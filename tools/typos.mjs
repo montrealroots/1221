@@ -96,6 +96,18 @@ const REAL_DOUBLES = new Set([
 
 const EXTENSIONS = /\.(ts|tsx|mjs|md)$/;
 const SKIP_DIRS = new Set(['node_modules', 'dist', '.git', 'coverage']);
+
+/**
+ * Somebody else's words, held to their spelling and not ours.
+ *
+ * The same exemption `tools/spelling.mjs` carries, and for the same reason:
+ * `docs/research/` quotes operators, standards bodies and union agreements
+ * verbatim, and the trade's own vocabulary trips a doubled-word check honestly.
+ * The DGA's title for the junior assistant director really is Second Second
+ * Assistant Director. "Correcting" that is editing a source, not fixing a typo.
+ */
+const NOT_OURS = ['docs/research'];
+const oursToCheck = (path) => !NOT_OURS.some((dir) => path.replace(/\\/g, '/').startsWith(dir));
 /** The two files that are lists of wrong words, and so are full of them. */
 const SKIP_FILES = new Set(['tools/typos.mjs', 'tools/spelling.mjs']);
 
@@ -155,7 +167,7 @@ function isRealDoubledName(line, index) {
 }
 
 const findings = [];
-for (const file of [...walk('src'), ...walk('tools'), ...walk('tests'), ...walk('docs')]) {
+for (const file of [...walk('src'), ...walk('tools'), ...walk('tests'), ...walk('docs')].filter(oursToCheck)) {
   if (SKIP_FILES.has(file)) continue;
   const lines = readFileSync(file, 'utf8').split('\n');
   lines.forEach((line, i) => {

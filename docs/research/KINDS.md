@@ -6,7 +6,7 @@ This is what actually changes, kind by kind, and it changes far more than the na
 
 ## What is in here
 
-8 kinds of production. For each: **the unit of work** — the atom progress is actually counted in, which differs more than anything else — then what is **absent** from the live-action pipeline, what is **reordered**, the processes that exist only here, how the crew differs, the shape of the money, and what goes wrong.
+10 kinds of production. For each: **the unit of work** — the atom progress is actually counted in, which differs more than anything else — then what is **absent** from the live-action pipeline, what is **reordered**, the processes that exist only here, how the crew differs, the shape of the money, and what goes wrong.
 
 The unit of work is the load-bearing one. A live-action feature counts shooting days. A CG feature counts approved seconds. A documentary counts field days against cut weeks. An engine that assumes one of them cannot hold the others.
 
@@ -20,6 +20,8 @@ The unit of work is the load-bearing one. A live-action feature counts shooting 
 6. **Multi-camera sitcom shot before a live studio audience**
 7. **Live and broadcast television**
 8. **Commercials and branded content (advertising film: TV/cinema spots, digital and social films, brand content, product/tabletop work)**
+9. **VFX-led tentpole and virtual production**
+10. **Micro-budget and independent narrative feature (roughly $0–$300k "ultra low", $300k–$2M "low budget"; non-union or SAG-AFTRA-only, no completion bond, no distributor attached at the start)**
 
 ---
 
@@ -4354,3 +4356,1053 @@ Measure brand lift, attention and sales effect; enter Cannes Lions, D&AD, Effies
 - **Decides.** What to claim and to whom; which awards to enter and at what entry cost; whether the case film is honest.
 - **Engine.** Effect model linking media weight x creative quality x distinctive branding to outcome, with lag and noise. A separate jury model rewards distinctiveness. Both feed agency reputation, director reel value, and who gets invited onto the next bid list.
 - **Takes.** 4 weeks to 12 months
+
+---
+
+## 9. VFX-led tentpole and virtual production
+
+*the shot-driven blockbuster (in-camera VFX on an LED volume, performance capture, full-CG sequences, multi-vendor post), where photography is one input among many and the film is assembled from shots bought from companies on three continents.*
+
+### The unit of work
+
+The atom is THE SHOT, not the page and not the scene. A page of dialogue may be zero shots; a half page reading "the bridge collapses" may be 140. Everything — bid, award, schedule, burn-down, payroll, blame — is keyed to a shot ID (e.g. TSQ_0420_0030) carrying a complexity tier (usually 1-5 or S/M/L/XL), an awarded price or awarded artist-hours, a vendor, a status (BID / AWARDED / TURNED OVER / WIP / SUBMITTED / CBB "could be better" / FINAL / OMIT / ADD), a version number, a cut in/out with handles, and a note history. Progress is FINALS PER WEEK against a burn-down curve, and the curve is the show: 2,000 shots, 60 weeks of post, means ~33 finals a week average and ~80/week in the last quarter, and everybody knows by month four whether the curve is achievable. Secondary units of work, each with its own idea of a good day: previs is measured in SECONDS OF CUT SEQUENCE delivered (a previs artist does roughly 5-20 seconds of blocked sequence a week, a good day is a shot or two of cut-in previs); the volume day is measured in SETUPS and in VALID TAKES (a take is invalid if the wall dropped frames, lost genlock, or showed a frustum edge — a good volume day is 12-22 setups with zero rebuilds and no content notes that outrun the brain bar); performance capture is measured in TAKES ON THE CAPTURE VOLUME (30-60 takes a day, later reported as "shots covered"); animation is measured in SECONDS OF FINAL ANIMATION PER ARTIST PER WEEK (roughly 2-6 seconds for creature work, 1-3 for a hero face); FX is measured in SIMULATIONS PUBLISHED and in machine-hours; comp is measured in SHOTS SUBMITTED PER ARTIST PER WEEK (0.5 for a hero shot, 5-10 for cleanup). Compute is its own currency: core-hours and GPU-hours, tracked daily, because a show can be on schedule and still dead if the farm cannot render the last quarter. A good day on a VFX-led show is a day where the finals curve moved, no asset was invalidated, and the cut did not change under a shot that was already at version 12.
+
+### What is absent
+
+- Chasing the light. On the volume there is no magic hour, no weather hold, no sunset that ends the day, no 'we lost the light' — a sunset is a slider and can be held for nine hours or run backwards. The single strongest scheduling force in live-action exterior work simply does not exist, which is why volume days are booked at a flat rate and run 10-12 hours regardless of what is on screen.
+- Location management for anything shot in the volume: no scout convoys, no permits, no police detail, no neighbourhood liaison, no parking coordinator, no company moves, no travel days, no per diems, no unit move between setups. Six 'countries' can be visited in one stage day.
+- Practical backings entirely: translites, painted backings, rear projection, front projection, poor-man's process, process trailers, greenscreen car work. The wall replaced the category, not just the technique.
+- Far-field set construction. The physical build stops at the practical edge, typically 8-15 feet from the talent; beyond that there is no carpentry, no scenic, no greens, no plaster, no set dressing, no strike cost and no lumber. The art department's output past that line is a file, not a build.
+- Picture lock as a gate that precedes post. There is no moment where the cut is fixed and the shots are then made; shots are being finalled while the cut is still moving, and 'lock' when it arrives is a legal date for the mix, not a creative one.
+- Page count as a scheduling unit. No one schedules an eighth of a page on a VFX-led show; the board is built from setups, wall-content availability, actor availability and volume booking, and the 1st AD's day is described in setups and shots, never in pages.
+- Night shooting as a scheduling constraint on volume work. Night exteriors are shot at 10am; there are no night premiums, no turnaround problems from a Friday-night wrap, no split days for an exterior night sequence.
+- Coverage invented on the day for full-CG sequences. There is no master-then-coverage; the camera was designed in previs and re-designed in layout, and no one is standing on a set deciding where to put it.
+- 'We'll fix it in the grade' as an answer about the background. In-camera VFX inverts it: the background is baked into the negative and cannot be regraded independently, so the answer becomes 'we fix it by redoing the shot as a full VFX shot,' which costs 40-200x what the grade note would have.
+- Shooting film in the volume, in practice. Moiré, banding, frustum error and refresh artifacts are invisible until a lab return; the workflow depends on seeing the wall live on a calibrated monitor. Film-out tentpoles (Nolan, some Villeneuve work) therefore also have no volume.
+- Wardrobe fittings, hair and makeup for fully digital characters, and the associated departments' authority over how they look. A creature's costume is a cloth sim owned by a Character Effects TD, its hair is a groom owned by a Groom Artist, and both are approved in a CG review, not a fitting room.
+- Hundreds of background artists for large crowds, plus the wrangling, holding areas and catering that implies. Crowd is a TD discipline with a library of cycles and an agent system.
+- Wrap as the end of production. Photography wrap is the midpoint at best; 55-75% of the negative cost and nearly all of the creative risk sits after it, and the VFX department grows after the crew is laid off.
+- A single exposed negative that is 'the film'. What comes off the stage is plates, tracking data, HDRIs, scans, LiDAR, take metadata and engine scene states — a set of inputs, several of which are not pictures at all.
+
+### What is reordered
+
+- Previs before the schedule and before the budget. On live action the script is broken down, scheduled and then budgeted, and visualisation (if any) serves the plan. Here 6-9 months of previs DESIGNS the sequences first, and the schedule, the stage requirement, the rig list and the number that goes to the studio are all derived from previs. Techvis then converts previs into measurable physical requirements — crane reach, lens, wall coverage, motion control speed, stunt rig clearance — and only then can a 1st AD build a board.
+- The art department finishes some of its work before the stage exists and continues long after wrap. The Virtual Art Department builds environments to camera, in engine, 3-8 months before load-in; VFX concept art keeps producing new environments during post for sequences that were changed in the edit.
+- Editorial precedes photography. Previs is cut into the reel, so an assembly of the film exists — with timing, rhythm and running length — before a single frame is photographed. The editor's first cut of an action sequence is a recut of previs, and the postvis version replaces it shot by shot.
+- Lighting is designed before photography and remains editable after it. The key light on a volume day is a rendered sun inside Unreal that was authored weeks earlier by the VAD and can be moved during the take; for CG shots lighting happens 8-16 months after the actor was photographed.
+- Camera is done two or three times. Previs camera (design), stage camera (record), and final layout camera (the one that ships). Focal length, height and move are creative decisions made, unmade and remade across three departments and two years.
+- Casting and performance are pulled forward for capture. A creature performer can be on a motion capture stage a year before principal photography, and body capture is routinely shot before, between and after the live-action block rather than inside it.
+- Scouting inverts: a VR scout of an unbuilt digital environment happens before anyone books a physical stage, and the physical 'location' decision becomes a volume booking and a wall-coverage decision.
+- The colour pipeline is decided in prep, not at the DI. The wall must be calibrated and colour-managed (ACES/OCIO, show LUT, wall gamut limits) before the first shot, and the DP is effectively grading the background months ahead of photographing it — the finish begins at load-in.
+- A purchasing process is inserted between prep and post that has no live-action equivalent at that position: bid package, vendor bids, negotiation, award. It typically concludes at or after wrap, meaning the companies making most of the film are hired after the film has been shot.
+- Shots finish out of cut order, driven by marketing. Trailer and teaser dates force 20-80 shots to final 6-10 months before the film does, sometimes from sequences that are later restructured, and those finals are paid for twice.
+- The tech scout becomes a shakedown day: a full-crew, full-engine, camera-on-the-floor rehearsal of the technology, typically 1-3 days before the shoot, testing latency, tracking, colour and content — a thing no live-action production does.
+- Additional photography is planned, not a failure. A 5-15 day reshoot block is budgeted at greenlight and lands 6-12 months into post, so photography is interleaved with post rather than preceding it, and the volume is often rebooked for it — which makes striking the LED package a scheduling decision, not a wrap task.
+- Dailies become two different rituals at two different times: on-set dailies of plates (unchanged), and, a year later, CG dailies where the director reviews 60-120 shot versions a day over a colour-critical remote review session. The second is where the film is actually directed.
+
+### How the crew differs
+
+- PRESENT AND UNIQUE — production-side VFX department: VFX Supervisor (a department head who outranks most others and is on the show longer than anyone but the director), VFX Producer, VFX Line Producer, VFX Coordinators and PAs, VFX Editor and assistant VFX editors, On-set VFX Supervisor, VFX Data Wrangler / Integration Supervisor, Scanning Technicians, and a studio-side VFX Executive who sits above the whole thing and reports to the studio, not the production.
+- PRESENT AND UNIQUE — visualisation: Previs Supervisor, Previs Artists, Techvis Artists, Postvis Supervisor and team, Stuntvis artists, and the previs vendor's own producer. These people are working a year before the crew exists and are the first hires after the director.
+- PRESENT AND UNIQUE — virtual production on the floor: Virtual Production Supervisor, VP Producer, VAD Supervisor, VAD Environment Artists, Lookdev and Technical Artists, Unreal Build Engineer, Brain Bar / nDisplay Operators (4-12), Media Server (disguise) Operator, LED Engineer / Screens Technician, Stage Systems and Network Engineers, Camera Tracking Technician, VP Imaging Scientist / Colour Scientist, Lighting Console Programmer driving DMX from the engine, Simulcam Operator, VCam Operator, Virtual Production Data Manager. None of these roles existed on a film set before roughly 2018 and several are still not in any union classification.
+- PRESENT AND UNIQUE — capture: Motion Capture Supervisor, mocap wranglers, marker technicians, Facial Capture Supervisor, HMC technicians, capture-stage engineers, and the performance-capture performers themselves who may never appear on screen.
+- PRESENT AND UNIQUE — vendor-side, the largest population on the film and physically absent from it: DFX/CG Supervisors, Asset Supervisor, Modellers, Texture Artists, Groom Artists, Riggers, Lookdev Artists, Matchmove Artists, Layout Artists, Animators, Character Effects TDs, FX TDs, Environment Artists and Matte Painters, Crowd TDs, Lighting TDs, Compositors, Roto and Prep artists (often 300-800 people in India, Malaysia or Vietnam), Render Wranglers, Pipeline TDs, Production Engineers, plus each vendor's own producers, coordinators and editors. A 2,000-shot show can employ 1,500-3,000 VFX artists across 10-20 companies — five to ten times the size of the shooting crew.
+- DIMINISHED OR ABSENT: Location Manager, location scouts, assistant location managers and the whole locations department for volume work. Transportation captain and drivers (no company moves). Construction coordinator, carpenters, scenic painters, plasterers, greensmen and standby painter — reduced to the practical build only. Backings and translite suppliers — gone entirely. Set decorators and dressers work a fraction of the square footage. Grip and electric shrink on the volume: the wall is the lamp, so fewer fixtures, fewer condors, fewer balloons, and no daylight balancing rigs, though rigging grips gain LED-support work.
+- ROLE SHIFTS RATHER THAN HEADCOUNT: the Director of Photography no longer owns the background — it was lit by a VAD artist weeks earlier and is driven by an operator the DP did not hire, which is the single most contested authorship change in the medium. The Production Designer shares authorship with the VAD Supervisor and, in post, with vendor Environment Supervisors. The 1st AD schedules around content-ready dates and render builds rather than daylight and company moves. The Editor cuts material that does not exist yet and re-cuts it three times as postvis and then finals arrive. The Director's principal working day, for two years, is a remote review session, not a set.
+- UNION FOOTING IS DIFFERENT AND RECENT: crew on the stage are IATSE (Local 600 camera, 728 electric, 80 grip); VFX artists were entirely non-union in the US until Marvel's VFX crew voted to unionise with IATSE in 2023, Disney and Lightstorm followed, and the first three VFX contracts were ratified in May 2025 — bringing minimum rates, overtime, turnaround, MPI health and pension, and an end to at-will employment for those units. Most vendor artists worldwide remain outside any collective agreement, and the VP floor roles (brain bar, VAD) mostly sit in no classification at all.
+
+### What goes wrong
+
+- Moiré, banding or panel scan lines that are invisible in the viewfinder and appear in dailies — or, worse, only on an IMAX screen at the first press screening, converting 40 in-camera shots into full VFX replacements.
+- Latency drift: the render lags the tracked camera by five or six frames, so the background slides on every whip pan. Nothing on the monitor looks obviously wrong and the whole day's fast material is unusable.
+- Genlock loss or one render node falling out of sync: tearing, a black seam, or a panel a frame behind. A take can be ruined by a single node and nobody catches it until wrap.
+- Frame rate collapse — an environment that was optimised for a 50mm is shot on a 25mm, the inner frustum doubles in pixels, the nodes drop under 24fps and the wall stutters through the take.
+- The inner frustum edge revealed by an operator's reframe, a second camera, or a dolly move nobody rehearsed: the shot has a soft-edged rectangle of correct perspective sitting inside a wrong-perspective world.
+- Multi-camera is effectively impossible: only one camera can own the inner frustum, so the sitcom-style efficiency of cross-shooting is off the table, and a second camera either gets its own frustum at GPU cost or a background with visibly wrong perspective.
+- Parallax breakdown: talent too close to the wall, or a lens too wide, and the background stops behaving like distance. The practical minimum of 8-12 feet from the wall quietly dictates blocking.
+- Colour the wall cannot make. Deep saturated reds, blues and certain greens sit outside the panel's usable volume, and wall spill contaminates skin tones in a way no grade can separate — because there is no matte between foreground and background.
+- Wall reflections in the wrong place: chrome, a car window, wet ground, a helmet visor picks up panel structure. That element then needs a full CG replacement anyway, in a shot that was supposed to be in-camera.
+- Insufficient wall brightness caps the stop. Deep-focus work, high-speed photography and long-lens exteriors at T8 are simply not available; the medium has a lighting ceiling and a whole class of shot is unshootable.
+- Content freeze broken at 3am: the director wants the mountain moved, the VAD rebuilds overnight, the build fails, and 120 crew arrive to a wall showing yesterday's revision — or a Perforce sync collision puts the wrong revision on screen and nobody notices for two setups.
+- The volume's fixed geometry defeats the shot: the crane cannot get back far enough, the arc runs out, the ceiling is too low, and a shot that worked in previs cannot exist on the stage that was booked for it.
+- The in-camera trap: the background is baked into the negative. Six months later the edit changes the geography of the sequence, and shots that cost nothing in post now cost $80k each to rebuild as full CG — the exact inverse of greenscreen's flexibility.
+- The volume was struck and the LED package returned to the rental house before the reshoot was scheduled, so additional photography must either re-rent the whole installation or be shot on greenscreen and cut against in-camera material it will never quite match.
+- Recorded virtual-take data lost or never captured: no tracked camera, no lens metadata, no scene state. Matchmove is re-derived from the plate at days per shot, on shots that were supposed to be finished.
+- A missing HDRI or LiDAR on one setup, discovered by a lighting TD in Mumbai fourteen months later, with the set long gone and the DP on another film.
+- Vendor failure: a company enters administration mid-show, or is over-committed, and 250 shots must be re-turned over to a second vendor with asset transfer, re-learning and a schedule that does not move.
+- Asset incompatibility across companies: the hero creature's rig, groom and shaders do not survive the handoff, and the same character is visibly a different animal in two consecutive sequences cut together.
+- An owner vendor publishes a new version of a shared asset and invalidates in-flight work at four other companies simultaneously.
+- Methodology failure at 60-80% spend: the water does not read, the fur is dead, the de-age is uncanny, the digital human crosses into the valley. The look is abandoned and the sequence restarts with months gone.
+- Mocap that cannot be used: marker occlusion, marker swaps, proportion mismatch between performer and creature that retargeting cannot fix, or a facial solve that drifts because the HMC slipped during the only good take.
+- Digital replica rights: a scanned performer's consent scope does not cover the use the film now needs, or a performer dies, or an estate objects — and a finished shot is legally unusable.
+- Cut changes under a finished shot: the shot is now fourteen frames longer than the handles covered, or reframed, or reversed, or omitted at version 12 after $180k of work.
+- Trailer pull forces 60 shots to final eight months early; the sequence is then restructured after a preview, and every one of them is re-finalled at full price.
+- Temp love: the director cannot let go of a postvis or temp comp, and the final shot is judged against a rough version nobody can reproduce.
+- Approval that will not stick — shots approved in isolation fall apart in the DI when cut next to their neighbours, producing a late-fix queue against a hard delivery date.
+- Farm and cloud overrun: an FX sim at 40 machine-hours a frame, a storage array full at 4am, licence throttling in the last fortnight, and a render queue that mathematically cannot finish the remaining shots before delivery.
+- Pipeline version bump mid-show — a USD, renderer or DCC upgrade that breaks caches, and a fortnight of a hundred artists' time spent on nothing visible.
+- Expanded aspect ratio discovered late: the IMAX version needs picture above and below the composed frame that was never rendered or comped, and 800 shots must be reopened.
+- LED panel and processor fan noise, plus stage heat, forcing ADR on dialogue that played beautifully, and actors working all day inside a glowing 20-foot cylinder with the eyestrain and fatigue that brings.
+- The schedule's true shape: photography wraps on time and under budget, and the film is still eighteen months and 60% of its money away from existing.
+
+### The shape of the money
+
+Photography is a minority line item. On a $200-300M negative: above-the-line (rights, script, director, producers, cast) roughly 20-30%; physical production including the shoot roughly 20-30%; VISUAL EFFECTS 20-40% on a normal tentpole and 60%+ on a character-driven CG show — trade-reported figures put Avatar at ~63%, The Lion King (2019) at ~67% and Avengers: Endgame in the 34-42% band (estimates, not audited); post, music and delivery 5-8%; contingency 8-10%; completion and financing costs on top. P&A sits outside the negative at 50-120% of it and, uniquely here, reaches back INTO production by forcing early finals. Inside the VFX package itself (estimates from bid practice): vendor labour 55-70%, split roughly comp 25-35%, animation and creature 20-30%, FX simulation 10-20%, environments 10-15%, asset build 10-15%, roto/prep/paint 5-10%; compute and storage 5-12%; the production-side VFX department (supervisor, producer, VFX editorial, data capture, previs and postvis) 8-15% of the VFX number; R&D and methodology 2-5%. Per-shot prices run under $1k-$5k for cleanup and simple comp, $5k-$25k mid-complexity, $60k-$500k+ for hero full-CG and digital human work; Avatar: The Way of Water has been reported at roughly $62,500 per shot across ~4,000 shots (trade estimate). Vendors bid 5-15% margin and routinely finish at or below zero because unbid note rounds are absorbed rather than fought. Virtual production moves money from post into production and from post into prep: a fully equipped LED volume day runs an estimated $75k-$250k+ all-in — stage rent, LED package (reported at $3k-$55k/day for the wall alone depending on size, with fully equipped premium stages quoted $25k-$75k/day), 8-20 VP crew, render nodes, and the amortised VAD build ($1.5-8M for a show, estimate) and previs spend ($2-6M, estimate) that had to happen first. What it buys back is real but not a discount: no company moves, no travel, no weather days, no far-field construction, a shorter shooting schedule (often 50-75 days instead of 90-110), and a chunk of set-extension work that never gets bid — traded against a fixed stage cost that runs whether the day is good or not, and a background that cannot be changed later. Geography is a finance decision as much as a creative one: the award routes toward the credit — UK AVEC pays 39% on qualifying VFX with the 80% cap disapplied (expenditure from 1 January 2025, claimable from April 2025); British Columbia's PSTC rose from 28% to 36% for productions starting principal photography after 31 December 2024, with a further 2% for productions over $200M of BC spend, plus the 16% DAVE credit on digital animation and VFX labour; Ontario, Quebec, Australia (30% PDV), New Zealand and India all compete for the same shots. A show routinely moves 300 shots across an ocean for eight points of credit and pays for it in review rounds. Cash flow is the hidden shape: vendors invoice against milestones, credits arrive at completion 12-24 months later, and a vendor's insolvency mid-show is a production emergency, not a supplier problem.
+
+### Processes that exist only here
+
+#### Pitchvis
+
+30-120 seconds of rendered sequence built before greenlight to sell scale, tone and a set piece to a studio that is deciding whether to spend $250M. Often the only moving image of the film that exists.
+
+- **Who.** Previs Supervisor (previs vendor: The Third Floor, Halon, Proof, Day For Nite)
+- **Decides.** Which sequence to visualise, how much to spend (est. $75k-$400k), and how honest it is: a pitchvis that oversells creates an expectation the show must later pay for at 100x the price.
+- **Engine.** Executive taste vector vs pitch content; greenlight probability; a persistent EXPECTATION record attached to the sequence, so later descoping reads as a broken promise and costs political capital. Pitchvis assets persist as real files into previs.
+- **Takes.** 4-10 weeks, pre-greenlight
+
+#### Script-to-shot VFX breakdown and complexity tiering
+
+Line-by-line pass converting script into a numbered shot list with a count per sequence and a tier per shot. Produces 'this is a 1,850 shot movie' — the number the whole production is then organised around.
+
+- **Who.** VFX Producer with VFX Supervisor
+- **Decides.** What counts as a shot, how coarse or fine to break it, the tier assigned (S/M/L/XL or 1-5), and how much padding to carry against the certainty that the count will grow 20-60%.
+- **Engine.** Script objects → shot records with tier, methodology flag (in-camera / plate+CG / full CG / 2D), and a growth model: counts inflate with director profile, edit volatility and sequence type. Tier drives every downstream cost and hour estimate.
+- **Takes.** 2-4 weeks, repeated every script revision
+
+#### Previs
+
+Sequences blocked, staged, shot, cut and re-cut in a real-time engine at low fidelity. The director directs the movie here first; the output is cut into editorial and becomes the plan of record.
+
+- **Who.** Previs Supervisor and Previs Artists (10-40 of them)
+- **Decides.** Staging, geography, beats, camera language, shot count and running time of the sequence — plus how many versions to iterate before it is called done.
+- **Engine.** A previs cut with per-shot timing that editorial holds; iteration count vs director satisfaction; a dependency link so that changing previs invalidates techvis, the schedule and the bid. Artist-weeks convert to seconds of cut sequence (5-20s/artist/week).
+- **Takes.** 6-9 months on a tentpole, often starting before the script is finished
+
+#### Techvis
+
+Converts previs into measurable physical truth: exact lens, camera height, crane reach and speed, stage footprint, wall coverage, rig clearance, wire gauge, motion control axis limits, plate tile counts.
+
+- **Who.** Techvis Artist / Technical Previs Supervisor
+- **Decides.** Whether a previs shot is physically shootable, and with what — or whether it must be redesigned, split, or moved to full CG.
+- **Engine.** Geometry check against a real equipment database (crane reach, dolly track lengths, lens FOV, stage dimensions, volume radius and height). Failure returns a redesign flag to previs and a cost delta to the budget. This is the bridge that makes previs decisions have physical consequences.
+- **Takes.** Rolling through prep, 1-3 days per complex shot
+
+#### Stuntvis
+
+Previs made specifically to plan and sell a stunt: rig positions, pull speeds, decelerator settings, impact points, camera safety, and where the digital double takes over from the performer.
+
+- **Who.** Stunt Coordinator with previs team
+- **Decides.** The handoff frame between performer and digital double, the rig type, and whether the beat is shot for real, shot for real and augmented, or made entirely.
+- **Engine.** Per-beat performer/double split with risk score; an insurance and safety gate; a downstream shot record whose methodology field is set by this decision (digital double = build a scanned double = asset cost).
+- **Takes.** 2-6 weeks per major sequence
+
+#### Virtual location scout
+
+The filmmakers walk an unbuilt digital environment in headsets, set cameras, place sun, scale buildings, mark blocking — sometimes with a tracked mock camera. Replaces the van, the recce photos and the folder.
+
+- **Who.** Director, DP, Production Designer and VAD Supervisor in VR / on a stage scout tool
+- **Decides.** Where the camera goes, where the practical build ends and the wall begins, what time of day it is, and which parts of the environment need detail (a heatmap of where the camera actually looks).
+- **Engine.** A camera-attention heatmap over the environment that drives build budget: only the looked-at 20% gets hero detail. Scout decisions write back as VAD work orders and as the practical build boundary.
+- **Takes.** 1-3 days per environment, repeated
+
+#### Volume design and LED package spec
+
+Specifies the wall: radius, height, ceiling coverage, pixel pitch (typically 1.5-2.8mm for the main wall, coarser for ceiling), panel type, brightness, processing, render node count, and whether it is a fixed volume or a modular build.
+
+- **Who.** Virtual Production Supervisor with Stage/Screens Engineer and DP
+- **Decides.** Wall geometry vs sequence needs, pitch vs budget vs moiré risk, ceiling vs light boxes, and how much of the show can actually live on it.
+- **Engine.** Wall geometry object (radius, height, arc) checked against every techvis shot: a lens/position pair either fits inside the arc or reveals the edge. Pixel pitch × subject distance × focal length produces a moiré risk value. Cost scales with square metres and pitch.
+- **Takes.** 4-8 weeks of design; 2-6 weeks of load-in
+
+#### VAD environment build
+
+Builds the digital environments that will be photographed: modelling, texturing, lighting and dressing whole worlds in engine to a standard that holds up in-camera at a stop of T2.8 on a 50mm.
+
+- **Who.** VAD Supervisor, Environment Artists, Lookdev Artists, Technical Artists
+- **Decides.** Which environments to build at hero fidelity, how much is geometry vs matte vs splat capture, how it is lit, and where the seam between practical set and wall content is disguised.
+- **Engine.** Asset graph with LOD and fidelity states; per-environment build cost in artist-weeks; a hard CONTENT-READY date per shoot day. An environment that misses its date takes the shoot day with it — the day cannot be swapped as easily as a location day.
+- **Takes.** 4-8 months for a show; 4-10 weeks per hero environment
+
+#### Real-time optimisation and frame budget
+
+Makes the environment run. Budgets draw calls, texture memory, shadow and lumen cost across the nDisplay render nodes so the inner frustum holds a locked 24fps with headroom for the camera to move anywhere.
+
+- **Who.** Technical Artist / Real-time TD (VAD)
+- **Decides.** What to cut, bake, proxy or fake; how much overscan to carry on the inner frustum; how many render nodes to throw at the frustum vs the outer wall.
+- **Engine.** A hard GPU frame-budget model: inner-frustum pixel count × scene cost vs node capacity. Falling under frame rate is not a cosmetic penalty — it invalidates takes and corrupts tracking sync. Every VAD art note has a measurable cost against this budget.
+- **Takes.** Continuous; 1-2 weeks of hard optimisation per environment before load
+
+#### Location capture: LiDAR, photogrammetry and Gaussian splats
+
+Captures real places as data: laser scans for survey-accurate geometry, photogrammetry for texture, and increasingly 3D Gaussian splats for photoreal environments that go straight to the wall or to previs.
+
+- **Who.** Scanning / Data Capture Supervisor (Clear Angle, Digital Domain scanning, in-house)
+- **Decides.** What to capture, at what density, in what light; whether a splat is good enough for the wall (it is fast and photoreal but relights badly) or whether it must be rebuilt as geometry.
+- **Engine.** Capture jobs with coverage/accuracy/lighting-condition attributes; splats carry a RELIGHTABILITY penalty so the cheap route fails when the shot needs a different time of day. Scans feed both VAD and the vendors' matchmove.
+- **Takes.** 1-3 days per location on the ground; 1-4 weeks processing
+
+#### Cyberscan and Light Stage capture of cast, costume and props
+
+Photogrammetric body and costume scans, and high-end facial capture under a Light Stage-type rig, producing the reflectance and geometry data from which digital doubles and de-aged faces are built.
+
+- **Who.** Scanning Technician / Digital Human Supervisor
+- **Decides.** Who gets scanned and at what tier, in which costumes, and the terms — since a scan of a performer is a digital replica with consent, use and compensation attached under the 2023 SAG-AFTRA terms.
+- **Engine.** Per-performer digital-double asset with a rights record (consent scope, term, compensation). A missing scan means an expensive rebuild from plates; a rights failure can legally block a finished shot.
+- **Takes.** 2-6 hours per performer; a scanning block of 3-10 days
+
+#### FACS ROM and facial performance capture
+
+A range-of-motion session recording the actor's full expression set, then head-mounted-camera capture of the performance itself; stereo/4D reconstruction and a solve onto the character's face rig.
+
+- **Who.** Facial Capture Supervisor (DI4D, Wētā FX, ILM, Digital Domain)
+- **Decides.** The capture system, how much ROM to shoot, whether to solve to blendshapes or a machine-learned neural rig, and how much animator cleanup to budget on top of the solve.
+- **Engine.** A facial pipeline with a SOLVE QUALITY value per take, degraded by HMC slip, hair, sweat, beards and extreme expressions. Poor solves convert automatically into animator hours. Face is the most expensive second of work in the business — model it separately from body.
+- **Takes.** ROM half a day per actor; capture runs with the shoot; solve 4-12 weeks trailing
+
+#### Performance capture stage block
+
+Body capture on a dedicated volume (Vicon/OptiTrack optical, or inertial) with witness cameras, props, stunt pads and a live low-res preview of the characters, shot as a theatre-in-the-round rather than a coverage day.
+
+- **Who.** Motion Capture Supervisor with mocap wranglers and marker technicians
+- **Decides.** Whether to capture the scene as performance (all actors together, camera later) or shot-by-shot; how many takes; which take is selected and how much of it survives retargeting.
+- **Engine.** Take records with occlusion/marker-swap quality flags; a retarget model where proportion mismatch between performer and creature generates animation fix hours. Selects feed layout, not editorial — the camera does not exist yet.
+- **Takes.** 10-40 capture days, often months before or after principal photography
+
+#### Methodology bake-off / R&D test
+
+A paid test to prove a hard look before the show commits: fur, water, a de-age, a digital human, a destruction methodology. Two or three vendors may be paid to test the same thing competitively.
+
+- **Who.** CG Supervisor and DFX Supervisor (vendor), with the production VFX Supervisor
+- **Decides.** Which approach and which vendor gets the hardest work, how long to test before committing, and whether the approach is abandoned (the expensive, correct answer) or pushed through.
+- **Engine.** R&D as a gamble with a success probability, a cost, and a deadline: committing without a test raises the chance of a catastrophic mid-show method failure at 60-80% spend. Successful methods become reusable capability for the vendor.
+- **Takes.** 6-16 weeks
+
+#### Bid package assembly
+
+Builds the document vendors bid against: per-shot descriptions, previs and postvis references, plate counts, asset lists, delivery formats, schedule milestones, review cadence, and the count of iterations included.
+
+- **Who.** VFX Producer with VFX Coordinator
+- **Decides.** How the work is packaged (by sequence, by asset, by discipline), how much detail to give, how many iterations to specify, and whether to bid it as fixed price per shot or as awarded hours.
+- **Engine.** Package objects grouping shots by sequence and shared asset. Package granularity controls later pain: splitting a sequence across vendors creates asset-sharing and continuity cost that must be tracked explicitly.
+- **Takes.** 3-6 weeks, issued during prep or photography
+
+#### Vendor bid, negotiation and award
+
+8-25 companies bid; bids come back as per-shot prices in tiers with assumptions and exclusions. Work is awarded as packages, often to 5-20 vendors on a single tentpole (Endgame used 14).
+
+- **Who.** Studio VFX Executive and VFX Producer, with vendor Executive Producers / Head of Production
+- **Decides.** Who gets which sequence, at what price, with what not-to-exceed; whether to split a sequence (cheaper, riskier) or keep it whole; and how much to squeeze a vendor who cannot say no.
+- **Engine.** Vendor objects with capacity (artist seats, current load), specialism strength per discipline, region/incentive, quality and reliability history, and margin tolerance. Overloading a vendor degrades its output 3-6 months later — the penalty must be delayed to be real.
+- **Takes.** Bids 3-4 weeks out; awards from photography through 2-3 months after wrap
+
+#### Incentive routing of VFX spend
+
+Places VFX spend where the credit is. UK AVEC pays 39% on qualifying VFX with the 80% cap disapplied (expenditure from 1 Jan 2025, claimable from April 2025); BC PSTC is 36% (+2% over $200M BC spend) plus 16% DAVE; Australia PDV 30%.
+
+- **Who.** Production Accountant / Film Incentive Consultant with VFX Producer
+- **Decides.** How many shots move country for money, and whether a weaker vendor in a better jurisdiction beats a stronger one at full price.
+- **Engine.** Per-vendor effective cost after credit, with qualifying-spend rules and a cash-flow lag (credits arrive at completion). Quality and incentive pull in different directions; the engine must let the player take the money and pay for it in the review cycle.
+- **Takes.** Decided at award; reconciled over 12-24 months
+
+#### Shot split and asset custody
+
+Decides which vendor BUILDS each shared asset (the hero creature, the hero ship, the city) and which vendors receive it. Assets cross company lines as USD/Alembic caches, textures and published rigs.
+
+- **Who.** VFX Producer with Asset Supervisor
+- **Decides.** Build-once-and-share (cheap, fragile, creates a dependency on one company's schedule) vs build-twice (expensive, continuity risk between vendors).
+- **Engine.** Asset custody graph: owner vendor, consumer vendors, publish version, translation loss per handoff (rig fidelity, shader mismatch, groom differences). A late change by the owner invalidates every consumer's in-flight work — this cascade is the core multi-vendor mechanic.
+- **Takes.** Ongoing; each asset transfer 1-3 weeks of engineering
+
+#### Stage load-in, panel mapping and colour calibration
+
+Hangs and maps the panels, then calibrates: panel-to-panel uniformity, brightness, white point, gamma, the wall's achievable gamut, camera-specific colour transform, and the show LUT/ACES config through to the on-set monitors.
+
+- **Who.** LED Engineer / Screens Technician with VP Imaging Scientist (colour scientist)
+- **Decides.** Target brightness and white point, how aggressively to match the wall to the camera's response, and which colours the show simply cannot have (deep saturated reds and blues are outside a typical wall's usable volume).
+- **Engine.** Wall colour state with measured uniformity and gamut; a per-camera-per-wall transform. Drift over hours/heat degrades it. Out-of-gamut content in a shot becomes a downstream fix cost or an on-set redesign.
+- **Takes.** 1-3 weeks of load-in, 2-5 days of calibration, re-checked weekly
+
+#### Camera tracking install and lens calibration
+
+Installs and surveys the tracking system, then shoots distortion grids and builds a lens file for every lens at multiple focus distances, so the rendered frustum matches the real lens exactly.
+
+- **Who.** Camera Tracking Technician (Mo-Sys StarTracker, stYpe RedSpy, OptiTrack, Ncam) with the 1st AC
+- **Decides.** Tracking technology (ceiling markers vs optical vs hybrid), which lenses are calibrated (each costs time), and the tracking origin/survey that everything is relative to.
+- **Engine.** Per-lens distortion and nodal-point data; tracking error in millimetres and degrees. Uncalibrated or drifting tracking produces a subtle parallax mismatch that is invisible on set and fatal in dailies — delay the reveal.
+- **Takes.** 2-4 days install; 20-60 minutes per lens/focus combination
+
+#### Genlock, sync and latency budget
+
+Locks camera shutter, LED refresh, render nodes, tracking and recording to one clock, and measures end-to-end latency from camera move to correct pixels on the wall — typically 3-6 frames, which must be compensated or lived with.
+
+- **Who.** Stage Systems Engineer / Video Engineer
+- **Decides.** Shutter angle and frame rate (which the wall's refresh constrains), how much latency compensation/prediction to apply, and whether a fast whip pan is allowed at all.
+- **Engine.** A latency value in frames that grows with scene complexity and tracking prediction; fast camera moves exceed it and the background lags visibly. Loss of genlock produces scan lines/tearing across a whole take. Both must invalidate takes, not just look bad.
+- **Takes.** 1-2 days to establish; checked every morning
+
+#### Shakedown day (plugfest)
+
+A full-crew rehearsal of the technology before shooting: real camera, real lenses, real content, real moves, with the DP lighting and the director staging, specifically to break things while it is still free.
+
+- **Who.** Virtual Production Supervisor with full brain bar, camera and grip departments
+- **Decides.** How many shakedown days to buy (1-3, at near full stage cost), and what to change when it fails — content, wall config, lens choice, or the shot itself.
+- **Engine.** Every latent technical failure (moiré, latency, gamut, frustum fit, frame rate) has a discovery probability that is high during shakedown and low during shooting. Skipping it moves those discoveries into shooting days at 5-20x the cost.
+- **Takes.** 1-3 days immediately before the block
+
+#### Content freeze and wall load
+
+Locks a revision of each environment, builds it to the render nodes and loads it on the wall for the coming day. Everything on the wall tomorrow was frozen today; live art notes fight this.
+
+- **Who.** VAD Supervisor and Unreal Build Engineer (Perforce Helix Core as source of truth)
+- **Decides.** When to freeze (earlier is safer, later is more responsive), what late changes are worth breaking the freeze for, and how much on-stage tweak capability (sun, weather, colour, set dressing sliders) to expose to the brain bar.
+- **Engine.** Revision state per environment with a build time (30 minutes to several hours). Post-freeze changes carry a rebuild cost measured in stage minutes — the mechanic that makes 'just move the mountain' expensive in front of 120 crew.
+- **Takes.** Nightly; loads take 30 minutes to 4 hours
+
+#### Brain bar operation
+
+Runs the wall live during the shooting day: loads scenes, drives the sun, weather, set dressing, background action, wall brightness and colour, responds to director and DP notes in seconds, and monitors render health per node.
+
+- **Who.** Brain Bar / nDisplay Operators, Unreal Operator, Media Server (disguise) Operator — 4-12 people at a desk on the stage floor
+- **Decides.** Which notes to execute live, which to defer to a rebuild, and when to tell the AD the wall needs ten minutes — the brain bar's honesty about this sets the day's rhythm.
+- **Engine.** A live request queue with per-request execution time (seconds to hours) and failure risk; node health and frame rate readouts; an operator-fatigue/competence value. The brain bar is the new gaffer's board and belongs on screen as a live instrument panel.
+- **Takes.** Every shooting minute of every volume day
+
+#### Frustum management
+
+Controls the inner frustum — the camera-perspective, high-fidelity region — its size, overscan, soft edge, and whether a second camera gets its own frustum (at real GPU cost) or shoots the outer frustum's wrong-perspective image.
+
+- **Who.** Virtual Production Supervisor / ICVFX operator with the DP
+- **Decides.** Single-camera purity vs multi-camera speed; frustum size (bigger is safer for whip pans, costlier to render); whether an operator's reframe is allowed to reveal the frustum edge.
+- **Engine.** Frustum geometry vs camera FOV each frame; an edge-reveal flag when the operator over-frames; per-extra-frustum GPU cost that can push the show under frame rate. This is why a volume is largely a single-camera medium — make that a rule the player feels.
+- **Takes.** Continuous, per setup
+
+#### Wall lighting and interactive lighting
+
+Uses the wall itself as the key and ambient source, supplemented by DMX fixtures driven from the engine so a virtual explosion fires a real 12K on the actor's face in sync.
+
+- **Who.** Gaffer and Lighting Console Programmer with VP lighting operator
+- **Decides.** How much light comes from the wall vs real fixtures, the wall's brightness (which competes with exposure, gamut and panel heat), and where to cheat with a card off-camera.
+- **Engine.** Wall luminance budget vs stop: the wall typically delivers far less than a real exterior, capping the achievable T-stop and killing deep-focus and high-speed work. Interactive lighting cues are timed events synced to engine content.
+- **Takes.** Per setup, 15-60 minutes
+
+#### Moiré and parallax policing
+
+Continuous management of the artifacts the medium creates: moiré from the pixel grid, banding, wrong parallax when subject and wall are too close or the lens too wide, and the wall going soft when it shouldn't.
+
+- **Who.** VFX Supervisor, DP and 1st AC
+- **Decides.** Lens choice, stop, camera-to-wall distance, talent-to-wall distance (a practical minimum of ~8-12 feet), wall angle, and when to defocus deliberately to hide structure.
+- **Engine.** An artifact risk function of pixel pitch, subject/wall distance, focal length and stop — and a DISCOVERY DELAY: some of it is visible on the monitor, some only in dailies, some only on an IMAX screen. Late discovery converts an in-camera shot into a full VFX shot.
+- **Takes.** Continuous; the argument of every setup
+
+#### In-camera versus fix-it call
+
+The defining decision of ICVFX: accept the background as photographed and final in camera, or shoot it knowing it will be replaced — by lighting the frustum blue/grey, shooting a clean pass, or flagging for a later paint-out.
+
+- **Who.** VFX Supervisor with Director and DP, on the floor, in the moment
+- **Decides.** Whether this take is a finished shot or a plate. Accepting in-camera saves a $15k-$80k shot and forecloses all later change; shooting to replace preserves options and spends the money anyway.
+- **Engine.** Per-shot methodology state written on the day, with cost and latitude consequences: in-camera shots are cheap and rigid; their cost to change later is catastrophic (rebuild as full CG). Director volatility should make this gamble genuinely risky.
+- **Takes.** Seconds, dozens of times a day
+
+#### Take recording of the virtual side
+
+Records what the camera cannot: tracked camera transform, lens metadata, the engine scene state and revision, sun and weather values, frustum settings and the exact content on the wall, keyed to timecode and take.
+
+- **Who.** Virtual Production Data Manager / Take Recorder operator
+- **Decides.** What is recorded and how it is archived, and whether to also record a clean CG render of the frustum for later replacement.
+- **Engine.** A virtual-take record joined to the physical take. Its presence makes later replacement/matchmove near-free; its absence means the vendor re-derives the camera from scratch (days per shot). A quiet failure here should be survivable but expensive.
+- **Takes.** Every take; 15-40 minutes of end-of-day wrangling
+
+#### On-set integration data capture
+
+HDRI bracket sets, chrome and grey balls, colour charts, texture reference, witness cameras, set survey, LiDAR of the practical build, lens and stop notes for every setup — the evidence a vendor needs to integrate CG a year later.
+
+- **Who.** VFX Data Wrangler / On-set VFX Supervisor
+- **Decides.** Which setups get full data (each costs 5-20 minutes of a stage day the AD wants back) and which are gambled on.
+- **Engine.** Per-setup data completeness score that becomes a lighting/integration difficulty multiplier at the vendor 12 months later. The AD's pressure to skip it and the consequence must be separated by a year of game time.
+- **Takes.** 5-20 minutes per setup
+
+#### Simulcam and on-set compositing
+
+For green screen and capture units: live composite of tracked CG environment or creature into the camera's viewfinder so the director, DP and actors can see the shot rather than imagine it.
+
+- **Who.** Simulcam Operator / Real-time Compositor
+- **Decides.** Whether to run simulcam (it costs setup time and crew), how much fidelity to show, and whether the eyeline/creature stand-in is physical, virtual or both.
+- **Engine.** Director and actor performance quality improves when the shot is visible; degrade blocking and eyeline accuracy when it is not. Simulcam has a per-day cost and a setup-time penalty per unit.
+- **Takes.** Continuous on capture and greenscreen units
+
+#### Plate and element unit
+
+A dedicated unit shooting non-story material: tiled plates for set extensions, clean plates, background driving plates, aerials, atmospherics, pyro elements, water, dust, motion-control passes for repeatable moves.
+
+- **Who.** Plate Unit DP / 2nd Unit DP with VFX Supervisor
+- **Decides.** What to shoot for real versus build in CG, tile counts and overlap, sun conditions to match, and how many clean plates to buy against an edit that doesn't exist yet.
+- **Engine.** Element library with match attributes (time of day, lens, height, sun angle). Elements bought speculatively either save six figures or are never used; a missing clean plate is a paint job at the vendor.
+- **Takes.** 10-40 days across the show
+
+#### Virtual camera (VCam) shoot
+
+For full-CG sequences: the director physically operates a camera inside the virtual scene, with animated characters playing back, capturing handheld feel and real operating instinct into shots that were never photographed.
+
+- **Who.** Director with VCam Operator (tracked tablet or camera-body rig inside the engine)
+- **Decides.** Framing, lens, move and operating style for shots with no physical existence; how many passes; which take becomes final layout.
+- **Engine.** VCam takes as first-class camera data feeding layout; operator style attributes (handheld weight, sway) that read as authored rather than procedural. Requires animation to exist first — a dependency on the animation schedule.
+- **Takes.** Days to weeks per sequence, months after capture
+
+#### Postvis
+
+Rough CG composited into the actual photographed plates within days of shooting, so the editor can cut a scene that reads. Replaces previs in the cut and is the version the studio screens for 6-12 months.
+
+- **Who.** Postvis Supervisor with a dedicated postvis team, often embedded with editorial
+- **Decides.** Which shots get postvis and at what quality, and how good it should be — too rough and the sequence dies in a screening; too good and the studio thinks it is finished and stops paying attention.
+- **Engine.** Per-shot postvis quality feeding SCREENING SCORE and the studio's perception of progress. Postvis quality also anchors expectations: notes given on postvis become binding on the final shot.
+- **Takes.** Continuous from first day of photography until final shots arrive
+
+#### Editorial turnover (with pulls and conform)
+
+The formal handoff: shots numbered, cut in/out set, handles added (typically 8-12 frames, sometimes 24), plates pulled from the camera originals at full resolution, count sheets written, EDL/AAF/reference QuickTimes and metadata packaged to each vendor's spec.
+
+- **Who.** VFX Editor with assistant editors and data ops
+- **Decides.** Handle length, what reference goes with the shot, how often to turn over (weekly batches vs continuous), and whether to turn over a shot from a cut that is still moving.
+- **Engine.** Turnover packages with completeness and correctness; a wrong pull or short handle surfaces days later as vendor downtime. Turning over an unstable cut generates re-turnovers that cost the vendor work already done. This is the pipe through which all money flows.
+- **Takes.** Weekly cycles across 12-20 months of post
+
+#### Matchmove and layout
+
+Recovers the real camera's position, lens and motion from the plate (or ingests the recorded virtual camera), rebuilds the set as geometry, and lays out CG elements in a space that matches the photography exactly.
+
+- **Who.** Matchmove Supervisor and Layout Supervisor (vendor side)
+- **Decides.** Solve approach, how much survey/LiDAR to trust, whether to stabilise or recreate, and how much layout re-staging to do relative to previs.
+- **Engine.** Solve quality with error in pixels; poor tracks propagate into slipping composites detected at the very end. Recorded virtual-take data reduces this to near zero — the payoff for on-set discipline.
+- **Takes.** 1-5 days per shot, first stage of every vendor's work
+
+#### Asset build: model, texture, groom, rig, lookdev
+
+Builds the hero assets to final quality: sculpt, UV, displacement, texture at 4-16K, groom for hair and fur, deformation rig with muscle and skin sliding, shaders validated under multiple lighting conditions.
+
+- **Who.** Asset Supervisor with Modellers, Texture Artists, Groom Artists, Riggers, Lookdev Artists
+- **Decides.** Build order and fidelity tier per asset, how much rig complexity to buy, and when an asset is 'approved' — because approval is the gate that lets 200 shots start.
+- **Engine.** Asset states (WIP / review / approved / locked) gating shot work. A post-approval change ripples through every shot using it — the single most expensive event in post. Build cost in artist-weeks by type: hero creature 12-30 weeks, digital double 6-12, vehicle 4-10.
+- **Takes.** 3-9 months, running ahead of shot production
+
+#### Animation
+
+Blocking, then spline, then final on every CG performance — keyframe, capture-driven, or a hybrid where mocap is the base and animators author everything an actor in a lycra suit could not do.
+
+- **Who.** Animation Supervisor with animators (10-80 per vendor)
+- **Decides.** Keyframe vs capture per shot, how many rounds of director notes to absorb before calling it, and where the performance departs from what was captured.
+- **Engine.** Per-shot animation state with note rounds; each director round costs days and the director's satisfaction curve is non-monotonic. Output rate 2-6 seconds of final animation per artist-week for creature work, less for faces.
+- **Takes.** 6-14 months; typically the long pole on a creature show
+
+#### Creature FX and simulation
+
+Everything that moves because the character moved: muscle and fat jiggle, skin sliding, cloth and costume simulation, hair and fur dynamics, contact interpenetration fixes, wet and dirt maps.
+
+- **Who.** Character Effects (CFX) TD / Creature FX Supervisor
+- **Decides.** Simulation quality vs machine time, what is simulated versus faked, and how many failure iterations to accept before hand-fixing.
+- **Engine.** Sim jobs with machine-hours, a failure/instability rate (explosions, interpenetration) and a cache size in terabytes. CFX is strictly downstream of approved animation — every animation change re-runs it, which is why animation changes hurt twice.
+- **Takes.** 1-6 days per shot, after animation approval
+
+#### FX simulation
+
+Destruction, water, fire, smoke, sand, magic, energy — authored as procedural setups and simulated per shot, typically the most compute-hungry and least predictable discipline on the show.
+
+- **Who.** FX Supervisor and FX TDs (Houdini)
+- **Decides.** Voxel/particle resolution, how many setup iterations before per-shot work, and whether to build a reusable rig for a sequence or bespoke every shot.
+- **Engine.** Compute model where resolution scales cost non-linearly and some shots take 20-60 machine-hours per frame; a look-approval gate before per-shot production. FX is the discipline most likely to blow both the farm budget and the schedule.
+- **Takes.** Setup 4-10 weeks per effect; 3-15 days per shot
+
+#### Environments and set extension
+
+Extends the 8-15 feet of practical build (or the volume's wall) into a city, a canyon, a hangar — as projected matte paintings, full 3D builds, or captured splats, with correct parallax for the camera move.
+
+- **Who.** Environment Supervisor, Matte Painters, DMP/Projection artists
+- **Decides.** 2.5D projection (cheap, breaks with camera movement) vs full 3D (expensive, holds anything), and how much of the frame the environment actually owns.
+- **Engine.** Environment method tied to camera-move magnitude: a projection breaks above a parallax threshold, forcing an upgrade mid-shot. Reuse across shots in a sequence should give a real economy of scale.
+- **Takes.** 4-12 weeks per hero environment; 2-10 days per shot
+
+#### Crowd
+
+Populates armies, stadiums and city streets with agents driven by cycle libraries, behaviour rules and, for hero rows, individually animated or capture-driven characters.
+
+- **Who.** Crowd TD / Crowd Supervisor (Houdini crowds, Golaem, Massive)
+- **Decides.** Agent variation count, how many hero-tier crowd characters to hand-animate, and the crowd's staging and behaviour — a crowd can look procedural and kill the shot.
+- **Engine.** Agent count vs variation vs render cost; a 'proceduralness' penalty when variation is too low. Crowd depends on approved character assets and cycle libraries, and renders heavy — crowd shots are compute outliers.
+- **Takes.** Library build 6-12 weeks; 2-8 days per shot
+
+#### Lighting, rendering and farm management
+
+Lights every CG shot to match the plate's HDRI and reference, then renders in passes (beauty, AOVs, mattes, deep) across a farm of thousands of cores plus cloud burst, at 4K+ and 16-bit EXR.
+
+- **Who.** CG Supervisor, Lighting TDs, Render Wranglers, Pipeline TDs
+- **Decides.** Sampling and noise thresholds, how much to solve in 3D versus leave to comp, render priority order across 2,000 shots, and when to spend real money on cloud.
+- **Engine.** Farm as a finite, schedulable resource with core-hours, queue priority, per-frame render times (2-40 hours for hero shots), storage in petabytes, and a cloud-burst price. The last eight weeks of a show are a farm-capacity crisis — make that a real constraint.
+- **Takes.** Continuous; renders are the heartbeat of the last six months
+
+#### Compositing
+
+Assembles plate, CG passes, elements, environments and paint into the final image: integration, grain, lens artifacts, defocus, atmosphere, colour matching, and every fix that is cheaper in 2D than in 3D.
+
+- **Who.** Compositing Supervisor and Nuke compositors (often the largest department)
+- **Decides.** What to fix in comp versus send back to 3D (comp is 10x cheaper and 10x faster, and everyone knows it), and how far to push integration before calling final.
+- **Engine.** Comp as the funnel every shot passes through; per-shot comp hours by tier; a 'kickback' path to upstream departments with a cost. Comp is where schedule compression is absorbed and where quality is finally decided.
+- **Takes.** 1-20 days per shot; the last department on every shot
+
+#### Client review cycle
+
+The daily ritual of post: 60-150 shot versions reviewed against reference in a synced remote session, with drawn annotations and typed notes logged to the tracker per shot per version.
+
+- **Who.** VFX Supervisor and Director with vendor DFX Supervisor (cineSync / Sohonet ClearView / RV, colour-critical)
+- **Decides.** Approve, CBB (could be better), or kick back with notes — and how specific the notes are, since vague notes cost a full version round (3-10 days per round).
+- **Engine.** Note rounds per shot with quality gain per round and diminishing returns; director specificity as a stat; version count per shot (a healthy hero shot finals around v8-v20). Vendor morale and margin erode with unbid rounds.
+- **Takes.** 2-4 hours a day, five days a week, for 12-20 months
+
+#### Change orders, omits and adds
+
+Manages the difference between what was bid and what is being made: shots omitted after work was done, shots added that were never bid, shots re-timed or re-framed, methodology changes. Each requires a signed change order or the vendor eats it.
+
+- **Who.** VFX Producer with vendor Executive Producer
+- **Decides.** What is a change (billable) versus a note (included), whether to kill a shot at v9 or finish it, and how hard to fight a vendor that is losing money.
+- **Engine.** Bid baseline vs actuals per shot; vendor margin tracking with a relationship/goodwill value that degrades when squeezed and shows up as slower turnarounds and B-team staffing on the next show. Omitted shots still cost what was spent.
+- **Takes.** Weekly; the whole of post
+
+#### Temp VFX for previews
+
+Builds good-enough temp shots so the film can be screened for recruited audiences 6-12 months before it is finished — the screenings that produce the notes that recut the sequences that invalidate the shots.
+
+- **Who.** VFX Editor with postvis team and, late on, vendors
+- **Decides.** How much to spend on temps that will be thrown away, and which sequences must read properly at the screening to survive the process.
+- **Engine.** Screening score as a function of temp quality and cut coherence; a bad score triggers studio notes that cascade into recuts, new shots and omits. 'Temp love' — the director becoming attached to a temp — is a real, modellable state.
+- **Takes.** 2-5 preview cycles across post
+
+#### Marketing pulls and trailer finals
+
+Finals a set of shots out of sequence and months early to meet teaser, trailer and Super Bowl dates, often from sequences that are still being restructured.
+
+- **Who.** VFX Producer with studio Marketing and Creative Advertising
+- **Decides.** Which shots marketing gets, whether to final them properly or build cheaper trailer-only versions, and how much schedule to steal from the film to feed the campaign.
+- **Engine.** Trailer date as a hard deadline pulling capacity out of the main curve; shots finalled early have a probability of being invalidated by later recuts and re-finalled at full cost. Marketing pressure is external and non-negotiable.
+- **Takes.** 3-6 pulls across post, each 4-8 weeks of disruption
+
+#### Finaling and DI integration
+
+Approved shots are conformed into the DI at full resolution and graded with the rest of the film — where a shot that was approved in isolation is revealed to not match the scene around it, generating late fixes.
+
+- **Who.** VFX Supervisor with DI Colourist and Digital Intermediate facility
+- **Decides.** Whether to fix in the grade (fast, limited) or send the shot back to the vendor with days left (expensive, risky), and the final trim on shots that are technically approved but contextually wrong.
+- **Engine.** Shots re-evaluated in cut context with a mismatch probability; a late-fix queue with a hard delivery date. Colour-managed pipeline state (ACES/OCIO) matters here — mismatched transforms between vendors surface as shots that will not sit.
+- **Takes.** 4-8 weeks of DI, running against final deliveries
+
+#### Format deliverables and asset archive
+
+Stereo conversion of 1,500-3,000 shots, IMAX/large-format versions that need MORE PICTURE than the flat frame (expanded aspect ratio work must be rendered and comped beyond the composed frame), HDR passes, and archive of every asset, cache and scene file.
+
+- **Who.** VFX Producer, Stereo Supervisor (Stereo D, Prime Focus, Legend), Post Supervisor
+- **Decides.** Whether to render and comp expanded-ratio area from the start (cheap insurance) or retrofit it (expensive), which shots get hero stereo attention, and what to archive for the inevitable sequel.
+- **Engine.** Per-shot deliverable matrix (flat, IMAX ratio, stereo, HDR, Dolby) with a retrofit penalty if the extended area was not carried. Archive completeness becomes a real cost saving on the next film in the franchise — a cross-project state.
+- **Takes.** Stereo 4-8 months in parallel; archive 4-8 weeks after delivery
+
+---
+
+## 10. Micro-budget and independent narrative feature (roughly $0–$300k "ultra low", $300k–$2M "low budget"; non-union or SAG-AFTRA-only, no completion bond, no distributor attached at the start)
+
+### The unit of work
+
+Three units run at once and the game must track all three. 1. THE SHOOTING DAY, priced as a percentage of the whole film. A studio day is measured in pages (2–3/day). A micro-budget day is measured the same way but at 6–10 pages and 15–30 setups, because the schedule is 12–21 days, not 40–60. The operative fact is that a day here is 5–8% of the entire budget, so "we'll pick it up another day" is not available: a lost day is lost pages, and lost pages are either rewritten out, absorbed as a hole in the edit, or bought back with a free favour weekend months later. A good day is: every scene on the board COMPLETE (not "we got the master"), sound usable, two verified card copies before anyone sleeps, out of the location on the promised hour, and crew who answer the phone tomorrow. A great day is all of that plus one scene banked ahead. 2. FAVOUR CAPITAL, the real currency. Every location, lens, grade, mix day and unpaid rehearsal is drawn from a finite, non-renewing pool of relationships. The producer's live question is never only "can I afford it" but "can I still ask." A film that shoots brilliantly and spends every favour on the shoot dies in post, where 80% of micro-budget films actually die. 3. ELAPSED MONTHS, once the shoot ends. Progress stops being measured in days and becomes cut versions and delivery items: assembly → cut 12 → picture lock → mix → grade → DCP → QC pass. One editor, unpaid, working nights around a paying job, moves the film at roughly one meaningful cut version per 3–6 weeks. A good week in post is a completed pass, or one delivery item permanently crossed off. Total elapsed time from first draft to premiere is typically 18 months to 4 years, of which shooting is 3 weeks.
+
+### What is absent
+
+- Studio development: no development executive, no coverage gate, no notes rounds, no greenlight committee, no approvals of any kind. The greenlight is one person deciding to spend money they largely do not have.
+- The completion bond. Nothing at this budget is bonded, so there is no bond company to take over the picture, no cash-flow schedule enforced by a third party, and no safety net if the money runs out mid-shoot — the film simply stops.
+- Bank financing against contracts: no pre-sales, no gap loan, no discounting of a tax credit, no interim facility. Money is equity, personal debt, crowdfunding or credit cards.
+- Second unit, splinter unit, insert stage. There is one camera and one crew, and if it is not shot on the day it does not exist.
+- Built sets and stage work. No construction department, no standing sets, no backlot, no scene dock, no greenbeds, no strike.
+- Transport department: no basecamp, no honeywagon, no cast trailers, no picture-car department, no teamsters, no drivers, no lockup. Cast changes in a bathroom and crew park on the street.
+- The dailies pipeline: no DIT cart, no colour on set, no dailies lab, no studio dailies screenings, and usually no editor cutting during the shoot — the director does not see an assembly until weeks after wrap.
+- Research screenings: no recruited audiences, no NRG cards, no top-two-box score, no exit polls, no reshoot money contingent on a test number.
+- P&A and the marketing department: no media buy, no tracking, no one-sheet campaign testing, no trailer house, no release-date strategy. Marketing begins and ends with festival programmers and, if you are lucky, a publicist for ten days.
+- Union post: no union editorial crew, no assistant editor, no Foley stage, no ADR stage, no music scoring stage, no orchestra, no music supervisor clearing catalogue tracks.
+- Residual-bearing crew benefits: no pension and health for crew (only SAG-AFTRA cast, at roughly 21–22% on top of scale), no holiday pay, no turnaround pay, no meal penalties, no idle days.
+- MPA/CARA rating submission — the fee and the process belong to a distributor the film does not yet have.
+- Standby departments that exist purely against risk: set medic, stunt coordinator on non-stunt days, standby carpenter/painter, fire safety officer, armourer (which is precisely why the risk lands).
+- Insurance as a financing instrument: no cast insurance claim big enough to pay for reshoots, no weather cover, no essential-element coverage. A sick lead is simply a lost film.
+
+### What is reordered
+
+- THE BUDGET COMES BEFORE THE BREAKDOWN. The number is fixed first — it is the money that exists — and the script is cut down to fit it. A studio breaks down a script and prices it; here you price the money and then write or rewrite the script until it is shootable for that figure.
+- THE LOCATION COMES BEFORE THE SCRIPT. Pages are generated from the house, the bar, the car and the four actors that can actually be obtained. Scouting is not a response to the script; it is an input to the first draft.
+- CASTING COMES BEFORE FINANCING. The attachment IS the raise. A recognisable name for three days at $256.60/day is what makes investors, sales agents and festival programmers look at all, so casting is attempted while the money is hypothetical and often collapses when the money fails to arrive.
+- FINANCING CONTINUES THROUGH PRODUCTION AND INTO POST. Films are routinely shot on 60–70% of the money, with the remainder raised during or after the shoot against footage. The finance stage never closes; it runs in parallel with everything.
+- POST IS INTERMITTENT, NOT CONTINUOUS. A studio runs a 20-week post schedule end to end. Here post is 6–18 months of nights and weekends, interleaved with the crew's paying work, and the calendar is set by other people's availability, not by a release date.
+- SOUND DESIGN, MUSIC AND VFX START BEFORE PICTURE LOCK — not for creative reasons but because the friend doing them has a free fortnight in March and will not have another until September. Favour availability, not workflow logic, sets the order.
+- THE FESTIVAL DEADLINE PRECEDES THE FINISH. Films are submitted as works in progress with temp music, an unmixed track and no grade, because the Sundance deadline lands in late summer and the finishing money arrives (if ever) after acceptance.
+- LEGAL CLEARANCE HAPPENS AT DELIVERY, NOT AT GREENLIGHT. Chain of title, music rights, trademark clearance and E&O are assembled at the end, retroactively, when a buyer's lawyer asks — which is exactly why unfixable defects are discovered when the film is already made.
+- PICKUPS AND RESHOOTS FOLLOW THE FIRST ASSEMBLY BY MONTHS and are normal rather than a failure: the assembly reveals the hole, then the producer re-collects cast and crew for a free weekend.
+- DISTRIBUTION IS SOUGHT AFTER THE FILM EXISTS. There is no pre-sale, no output deal and no buyer in development; the film is made on spec and shown to the market as a finished object.
+- PUBLICITY STARTS AT FESTIVAL ACCEPTANCE, i.e. after the film is finished, whereas a studio campaign starts in prep with unit stills, EPK and a trailer plan. Here the EPK is whatever the stills photographer happened to shoot on day four.
+
+### How the crew differs
+
+- PRESENT HERE, NOWHERE ELSE: the writer-director-producer-editor as a single legal and creative person. On a studio film these are four separate deals with four separate guilds; here one human holds all four and the game must model the interference between them (the director cannot see the film because the editor is the director).
+- PRESENT: the producer doubling as first AD, unit production manager, location manager and transport. This is the most common and most destructive doubling in micro-budget film, because producing is a phone job and ADing is a floor job, and they cannot be done in the same minute.
+- PRESENT: the owner-operator. A DP who arrives with the camera, a mixer who arrives with the bag, a gaffer who arrives with the van. Hired as much for the gear as the skill, paid a kit fee, and liable for their own equipment — a relationship that does not exist above about $3M.
+- PRESENT: the unpaid intern/PA layer, usually film students, which is the only reason the day functions at all and is also a legal exposure on a for-profit production.
+- PRESENT: the associate producer given the credit in exchange for a house, a van, a $10,000 cheque or a weekend of their labour. Credit is a currency here in a way it is not on a studio picture.
+- PRESENT: the fiscal sponsor, the crowdfunding manager and the festival strategist — three roles born entirely of independent finance and festival distribution that have no analogue on a studio call sheet.
+- PRESENT: the producer's rep, a hired advocate who exists specifically because the film has no distributor and must be sold as a finished object at a festival.
+- PRESENT: the favour-labour post team — a colourist, mixer, composer and VFX artist who each fit the film around paying work, which is why post takes a year rather than twenty weeks.
+- ABSENT: the entire second and third AD tier, the DGA trainee, and usually the key second AD, so there is nobody generating call sheets, movement orders or actor wrangling except the one AD who is also the producer.
+- ABSENT: the script supervisor. Cut more often than any other genuinely load-bearing role, and the single cheapest insurance against unusable coverage, missing eyelines and continuity errors discovered eleven months later in the edit.
+- ABSENT: the DIT, the video-village operator and the on-set colourist. Data handling falls to a second AC or the producer, and there is no monitored image beyond a director's monitor.
+- ABSENT: key grip, best boy grip, best boy electric, rigging crews. Grip and electric is one or two people, which fixes lighting to what two people can carry up a staircase.
+- ABSENT: transport captain, drivers, teamsters, picture-car coordinator, basecamp. Everybody drives themselves and parks in the street, and the risk lands on hired/non-owned auto or nobody.
+- ABSENT: set medic, stunt coordinator on ordinary days, standby carpenter and painter, fire safety officer, armourer. The absence of the stunt coordinator and armourer is where people actually get hurt.
+- ABSENT: construction, greens, scenic, and the entire build economy. There are no sets, only rooms.
+- ABSENT: craft service as a distinct department from catering, so the producer or a PA is buying food at 6am and still holding the job at 11pm.
+- ABSENT: the assistant editor. One editor does their own media management, sync, exports and turnovers, which is a large and invisible part of why post takes so long.
+- ABSENT: the music supervisor, which is why clearances go wrong. Nobody in the room whose job it is to know that the master and the publishing are two separate rights.
+- LEGALLY UNSKIPPABLE EVEN HERE, AND OFTEN SKIPPED ANYWAY: the studio teacher/set tutor when a minor is cast, and an intimacy coordinator for nudity or simulated sex, which SAG-AFTRA now requires producers to use best efforts to engage. Cutting either is not a saving, it is a violation.
+
+### What goes wrong
+
+- TOTAL DATA LOSS. A drive fails or a card is formatted before the second copy verified, and a day — or in the worst case the film — is gone. There is no lab, no LTO archive and no insurance claim big enough to reshoot. This is the extinction event that exists nowhere above this budget level.
+- TIER BREACH. The budget creeps past the SAG-AFTRA ceiling — and deferred compensation counts toward it — so every cast payment must be retroactively upgraded to the next tier's rates plus penalties, on a film that has no money left. A $290,000 film that quietly deferred $40,000 of fees is not a $290,000 film.
+- A CAST MEMBER BOOKS A PAYING JOB AND LEAVES. There is no pay-or-play, no hold deal, no cast insurance. Half a performance exists and the character must be recast, rewritten out, or the film abandoned.
+- THE LOCATION IS REVOKED MID-SCENE. The neighbour calls the police, the restaurant decides to reopen, the owner's spouse comes home. Pages evaporate at noon with no cover set and no second day.
+- THE FAVOUR COLLAPSES. The free colourist gets a real job, the composer's band goes on tour, the mixer moves cities. The film sits untouched for five months because the person doing it for nothing owes it nothing.
+- BROKEN CHAIN OF TITLE. An actor who never signed a release, a co-writer who will not assign, a location owner who will not countersign. Discovered at delivery, by a buyer's lawyer, when the film is finished and everyone has scattered. It kills the sale, not the shoot.
+- UNCLEARABLE MUSIC. The scene was shot to the song, cut to the song, and tested with the song, and the master and publishing together cost more than the film. The scene does not work without it and now has to be re-cut around a replacement.
+- UNUSABLE PRODUCTION SOUND. Air conditioning, a fridge, a highway, a wrong lav placement — and no scripty notes, no room tone and no wild lines. The fix is ADR, which costs money the film does not have and requires an actor's day nine months later.
+- AN INJURY WITH NO WORKERS' COMPENSATION. Because everyone was paid cash as a 1099 contractor, there is no coverage, the LLC has no assets, and liability lands personally on the producer. This is the failure mode that follows someone for a decade.
+- THE LLC RUNS OUT OF MONEY THREE DAYS BEFORE WRAP. No bond, no bank, no completion facility. Films genuinely stop here and are never finished — the most common cause of the abandoned micro-budget feature.
+- BURNING PREMIERE STATUS BY ACCIDENT. A cast-and-crew screening announced publicly, a Vimeo link that got shared, a local festival taken in October — and Sundance's world-premiere requirement is gone before you submitted.
+- THE FILM IS FINISHED AND NOBODY WANTS IT. Rejected by every A-list festival, then the tier-two ones, with $6,000 spent on submissions and no premiere left to offer. There is no distributor obligated to release it and no contractual anybody. It simply does not come out.
+- THE DIRECTOR IS ALSO THE EDITOR AND CANNOT SEE THE FILM. Eleven months alone with the footage produces a cut that is defensible scene by scene and dead as a whole, with no producer with enough standing to force a change.
+- THE FILM IS 68 MINUTES. Under the runtime a market wants (distributors generally want 80+ for a slot), too long for shorts programming, so it qualifies for almost nothing and cannot be lengthened because the coverage does not exist.
+- SAG-AFTRA PULLS THE CAST. Late payment, missing P&H contributions, an unfiled security agreement or an unsigned contract, and the union instructs performers not to work. Mid-shoot this is terminal.
+- A MINOR WITH NO SET TUTOR AND NO PERMIT. Child labour hours are statutory, not negotiable, and a violation stops the day, voids the coverage and can end the production.
+- THE INVESTOR WANTS OUT. A friend-and-family investor who did not understand the risk asks for the money back during post, and the operating agreement is a template nobody read.
+- DEFERRALS NEVER PAY AND THE GOODWILL BECOMES PUBLIC. Twenty-five people worked for a promise; in a local crew community of a few hundred, that is a reputation that prices the next film's crew, or prevents it.
+- QC FAILURE AT DELIVERY. The DCP is the wrong frame rate, the mix has no M&E track, the captions are unsynced, and every fix routes back to a mixer or colourist who has moved on and must be re-hired at full rate.
+- THE ONE PERSON DOING EVERYTHING BREAKS. A producer-director-editor with a fever on day nine has no second unit, no co-producer and no cover. Burnout mid-post is why films sit at cut four for two years.
+- WEATHER WITH NO COVER SET. A studio picture carries interiors to swing to and weather insurance. Here rain on a 15-day board simply deletes pages.
+- THE RETURN-AFTER-SHOOTING GAMBLE FAILS. Art department bought the dressing intending to return it, it got damaged on day two, and a $3,000 art budget has just absorbed a $1,200 loss it cannot cover.
+
+### The shape of the money
+
+Above the line is near zero and below the line is dominated by three things a studio barely notices: food, insurance and cast minimums. A representative $250,000 ultra-low-budget feature (est., and the shape matters more than the numbers): cast 12–18% — SAG-AFTRA minimums at $256.60/day plus roughly 21–22% pension and health loaded on top, which is the tax nobody remembers when they price the tier; crew 20–30% at flat rates of $150–$350/day for 12-hour days; equipment 8–12%, much of it kit fees rather than rental invoices; catering and craft service 8–12%, which at this scale can be a bigger line than camera and is the highest-yield dollar in the budget; locations 5–10%, often mostly cleaning, power and a neighbour payoff rather than a location fee; art, props and wardrobe 5–8% combined, frequently under $10,000 for the entire film; insurance 3–6%; and post 15–25% — which is almost always underfunded at greenlight because the money ran out on the shoot. Three structural differences from live-action studio shape: FIRST, ABOVE THE LINE INVERTS. On a studio film, above the line (script, producers, director, cast) can be 30–50% of the budget. Here it is frequently under 10% and sometimes zero, because the writer, director and producers are all deferred or working for points. The budget is almost entirely below-the-line cash for things that will not extend credit: food, fuel, insurance certificates, hard drives. SECOND, THE STATED BUDGET IS A FICTION OF ABOUT ONE THIRD. A $250,000 film routinely consumes $700,000–$1,000,000 of real labour and asset value, donated. The engine should hold both a cash budget and a shadow budget of favour value, because the shadow budget is what is actually being spent and what runs out. Note also that SAG-AFTRA counts deferred compensation inside the total production cost for tier purposes, so the fiction has a hard legal edge: defer enough and you have broken your own ceiling. THIRD, THERE IS A SECOND BUDGET NOBODY RAISES. Finishing and delivery — mix, grade, DCP, M&E, captions, CCSL, E&O, QC fixes, festival fees, publicist, travel to the premiere — runs $30,000–$80,000 (est.) and is discovered after the shoot, with no investors left and no film to show yet. This second raise, not the first, is where most micro-budget films stall permanently. Festival submissions alone run $2,000–$10,000 at $50–$125 a submission, and a publicist for a festival run is $5,000–$15,000 — both routinely omitted from the budget entirely. On the way back: there is no P&A, so there is no money spent on the audience, which also means there is almost no audience. A no-MG distribution deal takes 15–30% off the top before recoupable expenses; an aggregator takes about 20%; AVOD pays on the order of $0.002–$0.008 a view (est.). Against that, the investor waterfall almost never clears, and deferrals — which sit below investor recoupment — functionally never pay. Budget for the career, not the return.
+
+### Processes that exist only here
+
+#### Write-to-Inventory Draft
+
+The script is written against a physical asset list — the house, the car, the diner, the four actors who will work for nothing. Pages are generated from what exists rather than written then sourced.
+
+- **Who.** Writer-director
+- **Decides.** Which owned or borrowable assets become story; how many locations, speaking roles, night exteriors, minors, animals and vehicles the draft is allowed; what gets cut before it is ever written.
+- **Engine.** Asset objects (location, prop, vehicle, person) with access cost and reliability; a script model where each scene carries a resource-requirement vector; a live shootability score recomputed as pages change, so a rewrite visibly moves the schedule and the budget.
+- **Takes.** 4–12 weeks, unpaid, around a day job
+
+#### Chain of Title Assembly
+
+Copyright registration, writer's assignment of rights to the LLC, co-writer releases, title report, option paperwork if adapted, life rights if based on a real person.
+
+- **Who.** Producer, with a production attorney
+- **Decides.** Whether to spend $500–$2,500 on legal now or self-assemble from templates and accept a gap that will surface at delivery, when it is unfixable.
+- **Engine.** A per-project document ledger where every item has a signed/unsigned state, a signatory and a hidden defect flag. Delivery, E&O and any sale read the ledger; defects stay invisible unless a paid legal pass is bought.
+- **Takes.** 2–6 weeks; US copyright standard electronic filing $65 (est.)
+
+#### Entity Formation and the Cap Table
+
+A single-purpose LLC, operating agreement, member units, manager control, a bank account; investor units versus sweat-equity units; who can sign a cheque.
+
+- **Who.** Producer
+- **Decides.** State of formation, whether crew deferrals are debt or equity, the investor preferred return, and the split after recoupment (commonly 50/50 or 60/40 to investors).
+- **Engine.** A cap table with unit classes, priority order and recoupment balances. Every deferral, favour-converted-to-points and investor dollar writes a claim into a waterfall the revenue engine later drains top-down.
+- **Takes.** 1–3 weeks; $500–$2,000 in filing and legal
+
+#### The Friends-and-Family Raise
+
+Twenty to sixty personal asks for cheques of $1,000–$50,000 against a deck, a lookbook, a comp title and a promise. Most micro-budget money is relationship money, not film money.
+
+- **Who.** Producer
+- **Decides.** Who to ask, in what order, for how much; whether to accept money that arrives with a casting condition or a credit demand attached.
+- **Engine.** A relationship graph with trust, liquidity and ask-fatigue per contact. Asks consume trust whether or not they land; conditioned money attaches constraint objects that the production must satisfy or renegotiate.
+- **Takes.** 3–9 months, usually still running when prep starts
+
+#### Crowdfunding Campaign
+
+A 30-day Kickstarter or Seed&Spark push: pitch video, reward tiers, daily posting, hundreds of personal messages. Raises roughly $10k–$60k and a mailing list that is worth more than the cash.
+
+- **Who.** Producer or campaign manager
+- **Decides.** Goal size, all-or-nothing versus flexible, reward tiers and their true fulfilment cost, and launch timing relative to the shoot.
+- **Engine.** Campaign curve with a front load from the personal network, a dead middle and a deadline spike; platform and processing fees near 5% + 3%; reward fulfilment booked as a real future liability; an audience-list asset that decays without contact.
+- **Takes.** 6 weeks prep, 30 days live, 2 months fulfilling
+
+#### Fiscal Sponsorship and Grants
+
+Routing donations through a 501(c)(3) sponsor (Film Independent, Fractured Atlas, The Gotham) so they are tax-deductible, plus applications to labs, regional arts councils and film funds.
+
+- **Who.** Producer
+- **Decides.** Whether to give up a 6–8% sponsor fee to unlock deductible donations; which grants and labs are worth the writing days against a low hit rate.
+- **Engine.** Grant objects with deadline, application cost in producer-days, hit probability scaled by the quality of attached material, and money arriving on a 3–9 month lag that must be reconciled against a fixed shoot date.
+- **Takes.** Applications 1–3 weeks each; decisions 3–9 months
+
+#### Incentive Chase vs. Shooting Where You Live
+
+Weighing a 20–30% state rebate against housing a crew away from home, hitting a minimum spend, paying a CPA audit and waiting 6–18 months for the money.
+
+- **Who.** Line producer
+- **Decides.** Shoot at home with free locations, free beds and no rebate, or move to the incentive state and start paying for everything that used to be a favour.
+- **Engine.** Per-jurisdiction incentive records (rate, minimum spend, cap, audit cost, payout lag, loan-out withholding) evaluated against a favour-asset map anchored to the home town; both feed one cash-flow timeline that can go negative before the rebate lands.
+- **Takes.** 2–4 weeks of analysis; rebate cash 6–18 months post-wrap
+
+#### Tier Engineering: Picking the SAG-AFTRA Agreement
+
+Choosing the tier: Ultra Low Budget (under $300k, $256.60/day), Moderate Low ($300k–$700k, $449.05/day or $1,559.60/week), Low Budget ($700k–$2M, $834/day or $2,896/week). 2026 rates.
+
+- **Who.** Producer
+- **Decides.** Which ceiling the entire film is designed under; whether to drop a shoot day to stay below $300k; whether one name actor's quote breaks the tier for everybody.
+- **Engine.** Tier table with ceilings, day and week minimums, P&H (≈21–22%) and background rates; a running budget total that COUNTS DEFERRED COMPENSATION; a breach check that retroactively upgrades every cast payment to the next tier plus penalties.
+- **Takes.** Decided in prep, enforced at final cast list
+
+#### Deferral and Points Ledger
+
+Writing the deals: scale-minus with the balance deferred, deferred fees payable from first revenue after investor recoupment, plus back-end points for key cast and heads of department.
+
+- **Who.** Producer
+- **Decides.** Who gets deferred cash, who gets points, who gets credit only; what priority tier each sits in; and whether to pretend deferrals do not count against the SAG ceiling (they do).
+- **Engine.** Each deal memo mints a claim {amount, class, priority, trigger}. The waterfall pays strictly in order. Unpaid claims persist for years and write reputational debt onto that person's trust value in the relationship graph.
+- **Takes.** Ongoing through prep; consequences 2–10 years later
+
+#### The Favour Economy
+
+Cataloguing what can be had free — a location, a lens, a Saturday from an actor, a colour grade — and spending it. Each ask draws down a relationship that does not refill on its own.
+
+- **Who.** Producer and director
+- **Decides.** Which favours go to which department, and whether to burn a large favour on the shoot or hold it for post, where most micro-budget films actually die.
+- **Engine.** Favour capital per contact with a replenishment rate tied to reciprocity events, plus a hidden reliability roll (will they actually turn up). Post-stage favours draw from the same depleted pool the shoot used.
+- **Takes.** The life of the production and the next one
+
+#### Crew-Owned Kit and the Kit Fee
+
+Hiring people for their gear: a DP with a camera package, a mixer with a bag rig, a gaffer with a van. Kit fees of roughly $100–$500/day replace a rental order.
+
+- **Who.** Line producer and director of photography
+- **Decides.** Rent a package, buy and resell after wrap, or hire the owner-operator; and who eats the cost when a privately owned lens is damaged.
+- **Engine.** Crew records carry an owned-gear list with condition and insurance status. Rent/buy/kit-fee compared on total cash plus residual value. Damage events resolve against a policy, or against the producer's own pocket.
+- **Takes.** Negotiated in prep; damage claims resolve post-wrap
+
+#### Cast Attachment Without Money
+
+Getting a known actor for two to five days at ULB scale on the strength of the role, a relationship, or a producer credit. This attachment is what makes the raise and the festival submission credible.
+
+- **Who.** Producer and director
+- **Decides.** Which role to enlarge to attract a name, how many days to buy, and whether to shoot their scenes first and out of order to lock them before they book something real.
+- **Engine.** Agent objects with quote floors and a passion-project override driven by script quality and director heat; hard availability windows. The attachment raises financing probability and programmer attention as two separate tracked values.
+- **Takes.** 2–8 months of chasing; the window is days wide
+
+#### Casting Without a Casting Director
+
+A breakdown on Actors Access or Backstage, 400–2,000 self-tapes, callbacks over video or in a rented room, chemistry reads at a kitchen table. No casting office, no session tape, no studio approval.
+
+- **Who.** Director, doubling as casting director
+- **Decides.** How many prep hours go to watching tapes instead of scheduling, scouting or rewriting; whether to cast a non-actor for texture and risk the scene collapsing on the day.
+- **Engine.** Submission volume scaled by breakdown reach and offered pay; per-actor hidden craft, reliability and availability; a finite prep-hour budget where every hour on casting is taken from schedule, locations or script.
+- **Takes.** 4–8 weeks inside a 6-week prep
+
+#### SAG-AFTRA Signatory Paperwork
+
+Signatory application with script, budget and schedule; preliminary cast list; contracts filed on time; Exhibit G daily time reports; final cast list; security agreement; assumption agreement on any transfer of rights.
+
+- **Who.** Producer and production coordinator
+- **Decides.** Whether to go union at all; how early to apply (four weeks minimum); whether to Taft-Hartley a non-member; whether to post a bond when the company has no credit history.
+- **Engine.** Paperwork objects with deadlines on a compliance clock. Missed filings escalate warning → fine → cast withdrawal. The final cast list reconciles against the budget total and can retro-trigger a tier breach. No assumption agreement, no sale.
+- **Takes.** Filed 4+ weeks before the first shoot day; final cast list within 30 days of wrap
+
+#### Minimum Viable Insurance
+
+General liability $1M/$2M for location certificates, an equipment floater, hired/non-owned auto and workers' compensation — legally required the moment anyone is employed. Short-term package est. $3k–$8k.
+
+- **Who.** Producer
+- **Decides.** What to insure and what to gamble on; whether to carry workers' comp or pay everyone cash and pretend there are no employees.
+- **Engine.** Policy objects with limits, deductibles and named perils. Locations refuse access without a valid certificate naming them. Injury and theft events resolve against coverage first, then the LLC, then the producer personally.
+- **Takes.** 1–2 weeks to bind; E&O deferred until a buyer demands it
+
+#### Practical Locations and the Access Deal
+
+Securing houses, bars and offices through relationships: a signed release, a certificate of insurance, $0–$500 a day, and a promise to be out by ten.
+
+- **Who.** Producer, doubling as location manager
+- **Decides.** Which owner to trust, how many pages to concentrate in one building, and whether to collapse the whole film into three locations to survive a 15-day board.
+- **Engine.** Location records with access window, noise exposure, neighbour tolerance, available amperage, parking count, and a revocation probability that climbs with hours on site, crew size and night work.
+- **Takes.** 3–6 weeks of scouting; deals signed days before the shoot
+
+#### Permit or Run-and-Gun
+
+A city permit with fees, a fire marshal and sometimes police, versus shooting handheld with four people and no tripod, ready to walk away.
+
+- **Who.** Producer and first assistant director
+- **Decides.** Which exteriors get permitted and which get stolen; whether to shoot off a monopod to look like a tourist; what to do when a police officer walks up.
+- **Engine.** Per-shot legality state with a detection probability driven by crew size, gear footprint, tripod use, duration and time of day, and graded consequences: warning, shutdown, confiscated card, lost location, or a citation against the LLC.
+- **Takes.** Permits 1–3 weeks lead; the stolen shot takes eight minutes
+
+#### Flat-Rate Deal Memos
+
+Non-union crew on a flat day rate — commonly $150–$350 for a twelve-hour day at this scale (est.) — with no overtime, no meal penalty, no turnaround pay; kit fee negotiated separately.
+
+- **Who.** Line producer
+- **Decides.** The rate per department, whether everyone is paid the same, and whether the flat rate is even legal once hours worked are divided into it.
+- **Engine.** Crew deal objects with rate, hours worked, kit fee, and a derived implicit hourly that can drop under statutory minimum wage. Morale and a latent wage-claim risk both track the gap between hours worked and money paid.
+- **Takes.** Negotiated over 2–3 weeks of prep
+
+#### Role Doubling Map
+
+One person carries two to four jobs: director/editor, producer/first AD, DP/operator/gaffer, sound mixer/boom operator, PA/craft service/driver.
+
+- **Who.** Producer / unit production manager (the same person)
+- **Decides.** Which pairings are survivable and which are fatal — producer plus first AD breaks the shooting day, director plus editor breaks the film's objectivity a year later.
+- **Engine.** Person objects hold multiple role slots with per-role competence. Each concurrent role applies a fatigue and attention penalty that degrades the specific outputs of the neglected role: setup speed, continuity errors, missed coverage.
+- **Takes.** Set in prep; the damage appears on day three and in month nine
+
+#### The Fifteen-Day Board
+
+A stripboard of 12–21 shooting days, grouped by location rather than by story, at 6–10 script pages and 15–30 setups a day against a studio's 2–3 pages.
+
+- **Who.** First assistant director
+- **Decides.** Day order; what to shoot on the single day the name actor is available; whether to run weekends only across four weeks so people keep their jobs.
+- **Engine.** A constraint scheduler over scenes (location, cast-day, daylight, minors' hours) with per-day page and setup capacity derived from crew size, lighting approach and cast count. Every cut day removes pages that must resurface somewhere.
+- **Takes.** Built in 1–2 weeks; executed in 3
+
+#### Rehearsal as Cost Avoidance
+
+Two to five unpaid sessions in someone's living room: table read, blocking against a taped floor plan, finding the bad dialogue while it is still free to fix.
+
+- **Who.** Director
+- **Decides.** How much of the cast's goodwill to spend on unpaid rehearsal, and whether to block for the camera now or improvise it on the day at 40 minutes a setup.
+- **Engine.** Each rehearsal hour raises a per-scene preparedness value that lowers takes-to-print and setup time on the day; the same hours draw down actor goodwill, which raises the probability of a late walk-off or a refused pickup day.
+- **Takes.** 2–5 sessions over 2–3 weeks
+
+#### Production Design by Scavenging
+
+Dressing from Marketplace, thrift stores, prop-house damage shelves and the location owner's own furniture. Total art budget is frequently $2,000–$8,000 for the entire film.
+
+- **Who.** Production designer / art director (often one person)
+- **Decides.** Which three scenes get real design and which get shot tight to hide the room; buy versus borrow versus buy-and-return, which is common and risky.
+- **Engine.** Set dressing as an inventory with source, cost, return deadline and a look value. Tight lensing can substitute for dressing at a measurable cost in scope and production-value score, which the grade cannot recover.
+- **Takes.** 3–4 weeks of prep, then 45 minutes per location on the day
+
+#### Costume from Closets
+
+Actors' own clothes, thrift runs, and duplicates bought only for scenes involving blood, water or damage. Continuity held on a phone camera.
+
+- **Who.** Costume designer / wardrobe supervisor
+- **Decides.** Which characters need a designed look, how many doubles of the hero shirt to buy, and whether to risk a one-of-one garment in a messy scene.
+- **Engine.** Per-character costume records with duplicate counts. Any scene flagged wet, bloody or torn consumes a duplicate; running out forces either a reshoot day or a continuity defect that surfaces as a visible error in the cut.
+- **Takes.** 2–3 weeks prep; $500–$4,000 total
+
+#### Feeding the Crew
+
+Two hot meals a day for 12–25 people at roughly $10–$18 a head (est.), plus coffee and a genuine crafty table. The single line item that best predicts whether people come back tomorrow.
+
+- **Who.** Producer or craft service PA
+- **Decides.** Catered, cooked by a volunteer, or pizza; and whether to actually break at hour six as the deal memos say.
+- **Engine.** A daily morale value driven by food quality, break timing and hours worked. Morale gates next-morning crew reliability, take quality, and — months later — willingness to do pickups and post work for nothing.
+- **Takes.** Every day; 8–12% of the whole budget
+
+#### Take Discipline and Shooting Ratio
+
+Micro-budget ratios run roughly 6:1–15:1 (est.) against a studio's 20:1 or more: two to four takes a setup, one lens, sometimes no coverage at all beyond the master.
+
+- **Who.** Director, DP and first AD
+- **Decides.** Whether to buy a third take, whether to shoot the close-up, whether a oner replaces coverage and quietly removes every option the editor will have.
+- **Engine.** Per-setup take model: each take consumes clock and card space and returns a performance sample with quality variance. Coverage choices literally write the option set the edit stage receives, so an uncovered scene is genuinely uncuttable later.
+- **Takes.** Decided 15–30 times a day
+
+#### Data Wrangling Without a DIT
+
+Nightly offload to two drives with checksum verification, no card formatted until both copies verify, and one drive leaving the location every night.
+
+- **Who.** Second AC, or whoever owns a laptop
+- **Decides.** Whether to buy the third drive, who carries it home, and whether to format a card early because you ran out of media at hour eleven.
+- **Engine.** Card and drive objects with capacity, copy state and verify state; a nightly failure roll against drive age and process discipline. An unverified single copy can destroy a day's footage silently, discovered weeks later in the assembly.
+- **Takes.** 1–2 hours every night after wrap
+
+#### Sound With One Person
+
+One boom, two to four lavs and a four-track bag. No second boom means overlapping dialogue in two-shots is compromised. Room tone and wild lines grabbed at every location or lost forever.
+
+- **Who.** Production sound mixer, also booming
+- **Decides.** Boom versus lav priority; whether to stop the day for a plane or an air conditioner; whether to record wild lines now or gamble on ADR that is not in the budget.
+- **Engine.** Per-take audio quality from mic choice, mixer skill and a location ambient-noise model (traffic, HVAC, neighbours, refrigerators). Unusable audio mints an ADR liability with a cash cost and an actor-availability requirement months out.
+- **Takes.** Continuous; the cost lands in month ten
+
+#### Available Light and the Two-Unit Package
+
+Working with windows, practicals, a bounce and one or two LED panels. Ten to thirty minutes a setup rather than the one to two hours a lit studio scene takes.
+
+- **Who.** DP, doubling as gaffer
+- **Decides.** Where the camera goes relative to the window; whether to gel practicals; whether to chase the sun or move the scene to a different hour of the day.
+- **Engine.** A per-location light model over a day clock (window orientation, sunset time, available amperage on the domestic circuit). Setup time scales with package size; per-shot image quality sets a ceiling the colour grade can never exceed.
+- **Takes.** Every setup, all day
+
+#### The Fourteen-Hour Day
+
+With no union hours to enforce and no money for another day, days run twelve to sixteen hours and turnaround gets cut to eight or less by day four.
+
+- **Who.** First assistant director
+- **Decides.** Push into hour fifteen to finish the scene or lose the pages; tomorrow's call time; whether to drop a take rather than a scene.
+- **Engine.** Cumulative per-person fatigue driving error rates in continuity, focus and sound, plus injury probability and walk-off risk. Short turnaround compounds across days; injury events route straight into the insurance and personal-liability model.
+- **Takes.** Compounds across the 15–21 day shoot
+
+#### Losing the Day
+
+Rain with no cover set, a lead who does not arrive, a location revoked at noon — with no contingency day, no weather insurance and no money to add a day.
+
+- **Who.** Producer and first AD
+- **Decides.** Which pages to abandon, whether to rewrite the scene into a location you still hold, whether to promise a free pickup day nobody will be paid for.
+- **Engine.** A scheduled-pages versus completed-pages ledger. Abandoned pages become a debt that must be rescheduled, written out, or carried into the edit as a structural hole the story model can detect and the audience will feel.
+- **Takes.** Happens on 1 in 4 micro-budget shoots (est.)
+
+#### Pickups and the Second Weekend
+
+Months after wrap, one to three days re-assembling part of the cast and a skeleton crew to plug holes the assembly exposed. Hair, weight and season have all moved.
+
+- **Who.** Producer and director
+- **Decides.** What to shoot, who can be asked back for free, and whether the fix is worth reopening a film everyone believes is finished.
+- **Engine.** Continuity drift per actor over elapsed time (hair, weight, tan, age) constraining what can be intercut; favour capital and availability re-rolled at current values; the cash must come out of the finishing money, not new money.
+- **Takes.** 1–3 days, 4–14 months after wrap
+
+#### The Long Solo Assembly
+
+Six to eighteen months of nights and weekends: assembly, then cut two through cut twelve, restructuring what the script promised into what was actually captured.
+
+- **Who.** Editor, very often the director
+- **Decides.** What the film now is; which subplot dies; whether to cut twelve minutes or defend them; and when to stop cutting and lock.
+- **Engine.** Cut versions as objects with runtime, structure and pacing scores derived strictly from the coverage that exists. Calendar advances in weeks bounded by the editor's paid work. Director-as-editor applies a standing objectivity penalty.
+- **Takes.** 6–18 months, unpaid or on points
+
+#### Friends-in-a-Room Screenings
+
+Five to fifteen people in a living room or a cheap screening room, a conversation afterwards, no cards, no recruiter, no research company, no score.
+
+- **Who.** Director and producer
+- **Decides.** Who to invite — whose taste is worth anything — which notes to act on, and whether to recut or defend the version you have.
+- **Engine.** Viewer objects with taste profiles and candour levels. Feedback aggregates into PERCEIVED problems that may not match the film's real scored defects, so the player can faithfully act on a wrong note and make the film worse.
+- **Takes.** 3–8 screenings across the cut cycle
+
+#### Music: Composer on Points
+
+Thirty to seventy minutes of score written in a bedroom studio for $2,000–$10,000 or deferred, plus songs licensed from unsigned bands at roughly $250–$1,500 a side (est.).
+
+- **Who.** Composer
+- **Decides.** Score versus songs; the free composer or the right one; and how much of the film runs under music, which also happens to mask production sound problems.
+- **Engine.** Cue objects with length, delivery date and a rights state requiring BOTH master and publishing to clear. Temp-track attachment raises the chance the director rejects the real score. Any uncleared cue blocks delivery and E&O.
+- **Takes.** 2–6 months, paced by the composer's day job
+
+#### Sound Post in a Bedroom
+
+Dialogue edit, noise reduction, minimal Foley, ADR recorded in a closet under a duvet, then a stereo mix and usually a 5.1. Two to six weeks of one person's time, $3,000–$15,000, often deferred.
+
+- **Who.** Sound designer / re-recording mixer (one person)
+- **Decides.** How many mix days to buy; whether to do a 5.1 at all; which scenes get real Foley; whether to ADR an entire scene or live with the air conditioner.
+- **Engine.** A per-reel audio defect list generated directly from production sound quality. Each fix costs mixer-days. Delivery specs demand stereo, usually 5.1, and an M&E track; a missing deliverable blocks the sale outright.
+- **Takes.** 2–6 weeks of work spread over 3–6 months
+
+#### Colour: One Day in Someone's Suite
+
+A one-to-four-day grade, often a favour or $500–$1,500 a day (est.), working from log media. The last chance to make fourteen mismatched days look like one film.
+
+- **Who.** Colourist
+- **Decides.** Matching versus styling; which scenes get windows and tracking; whether to pay for a proper conform and online or just grade the edit timeline.
+- **Engine.** A per-shot image-quality ceiling fixed on the shoot (exposure, lens, noise). Grade days convert that ceiling into a final look value with sharply diminishing returns. Day-to-day mismatch is a separate defect the grade only partly hides.
+- **Takes.** 1–4 days, booked around the colourist's paying clients
+
+#### Invisible VFX Cleanup
+
+Sixty to two hundred shots of boom removal, sign and logo replacement, split screens, plate stitches, phone-screen comps and muzzle flashes — the cheap fixes for cheap shooting.
+
+- **Who.** VFX artist (a friend, in After Effects)
+- **Decides.** Which mistakes to fix and which to live with, and whether to pay $75–$300 a shot (est.) or trade a credit and a favour.
+- **Engine.** A shot-level defect list produced by production decisions (boom in frame, uncleared trademark, continuity break). Each fix carries cost, turnaround and a quality roll; anything unfixed stays visible in the finished film's quality score.
+- **Takes.** 2–5 months, elastic, dependent on one person
+
+#### Delivery Package
+
+DCP, ProRes 422 HQ master, stereo and 5.1 stems, M&E, closed captions, CCSL/dialogue list, chain of title, E&O certificate, artwork, stills, QC report. Est. $5,000–$20,000 and almost never budgeted.
+
+- **Who.** Post supervisor or the producer
+- **Decides.** Build it now or when a buyer asks; whether to make a festival DCP at $700–$1,500 (est.); who pays for QC fixes when the report comes back failed.
+- **Engine.** Per-buyer delivery checklists where each missing item blocks payment. A QC pass generates fail items that route back to mix, grade or VFX with their own costs and lead times, reopening stages the player thought were closed.
+- **Takes.** 4–12 weeks, and it is the stage films die in
+
+#### Festival Strategy and Premiere Status
+
+Sundance 2026 programmed 97 features and episodics from 16,201 submissions (4,255 of them features); feature entry fee $125. Then SXSW, Tribeca, TIFF, then tier two and three.
+
+- **Who.** Producer, sometimes a paid festival strategist
+- **Decides.** Which A-list festivals to submit to and in what order; early, regular or late deadline fee; whether to hold the film a full year for a better slot; when to admit defeat and drop a tier.
+- **Engine.** Festival objects with deadline, fee, acceptance rate, premiere requirement (world/international/North American/regional) and prestige. Premiere status is a resource spent exactly once. Submissions cost cash and roll against the cut's state on that date.
+- **Takes.** Submissions Apr–Sep; results Nov–Dec; a circuit runs 12–18 months
+
+#### The Premiere and the Buyer Screening
+
+Press screening, industry screening, a rep working the room, reviews that set the price, and the 72 hours in which a micro-budget film either sells or quietly does not.
+
+- **Who.** Producer with a producer's rep or sales agent
+- **Decides.** Whether to hire a rep at around 10% of the deal and a publicist at $5,000–$15,000 for the run (est.); whether to take the first offer in the room.
+- **Engine.** Buyer agents with slate needs and acquisition ceilings attend based on premiere tier, cast recognisability and word of mouth generated in screening one. An offer window that closes. Reviews drawn as a distribution around the film's real quality.
+- **Takes.** 72 hours, after 2–4 years of work
+
+#### The Distribution Deal
+
+Usually no minimum guarantee: a 15–30% distribution fee, recoupable expenses capped or uncapped, a 7–15 year term, all-rights versus split rights, and holdbacks on every window.
+
+- **Who.** Producer and entertainment attorney
+- **Decides.** Accept a no-MG all-rights deal, split the rights by territory and window, or self-distribute; and whether to cap the distributor's expenses — the single clause that determines whether anyone is ever paid.
+- **Engine.** Deal objects with fee percentage, expense cap, term, territory, holdbacks and reporting cadence. Revenue passes through the distributor's own ledger before it reaches the film's waterfall, so an uncapped expense line can zero every claim below it.
+- **Takes.** 6 weeks to 9 months of negotiation
+
+#### Self-Distribution and the Aggregator
+
+An aggregator such as Filmhub takes about 20% of revenue (plus a roughly $500 QC fee as of 2026) and places the film across AVOD, FAST, TVOD and SVOD partners. AVOD pays roughly $0.002–$0.008 per view (est.).
+
+- **Who.** Producer
+- **Decides.** Aggregator, traditional distributor, four-wall theatrical, or direct to the crowdfunding mailing list; and whether to spend anything at all on marketing.
+- **Engine.** Platform objects with distinct payout models (per view, per hour watched, revenue share) and discovery weighted by artwork, genre, title and runtime. The mailing list built during crowdfunding is a real owned asset converting at a modelled rate.
+- **Takes.** Ingest 4–8 weeks; revenue trickles for years
+
+#### The Waterfall That Never Reaches the Bottom
+
+Revenue pays the distributor's fee and expenses, then deferred SAG-AFTRA residuals once negative cost recoups, then investor principal, then a preferred return, then points split with deferred crew and cast.
+
+- **Who.** Producer and production accountant
+- **Decides.** Nothing — every decision here was already made in the deal memos. This stage is where the player watches the compounded price of every earlier promise.
+- **Engine.** An ordered claim queue with running balances, drained top-down by each revenue event. Unpaid deferrals and points persist as visible obligations AND as trust damage in the relationship graph that prices the next film's crew.
+- **Takes.** Quarterly statements for 7–15 years
+
+#### Investor Relations After the Fact
+
+Annual statements, K-1s, and the conversation in which you explain that the film played fourteen festivals, got a distributor, and has returned eight percent of principal.
+
+- **Who.** Producer
+- **Decides.** How honest to be and how early; whether to return something symbolic out of pocket; whether these are the people you ask for film two.
+- **Engine.** Investor objects with expectation, patience and a memory of how accurate your last forecast was. Disclosure quality and timing determine whether they fund the next film at a higher figure, a lower one, or send a lawyer.
+- **Takes.** Annually, indefinitely
+
+#### What the Film Actually Buys
+
+At this scale the product is usually not revenue: it is a manager, an agent, general meetings, a directing sample, a lab place, a script sale, or a second film with ten times the budget.
+
+- **Who.** Writer-director
+- **Decides.** Which career door to walk through; whether to take the work-for-hire job now or hold out to protect the next original; who to sign with.
+- **Engine.** A career state carrying representation, heat that decays month by month, and an offer slate gated by festival tier, reviews and who physically saw the film. This is the real progression currency of the micro-budget tier, not cash.
+- **Takes.** The 6–18 months after the premiere, then it is gone
+
+#### Payroll, Workers' Comp and the Cash Trap
+
+Running crew through a payroll service (roughly 0.5–1% of gross plus workers' comp loading) versus paying flat cash as 1099 contractors who are, legally, employees.
+
+- **Who.** Producer with a payroll company
+- **Decides.** Payroll company or cash; whether to carry workers' comp; whether to call anyone a volunteer, which is almost never lawful on a for-profit film.
+- **Engine.** Per-person employment classification carrying statutory obligations, with a latent audit and claim probability resolving months or years later. An on-set injury with no comp converts directly into personal liability against the producer's own assets.
+- **Takes.** Set in prep; consequences land 6 months to 3 years later

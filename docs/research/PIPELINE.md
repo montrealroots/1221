@@ -6,7 +6,7 @@ This is the map SLATE builds from. It is deliberately written as processes rathe
 
 ## What is in here
 
-8 domains, 439 named processes, 177 option spaces. Every process says who does it, what it is, **what gets decided** — which is the part that becomes a choice in SLATE — what the engine behind it would have to hold, how long it takes, and how television differs from film.
+10 domains, 613 named processes, 257 option spaces. Every process says who does it, what it is, **what gets decided** — which is the part that becomes a choice in SLATE — what the engine behind it would have to hold, how long it takes, and how television differs from film.
 
 An **option space** is a list of everything a given choice can be. They are the answer to wanting every option at hand: not a dropdown of names, but the real set, each entry of which has to carry a consequence before it earns its place.
 
@@ -19,9 +19,9 @@ An **option space** is a list of everything a given choice can be. They are the 
 5. **Script breakdown and scheduling** — 63 processes, 27 option spaces
 6. **Budgeting, financing and the bond** — 64 processes, 21 option spaces
 7. **Casting, end to end** — 58 processes, 15 option spaces
-8. **Crew and departments: who a production hires, in what order, under whose agreement, and what happens when one of them leaves** — 14 processes, 6 option spaces
-
-Domains 1 to 7 were written by the agent fleet described in `README.md`. Domain 8 was written later, by hand, from named published sources, and is shallower than the seven before it: fourteen processes rather than sixty. It covers the structure, the hiring chain, the jurisdictions, the budget tiers and the prep calendar, which is what rank 2 of the build order needs. It does not attempt the per-craft depth the agents reached. The twelve domains after it are still missing.
+8. **Every crew position, every department** — 58 processes, 32 option spaces
+9. **Production design, art and construction** — 63 processes, 24 option spaces
+10. **Costume, hair, makeup and prosthetics (film and television)** — 67 processes, 30 option spaces
 
 ---
 
@@ -5205,154 +5205,2335 @@ Roles played in a capture volume are cast on body, voice and physical invention,
 
 ---
 
-## 8. Crew and departments: who a production hires, in what order, under whose agreement, and what happens when one of them leaves
+## 8. Every crew position, every department
 
-### The department map is fixed before any name is in it
+*the full roster, the hierarchy inside each department, who hires whom, when each body starts and wraps, and what the engine must hold for a crew list to behave rather than decorate*
 
-A production is a set of departments with a head each, and the set barely varies between a four-week independent and a nine-month tentpole. What varies is how many people sit under each head, and how many heads one person wears. The departments are production (office and accounting), assistant directors, camera, electric, grip, art, construction, set decoration, property, costume, hair, makeup, production sound, script supervision, locations, transportation, stunts, special effects, visual effects, craft service and catering, and editorial.
+### Setting the producer stack and the authority graph
 
-- **Who.** Line Producer; Unit Production Manager; the Producer
-- **Decides.** Which departments this picture actually carries — a picture with no practical effects carries no special effects department, a stage-bound picture may carry no locations department beyond a manager — and which department heads double, such as the DP operating their own camera or the production designer acting as their own art director.
-- **Engine.** A department table per title, each row carrying a head post, a staffing level, a union jurisdiction, a start week and an end week. The table is generated from the plan and the budget rather than hand-authored, so a picture's crew is a consequence of what it is and what it cost.
-- **Takes.** Settled during budgeting; revised at every budget pass
-- **Television.** A returning series carries the same departments permanently and staffs them to the season rather than the episode, so the heads are employees on a run-of-show deal rather than a picture's hires.
+Company principal commits development money, attaches director, and decides which producers get a fee, which get a fund, and which get only a card.
 
-### The head is hired, then the head hires the department
+- **Who.** Producer / Executive Producer (playable: the mother, as company principal; the father, as lot and production head)
+- **Decides.** Who produces; who only gets billing; weekly fee vs package vs deferment vs points; whether an EP seat is money, a talent attachment, or the studio's own person watching the money.
+- **Engine.** A credit object with arbitration rules, a fee schedule sitting outside the below-the-line budget, a points/cap table, and a directed 'who may fire whom' graph rooted at this stack that every later hire inherits.
+- **Takes.** 2-30 weeks, before prep opens
+- **Television.** TV is writer-led: the showrunner is an EP and outranks non-writing producers regardless of card order; the line producer and producing director sit below the room.
 
-Department heads are engaged by production. Everybody below a head is engaged by that head, within a headcount and a rate band production has set. A key grip reviews every hire and every equipment order in the grip department; a best boy electric runs hiring, scheduling, timesheets and inventory for electric. Production does not interview a grip.
+### Engaging the line producer and locking the top sheet
 
-- **Who.** Unit Production Manager; Line Producer; each department head; the best boy or assistant who does the paperwork
-- **Decides.** Whether a head gets their usual crew or is made to take somebody production wants, what the headcount ceiling is, and whether a head may exceed it for a heavy day.
-- **Engine.** Two-tier hiring: production controls heads, heads control their own rosters. A head brought in carries a crew loyalty set — the people they always bring — and denying it costs the head's efficiency or their goodwill. This is the cheapest available way to make the choice of a head matter beyond their own day rate.
-- **Takes.** A head is engaged weeks out; their crew is assembled in days
-- **Television.** The same, except a head's crew becomes the show's crew for years, which makes the original hire far more consequential and makes firing a head mid-season a departmental event rather than a personnel one.
+Line producer budgets the script, sets the schedule length, and tells the principal what the picture costs at three crew sizes before anyone else is hired.
 
-### The director selects the first AD, and is consulted on the UPM
+- **Who.** Line Producer (non-DGA producer title; in TV often also the UPM of record)
+- **Decides.** Shoot days; union footing; which departments get depth and which get one body; the contingency; whether the number the financier was told is the number the crew list can carry.
+- **Engine.** A budget tree with real accounts (ATL 1100-1900, BTL 2000-4900, post 5000+), each crew line carrying rate x guarantee x fringe %, and a schedule object the budget reads so cutting days actually deletes crew-weeks.
+- **Takes.** 2-6 weeks for a first budget; re-budgets in 2-4 days
+- **Television.** TV budgets to a pattern budget (a per-episode template) plus amortisation for standing sets, pilot builds and series regulars; features budget one whole.
 
-A contractual right, not a courtesy. Under the DGA Basic Agreement the producer must consult the director about the selection of the Unit Production Manager on a theatrical feature or a non-episodic television programme, and the director has the right to select the First Assistant Director.
+### Choosing the union footing and signing the agreements
 
-- **Who.** The Director; the Producer; the UPM; DGA Reports Compliance
-- **Decides.** Whether the director gets their own 1st AD, usually the one they always work with, and whether the producer's preferred UPM survives the consultation.
-- **Engine.** An approval chain with named holders rather than a single hiring decision: the 1st AD slot is the director's to fill, the UPM slot is the producer's but consultable. A producer who installs a UPM over a director's objection has spent something, and the engine should charge it. A playable producer and a playable director want different people in these two chairs, which is the kind of conflict the three-seat premise exists to create.
-- **Takes.** The 1st AD is typically engaged six weeks out; the UPM ten
-- **Television.** Episodic directors do not bring their own 1st AD. The show has one, and an incoming episodic director inherits the crew entirely. The right exists on paper and is worth nothing in practice, which is a real difference between directing a film and directing television.
+Production becomes signatory to some or none of DGA, SAG-AFTRA, WGA, IATSE and Teamsters, and picks the tier inside each.
 
-### Which agreement the picture is made under, decided by its budget
+- **Who.** Line Producer and production counsel; signatory is the production company (the mother's company) or the lot (the father's)
+- **Decides.** IATSE Basic (LA) vs Area Standards (outside LA/NY) vs Low Budget Theatrical tiers vs non-union; DGA yes/no; whether to fly a flag of convenience by shooting out of jurisdiction.
+- **Engine.** Per-agreement rule objects: minimum rates, turnaround hours, meal-penalty ladders, fringe percentages, crew-size minimums, and a grievance path. A non-signatory show must be able to be struck, picketed and flipped mid-shoot.
+- **Takes.** 1-4 weeks to paper; signatory status is permanent per entity
+- **Television.** A series signs once and carries the footing across seasons; a feature signs per picture, so a company can be union on one and not the next.
 
-A union picture is made under a named agreement, and which one is a function of total production cost. The IATSE Low Budget Theatrical Agreement runs in tiers: Ultra Low Budget up to $3.3m, Tier 1A from $3.3m to $6.875m, Tier 1B to $9.9m, Tier 2 to $13.75m, and Tier 3 to $16.5m, above which the Basic Agreement applies. Qualifying cost includes above- and below-the-line across pre-production, production and post, and excludes the completion bond premium and contingency up to ten per cent of budget.
+### Hiring the Unit Production Manager
 
-- **Who.** Line Producer; production counsel; the IATSE local's business representative; Production Accountant
-- **Decides.** Which tier to aim at, and therefore whether the budget is built to sit under a ceiling. A picture budgeted at $6.8m is a different picture from one budgeted at $7.1m, and not because of the $300,000.
-- **Engine.** A tier lookup against total cost, selecting a rate table and a set of terms. The tier is stored on the title because everything downstream reads it. Ultra Low Budget additionally requires a minimum of fifteen days of principal photography and pays negotiated wages at 125% of statutory minimum wage, not less than $15 an hour, rather than scale.
-- **Takes.** Settled at the financing plan; filed before the first day
-- **Television.** Television has its own agreements and its own tier logic, keyed to licence fee and episode count rather than negative cost, so the same crew can be on three different rate cards across a career.
+The UPM takes over cost control, hires and fires below-the-line, signs every deal memo and purchase order, and runs the location/transport/facilities spend.
 
-### Blowing through the tier ceiling reprices the crew retroactively
+- **Who.** Producer hires; the UPM is DGA-covered and works to the producer, above the 1st AD
+- **Decides.** Whether one person is both line producer and UPM; DGA minimum vs over-scale; whether the UPM gets a producer card (needs a DGA waiver) or stays UPM.
+- **Engine.** A DGA rate card by budget tier and studio/distant status (est. 2025-26 features over $11M: $7,021/wk studio, $9,830/wk distant, plus a weekly production fee), and a signing-authority field that gates every PO in the ledger.
+- **Takes.** Starts 8-14 weeks before principal photography on a feature
+- **Television.** A series carries a UPM per season plus Production Managers per block; a pilot's UPM often does not carry to series.
 
-The consequence that makes the tier real. If final costs exceed the applicable tier ceiling by more than ten per cent, every covered employee must be paid retroactively at the rates of the then-current IATSE Basic Agreement. A two-week advance notification lets a production move up a tier instead of taking the repricing.
+### Hiring the First Assistant Director
 
-- **Who.** Production Accountant; Line Producer; the local's business representative; the completion bond's inspector
-- **Decides.** Whether to notify and step up a tier while there is still time, or to gamble on landing inside the ceiling.
-- **Engine.** A live cost-to-ceiling ratio the player can watch, a two-week notification window that closes, and a retroactive repricing event that recalculates every covered timecard on the picture at Basic Agreement rates. SLATE already reads an overrun off how far a schedule was cut below what the money implies; this is what that overrun can cost beyond the extra days. A picture can be destroyed by its own tenth per cent.
-- **Takes.** Notification is two weeks; the repricing is immediate and covers the whole run
-- **Television.** Season-long accounting makes the ceiling a running total across episodes rather than a single number, so an expensive early episode constrains every later one.
+The 1st AD is brought in to break down the script, board the schedule, and then run the floor: the only person on set who may call action-adjacent commands other than the director.
 
-### Jurisdiction: which local covers which craft
+- **Who.** Director names, Producer/UPM hires; DGA-covered
+- **Decides.** Director's regular 1st vs a 1st the studio trusts to make the day; whether one 1st covers all units or each unit gets its own.
+- **Engine.** A per-person 'can make the day' competence that changes pages-per-day throughput, an authority token that lets the holder issue set commands, and a relationship edge to the director that changes how much schedule the director can overrun.
+- **Takes.** Prep starts 4-8 weeks before day one; wraps at end of principal
+- **Television.** TV usually runs two 1st ADs alternating prep/shoot blocks so one preps the next episode while the other shoots; a feature has one.
 
-A craft is not a job title, it is a bargaining unit, and the boundaries are specific. The Hollywood locals: 44 Affiliated Property Craftpersons; 80 Grips; 600 International Cinematographers Guild, national; 695 Production Sound Technicians, Television Engineers, Video Assist Technicians and Studio Projectionists; 700 Motion Picture Editors Guild, national; 705 Costumers; 706 Makeup Artists and Hairstylists Guild; 728 Motion Picture Studio Electrical Lighting Technicians; 729 Motion Picture Set Painters and Sign Writers; 800 Art Directors Guild, national; 871 Script Supervisors, Continuity Coordinators, Accountants and Allied Production Specialists; 884 Motion Picture Studio Teachers and Welfare Workers; 892 Costume Designers Guild; and USA 829 United Scenic Artists, national.
+### Building the AD department below the 1st
 
-- **Who.** Each local's business representative; Production Accountant; Line Producer
-- **Decides.** Nothing, day to day, which is the point. Jurisdiction is a constraint the production discovers rather than chooses, and discovering it late is expensive.
-- **Engine.** A craft-to-local map on every crew post, so a rate, a set of working conditions and a pension-and-health contribution all follow from the post rather than being authored per person. The map is also what makes a jurisdictional dispute expressible: two locals claiming the same work is a real and recurring production problem.
-- **Takes.** Permanent
-- **Television.** Identical jurisdictions, different agreements over them.
+The 1st staffs the department that produces call sheets, wrangles background, manages cast flow from trailer to set, and holds the lock-ups.
 
-### The crafts that are Teamsters, not IATSE
+- **Who.** 1st AD names, UPM hires; Key 2nd AD, 2nd 2nd AD, Additional 2nd ADs, DGA Trainee, Set PAs
+- **Decides.** Headcount; whether to carry a DGA Trainee; how many set PAs; whether background wrangling gets its own 2nd 2nd.
+- **Engine.** Each AD body is a throughput multiplier on distinct queues (cast-to-set latency, background placement time, paperwork completion), so removing one body must measurably lengthen the day, not just remove a name.
+- **Takes.** Key 2nd starts 3-5 weeks out; 2nd 2nd and PAs 1-2 weeks out
+- **Television.** TV carries an Additional 2nd per block and often a permanent office 2nd; the US has no '3rd AD' — that is a UK title, the US term is Second Second.
 
-A counter-intuitive boundary, and one that makes two career ladders unmodellable if it is got wrong. Hollywood Teamsters Local 399 covers transportation coordinators, transportation captains and drivers — and also location managers, key assistant location managers, assistant location managers and location scouts, animal trainers and wranglers, casting professionals, dispatchers, chef assistants and mechanics. Roughly 6,400 members across Los Angeles and New Mexico.
+### Naming the Director of Photography
 
-- **Who.** Transportation Coordinator; Location Manager; Casting Director; Local 399's business representative
-- **Decides.** Which agreement a location manager's or a casting director's deal sits under, and therefore what their floor, their benefits and their career ladder look like.
-- **Engine.** Locations and casting hang off the Teamsters map rather than the IATSE one. Modelling a casting director as a creative guild member in the DGA or WGA sense produces a career that does not exist; the Casting Society is a professional body that gives the Artios Awards, not a union that sets fees.
-- **Takes.** Permanent
-- **Television.** The same, with the wrinkle that a long-running series' location department is effectively permanent staff.
+The DP is engaged on a weekly or flat deal with prep and wrap weeks, a kit/box rental if any, and camera-test days.
 
-### Staffing a department to the money
+- **Who.** Director chooses, Producer approves, UPM papers the deal; ICG Local 600
+- **Decides.** Which DP (each with a different look vocabulary, speed, and appetite for coverage); prep weeks bought; whether the DP also operates A camera.
+- **Engine.** A DP record holding lighting-style parameters that feed the image, a shooting-speed rating that changes setups-per-day, a preferred-crew list that becomes a package deal, and a relationship to the director that gates who wins a disagreement.
+- **Takes.** Starts 4-8 weeks before shooting; wraps at end of principal (plus dailies review)
+- **Television.** TV rotates DPs by block with a pilot DP setting the look bible; features keep one DP for the whole picture.
 
-Headcount is the budget's main lever on the crew, and it moves in recognisable bands: five to seven people on an ultra-low-budget picture where the DP operates and the director handles props; ten to twenty on a small independent, where sound may be one person and the art department is one person who is at least dedicated; twenty-five to over a hundred on a fully staffed production with no doubling at all; and around two hundred on a large union feature.
+### Crewing the camera department
 
-- **Who.** Line Producer; UPM; each department head arguing for their own count
-- **Decides.** Which roles exist at all, which merge, and which are day-played rather than carried. Merging is not free: a DP who is also the operator cannot watch a monitor and light at the same time.
-- **Engine.** Headcount per department as a function of budget tier and plan, with an explicit doubling table saying which posts may merge and what merging costs in time per unit of work. A picture that saves a second AC and loses twenty minutes a day to it has made a real decision, and the engine has to be able to say so.
-- **Takes.** Set during budgeting; argued over continuously
-- **Television.** Multi-camera sitcoms carry a large permanent stage crew and a small location footprint; single-camera drama is staffed like a feature that never stops.
+A camera crew is built per camera body: one operator, one 1st AC, one 2nd AC per camera, plus a shared DIT and loader.
 
-### The staggered start: ten weeks of people arriving
+- **Who.** DP names, UPM hires; Camera Operators, 1st ACs, 2nd ACs, DIT, Digital Loader, Camera Utility, Still Photographer — all ICG Local 600
+- **Decides.** How many cameras (A, B, C, splinter); Steadicam operator on call or on crew; DIT with a cart vs a loader with a laptop; whether stills is on payroll or day-hired.
+- **Engine.** Per-camera crew requirement so adding a camera adds three bodies and a truck, plus focus-puller skill driving a soft-take probability, and a data pipeline where a missing loader means unbacked cards and a real risk of loss.
+- **Takes.** 1st AC starts 1-2 weeks out for prep; 2nd AC 3-5 days; wraps with the unit
+- **Television.** TV runs two or three cameras as standard for schedule speed; features add cameras per sequence and strike them again.
 
-Crew does not start together. On a studio feature the office opens around ten weeks out with the producers, director, casting director, location manager, UPM, production coordinator, production accountant and production designer. A set designer follows at nine weeks. At eight, the assistant production accountant, costume designer and set decorator start and the first location scout goes out. At seven come the principal locations presentation, the blueprints meeting, a budget review and the legal and insurance meeting. At six, the first AD, costumers, leadman, prop master, construction coordinator and transportation coordinator all begin and the major locations lock. At five the DP starts a one-week prep, equipment bids go out and set construction begins. At four, the second AD, office secretary, assistant prop master and special effects supervisor start, and the DP joins the second scout. At three, the script supervisor and swing gang come on and cast deals lock. At two, the DP goes exclusive, the first AC, gaffer, key grip and transportation captain start, the stunt coordinator and key hair and makeup arrive, and rehearsals begin. At one, everybody else: camera operators, sound mixer, boom operator, the editor, and the trucks are loaded.
+### Camera prep and checkout at the rental house
 
-- **Who.** UPM, who authors the start-date schedule; Production Coordinator, who executes it; every head
-- **Decides.** Who starts when, which is a direct spend decision — every week of prep for a head is a week of their rate — and how much prep each department gets before it is expected to be ready.
-- **Engine.** A per-post start offset measured in weeks before the first day of photography, and an end offset after wrap. Crew cost then falls out of the schedule rather than being a lump: the same picture with two extra weeks of art department prep costs a computable amount more and arrives on day one in a measurably better state. This is the most immediately useful piece of this domain for SLATE, because it turns the crew from a budget line into a calendar of people.
-- **Takes.** Ten weeks of prep on a studio feature; three to eight weeks is the ordinary range
-- **Television.** A series prep is front-loaded into the pilot or the season opener and then collapses: episode eight gets days of prep, not weeks, because the standing sets and the crew already exist.
+Two to five days at the rental house building the package, testing every body and lens, shooting a lens-projection and back-focus chart, and burning in tests for the lab.
 
-### The one-week look, before the exclusive deal
+- **Who.** 1st AC runs it; DP attends; 2nd AC and Camera Utility assist
+- **Decides.** Which bodies, which lens set, filtration, support, wireless video channels; how many prep days to buy at what cost.
+- **Engine.** Equipment objects with real failure modes (a lens that back-focuses soft, a body with a sensor defect) and a prep-days variable that lowers the on-set failure probability; skipping prep must produce actual bad takes.
+- **Takes.** 2-5 days for a feature; 1-2 for TV
+- **Television.** A series preps once at pilot/season start and re-preps only when the package changes; features prep every picture.
 
-A DP is commonly engaged for a single week of prep before being hired permanently, and goes exclusive only two weeks out. It is a trial that both sides use.
+### Crewing the grip department
 
-- **Who.** The Director; the DP; UPM; the DP's agent
-- **Decides.** Whether this DP is the DP. A week of scouting and testing with a director is where a mismatch in taste surfaces while it is still cheap.
-- **Engine.** A provisional engagement state distinct from an engagement: a post can be filled provisionally, generate a read on fit between two people, and then convert or not. This is the same shape as an option on material, applied to a person, and it gives the engine a way to discover compatibility without simply exposing a hidden number.
-- **Takes.** One week of prep; exclusivity from two weeks out
-- **Television.** A series DP is tested on the pilot and then becomes a fixture, often alternating blocks with a second DP so each can prep while the other shoots.
+Grips carry all non-electrical support: dolly and crane, rigging points, flags, nets, silks, overheads, car mounts and safety.
 
-### Deal memos, start paperwork, and the moment a person legally exists on the picture
+- **Who.** Key Grip named by the DP, hired by UPM; Best Boy Grip, Dolly Grip, Company Grips, Rigging Key Grip, Rigging Best Boy, Rigging Grips — IATSE Local 80 (LA)
+- **Decides.** Shooting crew size vs a separate rigging crew running ahead; dolly vs techno vs handheld days; whether the show carries a crane and its own grip.
+- **Engine.** Grip headcount as a setup-time divisor with diminishing returns, rigging crew as a parallel work queue that must be scheduled days ahead, and a rig-complexity value per setup that fails when undercrewed.
+- **Takes.** Key grip 1-3 weeks prep; rigging crew starts 1-4 weeks ahead of the shooting crew and runs behind striking
+- **Television.** A stage-based series keeps a permanent stage rigging crew across the season; features rig and strike per location.
 
-A crew member is not hired when they say yes. They are hired when a deal memo is signed and start paperwork is filed, and on a guild picture that paperwork goes to the guild as well as to the production.
+### Crewing the electric department
 
-- **Who.** Production Coordinator; Production Accountant; the crew member; DGA Reports Compliance for DGA posts
-- **Decides.** Rate, guaranteed hours or days, box or kit rental, credit, travel and per diem, and whether the engagement is run-of-show, weekly or daily.
-- **Engine.** The crew engagement record, which is the same shape as the cast engagement record: person, title, post, dates, rate, guarantee, credit. If the crew deal and the actor deal are not the same record with different defaults, the engine will carry two of everything forever.
-- **Takes.** Days
-- **Television.** Run-of-series deals with annual escalators and an episode guarantee, rather than a picture's fixed span.
+Electrics power and light the set: distro, generators, fixtures, board operation, and the pre-light that happens before the shooting crew arrives.
 
-### Day-playing, and the difference between a crew and a call sheet
+- **Who.** Gaffer named by the DP, hired by UPM; Best Boy Electric, Lamp Operators (Set Lighting Technicians), Genny Operator, Rigging Gaffer, Rigging Best Boy, Rigging Electrics — IATSE Local 728 (LA), IBEW Local 40 for contracted studio electrical
+- **Decides.** Crew depth; genny size and how many; LED vs tungsten package; whether to buy pre-light days.
+- **Engine.** A power budget in amps that a unit can exceed and trip, a pre-light-days variable that reduces first-setup time on each new set, and a board-operator skill that sets how fast a relight between setups happens.
+- **Takes.** Gaffer 1-3 weeks prep; rigging crew often 2-6 weeks ahead on a big build
+- **Television.** Series stages are pre-rigged once with a permanent grid and a house crew, so per-episode relight time is far lower than a feature's location day.
 
-Not everybody on the crew is on the picture. A day player is engaged for the days they work, and a heavy day pulls in additional grips, electricians and drivers who are gone the next morning.
+### Crewing the sound department
 
-- **Who.** 1st AD, who calls the day; each department head, who orders their additional labour; UPM, who approves it
-- **Decides.** How much additional labour a given day buys, which is a direct trade against the day's page count.
-- **Engine.** A distinction between the carried crew and the day's roster, with the roster built per shooting day from what the day requires. A big day with no additional labour simply does not finish, and that is the mechanism by which an under-crewed schedule converts into an overrun rather than into a number nobody can see.
-- **Takes.** Ordered one to three days ahead
-- **Television.** Episodic patterns make additional labour predictable, so a show's day-player spend is a budgeted line rather than a running decision.
+The sound department records production dialogue, plants mics, manages timecode and comms, and tells the 1st AD when a take is unusable.
 
-### Replacing a head mid-picture
+- **Who.** Production Sound Mixer engaged by producer/UPM (director often names); Boom Operator and Sound Utility/2nd Boom named by the mixer — IATSE Local 695
+- **Decides.** One boom or two; how many radio channels and lav kits; whether to carry a sound utility at all; kit rental rate.
+- **Engine.** Per-take dialogue-usability scoring from mic choice, distance, ambient noise, wardrobe (rustle), and channel count, feeding a later ADR cost and schedule — the only honest way a mixer's presence changes anything.
+- **Takes.** Mixer 2-5 prep days; crew starts day one; wraps with the unit
+- **Television.** Multi-cam sitcoms use overhead booms on a fixed grid plus an audience mixer; single-cam TV matches feature practice.
 
-Heads leave. They are fired, they fall ill, they take a better job, they fall out with the director. Replacing one is not like replacing a crew member, because the department is built around them.
+### Engaging the Production Designer
 
-- **Who.** The Producer; the Director; UPM; the incoming head; the local
-- **Decides.** Whether to replace with the best boy or assistant already there, bring in an outsider, or let the picture continue short-handed.
-- **Engine.** A departure event that degrades the department rather than simply swapping a name: an outside replacement arrives without the crew loyalty set and without the prep, and a promoted second arrives with both but with less capability. The cost of losing a production designer in week two of a shoot has to be visible, or nothing about keeping a crew happy matters.
-- **Takes.** Days to weeks, and the department runs degraded throughout
-- **Television.** Far more survivable, because the show's pattern carries the department; a feature depends on its heads much more than a series does.
+The PD is the first big-spend department head on, setting the visual world, and running art, construction, set dec, props and graphics through the art department.
 
-### Wrap, and the order people leave in
+- **Who.** Director chooses, Producer approves; ADG Local 800 (LA) / USA 829 (NY)
+- **Decides.** Which PD; how many prep weeks; build vs find vs dress-to-camera; the art department budget split between build and dressing.
+- **Engine.** A design-brief object that later constrains what locations qualify, what construction must be built, and what the set dec budget can reach — so a PD choice changes the location shortlist, not only the concept art.
+- **Takes.** Starts 8-20 weeks before shooting on a feature; wraps 1-2 weeks after picture wrap
+- **Television.** TV's PD builds standing sets once at pilot and then amortises them; a series PD's weekly job is swing sets and episodic locations.
 
-Departments come off in roughly the reverse of the order they came on, and some do not come off at all. Camera and sound wrap with the shoot. Grip and electric wrap their equipment out over days. Art, construction and set decoration strike sets for a week or more. Costume inventories and returns. Accounting stays for months after everybody else has gone.
+### Crewing the art department under the PD
 
-- **Who.** UPM; Production Accountant; each head; Transportation Coordinator
-- **Decides.** How much wrap each department is given, and whether anything is struck in a hurry and damaged or lost.
-- **Engine.** End offsets per post, mirroring the start offsets, so the tail of a picture's crew cost is as computable as its head. Accounting's long tail is what makes a picture's final cost arrive weeks after its last shooting day, which is the gap the tier ceiling is judged in.
-- **Takes.** Days for camera; weeks for construction; months for accounting
-- **Television.** A series hiatus is not a wrap: the crew is held, the sets stand, and the cost continues.
+The art department turns design into drawings: set designers draft what construction builds; graphics makes every readable object; the coordinator runs the paperwork and the bids.
+
+- **Who.** PD names, UPM hires; Supervising Art Director, Art Directors, Assistant Art Directors, Set Designers, Illustrator/Concept Artist, Graphic Designer, Art Department Coordinator, Model Maker, Researcher, Art PA — Local 800
+- **Decides.** How many art directors (one per unit or per build); how many set designers; whether graphics is in-house or vendored.
+- **Engine.** A drawing-package pipeline with real lead times — construction cannot start a set that has no released drawings — so understaffing art must delay the build and push the schedule, not just look thin.
+- **Takes.** Supervising AD starts with the PD; set designers 6-16 weeks out; graphics 4-8 weeks out and runs to wrap
+- **Television.** A series keeps a small permanent art staff and spikes for a big episode; features ramp to a peak and collapse at wrap.
+
+### Crewing construction
+
+The construction shop bids the drawings, builds the sets on stage or on location, paints and finishes them, and strikes them after wrap.
+
+- **Who.** Construction Coordinator hired by UPM on the PD's recommendation; General Foreman, Propmaker Foremen, Propmakers/Carpenters, Paint Foreman, Painters, Scenic Artists, Plasterers/Sculptors/Model Makers, Greensperson and Greens crew, Labor Foreman, Utility Laborers, Toolroom — IATSE Local 44 (propmakers), Local 729 (set painters), Plasterers Local 755, Studio Utility Local 724
+- **Decides.** Build vs rent vs practical location; shop size and how many shifts; whether to run a night crew to make a delivery date.
+- **Engine.** A build queue with per-set man-hours, material lead times, stage occupancy and a hard delivery date; adding a second shift must cost overtime and produce a real completion-date shift with a quality risk.
+- **Takes.** Coordinator 8-16 weeks out; shop peaks 4-8 weeks before the set is needed; strike crew runs 1-4 weeks after wrap
+- **Television.** TV builds standing sets once and then builds swing sets weekly against an unmovable airdate; a feature's build is one ramp.
+
+### Crewing set decoration
+
+Set dec buys, rents and places everything inside the walls that is not a prop, dresses ahead of the shooting crew, and keeps continuity of dressing.
+
+- **Who.** Set Decorator hired by PD/UPM (department head in their own right); Lead Man/Lead Person, Buyers, Set Dressers (swing gang), On-Set Dresser, Drapery, Upholstery — IATSE Local 44
+- **Decides.** Rent vs buy vs build; swing gang size; whether to carry a dedicated on-set dresser so the shooting crew is not waiting on the swing gang.
+- **Engine.** A dressing inventory with source, rental clock, return condition and continuity state per set, plus a dress-time cost per set that the swing gang size divides — and a rental burn that keeps charging while a set stands.
+- **Takes.** Decorator 6-12 weeks out; lead man 4-8; swing gang 2-4; wraps 1-3 weeks after picture to return everything
+- **Television.** Series dec carries a warehouse of owned stock across seasons; features liquidate at wrap, which is an actual sale in the ledger.
+
+### Crewing the property department
+
+Props supplies and handles everything an actor touches, manufactures hero props, and holds custody and continuity of every one of them, including weapons.
+
+- **Who.** Property Master hired by UPM (often at the director's or PD's recommendation); Assistant Property Master, Props Assistants, Armorer/Weapons Specialist, Food Stylist, Picture Vehicle coordination liaison — IATSE Local 44
+- **Decides.** Which props are hero, stunt, rubber, breakaway; how many duplicates; whether to carry a dedicated armorer; practical vs replica weapons.
+- **Engine.** Per-prop records with hero/stunt/backup duplicates, damage and loss on a take, continuity state per scene, and a weapons chain-of-custody with a live-round prohibition that can be violated with consequences.
+- **Takes.** Prop master 4-8 weeks out; assistants 1-3 weeks; wraps 1-2 weeks after
+- **Television.** A series prop master carries recurring hero props across years and must maintain and duplicate them; features build and sell off.
+
+### Crewing costume
+
+The designer designs; the supervisor runs the budget, the workroom, fittings and the crew; set costumers dress and maintain on the day.
+
+- **Who.** Costume Designer engaged by director/producer (CDG Local 892); Assistant Costume Designer, Costume Supervisor, Key Costumer, Set Costumers, Truck Costumer, Ager/Dyer, Cutter/Fitter, Tailor, Stitchers, Milliner, Shoemaker, Costume PA — IATSE Local 705 (LA) / 764 (NY)
+- **Decides.** Build vs rent vs shop; number of fittings per actor; how many set costumers per unit; whether an ager/dyer is on staff for a period or distressed look.
+- **Engine.** Per-character costume objects with multiples for stunts and damage, a fitting calendar that competes with the actor's availability, and a continuity/damage state so an unbudgeted multiple actually stops a re-take.
+- **Takes.** Designer 6-12 weeks out; supervisor 5-10; workroom 4-8; set crew from day one; wraps 1-3 weeks after
+- **Television.** TV designers dress a large recurring cast weekly on a fixed pattern-budget line; features concentrate spend on a build period.
+
+### Crewing hair
+
+Hair designs and executes every character's hair, builds and maintains wigs and hairpieces, and does daily application and on-set continuity.
+
+- **Who.** Department Head Hair hired by producer with actor approval/consultation; Key Hair Stylist, Additional Hair Stylists, Wig Maker — IATSE Local 706 (LA) / 798 (NY)
+- **Decides.** Headcount against cast size and call time; wigs vs real hair; whether a lead actor's personal stylist is carried and at what cost.
+- **Engine.** A per-actor chair-time value that sets the earliest possible crew call, a wig inventory with maintenance state, and a continuity record per scene — so understaffing hair must push the whole unit's call earlier.
+- **Takes.** Dept head 2-6 weeks out for tests; crew from day one; wraps at picture wrap
+- **Television.** Hair and makeup are the same local (706) but two separate departments with two department heads — a game that merges them is wrong in both media.
+
+### Crewing makeup and prosthetics
+
+Makeup covers straight beauty makeup, character makeup, tattoo cover, injury and blood, and prosthetic application, which can take hours before a call.
+
+- **Who.** Department Head Makeup; Key Makeup Artist, Additional Makeup Artists, Special Makeup Effects Designer and lab crew, Body Makeup — Local 706 (LA) / 798 (NY)
+- **Decides.** Straight vs prosthetic approach for a character; in-house artist vs an outside SFX makeup shop; how many artists for a big background day.
+- **Engine.** Per-look application time (10 minutes to 6 hours) that sets call times and drives turnaround violations, a prosthetic appliance inventory consumed per application, and a lifecast/fitting dependency before shooting can start.
+- **Takes.** Dept head 3-8 weeks for tests and lifecasts; prosthetics lab 6-16 weeks; crew from day one
+- **Television.** Prosthetic-heavy series must sustain the appliance burn weekly for months; a feature's lab runs to a peak and stops.
+
+### Crewing practical special effects
+
+Practical effects deliver atmosphere, rain, wind, snow, fire, bullet hits, breakaways, rigs and pyro on the day, under permit and licence.
+
+- **Who.** Special Effects Coordinator hired by UPM on producer/director recommendation; SFX Foreman, SFX Technicians, Pyrotechnician (licensed), Water/Rain crew, Mechanical Effects Shop — IATSE Local 44
+- **Decides.** Which effects are practical vs handed to VFX; licence class and permit lead time; how many test days; rain tower vs hose.
+- **Engine.** Per-effect prep, reset and safety-radius values so a pyro take costs reset minutes and blocks the unit, permit objects with issuing authority and lead time, and an injury/fire probability that rises with skipped tests.
+- **Takes.** Coordinator 3-10 weeks out; crew per sequence; some builds run months
+- **Television.** TV rarely carries a standing SFX crew and day-hires per episode, which makes reset time worse and pushes effects to VFX.
+
+### Crewing stunts
+
+The coordinator designs the action, casts doubles to match principals, rehearses, rigs, and signs off on safety before every stunt take.
+
+- **Who.** Stunt Coordinator engaged by producer/director (SAG-AFTRA covered, not IATSE); Assistant Stunt Coordinator, Stunt Riggers, Stunt Performers, Stunt Doubles, Utility Stunts, Second Unit Director (often the coordinator)
+- **Decides.** Which coordinator; how many rehearsal days; doubles vs the actor performing it; ratchet/wire/car/fire; adjustment rate per performer per stunt.
+- **Engine.** Per-stunt risk scoring from rehearsal days, rigging quality, coordinator skill and actor insistence, producing real injury outcomes that remove a performer for a real number of days and trigger insurance and an OSHA-style investigation.
+- **Takes.** Coordinator 2-8 weeks out; performers per sequence; adjustments settled daily
+- **Television.** Series carry a season coordinator and a stable of recurring doubles; features assemble per picture, and tentpoles carry a full second unit.
+
+### Crewing the on-set VFX unit
+
+The on-set VFX unit captures everything the vendors will need: HDRIs, chrome/grey balls, lidar scans, tracking markers, lens and camera metadata, witness cameras, and clean plates.
+
+- **Who.** VFX Supervisor hired by producer/studio; VFX Producer, VFX Coordinator, On-Set Data Wrangler, Witness-Cam Operator, Lidar/Photogrammetry technician, VFX Editor — mostly non-union in the US
+- **Decides.** Whether to carry a supervisor every day or only on VFX days; how much plate time to buy; in-camera (LED volume) vs post.
+- **Engine.** A per-shot data-completeness record that, when incomplete, raises the vendor's bid and the shot's turnaround later — making an on-set staffing saving into a visible post overrun.
+- **Takes.** Supervisor 4-16 weeks out; on set per VFX day; runs through post
+- **Television.** Episodic VFX runs a continuous overlapping pipeline across episodes with a fixed weekly quota, not one delivery date.
+
+### Engaging the script supervisor
+
+The script supervisor times the script, tracks continuity of action, dialogue and wardrobe, marks which takes are circled, and produces the daily editor's log, lined script and facing pages.
+
+- **Who.** Producer/UPM hires; director often names — IATSE Local 871 (LA) / Local 161 (NY)
+- **Decides.** One supervisor or one per unit; how many prep days for the timing; whether continuity errors are caught or shipped to post.
+- **Engine.** A per-take record of coverage, screen direction, eyeline, continuity flags and circled status that post must actually read; a missed continuity error must survive into the cut and cost something.
+- **Takes.** 2-5 prep days for timing; on set every shooting day; 1-2 days wrap paperwork
+- **Television.** TV script supervisors also police the running time against a network slot to the second, which a feature does not care about until the cut.
+
+### Crewing locations
+
+Locations finds, secures, permits and polices every place the unit stands, negotiates the site fee, manages neighbours, parking and police, and restores the site after.
+
+- **Who.** Location Manager hired by UPM; Key Assistant Location Manager, Assistant Location Managers, Location Scouts, Location Assistants, Parking Coordinator — Teamsters Local 399 in LA, not IATSE
+- **Decides.** Which location from the shortlist; fee and days; how many ALMs and scouts; whether to buy a prep day and a wrap day at each site.
+- **Engine.** Location objects carrying fee, permit authority and lead time, noise/curfew rules, load-in distance, power availability, parking capacity and neighbour tolerance — each of which must change the shooting day's throughput.
+- **Takes.** LM 8-16 weeks out; scouts 6-12; ALMs 2-6; wraps 1-3 weeks after to restore and settle
+- **Television.** A series LM works a rolling 2-3 episode horizon with a repeat-location list; a feature scouts once and locks.
+
+### Crewing transportation
+
+Transpo moves every truck, trailer, and person, sets the base camp, and supplies and maintains picture vehicles.
+
+- **Who.** Transportation Coordinator hired by UPM; Transportation Captain, Co-Captain, Drivers, Picture Car Coordinator, Wrangler/Animal drivers, Mechanic — Teamsters Local 399 (LA) / 817 (NY)
+- **Decides.** How many trucks and of what kind; base-camp size; how many drivers; picture cars owned, rented or built; whether to add a shuttle for a distant parking lot.
+- **Engine.** Vehicle objects with capacity, load and travel time; a company-move cost in minutes derived from distance, truck count and driver count; picture cars with condition and duplicates for stunt destruction.
+- **Takes.** Coordinator 4-8 weeks out; captain 2-4; drivers 1-2 weeks before day one; wraps 1-2 weeks after
+- **Television.** A stage-based series has a near-static transport load; a location-heavy feature's transport is the largest single BTL headcount after construction.
+
+### Crewing catering and craft service
+
+Catering serves hot meals on the clock; craft service keeps the standing table, water, coffee and dietary needs going all day and cleans the set's consumables.
+
+- **Who.** Caterer contracted by UPM (usually a vendor, not payroll); Chef, Assistant Chefs, Servers. Craft Service is crew — Key Craft Service and assistants, IATSE Local 80 in LA
+- **Decides.** Per-head meal rate; hot lunch vs walkaway; second meal or meal penalty; craft service headcount and whether it is one person with a table or a full crew.
+- **Engine.** A meal clock that starts at crew call and triggers a per-person penalty ladder when breached, plus a morale/fatigue input from food quality and second-meal timing that measurably changes error rates late in a day.
+- **Takes.** Both start day one of shooting (catering often at prep for big crews); wrap with the unit
+- **Television.** Same in both, but a long-running series' craft table is a standing cost that crews use as a loyalty signal when deciding to re-up.
+
+### Engaging the set medic and safety officer
+
+The medic is the on-set first responder and the person who fills out the injury report; the safety officer runs the safety meeting and signs the day's hazards.
+
+- **Who.** UPM hires; Set Medic (IATSE Local 80 in LA), Safety Coordinator/Officer, Fire Safety Officer (fire-department detail), Studio Guard/Security
+- **Decides.** Medic on every day vs only hazard days; whether to carry a safety coordinator at all; how many fire and police details the day needs.
+- **Engine.** An injury pipeline: incident, report, workers' comp claim, lost days, insurance premium change, and a regulator inspection probability — without which the medic is a name on a call sheet.
+- **Takes.** From day one of shooting; fire/police details per permit condition
+- **Television.** No real difference; both carry a medic once crew size crosses the jurisdiction's threshold.
+
+### Building the production office
+
+The office issues every piece of paper the show runs on: crew list, deal memos, call sheets, distributions, travel, shipping, insurance certificates and the production report.
+
+- **Who.** UPM hires; Production Supervisor, Production Coordinator, Assistant Production Coordinator, Travel Coordinator, Office Production Assistants, Writers' PA (TV) — IATSE Local 871 (LA) / 161 (NY)
+- **Decides.** Office headcount; whether a production supervisor sits above the coordinator; how many office PAs; the software the paperwork runs on.
+- **Engine.** A document pipeline where call sheets, DPRs, deal memos and start paperwork are objects that must exist and be distributed on time — a late call sheet has to actually cost the next day's start.
+- **Takes.** Coordinator 8-12 weeks out (first office body after UPM); APOC 6-8; PAs 4-6; office closes 4-8 weeks after wrap
+- **Television.** A series office runs continuously across a season with an episode-numbered paperwork cycle; a feature office opens once and closes.
+
+### Building the accounting department
+
+Accounting cuts the payroll through a payroll service, codes every cost to an account, and issues the weekly cost report and the estimate-to-complete.
+
+- **Who.** UPM/Line Producer hires; Production Accountant, First Assistant Accountant, Second Assistant Accountant, Payroll Accountant, Accounting Clerks, Post Accountant — IATSE Local 871 (LA) / 161 (NY)
+- **Decides.** In-house vs payroll-service split; how many assistants; how often a cost report is published and to whom; which payroll company.
+- **Engine.** A ledger where each hired body posts wage plus fringes (pension, health and welfare, vacation, holiday, employer taxes — often 25-40% on top of wage) and a running estimate-to-complete that the producer must be able to be surprised by.
+- **Takes.** Accountant 8-12 weeks out; assistants 6-8; post accountant runs 3-12 months past wrap
+- **Television.** A series accountant closes an episode's costs against the pattern budget every week and reports over/under by episode.
+
+### Building the post-production department
+
+Post staffs the cutting rooms, sets the delivery calendar, books facilities, and carries the picture from dailies to delivery.
+
+- **Who.** Producer/studio hires Post Supervisor; Editor engaged by director with producer approval (Editors Guild Local 700); Assistant Editors, VFX Editor, Music Editor, Post PA, Post Coordinator
+- **Decides.** Which editor; how many cutting rooms and assistants; whether the editor cuts during shooting; facility vs in-house finishing.
+- **Engine.** A cutting-room pipeline with dailies turnaround, assembly, director's cut (DGA guarantees 10 weeks on a feature), producer's cut, locks and delivery items — each consuming real weeks that the release date reads.
+- **Takes.** Post supervisor 4-8 weeks before shooting; editor and first AE from day one of shooting; runs 20-50 weeks past wrap on a feature
+- **Television.** TV runs multiple editors in parallel, one per episode, with a DGA director's cut of 4 days and a much shorter producer's cut; the showrunner has final cut in practice.
+
+### Assembling the crew list and the hiring order
+
+The crew list is built department by department in start-date order, because each head hires their own people and no one below a head is hired before the head.
+
+- **Who.** UPM builds it; department heads populate their own columns
+- **Decides.** Which department gets depth; who starts when; how many total bodies the day carries; which positions are cut to make the budget.
+- **Engine.** A dependency graph of hires (head before crew, drawings before construction, prep before shoot) plus a per-department headcount-to-throughput curve, so cutting a body must lengthen a day somewhere specific.
+- **Takes.** Built over 6-14 weeks of prep; revised daily
+- **Television.** A series inherits last season's crew list and re-offers; a feature builds from zero each time, so relationship memory matters far more in TV.
+
+### Negotiating a crew deal memo
+
+Each hire is papered with a rate, a guarantee (hours or days), overtime terms, kit/box rental, travel and per diem, credit, and start and end dates.
+
+- **Who.** UPM or Production Supervisor negotiates; department head or agent on the other side
+- **Decides.** Scale vs over-scale; hourly vs daily flat vs weekly; guaranteed hours (8, 10, 12); box rental amount; whether a credit is guaranteed or best-efforts.
+- **Engine.** A deal object the payroll engine reads literally: hours worked run through the overtime ladder, the guarantee floors the pay, box rental posts to a different account, and credit obligations bind the main and end titles.
+- **Takes.** 1 day to 3 weeks per deal; heads take longest
+- **Television.** TV deals carry episodic guarantees, holding fees for hiatus, and options for subsequent seasons; feature deals end at wrap.
+
+### Processing start paperwork and onboarding
+
+Every hire returns a start form, I-9, W-4, union dispatch or waiver, loan-out documentation if applicable, and safety-training acknowledgement before their first day is payable.
+
+- **Who.** Production Coordinator/APOC collects; Payroll Accountant processes
+- **Decides.** Whether to let someone work before paperwork lands; loan-out vs W-2; which safety bulletins require sign-off for this show's hazards.
+- **Engine.** A per-person compliance state gating payability, plus a union-dispatch check that fails when a non-member takes a covered job and can escalate to a grievance and a fine on the production.
+- **Takes.** 1-5 days per person; must clear before first payable day
+- **Television.** Series onboarding is bulk at season start and drip for replacements; the hazards sign-off repeats when the show's hazards change.
+
+### Deciding local hire versus travel and per diem
+
+For each position, production decides whether to hire locally at the shooting jurisdiction or fly in a preferred person on travel, housing and per diem.
+
+- **Who.** UPM and Line Producer, with the Location Manager's input
+- **Decides.** Which department heads travel; how many travelling crew the incentive rules allow before the rebate shrinks; per diem rates; housing standard.
+- **Engine.** A per-jurisdiction crew-depth table (how many qualified people of each classification exist there), an incentive rule that rewards local hires, and a travel cost line that scales with headcount.
+- **Takes.** Decided 6-12 weeks out; changes are expensive after housing is booked
+- **Television.** A series that relocates carries a travelling core for years, so housing becomes a standing lease, not a hotel block.
+
+### Publishing the call sheet
+
+Each afternoon the next day's call sheet goes out: scenes, cast call and status, crew calls by department, weather, hospital, and the advance schedule.
+
+- **Who.** 2nd AD drafts, 1st AD approves, UPM signs; distributed by the Production Coordinator
+- **Decides.** Crew call times per department; whether hair/makeup pre-calls break turnaround; what goes on the advance; whether to publish before the day's changes settle.
+- **Engine.** Per-department call time derived from the day's work (chair time, pre-light, dressing) and checked against each person's wrap time for turnaround; a late or wrong call sheet must actually cost crew or money.
+- **Takes.** Drafted over the shooting day; out by wrap or shortly after
+- **Television.** TV call sheets carry an episode number and a cross-boarded scene list spanning two episodes; features carry one story.
+
+### Running the shooting day on the floor
+
+The 1st calls the order of work, walks rehearsal, calls turnaround for lighting, sets the pace, and decides in real time what gets cut to make the day.
+
+- **Who.** 1st AD runs it; Key 2nd AD manages cast flow; department heads deliver against the plan
+- **Decides.** Shot order; how many takes before moving on; which shot to drop; when to call lunch; whether to go into overtime or come back another day.
+- **Engine.** A setup queue with per-setup light/dress/rehearse/shoot times modified by every department's staffing and skill, an elapsed clock, and a make-the-day evaluation that pushes unshot work to a rollover list.
+- **Takes.** 10-14 hours per day, typically 12
+- **Television.** TV's day is harder-capped by the episodic schedule: unshot work usually becomes a cut scene rather than an added day.
+
+### Enforcing turnaround, meal penalties and overtime
+
+Contract time rules bite: minimum rest between wrap and next call, meal breaks at fixed intervals, and an overtime ladder through time-and-a-half, double, and golden time.
+
+- **Who.** 1st AD and UPM watch the clock; department heads and the shop steward push back
+- **Decides.** Whether to buy a forced call and break turnaround; whether to take a meal penalty and keep shooting; whether to push into golden time to finish.
+- **Engine.** Per-agreement time rules as arithmetic: a turnaround counter per person, a meal clock with a rising per-person penalty, and an OT ladder that recomputes the day's cost live so 'one more shot' has a number.
+- **Takes.** Continuous; evaluated per person per day
+- **Television.** Identical mechanics; a series' cumulative fatigue across months makes repeated forced calls a real attrition driver.
+
+### Filing the daily production report
+
+The DPR records actual call and wrap, scenes and pages shot, setups, film/data used, cast worked, meal times and penalties, accidents and the day's gain or loss against schedule.
+
+- **Who.** 2nd AD prepares; UPM and Production Accountant review
+- **Decides.** Nothing directly — but it is the record the studio reads, and what it says decides whether help arrives.
+- **Engine.** A truthful per-day record the schedule and budget read: pages behind, setups per day, penalties incurred; a running variance that triggers studio intervention past a threshold.
+- **Takes.** Filed nightly; 30-60 minutes
+- **Television.** TV reports against the episode as well as the day, so a slow block is visible to the network within a week.
+
+### Standing up a second unit
+
+A separate unit shoots action, inserts, plates, scenics and doubles simultaneously with main unit, with its own camera, grip, electric, AD and script crew.
+
+- **Who.** Second Unit Director (often the Stunt Coordinator or a specialist) hired by producer; full parallel crew under a 2nd Unit 1st AD and 2nd Unit DP
+- **Decides.** Whether to run a second unit and for how many days; who directs it; whether it gets A-list crew or the second string; how much main-unit gear it takes.
+- **Engine.** A second scheduling and resource pool competing with main unit for gear, crew and cast; the same body cannot be on both units on the same day, and the conflict must be enforced.
+- **Takes.** Crews up 1-3 weeks before its first day; runs days to months
+- **Television.** TV rarely runs a true second unit; it runs a splinter unit off the main crew for an hour or a half-day, which steals bodies from the main unit.
+
+### Running a splinter, pre-rig or additional unit
+
+Small units break off to grab inserts or plates, and the rigging crews work ahead pre-lighting tomorrow's set and behind striking yesterday's.
+
+- **Who.** 2nd 2nd AD or an Additional 1st AD; rigging crews under the Rigging Gaffer and Rigging Key Grip
+- **Decides.** Whether to pre-rig at all; how far ahead; who gets pulled off main unit and for how long.
+- **Engine.** Parallel work queues with their own crew assignments and a first-setup-time reduction on any pre-lit set; without pre-rig, the first setup on each new location must cost visibly more.
+- **Takes.** Rigging runs 1-10 days ahead; splinters are hours
+- **Television.** Series stages run near-permanent pre-rig crews, which is why a stage day beats a location day on setups.
+
+### Casting and wrangling background
+
+Background performers are ordered by count and type, fitted by costume, checked in by the AD department, placed, and vouchered.
+
+- **Who.** Background Casting Director (Teamsters Local 399 in LA for casting) books; 2nd 2nd AD and Background PAs wrangle on the day; SAG-AFTRA covers union background
+- **Decides.** How many background per scene; union vs non-union; how many get special-ability or wardrobe bumps; whether to add atmosphere to fill a frame.
+- **Engine.** Background as costed units with a SAG-AFTRA covered-count minimum, a bump ladder for wardrobe, props and special ability, and a wrangling-time cost that rises non-linearly with count.
+- **Takes.** Booked 3-10 days out; fitted 1-3 days out; on the day
+- **Television.** A series runs a recurring background pool with continuity obligations (the same faces in the same bar); features book fresh.
+
+### Engaging a studio teacher for minors
+
+Any minor on set requires a credentialed studio teacher who controls the child's work hours, schooling hours, rest and recreation, and can stop the unit.
+
+- **Who.** UPM hires; Studio Teacher/Welfare Worker — IATSE Local 884 in LA
+- **Decides.** How many teachers (one per group of minors); whether to schedule a minor at all on a long day; whether to shoot the child's coverage first.
+- **Engine.** A per-minor daily clock split between work, school and rest by age band, with a hard stop the 1st AD cannot override and a fine and permit risk if breached.
+- **Takes.** On set every day a minor works
+- **Television.** A series with a child regular is schedule-shaped by this for years; features absorb it in a few weeks.
+
+### Engaging animal handlers
+
+Animals arrive with trainers, a welfare representative, and their own working-time limits, and the unit works to the animal's pace and comfort.
+
+- **Who.** UPM hires; Head Animal Trainer/Wrangler, Handlers — Teamsters Local 399 in LA; American Humane Safety Representative attends
+- **Decides.** Real animal vs VFX vs animatronic; how many doubles of the animal; whether to pay for the AH monitor and the end-credit disclaimer.
+- **Engine.** Animal objects with fatigue, working-hour limits, take-reliability, and a welfare-incident risk that can shut the day and reach the press.
+- **Takes.** Booked 2-6 weeks out; on set per scene
+- **Television.** A recurring animal character in a series needs multiple trained doubles maintained across seasons.
+
+### Standing up a marine or underwater unit
+
+Water work adds a whole parallel safety structure: dive certification, safety divers per performer, tanks, tenders and a marine coordinator with authority over the day.
+
+- **Who.** Marine Coordinator (IATSE Local 80 covers marine in LA); Underwater DP, Dive Safety Supervisor, Safety Divers, Boat Captains, Water Safety
+- **Decides.** Tank vs open water; how many safety divers; whether performers dive or doubles do; certification requirements for crew.
+- **Engine.** Per-person dive certification and bottom-time limits, water-temperature exposure clocks, and a drowning/injury risk that rises with skipped safety staffing — plus a hard cap on takes per dive.
+- **Takes.** Coordinator 3-8 weeks out; unit runs per sequence
+- **Television.** Effectively identical; TV does it less because the schedule cannot absorb the reset time.
+
+### Standing up an aerial unit
+
+Aerial work requires certified pilots, airspace clearance, and a flight-safety plan filed with and approved before the day.
+
+- **Who.** Aerial Coordinator; Aerial DP; Helicopter Pilot (FAA-certified, Motion Picture Manual); Drone Pilot (FAA Part 107 with any needed waiver); Gimbal Technician
+- **Decides.** Helicopter vs drone vs crane; airspace and altitude; whether to fly over people (needs a waiver); how many flight hours to buy.
+- **Engine.** Airspace and permit objects with issuing authority and lead time, weather minimums that can cancel the day, per-hour aircraft costs, and a flight-incident risk tied to the safety plan's completeness.
+- **Takes.** Cleared 2-8 weeks out; flies in hours
+- **Television.** TV uses drones routinely as a cheap crane; helicopter units are mostly a feature and commercial expense.
+
+### Engaging specialty camera operators and systems
+
+Specialty systems come with their own operator and often their own technician, on a day rate plus a substantial equipment rental.
+
+- **Who.** DP requests, UPM hires; Steadicam Operator, Technocrane Operator, Remote Head Technician, Crane Operator, Car Rig Technician, Motion Control Operator, Underwater Camera Operator — ICG Local 600
+- **Decides.** Which system for which sequence; own the operator for the run or day-hire; whether the rig's setup time fits the day.
+- **Engine.** Per-system setup/reset time, crew requirement, move speed and shot vocabulary — a technocrane must unlock shots a dolly cannot and cost the minutes it really costs.
+- **Takes.** Booked 1-4 weeks out; on set per sequence
+- **Television.** Series buy a standing Steadicam operator because the walk-and-talk is weekly; features bring one in for the sequences that need it.
+
+### Running data management and DIT
+
+Cards come off camera, get copied with checksums to at least two destinations plus an LTO or cloud archive, are verified, and only then are cards cleared for reuse.
+
+- **Who.** DIT and Digital Loader (ICG Local 600); Data Manager on some shows
+- **Decides.** Two copies or three; on-set colour management by the DIT or handed to the lab; whether to buy enough cards to never clear on set.
+- **Engine.** A footage-custody chain with real verification states; an unverified or single-copy clear must be able to lose a day's work permanently, with the lost scenes needing reshoot.
+- **Takes.** Continuous through the day; 1-3 hours after wrap
+- **Television.** No material difference; episodic volume makes the archive cost larger and the pipeline more automated.
+
+### Running video assist and video village
+
+Video assist feeds monitors to the director, the DP and the village, records every take for instant replay, and runs any on-screen playback content.
+
+- **Who.** Video Assist Operator / Playback Operator (IATSE Local 695); Video Controller on multi-camera
+- **Decides.** How many monitors and to whom; whether to carry a dedicated playback operator; wireless vs hard line; who is allowed at the village.
+- **Engine.** A monitor-access model that changes decision quality and speed — more eyes on the frame catches errors earlier but adds notes and slows the day — plus a playback-content dependency cleared for rights.
+- **Takes.** On set every shooting day
+- **Television.** Multi-camera TV runs a live line cut from a video controller in a booth, which is a different job from a single-camera video assist.
+
+### Engaging the unit publicist and stills photographer
+
+Publicity captures the campaign's raw material on set: approved stills, behind-the-scenes footage, set visits and cast interviews.
+
+- **Who.** Studio marketing or producer hires; Unit Publicist, Unit Still Photographer (ICG Local 600), EPK crew
+- **Decides.** Stills on every day or selected days; whether to allow set visits and when; who has photo approval in their contract.
+- **Engine.** An asset library with per-actor approval rights (many stars hold still-approval), which gates what marketing can later use — a refused approval must actually remove images from the campaign.
+- **Takes.** Stills per day; EPK 5-20 days across the shoot
+- **Television.** TV shoots gallery days per season for key art and unit stills per episode on a much smaller allocation.
+
+### Appointing the shop steward and handling a grievance
+
+The steward polices the agreement on the floor — turnaround, meals, classification, safety — and files a grievance when production breaks it.
+
+- **Who.** Crew elect or the local appoints a Shop Steward per department; Business Agent from the local escalates
+- **Decides.** As production: whether to fix it, pay the penalty, or fight it. As crew: whether to file, walk, or let it go.
+- **Engine.** A grievance object with a cost, a resolution clock, a precedent effect on how the local treats this company next time, and a crew-morale effect — plus a safety refusal that can legally stop the day.
+- **Takes.** Filed within days; resolved in weeks to months
+- **Television.** A series accumulates grievance history across a season, so a company that runs hot loses its crew at re-up time.
+
+### Replacing or firing a crew member mid-show
+
+Someone is let go for performance, conduct, injury or a clash, and a replacement must be found inside the shooting schedule.
+
+- **Who.** Department head fires within their department; UPM signs; a department head is fired by the UPM or the producer
+- **Decides.** Who goes; whether to replace from the local's availability list or promote from within; whether to eat the days while a replacement travels in.
+- **Engine.** A knowledge-loss penalty (the replacement does not know the show), a replacement-availability search against the jurisdiction's crew pool with real lead times, and a reputation effect on the firer that changes who will take the next offer.
+- **Takes.** Replacement lands in 1-10 days depending on classification and market
+- **Television.** Firing a department head mid-season is far more damaging in TV because continuity of look, sets and props lives in that person's head.
+
+### Wrapping out a department
+
+After picture wrap each department returns rentals, sells or stores purchases, settles accounts, strikes sets and closes out its paperwork.
+
+- **Who.** Each department head runs their own wrap under the UPM; Construction and Set Dec run the longest
+- **Decides.** Sell, store or destroy; how many wrap days each department gets; whether to hold gear for possible reshoots.
+- **Engine.** A wrap ledger where returns, sales and storage post real money back and forward, plus an asset store that a sequel, a series or a reshoot can draw on — storage must keep charging monthly.
+- **Takes.** Camera/sound 1-3 days; props/costume 1-3 weeks; set dec 2-4 weeks; construction strike 1-6 weeks
+- **Television.** TV does not fully wrap between seasons: standing sets and stock go into hold at a monthly cost, which is why a cancellation triggers a real liquidation.
+
+### Recalling crew for reshoots and additional photography
+
+After a cut reveals problems, a short unit reassembles to shoot new or fixed material, often months later and with a different availability picture.
+
+- **Who.** Producer/studio orders; UPM recrews; the original department heads are recalled if available
+- **Decides.** How many days; which heads to recall at what premium; whether to shoot with a smaller crew and match later; whether the original director returns.
+- **Engine.** Crew availability checked against everyone's post-wrap bookings, a match risk when a replacement covers a recalled head, and a continuity check against stored costume, props and set assets that may have been sold.
+- **Takes.** Recall 2-6 weeks out; 1-15 shooting days
+- **Television.** Episodic 'additional photography' is usually a half-day pickup folded into the next block's schedule with whoever is already working.
+
+### Crewing a season and carrying it through hiatus
+
+A series crews once per season, then must hold or lose people across hiatus while they are free to take other work.
+
+- **Who.** UPM and department heads; showrunner approves key heads
+- **Decides.** Whether to pay a holding fee to keep a head; who gets an option for next season; who is let go and re-offered later.
+- **Engine.** Per-person loyalty, competing offers generated by the wider industry, and a holding-fee cost against a probability the person stays — the crew list must be able to erode between seasons.
+- **Takes.** Hiatus 8-30 weeks between seasons
+- **Television.** This process does not exist on features at all; it is the single biggest structural difference in how a TV crew is held together.
+
+### Cross-boarding and doubling crew across blocks
+
+A series shoots scenes from two episodes on the same day on the same standing set, while one director preps the next block and another shoots this one.
+
+- **Who.** UPM and 1st ADs; two AD teams and two directors overlapping
+- **Decides.** How many episodes to cross-board; whether to run two full AD teams; how much prep each director gets.
+- **Engine.** A schedule that can hold scenes from multiple episodes on one day with separate continuity, per-episode cost allocation, and a director-prep calendar that overlaps the shooting calendar.
+- **Takes.** Blocks are typically 7-10 days per episode, overlapping
+- **Television.** This is the defining TV process; a feature has exactly one director shooting one story and never cross-boards.
+
+### Engaging the producing director and the DGA director on a series
+
+One director sets the show's grammar and often directs the pilot and several episodes, and guest directors come in for a prep-shoot-cut cycle of a few weeks each.
+
+- **Who.** Showrunner and studio engage; Producing Director/Director-Producer sets the template, guest directors shoot their blocks
+- **Decides.** Which guest directors; how much prep each gets (DGA minimums by episode length); whether a series regular or the showrunner directs.
+- **Engine.** A director pool with availability, style, speed and a fit score against the show's template, plus a DGA prep-day and cut-day minimum per episode length that the schedule must honour.
+- **Takes.** Guest director: roughly 7-15 days prep, 7-10 shoot, 4 days for the director's cut
+- **Television.** This role has no feature equivalent; on a feature the director is on the whole picture and holds DGA cut rights over 10 weeks.
+
+### Deciding department depth against the day
+
+For every department, production chooses how many bodies to carry, knowing that a thinner department does not fail loudly — it just makes every day slower.
+
+- **Who.** Line Producer and UPM with each department head
+- **Decides.** One grip or four; one costumer or three; a rigging crew or none; a second AC per camera or a shared one.
+- **Engine.** A per-department staffing-to-time curve with diminishing returns and a breaking point below which failure rates rise; this is the single system that makes crew size a real decision instead of a budget line.
+- **Takes.** Set in prep, revised weekly under cost pressure
+- **Television.** TV departments are sized to a sustainable week for months; feature departments are sized to a sprint and can be run hot.
+
+### Option spaces
+
+**Production department positions** — 16 options
+
+`Executive Producer` · `Producer` · `Co-Producer` · `Associate Producer` · `Line Producer` · `Unit Production Manager (DGA)` · `Production Manager (TV, per block)` · `Production Supervisor` · `Production Coordinator (IA 871/161)` · `Assistant Production Coordinator` · `Travel Coordinator` · `Production Secretary` · `Office Production Assistant` · `Writers' Assistant / Script Coordinator (TV)` · `Showrunner's Assistant (TV)` · `Production Executive (studio side)`
+
+**Assistant director department positions** — 10 options
+
+`First Assistant Director (DGA)` · `Key Second Assistant Director (DGA)` · `Second Second Assistant Director (DGA)` · `Additional Second Assistant Director` · `DGA Trainee (Assistant Directors Training Program)` · `Set Production Assistant` · `Background/Extras PA` · `Basecamp PA` · `Second Unit First AD` · `Additional First AD (TV, alternating blocks)`
+
+**Camera department positions (ICG Local 600)** — 17 options
+
+`Director of Photography` · `A-Camera Operator` · `B/C-Camera Operator` · `Steadicam Operator` · `First Assistant Camera (focus puller), one per camera` · `Second Assistant Camera (clapper/loader), one per camera` · `Digital Imaging Technician (DIT)` · `Digital Loader / Data Wrangler` · `Camera Utility` · `Camera PA / Trainee` · `Still Photographer` · `Technocrane Operator` · `Remote Head Technician` · `Motion Control Operator` · `Underwater Camera Operator` · `Drone Pilot / Aerial DP` · `Video Controller (multi-camera TV)`
+
+**Grip department positions (IATSE Local 80 in LA)** — 11 options
+
+`Key Grip` · `Best Boy Grip` · `Dolly Grip` · `Company Grip` · `A-Camera Dolly Grip / B-Camera Dolly Grip` · `Crane Operator` · `Rigging Key Grip` · `Rigging Best Boy Grip` · `Rigging Grip` · `Construction Grip` · `Grip Trainee`
+
+**Electric department positions (IATSE Local 728 in LA; IBEW Local 40 for contracted studio electrical)** — 10 options
+
+`Gaffer (Chief Lighting Technician)` · `Best Boy Electric (Assistant Chief Lighting Technician)` · `Set Lighting Technician / Lamp Operator` · `Dimmer Board Operator` · `Generator Operator` · `Rigging Gaffer` · `Rigging Best Boy Electric` · `Rigging Electrician` · `Balloon Tech` · `Electrical Trainee`
+
+**Sound department positions (IATSE Local 695)** — 7 options
+
+`Production Sound Mixer` · `Boom Operator` · `Sound Utility / Second Boom Operator` · `Playback Operator` · `Video Assist Operator` · `Comms/Walkie Technician` · `RF Coordinator (large shows)`
+
+**Art department positions (ADG Local 800 in LA; USA 829 in NY)** — 13 options
+
+`Production Designer` · `Supervising Art Director` · `Art Director` · `Assistant Art Director` · `Set Designer` · `Draftsperson` · `Concept Illustrator` · `Storyboard Artist` · `Graphic Designer` · `Art Department Coordinator` · `Model Maker` · `Researcher` · `Art Department PA`
+
+**Construction department positions** — 15 options
+
+`Construction Coordinator (IA 44)` · `General Foreman` · `Propmaker Foreman` · `Propmaker / Studio Carpenter (IA 44)` · `Paint Foreman (IA 729)` · `Set Painter (IA 729)` · `Scenic Artist / Charge Scenic` · `Sign Writer` · `Plasterer / Sculptor / Model & Mold Maker (Plasterers Local 755)` · `Greensperson and Greens crew (IA 44)` · `Labor Foreman / Utility Laborer (Studio Utility Local 724)` · `Toolroom Keeper` · `Welder` · `Construction Accountant` · `Strike crew`
+
+**Set decoration positions (IATSE Local 44)** — 10 options
+
+`Set Decorator` · `Assistant Set Decorator` · `Lead Man / Lead Person` · `Buyer` · `Set Dresser (swing gang)` · `On-Set Dresser` · `Drapery Foreman / Draper` · `Upholsterer` · `Warehouse Manager` · `Set Dec Coordinator`
+
+**Property department positions (IATSE Local 44)** — 8 options
+
+`Property Master` · `Assistant Property Master` · `Second Assistant Property Master` · `Props Assistant` · `Armorer / Weapons Specialist` · `Prop Maker (props shop)` · `Food Stylist` · `Picture Vehicle Coordinator (with Transportation)`
+
+**Costume department positions (CDG Local 892 for designers; IA 705 in LA / 764 in NY for costumers)** — 14 options
+
+`Costume Designer` · `Assistant Costume Designer` · `Costume Supervisor` · `Key Costumer` · `Set Costumer` · `Truck Costumer` · `Background Costumer` · `Ager / Dyer / Distresser` · `Cutter / Fitter` · `Tailor / Seamstress / Stitcher` · `Milliner` · `Shoemaker / Cobbler` · `Costume Coordinator` · `Costume PA`
+
+**Hair department positions (IATSE Local 706 in LA / 798 in NY)** — 6 options
+
+`Department Head Hair` · `Key Hair Stylist` · `Additional Hair Stylist` · `Wig Maker / Hair Ventilator` · `Personal Hair Stylist (actor's, carried by production)` · `Barber`
+
+**Makeup department positions (IATSE Local 706 in LA / 798 in NY)** — 8 options
+
+`Department Head Makeup` · `Key Makeup Artist` · `Additional Makeup Artist` · `Body Makeup Artist` · `Special Makeup Effects Designer` · `Prosthetics Lab Technician / Sculptor / Mold Maker / Painter` · `Prosthetic Applicator` · `Personal Makeup Artist (actor's, carried by production)`
+
+**Practical special effects positions (IATSE Local 44)** — 10 options
+
+`Special Effects Coordinator` · `Special Effects Foreman` · `Special Effects Technician` · `Licensed Pyrotechnician` · `Water/Rain Technician` · `Snow Technician` · `Atmospheric/Smoke Technician` · `Mechanical Effects Engineer` · `Effects Shop Fabricator` · `Miniature Effects Supervisor`
+
+**Stunt department positions (SAG-AFTRA, not IATSE)** — 12 options
+
+`Stunt Coordinator` · `Assistant Stunt Coordinator` · `Second Unit Director (often the coordinator)` · `Stunt Rigger` · `Key Stunt Rigger` · `Stunt Performer` · `Stunt Double (per principal)` · `Utility Stunt` · `Precision Driver` · `Fight Choreographer` · `Wire/Ratchet Technician` · `Safety Supervisor for stunts`
+
+**On-set VFX positions (largely non-union in the US)** — 11 options
+
+`Visual Effects Supervisor` · `Visual Effects Producer` · `VFX Coordinator` · `On-Set VFX Data Wrangler` · `Witness Camera Operator` · `Lidar / Photogrammetry Technician` · `Techvis Artist` · `VFX Editor` · `Motion Capture Supervisor` · `Virtual Production Supervisor / LED Volume Operator` · `Brain Bar Technician (virtual production)`
+
+**Script supervision and continuity (IATSE Local 871 in LA / 161 in NY)** — 4 options
+
+`Script Supervisor` · `Second Unit Script Supervisor` · `Additional Script Supervisor (per unit)` · `Continuity Assistant (non-US practice)`
+
+**Locations department positions (Teamsters Local 399 in LA)** — 9 options
+
+`Location Manager` · `Key Assistant Location Manager` · `Assistant Location Manager` · `Location Scout` · `Location Assistant` · `Parking Coordinator` · `Location Production Assistant` · `Permit Coordinator` · `Location Accountant (large shows)`
+
+**Transportation positions (Teamsters Local 399 in LA / 817 in NY)** — 14 options
+
+`Transportation Coordinator` · `Transportation Captain` · `Transportation Co-Captain` · `Driver (5-ton, 10-ton, tractor-trailer, cube, van)` · `Honeywagon Driver` · `Cast Trailer Driver` · `Camera Truck Driver` · `Water Truck Driver` · `Picture Car Coordinator` · `Picture Car Mechanic` · `Stunt/Precision Driver liaison` · `Dispatcher` · `Mechanic` · `Fuel Truck Operator`
+
+**Catering and craft service positions** — 7 options
+
+`Catering Chef (vendor)` · `Assistant Chef` · `Catering Server / Dishwasher` · `Key Craft Service (IA 80 in LA)` · `Craft Service Assistant` · `Barista / Coffee Truck (vendor)` · `Dietary/Allergen Specialist (large shows)`
+
+**Medical, safety and security positions** — 9 options
+
+`Set Medic (IA 80 in LA)` · `Additional Set Medic` · `Safety Coordinator / Safety Officer` · `Fire Safety Officer (fire department detail)` · `Police Officer detail` · `Studio Guard / Set Security` · `Security Coordinator` · `COVID/Health Safety Supervisor (when protocols are in force)` · `Intimacy Coordinator (SAG-AFTRA standard for simulated sex and nudity)`
+
+**Accounting positions (IATSE Local 871 in LA / 161 in NY)** — 9 options
+
+`Production Accountant` · `First Assistant Accountant` · `Second Assistant Accountant` · `Payroll Accountant` · `Accounting Clerk` · `Construction Accountant` · `Location Accountant` · `Post Production Accountant` · `Tax Incentive Accountant`
+
+**Post-production positions (Editors Guild Local 700)** — 17 options
+
+`Post Production Supervisor` · `Post Production Coordinator` · `Editor` · `Additional Editor / Episodic Editor (TV)` · `First Assistant Editor` · `Assistant Editor` · `VFX Editor` · `Music Editor` · `Supervising Sound Editor` · `Dialogue Editor` · `ADR Supervisor / ADR Mixer` · `Sound Effects Editor / Foley Artist / Foley Mixer` · `Re-recording Mixer` · `Colorist` · `Online Editor / Conform` · `DI Producer` · `Post PA`
+
+**Second unit and specialty unit positions** — 12 options
+
+`Second Unit Director` · `Second Unit First AD` · `Second Unit DP` · `Second Unit Camera crew (full mirror of main)` · `Second Unit Key Grip and Gaffer` · `Second Unit Script Supervisor` · `Splinter Unit Additional 1st AD` · `Pre-rig crew (rigging gaffer and rigging key grip)` · `Marine Coordinator, Dive Safety Supervisor, Safety Divers` · `Aerial Coordinator, Helicopter Pilot, Gimbal Technician` · `Insert Unit crew` · `Plate Unit crew`
+
+**Union footing options (what the production signs)** — 11 options
+
+`IATSE Basic Agreement (LA jurisdiction, Hollywood locals)` · `IATSE Area Standards Agreement (outside LA/NY/SF/Illinois)` · `IATSE Low Budget Theatrical Agreement (tiered by budget)` · `Local-specific agreements (Local 52 NY, Local 481 New England, etc.)` · `DGA Basic Agreement / FLTTA` · `SAG-AFTRA Theatrical, TV, Ultra Low Budget, Modified Low Budget, New Media` · `WGA MBA` · `Teamsters Local 399 / 817 Black Book` · `Basic Crafts (Local 724, 755, IBEW 40, Plumbers 78)` · `Fully non-union` · `Hybrid: union above-the-line, non-union crew`
+
+**Deal memo structures for a crew hire** — 15 options
+
+`Hourly at scale with an 8-hour guarantee` · `Hourly at scale with a 10- or 12-hour guarantee` · `Hourly over-scale` · `Daily flat (a 'flat 12')` · `Weekly with a 5-day or 6-day guarantee` · `Weekly all-in (no overtime) — only legal above certain thresholds or non-union` · `Episodic guarantee with a per-episode fee (TV)` · `Prep weeks + shoot weeks + wrap weeks, each rated separately` · `Kit/box rental as a separate weekly line` · `Car allowance / mileage` · `Per diem and housing for travelling crew` · `Holding fee across hiatus (TV)` · `Option for subsequent seasons (TV)` · `Deferment against first-dollar or back-end` · `Credit guarantee: main title, end title card, or shared card`
+
+**Who hires whom (the authority chain the engine must enforce)** — 15 options
+
+`Producer hires: director, UPM, line producer, DP (with director), PD (with director), editor (with director), composer` · `UPM hires: every below-the-line department head, signs every deal memo and PO` · `Director names (producer approves): 1st AD, DP, PD, editor, script supervisor, stunt coordinator` · `DP names: camera operators, 1st ACs, gaffer, key grip` · `Gaffer hires: best boy electric, who hires the lamp operators` · `Key Grip hires: best boy grip, who hires the company grips` · `Production Designer names: art directors, set decorator, construction coordinator, prop master` · `Set Decorator hires: lead man, buyers, swing gang, on-set dresser` · `Construction Coordinator hires: general foreman, propmakers, paint, plaster, labor` · `Costume Designer names, Costume Supervisor hires: keys, set costumers, workroom` · `1st AD hires: key 2nd, 2nd 2nd, set PAs, DGA trainee` · `Production Coordinator hires: APOC, office PAs` · `Production Accountant hires: assistant accountants and clerks` · `Post Supervisor hires: assistant editors, post coordinator, post PA` · `Showrunner hires (TV): writers, producing director, guest directors, key heads`
+
+**Small production: department headcounts on a shooting day (estimates; indie feature $1-5M or a short-order half-hour; 25-45 on set)** — 22 options
+
+`Production office 3-4` · `AD 2-3 (1st, 2nd, set PA)` · `Camera 4-5 (DP operating, 1st AC, 2nd AC, DIT/loader)` · `Grip 3 (key, best boy, dolly/grip)` · `Electric 3 (gaffer, best boy, electric)` · `Sound 2 (mixer, boom)` · `Art 3 (PD, art director, PA)` · `Construction 0-2 (day-hired shop)` · `Set dec 1-2 (decorator dressing their own sets)` · `Props 1` · `Costume 2 (designer/supervisor, set costumer)` · `Hair 1, Makeup 1` · `SFX 0-1 day hires` · `Stunts: coordinator day-hired per sequence` · `VFX: supervisor day-hired on VFX days` · `Script supervisor 1` · `Locations 1-2` · `Transport 0-2` · `Catering vendor 2-3; craft service 1` · `Medic: day-hired or none` · `Accounting 1 (often part-time)` · `Post 1-2 (editor, AE)`
+
+**Medium production: department headcounts (estimates; $15-40M feature or a network hour-long; 80-150 on set)** — 22 options
+
+`Production office 6-9` · `AD 4-6 (1st, key 2nd, 2nd 2nd, 2-3 set PAs, DGA trainee)` · `Camera 9-14 (DP, A/B operators, 2 1st ACs, 2 2nd ACs, DIT, loader, utility, stills)` · `Grip 8-12 shooting + 4-8 rigging` · `Electric 8-12 shooting + 6-10 rigging` · `Sound 3 (mixer, boom, utility)` · `Art 6-10` · `Construction 15-40 at peak` · `Set dec 8-14` · `Props 3-4` · `Costume 8-12` · `Hair 4-6, Makeup 4-6` · `SFX 3-6` · `Stunts: coordinator + 2 + doubles per sequence` · `VFX 3-4 on set` · `Script supervisor 1` · `Locations 6-10` · `Transport 12-25 drivers` · `Catering 4; craft service 2-3` · `Medic 1` · `Accounting 3-4` · `Post 5-8`
+
+**Large production: department headcounts (estimates; $150M+ tentpole or premium drama; 300-600+ across all units)** — 22 options
+
+`Production office 12-20` · `AD 8-14 across units` · `Camera 20-40 across units` · `Grip 25-60 including rigging` · `Electric 25-60 including rigging` · `Sound 3-5` · `Art 20-40` · `Construction 100-300 at peak` · `Set dec 25-60` · `Props 6-12` · `Costume 25-60 plus an outside workroom` · `Hair 10-25, Makeup 10-25 plus a prosthetics lab` · `SFX 15-40` · `Stunts: coordinator, 2nd unit, 10-60 performers on big days` · `VFX 6-12 on set, hundreds at vendors` · `Script supervisors 2-3 (one per unit)` · `Locations 15-30` · `Transport 40-90` · `Catering 8-12; craft service 4-8` · `Medic 2-4 plus a safety officer` · `Accounting 6-12` · `Post 12-25`
+
+**When each department comes on and goes off (relative to day one of principal photography)** — 18 options
+
+`UPM: -8 to -14 weeks, off at wrap +2 to +6 weeks` · `Production Designer: -8 to -20 weeks, off at wrap +1 to +2 weeks` · `Production Coordinator: -8 to -12 weeks, off at wrap +4 to +8 weeks` · `Production Accountant: -8 to -12 weeks, runs 3-12 months past wrap` · `Construction Coordinator: -8 to -16 weeks, strike runs to wrap +6 weeks` · `Location Manager: -8 to -16 weeks, off at wrap +1 to +3 weeks` · `1st AD: -4 to -8 weeks, off at wrap` · `DP: -4 to -8 weeks, off at wrap (plus dailies)` · `Costume Designer: -6 to -12 weeks; Supervisor -5 to -10` · `Set Decorator: -6 to -12 weeks, off at wrap +2 to +4 weeks` · `Prop Master: -4 to -8 weeks, off at wrap +1 to +2` · `Makeup/Hair dept heads: -2 to -8 weeks for tests, off at wrap` · `Key Grip / Gaffer: -1 to -3 weeks; rigging crews -2 to -6 weeks` · `Sound Mixer: -2 to -5 days` · `Script Supervisor: -2 to -5 days` · `Camera crew (1st AC): -1 to -2 weeks for prep; 2nd AC -3 to -5 days` · `Set PAs, craft service, catering, medic: day one` · `Post Supervisor: -4 to -8 weeks; Editor and 1st AE: day one, run 20-50 weeks past wrap`
+
+**Verified rate anchors the engine can read (US, 2025-26; marked where they are guild minimums)** — 11 options
+
+`DGA UPM, features over $11M: $7,021/week studio, $9,830/week distant, plus weekly production fee (est. $943-$1,812 depending on role and setting)` · `DGA 1st AD: $6,676/week studio, $9,338/week distant` · `DGA Key 2nd AD: $4,473/week studio, $6,251/week distant` · `DGA Second Second AD: $4,223/week studio, $5,905/week distant` · `IATSE Theatrical: Gaffer and Key Grip $63.01/hr; Best Boy (grip or electric) $57.20/hr; Dolly Operator $59.19/hr; Grip and Lighting Technician $54.78/hr` · `IATSE Theatrical: 1st AC $58.49/hr; 2nd AC $52.12/hr; Local 600 DP rate cards start around $145.45/hr` · `IATSE Theatrical: Production Mixer $86.75/hr; Boom Operator $67.70/hr` · `IATSE Theatrical: Dept Head Makeup and Dept Head Hair $69.91/hr; Makeup Artist $54.63/hr; Key Hair Stylist $58.46/hr` · `IATSE Theatrical: Art Director $63.01/hr; Set Designer $55.01/hr; Property Master $63.01/hr` · `Fringes on top of wage: pension, health and welfare, vacation, holiday and employer taxes, commonly 25-40% (estimate; varies by agreement)` · `Basic cable TV early seasons may pay 83.5-90% of DGA minimum`
 
 ### What gets got wrong
 
-- A crew is modelled as a budget line rather than as a calendar of people. The staggered start schedule is the fix and it is cheap: a start offset and an end offset per post turns crew cost into a consequence of the schedule, and makes buying an extra week of art department prep a decision with a price and an effect.
-- Department heads are hired by production and everybody else is hired by a head. Modelling a flat hiring pool loses the mechanic of a head bringing their own crew, which is the main reason the choice of a head matters beyond a day rate.
-- The director's right to pick the first AD and be consulted on the UPM is contractual. It is also the cleanest available source of conflict between two of the three playable seats, and it costs almost nothing to model.
-- The budget tier is not a rate lookup, it is a ceiling with teeth. Exceeding it by more than ten per cent reprices every covered timecard retroactively at Basic Agreement rates, which means a production can be ruined by an overrun it could have notified its way out of two weeks earlier.
-- Locations and casting are Teamsters crafts, not IATSE ones. Get this wrong and the career ladders of two of the most important non-creative roles in the industry do not exist.
-- Doubling a post must cost time, not only save money. A DP who operates, a designer with no art director, a sound mixer booming their own scene: each is a real saving and a real loss of minutes per unit of work, and if only the saving is modelled, every production doubles everything.
-- A department is not a number of interchangeable people. Losing a head mid-shoot should degrade the department rather than swap a label, and the difference between promoting the best boy and importing a stranger is the difference between a department that knows the picture and one that does not.
+- Props and Set Decoration are two separate departments that both come out of IATSE Local 44 and constantly dispute jurisdiction. The working rule: if an actor touches it, it is a prop; if it sits in the room, it is set dressing. The engine needs that boundary as a property on every object, because it decides which department's budget and which department's continuity record owns it.
+- There is no '3rd AD' in US practice. The DGA titles are First Assistant Director, Key Second Assistant Director, Second Second Assistant Director, and Additional Second Assistant Director. '3rd AD' is a UK title. A game that ships a US crew list with a 3rd AD has announced it did no research.
+- The DP does not hire the gaffer and key grip as a matter of law — the production company employs them and the UPM signs the deal — but the DP names them, and they arrive as a package with their own best boys and crews. Model it as a recommendation with a strong default and a real cost to overriding it.
+- Costume Designer (CDG Local 892) and Costume Supervisor (Local 705 in LA, 764 in NY) are different jobs in different unions. The designer designs and has no payroll authority; the supervisor runs the budget, the workroom and the crew. Merging them is the single most common costume-department error in games.
+- Hair and Makeup are one union local (706 in LA, 798 in NY) and two entirely separate departments with two separate department heads. They are never one department, and a Department Head Hair does not report to a Department Head Makeup.
+- Location Managers and Casting Directors in Los Angeles are Teamsters Local 399, not IATSE. Set Medics and Craft Service are IATSE Local 80, the grip local. If the engine derives a person's contract terms from their department, it will get all four of these wrong.
+- Construction is not one union. Propmakers and carpenters are Local 44, set painters and scenic artists are Local 729, plasterers, sculptors and mold makers are Plasterers Local 755, and utility laborers are Studio Utility Local 724, with IBEW Local 40 holding contracted studio electrical work. Five rate cards under one coordinator.
+- A Unit Production Manager is a DGA position with credit restrictions: under the Basic Agreement a UPM generally cannot also take a producer credit on the same picture without a waiver, which is why 'Line Producer' and 'UPM' are two names that sometimes sit on one person and sometimes cannot.
+- Fringes are not a rounding error. Pension, health and welfare, vacation, holiday and employer payroll taxes commonly add 25-40% on top of the wage (estimate, varies by agreement), and box/kit rental posts to a different account and is fringed differently. A budget that multiplies rate by hours and stops is wrong by a quarter.
+- The thirty-mile studio zone is a real boundary with money attached. Inside it a crew member is on a studio rate and drives themselves; outside it they are on distant location with a higher rate, per diem, housing and travel days. Same person, same job, roughly 40% more per week.
+- Turnaround, meal penalties and overtime are arithmetic, not atmosphere. A forced call is bought at a stated price; a meal penalty is a rising per-person ladder; golden time is a multiplier. If these are flavour text, the entire 'do we get one more shot' decision — the most-made decision in production — has no engine behind it.
+- Rigging crews are separate crews. A rigging gaffer and rigging key grip work days ahead pre-lighting and days behind striking, with their own bodies. Without them, every new location's first setup costs the full light-from-zero time. Games that model one lighting crew cannot represent why a stage day beats a location day.
+- Television does not wrap between seasons. Standing sets go into hold at a monthly cost, stock goes into a warehouse, and department heads either take a holding fee or take another job and are gone. Feature logic — everything liquidates at wrap — produces a TV simulation that cannot represent the thing that actually kills shows.
+- The DGA guarantees a feature director ten weeks for the director's cut and a television director four days. That single number is why a feature editor's room and a TV editor's room are structurally different, and why TV runs multiple editors in parallel while a feature runs one room deeper.
+- Adding a camera is not adding a camera. It adds an operator, a 1st AC and a 2nd AC, more data, more truck space, and a lighting compromise because two cameras cannot both have the best angle. A game where the B camera is free will make multi-camera the dominant strategy and never be corrected.
+- 'Best boy' is the contract term for the second in both grip and electric and is used regardless of the person's gender; the official IATSE Local 728 classification is Assistant Chief Lighting Technician. Getting the formal and the spoken title both right is cheap and every crew member will notice.
+- Catering is a contracted vendor; craft service is crew on the payroll. They are different lines in different accounts with different failure modes, and a simulation that has one 'food' stat cannot represent a show where the caterer is fine and the craft table has nothing after 4pm.
+- A department head's departure takes the show's knowledge with them. The replacement does not know which wall is wild, which prop has a duplicate, or which actor's hair takes ninety minutes. The engine needs an explicit knowledge-loss penalty, or firing people will always be free.
+
+### Carried over: the IATSE Low Budget tiers
+
+These figures came from a hand-written pass over this domain and are kept because the agent sweep did not reproduce them. Source: Wrapbook’s guide to the IATSE Low Budget Theatrical Agreement.
+
+A union picture is made under a named agreement, and which one is a function of total production cost. The tiers run: Ultra Low Budget up to $3.3m, Tier 1A from $3.3m to $6.875m, Tier 1B to $9.9m, Tier 2 to $13.75m, and Tier 3 to $16.5m, above which the Basic Agreement applies. Qualifying cost includes above- and below-the-line across pre-production, production and post, and excludes the completion bond premium and contingency up to ten per cent of budget.
+
+- **Decides.** Which tier to aim at, and therefore whether the budget is built to sit under a ceiling. A picture budgeted at $6.8m is a different picture from one budgeted at $7.1m, and not because of the $300,000.
+- **Engine.** A tier lookup against total cost, selecting a rate table and a set of terms, stored on the title because everything downstream reads it. Ultra Low Budget additionally requires a minimum of fifteen days of principal photography and pays negotiated wages at 125% of statutory minimum wage, not less than $15 an hour, rather than scale. Exceeding a ceiling by more than ten per cent reprices the crew retroactively.
+
+---
+
+## 9. Production design, art and construction
+
+*film and television*
+
+### Design Script Breakdown
+
+Every scene read for what design must supply: set or location, period, day/night, action against the walls, what breaks or burns, what the camera sees past the door.
+
+- **Who.** Production Designer with Supervising Art Director and Art Department Coordinator
+- **Decides.** Which scenes become a stage build, a location, a re-dress of another set, or a digital extension; what goes on the set list at all; what never gets designed because it will be cut.
+- **Engine.** Scene→requirement rows: setId, INT/EXT, period year, practical action flags (door, window, water, fire, gunfire, vehicle), widest lens and coverage arc. The set list is derived from these rows, never authored.
+- **Takes.** 3-10 days on a feature; 1-2 days per episode
+- **Television.** TV breaks down against a fixed standing-set inventory; any new set must justify itself against amortisation over the episode order, so 'write it into the kitchen' is a real note.
+
+### Visual Research
+
+Period, place and social class are pinned with primary sources: archive photos, catalogues, floor plans, trade journals, museum collections, personal albums from real people in the world depicted.
+
+- **Who.** Production Designer, Art Department Researcher, Assistant Art Director
+- **Decides.** How specific the world is — decade vs year, region vs city, and which real building or real room the set is quoting.
+- **Engine.** A research corpus with dated, sourced items tagged period/region/class; a set's accuracy score is the overlap between its finish, dressing and prop choices and the corpus. Thin research caps achievable accuracy.
+- **Takes.** 1-4 weeks, running through prep
+- **Television.** A series builds the corpus once as a show bible and each episode draws down on it; feature research is disposable.
+
+### Mood Board, Look Book and Colour Script
+
+Images, palettes, textures and material samples assembled per set and per story movement, usually as a bound or PDF look book with a colour-by-sequence strip.
+
+- **Who.** Production Designer with Illustrator
+- **Decides.** The palette each set is allowed, the texture vocabulary, and where colour shifts as the story turns.
+- **Engine.** Per-set palette record (hue family, value range, saturation cap, accent hue) that downstream paint, dressing, wardrobe and lighting draws must sample from. Colour agreement with wardrobe/DP is a scored, contested value.
+- **Takes.** 1-2 weeks, revised throughout prep
+- **Television.** TV colour scripts are per-season and enforced by the format bible; a guest director who breaks palette is overruled by the showrunner, not the designer.
+
+### Concept Illustration
+
+Key frames and set illustrations that show the space from the camera's likely position, with lighting and atmosphere, so the director and studio can approve a look before money is spent.
+
+- **Who.** Illustrator / Concept Artist (IATSE Local 800; ≈$65.45/hr senior, 2025-26 rate sheets)
+- **Decides.** Which of several design directions survives; how ambitious the build reads to the people paying for it.
+- **Engine.** Each concept is an asset with a fidelity level, hours spent, and an approval roll weighted by director trust, studio taste and how well it matches the corpus. Approval locks a design variant that construction must then match.
+- **Takes.** 1-5 days per key frame; 10-60 frames on a feature
+- **Television.** Series often illustrate only the pilot; episodic sets go from sketch to draft with no illustration, which is where episodic sets go wrong.
+
+### Design Meetings and Approvals
+
+Scheduled meetings where plans, illustrations and models are walked; notes are taken; the designer defends scope against schedule and budget.
+
+- **Who.** Director, Production Designer, DP, Producer, UPM, VFX Supervisor
+- **Decides.** Every design gate: approve, approve with notes, redesign, cut. Also who wins when the DP wants a wall out and the designer wants a ceiling in.
+- **Engine.** A gate object per set with state (proposed/noted/approved/frozen/cut), an attendee list, and per-attendee satisfaction. Late changes after 'frozen' create change orders with real cost and schedule effects.
+- **Takes.** 2-4 hours weekly through prep
+- **Television.** On series the showrunner holds the approval, not the director; a director is often approving a set they inherited two episodes ago.
+
+### Location Recce (Art Department)
+
+Candidate locations measured, photographed, tested for power, ceiling height, wall condition, sightlines and what must be removed, covered or replaced.
+
+- **Who.** Production Designer, Art Director, Location Manager, Construction Coordinator
+- **Decides.** Whether the location is shootable as-is, shootable with modification, or must be replicated on stage.
+- **Engine.** Each location holds measured geometry, surface finishes, structural limits, permitted modifications, restoration bond and neighbour risk. Modification cost is computed from the delta between its finishes and the design's required finishes.
+- **Takes.** 1-3 days per location, several rounds
+- **Television.** Series convert repeat locations into standing sets by season two because recurring location fees and travel exceed a one-time build.
+
+### Build / Find / Fake Decision
+
+For every environment, the choice between stage build, practical location, backlot, LED volume, partial build plus extension, miniature or full CG, costed against shoot days.
+
+- **Who.** Production Designer with Producer, UPM and VFX Supervisor
+- **Decides.** The single largest cost lever in the department, and the one that moves the whole schedule.
+- **Engine.** A comparator that costs each route: build cost + stage rent + strike vs location fee + permits + company move + weather loss vs VFX shot count × per-shot rate. Outcome must flip when any input moves ~15%.
+- **Takes.** Continuous through prep; locked 6-10 weeks before shoot
+- **Television.** TV amortises a build across the order (a $600k set over 10 episodes is $60k/ep) and the location alternative does not amortise, so TV builds sooner than film does.
+
+### Stage Allocation and Set Layout
+
+Fitting sets onto stages with room for lighting, camera, crew circulation, fire lanes, load-in doors and the sets that must stand simultaneously.
+
+- **Who.** Production Designer, Construction Coordinator, UPM, studio Stage Manager (the lot)
+- **Decides.** What stands, what swings, what goes on which stage, and whether two sets can share a stage without blocking each other's coverage.
+- **Engine.** 2D packing with real stage rectangles, clear grid height, perm-wall/cyclorama positions, elephant-door widths, and required clearance rings (≈8-10 ft working, 4 ft fire lane). Rejected packings force a second stage booking.
+- **Takes.** 1-2 weeks, revised as sets change
+- **Television.** Series hold stages for the run and pay holding rate between blocks; features give stages back. The lot's owner (father persona) prices both.
+
+### Art Department Budget Build
+
+Costing into the standard accounts — 2200 art department, 2300 set construction, 2400 striking, 2700 set dressing, 2800 property — with labour, materials, rentals, loss and damage, and a contingency.
+
+- **Who.** Production Designer, Art Department Coordinator, UPM, Production Accountant
+- **Decides.** How the money splits between build, dressing and props; where the fat is; which set is the sacrifice.
+- **Engine.** Account-level ledger with labour (rate × crew × weeks × fringe), materials by unit, rental with duration, and per-set attribution. The player must be able to move money between accounts and see the physical result.
+- **Takes.** 2-3 weeks initial; re-forecast weekly
+- **Television.** TV runs a pattern budget per episode plus an amortised build; a pilot's build is often charged to the pilot alone, which distorts the pilot budget badly.
+
+### Concept and White Model
+
+A rough card or foamcore model at 1/4 in = 1 ft (or 1:25) to test scale, sightlines and whether the room works before drafting time is spent.
+
+- **Who.** Model Maker (Local 800; Model Builder 1 ≈$51.15/hr)
+- **Decides.** Room proportion, ceiling height, door and window placement, and whether the camera can get the shot the director described.
+- **Engine.** Model is a low-res geometry record that, once approved, seeds the drafting geometry. A camera solver checks whether the required lens/angle fits inside the model with crew clearance; failures force redesign.
+- **Takes.** 2-5 days per set
+- **Television.** Multi-camera TV models get four camera positions checked against an audience-side proscenium line, which single-camera never does.
+
+### Set Drafting
+
+Floor plans, elevations, sections and reflected ceiling plans at 1/4 in = 1 ft, with door and window schedules, finish schedule and hardware call-outs.
+
+- **Who.** Set Designer / Draughtsperson (Local 800 ≈$55.01/hr; Lead Set Designer ≈$64.87/hr)
+- **Decides.** Real dimensions: wall lengths, opening sizes, platform heights, where a wall wilds, what is stock and what is custom.
+- **Engine.** Dimensioned geometry per set with an element list (walls, openings, platforms, stairs, trim). Every element carries a material spec, a labour estimate and a finish. The takeoff for construction is computed from this, not guessed.
+- **Takes.** 1-3 weeks per major set; 40-200 sheets on a feature
+- **Television.** UK/Europe draft in metric at 1:25; US in imperial at 1/4 in. A show shooting both must reconcile, and mismatched units are a real, costly error.
+
+### Construction Drawing Package and Revision Control
+
+Issuing numbered, dated drawing sets to the mill and shops, with revision clouds, and pulling superseded sheets back out of the shop.
+
+- **Who.** Art Director with Set Designers and Art Department Coordinator
+- **Decides.** What version the shop is building to, and who eats the cost when they build to an old sheet.
+- **Engine.** Versioned sheet objects with issue date, revision letter, distribution list and an acknowledgement flag per recipient. Building to a superseded revision creates rework cost and schedule slip that the sim actually charges.
+- **Takes.** Continuous; issues every few days through build
+- **Television.** Episodic swing sets are issued in a 5-8 day cycle, so revision discipline is tighter and errors hit the shooting week directly.
+
+### Moulding Profiles and Millwork Detail
+
+Full-size or 1½ in = 1 ft profile drawings for cornice, casing, base, panelling and stair parts, with a call on stock profile vs custom knife.
+
+- **Who.** Set Designer, Construction Coordinator, mill foreman
+- **Decides.** Period credibility per linear foot, and whether the mill runs stock moulding, a custom knife, or the staff shop runs plaster cornice.
+- **Engine.** A profile library with period tags, cost per linear foot by route (stock / custom knife setup + run / cast plaster / foam) and lead time. Period-wrong profiles reduce the set's accuracy score visibly in close-up shots.
+- **Takes.** 1-3 days per set; custom knives 1-2 weeks lead
+- **Television.** Series buy a custom knife once and run it for years; features rent or substitute.
+
+### Presentation Model
+
+A finished scale model, painted and sometimes dressed, used to sell the design to the studio and to brief the DP and construction crew.
+
+- **Who.** Model Maker
+- **Decides.** Whether the studio approves an expensive set; and how well the crew understands the intent before the first flat goes up.
+- **Engine.** A model asset with fidelity and hours; raises approval probability and reduces construction misinterpretation rate (a hidden error term that otherwise produces rebuilds).
+- **Takes.** 1-3 weeks
+- **Television.** Rare on episodic television outside pilots and event series; digital walkthroughs replace it.
+
+### Virtual Art Department Build
+
+Digital sets modelled and lit in a real-time engine for previs, virtual scouting and, on LED-volume shows, as the actual photographed background.
+
+- **Who.** VAD Supervisor and Unreal artists under the Production Designer
+- **Decides.** What is physically built to the volume's edge and what exists only as pixels; the resolution and parallax budget of the environment.
+- **Engine.** Digital assets with polycount, texel density, load budget for the volume's render nodes, and a physical-build boundary line. Volume frustum math must constrain camera moves and focal lengths the player can shoot.
+- **Takes.** Starts ~12 weeks before the first volume shoot day
+- **Television.** Streaming series reuse volume environments across episodes at near-zero marginal cost; features build bespoke and abandon.
+
+### Virtual Scout
+
+Walking the digital set in headsets, placing cameras, setting lens and height, and finding what is missing before it is built.
+
+- **Who.** Director, DP, Production Designer, VFX Supervisor in VR or on a volume
+- **Decides.** Camera positions, which walls must wild, what ceiling is needed, and what is out of frame and can go unbuilt.
+- **Engine.** Camera solutions recorded from the scout become constraints on the build: any wall inside a recorded frustum must exist physically at required fidelity; walls never seen drop to a cheaper spec.
+- **Takes.** Half a day to two days per set
+- **Television.** Rare on episodic television except on volume shows and prestige series.
+
+### Construction Bid and Shop Award
+
+Drawing package sent to studio mills and independent set shops for bids; bids compared on labour hours, materials, overhead and delivery date.
+
+- **Who.** Construction Coordinator (Local 44; ≈$4,048/wk scale) with UPM
+- **Decides.** In-house lot mill vs outside shop vs coordinator-hired crew on production payroll; who builds what and for how much.
+- **Engine.** Shops as entities with capacity (crew heads, mill square footage), current load, quality rating, overrun history and a bid model. Overloaded shops bid high or deliver late; the lot's own mill (father persona) prices at internal rates.
+- **Takes.** 1-2 weeks to bid; award 8-12 weeks before shoot
+- **Television.** Series usually keep a standing construction crew on the show payroll rather than bidding out, because swing sets arrive weekly.
+
+### Construction Schedule and Build Order
+
+Sequencing the build backwards from the shooting schedule: which set stands first, what can be built while another is being shot, what needs paint and dressing days before camera.
+
+- **Who.** Construction Coordinator with 1st AD and UPM
+- **Decides.** Crew size by week, overtime exposure, and which set is at risk if anything slips.
+- **Engine.** Critical-path scheduler over set tasks (mill, erect, plaster, paint, dress) with crew-hour capacity, a hard 'ready for dressing' date per set, and a turnaround rule. Slippage compounds into overtime cost or a shoot-day move.
+- **Takes.** Build periods of 4-16 weeks on features
+- **Television.** Episodic construction runs a rolling weekly cycle: build Monday-Thursday, paint Friday, dress the weekend, shoot Monday — with almost no float.
+
+### Materials Buy
+
+Ordering lumber (1x3 and 1x4 white pine, 2x4 studs), sheet goods (1/4 in lauan, 3/4 in ply, MDF), hardware, foam billet, plaster, paint and expendables.
+
+- **Who.** Construction Coordinator, Toolman, Purchasing
+- **Decides.** Quality tier, whether stock is bought new or pulled from the lot's reuse yard, and exposure to commodity price swings.
+- **Engine.** A materials market with per-unit prices that drift and spike (lumber, steel, foam), lead times, and a lot-owned salvage inventory that can be drawn down. Substitutions change build hours and finish quality.
+- **Takes.** Ordering weekly; long-lead items 2-6 weeks
+- **Television.** Series keep a standing lumber and hardware stock on the stage; features buy per build and lose the surplus at strike.
+
+### Stage Prep and Floor Lay
+
+Stage cleared and swept, floor laid — plywood deck, hardwood, tile, lino, dirt, gravel or water deck — set lines snapped from the plot plan, lockups established.
+
+- **Who.** Propmaker crew (Local 44) with Construction Coordinator
+- **Decides.** Floor finish and level changes, which determine camera dolly smoothness, sound underfoot, and whether the set can be rolled or must be floated.
+- **Engine.** Floor is a surface object with material, levelness tolerance, footfall sound signature and dolly-track compatibility. A bad floor adds grip time per setup and can force sound to loop footsteps.
+- **Takes.** 2-5 days per stage
+- **Television.** Multi-camera sets lay a smooth, level pedestal-friendly floor because pedestal cameras cannot cross a threshold; single-camera can build steps freely.
+
+### The Mill: Flats and Units
+
+Flats framed — Hollywood flats are 1x3 on edge skinned in 1/4 in lauan, modular at 4 ft wide and heights in 2 ft steps — plus doors, windows, stairs, platforms, panelling and casework.
+
+- **Who.** Mill Foreman, Gang Bosses and Propmakers (Local 44)
+- **Decides.** Wall system (Hollywood flat, muslin/Broadway flat, 2x4 stud, steel stud, rental modular), whether units are wild, and build quality against the closest lens on them.
+- **Engine.** Per-unit labour hours by type and finish grade, material takeoff, mill capacity in crew-hours/day, and a quality value that determines how it survives repeated wilding, stunt impacts and 35mm close-ups.
+- **Takes.** Hours per flat; 2-8 weeks per major set
+- **Television.** Television flats are built to be wilded and re-erected hundreds of times over seasons and are specced heavier; a one-off feature flat can be built to survive twelve weeks.
+
+### Metal Shop and Engineered Structure
+
+Steel and aluminium framing for tall walls, catwalks, ceilings, elevated platforms, gimbal bases and anything that carries people or takes stunt load.
+
+- **Who.** Propmakers with welding certification, Construction Coordinator, and a licensed structural engineer where required
+- **Decides.** Whether the design's height and span are structurally possible, and what has to be engineered and signed off.
+- **Engine.** Load model: live load per square foot, span tables, point loads for rigging, and an engineering sign-off gate above thresholds. Unsigned structures are a safety-incident probability, not just a label.
+- **Takes.** 1-4 weeks depending on scope
+- **Television.** Long-running series keep engineered structures standing and re-certify; features build once to the minimum defensible spec.
+
+### Set Erection (Stand-Up)
+
+Units trucked in through the elephant door, walls stood on set lines, bolted and braced, openings hung, platforms decked, ceilings dry-fitted.
+
+- **Who.** Propmaker crew under Construction Foreman, on stage
+- **Decides.** The real geometry the camera will live in; discrepancies from drawings get resolved here in favour of whatever is standing.
+- **Engine.** Erection converts unit objects into a placed geometry graph with tolerances. Deviation from drafted dimension propagates to dressing fit, backing alignment and VFX survey — a real downstream error, not cosmetic.
+- **Takes.** 2-10 days per set
+- **Television.** Episodic swing sets are stood up and struck weekly on the same stage footprint; the 'set lines' become permanent floor marks.
+
+### Wild Walls, Floats and Camera Access
+
+Designating which walls pull out, how they hinge or lift, how ceilings float, and the hardware (wall jacks, hinge plates, pin hinges, bracing, casters) that lets the grips move them in minutes.
+
+- **Who.** Construction Coordinator and Key Grip agreeing hardware; propmakers install
+- **Decides.** How fast the camera can turn around in the set — which is shooting-day speed, not an art department nicety.
+- **Engine.** Each wall has a wild method, a two-grip move time in minutes, and a re-set accuracy. Coverage plans that need a wild wall consume grip minutes; a hard wall forces the camera outside or the shot to change.
+- **Takes.** Designed in drafting; installed during erection
+- **Television.** Multi-camera sets barely wild because the fourth wall is already open to the audience; single-camera drama wilds constantly.
+
+### Hard Ceilings, Greenbeds and Goalposts
+
+Deciding whether the set has a hard ceiling, wild ceiling pieces, stretched muslin, beams only, or open sky to the grid, and building lighting access above it.
+
+- **Who.** Production Designer, Construction Coordinator, Gaffer, Key Grip
+- **Decides.** Whether lighting comes from above the set or must all come from the floor and through windows.
+- **Engine.** Ceiling state modifies lighting setup time, achievable looks and the Gaffer's fixture options; greenbeds add build cost and load but restore top light. It must change the DP's available lighting choices, not just prose.
+- **Takes.** 2-6 days per set
+- **Television.** Multi-camera almost never has a ceiling; prestige single-camera drama uses hard ceilings as a signature and pays for it in setup minutes.
+
+### Backlot and Exterior Facade Build
+
+Street facades, porches, shopfronts and partial buildings on backlot or location, usually one or two storeys practical with the rest faked or extended.
+
+- **Who.** Construction Coordinator, Propmaker crew, Plasterers, Painters, Greens
+- **Decides.** How much of the street is real, which directions can be shot, and what the weather and daylight exposure will be.
+- **Engine.** Facade objects with shootable sightline arcs, height built vs height needed, and a weather/daylight schedule that determines usable hours. Backlot streets held by the lot (father persona) carry re-dress cost per production.
+- **Takes.** 3-10 weeks
+- **Television.** A series that re-dresses a standing backlot street each season pays a fraction of the first build; studio backlots price this as a recurring line.
+
+### Staff Shop: Moulds and Casting
+
+Moulds taken and parts run: cornice, brick and stone veneer, ornament, rosettes, statuary and repeated architectural units. Ultracal 30 (≈85% plaster, 10% portland, 5% silica) for hard tooling; Hydrocal for shells.
+
+- **Who.** Plasterers, Sculptors and Mould Makers (OPCMIA Local 755, Hollywood)
+- **Decides.** Whether repeats are cast, CNC'd in foam, vac-formed or bought; how many pulls a mould must survive.
+- **Engine.** Mould objects with material, pull count before detail loss, cure time per pull (hours), weight per cast unit and installation labour. Underestimating pulls forces a remould mid-build with real schedule cost.
+- **Takes.** Mould 2-5 days; pulls hours each; 2-6 weeks per set
+- **Television.** Series amortise the mould across seasons; the mould itself becomes an asset the production company owns and can rent out.
+
+### Sculpting and CNC
+
+Clay, foam and digital sculpting of ornament, creatures, statuary, rockwork and vehicle bodies; hot-wire and CNC-milled EPS/urethane, hard-coated and finished.
+
+- **Who.** Sculptors (Local 755), CNC operators, Model Makers
+- **Decides.** Whether a form is hand-sculpted (unique, slow, alive) or milled from a digital model (fast, repeatable, sometimes dead).
+- **Engine.** Form assets with a hand/digital origin flag, hours, material volume, hard-coat spec and a 'read' quality at distance bands. Milled foam without hard-coat fails on impact — a real prop failure event.
+- **Takes.** Days to many weeks
+- **Television.** Television rarely has sculpt time; digital mill and buy-in dominate outside of genre shows with a standing shop.
+
+### Scenic Paint: Base and Finish
+
+Prime, base coat, glaze and finish on every built surface, matched to approved paint elevations and sample boards; sheen chosen for camera.
+
+- **Who.** Charge Scenic / Paint Foreman and Painters (IATSE Local 729; ≈$49.85/hr scale)
+- **Decides.** Colour, sheen (flat, eggshell, satin, semi-gloss, gloss) and finish technique per surface — which drives how the set reflects and bounces light.
+- **Engine.** Each surface holds colour (measurable value/saturation), sheen and reflectance. Reflectance feeds the lighting model: a gloss wall bounces and flares, a flat wall eats light and forces more fixtures or a stop.
+- **Takes.** 2-6 days per set; sample boards 1-2 days
+- **Television.** Series maintain paint formulas on file and touch up weekly; features paint once and the standby painter patches.
+
+### Faux Finishes and Specialty Scenic
+
+Wood graining, marbleising, stone, brick, rust, verdigris, gilding, stencilling, murals, trompe l'oeil and wallpaper hanging on built surfaces.
+
+- **Who.** Scenic Artists (Local 729; scenic artists are Local 800 for fine-art and mural work, USA 829 in New York)
+- **Decides.** Whether an expensive material is bought or faked — real marble vs painted marble is a cost and weight decision as much as a look decision.
+- **Engine.** Finish routes with cost per square foot, labour hours, weight per sq ft, and a lens-distance credibility threshold (a painted marble that reads at 35mm fails at 100mm macro). Coverage plans must consult it.
+- **Takes.** Days to weeks per surface
+- **Television.** Television leans harder on faked finishes because sets must be light enough to wild and cheap enough to strike.
+
+### Aging and Distressing
+
+Dirtying down built surfaces, dressing and props with glazes, dry brush, spatter, Fuller's earth, aging sprays, water staining, char and wear at hand height and floor level.
+
+- **Who.** Painters and Aging specialists (Local 729), with Set Decorator and Property Master on dressing
+- **Decides.** How long the room has been lived in, by whom, and how poor or careful they were — the single most legible storytelling act the paint crew performs.
+- **Engine.** An aging value per surface and per dressed item (0-100) plus a wear-pattern type keyed to use (hands on doorframes, feet at thresholds). Continuity across days and reshoots must reference the recorded value.
+- **Takes.** 1-3 days per set; ongoing on shoot days
+- **Television.** Series must hold aging constant for years across strikes and re-erections, so aging is photographed and formula-recorded, not improvised.
+
+### Sign Writing and Hand Lettering
+
+Hand-painted signage, gold leaf, window lettering, vehicle lettering, neon layout and period-correct typography executed at full scale on the set.
+
+- **Who.** Sign Writers (IATSE Local 729) and Graphic Artists (Local 800)
+- **Decides.** Whether signage is hand-lettered (period-true, expensive) or printed vinyl (fast, sometimes reads wrong on camera).
+- **Engine.** Sign assets carry typeface/period-correctness, execution route, clearance status and readability at distance. Wrong-period type is an accuracy penalty visible in any wide shot containing the sign.
+- **Takes.** Hours to several days per sign
+- **Television.** Television leans on printed graphics for speed; period features hire sign writers because printed vinyl has the wrong surface under light.
+
+### Chroma Screen Application
+
+Painting or hanging chroma green or blue on walls, window bucks, floors and set extensions — Rosco 5711 green, 5710 blue, matte vinyl acrylic, roughly 300 sq ft per gallon, recoat in 1-2 hours at 75°F.
+
+- **Who.** Painters (Local 729) and Grips, specified by the VFX Supervisor and Production Designer
+- **Decides.** Green vs blue, painted vs fabric vs LED, how much of the set is screen, and how far the screen sits from talent.
+- **Engine.** Screen surfaces with area, distance to subject and illuminance; spill contamination on skin and wardrobe scales with proximity and green-in-frame area, producing real keying difficulty and roto cost in post.
+- **Takes.** Half a day to 3 days per set
+- **Television.** Volume-based series replace screens with LED entirely; broadcast television keeps permanent cyclorama green on dedicated stages.
+
+### Backings: Translights and Backdrops
+
+Selecting and hanging what is seen out of every window and door: painted backdrops, photographic translights on 9-mil polyester, digital print vinyl, cyclorama, LED wall or greenscreen.
+
+- **Who.** Production Designer, Art Director, Grips to hang, Gaffer to light; supplied by backing houses such as J.C. Backings (4,500+ backings for rental)
+- **Decides.** Whether the view is real, painted, photographic or digital; its scale, its time of day, and whether it can be lit to change.
+- **Engine.** Backing assets with image content, dimensions, translucency, minimum standoff distance and lighting requirement (fixtures + power). Too little standoff creates visible falloff and a wrap-around shadow the sim should punish.
+- **Takes.** 1-3 days to hang and light; sourcing 1-4 weeks
+- **Television.** Series rent the same backing for the run — a real recurring line item — while features order custom prints for one sequence.
+
+### Set Dressing Research and Pull
+
+Building a dressing list per set — furniture, rugs, lamps, art, books, plants, kitchen contents, curtains — then pulling from prop houses, buying, or commissioning builds.
+
+- **Who.** Set Decorator (Local 44; ≈$4,157/wk scale) with Lead Person (Leadman) and Buyer
+- **Decides.** Who the characters are through what they own: period, class, taste, tidiness, and how long they have lived there.
+- **Engine.** Item records with period range, class tier, condition, dimensions, source, rental rate per week and clearance status. Character-consistency scoring compares the dressing set against the character's income, history and taste profile.
+- **Takes.** 2-6 weeks per set in prep
+- **Television.** Series build a permanent inventory owned or on long-term rental; the decorator's rental burn is a recurring monthly cost that survives hiatus.
+
+### Buying and Rental House Pulls
+
+Physical pulls at studio and independent prop houses, retail buying, antique dealers, cleared art rental, and estate sourcing, with hold tags, pull sheets and delivery booking.
+
+- **Who.** Buyer and Set Decorator; Property Master for props
+- **Decides.** Rent vs buy vs build for each item, which sets the rental burn against the purchase and resale value.
+- **Engine.** A prop-house market: inventories with availability windows, weekly rates, loss-and-damage exposure, and competing productions holding the same piece. Rental over a long TV run must eventually cost more than buying.
+- **Takes.** Days per set; ongoing through the shoot
+- **Television.** On a long series the buy-vs-rent crossover is usually 8-14 weeks, so series buy what features rent.
+
+### Drapery, Upholstery and Floor Covering
+
+Making and hanging curtains and blinds, reupholstering furniture in period-correct fabric, laying carpet, lino, tile and rugs on set.
+
+- **Who.** Drapers, Upholsterers and Floorcovering crafts (Local 44)
+- **Decides.** Fabric, period and colour on the largest soft surfaces in frame, and whether windows can be dressed to control light.
+- **Engine.** Soft goods with yardage, fabric spec, flame-retardancy certification (NFPA 701 where required), labour hours, and an acoustic absorption value that changes the set's reverb and thus production sound quality.
+- **Takes.** 1-3 weeks lead; 1-2 days to install
+- **Television.** Multi-camera stages need heavy soft goods for audience acoustics; single-camera drama uses them to kill slap on hard sets.
+
+### Dressing Load-In
+
+Trucking, carrying and placing every piece of dressing to the decorator's plan after paint is dry and before camera prep, including hanging art and installing practicals.
+
+- **Who.** Lead Person with the swing gang (set dressers, Local 44)
+- **Decides.** Final placement of everything, and what gets cut when the truck does not fit or the set is not ready.
+- **Engine.** Load-in is a crew-hour task gated by paint-dry state and stage access, with truck capacity, elevator/door constraints and an item-by-item placement record used for continuity and strike.
+- **Takes.** 1-4 days per set
+- **Television.** Episodic swing sets load in over a weekend and strike the following weekend; the same gang does both, so labour is double-counted per episode.
+
+### Greens
+
+Live nursery stock, cut greens, silks, sod and artificial turf, hedges, ground cover, mulch, leaves, rockwork, camo netting and in-ground planting where permits allow, indoors and out.
+
+- **Who.** Greens Foreman / Greensperson (Local 44), supplied by houses such as Green Set Inc.
+- **Decides.** Season and climate on screen, and whether the location's real season can be overridden.
+- **Engine.** Greens items with live/artificial flag, wilt clock for cut greens (hours to days by species and stage heat), fire-retardant treatment state, weight, and a season/latitude match value driving whether the shot reads right.
+- **Takes.** 1-5 days to dress; live greens need daily maintenance
+- **Television.** Series shooting out of season on a standing exterior re-green every block; features green once and shoot out.
+
+### Property Breakdown and Sourcing
+
+Every object an actor touches identified from the script, then sourced: hand props, period pieces, practical devices, paperwork, money, food, luggage, phones, weapons.
+
+- **Who.** Property Master (Local 44; ≈$63/hr, ≈$4,353/wk distant scale) with Assistant Property Master and Props Assistants
+- **Decides.** What the actor actually holds — which changes performance, blocking and the shot; and how many of each exist.
+- **Engine.** Prop records tied to scenes and characters, with tier, count, condition, clearance, weight and whether it functions. Scene playability must fail if a required prop is missing, not merely warn.
+- **Takes.** 2-6 weeks prep; ongoing daily
+- **Television.** On series the property department maintains a continuity inventory across years — a character's watch must still exist in season four.
+
+### Prop Making and Fabrication
+
+Building props that cannot be bought: sci-fi devices, period reproductions, oversized items, breakdown versions and anything the script invented. Routes include 3D print, CNC, vac-form, silicone mould and urethane cast, machining and hand carving.
+
+- **Who.** Propmakers (Local 44), Model Makers (Local 800), specialist vendors
+- **Decides.** Fabrication route, fidelity, how many copies, and how much of the design is functional versus cosmetic.
+- **Engine.** Fabrication route table: setup cost, per-unit cost, unit time, achievable tolerance/detail, durability under handling and stunt use. Copies beyond the first should be cheaper per unit via mould amortisation.
+- **Takes.** Days to 8+ weeks for a hero build
+- **Television.** Series design hero props once and run duplicates for years; the mould and the digital file become owned assets.
+
+### Hero, Stunt, Background and Multiples
+
+For each significant prop, deciding the family: hero (close-up, full detail), matching seconds, stunt (rubber, foam, soft), breakaway, practical (functioning) and background dress versions, and how many of each.
+
+- **Who.** Property Master with Stunt Coordinator and SFX Supervisor
+- **Decides.** How many takes a destructive action can have, and whether the day dies because there was only one.
+- **Engine.** Per-prop inventory counts by variant with consumption on take. Destroying the last copy of a required prop blocks further takes and forces a reshoot or a schedule change — an actual failure state.
+- **Takes.** Ordered in prep; 1-6 weeks lead
+- **Television.** Television carries fewer multiples and shoots destructive action late in the day for that reason.
+
+### Breakaways and Action Props
+
+Sugar-glass and resin breakaway glass, bottles, chairs, windows and balsa furniture, specced so they shatter into blunt pieces; modern professional breakaways are cast resin, not sugar.
+
+- **Who.** Property Master, Propmakers, SFX Supervisor, Stunt Coordinator
+- **Decides.** What breaks, how it breaks, how many copies, and whether the performer is safe touching it.
+- **Engine.** Breakaway items with a fragility spec, copies on hand, reset time per take (minutes), cleanup time and an injury probability that scales with material choice, rehearsal count and stunt-double substitution.
+- **Takes.** 1-4 weeks lead; minutes to reset per take
+- **Television.** Television schedules fewer resets, so breakaway-heavy scenes get cut down or rewritten in the room.
+
+### Graphics Package
+
+Every printed and displayed thing: signage, labels, packaging, newspapers, letters, files, ID cards, menus, posters, currency, book jackets, wayfinding, vehicle livery.
+
+- **Who.** Graphic Designer / Graphic Artist (Local 800)
+- **Decides.** The fictional brand world — invented brands vs cleared real ones — and the period fidelity of every piece of type in frame.
+- **Engine.** Graphic assets with period-correct typeface, print process, clearance record and print lead time. A brand object shared across props, dressing and picture cars so the world stays internally consistent.
+- **Takes.** 4-10 weeks across prep; reprints within 24-48 hours
+- **Television.** Series build a brand bible that recurs weekly and is reprinted constantly; features design a world once.
+
+### Screen Graphics and Playback
+
+Everything shown on a phone, laptop, monitor or television in frame: animated UI, messages, TV broadcasts, security feeds, with playback cued to camera and synced to the actor's action.
+
+- **Who.** Graphic Designer / Playback Supervisor (Video Assist / Local 600 or 695 depending on scope) with Property Master
+- **Decides.** Whether screens are practical (playing live, must be cued and sync-safe) or added in post.
+- **Engine.** Screen assets with refresh rate, shutter-sync risk at given frame rates, brightness and content cue timing. Practical playback costs setup minutes and re-cue time per take; post replacement costs VFX shots.
+- **Takes.** 3-8 weeks build; minutes to cue per take
+- **Television.** Series build screen-graphics templates once and fill content weekly; features build bespoke animations per sequence.
+
+### Clearance and Legal Sign-Off
+
+Every visible logo, artwork, book, newspaper, phone number, address, licence plate and branded product either licensed, replaced with invented alternatives, or removed. Fictional numbers are 555-0100 to 555-0199; 2GAT123 is the stock fake California plate.
+
+- **Who.** Production Counsel and clearance service, with Property Master, Set Decorator and Graphic Designer supplying the list
+- **Decides.** What can legally appear; whether a piece is cleared, needs a release, or must be repainted before camera rolls.
+- **Engine.** Every graphic, artwork and product item carries a clearance state (cleared / pending / denied / invented). Uncleared items in a delivered cut create an E&O failure that blocks delivery until a paint-out is paid for.
+- **Takes.** Weeks in prep; per-item turnaround 2-10 days
+- **Television.** Series get blanket clearances and a standing invented-brand library; features clear per title and carry E&O exposure into delivery.
+
+### Weapons and Armoury
+
+Selecting, transporting, securing and issuing weapons; briefing cast; managing blanks, dummy rounds and non-guns. California SB 132 (2023) made Safety Bulletins 1 and 2 mandatory and requires trained personnel and limits live ammunition.
+
+- **Who.** Property Master with Armorer / Weapons Specialist; Safety Advisor where required
+- **Decides.** Real firearm with blanks vs inert real vs replica non-gun vs rubber vs airsoft vs full CG muzzle flash — a safety decision with cost and schedule attached.
+- **Engine.** Weapon objects with functional state, ammunition type, chain-of-custody log, required personnel on set, safety-meeting state, and a jurisdiction rules table. Violations raise incident probability and can halt production.
+- **Takes.** Prep weeks; 30-60 min safety meeting per weapons day
+- **Television.** Television's weekly pace makes per-episode armorer engagement and repeated safety meetings a recurring cost that indie features often skip illegally.
+
+### Food Styling and Consumables
+
+Preparing food and drink that must look right on camera, survive hours under light, be safe to eat repeatedly, and be reset identically between takes.
+
+- **Who.** Property Master with Food Stylist and Props Assistants
+- **Decides.** Real food vs styled fake, how many resets exist, and what an actor can consume across a day of takes.
+- **Engine.** Consumable stock with per-take consumption, reset time, spoilage clock under stage heat, dietary and allergy constraints per performer, and continuity of plate state across coverage.
+- **Takes.** Prepped daily, 2-4 hours ahead of the scene
+- **Television.** Series with recurring restaurant or kitchen sets run a standing food budget and a repeatable menu.
+
+### Picture Cars: Casting and Prep
+
+Choosing and sourcing every vehicle in frame — hero, matching doubles, stunt units, background atmosphere cars — then prepping: paint, period plates, livery, interior dressing, mechanical reliability.
+
+- **Who.** Picture Car Coordinator with Transportation Coordinator, Production Designer and Property Master
+- **Decides.** What the characters drive, how many copies exist for destruction, and the period accuracy of every car in a street shot.
+- **Engine.** Vehicle records with make/model/year, condition, copies, rigging compatibility, daily rate or purchase price, resale value, and a period-correctness check against the scene's year and region.
+- **Takes.** 3-8 weeks prep; 1-3 days per vehicle to prep
+- **Television.** Series own or long-term-lease hero vehicles and keep a background pool on the lot; features rent per shoot and return.
+
+### Picture Car Rigging and Process
+
+Rigging for driving scenes: process trailer / low loader, tow dolly, pod or biscuit rig (a low chassis with a roof-level driver), arm cars such as the U-Crane or Blackbird, gimbal bucks, poor-man's process, LED volume or greenscreen with plates.
+
+- **Who.** Picture Car Coordinator, Transportation, Grips, Camera and Stunt Coordinator
+- **Decides.** Whether the actor drives, appears to drive, or is composited; which controls safety, shooting speed and how the scene can be covered.
+- **Engine.** Rig objects with setup time, crew requirement, permitted speed, achievable camera positions, lighting control, and an actor-safety modifier. Each rig should open and close specific shot types, not be interchangeable.
+- **Takes.** 2-4 hours to rig; setup time per position 20-60 min
+- **Television.** Episodic television overwhelmingly uses process trailers and poor-man's process because arm cars and volumes are too slow for the day's page count.
+
+### VFX Survey: Scan, Reference and Witness
+
+LIDAR scanning and photogrammetry of sets and locations, chrome and grey ball, colour chart, HDRI capture, tracking markers placed by the art department, witness cameras and as-built measurements.
+
+- **Who.** VFX Supervisor and Data Wrangler, with Art Director supplying drawings and Set Decorator supplying the build state
+- **Decides.** How accurately post can extend, replace or re-light what was built, and how many tracking markers scar the set finish.
+- **Engine.** A per-set digital twin with scan accuracy, HDRI capture points, marker placement, and a downstream VFX cost that falls as survey completeness rises. Skipping the scan must make later shots measurably more expensive.
+- **Takes.** 2-6 hours per set; scanning as sets are struck
+- **Television.** Volume-based series scan before the season and re-use; episodic drama often skips survey entirely and pays in roto.
+
+### Set Extension Planning
+
+Agreeing the line where the physical build stops and the digital or miniature extension begins — typically build to 8-12 ft, with the top of the world added later, or forced perspective and hanging miniatures.
+
+- **Who.** Production Designer with VFX Supervisor and DP
+- **Decides.** How tall the build must be, which determines steel, engineering, stage clear height and lighting position.
+- **Engine.** Extension line as a height value per wall, with a relationship between built height, lens/height of camera, and number of VFX shots requiring extension. Lowering the line saves build cost and raises VFX cost — a live tradeoff.
+- **Takes.** Decided in prep; revisited at tech scout
+- **Television.** Series set the line once in the pilot; every later episode inherits it, so a bad line costs for years.
+
+### Miniatures and Bigatures
+
+Building physical miniatures at scales from 1:24 to 1:3 for exteriors, ships, cities and destruction that would be prohibitive full size.
+
+- **Who.** Model Makers (Local 800) and specialist model shops, under the Production Designer and VFX Supervisor
+- **Decides.** Scale — which sets the physics of any water, fire, smoke or debris photographed against it and the camera speed needed.
+- **Engine.** Scale factor drives frame rate for believable motion (roughly √scale), particle size limits, and build cost by scale. Choosing 1:12 instead of 1:6 must change the camera speed the shot needs.
+- **Takes.** 6-20 weeks
+- **Television.** Effectively extinct in episodic television; survives on features and event series with genre budgets.
+
+### Standby Art Department on Shoot Day
+
+The department's presence during shooting: solving design problems live, patching and touching up paint, adjusting dressing for camera, handing props, and keeping the set shootable.
+
+- **Who.** On-Set / Standby Art Director, Standby Painter (Local 729), Standby Props, On-Set Dresser
+- **Decides.** How quickly a problem on the floor is solved without losing the setup, and who takes responsibility when the wall is in the shot.
+- **Engine.** Standby crew as capacity that absorbs on-floor problem events; without them, events convert to lost setup minutes. Each craft covers a distinct event class (paint scuff, dressing swap, prop failure, wall move).
+- **Takes.** Every shooting day, full crew call
+- **Television.** Television's compressed day means standby crew make more unilateral calls; on features the designer is usually reachable and consulted.
+
+### Hot Set, Continuity and Resets
+
+Photographing and recording the exact state of the set and props before and after each take, declaring 'hot set' so nothing is moved overnight, and resetting exactly between takes and across days.
+
+- **Who.** On-Set Dresser and Property Master with the Script Supervisor
+- **Decides.** Whether coverage cuts together, and whether a pickup weeks later can match.
+- **Engine.** Per-setup state snapshot: every dressed item's position, every prop's condition and level (drink fill, cigarette length, food eaten). Mismatch on a later day creates a continuity error that surfaces in the edit.
+- **Takes.** 2-10 minutes per reset; continuous
+- **Television.** Television's standing sets are hot across whole seasons; a crew member moving a lamp on hiatus creates errors nobody can trace.
+
+### Set Changes, Swings and Overnight Turnarounds
+
+Converting a set overnight: striking one dressing and installing another, repainting, moving wild walls, changing season or time period on the same footprint.
+
+- **Who.** Construction Coordinator, Lead Person, swing gang, paint crew — often on a night crew
+- **Decides.** Whether a stage can serve two sets in one shooting week, which is the difference between one stage booking and two.
+- **Engine.** Turnaround task with crew hours, a hard clock between wrap and next call, overtime and night-premium cost, and a failure state if the work cannot fit — which pushes the shoot day.
+- **Takes.** 8-14 hours overnight; 1-3 days for a full swing
+- **Television.** This is the core rhythm of episodic television; features do it rarely and pay premium when they do.
+
+### Change Orders and Script Revisions
+
+Tracking what a coloured-page revision does to a set already drafted, bid or built, and issuing costed change orders before the work is done.
+
+- **Who.** Art Department Coordinator, Construction Coordinator, UPM, Production Accountant
+- **Decides.** Whether to absorb, rebuild, redesign or push back on a writer's change — and on this show, the writer may be the player's father.
+- **Engine.** Change orders link a script revision to affected set elements with delta cost and delta schedule. Late-stage changes cost superlinearly with build progress (design 1×, in mill 3×, standing 6× — estimates to tune).
+- **Takes.** Hours to issue; days to weeks to execute
+- **Television.** Television revises constantly through the shooting week; a Tuesday page change that adds a doorway is a real crisis.
+
+### Strike, Salvage and Storage
+
+Taking the set down, deciding what is salvaged, stored, sold, donated or dumpstered, and restoring the stage to bare floor and clean walls.
+
+- **Who.** Construction Coordinator with propmaker and labour crew; Lead Person for dressing (budget account 2400)
+- **Decides.** What survives as an asset versus what becomes a disposal cost — and whether the reuse yard grows.
+- **Engine.** Strike as a crew-hour job producing salvage inventory with condition, storage cost per square foot per month, and resale value. Storage must eventually exceed rebuild cost for low-value units, forcing a real decision.
+- **Takes.** 1-5 days per set; hours for dressing
+- **Television.** TV strikes to storage between seasons and pays holding for months; features strike to nothing and eat the loss.
+
+### Location Restoration and Make-Good
+
+Removing everything installed, repainting to the original colour, replacing damaged finishes, replanting, and passing the owner's walk-through to release the damage deposit.
+
+- **Who.** Location Manager with Construction Coordinator, painters and greens
+- **Decides.** How much modification was worth doing in the first place, given that all of it must be undone.
+- **Engine.** Restoration obligation recorded at the point of modification with a cost estimate and a bond. Damage events during the shoot increase it; a failed walk-through forfeits the deposit and harms the location's future availability.
+- **Takes.** 1-5 days; deposits held 2-8 weeks
+- **Television.** A series that burns a location's goodwill loses a recurring location; features only pay once.
+
+### Returns, Loss and Damage
+
+Returning rentals to the houses, reconciling pull sheets, negotiating loss-and-damage charges for what came back broken or did not come back at all.
+
+- **Who.** Lead Person, Property Master, Art Department Coordinator, Production Accountant
+- **Decides.** How much of the department's budget leaks at the end, and whether the prop houses will deal with this production again.
+- **Engine.** Every rented item has a return state and a house-relationship value. Repeated L&D raises future rental rates and reduces hold priority against competing productions — a persistent vendor reputation.
+- **Takes.** 1-3 weeks after wrap
+- **Television.** Series reconcile per season; the relationship value matters far more because the same houses are used weekly for years.
+
+### Standing Set Maintenance and Season Carry
+
+Keeping standing sets shootable across a run: repainting high-traffic surfaces, repairing wild-wall hardware, replacing worn dressing, rebuilding after a stunt, storing between seasons.
+
+- **Who.** Construction Coordinator, Charge Scenic, Lead Person, on a series
+- **Decides.** Whether a set survives a season or must be rebuilt; the annual carry cost of the show's physical world.
+- **Engine.** Per-set wear accumulating with shooting days, wild-wall cycles and stunt events, against a maintenance budget. Unmaintained sets degrade visibly and eventually fail an approval or a stunt safety check.
+- **Takes.** Ongoing; hiatus refurb 2-6 weeks
+- **Television.** This process does not exist in feature film at all; it is the defining economic fact of television art departments.
+
+### Safety and Compliance
+
+Flame-retardant treatment and certification of fabrics and greens, egress and fire lanes on stage, rigging load limits, silica and lead controls when cutting or stripping, guardrails on elevated decks.
+
+- **Who.** Construction Coordinator, Production Designer, Safety Coordinator, studio Fire Marshal, Cal/OSHA jurisdiction
+- **Decides.** Whether the set passes inspection and can be shot on, and whether the crew building it is exposed to a citable hazard.
+- **Engine.** Per-set compliance flags (fire cert, egress width, rail heights, load sign-off) checked before a stage can be released for shooting; violations generate inspection events, fines, shutdown risk and injury probability.
+- **Takes.** Inspections 1-2 hours; treatments 1-2 days
+- **Television.** Standing sets need re-certification over time; a set that passed in season one can fail in season five.
+
+### Department Staffing and Deal Memos
+
+Hiring the department against scale minimums and prep weeks: Art Department Manager ≈$78.01/hr, Set Designer ≈$55.01/hr, Property Master ≈$63.01/hr, Painter ≈$49.85/hr, Construction Coordinator ≈$4,048/wk (2025-26 IATSE rate sheets; studio and distant differ).
+
+- **Who.** Production Designer, Construction Coordinator and Set Decorator hiring; UPM approving; the production company (the mother persona) paying
+- **Decides.** Crew size, experience tier, how many prep weeks each key gets, and which union footing the show sits on.
+- **Engine.** Crew as people with craft, tier, rate, availability window, loyalty to a designer, and a speed/quality profile. Hiring under-tier crew must degrade build quality and increase rework, not just cost less.
+- **Takes.** Offers 4-12 weeks out; prep 2-12 weeks by role
+- **Television.** Series hire for the run with holding fees over hiatus; features hire per picture, so the best crews follow designers between jobs.
+
+### Option spaces
+
+**Build Strategy** — 12 options
+
+`Full stage build` · `Partial stage build with digital extension` · `Re-dress of an existing standing set` · `Backlot standing exterior, re-dressed` · `Practical location, shot as found` · `Practical location, modified (paint, dress, remove)` · `Location with facade or partial build added` · `LED volume / in-camera VFX` · `Blue or green screen with photographed plates` · `Miniature / bigature` · `Full CG environment` · `Foreground build plus hanging miniature or matte`
+
+**Wall System** — 9 options
+
+`Hollywood flat (1x3 on edge, 1/4 in lauan skin, 4 ft module, heights in 2 ft steps)` · `Broadway/muslin flat on 1x3 with corner blocks` · `2x4 stud wall, drywall or ply skinned` · `Steel stud framing` · `Rental modular flat package` · `Permanent hard walls (studio perm set)` · `Plaster on lath / plaster over foam` · `Foam-skinned scenic wall` · `Existing location wall, papered or painted`
+
+**Wall Surface and Finish** — 18 options
+
+`Flat paint` · `Eggshell` · `Satin` · `Semi-gloss` · `Gloss` · `Wallpaper (period, hung)` · `Faux wood grain` · `Real veneer or panelling` · `Tile` · `Brick (real, plaster-cast, or foam)` · `Board-formed concrete in plaster` · `Stone (cast or real veneer)` · `Plaster texture (smooth, skip trowel, heavy)` · `Sheet metal / rust` · `Fabric-covered` · `Whitewash` · `Nicotine glaze` · `Chroma green or blue`
+
+**Aging Level and Method** — 9 options
+
+`Factory new` · `Freshly cleaned` · `Lived-in` · `Worn` · `Neglected` · `Derelict` · `Fire or smoke damaged` · `Water/storm damaged` · `Post-apocalyptic`
+
+**Aging and Distressing Materials** — 13 options
+
+`Aging glaze` · `Dry brush` · `Spatter and flyspeck` · `Fuller's earth` · `Streaks 'N Tips` · `Dulling spray` · `Sanding and physical wear` · `Water staining` · `Char and soot` · `Ash and dust` · `Rust solutions` · `Mould and mildew wash` · `Hand-oil at door frames and switches`
+
+**Drafting Scale and Drawing Types** — 16 options
+
+`1/8 in = 1 ft plot plan` · `1/4 in = 1 ft floor plan and elevations (US standard)` · `1/2 in = 1 ft detail` · `3/4 in = 1 ft detail` · `1 1/2 in = 1 ft moulding profile` · `Full size template` · `1:100 / 1:50 site (metric)` · `1:25 set plan and elevation (UK/Europe standard)` · `1:10 detail` · `1:1 profile` · `Reflected ceiling plan` · `Section` · `Finish schedule` · `Door and window schedule` · `Hardware schedule` · `Paint elevation`
+
+**Model Type** — 10 options
+
+`Thumbnail sketch model` · `White card model at 1/4 in = 1 ft` · `White card model at 1:25` · `Finished painted presentation model` · `Dressed presentation model` · `Digital model (SketchUp)` · `Digital model (Rhino / Vectorworks / AutoCAD 3D)` · `3D printed or CNC-milled model` · `Real-time engine model for VR walkthrough` · `No model at all`
+
+**Prop Tier** — 11 options
+
+`Hero (full detail, close-up)` · `Matching second / backup hero` · `Background or dress prop` · `Stunt (foam, rubber, soft)` · `Breakaway` · `Practical (actually functions)` · `Consumable` · `Duplicate multiples (specified count)` · `Insert / macro version` · `Period rental (uninsurable, handle-only)` · `Cleared art or licensed product`
+
+**Prop Fabrication Route** — 14 options
+
+`Pull from prop house rental` · `Buy retail` · `Buy period/antique` · `Modify an existing piece` · `3D print FDM` · `3D print SLA/resin` · `CNC machine` · `Vacuum form styrene` · `Silicone mould plus urethane cast` · `Fibreglass / GRP layup` · `Machined metal` · `Hand carve or sculpt` · `Electronics and practical build` · `Outsource to specialist vendor`
+
+**Weapon Handling** — 8 options
+
+`Replica non-gun (solid, cannot chamber)` · `Rubber / soft stunt weapon` · `Resin cast dummy` · `Airsoft or BB-derived replica` · `Real firearm rendered permanently inoperable` · `Real firearm with dummy rounds` · `Real firearm with blanks (quarter, half, full load)` · `No weapon, CG muzzle flash and weapon added in post`
+
+**Picture Car Class** — 12 options
+
+`Hero car` · `Matching doubles` · `Stunt / sacrificial unit` · `Background atmosphere car` · `Insert buck / cutaway body` · `Process pod car (cut-down chassis)` · `Camera car / insert truck` · `Period-correct rental` · `Purchased and prepped` · `In-house lot pool car` · `Electric double for quiet dialogue` · `Non-runner for static dressing`
+
+**Car Photography Rig** — 11 options
+
+`Process trailer / low loader` · `Tow dolly with A-frame` · `Pod or biscuit rig (driver above, chassis low)` · `Arm car (U-Crane, Blackbird, Filmotechnic)` · `Gimbal buck on stage` · `Poor-man's process (static car, moving light)` · `LED volume with driving plates` · `Green screen with plates` · `Rear projection` · `Actor genuinely driving with camera mounts` · `Insert car tracking alongside`
+
+**Backing and View Type** — 11 options
+
+`Hand-painted backdrop` · `Photographic translight on 9-mil polyester` · `Digital print vinyl` · `Plaster cyclorama` · `Fabric cyc` · `LED wall` · `Green or blue screen` · `Rear projection` · `Scrim with practical lights behind (night twinkle)` · `Blinded or curtained window (no view)` · `Practical real view through a location window`
+
+**Greens** — 14 options
+
+`Live nursery stock in pots` · `Cut greens (limited wilt clock)` · `Silk / artificial plants` · `Mixed live and artificial` · `Fabricated or sculpted trees` · `Sod / live turf` · `Artificial turf` · `Ground cover: mulch, leaf litter, pine straw` · `Dirt, sand, gravel, decomposed granite` · `Hedging and topiary` · `Dead or burnt greens` · `Camouflage netting` · `In-ground planting (permit required)` · `Snow substitutes over greens`
+
+**Dressing Source Channel** — 12 options
+
+`Studio prop house` · `Independent rental house` · `Retail purchase` · `Antique or period dealer` · `Cleared art rental` · `Custom build in the shop` · `Borrowed / product placement` · `Another production's inventory` · `The lot's own standing stock` · `Purchased for later resale` · `Picture vehicle pool` · `Cast or crew personal loan`
+
+**Floor Treatment** — 14 options
+
+`Bare stage floor` · `Plywood deck` · `Hardwood laid in` · `Tile set` · `Lino or vinyl` · `Carpet` · `Painted hardboard` · `Cast or stamped concrete` · `Dirt or sand fill` · `Gravel` · `Turf` · `Water (tank, rain deck, wet-down)` · `Snow (paper, foam, gel)` · `Raised platform with steps or ramp`
+
+**Ceiling Strategy** — 9 options
+
+`No ceiling, open to the grid` · `Full hard ceiling` · `Wild ceiling pieces` · `Stretched muslin or fabric ceiling` · `Beams and coffers only` · `Partial ceiling at the edge of frame` · `Greenbed above the set` · `Goalposts and a light grid over the set` · `Translucent ceiling for soft top light`
+
+**Set Extension Line** — 11 options
+
+`Build to 8 ft` · `Build to 10 ft` · `Build to 12 ft` · `Build to 16 ft` · `Build full height` · `Forced perspective above the line` · `Hanging miniature` · `Digital extension above a marked line` · `LED volume upper wall` · `Matte painting` · `Ceiling piece only where seen`
+
+**Plaster, Sculpt and Mould Materials** — 16 options
+
+`Ultracal 30 (≈85% plaster, 10% portland, 5% silica; hard tooling)` · `Hydrocal (shells, mother moulds)` · `Plaster of Paris` · `Forton MG` · `EPS foam billet` · `Polyurethane foam` · `Expanding two-part foam` · `Fibreglass / GRP` · `Silicone (mould)` · `Latex` · `Vacuum-formed styrene` · `Sintra / PVC sheet` · `Tooling board` · `Oil-based clay` · `Water clay` · `Papier-mâché / Celluclay`
+
+**Scenic Technique** — 19 options
+
+`Prime and base coat` · `Glaze` · `Spatter` · `Sponge` · `Rag roll` · `Dry brush` · `Wood graining` · `Marbleising` · `Stone / granite` · `Brick` · `Rust` · `Verdigris` · `Gilding / gold leaf` · `Stencil` · `Wallpaper hang` · `Mural` · `Trompe l'oeil` · `Chroma key coat` · `Aging pass`
+
+**Construction Contracting Model** — 9 options
+
+`Studio lot in-house mill` · `Independent set construction shop, fixed bid` · `Independent shop, time and materials` · `Coordinator hires crew directly to production payroll` · `Rental flat package` · `Specialty fabricator for hero elements` · `Overseas build and ship` · `Buy an existing standing set from another production` · `Co-build shared with a second production`
+
+**Labour Jurisdiction** — 9 options
+
+`IATSE Hollywood Basic Agreement (800 art/set design, 44 property and construction, 729 paint, 755 plaster/sculpt)` · `IATSE Area Standards Agreement` · `New York (Local 52, USA 829 scenic artists, ADG 800)` · `Georgia (Local 479)` · `New Mexico (Local 480)` · `Canada (IATSE 891/873, DGC design)` · `UK (BECTU/PACT, British Film Designers Guild titles)` · `Non-union / low-budget tier` · `Hybrid split by department`
+
+**Design Toolchain** — 17 options
+
+`Pencil and vellum` · `AutoCAD` · `Vectorworks` · `SketchUp` · `Rhino` · `Revit` · `Blender` · `Cinema 4D` · `Maya` · `Unreal Engine 5` · `Photoshop` · `Procreate` · `Illustrator` · `InDesign (look books)` · `Shot Designer` · `Frame.io / cineSync review` · `ShotGrid / ftrack asset tracking`
+
+**Strike Disposition** — 10 options
+
+`Dumpster` · `Recycle or salvage yard` · `Strike to paid storage` · `Hold standing on a paid stage` · `Sell to another production` · `Donate` · `Keep hero units only, dump the rest` · `Season storage for a series` · `Return rental flats` · `Restore stage to bare and clean`
+
+### What gets got wrong
+
+- Amortisation is the whole difference between film and TV art departments. A $600,000 standing set across a ten-episode order is $60,000 per episode and cheaper than the location it replaces; the same set on a feature is a $600,000 line that dies at strike. Any sim that costs a build the same way for both has not modelled television.
+- Wild walls are a grip-time system, not a construction detail. If the engine does not charge minutes for moving a wall and does not reward hard sets with better sound and better-looking wides, 'wild' is a decorative word.
+- Ceilings and top light are the same decision. A hard ceiling should remove overhead fixtures from the Gaffer's option list and add setup minutes; if it only changes a description, the ceiling is not in the simulation.
+- Reflectance must be a number. Sheen choice (flat to gloss) has to feed the lighting model and the stop, or 'semi-gloss' is a label. The same applies to acoustic absorption from soft goods feeding the production sound quality.
+- Green screen contaminates. Spill on skin and wardrobe should scale with screen area in frame and proximity, producing measurable keying and roto cost downstream. Rosco 5711 green at ~300 sq ft per gallon is the material fact; the spill is the system.
+- Prop multiples are a failure state, not an inventory display. The engine must be able to block further takes because the last breakaway is gone, and force a schedule change. If running out only prints a warning, the count does not matter.
+- Aging has to be recorded, not rolled. A set aged in week one must match in a pickup in month five. Store the formula and the photograph; make an unrecorded aging pass produce a continuity error that shows in the edit.
+- Clearance failures surface at delivery, not on set. An uncleared logo or artwork should pass through the shoot invisibly and then block E&O sign-off, costing a paint-out or a VFX removal — a delayed consequence with a real price.
+- The extension line is the cleanest build-versus-VFX tradeoff in the game. Build height must trade against VFX shot count continuously; if lowering the line by four feet does not visibly raise the post budget, neither number is real.
+- Backings need standoff. A translight hung three feet outside a window gives falloff and wrap shadow; the stage footprint must actually accommodate the distance, or the choice is fake. Stage packing has to include backing standoff, not just set walls.
+- Load-in doors and stage clear height are hard constraints. A unit built wider than the elephant door has to be built in pieces on stage — more hours, more seams for paint, a different quality outcome.
+- Rent versus buy has a crossover, and it should bite. Rough anchor: 8-14 weeks of rental equals purchase. Long-run television that keeps renting furniture should quietly lose money to a producer who buys.
+- Mould pulls die. A mould rated for fifty pulls that needs eighty forces a remould mid-build; the schedule slip belongs in the sim, not in an equipment list.
+- Miniature scale sets frame rate. Photographing a 1:12 miniature at 24fps looks like a toy; the relationship (roughly the square root of the scale) has to constrain camera speed, or scale is a cosmetic dropdown.
+- Construction crew size does not scale linearly. Adding propmakers to a stage past its working density produces interference, not speed; there is a real crew-hours-per-square-foot ceiling per stage.
+- Change cost is superlinear with build progress. A door moved in drafting is cheap; moved while in the mill it is several times worse; moved once the set is standing and painted it is many times worse again. Flat change costs kill the tension of the writer's rewrite — which matters here because the writer is the father.
+- Union jurisdiction is not flavour. In Hollywood, set builders are propmakers under Local 44, painters and sign writers are Local 799 territory only in theatre — they are Local 729 — and plaster, sculpt and moulds are OPCMIA Local 755. In the UK the same work sits under different titles entirely. Who may touch what changes both cost and speed.
+- Standby crew absorb events. Remove the standby painter and scuffs become lost setup minutes; remove the on-set dresser and every camera move costs a reset. Model standby as capacity against an event stream, not as a line item.
+- Live greens have a clock. Cut greens under stage lighting wilt in hours to days by species; live potted stock needs water and light between shooting days. If greens never wilt, the choice between live and silk has no teeth.
+- Restoration is priced at the moment of modification, not at wrap. Every hole drilled in a location is a future cost and a future relationship risk; a series that burns a location loses a recurring set.
+- Survey debt is real. Skipping the LIDAR scan and HDRI on a set that is about to be struck should make every later VFX shot in that set measurably more expensive and sometimes impossible.
+- Television's turnaround is the constraint everything else bends around. Wrap Friday, strike and swing over the weekend, shoot Monday — with a night crew, overtime, and no float. If the sim lets a TV set take three weeks to change over, it is simulating film with more episodes.
+
+---
+
+## 10. Costume, hair, makeup and prosthetics (film and television)
+
+### Costume script breakdown / costume plot
+
+Every scene parsed into character x change x day-of-story. Action tagged: rain, mud, blood, fire, stunt, harness, wire, nudity. A change chart is built against the shooting schedule; multiples are counted per change.
+
+- **Who.** Costume Supervisor, with Costume Designer and Assistant Costume Designer
+- **Decides.** MOTHER sets prep weeks and headcount. The Designer decides how many distinct changes each character gets, what is a re-wear, and how many multiples per change. ACTOR can only lobby for or refuse a look.
+- **Engine.** Change record {char, DOS, scenes[], action_tags[], shoot_days, wear_count}. multiples_needed = f(destruction tags, wet tags, stunt days, parallel-unit days). Labour hours, yardage and dollars derive only from this count; no other system may invent a costume.
+- **Takes.** 3-7 days on a feature; 4-12 hours per TV episode
+- **Television.** Redone every episode against scripts still changing. Cross-boarding puts two or three episodes' changes on the truck at once, so the chart is per-block, not per-episode, and re-wears across episodes must be tracked by DOS not by air order.
+
+### Design research and reference gathering
+
+Period, class, geography, trade and weather researched from photographs, museum holdings, tailoring records and paintings. Mood boards assembled per character and per act. Real garment references pulled and photographed.
+
+- **Who.** Costume Designer with Assistant Costume Designer and a researcher
+- **Decides.** Depth of research (weeks), whether the show is historically accurate, heightened, or deliberately anachronistic. MOTHER funds research trips and image licensing; FATHER can open the lot's own costume archive free.
+- **Engine.** Research_level 0-5 per character raises a period_accuracy score that a critic/awards model and a historian-audience segment read. Accuracy also constrains the source pool: level 5 bars synthetic fabrics and modern zips, raising build cost and prep weeks.
+- **Takes.** 2-6 weeks on a period feature; days on a contemporary one
+- **Television.** Done once for the pilot and reused as a series bible; new-character research is compressed to hours, so a show's accuracy is effectively frozen at pilot.
+
+### Costume illustration and concept art
+
+Sketches or digital renders per look, often on a posed figure of the actor's build, with fabric swatches attached. Superhero and creature looks go through many rounds of full-colour concept before anything is cut.
+
+- **Who.** Costume Illustrator or Concept Artist, to the Costume Designer's direction
+- **Decides.** How many rounds of concept to pay for; whether to sell the design with a drawing or a fabric-on-body mock-up. Approval chain order: director first, or studio first.
+- **Engine.** Concept asset {rounds, hours, $}. Each approval round rolls against director_taste_match and studio_note_pressure; a failed round costs days and burns prep. Approved art becomes an immutable target the workroom is scored against (build_fidelity).
+- **Takes.** 4-40 hours per look; a hero superhero suit runs 20-100+ concept images over 6-12 weeks
+- **Television.** Features illustrate nearly everything; TV illustrates only the pilot's leads and genre builds, and later episodes are approved from photographs of the mock-up instead.
+
+### Tone, palette and texture meeting
+
+Palette agreed against the sets, the lighting plan and the LUT. Which characters can wear white, black, red, pattern; what is forbidden near the greenscreen; sheen levels; how colour tracks a character's arc.
+
+- **Who.** Costume Designer with Director, Director of Photography, Production Designer
+- **Decides.** The palette itself, and who wins when the Production Designer's walls and the Designer's coats collide. FATHER-as-writer can dictate colour in the script and force the argument.
+- **Engine.** Palette as constrained colour set per character per act. Each garment carries {hue, value, chroma, sheen, weave_pitch_mm}. DP's lighting and the show LUT transform garment colour to on-screen colour; mismatch feeds a visual_cohesion score and a reshoot risk.
+- **Takes.** One half-day meeting, revisited 2-4 times in prep
+- **Television.** Set once with the pilot DP; guest directors inherit it. A DP change mid-season can silently break the palette because nobody re-runs the test.
+
+### Costume budget build and prep schedule
+
+A costume budget by account: labour (workroom, set crew, agers), rentals, purchases, manufacture, cleaning, box/kit rentals, loss and damage, truck. Prep weeks per head negotiated against the start date.
+
+- **Who.** Costume Supervisor with the Line Producer and UPM
+- **Decides.** MOTHER approves or cuts the number. Cutting it forces the Designer to trade build for rental, multiples for luck, and prep weeks for overtime later.
+- **Engine.** Budget lines tied to the breakdown counts, not typed by hand. Under-funding sets a shortfall that resolves as one of: fewer multiples (continuity risk), rented instead of built (fit risk), fewer set costumers (delay risk on set). Estimate: contemporary drama 1-3% of the below-the-line; period and superhero far higher.
+- **Takes.** 1-2 weeks, then revised weekly through prep
+- **Television.** A per-episode pattern budget plus an amortised pilot build. Series regulars' principal wardrobe is a capital cost carried across the season; guest cast is the weekly variable.
+
+### Actor measurement and sizing
+
+30-60 measurements taken, shoe, hat, glove and ring size, bra size, plus notes on posture, scars, tattoos, prosthetic limbs, and what the actor will and will not wear. Photographed in undergarments from four sides.
+
+- **Who.** Costume Supervisor or Key Costumer; a Cutter/Fitter for built work
+- **Decides.** ACTOR decides what is disclosed and what is refused. The Supervisor decides whether to measure in person, take a tailor's sheet remotely, or 3D scan.
+- **Engine.** Body record per performer {measurements[], posture, asymmetry, weight_trend}. Garment fit = distance between garment block and body record; mismatch converts to alteration hours. A weight change of >3% invalidates built garments and triggers re-cut.
+- **Takes.** 45-90 minutes; a 3D body scan adds 30 minutes
+- **Television.** Re-measured at the top of every season and after hiatus; actors' bodies change between seasons and a whole principal wardrobe can need re-cutting.
+
+### Source route decision: pull, rent, buy, build or borrow
+
+Each item routed: pulled from a costume house, rented, bought retail or vintage, custom built in the workroom, borrowed from a fashion house, supplied by the actor, or taken from studio stock.
+
+- **Who.** Costume Designer with Costume Supervisor
+- **Decides.** The single most consequential costume decision. MOTHER's budget and FATHER's lot stock both change what is even possible. Built means control and fit; rented means speed and risk.
+- **Engine.** Per-item route with cost, lead time, fit quality, exclusivity and multiples feasibility. Rented items cannot be aged or cut without a damage fee; borrowed fashion cannot be doubled; built items take workroom capacity that is a finite queue.
+- **Takes.** Decided per item across prep; the routing pass itself is 2-5 days
+- **Television.** TV leans hard on buy and pull because a week of prep cannot absorb a build. A built hero piece in TV is a season-long asset and is guarded accordingly.
+
+### Costume house pull
+
+Racks pulled against the breakdown, tagged, checked out, brought to the fitting room. Period crowds are pulled by the hundred. Angels in London holds over a million items on roughly eight miles of hanging rail.
+
+- **Who.** Costume Supervisor, Key Costumer and Costume Coordinator, at Western Costume, Palace, Angels, Cosprop, Tirelli or a studio's own stock
+- **Decides.** Which house (each has different strengths and different period depth), how many weeks of rental to book, whether to sub-rent or buy out a piece that will be destroyed.
+- **Engine.** Houses as inventories with {period coverage, size curve, condition, exclusivity flag}. A pull is a query against stock; if another production has already pulled that period in that size, it is gone. Rental cost per item per week; buy-out price; damage schedule.
+- **Takes.** A day per character; 2-5 days for a 200-strong period crowd
+- **Television.** TV sub-rents in smaller lots and returns weekly to control cost; a show set in one period will exhaust a house's size range by mid-season and be forced to build or re-dress.
+
+### Shopping and purchasing
+
+Retail, vintage, online and wholesale buying against approved designs, with returns as a deliberate tactic: buy six, fit one, return five. Receipts, purchase orders and a returns deadline are tracked.
+
+- **Who.** Costume Buyer / Shopper, with the Assistant Costume Designer
+- **Decides.** How much is bought on spec, how aggressively to buy multiples of a retail item that may be discontinued before the shoot ends.
+- **Engine.** Purchase record {price, return_by, restock_fee, discontinued_risk}. A retail hero item that goes out of stock while shooting continues is a continuity failure event; buying deep up front costs cash flow but removes the risk.
+- **Takes.** Continuous through prep; 2-4 shopper days per principal character
+- **Television.** The discontinuation risk is the defining TV problem: a character wears a shirt for six seasons and the brand stops making it in year two.
+
+### Fabric sourcing, swatching and dye-lot control
+
+Swatches gathered, tested for drape, weight, sheen and camera behaviour; yardage calculated with a multiples allowance; all yardage for one garment family bought in a single dye lot.
+
+- **Who.** Costume Designer, Assistant Costume Designer, Buyer, with the Cutter/Fitter's yardage list
+- **Decides.** Fabric identity per garment, and whether to buy enough for every multiple now or risk the lot running out.
+- **Engine.** Fabric record {fibre, weave, GSM, weave_pitch_mm, sheen, stretch, dye_lot_id, yardage_remaining}. Two garments from different dye lots read as different colours on camera; the engine must actually track lot id and flag a mismatch at continuity, not at purchase.
+- **Takes.** 1-3 weeks; specialty mill or hand-woven fabric runs 6-16 weeks
+- **Television.** TV cannot wait for a mill run, so specialty fabric is a pilot-only luxury. Holding back yardage for future seasons is a real and frequently skipped decision.
+
+### Pattern drafting and toile / muslin mock-up
+
+A pattern drafted to the actor's measurements or draped on a figure made to match; a calico or muslin toile sewn and fitted before the real cloth is cut. Period patterns drafted from original garments or cutting manuals.
+
+- **Who.** Pattern Maker & Fitter (women's) or Men's Tailor Cutter, Local 705 Custom Made division
+- **Decides.** Whether to toile at all. Skipping the toile saves a week and gambles the fabric, which on a period silk is the whole budget line.
+- **Engine.** Pattern asset reusable for multiples and for doubles' bodies. toile_step present/absent changes P(fabric ruined on first cut) and the number of fitting rounds needed. Pattern once drafted makes each additional multiple cheaper (learning curve on labour hours).
+- **Takes.** Pattern 8-30 hours; toile 6-20 hours per garment
+- **Television.** Toiles are rare in episodic TV outside of genre builds; the pattern library from the pilot is the asset that makes later builds survivable.
+
+### The workroom build: cut, fit, finish
+
+Fabric cut, canvassed, basted, assembled, pressed, hand-finished. A tailored three-piece suit, a corseted period gown or a beaded hero dress each carry hundreds of hours across several hands.
+
+- **Who.** Manufacturing Foreperson, Cutter/Fitter, Table Person, Draper/Stitcher, Coat Pant & Vest Maker, Shirt Maker, Finisher, Beader (Local 705 classes 1-5)
+- **Decides.** How many bodies in the workroom and at what class; whether to send work out to an outside house; what gets hand-finished and what gets machine-finished and will read as cheap in close-up.
+- **Engine.** Workroom as a queue with per-class capacity and hourly cost. Each garment carries a labour estimate by type (estimates: tailored suit 40-80 h; beaded evening gown 150-400 h; corseted period gown 60-200 h). Overrun overflows to overtime cost or a missed fitting date.
+- **Takes.** 1-6 weeks per hero garment depending on class of work
+- **Television.** TV workrooms are small and mostly do alterations; real manufacture is subcontracted to a house that also serves features, so TV sits behind features in the outside queue.
+
+### Millinery, footwear, gloves and accessories
+
+Hats blocked and trimmed, boots and shoes made on a last or bought and modified, gloves, canes, spectacles, jewellery, watches, handbags and hosiery sourced to period and class.
+
+- **Who.** Milliner and Millinery-Maker (705), Cobbler or outside boot maker, Glover, Costume Designer
+- **Decides.** Made versus bought per item; whether the actor's shoes must be stunt-safe, dance-safe, or silent on a hard floor.
+- **Engine.** Accessory records with their own lead times (bespoke boots 6-12 weeks; blocked hat 10-30 h). Footwear carries {sole_material, noise, grip, heel_height} read by stunt, dance and sound systems: a leather sole on a marble floor creates a sound-department conflict.
+- **Takes.** Hat 1-2 weeks; bespoke footwear 6-12 weeks; accessories continuous
+- **Television.** Hats and shoes are the first things TV buys rather than makes, and the first things to wear out under a 22-episode order.
+
+### Specialty costume: armour, leather, uniforms, corsetry
+
+Armour vacuum-formed, moulded in urethane, tooled in leather or fabricated in metal; military and police uniforms built to regulation or deliberately altered; corsets and body-shaping foundations built to change silhouette.
+
+- **Who.** Special Costume Keyperson, Wardrobe Specialty Manufacturer, Special Operator (705), often with an outside armourer or leather shop
+- **Decides.** Material and therefore weight, noise, heat and whether the performer can fight in it. Real metal reads best and is punishing to wear.
+- **Engine.** Specialty garment {weight_kg, articulation_range_deg, noise_db, heat_load, repair_time}. Weight and articulation feed stunt performance and take length; noise feeds a sound-department conflict; heat feeds performer fatigue and the number of takes before a break.
+- **Takes.** 4-16 weeks for a hero armour build; 2-6 weeks for leatherwork
+- **Television.** A TV armour build is amortised over a season and repaired nightly rather than replaced; the repair queue, not the build, is the bottleneck.
+
+### Fitting session
+
+Actor tries options; the Designer builds looks head to toe; alterations pinned and chalked; every approved look photographed front, back and profile with the item list. The director or a producer may attend to approve.
+
+- **Who.** Costume Designer, Costume Supervisor, Cutter/Fitter or Alteration Fitter, Costume PA photographing
+- **Decides.** ACTOR approves or refuses the look and can change the character by what they will wear. The Designer decides what is presented at all. MOTHER decides whether a producer sits in and second-guesses.
+- **Engine.** Fitting event with outcomes: approve / approve with alteration / re-cut / re-source / concept change. Each outcome has a cost in hours and days. Actor_comfort and actor_taste_match modify performance quality and the probability of a day-of-shoot refusal.
+- **Takes.** 1-4 hours per actor per fitting; 2-4 fittings for a built principal look; SAG-AFTRA pays fitting time in hour then quarter-hour increments when it is not a work day
+- **Television.** Weekly guest-cast fittings are 20-40 minutes and often the same day as their first scene; series regulars get real fittings only at season start.
+
+### Camera and fabric test
+
+Garments shot on the actual camera, lens, lighting and LUT. Checked for moire, black that goes green or brown, white that clips, sheen that flares, colour that fights the set, and fabric noise on the boom.
+
+- **Who.** Costume Designer, DP, Camera Operator, Colourist, with Hair and Makeup Department Heads
+- **Decides.** Whether a garment survives at all. This is the test that kills fine herringbone, tight stripes, pure white shirts and certain blacks before they reach the set.
+- **Engine.** Simulate: moire_risk = f(weave_pitch_mm, garment distance, lens focal length, sensor pitch, OLPF present). IR_leak flag for dyes that go magenta on IR-sensitive sensors. clip_risk from garment luminance vs exposure. A failed test forces re-source, re-dye or a lens change.
+- **Takes.** Half a day to a full day, usually combined with the hair and makeup test
+- **Television.** Run once for the pilot and almost never again; a mid-season camera or LED-wall change can reintroduce moire that nobody re-tests for.
+
+### Multiples manufacture
+
+The same look built or bought several times over and classified: hero, stunt, photo double, wet, blood light, blood heavy, burned, tear-away, rigged for harness, VFX marker, stand-in.
+
+- **Who.** Costume Supervisor directing the workroom; Ager/Dyer for the damaged set
+- **Decides.** How many, of which classes. Too few is the single most common cause of a lost shooting day; too many is dead budget.
+- **Engine.** Each multiple is its own object with its own condition state and its own continuity position. The scheduler must consume them: a wet take consumes a dry multiple until laundry returns it (drying time hours). If the pool empties, the day stalls.
+- **Takes.** Each additional multiple is roughly 60-80% of the first's labour once the pattern exists (estimate)
+- **Television.** TV builds fewer multiples and relies on re-washing overnight; a rain sequence in TV is therefore scheduled last in a block, not first.
+
+### Stunt double and photo double duplication
+
+Every stunt double, photo double, driving double and rider gets the same costume cut to a different body, with hidden pads, harness slits, fire-retardant underlayers or crash armour concealed inside.
+
+- **Who.** Costume Supervisor, Cutter/Fitter, with the Stunt Coordinator
+- **Decides.** How many doubles are dressed, whether the costume is re-cut for pads (it must be, and that changes the silhouette), and what fire or impact protection is built in.
+- **Engine.** Double body record separate from the principal's; garment = pattern + that body. Padding changes the outer measurements, so the double's version is a different size that must still read identically. Harness slit and Nomex underlayer flags gate whether a stunt is legally allowed to be attempted.
+- **Takes.** 1-3 days per double look, plus its own fitting
+- **Television.** TV doubles are often cast late and the costume is faked with a back-to-camera cheat; the engine should let the player take that shortcut and pay for it in a visible cut.
+
+### Ageing, breaking down and textile art
+
+New cloth made old: dye baths, tea and coffee staining, airbrushed grime, Fuller's earth sprays, wire brush, cheese grater, sandpaper, sole ruffer, bleach, sandblasting, wax and grease, singeing, controlled tears reinforced against further tearing.
+
+- **Who.** Head Dyer and Dyer (705), Textile Artist / Breakdown Artist, sometimes a Chief Textiles Artist on a large show
+- **Decides.** How far down the ageing scale each multiple sits and whether the damage is progressive across the story. Permanent damage versus washable dirt is the key call: washable survives a re-shoot, permanent does not.
+- **Engine.** Ageing state as a numeric scale 0-10 per garment per DOS, with a permanence flag. Reversible dirt (Fuller's earth, Streaks 'n Tips) resets on wash; permanent (dye, abrasion, burn) does not and consumes a multiple. Continuity checks compare state to the DOS requirement.
+- **Takes.** 2-8 hours per garment per stage; a 200-person battle crowd is 1-3 weeks for a team
+- **Television.** TV breaks down on the truck overnight with spray and pastel because there is no dye room; anything needing a vat is sent out and comes back next week.
+
+### Costume continuity documentation
+
+Every look photographed as worn, with buttons, roll of sleeve, tuck, watch on which wrist, ageing state and which multiple is on the body. Logged by scene, slate and take into a continuity book or SyncOnSet.
+
+- **Who.** Set Costumer and Key Costumer, cross-checked by the Script Supervisor
+- **Decides.** How rigorous the log is. This is cheap in prep and catastrophic to skip when a scene resumes six weeks later after a location move.
+- **Engine.** Continuity record {scene, take, garment_instance_id, ageing_state, dressing_detail_hash}. A resumed scene compares the record to the available garment pool; a mismatch is either caught (costs minutes) or missed (creates a visible error flagged in dailies or, worse, at the edit, costing a pickup).
+- **Takes.** 5-15 minutes per look per day; a full principal log is continuous
+- **Television.** TV continuity spans episodes and seasons: a flashback shot in season four must match a garment worn in season one that may have been sold at wrap. The archive decision at season wrap becomes a season-four problem.
+
+### Costume truck and trailer setup
+
+A wardrobe trailer or 45-foot truck fitted with rails, a washer and dryer, steamer, sewing station, size stock, emergency kit, and a bagged and tagged set for each principal for the day plus the next day's cover set.
+
+- **Who.** Truck Costumer and Costume Coordinator
+- **Decides.** Truck size, whether laundry travels or goes out, how many days of cover set are carried, what the emergency stock holds.
+- **Engine.** Truck as constrained storage {rail_metres, laundry_capacity_loads_per_night, travel_time}. A distant location without laundry capacity converts wet and blood scenes into hard multiple requirements. Cover-set costumes must physically be on the truck for a weather cover day to be callable.
+- **Takes.** 1-2 days to fit out; 1-2 hours per shooting day
+- **Television.** A TV truck also carries standing-set stock for every series regular and a season's worth of established looks, so rail space runs out by mid-season.
+
+### Daily dressing of the principal cast
+
+Costume laid out in the trailer before the actor's call, pressed and correct to the continuity note. The actor is dressed, wired for sound with the mic hidden, checked head to toe, then walked to set.
+
+- **Who.** Set Costumer assigned to the actor; Key Costumer supervising
+- **Decides.** Which costumer is assigned to which actor (a relationship that matters), what order the day is dressed in, and how the radio mic is concealed without ruining the line of the garment.
+- **Engine.** Dressing task with duration by garment complexity (contemporary 5-10 min; corseted period 20-45 min; armour 30-60 min). Runs on the critical path to first shot. Mic concealment creates a costume/sound conflict resolved by garment material and cut.
+- **Takes.** 5-60 minutes per actor depending on the look
+- **Television.** Identical, but TV dresses more people in less time; a multicam sitcom dresses the whole cast between scenes in front of an audience.
+
+### Quick changes and on-set costume maintenance
+
+Changes executed in a tent, a doorway or behind a flat in the time the camera takes to reset. Garments pre-rigged with hidden closures. Steaming, lint, sweat patches, shoe scuffs and a dropped hem all handled between takes.
+
+- **Who.** Set Costumer, sometimes two or three for a timed change
+- **Decides.** Whether to pre-rig a garment for speed (and slightly compromise how it reads) and how many costumers to staff for the day.
+- **Engine.** Quick-change duration vs available reset window; failure inserts delay minutes into the day. Garment rig_for_speed flag trades 30-60% off change time against a small hit to on-camera fidelity that the camera department may notice in close-up.
+- **Takes.** 20 seconds to 5 minutes per change
+- **Television.** Multicam and live TV live or die on this; a soap or sitcom may run 15-30 quick changes a day and the costume department is scheduled like a pit crew.
+
+### Background and crowd costuming
+
+Background sized in advance or fitted en masse; dressed at a rate of a few minutes per person at a dressing tent; self-supplied wardrobe checked and rejected or bumped.
+
+- **Who.** Crowd Costume Supervisor or Key Costumer with a team of BG costumers; a Costume House for the pull
+- **Decides.** Fitted versus self-supplied versus house-pulled; the ratio of hero background to filler; how many costumers per hundred background.
+- **Engine.** Throughput model: dressers x minutes_per_person vs call time. A period crowd of 300 with 6 dressers at 6 minutes each is 5 hours and must start before dawn. Under-staffing pushes first shot. SAG-AFTRA wardrobe allowance for a self-supplied change is $27 per day under the 2023 MOA.
+- **Takes.** 3-8 minutes per background performer once sized; sizing day is separate
+- **Television.** TV crowds are smaller and usually self-supplied with a rack of correction pieces; a period TV show cannot do this and its crowd days are its most expensive.
+
+### Laundry, repair and overnight turnaround
+
+Every worn garment washed, dry-cleaned, spot-treated, repaired, re-aged to match and re-hung before the next call. Blood removed or deliberately left. Sweat neutralised. Shoes dried.
+
+- **Who.** Set Costumer and Truck Costumer; a dedicated laundry costumer on a big show
+- **Decides.** What is washed and what is left dirty for continuity; whether dry-cleaning goes out (a day or two turnaround) or a garment is sacrificed.
+- **Engine.** Overnight queue with capacity. Each garment has {wash_cycles_remaining, shrinkage_per_wash, colour_fade_per_wash, repair_state}. A garment degrades measurably across the shoot; a hero shirt washed 40 times no longer matches its own multiple. Turnaround failure forces a multiple or a delay.
+- **Takes.** Overnight; 6-10 hours of crew time after a muddy day
+- **Television.** The defining TV cost. A 22-episode order washes the same eight shirts hundreds of times; the wear model is what forces the mid-season rebuild.
+
+### Costume for VFX, greenscreen and motion capture
+
+Tracking markers placed and logged, chroma-safe colours enforced, grey or neutral versions built for lighting reference, mocap suits fitted, tear-away or partial garments built for a digital extension, witness-camera reference shot.
+
+- **Who.** Costume Designer and Supervisor with the VFX Supervisor
+- **Decides.** Whether a costume is built practical, built half-practical and extended digitally, or built as a mocap suit and replaced entirely. That decision moves money between the costume budget and the VFX budget.
+- **Engine.** Garment vfx_mode {practical, hybrid, digital}. Marker layout is data VFX consumes. Chroma conflict check: any garment hue within a tolerance of the screen key value forces a re-source. Cost transfer between departments must be explicit, not implied.
+- **Takes.** Marker-up 20-40 minutes per actor per day; a mocap suit fitting is 1-2 hours
+- **Television.** Episodic VFX-heavy shows standardise on one suit per performer for the season; a feature rebuilds per sequence.
+
+### Intimacy, modesty and nudity garments
+
+Modesty garments, barriers, pouches, pasties, merkins and prosthetic genital pieces sourced or made, fitted privately, and agreed in writing with what the nudity rider permits.
+
+- **Who.** Costume Supervisor with the Intimacy Coordinator and the actor
+- **Decides.** ACTOR consents or refuses, item by item and scene by scene. The Coordinator holds the agreement; the department executes only what the rider covers.
+- **Engine.** Consent record per scene per garment gates whether the scene is shootable at all. Revocation mid-shoot is a legal event, not a soft note; it forces a rewrite, a double, or a VFX solution and costs schedule.
+- **Takes.** Fitting 30-60 minutes, private; prosthetic pieces follow the lifecast pipeline
+- **Television.** Series contracts often set nudity terms per season, and a showrunner's late script can exceed them, which is a real and recurring TV conflict.
+
+### Costume wrap, returns, sales and archive
+
+Rentals returned and damages settled, purchases returned where possible, hero pieces catalogued and sent to studio archive or held for reshoots and sequels, the rest sold, donated or destroyed under contract.
+
+- **Who.** Costume Supervisor with the Coordinator and the studio's asset department
+- **Decides.** MOTHER or FATHER decides what the company keeps. Holding a hero costume costs storage; selling it makes cash and forfeits a sequel, a reshoot and a marketing display.
+- **Engine.** Asset ledger: each hero piece becomes an owned object with storage cost per year, resale value, and a reshoot_available flag. Selling a piece and then needing a pickup six months later forces a rebuild at full cost. Studio stock built this way is the lot's costume library.
+- **Takes.** 1-3 weeks after picture wrap
+- **Television.** TV cannot wrap out: everything a returning character wears is held for the next season, so storage is a permanent line and a cancellation triggers a mass liquidation decision.
+
+### Hair design and research
+
+Each character's hair worked out by period, class, region and arc: cut, colour, length, texture, dressing and how it changes across the story. Decided against the costume palette and the makeup design.
+
+- **Who.** Department Head Hair Stylist (US) or Hair and Make-Up Designer (UK)
+- **Decides.** Real hair versus wig versus hairpiece for each character, which is the choice everything else follows from.
+- **Engine.** Hair look record per character per DOS {length, colour, texture, dressing, source: real|wig|piece}. Real-hair looks bind the actor's physical hair to the schedule; wig looks bind an asset. The engine must not let a real-hair look change back and forth across a shooting schedule that is out of order.
+- **Takes.** 1-3 weeks of design in prep
+- **Television.** Hair design is a series identity and changing a lead's hair mid-season is a story event that the network weighs in on.
+
+### Actor hair consultation and consent
+
+What the actor will let be done to their own hair: cut, shave, dye, perm, extensions, facial-hair grow-out, or nothing at all. Contract riders and pay-or-play appearance clauses checked.
+
+- **Who.** Department Head Hair Stylist with the actor, the director and the actor's representation
+- **Decides.** ACTOR decides, absolutely, and can be paid extra for a drastic change. The Department Head decides how to achieve the look if consent is refused.
+- **Engine.** Consent flags per alteration type. A refusal routes the look to a wig or piece, which costs weeks and money. A granted cut is one-way and locks the actor's real hair state for the rest of the schedule and for any concurrent job, which the agent model must enforce.
+- **Takes.** One meeting, 30-60 minutes; re-opened whenever the script changes
+- **Television.** A series lead's hair is contractually constrained for the season and sometimes for the hiatus, because pickups and promo shoots need it to match.
+
+### Wig commission, head block and cap building
+
+The actor's head measured or taped to make a personal block; a foundation cap built in lace (HD, Swiss or French), netting or silk; the hairline drawn to the actor's own.
+
+- **Who.** Wig Maker, with the Department Head Hair Stylist
+- **Decides.** Lace type (invisibility versus durability), cap construction, hairline shape, and whether to buy a ready-made and re-front it instead.
+- **Engine.** Wig asset {cap_type, lace_grade, hairline_fidelity, durability_wears}. Lace grade trades on-camera invisibility against tearing: a fine HD lace front may survive 10-20 applications, a French lace far more. Each wear consumes durability; at zero the front must be replaced.
+- **Takes.** Block and cap 4-10 hours
+- **Television.** TV buys stock lace wigs and customises the front; only a period or genre series commissions from scratch, and it makes two of everything for the season.
+
+### Ventilating (hand-knotting) the wig
+
+Hair knotted strand by strand into the lace with a ventilating needle, direction and density controlled at the hairline so it grows the right way, single knots at the front and doubles behind.
+
+- **Who.** Wig Maker / Ventilator
+- **Decides.** Human versus yak versus synthetic fibre, density, knot type, and whether to hand-tie the whole cap or hand-tie only the front over a wefted body.
+- **Engine.** Labour model: full hand-tied lace piece 35-45 hours typical, 60+ hours at 26-32 inch lengths, and 80-120 hours for a fully hand-tied cap with a hand-tied front. Fibre cost separate. Hero film wigs start around $3,000 and run far higher. This is a hard lead time nothing can compress.
+- **Takes.** 35-120 hours of one person's labour; 2-6 weeks calendar for a hero wig
+- **Television.** No TV schedule absorbs this inside an episode, so wigs are either a pilot-era asset or bought in. A lost or ruined hero wig mid-season is a genuine emergency.
+
+### Daily wig prep, setting and dressing
+
+Wig washed, conditioned, blocked, set on rollers or pin-curled, dried in a wig oven, then dressed out to the design and taken to set on its block. Repeated for every wig every day it is worn.
+
+- **Who.** Hair Stylist or a dedicated Wig Prep artist, often working nights
+- **Decides.** How many wigs are in rotation per character (a wig being dressed cannot be on an actor's head) and whether to staff a night prep person.
+- **Engine.** Wig instance has a prep state and a prep duration (2-6 hours per wig). A single hero wig cannot be worn on consecutive days without night prep labour. Two wigs per character is the standard insurance; one is a schedule risk the player can choose.
+- **Takes.** 2-6 hours per wig per prep cycle
+- **Television.** TV runs a wig room off the shooting schedule permanently; the prep queue is a standing overnight department cost that features pay only in period blocks.
+
+### Wig application and lace front blending
+
+The actor's own hair pin-curled or wrapped flat, a wig cap fitted, the wig placed, the lace glued with adhesive, the excess lace cut, the join blended with makeup so no edge reads, and the whole styled to the continuity photo.
+
+- **Who.** Hair Stylist; Department Head for a lead
+- **Decides.** Glue versus tape versus clip, how much lace to leave, whether to build the blend with PAX or foundation.
+- **Engine.** Application duration by complexity: simple wig 20-30 min, hero lace front 45-90 min. Adhesive choice trades hold_hours against skin irritation risk and removal time. A failed lace edge under a close-up lens is a visible flaw the camera department can call.
+- **Takes.** 20-90 minutes, on top of makeup
+- **Television.** Same, but TV compresses it and will accept a slightly visible front on a wide-shot day, then buy the time back on a close-up day.
+
+### Facial hair
+
+Beards, moustaches, sideburns and stubble made on lace and applied, or laid hair by hair in crepe wool or human hair directly onto the skin with adhesive, or punched stubble on a lace base.
+
+- **Who.** Hair Stylist or Make-Up Artist (jurisdiction varies), Wig Maker for the piece
+- **Decides.** Grow it, lay it, or pre-make it on lace. Grown is free and unrepeatable and holds the actor hostage; laid is slow daily; pre-made is expensive once and fast daily.
+- **Engine.** Per-day chair cost: hand-laid beard 45-90 min daily; pre-made lace beard 15-30 min daily; grown beard 0 min but locks actor appearance across the whole schedule and any concurrent job. Pre-made cost amortises against shoot days: the break-even is a real calculation the player should see.
+- **Takes.** Making a lace beard 15-40 hours; daily application 15-90 minutes
+- **Television.** TV almost always grows or pre-makes; laying daily for 8 months of a series is not affordable and the actor's hiatus makes grown hair unreliable across seasons.
+
+### Bald cap application
+
+Hair flattened, a vinyl, latex or cap-plastic (Baldiez) cap fitted, glued, trimmed, the edges dissolved or blended invisible, then painted to match skin with PAX or alcohol colour and powdered.
+
+- **Who.** Make-Up Artist, often the prosthetics lead
+- **Decides.** Cap material (dissolvable plastic reads best and is fragile) and whether the actor will simply shave, which is faster daily and a one-way consent decision.
+- **Engine.** Cap application 45-120 minutes daily versus a one-time shave. Cap durability: a plastic cap is single-use per day and consumes stock; a shaved head needs a 5-minute re-shave. Cap under a prosthetic adds to total chair time before any appliance is laid.
+- **Takes.** 45-120 minutes to apply and blend; 15-30 minutes to remove
+- **Television.** A recurring bald character on TV almost always ends with the actor shaving, because the daily cap cost compounds over a season.
+
+### On-set hair maintenance and continuity
+
+Hair reset between takes to the continuity still, wind and rain damage repaired, wet-look maintained with glycerine or gel, hair dirtied or bloodied to match, and stand-by for any action that disturbs it.
+
+- **Who.** Key Hair Stylist and set hair crew
+- **Decides.** Staffing on set, and whether a hair reset justifies holding the camera.
+- **Engine.** Each take can degrade hair_state; a reset costs minutes. The director's tolerance and the DP's shot size determine whether degradation is visible. Wet, wind and stunt tags force resets. Reset time competes directly with shots-per-day.
+- **Takes.** 2-15 minutes per reset; continuous standby
+- **Television.** TV resets less and shoots wider; a multicam show effectively cannot reset mid-scene at all.
+
+### Cutting, colouring and extensions across the schedule
+
+On-camera haircuts, root touch-ups every few weeks, colour corrections, perms, relaxers, and extensions installed and maintained, all scheduled against an out-of-order shooting order.
+
+- **Who.** Department Head Hair Stylist; a licensed colourist (Local 706 hair stylists must hold a current cosmetology licence)
+- **Decides.** When the one-way haircut happens, which forces the scheduler to shoot every 'before' scene first. Colour appointment cadence.
+- **Engine.** Actor hair length grows at a rate per week; colour roots emerge on a timer. A scripted haircut creates a hard schedule constraint: all pre-cut scenes must precede it or be doubled/VFX'd. The engine must actually schedule around the cut, not just narrate it.
+- **Takes.** Cut 30-60 min; full colour 2-4 hours; extensions 3-6 hours to install
+- **Television.** Over a long order, real growth and root emergence are continuous and the department books standing salon days; a feature can often ignore growth entirely.
+
+### Makeup design and the character bible
+
+Per character: skin tone, health, age, era-correct cosmetics, scars, tattoos, injuries by DOS, and how all of it progresses. Written up with photographs and a product list so anyone can reproduce it.
+
+- **Who.** Department Head Make-Up Artist; a Special Make-Up Effects Designer where appliances are involved
+- **Decides.** Whether a transformation is achieved with makeup, with prosthetics, with a suit, or in VFX. That routing decision sets the entire chair-time and budget shape of the show.
+- **Engine.** Makeup look per character per DOS as a stack of layers with products and durations. Route choice {makeup-only, appliance, suit, VFX} produces wildly different cost curves: makeup is cheap per day and cheap up front; appliances are expensive up front and expensive daily; VFX is free on the day and expensive in post.
+- **Takes.** 1-4 weeks in prep
+- **Television.** Written once as a series bible so a swing artist can match it; the cost of a design that only its creator can execute is a real TV failure mode.
+
+### Makeup and hair test day
+
+Full looks built and shot on the real camera under the real lighting with the show LUT. Skin tones checked against the LUT, appliance edges checked in close-up, wig fronts checked, HD-visible products swapped out.
+
+- **Who.** Department Heads of Make-Up and Hair, DP, Director, actor, Costume Designer
+- **Decides.** Final sign-off on every look. Also whether a product with light-reflecting silica that flares under LED must be replaced.
+- **Engine.** Test produces per-look pass/fail against {LUT, lens, light source spectrum, shot size}. Fails force redesign and consume prep days. Skipping the test raises the probability of a look being rejected in dailies, which costs a reshoot or a mid-shoot redesign.
+- **Takes.** Half a day to two days; a heavy prosthetic test day is a full day per character
+- **Television.** Done for the pilot and for new series-regular characters; guest characters are tested in the chair on the morning of their first day, which is why guest looks fail more often.
+
+### Daily beauty makeup
+
+Skin prep, colour correction, base matched to the lighting, contour, eyes, lips, powder, set. Matched to the continuity still and to the shot size the day will be shooting.
+
+- **Who.** Make-Up Artist assigned to the performer; Department Head on the lead
+- **Decides.** How much time the actor is given in the chair, which sets their call time and therefore their turnaround; and which artist works on whom (stars often have an approved personal artist).
+- **Engine.** Chair duration 20-45 minutes standard, longer for a heavy period look. Chair time is on the critical path to first shot, chained behind hair and before costume. Actor's makeup call = crew call minus total chair time, and the SAG-AFTRA work day starts at makeup call, not crew call.
+- **Takes.** 20-45 minutes; period or heavy beauty 45-90 minutes
+- **Television.** Identical in structure but compressed; a soap or multicam shoots 5-8 times the pages and the chair time per actor is squeezed to 15-25 minutes.
+
+### Body makeup, tattoo cover and full body paint
+
+Exposed skin evened out, tattoos covered with orange corrector then PAX or alcohol colour and sealed, veins and bruises added, or a whole body painted a character colour with airbrush and sponge.
+
+- **Who.** Body Make-Up Artist (a distinct Local 706 classification), with a team for full-body work
+- **Decides.** Cover versus incorporate a tattoo into the character; airbrush versus hand; how many artists to throw at a full body paint to cut the clock.
+- **Engine.** Area-based time model: tattoo cover 15-60 minutes per piece depending on size and contrast; full body paint 3-6 hours with one artist, roughly halving with each added artist down to a floor. Sealed paint has a wear_hours before touch-up. Sweat and costume contact degrade it per take.
+- **Takes.** 15-60 min per tattoo; 2-6 hours for a full body; 30-60 min to remove
+- **Television.** A recurring full-body character on TV forces a schedule redesign: their scenes get banked into blocks so the paint is amortised across a single long day.
+
+### Character and ageing makeup without appliances
+
+Age and character built with paint alone: shading, highlight, stipple sponge texture, stretch-and-stipple latex wrinkles, red-brown liner, greyed brows, broken capillaries, illness pallor, dirt and exhaustion.
+
+- **Who.** Make-Up Artist or Department Head
+- **Decides.** Whether the ageing is carried by paint, by appliances, or by casting a different actor. Paint reads badly in close-up and is fine in a wide.
+- **Engine.** Paint-only ageing has a credibility ceiling that falls as shot size tightens: believable in a wide, exposed in a 75mm close-up. The engine should score it against the day's lens list, so the choice is only safe if the schedule cooperates.
+- **Takes.** 45 minutes to 2.5 hours
+- **Television.** TV uses paint-only ageing far more, and its shot language (more mediums, fewer extreme close-ups) is partly why it gets away with it.
+
+### On-set blood, wounds, dirt and sweat
+
+Wounds built with wax, gelatin, Bondo transfers or silicone; blood applied in stages; dirt and sweat (glycerine and water) laid on and matched take to take; blood rigs, bladders and tubing dressed into a costume.
+
+- **Who.** Make-Up Artist; the Special Make-Up Effects team for rigged effects
+- **Decides.** Blood type (staining versus washable versus mouth-safe), how progressive the injury is across the scene, whether the effect is squibbed, pumped, or applied by hand.
+- **Engine.** Injury state per character per scene on a timeline; every take must be reset to the correct point, costing minutes. Blood consumes costume multiples. Mouth-safe versus staining is a safety and laundry flag, not a label: staining blood on a rented costume triggers a damage charge.
+- **Takes.** Reset 2-20 minutes per take; building a practical wound 30-120 minutes
+- **Television.** Procedurals run a standing injury pipeline with pre-made stock pieces; features build bespoke. A TV blood day is scheduled at the end of a block because the costumes are then unusable.
+
+### Touch-ups and continuity on set
+
+Between setups: powder for shine, lip reapplied, sweat blotted or added, appliance edges checked and re-glued, continuity stills compared, notes taken on what changed.
+
+- **Who.** Make-Up Artist and Hair Stylist standing by at the monitor
+- **Decides.** When to interrupt the camera. Every touch-up is a negotiation with the first AD over minutes.
+- **Engine.** Shine and degradation accumulate per take as a function of heat, lamp load and performer exertion. The AD grants or refuses the touch-up; an ungranted touch-up raises a visible-flaw probability. Cumulative denied touch-ups should produce a dailies note.
+- **Takes.** 30 seconds to 5 minutes per touch-up, many times a day
+- **Television.** TV grants fewer, and a live or multicam show grants almost none between takes; the artists work in the scene breaks instead.
+
+### Removal and skin care
+
+Makeup removed, adhesives dissolved with the correct solvent, skin cleaned, soothed and treated. Logged if there is irritation, because a reaction can stop a performer working.
+
+- **Who.** Make-Up Artist; the prosthetics team for appliance removal
+- **Decides.** How much time is booked for removal, which is real paid time and which ends the actor's day for turnaround purposes.
+- **Engine.** Removal duration counts inside the actor's work day; dismissal time sets the 12-hour turnaround clock and therefore tomorrow's earliest call. A 2-hour prosthetic removal after a 12-hour day mechanically produces a forced call push or a turnaround violation penalty.
+- **Takes.** Beauty 5-15 min; prosthetics 30-120 min; full body paint 30-60 min
+- **Television.** The turnaround arithmetic is the same and bites harder in TV, where the same actor works 5 days a week for months and skin damage accumulates.
+
+### Lifecast: face, head, body, hands and teeth
+
+Actor's hair capped, skin released, alginate applied over the face or body, backed with plaster bandage, demoulded, then a positive poured immediately in Ultracal 30 because alginate shrinks within hours.
+
+- **Who.** Special Make-Up Effects Designer with lab technicians; a dentist for dental impressions
+- **Decides.** Scope of the cast (face only, full head, torso, hands, full body), material, and whether to scan instead. Also whether the actor can tolerate it, which is a real limit.
+- **Engine.** Materials and time: roughly 2-2.5 lb alginate and about six 4-inch plaster bandage rolls for a head; demould about 10 minutes after set; Ultracal 30 has around 30 minutes working time and sets in 20-30 minutes. Positive must be poured same day or the cast is lost. Claustrophobia/panic roll can abort the session.
+- **Takes.** Face 60-90 min in the chair; full head 2-3 hours; full body 4-6 hours; add a day for the positives to cure
+- **Television.** TV lifecasts once and reuses the positive for the run of the series; a body change in an actor between seasons quietly invalidates it.
+
+### 3D scan and digital sculpt route
+
+Photogrammetry rig, structured-light or Light Stage capture of the performer; the appliance sculpted in ZBrush on the scan data; output 3D printed as a sculpt or machined, then moulded conventionally.
+
+- **Who.** Scanning technician and digital sculptor, with the Special Make-Up Effects Designer
+- **Decides.** Digital versus clay. Digital iterates faster and shares with VFX; clay reads better in the hands of a great sculptor and needs no print farm.
+- **Engine.** Two pipelines with different time and cost curves and a shared endpoint (a physical positive). Digital route: capture 1-2 h, sculpt 20-80 h, print 6-30 h, cleanup 4-12 h. Digital data also feeds VFX digi-doubles, so the cost can be split between departments.
+- **Takes.** 3-10 days end to end for a hero appliance set (estimate)
+- **Television.** TV increasingly starts digital because the files survive crew turnover and a new artist can re-run an appliance in week 30 without the original sculptor.
+
+### Sculpting the appliance
+
+Oil clay (Chavant NSP, Monster Clay, Roma Plastilina) or water clay built over the lifecast positive, sculpted to the approved design, textured pore by pore, edges blended down to nothing so they can disappear on skin.
+
+- **Who.** Sculptor, under the Special Make-Up Effects Designer
+- **Decides.** How many pieces the makeup breaks into (one big piece is faster to apply and worse at moving; many pieces move better and take longer daily), and where the seams fall.
+- **Engine.** piece_count directly sets daily application time and the number of moulds. Each piece: sculpt hours, mould cost, per-run material cost, application minutes. The Fallout Ghoul used nine silicone pieces at 5 hours for the first application, reduced to under 2.5 hours by season two.
+- **Takes.** 40-200 hours per hero character sculpt
+- **Television.** A TV appliance is designed for the clock first: pieces are merged and simplified specifically to cut daily chair time, because it is paid for 60+ times, not 6.
+
+### Mould making
+
+A negative taken off the sculpt: stone (Ultracal 30, Hydrocal), fibreglass and epoxy for a production mould, or platinum silicone in a jacket. Keys, walls, injection and vent points cut; a core made so the appliance has thickness.
+
+- **Who.** Mould Maker / lab technician
+- **Decides.** Mould material, which sets how many runs it survives and how fine the surface detail is; number of duplicate moulds (running two moulds halves the daily run time).
+- **Engine.** Mould asset {material, detail_fidelity, runs_remaining, run_cycle_hours}. A stone mould degrades and must be re-pulled; fibreglass survives a series. Daily appliance supply = moulds x runs per day; if the shoot needs more pieces per day than the moulds can produce, the player must build more moulds.
+- **Takes.** 1-4 days per mould; a full character set is 1-2 weeks
+- **Television.** TV builds redundant moulds up front because a cracked mould in week 12 stops the show; a feature gambles on one set more often.
+
+### Running the material: foam latex, gelatin, silicone or transfer
+
+Foam latex whipped in a Hobart through its stages, gelled, injected, cured; or platinum silicone (Platsil Gel-10, Gel-25) run into a Baldiez-encapsulated mould; or gelatin poured; or a Pros-Aide bondo transfer made on a flat.
+
+- **Who.** Foam Runner / lab technician, under the Lab Supervisor
+- **Decides.** Material, and therefore what the makeup can do. Foam is light, warm and deadens under stretch; silicone translucent and heavy; gelatin cheap, beautiful, and melts; transfers ultra-thin and single-use.
+- **Engine.** Foam latex cures at about 185F/85C: small moulds 2-2.5 hours, larger 3-4 hours, never above 200F. Each run has a yield probability; a bad run wastes a day's pieces. Daily consumption: silicone and gelatin pieces are single-use, foam sometimes survives two. Stock on hand must cover shoot days plus failure rate.
+- **Takes.** A run cycle is 4-8 hours; the lab typically runs the next day's pieces overnight, every night
+- **Television.** A TV prosthetic character means an overnight lab running for months; the lab becomes a standing department with its own crew, oven capacity and consumables budget.
+
+### Seaming, painting and hair punching the appliance
+
+Flash trimmed, seams patched, intrinsic colour already in the silicone, extrinsic layers built in PAX, Skin Illustrator, rubber mask grease paint or silicone pigment, then hair punched in one or two strands at a time for brows, lashes, stubble and body hair.
+
+- **Who.** Lab Technician / appliance painter; a hair punch artist
+- **Decides.** How much colour is intrinsic (durable, made once) versus extrinsic (flexible, redone or touched daily), and whether hair is punched into the piece or laid on the day.
+- **Engine.** Pre-painting cost per piece against daily chair minutes saved. Punching is a hard labour number: a full punched brow and lash set is 8-30 hours per piece. Punched hair survives application and reads better; laid hair is 20-40 minutes of chair time every single day.
+- **Takes.** Paint 2-8 hours per piece; punching 8-40 hours per piece
+- **Television.** TV pre-paints and pre-punches everything possible, because the chair-time saving compounds across the order and the lab has nights free that the set does not.
+
+### Appliance pre-fit and test application
+
+The full makeup applied once, off the clock, to find where pieces fight the actor's expressions, where edges lift, how the colour reads on camera, and to time the application honestly.
+
+- **Who.** Special Make-Up Effects Designer with the applying artist and the actor
+- **Decides.** Whether the design ships or goes back to sculpt. Also who is allowed to apply it; a complex makeup may only have two or three people in the world who can do it to standard.
+- **Engine.** Pre-fit returns a measured application time and a defect list. Without a pre-fit, day-one application overruns by a large factor and the production loses the morning. Artist skill rating modifies both time and quality; a B-team artist on an A-team makeup produces a visible difference.
+- **Takes.** A full day, usually combined with the camera test
+- **Television.** TV must pre-fit because the makeup will be applied by a rotating crew across a season; a makeup only its designer can apply is unshootable in episodic.
+
+### Daily prosthetic application
+
+Skin prepped and barriered, cap applied, pieces laid in order and glued with Pros-Aide or Telesis silicone adhesive, edges dissolved and blended, colour laid in with alcohol palettes and airbrush, powder, then hair, teeth and lenses.
+
+- **Who.** Prosthetic Make-Up Artist, often two or three working in parallel on one actor
+- **Decides.** Call time, which is set by this number and nothing else. How many artists to staff (two artists can roughly halve a multi-piece application).
+- **Engine.** Total chair time = sum(piece application) + blend + paint + hair + dental + lenses, divided by parallel artists with a floor. Real anchors: Fallout's Ghoul, nine silicone pieces, 5 hours at first, under 2.5 by season two; Chad Powers, a lace, dentures, forehead, nose/cheek and lip pieces in just under an hour. Chair time sets makeup call, which sets the paid day and the turnaround.
+- **Takes.** 45 minutes (light) to 5 hours (full character); 6-8+ hours for extreme full-body makeups
+- **Television.** TV relentlessly engineers the number down between seasons because it is paid every shooting day; a feature will tolerate a 5-hour makeup for a 6-day character.
+
+### Prosthetic removal
+
+Adhesive dissolved with the matching remover (Super Solv for Telesis, Bond Off, isopropyl myristate, Detachol), pieces lifted without tearing skin, residue cleaned, skin treated and checked for reaction.
+
+- **Who.** Prosthetic Make-Up Artist
+- **Decides.** Whether to salvage pieces for a second wear and whether to book a second artist so removal fits inside the day.
+- **Engine.** Removal duration counts in the work day and sets dismissal, which starts the 12-hour turnaround. Removal quality affects skin_condition; cumulative damage raises reaction probability, which can make an actor unable to wear the makeup and stop the schedule outright.
+- **Takes.** 30 minutes to 2 hours; full body creature makeups longer
+- **Television.** Across a season, skin condition is a managed resource: rest days, barrier products and piece redesign are scheduled to protect it.
+
+### Dental appliances
+
+Impressions taken, a model cast, teeth sculpted in wax, then acrylic teeth or snap-on veneer shells made, fitted, painted and glazed. Or stock vampire teeth, or teeth blacked out with tooth enamel.
+
+- **Who.** Special Make-Up Effects Designer with a dental technician; impressions taken by a dentist
+- **Decides.** Custom versus stock; how much the teeth change the actor's speech, which is a performance and a sound-department problem.
+- **Engine.** Dental asset {fit_quality, speech_penalty, wear_hours}. Speech penalty raises the chance of a line fluff and may force ADR, which is a post cost. Poor fit causes pain that reduces usable wear time per day and can force a scene to be re-scheduled.
+- **Takes.** Impression 30-60 min; lab 3-10 days; daily fitting 2-10 minutes
+- **Television.** A recurring dental piece is made in duplicate; teeth get lost, and a lost hero denture on a TV schedule is a same-week rebuild.
+
+### Contact lenses
+
+Eyes measured and fitted by an eye care professional, lenses chosen or hand-painted (sclerals for a full eye, corneal for iris changes, blackout, cataract, blind), inserted and removed by a trained artist on the day.
+
+- **Who.** Special Make-Up Effects Designer and a lens painter, with a licensed optometrist doing the fit
+- **Decides.** Practical lens versus digital eyes in post. Lenses are cheap and immediate; they also limit wear time and can halt an actor entirely.
+- **Engine.** Lenses are FDA-regulated medical devices in the US and require a prescription and a professional fit, even plano cosmetic ones; hand-painted lenses are generally plano only. Per-actor wear_hours_max, with vision impairment reducing the actor's ability to hit marks. Exceeding wear time is a safety stop.
+- **Takes.** Fitting appointment 30-60 min; lenses 1-4 weeks to make; daily insertion 5-15 minutes
+- **Television.** A season-long lens character needs multiple pairs and scheduled eye rest; shows frequently switch to VFX eyes after a season for exactly this reason.
+
+### On-set prosthetic maintenance
+
+Lifting edges re-glued, colour re-stippled where sweat has cut it, sweat managed under a non-breathing appliance, damage from a stunt repaired or a whole piece replaced mid-day.
+
+- **Who.** Prosthetic Make-Up Artist standing by with a repair kit
+- **Decides.** Repair or replace on the day; whether to hold the unit for 20 minutes or shoot around.
+- **Engine.** Appliance integrity degrades per take as a function of heat, humidity, exertion and dialogue. Below a threshold it is visible in a close-up. Replacement consumes a spare piece and 45+ minutes; if no spare was run last night, the option does not exist. This is the direct link between lab capacity and the shooting day.
+- **Takes.** 5-30 minutes per repair; a mid-day replacement 45 minutes to 2 hours
+- **Television.** TV carries spares as policy; a feature on a distant location may be a day's freight from its lab, which turns a torn piece into a lost day.
+
+### Suit design and engineering
+
+A superhero or creature suit designed as a garment, a sculpture and a machine at once: silhouette, material, seam placement, how the performer gets in and out, where the eyes are, what the stunt version must survive.
+
+- **Who.** Suit Designer / Creature Designer (Ironhead, Legacy Effects, Weta Workshop, Spectral Motion, Studio Gillis) with the Costume Designer, Director, VFX Supervisor and Stunt Coordinator
+- **Decides.** Who owns the suit build: the costume department (705), the prop shop (44) or the makeup effects shop (706). That jurisdiction call decides who is hired and what the deal is.
+- **Engine.** Suit spec {panel_map, seam lines, material per zone, weight, articulation, vision cone, don_time, heat_index}. Every one of these is read later: articulation by stunts, vision by the AD for safe blocking, heat by performer endurance, don time by the call sheet.
+- **Takes.** 8-20 weeks of design and engineering before fabrication starts
+- **Television.** A TV suit is designed to be maintainable and fast to wear above all; a feature suit is designed to photograph, and its 90-minute don time is absorbed by the schedule.
+
+### Suit body cast, scan and pattern
+
+A full body lifecast or 3D scan of the performer and of every stunt double, a form made to match, and a stretch pattern drafted on that form with negative ease calculated for the fabric's stretch.
+
+- **Who.** Lab team with the Pattern Maker; a Figure Maker to build the dress form
+- **Decides.** Cast versus scan; how many bodies (hero, stunt, fight double, wire double, scale double) get their own pattern.
+- **Engine.** Every body that wears the suit needs its own pattern derived from a shared design. Negative-ease maths is real: fabric stretch percentage determines pattern reduction, and getting it wrong makes a suit that wrinkles on camera or cannot be worn. Each extra body is 60-80% of the first's build cost.
+- **Takes.** Full body cast 4-6 hours per performer; pattern 1-2 weeks
+- **Television.** TV scans once and lives with it; if the performer's body changes, the suit is let out rather than re-patterned, and it starts to read badly.
+
+### Suit sculpt: muscle, creature anatomy and surface
+
+Musculature or creature anatomy sculpted over the body form in clay, or carved directly in foam and covered; skin texture, scales, veins and wrinkles sculpted at a scale that survives a macro lens.
+
+- **Who.** Sculptor and Muscle Suit Fabricator
+- **Decides.** How much of the body is sculpted and moulded versus tailored in stretch fabric. Sculpted reads as flesh and restricts movement; tailored moves and reads as cloth.
+- **Engine.** Per-zone construction map: each body zone is sculpted-and-moulded, foam-carved, or sewn. Zone choice sets that zone's weight, articulation and heat contribution. Aggregate weight and articulation then gate which stunts are performable in the suit at all.
+- **Takes.** 6-16 weeks for a hero creature sculpt
+- **Television.** TV creature suits reuse a moulded head and hands over a sewn body, because the sewn parts can be remade in a week and the sculpted parts cannot.
+
+### Suit moulds and fabrication
+
+Foam latex run into body moulds and glued to a lycra base; silicone skins cast; urethane armour pulled; four-way stretch panels cut and sewn; dye-sublimation or silicone printing applied for pattern; hardware, magnets and zips installed.
+
+- **Who.** Mould Maker, Fabricator, Seamstress/Stitcher, Painter
+- **Decides.** Material per zone, print method for pattern, and how many suits to build. Estimate: a basic full-body suit's fabrication runs roughly $35,000-$50,000 before the head.
+- **Engine.** Build cost and calendar per zone per method. Suit count is the real decision: hero, backup hero, stunt, wire, scale double, damaged, wet. Each is a separate asset with its own condition and repair state; the shooting schedule consumes them exactly like costume multiples.
+- **Takes.** 12-30 weeks for a hero suit set; a single sewn stretch suit 3-6 weeks
+- **Television.** TV orders fewer suits and repairs harder; a suit-heavy series should model a nightly repair queue as a standing department, not an exception.
+
+### Suit hero head, helmet and animatronics
+
+A static mask, a cable-driven head, or a radio-controlled animatronic with servos for brows, lips, eyes and ears, puppeteered live by two to four operators off camera, with a lens-safe eye and a breathing path for the performer.
+
+- **Who.** Animatronics Designer, mechanical engineer, puppeteers
+- **Decides.** Static, cable, servo or digital face replacement. Each is a different cost, a different crew on the day, and a different quality of performance.
+- **Engine.** Head spec {DOF count, operator count, battery_minutes, reset_time, failure_rate_per_take}. Every degree of freedom adds an operator and a failure mode; a servo failure mid-take is a reset of 5-30 minutes. Digital replacement moves the cost to post and requires a tracking-marked plate head instead.
+- **Takes.** 16-40 weeks for a hero animatronic head; 4-8 weeks for a static hero mask
+- **Television.** Animatronic heads are rare in episodic because the daily operator crew and failure rate are unaffordable; TV uses static heads with digital assist.
+
+### Suit fitting and range-of-motion test
+
+The performer is dressed, and then asked to do everything the script requires: run, fight, climb, sit in a car, get up off the ground, breathe for twenty minutes. Vision cone mapped. Failures sent back to the shop.
+
+- **Who.** Suit shop team, Stunt Coordinator, performer, Director
+- **Decides.** Whether the suit ships. Whether an action beat must be rewritten because the suit cannot do it.
+- **Engine.** Range-of-motion test returns a per-action pass/fail list that the stunt and scheduling systems must consult before a beat can be scheduled. A failed action forces a suit revision (weeks), a stunt redesign, or a VFX shot. This is the check that makes a suit real rather than a costume label.
+- **Takes.** A half to full day per suit, repeated after every revision
+- **Television.** TV tests once and then discovers the limitation on the day, which is why suited action in episodic is blocked conservatively.
+
+### Suit performer casting, conditioning and safety
+
+A performer cast for body shape and movement ability as much as acting; conditioned for the load; monitored for heat stress, with cooling breaks and a handler who never leaves them.
+
+- **Who.** Suit Performer (a distinct casting discipline), with a creature handler, the Stunt Coordinator and set medic
+- **Decides.** ACTOR persona can choose to be the suit performer, or refuse and be replaced for those shots. MOTHER decides whether to pay for a dedicated performer and handler.
+- **Engine.** Suits commonly weigh 20-50 lb and shot endurance can fall to 10-20 minutes in warm conditions. Model core_temp rising as f(ambient, suit heat index, exertion) with a mandatory cooling break at threshold; ignoring it is a safety incident, not a soft penalty. Endurance sets takes-per-hour.
+- **Takes.** Continuous; cooling breaks every 10-30 minutes of wear
+- **Television.** On a long order the suit performer's body is a managed asset with rest days written into the schedule; features push harder over fewer days.
+
+### Suit dress, undress and cooling on the day
+
+The performer is zipped, glued, magnetised and cabled into the suit by a team; the head goes on last; ice vests and forced-air cooling are run between setups; partial undress at every break.
+
+- **Who.** Suit shop dressers (two to four), creature handler
+- **Decides.** How many dressers, and whether the head comes off between setups (faster recovery, slower reset).
+- **Engine.** don_time and doff_time (30-120 minutes each for a hero suit) sit on the critical path exactly like makeup chair time and set the performer's call. Partial doff trades reset minutes against core temperature recovery; the player should be able to make that trade shot by shot.
+- **Takes.** Dress 30-120 minutes; undress 15-60 minutes; cooling breaks throughout
+- **Television.** TV banks all suited scenes into blocks so the suit goes on once a day rather than twice, which reshapes the whole shooting schedule around one costume.
+
+### Suit maintenance, repair and repaint
+
+Sweat flushed out and the suit dried inside, seams re-glued, foam tears patched, paint touched in, magnets and fasteners replaced, animatronic servos serviced and batteries charged, every single night.
+
+- **Who.** Suit shop crew working nights on set, plus the shop back at base
+- **Decides.** Crew size on the night shift and whether to rotate suits so each gets a full dry cycle.
+- **Engine.** Per-suit condition degrades per wear day; nightly repair restores a fixed amount. If wear exceeds repair, the suit falls below a usable threshold and the backup must rotate in; if there is no backup, the day is lost. A suit needs 12-24 hours to dry properly, which is the real argument for building two.
+- **Takes.** 3-8 hours of night crew per suit per shooting day
+- **Television.** This is the whole economics of a suited TV series: the nightly crew is a fixed recurring cost that a feature only pays for a few weeks.
+
+### Option spaces
+
+**Source route for any costume item** — 11 options
+
+`Pull from a costume house (Western, Angels, Palace, Cosprop, Tirelli, Sands)` · `Pull from studio stock / the lot's own costume library` · `Rent from a specialty house (military, uniforms, dance)` · `Buy retail new` · `Buy vintage or from a dealer` · `Borrow from a fashion house as a brand loan` · `Actor's own clothing` · `Build in the production's workroom` · `Build at an outside costume house` · `Buy a base and heavily modify` · `Buy multiples of a retail item deliberately deep`
+
+**Costume multiple classes to manufacture** — 16 options
+
+`Hero` · `Backup hero` · `Stunt double` · `Photo / driving double` · `Scale or child double` · `Wet` · `Blood light` · `Blood heavy` · `Progressive damage (stages 1-n)` · `Burned or singed` · `Tear-away / break-away` · `Harness-slit and rig-compatible` · `Fire-retardant underlayer version` · `Stand-in` · `VFX marker / neutral grey` · `Archive hold`
+
+**Ageing and breakdown techniques** — 18 options
+
+`Dye bath / over-dye` · `Tea and coffee stain` · `Airbrushed dirt and shading` · `Fuller's earth in water (washable)` · `Streaks 'n Tips and hairspray tint` · `Wire brush` · `Cheese grater` · `Sandpaper and files` · `Sole ruffer` · `Bleach and discharge paste` · `Sandblasting` · `Tumbling with rocks in a machine` · `Wax, grease and oil` · `Pastel and chalk` · `Candle smoke and singeing` · `Controlled tears reinforced with Fray Check` · `Sweat rings and salt staining` · `Blood (staining or washable)`
+
+**Camera test failure modes a garment can be rejected for** — 11 options
+
+`Moire from fine weave or stripe` · `Black that reads green, brown or purple` · `Infrared leak turning black to magenta` · `White that clips the highlight` · `Sheen or specular flare under HMI or LED` · `Colour fighting the set or the LUT` · `Chroma value too near the key screen` · `Fabric noise picked up by the boom` · `Drape that reads wrong at high frame rate` · `Radio mic impossible to conceal` · `Dye lot mismatch between multiples`
+
+**Prosthetic appliance materials** — 10 options
+
+`Foam latex` · `Gelatin` · `Encapsulated platinum silicone (Platsil Gel-10 / Gel-25 in Baldiez)` · `Gel-filled silicone (deflatable)` · `Pros-Aide bondo transfer` · `Cold foam polyurethane` · `Latex slip / slush` · `Cap plastic piece` · `3D-printed flexible resin` · `Silicone-coated foam hybrid`
+
+**Prosthetic adhesives** — 11 options
+
+`Pros-Aide` · `Pros-Aide II` · `Telesis 5` · `Telesis 7` · `Telesis 8` · `Beta Bond` · `Spirit gum` · `Mastix` · `Skin Tite` · `Ghost Bond (lace)` · `Medical double-sided tape`
+
+**Adhesive removers** — 8 options
+
+`Super Solv` · `Telesis Super Solv` · `Ben Nye Bond Off` · `Isopropyl myristate` · `99% isopropyl alcohol` · `Detachol` · `C-22 / Telesis Extra` · `Oil-based remover`
+
+**Appliance and skin colour systems** — 11 options
+
+`Intrinsic pigment in the silicone` · `PAX (Pros-Aide plus acrylic)` · `Skin Illustrator alcohol-activated palettes` · `Stacolor` · `Reel Creations` · `Rubber mask grease paint (castor-oil based)` · `Temptu silicone airbrush` · `Fuse FX` · `Bluebird FX` · `Traditional cream foundation` · `Powder set with translucent or coloured powder`
+
+**Lifecast and capture methods** — 9 options
+
+`Prosthetic-grade alginate over plaster bandage` · `Dental alginate for teeth` · `Skin-safe silicone (Body Double)` · `Plaster bandage only (rough form)` · `Photogrammetry rig` · `Structured-light scan (Artec, EinScan)` · `LiDAR` · `Light Stage capture` · `Re-use of an archived cast`
+
+**Mould materials** — 8 options
+
+`Ultracal 30` · `Hydrocal` · `Hydrostone` · `Fibreglass and epoxy` · `Platinum silicone in a rigid jacket` · `Aluminium production mould` · `3D-printed resin mould` · `Two-part stone with a core`
+
+**Sculpting media** — 6 options
+
+`Chavant NSP (soft, medium, hard)` · `Monster Clay` · `Roma Plastilina` · `WED water clay` · `Digital sculpt in ZBrush` · `Hybrid: digital blockout, clay detail`
+
+**Wig cap and lace construction** — 10 options
+
+`HD lace front` · `Swiss lace front` · `French lace` · `Silk top` · `Monofilament top` · `Machine-wefted body with hand-tied front` · `Fully hand-tied cap` · `Hard front / stiffened front` · `Injected cap` · `Ready-made customised`
+
+**Hair fibre** — 9 options
+
+`European human hair` · `Indian human hair` · `Chinese processed human hair` · `Yak (white and facial hair)` · `Angora` · `Crepe wool` · `Horsehair` · `Synthetic Kanekalon` · `Buffalo or alpaca for creature work`
+
+**Facial hair method** — 8 options
+
+`Actor grows it` · `Hand-laid crepe wool` · `Hand-laid human hair` · `Pre-made lace beard and moustache` · `Punched stubble on lace` · `Stubble stippled with a sponge and stipple black` · `Punched directly into a prosthetic piece` · `Digital addition in post`
+
+**Hair alteration the actor may consent to** — 11 options
+
+`No change (wig or piece only)` · `Cut` · `Restyle without cutting` · `Colour` · `Bleach` · `Perm or relax` · `Shave head` · `Shave or alter eyebrows` · `Grow facial hair` · `Grow hair out over hiatus` · `Extensions installed`
+
+**Contact lens options** — 9 options
+
+`No lens (VFX eyes in post)` · `Stock soft cosmetic lens` · `Custom hand-painted corneal lens` · `Hand-painted scleral lens` · `Full blackout sclera` · `Cataract or blind lens` · `White-out lens` · `Slit or animal pupil` · `Lens with prescription correction built in`
+
+**Dental options** — 8 options
+
+`Nothing` · `Stock vampire fangs` · `Custom acrylic snap-on teeth` · `Veneer shells` · `Full upper and lower denture` · `Tooth enamel blackout paint` · `Dental wax build-up` · `Digital dental replacement`
+
+**Ageing route for a character** — 8 options
+
+`Cast a different actor` · `Makeup shading only` · `Stretch-and-stipple latex` · `Partial appliances (neck, hands, eye bags)` · `Full appliance old-age makeup` · `Appliances plus a grey wig and dentures` · `Digital de-ageing or ageing in post` · `Wig and costume only`
+
+**Suit construction method per body zone** — 12 options
+
+`Four-way stretch spandex / powernet, sewn` · `Dye-sublimation printed stretch` · `Silicone printed on stretch` · `Foam latex over a lycra base` · `Carved-foam muscle suit, covered` · `Cast silicone skin` · `Slush-cast urethane` · `Vacuum-formed armour panels` · `3D-printed SLS panels` · `Injection-moulded rubber` · `Leather and fabric tailoring` · `Knitted or woven chainmail substitute`
+
+**Suit head type** — 8 options
+
+`Static sculpted mask` · `Static mask with a cable-operated jaw` · `Cable-driven multi-point head` · `Radio-controlled animatronic head` · `Hybrid cable plus servo` · `Helmet with the performer's face visible` · `Helmet with a blank plate for digital face replacement` · `Rod or hand puppet head operated off-body`
+
+**Suit build inventory** — 10 options
+
+`Hero` · `Backup hero` · `Stunt` · `Wire and harness version` · `Wet version` · `Damaged / battle-worn version` · `Scale double version` · `Static display / poster version` · `Partial (upper body only for close work)` · `Neutral grey witness version for VFX`
+
+**Where the makeup blend line sits (department jurisdiction)** — 7 options
+
+`Makeup department owns it (Local 706 / 798)` · `Hair department owns it (706 / 798)` · `Costume department owns it (705 / 764)` · `Property / creature shop owns it (Local 44)` · `Outside effects shop on a vendor contract` · `Combined Hair and Make-Up Design (UK / BECTU model)` · `VFX owns it and it is digital`
+
+**Who applies a star's makeup and hair** — 7 options
+
+`Department Head` · `Key artist assigned to that actor` · `The actor's personal approved artist, paid by production` · `The actor's personal artist paid by the actor` · `A specialist brought in for one makeup only` · `The designer of the prosthetic, on the days they are available` · `A day-player swing`
+
+**Hair and makeup working space** — 9 options
+
+`3-station HMU trailer` · `5-station trailer` · `10-station 'works' trailer` · `Hard room on the lot` · `Hotel room on distant location` · `Tented station at base camp` · `Standing HMU room on a TV stage` · `Prosthetics lab truck with an oven` · `A chair in a corner of the stage`
+
+**Blood and fluids** — 12 options
+
+`Ben Nye stage blood` · `KD151` · `Pigs Might Fly` · `Fleet Street` · `Reel Blood` · `Non-staining washable blood` · `Mouth-safe edible blood` · `Drying / scab blood gel` · `Fresh-scab gel` · `Blood rig: pumped through tubing` · `Blood bladder or squib` · `Digital blood in post`
+
+**Background wardrobe supply** — 7 options
+
+`Production fits every background performer` · `Background self-supplies and is bumped a wardrobe allowance` · `Costume house crowd pull, sized in advance` · `Built crowd for period or genre` · `Mixed: hero background fitted, filler self-supplied` · `Uniform rental in bulk` · `Digital crowd`
+
+**Costume clearance and legal constraints** — 9 options
+
+`Trademarked logos and brand marks` · `Real military uniform regulations and statute` · `Real police and emergency service uniforms` · `Designer house loan terms (return, credit, no alteration)` · `Union label requirements` · `Fur and exotic materials policy` · `Religious dress sensitivity` · `Real person's identifiable look` · `Flame-retardancy standards for fire work`
+
+**Designer and department deal shapes** — 9 options
+
+`Weekly rate plus box / kit rental` · `Flat deal for the picture` · `Per-episode rate` · `Overall deal at the studio` · `Daily rate for a day player` · `Vendor contract to an outside effects shop` · `Fixed-bid suit build` · `Cost-plus suit build` · `Amortised pilot build charged across a season`
+
+**What happens to the physical assets at wrap** — 10 options
+
+`Studio archive` · `Held for a sequel or pickups` · `Held for marketing and exhibition` · `Returned to the rental house` · `Returned to retail` · `Sold at auction` · `Sold to the actor` · `Donated to a museum or school` · `Destroyed under a licensing contract` · `Stored in the lot's costume library`
+
+**Chair-time bands that set an actor's call** — 8 options
+
+`15-30 min: light beauty` · `30-45 min: standard beauty plus hair` · `45-90 min: wig, facial hair or a single appliance` · `90 min-2.5 hours: multi-piece light prosthetic` · `2.5-4 hours: full character prosthetic` · `4-6 hours: full creature or full body paint` · `6-8+ hours: extreme full-body transformation` · `Plus 30-120 min removal at the end of the day`
+
+### What gets got wrong
+
+- Chair time is not flavour text, it is the schedule. Makeup call equals crew call minus total chair time, the actor's paid day starts at makeup call, and the day ends at dismissal after removal. A 4-hour makeup plus a 90-minute removal on a 12-hour shooting day mechanically produces a forced call push the next morning or a turnaround penalty. If the engine does not run that arithmetic, prosthetics are a label.
+- Hair and makeup are two separate departments in the US (Department Head Make-Up Artist, Department Head Hair Stylist, IATSE 706 in Hollywood and 798 in New York) and one department in the UK (Hair and Make-Up Designer, BECTU). Costume is a third (Costume Designers Guild 892 for designers, Motion Picture Costumers 705 in LA, 764 in New York). They must agree at the blend line and they frequently do not.
+- Local 705's Custom Made division has real, distinct classifications the game should use by name: Manufacturing Foreperson, Pattern Maker & Fitter, Men's Tailor Cutter, Special Costume Keyperson, Milliner, Table Person, Figure Maker, Head Dyer, Alteration Fitter, Coat Pant & Vest Maker, Draper/Stitcher, Shirt Maker, Dyer, Beader, Special Operator, Finisher. Collapsing these into 'tailor' loses the whole labour model.
+- A creature or superhero suit sits on a genuine union jurisdiction line between costume (705), property and creature fabrication (Local 44) and makeup effects (706). Which department owns the build changes who is hired, the applicable agreement, and who is standing by on set at 3am to repair it. This is a decision, not a detail.
+- Multiples are not spares, they are consumables. A wet take consumes a dry multiple until laundry returns it hours later. Blood and permanent ageing consume a multiple outright. If the engine does not deplete the pool, rain and blood scenes cost nothing, which is exactly backwards.
+- Dye lots are real. Two identical garments cut from different lots of the same fabric read as different colours on camera. Track a dye_lot_id per garment or the continuity system is decorative.
+- Reversible and permanent breakdown are different systems. Fuller's earth and Streaks 'n Tips wash out and survive a reshoot; dye, abrasion, bleach and burn do not and cannot be undone. On a rented garment, permanent breakdown triggers a damage buy-out from the costume house.
+- Moire is a physical interaction between weave pitch, subject distance, focal length and sensor pitch, not a property of a shirt. The same herringbone jacket is fine in a wide and destroys a 100mm close-up. Model it against the day's lens list or the camera test has nothing to test.
+- A scripted haircut is a one-way schedule constraint. Every 'before' scene must be shot before it, or doubled, or fixed in VFX. Actors' consent to cut, shave, bleach or grow is contractual and also binds them for any concurrent job and for pickups months later.
+- Wigs cannot be made fast. A fully hand-tied lace piece is 35-45 hours of ventilating, 60+ hours at 26-32 inches, and 80-120 hours for a hand-tied cap with a hand-tied front. Hero film wigs start around $3,000. There is no money that compresses this, only a decision made 6 weeks earlier.
+- One wig per character is a schedule risk, not a saving. A wig being washed, blocked, set and dressed (2-6 hours) cannot be on an actor's head. Two per character is the working standard and the player should be allowed to gamble on one.
+- Foam latex has hard physics: it cures at about 185F/85C, small moulds 2-2.5 hours, larger 3-4 hours, and above 200F it degrades. The lab runs overnight, every night, and a failed run means tomorrow's pieces do not exist. Lab capacity is directly coupled to the shooting day.
+- Alginate shrinks within hours of demoulding, so the positive must be poured the same day. Ultracal 30 gives roughly 30 minutes of working time. A lifecast is a perishable event, not a stored asset, until the positive cures.
+- Piece count is the lever. The same makeup broken into nine pieces moves beautifully and takes five hours; merged into four it takes two and a half and moves less. Fallout's Ghoul went from five hours in season one to under two and a half in season two by redesign, not by artists working faster.
+- Silicone and gelatin appliances and Pros-Aide transfers are single-use. Foam latex sometimes survives two wears. Every shooting day for that character consumes stock, and the stock is made by a lab with finite mould count and oven capacity.
+- Contact lenses are FDA-regulated medical devices in the US and require a prescription and a professional fit even with no corrective power. Hand-painted lenses are generally plano only. Per-actor maximum wear hours is a hard safety stop and reduced vision degrades the actor's ability to hit marks.
+- Skin is a depleting resource. Repeated adhesive application and solvent removal accumulates damage; a reaction can make a performer unable to wear the makeup at all and stop a series. Across a long TV order this is a managed variable with rest days scheduled against it.
+- Suits kill people if you model them as clothing. Common hero suits run 20-50 lb and shot endurance can fall to 10-20 minutes in warm conditions. Core temperature rise, mandatory cooling breaks and a dedicated handler are safety systems, not comfort options.
+- Dress and undress time for a hero suit (30-120 minutes each way) sits on the critical path exactly like chair time. Whether the head comes off between setups is a real trade between reset minutes and the performer's recovery, and the player should make it shot by shot.
+- An animatronic head is a crew, not a prop. Each degree of freedom adds an operator standing off camera every day and a per-take failure mode with a 5-30 minute reset. Four-servo brows means someone is being paid for eight months to move them.
+- Range-of-motion testing is what makes a suit real. The test returns a per-action pass/fail list, and the scheduler must consult it before a stunt beat can be booked. Without that check, a suit is a costume with a scary name.
+- Television is not film with more episodes in this department specifically. TV's constraint is repetition: the same eight shirts washed two hundred times, the same appliance applied sixty times, the same suit worn for eight months. Wear, shrinkage, colour fade, mould life and lab throughput are the TV systems; features barely feel them.
+- TV designs down to the clock and features design up to the frame. A TV prosthetic is engineered to cut daily chair time because it is paid for every shooting day; a feature will accept a five-hour makeup for a six-day character. The same design decision has opposite correct answers.
+- A retail hero garment that gets discontinued mid-season is a real and common TV failure. Buying deep up front costs cash flow and removes the risk; buying shallow is cheaper and is the reason a character's shirt quietly changes in episode nine.
+- Season wrap is not wrap. Everything a returning character wears is held, which is permanent storage cost, and a cancellation triggers a liquidation decision. A flashback in season four needs a garment from season one that may have been auctioned.
+- Star approval clauses are contractual and override the department. A personal makeup artist or hairstylist paid by production can override the Department Head's design and creates a second reporting line. Model the approval right, not just the rate.
+- SAG-AFTRA fitting time is paid in hour then quarter-hour increments on non-work days, and the wardrobe allowance for a performer's own clothing was raised to $27 per day in the 2023 MOA (with formal wear going to $30 effective July 2027). Background dressing throughput, not money, is usually the binding constraint on a crowd day.
+- IATSE Local 706 hair stylists must hold and maintain a current cosmetology licence. Licensing is a real hiring gate in some jurisdictions and should sit in the crew model, not be assumed away.
+- Intimacy garments run on consent, not on inventory. Consent is per scene and per garment, it is revocable mid-shoot, and revocation forces a rewrite, a double or a VFX solution with a real schedule cost. Treat it as a gate on shootability.
+- The department the player will most want to skip is the test day, and skipping it is exactly the decision that should hurt: untested looks fail in dailies, and a look rejected in dailies costs a redesign mid-shoot or a reshoot. Make the saved half-day visible against the cost of the failure.
+- Mould libraries are assets with sequel value. FATHER's lot holding the moulds, the patterns and the archived lifecasts means a sequel re-runs pieces instead of re-sculpting them. Selling or scrapping them is a cheap decision now that is expensive three years later, and the engine should remember.
