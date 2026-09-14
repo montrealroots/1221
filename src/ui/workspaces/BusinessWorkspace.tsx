@@ -736,6 +736,7 @@ function CastForm({ projectId, onClose }: { projectId: string; onClose: () => vo
 
   const inIt = castOf(sim, project);
   const filled = howManyCast(project);
+  const me = sim.universe.people[sim.universe.playerId]!;
 
   return (
     <Modal
@@ -748,7 +749,13 @@ function CastForm({ projectId, onClose }: { projectId: string; onClose: () => vo
       <p className="muted small">
         Two weeks before the camera turns over the office fills whatever is left, at the band, out
         of whoever the band reaches. Paying over it is the only way to reach further, and the only
-        reason to.
+        reason to — and what you pay over the band the company pays today, whether or not a frame
+        is ever shot.
+      </p>
+      <p className="muted small">
+        Play It puts you in the part at the band, and the company hands you the money. You are the
+        best there has ever been at this, so nobody is deciding whether you are right for it. What
+        you cannot do is be in two things at once.
       </p>
       <div className="table-wrap">
         <table className="table">
@@ -790,13 +797,24 @@ function CastForm({ projectId, onClose }: { projectId: string; onClose: () => vo
                   <td className="nowrap">
                     {seatFor(project, one.role.id)
                       ? <button className="btn btn-sm" onClick={() => release(one.role.id)}>Let Them Go</button>
-                      : one.role.seen
-                        ? (
-                          <button className="btn btn-sm" onClick={() => setOpen(open === one.role.id ? undefined : one.role.id)}>
-                            {open === one.role.id ? 'Close' : `Who Came In (${(one.role.seen ?? []).length})`}
+                      : (
+                        <>
+                          {one.role.seen
+                            ? (
+                              <button className="btn btn-sm" onClick={() => setOpen(open === one.role.id ? undefined : one.role.id)}>
+                                {open === one.role.id ? 'Close' : `Who Came In (${(one.role.seen ?? []).length})`}
+                              </button>
+                            )
+                            : <button className="btn btn-sm" onClick={() => put(one.role.id)}>Put It Out</button>}
+                          <button
+                            className="btn btn-sm btn-primary"
+                            style={{ marginLeft: 'var(--s2)' }}
+                            onClick={() => offer(one.role.id, me.id, one.role.bandCents)}
+                          >
+                            Play It
                           </button>
-                        )
-                        : <button className="btn btn-sm btn-primary" onClick={() => put(one.role.id)}>Put It Out</button>}
+                        </>
+                      )}
                   </td>
                 </tr>
               );

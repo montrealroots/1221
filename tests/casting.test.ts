@@ -31,8 +31,9 @@ import {
   ATTRIBUTES_READ, AXES, HAGGLE, SIZES, TAKES, takesAt,
 } from '@/engine/content/casting';
 import {
-  askFor, castOf, castOn, decideOffer, howManyCast, openRoles, quoteOf, readOf, readOn,
-  reachOfBand, seatFor, sheetFor, takeFactor, whereTheCastStands, whoCameIn, WHOEVER,
+  askFor, castOf, castOn, datesFor, decideOffer, freeToWork, howManyCast, openRoles, quoteOf,
+  readOf, readOn, reachOfBand, seatFor, sheetFor, takeFactor, whereTheCastStands,
+  whoCameIn, WHOEVER,
 } from '@/engine/world/casting';
 import { decideTake } from '@/engine/world/selling';
 import { cutsAWeek, ratioOf, weeksToConvert, willMakeIt } from '@/engine/world/inventory';
@@ -501,6 +502,159 @@ describe('the office fills what nobody filled, at the band and no further', () =
   });
 });
 
+describe('reaching past the band costs what reaching past it costs', () => {
+  const cashOf = (sim: Simulation): number => {
+    const company = Object.values(sim.universe.companies).find((one) => one.trade === 'film')!;
+    const account = Object.values(sim.universe.accounts)
+      .find((a) => a.ownerId === company.id && a.kind === 'company_cash' && !a.closedAt)!;
+    return account.balance;
+  };
+
+  it('bills the company the difference, on the day it reaches', () => {
+    // Without this, paying over the band is free and there is no reason ever to
+    // offer less than the most somebody would take.
+    const sim = world('overage');
+    const id = greenlit(sim, 'feature', 'Hvítserkur');
+    const role = openRoles(sim.universe.projects[id]!).find((r) => r.size === 'lead')!;
+    run(sim, 'company.breakdown', { projectId: id, roleId: role.id });
+    const person = whoCameIn(sim, sim.universe.projects[id]!.roles!.find((r) => r.id === role.id)!)[0]!;
+    const before = cashOf(sim);
+    const spent = sim.universe.projects[id]!.spentCents;
+    const over = role.bandCents * 2;
+    run(sim, 'company.cast', { projectId: id, roleId: role.id, personId: person.id, feeCents: over });
+    // Only if they took it. If they passed, nothing moved either.
+    if (seatFor(sim.universe.projects[id]!, role.id)) {
+      expect(cashOf(sim)).toBe(before - role.bandCents);
+      expect(sim.universe.projects[id]!.spentCents).toBe(spent + role.bandCents);
+    } else {
+      expect(cashOf(sim)).toBe(before);
+    }
+  });
+
+  it('charges nothing for taking somebody at or under the band', () => {
+    const sim = world('no-overage');
+    const id = greenlit(sim, 'feature', 'Hvítserkur');
+    const role = openRoles(sim.universe.projects[id]!).find((r) => r.size === 'day')!;
+    run(sim, 'company.breakdown', { projectId: id, roleId: role.id });
+    const person = whoCameIn(sim, sim.universe.projects[id]!.roles!.find((r) => r.id === role.id)!)[0]!;
+    const before = cashOf(sim);
+    run(sim, 'company.cast', {
+      projectId: id, roleId: role.id, personId: person.id, feeCents: role.bandCents,
+    });
+    expect(cashOf(sim)).toBe(before);
+  });
+
+  it('is what the office never does, which is the whole of what the office is', () => {
+    const sim = world('office-free');
+    const id = greenlit(sim, 'feature', 'Hvítserkur');
+    const before = cashOf(sim);
+    const shoot = sim.universe.projects[id]!.periods!.find((p) => p.id === 'shooting')!;
+    sim.advanceTo(shoot.from - MS_WEEK);
+    expect(howManyCast(sim.universe.projects[id]!)).toBe(sim.universe.projects[id]!.roles!.length);
+    // Prep money has gone out in the meantime, so this is not a balance check —
+    // it is that not one cent of what went out was a cast overage.
+    const overages = Object.values(sim.universe.accounts)
+      .filter((a) => a.name.includes('Over The Band'));
+    expect(overages).toHaveLength(0);
+    expect(cashOf(sim)).toBeLessThan(before);
+  });
+});
+
+describe('the player can be in the picture, which is the point of the game', () => {
+  it('takes the part without anybody deciding whether they are right for it', () => {
+    const sim = world('player-cast');
+    const id = greenlit(sim, 'feature', 'Hvítserkur');
+    const role = openRoles(sim.universe.projects[id]!).find((r) => r.size === 'lead')!;
+    const done = run(sim, 'company.cast', {
+      projectId: id, roleId: role.id, personId: sim.universe.playerId, feeCents: role.bandCents,
+    });
+    expect(done.ok).toBe(true);
+    expect(seatFor(sim.universe.projects[id]!, role.id)!.personId).toBe(sim.universe.playerId);
+  });
+
+  it('hands them the money, out of the company and into their own account', () => {
+    const sim = world('player-paid');
+    const id = greenlit(sim, 'feature', 'Hvítserkur');
+    const role = openRoles(sim.universe.projects[id]!).find((r) => r.size === 'lead')!;
+    const me = sim.universe.people[sim.universe.playerId]!;
+    const mine = () => sim.universe.accounts[me.primaryAccountId!]!.balance;
+    const before = mine();
+    run(sim, 'company.cast', {
+      projectId: id, roleId: role.id, personId: sim.universe.playerId, feeCents: role.bandCents,
+    });
+    expect(mine()).toBe(before + role.bandCents);
+  });
+
+  it('cannot be in two things at once, which is the only thing stopping them', () => {
+    const sim = world('player-busy');
+    const a = greenlit(sim, 'feature', 'Hvítserkur');
+    const b = greenlit(sim, 'feature', 'Reykjanes');
+    const first = openRoles(sim.universe.projects[a]!).find((r) => r.size === 'lead')!;
+    const second = openRoles(sim.universe.projects[b]!).find((r) => r.size === 'lead')!;
+    run(sim, 'company.cast', {
+      projectId: a, roleId: first.id, personId: sim.universe.playerId, feeCents: first.bandCents,
+    });
+    run(sim, 'company.cast', {
+      projectId: b, roleId: second.id, personId: sim.universe.playerId, feeCents: second.bandCents,
+    });
+    // Two pictures greenlit on the same day shoot across each other.
+    expect(seatFor(sim.universe.projects[b]!, second.id)).toBeUndefined();
+  });
+
+  it('lifts the picture, because they are the best there has ever been at it', () => {
+    const sim = world('player-lifts');
+    const id = greenlit(sim, 'feature', 'Hvítserkur');
+    const role = openRoles(sim.universe.projects[id]!).find((r) => r.size === 'lead')!;
+    const shoot = sim.universe.projects[id]!.periods!.find((p) => p.id === 'shooting')!;
+    sim.advanceTo(shoot.from);
+    const without = castOn(sim, sim.universe.projects[id]!, 'truth')!;
+    run(sim, 'company.release', { projectId: id, roleId: role.id });
+    run(sim, 'company.cast', {
+      projectId: id, roleId: role.id, personId: sim.universe.playerId, feeCents: role.bandCents,
+    });
+    expect(castOn(sim, sim.universe.projects[id]!, 'truth')!).toBeGreaterThan(without);
+  });
+
+  it('never turns up in a submission pile, even once they have worked here', () => {
+    // A sheet of a hundred hundreds in a pile of four would win every part
+    // there has ever been, and the pile would stop being a choice.
+    //
+    // The pile's first pass is people who have acted for this company before,
+    // so the exclusion only means anything once the player is one of them. The
+    // version of this test that never put them in a picture first passed with
+    // the guard deleted, which is the whole reason the setup below exists.
+    const sim = world('player-not-in-pile');
+    // Two small ones, both said yes to before either is cast, because a lead's
+    // fee paid out of the company is real money and the second greenlight has
+    // to clear the same door as the first.
+    // And they do not overlap: the second shoots two years after the first
+    // wraps, so the player is genuinely free for it. An overlapping pair
+    // excluded them on the dates instead, and passed with the guard deleted.
+    const small = { budgetCents: 3_000_000_00 };
+    const first = greenlit(sim, 'feature', 'Hvítserkur', small);
+    const next = greenlit(sim, 'feature', 'Reykjanes', {
+      ...small, from: sim.now + 104 * MS_WEEK,
+    });
+    const mine = openRoles(sim.universe.projects[first]!).find((r) => r.size === 'lead')!;
+    run(sim, 'company.cast', {
+      projectId: first, roleId: mine.id, personId: sim.universe.playerId, feeCents: mine.bandCents,
+    });
+    expect(seatFor(sim.universe.projects[first]!, mine.id)!.personId).toBe(sim.universe.playerId);
+
+    // Now the second picture, from the same company, goes looking.
+    const lead = openRoles(sim.universe.projects[next]!).find((r) => r.size === 'lead')!;
+    const when = datesFor(sim.universe.projects[next]!, lead)!;
+    expect(freeToWork(sim, sim.universe.playerId, when.from, when.to),
+      'the player has to be free for the second picture or this proves nothing').toBe(true);
+    for (const role of openRoles(sim.universe.projects[next]!)) {
+      run(sim, 'company.breakdown', { projectId: next, roleId: role.id });
+    }
+    for (const role of sim.universe.projects[next]!.roles!) {
+      expect(role.seen ?? []).not.toContain(sim.universe.playerId);
+    }
+  });
+});
+
 describe('letting somebody go never gets the money back', () => {
   it('keeps the seat on the record, because the fee is still owed', () => {
     const sim = world('release');
@@ -516,6 +670,39 @@ describe('letting somebody go never gets the money back', () => {
     // Gone from the part, still on the picture, still costing what it cost.
     expect(after.cast!.some((s) => s.personId === was.personId && s.feeCents === was.feeCents))
       .toBe(true);
+  });
+});
+
+describe('a part that has been shot has been shot', () => {
+  it('refuses an offer made after the camera has finished with it', () => {
+    // Everything else about casting late is expensive. This is impossible: the
+    // scenes were shot with whoever was standing there.
+    const sim = world('too-late');
+    const id = greenlit(sim, 'feature', 'Hvítserkur');
+    const shoot = sim.universe.projects[id]!.periods!.find((p) => p.id === 'shooting')!;
+    sim.advanceTo(shoot.to + MS_WEEK);
+    const role = sim.universe.projects[id]!.roles![0]!;
+    // The office filled it during prep, so let that person go first — which
+    // leaves the part open, and still shot.
+    expect(run(sim, 'company.release', { projectId: id, roleId: role.id }).ok).toBe(true);
+    expect(openRoles(sim.universe.projects[id]!).some((r) => r.id === role.id)).toBe(true);
+    const done = run(sim, 'company.cast', {
+      projectId: id, roleId: role.id, personId: sim.universe.playerId, feeCents: role.bandCents,
+    });
+    expect(done.ok).toBe(false);
+    expect(done.error).toMatch(/already been shot/);
+  });
+
+  it('still takes an offer made while the camera is on it', () => {
+    const sim = world('just-in-time');
+    const id = greenlit(sim, 'feature', 'Hvítserkur');
+    const shoot = sim.universe.projects[id]!.periods!.find((p) => p.id === 'shooting')!;
+    sim.advanceTo(shoot.from + MS_WEEK);
+    const role = sim.universe.projects[id]!.roles![0]!;
+    run(sim, 'company.release', { projectId: id, roleId: role.id });
+    expect(run(sim, 'company.cast', {
+      projectId: id, roleId: role.id, personId: sim.universe.playerId, feeCents: role.bandCents,
+    }).ok).toBe(true);
   });
 });
 
@@ -563,23 +750,6 @@ describe('the whole of it still holds together', () => {
     }).error).toBeDefined();
     expect(run(sim, 'company.breakdown', { projectId: id, roleId: 'made-up' }).error).toBeDefined();
     expect(run(sim, 'company.release', { projectId: id, roleId: role.id }).error).toBeDefined();
-  });
-});
-
-describe('the player is never read by it', () => {
-  it('keeps the best actor alive out of every submission pile', () => {
-    // The player's sheet is every attribute at the ceiling. A casting system
-    // that read it would be a hundred lookups all returning a hundred, which is
-    // the trap `docs/DEPTH.md` names by that description — so the player is
-    // cast by being offered a part, never by turning up in a pile.
-    const sim = world('no-player');
-    const id = greenlit(sim, 'feature', 'Hvítserkur');
-    for (const role of openRoles(sim.universe.projects[id]!)) {
-      run(sim, 'company.breakdown', { projectId: id, roleId: role.id });
-    }
-    for (const role of sim.universe.projects[id]!.roles!) {
-      expect(role.seen ?? []).not.toContain(sim.universe.playerId);
-    }
   });
 });
 

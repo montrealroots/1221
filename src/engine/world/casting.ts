@@ -671,11 +671,13 @@ export function castSomebody(sim: Simulation, casting: Casting): Cast {
 
   if (!project.cast) project.cast = [];
   project.cast.push({ roleId: role.id, personId: person.id, feeCents: fee, castAt: sim.now });
-  // The number goes on their record whatever it was, which is the whole of why
-  // a producer thinks twice before buying somebody cheap: it is not this
-  // picture the cheap number costs them, it is the next three.
+  // The number goes on their record whatever it was, which is the reason a
+  // producer thinks twice before buying somebody cheap: it is not this picture
+  // the cheap number costs them, it is the next three.
   writeTheQuote(person, project.id, role.size, fee, sim.now);
-  person.careerTrack = 'actor';
+  if (!person.isPlayer) person.careerTrack = 'actor';
+  payTheOverage(sim, project, role, fee);
+  payThePlayer(sim, project, person, fee);
 
   sim.notify({
     category: 'business',
@@ -687,6 +689,52 @@ export function castSomebody(sim: Simulation, casting: Casting): Cast {
     refId: project.id,
   });
   return { ok: true, answer };
+}
+
+/**
+ * Charges the company whatever the part cost over what it was priced at.
+ *
+ * Without this, paying over the band is free and the whole negotiation is a
+ * form: there would be no reason ever to offer less than the most somebody
+ * would take. The band is already inside the budget — the cast account is a
+ * share of the negative, and the periods spend the negative — so what is posted
+ * here is the difference and only the difference. A picture that reaches past
+ * what it was greenlit for is a picture going over, on the day it reaches.
+ *
+ * It goes out at the offer rather than at the shoot because that is when the
+ * company committed to it. Pay or play is precisely the doctrine that the money
+ * is owed from the moment somebody said yes, whether or not a frame is shot.
+ */
+function payTheOverage(sim: Simulation, project: Project, role: Role, fee: Money): void {
+  const over = fee - role.bandCents;
+  if (over <= 0) return;
+  const account = Object.values(sim.universe.accounts)
+    .find((a) => a.ownerId === project.companyId && a.kind === 'company_cash' && !a.closedAt)?.id;
+  if (!account) return;
+  sim.expense(account, over, `${project.title}: Over The Band On ${role.name}`, 'business',
+    { refType: 'project', refId: project.id });
+  project.spentCents += over;
+}
+
+/**
+ * Moves the fee, where the person being paid is the player.
+ *
+ * Everybody else's fee is inside the budget and goes out with the periods,
+ * because everybody else is an abstraction the picture pays for. The player is
+ * not: they hold a real account with a real balance, and a company that hires
+ * them has to actually hand the money over. It is the whole of what being cast
+ * pays, and it is the first money in this build that goes from the family's
+ * company into the player's own pocket.
+ */
+function payThePlayer(sim: Simulation, project: Project, person: Person, fee: Money): void {
+  if (!person.isPlayer || fee <= 0) return;
+  const from = Object.values(sim.universe.accounts)
+    .find((a) => a.ownerId === project.companyId && a.kind === 'company_cash' && !a.closedAt)?.id;
+  const to = person.primaryAccountId
+    ?? Object.values(sim.universe.accounts).find((a) => a.ownerId === person.id && !a.closedAt)?.id;
+  if (!from || !to) return;
+  sim.transfer(from, to, fee, `${project.title}: Acting Fee`, 'business',
+    { refType: 'project', refId: project.id });
 }
 
 /** Lets somebody go. The money stays owed, which is the point of the record. */
