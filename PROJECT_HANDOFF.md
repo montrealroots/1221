@@ -279,17 +279,49 @@ Commit `6f57b23` claimed **typecheck clean, 737 tests passing, gate green, lint 
 
 1. **Push the two commits** (`677bbd5`, `9d11f97`) to `origin/claude/slate-cleanup-e4apmx`. They were deliberately left unpushed: pushing is a shared-state action and the user had not been asked. Nothing else blocks it — the gate is green at `9d11f97`.
 
-2. **Run `npm run gate` once from the Linux account** to confirm the cross-platform repair did not regress anything there. It should not — every change uses forward slashes and `/\r?\n/`, both of which behave identically on Linux — but the repair touched twelve shared files and has only been observed green on Windows so far.
+2. ~~Run `npm run gate` once from the Linux account.~~ **Done, 2026-09-14: exit
+   0 on Linux, 38 test files, 804 passing, 1 todo.** The cross-platform repair
+   holds on both platforms.
 
-3. **Consider whether the CRLF data-parsing bug deserves a wider sweep.** Two `.tsv` loaders were splitting on `'\n'` and corrupting their last field on a CRLF checkout (section 3). Nothing else in `src/` splits on a bare `'\n'` to parse a data file today, but any future loader should use `/\r?\n/`.
+3. ~~Consider whether the CRLF data-parsing bug deserves a wider sweep.~~
+   **Done, 2026-09-14: no wider sweep needed in `src/`.** Swept every
+   `split('\n')` in `src/`, `tools/` and `base44/`. The two `.tsv` loaders are
+   fixed (`content/geography.ts`, `content/holidays.ts`, both `/\r?\n/`). The
+   only two bare splits left in `src/` are `content/holiday-data.ts` and
+   `content/world-data.ts`, and both split an **escaped `\n` inside a string
+   literal** rather than file content — immune to how the repo is checked out.
+   Roughly twenty tools still split real file content on `'\n'`, which leaves a
+   trailing `\r` per line on a CRLF checkout; the gate is green on both
+   platforms regardless, so treat that as a latent hazard for a future tool
+   rather than a live bug. Any future loader should still use `/\r?\n/`.
 
 4. **The production-process research is the largest piece of unfinished work and the user has asked about it directly.** `docs/research/PIPELINE.md` holds 7 of 20 planned domains and stops dead at casting, exactly where the crew would come on set. Missing: crew and departments, production design, costume, locations, camera, lighting, sound on set, the shoot day itself, effects, post picture, post sound, marketing, and a final synthesis. `KINDS.md` holds 8 of 13, missing the VFX-led tentpole, the micro-budget feature, the returning series, short form, and a spine synthesis.
 
    **CORRECTION (2026-09-12):** an earlier revision of this file, written earlier in the same session, claimed the "425 processes / 762 distinct roles" enumeration "was never landed in the repo at all." **That was wrong, and it was committed and pushed before being caught.** The enumeration is in `PIPELINE.md` and has been since `6f57b23`. Verified by counting: **425 `**Who.**` fields, 425 `**Decides.**` lines and 425 `**Engine.**` lines** across the seven landed domains, and parsing the `Who.` fields gives 659 distinct role strings (the prior session's figure of 762 differs only in how the strings are split and normalized). The prior session's role analysis is therefore **fully reproducible from what is on disk** — nothing about it was lost. The mistaken inference came from the transcript showing a workflow named "Every process in a film and television production, enumerated as a buildable specification" completing in the same minute the weekly limit hit; that was the attempt at the *missing* domains, not the source of the landed ones. Another instance of requirement #14: the claim was not checked against the file before being written down.
 
-   On resuming the research: `docs/research/README.md` says the killed agents can be re-run and that a resumed run replays the cached work for free. **That is not available from this account** — the prior sessions used a dynamic-workflow tool this account does not have. Regenerating the missing 13 domains at the landed depth is a very large job (the 7 landed domains are 551 KB), and it must be real sourced research: every process carries a `Who.`/`Decides.`/`Engine.`/`Takes.`/`Television.` line, and the `Engine.` line is a buildable claim. **Inventing these would be worse than leaving them missing**, because the whole value of this corpus is that it is checkable and it is what caught three real modeling faults. Scope it with the user before starting.
+   **RESOLVED (2026-09-14), from the other account.** The resume *is* available
+   from the account that ran the original fleet, and it works exactly as
+   `docs/research/README.md` describes: re-invoking the workflow with the same
+   run id replays every completed agent from cache for nothing and re-runs only
+   the ones that died. Both fleets were resumed on 2026-09-14 once the weekly
+   limit reset at 11:00 UTC. So the note below — written by the account that
+   lacked the tool — is true of that account and not of this one. If you are the
+   account without it, leave the research alone and say so; do not hand-write
+   domains to fill the gap beyond what is already there.
 
-5. **Separately, raise the lot-viability finding with the user** (section 6): 21% occupancy against 62% break-even, with enquiry volume inert. Get an explicit decision on whether to build the master-lease mechanic the research recommends, before spending effort on it unprompted — it is new scope.
+   The original caution still stands and is worth repeating: Regenerating the missing 13 domains at the landed depth is a very large job (the 7 landed domains are 551 KB), and it must be real sourced research: every process carries a `Who.`/`Decides.`/`Engine.`/`Takes.`/`Television.` line, and the `Engine.` line is a buildable claim. **Inventing these would be worse than leaving them missing**, because the whole value of this corpus is that it is checkable and it is what caught three real modeling faults. Scope it with the user before starting.
+
+5. **The lot-viability finding was raised with the user on 2026-09-12 and is
+   still undecided.** They were told: 21% occupancy against a 62% break-even,
+   the family putting in about EUR 30m over five years, and — the part that
+   matters — that enquiry volume is hardcoded at one a month and responds to
+   nothing, so no action the player takes can move occupancy. They were told
+   the research names the master lease as the real answer (Netflix took 14
+   stages at Shepperton for ten years in 2019; Amazon nine stages in 2022) and
+   that it is new scope. Their reply was to keep building rather than to decide.
+   **So it remains undecided: do not build the master-lease mechanic unprompted,
+   and do not treat "keep going" as approval for it.** Re-raise it when the next
+   natural decision point comes.
 
 6. **Ranks 2–7 are still unbuilt** and rank 8 now sits on top of them. Per requirement #3 this was a deliberate, user-approved skip, not an accident — but the dependency debt is real and the next engine work should probably be rank 2 rather than rank 9.
 
