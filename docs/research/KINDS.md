@@ -6,7 +6,7 @@ This is what actually changes, kind by kind, and it changes far more than the na
 
 ## What is in here
 
-10 kinds of production. For each: **the unit of work** — the atom progress is actually counted in, which differs more than anything else — then what is **absent** from the live-action pipeline, what is **reordered**, the processes that exist only here, how the crew differs, the shape of the money, and what goes wrong.
+12 kinds of production. For each: **the unit of work** — the atom progress is actually counted in, which differs more than anything else — then what is **absent** from the live-action pipeline, what is **reordered**, the processes that exist only here, how the crew differs, the shape of the money, and what goes wrong.
 
 The unit of work is the load-bearing one. A live-action feature counts shooting days. A CG feature counts approved seconds. A documentary counts field days against cut weeks. An engine that assumes one of them cannot hold the others.
 
@@ -22,6 +22,8 @@ The unit of work is the load-bearing one. A live-action feature counts shooting 
 8. **Commercials and branded content (advertising film: TV/cinema spots, digital and social films, brand content, product/tabletop work)**
 9. **VFX-led tentpole and virtual production**
 10. **Micro-budget and independent narrative feature (roughly $0–$300k "ultra low", $300k–$2M "low budget"; non-union or SAG-AFTRA-only, no completion bond, no distributor attached at the start)**
+11. **Returning scripted television series as a machine**
+12. **Music video, short film and short form**
 
 ---
 
@@ -31,7 +33,15 @@ The unit of work is the load-bearing one. A live-action feature counts shooting 
 
 ### The unit of work
 
-The atom is the SHOT; the currency is the APPROVED SECOND. Nothing is measured in pages, setups or shooting days, because nothing is shot. A 100-minute feature is 144,000 frames at 24fps and, typically, 1,200-2,000 shots (est.); an 11-minute series episode is 150-250 shots. Every shot carries a stage (board / rough layout / final layout / blocking / animation final / CFX / FX / lit / comped / final) and a round number, and progress is read off the story reel as "percent of runtime at or beyond stage X" — the reel is the film from month three and the only honest completion metric. Throughput is quota-driven, per department, per artist-week, and the quotas are the plan's load-bearing numbers. Feature character animation runs 3-5 seconds per animator per week (a hard, well-attested industry figure); a mid-budget 12-minute CG kids' series budgets ~6 seconds of animation per animator per DAY, ~13 seconds of layout per artist per day and ~4 comped shots per artist per day (CG-Wire's 52x12min model). That 5-10x spread between feature and series is the whole economic difference between the two forms. Lighting runs 1-4 days per shot on a feature and many shots per day on a series; CFX 0.5-3 days per shot; hero FX shots 1-6 weeks. Secondary units the engine must also carry: ROUNDS (a shot approved in 3 rounds is cheap, in 12 rounds is a disaster; rounds-per-approval is the real measure of a director's cost), RETAKES (open notes burning down), FINALS PER WEEK in the last 9 months (the burn-down that predicts delivery), CORE-HOURS on the farm, and TERABYTES of cache. A good day, feature: an animator gets one 4-second shot approved at round 4 and blocks the next; a lighting artist finals two shots; CFX clears eight sims with two kickbacks; the farm returns 96% of submitted frames before the 9am dailies; editorial cuts 90 seconds of newly-lit footage into the reel and the sequence still plays. A good day, series: 4-6 minutes of layout leaves the building, one episode's animation closes, the vendor delivers a block with under 15% retakes, and nothing in the pipeline stalled behind a missing asset. A bad day has the same shape inverted: the farm crashed at 04:00 and there are no frames to review, so 60 artists have nothing to show and a day of the schedule — crew size x one day — is simply gone.
+The atom is the SHOT; the currency is the APPROVED SECOND. Nothing is measured in pages, setups or shooting days, because nothing is shot. A 100-minute feature is 144,000 frames at 24fps and, typically, 1,200-2,000 shots (est.); an 11-minute series episode is 150-250 shots. Every shot carries a stage (board / rough layout / final layout / blocking / animation final / CFX / FX / lit / comped / final) and a round number, and progress is read off the story reel as "percent of runtime at or beyond stage X" — the reel is the film from month three and the only honest completion metric.
+
+Throughput is quota-driven, per department, per artist-week, and the quotas are the plan's load-bearing numbers. Feature character animation runs 3-5 seconds per animator per week (a hard, well-attested industry figure); a mid-budget 12-minute CG kids' series budgets ~6 seconds of animation per animator per DAY, ~13 seconds of layout per artist per day and ~4 comped shots per artist per day (CG-Wire's 52x12min model). That 5-10x spread between feature and series is the whole economic difference between the two forms. Lighting runs 1-4 days per shot on a feature and many shots per day on a series; CFX 0.5-3 days per shot; hero FX shots 1-6 weeks.
+
+Secondary units the engine must also carry: ROUNDS (a shot approved in 3 rounds is cheap, in 12 rounds is a disaster; rounds-per-approval is the real measure of a director's cost), RETAKES (open notes burning down), FINALS PER WEEK in the last 9 months (the burn-down that predicts delivery), CORE-HOURS on the farm, and TERABYTES of cache.
+
+A good day, feature: an animator gets one 4-second shot approved at round 4 and blocks the next; a lighting artist finals two shots; CFX clears eight sims with two kickbacks; the farm returns 96% of submitted frames before the 9am dailies; editorial cuts 90 seconds of newly-lit footage into the reel and the sequence still plays. A good day, series: 4-6 minutes of layout leaves the building, one episode's animation closes, the vendor delivers a block with under 15% retakes, and nothing in the pipeline stalled behind a missing asset.
+
+A bad day has the same shape inverted: the farm crashed at 04:00 and there are no frames to review, so 60 artists have nothing to show and a day of the schedule — crew size x one day — is simply gone.
 
 ### What is absent
 
@@ -125,7 +135,45 @@ The atom is the SHOT; the currency is the APPROVED SECOND. Nothing is measured i
 
 ### The shape of the money
 
-Labour is essentially the entire budget, and the budget is therefore just CREW SIZE x WEEKS. There is no physical production spend of any kind — no locations, sets, camera or lighting rental, stock, travel, transport, catering-at-scale or stage rent — so 70-85% of a CG feature's below-the-line is artist and engineer salaries (est.). This is the single deepest structural difference: you cannot buy speed with money the way live action can (more units, more crew, night shoots), because the constraint is trained artists who do not exist in the market and take months to hire and ramp. Rough proportional shape of a $150-200M studio CG feature (estimates, and studio accounting differs wildly — Pixar's quoted budgets include company overhead that other studios exclude, which is why its numbers look high): - Story/development, boarding, editorial and screenings: 10-20% of schedule and a meaningful cost share, because it runs for years at low headcount. Live action would call almost all of this "free." - Asset build (modelling, texturing, lookdev, groom, rigging): 15-25%. - Shot production (layout, animation, CFX, FX, lighting, comp): 45-60% — animation and lighting are the two biggest single departments. - Compute: render farm capex/opex, storage, and software licences (Maya, Houdini, Nuke, Katana, RenderMan/Arnold, Deadline, ShotGrid) — roughly 5-12% of a feature (est.), higher on effects-heavy or high-fidelity shows, and often carried as studio overhead rather than a picture cost. - Voice cast: usually LOW SINGLE DIGIT PERCENT, even with stars. A lead records 8-25 four-hour sessions across three years; SAG-AFTRA animation session scale is roughly $1,000-1,300 per session (est.), with stars on negotiated flat fees. Compare live action, where a single lead's quote can be 10-20% of the whole negative cost. Talent is cheap here and artists are expensive — the exact inverse of live action. - Music, sound and mix: 3-6%. - Post as a separate phase barely exists; comp, colour and effects are production line items. The number that governs everything is COST PER FINISHED MINUTE, and its range across this one form is enormous: - Studio CG feature: ~$150-200M for ~100 minutes = roughly $1.5-2M per finished minute. - Premium streaming CG series: roughly $1.5-4M per 22-25 minute episode (est.) = ~$70-180k per minute. - Mid-budget European CG kids' series: a published model for 52 x 12 minutes comes to EUR 4.12M total, about EUR 79k per episode, i.e. roughly EUR 6,600 per finished minute — with EUR 2.15M of that in the production stage (layout, animation, rendering, comp), EUR 449k in conception/scripts, EUR 325k in board and animatic, and EUR 444k in post. That is a 200-300x spread per minute for the same craft, and the entire feature/series distinction lives in it: features buy rounds (a shot may go 8-15 rounds), series buy throughput (a shot goes 1-3 rounds and reuses everything). Other money facts particular to this form: - Fixed burn. Once 300 people are on payroll, every week of schedule slip has an exact, predictable, unavoidable price. There is no way to "wrap early." - Tax credits dictate GEOGRAPHY of the crew (Canada, UK, France, Ireland, Spain, Australia), so the budget is often assembled around where the labour rebate is, not where the director is. - Series economics are amortisation economics: the launch asset library is a capital cost recovered over 13-52 episodes, so season two is dramatically cheaper per minute than season one, and a script demanding a new set is a budget event. - Marketing spend for a wide-release animated feature typically equals or exceeds the negative cost (P&A $100-150M+ for a major title, est.), and animated features earn a larger share of revenue internationally and from consumer products than comparable live action, which is why merchandisable design is a budget input, not an afterthought. - Compute is the one line that behaves like a physical constraint: you cannot hire more of it on Friday for Monday, on-prem capacity is ordered 6-12 months ahead, and cloud burst costs a large multiple of amortised on-prem per core-hour.
+Labour is essentially the entire budget, and the budget is therefore just CREW SIZE x WEEKS. There is no physical production spend of any kind — no locations, sets, camera or lighting rental, stock, travel, transport, catering-at-scale or stage rent — so 70-85% of a CG feature's below-the-line is artist and engineer salaries (est.). This is the single deepest structural difference: you cannot buy speed with money the way live action can (more units, more crew, night shoots), because the constraint is trained artists who do not exist in the market and take months to hire and ramp.
+
+Rough proportional shape of a $150-200M studio CG feature (estimates, and studio accounting differs wildly — Pixar's quoted budgets include company overhead that other studios exclude, which is why its numbers look high):
+
+- Story/development, boarding, editorial and screenings: 10-20% of schedule and a meaningful cost share, because it runs for years at low headcount. Live action would call almost all of this "free."
+
+- Asset build (modelling, texturing, lookdev, groom, rigging): 15-25%.
+
+- Shot production (layout, animation, CFX, FX, lighting, comp): 45-60% — animation and lighting are the two biggest single departments.
+
+- Compute: render farm capex/opex, storage, and software licences (Maya, Houdini, Nuke, Katana, RenderMan/Arnold, Deadline, ShotGrid) — roughly 5-12% of a feature (est.), higher on effects-heavy or high-fidelity shows, and often carried as studio overhead rather than a picture cost.
+
+- Voice cast: usually LOW SINGLE DIGIT PERCENT, even with stars. A lead records 8-25 four-hour sessions across three years; SAG-AFTRA animation session scale is roughly $1,000-1,300 per session (est.), with stars on negotiated flat fees. Compare live action, where a single lead's quote can be 10-20% of the whole negative cost. Talent is cheap here and artists are expensive — the exact inverse of live action.
+
+- Music, sound and mix: 3-6%.
+
+- Post as a separate phase barely exists; comp, colour and effects are production line items.
+
+The number that governs everything is COST PER FINISHED MINUTE, and its range across this one form is enormous:
+
+- Studio CG feature: ~$150-200M for ~100 minutes = roughly $1.5-2M per finished minute.
+
+- Premium streaming CG series: roughly $1.5-4M per 22-25 minute episode (est.) = ~$70-180k per minute.
+
+- Mid-budget European CG kids' series: a published model for 52 x 12 minutes comes to EUR 4.12M total, about EUR 79k per episode, i.e. roughly EUR 6,600 per finished minute — with EUR 2.15M of that in the production stage (layout, animation, rendering, comp), EUR 449k in conception/scripts, EUR 325k in board and animatic, and EUR 444k in post.
+
+That is a 200-300x spread per minute for the same craft, and the entire feature/series distinction lives in it: features buy rounds (a shot may go 8-15 rounds), series buy throughput (a shot goes 1-3 rounds and reuses everything).
+
+Other money facts particular to this form:
+
+- Fixed burn. Once 300 people are on payroll, every week of schedule slip has an exact, predictable, unavoidable price. There is no way to "wrap early."
+
+- Tax credits dictate GEOGRAPHY of the crew (Canada, UK, France, Ireland, Spain, Australia), so the budget is often assembled around where the labour rebate is, not where the director is.
+
+- Series economics are amortisation economics: the launch asset library is a capital cost recovered over 13-52 episodes, so season two is dramatically cheaper per minute than season one, and a script demanding a new set is a budget event.
+
+- Marketing spend for a wide-release animated feature typically equals or exceeds the negative cost (P&A $100-150M+ for a major title, est.), and animated features earn a larger share of revenue internationally and from consumer products than comparable live action, which is why merchandisable design is a budget input, not an afterthought.
+
+- Compute is the one line that behaves like a physical constraint: you cannot hire more of it on Friday for Monday, on-prem capacity is ordered 6-12 months ahead, and cloud burst costs a large multiple of amortised on-prem per core-hour.
 
 ### Processes that exist only here
 
@@ -607,7 +655,17 @@ The CUT (Japan) / the SCENE (US — in animation a "scene" is one shot), and ben
 
 ### The shape of the money
 
-Labour is almost the entire negative cost. There is no equipment rental, no location fee, no set construction, no transport, no unit catering, no weather cover. In a TV anime episode the sakuga block — layout, key animation, second key, AD correction, inbetween and finishing — is typically 60-70% of the episode's cost, with pre-production and post-production roughly 10-20% each (industry-vendor estimate). Compare live action, where above-the-line plus the shooting crew plus locations and equipment dominate and the drawing-equivalent line does not exist.\n\nSCALE. A 30-minute TV anime episode is currently quoted at ¥25-50M (roughly $160k-320k) with high-profile seasonal titles going well past that; the 2000s baseline was closer to ¥10-15M. ARCH's Nao Hirasawa has cited TV costs reaching as much as ¥300M per episode and ¥4bn per feature at the extreme top end (reported figure, treat as an outlier not a norm). Western half-hour 2D for cable or streaming is commonly $300k-800k per episode with prime-time network animation far above that (estimate). A hand-drawn feature runs 300-600 crew over 3-4 years; Princess Mononoke used over 144,000 cels, roughly 80,000 of which Miyazaki personally corrected or redrew.\n\nWHO CARRIES THE RISK. This is the structural difference. The Japanese studio is paid a fixed production fee per episode by the production committee; the committee owns the copyright pro rata and each member exploits its own window (print, broadcast, streaming, discs, music, merchandise, games). Every overrun comes out of the studio's own margin. There is no completion bond, no contingency line held by a financier, and no insurable weather day. The de facto contingency is unpaid overtime by freelancers.\n\nPIECE RATES, NOT DAY RATES. Japan pays per unit produced: roughly ¥200-300 per inbetween drawing, ¥2,000-5,000 per cut for first key animation, ¥1,600-3,200 per cut for second key. JAniCA's 2023 survey put average annual income around ¥2.63M for dōga staff and just under ¥4M for those working in the genga process; entry-level inbetweeners commonly clear under $10,000 a year. The US pays weekly union scale instead: TAG Local 839, 2024-27 agreement, second period (4 Aug 2024 - 2 Aug 2025) — Animator/Background/Layout/Model Designer journey $60.33/hr, $2,413.20/wk; Key Assistant Animator $57.81/hr; Assistant Animator and Storyboard Revisionist journey $51.63/hr, $2,065.20/wk; Breakdown journey $45.34/hr; Inbetweener journey $43.67/hr, $1,746.80/wk; Animation Checker journey $51.63/hr; Painter journey $42.90/hr; Special Effects journey $44.68/hr; Color Modelist journey $44.89/hr; Timing Director journey $67.60/hr, $2,704.00/wk; Animation Director journey $70.52/hr, $2,820.80/wk; Animation Art Director $70.03/hr. Storyboard-only flat for a half-hour subject is $4,186.81 (older license terms) rising to $4,354.27 with 240 P&H hours. Freelance timing was $4.95 per foot on a basis of 8 hours per 70 feet, a classification retired on 1 January 2025. The identical job therefore costs roughly an order of magnitude more in Burbank than in Tokyo, which is the entire economic reason the overseas relationship exists.\n\nOFFSHORE SHARE. A 2024 survey found 45.2% of Japanese studios outsourcing part of production; China's share fell 14.7% on rising cost while Vietnam and the Philippines rose and 23.7% turned to the US for specialised digital work. Western series have shipped animation to Korea, Taiwan, the Philippines, Vietnam, India and China since the early 1980s; the domestic spend becomes board, design, timing and retake supervision only.\n\nTHE ASSET THAT GETS CHEAPER. Backgrounds and bank cuts are drawn once and reused free forever, so a long-running series' per-episode cost falls as the bank deepens. Nothing in live action behaves this way — a standing set still costs to light, dress and crew every single day it is used.
+Labour is almost the entire negative cost. There is no equipment rental, no location fee, no set construction, no transport, no unit catering, no weather cover. In a TV anime episode the sakuga block — layout, key animation, second key, AD correction, inbetween and finishing — is typically 60-70% of the episode's cost, with pre-production and post-production roughly 10-20% each (industry-vendor estimate). Compare live action, where above-the-line plus the shooting crew plus locations and equipment dominate and the drawing-equivalent line does not exist.
+
+SCALE. A 30-minute TV anime episode is currently quoted at ¥25-50M (roughly $160k-320k) with high-profile seasonal titles going well past that; the 2000s baseline was closer to ¥10-15M. ARCH's Nao Hirasawa has cited TV costs reaching as much as ¥300M per episode and ¥4bn per feature at the extreme top end (reported figure, treat as an outlier not a norm). Western half-hour 2D for cable or streaming is commonly $300k-800k per episode with prime-time network animation far above that (estimate). A hand-drawn feature runs 300-600 crew over 3-4 years; Princess Mononoke used over 144,000 cels, roughly 80,000 of which Miyazaki personally corrected or redrew.
+
+WHO CARRIES THE RISK. This is the structural difference. The Japanese studio is paid a fixed production fee per episode by the production committee; the committee owns the copyright pro rata and each member exploits its own window (print, broadcast, streaming, discs, music, merchandise, games). Every overrun comes out of the studio's own margin. There is no completion bond, no contingency line held by a financier, and no insurable weather day. The de facto contingency is unpaid overtime by freelancers.
+
+PIECE RATES, NOT DAY RATES. Japan pays per unit produced: roughly ¥200-300 per inbetween drawing, ¥2,000-5,000 per cut for first key animation, ¥1,600-3,200 per cut for second key. JAniCA's 2023 survey put average annual income around ¥2.63M for dōga staff and just under ¥4M for those working in the genga process; entry-level inbetweeners commonly clear under $10,000 a year. The US pays weekly union scale instead: TAG Local 839, 2024-27 agreement, second period (4 Aug 2024 - 2 Aug 2025) — Animator/Background/Layout/Model Designer journey $60.33/hr, $2,413.20/wk; Key Assistant Animator $57.81/hr; Assistant Animator and Storyboard Revisionist journey $51.63/hr, $2,065.20/wk; Breakdown journey $45.34/hr; Inbetweener journey $43.67/hr, $1,746.80/wk; Animation Checker journey $51.63/hr; Painter journey $42.90/hr; Special Effects journey $44.68/hr; Color Modelist journey $44.89/hr; Timing Director journey $67.60/hr, $2,704.00/wk; Animation Director journey $70.52/hr, $2,820.80/wk; Animation Art Director $70.03/hr. Storyboard-only flat for a half-hour subject is $4,186.81 (older license terms) rising to $4,354.27 with 240 P&H hours. Freelance timing was $4.95 per foot on a basis of 8 hours per 70 feet, a classification retired on 1 January 2025. The identical job therefore costs roughly an order of magnitude more in Burbank than in Tokyo, which is the entire economic reason the overseas relationship exists.
+
+OFFSHORE SHARE. A 2024 survey found 45.2% of Japanese studios outsourcing part of production; China's share fell 14.7% on rising cost while Vietnam and the Philippines rose and 23.7% turned to the US for specialised digital work. Western series have shipped animation to Korea, Taiwan, the Philippines, Vietnam, India and China since the early 1980s; the domestic spend becomes board, design, timing and retake supervision only.
+
+THE ASSET THAT GETS CHEAPER. Backgrounds and bank cuts are drawn once and reused free forever, so a long-running series' per-episode cost falls as the bank deepens. Nothing in live action behaves this way — a standing set still costs to light, dress and crew every single day it is used.
 
 ### Processes that exist only here
 
@@ -1049,7 +1107,17 @@ Painted cels are laid on the pegs over the background and photographed frame by 
 
 ### The unit of work
 
-THE ATOM IS THE FRAME: one still exposure, 1/24 of a second of screen time. Nothing else in the building is a unit. UNIT OF WORK: seconds of approved footage per animator per week. Verified rates: Aardman averaged 4.2 sec/week per animator on Wallace & Gromit: Vengeance Most Fowl (peak ~5), with 30-35 animators giving just over 2 minutes of film a week; Aardman quotes ~2 sec/day per animator on the Shaun the Sheep features (20-28 animators); Coraline's 28+ animators produced 90-100 seconds of finished animation a week (~3.2-3.6 sec each); Chicken Run's best single day studio-wide in 1999 was 26 seconds. Hard sequences collapse this: Missing Link's elephant walk took nearly three months for roughly 20 seconds. A GOOD DAY on one unit: 24-60 frames in the can — 1 to 2.5 seconds — with no camera bump, no puppet failure, no face pop and no frame deleted. A GREAT day is finishing a shot (typical shot 3-6 seconds, 72-144 frames, 3-15 days). A BAD day is negative: 400 frames rolled back after an armature joint strips. On twos (12 images/second, Aardman and Isle of Dogs house style) a day yields twice the screen seconds for the same number of exposures. UNIT OF PROGRESS: shots final against total shots (a feature is ~1,100-1,500; Missing Link was 1,486), and percentage of the animatic replaced by real footage. The shop has its own units: faces printed per week (~2,000 on Missing Link from five printers running 24/7), sets delivered per month, puppet copies delivered per character. CAPACITY EQUATION: weekly output = active units x seconds per unit per week. A 100-minute film is ~6,000 seconds; 30 units at 4 sec/week = 120 sec/week = 50 perfect weeks, which is why shoots run 12-24 months in practice — Coraline 18 months, Guillermo del Toro's Pinocchio 935 shooting days inside 1,000 production days, Vengeance Most Fowl just over a year. Units are capped not by money but by stages, built sets, duplicate puppets and trained animators. SCHEDULE SHAPE: development 2-15 years (del Toro's Pinocchio, 15); design and fabrication 12-24 months, overlapping; animatic locked before the shop commits; shoot 12-24 months with units opening in waves as sets and puppets land; VFX/post overlapping the shoot and running 6-12 months past it; total 3-5 years. There is no principal-photography block with a start and an end date the way live action has one — units open and close continuously for two years.
+THE ATOM IS THE FRAME: one still exposure, 1/24 of a second of screen time. Nothing else in the building is a unit.
+
+UNIT OF WORK: seconds of approved footage per animator per week. Verified rates: Aardman averaged 4.2 sec/week per animator on Wallace & Gromit: Vengeance Most Fowl (peak ~5), with 30-35 animators giving just over 2 minutes of film a week; Aardman quotes ~2 sec/day per animator on the Shaun the Sheep features (20-28 animators); Coraline's 28+ animators produced 90-100 seconds of finished animation a week (~3.2-3.6 sec each); Chicken Run's best single day studio-wide in 1999 was 26 seconds. Hard sequences collapse this: Missing Link's elephant walk took nearly three months for roughly 20 seconds.
+
+A GOOD DAY on one unit: 24-60 frames in the can — 1 to 2.5 seconds — with no camera bump, no puppet failure, no face pop and no frame deleted. A GREAT day is finishing a shot (typical shot 3-6 seconds, 72-144 frames, 3-15 days). A BAD day is negative: 400 frames rolled back after an armature joint strips. On twos (12 images/second, Aardman and Isle of Dogs house style) a day yields twice the screen seconds for the same number of exposures.
+
+UNIT OF PROGRESS: shots final against total shots (a feature is ~1,100-1,500; Missing Link was 1,486), and percentage of the animatic replaced by real footage. The shop has its own units: faces printed per week (~2,000 on Missing Link from five printers running 24/7), sets delivered per month, puppet copies delivered per character.
+
+CAPACITY EQUATION: weekly output = active units x seconds per unit per week. A 100-minute film is ~6,000 seconds; 30 units at 4 sec/week = 120 sec/week = 50 perfect weeks, which is why shoots run 12-24 months in practice — Coraline 18 months, Guillermo del Toro's Pinocchio 935 shooting days inside 1,000 production days, Vengeance Most Fowl just over a year. Units are capped not by money but by stages, built sets, duplicate puppets and trained animators.
+
+SCHEDULE SHAPE: development 2-15 years (del Toro's Pinocchio, 15); design and fabrication 12-24 months, overlapping; animatic locked before the shop commits; shoot 12-24 months with units opening in waves as sets and puppets land; VFX/post overlapping the shoot and running 6-12 months past it; total 3-5 years. There is no principal-photography block with a start and an end date the way live action has one — units open and close continuously for two years.
 
 ### What is absent
 
@@ -1134,7 +1202,11 @@ THE ATOM IS THE FRAME: one still exposure, 1/24 of a second of screen time. Noth
 
 ### The shape of the money
 
-Money buys years of resident labour inside a permanent building, not day-rates on location. Verified budgets: Coraline, ParaNorman, The Boxtrolls and Kubo and the Two Strings each around $60M; Isle of Dogs $35M; Missing Link reported around $100M; The Nightmare Before Christmas $18M in 1993; Chicken Run in the mid-$40Ms (estimate). Crew sizes: Pinocchio 357 people over 1,000 production days; Vengeance Most Fowl 200+; Isle of Dogs 70-100 in the puppet shop alone. PROPORTIONAL SPLIT for a mid-size feature (ESTIMATE, inferred from department sizes and published production data rather than released budget top sheets): art and fabrication 25-35% - puppets, armatures, faces and the print farm, sets, props, costume, hair - the single largest block and the one with no live-action analogue at this weight; animation labour 20-30%; camera, lighting, rigging, motion control and stage operations 8-12%; VFX and post 12-20%, rising every year as CG extension and seam/rig cleanup grow (Missing Link touched nearly all 1,486 shots and rendered for 112 million processor hours); editorial, story and development 6-10%; music, sound and mix 3-5%; voice cast 2-5%, a fraction of live-action cast cost because even a major star records in five to fifteen days; facility overhead, insurance and bond the remainder. HOW THAT DIFFERS. (1) There is no cast-cost cliff: names are cheap here, so star power does not distort the budget the way it does in live action. (2) There are no location fees, no weather days, no cast overtime and no catering-on-location; instead the facility burns continuously for 2-4 years whether or not a frame is shot. (3) The marginal cost of screen time is close to linear - seconds = animators x weeks x ~4 sec/week - so a picture is made cheaper by being shorter in seconds, never by being faster in days. (4) Money converts to speed only through units, and a unit needs a stage, a built set and a duplicate puppet, so cash cannot outrun the shop: Pinocchio was bid at 48 sets and delivered 99, which is a schedule problem before it is a money problem. (5) Cost is front-loaded and sunk: a scene cut after its sets and puppets are built is a total write-off, which is precisely why the animatic locks before fabrication starts. (6) Post is not a tail, it is a parallel standing department funded from day one, because every frame shot creates cleanup work. (7) Labour terms differ from a live-action crew: people are staff or long-term contract rather than dailies, so attrition, training and holiday - not turnaround penalties - are the labour risks. The Animation Guild (IATSE Local 839) master agreement covers Los Angeles animation; Portland, Bristol and other shops sit on different terms (estimate).
+Money buys years of resident labour inside a permanent building, not day-rates on location. Verified budgets: Coraline, ParaNorman, The Boxtrolls and Kubo and the Two Strings each around $60M; Isle of Dogs $35M; Missing Link reported around $100M; The Nightmare Before Christmas $18M in 1993; Chicken Run in the mid-$40Ms (estimate). Crew sizes: Pinocchio 357 people over 1,000 production days; Vengeance Most Fowl 200+; Isle of Dogs 70-100 in the puppet shop alone.
+
+PROPORTIONAL SPLIT for a mid-size feature (ESTIMATE, inferred from department sizes and published production data rather than released budget top sheets): art and fabrication 25-35% - puppets, armatures, faces and the print farm, sets, props, costume, hair - the single largest block and the one with no live-action analogue at this weight; animation labour 20-30%; camera, lighting, rigging, motion control and stage operations 8-12%; VFX and post 12-20%, rising every year as CG extension and seam/rig cleanup grow (Missing Link touched nearly all 1,486 shots and rendered for 112 million processor hours); editorial, story and development 6-10%; music, sound and mix 3-5%; voice cast 2-5%, a fraction of live-action cast cost because even a major star records in five to fifteen days; facility overhead, insurance and bond the remainder.
+
+HOW THAT DIFFERS. (1) There is no cast-cost cliff: names are cheap here, so star power does not distort the budget the way it does in live action. (2) There are no location fees, no weather days, no cast overtime and no catering-on-location; instead the facility burns continuously for 2-4 years whether or not a frame is shot. (3) The marginal cost of screen time is close to linear - seconds = animators x weeks x ~4 sec/week - so a picture is made cheaper by being shorter in seconds, never by being faster in days. (4) Money converts to speed only through units, and a unit needs a stage, a built set and a duplicate puppet, so cash cannot outrun the shop: Pinocchio was bid at 48 sets and delivered 99, which is a schedule problem before it is a money problem. (5) Cost is front-loaded and sunk: a scene cut after its sets and puppets are built is a total write-off, which is precisely why the animatic locks before fabrication starts. (6) Post is not a tail, it is a parallel standing department funded from day one, because every frame shot creates cleanup work. (7) Labour terms differ from a live-action crew: people are staff or long-term contract rather than dailies, so attrition, training and holiday - not turnaround penalties - are the labour risks. The Animation Guild (IATSE Local 839) master agreement covers Los Angeles animation; Portland, Bristol and other shops sit on different terms (estimate).
 
 ### Processes that exist only here
 
@@ -1594,7 +1666,33 @@ Puppets, faces, sets and props are catalogued, conserved and either kept for exh
 
 ### The unit of work
 
-THE UNIT IS NOT THE PAGE. There is no page. PRODUCTION unit = the ACCESS-DAY, and the thing counted at the end of it is the BANKABLE SEQUENCE: a self-contained scene with a beginning, a turn and an end that could survive into a cut. A verite day yields 4-10 hours of rushes and, on a good day, one sequence. Many days yield none. An interview day yields 1-6 hours of record and, typically, 3-8 usable minutes. Wildlife counts BEHAVIOURS SECURED per expedition: a good field day is one behaviour, and a 30-day trip that returns two is a success. THE RATIO is the documentary's analogue of stop-motion's seconds-per-day, and it is the headline number of the whole form. Verified examples: Wiseman's "Monrovia, Indiana" — 120 hours to 143 minutes, about 50:1; "At Berkeley" — 250 hours shot over 12 weeks, cut to 244 minutes over 14 months, about 60:1; "Hoop Dreams" — 250 hours over five years to 171 minutes, about 87:1. Longitudinal verite and blue-chip natural history run far above that; 300:1 and beyond is normal when camera traps and expedition rushes are counted. A doc player who shoots less is not being efficient, they are narrowing what the edit can find. POST unit = the STRUCTURAL PASS. Not minutes cut, not shots — a complete re-ordering of the whole film, 3-10 days each, and a feature takes twenty to sixty of them. Secondary counters that a producer actually tracks weekly: minutes of fine cut (the Alliance of Documentary Editors' rule of thumb, cited in the IDA's 2025 budgeting guidance, is roughly one month of editing per 10 minutes of screen time — a 90-minute film is about nine months in the room); hours of rushes transcribed and indexed; seconds of archive cleared; percentage of the cut that is rights-clean; number of fact-check claims sourced; number of releases outstanding. A good day in the cutting room is one where the film gets shorter and clearer, or where a structure that does not work is proved not to work fast. SCHEDULE SHAPE. There is no contiguous "shoot." Production is a string of blocks separated by months, interleaved with editing, and gated by money landing and by events in the world happening. - News/current-affairs magazine segment: 3-10 days total. - Broadcast strand half-hour (Panorama-style): 3-8 weeks from commission to transmission. - Broadcast strand hour (Frontline/Dispatches/Storyville acquisition): 4-9 months. - Independent feature doc: development and research 6-18 months; production spread across 1-4 years in blocks; edit 6-14 months; finishing 12 weeks for grade/sound/graphics plus 4 weeks of deliverables (the IDA's $1.3M sample schedule); festival run and sale 6-18 months after lock. Typical total 2-5 years; the field's own folk figure for an indie feature doc is 4-5 years. - Wiseman model: 4-12 weeks shooting, then 9-16 months alone in the edit, roughly one film a year. - True crime limited series (4-6 x 45-60'): 12-24 months, with legal vetting occupying the last 8-12 weeks. - Archival-only feature: almost no production; 12-24 months of research, licensing and edit running as one process. - Blue-chip natural history series: 3-4 years. "Blue Planet II" — over four years, 125 expeditions in 39 countries, more than 6,000 hours of underwater filming and 1,000 hours in submersibles, for seven 60-minute episodes. The schedule is a CALENDAR OF OTHER PEOPLE'S EVENTS — a verdict date, an election, a migration, a surgery, a parole hearing, a field season — not a strip board. You cannot move any of them, and missing one deletes a scene from the film permanently.
+THE UNIT IS NOT THE PAGE. There is no page.
+
+PRODUCTION unit = the ACCESS-DAY, and the thing counted at the end of it is the BANKABLE SEQUENCE: a self-contained scene with a beginning, a turn and an end that could survive into a cut. A verite day yields 4-10 hours of rushes and, on a good day, one sequence. Many days yield none. An interview day yields 1-6 hours of record and, typically, 3-8 usable minutes. Wildlife counts BEHAVIOURS SECURED per expedition: a good field day is one behaviour, and a 30-day trip that returns two is a success.
+
+THE RATIO is the documentary's analogue of stop-motion's seconds-per-day, and it is the headline number of the whole form. Verified examples: Wiseman's "Monrovia, Indiana" — 120 hours to 143 minutes, about 50:1; "At Berkeley" — 250 hours shot over 12 weeks, cut to 244 minutes over 14 months, about 60:1; "Hoop Dreams" — 250 hours over five years to 171 minutes, about 87:1. Longitudinal verite and blue-chip natural history run far above that; 300:1 and beyond is normal when camera traps and expedition rushes are counted. A doc player who shoots less is not being efficient, they are narrowing what the edit can find.
+
+POST unit = the STRUCTURAL PASS. Not minutes cut, not shots — a complete re-ordering of the whole film, 3-10 days each, and a feature takes twenty to sixty of them. Secondary counters that a producer actually tracks weekly: minutes of fine cut (the Alliance of Documentary Editors' rule of thumb, cited in the IDA's 2025 budgeting guidance, is roughly one month of editing per 10 minutes of screen time — a 90-minute film is about nine months in the room); hours of rushes transcribed and indexed; seconds of archive cleared; percentage of the cut that is rights-clean; number of fact-check claims sourced; number of releases outstanding. A good day in the cutting room is one where the film gets shorter and clearer, or where a structure that does not work is proved not to work fast.
+
+SCHEDULE SHAPE. There is no contiguous "shoot." Production is a string of blocks separated by months, interleaved with editing, and gated by money landing and by events in the world happening.
+
+- News/current-affairs magazine segment: 3-10 days total.
+
+- Broadcast strand half-hour (Panorama-style): 3-8 weeks from commission to transmission.
+
+- Broadcast strand hour (Frontline/Dispatches/Storyville acquisition): 4-9 months.
+
+- Independent feature doc: development and research 6-18 months; production spread across 1-4 years in blocks; edit 6-14 months; finishing 12 weeks for grade/sound/graphics plus 4 weeks of deliverables (the IDA's $1.3M sample schedule); festival run and sale 6-18 months after lock. Typical total 2-5 years; the field's own folk figure for an indie feature doc is 4-5 years.
+
+- Wiseman model: 4-12 weeks shooting, then 9-16 months alone in the edit, roughly one film a year.
+
+- True crime limited series (4-6 x 45-60'): 12-24 months, with legal vetting occupying the last 8-12 weeks.
+
+- Archival-only feature: almost no production; 12-24 months of research, licensing and edit running as one process.
+
+- Blue-chip natural history series: 3-4 years. "Blue Planet II" — over four years, 125 expeditions in 39 countries, more than 6,000 hours of underwater filming and 1,000 hours in submersibles, for seven 60-minute episodes.
+
+The schedule is a CALENDAR OF OTHER PEOPLE'S EVENTS — a verdict date, an election, a migration, a surgery, a parole hearing, a field season — not a strip board. You cannot move any of them, and missing one deletes a scene from the film permanently.
 
 ### What is absent
 
@@ -1701,7 +1799,39 @@ THE UNIT IS NOT THE PAGE. There is no page. PRODUCTION unit = the ACCESS-DAY, an
 
 ### The shape of the money
 
-THE MONEY GOES INTO TIME, RIGHTS AND THE CUTTING ROOM — not onto the screen on a shoot day. Roughly the inverse of live action's shape. A characteristic independent feature documentary (call it the IDA's $1.3M sample, which is a realistic professional-rate budget), proportionally: - ABOVE THE LINE (director and producer fees): 15-25%. The IDA's own guidance puts director and producer fees at 5-10% of the budget EACH, structured as flat project fees rather than weekly rates, because the job runs for years and carries revenue participation. - CONTRIBUTORS / CAST: effectively ZERO. This is the single largest structural difference in the whole budget. There is no cast cost, no SAG-AFTRA scale, no overtime, no per diems for talent, no star salary. Paying contributors is an editorial and ethical decision that most broadcast standards constrain or forbid; where fees appear they are life-rights options (biographical), consultancy fees (true crime, forensic experts), or reimbursed expenses. True crime and some biographical work are the exceptions, and paying is itself a credibility cost. - PRODUCTION CREW AND SHOOT EXPENSES: 15-25%, spread across dozens of short blocks over years rather than one compressed period. Crew is 2-6 people, not 60-150. Equipment is owned or hired by the week, not a truck package. - TRAVEL AND LOGISTICS: 5-15% on a domestic film; 25-40% on international, conflict or expedition work. For blue-chip natural history this is the dominant line — permits, charters, boats, ice camps, dive support, freight for specialist rigs. - EDITORIAL: 20-30%, and usually the largest single below-the-line block. An editor for 30-50 weeks plus an assistant editor plus a cutting room. The Alliance of Documentary Editors' rule of roughly one month per 10 finished minutes means a 90-minute film carries about nine months of editor salary. Live action pays an editor for a fraction of that. - ARCHIVE, STILLS, DOCUMENTS AND MUSIC LICENSING: 5-15% on a typical film; 25-40%+ on an archive-driven one, where it can exceed everything else combined. Anchors: $49-79 per second at Producers Library depending on theatrical/non-theatrical and regular/premium tier; $80-100 per second for TV news at a 30-second minimum; roughly $25 for a public-domain service copy up to about $200 per second for premium historical material. Indie song sync around $250-5,000; major-label catalogue commonly $20,000 and up. The IDA warns archival licensing is the most common source of post-production overrun. - FINISHING (conform, grade, sound design, mix, graphics, DCP, captions, audio description, deliverables): 8-12%. The IDA sample allows 12 weeks for colour, sound and graphics plus 4 weeks for deliverables. - LEGAL, E&O, FACT CHECK, CLEARANCE: 3-6% — a line live action barely has. E&O for an indie feature doc runs roughly $6,000-15,000 at $1M/$3M limits (ESTIMATE; higher with heavy fair use or true crime content). Fair use opinion letters, pre-broadcast vetting and fact-checking are each separate professional fees. - TRANSCRIPTION: a real, doc-only line. At roughly $1-2 per recorded minute for human transcription (ESTIMATE), 300 hours of rushes is about $18,000-36,000 before anyone cuts anything. - OFFICE, INSURANCE, ADMIN: 4-6%. - ACCESSIBILITY: the IDA template reserves about 2% (about $20,000 on $1.3M) across crew sections for transcripts, captions, audio description, interpreters and an accessibility coordinator. - FESTIVALS, PUBLICITY, IMPACT: 2-6%. - CONTINGENCY: 6-10% per IDA guidance, and it is nearly always consumed by archive and legal, not by production. HOW THE CASH BEHAVES, which matters more than the proportions. Live action closes financing, then spends. Documentary spends first (development and sizzle out of pocket), then raises in tranches across years from mismatched sources — grants with 3-9 month decision latency, territorial pre-sales, fiscal-sponsored donations at a 5-8% sponsor fee (estimate), deferrals and in-kind. The schedule is therefore gated by money landing, not by availability. A producer routinely carries months of payroll personally. Deferred fees are normal and frequently never recouped. Production services work is priced differently again: roughly a 10% production services fee where the producer takes no distribution revenue. WHAT THIS MEANS AGAINST LIVE ACTION: a fiction feature spends its money in a 30-50 day block with 100 people on payroll and post as a tail. A documentary spends a small amount per shoot day across three years, then spends the bulk of the budget on one editor, one archival producer and a lawyer, in a room, arguing about a film that does not exist yet.
+THE MONEY GOES INTO TIME, RIGHTS AND THE CUTTING ROOM — not onto the screen on a shoot day. Roughly the inverse of live action's shape.
+
+A characteristic independent feature documentary (call it the IDA's $1.3M sample, which is a realistic professional-rate budget), proportionally:
+
+- ABOVE THE LINE (director and producer fees): 15-25%. The IDA's own guidance puts director and producer fees at 5-10% of the budget EACH, structured as flat project fees rather than weekly rates, because the job runs for years and carries revenue participation.
+
+- CONTRIBUTORS / CAST: effectively ZERO. This is the single largest structural difference in the whole budget. There is no cast cost, no SAG-AFTRA scale, no overtime, no per diems for talent, no star salary. Paying contributors is an editorial and ethical decision that most broadcast standards constrain or forbid; where fees appear they are life-rights options (biographical), consultancy fees (true crime, forensic experts), or reimbursed expenses. True crime and some biographical work are the exceptions, and paying is itself a credibility cost.
+
+- PRODUCTION CREW AND SHOOT EXPENSES: 15-25%, spread across dozens of short blocks over years rather than one compressed period. Crew is 2-6 people, not 60-150. Equipment is owned or hired by the week, not a truck package.
+
+- TRAVEL AND LOGISTICS: 5-15% on a domestic film; 25-40% on international, conflict or expedition work. For blue-chip natural history this is the dominant line — permits, charters, boats, ice camps, dive support, freight for specialist rigs.
+
+- EDITORIAL: 20-30%, and usually the largest single below-the-line block. An editor for 30-50 weeks plus an assistant editor plus a cutting room. The Alliance of Documentary Editors' rule of roughly one month per 10 finished minutes means a 90-minute film carries about nine months of editor salary. Live action pays an editor for a fraction of that.
+
+- ARCHIVE, STILLS, DOCUMENTS AND MUSIC LICENSING: 5-15% on a typical film; 25-40%+ on an archive-driven one, where it can exceed everything else combined. Anchors: $49-79 per second at Producers Library depending on theatrical/non-theatrical and regular/premium tier; $80-100 per second for TV news at a 30-second minimum; roughly $25 for a public-domain service copy up to about $200 per second for premium historical material. Indie song sync around $250-5,000; major-label catalogue commonly $20,000 and up. The IDA warns archival licensing is the most common source of post-production overrun.
+
+- FINISHING (conform, grade, sound design, mix, graphics, DCP, captions, audio description, deliverables): 8-12%. The IDA sample allows 12 weeks for colour, sound and graphics plus 4 weeks for deliverables.
+
+- LEGAL, E&O, FACT CHECK, CLEARANCE: 3-6% — a line live action barely has. E&O for an indie feature doc runs roughly $6,000-15,000 at $1M/$3M limits (ESTIMATE; higher with heavy fair use or true crime content). Fair use opinion letters, pre-broadcast vetting and fact-checking are each separate professional fees.
+
+- TRANSCRIPTION: a real, doc-only line. At roughly $1-2 per recorded minute for human transcription (ESTIMATE), 300 hours of rushes is about $18,000-36,000 before anyone cuts anything.
+
+- OFFICE, INSURANCE, ADMIN: 4-6%.
+
+- ACCESSIBILITY: the IDA template reserves about 2% (about $20,000 on $1.3M) across crew sections for transcripts, captions, audio description, interpreters and an accessibility coordinator.
+
+- FESTIVALS, PUBLICITY, IMPACT: 2-6%.
+
+- CONTINGENCY: 6-10% per IDA guidance, and it is nearly always consumed by archive and legal, not by production.
+
+HOW THE CASH BEHAVES, which matters more than the proportions. Live action closes financing, then spends. Documentary spends first (development and sizzle out of pocket), then raises in tranches across years from mismatched sources — grants with 3-9 month decision latency, territorial pre-sales, fiscal-sponsored donations at a 5-8% sponsor fee (estimate), deferrals and in-kind. The schedule is therefore gated by money landing, not by availability. A producer routinely carries months of payroll personally. Deferred fees are normal and frequently never recouped. Production services work is priced differently again: roughly a 10% production services fee where the producer takes no distribution revenue.
+
+WHAT THIS MEANS AGAINST LIVE ACTION: a fiction feature spends its money in a 30-50 day block with 100 people on payroll and post as a tail. A documentary spends a small amount per shoot day across three years, then spends the bulk of the budget on one editor, one archival producer and a lawyer, in a room, arguing about a film that does not exist yet.
 
 ### Processes that exist only here
 
@@ -2163,7 +2293,15 @@ Premiere strategy (Sundance, Berlinale, IDFA, Hot Docs, True/False, CPH:DOX, She
 
 ### The unit of work
 
-There are three units, and they are not pages. FIELD: the contributor-day, and inside it the BEAT BANKED. Progress is "did we get the moment" — a confrontation, a decision, a confession, a reaction shot of the person who wasn't speaking. A story producer's day is scored against the story areas assigned that morning, not against minutes shot. Raw volume is the cost, not the progress: a docusoap crew banks roughly 4-8 hours of media per camera per day; a 90-camera fixed rig running 24 hours banks ~2,000 camera-hours a day. Shooting ratios (estimates from working practice): observational docusoap 30:1 to 100:1; travelling competition 100:1 to 300:1; continuous fixed-rig 1,000:1 and upward — a 24/7 rig with ~90 sources cutting three 44-minute episodes a week is arithmetically near 7,000:1. A good field day is three to five usable beats plus the OTF lines that make them cuttable; a bad one is fourteen hours of media containing nothing an editor can use. POST: the CUT MINUTE and the CUT STAGE. An unscripted editor produces roughly 2-4 finished minutes a day (estimate), so a 44-minute episode is 3-6 weeks in a suite, and the schedule is literally a grid of editor-weeks. The tracked state per episode is its stage: stringouts built → paper cut → assembly (routinely 60-120 minutes long) → producer's cut → EP cut → broadcaster cut → notes rounds → lock → online/mix → delivery. A good post day is an act that plays without the story producer having to explain it. DELIVERY: the LOCKED EPISODE against an airdate. Unscripted is almost always sold against a transmission date fixed before a frame is shot, and on strips the airdate is the master clock: Love Island-style formats shoot in the evening and transmit the following night, so the unit becomes the 24-hour cycle and the only question is "does it make air". SCHEDULE SHAPE: typical primetime competition — 8-20 weeks development and bible, 6-16 weeks casting (overlapping), 6-12 weeks prep/rig build, 3-10 weeks continuous shoot (Survivor runs a 26-day game since season 41, down from 39), post beginning on shoot day one and running 8-20 weeks past wrap. Docusoap: 8-14 weeks shooting in bursts across a 6-9 month calendar, post trailing each block. Studio talent format: months of regional auditions, then a weekly live cycle of 5-6 days per show. Daily strip: one 24-hour pipeline repeated 40-60 times.
+There are three units, and they are not pages.
+
+FIELD: the contributor-day, and inside it the BEAT BANKED. Progress is "did we get the moment" — a confrontation, a decision, a confession, a reaction shot of the person who wasn't speaking. A story producer's day is scored against the story areas assigned that morning, not against minutes shot. Raw volume is the cost, not the progress: a docusoap crew banks roughly 4-8 hours of media per camera per day; a 90-camera fixed rig running 24 hours banks ~2,000 camera-hours a day. Shooting ratios (estimates from working practice): observational docusoap 30:1 to 100:1; travelling competition 100:1 to 300:1; continuous fixed-rig 1,000:1 and upward — a 24/7 rig with ~90 sources cutting three 44-minute episodes a week is arithmetically near 7,000:1. A good field day is three to five usable beats plus the OTF lines that make them cuttable; a bad one is fourteen hours of media containing nothing an editor can use.
+
+POST: the CUT MINUTE and the CUT STAGE. An unscripted editor produces roughly 2-4 finished minutes a day (estimate), so a 44-minute episode is 3-6 weeks in a suite, and the schedule is literally a grid of editor-weeks. The tracked state per episode is its stage: stringouts built → paper cut → assembly (routinely 60-120 minutes long) → producer's cut → EP cut → broadcaster cut → notes rounds → lock → online/mix → delivery. A good post day is an act that plays without the story producer having to explain it.
+
+DELIVERY: the LOCKED EPISODE against an airdate. Unscripted is almost always sold against a transmission date fixed before a frame is shot, and on strips the airdate is the master clock: Love Island-style formats shoot in the evening and transmit the following night, so the unit becomes the 24-hour cycle and the only question is "does it make air".
+
+SCHEDULE SHAPE: typical primetime competition — 8-20 weeks development and bible, 6-16 weeks casting (overlapping), 6-12 weeks prep/rig build, 3-10 weeks continuous shoot (Survivor runs a 26-day game since season 41, down from 39), post beginning on shoot day one and running 8-20 weeks past wrap. Docusoap: 8-14 weeks shooting in bursts across a 6-9 month calendar, post trailing each block. Studio talent format: months of regional auditions, then a weekly live cycle of 5-6 days per show. Daily strip: one 24-hour pipeline repeated 40-60 times.
 
 ### What is absent
 
@@ -2248,7 +2386,25 @@ There are three units, and they are not pages. FIELD: the contributor-day, and i
 
 ### The shape of the money
 
-Above-the-line barely exists. There is no script cost, no writers' fees, no residuals-bearing cast. On a scripted drama, script plus principal cast can be 25-40% of the budget; on unscripted the whole ATL block is commonly 5-12% (estimate) and on an observational series it can be almost nothing. The single largest ATL line, where it exists, is the host or judging panel on a big talent or competition format — a marquee panel can cost more than the entire below-the-line of a docusoap, which is exactly why cheap formats avoid presenters. Contributors are not a salary line. They are stipends (widely reported figures: Big Brother US houseguests around $1,000-1,250 per week; Survivor players a per-week stipend scaling with how long they last; Love Island UK around £250 per week — all reported, not audited), plus travel, per diems, sequester hotels, medicals, psych screening, wardrobe allowances, welfare and aftercare. Prize money is a separate, usually bonded or escrowed line, and on most formats it is under 5% of the budget — the prize is the format's engine, not its cost. The money is in below-the-line labour weeks, technology and post. Three blocks dominate: 1. CREW WEEKS. Unscripted crews are small per unit but run for a very long time and there are many units. Story and casting departments alone can be 10-20% of the budget (estimate) — that is the writing budget, spent on production job titles. 2. TECHNICAL PLANT. On fixed-rig and studio formats the rig, gallery, OB facility, fibre, lighting for 24-hour shooting, radio mic inventory and the shared media store can be the largest single block. On travelling formats this becomes location, logistics, medevac cover and challenge construction instead. 3. POST AND MEDIA. Post plus story is routinely 30-45% of an unscripted budget (estimate) versus perhaps 15-25% on drama, because the storytelling happens there. Storage is a real, sizeable line — hundreds of terabytes to petabytes per season, plus LTO archive and multi-year retention. Logging, transcription and assistant-editor hours are budgeted as production, not as overhead, because they gate everything downstream. Music inverts: library and blanket licences instead of a composer and a scoring stage, so music is a small line except on talent formats where performance clearance becomes significant. Graphics invert too: a big one-off package design in prep, then near-zero marginal cost per episode. Two lines have no scripted analogue: the format licence fee where you are producing someone else's format (a single-digit percentage of the local production budget per episode is typical, plus paid consultancy weeks for the flying producer — estimate), and welfare/duty of care, which since the late-2010s UK scandals has become a real six-figure annual cost on large formats (estimate). Revenue shape differs as much as cost shape. A drama recoups on licence and library sales of the finished tape; an unscripted hit recoups on the FORMAT — licence fees, consultancy, distributor commission of roughly 25-35% (estimate), and territory after territory paying to make their own version. The global format trade is estimated in the low billions of euros annually. That is why the bible, not the episode, is the asset, and why indies fight to retain format rights even at the cost of deficit-financing the first series. Headline ranges, all estimates: UK per-hour tariffs run from roughly £50-150k/hr for daytime factual to £200k-1m+/hr for a primetime peak format; US cable docusoap roughly $150-450k per episode; US network primetime competition roughly $1-3m per episode; streamer unscripted roughly $500k-1.5m per episode. Producer fee is typically around 10% of budget, and contingency is thin to nonexistent because the tariff is fixed and the overage is yours.
+Above-the-line barely exists. There is no script cost, no writers' fees, no residuals-bearing cast. On a scripted drama, script plus principal cast can be 25-40% of the budget; on unscripted the whole ATL block is commonly 5-12% (estimate) and on an observational series it can be almost nothing. The single largest ATL line, where it exists, is the host or judging panel on a big talent or competition format — a marquee panel can cost more than the entire below-the-line of a docusoap, which is exactly why cheap formats avoid presenters.
+
+Contributors are not a salary line. They are stipends (widely reported figures: Big Brother US houseguests around $1,000-1,250 per week; Survivor players a per-week stipend scaling with how long they last; Love Island UK around £250 per week — all reported, not audited), plus travel, per diems, sequester hotels, medicals, psych screening, wardrobe allowances, welfare and aftercare. Prize money is a separate, usually bonded or escrowed line, and on most formats it is under 5% of the budget — the prize is the format's engine, not its cost.
+
+The money is in below-the-line labour weeks, technology and post. Three blocks dominate:
+
+1. CREW WEEKS. Unscripted crews are small per unit but run for a very long time and there are many units. Story and casting departments alone can be 10-20% of the budget (estimate) — that is the writing budget, spent on production job titles.
+
+2. TECHNICAL PLANT. On fixed-rig and studio formats the rig, gallery, OB facility, fibre, lighting for 24-hour shooting, radio mic inventory and the shared media store can be the largest single block. On travelling formats this becomes location, logistics, medevac cover and challenge construction instead.
+
+3. POST AND MEDIA. Post plus story is routinely 30-45% of an unscripted budget (estimate) versus perhaps 15-25% on drama, because the storytelling happens there. Storage is a real, sizeable line — hundreds of terabytes to petabytes per season, plus LTO archive and multi-year retention. Logging, transcription and assistant-editor hours are budgeted as production, not as overhead, because they gate everything downstream.
+
+Music inverts: library and blanket licences instead of a composer and a scoring stage, so music is a small line except on talent formats where performance clearance becomes significant. Graphics invert too: a big one-off package design in prep, then near-zero marginal cost per episode.
+
+Two lines have no scripted analogue: the format licence fee where you are producing someone else's format (a single-digit percentage of the local production budget per episode is typical, plus paid consultancy weeks for the flying producer — estimate), and welfare/duty of care, which since the late-2010s UK scandals has become a real six-figure annual cost on large formats (estimate).
+
+Revenue shape differs as much as cost shape. A drama recoups on licence and library sales of the finished tape; an unscripted hit recoups on the FORMAT — licence fees, consultancy, distributor commission of roughly 25-35% (estimate), and territory after territory paying to make their own version. The global format trade is estimated in the low billions of euros annually. That is why the bible, not the episode, is the asset, and why indies fight to retain format rights even at the cost of deficit-financing the first series.
+
+Headline ranges, all estimates: UK per-hour tariffs run from roughly £50-150k/hr for daytime factual to £200k-1m+/hr for a primetime peak format; US cable docusoap roughly $150-450k per episode; US network primetime competition roughly $1-3m per episode; streamer unscripted roughly $500k-1.5m per episode. Producer fee is typically around 10% of budget, and contingency is thin to nonexistent because the tariff is fixed and the overage is yours.
 
 ### Processes that exist only here
 
@@ -2710,7 +2866,13 @@ Selling the bible into other territories at market, then sending someone who ran
 
 ### The unit of work
 
-The episode is the atom: one script becomes one finished show in one five-day week, twenty-two times a year. Inside the week the unit changes every day, and none of them is the live-action page-per-day. Monday the unit is the timed read — minutes over slot, plus a map of which jokes died at a table of sixty people. Tuesday and Wednesday the unit is the scene on its feet and laughs per page: a multicam script runs 45-55 double-spaced pages for roughly 21 minutes of air (about 25-30 seconds a page, estimate), and the working expectation is three to five laughs a page, sixty to a hundred jokes in an episode. Thursday the unit is the numbered shot — on the order of 120-200 shots assigned across four cameras (estimate) — and a good day means every second of every scene is held by at least one camera in a usable size. Friday the unit is the scene pass, not the page: five to nine lettered scenes, each played whole, usually twice. A good tape night is six scenes in four hours, no scene past three passes, fewer than a dozen alts thrown, the house still above three-quarters full at the last scene, and the show timing out under 23:00 before the trim. Nothing is ever measured in pages per day, because the entire script is shot in one night. The scarce resource is not daylight and not setups — it is audience. Roughly 240 minutes of usable room temperature, spent by every reset, reload, costume change and repeat. Across the season the unit of progress is episodes in the can against episodes broken: the room must stay six to eight scripts ahead of the stage, and the loss condition is arriving at Monday with nothing shootable.
+The episode is the atom: one script becomes one finished show in one five-day week, twenty-two times a year. Inside the week the unit changes every day, and none of them is the live-action page-per-day.
+
+Monday the unit is the timed read — minutes over slot, plus a map of which jokes died at a table of sixty people. Tuesday and Wednesday the unit is the scene on its feet and laughs per page: a multicam script runs 45-55 double-spaced pages for roughly 21 minutes of air (about 25-30 seconds a page, estimate), and the working expectation is three to five laughs a page, sixty to a hundred jokes in an episode. Thursday the unit is the numbered shot — on the order of 120-200 shots assigned across four cameras (estimate) — and a good day means every second of every scene is held by at least one camera in a usable size. Friday the unit is the scene pass, not the page: five to nine lettered scenes, each played whole, usually twice.
+
+A good tape night is six scenes in four hours, no scene past three passes, fewer than a dozen alts thrown, the house still above three-quarters full at the last scene, and the show timing out under 23:00 before the trim. Nothing is ever measured in pages per day, because the entire script is shot in one night. The scarce resource is not daylight and not setups — it is audience. Roughly 240 minutes of usable room temperature, spent by every reset, reload, costume change and repeat.
+
+Across the season the unit of progress is episodes in the can against episodes broken: the room must stay six to eight scripts ahead of the stage, and the loss condition is arriving at Monday with nothing shootable.
 
 ### What is absent
 
@@ -2814,7 +2976,19 @@ The episode is the atom: one script becomes one finished show in one five-day we
 
 ### The shape of the money
 
-Multicam money is front-loaded, fixed and cast-dominated, and the pattern almost never moves once set. CAPITAL FIRST. The season's largest construction bill is paid before episode one: four to eight standing sets plus a pre-rigged lighting grid on a leased stage, commonly $1-2M as one-time capital (estimate), amortised across twenty-two episodes. After that the weekly pattern is nearly flat — same stage, same crew, same grid, no locations, no company moves, no weather. The marginal cost of episode 22 is materially lower than episode 1, which is the entire economic argument for the form. LEVEL. A first-season network multicam half-hour lands roughly $1.3-1.8M per episode (estimate), against a single-camera comedy at $2-3.5M and an hour drama at $4-9M. The gap is almost entirely locations, transport, extra camera/grip/electric days and a post schedule three times as long. PROPORTIONS on a mid-run network multicam at around $2M an episode (estimate): cast 30-45%; writing and producing fees 12-20%; director 1-2%; the stage crew below the line — camera, electric, sound, props, set dressing, wardrobe, hair and makeup, stage crew — 20-28%; swing sets and construction 4-8%; stage and facility 3-5%; post, including editorial, mix, online and music, 5-8%. Audience, warm-up and seating together are well under 1% of the budget and are the single biggest determinant of whether the episode works. TWO EXTREME SKEWS. First, cast. Multicam hits produce the largest per-episode actor deals in television: Friends' six leads reached $1M each per episode in seasons nine and ten; The Big Bang Theory's three original leads reached $1M each from season eight. Cast can pass 60% of the budget and reduce the whole below-the-line pattern to a rounding correction. Second, the things that dominate other formats are nearly nothing here: an episode carries a main title, an end title and three or four two-to-five-second stingers, so original score runs under two minutes, and visual effects are usually zero. POST IS CHEAP because the show was cut while it was shot. Flat high-key lighting needs almost no grading, ADR is avoided on principle, the mix is a day, and the reference cut already exists as the line cut. Where a single-camera show spends on setups, moves and post, a multicam spends on people who are on camera and people who write jokes. THE BUSINESS SITS OUTSIDE THE EPISODE. Studios deficit-finance against the network licence fee and monetise the library; the number that matters is eighty-eight to a hundred episodes, enough to strip five days a week in syndication. Multicam exists because the per-episode cost of reaching a hundred episodes is the lowest in scripted television — and because the live audience gives you, for free, the one thing money cannot buy: an honest answer about whether it is funny.
+Multicam money is front-loaded, fixed and cast-dominated, and the pattern almost never moves once set.
+
+CAPITAL FIRST. The season's largest construction bill is paid before episode one: four to eight standing sets plus a pre-rigged lighting grid on a leased stage, commonly $1-2M as one-time capital (estimate), amortised across twenty-two episodes. After that the weekly pattern is nearly flat — same stage, same crew, same grid, no locations, no company moves, no weather. The marginal cost of episode 22 is materially lower than episode 1, which is the entire economic argument for the form.
+
+LEVEL. A first-season network multicam half-hour lands roughly $1.3-1.8M per episode (estimate), against a single-camera comedy at $2-3.5M and an hour drama at $4-9M. The gap is almost entirely locations, transport, extra camera/grip/electric days and a post schedule three times as long.
+
+PROPORTIONS on a mid-run network multicam at around $2M an episode (estimate): cast 30-45%; writing and producing fees 12-20%; director 1-2%; the stage crew below the line — camera, electric, sound, props, set dressing, wardrobe, hair and makeup, stage crew — 20-28%; swing sets and construction 4-8%; stage and facility 3-5%; post, including editorial, mix, online and music, 5-8%. Audience, warm-up and seating together are well under 1% of the budget and are the single biggest determinant of whether the episode works.
+
+TWO EXTREME SKEWS. First, cast. Multicam hits produce the largest per-episode actor deals in television: Friends' six leads reached $1M each per episode in seasons nine and ten; The Big Bang Theory's three original leads reached $1M each from season eight. Cast can pass 60% of the budget and reduce the whole below-the-line pattern to a rounding correction. Second, the things that dominate other formats are nearly nothing here: an episode carries a main title, an end title and three or four two-to-five-second stingers, so original score runs under two minutes, and visual effects are usually zero.
+
+POST IS CHEAP because the show was cut while it was shot. Flat high-key lighting needs almost no grading, ADR is avoided on principle, the mix is a day, and the reference cut already exists as the line cut. Where a single-camera show spends on setups, moves and post, a multicam spends on people who are on camera and people who write jokes.
+
+THE BUSINESS SITS OUTSIDE THE EPISODE. Studios deficit-finance against the network licence fee and monetise the library; the number that matters is eighty-eight to a hundred episodes, enough to strip five days a week in syndication. Multicam exists because the per-episode cost of reaching a hundred episodes is the lowest in scripted television — and because the live audience gives you, for free, the one thing money cannot buy: an honest answer about whether it is funny.
 
 ### Processes that exist only here
 
@@ -3258,7 +3432,15 @@ The studio spends more per episode than the network's licence fee and is betting
 
 ### The unit of work
 
-The unit of work is the SECOND OF TRANSMISSION; the unit of progress is the RUNDOWN ITEM CLEARED. A live-action day burns pages. A live day burns clock — you cannot get more of it by working harder and you cannot get any of it back. The atomic object is the ITEM: a news story, a sport segment between breaks, an award, a performance, a live-drama act. Each carries a slug, a planned duration, an actual duration, a format (VO, VO/SOT, package, live two-way, OOV, donut, presentation, VT, live), the sources it needs, and a status that runs not written → written → approved → ready → cued → on air → aired → dropped. The health of the show at any instant is one signed number: seconds HEAVY or seconds LIGHT against the hard out, recomputed every frame. A GOOD DAY: out of titles on the second; no black; no wrong source; no hot mic; no misspelled name on air; every VT played to its out-cue; every break hit; the presenter never asked to stretch more than about twenty seconds; the hard out hit within a second or two of the junction. In sport add: nothing missed because you were in a replay, and a replay on air inside roughly ten seconds of anything that mattered. In news add: you were first and you were right, and nothing said on air had to be corrected afterwards. Secondary counters crews actually keep: cuts per minute (2-20 in live sport, 1-4 in live drama); replays per period; time-to-air on a breaking story (a staffed news operation targets under 60 seconds from a standing start); drift in seconds per item; faults per transmission, where the target is literally zero; and for a touring OB, venues turned around per week. Note the scale inversion: a drama unit might deliver 3-5 minutes of finished screen time a day at very high cost per minute. A gallery delivers 22 minutes in 22 minutes, an Olympic host operation delivers 11,000+ hours in seventeen days, and a rolling news channel delivers 8,760 hours a year. Live television is the only form where finished output equals elapsed time exactly, by definition.
+The unit of work is the SECOND OF TRANSMISSION; the unit of progress is the RUNDOWN ITEM CLEARED. A live-action day burns pages. A live day burns clock — you cannot get more of it by working harder and you cannot get any of it back.
+
+The atomic object is the ITEM: a news story, a sport segment between breaks, an award, a performance, a live-drama act. Each carries a slug, a planned duration, an actual duration, a format (VO, VO/SOT, package, live two-way, OOV, donut, presentation, VT, live), the sources it needs, and a status that runs not written → written → approved → ready → cued → on air → aired → dropped. The health of the show at any instant is one signed number: seconds HEAVY or seconds LIGHT against the hard out, recomputed every frame.
+
+A GOOD DAY: out of titles on the second; no black; no wrong source; no hot mic; no misspelled name on air; every VT played to its out-cue; every break hit; the presenter never asked to stretch more than about twenty seconds; the hard out hit within a second or two of the junction. In sport add: nothing missed because you were in a replay, and a replay on air inside roughly ten seconds of anything that mattered. In news add: you were first and you were right, and nothing said on air had to be corrected afterwards.
+
+Secondary counters crews actually keep: cuts per minute (2-20 in live sport, 1-4 in live drama); replays per period; time-to-air on a breaking story (a staffed news operation targets under 60 seconds from a standing start); drift in seconds per item; faults per transmission, where the target is literally zero; and for a touring OB, venues turned around per week.
+
+Note the scale inversion: a drama unit might deliver 3-5 minutes of finished screen time a day at very high cost per minute. A gallery delivers 22 minutes in 22 minutes, an Olympic host operation delivers 11,000+ hours in seventeen days, and a rolling news channel delivers 8,760 hours a year. Live television is the only form where finished output equals elapsed time exactly, by definition.
 
 ### What is absent
 
@@ -3376,7 +3558,15 @@ The unit of work is the SECOND OF TRANSMISSION; the unit of progress is the RUND
 
 ### The shape of the money
 
-Live television inverts the film budget. Development, script, post and VFX — three of the largest cost groups in scripted drama — do not exist as line items at all. What replaces them is RIGHTS, FACILITIES and PEOPLE-FOR-A-DAY, all committed before anyone knows what the programme will contain. SPORT. The rights fee dwarfs the production. For a major league property the fee routinely runs ten to a hundred times the cost of covering it (estimate); the coverage is a rounding error on the contract, which is exactly why the contract usually mandates minimum production standards. Inside the production budget of a single match, a rough split (estimate): facilities 30-40% (truck and B-unit, cameras, box lenses, replay servers, RF, ultra-motion, cable-cam); crew 30-45% (day rates, travel days, hotels, per diems, overtime); connectivity and transmission 8-15%; venue access, power and rigging 5-10%; graphics and data licences 3-8%; logistics and catering 3-5%. NEWS. The money is capital, not project. A studio, a gallery, a playout chain, a newsroom computer system and a graphics system are bought once and amortised over five to ten years; the marginal cost of tonight's bulletin is crew hours plus whatever field circuits the stories need. A news operation costs almost the same on a dead Tuesday as on the biggest day of the decade — which is why cost control here is headcount and bureau count, never per-programme savings. THE SHAPE DIFFERENCES THAT ACTUALLY MATTER. (1) There is no above-the-line / below-the-line split: presenters, commentators and correspondents are on annual talent contracts, not engaged per production. (2) Contingency is bought as HARDWARE REDUNDANCY at booking time, not held as a percentage reserve — you pay for the second satellite path whether or not the fibre gets cut. (3) Overtime dominates budget variance because you do not control the event's length: extra time, a rain delay, a filibuster, a five-hour awards show. (4) Cost per finished hour is one to two orders of magnitude below scripted drama, but cost per hour of STANDING CAPACITY is high and fixed. (5) The insurance product is event cancellation, abandonment and non-appearance cover, not a completion bond. (6) A large share of spend is subcontracted to facilities houses at a markup rather than employed, so the marginal decision is always "book it or don't", never "we already own it". ORDER-OF-MAGNITUDE FIGURES, ALL ESTIMATES. A large triple-expando OB truck with a B-unit: roughly US $8k-$30k/day, or UK £6k-£20k/day, crew on top. Ultra-motion, cable-cam and each additional replay operator price as separate line items. Ku-band occasional-use satellite historically ran hundreds to low thousands of dollars per hour and has now been largely displaced by fibre contribution circuits and bonded cellular, which has collapsed the cost of getting a reporter live from a field. Camera counts scale the same way costs do: a routine league match 12-30 cameras, a European final 35-50, a Super Bowl well over a hundred in recent years (estimate). Verified at the top of the scale: OBS produced over 11,000 hours of coverage at Paris 2024 including about 3,500 hours of live sport, with more than 110 cameras plus three helicopters and eight drones on the opening ceremony alone; the London 2012 International Broadcast Centre housed nearly 5,900 OBS personnel. A Summer Games host-broadcast operation therefore runs into the hundreds of millions of dollars (estimate) — and still spends none of it on post.
+Live television inverts the film budget. Development, script, post and VFX — three of the largest cost groups in scripted drama — do not exist as line items at all. What replaces them is RIGHTS, FACILITIES and PEOPLE-FOR-A-DAY, all committed before anyone knows what the programme will contain.
+
+SPORT. The rights fee dwarfs the production. For a major league property the fee routinely runs ten to a hundred times the cost of covering it (estimate); the coverage is a rounding error on the contract, which is exactly why the contract usually mandates minimum production standards. Inside the production budget of a single match, a rough split (estimate): facilities 30-40% (truck and B-unit, cameras, box lenses, replay servers, RF, ultra-motion, cable-cam); crew 30-45% (day rates, travel days, hotels, per diems, overtime); connectivity and transmission 8-15%; venue access, power and rigging 5-10%; graphics and data licences 3-8%; logistics and catering 3-5%.
+
+NEWS. The money is capital, not project. A studio, a gallery, a playout chain, a newsroom computer system and a graphics system are bought once and amortised over five to ten years; the marginal cost of tonight's bulletin is crew hours plus whatever field circuits the stories need. A news operation costs almost the same on a dead Tuesday as on the biggest day of the decade — which is why cost control here is headcount and bureau count, never per-programme savings.
+
+THE SHAPE DIFFERENCES THAT ACTUALLY MATTER. (1) There is no above-the-line / below-the-line split: presenters, commentators and correspondents are on annual talent contracts, not engaged per production. (2) Contingency is bought as HARDWARE REDUNDANCY at booking time, not held as a percentage reserve — you pay for the second satellite path whether or not the fibre gets cut. (3) Overtime dominates budget variance because you do not control the event's length: extra time, a rain delay, a filibuster, a five-hour awards show. (4) Cost per finished hour is one to two orders of magnitude below scripted drama, but cost per hour of STANDING CAPACITY is high and fixed. (5) The insurance product is event cancellation, abandonment and non-appearance cover, not a completion bond. (6) A large share of spend is subcontracted to facilities houses at a markup rather than employed, so the marginal decision is always "book it or don't", never "we already own it".
+
+ORDER-OF-MAGNITUDE FIGURES, ALL ESTIMATES. A large triple-expando OB truck with a B-unit: roughly US $8k-$30k/day, or UK £6k-£20k/day, crew on top. Ultra-motion, cable-cam and each additional replay operator price as separate line items. Ku-band occasional-use satellite historically ran hundreds to low thousands of dollars per hour and has now been largely displaced by fibre contribution circuits and bonded cellular, which has collapsed the cost of getting a reporter live from a field. Camera counts scale the same way costs do: a routine league match 12-30 cameras, a European final 35-50, a Super Bowl well over a hundred in recent years (estimate). Verified at the top of the scale: OBS produced over 11,000 hours of coverage at Paris 2024 including about 3,500 hours of live sport, with more than 110 cameras plus three helicopters and eight drones on the opening ceremony alone; the London 2012 International Broadcast Centre housed nearly 5,900 OBS personnel. A Summer Games host-broadcast operation therefore runs into the hundreds of millions of dollars (estimate) — and still spends none of it on post.
 
 ### Processes that exist only here
 
@@ -3838,7 +4028,37 @@ Log every fault, every near miss, every frame of black, every wrong super and ev
 
 ### The unit of work
 
-THE UNIT IS THE SETUP AND THE APPROVAL, NEVER THE PAGE. A commercial has no pages — the "script" is a board of 12-30 numbered frames, and a 30-second film contains roughly 15-25 cuts. The 1st AD builds the day as an ordered setup list with clock estimates (light / rehearse / turn over / reset), not as eighths. A live-action feature day = 4-5 pages. A commercial day = 20-40 setups, or, on a tabletop/food day, 3-6 setups shot 60 times each. Finished-film yield per shoot day is 10-30 seconds; a stop-motion analogy is fair — you are measuring output in seconds, not minutes. A GOOD DAY: every boarded setup in the can, plus the two "options" the agency asked for and the safety the client asked for; the product beauty pass covered before the food/pack dies or the light goes; the agency's preferred take circled at the monitor with the client physically nodding; a wrap inside the 10th or 12th hour with no meal penalty; and nothing added to the post fix-list. A day where you shot brilliantly but missed the pack shot is a failed day, because the pack shot is the only compulsory frame. PROGRESS ACROSS THE JOB IS COUNTED IN APPROVALS CROSSED, NOT FOOTAGE: brief accepted → territory chosen → client buys the board → legal substantiates the claim → budget released → bid awarded → PPM signed off → shoot approved live at the monitor → offline approved up the ladder → online/grade/mix approved → clearance body issues a clock number/Ad-ID → versions QC'd → trafficked before the deadline. Each gate has a named human with a veto. Time between gates is the real schedule. SCHEDULE SHAPE AND DURATION (typical national TV campaign, est.): - Brief to client concept approval: 2-6 weeks. - Bid out to three companies, treatments back, award: 8-15 working days (treatment 3-7 days, bid build 3-7 days, levelling 2-5 days). - Award to shoot ("prep"): 10-20 working days. That is the entire prep: crew, cast, wardrobe, locations, build, product, permits, PPM. A feature's 8-12 weeks compressed into two. - PPM: one 3-6 hour meeting, 2-4 days before the shoot. - Shoot: 1-3 days. Two days is normal. A day is 10 or 12 hours plus pre-call. - Offline: 1-3 weeks, 3-8 client rounds. - Online, VFX, grade, sound, versions: 1-3 weeks. - Clearance: 2-10 working days, in parallel and again at final. - Traffic deadline: 2-5 business days before first air. - Brief to air: 8-16 weeks typical; 6 weeks fast; 6 months for a global platform launch. - Reactive social/branded content: whole cycle in 3-10 days, shot on a half-day, cut overnight. - Actualization/final cost report: 30-90 days AFTER delivery. Talent usage administration: continues for 13-week cycles across a maximum 21-month period of use under the SAG-AFTRA Commercials Contract, then renegotiate or take it off air.
+THE UNIT IS THE SETUP AND THE APPROVAL, NEVER THE PAGE. A commercial has no pages — the "script" is a board of 12-30 numbered frames, and a 30-second film contains roughly 15-25 cuts. The 1st AD builds the day as an ordered setup list with clock estimates (light / rehearse / turn over / reset), not as eighths. A live-action feature day = 4-5 pages. A commercial day = 20-40 setups, or, on a tabletop/food day, 3-6 setups shot 60 times each. Finished-film yield per shoot day is 10-30 seconds; a stop-motion analogy is fair — you are measuring output in seconds, not minutes.
+
+A GOOD DAY: every boarded setup in the can, plus the two "options" the agency asked for and the safety the client asked for; the product beauty pass covered before the food/pack dies or the light goes; the agency's preferred take circled at the monitor with the client physically nodding; a wrap inside the 10th or 12th hour with no meal penalty; and nothing added to the post fix-list. A day where you shot brilliantly but missed the pack shot is a failed day, because the pack shot is the only compulsory frame.
+
+PROGRESS ACROSS THE JOB IS COUNTED IN APPROVALS CROSSED, NOT FOOTAGE: brief accepted → territory chosen → client buys the board → legal substantiates the claim → budget released → bid awarded → PPM signed off → shoot approved live at the monitor → offline approved up the ladder → online/grade/mix approved → clearance body issues a clock number/Ad-ID → versions QC'd → trafficked before the deadline. Each gate has a named human with a veto. Time between gates is the real schedule.
+
+SCHEDULE SHAPE AND DURATION (typical national TV campaign, est.):
+
+- Brief to client concept approval: 2-6 weeks.
+
+- Bid out to three companies, treatments back, award: 8-15 working days (treatment 3-7 days, bid build 3-7 days, levelling 2-5 days).
+
+- Award to shoot ("prep"): 10-20 working days. That is the entire prep: crew, cast, wardrobe, locations, build, product, permits, PPM. A feature's 8-12 weeks compressed into two.
+
+- PPM: one 3-6 hour meeting, 2-4 days before the shoot.
+
+- Shoot: 1-3 days. Two days is normal. A day is 10 or 12 hours plus pre-call.
+
+- Offline: 1-3 weeks, 3-8 client rounds.
+
+- Online, VFX, grade, sound, versions: 1-3 weeks.
+
+- Clearance: 2-10 working days, in parallel and again at final.
+
+- Traffic deadline: 2-5 business days before first air.
+
+- Brief to air: 8-16 weeks typical; 6 weeks fast; 6 months for a global platform launch.
+
+- Reactive social/branded content: whole cycle in 3-10 days, shot on a half-day, cut overnight.
+
+- Actualization/final cost report: 30-90 days AFTER delivery. Talent usage administration: continues for 13-week cycles across a maximum 21-month period of use under the SAG-AFTRA Commercials Contract, then renegotiate or take it off air.
 
 ### What is absent
 
@@ -3912,7 +4132,19 @@ THE UNIT IS THE SETUP AND THE APPROVAL, NEVER THE PAGE. A commercial has no page
 
 ### The shape of the money
 
-FOUR SEPARATE POTS, AND THE BIGGEST ONE IS NOT PRODUCTION. The client pays: (1) an agency fee or retainer for creative and account service; (2) a production budget, approved as a pass-through against a bid; (3) rights — talent usage, music licensing, image and location rights, which run for years; and (4) MEDIA, which typically dwarfs all three. A common planning heuristic puts production at roughly 10% of campaign spend (est.; realistically 5-20%) — a $20m media buy behind a $1.5m production is unremarkable. Every production decision is therefore made in the shadow of a media commitment that is already paid for and cannot move. This is the deepest economic difference from every other kind of filmmaking: THE DEADLINE IS BOUGHT. INSIDE THE PRODUCTION BUDGET (the AICP bid, proportions are typical rather than fixed): crew labour across pre-production, shoot and wrap is usually the largest single block; then equipment, studio/stage, location, travel and the art department (set construction labour and materials can rival crew on a build job); then director and creative fees; then insurance (roughly 1-3% of direct costs, est.); then talent session fees and payroll handling; then a production fee — the company's markup on direct costs, commonly 20-35% (est.) — plus contingency and a weather day allowance. Editorial and finishing may sit inside the bid or, more often on larger jobs, be contracted separately by the agency. WHERE THE PROFIT ACTUALLY IS: not in the markup line, but in the difference between a FIRM BID and the actual ledger. On a firm bid the production company keeps the underage and absorbs the overage; on cost-plus, savings return to the client and the company earns only its fee. The entire commercial production business model is a bet, made weeks in advance, that the day will go as budgeted. Actualization 30-90 days later settles the bet — and a disallowed line or an unbudgeted overtime hour can flip a delivered, awarded job into a loss. BIDDING COSTS MONEY AND MOSTLY LOSES. Three companies produce a full creative treatment and a complete line-item budget; one gets paid. Treatment design, a bid producer's week and sometimes a scout are spent per bid, at a win rate commonly around one in three to one in five (est.). That sunk cost is embedded in the markup of the jobs you do win — the losers subsidise the winners. Nothing comparable exists in features. RIGHTS CAN EXCEED PRODUCTION. Session fees are small; usage is not. A US national campaign under the SAG-AFTRA Commercials Contract accrues holding fees every 13-week cycle plus per-use and market-based use fees across a maximum 21-month period of use, and heavy national rotation can pay a single principal more than the day rate of the whole crew. Celebrity deals are negotiated as flat buyouts outside the bid entirely, sometimes in the millions. Licensing a well-known music track for a national campaign commonly runs mid-five to seven figures (est.), split between master and publishing, and a custom composition is a fraction of that. WHY THE MONEY PER SHOOTING DAY IS SO DIFFERENT — THE DENOMINATOR, NOT THE NUMERATOR. A US national spot commonly costs $150,000-$500,000+ per shoot day all-in (est.); a mid-budget feature runs $50,000-$200,000 per day. The commercial day is not more expensive in kind — the crew rates are comparable, sometimes identical people. The difference is amortisation. Director, DP, casting, wardrobe, set build, location, insurance, prep, scouting, PPM, permits and the whole fixed apparatus are paid for by ONE TO THREE shooting days instead of forty. Prep is a fixed cost spread over a tiny base. Add compression premiums — everything booked at short notice, everything needed on a single date with no pickup day — and premium crew and kit hired at commercial rather than feature rates. THE PER-SECOND MATH TELLS THE TRUTH. A $500,000 two-day shoot delivering a 30-second spot is roughly $16,600 per finished second (production only, before media, rights and post). A $100m feature at 120 minutes is roughly $13,900 per finished second. A big commercial costs as much per second of screen time as a tentpole — and a $2m production for a 60-second film exceeds it outright. What a commercial actually buys is not a film, it is a guaranteed-quality 30 seconds that must survive being seen ten thousand times.
+FOUR SEPARATE POTS, AND THE BIGGEST ONE IS NOT PRODUCTION. The client pays: (1) an agency fee or retainer for creative and account service; (2) a production budget, approved as a pass-through against a bid; (3) rights — talent usage, music licensing, image and location rights, which run for years; and (4) MEDIA, which typically dwarfs all three. A common planning heuristic puts production at roughly 10% of campaign spend (est.; realistically 5-20%) — a $20m media buy behind a $1.5m production is unremarkable. Every production decision is therefore made in the shadow of a media commitment that is already paid for and cannot move. This is the deepest economic difference from every other kind of filmmaking: THE DEADLINE IS BOUGHT.
+
+INSIDE THE PRODUCTION BUDGET (the AICP bid, proportions are typical rather than fixed): crew labour across pre-production, shoot and wrap is usually the largest single block; then equipment, studio/stage, location, travel and the art department (set construction labour and materials can rival crew on a build job); then director and creative fees; then insurance (roughly 1-3% of direct costs, est.); then talent session fees and payroll handling; then a production fee — the company's markup on direct costs, commonly 20-35% (est.) — plus contingency and a weather day allowance. Editorial and finishing may sit inside the bid or, more often on larger jobs, be contracted separately by the agency.
+
+WHERE THE PROFIT ACTUALLY IS: not in the markup line, but in the difference between a FIRM BID and the actual ledger. On a firm bid the production company keeps the underage and absorbs the overage; on cost-plus, savings return to the client and the company earns only its fee. The entire commercial production business model is a bet, made weeks in advance, that the day will go as budgeted. Actualization 30-90 days later settles the bet — and a disallowed line or an unbudgeted overtime hour can flip a delivered, awarded job into a loss.
+
+BIDDING COSTS MONEY AND MOSTLY LOSES. Three companies produce a full creative treatment and a complete line-item budget; one gets paid. Treatment design, a bid producer's week and sometimes a scout are spent per bid, at a win rate commonly around one in three to one in five (est.). That sunk cost is embedded in the markup of the jobs you do win — the losers subsidise the winners. Nothing comparable exists in features.
+
+RIGHTS CAN EXCEED PRODUCTION. Session fees are small; usage is not. A US national campaign under the SAG-AFTRA Commercials Contract accrues holding fees every 13-week cycle plus per-use and market-based use fees across a maximum 21-month period of use, and heavy national rotation can pay a single principal more than the day rate of the whole crew. Celebrity deals are negotiated as flat buyouts outside the bid entirely, sometimes in the millions. Licensing a well-known music track for a national campaign commonly runs mid-five to seven figures (est.), split between master and publishing, and a custom composition is a fraction of that.
+
+WHY THE MONEY PER SHOOTING DAY IS SO DIFFERENT — THE DENOMINATOR, NOT THE NUMERATOR. A US national spot commonly costs $150,000-$500,000+ per shoot day all-in (est.); a mid-budget feature runs $50,000-$200,000 per day. The commercial day is not more expensive in kind — the crew rates are comparable, sometimes identical people. The difference is amortisation. Director, DP, casting, wardrobe, set build, location, insurance, prep, scouting, PPM, permits and the whole fixed apparatus are paid for by ONE TO THREE shooting days instead of forty. Prep is a fixed cost spread over a tiny base. Add compression premiums — everything booked at short notice, everything needed on a single date with no pickup day — and premium crew and kit hired at commercial rather than feature rates.
+
+THE PER-SECOND MATH TELLS THE TRUTH. A $500,000 two-day shoot delivering a 30-second spot is roughly $16,600 per finished second (production only, before media, rights and post). A $100m feature at 120 minutes is roughly $13,900 per finished second. A big commercial costs as much per second of screen time as a tentpole — and a $2m production for a 60-second film exceeds it outright. What a commercial actually buys is not a film, it is a guaranteed-quality 30 seconds that must survive being seen ten thousand times.
 
 ### Processes that exist only here
 
@@ -4907,7 +5139,13 @@ Stereo conversion of 1,500-3,000 shots, IMAX/large-format versions that need MOR
 
 ### The unit of work
 
-Three units run at once and the game must track all three. 1. THE SHOOTING DAY, priced as a percentage of the whole film. A studio day is measured in pages (2–3/day). A micro-budget day is measured the same way but at 6–10 pages and 15–30 setups, because the schedule is 12–21 days, not 40–60. The operative fact is that a day here is 5–8% of the entire budget, so "we'll pick it up another day" is not available: a lost day is lost pages, and lost pages are either rewritten out, absorbed as a hole in the edit, or bought back with a free favour weekend months later. A good day is: every scene on the board COMPLETE (not "we got the master"), sound usable, two verified card copies before anyone sleeps, out of the location on the promised hour, and crew who answer the phone tomorrow. A great day is all of that plus one scene banked ahead. 2. FAVOUR CAPITAL, the real currency. Every location, lens, grade, mix day and unpaid rehearsal is drawn from a finite, non-renewing pool of relationships. The producer's live question is never only "can I afford it" but "can I still ask." A film that shoots brilliantly and spends every favour on the shoot dies in post, where 80% of micro-budget films actually die. 3. ELAPSED MONTHS, once the shoot ends. Progress stops being measured in days and becomes cut versions and delivery items: assembly → cut 12 → picture lock → mix → grade → DCP → QC pass. One editor, unpaid, working nights around a paying job, moves the film at roughly one meaningful cut version per 3–6 weeks. A good week in post is a completed pass, or one delivery item permanently crossed off. Total elapsed time from first draft to premiere is typically 18 months to 4 years, of which shooting is 3 weeks.
+Three units run at once and the game must track all three.
+
+1. THE SHOOTING DAY, priced as a percentage of the whole film. A studio day is measured in pages (2–3/day). A micro-budget day is measured the same way but at 6–10 pages and 15–30 setups, because the schedule is 12–21 days, not 40–60. The operative fact is that a day here is 5–8% of the entire budget, so "we'll pick it up another day" is not available: a lost day is lost pages, and lost pages are either rewritten out, absorbed as a hole in the edit, or bought back with a free favour weekend months later. A good day is: every scene on the board COMPLETE (not "we got the master"), sound usable, two verified card copies before anyone sleeps, out of the location on the promised hour, and crew who answer the phone tomorrow. A great day is all of that plus one scene banked ahead.
+
+2. FAVOUR CAPITAL, the real currency. Every location, lens, grade, mix day and unpaid rehearsal is drawn from a finite, non-renewing pool of relationships. The producer's live question is never only "can I afford it" but "can I still ask." A film that shoots brilliantly and spends every favour on the shoot dies in post, where 80% of micro-budget films actually die.
+
+3. ELAPSED MONTHS, once the shoot ends. Progress stops being measured in days and becomes cut versions and delivery items: assembly → cut 12 → picture lock → mix → grade → DCP → QC pass. One editor, unpaid, working nights around a paying job, moves the film at roughly one meaningful cut version per 3–6 weeks. A good week in post is a completed pass, or one delivery item permanently crossed off. Total elapsed time from first draft to premiere is typically 18 months to 4 years, of which shooting is 3 weeks.
 
 ### What is absent
 
@@ -4989,7 +5227,19 @@ Three units run at once and the game must track all three. 1. THE SHOOTING DAY, 
 
 ### The shape of the money
 
-Above the line is near zero and below the line is dominated by three things a studio barely notices: food, insurance and cast minimums. A representative $250,000 ultra-low-budget feature (est., and the shape matters more than the numbers): cast 12–18% — SAG-AFTRA minimums at $256.60/day plus roughly 21–22% pension and health loaded on top, which is the tax nobody remembers when they price the tier; crew 20–30% at flat rates of $150–$350/day for 12-hour days; equipment 8–12%, much of it kit fees rather than rental invoices; catering and craft service 8–12%, which at this scale can be a bigger line than camera and is the highest-yield dollar in the budget; locations 5–10%, often mostly cleaning, power and a neighbour payoff rather than a location fee; art, props and wardrobe 5–8% combined, frequently under $10,000 for the entire film; insurance 3–6%; and post 15–25% — which is almost always underfunded at greenlight because the money ran out on the shoot. Three structural differences from live-action studio shape: FIRST, ABOVE THE LINE INVERTS. On a studio film, above the line (script, producers, director, cast) can be 30–50% of the budget. Here it is frequently under 10% and sometimes zero, because the writer, director and producers are all deferred or working for points. The budget is almost entirely below-the-line cash for things that will not extend credit: food, fuel, insurance certificates, hard drives. SECOND, THE STATED BUDGET IS A FICTION OF ABOUT ONE THIRD. A $250,000 film routinely consumes $700,000–$1,000,000 of real labour and asset value, donated. The engine should hold both a cash budget and a shadow budget of favour value, because the shadow budget is what is actually being spent and what runs out. Note also that SAG-AFTRA counts deferred compensation inside the total production cost for tier purposes, so the fiction has a hard legal edge: defer enough and you have broken your own ceiling. THIRD, THERE IS A SECOND BUDGET NOBODY RAISES. Finishing and delivery — mix, grade, DCP, M&E, captions, CCSL, E&O, QC fixes, festival fees, publicist, travel to the premiere — runs $30,000–$80,000 (est.) and is discovered after the shoot, with no investors left and no film to show yet. This second raise, not the first, is where most micro-budget films stall permanently. Festival submissions alone run $2,000–$10,000 at $50–$125 a submission, and a publicist for a festival run is $5,000–$15,000 — both routinely omitted from the budget entirely. On the way back: there is no P&A, so there is no money spent on the audience, which also means there is almost no audience. A no-MG distribution deal takes 15–30% off the top before recoupable expenses; an aggregator takes about 20%; AVOD pays on the order of $0.002–$0.008 a view (est.). Against that, the investor waterfall almost never clears, and deferrals — which sit below investor recoupment — functionally never pay. Budget for the career, not the return.
+Above the line is near zero and below the line is dominated by three things a studio barely notices: food, insurance and cast minimums.
+
+A representative $250,000 ultra-low-budget feature (est., and the shape matters more than the numbers): cast 12–18% — SAG-AFTRA minimums at $256.60/day plus roughly 21–22% pension and health loaded on top, which is the tax nobody remembers when they price the tier; crew 20–30% at flat rates of $150–$350/day for 12-hour days; equipment 8–12%, much of it kit fees rather than rental invoices; catering and craft service 8–12%, which at this scale can be a bigger line than camera and is the highest-yield dollar in the budget; locations 5–10%, often mostly cleaning, power and a neighbour payoff rather than a location fee; art, props and wardrobe 5–8% combined, frequently under $10,000 for the entire film; insurance 3–6%; and post 15–25% — which is almost always underfunded at greenlight because the money ran out on the shoot.
+
+Three structural differences from live-action studio shape:
+
+FIRST, ABOVE THE LINE INVERTS. On a studio film, above the line (script, producers, director, cast) can be 30–50% of the budget. Here it is frequently under 10% and sometimes zero, because the writer, director and producers are all deferred or working for points. The budget is almost entirely below-the-line cash for things that will not extend credit: food, fuel, insurance certificates, hard drives.
+
+SECOND, THE STATED BUDGET IS A FICTION OF ABOUT ONE THIRD. A $250,000 film routinely consumes $700,000–$1,000,000 of real labour and asset value, donated. The engine should hold both a cash budget and a shadow budget of favour value, because the shadow budget is what is actually being spent and what runs out. Note also that SAG-AFTRA counts deferred compensation inside the total production cost for tier purposes, so the fiction has a hard legal edge: defer enough and you have broken your own ceiling.
+
+THIRD, THERE IS A SECOND BUDGET NOBODY RAISES. Finishing and delivery — mix, grade, DCP, M&E, captions, CCSL, E&O, QC fixes, festival fees, publicist, travel to the premiere — runs $30,000–$80,000 (est.) and is discovered after the shoot, with no investors left and no film to show yet. This second raise, not the first, is where most micro-budget films stall permanently. Festival submissions alone run $2,000–$10,000 at $50–$125 a submission, and a publicist for a festival run is $5,000–$15,000 — both routinely omitted from the budget entirely.
+
+On the way back: there is no P&A, so there is no money spent on the audience, which also means there is almost no audience. A no-MG distribution deal takes 15–30% off the top before recoupable expenses; an aggregator takes about 20%; AVOD pays on the order of $0.002–$0.008 a view (est.). Against that, the investor waterfall almost never clears, and deferrals — which sit below investor recoupment — functionally never pay. Budget for the career, not the return.
 
 ### Processes that exist only here
 
@@ -5406,3 +5656,1499 @@ Running crew through a payroll service (roughly 0.5–1% of gross plus workers' 
 - **Decides.** Payroll company or cash; whether to carry workers' comp; whether to call anyone a volunteer, which is almost never lawful on a for-profit film.
 - **Engine.** Per-person employment classification carrying statutory obligations, with a latent audit and claim probability resolving months or years later. An on-set injury with no comp converts directly into personal liability against the producer's own assets.
 - **Takes.** Set in prep; consequences land 6 months to 3 years later
+
+---
+
+## 11. Returning scripted television series as a machine
+
+*a renewed multi-episode season running several episodes through writing, prep, photography, editorial and finishing simultaneously. Two settings of one machine: the 22-episode broadcast network season and the 8-10 episode streaming season.*
+
+### The unit of work
+
+ATOMIC DELIVERABLE: the episode. THE MACHINE'S REAL UNIT: the episode-state. Every episode in the order sits in exactly one of eleven states (unbroken, breaking, outlined, draft, production draft, prepping, shooting, cutting, finishing, delivered, aired) and a healthy machine has one episode in nearly every state at once. A feature is one project; a season is twenty-two projects in eleven states.
+
+DAY UNIT: pages. A network hour carries ~50-58 script pages on an 8-day board, so 5-8 pages a day — about twice a feature's 2-4 — possible only because sets are standing, pre-lit and known. Half-hour single-camera: 3-5 days for 28-35 pages. A good shooting day is the day's strips completed inside 12 hours, nothing moved to the drop list, tomorrow's first setup pre-lit, and no page of tomorrow's script still unwritten.
+
+BLOCK UNIT: one director, one prep, one shoot, covering 1-3 episodes. DGA guarantees for network prime time one-hour are 7 prep days and 8 shooting days; high-budget SVOD one-hour (budget at or above $7M) is 7 prep, 9 shoot, plus 2 paid post days. Blocks stagger so one preps while the previous shoots: about 1.6 calendar weeks per delivered network hour. Streaming blocks run 15-25 days for 2-3 episodes.
+
+SEASON UNITS: episodes in the can, episodes locked, episodes delivered. The single number describing a broadcast show's health is the DELIVERY BUFFER — days between picture lock and airdate. Six weeks in September is healthy; three days in March is a show in crisis; zero is a repeat and advertiser make-goods. A streaming season has no buffer curve, only one wall: the drop date, when all episodes must exist at once.
+
+ROOM UNIT: scripts delivered to production on or before the first prep day. The pump must stay at least one full block ahead of the board; when it does not, the board shoots outlines and the machine begins eating itself.
+
+A GOOD WEEK for the whole machine is four different pipelines each advancing one step: a script goes out, a block wraps on its scheduled last day, a cut locks, and a master is delivered to the network.
+
+CALENDAR, BROADCAST 22: room opens May-June; first scripts July; photography starts mid-July; two-week Christmas hiatus; wrap late March-April; airs late September through May; episode delivery 2-6 weeks before air in autumn, narrowing to days by spring. Roughly 40 weeks of photography for 22 hours.
+
+CALENDAR, STREAMING 8-10: room 10-20 weeks with most or all scripts written before photography; 4-7 months of photography in 2-3 episode blocks; 4-9 months of post; 14-24 months per season door to door, 12-24 months between seasons.
+
+### What is absent
+
+- The greenlight as a per-project gate. The order IS the greenlight. No episode is individually approved into existence; twenty-two of them are pre-approved and the machine's job is to fill them.
+- A finished screenplay before production. Photography begins on an order, not a script. Later episodes are unwritten on the day the first block shoots — a state that would be catastrophic on a feature and is normal here.
+- Development and packaging. The show already exists. Cast, format, sets, crew, jurisdiction and pattern budget were fixed in earlier seasons and are now inherited constraints, not choices.
+- The pilot. Absent from a returning season and present only as fossils: the standing sets, the series regular deals with their option ladders, the main titles, and the pattern budget descended from the pilot's cost.
+- Director's cut authority and final cut. The DGA gives an episodic director one cut (4 days on an hour, 2 on a half) and then the show takes it. No director controls design, casting, look or release.
+- Principal photography wrap and strike. Nothing is struck while the show is alive. Sets stand, stages stay leased, the crew goes on hiatus rather than being released.
+- A distributor, a release date negotiation, prints and advertising, theatrical windowing, box office. The network or platform schedules you; a promo department cuts your marketing out of your own unlocked footage.
+- Festivals, premieres, test screenings and preview cards. Network research exists but almost never recuts a returning series; audience data arrives after air, when the episode cannot be changed.
+- A reshoot period. There is no going back. Material is fixed by pinning added scenes onto a later block while the set still stands, or it is never fixed.
+- Post as a discrete phase. It never starts and never ends. It is a running conveyor from the second day of photography until weeks after the last episode wraps.
+- A single delivery. Delivery is a repeating per-episode checklist — air master, textless, alt audio, captions, international versions, metadata — executed twenty-two times.
+- A completion bond. Studio or network finance carries the overage risk; bonding an episodic series is rare.
+- The unified shooting script. Colored revision pages go to a crew already prepping three episodes, so the 'script' is a moving version tree, not a document.
+
+### What is reordered
+
+- CASTING BEFORE WRITING. Series regulars were cast seasons ago. You write to fixed actors whose deals, availability, episode guarantees and exclusivity already exist. Character is a constraint before it is an invention; only guest and recurring casting happens per-episode, after the script.
+- BUDGET BEFORE SCRIPT. The pattern budget is locked before a single episode of the season is written. Scripts are written down to the pattern, then cut in prep to hit it — the opposite of costing a finished screenplay.
+- SCHEDULING BEFORE SCRIPT. The AD boards episodes that exist only as outlines or arc slots, because stage availability, guest actor windows and the airdate are fixed before the pages are.
+- PREP INSIDE SHOOT. The next block's prep runs while the current block shoots, staffed by the same department heads. Concept and production meetings happen around a shooting day, not before one.
+- EDITORIAL INSIDE PHOTOGRAPHY. Assembly begins on day two from dailies. The editor's cut is due 4 business days (half-hour) to 6 business days (hour) after that episode's photography closes — while two later episodes are still shooting.
+- NOTES EVERYWHERE, NOT AT A GATE. Studio then network notes land on the outline, the draft, the production draft, the producer's cut, the studio cut and the network cut. There is no single approval point; approval is a continuous tax on the showrunner's day.
+- MARKETING BEFORE COMPLETION. Promos cut from unlocked footage air while later episodes are still shooting. Episode 1 airs in September while episode 12 shoots.
+- THE DIRECTOR ARRIVES LATE AND LEAVES EARLY. They come in after the script is locked and the schedule is boarded, and they hand the cut over before the mix.
+- FINISHING ORDER IS NOT AIR ORDER. Episode 4 locks while episode 7 preps, and the network may have moved episode 7 to air fourth. Written order, produced order and aired order are three different sequences over the same objects.
+- WRAP BEFORE DELIVERY OF MOST OF THE SEASON. Photography ends in April with six to eight episodes still in editorial, finishing to airdates that have already been announced.
+
+### How the crew differs
+
+- PRESENT — Showrunner: the credited executive producer and head writer holding de facto final cut, final say on casting, design, budget and notes. There is no film equivalent; the nearest is a writer-director-producer who also owns the payroll and never leaves.
+- PRESENT — The writers room as a standing department: staff writer, story editor, executive story editor, co-producer, producer, supervising producer, co-executive producer, executive producer. 2023 WGA MBA sets minimum staff by order: 3 writers for 1-6 episodes, 5 for 7-12, 6 for 13 or more, of which at least 3 must be writer-producers, guaranteed the lesser of 20 weeks or the room's duration.
+- PRESENT — Script coordinator, writers' assistant, writers' PA, showrunner's assistant: the clerical spine that versions scripts, keeps the continuity ledger, distributes colored pages and takes the room's transcript.
+- PRESENT — Producing director (an EP-level director-producer) who sets the visual grammar, directs several episodes including the premiere, and supervises visiting directors so twenty-two hours read as one show.
+- PRESENT — Episodic directors as visiting labor: hired per block, guild-guaranteed prep and shoot days, one cut, then gone. A season employs 8-14 of them.
+- PRESENT — Writer on set / producing writer: one member of the room is on the floor every shooting day with authority to rewrite, which no feature screenwriter has.
+- PRESENT — Two of everything on heavy schedules: two cinematographers and two 1st AD teams alternating blocks, one prepping while the other shoots.
+- PRESENT — Multiple editors (2-4) each with an assistant, rotating episodes so one is always free for the showrunner; a post producer and post coordinator running a conveyor rather than a project.
+- PRESENT — A standing-set establishment: construction coordinator and crew building swing sets during the season, a swing gang and on-set dresser turning a permanent set over between two episodes' scenes on the same day, and a warehouse of the show's own stock.
+- PRESENT — Studio current programming executive and network current programming executive assigned to your show, giving notes weekly for years, plus Broadcast Standards and Practices as an external rules authority on broadcast.
+- PRESENT — Network scheduling and promo departments, who decide what order your work airs in and cut your advertising out of your unlocked footage.
+- PRESENT — Production accountant running two books at once: the pattern/episodic budget and the amortization pool.
+- ABSENT — A screenwriter who delivers a finished screenplay and departs. Writing here is salaried, continuous and hierarchical.
+- ABSENT — A director with authority over design, casting, the schedule or the cut.
+- ABSENT — A one-picture location department. Locations recur across seasons under term deals; the location manager is managing a portfolio, not a scout list.
+- ABSENT — A distributor, a theatrical marketing team, a completion guarantor, a festival strategist, a preview-screening research house.
+- ABSENT — A unit publicist running a release campaign. There is a series publicist feeding a press cycle that runs for years.
+
+### What goes wrong
+
+- SCRIPT CASCADE. Episode 9's script isn't ready on its first prep day. Nothing can absorb it: the shoot date is fixed by the airdate, the stage is booked, the guest cast is held. You shoot an outline, swap the block order (which breaks the cross-board), or lose a day you will never get back. This is the characteristic television failure and it has no feature equivalent.
+- CROSS-BOARD CONTAMINATION. A single overrun does not damage one episode, it damages a block. Days stolen from episode 7 were already boarded on a location shared with episode 8, so one bad day propagates across three episodes' schedules and two editors' delivery dates.
+- CONTINUITY BREACH ACROSS YEARS. A draft asserts something the show already established on air three seasons ago. Once it airs it is canon and cannot be fixed; it costs audience trust in proportion to fandom intensity.
+- LOSING A SERIES REGULAR MID-ORDER. Death, illness, arrest, a refusal to return, a legal dispute. Fourteen unwritten episodes must be rebroken, shot pages may be unusable, and the cast guarantee is still owed.
+- A MISSED OPTION WINDOW. Options on regulars and recurring guests expire on calendar dates. Miss one and the actor is free; a hot recurring is gone, often to a series regular role elsewhere, and the arc written for them is stranded.
+- AIRDATE MISS. The network runs a repeat, sells make-goods to advertisers and loses the lead-in for the next week. Unique to broadcast: the consequence of lateness is public and immediate rather than a slipped release.
+- THE BACK NINE THAT DOESN'T COME. You wrote 13 toward a cliffhanger and now it has to be a series finale, or you wrote 13 as a finale and now owe nine episodes past the end of your story.
+- CANCELLATION MID-PRODUCTION. Shot episodes that never air, unamortized set construction written off, a hundred-plus crew released with no notice, and a stage lease still running.
+- STANDING SET LOSS. Fire, flood or a stage the landlord needs back. On a feature you lose a location; here you lose the set that 60% of every episode is shot on, and rebuilding it is an amort charge against a season already underway.
+- HIATUS DRIFT. The crew is not under contract between seasons. Your gaffer, your A-camera operator and your best co-EP take other jobs in March and do not come back, and season five starts with a crew that has to relearn the show.
+- SHOWRUNNER SATURATION. Every pipeline queues on one person. Over-schedule them and scripts, cuts, casting and budget approvals all stall at once — the only failure mode in production where every department degrades simultaneously from a single cause.
+- AIR ORDER REORDER BREAKING THE ARC. The network moves an episode for a holiday or a stunt and a character now knows something they have not yet learned. You repair it with ADR, a new insert, or you let it go.
+- TOPICALITY. A real-world event makes a finished, paid-for episode unairable. It is pulled, the order shuffles, and the buffer evaporates.
+- BINGE EXPOSURE. A streaming audience watches eight hours in two days. Repeated angles, re-used stage geography, recycled music cues and small continuity slips that weekly viewing forgave are all visible at once.
+- FINISHING BOTTLENECK. One mix stage, four episodes needing it the same week because three earlier locks slipped. The conveyor has no slack by design.
+- AN OFF-SHOW BLOCK. A visiting director shoots two episodes that do not look or move like the series. You cannot reshoot them; you repair what you can in editorial and the episodes stay slightly wrong forever.
+- GUILD EXPOSURE FROM THE MACHINE ITSELF. Understaffing the room below WGA minimums, spanning a writer's episodic fee over more than 2.4 weeks on a short order, cutting behind a director inside their guaranteed cut period, or failing the DGA prep guarantee — all grievable, and all tempting when the schedule is collapsing.
+- GUARANTEES YOU CANNOT SAVE YOUR WAY OUT OF. Writing a regular out of three episodes saves nothing if their deal guarantees all 22. Cost-cutting in television frequently removes the work without removing the cost.
+- THE SUCCESS DEATH SPIRAL. Seasons of escalations and a season-six cast renegotiation push the pattern above what the license fee can bear; the studio's own hit becomes unprofitable to keep making.
+
+### The shape of the money
+
+MONEY IS PER-EPISODE AND REPEATING, WHICH CHANGES EVERYTHING. A $50,000 error in the pattern is $1.1M over 22 episodes; a $50,000 saving is the same in reverse. You do not budget a film, you budget an average and then manage variance against it twenty-two times.
+
+THE BOOKS SPLIT IN TWO. The PATTERN (or episodic) budget holds everything a single episode owns: cast for that episode, guest cast, shooting crew days, that episode's stage and location days, its post, its music. The AMORT pool holds everything no episode owns: standing set construction, series prep, production offices, insurance, main titles, long-term rentals, underlying rights. Amort is divided by the order size, so an 8-episode streaming season carries the same set build over 8 episodes that a 22-episode network season spreads over 22 — a structural reason short orders look expensive per hour.
+
+PROPORTIONS, network one-hour drama, working estimate: above-the-line 25-35% (series regular cast, showrunner and writing staff, episodic director, producers); below-the-line production 45-55%; post 8-12%; amort allocation 5-15%; insurance, fringes and office in the remainder. Fringes run roughly 20-25% on top of union labor.
+
+ABSOLUTE FIGURES. Broadcast one-hour drama: roughly $3-8M per episode (2025 estimate). Streaming drama: $5-15M typical, prestige above $15M, outliers to $20-35M. Half-hour single-camera: roughly $2-5M. Verified guild floors: WGA network prime time 60-minute story-and-teleplay minimum $46,759 effective 5/2/25-5/1/26, plus a program fee of $1,651 per 60-minute network episode capped at 3 per episode; staff writer weekly minimum $5,088 on a 20-of-26 guarantee rising to $5,935 week-to-week; writer-producer (co-producer and above) $9,087 weekly on a 20-week guarantee, $12,122 for 9 weeks or fewer; development room writer-producers $15,152 weekly with a 10-consecutive-week guarantee. DGA network prime time one-hour episode $57,374 for 7 prep and 8 shoot days; high-budget SVOD one-hour at $7M-plus budget $68,893 for 7 prep, 9 shoot and 2 paid post days.
+
+THE CAST LINE GROWS AND EVENTUALLY KILLS THE SHOW. Series regular deals run five to seven seasons with annual escalations and renegotiate hard at seasons four to six. A hit's own success raises its pattern until the license fee no longer covers it.
+
+TWO FINANCING SHAPES, AND THEY PRODUCE DIFFERENT GAMES. DEFICIT FINANCING (broadcast): the network licenses domestic rights for roughly 60-90% of cost; the studio funds the gap and owns the show, recouping through international, streaming licensing and off-network syndication (historically at 88-100 episodes). A $4M episode against a $1.7M license fee is a $2.3M per-episode deficit the studio carries for years betting on the library. COST-PLUS (streaming): the platform pays 100% of the budget plus a premium, commonly cited between 10% and 30%, takes worldwide rights for about a decade, and owns everything. The studio books profit on day one and has no backend, no library and no deficit — so nobody is incentivised to keep a show alive to reach syndication, and cancellation after two seasons costs the financier nothing.
+
+THE OVERAGE RULE IS THE SEASON, NOT THE EPISODE. Going over on episode 4 is normal and forgiven if named savings exist on episode 9. Line producers therefore deliberately build cheap episodes — bottle shows, cast-light shows, standing-set-only shows — as banked capacity.
+
+JURISDICTION IS A MULTI-SEASON BET. The rebate percentage, qualifying spend rules, crew depth and stage inventory are chosen once and locked by the stage lease and the standing sets. Incentive cash arrives quarters after the spend, so the show's cash position and its cost position are different numbers.
+
+### Processes that exist only here
+
+#### Season Order Negotiation
+
+Convert a renewal into a firm order: episode count, per-episode license fee or cost-plus premium, delivery dates, premiere date, and which cast options get exercised to support it.
+
+- **Who.** Showrunner / Studio EVP Current Programming / Network
+- **Decides.** Fight for 10 vs 13 vs 22. Trade a lower per-episode fee for a longer order. Accept a split season that buys post time. Take a shortened final season now or gamble on a full renewal.
+- **Engine.** Order object {count, pattern target, delivery calendar, premiere date}. Count drives amort-per-episode, WGA minimum staff tier, cast guarantee cost and the whole downstream calendar. Deficit ledger or cost-plus margin per episode.
+- **Takes.** 2-6 weeks; Feb-May for broadcast, any month for streaming
+
+#### Season Architecture
+
+Lay the season's spine before any script: arcs per character, the year's act-outs, which episodes carry tentpoles, where the bottle episode and the cast-light episode sit, what the finale is.
+
+- **Who.** Showrunner / Executive Producers
+- **Decides.** Which episode is the midseason turn. Where to spend the money. Who is absent from which episode. How serialized each hour is, which determines how much the network can reorder you later.
+- **Engine.** Season graph: per-episode arc slots, character presence flags, cost class (bottle/standard/tentpole), and a serialization coefficient that later constrains air-order changes and binge exposure.
+- **Takes.** 2-4 weeks before the room opens
+
+#### Convening the Room
+
+Hire the room to and above WGA minimums across tiers from staff writer to co-EP, plus script coordinator and writers' assistant. Second seasons rebuild from writers who took other jobs on hiatus.
+
+- **Who.** Showrunner / Studio Head of Television
+- **Decides.** Room size and tier mix against the writing budget. Who can be trusted to produce a block on set while you are in a cut. Which new voice the show needs and which veteran you can no longer afford.
+- **Engine.** Writer agents with tier, weekly cost, break skill, draft speed, producing ability, voice-match and availability. WGA constraints: 3/5/6 writers by order size, 3 writer-producers, 20-week guarantee.
+- **Takes.** 3-6 weeks
+
+#### The Script Pump
+
+Set and hold a delivery date for every script against its first prep day. The pump must stay at least one full block ahead of the board or production begins prepping outlines.
+
+- **Who.** Showrunner / Script Coordinator
+- **Decides.** Which episode gets broken next, which is rarely the next to shoot. How many to break in parallel. When to stop breaking and start writing. Whether to buy a freelance script to catch up.
+- **Engine.** Per-episode script pipeline with states and a hard dependency: production draft must exist by prep day 1. Lateness degrades prep quality, raises shooting-day cost and propagates to editorial delivery.
+- **Takes.** continuous, 30-45 weeks
+
+#### Breaking an Episode
+
+Card the episode on the board: teaser and acts, A/B/C stories, the runner, and act-outs. A broadcast hour needs 4-5 act-outs that survive a commercial; a streaming hour needs none.
+
+- **Who.** Room: Showrunner, Co-EP, Exec Story Editor, Staff Writers
+- **Decides.** Which story earns the act-out. What to cut to fit 42 broadcast minutes versus 55 streaming ones. Whether to spend another room week here or move on and fix it in the draft.
+- **Engine.** Beat-card board with act assignment, story strand, character load and estimated screen minutes. Quality from room composition, days spent and showrunner attention; overruns steal from the next episode.
+- **Takes.** 3-7 room days per episode
+
+#### Outline, Notes, Draft
+
+The writer takes the board to an outline, absorbs studio then network notes, writes a draft, takes notes again. Two masters, two rounds, minimum, on every single episode, for years.
+
+- **Who.** Assigned writer / Showrunner / Studio and Network execs
+- **Decides.** Which notes to take, which to slow-walk, which to fight. Whether to rewrite it yourself (fast, exhausting) or send it back (slow, develops the writer, risks the prep date).
+- **Engine.** Note objects with source, severity, cost impact and taken/ignored record feeding studio and network trust meters. Showrunner attention is a finite per-week budget spent here or on stage or in the cut.
+- **Takes.** 1-2 weeks outline, 2 weeks draft, 1 week per notes round
+
+#### Showrunner Pass and Production Draft
+
+Every script goes out in one voice. The production draft is what gets budgeted, boarded and cast; everything after it ships as colored revision pages to a crew already prepping.
+
+- **Who.** Showrunner
+- **Decides.** How heavily to rewrite. When to release — early means better prep and a worse script. What to cut for the pattern before the line producer ever sees the page count.
+- **Engine.** Draft version tree with colored-revision propagation into breakdown, schedule and budget. Each post-release revision costs re-prep time, department morale and money scaled to how late it lands.
+- **Takes.** 2-5 days per script
+
+#### Table Read
+
+The full cast reads the episode aloud with both sets of executives in the room, days before the shoot. It is the last public test of the script and the first time the cast sees the whole thing.
+
+- **Who.** Showrunner / Cast / Director / Studio and Network execs
+- **Decides.** What dies on the page tonight. Whether the episode is long and what comes out. Whether an actor's objection to a scene is worth taking. Whether to rewrite overnight.
+- **Engine.** Read produces a timed runtime estimate, per-scene cast reaction and an exec note set; overnight rewrite consumes showrunner attention and issues revision pages against an already-boarded schedule.
+- **Takes.** 2-3 hours plus an overnight rewrite, per episode
+
+#### Writing Credits and Episodic Fees
+
+Assign Story by / Teleplay by / Written by per episode and pay the separated script fee. Credits are money, residuals and career. Disputes go to Guild arbitration.
+
+- **Who.** Showrunner / WGA Credits Department
+- **Decides.** Who gets which script. Whether to share a credit. How to spread 22 scripts across 8 writers so everyone is fed and nobody is overloaded at the wrong moment.
+- **Engine.** Per-episode credit record; WGA minimums ($46,759 story and teleplay, 60-min NPT, eff. 5/2/25) plus program fee ($1,651, max 3 per episode); span rule spreads a fee over max 2.4 weeks on short orders.
+- **Takes.** per episode; arbitration 2-4 weeks
+
+#### The Continuity Ledger and Series Bible
+
+Maintain everything the show has said: names, dates, deaths, geography, established rules, and crucially who knows what and when. Split between what has aired and what has merely been shot.
+
+- **Who.** Script Coordinator / Writers' Assistant
+- **Decides.** Whether to break an established fact and accept the cost. What to quietly retcon. Whether to spend a scene repairing a contradiction or let it stand.
+- **Engine.** Fact store keyed to establishing episode and on-screen certainty, with a checker that fires when a draft contradicts it. Audience and critic penalty scaled to fandom intensity and airing status.
+- **Takes.** continuous
+
+#### Block Design (the cross-board)
+
+Decide which episodes shoot together. Two hours as one block is standard; blocks are chosen for shared locations, guest availability, weather, and one director covering all of it.
+
+- **Who.** Line Producer / 1st AD / Showrunner
+- **Decides.** 1x1, 2x1 or 3x1 blocks. Which episodes pair. Whether to break a block apart to protect an airdate when a script slips.
+- **Engine.** Block object owning episodes, one director, one DP rotation slot, one prep window. Block size trades setup savings against required script lead time and against editorial complexity downstream.
+- **Takes.** set at season start, revised per block
+
+#### Cross-Boarding the Stripboard
+
+Build one shooting schedule from two or three scripts. Every strip carries its episode number, and a single day can shoot scenes from all of them on the same standing set.
+
+- **Who.** 1st Assistant Director / UPM
+- **Decides.** Which scenes travel together. Whether to shoot an episode entirely out of story order. What goes on the drop list first when the day runs long.
+- **Engine.** Strips tagged {episode, set, cast, day/night, pages}. Scheduler must respect per-episode cast day counts, guest availability windows, and the script-readiness state of every episode in the block.
+- **Takes.** 2-3 days per block, revised nightly
+
+#### Standing Set Economy
+
+The show owns permanent sets on leased stages. Swing sets are built and struck inside the season. Stage floor space, not money, is usually the binding constraint.
+
+- **Who.** Production Designer / Construction Coordinator / Set Decorator
+- **Decides.** Which new set is worth building — it must pay back over the remaining episodes. What to strike. Whether to go to a practical location instead and eat a company move.
+- **Engine.** Stage floor inventory; set objects with build cost (amort), strike cost, days used per episode, reuse counter and a visual-fatigue score. Construction crew is a resource competing with the shooting day.
+- **Takes.** 2-6 weeks per build, in parallel with shooting
+
+#### Day-Out-of-Days Across the Order
+
+Track every actor's days across the whole season rather than one script. Series regulars carry per-season episode guarantees: you pay whether they work or not, so idle guarantees are pure waste.
+
+- **Who.** 1st AD / Production Coordinator
+- **Decides.** Which episodes a regular sits out. How to cluster a guest's scenes from two episodes into consecutive days. When to pay a holding fee to keep someone available.
+- **Engine.** Per-actor contract {guarantee count, episodic fee, exclusivity, option window, travel terms} against an actual-use table spanning the order. Unused guarantees bill anyway; overages bill on top.
+- **Takes.** continuous
+
+#### Director Booking Cycle
+
+Hire a director per block from a season-long list. They arrive as visiting staff, take guild-guaranteed prep, shoot, deliver one cut and leave. A season employs 8-14 of them.
+
+- **Who.** Showrunner / Producing Director / Line Producer
+- **Decides.** Known hand, new voice, or a shadow being promoted. Who gets the tentpole and who gets the bottle. Whether to give a cast member or a writer an episode.
+- **Engine.** Director pool with fee, speed, coverage style, show-fit, days-over tendency, availability. DGA guarantees enforced: NPT 1-hr 7 prep / 8 shoot at $57,374; HB SVOD 1-hr 7/9 plus 2 post days at $68,893.
+- **Takes.** booked 6-12 weeks ahead; 15-16 days each
+
+#### Tone Meeting
+
+A page-by-page walk of the script with the visiting director before prep: what every scene is for, what the show does and never does, which moments are not theirs to reinterpret.
+
+- **Who.** Showrunner / Episodic Director / Producing Director
+- **Decides.** How much rope this director gets. Which sequences to prescribe shot by shot. Whether to say no to a swing now rather than discover it in dailies three weeks later.
+- **Engine.** Per-scene intent record that later grades dailies against expectation, producing a show-fit delta per block which sets how much editorial repair and how many pickups the block will need.
+- **Takes.** 3-6 hours per episode
+
+#### Producing Director and Look Enforcement
+
+One director-producer owns the visual grammar, directs several episodes including the premiere, and supervises the visiting directors so twenty-two hours read as one continuous show.
+
+- **Who.** Producing Director (EP-level) / Cinematographers
+- **Decides.** The camera and lens rules. What the show never does. Whether to step onto a block that is drifting, and whether that costs you the director for next season.
+- **Engine.** Show style vector (coverage density, movement, lens set, cutting pace). Each director pulls output toward their own vector; producing director presence and tone-meeting specificity pull it back.
+- **Takes.** continuous; personally directs 3-6 episodes
+
+#### Two-Team Rotation
+
+On heavy schedules two DPs and two AD teams alternate blocks, one prepping while the other shoots, so prep is never done by people who spent the day on stage.
+
+- **Who.** UPM / Cinematographers / 1st ADs
+- **Decides.** Run one team hard or two in rotation, which costs more and lasts longer. Who preps the hardest block. Whether to add a team mid-season when the schedule tightens.
+- **Engine.** Crew agents with fatigue, rate, loyalty and availability; rotating assignment matrix over blocks. Single-team mode accumulates fatigue driving error rate, injury risk, overtime and attrition.
+- **Takes.** continuous
+
+#### Rolling Prep
+
+Prep for the next block runs while the current one shoots, staffed by the same heads of department. Concept, location and production meetings are squeezed around a shooting day.
+
+- **Who.** 1st AD / UPM / Department Heads
+- **Decides.** How many prep days to protect against the schedule. What to prep from an outline. When to pull a department head off the floor and who covers them.
+- **Engine.** Each HOD has a daily attention budget split across shoot, prep and post. Under-prepped days raise overtime, drops and error on the day they are eventually shot, not on the day prep was skipped.
+- **Takes.** 7-8 days per episode, fully overlapped
+
+#### Episodic Guest Casting
+
+Cast guests and recurring players for episodes still being written, against a board already locked. Network approval is needed above a size threshold. Recurring deals carry options on later episodes.
+
+- **Who.** Casting Director / Showrunner / Network Casting
+- **Decides.** Name or unknown. Option a recurring now while they are cheap, or gamble on availability later. Whether to kill a character and lose that actor to the show forever.
+- **Engine.** Guest pool with quote, availability windows, option terms and audience draw. Late casting narrows the pool and raises cost. Options are cheap calls on future availability with expiry dates on the calendar.
+- **Takes.** 1-2 weeks per episode
+
+#### The Episodic Shooting Day
+
+An 8-day hour means 5-8 pages a day on sets already lit, with a crew that knows the room. Overrun is absorbed by the drop list, not by adding a day, because tomorrow belongs to another episode.
+
+- **Who.** 1st AD / Episodic Director / Line Producer
+- **Decides.** What to drop. Whether to go into overtime or come back. Splinter unit or lose the scene. Whether to call it and rewrite the missing material out tonight.
+- **Engine.** Per-day page target versus achieved. Drops roll into a per-episode debt that must be rescheduled into a later day or written out. Hot costs accrue hourly against the pattern in real time.
+- **Takes.** 8 days per network hour; 15-25 per block
+
+#### Splinter and Second Unit
+
+A small unit shoots inserts, drives, establishers and stunt work in parallel, frequently for a different episode than main unit is shooting that day.
+
+- **Who.** Second Unit Director / Second Unit 1st AD
+- **Decides.** What to hand off. Whether to split the DP or use a second-unit DP. When a second unit day is cheaper than another main unit day.
+- **Engine.** Second unit is a second scheduling track drawing from shared crew, cast and equipment pools, with its own daily cost and a quality penalty applied to performance-carrying material.
+- **Takes.** scattered days through each block
+
+#### Added Scenes and Pickups
+
+Television has no reshoot period. Missing or newly needed material is pinned onto a later block's day while the set still stands and the actor is still on the lot.
+
+- **Who.** Line Producer / Showrunner / 1st AD
+- **Decides.** Whether the fix is worth a half day. Whether to solve it in the edit instead. Which block absorbs it and what that block gives up.
+- **Engine.** Pending-pickup queue per episode with a shelf life bounded by set strike date, actor availability and hair/makeup continuity. Unfilled pickups convert to permanent quality damage at picture lock.
+- **Takes.** half a day to a day, weeks later
+
+#### Pattern Budget Construction
+
+Build the average episode across every account — cast, crew, stage, locations, post, music — and lock it with studio and network signature before episode one shoots. Every episode is measured against it.
+
+- **Who.** Line Producer / Production Accountant / Studio Finance
+- **Decides.** Where the money lives: days, cast, VFX or music. How much contingency to bury in the pattern. What shape of episode the show can actually afford to make every week.
+- **Engine.** Pattern line items by account per episode; every episodic budget is a signed variance from it. Changing the pattern mid-season requires studio approval and re-forecasts the whole season total.
+- **Takes.** 3-5 weeks before production
+
+#### The Amort Pool
+
+Pool the costs no episode owns — standing set construction, series prep, offices, insurance, long-term rentals, main titles, underlying rights — and spread them across the order.
+
+- **Who.** Production Accountant / Line Producer
+- **Decides.** What to amortize versus charge to an episode. Whether a set build is affordable given how many episodes remain to absorb it.
+- **Engine.** Amort pool with per-episode allocation equal to pool divided by order size. A back-nine pickup retroactively lowers per-episode amort; cancellation strands the unamortized balance as a write-off.
+- **Takes.** set at season start, revised on every order change
+
+#### Episodic Budget Lock and Variance
+
+By prep day 3-4 the line producer issues that episode's budget with a variance sheet against the pattern. The script is cut, or days moved, until it is on pattern, then the budget is locked.
+
+- **Who.** Line Producer / Showrunner / Studio Production Exec
+- **Decides.** What comes out of the script to make the number. Whether to deliberately run this one over and pay it back from a bottle episode later in the order.
+- **Engine.** Per-episode budget with variance against pattern and a rolling season total. Overages must be matched by named savings elsewhere in the order or the studio refuses the lock and the prep stalls.
+- **Takes.** 2-3 days, during prep, per episode
+
+#### Hot Costs and the Season Bank
+
+Daily hot costs report hours shot, overtime, meal penalties and labor overages the next morning. Estimated Final Cost reports land roughly 4, 8 and 12 weeks after an episode wraps.
+
+- **Who.** Production Accountant / UPM / Showrunner
+- **Decides.** When to intervene mid-block on incomplete data. Which later episode pays for this one. Whether to bank savings for the finale or spend them now on a failing episode.
+- **Engine.** Daily actuals feed a season ledger; per-episode EFC matures over weeks, so the player sees noisy partial numbers early and true cost far too late to change the episode they describe.
+- **Takes.** daily; EFC lags 4-12 weeks
+
+#### Cast Options, Bumps and Renegotiation
+
+Series regular deals run five to seven seasons with annual escalations and option windows that must be exercised on time. Hits renegotiate at seasons four to six and the cast becomes the biggest line.
+
+- **Who.** Studio Business Affairs / Talent Agents / Showrunner
+- **Decides.** Exercise or drop. Pay the renegotiation or write the character out. Hold a recurring with a paid option or gamble that they will still be free in four months.
+- **Engine.** Contract objects with option deadlines placed on the game calendar, escalation schedule, guarantee counts and exclusivity. Missed windows free the actor; renegotiations raise the pattern permanently.
+- **Takes.** windows fall on fixed dates; talks 2-8 weeks
+
+#### Episodic VFX Under a Season Deal
+
+Vendors are bid for the season at a per-shot or per-episode rate and deliver weekly against rolling turnovers, not against one show-wide delivery. Shot counts per episode are budgeted like pages.
+
+- **Who.** VFX Producer / VFX Supervisor / Vendors
+- **Decides.** How many shots this episode can carry. Practical or CG. Whether to bank cheap episodes to afford a tentpole. Whether to bring a second vendor on when the queue backs up.
+- **Engine.** Per-episode shot budget against a season-wide vendor capacity queue; turnover dates chained to picture lock; overflow either costs a premium, degrades quality, or pushes the delivery date.
+- **Takes.** 6-12 weeks per episode, overlapping
+
+#### Editorial Rotation
+
+Each editor takes an episode and assembles from dailies as it shoots, then cuts while the next one shoots. Editors rotate so one is always available for the showrunner.
+
+- **Who.** Post Producer / Editors (2-4) / Assistant Editors
+- **Decides.** Which editor gets which episode and who gets the finale. Whether to add a fourth editor to catch up. Whether to pull an editor off a cut to fix an earlier one.
+- **Engine.** Editor agents with speed, taste and fatigue; per-episode cut state. Parallel occupancy means inserting work anywhere delays every episode behind it, exactly like a production line.
+- **Takes.** assembly during shoot; editor's cut 4 business days (half-hour) to 6 (hour) after wrap
+
+#### The Cut Ladder
+
+Editor's cut, then the director's one guaranteed cut, then the producer's cut, then studio notes, then network notes, then lock. The showrunner's cut is the show.
+
+- **Who.** Editor / Episodic Director / Showrunner / Studio / Network
+- **Decides.** How much of the director's cut survives. Which notes to absorb and which to argue. Whether to spend a pickup day, a rescore, or accept the episode as it is.
+- **Engine.** Cut object with per-stage day counts, ranked note sources and a quality delta per pass. DGA rights enforced as hard blocks: 4 days on an hour, 2 on a half, and nobody may cut behind the director.
+- **Takes.** 4-6 weeks from wrap to lock, per episode
+
+#### Timing to Format
+
+A broadcast hour must hit an exact runtime and act structure — teaser plus four or five acts with act-outs on the breaks, around 42 minutes. Streaming episodes float between roughly 48 and 70.
+
+- **Who.** Post Producer / Editor / Network Standards and Practices
+- **Decides.** What to trim to make time, or on a streamer whether to let the episode run long. Whether to fight S&P on language, imagery or subject and what to offer instead.
+- **Engine.** Runtime target with per-platform tolerance; trims remove scenes with a quality cost. S&P is a rules pass over dialogue and imagery producing mandatory fixes on a deadline ahead of delivery.
+- **Takes.** 1-3 days per episode
+
+#### Weekly Music
+
+The composer spots and scores a new episode every one to two weeks on a fixed per-episode fee while the music supervisor clears source tracks against that episode's music budget.
+
+- **Who.** Composer / Music Supervisor / Music Editor
+- **Decides.** Score or licensed track. How much of the music budget the needle-drop eats. Whether to re-use themes to save time and money at the cost of freshness.
+- **Engine.** Per-episode music budget; cue library with reuse discount and a staleness penalty; clearance objects with term, territory, media and a probability of refusal; composer as a booked weekly resource with a queue.
+- **Takes.** 1-2 weeks per episode, overlapping
+
+#### ADR From Actors Who Are Still Shooting
+
+Looping must be recorded from actors who are shooting a different episode that week, in a lunch hour, after wrap, or down a line from a remote booth on location.
+
+- **Who.** ADR Supervisor / Supervising Sound Editor / Post Coordinator
+- **Decides.** Which lines to loop and which to fix with an alternate take. Whether to hold the mix for an actor. Whether to use loop group instead of the principal.
+- **Engine.** Actor time is a contested resource shared by shooting, ADR, promo and press. Unrecorded ADR blocks the mix and threatens delivery; substitutes carry an audible quality penalty.
+- **Takes.** 1-2 sessions per episode
+
+#### Finishing Slots
+
+Colour, mix and online are standing weekly reservations. Every episode gets the same slot and the same number of days, forever. The pipeline is a conveyor, not a project.
+
+- **Who.** Post Producer / Post Coordinator / Facility
+- **Decides.** Whether to buy an extra mix day. Which episode jumps the queue when the air order changes. When to add a second mix stage for the back half.
+- **Engine.** Facility calendar of fixed recurring slots per episode. A late lock pushes into the next episode's slot and cascades down the order. Extra capacity costs money and may simply not exist at the vendor.
+- **Takes.** 2-4 days mix, 1-2 days colour, per episode
+
+#### Delivery and QC
+
+A repeating per-episode checklist: air master, textless, alternate audio, captions, foreign versions, metadata. A QC failure three days before air is a broadcast emergency.
+
+- **Who.** Post Producer / Studio Delivery / Network Operations
+- **Decides.** Whether to deliver with a known flaw. Whether to pay for a rush pass. What gets fixed only in the international version.
+- **Engine.** Per-episode delivery checklist with pass/fail QC against a hard airdate. Failure penalties: repeat airing, advertiser make-goods, platform slip, and a permanent hit to network trust.
+- **Takes.** 3-10 days ahead of air or drop
+
+#### Managing the Delivery Buffer
+
+The real health metric of a broadcast season is the gap between picture lock and airdate. It starts at six weeks in September and drifts toward days by March.
+
+- **Who.** Post Producer / Showrunner / Network Scheduling
+- **Decides.** Whether to spend buffer to fix an episode properly. Whether to stack post resources now to rebuild it. Whether to ask the network for a repeat week to catch up.
+- **Engine.** Buffer in days per episode equals delivery date minus airdate. Every overrun anywhere in the machine subtracts from it; below a threshold the player's options narrow to compromises and failure risk rises.
+- **Takes.** tracked weekly, all season
+
+#### Promo, Previously-On and Next-On
+
+The network cuts promos from your unlocked footage weeks before air. You cut the previously-on and, on broadcast, the next-week-on from episodes that may still change.
+
+- **Who.** Network Promo Department / Post Producer / Editor
+- **Decides.** What footage to release for promo and what to withhold. How much to reveal in the next-on. How much recap a serialized arc needs for lapsed viewers.
+- **Engine.** Promo asset requests pull from unlocked cuts; spoiler level trades anticipation against surprise in the audience model. Recap length trades runtime against comprehension for non-continuous viewers.
+- **Takes.** continuous, 2-6 weeks ahead of each air date
+
+#### Air Order Versus Production Order
+
+Episodes air in a different order than they were written or shot. The network moves one for a holiday, a sweeps stunt, a lead-in, or because it tested better.
+
+- **Who.** Network Scheduling / Showrunner
+- **Decides.** Whether to fight the reorder. What continuity repair the edit needs. Whether to re-record a line or shoot an insert to make the new order work.
+- **Engine.** Three orderings per episode — written, produced, aired — with continuity dependencies between them. A reorder violating a serialized dependency forces repairs or inflicts audience confusion.
+- **Takes.** set weeks ahead; changes with 2-3 weeks' notice
+
+#### Ratings and Data Feedback
+
+Broadcast gets overnights the next morning and 7-day and 35-day figures later; streamers share completion and drop-off selectively or not at all. You steer the back half by whatever you get.
+
+- **Who.** Network Research / Studio / Showrunner
+- **Decides.** Whether to push a character the audience found. Whether to accelerate an arc. Whether to play safe to protect a renewal, at the cost of the show.
+- **Engine.** Per-episode audience metrics with lagged availability and platform-dependent granularity, feeding a renewal probability model. Late scripts can respond only if the script pump still has lead time.
+- **Takes.** overnight to 35 days after each airing
+
+#### Back Nine and Additional Episode Orders
+
+A 13-episode order can become 22 with a back-nine pickup decided in the autumn — after you have written, and possibly shot, toward a 13-episode ending.
+
+- **Who.** Network / Studio / Showrunner
+- **Decides.** Write the 13th as a finale or as a cliffhanger. Hold arcs back in case nine more arrive. Keep the room employed on episodes that may never exist.
+- **Engine.** Pickup decision on a scheduled date with probability from ratings, cost, ownership and slot need. Pickup re-plans arcs, re-hires the room and re-amortizes; a pass leaves an ending that must work as one.
+- **Takes.** decided Oct-Nov; adds 3-4 months of production
+
+#### Crossovers and Sister-Show Sync
+
+Two series in the same universe shoot a shared event, trading cast, sets and shooting days across two separate boards, two crews and two post pipelines that must match.
+
+- **Who.** Showrunners of both series / Studio / Both line producers
+- **Decides.** Whether the ratings uplift is worth surrendering scheduling control. Whose look wins. Which show pays for the shared days and which carries the guest cast.
+- **Engine.** Cross-production dependency linking two block schedules, two cast availability tables and two delivery calendars; a slip on either side damages both, and style vectors must be reconciled at the cut.
+- **Takes.** planned 3-4 months ahead; 2-6 shared shooting days
+
+#### Hiatus
+
+Broadcast takes a two-week Christmas hiatus mid-season; every show takes a long hiatus between seasons. Sets stand, leases run, and the crew goes to other jobs.
+
+- **Who.** UPM / Line Producer / Department Heads / Studio
+- **Decides.** Pay holding fees or risk losing people. How long a hiatus the room takes. Whether to keep the stage lease and the standing sets or strike and hope.
+- **Engine.** Crew agents with loyalty, rate and competing offers evaluated during hiatus; stage, equipment and set carrying costs accrue while idle. Returning-crew percentage drives next season's start-up efficiency.
+- **Takes.** 2 weeks midseason; 3-9 months between seasons
+
+#### Staffing Season and Room Turnover
+
+Between seasons the room dissolves. Writers are pitched elsewhere in the spring staffing window and your best co-EP leaves to run their own show. You rebuild the engine every year.
+
+- **Who.** Showrunner / Agents / Studio
+- **Decides.** Who to hold with a promotion or an overall deal. Whether to promote from within or bring in new voices. How much institutional knowledge you can afford to lose.
+- **Engine.** Writer career progression with poaching offers scaled to the show's prestige and the writer's credits. Institutional knowledge is a room attribute driving break speed, voice match and continuity errors.
+- **Takes.** Apr-June for broadcast; rolling for streaming
+
+#### Showrunner Bandwidth
+
+One person approves scripts, cuts, casting, design, budgets and notes for every episode in every state at once. Everything in the machine queues on them.
+
+- **Who.** Showrunner
+- **Decides.** Where to be today: the room, the stage, the cut, the mix, or the network. Who to deputise. What to let pass unwatched and accept the consequences of.
+- **Engine.** A daily attention allocation across N parallel episodes. Unattended stages degrade in quality and drift from the show's voice; delegation moves the check to a co-EP with lower fidelity and lower cost.
+- **Takes.** daily, for 10-12 months
+
+#### Renewal, Cancellation and Wrap-Out
+
+The decision that extends or ends the machine. Renewal restarts the whole cycle; cancellation strands unaired episodes, unamortized builds and a crew with no notice.
+
+- **Who.** Network President / Studio / Showrunner
+- **Decides.** Whether to shoot a hedge ending. Whether to accept a shortened final season. What to strike, what to store, and which relationships to protect for the next show.
+- **Engine.** Renewal model over ratings or completion, cost per episode, ownership, library value and slot need, resolved on a fixed calendar date. Cancellation triggers write-offs, asset disposal and crew dispersal.
+- **Takes.** decided Feb-May on broadcast; 2-8 weeks after drop on streaming
+
+---
+
+## 12. Music video, short film and short form
+
+*promos, shorts, vertical and social assets, main title sequences, trailers and campaign AV*
+
+### The unit of work
+
+There is no single atom here, and an engine that assumes one cannot hold this kind. FIVE units live inside it and a title must DECLARE which one it counts in.
+
+MUSIC VIDEO: the atom is the SETUP; the currency is the COMPLETE PASS — a top-to-bottom performance of the song to playback. There are no pages, no eighths and no scene numbers, because there is no script. The timeline's length is fixed by the track before a frame is shot, so coverage is planned against a timecode map of the song, not against a scene. A one-day promo runs 20-40 setups inside 12-14 hours and yields 10-20 complete passes; a 3:30 track cut at a modern promo's 1.5-3 second average shot length needs roughly 70-140 shots (estimate). Progress reads as PERCENT OF THE SONG COVERED, section by section — a verse with one angle is a hole no edit closes. A good day: the hero look shot first while the artist is fresh, every section covered from two or more angles, the choreography block closed before the dancers' legs go, the artist released inside their window, and the producer still inside the fixed award. A bad day is that list inverted, and there is no second day, because the second day was the first thing cut to make the number.
+
+SHORT FILM: the atom is the shoot day and pages against it — commonly 8-20 script pages across 3-8 days — but the unit of PROGRESS is not the day. It is the FESTIVAL ACCEPTANCE. A short's life is counted in selections, in premiere status held or burned, and in whether a qualification was reached inside the Academy's two years from completion. The shoot is a fortnight of a five-year object.
+
+VERTICAL AND SOCIAL: the atom is the FINISHED ASSET; the currency is RETENTION. A batch day produces 20-40 assets from one talent and one set of looks. A good day is thirty assets that survive their first three seconds. Progress is posts shipped and watch-through held, and the work does not stop at delivery — a losing asset is re-cut and re-posted rather than wrapped.
+
+TITLE SEQUENCE: the atom is the APPROVED SECOND, as in animation, and the second unit is the CARD. Ninety seconds of authored screen time is a normal deliverable, built over 4-10 weeks by two to thirty people; ROUNDS PER APPROVAL is the cost driver, and the card list is fixed by contract before the design exists.
+
+TRAILER AND CAMPAIGN AV: the atom is the CUT — a numbered version of a named piece. A house's week is counted in versions delivered and versions surviving a bakeoff, against a dated campaign calendar that the film's own post schedule has to serve rather than the other way round.
+
+### What is absent
+
+- DEVELOPMENT. No option, no chain of title, no writer's deal, no drafts, no greenlight committee, no development slate. A music video's entire development is a phone call and a PDF written in two days by the person who will direct it.
+- THE SCREENPLAY. Only the short film has one. The song is the script for a promo; the finished film is the script for a trailer; a card list is the script for a title sequence; a spreadsheet of concepts is the script for a batch day.
+- SCRIPT BREAKDOWN AND THE STRIPBOARD. No scene numbers, no eighths of a page, no day/night strips, no cross-boarding, no Day-Out-Of-Days. A one-day board is an ordered list of setups with drop flags.
+- THE MULTI-WEEK SHOOTING SCHEDULE. No unit moves across weeks, no six-day weeks, no schedule contingency, no cover set. The schedule is a single day that either holds or does not.
+- PRODUCTION SOUND. On a music video there is no mixer, no boom operator, no lavs, no room tone, no wild lines and no sound hold. Playback replaces the entire department; the released record is the mix.
+- ADR, LOOP GROUP AND DIALOGUE EDITING for promos, titles and most vertical work.
+- THE COMPOSER, SPOTTING SESSION AND SCORE for music video: the music predates the picture and cannot be moved by a single frame to serve the cut.
+- POST SOUND AT FEATURE SCALE. No supervising sound editor, no Foley stage, no predubs, no final mix on a dub stage for a promo; the deliverable carries the label's master.
+- THE COMPLETION BOND AND THE GUARANTOR'S REPRESENTATIVE. Nothing at this scale is bonded. The risk sits on a production company's balance sheet or on the maker's own credit card.
+- FILM FINANCE ENTIRELY: bank debt, gap, tax-credit equity, presales, collection account management, waterfalls, recoupment corridors, profit definitions.
+- DISTRIBUTION AND WINDOWS. No theatrical window, no licence term, no territory splits, no output deal. A music video is a marketing expense; a trailer is a marketing expense; a short earns approximately nothing.
+- RESIDUALS, BACKEND AND PROFIT PARTICIPATION for anyone, in any role, on any of it.
+- MARKETING AS A SEPARATE PHASE. Most of this kind IS the marketing of something else — a record, a feature, a brand — so there is no campaign for the object itself.
+- TEST SCREENINGS AND PREVIEWS of the finished work, with the single inversion that trailers ARE the tested object.
+- THE RESHOOT BLOCK. There is no additional-photography period with cast and crew recalled. There is a pickup afternoon, a second-unit hour, or there is nothing.
+- THE DGA CUT STRUCTURE. No guaranteed director's cut period, no guild-defined cutting rights, no studio cut sequence. Most of this work is outside the DGA entirely.
+- CAST INSURANCE AND MEDICALS. Nobody is bonded against the artist's flu, their voice, their tour routing or their mood.
+- DAILIES AS A RITUAL. Nobody screens rushes. The DIT hands over a drive at wrap and the editor starts that night.
+- THE SECOND UNIT as a standing unit with its own director, AD and crew.
+- THE STUDIO NOTE AND THE DEVELOPMENT EXECUTIVE, replaced wholesale by a video commissioner, an artist, a manager and an A&R.
+- A CREDIT SEQUENCE ON THE WORK ITSELF. A promo carries a small block of text at best; most of the people who made it are not named anywhere the audience can see.
+- WEATHER COVER AS A PLAN. There is no cover set to move to, because there is no second location, no second day and no money for either.
+
+### What is reordered
+
+- THE SCORE COMES FIRST. In a feature the music is written last, to picture. In a music video the music exists before anything and is immutable to the frame: total runtime, every cut point and the emotional structure are all pre-decided by a record that was finished before the director was hired.
+- THE EDIT IS PRE-STRUCTURED. The cut's length and internal shape are known before the shoot, so coverage is planned against a timeline rather than against a scene. The editor's structural work happens in prep, and the shoot exists to fill a cut that already has a shape.
+- THE PITCH PRECEDES THE JOB. A full creative document — the treatment — is written, designed and delivered for free before anybody is hired or any money commits. A feature develops after the money; a promo develops before it, at the director's expense, five to fifteen times over for one job.
+- CASTING IS LAST, NOT FIRST. The lead is already cast: the artist made the record. Everything else is cast in days from digitals, street casts and Instagram calls, frequently in the week of the shoot.
+- MARKETING IS THE OBJECT, NOT A PHASE. There is no marketing campaign for a music video, because the video is the marketing campaign for the record.
+- FINISHING PRECEDES THE FILM. A trailer is fully finished — graded, mixed, mastered, QC'd, DCP'd, MPA-approved — months or a year before the film it advertises is finished, and it drags named shots through VFX and grade out of the film's own order and at the film's own cost.
+- LEGAL COMES BEFORE DESIGN ON TITLES. The card list, order, size and duration are settled in business affairs from deal memos and guild rules before the designer knows what the sequence looks like. The design is made to fit a legal object.
+- TITLES ARRIVE AFTER PICTURE LOCK AND THEN CHANGE IT. A title slot is negotiated into a locked cut, so the runtime the picture editor locked moves because a design department needed ninety seconds.
+- TESTING HAPPENS BEFORE DELIVERY, NOT AFTER. Trailers are recruited-audience tested and re-cut as a normal step; vertical assets are posted, measured and re-cut. In features the testing follows a finished film; here it precedes a finished asset.
+- DELIVERY IS ITERATIVE AND THERE IS NO WRAP. A vertical asset ships, is measured, is re-hooked and re-posted. The campaign outlives the production by months.
+- FESTIVAL STRATEGY PRECEDES FINISHING ON SHORTS. The deadline that governs the mix and the grade is a submission cut-off, so a festival cut with a temp grade and a stereo mix routinely goes out before the real finish exists.
+- PLAYBACK SPEED IS DECIDED BEFORE THE PERFORMANCE. A post-production decision — this section will run at half speed — is made in prep and the actor performs to it, at double time, on the day. The performance is authored to serve the edit rather than the reverse.
+- PREP AND SHOOT COLLAPSE INTO EACH OTHER. Scout, tech scout, fitting, rehearsal, camera test and shoot can all fall inside one week and often inside 72 hours, with the recce happening on the phone and the fitting happening at the location.
+- THE NARRATIVE IS OFTEN INVENTED IN THE EDIT. A promo shot as performance and fragments acquires its story in the assembly, which is a documentary's order applied to a scripted-looking object.
+
+### How the crew differs
+
+- PRESENT AND UNIQUE — VIDEO COMMISSIONER. The label executive who writes the brief, selects the pitch pool, awards the job and approves the cut. Part studio executive, part agency creative, and they carry the budget in their own line. Nothing in the live-action feature crew maps to them: the closest analogue is a studio development executive who is also the client and also the financier.
+- PRESENT AND UNIQUE — DIRECTOR'S REP / EXECUTIVE PRODUCER AT A PROMO COMPANY. Sells the director into pitches, takes a percentage, and is the reason the brief was seen at all. A director without a rep does not receive briefs; a rep with the wrong relationships is a career ceiling.
+- PRESENT AND UNIQUE — TREATMENT DESIGNER. A paid freelancer whose entire job is to make an unpaid pitch document look like a finished film. Paid by the director, from the director's own money, on a job nobody has won.
+- PRESENT AND UNIQUE — PLAYBACK OPERATOR / SOUND PLAYBACK TECHNICIAN. The only sound person on a music video set. Runs the track, the speed variants, the timecode and the speakers, and a mistake here is the one on-set error with no post-production fix.
+- PRESENT AND UNIQUE — CHOREOGRAPHER AND DANCE CAPTAIN. On a large share of promos they own the rhythm of the frame and have more practical say over blocking than the 1st AD does.
+- PRESENT AND UNIQUE — THE ARTIST'S GLAM TEAM. Stylist, hair, makeup and frequently a personal creative director who work for the artist, outrank the production, cannot be fired by it, and can stop the day.
+- PRESENT AND UNIQUE — ARTIST MANAGER AND DAY-TO-DAY MANAGER. Approvers with veto power who are physically on set, are not on the call sheet, have no contractual role in production, and decide whether a shot exists.
+- PRESENT AND UNIQUE — MUSIC VIDEO PRODUCER. Carries a fixed-price contract with no studio backstop, absorbs every overage into the production company's profit, and is simultaneously the UPM, the accountant, the locations department and the payroll.
+- PRESENT AND UNIQUE — TRAILER EDITOR. A distinct craft with its own award circuit. Cuts to a marketing brief from a film they did not make, at material ratios an order of magnitude above a feature editor's, against three rival houses on the same footage.
+- PRESENT AND UNIQUE — TRAILER COPYWRITER AND VOICE ARTIST. Writes the cards and the voiceover that carry a piece whose dialogue was written for something else.
+- PRESENT AND UNIQUE — TRAILER MUSIC SUPERVISOR AND TRAILER MUSIC COMPOSERS. An entire industry writing cues that will never appear in any film, plus the houses that produce slowed-down covers of famous songs specifically for advertising.
+- PRESENT AND UNIQUE — TITLE DESIGNER. The director of ninety seconds, commanding animators, compositors and a Flame artist, with no shooting unit and no AD, working to a card list settled by lawyers.
+- PRESENT AND UNIQUE — MOTION DESIGNER, TYPOGRAPHER AND FLAME ARTIST as the finishing crafts of titles and trailers, sitting where a feature would have a DI colourist and an online editor and doing a job neither of those does.
+- PRESENT AND UNIQUE — CREATOR / TALENT-OPERATOR. In vertical, the performer who is also director, camera operator, editor and publisher, and whose perceived authenticity degrades as soon as a real crew appears behind them.
+- PRESENT AND UNIQUE — SOCIAL STRATEGIST AND PERFORMANCE MARKETER. Decides what gets made next on the basis of what performed, occupying the seat a development executive occupies in features, but with an evidence base measured in hours rather than years.
+- PRESENT AND UNIQUE — FESTIVAL STRATEGIST / SHORTS PUBLICIST. A paid specialist who plans the submission ladder, protects premiere status and buys the qualifying week. There is no feature equivalent because a feature has a sales agent instead.
+- PRESENT AND UNIQUE — STAGE SALES MANAGER on the lot side, whose job is filling the gaps between feature holds with one- and two-day short-form bookings.
+- ABSENT — SCRIPT SUPERVISOR. On a promo there is no script to mark up and no dialogue continuity to hold; what continuity exists is looks and props, and the stylist and the art director hold it between them.
+- ABSENT — PRODUCTION SOUND MIXER, BOOM OPERATOR AND UTILITY SOUND. No production track is recorded at all on a music video. The largest single omission relative to a live-action set, and it removes an entire department and its cart.
+- ABSENT — THE FULL AD DEPARTMENT. One 1st AD, sometimes none, and no 2nd, no 2nd 2nd, no key set PA. On the smallest shoots the producer calls the day.
+- ABSENT — UNIT PRODUCTION MANAGER, PRODUCTION ACCOUNTANT AND A PAYROLL DEPARTMENT, replaced by one producer, one coordinator and a spreadsheet, with a payroll service invoiced per job.
+- ABSENT — CASTING DIRECTOR in the feature sense. Casting is an Instagram call, a street cast, a dancer audition or a model agency board, run in days by the producer.
+- ABSENT — LOCATION MANAGER AS A STANDING POST, plus scouts, unit managers and a locations department. A scout is hired for two days or the producer drives around with a phone.
+- ABSENT — SET DECORATOR, CONSTRUCTION COORDINATOR, GREENSMAN, STANDBY PAINTER AND STANDBY CARPENTER as departments. One art director, one props person, a van and a credit card.
+- ABSENT — COSTUME SUPERVISOR, CUTTER-FITTER AND SET COSTUMER. One stylist and an assistant, pulling from showrooms on loan against a credit in the description box.
+- ABSENT — COMPOSER, MUSIC EDITOR, SUPERVISING SOUND EDITOR, FOLEY ARTIST, DIALOGUE EDITOR AND RE-RECORDING MIXER. For promos and titles the music already exists and the released record is the mix.
+- ABSENT — THE DGA-COVERED UPM AND AD STRUCTURE, and with it the guild-defined director's prep, director's cut and consultation rights. Most of this work sits outside the DGA entirely.
+- ABSENT — THE STUDIO EXECUTIVE, the development department, the physical production executive and the post executive as separate approving bodies.
+- ABSENT — THE COMPLETION GUARANTOR'S REPRESENTATIVE, the bond company's schedule audit, and the insurance-mandated safety hierarchy that comes with them.
+- ABSENT — CRAFT SERVICE AND CATERING AS DEPARTMENTS. Lunch is delivered and someone drove to a shop for the rest.
+- ABSENT — MEDIC, SAFETY OFFICER AND INTIMACY COORDINATOR on non-signatory shoots. Frequently, publicly and correctly criticised, and a direct consequence of compressing a feature's safety apparatus into a one-day fixed-price budget.
+- MOVED — THE EDITOR is engaged before the shoot rather than after it, because the cut's structure is fixed by the song and the coverage plan is written against a timeline.
+- MOVED — THE DP is often the operator, the gaffer's boss, the colourist's first client and occasionally the drone pilot, and on the smallest jobs also owns the camera.
+
+### What goes wrong
+
+- THE MASTER CHANGES AFTER THE SHOOT. A new mix, a different song edit or a radio version lands after the video is cut, and every sync point moves. Nothing in a feature works like this, because a feature's picture cannot be re-timed to a different score for free.
+- LIP SYNC IS OFF AND THE TAKE IS DEAD. The artist is a beat behind, the playback speed was set wrong, or a take rolled without timecode. There is no production audio to slip against, so the fix does not exist — the take is simply gone.
+- THE ARTIST DOES NOT ARRIVE, ARRIVES LATE, OR ARRIVES UNUSABLE. The lead is a touring musician with no call-time discipline and no bond behind them. Four hours lost on a one-day shoot removes a third of the coverage and no money can buy it back.
+- THE ARTIST DECIDES THEY HATE HOW THEY LOOK. The most common note in this kind, delivered after the fact, capable of killing an angle, a look or a whole block of finished footage.
+- AN APPROVER WITH NO CONTRACTUAL ROLE RE-CUTS THE VIDEO. A manager, an A&R, or the artist's partner, with total practical power and no accountability, three rounds after the notes were supposed to have closed.
+- THE IDEA IS TAKEN AND THE PITCH IS LOST. A treatment's concept turns up in the winning director's video. There is no remedy, no registration, no recourse, and everyone in the business knows it.
+- THE POOL WAS FIFTEEN DEEP AND NOBODY SAID. A director burns a week and real cash on a pitch with a one-in-fifteen chance that was never disclosed.
+- OVERAGE LANDS ON THE PRODUCTION COMPANY. One blown day on a fixed award converts a profitable job into a loss the company eats, because there is no studio, no bond and no contingency to draw on.
+- THE RELEASE DATE CANNOT MOVE. A single drops on a Friday and the video premieres with it. A day lost in post is taken out of the grade, not out of the date.
+- THE SINGLE CHANGES OR THE TRACK IS DROPPED. The label reprioritises, the song is no longer the focus, and a finished video is either shelved unreleased or dumped with no promotion behind it.
+- THE STOLEN LOCATION IS SHUT DOWN ON THE DAY. A small unit without a permit is moved on, and the one setup the treatment was built around is gone with nothing scheduled to replace it.
+- THE NEIGHBOURS COMPLAIN ABOUT THE PLAYBACK. Music videos are loud by construction. A noise complaint stops the only thing the day exists to do, and there is no way to shoot the performance quietly.
+- AN UNINSURED, UNPERMITTED, NON-SIGNATORY SET INJURES SOMEBODY. The most serious failure in this kind, produced directly by compressing a feature's safety apparatus into a one-day fixed-price budget with no medic and no safety officer.
+- THE CROWD DOES NOT TURN UP. Unpaid background recruited on social media has an attendance rate, not a call time, and the club scene the video needs has eleven people in it.
+- ONE DAY, ONE SUN, NO COVER. There is no weather day, no cover set and no second unit. The golden-hour setup the entire treatment rests on happens once, or it does not happen.
+- THE CHOREOGRAPHY OUTRUNS THE BODIES. Dancers give a limited number of full-out takes; past that the performance visibly degrades and remaining daylight is worthless.
+- SHORTS: THE SOUND IS THE TELL. Programmers discount a short for weak production sound and a rushed mix faster than for any other flaw, and sound is the first department a short underfunds.
+- SHORTS: THE PREMIERE IS BURNED. A private link circulates, a local screening happens, or someone posts it, and every festival requiring a world or international premiere is now closed permanently.
+- SHORTS: THE LADDER RUNS OUT OF TIME. Films age out of programmability, and the Academy's qualification window is two years from the completion date, which begins ticking whether or not anyone has seen it.
+- SHORTS: RIGHTS ARE NOT CLEAN FOR THE CONVERSION. A needle-drop cleared for festival exhibition only, an unsigned performer release, or an uncredited co-writer, and the short can neither be sold nor become a feature.
+- SHORTS: THE FAVOUR BANK EMPTIES BEFORE THE FILM IS FINISHED. Nobody is contractually obliged to return for the pickup day, and the people who worked free the first time have paid work now.
+- VERTICAL: THE CROP KILLS THE FRAME. A 16:9 shoot reframed to 9:16 loses two-handers, wides and any composition that was the point, and the vertical version reads as a worse film made by someone else.
+- VERTICAL: THE SAFE ZONE ATE THE PAYOFF. The title, the product or the face sits under the caption bar or behind the share button on the one platform that mattered, and nobody caught it until it was live.
+- VERTICAL: THE PLATFORM CHANGES THE RULES. Lengths, aspect handling, audio licensing and interface overlays change without notice, and a library of finished assets is retroactively wrong.
+- VERTICAL: THE ALGORITHM DOES NOT CARE. An asset that satisfied every approver gets no reach, with no explanation, no appeal and no diagnosis, which makes the approval process that produced it unfalsifiable.
+- TITLES: THE PICTURE CHANGES AFTER APPROVAL. Runtime moves, a name is added, a card order is renegotiated, and ninety seconds of finished animation plus a scored cue re-open at the most expensive possible moment.
+- TITLES: A CREDIT OBLIGATION IS BREACHED. Wrong order, wrong size relative to the title, too short on screen, or a shared card where a deal forbids one. A legal problem that holds delivery, not a note anyone can argue with.
+- TITLES: MAIN-ON-END KILLS THE JOB MID-BUILD. The director decides the film should start cold, and a designed sequence becomes a tail credit roll with the fee and the brief both collapsing.
+- TRAILERS: THE SHOT IS NOT FINISHED. The campaign needs a hero VFX shot a year before the film needs it, so the film's post budget pays to final it out of order, sometimes twice, and sometimes for a shot that will be cut from the film.
+- TRAILERS: THE CUT TESTS WELL AND EXPLAINS NOTHING, or explains everything and gives the film away. The two failure modes are opposite, both are fatal, and fixing one moves the score on the other.
+- TRAILERS: THE MPA REFUSES THE BAND. The piece cannot play in front of the feature it was made for, the placement is dated, and the re-cut has to clear again before the week closes.
+- TRAILERS: THE MUSIC DOES NOT CLEAR IN TIME, or clears for one territory and not another, after three rounds of cutting have been built on it and the studio has fallen in love with it.
+- TRAILERS: THE FILM CHANGES UNDER THE CAMPAIGN. A scene cut from the finished film is already in a trailer the world has watched forty million times.
+- TRAILERS: FOUR HOUSES, ONE WINNER, AND YOUR BEST TEN SECONDS IN SOMEBODY ELSE'S CUT, uncredited, with the fee paid and nothing to show.
+- THE LOT: A TWO-DAY PROMO BOOKING BLOCKS A TWELVE-WEEK FEATURE HOLD, or a short-form crew with no lot experience damages a floor, a wall or a perm that the next tenant needed intact, and the turnaround eats the margin the booking earned.
+
+### The shape of the money
+
+There is no above-the-line in the feature sense, because the biggest name on the call sheet is not paid by the production at all. The artist's fee comes from their own deal with the label, out of a different pot, and the video's budget is booked as a marketing expense rather than a negative cost. That one fact reshapes everything below it.
+
+MUSIC VIDEO. The label awards one fixed figure and the production company lives on the difference. Director's fee plus production markup commonly runs 15-25% of the award (estimate); everything a feature spends above the line — stars, producers, a writer, an option — is simply not there. Below the line dominates at roughly 55-70% of the award: crew, camera and lighting package, locations, art, wardrobe, dancers, transport and catering, all compressed into one or two days. That compression is why THE DAY is the most expensive unit in this kind and why the second day is always the first thing cut. Post takes 10-20%: an editor for a week, a grade, a light online, a set of cutdowns. Insurance runs 1-3% of budget where it is carried at all, and contingency — the 10% a bonded feature must show before a guarantor will sign — frequently does not exist, because the overage is the production company's own money and not a line anyone will fund. Recoupment then inverts the feature model completely: the label's video spend is charged back to the artist as a recoupable advance, commonly at 50-100% of cost depending on the deal, and recouped from royalties from every source rather than from the video. So the person on screen is paying for the video out of money they have not earned, while nobody who made it — director, DP, editor, dancers — sees a residual, a point or any ownership at all. The label owns the master outright.
+
+Budget bands, with the caveat that published figures are marketing copy as often as accounting: DIY and lyric videos at $0-5,000; indie at $5,000-10,000; a working commercial promo at $10,000-50,000; major-label standard at $50,000-500,000; superstar and event videos above $500,000 (all estimates, and the spread within each band is enormous).
+
+SHORT FILM. The cash cost is small and the real cost is unpaid labour, so the ledger is a lie by construction: it shows equipment, insurance, food, transport, post and a location fee, and hides twenty people working for nothing. Then the FESTIVAL CAMPAIGN becomes the largest cash line after the shoot and the one every first-time producer forgets — roughly $30-75 a submission, $1,000-2,000 for a twenty-festival run in fees alone, and $3,000-5,000 or more for a serious run once travel, press kit, poster and screening costs are counted. A common rule of thumb is 3-5% of the production budget reserved for festivals; the honest number on a cheap short is closer to half the cash budget again. A qualifying theatrical week in one of the six eligible metros is a further direct purchase. Revenue against all of this is functionally zero.
+
+VERTICAL AND SOCIAL. Priced per asset, not per day. The cost driver is talent and volume rather than craft, and the marginal cost of the twenty-first asset on a batch day is close to nothing — which is the entire economic point of the form and the reason it is scheduled as batches rather than as shoots. Media spend behind the asset routinely exceeds the asset's production cost by a large multiple, and the ongoing re-cut and re-post labour is a running cost with no wrap date.
+
+TITLE SEQUENCES. Almost pure labour, with no shooting unit in most cases: roughly $50,000-$300,000 for television depending on scope, with teams of two to thirty. Cost is rounds multiplied by artist-weeks, so the single most expensive thing a client can do is change their mind after approval. The money sits inside the show's post budget and is a rounding error against the series it fronts.
+
+TRAILERS AND CAMPAIGN AV. Paid out of P&A, never out of the negative cost, which is why a marketing department can force a shot to final eighteen months early and charge the film for it. The house takes a project fee for creative plus finishing, and the studio pays several houses for work it will never use as a normal and budgeted line. The creative spend is dwarfed by the media buy behind it, frequently by an order of magnitude or more, which is the reason the approval chain on ninety seconds is longer than the approval chain on a scene in the film.
+
+THE LOT'S SIDE. Short form is gap revenue. A one- to three-day booking at short notice sells a stage-day that would otherwise have been idle, and lot day rates in Los Angeles broadly run $1,000-5,000 a stage-day depending on size and package (estimate), with prep and strike commonly charged at a discount to shoot days. The value is not the rate: it is occupancy, and it is crew retention, because the grips, electricians and painters who work the promos between features are the ones still available when the next picture starts.
+
+### Processes that exist only here
+
+#### The Brief Drop
+
+The label sends a track, a budget figure, a locked release date and a reference deck to several directors' reps at once. Nobody is paid, and nobody is told how many others received it.
+
+- **Who.** Video Commissioner (label creative/video department)
+- **Decides.** Whether to chase this track at all, what to promise against the number, and whether to ask the commissioner how deep the pool is before spending money on a treatment.
+- **Engine.** A brief object carrying track, fixed budget, immovable release date, artist availability window and a hidden pool size. Pool size is the win probability; asking for it is a relationship move some commissioners answer and some do not.
+- **Takes.** 24-72 hours from drop to treatment deadline
+
+#### Track Ingest And The Section Map
+
+The song is the script. You get a mix that may not be final, map its sections to timecode, and pin every later creative decision to a bar number.
+
+- **Who.** Director, Editor
+- **Decides.** Which mix to cut to, whether to demand stems, an instrumental and a clean edit, and what happens if the master changes after the shoot.
+- **Engine.** Track asset with duration, BPM and a section map (intro/verse/chorus/bridge/outro) in timecode. A new master version re-times the map and invalidates every cut made against the old one.
+- **Takes.** An hour, and again every time the mix changes
+
+#### Treatment Writing
+
+Three to twelve pages: concept, tone, look, reference stills and a beat-by-beat structure keyed to the song. It is the only document in this kind that does the job a screenplay does.
+
+- **Who.** Director
+- **Decides.** The performance-to-narrative ratio, the look references, how many locations and looks to promise, and how much of the promise the awarded budget can actually carry.
+- **Engine.** Treatment as a costed object: every promised element — a location, a crowd, a car, a build, a VFX beat — carries a price, and the gap between promised scope and awarded budget is the first number the producer must close.
+- **Takes.** 1-3 days, unpaid
+
+#### Treatment Design And The Deck
+
+The PDF is designed. Directors routinely pay a designer out of their own pocket, roughly $300-1,500 a deck (estimate), to lose a pitch they were never going to be paid for.
+
+- **Who.** Treatment designer (freelance, paid by the director)
+- **Decides.** Design it yourself, pay a designer, or reuse a template — and how many pitches you can carry at once at that burn rate.
+- **Engine.** Per-pitch sunk cost drawn against a win rate. A director's ledger must show unpaid pitch spend as a real accumulating loss, not a flavour line.
+- **Takes.** 1-2 days, overlapping the writing
+
+#### The Pitch Pool
+
+Five to fifteen directors write full treatments on one track for one job, unpaid. The 2019 We Direct Music Videos guidelines propose three phases — interest, a one-page concept, then full treatments from up to five — to cap the free work.
+
+- **Who.** Executive Producer, Director's Rep
+- **Decides.** Which phase to bow out at, whether to pitch to a signatory or a non-signatory commissioner, and whether to hold an idea back for a better track.
+- **Engine.** Pool size, phase structure and a per-director win probability weighted by reel fit, prior work with the artist and rep relationship. An idea in a losing treatment can resurface in the winner's video.
+- **Takes.** 3-10 days from drop to award
+
+#### The Award Call
+
+You won. The budget is the number it always was, the shoot date is inside three weeks, and none of the directors who lost receives a kill fee.
+
+- **Who.** Video Commissioner, Director's Rep
+- **Decides.** Accept at the number, push for more, or pass — and whether to say anything when a losing treatment's idea turns up in the approved brief.
+- **Engine.** Award event converting a treatment into a fixed-price contract with a locked delivery date. Refusing costs standing with that commissioner and that label, which is the only currency a director banks between jobs.
+- **Takes.** One call
+
+#### Budget Cram
+
+A single fixed award has to contain the entire video. There is no studio to go back to, so the producer cuts scope until the number closes and the production company carries anything that does not.
+
+- **Who.** Music Video Producer / Line Producer
+- **Decides.** What to cut: a shoot day, a location, the crowd, the crane, the build, the cast, the post days, or the director's own fee.
+- **Engine.** Fixed-price contract where overage is charged to the production company's P&L, never the label's. The prodco's markup (commonly 15-25%, estimate) is the only buffer and it can go to zero or negative.
+- **Takes.** 1-3 days
+
+#### The Artist Window
+
+The artist is touring, promoting or simply not a morning person. You are given a window inside the day — often six to ten hours — and the whole schedule is built around it.
+
+- **Who.** Producer, Artist Management
+- **Decides.** What is shot with the artist and what without, whether to use a double for wides and inserts, and whether to split the artist across two half-days.
+- **Engine.** A talent window as a hard sub-interval of the shoot day, with lateness as a probability rather than a plan. Everything inside it competes; everything outside runs as second unit on the same call.
+- **Takes.** Negotiated over days, honoured or not on the day
+
+#### Playback Design
+
+Per setup you fix a playback speed and a camera frame rate. Double-speed playback shot at 48fps gives slow motion that still lip-syncs; half-speed playback undercranked gives frantic motion with true sync.
+
+- **Who.** Director, DP, Playback Operator
+- **Decides.** Which sections run at normal speed, which at double for slow motion, which are undercranked, and which are non-sync beauty with no performance at all.
+- **Engine.** A per-setup (playback rate, camera fps) pair. Sync is valid only when the product resolves to 1x at timeline rate; performance difficulty and error rate climb with the speed multiple.
+- **Takes.** Decided in prep, re-decided on the day
+
+#### Playback On Set
+
+The track plays loud on every take from a rig carrying timecode. No production sound is recorded at all: no mixer, no boom, no room tone, and the only sync reference is the clap or the code.
+
+- **Who.** Playback Operator / Sound Playback Technician
+- **Decides.** Speaker placement and level, in-ear monitors for dancers, whether to roll a reference mic, and what to do where the location carries a noise limit.
+- **Engine.** No production-audio asset exists anywhere in the pipeline. Sync is by timecode or slate only; a take rolled at the wrong playback speed, or with no code, is unusable and cannot be rescued in post.
+- **Takes.** All day, every take
+
+#### The Performance Pass
+
+The unit of coverage. The artist performs the whole song, or a whole section, to playback, and you count complete passes. Energy and voice degrade across the day and the best pass is rarely the last.
+
+- **Who.** Director, 1st AD, Artist
+- **Decides.** How many full passes per setup, which sections to punch in on, and when to spend the artist's remaining energy on the hero angle.
+- **Engine.** Passes per setup as the coverage count, with a per-take fatigue curve on the artist lowering both performance quality and sync accuracy. Song sections tracked for angle coverage — an uncovered chorus is a hole no edit closes.
+- **Takes.** 3-8 minutes a pass; 10-20 passes a day
+
+#### Looks, Styling And The Artist's Own Team
+
+The artist arrives with a stylist, a hair person and a makeup artist who work for the artist, not for the production. Every look change costs 30-90 minutes and is approved by someone not on the call sheet.
+
+- **Who.** Stylist, Artist's Hair/Makeup/Creative Director
+- **Decides.** Whether to hire your own stylist or absorb the artist's, how many looks the day can hold, and what order to shoot them in.
+- **Engine.** Dual chain of command: the artist's team can veto a look and can run long, and the production cannot fire them. Look count drives change time; glam call precedes crew call by 1-3 hours and is the real start of the day.
+- **Takes.** Glam 1-3 hours; 30-90 minutes per change
+
+#### The One-Day Board
+
+Twenty to forty setups in a 12-14 hour day across one or two locations, ordered by look, light and the artist's window rather than by story order or by scene.
+
+- **Who.** 1st AD, Producer
+- **Decides.** Setup order, which setups carry a drop flag, when to call the artist in, and what moves to second unit or to a pickup hour.
+- **Engine.** A board of setups with per-setup durations and droppable flags. When the day runs out the remaining setups are lost, not carried — there is no such thing as adding a day.
+- **Takes.** 12-14 hours, one or two days total
+
+#### The Choreography Block
+
+Where there is choreography, dancers rehearse days before the shoot, are cast on look and ability, and are paid under the SAG-AFTRA Music Video Agreement where the production is signatory.
+
+- **Who.** Choreographer, Dance Captain, Dancers
+- **Decides.** Number of dancers, rehearsal days, signatory or not, camera-facing versus formation, and how many full-out takes bodies can actually give.
+- **Engine.** Rehearsal days as a separate cost and calendar item. Dancer stamina caps full-out takes per setup (roughly 4-8 before quality falls, estimate); signatory status sets rate floors, use fees and rehearsal minimums.
+- **Takes.** 1-3 rehearsal days, then the shoot
+
+#### Permit Or Steal
+
+At this budget the choice is a permitted location, a friend's flat, or stealing the shot with a five-person unit, no permit and no police notification.
+
+- **Who.** Producer, Location Scout (where one exists)
+- **Decides.** Permit and pay, or steal and run — location by location, on a day where the stolen shot may be the only one the treatment was built on.
+- **Engine.** Per-location permit cost and lead time against a shutdown probability, a fine, and a reputation cost with that city's film office that persists into later productions.
+- **Takes.** Permits 3-15 business days; stealing takes nerve
+
+#### The Assembly To Track
+
+Cut against a timeline whose length and structure are already fixed by the song. Promo average shot length runs roughly 1.5-3 seconds, so a 3:30 track carries 70-140 shots (estimate).
+
+- **Who.** Editor
+- **Decides.** The performance-to-narrative ratio in the cut, which chorus gets which angle, and whether to cut on the beat or deliberately against it.
+- **Engine.** Timeline length locked to track duration; shot count and average shot length as cut metrics; per-section angle coverage read off the shoot log so the engine can flag sections with nothing to cut to.
+- **Takes.** 2-5 days to first cut
+
+#### The Approval Chain
+
+Four to six approvers with different interests see the cut: the commissioner protects the brief, the manager protects the artist's face, A&R protects the single, marketing protects the date.
+
+- **Who.** Video Commissioner, Artist, Manager, A&R, Label Marketing
+- **Decides.** Which notes to take, which to fight, which approver to route a note through, and when to tell the director the video has stopped being theirs.
+- **Engine.** Multiple named approvers with distinct agendas and veto weights, whose notes can be mutually contradictory. The engine must permit a cut that satisfies one approver and angers another.
+- **Takes.** 2-4 rounds over 1-3 weeks
+
+#### Rights And The Reel
+
+The label owns the video outright as a work made for hire. The director takes no residual, no ownership and sometimes no automatic right to put the finished piece on their own reel.
+
+- **Who.** Director, Rep, Label Business Affairs
+- **Decides.** Whether to negotiate reel rights and behind-the-scenes usage at the award stage, when there is no leverage and no lawyer.
+- **Engine.** Ownership and reel-permission flags on the finished asset. A video the director cannot show does not build the reel, and the reel is the only thing that wins the next brief.
+- **Takes.** A clause nobody reads
+
+#### Finish, Cutdowns And The Premiere
+
+Grade, titles, clean and explicit versions, then the derivative set: vertical cutdowns, a lyric video, Spotify Canvas loops, stills and pre-save assets, all pinned to the release date.
+
+- **Who.** Colourist, Online Editor, Post Producer, Label Digital
+- **Decides.** Premiere platform and timing, whether the vertical is a crop or its own cut, what goes out on release day and what is held for the following week.
+- **Engine.** A deliverable set generated from one master, each item with its own aspect, duration and spec. A missing item delays the premiere, and the label will not move the premiere.
+- **Takes.** 1-2 weeks; 6-10 weeks brief to release
+
+#### Declaring The Purpose
+
+A short is made to do one job: a calling card for a director, a proof of concept for a feature, a festival object chasing a qualification, or a piece of work that simply exists.
+
+- **Who.** Director, Producer
+- **Decides.** Which of the four this is — because it sets running time, cast, festival plan, rights strategy, and whether the film should ever be allowed online.
+- **Engine.** A purpose field read by every later decision: qualification-chasing forces the festival ladder, proof-of-concept forces rights retention and private screening, calling-card forces a known name in the cast.
+- **Takes.** One decision, made too late by most
+
+#### Financing A Short
+
+Money comes from the maker's own account, a public grant or arts body, a brand, a shorts fund, crowdfunding, or deferred favours. There is no recoupment plan because there is almost no revenue.
+
+- **Who.** Producer
+- **Decides.** Which money to take and what it costs — brand money buys scope and takes creative control, grant money brings a timetable, a report and an acquittal.
+- **Engine.** Funding sources carrying strings the engine enforces later: brand approval rights over the cut, grant deliverable dates, crowdfunder reward obligations. Not a one-off cash injection.
+- **Takes.** 2 weeks to 2 years
+
+#### The Favour Bank
+
+Crew work at a fraction of rate, or for nothing, on the strength of who is asking. The favour is real currency, it is spent rather than borrowed forever, and it does not refill on its own.
+
+- **Who.** Producer, Heads of Department
+- **Decides.** Who to ask, for how many days, and how much of a standing relationship to burn on a film nobody is being paid to make.
+- **Engine.** A per-relationship favour balance drawn down by unpaid days and restored by paid work, credits, recommendations and reciprocal favours. An overdrawn relationship refuses the next ask.
+- **Takes.** The length of a career
+
+#### Running Time Discipline
+
+Programmers block shorts into 90-minute sets. Under 15 minutes is easily programmable; over 20 it must be exceptional to earn the slot; the Academy's ceiling is 40 minutes including all credits.
+
+- **Who.** Editor, Director
+- **Decides.** Where to cut, and whether to lose a scene you love to get under a threshold that decides whether anyone ever sees it.
+- **Engine.** Runtime thresholds that change selection probability at festivals, plus the hard 40-minute Academy definition as an eligibility gate rather than a preference.
+- **Takes.** The whole edit
+
+#### Festival Strategy
+
+A submission ladder built top-down: Sundance, SXSW, Clermont-Ferrand and the other tier-one festivals first because they require world or international premieres, then everything below as rejections arrive.
+
+- **Who.** Producer, Festival Strategist or Shorts Publicist
+- **Decides.** Submission order, how long to hold premiere status, which deadline tier to pay, and when to stop spending.
+- **Engine.** Per-festival premiere requirements, deadline-tiered fees (roughly $30-75 a submission, estimate), decision dates and acceptance rates — Sundance 2026 took 54 shorts from 11,480 submissions.
+- **Takes.** 12-24 months of the film's life
+
+#### The Qualifying Run
+
+Academy eligibility comes from a qualifying award at a listed festival, or from a paid seven-consecutive-day theatrical run in one of six US metro areas, within two years of the completion date.
+
+- **Who.** Producer
+- **Decides.** Chase a festival win, buy a theatrical week, or neither — and whether the film is good enough to justify either cost.
+- **Engine.** Two mutually sufficient qualification routes with distinct costs and probabilities, a two-year completion clock, and an Academy submission deadline months ahead of the ceremony.
+- **Takes.** A festival cycle, or one paid week
+
+#### The Online Release Decision
+
+After the run: release free on YouTube or Vimeo, chase a Staff Pick or a curated channel, licence to a shorts platform or an airline, or keep it offline because it is really a pitch document.
+
+- **Who.** Producer, Director, Sales Agent
+- **Decides.** Free release date, exclusivity, and whether to stay offline to protect a feature version that may never happen.
+- **Engine.** Release channels with different reach and different consequences: a public release closes every premiere-requiring festival and can devalue a feature adaptation, while a curated pick is a career event.
+- **Takes.** One decision after 18 months
+
+#### Proof-Of-Concept Conversion
+
+The short becomes the pitch for the feature. It is shown in rooms rather than released, and the deal that follows is for the feature with the short standing as the evidence.
+
+- **Who.** Director, Agent, Producer
+- **Decides.** Who sees it and when, whether to option the short's rights out, and whether to direct the feature or sell it and walk.
+- **Engine.** The short as an asset with a demonstrable quality score raising meeting probability and attachment quality on a derived feature project. Rights must be clean or the conversion is impossible.
+- **Takes.** 6-24 months after the premiere
+
+#### Format Declaration
+
+Vertical is either captured native 9:16 at 1080x1920 or shot 16:9 with a 9:16 protect, and the choice changes every lens, every block, every eyeline and every piece of blocking on the day.
+
+- **Who.** Director, DP
+- **Decides.** Native vertical, protected centre extraction, or a separate vertical pass on every setup — and who on set is responsible for holding the protect.
+- **Engine.** Frame-guide state per setup. Protected shooting costs wider lenses and more headroom and yields a weaker vertical frame; native vertical costs a second pass or a second camera and body.
+- **Takes.** Decided in prep, enforced every setup
+
+#### Safe Zone Layout
+
+The platform interface eats the frame. Keeping key content inside roughly the central 900x1400 of 1080x1920 survives TikTok, Reels and Shorts overlays; the bottom fifth and the right edge belong to the app.
+
+- **Who.** Editor, Motion Designer
+- **Decides.** Where titles, faces and product sit, and whether to build one universal-safe master or separate per-platform masters.
+- **Engine.** Per-platform overlay masks applied to the frame, plus a legibility check that fails any element placed under a caption bar, a username, an audio label or a share button.
+- **Takes.** Continuous through post
+
+#### The Hook Window
+
+The first one to three seconds decide whether anything else is seen. Retention is measured from frame one, and a slow open is a dead asset no matter how good the rest of it is.
+
+- **Who.** Creative Director, Editor
+- **Decides.** What the opening frame shows, whether to open on the payoff, and how many alternative hooks to cut over the same body.
+- **Engine.** A retention curve per asset driven by the opening seconds, with hook variants modelled as separate testable assets sharing one body and one set of deliverable specs.
+- **Takes.** Hours of argument over seconds
+
+#### Sound-Off Design
+
+Most viewing starts muted. Burned-in captions, on-screen text and visual legibility carry the piece, and the audio is a bonus rather than the spine the way it is everywhere else in film.
+
+- **Who.** Editor, Designer
+- **Decides.** Caption style and pacing, how much on-screen text, and whether the piece reads at all with the sound off.
+- **Engine.** A mute-legibility property per asset: an asset that only works with sound loses reach. Captions are burned into the master, not carried as a sidecar file.
+- **Takes.** Built into the cut
+
+#### The Batch Day
+
+Vertical is shot in volume: twenty to forty finished assets from one day with one talent, one set of looks, and a shot list that is a spreadsheet rather than a board.
+
+- **Who.** Producer, Content Lead
+- **Decides.** Assets per day, number of looks, concepts per look, and how far to push the talent's voice and face before both go.
+- **Engine.** Assets-per-day as the throughput unit with quality decay as the count climbs. Talent stamina and look-change time are the two binding constraints, not lighting or coverage.
+- **Takes.** One day for a month of posting
+
+#### Creator-Led Production
+
+A large share of short form is made by the person on camera, who is also the director, the operator, the editor and the distributor. There is no call sheet and no department.
+
+- **Who.** Creator, or a two-person crew
+- **Decides.** Whether to hire any crew at all, and what is lost in perceived authenticity the moment you do.
+- **Engine.** A production mode where one person occupies every role: quality is capped but cost and time collapse, and audience-perceived authenticity falls as crew size rises on creator-led work.
+- **Takes.** An afternoon
+
+#### Variant Testing And Repost
+
+The asset is not finished when it ships. Hooks, thumbnails, captions and lengths are varied, posted, measured and re-posted, and a failed asset is re-cut rather than mourned.
+
+- **Who.** Social Strategist, Performance Marketer
+- **Decides.** Which variants to run, when to kill one, what to spend boosting, and whether to re-cut or re-shoot.
+- **Engine.** Per-variant performance feeding back into the next brief, so the winning hook shape becomes the next batch's plan. Re-cutting is an ongoing cost line, not a wrap.
+- **Takes.** Weeks after delivery
+
+#### The Title Brief
+
+The designer arrives at or just before picture lock with a duration, a list of names and a tone. Main-on-picture buys a designed sequence; main-on-end means the film starts cold and the work moves to the tail.
+
+- **Who.** Title Designer, Executive Producer (design studio)
+- **Decides.** Main-on-picture or main-on-end, the length of the slot, live action or pure design, and whether the sequence carries story or only mood.
+- **Engine.** A title slot as a runtime allocation inside the locked picture with a card list attached. Changing the slot length changes the film's runtime and re-opens the composer's cue.
+- **Takes.** 6-16 weeks brief to delivery
+
+#### The Card Obligations
+
+Who appears, in what order, at what size, for how long, and whether shared, is not a design choice. It is the sum of every deal memo plus guild credit rules, and getting it wrong is a contract breach.
+
+- **Who.** Production Executive, Business Affairs, Guild Administrators
+- **Decides.** Nothing aesthetic. The designer decides only how to make a fixed sequence of names look inevitable.
+- **Engine.** A credit obligation list generated from cast and crew deals plus guild rules: position, size relative to title, screen duration, shared-card permission. Violations are legal events that hold delivery, not notes.
+- **Takes.** Weeks of back and forth with legal
+
+#### Styleframes And The Animatic
+
+Two to four directions are pitched as finished-looking single frames plus an animatic cut to a temp of the title music, because a still cannot sell rhythm and a rhythm cannot sell a look.
+
+- **Who.** Title Designer, Art Director
+- **Decides.** Which direction to build, and whether to pitch a safe one alongside the one you actually want made.
+- **Engine.** Pitch directions as costed options against a client-preference model. The animatic fixes timing, so a later duration change invalidates it and the work restarts at the frame stage.
+- **Takes.** 2-4 weeks
+
+#### The Title Shoot
+
+Many title sequences are their own production: a day or two of macro, tabletop, practical in-camera elements, miniature or motion-control photography that appears nowhere in the film itself.
+
+- **Who.** Title Designer as director, small crew, macro and tabletop specialists
+- **Decides.** Shoot the elements or build them, whether to use footage from the film at all, and whether the actors are needed for a separate half-day.
+- **Engine.** A separate micro-shoot with its own crew, stage day and budget line, scheduled after the feature has wrapped and inside the post window.
+- **Takes.** 1-3 days
+
+#### Build, Rounds And Finish
+
+Ninety seconds of authored frames built by a team of two to thirty over weeks, costing roughly $50,000-$300,000 for television, then finished, graded to match the show and conformed to delivery spec.
+
+- **Who.** Designer, 2D and 3D Animators, Compositor, Flame Artist
+- **Decides.** Round count, where in the ninety seconds to spend the money, and what to abandon when the picture changes underneath the build.
+- **Engine.** Approved seconds as the unit with rounds-per-approval as the cost driver. A picture change after approval re-opens the sequence, its music and its conform.
+- **Takes.** 4-10 weeks
+
+#### Versioning And Localisation
+
+Textless backgrounds, per-territory title cards, per-episode guest-star swaps on a series, shortened versions for later episodes, and a version with the episode title and one without.
+
+- **Who.** Post Producer, Localisation Vendor
+- **Decides.** How the template is built, so a name can be swapped without re-rendering the sequence for every episode and every territory.
+- **Engine.** A templated sequence where card text is data rather than pixels. Localised versions multiply per territory; a non-templated build costs a full re-render for every change.
+- **Takes.** Ongoing for the life of the series
+
+#### The Bakeoff Assignment
+
+Three to six trailer houses receive the same footage and cut against each other, on a project fee, with the studio free to take a structure from one house and ten seconds from another.
+
+- **Who.** EVP Creative Advertising (studio marketing)
+- **Decides.** For the house: whether to take it, how many editors to put on it, and how far from the brief to go to be memorable.
+- **Engine.** Parallel competing vendors on one asset with partial wins possible. Fees are paid regardless of use, so a studio routinely buys work it will never release.
+- **Takes.** 1-3 weeks a round
+
+#### Footage Pull And Selects
+
+Marketing receives dailies and unfinished cuts, often with VFX at grey-ball stage and no grade. The house builds selects bins of everything usable before cutting a frame of trailer.
+
+- **Who.** Trailer Editor, Assistant Editor
+- **Decides.** Which moments are trailer moments, what to reveal, and which unfinished shots to ask the studio to push to final early.
+- **Engine.** A shot pool where every shot carries a completion state. Pulling an unfinished shot into a trailer forces it through VFX, grade and mix ahead of the film's own schedule, at the film's cost.
+- **Takes.** Days, repeated at every new footage delivery
+
+#### The Piece Set
+
+Not one object: an announcement teaser, trailer one, trailer two, a red band where the rating allows, :30 and :15 TV spots, six-second bumpers, vertical cuts and BTS pieces, each on its own date.
+
+- **Who.** Studio Marketing, Trailer House
+- **Decides.** How many pieces, when each drops against release, and how much of the film each is allowed to give away.
+- **Engine.** A campaign calendar of dated pieces derived from one film, each with a length spec and a reveal budget. A beat spent early is removed from the pool available to later pieces.
+- **Takes.** 12-18 months out through release week
+
+#### Trailer Music
+
+Rarely the film's score. It is library trailer music, a licensed track, a slowed-down cover of a famous song cut for the purpose, or custom cues, layered with braams and risers from a design library.
+
+- **Who.** Music Supervisor, Trailer Music House, Composer
+- **Decides.** Library, licensed track, trailerised cover or custom score — and what the sync licence costs against the piece's media plan and territories.
+- **Engine.** Music options with distinct costs and clearance terms scaled to media spend, term and territory. A track cleared for a trailer is not cleared for the film, and the reverse is also true.
+- **Takes.** Runs alongside every cut
+
+#### Copy, Cards And Voice
+
+Title cards, quote cards, laurels, the billing block and the release-date card, plus voiceover where it is used, recorded to a cut that is still moving underneath it.
+
+- **Who.** Copywriter, Voice Artist, Graphics Designer
+- **Decides.** The lines, the card count, whether to use VO at all, and which review quotes or festival laurels to carry.
+- **Engine.** Cards as timed elements consuming runtime out of a fixed length. The billing block is contractually mandated on paid advertising and is generated from the same obligation list as the main titles.
+- **Takes.** Hours, repeatedly, every round
+
+#### Testing The Cut
+
+Cuts are screened to recruited audiences and scored on appeal, intent to see, comprehension and demographic skew. A well-liked trailer that leaves viewers unable to say what the film is fails.
+
+- **Who.** Studio Research, Marketing Executives
+- **Decides.** Which cuts go to test, which scores to believe, and whether to re-cut toward the score or hold the line against it.
+- **Engine.** Test scores on separate axes that can disagree, so optimising one can damage another. Results return as a re-cut order with a date, not as advice.
+- **Takes.** 1-2 weeks a round
+
+#### MPA Approval
+
+Every trailer, poster and TV spot for a rated film is submitted for approval. Green band is approved to accompany a feature or for appropriate audiences; red band is restricted; some material is approved only for named placements.
+
+- **Who.** MPA Advertising Administration, Studio Legal
+- **Decides.** Which band to seek, what to trim to hold a green band, and whether to cut a separate red band for online only.
+- **Engine.** A submission with three outcomes — approved, approved with restrictions, refused — gating where a piece can play. A refusal costs a re-cut and can miss a dated placement outright.
+- **Takes.** Days per submission
+
+#### Finishing And The Format Spread
+
+One trailer becomes dozens of files: theatrical DCP at scope and flat, broadcast masters, online 16:9, 1:1 and 9:16, captioned and described versions, and per-territory text and dub versions.
+
+- **Who.** Online Editor, Colourist, Mix Engineer, Delivery Coordinator
+- **Decides.** Which formats the media plan actually needs, which to skip, and whether the vertical is a crop or a genuine reframe.
+- **Engine.** A format matrix generated from the media plan, each output carrying its own spec and QC gate. A DCP that fails QC misses its screening week and the week does not come back.
+- **Takes.** 2-5 days per piece, per wave
+
+#### Short-Form Booking As Lot Fill
+
+Music videos, shorts, spots and title shoots take stages for one to three days at short notice, filling gaps between feature holds that a lot cannot sell any other way.
+
+- **Who.** Stage Sales Manager, Lot Booking Coordinator
+- **Decides.** Whether to take a two-day booking that may block a pending long hold, and what premium to charge for short notice, weekends and single-day use.
+- **Engine.** Bookings carrying length, notice period and displacement risk against pending long holds. Short form lifts occupancy and revenue per idle day while fragmenting the calendar and raising turnaround cost.
+- **Takes.** Booked days ahead, not months
+
+#### Crew Retention Between Pictures
+
+Short-form work keeps grips, electricians, painters, riggers and stage crew on the lot and in work between features, so the same people are available and warm when the next picture starts.
+
+- **Who.** Line Producer, Heads of Department, Lot Operations
+- **Decides.** Whether to route short-form work to house crew, and whether to discount the stage in order to keep the people.
+- **Engine.** A retention state per crew relationship: continuous work holds availability and loyalty, a gap sends people to another lot, and rehiring later costs a premium or a worse person.
+- **Takes.** Between every picture
+
+---
+
+## The Spine
+
+### Invariant
+
+- THE SLOT AND THE TIMELINE. Every production is an attempt to occupy a stated duration of screen time, and one continuous timeline per deliverable exists from day one, always fully accounted for — every second of it is occupied by something, even if that something is a blank, a board panel, a stringout block or a hoped-for scene. Documentary does not break this: a 90' feature or a 44' strand hour is contracted before the film is found. Live does not break it: the rundown is a timeline totalled to the second, with a hard out. The engine stores SECONDS OF TARGET RUNTIME as its only native measure; pages, feet, cuts, drawings, shots, beats and rundown items are display conversions into it (script page ~60s by convention; 35mm foot = 16 frames = 0.667s; a 22' anime episode at ~300 cuts = ~4.4s/cut; a CG shot ~4-5s).
+- THE SEGMENT. The timeline is partitioned into addressable spans — shot, cut, scene, setup, sequence, act, stringout block, rundown item — each with duration, ordinal position, provenance (which work order produced it), an owner, and a maturity vector. Granularity is a per-production setting (see AXIS: ATOM), not a code fork: the same object is a 3-second Aardman shot and a 4-minute live two-way.
+- THE MATURITY VECTOR, NOT A SINGLE STATE. Each segment carries independent dimension-states: PICTURE, SOUND/DIALOGUE, PERFORMANCE, RIGHTS/CONSENT, COMPLIANCE/LEGAL, CONFORM-TO-SPEC. Done(t) = MIN across dimensions, never picture alone. This one object holds a documentary scene that is beautifully cut and legally undeliverable, a CG shot that is lit but tracking a temp voice, and a live item that is fully compliant and does not yet exist.
+- THE STATE LADDER IS DATA, NOT CODE. Each production declares, per dimension, an ordered list of rungs with a terminal DELIVERABLE rung, a cost per transition and a regression rule. Live action (unscheduled - scheduled - shot - selected - cut - locked - finished), anime (LO - LO-check - genga - AD correction - douga - douga-check - paint - BG - comp - OK), CG (board - rough layout - final layout - blocking - animation final - CFX - FX - lit - comped - final), doc (hoped - material exists - in a stringout - in the assembly - in the locked cut - cleared), live TV (slugged - sourced-and-timed - transmitted) are rows in one table. Live is not a missing pipeline; it is a two-rung ladder.
+- WORK ORDERS ON A GRAPH THAT IS NOT A DAG. A task consumes capacity for a duration and changes the state of a segment or an asset. Edges are of two types: PRECEDES and INVALIDATES. Downstream discovery routinely creates upstream work — an edit note becomes tomorrow morning's field assignment, a reboard becomes new modelling, a legal note becomes a recut, a failed sim becomes re-animation. Any engine whose scheduler assumes an acyclic forward flow can express live-action prep and nothing else.
+- ASSETS, DISTINCT FROM SEGMENTS. Anything built or acquired once and consumed many times: a rig, a puppet and its duplicates, a built miniature set, a standing set, a fixed camera rig, a location booking, a bank cut, a graphics package, a licensed archive clip, a format bible, a contracted actor's availability. Each has build cost, marginal cost per use, wear/decay, maintenance, reuse scope (shot / episode / season / franchise) and a strike-or-dispose event. One mechanic covers series-animation asset amortisation, the puppet hospital, the standing set that still costs a crew to light, and the archive clip that costs $80-100 per second every time it is used.
+- CAPACITY POOLS AND RATES. People, machines, stages, booths, suites, render farms and vendor studios are pools with availability windows, cost per unit time, ramp/training time, skill level and a THROUGHPUT RATE per (role x task x difficulty) held as a distribution, not a constant. Every published number in every form is a row in one table: 4-5 finished seconds per feature animator per week; ~2 sec/day per animator at Aardman; ~3.75 ft/day (~14 s/week) for a classic Disney feature animator with assistants; 70 feet per 8 hours for TAG freelance timing (~47s of screen time a day); 1-3 cuts/day for a TV key animator; 2-5 script pages a day; 2-4 finished minutes a day for an unscripted editor; roughly one month of cutting per 10 finished minutes for a feature doc. Money buys capacity with latency; capacity buys progress at a rate; money never converts to progress directly.
+- REVIEW EVENTS WITH AUTHORITY, LATENCY AND ROUNDS. Someone with named authority inspects work and returns approve / note / reject. The parameters are latency (overnight for dailies, a week for a sweatbox, weeks for a broadcaster cut, zero in a gallery) and expected rounds. ROUNDS-PER-APPROVAL is the universal cost multiplier and the main lever an auteur pulls: a CG shot approved in 3 rounds versus 12 rounds is the whole difference between a series and a feature. Live is the degenerate setting rounds=0, latency=0; the note arrives after transmission and can only change the next show.
+- COMMITMENT POINTS AND AN INVALIDATION COST FUNCTION. Every form has moments after which a change destroys work already built on top: voice lock, fabrication lock, design lock forced by a 16-week puppet build, exposure of the negative, frame capture, picture lock, a signed release, transmission. The engine needs ONE mechanism — for each decision type, cost-of-change as a function of what depends on it — and the twelve forms differ only in WHERE on the calendar those points sit. This is the single most transferable mechanic in the game.
+- ACCESS WINDOWS OWNED BY SOMEONE ELSE. Actor dates, a stage, a studio audience night, a satellite path, a farm reservation, a suite booking, a verdict date, a migration, an election, a funder's decision meeting, a transmission slot. A window has an opening, a duration, a negotiability coefficient and a consequence for missing it. Live and documentary are the settings where negotiability is zero and the consequence is a scene that can never exist.
+- YIELD AND VARIANCE. An attempt does not deterministically produce its intended output. Takes fail, sims blow up, an armature strips and deletes 400 frames, the farm dies at 04:00 and 60 artists have nothing to review, an interviewee says nothing usable, a behaviour does not occur in 30 field days, a freelancer stops answering the phone. Every task has a success distribution and a failure mode that consumes time and may destroy prior work. Coverage (buying extra attempts) versus one-pass is a parameter, not a separate system.
+- THE MATERIAL INVENTORY LEDGER. Everything acquired but not yet placed on the timeline: rushes hours, camera-hours, exposed frames, drawn cuts in hand, rendered versions, logged beats, licensed archive, transcribed interviews. Every form has one. Its size relative to runtime IS the shooting ratio, and the ratio is therefore a derived statistic rather than a design constant — 1:1 for CG, ~50:1 for Wiseman, ~87:1 for Hoop Dreams, ~7,000:1 for a 90-source fixed rig cutting three 44' episodes a week. Same ledger, same arithmetic.
+- MONEY AS TRANCHES, BURN AND OBLIGATION. Cash arrives on a schedule that is itself uncertain (one greenlight; a per-episode tariff against an airdate; grants with 3-9 month decision latency; a committee's fixed fee), is consumed by committed capacity whether or not work happens, and carries obligations — deferrals, residuals, recoupment, escrowed prize money, and above all WHO EATS THE OVERRUN (financier, bond company, or the studio's own margin).
+- RIGHTS, CONSENT AND COMPLIANCE AS SEGMENT-LEVEL STATE. Music, archive, likeness, trademark, contributor consent, fairness and right of reply, broadcast standards, accessibility (captions, audio description). This is a maturity dimension, not a department: in fiction it is resolved before capture, in documentary months after lock, in live in real time and irrevocably. Same field, different schedule — and in some forms a lawyer can destroy finished work at week 19.
+- PEOPLE AS PERSISTENT ENTITIES. Crew, cast and contributors have skill, speed, reliability, morale, fatigue, relationships, reputation, cost and availability, and they persist between productions. Every form's characteristic catastrophe is a person: the key animator holding the only copy of a cut, the lead animator who leaves at month 20 of a 30-month show, the contributor who withdraws consent after lock, the anchor who is ill at 17:55.
+- A DELIVERY CONTRACT. A spec (masters, formats, versions, QC, captions, localisation, dub) and a date, against which a terminal gate fires — a festival premiere, an airdate, a release date, or a wall clock at 18:00:00. No form lacks one. Reception is scored after that gate and never inside the pipeline.
+- WHAT A 'KIND OF PRODUCTION' IS IN THE ENGINE: not a type and not a subclass, but a PRODUCTION DESCRIPTOR — a vector over the axes below, plus three data tables (state ladders, rate table, role/department table) plus an event deck. A thirteenth kind is a new row set, not new code. If any of the twelve requires a subsystem the others do not have, the spine is wrong and must be fixed before the twelfth is attempted.
+
+### Axes
+
+#### Axis
+
+AUTHORSHIP ORDER (where the structure of the thing is decided)
+
+#### Values
+
+- script-first
+- format-first (rules generate the events)
+- material-first (structure discovered in assembly)
+- event-first (the world's calendar is the script)
+- continuous-rewrite-until-air
+
+#### Changes
+
+Decides whether a breakdown can be derived from a document at all, and therefore whether the schedule is generated top-down from a plan or bottom-up from an inventory. script-first enables the entire tag/breakdown/day-out-of-days apparatus; material-first replaces it with an access calendar of events you do not control and moves the writing task node downstream of capture; format-first makes the CAST BOARD the authoring act. Stop-motion = script-first (and locked to the frame as an animatic before fabrication). Live news = event-first + continuous-rewrite.
+
+#### Axis
+
+IMAGE ORIGIN
+
+#### Values
+
+- photographed continuous
+- photographed one frame at a time
+- drawn
+- rendered
+- appropriated (archive/UGC)
+- live-switched multi-source
+- hybrid
+
+#### Changes
+
+Gates the existence of whole departments as data rather than code: weather, daylight, locations, permits, lenses, focus, grip and electric, production sound exist only under 'photographed continuous' (and partially under multi-source live). Under drawn/rendered, a 'location' is a build cost not a booking cost, and lighting is a file editable at 2am. Under appropriated, acquisition is a licensing task priced per second. Stop-motion = photographed one frame at a time (so: physical sets and DMX lighting persist for weeks, but no weather, no motion blur, no sync sound). Live news = live-switched multi-source.
+
+#### Axis
+
+IMAGE FIXATION POINT (when the picture becomes expensive or impossible to change)
+
+#### Values
+
+- at exposure
+- at frame capture
+- at render/comp approval
+- at picture lock only
+- at transmission
+
+#### Changes
+
+Defines what 'fix it in post' can mean. At-exposure bakes light and performance into the negative; at-render-approval means light, lens, DOF and time of day are numeric attributes set months after the acting; at-transmission means there is no post at all and every fixable thing must be fixed before the playhead arrives. Stop-motion = at frame capture (relighting mid-shot is a continuity break, not an option). Live news = at transmission.
+
+#### Axis
+
+PERFORMANCE COUPLING
+
+#### Values
+
+- performance simultaneous with image
+- performance precedes image by months (voice-first)
+- performance IS the unrepeatable event
+- performance simultaneous with delivery
+- no performer
+
+#### Changes
+
+Sets the direction of invalidation. Voice-first makes a dialogue change a mass invalidation of every shot animated to the old take rather than a pickup; unrepeatable-event makes a performance note unanswerable except by new access or restructuring; simultaneous-with-delivery makes rehearsal the only lever. Also decides whether ADR exists (it exists only under 'simultaneous with image'). Stop-motion = voice-first, with the animator as the second performer. Live news = simultaneous with delivery.
+
+#### Axis
+
+RETAKE COST / REPEATABILITY
+
+#### Values
+
+- free (re-render)
+- cheap-but-queued (redraw a cut, re-comp)
+- expensive but possible (recall cast and crew)
+- destructive (re-animate from frame one)
+- impossible
+
+#### Changes
+
+Determines whether coverage exists, whether the edit SELECTS or CONSTRUCTS, what insurance and bonding can even cover, and the shape of the risk model. 'Free' creates the discipline problem (nothing is ever finished); 'impossible' creates the ratio problem (buy attempts in parallel because you cannot buy them in series). Stop-motion = destructive (a reshoot is a rebuild of a struck set plus a week of re-animation). Live news = impossible.
+
+#### Axis
+
+DELIVERY LATENCY (capture to audience)
+
+#### Values
+
+- zero
+- hours
+- days
+- weeks
+- months
+- years
+
+#### Changes
+
+Sets how many pipeline stages can physically exist. At zero, post is not absent — it is compressed to zero and its tasks MIGRATE UPSTREAM into prep, rehearsal, pre-cut VTs and a prepared graphics package; compliance becomes a pre-clearance and a delay-line. At years, review latency, rounds and rework dominate everything. This single axis generates 'live television has no post' without a special case. Stop-motion = years. Live news = zero.
+
+#### Axis
+
+CADENCE / DELIVERABLE TOPOLOGY
+
+#### Values
+
+- single work
+- finite series delivered in waves
+- weekly cycle
+- daily strip
+- continuous live
+- occasional/irregular
+
+#### Changes
+
+Switches the scheduler between BURN-DOWN (optimise completion of one timeline) and FACTORY (optimise steady-state throughput across N timelines in different states). Series and strips also switch the progress display from 'percent of the film' to 'stage-ups per week across the wave'. Stop-motion feature = single work. Live news = continuous.
+
+#### Axis
+
+ATOM GRANULARITY (the denominator of every quota)
+
+#### Values
+
+- frame
+- drawing
+- cut/shot
+- camera setup
+- scene
+- page/eighth
+- rundown item
+- episode
+
+#### Changes
+
+Sets the resolution of the schedule and the native unit shown to the player. The engine still computes in seconds of runtime; this axis picks the conversion row and the size of the smallest thing that can be assigned, reviewed, failed and redone. Stop-motion = frame (assignments in seconds/week). Live news = rundown item (durations to the second, with TRT and outcue).
+
+#### Axis
+
+PARALLELISM TOPOLOGY
+
+#### Values
+
+- single unit serial
+- multi-unit
+- department-parallel (everyone works on everything at once)
+- vendor-distributed
+- simultaneous multi-source
+
+#### Changes
+
+Decides what a failure costs and what a bottleneck looks like. Single-unit: a failure loses a day. Department-parallel: a failure upstream idles hundreds (a dead farm = crew size x one day, gone). Vendor-distributed: adds shipping latency, quality variance and a retake cycle measured in weeks. Simultaneous multi-source: nothing is sequential, everything is a routing decision made in a second. Stop-motion = multi-unit (30-35 stages, each a first unit). Live news = simultaneous multi-source.
+
+#### Axis
+
+CAPACITY ELASTICITY (can money buy speed?)
+
+#### Values
+
+- instant (day players, more crew, night shoots)
+- slow (trained artists, months to hire and ramp)
+- fixed physical (stages, units, duplicate puppets, booths, suites)
+- lead-timed compute (on-prem ordered 6-12 months out; cloud burst at a multiple)
+- single irreplaceable person
+
+#### Changes
+
+This is the axis that decides whether catching up is possible at all. Live action buys a second unit on Friday; CG cannot buy animators who do not exist; stop-motion cannot open a unit without a stage, a built set and a duplicate puppet, so cash cannot outrun the shop; documentary cannot buy a faster editor because the edit is a search, not a throughput task. Stop-motion = fixed physical. Live news = fixed physical (studio, gallery, satellite path, crews on shift).
+
+#### Axis
+
+LABOUR CONTRACT MODEL
+
+#### Values
+
+- day-rate union crew
+- weekly staff/long contract
+- piece-rate per unit produced
+- flat project fee
+- freelance self-shooting
+- stipend contributor
+- vendor lump sum
+
+#### Changes
+
+Selects the entire cost-and-penalty subsystem: turnaround, meal penalties, golden time and French hours exist only under day-rate; quotas, attrition, ramp and holiday under weekly staff; per-drawing and per-cut accounting (~Y200-300 an inbetween, Y2,000-5,000 a first-key cut) under piece-rate, where the de facto contingency is unpaid overtime; welfare, aftercare and duty of care under stipend contributors. Stop-motion = weekly staff. Live news = salaried shift.
+
+#### Axis
+
+ASSET REUSE ECONOMY
+
+#### Values
+
+- single-use
+- reusable free (digital)
+- reusable with maintenance (puppets, sets, rigs)
+- reusable with per-use cost (standing set still needs a crew)
+- licensed per use (archive, music)
+
+#### Changes
+
+Generates season-2 economics and makes 'a script that demands a new set' a budget event. Under reusable-free, the launch asset library is a capital cost amortised over 13-52 episodes and bank cuts are free forever; under reusable-with-maintenance, the puppet hospital and set strike become scheduling decisions (striking a set is the decision to make its reshoots cost a rebuild); under licensed-per-use, every second on screen carries a recurring price. Stop-motion = reusable with maintenance. Live news = reusable free (graphics package) plus licensed per use (agency feed).
+
+#### Axis
+
+CLOCK OWNERSHIP (what the schedule is built out of)
+
+#### Values
+
+- internal plan
+- talent availability
+- slot/airdate
+- external world events
+- seasonal or biological window
+- funding arrival
+- audience presence
+- physical lead time (fabrication, farm)
+
+#### Changes
+
+Determines what a slip costs and whether it is even a slip. Under external-world-events and seasonal windows, missing a date deletes a scene permanently and no money repairs it; under slot/airdate the date is immovable and the content flexes instead; under funding-arrival the schedule stops until the tranche lands and a producer carries payroll personally. Stop-motion = internal plan bounded by fabrication lead time. Live news = external events plus a slot to the second.
+
+#### Axis
+
+APPROVAL TOPOLOGY
+
+#### Values
+
+- single author
+- director + studio
+- showrunner + network notes
+- commissioner/compliance chain
+- production committee
+- real-time producer
+- none until transmission
+
+#### Changes
+
+Sets rounds distribution, note latency, and who is allowed to force a regression (send finished work back down the ladder). It also sets whose taste the quality model uses. Long chains multiply rounds; committees add veto latency; a single author removes rounds and adds the risk that nobody stops a bad structure. Stop-motion = director + studio, with approval landing days-to-weeks after shooting so a whole week of animation can be wrong. Live news = real-time producer (rounds 0, latency 0).
+
+#### Axis
+
+LEGAL EXPOSURE SURFACE
+
+#### Values
+
+- pre-cleared fiction
+- factual: defamation, fairness, right of reply
+- archive-licensing-heavy
+- contributor consent and welfare
+- live compliance (no undo)
+- minimal
+
+#### Changes
+
+Moves the clearance tasks relative to lock and decides whether finished work can be destroyed late. Fiction clears in prep; factual vets the CUT, so a lawyer watching a 94-minute assembly generates recuts weeks before delivery; archive-heavy makes licensing the largest overrun risk and orders hi-res masters only after lock; live compliance means the only control is pre-brief, a delay line and an apology. Stop-motion = pre-cleared. Live news = live compliance.
+
+#### Axis
+
+FINANCE ARRIVAL AND RISK BEARER
+
+#### Values
+
+- single greenlight tranche
+- per-episode tariff against a slot
+- accreting grants and pre-sales over years
+- fixed production fee, producer eats the overrun
+- self-funded then sold
+- ad/licence-fee steady state
+
+#### Changes
+
+Decides whether the schedule is gated by availability or by money landing, whether a contingency and a completion bond exist, and who pays for a mistake. Accreting finance makes the budget a moving forecast re-cut at every tranche and inverts the finance-then-make order (the film is finished on grants and sold afterwards, so festival strategy is a production department). Stop-motion = single greenlight with a bond. Live news = steady-state operating budget.
+
+#### Axis
+
+PHYSICAL WORLD DEPENDENCE
+
+#### Values
+
+- real world found
+- real world dressed
+- built at 1:1 on stage
+- fabricated in miniature
+- synthetic
+- none (archive only)
+
+#### Changes
+
+Gates scouting, permits, location fees, basecamp, construction, strike, transport and weather cover, and sets what a 'place' costs: a negotiation with a landowner, a construction order, a model-shop booking, or an artist-week. It also sets the physical failure deck — nothing breaks in a synthetic world, and surface tension and flame do not scale down in a miniature one. Stop-motion = fabricated in miniature. Live news = real world found (plus one built studio set reused daily for years).
+
+### Progress model
+
+"How far along is this" is never stored. It is derived, every time, from four things the engine already holds: the TIMELINE, the MATURITY VECTORS on its segments, the INVENTORY LEDGER, and the RATE TABLE. There is no progress field, no percentage counter, and no per-form progress code.
+
+THE CORE MEASURE IS RUNTIME-WEIGHTED MATURITY. For a chosen dimension d and rung r: progress(d,r) = (seconds of target runtime whose occupying segment is at or beyond r) / (target runtime). This is exactly how a CG feature reads its story reel ("percent of runtime at or beyond LIT") and it generalises without modification to everything else. Overall completion is the integral of the WEAKEST dimension: complete = (1/T) * integral over t of min_d(level_d(t)/terminal_d). A documentary scene that is cut, graded and unlicensed is 0% complete at that second, which is the truth.
+
+NEVER A SINGLE NUMBER — ALWAYS A CURVE. The display object is a stacked profile of the runtime at each rung (the reel bar, the cut table's columns, the stripboard's shot/unshot, the rundown's confirmed/unconfirmed). A production's character is visible in the shape of that profile: CG is 100% covered at boards from month three with a slow climb up ten rungs over four years; live action jumps two rungs across 30-50 days and then climbs the rest in post; documentary has a low, speculative, oscillating profile for years; live has a profile that must be flat at terminal ahead of a moving playhead.
+
+NATIVE UNITS ARE A CONVERSION TABLE, NOT A MODEL. One row per atom: page = ~60s (convention); 35mm foot = 16 frames = 0.667s (so TAG's retired 70ft/8h timing basis is ~47s of screen time a day); anime cut = ~4.4s (22 min / ~300 cuts); CG or stop-motion shot = 3-6s; doc sequence = 2-4 min; rundown item = its slugged TRT. Quotas are authored in native units and multiplied into seconds by the engine. The player always sees their own vocabulary — pages to a 1st AD, seconds-per-week to an animation supervisor, cuts-up to a seishin, cut-minutes to a story producer, back-time to a gallery — and it is one computation underneath.
+
+TWO LEDGERS, AND THE RATIO FALLS OUT. TIMELINE = runtime claimed at a maturity. INVENTORY = material acquired but not yet placed (rushes hours, camera-hours, exposed frames, cuts in hand, logged beats, licensed archive). Ratio = inventory / runtime, a DERIVED statistic: ~1:1 for CG and stop-motion, ~50:1 Wiseman, ~87:1 Hoop Dreams, ~7,000:1 for a 90-source rig cutting three 44' episodes a week (90 x 24 x 7 = 15,120 camera-hours against 2.2 hours of cut). The forms where inventory dwarfs the timeline are exactly the forms where the bottleneck is the CONVERSION rate (editor-weeks), not the acquisition rate — which reproduces "documentaries are made in the edit" with no documentary-specific code anywhere.
+
+THE DENOMINATOR MOVES, AND THAT IS NOT A BUG. Hold three numbers, not one: T_CONTRACT (the slot you owe), T_CURRENT (sum of segment durations in the current cut — a 120-minute assembly on its way to 94), T_COVERED (runtime for which material exists at or beyond some rung). Percent complete can therefore go DOWN while work goes up, which is precisely what a structural pass in a cutting room feels like, and the engine must display that honestly rather than monotonically.
+
+REWORK IS FIRST CLASS AND IS THE REAL DIFFERENTIATOR. Every segment carries a ROUNDS counter and an open-notes list; regression edges send it back down the ladder. The cost of a regression is the form's signature: free and infinite in CG (which is why rounds-per-approval, not shots-per-week, is the honest measure of a director's cost), a week of destroyed animation in stop-motion, a redrawn cut in 2D, a recalled cast and crew in live action, impossible in documentary and live (where a note can only be answered by new access, by restructure, or by the next edition). Net progress is always gross stage-ups minus regressions.
+
+FORECASTING, NOT COUNTING. Remaining time = remaining atoms / (capacity x rate), computed per department against the rate distribution and Monte-Carlo'd; the delivery forecast is the MAX over bottlenecks, never the sum. In the last third of any production the honest metric is not cumulative percent but the DERIVATIVE: finals per week, stage-ups per week, cut-minutes locked per week, retakes burning down, plotted against days remaining. That one burn-down chart is legible in an animation producer's office, an unscripted post supervisor's grid and a doc editor's wall.
+
+THE LIVE CASE PROVES THE MODEL RATHER THAN BREAKING IT. Live sets delivery latency to zero and introduces a PLAYHEAD. Before air, progress = READINESS: percent of rundown runtime with a confirmed source, confirmed script, confirmed duration, confirmed graphics and legal sign-off — the same runtime-weighted maturity measure against a two-rung ladder. During air, the only metrics are elapsed against back-time and DRIFT IN SECONDS, and the terminal gate fires continuously as the playhead passes each second: a segment must be at terminal AT the moment it plays, not before it. Live counts nothing only if you were counting pages; measured as runtime-weighted maturity against a moving gate, it counts the same thing everything else does.
+
+AND THE SERIES CASE. A season is N timelines at different maturities plus a shared asset library. The season-level metric is throughput (episodes past each gate per week) and the leading risk indicator is WIP: episodes in flight above the number of suites, units or vendor slots available to finish them.
+
+### Build first
+
+ONE SEASON OF A FORMAT-LED UNSCRIPTED SERIES DELIVERED AGAINST A FIXED TRANSMISSION DATE — 8 x 60', cast of 12-16 contributors, one built arena/house set with a fixed rig plus two roving crews, shot in blocks, story team in the field, post running parallel from shoot day one, compliance and consent gating lock, and an airdate that cannot move. Descriptor vector: authorship = format-first; image = photographed continuous + live-switched multi-source; fixation = at picture lock; performance = unrepeatable event; retake = impossible (pickup interviews only); latency = weeks; cadence = finite series in waves; atom = beat/segment; parallelism = multi-source plus department-parallel post; elasticity = fixed physical (suites, rig, sequester); labour = day-rate crew + staff story team + stipend contributors; reuse = format bible, graphics package and standing rig amortised across episodes; clock = airdate; approval = commissioner/compliance chain; legal = consent + welfare + fairness; finance = per-episode tariff; world = built at 1:1. Build order after it: (2) live-action feature as a PURE PORT, (3) CG or 2D series with vendors, (4) live news, (5) stop-motion, (6) documentary.
+
+### Why that one
+
+IT BREAKS EVERY ASSUMPTION A LIVE-ACTION-SHAPED ENGINE SILENTLY BAKES IN, AT ONCE. No script, so no page count, no eighths, no lined script, no stripboard, no day-out-of-days can be hardcoded anywhere. No takes, so coverage, retakes and "go again" cannot be assumed by the review system. No phase boundary between production and post, so the scheduler cannot be written as prep-shoot-post. No director's cut, so approval must be a configurable chain from the first line of code. If the engine can run this, none of those five assumptions exist in the codebase, and they can never be reintroduced. Build live action first and every spine primitive gets satisfied by a live-action-shaped special case — the day, the page, the strip — and you find out the spine was fake at form four, with nine forms of content already authored on top of it.
+
+IT IS THE ONLY FORM WHERE ALL THREE PROGRESS REGIMES MUST BE RECONCILED IN ONE RUN. Contributor-days banking beats (inventory side, astronomical ratio, speculative coverage), editor-weeks converting inventory into timeline at 2-4 cut-minutes a day (rate side, and the true bottleneck), and a locked runtime against an immovable airdate (terminal gate). The two-sided ledger, the rate table and the moving denominator all have to be real on day one, which is exactly the architectural claim that needs proving. In CG the inventory ledger would be a stub; in documentary the rate table would be a stub; here neither can be.
+
+IT FORCES THE CYCLIC GRAPH IMMEDIATELY. The defining edge of unscripted is backwards: a story note from the edit becomes tomorrow morning's field assignment ("nobody says why she left — get it tonight"). A DAG-only executor fails on the first episode cycle. Discovering that in build one is cheap; discovering it in build nine is a rewrite.
+
+IT FORCES THE MATURITY VECTOR TO BE A VECTOR. A finished, funny, perfectly cut act can be destroyed at week 19 by a withdrawn consent, a duty-of-care escalation, a fairness obligation or a compliance note. Nothing else makes "done = min across dimensions" unavoidable so early; in fiction you could fake it as a pre-production checkbox for a long time.
+
+IT FORCES THE FACTORY SCHEDULER AND ASSET AMORTISATION WITHOUT A DEEP ASSET FOREST. Eight episodes sit in different stages simultaneously against a weekly transmission; the format bible, graphics package, arena build, fixed rig and returning cast are assets amortised across them. You get WIP limits, suite contention and season-two economics without yet needing the model-texture-lookdev-rig dependency tree, which is additive later rather than foundational.
+
+IT IS COMPLETABLE AND VERIFIABLE. There are no craft departments to model in depth, no fabrication, no render farm, no stunts, no VFX bid. A working series producer or post supervisor can play one episode cycle end to end in an afternoon and say whether it is true — which is the only test that matters and one nobody can perform on a half-built four-year CG feature.
+
+IT PAYS OUT IMMEDIATELY ACROSS NEIGHBOURS. Documentary and true crime become re-parameterisations of the thing you already built — set authorship to material-first, approval to single-author, finance to accreting tranches, legal to archive-licensing-heavy, cadence to single work — with the archival-clearance task type as the only genuinely new content. That is a two-for-one on the hardest epistemic form in the list.
+
+THE PROOF STEP IS BUILD TWO, NOT BUILD ONE. Port the live-action feature next and require it to add ZERO engine concepts: only new rows (script-first authorship, page/eighth atom, a day-shaped access window with turnaround and meal penalties as labour-contract data, dressed-world departments, a weather deck). If that port needs a new subsystem, the spine is wrong and you have spent two builds finding out instead of nine. Then CG/2D series proves capacity types (farm, vendor latency, quota-driven department-parallel work); live news proves latency=0 and the playhead; stop-motion proves fixed physical capacity and destructive retakes; documentary closes the set.
+
+ACCEPTANCE TEST FOR BUILD ONE, stated up front so it cannot be fudged: the engine must produce a four-figure shooting ratio, an editor-week bottleneck, a legal recut at week 19 and a make-air scramble, with the strings "ratio", "editor", "episode" and "compliance" appearing only in data files.

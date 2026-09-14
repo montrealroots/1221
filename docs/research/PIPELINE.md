@@ -6,7 +6,7 @@ This is the map SLATE builds from. It is deliberately written as processes rathe
 
 ## What is in here
 
-10 domains, 613 named processes, 257 option spaces. Every process says who does it, what it is, **what gets decided** — which is the part that becomes a choice in SLATE — what the engine behind it would have to hold, how long it takes, and how television differs from film.
+19 domains, 1178 named processes, 516 option spaces. Every process says who does it, what it is, **what gets decided** — which is the part that becomes a choice in SLATE — what the engine behind it would have to hold, how long it takes, and how television differs from film.
 
 An **option space** is a list of everything a given choice can be. They are the answer to wanting every option at hand: not a dropdown of names, but the real set, each entry of which has to carry a consequence before it earns its place.
 
@@ -22,6 +22,15 @@ An **option space** is a list of everything a given choice can be. They are the 
 8. **Every crew position, every department** — 58 processes, 32 option spaces
 9. **Production design, art and construction** — 63 processes, 24 option spaces
 10. **Costume, hair, makeup and prosthetics (film and television)** — 67 processes, 30 option spaces
+11. **Locations, permits and logistics** — 62 processes, 27 option spaces
+12. **Camera, lenses and format (acquisition): bodies, gauges, sensors, optics, filtration, movement systems, multicam vs single camera, and the IMAX commitment** — 58 processes, 37 option spaces
+13. **Lighting and grip** — 59 processes, 35 option spaces
+14. **Sound on set (production sound: department, microphones, booming, RF, recording, sync, playback, cueing, reports, and take failure)** — 62 processes, 26 option spaces
+15. **The shooting day itself: the atomic loop from call sheet to dailies, film and television** — 64 processes, 21 option spaces
+16. **Stunts, special effects, creatures and visual effects** — 67 processes, 36 option spaces
+17. **Post: editorial and picture finishing (dailies through deliverables), film and television** — 64 processes, 31 option spaces
+18. **Post: sound and music** — 60 processes, 24 option spaces
+19. **Marketing, distribution, awards and strategy (film and television)** — 69 processes, 22 option spaces
 
 ---
 
@@ -7537,3 +7546,7281 @@ Sweat flushed out and the suit dried inside, seams re-glued, foam tears patched,
 - Intimacy garments run on consent, not on inventory. Consent is per scene and per garment, it is revocable mid-shoot, and revocation forces a rewrite, a double or a VFX solution with a real schedule cost. Treat it as a gate on shootability.
 - The department the player will most want to skip is the test day, and skipping it is exactly the decision that should hurt: untested looks fail in dailies, and a look rejected in dailies costs a redesign mid-shoot or a reshoot. Make the saved half-day visible against the cost of the failure.
 - Mould libraries are assets with sequel value. FATHER's lot holding the moulds, the patterns and the archived lifecasts means a sequel re-runs pieces instead of re-sculpting them. Selling or scrapping them is a cheap decision now that is expensive three years later, and the engine should remember.
+
+---
+
+## 11. Locations, permits and logistics
+
+*film and television*
+
+### Location Breakdown (locations pass on the script breakdown)
+
+Every scene is tagged INT/EXT, DAY/NIGHT, page eighths, scripted place name and same-place links, then sorted into stage-buildable, must-be-practical, and could-be-either.
+
+- **Who.** 1st AD with the Location Manager and Script Supervisor; signed off by the UPM/Line Producer. The mother sets the ceiling it must respect.
+- **Decides.** Per scene: stage build, standing set, practical as-is, practical dressed, backlot, LED volume, or rewrite. Which scripted places collapse to one real location. Which scenes force a genuine exterior.
+- **Engine.** Scene rows holding int_ext, day_night, eighths, cast_ids, place_id, and sfx/vehicle/animal/minor/stunt flags. A computed buildability score per scene from required ceiling height, wall moves, natural-light dependence and what is visible through windows.
+- **Takes.** 2-5 days on a feature; 4-8 hours per episode in TV.
+- **Television.** TV breaks down against an existing standing-set inventory first; only what will not swing becomes a location scene. Cross-boarding two episodes means a location must be held for two blocks or shot twice.
+
+### Locations Brief and Look Book
+
+A written and visual spec per scripted place: period, architecture, light direction, geography, sightlines, the shot in the director's head, and the non-negotiables.
+
+- **Who.** Director and Production Designer, written up by the Location Manager; budget ceiling set by the producer (the mother).
+- **Decides.** What counts as a match. Whether 'a Victorian terrace' means any terrace or that terrace. How much of the look can be dressed in versus found.
+- **Engine.** Per place a weighted tag vector (period, style, material, scale, light aspect, sightline, altitude, vegetation, footfall) and a sign-off threshold. Locations carry the same vector, so match is computed rather than asserted.
+- **Takes.** 1-2 weeks, concurrent with early prep.
+- **Television.** A series has a locations bible instead: written once and defended for years as directors rotate and showrunners change.
+
+### Library and Film Commission Search
+
+Search the production's own photo files, commission databases and commercial libraries for candidates matching the brief, before anyone drives anywhere.
+
+- **Who.** Location Scout and Location Manager, with film commission location coordinators (California Film Commission, Film in Iceland, Film London, Georgia Film Office).
+- **Decides.** The long list, which regions to physically scout, and whether to send a request package to a commission and let them return options.
+- **Engine.** A gazetteer of location records: coordinates, tag vector, owner chain, historic fees, historic permit outcomes, last-shot date and shot-out fatigue. Queries return a ranked candidate set, not a flat list.
+- **Takes.** 3-10 days.
+- **Television.** TV leans much harder on the library, and 'recently shot by another series' is a live disqualifier in Atlanta, Vancouver or Belfast.
+
+### Preliminary Scout
+
+Alone in a car with a stills camera, compass and tape. Shoots coverage of each candidate, notes access, sun, noise, power, parking and whether the owner will even take a call.
+
+- **Who.** Location Scout (Teamsters Local 399 in Los Angeles, IATSE in some states, LMGI members across markets).
+- **Decides.** Which candidates survive to the director's scout, and how many options per scripted place to carry (three is the norm).
+- **Engine.** Per visit: mileage, hours, fuel, and a returned photo set with time and heading. Scouts carry skill, regional knowledge and an owner-relationship score that shifts access probability and the first-ask fee.
+- **Takes.** 1 day per 3-6 sites within an hour's drive; a week per region on a travel scout.
+- **Television.** TV scouts the next episode while the current one shoots. It is a permanent parallel workload, not a phase that ends.
+
+### Scout Package Build
+
+Photos assembled per site: labelled coverage, panoramas, compass headings, satellite and street maps, dimensions, power and parking notes, owner contact and asking fee.
+
+- **Who.** Location Scout and Location Assistant.
+- **Decides.** How the option is presented. Which frame leads, what is shown and what is left out. A weak site can be sold and a strong one buried.
+- **Engine.** A package object with a completeness score. Missing fields (no dimensions, no power note, no owner contact) raise the probability the site fails later at tech scout and must be replaced at cost.
+- **Takes.** 2-4 hours per site.
+- **Television.** Same craft, but delivered to a director with a week of prep who will not travel to see three options.
+
+### Sun Path and Shadow Study
+
+For the intended shoot date, plot sunrise, sunset, magic hour, azimuth and elevation across the day, and where the building's shadow falls on the actor's eyeline.
+
+- **Who.** Location Manager with the DP, using Helios, Sun Seeker, Artemis or an ephemeris.
+- **Decides.** Which direction the camera can face at which hour, whether the scene is a morning or afternoon scene, and whether the location works in June but not October.
+- **Engine.** Real solar position from latitude, longitude and date, with terrain and building-height masks producing an hourly usable window per camera azimuth. Magic hour length must vary by latitude: minutes near the equator, hours in Iceland.
+- **Takes.** 1-2 hours per location, redone every time the schedule moves.
+- **Television.** A series returns to the same exterior across a season, so the study must be rerun per block. A location that worked in the pilot's July is unusable in the series' November.
+
+### Sound Survey
+
+Measure the ambient floor and identify intermittents: flight paths, rail, school bells, HVAC, generators, church bells, surf, wind, road noise, construction next door.
+
+- **Who.** Production Sound Mixer on the tech scout; Location Manager between scouts.
+- **Decides.** Whether the scene can be shot sync or must be looped, whether to pay a neighbouring business to shut a plant down, and whether to move the day to nights.
+- **Engine.** Per location an ambient dB floor plus scheduled and stochastic noise events with real timetables (flight frequency, bell times, construction hours). Takes are spoiled at a probability driven by these, and ADR cost accrues downstream in post.
+- **Takes.** 1-3 hours per location; a full day for a known-bad site.
+- **Television.** A series that loops every exterior builds a standing ADR line the post supervisor will fight about all season, and the actor is called back for it.
+
+### Access, Egress and Truck Route Survey
+
+Drive the route the trucks will take. Check turning circles, overhead clearance, weight-limited bridges, gate widths, gradient, surface bearing, reversing room, and where a 48-foot trailer physically cannot go.
+
+- **Who.** Transportation Coordinator (Teamsters) with the Location Manager and Key Grip.
+- **Decides.** Truck sizes ordered, whether to transload into smaller vehicles, where trucks park versus where equipment lands, and whether the location is viable at all.
+- **Engine.** A route graph with per-segment clearance height, weight limit, width, gradient and turning radius, plus vehicle records carrying real dimensions and weights. A vehicle that does not fit is swapped or the gear is hand-carried, and the crew hours are real.
+- **Takes.** Half a day per location; longer on remote routes.
+- **Television.** A series repeats the same route weekly, so a single low bridge becomes a permanent tax on every move for three years.
+
+### Power Survey and Tie-In Assessment
+
+Establish available service, panel capacity, phase, breaker sizes and where a tie-in is legal; otherwise size the generator and the cable run from wherever it can park.
+
+- **Who.** Gaffer and Best Boy Electric with the Location Manager; a licensed electrician for any tie-in.
+- **Decides.** House tie-in, plug-in distro, or towplant generator. Generator size and fuel type. Cable run length, and whether it crosses a public footway needing ramps and a separate permit.
+- **Engine.** Location power record: service amps, voltage, phase, panel position. The lighting order draws amperage; if demand exceeds supply a generator is forced, bringing its own noise dB, fuel burn per hour, footprint and permit line.
+- **Takes.** 1-2 hours on the tech scout; a separate electrician visit for any tie-in.
+- **Television.** Standing sets on stage are pre-wired and this cost vanishes. Every location week puts it back.
+
+### Structural and Rigging Survey
+
+Establish floor loading, roof loading, beam positions and rated rigging points, whether a condor can be sited, and whether a wall can come out or a ceiling piece can fly.
+
+- **Who.** Key Grip, Rigging Gaffer, and where required a structural engineer.
+- **Decides.** Whether lights fly or stand. Whether a wall is removed. Whether a crane, condor or scissor lift can be used and where it sits. Whether an engineer's letter is needed for the permit.
+- **Engine.** Per location: floor load in kg/m2, a rigging point list with rated capacities, ceiling height and clear span. Grip and lighting orders carry weight and footprint; an over-capacity rig is refused or needs an engineered solution with cost and lead time.
+- **Takes.** 2-4 hours on site; a week for an engineer's report.
+- **Television.** Rarely needed on a stage-based series; a constant cost on a location-heavy limited series or feature.
+
+### Comms and Data Coverage Survey
+
+Check cell coverage by carrier, radio repeater need, satellite fallback, and whether dailies and DIT offloads can be uploaded from site or must go by courier.
+
+- **Who.** Location Manager with Video Assist, the DIT and the 2nd AD.
+- **Decides.** Radio channel plan and whether a repeater is hired. Whether a satellite terminal or cell booster is needed. Whether dailies travel on a drive in a car.
+- **Engine.** Per location a coverage value per carrier and an upload bandwidth. Below threshold the call sheet's comms plan changes, courier cost and dailies latency rise, and emergency response time in the safety model lengthens.
+- **Takes.** 1 hour on the tech scout.
+- **Television.** A series shooting remote hires a repeater and a satellite link for the whole season rather than paying per day.
+
+### Director's Scout (creative scout)
+
+The decision-makers walk the surviving options in order, at roughly the intended shoot time of day, and the director picks.
+
+- **Who.** Director, DP, Production Designer, Producer, Location Manager and 1st AD. The player-as-actor is not normally on it; the mother often is.
+- **Decides.** The location. Sometimes one nobody scouted, spotted from the van on the way.
+- **Engine.** Director preference vector matched against each option's tag vector, modified by ego, fatigue, weather on the scout day and the order in which sites were shown. Sequence matters: the last site seen carries a recency bonus.
+- **Takes.** 1-3 days per region.
+- **Television.** Episodic directors get a compressed scout inside a 7-8 day prep and frequently inherit locations the showrunner and producing director already chose.
+
+### Tech Scout / Recce
+
+Every department head walks the chosen location and agrees, room by room and shot by shot, where trucks park, where camera goes, where lights rig, where crew eat and what is unsafe.
+
+- **Who.** 1st AD leads. DP, Gaffer, Key Grip, Sound Mixer, Production Designer, SFX Supervisor, Stunt Coordinator, Transportation Coordinator, Location Manager, Medic, and in the UK a Production Safety Adviser.
+- **Decides.** Equipment order, crew count, truck count, prep days, work order, the contents of the risk assessment, and whether the location survives contact with reality.
+- **Engine.** Attendance is a real cost (a day of HOD salaries). Outputs are hard objects: equipment list, vehicle list, prep-day count, hazard list. Departments that skip the scout produce wrong orders on the day at a modelled failure rate.
+- **Takes.** 1-2 days per shooting block on a feature; a half-day per episode in TV.
+- **Television.** TV runs a tech scout per episode with a rotating director and a constant crew. The crew's accumulated knowledge substitutes for scout time, which is why the scout is short.
+
+### Location Scoring and Recommendation
+
+Each surviving option is costed all-in: fee, permit, police, fire, parking, move, overtime exposure and weather risk, then compared on total day cost rather than on the fee.
+
+- **Who.** Location Manager and UPM/Line Producer; the mother approves anything over her delegated limit.
+- **Decides.** Which option goes forward and the case made for it. A cheaper fee with a worse truck route is the more expensive day.
+- **Engine.** All-in day cost per option = fee + permit + services + parking + (move hours x crew rate) + risk-weighted overtime + weather contingency. The engine must let a high-fee location win on total cost, or the comparison is decoration.
+- **Takes.** 1-2 days.
+- **Television.** TV amortises across episodes: a location used eight times justifies a build-out and a season licence a feature could never carry.
+
+### Owner Approach and Consent Chain Identification
+
+Identify who can actually say yes — freeholder, leaseholder, managing agent, HOA, council, diocese, trust, estate — and get a yes in principle before anything else moves.
+
+- **Who.** Location Manager or Scout; on sensitive properties the Producer makes the call personally.
+- **Decides.** Who to ask, in what order, what to tell them about the content, and whether to disclose the title and the cast.
+- **Engine.** Ownership chains with multiple consent-holders, each with a disposition, price sensitivity and content tolerance. Disclosing a controversial script raises refusal probability; concealing it raises the chance of a mid-shoot ejection.
+- **Takes.** Days to weeks; months for institutions, rail, ports and the military.
+- **Television.** A series must disclose it will be back. A one-day ask and a three-year ask are different conversations at different prices.
+
+### Location Fee Negotiation
+
+Agree the rate card: prep days, shoot days, strike days, hold days, hourly overage, and what the owner is compensated for beyond the fee (lost trade, staff, utilities, relocation).
+
+- **Who.** Location Manager negotiates; UPM/Line Producer authorises; the mother sets the walk-away number.
+- **Decides.** The numbers and the day types. A low shoot fee with paid prep and strike can beat a high flat fee, or lose to it.
+- **Engine.** A negotiation with genuine reservation prices on both sides, informed by comparable fees in the gazetteer, the owner's need, the production's visible budget tier, and how many real alternatives the production has left.
+- **Takes.** Days to weeks.
+- **Television.** Series negotiates an episodic rate plus a season minimum. Per-day price falls, commitment is real, and cancellation terms matter far more.
+
+### Location Agreement Drafting and Signature
+
+A signed agreement covering access dates, fee, indemnity, insurance limits and named insureds, restoration standard, permitted alterations, right to depict, exclusivity, cancellation and holdover.
+
+- **Who.** Production Legal or studio business affairs; Location Manager collects signatures; the mother's company is the contracting party.
+- **Decides.** Which clauses to concede. Owner approval of the depiction is the one that can kill a finished picture.
+- **Engine.** The agreement is a live object with enforceable terms: crew headcount cap, truck cap, noise curfew, no-drone clause, no-pyro clause, hours window. On the day, breaching a term fires a real consequence — ejection, penalty or claim.
+- **Takes.** 3-10 days; far longer with institutions.
+- **Television.** Series agreements carry option periods, per-episode rates, assignment to the network, and a term that outlives the showrunner who signed it.
+
+### Option, Hold and First Refusal
+
+Pay to hold a location while the schedule is still moving, or accept second position behind another production already holding it.
+
+- **Who.** Location Manager, with UPM sign-off on the option fee.
+- **Decides.** What to pay to keep a location alive, and whether to accept second position and carry the risk of being bumped.
+- **Engine.** Option fee, option window, and a probability the first-position production confirms. Being bumped triggers a forced replacement with real cost and a schedule cascade into every day around it.
+- **Takes.** Immediate to agree; the option runs days to weeks.
+- **Television.** A series routinely holds recurring exteriors across hiatus purely so a competitor cannot take them.
+
+### Neighbour and Merchant Relations
+
+Door-knock the affected radius, explain the shoot, negotiate quiet hours, pay inconvenience money, compensate lost trade, and buy the cooperation of whoever can ruin a take with a leaf blower.
+
+- **Who.** Assistant Location Manager, with a dedicated Community Liaison on large urban shoots.
+- **Decides.** The radius. Who gets paid and how much. Whether to buy out a business for the day or work around it.
+- **Engine.** Neighbours as agents with tolerance, grievance and leverage. Unpaid grievance converts into noise, complaints, permit revocation and future refusal at that address. Payments are a budget line with diminishing returns.
+- **Takes.** 2-5 days ahead of the shoot; continuous on the day.
+- **Television.** A series burns goodwill cumulatively. The eighth visit to a street is refused where the first was welcomed; tolerance must decay per visit.
+
+### Insurance Certificates and Additional Insureds
+
+Issue certificates of insurance naming the owner, the municipality, the film office and any other required party as additional insured, at the limits the permit and the agreement demand.
+
+- **Who.** Production Coordinator with the production's broker; UPM approves limits.
+- **Decides.** Limits carried, whether to buy higher limits for one location, and which riders to add (aircraft, watercraft, animals, pyro, cast insurance for a hazardous day).
+- **Engine.** Each location and permit carries required limits and named parties. A missing or misnamed COI blocks the permit as a hard gate, not a warning. City of Los Angeles requires a $1,000,000 minimum for motion filming with the City and FilmLA named.
+- **Takes.** 1-3 days per certificate.
+- **Television.** A series carries a blanket policy and issues certificates on demand; a one-off feature buys per-production cover and re-buys riders.
+
+### Condition Report and Damage Deposit
+
+Photograph and video every surface before anything is touched, log existing damage, agree the deposit, and get it countersigned by the owner.
+
+- **Who.** Assistant Location Manager with the owner present; Art Department documents the dressing state.
+- **Decides.** How thorough to be, and whether to pay a cash deposit or provide a letter of credit.
+- **Engine.** A before-state per surface. At wrap an after-state is computed from what actually happened — dolly track, paint, rain, rigging load, vehicle weight on a lawn — and the difference drives deposit release, part-withholding or a claim.
+- **Takes.** 2-4 hours.
+- **Television.** Repeated per visit on a recurring location, and cumulative wear must accrue rather than reset.
+
+### Clearance of What the Camera Sees
+
+Identify visible trademarks, artwork, murals, distinctive architecture, house numbers and licence plates, then obtain releases or dress them out.
+
+- **Who.** Production Legal and the Clearance Coordinator, flagged by the Location Manager and Production Designer.
+- **Decides.** Remove, paint out in post, licence, or shoot around.
+- **Engine.** Location records list visible IP objects with clearance status and licence cost. Uncleared items in frame create a real post cost or a legal exposure that surfaces at the E&O stage — a delivery gate, not a note.
+- **Takes.** Ongoing through prep; days to weeks per item to licence.
+- **Television.** A series clears once and re-uses. A mural repainted between seasons invalidates the clearance and forces a paint-out.
+
+### Permit Application
+
+Submit locations, dates, hours, activities, vehicle counts, crew size, insurance and special-activity riders, then answer the conditions the body attaches.
+
+- **Who.** Location Manager and Permit Coordinator, filing with the permitting body (FilmLA for Greater Los Angeles, NYC MOME, a UK local authority film office, the municipality in Iceland).
+- **Decides.** What to declare. Declaring pyro, drones, gunfire or a closure adds fee, lead time and scrutiny; under-declaring risks revocation on the day with the trucks already parked.
+- **Engine.** A jurisdiction table: base fee, per-activity riders, minimum lead time, permitted hours, insurance minimums, required personnel and revocation rules. City of Los Angeles: $931 application covering up to 5 locations over 7 consecutive days; riders $148.75 in hours, $208 after hours.
+- **Takes.** City of LA: 3 business days minimum with a 10 a.m. filing deadline. NYC: 2-5 days. UK: 5-15 working days. Iceland protected areas: 15 working days.
+- **Television.** A series often runs a standing or blanket permit for recurring locations and files riders per episode; a feature files fresh every time.
+
+### Community Notification and Survey
+
+Notify every address in the required radius, and where hours fall outside the norm or impact is high, run a signature survey and clear a threshold before the permit is granted.
+
+- **Who.** The film office or its contractor (FilmLA runs LA notification); Location Manager runs the survey where the production must.
+- **Decides.** The radius, whether to survey early, and whether to sweeten the ask with payment or restricted hours.
+- **Engine.** An address list within a radius, each household with a disposition. Signature thresholds gate the permit. City of LA notification starts at $232 per location and rises with radius; hours outside 7 a.m.-10 p.m. weekdays or 9 a.m.-10 p.m. weekends require survey approval.
+- **Takes.** 5-10 business days for a survey.
+- **Television.** A series on the same street must re-survey repeatedly and the yes rate falls with every pass.
+
+### Traffic Management Plan and Road Closure
+
+Draw a closure or control plan to the governing standard (WATCH/MUTCD in California, Chapter 8 in the UK), set detours, signage, cones, flaggers and timings, and get it approved.
+
+- **Who.** Location Manager with a licensed traffic control company and the Transportation Coordinator; approved by the highway authority and police.
+- **Decides.** The level of control — intermittent holds, lane, direction, full closure, rolling roadblock — and the hours it may operate.
+- **Engine.** A road network with direction, lane count, rush-hour restriction flags and traffic volume. City of Los Angeles requires one LAPD officer per travel direction closed and a minimum of two for a full closure, plus a survey for any public-road closure; lane closure rider $78 per location.
+- **Takes.** 10-20 business days for a full closure; 3-5 for intermittent control. UK film orders under s16A RTRA 1984 can run up to seven days.
+- **Television.** A series closing the same street weekly negotiates a standing plan, but a rush-hour restricted road refuses regardless of how often you ask.
+
+### Police Detail
+
+Hire officers for closures, gunfire, crowd control, prop weapons and police wardrobe. The number is set by the department, not by the production.
+
+- **Who.** Location Manager books through the film office or the department's film unit. On set the officers answer to their own supervisor, not the 1st AD.
+- **Decides.** Off-duty versus active duty, how many, for how long, and whether to change the scene so it needs fewer.
+- **Engine.** Per-jurisdiction officer rates with minimums. City of LA: retired/off-duty $67.19-$77.90 per hour on an 8-hour minimum; active duty about $74 per hour on a 2-4 hour minimum. Minimums mean a 90-minute shot bills a full block.
+- **Takes.** Booked 5-10 business days ahead; overtime accrues live on the day.
+- **Television.** A series with recurring police work builds a relationship with the film unit and gets the same officers; a feature takes whoever is rostered.
+
+### Fire Safety Officer, Open Flame and Atmospherics
+
+Any open flame, smoke, atmospherics, fuel storage, welding or pyro triggers a standby fire safety officer, an inspection, and frequently a separate pyrotechnic permit and licensed operator.
+
+- **Who.** Location Manager books; SFX Supervisor executes; the fire department's film unit inspects.
+- **Decides.** Whether the effect is practical or VFX, and whether to move it to a stage where the fire plan is already approved.
+- **Engine.** Effect types map to required personnel, permits, lead time and standby equipment. City of LA: LAFD spot-check surcharge $287; Fire Safety Officer $127/hour with a 4-hour minimum plus one hour travel; SFX and gunfire riders $78 each. Smoke also triggers neighbour notification.
+- **Takes.** 5-15 business days for pyro; 3 days for a standby officer.
+- **Television.** A stage-based series pre-clears its standing sets for atmospherics once a season; a location series re-clears every single time.
+
+### Firearms, Blanks and Weapons on Location
+
+Licence, transport, store and handle weapons; notify police and the neighbourhood; agree the safety protocol, the exclusion distance and who may touch what.
+
+- **Who.** Property Master and Armourer/Weapons Master; police and the state fire marshal in the US; a registered firearms dealer and police authorisation in the UK.
+- **Decides.** Live-fire blanks, non-gun replicas, airsoft, rubber, or VFX muzzle flash. Post-2021 practice has shifted hard toward the last two.
+- **Engine.** Weapon type drives permit chain, armourer days, police requirement (a $78 gunfire rider in LA City), notification radius, insurance rider, and a non-zero accident probability reducible by rehearsal, protocol and crew fatigue state.
+- **Takes.** Days domestically; 10-20 business days for licences abroad.
+- **Television.** A procedural series carries a standing armoury and a full-time armourer; a feature hires per sequence and re-learns the protocol.
+
+### Drone and Unmanned Aerial Operations
+
+Plan the flight, clear the airspace, obtain waivers for night, over-people or beyond-line-of-sight, and separately obtain the location's own drone consent, which is often refused.
+
+- **Who.** Aerial Coordinator and a licensed remote pilot. FAA Part 107 with LAANC in the US; EASA in Europe; Samgongustofa and Isavia in Iceland.
+- **Decides.** Drone versus helicopter versus crane versus stock. Whether the shot is worth the waiver lead time and the airspace fight.
+- **Engine.** Airspace classes and controlled-zone geofences, waiver types with lead times, per-airframe wind and precipitation limits, battery endurance per flight, and a separate protected-area consent layer. LA City charges a $78 drone rider; many location agreements ban drones outright.
+- **Takes.** LAANC in minutes to days; a Part 107 waiver 60-90 days; an Iceland protected-area consent 15 working days.
+- **Television.** A series flies its establishing shots once and re-uses them for years; a feature flies per sequence and pays each time.
+
+### Helicopter and Aircraft Work
+
+Book aircraft, mounts (Shotover, Tyler), fuel stops, landing zones and a safety plan, and obtain the low-flying authorisation that ordinary aviation rules forbid.
+
+- **Who.** Aerial Coordinator and Aerial DP with a motion-picture qualified pilot, operating under the FAA's Motion Picture and Television Operations Manual in the US.
+- **Decides.** Whether the shot is aerial at all, which mount, where the LZ sits, and whether the LZ needs its own landowner consent and fire cover.
+- **Engine.** Aircraft records with endurance, ceiling, mount compatibility, hourly cost and weather minima. LZ records with consent, fire cover and fuel logistics. A temporary flight restriction is an object that also closes the airspace to the production's own drone.
+- **Takes.** Plan filed 10-30 days ahead; weather cancels on the morning.
+- **Television.** Aerial units are a feature and prestige-limited-series expense. Network TV buys stock or flies a drone.
+
+### Marine, Water and Tide Work
+
+Permit the water use, close or mark an exclusion zone, book safety boats and divers, and plan around tide, current, cold shock and visibility.
+
+- **Who.** Marine Coordinator, Dive Safety Supervisor, harbourmaster, coastguard and a water safety team.
+- **Decides.** Real water, tank stage, or dry-for-wet. Which tide window. How many safety personnel per person in the water.
+- **Engine.** Tide tables per site and date, current and swell, water temperature driving immersion limits and mandatory warm-up cycles, a boat and diver roster, and an exclusion-zone permit. Actors in water carry a real fatigue and hypothermia state.
+- **Takes.** Permits 10-30 days; the usable tide window may be 90 minutes.
+- **Television.** TV almost always goes to a tank. Features still go to sea and pay for it in days lost.
+
+### Environmental and Heritage Consent
+
+Survey for archaeology, protected species, nesting birds and sensitive habitat; agree mitigation, matting, trackway, exclusion zones and a watching brief.
+
+- **Who.** Location Manager with the consenting body — SHPO and federal land archaeologists in the US, Historic England or HES in the UK, Minjastofnun Islands in Iceland — plus an ecologist where protected species are present.
+- **Decides.** Whether to accept a monitor on set, where mats and trackway go, and whether to shift dates outside a nesting or spawning season.
+- **Engine.** A habitat and heritage layer per location with seasonal closure windows, buffer distances, required monitors and a restoration obligation. Breaching a buffer is an event with fines, loss of the location and a standing penalty.
+- **Takes.** Surveys 2-8 weeks; consents 4-12 weeks on designated land.
+- **Television.** A returning series can secure a multi-year consent with annual conditions; a feature gets one bite.
+
+### Minors on Location — Permits, Studio Teachers and Welfare
+
+Obtain the minor's work permit, book the teacher, provide a schoolroom or trailer, and build the day around statutory working hours, schooling minutes and rest.
+
+- **Who.** 2nd AD and Production Coordinator; a Studio Teacher in California, a licensed Chaperone and local authority licence in the UK, a welfare officer elsewhere.
+- **Decides.** Whether to cast a minor at all, whether to use a legal-18 double for the hard hours, and how to schedule around a legally shortened day.
+- **Engine.** Per-jurisdiction hard limits — hours on set, hours worked, schooling minutes, rest, night work — as scheduling constraints that cannot be overridden by money. Breach is a fine and revocation. The schoolroom occupies real basecamp footprint.
+- **Takes.** Permits 5-20 business days; UK licensing longer.
+- **Television.** A series with a child lead is permanently constrained: the schedule is built around the minor's clock for years, and the actor ages out of one legal bracket into another mid-run.
+
+### Animals on Location
+
+Permit, transport, house, feed and handle animals, provide a wrangler-to-animal ratio, exclusion zones and a welfare plan the monitor will sign.
+
+- **Who.** Animal Wrangler and Head Trainer; American Humane monitoring on US union productions; Matvaelastofnun for import and welfare in Iceland.
+- **Decides.** Real animal, trained animal, animatronic or CG. How many wrangler days. Whether to import or source locally.
+- **Engine.** Animal records with species, trained behaviours, working-hour limits, temperature and weather limits, transport rules and quarantine periods. Iceland's import restrictions are severe enough to force local sourcing or CG rather than shipping a horse in.
+- **Takes.** Wranglers booked weeks out; import and quarantine run months.
+- **Television.** A series animal is a recurring cast member with a double and a contract; a feature hires for the sequence.
+
+### Carnet, Customs and Equipment Import
+
+List every serialised item, raise an ATA Carnet or temporary import bond, and clear it in and out of every territory without the list changing.
+
+- **Who.** Production Coordinator with a shipping agent and customs broker; the Line Producer signs the guarantee.
+- **Decides.** What ships versus what is hired locally, whether to run a carnet or pay duty, and whether to carry spares that complicate the manifest.
+- **Engine.** A carnet manifest of serialised items, with customs events at each border carrying clearance time, broker fee, bond amount and an inspection probability. An item hired mid-shoot and added to the shipment is a real failure with a real fine.
+- **Takes.** Carnet issued in 1-5 days; border clearance hours to days.
+- **Television.** A series shooting abroad sets up a local entity and imports permanently instead of running a carnet every block.
+
+### Visas and Work Authorisation
+
+Obtain work authorisation for travelling cast and crew — O-1 and P visas into the US, national permits into Europe, EEA free movement into Iceland.
+
+- **Who.** Production Coordinator with immigration counsel and the Line Producer; the mother's company is the sponsoring entity.
+- **Decides.** Who travels and who is hired locally. Whether a name actor's visa timeline sets the production's start date.
+- **Engine.** Per-nationality, per-territory permit types with lead times, costs, quotas and refusal probability. A refused or late visa forces a recast or a schedule move — immigration must be allowed to break a schedule.
+- **Takes.** O-1 premium processing 15 calendar days plus preparation; standard 2-4 months. EEA nationals need no permit for Iceland.
+- **Television.** A series sponsors once and renews; a feature sponsors per production and eats the lead time every time.
+
+### Iceland — Landowner and Municipal Permission
+
+There is no national film permit in Iceland. Permission comes from the landowner (private, commune, or state via Rikiseignir) and from the municipality; Reykjavik grants a usage permit for city land.
+
+- **Who.** An Icelandic production service company or fixer with the Location Manager. The mother's Icelandic parent company is a genuine advantage in this chain.
+- **Decides.** Which municipality to base in, which landowner to deal with, and whether to touch commons land where an entire farming association must agree.
+- **Engine.** Iceland as a parcel map: owner type, municipality, protected-area overlay, road access class. Commons (afrettur) require multi-party consent from several farmers, each with a disposition. Permission is a chain, and any single link can refuse.
+- **Takes.** 3-10 business days for a straightforward municipal usage permit; weeks for commons.
+- **Television.** A returning series bases in one municipality and builds the relationship; a feature shoots six and negotiates six times.
+
+### Iceland — Protected Area Filming Permit
+
+A permit for commercial filming, photography and drone use inside protected areas, filed through the agency's service portal with locations, dates, crew numbers, equipment, flight paths and a statement of environmental impact.
+
+- **Who.** Natturuverndarstofnun, the Nature Conservation Agency of Iceland, which took over protected areas on 1 January 2025 when Umhverfisstofnun was dissolved into it and Umhverfis- og orkustofnun.
+- **Decides.** Which protected sites to bundle into one application, what equipment and vehicle movement to declare, whether to declare off-path travel, and whether to accept the conditions attached.
+- **Engine.** A protected-area polygon layer keyed to the Icelandic register. Application fee 83,200 ISK for cinematography and photography; 41,600 ISK for recreational drone use in up to two areas. Conditions attach as enforceable on-the-day constraints, not as text.
+- **Takes.** 15 working days standard; 30 days for the Myvatn and Laxa conservation area. A surcharge of roughly two hours of expert work applies within five working days of the start.
+- **Television.** No difference in the permit itself. The difference is that a series returning each season accumulates a compliance record the agency reads before granting the next one.
+
+### Iceland — National Parks That Issue Their Own Permits
+
+Thingvellir issues its own filming permits and the national agency will not process applications for it at all. Vatnajokull requires its own application at least 30 days in advance, charged against the park's price list.
+
+- **Who.** The Thingvellir Committee, or the Park Director acting for it; Vatnajokull National Park's own administration (now under Natturuverndarstofnun but with its own process and price list).
+- **Decides.** Whether the shot is worth two parallel permit chains, or whether to shoot geology that looks identical on unprotected ground an hour away.
+- **Engine.** Separate authority objects with their own lead times, fee schedules, ranger requirements and refusal behaviour. The engine must not collapse these into one generic 'Iceland permit' — that is exactly the decorative failure this project exists to avoid.
+- **Takes.** Vatnajokull: 30 days minimum. Thingvellir: allow 3-4 weeks (estimate).
+- **Television.** None in the permit; repeat series-scale use raises scrutiny and can attract crew-size caps.
+
+### Iceland — Off-Road Driving Exemption
+
+Off-road driving is prohibited under the Nature Conservation Act No. 60/2013. Any vehicle movement off a marked road, including a picture-car shot, needs a specific exemption naming the exact ground with maps and photographs.
+
+- **Who.** Natturuverndarstofnun grants the exemption; the Location Manager and Icelandic fixer apply; the Transportation Coordinator plans the route.
+- **Decides.** Whether to apply, whether to accept mats and an on-site supervisor, whether to move the shot onto a marked track, or whether to fake it on ground that is already hard-standing sandur.
+- **Engine.** Per-parcel surface class with a legality flag. Fines for illegal off-road driving start around 50,000 ISK and can escalate to prosecution (estimate). An unauthorised track across moss is permanent — hold it as a persistent scar on the location record and on the production's standing.
+- **Takes.** Up to 15 working days; up to 30 in Myvatn-Laxa; a late-filing surcharge inside five working days.
+- **Television.** None in law, but a series will be refused faster where a previous season left damage.
+
+### Iceland — Highland Season, F-Roads and River Crossings
+
+Interior highland roads (F-roads) are snow-closed most of the year. Most open between mid-June and early July and close between mid-September and mid-October, each announced individually by Vegagerdin after inspection.
+
+- **Who.** Transportation Coordinator with an Icelandic super-jeep operator; Vegagerdin publishes road status; ICE-SAR (Landsbjorg) for rescue cover.
+- **Decides.** Whether the highland sequence can be scheduled at all and in which weeks; whether to use modified vehicles and a guide; whether to carry a rescue contract.
+- **Engine.** Per-road open and close dates driven by a snowpack model and an inspection date, not a fixed calendar. Unbridged fords with depth as a function of glacial melt and time of day, so an afternoon crossing can be impassable where the morning was fine. Vehicles carry wading depth.
+- **Takes.** The usable window is roughly 8-14 weeks a year; a crossing decision is made in minutes on the day.
+- **Television.** A series simply cannot schedule a highland location outside the window. A feature with a long shoot can wait for the road to open.
+
+### Parking Plan and Basecamp Layout
+
+Draw the basecamp to scale: every vehicle sited, generator downwind and away from sound, catering with a clear path, honeywagon near but not too near, cast trailers in billing order, and an ambulance route in and out.
+
+- **Who.** Location Manager, Assistant Location Manager and Transportation Coordinator; the 2nd AD assigns cast trailers by billing.
+- **Decides.** Basecamp site, vehicle order in and out, who parks where, and whose trailer is closest to set. This is where the player-as-actor's standing becomes a physical fact.
+- **Engine.** A footprint model: every vehicle has real length, width and turning need; the site has real dimensions and gate positions. Trailer position is computed from billing and negotiated rider terms, and the actor's satisfaction reads that position directly.
+- **Takes.** Half a day to draw; 2-4 hours to execute on the morning.
+- **Television.** A series basecamps at a fixed studio-adjacent lot most days; a location feature rebuilds the whole camp at every new site.
+
+### Basecamp Build, Run and Strike
+
+Vehicles arrive in a set order, level and shore, power distributes, water and waste connect, the site is lit and signed, and at wrap everything reverses without waking the street.
+
+- **Who.** Transportation Captain and drivers (Teamsters Local 399 in Los Angeles, Local 817 in New York); Location Assistants run the site.
+- **Decides.** Arrival time per vehicle, how many drivers stay through the day, whether the camp holds overnight or strikes daily, and whether to run generators or take shore power.
+- **Engine.** Driver hours with turnaround and meal penalties; generator fuel burn and dB; waste tank capacity consumed per honeywagon room-use; a real setup and strike duration per vehicle type that eats into the shooting day.
+- **Takes.** 2-4 hours to build; 1-2 hours to strike; longer with a large camp.
+- **Television.** A series with a home base amortises the build across the season; a location feature pays it fresh every day.
+
+### Crew Parking and Shuttle
+
+Find parking for 80-200 crew cars away from set and shuttle people in. On a tight urban location the walk is the cost.
+
+- **Who.** Assistant Location Manager; Teamster drivers run the shuttles.
+- **Decides.** Where crew park, shuttle frequency and vehicle count, and whether crew are paid from the shuttle point or from set — a live union question, not a courtesy.
+- **Engine.** Crew headcount to car count with a modelled ride-share rate; shuttle capacity and cycle time producing an arrival curve. A slow shuttle pushes first shot later and the resulting overtime is real money.
+- **Takes.** Set up in prep; runs from an hour before call to an hour after wrap.
+- **Television.** A series crew learns the routine and absorbs it; a feature crew at a new location every day loses the time again and again.
+
+### Unit Move (company move)
+
+The whole company relocates mid-day. Trucks wrap, load, drive, unload and re-rig while cast and camera move. The crew is paid throughout and nothing is shot.
+
+- **Who.** The 1st AD calls it; Transportation Coordinator executes; UPM counts the cost.
+- **Decides.** How many moves in a day (one is normal, two is punishing), whether to move at lunch, whether to pre-rig the second location, and whether to split the unit instead.
+- **Engine.** Move duration = wrap-out + drive time on a real road network with real traffic + set-up, all at full crew cost. Pre-rigging trades a rigging crew's day against the move time. Two moves in a day must visibly cost pages on the schedule.
+- **Takes.** 2-4 hours for a standard move; 45 minutes for a walking move; half a day for a distant one.
+- **Television.** TV shoots 5-8 pages a day against a feature's 2-3, so a move consumes a proportionally larger share of the episode. TV schedules avoid moves far harder than features do.
+
+### Load-In, Pre-Rig and Pre-Light
+
+Cable, rig, pre-light and pre-dress the location before the shooting company arrives, so the first shot is not four hours away.
+
+- **Who.** Rigging Gaffer and Rigging Key Grip with their crews, a day or more ahead of the shooting company; the Location Manager holds the door open.
+- **Decides.** How many prep days to buy from the owner, how large a rigging crew, and whether to pre-light at all.
+- **Engine.** Prep days are a real fee line in the location agreement and a real labour cost, and they buy back first-shot time on the shooting day. The trade must be computable: one rigging day against two hours of company overtime.
+- **Takes.** 1-3 days per location; a week for a large interior.
+- **Television.** TV pre-rigs relentlessly because the shooting day is too short to light from scratch. Features sometimes light on the day and take the hit.
+
+### Load-Out, Strike and Restore
+
+Everything out, everything back, walls repainted, lawns reseeded, tape residue removed, and a final walkthrough with the owner against the condition report.
+
+- **Who.** Rigging crews, Set Dressing, Construction and Location Assistants; the Assistant Location Manager stays until the owner signs.
+- **Decides.** How much restoration to do versus how much deposit to forfeit, and whether to leave an improvement as a gift to secure a return visit.
+- **Engine.** An after-state per surface computed from what the production actually did; restoration tasks with cost and duration; a walkthrough that compares states and releases, part-withholds or escalates the deposit into a claim.
+- **Takes.** Hours to days; landscape restoration can run weeks after wrap.
+- **Television.** A recurring location is struck and restored between blocks, or held dressed at a holding fee. The second is usually cheaper and should be a real player choice.
+
+### Facilities Order — Trailers, Water, Waste, Toilets, Catering
+
+Order the physical infrastructure of a working day for 100-200 people in a field: dressing rooms, honeywagon, makeup and wardrobe trailers, production office, water, waste, toilets, dining tent, craft service.
+
+- **Who.** Production Coordinator orders; Location Manager sites; the Caterer and facilities vendor deliver.
+- **Decides.** Sizes and counts, dining tent versus a hired hall, and whether to cut facilities to fit the footprint — the cut the cast notice first and complain about loudest.
+- **Engine.** Headcount drives toilet count, water volume, waste capacity, catering covers and tent area. Undersupply has real consequences: queues that delay call, cold food that lowers morale, a full waste tank that halts the day.
+- **Takes.** Ordered in prep; delivered the night before or at first light.
+- **Television.** A series on a home base has permanent facilities and a real kitchen; a location series carries them and the cost lands per episode.
+
+### Travel Booking and Movement Order
+
+Book flights, rail, ground and transfers for cast and crew, and issue a movement order stating who moves when, from where, with what baggage and excess.
+
+- **Who.** Travel Coordinator and Production Coordinator; the 2nd AD issues the movement order; the mother approves class of travel above the line.
+- **Decides.** Class per person against contract, whether to charter, whether crew fly the day before, and who travels with the equipment.
+- **Engine.** Contracted travel entitlements per person (economy, business, first, companion, excess baggage) as enforceable terms; a flight network with real schedules, costs, connection risk and a delay distribution that can cost a shooting day.
+- **Takes.** Booked 2-6 weeks ahead; rebooked constantly as the schedule moves.
+- **Television.** A series flies guest cast in and out weekly — a continuous travel operation rather than a single block move.
+
+### Accommodation Booking and Rooming
+
+Negotiate a hotel block at a capped rate for the shoot window, allocate rooms by contract and standing, and manage check-in and check-out against a moving schedule.
+
+- **Who.** Travel Coordinator; the 2nd AD builds the rooming list; the Line Producer negotiates the block rate.
+- **Decides.** Hotel tier, apartments versus hotel, whether leads get a suite or a rented house, and who shares.
+- **Engine.** Hotel inventory per location with real capacity, seasonal rate curves and distance-to-set driving daily travel time. Remote Iceland inventory is genuinely small: sixty rooms within an hour of a highland location is a hard constraint, not a price.
+- **Takes.** Blocks held 2-3 months ahead; peak-season Iceland considerably earlier.
+- **Television.** A series takes annual corporate rates and long-stay apartments for its regulars; a feature block-books for the shoot and releases.
+
+### Per Diem Administration
+
+Pay a daily meal and incidental allowance to anyone housed away from home, in advance of the week of work, reduced where the producer provides meals.
+
+- **Who.** Production Accountant and Payroll; the UPM sets the rate above contract minimum.
+- **Decides.** Cash, prepaid card or reimbursement; whether to pay above minimum to buy goodwill; whether to provide meals and reduce the allowance.
+- **Engine.** Residence versus work location sets local, nearby or distant status per person. SAG-AFTRA per diem minimum is $75 per day as of 14 December 2025, owed only where the producer does not provide meals. IATSE Area Standards nearby daily living allowance is $121 per day or $847 per week from 2 August 2026.
+- **Takes.** Paid weekly in advance; administered daily.
+- **Television.** A series pays per diem for months and the cumulative figure becomes a major budget line; a feature pays it for a block.
+
+### Local, Nearby and Distant Hire Determination
+
+Classify every crew member by where they live relative to the work: inside the zone, nearby, or distant. The classification sets travel time, mileage, per diem, hotel and travel-day pay.
+
+- **Who.** UPM and Production Accountant against the union agreements; the mother's company carries the liability for getting it wrong.
+- **Decides.** Who to hire locally to avoid travel cost, and whether a particular key is worth flying and housing for the whole shoot.
+- **Engine.** A geographic zone test — in Los Angeles a 30-mile radius centred on Beverly Boulevard and La Cienega, the former AMPTP headquarters — plus per-agreement nearby and distant rules. Classification computed from real addresses and real coordinates.
+- **Takes.** Set at hire; retested every time the shoot location moves.
+- **Television.** A series' location determines local hire for years and builds an entire regional crew base around it; a feature borrows one that already exists.
+
+### Weather Cover and Cover Sets
+
+For every exterior day, a plan for what is shot if it rains: a cover set held ready, a second unit day, or a paid weather day with nothing in the can.
+
+- **Who.** 1st AD and UPM; the Location Manager holds the cover location; the father's lot holds a stage on standby.
+- **Decides.** Whether to hold a cover set at all (a real daily hold cost), which day to swap, and at what hour of the morning to call it.
+- **Engine.** A weather model per location with real seasonal distributions, a forecast uncertain at 24 and 48 hours, and a call deadline. Holding a cover set costs a hold fee and a standby crew; not holding one risks a lost day at full crew cost.
+- **Takes.** The call is made between 4 a.m. and 6 a.m.; a cover set is held for the whole block.
+- **Television.** TV almost always has a standing set as cover and the swap is nearly free. A location-only feature has no cover and eats the day whole.
+
+### Location Risk Assessment and Safety Plan
+
+Write a hazard-by-hazard assessment for the location, brief it at call, and set controls: exclusion zones, PPE, safety boats, rope teams, warm-up cycles, hospital routes, comms.
+
+- **Who.** In the US the 1st AD with the studio safety department; in the UK a dedicated Production Safety Adviser; a set medic on site throughout.
+- **Decides.** What is attempted at all, with which controls, and whether the actor performs it or a double does.
+- **Engine.** A hazard register per location and per scene with severity, likelihood and controls. Controls cost money and time and reduce a real accident probability. Crew fatigue, turnaround violation, night work and weather must all raise that probability.
+- **Takes.** Written in prep, updated per location, briefed daily in about ten minutes.
+- **Television.** A series reuses and updates assessments. The real risk is complacency, which the engine should model as drift in the control set over a season.
+
+### Security, Lock-Up and Crowd Control
+
+Control who gets in, stop the public walking through frame, guard the trucks overnight, and keep cameras and drones off a closed set.
+
+- **Who.** Location Assistants hold the lock-up points; a security vendor guards vehicles and equipment; executive protection for the player-as-actor where fame warrants it.
+- **Decides.** Level of security, whether the set is closed, whether phones are bagged, and whether to pay for a 24-hour guard on the equipment.
+- **Engine.** Perimeter length drives guard count; a public interference rate per location driven by footfall, cast fame and whether the shoot was publicised; theft and leak probabilities reduced by spend. A leaked image carries a downstream publicity consequence.
+- **Takes.** Continuous through the shooting day; overnight guards on a holding location.
+- **Television.** A long-running series with famous cast has a permanent paparazzi problem at fixed, known locations that a feature's one-off day never develops.
+
+### Sustainability Plan, Waste and Carbon Reporting
+
+Segregate waste, eliminate single-use, run hybrid or HVO generators, meter fuel and power, and report the production's carbon footprint.
+
+- **Who.** Sustainability Coordinator or Eco Supervisor; the Location Manager executes on site; albert certification in the UK, PGA Green in the US.
+- **Decides.** Whether to pay more for battery and HVO power, whether to certify, and whether the commissioning broadcaster contractually requires it.
+- **Engine.** Fuel and power consumption computed from the actual generator and vehicle order and their hours run, a waste stream tally, and a carbon figure that can be a hard delivery requirement. The greener option must cost more and be genuinely choosable or refusable.
+- **Takes.** Planned in prep, measured daily, reported at wrap.
+- **Television.** UK broadcasters require albert certification for commissioned television; features are largely voluntary and market-driven.
+
+### Stage Booking on the Lot
+
+Book a sound stage for a build period and a shoot period, with the lot's power, HVAC, catwalks, perms, parking, drive-on passes and support shops.
+
+- **Who.** The father's lot: Stage Manager and the booking office. The production's UPM books; the mother's company pays, or does not, if it is the family lot.
+- **Decides.** Which stage — floor area, clear height to the perms, elephant door dimensions, floor load, a pit or a tank, soundproofing rating — and for how many weeks of build, shoot and strike.
+- **Engine.** Stage records with real dimensions and a booking calendar, plus the lot's revenue model. A set whose flats do not fit through the elephant door does not get into that stage, and the construction plan must be tested against the door before it is built.
+- **Takes.** Booked months ahead for a series, weeks for a feature; the build occupies 4-10 weeks before shooting starts.
+- **Television.** A series holds its stages for the run and pays holding costs through hiatus; a feature books a block and leaves. For the lot owner these are completely different businesses.
+
+### Stage Day Versus Location Day — the Swing Decision
+
+Decide scene by scene whether to build and shoot on stage or shoot the real place, knowing these are different days in cost, time and risk, not different backgrounds.
+
+- **Who.** UPM/Line Producer with the Production Designer and 1st AD; the mother decides where the money goes; the father, as the writer, can rewrite the scene out of the problem entirely.
+- **Decides.** Build cost and stage weeks against location fee, permits, police, moves and weather exposure. Break-even is normally a count of shooting days in the same set.
+- **Engine.** Two complete day models. Stage: no permit, no weather, no neighbours, controlled sound, power in place, short first-shot, amortised build, capped scale, fake exterior. Location: fee, permit, police, parking, move, weather and noise variance, long first-shot.
+- **Takes.** Decided in prep and revisited every time the budget or schedule moves.
+- **Television.** TV resolves toward stage almost always: standing sets shot at 5-8 pages a day are the economic engine of the form. Film can afford the real place because it shoots 2-3 pages and sells the image.
+
+### Location Accounting and Cost Reporting
+
+Raise purchase orders, pay location fees and permits, run petty cash for the location department, and report actuals against budget every week.
+
+- **Who.** Production Accountant with the Location Manager; the mother reads the weekly cost report.
+- **Decides.** Where to find money when a location overruns, and which line to raid to cover it.
+- **Engine.** Budget lines per location carrying committed, actual and estimate-to-complete, updated from real events — an extra police hour, a forfeited deposit, an unplanned move — so every overspend traces back to a decision the player actually made.
+- **Takes.** Weekly through prep and shoot; a final reconciliation at wrap.
+- **Television.** TV reports per episode against a pattern budget; an episode that goes over must be recovered by another going under, which shapes which locations later episodes can afford.
+
+### Damage Claims and Final Settlement
+
+Where an owner claims damage beyond the deposit, assemble the condition report, the wrap photos and the crew accounts, then settle or dispute.
+
+- **Who.** Production Legal and the insurance broker; the Location Manager supplies the evidence; the mother signs the settlement.
+- **Decides.** Pay, negotiate down, or claim on the policy and take the premium consequence.
+- **Engine.** Claim amount against deductible and premium history; a settlement negotiation with an owner whose leverage includes refusing the production forever and telling other owners. The gazetteer records the outcome and it changes future access probability.
+- **Takes.** Weeks to months after wrap.
+- **Television.** A series must settle well or lose a location it needs next season — the negotiating position is weaker and both sides know it.
+
+### Fixer and Production Service Company Engagement
+
+Appoint a local company to hold permits, employ local crew, handle customs, guarantee the incentive filing and carry local liability.
+
+- **Who.** Line Producer engages. In Iceland an Icelandic service company is effectively mandatory, both for the incentive filing and for the permit chain.
+- **Decides.** Which service company, on what fee (typically a percentage of local spend), and how much authority is delegated to it.
+- **Engine.** Service company records with local relationships, crew depth, permit success rate, fee percentage and reliability. A cheap fixer with thin relationships must actually produce refused permits and lost days, not just a lower line item.
+- **Takes.** Engaged 2-4 months before the shoot.
+- **Television.** A series sets up its own local entity after the first season and cuts the fixer out, which is a real one-off cost with a real payback period.
+
+### Incentive-Led Territory Choice
+
+Choose where to shoot partly for the rebate. Iceland offers up to a 35% reimbursement of production costs incurred in Iceland; other territories layer cultural tests, local-hire ratios, minimum spend and caps.
+
+- **Who.** The mother and the Line Producer with a production incentive consultant, and the studio's finance side.
+- **Decides.** Territory, how many days must fall inside it, what spend qualifies, and whether the script's geography is rewritten to suit the money.
+- **Engine.** Per-territory rules: rate, qualifying spend categories, minimum spend, local-hire requirement, cap, application timing, audit requirement and cash-flow delay. The rebate must be modelled as cash received months after wrap, not a discount at the till.
+- **Takes.** Decided in pre-production; the cash arrives 3-12 months after delivery.
+- **Television.** A series commits a territory for its whole run, and the incentive's sunset date or cap becomes a genuine risk to seasons four and five.
+
+### Option spaces
+
+**Location class** — 30 options
+
+`practical interior` · `practical exterior` · `backlot street` · `standing set on stage` · `new build on stage` · `new build on location` · `tank or water stage` · `LED volume / virtual production stage` · `existing film-ready facility with a built set` · `institutional (hospital, school, courthouse, prison)` · `transport (rail, airport, port, highway)` · `protected or heritage site` · `national park or wilderness` · `private residence` · `retail, restaurant or bar` · `industrial or warehouse` · `religious building` · `military installation` · `government building` · `sports venue or arena` · `hotel or casino` · `farm or ranch` · `underground (tunnel, mine, sewer)` · `rooftop` · `offshore or marine` · `glacier or ice` · `volcanic or lava field` · `desert or dune` · `forest` · `quarry`
+
+**Scout type** — 15 options
+
+`desk / library scout` · `preliminary scout (scout alone)` · `director's creative scout` · `producer's cost scout` · `tech scout / recce` · `safety recce` · `survey scout (measure, lidar, photogrammetry)` · `night scout` · `seasonal or weather scout` · `pre-rig scout` · `second unit scout` · `VFX data scout (HDRI, lidar, witness cameras)` · `stunt recce` · `aerial recce` · `sound-only recce`
+
+**Permit jurisdiction regime** — 19 options
+
+`one-stop city film office (FilmLA for LA City and County)` · `municipal fee permit with free city services (NYC MOME)` · `state park authority` · `national park service` · `federal land agency (BLM, USFS, NPS)` · `tribal land authority` · `private land, no permit required` · `UK local authority film office plus police plus highways TTRO/s16A order` · `EU municipal permit plus police` · `Iceland municipal usage permit` · `Iceland protected-area permit (Natturuverndarstofnun)` · `park that issues its own permits (Thingvellir, Vatnajokull)` · `rail authority possession` · `port or harbourmaster` · `airport authority airside` · `military base commander` · `diocese or religious body` · `heritage body (Historic England, Minjastofnun)` · `landowner consent only`
+
+**Road closure level** — 14 options
+
+`no traffic control at all` · `soft intermittent traffic control (holds up to about 3 minutes)` · `hard intermittent traffic control` · `sidewalk or footway closure only` · `single lane closure` · `single direction closure` · `full closure with signed detour` · `rolling roadblock` · `highway closure with state patrol` · `bridge or tunnel closure` · `full block lock-up with resident exemptions` · `night-only closure` · `park or plaza closure` · `shoot live with the world running`
+
+**Traffic control staffing** — 10 options
+
+`production assistants only` · `licensed flaggers` · `certified traffic control company with a WATCH/MUTCD or Chapter 8 plan` · `off-duty police` · `active-duty police` · `state patrol or CHP` · `sheriff's deputies` · `motorcycle escort` · `highway-authority approved contractor` · `Vegagerdin-approved contractor in Iceland`
+
+**Location deal shape** — 15 options
+
+`flat day rate` · `tiered prep / shoot / strike / hold rate card` · `hourly with overtime overage` · `per-scene fee` · `goodwill or charitable donation in lieu of fee` · `in-kind (restoration works, repaint, new fence)` · `venue hire plus lost-business compensation` · `long-term series licence with per-episode fee` · `blanket annual master agreement` · `buyout with an option to return` · `tenancy or lease for a build` · `outright purchase of the property` · `exclusivity premium` · `first-refusal option with an option fee` · `no fee in exchange for credit or placement`
+
+**Location agreement clauses in play** — 19 options
+
+`indemnity and additional insured` · `right to depict and alter name and address` · `owner approval of depiction` · `exclusivity against other productions` · `right to return for reshoots` · `force majeure` · `damage cap` · `restoration standard (as-found versus betterment)` · `noise and hours limits` · `crew headcount cap` · `vehicle and truck cap` · `no smoking or alcohol` · `no drones` · `no pyrotechnics, firearms or animals` · `confidentiality and NDA` · `no photography by crew` · `cancellation window and kill fee` · `holdover penalty` · `assignment to the studio or network`
+
+**Basecamp vehicle types** — 34 options
+
+`two-, three- and five-banger dressing rooms` · `star trailer (double or triple)` · `8- or 10-room honeywagon` · `makeup and hair trailer` · `wardrobe trailer` · `production office trailer` · `schoolroom trailer` · `cast bus` · `crew bus` · `camera truck` · `grip truck (10-ton or 48-foot)` · `electric truck` · `tow-plant generator (500A, 1200A, 1400A)` · `distribution and cable truck` · `art department truck` · `set dressing five-ton` · `props truck` · `construction trailer` · `SFX truck` · `stunt truck` · `VFX truck` · `catering truck and dining tent` · `craft service truck` · `water truck` · `fuel truck` · `waste and vacuum truck` · `portable toilets` · `medic unit` · `security vehicles` · `picture-car transporter` · `insert car or process trailer` · `scissor lift or condor` · `forklift or telehandler` · `shuttle vans`
+
+**Basecamp siting** — 14 options
+
+`adjacent to the location` · `remote basecamp with shuttle` · `rented parking lot` · `street parking under permit` · `stadium or fairground` · `school lot out of term` · `studio lot with drive-on` · `hotel car park` · `split basecamp (cast one side, trucks another)` · `satellite basecamp plus separate crew park` · `no basecamp (pocket unit)` · `marine or barge basecamp` · `helicopter-staged forward camp` · `tented camp on a wilderness location`
+
+**Unit move type** — 11 options
+
+`no move (single location day)` · `walking move within the block` · `quick move under 30 minutes` · `lunch-time move` · `half-day move` · `full company move with basecamp relocation` · `overnight move on turnaround` · `pre-rigged double-bank second location` · `split unit (two crews, no move)` · `move plus travel day` · `cross-border move`
+
+**Stage versus location fork** — 12 options
+
+`build on stage` · `build on location` · `practical location as-is` · `practical location dressed` · `backlot exterior` · `existing standing set` · `partial build with VFX extension` · `LED volume / virtual production` · `tank stage` · `exterior backlot night` · `second unit plates only` · `rewrite the scene into a cheaper place`
+
+**Aerial platform** — 15 options
+
+`handheld gimbal` · `jib or crane` · `technocrane` · `cable cam` · `sub-250g drone` · `Part 107 standard drone` · `drone with night, over-people or BVLOS waiver` · `heavy-lift cinema drone` · `FPV drone` · `helicopter with a Shotover or Tyler mount` · `fixed-wing aircraft` · `tethered balloon or aerostat` · `telescopic mast` · `stock aerial library` · `fully digital aerial`
+
+**Weather cover strategy** — 13 options
+
+`cover set on stage` · `cover set at a second practical` · `interior at the same location` · `second unit day` · `insert day` · `wild lines and loop group` · `splinter unit` · `swap with a later interior day` · `shoot the rain with rain towers and a rain deck` · `shoot through it under tents and hot tents` · `take a paid weather day` · `hold a rain date in the schedule` · `convert the exterior to VFX`
+
+**Travel class and mode** — 14 options
+
+`economy` · `premium economy` · `business` · `first` · `private charter` · `coach or bus` · `rail` · `self-drive with mileage` · `production van` · `helicopter transfer` · `ferry` · `super-jeep or 4x4 convoy` · `snowcat` · `no travel (local hire)`
+
+**Accommodation tier** — 14 options
+
+`five-star hotel` · `four-star hotel` · `three-star business hotel` · `extended-stay apartment` · `rented house share` · `crew hotel block at a capped rate` · `guesthouse or hostel` · `farmhouse takeover` · `motorhomes and campers` · `mountain hut or lodge` · `ship or barge` · `tented camp` · `per-night allowance and self-booking` · `no accommodation (local hire)`
+
+**Per diem structure** — 10 options
+
+`full cash per diem` · `meal-by-meal breakdown (breakfast, lunch, dinner)` · `government-rate based (GSA or HMRC)` · `provided meals plus reduced per diem` · `provided meals plus incidentals only` · `weekly living allowance` · `housing allowance separate from meals` · `prepaid card` · `receipts and reimbursement` · `no per diem (local hire)`
+
+**Iceland terrain sensitivity class** — 16 options
+
+`moss and lava (Racomitrium)` · `geothermal crust and sinter` · `glacier ice and crevasse field` · `glacial river floodplain and quicksand` · `black sand desert (sandur)` · `vegetated highland tundra` · `bird cliff and nesting colony` · `seal or whale haul-out` · `wetland and Ramsar site (Myvatn-Laxa)` · `archaeological turf ruin` · `hot spring and hveraverur` · `coastal basalt columns` · `sea cave and tidal zone` · `scoria and tephra cone` · `farmland and grazing` · `glacier tongue and ice cave`
+
+**Iceland consent chain (every body that can say no)** — 17 options
+
+`landowner (private)` · `commune or farming association (afrettur)` · `state land via Rikiseignir` · `the municipality (usage permit)` · `Natturuverndarstofnun (protected areas, off-road exemption)` · `the Thingvellir Committee` · `Vatnajokull National Park` · `Snaefellsjokull National Park` · `Minjastofnun Islands (heritage)` · `Vegagerdin (roads and closures)` · `logreglan (police)` · `Samgongustofa and Isavia (drones and airspace)` · `Umhverfis- og orkustofnun (environment and energy matters)` · `Matvaelastofnun (animals)` · `the power companies at geothermal and hydro sites` · `ICE-SAR / Landsbjorg (rescue cover coordination)` · `Film in Iceland / the Icelandic Film Centre (incentive registration, not a permit)`
+
+**Load-in constraint types** — 16 options
+
+`level street access` · `stairs only` · `lift with dimension limit` · `narrow gate or archway` · `weight-limited bridge` · `weight-limited floor` · `tidal access window` · `night-only access` · `secured facility requiring clearance` · `no vehicle access (hand-carry distance)` · `helicopter-only access` · `snowcat or super-jeep only` · `boat-only access` · `rail possession window` · `airside escort at an airport` · `ford crossing`
+
+**Location power source** — 11 options
+
+`house tie-in by a licensed electrician` · `house plug-in and distro only` · `diesel tow-plant generator` · `HVO or biodiesel generator` · `battery or hybrid generator` · `temporary grid supply` · `solar plus battery` · `local-hire generator` · `battery LED only (no genny)` · `shore power at a marine location` · `utility feed at an industrial site`
+
+**Hazard classes carried in a location risk assessment** — 29 options
+
+`traffic` · `working at height` · `water and drowning` · `cold and hypothermia` · `heat` · `altitude` · `rockfall` · `crevasse` · `hydrogen sulphide and geothermal gas` · `confined space` · `electrical` · `livestock and wildlife` · `crowd` · `crime and public order` · `structural collapse` · `asbestos and lead` · `biological and sewage` · `wind and lightning` · `tide` · `avalanche` · `volcanic activity` · `fire` · `firearms` · `pyrotechnics` · `stunts and vehicles` · `aviation` · `marine operations` · `food safety` · `fatigue and travel driving`
+
+**Location security level** — 12 options
+
+`none` · `single lock-up PA` · `unarmed guard` · `24-hour guard on vehicles and equipment` · `gated with sign-in` · `closed set with credentials and wristbands` · `executive protection for talent` · `anti-drone and anti-paparazzi measures` · `police presence` · `screening and bag checks` · `phone bags and NDA policy` · `marine exclusion zone`
+
+**Notification and consent instruments** — 11 options
+
+`no notification` · `courtesy letter` · `statutory radius notification` · `door-to-door survey with signatures` · `petition threshold` · `public meeting` · `business impact survey` · `residents' association agreement` · `council or district sign-off` · `individual hold-harmless letters` · `compensation schedule`
+
+**Restoration and wrap outcomes** — 14 options
+
+`as-found with photo sign-off` · `agreed betterment` · `repaint or refinish` · `landscape restoration and reseeding` · `supervised moss and vegetation restoration` · `hard-standing reinstatement` · `archaeological watching-brief clearance` · `deposit released in full` · `deposit part-withheld` · `claim on production insurance` · `third-party claim` · `legal dispute` · `improvements gifted to the owner` · `permanently barred from returning`
+
+**Day type (what kind of shooting day this is)** — 15 options
+
+`stage day on the company's own lot` · `stage day at a rented facility` · `backlot day` · `local location day inside the zone` · `distant location day` · `travel day` · `weather or hold day` · `second unit day` · `splinter unit day` · `night location day` · `turnaround-violated day` · `wilderness or remote day` · `marine day` · `aerial day` · `company move day`
+
+**Crew hiring status** — 9 options
+
+`local hire, no travel or per diem` · `local hire with mileage` · `nearby hire with daily living allowance` · `distant hire with travel, per diem, hotel and travel days` · `travelling key with housing allowance` · `foreign hire requiring a visa and carnet` · `local trainee or placement` · `fixer-supplied local crew` · `local-ratio hire mandated by an incentive condition`
+
+**Incentive-relevant location levers** — 14 options
+
+`which territory` · `qualifying spend categories` · `minimum spend threshold` · `local-hire ratio` · `days physically in territory` · `regional or rural uplift` · `local-labour uplift` · `per-production cap` · `cultural test` · `application before versus after principal photography` · `audit and CPA sign-off requirement` · `sunset or expiry date` · `transferability or sale of the credit` · `cash rebate versus tax credit`
+
+### What gets got wrong
+
+- The location fee is the smallest part of a location day. Permits, police, fire standby, parking, the move and the overtime it causes routinely outweigh it three to one. A game that models only the fee models nothing.
+- Officer and fire-officer minimums bill whole blocks. An eight-hour LAPD minimum means a single ninety-second gunshot costs eight hours of two officers, and the scene that removes the gun saves a four-figure sum.
+- Filming hours are permitted hours, not practical ones. City of Los Angeles standard is 7 a.m. to 10 p.m. weekdays and 9 a.m. to 10 p.m. weekends; anything outside requires a neighbourhood survey that can be refused by the people who live there.
+- Permit lead times are working days, not calendar days. A Friday afternoon filing loses the weekend, and the City of LA's 10 a.m. filing deadline loses another day if you miss it by an hour.
+- The person who owns the building is usually not the person who can say yes. Leaseholders, managing agents, HOAs, dioceses, trusts and estates each hold an independent veto, and finding the chain is most of the work.
+- Owner approval of depiction is the clause that kills finished pictures. It is never in the standard form, it is sometimes conceded to get a location nobody else has, and then the owner sees the cut.
+- Second position on a location is not a location. Being bumped a week out is a schedule cascade through every day around it, not an inconvenience with a replacement cost.
+- Neighbour tolerance decays with use. The eighth visit to the same street is refused where the first was welcomed. Model the decay per visit, not a fixed disposition per address.
+- A company move is the most expensive thing on a schedule that produces no footage. Two in a day is a decision to lose pages, and the engine should make the player feel the pages go.
+- The 30-mile studio zone is centred on Beverly Boulevard and La Cienega, the old AMPTP address, not on any studio. Crossing it changes travel pay, mileage and per diem for the entire crew at once.
+- Per diem at a distant location is owed for every day, including unworked weekends and hold days. A four-day weather hold with a hundred distant crew is a real number.
+- A 48-foot trailer's turning circle kills more locations than any fee negotiation ever does, and it is discovered on the truck recce or on the morning — never in between.
+- Iceland has no national film permit. Permission is a chain of municipality, landowner and, on protected land, the Nature Conservation Agency, and any single link refusing ends the day.
+- Umhverfisstofnun no longer handles protected areas. On 1 January 2025 it was dissolved and split into Natturuverndarstofnun for nature conservation and protected areas, and Umhverfis- og orkustofnun for environment and energy. A spec that names the old agency is already wrong.
+- Thingvellir and Vatnajokull issue their own permits. The national agency will not process a Thingvellir application at all, and Vatnajokull wants thirty days' notice against its own price list.
+- Icelandic off-road driving is a criminal matter, not a fee. The Nature Conservation Act No. 60/2013 prohibits it outright, and an exemption must name the exact ground with maps and photographs before a wheel turns.
+- Icelandic moss does not grow back within a production's lifetime. A single track across Racomitrium is a scar for decades, and it should persist in the save, on the location record and on the company's standing with the agency.
+- F-roads open when Vegagerdin has inspected them, not on a date in a calendar. A highland location cannot be scheduled for May at any price, and the announcement is road by road.
+- Glacial rivers rise through the day as the ice melts. A ford that is passable at 8 a.m. can be impassable at 4 p.m., which turns a crossing into a wrap deadline rather than a route choice.
+- Remote accommodation inventory is a hard cap on crew size. You cannot house a hundred people near an Icelandic highland location at any price, so the crew list is set by the beds, not the budget.
+- Many location agreements ban drones outright regardless of what the aviation authority permits, and a temporary flight restriction filed for your helicopter closes the airspace to your own drone.
+- Nesting season closes bird cliffs and spawning closes rivers. Seasonal ecological closures cannot be bought out, only scheduled around, and they are the constraint most often missed in prep.
+- Insurance certificates are a hard gate, not paperwork. Wrong named insureds means no permit, and the trucks are already loaded and the crew already called.
+- Prep days, strike days and hold days are paid days in a location agreement. A three-day shoot is routinely a seven-day fee, and the rate card matters more than the headline number.
+- The incentive is cash months after delivery, not a discount at the till. Cash-flowing a 35% rebate costs real interest, and a territory's cap or sunset date can remove it between seasons.
+- A minor's statutory hours cannot be bought out, deferred or negotiated. The day ends when it ends, and a series built on a child lead is built on that clock for years.
+- Television resolves toward the stage because it shoots five to eight pages a day; film can afford the real place because it shoots two to three and sells the image. The same location costs the two forms completely differently.
+- Stage days have no weather, no neighbours, no permit and no police, and that is most of their value. The price is that the exterior is fake and the scale is capped by the grid height and the elephant door.
+
+---
+
+## 12. Camera, lenses and format (acquisition): bodies, gauges, sensors, optics, filtration, movement systems, multicam vs single camera, and the IMAX commitment
+
+*for both film and television*
+
+### Format and aspect-ratio lock
+
+The show commits to a gauge or sensor, a capture aspect ratio, a delivery ratio, a resolution and whether extraction/reframing is permitted. It is written into the camera order, the DI plan and the delivery spec.
+
+- **Who.** Director + Director of Photography propose; Producer (mother's company) signs the cost; distributor/studio (father's lot) can mandate; network/streamer spec can override
+- **Decides.** 35mm/16mm/65mm/IMAX/digital; sensor mode and open gate; spherical or anamorphic and squeeze; capture AR vs delivery AR; protect-and-frame rules; project frame rate; colour pipeline.
+- **Engine.** Format record holding gate/sensor dims in mm, photosite grid, squeeze, capture AR, delivery AR set, extraction map, consumption (ft/min or GB/hr), $/day and a coverage matrix against every lens in the rental inventory. Every later system reads it.
+- **Takes.** 1-3 weeks in prep, locked before camera test (est.)
+- **Television.** TV locks at pilot and inherits for the series run; network/streamer delivery (UHD 3840, 10-bit, HDR, 16:9 protected) usually forces the answer. Features may choose 2.39 or 1.43 freely and change between seasons is a re-spec, not a preference.
+
+### Camera test / shoot-out
+
+Two to five bodies and several lens sets are shot on the same charts, skin tones and practicals at matched stops, pushed through the intended pipeline, and projected or viewed on a calibrated reference display.
+
+- **Who.** Director of Photography, 1st AC, DIT, rental-house prep tech, colourist; Producer approves the day
+- **Decides.** Which body, which lens family, which diffusion, base EI, whether the intended look survives the DI, and whether the on-paper choice gets overturned.
+- **Engine.** Per-body measurables: usable stops above/below middle grey, noise floor by EI, colour-matrix error, highlight rolloff shape, IR response, rolling-shutter readout ms. Per-lens: MTF at stops, flare gain, breathing %, close focus, coverage circle. Test produces a scored comparison.
+- **Takes.** 1-2 test days plus a viewing day, 2-6 weeks before principal
+- **Television.** Features test hard; series test once at pilot. Multicam sitcom tests the four-body match and the shading, not the look — the question is whether A/B/C/X cut together under one lighting state.
+
+### Lens test and projection
+
+Every lens in the set is projected on a chart to check centring, field illumination, focus-mark accuracy against a tape, breathing, close focus, and — for anamorphic — squeeze consistency and mumps.
+
+- **Who.** 1st Assistant Camera with the rental house lens tech; DP attends for character
+- **Decides.** Which serial numbers ship; which lenses are rejected; whether a focal length gets doubled for a second unit or a Steadicam set.
+- **Engine.** Serial-numbered lens instances with per-unit condition, calibration error in mm at marked distances, centring offset, coating condition and a repair/servicing state that degrades with mileage and travel.
+- **Takes.** 0.5-1 day per set
+- **Television.** Series carry lens sets for months and re-check at hiatus; features project the whole set before shooting and again after any big travel move or a drop.
+
+### Camera package spec and bid
+
+A written package — bodies, backups, lens sets, filters, support, accessories, media — goes out for quotes; the deal is negotiated as a weekly at a fraction of list, usually on a 3-day week.
+
+- **Who.** DP and 1st AC build the list; UPM/Line Producer bids it to Panavision, Keslow, ARRI Rental, Otto Nemenz, Company 3/Cinelease, MBS; mother's company signs the rental order
+- **Decides.** House, package size, number of bodies, backup depth, weekly rate, loss-and-damage terms, pickup/return dates, whether a second unit shares or splits the package.
+- **Engine.** Rental inventory per house with real stock counts, list rate, negotiated multiplier (30-60% of list is normal, est.), availability calendar, and a contention model — two shows wanting the same ALEXA 65 set in the same window collide.
+- **Takes.** 2-4 weeks in prep; quotes in 3-7 days
+- **Television.** Series buy an annual or per-season deal and often own the package outright through the studio (father's lot may own the gear and charge the show internally); features rent per production week.
+
+### Camera prep / checkout
+
+Two to five days on the prep bench: every body powered, every menu set, every lens mounted, every accessory built, media formatted and speed-tested, wireless video and focus paired, matte boxes and filters inventoried.
+
+- **Who.** 1st Assistant Camera leads; 2nd AC and camera utility; rental house prep tech; DIT preps the cart
+- **Decides.** Camera build per rig (studio, handheld, Steadicam, crash, drone), menu/user-set preferences, framelines, recording format, where the failure risks are.
+- **Engine.** Prep produces a package manifest of instanced items each with condition and compatibility flags; anything unpreppped raises a per-day probability of on-set failure (dead cable, wrong mount, missing shim) that eats shoot minutes.
+- **Takes.** 2-5 days for a feature; 1-3 days for a series; 1 day for a splinter unit
+- **Television.** Series re-prep at season start and spot-prep at hiatus; multicam studio shows prep the studio channels, CCUs and pedestals with an engineering crew instead of an AC team.
+
+### Back focus, collimation and flange depth
+
+Flange focal distance is set and verified per body with a depth gauge or collimator; zooms are back-focused at the long end wide open; shims are added or removed until marks track.
+
+- **Who.** 1st Assistant Camera; rental house optical tech for a real collimation
+- **Decides.** Whether marks can be trusted; whether a zoom holds focus through the throw; whether a lens gets pulled from the package.
+- **Engine.** Per-body flange error in hundredths of a mm and per-lens calibration error; combined error above a threshold makes focus marks drift with distance, raising soft-take probability that only shows up in dailies.
+- **Takes.** 20-45 min per body; re-check after any mount change
+- **Television.** Identical, but multicam live channels also set back focus on box lenses on the pedestal before every show day, since a servo zoom that loses back focus ruins every wide-to-tight move on air.
+
+### Ground glass, framelines and surround view
+
+The viewfinder and monitor framelines for capture, delivery and every protected ratio are loaded, with a chosen surround-view percentage so the operator sees outside the frame.
+
+- **Who.** 1st AC configures; DP and Director approve; VFX Supervisor and Post Supervisor sign the extraction plan
+- **Decides.** What the operator is actually protecting; how much headroom for reframing exists; whether boom/rig is visible in the extraction area.
+- **Engine.** Frameline set as rectangles in sensor coordinates with a hierarchy (capture, delivery, protect); the boom/rig-in-shot check and any post reframe both test against these rectangles, not against prose.
+- **Takes.** 30-60 min at prep; minutes to change on set
+- **Television.** TV routinely captures open gate/16:9 and protects 1.78 for broadcast plus 2.00 or 2.39 for a streamer 'cinematic' version. Features protect 1.78/1.85 for airline and home video from a 2.39 capture, or 1.90/1.43 for IMAX.
+
+### Look development and show LUT
+
+A show LUT or set of LUTs is built from test footage, sometimes with print-emulation, grain and halation, and becomes the on-set viewing transform and the starting point in the DI.
+
+- **Who.** DP with the DI colourist (Company 3, Picture Shop, Harbor, FotoKem); Director approves; VFX gets a copy
+- **Decides.** Contrast and colour of everything the director sees on the day; whether the DP exposes to the LUT or under it; how much latitude is handed to post.
+- **Engine.** LUT objects with input encoding, output display, and measured effect on apparent contrast/saturation; on-set exposure decisions are stored relative to the LUT so a later grade can reveal or destroy what was protected.
+- **Takes.** 3-10 days in prep; revisions through the shoot
+- **Television.** A series LUT is written into the show bible and handed to every episodic DP so episodes match; features can drift the LUT act to act. Broadcast multicam grades live in the CCU instead — a paintbox, not a LUT pipeline.
+
+### Makeup, hair and wardrobe camera test
+
+Principals are shot through the actual taking lens, filtration and LUT, in the intended light, so skin, wigs, prosthetics, fabrics and colours are judged the way the camera will see them, not the way the room does.
+
+- **Who.** Director, DP, Makeup Dept Head, Hair Dept Head, Costume Designer, and the cast — this is the actor's test too (playable as the actor)
+- **Decides.** Which diffusion sits on the lens for close-ups; foundation and highlight choices; fabric sheen and colour that would buzz or go grey; hair edge against the background.
+- **Engine.** Actor appearance state with parameters (skin texture, hairline, prosthetic seam) that interact with lens sharpness, diffusion strength, key-to-fill ratio and sensor colour; the test result modifies how those numbers land, so the choice has a measurable payoff on screen.
+- **Takes.** 0.5-2 days, 1-4 weeks before shooting
+- **Television.** TV tests at pilot and for new cast only; features retest for period looks, aging makeup and prosthetics. Multicam sitcoms test under the flat, hot, fixed studio key where nothing can hide.
+
+### Shot list, camera cards and coverage plan
+
+Every scene is broken into setups with size, lens, height, movement and camera assignment; the AD orders them by lighting and company moves.
+
+- **Who.** Director with DP; 1st AD converts to a shooting order; Script Supervisor tracks it; on multicam the Camera Coordinator issues cards
+- **Decides.** How many setups the day contains, which actor is covered in which pass, the order of masters and close-ups, and how many camera bodies are working.
+- **Engine.** Setup objects: size, focal length, height, movement device, camera letter, estimated relight/turnaround minutes. The day's minutes come out of the sum, and unshot setups become the thing lost when the day falls behind.
+- **Takes.** Days in prep per block; revised nightly
+- **Television.** Episodic TV plans 30-60 setups a day against 5-8 pages; features often 10-25. Multicam sitcom plans camera cards per scene for four simultaneous cameras rather than sequential setups; live multicam issues a full shot-by-shot camera card per operator.
+
+### Lens selection per setup
+
+A focal length and stop are chosen for a given frame, working distance and background compression; the choice sets perspective, depth of field and how much of the room is in frame.
+
+- **Who.** Director of Photography chooses; Director drives the size; 1st AC mounts; the actor is directly affected (a 27mm at 3 ft is a different face than a 100mm at 20 ft)
+- **Decides.** Perspective on faces; how much set/location must be dressed and lit; whether the dolly can get where it needs to; how forgiving focus will be.
+- **Engine.** Real optics: field of view from focal length and gate width, hyperfocal and DOF from focal length, T-stop, distance and circle of confusion (~0.025mm S35, ~0.032mm FF), plus a per-lens distortion and breathing figure that changes the frame when focus moves.
+- **Takes.** Seconds to decide; 2-10 min per lens change
+- **Television.** Multicam sitcom operators live on zooms because four cameras must reframe live without swapping glass; single-camera drama swaps primes. Live studio multicam uses box zooms with 100x range and 2x extenders.
+
+### Exposure setting (stop, EI, ND, shutter)
+
+Four dials trade against each other for the same brightness: T-stop, exposure index, neutral density, shutter angle. Each has a side effect — depth of field, noise floor, IR pollution, motion blur.
+
+- **Who.** Director of Photography sets; 1st AC executes the iris; DIT confirms on the waveform; Gaffer adjusts the light to match
+- **Decides.** Depth of field for that frame; how much latitude sits in the highlights; whether a face reads at 800 EI or is pushed to 3200; how much light must be rigged.
+- **Engine.** Exposure model: incident level in foot-candles, T-stop, EI, ND density, shutter angle, resulting exposure in stops relative to the sensor's native. Over/under drives measurable noise and clipping that survives into the grade.
+- **Takes.** 1-5 min per setup; seconds for a stop change
+- **Television.** Multicam and live TV hold a fixed stop across all channels and shade in the CCU instead — the operator does not change the iris, the Video Controller does, and the stop is the same for every camera in the row.
+
+### Filtration selection and matte box build
+
+Glass goes in front of (or behind) the lens: diffusion, ND, IRND, polariser, grads, streaks, colour. Stages are 4x5.65, 6.6x6, or 138mm round; some filters must rotate.
+
+- **Who.** Director of Photography chooses; 1st AC builds; 2nd AC pulls and cleans; the actor may have a contractual say over close-up diffusion
+- **Decides.** Highlight bloom and skin softening; contrast floor; sky density; reflection control; whether flares streak; whether the look is baked in or left to the DI.
+- **Engine.** Filters as stacked optical operators with measured strength (bloom radius, contrast lift, stop loss, IR transmission, polarisation angle). Stacking too many produces real vignetting and internal reflection on wide lenses.
+- **Takes.** 1-3 min per change; the set is chosen in prep
+- **Television.** Series keep one diffusion on the lens for the whole season to stay matchable; features change per sequence. Live multicam uses almost no diffusion — it cannot be matched across four channels being shaded in real time.
+
+### Focus pulling and marks
+
+Distances are measured with tape or Cine Tape, marked on the lens disc and the floor, and pulled live during the take on a Preston FIZ, cforce/Hi-5, or by hand on the barrel.
+
+- **Who.** 1st Assistant Camera (focus puller); 2nd AC sets marks and slates; the actor's mark-hitting decides whether it works
+- **Decides.** Whether the take is usable; how much the operator can move; whether the actor is free to improvise the blocking or must hit a taped mark.
+- **Engine.** Per-take focus error in cm against DOF depth in cm; if error exceeds DOF the take is soft. DOF shrinks with a longer lens, a wider stop, a bigger sensor and a closer subject — so the same actor freedom costs more on a 65mm camera at T1.4.
+- **Takes.** Live; rehearsal plus 1-3 min per setup to set marks
+- **Television.** Multicam sitcom pullers work four cameras off wide stops and deep focus, with far more forgiveness; drama at T1.3 on large format is the hardest pull in the business.
+
+### Camera movement design
+
+The move is designed against the actors' blocking: what starts the move, what it lands on, what device carries it, and how long the crew needs to build the path.
+
+- **Who.** Director with DP and Camera Operator; Key Grip and Dolly Grip cost it; the actor's blocking is built around it
+- **Decides.** Which movement system gets rented and rigged; how much floor must be levelled or laid; whether the shot is one take or a stitched piece; how long the setup takes.
+- **Engine.** Each device has a state: build time in minutes, crew count, max payload kg, reach in ft, speed/acceleration limits, floor/leveling needs, and a smoothness quality that feeds take-usability. A Titan crane is not a dolly with a bigger number.
+- **Takes.** Minutes to design; 20 min to 4 hours to build depending on device
+- **Television.** Episodic drama buys one or two 'big' moves per episode and shoots the rest on sticks and dolly; features build days. Multicam and live TV get movement from pedestals, jibs and a Steadicam that must stay out of the other three cameras' frames.
+
+### Dolly work and track
+
+A Fisher or Chapman dolly is placed, levelled, track or a dance floor is laid, and the move is rehearsed to marks so the push, boom and stop land on beats of the scene.
+
+- **Who.** Dolly Grip operates and Key Grip rigs (Grip department, working for the DP); Camera Operator rides
+- **Decides.** Move geometry; whether track shows in frame; whether the floor supports it; the dolly grip's speed matching to actor pace.
+- **Engine.** Dolly instance with boom range in inches, seat/riser config, track vs dance-floor requirement, and a level tolerance. Floor unevenness above tolerance introduces visible bounce that costs takes.
+- **Takes.** 15-60 min to lay track; 5 min to reposition
+- **Television.** Multicam sitcom runs three or four Fisher 11 dollies on a smooth stage floor with no track at all, constantly repositioning between takes on an audience night.
+
+### Crane, jib and telescoping arm
+
+An arm — Chapman Titan/Hydrascope, Technocrane/Supertechno, Scorpio, Moviebird, Lenny Arm, Jimmy Jib — is assembled, counterweighted, and its sweep is cleared and called out for safety.
+
+- **Who.** Key Grip and crane technician build; Crane/Arm Operator drives; Camera Operator or a remote head carries the camera
+- **Decides.** Vertical reach and horizontal telescope; whether the move can travel through a window or over a set wall; how much of the stage or street must be closed to the sweep.
+- **Engine.** Arm records: max reach ft, telescope range, payload kg, counterweight mass, build time, crew count, base footprint, and whether it needs a tracking vehicle. Reach limits which framing is physically achievable from a given base position.
+- **Takes.** 45 min (jib) to 4 hours (Titan/Hydrascope) to build
+- **Television.** Live sports and awards run jibs and Technocranes permanently rigged for the show; drama rents per day. A 50 ft Supertechno on a soundstage is a feature or a big-event-TV item, not an episodic tool.
+
+### Remote head operation
+
+A stabilised or geared remote head (Libra, Scorpio, Ronford Atlas, Mo-Sys, Flight Head, ARRI SRH-3) carries the camera on a crane, car or gimbal while the operator sits at a console.
+
+- **Who.** Remote Head Technician builds and calibrates; Camera Operator runs pan/tilt on wheels or a joystick; Focus Puller runs remotely
+- **Decides.** Whether the operator's hand is on the frame at all; how much horizon stabilisation is applied; whether encoded data is being logged for VFX.
+- **Engine.** Head record: axes (2/3/5), stabilisation quality, payload, latency ms, whether it outputs encoded pan/tilt/roll and lens data. Latency and stabilisation quality feed operating accuracy; encoded output enables VFX match-move without a solve.
+- **Takes.** 30-90 min to build and balance
+- **Television.** Broadcast uses robotic heads (Telemetrics, Ross Furio, Vinten FHR) to run whole studio shows with fewer operators; scripted uses remote heads for reach and danger, not headcount.
+
+### Steadicam operation
+
+The camera is flown on a stabilised body-mounted sled (Steadicam Master/Ultra2/Volt, ARRI Trinity 2, Artemis) so the operator can walk, run, climb stairs and hand off to a dolly.
+
+- **Who.** Steadicam Operator (an Local 600 camera operator with their own rig, rented to the production); Steadicam AC; the actor walks with them
+- **Decides.** Whether the scene is a walk-and-talk in one, how long the take can physically run, and what the camera weighs (which limits which body and lens can fly).
+- **Engine.** Payload limit kg by rig; operator fatigue as a curve against take length and rig weight; horizon and float quality as usability inputs. A 65mm body plus anamorphic glass may be over the limit, forcing a different camera for that shot.
+- **Takes.** 20-40 min to build and balance; the operator is a daily hire with a rig rental
+- **Television.** Sitcom and live TV keep a Steadicam as the fourth or fifth camera for audience-night mobility; drama uses it to save setups. Steadicam day rate plus rig rental is a real line item in both.
+
+### Gimbal and stabilised rig
+
+A three-axis electronic gimbal (DJI Ronin 2/4D, Freefly MoVI Pro/XL, ARRI Trinity's hybrid) carries the camera on a handheld sled, a crane, a car mount or a drone.
+
+- **Who.** Camera Operator or a dedicated gimbal/technical operator; 1st AC runs remote focus
+- **Decides.** Movement that is neither dolly-smooth nor handheld — whether the camera can run, crawl through a car window, or be handed between rigs mid-take.
+- **Engine.** Payload kg, battery runtime minutes, axis limits, and a distinct motion signature (stabilised but with horizon float) that reads differently from Steadicam and from dolly. Payload gates which body+lens fits.
+- **Takes.** 15-45 min to balance; rebalance after any lens change
+- **Television.** Effectively the same in both, but TV leans on gimbals harder because they are cheaper and faster to deploy than a Steadicam operator plus rig on a short schedule.
+
+### Handheld operation
+
+The camera is shouldered or held low with a handgrip/Easyrig, so the frame carries the operator's body. Weight distribution and the presence of a shoulder pad decide how long it can be sustained.
+
+- **Who.** Camera Operator (or the DP operating); 1st AC pulls off a monitor or the barrel
+- **Decides.** Texture of the scene; how fast a camera can follow an unrehearsed actor; how many takes the operator can physically hold.
+- **Engine.** Rig weight kg, balance point, operator fatigue by take duration, and a shake amplitude parameter that grades from 'documentary' to 'locked' and interacts with long lenses (a 100mm handheld reads as chaos, a 21mm reads as intimacy).
+- **Takes.** 5-10 min to reconfigure the build from studio to handheld
+- **Television.** Multicam sitcom almost never goes handheld — a handheld camera cannot stay out of the other three cameras' frames. Single-camera comedy and drama use it constantly.
+
+### Aerial unit: drone or helicopter
+
+A UAS (DJI Inspire 3, Freefly Alta X) or a gyro-stabilised helicopter mount (Shotover F1/U1, Cineflex Elite, GSS) flies the camera; airspace, TFRs, permits and safety perimeters are arranged.
+
+- **Who.** Aerial Coordinator, Drone Pilot (FAA Part 107 certificate, plus waivers) and Camera Operator on a gimbal console; for helicopters a Tyler/Shotover/Cineflex operator and a film pilot
+- **Decides.** Whether the shot exists at all; what payload can fly (drone gimbals cap the camera); altitude, speed and legal envelope; how much the day costs.
+- **Engine.** Payload kg limit per platform, battery/fuel endurance minutes, wind ceiling, legal state (Part 107, night waiver, over-people waiver, closed-set/TFR), and a per-flight weather gate. Weather or permit failure cancels the shot outright.
+- **Takes.** Batteries 8-20 min per flight (drone); 1-2 hours per helicopter sortie; permits days to weeks
+- **Television.** TV flies small drones under Part 107 with a local operator on a half-day; features close airspace and put a Shotover on a helicopter. Live sports use cable systems (Skycam, Spidercam) instead of free flight.
+
+### Vehicle rig, process and car-to-car
+
+The camera is mounted to a picture car (hood, door, hostess tray, boot), hung from a Biscuit/low-loader or process trailer, or carried on a crane-arm camera car running alongside.
+
+- **Who.** Key Grip and Rigging Grip build; Precision/Picture Car Driver; Camera Car driver with a Russian Arm/Ultimate Arm operator; Transportation Coordinator
+- **Decides.** Whether the actor drives or is towed; whether backgrounds are real, plate-projected or an LED volume; how fast the unit can legally move; the size of the road closure.
+- **Engine.** Mount types with payload and vibration figures; rig build times; tow rigs remove the driving-actor requirement; road closure permits and police escorts as cost and calendar items. Vibration feeds take usability on long lenses.
+- **Takes.** 1-3 hours to rig a car; a half-day to load a process trailer
+- **Television.** TV uses poor-man's process and LED-wall car stages to keep car scenes on the lot; features run full camera-car units on closed roads. The father's lot renting out a car-process stage is a real revenue line.
+
+### Underwater and water unit
+
+The camera goes into a housing (splash bag to full deep housing) or on a water-capable remote head; lenses get dome or flat ports; the unit works to dive tables and safety-diver ratios.
+
+- **Who.** Underwater DP, Underwater Camera Operator, Safety Divers, Marine Coordinator; housing tech from Hydroflex/Gates/Nauticam
+- **Decides.** Whether a scene is shot wet or dry-for-wet; what glass can be used (dome ports change field of view and close focus); actor water time and the number of takes the cast can physically do.
+- **Engine.** Housing catalogue with depth rating, port type and its optical effect (flat port introduces refraction: ~1.33x apparent magnification, so a 25mm behaves near 33mm), plus a cast water-exposure/fatigue clock and mandatory safety-diver headcount.
+- **Takes.** 1-2 hours to load a housing; days of prep and a tank booking
+- **Television.** TV mostly buys tank days at a facility with a rented housing; features build custom water units and book dive tanks (Warner Bros., Pinewood, Baja) for weeks.
+
+### Motion control programming
+
+A robotic arm or encoded crane repeats an identical move pass after pass so elements — twinning, split screens, clean plates, miniatures, effects layers — can be combined frame-accurately.
+
+- **Who.** Motion Control Operator/Technician (MRMC Bolt/Milo, Technodolly, Kuka); VFX Supervisor specifies; 1st AC on the head
+- **Decides.** Whether a shot is achievable at all (one actor as twins, a face replacement, a beat matched to a miniature); how many passes the day must accommodate.
+- **Engine.** Move data stored as a keyframed path with repeat accuracy in mm, max speed and payload; each pass costs real minutes; VFX comps that require a repeatable pass fail if the move was not encoded.
+- **Takes.** 2-6 hours to programme a move; 3-15 min per repeat pass
+- **Television.** TV budgets rarely support a Bolt; the same effect is done with a locked-off camera and split-screen, which constrains what the camera can do in that scene. Features and commercials use motion control freely.
+
+### Multi-camera placement on a single-camera show (A/B/C)
+
+Additional bodies are placed to steal a second or third size in the same pass — usually a tighter lens on the same eyeline, or a cross-shot that does not contaminate the lighting.
+
+- **Who.** Director of Photography with the Director and the A-Camera Operator; 1st AD balances the day
+- **Decides.** Setup count for the day; lighting compromise (two cameras rarely both get the ideal light); extra crew, media and rental cost.
+- **Engine.** Each additional body adds a crew set (operator + 1st AC + 2nd AC), a media stream in GB/hr, a rental line, and a lighting-quality penalty that grows with the angle between the two cameras. It buys back setup minutes.
+- **Takes.** Adds 5-15 min per setup to place; saves a full setup when it works
+- **Television.** Episodic TV runs A and B as standard on nearly every setup because the schedule demands it; features often run single-camera for lighting control and add B only for stunts, crowd and once-only events.
+
+### Film-style multicam (sitcom) camera plan
+
+Three to four cameras on Fisher dollies shoot each scene simultaneously from a fixed audience-side arc; camera cards assign each operator a size per line; the show is cut from the ISOs with a line cut for reference.
+
+- **Who.** Director, DP, Camera Coordinator, A/B/C/X Camera Operators, Dolly Grips, Video Controller; shot before a live audience
+- **Decides.** Which camera holds which actor on which line; how the scene can be blocked (nothing may cross the fourth wall); how many takes the audience will tolerate.
+- **Engine.** Camera-card objects mapping script lines to camera letters and sizes; a fourth-wall constraint that invalidates blocking; a simultaneous-coverage model so one take yields three or four usable angles; audience fatigue as a clock.
+- **Takes.** Blocking day, pre-shoot day, camera-blocking day and a show night — a 5-day week per episode
+- **Television.** This is a television-only form. Film does not shoot this way. Crew titles differ too: Camera Coordinator, Video Controller, X camera (the swing/roving camera) have no feature equivalent.
+
+### Live / studio multicam and vision mixing
+
+Four to fifty camera channels feed a production switcher over SMPTE fibre or triax; the director calls shots live, the TD cuts, EVS replays, and the programme feed is the deliverable.
+
+- **Who.** Technical Director on the switcher, Director calling shots, Camera Supervisor, Camera Operators on pedestals, Video Controller (shader), EVS Replay Operator, Lighting Director (not a DP)
+- **Decides.** Camera count and positions; lens ranges on the box lenses; robotic vs manned; replay angles; whether the show is live, live-to-tape or as-live.
+- **Engine.** Channel objects (camera head, CCU, cable run in metres, lens, mount) plus a switcher state machine with preview/programme, ME rows, keyers, DVEs. Genlock/timing is a hard constraint — an ungenlocked source cannot be cut to cleanly.
+- **Takes.** 1-3 day rig; rehearsal/camera blocking day; show day
+- **Television.** Entirely television. Film's only contact with it is a concert film or an event shot multicam. The job titles (TD, Video Controller, Camera Supervisor) do not exist on a film crew.
+
+### Camera shading and CCU matching
+
+Every studio channel is matched live on a waveform and vectorscope — iris, black level, gamma, knee, matrix, white balance — so cuts between cameras are invisible.
+
+- **Who.** Video Controller / Vision Engineer (Video Operator) at the CCU/RCP rack; Camera Supervisor arbitrates
+- **Decides.** Whether the cut between camera 2 and camera 4 shows a colour or exposure jump; how much correction is baked in versus left to a grade.
+- **Engine.** Per-channel gain/black/gamma/knee/matrix values and a drift model (lamps warm, daylight changes, iris follows). Mismatch above a tolerance is visible on every cut and is the real cost of not having a shader.
+- **Takes.** 30-90 min to line up before a show; continuous during it
+- **Television.** Multicam only. In single-camera work the equivalent is the DIT's CDL, applied per setup and not live. A sitcom on ALEXAs still shades — through the DIT's live grade rather than a broadcast CCU.
+
+### Sync: genlock, timecode and jam
+
+Every camera and recorder is locked to the same timecode (and, in multicam or LED-volume work, to the same genlock reference — black burst or tri-level sync) and re-jammed through the day as clocks drift.
+
+- **Who.** 2nd Assistant Camera jams boxes; DIT or Video Engineer distributes reference; Sound Mixer holds the master clock
+- **Decides.** Whether multi-camera takes sync in post without manual slipping; whether an LED wall or a practical screen tears in frame.
+- **Engine.** Per-device clock with a drift rate (parts per million) and last-jam timestamp; drift past a frame causes sync errors in editorial. Genlock is a boolean requirement for switching, LED volumes and 3D rigs.
+- **Takes.** 2 min per device; re-jam every 4-6 hours
+- **Television.** Live TV cannot function without genlock at all — it is infrastructure. Single-camera film can survive on timecode alone until an LED wall, a process screen or a 3D rig enters, at which point genlock becomes mandatory.
+
+### Frame rate, high speed and ramps
+
+Sensor or camera frame rate is set above or below project rate for slow or fast motion, sometimes ramped within a shot with a matched iris/shutter compensation.
+
+- **Who.** Director of Photography sets; 1st AC executes; VFX and Editorial must be told; Sound knows it is MOS above sync speed
+- **Decides.** The speed of the action on screen; how much light is needed (doubling the frame rate at a fixed shutter angle costs a stop); whether dialogue can be recorded; whether resolution must drop to hit the rate.
+- **Engine.** Per-body rate table keyed to resolution and sensor mode (e.g. ALEXA 35 up to 120 fps at 4.6K; ALEXA 35 Xtreme to 330 fps at full 17 stops and 660 fps in Sensor Overdrive at ~11 stops, EI 1600; V-RAPTOR [X] 8K to 120 fps, 2K 2.4:1 to 600 fps). Light demand and data rate scale with rate.
+- **Takes.** Seconds to change; minutes to relight for the stop loss
+- **Television.** TV rarely goes above 120 fps because of the light and data cost; features hire a Phantom Flex4K (up to ~1,000 fps at 4K, ~1,955 fps at 2K) as a specialty day. TV's project rate is fixed by the broadcast standard (23.98/25/29.97), a feature's by choice.
+
+### Shutter angle and flicker management
+
+Shutter angle is chosen for motion blur and, critically, to avoid flicker or banding from HMIs on magnetic ballasts, fluorescents, LED PWM dimming, CRT/LCD screens and pulsed practicals.
+
+- **Who.** Director of Photography with the Gaffer; DIT verifies on a monitor; 1st AC sets the angle
+- **Decides.** Motion blur (180° at 24 fps = 1/48 s); whether a light source bands; whether screens in shot roll.
+- **Engine.** Flicker model: source frequency and duty cycle vs frame rate and shutter angle; mismatched combinations produce banding or pulsing that ruins the take. 60 Hz magnetic-ballast HMI at 24 fps is safe at 144° or 172.8°, not 180°.
+- **Takes.** Seconds to set; minutes to hours to diagnose a flicker on set
+- **Television.** Studio TV designs the lighting grid around the frame rate once and never thinks about it again; location film work meets a new set of uncontrolled sources every day. LED volumes add panel refresh rate as a third frequency to reconcile.
+
+### Media management and offload
+
+Cards and drives (Codex Compact Drive, RED PRO CFexpress, Sony AXS/SxS, CFexpress Type B) are offloaded to at least two destinations with checksum verification, then the card is only cleared after verification.
+
+- **Who.** Digital Imaging Technician and/or Digital Loader (Data Wrangler); on film, the 2nd AC loader
+- **Decides.** How many cards the package needs; whether the day can keep rolling without waiting for a card; where the second copy lives before the LTO.
+- **Engine.** Per-format data rate GB/min, card capacity, copy speed, verification time, and a hard rule of two verified copies. Insufficient cards or offload speed stalls the shoot — 'waiting on media' is real lost minutes.
+- **Takes.** Roughly 1:1 to 1:3 against shot minutes depending on data rate and drive speed
+- **Television.** Episodic shows generate huge volumes on A/B cameras every day and often offload to a dedicated on-set DIT truck with LTO. Features may carry more media and offload at a lab overnight.
+
+### Dailies creation and delivery
+
+Camera originals are transcoded to viewing files with the show LUT/CDL applied, synced to sound, named per the camera reports, and pushed to editorial, the studio and the production company.
+
+- **Who.** DIT on set for near-set dailies; dailies colourist and lab (FotoKem, Company 3, Picture Shop); Post Supervisor owns the pipeline
+- **Decides.** What the director, the DP, the studio and the actor actually see the next day; whether a soft take, a flicker or a boom is caught in time to reshoot.
+- **Engine.** Dailies produce a per-take quality report (exposure, focus, boom/rig in frame, flicker, continuity) available the following day; reshoot decisions are made from that report, and a show that skips dailies discovers problems too late to fix cheaply.
+- **Takes.** Overnight; 4-12 hours from wrap
+- **Television.** TV dailies circulate to a large studio/network group and notes come back fast; features circulate narrowly. The actor (playable) sees their own dailies only if the production grants it — a real contractual point.
+
+### Film loading and magazine handling
+
+Raw stock is loaded into magazines in total darkness, cans are labelled, exposed rolls are taped, canned and logged, and short ends are recorded for reuse.
+
+- **Who.** 2nd Assistant Camera (clapper loader, UK) in a darkroom, changing tent or black bag; Camera Truck as base
+- **Decides.** How many magazines are in play; how often the camera must stop to reload; whether a roll is lost to a loading fault.
+- **Engine.** Magazine objects with capacity (400/1000 ft, 16mm 400 ft), a load time (2-5 min), a reload interruption to the shoot clock, and a per-load fault chance (fogging, scratch, mis-thread) that is only discovered at the lab the next day.
+- **Takes.** 2-5 min per load; a 35mm 4-perf 1000 ft mag runs about 11 min at 24 fps
+- **Television.** Almost no television shoots film now; when it does (a prestige pilot, a period series), the magazine reload is a scheduling cost the schedule has to absorb. Features shooting film build the reload into the day.
+
+### Film camera running, gate checks and footage
+
+After a printed take the gate is checked for a hair or emulsion build-up; footage counters are logged per take; camera speed and the loop are verified before each roll.
+
+- **Who.** 1st Assistant Camera checks the gate; 2nd AC logs footage; Camera Operator watches the through-the-lens finder
+- **Decides.** Whether a good take must be repeated for a hair; when to reload; how many feet of stock the day consumed against the budget.
+- **Engine.** Per-take footage consumption derived from gauge and take length; hair-in-the-gate probability per roll; a stock-consumption budget in feet with a shooting ratio target that the production is held to.
+- **Takes.** 30-60 s per gate check; continuous logging
+- **Television.** A film-shot TV series runs a much tighter shooting ratio than a feature (roughly 6:1-10:1 vs 15:1-25:1 on a feature; est.) because stock and lab are a per-episode cost and the schedule is fixed.
+
+### Lab processing and scanning
+
+The negative is developed (ECN-2), prepped, and scanned on an ARRISCAN XT, Lasergraphics Director/ScanStation or Northlight at a chosen resolution and colour space.
+
+- **Who.** Lab (FotoKem, Cinelab London, Kodak Film Lab); Post Supervisor books; DP specifies push/pull and the scan
+- **Decides.** Push/pull processing (and the grain/contrast it brings); scan resolution (2K/4K/6K/8K); whether a print is struck; turnaround for dailies.
+- **Engine.** Cost per foot for stock, processing and scanning (≈$0.89/ft 35mm stock at 2026 Kodak list, ≈$0.18-0.25/ft process, ≈$0.10-0.30/ft scan — est., so roughly $110-125 per shot minute at 35mm 4-perf 24 fps), plus grain/resolution characteristics per stock and scan.
+- **Takes.** Overnight for dailies; 24-72 h for a full scan pass
+- **Television.** TV on film lives or dies on lab turnaround because the episodic cut has a locked airdate; a feature can wait. Very few labs still handle 65mm/15-perf, which narrows the choice to a handful of facilities worldwide.
+
+### Raw stock ordering and short ends
+
+Stock is ordered by emulsion, gauge, roll length and perforation, delivered cold, and drawn down through the shoot; recans and short ends are tracked and re-used or sold.
+
+- **Who.** 1st AC specifies; Production Coordinator orders from Kodak or a broker; Producer (mother) approves the stock budget
+- **Decides.** Which emulsions are available on the day (50D vs 500T changes what can be lit); how much contingency stock exists; whether an unplanned night costs a new order.
+- **Engine.** Stock inventory in feet by emulsion with lead time, price per foot, a cold-storage condition and an expiry; running out mid-day is a real stop. Each emulsion has grain, ISO and colour characteristics that alter the image.
+- **Takes.** Order lead time 2-10 days; delivered per shooting block
+- **Television.** Same mechanics, but a series orders per block against a per-episode stock budget while a feature orders against a total. Digital shows replace this entire process with media cards and data-storage cost.
+
+### Camera reports and lens/metadata logs
+
+Every take is logged: roll, scene, slate, take, lens, T-stop, filter, focus distance, frame rate, height, tilt, circled or not — and on digital, the camera's own metadata sidecars.
+
+- **Who.** 2nd Assistant Camera writes the report; DIT captures digital metadata; Script Supervisor cross-checks circled takes
+- **Decides.** What editorial and VFX know about each shot; whether a plate can be matched later; what gets printed or transcoded.
+- **Engine.** Per-take metadata record used by VFX match-move, by continuity checks (wrong lens on a matching angle), and by post. Missing metadata raises VFX cost with a measurable multiplier, which is the real reason it matters.
+- **Takes.** Continuous; 1-2 min per setup
+- **Television.** TV's volume makes the report the only reliable record across a season of episodic directors; features can lean on memory and dailies. Cooke /i and Zeiss eXtended Data automate much of it on modern lenses.
+
+### Slating
+
+A timecode slate is shot head or tail, sticks are clapped for a sync point, MOS is marked, and second sticks are called when the first are missed or soft.
+
+- **Who.** 2nd Assistant Camera; Sound Mixer confirms; Script Supervisor logs
+- **Decides.** How fast editorial syncs; whether a take needs manual syncing; the take numbering everyone downstream refers to.
+- **Engine.** Slate event per take with a sync-point quality flag; a missed or soft slate adds editorial sync time. On multi-camera setups every camera must see a slate or be timecode-jammed.
+- **Takes.** 10-20 s per take
+- **Television.** Broadly identical. Live multicam has no slate at all — everything is genlocked and timecoded from the truck.
+
+### VFX on-set data capture
+
+For every VFX shot: chrome and grey ball, colour chart, HDRI panorama, LiDAR scan, tracking markers, measured camera height/tilt/distance, lens serial and distortion grid, witness cameras.
+
+- **Who.** VFX Supervisor and VFX Data Wrangler; 1st AC supplies lens data; DP shoots the reference
+- **Decides.** Whether the shot can be tracked and lit in post at the budgeted cost; whether a plate needs a re-shoot; how many markers must be painted out.
+- **Engine.** Per-shot VFX data completeness score that multiplies the vendor's bid (missing HDRI or lens grid raises cost and time by a measurable factor); LiDAR and tracking markers as line items with capture time.
+- **Takes.** 5-20 min per VFX setup; a LiDAR scan 20-60 min per set
+- **Television.** Episodic VFX volumes are enormous and turnaround is weeks, so data discipline matters more, not less; but TV schedules give less time to capture it — the classic squeeze.
+
+### LED volume / virtual production camera work
+
+The camera is tracked in 3D so the LED wall renders a perspective-correct frustum for it; genlock ties camera shutter to panel refresh; moiré, colour and exposure are managed against the panel.
+
+- **Who.** Virtual Production Supervisor, Brain Bar operators, Camera Tracking Technician (Mo-Sys StarTracker, OptiTrack, Vicon), DP, 1st AC
+- **Decides.** Which lens focal lengths are usable without moiré or frustum edge; how far the actors can stand from the wall; whether a second camera can shoot at all (two frustums fight).
+- **Engine.** Panel pitch mm, refresh rate, brightness nits, colour volume; camera tracking latency ms; frustum geometry from lens FOV and camera position; a moiré function of pitch, focal length, stop and distance. Two cameras require frustum time-slicing or a static background.
+- **Takes.** Days to load and align a volume; minutes per lens change to re-verify
+- **Television.** TV uses volumes for recurring sets (a cockpit, a car, a spaceship bridge) where the build amortises across a season; features use them for controlled sequences. Volume stage rental is a big lot revenue item (playable as the father).
+
+### Video village, video assist and wireless video
+
+Camera feeds are transmitted (Teradek Bolt, ARRI WVS) to director's monitors, the DP's monitor, video village, the client tent and the DIT cart, with the LUT applied and recording for instant replay.
+
+- **Who.** Video Assist Operator / Playback Operator; DIT supplies the graded feed; 1st AC pairs the transmitters
+- **Decides.** Who gets to see the frame and in what grade; how instantly a take can be reviewed; whether the studio can watch remotely (and therefore give notes in real time).
+- **Engine.** Transmitter range in feet, latency ms, channel count and interference state; monitor calibration state per position. Remote viewing (streamer/studio) is a distinct feed with its own approval loop that can stall a set.
+- **Takes.** Set up once per day; 10-20 min per company move
+- **Television.** TV video village routinely includes network and studio executives watching live or remotely and giving notes between takes; features restrict it. Multicam has a control room instead of a village.
+
+### Camera crew hiring and union footing
+
+A camera department is hired: DP, A/B/C Camera Operators, 1st ACs, 2nd ACs, Camera Utility/Loader, DIT, Digital Loader, Still Photographer, plus Steadicam and specialty operators.
+
+- **Who.** Director of Photography chooses the operator and 1st AC; UPM negotiates; IATSE Local 600 (International Cinematographers Guild) in the US, BECTU in the UK
+- **Decides.** Headcount per camera body, day rates, box rentals, whether a Steadicam operator is on payroll or a daily, and how many hours before overtime and meal penalties bite.
+- **Engine.** Crew objects with rate, guild minimum, box rental, turnaround rules, and a competence stat that changes take-failure probability. Adding a camera body forces a matched crew set — this is why B camera is never free.
+- **Takes.** Hired 2-6 weeks before principal; daily hires booked 1-7 days out
+- **Television.** Series crews are hired for a season with episodic DPs rotating on a prep/shoot alternating pattern, so the operator and 1st AC carry continuity, not the DP. Features hire one DP for the whole show.
+
+### Camera insurance, loss and damage
+
+The package is insured for its replacement value; damage, loss, saltwater, sand and drops are claimed against a deductible; rental houses charge loss-and-damage on return.
+
+- **Who.** Production Insurance broker; UPM/Line Producer; 1st AC owns the equipment on the floor; rental house assesses damage
+- **Decides.** Whether a risky shot (water, vehicle, drone over a hard surface, stunt crash cam) is affordable; whether a vintage lens set can be exposed to a desert or a beach.
+- **Engine.** Per-item replacement value, deductible, and a damage-probability per environment/rig combination. A rare rehoused lens set may simply be uninsurable for a given stunt, which removes it from the option list for that day.
+- **Takes.** Bound in prep; claims take weeks
+- **Television.** Series carry annual policies and absorb attrition across a season; features insure per production. Either way, the rental house's loss-and-damage bill arrives after wrap and lands on the production company (mother).
+
+### Stereoscopic 3D capture
+
+Two matched cameras are mounted on a beamsplitter or side-by-side rig; interocular distance and convergence are set per shot to control depth; the rig is aligned continuously.
+
+- **Who.** Stereographer, 3D Rig Technicians, Convergence Puller; DP retains the image
+- **Decides.** Depth budget of the shot; which lenses can be matched; whether the shot is captured natively or converted in post.
+- **Engine.** Rig objects with interocular range mm, convergence control, alignment drift, and a payload limit that excludes most large bodies. Depth budget per shot with limits that, if exceeded, cause viewer discomfort — a real constraint, not a slider.
+- **Takes.** 1-2 hours to build and align; 10-20 min per shot to reset interocular/convergence
+- **Television.** Native 3D television is essentially dead outside event broadcasts; features that want 3D now usually convert in post, which is a post cost rather than a camera process. Native 3D roughly doubles camera crew and data.
+
+### Shooting IMAX 15/70 film
+
+A 65mm negative runs horizontally through the camera at 15 perforations per frame, held flat by vacuum, in a 1.43:1 frame roughly ten times the area of a 35mm Academy frame.
+
+- **Who.** Director and DP commit; IMAX supplies the cameras and technicians; specialist 1st ACs and loaders; IMAX post supervises
+- **Decides.** Whether the film carries a true 1.43 IMAX presentation; which scenes are IMAX and which fall back to 35mm or digital; how much of the schedule the format's limits eat.
+- **Engine.** Hard constraints: 1,000 ft magazine ≈ 3 min at 24 fps (film travels ≈336 ft/min); reload 5-10 min (2D), ~20 min (3D); 2D body 45-95 lb, blimped ~275 lb, 3D rig ~230 lb; camera noise prevents clean dialogue; a very small worldwide camera pool (est. ~10-15 bodies).
+- **Takes.** 3 min per magazine; months of scheduling around a handful of cameras
+- **Television.** Television never shoots 15/70. The only TV contact is a documentary or event piece licensed into IMAX venues, and that is a distribution decision, not an acquisition one.
+
+### Filmed for IMAX (digital) compliance
+
+A production uses an IMAX-certified digital camera, frames for the expanded 1.90:1 (or the taller 1.43:1 where the camera's open gate supports it), and delivers through IMAX's supervised post pipeline.
+
+- **Who.** Producer (mother's company) and distributor sign the IMAX deal; DP shoots to spec; IMAX post team supervises the DMR/master
+- **Decides.** Which bodies are allowed on the show at all; which sequences are expanded ratio; how framing must protect both IMAX and the flat/scope theatrical release.
+- **Engine.** Certified-camera list as a gate on the body option space (IMAX updates it quarterly; certification takes 6-9 months of joint testing with a manufacturer). Framing must satisfy two ratio rectangles at once, and the 1.43 presentation only exists on a small number of GT/laser screens.
+- **Takes.** Committed in prep; IMAX post adds weeks to the DI
+- **Television.** Not a television process, but the streamer equivalent — Netflix's approved-camera list — is exactly the same shape of constraint applied to TV, and is checked the same way.
+
+### Streamer/network camera approval compliance
+
+The show's cameras and recording formats are checked against the buyer's technical spec before the package is booked, because non-compliant footage can be rejected at delivery.
+
+- **Who.** Post Supervisor and DP verify; the streamer's production technology group audits; UPM must source compliant bodies
+- **Decides.** Which bodies and codecs are legal on the show; whether a small crash cam or a drone camera can be used for more than a few seconds of runtime.
+- **Engine.** Netflix-style rules as real gates: sensor ≥3840 photosites wide, 10-bit or greater, RAW or intraframe ≥240 Mbit/s at 23.98, scene-referred log and gamut, and ≥90% of final runtime from approved cameras. The engine tracks runtime share by camera.
+- **Takes.** Checked in prep; audited at delivery
+- **Television.** This is predominantly a television/streaming constraint. Theatrical features answer to the distributor and the DCP spec instead, which is looser about acquisition and stricter about the master.
+
+### Colour pipeline definition
+
+A working colour space and transform chain is defined end to end: camera log/gamut, working space (ACEScct or a manufacturer space), on-set LUT/CDL, VFX handoff space, and the display transforms for SDR, HDR and theatrical P3.
+
+- **Who.** DP, DI colourist, Post Supervisor, VFX Supervisor; DIT implements on set
+- **Decides.** Whether VFX, dailies, editorial and the DI all see the same image; how much of the look is fixed on the day; what the HDR pass will have to work with.
+- **Engine.** Explicit transform chain objects; mismatch between any two stages produces a measurable colour shift that appears as a cost/time hit at the DI or a VFX re-render — the cheap 'we'll fix it later' option must be able to actually fail.
+- **Takes.** Defined in prep over 1-2 weeks; enforced throughout
+- **Television.** TV must deliver SDR Rec.709 and HDR (Dolby Vision/HDR10) simultaneously for every episode on a fixed airdate; features do one theatrical P3 pass then home-video passes. TV's pipeline has to be repeatable across many episodes and vendors.
+
+### Anamorphic-specific handling
+
+Anamorphic glass squeezes the image horizontally, so monitoring must de-squeeze by the right factor, close focus is far longer than spherical, and the lens's own aberrations (oval bokeh, horizontal flare, mumps) become the look.
+
+- **Who.** Director of Photography chooses; 1st AC manages close focus and de-squeeze; DIT sets monitoring
+- **Decides.** Whether the widescreen frame comes from optics or from a crop; how close the camera can get to a face; how much light is needed (anamorphics are typically a stop or more slower).
+- **Engine.** Squeeze factor per lens (2x, 1.8x, 1.65x/1.6x, 1.5x, 1.33x, 1.25x) applied to sensor width to give final AR; per-lens close-focus distance in feet, T-stop, flare and distortion parameters; monitoring de-squeeze must match or the operator frames wrong.
+- **Takes.** Chosen in prep; adds minutes per setup on set
+- **Television.** Anamorphic on TV is a deliberate prestige signal and costs schedule (slower glass, longer close focus, more light). A 2x anamorphic set generally will not cover a full-frame sensor, which forces a crop mode and changes the effective focal lengths.
+
+### Specialty optics setup (probe, macro, snorkel, split)
+
+A probe lens, snorkel/periscope, macro, split-field diopter or Frazier system is mounted so the camera can go inside a small space, get very close, or hold two focus planes at once.
+
+- **Who.** 1st AC builds; DP specifies; often a specialty operator or the second unit
+- **Decides.** Shots that are otherwise impossible: inside a bottle, across a miniature, a hand and a face both sharp; what the second unit can take off the main unit's plate.
+- **Engine.** Per-optic parameters: minimum focus in inches/mm, magnification ratio, light loss in stops (probes are slow — T14 and worse), image circle, and required rig. Light loss changes the lighting requirement, which changes the day.
+- **Takes.** 20-60 min to rig; often shot as a separate unit
+- **Television.** TV buys these as a half-day specialty; features can carry them for a sequence. The light loss is the reason they are usually second-unit or insert-stage work in both.
+
+### Vintage and rehoused glass sourcing
+
+Older optics — Canon K35, Baltars, Speed Panchros, Lomo, Kowa, Todd-AO — are sourced, often rehoused into modern barrels with proper focus gears and matched fronts.
+
+- **Who.** DP specifies; rental house or a specialist (TLS, Zero Optik, GL Optics, P+S Technik, Whitepoint) supplies; 1st AC checks condition
+- **Decides.** The show's texture: flare behaviour, field curvature, colour cast, resolving power. Also availability — there are only so many complete sets in the world.
+- **Engine.** Finite rental inventory with real set counts and booking contention; per-set optical character (contrast index, flare gain, aberration, coverage circle) and a condition state. Uncoated vintage glass may not cover a large-format sensor at all.
+- **Takes.** Sourced 4-12 weeks out; sets can be booked a year ahead
+- **Television.** A series booking a rare vintage set for six months takes it off the market for every feature that year — a real scarcity conflict the lot (father) or the company (mother) can exploit or suffer.
+
+### Crash cams, minicams and body-mounted cameras
+
+Small bodies (RED KOMODO, Sony FX3, Blackmagic Pyxis/Micro, GoPro, DJI Osmo, Z CAM) are placed where a full camera cannot go or would be destroyed — inside a crash, on a helmet, under a car.
+
+- **Who.** 1st AC or a specialty technician rigs; Stunt Coordinator approves placement; VFX may own the plate
+- **Decides.** Coverage of once-only events; whether an expensive stunt yields three angles or one; whether that footage is legal under the buyer's approved-camera rules.
+- **Engine.** Small-body catalogue with real spec differences (sensor size, codec, dynamic range, rolling shutter) and a survival probability per placement; buyer approval rules gate how much runtime these can supply.
+- **Takes.** 10-40 min per placement
+- **Television.** Identical, but TV leans on minicams more because a full B camera crew costs a day rate and a minicam does not. The approved-camera runtime rule is the check on abuse.
+
+### Second unit and splinter unit camera package
+
+A separate camera package shoots inserts, doubles, plates, drives, establishers and action while main unit works; it must match the main unit's format, lenses and LUT exactly.
+
+- **Who.** Second Unit Director, Second Unit DP, their own operator and AC team; UPM approves; main unit DP sets the look rules
+- **Decides.** How much can come off the main unit's schedule; whether the format choice is duplicated (a second ALEXA 65 set is a serious cost) or downgraded.
+- **Engine.** Duplicate package cost and availability, a match-quality figure between units (same lens family and LUT or not), and a schedule-relief number in days that the main unit gains. Mismatch shows in the cut.
+- **Takes.** Runs days to weeks in parallel; prepped like a main package
+- **Television.** TV's version is the 'splinter unit' or second-block crew running concurrently on another stage; because two episodes shoot in overlapping blocks, TV often runs two full units continuously, which doubles camera rental for the season.
+
+### Weather and environment protection
+
+Rain deflectors, rain covers, heaters, desiccant, sand covers, cold-weather batteries and lens defoggers are deployed; film stock and sensors are protected from condensation, dust and salt.
+
+- **Who.** 1st AC and camera utility; Key Grip supplies cover; Locations warns
+- **Decides.** Whether a day proceeds in weather; how long the package survives the environment; whether a body has to be swapped mid-day.
+- **Engine.** Environment state (rain, dust, salt, humidity, temperature) driving failure probability per body and lens and a protective-gear mitigation; condensation when moving a cold camera into warm air is a real several-minute stop.
+- **Takes.** 5-20 min to rig protection; ongoing
+- **Television.** Effectively the same. TV's tighter schedule means a weather-forced camera failure eats a day that has nowhere to go, while a feature has more cover-set flexibility.
+
+### Camera department wrap and return
+
+The package is stripped, inventoried, cleaned and returned; missing and damaged items are itemised; the rental house issues a damage assessment against the production's insurance.
+
+- **Who.** 1st AC and 2nd AC break down; rental house checks in; UPM settles loss and damage
+- **Decides.** The final cost of the camera department; the production company's standing with that rental house for the next show.
+- **Engine.** Per-item condition on return; a relationship score with each rental house that affects future quotes and priority on scarce inventory (which set of Ultra Vistas you can get next year).
+- **Takes.** 1-3 days after wrap; claims settle over weeks
+- **Television.** A series never fully wraps between seasons — the package is held on a hiatus rate or struck and re-prepped, and that decision is a real cost trade the production company (mother) makes.
+
+### Camera safety protocol
+
+Crane sweeps are cleared and called, remote heads are payload-checked, drones fly to a briefed perimeter, car rigs are torqued and safety-cabled, and no one stands where a rig can fall.
+
+- **Who.** 1st AD calls it; Key Grip and Stunt Coordinator enforce; Safety Officer on big rigs; the actor's consent matters for any rig near them
+- **Decides.** Whether a given movement is permitted with actors in frame; how far back the camera must be; whether a stunt double replaces the actor for the camera's sake.
+- **Engine.** Per-rig safety envelope (sweep radius, payload margin, tether requirement) and an incident probability that rises with skipped steps, fatigue and overtime hours — with consequences that reach insurance, guild complaints and the production's record.
+- **Takes.** 2-10 min per rig setup; a briefing at the top of the day
+- **Television.** Same rules, but TV's hour counts and back-to-back blocks make fatigue the bigger driver; the guild and the studio (father's lot) both carry the record when something goes wrong.
+
+### Option spaces
+
+**Digital camera bodies (Super 35)** — 20 options
+
+`ARRI ALEXA 35 — 4.6K 4608x3164, 27.99x19.22mm, 17 stops, EI 160-6400, to 120 fps, LPL/PL, ARRIRAW+ProRes, Log C4/AWG4, ARRI Textures` · `ARRI ALEXA 35 Xtreme — same ALEV 4 sensor, to 330 fps at 17 stops, Sensor Overdrive to 660 fps at ~11 stops and EI 1600, ARRICORE codec` · `ARRI ALEXA 35 Live / Live Xtreme — multicam-configured, SDI-out HFR up to 8x, for live event and studio use` · `ARRI ALEXA Mini (legacy) — 3.4K S35 ALEV III, 14+ stops, to 200 fps, still widely rented` · `ARRI AMIRA (legacy) — documentary/ENG-bodied S35, built-in ND, shoulder ergonomics` · `RED KOMODO 6K — 19.9x10.4mm S35, global shutter, RF mount, to 40 fps 6K` · `RED KOMODO-X 6K — S35 global shutter, 6K 80p / 4K 120p, improved I/O` · `RED DSMC2 HELIUM 8K S35 (legacy) — 8192x4320 on a 29.90x15.77mm S35 sensor` · `RED DSMC2 GEMINI 5K S35 (legacy) — dual-sensitivity, strong low light` · `Sony FX9 (PXW-FX9) — 6K full-frame sensor, S35 crop modes, built-in variable ND, E-mount` · `Sony FX6 — full-frame 4K, variable ND, small-body workhorse` · `Panasonic VariCam LT — S35, dual native ISO 800/5000, V-Log/V-Gamut` · `Panasonic AU-EVA1 — S35 5.7K, dual native ISO 800/2500, EF mount` · `Canon EOS C300 Mk III — Super 35 DGO sensor, 16+ stops claimed, Cinema RAW Light` · `Canon EOS C400 / C80 / C70 / C50 — RF-mount full-frame and S35 bodies, internal ND` · `Blackmagic URSA Mini Pro 12K OLPF — 12288x6480 S35, Blackmagic RAW, PL/EF/F` · `Blackmagic Pyxis 6K / Micro Studio 4K — compact bodies for crash and multicam ISO use` · `Z CAM E2-S6 / F6 — small-body S35 and full-frame, budget and rig work` · `Phantom Flex4K (Vision Research) — 4K to ~1,000 fps, 2K to ~1,955 fps, specialty high-speed` · `Phantom VEO 4K / VEO 640 — smaller high-speed bodies for on-set slow motion`
+
+**Digital camera bodies (large format, full frame and 65mm)** — 19 options
+
+`ARRI ALEXA LF — 4.5K 4448x3096, 36.70x25.54mm, 14+ stops, LPL, ARRIRAW/ProRes, open gate is natively 1.43:1` · `ARRI ALEXA Mini LF — same LF sensor in a Mini body, Codex Compact Drive, the most-used LF body in TV drama` · `ARRI ALEXA 65 (ARRI Rental exclusive) — 6.5K 6560x3100, 54.12x25.58mm A3X sensor, 8.25µm photosites, ARRIRAW only` · `ARRI ALEXA 265 — 65mm A3X Rev.B sensor 6560x3100, 54.12x25.58mm, 15 stops, EI to 6400, 3.3 kg body (vs 10.5 kg ALEXA 65)` · `Sony VENICE 2 8K — 8.6K 8640x5760 full frame 36x24mm, 16 stops, dual base ISO 800/3200, 8-stop internal ND, X-OCN` · `Sony VENICE 2 6K — 6048x4032 full frame, dual base 800/3200, same body and ND` · `Sony VENICE (original) — 6K full frame, Rialto extension, 15+ stops` · `Sony BURANO — 8.6K full-frame, internal 8-stop ND, in-body stabilisation, autofocus, PL/E` · `Sony RIALTO / RIALTO 2 / RIALTO Mini — sensor block separated from the body by up to ~39 ft for tight rigs` · `RED V-RAPTOR 8K VV — 40.96x21.60mm VistaVision sensor, REDCODE RAW` · `RED V-RAPTOR [X] 8K VV — global shutter VV sensor, 8K to 120 fps, 6K to 160 fps, 2K 2.4:1 to 600 fps, Extended Highlights` · `RED V-RAPTOR XL / XL [X] — studio-bodied version with internal ND and full I/O` · `RED V-RAPTOR XE 8K VV — 8K to 60 fps, 17+ stops, lower-cost VV entry` · `RED RANGER MONSTRO 8K VV — 8192x4320 VistaVision, studio body` · `Panavision Millennium DXL2 — Monstro 8K VV in a Panavision body with Panavision colour science and ergonomics` · `Blackmagic URSA Cine 12K LF — 12K full-frame, Blackmagic RAW, built-in storage` · `Blackmagic URSA Cine 17K 65 — 17520x8040 RGBW 65mm sensor, 50.81x23.32mm, 2.9µm pitch, 16 stops, to 60 fps (170 fps at 8K)` · `Fujifilm GFX ETERNA 55 — 102MP 43.6x32.7mm 4:3 sensor, 8K30 DCI / 4K48 open gate, 14+ stops, dual base ISO 800/3200, internal variable ND, IMAX-certified (Jan 2026)` · `Panasonic S1H / BS1H / BGH1 — full-frame mirrorless and box bodies used for crash, rig and multicam ISO`
+
+**35mm film cameras** — 13 options
+
+`ARRICAM Studio (ST) — quiet studio body, 4/3/2-perf movements, 1-60 fps` · `ARRICAM Lite (LT) — handheld/Steadicam companion to the ST, shares magazines and accessories` · `ARRIFLEX 435 Xtreme — MOS high-speed, to ~150 fps, the standard insert/action body` · `ARRIFLEX 235 — tiny MOS handheld/crash body to ~60 fps` · `ARRIFLEX 416 — see 16mm list` · `Panavision Panaflex Millennium XL2 — the modern Panavision workhorse, quiet, 4/3-perf, Panavision mount` · `Panavision Panaflex Platinum — earlier studio body, still rented` · `Panavision Panastar II — high-speed to ~120 fps` · `Panavision Panaflex Lightweight / GII — handheld and Steadicam bodies` · `Aaton Penelope — 2-perf/3-perf 35mm, light, quiet, for handheld and long takes` · `Moviecam Compact / SL (ARRI-absorbed) — legacy studio bodies still in rental inventory` · `Mitchell BNC / Fries-converted bodies — historical and specialty use` · `Beaumont VistaVision and 8-perf horizontal bodies — VFX plates and, recently, full features`
+
+**16mm film cameras** — 7 options
+
+`ARRIFLEX 416 / 416 Plus — Super 16, to 75 fps, modern ergonomics` · `ARRIFLEX 16SR3 / SR3 Advanced — the long-standing Super 16 workhorse` · `Aaton XTR Prod / Xterà — quiet Super 16, excellent for documentary and handheld` · `Aaton A-Minima — very small Super 16 body using 200 ft daylight spools` · `Bolex H16 (Reflex/Rex) — spring-wound, non-sync, used for texture and inserts` · `Ikonoskop A-Cam / Krasnogorsk-3 / Eclair NPR — specialty and low-budget bodies` · `Canon Scoopic / Beaulieu R16 — vintage documentary bodies used for period texture`
+
+**65mm and IMAX film cameras** — 8 options
+
+`ARRIFLEX 765 — 5-perf 65mm, the standard modern 65mm sync body` · `Panavision System 65 — Panaflex 65, 65 Handheld and 65 High Speed bodies, 5-perf` · `Panavision Ultra Panavision 70 configuration — 65mm with a 1.25x anamorphic for 2.76:1` · `Fries 865 / converted Mitchell 65mm — legacy 5-perf bodies` · `IMAX MSM 9802 — 15-perf horizontal 65mm, 45-95 lb, 1,000 ft ≈ 3 min at 24 fps` · `IMAX MKIV — lighter 15/70 body used for handheld and rigged work` · `IMAX 3D camera — dual-strip 15/70, ~230 lb, refrigerator-sized, ~20 min reloads` · `IMAX next-generation 15/70 cameras — a small new fleet announced 2023, targeted at roughly 30% quieter operation (est.)`
+
+**Motion picture film stocks** — 9 options
+
+`Kodak VISION3 50D 5203 (35mm) / 7203 (16mm) — daylight, finest grain, needs the most light` · `Kodak VISION3 250D 5207 / 7207 — daylight balance with more speed` · `Kodak VISION3 200T 5213 / 7213 — tungsten, fine grain interior stock` · `Kodak VISION3 500T 5219 / 7219 — tungsten high speed, the default for night and low light` · `Kodak VISION3 in 65mm (5203/5207/5213/5219) — the same emulsions perforated for 65mm` · `Kodak EASTMAN Double-X 5222 / 7222 — black and white negative` · `Kodak EKTACHROME 100D 7294 (16mm/Super 8) — colour reversal` · `ORWO N75 / UN54 — black and white negative alternatives` · `Recans and short ends — previously purchased stock resold at a discount with unknown handling history`
+
+**Film gauges and pull-downs** — 10 options
+
+`35mm 4-perf Academy — 21.95x16.00mm gate, 90 ft/min at 24 fps, 1,000 ft ≈ 11 min` · `35mm 3-perf Super 35 — 24.89x13.86mm, 67.5 ft/min, 1,000 ft ≈ 14.8 min, 25% less stock than 4-perf` · `35mm 2-perf Techniscope — 45 ft/min, 1,000 ft ≈ 22 min, native ~2.39 with half the stock of 4-perf` · `35mm anamorphic 4-perf — full 4-perf gate with 2x squeeze for 2.39` · `VistaVision 8-perf horizontal 35mm — 37.72x24.92mm, 180 ft/min, 1,000 ft ≈ 5.5 min` · `Super 16 — 12.52x7.41mm, 36 ft/min, 400 ft ≈ 11 min` · `Regular 16 / Ultra 16 — smaller and centred gates for older lenses and camera bodies` · `65mm 5-perf — 52.48x23.01mm gate, 112.5 ft/min, 1,000 ft ≈ 8.9 min` · `65mm 5-perf with 1.25x squeeze (Ultra Panavision 70) — 2.76:1` · `IMAX 15-perf horizontal 65mm — ~70.41x52.63mm, 336 ft/min, 1,000 ft ≈ 3 min`
+
+**Aspect ratios** — 14 options
+
+`1.33:1 (4:3) — silent/TV legacy and open-gate capture ratio` · `1.375:1 Academy — classic 35mm sound ratio` · `1.43:1 — IMAX 15/70 and IMAX-certified open gate` · `1.66:1 — European widescreen and much Super 16 work` · `1.78:1 (16:9) — the broadcast and streaming default` · `1.85:1 — the standard US flat theatrical ratio` · `1.90:1 — IMAX digital / expanded aspect ratio` · `2.00:1 (Univisium) — increasingly common for streaming drama` · `2.20:1 — 70mm roadshow` · `2.35:1 — pre-1970 scope` · `2.39:1 (often called 2.40) — modern scope` · `2.55:1 — original CinemaScope` · `2.76:1 — Ultra Panavision 70` · `Multi-ratio (a picture that changes ratio between IMAX and non-IMAX sequences)`
+
+**Recording codecs and containers** — 11 options
+
+`ARRIRAW (uncompressed, MXF) — ARRI's raw, largest data, full latitude` · `ARRIRAW HDE — lossless encoded ARRIRAW, roughly 40% smaller` · `ARRICORE — ARRI's newer lower-data-rate codec introduced with the ALEXA 35 Xtreme` · `REDCODE RAW (R3D) — wavelet raw at selectable HQ/MQ/LQ or ratio-based compression` · `Sony X-OCN XT / ST / LT — 16-bit linear raw variants, XT largest to LT smallest` · `Blackmagic RAW — constant quality (Q0/Q1/Q3/Q5) or constant bitrate (3:1 to 18:1)` · `Apple ProRes 4444 XQ / 4444 / 422 HQ / 422 / 422 LT / Proxy` · `Avid DNxHR HQX / HQ / SQ / LB` · `Canon Cinema RAW Light` · `H.264 / H.265 (XAVC, All-I and Long-GOP) — small bodies and proxies` · `Uncompressed / 12-bit RGB via SDI to an external recorder`
+
+**Log encodings and colour gamuts** — 11 options
+
+`ARRI Log C3 / ARRI Wide Gamut (ALEXA Classic, LF, Mini LF)` · `ARRI Log C4 / AWG4 (ALEXA 35, 265)` · `Sony S-Log3 / S-Gamut3.Cine` · `RED Log3G10 / REDWideGamutRGB` · `Panasonic V-Log / V-Gamut` · `Canon Log 2 / Log 3 / Cinema Gamut` · `Blackmagic Design Film Gen 5` · `Fujifilm F-Log2 / F-Log2 C` · `ACES 2065-1 (AP0) and ACEScct / ACEScg (AP1) working spaces` · `Rec.709 / Rec.2020 / DCI-P3 / P3-D65 display spaces` · `PQ (SMPTE ST 2084) and HLG transfer functions; Dolby Vision and HDR10+ delivery`
+
+**Lens mounts** — 11 options
+
+`PL (positive lock) — the cinema standard, 52mm flange` · `LPL (large positive lock) — ARRI's large-format mount, 44mm flange, adapts to PL` · `Panavision PV mount — proprietary, only on Panavision bodies and glass` · `XPL — ARRI's 65mm mount for ALEXA 65/265` · `RF (Canon) — RED KOMODO/V-RAPTOR and Canon cinema bodies` · `E-mount (Sony) — FX and VENICE bodies (VENICE has a PL adapter)` · `EF (Canon) — legacy cinema and small bodies` · `L-mount — Panasonic and Leica cinema-adjacent bodies` · `G-mount (Fujifilm GFX) — ETERNA 55 native` · `Nikon F / Leica M / Hasselblad V — adapted, largely for rehoused vintage glass` · `B4 (2/3 inch) — broadcast box and ENG lenses on studio and ENG cameras`
+
+**Spherical prime families (Super 35 coverage)** — 18 options
+
+`ARRI/ZEISS Master Prime — T1.3, clinically sharp, minimal breathing` · `ARRI/ZEISS Ultra Prime — T1.9, the industry's default neutral set` · `ARRI/ZEISS Ultra Wide Zoom 9.5-18mm` · `ZEISS Super Speed MkII / MkIII — T1.3, warm, the 1980s-90s look` · `ZEISS Standard Speed — T2.1, older and gentler` · `ZEISS Compact Prime CP.2 / CP.3 / CP.3 XD — budget, metadata-capable` · `Cooke S4/i — the 'Cooke Look', warm and gentle, T2` · `Cooke miniS4/i — smaller, lighter S4 optics` · `Cooke Panchro/i Classic — modern recreation of the Speed Panchro` · `Cooke SP3 — compact full-frame primes` · `Panavision Primo / Primo V — the Panavision standard spherical set` · `Panavision Ultra Speed / Super Speed (Z-series) — faster, older character` · `Leitz (Leica) Summicron-C — T2.0, compact, clean` · `Leitz Summilux-C — T1.4, the premium fast set` · `Tribe7 Blackwing7 — deliberately tuned imperfection in several 'tunings'` · `Canon Sumire Prime / CN-E — soft-falloff, EF/PL` · `Sigma Cine FF High Speed — value full-frame set` · `Atlas Sun Series / Zeiss Nano Prime — newer value sets`
+
+**Spherical prime families (large format coverage)** — 17 options
+
+`ARRI Signature Prime — T1.8, LPL, gentle and organic, the default LF set` · `ARRI Signature Zoom 16-32 / 45-135 / 65-300` · `ARRI Rental Prime DNA / DNA LF — hand-tuned character glass, rental exclusive` · `ZEISS Supreme Prime — T1.5, clean and neutral full frame` · `ZEISS Supreme Prime Radiance — deliberate blue-tinted flare` · `Cooke S7/i — T2.0 full frame Cooke Look` · `Cooke S8/i — T1.4 full frame` · `Cooke Varotal/i FF 30-95` · `Panavision Primo 70 — large-format spherical` · `Panavision Panaspeed — T1.4, the fastest large-format primes available` · `Panavision Primo Artiste — softer and lower contrast, for VistaVision-size sensors` · `Panavision Sphero 65 — 65mm-format spherical` · `Panavision Primo 65 — Panavision's newer 65mm-format set` · `Leitz Prime / Leitz Thalia / Leitz Hugo — full-frame and 65mm Leitz optics` · `Leitz ELCAN — anamorphic-adjacent large format specials` · `Fujinon Premista 19-45 / 28-100 / 80-250 — large-format zooms` · `Whitepoint Optics TS70 (rehoused Hasselblad) — medium-format glass on LF sensors`
+
+**Anamorphic families with squeeze factors** — 22 options
+
+`Panavision C-Series 2x — the classic 1970s-80s scope look, compact` · `Panavision B-Series 2x — older, softer` · `Panavision E-Series 2x — cleaner and more consistent` · `Panavision G-Series 2x — lighter and faster, modern handling` · `Panavision T-Series 2x — flatter field, less mumps` · `Panavision Primo Anamorphic 2x — the clean premium set` · `Panavision Ultra Panatar 1.3x — squeeze on a 4:3 sensor to reach 2.39` · `Panavision Ultra Vista 1.6x — full-frame anamorphic giving 2.39 from an 8K VV sensor` · `ARRI Master Anamorphic 2x — clean, low distortion, T1.9` · `ARRI Rental ALFA 2x — large-format anamorphic, rental exclusive` · `Cooke Anamorphic/i 2x and Anamorphic/i SF (Special Flare)` · `Cooke Anamorphic/i Full Frame Plus 1.8x` · `Hawk V-Lite 2x / V-Plus 2x / C-Series 2x (Vantage)` · `Hawk 1.3x and MiniHawk 1.3x — squeeze for 4:3 sensors` · `Hawk V-Series 1.5x and Hawk65 for 65mm-format sensors` · `Hawk Class-X — newer Vantage anamorphic` · `Atlas Orion 2x (Super 35) and Atlas Mercury 1.5x (full frame)` · `Scorpio Anamorphic 2x (Servicevision)` · `Kowa Cine Prominar Anamorphic 2x — vintage character` · `Lomo Round Front / Square Front 2x — heavy vintage distortion and flare` · `Todd-AO / Technovision rehoused anamorphics` · `Laowa Nanomorph 1.5x, DZOFilm Pavo 1.8x, SIRUI Venus 1.6x — value anamorphics`
+
+**Cine zooms** — 12 options
+
+`Angénieux Optimo 15-40 / 28-76 / 17-80 / 24-290` · `Angénieux Optimo Ultra 12x (36-435mm) with swappable rear groups for S35/FF/U35` · `Angénieux Optimo Prime and EZ-1 / EZ-2` · `ARRI/Fujinon Alura 18-80 / 45-250 and Alura Studio zooms` · `ARRI Signature Zoom 16-32 / 45-135 / 65-300` · `Fujinon Premista 19-45 / 28-100 / 80-250 (large format)` · `Fujinon Cabrio 19-90 / 20-120 / 25-300 (servo, ENG-style handles)` · `Canon CN7 17-120 / CN10 / CN20 50-1000 / Flex Zoom 20-50 and 45-135` · `Cooke Varotal 18-100 / 25-250 and Varotal/i FF 30-95` · `ZEISS Lightweight Zoom LWZ.3 21-100` · `Panavision Primo Zoom 17.5-75 / 24-275 / ATZ / AWZ anamorphic zooms` · `Hawk anamorphic zooms (V-Plus 2x, 1.3x front anamorphic zooms)`
+
+**Broadcast box and ENG lenses** — 7 options
+
+`Canon UHD DIGISUPER 122 / 86 / 66 (2/3" box lenses for sports and events)` · `Fujinon UA107x8.4 / UA80 / UA27 (2/3" box and portable UHD)` · `Canon CJ20ex5B / CJ25ex7.6B (portable ENG UHD)` · `Fujinon UA22x8 / UA46x9.5 (portable UHD)` · `Fujinon Duvo hybrid PL box zooms for large-sensor broadcast` · `Canon and Fujinon 2x extenders and wide-angle converters` · `Studio build-up kits (zoom demand, focus demand, servo, and a shot box)`
+
+**Specialty optics** — 12 options
+
+`Innovision HD Probe II / Optex Excellence probe — periscope probes for tiny spaces` · `Laowa 24mm T14 Probe — macro probe, very slow, needs a lot of light` · `T-Rex / Revolution / Kenworthy snorkel systems — periscope with a rotating front` · `Frazier Lens System — extreme depth of field with a swivelling front element` · `P+S Technik Skater Scope — low-angle periscope` · `Century Swing/Shift and tilt-shift adapters — selective focus plane` · `Macro lenses: Cooke Macro, ZEISS 100mm Makro-Planar, Canon MP-E 65mm` · `Split-field diopters (+1/2, +1, +2, +3) and full diopters for close focus` · `Rota-Pola and motorised filter stages` · `Mirror/reflex long lenses and 800-1200mm long-lens packages` · `Lensbaby, Petzval and deliberately aberrated rehoused stills glass` · `Borescope and periscope rigs for miniatures`
+
+**Diffusion filtration** — 12 options
+
+`Tiffen Black Pro-Mist 1/8, 1/4, 1/2, 1, 2, 3, 4, 5` · `Tiffen Pro-Mist and Warm Black Pro-Mist` · `Tiffen Glimmerglass 1/8 to 5` · `Tiffen Black Satin and Satin` · `Tiffen Soft/FX, Black Diffusion/FX, Gold Diffusion/FX` · `Tiffen Ultra Contrast and Low Contrast 1/8 to 5` · `Tiffen Double Fog, Fog and Smoque` · `Schneider Hollywood Black Magic 1/8 to 2` · `Schneider Classic Soft, Radiant Soft, Digicon, Black Frost, White Frost` · `Harrison & Harrison Black Diffusion and HD diffusion sets` · `Nets and stockings behind the lens (bobbinet, silk, black net)` · `Practical hacks: hairspray, Vaseline on a clear filter, breath on glass`
+
+**ND, polarising and graduated filtration** — 9 options
+
+`ND 0.3 / 0.6 / 0.9 / 1.2 / 1.5 / 1.8 / 2.1 / 2.4 (1 to 8 stops)` · `IRND (Tiffen, Schneider Platinum IRND, Formatt Firecrest) — IR-corrected for digital sensors` · `Hot Mirror / IR cut filters` · `Linear and circular polarisers; motorised Rota-Pola` · `Graduated ND hard-edge, soft-edge and attenuator 0.3 to 1.2` · `Colour grads: sunset, tobacco, coral, blue, chocolate` · `Internal electronic variable ND (Sony FX/VENICE/BURANO, Fujifilm ETERNA 55, Canon C-series)` · `Behind-the-lens ND for Panavision bodies` · `Clear / optical flat (as a protective element that keeps the optical path constant)`
+
+**Colour and effect filtration** — 9 options
+
+`85 / 85B conversion (tungsten stock in daylight) and 80A (daylight stock under tungsten)` · `Antique Suede, Chocolate, Coral, Sepia, Tobacco, Straw` · `Enhancing and didymium filters` · `Streak filters: Tiffen 1mm/2mm/4mm, Schneider True-Streak (blue, gold, green, red)` · `Star filters 4/6/8-point` · `Contrast filters for black and white: yellow, orange, red, green` · `Center-spot and clear-center ND` · `Gels behind the lens (colour correction and colour effect)` · `Optical flats and UV`
+
+**Dollies and track** — 10 options
+
+`Chapman/Leonard PeeWee IV/V and Super PeeWee IV/V` · `Chapman Hybrid III/IV and Hustler IV/V` · `Chapman Sidewinder, Leonard, Pedolly and Zephyr crane-dolly` · `J.L. Fisher Model 10, 11 and 23 dollies; Fisher 9 and 21 low dollies` · `Panther Classic, Evolution and Twister dollies` · `MovieTech Cricket and Oktopod` · `Egripment dollies` · `Doorway dolly, Western dolly, skate wheels and Magliner` · `Straight and curved track, sleds, skates, and a plywood/Masonite dance floor` · `Slider and mini-jib for small moves`
+
+**Cranes, arms and jibs** — 11 options
+
+`Chapman Titan II and Super Nova cranes` · `Chapman Hydrascope 22 / 30 / 44 / 54 telescoping cranes` · `Chapman Lenny Arm II / III / Plus and Mini Lenny` · `Technocrane 15 / 22 / 30 and Supertechno 50 (telescoping, remote head)` · `Technodolly (motion-control Technocrane)` · `Scorpio Telescopic Crane 23 / 30 / 45 (Servicevision)` · `Moviebird 30 / 44 / 55` · `Jimmy Jib Triangle and other jib arms` · `Louma 2 remote crane` · `Matthews Tulip crane and porta-jibs` · `Giraffe crane and straight crane arms`
+
+**Remote heads** — 11 options
+
+`Libra Head (3-axis and 5-axis)` · `Scorpio Head Mk1/Mk2/Mk3 (Servicevision)` · `Ronford-Baker Atlas remote head` · `Mo-Sys L40 and Lambda heads` · `Flight Head 6 / Flight Head Mini (Filmotechnic)` · `ARRI SRH-3 stabilised remote head` · `Stab-C Compact and Stab-C Series` · `Oculus (Motorized Precision) robotic head` · `Hot Gears and Cinemoves heads` · `Blackcam and robotic broadcast heads (Telemetrics, Ross Furio, Vinten FHR)` · `Hydra underwater remote head`
+
+**Stabilisers and gimbals** — 10 options
+
+`Steadicam Master Series, Ultra2, Zephyr, M-1, M-2, and the Volt module` · `ARRI TRINITY and TRINITY 2 (hybrid mechanical/electronic stabiliser)` · `Tiffen Steadicam Archer and Aero for lighter payloads` · `Glidecam and budget mechanical stabilisers` · `Easyrig Vario 5 / Cinema 3 (weight relief, not stabilisation)` · `Flowcine Serene and Gravity One arm/vest systems` · `DJI Ronin 2, Ronin 4D, RS 4 Pro` · `Freefly MoVI Pro, MoVI XL, MoVI Carbon` · `Motion Impossible Agito (remote wheeled gimbal platform)` · `Newton stabilised head for cable and drone use`
+
+**Aerial systems** — 10 options
+
+`DJI Inspire 3 with Zenmuse X9-8K Air (Netflix-approved)` · `Freefly Alta X and Alta 8 Pro carrying a MoVI Pro/XL with a cinema body` · `DJI Matrice heavy-lift platforms with third-party gimbals` · `Shotover F1 / U1 / G1 / K1 gyro-stabilised helicopter mounts` · `Cineflex V14 / V14HD / Elite` · `GSS C516 / C520 gyro-stabilised systems` · `Tyler Middle Mount, Nose Mount and Major Mount (helicopter)` · `Wescam legacy systems` · `Cable systems: Skycam, Spidercam, CableCam, Flying-Cam` · `Balloon and blimp-mounted cameras for very slow high shots`
+
+**Vehicle and process rigs** — 11 options
+
+`Russian Arm (Filmotechnic) with Flight Head on a chase vehicle` · `Ultimate Arm and Edge Arm` · `Motocrane on a pursuit vehicle` · `Blackbird camera car (Performance Filmworks)` · `Shotmaker Blues and Elite camera/crane trucks` · `Biscuit Jr and Biscuit rigs (actor driven, car on a chassis)` · `Low-loader and process trailer (car towed, actors act)` · `Hood mount, door mount, hostess tray, boot/bonnet rig, suction-cup rigs` · `Tow dolly and A-frame tow rigs` · `Poor-man's process (car on a stage with moving light and rear projection)` · `LED volume car process stage with genlocked panels`
+
+**Underwater systems** — 9 options
+
+`Splash bags (Aquatech, Ewa-Marine) for surface and shallow work` · `Hydroflex housings and HydroRig systems` · `Gates housings for ARRI, RED and Sony bodies` · `Nauticam and SeaCam housings` · `Hydra underwater remote head` · `Dome ports and flat ports with matched port extensions` · `Water boxes and half-half (split-level) domes` · `Underwater lighting, comms and safety-diver support` · `Dry-for-wet and tank work as alternatives`
+
+**Motion control and repeatable systems** — 8 options
+
+`MRMC Bolt, Bolt Jr+, Bolt X high-speed cinebot arms` · `MRMC Milo, Talos and Cyclops rigs` · `Technodolly (encoded telescoping crane)` · `Kuka industrial arms with cinema control software` · `Flair and other motion-control software with Maya/Unreal export` · `Spidercam and cable systems with encoded data` · `Encoded heads and lens encoders logging FIZ for VFX` · `Cinetics, edelkrone and small-scale repeatable sliders`
+
+**Tripod heads and support** — 11 options
+
+`OConnor 2575D, 2560, 1030DS, 120EX fluid heads` · `Sachtler Cine 30 HD, Video 30, and Studio series` · `Ronford-Baker Fluid 7, Atlas and Heavy Duty heads` · `Cartoni Lambda, Maxima and Master series` · `ARRIHEAD 2 and ARRI geared heads` · `Panavision Panahead and Super Panahead (geared)` · `Worrall geared head` · `Mitchell-mount and 100/150mm bowl support` · `Standard tripods, baby legs, hi-hats, cheese plates and low-mode brackets` · `Dutch head, rocker plates, nodal heads and slant boards` · `Vinten Vector 750/950 studio pedestals and Fujinon/Canon pedestal builds for multicam`
+
+**Camera configurations** — 10 options
+
+`Single camera, one setup at a time (feature and single-camera TV drama)` · `Single camera with a B camera on most setups (episodic standard)` · `Three-camera film-style multicam before a live audience (sitcom)` · `Four-camera film-style multicam with an X/swing camera` · `Live multicam to a switcher with ISO recording (talk, soap, awards, sports)` · `Live-to-tape / as-live multicam` · `Concurrent splinter or second unit running its own package` · `Crash and minicam supplements on a main-unit setup` · `Motion-control repeat passes as a form of multi-angle capture` · `3D beamsplitter pair as a single logical camera`
+
+**Frame rates and shutter angles** — 8 options
+
+`Project rates: 23.98, 24, 25, 29.97, 30, 48, 50, 59.94, 60 fps` · `Sensor/camera rates from 1 fps to the body's maximum (12-1,000+ fps)` · `Shutter angles: 11.2°, 45°, 90°, 144°, 172.8°, 180°, 270°, 360°` · `Electronic shutter speeds on digital bodies (1/48, 1/50, 1/60, 1/96 and so on)` · `Ramps (frame-rate ramp, shutter ramp, iris-compensated ramp)` · `Undercranking for speed-up; overcranking for slow motion` · `High frame rate delivery (48 or 60 fps theatrical, 50/60p broadcast)` · `Variable-speed film camera motor settings`
+
+**Recording media and offload** — 10 options
+
+`Codex Compact Drive 1TB/2TB with ARRI bodies` · `Codex High Density Encoding drives and readers` · `RED PRO CFexpress and RED MINI-MAG` · `Sony AXS-A series cards and SxS Pro+` · `CFexpress Type A and Type B cards` · `Blackmagic URSA Cine media modules and CFexpress` · `Internal SSD modules (URSA Cine 8TB, Ronin 4D)` · `On-set copy stations with checksum verification (Silverstack, YoYotta, Hedge)` · `LTO-8/LTO-9 tape archive on set or at post` · `RAID shuttle drives and cloud upload (10G Ethernet / Blackmagic Cloud)`
+
+**Monitoring, wireless video and control** — 9 options
+
+`SmallHD, TVLogic, Flanders Scientific and Sony reference monitors` · `Director's monitors, DP monitors and video-village displays with per-position calibration` · `Teradek Bolt 4K and ARRI WVS wireless video (zero-delay class)` · `On-board EVFs: ARRI EVF-2/MVF-2, RED DSMC3 EVF, Sony DVF series` · `Waveform, vectorscope, false colour, zebras, focus peaking and frame-line overlays` · `LUT boxes and on-set grading (Pomfort LiveGrade, Colorfront)` · `Preston FIZ (HU3/HU4), ARRI Hi-5 and cforce motors, Tilta Nucleus-M` · `Camera control: ARRI ECS, RED Control, Sony's Ci/remote apps, broadcast RCP/CCU` · `Timecode: Ambient Lockit, Tentacle Sync, Deity; genlock via black burst or tri-level sync`
+
+**Camera department positions** — 15 options
+
+`Director of Photography / Cinematographer (ASC, BSC)` · `A / B / C Camera Operator; Steadicam Operator; Technocrane and remote head operators` · `1st Assistant Camera (focus puller)` · `2nd Assistant Camera (clapper loader)` · `Camera Utility / Camera Trainee / Loader` · `Digital Imaging Technician (DIT) and Digital Loader / Data Wrangler` · `Video Assist / Playback Operator` · `Unit Still Photographer` · `Camera Coordinator (multicam) and Camera Supervisor (broadcast)` · `Video Controller / Vision Engineer / Shader (broadcast)` · `Technical Director (broadcast switcher)` · `Stereographer and 3D rig technicians` · `Drone Pilot and Aerial Coordinator; Underwater DP and Underwater Operator` · `Motion Control Operator; Camera Technician / Engineer` · `Guild footing: IATSE Local 600 (ICG) in the US, BECTU in the UK`
+
+**Rental houses and suppliers** — 12 options
+
+`Panavision (proprietary cameras and optics, rental-only)` · `ARRI Rental (ALEXA 65, ALFA and DNA glass, rental-exclusive)` · `Keslow Camera` · `Otto Nemenz International` · `MBS Equipment Company / Cinelease` · `Company 3 / Panavision-affiliated post` · `Sim International` · `Camera Service Center and regional houses` · `Vantage Film (Hawk anamorphic, worldwide)` · `Musitelli, Movietech, Take 2 and other territory houses` · `IMAX Corporation (the only source of 15/70 cameras)` · `Specialty houses for vintage and rehoused glass (TLS, Zero Optik, GL Optics, P+S Technik, Whitepoint)`
+
+**3D and stereoscopic rigs** — 7 options
+
+`Beamsplitter (mirror) rigs for close interocular work` · `Side-by-side rigs for wider interocular and distant subjects` · `Cameron-Pace / 3ality legacy rigs` · `Stereotec and Element Technica rigs` · `IMAX 3D dual-strip 15/70 camera` · `Native stereo pairs of matched small bodies (KOMODO, Pyxis)` · `Post-conversion (no on-set rig; a post cost instead)`
+
+**Broadcast multicam camera systems** — 9 options
+
+`Sony HDC-3500 / HDC-5500 / HDC-P50 system cameras` · `Grass Valley LDX 100 / LDX 150 / LDX C150` · `Ikegami UHK-X700 / UHL-F4000` · `Panasonic AK-UC4000 / AK-UC3300` · `Hitachi SK-UHD series` · `Large-sensor system cameras (Sony HDC-F5500, Blackmagic URSA Broadcast G2) for shallow-depth studio looks` · `CCUs and RCPs, triax or SMPTE 311M hybrid fibre` · `Switchers: Grass Valley Kayenne / K-Frame, Sony XVS, Ross Acuity / Carbonite` · `EVS and replay servers; robotic pedestals; Jimmy Jibs; Skycam/Spidercam`
+
+### What gets got wrong
+
+- Sensor size is not a quality number; it is a geometry number. To hold the same framing on a bigger sensor you use a longer lens, which at the same T-stop gives less depth of field. If the engine does not compute field of view from focal length and gate width, and depth of field from focal length, stop, distance and circle of confusion, then 'large format' is a label.
+- Lens coverage must be enforced or the whole option space collapses. A Super 35 prime on a full-frame open gate vignettes; most 2x anamorphics do not cover full frame at all, which is exactly why 1.5x, 1.6x and 1.8x squeezes exist. Every lens needs an image-circle number and every sensor mode a diagonal.
+- Squeeze factor times sensor width gives the delivered aspect ratio. The same 2x lens produces 2.39 on a 4-perf gate and something else on a 16:9 sensor; a 1.3x needs a 4:3 sensor to reach 2.39. Anamorphic cannot be modelled as 'widescreen look' — it is arithmetic.
+- Maximum frame rate is a function of resolution and sensor mode, not a single figure per camera. ALEXA 35 does 120 fps at 4.6K; the Xtreme does 330 fps at full latitude and 660 fps only by giving up six stops of highlight and jumping to EI 1600. A flat 'max fps' field is a lie.
+- Rolling shutter is a real, measurable readout time. Global-shutter bodies (KOMODO, KOMODO-X, V-RAPTOR [X]) can shoot strobes, gunfire, whip pans and LED walls that skew or band on a rolling-shutter sensor. This is a capability difference, not a spec-sheet bullet.
+- ND above about 1.2 without IR correction turns blacks red on most digital sensors, and it is invisible on a small monitor. If the engine has an ND stack it needs an IR-transmission property and a consequence that appears in dailies.
+- Shutter angle is not only motion blur — it is flicker. A 60 Hz magnetic-ballast HMI at 24 fps is safe at 144° or 172.8°, not 180°. LED fixtures add PWM dimming frequency, and screens in shot add refresh rate. Three frequencies must be reconciled against the frame rate.
+- Film consumption is fixed by gauge and pull-down, not by preference: 35mm 4-perf runs 90 ft/min at 24 fps (1,000 ft ≈ 11 min), 3-perf 67.5, 2-perf 45, Super 16 36, 65mm 5-perf 112.5, IMAX 15/70 336 ft/min (1,000 ft ≈ 3 min). Every take spends feet, and feet are money three times: stock, processing, scan.
+- Film costs approximately $0.89/ft for 35mm stock at 2026 Kodak list, plus roughly $0.18-0.25/ft to process and $0.10-0.30/ft to scan — call it $110-125 per screen minute at 4-perf 24 fps before a single retake (estimates). Shooting ratio is therefore a real budget variable, not flavour.
+- IMAX 15/70 commits you to: a 3-minute magazine, a 5-20 minute reload, a 45-95 lb body (275 lb blimped, ~230 lb for 3D), a camera too loud for clean dialogue, a handful of slow prime lenses, a lighting package several times larger, a tiny worldwide camera pool, one of very few labs that can process 65mm, VFX at 15/70 resolution, framing that must also work at 1.90 and at 2.39 or 1.85, and a 1.43 presentation that exists on only a few dozen screens worldwide.
+- 'Filmed for IMAX' (digital) is a different commitment from 'Shot with IMAX film cameras': a certified body from a list IMAX updates quarterly, expanded-ratio framing, and IMAX-supervised post. New camera certification takes 6-9 months of joint testing, so a body that is not on the list cannot be made eligible for your shoot.
+- Netflix-style approval is a hard gate, not advice: a true 3840-photosite-wide sensor, 10-bit or greater, RAW or intraframe at 240 Mbit/s at 23.98, scene-referred log and gamut, and at least 90% of final runtime from approved cameras. That last rule is what stops a production covering everything with unapproved minicams.
+- Television is not film with more episodes. Episodic drama runs A and B camera on nearly every setup and shoots 30-60 setups a day against 5-8 pages; a feature may shoot 10-25. A sitcom shoots four cameras simultaneously with camera cards and a live audience, and cannot block through the fourth wall. Live multicam has no slate, no setups and no DP — it has a Lighting Director, a Technical Director and a Video Controller.
+- Multicam requires genlock, not just timecode. Cameras that are not locked to a common reference cannot be cut between cleanly in a switcher, and an LED volume or a practical screen in frame will tear. Timecode syncs files; genlock syncs frames.
+- In multicam the operator does not control exposure — the Video Controller does, from the CCU, and matches every channel live on a waveform. Modelling a sitcom or a live show with per-camera DP exposure decisions gets the job titles and the workflow wrong.
+- Focus is a failure mode, not a setting. Focus error in centimetres must be compared against depth of field in centimetres. That is what makes a T1.4 large-format close-up genuinely harder than a T4 Super 35 wide, and what makes the actor's mark-hitting matter mechanically.
+- Anamorphic close focus is typically several feet, not inches. A 2x 40mm that will not focus closer than 3 ft 6 in changes the blocking of an intimate scene. Modelling anamorphic without per-lens close focus removes the single biggest practical constraint of the format.
+- Probe and macro optics are extremely slow (a 24mm probe at T14 is roughly five stops down from a T2 prime). The light package, not the lens rental, is the real cost of that shot.
+- Vintage and rehoused glass is finite. There are a limited number of complete Canon K35, Baltar and Lomo sets on earth, and a series booking one for six months removes it from every feature that year. Scarcity and booking contention are part of the option space.
+- A flat underwater port magnifies about 1.33x, so lens choice underwater is not the same as on land. A dome port behaves differently again and changes close focus. Water work needs an optical model, not a 'can shoot underwater' flag.
+- Payload limits are the quiet gate on movement. A large-format body with anamorphic glass, matte box and battery can exceed what a Steadicam sled, a gimbal or a drone will carry, which forces a different camera for that one shot — a real and common production compromise.
+- Data rate is a scheduling constraint, not just a storage bill. ARRIRAW open gate runs roughly half a gigabyte per second (on the order of 1.5-1.9 TB per hour; estimates), and two verified copies must exist before a card is cleared. Insufficient cards or offload throughput stops the shoot.
+- Diffusion is irreversible. A 1/2 Black Pro-Mist on the close-ups cannot be removed in the DI, which is precisely why the camera test exists and why an actor with lens approval in their contract is exercising real power.
+- A show LUT is not a grade. Exposure decisions are made relative to it, so the same negative protected against one LUT can fall apart under another. The pipeline — camera log, working space, on-set transform, VFX handoff, display transforms for SDR, HDR and P3 — has to be modelled as a chain that can be mismatched.
+- VFX on-set data has a measurable cost multiplier. A missing HDRI, chrome/grey ball, lens distortion grid or camera height measurement raises the vendor's bid and the schedule. The cheap decision on the day must be able to become the expensive decision in post.
+- LED volumes are a three-frequency problem (shutter, panel refresh, tracking latency) plus a moiré function of panel pitch, focal length, stop and distance. Two cameras cannot share one frustum without time-slicing. 'Shoot it on the volume' is not a free substitute for a location.
+- Panavision is rental-only and its PV mount is proprietary; ARRI Rental holds ALEXA 65, ALFA and DNA exclusively. Choosing certain cameras therefore commits you to a supplier and to their glass, which is a business relationship as much as a technical choice.
+- Film cameras have sound. A 435 or a Panastar is MOS by nature; an ARRICAM ST or a Millennium XL2 is quiet enough for dialogue. If the engine does not carry a camera-noise figure that interacts with the sound department, half the reason for the body list disappears.
+- A gate check that finds a hair kills a printed take, and nobody knows until the lab reports the next day. Film's error feedback loop is 12-24 hours long; digital's is immediate. That latency difference should change how a production behaves, not just its cost line.
+- Second unit must match: same format, same lens family, same LUT, or the cut shows it. Duplicating an ALEXA 65 or Ultra Vista package for a splinter unit is a serious cost, which is why productions often downgrade the second unit and then pay for it in the edit.
+
+---
+
+## 13. Lighting and grip
+
+*set lighting (electric) and grip departments, film and television, from script breakdown through pre-rig, pre-light, shooting-day lighting and camera support, to strike and wrap-out.*
+
+### Script Breakdown For Light
+
+Pass scene by scene tagging int/ext, day/night, every motivating source named or implied (window, fire, TV, streetlamp, match, headlights), and every effect the light must perform.
+
+- **Who.** Director of Photography with the Gaffer (Chief Lighting Technician)
+- **Decides.** Player tags each scene's motivating source and whether it is a real practical, an augmented practical, or invented off-screen light. Also whether the show has source discipline or paints freely.
+- **Engine.** Per-scene record: int/ext, clock time, sun azimuth/altitude if ext, list of motivating sources with type, world position, colour and level, plus effect cues. Every later fixture order, truck size and shoot-day minute estimate reads this record; untagged scenes cost prep minutes on the day.
+- **Takes.** 2-4 days for a feature, one pass
+- **Television.** Series does it once for standing sets, then only for swing sets each episode; the pilot's look becomes a locked bible the episodic gaffer matches rather than reinvents.
+
+### Location Scout And Tech Scout
+
+Walk the location with the DP. Measure ceiling height, find the panel and its available amperage, find the genny spot, the cable route, the condor pad, what can be rigged from and what cannot be touched.
+
+- **Who.** Gaffer, Key Grip, Rigging Gaffer, DP, Location Manager, 1st AD, Production Designer
+- **Decides.** Player picks genny position (distance vs sound vs cable cost), tie-in or generate, rigging points, whether a wall or window comes out, and whether the location survives the lighting plan at all.
+- **Engine.** Location object holds: ceiling height and construction, existing service (amps, phases, panel type, landlord permission flag), distance from truck park to set in feet, rigging point load ratings, window count/area/orientation, sound-sensitive neighbours radius. Failures here surface as shoot-day time and money.
+- **Takes.** 1 day per 2-4 locations; tech scout is a separate full day 1-2 weeks out
+- **Television.** Episodic scouts are half-days because 60-80% of the show is on standing sets already rigged; only the location work of the week is scouted.
+
+### Sun Path And Shadow Study
+
+Establish where the sun is at every hour on the shoot date for each exterior, including what shadows the building, the hillside or the neighbouring tower throws across the set.
+
+- **Who.** Gaffer and DP, with the 1st AD and the Location Manager
+- **Decides.** Player chooses shooting direction, the hour each exterior setup is scheduled, and whether the day is shot with the sun as key, as backlight, or blocked entirely and replaced.
+- **Engine.** Real solar position from latitude, longitude, date and hour (azimuth/altitude), plus a coarse occlusion mesh for the site. Produces per-hour sun vector, shadow map, colour temperature of daylight by altitude (~2000K at horizon to ~5600K+ midday) and a 'usable window' the scheduler consumes.
+- **Takes.** 2-4 hours desk work per exterior; re-run whenever the date moves
+- **Television.** Series exteriors are usually scheduled around the standing-set day rather than the sun, so the sun study becomes a risk report rather than a plan.
+
+### Lighting Plot And Plan Drafting
+
+Draw the fixture plot over the set plan: every unit, its position, height, circuit, channel, colour, accessory and trim height. Produce hang plot, channel hookup, colour call and magic sheet.
+
+- **Who.** Gaffer and Rigging Gaffer, drawn by the Lighting Designer or Best Boy on Vectorworks Spotlight
+- **Decides.** Player places each fixture: type, position in 3D, aim, trim height, gel, diffusion, dimmer channel, and whether it is a rig unit (hung once) or a floor unit (moved all day).
+- **Engine.** A real plot data structure: fixture instances with 3D transform, mount type, circuit id, DMX address, accessory stack. The plot must be renderable as a photometric solve AND costable as a rental line AND schedulable as rigging hours. If the plot is not readable by all three, it is a picture, not a plot.
+- **Takes.** 1-3 days per stage set; hours for a small location
+- **Television.** Multicam TV plots are far denser overhead and are the primary document; the LD's plot and its cue list are re-used across the season with weekly revisions, so the plot is a versioned living file.
+
+### Load Schedule And Power Order
+
+Total every fixture's real draw, assign to phases and circuits, size the generator or the tie-in, and calculate voltage drop over the run length.
+
+- **Who.** Best Boy Electric (Assistant Chief Lighting Technician)
+- **Decides.** Player picks generator size, single vs three phase, feeder gauge and length, number of distro boxes, and whether to balance by rebalancing phases or by ordering more plant.
+- **Engine.** Per-fixture actual draw (not nameplate), ballast power factor, inrush. Sum per phase; compute neutral current including harmonic contribution from electronic ballasts and LED drivers; voltage drop V=2KIL/A (K=12.9 copper) against a 3% ceiling; generator kW/kVA headroom and fuel burn per hour. Trips and brownouts are consequences, not flavour.
+- **Takes.** 3-6 hours per big day; 30 min for a small location
+- **Television.** A stage runs on house power with a permanent dimmer room; the load schedule is done once at rig and only revised when the plot is.
+
+### Equipment Bid And Package Order
+
+Send the plot and truck list to rental houses (Cinelease, Keslow, Quixote, MBS, Hollywood Rentals, Paskal, Illumination Dynamics), take bids, negotiate a package deal, order sub-rentals for specialty units.
+
+- **Who.** Best Boy Electric and Best Boy Grip, approved by the Gaffer, Key Grip and UPM
+- **Decides.** Player picks vendor, package vs a la carte, weekly vs daily rate, what to sub-rent, what to buy as expendables, and how much loss-and-damage exposure to carry.
+- **Engine.** Vendor objects with catalogue, stock depth per item, day/week rate, package discount curve, delivery radius, and a reliability score. Items have real availability: order an 18K on a busy week and it is out, and the substitution changes the picture. L&D and expendables burn as a running ledger.
+- **Takes.** 1-2 weeks of bidding; orders lock 3-5 days before the truck rolls
+- **Television.** Series take a season-long package at a flat weekly rate with a standing truck; the negotiation happens once and the show eats the rate all season.
+
+### Truck Load And Pack-Out
+
+Prep every unit at the rental house: bench-test lamps, ballasts, cables; pack the 5-ton or 10-ton grip and electric trucks by shelf and bay so the first thing needed is nearest the door.
+
+- **Who.** Best Boy Electric and Best Boy Grip with the rental house's prep techs
+- **Decides.** Player chooses truck size, what stays on the truck versus what goes to a stage locker, and the pack order, which becomes the fetch time for every item on every setup.
+- **Engine.** Truck as a volume with named bays; each item has a stow location and a fetch time in minutes derived from bay depth plus distance-from-truck-to-set. Bad packing shows up as real minutes added to every setup. Faulty units found at prep versus found on the day is a separate probability.
+- **Takes.** 1-3 days of prep at the rental house
+- **Television.** Stage shows load a permanent lockup rather than a truck; the fetch distance is from the lockup to the stage floor and is fixed for the season.
+
+### Crew Hiring And Rig Day-Out-Of-Days
+
+Hire the shooting crew and, separately, the rigging crew. Set head counts per day against the plot's complexity and the schedule's moves.
+
+- **Who.** Gaffer and Key Grip, with the Best Boys, against the UPM's budget
+- **Decides.** Player sets crew size per day (a gaffer, best boy and 3 electrics versus 12), who is a dayplayer, who is on the show, and whether a second rigging unit runs ahead of the company.
+- **Engine.** Named crew records with rate, local, skill rating per task family (rigging, board, condor, balloon, dimmer, fixture tech), fatigue, loyalty to the gaffer, and availability. Task duration = base minutes / crew-size curve x skill factor. Overstaffing has a cost, understaffing a longer one.
+- **Takes.** Ongoing from 3 weeks out; daily adjustments
+- **Television.** Series crews are hired for the season and carry across episodes; continuity of crew is itself an asset because they already know the sets.
+
+### Stage Pre-Rig
+
+Before the shooting company arrives, hang the overhead plot from the perms, pipe grid or green beds: fixtures, cable, distro, motors, truss, ceiling rags and overheads.
+
+- **Who.** Rigging Gaffer (Chief Rigging Technician) and Rigging Key Grip with the rigging crew
+- **Decides.** Player chooses how much lives overhead versus on the floor, whether to build green beds, and how far ahead of the company the rig unit runs.
+- **Engine.** Rigging crew as a second unit on its own calendar, with its own truck, its own hours and its own rate. Overhead fixture count reduces shoot-day setup minutes and floor congestion; the trade is rig days and money. Perms/grid load budget in lbs per point and per bay must be tracked or things fall.
+- **Takes.** 2-10 days per stage set with a 6-15 person rig crew
+- **Television.** On a multicam series the entire show lives overhead by design; there are effectively no floor stands in the audience's sightline, so the pre-rig is the show.
+
+### Green Bed And Pipe Grid Construction
+
+Build the elevated walkways (green beds) and the pipe grid above a set so electrics can walk the rig and hang and adjust units over the set without a lift.
+
+- **Who.** Rigging Key Grip and rigging grips, with Construction Grip
+- **Decides.** Player decides grid height (trim), bed layout, whether to build at all or use lifts, and the pipe spacing that determines where a unit can be hung.
+- **Engine.** Grid as a real geometry: pipe positions, trim height, load per pipe, walkable bed polygons. A fixture can only hang where a pipe exists; a note asking for a light between pipes costs a menace arm or a re-rig. Height drives both softness (inverse square) and the time to adjust.
+- **Takes.** 2-5 days for a stage set
+- **Television.** Multicam stages have permanent grids at fixed trim; a feature builds the grid for the picture and strikes it.
+
+### Tie-In, Generator Spot And Cable Run
+
+Either land feeder on the building's service at a disconnect (tie-in) or spot the generator and run feeder from the plant to the distro points.
+
+- **Who.** Best Boy Electric with the Generator Operator and, for a tie-in, a licensed electrician
+- **Decides.** Player picks tie-in versus genny, plant position (sound distance versus feeder length), cable route, ramps, and whether to run a second smaller plant for a distant corner.
+- **Engine.** Feeder run length in feet drives voltage drop and cable inventory; genny distance drives measured dB at the set and sound-department complaints; ramps and route drive pedestrian risk. Tie-in requires a permission flag, an electrician, and the panel's real spare capacity.
+- **Takes.** 1-3 hours for a genny spot and run; half a day for a tie-in
+- **Television.** Stages are on house power with permanent distribution; a genny only appears for a location week or a big effects load.
+
+### Distro Layout And Circuit Assignment
+
+Break feeder down through distro boxes to Bates and Edison at the set: 400A/1200A distro, 100A bates spider and gang boxes, lunch boxes, snakebites, stringers.
+
+- **Who.** Best Boy Electric
+- **Decides.** Player assigns which fixture goes on which circuit and phase, where boxes land, and how much headroom to leave for the unplanned unit the DP asks for at hour nine.
+- **Engine.** A circuit graph: source to feeder to distro to breaker to run to fixture, each edge with an ampacity and a length. Overload trips that breaker and only that breaker, on the take. Phase imbalance and neutral loading are computed, not narrated. Adding an unbudgeted 2K must actually be able to fail.
+- **Takes.** 1-2 hours to set at each location
+- **Television.** A stage dimmer room's patch is semi-permanent; changes are made at a patch panel rather than by relocating boxes.
+
+### Pre-Light
+
+Light the set before the company arrives: rough in every unit at level and colour, set overheads and negative fill, and leave a set that is 70-90% there when the first shot is called.
+
+- **Who.** Gaffer, Best Boy Electric and Set Lighting Technicians (lamp operators); Key Grip with grips
+- **Decides.** Player decides how many pre-light days to buy, how complete to leave it, and which sets get pre-lit at the cost of others.
+- **Engine.** Pre-light completeness as a stored 0-1 state per set that directly subtracts from the first-setup duration on the shoot day. Buying a pre-light day trades a known cost against an estimated saving; the saving must be computed from the plot's complexity, not assumed.
+- **Takes.** 1-2 days per set, 6-12 hour crew day
+- **Television.** Multicam pre-lights to near-100% because there is no time to light during the shoot; a single-camera series pre-lights the swing set while the company shoots the standing set.
+
+### Console Programming And Cue Build
+
+Patch every fixture to a channel, build looks and cues on an ETC Eos, grandMA3 or similar, and record the states the show will need: day, night, lamp-off, fire flicker, blackout.
+
+- **Who.** Lighting Console Programmer or Dimmer Board Operator, directed by the Gaffer or the Lighting Director
+- **Decides.** Player decides what is on the board versus on a hand squeezer, how many looks to store, cue fade times, and whether the show is cue-driven or manually balanced shot to shot.
+- **Engine.** A real patch and cue stack: channel to fixture to parameters (intensity, CCT, hue/sat, zoom, pan/tilt). A recorded cue is a stored state vector recalled in fade time t. Recall time versus manual re-set time is the whole argument for a board, so both must be timed.
+- **Takes.** 4-12 hours initial patch and programming; 30-90 min of revisions per shoot day
+- **Television.** This is the central craft in multicam and variety: hundreds of cues fired live against a rundown. Single-camera features often have no board at all beyond practical dimming.
+
+### Camera, Colour And Flicker Test
+
+Shoot a test: every fixture family against skin, costume and set finishes; frame-rate and shutter-angle sweeps for flicker; gel and diffusion comparisons; LUT built and approved.
+
+- **Who.** DP, Gaffer, DIT, 1st AC, with the camera rental house
+- **Decides.** Player chooses which fixtures make the show's palette, the working CCT, the shutter/frame-rate safe list, and the show LUT.
+- **Engine.** Fixture SPD x camera spectral sensitivity gives RGB response; TM-30 Rf/Rg and SSI scored per fixture; metamerism failures on specific dyes and skin tones must be modelled, because that is what a test catches. Flicker model: HMI ballast type and mains Hz, LED PWM frequency and duty, versus fps and shutter angle.
+- **Takes.** 1-2 days, 3-6 weeks before principal
+- **Television.** Series tests at the pilot and then almost never again; a fixture substitution mid-season that was never tested is a real continuity risk.
+
+### Practical Lamp Prep And Dimming
+
+Re-lamp every practical in the set to a chosen wattage and colour, run each to a dimmer or hand squeezer, and hide the cable. Lampshades lined, bulbs dipped or gelled, screens flagged.
+
+- **Who.** Set Lighting Technicians with the Set Decorator and Lead Man; Gaffer approves
+- **Decides.** Player picks bulb type and wattage per practical, its dimmed level, whether it is on the board, and whether it carries real exposure or only reads as a source.
+- **Engine.** Each practical is a fixture instance with a real level, a colour that shifts as it dims if it is incandescent (3200K at full toward ~2400K at 25%), and a contribution to the exposure solve. A practical that reads in frame but lights nothing, versus one carrying the key, must be different objects.
+- **Takes.** 20-60 min per practical; a dressed room can hold 6-20
+- **Television.** Multicam practicals are almost always decorative because the overhead rig carries all exposure; a single-camera show frequently keys faces off practicals.
+
+### Blocking Rehearsal And Marks
+
+First team walks the scene. Marks are laid in tape, the DP calls the coverage, and the gaffer and key grip watch to see what the blocking breaks in the pre-light.
+
+- **Who.** Director and cast; DP, Gaffer, Key Grip, Dolly Grip and 1st AD watching
+- **Decides.** Player (as DP or gaffer) decides what to accept, what to ask the director to change, and which of the pre-lit positions survive.
+- **Engine.** Actor blocking as a path through the set with dwell points. The photometric solve is evaluated at each mark at eye height and at the camera's angle, producing per-mark key level, ratio and colour. A blocking change invalidates specific fixtures, and that invalidation list is the relight work order.
+- **Takes.** 10-30 min per scene
+- **Television.** Multicam blocks the entire episode over a rehearsal day and a camera-blocking day; the lighting is adjusted to the blocking once, not per shot.
+
+### Setting The Key
+
+Place the source that does the work on the face: unit type, height, horizontal angle off lens axis, distance, and softness. Everything else is set relative to it.
+
+- **Who.** Gaffer, on the DP's call, executed by a Set Lighting Technician
+- **Decides.** Player picks fixture, distance, height, angle, diffusion, and whether it is hard or soft, direct or bounced, motivated or invented.
+- **Engine.** Key must be a computed illuminance at the mark, not a label. Inverse-square with a real beam profile (candela curve by zoom setting), cosine falloff on the face normal, source apparent size from distance and diffuser area driving shadow penumbra width. Move it two feet and exposure and shadow edge both change.
+- **Takes.** 5-20 min once the unit is in place
+- **Television.** In multicam the key must serve three or four cameras at once, so it sits higher and more frontal; there is no per-shot key.
+
+### Fill And Negative Fill
+
+Raise the shadow side with bounce, a soft unit or ambient, or lower it by putting black between the subject and whatever is filling it. Negative fill is a grip tool and costs nothing to run.
+
+- **Who.** Gaffer calls it; Grips set bounce and floppies, Electrics set fill units
+- **Decides.** Player sets the ratio target and picks the means: a unit, a bounce card, an overhead, or a 4x4 floppy taking light away.
+- **Engine.** Shadow-side illuminance computed from the bounce solve (surface albedo and area, one or two bounces) and from ambient sky. Negative fill must reduce a real quantity: a solid placed at a position removes that surface's contribution from the sum. Ratio = key+fill : fill, in stops.
+- **Takes.** 3-15 min
+- **Television.** Multicam sets are filled broadly from the grid to keep all angles usable, so the achievable ratio is flatter; the LD fights to keep any modelling at all.
+
+### Backlight, Kicker And Separation
+
+Place the source behind or three-quarters behind the subject that separates them from the background: rim, hair light, edge, or a broad backlight for smoke and rain.
+
+- **Who.** Gaffer and Set Lighting Technicians; Grips flag it off the lens
+- **Decides.** Player picks the unit, its height and side, its level relative to key, its colour, and whether it is a hard edge or a soft wrap.
+- **Engine.** Requires a real rear hemisphere in the solve and a lens-flare/veiling-glare model, because backlight's cost is flare into the lens and the grip time spent flagging it. Rain and atmosphere multiply backlight visibility: particle density x source angle relative to camera must drive whether rain reads at all.
+- **Takes.** 5-20 min, plus flagging
+- **Television.** Multicam backlight comes from a fixed ring of units in the grid, set once for all positions; it is a wash, not a placed kicker.
+
+### Eye Light
+
+Put a small, low source near the lens axis to catch a specular in the eye without changing exposure: a Tweenie through a frame, an LED tube, a bounce card off the matte box, a ring.
+
+- **Who.** Gaffer, with a small unit or a bounce card placed by a Set Lighting Technician
+- **Decides.** Player chooses source, distance, level and catchlight shape, and whether it is visible as a reflection in glasses.
+- **Engine.** Specular reflection model on a curved eye: source apparent size and position produce a catchlight of a computed size and shape. Must also model the failure - the same source in a subject's glasses, or a catchlight shape that changes between coverage and breaks continuity.
+- **Takes.** 2-8 min
+- **Television.** Multicam uses a low frontal eye-light wash on the whole playing area rather than a per-subject catchlight.
+
+### Lighting The Set And Background
+
+Light everything behind and around the actors: walls, depth, windows, corridors, signage, the far end of the street. Establish where the eye goes and where it does not.
+
+- **Who.** Gaffer and Set Lighting Technicians; Grips shape and cut
+- **Decides.** Player decides background level relative to key, how much depth to build, what to let go black, and whether the set's own practicals carry it.
+- **Engine.** Full-set irradiance solve with material albedo and specularity per surface, evaluated inside the camera frustum at the chosen T-stop. Background exposure relative to face exposure in stops is the output, and it must drive the rendered image, not a description of it.
+- **Takes.** 20-90 min for a first setup, 5-20 min for coverage
+- **Television.** On a multicam stage the set wash is a permanent state on the board; on a single-camera show it is rebuilt for every angle.
+
+### Metering And Exposure Set
+
+Read the key at the mark, read the fill and background, read the practicals in frame, then set the T-stop, ND and ISO that put skin where the DP wants it.
+
+- **Who.** DP with a Sekonic incident/spot meter; DIT on the waveform; 1st AC pulls the stop
+- **Decides.** Player sets the T-stop, ISO/EI, internal or external ND, shutter angle, and where on the curve skin sits.
+- **Engine.** Real photometry to exposure: illuminance (lux) x surface reflectance gives luminance, then EV at a given ISO and shutter, then IRE on a waveform through the show LUT. Change the key's distance by 30% and the required stop must change by about a stop. False colour and clipping come from that same number.
+- **Takes.** 1-4 min per change
+- **Television.** Multicam sets exposure once for the night; a Video Controller/Shader in the truck rides iris and paint per camera live, so the LD's job is to keep all cameras within the shaders' range.
+
+### Ratio And Contrast Setting
+
+Set the relationship between key and fill, subject and background, and highlight and shadow, to match the show's chosen contrast for that scene.
+
+- **Who.** DP and Gaffer
+- **Decides.** Player sets the target ratio (e.g. 2:1, 4:1, 8:1), where the shadows land relative to the sensor's noise floor, and whether highlights clip.
+- **Engine.** Ratio derived from the solve, expressed in stops, compared against a per-scene target and a per-show style band. The renderer's shadow noise and highlight rolloff come from the camera's real latitude, so an 8:1 ratio at a low ISO and an 8:1 at a high ISO must not look the same.
+- **Takes.** 3-10 min
+- **Television.** Broadcast multicam is held far flatter (often 2:1 or less on faces) because of live switching and legal video levels; a cinematic single-camera drama routinely runs 4:1 to 16:1.
+
+### Shaping With Flags, Cutters And Nets
+
+Take light off what should not have it: a cutter off the wall, a flag off the lens, a net on a hot spot, a finger off a shoulder, a teaser above the frame line.
+
+- **Who.** Key Grip and Grips, called by the Gaffer or DP
+- **Decides.** Player picks tool, size, distance from source (a flag near the source is soft-edged; near the subject it is hard), angle and how much it cuts.
+- **Engine.** Each flag/net is an occluder with position, size and per-wavelength transmission (solid=0, single net about -0.5 stop, double about -1 stop, silk diffuses). Shadow edge hardness falls out of geometry: source size, occluder distance from source and from subject. This is why a flag is a placed object, not a toggle.
+- **Takes.** 2-10 min per flag; a complicated set can carry 20
+- **Television.** Multicam cuts from the grid with teasers and top hats only; a floor flag would be in another camera's shot.
+
+### Building Diffusion, Bounce And Book Lights
+
+Soften a hard source by putting fabric in front of it or bouncing it off a surface, or both: a book light is a unit bounced into a white card and read back through a diffusion frame.
+
+- **Who.** Gaffer and Key Grip together - electric owns the unit, grip owns the frame
+- **Decides.** Player picks the fabric (grid cloth grade, silk, Magic Cloth, muslin), the frame size, the distance from source to fabric to subject, and whether to bounce first.
+- **Engine.** Softness = source apparent angular size at subject. Fabric has transmission in stops and a scattering lobe; distance from unit to fabric changes both the illuminated area of the fabric and the loss. A 12x12 half-grid at 6 ft and at 18 ft must produce measurably different penumbra and level.
+- **Takes.** 10-40 min to build; 5 min to adjust
+- **Television.** Multicam uses fixed soft boxes and space lights in the grid rather than built bounces, because a book light on the floor cannot exist in a 4-wall set.
+
+### Colour Temperature And Tint Management
+
+Get every source into an intentional relationship: convert with CTB/CTO, correct green-magenta with plus/minus green, set LED CCT and tint, and match mixed families.
+
+- **Who.** Gaffer, checked by the DP and the DIT with a spectrometer
+- **Decides.** Player picks the base white balance, which sources are corrected and which are deliberately off, and how far the mismatch is allowed to go.
+- **Engine.** Per-fixture SPD and Duv, not just a Kelvin number. Gels are spectral transmission curves applied to the SPD; the result is re-scored through camera sensitivity. Two fixtures at the same nominal 3200K with different Duv must render differently on skin, or the whole gel system is decoration.
+- **Takes.** 5-20 min per source family; a gel change on a 20K is a 15 min job
+- **Television.** Multicam standardises the whole rig on one CCT so the shaders have a stable reference; features routinely run deliberately mixed.
+
+### Turnaround (Relighting The Reverse)
+
+Camera turns 180 degrees for the reverse. Everything that was behind camera is now in frame: stands, flags, cable, the key. The set is relit from the other side.
+
+- **Who.** Gaffer, Key Grip and full crew, under the 1st AD's clock
+- **Decides.** Player decides whether to pre-rig both sides during the pre-light (a two-way), cheat the existing rig, or fully relight.
+- **Engine.** The single biggest recoverable time sink and it must be computed: count fixtures and grip tools now inside the frustum, sum their move times, add re-set of key/fill/back on the new axis. Pre-rigging both directions costs rig hours and fixture rental but cuts turnaround minutes; the trade must be numeric.
+- **Takes.** 20-75 min, or 5-10 min if pre-rigged both ways
+- **Television.** Multicam has no turnaround at all - the fourth wall is where the cameras and audience are and the set is lit for that axis permanently. This is the single largest schedule difference between the formats.
+
+### Lighting Continuity Match
+
+Match light to a scene shot days or weeks earlier: same key angle and level, same colour, same background, same time-of-day feel, often on a different stage or after a location change.
+
+- **Who.** Gaffer, with reference stills from the Script Supervisor and the DIT's dailies
+- **Decides.** Player decides how closely to match, whether to re-create or to cheat, and whether to flag a mismatch as acceptable.
+- **Engine.** Per-shot lighting state hash: fixture ids, positions, levels, CCT/Duv, accessory stack, sun vector, plus rendered key level/ratio/background stop. Comparing two hashes yields a real match score that can degrade a scene in post and cost reshoot risk. Without the stored state there is no continuity system.
+- **Takes.** 15-60 min to rebuild a matched setup
+- **Television.** Series live on this: standing sets are photographed and the state is documented so any episodic gaffer can restore it. The 'lighting bible' is a real document.
+
+### Resolving Boom And Camera Shadows
+
+Every hard source makes a shadow, and the boom, the camera, the dolly and the operator all walk through them. Sources get moved, flagged, softened or the boom gets re-angled.
+
+- **Who.** Gaffer, Key Grip and the Boom Operator, refereed by the DP
+- **Decides.** Player chooses whether to move the light, soften it, flag the shadow into a dark area, re-block the boom, or accept a plant mic instead.
+- **Engine.** Shadow casting from each hard source against moving occluders (boom path, camera path). Hard source count per setup should drive a measurable sound cost: boom compromise probability, plant-mic time, and ADR risk later. That makes 'soft light is cheaper for sound' a real trade.
+- **Takes.** 2-15 min per conflict, several times a setup
+- **Television.** Multicam mics on booms from two fixed positions plus plants, and the grid's height puts most shadows on the floor rather than on the set walls.
+
+### Atmosphere Call
+
+Fill the set with haze (glycol/glycerin) or smoke (mineral oil cracker, bee smoke) so beams read and depth separates. The set must be sealed and the level maintained between takes.
+
+- **Who.** Special Effects Technician runs the hazer or smoke; DP and Gaffer call the density; 1st AD owns the clock
+- **Decides.** Player decides whether to use atmosphere, the density, the type, and whether to seal the stage or fight the HVAC.
+- **Engine.** Atmospheric density as a scalar that raises veiling glare, lowers contrast, makes backlight beams visible, and decays over time at a rate set by air exchange. Re-filling costs minutes on the AD's clock and the decay rate must make the re-fill frequency real. Cast respiratory limits exist.
+- **Takes.** 5-15 min initial fill; 1-3 min top-up between takes
+- **Television.** Audience-present multicam rarely hazes; a live audience cannot be smoked for three hours. Variety and concert TV haze constantly because beams are the content.
+
+### Laying And Levelling Dolly Track
+
+Lay straight or curved track on the move's line, level it with wedges and cribbing against a bubble or laser, tie it, and check the dolly rolls silently and without a bump end to end.
+
+- **Who.** Dolly Grip with Grips, under the Key Grip
+- **Decides.** Player picks track type (steel tube, Fisher/Chapman straight and curved sections), length, route, whether to build a dance floor instead, and how much cribbing the ground needs.
+- **Engine.** Track as geometry with a levelling tolerance; ground type (stage floor, grass, sand, gravel, asphalt) sets cribbing time and achievable smoothness. A residual error in the level must produce a visible bump whose severity scales with lens focal length, so a long lens punishes a sloppy lay.
+- **Takes.** 15-60 min depending on length and ground
+- **Television.** Multicam uses pedestals on a level stage floor with no track at all; a sitcom's camera movement is a ped push or a crab, not a dolly move.
+
+### Executing The Dolly Move
+
+Push, pull, crab, arc or boom the dolly in time with the actors and the operator's frame, hitting marks to the inch, repeatably, take after take.
+
+- **Who.** Dolly Grip
+- **Decides.** Player (as dolly grip or as the DP choosing the move) sets the move shape, speed profile, boom timing, and where in the dialogue each beat lands.
+- **Engine.** The move is a timed path with a speed curve tied to the actor's blocking and the dialogue's beats. Repeatability is a skill roll against the dolly grip's rating, the move's complexity, and take fatigue. A blown move costs a take, which costs minutes and media, and takes are a finite budget.
+- **Takes.** Rehearsal 2-5 min; the move is the length of the take
+- **Television.** Rare in multicam; the equivalent skill is the pedestal operator's crab and the jib arm operator's live move to a cue.
+
+### Crane, Jib And Technocrane Setup
+
+Build the crane: base, ballast (counterweights to a computed moment), track or dolly base, arm sections, remote head, and rehearse the arm's arc for clearance and for the electrics to stay out of it.
+
+- **Who.** Key Grip with the crane technician and Grips; the operator is Camera department
+- **Decides.** Player picks arm type and length, manned versus remote head, whether it rides track, and how much ballast and floor space it eats.
+- **Engine.** Real moment arithmetic: payload x reach = counterweight x counter-reach; arm length options with real reach and elevation figures; base footprint versus set space; build time per arm. A crane's reach must open shots otherwise impossible, and its footprint must close lighting positions otherwise available.
+- **Takes.** 45 min-3 hours to build; 20-40 min to reconfigure length
+- **Television.** Multicam and variety use permanently stationed jibs (Jimmy Jib class) operated live to a cue from the director, not built per shot.
+
+### Car And Process Rigging
+
+Rig camera and lights to a vehicle: hood and door mounts, hostess tray, suction cups with safeties, speedrail cages, low-loader or process trailer, tow rig, or a crane-arm car (Russian arm).
+
+- **Who.** Key Grip and Rigging Grips, with the Best Boy Electric for on-board power
+- **Decides.** Player picks the rig type, which determines what the shot can be, how fast the car can go, how long it takes to re-rig for a reverse, and the safety envelope.
+- **Engine.** Each rig has: build time, max safe vehicle speed, camera positions it permits, lights it can carry, and a failure probability under load. On-board lighting needs a real power source (inverter, battery, follow genny). Interior car light must be a separate solve from the moving exterior environment light.
+- **Takes.** 30 min for a hood mount; 2-4 hours for a full process or Russian arm rig
+- **Television.** Episodic TV overwhelmingly uses poor-man's process or a stationary car on a stage against an LED wall, because a full process day does not fit an 8-day episode.
+
+### Floating A Wall / Wild Walls
+
+Pull a set wall out, or lift it and hold it on a menace arm or wall braces, to get a camera or a light into a position the built set does not allow. Then put it back for the reverse.
+
+- **Who.** Key Grip and Grips with Construction
+- **Decides.** Player decides which wall comes out, whether the ceiling floats too, and whether to build the coverage around the set instead.
+- **Engine.** Set walls as movable objects with a wild flag, a float time, and a dependency on what is dressed or rigged to them. Floating a wall opens fixture positions and camera positions and costs minutes both ways. A wall that is not wild simply forecloses those positions.
+- **Takes.** 10-30 min out, same back
+- **Television.** Multicam sets are permanently three-walled and open to the audience, so nothing needs floating; that openness is the format's whole efficiency.
+
+### Window Treatment
+
+Control daylight through windows: gel with ND (0.3/0.6/0.9/1.2), combine ND with CTO/CTB, put diffusion outside, black out entirely with duvetyne or Visqueen, or build a frame outside the glass.
+
+- **Who.** Best Boy Electric and Rigging Grips
+- **Decides.** Player picks ND grade per window, whether to correct the colour of the daylight, whether to blow the window out, and whether to black and replace the daylight with controllable units.
+- **Engine.** Window as an aperture with area, orientation and a gel stack. Exterior illuminance comes from the solar model and sky condition; the gel's density in stops and its spectral curve are applied, then the interior solve runs. Blowing out a window versus holding it must be a computed exposure relationship.
+- **Takes.** 20-60 min per window with a lift; longer above ground level
+- **Television.** Stage 'windows' are backings lit by the rig and never change; the treatment is set once at pre-light and never re-fought.
+
+### Day Exterior Overhead And Bounce
+
+Put a silk or grid cloth overhead on 12x12, 20x20 or 30x30 frames to soften the sun over the playing area, and bounce it back in with Ultrabounce, beadboard or a shiny board.
+
+- **Who.** Key Grip and Grips for the frames; Gaffer for any units
+- **Decides.** Player picks frame size, fabric grade, height, whether to fly it from stands, lifts or scaffold, and how many bags and how much crew it takes.
+- **Engine.** Overhead as a large area diffuser: it sets a new source size and reduces illuminance by the fabric's stop loss, softening shadows across the whole playing area. Wind load is a real force on area; stand rating, bag count and wind speed must combine into a genuine failure probability.
+- **Takes.** 20-60 min for a 12x12; 1.5-3 hours for a 20x20 or 30x30
+- **Television.** Almost never used in multicam; an episodic single-camera show uses 12x12s because a 20x20 does not fit the day.
+
+### Day Exterior Negative Fill And Sun Chase
+
+Cut the sky off one side with solids to build contrast in open daylight, move bounce as the sun swings, and re-set as the shadow line crosses the set through the day.
+
+- **Who.** Key Grip and Grips; DP watching the sun
+- **Decides.** Player decides where to schedule each setup in the sun's arc, when to turn around, and whether to chase the sun or overhead the whole area and stop caring.
+- **Engine.** Sky as a large low-contrast source (an area light with sun-altitude-dependent CCT and level) that a solid can occlude. The sun vector moves on a real clock; every 20-30 minutes of shooting produces a measurable change in key angle and shadow direction that continuity compares against the first take.
+- **Takes.** Continuous; a re-set every 30-90 min
+- **Television.** Episodic shows schedule exteriors in blocks precisely because they cannot afford to chase; a feature will burn a day chasing an hour of light.
+
+### Day For Night
+
+Shoot in daylight and make it read as night: underexpose 1.5-2.5 stops, shoot away from or across the sun, keep the sky out or filter it, use backlight as moonlight, and control any skin that must stay readable.
+
+- **Who.** DP and Gaffer, with the Colourist consulted in prep
+- **Decides.** Player picks the underexposure, filtration (polariser, ND grad), shooting direction, whether the sky is in frame, and how much is fixed in the grade versus in camera.
+- **Engine.** Exposure offset applied to the real solve; sky luminance as a separate element that clips white if not handled; polariser effect depending on angle to the sun. The result has to be gradeable - the engine must carry how much shadow information survives the underexposure at that ISO, because that decides if it works.
+- **Takes.** Adds 10-20% to setup time; the decision is made in prep
+- **Television.** TV schedules force day-for-night far more often than features, which buy real night; the tell is that TV day-for-night is usually helped much harder in the grade.
+
+### Night Exterior Ambient Wash
+
+Light a street, a field or a backlot from above: HMIs and big LEDs in condors at 60-150 ft, Musco-class mobile lighting, balloons, or bounce off a building, giving a base level over the whole area.
+
+- **Who.** Gaffer and Best Boy Electric with a Condor Operator and a Genny Operator
+- **Decides.** Player picks number and height of condors, fixture per basket, spread versus punch, colour, and how much area to light versus how much to hide.
+- **Engine.** Area coverage from a high, distant source: inverse square at 100+ ft means choosing between level and area, and that trade must be arithmetic. Condor rental, operator, permit, ground bearing, wind rating (28 mph per ANSI A92 for the platform) and the reach of the feeder run all cost.
+- **Takes.** 2-6 hours to set the first time; 30-60 min per move
+- **Television.** A series' night exteriors are smaller and lit tighter because condor days are unaffordable weekly; features build the whole street.
+
+### Moonlight Key And Source Motivation
+
+Choose a single hard, high, cool source as the moon and place every other light as a motivated consequence: practicals inside windows, streetlamps, a porch light, a passing car.
+
+- **Who.** DP and Gaffer
+- **Decides.** Player picks the moon's direction, height, hardness and colour, and whether the show's night is blue-moonlight convention, sodium-and-mercury urban, or near-black naturalism.
+- **Engine.** A directional source with an azimuth that must stay consistent across every shot of the sequence, checked against the continuity hash. Different night palettes are different CCT/Duv and different levels, which must produce different exposures and different gradeable latitude, not different adjectives.
+- **Takes.** 20-60 min for the moon; the motivated sources are the rest of the setup
+- **Television.** Multicam has no night exteriors to speak of; drama TV reuses one moon direction across a standing exterior set for the whole season.
+
+### Interactive And Effects Lighting
+
+Make light do something: fire flicker, TV wash, lightning, police strobes, elevator passes, car headlights sweeping, a lamp switching on, a welding arc, a muzzle flash.
+
+- **Who.** Set Lighting Technicians on hand dimmers or a board, cued by the Gaffer
+- **Decides.** Player picks the effect device, its speed, amplitude and colour, whether it is hand-cued or programmed, and whether it is in-camera or left for VFX.
+- **Engine.** Each effect is a time-varying intensity/colour function with amplitude, frequency and randomness parameters, evaluated per frame so it interacts with shutter angle and frame rate. A fire flicker at 60 fps must look different from the same flicker at 24 fps, or the effect system is a sprite.
+- **Takes.** 10-40 min to rig; cued live per take
+- **Television.** Multicam runs effects as recorded console cues fired by the board op on the director's call; single-camera hand-cues most of them.
+
+### Green Screen And Blue Screen Lighting
+
+Light the backing evenly - the professional target is within about a third of a stop corner to corner - set backing level relative to subject, and control spill onto the subject's edges.
+
+- **Who.** Gaffer and Set Lighting Technicians, with the VFX Supervisor
+- **Decides.** Player picks green versus blue, backing material, fixture type and spacing, backing exposure relative to key, subject distance off the backing, and spill-control measures.
+- **Engine.** Evenness computed as real variance across the backing surface from the fixture array's overlapping falloff; spill computed as bounce from a saturated surface onto the subject at a distance-dependent level. The key quality score feeds VFX cost and schedule downstream - a bad backing is money in post.
+- **Takes.** 1-3 hours for a stage backing; 20-40 min for a small element
+- **Television.** News and weather multicam key against a small permanent cyc lit once; episodic VFX-heavy TV lights greenscreen constantly and cheaply, often accepting a worse key.
+
+### LED Volume / ICVFX Lighting
+
+Balance the wall's emitted light as a real source against supplementary fixtures, manage genlock and frame sync, control moire and reflections, and match the wall's colour to the practical lights.
+
+- **Who.** Gaffer with the Volume Brain Bar, VFX Supervisor and Stage Engineer
+- **Decides.** Player decides how much exposure comes from the wall, what supplementary hard light is added, the wall's nit level, camera distance and lens choice to avoid moire.
+- **Engine.** The wall is simultaneously an image and an emissive area source; its contribution to the subject solve is luminance x area / distance. Wall nits versus a real key in stops must be a number (walls typically sit well below an HMI key), which is why practical fixtures are still ordered.
+- **Takes.** Volume days are scheduled; content load and colour balance is 1-4 hours per environment
+- **Television.** Volume stages entered episodic TV for driving and window backings because they replace process days; features use them for full environments.
+
+### High Frame Rate Lighting
+
+Raise the light level for high-speed photography - every doubling of frame rate costs a stop - and eliminate every flickering source in frame.
+
+- **Who.** Gaffer and Best Boy Electric with the DP
+- **Decides.** Player picks the frame rate, then must find the extra stops: bigger units, closer, less diffusion, wider stop, or higher ISO with its noise cost.
+- **Engine.** Exposure = f(fps, shutter angle, T-stop, ISO, illuminance). Doubling fps halves exposure time, so the illuminance requirement doubles. The fixture list must be checked for flicker-free rating at that rate (a SoftSun is rated flicker-free to 10,000 fps; a magnetic-ballast HMI is not safe off-speed).
+- **Takes.** Adds 30-90 min to a setup; often a dedicated unit
+- **Television.** Rare in episodic TV budgets; common in commercials, features and sports television replay where dedicated flicker-free rigs are permanent.
+
+### VFX Lighting Reference Capture
+
+Shoot chrome ball, grey ball and colour chart at the lighting position, take an HDRI panorama of the set, and log every fixture's type, position, height and level for the CG team.
+
+- **Who.** VFX Data Wrangler or 2nd Unit, with the Gaffer's fixture list
+- **Decides.** Player decides whether to spend the 3-8 minutes per setup, which directly determines how well CG elements will match.
+- **Engine.** The fixture list and positions already exist in the plot; capture writes them plus an HDRI to a shot record. Skipping it raises a VFX match cost in post that must be a real downstream number, otherwise nobody will ever choose to spend the time.
+- **Takes.** 3-8 min per lighting setup
+- **Television.** VFX-heavy TV is often worse at this than features despite more shots, which is a real and costly pattern.
+
+### Aerial Lift Operation And Spotting
+
+Position and operate scissor lifts, Genie towers and Condors to hang and adjust units at height, with outriggers set, ground bearing checked and a spotter watching for overhead hazards.
+
+- **Who.** Set Lighting Technician certified on the lift, with a Grip spotting on the ground
+- **Decides.** Player picks lift type and reach, where it parks (which decides what can be lit and what is blocked), and whether the ground needs plating.
+- **Engine.** Lift as a machine with reach, platform capacity, footprint, ground-bearing requirement, drive speed and a wind rating. Reach determines achievable fixture height; footprint blocks camera and traffic positions. Every adjustment at height costs the lift's travel time, which is why grid work is faster.
+- **Takes.** 10-30 min to spot; 3-10 min per adjustment at height
+- **Television.** Stage grids remove the lift entirely for the rigged units, which is a large part of why multicam is fast.
+
+### Balloon Light Deployment
+
+Inflate and fly a helium or air-inflated lighting balloon over the set on tethers, giving a soft, omnidirectional, shadowless source from above with no stand in frame.
+
+- **Who.** Balloon Technician (often an Airstar-trained tech) with Set Lighting Technicians
+- **Decides.** Player picks balloon type and size, helium versus air-inflated, lamp type inside (tungsten, HMI, LED), fly height, tether points, and whether wind allows it at all.
+- **Engine.** Balloon = area source with soft omnidirectional distribution, a fly height, a helium cost per fill and a wind limit. Its advantage is that it needs no ground footprint and casts no hard shadow; the sim must give it those exact properties and charge helium, tech and wind risk for them.
+- **Takes.** 30-60 min to inflate and fly; 15 min to bring down
+- **Television.** Common on location TV for quick wide ambient because it replaces a condor; not used on multicam stages where the grid already does it.
+
+### Wind And Weather Call On Overheads
+
+Decide whether a frame, an overhead, a balloon or a lift stays up as wind rises, and bring it down before it becomes a hazard. Wet rags double in weight and stop diffusing.
+
+- **Who.** Key Grip, with the 1st AD and the Safety Officer
+- **Decides.** Player decides the threshold to pull the rig, whether to re-rig smaller, and whether to move the setup inside.
+- **Engine.** Wind speed as a weather variable; force on a frame scales with area and wind pressure; stand rating, bag mass and lever arm produce a stability margin. Crossing the margin should be an accident with real consequences, not a warning. Wet fabric changes mass and transmission.
+- **Takes.** 5-20 min to strike an overhead in a hurry
+- **Television.** Identical; TV schedules simply have less slack to absorb the lost hour.
+
+### Safety Meeting, Lockout/Tagout And Electrical Safety
+
+Run the day's safety brief, lock out circuits being worked on, ground the plant, GFCI anything near water, ramp and flag cable, and enforce fall protection and lift certification.
+
+- **Who.** Best Boy Electric and Key Grip, with the Safety Officer and the 1st AD
+- **Decides.** Player decides how much time to spend, whether to work hot, and whether to accept a shortcut when the clock is against them.
+- **Engine.** A risk state per rig: ungrounded plant, unbagged stand, unsafetied overhead unit, hot work, unprotected cable run. Each carries a per-hour incident probability with consequences (injury, shutdown, insurance, crew trust in the gaffer). Cutting the brief saves minutes and raises those numbers.
+- **Takes.** 10-20 min at crew call; ongoing
+- **Television.** Same standards; long-running series accumulate complacency, which is a realistic modifiable risk drift.
+
+### Strike, Company Move And Re-Set
+
+Wrap the setup, coil cable, strike stands and frames, load the trucks, move to the next location and re-set. Nothing is shot during a company move.
+
+- **Who.** Best Boy Electric and Best Boy Grip with the full crew
+- **Decides.** Player decides how many locations per day, how much gear travels versus stays rigged, and whether to split the crew so a second unit pre-lights the next location.
+- **Engine.** Move cost = strike minutes + drive minutes + re-set minutes, all scaling with fixture count, distance from truck to set, crew size and parking. Splitting the crew is a real option with a real cost, and the AD's day has a hard end - overruns cost overtime and force the schedule.
+- **Takes.** 45 min-3 hours per company move
+- **Television.** Multicam never moves; a single-camera series treats a second move in a day as a schedule failure.
+
+### Wrap-Out And Return
+
+At the end of the show, inventory every item, account for loss and damage, return the trucks, and settle the rental account.
+
+- **Who.** Best Boy Electric and Best Boy Grip with the rental house
+- **Decides.** Player decides how carefully the package was tracked all along, which now determines the L&D bill.
+- **Engine.** Running inventory maintained from pack-out through every setup; items lost, broken or burned accumulate. The wrap bill is that ledger, so careless days genuinely cost money at the end. Gel, tape, blackwrap and lamps are consumed as expendables all the way through.
+- **Takes.** 1-3 days
+- **Television.** Series wrap at hiatus and at series end; a hiatus wrap-out on a standing set is often a partial de-rig with the plot left hanging.
+
+### Multicam Plot, Hang And Focus
+
+Hang the whole show from the overhead grid, focus each unit to a specific area of a specific set, gel it, and record the states. The LD, not a DP, owns the design on many multicam shows.
+
+- **Who.** Lighting Director with the Stage Gaffer, Stage Electricians and a Console Programmer
+- **Decides.** Player designs a plot that must serve three or four cameras shooting simultaneously from the fourth wall, plus the audience's sightlines and the house lights.
+- **Engine.** Every fixture must be evaluated against multiple camera positions at once. The optimisation target is not one good angle but acceptable exposure and modelling from all live camera positions, which mathematically forces flatter, higher, more frontal light. That constraint must be in the solver.
+- **Takes.** 2-5 days initial hang per set; 4-8 hours of revision weekly
+- **Television.** This process has no single-camera equivalent. A feature gaffer optimises one camera at a time and relights for the reverse; the LD cannot.
+
+### Multicam Camera Blocking And Cue Refinement
+
+Run the episode camera by camera with stand-ins, record every shot's camera position, and refine the lighting states and cue fades to fit the shot list without relighting.
+
+- **Who.** Lighting Director, Console Programmer, Technical Director, Camera Coordinator
+- **Decides.** Player decides which cues change with which scene, fade times, and which compromises to accept where two cameras want opposite things.
+- **Engine.** Shot list x camera positions x cue states as a matrix. A cue change must be a stored state transition with a fade time the board executes live. Conflicts between camera needs must be surfaced as explicit compromises the player resolves, with a rendered cost in either angle quality or cue count.
+- **Takes.** 6-10 hours on camera-blocking day
+- **Television.** The single-camera equivalent is simply setting each shot; there is no cue list and no board.
+
+### Multicam Shoot Night
+
+Shoot the episode in front of an audience, running cues live between scenes, resetting practicals and effects between takes, with the shaders riding iris and paint per camera.
+
+- **Who.** Lighting Director, Dimmer Board Operator, Stage Electricians; Video Controller/Shader in the truck
+- **Decides.** Player decides how much to fix live versus let the shaders handle, whether to stop the audience for a relight, and when to pick up a scene film-style after the audience leaves.
+- **Engine.** Live cue execution against a running clock with an audience whose patience is a depleting resource. Board recall time versus manual re-set time is the whole economy. Shader iris adjustments partly compensate for exposure error, which must reduce but not eliminate the cost of a bad lighting state.
+- **Takes.** 3-5 hours for a 22-minute episode
+- **Television.** Single-camera has no live audience clock, no shaders and no cue execution; it has the AD's day and the turnaround problem instead.
+
+### Talk Show, Variety And Awards Lighting
+
+Design a show around automated fixtures, truss, LED walls and audience wash: host key from a front truss, set wash, audience light, music-number looks, and a cue stack fired against a rundown.
+
+- **Who.** Lighting Director / Lighting Designer, with a Programmer, Automated Lighting Techs, Riggers and a Board Operator
+- **Decides.** Player designs the rig, the looks, the moving-light palette and the cue stack, and decides how much of the show is moving-light spectacle versus clean key light on a face.
+- **Engine.** Moving fixtures need pan/tilt/zoom/colour/gobo as real animatable parameters with real slew times - a mover cannot be in two places instantly. Beam visibility depends on haze density. Audience light level is a real constraint because the audience must be exposable in the same frame as the stage.
+- **Takes.** 1-5 days of rig and programming per episode or event
+- **Television.** This is television-only as a format; features borrow the equipment for concert scenes and must then rent the same automated package and the same techs.
+
+### Lighting Budget And Overage Tracking
+
+Track rentals, expendables, loss and damage, crew hours, overtime, meal penalties, sub-rentals, condor and lift days, fuel and helium against the approved lighting and grip accounts.
+
+- **Who.** Best Boy Electric and Best Boy Grip, reported to the UPM and the Line Producer
+- **Decides.** Player decides where to spend when the account is running hot: fewer rig days, a smaller truck, a smaller crew with longer days, or a request to the producer.
+- **Engine.** Live account ledger fed by every other process: each rig day, each condor, each gallon of fuel, each hour of overtime posts a real line. A gaffer who is always over budget loses jobs; a gaffer who is always under gets a reputation for a small look. Both effects must exist.
+- **Takes.** Daily, 30-60 min; a weekly cost report
+- **Television.** Series run a per-episode pattern budget and an amortised pilot rig; overage in one episode is expected to be recovered in the next, which changes the whole decision shape.
+
+### Handover To Post: LUT, CDL And Dailies Note
+
+Lock the show LUT, generate per-scene CDL grades on set, and send a note to the colourist about what the lighting intends so dailies and the final grade honour it.
+
+- **Who.** DP and DIT, with the Gaffer's notes
+- **Decides.** Player decides whether to protect the look in camera or to shoot flat and fix it later, and how much latitude to leave in shadows and highlights.
+- **Engine.** Lighting choices must produce a real signal with real latitude: underexposed shadows carry noise the grade cannot remove, clipped highlights carry no data. The colourist's achievable range is a function of what the lighting actually recorded, so shooting flat and fixing later must have a genuine cost.
+- **Takes.** 15-45 min per day on set; a grade session later
+- **Television.** TV's dailies-to-air turnaround is far tighter and the colourist often has hours, not days, so protecting the look on set matters more in TV than in features.
+
+### Option spaces
+
+**Tungsten Fresnel Spots** — 17 options
+
+`Mole-Richardson Mini-Mole / Inkie 200-250W` · `Mole Inbetweenie 300W` · `Mole Tweenie 650W` · `Mole Baby Solarspot 1000W (Baby 1K)` · `Mole Baby Junior Solarspot 2000W (BJ, 6in lens)` · `Mole Junior Solarspot 2000W (10in lens)` · `Mole Baby Senior Solarspot 5000W (10in)` · `Mole Senior Solarspot 5000W (14in)` · `Mole Baby Tener 10,000W` · `Mole Tener Solarspot 10/12,000W (20in)` · `Mole Big Eye Tener 10/12,000W (24in)` · `Mole Big Mole / Big Mo Solarspot 20,000W (24kW lamp option)` · `ARRI Fresnel 150W / 300W / 650W` · `ARRI Junior 1000W / 2000W` · `ARRI Studio T1 1kW / T2 2kW / T5 5kW / T12 12kW / T24 24kW` · `DeSisti Leonardo 1kW / 2kW / 5kW / 10kW` · `LTM Pepper 100 / 200 / 420 / 650 / 1000 / 2000`
+
+**Tungsten Open Face, Soft And Cyc Units** — 14 options
+
+`Mole Mickey-Mole 1000W open face` · `Mole Mighty-Mole 2000W open face` · `Mole Molequartz Nook Light 650W / 1000W` · `Single Broad 750W / Double Broad 1000-2000W` · `Mole Skypan 5000W / 10,000W open dish` · `Scoop 500-2000W` · `Far Cyc 1-cell / 3-cell / 4-cell (1000-1500W per cell)` · `Ground row / cyc strip` · `Softlite / Zip Soft Light 750W / 1000W / 2000W` · `ARRI Arrilite 750W / 1000W / 2000W` · `Blonde 2000W open face (UK/EU)` · `Redhead 800W open face (UK/EU)` · `Chinese lantern / china ball with 100-300W globe` · `Practical bulbs: 25W-300W household, candelabra, globe, Edison filament, mushroom`
+
+**Multi-Lamp PAR Arrays (Brutes)** — 9 options
+
+`Mole Molepar single PAR64 1000W` · `6-light Mini-Brute (6 x 650W FAY or 1kW PAR)` · `Maxi-Brute 9-light (9 x 1000W PAR64 = 9kW)` · `Maxi-Brute 12-light (12kW)` · `Dino 24-light (24 x 1000W = 24kW)` · `Wendy light (custom PAR64 array on truss, 30-100+ lamps)` · `FAY lamp arrays (PAR36 650W dichroic 5000K)` · `PAR64 lamp choices: VNSP, NSP, MFL, WFL` · `Ruby 7 / custom multi-lamp specials`
+
+**HMI Fresnels, PARs And Open Reflectors** — 14 options
+
+`ARRI M8 800W` · `ARRI M18 1800W` · `ARRI M40 4000W / M25 2500W` · `ARRI M90 9000W` · `ARRIMAX 18/12 (18,000W or 12,000W, reflector-only with Max lens set)` · `ARRI Compact 125 / 200 / 575 / 1200 / 2500 / 4000 / 6000 / 12000 / 18000` · `ARRI ARRISUN 5 / 12 / 40 / 60 PAR` · `ARRI Pocket PAR 200 / 400 / 575` · `K5600 Joker-Bug 200 / 400 / 800 / 1600` · `K5600 Alpha 4K / 9K / 18K` · `LTM Luxarc 200 / 575 / 1200 / 2500 / 4000 / 6000 / 12000 / 18000` · `Lightstar Luxed 1200 / 4000 / 6000 / 12000` · `Ballast type: magnetic (flicker-prone) or electronic square-wave (flicker-free, dimmable to about 50%)` · `Header cable lengths 25 / 50 / 100 ft`
+
+**Arc, Xenon And Plasma Specials** — 9 options
+
+`Luminys SoftSun 100K (100,000W, about 5000K, CRI 96+, dims 100kW to 3kW, flicker-free to 10,000 fps, 320 lb head, output comparable to seven ARRIMAX 18Ks)` · `Luminys SoftSun 50K / 20K / 10K / 5K / 2K` · `Luminys SoftSun 200K` · `Lightning Strikes LS-1 20K / 70K / 200K xenon lightning strobe` · `Musco SkyLight / Mobile mast lighting (metal halide, 4000-6000W per head)` · `Carbon arc Brute (legacy, 225A)` · `Hive Lighting plasma: Bumble Bee 25-C, Wasp 100-C, Hornet 200-C, Killer Plasma 1000` · `Xenon followspot / Super Trouper (variety and concert TV)` · `Nitesun / helicopter searchlight`
+
+**Fluorescent Fixtures** — 12 options
+
+`Kino Flo 4ft 4Bank / 4ft 2Bank` · `Kino Flo 2ft 4Bank / 2ft 2Bank` · `Kino Flo Single, Double and Barfly 200 / 400` · `Kino Flo Diva-Lite 201 / 401` · `Kino Flo Image 20 / 45 / 85` · `Kino Flo Wall-o-Lite / Mega` · `Kino Flo ParaBeam 200 / 400` · `Kino Flo VistaBeam 300 / 600` · `Kino Flo Celeb 200 / 250 / 400 / 850 (LED successors)` · `Kino Flo FreeStyle 21 / 31 and Mimik 120` · `Tubes: KF32 (3200K), KF29 (2900K), KF55 (5500K), 420/430 series, chroma green and blue` · `Domestic fluorescent practicals and their green spike`
+
+**LED Hard And Point Sources** — 14 options
+
+`ARRI Orbiter 400W nominal / 500W max, with Open Face 15/30/60, Projection 15/25/35, Fresnel 15-65 motorised, Domes S/M/L` · `ARRI L-Series L5-C / L7-C / L10-C fresnels` · `Aputure Electro Storm CS15 (1500W RGBWW, about 1585W draw)` · `Aputure Electro Storm XT26 (2600W bi-colour)` · `Aputure LS 600d / 600x Pro / 1200d Pro` · `Nanlux Evoke 900C / 1200B / 2400B / 5000B` · `Nanlux Dyno 650C / 1200C` · `Creamsource Vortex4 / Vortex8` · `Litepanels Gemini Hard 1x1 / 2x1` · `Fiilex Q Series` · `Mole-Richardson LED Tener / Junior / Baby fresnels` · `ETC Source Four LED Series 3 Lustr X8 (with 10/19/26/36/50 degree barrels)` · `Prolights / Chauvet Ovation ellipsoidals` · `Accessories: fresnel lens, projection optics, dome, barndoor, snoot, lantern, softbox adapter`
+
+**LED Soft Panels, Mats And Boxes** — 13 options
+
+`ARRI SkyPanel S30-C / S60-C / S120-C / S360-C` · `ARRI SkyPanel X21 (800W) / X22 (1600W) / X23 (2400W), 4800 lux at 10 m per panel, RGBACL, 1500K-20,000K, IP66` · `Litepanels Gemini Soft 1x1 / 2x1 / Flex` · `Creamsource SpaceX` · `Aputure Nova P300c / P600c` · `LiteGear LiteMat Spectrum 1 / 2 / 3 / 4 / 8` · `LiteGear LiteRibbon and LiteTile` · `DMG Lumiere (Rosco) MINI MIX / SL1 MIX / MAXI MIX / DASH` · `Digital Sputnik DS1 / DS3 / Voyager` · `Cineo Maverick / Quantum 400 / Quantum 800 / Reflex (remote phosphor)` · `Rosco Silk 110 / 210` · `Softbanks and eggcrates: DoPchoice Snapbag, Snapbox, Snapgrid, Octa, Butterfly` · `Chimera Video Pro Plus, Daylite Jr/Sr, Octa, Lantern, Pancake Lantern`
+
+**LED Tubes, Sticks And Pixel Practicals** — 10 options
+
+`Astera Titan Tube (8 x 1ft pixels, battery, CRMX)` · `Astera Helios Tube / Hyperion Tube` · `Astera AX3 LightDrop / PixelBrick / NYX Bulb` · `Astera AX9 PowerPAR` · `Quasar Science Rainbow 2 (2ft / 4ft) and Double Rainbow` · `Quasar Science Q-LED X tubes and Ossium rigging system` · `Nanlite PavoTube II 6C / 15C / 30C` · `Aputure MT Pro / amaran PT tubes` · `LED practical bulbs with DMX or app control` · `LED tape and ribbon with drivers for set-build integration`
+
+**Automated / Moving Lights (Television And Concert)** — 10 options
+
+`Vari-Lite VL series` · `Martin MAC Aura / Viper / Ultra Performance` · `Robe BMFL / Esprite / Forte / T1 Profile` · `Claypaky Sharpy / Mythos / Xtylos` · `Ayrton Perseo / Domino / Huracan` · `GLP impression X4 / JDC1 strobe` · `Chauvet Professional Maverick` · `Elation Proteus (IP-rated for exterior)` · `Followspots: manual long-throw xenon, or remote follow systems` · `Strobes and blinders: Atomic 3000, Molefay / audience blinders`
+
+**Overhead Ambient: Space Lights And Balloons** — 10 options
+
+`Tungsten Space Light 6000W (6 x 1kW nook lights in a silk cylinder)` · `Maxi Space Light 6000W / 9000W` · `LED Space Light (e.g. Mole LED Spacelite)` · `Space light skirts: white silk (soft spread) or black (directional control)` · `Airstar helium balloons: Sirocco range, Tube, Crystal, Diamond` · `Airstar NEO Film air-inflated LED tube (2200K-6500K, 240-degree diffusion)` · `Balloon lamp options: tungsten, HMI, LED` · `China balls / paper lanterns 12in-36in` · `Chimera Lantern and Pancake Lantern` · `Soft boxes flown on speedrail: 4x4, 6x6, 8x8`
+
+**Colour Temperature Conversion Gels** — 13 options
+
+`Full CTB (Lee 201 / Rosco 3202 Full Blue): 3200K to about 5500K, roughly 1.5-2 stops loss` · `Half CTB (Lee 202 / Rosco 3204)` · `Quarter CTB (Lee 203 / Rosco 3206)` · `Eighth CTB (Lee 218 / Rosco 3208)` · `Full CTO (Lee 204 / Rosco 3407): 5500K to about 3200K` · `Half CTO (Lee 205 / Rosco 3408)` · `Quarter CTO (Lee 206 / Rosco 3409)` · `Eighth CTO (Rosco 3410)` · `Roscosun 85 (3401)` · `Plusgreen / Windowgreen 1/8, 1/4, 1/2, Full (Lee 244, Rosco 3304)` · `Minusgreen 1/8, 1/4, 1/2, Full (Lee 247, Rosco 3308)` · `Urban Vapor / Fluorofilter / sodium and mercury correction gels` · `Straw, bastard amber, half straw for warmth without full conversion`
+
+**Diffusion Gels And Fabrics** — 12 options
+
+`Full Grid Cloth / Half Grid / Quarter Grid / Light Grid Cloth` · `Lee 216 Full White Diffusion / 250 Half / 251 Quarter / 252 Eighth` · `Lee 253 Hampshire Frost / 132 Quarter Hampshire` · `Lee 410 Opal Frost / 129 Heavy Frost` · `Rosco Tough Spun, Light Tough Spun, Quarter Tough Spun` · `Rosco Magic Cloth` · `Rosco Tough Silk / Soft Frost` · `Bleached and unbleached muslin` · `China silk, quarter silk, half silk, full artificial silk` · `Bobbinet / scrim gauze` · `Frost on the barndoor: 216 clipped, Hampshire, or a pancake of tough spun` · `Blackwrap (Cinefoil) for cutting rather than diffusing`
+
+**ND, Window And Effect Filtration** — 9 options
+
+`ND 0.3 (1 stop) / ND 0.6 (2) / ND 0.9 (3) / ND 1.2 (4) gel for windows` · `Combination ND+CTO and ND+CTB window gels` · `Perforated ND and scrim gauze for windows` · `Blackout: duvetyne, Visqueen, Cinefoil, blackout cloth, blacking out a location` · `Silver / gold lame and mirror board for hard bounce` · `Dichroic filters on FAY and PAR lamps` · `Polarising filters (camera side) for glass and sky` · `Rosco Cinegel 3000-series and Lee HT (high temperature) ranges for big units` · `Colour effect gels: CalColor, Storaro, Congo Blue, Primary Red, Steel Blue, Lavender`
+
+**Flags, Cutters, Nets, Dots And Fingers** — 10 options
+
+`Flags: 12x18, 18x24, 24x36, 24x30, 4x4 solid, 4x4 floppy (hinged, doubles to 4x8)` · `Cutters: 10x42, 18x48, 24x72` · `Meat axe / open frame` · `Dots: 3in, 6in, 10in - solid, single net, double net, silk` · `Fingers: 2x12, 4x12 - solid, single, double, silk` · `Nets by frame tape colour: single (green, about half a stop), double (red, about one stop), lavender (light single), open-end (no bottom rail, no shadow line)` · `Silks: 18x24, 24x36, 4x4` · `Teasers and top hats for cutting above the frame line` · `Celo / cucoloris: wood cookie, plastic cookie, branchaloris, dapple` · `Blackwrap for cutting at the source`
+
+**Overhead Frames And Rags** — 6 options
+
+`Frame sizes: 4x4, 6x6, 8x8, 12x12, 20x20, 30x30 (butterfly and overhead)` · `Frame types: butterfly (floor, on two stands), overhead (flown), and collapsible` · `Rags: full / half / quarter / light grid cloth, Magic Cloth, China silk, artificial silk, muslin, black solid (duvetyne), single and double black net (black scrim), Ultrabounce black/white, Griffolyn, chroma green and blue` · `Bounce boards: 4x8 beadboard, showcard (white/black), foamcore, poly board, mirror board, shiny board (hard side / soft side)` · `Frame rigging: overhead stands, hi-rollers, menace arm, scaffold, two Condors, or truss` · `Rag ties, sash cord, bungees, and frame bags`
+
+**Stands** — 12 options
+
+`C-stand (Century / gobo stand) 20in, 30in, 40in, with turtle base and rocky mountain leg options` · `Low boy combo` · `Baby stand / beefy baby (5/8in baby pin)` · `Junior stand (1-1/8in junior receiver)` · `Combo stand (baby and junior)` · `Hi-roller / Mombo Combo / Super Mafer` · `Roller stand 1, 2, 3` · `Crank-up / wind-up stands to 13, 20, 26 ft` · `Overhead stands for 12x12 and up` · `Menace arm and offset arm on a stand` · `Preemie / short stands and hi-hats` · `Cine stands and high-capacity 20-40 ft wind-ups`
+
+**Arms, Heads, Hangers And Booms** — 12 options
+
+`Grip head 2.5in (baby) and 4.5in (junior)` · `Gobo arm 20in / 40in` · `Extension arm` · `Menace arm` · `Boom arm / hollywood arm` · `Pipe boom and telescoping hanger (for grid and pipe rigs)` · `Sidearm (baby and junior)` · `Scissor clip for drop ceilings` · `Chain vise grip / trapeze` · `Baby-to-junior spud adapter and junior-to-baby reducer` · `Offset arms and drop-down hangers` · `Poles: polecat, autopole, wall spreader, crossbar`
+
+**Clamps, Plates And Mounting** — 14 options
+
+`Mafer clamp` · `Cardellini (end jaw and centre jaw) 2in / 4in / 6in` · `Matthellini 3in / 6in / 9in` · `Manfrotto Super Clamp` · `Platypus clamp` · `Cheeseborough clamp (fixed and swivel)` · `Grid clamp / pipe clamp / C-clamp` · `Furniture clamp` · `Putty knife (door clamp)` · `Baby plate, junior plate, pigeon plate, nail-on plate, wall plate` · `Turtle base and low-low plate` · `Speedrail 1-1/4in OD and Kee Klamp fittings` · `Suction cups (with safety), magnet mounts, gaffer grip (gator clamp)` · `Snot tape, gaffer tape, camera tape, paper tape`
+
+**Rigging Structure And Hardware** — 11 options
+
+`Perms (permanent stage grid) and green beds` · `Pipe grid at trim height` · `12in and 20.5in box truss, pre-rig truss` · `Chain motors: CM Lodestar 1/4, 1/2, 1 ton; motor control` · `Shackles, spansets, steel and soft safeties, turnbuckles` · `Wire rope, come-alongs, ratchet straps` · `Sash cord (trick line), rope, knots: bowline, clove hitch, trucker's hitch` · `Scaffold (tube-and-clamp, system scaffold), rolling towers` · `Rigging plates and beam clamps` · `Sandbags 15 lb / 25 lb / 35 lb, water barrels, shot bags` · `Cable ramps, yellow jackets, cable crossovers, ground protection matting`
+
+**Dollies And Camera Support (Grip)** — 12 options
+
+`Chapman/Leonard PeeWee, Super PeeWee (II-V)` · `Chapman/Leonard Hybrid (III, IV, V)` · `Chapman/Leonard Hustler (IV, V)` · `Chapman/Leonard Pedolly and Sidewinder` · `J.L. Fisher Model 9, Model 10 (1200 lb capacity), Model 11 (900 lb capacity)` · `Panther Classic, Foxy, Galaxy; Movietech` · `Doorway dolly, Western dolly, Tube dolly, skateboard dolly` · `Magliner with a sled for run-and-gun` · `Slider and mini-jib` · `Hi-hat, low hat, bazooka, rocker plate, tilt plate` · `Television pedestals: Vinten Vector / Quattro, Cartoni, Shotoku (studio ped work is camera department)` · `Robotic pedestals: Ross Furio, Telemetrics, Shotoku robotics (news and multicam)`
+
+**Track, Levelling And Floors** — 8 options
+
+`Steel tube track: straight sections, curved sections, switches` · `Track wedges, cribbing, apple boxes (full, half, quarter, pancake)` · `Bubble levels, laser levels, string lines` · `Dance floor: layout board plus masonite over ply` · `Plywood and rubber matting over grass, sand, gravel` · `Track skates and dolly track wheels (soft, hard)` · `Sound blankets under track for stage floors` · `Slider rails and doorway track for short moves`
+
+**Cranes, Arms And Remote Systems** — 11 options
+
+`Chapman Lenny Mini (2.5-28.5 ft reach in 2 ft increments)` · `Chapman Lenny Arm II Plus (to about 19 ft height, 17 ft reach manned)` · `Chapman Lenny Arm III (to about 55 ft reach, 47 ft elevation, remote)` · `Chapman Titan II, Zeus, Electra, Hydrascope` · `J.L. Fisher Model 21 / 23 jib arms` · `Technocrane telescoping cranes (roughly 15, 22, 30, 50 ft classes)` · `Supertechno and Moviebird telescoping arms` · `Filmotechnic Russian Arm (crane on a vehicle)` · `Scorpio, Libra and Ronin 2 remote heads (camera department)` · `Cablecam, Skycam, Spidercam (aerial wire systems; common in sports and event TV)` · `Jimmy Jib Triangle and studio jibs for multicam`
+
+**Vehicle And Specialty Rigs** — 11 options
+
+`Hood mount, door mount, side mount with speedrail` · `Hostess tray` · `Suction cup rigs with steel safeties` · `Biscuit rig and pod system` · `Low loader / process trailer` · `Tow rig and A-frame` · `Russian Arm and gyro-stabilised vehicle heads` · `Poor man's process: stationary car, moving lights and shakers` · `LED volume driving plate` · `Camera car with an electric follow genny and on-board inverter power` · `Shakers, dolly-bounce rigs, and grip-built gimbals`
+
+**Aerial Lifts And Elevated Platforms** — 9 options
+
+`JLG 600S / 660SJ boom lift (about 60 ft)` · `JLG 800S / 860SJ (about 80 ft)` · `JLG 1200SJP / 1250AJP (about 120 ft)` · `JLG 1350SJP (about 135 ft) and 1500SJ (about 150 ft)` · `Genie Super Tower ST-25 and AWP-40 personnel lifts` · `Scissor lifts 19-40 ft` · `Rolling scaffold towers and ladders (A-frame, extension, Little Giant)` · `Ground plating and outrigger pads` · `Wind rating per ANSI A92 / CSA B354, commonly 28 mph for outdoor-rated platforms`
+
+**Power Generation** — 10 options
+
+`1400A movie generator on a 10-ton truck (studio-quiet, three-phase 120/208)` · `1200A and 750A plants` · `500A tow plant (single or three phase)` · `320A and 250A tow plants` · `Honda EU7000is and similar inverter putt-putt generators (about 7kW)` · `Multiquip Whisperwatt DCA-25 / 45 / 70 / 125 / 180 / 220 kVA` · `Battery power stations: Instagrid, Portable Electric Voltstack and similar (silent, zero-emission, limited kWh)` · `House tie-in at a disconnect / bull switch with a licensed electrician` · `Shore power and location panel taps` · `Follow genny on a camera car`
+
+**Distribution Hardware And Connectors** — 12 options
+
+`4/0 Type W feeder cable, rated about 400A, Camlok / Powerlok single-pole (E1016)` · `2/0 banded feeder (about 175A) and 5-wire banded sets (3 hots, neutral, ground)` · `1200A and 400A distro boxes` · `100A Bates (stage pin) gang box, spider box, lunch box (100A in, 5 fused duplex Edison out)` · `60A Bates and 60A-to-100A adapters` · `Snakebite (100A Bates to two 60A) and breakouts` · `20A stage pin (2P&G) and Edison stringers, 1K and 2K stingers` · `Socapex 19-pin multicable and breakouts` · `True1 and PowerCon for LED fixtures` · `GFCI and portable ground-fault protection, grounding rods` · `Phase tester, clamp meter, voltage tester` · `NEC guidance: 3% max voltage drop on feeders; V = 2KIL/A with K = 12.9 for copper`
+
+**Control, Dimming And Effects Devices** — 10 options
+
+`DMX512-A, RDM, sACN (ANSI E1.31), Art-Net` · `Wireless DMX: LumenRadio CRMX, Wireless Solution W-DMX` · `Consoles: ETC Eos family (Ion Xe, Gio, Apex), MA Lighting grandMA2 / grandMA3, Avolites, High End Hog 4, Jands Vista` · `Tablet control: Luminair, Blackout, manufacturer apps` · `Dimmer racks: ETC Sensor3, 12 x 2.4kW and 24 x 2.4kW packs, 6kW and 12kW dimmers` · `Portable dimmers, hand squeezers, variacs, foot dimmers` · `Flicker boxes: Magic Gadgets Shadowmaker and Flicker Master, Reel EFX` · `Lightning generators: Lightning Strikes LS-1 20K / 70K / 200K` · `Fixture-native control: on-board CCT, hue, saturation, effects engines` · `DMX splitters, opto-isolators, terminators`
+
+**Metering And Measurement** — 10 options
+
+`Incident meter (Sekonic L-758, L-858)` · `Spot meter (1-degree)` · `Colour meter / spectrometer: Sekonic C-800, UPRtek, Asensetek` · `Waveform monitor and vectorscope (DIT cart)` · `False colour and zebras on monitor` · `Light meter apps (secondary, for scouting)` · `Sun position apps: Sun Surveyor, Helios, PhotoPills` · `Clamp meter and phase rotation tester` · `Anemometer for wind calls` · `Colour metrics read out: CCT, Duv, CRI Ra, TM-30 Rf and Rg, SSI, TLCI`
+
+**Set Lighting (Electric) Crew Positions** — 14 options
+
+`Gaffer / Chief Lighting Technician (CLT)` · `Best Boy Electric / Assistant Chief Lighting Technician (ACLT)` · `Set Lighting Technician / Lamp Operator` · `Dimmer Board Operator / Lighting Console Programmer` · `Fixtures Technician` · `Rigging Gaffer / Chief Rigging Technician (CRT)` · `Rigging Best Boy / Assistant Chief Rigging Technician (ACRT)` · `Rigging Electricians` · `Generator Operator` · `Balloon Technician` · `Lighting Director (LD) - television, often the design lead on multicam and variety` · `Lighting Designer - variety, awards, concert television` · `Video Controller / Shader - television truck, rides iris and paint` · `Local representation: IATSE Local 728 (Los Angeles set lighting), IATSE Local 52 (New York studio mechanics), BECTU in the UK`
+
+**Grip Crew Positions** — 11 options
+
+`Key Grip` · `Best Boy Grip` · `Dolly Grip` · `Company Grip / Third Grip` · `Rigging Key Grip` · `Rigging Best Boy Grip` · `Rigging Grips` · `Crane Technician` · `Construction Grip` · `A-rig and B-rig crews on a multi-unit show` · `Local representation: IATSE Local 80 (Los Angeles grips), IATSE Local 52 (New York), BECTU in the UK`
+
+**Face Lighting Schemes** — 13 options
+
+`Paramount / butterfly (source high and frontal, symmetrical nose shadow)` · `Rembrandt (45 degrees and up, triangle on the shadow cheek)` · `Loop` · `Split` · `Short side key (shadow side toward camera)` · `Broad side key (lit side toward camera)` · `Top light` · `Underlight` · `Rim / edge only` · `Available-light naturalism and window key` · `Book light (bounce through diffusion)` · `Ring / on-axis for beauty and commercial work` · `Motivated single-source with fill from bounce only`
+
+**Night Exterior Strategies** — 11 options
+
+`Condor wash from 60-150 ft with HMIs or big LEDs` · `Musco-class mobile mast lighting` · `Balloon ambient over the playing area` · `Bounce off a building face or a tented white` · `Practical-driven: streetlamps, shop windows, car headlights, neon` · `Moonlight hard backlight with minimal fill` · `Sodium / mercury urban palette` · `Near-black naturalism at high ISO with tiny sources` · `Day for night` · `Dusk-for-night / magic hour stealing` · `Wet-down (water truck) so streets carry reflections`
+
+**Day Exterior Strategies** — 11 options
+
+`Sun as key, bounce as fill` · `Sun as backlight, bounce or unit as key` · `12x12 / 20x20 overhead silk over the playing area` · `Full block: solid overhead, everything lit by units` · `Negative fill only (solids on one side)` · `Shoot into the shade and expose for it` · `HMI fill against the sun (punching in)` · `Schedule to the sun and turn around with it` · `Poly and beadboard bounce for a large soft fill` · `Mirror board / shiny board redirecting sun` · `Overcast: shoot it and add shape with negative fill`
+
+**Television Multicam Lighting Approaches** — 10 options
+
+`Sitcom four-wall proscenium: overhead grid, three or four cameras, no floor stands in sightlines` · `Cue-driven design on a console, with the LD or a board op firing cues` · `High soft ambient from space lights plus keyed playing areas` · `Backlight ring for separation on all axes` · `Audience light and house wash as a separate system` · `Talk show: front truss key, set wash, moving-light accents, LED wall backing` · `Variety and awards: automated fixtures, haze, followspots, video wall integration` · `News and weather: fixed key/fill/back per position plus a chroma cyc` · `Game show: audience, contestant positions, host position, dramatic reveal cues` · `Sketch and multicam hybrid: multicam stage plus single-camera pickups after the audience leaves`
+
+### What gets got wrong
+
+- Nameplate wattage is not draw. An HMI's ballast losses and power factor mean an 1800W unit does not draw 15A, and a 20K tungsten draws about 167A at 120V - which is a 2 x 100A feed or a 208V run, not a lunch box. If the sim uses nameplate watts as amps, the whole power system is decoration.
+- The crew's own rule of thumb is watts divided by 100 for amps at 120V, not watts divided by 120. That deliberate 20% headroom is why real rigs do not trip, and a sim that computes exactly 8.33A for a 1K will be systematically over-optimistic about what a circuit holds.
+- Neutral current in a three-phase distro is not the simple imbalance once electronic ballasts and LED drivers are on it. Third-harmonic currents add on the neutral, so a balanced LED rig can put more current on the neutral than on any hot leg. That is a real fire mechanism and the reason feeder sets are 5-wire.
+- Voltage drop dims and warms tungsten before it trips anything. A long feeder run at high load pulls a 3200K lamp measurably warmer and lower, which shows up as a colour continuity problem nobody traces back to the cable.
+- Tungsten dims warm and LED does not unless it is told to. Dim a 1K practical to half and it goes toward 2400K; dim an LED practical to half and it stays at 3200K and instantly reads as fake. Any dimming model that only changes intensity gets this wrong.
+- A hot HMI will not restrike. Once it has been running it needs roughly 5-15 minutes to cool before it will fire again, which is why nobody turns HMIs off for lunch and why the first setup after a break is slow. This is a schedule mechanic, not a flavour note.
+- HMI flicker depends on ballast type, mains frequency, frame rate and shutter angle together. A magnetic ballast at 24 fps and 180 degrees on 60 Hz is fine; the same unit off-speed is not. Electronic square-wave ballasts remove the problem and cost more.
+- LED flicker is a different failure: PWM driver frequency against a rolling shutter produces banding at high shutter speeds and high frame rates, and it appears on the monitor rather than in the eye. Fixtures need a PWM frequency parameter and a high-speed rating, not a boolean 'flicker free'.
+- CRI alone is close to useless. Two fixtures both at 96 CRI can render the same costume dye differently. The sim needs SPD and TM-30 Rf/Rg or SSI, and the visible consequence should land on specific materials and specific skin tones - which is exactly what a camera test exists to catch.
+- Green-magenta mismatch (Duv) breaks a scene faster than a Kelvin mismatch. A warm light beside a cool light reads as a choice; a green light beside a neutral one reads as broken. Tint needs to be a first-class axis with its own correction gels.
+- Lighting darker skin is not lighting lighter skin with more level. It typically wants more separation, more deliberate specular shaping and warmer sources, and underexposure is far less forgiving. A sim where skin is one reflectance value cannot represent either the craft or the failure.
+- Grip and electric is a real jurisdictional wall. Electric owns anything that plugs in and makes light; grip owns anything that shapes or blocks light and everything the camera sits on. A player ordering a grip to set a lamp should be refused, and in a union town that refusal has teeth.
+- The rigging crew is a separate unit with a separate call, a separate truck and often separate cards. Pre-light and pre-rig hours are paid by that crew and the saving they buy lands on a different crew's day. If pre-light is modelled as free, the economics of a stage show collapse.
+- Turnaround is the largest recoverable time sink on a single-camera day and it has a real countermeasure: pre-rigging both directions during the pre-light. Buy that in prep and the reverse takes minutes; skip it and it takes the better part of an hour, every time.
+- Multicam has no turnaround at all, and that is the format's entire advantage. Three or four cameras live from the fourth wall means the lighting is designed once for all of them, which is why a 22-minute sitcom shoots in a night and 22 minutes of drama takes days.
+- Multicam light is flatter because of geometry, not taste. With three live cameras you cannot put a hard key at 45 degrees without it being a light stand in somebody's frame. Derive the flatness from multi-camera constraint satisfaction or it reads as a lazy stereotype.
+- On a multicam or live show a Video Controller/Shader rides iris and paint per camera in the truck, partially compensating for a bad lighting state. It should reduce, never eliminate, the penalty - otherwise exposure stops mattering in television.
+- Every hard source is a cost to the sound department. The boom's shadow is the most common on-set argument, and soft light is chosen as often to give the boom room as for how it looks. A sim without shadow-versus-boom conflict is missing a daily negotiation.
+- The generator's distance from set is a three-way trade: sound wants it far, voltage drop wants it near, cable inventory wants it near. All three have to be numbers or the placement decision is empty.
+- Fabric in wind is a sail. A 12x12 silk in 20 mph generates more force than most stands are rated for, and the failure is the stand going over. Bag count, stand rating, frame area and wind speed have to combine into a genuine stability margin with a genuine accident.
+- A boom lift's published wind rating is for the platform, not the platform with a 4x4 and an M90 on the basket rail. A 28 mph ANSI rating and a real load are different numbers, and the sim should punish treating them as the same.
+- Wet rags are not rags. A silk that takes rain doubles in weight, stops diffusing and starts loading the frame, and it has to come down. The same is true of bounce and of anything cotton.
+- Gel burns. Full CTB in front of a 10K fades and shifts within a couple of hours, so a long day needs a re-gel costing a lift, an electric and 15 minutes. Cheap gel in front of a hot unit is not a one-time cost.
+- Day for night cannot be fixed later if the sky is in frame. The sky clips white no matter how far you underexpose, so the decision to keep or exclude the sky is made before the camera rolls, not in the grade.
+- Green screen fails on evenness and spill, not on colour. The backing must be within about a third of a stop corner to corner, and green bouncing onto the subject's shoulders kills the edge before any key setting does. Distance off the backing is the cheapest fix and costs floor space.
+- An LED volume wall is a dim source. Wall luminance sits well below a real key, so ICVFX shoots still order conventional fixtures for anything approaching a face. A sim where the wall replaces the lighting package has never been on a volume stage.
+- Every doubling of frame rate costs a stop. High-speed work does not just need 'more light', it needs a computable amount more, and the flicker-free rating of every unit in frame must be checked at that rate.
+- Haze decays. Density falls as the room exchanges air, so re-filling between takes is a recurring minute cost on the AD's clock, and a leaky location or a live audience makes atmosphere impractical rather than merely expensive.
+- Rain only reads in backlight. Rain in a frontal key is invisible on camera, so a rain day is really a backlight-position problem - and the same is true of snow, dust and breath.
+- Dolly track level error scales with focal length. A lay that is fine for a 25mm is a visible bump on a 135mm, so the acceptable tolerance has to come from the lens, not from a fixed 'track quality' stat.
+- Fixture substitution is where continuity actually dies. The 18K you wanted is out, you take two 12Ks, and now the shadow has two edges. Rental stock depth and substitution consequences must be real, because 'what is available this week' is one of the biggest constraints on a working gaffer.
+- Pre-light completeness is not a percentage in a note; it is a subtraction from a specific first-setup time. If buying a pre-light day does not measurably shorten a shoot day, nobody will ever buy one and the entire rigging department becomes ornamental.
+- A 20x20 or 30x30 overhead is not a bigger 12x12. Past about 12x12 you cannot fly it from stands in any wind and you need lifts or scaffold, which moves it from a grip task to a scheduled build. That step change has to be in the model.
+- Heat is a schedule cost. A 10K in a small practical set raises room temperature fast, makeup runs, and the cast's tolerance is finite. Fixture heat output in BTU should feed a room temperature that feeds a real cast-comfort clock.
+- Helium is a consumable and a permit. Balloons need fills, lose lift over a day, and tethered flights above certain heights near airports require notification. Treating a balloon as a free floating soft light misses every one of its real costs.
+- Terminology and voltage change outside the US. In the UK a spark is an electrician, a blonde is a 2K open face, a redhead is an 800W, a brute is a big arc, and 230V mains halves the amperage for the same wattage - which changes what a domestic circuit carries by a factor of two.
+- The big design trap for this domain specifically: a fixture list where every unit differs only in a wattage label. If a 5K Senior at 20 ft and a SkyPanel S60 at 6 ft produce the same rendered image with the same shadow edge, the whole catalogue is a dropdown. Beam profile, source area, SPD and falloff must be per-fixture data the solve actually reads.
+
+---
+
+## 14. Sound on set (production sound: department, microphones, booming, RF, recording, sync, playback, cueing, reports, and take failure)
+
+*film and television*
+
+### Sound department deal memo and kit rental negotiation
+
+Producer offers a labour rate; the mixer separately quotes a weekly or daily rental for the recorder, wireless channels, comteks, carts and expendables. Crew size and channel count are haggled line by line.
+
+- **Who.** Line Producer / UPM with the Production Sound Mixer; studio side approves the budget
+- **Decides.** Which mixer to hire, day vs weekly rate, how many wireless channels production pays for, whether a Utility Sound Technician exists on this show, whether playback is a separate hire.
+- **Engine.** Mixer roster with skill vectors (boom craft, RF craft, speed, diplomacy, post relations, reputation); kit as inventory objects each with a rental price and a capability flag; a budget line that hard-caps channel count and crew slots consumed by every later process.
+- **Takes.** 1-3 days of negotiation in prep; 10-20 minutes of player time
+- **Television.** TV signs a season pattern deal with a locked weekly kit rate and an episodic amortisation; a feature negotiates per-picture and can justify a bigger cart for a shorter run. US package rental commonly runs roughly $450-900/day or $2,500-4,000/week (estimate).
+
+### Script breakdown for sound
+
+Mixer reads the script and tags every scene needing playback, on-camera singing, live music, crowds, vehicles, water, gunfire, practical sound sources, and dialogue post will never recover.
+
+- **Who.** Production Sound Mixer, cross-checked with the 1st AD and Script Supervisor
+- **Decides.** Which scenes get flagged playback / live-vocal / wild-line / ADR-inevitable; where to demand a second boom, extra channels, or a sound day with no camera.
+- **Engine.** Per-scene sound requirement tags derived from script objects (line count, simultaneous speakers, action verbs, props, extras count, INT/EXT, vehicle flags) that feed the schedule's resource allocator and the post ADR forecast.
+- **Takes.** 4-8 hours spread over prep week 1
+- **Television.** Film breaks down one script once. TV breaks down every episode as scripts arrive, often mid-shoot, and must guess at scripts that do not exist yet — so channel counts and crew are sized for the worst plausible episode.
+
+### Tech scout / location sound survey
+
+Mixer walks each location with an SPL meter, logs the ambient floor in dBA by hour, notes flight paths, HVAC, refrigeration, traffic cycles, hard-surface reverb, and runs an RF spectrum scan.
+
+- **Who.** Production Sound Mixer with Location Manager, 1st AD, Gaffer, Key Grip
+- **Decides.** Accept, treat, or veto a location on sound grounds; what to ask Locations for (road lockups, HVAC control, neighbour payoffs); whether the day needs an extra hour or a bigger crew.
+- **Engine.** Per-location acoustic record: dBA floor by hour of day, named noise emitters with position, spectrum and a kill cost in minutes and dollars, surface material map with absorption per octave band, RT60 per room, and measured RF occupancy at that lat/long.
+- **Takes.** 20-60 minutes per location; a full scout day is 6-10 hours
+- **Television.** TV reuses standing sets and a small stock of returning locations, so the survey is amortised; the mixer's location file persists across a season. Film scouts nearly everything fresh.
+
+### RF spectrum scan and frequency coordination
+
+Scan the local band, subtract occupied TV channels and other productions, then compute a compatible set of carriers clear of third- and fifth-order intermodulation products across every transmitter on the show.
+
+- **Who.** Production Sound Mixer or Utility Sound Technician; on large shows a dedicated RF/Frequency Coordinator
+- **Decides.** Which exact frequencies each transmitter, IFB and hop runs on today; how many simultaneous channels are safe here; whether to change band or go hardline.
+- **Engine.** Geographic TV-channel occupancy table; transmitter list with frequency, power and position; an intermod solver generating 2f1-f2, 2f2-f1 and 5th-order products with a minimum guard (250 kHz from any carrier is the common rule); a per-take dropout probability derived from margin.
+- **Takes.** 20-45 minutes at a new location; 5-10 minutes to re-scan at a move
+- **Television.** A stage-based TV show coordinates once for the lot and re-checks weekly; features on the move re-coordinate every location. In a crowded market (NYC, LA, Atlanta) other productions occupy spectrum and coordination is a phone call between mixers.
+
+### FCC Part 74 licence and legal band check
+
+Confirm that every carrier in use sits in a band this production is legally allowed to occupy, and that a Part 74 licence exists where the band demands one.
+
+- **Who.** Production Sound Mixer (licensee is usually the mixer or the production company); Production Coordinator files
+- **Decides.** Whether to run licensed UHF, the duplex-gap slice, 900 MHz, 1.4 GHz or unlicensed 2.4/5 GHz; whether to buy or rent legal gear for a band the show's old blocks no longer cover.
+- **Engine.** Band table with legality, eligibility and power limits per band; gear objects tuned to a frequency block that may or may not intersect a legal band; a compliance flag that can generate a real consequence (interference complaint, shutdown, fine).
+- **Takes.** Licence filing days to weeks in prep; the on-day check is 2 minutes
+- **Television.** Identical rules. Long-running TV is more exposed because legacy blocks stay in the package for years; the 600 MHz repack made 617-652 and 663-698 MHz illegal for wireless mics in the US, stranding whole generations of gear.
+
+### Antenna and RF distribution plan
+
+Site receive antennas (shark fins, LPDAs, helicals) for line of sight to the acting area, run low-loss coax, feed a distro or multicoupler, and separate transmit antennas (IFB, hops) from receive.
+
+- **Who.** Utility Sound Technician under the Production Sound Mixer
+- **Decides.** Antenna type and position, mast height, coax length and type, whether to use inline amps, how far the cart can sit from the set, whether a remote antenna rides in a car or on a boat.
+- **Engine.** Antenna gain patterns, coax loss per metre by type and frequency, free-space and obstruction path loss, body-shadowing when an actor turns, multipath nulls tied to set geometry, and receiver sensitivity — resolving to a per-transmitter link margin in dB.
+- **Takes.** 15-40 minutes at cart build; 5-15 minutes per company move
+- **Television.** Stage shows hang permanent antennas in the grid and the plan is stable all season. Location and reality work re-sites antennas constantly, and distance from cart to actor is the single biggest cause of RF failure.
+
+### Channel plan and track layout
+
+Assign every input — booms, lavs, plants, playback return, thumper, camera scratch — to a numbered track, name the tracks, and decide what goes to the mixdown versus isolated tracks only.
+
+- **Who.** Production Sound Mixer
+- **Decides.** Track order, which sources are in the L/R mix editorial will cut with, whether booms sit on 1-2, whether the mix lives on the last pair, and what the camera hop carries.
+- **Engine.** A persistent routing matrix whose track names propagate into the BWF/iXML metadata, the sound report, the dailies sync, and the editor's timeline — so a bad layout produces real downstream confusion in post, not a cosmetic label.
+- **Takes.** 10-20 minutes at cart build; re-cut per scene in 1-2 minutes
+- **Television.** TV standardises the layout for the season so the assistant editor never has to think; features may re-plan for a big day. Multi-camera and reality shows burn tracks far faster and force ISO-only layouts.
+
+### Timecode architecture decision
+
+Choose project frame rate and timecode standard, elect a master clock, and decide how cameras, recorder, slates and sync boxes receive and hold code.
+
+- **Who.** Production Sound Mixer with the 1st AC, DIT and Post Supervisor
+- **Decides.** 23.976 / 24 / 25 / 29.97 DF or NDF / 30; free run versus record run; time-of-day versus an hour-per-roll or hour-per-episode convention; who is master.
+- **Engine.** A clock model per device with a drift rate in ppm, a last-jam timestamp, and an accumulating offset in frames; sync failure downstream is computed from that offset, not asserted. Pull-up/pull-down mismatches must produce a growing slip, not a fixed one.
+- **Takes.** One prep meeting, 30-60 minutes; 2 minutes to change on the day (and it should never change on the day)
+- **Television.** US TV frequently runs 23.976 for drama and 29.97 DF for live/multi-cam and unscripted, where drop-frame keeps clock time honest over an hour block. Features are 23.976 or 24. European TV and features are 25.
+
+### Sound cart or bag build
+
+Assemble the recording position: recorder, mixing surface, receivers, distro, IFB transmitter, power, monitoring, and a cable plan — or pack the same into a bag rig if the day is mobile.
+
+- **Who.** Production Sound Mixer and Utility Sound Technician
+- **Decides.** Cart versus bag versus both; how many receivers physically fit; whether to bring the big recorder or a small one; headphone choice; where the cart will live relative to video village.
+- **Engine.** Physical rig objects with weight, power draw, channel capacity and set-up/tear-down times in minutes; a day type (stage, location, moving, handheld) that penalises the wrong rig with lost minutes and fewer usable channels.
+- **Takes.** 2-6 hours the first time; 20-40 minutes per shoot morning
+- **Television.** Episodic TV on a stage builds a cart once and leaves it; a feature that moves every day lives in a bag more often. Reality and documentary are bag-only, with the mixer wearing the rig all day.
+
+### Wardrobe fitting for radio mics
+
+During fittings, agree where each costume can hide a transmitter and a lavalier, what fabrics will rustle, and which garments need a pocket, a hidden pouch or a moved seam.
+
+- **Who.** Utility Sound Technician or Boom Operator with the Costume Designer and Costume Supervisor; the performer attends
+- **Decides.** Mic position per costume, mount hardware, whether to ask for a garment change, whether a character is simply un-mic-able and must be boomed.
+- **Engine.** Costume objects carrying fabric noise coefficients (silk/taffeta/leather/corduroy high, cotton/jersey low), concealment volume for a pack, and a per-costume lav placement set with resulting frequency response and rustle probability.
+- **Takes.** 10-20 minutes per costume; a fitting day is 4-8 hours
+- **Television.** TV characters wear repeating costumes, so a season's rigs get solved once and logged. Features have more one-off costumes and period wardrobe, which is worse for concealment and noise.
+
+### Playback pre-record and prep session
+
+Receive the approved pre-record, build the playback session with click, count-ins, thumper stems and vocal-out variants, and lay it against timecode so it can be chased frame-accurately.
+
+- **Who.** Production Sound Mixer or a dedicated Playback Operator (Local 695 classification), with the Music Supervisor, Composer and Music Editor
+- **Decides.** Which mix goes to speakers versus earwigs, whether to supply click, whether the vocal is present or stripped, count-in length, and how many alternate tempos exist.
+- **Engine.** Playback session objects with stem list, tempo map, timecode start and a sync-chase state; an audio bed that the recorder captures on its own ISO track and that post can check for drift, plus a dancer/performer sync attribute driven by what they can actually hear.
+- **Takes.** 4-12 hours per number in prep
+- **Television.** Musical TV (a series with numbers, a variety show, a competition) pre-records weeks ahead with locked arrangements; a feature musical may re-cut a number the night before and hand it to playback at call.
+
+### Earwig and cueing plan
+
+Decide who is fed what in-ear: lines from an off-camera reader, a click, a director's cue, a playback mix, or a co-star performing from another room.
+
+- **Who.** Production Sound Mixer and Utility Sound Technician with the 1st AD and the Director; the performer consents
+- **Decides.** Earwig type and fit, who wears one, what each earwig carries, who talks into it, and the rehearsal protocol so the feed does not arrive mid-line.
+- **Engine.** A cue-feed routing graph (source, recipient, latency, whether the feed leaks audibly into the boom), a per-performer line-security attribute, and a leak model where a badly fitted earwig bleeds into the room and ruins the take.
+- **Takes.** 5-15 minutes to fit and test per performer; the feed runs all day
+- **Television.** Common on both. TV uses earwigs heavily for hosts, non-actors, children, and live segments; features use them for sealed-set scenes (glass boxes, vehicles, helmets) and for actors who need a reader.
+
+### Camera hop, scratch audio and IFB handshake
+
+Mount a receiver on each camera so the camera records a guide mix, and confirm the camera's audio inputs, levels and timecode input are actually set to take it.
+
+- **Who.** Utility Sound Technician with the 1st AC and the Camera Operator
+- **Decides.** Which mix the camera receives (mono mix, mix plus boom, ISO), whether a hop is worth a channel of spectrum, whether to skip it and rely on timecode alone.
+- **Engine.** Per-camera audio state (armed/not, level, source), a hop as a real RF link that competes for spectrum, and a dailies consequence: without a hop, sync depends purely on clock drift and slates.
+- **Takes.** 5-10 minutes per camera at prep; 2 minutes per camera each morning
+- **Television.** Both do it. Multi-camera TV and reality lean harder on camera scratch because there are more cameras and more chance of a sound roll gap; scripted features may go without on A camera if timecode is solid.
+
+### Location acoustic treatment order
+
+Hang sound blankets, lay carpet under dolly track, felt chair feet, tape rattles, duvetyne glass, and box in reflective surfaces before the company arrives.
+
+- **Who.** Production Sound Mixer requesting; Key Grip, Set Dresser, Construction and Locations executing
+- **Decides.** What gets treated, how much, and whether the money comes from grip labour or the sound budget; whether to treat or to re-block the scene.
+- **Engine.** Surface objects whose absorption coefficients change when treated, recomputing RT60 and the reverberant field for every capture solve in that room; treatment costs minutes of crew time and a quantity of material.
+- **Takes.** 30 minutes to half a day depending on the room
+- **Television.** Purpose-built TV stages are already treated and the problem is the lot outside (see stage/lot noise). Practical locations — marble lobbies, glass restaurants, empty warehouses — are the killers, and features shoot in more of them.
+
+### Morning timecode jam
+
+Feed the day's master code into every camera, slate and sync box, verify frame rate and user bits, and note the jam time.
+
+- **Who.** Utility Sound Technician; 1st ACs and the 2nd AC with the slate present themselves
+- **Decides.** Jam interval (once a morning, again after lunch, continuous via networked boxes), user-bit convention (date, roll, episode), who holds master.
+- **Engine.** Per-device drift accumulating from the jam timestamp at its own ppm rate; a verification event that either catches a wrong frame rate or does not, producing a real sync error in dailies hours later.
+- **Takes.** 10-15 minutes at call; 5 minutes after lunch
+- **Television.** Identical, but TV's tighter day makes people skip the post-lunch re-jam more often — and that is exactly where a season's sync problems come from.
+
+### Pre-call wiring of cast
+
+Fit each actor with a lavalier and transmitter before they reach set — routing the cable, mounting the capsule, taping the pack, checking for rustle by having them move.
+
+- **Who.** Utility Sound Technician or Boom Operator; the Performer; Costume and Hair/Makeup adjacent
+- **Decides.** Capsule model and colour, exact mount point, adhesive or pouch, cable routing, pack position, whether the actor's own movement will kill this rig.
+- **Engine.** Per-actor rig state (mic model, position, mount, cable dress) resolving to a frequency response, an expected level, a rustle probability per movement type (sit, run, hug, fight), and a re-rig time when it fails.
+- **Takes.** 5-12 minutes per actor; 30-60 minutes for a full cast
+- **Television.** TV's speed pushes more of the show onto lavs, so wiring is heavier and starts earlier. Features can afford to boom more and wire less. On reality, everyone in the room is wired and the department may run 20-30 channels.
+
+### Battery and power management
+
+Log battery state for every transmitter, receiver, slate and the cart itself; swap on a schedule rather than on failure; keep the cart's power clean and free of ground loops.
+
+- **Who.** Utility Sound Technician
+- **Decides.** Battery chemistry and swap interval, whether to swap at lunch or at a run-time threshold, how much reserve to carry.
+- **Engine.** Per-device runtime clocks that deplete with transmit power and temperature (a lithium AA pair in a body pack runs roughly 4-6 hours, est.), with a failure event mid-take if a swap is skipped — a real cause of a dead take.
+- **Takes.** Continuous; 10-15 minutes of swaps at lunch
+- **Television.** No difference in kind, but a 12-14 hour TV day with more wired bodies burns more cells and makes the lunch swap non-optional.
+
+### Blocking rehearsal attendance
+
+Watch the director and actors set the blocking; memorise who speaks where, in what order, and what the actors do with their heads and hands.
+
+- **Who.** Boom Operator (mandatory), Production Sound Mixer, Utility Sound Technician
+- **Decides.** Where the boom will stand, which lines each boom covers, where a plant is needed, whether a lav must carry a moment the boom cannot reach.
+- **Engine.** A per-scene blocking record: timed positions and orientations for each speaking actor and each line, exposed to the boom kinematics solver and to the plant/lav placement solver.
+- **Takes.** 5-20 minutes per setup
+- **Television.** Multi-camera TV rehearses across a week with a blocking day, a camera-blocking day and a shoot night, so boom choreography is scripted. Single-camera TV and features block once, fast, and the boom op gets one look.
+
+### Boom versus lighting negotiation (shadow)
+
+Find a boom position that is out of frame and out of the key light's shadow path, or get a light flagged, moved or netted.
+
+- **Who.** Boom Operator with the Gaffer and Director of Photography; 1st AD arbitrates the clock
+- **Decides.** Whether to take the shadow note, work from the other side, go underslung, plant instead, or surrender the boom and accept lav-only sound.
+- **Engine.** Light objects with position, size and hardness casting a shadow cone onto surfaces visible to the camera frustum; the boom solver intersects reach envelope, frame volume and shadow cone. An empty feasible set forces a documented downgrade.
+- **Takes.** 2-10 minutes per setup; a bad one costs 20+
+- **Television.** Same physics, less time in TV — where the answer is more often 'wire them' than 'move the light'. The DP's willingness is a relationship attribute, not a constant.
+
+### Frame-line check
+
+Ask the operator how much headroom exists, then find the lowest the mic can fly without dipping into frame, factoring lens, sensor, aspect ratio and any camera move.
+
+- **Who.** Boom Operator with the Camera Operator and 1st AC
+- **Decides.** Boom height and angle; whether to ride the frame line tight for level or hang back safe; whether an extension is needed.
+- **Engine.** Frame volume computed from lens focal length, sensor size, aspect ratio, camera position and the move's keyframes — producing a minimum mic distance that directly scales captured dialogue level by inverse-square and reverberant ratio.
+- **Takes.** 1-3 minutes per setup, repeated after every lens change
+- **Television.** Multi-camera TV has several simultaneous frame lines and the boom must clear all of them, which forces the mic higher and thinner. Widescreen features (2.39:1) give the boom more vertical room than 1.78:1 TV framing at the same focal length.
+
+### Boom microphone selection per setup
+
+Choose the capsule and windshield for this specific shot: interior or exterior, room size, distance, wind, and how much off-axis reflection the room will throw.
+
+- **Who.** Boom Operator with the Production Sound Mixer
+- **Decides.** Shotgun versus hypercardioid versus cardioid; basket versus softie versus bare; whether to switch mics between the wide and the close.
+- **Engine.** Mic objects with frequency-dependent polar response, sensitivity in mV/Pa, self-noise in dB(A), max SPL, proximity curve and an off-axis coloration index; the interference-tube penalty must be modelled so a shotgun genuinely sounds wrong in a small hard room.
+- **Takes.** 30 seconds to 2 minutes; a mic swap is under a minute
+- **Television.** None in principle. TV's repeated sets mean the choice is cached: the standing kitchen set always gets the same mic, and the department knows it by episode three.
+
+### Booming the take
+
+Hold a 2-5 kg pole overhead, keep the capsule aimed at the speaking mouth, swing between actors ahead of the line, stay out of frame and out of shadow, and do not touch anything.
+
+- **Who.** Boom Operator
+- **Decides.** Distance to mouth, angle off the mouth axis, when to swing, whether to favour one actor in an overlap, whether to crab with a moving camera.
+- **Engine.** Per-line mic-to-mouth distance and off-axis angle, a swing-timing model that can arrive late (first syllable off-mic), operator fatigue reducing steadiness over take count and pole weight, and handling-noise probability rising with fatigue and awkward positions.
+- **Takes.** The length of the take, repeated every take; a 12-hour day is hundreds of swings
+- **Television.** Feature coverage is slower with fewer, longer takes; TV shoots more setups per day with less rehearsal, so the boom op works more from instinct and misses more first syllables. Multi-cam TV booms live to several cameras at once.
+
+### A and B boom assignment
+
+Split the scene between booms so overlapping dialogue lands on separate tracks that post can cut independently.
+
+- **Who.** Production Sound Mixer assigning; two Boom Operators executing
+- **Decides.** Who covers whom, how the split maps to tracks, whether the second boom is worth the day rate on this scene.
+- **Engine.** Per-line assignment to a track, with a leakage model: the unwanted actor's voice arriving on the other boom at a level set by distance and polar pattern. Post's ability to cut overlaps depends on that measured separation in dB.
+- **Takes.** 1-2 minutes to brief; the extra boom costs a day rate
+- **Television.** Multi-camera sitcom is built on this — two to four booms working simultaneously to matched cameras. Single-camera drama adds a B boom only for dense scenes or a director who shoots overlaps.
+
+### Underslung and low booming
+
+Work the mic from below the frame line pointing up, used when overhead is blocked by a low ceiling, a shadow problem, or a very wide shot.
+
+- **Who.** Boom Operator
+- **Decides.** Whether to go under, which mic (a hyper handles under-boom better than a long shotgun), and how to hide from the reverse.
+- **Engine.** The same polar/distance solve with a different geometry and a different room-reflection path (floor rather than ceiling), plus an added shadow risk on the actor's face and a higher chance of catching footsteps and floor noise.
+- **Takes.** Same as overhead booming; set-up thinking is under a minute
+- **Television.** More common in TV, where low practical ceilings on standing sets and tight multi-camera frames block overhead positions.
+
+### Plant microphone placement
+
+Hide a microphone in the set — in a lamp, behind a book, under a table lip, on a car dash, in a bouquet — to cover a position no boom can reach.
+
+- **Who.** Utility Sound Technician or Boom Operator, cleared with the Set Dresser and Property Master
+- **Decides.** How many plants, their exact hiding places, mic type (boundary, miniature, gooseneck), wired or wireless, and whether the dressing can be moved without a continuity note.
+- **Engine.** Plant objects with position and orientation in set geometry, a concealment score that camera coverage can violate (the mic appears in frame), and a capture solve dominated by whatever surface they are mounted to (boundary gain, resonance, handling through the furniture).
+- **Takes.** 3-15 minutes per plant
+- **Television.** Standing TV sets get permanent plants installed once and left, which is a real season-long advantage. Features re-plant every location.
+
+### Lavalier placement and concealment
+
+Site the capsule on the body — sternum, collar, hairline, hat brim, temple, prop — trading frequency response and chest resonance against concealment and rustle.
+
+- **Who.** Utility Sound Technician or Boom Operator; the Performer; Costume standing by
+- **Decides.** Exact mount point, mount hardware, whether to cut into a costume, whether to accept a compromised sound to keep a shot clean.
+- **Engine.** Placement objects each with a response curve (chest boost, high-frequency loss under fabric), an off-axis penalty when the actor turns their head, a rustle probability per movement class, and a visibility risk against the camera frustum.
+- **Takes.** 2-8 minutes per actor per costume change
+- **Television.** None mechanically, but TV's lav-heavy style makes placement quality the dominant driver of dialogue quality across a season, where in features the boom usually carries the show.
+
+### Transmitter setup and gain staging
+
+Set transmitter gain so a shout does not overload the pack's front end and a whisper still sits above the noise, then confirm the receiver's level and diversity behaviour.
+
+- **Who.** Utility Sound Technician under the Production Sound Mixer
+- **Decides.** Transmitter gain, low-cut setting, transmit power, whether to run the pack's internal recording as a backup, whether 32-bit float at the recorder covers the risk.
+- **Engine.** A signal chain with a real gain structure: capsule sensitivity, transmitter input headroom and its own clipping point, RF link, receiver output, recorder preamp and limiter. 32-bit float must remove recorder clipping without removing transmitter clipping or room noise.
+- **Takes.** 1-3 minutes per channel; re-check before a loud scene
+- **Television.** None. The most common real failure is a pack set for dialogue and then an actor screams — and the clip happened upstream of the recorder, where float cannot save it.
+
+### Pre-roll RF and rig confidence check
+
+Before the first take of each setup, have each wired actor speak, walk the set, and confirm every channel is clean at the positions the blocking will actually use.
+
+- **Who.** Utility Sound Technician and Production Sound Mixer
+- **Decides.** Whether to change a frequency, move an antenna, re-rig a lav, or warn the AD that a corner of the set is a dead zone.
+- **Engine.** Sampled link margin at the blocking's actual waypoints, producing a per-position dropout probability and a named dead-zone list that the take-resolution step can draw from.
+- **Takes.** 1-4 minutes per setup
+- **Television.** TV often skips it under clock pressure and eats the dropout; features are likelier to spend the minute. The skip should be a real player choice with a real distribution of consequences.
+
+### Roll protocol and speed
+
+The AD calls roll sound; the mixer starts the recorder and calls 'sound speed' or 'sound is rolling'; cameras roll; the slate is marked; the director calls action.
+
+- **Who.** 1st AD calls it; Production Sound Mixer answers; 2nd AC slates; Camera Operator confirms
+- **Decides.** Whether to roll at all (mixer can hold for a plane), whether to call speed before a channel is clean, and whether to interrupt after action.
+- **Engine.** A turn-ordered roll sequence with real timestamps, a recorder file opening with its own timecode, and an authority model: the mixer can hold the roll and that hold costs measured seconds against the day.
+- **Takes.** 10-30 seconds per roll; dozens of times a day
+- **Television.** Multi-camera TV and live TV roll continuously across a scene rather than per take, so the department is recording for minutes at a stretch and the 'hold for a plane' lever effectively disappears.
+
+### Slating and sync marks
+
+Scene, slate and take are announced and struck on a clapper, usually a smart slate displaying timecode; variants cover the cases where the head mark is impossible.
+
+- **Who.** 2nd Assistant Camera on the slate; Production Sound Mixer confirming; Script Supervisor logging
+- **Decides.** Head sticks, second sticks (when the first is fluffed), tail sticks, soft sticks for a quiet scene, no slate on a continuous roll, MOS board, or a bloop from the recorder.
+- **Engine.** A per-take sync record holding announced scene/take, the clap frame, the displayed timecode and the recorder's timecode — with the discrepancy between them being what dailies must resolve. A missing or wrong slate creates real work hours later.
+- **Takes.** 10-20 seconds per take
+- **Television.** Multi-camera TV frequently runs with a common start mark and continuous code rather than per-take slates; unscripted often has no slate at all and lives entirely on timecode.
+
+### Mixing the take
+
+Ride faders live across the take, balancing booms and lavs into the mixdown editorial will cut with, while every source also lands isolated on its own track.
+
+- **Who.** Production Sound Mixer
+- **Decides.** Which source leads at each moment, how much lav sits under the boom, whether to mute a channel that is only bringing noise, how aggressively to ride.
+- **Engine.** Time-varying per-track gain applied to the capture solve, producing both a mixdown and untouched ISOs; a mix quality attribute read by editorial (which cuts the mix) and a separate ISO quality attribute read by the re-recording mixer months later.
+- **Takes.** The duration of every take
+- **Television.** TV editors cut the mix far more often and re-mix from ISOs less, because the post schedule is shorter — so the on-set mix carries more weight in TV than in a feature that will be fully re-mixed.
+
+### Level setting, limiting and headroom
+
+Set the recording level so dialogue averages around -20 dBFS with peaks well below full scale, engage limiters for surprises, and decide whether to record 32-bit float.
+
+- **Who.** Production Sound Mixer
+- **Decides.** Nominal level, limiter threshold and ratio, 24-bit versus 32-bit float, whether to trust the float and stop riding gain.
+- **Engine.** A real gain structure with a preamp noise figure, a converter floor, limiter behaviour, and a clipping test at each stage. 32-bit float should remove the recorder's clip failure mode entirely while leaving transmitter clip, room noise and preamp noise untouched.
+- **Takes.** Continuous; explicit adjustment 10-30 seconds
+- **Television.** None technically. Deliverables from major streamers are 48 kHz / 24-bit polyphonic BWF with iXML for both film and episodic; float is recorded then delivered at 24-bit.
+
+### Monitoring the take and calling a problem
+
+Listen to every take for noise, dropouts, rustle, distortion and missed lines, and decide in the seconds after 'cut' whether to ask for another.
+
+- **Who.** Production Sound Mixer on headphones; Boom Operator also monitoring
+- **Decides.** Say nothing, say 'we'll take it', ask for one more for sound, or declare the take unusable — and how to phrase it to an AD who is behind.
+- **Engine.** A per-take defect list generated by the capture solve (each with severity and whether post can fix it), surfaced to the player, plus a political cost model: repeated calls spend credibility with the AD and director that later requests draw on.
+- **Takes.** 5-20 seconds per take to decide; 2-4 minutes for the extra take
+- **Television.** The tolerance threshold is higher in TV. A defect a feature would re-shoot, an episodic day accepts and flags for ADR — which is why TV carries bigger ADR bills per minute of screen time.
+
+### Lockup and public noise control
+
+Hold traffic, pedestrians, leaf blowers, construction and neighbours for the duration of a take, and time takes around cycles you cannot stop.
+
+- **Who.** 2nd AD and Production Assistants executing; Production Sound Mixer requesting; Locations negotiating
+- **Decides.** How wide the lockup goes, how many PAs it costs, whether to pay a neighbour to stop work, whether to shoot between train passes.
+- **Engine.** Noise emitters with schedules and duty cycles (aircraft as a Poisson arrival rate tuned to flight-path proximity, trains on a timetable, traffic on light cycles) against controllable ones with a cost in bodies and dollars to suppress.
+- **Takes.** 5-20 minutes to establish; ongoing all day
+- **Television.** TV shoots more on controlled stages and backlots where lockup is trivial; location-heavy features spend real money here. Night exteriors in a residential area are the worst case for both.
+
+### HVAC, refrigeration and practical noise kill
+
+Switch off air handling, fridges, ice machines, fish tanks, fluorescent ballasts and buzzing practicals — and remember to switch them back on so the location does not flood or spoil.
+
+- **Who.** Production Sound Mixer requesting; Locations, Construction and the building engineer executing; 2nd AD tracking the restore
+- **Decides.** What to kill, who holds the key, whether the loss of air conditioning will cook the crew and the cast's makeup by hour six.
+- **Engine.** Named emitter objects with an on/off state, a spectrum, a restore obligation, and a side effect: killing air on a summer stage raises a heat variable that degrades makeup, tempers and take counts.
+- **Takes.** 2-15 minutes to kill; must be restored at wrap
+- **Television.** Stage-based TV controls its own air handling on a schedule, which makes it the quietest environment available — until the stage next door starts building a set.
+
+### Camera, grip and equipment noise mitigation
+
+Chase down camera fan noise, lens motor whine, dolly and crane squeaks, dimmer board hum, magnetic HMI ballast buzz and generator drift.
+
+- **Who.** Production Sound Mixer flagging; 1st AC, Key Grip, Dolly Grip and Gaffer fixing
+- **Decides.** Ask for a fan mode change, a ballast swap to flicker-free, lamps to LED, track relaid on carpet, a dolly greased, or a genny moved further with longer cable.
+- **Engine.** Each piece of production equipment carries its own noise emission spectrum and level at 1 m, with fixes that cost measured minutes or money and reduce that emission by a known amount — so a quieter cart genuinely raises the take's signal-to-noise.
+- **Takes.** 2-30 minutes depending on the fix
+- **Television.** Identical, but TV's standing lighting rigs are usually already sorted; features rig fresh every location and rediscover the same hums.
+
+### Wardrobe and prop noise mitigation
+
+Silence jewellery, watches, keys, phones, crisp fabrics, squeaking leather, stiff new shoes, jangling belts and rattling props before the roll.
+
+- **Who.** Utility Sound Technician with Costume, Hair, Makeup and Props
+- **Decides.** Tape, pad, swap, or shoot around; whether to ask an actor to remove something that was a character choice.
+- **Engine.** Per-costume and per-prop noise emitters triggered by movement events in the blocking, each suppressible by a treatment that costs a minute and sometimes a continuity note.
+- **Takes.** 1-10 minutes per issue
+- **Television.** None. Period work is consistently worse: corsetry, petticoats, leather, and scripted hand props that must be handled on dialogue.
+
+### Room tone capture
+
+Record 30-60 seconds of the room with the exact lighting, HVAC and crew state the scene was shot in, so post can fill gaps and build seamless ambience.
+
+- **Who.** Production Sound Mixer; the 1st AD calls for it and the whole company must stand still
+- **Decides.** When to take it (before the lighting changes), how long, how many tones per location and per state, and whether to fight the AD for the minute.
+- **Engine.** A tone asset keyed to location plus lighting state plus HVAC state plus crew count; a missing or mismatched tone must produce a measurable post problem (audible holes in cuts, more ADR-fill labour), not a cosmetic warning.
+- **Takes.** 45-90 seconds including settling the crew
+- **Television.** Features get tone routinely; episodic TV skips it under time pressure far more often, which is one of the most common post complaints about TV production sound.
+
+### Wild lines and wild dialogue takes
+
+After the visual take, record dialogue without camera — lines lost to noise, off-camera lines, alternate readings, or an actor's first take of a scene they will later be too tired to repeat.
+
+- **Who.** Production Sound Mixer recording; the Performer delivering; the Script Supervisor logging; the Director approving
+- **Decides.** Which lines to grab, how many passes, whether to match the boom perspective, whether the actor is still available to do it.
+- **Engine.** Wild takes stored as their own assets with their own metadata and a perspective attribute (mic, distance, room); post can substitute a wild line for a ruined one only if perspective and performance match within a tolerance the engine checks.
+- **Takes.** 1-5 minutes per line; 10-20 minutes for a run of them
+- **Television.** TV relies on them heavily because the shooting day cannot afford another camera take; features often prefer to re-shoot or to schedule ADR.
+
+### Wild effects, props and vehicle recording
+
+Record the actual doors, keys, guns, machinery, footsteps on the real floor, and the picture cars starting, idling, passing and driving away, for post to use over cut sound.
+
+- **Who.** Production Sound Mixer or Boom Operator; Property Master and Transportation assist
+- **Decides.** What to record, when (usually at wrap or during a lighting reset), and whether to hand post a real library or let them buy stock.
+- **Engine.** Effects assets tagged to the prop or vehicle object they came from; post's sound-editorial step can either use the real recording (matching the picture) or a library substitute with a small authenticity penalty and a licensing cost.
+- **Takes.** 2-20 minutes per item; a vehicle session is 30-60 minutes
+- **Television.** Features do far more of this. TV usually buys library and moves on, except for a signature prop or vehicle that recurs across a season and is worth recording once.
+
+### Playback operation on the shooting day
+
+Roll the pre-record locked to timecode, feed speakers or earwigs, count the performers in, and record the playback back onto its own ISO for reference.
+
+- **Who.** Playback Operator (or the Production Sound Mixer on a small show), with the 1st AD and Choreographer
+- **Decides.** Speaker versus earwig delivery, playback level, which stem plays (full mix, instrumental, click only), count-in length, whether to play out to the end or cut on the director's call.
+- **Engine.** Playback as a timecode-chased transport whose start frame is logged per take; the playing audio is an emitter in the acoustic scene that bleeds into every open mic at a level set by distance, so the choice of level genuinely changes what dialogue can be captured.
+- **Takes.** The number's duration per take; 5-10 minutes to set up per setup
+- **Television.** A musical TV series runs playback weekly with a locked crew and standing speaker positions; a feature musical builds it per number. Live TV musicals run playback and live vocal simultaneously with no safety net.
+
+### Live vocal recording on set
+
+Record the actor actually singing on camera, usually against a click or piano fed only to their earwig, so no accompaniment leaks into the vocal track.
+
+- **Who.** Production Sound Mixer with the Music Supervisor, Music Editor and the Performer; often an off-camera accompanist
+- **Decides.** Whether the number is live or mimed, what the singer hears, which mic carries the vocal (a hidden lav, a dedicated plant, or the boom), how many ISOs the vocal needs.
+- **Engine.** A vocal track with its own capture solve at higher dynamic range (sung levels run far above speech), a bleed model proving the accompaniment stayed out of the mic, and a music-post branch that can only build the number if the isolation was real.
+- **Takes.** Adds 20-60 minutes per setup; the whole number may take a day
+- **Television.** Live-vocal TV exists (live musicals, competition formats, some series numbers) but is rarer; the feature musical is where this is a defining production choice, and it changes the entire shooting plan around it.
+
+### Thumper and click for dance
+
+Feed dancers a very low-frequency pulse through a subwoofer or floor transducer, or a click in the ear, so they stay in time without audible music on the dialogue tracks.
+
+- **Who.** Playback Operator and Production Sound Mixer with the Choreographer
+- **Decides.** Thumper versus in-ear click versus full music playback; thumper frequency and level; whether the floor transmits it into the camera or props.
+- **Engine.** Thumper as a band-limited emitter whose energy sits below the dialogue band and is removable by a high-pass in post — with a level threshold above which it rattles set dressing, the camera or the boom and becomes unremovable.
+- **Takes.** 10-20 minutes to rig; runs through the number
+- **Television.** Same technique in both. TV dance (competition, variety) more often just plays the music loud because there is no dialogue to protect.
+
+### Earwig feeding during the take
+
+Feed lines, cues or a co-star's off-stage performance directly into an actor's ear mid-take.
+
+- **Who.** Utility Sound Technician or Production Sound Mixer operating; the Director or a reader speaking; the Performer receiving
+- **Decides.** Timing of every prompt, how far ahead of the line to feed, whether to cue moves, whether to stop feeding and let the actor run.
+- **Engine.** Prompt events with a delivery timestamp relative to the line; a too-late prompt introduces a measurable hesitation in the performance, and a too-loud feed leaks into the open mics as a second voice under the dialogue.
+- **Takes.** Runs through the take
+- **Television.** Heavier in TV (hosts, non-actors, children, guest stars parachuted into a week). Features use it for sealed environments and for performers who work this way.
+
+### Crowd, walla and pantomime background
+
+Instruct background artists to mime conversation rather than speak, so their voices do not contaminate the principal dialogue — then record real walla separately.
+
+- **Who.** 1st AD and 2nd AD directing background; Production Sound Mixer specifying
+- **Decides.** Silent background versus live background; whether to record a group walla pass; whether to mic a specific background moment that is genuinely in the scene.
+- **Engine.** Background actors as an emitter cluster with a speaking flag; when live, they raise the noise floor and add intelligible words that post cannot remove, degrading the dialogue track measurably. A separate walla asset is created only if recorded.
+- **Takes.** 2-5 minutes to instruct; 5-15 minutes for a walla pass
+- **Television.** Identical practice. Features with large crowds fund a dedicated loop group later; TV relies more on stock crowd and the on-set walla pass.
+
+### Multi-camera and simultaneous coverage
+
+Cover several live frames at once, assigning a boom per camera where possible and filling the impossible angles with lavs and plants.
+
+- **Who.** Production Sound Mixer coordinating multiple Boom Operators
+- **Decides.** Which boom serves which camera, how many booms to request, how much to surrender to lav-only, whether to ask for a split of the cameras.
+- **Engine.** Multiple simultaneous frame volumes intersected against each boom's reach envelope; the count of actors whose best available source degrades from boom to lav is the measurable cost of the extra camera.
+- **Takes.** Structural — affects every setup of the day
+- **Television.** This is the central structural difference. A multi-camera sitcom is designed for it (permanent booms, hanging mics, an audience mixer). A single-camera feature adding a B or C camera for coverage silently costs sound quality that nobody budgets for.
+
+### Audience capture on a multi-camera stage
+
+Mic the studio audience with overhead and hanging microphones, record the genuine laughter and reaction isolated from the stage mics, and ride it live.
+
+- **Who.** Audience Mixer or a second Production Sound Mixer on a separate rig; Warm-Up comedian working the crowd
+- **Decides.** Number and placement of audience mics, how much stage bleed is acceptable, whether to record the warm-up, how to keep the audience quiet for a re-take.
+- **Engine.** An audience as a distributed emitter with a size, an energy level that decays across a long shoot night, and a reaction model tied to the performance; the recorded laugh is an asset the post sweetening step either uses or replaces.
+- **Takes.** 1-2 hours of rig per stage; runs through a 3-5 hour shoot night
+- **Television.** This process does not exist in film at all. It exists only in multi-camera sitcom, sketch, variety and talk television, and it requires a separate mixer, a separate recorder and its own track budget.
+
+### Exterior wind, rain and water work
+
+Defend microphones against wind noise and water — full blimps, high-wind furs, rain covers, sealed lav mounts — and accept that practical rain on a hard surface will drown dialogue.
+
+- **Who.** Boom Operator and Utility Sound Technician under the Production Sound Mixer; Special Effects running the rain
+- **Decides.** Windshield escalation level, whether to lav under wardrobe, whether to go wireless boom, whether to declare the scene an ADR scene before rolling.
+- **Engine.** Wind speed and gust distribution per location and hour interacting with a per-windshield attenuation figure; rain intensity as a broadband emitter whose level depends on the surface it lands on (tin, canvas, leaves, water, umbrella).
+- **Takes.** 5-15 minutes to re-rig; the conditions run all day
+- **Television.** None in physics. Features shoot more controlled exteriors with more time; TV shoots the same exterior faster and takes the ADR hit.
+
+### Vehicle and process work
+
+Get sound from inside moving or towed vehicles: plants on the dash and visors, lavs on the actors, a wireless feed back to a cart that may be on a tow rig or a follow van.
+
+- **Who.** Production Sound Mixer with Transportation, the Picture Car Coordinator and the Key Grip
+- **Decides.** Rigid tow versus process trailer versus poor-man's process versus a real drive; where the cart rides; whether to record to a transmitter's internal card as a lifeline.
+- **Engine.** A vehicle acoustic space (small, hard, resonant, with road, engine and wind noise scaling by speed and surface) plus an RF link that may pass through a metal body — producing the industry-true outcome that car interiors are the single most ADR-prone environment.
+- **Takes.** 30-90 minutes to rig; runs through the sequence
+- **Television.** TV uses poor-man's process and stage-bound car work far more, which is quieter and actually better for sound. Features drive for real more often and pay for it in ADR.
+
+### Stunts, gunfire and hearing safety
+
+Protect people and gear from impulsive noise, decide what to record and what to pull mics for, and keep the department out of the action safety zone.
+
+- **Who.** Production Sound Mixer and Boom Operator with the Stunt Coordinator, Armourer and Special Effects Coordinator
+- **Decides.** Whether to pull the booms and lavs for a squib or blank fire, whether to record a wild gunshot instead, where to stand, whether hearing protection is mandatory for this take.
+- **Engine.** Impulse events with peak SPL and distance falloff, a gear-damage model for capsules and preamps, an exposure accumulator per crew member, and a take outcome where a live mic on a gunshot returns an overloaded, unusable track.
+- **Takes.** 5-20 minutes of safety meeting per sequence
+- **Television.** Identical rules. Features have more action days; TV procedurals fire more blanks across a season and normalise the routine faster.
+
+### Steadicam, oners, handheld and drone coverage
+
+Cover a continuous moving shot where the camera turns 360 degrees, the boom has nowhere to hide, and the actors travel through several acoustic spaces in one take.
+
+- **Who.** Boom Operator with the Steadicam Operator, Dolly Grip and 1st AD
+- **Decides.** Whether to boom at all, whether to go wireless boom, how to hand off between two booms mid-take, whether to accept lav-only, whether to plant along the route.
+- **Engine.** A time-varying frame volume along the camera's path intersected with a boom reach envelope that must also move; a per-space acoustic handoff so the recorded perspective genuinely shifts as the actors change rooms.
+- **Takes.** The take, plus 10-30 minutes of choreography per shot
+- **Television.** Drone and aerial shots are almost always MOS in both. Long oners are increasingly common in prestige TV and cost the sound department the same way they do in features.
+
+### Intimate scenes, nudity and mic consent
+
+Agree in advance who may touch a performer to place or remove a body mic, whether a mic is placed at all, and how the closed-set protocol handles wiring.
+
+- **Who.** Intimacy Coordinator with the Production Sound Mixer and Utility Sound Technician; the Performer consents
+- **Decides.** Boom-only coverage, self-applied lav, a same-gender technician, or no body mic and full ADR for the scene.
+- **Engine.** A consent state per performer per scene that gates the lav placement options available; removing lavs measurably reduces available sources and raises the scene's ADR probability, so the ethical choice has a real production cost.
+- **Takes.** 10-20 minutes in the pre-scene meeting
+- **Television.** Both, with intimacy coordinators now standard on scripted work at both scales. Long-running TV with a recurring relationship storyline runs the protocol repeatedly with the same performers.
+
+### Radio mic privacy discipline
+
+Mute or power down transmitters between takes and at breaks, and tell actors plainly when their pack is live, so private conversation is never recorded or overheard in the village.
+
+- **Who.** Production Sound Mixer and Utility Sound Technician; enforced as department culture
+- **Decides.** Mute-at-cut policy, whether comteks in video village carry open mics between takes, whether to pull packs at lunch.
+- **Engine.** A per-transmitter live/muted state that the IFB feed and the recorder both read; a trust attribute per performer that degrades on a violation and changes their willingness to be wired and to perform quietly.
+- **Takes.** Seconds per take; continuous vigilance
+- **Television.** Same rule everywhere, but on unscripted and reality the convention inverts — everyone is live all day by design, and the consent paperwork covers it.
+
+### Media offload, backup and file naming
+
+Copy the day's audio from the recorder's primary media to at least two destinations, verify the copies, and name the sound roll and files to the show's convention.
+
+- **Who.** Utility Sound Technician or Production Sound Mixer; DIT receives
+- **Decides.** Number of backups, whether to hand a drive to the DIT or upload, sound roll numbering scheme, whether to mirror in-recorder to a second card.
+- **Engine.** Media objects with capacity, a copy time proportional to size, a verified/unverified state and a real (small) corruption probability; an unverified card that fails destroys a day of ISOs and forces reshoot or full ADR.
+- **Takes.** 15-45 minutes at wrap, longer on a heavy multitrack day
+- **Television.** None. Episodic volume makes roll numbering across a season a genuine source of confusion, which is why the convention is set in prep and never changed.
+
+### Metadata entry
+
+Enter scene, slate and take, track names, notes and circled status into the recorder so they are written into the BWF/iXML header of every file.
+
+- **Who.** Production Sound Mixer during the day; Utility Sound Technician corrects at wrap
+- **Decides.** How much to type live versus fix later in a metadata tool, naming discipline for tracks, whether to note the reason a take was bad.
+- **Engine.** Metadata fields carried inside the audio asset that downstream systems actually read: dailies auto-sync matches on scene and take, the editor's bin names come from it, and mismatched or blank fields create real, costly manual work in post.
+- **Takes.** 10-30 seconds per take live; 20-40 minutes of cleanup at wrap
+- **Television.** Streamers require consistent scene/take iXML in polyphonic 48 kHz / 24-bit BWF for auto-sync on both features and series; TV's higher take volume punishes sloppy metadata harder.
+
+### The sound report
+
+Produce the day's report: sound roll, every scene, slate and take with start timecode, track assignments, circled takes, wild tracks, room tone, MOS takes and the notes explaining every problem.
+
+- **Who.** Production Sound Mixer authors; Script Supervisor cross-checks; Assistant Editor consumes
+- **Decides.** What to write down and how honestly — a note saying 'lav rustle, boom covers it' changes what post does; an unnoted problem is discovered at the mix.
+- **Engine.** A structured report object generated from the day's take records that post genuinely reads: notes gate whether editorial uses the mix or the ISO, flag ADR candidates, and reconcile against the camera report to find missing takes.
+- **Takes.** 20-40 minutes at wrap, built through the day
+- **Television.** Same document in both. TV's report is the primary channel between a mixer who will never meet the post crew and a post crew running an episode a week; features have time for a conversation.
+
+### Dailies handoff and sync verification
+
+Deliver the sound roll with the camera media, confirm auto-sync succeeded on scene and take, and resolve anything that landed out of sync before the next day's dailies.
+
+- **Who.** Utility Sound Technician or Production Sound Mixer handing to the DIT or dailies house; Assistant Editor verifying
+- **Decides.** Deliver to DIT, to a lab, or upload; whether to flag known sync risks; whether to stay late to fix a mismatch now rather than at 7am.
+- **Engine.** A sync-resolution step matching audio timecode against camera timecode within a tolerance, falling back to clap detection and then to manual sync; each fallback costs measured assistant-editor hours that appear in the post budget.
+- **Takes.** 10-30 minutes handoff; problems cost hours the next morning
+- **Television.** TV's weekly turnaround means a sync failure is discovered and must be fixed within a day; a feature may not notice until the assembly, by which point the mixer is on another show.
+
+### Post turnover notes and ADR flagging
+
+Hand across the department's knowledge: which scenes are unrecoverable, which lavs to prefer, where room tone exists, which lines were wild, and what the room sounded like.
+
+- **Who.** Production Sound Mixer to the Supervising Sound Editor, Dialogue Editor and Post Supervisor
+- **Decides.** Whether to write a real turnover document, whether to call the sound supervisor, whether to be honest about a bad day.
+- **Engine.** A turnover asset that seeds the post-production ADR list, the dialogue editing effort estimate and the mix schedule; a shoot that ran a good department should measurably reduce post cost and raise the final dialogue quality score.
+- **Takes.** 2-6 hours at the end of the shoot
+- **Television.** Features hold a formal spotting and turnover. TV turns over every episode continuously, so the notes must live in the report rather than a meeting — one more reason TV sound reports carry more weight.
+
+### De-mic, wrap and gear recovery
+
+Remove every transmitter, lav and mount from every actor before they leave, recover plants from the set, account for the kit, and charge everything for tomorrow.
+
+- **Who.** Utility Sound Technician; Costume assists
+- **Decides.** Order of de-micing (actors on turnaround first), what to leave rigged overnight on a standing set, how much to charge.
+- **Engine.** An inventory reconciliation with a loss probability per item per day (packs walk home in costume pockets); lost items cost replacement money out of the mixer's own kit, which is real because the mixer owns the gear.
+- **Takes.** 20-40 minutes at wrap
+- **Television.** On a standing TV set, plants and grid mics stay rigged overnight all season; a feature strikes and re-rigs at every location, which is more labour and more attrition.
+
+### Second unit, splinter unit and plate coverage
+
+Decide whether the second unit or splinter carries sound, or runs MOS for stunts, inserts, plates and scenics.
+
+- **Who.** A second Production Sound Mixer, or no sound department at all
+- **Decides.** Staff a second sound crew, share one crew across units, or run MOS and record the effects wild later.
+- **Engine.** Unit objects each with their own sound crew slot, cost and capability; MOS units produce takes with no audio asset, forcing the post pipeline into effects and ADR for any dialogue shot there.
+- **Takes.** Structural; a decision made in prep and revisited weekly
+- **Television.** Features run substantial second units with real sound crews; TV's second unit is smaller, often MOS-only, and frequently shares the main unit's utility on a split day.
+
+### Actor sound discipline on the take
+
+Keep the head on the boom's axis, hold level between rehearsal and take, avoid stepping on another actor's line when the scene will be cut in singles, and do not rustle the mic.
+
+- **Who.** The Performer, coached by the Director and quietly by the Boom Operator
+- **Decides.** Whether to play a line quieter than rehearsal, whether to overlap, whether to turn away on the key line, whether to hit the mark the boom planned for.
+- **Engine.** Performance parameters (level in dB SPL, head orientation, movement energy, overlap flag) that feed straight into the capture solve — so a beautifully-played whisper delivered off-axis in a noisy room is genuinely unusable and creates an ADR obligation for that actor.
+- **Takes.** Every take
+- **Television.** TV performers learn their standing sets' sound and their department's habits across a season, so discipline improves; features drop actors into a new acoustic every few days.
+
+### Stage and lot noise governance
+
+Control what happens around a shooting stage: air handling schedules, elephant doors, construction on the neighbouring stage, flight paths over the lot, tours and traffic.
+
+- **Who.** Studio/Lot management, Stage Manager and Facilities; the Production Sound Mixer complains upward
+- **Decides.** Which stage a show gets, whether construction runs adjacent to a shooting stage, whether the air handler is on a shoot-friendly cycle, whether to soundproof a stage.
+- **Engine.** A lot-level noise model: stages with acoustic isolation ratings, neighbours with their own schedules, and a per-stage daily noise profile that a production's shooting day reads. Investing in stage isolation must raise the rent and lower every tenant's take-loss rate.
+- **Takes.** Scheduling decisions made weeks ahead; a complaint takes minutes and may change nothing
+- **Television.** This is overwhelmingly a TV problem because TV lives on stages for years, and a series' whole season quality can hinge on which stage it drew and who is building next door.
+
+### Option spaces
+
+**Boom microphones** — 24 options
+
+`Sennheiser MKH 416 (short shotgun, 13 dB(A) self-noise)` · `Sennheiser MKH 8060 (short shotgun)` · `Sennheiser MKH 8070 (long shotgun)` · `Sennheiser MKH 50 (hypercardioid, the interior workhorse)` · `Sennheiser MKH 40 (cardioid)` · `Sennheiser MKH 8050 (hyper)` · `Schoeps CMIT 5U (shotgun)` · `Schoeps SuperCMIT 2U (digital, DSP-narrowed pattern)` · `Schoeps CMC6 + MK41 (hyper)` · `Schoeps CMC6 + MK4 (cardioid)` · `Schoeps CMC6 + MK8 (figure-8)` · `Schoeps miniCMIT` · `Neumann KMR 81i (short shotgun)` · `Neumann KMR 82i (long shotgun)` · `Neumann KM 185 (hyper)` · `Sanken CS-3e (three-capsule shotgun)` · `Sanken CS-M1 (short)` · `Sanken CS-1e` · `DPA 4017B (shotgun)` · `DPA 4018 (supercardioid)` · `DPA 2017` · `Audio-Technica BP4073 / BP4071 (line-gradient)` · `Rode NTG-5` · `Deity S-Mic 2`
+
+**Lavalier microphones** — 15 options
+
+`DPA 6060 / 6061 (subminiature, 3 mm)` · `DPA 4060 / 4061 (miniature omni)` · `DPA 4071 (chest-EQ omni)` · `DPA 4080 (cardioid lav)` · `Sanken COS-11D (the industry default under clothing)` · `Sanken COS-11D BP` · `Countryman B6 (ultra-small omni)` · `Countryman B3` · `Tram TR-50` · `Sennheiser MKE 2 Gold` · `Sennheiser MKE 1` · `Voice Technologies VT500 / VT506` · `Shure TwinPlex TL45 / TL47 / TL48` · `Lectrosonics M152` · `Rode Lavalier II`
+
+**Plant and specialty microphones** — 13 options
+
+`Sanken CUB-01 boundary` · `Schoeps CCM 4 / CCM 41 compact` · `DPA 4098 supercardioid gooseneck` · `DPA 4060 taped into set dressing` · `Countryman B3 in a prop or flower` · `Tram TR-50 under a table lip` · `Crown / AKG PZM boundary plate` · `Sennheiser MKE 2 in a car interior` · `Hidden MKH 50 on a low stand just out of frame` · `Hanging overhead mic (Audio-Technica U853 or similar) on a multicam set` · `Parabolic reflector (Telinga) for very distant exteriors` · `Contact mic or hydrophone in a waterproof mount` · `Second boom pole as a static plant on a C-stand`
+
+**Windshields, suspensions and wind protection** — 17 options
+
+`Bare mic (interior, no wind)` · `Rycote Baby Ball Gag (light interior wind)` · `Rycote Softie (fixed foam-and-fur)` · `Rycote Modular Windshield WS 295/4/5` · `Rycote Cyclone` · `Rycote Super-Shield` · `Rycote Nano Shield` · `Cinela Pianissimo` · `Cinela Osix` · `Cinela Albert` · `Cinela Cosi` · `Bubblebee Spacer Bubble / Windbubble` · `Schoeps basket + W140 / B5D` · `Sanken WS-1 windjammer` · `High-wind fur cover over any basket` · `Rycote Lyre / InVision shockmount` · `Rain cover over a blimp`
+
+**Boom poles and mic rigging** — 14 options
+
+`K-Tek Klassic aluminium` · `K-Tek Avalon carbon fibre, internally cabled` · `K-Tek Traveler (short, bag work)` · `VDB carbon fibre` · `Ambient QuickPole QP series` · `Ambient QXS with internal coiled cable` · `Panamic` · `Loon pole (5 ft to 21 ft)` · `Straight XLR with external coil on a bare pole` · `Wireless plug-on transmitter on the pole (no cable)` · `Fixed mic stand or C-stand plant` · `Overhead grid hang on a multicam stage` · `Mic mounted on the Steadicam or camera` · `Hand-held mic below frame`
+
+**Wireless transmitter and receiver systems** — 14 options
+
+`Lectrosonics Digital Hybrid (SMV/SMQV/SMWB/LT transmitters + SRc/SRb/Venue 2 receivers)` · `Lectrosonics D Squared (DBu/DCHT + DSQD/DSR)` · `Lectrosonics DCR822 / DCHR portable receivers` · `Sound Devices A20-Mini + A20-Nexus (SpectraBand, 32-bit float internal recording)` · `Audio Ltd A10` · `Wisycom MTP61 / MTP41 + MPR52 / MPR30 / MCR54` · `Zaxcom ZMT4 / TRXLA (internal card recording + ZaxNet remote control)` · `Sennheiser Digital 6000 (SK 6212 + EM 6000)` · `Sennheiser Digital 9000` · `Sony DWX slot-in digital` · `Shure Axient Digital (AD / ADX)` · `Deity Theos` · `Sennheiser EW-DX / G4 (budget tier)` · `Hardline: cabled lav or boom, no RF at all`
+
+**Antennas and RF distribution** — 12 options
+
+`Quarter-wave whip on the receiver` · `Dipole antenna on a stand` · `Lectrosonics SNA600a folding shark-fin dipole` · `ALP620 / ALP650 log-periodic (LPDA) directional` · `RF Venue Diversity Fin` · `Helical / circularly polarised antenna (RF Venue CP Beam)` · `Antenna multicoupler or distro (Lectrosonics UMC16B, Betso, PSC)` · `Inline RF amplifier` · `LMR-195 / 240 / 400 low-loss coax runs` · `Antenna mast or high-hat above the set` · `Remote antenna rigged into a car, boat or another room` · `Separate transmit antenna for IFB, physically distanced from receive`
+
+**Recorders and mixers** — 15 options
+
+`Sound Devices Scorpio (32 channels / 36 tracks, 16 mic pres, 32x32 Dante)` · `Sound Devices 888 (16 ch / 20 tracks, 8 pres; 20 ch / 24 tracks with ISO-4)` · `Sound Devices 833 (6 mic/line inputs, 12 tracks)` · `Sound Devices MixPre-10 II (10 ch / 12 tracks, 32-bit float)` · `Sound Devices 688 / 664 (legacy)` · `Zaxcom Deva 24 + Mix-16 control surface` · `Zaxcom Nova 2` · `Zaxcom Maxx` · `Aaton Cantar X3 (24 tracks, 8 mic pres, 10 faders)` · `Aaton Cantar Mini` · `Sonosax SX-R4+ / SX-LC8` · `Zoom F8n Pro (32-bit float, budget)` · `Tascam field recorders` · `Nagra VI / Nagra Seven (legacy)` · `No recorder: single-system audio recorded into the camera`
+
+**Timecode and sync devices** — 14 options
+
+`Ambient Lockit ACN-CL / LockitBT (factory-calibrated to 0.1 ppm; 0.0 ppm drift in C-Jam networked mode)` · `Ambient Master Lockit ACN-ML` · `Ambient ACN-CT Tiny Lockit` · `Denecke SB-3 / SB-4 sync box` · `Denecke TS-3 / TS-C smart slate` · `Ambient ACN-SL smart slate` · `Tentacle Sync E MK II (TCXO, under one frame drift in 24 hours)` · `Deity TC-1 / TC-SL1 / SL4` · `Betso SBOX-1` · `Zaxcom ERX (timecode over 2.4 GHz ZaxNet)` · `Atomos UltraSync ONE` · `Genlock / wordclock from a master sync generator` · `Dumb clapper slate with no timecode` · `No slate, no code: sync by waveform matching in post`
+
+**Sample rate, bit depth and file format** — 11 options
+
+`48 kHz / 24-bit polyphonic BWF (the delivery standard)` · `48 kHz / 24-bit monophonic per-track WAVs` · `48 kHz / 32-bit float` · `96 kHz / 24-bit` · `192 kHz (effects capture only)` · `47.952 kHz pull-down` · `48.048 kHz pull-up` · `iXML metadata written on the day` · `iXML repaired afterwards in a metadata tool (Wave Agent, Wingman)` · `Sound report exported as PDF + CSV + ALE` · `MP3 or AAC reference mixdown for producers`
+
+**Frame rate and timecode standard** — 14 options
+
+`23.976 fps non-drop (US scripted default)` · `24.000 fps` · `25 fps (Europe, PAL territories)` · `29.97 fps drop-frame` · `29.97 fps non-drop` · `30 fps` · `47.95 / 48 fps` · `50 fps` · `59.94 / 60 fps` · `High-speed variable (always MOS)` · `Free run (clock runs continuously)` · `Record run (clock advances only while recording)` · `Time-of-day code` · `Hour-per-camera-roll or hour-per-episode convention`
+
+**Track layout and routing** — 11 options
+
+`Track 1 Boom A, Track 2 Boom B, Tracks 3+ lav ISOs, last pair L/R mixdown` · `Mixdown on Tracks 1-2, ISOs from Track 3` · `Mono mix on Track 1 only` · `Two-track to camera: mixdown plus boom` · `ISO-only, no mixdown` · `Dedicated track for playback return` · `Dedicated track for the thumper or click` · `Dedicated track for camera scratch or reference` · `Dedicated track for an off-camera reader or earwig feed` · `Dedicated audience mix tracks (multicam)` · `Group buses for sub-mixed background or crowd`
+
+**Sound crew configurations** — 12 options
+
+`Mixer only, bag rig (one-man band)` · `Mixer + Boom Operator` · `Mixer + Boom Operator + Utility Sound Technician (US scripted standard)` · `Mixer + two Boom Operators + Utility` · `Mixer + two Booms + two Utilities (large action or multicam)` · `Mixer + Boom + Utility + dedicated Playback Operator` · `Mixer + dedicated RF / Frequency Coordinator` · `Separate Audience Mixer on a second rig (multicam sitcom)` · `Second-unit sound crew` · `UK/BECTU shape: Sound Recordist + Boom Operator + Sound Assistant` · `Sound trainee (Local 695 Y-16A) attached` · `No sound department: MOS unit`
+
+**IFB, monitoring and comms** — 12 options
+
+`Comtek M-216 transmitter + PR-216 beltpacks (216-217 MHz)` · `Comtek BST-25/216 higher-power transmitter` · `Lectrosonics IFB (T4 transmitter + R1a receivers)` · `Zaxcom ERX3TCD (2.4 GHz ZaxNet, carries IFB and timecode together)` · `Sennheiser IEM used as IFB` · `Wired Comtek feed at video village` · `Motorola walkie channel reserved for sound` · `Radio Active Designs UV-1G (VHF intercom, deliberately keeps UHF free for mics)` · `Clear-Com FreeSpeak II (1.9 GHz DECT)` · `Riedel Bolero (1.9 GHz)` · `Hollyland Solidcom C1` · `Headphones: Sony MDR-7506, Sennheiser HD 25, Beyerdynamic DT 770 / DT 48`
+
+**Earwig and prompting systems** — 11 options
+
+`Phonak Invisity in-canal inductive receiver (~1.5 g, fed by a concealed neck-loop)` · `Phonak Roger Earpiece` · `Phonito Nano inductive earpiece` · `Neck-loop inductive transmitter with a hidden body pack` · `Comtek beltpack with a moulded earpiece` · `Zaxcom ERX with a concealed earbud` · `Wired ear prompt for a locked-off shot` · `Off-camera reader on an open mic (no earwig)` · `Practical in-ear device written into the costume` · `Bone-conduction transducer` · `No prompt at all`
+
+**Playback systems and delivery** — 14 options
+
+`Pro Tools chasing LTC via a sync interface` · `Playback from the Aaton Cantar` · `Playback from a Zaxcom Deva or Nova` · `Playback from a Sound Devices recorder` · `QLab` · `Ableton Live` · `Reaper` · `Dedicated playback cart with a second operator` · `Consumer device with no timecode (small scenes only)` · `Speakers: QSC K12.2 / JBL EON (small), Meyer UPJ or UPA (large numbers)` · `Anchor Audio portable PA` · `In-ear click only, no speakers` · `Thumper: ButtKicker or Aura tactile transducer under the floor` · `Live off-camera accompanist (piano, guitar, percussion)`
+
+**Lavalier mounting hardware and materials** — 17 options
+
+`Rycote Undercovers / Stickies` · `Rycote Overcovers (fur)` · `Bubblebee Lav Concealer` · `Bubblebee The Invisible Lav Covers` · `URSA Straps (waist, thigh, ankle, arm)` · `URSA Plush Circles / Soft Circles` · `Hide-a-mic pouches` · `Viviana Wear concealment pouches` · `3M Micropore / Transpore medical tape` · `Topstick toupée tape` · `Moleskin` · `Pros-Aide or Osto-bond adhesive for skin mounting` · `Vampire clips (pins into fabric)` · `Manufacturer flat mounts and tie clips` · `Hairline or temple mount, dressed by the Hair department` · `Hat brim or wig-line mount` · `Mic hidden inside a prop or set piece`
+
+**Recording position: cart versus bag** — 10 options
+
+`Magliner Gemini cart with a sound cart top` · `Custom-built sound cart (PSC, Rock-N-Roller base)` · `Bag rig (Orca OR-34, K-Tek Stingray, Petrol) on a harness` · `Backpack rig for run-and-gun` · `Small over-the-shoulder bag` · `Cart at base plus a satellite bag for mobile setups` · `Cart pushed and repositioned by the Utility every setup` · `Fixed position adjacent to video village` · `Mix from inside a sound truck or a stage sound room` · `Follow-cart on a moving vehicle rig`
+
+**Noise mitigation tactics available on the day** — 20 options
+
+`Kill HVAC and log the restore` · `Kill fridges, ice machines, fish tanks` · `Hang sound blankets / moving blankets on hard surfaces` · `Duvetyne over glass` · `Carpet or rubber under dolly track` · `Grease the dolly, crane or door hinge` · `Swap magnetic HMI ballasts for flicker-free electronic` · `Swap buzzing practicals to LED` · `Bring dimmers to full or bypass the board` · `Move the generator further and run longer cable` · `Lock up roads, sidewalks and neighbours with PAs` · `Hold for aircraft, trains or a passing truck` · `Re-time takes to a traffic-light cycle` · `Felt or tennis balls on chair and table feet` · `Tape and pad rattling props and jewellery` · `Stop a practical clock` · `Close a window and cheat the exterior` · `Re-block the scene away from the noise` · `Shoot the wide MOS and protect the close-up for sound` · `Accept it and flag ADR`
+
+**Take disposition** — 16 options
+
+`Print / circle take` · `Good for sound, good for picture` · `'We'll take it' (flawed but usable)` · `'One more for sound'` · `Sound NG — mixer requests another` · `Camera NG, sound good` · `MOS (no sound recorded)` · `Sound-only take (wild take of the scene)` · `Wild line pickup after the take` · `Room tone` · `False start` · `Abort mid-take` · `Second sticks` · `Tail sticks` · `Buy it and ADR it` · `Series take (rolling through several takes on one file)`
+
+**Grounds a mixer can call a take NG on** — 27 options
+
+`Aircraft or helicopter overhead` · `Traffic, airbrakes or a motorcycle` · `RF dropout or interference hit` · `Transmitter battery died mid-take` · `Clothing rustle over the line` · `Boom forced off the actor by a shadow note` · `Boom dipped into frame` · `Actor turned off the mic axis on the key line` · `Overlapping dialogue that ruins the split` · `Dolly, crane or Steadicam mechanical noise` · `Camera fan or lens motor` · `HMI ballast whine or dimmer hum` · `Generator surge or drift` · `HVAC restarted mid-take` · `Buzzing practical light` · `Footsteps on a hard floor over dialogue` · `Prop or jewellery noise on a line` · `Wind blast or handling noise` · `Water, rain or splash over dialogue` · `Distant construction, gunfire or a dog` · `Public or crowd noise` · `A walkie squawk or a phone` · `A crew member spoke or coughed` · `Digital clip or transmitter overload` · `Media write error on the recorder` · `Timecode mismatch discovered mid-take` · `Delivery fell below the room's noise floor`
+
+**Wild recordings the department can make** — 14 options
+
+`Room tone per location per lighting state` · `Wild lines from a principal` · `Off-camera reader lines` · `Group walla / crowd pass` · `Prop effects (doors, drawers, keys, latches, weapons dry)` · `Footsteps on the practical floor surface` · `Costume movement pass` · `Vehicle wild track (start, idle, away, by, brake, door)` · `Practical machinery and appliances` · `Location ambience / atmos bed` · `Acoustic impulse of the space (sweep or clap)` · `Actor breaths and efforts` · `Guide vocal or live-sing safety pass` · `A whole scene recorded wild for TV overlaps`
+
+**Legal US radio bands available to a production** — 15 options
+
+`470-608 MHz UHF TV band (Part 74 licensed, or unlicensed with tighter limits)` · `614-616 MHz 600 MHz guard band` · `653-663 MHz 600 MHz duplex gap (4 MHz portion for licensed Part 74)` · `VHF high band 174-216 MHz` · `216-217 MHz (Comtek-style IFB)` · `VHF low 54-72 / 76-88 MHz` · `169-172 MHz travelling band` · `902-928 MHz ISM (unlicensed)` · `941.5-944 MHz / 944-952 MHz (licensed, eligibility-limited)` · `952.85-956.25 MHz / 956.45-959.85 MHz (licensed)` · `1435-1525 MHz (licensed, coordinated with AFTRCC)` · `1920-1930 MHz DECT (intercom)` · `2.4 GHz ISM (ZaxNet, timecode, IFB)` · `5 GHz U-NII` · `6875-6900 MHz / 7100-7125 MHz (licensed)`
+
+**Boom position options per setup** — 12 options
+
+`Overhead front, on the mouth axis` · `Overhead at 45 degrees off the eyeline` · `Overhead from behind the actor` · `Underslung / low boom from below the frame line` · `Side boom from the off-camera side` · `Over-the-shoulder for the reverse` · `Boom riding in the dolly's wake` · `Boom hung from a grid or a stand (multicam)` · `Wireless plug-on boom, operator free-roaming` · `Boom sacrificed to lighting; lav only` · `Boom plus plant on the far actor` · `No boom: lav and plant coverage only`
+
+**Show format, which fixes the whole sound plan** — 13 options
+
+`Single-camera feature` · `Single-camera episodic drama` · `Multi-camera sitcom with a live audience` · `Multi-camera sitcom without an audience` · `Daytime serial / soap` · `Sketch comedy` · `Variety or musical special` · `Talk show` · `Live broadcast drama or musical` · `Competition / unscripted / reality` · `Documentary` · `Commercial / promo` · `Second unit / plates (MOS)`
+
+**Daily delivery to editorial** — 10 options
+
+`Poly BWF on a drive handed to the DIT with the sound report` · `Mono per-track WAVs` · `Mixdown only to editorial, ISOs held by the mixer` · `Direct upload to a cloud dailies service` · `Audio cards handed to a dailies lab` · `Sound report as PDF only` · `Sound report as PDF + CSV + ALE` · `Metadata written live in the recorder` · `Metadata repaired after wrap in Wave Agent` · `No metadata: sync by clapper in post`
+
+### What gets got wrong
+
+- The mixer usually owns the equipment. Labour rate and kit rental are two separate budget lines, so cutting wireless channels saves rental money and costs sound quality, while cutting crew saves wages and costs speed. A game that models one budget number gets this wrong.
+- A boom is not a microphone, it is a performance. The capsule is fixed; what varies take to take is distance, angle, and whether the operator swung in time for the first syllable. Model the operator, not just the mic in the slot.
+- Shotguns are the wrong mic indoors. Interference-tube microphones comb-filter off-axis reflections, so an MKH 416 or CMIT in a small hard room sounds hollow and 'tubby'. The interior mic is a hypercardioid (MKH 50, Schoeps MK41). Any sim where 'shotgun = best mic' has inverted real practice.
+- Lavs are not a backup for the boom, they are a different sound: chest resonance, fabric, no room, wrong perspective. Post prefers boom and uses lavs for wides, action and overlaps. A sim that treats them as interchangeable quality tiers is wrong.
+- The boom's opponent is the gaffer, not the DP. Boom shadow is a lighting geometry problem and it is resolved by moving a light, flagging it, or surrendering the boom — and all three spend minutes from the same clock the AD is guarding.
+- MOS does not mean the sound department is absent or idle. Second unit, plates, high-speed and aerials run MOS, and the department may still be recording wild effects or rigging for the next unit.
+- Room tone is scene-and-state specific. Tone recorded after the lights changed, after the HVAC came back, or with a different crew count in the room is the wrong tone and post cannot use it.
+- A 'sound NG' is a request, not a veto. The 1st AD and director decide. The mixer's real leverage is reputation and the implicit ADR bill, so this should be a political resource that depletes, not a button that always works.
+- Timecode drift is small but real and directional. A 0.1 ppm Lockit drifts under half a frame across 24 hours; an un-jammed camera clock drifts frames by lunch. Cameras almost always drift more than the sound recorder, so the recorder should be master.
+- 23.976 versus 24 is a sync fault, not a preference. A pull-up or pull-down mismatch produces a slip that grows across the take. A constant offset means someone jammed wrong; a growing slip means the rates disagree.
+- The 600 MHz repack made 617-652 and 663-698 MHz illegal for wireless microphones in the US. Old transmitter blocks are not merely crowded, they are unlawful, and a long-running show's legacy package is exactly where this bites.
+- Third-order intermodulation (2f1 minus f2) is what actually fails. Every carrier can be individually clear and legal and the set still beats against itself. Coordination software exists because this is arithmetic, and the common working guard is 250 kHz between any product and any carrier.
+- Body packs are live microphones on human beings. Professional practice is to mute or pull packs at breaks and to tell actors plainly when they are live. A game that models IFB without modelling this is missing the single most-discussed ethical rule in the department.
+- Playback is recorded, not just played. The recorder captures the playback on its own ISO because the editor needs it for sync and the music editor needs it to check drift against the pre-record.
+- A thumper is deliberately inaudible: low enough to be high-passed out of dialogue, loud enough for dancers to feel through the floor. Too loud and it rattles the set, the camera and the boom, at which point it is no longer removable.
+- Earwigs are not only a memory aid. They feed off-camera lines when an actor is sealed behind glass or in a vehicle, they cue moves, and they carry a click for a number. Phonak Invisity-class in-canal receivers weigh about 1.5 g and sit in the canal, invisible to camera and silent to the boom.
+- Television is faster, not smaller. An episodic day carries more pages and more setups than a feature day, so more of the show goes lav-heavy, more defects are accepted and flagged, and TV therefore carries a higher ADR burden per screen minute than features of comparable budget.
+- Multi-camera sitcom is a genuinely different craft, not film with more cameras: two to four boom operators working matched simultaneous frames, permanent overhead plants and hanging mics on standing sets, a separate audience mixer on their own rig and their own tracks, continuous rolls instead of per-take slates, and a sweetening pass afterwards.
+- Single-system (audio recorded into the camera) is normal for unscripted, documentary and news, and rare for scripted drama. Double-system with timecode and ISOs is the scripted standard for both film and television.
+- 32-bit float removes clipping at the recorder, not noise and not clipping upstream. The transmitter's input stage can still overload on a scream, and preamp self-noise plus the room's floor still set the usable dynamic range.
+- US titles are specific: Production Sound Mixer (IATSE Local 695, Y-1), Boom Operator / First Assistant Sound (Y-8), Utility Sound Technician / Second Assistant Sound (Y-7A), with Playback and Video Assist as separate classifications in the same local. In the UK the crew is BECTU and the titles are Sound Recordist, Boom Operator and Sound Assistant.
+- The sound report is the department's only durable voice. On a feature the mixer might talk to the sound supervisor; on a series shipping an episode a week, the report is the entire channel. An unnoted problem is discovered on the dub stage months later, and the note 'lav rustle, use boom' genuinely changes what post does.
+- Streamer dailies want 48 kHz / 24-bit polyphonic BWF with consistent scene and take values in the iXML header, because that is what auto-sync matches on. Blank or inconsistent metadata does not fail loudly, it silently converts into assistant-editor hours.
+- The car interior is the most reliably ADR-prone environment in the business: small, hard, resonant, full of road and engine noise, with a metal shell that attenuates RF. Poor-man's process on a stage is better-sounding than a real drive, which is why TV does more of it.
+- The lot runs the acoustics. Stage isolation, the air-handling schedule, the elephant doors, flight paths over the lot, and whether construction is hammering on the stage next door are lot-level decisions. A series can lose a season's worth of takes to a neighbour, and nobody on the production has authority to fix it.
+- The performer is a sound variable. Head orientation, level consistency between rehearsal and take, overlap discipline and hitting the mark the boom planned around decide whether a beautifully played whisper is a usable track or an ADR obligation with that actor's name on it.
+
+---
+
+## 15. The shooting day itself: the atomic loop from call sheet to dailies, film and television
+
+### Call sheet build and approval
+
+The next day's order of battle is drafted from the one-liner: scenes, story day D/N, page eighths, cast with ID numbers and SWF status, per-department calls, background, special equipment, advance schedule, hospital, sunrise/sunset, weather, walkie channels, safety notes.
+
+- **Who.** 2nd Assistant Director (drafts), 1st AD (approves), UPM/Line Producer (signs)
+- **Decides.** Scene order, which cast work, crew call vs shooting call, who gets a pre-call, who is on hold, what is dropped to the advance schedule, and whether the day is legal on turnaround for every person on it.
+- **Engine.** Per-person turnaround clocks from last night's dismissal; cast day-out-of-days status (SW/W/WF/H/SWFH); scene records with eighths, cast list, elements, location, story day; department call offsets; a legality pass that flags forced calls and produces their cost before issue.
+- **Takes.** 60-120 min, issued between lunch and wrap the day before
+- **Television.** TV call sheets carry episode number and often two units and two episodes prepping at once; the advance schedule crosses into the next episode's block, and cast availability is governed by series-regular contracts and guest-star work-day guarantees rather than a one-off deal.
+
+### Staggered department calls and pre-calls
+
+Departments are called at different times: rigging grip/electric and construction pre-call to pre-light or finish a set, catering before general crew, camera at general call, cast to makeup on their own clock.
+
+- **Who.** 1st AD with Gaffer, Key Grip, Construction Coordinator, Locations Manager
+- **Decides.** How much money is spent buying a head start, whose overtime is bought at the front of the day rather than the back, and whether the first shot lands at the shooting call.
+- **Engine.** Per-department call offsets that feed each person's own hour counter and turnaround; a pre-light model where hours of pre-rig reduce first-setup lighting time by a bounded amount per unit of rig complexity; separate OT ledgers per department.
+- **Takes.** Pre-calls typically 1-3 hours before general crew call
+- **Television.** Episodic TV pre-lights the next day's stage with a rigging crew almost every day because the schedule cannot absorb a slow first setup; features pre-light selectively.
+
+### Cast call construction
+
+Each performer gets a report time built backward from the time they are needed on set: makeup, hair, wardrobe, rehearsal, then set. The call sheet prints both the chair time and the on-set time.
+
+- **Who.** 2nd AD
+- **Decides.** How long each actor sits before working, whether an actor is called early for a rehearsal they are not in, and whether an actor's day (and therefore their meal clock and overtime) starts hours before their first shot.
+- **Engine.** Per-performer HMU duration by look complexity (prosthetics, period hair, blood, wigs); chair capacity per HMU crew head; a performer fatigue/morale term driven by dead time; Exhibit G time record starting at report, not at first shot.
+- **Takes.** Built as part of the call sheet; chair time 20 min to 4+ hours depending on look
+- **Television.** Series regulars have negotiated turnaround and often a contractual latest-call or earliest-dismissal; guest cast are worked to the day. Multi-cam cast rarely have a chair call before mid-afternoon on tape day.
+
+### Transportation call, drive-on and base camp
+
+Trucks are moved and spotted, talent are picked up or drive themselves, crew park and are shuttled. On location, base camp is laid out: honeywagon, star trailers, HMU trailer, wardrobe, production, catering.
+
+- **Who.** Transportation Coordinator, Transportation Captain, drivers (Teamsters Local 399 in LA)
+- **Decides.** Whether cast are driven (paid travel time) or self-drive, how far base camp is from set, and how long a walk or shuttle stands between the trailer and the first rehearsal.
+- **Engine.** Base-camp-to-set distance in metres feeding a per-fetch time cost for every talent move; truck spotting order; driver call times; travel time on the Exhibit G; parking and shuttle capacity as a location attribute.
+- **Takes.** Driver pre-calls 1-2 hours before crew; base camp set 1-3 hours
+- **Television.** A returning series on a home stage has almost none of this; the same show on a location day inherits the full feature apparatus. Multi-cam has none at all.
+
+### Talent check-in and the Exhibit G start
+
+Each performer is checked in on arrival and the time recorded on the SAG-AFTRA Exhibit G daily time report, which also logs makeup/wardrobe, set arrival, meals in and out, dismissal and travel, and is signed by the performer at wrap.
+
+- **Who.** 2nd AD / 2nd 2nd AD
+- **Decides.** The legal record of the day for every performer, which drives meal penalties, overtime, forced-call findings and any later claim.
+- **Engine.** A per-performer time ledger with typed events (report, HMU, set, meal out/in, dismiss, travel) evaluated against SAG-AFTRA rules to emit penalties as money at wrap; performer signature/dispute state.
+- **Takes.** Continuous; 15-30 min of paperwork at wrap
+- **Television.** Identical form. On a series the accumulated Exhibit Gs are how a showrunner's habits become a budget problem across 22 episodes rather than one bad day.
+
+### Hair, makeup and wardrobe
+
+Looks are applied in chair order, continuity photos are pulled from the last day this look was shot, and standby personnel follow the actor to set with the kit.
+
+- **Who.** Key Makeup Artist, Key Hair Stylist, Costume Supervisor, Set Costumer, prosthetic makeup artists
+- **Decides.** Chair order and therefore who is ready first, whether a prosthetic look forces an earlier call than the rest of the day needs, and how continuity is matched to the previous scene shot out of order.
+- **Engine.** Look records per character per story day with reference stills; application and removal durations; a degradation clock (sweat, heat, hours worn) that requires touch-ups and can force a break; prosthetic appliance inventory consumed per application.
+- **Takes.** 20 min (basic) to 4-6 hours (full prosthetic)
+- **Television.** A series bible of established looks makes most days fast; multi-cam does a full pass in the late afternoon before audience and touches up between scenes in front of 200 people.
+
+### Safety meeting and safety bulletins
+
+Before work begins, the 1st AD holds a safety meeting covering the day's hazards and the applicable AMPTP Industry-Wide Labor-Management Safety Committee bulletins; anyone working a stunt, firearm, fire, water or height element is briefed and signs.
+
+- **Who.** 1st AD, with Stunt Coordinator, Armorer, SPFX Coordinator, Safety Advisor where required
+- **Decides.** Whether a hazardous element is shot as planned, modified, or refused; who is present; what personal protective equipment and standby (fire safety officer, paramedic, safety diver) is on the clock.
+- **Engine.** Hazard tags on scenes (firearm, fire, water, height, vehicle, animal, pyro) that require named personnel and bulletin acknowledgement to unlock the setup; an incident probability per hazard modified by prep, rehearsal count, fatigue hours and coordinator quality.
+- **Takes.** 5-20 min at crew call; longer walk-and-talk for stunts
+- **Television.** Same rules. In California, productions claiming the state tax credit must employ a Safety Advisor for enumerated risk categories under SB 132 (rules effective Jan 1 2025; the Safety on Production Pilot Program from Jul 1 2025).
+
+### The morning walk-through
+
+Before crew are committed, the director walks the set and states the plan for the scene: the master, the general coverage intention, where the camera lives, whether it moves.
+
+- **Who.** Director, Director of Photography, 1st AD, Key Grip, Gaffer, Script Supervisor
+- **Decides.** The shape of the whole morning: how many setups the scene will be broken into, which side of the line the camera works from, and what gets lit first.
+- **Engine.** A scene plan object holding intended setup count, camera positions relative to the geometry of the set, and an axis (the line); everything downstream costs time against that plan and deviating from it is a measurable time event.
+- **Takes.** 10-30 min
+- **Television.** A TV director walks the set with the 1st AD already knowing the day cannot expand; on a returning series the sets, the line and the standard coverage of a recurring set are effectively inherited and the walk is five minutes.
+
+### Blocking rehearsal with first team
+
+The actors walk the scene on the set with the words: entrances, where they sit, where they stand, when they move, what they touch. Nobody is lit yet; the crew watch from the edge.
+
+- **Who.** Director and the principal cast (first team)
+- **Decides.** Physical staging, which lines land on which moves, whether a prop or set piece needs to change, and — the expensive one — whether the scene now needs a different shot than the one that was scheduled.
+- **Engine.** Blocking as a set of positions and beats on the set's floor plan; each position generates lighting demand, a mark, a continuity state and an eyeline; changes propagate cost into the lighting and grip estimates for the setup.
+- **Takes.** 10-45 min; longer for a complicated oner or a stunt
+- **Television.** Single-cam TV blocks as film does. Multi-cam blocks the entire episode across days one and two of the rehearsal week, in a rehearsal hall or on the stage, with no cameras present ('dry blocking').
+
+### Showing the blocking to the crew
+
+The scene is run once more for the departments so everyone sees where the actors go before the set is committed to a lighting and rigging plan.
+
+- **Who.** 1st AD calls it; Gaffer, Key Grip, DP, boom operator, 2nd AC, standby departments watch
+- **Decides.** Where the boom can live, where lights and flags can stand, where the dolly track can be laid, and what the first setup will actually be.
+- **Engine.** Department-visible blocking data: floor positions, sightlines, ceiling clearance, heights; each department returns a time estimate for that blocking that the AD's day model consumes.
+- **Takes.** 5-15 min
+- **Television.** Multi-cam does this as 'camera blocking' with four operators and a Technical Director working out cross-shooting from shot cards, a whole day of the week rather than ten minutes.
+
+### Marking the actors
+
+Each actor's stopping positions are marked on the floor with camera tape in a colour assigned to that actor: T-marks for a stop, toe marks, or a sandbag/apple box for a night exterior where tape will not read.
+
+- **Who.** 2nd Assistant Camera
+- **Decides.** How precisely the actors are held — a hard T-mark buys focus and framing accuracy and costs spontaneity; a loose mark or a 'find your own light' costs focus pulls and can lose the shot.
+- **Engine.** Marks as data (position, actor, beat index, hardness) read by the focus system: hit-rate per actor per mark hardness, feeding a soft-focus failure probability on each take; marks persist for continuity across setups of the same scene.
+- **Takes.** 2-10 min
+- **Television.** Same. In multi-cam, marks must satisfy four simultaneous cameras, so they are set during camera blocking and are far less negotiable on the night.
+
+### Setting camera and choosing the lens
+
+The camera is placed, height and level set, and a focal length chosen; the operator frames and the director confirms through the finder or the monitor. Lens choice sets how much of the set is seen and how the space compresses.
+
+- **Who.** DP with Director and Camera Operator; 1st AC executes
+- **Decides.** Focal length, camera height, distance to subject, frame size (wide/medium/close), aspect and whether this is the master or a piece of coverage.
+- **Engine.** A real camera model: sensor/gate size, lens focal length and close focus, T-stop, resulting field of view and depth of field at the subject distance, so that a 27mm at 3 ft and a 100mm at 20 ft produce genuinely different shot records, lighting demands and focus difficulty.
+- **Takes.** 5-20 min per new position
+- **Television.** TV drama shoots more with two cameras running simultaneously (A and B) to bank coverage, which constrains lighting to be acceptable from two angles at once; multi-cam has four.
+
+### Grip rig: track, crane, remote head
+
+Camera support is built: sticks and a head, a dolly on level track or a dance floor, a Steadicam operator, a crane or Technocrane with a remote head, a car rig, a drone.
+
+- **Who.** Key Grip, Best Boy Grip, Dolly Grip, company grips
+- **Decides.** Whether the shot moves, how far, how repeatably, and how much of the setup time is spent building rather than lighting.
+- **Engine.** Per-support build time, crew count, floor/levelling requirements, weight limits, and a repeatability score that sets how consistently a move hits its marks across takes; a move's complexity raises the per-take failure probability.
+- **Takes.** 5 min (sticks) to 90+ min (crane/Technocrane, car rig)
+- **Television.** TV leans on Steadicam and handheld because they build in minutes; a Technocrane day is a budgeted event. Multi-cam uses pedestal dollies (e.g. Chapman Hustler) crab-steered by dolly grips on a flat stage floor.
+
+### Lighting the setup
+
+Key, fill, backlight and practicals are set and balanced; grips cut and shape with flags, nets, silks and negative fill; the board is programmed for any cue. On stage this may mean greenbed work; on location it means generator, cable runs and windows.
+
+- **Who.** Gaffer, Best Boy Electric, Dimmer Board Operator, lamp operators; grips for shaping
+- **Decides.** The look, and the time cost of the look: how many units, how far up, how much shaping, whether the lighting is built to work from one angle only or to survive the turnaround.
+- **Engine.** Fixture inventory with wattage/output, colour temperature, and rig time; power budget against genny or house supply; a 'lighting state' per setup that is either reusable for the reverse or not, which is the single biggest lever on setups-per-day.
+- **Takes.** 20-90 min for a first setup; 10-30 min for coverage within the same state
+- **Television.** Episodic TV lights sets to be shot from anywhere (soft overhead, practicals hot, less directional) precisely to kill turnaround time. Multi-cam lights the whole standing set at once from a permanent overhead grid and barely relights all night.
+
+### Second team and lighting reference
+
+Stand-ins occupy the actors' marks during lighting so the first team can stay in the trailer or rehearse; the DIT checks exposure and colour on waveform, false colour and a chip chart and builds a look (CDL/LUT).
+
+- **Who.** Stand-ins (second team), 2nd 2nd AD who runs them, DIT
+- **Decides.** Whether the actors are protected from standing under lights for an hour, and whether the image is judged on a calibrated monitor or by eye.
+- **Engine.** Stand-in records matched to principals by height and skin tone (a mismatch degrades the lighting result); a colour pipeline object (camera LUT + per-setup CDL) that carries into dailies and, if wrong, becomes a dailies problem tomorrow.
+- **Takes.** Runs concurrently with lighting
+- **Television.** Same, and stand-ins on a long-running series are near-permanent crew who know the blocking. Multi-cam stand-ins work the camera blocking day.
+
+### Camera build, filtration and exposure
+
+The body is configured: frame rate, shutter, codec/stock, ND and diffusion filtration, matte box, follow focus and monitoring; the 1st AC measures distances and builds focus marks on the barrel or the hand unit.
+
+- **Who.** 1st AC (focus puller), 2nd AC, DIT, Camera Operator
+- **Decides.** Exposure index, shutter angle, frame rate (24 vs 23.976 vs off-speed), filtration, and the record format, which sets both the look and how much media the day burns.
+- **Engine.** Format records with real data rates and roll limits — ARRIRAW 4.6K Open Gate at 24 fps is ~33.4 GB/min, so a 2 TB Codex Compact Drive holds ~56 min; a 400 ft 35mm 4-perf magazine runs ~4 min 26 s at 24 fps, a 1000 ft mag ~11 min — so card/mag changes interrupt the day on a schedule the player can feel.
+- **Takes.** 20-45 min at call; 2-10 min per reconfiguration
+- **Television.** TV standardises the package across the season so this is fast; a feature may change format for a sequence. Multi-cam runs four identical bodies with identical settings, all rolling all night.
+
+### Sound plan for the setup
+
+Boom position is worked out against the frame and the lighting, radio mics are rigged in wardrobe, plant mics are hidden in the set, and playback is prepped if the scene needs it. The mixer sets levels and names the sound roll.
+
+- **Who.** Production Sound Mixer, Boom Operator, Sound Utility (2nd boom/cable)
+- **Decides.** Whether dialogue is recorded usable, which is the difference between a scene that is finished and a scene that is going to ADR; and whether the boom is going to be in the frame.
+- **Engine.** Per-setup acoustic model: ambient noise floor from the location (road, flight path, HVAC, generator), reverberation, wind; boom reach against lens angle; per-take dialogue-usability score that post reads. Radio mic count and battery/interference state.
+- **Takes.** 5-15 min per setup, concurrent with lighting
+- **Television.** Identical craft. Multi-cam uses several booms simultaneously over a proscenium plus audience mics, and the mixer balances a live feed for the audience PA as well as the recording.
+
+### Final set dressing and prop continuity
+
+The dressing is set to the state the story requires for this moment, matched to what has already been shot; consumables (food, cigarettes, drinks, blood) are laid in multiples; hero props are checked and handed off.
+
+- **Who.** Set Dresser/Leadman, Property Master, Standby Props, Art Director
+- **Decides.** What the set looks like at this exact story beat, how many resets the department can afford (how many identical cakes exist), and what is cheated out of frame to make room for the camera.
+- **Engine.** Per-prop continuity state machine (full/half/empty, lit/unlit, bloodied, broken) and a consumables inventory that depletes per take — running out is a real stop; a 'cheat' record noting what was moved so it can be restored for the reverse.
+- **Takes.** 5-20 min, concurrent
+- **Television.** A returning series' standing sets have a documented default state and a continuity photo archive going back seasons; the cost of an error is a mismatch across episodes, not just across a cut.
+
+### Lock-up, last looks and first team back in
+
+The perimeter is locked (doors, roads, the stage's red light and bell), background is placed, the principals are brought from base camp and put on their marks, and hair, makeup and costume do a final pass before the AD clears the set.
+
+- **Who.** 2nd 2nd AD and set PAs (lock-up), Key HMU and Costume standby (last looks), 1st AD
+- **Decides.** How long the actors stand under the lights before rolling, and whether the set is genuinely quiet and controlled or is going to be interrupted.
+- **Engine.** Lock-up quality per location (controlled stage, closed street, live public space) setting the probability of an interruption per take; travel time from base camp; a last-looks duration that the AD can cut short at a continuity risk.
+- **Takes.** 3-10 min
+- **Television.** Multi-cam's 'lock-up' is a house of 200 strangers: the audience is settled, the warm-up comic hands off, and the stage manager holds them silent for each take.
+
+### The roll procedure
+
+The fixed liturgy: 'lock it up' - 'roll sound' - mixer calls 'speed' - 'roll camera' - operator calls 'rolling'/'speed' - 2nd AC calls the slate and claps - 'background action' - the director calls 'action'.
+
+- **Who.** 1st AD calls it; Sound Mixer, Camera Operator, 2nd AC, Director
+- **Decides.** Who calls action (director) versus who calls the roll (1st AD) — and on a hazardous setup, whether the coordinator holds a veto inside the countdown.
+- **Engine.** An explicit state machine for the roll with a real time cost per step and per-step failure states (sound not speed, camera no-roll, card full, timecode not jammed, radio mic hit); pre-roll seconds consumed off the media budget on every attempt.
+- **Takes.** 10-30 seconds; film cameras need 2-4 s to come up to speed
+- **Television.** In multi-cam the stage manager and the Technical Director run the roll; all four cameras and the line cut roll together and the director calls action from the booth or the floor.
+
+### Slating
+
+The slate carries production, director, DP, date, roll, scene and take, and is clapped in frame for sync. Variants: head slate, tail slate (upside down, at the end when the front was impossible), second sticks (the first was missed or blocked), soft sticks, and MOS for no sound.
+
+- **Who.** 2nd Assistant Camera; timecode jammed by the Sound Mixer
+- **Decides.** Whether the shot can be synced cheaply in post, how takes are numbered and named, and whether the editor can find anything.
+- **Engine.** A slate record per take (scene, setup letter, take number, roll, sync method, timecode) that is the join key between picture, sound, script supervisor's log and dailies; timecode drift between jam-syncs as a real failure mode.
+- **Takes.** 5-15 seconds
+- **Television.** Same, faster. US convention numbers the setup as scene plus letter (24A take 3); UK/Commonwealth practice uses a continuously incrementing slate number. Multi-cam slates all cameras at once or relies on common timecode.
+
+### The take
+
+The scene is performed and recorded. Focus is pulled by hand against the marks, the dolly move is executed, the boom tracks the dialogue, background action runs, effects fire, and everything either lands together or does not.
+
+- **Who.** Cast, Camera Operator, 1st AC, Boom Operator, Dolly Grip, plus every standby department
+- **Decides.** Nothing, until it ends — this is the moment the player as actor actually acts, and the moment everyone else's preparation is either tested or wasted.
+- **Engine.** A per-take resolution that composites independent subsystems into one result: performance (actor state, take number, direction given), focus, framing, movement, sound usability, continuity, technical integrity, interruption. Each returns a graded value, not a pass/fail, and the take record stores all of them.
+- **Takes.** Length of the scene: 20 seconds to 10 minutes
+- **Television.** TV runs fewer takes per setup because the day is fixed; the working average is roughly 2-4 takes on TV and 3-6 on a feature (estimate). Multi-cam performs the scene end to end with an audience laughing and resets only when it breaks.
+
+### Cutting the take and naming the reason
+
+The take ends and the reason is spoken aloud and written down: performance, technical, sound, camera, continuity, external, or 'that's the one'. The reason determines what changes before the next take.
+
+- **Who.** Director calls 'cut'; 1st AD, Script Supervisor and department heads report the reason
+- **Decides.** Whether to go again, adjust and go again, move on, or abandon the setup; and whether the fault is charged to a department, which is how set politics happen.
+- **Engine.** A typed cut-reason enumeration attached to every take, with department attribution; repeated attribution shifts crew morale, department-head standing and the director's reputation; the reason also determines whether the next take is cheap (go again now) or expensive (reset, relight, rebuild).
+- **Takes.** Instant; 30 s to 5 min to reset
+- **Television.** TV cuts earlier and moves on sooner — 'we'll fix it in the edit' is a real TV decision because the showrunner, not the director, owns the cut. Multi-cam often does not cut at all; it runs to the end of the scene and picks up.
+
+### Selecting circle takes
+
+Takes the director wants are 'circled' (historically circled on the camera report as print takes for the lab); the script supervisor records which takes are preferred and why, on which portion of the scene.
+
+- **Who.** Director with Script Supervisor; Editor's preference noted
+- **Decides.** What gets prioritised in dailies and in the assembly — and what the editor is quietly allowed to ignore.
+- **Engine.** Take disposition per take (circled / hold / NG / false start / series / safety) and, crucially, a partial-take model: a take can be circled from line 4 to the end. The editor's later behaviour reads these records rather than an abstract 'quality' number.
+- **Takes.** Seconds per take
+- **Television.** On TV the showrunner may overrule circled takes at dailies; the director's circles are advisory. On a feature they carry more weight because the director has a contractual cut.
+
+### Gate check, lens check and playback review
+
+After a printed take on film the gate is checked for hair or debris; on digital the equivalent is a check for flare, smudge, sensor dust and an ND/filter verification. Playback is reviewed on the video village monitor when something is in doubt.
+
+- **Who.** 1st AC (gate/lens), Video Assist operator, Director, DP, Script Supervisor
+- **Decides.** Whether the setup is genuinely finished, or whether everything just shot must be shot again — a hair in the gate means the take is gone.
+- **Engine.** A hair/debris probability per film take rising with dust, wind and mag changes; a check that costs 1-3 minutes and, if skipped, defers the discovery to dailies where it costs the whole setup. Playback consumes time and invites more takes.
+- **Takes.** 1-3 min per gate check; 1-5 min per playback
+- **Television.** Digital TV almost never stops for this; video village review is more common because producers and the studio are watching remotely via a streaming feed.
+
+### Reset between takes
+
+Everything is returned to its top-of-scene state: props repositioned, consumables replaced, blood cleaned and reapplied, wardrobe changed for a duplicate, dolly returned to the start mark, squibs re-rigged.
+
+- **Who.** Standby Props, SPFX, Costume Standby, Makeup Standby, Set Dresser, Dolly Grip
+- **Decides.** How many more takes the scene can physically support, and whether an effects reset makes the next take cost twenty minutes instead of thirty seconds.
+- **Engine.** Per-element reset time and reset count remaining (duplicate wardrobe, breakaway glass, squibs, blood units, food); when the reset budget hits zero the setup is over whether or not the performance landed. This is the hard constraint the film-set fantasy usually ignores.
+- **Takes.** 30 seconds to 45 minutes
+- **Television.** TV schedules fewer resettable elements for this exact reason. Multi-cam resets in front of the audience, and the warm-up comic covers the dead air.
+
+### Choosing the next setup (coverage)
+
+With the master shot in hand, the scene is broken into coverage: two-shots, over-the-shoulders, clean and dirty singles, inserts, cutaways, POVs. Or the director commits to a oner and shoots no coverage at all.
+
+- **Who.** Director with DP; 1st AD costs it; Script Supervisor tracks what is covered
+- **Decides.** How much insurance the edit gets versus how many setups the day can afford; the exact trade the whole shooting day is made of.
+- **Engine.** A coverage ledger per scene, per line of dialogue: which beats exist in which frame sizes, from which side of the line. The editor's later options are literally this ledger, so undercoverage produces an unfixable cut, not a vague penalty.
+- **Takes.** Decision is instant; each new setup costs 10-60 min
+- **Television.** TV shoots standardised coverage (master, two singles, maybe overs) fast and consistently, often with A and B cameras banking two sizes at once. A multi-cam gets all four sizes simultaneously and needs no turnaround at all.
+
+### Shooting the turnaround
+
+The camera crosses to the opposite angle for the reverse. Lights that were behind the camera must move behind the actors, flags and stands come out of the new frame, the set may need a wild wall pulled, and the dolly track relaid.
+
+- **Who.** Gaffer, Key Grip, DP, 1st AD
+- **Decides.** Whether the reverse is lit fresh (slow, beautiful, matched to the original look) or cheated with a fast relight, and whether the day survives it.
+- **Engine.** A relight cost derived from how much of the existing lighting state is reusable from the opposing angle — this makes the DP's earlier lighting choice pay or cost hours later. Wild-wall availability is a stage attribute; on location there is no wild wall.
+- **Takes.** 20-60 min; can be 10 min if pre-rigged for both angles
+- **Television.** The single biggest reason TV lighting looks the way it does: TV lights for the turnaround up front. Multi-cam never turns around; the fourth wall is the audience.
+
+### Eyeline and the reader
+
+For a single or an over, the actor's eyeline must match where the other character was in the master. An off-camera actor reads lines, or a stand-in, the script supervisor, a taped mark or a tennis ball on a stand substitutes.
+
+- **Who.** Script Supervisor and Director; Camera Operator verifies through the lens
+- **Decides.** Whether the actor is given a live scene partner (costing that actor's time and their own shooting day) or a mark; a wrong eyeline breaks the cut and cannot be fixed.
+- **Engine.** An eyeline vector per performer per setup derived from the blocking geometry and camera position, checked against the master's geometry; a match/mismatch that post reads. Reader presence modifies the performance term of the take result.
+- **Takes.** 1-5 min to set
+- **Television.** TV frequently shoots singles with no reader at all when an actor has been released, and the AD schedules 'off-camera work' as a cost. In multi-cam the partner is always there, live.
+
+### Screen direction and the line
+
+The 180-degree axis between the characters is established by the master; every subsequent setup stays on one side unless it is deliberately crossed with a neutral shot, a move across, or a cut on action.
+
+- **Who.** Script Supervisor (primary guardian), Director, DP
+- **Decides.** Whether coverage cuts together at all, and whether a deliberate crossing is an effect or an error.
+- **Engine.** The axis is stored as a geometric line in the set for the scene; every camera position is on a side; violations are recorded and produce a real editorial constraint rather than a warning. Motion direction of travelling shots is tracked the same way.
+- **Takes.** Continuous
+- **Television.** Same rule, but a multi-cam's four cameras are all on one side of the proscenium by construction, so the axis problem barely exists.
+
+### Inserts, cutaways and the splinter unit
+
+Close shots of hands, objects, screens, clocks, signs and reaction cutaways are picked up — either by the main unit at the end of a setup or by a splinter unit working elsewhere with a B camera crew.
+
+- **Who.** 1st AD schedules; Director or 2nd Unit Director shoots; Property Master supplies
+- **Decides.** Whether to spend main-unit time on an insert or hand it to a splinter/2nd unit, and whether the actor's own hands are used (which costs their time).
+- **Engine.** An insert list per scene with owner (main/splinter/2nd unit/insert stage), a flag for whether the principal's hands or face are required, and a quality penalty for doubling; splintering costs a duplicate crew and a camera package for the hours it runs.
+- **Takes.** 2-15 min each as part of the main unit
+- **Television.** TV relies on inserts heavily to cover schedule gaps and shoots them in batches at wrap. Features may send a whole insert day to an insert stage weeks later.
+
+### Script supervision: lining the script
+
+The script is lined: a vertical line down each page for every setup, solid where the actor is on camera and squiggled where they are off, annotated with the setup letter, frame size and lens. This becomes the map of what was shot.
+
+- **Who.** Script Supervisor
+- **Decides.** Nothing directly — it records everything, and it is the only complete record of what coverage exists.
+- **Engine.** The lined script is the coverage ledger made visible; it must be a first-class data object (per-line, per-setup, on/off camera, size, lens, takes, circled) that the edit system and the production report both read.
+- **Takes.** Continuous through the day
+- **Television.** Identical. On TV the lined script goes to the editor the same night because the editor is cutting while the show shoots.
+
+### Script supervision: the editor's log and daily reports
+
+Facing-page notes per take: lens, filter, camera, frame size, take length, action description, the director's comments, circled takes, and what differs between takes. Plus the daily progress report: scenes and eighths shot, setups, times.
+
+- **Who.** Script Supervisor
+- **Decides.** What the editor knows about a take before watching it, and what the production report says the day actually achieved.
+- **Engine.** Per-take metadata records keyed to the slate, plus a daily rollup (scenes completed/partial, eighths, setups, first shot, meal times, camera wrap) that feeds the DPR without re-entry. Modern practice is software (ScriptE, Scenechronize) on an iPad, not paper.
+- **Takes.** Continuous; 30-45 min to finalise at wrap
+- **Television.** Same. TV script supervisors also time the script against the network's required running time, and a scene running long is a note that reaches the writers that day.
+
+### Continuity matching
+
+Because scenes shoot out of order, every detail must match its neighbours in the story: which hand holds the glass, how full it is, buttons done or undone, hair parted which way, the bruise's age, the weather outside the window.
+
+- **Who.** Script Supervisor, with Costume, Hair, Makeup, Props, Set Dec
+- **Decides.** When to correct a mismatch (costing a reset) and when to accept it because it is unlikely to cut against anything.
+- **Engine.** A continuity state vector per character and per prop, carried across the schedule by story day and scene adjacency — not by shooting day. An error's severity is a function of whether the mismatched shots can be adjacent in the cut.
+- **Takes.** Continuous; still photography at the end of each setup
+- **Television.** TV continuity spans episodes and seasons and is held in a series continuity database; a mismatch can surface months later in a different director's episode.
+
+### Wild lines and room tone
+
+Lines are recorded without picture when a plane ruined a take or a line was added; at least a minute of room tone is recorded on every location so the editor can fill gaps invisibly.
+
+- **Who.** Production Sound Mixer; 1st AD calls for quiet
+- **Decides.** Whether to buy the fix now for a minute of set time or leave it for ADR, which costs an actor's day and a stage weeks later.
+- **Engine.** Wild track records attached to scene and line; a post model where missing room tone or missing wild lines converts directly into ADR days and cost. Room tone must be per-location-per-configuration, not per-day.
+- **Takes.** 1-5 min
+- **Television.** Same. TV shows on tight post schedules take wild lines aggressively because there is no time for a big ADR session.
+
+### Page count and pages behind
+
+Work is measured in page eighths. The day is scheduled for a number of eighths; what is actually completed is tallied, and the difference accumulates as days ahead or behind schedule.
+
+- **Who.** Script Supervisor counts; 1st AD reports; UPM and studio watch
+- **Decides.** The single number that governs the AD's afternoon and the producer's phone calls.
+- **Engine.** Eighths per scene from the breakdown; completion state per scene (complete/partial with which eighths remain); a running schedule variance in both days and dollars. A page is eight eighths regardless of physical length, and dialogue-heavy pages shoot faster than action pages — the engine needs an eighths-to-hours coefficient per scene type, not a flat rate.
+- **Takes.** Continuous
+- **Television.** Typical loads (estimates): a studio feature 2-4 pages and roughly 15-25 setups a day; a network hour 6-9 pages and 30-50 setups over 7-8 days; a single-cam half hour 5-7 pages a day; a multi-cam taping puts 35-45 pages on tape in one night.
+
+### Making the day
+
+When the morning has run long, the day is re-cut in real time: coverage is dropped, scenes are combined into a oner, a scene is split to another day, background is cut, a setup is cheated from the existing lighting, or the company works into overtime.
+
+- **Who.** 1st AD, with Director, UPM/Line Producer, and the studio or showrunner by phone
+- **Decides.** What the audience will never see, and who pays for the gap — the schedule, the budget, or the crew's rest.
+- **Engine.** An explicit AD decision surface with priced options: each move returns time saved, money spent, coverage lost, and a hit to a named relationship (director, DP, cast, studio). 'Making the day' should be a tracked reputation statistic for the 1st AD and the director across a career.
+- **Takes.** Decided at lunch and again mid-afternoon
+- **Television.** A TV director who does not make the day repeatedly does not get asked back; the showrunner is told before the director is. A feature can buy a day; a network episode with a locked airdate and the next block already prepping usually cannot.
+
+### The meal clock and the lunch call
+
+Under IATSE practice the first meal is due within six hours of general crew call; a further meal is due roughly six hours after the first ends. The AD may take a grace period, an NDB, or a walking meal, or eat the penalty.
+
+- **Who.** 1st AD calls lunch; Craft Service and Caterer serve; UPM is liable
+- **Decides.** Whether to break in the middle of a setup (losing momentum and the lit state) or push through and pay every person on the crew and cast a penalty.
+- **Engine.** Two clocks (crew from general call, cast from individual call), grace windows (12 minutes with crew consent, up to a further 30 for the second meal), NDB as a 15-minute paid non-deductible break that resets the clock, walking meal, and a penalty accrual per person per half hour.
+- **Takes.** Half-hour to one-hour break (unpaid); 12-min or 30-min graces
+- **Television.** Identical rules. Multi-cam feeds the crew before the audience arrives and feeds the audience nothing but a warm-up act.
+
+### Meal penalty accrual
+
+Missing a meal deadline triggers liquidated damages per person per half hour, escalating. It applies to the entire company simultaneously, so it is a cliff cost, not a trickle.
+
+- **Who.** UPM/Line Producer own the cost; 2nd AD records the times; payroll pays it
+- **Decides.** Whether fifteen more minutes of shooting is worth several thousand dollars across a hundred-person company.
+- **Engine.** Per-person escalating schedules: SAG-AFTRA principals at $25 for each of the first and second half hours and $50 per half hour thereafter, rising to $75 per half hour from the fifth half hour effective Jul 1 2026 (background $15 from the fifth half hour). IATSE's schedule escalates similarly and adds a rule that 20+ meal penalties in a week owes an hour's pay per half hour of delay.
+- **Takes.** Accrues in half-hour increments
+- **Television.** Same money, different pain: on a 22-episode series, habitual meal penalties become a seven-figure season line and a UPM's problem with the studio.
+
+### First shot after lunch
+
+The clock restarts; the company returns, last looks are redone, the afternoon's first setup is lit or resumed. The time of the first shot after lunch is printed on the production report and is read as a measure of the AD's grip on the day.
+
+- **Who.** 1st AD
+- **Decides.** Whether the lighting state was held through lunch (crew eat in shifts, lamps stay hot) or struck, and how much of the afternoon the restart costs.
+- **Engine.** A restart cost that depends on whether the setup was held or broken, plus a fatigue term; the DPR field 'first shot after lunch' as a visible, judged statistic.
+- **Takes.** 10-40 min after the return
+- **Television.** Same. Multi-cam's equivalent is the audience being seated after the crew's dinner, which is a hard, immovable time.
+
+### Overtime and the elapsed-hour escalators
+
+Past the standard day, hourly crew move up the escalator, and the marginal hour becomes several times the cost of the eighth hour. Cast overtime runs on their own contractual structures.
+
+- **Who.** UPM/Line Producer; 1st AD watches the clock; payroll computes
+- **Decides.** Whether to shoot the martini or drop the scene — a decision that should be presented as money, not as a mood.
+- **Engine.** Under the IATSE Basic Agreement, studio work pays time and a half after 8 hours, double time after 12 hours worked, and (2024 terms, productions starting principal photography on or after Aug 4 2024) triple time after 15 elapsed hours; golden hours apply beyond 12 worked hours. The engine must price the 13th hour at roughly 2x and the 16th at roughly 3x the base hour, per head.
+- **Takes.** Hour by hour
+- **Television.** The same escalators, but a series has a weekly and seasonal pattern; consistently long days on a series trigger union scrutiny and crew attrition between blocks.
+
+### Company move
+
+The whole unit strikes, loads, travels and re-establishes at another location. Even a short move inside a lot costs the day; a cross-town move can cost two hours of shooting.
+
+- **Who.** 1st AD calls it; Transportation Coordinator executes; Locations Manager holds both ends
+- **Decides.** Whether to schedule two locations in a day at all, and whether the move is at lunch (cheapest, the break absorbs travel) or mid-afternoon.
+- **Engine.** Move cost as a function of distance, truck count, equipment volume, parking at the destination, and whether a second set of trucks was pre-positioned; a 'move at lunch' discount; the move consumes the lighting state entirely.
+- **Takes.** 45 min (a walk-to move) to 3 hours
+- **Television.** TV avoids company moves ruthlessly and pays a premium for a location that offers multiple looks. Multi-cam has none; the swing set is thirty feet away on the same stage.
+
+### Camera media handling and offload
+
+Full magazines or cards are handed off, offloaded to redundant storage with checksum verification, logged, and the media is only wiped after verified copies exist (typically two disks plus an LTO tape, or a shuttle drive to post).
+
+- **Who.** 2nd AC and Loader (film) or Data Manager/DIT (digital); Camera Operator hands off
+- **Decides.** How many cards are in circulation (which sets how often the day stops for a change), and whether the production keeps two copies before erasing — the single most consequential unglamorous decision on set.
+- **Engine.** Real capacities and runtimes by format (see camera build), offload time as data volume divided by transfer rate, checksum verification (xxHash/MD5) as a separate pass, and an explicit risk model where skipping a copy to save time creates a chance of losing a day's work.
+- **Takes.** Offload runs continuously; a card/mag change on set is 1-5 min
+- **Television.** TV offloads to a post house nightly with a hard courier deadline so the editor can cut in the morning. Film may hold media until the end of a location block.
+
+### Camera reports and sound reports
+
+Each roll/card gets a report listing every take, its length, circled status, format, filters and notes; the sound report lists tracks, mics, wild tracks and comments. They travel with the media to post.
+
+- **Who.** 2nd AC (camera report), Sound Mixer (sound report)
+- **Decides.** What post is told about what it is receiving, and how footage/stock consumption is tracked against budget.
+- **Engine.** Per-roll records that roll up into the daily footage totals on the production report (gross footage, print, waste on film) and into the post ingest manifest; a mismatch between camera report and media is a real, findable error.
+- **Takes.** Continuous; 10-20 min to close out
+- **Television.** Same, generally automated via metadata on TV.
+
+### VFX on-set data capture
+
+For any shot with effects: witness cameras, chrome and grey ball HDRI, colour chart, lens grids, lidar or photogrammetry of the set, tracking markers placed and measured, camera height/tilt/lens/distance logged.
+
+- **Who.** VFX Supervisor, VFX Data Wrangler, with camera and grip support
+- **Decides.** Whether a shot is cheap in post or an archaeology project — and whether the extra four minutes on set is spent.
+- **Engine.** A per-shot VFX data completeness record (which captures exist) that directly sets the post cost and schedule for that shot; missing data multiplies vendor hours. Marker placement creates paint-out work that is itself costed.
+- **Takes.** 3-15 min per VFX setup; lidar of a set 30-90 min once
+- **Television.** TV VFX volume is high and per-shot budget is low, so data capture discipline matters more, not less; a show with a VFX supervisor on set beats one calling in remotely.
+
+### Hazard clocks: stunts, firearms, fire, water, heights, animals
+
+Hazardous elements run on their own procedure: rehearse at quarter speed, then half, then full; weapons are shown and cleared before every take; fire and water have standby crews; animals have a welfare monitor with a veto.
+
+- **Who.** Stunt Coordinator, Armorer/Weapons Master, SPFX Coordinator, Safety Advisor, American Humane monitor, set medic
+- **Decides.** How many rehearsal passes are bought before rolling, how many takes the stunt performer can safely do, and whether to substitute a double, a rig, or a visual effect.
+- **Engine.** Per-hazard rehearsal-to-risk curve (each rehearsal pass lowers incident probability with diminishing returns and costs time), performer fatigue raising it, a maximum safe repetition count, and an incident model with real consequences — injury, shutdown, investigation, insurance claim.
+- **Takes.** Rehearsals 15-90 min; each take may cost a 10-40 min reset
+- **Television.** TV does smaller stunts more often and leans on the coordinator's standing crew. California productions on the state tax credit must staff a Safety Advisor for enumerated categories including firearms, major stunts, pyro, aircraft and vehicles.
+
+### Child performers and the studio teacher
+
+Minors work to a statutory clock that includes schooling and rest, and the studio teacher has authority to stop work. Under California rules a minor needs three hours of school in a work day, deliverable in increments of no less than twenty minutes, with a ratio of ten students per teacher.
+
+- **Who.** Studio Teacher/Welfare Worker, 2nd AD, parent or guardian
+- **Decides.** When the child's work time is spent — the scheduling of every scene they are in, and whether a double, a stand-in or a shot design is used to finish without them.
+- **Engine.** Per-minor daily counters (work time, school time, rest and recreation, maximum time at the production site) by age band, with a hard stop that cannot be overridden by any AD decision; a scheduling optimiser must plan the day around the minor's window. Teacher headcount as a staffing constraint.
+- **Takes.** Governs the whole day
+- **Television.** A series with child leads plans its entire season schedule around these clocks and around school terms; multi-cam tapes late at night, which is precisely when minors cannot work, forcing pre-shoots.
+
+### Weather, cover sets and holds
+
+On an exterior day the weather is checked hourly; continuity of light and sky must match what has already been shot. If it turns, the company moves to a cover set, shoots the weather into the scene, waits, or loses the day.
+
+- **Who.** 1st AD, Line Producer, Locations Manager, Director
+- **Decides.** Whether to keep a dressed, lit interior standing as a cover set all week (expensive insurance) and when to call it.
+- **Engine.** A weather model with hourly cloud, precipitation and wind, a continuity requirement per scene (matched sun, overcast, wet-down), sunrise/sunset and magic-hour windows, and cover-set availability as a standing cost. Wet-downs and rain towers as purchasable continuity.
+- **Takes.** Decision points every hour; a cover-set move costs a company move
+- **Television.** TV schedules exteriors with a built-in cover scene on the same call sheet as standard practice; features on distant location may have a weather day in the schedule and a completion bond watching it.
+
+### The Abby Singer and the martini
+
+'The Abby Singer' is called on the second-to-last setup of the day (after production manager Abner Singer) so departments can begin wrap-out; the 'martini shot' is the last shot — the next one is in a glass.
+
+- **Who.** 1st AD announces both
+- **Decides.** Nothing mechanically, but it is the signal that starts the wrap machinery running in parallel with shooting, which is worth 20-40 minutes off the wrap time.
+- **Engine.** A flag that lets non-essential departments begin striking while the last setup shoots, trading a small risk (if the martini needs an extra setup, the gear is already on the truck) for real time.
+- **Takes.** Called with 1-2 setups remaining
+- **Television.** Universal on both. Multi-cam's equivalent is the last scene before the curtain call, after which the audience is released.
+
+### Camera wrap, crew wrap and wrap-out
+
+'Camera wrap' ends shooting; the crew then strike lighting and grip, restore the location, load trucks, and wrap out. Cast are wrapped individually as they finish, which starts their turnaround earlier than the crew's.
+
+- **Who.** 1st AD calls camera wrap; department heads run their own wrap-out
+- **Decides.** Whether to release cast early (protecting their turnaround and their overtime) and how much is struck tonight versus left standing for tomorrow.
+- **Engine.** Separate wrap clocks per department; a 'leave it standing' option on a stage that saves tomorrow's rig time and costs stage occupancy; cast dismissal times written to the Exhibit G individually; the 2nd AC and data crew wrap last because offload continues after camera wrap, which shortens their turnaround.
+- **Takes.** Crew wrap-out 30-120 min after camera wrap
+- **Television.** On a series stage, sets are left standing between episodes; on a feature location, full restoration to the location agreement's condition is a contractual obligation with a walkthrough.
+
+### Wrap paperwork: time cards, Exhibit G, start work
+
+Performers sign the Exhibit G, crew time cards are collected and approved, background vouchers are collected, and new-hire start paperwork is processed for anyone who worked their first day.
+
+- **Who.** 2nd AD, 2nd 2nd AD, Production Accountant's clerk
+- **Decides.** What the production is legally admitting about the day — the times written here are the times paid and penalised.
+- **Engine.** Time records as a settled, auditable object that payroll and the penalty engine read; a discrepancy/dispute path where a performer refuses to sign, which becomes a union matter.
+- **Takes.** 20-45 min after wrap
+- **Television.** Identical; volume differs with cast size.
+
+### Hot costs
+
+An overnight report of the day's variable spend against what was budgeted: overtime hours by department, meal penalties, forced-call penalties, extra background, additional equipment, catering counts.
+
+- **Who.** Production Accountant / 2nd Assistant Accountant, reviewed by UPM and Line Producer
+- **Decides.** Whether tomorrow's plan changes because today cost too much — the fastest feedback loop in production finance.
+- **Engine.** A daily variance ledger by budget account code, fed automatically by the day's time and penalty records, compared against the budgeted day; cumulative variance drives producer and studio pressure events.
+- **Takes.** 2-4 hours overnight, distributed by morning
+- **Television.** On a series, hot costs are aggregated per episode against a per-episode pattern budget, and an over-pattern episode must be paid back by a cheaper one later in the season.
+
+### The Daily Production Report
+
+The legal record of the shooting day: crew and shooting call, first shot, meal in and out, first shot after lunch, camera wrap, wrap; scenes scheduled versus shot with eighths; setups; minutes/footage; cast times; crew headcount; penalties; accidents; and the running ahead/behind.
+
+- **Who.** 2nd AD compiles; UPM approves; distributed to producers, studio, completion bond, insurer
+- **Decides.** Nothing — it reports. But it is the document everyone judges the day by, and the one a completion bond reads before it acts.
+- **Engine.** An auto-assembled DPR from the day's records, with every field sourced from a system that actually produced it; cumulative totals (days ahead/behind, pages ahead/behind, setups to date, cost to date) that drive studio, bond and insurer behaviour in later turns.
+- **Takes.** 45-90 min after wrap; distributed same night or early morning
+- **Television.** TV DPRs are per episode and per unit, tracked against the episode's pattern and the season's overall days; a series that runs two units files two reports a day.
+
+### Dailies creation
+
+The day's media is ingested, sound is synced (by timecode or by the clap), the on-set CDL and show LUT are applied, the material is transcoded to editorial format and to review proxies, and it is delivered to the cutting room and to a secure review platform.
+
+- **Who.** DIT or dailies house colourist, Post Production Supervisor, assistant editor
+- **Decides.** How the material is graded before anyone judges it, and who gets to see it — with forensic watermarking and access control on a studio title.
+- **Engine.** A colour pipeline object carrying camera LUT and per-setup CDL from set to dailies to editorial; a sync process with a real failure mode (no timecode jam, no clap, tail slate); delivery deadlines that miss if offload ran late.
+- **Takes.** 4-10 hours overnight
+- **Television.** TV dailies must land before the editor's morning because the assembly is due within days; feature dailies on distant location may be turned around locally or shipped.
+
+### Dailies review
+
+Yesterday's footage is watched — historically in a screening room together, now usually individually on PIX, Moxion or Frame.io with notes attached to timecode. Technical problems, performance problems and coverage gaps surface here.
+
+- **Who.** Director, DP, Editor, Producers; on TV also the Showrunner, studio and network executives
+- **Decides.** Whether anything must be reshot while the set still exists, whether the DP's look is holding, and whether an actor's performance needs a different direction tomorrow.
+- **Engine.** A deferred-discovery system: defects created on set (soft focus, boom in frame, hair in gate, unusable sound, continuity error) are hidden until dailies, and the cost of fixing them depends on whether that set, location, weather or cast are still available. This is the mechanism that makes the gate check matter.
+- **Takes.** 1-3 hours, usually after wrap or at lunch the next day
+- **Television.** On TV the showrunner's dailies notes carry more force than the director's, and studio/network executives watch remotely from the first day. On a feature the director's authority over dailies is near-absolute until the cut.
+
+### The editor's assembly during shooting
+
+The editor cuts scenes as they arrive, usually within a day or two of shooting, and flags what does not work: missing coverage, an eyeline that breaks, a performance that needs a line, a scene that does not play.
+
+- **Who.** Editor and Assistant Editor, in the cutting room
+- **Decides.** What gets requested back from set while the company is still there — the cheapest possible fix.
+- **Engine.** An assembly state per scene that reads the coverage ledger, continuity records and take dispositions and returns specific, nameable gaps ('no clean single on the confession', 'nothing to cut to on page 34'); those gaps become schedulable pickup items with a cost.
+- **Takes.** Continuous; a first assembly is expected shortly after wrap
+- **Television.** TV editors cut ahead and the editor's cut is due within days; the DGA gives a TV director a short director's cut period and the showrunner then takes over. A feature editor has weeks and the director has a contractual cut.
+
+### Turnaround and the next day's call
+
+Every person's next call must respect their rest period from their own dismissal. A late wrap pushes tomorrow's call, which pushes the meal clock, which pushes the wrap — the chain that makes a bad Tuesday into a bad week.
+
+- **Who.** 1st AD and UPM compute it; 2nd AD issues the call
+- **Decides.** Whether to push tomorrow's call (losing daylight or stage time), force a call and pay the penalty, or dismiss some departments earlier tonight.
+- **Engine.** Per-person clocks: IATSE Basic Agreement provides a 10-hour daily rest and 54 hours of weekend rest after a five-day week, with invaded rest paid at a penalty rate. SAG-AFTRA gives performers a 12-hour rest in the studio zone (reducible to 11 on an overnight location on two non-consecutive days, or 10 where specified exterior conditions apply) and 56 hours weekly; a forced call for a day performer costs the daily rate or $900, whichever is less, per violation, and invading any part of an hour pays as a full extra day.
+- **Takes.** Computed at wrap; call issued that night
+- **Television.** Series with fixed airdates absorb forced calls as a cost of business more readily than features; 'Fraturday' — a Friday that runs past midnight — eats into the weekend rest and is a scheduled, priced decision, not an accident.
+
+### Stage day operation
+
+On a sound stage the day runs on house power through the bull switch, the elephant doors are closed and the red light and bell control entry, sets are built with wild walls and shot from the perms and greenbeds; there is no weather and no sun to chase.
+
+- **Who.** Stage crew under the Gaffer, Key Grip and Construction Coordinator; lot's stage operations staff
+- **Decides.** Whether to build the set on stage at all — trading construction cost for total control, quiet, and a day that does not stop.
+- **Engine.** Stage attributes that actually change the day: clear height to the perms, floor load, soundproofing and NC rating, power supply in amps, door dimensions, catwalk/greenbed access, wild-wall availability, and no weather term at all. Company move cost inside a lot is minutes, not hours.
+- **Takes.** A full shooting day with no weather loss
+- **Television.** TV lives here: standing sets on a stage, pre-rigged overhead, lit for the turnaround, with a lighting console holding cues per set. It is why a TV day can carry 40 setups and a location feature day carries 15.
+
+### Location day operation
+
+A real place is borrowed: permits pulled, neighbours notified, streets coned or closed with officers, parking held, power run from a generator, the interior hushed by killing the HVAC, and the whole place restored at wrap.
+
+- **Who.** Locations Manager, Key Assistant Location Manager, location assistants, unit PAs, police/fire officers
+- **Decides.** Everything about how much of the day is actually shooting: parking distance, walk to set, noise windows, curfews, the hours the permit allows, and how much of the location the company may touch.
+- **Engine.** Location records with permit hours and curfew, ambient noise profile (flight path, road, rail), power availability, parking capacity and distance to set, restoration obligations, and a neighbour/complaint model that can shut a shoot down mid-setup.
+- **Takes.** A full day, with 1-3 hours of it lost to travel, walk and weather
+- **Television.** TV location days are the expensive exception, usually batched so a location is used for several episodes at once; features can live on location for months with a travelling circus.
+
+### Multi-camera television: dry blocking and camera blocking
+
+The rehearsal week: a table read, then days of rehearsal and dry blocking with no cameras, then a camera-blocking day where the director and TD assign every line to a camera and each operator builds a numbered shot card for the episode.
+
+- **Who.** Director, Technical Director, four camera operators, Stage Manager, cast
+- **Decides.** Which of four simultaneous cameras covers which line, where each pedestal sits and crabs, and how the whole episode will be cut before a frame is shot.
+- **Engine.** A per-line camera assignment matrix across four cameras (conventionally A, B, C and X), each operator's shot list as an ordered set of positions and sizes, and pedestal paths on the stage floor that must not collide or shoot each other into frame.
+- **Takes.** Days 1-4 of a five-day week
+- **Television.** This is the process that has no film equivalent at all: in multi-cam the coverage decision is made days in advance, in writing, and the shooting night executes it.
+
+### Multi-camera television: run-throughs and rewrites
+
+The cast perform the episode for the producers (producer run-through) and then for the studio and network (network run-through); the writers go away and rewrite overnight, and new coloured pages arrive the next morning.
+
+- **Who.** Showrunner and writing staff, Director, studio and network executives
+- **Decides.** What the script is — a multi-cam script changes materially every day of the week, including during the taping itself.
+- **Engine.** A script version system with coloured revision pages that propagates changes into blocking, camera cards, props and set dressing; a joke-level quality model where a run-through's laugh response is the signal that drives the rewrite.
+- **Takes.** Run-through 1-2 hours; rewrite overnight
+- **Television.** There is no film equivalent. Single-cam TV also revises, but not on a daily rehearsal-response loop with a live test audience of executives.
+
+### Multi-camera television: the taping night
+
+An audience of roughly 200 is seated; scenes are performed in story order on swing sets across the stage; all four cameras record ISO and the TD cuts a line feed for reference; the audience laughs and the laughs are recorded.
+
+- **Who.** Director (often from the booth), Technical Director cutting the line, Stage Manager on the floor, warm-up comedian, Audience Coordinator, four operators, writers at a table by the stage
+- **Decides.** How many full takes per scene, when to do a pickup, when to take a writer's alt joke from the floor, and when to move on because the audience is cooling.
+- **Engine.** Audience state as a real variable (energy decaying with time and with resets, restored by the warm-up and by a good take), separate ISO records plus a line cut, alt-joke selection per beat, and a taping running time that must fit the audience's endurance — typically 3-5 hours for a 22-minute episode.
+- **Takes.** A taping night of 3-5 hours in front of an audience
+- **Television.** Everything here is unlike film: no turnaround, no relighting, no single-camera coverage, an audience, and a live rewrite. Pre-shoots — scenes with minors, animals, effects, exteriors or complex rigs — are taped in the afternoon before the audience arrives.
+
+### Night shoots, splits and the sixth day
+
+A night exterior runs from dusk to dawn; a split day starts in the afternoon and ends after midnight; a sixth day of the week is a premium day. Each reshapes turnaround, meal clocks, and human performance.
+
+- **Who.** 1st AD, UPM, Line Producer
+- **Decides.** Whether the sequence is shot at real night, day-for-night, or with a controlled dusk window, and whether the company flips its schedule for a block (costing a transition day at each end).
+- **Engine.** Real sun times by date and latitude for the location; usable-darkness window; a flip cost of one or two days of degraded performance at each end; premium pay for sixth and seventh days; fatigue accumulating across consecutive nights and affecting both take results and incident probability.
+- **Takes.** A 12-hour night plus turnaround into the following night
+- **Television.** TV batches night work into a night block within an episode's schedule; features may shoot weeks of nights. Multi-cam never shoots nights in this sense — the audience goes home.
+
+### An incident on set
+
+An injury, a near-miss, a fire, a vehicle incident or an animal escape halts the setup. The scene is secured, treatment given, the incident reported, and work resumes only when the hazard is controlled — or the day ends.
+
+- **Who.** 1st AD stops work; set medic responds; UPM, Safety Advisor, studio safety and the insurer follow
+- **Decides.** Whether to continue, whether to change how the shot is achieved, and whether the production is now in a reportable, insurable or investigable event.
+- **Engine.** An incident object with severity, cause attribution, hours lost, medical and legal consequence, insurance claim path, OSHA/Cal-OSHA reportability, and a lasting effect on crew trust, department heads' willingness and the production's standing with the completion bond and insurer.
+- **Takes.** Minutes to the end of production
+- **Television.** Same on both, but a series carries the reputational consequence across the remaining episodes and into next season's crewing.
+
+### Option spaces
+
+**Why a take ends (the cut taxonomy)** — 38 options
+
+`That's the one — print/circle it` · `Cut, going again for performance` · `Cut for a line — blown, dropped, paraphrased` · `Cut for a missed mark` · `Cut for an eyeline — actor looked the wrong side` · `Cut — actor requested it` · `Cut for soft focus` · `Cut for a framing error or a bump in the move` · `Cut — dolly move late or early` · `Cut — Steadicam operator's horizon or wobble` · `Cut — boom in frame` · `Cut — shadow of the boom, the crane or a crew member in shot` · `Cut — light stand, flag, C-stand or cable visible` · `Cut — crew member or equipment reflected in glass or a mirror` · `Cut — unwanted lens flare` · `Cut — a lamp blew, flickered or a ballast buzzed` · `Cut — a practical failed to fire` · `Cut — special effect failed (squib, breakaway, rain, smoke)` · `Cut — prop failed, broke or ran out` · `Cut — wardrobe malfunction` · `Cut — continuity error spotted by the script supervisor` · `Cut — dressing out of place or a cheat visible` · `Cut for aircraft` · `Cut for traffic, a siren, a leafblower, a dog, a helicopter` · `Cut for a radio mic hit, static or a dropout` · `Cut — sound not usable, mixer flagged it` · `Cut — camera did not roll, or rolled out (magazine/card full)` · `Cut — camera reported an error or lost sync` · `Cut — timecode not jammed or slate missed (second sticks)` · `Cut — background action wrong or an extra looked at camera` · `Cut — animal did not perform` · `Cut — child's time expired or the studio teacher stopped work` · `Cut — stunt went wrong or was aborted for safety` · `Cut — an outsider walked into shot (lock-up failed)` · `Cut — the sun went in, or came out, or the light no longer matches` · `Cut — one more for protection/safety, nothing wrong` · `Cut — abandon the setup, we are moving on` · `False start — cut in the first seconds, no take burned`
+
+**Coverage patterns available for a scene** — 26 options
+
+`Master (full scene, all players)` · `Establishing/wide establishing` · `Oner — the whole scene in one developing shot, no coverage` · `Two-shot` · `Three-shot / group shot` · `Over-the-shoulder (over)` · `Dirty single (foreground shoulder in frame)` · `Clean single` · `Favouring single (two in frame, one favoured)` · `50/50 profile two-shot` · `Medium shot / cowboy / medium close-up` · `Close-up` · `Extreme close-up` · `Insert (hands, object, screen, document)` · `Cutaway (reaction, detail, environment)` · `Point of view (POV)` · `Over-the-hip / low angle / high angle variant of a size` · `Reverse (the turnaround)` · `Walk-and-talk (dolly, Steadicam or handheld tracking)` · `Push-in / pull-out on a static frame` · `Whip pan or swish between subjects` · `Split-screen or in-camera split` · `Tie-in shot (to link two geographies)` · `Plate (empty frame for VFX)` · `Safety take of an existing angle` · `Second camera size banked simultaneously (A/B cameras)`
+
+**Camera support and movement for a setup** — 22 options
+
+`Sticks (tripod) with a fluid or geared head` · `High hat / low mode` · `Handheld` · `Shoulder rig with an easyrig` · `Steadicam / Trinity / Ronin-style stabilised rig` · `Dolly on straight track (Fisher 10/11, Chapman Peewee)` · `Dolly on curved track` · `Dance floor (dolly on levelled ply, free movement)` · `Crab dolly with a pedestal (multi-cam standard)` · `Jib arm` · `Crane (Chapman Titan, Super Technocrane)` · `Telescoping crane with a remote head (Libra, Scorpio)` · `Cable cam` · `Drone / UAV with a licensed operator` · `Car process trailer or low-loader` · `Hostess tray / hood mount / door mount` · `Russian arm / camera car tracking vehicle` · `Motion control rig (repeatable move)` · `Snorkel/probe lens rig` · `Underwater housing` · `Wire rig / body mount / snorricam` · `Static locked-off (no operator)`
+
+**Slate and sync methods** — 12 options
+
+`Head slate, clapped, sync sound` · `Second sticks (re-slate after a miss)` · `Soft sticks (hand-touched, for proximity or a sleeping baby)` · `Tail slate / end board (upside down, at the end of the take)` · `MOS (no sound recorded)` · `Timecode smart slate, jam-synced (Denecke TS-3, Ambient Lockit)` · `Timecode only, no clap (jam-synced camera and recorder)` · `In-camera audio as a sync guide track` · `Common marker across multiple cameras` · `Individual slates per camera` · `Verbal slate only (documentary/insert)` · `Pre-numbered clapper with no timecode (no-budget)`
+
+**Rehearsal depth before rolling** — 9 options
+
+`No rehearsal — roll on the first pass and shoot the rehearsal` · `Walk-through for positions only` · `Full blocking rehearsal with the director, private (crew off set)` · `Blocking rehearsal, then a crew watch` · `Blocking, crew watch, then a technical rehearsal for camera and focus` · `Marking rehearsal with stand-ins only` · `Full dress rehearsal at speed with all elements` · `Rehearse the stunt or effect at quarter, half, then full speed` · `Pre-rehearsed offsite days earlier (rehearsal period)`
+
+**How the 1st AD makes the day when behind** — 16 options
+
+`Drop coverage — shoot the master and one single only` · `Combine two scenes into a single developing shot` · `Cheat the reverse from the existing lighting` · `Shoot the scene from one side only and cut the other side later` · `Split the scene — shoot half now, the rest on a later day` · `Push the scene to the advance schedule / add a day` · `Cut background numbers to speed lock-up` · `Hand an insert or cutaway to a splinter unit` · `Shoot the rehearsal as a take` · `Skip the gate check / skip playback` · `Call a walking meal or take an NDB instead of breaking` · `Take the meal penalty and keep shooting` · `Work into overtime, into golden hours` · `Force tomorrow's call and pay the turnaround penalty` · `Release cast early and shoot their coverage with a reader` · `Ask the director to give up a shot they wanted`
+
+**Choices at the sixth hour (the meal clock)** — 10 options
+
+`Break on time — half-hour meal` · `Break on time — one-hour meal` · `Take the 12-minute grace to finish the take (needs crew consent)` · `Take the further 30-minute grace on the second meal window` · `Call a non-deductible break (NDB) — 15 paid minutes, clock resets` · `Call a walking meal — crew eat while working` · `Run French hours (continuous, no formal break) — non-union or overseas only` · `Stagger the break by department, holding the lighting state` · `Break the cast but not the crew (or vice versa)` · `Push through and accrue the penalty`
+
+**Day types** — 20 options
+
+`Stage day, standing set` · `Stage day, new build` · `Backlot / exterior set day` · `Practical interior location day` · `Practical exterior location day` · `Night exterior` · `Split day (afternoon into night)` · `Distant/overnight location day` · `Company-move day (two locations)` · `Travel day` · `Second unit day` · `Splinter unit day` · `Insert stage day` · `Process/car rig day` · `Water or tank day` · `Volume / LED wall day` · `Multi-camera taping day (with audience)` · `Multi-camera pre-shoot day (no audience)` · `Rehearsal day (paid, no camera)` · `Reshoot / additional photography day`
+
+**Turnaround choices at wrap** — 11 options
+
+`Wrap on time; standard call tomorrow` · `Wrap late; push tomorrow's call to protect rest` · `Wrap late; push crew call but hold cast call (cast wrapped earlier)` · `Force a call on some departments and pay the penalty` · `Force a call on cast (forced call) and pay the performer penalty` · `Dismiss some departments early tonight to buy their tomorrow` · `Reduced rest on an overnight location where the contract allows it` · `Flip to a night schedule with a transition day` · `Take a Fraturday — run past midnight into the weekend rest` · `Call a weather day / cancel tomorrow` · `Insert a cover set for the morning and start later`
+
+**Take dispositions on the camera report** — 12 options
+
+`Circled / print (the wanted take)` · `Circled in part (from a named line to the end)` · `Hold (maybe usable)` · `NG — no good, with a reason code` · `False start` · `Series take (a run of takes treated together)` · `Safety / protection take` · `Buy take (bought for a single moment)` · `Abort — camera or sound never got it` · `MOS take` · `Plate` · `Reference / rehearsal recorded`
+
+**Sound modes for a setup** — 11 options
+
+`Full sync sound, boom primary` · `Sync sound, radio mics primary (wide shot, no boom position)` · `Boom plus radios plus plant mics, multitrack` · `Playback (music or dialogue) with performers miming or dancing` · `Live vocal recorded to playback` · `MOS — no sound` · `Guide track only (dialogue to be replaced)` · `Wild lines after the take` · `Room tone` · `Crowd walla recorded separately` · `Audience track (multi-cam)`
+
+**Recording formats and their roll limits** — 12 options
+
+`35mm 4-perf, 400 ft magazine (~4 min 26 s at 24 fps)` · `35mm 4-perf, 1000 ft magazine (~11 min at 24 fps)` · `35mm 3-perf (about a third more running time per foot)` · `65mm 5-perf, 500/1000 ft magazine (very short runs, ~2.5/5 min at 24 fps, estimate)` · `16mm/Super 16, 400 ft (~11 min at 24 fps)` · `IMAX 15/65 (roughly 3 min per 1000 ft load, estimate)` · `ARRIRAW 4.6K Open Gate on ALEXA 35 (~33.4 GB/min; ~56 min on a 2 TB Codex Compact Drive)` · `Apple ProRes 4444 XQ on ALEXA` · `Sony VENICE X-OCN on AXS cards` · `REDCODE RAW on RED V-Raptor` · `Blackmagic RAW` · `Broadcast multi-cam ISO record to a central server (effectively unlimited)`
+
+**Lighting approaches for a setup** — 15 options
+
+`Available light / natural only` · `Bounce and negative fill only` · `Soft overhead book light or muslin` · `Hard key with shaping (flags, cutters, nets)` · `Practical-motivated (lamps in the set carry the look)` · `Window light shaped with silks, ND gel and bounce outside` · `HMI through the window for a sun beat` · `Space lights / overhead soft grid (stage and multi-cam standard)` · `Chinese lantern or china ball on a boom for a moving key` · `LED panels and tubes, colour-mixed on a console` · `Day for night` · `Night exterior with a Musco/condor moonbox` · `Firelight, TV or candlelight effects flicker` · `Interactive lighting for VFX (matched to a plate or LED wall)` · `Pre-rigged overhead for 360-degree shooting (no turnaround)`
+
+**Eyeline references for a single** — 10 options
+
+`The other actor, live, off camera` · `The other actor on a monitor or remote feed` · `A stand-in reading the lines` · `The script supervisor reading the lines` · `The director reading the lines` · `A taped mark on a stand` · `A tennis ball or a piece of tape on a C-stand` · `An eyeline device — a lamp or an on-axis reference near the lens` · `Nothing — the actor is told where to look` · `An LED wall or projection showing the actual background`
+
+**Continuity capture methods** — 11 options
+
+`Lined script (vertical lines per setup, on/off camera)` · `Facing-page editor's log per take` · `Daily progress report (scenes, eighths, setups, times)` · `Continuity stills per setup, per character (iPad/digital, historically Polaroid)` · `Prop and dressing state notes` · `Wardrobe continuity book kept by the costume supervisor` · `Hair and makeup continuity photos per look per story day` · `Timing the scene with a stopwatch against the script's estimate` · `Software capture (ScriptE, Scenechronize) exporting to editorial` · `Camera and sound reports cross-referenced` · `Video assist recordings of every take`
+
+**Multi-camera taping-night choices** — 12 options
+
+`Full run of the scene, all four cameras, take one` · `Second full take for safety` · `Pickup from a named line` · `Alt joke from the writers' table, shot immediately` · `Reset and go again because the audience did not laugh` · `Move on because the audience is cooling` · `Shoot a tag or button separately` · `Swing to the next set while the audience is held` · `Wild lines after the audience leaves` · `Hold a scene for a post-audience pickup` · `Send a scene to a pre-shoot (minors, animals, effects, exterior)` · `Tape a scene twice with different endings and choose in the edit`
+
+**Dailies delivery routes** — 10 options
+
+`On-set DIT dailies to a local drive for same-night viewing` · `Dailies house overnight, colour-corrected, Avid media plus proxies` · `Direct-to-editorial transcode by the assistant editor` · `Secure streaming review (PIX, Moxion, Frame.io) with forensic watermarking` · `Screening room projection with director, DP and editor` · `Film lab processing and a print screening (film origination)` · `Courier or shuttle drive from a distant location` · `Cloud upload from location over a bonded connection` · `Studio and network executive access feed` · `No dailies review at all (director defers to the monitor on set)`
+
+**What to do with a moment that did not work** — 11 options
+
+`Go again now, while everything is standing` · `Adjust and go again (new direction, new blocking, new lens)` · `Take a safety and move on` · `Cover the moment from another angle instead` · `Pick it up at the end of the day from the same setup` · `Schedule a pickup day later in the shoot` · `Fix it in the edit — cut away, use a different take's line` · `Fix it with ADR` · `Fix it with VFX (paint-out, face replacement, comp)` · `Add it to the reshoot list for additional photography` · `Accept it — the scene is done`
+
+**Crew call structures** — 11 options
+
+`Unified call — everybody at once` · `Staggered calls by department` · `Pre-call for rigging grip and electric` · `Pre-call for construction or paint` · `Pre-call for hair, makeup and prosthetics` · `Split call (part of the crew for a night unit)` · `On hold (paid, not called)` · `Travel call (distant location)` · `Second unit called separately` · `Rigging crew on a different location entirely (pre-light tomorrow)` · `Skeleton crew for an insert or plate`
+
+**Weather responses on an exterior day** — 11 options
+
+`Shoot it — the weather matches what is already shot` · `Wait it out (crew holding, clock running)` · `Move to a cover set (interior, dressed and standing)` · `Flip the schedule — shoot a scene that suits this weather` · `Wet down the street so the change is invisible` · `Shoot into the weather and match it in the remaining scenes` · `Deploy rain towers, wind machines or snow to force continuity` · `Use a 12x12 or overhead silk to hold consistent light` · `Shoot tight so the sky is out of frame` · `Call a weather day and go home` · `Push the scene to the weather-cover day in the schedule`
+
+**Insert and pickup unit configurations** — 10 options
+
+`Main unit shoots it at the end of the setup` · `Splinter unit — B camera crew working nearby` · `Second unit with its own director and 1st AD` · `Insert stage days, batched later` · `VFX plate unit` · `Stunt unit under the stunt coordinator` · `Aerial unit` · `Underwater unit` · `Motion control unit` · `Pickup day with the main unit reassembled`
+
+### What gets got wrong
+
+- The unit of the shooting day is the SETUP, not the page and not the scene. Time is spent moving and relighting the camera; a 3-page dialogue scene covered in 6 setups is faster than a half-page fight covered in 14. Any engine that converts pages directly to hours will produce a day that feels nothing like a real one.
+- Crew call is not shooting call. First shot on a well-run stage day lands 45-90 minutes after crew call; on a location day with a base camp walk it can be two hours. The gap is a measurable quality of the 1st AD, and it is the first thing on the production report.
+- Meal penalties and turnaround penalties are per-person and hit the entire company at once. They are cliff costs, not gradients — crossing the sixth hour by one minute bills a hundred and twenty people. Model them as a step function with the headcount as the multiplier, or the AD's most agonising decision becomes trivial.
+- Overtime is not linear. Under the IATSE Basic Agreement studio terms it is time and a half after 8 hours, double time after 12 worked, and (2024 terms, productions starting principal photography on or after Aug 4 2024) triple after 15 elapsed. Hour 16 costs roughly three times hour 8 per head, which is why the martini shot is a financial decision.
+- Turnaround is the mechanism that turns one bad day into a bad week. It is computed per person from their own dismissal, so the 2nd AC who offloaded media for 90 minutes after camera wrap has a different tomorrow from the gaffer who left at wrap. Per-person clocks, never a production-wide one.
+- Lighting for the turnaround is the single decision that separates the look of film from the look of television. TV lights so the reverse costs ten minutes; features light so the reverse costs an hour and looks better. If the engine does not model lighting state reusability from the opposing angle, it cannot represent the actual difference between the two mediums.
+- Multi-camera television inverts the whole loop. The week IS the production and the taping night is assembly; coverage is decided in writing days before on camera cards; there is no turnaround and effectively no relighting; the script changes daily in response to a live audience; and the audience's energy decays measurably over the night. Treating it as 'film with four cameras' is the error the domain most invites.
+- On TV the director does not own the cut — the showrunner does. Circled takes are advisory, dailies notes come from the showrunner and the network, and the director's leverage over what ends up on screen is a fraction of a feature director's. The same on-set choice has a different downstream consequence depending on which medium the player is in.
+- Defects must be discovered late or the simulation is dishonest. Soft focus, a boom shadow, a hair in the gate, an unusable sound track and a broken eyeline should be invisible on set and surface in dailies, where the cost of fixing them depends on whether the set, the weather and the cast still exist. That deferred-discovery window is what makes the gate check, the playback and the safety take worth their minutes.
+- Resets are a hard constraint, not a soft one. There are four identical cakes, six squibs and two unbloodied shirts. When the reset budget hits zero the setup ends regardless of whether the performance landed. Most film games model takes as infinite; real sets do not.
+- Continuity travels by STORY day and scene adjacency, not by shooting day. An error only matters if the mismatched shots can end up adjacent in the cut, which is why the script supervisor's judgement is a real skill rather than a checklist.
+- Child performers' clocks override every other consideration, including the director, the weather and the money. Under California rules a minor needs three hours of schooling in a work day, deliverable in increments of no less than twenty minutes, with roughly ten students per studio teacher, and the teacher can stop the shot. Any multi-cam taping with a minor in it forces a pre-shoot.
+- What the player experiences depends entirely on which of the three people they are. As the actor, the day is mostly waiting — a chair call at 5:30, three setups before lunch, an hour in the trailer between each, and perhaps fifteen minutes of actually acting. As the mother running the company, the day is the hot cost report and a phone call at 4pm. As the father running the lot and the production side, it is stage occupancy, a bond's opinion, and whether the day was made. The same events, three completely different loops.
+- A stage day and a location day differ in their failure modes, not just their scenery. A stage cannot lose the light, cannot be shut down by a neighbour, and can pull a wild wall; a location cannot do any of those and can lose two hours to a permit curfew. Model the attributes (clear height, power, noise floor, permit hours, parking distance, wild walls) and the difference emerges; label the days 'stage' and 'location' and nothing changes.
+- Sound is where the day's invisible money is lost. A flight path over a location costs a cut every ninety seconds, and each cut is a take. Ambient noise, reverberation and boom reach should be per-location, per-setup numbers that determine whether a scene is finished on the day or scheduled into ADR weeks later at an actor's day rate.
+- Figures that are estimates and are marked as such: takes per setup (2-4 TV, 3-6 feature), setups per day (15-25 studio feature, 30-50 TV hour), 65mm and IMAX magazine run times, base-camp-to-set walk times, and typical taping-night length (3-5 hours). Figures verified against published sources: SAG-AFTRA meal penalties and the Jul 1 2026 increase to $75 per half hour from the fifth half hour ($15 background); SAG-AFTRA rest periods (12 hours studio zone, reductions to 11 or 10 as specified, 56-hour weekly) and the day-performer forced-call penalty of the daily rate or $900, whichever is less; IATSE 10-hour daily rest, 54-hour weekend rest after a five-day week, and the overtime escalators above; the six-hour meal deadline with a 12-minute grace and a further 30 minutes on the second meal, plus the 20-penalties-per-week rule; ARRIRAW 4.6K Open Gate at ~33.4 GB/min and ~56 minutes on a 2 TB Codex Compact Drive; 35mm 400 ft at ~4 min 26 s and 1000 ft at ~11 min at 24 fps; California SB 132's safety advisor requirements effective Jan 1 2025 with the pilot programme from Jul 1 2025; and California's three-hours-of-school and 10:1 studio teacher rules.
+
+---
+
+## 16. Stunts, special effects, creatures and visual effects
+
+### Action and hazard breakdown
+
+Every scene parsed and tagged for stunts, SFX, VFX, firearms, animals, water, aerial, minors, heights. Tags drive breakdown sheets, required personnel, permits, and which Safety Bulletin attaches to the call sheet.
+
+- **Who.** 1st Assistant Director (with Stunt Coordinator, UPM, Script Supervisor)
+- **Decides.** Which beats are tagged 'stunt' versus 'actor performs own action'; whether to flag early (prep cost) or late (overtime and reshoot risk); which hazards get a written notification.
+- **Engine.** Per-beat hazard vector {height_m, speed_kph, fire, water_depth_m, firearm, animal, vehicle_mass_kg, crowd_n}. Tag-to-requirement lookup table. An untagged hazard raises incident probability and Cal/OSHA citation exposure.
+- **Takes.** 2-5 days at prep start, re-run on every colored script revision
+- **Television.** Episodic re-breaks each episode inside a 7-8 day prep; a stunt tagged in a white script delivered Thursday may shoot nine days later, so the coordinator is hired for the season, not the gag.
+
+### Stunt Coordinator engagement and department build
+
+Coordinator hired, often doubling as 2nd Unit Director. Builds Assistant Stunt Coordinator, riggers, stunt doubles, utility and non-descript stunt performers. SAG-AFTRA Stunt Coordinator scale is $1,246/day, $4,646/week (7/1/25-6/30/26).
+
+- **Who.** Stunt Coordinator (engaged by Director, UPM and Producer; on the player's mother's company, she signs it)
+- **Decides.** Which coordinator (specialty: fights, driving, wire, water, fire); whether they also direct 2nd unit; daily, weekly or flat-deal terms; crew size.
+- **Engine.** Coordinator entity with per-discipline skill values, a safety record, a loyal performer roster, a rate, and availability. Specialty mismatch lengthens rehearsal, lowers gag quality and raises incident rate.
+- **Takes.** Hired 6-12 weeks before principal on an action feature; 1-3 weeks on episodic
+- **Television.** A series carries one coordinator all season; features hire per picture and may run two coordinators across main and 2nd unit.
+
+### Action design and stunt-vis
+
+The sequence is designed beat by beat (geography, who wins each exchange, camera). Pitched as stunt-vis: real performers on mats in a warehouse, shot and cut; or as previs animation; usually both.
+
+- **Who.** Stunt Coordinator / Stunt Designer with Previs Supervisor and Director
+- **Decides.** Beat count, the practical-to-digital handoff points, whether to pitch with real bodies or CG, how many rehearsal days to buy, whether to show the studio.
+- **Engine.** Sequence graph of beats each carrying (difficulty, risk, cost, screen-seconds, required discipline). Director approval model scoring clarity and coverage. Approval locks the resource requirement list that prep then buys.
+- **Takes.** 2-8 weeks; a major set piece is 3-10 rehearsal days plus a cut
+- **Television.** Rarely funded in TV outside a pilot or a season finale; most episodic action is designed in a single rehearsal day.
+
+### Fight choreography and rehearsal
+
+Choreography taught in a rehearsal space and drilled to performance speed. Edged, piercing and projectile props follow Safety Bulletin #30. Actors learn their portion; doubles learn all of it.
+
+- **Who.** Fight Coordinator / Stunt Coordinator, Stunt Performers, cast
+- **Decides.** Style (boxing, Muay Thai, HEMA, gun-fu, wire wuxia, brawl), moves per take, camera-facing angles, how much the lead actor does, whether to shoot at 24 or overcrank.
+- **Engine.** Per-performer combat skill that rises with rehearsal hours and decays with time off. Move-count versus take-length versus error probability. Injury roll per repetition. 'Lead does own fight' flag frees camera angles and raises the insurance premium.
+- **Takes.** 2-6 weeks for a lead in a martial film; 1-2 days for a background scuffle
+- **Television.** TV rehearses on the shooting day or the night before; the fight is designed to be shootable in 6-10 setups.
+
+### Stunt casting, doubling and matching
+
+Doubles matched on height, weight, build, skin tone and hair. SAG-AFTRA policy bars 'paint-down' and 'wigging' - performers must match the actor's race and gender.
+
+- **Who.** Stunt Coordinator with Costume Supervisor, Hair Department Head and SAG-AFTRA
+- **Decides.** Who doubles whom; how many utility and non-descript stunt performers; hiring off the coordinator's roster versus an open call; importing a specialist versus a local hire.
+- **Engine.** Performer database with anthropometrics, discipline skills, availability, rate, fatigue and injury state. Match score sets how much of the double can be shot head-on before a face replacement shot is required.
+- **Takes.** 1-4 weeks
+- **Television.** Series doubles carry across episodes; a mid-season conflict forces a rematch and re-shoots of any reveal angle already cut.
+
+### Rig design and engineering sign-off
+
+Wire rigs, truss, beam clamps, deadman anchors, load-rated shackles and pulleys. Working load limits with 5:1 to 10:1 safety factors. A written rig plan; a stamped drawing when stage roof loads are involved.
+
+- **Who.** Stunt Rigger, Key Rigging Grip, sometimes a licensed structural engineer
+- **Decides.** Anchor points, wire and rope spec, safety factor, whether to pay for an engineer's stamp, whether the stage grid can take the load or the rig must be ground-supported.
+- **Engine.** Rig object: anchors, span, angle, dynamic load = mass x g x shock factor. Stage entity carries point load and distributed load limits. Exceeding WLL triggers a failure roll. Engineer sign-off lowers failure odds and satisfies the insurer.
+- **Takes.** 1-5 days per rig; 1-2 weeks for a flying sequence
+- **Television.** TV reuses a standing rig on a standing set across the season; the engineering is amortized once.
+
+### Wire work and flying
+
+Performer in a sit, waist or full-body harness, flown by hand-pull teams, electric winches, descenders or a multi-axis flying rig. Wire gauge chosen against load and visibility.
+
+- **Who.** Stunt Rigger, Stunt Coordinator, wire pullers or winch operator
+- **Decides.** Hand-pull versus motorized; one, two or four point; harness type; wire gauge; whether wires are hidden by frame and costume or removed in post.
+- **Engine.** Wire count sets control precision and removal cost. Gauge x distance x plate resolution gives pixel width, which converts directly to comp hours. Pull-crew mass versus performer mass caps achievable acceleration.
+- **Takes.** 1-2 hours per rig setup, 2-6 takes per hour
+- **Television.** Series wire work is usually two-point and short; features build bespoke multi-axis rigs.
+
+### High falls
+
+A freefall onto a vented airbag or a cardboard box rig, or a controlled descent on a fan descender or decelerator. Spotters, a clear landing zone, a medic and an ambulance on standby.
+
+- **Who.** High-fall performer, Stunt Coordinator, Stunt Rigger (Safety Bulletin #18 governs air bags, boxes and freefall catch systems)
+- **Decides.** Method (airbag, boxes, decelerator, ratchet-assisted, dummy, digital double), height, take count, whether to shoot it at all versus build the fall in CG.
+- **Engine.** Impact velocity v = sqrt(2gh); bag depth and vent rating give deceleration in g. Performer skill gated against height. Hard cap of one to three takes per performer per day. Wind speed gate. Bag and boxes in frame become paint-out shots.
+- **Takes.** Half a day to rig, 1-3 takes
+- **Television.** Episodic tops out far lower; anything above roughly 20 feet in TV is usually a digital double.
+
+### Ratchets, jerk-backs and air rams
+
+A pneumatic ratchet yanks a harnessed performer on a cable to sell an impact; an air ram launches a body; mini-tramps, teeterboards and descenders do the same job at smaller scale.
+
+- **Who.** Stunt Coordinator, Special Effects Technician (air), Stunt Performer
+- **Decides.** PSI, cable length, pull direction, landing surface (crash mats, sand, pads), whether it's a performer or a dummy, how many takes before the body is done.
+- **Engine.** PSI-to-velocity curve, travel distance, landing pad absorption coefficient. Injury probability rises steeply outside the calibrated envelope. Pads visible in frame create paint-out work. Per-performer fatigue reduces landing accuracy.
+- **Takes.** 1-3 hours per rig
+- **Television.** Standard episodic tool; usually the cheapest convincing impact available.
+
+### Fire burns
+
+Partial burns (arm, back, hand) or a full burn. Protective gel under Nomex layers and a hood, oxygen supply, burn time counted out loud, an extinguishing crew with CO2 and blankets standing over the performer.
+
+- **Who.** Stunt Coordinator, burn performer, licensed pyrotechnic operator, Fire Safety Officer / standby fire marshal
+- **Decides.** Burn seconds, coverage, fuel type, take count, whether the face is exposed (which buys a digital face replacement shot), whether to use a burning dummy instead.
+- **Engine.** Burn-seconds budget per performer per day. Gear layers give a thermal margin; exceeding it is an injury. Fire officer presence is a required flag. Exposed-face burns add face replacement shots at a known per-shot cost.
+- **Takes.** 30-60 minutes prep per burn; the burn itself runs 5-25 seconds
+- **Television.** Full burns are rare in episodic; partial burns and CG fire carry the load.
+
+### Precision and stunt driving
+
+Slides, drifts, reverse 180s, near-misses, convoy and pursuit work. Road closures, intersection control, chase mapping, safety vehicles, spotters at every cross street.
+
+- **Who.** Precision Driver / Stunt Driver, Picture Car Coordinator, Stunt Coordinator (Bulletins #8, #20, #37, #43)
+- **Decides.** Speeds, gaps between cars, car count, closure footprint and hours, driver skill tier, restraint type in the picture car, whether an actor free-drives.
+- **Engine.** Per-car mass, grip coefficient by surface (dry, wet, dirt, gravel), top speed. Driver skill versus required tolerance gives a hit/miss roll per take. Each crash consumes a picture-car unit. Closure permit is an object with an area, an hour window and a cost.
+- **Takes.** 1-4 hours per setup; a full chase is 3-15 shoot days
+- **Television.** TV chases are shot in pieces across days on a backlot or a single closed block, then stitched.
+
+### Alternative driving systems
+
+The actor appears to drive while a professional drives from a roof pod or a towed 'biscuit' rig; or the car sits on a low-loader or process trailer; or it sits in an LED volume playing drive plates.
+
+- **Who.** Picture Car Coordinator, Precision Driver, Stunt Coordinator (Bulletin #42)
+- **Decides.** Pod versus biscuit versus low-loader versus poor-man's process versus LED volume versus greenscreen; whether hands must be seen on the wheel; who really drives.
+- **Engine.** Method determines rig removal cost (a roof pod is a large paint-out), achievable speed, permitted camera angles, and whether reflections and interactive light are real or must be created.
+- **Takes.** 2-4 hours to rig, then shot at normal pace
+- **Television.** Volume and process trailers dominate TV because they are schedulable and weatherproof; features still chase real roads.
+
+### Vehicle destruction: cannon rolls, ramps, jumps
+
+A nitrogen cannon fires a piston through the floorpan to flip a car; a pipe ramp barrel-rolls it; ramps and ballast throw it. Cage, fuel cell, battery cut-off, ballast placement, a single chance.
+
+- **Who.** Special Effects Coordinator (cannon), Stunt Driver, Stunt Coordinator
+- **Decides.** Charge size, ramp angle and approach speed, ballast and weight distribution, driver in the car versus remote control, whether to build a duplicate car for a second attempt.
+- **Engine.** Single-use event with a landing-mark hit probability and an outcome distribution (clean roll, under-rotation, over-travel). Cost equals car plus cage plus cannon build plus prep days. No reset exists without a duplicate vehicle and a second prep day.
+- **Takes.** 2-5 days of prep, one take
+- **Television.** Almost always CG or stock in episodic; the prep days are what TV cannot afford, not the car.
+
+### Aerial work: helicopters, fixed wing, drones, wirecam
+
+Camera ships with gyro-stabilized gimbals; an FAA-approved Motion Picture and Television Operations Manual plus a waiver for low-altitude and close-formation work; drones under 14 CFR Part 107 with waivers for operations over people, at night, or multiple aircraft per pilot.
+
+- **Who.** Aerial Coordinator, Pilot in Command, Aerial DP, UAS Remote Pilot (Bulletins #3, #3A, #11, #11A, #29, #36)
+- **Decides.** Platform (helicopter, fixed wing, heavy-lift drone, FPV, wirecam, techno crane), stand-off distance, altitude, number of flight hours bought, whether to apply for a waiver at all.
+- **Engine.** Platform attributes: max speed, min altitude, endurance minutes, payload kg, camera compatibility. Weather gates on ceiling, visibility and wind. Waiver as a permit object with a real lead time. Flight hours burn per take and refuel time is dead unit time.
+- **Takes.** Waivers 30-90 days lead (estimate); flying 2-6 hours per day
+- **Television.** TV buys drones and a day of helicopter for the main title and establishers; features build dedicated aerial units.
+
+### Water work and diving
+
+Dive tanks, horizon tanks, open water and dry-for-wet. Breath-hold or supplied air, safety diver ratios, water temperature and turnover, recompression planning, a hyperbaric contingency.
+
+- **Who.** Dive Supervisor, Safety Divers, Marine Coordinator, Stunt Coordinator (Bulletins #7, #15, #17)
+- **Decides.** Tank versus open water versus dry-for-wet; water temperature; breath-hold versus regulator or hookah; safety diver count; how deep the build goes.
+- **Engine.** Water temperature gives a per-person exposure timer and a forced warm-up period. Visibility drives lighting and lens choice. Safety diver ratio is a hard requirement. Dry-for-wet converts the cost into a VFX line and a stage-atmos line.
+- **Takes.** Tank days run 10-12 hours with hard in-water limits per performer
+- **Television.** TV uses tanks on the lot and dry-for-wet; open water is a feature luxury that loses days to swell and light.
+
+### Animal action
+
+Trained animals worked to behaviors, with script pre-review and on-set monitoring if the production wants the end-credit certification. Venomous reptiles and indigenous wildlife have their own protocols.
+
+- **Who.** Animal Coordinator / Head Wrangler, American Humane Certified Safety Representative (Bulletins #6, #12, #31)
+- **Decides.** Real animal, trained animal augmented in CG, full CG, or animatronic; whether to invite American Humane; how many behaviors to attempt.
+- **Engine.** Animal entity with a list of trained behaviors, a working-time cap per day, heat and cold gates, and a handler ratio. A behavior not on the list must be split across shots or be CG. The monitor can halt the day.
+- **Takes.** Roughly 4-6 hours of working time per animal per day (estimate)
+- **Television.** Series animals become recurring cast with continuity problems; doubles for a dog are matched like an actor's.
+
+### Safety meeting and hazard notification
+
+A documented meeting before any stunt or effect, with a signature sheet and the relevant Safety Bulletin attached to the call sheet. California SB 735 adds state firearms rules from 1/1/2025 and a Safety on Production pilot from 7/1/2025 tied to the tax credit.
+
+- **Who.** 1st Assistant Director runs it; Stunt Coordinator, SFX Coordinator, Studio Safety representative, Safety Advisor where required
+- **Decides.** Whether to hold it properly, who attends, whether to walk the gag, whether to run a dry rehearsal, whether to hire a safety advisor before the law forces it.
+- **Engine.** safety_meeting_quality in 0-1 multiplies incident probability. Skipping it converts any incident into a citation and a civil claim. California tax-credit recipients need a safety advisor risk assessment on file or the credit is at risk.
+- **Takes.** 10-30 minutes; a full walkthrough is 1-2 hours
+- **Television.** Identical in law; in practice the episodic schedule pressure makes this the first thing compressed, which is exactly where the sim should bite.
+
+### Stunt day execution loop
+
+Block, light, dry rehearse, rehearse at speed, clear the set, roll cameras, 'we're going for one', reset. Hot set cleared, fire lanes kept, ambulance staged, a stop-work right for everyone present.
+
+- **Who.** 1st AD, Stunt Coordinator, Director, Set Medic, Fire Safety Officer
+- **Decides.** How many takes to ask for, whether to ask for one more, how many cameras to put on it, whether to accept the first one that worked.
+- **Engine.** Per-take fatigue on performers; success probability falls with fatigue and rises with rehearsal hours. Reset time by gag type. Camera count sets the probability the gag is usably covered. 'One more' costs coordinator relationship.
+- **Takes.** Reset from 20 minutes (a fight beat) to 4 hours (a car flip)
+- **Television.** Episodic gets one or two attempts because the day has 30 other setups; features will burn a whole day on a gag.
+
+### Stunt adjustments and hazard pay
+
+Stunt performers earn scale plus a per-gag 'stunt adjustment' negotiated against risk, with contractual premiums for night, water, smoke and hazardous conditions. Scale day rate 7/1/25-6/30/26 is $1,246.
+
+- **Who.** Stunt Coordinator negotiates; Production Manager and Payroll process; SAG-AFTRA enforces
+- **Decides.** Adjustment size per gag, how many performers get bumped, whether to argue with the coordinator's number, whether to pay above market to secure a specialist.
+- **Engine.** adjustment = f(risk_tier, performer_leverage, coordinator_relationship, precedent set earlier on the show). Underpaying damages the roster's willingness and the coordinator relationship; overpaying eats contingency and sets a precedent for the rest of the schedule.
+- **Takes.** Negotiated in prep or on the day
+- **Television.** A season-long show sets a precedent in episode 2 that it pays for in episode 19.
+
+### Incident, injury and stop-work
+
+An injury triggers treatment, an incident report, a possible Cal/OSHA reportable event, a studio investigation, a possible shutdown, and in the worst case a criminal referral and a project that never finishes.
+
+- **Who.** Set Medic, 1st AD, Studio Safety, Cal/OSHA, the insurer, the completion guarantor
+- **Decides.** After the fact: disclose fully or minimize, keep shooting or stand down, recast or go digital, how to handle the press and the crew.
+- **Engine.** Severity roll to days lost, permanent performer state change, insurance claim, premium change, regulator investigation timer, press heat value, and a branch where the picture is taken over or abandoned. A fatality is career-altering for all three player seats.
+- **Takes.** Minutes to years
+- **Television.** A series can shut down mid-season and burn its airdate pattern, which costs the network far more than the day.
+
+### SFX bid and department build
+
+The coordinator reads the script, bids every gag, staffs technicians, builds or rents the SFX truck and shop, and obtains the licenses and permits the gags require.
+
+- **Who.** Special Effects Coordinator (with SFX Foreman and technicians), hired by the UPM
+- **Decides.** Which coordinator, crew size, shop build days, build versus rent, how many gags to prep in parallel, which gags to talk the director out of.
+- **Engine.** Gag list to labor days x crew rate plus materials plus rentals. Shop capacity caps parallel prep. Licensed operator requirement gates pyro and open flame entirely, so an unlicensed hire simply cannot execute certain gags.
+- **Takes.** 4-10 weeks of prep on a feature
+- **Television.** A series keeps a small continuing SFX crew and adds day players for big episodes; the same rain rig gets reused all season and is amortized.
+
+### Atmospherics: smoke, haze, fog, dust
+
+Glycol and glycerin hazers, cracked oil, water-based fog, dry ice or liquid nitrogen low-fog, bee smokers for a pocket, Fuller's earth for dust. Requires ventilation, cast notification, SDS on file and exposure monitoring.
+
+- **Who.** Special Effects Technician (atmosphere), with the DP and Gaffer (Bulletins #10 and #10A)
+- **Decides.** Medium, density, hold time, fan placement, notification of cast with respiratory conditions, whether the atmosphere is practical or added in post.
+- **Engine.** A density value that makes light beams visible (a direct lighting dependency), decays with time and HVAC, and must be refilled. Exposure timers per person. Exterior wind cancels it entirely. Density continuity drift across a day is the real failure.
+- **Takes.** Refill every 2-10 minutes on an interior; matching across a day is the hard part
+- **Television.** Standing sets get a hazer as a permanent fixture and a look; features re-establish density every setup.
+
+### Rain
+
+Rain towers and standpipes, rain bars on scaffold, sprinkler heads, wet-downs, a water truck and pump supply, drainage and reclamation, water use and discharge permits.
+
+- **Who.** Special Effects Coordinator and water technicians, with Locations and the fire department
+- **Decides.** Coverage area, intensity, wet-down depth, whether the sky sees rain or only the ground, backlight placement, whether to add CG rain instead.
+- **Engine.** Coverage in m2 drives pumps, hose runs, gallons per minute and truck refills. Rain only reads with backlight and the right shutter, so it is a lighting dependency. Actors carry a wet-down continuity state with a hair and makeup reset per take. Cold water starts an exposure timer.
+- **Takes.** 3-8 hours to rig; 5-15 minute reset per take
+- **Television.** TV rains on a small pool of coverage and cheats the rest with wet-down and a rain bar at the lens; features rain whole streets.
+
+### Snow and ice
+
+Layered snow: a base (foam, paper, salt, cellulose), falling snow (paper, foam, plastic), blankets, dressing snow, wax or resin icicles, and either a cold stage for visible breath or CG breath.
+
+- **Who.** Special Effects Coordinator and snow technicians
+- **Decides.** Material per layer, coverage acreage, whether breath is real (refrigerated stage) or added, what gets raked between takes, biodegradable versus plastic.
+- **Engine.** Material gives cost per m2, persistence under heat and wind, camera reflectance, and environmental permit exposure. Footprints are a continuity object that must be raked, which is reset time. Coverage acreage x material cost is a large, legible number.
+- **Takes.** Dressing an exterior street is 1-3 days; falling snow resets every take
+- **Television.** A Christmas episode buys a block of snow for one or two days; a feature snowbound act dresses a location for weeks.
+
+### Wind and storm
+
+Ritter-type fans from 25 to 100 hp, squirrel cages, jet fans, debris blowers for leaves and paper, usually combined with rain and atmospherics to build a storm.
+
+- **Who.** Special Effects Technician (wind) with Grip (Bulletin #38 inclement or severe weather)
+- **Decides.** Fan count, size and distance, debris load and type, how much wind the hair and costume can survive, whether the wind is felt or seen.
+- **Engine.** Fan power and distance give a wind speed at the mark. Wind speed gates crane use, wire work, balloon and drone flight, and bends rain trajectory. Fan noise destroys the production sound floor, which spawns ADR downstream.
+- **Takes.** 1-3 hours to rig
+- **Television.** Identical hardware; TV buys one fan and points it at the actor's hair.
+
+### Breakaways
+
+Sugar glass and resin ('candy') glass for bottles, windows and panes; breakaway balsa furniture; breakaway walls, doors and floors; multiples built for the expected take count.
+
+- **Who.** Special Effects Coordinator, Prop Maker, breakaway fabricator
+- **Decides.** Material (sugar, resin, tempered glass with CG shatter, all CG), number of duplicates, whether the break is practical or simulated, lead time to fabricate.
+- **Engine.** Breakaways are consumables: take count is hard-capped by units built, and running out mid-scene ends the day's coverage. Reset time per unit. Sugar glass has a shelf life and fails in humidity; resin costs more and survives heat and travel.
+- **Takes.** 1-3 weeks of fabrication lead
+- **Television.** TV orders three; features order thirty and still run out on the fourth take of the master.
+
+### Squibs, bullet hits and blood
+
+Electric-match squibs with blood packs under scored wardrobe, non-explosive nitrogen or pneumatic hit rigs, air blood guns, spark and dust hits, concrete and glass hit plates, bullet-hole set dressing.
+
+- **Who.** Special Effects Coordinator (licensed), Costume Supervisor, Key Makeup Artist
+- **Decides.** Explosive squib versus pneumatic versus fully CG hit; hit count; blood viscosity and colour; blast plate under the wardrobe; how many duplicate costumes exist.
+- **Engine.** Each hit is a single-use consumable with rig time and a required wardrobe duplicate. Duplicate count hard-caps takes. Practical hits force a full costume and makeup reset cycle. CG hits move the money into per-hit comp work with a known unit price.
+- **Takes.** 30-45 minutes to rig a body for three hits; reset is a full change
+- **Television.** Most episodic television now shoots the hit dry and adds it in post, trading SFX cost for a VFX shot count.
+
+### Firearms and blanks
+
+Rubber, resin, non-firing and blank-firing weapons; blank loads by charge; no live ammunition; California from 1/1/2025 requires permits, federal documentation and training for handlers and bans ammunition on set except under prescribed conditions.
+
+- **Who.** Armorer / Weapons Master under the Property Master, with the 1st AD (Bulletins #1 and #2; California SB 735)
+- **Decides.** A show-wide firing versus non-firing policy; blank load; cold-gun call procedure; whether muzzle flash, shell ejection and recoil are practical or added in post.
+- **Engine.** Weapon objects with fires_blanks, load, flash size, shell ejection and recoil, feeding an on-camera realism score. A non-firing policy adds N VFX shots at a per-shot price. A compliance state gates whether you may shoot in California at all; violation opens the shutdown and litigation branch.
+- **Takes.** 1-2 hours of armorer prep daily plus a briefing before each use
+- **Television.** Same law; a series with weekly gunplay pays the compliance cost 22 times, which makes the non-firing policy economically obvious in TV before it is in film.
+
+### Pyrotechnics
+
+Mortars, gas bombs, det cord, flash pots, spark hits, air mortars throwing debris. Each event needs a permit from the authority having jurisdiction, a measured exclusion zone, and camera protection inside the radius.
+
+- **Who.** Pyrotechnic Operator - Special Effects (California State Fire Marshal First, Second or Third Class), Fire Safety Officer (Bulletins #13, #16, #19)
+- **Decides.** Charge type and mass, number of charges, exclusion radius, who stays inside it, day or night, whether there is any possibility of a reset.
+- **Engine.** Charge mass maps to fireball diameter, duration and heat radius. Exclusion radius must exceed every crew position or an injury roll fires. Permits are objects with lead times and an inspection gate. Cameras inside the radius are consumables that can be destroyed.
+- **Takes.** Rig 4 hours to 3 days; one take; reset a day or more
+- **Television.** Episodic uses flash pots, sparks and CG; full gas bombs are a feature and premium-limited-series item.
+
+### Large-scale burns and flame effects
+
+Flame bars, propane accumulators and manifolds, fire trenches, burning sets and vehicles, flamethrowing devices. In California a First Class Special Effects licence with a DOJ certificate of eligibility serves as the flamethrower permit.
+
+- **Who.** Special Effects Coordinator with a licensed pyrotechnic operator and fire department standby
+- **Decides.** Propane volume, bar layout, burn duration, whether the set is protected or destroyed, how many fire engines stand by, air-quality and neighbour exposure.
+- **Engine.** Propane supply converts to total burn-minutes available that day. Set objects carry a destroy flag that makes re-shooting impossible. Fire department standby is an hourly cost. Heat-distance model for crew and camera. Smoke plume triggers air quality and permit consequences.
+- **Takes.** 1-5 days to rig; the burn window is minutes to hours
+- **Television.** A backlot burn on the father's lot is a schedulable asset; location burns need a permit chain TV rarely has time for.
+
+### Mechanical effects: gimbals, motion bases, collapsing sets
+
+Two to six axis hydraulic or electric gimbals for ships, aircraft and vehicles; tilting rooms; shaker rigs; rigs that drop a floor, collapse a wall or shear a staircase on cue.
+
+- **Who.** Special Effects Coordinator with the Construction Coordinator (Bulletin #41 gimbals)
+- **Decides.** Gimbal size, axis count and payload; programmed motion versus a live operator; whether the room moves or the camera does; the number of collapse rebuilds afforded.
+- **Engine.** Gimbal entity with payload kg, maximum degrees, maximum rate and repeatability. Programmed motion yields repeatable takes and exportable data for the CG camera. Set weight versus payload is a hard gate. Crew on the gimbal require harnesses and a stop procedure.
+- **Takes.** Install 2-7 days; every move recalibrated after a set change
+- **Television.** A series gimbal lives under a standing set for a season; a feature builds and strikes it.
+
+### Prosthetic and special makeup effects
+
+Lifecast, sculpt, mould, run in foam latex, platinum silicone, encapsulated silicone or gelatin; seam, paint, punch hair; apply daily and remove. Contacts, dentures and bald caps included. Blood handling follows Bulletin #24.
+
+- **Who.** Prosthetic / Special Makeup Effects Designer, mould maker, foam or silicone runner, painter, hair puncher, applying Key Makeup Artist
+- **Decides.** Material, piece count per character, how many appliance runs to order, application time (and therefore the actor's call time), whether a close-up gets a better piece.
+- **Engine.** Appliances are consumables, typically one set per actor per shoot day, with a lead time to manufacture. Application hours attach to the actor's working day and to turnaround. Material sets a skin translucency score that decides whether close-ups hold or need VFX help. Heat and sweat degrade the piece over hours.
+- **Takes.** Lifecast 2 hours; a lab build 6-20 weeks; application 2-6 hours daily, removal about an hour
+- **Television.** A weekly prosthetic character determines the call sheet all season; TV designs for a 90-minute application because a 4-hour one costs an hour of shooting every day.
+
+### Creature suits and creature performance
+
+A built suit over a performer, often with an animatronic face inside, cooling vests, limited vision and airflow. The performer is cast and trained for the creature's movement, not just its size.
+
+- **Who.** Creature Effects Supervisor, suit performer, suit wrangler and dresser
+- **Decides.** Suit versus mocap versus full CG; performer height and proportion; how much of the suit reaches the screen versus being replaced; how many suits are built.
+- **Engine.** Suit entity with weight, vision restriction and heat load, giving a maximum continuous wear time before a forced break that costs shooting minutes. Performer skill drives believability. A suit that fails in close-up spawns head or face replacement shots.
+- **Takes.** Build 3-9 months; wear stints of roughly 20-40 minutes (estimate)
+- **Television.** Series creatures are engineered for a 12-hour day and repeated weekly wear; feature hero suits are engineered for a handful of days and are often unwearable at that duty cycle.
+
+### Animatronics and puppetry
+
+Servo-driven heads, cable-actuated faces, rod and bunraku puppets, waldo and telemetry control suits, radio control. Puppeteers often work in frame in blue or green suits to be removed later.
+
+- **Who.** Animatronics Designer and Engineer, lead Puppeteer, auxiliary puppeteers, telemetry operator
+- **Decides.** Degrees of freedom, control method (live telemetry, radio, pre-programmed), number of puppeteers, whether rods and operators get painted out or hidden.
+- **Engine.** DOF count sets expressive range and build cost. Live control gives directable, variable takes; programmed control gives repeatability for VFX matching. Every visible operator and rod is a paint-out shot. Servo failure is a downtime event with a repair timer.
+- **Takes.** Build 8-24 weeks; on-set failures cost roughly 15-40 minutes each (estimate)
+- **Television.** TV creature shops build for reliability over expressiveness because there is no time for a repair; features accept fragility for a better face.
+
+### Miniatures and motion control
+
+Scale models from roughly 1:3 to 1:24, shot on a repeatable motion-control rig at high frame rate so the physics scale. Pyro on miniatures, water tanks for miniature ships, multiple passes for fire, smoke and mattes.
+
+- **Who.** Miniature Effects Supervisor, Model Makers, Motion Control Operator
+- **Decides.** Scale, build versus CG, frame rate, number of passes, whether the model is destroyed (one take) or survives.
+- **Engine.** Scale sets the required frame rate at roughly 24 x sqrt(1/scale), which sets light levels and therefore the lighting package. Motion-control moves are stored data that also drives the CG camera later. A destroyed model is a single take unless duplicates were budgeted.
+- **Takes.** Build 6-20 weeks; shoot 1-10 days
+- **Television.** Effectively extinct in episodic; survives in features where a director wants real fire at scale.
+
+### Effects loads on construction and locations
+
+Sets engineered to take water, fire, gimbal or breakaway loads: drainage, fire lanes, sprinkler defeats, tented builds, roof-load capacity, tank access, permits and inspections.
+
+- **Who.** Construction Coordinator, Location Manager, Special Effects Coordinator, and on an owned lot the head of the studio (the player's father)
+- **Decides.** Build the set to survive the gag or to be destroyed; which stage; how many duplicate walls; whether to build on the lot or on location.
+- **Engine.** Stage and set attributes: roof point load, distributed load, drainage, tank, fire rating, water supply, power. A gag requiring an attribute the stage lacks forces a stage move (days plus cost) or a rebuild. Owning the lot means the player can grant or deny themselves the stage.
+- **Takes.** 2-8 weeks of build
+- **Television.** Series sets are built to survive, because they shoot again next week; features build to destroy.
+
+### VFX methodology and first budget
+
+A read-through and a methodology pass on every sequence: what is practical, what is digital, what is hybrid. Produces a first shot count, a first number, and the list of shooting-day implications.
+
+- **Who.** VFX Supervisor (production side) with the VFX Producer
+- **Decides.** Method per sequence; where the practical/digital line falls; target shot count; how much is reserved for invisible fixes, which is always underestimated.
+- **Engine.** Per-sequence method options each carrying cost, stage days, risk and a quality ceiling. Changing method reprices every downstream stage and changes the shooting schedule. This coupling is the department's falsifiable core: change the method and the shoot changes.
+- **Takes.** 2-4 weeks, revised at every draft
+- **Television.** TV VFX counts run higher per dollar and far lower per shot; a series supervisor holds 8-10 episodes at different stages simultaneously and cannot stop for any one of them.
+
+### Shot counting, complexity tiering and the bid book
+
+Every shot broken into tasks (roto, prep/paint, matchmove, layout, animation, FX, lighting, comp), tiered simple/medium/complex, with an assumed version count. Asset builds are priced separately and amortized over the shots that use them.
+
+- **Who.** VFX Producer with VFX Coordinators
+- **Decides.** Tier assumptions, version allowance per tier, what is in-bid versus a change order, which shots to cut before anyone bids them.
+- **Engine.** Shot record {sequence, id, tasks[], tier, bid_hours, assumed_versions, awarded_vendor}. Actual versions consumed versus assumed is the overage engine. Asset amortization spreads a build over a shot count that will change.
+- **Takes.** 1-3 weeks per bid round, several rounds
+- **Television.** TV bids per episode or per block against a season rate card, so tiering is coarser and the version allowance is brutally small.
+
+### Previs
+
+Low-resolution animated sequences built with real lens values, real set geometry, real blocking and timing, cut to a working edit. Used to sell the sequence and to plan the shoot.
+
+- **Who.** Previs Supervisor and Previs Artists (in-house or a house such as The Third Floor, Proof, Halon, Day For Nite)
+- **Decides.** Which sequences get previs, at what fidelity, in-house or outside, whether previs cuts into the editorial reel and whether test audiences see it.
+- **Engine.** Previs sequence as a timed edit carrying camera data (lens, height, move, speed) that flows into techvis, shot count and the shooting schedule. Previs'd sequences shoot measurably faster and overrun less; previs cost is per finished second.
+- **Takes.** 4-20 weeks; roughly 1-3 finished seconds per artist per day (estimate)
+- **Television.** Rare outside pilots and finales; when TV does previs it is usually 'shot-vis' of a single set piece a week ahead.
+
+### Techvis
+
+Previs converted into buildable diagrams: crane arm length and reach, dolly track runs, exact greenscreen dimensions and placement, wire anchor points, LED wall coverage, safe pyro distance, camera height to the frame.
+
+- **Who.** Techvis Artist or Previs Supervisor with the DP, Key Grip, Stunt Coordinator, SFX Coordinator and Construction
+- **Decides.** Whether to techvis at all; how much set to build versus extend; what grip and crane package to order; how big the screen must be.
+- **Engine.** Computes required screen size from lens FOV x subject distance, crane reach from arm geometry, wall coverage from the camera frustum. Techvis'd setups land on the day; untechvis'd ones produce a 'the screen is too small' event costing setups and adding VFX shots.
+- **Takes.** 1-5 days per set piece
+- **Television.** TV techvis is a tape measure and the VFX supervisor's judgement, which is exactly why TV loses setups to undersized screens.
+
+### Postvis
+
+Rough CG composited over shot plates during the edit so the cut can be judged, screened and tested before any final VFX exists.
+
+- **Who.** Postvis team (often the previs vendor), VFX Editor, Editor
+- **Decides.** How much postvis, how polished, whether test screenings see postvis or cards, whether postvis is reused as a comp starting point.
+- **Engine.** Postvis quality feeds test-screening scores and studio confidence, and surfaces cut problems early, reducing late change orders. It costs real money for pixels nobody will see, so it is a genuine gamble the player can decline.
+- **Takes.** Continuous through the editorial period
+- **Television.** TV postvis is often just a temp comp done by VFX editorial in Avid, because there is no time for a separate team.
+
+### Vendor bid, award and the incentive map
+
+Bid packages of script pages, previs, shot lists and turnover assumptions go to vendors; work is awarded by sequence or asset. Territory is chosen partly for incentives: UK AVEC pays 39% on qualifying UK VFX costs from 1 Jan 2025, exempt from the 80% cap; BC PSTC rose to 36% from 1 Jan 2025 with DAVE at 16% and a 2% bonus above $200M BC spend; Australia's PDV offset is 30%.
+
+- **Who.** VFX Producer, Producer, studio VFX executive; the employing company (the player's mother) signs the awards
+- **Decides.** How many vendors, which sequences to which, fixed bid versus time and materials versus cost-plus, territory, holdback for overages, whether to build an in-house unit.
+- **Engine.** Vendor entities with capacity in artist-weeks, per-discipline strength, quality variance, timezone, rate, territory and incentive rate. Award is an assignment problem trading cost, quality and schedule. Splitting an asset across vendors adds a real synchronization cost.
+- **Takes.** A bid round is 3-6 weeks; awards roll from prep into post
+- **Television.** TV awards per block with a season-long vendor of record and 2-6 week turnarounds per episode; a vendor who misses a delivery misses an airdate, which is unforgivable in a way a feature slip is not.
+
+### On-set VFX supervision
+
+Present on the floor: protecting plates, arguing for coverage, calling for clean plates, placing markers, judging screen lighting and spill, recording exactly what happened for the vendor who was not there.
+
+- **Who.** VFX Supervisor (production), VFX Producer, VFX Coordinator, VFX Data Wrangler
+- **Decides.** Whether to spend 30-90 seconds of unit time on a clean plate, how many markers to place, whether to fight the DP over spill or a diffusion filter, whether to shoot an element now or build it later.
+- **Engine.** Every setup writes flags onto the shot record: clean_plate, marker_count, hdri, survey, lens_data, witness_cams. Each missing flag multiplies a downstream task's hours by a known factor, which is the clearest cause-and-effect chain in the whole game.
+- **Takes.** Every shooting day, all day
+- **Television.** A TV supervisor covers two units and often is not on the floor at all; the data package is thinner and the post cost is higher per shot as a direct result.
+
+### On-set data capture: HDRI, reference balls, charts
+
+Bracketed equirectangular HDRI at the camera position (fisheye on a nodal head, or a one-shot 360 camera), a chrome ball and an 18% grey ball, a colour chart, lens distortion grids per lens per focal length, and texture reference stills.
+
+- **Who.** VFX Data Wrangler under the VFX Supervisor
+- **Decides.** HDRI at every setup or only at lighting changes; how many stops to bracket; whether to hold the unit for two minutes; whether the lens grids were ever shot at all.
+- **Engine.** lighting_data_quality in 0-1 from (HDRI present, stops covered, balls shot, chart shot). Low quality forces hand-matching, adding lighting hours and lowering the integration score. A missing distortion grid for a lens means nothing CG can be placed correctly in any shot on that lens.
+- **Takes.** 60-180 seconds per setup, and the unit resents every one of them
+- **Television.** Frequently skipped in episodic, which is why TV CG so often sits wrong in the plate; the sim should make that visible rather than assert it.
+
+### Survey, LiDAR and photogrammetry
+
+The set or location scanned to scale with terrestrial LiDAR, photogrammetry, drone photogrammetry for exteriors, or radiance-field capture. Witness points measured. Actors, costumes and props photoscanned.
+
+- **Who.** VFX Data Wrangler or a survey vendor; photogrammetry and scan technicians
+- **Decides.** Scan or not; density and accuracy; before dressing, after dressing, or both; whether to scan a location you may never return to.
+- **Engine.** Scan object with point count, accuracy in mm and coverage percentage, consumed by matchmove, layout and environments. A scan removes the 'scale is wrong' failure and cuts matchmove hours. A struck set with no scan is unrecoverable except at many times the cost.
+- **Takes.** 20-60 minutes per set for LiDAR; an actor photoscan is 10-30 minutes
+- **Television.** A series scans its standing sets once and reuses the data for years, which is the single best return on VFX spend in television.
+
+### Camera and lens metadata
+
+Frame rate, shutter angle, ISO, ND, focal length, T-stop, focus distance, sensor mode and filtration recorded per take, plus live lens metadata where the glass supports it (Cooke /i, ZEISS eXtended Data, ARRI LDS).
+
+- **Who.** DIT, 1st AC, VFX Data Wrangler
+- **Decides.** Whether lens metadata is recorded at all; which filtration is used, since heavy diffusion must be reproduced digitally; whether to shoot open gate for stabilization and reframing room.
+- **Engine.** Metadata fields on every take. Missing focal length and focus distance raise matchmove solve failure rates. Heavy in-camera filtration caps the achievable match score for CG unless the filter is characterized and simulated, which is a specific post cost.
+- **Takes.** Continuous, automatic when the gear supports it
+- **Television.** No meaningful difference in the data; TV just loses more of it because nobody is assigned to collect it.
+
+### Witness cameras and reference
+
+Two or more timecode-locked cameras from offset angles recording a practical event - an explosion, a stunt, a puppet performance - so it can be triangulated in 3D later. Plus reference video, phone video and still reference of everything.
+
+- **Who.** VFX Data Wrangler, 2nd Unit
+- **Decides.** How many witness cameras, where to place them, whether to jam timecode and genlock, whether to burn a setup and crew on cameras that will never be in the movie.
+- **Engine.** Witness count and baseline angle give reconstruction accuracy. With fewer than two usable angles a one-take practical event cannot be matched in CG, which permanently removes the option to fix or extend it later.
+- **Takes.** 15-30 minutes to set up
+- **Television.** Almost never done in episodic; the consequence appears weeks later as a shot that cannot be fixed.
+
+### Markers, screens and the shooting compromise
+
+Green or blue screen chosen against wardrobe and spill, lit to an even value across its area; tracking markers sized to lens and distance (tape crosses, balls, LED markers); stage blacks instead of screen when shooting smoke, fire or hair.
+
+- **Who.** VFX Supervisor with the DP and Gaffer
+- **Decides.** Green, blue, black, in-camera or LED; marker density; subject-to-screen distance, trading spill against coverage; whether the costume designer is told before she picks a green coat.
+- **Engine.** Screen evenness (stop range across the surface) and spill level become a keying difficulty multiplier on comp hours. Marker density raises solve confidence and paint-out hours simultaneously. A green costume in front of green is a crisis event with a same-day cost.
+- **Takes.** 2-8 hours to rig a screen
+- **Television.** TV reuses a standing screen wall and lights it once; features re-rig per setup and lose the evenness.
+
+### Plate photography and element units
+
+Background plates, drive plate arrays, tiled plates for large formats, aerial plates, clean plates, and elements shot against black at high speed: fire, smoke, water, dust, debris, sparks.
+
+- **Who.** Plate Unit DP or 2nd Unit, VFX Supervisor, Element Unit
+- **Decides.** Shoot plates, license stock, or build CG; number of cameras in a drive array; time of day and sun angle to match principal photography; frame rate for elements.
+- **Engine.** Plate assets with location, time, sun azimuth and elevation, lens and format. Sun-angle mismatch against the principal photography forces a relight cost or a reshoot. A missing drive plate forces a CG environment build at many times the plate cost.
+- **Takes.** A plate unit runs for days or weeks in parallel; elements are 1-3 stage days
+- **Television.** TV buys a plate library once for a show's recurring geography (a city, a road, a skyline) and reuses it every episode.
+
+### Motion capture
+
+Volume shoots with marker suits and camera arrays, or on-set performance capture with witness cameras, with props and set pieces tracked. Data is solved, cleaned and retargeted to a creature skeleton with different proportions.
+
+- **Who.** Motion Capture Supervisor, mocap technicians, performers; optical, inertial or markerless systems
+- **Decides.** Volume versus on-set capture; optical, inertial or markerless; how many performers at once; whether face and body are captured together; how much cleanup to buy.
+- **Engine.** Volume size and camera count set accuracy and occlusion failure rate. Retargeting error grows with the proportion mismatch between performer and creature, converting directly into animation cleanup hours. Capture data is a reusable asset across shots and sequels.
+- **Takes.** A volume day yields roughly 30-90 usable seconds (estimate); cleanup runs 3-10x capture time
+- **Television.** TV uses inertial suits and markerless capture because a volume day is unaffordable; the quality difference shows in contact and weight.
+
+### Facial capture and digital doubles
+
+FACS-based shape libraries, head-mounted camera rigs, 4D scanning, and reflectance scans for skin response. Digital doubles built for stunts, impossible camera moves, and shots the performer cannot or will not do.
+
+- **Who.** Facial Capture Supervisor, scanning vendor, Creature and Character TDs, Digital Double Supervisor
+- **Decides.** How many FACS shapes; HMC rig type; whether the double is stunt-grade or hero-grade; whether to scan the actor at all given what the scan then permits.
+- **Engine.** Digital double fidelity tiers, each with a build cost and a maximum on-screen size before it fails (a stunt-grade double holds to roughly a third of frame height; a hero double holds to a close-up). Scan and reflectance data set the render quality ceiling.
+- **Takes.** Scan session 2-6 hours; a hero digital double build is 8-20 weeks
+- **Television.** TV builds one double per lead in season one and reuses it, ageing it badly across seasons unless it is rebuilt.
+
+### Digital replica consent, de-aging and synthetic performers
+
+Under the 2023 SAG-AFTRA agreements an Employment-Based Digital Replica needs clear, conspicuous, separately signed consent, with separate bargaining for any use outside the picture; Synthetic Performers require notice to and bargaining with the union. California AB 2602 and AB 1836 (2024) add contract-consent and deceased-performer rules.
+
+- **Who.** VFX Producer with Business Affairs and SAG-AFTRA; the actor personally
+- **Decides.** Whether to be scanned and on what terms; scope and duration of consent; de-aging method; whether to use a replica of a deceased or unavailable performer and take the press consequence.
+- **Engine.** Consent object per performer with scope, term, territory and payment. Any use outside scope opens a grievance and litigation branch. De-aging method maps to a cost curve, an uncanny score and a press-risk value. This is where the actor seat and the company seat genuinely conflict.
+- **Takes.** Negotiated inside the deal; the scan session is 2-4 hours
+- **Television.** Series contracts are the pressure point, because a season-long option makes a replica far more valuable to the company than it is to the performer.
+
+### Turnover from editorial to VFX
+
+Shots turned over as an EDL, OTIO or AAF with count sheets, agreed handles (commonly 8-12 frames each end), full-resolution plate pulls from the camera originals in the show's colorspace, reference QuickTimes with burn-ins, and the on-set data package.
+
+- **Who.** VFX Editor, VFX Coordinator, Assistant Editor
+- **Decides.** Handle length; turning over before or after picture lock; pull resolution and colorspace; how often to re-turn over after a re-cut.
+- **Engine.** Turnover events carry version numbers. Every re-cut invalidates some shots by changing head and tail frames or shot boundaries, creating re-turnover cost and orphaned work. Handle length directly scales render, storage and roto cost. A wrong colorspace at pull poisons everything downstream.
+- **Takes.** 1-5 days per package, with dozens of packages across a show
+- **Television.** TV turns over continuously per episode against an airdate; a feature turns over in waves and can afford to wait for lock.
+
+### Roto, paint and prep
+
+Matte extraction where a key will not hold, rig and wire removal, marker removal, blemish and continuity fixes, stabilization, degrain and regrain, plate repair.
+
+- **Who.** Roto Artists and Paint/Prep Artists, frequently at a dedicated or offshore prep vendor
+- **Decides.** How much prep to keep in-house versus send to a prep vendor; acceptable roto quality; whether to remove a rig or simply reframe the shot.
+- **Engine.** Roto hours as a function of subject complexity, motion blur, frame count and edge detail (hair and semi-transparency dominate). Paint hours per marker per frame. These are the invisible hours created by on-set decisions and they are where budgets quietly die.
+- **Takes.** Hours to weeks per shot
+- **Television.** TV prep is almost entirely offshore and fixed-price per frame, which caps quality rather than cost.
+
+### Matchmove, layout and camera solve
+
+Solving the real camera's motion, lens and position within the scanned set, body-tracking performers, and assembling the shot's 3D scene at correct real-world scale for every downstream department.
+
+- **Who.** Matchmove Artist and Layout Artist
+- **Decides.** Little by itself - it is where upstream frugality is billed. The only live choice is hand-solve versus re-shoot versus cheat the shot.
+- **Engine.** Solve confidence derived from marker count, parallax, lens metadata and survey presence. Low confidence forces a hand solve and gates animation, FX, lighting and comp. A failed solve is the cleanest demonstrable chain from a skipped 90 seconds on set to weeks of post.
+- **Takes.** 2 hours to 5 days per shot
+- **Television.** Identical work, worse inputs, so TV matchmove is proportionally more expensive per shot than feature matchmove.
+
+### Asset build: model, texture, groom, rig, look dev
+
+Sculpt, retopologize, UV, texture, groom fur or hair, build muscle, flesh and skin deformation, build cloth, then look-dev the asset under the show's HDRIs against chrome and grey reference.
+
+- **Who.** Modeler, Texture Artist, Groom Artist, Creature Rigger, Look Development Artist, CG Supervisor
+- **Decides.** Fidelity tier; muscle and flesh simulation versus a simpler deformation rig; groom density; how many variants (hero, crowd, LOD, damaged, wet).
+- **Engine.** Asset object with per-discipline completion states. Asset approval gates every shot that uses it, so a late creature approval creates a schedule cliff that money cannot flatten. Fidelity tier drives per-frame render cost; groom density drives simulation and render cost superlinearly.
+- **Takes.** A hero creature is 4-9 months; a hero vehicle 6-12 weeks
+- **Television.** TV builds the asset in the first episodes and amortizes it across the season and later seasons, which is why TV creature design is locked earlier and changed less.
+
+### Animation
+
+Blocking, then spline, then polish, reviewed against the plate in dailies. Creature and character performance decided shot by shot, from keyframe, from capture, or from both.
+
+- **Who.** Animation Supervisor and Animators, reviewed by the VFX Supervisor and Director
+- **Decides.** Keyframe versus capture versus hybrid; how many rounds of director notes to fund; whether the director attends animation review at all.
+- **Engine.** Animation hours per second scaled by creature complexity and shot length. Each note round is a version with a cost and a quality delta that diminishes. Director engagement raises quality and cost together, which is a real, legible trade for the player.
+- **Takes.** 1-4 weeks per hero shot (estimate)
+- **Television.** TV animation gets two rounds and a showrunner who is prepping episode 9 while reviewing episode 4.
+
+### FX simulation
+
+Rigid body destruction, fluids, pyro, smoke and fire volumes, cloth, hair dynamics and crowds, cached out as volumes and geometry caches that are enormous on disk.
+
+- **Who.** FX TD / Effects Supervisor with a render and simulation farm
+- **Decides.** Simulation resolution; number of iterations; art-directed cheat versus physically driven; how much storage to buy; whether to cut the shot instead.
+- **Engine.** Simulation resolution scales compute roughly cubically and disk in terabytes. Each iteration has a wall-clock floor that money cannot shorten, so a late note is a late delivery regardless of budget. Storage is a real, forecastable budget line.
+- **Takes.** Each iteration is 4-48 hours of wall clock
+- **Television.** TV avoids large simulation entirely and buys library elements, which is why TV destruction looks like library elements.
+
+### CG environments, matte painting and set extension
+
+2.5D projections, full CG builds, photogrammetry-derived rebuilds, sky replacement, crowd tiles, and digital extension above a partial practical build.
+
+- **Who.** Environment Supervisor, Matte Painter, Environment Artist
+- **Decides.** How much set to build practically versus extend digitally; projection versus full 3D, which is decided by the camera move; whether the extension line is at 12 feet or at the roofline.
+- **Engine.** Construction cost per square metre against environment build cost, arbitrated by the camera move: a dolly with real parallax invalidates a 2.5D projection and forces a full build. So a director's decision on the day reprices post, which is exactly the coupling the game needs.
+- **Takes.** 6-16 weeks per hero environment
+- **Television.** TV builds an environment once as a reusable digital backlot and re-dresses it weekly - the digital equivalent of the father's standing New York street.
+
+### Lighting, rendering and the farm
+
+Lighting the CG to the captured HDRI and the plate, rendering in AOVs and deep passes to multi-part EXR, and managing farm queues and priorities across a facility running several shows at once.
+
+- **Who.** Lighting TD, Render Wrangler, Pipeline TD
+- **Decides.** Renderer; sampling and noise thresholds; denoise or brute force; on-premises versus cloud burst; how much of the frame is rendered versus painted.
+- **Engine.** frames x layers x samples gives core-hours, which gives dollars and wall clock. Farm capacity is a shared resource across the vendor's whole slate, so another show's crunch delays yours. Denoising lowers cost and raises artifact risk - a real dial with two-sided consequences.
+- **Takes.** Roughly 1-40 core-hours per frame depending on complexity (estimate)
+- **Television.** TV renders to a hard per-frame cost ceiling set by the episodic budget, which is why TV lighting is simpler rather than merely faster.
+
+### Compositing and final
+
+Key, despill, integrate, grade to the plate, restore lens character (distortion, bloom, chromatic aberration, halation), regrain, and deliver in the show's colorspace at the agreed resolution.
+
+- **Who.** Compositor, Lead Compositor, Compositing Supervisor
+- **Decides.** What gets fixed in comp versus sent back upstream to 3D; when a shot is final; whether to accept a shot that is merely finished.
+- **Engine.** Comp hours per shot per tier. 'Fix it in comp' is a cheaper option with a ceiling: past a defined threshold the note cannot be answered in 2D and must go back upstream at many times the cost. Modelling that ceiling is what stops the option being a free pass.
+- **Takes.** 3 days to 6 weeks per shot
+- **Television.** Episodic comp is where nearly all the money goes, because TV avoids 3D wherever a 2D answer exists.
+
+### Review, versioning and the note cycle
+
+Internal dailies, supervisor review, then client review over a synchronized review session, tracked in a production tracking system. Statuses run WIP, pending, CBB (could be better), approved and final. Finals go to the DI.
+
+- **Who.** VFX Supervisor, Director, studio executive, and on the player's pictures the mother as the company principal
+- **Decides.** Review cadence and who is in the room; whether to final a CBB shot to save money; how many versions a shot is allowed before it becomes a change order.
+- **Engine.** Per-shot version counter against a tier allowance. Each note carries a cost and a quality delta with diminishing returns. Finalling early saves money and costs quality and reputation. Different reviewers have different note tendencies, so who is in the room changes the outcome.
+- **Takes.** A review cycle is 1-5 days; a hero shot may reach 20-60 versions
+- **Television.** TV reviews weekly against an airdate; the showrunner finals shots that a feature director would send back, and the audience notices less because of the screen it plays on.
+
+### Colour pipeline and DI handoff
+
+A managed colour pipeline - ACES, with ACES 2.0 released publicly in 2025 and ACES 1.x still widespread - with OCIO configs, the show LUT and on-set CDLs travelling with the plates, and EXR deliverables in the agreed encoding, conformed into the DI and graded.
+
+- **Who.** VFX Supervisor, DI Colorist, Post Supervisor, Pipeline TD
+- **Decides.** ACES versus a bespoke log pipeline; whether the on-set CDL travels to the vendors; deliverable format, bit depth and encoding.
+- **Engine.** A colorspace field on every asset transfer. A mismatch produces an error invisible until the DI, forcing re-deliveries of finalled shots. The show LUT determines what the artists were actually judging, so changing it late invalidates approved work.
+- **Takes.** Set up once in prep, then breaks continuously
+- **Television.** TV pipelines are set once per series and rarely revisited, so an error in season one propagates for years.
+
+### Virtual production and in-camera VFX
+
+An LED volume driven by a real-time engine with camera tracking, an inner frustum rendered to the camera's perspective and an outer frustum providing interactive light, genlocked to the camera and colour-managed end to end.
+
+- **Who.** Virtual Production Supervisor, Volume Operator, Brain Bar real-time artists, VP DP, camera tracking technician
+- **Decides.** Volume versus location versus greenscreen per sequence; environment build lead time; wall dimensions; whether these are final pixels or interactive light to be replaced later.
+- **Engine.** Volume attributes: wall dimensions, pixel pitch, brightness, processing latency in ms. Lens, stop and subject distance against pixel pitch give moiré and parallax failure thresholds. Environments must exist BEFORE the shoot day, which moves cost from post into prep - a different cash-flow shape the producer feels.
+- **Takes.** Environment build 8-20 weeks; the shoot runs at normal pace if ready and at a crawl if not
+- **Television.** Volumes suit television better than film: a standing virtual set, weatherproof, schedulable, and reusable weekly, which is precisely the economics a lot owner would build for.
+
+### VFX editorial
+
+Tracks every shot's state, cuts new versions into the reel, maintains count sheets and shot lengths, handles re-cuts and re-turnovers, builds temp comps, and screens VFX reels for the director and studio.
+
+- **Who.** VFX Editor and VFX Assistant Editor
+- **Decides.** Staffing level; how tightly the shot list is controlled; whether temp comps are cut in-house or bought.
+- **Engine.** The integrity of the shot database itself. Weak VFX editorial produces shots delivered against stale cut lengths, duplicated work and unbilled scope - a hidden leak the player can only see by staffing the position, which makes it a real and unglamorous spending choice.
+- **Takes.** Continuous across the whole post period
+- **Television.** One VFX editor may carry an entire season across overlapping episodes, which is where TV shows lose track of shots entirely.
+
+### Change orders, overages and the settlement
+
+Anything outside the bid assumptions - added shots, changed methodology, extra versions, a re-cut, a new asset - becomes a change order. Vendors absorb some to protect the relationship and fight over the rest; settlement often waits until wrap.
+
+- **Who.** VFX Producer, studio VFX executive, vendor executive producer
+- **Decides.** Approve, absorb, push back on the vendor, or cut the shot; whether to squeeze a vendor you will need again next year.
+- **Engine.** A per-shot ledger of bid versus actual. Vendor goodwill as a depleting resource that affects crew quality assigned to your show. Squeezing below cost raises vendor attrition and quality variance and can push a vendor into insolvency mid-show, which is a documented industry failure mode.
+- **Takes.** Continuous; settled at wrap or months after
+- **Television.** TV change orders are smaller and constant; features have fewer, larger fights.
+
+### Delivery, archive and campaign
+
+Final EXR or DPX delivery into the DI, QC, format versioning (large format, HDR, stereo), and archive of assets and project files. The VFX Oscar narrows a finalist list to a ten-film shortlist, then a January bake-off of reels selects five nominees; an Oscar for stunt design arrives for films released in 2027, presented at the 100th ceremony in 2028.
+
+- **Who.** VFX Producer, Post Supervisor, Studio Post Executive; the Academy's Visual Effects Branch for awards
+- **Decides.** Archive depth (finals only, or project files and caches); campaign spend; which four names go on the submission, which is a career-defining choice for the people who did the work.
+- **Engine.** Archive completeness sets the cost of any sequel, series spin-off or reuse. Campaign spend maps to a nomination probability curve. A nomination raises supervisor and vendor reputation, which changes what they can charge and who will hire them - the loop must close back into bidding.
+- **Takes.** Delivery takes weeks; a campaign runs months
+- **Television.** Television has its own Emmy categories for special visual effects and stunt coordination, judged per-episode, so TV campaigns pick a single episode rather than a body of work.
+
+### Option spaces
+
+**High fall method** — 8 options
+
+`Vented air bag (deep fill)` · `Cardboard box rig` · `Fan descender / decelerator` · `Ratchet-assisted descent` · `Wire-controlled descent` · `Foam pit (rehearsal only)` · `Stunt dummy` · `Digital double`
+
+**Wire flying system** — 10 options
+
+`Single-point hand pull` · `Two-point hand pull` · `Four-point pulley` · `Electric winch` · `Motorized multi-axis flying rig` · `Spin rig` · `Pneumatic ratchet` · `Descender` · `Air ram or teeterboard launch` · `No wire (CG)`
+
+**Fire gag level** — 7 options
+
+`Heat haze only` · `Flame bars in frame, no performer` · `Partial burn (hand, arm, back)` · `Full burn with hood` · `Full burn, face exposed` · `Burning stunt dummy` · `Fully CG fire`
+
+**Vehicle destruction method** — 9 options
+
+`Nitrogen cannon roll` · `Pipe ramp barrel roll` · `Ramp jump with ballast` · `Remote-driven vehicle` · `Caged driver impact` · `Towed or winched impact` · `Hydraulic flip plate` · `Miniature` · `Full CG vehicle`
+
+**Driving realization** — 9 options
+
+`Actor free-driving` · `Precision driver doubling` · `Roof pod` · `Biscuit or tow rig` · `Low-loader / process trailer` · `Poor-man's process` · `LED volume with drive plates` · `Greenscreen with plates` · `Full CG vehicle`
+
+**Atmosphere medium** — 10 options
+
+`Glycol hazer` · `Cracked oil hazer` · `Water-based fogger` · `Dry ice low fog` · `Liquid nitrogen low fog` · `Bee smoker` · `Mineral oil smoke` · `Fuller's earth dust` · `Peat or cork debris` · `CG atmosphere`
+
+**Rain system** — 8 options
+
+`Rain bars on scaffold` · `Rain towers` · `Sprinkler heads` · `Rain bird on a crane` · `Hand misters` · `Wet-down only` · `Rain-on-lens element pass` · `CG rain`
+
+**Snow material** — 8 options
+
+`Biodegradable paper / cellulose` · `Plastic snow` · `Foam (soap-based) snow` · `Shaved ice or real snow` · `Salt` · `Sand-based blanket` · `Wax or resin icicles` · `CG snow`
+
+**Breakaway material** — 7 options
+
+`Sugar glass` · `Resin (candy) glass` · `Tempered safety glass with CG shatter` · `Breakaway balsa` · `Foam or latex props` · `Real glass behind a plate` · `Fully CG breakage`
+
+**Bullet-hit method** — 8 options
+
+`Explosive squib with blood pack` · `Pneumatic / nitrogen hit` · `Air blood rig` · `Non-explosive impact plate` · `Spark hit` · `Dust or concrete hit` · `CG hit` · `Off-screen (no hit)`
+
+**Firearm policy** — 6 options
+
+`Blank-firing with licensed armorer` · `Blank-firing for wide shots only` · `Non-firing replica with CG flash and shells` · `Rubber or resin weapons only` · `Airsoft-style non-firing` · `Fully CG weapon`
+
+**Pyrotechnic charge type** — 9 options
+
+`Flash pot` · `Air mortar (debris, no fire)` · `Black powder mortar` · `Gas bomb (naphtha)` · `Detonating cord` · `Propane flame bar` · `Mortar array` · `Miniature explosion` · `CG explosion`
+
+**Creature realization** — 10 options
+
+`Prosthetic makeup on an actor` · `Full creature suit with animatronic head` · `Rod or hand puppet` · `Bunraku puppet with painted-out operators` · `Telemetry-controlled animatronic` · `Hybrid suit with CG head` · `Mocap-driven CG` · `Keyframed CG` · `Stop-motion` · `2D animation`
+
+**Prosthetic material** — 8 options
+
+`Foam latex` · `Platinum-cure silicone` · `Encapsulated silicone` · `Gelatin` · `Cold foam` · `3D-printed shell` · `Cap plastic / bald cap` · `Fully digital`
+
+**Motion capture system** — 6 options
+
+`Optical marker volume` · `On-set optical capture` · `Inertial suit` · `Markerless multi-camera` · `Witness-camera-derived solve` · `Hand keyframe only`
+
+**Facial capture method** — 6 options
+
+`Stereo head-mounted camera` · `Mono head-mounted camera` · `4D scan library` · `FACS shape library only` · `Markerless ML solve from the plate` · `Hand animation`
+
+**Digital double tier** — 5 options
+
+`None` · `Wide-shot stunt double` · `Mid-shot double with cloth simulation` · `Hero double to close-up` · `Full digital human with scanned reflectance`
+
+**Scan and survey method** — 7 options
+
+`Total station witness points` · `Terrestrial LiDAR` · `Photogrammetry` · `Drone photogrammetry` · `Radiance field / Gaussian splat capture` · `Measured drawings only` · `Nothing`
+
+**Background and screen method** — 8 options
+
+`Greenscreen` · `Bluescreen` · `Black drape` · `Natural in-camera location` · `LED volume` · `Rear or front projection` · `Partial build with digital extension` · `Full CG environment`
+
+**Plate acquisition** — 8 options
+
+`Dedicated plate unit` · `Principal photography leftovers` · `Licensed stock library` · `Motion-control repeatable pass` · `Tiled array for large format` · `Aerial plate` · `Multi-camera drive plate array` · `Build CG instead`
+
+**Previs scope** — 7 options
+
+`None` · `Storyboards only` · `Previs for hero sequences` · `Full-film previs` · `Previs plus techvis plus postvis` · `In-house previs unit` · `Live visualization in the volume`
+
+**VFX bid structure** — 7 options
+
+`Fixed bid per shot` · `Fixed bid per sequence` · `Asset builds bid separately with amortization` · `Time and materials` · `Cost plus` · `Day-rate crew augmentation` · `Blended bulk deal with a tier cap`
+
+**Vendor territory** — 11 options
+
+`Los Angeles` · `Vancouver` · `Montreal` · `Toronto` · `London` · `Australia` · `New Zealand` · `India` · `Korea or Japan` · `Eastern Europe` · `Distributed / remote`
+
+**Vendor count strategy** — 5 options
+
+`Single vendor for the whole show` · `One hero vendor plus a prep vendor` · `Sequence-split across three to six vendors` · `Ten or more vendors with an in-house supervising team` · `Studio-owned in-house facility`
+
+**Renderer and CG pipeline** — 8 options
+
+`Arnold` · `RenderMan` · `V-Ray` · `Redshift` · `Karma` · `Unreal (real-time)` · `Gaffer or Katana front-end` · `Proprietary`
+
+**Review tooling** — 6 options
+
+`Synchronized review session software` · `Web review and annotation` · `Dailies review platform` · `RV sessions` · `Projected theatre review` · `Notes by email`
+
+**Shot tracking system** — 5 options
+
+`Autodesk Flow Production Tracking (formerly ShotGrid)` · `ftrack` · `Kitsu` · `Spreadsheets` · `Proprietary`
+
+**Colour pipeline** — 5 options
+
+`ACES 1.x` · `ACES 2.0` · `Camera-native log with a show LUT` · `ACEScct with on-set CDLs` · `Unmanaged`
+
+**Camera tracking for virtual production** — 6 options
+
+`Optical marker ceiling tracking` · `Infrared beacon tracking` · `Witness-camera tracking` · `Encoder-based crane or dolly data` · `Optical volume system` · `Locked off (no tracking)`
+
+**Second unit structure** — 8 options
+
+`No second unit` · `Splinter unit off main` · `Full second unit with its own director and DP` · `Stunt unit with the Stunt Coordinator as 2nd Unit Director` · `Plate unit` · `Aerial unit` · `Underwater unit` · `Element unit`
+
+**Safety staffing level** — 5 options
+
+`Legal minimum (medic and 1st AD)` · `Plus fire safety officer` · `Plus standby ambulance and paramedic` · `Plus independent safety advisor` · `Plus third-party rig inspection and engineer sign-off`
+
+**Stunt double sourcing** — 6 options
+
+`Coordinator's regular roster` · `Open stunt call` · `Local hires in a distant location` · `Imported specialists` · `The actor performs it` · `Digital double`
+
+**Crowd methodology** — 6 options
+
+`Real background actors` · `Extras plus tiling` · `Card or sprite crowds` · `Agent-based crowd simulation` · `Mocap library crowds` · `Hero-to-background LOD blend`
+
+**Destruction methodology** — 5 options
+
+`Practical demolition of a built set` · `Miniature` · `Rigid body simulation` · `Practical debris elements over CG structure` · `Stock library`
+
+**De-aging approach** — 6 options
+
+`Makeup and lighting only` · `2D compositing work` · `CG head replacement with a FACS rig` · `ML face replacement trained on archival footage` · `Younger actor with digital blending` · `Recast`
+
+**Element acquisition** — 5 options
+
+`Shoot elements on a stage` · `Shoot elements with the main unit` · `License an element library` · `Simulate in CG` · `Reuse from a previous production`
+
+### What gets got wrong
+
+- Every practical choice must move money into or out of post, or none of this is real. A wire is comp hours, a roof pod is a paint-out, a non-firing gun is a shot count, a visible puppeteer is a paint-out, a bag in frame is a paint-out. If the engine does not transfer budget between departments when the player changes a method, the whole domain is decoration.
+- A stunt's cost is mostly the shooting day around it, not the gag. A car flip is two prep days, a half-day of setups, a closure permit and an ambulance. Model gags as schedule objects that consume setups, not as line items.
+- Some events cannot be reset. Cannon rolls, big burns, destroyed miniatures, destroyed sets and single breakaways need explicit consumable and irreversible flags. A game that lets the player re-roll a car flip has not modelled the thing that makes stunts frightening.
+- The highest-leverage 90 seconds in the game is HDRI and lens-grid capture. If the engine does not carry a per-setup data-quality flag with a downstream hours multiplier, the player will never feel why the VFX supervisor is standing in the middle of the set holding a chrome ball.
+- Version counts blow VFX budgets, not shot counts. Bid an allowance per tier, count actual versions, and make the overage visible as it forms. A show that delivers its bid shot count at three times the bid versions is over budget and nobody noticed until wrap.
+- Simulation and render iteration have a wall-clock floor money cannot lower. A note given on Friday on a 30-hour simulation is a Monday answer regardless of the cheque. Schedule pressure must therefore be able to make quality unbuyable.
+- Vendor capacity is shared across their whole slate. Awarding to a vendor already full buys you their B team, and the engine should model that as quality variance, not as a refusal to take the work.
+- Squeezing vendors below cost is a documented industry failure mode with a real outcome: attrition, quality collapse, and insolvency mid-show. Model vendor financial health, or the player will discover that the optimal strategy is to underpay everyone forever.
+- A re-cut invalidates turnovers. Editorial and VFX must be coupled: changing a cut point orphans work already paid for and creates re-turnover cost. A game where editorial is free is a game where VFX overruns are inexplicable.
+- Incentives are claimed against qualifying spend in territory, audited, capped and paid 12-24 months later. They improve the financing, not the cash flow, unless the producer discounts the credit at a cost. Treat them as a receivable, not a discount.
+- Television is not film with more episodes here specifically: the TV VFX supervisor holds 8-10 episodes at different stages at once, turnover is weekly against an airdate, the creature or environment is built once in the first block and amortized across seasons, and a missed delivery costs a broadcast slot rather than a release date.
+- Standing sets and standing rigs are TV's real advantage: one engineering sign-off, one LiDAR scan, one screen lighting setup, reused 22 times. The sim should reward the series for it and deny it to the feature.
+- Safety Bulletins are a real, numbered corpus (#1-#45 from the Industry-Wide Labor-Management Safety Committee, including #4 Stunts, #16 Pyrotechnics, #18 freefall catch systems, #10 atmospheric fog and haze, #41 gimbals, #42 alternative driving systems, #43 free driving). Using the actual numbers makes the game's safety system checkable rather than asserted.
+- California SB 735 makes firearms handling a licensed and documented activity from 1 January 2025 and ties a Safety Advisor risk assessment to tax-credit recipients from 1 July 2025 through 30 June 2030. Compliance state should gate whether the player can shoot in California at all.
+- Pyrotechnics and open flame require a licensed operator (California State Fire Marshal Pyrotechnic Operator - Special Effects, First, Second or Third Class) and a per-event permit from the authority having jurisdiction. A permit denial is a schedule event, not a fee.
+- Aerial work runs on paper with real lead times: an FAA-approved Motion Picture and Television Operations Manual plus waivers for helicopter work, and Part 107 waivers for drone operations over people, at night, or multiple aircraft per pilot. Those waivers should be objects that take weeks, so the player who decides on a drone shot on Tuesday cannot have it on Thursday.
+- SAG-AFTRA pays stunt performers scale ($1,246 per day, $4,646 per week for coordinators, 7/1/25-6/30/26) plus a negotiated per-gag adjustment. The adjustment is the real number and it is set by the coordinator's relationship with production. Also model the no-paint-down, no-wigging rule: doubles must match the performer's race and gender.
+- Digital replica consent is the one place the three player seats genuinely conflict. The mother's company wants the scan because it de-risks the schedule; the actor owns the face and, under the 2023 agreements and California AB 2602 and AB 1836, must consent specifically, conspicuously and separately, with new bargaining for any use outside the picture. Make the actor seat able to refuse and pay for refusing.
+- Do not model VFX quality as a single number. Integration (does it sit in the plate: light direction, grain, lens character, contact and weight) and design (is it a good idea) fail independently, and audiences punish failed integration far more harshly than failed design.
+- Roto, paint and prep are invisible on set and enormous in post. They are the single clearest demonstration that the game's causality works, because the player can trace a marker they approved in April to an invoice in November.
+- 'Fix it in post' must have a ceiling. Some notes cannot be answered in 2D and must go back to 3D at five to twenty times the cost. Without that ceiling, comp becomes a universal solvent and every other decision stops mattering.
+- Second unit is a second simulation thread with its own crew, weather, equipment, call sheet and director - not a discount rate on main unit days. It is the only way to buy shooting days rather than stretch them.
+- Stunt performers are persistent people with fatigue and injury state. The same double cannot do six high falls in a day, and a performer hurt in episode 4 is unavailable in episode 5. Bodies are the resource; rigging is just equipment.
+- Weather must be the same weather the rest of the simulation reads. Wind gates cranes, balloons, drones, wire work and the trajectory of rain; cold gates water work and prosthetic adhesion; heat gates suits, animals and foam latex.
+- Insurance, bonds and premiums close the loop on safety. An incident changes the premium, a serious one brings in the guarantor, and a guarantor can take over the picture. If safety only costs money up front and never pays back, the rational player never buys it.
+- Awards and credits feed reputation, and reputation feeds bids, rates and who will take your call. The VFX Oscar runs a finalist list to a ten-film shortlist to a January bake-off of reels to five nominees; a stunt design Oscar arrives for films released in 2027 at the 100th ceremony in 2028; television has its own Emmy categories judged per episode. Close that loop or the campaign spend is a sink.
+- Mark the soft numbers as distributions, not constants. Artist hours per shot, render core-hours per frame, previs seconds per artist-day and mocap usable seconds per volume day vary by an order of magnitude by complexity and facility. The engine should carry ranges with complexity drivers; a single constant will be wrong in both directions.
+- Twelve gags that genuinely behave differently beat four hundred that share a script. Twelve car bodies with real mass, wheelbase, grip and rollover threshold; twelve prosthetic materials with real translucency, weight and heat life; twelve vendors with real capacity, strengths and financial health. The test is always: change one input a little and see whether the outcome changes or only the prose.
+
+---
+
+## 17. Post: editorial and picture finishing (dailies through deliverables), film and television
+
+### Camera original offload and checksum verification
+
+Cards and mags are copied to at least two disks plus LTO, verified byte-for-byte (xxHash64 or MD5), an MHL manifest written, and no card is formatted until three copies verify.
+
+- **Who.** Data loader / DIT on set; digital imaging media manager at the dailies lab
+- **Decides.** Copy topology (2 disks + LTO vs 3 disks), checksum algorithm and therefore speed, who holds the offsite copy, when cards are wiped, on-set lab vs facility.
+- **Engine.** Per-card object: bytes, frame count, checksum state, copy count, physical location. Copy time = bytes / transfer rate per device. Per-copy failure probability. A card formatted before verification permanently destroys that material and the scene must be reshot.
+- **Takes.** 20-60 min per 512 GB card at ~400 MB/s; runs parallel to shooting
+- **Television.** One lab serves several concurrently shooting units; turnaround is nightly and non-negotiable because an editor starts cutting that footage at 9am.
+
+### Dailies colour (ASC CDL pass)
+
+Applies the show LUT plus a per-shot ASC CDL (slope, offset, power per channel plus saturation) so the room sees intent rather than log. CDL values travel forward in the ALE/XML to the DI.
+
+- **Who.** Dailies colorist (on-set DIT or lab colorist), under the DP's direction
+- **Decides.** One show LUT or per-scene looks; how far to push dailies; whether the DI honours the CDLs or starts clean; whether the DP supervises remotely each night.
+- **Engine.** Per-clip CDL (10 floats) plus a LUT asset and an inheritance flag into conform. A look-drift scalar between dailies and final grade. Colorist skill lowers drift and DI rework hours. Director expectation anchors to whatever dailies looked like.
+- **Takes.** 2-6 hours per shoot day, overnight
+- **Television.** A series locks one show LUT in the pilot and reuses it all season; changing the look mid-season forces regrading of already-delivered episodes for consistency.
+
+### Dailies transcode and proxy generation
+
+Camera raw is transcoded to editorial proxies (DNxHD 36, DNxHR LB, ProRes Proxy/LT) plus viewing H.264s with burn-ins: timecode, clip name, scene/take, and a forensic watermark.
+
+- **Who.** Dailies operator / post house render wrangler
+- **Decides.** Proxy codec and resolution, burn-in layout, how many derivative sets, render farm size, or whether to cut camera-native and skip proxies.
+- **Engine.** Bytes-in to bytes-out ratio per codec, render hours per shoot hour across N nodes, cumulative storage per week, and a picture-fidelity flag that governs whether editorial can judge focus, grain and VFX at all.
+- **Takes.** 1-3x realtime per stream; overnight for a 2-4 hour shoot day
+- **Television.** Runs every night for 8-10 months, so storage is a season-long budget line with a migration plan, not a one-off spend.
+
+### Sync and dailies prep
+
+Marries picture to production sound by timecode or slate, groups multicam angles, renames clips, ingests the script supervisor's notes and lined script, and builds dailies bins and stringouts.
+
+- **Who.** First assistant editor, with a second assistant
+- **Decides.** Sync method (jam-synced TC, waveform, clapper, Tentacle), grouping strategy, naming convention, which takes are circled, bin architecture for the whole show.
+- **Engine.** Per-take sync offset with an error probability by method; a latent sync-error flag that can surface weeks later in the cut; per-take metadata fields (circle take, lens, camera, script notes) that later processes actually read.
+- **Takes.** 3-8 hours per shoot day
+- **Television.** One AE per episode block, working overnight; sync must be finished before the editor's start time or the episode's DGA clock slips.
+
+### Dailies distribution and security
+
+Uploads to a secure review platform (PIX, Moxion, DAX, Frame.io, Sony Ci), sets per-person access, applies forensic per-viewer watermarking, and sets expiry.
+
+- **Who.** Post production supervisor with the assistant editor
+- **Decides.** Platform, the access list and how far down the ladder dailies travel, watermark mode, whether the financier and studio see dailies nightly.
+- **Engine.** Per-person access matrix; leak probability scaling with list size and inversely with watermark strength; a studio-confidence value driven by what executives actually watched; per-seat monthly cost.
+- **Takes.** Minutes to hours to upload, nightly
+- **Television.** Network and streamer executives watch episodic dailies as a matter of course; on a tentpole feature a dailies leak can move the marketing date.
+
+### Dailies screening
+
+Review of the previous day's material, judged for performance, focus, coverage and continuity, deciding whether anything must be retaken while the set still stands.
+
+- **Who.** Director, DP, editor, producer; projected in the lot's screening room
+- **Decides.** Watch as a group or alone; project or stream; call a same-day pickup while the set exists rather than a reshoot six months later.
+- **Engine.** Per-day problem-detection roll against coverage gaps, technical faults and performance quality; a cost delta between fixing now (hours) and fixing later (a reshoot day plus set rebuild).
+- **Takes.** 30-90 minutes daily
+- **Television.** Rarely projected; watched on a laptop between setups, so detection probability is materially lower.
+
+### Scene assembly during photography
+
+Cuts each scene within a day or two of it being shot so an assembly exists at wrap, and flags coverage that does not cut while the unit can still shoot it.
+
+- **Who.** Picture editor (IATSE Local 700)
+- **Decides.** Whether to raise a coverage note or stay silent; which take reads; which performance the film will be built on.
+- **Engine.** Per-scene record of available takes, coverage completeness, performance quality and an editor skill rating, producing a scene-works score that feeds assembly length and quality.
+- **Takes.** Continuous, roughly one day behind the unit
+- **Television.** The episodic editor must deliver a cut episode days after that episode wraps while the next one shoots; editors leapfrog in a rotation of two to four.
+
+### Editor's assembly (first cut)
+
+Every scene in script order with everything in. Long, unshaped, and the baseline against which all later cutting is measured.
+
+- **Who.** Picture editor, delivered to the director
+- **Decides.** How much to shape versus present raw; whether to show the director the problems or hide them; what to leave out of the assembly entirely.
+- **Engine.** Assembly runtime summed from scene lengths; a fat figure (assembly minus target runtime, typically 20-50% over); per-scene quality scores; an initial problem-scene list carried into the notes system.
+- **Takes.** Feature: ready at or just after wrap. TV: 4 business days (half-hour) or 6 (one-hour) after close of photography, DGA 7-505(c)
+- **Television.** The assembly date is a contractual deadline in television and merely practice on features.
+
+### Director's cut
+
+The director's protected pass: restructure, drop scenes, retime, change the shape. The producer cannot take the cut away during this period.
+
+- **Who.** Director, working with the picture editor
+- **Decides.** What is cut, scene order, whether producers are invited in early, whether to screen it, what to defend later.
+- **Engine.** DGA period as a hard timer; per-change runtime and quality deltas; a director-satisfaction value; a divergence measure between the director's cut and studio expectations that seeds the coming notes fight.
+- **Takes.** Feature: 10 weeks, or one day of editing per two days of scheduled photography, whichever is longer (DGA 7-505(b)). Long-form TV 91 min-2 hr: 20 days, plus 5 days per additional hour
+- **Television.** Episodic: 4 days for one-hour, 1 day plus up to one more for half-hour; pilots get 5 and 2 days. High-budget SVOD adds producer notes within 24 hours and a 24-48 hour revision window.
+
+### Producer's cut / showrunner's cut
+
+The cut the company will show the buyer. Restores, trims, reorders. In television this is where the episode is actually made.
+
+- **Who.** Producer on a feature (the mother's seat); showrunner or executive producer in television
+- **Decides.** How much of the director's work survives; whether to fight the director or protect the relationship; whether to bring them back in to execute.
+- **Engine.** A director-relationship value that moves when work is reversed; per-change quality delta that can go negative if the producer's taste is wrong; running runtime and cut-quality score.
+- **Takes.** Feature: 1-6 weeks. TV: 1-5 days per episode
+- **Television.** In television the showrunner's cut is the definitive cut and the director's is a draft; on a feature it is an intermediate stage between director and studio.
+
+### Studio / network notes rounds
+
+Written and verbal notes on pace, clarity, character, ending and length. Some are mandatory, some are preference, and telling them apart is the skill.
+
+- **Who.** Studio production executive and creative executive; network SVP of current programming; delivered as a call and a notes document
+- **Decides.** Which notes to take, which to appear to take, which to refuse, whether to cut an alternative to disprove one, when to escalate above the note-giver.
+- **Engine.** Each note as an object: type, strength (mandatory/strong/soft), originating executive, cost and quality effect if taken, relationship cost if refused. Notes persist and compound across rounds; ignored notes return harder.
+- **Takes.** 24 hours to 2 weeks per round; 2-8 rounds typical
+- **Television.** Notes arrive per episode, every episode, from both studio and network, on a clock set by the air date; a feature gets rounds keyed to screenings instead.
+
+### Notes triage and alternate versions
+
+Builds alternate cuts of contested sequences so the room can compare, maintains a versions bin, and tracks which note produced which change.
+
+- **Who.** Picture editor and assistant editor
+- **Decides.** How many alternates to build, whether to build the executive's own note badly to kill it, what to archive for the later restoration argument.
+- **Engine.** A version tree where each node carries runtime, quality, and which notes it satisfies; editorial hours per alternate; a probability that a side-by-side comparison changes the room's mind, modified by who is in it.
+- **Takes.** Hours to days per alternate
+- **Television.** Rarely done in episodic television; the clock does not allow it outside of pilots.
+
+### Temp music
+
+Temps the cut with needledrops and other films' scores so screenings play; the room falls in love with the temp and the composer then has to beat it.
+
+- **Who.** Music editor
+- **Decides.** What to temp with, whether to temp from the composer's demos, whether to temp so effectively that the original score is doomed.
+- **Engine.** A temp-love value that raises the bar the eventual score is judged against; a screening-score contribution from music; clearance exposure if a temped screening is recorded or leaks.
+- **Takes.** Days per reel, refreshed for every screening
+- **Television.** A series temps from its own score library after the first episodes are scored; needledrops are avoided because per-episode clearance is charged every time.
+
+### Temp VFX and postviz
+
+Slap comps, keyed greenscreen, tracked signage, blocked-in creatures and split screens so a preview audience is not watching blue screen and scene-missing cards.
+
+- **Who.** VFX editor and a postviz vendor
+- **Decides.** Which shots must be temped for a given screening, postviz spend, whether to screen with cards and explain, whether to finish a hero shot early for marketing.
+- **Engine.** Per-shot temp state (none / slap comp / postviz / temp final) with cost per state and an audience-score penalty for unfinished shots scaled by how central the shot is to the sequence.
+- **Takes.** Days to weeks per screening batch
+- **Television.** Episodic rarely temps; shots go straight toward near-final because there is no preview process to serve.
+
+### Temp mix / temp dub
+
+A fast mix of temp effects, temp music and production dialogue so the cut can be screened at something like release quality.
+
+- **Who.** Supervising sound editor and re-recording mixer on a dub stage
+- **Decides.** Stage days bought, 5.1 temp versus a stereo pass, which reels get real attention and which are thrown together.
+- **Engine.** Stage day rate and calendar; a sound-quality contribution to the preview score; consumed temp work that either accelerates or wastes final mix days depending on how much of the cut survives.
+- **Takes.** 2-5 days per feature temp, repeated per preview
+- **Television.** Not applicable; episodic goes to a final mix directly from lock.
+
+### Recruited test screening (research screening)
+
+A recruited audience matching a demographic quota watches the cut cold in a suburban multiplex, fills cards, and a subset stays for a focus group.
+
+- **Who.** Studio research department contracting NRG or Screen Engine/ASI; producer and director attend
+- **Decides.** Whether to test at all; the market and the quota; how many screenings; whether the filmmakers are told the target score beforehand.
+- **Engine.** An audience model with per-segment taste vectors, scene-level engagement, walkout and phone-check curves, and card outcomes generated from them. Market-to-market variance must be large enough that a single screening is genuinely unreliable.
+- **Takes.** One evening per screening, topline overnight, 2-5 screenings across 6-12 weeks
+- **Television.** Television tests pilots with dial testing and panel methods; ongoing series almost never test, and the network may test only the pilot before ordering.
+
+### Score cards and the number
+
+Top-two-box percentages for overall rating and for definite recommend, best-liked and worst-liked scenes, character ratings, pace responses, demographic splits and verbatims.
+
+- **Who.** Research analyst, presenting to studio leadership and the filmmakers
+- **Decides.** Whether to believe the number, whether to recut for it, which demographic to chase, whether to test again for a better result.
+- **Engine.** A real card instrument with named fields, per-segment scoring, a comparison against a genre norm, and a studio decision rule where release width, P&A spend and date confidence are keyed to the topline.
+- **Takes.** Topline overnight; the full report in 3-5 days
+- **Television.** Pilot testing produces a similar report that feeds the series pick-up decision rather than a marketing spend.
+
+### Focus group
+
+Fifteen to twenty-five recruits stay behind and are asked why. Specific complaints here, not the score, are what usually drive recuts.
+
+- **Who.** Research moderator, with filmmakers listening from the back of the room
+- **Decides.** Whether to sit in; whether to act on a loud minority; which complaint to treat as the real problem.
+- **Engine.** A small-N sample drawn from the audience model with a loudness bias so the group can mislead, plus a reversal risk when the player recuts to a complaint that the wider sample did not share.
+- **Takes.** 45-75 minutes immediately after the screening
+
+### The recut decision
+
+Post-preview restructuring: new opening, dropped subplot, new ending, added voiceover, a character saved or killed.
+
+- **Who.** Producer, director and studio head together
+- **Decides.** Scope of the recut, whether new material must be shot, whether the director stays to execute it or is replaced in the cutting room.
+- **Engine.** A change plan costed in editorial weeks, invalidated VFX shots, rescored reels and added ADR, with a projected score delta carrying real uncertainty so recutting can make the film worse.
+- **Takes.** 2-10 weeks
+- **Television.** The equivalent is a network-mandated restructure of a pilot, often including reshooting a role after recasting.
+
+### Additional photography / reshoots
+
+New scenes, replacement coverage and inserts, requiring actors, sets and looks that may no longer exist to be reassembled months after wrap.
+
+- **Who.** Producer commissions; unit production manager schedules; the director or a second unit director shoots
+- **Decides.** Reshoot versus fix in post; number of days; which cast; rebuild a struck set, cheat it, or replace with VFX; stage versus location.
+- **Engine.** Actor availability windows, holding fees and re-hire rates; hair, weight and beard continuity flags; set existence state (struck, standing on the lot, must rebuild); crew re-hire at current rates; per-day cost and per-scene quality delta.
+- **Takes.** 1-20 days, typically 3-6 months after wrap
+- **Television.** Pickups are folded into a later episode's shooting days or a company-move day; a standalone reshoot block in episodic television signals a show in trouble.
+
+### Insert and pickup unit
+
+Hands, phones and screen content, signage, driving plates, food, and shots invented in the cutting room that never existed in the script.
+
+- **Who.** Second unit director and insert unit DP
+- **Decides.** Main unit or insert unit; matching lens, lighting and time of day; who supervises; whether the editor specifies the shot precisely enough to be usable.
+- **Engine.** A match-quality score driven by lens, lighting and elapsed time since the parent scene; per-day cost; a usability roll where a vague editorial request yields an unusable insert.
+- **Takes.** 1-5 days
+- **Television.** Often shot by the show's own crew on a stage between episodes.
+
+### Runtime decision
+
+Setting the release running time. Every extra minute costs showtimes; every cut minute costs story. It is argued for months and fixed at lock.
+
+- **Who.** Studio distribution head and the director argue it; the producer brokers
+- **Decides.** Target runtime band, what comes out to reach it, whether to defend a three-hour cut against distribution.
+- **Engine.** Runtime to showtimes per screen per day to per-screen gross; an exhibitor resistance curve that bites above roughly 150 minutes; a story-quality curve that turns down when cutting goes too far; contractual runtime floors and ceilings; Academy feature threshold of more than 40 minutes.
+- **Takes.** Argued across the whole post period, fixed at picture lock
+- **Television.** Television runtime is a format, not an argument: broadcast hour roughly 41-43 minutes of content, half-hour roughly 21-22; premium and streaming give a band the showrunner defends.
+
+### Act structure and break placement
+
+Placing act-outs so the audience returns after the break, and hitting the clock exactly including teaser, tag, bumpers and black between acts.
+
+- **Who.** Showrunner and picture editor against the network's format clock
+- **Decides.** Where each act break falls, whether to move a break to save a scene, cold open length, tag or no tag.
+- **Engine.** A per-network format-clock object (act count, per-act minimum and maximum, total content seconds, black duration) validated at delivery, plus an act-out strength value feeding a tune-out probability at each break.
+- **Takes.** Continuous through the cut, verified at lock
+- **Television.** Does not exist on features at all. The streaming equivalent is only recap, intro and credit-marker chapter timings supplied as metadata.
+
+### Broadcast Standards and Practices pass
+
+Reviews the cut for language, nudity, violence, brands, imitable behaviour and legal exposure, and issues required changes before the episode can air.
+
+- **Who.** Network Standards and Practices executive
+- **Decides.** Comply, fight, or shoot a cover version; blur versus trim versus ADR replacement; how much to argue per item.
+- **Engine.** A per-network rule set with severities; each flagged item carries a fix cost (ADR session, blur, trim seconds) and a quality delta; refusal escalates to an airing block that costs the slot.
+- **Takes.** 1-5 days per episode
+- **Television.** Features face CARA instead, where the currency is a rating rather than a ruling, and streaming originals often face only internal standards.
+
+### Ratings submission (CARA) and appeal
+
+A board of parents screens the film and assigns G, PG, PG-13, R or NC-17 with a descriptor. A contractual rating obligation turns an unwanted rating into forced cuts.
+
+- **Who.** Distributor submits; the Classification and Rating Administration rates; the Rating Appeals Board hears appeals
+- **Decides.** Submit early or late; which version to submit; cut to the rating or appeal; accept the descriptor wording.
+- **Engine.** Content counters (F-word count and usage, nudity duration, violence intensity, drug depiction) mapped to a rating with noise; a contractual required rating; per-trim quality cost; resubmission fee and a one-to-two week loop per pass.
+- **Takes.** 1-2 weeks per submission; an appeal adds 2-4 weeks
+- **Television.** Television self-applies TV Parental Guidelines (TV-Y to TV-MA with D/L/S/V descriptors) with no external board, but S&P is far more intrusive than CARA.
+
+### Picture lock
+
+The cut is frozen so sound, music, VFX and the DI can work to fixed timings. It is a financial commitment rather than a creative milestone.
+
+- **Who.** Declared by the studio or producer on a feature, the showrunner in television; executed by the editor
+- **Decides.** When to lock, whether to lock reel by reel, whether to lock with VFX shots unresolved, whether the lock is hard or soft.
+- **Engine.** A lock flag and timestamp per reel or episode; downstream departments snapshot the timeline at lock; after that every changed frame triggers costed change propagation into sound, music, VFX, captions and DI.
+- **Takes.** A date, typically 8-16 weeks before release (feature) or 2-6 weeks before air (TV)
+- **Television.** Episodic locks per episode on a rolling calendar driven by air dates, so a slipped lock cascades into every subsequent episode's slot.
+
+### Lock breaks and change lists
+
+When the cut changes after lock, a change list (old timecode to new, adds, omits and trims per reel, in frames) goes out so every department can conform to the new picture.
+
+- **Who.** Assistant editor issues them; music editor, sound, VFX and finishing consume them
+- **Decides.** Whether a change is worth the downstream cost, whether to batch changes into one release, whether to hide a small change and hope.
+- **Engine.** A change-list object of per-reel edits with frame counts, plus a propagation cost model: sound conform hours, music re-record or re-conform, invalidated VFX shots, DI reconform and regrade, caption and dub retiming.
+- **Takes.** Hours to issue; days to weeks of downstream work
+- **Television.** Television absorbs post-mix changes routinely; on a feature a late change can miss the DCP deadline and put the release date at risk.
+
+### VFX turnover
+
+Publishes each shot to vendors: plates pulled from camera original at cut length plus handles, count sheets, EDL/ALE, reference QuickTimes, CDLs, lens and camera metadata and scan notes.
+
+- **Who.** VFX editor with the VFX producer and the assistant editor
+- **Decides.** Handle length (commonly 8-12 frames each side, 24 or more for retimes), which shots go to which vendor, shot numbering scheme, full-frame pull versus cropped.
+- **Engine.** A shot database: number, scene, vendor, cut length, handles, complexity, bid, status, current version, due date. Pull time and storage per shot. Any cut change alters cut length and forces a re-pull that costs money and calendar.
+- **Takes.** Days per turnover; 3-20 turnovers across a feature
+- **Television.** Episodic turns over weekly per episode with 4-8 week deliveries, far more invisible work (split screens, cleanup, set extension, window comps) and much lower per-shot prices.
+
+### VFX review cycles
+
+Versioned reviews of every shot with per-shot notes until approval; a shot is only final when approved at full resolution in the correct colour space.
+
+- **Who.** VFX supervisor, director and VFX editor, in a theatre or over cineSync
+- **Decides.** Approve, note, or abandon the shot; how many versions to pay for; when to call something final that is not perfect because the DI starts Monday.
+- **Engine.** Per-shot version count and per-version cost, a quality curve with diminishing returns per iteration, vendor capacity limits that queue work, and a hard finals deadline that gates the DI.
+- **Takes.** Weeks to months per shot; finals can land days before the DI
+- **Television.** Fewer versions per shot, approval often by the producer rather than the director, and the episode's air date is an absolute wall.
+
+### VFX finals ingest and validation
+
+Finals arrive as EXR sequences or DPX/ProRes and are checked for frame count, handles, colour space, bit depth, alpha and naming before being dropped into the conform.
+
+- **Who.** VFX editor with the finishing facility's data operations
+- **Decides.** Accept or reject a delivery; whether to master with a lower approved version to make the date; which shot gets a waiver.
+- **Engine.** Per-delivery validation checks with a realistic failure rate; a live missing-finals list that blocks DI sections; a fallback version per shot so the master can be built with known compromises flagged for QC.
+- **Takes.** Hours per batch, continuous through the DI
+
+### Conform / online
+
+Rebuilds the locked cut at full resolution from camera original using an AAF, XML or EDL, relinking every clip and reproducing speed changes, resizes, repositions, dissolves and effects created in the offline.
+
+- **Who.** Online editor or conform artist at the finishing facility
+- **Decides.** Conform tool, whether to honour offline effects or rebuild them cleanly, how to treat Avid stabilisations and retimes, how to handle archival, stock, phone and mixed-format sources.
+- **Engine.** Per-clip link state (found, missing, wrong reel, wrong source), transform and speed parameters that may not translate between systems, per-mismatch artist hours, and a systematic offline-versus-conform diff that catches drift.
+- **Takes.** 1-5 days per feature; 2-8 hours per TV episode
+- **Television.** Episodic conform is largely automated and same-day; features are conformed reel by reel with a person checking every cut point.
+
+### Pull list and partial reconform
+
+After a post-lock change, only affected regions are re-pulled and re-inserted rather than rebuilding the whole timeline.
+
+- **Who.** Online editor
+- **Decides.** Surgical pull versus full reconform; how much risk of a missed ripple to accept against how many hours to spend.
+- **Engine.** A timeline diff producing an affected-region list, with cost proportional to region count rather than runtime, plus a miss probability that surfaces as a QC fault later.
+- **Takes.** Hours
+
+### Digital intermediate setup and colour management
+
+Builds the show's colour pipeline: working space, input transforms per camera, output transforms or show LUT, display calibration, and the matrix of deliverable versions to be produced from it.
+
+- **Who.** DI producer and the facility's colour scientist
+- **Decides.** ACES 1.3 or ACES 2.0 versus camera-native with a show LUT versus a bespoke pipeline; working space (ACEScct, ACEScg, Log C, Rec.2020 PQ); HDR-first or SDR-first.
+- **Engine.** A genuine colour-managed transform graph so different pipeline choices produce different images; per-camera IDTs; a cross-camera consistency value that degrades with mixed sources; an archive-durability value tied to whether the pipeline is standard.
+- **Takes.** 1-3 days of prep before grading starts
+- **Television.** Decided once for the series in the pilot; changing it later forces regrading of delivered episodes.
+
+### Colour grading, primary pass
+
+Balances every shot for exposure, contrast and white balance, matches within scenes, and establishes the look reel by reel on a calibrated display or projector.
+
+- **Who.** Supervising colorist; the DP attends where available and the director has a contractual right to be present (DGA 7-506)
+- **Decides.** The look; which shots are rebuilt from scratch; match to dailies CDLs or start clean; who is in the room and whose approval counts.
+- **Engine.** Per-shot grade state and shot count, per-shot time cost scaled by complexity, a scene-consistency score, a colorist skill rating, and a drift measure from dailies that costs approval time when large.
+- **Takes.** Feature: 2-4 weeks in a DI theatre. TV: 4-16 hours per episode
+- **Television.** Graded against an established series look with the DP frequently absent; the colorist becomes the look's custodian across multiple DPs and directors.
+
+### Colour grading, secondaries and windows
+
+Isolated corrections: skin tone, sky replacement in-grade, eye lights, vignettes, relighting, tracked power windows, and qualifier keys on specific colours.
+
+- **Who.** Colorist with a DI assistant building tracks
+- **Decides.** How far to push; whether a problem is a grade fix, a paint fix or a full VFX shot; how many windows a shot justifies.
+- **Engine.** Per-shot node and window counts driving both artist time and render load; tracking failure probability on moving shots; a routing rule that pushes some fixes out of the grade and into a costed VFX or paint budget.
+- **Takes.** Folded into the grading days; heavy shots an hour or more each
+- **Television.** Time-boxed hard; a shot that needs an hour of windows in episodic usually gets 10 minutes or gets flagged for the next season's shooting notes.
+
+### Paint, beauty and DI fixes
+
+Removals (rigs, crew reflections, boom, modern objects, brand logos), beauty work, split screens of two performances, sky replacement, and dust-busting on scanned material.
+
+- **Who.** Finishing artist on Flame or Nuke inside the finishing facility
+- **Decides.** What to fix and what to live with; the boundary between grade, paint and a full VFX award; whose budget absorbs it.
+- **Engine.** A defect list generated during shooting (rig in frame, logo visible, continuity error, focus soft) with a per-item fix cost and a visible-if-unfixed penalty applied at QC and to audience immersion.
+- **Takes.** Hours to days per shot, in parallel with grading
+- **Television.** A standing weekly allocation of paint shots per episode rather than a bespoke list.
+
+### HDR grading pass
+
+Grades the HDR master, typically P3-D65 primaries in a Rec.2020 container with PQ, mastered to a stated peak, with static ST 2086 mastering-display metadata plus MaxCLL and MaxFALL for HDR10.
+
+- **Who.** Colorist on an HDR reference display
+- **Decides.** Which HDR standards to produce (Dolby Vision, HDR10, HDR10+, HLG); mastering peak (1000 nit versus 4000 nit); whether HDR is the master or derived from SDR.
+- **Engine.** Separate grade state per version; display peak as a live parameter that changes highlight handling and therefore the image; per-version grading hours; a distributor requirement matrix, since some platforms require Dolby Vision for an HDR original.
+- **Takes.** Feature: 3-8 extra days. TV: 2-6 extra hours per episode
+- **Television.** The HDR/SDR relationship is fixed for the series; changing it mid-season means regrading and redelivering earlier episodes.
+
+### Dolby Vision analysis and trim pass
+
+L1 analysis measures min, mid and max per shot; the colorist sets trims (lift, gain, gamma, saturation, tone detail) for target displays so consumer sets render intent; metadata ships with the picture.
+
+- **Who.** Colorist with a Dolby Vision-enabled grading system
+- **Decides.** How many trim targets beyond the mandatory 100-nit Rec.709 (600, 1000, 2000 nit); per-shot versus per-scene trims; whether to accept the automatic derivation or hand-trim.
+- **Engine.** Per-shot L1 values plus per-target trim parameters; a derived SDR image that measurably differs from a hand-graded SDR; a perceived-quality value per platform and per viewer display class in the audience model.
+- **Takes.** 1-3 days per feature; 1-3 hours per episode
+
+### SDR pass / derived trim
+
+The Rec.709, 100-nit version that most of the audience actually watches, either derived from the HDR with trims or hand-graded as a separate pass.
+
+- **Who.** Colorist
+- **Decides.** Derived versus hand-graded; how many days SDR gets; whether SDR or HDR is the reference for the theatrical grade.
+- **Engine.** Two grade states with a divergence measure, hours for a hand pass, and an audience-model quality value weighted by how each territory and platform actually consumes the title (SDR TV, HDR TV, phone, cinema).
+- **Takes.** 1-5 days hand-graded, hours if trim-derived
+- **Television.** Series budgets usually force the derived trim, so SDR quality is whatever the trims produce.
+
+### Theatrical grade / projector pass
+
+A separate grade for cinema: DCI-P3, 48 cd/m² (14 fL) reference white, gamma 2.6, viewed dark and large. A monitor grade does not survive projection unchanged.
+
+- **Who.** Colorist in a DI theatre with a calibrated DCI projector
+- **Decides.** Whether to buy a dedicated theatrical pass; screening room versus a full calibrated theatre; in-room approval versus remote.
+- **Engine.** Display environment as a parameter set (peak luminance, gamma, surround, screen size, seat distance) feeding the rendered image; per-version grade state; theatre day rate; a mismatch penalty when a version is derived without its own pass.
+- **Takes.** 3-10 days for a feature
+- **Television.** Only relevant for theatrical, festival or awards-qualifying television.
+
+### Aspect ratio and framing versions
+
+Builds alternate framings: open-matte 1.78 from a 2.39 master, an expanded 1.90 IMAX frame, 4:3 archive versions, and vertical or square crops for marketing.
+
+- **Who.** Finishing artist and colorist with the DP and director
+- **Decides.** Which ratios exist; hard matte versus shot-by-shot reframing; whether the premium-format version changes shot selection.
+- **Engine.** Per-shot framing offsets per version, a reframe-quality score, per-version approval time, and a hard constraint from what the sensor actually captured, since a hard-matted shoot cannot produce open matte at all.
+- **Takes.** 1-5 days per alternate version
+- **Television.** Series masters are 1.78 or 2.00 with occasional 2.39 event episodes; the crop question mostly appears in library reformatting years later.
+
+### Premium large format mastering (IMAX DMR and PLF)
+
+Remasters the title to the premium format with its own image processing, expanded-ratio sequences for material shot for it, a separate grade and a separate sound pass.
+
+- **Who.** IMAX post team or the PLF vendor, with the filmmakers
+- **Decides.** Whether to do it at all; how many expanded-ratio sequences; filmed-for-format versus converted.
+- **Engine.** A premium-format flag on the release that raises per-screen average and adds a screen allocation; added cost and calendar weeks; a per-sequence expansion list constrained by what the camera negative or sensor actually captured.
+- **Takes.** 2-6 weeks overlapping the DI
+- **Television.** Applies only to theatrical event releases of series material.
+
+### Main title and graphics design
+
+Designs main titles or main-on-end, the studio and production company logo treatments, in-picture graphics (locators, text messages, UI screens) and the typographic system.
+
+- **Who.** Title designer or title house, with director and producer
+- **Decides.** Front titles versus main-on-end; designed sequence versus plain cards; typeface, card duration and colour; whether titles are graded in the DI or delivered baked.
+- **Engine.** A card list derived from the credits obligation database; per-card screen duration summing into runtime; a design quality value; cost per route; text elements registered so textless versions can be produced later.
+- **Takes.** 4-12 weeks in parallel, delivered days before the DI
+- **Television.** A series main title is an asset reused weekly, increasingly compressed to 15-30 seconds or skipped entirely; cold-open-then-titles is a format decision made at the pilot.
+
+### Credit determination and the end crawl
+
+Determines who receives which credit in what order and builds the end crawl to satisfy guild agreements and every individual contract.
+
+- **Who.** Studio production executive with legal and labour relations; WGA runs credit arbitration; DGA and SAG-AFTRA have placement rules
+- **Decides.** Card order among producers, above or below the title, size and duration percentages, favoured-nations disputes, whether to contest a WGA arbitration outcome.
+- **Engine.** A per-person contractual credit obligation (position, size percentage, duration, paid-ad tie-in) and a rules engine validating the crawl against guild minimums, with a breach flag carrying real financial and relationship penalties. Arbitration is a timed process with an uncertain outcome.
+- **Takes.** Arbitration 2-4 weeks; crawl build 1-2 weeks; changes continue to days before delivery
+- **Television.** Credits are per-episode and formulaic, but created-by, developed-by and executive producer cards carry money and standing; a production company card is negotiated and worth fighting for.
+
+### Localization graphics and forced narratives
+
+Territory versions of on-screen text: translated main titles, burned-in forced-narrative subtitles for foreign-language dialogue, dub cards, and replaced graphics.
+
+- **Who.** Localization vendor with the finishing facility
+- **Decides.** Burn-in versus a subtitle track; how many territory graphic versions to build; whether textless elements are produced for every text event.
+- **Engine.** A text-event list with timecode in and out, layer and retained clean elements; per-language render cost; a delivery validation that fails when textless backgrounds are missing for a text event.
+- **Takes.** 1-3 weeks after lock
+- **Television.** Multiplied by episode count, so the per-event cost decision compounds across a season.
+
+### Textless elements and submasters
+
+Every shot containing text is also delivered clean, as a tail pack on the master or as separate track files in a supplemental package, so territories can re-text.
+
+- **Who.** Finishing facility
+- **Decides.** Tail pack versus supplemental package; what counts as a text element; whether to spend the render time now.
+- **Engine.** A completeness check against the text-event list; a hard delivery failure when incomplete; storage and render cost per element. Elements not preserved at creation cannot be recovered later without redoing the work.
+- **Takes.** Hours, but only possible if planned from the start
+
+### Subtitles, SDH and closed captions
+
+Authors English SDH and closed captions (CEA-608/708, or IMSC1/TTML/iTT for streaming) and foreign subtitle tracks, timed to locked picture and reconformed after any change.
+
+- **Who.** Captioning vendor; post supervisor approves
+- **Decides.** Vendor, reading-rate standard, placement rules, in-house versus outsourced, how many languages at launch versus later.
+- **Engine.** Reading-rate limits (characters per second) producing a real event count per title; per-language cost; conform cost on every picture change; an accessibility compliance flag against FCC/CVAA and distributor mandates.
+- **Takes.** 3-10 days per language
+- **Television.** Per episode on a rolling delivery, with the same reconform exposure each time picture moves.
+
+### Audio description authoring
+
+Writes and records description of on-screen action into dialogue gaps: a picture-dependent deliverable that breaks whenever the cut changes.
+
+- **Who.** Audio description writer and narrator at an accessibility vendor
+- **Decides.** Vendor, narrator, description density, which territories and languages receive it.
+- **Engine.** Gap analysis of the dialogue track yielding available seconds per gap; a script constrained to fit; re-record cost triggered by picture change; a compliance flag for regulated platforms.
+- **Takes.** 1-2 weeks
+
+### Digital cinema mastering (DCP)
+
+Encodes the theatrical version as JPEG 2000 in MXF, builds CPL, PKL and ASSETMAP (SMPTE ST 429 family), muxes audio, applies AES-128 encryption and issues KDMs per server per window.
+
+- **Who.** DCP mastering facility, or the lot's own post division
+- **Decides.** SMPTE versus Interop DCP; encrypted versus open; 2D and 3D; HFR; audio format (5.1, 7.1, Atmos); how many versions including subtitled, dubbed and accessibility.
+- **Engine.** Bitrate ceiling of roughly 250 Mb/s for standard DCI with higher VBR allowances for HDR and HFR; encode hours per version; per-version cost; KDMs bound to specific projector certificates and date windows; piracy risk when KDM handling is sloppy.
+- **Takes.** 1-3 days per version; KDMs issued continuously through the run
+- **Television.** Only for theatrical, festival or awards-qualifying television.
+
+### IMF mastering
+
+Builds an Interoperable Master Package under SMPTE ST 2067, commonly Application 2E for studio masters, with a CPL per version, audio and subtitle track files, and supplemental packages for territory variants.
+
+- **Who.** Mastering facility with the studio's asset management group
+- **Decides.** Which package is the original version; what becomes a supplemental; codec application; frame rate and colour metadata; whether to master once and derive or build each deliverable natively.
+- **Engine.** A package graph where versions share track files, so a territory variant costs a fraction of a new master; per-distributor spec profiles that must validate; a versioning history that makes later reuse cheap or impossible.
+- **Takes.** 1-5 days per package
+- **Television.** Every episode gets its own package, and season-level inconsistency surfaces as a batch of QC failures rather than one.
+
+### Broadcast and platform masters
+
+Produces the specific files each buyer requires: ProRes 422 HQ or XDCAM HD422 for broadcast with slate, bars, 2-pop, act black and stated total running time, plus per-platform masters to spec.
+
+- **Who.** Mastering facility
+- **Decides.** Which masters to build now and which to defer; derive from the IMF or master natively; who pays when a buyer's spec changes after delivery.
+- **Engine.** A deliverable list per contract with per-item cost, time and status, a derivation graph from the master, and a rejection probability per item that rises sharply when a spec is guessed rather than read.
+- **Takes.** Hours per file
+- **Television.** Volume is the problem: a 22-episode order can be several hundred discrete files across buyers and territories.
+
+### Audio layback and final marriage
+
+Lays the printmaster and stems against final picture, verifies sync at the head 2-pop and the tail, and measures loudness against the target for each deliverable.
+
+- **Who.** Mastering engineer with the re-recording mixer
+- **Decides.** Which mix goes to which deliverable; near-field fold-down versus a dedicated home mix; whether to remix or limit to pass a spec.
+- **Engine.** Per-deliverable loudness target and measured value with a pass/fail (theatrical Leq(m); ATSC A/85 at -24 LKFS; EBU R128 at -23 LUFS; Netflix at -27 LKFS dialog-gated ±2 LU with -2 dBTP peaks), sync offset in frames, and per-fix stage cost.
+- **Takes.** Hours per deliverable
+- **Television.** Broadcast loudness compliance is legally enforced (CALM Act in the US), so a failure is not merely a rejection.
+
+### Automated QC
+
+Machine validation of frame rate, bit depth, colour metadata, loudness, PSE/flash hazard, black and freeze frames, caption alignment and file and package structure.
+
+- **Who.** QC operator running Baton, Vidchecker, Aurora, or Photon for IMF packages
+- **Decides.** QC tier; run before or after human QC; accept warnings or fix them; whether to QC at the facility or let the distributor do it.
+- **Engine.** A distributor rule set with severities; error generation weighted by how carefully each upstream process was executed; per-error fix cost and turnaround; a report object that gates delivery.
+- **Takes.** 0.5-2x realtime, automated
+
+### Human eyeball QC
+
+A person watches the entire master and logs every fault against timecode: dropouts, dead pixels, un-final VFX, boom in frame, a wrong shot version, grade mismatch, caption error, wrong credit.
+
+- **Who.** QC technician in a calibrated room at the facility or the distributor
+- **Decides.** Full QC versus spot check; internal QC before submission (cheap) versus letting the buyer find it (expensive and public).
+- **Engine.** A defect list accumulated across every earlier process in the pipeline, each item carrying a detection probability per QC tier, feeding a fail report and a fix-and-resubmit loop measured in days and dollars plus a reputation effect on the facility and the company.
+- **Takes.** Runtime plus 50-100%; report within 24-48 hours
+- **Television.** Per episode against an air date, so a fail can pull a broadcast; features have slack but a larger blast radius when something ships wrong.
+
+### QC failure remediation and redelivery
+
+Fixes logged faults, re-renders affected segments, repackages (usually a supplemental IMP rather than a full remaster) and resubmits.
+
+- **Who.** Post supervisor coordinating; finishing facility executing
+- **Decides.** Fix versus request a waiver; patch versus full remaster; who absorbs the cost when the fault is the facility's rather than the production's.
+- **Engine.** Per-fault classification (source fault, facility error, spec misread) determining who pays; re-render scope and hours; a second-pass failure probability that rises when the first fix was rushed.
+- **Takes.** 1-10 days
+
+### Deliverables schedule and handover
+
+Satisfies the contractual delivery exhibit: masters, textless, M&E, stems, combined continuity and spotting list, dub script, caption files, music cue sheet, QC reports, chain of title, E&O certificate.
+
+- **Who.** Post production supervisor with the distributor's delivery and asset management department
+- **Decides.** Order of delivery; what to negotiate out of the exhibit up front; what to defer; deliver into the buyer's asset system or via a facility.
+- **Engine.** A checklist with per-item status and due date wired to a payment gate, since final payment and sometimes the exercise of rights release only on complete delivery. Missing trivial items hold real money.
+- **Takes.** Weeks, with a tail running months past release
+- **Television.** Rolling per-episode delivery sometimes only days ahead of air, where a single late item stops the episode from airing.
+
+### Archival mastering and preservation
+
+Creates the long-term archive: an archival master (lossless J2K or uncompressed, often an ACES 2065-1 encoding), camera originals retained on LTO, project files, VFX source and metadata.
+
+- **Who.** Studio asset management and the archive department
+- **Decides.** What to keep and for how long; LTO generation and copy count; sites; whether to keep the offline project, the VFX plates and the graded elements or only the flattened master.
+- **Engine.** Per-title archive footprint in terabytes, tape count and cost, a migration clock (drives read back roughly two generations), and a future-value term: a library title cannot be remastered, reformatted or restored if the elements were discarded.
+- **Takes.** Days to build; migration every 5-10 years indefinitely
+- **Television.** A season multiplies footprint; studios routinely under-archive episodic VFX source, which is why old series cannot be remastered in HDR.
+
+### Territory versioning and censorship cuts
+
+Builds altered versions for territories: trims for a classification board, removal of content prohibited in a market, alternate endings, replaced brands and graphics.
+
+- **Who.** Versioning producer at the distributor with local partners
+- **Decides.** Whether to make a version at all; how much to alter; submit and negotiate or pre-censor; whether to walk away from a market.
+- **Engine.** Per-territory rule set and approval process with a timer and a pass/fail, the box office or licence fee at stake in that territory, and a version graph so each cut is a supplemental rather than a new master.
+- **Takes.** 2-12 weeks per territory approval
+- **Television.** Applied per episode, and a single unacceptable episode can pull an entire series from a market.
+
+### Airline and IFE versioning
+
+An edited version for inflight use with profanity, nudity, drug use, extreme violence and aviation-sensitive content (crashes, hijacking, terrorism) removed, sometimes with framing and burned subtitle requirements.
+
+- **Who.** Versioning editor at an inflight content service provider, commissioned by the distributor
+- **Decides.** Edit in-house for control or let the vendor do it cheaply and badly; how aggressive the pass is; whether the director is consulted or told afterwards.
+- **Engine.** A content-flag list evaluated against an IFE rule set, per-edit quality delta, IFE licence revenue per title per airline window, and a director-reaction event if they discover the version.
+- **Takes.** 1-2 weeks
+- **Television.** Series are cut episode by episode to the same rules; one flagged scene can pull the whole series from a carrier.
+
+### Marketing pulls from editorial
+
+Supplies scenes, plates, cut-downs and stills to marketing, often from unlocked cuts and often of shots that will not be in the finished film.
+
+- **Who.** Assistant editor supplying the trailer house, publicity and the studio's creative advertising group
+- **Decides.** What marketing is allowed to see and use; whether to finish a VFX shot early for a trailer; whether to allow a spoiler into a trailer.
+- **Engine.** A trailer-asset request queue with early-finish VFX cost, a spoiler and overexposure value affecting opening demand, a security surface for leaks, and editorial hours diverted from the cut.
+- **Takes.** Continuous from assembly to release
+- **Television.** Promos are cut weekly from episodes still in post, and the network's promo department is a separate note-giver with its own demands.
+
+### Post schedule and budget management
+
+Builds and defends the post calendar and budget: editorial weeks, facility bookings, VFX cash flow, overtime, and the critical path from lock to delivery.
+
+- **Who.** Post production supervisor, post coordinator and post PA
+- **Decides.** Where to spend; buy editorial weeks or facility days; which vendor; crew size; when to close a cutting room; what to cut when the date moves.
+- **Engine.** A resource calendar of rooms, artists and stages with day rates; a critical path where a slipped lock cascades through every downstream department; IATSE Local 700 minimums and overtime rules; a cash curve against the financing plan.
+- **Takes.** The whole post period: feature 6-12 months; TV 6-12 weeks per episode with heavy overlap
+- **Television.** Television runs several episodes through every department simultaneously, so the schedule is a pipeline with throughput limits rather than a single chain.
+
+### Editorial crew hiring
+
+Hires the editor, additional editors, first and second assistants, VFX editor, music editor and apprentice, and sets rooms, kit rental and season commitments.
+
+- **Who.** Producer and post supervisor hire; picture editors are IATSE Local 700
+- **Decides.** Who cuts the picture; one editor or two; whether to rehire the editor who cut the director's last film; the size of the TV rotation.
+- **Engine.** A named editor pool with skill, speed, genre affinity, director relationships and a weekly quote; hire cost per week; direct effects on assembly date, cut quality and how well the cut survives note rounds.
+- **Takes.** Hired 2-6 weeks before principal photography begins
+- **Television.** A series carries two to four editors in rotation each with an assistant; a feature typically has one editor with one or two assistants.
+
+### Finishing facility selection and booking
+
+Chooses where conform, DI, mastering and QC happen: the family's own lot post department, a major (Company 3, Picture Shop, Harbor, Technicolor- and Deluxe-lineage houses), a boutique, or the studio's in-house facility.
+
+- **Who.** Post supervisor and producer; the lot's post division sells the service
+- **Decides.** In-house versus outside; the colorist by name; theatre versus suite; remote grading; whether to split conform and grade across houses.
+- **Engine.** Facility objects with day rates, colorist rosters, installed systems (Baselight, Resolve, Nucoda, Flame), calendar availability and a turnaround/quality profile. Booking in-house moves money between the family's own companies rather than out.
+- **Takes.** Booked 2-6 months ahead to secure a named colorist
+- **Television.** Series book a standing weekly slot for the season; losing it mid-season is a scheduling crisis.
+
+### Remote review and approval
+
+Streams colour-accurate review to distant approvers (Sohonet ClearView, Streambox, Colorfront Streaming Server, Evercast) so a director on another shoot can approve grade and VFX.
+
+- **Who.** Post supervisor with the facility's engineering team
+- **Decides.** Calibrated stream versus an uncalibrated link; who may approve remotely; whether a remote approval is treated as binding.
+- **Engine.** Approval fidelity per channel (in-room theatre > calibrated stream > laptop > phone) driving a reversal probability when the approved work is later seen properly, plus per-hour streaming and engineering cost.
+- **Takes.** Session length, plus an hour of setup
+- **Television.** Standard practice in episodic because directors have left for other shows by the time their episode finishes.
+
+### Option spaces
+
+**Offline editorial platform** — 7 options
+
+`Avid Media Composer (Ultimate)` · `Avid Media Composer | Enterprise with shared projects` · `Adobe Premiere Pro with Productions` · `DaVinci Resolve Studio (Cut/Edit pages)` · `Apple Final Cut Pro` · `Lightworks` · `EDIUS`
+
+**Editorial storage and collaboration** — 7 options
+
+`Avid Nexis shared storage` · `EditShare` · `Facilis TerraBlock` · `Local RAID with manual bin passing` · `Cloud workstations (AWS/Azure with Teradici or Jump)` · `LucidLink over local caches` · `Hybrid: on-prem media, remote seats`
+
+**Offline proxy codec** — 9 options
+
+`DNxHD 36` · `DNxHD 115 / 175x` · `DNxHR LB` · `DNxHR SQ` · `ProRes Proxy` · `ProRes LT` · `ProRes 422` · `H.264/H.265 proxy` · `Camera native (no proxy)`
+
+**Dailies colour approach** — 6 options
+
+`Camera-baked Rec.709` · `Single show LUT for the whole production` · `Show LUT plus per-shot ASC CDL` · `Full dailies grade by a colorist` · `Log/ungraded to editorial` · `On-set live grade carried forward into dailies and the DI`
+
+**Dailies review and security platform** — 8 options
+
+`PIX` · `Moxion` · `DAX` · `Frame.io` · `Sony Ci` · `Aspera/Signiant plus a secure player` · `Physical drives only` · `Screening room only, no remote access`
+
+**Feature cut sequence** — 6 options
+
+`Editor's assembly to director's cut to producer's cut to studio cut to previews to final` · `Director with contractual final cut (assembly, director's cut, delivered)` · `Director's cut screened straight to the studio, no producer pass` · `Studio takes the cut away and hires a new editor` · `Test-first: preview the director's cut before any producer changes` · `No testing at all, locked from the producer's cut`
+
+**Television cut sequence** — 5 options
+
+`Editor's cut to director's cut to showrunner cut to studio cut to network cut to lock` · `Streaming: editor's cut to director's cut to showrunner cut to platform notes to lock` · `Pilot: extra rounds plus testing plus possible recasting and reshoots` · `Showrunner cuts personally on every episode` · `Co-EP rotation handles cuts, showrunner sees final only`
+
+**Test screening design** — 8 options
+
+`No testing` · `Friends-and-family screening` · `Internal studio screening` · `Single-market recruited research screening (NRG or Screen Engine/ASI)` · `Multi-market recruited series` · `Dial testing` · `Online/streamed research panel` · `Festival work-in-progress premiere`
+
+**Preview card instrument fields** — 9 options
+
+`Overall rating (excellent / very good / good / fair / poor)` · `Definite recommend / probably recommend` · `Best-liked scenes` · `Worst-liked scenes` · `Character likeability ratings` · `Pace (too long / about right / too short)` · `Ending satisfaction` · `Would see again` · `Verbatim comments`
+
+**Response to a studio or network note** — 8 options
+
+`Take it as given` · `Take it partially` · `Cut an alternate and show both` · `Refuse and argue in the room` · `Refuse and escalate above the note-giver` · `Comply now and lobby to restore before lock` · `Comply in the delivered cut, restore in a later home version` · `Go public / threaten to remove your name`
+
+**Reshoot scope** — 9 options
+
+`No reshoot` · `ADR or voiceover only` · `Insert unit only` · `1-3 days of pickups` · `A week or more with the main unit` · `Full sequence replacement` · `New ending` · `Digital fix instead of a shoot` · `Recast and reshoot a role`
+
+**Feature runtime band** — 8 options
+
+`Under 90 min` · `90-99` · `100-109` · `110-119` · `120-134` · `135-149` · `150-169` · `170+`
+
+**Television runtime format** — 7 options
+
+`Broadcast half-hour: 21:00-22:00 content, 3 acts plus tag` · `Broadcast hour: 41:00-43:00 content, 4-6 acts plus teaser` · `Premium cable hour: 52-58 min, no act breaks` · `Streaming half-hour: 24-35 min` · `Streaming hour: 45-70 min` · `Limited series episode: variable by episode` · `Feature-length episode: 75 min+`
+
+**Picture lock strategy** — 6 options
+
+`Hard lock, all reels at once` · `Rolling reel-by-reel lock` · `Lock with VFX shots outstanding` · `Soft lock (locked for sound, trims still allowed)` · `Per-episode lock on a rolling calendar` · `Never formally locked (changes until the DCP deadline)`
+
+**Conform and finishing system** — 7 options
+
+`Blackmagic DaVinci Resolve Studio` · `FilmLight Baselight` · `Digital Vision Nucoda` · `Autodesk Flame` · `Autodesk Lustre` · `Colorfront Transkoder` · `Avid Symphony / Media Composer online`
+
+**Colour pipeline** — 7 options
+
+`ACES 1.3` · `ACES 2.0` · `Camera native (ARRI LogC4, REDWideGamutRGB, S-Gamut3.Cine) with a show LUT` · `Dolby Vision-centric HDR-first` · `Rec.709 SDR-first with an HDR derivative` · `Baselight T-CAM / Truelight` · `Bespoke per-show pipeline`
+
+**Mastering display** — 7 options
+
+`Sony BVM-HX310 / HX3110 (1000 nit LCD)` · `Sony BVM-X300 (1000 nit OLED)` · `Dolby Pulsar (4000 nit)` · `Flanders Scientific XM310K` · `Canon or Eizo reference monitor` · `DCI projector at 48 cd/m² in a DI theatre` · `Consumer OLED (not reference)`
+
+**HDR deliverable set** — 6 options
+
+`SDR only` · `HDR10 only` · `HDR10 plus SDR` · `Dolby Vision plus HDR10 fallback plus SDR trim` · `Dolby Vision plus HDR10+ plus HLG plus SDR` · `HLG only (broadcast)`
+
+**Finishing resolution** — 6 options
+
+`2K DCI (2048x1080)` · `UHD (3840x2160)` · `4K DCI (4096x2160)` · `6K` · `8K` · `Upscaled 2K finish delivered as UHD`
+
+**Frame rate** — 10 options
+
+`23.976` · `24` · `25` · `29.97` · `30` · `48` · `50` · `59.94` · `60` · `120`
+
+**Master aspect ratio** — 11 options
+
+`1.33` · `1.37` · `1.66` · `1.78` · `1.85` · `1.90 (IMAX digital)` · `2.00` · `2.20` · `2.39` · `2.76` · `1.43 (IMAX film)`
+
+**VFX handle length** — 7 options
+
+`0 frames` · `4 frames` · `8 frames` · `12 frames` · `16 frames` · `24 frames` · `Full take`
+
+**Title strategy** — 7 options
+
+`Designed front main titles` · `Front cards over picture` · `Front cards on black` · `Main-on-end only` · `Main-on-end with a designed sequence` · `Series main title sequence (15-90 s)` · `No titles at all until the end crawl`
+
+**Theatrical package** — 9 options
+
+`SMPTE DCP, encrypted` · `SMPTE DCP, unencrypted` · `Interop DCP` · `3D DCP` · `HFR DCP` · `Dolby Vision cinema DCP` · `IMAX DMR version` · `70mm or 35mm film print` · `Laser projection version`
+
+**Distributor master package** — 8 options
+
+`IMF App 2E original version plus supplementals` · `IMF App 5 / ACES archival package` · `ProRes 4444 XQ master` · `ProRes 422 HQ broadcast master` · `XDCAM HD422 broadcast master` · `DNxHR HQX` · `DPX or EXR archival image sequence` · `DCP`
+
+**QC tier** — 6 options
+
+`No QC (accept the risk)` · `Automated only (Baton, Vidchecker, Photon)` · `Automated plus spot check` · `Full human eyeball QC in a calibrated room` · `Distributor QC only` · `Dual QC: facility then distributor`
+
+**Archive plan** — 7 options
+
+`LTO-9 (18 TB native) or LTO-10 (30-40 TB native), three copies across two sites` · `Cloud deep archive (Glacier-class)` · `Facility-held archive` · `Camera originals discarded after delivery` · `Film separation masters or film-out` · `ACES 2065-1 archival master plus project files` · `Master only, no source elements`
+
+**Airline / IFE edit severity** — 5 options
+
+`Unedited` · `Mild (profanity only)` · `Standard IFE (profanity, nudity, drug use, aviation-sensitive content)` · `Aggressive (adds violence and thematic trims)` · `No airline version supplied`
+
+**Territory version** — 7 options
+
+`No alterations` · `Subtitle localization only` · `Dubbed version` · `Trimmed for the classification board` · `Alternate ending` · `In-picture brand or graphic replacement` · `Refuse the market`
+
+**Whose seat the player occupies on this title** — 5 options
+
+`Themselves, as lead actor` · `The mother, running the production company` · `The father, running the lot and the production side` · `The father as writer, defending the script inside the cut` · `Two seats at once on the same title (conflict of interest)`
+
+**Finishing facility choice** — 6 options
+
+`The family's own lot post department` · `A major (Company 3, Picture Shop, Harbor, Technicolor- or Deluxe-lineage)` · `A boutique finishing house` · `The studio's in-house post` · `An overseas facility for cost` · `Fully remote/distributed finishing`
+
+### What gets got wrong
+
+- The editor is hired before principal photography and cuts during it. Any design that begins editorial at wrap has already modelled the industry wrong: the assembly exists days after the last shot because the work was done nightly for months.
+- Dailies colour is not the grade, but it is the expectation the grade is judged against. Six months of watching one look and then seeing another in the DI is how 'the dailies looked better' arguments start, and they cost real approval days.
+- The director's cut period is contractual, not a courtesy. DGA 7-505 gives features ten weeks or one day per two days of scheduled photography, whichever is longer, and episodic one-hours four days. The producer cannot take the cut away during it.
+- Final cut is rare. Most directors never have it; the studio's right to cut is the default. The 'director's cut' sold on disc is usually a later assembly, not the DGA cut, and the two are different objects.
+- Picture lock is a financial event dressed as a creative one. After lock, one changed frame generates conform, sound conform, music re-timing, caption re-timing, VFX re-pulls and DI re-grades, and the cost scales with how many departments have already committed.
+- A change list is measured in frames and reels, and is the mechanism by which every department stays in sync. If the simulation has no change-list object, post-lock changes will be free, and the whole economics of locking collapses.
+- Test screening scores are distributions, not a number. Top-two-box overall and 'definite recommend' move independently, and market-to-market variance is large enough that a single screening is a bad basis for a decision — which is exactly why studios act on it anyway.
+- Focus groups over-weight the loudest recruit. Recutting to a focus group is one of the standard ways a film gets worse while the next screening's score stays flat.
+- Reshoots are constrained by actor availability, hair, weight and beard continuity, struck sets and re-hire cost, not just money. A game where reshoots are a cash button is missing the actual decision.
+- 'Additional photography' is planned and budgeted; 'reshoots' is what the press calls the same machinery when it leaks. The second framing costs the film reputation months before anyone sees it.
+- Runtime has a revenue function, not just a taste function. Past roughly 150 minutes exhibitors lose a showing per screen per day, and that is the real content of the argument between distribution and the director.
+- Television runtime is a legal and contractual clock, not a preference. Broadcast hours run about 41-43 minutes of content in 4-6 acts with specified black between them; missing the clock by seconds fails delivery and the episode does not air.
+- VFX finals routinely arrive after picture lock and during the DI. 'Shot not final at DI' is the normal state, not the exception, and the schedule must have a representation for it including a fallback version per shot.
+- Handles are money paid in advance for the right to change your mind. Trim beyond them after turnover and the plate is re-pulled and the work is redone at full price.
+- Conform is where the offline's sins surface. Retimes, stabilisations, resizes, third-party plugins and mixed-format sources frequently do not translate between systems, and every mismatch is artist hours nobody budgeted.
+- HDR is not a filter applied to SDR. It is a separate grade on a different display with its own metadata, and the SDR version most of the audience sees may be a trim derived from it rather than a graded pass of its own.
+- Model the version the viewer actually sees. Almost nobody sees the theatrical P3 grade; they see an SDR trim on a badly configured consumer television, a phone, or an airline seatback. If the audience model reads only one quality number, half the finishing work is decorative.
+- Textless elements can only be preserved as they are created. Once the master is flattened you cannot recover a clean background, and its absence is a hard delivery failure discovered weeks later by a territory.
+- Delivery is a payment gate. The last tranche of money and sometimes the exercise of rights release only on a complete delivery schedule, including unglamorous items like the combined continuity and spotting list and the music cue sheet.
+- QC failures are routine rather than exceptional, and the fail-fix-resubmit loop should be budgeted in days and dollars by default. A production that never fails QC is a production that skipped QC.
+- 23.976 versus 24 is a real fault line. Theatrical is 24, most TV and streaming masters are 23.976, and a pipeline that mixes them drifts about 3.6 seconds per hour — which shows up as a sync failure at layback, not at the point of the mistake.
+- Credits are contracts. Card order, size percentage and duration are negotiated obligations; a wrong crawl is a breach, and a WGA credit arbitration can change the names on the picture days before delivery, after the titles were designed and graded.
+- A contractual rating obligation turns CARA into an editorial force. A PG-13 requirement and an R result means cuts weeks before release, with a one-to-two week loop per resubmission and a slow appeal, on a calendar that has no slack left.
+- In television the director leaves after their cut and the showrunner finishes the episode. Giving TV directors feature-style authority over the finished episode is one of the most common ways fiction about the industry gets it wrong.
+- Assemblies are always long. The gap between the editor's assembly and the release runtime is typically 20-50%, and that gap, not the script page count, is what the cutting process is actually working on.
+- Storage and render time are constraints, not flavour. A 4K HDR feature's DI, VFX finals and deliverables run to tens or hundreds of terabytes, and the delivery schedule is partly a render schedule with a farm size and a queue.
+- The archive decision made at delivery sets library value decades later. Discarding camera originals or VFX source saves a few thousand now and forecloses every future remaster, format upgrade and restoration of that title.
+
+---
+
+## 18. Post: sound and music
+
+### Sound Turnover (picture lock handoff)
+
+Editorial exports AAF/OMF of all audio with handles, a burn-in QuickTime with reel/TC, EDLs, change notes, a guide mix and a dialogue-only pass.
+
+- **Who.** Assistant Picture Editor prepares; Post Production Supervisor schedules; Supervising Sound Editor receives. Mother's company signs off the spend; father's lot books its stages against the date.
+- **Decides.** How locked the lock is; handle length; per-reel or whole-show turnover; whether temp music/FX go with it; how many prep days before the stage; which facility gets it.
+- **Engine.** A Turnover object: reel list, frame rate and TC start per reel, handle length in frames, track count, guide flag, list of production takes referenced. Later picture edits diff against this baseline and set a dirty flag on every affected cue.
+- **Takes.** 1-3 days to prepare; feature turnover typically 8-12 weeks before release; TV episode 1-2 weeks before mix.
+- **Television.** TV turns over episodically against a soft lock, and network/streamer notes routinely re-open a locked episode after sound work has started.
+
+### Sound Spotting Session
+
+Watch the cut and stop on every place needing sound: design elements, ADR, backgrounds, foley specifics, hard effects. Notes become the department cue lists.
+
+- **Who.** Supervising Sound Editor and Sound Designer lead; Director, Picture Editor and Producer attend. On a lot picture the mother's company producer sits in; the father attends only if the script is being changed.
+- **Decides.** What is designed vs. pulled from library; which scenes get custom recording; how much ADR to attempt; the sonic vocabulary for every invented object.
+- **Engine.** Cue table keyed to TC, each row tagged department (DX/ADR/FOL/SFX/BG/DSN), priority, estimated hours, assigned editor. Summed estimated hours vs. booked crew-days produces the schedule and the overage risk number.
+- **Takes.** 3-6 hours for a feature; 1-2 hours per TV episode, often remote.
+- **Television.** Series run a standing sound team with a house vocabulary; spotting is a short weekly call, not a discovery session.
+
+### Music Spotting Session
+
+Run the cut marking where music starts and stops, what it plays and what it must not say. The Music Editor logs every in/out to the frame and numbers cues by reel (1M1, 2M3).
+
+- **Who.** Composer, Music Editor, Director, Picture Editor, Music Supervisor, studio music executive. Mother's company approves the resulting minute count because it sets the music cost.
+- **Decides.** Cue boundaries and count; total minutes of score; where songs replace score; whether the temp stays; the dramatic job of each cue.
+- **Engine.** Cue records: number, reel, start/end TC, duration, intent tag, instrumentation hint, score-or-song flag. Total minutes drives composer workload, session hours, copying pages and the whole music budget.
+- **Takes.** 4-8 hours for a feature, often over two days; 1-2 hours per TV episode.
+- **Television.** TV spotting is often a 45-minute video call per episode with 4-10 days to deliver 20-40 minutes of music; features get weeks per reel.
+
+### Change Notes and Conform
+
+Every post-turnover picture change is issued as an EDL-based change list, and all sound and music tracks are conformed frame-accurately, with re-cuts where a change lands mid-cue.
+
+- **Who.** Assistant Sound Editor and Music Editor conform; Assistant Picture Editor issues the change list; Post Supervisor rules on whether the change is accepted.
+- **Decides.** Whether to accept a change at all; conform by hand vs. automated (Conformalizer, Matchbox); whether music is edited to fit or re-recorded.
+- **Engine.** Per-change record: reel, old/new TC, delta frames, affected cues by department. Cost = hours x rate. Quality penalty rises sharply if the change lands inside a completed premix or a recorded orchestral cue.
+- **Takes.** Hours to days per change; a late reel change can cost 1-3 stage days.
+- **Television.** TV lives on change notes; post-mix notes from the network force paid fix days into an already-booked weekly stage.
+
+### Production Track Audit
+
+Read the reports, pull every iso (boom, each lav, mix), audition alt takes, and flag hum, wardrobe rustle, aircraft, camera noise and lines lost to playback or crowd.
+
+- **Who.** Supervising Sound Editor and Dialogue Editor, reading the production Sound Mixer's sound reports.
+- **Decides.** For each line: which source is the keeper, whether the scene is salvageable, whether to request alt takes from picture editorial, whether it goes to ADR.
+- **Engine.** Line-level record: available sources, SNR estimate, noise-type tags, intelligibility score, performance score inherited from the take, ADR-required flag. Feeds the ADR count and the dialogue editing hour estimate.
+- **Takes.** 2-5 days per feature; half a day per TV episode.
+- **Television.** Series carry known problem sets (a noisy standing set, an HVAC hum) that repeat weekly and can be fixed once at the source.
+
+### Dialogue Editing
+
+Split every line to its own track by character and mic, remove clicks, pops and smacks, fill room tone across edits, smooth perspective, build alternates, and lay ADR against production.
+
+- **Who.** Dialogue Editor (Motion Picture Editors Guild Local 700), under the Supervising Sound Editor.
+- **Decides.** Track layout by character and mic; how much to clean vs. leave for the mixer; where alt takes go in; which room tone covers which cut.
+- **Engine.** Per-line fades and handles, per-scene room-tone availability, and a continuity score penalising unmatched tone across cuts. Premix hours needed scale inversely with editing quality, so the trade is explicit in the schedule.
+- **Takes.** Feature: 4-8 weeks for 1-2 editors; TV hour: 3-6 days.
+- **Television.** TV dialogue editing is one editor per episode on a fixed weekly turnaround; features assign editors per reel.
+
+### Dialogue Restoration and De-noise
+
+Spectral repair and noise suppression: broadband and tonal removal, de-rustle, de-click, de-plosive, dereverb, and machine-learning dialogue isolation to lift a line out of an unusable background.
+
+- **Who.** Dialogue Editor, or a dedicated restoration specialist on shows with bad production tracks.
+- **Decides.** Tool and depth per line; how much artefact is acceptable; whether restoration saves an ADR line and therefore an actor's session and a stage day.
+- **Engine.** Per-line noise floor in dB, noise character, reduction amount applied, and an artefact score rising nonlinearly with reduction. Past a threshold the line audibly 'swims' and gets flagged in review. Restoration hours vs. ADR cost is a real, priced trade.
+- **Takes.** 5 minutes to 2 hours per line; can add 1-3 weeks to a feature.
+- **Television.** TV has no time for heavy restoration; the same line would simply be ADR'd or covered.
+
+### Perspective, Worldizing and Futz Design
+
+Match ADR and production to room and lens with reverb, EQ and distance; worldize by replaying audio in a real space and re-recording it; futz builds phone, TV, PA, radio and helmet voices.
+
+- **Who.** Dialogue Editor and the dialogue Re-recording Mixer; Sound Designer for processed voices.
+- **Decides.** Convolution IR vs. algorithmic reverb vs. real-room worldizing; how hard to futz; whether a phone voice is recorded through a real handset.
+- **Engine.** A room model per set (IR or RT60, size, materials, mic distance). Each ADR line carries a dryness value; match quality is the distance between its room model and the scene's. Futz is a named filter/codec chain with bandwidth parameters.
+- **Takes.** Folded into dialogue editing and the dialogue premix; a worldizing session is a day.
+- **Television.** TV reuses a fixed library of set IRs week to week; features build them per location.
+
+### ADR Cueing
+
+Every replacement line is numbered, timed to the frame, transcribed and given a reason code (technical, performance, clarity, censorship, added line). The ADR cue sheet goes to stage, actor and production.
+
+- **Who.** ADR Supervisor, or ADR Editor, with the Supervising Sound Editor. New lines written in post come from the writer - in this fiction, the father.
+- **Decides.** Which lines to cue and in what order; the reason for each; whether to add newly written lines in post; how many lines to attempt per actor-hour.
+- **Engine.** ADR cue records: number, character, TC in/out, text, reason, priority. Session throughput in lines/hour is a function of actor skill, line length and reason type. Needed-but-uncued lines resurface as mix problems later.
+- **Takes.** 1-3 days per feature; 2-4 hours per TV episode.
+- **Television.** TV cues are dominated by clarity and censorship passes; features cue for performance far more often.
+
+### ADR Scheduling and Booking
+
+Find the actor, find a stage near them, clear it against their current job, and book stage, ADR Mixer, recordist and a video link for the director.
+
+- **Who.** ADR Supervisor and Post Production Coordinator, with talent agents; producer (mother) approves cost; father's lot sells the stage if it is on the lot.
+- **Decides.** Stage city and facility; date; whether to fly the actor; whether the director attends in person, remotely or not at all; block length booked.
+- **Engine.** Actor availability calendar, geography, travel and per-diem cost, contractual free looping days vs. paid days, stage booking calendar with day rates and cancellation windows. A missed window pushes the mix and costs stage days.
+- **Takes.** 1-4 weeks lead; sessions booked in 2, 4 or 8 hour blocks.
+- **Television.** Series regulars loop on the same lot between shoot days; guest cast scattered across the world are the schedule risk every week.
+
+### ADR Recording Session
+
+The actor watches the loop, hears the guide, and performs to picture until sync and performance land. Takes are recorded, marked and circled line by line.
+
+- **Who.** ADR Mixer (IATSE Local 695) and ADR Recordist on the stage; ADR Supervisor and Director run the room; the Actor (the player, in their own role) performs.
+- **Decides.** Mic choice and distance to match production; cueing method; number of takes; which take is circled; whether to record wild alternatives and newly written lines.
+- **Engine.** Per-take sync error in frames, performance score, room-match score. The actor's ADR skill stat plus a fatigue curve lowers error across takes; each take spends stage minutes. The circled take carries its error values downstream.
+- **Takes.** 2-8 hours per principal; roughly 15-40 lines per hour depending on difficulty.
+- **Television.** TV runs shorter, denser sessions with the showrunner rather than a director, and often no picture-department attendance at all.
+
+### Remote ADR
+
+Audio sent over Source-Connect, ipDTL or a conference link with local recording; the far-end room records the master and delivers the files.
+
+- **Who.** ADR Mixer at the host stage, a local engineer at the far end, the Actor wherever they are.
+- **Decides.** Whether remote quality is acceptable; who records and owns the master; whether the line is re-done properly later.
+- **Engine.** Far-end room quality parameter, codec and latency parameters, mic mismatch penalty, and a persistent 'cannot match production' risk that the dialogue mixer pays for on the stage. Cheaper and faster, worse match.
+- **Takes.** 1-3 hours; bookable in days rather than weeks.
+- **Television.** Remote ADR is now the default in television and the exception on features with theatrical release.
+
+### Loop Group / Group ADR
+
+Record crowd, background conversation, reactions, efforts, hospital pages, radio chatter and specific off-camera lines to picture, in layered passes.
+
+- **Who.** Loop Group Leader and 4-12 specialist voice performers; ADR Supervisor directs; ADR Mixer records.
+- **Decides.** Group size; period, region and language specificity; number of passes (singles, pairs, full group); which lines are featured and therefore need content approval.
+- **Engine.** Group size x hours x rate; a crowd density model per scene comparing bodies on screen to voices recorded; a period/region authenticity score; pass count producing layers the mixer can thin or thicken.
+- **Takes.** 1-3 days per feature; 2-4 hours per TV episode.
+- **Television.** Procedurals and medical series keep a standing loop group on a weekly call; features hire a group for a block.
+
+### ADR Editing and Sync Fit
+
+Cut circled takes into the dialogue tracks, nudge and time-warp to lip sync, comp words across takes, match level and tone to surrounding production, and flag lines that still read as ADR.
+
+- **Who.** ADR Editor (Local 700).
+- **Decides.** Manual sync vs. algorithmic alignment (VocALign, Revoice Pro, Auto-Align Post); how much warping before it sounds unnatural; whether to send a line back for re-record.
+- **Engine.** Per-word sync error in frames, warp amount and a resulting artefact value, plus a blend score against neighbouring production lines. Lines above the artefact threshold get caught by the director at playback.
+- **Takes.** 2-4 hours of editing per recorded hour; 1-3 weeks per feature.
+- **Television.** TV fits ADR in hours, leaning harder on alignment software and accepting looser sync.
+
+### Voice Casting, Doubles and Digital Replicas
+
+Cast voice doubles for actors who cannot return, loop-group specialists for named roles, creature and monster vocals, and any synthetic or replica voice work.
+
+- **Who.** ADR Supervisor, Director and Casting Director; business affairs handles consent; SAG-AFTRA terms govern.
+- **Decides.** Real double vs. digital replica of the original voice; consent terms and compensation; whether the audience will notice; credit.
+- **Engine.** Consent records per performer with scope, term and payment; a detectability score for doubles and synthesis; a legal and publicity risk value when consent is absent or exceeded; cost delta against bringing the original actor back.
+- **Takes.** Days to weeks; consent paperwork gates the session.
+- **Television.** Series face this constantly with departed or deceased cast; features face it once, usually late and expensively.
+
+### Foley Spotting
+
+Reel by reel, list everything to be performed: every footstep pass by character and surface, every prop handle, every cloth move, every specific called out at the sound spotting session.
+
+- **Who.** Foley Supervisor or Foley Editor with the Supervising Sound Editor.
+- **Decides.** What is foleyed vs. cut from library; which characters get individual shoe treatment; how complete to go, knowing foreign markets need everything.
+- **Engine.** Per-scene cue list by category (feet/props/cloth), surface type, shoe type, and move counts. Coverage completeness feeds the M&E check directly - missing foley becomes a hard delivery failure, not a cosmetic one.
+- **Takes.** 1-2 days per feature; 2-3 hours per TV episode.
+- **Television.** TV foley is often spotted straight onto the stage with no separate session.
+
+### Foley Footsteps
+
+Perform every character's walk to picture in the pits - concrete, wood, gravel, dirt, tile, grass, marble, snow, water, metal - with the right shoes, weight and gait.
+
+- **Who.** Foley Artist, usually two working as a team, on a foley stage.
+- **Decides.** Shoe per character; surface per shot; weight and attitude of the walk; whether background characters get their own passes or are covered by the mains.
+- **Engine.** Pit inventory belonging to the facility, shoe inventory, per-character gait profile. Per-step sync accuracy and a performance-character score. A stage missing a needed surface forces substitution or a costed temporary build.
+- **Takes.** A feature runs 8-20 stage days across all foley; a TV hour 1.5-3 days.
+- **Television.** TV foley is one or two days per episode covering everything; features walk the same scene repeatedly for character and perspective.
+
+### Foley Props and Specifics
+
+Perform every object interaction: doors, drawers, glass, paper, weapons, kitchenware, car doors, chains, body falls, punches, and every specific the spotting session called out.
+
+- **Who.** Foley Artist, drawing on the stage's prop collection.
+- **Decides.** Which real object to perform with (celery for a bone break is a craft decision, not a joke); number of passes; whether a prop must be sourced or built.
+- **Engine.** Prop library tagged by material and size; a mapping from the on-screen object to the performed object with a plausibility score; sourcing cost and lead time for props the stage lacks.
+- **Takes.** Interleaved across the same foley stage days.
+- **Television.** TV leans on library hard effects for anything a prop pass would slow down.
+
+### Foley Cloth
+
+Perform clothing and body movement: rustle under every gesture, leather, armour, nylon, denim, a coat coming off. Usually the last, quietest and first-cut pass.
+
+- **Who.** Foley Artist.
+- **Decides.** Fabric per costume; how present cloth should be; whether to record it at all on a dialogue-heavy show with no budget.
+- **Engine.** Costume-to-fabric mapping per character per scene, movement intensity read from the cut, and a completeness value feeding the M&E gap map. Cloth is the pass most often skipped and the one foreign dubs miss first.
+- **Takes.** Typically 20-30% of foley stage time.
+- **Television.** Cloth is routinely omitted in television and routinely demanded by the same show's international deliverable.
+
+### Foley Recording
+
+Mic the pits and the artist, run to picture in loops, record each pass to its own tracks in close and room perspectives, and log every take against the cue list.
+
+- **Who.** Foley Mixer (IATSE Local 695) and Foley Recordist on the foley stage.
+- **Decides.** Mic selection and distance; dead vs. live room; how many perspectives to capture; whether footsteps get a stereo pair for the immersive mix.
+- **Engine.** Stage parameters: pit count, room RT60, mic set, tracks per pass. A recording quality value carried into the foley premix. Extra perspectives cost stage minutes and buy mix flexibility later.
+- **Takes.** Same stage days as the performance; 1-2 hours setup per day.
+- **Television.** TV records one perspective; features often record two or three for Atmos placement.
+
+### Foley Editing
+
+Tighten performed takes to frame-accurate sync, remove bad steps, fill gaps, level-match, and build mix-ready tracks split feet, props and cloth.
+
+- **Who.** Foley Editor (Local 700).
+- **Decides.** How tight to sync (dead-on vs. a frame loose for naturalism); what to fix vs. re-perform; the track layout handed to the stage.
+- **Engine.** Per-cue sync error, level consistency, and a track-layout object the mixer consumes. Weak editing burns premix hours; the trade between editing days and stage days is explicit and priced.
+- **Takes.** 1-2 editing days per stage day; 2-4 weeks per feature.
+- **Television.** TV foley editing is same-week and minimal; features re-edit foley after every picture change.
+
+### Hard Effects Cutting
+
+Cut every sync effect that is not foley: doors and cars in the wide, gunfire, impacts, glass, explosions, machinery, screen graphics and devices, layered from library and custom recordings.
+
+- **Who.** Sound Effects Editor (Local 700), several on a large show, under the Supervising Sound Editor.
+- **Decides.** Library vs. custom per event; number of layers per hit; realistic vs. stylised; how much is pre-built vs. left open for the mixer.
+- **Engine.** Per-event layer stack, each layer an asset with licence terms and metadata, plus sync frame and pitch/time treatment. Layer count and asset provenance both matter: an unlicensed library asset is a delivery failure.
+- **Takes.** Feature: 4-8 weeks across 2-6 editors; TV hour: 3-5 days.
+- **Television.** TV cuts effects almost entirely from library at speed; features record and design what they cannot buy.
+
+### Sound Design
+
+Create sounds that do not exist - creatures, vehicles, weapons, magic, technology, dream states - by recording sources and processing them, and define the show's sonic signature.
+
+- **Who.** Sound Designer, often the Supervising Sound Editor on smaller shows.
+- **Decides.** The design language per element; sources to record; processing chain; how much is real and how much invented; whether a designed sequence replaces score entirely.
+- **Engine.** Design assets with lineage (source recordings plus processing chain), a distinctiveness score, and an iteration counter. Each rejected director pass costs days. Designed sequences can substitute for scored minutes, moving cost between departments.
+- **Takes.** Weeks to months; a tentpole creature can take 4-12 weeks on its own.
+- **Television.** Series design a palette once in the pilot and reuse it; genre features design continuously through post.
+
+### Backgrounds Editing
+
+Lay the continuous world under every scene: rooms, streets, wind, traffic, birds by region and time of day, air handling, distant city, ocean, crowd beds - and keep them continuous across cuts.
+
+- **Who.** Backgrounds (ambience) Editor.
+- **Decides.** Geographic and time-of-day accuracy; density; mono, stereo, 5.1 or Atmos bed sources; whether a room sounds like a room or is silent by design.
+- **Engine.** Per-scene environment record: location type, region, season, time of day, interior/exterior, window state. Background assets carry the same tags; a mismatch (English birdsong in Arizona) is a discoverable, callable error.
+- **Takes.** Feature: 2-4 weeks; TV hour: 2-4 days.
+- **Television.** Series build a reusable BG library per standing set and location; features build per scene.
+
+### Custom and Field Recording Sessions
+
+Go record what the show needs: car runbys and onboards at a track, weapons at a range, animals, machinery, stadium crowds, and impulse responses of real rooms.
+
+- **Who.** Sound Designer or Recordist, with a vehicle coordinator, armourer or animal wrangler as needed, plus a safety officer.
+- **Decides.** What is worth a session; location and permits; mic array (how many rigs on a car); pass count; whether a picture vehicle or a stand-in is used.
+- **Engine.** Session cost (crew, travel, permits, insurance, vehicle and armourer fees), yield in usable assets, and an exclusivity value - assets no other production owns. Weather and permits can fail the day and return nothing.
+- **Takes.** 1-5 days per session; a tentpole may run 10-30 recording days.
+- **Television.** Almost never done on episodic television except on a pilot or a high-end limited series.
+
+### Sound Library and Metadata Management
+
+Ingest, name, tag and embed metadata (BWF iXML, Universal Category System), manage commercial library licences, and keep the whole collection searchable on the facility server.
+
+- **Who.** Sound Librarian or Assistant Sound Editor; facility owner (the father's lot, if in-house) owns the asset.
+- **Decides.** Naming and taxonomy; which commercial libraries to buy; reuse rights across shows; what becomes a permanent studio asset.
+- **Engine.** Asset table with category, source, licence type and per-show usage rights. Search quality directly changes editor hours per cue. A well-built library is a rentable lot asset with its own revenue line.
+- **Takes.** Continuous; 1-2 days to ingest each recording session.
+- **Television.** Series build a show library that becomes an asset across seasons and spin-offs.
+
+### Mix Prep and Track Layout
+
+Deliver a stage-ready session: track order, stem routing, naming, bus and VCA structure, plug-in presets, guide track, satellite/playback rig setup, and printed cue sheets per reel.
+
+- **Who.** Assistant Sound Editors and department heads, working to the Re-recording Mixers' template.
+- **Decides.** Track layout standard; how much is pre-mixed in the box; how much processing is baked in vs. left open; session architecture across machines.
+- **Engine.** A session object with per-department track counts and routing to stems, plus a stage-readiness score. A non-compliant session costs the first half-day of the mix; a compliant one converts directly into creative time.
+- **Takes.** 2-5 days before the stage, then ongoing.
+- **Television.** TV uses a fixed series template that never changes, which is why a TV mix can start at 9am and finish that day.
+
+### Temp Mix / Preview Mix
+
+A fast mix of unfinished material, usually 5.1, so the film can be screened for a test audience or for executives long before anything is finished.
+
+- **Who.** Re-recording Mixers on a smaller stage; Supervising Sound Editor; Music Editor with temp score; the studio calls the preview.
+- **Decides.** How much to fake; whether to preview at all; which scenes to finish properly for the screening; whether to protect the final from what the temp sets up.
+- **Engine.** A temp mix quality parameter feeding audience test scores, plus a temp-attachment value that rises with each screening and lowers approval probability for replacements. Costs stage days out of the finishing budget.
+- **Takes.** 3-8 days per preview; features typically run 1-4 previews.
+- **Television.** Rare in television; streaming pilots and event series occasionally test.
+
+### Dialogue Premix
+
+Balance and process every line - EQ, de-essing, compression, noise suppression, reverb matching, level automation - so dialogue is intelligible and consistent before anything joins it.
+
+- **Who.** Re-recording Mixer on the dialogue and music side, with the Dialogue Editor and Supervising Sound Editor on the stage.
+- **Decides.** Processing chain per character and scene; how loud dialogue sits; where production beats ADR; what to do with lines that still do not work.
+- **Engine.** Per-line output loudness, post-processing intelligibility score, and tone continuity across cuts. Intelligibility becomes a measurable deliverable - 'I can't hear the dialogue' is a failure state with review and audience consequences.
+- **Takes.** Feature: 5-15 stage days; TV hour: 0.5-1.5 days.
+- **Television.** TV premixes and finals in the same room on the same day, usually with one mixer running all three stems.
+
+### Effects and Foley Premix
+
+Balance hundreds of effects and foley tracks into manageable sub-stems, set perspective and panning, carve space against dialogue, and decide what actually survives.
+
+- **Who.** Re-recording Mixer on the effects and foley side.
+- **Decides.** What is cut entirely; layer balance; dynamics; which elements earn Atmos objects; how loud the world is against the voice.
+- **Engine.** Stem architecture with per-element gain and pan automation, a masking calculation against the dialogue stem, and an element-survival record. Editors can see what got muted, which carries a real relationship cost.
+- **Takes.** Feature: 5-15 stage days; TV hour: 0.5-1 day.
+- **Television.** On TV one mixer does dialogue, effects and music, so premixing is compressed into a single pass.
+
+### Music Premix
+
+Bring score and song stems onto the stage, balance them internally, place them against dialogue and effects, edit cues to picture, and shape the score's dynamics reel by reel.
+
+- **Who.** Music Editor with the music Re-recording Mixer; the Composer attends; the studio music executive attends playbacks.
+- **Decides.** Internal stem balance within cues; cue edits; where music ducks; whether a cue is pulled entirely on the stage.
+- **Engine.** Score stems per cue with independent automation, a cue-survival record, and a per-cue conflict score against dialogue and effects. Pulled cues still carry their full write-and-record cost, so sunk cost is visible in the ledger.
+- **Takes.** Feature: 3-8 stage days; TV hour: a few hours.
+- **Television.** TV composers rarely attend the dub; the music editor defends the score alone or not at all.
+
+### Final Mix (the Dub)
+
+Combine the dialogue, music and effects/foley premixes into the finished soundtrack reel by reel, with the director making every final balance decision in the room.
+
+- **Who.** Two, sometimes three, Re-recording Mixers (Local 700) on a dub stage; Director, Supervising Sound Editor, Producer and studio executives attend. The stage may be the father's.
+- **Decides.** Every relative level in the picture; dynamic range; what plays and what disappears; the pace of the sound; when a reel is declared finished.
+- **Engine.** Reel-by-reel progress against booked days, a live notes queue from playbacks, and per-decision deltas on stems. Mix state must be recallable per reel so notes passes can revisit. Overage = day rate x extra days charged to the picture.
+- **Takes.** Feature: 10-25 stage days plus premix; TV hour: 1-2 days; half-hour comedy: 0.5-1 day.
+- **Television.** TV mixes in a fixed weekly slot with the showrunner in the chair, one mixer in the box, and no premix block at all.
+
+### Immersive Authoring (Atmos object panning and rendering)
+
+Assign sounds to bed channels or to objects with X/Y/Z metadata, automate object trajectories, monitor the room render, and record the immersive master.
+
+- **Who.** Re-recording Mixers with the Dolby Atmos Renderer operated by the stage recordist; a Dolby sound consultant attends on tentpoles.
+- **Decides.** What becomes an object vs. lives in the bed; how aggressive the height and surround use is; binaural render mode per object; whether the picture is immersive at all.
+- **Engine.** 128 renderer inputs. Cinema: a 9.1 bed plus up to 118 objects, rendered to as many as 64 speaker feeds. Home: a 7.1.2 bed plus objects. Hold per-object trajectories, binaural mode, and the playback room's speaker layout.
+- **Takes.** Runs inside the final mix; adds roughly 10-25% to stage time (estimate).
+- **Television.** TV Atmos is mixed near-field in 7.1.4 rooms with a home renderer; theatrical uses the cinema renderer and a large stage.
+
+### Mix Review and Notes Passes
+
+Play the mix reel by reel or in full, collect notes from the room and from remote executives, and run fix passes against them.
+
+- **Who.** Director, Producer (mother's company), studio or network executives, Supervising Sound Editor; the mixers execute.
+- **Decides.** Which notes to take; whose note wins when the director and the studio disagree; whether to spend a day fixing or to defend the mix.
+- **Engine.** Note objects with author, authority weight, timecode and cost-to-address in stage hours. Ignoring a high-authority note carries a political cost; addressing every note burns the schedule. Both consequences must be modelled.
+- **Takes.** 1-2 days per playback pass; 2-5 passes on a typical feature.
+- **Television.** TV notes arrive as written lists from the network after delivery, and fixes happen without anyone in the room.
+
+### Print Master, Fold-down and Re-renders
+
+Produce the definitive files: theatrical print master, 7.1 and 5.1 re-renders from the immersive master, Lt/Rt or 2.0 downmix, binaural where required, each checked for level and phase.
+
+- **Who.** Re-recording Mixers with the stage recordist/mastering engineer.
+- **Decides.** Whether fold-downs are automatic renders or separately mixed passes; downmix coefficients; which formats are hand-checked.
+- **Engine.** A render graph from the immersive master to every derived format, with per-format loudness and true-peak measurement and a quality delta when an automatic fold-down replaces a hand-mixed pass.
+- **Takes.** 1-3 days per feature; hours per TV episode.
+- **Television.** TV renders automatically as a matter of course; features that do the same get punished in home review.
+
+### Stems and Splits Delivery
+
+Print separated dialogue, music and effects stems, plus foley and optional sub-stems, in every required format - the elements that make all future re-versioning possible.
+
+- **Who.** Re-recording Mixers print; Post Supervisor and the studio delivery department receive.
+- **Decides.** How many stems and how finely split; whether stems are printed in immersive, 7.1 and 5.1; naming and channel order.
+- **Engine.** Stem set definitions per format with channel mapping and print time. A check that stems sum back to the mix - a plug-in left on the master bus produces stems that do not, which is a classic and expensive failure.
+- **Takes.** 1-3 days, often printed overnight.
+- **Television.** TV prints stems every week as a condition of delivery; features print once at the end and pay if they got it wrong.
+
+### M&E and Fully-Filled M&E
+
+Build a music-and-effects mix with all English dialogue removed and every other sound intact, filling any effect or foley that existed only inside the production dialogue track.
+
+- **Who.** M&E Mixer or Re-recording Mixer with a dedicated M&E Editor and the Supervising Sound Editor.
+- **Decides.** How much filling; whether to supply an optional dialogue track for unintelligible on-camera crowd; how to handle on-camera singing and sync effects buried under dialogue.
+- **Engine.** A gap map of every place where removing dialogue removes something else, a fill-completeness score, and a QC pass that can reject the M&E and cost stage days. This is the most commonly failed deliverable in post sound.
+- **Takes.** 2-6 stage days per feature; 0.5-1 day per TV episode.
+- **Television.** TV prints M&E the same day as the mix as a standing obligation; features get a dedicated block after the final.
+
+### Foreign Dub Support
+
+Supply dubbing scripts, M&E, stems and cue sheets; territories cast voices, record ADR in their language, and mix a DM&E against the delivered M&E.
+
+- **Who.** The studio's localization group and territory dubbing vendors; the original Supervising Sound Editor consults.
+- **Decides.** Which territories get a full dub vs. subtitles; whether the original team reviews the foreign mixes; how strict the sync fidelity requirement is.
+- **Engine.** Per-territory job with cast, studio, budget and schedule. The quality of the delivered M&E hard-caps achievable dub quality. Immersive dub deliverables come back as ADM BWF under current streamer specs.
+- **Takes.** 2-6 weeks per territory, running after the original mix.
+- **Television.** Streaming series dub into 20-30 languages per season on a fixed cadence; features dub into a shorter list tied to release dates.
+
+### Loudness Compliance and Audio QC
+
+Measure integrated and dialogue-gated loudness, true peak and channel configuration against the outlet's spec, and run a full-length listen for dropouts, clicks, sync drift and channel errors.
+
+- **Who.** QC Operator at the facility or the distributor's QC vendor; mixers execute fixes.
+- **Decides.** Nothing creative, but the fix strategy on a failure - re-mix vs. global trim - has real quality consequences and real cost.
+- **Engine.** Targets per outlet: Netflix -27 LKFS +/-2 dialog-gated, true peak at or below -2 dBTP, measured off the 5.1 re-render; US broadcast ATSC A/85 -24 LKFS +/-2; EBU R128 -23 LUFS; theatrical has no target; trailers cap at 85 Leq(m).
+- **Takes.** One pass at real time plus report turnaround; 1-3 days.
+- **Television.** Broadcast and streaming QC is a hard gate with rejection and re-delivery; theatrical QC is the studio screening plus a DCP check.
+
+### DCP Audio Layout and Theatrical Print Master
+
+Wrap the audio into the DCP's 16-channel MainSound track file in the standard channel order, with the immersive bitstream carried as a separate track file for Atmos releases.
+
+- **Who.** Mastering engineer at the DCP facility, working from the print master; the Re-recording Mixers approve.
+- **Decides.** Which formats to master (5.1, 7.1 DS, Atmos, IMAX, Auro-3D, DTS:X); whether HI and VI-N accessibility tracks are produced.
+- **Engine.** Channel map per ISDCF Doc 4: 1 L, 2 R, 3 C, 4 LFE, 5 Lss, 6 Rss, 7 HI, 8 VI-N, 11 Lrs, 12 Rrs, 13 motion data, 14 sync signal, 15 sign language video. Immersive rides as SMPTE ST 2098-2 IAB in an IMF or DCP.
+- **Takes.** 1-3 days per version.
+- **Television.** Does not exist in television; the equivalent is an IMF package with its own audio channel layout.
+
+### Trailer and Marketing Mix
+
+Marketing cuts trailers and spots with their own design and music, mixed to the trailer standard and submitted for loudness certification before they can play in theatres.
+
+- **Who.** A trailer house's Sound Designer and Mixer, separate from the film's sound team; studio marketing approves; certification is external.
+- **Decides.** Whether the film's sound team is involved at all; trailer music (usually not the score); how hard to push against the cap.
+- **Engine.** An independent asset pipeline with its own licences and its own clearance, plus a certification check at 85 Leq(m) under the TASA standard. A failed certification blocks the trailer from release prints.
+- **Takes.** 1-3 days per trailer; dozens of spots across a campaign.
+- **Television.** Network on-air promo groups cut promos to broadcast loudness spec, weekly, with no certification body.
+
+### Near-Field / Home Mix
+
+Re-balance the theatrical mix for home listening: dialogue up, dynamic range reduced, effects and music controlled, monitored at 79-82 dB rather than the 85 dB theatrical reference.
+
+- **Who.** Re-recording Mixers in a near-field room, often the same team days after the theatrical mix.
+- **Decides.** Whether to re-mix properly or simply render; how much dynamic compression; whether to deliver home Atmos (7.1.2 bed plus objects) or only 5.1.
+- **Engine.** A separate automation layer over the theatrical mix, monitoring level as an explicit parameter, and a home-intelligibility score distinct from the theatrical one. Skipping this is the direct cause of home dialogue complaints.
+- **Takes.** 2-6 days per feature; a few hours per TV episode.
+- **Television.** Television is mixed near-field from the start; only theatrical features need this translation pass, and only features can skip it.
+
+### Broadcast, Streaming and Airline Versions
+
+Produce edited-for-television and airline versions: censored dialogue replaced with cover lines recorded at ADR, runtime trims, format conform and separate loudness compliance.
+
+- **Who.** Post Supervisor, Re-recording Mixers, ADR Supervisor for cover lines; the distributor specifies.
+- **Decides.** Which words are covered and with what; whether the original actor re-records or a double does; how much of the mix must be re-conformed around trims.
+- **Engine.** A per-line censorship map with replacement text and the ADR record satisfying it, plus version objects each carrying their own stems, loudness state and QC status. Every version is a real cost line, not a flag.
+- **Takes.** 2-5 days per version.
+- **Television.** Broadcast series build cover lines during the original ADR session as standard practice; features do it later and pay twice.
+
+### Archive and Element Vaulting
+
+Deliver and store every element - Pro Tools sessions, source recordings, stems, print masters, M&E, cue sheets, licences, metadata - to the archival spec, typically on LTO.
+
+- **Who.** Post Supervisor and facility; studio asset management (the mother's company, or the father's lot if it holds the vault).
+- **Decides.** What is kept and for how long; whether the facility or the studio holds masters; format migration policy; whether session files are archived or only renders.
+- **Engine.** Element inventory with location, format, condition and retention date. Missing elements make future re-versioning - a remaster, an Atmos upgrade, a sequel reusing a creature - impossible or expensive, decades later.
+- **Takes.** 1-2 weeks after final delivery.
+- **Television.** Series accumulate a season-by-season archive whose completeness determines whether a revival is cheap or impossible.
+
+### Composer Engagement and Deal
+
+Negotiate creative fee, package vs. a la carte, recording budget, publishing split, credit and delivery dates.
+
+- **Who.** Producer (mother's company), studio music executive, Music Supervisor and the composer's agent; the composer signs.
+- **Decides.** Which composer; package vs. a la carte; fee; whether the studio keeps the publisher's share; soundtrack participation; the delivery milestone structure and penalties.
+- **Engine.** Deal object: fee, package flag, recording budget inside or outside the fee, publishing split (studio normally takes the publisher's share, composer keeps the writer's share), milestones, penalties. Package deals push every recording decision onto the composer's own P&L.
+- **Takes.** 1-6 weeks to close; engaged during editorial, occasionally during prep.
+- **Television.** TV is overwhelmingly per-episode package deals. Widely cited ranges (estimate, dated): half-hour $5,000-7,500, one-hour $10,000-17,500, MOW $20,000-45,000, composer absorbing all costs.
+
+### Temp Score Build
+
+Cut existing music - other films' scores, records, production library - under the picture so the cut can be screened, timed and tested long before a composer writes a note.
+
+- **Who.** Music Editor, with the Picture Editor and Director.
+- **Decides.** What the temp is; how close to the intended final; whether to temp with the composer's own earlier work; whether to temp at all.
+- **Engine.** Temp cue objects with source, duration and placement, plus a temp fingerprint per cue. The composer's later cue is scored against that fingerprint, and too close a match raises a soundalike/plagiarism risk value.
+- **Takes.** Days to weeks, continuous through editorial.
+- **Television.** TV usually temps from the series' own existing score library, which avoids temp love entirely and reinforces the show's sound.
+
+### Temp Love
+
+The temp becomes the reference the score is judged against, and original cues get rejected for the crime of not being the temp.
+
+- **Who.** Director, Producer, studio executives - everyone who has watched the cut fifty times with the temp in it.
+- **Decides.** Whether to fight it, swap the temp mid-process to break the attachment, license the temp for real, or hire the composer of the temp.
+- **Engine.** An attachment scalar per temp cue growing with screenings and elapsed time. Cue approval probability falls as a function of distance from the temp fingerprint multiplied by attachment. Licensing the temp is a priced alternative.
+- **Takes.** Builds over weeks; resolves at the first score playback.
+- **Television.** Much weaker in television because the temp is usually the show's own score.
+
+### Composing and Mockup Approval
+
+Write cue by cue, produce sampled mockups close enough to the final to judge, deliver against picture, take notes, revise, repeat until approved.
+
+- **Who.** Composer, with assistants and additional music writers; Music Editor; Director and studio music executive approve.
+- **Decides.** Thematic material; instrumentation; tempo and sync points; how many revisions to absorb; whether to bring in additional writers to hit the date.
+- **Engine.** Per-cue state machine (written, mocked, submitted, noted, revised, approved), revision counter, composer output rate in minutes/day, and a fatigue-quality curve. Additional writers raise throughput and dilute authorship and awards eligibility.
+- **Takes.** Feature: 4-12 weeks for 60-110 minutes of music; TV hour: 20-40 minutes in 4-10 days.
+- **Television.** TV composers deliver weekly with no orchestra and effectively no revision round; features get mockup passes and a scoring stage.
+
+### Orchestration
+
+Turn the sketch into a full conductor score - assigning material to real instruments, divisi, transpositions, doublings - playable by the ensemble actually hired.
+
+- **Who.** Orchestrator or orchestration team (AFM), working from the composer's sketch or mockup.
+- **Decides.** Instrumentation within the budgeted orchestra; how literally to follow the mockup; how many orchestrators to hire to meet the date.
+- **Engine.** Score pages per cue as a function of minutes, tempo and staff count. AFM orchestrator page rate $51.34-$58.03 across the 2024-27 scale dates, plus page-rate vacation pay and P&H. Copying cannot start until pages exist.
+- **Takes.** 1-3 days per orchestrator per cue, in parallel with writing.
+- **Television.** Almost never used on weekly television, where the mockup is the score.
+
+### Music Preparation and Copying
+
+Extract, format, proofread and print every player's part, bind them, mark bowings, and get them on the stands before the downbeat.
+
+- **Who.** Music Librarian and copyist team (AFM music preparation).
+- **Decides.** Number of parts; proofing time; paper vs. digital parts; whether to prep for one session or several.
+- **Engine.** Pages per part x players. AFM copyist page rate $32.11-$36.30 across the 2024-27 scale dates plus vacation and P&H. A part error is discovered at full orchestra rate - the most expensive place in the business to find a mistake.
+- **Takes.** Overnight to a week; always the last thing before the session.
+- **Television.** Not applicable to sample-based weekly scores; applies the moment a series books live players.
+
+### Scoring Session
+
+Record the score with live players on a scoring stage, to picture, with click and streamers, cue by cue, with the composer approving each take.
+
+- **Who.** Conductor (often the composer), Music Contractor, Scoring Mixer, Score Recordist, Music Editor, orchestra; studio executive and director attend.
+- **Decides.** Orchestra size; number of sessions; which cues are live vs. sampled; click vs. free timing; take count; whether sections are recorded separately for control.
+- **Engine.** AFM Basic Theatrical/TV scale: $350.44 single session from 5/3/2025, $364.46 from 5/2/2026; pension 11.99%, H&W $48.54/day; a 3-hour session yields no more than 15 minutes of finished music; doubling, cartage and overtime premiums; stage day rate.
+- **Takes.** Feature: 3-12 session days; each 3-hour session yields up to 15 minutes of music.
+- **Television.** Weekly TV scores are sampled with a few live overdubs; a standing orchestra on a series is a prestige exception with a prestige budget.
+
+### Overdubs, Soloists and Programming
+
+Layer soloists, ethnic instruments, choir, synths and programmed percussion onto the orchestral bed, or build whole cues in the box with no orchestra at all.
+
+- **Who.** Composer, programmers, soloists, Scoring Mixer; Music Contractor books the players.
+- **Decides.** Which soloist (a named player is both a cost and a sound); how much sample replacement; whether the programmed layer is the score and the orchestra is sweetening.
+- **Engine.** Per-overdub cost and calendar, sample library licence terms, and a liveness parameter per cue that feeds perceived quality and awards prospects. A named soloist adds a marketing value as well as a fee.
+- **Takes.** Days, usually booked around the main sessions.
+- **Television.** This is the entire music recording process on most series - a few live overdubs onto a sampled bed.
+
+### Score Mixing and Stem Delivery
+
+Mix each recorded cue and deliver score stems to the dub stage in the agreed split so the re-recording mixers can rebalance on the stage.
+
+- **Who.** Scoring Mixer with the Music Editor and Composer.
+- **Decides.** Stem split (strings / brass / winds / percussion / synth / choir / solo); how finished the mix is; whether stems are delivered in 5.1 or immersive.
+- **Engine.** Stem definitions per cue and delivered formats, setting the degree of freedom the dub mixer has. Too few stems and the stage cannot fix a balance; too many costs mixing days and slows the premix.
+- **Takes.** 1-2 days per session day, running right up to the music premix.
+- **Television.** TV stems are exported straight from the composer's DAW in a fixed template, same day.
+
+### Music Editing for Picture and Stage
+
+Conform cues to picture changes, edit cues to new lengths, create alternates, build source cues, prepare click and streamers for sessions, and run music playback on the dub stage.
+
+- **Who.** Music Editor (Local 700).
+- **Decides.** Where to cut a cue to fit a new edit without breaking its harmony; which alternate to offer; whether a cue can be saved or must be rewritten.
+- **Engine.** Per-cue edit-point map with musical validity - a cut at a bar line vs. mid-phrase - and a musicality penalty for bad edits that the composer, and eventually the audience, can hear.
+- **Takes.** The full duration of post; present for the entire music premix.
+- **Television.** On TV the music editor often also builds the score from the composer's library, which is a creative role in everything but title.
+
+### Source Music and On-Camera Playback
+
+Music that exists inside the world - radios, bands, jukeboxes, an actor singing. Usually pre-recorded before the shoot, played back on set, then re-synced in post.
+
+- **Who.** Music Supervisor, Music Editor, production Sound Mixer for playback on set, Composer if the source is scored.
+- **Decides.** Pre-record vs. live singing on set; which recording plays; whether an on-camera band mimes to a studio take; whether the vocal is replaced in post.
+- **Engine.** A link between the on-set playback take, the pre-record master and the post sync record. On-camera use raises the licence cost class and can require a separate artist performance or recording agreement.
+- **Takes.** Pre-records weeks before the shoot; post sync 1-3 days.
+- **Television.** Series with musical performance (a band show, a competition format) run this weekly with a standing music production team.
+
+### Music Supervision and Needle-Drop Selection
+
+Find and propose songs for specific moments, negotiate across the whole song list, and manage the gap between what the picture wants and what it can afford or get cleared.
+
+- **Who.** Music Supervisor with the Director, Producer and studio music executive.
+- **Decides.** Song per scene; alternates for every first choice; how the music budget is distributed; whether to chase an expensive song or build the scene around an affordable one.
+- **Engine.** A song list with first, second and third choices per slot, quote ranges, a running budget, and per-song clearance risk. Spending on one song removes it from the pool for every other - a genuine allocation problem.
+- **Takes.** From prep to final mix; a song-driven film takes months.
+- **Television.** TV clears per episode against a fixed per-episode music budget, often with pre-negotiated blanket deals with production-music libraries.
+
+### Clearance and Licensing
+
+Obtain two separate licences per recorded song - a synchronization licence from the publisher(s) for the composition and a master use licence from the label for the recording. Both must clear or the song cannot be used.
+
+- **Who.** Music Clearance Administrator or clearance house with the Music Supervisor, business affairs and the E&O insurer.
+- **Decides.** Rights requested (term, territory, media, in-context vs. out-of-context, trailer rights); fee offered; whether to accept MFN; whether to re-record instead of licensing the master.
+- **Engine.** Per-song rights holders with control percentages - one refusal from a 10% co-writer kills the song. MFN propagates any improved fee to every holder. Festival-only ~$1,000 all-in; indie cue $250-2,500; TV episode $1,500-10,000; a major all-media drop $50k-500k+ (estimates).
+- **Takes.** 2-12 weeks per song; expedited clearance costs more.
+- **Television.** TV clearances run on days, not weeks, and rely on pre-cleared libraries and standing deals because the airdate does not move.
+
+### Publishing, Splits and Ownership
+
+Determine who owns and controls the score and original songs: writer's share versus publisher's share, co-writer splits, and the terms of the work-for-hire.
+
+- **Who.** Business affairs, the studio's publishing arm, the composer's attorney and the songwriters' representatives.
+- **Decides.** Whether the studio demands, shares or waives the publisher's share; split sheets for co-written cues; whether to buy out future royalties instead of paying backend.
+- **Engine.** An ownership ledger per cue: writer share percentages by person, publisher share by entity, PRO affiliation per writer. The royalty engine reads this ledger; without it, cue sheets cannot be generated correctly.
+- **Takes.** Negotiated with the composer deal; split sheets signed as cues are written.
+- **Television.** TV studios almost always keep the publisher's share across a whole series, which makes a long-running show's catalogue a major asset.
+
+### Cue Sheets and PRO Registration
+
+Produce the definitive list of every piece of music in the finished picture with exact durations and usage types, and file it with the performing rights organizations. This is the document that causes royalties to be paid.
+
+- **Who.** Music Editor compiles; the production company or music clearance files; ASCAP, BMI, SESAC and GMR receive.
+- **Decides.** Nothing creative - but accuracy is everything, and which party is contractually responsible for filing is a real negotiating point.
+- **Engine.** One row per cue: title, composers and publishers with shares and PRO, start TC, duration to the second, and usage code (VV, BV, VI, BI, MT, ET, logo). RapidCue's standardized template feeds all PROs at once; file within about three months of first broadcast.
+- **Takes.** 1-3 days to compile; filed on delivery.
+- **Television.** TV files a cue sheet per episode, and per-minute performance royalties from airings are the composer's real income - usually far more than the package fee.
+
+### Royalty Flow and Backend
+
+Money returns over decades: performance royalties via the PROs, mechanicals on soundtrack sales, master royalties from the label, and AFM new-use and reuse payments when recorded music moves to another medium.
+
+- **Who.** PROs, publishers, labels and the studio's music group pay; composers, songwriters and AFM musicians receive; the mother's company collects the publisher's share.
+- **Decides.** For the company: keep or sell the publishing catalogue; release a soundtrack; grant a buyout instead of backend; how aggressively to exploit the catalogue.
+- **Engine.** A royalty accrual model driven by cue sheets x airings x outlet weight. US theatrical exhibition pays no domestic public-performance royalty; foreign theatrical does. Statutory mechanical 13.1 cents per work in 2026 (2.52 cents/minute over 5 minutes). AFM new-use triggers on reuse.
+- **Takes.** First PRO statements 6-9 months after airing; income continues for the life of copyright.
+- **Television.** Series generate performance royalties every time an episode airs anywhere, forever; a theatrical feature's domestic run generates none.
+
+### Option spaces
+
+**ADR cueing method** — 6 options
+
+`Three-beep countdown with visual streamer` · `Visual streamer and wipe only, no beeps` · `Free-run looping with headphone guide` · `Rhythmo band (bande rythmo scrolling text, standard for dubbing and in France)` · `Record wild and post-fit with alignment software` · `No cue at all - wild lines and added dialogue`
+
+**ADR microphone** — 9 options
+
+`Sennheiser MKH 416` · `Schoeps CMIT 5U` · `Sanken CS-3e` · `DPA 4017B` · `DPA 4018` · `Neumann U 87 Ai` · `Neumann TLM 103` · `Sennheiser MKH 50` · `Matched lavalier (DPA 6060, Sanken COS-11D) to match production lavs`
+
+**ADR recording location** — 7 options
+
+`Purpose-built ADR stage with projection` · `Dub stage doubling as ADR` · `Music studio vocal booth` · `Actor's home booth` · `Remote hookup via Source-Connect or ipDTL` · `Hotel-room portable rig` · `Phone capture (emergency only)`
+
+**Dialogue source per line** — 8 options
+
+`Production boom` · `Production lavalier (per lav)` · `Boom and lav blended` · `Alternate take's production audio` · `ADR by the original actor` · `Loop-group double` · `ML-isolated / restored production` · `Silent, covered by effects or music`
+
+**Dialogue repair toolchain** — 8 options
+
+`iZotope RX (Spectral De-noise, Dialogue Isolate, De-rustle, De-plosive, Mouth De-click, Dereverb)` · `CEDAR DNS / Cambridge` · `Accentize dxRevive` · `Supertone Clear` · `Waves Clarity Vx` · `Acon DeVerberate` · `Manual spectral painting` · `No repair - re-record instead`
+
+**Foley pit surfaces** — 17 options
+
+`Concrete` · `Hardwood` · `Wooden stairs` · `Carpet` · `Tile / marble` · `Linoleum` · `Gravel` · `Dirt / earth` · `Sand` · `Grass / leaves` · `Snow (cornstarch)` · `Water tank` · `Mud` · `Metal grate / plate` · `Cobblestone` · `Roof tar / shingle` · `Deck plating`
+
+**Foley footwear** — 14 options
+
+`Leather-soled dress shoes` · `Rubber-soled dress shoes` · `Work boots` · `Combat boots` · `Cowboy boots` · `Riding boots` · `Sneakers` · `High heels by height` · `Sandals / flip-flops` · `Bare feet` · `Slippers` · `Period footwear` · `Horse hooves` · `Animal paws`
+
+**Post-sound vendor model** — 6 options
+
+`Studio-owned facility on the lot` · `Major independent post house` · `Boutique sound company` · `One-stop picture-and-sound facility` · `Supervisor's own room plus a rented stage for the mix` · `Fully remote cutting with a stage only at the end`
+
+**Mix room class** — 6 options
+
+`Dolby Atmos-certified feature dub stage` · `Large-format 7.1 / 5.1 theatrical stage` · `Near-field Atmos room (7.1.4)` · `Near-field 5.1 room` · `Stereo edit suite` · `In-the-box on headphones`
+
+**Mix console / controller** — 7 options
+
+`Avid S6 M40` · `Avid S4` · `Harrison MPC5 / Xdubber` · `AMS Neve DFC Gemini` · `Euphonix System 5` · `Icon D-Control (legacy)` · `Mouse and keyboard in Pro Tools`
+
+**Monitoring calibration** — 5 options
+
+`Theatrical reference: 85 dB SPL C-weighted, -20 dBFS pink noise, fader 7.0` · `Near-field 82 dB` · `Near-field 79 dB` · `Broadcast 79 dB` · `Uncalibrated consumer level`
+
+**Release audio format** — 15 options
+
+`Dolby Atmos (cinema)` · `Dolby Atmos (home)` · `DTS:X` · `Auro-3D` · `IMAX 12-track` · `IMAX 6-track` · `7.1 DS` · `5.1` · `LCR` · `Lt/Rt matrix stereo` · `2.0 stereo` · `Mono` · `Binaural` · `Descriptive audio / VI-N` · `Hearing-impaired (HI) track`
+
+**Stem split delivered** — 7 options
+
+`3-stem DME` · `4-stem with foley separate` · `5-6 stem (DX, ADR, MX, FX, FOL, BG)` · `Fully split per element` · `5.1 stems only` · `Immersive object stems` · `DME plus optional dialogue and narration stems`
+
+**Loudness target by outlet** — 6 options
+
+`Theatrical: no numeric target, calibrated reference only` · `Theatrical trailers: 85 Leq(m) (TASA)` · `Netflix: -27 LKFS +/-2 dialog-gated, true peak at or below -2 dBTP` · `US broadcast: ATSC A/85, -24 LKFS +/-2` · `Europe: EBU R128, -23 LUFS` · `Podcast / web: -16 LUFS`
+
+**Composer engagement model** — 8 options
+
+`Full package deal` · `A la carte creative fee with studio-funded recording` · `Hybrid fee plus a capped recording budget` · `Buyout including backend` · `Score delivered by a music production company` · `Song-driven with no original score` · `Production/library music only` · `An existing recording artist scoring their first picture`
+
+**Scoring venue** — 12 options
+
+`Newman Scoring Stage (Fox lot)` · `Sony Pictures' Barbra Streisand Scoring Stage` · `Warner Bros. Eastwood Scoring Stage` · `Abbey Road Studio One` · `AIR Lyndhurst` · `Synchron Stage Vienna` · `Smecky Music Studios, Prague` · `FAMES Studios, Skopje` · `Budapest Scoring` · `Nashville` · `Bratislava` · `The composer's own studio`
+
+**Ensemble size** — 11 options
+
+`Solo instrument` · `Chamber (8-16)` · `Small orchestra (30-40)` · `Standard (55-65)` · `Large (80-95)` · `Full with choir (100+)` · `Synth and samples only` · `Hybrid orchestra plus programming` · `Band` · `Period instruments` · `World / regional ensemble`
+
+**Scoring sync method** — 7 options
+
+`Fixed click track` · `Variable click with a tempo map` · `Streamers and punches on picture` · `Free timing conducted to picture` · `Auricle / Cue-generated click and streamers` · `MIDI-locked DAW playback` · `Record wild and sync in post`
+
+**Music licence type** — 10 options
+
+`Synchronization licence` · `Master use licence` · `All-in one-stop licence` · `Festival-only licence with an option` · `Step deal (festival then expanded)` · `Re-record / cover licence` · `Commissioned sound-alike` · `Production library blanket` · `Public domain composition with a new recording` · `Commissioned original song`
+
+**Licence scope axes** — 5 options
+
+`Term: 1 / 3 / 5 / 7 / 10 years or perpetuity` · `Territory: festival only / domestic / North America / worldwide` · `Media: theatrical, home video, free TV, pay TV, streaming, airline, promotional, trailer, soundtrack album, all media now known or hereafter devised` · `Context: in-context vs. out-of-context` · `Exclusivity: exclusive or non-exclusive`
+
+**Cue sheet usage code** — 8 options
+
+`VV - visual vocal` · `BV - background vocal` · `VI - visual instrumental` · `BI - background instrumental` · `MT - main title` · `ET - end title` · `Logo` · `Theme`
+
+**M&E deliverable type** — 8 options
+
+`Standard M&E` · `Fully-filled M&E` · `M&E with optional dialogue track` · `DM&E (dubbed dialogue, music and effects)` · `Immersive M&E delivered as ADM BWF` · `5.1 M&E` · `Stereo M&E` · `M&E with narration on a separate stem`
+
+**Music budget instrument** — 7 options
+
+`Hard music budget line` · `Per-episode music budget` · `Blanket library deal` · `Gratis or promotional deal with an emerging artist` · `Backend participation instead of a fee` · `Soundtrack album advance offsetting licence costs` · `The studio's own catalogue used at cost`
+
+**Recording session rights posture** — 6 options
+
+`AFM Basic Theatrical / TV Film Agreement (scale plus P&H, new-use, special payments)` · `AFM low-budget agreement` · `Non-union US session` · `European buyout session` · `Sample libraries only` · `Hybrid: union core with non-union overdubs`
+
+### What gets got wrong
+
+- Temp love is a production risk, not an anecdote: the temp becomes the reference the score is judged against, and directors have replaced composers over it. Model attachment as a scalar that grows with every screening.
+- Fully-filled M&E is the most commonly rejected deliverable in post sound. If dialogue and a sync effect were recorded on the same production track, removing the dialogue removes the effect, and somebody has to perform or cut a replacement.
+- US theatrical exhibition pays no domestic public-performance royalty to composers - a legacy of the Alden-Rochelle consent decree. Foreign theatrical does pay. A feature composer's PRO income comes from television, streaming and abroad.
+- Package deals make the composer the production company for music. Hiring an orchestra comes out of their own fee, so the composer's economic incentive is always to record less live music than the director wants.
+- Most Favored Nations means one rights holder's improved deal cascades to every other holder on that song, retroactively. Raising one offer can blow the entire music budget in a single phone call.
+- One refusing co-writer kills a song regardless of how small their share is. Clearance is unanimity, not majority, and the 5% holder is often the one nobody can find.
+- A festival-only licence puts an expiry date on a finished film. Pictures have gone unreleasable, or been re-cut years later, because an option lapsed.
+- Cue sheets are how money actually moves. A cue sheet that is late, wrong or never filed means a writer is simply never paid, and no automatic system anywhere notices.
+- The writer's share is effectively unassignable in practice; the publisher's share is what the studio takes. Model them as separate ledgers or the royalty engine will be wrong for the life of the title.
+- ADR is never free, even when an actor's contract includes prepaid looping days: stage, mixer, supervisor, travel and the director's time all cost, and the prepaid days run out.
+- Remote ADR trades money now for a room-match penalty that the dialogue mixer pays for on the stage weeks later, in stage hours that cost more than the travel would have.
+- Actors vary enormously at ADR. Some match sync and performance in two takes; some can never match their own on-set performance. This is a per-person stat, not a flat difficulty.
+- Machine-learning dialogue isolation has changed the economics: lines that were automatic ADR in 2015 are now saved in the box. The cost moved from the actor's calendar to an artefact budget.
+- Foley cloth is the pass most often cut for budget and the first thing a foreign dub discovers is missing. The saving and the failure land in different departments months apart.
+- Foley is performed, not triggered. Two artists work as a team, feet, props and cloth are separate passes, and the same scene is walked several times for different characters.
+- Re-recording mixers are Motion Picture Editors Guild Local 700 (jurisdiction ceded by Local 695 in 1998). Production sound mixers, ADR mixers and foley mixers are IATSE Local 695. Sound editors, dialogue editors, music editors and foley artists are Local 700.
+- Atmos is not a checkbox. The renderer takes 128 inputs: cinema is a 9.1 bed plus up to 118 objects rendered to as many as 64 speaker feeds; home is a 7.1.2 bed. Object count is a real budget of attention, not a capacity to fill.
+- An automatic 5.1 fold-down of an Atmos mix is not a mixed 5.1. Skipping the hand pass is a direct, traceable cause of 'the dialogue is too quiet' reviews.
+- Netflix measures loudness dialogue-gated off the 5.1 re-render, not off the Atmos master: -27 LKFS +/-2 with true peak at or below -2 dBTP. Mixers typically set limiters around -2.3 dBTP on beds and objects to survive QC.
+- Theatrical has no loudness specification, only a calibration reference (85 dB SPL C-weighted with -20 dBFS pink noise, fader 7.0). Trailers do have one - 85 Leq(m) under TASA - and failing it blocks the trailer from release prints.
+- A picture change after the premix costs several times what the same change costs before it. When a change lands matters more than what the change is.
+- Television is mixed near-field from the start; features are not. The near-field pass on a feature is a separate job that can be skipped, and skipping it is the single most common cause of home-viewing dialogue complaints.
+- An AFM scoring session is capped by contract: a three-hour single session yields no more than 15 minutes of finished music. You cannot buy past it with a faster orchestra - you buy another session.
+- Copying errors are discovered at full orchestra rate. A wrong transposition in the horn parts costs ninety players their downtime while somebody finds a pencil.
+- The stage day is the atomic unit of post-sound cost, and a day lost to a bad Pro Tools handoff is indistinguishable in the budget from a day lost to a director changing their mind.
+- Trailer music is almost never the film's score, is licensed separately under separate rights, and the trailer mix is made by a different company under a different contract with its own certification.
+- Commissioned sound-alikes are legally dangerous when they imitate a specific identifiable performer - Midler v. Ford and Waits v. Frito-Lay both went against the advertiser. Cheaper than the master, and a lawsuit.
+- Synthetic voice and digital voice replicas require the performer's separate written consent and compensation under current SAG-AFTRA terms. Consent has a defined scope, and exceeding the scope is the failure state, not the absence of consent.
+- Music editors, not composers, live on the dub stage. The composer attends the first day and the playback; the music editor is there the whole time and defends every cue.
+- Awards eligibility has teeth: an Original Score must be original and written specifically for the picture, and a credited composer who did not write most of it - or a score dominated by pre-existing music - is disqualified. Authorship must be tracked per cue.
+- AFM new-use and reuse payments trigger when a recorded cue moves to another medium (a trailer, a game, a sequel). European buyout sessions carry no such obligation, which is exactly why scores are recorded there.
+- Keeping the publisher's share versus giving it away is worth more to a company over thirty years than the composer's entire fee, and it is decided in a single line of a deal memo nobody in the room reads aloud.
+- Sync drift is silent until it is catastrophic: a frame-rate or pull-up/pull-down mismatch between a 23.976 picture and a 24 fps sound session drifts slowly and is usually found at the worst possible moment.
+- Stems that do not sum back to the mix are a classic failure - one plug-in left across the master bus, and every derived version is subtly wrong. The check is trivial and routinely skipped.
+
+---
+
+## 19. Marketing, distribution, awards and strategy (film and television)
+
+### Positioning and the sell
+
+Writes the one-line sell, ranks the reasons to see it, names primary and secondary quadrants, and fixes what the campaign will conceal: a twist, the real tone, the runtime, subtitles, a third-act genre change.
+
+- **Who.** President of Worldwide Marketing with EVP Creative Advertising and SVP Research; signed off by the company principal [Mother] or the lot's distribution/marketing chief [Father]
+- **Decides.** Sell star, genre, IP, filmmaker or event; which quadrant is primary; what is hidden; whether to sell the picture as what it is or as something broader than it is.
+- **Engine.** Per-title sell vector (genre signal, star salience, spectacle, tone, clarity, novelty, familiarity) and per-segment taste vectors. Conversion = f(exposure, vector match). Every asset inherits the vector; drift is a rejectable note and a cost.
+- **Takes.** 2-4 weeks; locked 9-12 months before a tentpole date (estimate)
+- **Television.** A series is positioned against a subscriber job (acquisition, retention, winback) or a network demo guarantee, and the sell must hold for 8-10 weeks of weekly, not one Friday.
+
+### Comparable-titles model and gross projection
+
+Builds a comp set of 8-20 prior titles matched on genre, rating, cast, season, rating and spend, then projects opening, multiple, domestic final and international by territory.
+
+- **Who.** SVP/VP Research and the distribution forecasting group; Comscore and Gower Street for international [Mother or Father]
+- **Decides.** Which comps are honest rather than flattering, what multiple to assume, and therefore the P&A the picture can carry and the date it can survive.
+- **Engine.** Title database (genre, rating, cast, date, spend, opening, final, per-territory) plus a similarity metric and nearest-neighbour or regression projection with a confidence band that narrows as tracking data arrives.
+- **Takes.** First pass at greenlight, re-run at every tracking read; 2-5 days per pass
+- **Television.** Comps are platform-specific: first-28-day hours for a streamer, L+7 in the demo for broadcast. There is no opening weekend and no multiple to forecast.
+
+### Concept and positioning test
+
+Online quota panels see loglines, titles, concept boards or art before assets exist and rate interest, clarity and genre read by quadrant.
+
+- **Who.** SVP Research commissioning National Research Group or Screen Engine/ASI [Mother pays; Father's studio has its own research group]
+- **Decides.** Which of 3-6 positionings the campaign is built on, whether the title works, and whether the picture needs a different sell than the script implied.
+- **Engine.** Segment panel sampling with sample-size-driven noise. Each position scores per segment, so the best mean score can lose the quadrant you actually need; results feed the sell vector as a prior.
+- **Takes.** 1-2 weeks per wave; roughly $40k-$150k per study (estimate)
+- **Television.** Streamers skip panels and A/B real artwork and loglines on logged-in members; broadcast dial-tests pilots with recruited groups in Las Vegas or LA.
+
+### Title clearance and MPA Title Registration
+
+Registers the title, circulates it to member distributors, receives protests over confusingly similar titles, and goes to three-member MPA arbitration if the title is not withdrawn.
+
+- **Who.** Business Affairs and clearance counsel with the MPA Title Registration Bureau; the principal who must live with the result [Mother/Father]
+- **Decides.** Fight, buy out the objector, or change the title, sometimes after key art and trailers are already cut and printed.
+- **Engine.** Registry of registered titles with owner, date and status; a similarity/confusion test; an arbitration panel with an outcome probability; a late loss forces re-lettering every asset at cost and delay.
+- **Takes.** Registration in days; a protest and arbitration in weeks to months
+- **Television.** Series titles run the same registry when the distributor is an MPA member, but streamers retitle series far later and far more freely than features.
+
+### Title treatment design and lock
+
+Designs the logo lockup - typeface, letterspacing, texture, colourways - and delivers horizontal, stacked, single-colour, knockout and animated variants.
+
+- **Who.** Print/key-art agency designer with the EVP Creative Advertising [Mother's marketing group]
+- **Decides.** Which of 20-60 comps advances; whether the treatment reads at 48 feet on a billboard and at 60 pixels in a streaming tile.
+- **Engine.** Treatment asset with legibility scores at poster, OOH, phone and thumbnail sizes; recognition contributes to unaided awareness; a weak thumbnail measurably costs streaming click-through.
+- **Takes.** 4-8 weeks of rounds
+- **Television.** A series treatment must survive a tile crop, an on-air bug and a season-number lockup, and becomes reusable brand equity across seasons.
+
+### Key art campaign
+
+Hundreds of comps narrowed to teaser one-sheet, payoff one-sheet, character sheets, group art, banners, standees and format-exclusive art, each delivered in dozens of sizes.
+
+- **Who.** EVP Creative Advertising with a print agency (key-art house); approvals from filmmaker, talent and the principal [Mother; or Father's in-house creative group]
+- **Decides.** Face size, whether the star is on it at all, how much world to show, palette, tagline, and which art is aimed at which quadrant.
+- **Engine.** Art asset with composition tags, star visibility, genre legibility, per-segment appeal, per-placement size kit, approval flags per talent contract, and a cost per round and per size kit.
+- **Takes.** 10-20 weeks from first comps to final size kits
+- **Television.** Series art ships as a set - 16:9 tile, 2:3 vertical, hero, thumbnail - because platforms personalise which image a given user sees.
+
+### Key art quantitative testing
+
+Shows finished comps to quota'd panels for appeal, clarity, genre read and intent lift, sometimes with eye-tracking on where attention lands first.
+
+- **Who.** SVP Research with Screen Engine/ASI or NRG online panels
+- **Decides.** Which sheet goes to print, which tagline survives, whether the star's face gets bigger, whether the art reads as the genre you are selling.
+- **Engine.** Per-art, per-segment appeal plus genre-read accuracy. A wrong genre read predicts weak opening conversion and later expectation mismatch; testing costs money and time and can still be overruled by talent approval.
+- **Takes.** 3-7 days per wave
+- **Television.** Streamers live-test tiles on real members and read play rate within hours, then keep multiple winners running simultaneously.
+
+### Talent approvals on likeness, photo and billing
+
+Routes every still, art comp and spot frame to contractual approvers and kills, retouches or replaces what is refused inside the contractual window.
+
+- **Who.** Talent relations and marketing ops with the artist's agent, manager and publicist [the Actor sits on the other side of this table]
+- **Decides.** As the actor: which photos to approve, whether to exercise kill rights, whether to trade approval for better billing or placement.
+- **Engine.** Per-person contract terms (photo approval percentage, kill rights, likeness approval, approval window in days); each asset carries an approver list and status; a refusal at day N forces a re-comp with cost and schedule impact.
+- **Takes.** 5-10 business days per round, contractually
+- **Television.** Series regulars re-approve each season's art and promos; episodic contracts specify how many approval rounds and promo days are owed.
+
+### Billing block and guild credit compliance in paid advertising
+
+Builds the billing block in contractual order and size, submits paid ads for guild review, and corrects non-compliant materials before they post.
+
+- **Who.** Credits administrator in Business Affairs with the WGA and DGA credits departments and SAG-AFTRA
+- **Decides.** Order of names, which contractual credits ride on which ad units, whether to seek a waiver, and how small the block can legally go.
+- **Engine.** Per-person credit obligations (position, size as a percentage of title, which media trigger the obligation); a compliance check on each ad unit; violations create guild claims with penalties and reprint costs.
+- **Takes.** Days per submission; continuous through the campaign
+- **Television.** Television carries per-episode and per-season obligations under the BA and FLTTA, and on-air promos plus platform metadata are audited as advertising too.
+
+### Unit stills and the gallery/special shoot
+
+Shoots and culls tens of thousands of frames down to a few hundred approved selects for press, key art, social and awards use.
+
+- **Who.** Unit Photographer (IATSE Local 600) during production; a hired photographer for the gallery; selects by the photo editor [the Actor sits for it]
+- **Decides.** As the actor: whether to give a gallery day and how you are shot. As the company: when to shoot, what to spend, what to embargo and for how long.
+- **Engine.** Photo library with per-image approval status, embargo date and territory rights; press placements consume approved assets; a thin approved library caps earned-media reach later.
+- **Takes.** Shoot days across production; selects over weeks
+- **Television.** Series shoot a gallery each season, scheduled against actor availability that is written into the episodic deal.
+
+### EPK, B-roll and behind-the-scenes capture
+
+Captures on-set B-roll, cast and crew interviews and featurettes for press use, junket packages, in-flight, bonus content and later awards material.
+
+- **Who.** EPK crew engaged by publicity, supervised by the Unit Publicist [Mother's company pays it out of the production budget]
+- **Decides.** How many EPK days, who sits for interviews, whether to capture a making-of specifically to feed an awards campaign a year later.
+- **Engine.** EPK inventory with per-day cost; outlets require specific formats and clearances; featurette availability raises earned-media reach and supplies awards content that cannot be shot after wrap.
+- **Takes.** 2-6 shoot days; cut over months
+- **Television.** Series capture per season and per episode for aftershows, vertical social and next-episode promos cut from the same material.
+
+### Trailer house assignment and the AV brief
+
+Briefs multiple houses on the same footage, pays each, screens their cuts and picks a winner or assembles one cut from several.
+
+- **Who.** EVP Creative Advertising assigning 2-6 competing AV houses [Mother's marketing group, or Father's studio creative advertising department]
+- **Decides.** How many houses to pay, whether to brief rival positionings against each other, what to spend per cut, and who gets the main trailer.
+- **Engine.** Each house has a style vector, fee, turnaround and hit rate; a brief generates candidate cuts with quality draws and sell-vector match; more houses cost more and improve the best-of-N draw.
+- **Takes.** 3-6 weeks per round, multiple rounds
+- **Television.** Platform in-house creative groups cut most series AV, and per-episode teasers and next-on promos are cut weekly during the run.
+
+### Teaser
+
+A 60-90 second first look, often assembled from limited footage, built to announce existence, date and tone rather than plot.
+
+- **Who.** EVP Creative Advertising with the filmmaker; released by the distribution marketing group
+- **Decides.** When to drop, what to withhold, whether to tease title only, and whether to spend for attachment to a specific tentpole.
+- **Engine.** Asset with runtime, spoiler level and sell vector; its drop date starts the awareness curve, which decays without follow-up, so an early teaser buys memory and costs later spend to sustain.
+- **Takes.** 4-8 weeks to cut; drops 6-14 months out
+- **Television.** Series teasers are date announcements tied to a platform event, an upfront, or a finale lead-out, not to an attached feature.
+
+### Trailer 1 (the main trailer)
+
+The 2-2:30 spine of the campaign: premise, star, genre promise, set pieces, date. Everything downstream - spots, digital cutdowns, OOH lines - is derived from it.
+
+- **Who.** EVP Creative Advertising, the filmmaker under contractual consultation, approved by the marketing president and the principal [Mother/Father]
+- **Decides.** How much plot to give, whether the third act shows, which needle-drop, whether the trailer promises a different film than the one shot.
+- **Engine.** The trailer sets per-segment expectation. Exit polling later compares delivered quality to promised expectation; the gap drives word of mouth and the weekly decay rate, not just the opening.
+- **Takes.** 6-10 weeks from brief to approved cut; drops 3-5 months out
+- **Television.** The series main trailer drops 4-8 weeks out, usually with the first two episodes' worth of footage, and is re-cut mid-run to sell the back half.
+
+### Trailer 2, final trailer and the extended look
+
+Later cuts that add spectacle, reviews or a new hook, plus in-theatre extended looks and 'special looks' cut for a specific event or partner.
+
+- **Who.** EVP Creative Advertising with the AV house; placement by the media group
+- **Decides.** Whether a second trailer is needed at all, what new footage it burns, whether reviews or quotes are cut in, and what it is attached to.
+- **Engine.** Each additional cut has diminishing awareness return against rising spoiler cost; a spoiler-level state variable reduces the delivered-vs-expected surprise term that drives word of mouth.
+- **Takes.** 4-6 weeks; drops 4-8 weeks out
+- **Television.** Streaming series run a 'first look' at a platform showcase, then weekly next-episode promos that are a separate discipline from the launch trailer.
+
+### Trailer music licensing and custom score
+
+Licenses master and publishing rights for trailer cues by term, media and territory, or commissions custom trailer score from a specialist house.
+
+- **Who.** Music clearance supervisor in marketing with publishers, labels and trailer-music libraries
+- **Decides.** Iconic song versus custom cue; how wide a licence to buy (trailer only, all media, worldwide, perpetuity) and therefore how much the cue costs.
+- **Engine.** Per-cue master and publishing quotes by media, term and territory; failure to clear kills the cut at the deadline; a licence limited to trailers blocks the cue's reuse in TV spots or digital.
+- **Takes.** 2-6 weeks; five figures to seven figures for a known master (estimate)
+- **Television.** Series promo cues are often cleared under blanket platform deals, which lowers cost but flattens the sound across a slate.
+
+### AV testing
+
+Tests trailers and spots for interest lift, clarity, genre read and second-by-second attention, then reports where viewers disengage.
+
+- **Who.** SVP Research with NRG or Screen Engine/ASI; dial groups plus online quant
+- **Decides.** Which cut goes wide, what gets trimmed, whether the ending reveal stays, which spot version carries the national buy.
+- **Engine.** Second-by-second attention curve plus pre/post intent lift by segment; a low-clarity cut produces awareness without first choice, which is the specific failure mode a game must be able to show.
+- **Takes.** 5-10 days per wave
+- **Television.** Platforms measure real trailer completion and downstream play rate on their own service instead of paying for panels.
+
+### MPA Advertising Administration submission and band designation
+
+Submits every advertising material - trailers, posters, spots, online, packaging, press kits - for review and receives 'approved without restrictions' or 'approved with restrictions' with placement designations.
+
+- **Who.** Advertising administration liaison at the distributor with the MPA Advertising Administration in Sherman Oaks
+- **Decides.** Whether to cut for a green band that can play widest, or keep a restricted cut that can only ride R and NC-17 features and age-gated online placements.
+- **Engine.** Each asset has a band and a placement mask. An R-rated film's trailer cannot precede a G or PG feature; restricted trailers only precede R or NC-17. Rejections force a re-cut and a lost placement window.
+- **Takes.** Rough cuts submitted early; written approval only on the final cut, typically days per submission
+- **Television.** In-home and TV advertising for series uses TV Parental Guidelines and network Standards and Practices instead of CARA bands.
+
+### Rating-block, tag and audio compliance on advertising
+
+Applies the five-second theatrical Trailer Tag, the four-second full rating block on TV spots with an audible rating call-out, radio rating reads, and obtains TASA sound compliance certificates.
+
+- **Who.** Advertising administration liaison plus an independent audio engineering firm certified by the TASA Committee
+- **Decides.** Whether to spend on re-mastering a loud trailer, and how to run advertising in the 14 days before release when every ad must carry the certified rating.
+- **Engine.** Compliance flags per asset (tag duration, block duration, audible call-out, radio read, TASA certificate). A TASA blind field-check failure revokes trailer approval mid-flight and pulls prints from screens.
+- **Takes.** Days; certificate per trailer
+- **Television.** TV spots of ten seconds or less are exempt from the audible rating call-out; radio spots of 30 seconds or more must read the full rating definition.
+
+### Trailer attachment and in-theatre placement negotiation
+
+Negotiates which features your trailer rides, how many screens carry it, pre-show inventory, lobby standees and any exclusive in-theatre extended look.
+
+- **Who.** EVP Theatrical Distribution and exhibitor relations with circuit film buyers at AMC, Regal, Cinemark and independents [Father's side of the business]
+- **Decides.** Which feature to chase for attachment, whether to trade attachment on your own tentpole for someone else's, and what to spend on pre-show media.
+- **Engine.** Circuit-level playlist inventory with compatibility rules from the band designation; attached impressions are high-intent and cheap per conversion; exhibitors control the playlist, so attachment is negotiated, not bought outright.
+- **Takes.** Negotiated 6-12 weeks ahead of each play period
+- **Television.** Series buy cinema pre-show media outright, since they have no feature to trade and no attachment right.
+
+### TV spot construction and the spot map
+
+Cuts :60, :30, :15, :10 and :06 spots in multiple message versions - action, comedy, romance, review, event - and maps which version runs against which programming.
+
+- **Who.** EVP Creative Advertising with AV houses; media group specifying lengths and versions
+- **Decides.** How many versions to fund, which message each demo sees, when the 'critics are calling it' version replaces the premise version.
+- **Engine.** Each spot is a creative with a message tag and per-segment conversion; the map assigns creatives to placements, so the same spend produces different conversion depending on creative-to-audience matching.
+- **Takes.** Ongoing from 10 weeks out; re-versioned weekly in the last month
+- **Television.** Series spots also serve as on-air promos with tune-in end cards and are produced under the network's own promo department, not an outside house.
+
+### National media plan and buy
+
+Builds the reach-and-frequency plan across linear primetime, sports and live, cable, CTV, YouTube and audio, then buys units against demo guarantees.
+
+- **Who.** SVP Media with the agency of record; upfront or scatter negotiation with network and platform ad sales [Mother buys; Father may sell if the lot owns a network]
+- **Decides.** Upfront commitment versus scatter pricing, share of budget in live sports, flight start date, frequency cap, and whether to buy a single huge event or sustained reach.
+- **Engine.** Per-placement CPM, audience composition, reach curve with diminishing returns, frequency distribution and a decay function. Awareness gain depends on effective reach at a minimum frequency, not on impressions bought.
+- **Takes.** Upfront commitments each May; scatter bought weeks out; the plan runs 6-10 weeks
+- **Television.** For a series, the same team buys and also sells: your own network's promo inventory is free but finite, and it trades against paid outside media.
+
+### Local and spot-market weighting
+
+Weights spend by DMA against index of past performance, ethnic composition, competitive pressure and per-screen expectation, and adds local radio, transit and grassroots.
+
+- **Who.** VP Media and the buying agency, with input from the distribution field team and regional exhibitor data
+- **Decides.** Whether to over-index Los Angeles and New York, protect a weak market, or spend where the picture already over-indexes to bank a bigger opening.
+- **Engine.** DMA-level population, screen count, historical index per genre, local media costs and competitor spend. The same national dollar produces different per-screen averages depending on where it lands.
+- **Takes.** Plan set 6-8 weeks out; adjusted weekly in the last three weeks
+- **Television.** Broadcast affiliates run local tune-in inside a national campaign; streamers have no local geography except by IP targeting.
+
+### Digital and social paid buy
+
+Runs bought video, display and search against custom and lookalike audiences, with dozens to hundreds of creative variants and continuous optimisation.
+
+- **Who.** Head of Digital Marketing with the agency and platform reps (YouTube, Meta, TikTok, Snap, Reddit, programmatic)
+- **Decides.** Platform mix, targeting stack, how many creative variants to produce, whether to optimise to view-through or to ticket-purchase intent.
+- **Engine.** Auction-based cost per placement that rises with demand, per-platform creative formats, view-through rates, and an attribution model that cannot cleanly separate digital lift from national TV lift.
+- **Takes.** Continuous from 12 weeks out; heaviest in the final 10 days
+- **Television.** Streamers can retarget their own logged-in non-watchers and lapsed subscribers, which is a targeting weapon no feature campaign has.
+
+### Organic social and fandom management
+
+Runs the title's accounts, publishes a content calendar, seeds memes and stills, manages fan communities and answers or ignores backlash.
+
+- **Who.** Social media manager and community team in marketing; talent's own accounts negotiated separately [the Actor's own feed is an asset with its own reach]
+- **Decides.** Tone of voice, posting cadence, whether to engage critics, whether to ask talent to post and what they are asked to post.
+- **Engine.** Follower counts by platform, organic reach decay, engagement-to-awareness conversion, sentiment as a tracked variable, and talent accounts with their own reach and their own willingness to post.
+- **Takes.** Daily from announcement to release and beyond
+- **Television.** Series run weekly episode-night social in real time, and a live sentiment feed becomes an input into renewal conversations.
+
+### Creator and influencer program
+
+Pays or hosts creators for content, screenings, set visits and premiere coverage, with disclosure obligations and usage rights negotiated per creator.
+
+- **Who.** Head of Digital Marketing and a talent/influencer agency; legal for FTC disclosure compliance
+- **Decides.** Which creators match the quadrant, paid versus hosted, whether creators get early screenings and under what embargo.
+- **Engine.** Creator roster with audience overlap by segment, cost per post, credibility multiplier, and a backfire probability if the match is wrong or disclosure is sloppy.
+- **Takes.** Booked 4-8 weeks out; activity across the last three weeks
+- **Television.** Series run creators across an entire season with weekly reaction content, which is cheaper per week and builds a cumulative audience.
+
+### Out-of-home and special builds
+
+Buys billboards, transit, wildposting, bus wraps, station dominations and special builds, and schedules installation and removal.
+
+- **Who.** VP Media with OOH specialists; production of special builds by a fabrication vendor
+- **Decides.** Whether to buy a Sunset Boulevard statement board that talent and press will see, or reach-efficient boards in commuter corridors.
+- **Engine.** Per-face cost by market and format, impressions by traffic count, a long lead for build fabrication, and a separate 'industry visibility' effect that matters for awards and talent relations rather than tickets.
+- **Takes.** Booked 6-12 weeks ahead; builds 4-8 weeks
+- **Television.** Streaming series buy heavy OOH around launch and again at awards, using the same boards to sell subscription rather than tickets.
+
+### Promotional partnerships and tie-ins
+
+Negotiates media-value partnerships where a brand spends its own money running your title in its advertising in exchange for content, talent or licence.
+
+- **Who.** SVP Promotions with brand partners (QSR, auto, beverage, retail, telco) and their agencies
+- **Decides.** Which brands fit the rating and the tone, what talent is committed, whether to take cash, media value or both, and what creative approval the brand receives.
+- **Engine.** Partner deals hold committed media value, required talent days, approval rights and a brand-fit score. Media value substitutes for P&A dollars but constrains creative and can misposition the film.
+- **Takes.** Negotiated 6-12 months out; activation in the final 6 weeks
+- **Television.** Series partnerships are integrations and co-branded launch events, and can run across a whole season or a whole platform slate.
+
+### Publicity plan and embargo architecture
+
+Sequences announcements, first looks, features, reviews and social reactions, and sets an embargo time for each tier of coverage.
+
+- **Who.** EVP Global Publicity with the unit publicist and outside PR firms; talent's personal publicists [the Actor's own publicist works this plan]
+- **Decides.** When reactions break versus full reviews, whether to lift the social embargo at the premiere, which outlet gets which exclusive.
+- **Engine.** Outlet objects with reach, prestige, lead time and a probability of breaking embargo; each coverage unit generates earned impressions weighted by prestige; a broken embargo cascades and cannot be recalled.
+- **Takes.** Planned 6+ months out; executed across the final 8 weeks
+- **Television.** Series stage a press cycle per season, plus episodic recaps and post-finale interviews, and the embargo covers spoilers episode by episode.
+
+### Long-lead press and set visits
+
+Hosts monthly-magazine and long-lead journalists on set for features that publish 3-9 months later, with copy approval negotiated or refused.
+
+- **Who.** Unit publicist and EVP Global Publicity; the filmmaker and leads give access [the Actor decides how much access]
+- **Decides.** Which writers get access, what is on and off the record, whether to show footage, and how much the director is exposed to a hostile writer.
+- **Engine.** Long-lead stories have a fixed publication lag and a large prestige weight; access raises story quality and raises the risk of a damaging piece, so the payoff has real variance.
+- **Takes.** Set visits during production; publication 3-9 months later
+- **Television.** Series long-lead is tied to season premieres, and a set visit can be repeated every year with the same publication.
+
+### The junket (press days)
+
+Two to four days of back-to-back roundtables, one-on-ones, satellite tours and EPK interviews at a hotel, with broadcast affiliates and international press flown in.
+
+- **Who.** EVP Global Publicity with a junket production vendor; talent contractually obligated to attend [the Actor works these days]
+- **Decides.** As the actor: which outlets you sit with and how many hours. As the company: how many days, who is flown, whether international press travel to LA or the cast travel to them.
+- **Engine.** Talent day budget (contractual press days), per-interview earned reach, fatigue reducing performance quality, cost per junket day for suites, crews and travel, and a gaffe probability rising with hours.
+- **Takes.** 2-4 days, 3-6 weeks before release
+- **Television.** Series do junkets at press tours and platform events, sometimes covering an entire slate in one week.
+
+### Talent press tour and contractual obligations
+
+Builds a multi-city and multi-country itinerary of premieres, TV bookings, podcasts, panels and fan events against the days owed in each contract.
+
+- **Who.** EVP Global Publicity and talent's reps; travel booked by marketing ops [the Actor lives this process]
+- **Decides.** As the actor: whether to give extra unpaid days, where to travel, what to say about a picture you dislike, what you refuse.
+- **Engine.** Per-person press days owed, day rate for overages, travel and per-diem cost, market-level earned reach per appearance, fatigue and scandal risk, and a relationship variable that carries into future casting.
+- **Takes.** 2-6 weeks of travel around release
+- **Television.** Series obligations recur per season and press tours are scheduled inside the shooting schedule, so a tour costs production days.
+
+### Critics screenings, review embargo and aggregator management
+
+Books press screenings by market, decides who is invited and who is not, and sets the review embargo date and time.
+
+- **Who.** EVP Global Publicity with critics' organisations, the aggregators' processes and the studio's screening coordinator
+- **Decides.** Screen critics early to build word of mouth, or hold the picture until opening day to protect the opening weekend from bad reviews.
+- **Engine.** Critic agents with taste vectors and outlet weights produce individual scores; an aggregate percentage forms once a threshold of reviews posts; review timing shifts which segments see the score before they buy.
+- **Takes.** Screenings 1-6 weeks out; embargo lifts hours to weeks before release
+- **Television.** Critics receive screeners of 2-6 episodes, the embargo lifts at premiere, and a season can be re-reviewed episode by episode as it airs.
+
+### Asset debut placement
+
+Places the teaser, trailer and key art debut with an exclusive partner, a live event, a platform takeover or a sports telecast for maximum first-day volume.
+
+- **Who.** Head of Digital Marketing and publicity with platform partners and outlets
+- **Decides.** Exclusive versus wide simultaneous drop, in front of which audience, whether to pay for a masthead or a Super Bowl unit.
+- **Engine.** Debut placement has a first-24-hour view curve and a press-pickup multiplier; the same trailer produces very different day-one volume depending on placement, and a strong day one seeds organic reach.
+- **Takes.** Booked 2-8 weeks ahead; executes in a day
+- **Television.** Platforms debut series trailers inside their own service and at slate events, so reach is guaranteed but skews to existing subscribers.
+
+### World premiere and red carpet
+
+Books a theatre, builds a carpet and step-and-repeat, manages the arrival order, the after-party, seating and who is photographed with whom.
+
+- **Who.** Special events group in marketing with an event production vendor; publicity runs the carpet [the Actor walks it]
+- **Decides.** City, venue, guest list, whether the carpet is open press, whether talent does interviews, who is seated where.
+- **Engine.** Event cost by venue and city, photo and video pickup as earned reach, an arrival-order variable that carries real talent politics, and an incident probability on a live carpet.
+- **Takes.** Planned 8-12 weeks; one night, 1-3 weeks before release
+- **Television.** Series premieres often screen only the first episode and double as a platform marketing event; an awards-season premiere may be rerun as an FYC screening.
+
+### Festival strategy: choosing the premiere
+
+Selects which festival receives the world premiere, in which section, and whether to premiere at all.
+
+- **Who.** The company principal with the sales agent, the awards consultant and the distributor's festival strategist [Mother's call; Father's lot may push a date]
+- **Decides.** Sundance for discovery and a sale, Cannes for prestige and international, Venice or Telluride into Toronto for an Oscar launch, SXSW for genre heat, or no festival.
+- **Engine.** Festival objects with dates, sections, slot capacity, jury and audience award odds, press corps size, acquisitions buyer presence, and a per-festival prestige and risk profile. The world premiere is consumed once.
+- **Takes.** Submissions and negotiations 2-6 months before the festival
+- **Television.** Series premiere at Sundance episodic, SXSW, Berlinale Series, Series Mania or Canneseries, which build critical standing but rarely drive a sale.
+
+### Festival execution, buzz and the acquisition sale
+
+Runs the premiere screening, press line, buyer screenings and, if the film is unsold, an overnight auction against a deal deadline.
+
+- **Who.** Sales agent and the producers with festival programmers, buyers and trade press [Mother negotiates; the Actor is on the panel]
+- **Decides.** Accept the first offer, hold for a bidding war, take a theatrical commitment over a bigger streaming cheque, or leave unsold.
+- **Engine.** Buyer agents with budgets, appetite by genre, and a willingness that moves with the premiere's reception; reviews and standing-ovation length are inputs; an unsold film's value decays measurably after the festival.
+- **Takes.** Premiere night, then 12-72 hours of negotiation
+- **Television.** Series are usually presold before the festival, so festival play is positioning rather than a sale.
+
+### Release date staking and competitive avoidance
+
+Stakes a date years out, monitors the competitive calendar, and moves, holds or splits the date as rivals move around it.
+
+- **Who.** President of Domestic Distribution with the release calendar committee and rival distributors [Father's territory; Mother petitions for it]
+- **Decides.** Hold against a bigger picture, move to open air, jump a quarter, split domestic and international, or trade the date with another title on your own slate.
+- **Engine.** A shared release calendar where every title carries a segment demand claim and a screen claim. Overlap reduces both. Moving forfeits sunk media and re-dates every asset, so a date change has a computable cost.
+- **Takes.** Dates staked 1-3 years out; moves happen weekly
+- **Television.** Series dates move far more cheaply, but a broadcast move forces an entire schedule rebuild and affiliate notification.
+
+### Awards qualifying run and expanded release
+
+Books the seven-day qualifying run required for Academy eligibility and, for Best Picture, the expanded run in ten of the top fifty US markets within the deadline.
+
+- **Who.** VP Distribution with awards strategy; booked into qualifying theatres in Los Angeles and New York [Mother funds it]
+- **Decides.** Whether to qualify at all, how wide the expanded run is, whether to four-wall, and whether to platform outward or dump into streaming after qualifying.
+- **Engine.** Eligibility rules as hard gates with dated deadlines; qualifying costs (four-wall rent, DCP, ads) that return almost no box office; failing the expanded-run requirement removes the film from Best Picture entirely.
+- **Takes.** Seven days minimum; the expanded run within 45 days of first release
+- **Television.** Television has no theatrical gate, but Emmy eligibility requires national availability by 31 May and a minimum episode count.
+
+### Theatrical booking and playdate negotiation
+
+Sells the picture into circuits site by site or by circuit-wide deal, negotiating terms, screen counts, playing weeks and holdover commitments.
+
+- **Who.** EVP Theatrical Distribution, division managers and film bookers with circuit buyers [Father's distribution arm]
+- **Decides.** Screen count and site list, aggregate percentage versus sliding scale versus 90/10 over house nut, minimum weeks, and which sites get the film at all.
+- **Engine.** Circuits, sites and screens with capacity, historic index and competing bookings; a term structure that determines the distributor's share per gross dollar; holdover rules that release or hold screens in week two and three.
+- **Takes.** Negotiated 4-10 weeks before release; settled after the run
+- **Television.** There is no booking for series; its analogue is carriage and placement on a platform's home row, which is negotiated internally or by affiliate deal.
+
+### Premium format and IMAX allocation
+
+Competes for a limited number of IMAX and premium large-format weeks, which are booked far in advance and often split mid-run.
+
+- **Who.** EVP Theatrical Distribution with IMAX, Dolby and circuit PLF programmers
+- **Decides.** Whether to pay for a format version, how many weeks to fight for, and whether to accept a split week against a bigger title.
+- **Engine.** Format screen inventory as a scarce calendar resource with per-screen revenue premium, a format-version production cost, and a bidding contest against other distributors for the same weeks.
+- **Takes.** Booked 6-18 months ahead; weeks reassigned during the run
+- **Television.** No analogue, except an event episode booked into cinemas, which is rare and treated as event cinema.
+
+### DCP, KDM and field servicing
+
+Masters and ships digital cinema packages, issues and reissues key delivery messages per site and date, handles trailer DCPs and fixes field failures.
+
+- **Who.** Distribution operations and the theatrical servicing vendor (Deluxe, Eclair, GDC and similar)
+- **Decides.** How many versions (formats, languages, accessibility tracks), which sites get which version, how to handle a key failure on opening night.
+- **Engine.** Per-site KDM validity windows tied to the booking; a key that expires or a wrong-version shipment loses actual shows and gross; version count multiplies mastering cost.
+- **Takes.** Masters 4-6 weeks out; keys issued days before each playdate
+- **Television.** Platform delivery is an IMF or mezzanine file plus captions, audio description, artwork and metadata delivered to spec weeks before launch.
+
+### International release pattern and localisation
+
+Sets a territory-by-territory date pattern, adapts the campaign locally, and orders dubbing, subtitling, local ratings submissions and local key art.
+
+- **Who.** President of International Distribution, territory managing directors and local marketing heads; or the sales agent for an independent [Mother, if the company sells its own]
+- **Decides.** Day-and-date worldwide against piracy, or staggered by territory to reuse talent and chase local holidays; dub versus subtitle; which territories get a local premiere.
+- **Engine.** Territories with market size, genre index, local holidays, censorship and rating regimes, dub and subtitle costs, and a piracy leakage term that rises with days between the first release and each later territory.
+- **Takes.** Pattern set 6-12 months out; localisation 8-16 weeks per territory
+- **Television.** Streamers launch globally on one day in up to 30+ languages, so localisation is a fixed launch gate rather than a staggered choice.
+
+### Windowing plan
+
+Fixes the dated sequence of rights: theatrical exclusivity, PVOD, EST, TVOD, SVOD Pay-1, Pay-2, free and FAST, plus airline, hotel and physical.
+
+- **Who.** President of Distribution with home entertainment, the streaming partner and the company principal [Father sets it if the lot distributes; Mother if she controls rights]
+- **Decides.** Window lengths, whether to break the window for a soft performer, whether to sell Pay-1 to a third party or keep it in-house.
+- **Engine.** A dated rights timeline where each window has a revenue function of elapsed days and box office, and a cannibalisation coefficient against the window before it. Shortening one window lifts one line and lowers another.
+- **Takes.** Planned pre-release; revised weekly once the picture opens
+- **Television.** Series windowing is about downstream licensing - second window SVOD, FAST, international, syndication - and about whether the show ever leaves its home platform.
+
+### P&A budget build and approval
+
+Builds the spend by line - national media, local, digital, OOH, creative, research, publicity, promotions, prints and awards - and books contingency.
+
+- **Who.** President of Worldwide Marketing with the CFO and the principal [Mother approves; Father approves if the lot is releasing]
+- **Decides.** Total spend, the split across lines, how much is committed and non-cancellable, and how much is held back for a second-weekend decision.
+- **Engine.** Budget lines with commitment dates and cancellation penalties; spend converts to reach via the media model; P&A recoups off the top of the waterfall, so every dollar changes the net-profit position of every participant.
+- **Takes.** First pass 6-9 months out; approved 3-4 months out; re-forecast weekly
+- **Television.** A series marketing budget is per season and is set against a platform's total slate budget, so titles compete internally for promo inventory as much as for cash.
+
+### Spend pacing and mid-flight re-forecast
+
+Paces committed media across the flight and decides, at each tracking read, whether to add, cut or reallocate the remaining budget.
+
+- **Who.** SVP Media and the marketing president with the agency; watched by distribution [Mother and Father argue about this]
+- **Decides.** Pour in another eight million against soft tracking, hold the money, or cut spend and protect the loss.
+- **Engine.** Non-cancellable commitments versus flexible inventory by channel; diminishing returns on incremental reach; a decision point each week with an honest expected-value calculation that usually says late spend converts poorly.
+- **Takes.** Weekly decisions across the final 10 weeks
+- **Television.** A weekly series can shift spend mid-run toward retention if episode two holds, which a feature can never do.
+
+### Tracking reads
+
+Weekly survey waves report unaided and total awareness, definite interest, first choice and top-two-choice by quadrant, against competitive titles on the same date.
+
+- **Who.** SVP Research receiving National Research Group tracking; read by the marketing president, distribution and the principals
+- **Decides.** Whether the campaign is working, which quadrant is missing, whether to change creative, change spend or change the date.
+- **Engine.** Three separate per-segment state variables - awareness, definite interest, first choice - which move independently, plus sampling error. Opening projection is a function of first choice, screen count and season, not of awareness.
+- **Takes.** Waves from 4-5 weeks out, weekly, then twice in the final week
+- **Television.** Streaming has no tracking; its analogues are platform intent signals, watchlist adds, trailer completion on-service and social velocity.
+
+### Presale and showtime sell-through monitoring
+
+Watches presale velocity, seat fill by market and format, and the number of showtimes added or cut as the weekend approaches.
+
+- **Who.** VP Distribution and the digital team reading ticketing partner data (Fandango, AMC, Atom) and Comscore showtime counts
+- **Decides.** Whether to add Thursday preview shows, push a format, buy last-minute local media, or quietly lower the projection given to press.
+- **Engine.** Per-site seat inventory and presale curve by title type; presales skew heavily to fan titles, so the same presale number implies different finals for a fan film and a broad comedy.
+- **Takes.** Continuous from on-sale (2-8 weeks out) to opening
+- **Television.** No presales; the nearest analogue is remind-me and watchlist adds inside the platform, which have far weaker predictive power.
+
+### Opening weekend war room
+
+Tracks Thursday previews, Friday actuals by hour and market, and revises the weekend estimate; re-weights remaining media and manages the press narrative.
+
+- **Who.** President of Domestic Distribution with research, media and the circuits; the principals on the phone [Father runs the room]
+- **Decides.** What number to give the trades on Saturday morning, whether to spend the last flexible media dollars, and how to frame a miss.
+- **Engine.** Hourly gross by site rolling into a weekend projection with day-of-week and holiday curves; a press narrative variable affecting second-weekend sampling; last-dollar media with very low marginal conversion by Friday.
+- **Takes.** Thursday evening to Sunday morning
+- **Television.** A launch weekend for a series is read in platform first-48-hour completion and social velocity; there is no reportable number unless the platform chooses to release one.
+
+### Exit polling and word-of-mouth measurement
+
+Polls actual ticket buyers on grade, recommend intent, what drove them, demographic composition and how the film compared with expectations.
+
+- **Who.** SVP Research with CinemaScore on opening night and Comscore/Screen Engine PostTrak across the first weekends
+- **Decides.** Whether to shift creative to reviews and recommendation, whether to widen or cut, and what to tell exhibitors about holdover.
+- **Engine.** Grade and recommend percentage by segment, driven by the gap between the expectation set by the campaign and the film's delivered quality per segment. That gap sets the weekly decay multiplier, which sets the final gross.
+- **Takes.** CinemaScore opening night; PostTrak across the first two weekends
+- **Television.** The streaming equivalent is completion rate by episode and the episode-by-episode drop curve, read continuously rather than once.
+
+### Hold, expand or pull decisions
+
+Decides week-two screen counts, expansions from platform to wide, contraction, and how long to keep paying for media against a declining run.
+
+- **Who.** EVP Theatrical Distribution with the circuits; marketing on continuing spend [Father decides screens; Mother decides money]
+- **Decides.** Expand a platform release city by city, hold screens against a new tentpole, cut spend and take the loss, or accelerate the home window.
+- **Engine.** Weekly per-screen average against the circuit's holdover threshold; expansion adds screens with a cost and a projected per-screen dilution; every extra week of spend is compared with the incremental gross it buys.
+- **Takes.** Decided Sunday night for the following Friday, every week of the run
+- **Television.** The analogue is mid-run promo support: a platform can double promo behind a show that is holding or silently stop promoting one that is not.
+
+### Awards campaign design and category placement
+
+Chooses which categories to enter, places performances as lead or supporting, builds the narrative, and sets the budget and calendar.
+
+- **Who.** Awards strategist or outside consultant with the marketing president, the filmmaker and talent's reps [Mother funds; the Actor's own placement is negotiated]
+- **Decides.** As the actor: run lead against the field, or supporting where you can win. As the company: how many categories, how much money, and which contender the company actually backs.
+- **Engine.** Voter bodies as populations with branch, taste vector, viewing behaviour and contact susceptibility; preferential ballot for Best Picture and plurality elsewhere; category placement changes the field you face and therefore the win probability.
+- **Takes.** Strategy set 6-12 months before the ceremony; runs 4-6 months
+- **Television.** Emmy placement is the entrant's own choice of lead, supporting or guest, bounded by hard rules on episode share and screen time, and comedy or drama placement can be overruled by the Industry Panel.
+
+### FYC mailings, screeners and the Academy Screening Room
+
+Posts the film to the Academy Screening Room, sends compliant FYC eblasts, and manages subtitle language slots and private links where permitted.
+
+- **Who.** Awards campaign manager working through an Academy-approved mailing house (Elite, HazMat or Vision)
+- **Decides.** When to post, how many blasts to send inside the one-per-week limit, what counts as the 'new information' a further blast requires, which languages to load.
+- **Engine.** Hard rule gates: one email per film per member per Monday-Sunday week; a 300-character non-embellished synopsis with no images or QR codes; ten subtitle slots (English, then French and Spanish, then seven of choice) before an eleventh is allowed by private link.
+- **Takes.** Continuous from October to final voting; mailing review typically 2-3 days
+- **Television.** Television campaigns use the Television Academy's own screening platform and its own regulations, and campaign across a much longer eligibility window.
+
+### FYC screenings, Q&As and events
+
+Books theatres, invites eligible voters, stages Q&As with up to two moderators, and runs pre-nomination receptions where the rules still allow them.
+
+- **Who.** Awards campaign manager and events team; moderators, panellists and talent [the Actor works these rooms]
+- **Decides.** How many of the permitted hosted screenings to use and when, which talent to put in the room, which guild and craft audiences to target.
+- **Engine.** A maximum of four hosted screenings of a film before nominations; no reception or complimentary food and drink at screening events after nominations until final polls close; each screening converts a bounded number of members from unseen to seen.
+- **Takes.** October through February, several nights a week at peak
+- **Television.** TV Academy FYC events run in spring against the June nomination vote, and a whole season may be screened over a single evening.
+
+### Trade and FYC media buy
+
+Buys FYC print and digital in the trades, awards-season newsletters, podcasts and billboards along the routes voters drive.
+
+- **Who.** SVP Media and the awards team with Variety, The Hollywood Reporter, Deadline, IndieWire and awards-corridor OOH
+- **Decides.** How many pages, which categories to advertise, whether to buy a below-the-line push, and when to go dark.
+- **Engine.** Trade inventory with rate cards and a finite audience of voters and pundits; unregulated reach is where surplus money goes once the regulated tactics are capped, with low conversion per dollar but real narrative effect.
+- **Takes.** November through February in film; April through June in television
+- **Television.** TV trade buys run through the spring and are often bought at slate level, selling a platform's brand as much as any one show.
+
+### Precursor circuit management
+
+Manages submissions, screenings and voter outreach for PGA, DGA, WGA, SAG, the craft guilds, critics groups, Critics Choice, the Globes and BAFTA.
+
+- **Who.** Awards strategist with guild liaisons, critics groups and the Globes and BAFTA voting bodies
+- **Decides.** Where to spend early, which bodies overlap with Academy branches, whether to chase a critics-group narrative or a guild sweep.
+- **Engine.** Each body has its own eligibility, calendar, voter population and overlap coefficient with the Academy branches. Winning a body with low overlap buys press, not votes; the overlap is what makes a precursor predictive.
+- **Takes.** Nominations and awards from late November through February
+- **Television.** Television precursors are fewer and later; the TCA Awards, Peabody and the guild TV categories carry most of the pre-Emmy signal.
+
+### Nomination morning and the final-voting push
+
+Reacts to the nominations list, re-cuts creative to lead with nominations, re-ups media, and books the talent for the final voting window.
+
+- **Who.** Awards strategist, publicity and the marketing president [Mother re-ups the money; the Actor does the calls]
+- **Decides.** Whether to double down on a frontrunner, redirect money to a single achievable category, or stand down and save the budget.
+- **Engine.** Nomination changes the field and the money: post-nomination rules forbid receptions at screenings, and the 99th-cycle requirement that members view all nominees in a category makes voter viewing time, not money, the binding constraint.
+- **Takes.** Nominations announced late January; final voting closes in early March (99th: voting 25 Feb - 4 Mar 2027)
+- **Television.** Emmy nominations land in July for a September ceremony, so the final phase is six weeks in summer with the ceremony in mid-September.
+
+### Ceremony night management
+
+Manages seating, carpet order, speech preparation, thank-you lists, press room routing and the party circuit.
+
+- **Who.** Publicity, talent relations and the awards team with the show producers; stylists, seat-fillers and the after-party team [the Actor is the product]
+- **Decides.** Who sits with whom, whether a speech is political, which party to attend, what to say if you lose on camera.
+- **Engine.** A ballot resolution against the modelled voter population, a live carpet and speech with reputational upside and downside, and standing effects that feed directly into future casting, financing and fee quotes.
+- **Takes.** One night; the Oscars ceremony is 14 March 2027 for the 99th
+- **Television.** The Emmys are in September (the 78th aired 14 September 2026), so a television win lands mid-production on the following season.
+
+### Slate announcement, upfront and platform showcase
+
+Presents the season's slate to advertisers and press in May upfronts or to subscribers at a platform showcase, with talent appearances and first-look footage.
+
+- **Who.** Network or platform chief with ad sales and marketing [Father if the lot owns a network; Mother pitches into it]
+- **Decides.** Which shows get the stage, what footage exists in time, which series is positioned as the platform's tentpole for the year.
+- **Engine.** Upfront commitments are dollars booked against demo guarantees, so a show presented as a tentpole carries a delivery obligation; failure to deliver triggers make-goods that cost inventory later.
+- **Takes.** Presentations in May; deals close over following weeks; the 2026 market totalled roughly $33.8bn with CTV commitments near $17.7bn
+- **Television.** This process is television's alone; a feature has no equivalent moment of selling unseen inventory against a guarantee.
+
+### Launch date and schedule position
+
+Places the series in a night, hour and week, sets the lead-in and lead-out, and sequences it against the rest of the slate and the competition.
+
+- **Who.** EVP Program Planning and Scheduling (broadcast) or the platform's head of content planning [Father's network side]
+- **Decides.** Premiere week or midseason, behind a hit or cold, against a rival's finale or into clear air, single premiere or double-pump.
+- **Engine.** A schedule grid with lead-in audience, flow-through coefficient, competitive titles claiming the same segment, and available promo inventory keyed to the slot.
+- **Takes.** Schedule set at upfronts in May; revised continuously
+- **Television.** This is the television-only analogue of a release date, and unlike a film date it can be changed in weeks and often is.
+
+### Release model: binge, weekly or hybrid
+
+Chooses whether a season drops at once, weekly, in batches, as a split season, or with a multi-episode premiere followed by weekly.
+
+- **Who.** Platform content and strategy chiefs with the showrunner and the studio [Mother's company can argue for it in the licence]
+- **Decides.** Concentrate the cultural spike and the sign-up surge, or stretch across billing cycles for retention and weekly conversation.
+- **Engine.** A viewing curve per model against a churn model: weekly holds a subscription across more billing cycles and sustains social presence; binge concentrates completion and first-28-day totals. Evidence supports substantially better short-term retention from staggered release.
+- **Takes.** Decided at greenlight or at delivery; affects post and marketing schedules
+- **Television.** This decision does not exist for a feature at all, and it changes which metric the show will be judged on at renewal.
+
+### On-air promo inventory and tune-in campaign
+
+Allocates finite in-service promo inventory - on-air spots, home-row placement, billboards in app, autoplay hero, email and push - across the slate.
+
+- **Who.** Network creative services or the platform's on-service promotion team with the scheduler
+- **Decides.** Which shows get the hero slot in launch week, how many promo units each series gets, whether a struggling show keeps support.
+- **Engine.** Promo inventory is a scarce internal resource with per-slot reach and conversion; allocating to one title removes it from another, so a slate is a zero-sum allocation problem the player actually solves.
+- **Takes.** Allocated weekly; heaviest in the two weeks before launch
+- **Television.** Features must buy every impression; a network or platform gets its most valuable impressions for free but only by taking them from itself.
+
+### Measurement and reporting
+
+Reports linear L+SD, L+3, L+7 and L+35 program ratings, C3/C7 commercial ratings for ad delivery, and platform first-party views, hours, completion and retention.
+
+- **Who.** Research chief with Nielsen, the platform's data science group, Luminate, Parrot Analytics and Samba/VideoAmp
+- **Decides.** Which number the show is publicly judged by, what gets released to press, and what the internal scorecard weighs.
+- **Engine.** Distinct measurement objects: program ratings versus commercial ratings; Nielsen minutes (which reward long runtimes and libraries) versus a platform 'view' defined as hours viewed divided by runtime (which penalises long runtimes).
+- **Takes.** Overnights next morning; L+7 a week later; L+35 five weeks later; Netflix publishes engagement annually from 2027
+- **Television.** Features are measured by box office reported daily and publicly; television's numbers are partly private and partly definitional, which is itself a strategic asset.
+
+### Renewal, cancellation and back order
+
+Decides renewal, cancellation, a back order of additional episodes, a shortened final season, or a move to another platform.
+
+- **Who.** Platform or network content chief with business affairs, finance and the studio [Mother's company waits on this call; Father's network makes it]
+- **Decides.** Renew at the same cost, renew with a budget cut, order a final season to complete the library, or cancel and take the write-off.
+- **Engine.** Renewal weighs first-28-day views and hours, completion rate, subscriber acquisition and save attribution, cost per hour viewed, demo delivery against guarantees, and the dated expiry of cast options and tax credits.
+- **Takes.** Decided weeks to months after launch; broadcast largely in the spring before upfronts
+- **Television.** Film's analogue is a sequel greenlight, decided on box office and downstream performance, with no option clock forcing the date.
+
+### Emmy submissions and category placement
+
+Enters programmes and individual achievements by the deadline, uploads episodes and materials, and pays entry fees per entrant.
+
+- **Who.** Awards team at the platform or studio with the showrunner and performers' reps [the Actor chooses lead, supporting or guest]
+- **Decides.** Which episode to submit, comedy or drama placement, lead versus supporting versus guest, which producers are entered.
+- **Engine.** Hard eligibility gates: six episodes to qualify as a series (three for documentary and hosted nonfiction) premiering nationally by 31 May; guest categories only for performers in fewer than 50% of episodes with at least 5% of the submitted episode's runtime; $225 processing plus $100 per entrant.
+- **Takes.** Submissions open February, entry deadline early May, nomination voting in June, nominations in July
+- **Television.** This is the television process; the film analogue is Academy category placement, where lead or supporting is argued rather than declared on a form.
+
+### Downstream licensing and second windows
+
+Licenses completed seasons into second-window SVOD, FAST channels, basic cable, international territories and, for high-volume series, syndication.
+
+- **Who.** President of Television Distribution with buyers at streamers, FAST services, cable networks and international broadcasters
+- **Decides.** Keep exclusive to drive the home platform, or license out for cash that lowers the effective cost per season.
+- **Engine.** Each licence is a dated, territory-scoped right with a fee and an exclusivity constraint; licensing out raises cash and lowers the home platform's differentiation, which shows up in churn.
+- **Takes.** Negotiated per season; markets at MIPCOM, MIPTV, LA Screenings and Series Mania
+- **Television.** Features have PVOD, Pay-1 and library lines instead; only television has the episode-volume threshold that makes off-network syndication possible.
+
+### Market sales and pre-sales
+
+Sells territory rights on a package or a finished film, takes minimum guarantees, and converts pre-sales into bankable contracts for financing.
+
+- **Who.** Sales agent or the company's international sales head at AFM, the European Film Market, the Marché du Film and Toronto [Mother's company, if it sells its own]
+- **Decides.** Which territories to sell and which to hold, what minimum guarantee to accept, whether to take a worldwide streaming offer instead.
+- **Engine.** Territory-by-territory value estimates driven by cast, genre and director; buyer agents with budgets and appetites; pre-sale contracts that can be discounted at a bank, so the sale changes the financing, not only the revenue.
+- **Takes.** Markets in February, May, September and November; deals close over weeks
+- **Television.** Series pre-sales happen at LA Screenings and Series Mania, usually against a pilot or a script and a cast, and often before a frame is shot.
+
+### Crisis management and campaign repair
+
+Responds to a scandal, a leak, a hostile review cycle, a rating surprise, a boycott or a talent incident by recutting, re-dating, restating or going silent.
+
+- **Who.** EVP Global Publicity with outside crisis counsel, legal and the principals [Mother's exposure; the Actor may be the crisis]
+- **Decides.** Do nothing, recut assets to reduce a person's presence, pull spots, move the date, issue a statement, or sell the picture on.
+- **Engine.** A reputation state per person and per title with decay; each response has a cost, a lag and a probability of making it worse; committed media is often non-cancellable, so the campaign keeps running while the story breaks.
+- **Takes.** Hours to weeks; a date move takes months to absorb
+- **Television.** A running series can write around a problem across a season, but it also has weekly exposure that a feature does not.
+
+### Post-release performance analysis
+
+Reconciles projection to actual, decomposes the miss into tracking error, creative failure, competitive pressure, word of mouth and date, and updates the comp database.
+
+- **Who.** SVP Research and the distribution analytics group; presented to the principals [Mother and Father both read it]
+- **Decides.** What the company believes next time: which houses, which agencies, which research vendors and which strategies are used again.
+- **Engine.** Attribution across the campaign's inputs, feeding back into the comp database, vendor reliability scores and the studio's own priors. Without this, a simulation cannot make a player better at the job over multiple titles.
+- **Takes.** 2-6 weeks after the run; slate reviews quarterly
+- **Television.** Television's version is the season post-mortem feeding the renewal case and the next season's episode order and budget.
+
+### Option spaces
+
+**Release pattern** — 17 options
+
+`Platform (1-10 screens, expanding)` · `Limited (11-99)` · `Semi-wide expansion (100-999)` · `Wide (1,000-3,000)` · `Super-wide (3,500-4,500+)` · `Exclusive-window theatrical` · `Day-and-date theatrical and PVOD` · `Theatrical plus same-day SVOD` · `Streaming-first with token theatrical` · `Awards qualifying run then platform` · `Four-wall qualifying run only` · `Event cinema (1-3 nights)` · `Roadshow with intermission and reserved seats` · `Festival-only` · `Direct-to-SVOD` · `Direct-to-TVOD/EST` · `Shelved / written off`
+
+**Theatrical-to-home window length** — 11 options
+
+`0 days (day-and-date)` · `17 days (Focus-style short window)` · `31 days (Universal 2026 standard)` · `45 days (2026-27 studio baseline)` · `60 days` · `90 days` · `120+ days` · `Performance-triggered break (drop below a per-screen threshold)` · `Pay-1 start at month 4` · `Pay-1 start at month 6-9` · `Free TV / FAST at 24-36 months`
+
+**AV cut hierarchy** — 19 options
+
+`Date/announce teaser (15-60s)` · `Teaser trailer (60-90s)` · `Trailer 1 (2:00-2:30)` · `Trailer 2` · `Final/launch trailer` · `Red-band (restricted) trailer` · `International trailer` · `Special look / extended look` · `In-theatre extended look` · `Sizzle or concept reel` · `Featurette` · `Clip` · `TV spots :60, :30, :15, :10, :06` · `Bumpers and tune-in tags` · `Vertical 9:16 cutdowns` · `YouTube 6s bumper` · `IMAX/Dolby exclusive intro` · `Next-episode promo (TV)` · `Season sizzle (TV)`
+
+**Key art deliverables** — 18 options
+
+`Teaser one-sheet` · `Payoff one-sheet` · `Character one-sheets` · `Group/ensemble art` · `Textless versions` · `Billboard 14x48` · `Bus shelter / 6-sheet` · `Transit and wraps` · `Standee and lobby build` · `Mylar / lenticular` · `IMAX / Dolby / PLF exclusive art` · `Streaming tile 16:9` · `Vertical 2:3` · `Square 1:1 and 9:16 social` · `Thumbnail` · `In-app hero` · `Trade FYC page` · `Press kit cover`
+
+**Paid media channels** — 28 options
+
+`Broadcast primetime` · `Live sports` · `Late night` · `Daytime` · `Cable` · `Spanish-language TV` · `CTV / streaming video` · `YouTube in-stream` · `YouTube masthead` · `Meta` · `TikTok` · `Snap` · `Reddit` · `X` · `Twitch` · `Programmatic display` · `Search / SEM` · `Streaming audio and podcasts` · `Terrestrial radio` · `Cinema on-screen and pre-show` · `Billboards` · `Transit` · `Wildposting` · `Special builds` · `Print` · `Direct mail` · `In-game / in-app` · `Brand partner media`
+
+**Research instruments** — 18 options
+
+`Concept test` · `Positioning test` · `Title test` · `Key art quant test` · `AV test with dial groups` · `Recruited-audience test screening` · `NRG tracking waves` · `Competitive tracking` · `Brand-lift study` · `Social listening` · `Presale and showtime data` · `PostTrak exit poll` · `CinemaScore` · `Comscore box office` · `Gower Street international forecast` · `The Quorum unaided awareness` · `Platform first-party A/B test` · `Focus groups`
+
+**Festival premiere slots** — 33 options
+
+`Sundance U.S. Dramatic Competition` · `Sundance U.S. Documentary Competition` · `Sundance Premieres` · `Sundance NEXT` · `Sundance Midnight` · `Berlinale Competition` · `Berlinale Panorama` · `Berlinale Forum` · `SXSW Headliners` · `SXSW Narrative Feature Competition` · `SXSW Midnighters` · `Cannes Competition` · `Cannes Un Certain Regard` · `Cannes Out of Competition` · `Cannes Midnight` · `Directors' Fortnight` · `Critics' Week` · `Tribeca` · `Locarno` · `Venice Competition` · `Venice Orizzonti` · `Venice Out of Competition` · `Telluride (unannounced lineup)` · `TIFF Gala` · `TIFF Special Presentations` · `TIFF Platform` · `TIFF Midnight Madness` · `NYFF Main Slate` · `AFI Fest` · `Busan` · `Sitges` · `Fantastic Fest` · `No festival`
+
+**Awards bodies to campaign (film)** — 24 options
+
+`Academy Awards` · `BAFTA` · `Golden Globes` · `Critics Choice` · `SAG Awards` · `PGA` · `DGA` · `WGA` · `ACE Eddie` · `ASC` · `ADG` · `CDG` · `Make-Up Artists and Hair Stylists Guild` · `MPSE` · `CAS` · `VES` · `Annie Awards` · `Independent Spirit Awards` · `Gotham Awards` · `National Board of Review` · `New York Film Critics Circle` · `Los Angeles Film Critics Association` · `National Society of Film Critics` · `AFI Top Ten`
+
+**Awards bodies to campaign (television)** — 14 options
+
+`Primetime Emmy Awards` · `Creative Arts Emmys` · `Daytime Emmys` · `Children's and Family Emmys` · `Golden Globes (TV)` · `SAG Awards (TV)` · `PGA (TV)` · `DGA (TV)` · `WGA (TV)` · `Critics Choice (TV)` · `TCA Awards` · `Peabody Awards` · `International Emmys` · `Hollywood Critics Association TV`
+
+**Awards campaign tactics** — 18 options
+
+`Approved-mailing-house eblast` · `Academy Screening Room posting` · `Private subtitled link (where permitted)` · `In-person FYC screening` · `Q&A or panel with up to two moderators` · `Pre-nomination reception` · `Tastemaker screening` · `Paid FYC Screenings Calendar listing` · `Trade FYC advertising` · `FYC billboards and OOH` · `FYC website` · `Scene at the Academy material` · `Guild screenings` · `Qualifying festival play` · `Awards consultant hire` · `Category placement` · `Original song push` · `Bake-Off and craft roundtable attendance`
+
+**Publicity units** — 18 options
+
+`Long-lead set visit` · `First-look photo exclusive` · `Trailer debut exclusive` · `Magazine cover story` · `Profile piece` · `Digital press day` · `Junket roundtable` · `One-on-one interview` · `Satellite media tour` · `Late-night booking` · `Morning/daytime show` · `Podcast appearance` · `Awards-season sit-down` · `Comic-Con or CCXP panel` · `Fan event / early screening` · `Red carpet` · `Aftershow appearance` · `Op-ed or essay under the talent's byline`
+
+**Television release models** — 11 options
+
+`Full-season binge` · `Weekly` · `Hybrid (2-3 episodes then weekly)` · `Batched drops of 3-4` · `Split season (Part 1 / Part 2)` · `Day-and-date global weekly` · `Linear simulcast plus next-day streaming` · `Linear run then full-season stream` · `Double-pump premiere week` · `Marathon or stunt airing` · `Burn-off (two per night)`
+
+**Television launch positions** — 14 options
+
+`Fall premiere week` · `Midseason (January)` · `Spring` · `Summer` · `Post-tentpole lead-out` · `After a live event (NFL, awards show)` · `Holiday stunt` · `Sunday 9pm` · `Thursday night` · `Friday-night burn-off` · `Platform premiere Wednesday` · `Platform premiere Thursday` · `Platform premiere Friday` · `Counter-programming a rival's finale`
+
+**Windows and licensing lines** — 18 options
+
+`Theatrical exclusive` · `PVOD` · `EST` · `TVOD rental` · `SVOD Pay-1 (output deal)` · `SVOD Pay-1 (direct/in-house)` · `SVOD Pay-2` · `AVOD` · `FAST channel` · `Linear pay TV` · `Free broadcast TV` · `International theatrical by territory` · `International SVOD by territory` · `Airline, hotel and maritime` · `Physical disc` · `Off-network syndication` · `Library/catalogue licensing` · `Clip and stock licensing`
+
+**Ratings and content certifications** — 18 options
+
+`CARA G` · `CARA PG` · `CARA PG-13` · `CARA R` · `CARA NC-17` · `Not Rated` · `Green band trailer (all audiences)` · `Yellow band trailer (appropriate audiences)` · `Red band / restricted trailer` · `TV-Y` · `TV-Y7` · `TV-Y7-FV` · `TV-G` · `TV-PG` · `TV-14` · `TV-MA` · `Content descriptors D, L, S, V, FV` · `BBFC, FSK, Eirin and other territory boards`
+
+**P&A budget lines** — 22 options
+
+`National TV and CTV` · `Local/spot market` · `Digital video` · `Social` · `Search` · `Out-of-home` · `Radio and audio` · `Cinema on-screen` · `Print` · `Creative development (AV)` · `Creative development (print)` · `Research` · `Publicity` · `Junket` · `Premiere and events` · `Unit and EPK` · `Promotions and partnerships` · `Screenings` · `Prints, DCP, KDM and shipping` · `International local spend` · `Awards campaign` · `Contingency`
+
+**Exhibitor deal structures** — 11 options
+
+`Aggregate percentage over the run` · `Sliding weekly scale` · `90/10 over house nut` · `Firm terms with holdover clause` · `Minimum playing weeks guarantee` · `Guaranteed screen count` · `PLF and IMAX premium terms` · `Format surcharge split` · `Four-wall (distributor rents the house)` · `Post-run settlement` · `Zone exclusivity`
+
+**Sales markets and screenings** — 12 options
+
+`AFM` · `European Film Market (Berlin)` · `Marché du Film (Cannes)` · `TIFF industry` · `Sundance sales` · `Busan ACFM` · `MIPCOM` · `MIPTV` · `LA Screenings` · `Series Mania Forum` · `Content Americas` · `Ventana Sur`
+
+**Metrics a renewal turns on** — 21 options
+
+`First-28-day views` · `Hours viewed` · `Completion rate by episode` · `Binge rate` · `Subscriber acquisition attribution` · `Save/retention attribution` · `Winback attribution` · `Cost per hour viewed` · `Demo delivery against guarantee (C3/C7)` · `L+SD` · `L+3` · `L+7` · `L+35` · `Nielsen minutes` · `Social velocity` · `International spread` · `Awards potential` · `Cast option expiry dates` · `Tax credit continuity` · `Library durability` · `Licensing value downstream`
+
+**Crisis responses** — 14 options
+
+`Do nothing` · `Recut assets` · `Pull specific spots` · `Reduce a person's presence in the campaign` · `Issue a statement` · `Issue an apology` · `Move the date` · `Re-submit for a different rating` · `Recast and reshoot` · `Sell the picture to a streamer` · `Shelve and write off` · `Dump into a quiet weekend` · `Accelerate the home window` · `Go silent and let it pass`
+
+**Date-move options** — 9 options
+
+`Hold the date` · `Move earlier into open air` · `Move later past a rival` · `Move a full quarter` · `Split domestic and international dates` · `Go day-and-date with streaming` · `Swap with another title on your own slate` · `Sell or trade the date to another distributor` · `Move to a qualifying-run-then-wide pattern`
+
+**Trailer attachment targets** — 9 options
+
+`Your own tentpole` · `A rival's tentpole` · `A genre-matched title` · `A four-quadrant family title` · `An awards-season platform release` · `PLF and IMAX screens only` · `Pre-show slot only` · `Lobby and standee only` · `No attachment`
+
+### What gets got wrong
+
+- Awareness, definite interest and first choice are three separate numbers that move independently. A campaign can raise awareness for eight weeks and lose first choice in the last ten days. A simulation with one 'hype' number cannot show the most common real failure.
+- The opening is bought and the multiple is earned. Spend moves the opening; the gap between what the campaign promised and what the picture delivers moves everything after. Model expectation and delivery as separate vectors or legs are decoration.
+- Selling a picture as something broader than it is produces the best opening and the worst hold. That trade has to be computable, not narrated.
+- MPA advertising approval is a gate with lead time, not a formality. Rough cuts go early but approval only attaches to the final cut in an approved viewing format such as a DCP link.
+- Band designation restricts placement: an R-rated film's trailer may not precede a G or PG feature, an NC-17 trailer may not precede G, PG or PG-13, and restricted trailers may only precede R or NC-17.
+- Theatrical Trailer Tags must display for five seconds; TV spot rating blocks must hold four seconds and be audibly stated except in spots of ten seconds or less; radio spots of 30 seconds or more must read the full rating definition.
+- Every trailer needs a TASA sound compliance certificate from a certified independent audio firm, and a blind field-check failure can revoke trailer approval after it is already in theatres.
+- In the fourteen days before release, all advertising in the marketplace must carry the CARA-certified rating. While a rating is under appeal, advertising and promotion are prohibited between certification and the appeal hearing.
+- NATO's in-theater marketing guidelines - two-minute trailers, a 150-day advertising lead, 120 days for other materials, with two exemptions per distributor per year - are exhibitor policy, not MPA rule. They are enforced by relationship, which is exactly what makes them interesting to model.
+- Exhibitors choose the trailer playlist. Attachment is negotiated, traded and occasionally denied; it is never simply purchased.
+- There is no single theatrical window. In 2026 Universal moved to a 31-day minimum heading to 45 in 2027 while Focus stayed at 17, and the top ten 2025 titles averaged roughly 51 days to first TVOD. A single global window constant is wrong.
+- The Best Picture expanded-run requirement - seven days in ten of the top fifty US markets, no later than 45 days after initial release - is a distribution cost incurred during the awards campaign, and missing it removes the film from the category entirely.
+- Academy campaign rules cap the tactics that actually move votes: one email per film per member per Monday-to-Sunday week, a further blast only with genuinely new information, a maximum of four hosted screenings before nominations, and no receptions or complimentary food at screening events after nominations until final polls close.
+- FYC mailings must go through one of three approved mailing houses (Elite, HazMat, Vision), carry a non-embellished synopsis of 300 characters or fewer with no images and no QR codes, and no exclamation points or taglines.
+- Public communications, including social posts, may not use the Oscar statuette or Academy logos, and may not reference the Academy Screening Room or Reading Room at all.
+- The Academy Screening Room supports ten subtitle languages - English, then French and Spanish, then seven of the distributor's choice - before an eleventh may be sent as a private link. This is a hard constraint on an international campaign.
+- Motion picture companies, and their executives acting as individuals, are prohibited from funding, organising or endorsing private Oscars-related events or gatherings until final voting closes, and directing talent to attend counts.
+- The binding constraint on an awards campaign is voter viewing time, not money. The 99th-cycle requirement that members watch every nominee in a category to vote in it makes hours, not dollars, the scarce resource in the final round.
+- Emmy eligibility is arithmetic: six episodes to qualify as a series in comedy, drama, variety, animation, short form and reality (three for documentary and hosted nonfiction), all premiering nationally by 31 May.
+- Emmy guest categories are only open to performers appearing in fewer than 50% of eligible episodes, with a minimum of 5% of the submitted episode's running time in stand-alone contiguous screen time. Lead, supporting or guest is the entrant's own election, which makes it a real player decision with a real constraint.
+- Comedy versus drama placement is no longer a runtime rule; it turns on whether the majority of the running time of at least six episodes is primarily comedic or dramatic, and the Television Academy's Industry Panel can overrule the entrant.
+- Emmy entry costs $225 per submission plus $100 per entrant, so a producer-heavy programme entry runs into four figures before a single ad is bought.
+- Advertisers pay on commercial ratings (C3/C7) while renewal conversations quote program ratings (L+7, L+35). The money and the talking point are different numbers, and a show can be healthy on one and dying on the other.
+- A streaming 'view' is typically hours viewed divided by total runtime, so a long film or a long season deflates views while inflating hours. Nielsen's minutes-viewed charts reward exactly the long runtimes and deep libraries that the view metric punishes.
+- Netflix moved from twice-yearly engagement reports to a single annual report from 2027, so public streaming numbers age badly and the comparison set a player reasons from is partly unavailable by design.
+- Binge and weekly cannot be compared on the same metric. Staggered release has been found to produce substantially better short-term retention, while a binge concentrates completion and first-window totals - two different games scored differently.
+- CinemaScore polls self-selected opening-night audiences and its genre norms differ sharply: a horror film's B- is routine, a family film's B- is a catastrophe. Absolute grades without genre context are meaningless.
+- Tracking is a leading indicator with real sampling error, and late money converts poorly. The honest expected value of a large last-week spend increase is usually negative, which is exactly the decision a good simulation should let a player get wrong.
+- P&A recoups off the top of the waterfall, so every marketing dollar is taken twice from net-profit participants: once as spend and once as recoupment ahead of their definition.
+- A qualifying run costs real money and returns almost nothing at the box office, and a four-wall is pure expense. Awards eligibility is a purchase, not a by-product.
+- Talent photo, likeness and billing approvals run on contractual clocks and can kill a one-sheet after the media is bought and the printer is running.
+- Day-and-date international release is a piracy decision as much as a marketing decision: the longer the gap between the first territory and the last, the greater the leakage against the later territories' opening.
+- Title registration arbitration can take your title after art is printed and trailers are cut, and the panel is made up of representatives of rival member studios.
+- Trailer music is licensed separately from the film's score and soundtrack, and a licence limited to trailers blocks the same cue's use in TV spots or paid digital.
+- Promotional partner media value substitutes for P&A cash but buys creative approval rights to a brand that has its own agenda, which can quietly misposition the film to the exact quadrant you were chasing.
+
+---
+
+## The Engines Behind It
+
+### Format engine
+
+- WHAT 'IMAX' ACTUALLY NAMES, AND WHY ONE FLAG IS ALREADY WRONG. Three separable commitments the engine must hold as three fields, not one enum: capture_format (15-perf 65mm 'IMAX film', native camera aperture approx. 70.4 x 52.6 mm, projected 1.43:1); certified_digital (the Filmed for IMAX programme, launched September 2020 — ARRI ALEXA 65 and 265, ALEXA LF and Mini LF, Panavision Millennium DXL2, RED RANGER MONSTRO and V-RAPTOR, Sony VENICE — which buys the expanded 1.90:1 frame and the IMAX post pipeline and none of the film consequences); and exhibition_format (an ordinary picture DMR'd up and booked onto the network). The play lives in the mismatches: shoot 1.43 and only ever release 1.90 because you could not get the film houses; shoot digital and buy the window. A single Title.isIMAX boolean cannot express any of those, and every interesting decision here is one of them.
+- CAMERA BODY AND MASS. IMAX 2D film bodies run roughly 45-95 lb depending on model (the MSM 9802 is the lightest and therefore the one that goes on rigs); a blimped body is about 275 lb; the 3D rig is about 230 lb and the size of a bar fridge. Engine consequence: every camera is an asset with mass_kg, and mass is read by the mount table — a head, crane, car rig, Steadicam vest, drone or underwater housing each has a rated payload, so the shot list is filtered by what can physically carry the body. Handheld exists only as a short-burst flag with an operator-fatigue clock. If the mass number changes nothing about which setups are available, the camera is a dropdown entry, which is exactly the failure this project exists to prevent.
+- NOISE, AND THE FACT THAT IT IS A SOUND-DEPARTMENT BUDGET LINE. Historic IMAX film cameras are loud enough that clean sync dialogue close to the lens is not achievable; productions plan looping instead. The new IMAX film camera used on the first feature shot entirely on IMAX film (172 minutes, 1.43:1, released 2026) is reported at about 30% quieter with a new blimp, which its director describes as allowing a whisper captured a foot from the face. Engine: camera.noise_dB plus blimp_state feeds a per-scene sync-usability test against mic distance, ambience and dialogue level; failures write ADR minutes onto the post schedule, which cost stage hours, an actor's dates months after wrap (a real availability conflict with their next job), and a measurable performance-quality delta versus the on-set take. Flip the body, and the ADR line moves. That is the sweep.
+- THE THREE-MINUTE WALL. Film runs 336-337 ft/min at 24 fps (5.6 ft/s; 15 perforations per frame) against 90 ft/min for 4-perf 35mm. A standard 1,000 ft magazine is therefore about 2 minutes 58 seconds; reload is 5-10 minutes for 2D and about 20 minutes for the 3D rig at 2,000 ft in three minutes; oversized mags exist (2,500 ft for underwater work, 3,500 ft for space). Engine: magazine_seconds is a hard cap on max_take_length, and reload_minutes is a queue against the number of loaders and mags on the truck. A five-minute unbroken take is not expensive on this format, it is impossible — the correct response from the engine is that the shot cannot be scheduled, and the scene must be re-blocked, split, or shot on a second format. Give the player 2,500 ft mags and the same oner becomes legal. Nothing else in this answer demonstrates a format engine more cleanly.
+- LENS, FOCUS AND WHAT THE FRAME DOES TO PERFORMANCE. The IMAX glass set is small, largely fixed focal lengths derived from large-format still optics, with long minimum focus distances and effectively no production zooms. Depth of field at this negative size for an equivalent field of view is dramatically shallower, so focus error rate per take rises and the 1st AC becomes a schedule risk. Engine: lens inventory per format with {focal, T-stop, close-focus, weight, availability count worldwide}; focus_difficulty per setup = f(negative diagonal, T-stop, subject distance, subject speed) feeding a per-take failure probability. Practical consequence the player feels: more takes per printed setup, fewer setups per day, and a real reason to cast an actor who hits marks.
+- LIGHT. Large-format capture on film demands stopping down to hold focus and needs far more light for it: reported packages run three to ten times a comparable conventional package. Engine: the lighting requirement is derived, not typed — required foot-candles = f(stock EI or sensor ISO, working T-stop, frame rate, filtration), which sizes the lamp inventory, which sizes the generator amperage, the truck count, the rigging-electric headcount, the pre-light days before the unit arrives, and the practical limit on how far from power you can shoot. A night exterior that a digital unit can do with two condors needs a rig that takes two extra pre-light days. Change format, and the crew list and the prep calendar must move by themselves.
+- MONITORING, DAILIES AND SHOOTING BLIND. Classic IMAX film work has minimal or no video assist and no playback; the new-generation body adds an LCD. Dailies return from the lab after transport and processing, not the same night. Engine: information latency is the mechanic. feedback_delay_hours per format determines when the director learns a take was soft, an actor's eyeline was wrong, or a hair was in the gate — and therefore whether the fix is a retake on the day (cheap) or a reshoot day after the set is struck (catastrophic). The script supervisor's reliability attribute matters ten times more on a format with no playback, which is a genuinely different game, not a modifier.
+- THE PRICE OF A MINUTE. Reported figures: 400 ft of 65mm stock around $619, and developing plus scanning around $490 per minute of film, landing near $1,000 per minute exposed before bulk discount (treat as an estimate; feature deals negotiate this down). At 337 ft/min a 4:1 shooting ratio on a 150-minute picture is about 600 minutes of negative, i.e. roughly $600k of stock-process-scan alone (estimate). Engine: the shooting ratio stops being a stylistic number and becomes a spend curve the player watches burn during the day. A director who does nine takes of a two-minute scene has spent about $18k of negative before lunch. Model a negative budget as a real account with a burn rate; a line producer who cannot see rolls-per-day on the daily progress report is not playing this format.
+- THE LAB AND THE SCANNER QUEUE — THE BOTTLENECK NOBODY MODELS. IMAX reports roughly 35 seconds to scan a single frame, i.e. about 14 minutes per second of screen time. A 172-minute picture is about 10,320 screen-seconds, which is on the order of 2,400 scanner-hours for the final cut alone, and you scan far more than you use. Engine: scanning is a capacity resource with a machine count, a queue and a cost per hour, and it sits on the critical path to the cut. It is also where negative risk resolves: until a roll is scanned there is exactly one copy of it in the world, in a truck, going to a lab. Model negative-in-transit as an insurable event with a total-loss branch, a reshoot cost and a bond consequence. That is a failure mode no digital format has.
+- FLEET AND CREW SCARCITY. There is no rental house with a shelf of these. The world fleet of working IMAX film bodies is a single-digit to low-double-digit number (estimate), a fraction of those are usable for dramatic features, the maintenance technicians are a named handful, and the loaders and 1st ACs who have done it are a small labour pool. Engine: cameras and format-qualified crew are globally scarce objects with booking calendars. Two productions in the same quarter must be able to collide over the same three bodies; losing that booking forces a format change or a schedule slip, and the player can be the one who takes the bodies first. A format whose equipment is infinitely available has thrown away its most characteristic constraint.
+- THE SCHEDULE TRANSFORM, WHICH IS WHERE IT ALL CASHES OUT. Aggregate the above and the day is different: fewer setups per day (estimate 20-40% down against a digital unit on comparable material), take length capped near three minutes, reload gaps every two to three takes, heavier rigging days, longer pre-lights, a bigger truck and therefore slower company moves, more rehearsal because film is expensive, and a strong bias toward covering the format's best material (vistas, spectacle, faces in close-up) rather than dialogue crossfire. Engine rule: format never multiplies the day count. It edits the resource list and the constraints of each setup, and the scheduler derives the day count from those. If the player switches format and the board does not re-solve to a different number of days by itself, the format engine is a coefficient wearing a costume.
+- FRAME GEOMETRY, AND WHY FORMAT IS PER-SCENE. 15/70 is 1.43:1; IMAX digital in laser houses is 1.90:1; most pictures that use the format use it for sequences and finish the rest at 2.39 or 1.85, so the ratio expands and contracts inside one show. Engine: capture assignment is a property of the SCENE, not the title, with three ratios carried per scene (capture, primary delivery, protected). Framing charts and safe areas are constraints the operator must satisfy; a scene shot 1.43 and delivered 1.90 loses top and bottom, and every home-video and broadcast master is another reframe with a cost and a creative loss. The falsifiable consequence: mark ten more scenes for the expanded frame and the negative cost, the scanner queue, the DMR spend, the ratio-shift count and the number of venues that can show the film as intended all move.
+- POST PIPELINE AND DELIVERABLES. IMAX finishing adds a distinct chain: DMR conform and image processing, an IMAX-specific grade pass, a separate IMAX sound mix (laser houses run a 12-channel system, so it is another stage booking, not a copy of the Atmos print master), certification, and film-out and print mastering if 15/70 prints are being struck. Certification alone typically adds two to six weeks. Engine: the mastering path is a graph of tasks with cost, latency, vendor capacity and a pass/fail gate — not a checkbox. Miss the gate and the date slips; the date is booked against a network calendar; slipping it loses the window to whoever is behind you.
+- PRINTS, FREIGHT AND PHYSICAL LOGISTICS. A three-hour 15/70 print is about 53 reels, 11 miles of film, 600 lb, shipped in nine boxes of six reels; three hours is near the practical limit of the format's print handling. Roughly 100 70mm prints of all gauges were struck internationally for the best-known recent case (reported). Engine: prints are manufactured units with lead time, per-unit cost, weight, freight cost, a limited number of labs that can make them, and breakage/wear in service. Runtime is therefore a physical constraint on the format, not only a pacing choice — write twelve minutes more and you can price yourself out of your own prints.
+- THE EXHIBITION GRAPH, AND THE 2% PROBLEM. As of 30 September 2025 there were 1,829 IMAX systems in 89 countries (1,759 commercial multiplexes, 10 commercial destinations, 60 institutional). Of those, roughly 41-42 could project 15/70 film in 2026 — about 25 in the United States, 9 in Canada, the rest in the UK, Australia, Belgium, Czechia and France. The projectors are refurbished machines decades old, several rebuilt specifically for one release. Engine: venues are objects in the existing geography with {system type, screen dimensions, native ratio, seat count, ticket premium, city}. The format you shot is visible as shot to about 2.3% of the network, which is a marketing asset (event scarcity, sold-out weeks, people travelling to see it) and a revenue cap at the same time. Booking is a calendar: the network plays one title at a time, so two tentpoles must be able to collide over the same weeks and the loser takes a worse corridor or no premium screens at all.
+- CONTRACTS, COVENANTS AND WHO PAYS. Format shows up in paper: a distribution agreement can require a minimum number of expanded-frame minutes; an exhibitor arrangement can guarantee a window; a camera-provider relationship can trade access to scarce bodies for a release commitment; insurance prices a format with an irreplaceable original negative differently from one with instant clones; a completion bond company reads a format that caps take length and slows the day and demands contingency or refuses. Engine: a format covenant object with a measurable delivery test (expanded-frame minutes delivered vs. required), a cure period and a remedy against the ledger — the same shape as the rating covenant. Fail it and money actually moves.
+- AUDIENCE AND MARKETING EFFECTS THAT MUST BE EARNED, NOT ASSERTED. Premium formats concentrate opening-weekend demand into a small number of high-price, high-capacity screens, generate a 'see it the right way' discourse that is genre-dependent (spectacle and scale respond, chamber drama does not), and pull a specific audience segment that will travel. Engine: no global IMAX revenue multiplier. Instead: per-venue capacity x showtimes/day (runtime-dependent) x premium ticket price x a segment's willingness to travel, summed over the venue graph, plus a word-of-mouth term keyed to whether the picture's content actually uses the frame. Shoot a two-hander in 1.43 and the model should return the insult: cost paid, benefit not collected.
+- WHAT THE PLAYER-AS-ACTOR FEELS, WHICH IS THE WHOLE POINT OF THE THREE-PERSON DESIGN. On this format the actor works to a camera that is loud, close, physically enormous and frequently without playback; takes are capped at under three minutes; there are reload gaps to hold an emotional state through; the marks are unforgiving because focus is; and there will be looping months later because production sound lost the whisper. On the mother's side it is a fleet booking, a negative account, a scanner queue and a bond conversation. On the father's side — the lot and the writing — it is the decision to write scenes that deserve the frame and to not write a five-minute oner. Three genuinely different experiences of one choice.
+- TELEVISION. Episodic does not shoot 15/70, so the TV format engine is a different machine with the same bones: the platform's delivery specification is the covenant. Streamers publish approved-camera lists and capture rules (a true-4K sensor and the great majority of final runtime captured on an approved body is the typical shape), HDR grade and immersive-audio deliverables, colour and loudness specs, and per-episode QC that can reject a master. The choice is compliance, not premium: it changes post cost, vendor bookings and rejection risk, and it barely moves the audience. Large-format digital on premium drama is the closest analogue to the feature decision — it changes the lens package, the light, the focus failure rate and the look, with none of the exhibition upside. The engine must express 'a format decision with real cost and no revenue premium', or television will be modelled as film with more episodes.
+- GENERALISING — A FORMAT ENGINE IS NINE TABLES AND ONE RULE. (1) CAPTURE CHAIN: bodies with mass, noise, mag seconds at rate, reload minutes, monitoring, mount compatibility, world fleet size, day rate, qualified-crew pool. (2) MEDIUM ECONOMY: cost per second recorded, process/scan latency and capacity, failure and loss rates, storage and freight, single-copy risk. (3) LIGHT BUDGET: required illumination derived from sensitivity, working stop, rate and filtration, expanded into lamps, amps, trucks, rigging hours and pre-light days. (4) OPTICS: lens inventory with availability counts and a derived focus-difficulty term. (5) FRAME GEOMETRY: per-scene capture/delivery/protected ratios, safe areas, reframe costs per deliverable. (6) POST GRAPH: mastering path with per-task cost, latency, vendor capacity and certification gates. (7) EXHIBITION GRAPH: venues with system type, native ratio, capacity, premium and booking calendar. (8) SCHEDULE TRANSFORM: constraints on max take length, setups per day, turnaround, prep, move speed. (9) PAPER: covenants, insurance class, bond attitude, guild implications. THE RULE: format writes constraints and resource requirements onto scenes and setups; the scheduler and the budget derive everything else. A format that multiplies a result is decoration.
+- THE SAME MACHINE MUST PRODUCE EVERY OTHER FORMAT, OR IT IS AN IMAX SPECIAL CASE. Super 16 (cheap stock, grain, a 1.78 crop, small light package, hand-holdable, dailies latency); 35mm 3-perf vs 4-perf (25% stock saving, no 1.33 protection); anamorphic (squeeze, breathing, slow glass so more light, close-focus pain, a distinctive flare an audience segment reads); native stereoscopic 3D (two heads, an interaxial decision per shot, doubled data, convergence work in post, a shrinking venue base, a per-ticket premium and a nausea term); high frame rate (motion clarity that raises art-department and makeup fidelity requirements because everything reads, plus a hostile audience segment); LED-volume virtual production (no location fees, no weather, a content-build calendar that moves cost to prep, a moire and parallax failure set, a ceiling on lens choice); multicam pedestal video before an audience (three-camera simultaneous coverage, no reloads, the audience as a clock); phone and consumer capture (near-zero rig cost, a documentary-adjacent audience read, a rejection risk at platform QC). Each of these is the same nine tables with different numbers. If adding one requires new code rather than new rows, the engine is not an engine.
+- FALSIFIABILITY SWEEPS FOR THIS DOMAIN (each must be registered as a decider and swept). Flip capture_format from certified digital to 15/70 and the following must all move without anyone typing a number: day count, setups per day, max take length, lamp inventory, generator count, pre-light days, negative account burn, scanner-hours queued, ADR minutes, post weeks, number of venues that can show the delivered picture natively, premium ticket revenue, insurance premium, bond contingency. Raise magazine capacity from 1,000 to 2,500 ft and a previously unschedulable oner becomes schedulable. Reduce camera noise by 30% and ADR minutes fall and an actor's post-wrap date conflict disappears. Take the last 15/70-capable venue out of a territory and the expanded frame stops being worth paying for there. If any one of these sweeps leaves the outcome flat, that input is decoration and should be deleted rather than shipped.
+
+### Genre engine
+
+- THE CENTRAL CLAIM. A genre is not a coefficient on revenue. It is (a) a set of obligatory scenes the audience has paid to see, (b) a resource signature those scenes write onto the breakdown, (c) a different long-pole department, (d) a different audience population with a different decay curve, and (e) a different market for the talent who make it. All five of those enter the world UPSTREAM of money, at the scene list. The test for whether a genre engine exists: build two pictures with the same budget, the same number of scenes and the same cast tier, one horror and one drama, and the day count, the crew list, the call times, the night ratio, the consumables order, the mix days, the classification band, the release corridor, the screen count, the marketing spend and the revenue decay must all come out different. If only the revenue differs, you have a multiplier with a name.
+- HORROR VS DRAMA AT THE SAME $15M — ABOVE THE LINE. Drama at that number spends 25-40% above the line because the cast IS the asset: a name gets it financed, presold and reviewed. Horror spends perhaps 5-10%: the concept is the star, the leads are unknown or genre-known, and the one recognisable face is often a supporting adult in the third act. Engine consequence: the casting market must price the same actor differently by genre (quote elasticity by genre), and the financing model must weight cast in presales by genre — a creature feature with no names presells; a drama with no names does not get made. That single asymmetry redistributes about a quarter of the budget below the line, and everything below follows from having that money.
+- WHERE THAT MONEY GOES — BELOW THE LINE. Horror moves it into: makeup effects (appliances, blood rigs, creature builds, a lab with finite mould and oven capacity); practical special effects (fire, rain, wind, breakaways, squibs, air rams); atmosphere (haze and smoke on nearly every interior, which costs 5-15 minutes to reload after every door opening, plus crew-health and camera-department consequences); stunts and rigging (falls, drags, wire pulls); night premium and overtime; and sound (the genre's primary weapon). Drama moves it into: cast, a longer dialogue schedule, period or production-design fidelity if applicable, and an awards campaign after delivery. Engine: no genre line items. Each of those is a real resource the breakdown asks for because a tagged scene exists; the genre only changes which scenes exist.
+- SHOOTING RATIO IS THE WRONG SINGLE NUMBER FOR HORROR, AND THIS IS THE INSTRUCTIVE CASE. A drama shoots long dialogue takes with two cameras and prints many of them: high ratio, cheap takes, fast resets. A horror setpiece often has a one-take-per-rebuild economy — a blood hit, a squib, a breakaway window, a foam appliance destroyed on contact — where the reset is 20-90 minutes and the consumable is gone. Engine: per-setup take economics {reset_minutes, consumables_consumed, rebuild_cost, spares_on_hand, failure_rate}, not a project-level ratio. The player's real decision is how many spares the lab ran last night, because with none the option to go again does not exist. That is the same mechanic as the prosthetics lab: capacity yesterday is options today.
+- NIGHT AND THE CLOCK. Horror's night-exterior and night-interior ratio is far higher than drama's. Night is not a mood setting: it is shorter usable hours in winter (already derivable from the project's NOAA sun model), lighting rigs that take pre-light days, generator and condor rental, union night differentials and higher overtime probability, degraded crew performance in the back half of the week, turnaround violations that push the next day's call, and weather cover that is harder to arrange because the cover set also has to be night. Engine: shift the night ratio by ten points and the schedule must re-solve to a different day count and a different overtime accrual by itself.
+- LOCATION CONCENTRATION. Horror's economic secret is the single location — a house, a motel, a hospital wing, a cabin — held for weeks. That produces fewer company moves, a longer location hold or a standing build, practical-lighting-heavy design, and a construction spend that beats a travel spend. Drama at the same budget typically spreads across many locations with more moves. Engine: a scene-location concentration index derived from the scene list, feeding move count, hold fees, build vs. location decisions, and the strike schedule. A genre that does not change where scenes are set has not touched the schedule.
+- CAST COMPOSITION AND ITS LEGAL FREIGHT. Horror over-recruits minors (child labour rules: restricted work hours by age, a studio teacher, permits, a shorter shooting day around them), animals (a handler, an American Humane monitor or equivalent, additional time), twins for infants, stunt performers as a larger share of the cast, and suit or creature performers as a separate casting discipline. Drama over-recruits experienced adults and day players with dialogue. Engine: cast composition writes hard scheduling constraints, not flavour. One eight-year-old lead can cost more schedule than a creature.
+- SOUND AND MUSIC ARE THE LONG POLE, AND THE ENGINE SHOULD SAY SO. In horror the mix is the apparatus: more predub days, heavier foley, designed sound rather than recorded sound, silence as a deliberate resource, low-frequency content that only pays off on a properly calibrated system, and a score that is often sound design. In drama the long pole is the performance in the cut, with a smaller mix. Engine: a per-genre craft-weight vector naming which department's quality dominates the final quality function and which post task governs the delivery date. That vector must also change who it is worth hiring: the best sound designer is worth more to a horror picture than the best production designer, and the player should be able to discover that by spending wrongly once.
+- CLASSIFICATION. Horror generates content-ledger tags at volume (violence intensity, gore, threat to children, sexual threat, sustained dread, language under stress), and the R vs PG-13 decision is an actual strategy with two live branches: the low-budget hard-R with an older, narrower, more committed audience, and the studio PG-13 that opens the under-17 audience at the cost of what the picture can show. Drama's band is usually driven by language and a single scene. Engine: the existing per-scene content ledger, a rating covenant with a cure period, and a recut loop with real cost and calendar. Cut one tagged element and the predicted band must be able to move; miss the covenant and money moves.
+- RUNTIME AND THE EXHIBITION ARITHMETIC. Horror features run 85-100 minutes; awards drama 110-150. That is not a style note: shorter runtime means more showtimes per screen per day, which raises opening-weekend capacity on the same screen count, and it lowers the print/DCP and shipping profile. Engine: showtimes per day derived from runtime plus turnover, multiplied through the venue graph. Add fifteen minutes to a horror picture in the edit and the model must return fewer shows, a lower opening capacity, and a worse exit poll from an audience that came for a lean scare.
+- THE AUDIENCE IS A DIFFERENT POPULATION WITH A DIFFERENT CURVE. Horror is front-loaded: a large opening against a modest total, typically in the region of a 2.2-2.8x opening-to-domestic multiplier, with well-liked outliers going higher (estimate; the distribution matters more than the mean). Drama platforms and plays long, 3.5-5x, on reviews and awards attention. Horror's exit grade runs in the B range and a C+ is survivable — the genre's audience grades harshly and comes anyway — while a C+ ends a drama. Horror skews young and female-forward in groups, is social-clip driven, and travels well in Latin America and parts of Asia; dialogue-led drama travels on cast and festival prestige. Engine: not one multiplier but a decay-curve shape with variance, a segment-affinity matrix over the existing geography and demography, and a critic-response curve that is weakly weighted for horror and heavily weighted for drama. Two response models, deliberately divergent.
+- RELEASE CORRIDOR AND COMPETITION. Horror has real seasonality: the January corridor, spring, late summer, and the September-October run to Halloween, with a distinct competitive density per corridor. Drama has the autumn festival-to-awards corridor with a completely different competitor set and a campaign spend that is a P&A line in its own right (a serious awards push is millions — treat as an estimate and make it a modelled line, not a flat fee). Engine: a dated calendar of corridors with occupancy; two horror pictures in the same October weekend must cannibalise each other in the model, and moving to January must be a survivable, measurable retreat.
+- THE FESTIVAL AND ACQUISITION GRAPH IS GENRE-SPECIFIC. Horror's venues are Sundance Midnight, TIFF Midnight Madness, SXSW, Fantastic Fest, Sitges, Fantasia, Beyond Fest, and their buyers behave differently — they buy on a room's reaction, at night, fast. Drama's are Sundance competition, Cannes, Venice, Telluride, Toronto, Berlin, with slower, larger, prestige-weighted deals and an awards runway. Engine: festivals as dated objects with sections, submission deadlines, acceptance probability by genre and register, a premiere-status consumable, and buyer agents who attend particular rooms. The same finished picture must get a different offer curve depending on which room it is shown in.
+- SEQUEL CONVERSION AND THE LONG GAME. Horror converts to franchise at a higher rate per dollar than any other genre, and the deal terms that matter — sequel options over the creator and the cast, escalating quotes, a rights bundle held or given away at the original purchase — are therefore worth far more in horror than in drama. Engine: a franchise hazard function by genre and performance, wired to the rights ledger already specified in development. The player who sold the sequel rights cheap on a $5M horror picture should watch the consequence run for a decade.
+- RISK, INSURANCE AND PERMITS. Fire, firearms, blood, water, stunts, minors at night, animals and pyro each raise the premium, require named safety personnel (armourer, fire marshal, medic, safety supervisor), lengthen the permit process, and add safety meetings to the day. Horror carries more of these tags per page than drama by a wide margin. Engine: insurance class and permit lead time derived from the tag census, with a real incident model — a safety failure is a shutdown, an investigation, a claim and a reputational event, not a debuff.
+- WHAT THE THREE PLAYERS EXPERIENCE. As the ACTOR: horror is nights, cold, blood that has to be reset, prosthetic chair time, screaming that costs the voice (a genuine vocal-fatigue clock with a next-day consequence), stunt negotiation, and a career-typecasting risk that is real and asymmetric — the genre pays scale, makes names, and then holds them. As the MOTHER (the company): horror is the only genre where a $5M film reliably returns like a $50M one, so the portfolio question is how many to carry and whether her slate is structurally all one thing. As the FATHER (the lot and the writing): horror fills stages cheaply and year-round, which is a lot-occupancy business decision, and writing the genre means writing obligatory scenes and act-outs built on dread rather than on turns.
+- TELEVISION CHANGES THE GENRE ENGINE, NOT JUST ITS SCALE. Horror in a returning series must be a repeatable engine: the threat cannot be resolved, so the writing problem is sustaining dread across a season and a hiatus. Practical effects that a feature builds once are consumed weekly, so the lab becomes a standing department with a nightly queue rather than a vendor. The night ratio collides with cross-boarded episodes and with series-regular guaranteed episode counts. Standards and Practices, not a classification board, sets what can be shown on a US broadcast network, and in Germany, the Netherlands, Brazil and Australia the band IS the time slot, so genre intensity directly costs airtime. The audience metric is retention and completion, not opening weekend, and a scare that makes a viewer stop watching is a measurable failure at a named minute. Drama in series is the inverse: performance-led, cheaper per episode, and worth more in library if it is procedural and order-independent.
+- GENERALISING — WHAT A GENRE ENGINE HOLDS. (1) OBLIGATORY SCENES AND CONVENTIONS: a typed list per genre and subgenre, each one a scene-type requirement whose absence is felt by the audience model, not by a score. (2) SCENE-TYPE RESOURCE SIGNATURES: what tag profile each scene type writes onto the breakdown — night, exterior, water, fire, atmosphere, makeup FX, stunt, wire, minors, animals, vehicles, VFX. (3) CRAFT-WEIGHT VECTOR: which department is the long pole, which HOD's quality dominates, which post task governs delivery. (4) CONTENT PRIORS: expected tag census, hence band distribution, recut probability and territory-specific consequences. (5) AUDIENCE POPULATIONS: segment affinity, admissibility by band and territory, front-loadedness, decay shape, variance. (6) TWO RESPONSE CURVES: critic and audience, with genre-specific correlation between them. (7) RUNTIME BAND feeding showtimes and payroll thresholds. (8) CALENDAR: corridors, festivals, competitive density. (9) TALENT MARKET: quote elasticity, typecast hazard, genre-fit scores for every craft. (10) FRANCHISE HAZARD and the rights terms that capture it. (11) RISK CLASS: insurance, permits, named safety roles. (12) EXPORT ASYMMETRY: per-territory presale multipliers, because action and horror travel and dialogue comedy does not.
+- HOW IT AVOIDS BEING A MULTIPLIER WITH A NAME — FOUR STRUCTURAL RULES. (i) Genre may never write to a revenue number directly; it may only write tags onto scenes, prices onto resources, and priors onto populations, and the existing systems derive the rest. (ii) SUBGENRE MUST BIND: found footage removes the lighting package, the score, the crew-visible frame and half the grip truck and caps the audience ceiling; slasher, possession, folk horror and creature feature must produce different night ratios, different lab loads and different casts. If the 32 horror subgenres behave identically, they are 32 labels and should be one. (iii) REGISTER IS A SECOND AXIS: 'elevated' and 'gory fun' at the same subgenre are different products with different buyers, different festivals, different critics and different exit grades, so register must be separately readable. (iv) EVERY GENRE PARAMETER REGISTERS AS A DECIDER INPUT and gets swept: move the night ratio, the gore tag count or the runtime a little, and day count, band, showtimes, opening capacity and decay must move. Anything that fails the sweep is deleted, not shipped.
+
+### Costume as object
+
+- THE BRIEF, GENERICALLY AND WITHOUT A TRADEMARK. Input: 'an armoured flying hero in primary colours'. The system must not look that up. It must decompose it into design parameters it already knows how to price: SILHOUETTE CLASS (armoured — rigid plate over a body-conforming base, as distinct from tailored, sculpted-flesh, stretch-only, or hard-shell); LOCOMOTION REQUIREMENT (flight — therefore wire and harness integration, a specific load path through the garment, and a cape or aerodynamic surface); CHROMA COMMITMENT (saturated primaries — a colour-science problem before it is an aesthetic one); FACE POLICY (open face, masked, helmeted, or digitally replaced); EMBLEM (a graphic mark that is simultaneously a clearance object, a merchandising asset and a key-art element); and MUTABILITY (does it change through the picture — damage stages, an upgrade, an alternate colourway). Every one of those is a field other systems read. A name is not one of them.
+- THE GARMENT ASSET RECORD. Each physical suit is one asset, not one design: {asset_id, design_id, unit_class, performer_body_id, zone_map[], mass_kg, heat_index, articulation (range of motion in degrees per joint), vision_cone_deg, hearing_attenuation_dB, don_minutes, doff_minutes, dressers_required, condition 0-1, wear_days, dry_state, repair_queue[], consumables_per_wear[], colourimetry {hue, value, chroma, sheen, IR reflectance, dye_lot}, hardware {zips, magnets, hooks, harness_points with load rating}, electrical {cooling pump, fan, battery_minutes, mic-pack cavity}, provenance {shop, contract, milestone, cost, weeks}, continuity {day-of-story, damage stage}, digital_twin {scan_id, material capture, cloth-sim parameters}, clearance {emblem mark id, verdict}, disposition {archive, press tour, merchandising reference, destroyed}}. The rule already written into this project's costume domain holds here with force: no other system may invent a costume. If a suit appears on screen, an asset exists, with a build order behind it and an invoice under it.
+- THE ZONE MAP IS THE LOAD-BEARING STRUCTURE. The body is divided into zones (skull, face, neck, deltoid, chest plate, ribs, abdomen, lumbar, hip, thigh, knee, calf, boot, upper arm, elbow, forearm, glove, cape attachment). Each zone carries a CONSTRUCTION ROUTE from a real option set: four-way stretch spandex or powernet sewn; dye-sublimation printed stretch; silicone printed on stretch; foam latex over a lycra base; carved-foam muscle covered; cast silicone skin; slush-cast urethane; vacuum-formed styrene; 3D-printed SLS or resin panel; injection-moulded rubber; leather or fabric tailoring; woven chainmail substitute. Route determines that zone's mass, stiffness, heat contribution, articulation cost, unit cost, build hours, repair time and failure mode. Aggregate them and you get the suit's mass, heat index and joint-by-joint range of motion — derived numbers, never typed. Change the chest plate from vac-form to SLS and the shoulder's usable range drops, which is where the consequence chain starts.
+- THE DESIGN AND ENGINEERING PHASE, WITH REAL CALENDAR. Concept illustration for a hero suit runs 20-100+ full-colour images over 6-12 weeks, each round rolling against director taste-match and studio note pressure; a failed round costs days out of prep. Suit design and engineering — silhouette, seam placement, how the performer gets in and out, where the eyes are, what the stunt version must survive — runs 8-20 weeks BEFORE fabrication starts. Approved artwork becomes an immutable target the workroom is scored against (build fidelity). Engine consequence: the suit has to be started before the film is financed, or it will not exist when the unit does. That is a genuine development-stage decision with money at risk, and the player should be able to get it wrong by waiting.
+- BODY CAST, SCAN AND PATTERN — WHY EVERY BODY COSTS AGAIN. A full body lifecast takes 4-6 hours per performer; a scan is faster and less accurate for fit. Pattern drafting is 1-2 weeks, and the negative-ease mathematics are real: the fabric's stretch percentage sets the pattern reduction, and getting it wrong produces a suit that wrinkles on camera or cannot be worn at all. Every body that wears the suit — hero, stunt double, fight double, wire double, scale double, stand-in — needs its own pattern off the shared design, at roughly 60-80% of the first build's cost. Engine consequence: recasting the lead after the pattern is cut is a six-figure, multi-week event; casting a stunt double with a different frame adds a suit; the performer's body changing during a long shoot degrades fit and the suit starts to read badly on camera.
+- FABRICATION: MONEY AND WEEKS. Sculpt for a hero creature or muscle suit runs 6-16 weeks; moulds and fabrication 12-30 weeks for a full hero suit set, or 3-6 weeks for a single sewn stretch suit; a static hero mask 4-8 weeks; a radio-controlled animatronic head 16-40 weeks. Basic full-body fabrication is on the order of $35,000-$50,000 before the head (estimate); a fully engineered armoured hero suit with plate, print, hardware and paint is materially more, and widely reported figures for one recent high-end example sit near $300,000 per suit across six suits (reported press figure, treat as an estimate, not a constant). Engine: cost and calendar per zone per route, summed, with shop capacity as a constraint — the shop is a vendor with a finite number of mould-makers, ovens and painters, and it has other clients.
+- MULTIPLES ARE THE DECISION, AND THE SCHEDULE CONSUMES THEM. The unit classes are already a real option set: hero, backup hero, stunt double, photo/driving double, scale or child double, wet, blood light, blood heavy, progressive damage stages 1-n, burned, tear-away, harness-slit and rig-compatible, fire-retardant underlayer version, stand-in, VFX marker/neutral grey, archive hold. The breakdown decides how many of each the schedule needs: multiples_needed = f(destruction tags, wet tags, stunt days, parallel-unit days, drying time). Engine: each suit is an asset with its own condition; a shooting day consumes wear from a specific asset; a wet day removes that asset from service for 12-24 hours to dry. Build two suits and a rain sequence costs a day. Build four and it does not. That is the whole argument, and it should be visible to the player as a number before they choose.
+- FITTINGS AND THE RANGE-OF-MOTION TEST — THE GATE THAT MAKES IT REAL. The performer is dressed and then asked to do everything the script requires: run, throw a punch, take a punch, climb, sit in a car, get up off the ground, kneel, look up (the flying hero's worst case), and breathe inside it for twenty minutes. The vision cone is mapped. Half a day to a full day per suit, repeated after every revision. Engine: the test returns a PER-ACTION PASS/FAIL LIST that the stunt and scheduling systems MUST consult before a beat can be scheduled. A failed action has exactly three resolutions, all expensive: revise the suit (weeks, and prep may not have weeks), redesign the stunt (the beat changes and the script changes with it), or buy the shot in VFX (money moves from the art department to post, and now the digital suit has to match the practical one). This is the single check that converts a costume from a label into a constraint.
+- FLIGHT, SPECIFICALLY. A flying hero is a harness problem wearing a garment. The harness must be engineered INTO the suit: a load-bearing plate or webbing under the sculpt, rated attachment points, slits that can be dressed closed, and a cable path that does not deform the silhouette. The suit therefore exists in a rig-compatible variant, and the non-rigged hero suit cannot fly. Flying beats add: a rigging crew and a stunt rigger, a wire-removal VFX shot count that scales with cable visibility against the background, a ceiling height requirement that constrains which stage on the lot can take the scene (which is the father's business, and a booking the mother pays for), pick-up points, and a per-take reset for re-flying. The cape is its own asset family — hero drape, shortened stunt cape, wire-rigged cape, wet cape, neutral-grey capture cape — with weight, hem weighting, fan wranglers, and a strong likelihood of becoming a digital asset because real cloth at speed will not behave. Model the cape separately or it will be free, and it is never free.
+- PRIMARY COLOURS ARE A CAMERA TEST, NOT A PREFERENCE. Saturated red and blue at high chroma sit near the edge of the display gamut, clip in the red channel, shift under HMI versus LED versus firelight, can leak in infrared and read magenta on some sensors, fight the production designer's walls and the show LUT, and refuse to match between dye lots across a dozen suits and multiple shops. The existing camera-test failure list applies directly: moire, black that reads green, IR leak, highlight clipping, sheen and specular flare, chroma value too near the key screen, fabric noise into the boom, drape that reads wrong at high frame rate, radio mic impossible to conceal, dye-lot mismatch. Engine: garment colourimetry is transformed by the lighting plan and the LUT into on-screen colour; mismatch feeds a visual-cohesion score and a reshoot risk. A failed camera test costs a repaint or a re-dye of every unit, measured in weeks, against a prep calendar that is already spent.
+- WHAT IT DOES TO THE PERSON INSIDE IT. Common hero suits weigh 20-50 lb, and endurance in warm conditions can fall to 10-20 minutes of continuous wear, with cooling breaks every 10-30 minutes. Model core temperature rising as a function of ambient temperature, the suit's heat index, and exertion, with a mandatory cooling break at threshold — and make ignoring it a safety incident with an investigation and a shutdown, not a soft penalty. Endurance sets takes per hour, which sets setups per day, which sets the day count. On top of heat: restricted vision (the AD must block around a cone, a spotter is assigned, some stunts become illegal), attenuated hearing (cues must be given differently), restricted breathing, claustrophobia as a real actor attribute that can end a career in the suit, dehydration and its next-day consequence, and the relief problem — a suit without a relief zip costs 45-120 minutes every single time, which over a 60-day shoot is days.
+- THE DAY: DON, DOFF, AND THE TRADE THE PLAYER SHOULD MAKE SHOT BY SHOT. Dressing a hero suit takes 30-120 minutes with two to four dressers; undressing 15-60. The head goes on last. That time sits on the critical path exactly like prosthetic chair time: it sets the performer's call, and therefore the paid day, and therefore the turnaround before tomorrow's call. Between setups the decision is PARTIAL DOFF — head off, torso open, ice vest in, forced-air hose connected — which recovers core temperature at the cost of reset minutes, versus staying suited, which is fast and cooks the performer. The engine should expose that trade at each setup rather than resolve it silently, because it is the most characteristic decision of a suited picture and it is the one the player-as-actor feels in their body.
+- NIGHTS, MAINTENANCE AND THE STANDING DEPARTMENT. Every shooting day the suit is flushed of sweat and dried inside, seams re-glued, foam tears patched, paint touched in, magnets and fasteners replaced, servos serviced, batteries charged: 3-8 hours of night crew per suit per shooting day. A suit needs 12-24 hours to dry properly, which is the real argument for building two. Engine: condition degrades per wear day as a function of exertion, water, blood, fire and stunt load; nightly repair restores a fixed amount scaled by crew size; if wear outruns repair the suit crosses a usable threshold and the backup rotates in; with no backup the day is lost. On a feature this is a few weeks of cost. On a suited series it is the entire economics of the show — a permanent night department, budgeted as a recurring line, and the reason television designs for maintainability while a feature designs to photograph.
+- THE DIGITAL TWIN IS A SECOND SUIT WITH A SECOND BUDGET. Any modern armoured hero exists twice: the practical build and the CG asset used for flight, full-speed action, impossible camera moves and digital doubles. The CG suit requires a cross-polarised texture and material capture of the real one, a lidar or photogrammetry scan of every unit class, cloth-simulation parameters for the cape, and a build at a vendor measured in weeks and six figures (estimate). Engine consequence with teeth: if the practical suit is revised after the scan, the CG asset is stale and either gets rebuilt or the shots will not match — a visible continuity fault the audience model can read. Every failed range-of-motion action that got bought in VFX lands here as shot count. The costume department's decision therefore writes directly into the post budget.
+- UNION JURISDICTION IS A DECISION, NOT A DETAIL. A hero or creature suit sits on a genuine line between costume (IATSE Local 705 in Los Angeles, with the Costume Designers Guild Local 892 designing), property and creature fabrication (Local 44), and makeup effects (Local 706). Whichever department owns the build determines who is hired, which agreement applies, what the shop rate is, who is standing by on set at 3am to repair it, and who gets the on-set credit. Engine: an ownership field with a real consequence on crew list, rate table and night-crew availability. Get it wrong and the suit is fine and nobody is contractually obliged to fix it at 3am.
+- WHO DECIDES, AS THE THREE PLAYABLE PEOPLE. THE MOTHER (production company) decides how many suits to build, which shop to contract, whether to pay for a dedicated suit performer and handler, whether the night repair crew is funded, and whether the design is started before financing closes. THE FATHER (lot and writing) controls whether the lot's own workroom and archive build it at internal cost or an outside shop takes the contract — a real make-or-buy decision with margin implications for the lot — and, as the writer, whether the script contains a beat the suit cannot perform. THE ACTOR (the player) decides whether to wear it at all, whether to be the suit performer or hand those shots to a double (which changes screen time, credit and the physical toll), whether to accept the fitting days in the deal, whether to push for the relief zip and the cooling rig in negotiation, and whether to take the franchise option that comes attached — because being the suit is career-defining and career-narrowing at the same time.
+- CONTRACT AND CAREER CONSEQUENCES SPECIFIC TO THE SUIT. Fitting days are compensated days and their number is negotiated in the deal memo; a suit build ties the actor's body to the production (weight and conditioning obligations appear in real contracts and should appear here as an attribute constraint with a monitoring clause); the sequel option on a suited lead is worth more to the studio than on any other role; and the typecast hazard is measurable — after the suit, offer volume in the genre rises and offer volume outside it falls, for a modelled number of years, recoverable by specific counter-moves. For the actor persona this is one of the strongest long-run decisions in the game, and it must be legible as a fork at the moment of signing.
+- CLEARANCE, MERCHANDISING AND THE LOCK THE PLAYER WILL NOT SEE COMING. The emblem is a mark: it goes through a clearance verdict like any proper noun, can conflict with an existing mark, and can be sent back for redesign — which cascades into every painted suit, every piece of key art, every prop and every toy sculpt. The consumer-products pipeline locks a design roughly 12-18 months before release (estimate) so that figures, packaging and licensee product can be manufactured; a design change after toy lock is a write-off with a licensee relationship attached. Engine: the design is a versioned object with downstream subscribers (VFX asset, marketing art, licensing, theme-park or live-appearance suits), and a late change bills each subscriber. That is how a costume becomes a business object rather than a wardrobe entry.
+- DISPOSITION AND AFTERLIFE. Suits are archived for sequels, sent on press tours and convention appearances (a different asset state with its own wear and freight), loaned for exhibition, insured at replacement value, and occasionally destroyed in a gag and claimed. Engine: the archive hold unit class exists precisely so a sequel three years later does not rebuild from zero, and so the player who cut the archive suit to save $50k pays $400k later. Long-memory consequences like that are what separate a simulation from a costing spreadsheet.
+- THE GENERIC ENGINE BEHIND ALL OF THIS — IT IS NOT A SUPERHERO SYSTEM. The same object handles a knight's harness, a deep-sea rig, a period corset, a mascot, a fursuit, a hazmat suit, an animatronic creature and a ballgown, because the fields are physical rather than thematic: zones, routes, mass, heat, articulation, vision, don/doff, multiples, condition, colourimetry, hardware, digital twin, jurisdiction, provenance. 'An armoured flying hero in primary colours' is simply a parameter set over those fields plus a wire-work requirement and a high-chroma flag. Nothing in the engine should ever know the name of a character. If adding a new kind of costume requires new code rather than a new set of zone routes, the costume engine does not exist yet.
+- FALSIFIABILITY SWEEPS FOR THE SUIT. Add 6 kg of plate to the torso: mass rises, shoulder articulation falls, the ROM test fails 'get up off the ground', the fight beat is rewritten or becomes two VFX shots, post cost rises and the schedule moves — with nobody typing a number. Delete the relief zip: 60 minutes a day, three days over a 60-day shoot. Build two suits instead of four: the rain sequence collides with the 12-24 hour dry cycle and loses a day. Move the shoot from a cold stage to a hot location: endurance falls from 20 minutes to 10, takes per hour halve, the day count rises. Raise the red saturation past the display limit: camera test fails, every unit is re-dyed, prep loses two weeks. Change the emblem after toy lock: a licensing write-off. Cast a stunt double with a different frame: one more pattern at 60-80% of build cost. If any of those sweeps leaves the outcome flat, that field is decoration and must not ship.
+
+### Build order
+
+#### Rank
+
+#### Build
+
+The typed script document and the scene as the atom (element list with stable ids, computed pagination, scene records with parsed heading fields, page-eighths)
+
+#### Why load bearing
+
+[PLAYABLE CORE] Everything in all nineteen domains eventually reads a scene. The breakdown tags elements; the schedule orders scenes; the budget counts what the scenes require; the shooting day shoots them; the editor cuts them; the arbitration ledger diffs them; the format engine assigns capture per scene; the genre engine writes obligatory scenes; the costume engine exists because a scene asked for a look. Build it as an ordered list of typed elements with stable ids, never a text blob, because pagination, breakdown, sides, revision marks, dialogue counts and word-share are all impossible over a blob and all trivial over a list. Page count must be computed from real line metrics (Courier 10 cpi, 6 lpi, per-element wrap widths, widow/orphan and (MORE)/(CONT'D) rules), never authored, or the line producer's estimate and the page count can never disagree — and that disagreement is a mechanic. TV difference to design in from day one: the same object must carry act architecture, cold open and tag blocks, and must be producible by a room rather than by one writer. This is the single most expensive thing to retrofit and the cheapest thing to get right first.
+
+#### Rank
+
+#### Build
+
+The breakdown: scene-level tagging into a typed element ledger (cast, extras, stunts, props, wardrobe, makeup FX, vehicles, animals, minors, SFX, VFX, atmosphere, music, sound, set dressing, greenery, special equipment)
+
+#### Why load bearing
+
+[PLAYABLE CORE] This is the join between story and money, and it is the reason nothing downstream needs a typed number. A resource exists because a tagged scene requires it. Delete the tag and the resource, the vendor, the crew member and the cost must all disappear by themselves. It is also the surface every later engine writes onto: genre writes tag profiles, format writes capture requirements, costume reads wardrobe tags to derive multiples. Without it, the format engine and the genre engine have nowhere to attach and will inevitably be implemented as multipliers — which is the specific failure the owner is trying to prevent. Build the tag vocabulary once, and let nothing invent a resource outside it.
+
+#### Rank
+
+#### Build
+
+The schedule: stripboard, strip ordering, day-out-of-days, unit and location moves, daylight from the existing NOAA sun model, turnaround, meal penalties, and episodic block shooting and cross-boarding
+
+#### Why load bearing
+
+[PLAYABLE CORE] Time is the currency of production, and the schedule is where every constraint in the game becomes a number of days. It consumes the existing clock, calendar, weather and geography, which are already built and currently decide almost nothing. It is also where television stops being film with more episodes: a series schedules by BLOCK across two or three episodes at once, honours series-regular guaranteed episode counts, and reuses standing sets — a scheduler designed only for a feature cannot express that and will have to be rewritten, so design both shapes now. Once the board re-solves by itself when an input moves, the falsifiability test passes for half the game at once.
+
+#### Rank
+
+#### Build
+
+The derived budget on the existing double-entry ledger (standard account structure, fringes, contingency), with a hard rule that no cost is typed
+
+#### Why load bearing
+
+[PLAYABLE CORE] The project already has a ledger that refuses to balance wrong; this connects it to the world. Every account line must trace to breakdown counts multiplied by schedule days multiplied by rate-table entries, so that a heading change from EXT. DAY to EXT. NIGHT moves the number without anyone touching the budget. That derivation is the entire difference between a simulation and a form. It also creates the first real failure branch — running out of money — which is what makes the earlier choices weigh anything at all.
+
+#### Rank
+
+#### Build
+
+The shooting day loop: setups, takes, resets, coverage, the clock, overtime, weather, failure and the day's footage record
+
+#### Why load bearing
+
+[PLAYABLE CORE] This is the heartbeat and the reason the player is an actor rather than a spreadsheet. It is where the player's body, the suit's heat index, the camera's magazine, the director's take count, the AD's call time and the weather all meet in one minute-by-minute loop, and it is the only place where format, genre and costume can be FELT rather than reported. Build it as a real resource contention loop that outputs footage records keyed to scene ids, takes, circled takes and script-supervisor notes, because the cut, the continuity system, the as-shot script and the arbitration evidence all read those records. Ranks 1 through 5, and nothing else, are the difference between a game and a form.
+
+#### Rank
+
+#### Build
+
+People as a market: attributes that actually vary, quotes, availability calendars, agents and gatekeeping, taste vectors, and the casting decision registered as a decider
+
+#### Why load bearing
+
+The project's own measurement says every attribute on every person is currently 100 and 813 acting attributes are read by nothing — so the craft sheet is uninformative even if something read it. Fix the distribution first, then build the market on top: an actor with a quote, dates, an agent who decides whether the script gets read tonight, and a taste vector that makes them say no. Casting must register in the decider registry and survive the sweep, because casting is the first decision in the game whose inputs the player will actively try to manipulate. This is also the moment the three-person design becomes real: the actor is cast, the mother casts, and the father's script is what they are reading.
+
+#### Rank
+
+#### Build
+
+The asset and vendor graph: every physical thing as an asset with condition, multiples, a repair queue and a wear cycle; every shop as a vendor with finite capacity, lead time and other clients
+
+#### Why load bearing
+
+Costumes, suits, prosthetic appliances, props, picture cars, camera bodies, lamps, mags and prints are the same object with different fields. Build it once and the prosthetics lab, the suit shop, the armourer, the camera fleet and the print run all fall out; build it five times and they will drift. The capacity constraint is the interesting half: what the lab ran last night determines what options exist on set today, which is the mechanic that makes production feel like a chain rather than a menu. This rank is the prerequisite for the Superman problem and for half of the format engine.
+
+#### Rank
+
+#### Build
+
+Post and the cut: footage to assembly, runtime measurement, the as-shot diff, sound and picture task graphs with vendor capacity, deliverables and a certification gate
+
+#### Why load bearing
+
+Without a cut, a shoot has no output and the shooting day is a toy. The cut is also where the genre engine's long-pole claim pays off (a horror mix takes stage days a drama does not), where the format engine's post pipeline and scanner queue bite, where reshoots are decided, and where runtime — a payroll threshold, a showtimes-per-day input and a classification surface — is finally a measured number rather than an estimate. Build the as-shot diff here, cheaply, because the credit ledger and localisation both read it later and it cannot be reconstructed after the fact.
+
+#### Rank
+
+#### Build
+
+Audience, release and verdict: segments over the existing geography, venue graph with booking calendars, decay curves with variance, windows and the recoupment waterfall
+
+#### Why load bearing
+
+This is the scoreboard, and it is what closes the loop so that every earlier decision has somewhere to land. It must be a population model over the 170,911 cities already in the save — the depth standard's own test is that deleting the geography breaks the audience model. Two response curves (critic and audience) must diverge, decay must be a shape with variance rather than a multiplier, and the waterfall must be able to pay different people differently in a downside case. Only once this exists can the format and genre engines be tested for whether their consequences are worth their costs, which is the precondition for building them honestly.
+
+#### Rank
+
+#### Build
+
+The format engine: capture chain, medium economy, light budget, optics, per-scene frame geometry, post graph, exhibition graph, schedule transform, covenants
+
+#### Why load bearing
+
+It is ranked here and not earlier for a specific reason: the entire content of a format engine is what it does to the day, the cut and the venue, so it cannot be built before those exist without becoming a label. Once ranks 3, 5, 8 and 9 are live, format is nine tables of rows and the code is thin — and the IMAX decision changes day count, crew, light, negative spend, scanner queue, ADR minutes, mastering path, screen count and ticket premium, all derived. Build it as per-scene assignment from the first line, because every real picture mixes formats and retrofitting per-scene onto per-title is another rewrite.
+
+#### Rank
+
+#### Build
+
+The genre engine: obligatory scenes and conventions, scene-type resource signatures, craft-weight vectors, content priors, audience populations, calendars, festival graph, quote elasticity, franchise hazard
+
+#### Why load bearing
+
+Same argument, same discipline: genre must write tags onto scenes and priors onto populations, never numbers onto outcomes, so it needs the breakdown, the schedule and the audience model underneath it or it will be a multiplier. Built here, it is mostly content — and it is the cheapest large increase in felt variety in the whole project, because it makes two pictures at the same budget come out as different objects. The hard requirement is that subgenre and register bind separately; 32 horror subgenres that behave identically are one subgenre and 31 dead words.
+
+#### Rank
+
+#### Build
+
+The costume, suit and prosthetics vertical: zone maps, construction routes, multiples, fittings and the range-of-motion gate, performer physiology, the night repair queue, the digital twin
+
+#### Why load bearing
+
+The first deep vertical to build on top of the asset graph, chosen because it is the one that touches the most systems at once: script (a beat the suit cannot do), casting (a body that fits the pattern), schedule (don time on the call sheet), the day (endurance, cooling breaks, takes per hour), VFX (every action bought in post), post (matching the digital suit), marketing and licensing (design lock), safety (heat stress as an incident), and the actor's own career (typecast hazard). Getting this vertical right proves the architecture generalises; prosthetics, creature builds and period tailoring then reuse the same object with different routes. Building it before rank 7 would produce a beautiful costume with nothing to constrain.
+
+#### Rank
+
+#### Build
+
+Contracts and guild floors as enforceable objects: payment triggers, guarantees, options, exclusivity, minimum tables computed against live budget and runtime, late-payment interest and claims
+
+#### Why load bearing
+
+Money that moves on a state transition is what makes deals matter, and the project already has the ledger to hold it. Minimums must be computed against live numbers — the WGA step threshold that automatically buys a second step, the SVOD runtime bands that raise every minimum when six minutes are added in the edit, the room-size floors of three writer-producers for ten consecutive weeks — so that a cheap deal is automatically an expensive one. It ranks below the production spine because a contract with nothing to pay for is paperwork, and above development because development is entirely made of contracts.
+
+#### Rank
+
+#### Build
+
+The version graph and the notes system: immutable drafts with element-level provenance, note objects with source, authority, specificity and correctness, the notes call, and credit determination reading real diffs
+
+#### Why load bearing
+
+Cheap to build early, impossible to reconstruct late — provenance edges must be written as drafts are created or arbitration, 'we already tried that' room memory, and every fee dispute are guesswork forever. Start the graph at rank 1 as a data structure even though the notes and arbitration systems are built here. The notes system is what makes development playable: notes that must actually mutate the script object, that can contradict each other, that can be wrong, and that cost relationship capital to refuse.
+
+#### Rank
+
+#### Build
+
+The development funnel and the relationship graph: access, general meetings, the pitch as a scored interaction with executives who have bosses, the option and rights ledger, the greenlight committee
+
+#### Why load bearing
+
+Ranked last of the load-bearing set, which will feel wrong to anyone reading the domain index top to bottom — but development's entire drama is competing for a production slot, and until a production exists and is visibly scarce and expensive, every development decision is abstract. Once ranks 1-14 are live, the funnel is the highest-value addition in the game, because it is where the three playable people diverge most sharply and where the relationship graph (strength, decay, debt, memory) gates everything: whose script is read tonight, who takes the meeting, whose call about a lapsed option gets a yes.
+
+### Can wait
+
+- THE RULE THAT GOVERNS THIS LIST: waiting means the process stays in PIPELINE.md and does NOT get a field, an id namespace or a modifier key in the engine. The project's own measurement — 123 declared id namespaces with 17 readers, 54 trait modifier keys with 7, 7 reputation axes with 0 — is what happens when a roadmap is stubbed as schema. Nothing below should be represented in code until its reader is being built in the same week.
+- THE FULL EQUIPMENT CATALOGUES. Twelve cameras that change what can be shot, three lens families that change focus difficulty and light, and four lighting classes are enough for years. Four hundred camera bodies is the exact failure mode this project was founded to avoid, and every hour spent on the catalogue is an hour not spent on the behaviour that would make twelve of them different.
+- THE FULL CREW ROSTER AS INDIVIDUAL SIMULATED PEOPLE. Build the ten to fourteen heads of department who make decisions that change outcomes (DP, production designer, line producer, 1st AD, editor, costume designer, makeup effects supervisor, stunt coordinator, VFX supervisor, composer, sound designer, casting director, script supervisor, gaffer). The other two hundred positions are payroll rows with rates and headcounts derived from the breakdown, and they should stay rows until a system exists that asks a boom operator a question.
+- WGA CREDIT ARBITRATION AS A SUBSYSTEM. Keep the version graph from day one because it cannot be reconstructed; keep the arbitration itself — three anonymous arbiters, the 33%/50% thresholds, the protest and the statement — until separated rights, residuals and quote effects exist to be paid out by it. An arbitration whose outcome pays nothing is a cutscene.
+- CO-PRODUCTION TREATY POINTS TESTS AND MULTI-TERRITORY NATIONALITY CALCULATORS. Deeply real and genuinely constraining, and worth building eventually because failing a points test by one point is a great mechanic — but it presupposes a crew market with nationalities, a spend plan by territory and a financing stack, none of which exist yet.
+- THE FULL TAX INCENTIVE JURISDICTION TABLE. Ship three jurisdictions with genuinely different rules (a headline-rate rebate, a transferable credit sold at a discount, and a qualifying-spend regime with a cultural test) so the choice of where to shoot is real. Fifty jurisdictions with accurate caps and audit rules is a research project that changes nothing until the player has a reason to move a production.
+- CLEARANCE, E&O, TITLE REGISTRATION AND CHAIN-OF-TITLE LITIGATION. Until a project can actually be blocked from delivery, these are paperwork. Carry a single latent legal-risk value on a project, raised by exposure and lowered by the mitigations, and resolve it as a rare, expensive event. Build the per-proper-noun clearance cascade later, when the string-as-entity refactor pays for itself across art department signage, props and casting breakdowns.
+- THE IP MARKET, BOOK SCOUTS, SHOPPING AGREEMENTS, IF/COME DEALS, TRACKING BOARDS, BAKE-OFFS AND THE TAKE. All excellent, all development-side, and all worthless before a production slot is scarce. They are also cheap to add once the relationship graph exists, so they are a year-three afternoon rather than a year-one month.
+- DEVELOPMENT SLATE PORTFOLIO SIMULATION AND OVERALL-DEAL ROI. A portfolio model needs a portfolio. Until the mother's company can carry eight projects at different gates with real burn, slate management is one project with a monthly cost, which the ledger already does.
+- PILOT TESTING, SCHEDULING, LEAD-IN AND COMPETITIVE-SLOT MODELLING FOR BROADCAST. A whole real system that only matters once broadcast networks, a weekly grid and an advertiser market exist. Streaming's retention and completion metrics are the modern equivalent and are cheaper to build, so do those first and come back to the grid.
+- STANDARDS AND PRACTICES, ALTERNATE TAKES FOR BROADCAST VERSIONS, AND PRODUCT INTEGRATION VERIFICATION. Each requires a broadcast outlet or a brand partner to exist as a counterparty. S&P in particular is a negotiation with a named executive whose goodwill is spendable — genuinely good, and genuinely dependent on an executive market that does not exist yet.
+- THE CARA APPEALS BOARD, AND CLASSIFICATION FOR MORE THAN THREE TERRITORIES. Build the content ledger and one classification body with a noisy panel, because that is where the falsifiable part lives (remove a tagged element, the predicted band moves). The appeal, the territory-by-territory band tables, the burned-in statutory cards and the era-versioned label changes are a second pass on real content once the first body works.
+- ANIMATRONIC SERVO FAILURE, PUPPETEER CREWS AND DEGREES-OF-FREEDOM MODELLING. The static mask and the digital face replacement cover the vast majority of cases. The animatronic head is a beautiful sub-simulation whose only consumer is a small number of creature-led pictures, and it should wait until suited productions are common enough in the save to justify it.
+- THE FULL POST GRANULARITY: cue-by-cue ADR, foley in passes, predub structure, music cue sheets, localisation and dub scripts, subtitle minute caps. Model post at first as task graphs with capacity, duration and a quality contribution. The cue-level detail earns its place only when residuals, localisation deliverables and music licensing are live systems that read it.
+- SIDES WATERMARKING AND LEAK TRACING, DISTRIBUTION TIERS, AND SCRIPT SECURITY. Charming and completely dependent on a press and public-attention system that can make a leak matter. Without one, tracing a watermark is a detective story with no victim.
+- THE OTHER NINE PRODUCTION KINDS. CG and 2D animation, stop-motion, documentary, unscripted, multicam before an audience, live television, commercials, and the VFX-led virtual-production tentpole each have a different unit of work — approved seconds, field days against cut weeks, run-throughs, shot rounds — and at least one of them (animation) has no principal photography at all. Get the live-action spine complete and honest first; the abstraction that lets a pipeline count approved seconds instead of shooting days is a refactor best done when there is something solid to refactor.
+- AWARDS CAMPAIGNS, GUILD AWARDS CALENDARS AND THE FESTIVAL CIRCUIT AT FULL FIDELITY. Start with premiere status as a consumable resource and four or five venues with different buyer behaviour, because that alone produces strategy. The full circuit, the campaign spend model and the voter-population simulation are a late-game layer for players who already care about their slate.
+- MERCHANDISING, CONSUMER PRODUCTS, THEME-PARK AND LICENSING PIPELINES. One field matters early — the design-lock date that makes a late costume change expensive — and it can live inside the costume vertical. The licensee network, the toy manufacturing calendar and the royalty accounting are a business the game can add once pictures have franchises.
+- HISTORICAL ERA TABLES AND PERIOD ACCURACY OF THE INDUSTRY ITSELF (package fees, studio-era contracts, changing guild terms by decade). The one thing to get right now is that the current era is modelled correctly — no agency package fees, commission-only incentives, the 2023 MBA room floors — because a game shipping 2018's economics is wrong in a way players notice immediately. Multi-era support is a later, larger project.
+- AND THE ONE THING THAT MUST NOT WAIT DESPITE LOOKING LIKE IT COULD: the decider registration and the generic input sweep. Every system above ranks 1-15 must register what it decides and every input it reads, and must fail the build if an input never moves the outcome. It is tempting to defer that until the systems are 'finished'. Defer it and the project will accumulate exactly the decorative vocabulary it was built to prevent, and the format, genre and costume engines — the three things the owner cares most about — are precisely the systems most likely to rot into multipliers without it.

@@ -215,6 +215,25 @@ Dependency, not appetite.
 days. `currentLocationId` is read in two dozen places and written once, at
 bootstrap. Until it moves, nothing about being somewhere can matter.
 
+**Before rank 1, a correction the research forced.** The order below builds the
+live-action feature first, and the spine synthesis in `research/KINDS.md` says
+that is the wrong first build — not because a feature is hard, but because every
+spine primitive gets quietly satisfied by a live-action-shaped special case (the
+day, the page, the strip) and the spine is not discovered to be fake until the
+fourth form, with nine forms of content authored on top of it. Its
+recommendation is a format-led unscripted season first, because it has no script
+and no takes and no boundary between production and post, so none of those
+assumptions can be hardcoded anywhere.
+
+Rank 1 is already built as a feature. The salvage is to run the test in reverse:
+take the unscripted season as the next build and require it to add **no new
+engine concepts**. Whatever it needs that `content/making.ts` cannot express is
+the list of places this engine is still live-action-shaped. Three are already
+known — progress is stored rather than derived and is not runtime-weighted,
+`stage` is a single field where the research wants a maturity vector whose
+minimum is what "done" means, and the scheduler assumes forward flow where
+downstream discovery routinely creates upstream work.
+
 **1. The Title. Done.** A picture with a dated life — prep, shoot, post,
 delivered — a unit base city, a budget, and a schedule made of ordinary
 scheduled items, laid out from the one number a producer actually chooses. It
