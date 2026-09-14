@@ -131,7 +131,7 @@ const rung = (id: string, label: string, what: string): Rung => ({ id, label, wh
  */
 const PICTURE_LADDERS: Ladders = {
   picture: [
-    rung('nothing', 'Not Shot', 'A schedule. That is the whole of it so far.'),
+    rung('nothing', 'Not Shot', 'A schedule, and nothing shot against it yet.'),
     rung('shot', 'Shot', 'It’s on a drive. Nobody has decided which take.'),
     rung('assembled', 'Assembled', 'Every scene is in order at its full length, and it plays badly.'),
     rung('cut', 'Cut', 'It’s the length it’s going to be, give or take a reel.'),

@@ -291,6 +291,26 @@ export type Stage =
 /** The stages a greenlit picture moves through, in order. */
 export const MAKING: readonly Stage[] = ['prep', 'shooting', 'post', 'delivered'];
 
+/**
+ * One deliverable part of a title: a feature, or one episode of a season.
+ *
+ * It carries its own maturity because parts do not finish together. On a block
+ * shoot episode one is locked while episode six is a stringout, and the season
+ * is neither of those numbers — it is the runtime-weighted blend of all eight,
+ * held down by whichever dimension is worst.
+ */
+export interface Part {
+  id: Id;
+  /** Which one it is, counting from one. */
+  ordinal: number;
+  /** Seconds of finished screen time it owes. */
+  seconds: number;
+  /** How far each dimension has come, by rung id. Absent means the bottom. */
+  maturity?: Partial<Record<string, string>>;
+  /** When it transmits or is due, where the plan gives parts their own dates. */
+  dueAt?: Instant;
+}
+
 export interface Project {
   id: Id;
   saveId: Id;
@@ -322,14 +342,40 @@ export interface Project {
    */
   ladders?: string;
   /**
-   * How far each dimension has come, by rung id. Absent means the bottom.
+   * What this owes, part by part, each with its own maturity.
    *
-   * Six strings, and every figure anybody reads about progress is recomputed
-   * from them. There is deliberately no percentage stored anywhere: "how far
-   * along is this" is a question with six answers whose minimum is the only
-   * honest single one.
+   * A feature is one part. A season is eight, at eight different rungs, and
+   * that is not a detail — it is what a season *is*. Holding one maturity
+   * vector for a whole season would say episode six is as finished as episode
+   * one, which is never true of anything made in blocks.
+   *
+   * Every figure anybody reads about progress is recomputed from these and
+   * weighted by runtime. There is deliberately no percentage stored anywhere.
    */
-  maturity?: Partial<Record<string, string>>;
+  parts?: Part[];
+  /**
+   * Seconds of finished screen time this owes in total.
+   *
+   * The engine's native measure. Pages, shooting days, approved shots and cut
+   * minutes are all conversions into it, because they have to be: a page is
+   * about a minute, an animation shot is four or five seconds, and an engine
+   * that counts in any one of them can only make one kind of thing. Stored
+   * rather than summed from the parts so that a contracted slot and what the
+   * cut currently runs to can differ, which is the ordinary state of a picture
+   * on its way from a long assembly down to its release length.
+   */
+  owesSeconds?: number;
+  /**
+   * The periods whose money has gone out and whose elements are handed over.
+   *
+   * Settling is not idempotent on its own — it posts an expense and pushes
+   * delivery elements — and once periods run alongside each other there is more
+   * than one route to the same one: the boundary of the period declared after
+   * it, and the tick at the end of the work. Recording which have settled is
+   * the minimum fact that stops a picture spending its budget twice, which is
+   * what happened before the guard, to the tune of ninety-six per cent over.
+   */
+  settled?: string[];
   /** The city the unit works out of. */
   unitBaseId?: string;
   /**

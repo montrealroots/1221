@@ -15,7 +15,8 @@ import { projectsOf } from '@/engine/world/company';
 import { PLANS, planById } from '@/engine/content/making';
 import { DIMENSIONS, rungsOf, terminalOf } from '@/engine/content/maturity';
 import {
-  advance, doneShare, holdingItUp, isFinished, knockBack, rungOf, shareOf, whereTheWorkStands,
+  advance, advancePart, doneShare, holdingItUp, isFinished, knockBack, owedSeconds,
+  partsOf, rungOf, rungOfPart, secondsAtOrBeyond, shareOf, whereTheWorkStands,
 } from '@/engine/world/maturity';
 import { finishesBy, heldUpBy, nobodysJob } from '@/engine/world/making';
 import { openTheDoors } from './doors';
@@ -213,5 +214,110 @@ describe('delivery waits for the work, not just the list', () => {
     }
     expect(validateUniverse(sim.universe).errors).toEqual([]);
     expect(sim.ledger.audit()).toEqual([]);
+  });
+});
+
+describe('a season is N timelines, measured in runtime', () => {
+  const season = (seed: string): { sim: Simulation; id: string } => {
+    const sim = world(seed);
+    return { sim, id: greenlit(sim, 'unscripted', 'The Arena') };
+  };
+
+  it('owes eight parts and eight hours, not one thing of unstated length', () => {
+    const { sim, id } = season('owes');
+    const project = sim.universe.projects[id]!;
+    expect(partsOf(project)).toHaveLength(8);
+    expect(owedSeconds(project)).toBe(8 * 3_600);
+    expect(project.parts!.map((p) => p.ordinal)).toEqual([1, 2, 3, 4, 5, 6, 7, 8]);
+  });
+
+  it('lets a producer set the runtime, including an hour and nineteen minutes', () => {
+    const sim = world('runtime');
+    run(sim, 'company.develop', { title: 'Seventy Nine', medium: 'film' });
+    const id = projectsOf(sim.universe).find((one) => one.title === 'Seventy Nine')!.id;
+    run(sim, 'company.greenlight', {
+      projectId: id, planId: 'feature', budgetCents: 20_000_000_00, shootWeeks: 6,
+      secondsEach: 79 * 60,
+    });
+    expect(owedSeconds(sim.universe.projects[id]!)).toBe(79 * 60);
+  });
+
+  it('holds eight episodes at different rungs at once, rather than moving as a lump', () => {
+    const { sim, id } = season('stagger');
+    const project = () => sim.universe.projects[id]!;
+    const end = finishesBy(project())!;
+    let sawSpread = 0;
+    for (let at = sim.now; at <= end; at += 9 * MS_DAY) {
+      sim.advanceTo(at);
+      const rungs = new Set(partsOf(project()).map((p) => rungOfPart(project(), p, 'picture')));
+      sawSpread = Math.max(sawSpread, rungs.size);
+    }
+    // Three different rungs at once is eight timelines. One would be a lump.
+    expect(sawSpread).toBeGreaterThanOrEqual(3);
+  });
+
+  it('weights progress by runtime, so the measure is screen time and not episodes', () => {
+    const { sim, id } = season('weighted');
+    const project = sim.universe.projects[id]!;
+    // Make one episode twice as long as the rest, then finish only that one.
+    project.parts![0]!.seconds = 7_200;
+    for (const d of DIMENSIONS) advancePart(project, project.parts![0]!, d.id, terminalOf('season', d.id));
+    const byRuntime = shareOf(project, 'picture');
+    const byCount = 1 / 8;
+    // 7,200 of 32,400 seconds is well clear of one episode in eight.
+    expect(byRuntime).toBeGreaterThan(byCount);
+    expect(byRuntime).toBeCloseTo(7_200 / (7_200 + 7 * 3_600), 6);
+  });
+
+  it('reads runtime at or beyond a rung, the way a reel is read', () => {
+    const { sim, id } = season('reel');
+    const project = sim.universe.projects[id]!;
+    expect(secondsAtOrBeyond(project, 'picture', 'assembly')).toBe(0);
+    for (const part of project.parts!.slice(0, 3)) advancePart(project, part, 'picture', 'assembly');
+    expect(secondsAtOrBeyond(project, 'picture', 'assembly')).toBe(3 * 3_600);
+    // And nothing has reached lock, which is a different question.
+    expect(secondsAtOrBeyond(project, 'picture', 'locked')).toBe(0);
+  });
+
+  it('finishes the whole season, and spends its budget exactly once', () => {
+    const { sim, id } = season('spend');
+    const project = () => sim.universe.projects[id]!;
+    for (let i = 0; i < 10; i += 1) {
+      const done = finishesBy(project())!;
+      if (sim.now > done) break;
+      sim.advanceTo(done + MS_DAY);
+    }
+    for (const element of heldUpBy(project())) {
+      run(sim, 'company.deliver', { projectId: id, elementId: element.id });
+    }
+    expect(isFinished(project())).toBe(true);
+
+    // The guard against settling a period by two routes: the boundary of the
+    // period declared after it, and the tick at the end of the work. Counting
+    // the postings tests that directly, where a total only tests it loosely —
+    // a season legitimately runs a little over when its field slips.
+    const plan = planById('unscripted')!;
+    for (const period of plan.periods) {
+      const posted = sim.universe.transactions
+        .filter((t) => t.memo === `${project().title}: ${period.label}`).length;
+      expect(posted, `${period.label} settled ${posted} times`).toBe(1);
+    }
+    expect(project().settled).toHaveLength(plan.periods.length);
+    // And the total is the budget plus an overrun, nowhere near twice it.
+    expect(project().spentCents).toBeGreaterThanOrEqual(project().budgetCents!);
+    expect(project().spentCents).toBeLessThan(project().budgetCents! * 1.3);
+    expect(sim.ledger.audit()).toEqual([]);
+  });
+
+  it('takes the latest end for the work, not the last one declared', () => {
+    const { sim, id } = season('latest');
+    const project = sim.universe.projects[id]!;
+    const windows = project.periods!;
+    const lastDeclared = windows[windows.length - 1]!;
+    const latest = windows.reduce((n, one) => Math.max(n, one.to), 0);
+    // Compliance is declared last and ends before the cut does, so reading the
+    // last element would finish the season four weeks early.
+    expect(lastDeclared.to).toBeLessThan(latest);
+    expect(finishesBy(project)).toBe(latest);
   });
 });

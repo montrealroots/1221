@@ -42,7 +42,9 @@ import {
 } from '../content/making';
 import { LOT_NAME } from '../content/estate';
 import { MS_WEEK, bookingsFor, rateFor, stagesOn, theLot } from './lot';
-import { advance, holdingItUp, isFinished } from './maturity';
+import {
+  advance, advancePart, doneShare, holdingItUp, isFinished, partsOutstanding,
+} from './maturity';
 import { DIMENSIONS, dimensionById } from '../content/maturity';
 import { armTheCrew } from './crew';
 import { capabilitiesOf } from './company';
@@ -59,6 +61,14 @@ export const DELIVERY_KIND = 'project.delivery';
  * would settle at the delivery date, weeks after everybody went home.
  */
 export const WORK_DONE = 'done';
+
+/**
+ * A single part coming through a period, on a plan that finishes them in order.
+ *
+ * The payload carries which period and which part, so one scheduled kind
+ * covers every part of every period of every plan.
+ */
+export const PART_KIND = 'project.part';
 
 // ---------------------------------------------------------------------------
 // Laying a plan onto dates
@@ -154,10 +164,19 @@ export function comesOn(project: Project): Instant | undefined {
   return project.periods?.[0]?.from;
 }
 
-/** When the work is done, which is the last date on it. */
+/**
+ * When the work is done, which is the latest date on it.
+ *
+ * The latest and not the last declared. Once periods can run alongside each
+ * other the declaration order stops being the calendar order: an unscripted
+ * season declares compliance last and it ends four weeks before the cut does.
+ * Reading the last element was right when everything was sequential and is a
+ * silent four-week lie the moment anything is not.
+ */
 export function finishesBy(project: Project): Instant | undefined {
   const periods = project.periods;
-  return periods?.[periods.length - 1]?.to;
+  if (!periods?.length) return undefined;
+  return periods.reduce((latest, one) => Math.max(latest, one.to), periods[0]!.to);
 }
 
 /** Whether the whole schedule is behind the picture. */
@@ -264,6 +283,8 @@ export interface Greenlight {
   planId: string;
   budgetCents: Money;
   shootWeeks: number;
+  /** What each part runs to, in seconds. Defaults to what the plan delivers. */
+  secondsEach?: number;
   /**
    * The date the plan is anchored to, meaning whichever end the plan nails
    * down. On a plan anchored at the start it is the day the first period
@@ -362,6 +383,16 @@ export function greenlight(sim: Simulation, spec: Greenlight): { ok: true; proje
 
   project.planId = plan.id;
   project.ladders = plan.ladders;
+  // What it owes, part by part. A producer sets the runtime — an hour and
+  // nineteen minutes is a perfectly ordinary answer — and the plan says how
+  // many parts a finished one of these is.
+  const seconds = Math.max(60, Math.round(spec.secondsEach ?? plan.delivers.secondsEach));
+  project.parts = Array.from({ length: plan.delivers.parts }, (_, i) => ({
+    id: `${project.id}-${i + 1}`,
+    ordinal: i + 1,
+    seconds,
+  }));
+  project.owesSeconds = seconds * plan.delivers.parts;
   project.budgetCents = spec.budgetCents;
   project.stage = 'greenlit';
   project.unitBaseId = theLot(sim)?.locationId;
@@ -386,7 +417,34 @@ export function greenlight(sim: Simulation, spec: Greenlight): { ok: true; proje
       refId: project.id,
     });
   }
-  const finishes = laid.periods[laid.periods.length - 1]?.to;
+  // A plan that finishes its parts in order gets one tick per part, spread
+  // across the span of each period that advances anything. Episode one comes
+  // through the cut weeks before episode eight, which is the whole reason a
+  // season is eight timelines rather than one.
+  if (plan.partsFinish === 'inOrder' && plan.delivers.parts > 1) {
+    for (const period of plan.periods) {
+      if (period.advances === undefined) continue;
+      const window = laid.periods.find((one) => one.id === period.id);
+      if (!window) continue;
+      const span = window.to - window.from;
+      for (let i = 1; i <= plan.delivers.parts; i += 1) {
+        sim.schedule({
+          at: window.from + Math.round((span * i) / plan.delivers.parts),
+          kind: PART_KIND,
+          label: `${project.title}: Part ${i}, ${period.label}`,
+          category: 'business',
+          priority: 25,
+          payload: { projectId: project.id, periodId: period.id, ordinal: i },
+          refType: 'project',
+          refId: project.id,
+        });
+      }
+    }
+  }
+
+  const finishes = laid.periods.reduce<Instant | undefined>(
+    (latest, one) => (latest === undefined ? one.to : Math.max(latest, one.to)), undefined,
+  );
   if (finishes !== undefined) {
     sim.schedule({
       at: finishes,
@@ -467,8 +525,13 @@ function enterPeriod(sim: Simulation, project: Project, periodId: string): void 
   if (!plan) return;
 
   if (periodId === WORK_DONE) {
-    const last = plan.periods[plan.periods.length - 1];
-    if (last) settlePeriod(sim, project, last);
+    // Every period that has not settled yet, not just the last declared one.
+    // With periods running alongside each other, more than one can still be
+    // open when the work finishes.
+    for (const one of plan.periods) {
+      const window = windowOf(project, one.id);
+      if (window && window.to <= sim.now) settlePeriod(sim, project, one);
+    }
     if (settleDelivery(sim, project)) return;
     const waiting = heldUpBy(project);
     sim.notify({
@@ -503,8 +566,18 @@ function enterPeriod(sim: Simulation, project: Project, periodId: string): void 
   if (period.holds === 'shooting') weighTheSchedule(sim, project, period);
 }
 
-/** Spends what a period costs and hands over what it made. */
+/**
+ * Spends what a period costs and hands over what it made.
+ *
+ * Once, however many routes reach it. A period is settled at the boundary of
+ * whichever period was declared after it and again by the tick at the end of
+ * the work, and posting its expense twice is a picture quietly spending its
+ * budget twice — which is exactly what happened before this guard, to the tune
+ * of ninety-six per cent over on a season.
+ */
 function settlePeriod(sim: Simulation, project: Project, period: Period): void {
+  if (project.settled?.includes(period.id)) return;
+  project.settled = [...(project.settled ?? []), period.id];
   const account = cashFor(sim, project.companyId);
   const budget = project.budgetCents ?? 0;
   const owed = Math.round(budget * period.spends);
@@ -521,9 +594,44 @@ function settlePeriod(sim: Simulation, project: Project, period: Period): void {
   // And whatever finishing it moves up its ladder. A period that advances
   // nothing is a period that made no difference to how finished the thing is,
   // which is a real thing a period can be.
+  //
+  // Only on a plan whose parts finish together. Where they finish in order the
+  // per-part ticks have already walked them up across the period's span, and
+  // levelling everybody at the boundary would erase exactly the stagger those
+  // ticks exist to create.
+  const plan = planOf(project);
+  if (plan?.partsFinish === 'inOrder' && (project.parts?.length ?? 1) > 1) return;
   for (const [dimension, rung] of Object.entries(period.advances ?? {})) {
     advance(project, dimension as never, rung as string);
   }
+}
+
+/**
+ * Moves one part up, the way a block shoot actually finishes a season.
+ *
+ * Scheduled across the span of a period that declares `inOrder`, so episode
+ * one locks weeks before episode eight and the season sits at eight different
+ * rungs in between. Without this a season is one timeline drawn eight times.
+ */
+function finishOnePart(sim: Simulation, project: Project, periodId: string, ordinal: number): void {
+  const plan = planOf(project);
+  const period = plan?.periods.find((p) => p.id === periodId);
+  const part = project.parts?.find((one) => one.ordinal === ordinal);
+  if (!period || !part) return;
+  let moved = false;
+  for (const [dimension, rung] of Object.entries(period.advances ?? {})) {
+    if (advancePart(project, part, dimension as never, rung as string)) moved = true;
+  }
+  if (!moved) return;
+  sim.notify({
+    category: 'business',
+    title: `${project.title}: Part ${ordinal} Is Through ${period.label}`,
+    body: `${partsOutstanding(project).length} of ${project.parts?.length ?? 1} still to come, `
+      + `and the whole thing reads ${Math.round(doneShare(project) * 100)}/100.`,
+    importance: 35,
+    refType: 'project',
+    refId: project.id,
+  });
 }
 
 /**
@@ -730,6 +838,12 @@ export function registerMaking(sim: Simulation): void {
     const project = sim.universe.projects[projectId];
     if (!project || project.shelvedAt) return;
     enterPeriod(sim, project, periodId);
+  });
+
+  sim.onSchedule(PART_KIND, (item) => {
+    const project = sim.universe.projects[String(item.payload?.projectId ?? '')];
+    if (!project || project.shelvedAt) return;
+    finishOnePart(sim, project, String(item.payload?.periodId ?? ''), Number(item.payload?.ordinal ?? 0));
   });
 
   sim.onSchedule(DELIVERY_KIND, (item) => {

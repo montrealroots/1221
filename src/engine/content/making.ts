@@ -130,6 +130,24 @@ export interface Plan {
   /** Which ladder set its maturity is measured against. */
   ladders: string;
   /**
+   * What a finished one of these actually is: how many parts, and how long.
+   *
+   * The runtime is a default, not a rule — a producer sets what a picture runs
+   * to, and an hour and nineteen minutes is a perfectly ordinary answer. The
+   * part count is the plan's, because eight episodes is what the format is.
+   */
+  delivers: { parts: number; secondsEach: number };
+  /**
+   * Whether the parts finish together or in order.
+   *
+   * A feature has one part, so the question does not arise. A season shot in
+   * blocks finishes episode one long before episode eight, and a period that
+   * advances `inOrder` staggers its parts across its own span rather than
+   * moving all of them at the end. That stagger is the difference between
+   * eight timelines and one timeline drawn eight times.
+   */
+  partsFinish: 'together' | 'inOrder';
+  /**
    * Which end of the schedule is nailed down.
    *
    * `start` is a picture: work begins when the money says it can, and the
@@ -164,6 +182,8 @@ const FEATURE: Plan = {
   deliveryWeeks: 6,
   anchor: 'start',
   ladders: 'picture',
+  delivers: { parts: 1, secondsEach: 6_000 },
+  partsFinish: 'together',
   periods: [
     {
       id: 'prep',
@@ -216,6 +236,8 @@ const SERIES: Plan = {
   deliveryWeeks: 4,
   anchor: 'start',
   ladders: 'picture',
+  delivers: { parts: 8, secondsEach: 3_000 },
+  partsFinish: 'inOrder',
   periods: [
     {
       id: 'prep',
@@ -298,6 +320,8 @@ const UNSCRIPTED: Plan = {
   deliveryWeeks: 2,
   anchor: 'delivery',
   ladders: 'season',
+  delivers: { parts: 8, secondsEach: 3_600 },
+  partsFinish: 'inOrder',
   periods: [
     {
       id: 'casting',

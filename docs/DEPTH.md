@@ -235,7 +235,7 @@ fixed.
 | Periods that run alongside each other, not only after | **Fixed.** `Period.runsWith` |
 | A clock anchored at the delivery date, not the start | **Fixed.** `Plan.anchor` |
 | "Done" as the minimum of a maturity vector, not one stage | **Fixed.** `Project.maturity` |
-| A season as N timelines at different maturities | Open |
+| A season as N timelines at different maturities | **Fixed.** `Project.parts` |
 
 The first two were the scheduler being a live-action scheduler wearing a
 general name. `layOut` set every period's start to the previous period's end,
@@ -268,16 +268,54 @@ through review — where on a season compliance is a live period running alongsi
 the cut. Both are now expressible, and `nobodysJob` will name any dimension a
 plan never moves.
 
-One still open, and it is the biggest:
+The fourth is fixed, and with it the progress model. A title owes **parts** —
+one for a feature, eight for a season — each with its own maturity vector and
+its own runtime in seconds. Progress is runtime-weighted across them and then
+minimised across dimensions, so the measure is screen time rather than episode
+count: a forty-minute episode that is locked is worth more of a season than a
+twenty-minute one, and counting episodes would call them equal.
 
-- **A season is eight timelines**, not one, sharing an asset library and running
-  against a weekly transmission. `Project` holds one set of periods and one
-  maturity vector, so the season currently matures as a single lump rather than
-  as eight episodes at eight different rungs. This is also where the last piece
-  of the progress model lands: the research wants progress derived from a
-  timeline measured in **seconds of target runtime**, with pages, shots, days
-  and cut-minutes as display conversions into it, and a picture in SLATE still
-  has no runtime at all. Those two are one job, not two.
+Seconds of finished screen time is now the engine's native measure, which is
+what the research asked for. A producer sets what a picture runs to, and an hour
+and nineteen minutes is an ordinary answer rather than a special case.
+
+Parts finish in order where the plan says so. A season's cut advances episode
+one weeks before episode eight, and in between the season genuinely sits at
+three different rungs at once — which is the difference between eight timelines
+and one timeline drawn eight times.
+
+Two real bugs fell out of building it, both from periods being able to run
+alongside each other:
+
+- **`finishesBy` returned the last declared period's end, not the latest.** An
+  unscripted season declares compliance last and it ends four weeks before the
+  cut does, so the work was being called finished four weeks early. Reading the
+  last element was right while everything was sequential and became a silent lie
+  the moment anything was not.
+- **A period could settle twice** — once at the boundary of the period declared
+  after it, once at the tick ending the work — and settling posts an expense.
+  A season spent ninety-six per cent over its budget before the guard. Pinned
+  now by counting postings per period rather than by checking a total, because
+  a total only catches it loosely: a season legitimately runs a little over when
+  its field slips.
+
+### What is left
+
+Nothing from the port test. The spine now expresses a format-led unscripted
+season with no engine concept it did not already need, which is what build two
+was for. The research's own acceptance test for build one is still worth
+running as a target, though, and it is not met yet:
+
+> the engine must produce a four-figure shooting ratio, an editor-week
+> bottleneck, a legal recut at week 19 and a make-air scramble, with the strings
+> "ratio", "editor", "episode" and "compliance" appearing only in data files.
+
+The maturity vector gives the legal recut. The other three need the inventory
+ledger — material acquired but not yet on the timeline — and the rate table
+that converts it. That is the next real piece, and it is what makes the shooting
+ratio a derived statistic rather than a design constant.
+
+
 
 **1. The Title. Done.** A picture with a dated life — prep, shoot, post,
 delivered — a unit base city, a budget, and a schedule made of ordinary
