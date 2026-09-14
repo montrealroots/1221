@@ -333,15 +333,53 @@ export const AIRDATE_WEEKS = 52;
 /** The longest schedule anybody will sit still for, in shooting weeks. */
 export const LONGEST_SHOOT = 40;
 
+/** What a greenlight would come to, worked out and committed to nothing. */
+export interface Prospect {
+  project: Project;
+  plan: Plan;
+  /** The shoot length, rounded the way the engine rounds it. */
+  weeks: number;
+  /** The date the plan is anchored to: a first day of prep, or a transmission date. */
+  from: Instant;
+  /** Every period, on real dates. */
+  periods: Dated[];
+  /** When the contract says it is due, which is after the work is done. */
+  deliverBy: Instant;
+  /** The window a stage is held across, where the plan holds one. */
+  held?: { from: Instant; to: Instant };
+  /** The stage it would take. */
+  stageId?: Id;
+  /** What each part runs to, in seconds. */
+  secondsEach: number;
+  /** How many parts a finished one of these is. */
+  parts: number;
+  /** Hands in the cutting room. */
+  hands: number;
+  /**
+   * How far the schedule is cut below what the money implies.
+   *
+   * Not committed by the greenlight and returned anyway, because it is the one
+   * figure a producer is deciding with and the engine works it out twice: here,
+   * and again in `weighTheSchedule` when the shoot is weighed and the overrun
+   * drawn. Handing back the same number means a screen that shows it is showing
+   * what the slip will be decided from rather than a second estimate of it.
+   */
+  tightness: number;
+}
+
 /**
- * Lays the dates down and takes the stage.
+ * What a greenlight would come to, without saying yes to it.
  *
- * Everything checked here is checked because it is a way a real greenlight
- * falls apart: no money behind it, a schedule nobody could shoot, or a stage
- * that turns out to be booked. The last one is the interesting refusal, since
- * it is the lot the family built saying no to the family.
+ * Every check and every date, and nothing written. `greenlight` is this plus
+ * the commit, which is the only way a screen can show a producer the schedule
+ * they are about to get: one mechanism rather than two calibrated near each
+ * other. Two would drift, and the first time they did somebody would be shown
+ * one set of dates and handed another — which is the bug this codebase has
+ * already been bitten by once, in the cutting room's own forecast.
  */
-export function greenlight(sim: Simulation, spec: Greenlight): { ok: true; project: Project } | { ok: false; error: string } {
+export function wouldBe(
+  sim: Simulation, spec: Greenlight,
+): { ok: true; prospect: Prospect } | { ok: false; error: string } {
   const project = sim.universe.projects[spec.projectId];
   if (!project) return { ok: false, error: 'There’s no such picture on the slate.' };
   if (project.shelvedAt) return { ok: false, error: 'That one came off the slate.' };
@@ -443,12 +481,48 @@ export function greenlight(sim: Simulation, spec: Greenlight): { ok: true; proje
     }
   }
 
-  project.planId = plan.id;
-  project.ladders = plan.ladders;
   // What it owes, part by part. A producer sets the runtime — an hour and
   // nineteen minutes is a perfectly ordinary answer — and the plan says how
   // many parts a finished one of these is.
   const seconds = Math.max(60, Math.round(spec.secondsEach ?? plan.delivers.secondsEach));
+  return {
+    ok: true,
+    prospect: {
+      project,
+      plan,
+      weeks,
+      from,
+      periods: laid.periods,
+      deliverBy: laid.deliverBy,
+      held,
+      stageId,
+      secondsEach: seconds,
+      parts: plan.delivers.parts,
+      hands: Math.max(1, Math.round(spec.hands ?? cuttingPeriod(plan)?.converts?.hands ?? 1)),
+      tightness: tightnessOf(weeks, spec.budgetCents),
+    },
+  };
+}
+
+/**
+ * Lays the dates down and takes the stage.
+ *
+ * Everything `wouldBe` refuses is refused because it is a way a real greenlight
+ * falls apart: no money behind it, a schedule nobody could shoot, a schedule
+ * laid into weeks that have gone, or a stage that turns out to be booked. The
+ * last one is the interesting refusal, since it is the lot the family built
+ * saying no to the family.
+ */
+export function greenlight(sim: Simulation, spec: Greenlight): { ok: true; project: Project } | { ok: false; error: string } {
+  const answer = wouldBe(sim, spec);
+  if (!answer.ok) return answer;
+  const { prospect } = answer;
+  const { project, plan, weeks, from, held, stageId } = prospect;
+  const laid = { periods: prospect.periods, deliverBy: prospect.deliverBy };
+  const seconds = prospect.secondsEach;
+
+  project.planId = plan.id;
+  project.ladders = plan.ladders;
   project.parts = Array.from({ length: plan.delivers.parts }, (_, i) => ({
     id: `${project.id}-${i + 1}`,
     ordinal: i + 1,

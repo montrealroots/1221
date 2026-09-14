@@ -20,9 +20,14 @@ import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Empty, Modal, Stat } from '@/ui/components/primitives';
 import { LookRegion, Open } from '@/ui/looks/Look';
 import { at } from '@/ui/looks/subject';
-import { toStart } from '@/ui/looks/words';
+import { said, toStart } from '@/ui/looks/words';
 import { formatMoney } from '@/engine/core/money';
 import { formatDate } from '@/engine/core/time';
+import { plansFor, planById } from '@/engine/content/making';
+import { rateById, throughput } from '@/engine/content/inventory';
+import { cuttingPeriod } from '@/engine/world/inventory';
+import { stillToCarry } from '@/engine/world/lot';
+import { AIRDATE_WEEKS, LEAD_WEEKS, LONGEST_SHOOT, wouldBe } from '@/engine/world/making';
 import type { GuildId, PolicyKind, RegistryId, RoleId } from '@/engine/domain/company';
 import {
   GUILD_BY_ID, POLICY_BY_ID, REGISTRY_BY_ID, ROLE_BY_ID,
@@ -328,8 +333,15 @@ function OptionForm({ onClose }: { onClose: () => void }) {
 /** What it is trying to make. */
 function Slate() {
   const slate = useWorld((s) => projectsOf(s.universe));
+  const [putting, setPutting] = useState(false);
+  const [saying, setSaying] = useState<string | undefined>();
+
   return (
-    <Panel title="The Slate" tight>
+    <Panel
+      title="The Slate"
+      tight
+      actions={<button className="btn btn-sm btn-primary" onClick={() => setPutting(true)}>Put Something On It</button>}
+    >
       {slate.length === 0 ? (
         <p className="muted small">
           Nothing on it. A company with one project has no slate — it has a hope — so this is worse
@@ -343,14 +355,244 @@ function Slate() {
                 <div className="strong">
                   <Open subject={at('project', project.id)}>{project.title}</Open>
                 </div>
-                {/* The stage is an id. A chip is a label, so it is read as one. */}
-                <span className="chip">{toStart(project.stage)}</span>
+                <div className="row gap-2">
+                  {/* The stage is an id. A chip is a label, so it is read as one. */}
+                  <span className="chip">{toStart(project.stage)}</span>
+                  {project.planId === undefined && !project.shelvedAt && (
+                    <button className="btn btn-sm" onClick={() => setSaying(project.id)}>Say Yes To It</button>
+                  )}
+                </div>
               </div>
             </div>
           ))}
         </div>
       )}
+      {putting && <DevelopForm onClose={() => setPutting(false)} />}
+      {saying && <GreenlightForm projectId={saying} onClose={() => setSaying(undefined)} />}
     </Panel>
+  );
+}
+
+/**
+ * Putting a title on the slate.
+ *
+ * Three answers, and the middle one is the only one that cannot be changed
+ * afterward: a picture is a film or it is television from the moment it is
+ * developed, and which it is decides how it can be made at all.
+ */
+function DevelopForm({ onClose }: { onClose: () => void }) {
+  const { run } = useGame();
+  const held = useWorld((s) => holdingsOf(s.universe));
+  const [title, setTitle] = useState('');
+  const [medium, setMedium] = useState<'film' | 'television'>('film');
+  const [holdingId, setHoldingId] = useState('');
+  const [error, setError] = useState<string | undefined>();
+
+  const put = () => {
+    const answer = run<{ ok: boolean; error?: string }>(
+      'company.develop', { title, medium, holdingId: holdingId || undefined }, { silent: true },
+    );
+    if (answer.value?.ok) { onClose(); return; }
+    setError(answer.value?.error ?? answer.error ?? 'It couldn’t go on the slate.');
+  };
+
+  const ways = plansFor(medium);
+  return (
+    <Modal
+      title="Put Something On The Slate"
+      onClose={onClose}
+      footer={(
+        <>
+          <button className="btn btn-ghost" onClick={onClose}>Never Mind</button>
+          <button className="btn btn-primary" onClick={put} disabled={title.trim().length === 0}>
+            Put It On
+          </button>
+        </>
+      )}
+    >
+      <div className="field">
+        <label htmlFor="develop-title">What Is It Called</label>
+        <input
+          id="develop-title" type="text" value={title} maxLength={80}
+          placeholder="The title of the thing"
+          onChange={(e) => { setTitle(e.target.value); setError(undefined); }}
+        />
+      </div>
+      <div className="field">
+        <label htmlFor="develop-medium">Film Or Television</label>
+        <select
+          id="develop-medium" value={medium}
+          onChange={(e) => { setMedium(e.target.value as 'film' | 'television'); setError(undefined); }}
+        >
+          <option value="film">A Film</option>
+          <option value="television">Television</option>
+        </select>
+      </div>
+      <div className="field">
+        <label htmlFor="develop-holding">What It Is Made From</label>
+        <select id="develop-holding" value={holdingId} onChange={(e) => setHoldingId(e.target.value)}>
+          <option value="">An idea, and no rights behind it</option>
+          {held.map((one) => (
+            <option key={one.id} value={one.id}>{one.title}</option>
+          ))}
+        </select>
+      </div>
+      <p className="xs dim" style={{ margin: 0 }}>
+        {ways.length === 1
+          ? `There is one way to make ${medium === 'film' ? 'a film' : 'television'} here: ${ways[0]!.label}.`
+          : `${said(ways.length, 'way')} to make television here: ${ways.map((one) => one.label).join(', ')}.`}
+        {' '}That choice is made at the greenlight, and this one is made now and not again.
+      </p>
+      {error && <p className="small negative" style={{ marginTop: 'var(--s3)' }}>{error}</p>}
+    </Modal>
+  );
+}
+
+/**
+ * Saying yes to something.
+ *
+ * Seven choices and they are not seven questions. The plan decides what the
+ * parts are and which end of the calendar is nailed down; the budget and the
+ * shoot length together decide how far the schedule is cut below what the money
+ * implies, which is what the overrun is drawn from; the hands decide whether
+ * the cut makes the date. So the form shows what the answers come to rather
+ * than what they are, and it asks the engine for that rather than working it
+ * out again: `wouldBe` runs every check and lays every date and commits
+ * nothing, so the schedule on screen is the schedule the button lays and the
+ * refusal on screen is the sentence the button would return.
+ */
+function GreenlightForm({ projectId, onClose }: { projectId: string; onClose: () => void }) {
+  const { run, sim } = useGame();
+  const project = useWorld((s) => s.universe.projects[projectId]);
+  const ways = project ? plansFor(project.medium) : [];
+  const [planId, setPlanId] = useState(ways[0]?.id ?? 'feature');
+  const plan = planById(planId);
+  const [budget, setBudget] = useState(4_000_000);
+  const [weeks, setWeeks] = useState(5);
+  const [minutes, setMinutes] = useState(Math.round((plan?.delivers.secondsEach ?? 6_000) / 60));
+  const [hands, setHands] = useState(2);
+  const [when, setWhen] = useState<string>('');
+
+  // The week count does not set a shoot on every plan — an unscripted season
+  // does not shoot — so the label is the plan's own base period.
+  const shootLabel = plan?.periods.find((one) => one.per === 1)?.label ?? 'How Long It Shoots';
+  const anchoredAt = plan?.anchor === 'delivery' ? AIRDATE_WEEKS : LEAD_WEEKS;
+  const from = when
+    ? new Date(`${when}T00:00:00Z`).getTime()
+    : sim.now + anchoredAt * 7 * 24 * 60 * 60 * 1000;
+  const spec = {
+    projectId, planId, budgetCents: Math.round(budget * 100), shootWeeks: weeks,
+    secondsEach: minutes * 60, hands, from,
+  };
+  const answer = wouldBe(sim, spec);
+
+  const say = () => {
+    const done = run<{ ok: boolean; error?: string }>('company.greenlight', spec, { silent: true });
+    if (done.value?.ok) onClose();
+  };
+
+  return (
+    <Modal
+      title={`Say Yes To ${project?.title ?? 'It'}`}
+      wide
+      onClose={onClose}
+      footer={(
+        <>
+          <button className="btn btn-ghost" onClick={onClose}>Never Mind</button>
+          <button className="btn btn-primary" onClick={say} disabled={!answer.ok}>Say Yes</button>
+        </>
+      )}
+    >
+      <div className="field">
+        <label htmlFor="gl-plan">How It Gets Made</label>
+        <select id="gl-plan" value={planId} onChange={(e) => setPlanId(e.target.value)}>
+          {ways.map((one) => <option key={one.id} value={one.id}>{one.label}</option>)}
+        </select>
+        {plan && <p className="xs dim" style={{ margin: 'var(--s2) 0 0' }}>{plan.what}</p>}
+      </div>
+
+      <div className="field">
+        <label htmlFor="gl-budget">What It Costs</label>
+        <input id="gl-budget" type="number" min={1} step={100_000} value={budget}
+          onChange={(e) => setBudget(Math.max(1, Number(e.target.value)))} />
+        <p className="xs dim" style={{ margin: 'var(--s2) 0 0' }}>
+          {formatMoney(Math.round(budget * 100), { cents: false })}, against{' '}
+          {formatMoney(stillToCarry(sim), { cents: false })} the family would still put in.
+        </p>
+      </div>
+
+      <div className="field">
+        <label htmlFor="gl-weeks">{shootLabel}</label>
+        <input id="gl-weeks" type="number" min={1} max={LONGEST_SHOOT} value={weeks}
+          onChange={(e) => setWeeks(Math.max(1, Number(e.target.value)))} />
+        <p className={`xs ${answer.ok && answer.prospect.tightness < 0.8 ? 'negative' : 'dim'}`} style={{ margin: 'var(--s2) 0 0' }}>
+          {answer.ok
+            ? `The money implies about ${Math.round(weeks / Math.max(0.01, answer.prospect.tightness))} weeks and you have set ${weeks}. `
+              + `A schedule cut below what it costs is what an overrun is drawn from.`
+            : 'The schedule against the money is worked out once the rest of it holds.'}
+        </p>
+      </div>
+
+      <div className="field">
+        <label htmlFor="gl-minutes">What Each Part Runs To</label>
+        <input id="gl-minutes" type="number" min={1} value={minutes}
+          onChange={(e) => setMinutes(Math.max(1, Number(e.target.value)))} />
+        <p className="xs dim" style={{ margin: 'var(--s2) 0 0' }}>
+          {said(plan?.delivers.parts ?? 1, 'part')} at {minutes} minutes.
+        </p>
+      </div>
+
+      <div className="field">
+        <label htmlFor="gl-hands">The Cutting Room</label>
+        <input id="gl-hands" type="number" min={1} value={hands}
+          onChange={(e) => setHands(Math.max(1, Number(e.target.value)))} />
+        <p className="xs dim" style={{ margin: 'var(--s2) 0 0' }}>
+          {rateById(plan ? cuttingPeriod(plan)?.converts?.at ?? '' : '')?.who ?? 'Nobody'}
+          {plan && cuttingPeriod(plan)
+            ? `, ${Math.round(throughput(cuttingPeriod(plan)!.converts!.at, hands) / 60)} finished minutes a week between them.`
+            : '.'}
+        </p>
+      </div>
+
+      <div className="field">
+        <label htmlFor="gl-when">
+          {plan?.anchor === 'delivery' ? 'The Transmission Date' : 'The First Day Of Prep'}
+        </label>
+        <input id="gl-when" type="date" value={when}
+          onChange={(e) => setWhen(e.target.value)} />
+        <p className="xs dim" style={{ margin: 'var(--s2) 0 0' }}>
+          Left alone it is {formatDate(from, sim.homeZone)}, which is the engine’s own default of{' '}
+          {anchoredAt} weeks out.
+        </p>
+      </div>
+
+      {answer.ok ? (
+        <div className="table-wrap">
+          <table className="table">
+            <tbody>
+              {answer.prospect.periods.map((window) => {
+                const period = plan?.periods.find((one) => one.id === window.id);
+                return (
+                  <tr key={window.id}>
+                    <td className="nowrap">{period?.label ?? window.id}</td>
+                    <td className="small nowrap">{formatDate(window.from, sim.homeZone)}</td>
+                    <td className="small nowrap">{formatDate(window.to, sim.homeZone)}</td>
+                  </tr>
+                );
+              })}
+              <tr>
+                <td className="nowrap strong">Delivered By</td>
+                <td className="small nowrap" colSpan={2}>
+                  {formatDate(answer.prospect.deliverBy, sim.homeZone)}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      ) : (
+        <p className="small negative" style={{ marginTop: 'var(--s3)' }}>{answer.error}</p>
+      )}
+    </Modal>
   );
 }
 
