@@ -79,24 +79,56 @@ export interface Laid {
 /**
  * Turns a plan and one number into a calendar.
  *
- * The one number is the length of the shoot, because that is the only number
- * a producer actually chooses. Everything else on a schedule is quoted against
- * it, so everything else falls out.
+ * The one number is the length of the plan's base period — the one carrying
+ * `per: 1` — because that is the only length a producer actually chooses. On a
+ * feature it is the shoot; on an unscripted season it is the field. Everything
+ * else on a real schedule is quoted against it, so everything else falls out.
+ *
+ * Two things here are not the obvious implementation, and both are the
+ * difference between a scheduler and a live-action scheduler.
+ *
+ * A period may declare `runsWith`, meaning it begins alongside another rather
+ * than after it. Walking the list and setting each start to the previous end
+ * is a live-action assumption wearing a general name: it cannot express post
+ * beginning on field day one and running months past wrap, which is simply
+ * what an unscripted season is. A period with no `runsWith` still starts after
+ * everything declared before it has finished, so the ordinary case is unchanged.
+ *
+ * And the whole schedule can be anchored at either end. A picture starts when
+ * the money says and delivers whenever it delivers. A broadcast season has its
+ * transmission date agreed before anybody knows what the content is, and the
+ * work is fitted backward into the room in front of it. `at` is read as the
+ * start for one and as the delivery date for the other.
  */
-export function layOut(plan: Plan, shootWeeks: number, from: Instant): Laid {
+export function layOut(plan: Plan, baseWeeks: number, at: Instant): Laid {
   const periods: Dated[] = [];
-  let at = from;
+  const startOf = new Map<string, Instant>();
+  let after = 0;
+
   for (const period of plan.periods) {
-    const weeks = Math.max(1, Math.round(period.per * shootWeeks));
-    const to = at + weeks * MS_WEEK;
-    periods.push({ id: period.id, from: at, to });
-    at = to;
+    const weeks = Math.max(1, Math.round(period.per * baseWeeks));
+    // Alongside the period it names, or after everything declared before it.
+    const from = period.runsWith !== undefined && startOf.has(period.runsWith)
+      ? startOf.get(period.runsWith)!
+      : after;
+    const to = from + weeks * MS_WEEK;
+    startOf.set(period.id, from);
+    periods.push({ id: period.id, from, to });
+    after = Math.max(after, to);
   }
+
+  const work = periods.reduce((n, p) => Math.max(n, p.to), 0);
+  // Shift the whole schedule so the anchored end lands where it was asked to.
+  const shift = plan.anchor === 'delivery'
+    ? at - (work + plan.deliveryWeeks * MS_WEEK)
+    : at;
+  for (const period of periods) { period.from += shift; period.to += shift; }
+
   return {
     planId: plan.id,
-    shootWeeks,
+    shootWeeks: baseWeeks,
     periods,
-    deliverBy: at + plan.deliveryWeeks * MS_WEEK,
+    deliverBy: work + shift + plan.deliveryWeeks * MS_WEEK,
   };
 }
 
@@ -230,7 +262,14 @@ export interface Greenlight {
   planId: string;
   budgetCents: Money;
   shootWeeks: number;
-  /** When the crew comes on. Defaults to eight weeks out. */
+  /**
+   * The date the plan is anchored to, meaning whichever end the plan nails
+   * down. On a plan anchored at the start it is the day the first period
+   * begins; on one anchored at delivery it is the transmission date, and the
+   * work is fitted backward in front of it. Defaults to eight weeks out for
+   * the first and to a year out for the second, because a season commissioned
+   * to start in eight weeks is a season nobody has cast.
+   */
   from?: Instant;
   /** The stage to hold. Defaults to the smallest one free for the whole hold. */
   stageId?: Id;
@@ -238,6 +277,9 @@ export interface Greenlight {
 
 /** How far out a greenlight puts the first day of prep, when nobody says. */
 export const LEAD_WEEKS = 8;
+
+/** How far out an unasked-for airdate sits. A season needs the room. */
+export const AIRDATE_WEEKS = 52;
 
 /** The longest schedule anybody will sit still for, in shooting weeks. */
 export const LONGEST_SHOOT = 40;
@@ -287,7 +329,11 @@ export function greenlight(sim: Simulation, spec: Greenlight): { ok: true; proje
     return { ok: false, error: `Nobody holds a crew together for ${weeks} weeks. ${LONGEST_SHOOT} is the outside of it.` };
   }
 
-  const from = spec.from ?? sim.now + LEAD_WEEKS * MS_WEEK;
+  // Read against the end the plan actually anchors, so a caller that says
+  // nothing gets a sensible date for the kind of thing it is rather than a
+  // start date silently used as an airdate.
+  const lead = plan.anchor === 'delivery' ? AIRDATE_WEEKS : LEAD_WEEKS;
+  const from = spec.from ?? sim.now + lead * MS_WEEK;
   const laid = layOut(plan, weeks, from);
   const held = holdingWindow(plan, laid);
 

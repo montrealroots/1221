@@ -225,14 +225,44 @@ recommendation is a format-led unscripted season first, because it has no script
 and no takes and no boundary between production and post, so none of those
 assumptions can be hardcoded anywhere.
 
-Rank 1 is already built as a feature. The salvage is to run the test in reverse:
-take the unscripted season as the next build and require it to add **no new
-engine concepts**. Whatever it needs that `content/making.ts` cannot express is
-the list of places this engine is still live-action-shaped. Three are already
-known — progress is stored rather than derived and is not runtime-weighted,
-`stage` is a single field where the research wants a maturity vector whose
-minimum is what "done" means, and the scheduler assumes forward flow where
-downstream discovery routinely creates upstream work.
+Rank 1 was already built as a feature, so the test was run in reverse: the
+unscripted season was written as build two and required to add no new engine
+concepts. **It needed four.** That list is the answer, and two of them are now
+fixed.
+
+| What the season needed | State |
+| --- | --- |
+| Periods that run alongside each other, not only after | **Fixed.** `Period.runsWith` |
+| A clock anchored at the delivery date, not the start | **Fixed.** `Plan.anchor` |
+| "Done" as the minimum of a maturity vector, not one stage | Open |
+| A season as N timelines at different maturities | Open |
+
+The first two were the scheduler being a live-action scheduler wearing a
+general name. `layOut` set every period's start to the previous period's end,
+which cannot express post beginning on field day one and running months past
+wrap — which is simply what an unscripted season is. And `deliverBy` was
+derived forward, so a longer shoot delivered later; a broadcast season has its
+transmission date agreed against a format document before anybody knows what
+the content is, and the work is fitted backward into the room in front of it.
+Those are opposite clocks and the engine only had one.
+
+The two still open are the bigger ones, and they are the next work:
+
+- **Progress is stored rather than derived, and is not runtime-weighted.** The
+  research is emphatic that "how far along is this" is never a field: it is
+  recomputed from the timeline, the maturity of its segments, the inventory
+  ledger and the rate table. The native measure is seconds of target runtime,
+  and pages, shots, days and cut-minutes are display conversions into it. A
+  picture in SLATE has no runtime at all.
+- **`stage` is one field where "done" should be the minimum across picture,
+  sound, performance, rights, compliance and conform.** An act that is
+  beautifully cut and legally uncleared is zero per cent done, and the
+  unscripted season is the kind where that is unavoidable rather than
+  postponable — a withdrawn consent can destroy a finished act at week
+  nineteen. Today the season has to map both its cut and its compliance period
+  onto the single stage `post`, which is the compromise showing.
+- **A season is eight timelines**, not one, sharing an asset library and
+  running against a weekly transmission. `Project` holds one set of periods.
 
 **1. The Title. Done.** A picture with a dated life — prep, shoot, post,
 delivered — a unit base city, a budget, and a schedule made of ordinary

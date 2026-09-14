@@ -55,10 +55,27 @@ export interface Period {
   /** What happens in it, in the world's words. */
   what: string;
   /**
-   * How long it runs, in shooting weeks. The shoot is 1 by definition and
-   * everything else is quoted against it, the way a real schedule is.
+   * How long it runs, as a multiple of the plan's base period.
+   *
+   * Exactly one period in a plan carries `per: 1`, and it is the one the
+   * producer actually chooses the length of — the shoot on a feature, the
+   * field on an unscripted season. Everything else is quoted against it, the
+   * way a real schedule is. Deliberately not called "shooting weeks" any
+   * more: a season that never shoots a scripted page still has a base period,
+   * and naming this after the live-action case is how an engine ends up
+   * unable to express anything else.
    */
   per: number;
+  /**
+   * The period this one begins alongside, rather than after.
+   *
+   * Without it every period starts when the last one ends, which is a
+   * live-action assumption wearing a general name. On an unscripted season
+   * post begins on field day one and runs months past wrap; the field and the
+   * cut are the same calendar, not two. A period naming another here starts
+   * when that one starts and runs its own length from there.
+   */
+  runsWith?: string;
   /**
    * Whether it holds a stage, and at what rate.
    *
@@ -91,14 +108,25 @@ export interface Plan {
   what: string;
   /** Which media it is available for. */
   media: readonly ('film' | 'television')[];
-  /** The periods, in the order they run. */
+  /** The periods, in the order they are declared. */
   periods: readonly Period[];
   /**
-   * Weeks between the end of the last period and the contractual delivery
-   * date. The window exists so that finishing is not the same as delivering,
-   * because it is not.
+   * Weeks between the end of the work and the contractual delivery date. The
+   * window exists so that finishing is not the same as delivering, because it
+   * is not.
    */
   deliveryWeeks: number;
+  /**
+   * Which end of the schedule is nailed down.
+   *
+   * `start` is a picture: work begins when the money says it can, and the
+   * delivery date is whatever falls out of the far end. `delivery` is a
+   * broadcast season: the transmission date is agreed against a format
+   * document before anybody knows what the content is, and the work is fitted
+   * backward into the room left in front of it. Those are opposite clocks,
+   * and an engine that only has the first can only make pictures.
+   */
+  anchor: 'start' | 'delivery';
 }
 
 // ---------------------------------------------------------------------------
@@ -121,6 +149,7 @@ const FEATURE: Plan = {
   what: 'Prep, a shoot, and a long post. The ordinary shape of a picture made indoors.',
   media: ['film'],
   deliveryWeeks: 6,
+  anchor: 'start',
   periods: [
     {
       id: 'prep',
@@ -168,6 +197,7 @@ const SERIES: Plan = {
   what: 'Long prep for standing sets, a long shoot, and a post that runs alongside it and finishes soon after wrap.',
   media: ['television'],
   deliveryWeeks: 4,
+  anchor: 'start',
   periods: [
     {
       id: 'prep',
@@ -201,7 +231,106 @@ const SERIES: Plan = {
   ],
 };
 
-export const PLANS: readonly Plan[] = [FEATURE, SERIES];
+/**
+ * A format-led unscripted season, delivered against a fixed transmission date.
+ *
+ * Here because the research said to build it, and said why: it breaks every
+ * assumption a live-action-shaped engine bakes in, all at once. There is no
+ * script, so no page count or stripboard can be hardcoded anywhere. There are
+ * no takes, so coverage cannot be assumed. There is no boundary between
+ * production and post, so a scheduler cannot be written as prep-shoot-post.
+ * Build the feature first and every one of those gets quietly satisfied by a
+ * live-action-shaped special case, and the spine is not discovered to be fake
+ * until the fourth kind, with nine kinds of content sitting on top of it.
+ *
+ * Four things about this plan are true of nothing else in the file, and each
+ * one was a place the engine had to stop being a picture engine:
+ *
+ * Casting sits where writing would. Choosing twelve people is choosing every
+ * story the season can contain, it happens before anything is shot, and it
+ * cannot be undone.
+ *
+ * Post begins on field day one, not after wrap. The field and the cut are one
+ * calendar, not two — which is what `runsWith` exists for.
+ *
+ * The airdate is agreed against a format document before anybody knows what
+ * the content is, so the work is fitted backward into the room in front of it
+ * rather than delivering whenever it happens to finish.
+ *
+ * And compliance runs alongside the cut rather than after it, because consent,
+ * welfare and fairness are what actually gate lock here. An act can be
+ * finished, funny and perfectly cut at week nineteen and be destroyed by a
+ * withdrawn consent.
+ *
+ * The proportions are SLATE's own, fitted to the bands in the research: six to
+ * sixteen weeks of casting overlapping six to twelve weeks of rig, three to ten
+ * weeks of continuous field, and post running from day one to eight or twenty
+ * weeks past wrap. The money shape is its own too, and its shape is the point:
+ * above the line barely exists, because there is no script cost and the
+ * contributors are on stipends rather than salaries.
+ */
+const UNSCRIPTED: Plan = {
+  id: 'unscripted',
+  label: 'A Format Season, Against An Airdate',
+  what: 'A cast board, a built arena, a continuous shoot, and a cut that starts the same day the cameras do.',
+  media: ['television'],
+  deliveryWeeks: 2,
+  anchor: 'delivery',
+  periods: [
+    {
+      id: 'casting',
+      stage: 'prep',
+      label: 'The Cast Board',
+      what: 'Choosing twelve people. That is the same act as choosing every story the season can contain, and it cannot be undone later.',
+      per: 1.5,
+      spends: 0.12,
+      unit: { one: 'contributor seen', many: 'contributors seen', aWeek: 40 },
+    },
+    {
+      id: 'rig',
+      stage: 'prep',
+      label: 'The Build And The Rig',
+      what: 'The arena goes up and the fixed rig goes in. Runs alongside casting, because neither waits for the other.',
+      per: 1,
+      runsWith: 'casting',
+      holds: 'prep',
+      spends: 0.18,
+      unit: { one: 'week of build', many: 'weeks of build', aWeek: 1 },
+    },
+    {
+      id: 'field',
+      stage: 'shooting',
+      label: 'The Field',
+      what: 'Continuous recording. Progress is beats banked against the story areas set that morning, never pages.',
+      per: 1,
+      holds: 'shooting',
+      spends: 0.42,
+      unit: { one: 'contributor-day', many: 'contributor-days', aWeek: 7 },
+    },
+    {
+      id: 'post',
+      stage: 'post',
+      label: 'The Cut',
+      what: 'Stringouts, paper cuts, assemblies. It starts on field day one and is still running months after everybody goes home.',
+      per: 3,
+      runsWith: 'field',
+      spends: 0.24,
+      unit: { one: 'cut minute', many: 'cut minutes', aWeek: 15 },
+    },
+    {
+      id: 'compliance',
+      stage: 'post',
+      label: 'Consent And Compliance',
+      what: 'Clearing what was recorded, which gates lock. A finished act can be destroyed at week nineteen by a withdrawn consent.',
+      per: 2.5,
+      runsWith: 'post',
+      spends: 0.04,
+      unit: { one: 'clearance', many: 'clearances', aWeek: 6 },
+    },
+  ],
+};
+
+export const PLANS: readonly Plan[] = [FEATURE, SERIES, UNSCRIPTED];
 
 export const planById = (id: string): Plan | undefined => PLANS.find((p) => p.id === id);
 

@@ -645,3 +645,77 @@ describe('the lot tells the truth about who is on it', () => {
       .toContain('3 stage weeks ');
   });
 });
+
+describe('build two: a season that is not a picture', () => {
+  const SEASON = planById('unscripted')!;
+
+  it('fits the work backward into a fixed airdate, rather than delivering whenever', () => {
+    const airdate = 1_800_000_000_000;
+    const short = layOut(SEASON, 6, airdate);
+    const long = layOut(SEASON, 12, airdate);
+    // Both land on the date they were given, exactly.
+    expect(short.deliverBy).toBe(airdate);
+    expect(long.deliverBy).toBe(airdate);
+    // And the longer season starts earlier rather than finishing later, which
+    // is the whole difference between a broadcast clock and a picture's.
+    expect(long.periods[0]!.from).toBeLessThan(short.periods[0]!.from);
+  });
+
+  it('starts the cut on field day one and runs it past wrap', () => {
+    const laid = layOut(SEASON, 8, 1_800_000_000_000);
+    const at = (id: string) => laid.periods.find((p) => p.id === id)!;
+    expect(at('post').from).toBe(at('field').from);
+    expect(at('post').to).toBeGreaterThan(at('field').to);
+  });
+
+  it('overlaps the build with casting, and waits for both before the field', () => {
+    const laid = layOut(SEASON, 8, 1_800_000_000_000);
+    const at = (id: string) => laid.periods.find((p) => p.id === id)!;
+    expect(at('rig').from).toBe(at('casting').from);
+    expect(at('field').from).toBeGreaterThanOrEqual(Math.max(at('casting').to, at('rig').to));
+  });
+
+  it('runs compliance alongside the cut, because that is what gates lock', () => {
+    const laid = layOut(SEASON, 8, 1_800_000_000_000);
+    const at = (id: string) => laid.periods.find((p) => p.id === id)!;
+    expect(at('compliance').from).toBe(at('post').from);
+  });
+
+  it('leaves a picture exactly as it was', () => {
+    const laid = layOut(planById('feature')!, 6, 0);
+    // Strictly sequential, anchored at the start, delivery derived forward.
+    for (const [i, period] of laid.periods.entries()) {
+      if (i > 0) expect(period.from).toBe(laid.periods[i - 1]!.to);
+    }
+    expect(laid.periods[0]!.from).toBe(0);
+    expect(layOut(planById('feature')!, 12, 0).deliverBy)
+      .toBeGreaterThan(layOut(planById('feature')!, 6, 0).deliverBy);
+  });
+
+  it('greenlights a season through the same command a picture uses', () => {
+    const sim = world('season');
+    const id = onTheSlate(sim, 'The Arena', 'television');
+    const done = run(sim, 'company.greenlight', {
+      projectId: id, planId: 'unscripted', budgetCents: 8_000_000_00, shootWeeks: 8,
+    });
+    expect(done.error).toBeUndefined();
+    const project = sim.universe.projects[id]!;
+    expect(project.periods?.map((p) => p.id))
+      .toEqual(['casting', 'rig', 'field', 'post', 'compliance']);
+    // It took a stage off the same board, the way everything else does.
+    expect(project.stageId).toBeDefined();
+  });
+
+  it('runs a whole season through to delivered on the ordinary clock', () => {
+    const sim = world('season-run');
+    const id = onTheSlate(sim, 'The Arena', 'television');
+    run(sim, 'company.greenlight', {
+      projectId: id, planId: 'unscripted', budgetCents: 8_000_000_00, shootWeeks: 8,
+    });
+    runItOut(sim, id);
+    const project = sim.universe.projects[id]!;
+    expect(project.spentCents).toBeGreaterThanOrEqual(project.budgetCents!);
+    expect(validateUniverse(sim.universe).errors).toEqual([]);
+    expect(sim.ledger.audit()).toEqual([]);
+  });
+});
