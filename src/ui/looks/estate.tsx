@@ -38,10 +38,10 @@ import { at } from './subject';
 import { whatTheyAre } from './family';
 import { bondFor, standingWord } from '@/engine/world/standing';
 import { isAre, outOf, spokenList, toStart } from './words';
-import { MONTHLY_OVERHEAD_CENTS } from '@/engine/content/lot';
+import { MONTHLY_OVERHEAD_CENTS, SELLING } from '@/engine/content/lot';
 import {
-  breakEvenShare, onStageAt, paidInSoFar, stagesOn, standingWith, utilisation,
-  whatTheFamilySays, whereTheLotStands,
+  breakEvenShare, onStageAt, paidInSoFar, pullOn, sellsFor, stagesOn, standingWith,
+  turnedAway, utilisation, whatTheFamilySays, whereTheLotStands,
 } from '@/engine/world/lot';
 import { formatMoney } from '@/engine/core/money';
 import { formatDate, MS_DAY } from '@/engine/core/time';
@@ -496,6 +496,8 @@ defineLook<TheLot>('lot', {
     const took = month.earnsShare ?? 0;
     const standing = standingWith(sim);
     const aYear = MONTHLY_OVERHEAD_CENTS * 12;
+    const pull = pullOn(sim);
+    const away = turnedAway(sim);
     return {
     name: LOT_NAME,
     kind: 'What The Family Built',
@@ -523,6 +525,48 @@ defineLook<TheLot>('lot', {
             note={`${Math.round(standing.share * 100)}/100 of a year of the group’s profit`} />
         </div>
         <p className="small">{whatTheFamilySays(sim)}</p>
+        <h4>Who Rings</h4>
+        <div className="table-wrap">
+        <table className="table">
+          <tbody>
+            <tr>
+              <td className="nowrap">Calls A Month</td>
+              <td className="small nowrap">{pull.calls.toFixed(1)}</td>
+              <td className="small">What it started at was one. The rest is earned.</td>
+            </tr>
+            <tr>
+              <td className="nowrap">Spent On Being Known</td>
+              <td className="small money nowrap">{moneyOf(sellsFor(sim))} a month</td>
+              <td className="small">
+                {Math.round(pull.reach * 100)}/100 of the way to everybody who books a stage. The
+                floor is {moneyOf(SELLING.floor)}, and the market takes {SELLING.remembers} months
+                to notice a lot and as long again to forget one.
+              </td>
+            </tr>
+            <tr>
+              <td className="nowrap">Crew In The Country</td>
+              <td className="small nowrap">{Math.round(pull.crew * 100)}/100</td>
+              <td className="small">
+                Against what there was on the first day. Every picture made here leaves people
+                behind, and a country you can crew in is a country worth calling.
+              </td>
+            </tr>
+            {away.map((one) => (
+              <tr key={one.why}>
+                <td className="nowrap">{one.count} Turned Away</td>
+                <td className="small nowrap" />
+                <td className="small">{one.said}.</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        </div>
+        <p className="small">
+          A producer in Reykjavik knows the stages are there whatever anybody spends. A desk in Los
+          Angeles hears about a show after the budget is locked unless the lot was in that
+          conversation first, so money spent on being known buys calls from abroad — and most of what
+          it buys is productions the rebate was never built for.
+        </p>
         <h4>The Stages</h4>
         <div className="table-wrap">
         <table className="table">

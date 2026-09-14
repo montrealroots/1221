@@ -22,8 +22,8 @@ import type { Simulation } from './core/simulation';
 import { CITIES } from './content/geography';
 import { weatherOn } from './systems/weather';
 import { MS_DAY } from './core/time';
-import { ENQUIRY_SHAPES, type Enquiry } from './content/lot';
-import { wouldBook } from './world/lot';
+import { CREW_BASE, ENQUIRY_SHAPES, type Enquiry } from './content/lot';
+import { MS_WEEK, pullOn, stagesOn, wouldBook } from './world/lot';
 import { decideQuota } from './world/sugar';
 import { decideSlip, type Squeeze } from './world/making';
 import { decideReview, type Review } from './world/trouble';
@@ -170,6 +170,65 @@ function lotFor(seed: number): Simulation {
   LOTS.set(seed, made);
   return made;
 }
+
+interface Ringing { sim: Simulation; crew: number; letWeeks: number }
+
+/**
+ * A world with a given crew base and a given three years behind it.
+ *
+ * Built rather than played, because sweeping this properly means reaching
+ * states a five-year save cannot: a country with three times the crew it
+ * started with, and a lot that has been full for three years. Both are
+ * reachable and neither is quick.
+ */
+function ringingIn(seed: number): Ringing {
+  const sim = lotFor(100 + seed);
+  return { sim, crew: 1, letWeeks: 0 };
+}
+
+defineDecider<Ringing, string>({
+  id: 'lot.rang',
+  decides: 'How many productions ring about a stage in one month.',
+  drawnIn: 'src/engine/world/lot.ts',
+  reads: {
+    // People in the country to crew a picture with. It starts at the national
+    // base and every picture made here adds two dozen who are still here
+    // afterwards, so this is the slow half and it only goes up.
+    crew: (r, t) => ({ ...r, crew: 1 + t * 2 }),
+    // And what the rooms did over the last three years, which is the fast half
+    // and runs both ways: three quiet years and the lot is new again.
+    record: (r, t) => ({ ...r, letWeeks: t * 3 * 52 * stagesOn(r.sim).length }),
+  },
+  sample: (seed) => ringingIn(seed % 4),
+  decide: ({ sim, crew, letWeeks }) => {
+    // A world posed rather than played: put the crew and the bookings where
+    // the sweep asks for them and read what the lot would hear.
+    const people = Object.values(sim.universe.people);
+    const want = Math.round(CREW_BASE * crew) - CREW_BASE;
+    for (let i = 0; i < want; i += 1) {
+      const one = people[i % people.length];
+      if (one) sim.universe.people[`crew-${i}`] = { ...one, id: `crew-${i}`, careerTrack: 'crew' };
+    }
+    // Across every room, because the record is what the LOT did and a lot with
+    // one busy stage and three dark ones has not been busy.
+    const rooms = stagesOn(sim);
+    const each = rooms.length > 0 ? Math.round(letWeeks / rooms.length) : 0;
+    for (const [i, room] of rooms.entries()) {
+      if (each <= 0) break;
+      sim.universe.bookings[`swept-${i}`] = {
+        id: `swept-${i}`, saveId: sim.universe.meta.id, stageId: room.id, holder: 'somebody',
+        kind: 'shooting', from: sim.now - each * MS_WEEK, to: sim.now, weekRateCents: 1,
+      };
+    }
+    const calls = pullOn(sim).calls;
+    for (let i = 0; i < want; i += 1) delete sim.universe.people[`crew-${i}`];
+    for (const [i] of rooms.entries()) delete sim.universe.bookings[`swept-${i}`];
+    if (calls < 1.25) return 'one a month';
+    if (calls < 1.75) return 'about three every two months';
+    if (calls < 2.5) return 'two a month';
+    return 'as many as the country has';
+  },
+});
 
 // ---------------------------------------------------------------------------
 // The sugar

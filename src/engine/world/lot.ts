@@ -19,9 +19,9 @@ import type { Instant } from '../core/time';
 import type { Money } from '../core/money';
 import { MS_DAY, instantFromZoned, zonedParts } from '../core/time';
 import {
-  AROUND_THE_SHOOT, BUILD_COST_CENTS, CREW_BASE, CREW_PENALTY, LOT_FLOOR_SQM,
-  MONTHLY_OVERHEAD_CENTS, MOST_OF_THE_SPEND, OVERHEAD, PATIENCE, RATE_SHARE, SHUT_YEAR_BITE,
-  type Rung,
+  AROUND_THE_SHOOT, BUILD_COST_CENTS, CALLS_A_MONTH, CREW_BASE, CREW_PENALTY, LOT_FLOOR_SQM,
+  MONTHLY_OVERHEAD_CENTS, MOST_CALLS, MOST_OF_THE_SPEND, OVERHEAD, PATIENCE, RATE_SHARE,
+  FOREIGN_REACH, SELLING, SHUT_YEAR_BITE, type Rung,
   ENQUIRY_SHAPES, STAGES, type Enquiry,
 } from '../content/lot';
 import { REBATE } from '../content/incorporation';
@@ -279,7 +279,13 @@ export function registerLot(sim: Simulation): void {
         });
       }
     }
-    takeAnEnquiry(sim);
+    // As many as rang, and the fraction is drawn rather than rounded away: at
+    // one and a half calls a month, half the months get the second one.
+    const pull = pullOn(sim);
+    const whole = Math.floor(pull.calls);
+    const over = pull.calls - whole;
+    const extra = sim.rng('lot', 'how-many', String(Math.floor(sim.now / MS_DAY))).next() < over ? 1 : 0;
+    for (let i = 0; i < whole + extra; i += 1) takeAnEnquiry(sim, i);
     collectWhatIsDue(sim);
     sim.schedule({
       at: startOfNextMonth(sim.now, sim.homeZone),
@@ -289,6 +295,33 @@ export function registerLot(sim: Simulation): void {
       priority: 5,
     });
   });
+
+  /**
+   * What the lot spends a month on being known.
+   *
+   * The only decision on this axis somebody takes again every month, and the
+   * first one that costs anything now the family's patience is finite. Bounded
+   * at both ends: the floor is what it costs to be sold at all, and above the
+   * ceiling there is nobody left to tell.
+   */
+  sim.onCommand<{ monthlyCents: Money }, { ok: boolean; error?: string }>(
+    'lot.sell', (payload, { sim: s }) => {
+      const lot = theLot(s);
+      const company = lot?.ownerId ? s.universe.companies[lot.ownerId] : undefined;
+      if (!company) return { ok: false, error: 'There’s no lot to sell.' };
+      const want = Math.round(Number(payload.monthlyCents ?? 0));
+      if (!Number.isFinite(want) || want < 0) return { ok: false, error: 'That isn’t an amount.' };
+      if (want > SELLING.most) {
+        return {
+          ok: false,
+          error: `${money(SELLING.most)} a month reaches everybody who books a stage. `
+            + 'Past that there’s nobody left to tell.',
+        };
+      }
+      company.sellsFor = Math.max(SELLING.floor, want);
+      return { ok: true };
+    },
+  );
 
   if (!sim.universe.scheduled.some((i) => i.kind === LOT_OVERHEAD_KIND && i.status === 'pending')) {
     sim.schedule({
@@ -348,9 +381,13 @@ export function howTheMonthWent(month: Utilisation): string {
  */
 export function chargeTheMonth(sim: Simulation, accountId: Id, earnedThisMonth: Money = 0): Money {
   let spent = 0;
+  const selling = sellsFor(sim);
   for (const line of OVERHEAD) {
-    sim.expense(accountId, line.monthlyCents, `${LOT_NAME}: ${line.label}`, 'business');
-    spent += line.monthlyCents;
+    // The selling line is the one somebody chooses. Everything else is what it
+    // costs to keep the doors open whether anybody wants them open or not.
+    const owed = line.id === 'selling' ? selling : line.monthlyCents;
+    sim.expense(accountId, owed, `${LOT_NAME}: ${line.label}`, 'business');
+    spent += owed;
   }
   familyCovers(sim, accountId, earnedThisMonth);
   return spent;
@@ -443,6 +480,25 @@ export function rungFor(share: number, shutYears: number): Rung {
     if (share >= one.at * bite) rung = one;
   }
   return rung;
+}
+
+/**
+ * Who rang and went away again, and what sent them.
+ *
+ * Counted rather than derived, because an enquiry that did not book leaves no
+ * record of itself anywhere else — the bookings table only holds the ones that
+ * said yes, which is the most flattering possible account of a stage business.
+ */
+export function turnedAway(sim: Simulation): { why: string; said: string; count: number }[] {
+  const lot = theLot(sim);
+  const company = lot?.ownerId ? sim.universe.companies[lot.ownerId] : undefined;
+  const kept = company?.turnedAway ?? {};
+  return [
+    { why: 'room', said: 'No room here was the right size', count: kept.room ?? 0 },
+    { why: 'rebate', said: 'What Iceland gives back didn’t cover getting here', count: kept.rebate ?? 0 },
+    { why: 'price', said: 'The room cost too much of what they had to spend', count: kept.price ?? 0 },
+    { why: 'booked', said: 'Every room that would hold it was taken', count: kept.booked ?? 0 },
+  ].filter((one) => one.count > 0).sort((a, b) => b.count - a.count);
 }
 
 /** Where the family stands, in a sentence. */
@@ -695,29 +751,127 @@ export function book(sim: Simulation, need: Enquiry, stageId: Id, from: Instant,
 
 const aOrAn = (kind: string): string => `${/^[aeiou]/i.test(kind) ? 'an' : 'a'} ${kind}`;
 
+export interface Pull {
+  /** People in the country to crew with, against the national base. */
+  crew: number;
+  /** How much of the last three years the rooms were let, 0-1. */
+  record: number;
+  /** How far the name has got, off what was spent getting it there, 0-1. */
+  reach: number;
+  /** Enquiries a month this comes to. */
+  calls: number;
+}
+
 /**
- * Somebody rings about a stage, once a month, and either books or does not.
+ * How many people ring about a stage this month, and why that many.
  *
- * One enquiry a month is SLATE's own and it is deliberately not many. A lot
- * nobody has heard of, in a country with no crew, does not have a queue. The
- * shape of who rings is weighted toward the middle of the market, because
- * that is where the work is.
+ * The two things a lot earns, and the reason this axis stopped being a fixed
+ * outcome. Neither is stored and neither can be set: the crew in the country
+ * is everybody who has ever been hired onto something here and stayed, and the
+ * record is what the bookings themselves say about the last three years.
+ *
+ * They pull differently on purpose. Crew is slow and it only goes up — a
+ * picture made here puts two dozen people in the country who are still here
+ * afterwards, and a country you can crew in is a country worth calling. The
+ * record is fast and runs both ways, because it falls out of its own window:
+ * three quiet years and the lot is what it was on the first day.
  */
-export function takeAnEnquiry(sim: Simulation): Booking | undefined {
+export function pullOn(sim: Simulation): Pull {
+  const crew = crewInTheCountry(sim) / CREW_BASE;
+  const threeYears = utilisation(sim, sim.now - 3 * 365 * MS_DAY, sim.now);
+  const record = threeYears.available > 0
+    ? Math.min(1, (threeYears.taken - threeYears.own) / threeYears.available)
+    : 0;
+  const reach = reachOf(sim);
+  return {
+    crew,
+    record,
+    reach,
+    calls: Math.min(
+      MOST_CALLS,
+      CALLS_A_MONTH * crew * (1 + Math.max(0, record)) * (1 + SELLING.worth * reach),
+    ),
+  };
+}
+
+/**
+ * How far the lot's name has got, off what it has actually spent getting there.
+ *
+ * Read back out of the ledger rather than off the figure somebody set, which is
+ * the whole of why it cannot be gamed. The market takes months to notice a lot
+ * and months to forget one, so this is the average of what went out across the
+ * window — a player who starts paying today buys a number that arrives over two
+ * quarters, and one who stops keeps it for two more.
+ *
+ * Never zero, because a production looking at Iceland finds the film commission
+ * whether or not anybody here bought a stand at a market. Spending nothing
+ * means being on a list rather than being in the conversation.
+ */
+export function reachOf(sim: Simulation): number {
+  const from = sim.now - SELLING.remembers * 30 * MS_DAY;
+  let spent = 0;
+  for (const txn of sim.universe.transactions) {
+    if (txn.at < from || !txn.memo.endsWith(SELLING_MEMO)) continue;
+    for (const posting of txn.postings) if (posting.amount > 0) spent += posting.amount;
+  }
+  const amonth = spent / SELLING.remembers;
+  const above = Math.max(0, amonth - SELLING.floor);
+  return Math.min(1, above / (SELLING.most - SELLING.floor));
+}
+
+/** The memo the selling line is posted under, which is what `reachOf` reads. */
+export const SELLING_MEMO = OVERHEAD.find((one) => one.id === 'selling')!.label;
+
+/** What the lot is spending a month on being known, floor included. */
+export function sellsFor(sim: Simulation): Money {
+  const lot = theLot(sim);
+  const company = lot?.ownerId ? sim.universe.companies[lot.ownerId] : undefined;
+  return Math.max(SELLING.floor, Math.min(SELLING.most, company?.sellsFor ?? SELLING.floor));
+}
+
+/**
+ * Somebody rings about a stage, and either books or does not.
+ *
+ * The shape of who rings is weighted toward the middle of the market, because
+ * that is where the work is. How many of them ring is `pullOn`.
+ */
+export function takeAnEnquiry(sim: Simulation, nth = 0): Booking | undefined {
   if (stagesOn(sim).length === 0) return undefined;
-  const rng = sim.rng('lot', String(Math.floor(sim.now / MS_DAY)));
-  const total = ENQUIRY_SHAPES.reduce((n, one) => n + one.weight, 0);
+  const lot = theLot(sim);
+  const company = lot?.ownerId ? sim.universe.companies[lot.ownerId] : undefined;
+  const rng = sim.rng('lot', String(Math.floor(sim.now / MS_DAY)), nth);
+  // Selling changes who rings, not only how many. A producer in Reykjavik
+  // knows the stages are there whether or not anybody bought a stand at a
+  // market; a desk in Los Angeles hears about a show after the budget is
+  // locked unless somebody was in that conversation first. So the money moves
+  // the mix toward the foreign end, and the foreign end is where the weeks are.
+  const reach = reachOf(sim);
+  const weigh = (one: { weight: number; of: Enquiry }): number =>
+    one.of.local ? one.weight : one.weight * (1 + FOREIGN_REACH * reach);
+  const total = ENQUIRY_SHAPES.reduce((n, one) => n + weigh(one), 0);
   let roll = rng.next() * total;
   let need = ENQUIRY_SHAPES[0]!.of;
   for (const one of ENQUIRY_SHAPES) {
-    roll -= one.weight;
+    roll -= weigh(one);
     if (roll <= 0) { need = one.of; break; }
   }
 
   // They want the stage some weeks out, not tomorrow.
   const from = sim.now + Math.round(30 + rng.next() * 90) * MS_DAY;
   const answer = wouldBook(sim, need, from);
-  if (!answer.stageId) return undefined;
+  if (!answer.stageId) {
+    // What rang and did not book, kept as a running count by reason. It is the
+    // only way the lever on selling can be read honestly: money buys attention
+    // from abroad, and most of what it buys is productions the rebate was
+    // never built for. A player who cannot see that is being sold a trap.
+    if (company) {
+      const why = /right size/.test(answer.because) ? 'room'
+        : /doesn’t cover/.test(answer.because) ? 'rebate'
+          : /too much of what it has to spend/.test(answer.because) ? 'price' : 'booked';
+      company.turnedAway = { ...(company.turnedAway ?? {}), [why]: (company.turnedAway?.[why] ?? 0) + 1 };
+    }
+    return undefined;
+  }
 
   const booking = book(sim, need, answer.stageId, from, answer.weekRateCents);
   const stage = sim.universe.stages[answer.stageId];

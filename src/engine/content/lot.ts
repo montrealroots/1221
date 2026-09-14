@@ -414,6 +414,95 @@ export const AROUND_THE_SHOOT: Record<Enquiry['kind'], { prep: number; strike: n
 export const MOST_OF_THE_SPEND = { local: 0.3, foreign: 0.18 } as const;
 
 /**
+ * How many people ring about a stage in a month, before anything is earned.
+ *
+ * One, and deliberately not many. A lot nobody has heard of, in a country with
+ * no business to speak of, does not have a queue — that was right when it was
+ * written and it is still right. What was wrong was that it was the whole
+ * model: the number never moved, so no action a player took could change the
+ * outcome, which by this project's own falsifiability test makes the axis a
+ * slot machine with prose on it.
+ *
+ * It is the floor now rather than the figure. What sits on top of it is two
+ * things the lot earns, and both of them are read off the save rather than
+ * stored: how many people there are in the country to crew a picture with, and
+ * how much of the last three years the rooms were let for.
+ */
+export const CALLS_A_MONTH = 1;
+
+/**
+ * How far the two things that earn a call can carry it.
+ *
+ * SLATE's own, and the ceiling matters more than the floor. Iceland draws on
+ * the order of a dozen foreign projects in a year, so a lot that has tripled
+ * its calls has taken most of what the country gets and there is nothing above
+ * that to buy. A model without a ceiling would let a player grind the number
+ * up forever, which is the same inert axis facing the other way.
+ */
+export const MOST_CALLS = 3;
+
+/**
+ * What a lot can spend a month telling people it exists, and what it buys.
+ *
+ * The overhead table has always carried a line called Selling It, at fifty
+ * thousand a month, and nobody chose it — it was a cost the lot paid the way it
+ * pays for insurance. It is the one thing on the whole axis an owner actually
+ * decides week to week, so it is a decision now: the standing figure is the
+ * floor, and anything above it is a bet on being in the conversation before a
+ * budget is locked rather than after.
+ *
+ * `most` is SLATE's own and is the point at which more money stops buying
+ * anything. Stage bookings come from a small world — the research puts the
+ * number of people who place them at a few hundred — and once you are known to
+ * all of them there is nobody left to tell.
+ */
+export const SELLING = {
+  /** What it costs before anybody decides anything. */
+  floor: 50_000_00,
+  /**
+   * Past this, more money buys nothing.
+   *
+   * Three times the standing line and SLATE's own. It is deliberately not a
+   * large number: a four-stage lot that spends more than this on being known
+   * is a lot spending more on the telling than it can earn from anybody it
+   * tells, and the research's own count of who places stage bookings — a few
+   * hundred people in the world — is the reason there is a ceiling at all.
+   */
+  most: 150_000_00,
+  /**
+   * How much of the calls the selling line can be worth, at the top.
+   *
+   * The rest comes from the crew in the country and what the rooms did, and it
+   * is deliberately not most of it: a lot that has never let a stage cannot buy
+   * its way to a full book, because the first thing anybody asks is who else
+   * has shot there.
+   */
+  worth: 0.6,
+  /**
+   * Months of spending the market takes to notice, and to forget.
+   *
+   * The research puts the sales cycle at three to twelve months, so this is
+   * read as an average across the window rather than as this month's figure —
+   * which means a player cannot buy a booking the month before they need one,
+   * and cannot stop paying without it showing up two quarters later.
+   */
+  remembers: 9,
+} as const;
+
+/**
+ * How much harder a fully sold lot is heard abroad than at home.
+ *
+ * SLATE's own, and the shape of it is the corpus's. Four in five projects
+ * claiming the Icelandic rebate are domestic and those producers know the
+ * stages are there whatever anybody spends; the foreign ones land at the film
+ * commission first and hear about a lot they were never told about after the
+ * budget is locked. At nothing spent the book is four fifths local, which is
+ * the national figure. At everything spent it is about half, which is what a
+ * lot that is actually being sold looks like.
+ */
+export const FOREIGN_REACH = 2;
+
+/**
  * How full it has to be to pay for itself, before any return on the money.
  *
  * No film commission or property research house publishes a break-even

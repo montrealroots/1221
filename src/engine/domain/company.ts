@@ -109,6 +109,27 @@ export interface Company {
    * reads against a smaller year, and the line comes to meet you.
    */
   familySaid?: string;
+  /**
+   * What the lot spends a month telling people it exists, where that has been
+   * decided.
+   *
+   * The overhead table's floor is what it costs to be sold at all. This is the
+   * part somebody chose, and it is the one decision on this axis that is taken
+   * again every month rather than once. Money only; what it buys is worked out
+   * from the ledger, because the market takes two quarters to notice a lot and
+   * two more to forget one, and a stored figure would let a player buy a
+   * booking the month before they needed it.
+   */
+  sellsFor?: Money;
+  /**
+   * How many enquiries went away again, by what sent them.
+   *
+   * Kept rather than worked out, because an enquiry that did not book leaves no
+   * trace anywhere else: the bookings table holds only the ones that said yes,
+   * which is the most flattering possible account of a stage business. It is
+   * also the only way to read what money spent on being known actually bought.
+   */
+  turnedAway?: Partial<Record<string, number>>;
 }
 
 // ---------------------------------------------------------------------------

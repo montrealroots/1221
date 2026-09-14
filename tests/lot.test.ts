@@ -22,12 +22,13 @@ import { quickSave, validateUniverse } from '@/engine';
 import type { Simulation } from '@/engine';
 import { MS_DAY } from '@/engine/core/time';
 import {
-  AROUND_THE_SHOOT, CREW_BASE, ENQUIRY_SHAPES, MONTHLY_OVERHEAD_CENTS, MOST_OF_THE_SPEND,
-  OVERHEAD, PATIENCE, RATE_SHARE, type Enquiry,
+  AROUND_THE_SHOOT, CREW_BASE, ENQUIRY_SHAPES, MONTHLY_OVERHEAD_CENTS, MOST_CALLS,
+  MOST_OF_THE_SPEND, OVERHEAD, PATIENCE, RATE_SHARE, SELLING, type Enquiry,
 } from '@/engine/content/lot';
 import { REBATE } from '@/engine/content/incorporation';
 import {
-  ISK_A_EURO, breakEvenShare, crewInTheCountry, heldFor, paidInSoFar, quotedFor, rungFor,
+  ISK_A_EURO, breakEvenShare, crewInTheCountry, familyCovers, heldFor, paidInSoFar, pullOn,
+  quotedFor, reachOf, rungFor, turnedAway,
   MS_WEEK, stagesOn, standingWith, tierFor, utilisation, whatTheFamilySays,
   whereTheLotStands, wholeHold,
   wouldBook,
@@ -224,22 +225,23 @@ describe('and somebody is paying for that', () => {
     // Past the line, a month the lot earned nothing is a month it funds itself,
     // and the company's cash goes under — which the greenlight door already
     // reads, so the consequence lands in machinery that was already there.
-    // Off the ledger and not off the notification, because the notification is
-    // the engine talking about itself. What has to be true is that in a month
-    // the lot took nothing, no money arrived.
-    let heldBack = 0;
-    for (let i = 0; i < 48; i += 1) {
-      const before = paidInSoFar(sim);
-      const month = utilisation(sim, sim.now, sim.now + 30 * MS_DAY);
-      sim.advanceTo(sim.now + 30 * MS_DAY);
-      if (standingWith(sim).conditional && month.earnsCents <= 0 && paidInSoFar(sim) === before) {
-        heldBack += 1;
-      }
-    }
-    expect(heldBack, 'the family wrote a blank check every month regardless').toBeGreaterThan(0);
-    const told = sim.universe.notifications.filter((one) => one.title.includes('Funds Itself'));
-    expect(told.length).toBeGreaterThan(0);
-    expect(told[0]!.body).toContain('money behind it');
+    // Asked of the function and not of a seed, because a busy lot rarely has a
+    // month it took nothing in — which is the mechanism working, and no way to
+    // test the mechanism. Off the ledger either way: what has to be true is
+    // that no money arrives, not that something was said about it.
+    const account = Object.values(sim.universe.accounts)
+      .find((one) => one.ownerId === lot!.ownerId && one.kind === 'company_cash')!;
+    account.balance = -500_000_00;
+
+    const before = paidInSoFar(sim);
+    expect(familyCovers(sim, account.id, 0), 'a month it earned nothing still got a check').toBe(0);
+    expect(paidInSoFar(sim)).toBe(before);
+    expect(account.balance).toBeLessThan(0);
+
+    // And the same month, with the lot having taken something.
+    expect(familyCovers(sim, account.id, 1_000_00)).toBeGreaterThan(0);
+    expect(paidInSoFar(sim)).toBeGreaterThan(before);
+    expect(account.balance).toBeGreaterThanOrEqual(0);
   });
 
   it('leaves a way back, because a dead end is not a decision', () => {
@@ -398,5 +400,121 @@ describe('the rebate is four tests and the country can fail one', () => {
       .toBe(REBATE.share);
     // Under the days, likewise.
     expect(tierFor(sim, { ...big, weeks: 1 }, from)).toBe(REBATE.share);
+  });
+});
+
+describe('how many people ring is something the lot earns', () => {
+  const tenYears = (seed: string, sell?: number): Simulation => {
+    const sim = quickSave({}, seed);
+    if (sell !== undefined) {
+      const done = sim.execute<{ ok: boolean }>({ kind: 'lot.sell', payload: { monthlyCents: sell } });
+      expect(done.value?.ok, 'the lot would not take a selling budget').toBe(true);
+    }
+    const from = sim.now;
+    for (let y = 1; y <= 10; y += 1) sim.advanceTo(from + y * 365 * MS_DAY);
+    return sim;
+  };
+
+  it('starts at one a month, which is what a lot nobody has heard of gets', () => {
+    const sim = quickSave({}, 'ring-cold');
+    const pull = pullOn(sim);
+    expect(pull.crew).toBe(1);
+    expect(pull.record).toBe(0);
+    expect(pull.reach).toBe(0);
+    expect(pull.calls).toBeCloseTo(1, 6);
+  });
+
+  it('never quite reaches nobody, because the film commission exists', () => {
+    // A production looking at Iceland finds the commission whether or not this
+    // lot bought a stand at a market. Spending nothing is being on a list.
+    const sim = quickSave({}, 'ring-floor');
+    expect(reachOf(sim)).toBe(0);
+    expect(pullOn(sim).calls).toBeGreaterThan(0);
+  });
+
+  it('is bounded, because the country only has so much work in it', () => {
+    // Iceland draws on the order of a dozen foreign projects a year. A lever
+    // a player could grind forever is the same fixed outcome facing the
+    // other way.
+    const sim = quickSave({}, 'ring-cap');
+    for (let i = 0; i < 4_000; i += 1) {
+      const one = Object.values(sim.universe.people)[0]!;
+      sim.universe.people[`extra-${i}`] = { ...one, id: `extra-${i}`, careerTrack: 'crew' };
+    }
+    expect(crewInTheCountry(sim)).toBeGreaterThan(CREW_BASE * 4);
+    expect(pullOn(sim).calls).toBeLessThanOrEqual(MOST_CALLS);
+  });
+
+  it('buys more calls when the lot is sold harder, and the money is real', () => {
+    const quiet = tenYears('ring-quiet', SELLING.floor);
+    const loud = tenYears('ring-loud', SELLING.most);
+    expect(reachOf(loud)).toBeGreaterThan(reachOf(quiet));
+    expect(pullOn(loud).calls).toBeGreaterThan(pullOn(quiet).calls * 1.3);
+
+    const jobs = (sim: Simulation): number => Object.values(sim.universe.bookings)
+      .filter((one) => one.kind === 'shooting').length;
+    expect(jobs(loud)).toBeGreaterThan(jobs(quiet));
+    // And it came out of the account, month after month, at the figure set.
+    const posted = loud.universe.transactions.filter((one) => one.memo.includes('Selling It'));
+    expect(posted.length).toBeGreaterThan(100);
+  });
+
+  it('cannot be bought the month before it is wanted, or dropped without cost', () => {
+    // Read back off the ledger across three quarters rather than off the
+    // figure somebody set, so the market takes as long to notice as it takes
+    // to forget.
+    const sim = quickSave({}, 'ring-lag');
+    sim.execute({ kind: 'lot.sell', payload: { monthlyCents: SELLING.most } });
+    const from = sim.now;
+    sim.advanceTo(from + 60 * MS_DAY);
+    const early = reachOf(sim);
+    sim.advanceTo(from + SELLING.remembers * 32 * MS_DAY);
+    expect(reachOf(sim), 'the whole of it arrived at once').toBeGreaterThan(early);
+    const full = reachOf(sim);
+
+    // Stop paying, and it is still there months later.
+    sim.execute({ kind: 'lot.sell', payload: { monthlyCents: SELLING.floor } });
+    sim.advanceTo(sim.now + 60 * MS_DAY);
+    expect(reachOf(sim)).toBeGreaterThan(0);
+    expect(reachOf(sim)).toBeLessThan(full);
+  });
+
+  it('refuses to be sold past the point anybody is listening', () => {
+    const sim = quickSave({}, 'ring-most');
+    const done = sim.execute<{ ok: boolean; error?: string }>({
+      kind: 'lot.sell', payload: { monthlyCents: SELLING.most * 4 },
+    });
+    expect(done.value?.ok).toBe(false);
+    expect(done.value?.error).toMatch(/nobody left to tell/);
+  });
+
+  it('says what the money bought, refusals and all', () => {
+    const loud = tenYears('ring-away', SELLING.most);
+    const quiet = tenYears('ring-away-quiet', SELLING.floor);
+    const by = (sim: Simulation, why: string): number =>
+      turnedAway(sim).find((one) => one.why === why)?.count ?? 0;
+    expect(turnedAway(loud).length, 'nothing was ever turned away').toBeGreaterThan(0);
+    expect(by(loud, 'rebate')).toBeGreaterThan(by(quiet, 'rebate'));
+    for (const one of turnedAway(loud)) expect(one.said.length).toBeGreaterThan(20);
+
+    // And it bought different calls, not only more of them. A desk in Los
+    // Angeles is what the money reaches; a producer in Reykjavik knows the
+    // stages are there whatever anybody spends. Read off who actually booked,
+    // because a share that did not move would mean the money bought volume and
+    // nothing else — which is a multiplier, not a demand model.
+    const abroad = new Set(ENQUIRY_SHAPES.filter((one) => !one.of.local).map((one) => one.of.from));
+    const share = (sim: Simulation): number => {
+      const jobs = Object.values(sim.universe.bookings).filter((one) => one.kind === 'shooting');
+      const foreign = jobs.filter((one) => [...abroad].some((who) => one.holder.startsWith(who)));
+      return jobs.length > 0 ? foreign.length / jobs.length : 0;
+    };
+    expect(share(loud), 'the money bought more of exactly the same calls')
+      .toBeGreaterThan(share(quiet) + 0.05);
+  });
+
+  it('keeps the books straight through all of that', () => {
+    const sim = tenYears('ring-sound', SELLING.most);
+    expect(validateUniverse(sim.universe).errors).toEqual([]);
+    expect(sim.ledger.audit()).toEqual([]);
   });
 });

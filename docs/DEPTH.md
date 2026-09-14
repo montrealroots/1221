@@ -200,13 +200,23 @@ That is defensible — the split describes what the receipts did, not what is
 owed today — but it understates a long-dead picture's debt. Fixing it means
 passing the current instant in and giving up the purity several tests rely on.
 
-**Enquiry volume is hardcoded at one a month and responds to nothing.** What
-the lot does is pinned now by `tests/lot.test.ts`, what it costs the family is
-something the family reacts to, and what a production weighs is a real decision
-— but how many of them ring is still a constant. That is the last piece on this
-axis and it is now safe to build, which it was not before: the funnel used to
-take 83 of every 100 enquiries, so more calls would have turned a lot that
-loses money forever into one that prints it forever. It takes 35 now.
+**The lot's axis is finished and its answer is that the lot cannot be made to
+pay.** How many people ring is earned now — off the crew in the country, off
+what the rooms did over three years, and off what the lot spends being known —
+and a player who sells it hard runs at 30/100 of a full month against a
+break-even of 62. That is the ceiling, and it is not a tuning failure. Break
+even needs the two big rooms let, only the handful of foreign features Iceland
+gets in a year can fill them, and winning all of them is winning a dozen
+projects. The research says the same thing about real lots: a stage business
+at 65% occupancy yields three or four per cent on what it cost to build against
+a required yield of six and a half, so the asset is worth less than the build
+on the day it opens. Studio lots are justified by trading income, by the land,
+and by an owner who wants the capacity — which is this family exactly, and is
+the frame the game should put it in.
+
+What is left on it is a decision rather than a defect: whether the player can
+build a small stage. Four rooms and the smallest is bigger than four of the ten
+enquiry shapes need, which is most of why it is empty.
 
 **The lot has no small stage, and that is most of why it is empty.** Four rooms
 and the smallest is bigger than four of the ten enquiry shapes need. The
@@ -572,6 +582,18 @@ fixed by widening what already existed rather than by adding a second
 mechanism — the same weekly tick, re-running the same periods, gated on the same
 cutting room. Two things moving the same parts is the bug this file already
 warns about.
+
+**A lever that is always wrong is as inert as a constant.** The first draft of
+the selling line bought more calls and lost money at every level: the extra
+attention arrived from abroad, and most of what arrives from abroad fails the
+rebate's own tier test, so the money bought refusals. It was truthful and it was
+a trap — a player learns once never to touch it and the term is a constant
+again. What fixed it was not a bigger multiplier but the corpus's own point:
+what a desk in Los Angeles buys is not more calls from RÚV. Money moves the
+*mix* and not only the count, and the same spend that used to lose twelve
+million across a decade now saves five. The waste is still there and is on the
+screen, because a lever whose cost is hidden is the same trap facing the other
+way.
 
 **A rate card nothing reads is a price list, not a price.** `wouldBook` computed
 what the room cost on its third line and then never mentioned it again: the
