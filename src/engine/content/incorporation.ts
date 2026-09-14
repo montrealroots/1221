@@ -144,7 +144,7 @@ export const REGISTRIES: readonly RegistryFacts[] = [
     id: 'us_ein', jurisdiction: 'us',
     body: 'Internal Revenue Service', label: 'The Employer Number',
     what: 'A federal Employer Identification Number for the American arm. Free, and the thing '
-      + 'every American counterparty asks for before they will send money.',
+      + 'every American counterparty asks for before they’ll send money.',
     why: 'No American bank account, payroll or guild deposit without one.',
     cost: 0, required: false, filesEveryMonths: 12,
   },
@@ -241,8 +241,8 @@ export const GUILDS: readonly GuildFacts[] = [
     body: 'SAG-AFTRA', label: 'The Screen Actors Guild',
     covers: 'Actors',
     what: 'You don’t join as a producer — you sign a specific agreement and become bound by it. '
-      + 'There is a ladder of them by budget, from the ultra low budget agreement up to the basic '
-      + 'theatrical, and which rung you are on decides the minimums and the conditions.',
+      + 'There’s a ladder of them by budget, from the ultra low budget agreement up to the basic '
+      + 'theatrical, and which rung you’re on decides the minimums and the conditions.',
     binds: 'Minimums, pension and health contributions on every salary, and residuals for as long as '
       + 'the picture is used. That means for the life of the copyright.',
     depositCents: cents(25_000), agreement: 'Low Budget Agreement', signable: true,
@@ -366,8 +366,8 @@ export const POLICIES: readonly PolicyFacts[] = [
   },
   {
     id: 'business_interruption', label: 'Business Interruption',
-    what: 'What the lot would have earned in the months it could not be used.',
-    why: 'A burnt stage costs twice: once to rebuild and once in every booking that could not happen.',
+    what: 'What the lot would have earned in the months it couldn’t be used.',
+    why: 'A burnt stage costs twice: once to rebuild and once in every booking that couldn’t happen.',
     limitCents: cents(10_000_000), premiumCents: cents(18_000), standing: true,
   },
 ];

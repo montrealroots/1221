@@ -277,7 +277,7 @@ export const SAFEGUARDS: readonly Safeguard[] = [
       + 'this new was designed in, not added afterwards. There’s a room inside with its own '
       + 'door, its own line out and its own air, and in the ordinary run of things nobody in the '
       + 'family thinks about it from one year to the next.',
-      'It is the layer that should never be reached, and the family built it on the principle that '
+      'It’s the layer that should never be reached, and the family built it on the principle that '
       + 'the layer you never need is the one worth paying for.',
     ],
     figures: [
@@ -293,10 +293,10 @@ export const SAFEGUARDS: readonly Safeguard[] = [
     covers: 'lot',
     summary: 'The stages sit inside the same line the house does, so nothing shooting here can be photographed from outside it.',
     detail: [
-      'A production on this lot is behind the same perimeter the family sleeps behind. There is no '
+      'A production on this lot is behind the same perimeter the family sleeps behind. There’s no '
       + 'long lens on a public road, no drone that gets near, and no crew car parked where anybody '
       + 'can read a call sheet through a windscreen.',
-      'Every person who works a day here is vetted before they arrive and badged while they are on it. '
+      'Every person who works a day here is vetted before they arrive and badged while they’re on it. '
       + 'For a business whose whole currency is what nobody has seen yet, that’s worth more than any '
       + 'of the fence.',
     ],

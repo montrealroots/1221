@@ -313,6 +313,23 @@ export interface Project {
 
   /** How it is being made, by plan id. Set at the greenlight and not before. */
   planId?: string;
+  /**
+   * Which ladder set its maturity is measured against, from the plan.
+   *
+   * Stored rather than looked up through the plan every time, because a plan's
+   * ladders could be revised and a picture already in flight should keep
+   * being measured against the ladder it was started on.
+   */
+  ladders?: string;
+  /**
+   * How far each dimension has come, by rung id. Absent means the bottom.
+   *
+   * Six strings, and every figure anybody reads about progress is recomputed
+   * from them. There is deliberately no percentage stored anywhere: "how far
+   * along is this" is a question with six answers whose minimum is the only
+   * honest single one.
+   */
+  maturity?: Partial<Record<string, string>>;
   /** The city the unit works out of. */
   unitBaseId?: string;
   /**

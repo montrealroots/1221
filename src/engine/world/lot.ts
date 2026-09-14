@@ -416,7 +416,7 @@ export function wouldBook(sim: Simulation, need: Enquiry, from: Instant): Answer
   if (!room) {
     const anyRoom = stagesOn(sim).some((st) => st.floorSqm >= need.needsSqm && st.clearHeightM >= need.needsHeightM);
     return {
-      because: anyRoom ? 'Every stage that would hold it is already booked.' : 'Nothing here is the right size for it.',
+      because: anyRoom ? 'Every stage that would hold it’s already booked.' : 'Nothing here is the right size for it.',
       weekRateCents: 0,
     };
   }

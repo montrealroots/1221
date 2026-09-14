@@ -288,7 +288,7 @@ function sentenceFor(key: FigureKey, value: number): string {
             : `${said}. People are fond of you. That’s the hardest of these to buy and the easiest to spend.`;
     case 'professionalReputation':
       return n < 5 ? `${said}. There’s no body of work for anybody in the business to have an opinion about.`
-        : n < 30 ? `${said}. A handful of people who’ve worked with you would vouch for you.`
+        : n < 30 ? `${said}. A handful of people who’ve worked with you’d vouch for you.`
           : n < 65 ? `${said}. Casting knows the name, and knows it’s safe.`
             : `${said}. The work speaks before you do.`;
     case 'reliability':

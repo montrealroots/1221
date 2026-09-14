@@ -223,7 +223,7 @@ export function capabilitiesOf(sim: Simulation): Capability[] {
       ]),
 
     of('own_material', 'Have Something To Make',
-      'Hold the rights to a story, so there is something for all of this to be for.',
+      'Hold the rights to a story, so there’s something for all of this to be for.',
       'A production company with no material is an address and a bank account.',
       [material.length > 0 ? undefined : {
         need: 'Anything At All',
@@ -584,7 +584,7 @@ export function registerCompanyCommands(sim: Simulation): void {
       category: 'personal',
       title: `${arm.legalName} Exists`,
       body: 'An American company, wholly owned by the Icelandic one. It has no staff, no money and no '
-        + 'address anybody works at — and it is the only thing that can sign with an American guild.',
+        + 'address anybody works at — and it’s the only thing that can sign with an American guild.',
       importance: 55,
     });
     return { ok: true, id: arm.id };

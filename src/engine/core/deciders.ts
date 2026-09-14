@@ -112,7 +112,7 @@ export function sweepOne<Input, Outcome>(
   const samples = opts.samples ?? 6;
   const steps = opts.steps ?? 7;
   const across = decider.reads[reads];
-  if (!across) throw new Error(`'${decider.id}' does not say it reads '${reads}'.`);
+  if (!across) throw new Error(`'${decider.id}' doesn’t say it reads '${reads}'.`);
   const shape = decider.shape ?? ((o: Outcome) => JSON.stringify(o));
   const seen = new Set<string>();
   for (let s = 0; s < samples; s += 1) {

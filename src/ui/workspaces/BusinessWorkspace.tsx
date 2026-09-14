@@ -44,7 +44,7 @@ export function BusinessWorkspace() {
     return (
       <Empty
         title="There Is No Company"
-        body="This save was made before the family formed one, so there is nothing here to run."
+        body="This save was made before the family formed one, so there’s nothing here to run."
       />
     );
   }

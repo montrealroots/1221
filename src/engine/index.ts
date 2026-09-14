@@ -313,7 +313,7 @@ export function migrate(universe: SaveUniverse): MigrationResult {
   record('households', 'the households');
   record('bonds', 'the bonds between people');
   record('companies', 'the family business');
-  record('registrations', 'the registers it is on');
+  record('registrations', 'the registers it’s on');
   record('signatures', 'the guilds it has signed with');
   record('policies', 'the cover it carries');
   record('holdings', 'the material it holds');
@@ -616,7 +616,7 @@ export function validateUniverse(universe: SaveUniverse): ValidationReport {
   for (const company of companies) {
     const total = company.ownerships.reduce((sum, one) => sum + one.percent, 0);
     if (company.ownerships.length > 0 && total !== 100) {
-      errors.push(`${company.name} is ${total}% owned, which is not how owning something works.`);
+      errors.push(`${company.name} is ${total}% owned, which isn’t how owning something works.`);
     }
     for (const owner of company.ownerships) {
       const known = owner.holderKind === 'person' ? universe.people[owner.holderId] : universe.companies[owner.holderId];

@@ -184,7 +184,7 @@ export const GROUP = {
   /** Turnover, in cents. SLATE's own. */
   revenueCents: 1_400_000_000_00,
   remit: 'Cane sugar, grown and milled abroad and sold into Europe and America.',
-  said: 'Large in sugar, and first in the part of it that is organic.',
+  said: 'Large in sugar, and first in the part of it that’s organic.',
 } as const;
 
 /**
@@ -211,7 +211,7 @@ export const GROUP_PROFIT_CENTS: Money = Math.round(GROUP.revenueCents * GROUP_M
  * that a sugar business has to keep explaining.
  */
 export const LOT_AS_A_SHARE_NOTE =
-  'The lot is not going to bankrupt anybody. It is going to sit on the group’s accounts, every year, '
+  'The lot isn’t going to bankrupt anybody. It’s going to sit on the group’s accounts, every year, '
   + 'as a number somebody has to justify.';
 
 // ---------------------------------------------------------------------------

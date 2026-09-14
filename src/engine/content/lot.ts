@@ -230,7 +230,7 @@ export const STAGES: readonly StageFacts[] = [
     weekRateCents: 82_000_00,
     fitted: ['tank', 'dive_well', 'geothermal_floor', 'silent_hvac'],
     tankSqm: 2_400,
-    said: 'Most of the floor is water, and it is heated because the country heats things.',
+    said: 'Most of the floor is water, and it’s heated because the country heats things.',
   },
   {
     id: 'stage-3',

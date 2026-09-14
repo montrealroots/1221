@@ -700,7 +700,7 @@ defineLook<Roled>('role', {
               value={facts.monthlyCents === 0 ? 'Nothing' : moneyOf(facts.monthlyCents)}
               note={facts.monthlyCents === 0 ? 'Whoever owns it does it' : 'Whether anything shoots or not'}
             />
-            <Stat label="Where" value="Sugar Land" note="There is nowhere else" />
+            <Stat label="Where" value="Sugar Land" note="There’s nowhere else" />
           </div>
         </>
       ),

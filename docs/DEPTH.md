@@ -234,7 +234,7 @@ fixed.
 | --- | --- |
 | Periods that run alongside each other, not only after | **Fixed.** `Period.runsWith` |
 | A clock anchored at the delivery date, not the start | **Fixed.** `Plan.anchor` |
-| "Done" as the minimum of a maturity vector, not one stage | Open |
+| "Done" as the minimum of a maturity vector, not one stage | **Fixed.** `Project.maturity` |
 | A season as N timelines at different maturities | Open |
 
 The first two were the scheduler being a live-action scheduler wearing a
@@ -246,23 +246,38 @@ transmission date agreed against a format document before anybody knows what
 the content is, and the work is fitted backward into the room in front of it.
 Those are opposite clocks and the engine only had one.
 
-The two still open are the bigger ones, and they are the next work:
+The third is fixed too, and it was the one the season could not fake. A picture
+carries six dimensions now — picture, sound, performance, rights, compliance,
+conform — each on a ladder the plan names, and `doneShare` takes the **minimum**
+across them. Not the average, which would call a finished uncleared episode five
+sixths done. A season that is locked, mixed, complete, compliant and accepted
+reads 0/100 the moment one contributor withdraws consent, and that is the honest
+number: it is worth nothing until somebody signs.
 
-- **Progress is stored rather than derived, and is not runtime-weighted.** The
-  research is emphatic that "how far along is this" is never a field: it is
-  recomputed from the timeline, the maturity of its segments, the inventory
-  ledger and the rate table. The native measure is seconds of target runtime,
-  and pages, shots, days and cut-minutes are display conversions into it. A
-  picture in SLATE has no runtime at all.
-- **`stage` is one field where "done" should be the minimum across picture,
-  sound, performance, rights, compliance and conform.** An act that is
-  beautifully cut and legally uncleared is zero per cent done, and the
-  unscripted season is the kind where that is unavoidable rather than
-  postponable — a withdrawn consent can destroy a finished act at week
-  nineteen. Today the season has to map both its cut and its compliance period
-  onto the single stage `post`, which is the compromise showing.
-- **A season is eight timelines**, not one, sharing an asset library and
-  running against a weekly transmission. `Project` holds one set of periods.
+The ladders are data and they differ by form. A picture's cut goes shot,
+assembled, cut, locked, graded. A season's goes stringout, paper cut, assembly,
+producer's cut, executive's cut, broadcaster's cut, locked — longer, because on
+that form the notes are the work and every rung is a person who can send it back
+down.
+
+It also surfaced something the single `stage` field had been hiding: no period in
+the feature plan advances compliance at all. That is not an oversight. On a
+picture the legal work *is* the delivery list — filing the chain of title is what
+clears the rights, and the errors and omissions certificate is what gets it
+through review — where on a season compliance is a live period running alongside
+the cut. Both are now expressible, and `nobodysJob` will name any dimension a
+plan never moves.
+
+One still open, and it is the biggest:
+
+- **A season is eight timelines**, not one, sharing an asset library and running
+  against a weekly transmission. `Project` holds one set of periods and one
+  maturity vector, so the season currently matures as a single lump rather than
+  as eight episodes at eight different rungs. This is also where the last piece
+  of the progress model lands: the research wants progress derived from a
+  timeline measured in **seconds of target runtime**, with pages, shots, days
+  and cut-minutes as display conversions into it, and a picture in SLATE still
+  has no runtime at all. Those two are one job, not two.
 
 **1. The Title. Done.** A picture with a dated life — prep, shoot, post,
 delivered — a unit base city, a budget, and a schedule made of ordinary

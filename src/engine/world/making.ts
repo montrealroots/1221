@@ -42,6 +42,8 @@ import {
 } from '../content/making';
 import { LOT_NAME } from '../content/estate';
 import { MS_WEEK, bookingsFor, rateFor, stagesOn, theLot } from './lot';
+import { advance, holdingItUp, isFinished } from './maturity';
+import { DIMENSIONS, dimensionById } from '../content/maturity';
 import { armTheCrew } from './crew';
 import { capabilitiesOf } from './company';
 
@@ -359,6 +361,7 @@ export function greenlight(sim: Simulation, spec: Greenlight): { ok: true; proje
   }
 
   project.planId = plan.id;
+  project.ladders = plan.ladders;
   project.budgetCents = spec.budgetCents;
   project.stage = 'greenlit';
   project.unitBaseId = theLot(sim)?.locationId;
@@ -511,7 +514,15 @@ function settlePeriod(sim: Simulation, project: Project, period: Period): void {
     project.spentCents += owed;
   }
   for (const element of elementsAfter(period.id, 'production')) {
-    if (!project.delivered.includes(element.id)) project.delivered.push(element.id);
+    if (project.delivered.includes(element.id)) continue;
+    project.delivered.push(element.id);
+    if (element.moves) advance(project, element.moves.dimension, element.moves.to);
+  }
+  // And whatever finishing it moves up its ladder. A period that advances
+  // nothing is a period that made no difference to how finished the thing is,
+  // which is a real thing a period can be.
+  for (const [dimension, rung] of Object.entries(period.advances ?? {})) {
+    advance(project, dimension as never, rung as string);
   }
 }
 
@@ -659,6 +670,7 @@ export function handOver(sim: Simulation, projectId: Id, elementId: string): { o
     };
   }
   project.delivered.push(element.id);
+  if (element.moves) advance(project, element.moves.dimension, element.moves.to);
   settleDelivery(sim, project);
   return { ok: true };
 }
@@ -672,6 +684,11 @@ export function handOver(sim: Simulation, projectId: Id, elementId: string): { o
  */
 export function settleDelivery(sim: Simulation, project: Project): boolean {
   if (heldUpBy(project).length > 0) return false;
+  // The contractual list being complete is not the same as the work being
+  // finished, and this is the order they actually bite in: a picture whose
+  // elements are all filed but whose rights are not cleared has handed over a
+  // box of things it does not own.
+  if (!isFinished(project)) return false;
   if (project.stage === 'delivered') return true;
 
   project.stage = 'delivered';
@@ -721,6 +738,19 @@ export function registerMaking(sim: Simulation): void {
     if (!project || project.shelvedAt) return;
     if (settleDelivery(sim, project)) return;
     const waiting = heldUpBy(project);
+    const short = holdingItUp(project);
+    if (waiting.length === 0 && short.length > 0) {
+      sim.notify({
+        category: 'business',
+        title: `${project.title} Is Due And Isn’t Finished`,
+        body: `Every element on the list is filed and the work isn’t done. `
+          + `${spokenDimensions(short)} still short of where it has to be.`,
+        importance: 75,
+        refType: 'project',
+        refId: project.id,
+      });
+      return;
+    }
     sim.notify({
       category: 'business',
       title: `${project.title} Is Due And Isn’t Delivered`,
@@ -769,3 +799,19 @@ export function whereThePictureStands(sim: Simulation, project: Project): string
 
 /** The lot's name, where a picture needs to say where it is being made. */
 export const MADE_AT = LOT_NAME;
+
+/** The dimensions falling short, named the way a person would say them. */
+function spokenDimensions(ids: readonly string[]): string {
+  const names = ids.map((id) => dimensionById(id)?.label.toLowerCase() ?? id);
+  if (names.length === 1) return `${names[0]![0]!.toUpperCase()}${names[0]!.slice(1)} is`;
+  const last = names[names.length - 1]!;
+  const rest = names.slice(0, -1).join(', ');
+  const said = `${rest} and ${last}`;
+  return `${said[0]!.toUpperCase()}${said.slice(1)} are`;
+}
+
+/** Every dimension a plan never moves, which is what somebody has to do by hand. */
+export function nobodysJob(plan: Plan): string[] {
+  const moved = new Set(plan.periods.flatMap((p) => Object.keys(p.advances ?? {})));
+  return DIMENSIONS.map((d) => d.id).filter((id) => !moved.has(id));
+}

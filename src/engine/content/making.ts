@@ -41,6 +41,7 @@
 
 import type { BookingKind } from '../domain/model';
 import type { Stage } from '../domain/company';
+import type { DimensionId } from './maturity';
 
 // ---------------------------------------------------------------------------
 // A period
@@ -88,6 +89,16 @@ export interface Period {
   /** The share of the budget that goes out across it. The shares sum to 1. */
   spends: number;
   /**
+   * What finishing this period moves, and to which rung.
+   *
+   * The join between the calendar and the maturity vector. A period ending is
+   * the event that advances a dimension, which is why a picture that has
+   * finished post is not automatically deliverable: post moves picture, sound
+   * and conform, and it does not touch rights or compliance at all. Those are
+   * somebody else's job and they are the ones that hold a finished thing up.
+   */
+  advances?: Partial<Record<DimensionId, string>>;
+  /**
    * What a week of this period produces, counted the way the people in it
    * count it.
    *
@@ -116,6 +127,8 @@ export interface Plan {
    * is not.
    */
   deliveryWeeks: number;
+  /** Which ladder set its maturity is measured against. */
+  ladders: string;
   /**
    * Which end of the schedule is nailed down.
    *
@@ -150,6 +163,7 @@ const FEATURE: Plan = {
   media: ['film'],
   deliveryWeeks: 6,
   anchor: 'start',
+  ladders: 'picture',
   periods: [
     {
       id: 'prep',
@@ -159,16 +173,18 @@ const FEATURE: Plan = {
       per: 0.85,
       holds: 'prep',
       spends: 0.2,
+      advances: { rights: 'optioned' },
       unit: { one: 'week of prep', many: 'weeks of prep', aWeek: 1 },
     },
     {
       id: 'shooting',
       stage: 'shooting',
       label: 'Principal Photography',
-      what: 'The shoot. The most expensive weeks of the picture, and the ones that cannot be done again cheaply.',
+      what: 'The shoot. The most expensive weeks of the picture, and the ones that can’t be done again cheaply.',
       per: 1,
       holds: 'shooting',
       spends: 0.5,
+      advances: { picture: 'shot', performance: 'captured' },
       unit: { one: 'shooting day', many: 'shooting days', aWeek: 5 },
     },
     {
@@ -178,6 +194,7 @@ const FEATURE: Plan = {
       what: 'Cut, then sound, then color. Longer than the shoot and quieter, and where a picture is actually decided.',
       per: 2.4,
       spends: 0.3,
+      advances: { picture: 'graded', sound: 'mixed', performance: 'complete', conform: 'mastered' },
       unit: { one: 'week of post', many: 'weeks of post', aWeek: 1 },
     },
   ],
@@ -198,6 +215,7 @@ const SERIES: Plan = {
   media: ['television'],
   deliveryWeeks: 4,
   anchor: 'start',
+  ladders: 'picture',
   periods: [
     {
       id: 'prep',
@@ -207,6 +225,7 @@ const SERIES: Plan = {
       per: 0.5,
       holds: 'prep',
       spends: 0.14,
+      advances: { rights: 'optioned' },
       unit: { one: 'week of prep', many: 'weeks of prep', aWeek: 1 },
     },
     {
@@ -217,6 +236,7 @@ const SERIES: Plan = {
       per: 1,
       holds: 'shooting',
       spends: 0.58,
+      advances: { picture: 'shot', performance: 'captured' },
       unit: { one: 'shooting day', many: 'shooting days', aWeek: 5 },
     },
     {
@@ -226,6 +246,7 @@ const SERIES: Plan = {
       what: 'What is left after wrap, which is less than a feature because most of it was already done.',
       per: 0.8,
       spends: 0.28,
+      advances: { picture: 'graded', sound: 'mixed', performance: 'complete', conform: 'mastered' },
       unit: { one: 'week of finishing', many: 'weeks of finishing', aWeek: 1 },
     },
   ],
@@ -276,14 +297,16 @@ const UNSCRIPTED: Plan = {
   media: ['television'],
   deliveryWeeks: 2,
   anchor: 'delivery',
+  ladders: 'season',
   periods: [
     {
       id: 'casting',
       stage: 'prep',
       label: 'The Cast Board',
-      what: 'Choosing twelve people. That is the same act as choosing every story the season can contain, and it cannot be undone later.',
+      what: 'Choosing twelve people. That’s the same act as choosing every story the season can contain, and it can’t be undone later.',
       per: 1.5,
       spends: 0.12,
+      advances: { rights: 'optioned' },
       unit: { one: 'contributor seen', many: 'contributors seen', aWeek: 40 },
     },
     {
@@ -305,6 +328,7 @@ const UNSCRIPTED: Plan = {
       per: 1,
       holds: 'shooting',
       spends: 0.42,
+      advances: { picture: 'stringout', performance: 'captured' },
       unit: { one: 'contributor-day', many: 'contributor-days', aWeek: 7 },
     },
     {
@@ -315,6 +339,7 @@ const UNSCRIPTED: Plan = {
       per: 3,
       runsWith: 'field',
       spends: 0.24,
+      advances: { picture: 'locked', sound: 'mixed', performance: 'complete', conform: 'mastered' },
       unit: { one: 'cut minute', many: 'cut minutes', aWeek: 15 },
     },
     {
@@ -325,6 +350,7 @@ const UNSCRIPTED: Plan = {
       per: 2.5,
       runsWith: 'post',
       spends: 0.04,
+      advances: { rights: 'cleared', compliance: 'passed' },
       unit: { one: 'clearance', many: 'clearances', aWeek: 6 },
     },
   ],
@@ -360,6 +386,16 @@ export interface Element {
   after: string;
   /** Whether the money is withheld until it is in. */
   holdsPayment: boolean;
+  /**
+   * What handing it over moves, and to which rung.
+   *
+   * On a picture there is no compliance period and no rights period — the
+   * legal work *is* this list. Filing the chain of title is what clears the
+   * rights; the errors and omissions certificate is what gets it through
+   * review. On a season those are a real period running alongside the cut
+   * instead, which is why the join lives on both and neither is redundant.
+   */
+  moves?: { dimension: DimensionId; to: string };
 }
 
 /**
@@ -414,11 +450,12 @@ export const DELIVERY: readonly Element[] = [
     by: 'production',
     after: 'post',
     holdsPayment: true,
+    moves: { dimension: 'conform', to: 'accepted' },
   },
   {
     id: 'stills',
     label: 'Stills And Key Art',
-    what: 'What the picture is sold with. Shot during the shoot by a unit photographer, because there is no shooting it afterward.',
+    what: 'What the picture is sold with. Shot during the shoot by a unit photographer, because there’s no shooting it afterward.',
     by: 'production',
     after: 'shooting',
     holdsPayment: false,
@@ -430,6 +467,7 @@ export const DELIVERY: readonly Element[] = [
     by: 'business',
     after: 'prep',
     holdsPayment: true,
+    moves: { dimension: 'rights', to: 'cleared' },
   },
   {
     id: 'eo',
@@ -438,11 +476,12 @@ export const DELIVERY: readonly Element[] = [
     by: 'business',
     after: 'prep',
     holdsPayment: true,
+    moves: { dimension: 'compliance', to: 'reviewed' },
   },
   {
     id: 'cues',
     label: 'The Music Cue Sheet',
-    what: 'Every piece of music, timed to the frame, with who wrote it and who publishes it. It is how composers get paid, and it is forgotten constantly.',
+    what: 'Every piece of music, timed to the frame, with who wrote it and who publishes it. It’s how composers get paid, and it’s forgotten constantly.',
     by: 'business',
     after: 'post',
     holdsPayment: true,
@@ -450,10 +489,11 @@ export const DELIVERY: readonly Element[] = [
   {
     id: 'credits',
     label: 'The Credit Obligations List',
-    what: 'Every credit anybody is contractually owed, in the size and order they are owed it. Getting one wrong is a breach with a number attached.',
+    what: 'Every credit anybody is contractually owed, in the size and order they’re owed it. Getting one wrong is a breach with a number attached.',
     by: 'business',
     after: 'post',
     holdsPayment: true,
+    moves: { dimension: 'compliance', to: 'passed' },
   },
 ];
 

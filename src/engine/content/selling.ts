@@ -59,7 +59,7 @@ export const TIERS: readonly Tier[] = [
   {
     id: 'marketing',
     label: 'What Was Spent Selling It',
-    what: 'The prints and advertising, repaid in full ahead of the money that made the picture. It is the tier people forget, and it is usually the one that sinks them.',
+    what: 'The prints and advertising, repaid in full ahead of the money that made the picture. It’s the tier people forget, and it’s usually the one that sinks them.',
   },
   {
     id: 'negative',
@@ -137,7 +137,7 @@ export const DEALS: readonly Deal[] = [
     id: 'agent',
     label: 'A Sales Agent',
     what: 'Territory by territory, sold off a market stand, with the agent taking a commission and charging the market costs back.',
-    said: 'Slower and smaller, and the company keeps nearly all of what survives. You will be reading statements for years.',
+    said: 'Slower and smaller, and the company keeps nearly all of what survives. You’ll be reading statements for years.',
     fee: 0.2,
     spendsOnSelling: 0.15,
     upFront: 0,
