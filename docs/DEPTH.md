@@ -201,9 +201,21 @@ owed today — but it understates a long-dead picture's debt. Fixing it means
 passing the current instant in and giving up the purity several tests rely on.
 
 **Enquiry volume is hardcoded at one a month and responds to nothing.** What
-the lot does is pinned now by `tests/lot.test.ts`, and what it costs the family
-is something the family reacts to — but who rings, and how often, is still a
-constant. That half is the next piece of work on this axis.
+the lot does is pinned now by `tests/lot.test.ts`, what it costs the family is
+something the family reacts to, and what a production weighs is a real decision
+— but how many of them ring is still a constant. That is the last piece on this
+axis and it is now safe to build, which it was not before: the funnel used to
+take 83 of every 100 enquiries, so more calls would have turned a lot that
+loses money forever into one that prints it forever. It takes 35 now.
+
+**The lot has no small stage, and that is most of why it is empty.** Four rooms
+and the smallest is bigger than four of the ten enquiry shapes need. The
+ordinary Icelandic commercial and the ordinary Icelandic documentary — 40 of the
+101 weight between them — are turned away because the only room that will hold
+them costs well over half of everything they were going to spend in the country.
+Nobody designed that; it fell out of pricing the whole hold against the budget.
+It is also the research's own warning about phase one, arriving from the other
+direction, and the obvious lever for a player: build a small one.
 
 The order mattered and was nearly got wrong. Making demand respond to the world
 first would have produced a better-looking lot and an equally inert one, because
@@ -560,6 +572,15 @@ fixed by widening what already existed rather than by adding a second
 mechanism — the same weekly tick, re-running the same periods, gated on the same
 cutting room. Two things moving the same parts is the bug this file already
 warns about.
+
+**A rate card nothing reads is a price list, not a price.** `wouldBook` computed
+what the room cost on its third line and then never mentioned it again: the
+decision was size, then availability, then the rebate, so every stage on the lot
+could have been priced at anything and exactly the same productions would have
+booked. Two thirds of `RATE_SHARE` had the same problem — prep and hold rates,
+declared, commented, and never asked for, because all three call sites passed
+`'shooting'`. A number that is never compared against anything is decoration
+however carefully it was derived.
 
 **A correct figure nobody acts on is the same fault as a wrong one.**
 `paidInAsShareOfAYear` was written, commented, tested, and read by no screen and

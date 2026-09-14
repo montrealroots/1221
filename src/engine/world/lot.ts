@@ -19,8 +19,9 @@ import type { Instant } from '../core/time';
 import type { Money } from '../core/money';
 import { MS_DAY, instantFromZoned, zonedParts } from '../core/time';
 import {
-  BUILD_COST_CENTS, CREW_PENALTY, LOT_FLOOR_SQM, MONTHLY_OVERHEAD_CENTS, OVERHEAD, PATIENCE,
-  RATE_SHARE, SHUT_YEAR_BITE, type Rung,
+  AROUND_THE_SHOOT, BUILD_COST_CENTS, CREW_BASE, CREW_PENALTY, LOT_FLOOR_SQM,
+  MONTHLY_OVERHEAD_CENTS, MOST_OF_THE_SPEND, OVERHEAD, PATIENCE, RATE_SHARE, SHUT_YEAR_BITE,
+  type Rung,
   ENQUIRY_SHAPES, STAGES, type Enquiry,
 } from '../content/lot';
 import { REBATE } from '../content/incorporation';
@@ -511,6 +512,30 @@ export interface Answer {
  * one rule is why Askja is quiet and Stage 3 is busy, and it falls out of the
  * sizes rather than being decided anywhere.
  */
+/**
+ * The weeks either side of the shoot that the stage is also held for.
+ *
+ * A booking is not the shoot. A feature builds a set for weeks before a camera
+ * turns over and takes days to get it out again, and the room is unavailable
+ * and earning the whole time. Counting only the shooting weeks understated what
+ * a stage is occupied for by most of a half and understated what it earns by
+ * about as much — on the same deals the engine was already writing.
+ */
+export function heldFor(need: Enquiry): { prep: number; shoot: number; strike: number } {
+  const around = AROUND_THE_SHOOT[need.kind];
+  return {
+    prep: Math.max(around.prep > 0 ? 1 : 0, Math.round(need.weeks * around.prep)),
+    shoot: need.weeks,
+    strike: Math.max(around.strike > 0 ? 1 : 0, Math.round(need.weeks * around.strike)),
+  };
+}
+
+/** Every week the room is gone for, prep and strike included. */
+export const wholeHold = (need: Enquiry): number => {
+  const held = heldFor(need);
+  return held.prep + held.shoot + held.strike;
+};
+
 export function fitsOn(sim: Simulation, need: Enquiry, from: Instant, to: Instant): SoundStage[] {
   return stagesOn(sim)
     .filter((stage) => stage.floorSqm >= need.needsSqm && stage.clearHeightM >= need.needsHeightM)
@@ -519,10 +544,44 @@ export function fitsOn(sim: Simulation, need: Enquiry, from: Instant, to: Instan
     .sort((a, b) => a.floorSqm - b.floorSqm);
 }
 
-/** Which rebate tier an enquiry would qualify for, on what it means to spend. */
-export function tierFor(need: Enquiry): number {
-  const big = need.spendIsk >= REBATE.higherNeeds.spendIsk && need.weeks * 5 >= REBATE.higherNeeds.workingDays;
-  return big ? REBATE.higherShare : REBATE.share;
+/**
+ * How many people there are in the country to crew a picture with.
+ *
+ * A national base, plus everybody the save has brought into existence to make
+ * something. `armTheCrew` fills a post by finding or generating a person, and
+ * those people persist after the picture is delivered — world/crew.ts says the
+ * size and shape of the crew base is a record of what the company has made.
+ * Nothing read it. It is read here, because the thing that decides whether a
+ * foreign production can claim the higher rebate is whether fifty people can be
+ * put on an Icelandic payroll, and that is a question about the country.
+ */
+export function crewInTheCountry(sim: Simulation): number {
+  const made = Object.values(sim.universe.people)
+    .filter((one) => one.careerTrack === 'crew').length;
+  return CREW_BASE + made;
+}
+
+/**
+ * Which rebate tier an enquiry would qualify for.
+ *
+ * All four limbs now, and they are cumulative. Spend, working days, shooting
+ * days and fifty crew taxed in Iceland for fifty days — the last of which sat
+ * in `REBATE.higherNeeds` being read by nothing while this function tested two
+ * of the four and called it the band. It matters because it is the one limb the
+ * country can fail: two large productions at once want a hundred people between
+ * them, and there are only so many in Iceland.
+ */
+export function tierFor(sim: Simulation, need: Enquiry, from: Instant): number {
+  const needs = REBATE.higherNeeds;
+  const days = need.weeks * 5;
+  if (need.spendIsk < needs.spendIsk) return REBATE.share;
+  if (days < needs.workingDays || days < needs.shootingDays) return REBATE.share;
+  // And the crew, against what is left after everything already booked over the
+  // same weeks has taken its own. A country is a finite number of people.
+  const to = from + wholeHold(need) * MS_WEEK;
+  const spokenFor = Object.values(sim.universe.bookings)
+    .filter((one) => one.kind === 'shooting' && one.from < to && from < one.to).length * needs.crew;
+  return crewInTheCountry(sim) - spokenFor >= needs.crew ? REBATE.higherShare : REBATE.share;
 }
 
 /**
@@ -534,12 +593,15 @@ export function tierFor(need: Enquiry): number {
  * that would be better off in Budapest goes to Budapest, and the game says so.
  */
 export function wouldBook(sim: Simulation, need: Enquiry, from: Instant): Answer {
-  const to = from + need.weeks * MS_WEEK;
+  const held = heldFor(need);
+  const to = from + wholeHold(need) * MS_WEEK;
   const room = fitsOn(sim, need, from, to)[0];
   if (!room) {
     const anyRoom = stagesOn(sim).some((st) => st.floorSqm >= need.needsSqm && st.clearHeightM >= need.needsHeightM);
     return {
-      because: anyRoom ? 'Every stage that would hold it’s already booked.' : 'Nothing here is the right size for it.',
+      because: anyRoom
+        ? `Every stage that would hold it is booked across the ${wholeHold(need)} weeks it needs.`
+        : 'Nothing here is the right size for it.',
       weekRateCents: 0,
     };
   }
@@ -550,36 +612,85 @@ export function wouldBook(sim: Simulation, need: Enquiry, from: Instant): Answer
   // Iceland against anywhere — it is weighing this stage against the one in
   // Gufunes, and the rebate is a straight gain.
   const penalty = need.local ? 0 : CREW_PENALTY;
-  const back = tierFor(need);
+  const back = tierFor(sim, need, from);
   if (back - penalty <= 0) {
     return {
       because: `${Math.round(back * 100)}% back doesn’t cover what it costs to bring a crew and a build here.`,
       weekRateCents: rate,
     };
   }
+
+  // And then the price, which this used to work out and throw away. What the
+  // rooms cost across the whole hold, against everything the production is
+  // going to spend in the country — because a stage asking a fifth of that is
+  // a stage being asked about and then not booked.
+  const asks = quotedFor(room, need);
+  const spend = Math.round((need.spendIsk / ISK_A_EURO) * 100);
+  const most = need.local ? MOST_OF_THE_SPEND.local : MOST_OF_THE_SPEND.foreign;
+  if (spend > 0 && asks > spend * most) {
+    return {
+      because: `${money(asks)} for ${wholeHold(need)} weeks is too much of what it has to spend here.`,
+      weekRateCents: rate,
+    };
+  }
+
   return {
     stageId: room.id,
     because: need.local
-      ? `Its crew is already here, and ${room.name} is free.`
-      : `${Math.round(back * 100)}% back covers the crew it has to fly in, and ${room.name} is free.`,
+      ? `Its crew is already here, and ${room.name} is free for the ${wholeHold(need)} weeks.`
+      : `${Math.round(back * 100)}% back covers the crew it has to fly in, and ${room.name} is free `
+        + `for the ${held.prep} of prep, ${held.shoot} of shooting and ${held.strike} of strike.`,
     weekRateCents: rate,
   };
 }
 
+/**
+ * Króna to euro.
+ *
+ * One rate, held flat on purpose. SLATE has no currency model and an invented
+ * moving one would be a second guess stacked on the first; what this is for is
+ * putting a rate card and an Icelandic budget into the same units so they can
+ * be compared at all.
+ */
+export const ISK_A_EURO = 150;
+
+/** What the whole hold costs, prep and strike at their own rate. */
+export function quotedFor(stage: SoundStage, need: Enquiry): Money {
+  const held = heldFor(need);
+  return Math.round(held.shoot * rateFor(stage, 'shooting')
+    + (held.prep + held.strike) * rateFor(stage, 'prep'));
+}
+
 /** Writes a booking onto a stage. */
 export function book(sim: Simulation, need: Enquiry, stageId: Id, from: Instant, weekRateCents: Money): Booking {
-  const booking: Booking = {
-    id: sim.nextId('booking'),
-    saveId: sim.universe.meta.id,
-    stageId,
-    holder: `${need.from}, ${aOrAn(need.kind)}`,
-    kind: 'shooting',
-    from,
-    to: from + need.weeks * MS_WEEK,
-    weekRateCents,
+  const held = heldFor(need);
+  const holder = `${need.from}, ${aOrAn(need.kind)}`;
+  const stage = sim.universe.stages[stageId];
+  const prepRate = stage ? rateFor(stage, 'prep') : Math.round(weekRateCents * RATE_SHARE.prep);
+  const write = (kind: BookingKind, at: Instant, weeks: number, rate: Money): Booking => {
+    const booking: Booking = {
+      id: sim.nextId('booking'),
+      saveId: sim.universe.meta.id,
+      stageId,
+      holder,
+      kind,
+      from: at,
+      to: at + weeks * MS_WEEK,
+      weekRateCents: rate,
+    };
+    sim.universe.bookings[booking.id] = booking;
+    return booking;
   };
-  sim.universe.bookings[booking.id] = booking;
-  return booking;
+
+  // Three rows and not one, because they are three different things at three
+  // different prices, and a single row called shooting that covered the build
+  // and the strike would be the lie the flat rate used to be.
+  let at = from;
+  if (held.prep > 0) { write('prep', at, held.prep, prepRate); at += held.prep * MS_WEEK; }
+  const shooting = write('shooting', at, held.shoot, weekRateCents);
+  at += held.shoot * MS_WEEK;
+  if (held.strike > 0) write('prep', at, held.strike, prepRate);
+  return shooting;
 }
 
 const aOrAn = (kind: string): string => `${/^[aeiou]/i.test(kind) ? 'an' : 'a'} ${kind}`;

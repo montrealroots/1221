@@ -375,6 +375,45 @@ export const MONTHLY_OVERHEAD_CENTS: Money = OVERHEAD.reduce((n, line) => n + li
 export const RATE_SHARE = { shooting: 1, prep: 0.6, hold: 0.35 } as const;
 
 /**
+ * How long a stage is held either side of the shoot, as multiples of it.
+ *
+ * The line above says a production pre-lights and strikes at a lower rate. It
+ * had nothing on how LONG for, so every booking in the engine was the shooting
+ * weeks and nothing else — which understates what a stage is actually occupied
+ * for by most of a half, and understates what it earns by about as much again.
+ * Prep and strike are 40-60% of a feature's stage weeks in the research, and
+ * these are set so a feature lands in the middle of that band.
+ *
+ * By kind, because the spread is enormous and it is the difference between a
+ * stage business and a spreadsheet. A feature builds a set over weeks and takes
+ * days to get it out again. A documentary on a stage is an interview against a
+ * backdrop: it arrives in the morning and is gone by the evening.
+ */
+export const AROUND_THE_SHOOT: Record<Enquiry['kind'], { prep: number; strike: number }> = {
+  feature: { prep: 0.6, strike: 0.2 },
+  'limited series': { prep: 0.45, strike: 0.15 },
+  commercial: { prep: 0.25, strike: 0.1 },
+  documentary: { prep: 0.1, strike: 0.05 },
+};
+
+/**
+ * The most of its Icelandic spend a production will hand to a stage.
+ *
+ * SLATE's own, and it is the term that makes a rate card a decision rather
+ * than an invoice. `wouldBook` worked the rate out and then never looked at it:
+ * the answer was size, then availability, then the rebate, so a stage could
+ * have been priced at anything and the same productions would have booked.
+ *
+ * The figure is reasoned rather than published. Stage rental is a single line
+ * in a budget whose Icelandic spend also carries crew, transport, accommodation
+ * and the build, so a room asking a fifth of everything the production will
+ * spend in the country is a room being asked about and then not booked. Foreign
+ * money has somewhere else to go and holds a harder line than local money,
+ * which is comparing this stage against the one across town.
+ */
+export const MOST_OF_THE_SPEND = { local: 0.3, foreign: 0.18 } as const;
+
+/**
  * How full it has to be to pay for itself, before any return on the money.
  *
  * No film commission or property research house publishes a break-even
@@ -571,3 +610,14 @@ export const ENQUIRY_SHAPES: readonly { weight: number; of: Enquiry }[] = [
  */
 export const CREW_PENALTY = 0.32;
 export const CREW_PENALTY_SOURCE = 'Imported-build cost uplift over UK, 25–40%, taken at the middle.';
+
+/**
+ * How many people in Iceland do this for a living, before the save adds any.
+ *
+ * On the order of a thousand, which is the figure the research uses and the
+ * reason the higher rebate's fifty-crew test is a real constraint rather than a
+ * formality: two large productions at once want a tenth of everybody. It is a
+ * base and not a total — every picture the company makes brings people into
+ * existence who are still here afterwards, and they count.
+ */
+export const CREW_BASE = 1_000;

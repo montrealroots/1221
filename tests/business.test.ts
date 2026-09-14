@@ -505,9 +505,11 @@ describe('the lot as a business', () => {
 
   it('turns away a foreign production the rebate doesn’t carry, and takes the same one local', () => {
     const sim = quickSave({}, 'lot-budapest');
+    // Spending enough that the room is a small share of it, so the only thing
+    // left to turn it away is where its crew is coming from.
     const small = {
       kind: 'documentary' as const, from: 'a streamer', needsSqm: 600, needsHeightM: 8,
-      needsTank: false, weeks: 2, spendIsk: 60_000_000,
+      needsTank: false, weeks: 2, spendIsk: 300_000_000,
     };
     // Too small for the higher rebate tier, so 25% back against a third more
     // to build and crew here. It goes somewhere with a crew already in it.

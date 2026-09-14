@@ -21,10 +21,16 @@ import { describe, expect, it } from 'vitest';
 import { quickSave, validateUniverse } from '@/engine';
 import type { Simulation } from '@/engine';
 import { MS_DAY } from '@/engine/core/time';
-import { MONTHLY_OVERHEAD_CENTS, OVERHEAD, PATIENCE } from '@/engine/content/lot';
 import {
-  breakEvenShare, paidInSoFar, rungFor, stagesOn, standingWith, utilisation, whatTheFamilySays,
-  whereTheLotStands,
+  AROUND_THE_SHOOT, CREW_BASE, ENQUIRY_SHAPES, MONTHLY_OVERHEAD_CENTS, MOST_OF_THE_SPEND,
+  OVERHEAD, PATIENCE, RATE_SHARE, type Enquiry,
+} from '@/engine/content/lot';
+import { REBATE } from '@/engine/content/incorporation';
+import {
+  ISK_A_EURO, breakEvenShare, crewInTheCountry, heldFor, paidInSoFar, quotedFor, rungFor,
+  MS_WEEK, stagesOn, standingWith, tierFor, utilisation, whatTheFamilySays,
+  whereTheLotStands, wholeHold,
+  wouldBook,
 } from '@/engine/world/lot';
 import { capabilitiesOf } from '@/engine/world/company';
 
@@ -75,12 +81,15 @@ describe('what the family actually bought', () => {
 });
 
 describe('and it does not fill', () => {
-  it('takes about nine bookings a year, doing nothing about it', () => {
+  it('takes a handful of jobs a year, doing nothing about it', () => {
     for (const seed of SEEDS) {
       const { sim } = fiveYears(seed);
-      const ayear = Object.values(sim.universe.bookings).length / 5;
-      expect(ayear, `${seed} took ${ayear} bookings a year`).toBeGreaterThan(6);
-      expect(ayear, `${seed} took ${ayear} bookings a year`).toBeLessThan(13);
+      // Jobs and not rows. A job is a prep, a shoot and a strike, and counting
+      // the rows would say the lot is three times busier than it is.
+      const jobs = Object.values(sim.universe.bookings)
+        .filter((one) => one.kind === 'shooting').length / 5;
+      expect(jobs, `${seed} took ${jobs} jobs a year`).toBeGreaterThan(2);
+      expect(jobs, `${seed} took ${jobs} jobs a year`).toBeLessThan(7);
     }
   });
 
@@ -261,5 +270,133 @@ describe('and somebody is paying for that', () => {
     const sim = yearsOn('lot-sound', 20);
     expect(validateUniverse(sim.universe).errors).toEqual([]);
     expect(sim.ledger.audit()).toEqual([]);
+  });
+});
+
+describe('what a production is actually weighing', () => {
+  const at = (sim: Simulation): number => sim.now + 60 * MS_DAY;
+  const shape = (id: string): Enquiry => ENQUIRY_SHAPES
+    .find((one) => `${one.of.kind}-${one.of.local}` === id)!.of;
+
+  it('holds the room for the build and the strike, not only the shoot', () => {
+    // Two thirds of the rate table was read by nothing: every booking in the
+    // engine was the shooting weeks, at the shooting rate, so a feature that
+    // builds a set for weeks was invisible until the camera turned over.
+    for (const one of ENQUIRY_SHAPES) {
+      const held = heldFor(one.of);
+      expect(held.shoot).toBe(one.of.weeks);
+      expect(wholeHold(one.of)).toBeGreaterThan(one.of.weeks);
+    }
+    // And the spread by kind is the point. A feature builds and strikes; a
+    // documentary on a stage arrives in the morning and is gone by the evening.
+    const feature = AROUND_THE_SHOOT.feature;
+    expect(feature.prep).toBeGreaterThan(AROUND_THE_SHOOT.documentary.prep * 3);
+    // Prep and strike land between two fifths and three fifths of the hold,
+    // which is what the research says a feature's stage time is made of.
+    const bigOne = ENQUIRY_SHAPES.find((one) => one.of.kind === 'feature' && one.of.weeks > 10)!.of;
+    const around = (wholeHold(bigOne) - bigOne.weeks) / wholeHold(bigOne);
+    expect(around).toBeGreaterThan(0.35);
+    expect(around).toBeLessThan(0.6);
+  });
+
+  it('writes the prep and the strike as their own rows, at their own rate', () => {
+    const { sim } = fiveYears('hold-rows');
+    const rows = Object.values(sim.universe.bookings);
+    const prep = rows.filter((one) => one.kind === 'prep');
+    const shooting = rows.filter((one) => one.kind === 'shooting');
+    expect(prep.length, 'nothing was ever booked as prep').toBeGreaterThan(0);
+    // One shoot, and a build and a strike around it.
+    expect(prep.length).toBeGreaterThanOrEqual(shooting.length);
+    // At the lower rate, because that is what the table has always said.
+    for (const row of prep) {
+      const stage = sim.universe.stages[row.stageId]!;
+      expect(row.weekRateCents).toBe(Math.round(stage.weekRateCents * RATE_SHARE.prep));
+    }
+  });
+
+  it('turns away a room that costs too much of what the job has to spend', () => {
+    const sim = quickSave({}, 'too-dear');
+    // The ordinary Icelandic commercial: a week on a stage, and the smallest
+    // room here is a great deal more room than it needs. It is not the rebate
+    // that turns this away and it is not the calendar — it is the price, which
+    // this engine used to work out and then never look at.
+    const answer = wouldBook(sim, shape('commercial-true'), at(sim));
+    expect(answer.stageId).toBeUndefined();
+    expect(answer.because).toMatch(/too much of what it has to spend/);
+    expect(answer.weekRateCents, 'it never even quoted').toBeGreaterThan(0);
+  });
+
+  it('takes the same job when the money behind it is bigger', () => {
+    const sim = quickSave({}, 'affordable');
+    const dear = shape('commercial-true');
+    expect(wouldBook(sim, dear, at(sim)).stageId).toBeUndefined();
+    // Nothing about the room changed. The budget did.
+    const funded = { ...dear, spendIsk: dear.spendIsk * 8 };
+    expect(wouldBook(sim, funded, at(sim)).stageId).toBeDefined();
+  });
+
+  it('holds foreign money to a harder line than local money', () => {
+    expect(MOST_OF_THE_SPEND.foreign).toBeLessThan(MOST_OF_THE_SPEND.local);
+    const sim = quickSave({}, 'harder-line');
+    const stage = stagesOn(sim).sort((a, b) => a.floorSqm - b.floorSqm)[0]!;
+    const sized: Enquiry = {
+      kind: 'limited series', from: 'somebody', needsSqm: stage.floorSqm - 10,
+      needsHeightM: 6, needsTank: false, weeks: 8, spendIsk: 1, local: true,
+    };
+    // A budget worked backward from the quote so the room lands exactly between
+    // the two lines, rather than a figure picked and hoped for.
+    const quoted = quotedFor(stage, sized);
+    const wanted = (MOST_OF_THE_SPEND.foreign + MOST_OF_THE_SPEND.local) / 2;
+    const job: Enquiry = { ...sized, spendIsk: Math.round((quoted / wanted / 100) * ISK_A_EURO) };
+    const spend = Math.round((job.spendIsk / ISK_A_EURO) * 100);
+    expect(quoted / spend).toBeGreaterThan(MOST_OF_THE_SPEND.foreign);
+    expect(quoted / spend).toBeLessThan(MOST_OF_THE_SPEND.local);
+    expect(wouldBook(sim, job, at(sim)).stageId).toBeDefined();
+    expect(wouldBook(sim, { ...job, local: false }, at(sim)).because)
+      .toMatch(/too much of what it has to spend|doesn’t cover/);
+  });
+});
+
+describe('the rebate is four tests and the country can fail one', () => {
+  it('counts everybody in Iceland who does this, and the save adds to them', () => {
+    const sim = quickSave({}, 'crew-count');
+    expect(crewInTheCountry(sim)).toBeGreaterThanOrEqual(CREW_BASE);
+  });
+
+  it('takes the higher tier away when there is nobody left to crew it', () => {
+    const sim = quickSave({}, 'crew-short');
+    const big: Enquiry = {
+      kind: 'feature', from: 'an American studio', needsSqm: 5_200, needsHeightM: 24,
+      needsTank: false, weeks: 14, spendIsk: 1_900_000_000, local: false,
+    };
+    const from = sim.now + 60 * MS_DAY;
+    expect(tierFor(sim, big, from), 'a tentpole could not reach the higher tier')
+      .toBe(REBATE.higherShare);
+
+    // Now fill the country. Every shooting booking across those weeks wants
+    // fifty people of its own, and there are only so many in Iceland.
+    const stage = stagesOn(sim)[0]!;
+    for (let i = 0; i < Math.ceil(crewInTheCountry(sim) / REBATE.higherNeeds.crew); i += 1) {
+      sim.universe.bookings[`b${i}`] = {
+        id: `b${i}`, saveId: sim.universe.meta.id, stageId: stage.id, holder: 'somebody',
+        kind: 'shooting', from, to: from + 20 * MS_WEEK, weekRateCents: 1,
+      };
+    }
+    expect(tierFor(sim, big, from), 'the country ran out of crew and nobody noticed')
+      .toBe(REBATE.share);
+  });
+
+  it('keeps the limbs cumulative, so failing one is failing the band', () => {
+    const sim = quickSave({}, 'crew-limbs');
+    const from = sim.now + 60 * MS_DAY;
+    const big: Enquiry = {
+      kind: 'feature', from: 'an American studio', needsSqm: 5_200, needsHeightM: 24,
+      needsTank: false, weeks: 14, spendIsk: 1_900_000_000, local: false,
+    };
+    // Under the spend, and no amount of crew in the country promotes it.
+    expect(tierFor(sim, { ...big, spendIsk: REBATE.higherNeeds.spendIsk - 1 }, from))
+      .toBe(REBATE.share);
+    // Under the days, likewise.
+    expect(tierFor(sim, { ...big, weeks: 1 }, from)).toBe(REBATE.share);
   });
 });
