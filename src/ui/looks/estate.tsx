@@ -38,6 +38,15 @@ import { at } from './subject';
 import { whatTheyAre } from './family';
 import { bondFor, standingWord } from '@/engine/world/standing';
 import { isAre, outOf, spokenList, toStart } from './words';
+import { MONTHLY_OVERHEAD_CENTS } from '@/engine/content/lot';
+import {
+  breakEvenShare, onStageAt, paidInSoFar, stagesOn, standingWith, utilisation,
+  whatTheFamilySays, whereTheLotStands,
+} from '@/engine/world/lot';
+import { formatMoney } from '@/engine/core/money';
+import { formatDate, MS_DAY } from '@/engine/core/time';
+
+const moneyOf = (cents: number): string => formatMoney(cents, { cents: false });
 
 // ---------------------------------------------------------------------------
 // Reading the world
@@ -480,22 +489,63 @@ defineLook<TheLot>('lot', {
     return { town, company: studioName(surnameIn(sim)) };
   },
   seeds: () => [''],
-  look: (lot) => ({
+  look: (lot, { sim }) => {
+    const stages = stagesOn(sim);
+    const month = utilisation(sim, sim.now - 30 * MS_DAY, sim.now);
+    const need = breakEvenShare(sim);
+    const took = month.earnsShare ?? 0;
+    const standing = standingWith(sim);
+    const aYear = MONTHLY_OVERHEAD_CENTS * 12;
+    return {
     name: LOT_NAME,
     kind: 'What The Family Built',
     parent: at('estate'),
-    summary: 'You can walk to the stages from the house, they’re newly built and standing empty, and nothing '
-      + 'has shot on one of them yet.',
+    summary: whereTheLotStands(sim),
     body: (
       <>
         <p className="small">
-          Newly built, on the same land, close enough to walk to from the house. Stages for Television and
-          Film both. In a country with no business to speak of, they’re the only stages there are.
+          On the same land, close enough to walk to from the house. Stages for Television and Film both.
+          In a country with no business to speak of, they’re the only stages there are — and being the
+          only stages in Iceland is worth less than it sounds, because what a production is choosing
+          between is here and Budapest.
         </p>
+        <div className="grid grid-3">
+          <Stat label="What A Month Costs" value={moneyOf(MONTHLY_OVERHEAD_CENTS)}
+            note={`${moneyOf(aYear)} a year, whether or not anybody is standing on a stage`} />
+          <Stat label="What Last Month Took"
+            value={`${Math.round(took * 100)}/100`}
+            tone={need !== undefined && took < need ? 'negative' : 'positive'}
+            note={need === undefined
+              ? 'Of what a full month is worth'
+              : `Of what a full month is worth. It needs ${Math.round(need * 100)}/100 to cover itself`} />
+          <Stat label="What The Family Has Put In" value={moneyOf(paidInSoFar(sim))}
+            tone={standing.conditional ? 'negative' : undefined}
+            note={`${Math.round(standing.share * 100)}/100 of a year of the group’s profit`} />
+        </div>
+        <p className="small">{whatTheFamilySays(sim)}</p>
+        <h4>The Stages</h4>
+        <div className="table-wrap">
+        <table className="table">
+          <tbody>
+            {stages.map((stage) => {
+              const on = onStageAt(sim, stage.id, sim.now);
+              return (
+                <tr key={stage.id}>
+                  <td className="nowrap">{stage.name}</td>
+                  <td className="small nowrap">{stage.floorSqm.toLocaleString('en-US')} m²</td>
+                  <td className="small nowrap">{stage.clearHeightM} m to the grid</td>
+                  <td className="small money nowrap">{moneyOf(stage.weekRateCents)} a week</td>
+                  <td className="small">{on ? `${on.holder}, through ${formatDate(on.to, sim.homeZone)}` : 'Empty'}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+        </div>
         <p className="small">
-          {lot.company} works out of here, and so far that means a gate, a name on it and a set of empty
-          stages. Nothing has been shot on one, nothing is booked onto one, and nobody outside{' '}
-          <Open subject={at('place', lot.town.id)}>{lot.town.name}</Open> knows they exist.
+          {lot.company} works out of here, and nobody outside{' '}
+          <Open subject={at('place', lot.town.id)}>{lot.town.name}</Open> has much reason to know it.
+          A lot with nothing on it is the same money every month as a lot that’s full.
         </p>
       </>
     ),
@@ -511,9 +561,10 @@ defineLook<TheLot>('lot', {
         detail: 'Inside the same line as the house, so nothing shooting here can be photographed from outside',
       },
     ],
-    provenance: 'The lot is the premise. SLATE has no stage bookings, no day rate and no overhead running '
-      + 'against it yet.',
-  }),
+    provenance: 'The rate card, the overhead and what the family will carry are all SLATE’s own, '
+      + 'worked out from what a lot this size costs to build and to keep open.',
+    };
+  },
 });
 
 // ---------------------------------------------------------------------------

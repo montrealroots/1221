@@ -97,6 +97,18 @@ export interface Company {
   remit: string;
   foundedAt: Instant;
   dissolvedAt?: Instant;
+  /**
+   * The last thing the family said about carrying this, by rung id.
+   *
+   * Stored because it is the only part of the conversation that is not
+   * derivable. What the family has put in is on the ledger and what a year of
+   * the group's profit came to is a function of the quota, so where they stand
+   * is recomputed every time anybody asks — but whether anybody has said it out
+   * loud is not a fact about money. It matters because the rung can move
+   * without the money moving at all: America shuts the quota, the same figure
+   * reads against a smaller year, and the line comes to meet you.
+   */
+  familySaid?: string;
 }
 
 // ---------------------------------------------------------------------------

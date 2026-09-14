@@ -636,12 +636,13 @@ describe('the lot tells the truth about who is on it', () => {
   });
 
   it('agrees with itself about one week and several', () => {
-    expect(howTheMonthWent({ available: 4, taken: 0, own: 0, share: 0, earnsCents: 0 }))
-      .toContain('Nobody was on a stage');
-    expect(howTheMonthWent({ available: 4, taken: 1, own: 0, share: 0.25, earnsCents: 100 }))
-      .toContain('1 stage week ');
-    expect(howTheMonthWent({ available: 4, taken: 3, own: 0, share: 0.75, earnsCents: 100 }))
-      .toContain('3 stage weeks ');
+    const month = (taken: number, earnsCents: number) => ({
+      available: 4, taken, own: 0, share: taken / 4, earnsCents,
+      ifFullCents: 400, earnsShare: earnsCents / 400,
+    });
+    expect(howTheMonthWent(month(0, 0))).toContain('Nobody was on a stage');
+    expect(howTheMonthWent(month(1, 100))).toContain('1 stage week ');
+    expect(howTheMonthWent(month(3, 100))).toContain('3 stage weeks ');
   });
 });
 

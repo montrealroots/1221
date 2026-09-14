@@ -21,10 +21,12 @@ import { describe, expect, it } from 'vitest';
 import { quickSave, validateUniverse } from '@/engine';
 import type { Simulation } from '@/engine';
 import { MS_DAY } from '@/engine/core/time';
-import { MONTHLY_OVERHEAD_CENTS, OVERHEAD } from '@/engine/content/lot';
+import { MONTHLY_OVERHEAD_CENTS, OVERHEAD, PATIENCE } from '@/engine/content/lot';
 import {
-  breakEvenShare, paidInSoFar, stagesOn, utilisation, whereTheLotStands,
+  breakEvenShare, paidInSoFar, rungFor, stagesOn, standingWith, utilisation, whatTheFamilySays,
+  whereTheLotStands,
 } from '@/engine/world/lot';
+import { capabilitiesOf } from '@/engine/world/company';
 
 /** Five years of the world running, with nobody doing anything about it. */
 function fiveYears(seed: string): { sim: Simulation; from: number } {
@@ -116,8 +118,147 @@ describe('and it does not fill', () => {
     expect(said).toMatch(/62% full to cover a month/);
   });
 
+  it('reads how full it was in money, because the break-even beside it is money', () => {
+    const { sim, from } = fiveYears('lot-weighted');
+    const five = utilisation(sim, from, sim.now);
+    // The two big rooms are two thirds of the rate card between them, so a
+    // month in the cheap ones is half the stage-weeks and a third of the money.
+    // Comparing weeks against a break-even worked out from the rate card made a
+    // busy cheap month read as most of the way to covering itself.
+    expect(five.earnsShare).toBeDefined();
+    expect(five.ifFullCents).toBeGreaterThan(five.earnsCents);
+    expect(five.earnsShare!).toBeLessThan(five.share!);
+    expect(five.earnsCents / five.ifFullCents).toBeCloseTo(five.earnsShare!, 6);
+    // And the number the screen prints is the money one. Find a month where
+    // the two disagree — a month in the cheap rooms — and read it off.
+    const busy = quickSave({}, 'lot-weighted');
+    const at = busy.now;
+    let month = utilisation(busy, busy.now, busy.now);
+    for (let i = 0; i < 120; i += 1) {
+      busy.advanceTo(at + i * 30 * MS_DAY);
+      month = utilisation(busy, busy.now - 30 * MS_DAY, busy.now);
+      if (month.taken > 0 && Math.round((month.share ?? 0) * 100) !== Math.round((month.earnsShare ?? 0) * 100)) break;
+    }
+    expect(month.taken, 'never found a month where the two readings differ').toBeGreaterThan(0);
+    const printed = Number(/took (\d+)%/.exec(whereTheLotStands(busy))?.[1]);
+    expect(printed).toBe(Math.round((month.earnsShare ?? 0) * 100));
+    expect(printed).not.toBe(Math.round((month.share ?? 0) * 100));
+  });
+
   it('keeps the books straight while doing all of it', () => {
     const { sim } = fiveYears('lot-books');
+    expect(validateUniverse(sim.universe).errors).toEqual([]);
+    expect(sim.ledger.audit()).toEqual([]);
+  });
+});
+
+describe('and somebody is paying for that', () => {
+  /** Runs the world on, a year at a time, and hands back where it got to. */
+  const yearsOn = (seed: string, years: number): Simulation => {
+    const sim = quickSave({}, seed);
+    const from = sim.now;
+    for (let y = 1; y <= years; y += 1) sim.advanceTo(from + y * 365 * MS_DAY);
+    return sim;
+  };
+
+  it('starts with nobody having mentioned it', () => {
+    const sim = quickSave({}, 'lot-quiet');
+    const standing = standingWith(sim);
+    expect(standing.share).toBe(0);
+    expect(standing.rung.id).toBe(PATIENCE[0]!.id);
+    expect(standing.conditional).toBe(false);
+  });
+
+  it('climbs the rungs as the money goes in, and says so without nagging', () => {
+    const sim = yearsOn('lot-rungs', 20);
+    const standing = standingWith(sim);
+    // Twenty years of a six-million-a-year drain against a hundred and
+    // fifty-four million year is most of a year's profit.
+    expect(standing.share).toBeGreaterThan(0.5);
+    expect(standing.conditional).toBe(true);
+
+    const said = sim.universe.notifications
+      .filter((one) => PATIENCE.some((rung) => one.title.includes(rung.label)))
+      .map((one) => one.title);
+    // Every rung above the first gets said, and the last word is the line.
+    expect(new Set(said).size).toBe(PATIENCE.length - 1);
+    expect(said[said.length - 1]).toContain(PATIENCE[PATIENCE.length - 1]!.label);
+    // A rung can be reached twice, because the family comes down off one when
+    // America reopens and the same money reads against a bigger year. What it
+    // never does is nag: three rungs across twenty years, said a handful of
+    // times between them, and the coming down is not announced at all.
+    expect(said.length).toBeLessThan(10);
+  });
+
+  it('makes the line come to meet you in a year America was shut', () => {
+    // The same money, read against a smaller year. This is the only place the
+    // quota is ever felt on this side of the family, and until now the figure
+    // that said so was computed correctly and read by nothing.
+    const carried = 0.42;
+    expect(rungFor(carried, 0).id).toBe('asked');
+    expect(rungFor(carried, 2).id, 'two shut years and the family had not moved').toBe('conditional');
+    // And it lets up again when America reopens, which is what makes it a
+    // lever rather than a ratchet.
+    expect(rungFor(carried, 0).id).not.toBe(rungFor(carried, 2).id);
+    // The bite is bounded, so no run of shut years makes the first euro fatal.
+    expect(rungFor(0.01, 20).id).toBe(PATIENCE[0]!.id);
+  });
+
+  it('stops writing a blank check, and the condition is that it is a business', () => {
+    const sim = yearsOn('lot-condition', 20);
+    expect(standingWith(sim).conditional).toBe(true);
+    const lot = sim.universe.properties
+      ? Object.values(sim.universe.properties).find((one) => one.kind === 'studio_lot')
+      : undefined;
+    expect(lot).toBeDefined();
+
+    // Past the line, a month the lot earned nothing is a month it funds itself,
+    // and the company's cash goes under — which the greenlight door already
+    // reads, so the consequence lands in machinery that was already there.
+    // Off the ledger and not off the notification, because the notification is
+    // the engine talking about itself. What has to be true is that in a month
+    // the lot took nothing, no money arrived.
+    let heldBack = 0;
+    for (let i = 0; i < 48; i += 1) {
+      const before = paidInSoFar(sim);
+      const month = utilisation(sim, sim.now, sim.now + 30 * MS_DAY);
+      sim.advanceTo(sim.now + 30 * MS_DAY);
+      if (standingWith(sim).conditional && month.earnsCents <= 0 && paidInSoFar(sim) === before) {
+        heldBack += 1;
+      }
+    }
+    expect(heldBack, 'the family wrote a blank check every month regardless').toBeGreaterThan(0);
+    const told = sim.universe.notifications.filter((one) => one.title.includes('Funds Itself'));
+    expect(told.length).toBeGreaterThan(0);
+    expect(told[0]!.body).toContain('money behind it');
+  });
+
+  it('leaves a way back, because a dead end is not a decision', () => {
+    const sim = yearsOn('lot-back', 20);
+    // Enquiries keep arriving whether or not anybody is paying, so a lot that
+    // lets a stage earns its way back to being covered. The proof is that the
+    // door is not permanently shut after twenty years of this.
+    const shutOnMoney = (): boolean => {
+      const door = capabilitiesOf(sim).find((one) => one.id === 'greenlight');
+      return door !== undefined && door.blockers.some((b) => b.fixKind === 'money');
+    };
+    let everOpen = false;
+    for (let i = 0; i < 24; i += 1) {
+      sim.advanceTo(sim.now + 30 * MS_DAY);
+      if (!shutOnMoney()) everOpen = true;
+    }
+    expect(everOpen, 'the money door never opened again').toBe(true);
+  });
+
+  it('says where the family stands in a sentence, with the sugar in it', () => {
+    const sim = yearsOn('lot-said', 12);
+    const said = whatTheFamilySays(sim);
+    expect(said).toMatch(/\d+\/100 of a year of the group/);
+    expect(said.length).toBeGreaterThan(80);
+  });
+
+  it('keeps the books straight through every bit of that', () => {
+    const sim = yearsOn('lot-sound', 20);
     expect(validateUniverse(sim.universe).errors).toEqual([]);
     expect(sim.ledger.audit()).toEqual([]);
   });

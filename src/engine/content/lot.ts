@@ -381,6 +381,73 @@ export const RATE_SHARE = { shooting: 1, prep: 0.6, hold: 0.35 } as const;
  * occupancy for a sound stage — it was looked for and it does not exist — so
  * this is the game's own arithmetic over the figures above and nothing more.
  */
+/**
+ * What the family will carry, and what it says on the way.
+ *
+ * The lot loses about six million a year and the sugar group clears a hundred
+ * and fifty-four, so this was never going to be a solvency question. Nobody is
+ * bankrupted by four per cent of profit. What runs out is willingness, and the
+ * conversation is the one every family business has about the part of it that
+ * does not pay: how long, and to what end.
+ *
+ * So the ladder is cumulative money in against a year of the group's profit,
+ * and the rungs are SLATE's own — the research has plenty to say about studios
+ * that failed and nothing to say about how long anybody's patience is. What is
+ * not ours is the shape: the corpus is blunt that the lots that went under
+ * mostly went under at the covenant rather than at the rate card, which is to
+ * say they ran out of somebody willing to keep paying, not out of tenants.
+ *
+ * At six million a year the first rung arrives in under three years and the
+ * last in about thirteen — and both come sooner every time America shuts the
+ * quota, because the same money read against a smaller year is a bigger share.
+ * That is the only place the sugar is ever felt on this side of the family.
+ */
+export interface Rung {
+  id: string;
+  /** Cumulative money in, as a share of a year of the group's profit. */
+  at: number;
+  /** Title Case, for a screen. */
+  label: string;
+  /** What the family is saying at this point. */
+  what: string;
+}
+
+export const PATIENCE: readonly Rung[] = [
+  {
+    id: 'nothing',
+    at: 0,
+    label: 'Nobody Has Mentioned It',
+    what: 'The lot costs what a bad month in the cane costs. It hasn’t come up.',
+  },
+  {
+    id: 'noticed',
+    at: 0.1,
+    label: 'It Has Been Noticed',
+    what: 'A tenth of a year’s profit has gone into stages nobody is standing on, and it’s in the group accounts where anybody can read it.',
+  },
+  {
+    id: 'asked',
+    at: 0.25,
+    label: 'They’re Asking What The Plan Is',
+    what: 'A quarter of a year. That’s no longer a thing the group absorbs without anybody putting a name to it, and the question is what it’s for.',
+  },
+  {
+    id: 'conditional',
+    at: 0.5,
+    label: 'The Money Comes With A Condition',
+    what: 'Half a year’s profit, and the family will keep the lights on in a month the lot earned something. A month it earned nothing is a month it funds itself.',
+  },
+];
+
+/**
+ * How much shorter the family's patience gets for every year America stays shut.
+ *
+ * SLATE's own. A run of shut years is when a loss-making side business stops
+ * being a rounding error and starts being a line somebody defends, and the
+ * quota already decides those years without being asked.
+ */
+export const SHUT_YEAR_BITE = 0.12;
+
 export const BREAK_EVEN_NOTE =
   'Nobody publishes a break-even for a stage, so this is worked out from what the lot costs and what '
   + 'it charges, and from nothing else.';

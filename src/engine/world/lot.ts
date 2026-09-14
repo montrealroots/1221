@@ -19,12 +19,13 @@ import type { Instant } from '../core/time';
 import type { Money } from '../core/money';
 import { MS_DAY, instantFromZoned, zonedParts } from '../core/time';
 import {
-  BUILD_COST_CENTS, CREW_PENALTY, LOT_FLOOR_SQM, MONTHLY_OVERHEAD_CENTS, OVERHEAD, RATE_SHARE,
+  BUILD_COST_CENTS, CREW_PENALTY, LOT_FLOOR_SQM, MONTHLY_OVERHEAD_CENTS, OVERHEAD, PATIENCE,
+  RATE_SHARE, SHUT_YEAR_BITE, type Rung,
   ENQUIRY_SHAPES, STAGES, type Enquiry,
 } from '../content/lot';
 import { REBATE } from '../content/incorporation';
 import { GROUP } from '../content/sugar';
-import { profitThisYear } from './sugar';
+import { profitThisYear, shutYearsRunning } from './sugar';
 import { ESTATE_CITY_ID, LOT_NAME, estatePlaceLine, movedInAt } from '../content/estate';
 
 /** A week, which is the unit a stage is let in. */
@@ -74,10 +75,23 @@ export interface Utilisation {
    * that would be the single most misleading number on the screen.
    */
   own: number;
-  /** 0-1. Undefined when the window holds no stage-weeks at all. */
+  /** 0-1, in stage-weeks. Undefined when the window holds no stage-weeks. */
   share: number | undefined;
   /** What those bookings are worth across the window, in cents. */
   earnsCents: Money;
+  /** What the window would have earned with every stage let, every week. */
+  ifFullCents: Money;
+  /**
+   * 0-1, in money rather than in weeks, and this is the one that matters.
+   *
+   * The four rooms are not worth the same: the two big ones are two thirds of
+   * the rate card between them, so a month with both twins full and both big
+   * rooms dark is half the stage-weeks and a third of the money. Against a
+   * break-even that is worked out from the rate card, only this one can be
+   * compared — and the screen was comparing the other one, which made a busy
+   * cheap month read as most of the way to covering itself.
+   */
+  earnsShare: number | undefined;
 }
 
 /**
@@ -107,12 +121,16 @@ export function utilisation(sim: Simulation, from: Instant, to: Instant): Utilis
       earnsCents += Math.round(weeks * booking.weekRateCents);
     }
   }
+  const ifFullCents = Math.round((span / MS_WEEK)
+    * stages.reduce((n, stage) => n + rateFor(stage, 'shooting'), 0));
   return {
     available,
     taken,
     own,
     share: available > 0 ? Math.min(1, taken / available) : undefined,
     earnsCents,
+    ifFullCents,
+    earnsShare: ifFullCents > 0 ? Math.min(1, earnsCents / ifFullCents) : undefined,
   };
 }
 
@@ -218,8 +236,8 @@ export function registerLot(sim: Simulation): void {
     const lot = theLot(sim);
     const account = lot ? cashFor(sim, lot.ownerId) : undefined;
     if (lot && account) {
-      const spent = chargeTheMonth(sim, account);
       const month = utilisation(sim, sim.now - 30 * MS_DAY, sim.now);
+      const spent = chargeTheMonth(sim, account, month.earnsCents);
       // Said plainly, and the bad month is the one worth saying. A quiet
       // month on a lot is not a neutral event, it is the cost of the bet.
       sim.notify({
@@ -228,6 +246,37 @@ export function registerLot(sim: Simulation): void {
         body: `${money(spent)} went out. ${howTheMonthWent(month)}`,
         importance: month.earnsCents === 0 ? 55 : 35,
       });
+      // And where the family stands on paying for it, when that has moved
+      // since the last time anybody said so. Against what was last said and
+      // not against earlier in the same tick, because the rung moves without
+      // the money moving: a shut year reads the same figure against a smaller
+      // year, and both halves of a single tick would see the shut year.
+      const now = standingWith(sim);
+      const company = sim.universe.companies[lot.ownerId ?? ''];
+      if (company && company.familySaid !== now.rung.id) {
+        const climbing = company.familySaid === undefined
+          || PATIENCE.findIndex((one) => one.id === now.rung.id)
+            > PATIENCE.findIndex((one) => one.id === company.familySaid);
+        company.familySaid = now.rung.id;
+        if (climbing && now.rung.id !== PATIENCE[0]!.id) {
+          sim.notify({
+            category: 'business',
+            title: `${GROUP.name}: ${now.rung.label}`,
+            body: whatTheFamilySays(sim),
+            importance: now.conditional ? 80 : 60,
+          });
+        }
+      }
+      if (now.conditional && month.earnsCents <= 0) {
+        sim.notify({
+          category: 'business',
+          title: `${LOT_NAME} Funds Itself This Month`,
+          body: `Nobody was on a stage and nothing came in, so nothing came from ${GROUP.name} either. `
+            + `The company is ${money(-(sim.universe.accounts[account]?.balance ?? 0))} under, and a picture `
+            + 'needs money behind it before anybody says yes to one.',
+          importance: 85,
+        });
+      }
     }
     takeAnEnquiry(sim);
     collectWhatIsDue(sim);
@@ -296,13 +345,13 @@ export function howTheMonthWent(month: Utilisation): string {
  * on a month when nothing happened. One line saying "overhead" would be a
  * number nobody could open.
  */
-export function chargeTheMonth(sim: Simulation, accountId: Id): Money {
+export function chargeTheMonth(sim: Simulation, accountId: Id, earnedThisMonth: Money = 0): Money {
   let spent = 0;
   for (const line of OVERHEAD) {
     sim.expense(accountId, line.monthlyCents, `${LOT_NAME}: ${line.label}`, 'business');
     spent += line.monthlyCents;
   }
-  familyCovers(sim, accountId);
+  familyCovers(sim, accountId, earnedThisMonth);
   return spent;
 }
 
@@ -324,14 +373,85 @@ export const PAID_IN = `Paid In By ${GROUP.name}`;
  * into this bet, which only ever goes up, and which anybody can add up from
  * the ledger and set against what the group makes in a year.
  */
-export function familyCovers(sim: Simulation, accountId: Id): Money {
+export function familyCovers(sim: Simulation, accountId: Id, earnedThisMonth: Money = 0): Money {
   const account = sim.universe.accounts[accountId];
   if (!account || account.balance >= 0) return 0;
+  // Past the last rung the money comes with a condition on it, and the
+  // condition is the only one a family ever actually sets: show me it is a
+  // business. A month the lot took nothing is a month it funds itself, the
+  // company's cash goes under, and the greenlight door — which already asks
+  // for money behind a picture — shuts until the lot lets a stage again.
+  //
+  // Recoverable on purpose. Enquiries keep arriving whether or not anybody is
+  // paying, so there is always a way back, and the way back is the business
+  // working rather than somebody relenting.
+  if (standingWith(sim).conditional && earnedThisMonth <= 0) return 0;
   const short = -account.balance;
   const step = 100_000_00;
   const put = Math.ceil(short / step) * step;
   sim.income(accountId, put, PAID_IN, 'business');
   return put;
+}
+
+export interface Standing {
+  /** Cumulative money in, against a year of the group's profit. */
+  share: number;
+  /** Where that puts the family. */
+  rung: Rung;
+  /** How much shorter a run of shut years has made the patience. */
+  shutYears: number;
+  /** Whether the money now comes with a condition on it. */
+  conditional: boolean;
+}
+
+/**
+ * Where the family stands on the thing it is paying for.
+ *
+ * The figure was already here and already right — money in against what the
+ * sugar cleared this year rather than against a flat number, so a shut year
+ * makes the same money a heavier sentence. Nothing read it. A correct figure
+ * nobody acts on is the same fault as a wrong one, and on this axis it was the
+ * whole fault: with an uncapped check behind it, every decision about the lot
+ * cost nothing and the best play was whatever you liked.
+ */
+export function standingWith(sim: Simulation): Standing {
+  const share = paidInAsShareOfAYear(sim);
+  const shutYears = shutYearsRunning(sim);
+  const rung = rungFor(share, shutYears);
+  return {
+    share,
+    rung,
+    shutYears,
+    conditional: rung.id === PATIENCE[PATIENCE.length - 1]!.id,
+  };
+}
+
+/**
+ * Which rung that much money puts the family on, after that many shut years.
+ *
+ * Pure, and separate from reading the save, so the shut-year half can be asked
+ * a question directly instead of being inferred from a world that happened to
+ * have a shut year in it. Every year America stays shut brings the rungs down,
+ * because a run of them is when the part of the business that loses money stops
+ * being a rounding error and starts being a line somebody defends.
+ */
+export function rungFor(share: number, shutYears: number): Rung {
+  const bite = Math.max(0.3, 1 - SHUT_YEAR_BITE * Math.max(0, shutYears));
+  let rung = PATIENCE[0]!;
+  for (const one of PATIENCE) {
+    if (share >= one.at * bite) rung = one;
+  }
+  return rung;
+}
+
+/** Where the family stands, in a sentence. */
+export function whatTheFamilySays(sim: Simulation): string {
+  const standing = standingWith(sim);
+  const put = `${Math.round(standing.share * 100)}/100 of a year of the group’s profit has gone in.`;
+  const shut = standing.shutYears > 0
+    ? ` America has been shut ${standing.shutYears === 1 ? 'a year' : `${standing.shutYears} years`}, which makes it read heavier than it would.`
+    : '';
+  return `${put} ${standing.rung.what}${shut}`;
 }
 
 /** Everything the family has put into the company, off the ledger itself. */
@@ -360,11 +480,14 @@ export function whereTheLotStands(sim: Simulation): string {
   if (month.taken === 0) {
     return `${stages.length} stages, and nobody has been on any of them in the last thirty days.${cover}`;
   }
-  const share = Math.round((month.share ?? 0) * 100);
+  // In money and not in weeks, because the break-even beside it is in money.
+  // The two big rooms are two thirds of the rate card, so a busy month in the
+  // cheap ones used to read most of the way to covering itself.
+  const share = Math.round((month.earnsShare ?? 0) * 100);
   const ours = month.own > 0 && month.taken > 0
-    ? ` ${Math.round((month.own / month.taken) * 100)}% of that is the company’s own picture, which pays nothing.`
+    ? ` ${Math.round((month.own / month.taken) * 100)}% of the weeks went to the company’s own picture, which pays nothing.`
     : '';
-  return `${stages.length} stages, ${share}% full across the last thirty days.${cover}${ours}`;
+  return `${stages.length} stages, and the last thirty days took ${share}% of what a full month is worth.${cover}${ours}`;
 }
 
 // ---------------------------------------------------------------------------

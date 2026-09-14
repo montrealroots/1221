@@ -200,12 +200,18 @@ That is defensible — the split describes what the receipts did, not what is
 owed today — but it understates a long-dead picture's debt. Fixing it means
 passing the current instant in and giving up the purity several tests rely on.
 
-**The lot's viability finding is not pinned by a test.** Five years across three
-seeds gives about ten bookings a year and 21% occupancy against a 62%
-break-even, with the family fronting roughly €30m. That was an ad hoc probe, not
-a committed test, so a future change could move it silently. It matters because
-enquiry volume is hardcoded at one a month and responds to nothing, which makes
-that axis inert: no action the player takes can currently change the outcome.
+**Enquiry volume is hardcoded at one a month and responds to nothing.** What
+the lot does is pinned now by `tests/lot.test.ts`, and what it costs the family
+is something the family reacts to — but who rings, and how often, is still a
+constant. That half is the next piece of work on this axis.
+
+The order mattered and was nearly got wrong. Making demand respond to the world
+first would have produced a better-looking lot and an equally inert one, because
+`familyCovers` topped the company's cash to zero every month with no cap and no
+failure state: the marginal cost of every lever was zero, so the best play was
+whatever you liked, decided in month one and never revisited. A perfect demand
+model on top of an infinite backstop is still a fixed outcome, only flattering.
+So the downside came first.
 
 ## The Build Order
 
@@ -554,6 +560,24 @@ fixed by widening what already existed rather than by adding a second
 mechanism — the same weekly tick, re-running the same periods, gated on the same
 cutting room. Two things moving the same parts is the bug this file already
 warns about.
+
+**A correct figure nobody acts on is the same fault as a wrong one.**
+`paidInAsShareOfAYear` was written, commented, tested, and read by no screen and
+no engine code. Its own comment said that reading the family's money against
+what the sugar cleared this year rather than against a flat number "is the only
+way the quota is ever felt on this side of the family" — and that was true, and
+the quota was still never felt, because the function had no callers. A number
+that is right and inert is harder to spot than one that is wrong, because
+everything about it looks finished.
+
+**A test that checks the announcement is not testing the mechanism.** The first
+draft of the family's patience passed with the mechanism deliberately removed:
+the test read a notification, and the notification was emitted from the tick on
+the same condition rather than from the code that actually withheld the money.
+Two of three tests in that commit had the same shape, and one of them recomputed
+the engine's own arithmetic inside the test and checked it against itself.
+Reintroduce the fault, watch it go red, and only then believe the test — most of
+all when the fault is subtle enough that you wrote the test to catch it.
 
 **Exports nothing reads, in a module written an hour ago.** Five of them, in
 the first draft of the inventory ledger: a sentence for a screen, a ledger
