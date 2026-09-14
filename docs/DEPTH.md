@@ -583,6 +583,15 @@ mechanism — the same weekly tick, re-running the same periods, gated on the sa
 cutting room. Two things moving the same parts is the bug this file already
 warns about.
 
+**One write in the whole interface skipped the engine, and the test that
+caught it was about something else.** Setting the clock speed assigned straight
+into `sim.universe.preferences` from a React component, and pausing when the
+world stops at you did the same — while `world.set_preferences` sat registered
+and called by nothing. It surfaced from a rule about reachability: every command
+the engine registers has to be run by something in the interface, and that one
+came back as unreachable when it was really being bypassed. The two readings
+look identical from the command's end. Both are now the same fix.
+
 **A fixture that stops short takes the rules with it.** The looks suite crawls
 a world that options and develops and then stops, so half the project page — the
 schedule, the crew, both ledgers, what can come apart — was never once drawn by

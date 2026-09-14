@@ -23,11 +23,15 @@ import { at } from '@/ui/looks/subject';
 import { said, toStart } from '@/ui/looks/words';
 import { formatMoney } from '@/engine/core/money';
 import { formatDate } from '@/engine/core/time';
-import { plansFor, planById } from '@/engine/content/making';
+import { DELIVERY, plansFor, planById } from '@/engine/content/making';
+import { DEALS, dealById } from '@/engine/content/selling';
 import { rateById, throughput } from '@/engine/content/inventory';
 import { cuttingPeriod } from '@/engine/world/inventory';
-import { stillToCarry } from '@/engine/world/lot';
-import { AIRDATE_WEEKS, LEAD_WEEKS, LONGEST_SHOOT, wouldBe } from '@/engine/world/making';
+import { pullOn, sellsFor, stillToCarry } from '@/engine/world/lot';
+import { SELLING } from '@/engine/content/lot';
+import {
+  AIRDATE_WEEKS, LEAD_WEEKS, LONGEST_SHOOT, canHandOver, windowOf, wouldBe,
+} from '@/engine/world/making';
 import type { GuildId, PolicyKind, RegistryId, RoleId } from '@/engine/domain/company';
 import {
   GUILD_BY_ID, POLICY_BY_ID, REGISTRY_BY_ID, ROLE_BY_ID,
@@ -95,6 +99,7 @@ export function BusinessWorkspace() {
 
       <Holdings />
       <Slate />
+      <TheLotsName />
       <Standings />
 
       <p className="xs dim" style={{ marginTop: 'var(--s5)' }}>
@@ -335,6 +340,8 @@ function Slate() {
   const slate = useWorld((s) => projectsOf(s.universe));
   const [putting, setPutting] = useState(false);
   const [saying, setSaying] = useState<string | undefined>();
+  const [filing, setFiling] = useState<string | undefined>();
+  const [selling, setSelling] = useState<string | undefined>();
 
   return (
     <Panel
@@ -361,6 +368,12 @@ function Slate() {
                   {project.planId === undefined && !project.shelvedAt && (
                     <button className="btn btn-sm" onClick={() => setSaying(project.id)}>Say Yes To It</button>
                   )}
+                  {project.planId !== undefined && project.stage !== 'delivered' && (
+                    <button className="btn btn-sm" onClick={() => setFiling(project.id)}>The Delivery List</button>
+                  )}
+                  {project.stage === 'delivered' && project.dealId === undefined && (
+                    <button className="btn btn-sm btn-primary" onClick={() => setSelling(project.id)}>Sell It</button>
+                  )}
                 </div>
               </div>
             </div>
@@ -369,6 +382,8 @@ function Slate() {
       )}
       {putting && <DevelopForm onClose={() => setPutting(false)} />}
       {saying && <GreenlightForm projectId={saying} onClose={() => setSaying(undefined)} />}
+      {filing && <DeliveryForm projectId={filing} onClose={() => setFiling(undefined)} />}
+      {selling && <SellForm projectId={selling} onClose={() => setSelling(undefined)} />}
     </Panel>
   );
 }
@@ -593,6 +608,175 @@ function GreenlightForm({ projectId, onClose }: { projectId: string; onClose: ()
         <p className="small negative" style={{ marginTop: 'var(--s3)' }}>{answer.error}</p>
       )}
     </Modal>
+  );
+}
+
+/**
+ * The contractual delivery list.
+ *
+ * A distributor does not pay for a film, it pays for a list, and four items on
+ * that list are paperwork nobody on the crew makes. Those four are the ones
+ * with a button. The rest come out of the work and arrive when the work does,
+ * which is why `handOver` refuses them outright and this shows them without a
+ * control rather than with one that always says no.
+ *
+ * And a piece of paperwork cannot be filed before the period it waits on is
+ * behind the picture, so a row that is not ready yet says when it will be
+ * instead of offering a button that would refuse for four months.
+ */
+function DeliveryForm({ projectId, onClose }: { projectId: string; onClose: () => void }) {
+  const { run, sim } = useGame();
+  const project = useWorld((s) => s.universe.projects[projectId]);
+  const [error, setError] = useState<string | undefined>();
+  if (!project) return null;
+
+  const file = (elementId: string) => {
+    const answer = run<{ ok: boolean; error?: string }>(
+      'company.deliver', { projectId, elementId }, { silent: true },
+    );
+    setError(answer.value?.ok ? undefined : answer.value?.error ?? answer.error);
+  };
+
+  return (
+    <Modal
+      title={`The Delivery List: ${project.title}`}
+      wide
+      onClose={onClose}
+      footer={<button className="btn btn-ghost" onClick={onClose}>Close</button>}
+    >
+      <p className="small">
+        A distributor pays for a list, not for a film, and it pays when the list is complete.
+        Four of these are paperwork no one on the crew makes.
+      </p>
+      <div className="table-wrap">
+        <table className="table">
+          <tbody>
+            {DELIVERY.map((element) => {
+              const over = project.delivered.includes(element.id);
+              const ready = canHandOver(project, element, sim.now);
+              const waits = windowOf(project, element.after);
+              return (
+                <tr key={element.id}>
+                  <td className="nowrap">{element.label}</td>
+                  <td className="small">{element.what}</td>
+                  <td className="small nowrap">
+                    {over ? 'Over'
+                      : element.by === 'production' ? 'Comes out of the work'
+                        : ready ? (
+                          <button className="btn btn-sm" onClick={() => file(element.id)}>File It</button>
+                        ) : waits
+                          ? `Not until ${formatDate(waits.to, sim.homeZone)}`
+                          : 'Waiting'}
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+      {error && <p className="small negative" style={{ marginTop: 'var(--s3)' }}>{error}</p>}
+    </Modal>
+  );
+}
+
+/**
+ * Selling the finished thing.
+ *
+ * The one decision that can pay the company back, and the terms differ more
+ * than the money does: a buyout is a check and no more, and a studio release
+ * reaches everybody for a decade after taking a third off the top.
+ */
+function SellForm({ projectId, onClose }: { projectId: string; onClose: () => void }) {
+  const { run } = useGame();
+  const project = useWorld((s) => s.universe.projects[projectId]);
+  const [dealId, setDealId] = useState(DEALS[0]?.id ?? '');
+  const [error, setError] = useState<string | undefined>();
+  const deal = dealById(dealId);
+
+  const sell = () => {
+    const answer = run<{ ok: boolean; error?: string }>(
+      'company.sell', { projectId, dealId }, { silent: true },
+    );
+    if (answer.value?.ok) { onClose(); return; }
+    setError(answer.value?.error ?? answer.error ?? 'Nobody bought it.');
+  };
+
+  return (
+    <Modal
+      title={`Sell ${project?.title ?? 'It'}`}
+      onClose={onClose}
+      footer={(
+        <>
+          <button className="btn btn-ghost" onClick={onClose}>Never Mind</button>
+          <button className="btn btn-primary" onClick={sell} disabled={!deal}>Take The Deal</button>
+        </>
+      )}
+    >
+      <div className="field">
+        <label htmlFor="sell-deal">Who Takes It</label>
+        <select id="sell-deal" value={dealId} onChange={(e) => { setDealId(e.target.value); setError(undefined); }}>
+          {DEALS.map((one) => <option key={one.id} value={one.id}>{one.label}</option>)}
+        </select>
+      </div>
+      {deal && (
+        <p className="xs dim" style={{ margin: 0 }}>
+          {deal.said}{' '}
+          {deal.reach === 0
+            ? 'Nobody licenses it again, so there are no windows to open and no statements to read.'
+            : 'It pays as the windows open, across years, and what comes home is what the waterfall leaves.'}
+        </p>
+      )}
+      {error && <p className="small negative" style={{ marginTop: 'var(--s3)' }}>{error}</p>}
+    </Modal>
+  );
+}
+
+/**
+ * What the lot spends on being known.
+ *
+ * The one decision on the whole estate taken again every month, and the only
+ * control in the game whose consequence is already fully explained on the page
+ * it opens onto. What it buys is read back off the ledger across three
+ * quarters rather than off this figure, so it cannot be bought the month
+ * before it is wanted and cannot be dropped without the market noticing two
+ * quarters later.
+ */
+function TheLotsName() {
+  const { run } = useGame();
+  const spending = useWorld((s) => sellsFor(s));
+  const pull = useWorld((s) => pullOn(s));
+  const [error, setError] = useState<string | undefined>();
+
+  const set = (monthlyCents: number) => {
+    const answer = run<{ ok: boolean; error?: string }>('lot.sell', { monthlyCents }, { silent: true });
+    setError(answer.value?.ok ? undefined : answer.value?.error ?? answer.error);
+  };
+
+  return (
+    <Panel title="Being Known" tight look={at('lot')}>
+      <p className="small">
+        A producer in Reykjavik knows the stages are there whatever anybody spends. A desk in Los
+        Angeles hears about a show after the budget is locked unless the lot was in that
+        conversation first.
+      </p>
+      <div className="field">
+        <label htmlFor="lot-selling">What It Spends A Month</label>
+        <input
+          id="lot-selling" type="range" min={SELLING.floor} max={SELLING.most} step={10_000_00}
+          value={spending} onChange={(e) => set(Number(e.target.value))}
+        />
+        <p className="xs dim" style={{ margin: 'var(--s2) 0 0' }}>
+          {formatMoney(spending, { cents: false })} a month. The floor is{' '}
+          {formatMoney(SELLING.floor, { cents: false })}, and past{' '}
+          {formatMoney(SELLING.most, { cents: false })} there is nobody left to tell.
+        </p>
+      </div>
+      <div className="row-between">
+        <div className="xs muted">{Math.round(pull.reach * 100)}/100 of the way to everybody who books a stage</div>
+        <div className="xs muted">{pull.calls.toFixed(1)} calls a month</div>
+      </div>
+      {error && <p className="small negative" style={{ marginTop: 'var(--s3)' }}>{error}</p>}
+    </Panel>
   );
 }
 

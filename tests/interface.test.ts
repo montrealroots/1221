@@ -329,8 +329,29 @@ describe('the production side is reachable by hand', () => {
     // no caller outside a test has never been given an argument nobody thought
     // of, which is how `company.greenlight` came to accept an airdate that laid
     // the whole schedule into weeks that had already happened.
-    for (const kind of ['company.fill_post', 'company.develop', 'company.greenlight']) {
+    for (const kind of [
+      'company.fill_post', 'company.develop', 'company.greenlight',
+      'company.deliver', 'company.sell', 'lot.sell',
+    ]) {
       expect(screen, `${kind} is still reachable only from a test`).toContain(`'${kind}'`);
+    }
+  });
+
+  it('leaves no engine command that a person cannot reach', () => {
+    // The whole point of the exercise, stated as the thing that has to stay
+    // true. A command nobody can run is engine work the game does not have.
+    const everywhere = readdirSync('src/ui', { recursive: true, encoding: 'utf8' })
+      .filter((one) => one.endsWith('.tsx') || one.endsWith('.ts'))
+      .map((one) => readFileSync(`src/ui/${one}`, 'utf8'))
+      .join('\n');
+    const engine = readdirSync('src/engine', { recursive: true, encoding: 'utf8' })
+      .filter((one) => one.endsWith('.ts'))
+      .flatMap((one) => [...readFileSync(`src/engine/${one}`, 'utf8')
+        .matchAll(/onCommand<[^(]*\(\s*'([a-z_]+\.[a-z_]+)'/g)].map((m) => m[1]!));
+    expect(engine.length, 'no commands were found at all').toBeGreaterThan(10);
+    for (const kind of new Set(engine)) {
+      expect(everywhere, `${kind} is registered and nothing in the interface runs it`)
+        .toContain(`'${kind}'`);
     }
   });
 

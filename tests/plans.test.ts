@@ -326,7 +326,16 @@ describe('the form and the engine agree about what a plan has', () => {
     const CONTROLS = readFileSync(new URL('../src/ui/shell/TimeControls.tsx', import.meta.url), 'utf8');
 
     expect(CONTEXT, 'nothing reads where the clock stopped').toContain('interruptedBy');
-    expect(CONTEXT, 'the world keeps ticking while it waits on you').toContain("timeSpeed = 'paused'");
+    // The pause itself, not the spelling of it. It used to be an assignment
+    // into `sim.universe` from a React component — the one write in the whole
+    // interface that skipped the engine — and this held that assignment in
+    // place rather than the behavior it stood for.
+    expect(CONTEXT, 'the world keeps ticking while it waits on you').toContain("timeSpeed: 'paused'");
+    const sim = quickSave({}, 'halted');
+    expect(sim.universe.preferences.timeSpeed).not.toBe('paused');
+    sim.execute({ kind: 'world.set_preferences', payload: { timeSpeed: 'paused' } });
+    expect(sim.universe.preferences.timeSpeed, 'the clock could not be stopped through a command')
+      .toBe('paused');
     expect(CONTROLS, 'the halt never reaches a screen').toContain('standingAt');
     expect(CONTROLS, 'not going never reaches the engine').toContain("'calendar.skip'");
   });
