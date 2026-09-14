@@ -20,6 +20,8 @@ import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { ALL_DESTINATIONS, DESTINATIONS } from '@/ui/shell/destinations';
 import { WEATHER_EMOJI } from '@/engine/systems/weather';
+import { quickSave } from '@/engine';
+import { capabilitiesOf } from '@/engine/world/company';
 
 // Anything Unicode says may be drawn as a picture, plus the selectors and
 // joiners that make one. A tick or a cross in the Dingbats block that has no
@@ -254,5 +256,65 @@ describe('reading the world', () => {
       }
     }
     expect(offenders, 'world readers that will not notice the screen changed its mind').toEqual([]);
+  });
+});
+
+// ---------------------------------------------------------------------------
+
+describe('every door a player is stopped at has a way through it', () => {
+  const SCREEN = 'src/ui/workspaces/BusinessWorkspace.tsx';
+
+  /**
+   * The two kinds of blocker that deliberately have no button, and why.
+   *
+   * Material has one, but it sits at the top of the panel that holds the
+   * rights rather than on the blocker, because taking an option is a thing a
+   * company does whether or not a door is shut on it. Money has none because
+   * there is no button that makes a company solvent — it is fixed by the
+   * business working, which is the whole point of the axis it belongs to.
+   */
+  const NOT_A_BUTTON: Record<string, string> = {
+    holding: 'Take An Option',
+    money: 'no control, and correctly so',
+  };
+
+  it('offers a control for every blocker the capability doors can raise', () => {
+    const screen = readFileSync(SCREEN, 'utf8');
+    const sim = quickSave({}, 'doors-reachable');
+    const raised = new Set<string>();
+    for (const door of capabilitiesOf(sim)) {
+      for (const blocker of door.blockers) if (blocker.fixKind) raised.add(blocker.fixKind);
+    }
+    expect(raised.size, 'a cold save raises no blockers at all').toBeGreaterThan(3);
+
+    for (const kind of raised) {
+      if (NOT_A_BUTTON[kind]) continue;
+      // The switch in `Missing` is what turns a blocker into something a person
+      // can press. A kind with no case there is a door a player can be stopped
+      // at and never get past, which is what happened to the head of production
+      // for eight commits: every other step of the sequence was reachable and
+      // that one was not, so the greenlight door could not be opened by hand.
+      expect(screen, `nothing in the interface fixes a '${kind}' blocker`)
+        .toContain(`case '${kind}'`);
+    }
+  });
+
+  it('can walk the whole sequence to a greenlight with the commands the screen runs', () => {
+    // The same path the buttons take, in the order the doors present it. If
+    // this passes and the screen has no control for one of them, the test
+    // above is the one that catches it.
+    const sim = quickSave({}, 'doors-walk');
+    const ran = (kind: string, payload: Record<string, unknown>): boolean =>
+      sim.execute<{ ok: boolean }>({ kind, payload }).value?.ok === true;
+    const somebody = Object.values(sim.universe.people).find((one) => !one.isPlayer)!;
+
+    expect(ran('company.fill_post', { role: 'production', personId: somebody.id })).toBe(true);
+    expect(ran('company.option', { title: 'Something To Make', hold: 'option', months: 18 })).toBe(true);
+    expect(ran('company.register', { registry: 'is_employer' })).toBe(true);
+    for (const policy of ['general_liability', 'workers_comp', 'production_package']) {
+      expect(ran('company.insure', { policy })).toBe(true);
+    }
+    const door = capabilitiesOf(sim).find((one) => one.id === 'greenlight')!;
+    expect(door.can, `still shut: ${door.blockers.map((b) => b.need).join(', ')}`).toBe(true);
   });
 });

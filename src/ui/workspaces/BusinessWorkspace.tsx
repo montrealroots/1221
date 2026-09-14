@@ -23,7 +23,7 @@ import { at } from '@/ui/looks/subject';
 import { toStart } from '@/ui/looks/words';
 import { formatMoney } from '@/engine/core/money';
 import { formatDate } from '@/engine/core/time';
-import type { GuildId, PolicyKind, RegistryId } from '@/engine/domain/company';
+import type { GuildId, PolicyKind, RegistryId, RoleId } from '@/engine/domain/company';
 import {
   GUILD_BY_ID, POLICY_BY_ID, REGISTRY_BY_ID, ROLE_BY_ID,
 } from '@/engine/content/incorporation';
@@ -135,6 +135,7 @@ function Door({ door }: { door: Capability }) {
 function Missing({ blocker }: { blocker: Blocker }) {
   const { run } = useGame();
   const [error, setError] = useState<string | undefined>();
+  const [filling, setFilling] = useState(false);
 
   const act = (kind: string, payload: Record<string, unknown>) => {
     const answer = run<{ ok: boolean; error?: string }>(kind, payload, { silent: true });
@@ -158,6 +159,12 @@ function Missing({ blocker }: { blocker: Blocker }) {
         const facts = POLICY_BY_ID[id as PolicyKind];
         return facts && { label: `Bind ${facts.label}`, go: () => act('company.insure', { policy: id }) };
       }
+      // A post is the one blocker that cannot be fixed by pressing a button,
+      // because it needs a person and the company has to choose which. It was
+      // the only unreachable one, and it shut the greenlight door — so a player
+      // could walk every other step of the sequence and stop here for good.
+      case 'role':
+        return { label: 'Fill The Post', go: () => setFilling(true) };
       default:
         return undefined;
     }
@@ -171,7 +178,69 @@ function Missing({ blocker }: { blocker: Blocker }) {
         {error && <div className="xs negative" style={{ marginTop: 2 }}>{error}</div>}
       </div>
       {control && <button className="btn btn-sm" onClick={control.go}>{control.label}</button>}
+      {filling && (
+        <PostForm
+          role={id as RoleId}
+          onClose={() => setFilling(false)}
+          onDone={(said) => { setError(said); if (!said) setFilling(false); }}
+        />
+      )}
     </div>
+  );
+}
+
+/**
+ * Who sits in a post.
+ *
+ * A list of everybody the company could ask, which at the start of a save is
+ * three people and two of them are your parents. That is the honest shape of
+ * it: a production company nobody has worked for hires the people in the
+ * house, and the post costs its salary from the month they start.
+ */
+function PostForm({ role, onClose, onDone }: {
+  role: RoleId;
+  onClose: () => void;
+  onDone: (error: string | undefined) => void;
+}) {
+  const { run } = useGame();
+  const everybody = useWorld((s) => Object.values(s.universe.people));
+  const facts = ROLE_BY_ID[role];
+  const [chosen, setChosen] = useState<string>(everybody[0]?.id ?? '');
+
+  const put = () => {
+    const answer = run<{ ok: boolean; error?: string }>(
+      'company.fill_post', { role, personId: chosen }, { silent: true },
+    );
+    onDone(answer.value?.ok ? undefined : answer.value?.error ?? answer.error ?? 'Nobody took it.');
+    if (answer.value?.ok) onClose();
+  };
+
+  return (
+    <Modal
+      title={`Fill ${facts?.label ?? 'The Post'}`}
+      onClose={onClose}
+      footer={(
+        <>
+          <button className="btn btn-ghost" onClick={onClose}>Never Mind</button>
+          <button className="btn btn-primary" onClick={put} disabled={!chosen}>Give Them The Post</button>
+        </>
+      )}
+    >
+      <div className="field">
+        <label htmlFor="post-person">Who</label>
+        <select id="post-person" value={chosen} onChange={(e) => setChosen(e.target.value)}>
+          {everybody.map((one) => (
+            <option key={one.id} value={one.id}>
+              {one.displayName}{one.isPlayer ? ' (you)' : ''}
+            </option>
+          ))}
+        </select>
+      </div>
+      <p className="xs dim" style={{ margin: 0 }}>
+        {facts?.what ?? ''} It pays {formatMoney(facts?.monthlyCents ?? 0, { cents: false })} a month
+        from the day they start, whether or not the company is making anything.
+      </p>
+    </Modal>
   );
 }
 
