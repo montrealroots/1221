@@ -225,10 +225,23 @@ export const howFarById = (id: string): HowFar | undefined => HOW_FAR.find((h) =
  * `FURTHEST` and a miss on one shade is worth a third of a miss on all of them.
  * This is where the door shuts.
  *
- * SLATE's own, and fitted rather than picked: a reading played dead center
- * against a want drawn flat across the range is about 1.7 out, so playing it
- * safe lands between the two thresholds below. Safe is not wrong and it is not
- * enough, which is the sentence the whole file is trying to be.
+ * SLATE's own, and fitted rather than picked: a reading played dead center is
+ * 1.5 out, so playing it safe lands between the two thresholds below. Safe is
+ * not wrong and it is not enough, which is the sentence the whole file is
+ * trying to be.
+ *
+ * The want it is 1.5 out of is not drawn flat, and this comment said it was for
+ * as long as it existed — along with a figure of 1.7, which is what a flat draw
+ * would have given. `whatTheyWant` rounds a number off the range, so the two
+ * ends come up half as often as everything between them: nought, one and two
+ * a sixth of the time each either way, and three a twelfth. That started as an
+ * artifact of the rounding and it is kept on purpose, because it is the better
+ * shape — most parts want something near the middle, and a part that wants the
+ * most warmth anybody has is a rarer thing than a part that wants a little.
+ *
+ * The shape is pinned in a test rather than written out here a second time. A
+ * distribution described in prose is a distribution nothing checks, and this
+ * one went two numbers wrong in a single sentence without anything noticing.
  */
 export const TOO_FAR = 3.4;
 

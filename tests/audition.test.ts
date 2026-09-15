@@ -23,6 +23,7 @@ import type { Simulation } from '@/engine';
 import type { Audition, Booking } from '@/engine/domain/model';
 import { sheetOf } from '@/engine/domain/attributes';
 import { MS_DAY } from '@/engine/core/time';
+import { makeRng } from '@/engine/core/rng';
 import { MS_WEEK } from '@/engine/world/lot';
 import {
   AS_GOOD_AS_IT_GETS, ASKING_AT, SHUTS_AT, afterTheNote, alreadyUpFor, decideAudition, feeFor,
@@ -582,6 +583,54 @@ describe('a tape is a performance nobody tells you anything about', () => {
   it('calls the two kinds of no by their two different names', () => {
     expect(decideAudition({ off: 2.4, sawYou: true, free: true }, 0.99)).toBe('went-another-way');
     expect(decideAudition({ off: 2.4, sawYou: false, free: true }, 0.99)).toBe('not-in-the-room');
+  });
+});
+
+describe('what the room wants, and how far off safe is', () => {
+  // The shape of the want is stated here rather than in prose. It was described
+  // in prose, once, above TOO_FAR — as "drawn flat across the range", putting a
+  // dead-center reading "about 1.7 out". Both halves were wrong and nothing
+  // checked either: the draw is not flat and the figure is 1.5. A distribution
+  // written in a comment is a distribution nothing tests.
+
+  it('draws the two ends half as often as everything between them', () => {
+    const rng = makeRng('the-shape');
+    const seen = new Map<number, number>();
+    const rounds = 120_000;
+    for (let i = 0; i < rounds; i += 1) {
+      const want = whatTheyWant(() => rng.next());
+      for (const shade of SHADES) {
+        const at = want[shade.id]!;
+        seen.set(at, (seen.get(at) ?? 0) + 1);
+      }
+    }
+    const draws = rounds * SHADES.length;
+    // Nothing outside the range a reading can reach, or the note would be
+    // asking for something nobody can play.
+    for (const at of seen.keys()) expect(Math.abs(at)).toBeLessThanOrEqual(FURTHEST);
+    for (const at of [-2, -1, 0, 1, 2]) {
+      expect((seen.get(at) ?? 0) / draws, `want ${at}`).toBeCloseTo(1 / 6, 2);
+    }
+    for (const at of [-FURTHEST, FURTHEST]) {
+      expect((seen.get(at) ?? 0) / draws, `want ${at}`).toBeCloseTo(1 / 12, 2);
+    }
+  });
+
+  it('puts safe between the two thresholds, which is the whole fitting', () => {
+    // The load-bearing claim, and the one that survives whatever the draw's
+    // shape is: playing it safe is not wrong and it is not enough. If the mean
+    // ever fell inside CLOSE_ENOUGH, dead center would be a winning button and
+    // there would be no reason to read for anything.
+    const rng = makeRng('safe-is-not-enough');
+    let total = 0;
+    const rounds = 120_000;
+    for (let i = 0; i < rounds; i += 1) total += howFarOff(AS_WRITTEN, whatTheyWant(() => rng.next()));
+    const mean = total / rounds;
+    expect(mean).toBeGreaterThan(CLOSE_ENOUGH);
+    expect(mean).toBeLessThan(TOO_FAR);
+    // And the figure the comment above TOO_FAR now cites, so the two cannot
+    // drift apart again.
+    expect(mean).toBeCloseTo(1.5, 2);
   });
 });
 
