@@ -126,7 +126,10 @@ describe('every plan is a plan somebody could actually run', () => {
 
   it('measures itself against a shoot, and holds a stage for it', () => {
     for (const plan of PLANS) {
-      expect(plan.periods.some((p) => p.per === 1)).toBe(true);
+      // The period it is measured against, named by the plan. `some(per === 1)`
+      // stood here and was true of a plan with two of them, which is how every
+      // reader that inferred the base ended up on the wrong one.
+      expect(plan.periods.some((p) => p.id === plan.basePeriod)).toBe(true);
       expect(plan.periods.some((p) => p.holds === 'shooting')).toBe(true);
       expect(plan.media.length).toBeGreaterThan(0);
       for (const period of plan.periods) {

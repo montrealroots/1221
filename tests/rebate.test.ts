@@ -35,8 +35,8 @@ import { whereFromById } from '@/engine/content/casting';
 import { performerNew } from '@/engine/world/casting';
 import {
   applyForRebate, armTheClaim, auditorsFee, awayOnTheCast, certifiable, inKrona,
-  limbsOf, payTheClaim, rateFor, shortOnFor, turnsOverOn, whereTheClaimStands,
-  whyNot, worthToday,
+  limbsOf, payTheClaim, rateFor, shootWeeksOf, shortOnFor, turnsOverOn,
+  whereTheClaimStands, whyNot, worthToday,
 } from '@/engine/world/rebate';
 
 interface Done { ok: boolean; id?: string; error?: string }
@@ -279,6 +279,25 @@ describe('applying, which closes on the first day of photography', () => {
     // Weeks of prep sit in front of it, and every one of them is still time to
     // apply. A deadline at the first date on the schedule would take them away.
     expect(turnsOverOn(project)!).toBeGreaterThan(project.periods![0]!.from);
+  });
+
+  it('closes on a format season’s field, and not on the rig that runs beside casting', () => {
+    const sim = world();
+    run(sim, 'company.develop', { title: 'The Arena', medium: 'television' });
+    const id = projectsOf(sim.universe).find((one) => one.title === 'The Arena')!.id;
+    expect(run(sim, 'company.greenlight', {
+      projectId: id, planId: 'unscripted', budgetCents: 20_000_000_00, shootWeeks: 6,
+    }).error).toBeUndefined();
+
+    const project = projectIn(sim, id);
+    const rig = project.periods!.find((one) => one.id === 'rig')!;
+    const field = project.periods!.find((one) => one.id === 'field')!;
+    // The rig is exactly as long as the field and starts alongside casting, so
+    // a deadline placed on it would shut the application weeks before anybody
+    // pointed a camera at anything. The plan names its base period for this.
+    expect(rig.from).toBeLessThan(field.from);
+    expect(turnsOverOn(project)).toBe(field.from);
+    expect(shootWeeksOf(project)).toBe(Math.round((field.to - field.from) / MS_WEEK));
   });
 
   it('refuses once the camera has turned over, and the money is simply gone', () => {

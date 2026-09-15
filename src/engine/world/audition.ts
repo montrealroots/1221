@@ -51,6 +51,7 @@ import {
 } from '../content/audition';
 import { SIZES, sizeById } from '../content/casting';
 import { MS_WEEK } from './lot';
+import { baseWindowOf } from './periods';
 
 const MS_DAY = 24 * 60 * 60 * 1000;
 
@@ -349,8 +350,7 @@ export function freeAcross(sim: Simulation, from: Instant, to: Instant): boolean
       if (seat.personId !== me || seat.releasedAt !== undefined) continue;
       const role = project.roles?.find((r) => r.id === seat.roleId);
       if (!role) continue;
-      const shoot = project.periods?.find((p) => p.id === 'shooting')
-        ?? project.periods?.find((p) => p.id === 'field');
+      const shoot = baseWindowOf(project);
       if (shoot && shoot.from - MS_WEEK < to && from < shoot.to) return false;
     }
   }

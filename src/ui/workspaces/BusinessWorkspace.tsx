@@ -41,6 +41,7 @@ import {
   AIRDATE_WEEKS, LEAD_WEEKS, LONGEST_SHOOT, canHandOver, windowOf, wouldBe,
 } from '@/engine/world/making';
 import { LIMB_LABELS, THE_CLAIM } from '@/engine/content/rebate';
+import { basePeriodOf } from '@/engine/world/periods';
 import { REBATE } from '@/engine/content/incorporation';
 import {
   auditorsFee, awayOnTheCast, certifiable, limbsOf, shortOnFor, turnsOverOn,
@@ -517,8 +518,11 @@ function GreenlightForm({ projectId, onClose }: { projectId: string; onClose: ()
   const [when, setWhen] = useState<string>('');
 
   // The week count does not set a shoot on every plan — an unscripted season
-  // does not shoot — so the label is the plan's own base period.
-  const shootLabel = plan?.periods.find((one) => one.per === 1)?.label ?? 'How Long It Shoots';
+  // does not shoot — so the label is the plan's own base period. Found by the
+  // plan naming it: looking for `per === 1` labelled this slider "The Rig" on a
+  // format season, which is a period that runs alongside casting and is not the
+  // one the number sets.
+  const shootLabel = basePeriodOf(plan)?.label ?? 'How Long It Shoots';
   const anchoredAt = plan?.anchor === 'delivery' ? AIRDATE_WEEKS : LEAD_WEEKS;
   const from = when
     ? new Date(`${when}T00:00:00Z`).getTime()

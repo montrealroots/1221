@@ -46,16 +46,7 @@ import {
   CROWD_RUNS, DEPARTMENTS, FULLY_STAFFED_AT, POSTS, type Post, postById, prepScale,
 } from '../content/crew';
 import { MS_WEEK } from './lot';
-
-/**
- * The dates of one period.
- *
- * The same lookup `world/making.ts` exports, written out here rather than
- * imported, because making has to call this file at the greenlight and two
- * modules importing each other is a cycle waiting to bite.
- */
-const periodOn = (project: Project, id: string): { from: Instant; to: Instant } | undefined =>
-  project.periods?.find((p) => p.id === id);
+import { baseWindowOf } from './periods';
 
 export const CREW_KIND = 'project.crew';
 
@@ -128,9 +119,17 @@ export function crewDaysOf(shootWeeks: number): number {
   return Math.round((shootWeeks + CROWD_RUNS * 2) * 5);
 }
 
-/** When a post comes on, which is never before somebody said yes to the picture. */
+/**
+ * When a post comes on, which is never before somebody said yes to the picture.
+ *
+ * Counted back from the plan's base period and not from a period called
+ * 'shooting'. An unscripted season has no such period, so this used to hand
+ * every post the same date and `endFor` beside it handed back nothing, and
+ * `fillPost` walked away from all twenty-four. A format season was made by
+ * nobody, and the screen said it had not started hiring yet.
+ */
 export function startFor(project: Project, post: Post, notBefore: Instant): Instant {
-  const shoot = periodOn(project, 'shooting');
+  const shoot = baseWindowOf(project);
   if (!shoot) return notBefore;
   const scale = prepScale(((shoot.to - shoot.from) / MS_WEEK) || 6);
   const wanted = shoot.from - Math.round(post.startsAt * scale * MS_WEEK);
@@ -139,7 +138,7 @@ export function startFor(project: Project, post: Post, notBefore: Instant): Inst
 
 /** When they finish, which is after wrap for most and long after it for the money. */
 export function endFor(project: Project, post: Post): Instant | undefined {
-  const shoot = periodOn(project, 'shooting');
+  const shoot = baseWindowOf(project);
   if (!shoot) return undefined;
   const scale = prepScale(((shoot.to - shoot.from) / MS_WEEK) || 6);
   return shoot.to + Math.round(post.endsAt * scale * MS_WEEK);

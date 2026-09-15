@@ -66,6 +66,7 @@ import {
 } from '../content/casting';
 import type { Plan } from '../content/making';
 import { MS_WEEK } from './lot';
+import { baseWindowOf } from './periods';
 import { americanArm, signedWith } from './company';
 import { isCitizenOf } from '../domain/citizenship';
 
@@ -261,8 +262,7 @@ export const openRoles = (project: Project): Role[] =>
  * only reason a guest is cheaper than a regular.
  */
 export function datesFor(project: Project, role: Role): { from: Instant; to: Instant } | undefined {
-  const shoot = project.periods?.find((p) => p.id === 'shooting')
-    ?? project.periods?.find((p) => p.id === 'field');
+  const shoot = baseWindowOf(project);
   if (!shoot) return undefined;
   const opens = shoot.from - MS_WEEK;
   if (!role.partId) return { from: opens, to: shoot.to };
@@ -1045,8 +1045,7 @@ export const OFFICE_FILLS_AT = 2;
 
 /** Arms the office's own pass at the parts, for a picture that has dates. */
 export function armTheCasting(sim: Simulation, project: Project): void {
-  const shoot = project.periods?.find((p) => p.id === 'shooting')
-    ?? project.periods?.find((p) => p.id === 'field');
+  const shoot = baseWindowOf(project);
   if (!shoot || (project.roles ?? []).length === 0) return;
   sim.schedule({
     at: Math.max(sim.now, shoot.from - OFFICE_FILLS_AT * MS_WEEK),
@@ -1445,8 +1444,7 @@ export function nextFreeDay(sim: Simulation, companyId: Id): Instant {
 
 /** When the office stops waiting and fills whatever is left. */
 export function officeFillsAt(project: Project): Instant | undefined {
-  const shoot = project.periods?.find((p) => p.id === 'shooting')
-    ?? project.periods?.find((p) => p.id === 'field');
+  const shoot = baseWindowOf(project);
   return shoot ? shoot.from - OFFICE_OPEN_UNTIL * MS_WEEK : undefined;
 }
 

@@ -37,9 +37,9 @@ import type { Project } from '../domain/company';
 import { instantFromZoned } from '../core/time';
 import { REBATE } from '../content/incorporation';
 import { LIMB_LABELS, THE_CLAIM, type Limbs, type WhyNot, refusalById, shortOn } from '../content/rebate';
-import { planById } from '../content/making';
 import { formatMoney } from '../core/money';
 import { ISK_A_EURO, MS_WEEK } from './lot';
+import { baseWindowOf } from './periods';
 import { capabilitiesOf } from './company';
 import { crewDaysOf, headcountOf } from './crew';
 import { fromWhere } from './casting';
@@ -54,16 +54,15 @@ export const CLAIM_KIND = 'project.rebate';
 /**
  * The first day a camera runs on this picture.
  *
- * The plan's base period, which is the one carrying `per: 1` — the shoot on a
- * feature, the field on an unscripted season. Read off the plan instead of
- * looking for a period called 'shooting', because a season that never shoots a
- * scripted page still has a first day and still qualifies.
+ * The period the plan names as its base — the shoot on a feature, the field on
+ * an unscripted season — because a season that never shoots a scripted page
+ * still has a first day and still qualifies. This read the base off `per === 1`
+ * for about an hour, which found the rig on a format season: the application
+ * would have closed weeks before anybody pointed a camera at anything, on a
+ * period that runs alongside casting.
  */
 export function turnsOverOn(project: Project): Instant | undefined {
-  const plan = project.planId ? planById(project.planId) : undefined;
-  const base = plan?.periods.find((one) => one.per === 1);
-  if (!base) return undefined;
-  return project.periods?.find((one) => one.id === base.id)?.from;
+  return baseWindowOf(project)?.from;
 }
 
 /** The last day the scheme exists in law, as an instant. */
@@ -155,9 +154,7 @@ export function limbsOf(sim: Simulation, project: Project, on: 'plan' | 'books')
 
 /** How many weeks the base period runs to, which is the number a producer chose. */
 export function shootWeeksOf(project: Project): number {
-  const plan = project.planId ? planById(project.planId) : undefined;
-  const base = plan?.periods.find((one) => one.per === 1);
-  const window = base ? project.periods?.find((one) => one.id === base.id) : undefined;
+  const window = baseWindowOf(project);
   if (!window) return 0;
   return Math.round((window.to - window.from) / MS_WEEK);
 }

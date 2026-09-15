@@ -59,13 +59,19 @@ export interface Period {
   /**
    * How long it runs, as a multiple of the plan's base period.
    *
-   * Exactly one period in a plan carries `per: 1`, and it is the one the
-   * producer actually chooses the length of — the shoot on a feature, the
-   * field on an unscripted season. Everything else is quoted against it, the
-   * way a real schedule is. Deliberately not called "shooting weeks" any
-   * more: a season that never shoots a scripted page still has a base period,
-   * and naming this after the live-action case is how an engine ends up
-   * unable to express anything else.
+   * Everything on a real schedule is quoted against the one period the producer
+   * actually chooses the length of, and so is everything here. Deliberately not
+   * called "shooting weeks" any more: a season that never shoots a scripted
+   * page still has a base period, and naming this after the live-action case is
+   * how an engine ends up unable to express anything else.
+   *
+   * This used to say that exactly one period in a plan carries `per: 1` and
+   * that it is the base. Both halves were wrong. The unscripted season carries
+   * two — the rig is as long as the field, which is a true thing about an
+   * unscripted season — so `per` was never an identifier, and everything that
+   * went looking for the base by it found the rig. `Plan.basePeriod` names it
+   * instead, because a plan should say which period that is and not leave it to
+   * be inferred from a number that means something else.
    */
   per: number;
   /**
@@ -139,6 +145,23 @@ export interface Plan {
   media: readonly ('film' | 'television')[];
   /** The periods, in the order they are declared. */
   periods: readonly Period[];
+  /**
+   * The id of the period the producer chooses the length of.
+   *
+   * The shoot on a feature, the field on an unscripted season. It is the one
+   * number a greenlight asks for, every other period is quoted against it, and
+   * it is the first day a camera runs — which makes it the date the crew's
+   * offsets count back from, the date the casting office works to, and the date
+   * the reimbursement's application closes on.
+   *
+   * Named here rather than found by searching the periods for one called
+   * 'shooting'. A season's base period is the field, and every reader that went
+   * looking for a literal either hard-coded two names or found nothing: the
+   * crew hired nobody onto an unscripted season for as long as this was
+   * inferred, because the lookup came back empty and the whole department
+   * walked past it.
+   */
+  basePeriod: string;
   /**
    * Weeks between the end of the work and the contractual delivery date. The
    * window exists so that finishing is not the same as delivering, because it
@@ -217,6 +240,7 @@ export interface Plan {
  */
 const FEATURE: Plan = {
   id: 'feature',
+  basePeriod: 'shooting',
   cast: 'performers',
   ratio: 'feature',
   label: 'A Feature, Shot On Stages',
@@ -280,6 +304,7 @@ const FEATURE: Plan = {
  */
 const SERIES: Plan = {
   id: 'series',
+  basePeriod: 'shooting',
   cast: 'performers',
   ratio: 'drama',
   label: 'A Series, Shot On Stages',
@@ -369,6 +394,7 @@ const SERIES: Plan = {
  */
 const UNSCRIPTED: Plan = {
   id: 'unscripted',
+  basePeriod: 'field',
   ratio: 'rig',
   label: 'A Format Season, Against An Airdate',
   what: 'A cast board, a built arena, a continuous shoot, and a cut that starts the same day the cameras do.',

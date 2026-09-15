@@ -30,6 +30,9 @@ import {
   standingReads, startFor, whereTheCrewStands,
 } from '@/engine/world/crew';
 import { finishesBy, windowOf } from '@/engine/world/making';
+import { baseWindowOf } from '@/engine/world/periods';
+import { datesFor } from '@/engine/world/casting';
+import { PLANS, planById } from '@/engine/content/making';
 
 interface Done { ok: boolean; id?: string; error?: string }
 
@@ -44,7 +47,9 @@ const world = (seed = 'crew'): Simulation => {
 
 /** Greenlights one and gives back its id. */
 function makeIt(sim: Simulation, title: string, over: Record<string, unknown> = {}): string {
-  run(sim, 'company.develop', { title, medium: 'film' });
+  const planId = (over.planId as string | undefined) ?? 'feature';
+  const medium = planById(planId)!.media.includes('film') ? 'film' : 'television';
+  run(sim, 'company.develop', { title, medium });
   const id = projectsOf(sim.universe).find((one) => one.title === title)!.id;
   const done = run(sim, 'company.greenlight', {
     projectId: id, planId: 'feature', budgetCents: 20_000_000_00, shootWeeks: 6, ...over,
@@ -52,6 +57,89 @@ function makeIt(sim: Simulation, title: string, over: Record<string, unknown> = 
   expect(done.error).toBeUndefined();
   return id;
 }
+
+// ---------------------------------------------------------------------------
+
+describe('which period the calendar hangs off', () => {
+  it('has every plan name its base period, and has that period exist', () => {
+    for (const plan of PLANS) {
+      const base = plan.periods.find((one) => one.id === plan.basePeriod);
+      expect(base, `${plan.id} names a base period it does not have`).toBeDefined();
+      expect(base!.per, `${plan.id}'s base period is not the one lengths are quoted against`).toBe(1);
+    }
+  });
+
+  it('does not let the base period be guessed from the one number that is not it', () => {
+    // The unscripted season's rig is exactly as long as its field, which is a
+    // true thing about an unscripted season and makes `per` useless as an
+    // identifier. Everything that guessed the base from it found the rig: a
+    // period that runs alongside casting, weeks before anybody points a camera
+    // at anything. This is the assertion that stops the guess coming back.
+    const unscripted = planById('unscripted')!;
+    expect(unscripted.periods.filter((one) => one.per === 1).length).toBeGreaterThan(1);
+    expect(unscripted.basePeriod).toBe('field');
+  });
+
+  it('puts a crew on a format season, which for a long time it did not', () => {
+    const sim = world('unscripted-crew');
+    const id = makeIt(sim, 'The Arena', { planId: 'unscripted' });
+    const project = sim.universe.projects[id]!;
+    expect(project.periods!.some((one) => one.id === 'shooting'))
+      .toBe(false);
+
+    // The bug this holds: the crew looked for a period called 'shooting', found
+    // nothing, gave every post the same start and no end at all, and hired
+    // nobody. Twenty-four posts carried, twenty-four people not engaged, and a
+    // screen reporting a season that had not started hiring yet — forever.
+    sim.advanceTo(finishesBy(project)! + MS_DAY);
+    const crew = crewOf(sim, sim.universe.projects[id]!);
+    expect(crew.length).toBe(postsFor(project.budgetCents ?? 0).length);
+    expect(crew.length).toBeGreaterThan(0);
+  });
+
+  it('dates a part on a format season off the field, though no plan can ask yet', () => {
+    // Casting, the office's own pass and the player's availability all read the
+    // same window, and all three used to hard-code 'shooting' with 'field'
+    // written in behind it. That second literal was never once reached: only a
+    // plan with `cast: 'performers'` lays any roles, and both plans that do have
+    // a period called 'shooting'. So the general version cannot be caught by
+    // greenlighting anything — a format season has no parts to date.
+    //
+    // It is asked of the function directly instead, which is where the contract
+    // actually lives. The day a contributor cast board exists, this is already
+    // right; a literal would have been found wrong by a player.
+    const sim = world('unscripted-parts');
+    const id = makeIt(sim, 'The Arena', { planId: 'unscripted' });
+    const project = sim.universe.projects[id]!;
+    const field = baseWindowOf(project)!;
+
+    const role = {
+      id: 'role_probe', ordinal: 1, name: 'The Host', size: 'lead', bandCents: 100_00,
+    };
+    const when = datesFor(project, role)!;
+    expect(when.to).toBe(field.to);
+    expect(when.from).toBe(field.from - MS_WEEK);
+    // And not the rig, which starts earlier and is the period the guesses found.
+    expect(when.from).not.toBe(windowOf(project, 'rig')!.from - MS_WEEK);
+  });
+
+  it('counts a format season’s offsets back from the field and not from the greenlight', () => {
+    const sim = world('unscripted-dates');
+    const id = makeIt(sim, 'The Arena', { planId: 'unscripted' });
+    const project = sim.universe.projects[id]!;
+    const field = baseWindowOf(project)!;
+    expect(field.id).toBe('field');
+
+    const upm = postById('upm')!;
+    const boom = postById('boom')!;
+    // The money is on it long before the floor is, the same as on a feature,
+    // and both are placed relative to the field. A version that fell back to
+    // the greenlight would put these two on the same day.
+    expect(startFor(project, upm, 0)).toBeLessThan(startFor(project, boom, 0));
+    expect(startFor(project, boom, 0)).toBeLessThan(field.from);
+    expect(endFor(project, upm)!).toBeGreaterThan(field.to);
+  });
+});
 
 /** Runs a picture all the way to delivered, however long that turns out to be. */
 function deliver(sim: Simulation, id: string): void {

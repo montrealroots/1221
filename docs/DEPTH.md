@@ -706,6 +706,36 @@ price of a plane ticket. What found it was the one test that wrote out the whole
 sum term by term instead of asserting the direction it moved in. A test that
 only checks a number went down cannot tell one subtraction from two.
 
+**A field that means one thing is not an identifier for another.** `Period.per`
+is how long a period runs as a multiple of the base, and the comment above it
+said that exactly one period in a plan carries `per: 1` and that it is the base.
+The unscripted season carries two — its rig is as long as its field, which is a
+true thing about an unscripted season — so `per` was never an identifier, and
+every reader that went looking for the base by it found the rig: a period that
+runs alongside casting, weeks before a camera is pointed at anything. The
+reimbursement's deadline landed there, and the greenlight form labelled its own
+week slider "The Rig". A plan names its base period now, because a fact the
+engine needs should be stated rather than inferred from a number that means
+something else.
+
+**Six copies of a lookup is five chances to answer differently, and all five
+were taken.** The same question — when does the camera run — was asked from six
+places. Two hard-coded the period id 'shooting' with 'field' written in behind
+it. Two inferred it from `per`. One hard-coded 'shooting' alone, found nothing
+on a format season, gave all twenty-four posts the same start and no end, and
+hired nobody: a season was made by nobody for as long as that stood, and the
+screen reported it as a season that had not started hiring yet. The tell was
+there the whole time in the shape of the code — a literal with a second literal
+behind it is a general question being answered by enumeration, and the next case
+is always the one nobody enumerated.
+
+And one of those six is still unreachable, which is worth saying rather than
+quietly fixing: only a plan that casts performers lays any parts, and both plans
+that do have a period called 'shooting', so no greenlight can tell the general
+version from the literal. The contract is tested directly on the function
+instead. A test that cannot fail today for a reason you can name is worth more
+than one that passes for a reason you cannot.
+
 **A comment that names the omission is not the same as fixing it.** `tierFor`
 carried a paragraph saying the higher rate has four conditions, that the crew
 limb "sat in `REBATE.higherNeeds` being read by nothing", and that all four were
