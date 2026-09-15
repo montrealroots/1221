@@ -17,6 +17,51 @@ Every entry below carries the evidence it survived on. Where a fix is a design
 decision, the options are stated and not chosen — those are the owner's.
 
 
+## Where this stands
+
+Paused here, deliberately, with the tree clean and everything pushed.
+
+**Cleared — nothing below needs a decision from anybody any more.**
+
+| what | where it landed |
+|---|---|
+| 366 dead lines in `domain/model.ts` | `bad08da` — the figure was wrong; 169 lines across eight names, checked by transitive closure |
+| the overdraft model nothing writes | `bad08da` — and thirteen more `Account` fields the sweep found that the audit had not |
+| `Part.dueAt` | `bad08da` |
+| `Audition.took` | `83e8ca8` |
+| the reimbursement's under-18 case | `83e8ca8` — and the four spellings of the rate rule collapsed to one |
+| the house that rots while the screen blames you | `dd6c397` — the false sentences only |
+| the want distribution described twice wrong | `848b17e` |
+| 104 id namespaces nothing issues | `e2c8fd4` — the gate's dead-word floor, 160 down to 56 |
+
+**Next, and each one needs a call before it can be built.**
+
+Three entries filed under Deletions turned out to carry a choice, so they are
+not deletions:
+
+- `canWorkIn` — delete it, or build EEA free movement first. A Dane needs no
+  arrangement to work in Iceland and `content/casting.ts` already says so, so
+  the function as written is wrong rather than merely unread.
+- `RATE_SHARE.hold` — delete it, or give it the reader the content is already
+  asking for: a returning series holding a standing set through post.
+- the four person fields and the whole skill sheet — this one is visible. It
+  takes the Lifestyle select and the Where You Come From box off the creation
+  screen.
+
+One half of a Mechanical entry is also a call: the house decays to nought in
+under twenty-three years and there is no repair. Whether the family holds it
+up, whether the player can spend on it, or whether the decay goes entirely.
+
+Then the eighteen under Decisions below, of which the heaviest are `quoteOf`
+only ever going up, nothing in the company ever ending or recurring, the
+Decision Center nothing writes to, and `w.fitness` as a one-way ratchet.
+
+**Still counted by the gate, and not yet looked at:** 47 trait modifier keys,
+6 guards that can never fire, 3 personality axes. The trait count wants
+resolving before anything is cut — this document's own entry on it says the
+ledger claimed seven keys are consulted and then listed fifteen.
+
+
 ## Mechanical — one obviously right fix (2)
 
 The code contradicts itself or its own comment. No judgement call in these.
