@@ -41,7 +41,7 @@ import {
   askFor, bringingThemCents, castOf, castSpark, datesFor, fromWhere, globalRuleOne, howManyCast,
   howSure,
   howWide, lookedAt, officeFillsAt, quoteOf, saysWhatItWants, seatFor, shownOf, sparkReads,
-  sureReads, theDiary, whereTheCastStands, whoCameIn,
+  sureReads, theDiary, whatSayingYesCosts, whereTheCastStands, whoCameIn,
 } from '@/engine/world/casting';
 import {
   AIRDATE_WEEKS, LEAD_WEEKS, LONGEST_SHOOT, canHandOver, windowOf, wouldBe,
@@ -1070,6 +1070,7 @@ function CastForm({ projectId, onClose }: { projectId: string; onClose: () => vo
                     const fee = typed === undefined || typed === ''
                       ? ask
                       : Math.round(Number(typed) * 100);
+                    const today = whatSayingYesCosts(role, person, fee);
                     return (
                       <tr key={person.id}>
                         <td className="nowrap">
@@ -1142,6 +1143,11 @@ function CastForm({ projectId, onClose }: { projectId: string; onClose: () => vo
                           >
                             Offer It
                           </button>
+                          <div className="dim xs" style={{ marginTop: 'var(--s1)' }}>
+                            {today > 0
+                              ? `${formatMoney(today)} leaves the company the day they say yes`
+                              : 'The budget pays this one as the periods run'}
+                          </div>
                         </td>
                       </tr>
                     );

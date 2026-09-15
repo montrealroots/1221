@@ -58,6 +58,7 @@ import { freshWellbeing } from '../systems/life';
 import { impliedPerformerTitle } from '../core/performer';
 import { clamp } from '../core/rng';
 import { MEN, WOMEN, patronymic } from '../content/names';
+import { GROUP } from '../content/sugar';
 import {
   AXES, A_PART_LEANS, CAST_SHARE, HAGGLE, QUOTE_LIFE, ROUNDS, SIZES, TAPE_LEANS, THE_TAPE,
   PAIRING, THE_GIVING, WHERE_FROM, axisById, passById, roundById, sizeById, takesAt,
@@ -812,9 +813,23 @@ export function castSomebody(sim: Simulation, casting: Casting): Cast {
     }
   }
 
-  const offer = offerOf(sim, project, role, person, fee);
-  const roll = sim.rng('casting', 'offer', project.id, role.id, person.id).next();
-  const answer = decideOffer(offer, roll);
+  // The one person in the save who does not get asked, because asking them is
+  // asking the hand on the button what it just did. Everybody else has an
+  // agent, a diary and a view about the part, and `decideOffer` is where those
+  // three argue; the player's answer is the offer. Before this line the draw
+  // ran for them too, and on seven and a half offers in a hundred — measured,
+  // over forty seeds — the game turned down a part on the player's own picture
+  // and said so in the only words it has for a refusal with no cause behind
+  // it: *they read it twice and they're going to pass. No, there isn't a
+  // reason.* There wasn't one. The dates are still a refusal, because being in
+  // two places at once is not a preference, and they are asked above with a
+  // sentence of their own.
+  const answer: Answer = person.isPlayer
+    ? { took: true, feeCents: fee }
+    : decideOffer(
+      offerOf(sim, project, role, person, fee),
+      sim.rng('casting', 'offer', project.id, role.id, person.id).next(),
+    );
 
   if (!('took' in answer) || !answer.took) {
     sim.notify({
@@ -835,16 +850,23 @@ export function castSomebody(sim: Simulation, casting: Casting): Cast {
   // the cheap number costs them, it is the next three.
   writeTheQuote(person, project.id, role.size, fee, sim.now);
   if (!person.isPlayer) person.careerTrack = 'actor';
+  const before = cashOn(sim, project.companyId);
   payTheOverage(sim, project, role, fee);
   payToBringThem(sim, project, person, fee);
   payThePlayer(sim, project, person, fee);
+  sayIfItWentUnder(sim, project, before);
 
   sim.notify({
     category: 'business',
     title: `${person.displayName} Is ${role.name}`,
     body: `${money(fee)} on ${project.title}${when ? `, from ${new Date(when.from).getUTCFullYear()}` : ''}.`
       + ` ${sayTheRead(shownOf(sim, project, role, person))}`
-      + ` ${sureReads(howSure(sim, project, role, person))}.`,
+      // How well the company knows them, as its own sentence, and not said at
+      // all about the player: `howSure` returns a hundred for them because
+      // there is nothing to be unsure about, and the sentence it reads as —
+      // *you have worked with them* — would be the game telling the player
+      // they have met themselves.
+      + (person.isPlayer ? '' : ` ${saidAsASentence(sureReads(howSure(sim, project, role, person)))}`),
     importance: 55,
     refType: 'project',
     refId: project.id,
@@ -879,6 +901,61 @@ export function globalRuleOne(sim: Simulation, person: Person): string | undefin
       + 'Until it does, nobody who is a member may work for it — here or anywhere else.';
   }
   return undefined;
+}
+
+/** What the company's cash account holds, or nothing if it has none. */
+function cashOn(sim: Simulation, companyId: Id | undefined): Money {
+  if (!companyId) return 0;
+  return Object.values(sim.universe.accounts)
+    .find((one) => one.ownerId === companyId && one.kind === 'company_cash' && !one.closedAt)
+    ?.balance ?? 0;
+}
+
+/**
+ * What closing this deal takes out of the company today.
+ *
+ * Not the fee. Everybody except the player is an abstraction the picture pays
+ * for out of the budget as the periods run, so seating them moves no cash at
+ * all. What moves on the day is the player's own fee, because they hold a real
+ * account and the company has to actually hand it over; whatever was agreed
+ * above the band, because that is the picture going over on the day it reaches;
+ * and the flights and the hotel for somebody who does not live here.
+ */
+export function whatSayingYesCosts(role: Role, person: Person, fee: Money): Money {
+  return Math.max(0, fee - role.bandCents)
+    + bringingThemCents(person, fee)
+    + (person.isPlayer ? fee : 0);
+}
+
+/**
+ * Says so when closing a deal put the company under.
+ *
+ * It is not refused, and getting to that was a wrong turn worth recording. A
+ * company mid-picture is supposed to be overdrawn: the periods spend the
+ * budget as they run and `familyCovers` tops the account back to zero at the
+ * end of every month, so on the first day of a shoot this company is routinely
+ * a couple of million under. A cash test on casting would have made casting
+ * impossible at exactly the moment casting happens.
+ *
+ * What was actually wrong was the silence. The money goes, the family covers
+ * it, the share of a year of the group's profit that has gone in ticks up, and
+ * the next greenlight is measured against what is left — so a deal closed today
+ * is a picture not made in two years, and nothing anywhere said so. The
+ * consequence was right and arrived with no cause attached to it.
+ */
+function sayIfItWentUnder(sim: Simulation, project: Project, before: Money): void {
+  const after = cashOn(sim, project.companyId);
+  if (after >= 0 || after >= before) return;
+  sim.notify({
+    category: 'business',
+    title: `${project.title} Is Spending Money The Company Hasn’t Got`,
+    body: `${money(-after)} under. ${GROUP.name} covers the difference at the end of the month, `
+      + 'and every euro of it is counted against what the family will still put in — which is the '
+      + 'same figure the next picture has to be greenlit against.',
+    importance: 60,
+    refType: 'project',
+    refId: project.id,
+  });
 }
 
 /**
@@ -988,6 +1065,20 @@ export function sayTheRead(read: Read): string {
     return `Even across all three: ${Math.round(read[best.id])}/100.`;
   }
   return `${best.label} ${Math.round(read[best.id])}/100, ${worst.label.toLowerCase()} ${Math.round(read[worst.id])}/100.`;
+}
+
+/**
+ * A fragment written to sit inside a line, read out as a sentence of its own.
+ *
+ * `sureReads` and its kind are phrased to be dropped into the middle of
+ * something — *…, and you have watched a tape* — which is right where a screen
+ * puts them under a name and wrong where a notification needs a full stop. The
+ * alternative was two wordings of every phrase, which is two wordings to keep
+ * true.
+ */
+function saidAsASentence(fragment: string): string {
+  if (!fragment) return fragment;
+  return `${fragment[0]!.toUpperCase()}${fragment.slice(1)}.`;
 }
 
 /** Whole units, no cents. Routed through the one formatter so the ledger

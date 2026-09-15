@@ -26,6 +26,7 @@ import type { Simulation } from '@/engine';
 import type { Person } from '@/engine/domain/model';
 import { ATTRIBUTE_BY_ID, sheetOf } from '@/engine/domain/attributes';
 import { projectsOf } from '@/engine/world/company';
+import { formatMoney } from '@/engine/core/money';
 import { planById } from '@/engine/content/making';
 import {
   ATTRIBUTES_READ, AXES, HAGGLE, SIZES, TAKES, THE_GIVING, THE_TAPE, roundById, takesAt,
@@ -38,7 +39,8 @@ import {
   howManyCast, openRoles, quoteOf, ranOverOnThem, theOfficeFills, writeTheQuote,
   alreadyKnown, believedAt, goesOffBy, howWide, lookedAt, officeFillsAt, readOf, readOn,
   reachOfBand, seatFor, sheetFor, shownOf, SOMEBODY_KNOWS, takeFactor, tapeLean, theBiggestName,
-  theDiary, theNameThatGoesOff, TOO_HOT, wantsOn, whereTheCastStands, whoCameIn, WHOEVER,
+  theDiary, theNameThatGoesOff, TOO_HOT, wantsOn, whatSayingYesCosts, whereTheCastStands,
+  whoCameIn, WHOEVER,
 } from '@/engine/world/casting';
 import { deckFor, somebodyGoesOff } from '@/engine/world/trouble';
 import { decideTake } from '@/engine/world/selling';
@@ -46,7 +48,7 @@ import { cutsAWeek, ratioOf, weeksToConvert, willMakeIt } from '@/engine/world/i
 import { MS_WEEK } from '@/engine/world/lot';
 import { decideSlip, finishesBy } from '@/engine/world/making';
 import { MS_DAY } from '@/engine/core/time';
-import { deliverIt, openTheDoors } from './doors';
+import { deliverIt, openTheDoors, theyCanAffordIt } from './doors';
 
 interface Done { ok: boolean; id?: string; error?: string; said?: string; came?: number }
 const run = (sim: Simulation, kind: string, payload: Record<string, unknown> = {}): Done =>
@@ -713,8 +715,12 @@ describe('reaching past the band costs what reaching past it costs', () => {
     run(sim, 'company.cast', { projectId: id, roleId: role.id, personId: person.id, feeCents: over });
     // Only if they took it. If they passed, nothing moved either.
     if (seatFor(sim.universe.projects[id]!, role.id)) {
-      expect(cashOf(sim)).toBe(before - role.bandCents);
-      expect(sim.universe.projects[id]!.spentCents).toBe(spent + role.bandCents);
+      // The overage AND what it costs to have them here, because whoever came
+      // in may not live here. Writing this as the overage alone held only while
+      // the draw happened to hand back somebody local.
+      const alsoOwed = bringingThemCents(person, over);
+      expect(cashOf(sim)).toBe(before - role.bandCents - alsoOwed);
+      expect(sim.universe.projects[id]!.spentCents).toBe(spent + role.bandCents + alsoOwed);
     } else {
       expect(cashOf(sim)).toBe(before);
     }
@@ -798,9 +804,9 @@ describe('the player can be in the picture, which is the point of the game', () 
     sim.advanceTo(shoot.from);
     const without = castOn(sim, sim.universe.projects[id]!, 'truth')!;
     run(sim, 'company.release', { projectId: id, roleId: role.id });
-    run(sim, 'company.cast', {
+    expect(run(sim, 'company.cast', {
       projectId: id, roleId: role.id, personId: sim.universe.playerId, feeCents: role.bandCents,
-    });
+    }).ok).toBe(true);
     expect(castOn(sim, sim.universe.projects[id]!, 'truth')!).toBeGreaterThan(without);
   });
 
@@ -1858,5 +1864,217 @@ describe('chemistry is not two solo scores added up', () => {
     project.cast = [];
     expect(castSpark(sim, project)).toBeUndefined();
     expect(sparkReads(90)).not.toBe(sparkReads(10));
+  });
+});
+
+describe('the player is the one person who is not asked', () => {
+  // `decideOffer` is four arguments between an agent and a producer, and the
+  // last of them is a draw. Run it on the player and the game is arguing with
+  // the hand that pressed the button: before the exemption existed, casting
+  // yourself at the band on your own family's picture came back *they read it
+  // twice and they're going to pass, no there isn't a reason* on three seeds
+  // in forty. There wasn't one.
+
+  it('takes the part on every seed, where everybody else is a draw', () => {
+    for (let i = 0; i < 12; i += 1) {
+      const sim = world(`mine-${i}`);
+      const id = greenlit(sim, 'feature', 'Hvítserkur');
+      const role = openRoles(sim.universe.projects[id]!).find((one) => one.size === 'lead')!;
+      const done = run(sim, 'company.cast', {
+        projectId: id, roleId: role.id, personId: sim.universe.playerId, feeCents: role.bandCents,
+      });
+      expect(done.ok, `seed mine-${i}`).toBe(true);
+      expect(seatFor(sim.universe.projects[id]!, role.id)?.personId, `seed mine-${i}`)
+        .toBe(sim.universe.playerId);
+    }
+  });
+
+  it('takes a part at a price that would have anybody else hanging up', () => {
+    // A euro for a lead is under every floor `decideOffer` has, which is the
+    // sharp end of the same claim: it is not that the player is generous, it
+    // is that nothing is being asked.
+    const sim = world('one-euro');
+    const id = greenlit(sim, 'feature', 'Hvítserkur');
+    const roles = openRoles(sim.universe.projects[id]!).filter((one) => one.size === 'lead');
+    const mine = roles[0]!;
+    const theirs = roles[1]!;
+
+    expect(run(sim, 'company.cast', {
+      projectId: id, roleId: mine.id, personId: sim.universe.playerId, feeCents: 100,
+    }).ok).toBe(true);
+    expect(seatFor(sim.universe.projects[id]!, mine.id)?.personId).toBe(sim.universe.playerId);
+
+    run(sim, 'company.breakdown', { projectId: id, roleId: theirs.id });
+    const live = sim.universe.projects[id]!.roles!.find((one) => one.id === theirs.id)!;
+    const somebody = whoCameIn(sim, live).find((one) => globalRuleOne(sim, one) === undefined)!;
+    run(sim, 'company.cast', {
+      projectId: id, roleId: theirs.id, personId: somebody.id, feeCents: 100,
+    });
+    expect(seatFor(sim.universe.projects[id]!, theirs.id), 'a euro is a euro to everybody else')
+      .toBeUndefined();
+  });
+
+  it('is not told it has met itself when the seat is announced', () => {
+    // `howSure` returns a hundred for the player because there is nothing to be
+    // unsure about, and a hundred reads as *you have worked with them*. Printed
+    // on the player's own seat that is the game saying you have met yourself —
+    // and it arrived lowercase, behind the full stop the read already ends on.
+    const sim = world('met-myself');
+    const id = greenlit(sim, 'feature', 'Hvítserkur');
+    const lead = openRoles(sim.universe.projects[id]!).find((one) => one.size === 'lead')!;
+    const mark = sim.universe.notifications.length;
+    run(sim, 'company.cast', {
+      projectId: id, roleId: lead.id, personId: sim.universe.playerId, feeCents: lead.bandCents,
+    });
+    const me = sim.universe.people[sim.universe.playerId]!;
+    const mine = sim.universe.notifications.slice(mark)
+      .find((one) => one.title === `${me.displayName} Is ${lead.name}`)!;
+    expect(mine.body).not.toMatch(/you have/i);
+    expect(mine.body).toMatch(/\.$/);
+
+    // And everybody else still gets told, as a sentence rather than a tail.
+    const part = openRoles(sim.universe.projects[id]!).find((one) => one.size === 'support')!;
+    run(sim, 'company.breakdown', { projectId: id, roleId: part.id });
+    const live = sim.universe.projects[id]!.roles!.find((one) => one.id === part.id)!;
+    for (const one of whoCameIn(sim, live)) {
+      if (globalRuleOne(sim, one)) continue;
+      const at = sim.universe.notifications.length;
+      run(sim, 'company.cast', {
+        projectId: id, roleId: part.id, personId: one.id, feeCents: part.bandCents,
+      });
+      const took = sim.universe.notifications.slice(at)
+        .find((note) => note.title === `${one.displayName} Is ${part.name}`);
+      if (!took) continue;
+      expect(took.body).toMatch(/\. You have [a-z ]+\.$/);
+      return;
+    }
+  });
+
+  it('is still refused by the calendar, because that is not a preference', () => {
+    const sim = world('two-places');
+    // Both greenlit before anybody is cast, because the second one could not be
+    // greenlit afterwards: paying the player takes the company under and the
+    // money question is asked there, at the one decision it belongs to.
+    const first = greenlit(sim, 'feature', 'Hvítserkur');
+    const second = greenlit(sim, 'feature', 'Surtsey');
+    const one = openRoles(sim.universe.projects[first]!).find((r) => r.size === 'lead')!;
+    const two = openRoles(sim.universe.projects[second]!).find((r) => r.size === 'lead')!;
+    expect(run(sim, 'company.cast', {
+      projectId: first, roleId: one.id, personId: sim.universe.playerId, feeCents: one.bandCents,
+    }).ok).toBe(true);
+
+    const clash = run(sim, 'company.cast', {
+      projectId: second, roleId: two.id, personId: sim.universe.playerId, feeCents: two.bandCents,
+    });
+    expect(clash.ok).toBe(false);
+    expect(clash.error).toMatch(/Nobody’s in two places/);
+  });
+});
+
+describe('a deal that spends money the company has not got says so', () => {
+  // The fault was never that it happens. A company mid-picture is supposed to
+  // be overdrawn — the periods spend the budget as they run and the family tops
+  // the account back up at the end of every month — and a cash test on casting
+  // would make casting impossible at exactly the moment casting happens. The
+  // fault was that it happened in silence: the money went, the family covered
+  // it, what they will still put in went down, and the next greenlight is
+  // measured against what is left. The consequence was right and arrived with
+  // no cause attached to it.
+
+  const purse = (sim: Simulation): number => Object.values(sim.universe.accounts)
+    .find((one) => one.kind === 'company_cash' && !one.closedAt)!.balance;
+
+  const said = (sim: Simulation, from: number): string[] => sim.universe.notifications
+    .slice(from).filter((one) => /Hasn’t Got/.test(one.title)).map((one) => one.body);
+
+  it('says it, and says how far under, when the deal digs the hole', () => {
+    const sim = world('went-under');
+    const id = greenlit(sim, 'feature', 'Hvítserkur');
+    const role = openRoles(sim.universe.projects[id]!).find((one) => one.size === 'lead')!;
+    const before = purse(sim);
+    expect(before, 'the company is solvent before the deal').toBeGreaterThan(0);
+
+    const mark = sim.universe.notifications.length;
+    expect(run(sim, 'company.cast', {
+      projectId: id, roleId: role.id, personId: sim.universe.playerId, feeCents: role.bandCents,
+    }).ok).toBe(true);
+
+    // The player holds a real account, so their fee is the one cast payment
+    // that actually moves on the day rather than being spent by the periods.
+    expect(purse(sim)).toBe(before - role.bandCents);
+    const told = said(sim, mark);
+    expect(told).toHaveLength(1);
+    expect(told[0]).toContain(formatMoney(-purse(sim), { cents: false }));
+    expect(told[0], 'and who covers it, because that is the consequence')
+      .toMatch(/Sugar Land/);
+  });
+
+  it('stays quiet when the company can pay for it', () => {
+    // Same deal, same seed, one difference: there is money in the account.
+    const sim = world('can-pay');
+    const id = greenlit(sim, 'feature', 'Hvítserkur');
+    const role = openRoles(sim.universe.projects[id]!).find((one) => one.size === 'lead')!;
+    theyCanAffordIt(sim);
+    const before = purse(sim);
+    const mark = sim.universe.notifications.length;
+    expect(run(sim, 'company.cast', {
+      projectId: id, roleId: role.id, personId: sim.universe.playerId, feeCents: role.bandCents,
+    }).ok).toBe(true);
+    expect(purse(sim), 'the money still goes').toBe(before - role.bandCents);
+    expect(purse(sim)).toBeGreaterThan(0);
+    expect(said(sim, mark), 'and nothing is said about it').toHaveLength(0);
+  });
+
+  it('stays quiet for a deal that moves nothing, on a company already under', () => {
+    // Everybody except the player is an abstraction the budget pays for as the
+    // periods run, so seating a local performer inside the band moves no cash
+    // at all. An overdraft that did not get deeper is not news.
+    const sim = world('already-under');
+    const id = greenlit(sim, 'feature', 'Hvítserkur');
+    const lead = openRoles(sim.universe.projects[id]!).find((one) => one.size === 'lead')!;
+    run(sim, 'company.cast', {
+      projectId: id, roleId: lead.id, personId: sim.universe.playerId, feeCents: lead.bandCents,
+    });
+    expect(purse(sim)).toBeLessThan(0);
+
+    const part = openRoles(sim.universe.projects[id]!).find((one) => one.size === 'support')!;
+    run(sim, 'company.breakdown', { projectId: id, roleId: part.id });
+    const live = sim.universe.projects[id]!.roles!.find((one) => one.id === part.id)!;
+    const local = whoCameIn(sim, live).find((one) => globalRuleOne(sim, one) === undefined
+      && bringingThemCents(one, part.bandCents) === 0);
+    if (!local) return;
+
+    const under = purse(sim);
+    const mark = sim.universe.notifications.length;
+    run(sim, 'company.cast', {
+      projectId: id, roleId: part.id, personId: local.id, feeCents: part.bandCents,
+    });
+    if (!seatFor(sim.universe.projects[id]!, part.id)) return;
+    expect(purse(sim)).toBe(under);
+    expect(said(sim, mark)).toHaveLength(0);
+  });
+
+  it('counts what a deal takes out today, which is not the fee', () => {
+    const sim = world('costs-today');
+    const id = greenlit(sim, 'feature', 'Hvítserkur');
+    const role = openRoles(sim.universe.projects[id]!).find((one) => one.size === 'lead')!;
+    run(sim, 'company.breakdown', { projectId: id, roleId: role.id });
+    const live = sim.universe.projects[id]!.roles!.find((one) => one.id === role.id)!;
+    const me = sim.universe.people[sim.universe.playerId]!;
+    const local = whoCameIn(sim, live).find((one) => bringingThemCents(one, role.bandCents) === 0)!;
+    const away = whoCameIn(sim, live).find((one) => bringingThemCents(one, role.bandCents) > 0);
+
+    expect(whatSayingYesCosts(role, local, role.bandCents), 'the budget pays for this one')
+      .toBe(0);
+    expect(whatSayingYesCosts(role, me, role.bandCents), 'the player holds a real account')
+      .toBe(role.bandCents);
+    expect(
+      whatSayingYesCosts(role, local, role.bandCents * 2),
+      'and whatever was agreed over the band lands on the day it is agreed',
+    ).toBe(role.bandCents);
+    if (away) {
+      expect(whatSayingYesCosts(role, away, role.bandCents))
+        .toBe(bringingThemCents(away, role.bandCents));
+    }
   });
 });

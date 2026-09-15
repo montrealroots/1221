@@ -14,8 +14,9 @@
 
 import { expect } from 'vitest';
 import type { Simulation } from '@/engine';
-import { capabilitiesOf } from '@/engine/world/company';
+import { capabilitiesOf, parentCompany } from '@/engine/world/company';
 import { MS_WEEK } from '@/engine/world/lot';
+import { LOT_NAME } from '@/engine/content/estate';
 import { stillMissing } from '@/engine/world/making';
 
 interface Done { ok: boolean; id?: string; error?: string }
@@ -104,4 +105,31 @@ export function deliverIt(sim: Simulation, projectId: string, weeks = 400): bool
     sim.advanceTo(sim.now + MS_WEEK);
   }
   return sim.universe.projects[projectId]?.stage === 'delivered';
+}
+
+/**
+ * Puts enough in the company's account that a deal can be paid out of it.
+ *
+ * Everybody except the player is an abstraction the picture pays for out of the
+ * budget as the periods run, so seating them moves no cash at all. The player
+ * holds a real account, so their fee is the one cast payment that actually has
+ * to be handed over on the day — and a company on its first morning holds about
+ * a hundred and seventeen thousand against a lead band of eight hundred and
+ * seventy-eight thousand on a twenty million euro feature. It goes under, which
+ * is allowed and is said out loud; what this exists for is the other half of
+ * that test, where the same deal is closed by a company that can pay and
+ * nothing is said.
+ *
+ * Posted as a letting rather than as money from the family, because the family
+ * putting money in is a thing the game counts and spends standing on. The lot
+ * earning it is not: measured over ten years across three seeds, the cash the
+ * lot's lettings pile up between month-ends peaks between 1.86 and 2.2 million,
+ * so this is a reachable balance rather than an invented one.
+ */
+export function theyCanAffordIt(sim: Simulation, cents = 2_000_000_00): void {
+  const company = parentCompany(sim.universe);
+  const account = Object.values(sim.universe.accounts)
+    .find((one) => one.ownerId === company?.id && one.kind === 'company_cash' && !one.closedAt);
+  if (!account) return;
+  sim.income(account.id, cents, `${LOT_NAME}: Eldey Pictures`, 'business');
 }
