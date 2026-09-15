@@ -51,11 +51,12 @@ import {
 } from '../content/audition';
 import { SIZES, sizeById } from '../content/casting';
 import { MS_WEEK } from './lot';
-import { baseWindowOf } from './periods';
+import { theyAreFree } from './diary';
 
 const MS_DAY = 24 * 60 * 60 * 1000;
 
 export const AUDITION_KIND = 'life.reading';
+export const WORKING_KIND = 'life.working';
 
 // ---------------------------------------------------------------------------
 // What is shooting that is not ours
@@ -344,21 +345,7 @@ export const alreadyUpFor = (sim: Simulation): Audition[] =>
 
 /** Whether the player is committed anywhere across a span. */
 export function freeAcross(sim: Simulation, from: Instant, to: Instant): boolean {
-  const me = sim.universe.playerId;
-  for (const project of Object.values(sim.universe.projects)) {
-    for (const seat of project.cast ?? []) {
-      if (seat.personId !== me || seat.releasedAt !== undefined) continue;
-      const role = project.roles?.find((r) => r.id === seat.roleId);
-      if (!role) continue;
-      const shoot = baseWindowOf(project);
-      if (shoot && shoot.from - MS_WEEK < to && from < shoot.to) return false;
-    }
-  }
-  for (const one of Object.values(sim.universe.auditions)) {
-    if (one.why !== 'cast') continue;
-    if (one.from < to && from < one.to) return false;
-  }
-  return true;
+  return theyAreFree(sim, from, to);
 }
 
 export interface GoingUp {
@@ -402,6 +389,11 @@ export function goUpFor(sim: Simulation, going: GoingUp): { ok: true; at: Instan
     label: way.notes ? `Reading For ${audition.holder}` : `${audition.holder}: The Tape Goes In`,
     category: 'career',
     priority: 40,
+    // A room is somewhere you have to be and a tape is not, which is the whole
+    // difference between the two ways in. Going in spends an afternoon that the
+    // clock now stops for and that something else can want; taping spends the
+    // days and none of the hours.
+    ...(way.notes ? { requiresPlayer: true, durationMinutes: IN_THE_ROOM } : {}),
     payload: { auditionId: audition.id },
     refType: 'audition',
     refId: audition.id,
@@ -467,9 +459,50 @@ function settle(sim: Simulation, audition: Audition, sawYou: boolean): WhyId {
  * in something other people watch is the only thing that has ever moved this
  * player's fame off nought.
  */
+/** How long an afternoon in a room actually takes out of a day. */
+export const IN_THE_ROOM = 90;
+
+/**
+ * Puts the engagement on the player's own calendar, a week at a time.
+ *
+ * The half of being cast that did not exist. `theyWantYou` posted the fee, moved
+ * four reputation fields and scheduled nothing at all, so a nine-week picture
+ * stopped the player's clock for exactly no time and a career was a sequence of
+ * bank transfers. `requiresPlayer` had one write site in the whole engine and it
+ * was a plan the player had typed themselves.
+ *
+ * A week rather than a day, deliberately. `docs/DEPTH.md` is explicit that
+ * nothing downstream may name a shooting day, because an engine that names one
+ * forecloses every other kind of production permanently — and a performer's week
+ * on a picture is not the production's unit anyway. What this says is only that
+ * somebody is working and cannot be elsewhere, which is true of every kind of
+ * thing that could ever be made.
+ */
+function takeTheirWeeks(sim: Simulation, audition: Audition): void {
+  const weeks = Math.max(1, Math.round((audition.to - audition.from) / MS_WEEK));
+  for (let i = 0; i < weeks; i += 1) {
+    const at = audition.from + i * MS_WEEK;
+    if (at < sim.now) continue;
+    sim.schedule({
+      at,
+      kind: WORKING_KIND,
+      label: weeks === 1
+        ? `On ${audition.holder}`
+        : `On ${audition.holder}: Week ${i + 1} Of ${weeks}`,
+      category: 'career',
+      priority: 45,
+      requiresPlayer: true,
+      payload: { auditionId: audition.id, week: i + 1, of: weeks },
+      refType: 'audition',
+      refId: audition.id,
+    });
+  }
+}
+
 export function theyWantYou(sim: Simulation, audition: Audition): void {
   const me = sim.universe.people[sim.universe.playerId];
   if (!me) return;
+  takeTheirWeeks(sim, audition);
   const account = me.primaryAccountId;
   if (account && audition.feeCents > 0) {
     sim.income(account, audition.feeCents, `${audition.holder}: Acting Fee`, 'career',
@@ -521,6 +554,33 @@ export const AS_GOOD_AS_IT_GETS = 0.82;
 // ---------------------------------------------------------------------------
 
 export function registerAudition(sim: Simulation): void {
+  /**
+   * A week of being on it.
+   *
+   * It does nothing to the world and that is correct for now: the point of the
+   * item is that it exists, stops the clock and can be wanted by something else
+   * at the same time. What a week of work takes out of the person giving it is
+   * the next piece, and it is not invented here so that this one can be judged
+   * on its own.
+   */
+  sim.onSchedule(WORKING_KIND, (item) => {
+    const audition = sim.universe.auditions[String(item.payload?.auditionId ?? '')];
+    if (!audition || audition.why !== 'cast') return;
+    const week = Number(item.payload?.week ?? 0);
+    const of = Number(item.payload?.of ?? 0);
+    if (week !== 1) return;
+    sim.notify({
+      category: 'career',
+      title: `You Start On ${audition.holder}`,
+      body: of === 1
+        ? 'A week of it, and your own time isn’t yours for any of it.'
+        : `${of} weeks of it, and your own time isn’t yours for any of them.`,
+      importance: 55,
+      refType: 'audition',
+      refId: audition.id,
+    });
+  });
+
   /**
    * The day the reading happens.
    *

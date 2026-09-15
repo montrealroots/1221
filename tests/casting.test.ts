@@ -114,6 +114,62 @@ function castEverybodyAt(sim: Simulation, id: string, at: Partial<Record<string,
 
 // ---------------------------------------------------------------------------
 
+describe('nobody is in two places', () => {
+  it('refuses to seat the player over a part they already have', () => {
+    const sim = world('two-places');
+    const first = greenlit(sim, 'feature', 'The First One');
+    const second = greenlit(sim, 'feature', 'The Second One');
+    const me = sim.universe.playerId;
+
+    const a = openRoles(sim.universe.projects[first]!)[0]!;
+    expect(run(sim, 'company.cast', {
+      projectId: first, roleId: a.id, personId: me, feeCents: a.bandCents,
+    }).error).toBeUndefined();
+    expect(seatFor(sim.universe.projects[first]!, a.id)?.personId).toBe(me);
+
+    // Both pictures are greenlit off the same day, so they shoot across each
+    // other. The room has always refused this; castSomebody never asked at all,
+    // so Play It would put the player in both — the one hard constraint a
+    // perfect performer has, enforced in one direction only.
+    const b = openRoles(sim.universe.projects[second]!)[0]!;
+    const said = run(sim, 'company.cast', {
+      projectId: second, roleId: b.id, personId: me, feeCents: b.bandCents,
+    });
+    expect(said.error).toContain('The First One');
+    expect(seatFor(sim.universe.projects[second]!, b.id)).toBeUndefined();
+  });
+
+  it('lets them take it once the first one is over', () => {
+    const sim = world('two-places-later');
+    const first = greenlit(sim, 'feature', 'The First One');
+    const me = sim.universe.playerId;
+    // The smallest part on it. A lead's band is more than the company holds, and
+    // paying the player is real money leaving a real account — which shuts the
+    // greenlight door on the next picture and would make this test fail for a
+    // reason that has nothing to do with the diary.
+    const parts = openRoles(sim.universe.projects[first]!);
+    const a = parts[parts.length - 1]!;
+    run(sim, 'company.cast', { projectId: first, roleId: a.id, personId: me, feeCents: a.bandCents });
+    expect(seatFor(sim.universe.projects[first]!, a.id)?.personId).toBe(me);
+
+    // Far enough out that the two shoots cannot touch, and still inside the
+    // option — further than that and the greenlight refuses for want of
+    // material, which is a different refusal than the one being tested.
+    run(sim, 'company.develop', { title: 'A Year Later', medium: 'film' });
+    const laterId = projectsOf(sim.universe).find((one) => one.title === 'A Year Later')!.id;
+    const said = run(sim, 'company.greenlight', {
+      projectId: laterId, planId: 'feature', budgetCents: 2_000_000_00, shootWeeks: 6,
+      from: sim.now + 60 * MS_WEEK,
+    });
+    expect(said.error, 'the later picture could not be greenlit at all').toBeUndefined();
+    const later = laterId;
+    const b = openRoles(sim.universe.projects[later]!)[0]!;
+    expect(run(sim, 'company.cast', {
+      projectId: later, roleId: b.id, personId: me, feeCents: b.bandCents,
+    }).error).toBeUndefined();
+  });
+});
+
 describe('the office is refused like anybody else', () => {
   it('does not seat its first choice every time, because it has to ask', () => {
     const sim = world('office-asks');

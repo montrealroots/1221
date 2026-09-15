@@ -59,11 +59,41 @@ of the research would be forty-five lookups all returning a hundred, which is
 why `src/engine/world/audition.ts` deliberately reads no attribute anywhere and
 a test enforces that by grepping the file.
 
-This is the largest single entry on this page and it is not a bug. The question
-it asks is a design question: what decides a performer's work, on a character
-who cannot be bad at it? Everything built for the player so far answers it the
-same way — spend calendar, money, other people's minutes or other people's
-goodwill. Whether that is the whole answer is undecided.
+This is the largest single entry on this page and it is not a bug. It is the
+premise. `content/prodigy.ts` says so in its own words: the player is the best
+there has ever been and the industry knows it, and "being the best there has
+ever been at the work is not the same as being able to keep the lights on, and
+that gap is the entire game."
+
+So the question was never how to let the player fail on craft. It was what the
+794 are for, given they can never be that. **Answered on 2026-09-15, by the
+owner: spend the instrument, then make the industry's picture of it lag.**
+
+**First, a performance costs something.** The player can do anything and cannot
+do everything at once. An attribute stops being a check and becomes a claim
+about what a performance takes out of the person giving it. The currency for
+this already exists and is dead: readiness and the nine dials under it are read
+by nothing in the engine, and the calendar has a cancellation curve with exactly
+one subject. It is gated on a prerequisite — being cast has to put days on the
+player's calendar before those days can cost anything, and today it does not:
+`theyWantYou` posts money, moves four reputation fields and schedules nothing,
+and `requiresPlayer` has one write site in the whole engine.
+
+**Then, the industry's picture lags the truth.** The player is at the ceiling and
+every office reads them correctly the instant they see them, because `shownOn`
+returns the truth on `person.isPlayer`. The machinery for the other answer is
+already built and already used on everybody else — `believedAt`, `howWide`,
+`offsetOn`. Turned on for the player, the forty-five attributes named for the
+audition room stop being what the player *has* and become what a room *learns*,
+which is what `DEPTH.md` means by typecasting: the industry's categorical
+picture of you, lagging what you can actually do.
+
+**Not chosen, and why it is worth writing down.** Cutting the sheet back to the
+twenty-nine anything writes is the cheapest honest answer and it was refused:
+the 813 are the domain vocabulary the research was mined for, and re-deriving
+them later costs more than carrying them. Reading more of them on everybody
+else is a background habit rather than an answer — it enriches the world around
+a character who still has nothing to decide.
 
 **3 of 7 personality axes** are in the same position for a different reason:
 `agreeableness`, `extraversion` and `riskTolerance` are asked for at character
@@ -286,6 +316,17 @@ file reference rather than as a finding.
 - **The reimbursement's under-18 case**, which needs a picture to declare an
   audience.
 - **The unscripted contributor cast board.**
+
+### Found while building, and not yet fixed
+
+- **The company can pay the player money it does not have.** Casting the player
+  at a lead's band on a €20m picture paid €877,000 out of a company holding
+  €117,000 and left it at minus €761,000. `sim.expense` has no balance check and
+  neither does `payThePlayer`, so the family's business goes negative silently
+  and the greenlight door then shuts on the next picture for want of money — the
+  right consequence arriving from the wrong cause. It was only reachable at all
+  because the player can now be seated in the family's own pictures, so it is
+  new in reach rather than new in code.
 
 ### Wrong, rather than missing
 

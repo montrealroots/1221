@@ -67,6 +67,7 @@ import {
 import type { Plan } from '../content/making';
 import { MS_WEEK } from './lot';
 import { baseWindowOf } from './periods';
+import { BEFORE_THE_FIRST_DAY, whatHasThem } from './diary';
 import { americanArm, signedWith } from './company';
 import { isCitizenOf } from '../domain/citizenship';
 
@@ -793,6 +794,23 @@ export function castSomebody(sim: Simulation, casting: Casting): Cast {
 
   const shut = globalRuleOne(sim, person);
   if (shut) return { ok: false, error: shut };
+
+  // And the one hard constraint a perfect performer actually has. This side
+  // never asked: the room refused to let the player go up for something that
+  // clashed, and Play It would seat them in a part shooting across one they had
+  // already won, so the only real refusal in the game was enforced in one
+  // direction. Everybody else is filtered on `freeToWork` before an offer is
+  // ever made; the player was the exception, and they are the one person in the
+  // save who cannot be replaced by somebody similar.
+  if (person.isPlayer && when) {
+    const has = whatHasThem(sim, when.from - BEFORE_THE_FIRST_DAY, when.to);
+    if (has) {
+      return {
+        ok: false,
+        error: `You’re on ${has.what} across those dates. Nobody’s in two places.`,
+      };
+    }
+  }
 
   const offer = offerOf(sim, project, role, person, fee);
   const roll = sim.rng('casting', 'offer', project.id, role.id, person.id).next();

@@ -27,8 +27,9 @@ import { MS_WEEK } from '@/engine/world/lot';
 import {
   AS_GOOD_AS_IT_GETS, ASKING_AT, SHUTS_AT, afterTheNote, alreadyUpFor, decideAudition, feeFor,
   freeAcross, goingNow, howFarOff, readingOf, remembersYou, shootingHere, theNote, whatIsGoing,
-  theyWantYou, whatTheyWant, whereYourWorkStands,
+  theyWantYou, whatTheyWant, whereYourWorkStands, WORKING_KIND,
 } from '@/engine/world/audition';
+import { whatHasThem } from '@/engine/world/diary';
 import {
   AS_WRITTEN, CLOSE_ENOUGH, COLD, FURTHEST, KNOWN_OF, REMEMBERED, SHADES, TOO_FAR, WAYS, howFarById,
 } from '@/engine/content/audition';
@@ -121,6 +122,67 @@ function playItOut(
 }
 
 // ---------------------------------------------------------------------------
+
+/**
+ * Puts a real engagement on the player, through the real path.
+ *
+ * `theyWantYou` is what a settled audition calls, so this asks it the same way
+ * the engine does rather than writing a seat by hand.
+ */
+function castOnSomething(sim: Simulation, weeks = 6): Audition {
+  const booking = shootingOnTheLot(sim, 'A Nordic Broadcaster', weeks);
+  const audition: Audition = {
+    id: sim.nextId('audition'),
+    saveId: sim.universe.meta.id,
+    bookingId: booking.id,
+    holder: booking.holder,
+    size: 'lead',
+    feeCents: 1_000_00,
+    from: booking.from,
+    to: booking.to,
+    closesAt: booking.from - SHUTS_AT * MS_WEEK,
+    wants: AS_WRITTEN,
+    state: 'over',
+    why: 'cast',
+  };
+  sim.universe.auditions[audition.id] = audition;
+  theyWantYou(sim, audition);
+  return audition;
+}
+
+describe('being cast is time you no longer have', () => {
+  it('lays the engagement on the calendar, a week at a time, and stops the clock', () => {
+    const sim = world('engaged');
+    const cast = castOnSomething(sim);
+    const weeks = sim.universe.scheduled
+      .filter((one) => one.kind === WORKING_KIND && one.refId === cast.id);
+
+    // theyWantYou posted the fee, moved four reputation fields and called
+    // sim.schedule exactly zero times, so a nine-week picture stopped the
+    // player's clock for no time at all and a career was a sequence of bank
+    // transfers. requiresPlayer had one write site in the whole engine.
+    expect(weeks.length).toBeGreaterThan(0);
+    expect(weeks.length)
+      .toBe(Math.max(1, Math.round((cast.to - cast.from) / MS_WEEK)));
+    expect(weeks.every((one) => one.requiresPlayer === true)).toBe(true);
+  });
+
+  it('has somebody who is on it, right through the middle of it', () => {
+    const sim = world('engaged-mid');
+    const cast = castOnSomething(sim);
+    const mid = cast.from + Math.floor((cast.to - cast.from) / 2);
+    expect(whatHasThem(sim, mid, mid + MS_DAY)?.what).toBe(cast.holder);
+    // And free again once it is over.
+    expect(whatHasThem(sim, cast.to + MS_WEEK, cast.to + 2 * MS_WEEK)).toBeUndefined();
+  });
+
+  it('is spoken for in the week before the first day, not only from it', () => {
+    const sim = world('engaged-before');
+    const cast = castOnSomething(sim);
+    const before = cast.from - MS_DAY;
+    expect(whatHasThem(sim, before, before + MS_DAY)?.what).toBe(cast.holder);
+  });
+});
 
 describe('the room cannot be an exam the player passes by existing', () => {
   it('decides exactly the same thing with every attribute in the save at fifty', () => {
