@@ -975,3 +975,96 @@ describe('an ask that is never answered', () => {
     }
   });
 });
+
+describe('a note nobody answers', () => {
+  // The turn is the player's rather than the clock's, which is right, and it
+  // left the turn open forever. Measured on a save that went in for everything
+  // and answered nothing: seventy-seven readings, seventy-seven still sitting on
+  // an unanswered note twenty-five years later, not one no on the record — and
+  // `readFor` counted every one of them, so going into the room and walking out
+  // of it bought exactly what going in and doing the job bought.
+
+  it('is settled on what was played, the day the thing starts shooting', () => {
+    const sim = quickSave({}, 'walked-out');
+    const booking = shootingOnTheLot(sim, 'somebody casting');
+    const ask = untilTheyAsk(sim, booking)!;
+    expect(ask, 'nobody asked, so there is nothing to walk out of').toBeDefined();
+
+    const going = run(sim, 'life.go_up', {
+      auditionId: ask.id, way: 'room', played: { warmth: 0, size: 0, pace: 0 },
+    });
+    expect(going.error).toBeUndefined();
+    sim.advanceTo(going.at! + MS_DAY);
+    expect(sim.universe.auditions[ask.id]!.state, 'they gave a note').toBe('noted');
+
+    // Right up to the first day of the shoot it is still the player's turn.
+    sim.advanceTo(ask.from - MS_DAY);
+    whatIsGoing(sim);
+    expect(sim.universe.auditions[ask.id]!.state, 'shut before they had to answer').toBe('noted');
+
+    sim.advanceTo(ask.from + MS_DAY);
+    whatIsGoing(sim);
+    const done = sim.universe.auditions[ask.id]!;
+    expect(done.state).toBe('over');
+    expect(done.why).toBeDefined();
+    // They turned up and they were seen, so the no they get is the one somebody
+    // gets who was in the room — not the one for an ask nobody answered.
+    expect(done.why).not.toBe('never-answered');
+    expect(done.why).not.toBe('not-in-the-room');
+    // And it is decided on the reading as played, because the note went untaken.
+    // Not on the note half-taken for them, which would be the game answering a
+    // question it exists to make the player answer.
+    expect(done.took).toBeUndefined();
+    expect(done.played).toEqual({ warmth: 0, size: 0, pace: 0 });
+  });
+
+  it('is worth less than answering it, measured over a career', () => {
+    // The falsifiable half. Same seeds, same world, one difference: whether the
+    // player answers the note. If walking out were as good as taking it, the
+    // note would be a button with one outcome.
+    const career = (seed: string, answer: boolean): { readings: number; cast: number } => {
+      const sim = quickSave({}, seed);
+      let readings = 0;
+      for (let week = 0; week < 10 * 52; week += 1) {
+        sim.advanceTo(sim.now + MS_WEEK);
+        for (const one of goingNow(sim)) {
+          if (!freeAcross(sim, one.from, one.to)) continue;
+          const done = run(sim, 'life.go_up', {
+            auditionId: one.id, way: 'room', played: { warmth: 0, size: 0, pace: 0 },
+          });
+          if (!done.error) readings += 1;
+        }
+        if (!answer) continue;
+        for (const one of Object.values(sim.universe.auditions)) {
+          if (one.state === 'noted') run(sim, 'life.take_note', { auditionId: one.id, howFar: 'good' });
+        }
+      }
+      const all = Object.values(sim.universe.auditions);
+      // Nothing is left holding a note on a picture that is already shooting.
+      // One whose shoot has not started yet is not stuck; it is the player's
+      // turn, and it is still their turn.
+      expect(all.filter((one) => one.state === 'noted' && sim.now >= one.from), seed)
+        .toHaveLength(0);
+      // Every no here is a no somebody got in a room. `not-in-the-room` is what
+      // a tape gets, and a player who walked out of the room was still in it.
+      expect(all.filter((one) => one.why === 'not-in-the-room'), seed).toHaveLength(0);
+      expect(all.some((one) => one.why === 'went-another-way'), `${seed}: nobody was turned down`)
+        .toBe(true);
+      return { readings, cast: all.filter((one) => one.why === 'cast').length };
+    };
+
+    let walked = 0;
+    let answered = 0;
+    for (const seed of ['w1', 'w2', 'w3']) {
+      const out = career(seed, false);
+      const took = career(seed, true);
+      expect(out.readings, `${seed}: nobody read for anything`).toBeGreaterThan(20);
+      walked += out.cast / out.readings;
+      answered += took.cast / took.readings;
+    }
+    expect(answered / 3, 'answering the note is worth something')
+      .toBeGreaterThan(walked / 3);
+    expect(walked / 3, 'and walking out is not worth nothing — they still saw you')
+      .toBeGreaterThan(0.2);
+  });
+});

@@ -123,10 +123,32 @@ export function ignoredBy(sim: Simulation, holder: string): number {
  *
  * They close here, and closing costs something, because the alternative is a
  * player who can ignore every part they are ever offered at no price.
+ *
+ * ## And the same date, one state further along
+ *
+ * A note is the player's turn rather than the clock's, which is right, and it
+ * left the turn open forever. Measured on a save that went in for everything
+ * and answered nothing: seventy-seven readings, seventy-seven of them still
+ * sitting on an unanswered note twenty-five years later, not one no on the
+ * record — and every one of them counted by `readFor`, because it counts a
+ * reading that is not open and not never-answered. Going into the room and
+ * walking out of it bought exactly what going in and doing the job bought.
+ *
+ * So a note goes unanswered on the first day of the shoot rather than never.
+ * Not on `closesAt`, which is the date nobody is *seen* after and can fall
+ * three days before a reading the player was in time to book; on the day the
+ * thing is being made, by which point somebody else is standing in the part.
+ * It settles on what was actually played, which is the reading before the note
+ * — they were in the room and they were seen, and what they did not do was
+ * answer.
  */
 export function shutWhatHasClosed(sim: Simulation): Audition[] {
   const shut: Audition[] = [];
   for (const audition of Object.values(sim.universe.auditions)) {
+    if (audition.state === 'noted' && sim.now >= audition.from) {
+      settle(sim, audition, true);
+      continue;
+    }
     if (audition.state !== 'open' || sim.now <= audition.closesAt) continue;
     audition.state = 'over';
     audition.why = 'never-answered';

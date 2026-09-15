@@ -286,23 +286,52 @@ come out — and takes the lot from about 4.5 outside jobs a year to about 7.4,
 from two kinds of production to three, and the player from 15 auditions in ten
 years to 33. The lot was not short of a room. It was tripling its own quotes.
 
-**The room is still worth building, and it is worth much less than it looked.**
-Measured before the floor was found, a planted small stage took the lot from 35
-shoots to 86 and the player from 12 auditions to 29 — which was the bug being
-measured, not the room. Measured after, across six seeds and twenty-five years,
-the room buys: the documentary, which is the one kind of production that cannot
-happen here at any hold length without it; a sixth holder; about 13 more shoots
-a decade; and an audition count that moves +4 by year ten, +7.5 by twenty and
-+12.8 by twenty-five. It never pays for itself. €17.3m to build and about
-€419k a year to keep, against under €100k a year of letting.
+**The room is worth building, and it took three measurements to find out what
+it is worth.** The first, before the `heldFor` floor was found, had a planted
+stage taking the lot from 35 shoots to 86 and the player from 12 auditions to
+29 — which was the bug being measured, not the room. The second, after the floor
+came out, had it worth +4 auditions by year ten. That one was measured on a save
+nobody played, and by then a save nobody played was a save where holders shut
+you out after two unanswered asks: the room was being judged on how often a
+player who answers nothing gets asked, which is a number about the player.
 
-That is the correct shape and not a disappointment. Auditions are gated on
-`remembersYou`, so a new holder who has never met the player is a door that
-takes years to open — the room does not buy work, it buys doors. And the money
-is spent in the currency that matters: €20.8m of the family's patience over ten
-years, out of the same pool the greenlight spends from. Build the room and get
-asked about parts, or keep the patience and greenlight your own pictures. Both
-are routes to a career and there is one pool.
+Measured on a save somebody plays — goes in for everything the dates allow,
+answers every note — across six seeds and twenty-five years, the room buys:
+
+| | year 10 | year 20 | year 25 |
+|---|---|---|---|
+| asks | +8.0 | +23.0 | +29.5 |
+| readings | +5.2 | +15.7 | +18.5 |
+| **parts** | **+4.2** | **+11.2** | **+13.0** |
+
+And a sixth holder, on every seed: an Icelandic producer making documentaries,
+who books between 19 and 37 times across the twenty-five years and zero times
+without the room. That is the one kind of production that cannot happen here at
+all, and it is not about the floor area — a documentary needs 500 square meters
+and the lot's smallest existing room is 2,000. It is that nobody making one can
+carry 2,000 square meters at the going rate.
+
+**It still does not pay for itself, and it is much closer than it looked.**
+€17.3m to build and €418,864 a year to keep, against €358,373 a year of extra
+letting averaged over six seeds — 86% of its own upkeep, and nothing at all
+against the build. The spread is wide: €196k a year on the worst seed, €426k on
+the best, so on some worlds the room does carry itself and on others it does not
+come close.
+
+**More work, and less money for it.** The same six seeds, over twenty-five
+years: +13 parts, and €487,428 *less* in the player's account. The room books
+small cheap productions, small cheap productions pay small fees, and a week
+standing on a documentary is a week not free for the American studio feature
+shooting the same weeks. That is the trade, and it is a real one — the room does
+not upgrade a career, it changes what kind of career is available.
+
+Auditions are gated on `remembersYou`, so a new holder who has never met the
+player is a door that takes years to open — the room does not buy work, it buys
+doors, and the doors it buys open onto smaller rooms. The money is spent in the
+currency that matters: €20.8m of the family's patience over ten years, out of
+the same pool the greenlight spends from. Build the room and get asked about
+parts, or keep the patience and greenlight your own pictures. Both are routes to
+a career and there is one pool.
 
 **The refusal is a live figure, not a timer.** What is behind the company is
 measured against a year of the group's profit, so a year America stays shut
