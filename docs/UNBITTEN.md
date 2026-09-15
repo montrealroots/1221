@@ -387,6 +387,24 @@ file reference rather than as a finding.
 
 ### Found while building, and not yet fixed
 
+- **The hands on a feature decide nothing.** `project.hands` is the one staffing
+  decision the cutting room offers and it is a real lever on two plans of three:
+  measured across twelve worlds each, a series at its plan's own staffing misses
+  its date four times and the same series with one editor misses twelve; an
+  unscripted season, six and twelve. A feature misses **none out of twelve at
+  either staffing**. One editor and four editors deliver the same picture on the
+  same day, so on the form the game leads with, the decision is a number that
+  changes nothing. Either a feature's cut needs to be long enough to be worth
+  staffing, or the control should not be offered on one.
+
+- **A default-staffed season misses its date a third to a half of the time**,
+  and that is probably right rather than wrong — trouble is supposed to threaten
+  the date, and the warning arrives while there is still time to act. It is here
+  because a test asserted the opposite and passed for months on the seed it was
+  written against, which means nobody had measured it. Now measured, and the
+  test says the true thing.
+
+
 - **The company can pay the player money it does not have.** Casting the player
   at a lead's band on a €20m picture paid €877,000 out of a company holding
   €117,000 and left it at minus €761,000. `sim.expense` has no balance check and

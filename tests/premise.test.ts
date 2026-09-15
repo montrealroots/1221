@@ -16,6 +16,7 @@
 import { describe, expect, it } from 'vitest';
 import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
+import { quotaNow } from '@/engine/world/sugar';
 import { createSave, defaultConfig, loadSave, migrate, quickSave, validateUniverse } from '@/engine';
 import { PREMISE_STATEMENT, SAVE_SCHEMA_VERSION, type SaveUniverse } from '@/engine/domain/model';
 import {
@@ -28,6 +29,37 @@ import { SKILLS } from '@/engine/domain/skills';
 import { deserialise, serialise } from '@/engine/persistence/adapter';
 import { settledTitle } from '@/ui/creation/CharacterCreation';
 import { GuardError, inspectPayload } from '../base44/shared/guard.js';
+
+describe('every save starts on the same morning', () => {
+  it('opens on Monday 5 January 2026, and on a Monday for a reason', () => {
+    const sim = quickSave({}, 'starts');
+    const at = new Date(sim.now);
+    expect(at.getUTCFullYear()).toBe(2026);
+    expect(at.getUTCMonth() + 1).toBe(1);
+    expect(at.getUTCDate()).toBe(5);
+    // A Monday, because the week is the unit almost everything here is
+    // measured in: a stage is let by the week, a shoot is scheduled in weeks,
+    // and a save beginning mid-week spends its first days out of step with
+    // every window the engine lays. Held here because nothing else held it —
+    // the date could be moved and every test in the build still passed.
+    expect(at.getUTCDay(), 'the save has to open on a Monday').toBe(1);
+  });
+
+  it('inherits a world that is already settled, and owes the player nothing yet', () => {
+    const sim = quickSave({}, 'inherited');
+    // Everything the save is handed happened before the morning it opens: the
+    // family moved onto the land a year earlier, the lot went up on it, and
+    // America had already decided the quota for this fiscal year the previous
+    // July. If any of those drifted past the start the player would arrive
+    // before their own history.
+    const lot = Object.values(sim.universe.properties).find((one) => one.kind === 'studio_lot')!;
+    expect(lot.createdAt).toBeLessThan(sim.now);
+    expect(Object.values(sim.universe.stages).every((one) => one.builtAt < sim.now)).toBe(true);
+    const year = quotaNow(sim);
+    expect(year, 'the fiscal year the save opens in has already been decided').toBeDefined();
+    expect(year!.decidedAt).toBeLessThan(sim.now);
+  });
+});
 
 describe('every save says what game it is', () => {
   it('writes the premise into a brand new universe', () => {

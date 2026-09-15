@@ -368,11 +368,18 @@ describe('repeatability is read by the shoot and by nothing else', () => {
       expect(deliverIt(sim, id)).toBe(true);
       return sim.universe.projects[id]!.deliveredAt!;
     };
-    // A room with slack absorbs the difficult cast entirely, which is true and
-    // is the reason this test names its hands. Take the slack away and the
-    // same cast is a later delivery.
-    expect(at(5, 4)).toBe(at(95, 4));
-    expect(at(5, 1)).toBeGreaterThan(at(95, 1));
+    // A room with slack absorbs nearly all of the difficult cast, and a room
+    // without absorbs none of it. Stated as the comparison rather than as
+    // "four hands absorb it exactly", which is what this used to say: that
+    // held on one seed and stopped holding the day an unrelated change moved
+    // every draw in the save along, and the claim it was standing in for is
+    // about slack rather than about a particular number of days.
+    const withSlack = at(5, 4) - at(95, 4);
+    const without = at(5, 1) - at(95, 1);
+    expect(without, 'a room with one hand pays for the difficult cast in full')
+      .toBeGreaterThan(0);
+    expect(withSlack, 'and a room with four pays for much less of it')
+      .toBeLessThan(without);
   });
 
   it('leaves what the picture sells for entirely alone', () => {

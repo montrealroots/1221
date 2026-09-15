@@ -245,12 +245,27 @@ export function capabilitiesOf(sim: Simulation): Capability[] {
       'Hand a finished film to a distributor and be paid for it.',
       'Delivery fails on paperwork far more often than on film, and errors and omissions cover is the paperwork it fails on.',
       [
-        needPolicy(u, 'errors_omissions'),
+        // The order is the point. An underwriter reads the chain of title
+        // before writing this cover, so when there is nothing to read — or a
+        // gap in what there is — the cover is not the thing in the way. The
+        // material is, and naming the cover first put a button on the page
+        // that could only ever be refused, in a panel whose whole promise is
+        // that a shut door names the single thing keeping it shut. Pressing it
+        // was the one way to walk this page and get stuck.
+        material.length === 0 ? {
+          need: 'Anything At All',
+          how: 'Option or buy the rights to something. An underwriter reads the '
+            + 'chain of title before writing the cover, and there’s nothing to read.',
+          fixKind: 'holding', fixId: '',
+        } : undefined,
         chainBreaks.length === 0 ? undefined : {
           need: 'A Clean Chain Of Title',
           how: `Close the gap on ${chainBreaks[0]!.title}.`,
           fixKind: 'holding', fixId: chainBreaks[0]!.id,
         },
+        material.length > 0 && chainBreaks.length === 0
+          ? needPolicy(u, 'errors_omissions')
+          : undefined,
       ]),
 
     of('greenlight', 'Greenlight Something',

@@ -867,6 +867,32 @@ describe('every door a company has to walk through', () => {
     }
   });
 
+  it('never offers a fix that would be refused if it were pressed', () => {
+    // Found by walking the built page rather than reading it. Delivering needs
+    // errors and omissions cover; the cover needs a chain of title for an
+    // underwriter to read. With no material the page named the cover, offered
+    // a Bind button, and the button could only ever be refused — which is the
+    // one way to walk this panel and get stuck, and it stopped a run at five
+    // of nine.
+    const sim = quickSave({}, 'offered');
+    const deliver = () => capabilitiesOf(sim).find((one) => one.id === 'deliver')!;
+    const named = () => deliver().blockers.map((one) => one.need);
+
+    // With nothing held, the thing in the way is the material, not the cover.
+    expect(named()).toContain('Anything At All');
+    expect(named()).not.toContain('Errors And Omissions');
+    const early = sim.execute({ kind: 'company.insure', payload: { policy: 'errors_omissions' } });
+    expect((early.value as { ok: boolean }).ok, 'the cover the page did not offer is refused')
+      .toBe(false);
+
+    // Take the option and the page moves on to the cover, which now binds.
+    sim.execute({ kind: 'company.option', payload: { title: 'The Cane Field' } });
+    expect(named()).toEqual(['Errors And Omissions']);
+    const now = sim.execute({ kind: 'company.insure', payload: { policy: 'errors_omissions' } });
+    expect((now.value as { ok: boolean }).ok, 'the cover the page offered is bound').toBe(true);
+    expect(deliver().can).toBe(true);
+  });
+
   it('costs what it costs, and the company can carry it from what it starts with', () => {
     const sim = quickSave({}, 'nine-cost');
     const before = companyCash(sim.universe);

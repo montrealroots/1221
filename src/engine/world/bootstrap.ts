@@ -172,7 +172,15 @@ export function defaultConfig(): NewSaveConfig {
     // Home base is the family land, and it is not a choice on any screen.
     startLocationId: ESTATE_CITY_ID,
     wealth: 'scraping',
-    startYear: 2026, startMonth: 3, startDay: 2,
+    // Monday 5 January 2026. A Monday because the week is the unit almost
+    // everything here is measured in — a stage is let by it, a shoot is
+    // scheduled in it, and a save that began mid-week spent its first days
+    // out of step with every window the engine lays. And the first working
+    // Monday of the year because that is when a year's business starts: the
+    // quota for the 2026 fiscal year was announced the previous July and the
+    // family moved onto the land a year before that, so everything the save
+    // inherits is already settled and what happens next is the player's.
+    startYear: 2026, startMonth: 1, startDay: 5,
   };
 }
 
