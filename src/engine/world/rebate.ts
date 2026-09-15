@@ -9,7 +9,7 @@
  *
  * ## One rule, two askers
  *
- * `world/lot.ts` has weighed the higher rate's four conditions since the lot
+ * `world/lot.ts` has weighed the higher rate's conditions since the lot
  * was built, for productions enquiring from abroad. This weighs the same four
  * for the family's own pictures, through the same `shortOn` in content, so
  * there is one legislated test and not two implementations of it drifting
@@ -107,20 +107,31 @@ export function awayOnTheCast(sim: Simulation, project: Project): Money {
  *
  * Everything that has gone out, less the three things that are not Icelandic
  * spend: what was recorded leaving the country as it left, what the cast took
- * home, and the share of any negative that is bought abroad whatever anybody
+ * home, and the share of the rest that is bought abroad whatever anybody
  * decides. Built off `spentCents` and not off the budget, so a picture that has
  * spent half of what it was greenlit for can only claim on half.
+ *
+ * The ordinary leak is a share of what has gone out and not a lump off the
+ * negative, which is the correction rather than the original. A fixed fourteen
+ * percent of the whole budget subtracted from a running total is not a share of
+ * anything: it read nought through the whole of prep on a picture that had
+ * already filed, and seventy percent off the spend at the point a picture was a
+ * fifth of the way through. It converged to the right answer only once the last
+ * euro went out, which is the worst possible shape for a wrong number — right
+ * whenever somebody checks it at the end.
+ *
+ * It is taken after what already left the country, so the flights are not
+ * leaked a second time on their way out.
  */
 export function certifiable(sim: Simulation, project: Project): Money {
-  const ordinary = Math.round((project.budgetCents ?? 0) * THE_CLAIM.leaks);
-  const spent = project.spentCents
-    - (project.notSpentHereCents ?? 0)
-    - awayOnTheCast(sim, project)
-    - ordinary;
+  const here = project.spentCents - (project.notSpentHereCents ?? 0);
+  const spent = here
+    - Math.round(here * THE_CLAIM.leaks)
+    - awayOnTheCast(sim, project);
   return Math.max(0, spent);
 }
 
-/** The same figure in króna, which is the unit the four conditions are written in. */
+/** The same figure in króna, which is the unit the conditions are written in. */
 export const inKrona = (cents: Money): number => Math.round((cents / 100) * ISK_A_EURO);
 
 // ---------------------------------------------------------------------------
@@ -128,7 +139,7 @@ export const inKrona = (cents: Money): number => Math.round((cents / 100) * ISK_
 // ---------------------------------------------------------------------------
 
 /**
- * What this picture puts up against the higher rate's four conditions.
+ * What this picture puts up against the higher rate's five limbs.
  *
  * The spend limb reads what is certifiable, which on a picture yet to shoot is
  * close to nothing — so an application is weighed against what the picture was
@@ -222,7 +233,7 @@ export interface Applied {
  *
  * The rate is stamped here on the plan and not recomputed at payment. A
  * producer who wanted the higher rate had to have built a picture that reaches
- * all four conditions by the day the camera turns over, and finding out
+ * every limb by the day the camera turns over, and finding out
  * afterwards is finding out too late.
  */
 export function applyForRebate(

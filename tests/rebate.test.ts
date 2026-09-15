@@ -29,6 +29,7 @@ import { companyCash, projectsOf } from '@/engine/world/company';
 import { MS_WEEK } from '@/engine/world/lot';
 import { REBATE } from '@/engine/content/incorporation';
 import { LIMB_LABELS, REFUSALS, THE_CLAIM, shortOn } from '@/engine/content/rebate';
+import { bringingThemCents, fromWhere } from '@/engine/world/casting';
 import { CROWD_RUNS, DEPARTMENTS, FULLY_STAFFED_AT, POSTS } from '@/engine/content/crew';
 import { crewDaysOf, crowdIn, headcountOf, postsFor } from '@/engine/world/crew';
 import { whereFromById } from '@/engine/content/casting';
@@ -140,6 +141,61 @@ describe('what an auditor would certify', () => {
     expect(certifiable(sim, project)).toBeLessThan(project.spentCents);
   });
 
+  it('leaks a share of what has gone out, and not a lump off the whole negative', () => {
+    const sim = world();
+    const id = makeIt(sim);
+    const project = projectIn(sim, id);
+
+    // Half the negative spent, then the whole of it. The deduction has to be
+    // half as large at half the spend. A flat share of the budget subtracted
+    // from a running total is not a share of anything: it read nought through
+    // the whole of prep on a picture that had already filed, and seventy
+    // percent off the spend a fifth of the way through, and came right only
+    // once the last euro went out.
+    project.spentCents = 10_000_000_00;
+    const atHalf = certifiable(sim, project);
+    project.spentCents = 20_000_000_00;
+    const atFull = certifiable(sim, project);
+
+    expect(atHalf).toBe(Math.round(10_000_000_00 * (1 - THE_CLAIM.leaks)));
+    expect(atFull).toBe(Math.round(20_000_000_00 * (1 - THE_CLAIM.leaks)));
+    expect(atHalf * 2).toBe(atFull);
+
+    // And a picture that has spent almost nothing certifies almost nothing
+    // rather than exactly nothing, because it has in fact spent something.
+    project.spentCents = 6_000_00;
+    expect(certifiable(sim, project)).toBeGreaterThan(0);
+  });
+
+  it('leaks what left the country only once', () => {
+    const sim = world();
+    const project = projectIn(sim, makeIt(sim));
+    project.spentCents = 10_000_000_00;
+    const clean = certifiable(sim, project);
+    // The flights are already off the top. Leaking them again on the way out
+    // would take fourteen percent of a number that is entirely foreign spend.
+    project.notSpentHereCents = 1_000_000_00;
+    expect(certifiable(sim, project))
+      .toBe(Math.round((10_000_000_00 - 1_000_000_00) * (1 - THE_CLAIM.leaks)));
+    expect(certifiable(sim, project)).toBeLessThan(clean);
+  });
+
+  it('holds the count of legislated limbs to one number in three places', () => {
+    // Three conditions in the law and five things to test, because two of the
+    // three have two parts. The exact fault this project has already made once
+    // and written into its own trap list is a count in a comment drifting from
+    // the constant beside it — so the three counts are held to each other here
+    // rather than to a number anybody typed.
+    const needs = Object.keys(REBATE.higherNeeds);
+    expect(Object.keys(LIMB_LABELS).sort()).toEqual([...needs].sort());
+    const allShort = shortOn(
+      { spendIsk: 0, workingDays: 0, shootingDays: 0, crew: 0, crewDays: 0 },
+      REBATE.higherNeeds,
+    );
+    expect(allShort.length).toBe(needs.length);
+    expect(new Set(allShort).size).toBe(needs.length);
+  });
+
   it('never goes below nothing, however little has gone out', () => {
     const sim = world();
     const project = projectIn(sim, makeIt(sim));
@@ -181,9 +237,12 @@ describe('what an auditor would certify', () => {
     const wasLocal = certifiable(sim, project);
     const spentWas = project.spentCents;
     const here = castFrom(sim, id, 'here');
-    // Somebody who lives here costs the certificate nothing at all: whatever
-    // went out over the band went out in Iceland and is certified with the rest.
-    expect(certifiable(sim, project)).toBe(wasLocal + (project.spentCents - spentWas));
+    // Somebody who lives here takes nothing off the certificate: what went out
+    // over the band went out in Iceland and is certified with the rest of the
+    // spend, leaked at the same ordinary share and at no other.
+    const local = project.spentCents - spentWas;
+    expect(certifiable(sim, project))
+      .toBe(wasLocal + local - Math.round(local * THE_CLAIM.leaks));
     expect(here.feeCents).toBeGreaterThan(0);
 
     const before = certifiable(sim, project);
@@ -192,10 +251,41 @@ describe('what an auditor would certify', () => {
     const rose = project.spentCents - spentBefore;
     const travel = Math.round(away.feeCents * whereFromById('uk')!.travel);
     expect(travel).toBeGreaterThan(0);
-    expect(certifiable(sim, project)).toBe(
-      before + rose - travel - Math.round(away.feeCents * THE_CLAIM.awayOfAFee),
+    // What went out, less the flights that left the country, is Icelandic
+    // spend and is leaked like the rest of it. What lands at their agent's is
+    // taken off whole, because none of it was ever spent here to be leaked.
+    const overage = rose - travel;
+    expect(certifiable(sim, project)).toBeCloseTo(
+      before
+      + overage - Math.round(overage * THE_CLAIM.leaks)
+      - Math.round(away.feeCents * THE_CLAIM.awayOfAFee),
+      -1,
     );
     expect(certifiable(sim, project)).toBeLessThan(before + rose);
+  });
+
+  it('pays for the flights the office itself books', () => {
+    const sim = world();
+    const id = makeIt(sim);
+    // Nobody cast by hand. The office fills every part two weeks out, and it
+    // reaches abroad exactly as a producer does — so it incurs flights, and for
+    // a while it incurred them without paying: the money never left the
+    // account, and the certificate then took those fees off as paid abroad on
+    // travel nobody had bought.
+    sim.advanceTo(sim.now + 20 * MS_WEEK);
+    const project = projectIn(sim, id);
+    const seats = project.cast ?? [];
+    expect(seats.length).toBeGreaterThan(0);
+
+    let owed = 0;
+    for (const seat of seats) {
+      const person = sim.universe.people[seat.personId]!;
+      if ((fromWhere(person)?.travel ?? 0) === 0) continue;
+      owed += bringingThemCents(person, seat.feeCents);
+    }
+    expect(owed, 'the office never reached abroad, so this proves nothing').toBeGreaterThan(0);
+    expect(project.notSpentHereCents ?? 0).toBe(owed);
+    expect(sim.ledger.audit()).toEqual([]);
   });
 
   it('certifies none of a penalty, because a penalty is money gone and not spend', () => {
@@ -206,9 +296,9 @@ describe('what an auditor would certify', () => {
     const fined = project.notSpentHereCents ?? 0;
     // A picture that delivered on the date is not fined, and one that ran late
     // is. Either way the two figures have to agree with each other.
+    const here = project.spentCents - fined;
     expect(certifiable(sim, project)).toBe(Math.max(0,
-      project.spentCents - fined - awayOnTheCast(sim, project)
-      - Math.round((project.budgetCents ?? 0) * THE_CLAIM.leaks)));
+      here - Math.round(here * THE_CLAIM.leaks) - awayOnTheCast(sim, project)));
   });
 });
 

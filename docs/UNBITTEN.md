@@ -135,6 +135,105 @@ wired.
 
 ---
 
+## From the audit of 2026-09-15
+
+Six scouts read the build against this standard and returned sixty-six
+candidates. Forty-one of them belong on this page: fifteen declared words with
+no reader, eight things correct and unreachable, and eighteen defects. The rest
+are missing features and live in `COVERAGE-MATRIX.md`, which is where a gap
+belongs.
+
+Three were fixed the day they were found and are in the section below. What
+follows is everything still owed, in the scouts' own framing, and none of it has
+been independently verified by a second pass — treat each line as a lead with a
+file reference rather than as a finding.
+
+### Declared, and nothing reads it
+
+- **Age decides nothing.** `content/lifespan.ts` is 540 lines with two exports
+  read, and a scout puts it at 2 of 48 rather than 2 of 28. It also strengthens
+  the ageing claim from an empirical one about 27,375 days to an arithmetic one
+  that holds for a save of any length. Verify the count before quoting it.
+- **The whole wellbeing model.** Readiness and the nine dials under it are read
+  by nothing in the engine, and they sit directly under the only thing a player
+  can choose to spend a day on.
+- **Travel fatigue is a second fitness bug**, unrecorded until now, and it takes
+  openness down with it — the same shape as the fitness fault, on a second dial.
+- **The tax engine is a screen.** Real, correct, entirely unwired.
+- **366 lines of `domain/model.ts`** are record shapes with no table, no
+  importer and no writer.
+- **Four fields on every person, and the whole skill sheet.** The scout's view is
+  that deletion is the honest answer here rather than wiring, because the prodigy
+  holds every skill at 100 and every other person at 5.
+- **The audit trail is a persisted, empty table**, and the history table is a
+  sleep diary.
+- **`Audition.took`** is written and read by nothing, in the save record of the
+  system the game is named after.
+- **The guild signature is a gate with no money behind it.** The content says
+  what the agreement costs and nothing charges any of it.
+- **A season anchored on an airdate has no airdates.**
+- **The denominator never moves:** a cut that cannot run long.
+- **The collective floor under an Icelandic fee**, and **`canWorkIn`**, which has
+  no reader at all.
+- **Awards and critics**, which is where `prestige` above is waiting.
+
+### Correct, and nothing can reach it
+
+- **The Decision Center is a room nothing ever writes to.** Every deadline in the
+  build goes unannounced, and the most expensive of them is the reimbursement.
+  Two commands — `world.take_decision_action` and `world.dismiss_decision` — read
+  a table the engine never fills.
+- **Nobody can see the booking board**, which is the only pipeline the career
+  has. The lever is money spent a year early and its effect is invisible until it
+  arrives as one notification.
+- **Three signable guilds, a registry, a policy and a company form** can be
+  reached only as a blocker chip.
+- **`sizeCasting` is inverted at both ends:** a long shoot always offers a lead
+  and a day player is unreachable, so a career's first job can only be a lead.
+  The Day Player row carries its own prose, rate, on-screen share and leans and
+  none of it is reachable.
+- **Three more guards at points the arithmetic already settles**, which is the
+  same fault as the crowd guard below.
+- **The reimbursement's under-18 case**, which needs a picture to declare an
+  audience.
+- **The unscripted contributor cast board.**
+
+### Wrong, rather than missing
+
+- **Nothing in the company ever ends.** An option you forgot to exercise never
+  lapses; cover you forgot to renew never lapses. The scout calls this the
+  cheapest large consequence available, and it is pure calendar and money.
+- **A quote that can only go up.** `quoteOf` returns the maximum of every past
+  fee, so taking a cheap job costs nothing — and the code's own comment claims
+  the opposite mechanic. The research names quote protection as a ratchet that
+  must bite in both directions.
+- **`stillOwedCents` stops accruing interest at week 260** and the screen still
+  says interest is included.
+- **The strike week is booked as prep**, and `RATE_SHARE.hold` is dead. `DEPTH.md`
+  records this one as fixed; only the prep third of it was.
+- **A directed night's sleep is added on top of the autopilot's**, which inverts
+  the contract its own comment states, and the guard written for it has no
+  caller.
+- **The house rots with no repair**, and the screen tells the player it is their
+  fault for a choice they do not have.
+- **The creation screen, `taste.ts` and the engine give three different counts**
+  of which personality axes do anything — and the screen's copy exists precisely
+  to be honest about that.
+- **`whereTheCrewStands` counts strangers as returning hands**, and no screen
+  reads it. Both halves of the One Rule at once.
+- **The note's magnitude has one right answer in every state**, and the tests pin
+  it. Four buttons, three decoys, in the second of only two decisions in the room
+  the game is named after.
+- **The room's want is drawn from nothing**, so the opening reading is a constant.
+- **A part is priced off the stage rate card** — what the room costs, not what the
+  cast costs.
+- **Two functions answer whether the player is free, and they disagree.**
+- **The casting office is a display string**, so roster memory has nine
+  addressable offices, two of which are one.
+- **The posts cost nothing and nobody has to say yes.**
+
+---
+
 ## Recently on this page, and no longer
 
 Kept because the shape of what went wrong is worth more than the fix.
@@ -150,6 +249,27 @@ refuse something.
 
 **Six reputation axes** were unread when the ledger was written. All six decide
 something now. The seventh is `prestige`, above.
+
+**The reimbursement leaked a lump rather than a share.** Fourteen percent of a
+whole negative was subtracted from a running total, so the certificate read
+nought through the whole of prep on a picture that had already filed, and
+seventy percent off the spend a fifth of the way through. It converged on the
+right answer only once the last euro went out, which is the worst possible shape
+for a wrong number: right whenever somebody checks it at the end.
+
+**The casting office flew people in and never paid for the flights.** It writes
+its own seats rather than going through the offer path, so it skipped the one
+payment that path makes for somebody who does not live here. A hundred and
+fifty-three thousand euros of travel incurred, nothing spent, and the
+reimbursement then took those fees off the certificate as money paid abroad on
+travel nobody had bought — wrong in two directions at once, from one missing
+line.
+
+**Three different counts of one thing.** The reimbursement's conditions were
+called three in the law's own content, four in nine places across the module
+built on top of it, and tested as five. There is a test holding the three counts
+to each other now, because the one certain thing about a hand-written count is
+that it stops being true.
 
 ---
 

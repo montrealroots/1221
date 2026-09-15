@@ -2,7 +2,7 @@
  * SLATE — claiming Iceland's production reimbursement on your own picture.
  *
  * `content/incorporation.ts` holds the law: who runs it, what the two rates
- * are, the four conditions on the higher one, and the date the whole scheme is
+ * are, the conditions on the higher one, and the date the whole scheme is
  * legislated to stop. This holds everything the law does not say and a
  * production has to know anyway — what a claim costs to make, what share of a
  * negative is bought outside the country whatever you do, and the reasons a
@@ -25,9 +25,9 @@
  * finished. Four things fall out of that and every one of them is a decision:
  *
  *   - A deadline that closes on the first day of photography and never reopens.
- *   - A cliff between twenty-five and thirty-five percent with four conditions
- *     under it, one of which is a question about how many people the picture
- *     actually employs.
+ *   - A cliff between twenty-five and thirty-five percent with three conditions
+ *     under it and five things to test, one of which is a question about how
+ *     many people the picture actually employs.
  *   - A reason to hire in the country beyond what the flights cost, because
  *     money paid where somebody lives is not money spent here.
  *   - A scheme with an end date, which every plan made against it is priced on.
@@ -90,11 +90,24 @@ export const THE_CLAIM = {
 } as const;
 
 // ---------------------------------------------------------------------------
-// The four conditions on the higher rate
+// The conditions on the higher rate
 // ---------------------------------------------------------------------------
 
 /**
- * What a production puts up against the higher rate's four conditions.
+ * What a production puts up against the higher rate's conditions.
+ *
+ * Three conditions in the law and five things to test, because two of the three
+ * have two parts: days in the country of which some must be shooting days, and
+ * people taxed here for a number of days each. `REBATE.higherNeeds` carries all
+ * five and `shortOn` below tests all five, so five is the number this interface
+ * has and the number a screen prints.
+ *
+ * Saying "four" would be the fault this project has already made once and
+ * written into its own trap list: a count in a comment that no longer matches
+ * the constant beside it. There is a test that holds these three numbers —
+ * the fields on `higherNeeds`, the labels below, and what `shortOn` can push —
+ * to the same value, because the one thing certain about a hand-written count
+ * is that it will stop being true.
  *
  * One shape for both askers, because there is one rule. An enquiry from abroad
  * fills this in from what it says it will spend and how long it will be here;
@@ -118,8 +131,7 @@ export interface Limbs {
 }
 
 /**
- * Which of the four conditions this production fails, in the order they are
- * legislated.
+ * Which limbs this production fails, in the order they are legislated.
  *
  * Returning the failures instead of a boolean is what lets a screen say which
  * one is in the way, and a producer who knows they are eight people short of

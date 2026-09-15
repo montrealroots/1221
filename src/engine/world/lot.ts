@@ -641,8 +641,8 @@ export function crewInTheCountry(sim: Simulation): number {
 /**
  * Which rebate tier an enquiry would qualify for.
  *
- * All four limbs, and they are cumulative. Spend, working days, shooting days
- * and fifty crew taxed in Iceland for fifty days — the last of which sat in
+ * Every limb, and they are cumulative. Spend, working days, shooting days and
+ * fifty crew taxed in Iceland for fifty days — the last of which sat in
  * `REBATE.higherNeeds` being read by nothing while this function tested two of
  * the four and called it the band. It matters because it is the one limb the
  * country can fail: two large productions at once want a hundred people between

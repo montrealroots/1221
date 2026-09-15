@@ -794,7 +794,7 @@ function RebateForm({ projectId, onClose }: { projectId: string; onClose: () => 
       </div>
 
       <p className="xs dim" style={{ marginTop: 'var(--s3)' }}>
-        {`What comes off the certificate: ${Math.round(THE_CLAIM.leaks * 100)}% of the negative, `}
+        {`What comes off the certificate: ${Math.round(THE_CLAIM.leaks * 100)}% of everything spent, `}
         {'bought outside the country whatever anybody decides; '}
         {`${formatMoney(project.notSpentHereCents ?? 0, { cents: false })} that left the country as it went; `}
         {`and ${formatMoney(awayOnTheCast(sim, project), { cents: false })} of cast fees paid where the `}

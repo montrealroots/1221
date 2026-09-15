@@ -114,9 +114,13 @@ Three things decide what comes back, and a producer can work out all three in
 advance. That is deliberate — a reimbursement is what a picture is planned
 against, and a figure drawn at the last moment cannot be planned against.
 
-**What was spent here, which is not what was spent.** Fourteen percent of any
-negative is bought outside the country whatever anybody decides: the camera
-package, the finish, the cover placed through a broker who is not here. On top
+**What was spent here, which is not what was spent.** Fourteen percent of
+everything a picture spends is bought outside the country whatever anybody
+decides: the camera package, the finish, the cover placed through a broker who
+is not here. A share of what has gone out, and not a lump off the whole
+negative — the first version took a flat fourteen percent of the budget off a
+running total, which read nought through the whole of prep on a picture that had
+already filed and came right only once the last euro went out. On top
 of that come two things a decision moves. Flights are bought abroad, so what it
 cost to bring somebody here is recorded leaving the country as it goes. And two
 fifths of a fee paid to a performer who lives somewhere else lands where they
@@ -127,8 +131,8 @@ as well, because a penalty is money gone without being spend — going over cost
 a picture three quarters of what it costs, and being late costs it all of it.
 
 **Which of the two rates, and the cliff between them.** Twenty-five percent
-ordinarily, thirty-five with four conditions under it, and the four are
-cumulative. The test itself lives in content and both askers reach it, so there
+ordinarily, thirty-five with three conditions under it and five things to test,
+because two of the three have two parts. They are cumulative. The test itself lives in content and both askers reach it, so there
 is one piece of legislation and not two implementations drifting apart. What
 differs is the answers. A foreign production asks whether Iceland can supply
 fifty people; a domestic one asks whether its own picture employs them — and

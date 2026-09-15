@@ -1103,6 +1103,14 @@ export function theOfficeFills(sim: Simulation, project: Project): number {
     project.cast.push({ roleId: role.id, personId: best.id, feeCents: role.bandCents, castAt: sim.now });
     writeTheQuote(best, project.id, role.size, role.bandCents, sim.now);
     best.careerTrack = 'actor';
+    // And the flights, which the office incurs exactly as a producer does. It
+    // casts at the band so there is never an overage, and it never reaches the
+    // player, so those two payments have nothing to do here — but somebody
+    // living in Copenhagen has to be got to the stage whoever hired them. This
+    // was missing, and a picture cast by the office flew four people in for
+    // nothing: the money was never spent, and the reimbursement then took their
+    // fees off the certificate as money paid abroad on travel nobody bought.
+    payToBringThem(sim, project, best, role.bandCents);
     filled += 1;
   }
   return filled;
