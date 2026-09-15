@@ -21,7 +21,7 @@
  */
 
 import { describe, expect, it } from 'vitest';
-import { quickSave } from '@/engine';
+import { migrate, quickSave } from '@/engine';
 import type { Simulation } from '@/engine';
 import type { Person } from '@/engine/domain/model';
 import { ATTRIBUTE_BY_ID, sheetOf } from '@/engine/domain/attributes';
@@ -1158,6 +1158,32 @@ describe('the diary is the scarcity', () => {
     });
     expect(cash(sim)).toBe(before - roundById('preread')!.costsCents);
     expect(roundById('callback')!.costsCents).toBeGreaterThan(roundById('preread')!.costsCents);
+  });
+});
+
+describe('a save written before the room still has its pile', () => {
+  it('widens a list of ids into a list of people nobody has seen yet', () => {
+    // The pile used to be person ids and is now people with rounds attached.
+    // Left alone, an older save would have found nothing in its strings and
+    // shown an empty pile — which reads as a part nobody advertised rather than
+    // as a save that lost something, and is the worse of the two failures.
+    const sim = world('older-save');
+    const id = greenlit(sim, 'feature', 'Hvítserkur');
+    const role = openRoles(sim.universe.projects[id]!)[0]!;
+    run(sim, 'company.breakdown', { projectId: id, roleId: role.id });
+    const live = sim.universe.projects[id]!.roles!.find((r) => r.id === role.id)!;
+    const were = live.seen!.map((one) => one.personId);
+    expect(were.length).toBeGreaterThan(0);
+
+    // Put it back the way an older build wrote it, and load.
+    (live as unknown as { seen: unknown }).seen = were;
+    expect(whoCameIn(sim, live)).toHaveLength(0);
+    const done = migrate(sim.universe);
+    expect(done.problems).toHaveLength(0);
+    expect(live.seen!.map((one) => one.personId)).toEqual(were);
+    expect(whoCameIn(sim, live)).toHaveLength(were.length);
+    // And nobody has been in a room, because nobody had.
+    for (const one of live.seen!) expect(one.rounds).toBeUndefined();
   });
 });
 

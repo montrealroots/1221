@@ -392,6 +392,28 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     }
   }
 
+  // A part's pile of submissions used to be a list of person ids, and is now a
+  // list of people with the rounds anybody has run on them. A save written
+  // before the audition room would have kept its strings, found nothing in
+  // them, and quietly shown an empty pile for every part that had one — which
+  // is the worst kind of breakage, because it looks like a picture nobody has
+  // advertised rather than like a save that lost something.
+  {
+    let widened = 0;
+    for (const project of Object.values(universe.projects)) {
+      for (const role of project.roles ?? []) {
+        const seen = role.seen as unknown;
+        if (!Array.isArray(seen)) continue;
+        if (!seen.some((one) => typeof one === 'string')) continue;
+        role.seen = seen.map((one) => (typeof one === 'string' ? { personId: one } : one));
+        widened += 1;
+      }
+    }
+    if (widened > 0) {
+      steps.push(`Kept the ${widened} pile${widened === 1 ? '' : 's'} of submissions a part had.`);
+    }
+  }
+
   // Every record must belong to this save and nothing else. Cross-save
   // contamination is the one corruption that is invisible until it matters.
   {
