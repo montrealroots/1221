@@ -20,7 +20,7 @@ import type { Money } from '../core/money';
 import { MS_DAY, instantFromZoned, zonedParts } from '../core/time';
 import {
   AROUND_THE_SHOOT, BUILD_COST_CENTS, CALLS_A_MONTH, CREW_BASE, CREW_PENALTY, LOT_FLOOR_SQM,
-  MONTHLY_OVERHEAD_CENTS, MOST_CALLS, MOST_OF_THE_SPEND, OVERHEAD, PATIENCE, RATE_SHARE,
+  MOST_CALLS, MOST_OF_THE_SPEND, OVERHEAD, PATIENCE, RATE_SHARE,
   FOREIGN_REACH, SELLING, SHUT_YEAR_BITE, type Rung,
   ENQUIRY_SHAPES, STAGES, type Enquiry,
 } from '../content/lot';
@@ -149,7 +149,31 @@ export function breakEvenShare(sim: Simulation): number | undefined {
   if (stages.length === 0) return undefined;
   const weeksInAMonth = 52 / 12;
   const ifFull = stages.reduce((n, s) => n + s.weekRateCents, 0) * weeksInAMonth;
-  return ifFull > 0 ? MONTHLY_OVERHEAD_CENTS / ifFull : undefined;
+  return ifFull > 0 ? monthlyOverhead(sim) / ifFull : undefined;
+}
+
+/**
+ * What each line of a month of the lot actually costs.
+ *
+ * One line is not a constant. The selling spend is the only thing on this list
+ * somebody chooses, and `chargeTheMonth` has always charged what they chose —
+ * while `OVERHEAD_FLOOR_CENTS` carries that line at the least the content
+ * declares. So the bar moved and the figure measuring it did not: raising the
+ * selling spend to its ceiling took break-even from 0.62 to a true 0.71, and
+ * every number on every screen went on saying 0.62. The player's one lever on
+ * this business silently raised its own target by nine points.
+ */
+function lineCosts(sim: Simulation): { line: typeof OVERHEAD[number]; owed: Money }[] {
+  const selling = sellsFor(sim);
+  return OVERHEAD.map((line) => ({
+    line,
+    owed: line.id === 'selling' ? selling : line.monthlyCents,
+  }));
+}
+
+/** What a month of the lot costs today, with the chosen line at what was chosen. */
+export function monthlyOverhead(sim: Simulation): Money {
+  return lineCosts(sim).reduce((n, one) => n + one.owed, 0);
 }
 
 /** What a booking of this kind pays, from the stage's shooting rate. */
@@ -382,11 +406,10 @@ export function howTheMonthWent(month: Utilisation): string {
  */
 export function chargeTheMonth(sim: Simulation, accountId: Id, earnedThisMonth: Money = 0): Money {
   let spent = 0;
-  const selling = sellsFor(sim);
-  for (const line of OVERHEAD) {
-    // The selling line is the one somebody chooses. Everything else is what it
-    // costs to keep the doors open whether anybody wants them open or not.
-    const owed = line.id === 'selling' ? selling : line.monthlyCents;
+  // Itemised, because one line saying "overhead" would be a number nobody could
+  // open — but costed by `lineCosts`, so what is charged here and what
+  // `breakEvenShare` measures against can never again be two different answers.
+  for (const { line, owed } of lineCosts(sim)) {
     sim.expense(accountId, owed, `${LOT_NAME}: ${line.label}`, 'business');
     spent += owed;
   }

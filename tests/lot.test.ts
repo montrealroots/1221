@@ -22,12 +22,13 @@ import { quickSave, validateUniverse } from '@/engine';
 import type { Simulation } from '@/engine';
 import { MS_DAY } from '@/engine/core/time';
 import {
-  AROUND_THE_SHOOT, CREW_BASE, ENQUIRY_SHAPES, MONTHLY_OVERHEAD_CENTS, MOST_CALLS,
+  AROUND_THE_SHOOT, CREW_BASE, ENQUIRY_SHAPES, OVERHEAD_FLOOR_CENTS, MOST_CALLS,
   MOST_OF_THE_SPEND, OVERHEAD, PATIENCE, RATE_SHARE, SELLING, type Enquiry,
 } from '@/engine/content/lot';
 import { REBATE } from '@/engine/content/incorporation';
 import {
-  ISK_A_EURO, breakEvenShare, crewInTheCountry, familyCovers, heldFor, paidInSoFar, pullOn,
+  ISK_A_EURO, breakEvenShare, chargeTheMonth, crewInTheCountry, familyCovers, heldFor,
+  monthlyOverhead, paidInSoFar, pullOn,
   quotedFor, reachOf, rungFor, turnedAway,
   MS_WEEK, stagesOn, standingWith, tierFor, utilisation, whatTheFamilySays,
   whereTheLotStands, wholeHold,
@@ -63,7 +64,7 @@ describe('what the family actually bought', () => {
     // Seven lines, posted separately, because one figure called overhead is a
     // figure nobody can argue with. These are what a lot costs to keep open.
     expect(OVERHEAD.length).toBeGreaterThan(5);
-    expect(MONTHLY_OVERHEAD_CENTS).toBe(OVERHEAD.reduce((n, line) => n + line.monthlyCents, 0));
+    expect(OVERHEAD_FLOOR_CENTS).toBe(OVERHEAD.reduce((n, line) => n + line.monthlyCents, 0));
     const { sim } = fiveYears('lot-overhead');
     for (const line of OVERHEAD) {
       const posted = sim.universe.transactions.filter((t) => t.memo.includes(line.label)).length;
@@ -78,6 +79,40 @@ describe('what the family actually bought', () => {
     // a hard number for a small lot and that is the point of it.
     expect(need).toBeGreaterThan(0.5);
     expect(need).toBeLessThan(0.75);
+  });
+});
+
+describe('what the lot measures itself against', () => {
+  it('moves the bar when the player moves the spend, and says so on the screen', () => {
+    const sim = quickSave({}, 'break-even-live');
+    const floor = breakEvenShare(sim)!;
+    const atFloor = monthlyOverhead(sim);
+    expect(atFloor).toBe(OVERHEAD_FLOOR_CENTS);
+
+    expect(sim.execute<{ ok: boolean }>(
+      { kind: 'lot.sell', payload: { monthlyCents: SELLING.most } },
+    ).value!.ok).toBe(true);
+
+    // breakEvenShare divided the declared constant while chargeTheMonth charged
+    // what the player chose, so the one lever on this business silently raised
+    // its own target and every figure on every screen went on printing the old
+    // one.
+    expect(monthlyOverhead(sim)).toBeGreaterThan(atFloor);
+    expect(breakEvenShare(sim)!).toBeGreaterThan(floor);
+    expect(breakEvenShare(sim)!).toBeCloseTo(
+      monthlyOverhead(sim) / (atFloor / floor), 6,
+    );
+  });
+
+  it('charges exactly what it says a month costs', () => {
+    const sim = quickSave({}, 'break-even-charge');
+    sim.execute({ kind: 'lot.sell', payload: { monthlyCents: SELLING.most } });
+    const account = Object.values(sim.universe.accounts)
+      .find((a) => a.kind === 'company_cash' && !a.closedAt)!;
+    const said = monthlyOverhead(sim);
+    const spent = chargeTheMonth(sim, account.id);
+    expect(spent).toBe(said);
+    expect(sim.ledger.audit()).toEqual([]);
   });
 });
 
@@ -113,7 +148,7 @@ describe('and it does not fill', () => {
       const { sim, from } = fiveYears(seed);
       const five = utilisation(sim, from, sim.now);
       const earnedAYear = five.earnsCents / 5;
-      const costAYear = MONTHLY_OVERHEAD_CENTS * 12;
+      const costAYear = OVERHEAD_FLOOR_CENTS * 12;
       expect(earnedAYear, `${seed} earned ${asYear(earnedAYear)}m a year`).toBeLessThan(costAYear / 2);
       // And somebody is writing the check. Without this the company's cash
       // just goes negative and stays there with nothing saying who is funding it.

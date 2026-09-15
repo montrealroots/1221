@@ -38,9 +38,9 @@ import { at } from './subject';
 import { whatTheyAre } from './family';
 import { bondFor, standingWord } from '@/engine/world/standing';
 import { isAre, outOf, spokenList, toStart } from './words';
-import { MONTHLY_OVERHEAD_CENTS, SELLING } from '@/engine/content/lot';
+import { SELLING } from '@/engine/content/lot';
 import {
-  breakEvenShare, onStageAt, paidInSoFar, pullOn, sellsFor, stagesOn, standingWith,
+  breakEvenShare, monthlyOverhead, onStageAt, paidInSoFar, pullOn, sellsFor, stagesOn, standingWith,
   turnedAway, utilisation, whatTheFamilySays, whereTheLotStands,
 } from '@/engine/world/lot';
 import { formatMoney } from '@/engine/core/money';
@@ -495,7 +495,8 @@ defineLook<TheLot>('lot', {
     const need = breakEvenShare(sim);
     const took = month.earnsShare ?? 0;
     const standing = standingWith(sim);
-    const aYear = MONTHLY_OVERHEAD_CENTS * 12;
+    const aMonth = monthlyOverhead(sim);
+    const aYear = aMonth * 12;
     const pull = pullOn(sim);
     const away = turnedAway(sim);
     return {
@@ -512,7 +513,7 @@ defineLook<TheLot>('lot', {
           between is here and Budapest.
         </p>
         <div className="grid grid-3">
-          <Stat label="What A Month Costs" value={moneyOf(MONTHLY_OVERHEAD_CENTS)}
+          <Stat label="What A Month Costs" value={moneyOf(aMonth)}
             note={`${moneyOf(aYear)} a year, whether or not anybody is standing on a stage`} />
           <Stat label="What Last Month Took"
             value={`${Math.round(took * 100)}/100`}

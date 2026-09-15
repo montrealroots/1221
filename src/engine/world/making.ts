@@ -711,13 +711,7 @@ function enterPeriod(sim: Simulation, project: Project, periodId: string): void 
   if (!plan) return;
 
   if (periodId === WORK_DONE) {
-    // Every period that has not settled yet, not just the last declared one.
-    // With periods running alongside each other, more than one can still be
-    // open when the work finishes.
-    for (const one of plan.periods) {
-      const window = windowOf(project, one.id);
-      if (window && window.to <= sim.now) settlePeriod(sim, project, one);
-    }
+    settleWhatHasEnded(sim, project, plan);
     if (settleDelivery(sim, project)) return;
     const waiting = heldUpBy(project);
     sim.notify({
@@ -736,8 +730,7 @@ function enterPeriod(sim: Simulation, project: Project, periodId: string): void 
   const period = plan.periods.find((p) => p.id === periodId);
   if (!period) return;
 
-  const was = plan.periods[plan.periods.indexOf(period) - 1];
-  if (was) settlePeriod(sim, project, was);
+  settleWhatHasEnded(sim, project, plan);
 
   project.stage = period.stage;
   sim.notify({
@@ -750,6 +743,28 @@ function enterPeriod(sim: Simulation, project: Project, periodId: string): void 
   });
 
   if (period.holds === 'shooting') weighTheSchedule(sim, project, period);
+}
+
+/**
+ * Settles every period that has actually ended, and only those.
+ *
+ * The one rule, in the one place, because there were two and they disagreed.
+ * The end of the work swept for periods whose dates had passed; the start of a
+ * period settled whichever period was *declared* before it. On a feature those
+ * are the same thing, and a feature was honest. On anything with a `runsWith`
+ * they are not, and declaration order is not calendar order: a series paid
+ * fifty-eight percent of its budget on the shoot's first day, and a format
+ * season paid its post period out the day before that period opened.
+ *
+ * The docstring on `enterPeriod` has always said the money goes out at a
+ * period's end, "which is the only honest place to put it". This is that
+ * sentence, written as code.
+ */
+function settleWhatHasEnded(sim: Simulation, project: Project, plan: Plan): void {
+  for (const one of plan.periods) {
+    const window = windowOf(project, one.id);
+    if (window && window.to <= sim.now) settlePeriod(sim, project, one);
+  }
 }
 
 /**

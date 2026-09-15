@@ -1112,7 +1112,31 @@ export function theOfficeFills(sim: Simulation, project: Project): number {
       // casting decision in the save the same decision wearing a vector.
       return AXES.reduce((n, axis) => n + one[axis.id] * wantsOn(role, axis.id), 0);
     };
-    const best = seen.reduce((top, person) => (worth(person) > worth(top) ? person : top), seen[0]!);
+    // Down the list in the order it believes in, asking each one — because an
+    // office is refused like anybody else. Without this it simply seated its
+    // first choice: `decideOffer` had exactly one caller in the engine, so at
+    // the band the player was turned down on thirty-six of eighty-four
+    // person-part pairs and the office was turned down never. Doing nothing was
+    // strictly better than negotiating, which is the whole of casting made
+    // pointless by one missing call.
+    //
+    // On the same draw the player gets, deliberately. Whether somebody will do
+    // it at that number is a fact about them and the number, not about who is
+    // asking, so a part the player was refused is a part the office is refused
+    // too, and the band stops being a way of getting for free what would not be
+    // given.
+    const order = [...seen].sort((a, b) => worth(b) - worth(a));
+    let best: Person | undefined;
+    for (const person of order) {
+      const roll = sim.rng('casting', 'offer', project.id, role.id, person.id).next();
+      if (decideOffer(offerOf(sim, project, role, person, role.bandCents), roll).took) {
+        best = person;
+        break;
+      }
+    }
+    // Everybody in the pile said no at the band. The part stays open, which is
+    // the honest outcome and the one that makes going over the band worth money.
+    if (!best) continue;
     if (!project.cast) project.cast = [];
     project.cast.push({ roleId: role.id, personId: best.id, feeCents: role.bandCents, castAt: sim.now });
     writeTheQuote(best, project.id, role.size, role.bandCents, sim.now);

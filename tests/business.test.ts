@@ -24,7 +24,7 @@ import {
 } from '@/engine/world/lot';
 import {
   BUILD_COST_CENTS, ENQUIRY_SHAPES, ICELAND_STAGE_FLOOR_SQM,
-  MONTHLY_OVERHEAD_CENTS, THE_RATE_CARD,
+  OVERHEAD_FLOOR_CENTS, THE_RATE_CARD,
 } from '@/engine/content/lot';
 import { GROUP, GROUP_PROFIT_CENTS, ORGANIC_SHARE_OF_WORLD, QUOTA, profitAfterQuota } from '@/engine/content/sugar';
 import { quotaYears, decideQuota } from '@/engine/world/sugar';
@@ -601,7 +601,7 @@ describe('where the money comes from', () => {
     // organic trade is 450,000 tonnes; the biggest real producer turns over
     // about what the lot cost, once.
     expect(BUILD_COST_CENTS).toBeLessThan(GROUP_PROFIT_CENTS * 3);
-    expect(MONTHLY_OVERHEAD_CENTS * 12).toBeLessThan(GROUP_PROFIT_CENTS * 0.1);
+    expect(OVERHEAD_FLOOR_CENTS * 12).toBeLessThan(GROUP_PROFIT_CENTS * 0.1);
   });
 
   it('puts the sugar’s name on the money it sends', () => {

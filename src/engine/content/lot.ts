@@ -362,7 +362,17 @@ export const OVERHEAD: readonly OverheadLine[] = [
 ];
 
 /** What a dark month costs, in cents. */
-export const MONTHLY_OVERHEAD_CENTS: Money = OVERHEAD.reduce((n, line) => n + line.monthlyCents, 0);
+/**
+ * The floor: what a month costs with the one line somebody chooses at its least.
+ *
+ * Not what a month costs. The selling line is a decision and this table carries
+ * its smallest value, so the live figure is `monthlyOverhead(sim)` in
+ * `world/lot.ts` and it is larger whenever the lot is being sold harder than
+ * the minimum. This was named `MONTHLY_OVERHEAD_CENTS` and read as though it
+ * were the answer, which is how the break-even figure came to measure against a
+ * bar the player had already moved.
+ */
+export const OVERHEAD_FLOOR_CENTS: Money = OVERHEAD.reduce((n, line) => n + line.monthlyCents, 0);
 
 /**
  * The three rates a stage is let at, as a share of the shooting rate.

@@ -77,6 +77,48 @@ function makeIt(sim: Simulation, title = 'Hvítserkur', over: Record<string, unk
 
 // ---------------------------------------------------------------------------
 
+describe('when the money actually leaves', () => {
+  it('pays every period at its own end, on every plan', () => {
+    for (const planId of ['feature', 'series', 'unscripted']) {
+      const plan = planById(planId)!;
+      const sim = world(`settle-${planId}`);
+      const medium = plan.media.includes('film') ? 'film' : 'television';
+      const id = onTheSlate(sim, 'Settling', medium);
+      expect(run(sim, 'company.greenlight', {
+        projectId: id, planId, budgetCents: 20_000_000_00, shootWeeks: 6,
+      }).error).toBeUndefined();
+
+      const paidAt = new Map<string, number>();
+      const seen = new Set<string>();
+      for (let i = 0; i < 60; i += 1) {
+        for (const txn of sim.universe.transactions) {
+          if (txn.refId !== id || seen.has(txn.id)) continue;
+          seen.add(txn.id);
+          paidAt.set(txn.memo, txn.at);
+        }
+        const end = finishesBy(sim.universe.projects[id]!);
+        if (end === undefined || sim.now > end) break;
+        sim.advanceTo(sim.now + 14 * MS_DAY);
+      }
+
+      // The docstring has always said the money goes out at a period's end,
+      // "which is the only honest place to put it". It settled whichever period
+      // was DECLARED before this one, and declaration order stops being
+      // calendar order the moment anything carries `runsWith`: a series paid
+      // 58% of its budget on the shoot's first day and a format season paid its
+      // post period out the day before that period opened.
+      for (const period of plan.periods) {
+        const window = windowOf(sim.universe.projects[id]!, period.id);
+        if (!window) continue;
+        const memo = [...paidAt.keys()].find((one) => one.includes(period.label));
+        if (memo === undefined) continue;
+        expect(paidAt.get(memo)!, `${planId}: ${period.id} was paid before it had run`)
+          .toBeGreaterThanOrEqual(window.to);
+      }
+    }
+  });
+});
+
 describe('laying a plan onto dates', () => {
   it('runs the periods back to back and puts delivery after all of them', () => {
     const plan = planById('feature')!;

@@ -35,7 +35,7 @@ import {
   askFor, castOf, castOn, castsAppeal, castsReliability, datesFor, decideOffer, freeToWork,
   fromWhere, globalRuleOne, bringingThemCents, reachesTo,
   castSpark, complementOf, givingOf, performerNew, shapeOf, sparkBetween, sparkReads,
-  howManyCast, openRoles, quoteOf, ranOverOnThem,
+  howManyCast, openRoles, quoteOf, ranOverOnThem, theOfficeFills, writeTheQuote,
   alreadyKnown, believedAt, goesOffBy, howWide, lookedAt, officeFillsAt, readOf, readOn,
   reachOfBand, seatFor, sheetFor, shownOf, SOMEBODY_KNOWS, takeFactor, tapeLean, theBiggestName,
   theDiary, theNameThatGoesOff, TOO_HOT, wantsOn, whereTheCastStands, whoCameIn, WHOEVER,
@@ -113,6 +113,66 @@ function castEverybodyAt(sim: Simulation, id: string, at: Partial<Record<string,
 }
 
 // ---------------------------------------------------------------------------
+
+describe('the office is refused like anybody else', () => {
+  it('does not seat its first choice every time, because it has to ask', () => {
+    const sim = world('office-asks');
+    const id = greenlit(sim, 'feature', 'Hvítserkur', { shootWeeks: 8 });
+    const project = sim.universe.projects[id]!;
+    for (const role of openRoles(project)) {
+      run(sim, 'company.breakdown', { projectId: id, roleId: role.id });
+    }
+    const shoot = sim.universe.projects[id]!.periods!.find((p) => p.id === 'shooting')!;
+    sim.advanceTo(shoot.from);
+
+    // theOfficeFills pushed straight into project.cast and never called
+    // decideOffer, which had exactly one caller in the whole engine. So at the
+    // band the player was refused and the office never was, and doing nothing
+    // was strictly better than negotiating.
+    const after = sim.universe.projects[id]!;
+    let ranked = 0;
+    let firstChoice = 0;
+    for (const seat of after.cast ?? []) {
+      const role = after.roles!.find((r) => r.id === seat.roleId);
+      if (!role) continue;
+      const pile = whoCameIn(sim, role);
+      if (pile.length < 2) continue;
+      const worth = (person: Person) => AXES.reduce(
+        (n, axis) => n + shownOf(sim, after, role, person)[axis.id] * wantsOn(role, axis.id), 0,
+      );
+      const order = [...pile].sort((a, b) => worth(b) - worth(a));
+      const at = order.findIndex((one) => one.id === seat.personId);
+      if (at < 0) continue;
+      ranked += 1;
+      if (at === 0) firstChoice += 1;
+    }
+    expect(ranked, 'no part had a pile deep enough to rank').toBeGreaterThan(4);
+    expect(firstChoice, 'the office got its first choice on every single part')
+      .toBeLessThan(ranked);
+  });
+
+  it('seats nobody the band cannot buy, and leaves the part open', () => {
+    // Everybody in the pile refuses, so the office has nothing to seat. The
+    // part staying open is what makes going over the band worth money.
+    const sim = world('office-refused');
+    const id = greenlit(sim, 'feature', 'Hvítserkur', { shootWeeks: 8 });
+    const project = sim.universe.projects[id]!;
+    const role = openRoles(project)[0]!;
+    run(sim, 'company.breakdown', { projectId: id, roleId: role.id });
+    const live = sim.universe.projects[id]!.roles!.find((r) => r.id === role.id)!;
+    // Everybody in the pile has already been paid ten times what this part
+    // pays, so the ask is their quote and the band is far under the floor an
+    // agent will counter from. Shrinking the band would not do it: askFor
+    // returns max(band, quote), so a smaller band shrinks the ask with it.
+    const pile = whoCameIn(sim, live);
+    expect(pile.length).toBeGreaterThan(0);
+    for (const person of pile) {
+      writeTheQuote(person, 'other_picture', live.size, live.bandCents * 10, sim.now);
+    }
+    theOfficeFills(sim, sim.universe.projects[id]!);
+    expect(seatFor(sim.universe.projects[id]!, live.id)).toBeUndefined();
+  });
+});
 
 describe('what somebody gives the other person', () => {
   it('is its own thing, and not craft standing wearing a second name', () => {
@@ -507,14 +567,22 @@ describe('a quote is a ratchet with memory', () => {
 });
 
 describe('the office fills what nobody filled, at the band and no further', () => {
-  it('leaves no part empty on the day the camera turns over', () => {
+  it('fills what it can on the day the camera turns over, and asks for all of it', () => {
     const sim = world('office');
     const id = greenlit(sim, 'feature', 'Hvítserkur');
     expect(howManyCast(sim.universe.projects[id]!)).toBe(0);
     const shoot = sim.universe.projects[id]!.periods!.find((p) => p.id === 'shooting')!;
     sim.advanceTo(shoot.from);
     const project = sim.universe.projects[id]!;
-    expect(howManyCast(project)).toBe(project.roles!.length);
+
+    // Nearly all of them, and no longer all of them by fiat. This asserted a
+    // full cast, and it passed because the office seated its first choice
+    // without asking — which made it the one buyer in the world nobody ever
+    // refuses. It asks now, down its own list, so a part whose whole pile says
+    // no at the band stays open. That is the outcome that makes going over the
+    // band worth money.
+    expect(howManyCast(project)).toBeGreaterThan(project.roles!.length * 0.7);
+    expect(howManyCast(project)).toBeLessThanOrEqual(project.roles!.length);
   });
 
   it('pays the band and nothing over it, because it has no authority to', () => {
@@ -1438,14 +1506,21 @@ describe('three axes that had no reader now have one each', () => {
     const shoot = sim.universe.projects[id]!.periods!.find((p) => p.id === 'shooting')!;
     sim.advanceTo(shoot.from);
     const project = sim.universe.projects[id]!;
-    const was = castOf(sim, project).map((one) => one.person!.reputation.reliability);
+    // Whoever is actually in it. castOf yields a row per part and the empty
+    // ones carry no person, which used to be unreachable only because the
+    // office seated every part without asking anybody.
+    const reliability = () => castOf(sim, project)
+      .filter((one) => one.person !== undefined)
+      .map((one) => one.person!.reputation.reliability);
+    const was = reliability();
+    expect(was.length).toBeGreaterThan(0);
     ranOverOnThem(sim, project, 6);
-    const now = castOf(sim, project).map((one) => one.person!.reputation.reliability);
+    const now = reliability();
     for (const [i, one] of now.entries()) expect(one).toBeLessThan(was[i]!);
     // A day is a day and nothing is nothing.
-    const flat = castOf(sim, project).map((one) => one.person!.reputation.reliability);
+    const flat = reliability();
     ranOverOnThem(sim, project, 0);
-    expect(castOf(sim, project).map((one) => one.person!.reputation.reliability)).toEqual(flat);
+    expect(reliability()).toEqual(flat);
   });
 
   it('weighs both of them by how much of the picture each part is', () => {
