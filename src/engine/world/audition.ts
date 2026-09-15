@@ -48,7 +48,8 @@ import { clamp } from '../core/rng';
 import {
   AS_WRITTEN, A_WORKING_WEEK, CLOSE_ENOUGH, COLD, EXPECTED_OF_ANYBODY, FURTHEST, KNOWN_OF,
   RELIED_ON, REMEMBERED,
-  SHADES, TOO_FAR, WELL_LIKED, WHAT_THEY_OFFER,
+  HELD_AGAINST_YOU_YEARS, IGNORED, MISREAD_THE_ROOM, SHADES, TOO_FAR, WELL_LIKED,
+  WHAT_THEY_OFFER,
   howFarById, shadeById, wayById, whyById, type Reading, type ShadeId, type WhyId,
 } from '../content/audition';
 import { SIZES, sizeById } from '../content/casting';
@@ -79,10 +80,70 @@ export function shootingHere(sim: Simulation, from = sim.now): Booking[] {
     .sort((a, b) => a.from - b.from);
 }
 
-/** Readings the player has done for these people, whatever came of them. */
+/**
+ * Readings the player has actually done for these people, whatever came of them.
+ *
+ * Every ending except the one where they never went. An ask that closed
+ * unanswered is not a reading and must not read as one — it used to, back when
+ * nothing closed at all, and the day auditions started expiring it would have
+ * meant ignoring somebody made them think of you more.
+ */
 export function readFor(sim: Simulation, holder: string): Audition[] {
   return Object.values(sim.universe.auditions)
-    .filter((one) => one.holder === holder && one.state !== 'open');
+    .filter((one) => one.holder === holder && one.state !== 'open' && one.why !== 'never-answered');
+}
+
+/**
+ * Times these people asked recently and the date to be seen by went past.
+ *
+ * Recently, and that word is the whole of it. Counting every one ever meant two
+ * unanswered asks shut a holder for the rest of the save with no way back,
+ * which is a countdown rather than a consequence — the same thing this build
+ * refuses on the family's patience, where a bad year brings the rungs down and
+ * a good one puts them back. Three years, the window the lot already judges its
+ * own record over.
+ */
+export function ignoredBy(sim: Simulation, holder: string): number {
+  const from = sim.now - HELD_AGAINST_YOU_YEARS * 365 * MS_DAY;
+  return Object.values(sim.universe.auditions)
+    .filter((one) => one.holder === holder && one.why === 'never-answered' && one.closesAt >= from)
+    .length;
+}
+
+/**
+ * Closes every ask whose date to be seen by has gone.
+ *
+ * `whatIsGoing` has always written a `closesAt` onto the row and said in the
+ * notification that nobody is being seen after it, and nothing ever read that
+ * date. Measured on a save nobody plays: sixty-six asks across twenty-five
+ * years, every one still open, the oldest shut twelve years earlier. So the one
+ * field on the record that says when a door closes was a sentence the game
+ * printed and did not keep, and the list a player opened was parts cast years
+ * ago by somebody else.
+ *
+ * They close here, and closing costs something, because the alternative is a
+ * player who can ignore every part they are ever offered at no price.
+ */
+export function shutWhatHasClosed(sim: Simulation): Audition[] {
+  const shut: Audition[] = [];
+  for (const audition of Object.values(sim.universe.auditions)) {
+    if (audition.state !== 'open' || sim.now <= audition.closesAt) continue;
+    audition.state = 'over';
+    audition.why = 'never-answered';
+    shut.push(audition);
+  }
+  if (shut.length > 0) {
+    const holders = [...new Set(shut.map((one) => one.holder))];
+    sim.notify({
+      category: 'career',
+      title: shut.length === 1 ? 'A Part Went Without You' : `${shut.length} Parts Went Without You`,
+      body: `${holders.join(', ')} asked, nobody heard back, and the date to be seen by has gone. `
+        + 'Being asked and not answering is the one thing an office remembers about a performer it '
+        + 'has never met.',
+      importance: 50,
+    });
+  }
+  return shut;
 }
 
 /**
@@ -113,7 +174,8 @@ export function remembersYou(sim: Simulation, holder: string): number {
   const relied = Math.min(0,
     ((me?.reputation.reliability ?? EXPECTED_OF_ANYBODY) - EXPECTED_OF_ANYBODY) / EXPECTED_OF_ANYBODY);
   return clamp(
-    COLD + readFor(sim, holder).length * REMEMBERED + (fame / 100) * KNOWN_OF + relied * RELIED_ON,
+    COLD + readFor(sim, holder).length * REMEMBERED + (fame / 100) * KNOWN_OF + relied * RELIED_ON
+      - ignoredBy(sim, holder) * IGNORED,
     0, 1,
   );
 }
@@ -224,15 +286,25 @@ export function howFarOff(played: Reading, wants: Record<string, number>): numbe
 /**
  * The one note the room gives.
  *
- * On the shade the reading was closest on, because a room tells you about the
- * part of it that nearly worked — which is also what makes over-taking
- * expensive, since the shade you are being asked to move is the shade you had
- * right. Ties go to the first shade declared, so the note is the same note every
- * time the same reading is played, and no draw is involved in what anybody says.
+ * On the shade the reading was FARTHEST off, which is what a room actually
+ * says: the note is about the thing that is most wrong, not the thing that
+ * nearly worked. It used to be the closest shade, on the reasoning that a room
+ * tells you about the part that nearly landed — good prose, and it quietly made
+ * the next decision unanswerable. The closest non-zero error is almost always
+ * the smallest one there is: enumerated, 57% of notes asked for a move of one
+ * step and 83% for one or two. A question whose answer is nearly always the
+ * same number is not a question, and it is why every magnitude scheme tried
+ * against it had a favorite in four states out of five.
+ *
+ * On the farthest shade the distances spread across the whole range — one step
+ * to six, with no value above a quarter of them — so how far to go is worth
+ * asking. Ties go to the first shade declared, so the note is the same note
+ * every time the same reading is played, and no draw is involved in what
+ * anybody says.
  */
 export function theNote(played: Reading, wants: Record<string, number>): { shade: ShadeId; toward: number } | undefined {
   let best: ShadeId | undefined;
-  let closest = Infinity;
+  let worst = 0;
   for (const shade of SHADES) {
     const off = Math.abs(played[shade.id] - (wants[shade.id] ?? 0));
     // A shade already exactly right gets no note, because a room does not ask
@@ -240,30 +312,55 @@ export function theNote(played: Reading, wants: Record<string, number>): { shade
     // of that" — and it made the note a trap: any movement on a shade already
     // landed makes it worse, and the player has no way of knowing which kind of
     // note they are holding. A note you cannot act on is a coin with prose.
-    if (off > 0 && off < closest) { closest = off; best = shade.id; }
+    if (off > worst) { worst = off; best = shade.id; }
   }
   if (!best) return undefined;
   return { shade: best, toward: Math.sign((wants[best] ?? 0) - played[best]) };
 }
 
 /**
+ * How surely the player read the room, 0 to 1.
+ *
+ * One minus the share of their readiness that is missing, bounded by
+ * `MISREAD_THE_ROOM`. Nothing here asks what the player can do — the premise
+ * forbids it and a test greps this file to make sure. What it asks is whether
+ * they were in any state to take in eight minutes and one sentence.
+ */
+export function heardItRight(sim: Simulation): number {
+  const me = sim.universe.people[sim.universe.playerId];
+  const ready = me ? clamp(readiness(me) / 100, 0, 1) : 1;
+  return 1 - MISREAD_THE_ROOM * (1 - ready);
+}
+
+/**
  * What the reading becomes once the note is answered.
  *
- * The magnitude is applied to the distance the note was actually asking for,
- * which the player is never told. Taking it all the way lands exactly on it.
- * Taking it past goes further, and further is past the thing they liked.
+ * The move is the number of steps the player chose, in the direction they took
+ * the note to mean. Both halves of that are new and the first is the important
+ * one: the magnitude used to be a SHARE of the distance the note was asking
+ * for, and that distance is the hidden truth, so taking it "all the way" landed
+ * on the want exactly, every time, by construction. Four buttons, one of which
+ * was arithmetically incapable of being beaten.
+ *
+ * `sure` is the second half. Below one there is a chance the player moved the
+ * shade the wrong way — not because they cannot act, but because a room gives
+ * one note, once, and a tired person hears it wrong. It is the only thing that
+ * makes the size of the move a decision: three steps is three steps of right
+ * or three steps of wrong, and one step is neither.
+ *
+ * The draw is the caller's, so this stays pure and a test can walk both
+ * outcomes without owning a simulation.
  */
 export function afterTheNote(
-  played: Reading, wants: Record<string, number>, note: { shade: string; toward: number }, howFarId: string,
+  played: Reading, note: { shade: string; toward: number },
+  howFarId: string, sure = 1, roll = 0,
 ): Reading {
   const how = howFarById(howFarId);
   const shade = shadeById(note.shade);
   if (!how || !shade) return played;
-  // What the note was actually asking for, which the player is never told. All
-  // the way lands on it exactly; halfway does not get there; past it goes past.
-  const asked = (wants[shade.id] ?? 0) - played[shade.id];
+  const heard = roll < sure ? note.toward : -note.toward;
   const out = { ...played };
-  out[shade.id] = clamp(Math.round(played[shade.id] + asked * how.share), -FURTHEST, FURTHEST);
+  out[shade.id] = clamp(played[shade.id] + heard * how.steps, -FURTHEST, FURTHEST);
   return out;
 }
 
@@ -332,6 +429,7 @@ export const SHUTS_AT = 1;
  * somebody twice buys, and it buys nothing else.
  */
 export function whatIsGoing(sim: Simulation): Audition[] {
+  shutWhatHasClosed(sim);
   const made: Audition[] = [];
   for (const booking of shootingHere(sim)) {
     const opens = booking.from - ASKING_AT * MS_WEEK;
@@ -470,7 +568,14 @@ export function takeTheNote(sim: Simulation, taking: Taking): { ok: true; why: W
   if (!howFarById(taking.howFar)) return { ok: false, error: 'That isn’t a way of taking a note.' };
 
   audition.took = taking.howFar;
-  audition.played = afterTheNote(readingOf(audition.played), audition.wants, audition.note, taking.howFar);
+  // Whether they took in what was actually said. Its own draw, keyed to this
+  // audition, so the same save answering the same note the same way gets the
+  // same day — and so a player who saves before a reading cannot roll for a
+  // better room by taking the note twice.
+  const sure = heardItRight(sim);
+  const roll = sim.rng('audition', 'heard', audition.id).next();
+  audition.heard = roll < sure;
+  audition.played = afterTheNote(readingOf(audition.played), audition.note, taking.howFar, sure, roll);
   return { ok: true, why: settle(sim, audition, true) };
 }
 

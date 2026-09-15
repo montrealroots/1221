@@ -22,7 +22,7 @@ import {
   FURTHEST, HOW_FAR, SHADES, WAYS, shadeById, whyById,
 } from '@/engine/content/audition';
 import {
-  alreadyUpFor, freeAcross, goingNow, remembersYou, whereYourWorkStands,
+  alreadyUpFor, freeAcross, goingNow, heardItRight, readingOf, remembersYou, whereYourWorkStands,
 } from '@/engine/world/audition';
 import type { Audition } from '@/engine/domain/model';
 
@@ -197,14 +197,20 @@ function GoUpForm({ auditionId, onClose }: { auditionId: string; onClose: () => 
  * The note, and the only decision anybody takes with information in it.
  *
  * What they asked for is one shade and one direction. How far they meant is
- * never said, and will not be.
+ * never said, and will not be — so the buttons are distances the player is
+ * choosing rather than fractions of an answer the game already holds. The
+ * state of the person is shown beside them, because how sure they are of what
+ * they just heard is the thing that decides whether committing is brave or
+ * stupid, and it is the only part of this the player can actually read.
  */
 function TheNote({ audition }: { audition: Audition }) {
   const { run } = useGame();
   const [error, setError] = useState<string | undefined>();
+  const sure = useWorld((s) => heardItRight(s));
   const shade = shadeById(audition.note?.shade ?? '');
   if (!shade || !audition.note) return null;
   const asked = audition.note.toward > 0 ? shade.high : shade.low;
+  const now = readingOf(audition.played)[audition.note.shade as 'warmth'];
 
   const take = (howFar: string) => {
     const answer = run<{ ok: boolean; error?: string }>(
@@ -217,9 +223,15 @@ function TheNote({ audition }: { audition: Audition }) {
     <div className="holding">
       <div className="strong">{`${audition.holder}: “${asked}.”`}</div>
       <p className="muted small">
-        {`That is the note, and it is on ${shade.label.toLowerCase()}. You had that one nearest `}
-        right: a room tells you about the part that nearly worked. How far they meant, they did
-        not say.
+        {`That is the note, and it is on ${shade.label.toLowerCase()} — the one you were `}
+        furthest off on. You played it at {now} of {FURTHEST}. How far they meant, they did not
+        say, and nobody is going to tell you.
+      </p>
+      <p className="xs dim" style={{ margin: '0 0 var(--s3)' }}>
+        {sure >= 1
+          ? 'You’re sharp enough to be certain what they said.'
+          : `You’re ${Math.round(sure * 100)}/100 sure you took that in the way they meant it. `
+            + 'Go as far as it goes and you\u2019re three steps right or three steps wrong.'}
       </p>
       <div className="row gap-2">
         {HOW_FAR.map((one) => (

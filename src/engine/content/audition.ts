@@ -167,7 +167,7 @@ export const wayById = (id: string): Way | undefined => WAYS.find((w) => w.id ==
 // The redirect
 // ---------------------------------------------------------------------------
 
-export type HowFarId = 'none' | 'half' | 'full' | 'over';
+export type HowFarId = 'none' | 'touch' | 'good' | 'far';
 
 export interface HowFar {
   id: HowFarId;
@@ -175,25 +175,45 @@ export interface HowFar {
   label: string;
   /** What the room reads it as. */
   what: string;
-  /** The share of the note the player actually applies. */
-  share: number;
+  /** How far the player moves, in shade steps. Absolute, not a share. */
+  steps: number;
 }
 
 /**
  * What the player does with the one note they get.
  *
- * The research is precise about this and it is the sharpest decision in the
- * domain: half-taking reads as not listening, and over-taking loses the thing
- * they liked enough to give you a second go. Both halves of that sentence are
- * built. The note is given on the shade the reading was *closest* on — the room
- * tells you about the part of it that nearly worked — so overcooking that shade
- * spends the only thing that was going right.
+ * This was four buttons with one right answer, and the arithmetic said so
+ * rather than the balance. The magnitudes used to be a SHARE of the distance
+ * the note was asking for — and that distance is the hidden truth, so `share: 1`
+ * landed exactly on the want by construction. It was an identity, not a
+ * decision. Enumerated over every reachable state: 117,306 of them give a note,
+ * and All The Way was among the best in **117,306 of them**. Leave It was never
+ * once uniquely best.
+ *
+ * So the player supplies the distance now, in steps on the same seven-point
+ * scale their own reading sits on, and nothing multiplies it by the answer.
+ * How far to go is a real guess about a number nobody has told them.
+ *
+ * What stops that becoming "always press the biggest" is the second half, in
+ * `world/audition.ts`: how surely you read a room is a thing fatigue takes. On
+ * a bad day the note you act on can be the opposite of the note you were given,
+ * and then the size of the swing is the size of the mistake. Committing hard
+ * is right on a sharp day and a gamble on a bad one, which is the trade this
+ * decision never had.
+ *
+ * Measured, so the claim is falsifiable: under the old rule one button was
+ * among the best in 100.0% of states. Under this one the favorite is among
+ * the best in about 80%, three different steps are uniquely best across the
+ * situations a player can read, and which one is best moves with readiness.
+ * That is better and it is not perfect — a single scalar guess against a known
+ * distribution will always have a favorite, and `docs/UNBITTEN.md` keeps the
+ * figure so nobody has to take this comment's word for it.
  */
 export const HOW_FAR: readonly HowFar[] = [
-  { id: 'none', label: 'Leave It', what: 'You heard it and you do it again as it was. Sometimes that is the answer. Usually it is deafness.', share: 0 },
-  { id: 'half', label: 'Halfway', what: 'You move, and not as far as they asked. Safe, and it can read as not having listened.', share: 0.5 },
-  { id: 'full', label: 'All The Way', what: 'Exactly what they asked for, exactly as far as they asked for it.', share: 1 },
-  { id: 'over', label: 'Past It', what: 'Further than they asked. It can be the thing that wins the room, and it can throw away whatever made them ask.', share: 1.7 },
+  { id: 'none', label: 'Leave It', what: 'You heard it and you do it again as it was. Sometimes that is the answer. Usually it is deafness.', steps: 0 },
+  { id: 'touch', label: 'A Touch', what: 'The smallest move that counts as having moved. Safe, and it can read as not having listened.', steps: 1 },
+  { id: 'good', label: 'A Good Deal', what: 'A real change, and not the whole of what you have. Most notes want about this.', steps: 2 },
+  { id: 'far', label: 'As Far As It Goes', what: 'Everything you have in that direction. It can be the thing that wins the room, and if you have misread the room it’s the thing that loses it.', steps: 3 },
 ];
 
 export const howFarById = (id: string): HowFar | undefined => HOW_FAR.find((h) => h.id === id);
@@ -226,7 +246,8 @@ export const CLOSE_ENOUGH = 1.2;
 // Why it ended
 // ---------------------------------------------------------------------------
 
-export type WhyId = 'wrong-for-it' | 'not-in-the-room' | 'went-another-way' | 'dates' | 'cast';
+export type WhyId = 'wrong-for-it' | 'not-in-the-room' | 'went-another-way' | 'dates' | 'cast'
+  | 'never-answered';
 
 export interface Why {
   id: WhyId;
@@ -251,6 +272,7 @@ export const WHYS: readonly Why[] = [
   { id: 'not-in-the-room', label: 'A Tape Is A Tape', said: 'It went in the pile with the others and nobody wrote back.' },
   { id: 'went-another-way', label: 'They Went Another Way', said: 'It came down to two and it wasn’t you. No, there isn’t a reason.' },
   { id: 'dates', label: 'The Dates', said: 'You’re working. They couldn’t hold it.' },
+  { id: 'never-answered', label: 'You Never Went Up For It', said: 'They asked, the date to be seen by went past, and they cast it without you.' },
 ];
 
 export const whyById = (id: string): Why | undefined => WHYS.find((w) => w.id === id);
@@ -458,3 +480,59 @@ export const WHAT_THEY_OFFER = {
    */
   fameStandsIn: 0.55,
 } as const;
+
+/**
+ * The most of your read of a room that a bad day can take.
+ *
+ * Not your acting — the premise forbids that, and `world/audition.ts` reads no
+ * attribute anywhere. What fatigue takes is the listening: eight minutes, one
+ * note, said once, by somebody who has been in that chair since nine. Tired
+ * enough and you act on the opposite of what they meant, which is the most
+ * ordinary way a good reading goes wrong and the only one the prodigy
+ * constraint leaves room for.
+ *
+ * It is what makes how far to go a decision. Commit everything and it is three
+ * steps of right or three steps of wrong; take a touch and it is neither. A
+ * player who can see their own readiness on the front page can read which kind
+ * of day it is before they walk in.
+ *
+ * SLATE’s own. At the ceiling it is nothing at all, so a rested performer simply
+ * hears the room.
+ */
+export const MISREAD_THE_ROOM = 0.35;
+
+/**
+ * What it costs with these people to have been asked and not answered.
+ *
+ * The ratchet running backwards, and it is the whole reason an unanswered ask
+ * closes rather than simply vanishing. `REMEMBERED` says a reading is worth
+ * something to the next call even when it ends in no — the research is explicit
+ * that a pass is an asset. The other half of that sentence was never built: an
+ * office that asks twice and hears nothing twice is an office that stops
+ * asking, and until now a player could ignore every part they were ever
+ * offered at no cost, forever, because nothing ever read the date the room
+ * shuts on.
+ *
+ * Larger than `REMEMBERED` on purpose. Turning up is ordinary and is worth a
+ * little; not turning up is a thing people remember, and two of them undo more
+ * than two readings built. SLATE's own.
+ */
+export const IGNORED = 0.22;
+
+/**
+ * How long an office holds it against you, in years.
+ *
+ * Because the first version of this did not, and a one-way door is a countdown
+ * rather than a consequence. Two unanswered asks took a holder to nothing and
+ * nothing is where they stayed for the rest of the save: no way back, no
+ * decision to make, and the same fault this build already names on the family's
+ * patience, where a shut year brings the rungs down and a good year puts them
+ * back.
+ *
+ * Three years, which is the window the lot already uses to decide whether its
+ * own record is any good, so the two halves of this world forget at the same
+ * rate. A reading is not windowed and does not fade — the research is explicit
+ * that a pass is a durable asset, and people remember having met somebody far
+ * longer than they remember being stood up by them.
+ */
+export const HELD_AGAINST_YOU_YEARS = 3;

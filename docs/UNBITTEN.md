@@ -227,51 +227,70 @@ player is perfect.
 
 ---
 
-## Measured: the one decision in the room the game is named after
+## Was measured, and is fixed: the one decision in the room
 
-This is the best-evidenced entry on the page and the only one proven by
-exhausting the state space rather than by reading. It is also the worst, because
-it is the player's single craft-adjacent choice.
+This was the best-evidenced entry on the page and the worst thing on it, because
+it was the player's single craft-adjacent choice. It is kept in full because the
+method is the point and because the replacement is measured against it.
 
-A reading is three shades, each from -3 to +3. The room gives one note, on one
-shade, and the player picks how far to take it: Leave It, Halfway, All The Way,
-Past It. `afterTheNote` moves that shade by `share` of the real gap, and the
-magnitudes are `{0, 0.5, 1, 1.7}` — so All The Way lands exactly on the want by
-construction. `decideAudition` falls away monotonically with distance and reads
-nothing else.
-
-Every reachable state was enumerated: 117,306 of them give a note.
+**What was wrong.** A reading is three shades, each from -3 to +3. The room gives
+one note, on one shade, and the player picks how far to take it. `afterTheNote`
+moved that shade by `share` of the **real** gap, and the magnitudes were
+`{0, 0.5, 1, 1.7}` — so All The Way landed exactly on the want by construction.
+It was an identity, not a balance. Every reachable state was enumerated: 117,306
+of them give a note.
 
 | Magnitude | Times it is among the best |
 |---|---|
-| Leave It | 0 |
-| Halfway | 33,498 |
-| All The Way | 117,306 |
-| Past It | 23,240 |
+| Leave It | 16,514 |
+| Halfway | 47,738 |
+| **All The Way** | **117,306 — every state there is** |
+| Past It | 39,242 |
 
-**All The Way is beaten zero times.** It wins outright in 66,151 states and ties
-in the other 51,155. **Leave It is never once among the best.** One button is
-never wrong and one is always wrong, in every state the game can reach.
+All The Way was beaten zero times. Leave It was never once *uniquely* best: its
+16,514 are exactly the states where all four are identical.
 
-It is worse than a dominant option, though. In 14,202 states — 12.1% — all four
-magnitudes land inside `CLOSE_ENOUGH` and the chance of being cast is *identical
-whatever the player picks*. On a reading wrong on one shade only, that is 71.4%
-of states. The cause is structural: `howFarOff` is the mean across three shades
-and the note moves exactly one, so the worst possible single-shade error is 2.0
-against a `CLOSE_ENOUGH` of 1.2. A player who is wrong in one way cannot be
-wrong enough for the answer to matter.
+**Three more designs were enumerated and thrown away**, which is the part worth
+keeping, because each looks right until it is measured:
 
-The file's own comment says of half-taking and over-taking that "both halves of
-that sentence are built". Both halves are present and neither is ever worth
-choosing. `content/audition.ts` describes the research's sharpest decision and
-`world/audition.ts` resolves it with arithmetic that has one answer.
+| Design | The favorite, among the best in |
+|---|---|
+| Share of the hidden gap (as shipped) | 100.0% |
+| Absolute steps, note on the closest shade | 63.8% — but *step 1 is optimal in all twelve situations a player can read* |
+| Absolute steps, note on the farthest shade | 95.9% |
+| The above, plus fatigue blurring how precisely the step lands | 79–96% |
 
-**This one needs a decision before it needs code.** Absolute steps that do not
-read the hidden gap only promote Halfway to dominance; a magnitude becomes a
-decision when it trades against something, and the room has nothing scarce in it
-— going in costs money from an account nothing can drain and three days that
-occupy no calendar. The fix is bound up with what the room is allowed to spend,
-which is the same question the prodigy constraint asks above.
+The second one is the trap this page warned about in its own words — "absolute
+steps that do not read the hidden gap only promote Halfway to dominance" — and
+it is now measured rather than asserted. The cause was found underneath it: the
+note was given on the shade the reading was **closest** on, and the closest
+non-zero error is nearly always the smallest one there is. **57% of notes asked
+for a move of one step, and 83% for one or two.** A question whose answer is
+almost always the same number is not a question, whatever the buttons say.
+
+**What is built.** Three changes, and they need each other:
+
+- The note is given on the shade the reading was **farthest** off, which is what
+  a room actually says and which spreads the distances across the whole range —
+  one step to six, nothing above a quarter of them.
+- The magnitudes are **absolute steps** `{0, 1, 2, 3}`. Nothing multiplies the
+  player's choice by the answer. Over-taking stopped being a button and became
+  an outcome: ask for one step and give three and you have gone past them, which
+  is what over-taking is.
+- **Readiness decides how surely the note was heard.** Below the ceiling there is
+  a chance the player moved the shade the wrong way — not because they cannot
+  act, but because a room gives one note, once, and a tired person hears it
+  wrong. It is the only thing that makes the size of the move a decision: three
+  steps is three steps of right or three steps of wrong, and one step is
+  neither. It is also the first thing in the engine that reads `readiness`.
+
+**Honest about what it did not fix.** The favorite is among the best in about
+80% of states rather than 100%, three different steps are uniquely best across
+the situations a player can read, and which one is best moves with readiness. A
+single scalar guess against a distribution will always have a favorite, and no
+amount of tuning removes that — it needs a second thing the player is trading
+against, and the room now has one rather than none. The figures stay here so the
+claim is falsifiable rather than a comment's word.
 
 ---
 
@@ -294,9 +313,12 @@ file reference rather than as a finding.
   read, and a scout puts it at 2 of 48 rather than 2 of 28. It also strengthens
   the ageing claim from an empirical one about 27,375 days to an arithmetic one
   that holds for a save of any length. Verify the count before quoting it.
-- **The whole wellbeing model.** Readiness and the nine dials under it are read
-  by nothing in the engine, and they sit directly under the only thing a player
-  can choose to spend a day on.
+- **The whole wellbeing model**, and this is now half true rather than true.
+  Readiness is read in exactly one place: `heardItRight` in the audition room,
+  where how ready the player is decides how surely they took in the one note
+  anybody gives them. That is the first and so far only outcome any of the nine
+  dials under it decides. The dials themselves still feed nothing but readiness,
+  and readiness still feeds nothing but the room.
 - **Travel fatigue is a second fitness bug**, unrecorded until now, and it takes
   openness down with it — the same shape as the fitness fault, on a second dial.
 - **The tax engine is a screen.** Real, correct, entirely unwired.
@@ -345,22 +367,24 @@ file reference rather than as a finding.
   because the player can now be seated in the family's own pictures, so it is
   new in reach rather than new in code.
 
-- **An audition never expires.** `whatIsGoing` writes a row with a `closesAt`
-  on it, and nothing ever reads that date except the player going up for the
-  part. Measured on a save nobody plays: 66 auditions across 25 years, every
-  one of them still `open`, the oldest closed twelve years ago. So the one
-  field on the row that says *after this nobody is being seen* is a sentence
-  the game prints and does not keep, and the list a player opens is a list of
-  parts that were cast years ago by somebody else. Found while measuring
-  whether the fifth room buys the player more work — it does, and the count
-  measured was auditions **offered**, which is the right number for that
-  question and is not affected by this.
+- ~~**An audition never expires.**~~ **Fixed.** `whatIsGoing` wrote a row with a
+  `closesAt` on it and nothing ever read that date. Measured on a save nobody
+  plays: 66 auditions across 25 years, every one still `open`, the oldest closed
+  twelve years earlier.
 
-  Not fixed here because the fix is a design decision and not a sweep: an
-  audition the player ignored could simply close, or it could cost something —
-  a holder who asks twice and is ignored twice is a holder who stops asking,
-  which is exactly the `remembersYou` ratchet running the other way. The second
-  one is the better game and it is not mine to choose.
+  The fix took the harder of the two endings. An ask now closes when its date
+  goes past, *and* being asked and not answering costs standing with the people
+  who asked — the `remembersYou` ratchet running the other way, which the
+  research describes and this build only ever had one half of. An office that
+  asks twice and hears nothing twice stops asking.
+
+  With a window on it, and that was the second pass. The first version counted
+  every unanswered ask ever, which took a holder to nothing after two and left
+  them there for the rest of the save: a countdown rather than a consequence,
+  and exactly the fault this build refuses on the family's patience. Three
+  years now, the same window the lot judges its own record over, so there is a
+  way back. Measured across three seeds over 25 years: a player who answers
+  nobody is asked about **29-38 parts instead of 66**, and holders come back.
 
 ### Wrong, rather than missing
 

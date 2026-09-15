@@ -26,14 +26,16 @@ import { MS_DAY } from '@/engine/core/time';
 import { MS_WEEK } from '@/engine/world/lot';
 import {
   AS_GOOD_AS_IT_GETS, ASKING_AT, SHUTS_AT, afterTheNote, alreadyUpFor, decideAudition, feeFor,
-  freeAcross, goingNow, howFarOff, readingOf, remembersYou, shootingHere, theNote, whatIsGoing,
-  theyWantYou, whatTheyWant, whereYourWorkStands, WORKING_KIND, believedOf, sizeCasting,
+  freeAcross, goingNow, heardItRight, howFarOff, readingOf, remembersYou, shootingHere, theNote,
+  whatIsGoing, theyWantYou, whatTheyWant, whereYourWorkStands, WORKING_KIND, believedOf,
+  sizeCasting, readFor, ignoredBy,
 } from '@/engine/world/audition';
 import { whatHasThem } from '@/engine/world/diary';
 import { applySleep, readiness } from '@/engine/systems/life';
 import {
-  AS_WRITTEN, A_WORKING_WEEK, CLOSE_ENOUGH, COLD, FURTHEST, KNOWN_OF, REMEMBERED, SHADES,
-  TOO_FAR, WAYS, WHAT_THEY_OFFER, howFarById,
+  AS_WRITTEN, A_WORKING_WEEK, CLOSE_ENOUGH, COLD, FURTHEST, HOW_FAR, KNOWN_OF, MISREAD_THE_ROOM,
+  HELD_AGAINST_YOU_YEARS, IGNORED, REMEMBERED, SHADES, TOO_FAR, WAYS, WHAT_THEY_OFFER,
+  type Reading,
 } from '@/engine/content/audition';
 import { SIZES, sizeById } from '@/engine/content/casting';
 
@@ -583,56 +585,113 @@ describe('a tape is a performance nobody tells you anything about', () => {
   });
 });
 
-describe('the note is on the thing that nearly worked', () => {
-  it('names the shade the reading was closest on, and never one already right', () => {
+describe('the note is on the thing that is most wrong', () => {
+  it('names the shade the reading was farthest off, and never one already right', () => {
     const wants = { warmth: 3, size: 0, pace: -3 };
     const note = theNote({ warmth: -2, size: 1, pace: 3 }, wants)!;
-    expect(note.shade).toBe('size');
+    // Warmth is five out, size one, pace six. The note is about the six.
+    expect(note.shade).toBe('pace');
     expect(note.toward).toBe(-1);
-    // A shade landed exactly gets no note. A room does not ask for a change to
-    // the thing it has, and a note you cannot act on is a coin with prose.
-    expect(theNote({ warmth: -2, size: 0, pace: 3 }, wants)!.shade).toBe('warmth');
+    // A shade landed exactly gets no note, and with nothing wrong there is no
+    // note at all. A note you cannot act on is a coin with prose.
+    expect(theNote({ warmth: 3, size: 2, pace: -3 }, wants)!.shade).toBe('size');
     expect(theNote(wants as never, wants)).toBeUndefined();
   });
 
-  it('lands exactly on what they wanted when it is taken all the way', () => {
-    const wants = { warmth: 2, size: -1, pace: 3 };
-    const played = { warmth: 1, size: -1, pace: 0 };
-    const note = theNote(played, wants)!;
-    const after = afterTheNote(played, wants, note, 'full');
-    expect(after[note.shade]).toBe(wants[note.shade]);
+  it('asks about a spread of distances rather than always the smallest one', () => {
+    // The reason this moved off the closest shade. On the closest rule the note
+    // asked for a single step in 57% of every reachable state and one or two in
+    // 83% — so how far to go had the same answer nearly every time, whatever
+    // the magnitudes were. Sampled here rather than enumerated, because the
+    // full sweep is 117,306 states and this is a unit test.
+    const seen = new Map<number, number>();
+    let seed = 12345;
+    const rng = (): number => { seed = (seed * 1103515245 + 12345) & 0x7fffffff; return seed / 0x7fffffff; };
+    for (let i = 0; i < 4000; i += 1) {
+      const draw = (): number => Math.round((rng() * 2 - 1) * FURTHEST);
+      const played: Reading = { warmth: draw(), size: draw(), pace: draw() };
+      const wants = { warmth: draw(), size: draw(), pace: draw() };
+      const note = theNote(played, wants);
+      if (!note) continue;
+      const gap = Math.abs(played[note.shade] - (wants[note.shade] ?? 0));
+      seen.set(gap, (seen.get(gap) ?? 0) + 1);
+    }
+    const total = [...seen.values()].reduce((n, one) => n + one, 0);
+    // No single distance is most of the questions, and the big ones happen.
+    for (const [, count] of seen) expect(count / total).toBeLessThan(0.4);
+    expect(seen.get(2 * FURTHEST) ?? 0).toBeGreaterThan(0);
   });
 
-  it('spends the very thing that got you the second go when it is overcooked', () => {
-    // The research's own sentence: over-taking loses the thing they liked
-    // enough to ask you again. The note is given on the shade you had nearest
-    // right, so going past it is the only way to make that shade worse.
+  it('moves the number of steps the player chose, and never the hidden distance', () => {
+    // The whole of the old fault in one assertion. The magnitude used to be a
+    // SHARE of the gap the note was asking for, and the gap is the hidden
+    // truth — so "all the way" landed on the want exactly, in every state that
+    // has ever existed, by arithmetic rather than by judgement.
     const wants = { warmth: 1, size: -3, pace: 0 };
     const played = { warmth: -1, size: 3, pace: 0 };
     const note = theNote(played, wants)!;
-    const full = afterTheNote(played, wants, note, 'full');
-    const over = afterTheNote(played, wants, note, 'over');
-    const wasOff = Math.abs(played[note.shade] - (wants[note.shade] ?? 0));
-    expect(Math.abs(full[note.shade] - (wants[note.shade] ?? 0))).toBeLessThan(wasOff);
-    expect(Math.abs(over[note.shade] - (wants[note.shade] ?? 0)))
-      .toBeGreaterThan(Math.abs(full[note.shade] - (wants[note.shade] ?? 0)));
+    for (const one of HOW_FAR) {
+      const after = afterTheNote(played, note, one.id);
+      expect(Math.abs(after[note.shade] - played[note.shade]), one.id).toBe(one.steps);
+    }
+    // And going as far as it goes is not a synonym for landing on it. On this
+    // reading the gap is six and the biggest move anybody has is three.
+    const far = afterTheNote(played, note, 'far');
+    expect(far[note.shade]).not.toBe(wants[note.shade]);
   });
 
-  it('reads halfway as halfway, and leaving it as leaving it', () => {
-    const wants = { warmth: 0, size: 0, pace: 3 };
-    const played = { warmth: 2, size: 2, pace: 0 };
+  it('overshoots when the move is bigger than the gap, which is how over-taking happens now', () => {
+    // Over-taking used to be a button that always overshot by the same share.
+    // It is an outcome now: ask for one step of change, give three, and you
+    // have gone past them — which is what over-taking is.
+    const wants = { warmth: 0, size: 0, pace: 1 };
+    const played = { warmth: 0, size: 0, pace: 0 };
     const note = theNote(played, wants)!;
-    const off = (r: Record<string, number>) => Math.abs(r[note.shade]! - (wants[note.shade] ?? 0));
-    expect(off(afterTheNote(played, wants, note, 'none'))).toBe(off(played));
-    expect(off(afterTheNote(played, wants, note, 'half')))
-      .toBeGreaterThan(off(afterTheNote(played, wants, note, 'full')));
+    expect(note.shade).toBe('pace');
+    const off = (r: Reading) => Math.abs(r[note.shade] - (wants[note.shade] ?? 0));
+    expect(off(afterTheNote(played, note, 'touch'))).toBe(0);
+    expect(off(afterTheNote(played, note, 'far'))).toBe(2);
   });
 
-  it('gives every magnitude a different share and only one of them nothing', () => {
-    expect(howFarById('none')!.share).toBe(0);
-    expect(howFarById('full')!.share).toBe(1);
-    expect(howFarById('over')!.share).toBeGreaterThan(1);
-    expect(howFarById('half')!.share).toBeGreaterThan(0);
+  it('gives every magnitude a different number of steps and only one of them none', () => {
+    const steps = HOW_FAR.map((one) => one.steps);
+    expect(steps).toEqual([...new Set(steps)]);
+    expect(steps.filter((n) => n === 0)).toHaveLength(1);
+    expect(Math.max(...steps)).toBe(FURTHEST);
+  });
+
+  it('turns the move the wrong way when the room was misread, and by as much as was committed', () => {
+    // The thing that makes how far to go a decision. A big swing is a big
+    // mistake when the note was not taken in, and a touch is barely one.
+    const wants = { warmth: 0, size: 0, pace: 3 };
+    const played = { warmth: 0, size: 0, pace: 0 };
+    const note = theNote(played, wants)!;
+    for (const one of HOW_FAR) {
+      const heard = afterTheNote(played, note, one.id, 1, 0);
+      const missed = afterTheNote(played, note, one.id, 0, 0.5);
+      expect(heard[note.shade], one.id).toBe(one.steps);
+      // `0` rather than `-one.steps`, because negating zero gives -0 and the
+      // matcher is Object.is. Leaving it wrong reads as a bug in the engine.
+      expect(missed[note.shade], one.id).toBe(one.steps === 0 ? 0 : -one.steps);
+    }
+  });
+
+  it('costs a rested actor nothing at all, and that is the point of the dial', () => {
+    const sim = quickSave({}, 'heard-rested');
+    const me = sim.universe.people[sim.universe.playerId]!;
+    // Nothing in the room reads the sheet. What it reads is the state of the
+    // person, and at the top of it there is no chance of mishearing anybody.
+    me.wellbeing.energy = 100;
+    me.wellbeing.stress = 0;
+    me.wellbeing.sleepDebt = 0;
+    const fresh = heardItRight(sim);
+    me.wellbeing.energy = 0;
+    me.wellbeing.stress = 100;
+    me.wellbeing.sleepDebt = 40;
+    const spent = heardItRight(sim);
+    expect(fresh).toBeGreaterThan(spent);
+    expect(fresh).toBeLessThanOrEqual(1);
+    expect(spent).toBeGreaterThanOrEqual(1 - MISREAD_THE_ROOM);
   });
 });
 
@@ -823,5 +882,96 @@ describe('fame is the half of the ratchet that travels', () => {
     theyWantYou(sim, small);
     expect(me.reputation.audienceAppeal - before)
       .toBeLessThan(me.reputation.publicFame - was.publicFame);
+  });
+});
+
+/**
+ * Being asked and not answering.
+ *
+ * `whatIsGoing` has always written a date the room shuts on and said so in the
+ * notification. Nothing read it, so the list a player opened was parts cast
+ * years ago and the one thing they could always do for free was ignore every
+ * part they were ever offered.
+ */
+describe('an ask that is never answered', () => {
+  it('closes when the date to be seen by goes past, rather than sitting open forever', () => {
+    const sim = quickSave({}, 'shuts');
+    sim.advanceTo(sim.now + 25 * 365 * MS_DAY);
+    const asks = Object.values(sim.universe.auditions);
+    expect(asks.length, 'the save has to produce some asks for this to mean anything')
+      .toBeGreaterThan(5);
+    // The measurement this exists for: on a save nobody plays, sixty-six asks
+    // across twenty-five years were all still open and the oldest had shut
+    // twelve years earlier.
+    const stale = asks.filter((one) => one.state === 'open' && sim.now > one.closesAt);
+    expect(stale, 'an ask past its own closing date is still open').toHaveLength(0);
+    for (const one of asks.filter((x) => x.why === 'never-answered')) {
+      expect(one.state).toBe('over');
+      expect(one.closesAt).toBeLessThan(sim.now);
+    }
+  });
+
+  it('does not let being ignored read as having been seen', () => {
+    const sim = quickSave({}, 'not-seen');
+    sim.advanceTo(sim.now + 10 * 365 * MS_DAY);
+    for (const holder of [...new Set(Object.values(sim.universe.auditions).map((o) => o.holder))]) {
+      // `readFor` is what the ratchet counts, and it must count readings. The
+      // day asks started closing, an unanswered one would otherwise have made
+      // ignoring somebody the thing that made them think of you.
+      expect(readFor(sim, holder).every((one) => one.why !== 'never-answered')).toBe(true);
+    }
+  });
+
+  it('makes an office that is ignored ask less often, and lets it come back', () => {
+    const sim = quickSave({}, 'colder');
+    const holder = 'somebody casting';
+    const ask = (closesAt: number, why: string): void => {
+      const id = sim.nextId('audition');
+      sim.universe.auditions[id] = {
+        id, saveId: sim.universe.meta.id, bookingId: 'b', holder, size: 'guest', feeCents: 0,
+        from: closesAt, to: closesAt, closesAt, wants: { warmth: 0, size: 0, pace: 0 },
+        state: 'over', why,
+      };
+    };
+    const cold = remembersYou(sim, holder);
+    ask(sim.now - 30 * MS_DAY, 'never-answered');
+    const once = remembersYou(sim, holder);
+    ask(sim.now - 60 * MS_DAY, 'never-answered');
+    const twice = remembersYou(sim, holder);
+    expect(once).toBeLessThan(cold);
+    expect(twice).toBeLessThan(once);
+    expect(IGNORED, 'not turning up costs more than turning up earns').toBeGreaterThan(REMEMBERED);
+
+    // And there is a way back, which is the whole reason it is a window. The
+    // first version counted every one ever, so two of these shut a holder for
+    // the rest of the save — a countdown rather than a consequence, and the
+    // same fault this build refuses on the family's patience.
+    const old = quickSave({}, 'colder-later');
+    const oldId = old.nextId('audition');
+    const longAgo = old.now - (HELD_AGAINST_YOU_YEARS + 1) * 365 * MS_DAY;
+    old.universe.auditions[oldId] = {
+      id: oldId, saveId: old.universe.meta.id, bookingId: 'b', holder, size: 'guest', feeCents: 0,
+      from: longAgo, to: longAgo, closesAt: longAgo, wants: { warmth: 0, size: 0, pace: 0 },
+      state: 'over', why: 'never-answered',
+    };
+    expect(ignoredBy(old, holder), 'held against you forever').toBe(0);
+    expect(remembersYou(old, holder)).toBe(cold);
+  });
+
+  it('asks a player who never answers about half as often over a career', () => {
+    // The consequence, measured end to end rather than asserted on a constant.
+    // Twenty-five years of a world running with nobody answering anything.
+    const run = (seed: string): number => {
+      const sim = quickSave({}, seed);
+      sim.advanceTo(sim.now + 25 * 365 * MS_DAY);
+      return Object.keys(sim.universe.auditions).length;
+    };
+    for (const seed of ['e1', 'e2', 'e3']) {
+      const asked = run(seed);
+      // Fewer than a world that forgives everything, and not nothing: an office
+      // that has forgotten the last one asks again.
+      expect(asked, seed).toBeGreaterThan(10);
+      expect(asked, seed).toBeLessThan(55);
+    }
   });
 });

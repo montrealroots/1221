@@ -1023,13 +1023,23 @@ export interface Audition {
   /**
    * The note, where a room gave one.
    *
-   * Given on the shade the reading was closest on, because a room tells you
-   * about the part that nearly worked. `toward` is the direction, and how far
+   * Given on the shade the reading was farthest off, because a room tells you
+   * about the thing that is most wrong. `toward` is the direction, and how far
    * is never said.
    */
   note?: { shade: string; toward: number };
   /** How far the player took it, by `content/audition.ts` id. */
   took?: string;
+  /**
+   * Whether the player took in what was actually said.
+   *
+   * False when a bad day cost them the one sentence anybody was going to give
+   * them, and they moved the shade the wrong way. Kept on the record rather
+   * than recomputed because readiness has moved on by the time anybody reads
+   * this back, and a no you can open and find out you misheard is a different
+   * no from a no you played right.
+   */
+  heard?: boolean;
   state: 'open' | 'waiting' | 'noted' | 'over';
   /** Why it ended, by `content/audition.ts` id. */
   why?: string;
