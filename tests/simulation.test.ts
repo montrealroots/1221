@@ -4,6 +4,7 @@ import { SAVE_SCHEMA_VERSION } from '@/engine/domain/model';
 import { formatTime, MS_DAY, MS_HOUR, MS_MINUTE, zonedParts } from '@/engine/core/time';
 import { skipTargets, checkConflicts, entriesBetween, monthGrid } from '@/engine/world/calendar';
 import { openDecisions } from '@/engine/world/world';
+import { createIdFactory, idAlreadyIssued, ID_NAMESPACES } from '@/engine/core/ids';
 
 describe('time advancement', () => {
   it('refuses to run the clock backwards', () => {
@@ -368,6 +369,31 @@ describe('the decision center', () => {
 });
 
 describe('an older save catches up with the build', () => {
+  it('hands out no id a save from before the namespace split already used', () => {
+    const sim = quickSave({}, 'old-ids');
+    sim.advanceTo(sim.now + 120 * MS_DAY);
+    const universe = sim.universe;
+    // Wind it back to how a build before the namespaces were told apart left
+    // it: one number for the whole save and no map.
+    delete universe.__idCounters;
+
+    const onTheRecord = new Set<string>([
+      ...Object.keys(universe.people), ...Object.keys(universe.accounts),
+      ...Object.keys(universe.companies), ...Object.keys(universe.stages),
+      ...universe.transactions.map((one) => one.id),
+      ...universe.scheduled.map((one) => one.id),
+    ]);
+    expect(onTheRecord.size, 'nothing on the record to collide with').toBeGreaterThan(20);
+
+    for (const ns of ['person', 'account', 'company', 'stage', 'txn', 'sched'] as const) {
+      for (let i = 0; i < 3; i += 1) {
+        const id = sim.nextId(ns);
+        expect(onTheRecord.has(id), `${id} is on the record already`).toBe(false);
+      }
+    }
+  });
+
+
   it('puts labels written by an older build into Title Case', () => {
     const sim = quickSave({}, 'relabel');
     sim.advanceTo(sim.now + 30 * MS_DAY);
@@ -412,5 +438,109 @@ describe('an older save catches up with the build', () => {
     const result = migrate(sim.universe);
     expect(result.migrated).toBe(false);
     expect(sim.universe.scheduled.map((s) => s.label)).toEqual(before);
+  });
+});
+
+describe('ids are told apart by namespace', () => {
+  // One counter for the whole save made an id in one namespace a function of
+  // how much work every other namespace had done — and several of the engine's
+  // seeded streams are keyed on an id, so posting a transaction anywhere in the
+  // save changed which performer walked into the audition room. It cost six
+  // tests across three files when the VAT return landed, and an hour each time
+  // before it turned out to be this.
+
+  const host = (): { __idCounter: number; __idCounters?: Record<string, number> } =>
+    ({ __idCounter: 0, __idCounters: {} });
+
+  it('does not move one namespace because another was used', () => {
+    const one = createIdFactory(host() as never);
+    expect(one('person')).toBe('person_000001');
+    for (let i = 0; i < 50; i += 1) one('txn');
+    expect(one('person'), 'fifty transactions moved the next person')
+      .toBe('person_000002');
+    // Fifty-one of them, counted in its own namespace and written in base 36
+    // like every id in the save.
+    expect(one('txn')).toBe(`txn_${(51).toString(36).padStart(6, '0')}`);
+  });
+
+  it('starts every namespace of a new world at one', () => {
+    const next = createIdFactory(host() as never);
+    for (const ns of ['person', 'txn', 'stage', 'audition'] as const) {
+      expect(next(ns)).toBe(`${ns}_000001`);
+    }
+  });
+
+  it('never hands the same id out twice, in any order', () => {
+    const next = createIdFactory(host() as never);
+    const seen = new Set<string>();
+    const order = ['person', 'txn', 'person', 'stage', 'txn', 'txn', 'stage', 'person'] as const;
+    for (let round = 0; round < 40; round += 1) {
+      for (const ns of order) {
+        const id = next(ns);
+        expect(seen.has(id), `${id} came out twice`).toBe(false);
+        seen.add(id);
+      }
+    }
+    expect(seen.size).toBe(order.length * 40);
+  });
+
+  it('picks up a save written before the namespaces were told apart', () => {
+    // Such a save carries one number that is at or above every id in it, so
+    // every namespace has to start there. Anything lower would hand out an id
+    // that is already on a record.
+    const old = { __idCounter: 42 } as { __idCounter: number };
+    const next = createIdFactory(old as never);
+    expect(next('person')).toBe(`person_${(43).toString(36).padStart(6, '0')}`);
+    expect(next('txn')).toBe(`txn_${(43).toString(36).padStart(6, '0')}`);
+    expect(next('stage')).toBe(`stage_${(43).toString(36).padStart(6, '0')}`);
+    expect(next('person')).toBe(`person_${(44).toString(36).padStart(6, '0')}`);
+  });
+
+  it('goes on counting every id it has issued, which is what an older save starts from', () => {
+    const at = host();
+    const next = createIdFactory(at as never);
+    for (let i = 0; i < 7; i += 1) { next('person'); next('txn'); }
+    expect(at.__idCounter).toBe(14);
+    // The total is at or above every namespace's own count, and that is exactly
+    // the property the pick-up above rests on: a save carrying only this number
+    // can start each namespace here without handing out an id twice.
+    for (const one of Object.values(at.__idCounters!)) {
+      expect(at.__idCounter).toBeGreaterThanOrEqual(one);
+    }
+  });
+
+  it('never walks a counter backwards when an id is claimed', () => {
+    const at = host();
+    idAlreadyIssued(at as never, 'person', 5);
+    idAlreadyIssued(at as never, 'person', 2);
+    expect(createIdFactory(at as never)('person')).toBe('person_000006');
+  });
+
+  it('keeps the player out of the way of the next person', () => {
+    // `person_000001` is written by hand at boot, before there is a simulation
+    // to ask for it.
+    const sim = quickSave();
+    expect(sim.universe.playerId).toBe('person_000001');
+    expect(Object.keys(sim.universe.people)).toContain('person_000001');
+    expect(sim.nextId('person')).not.toBe('person_000001');
+  });
+
+  it('holds a person still while the ledger fills up', () => {
+    // The end of it, on a real save: the same seed, the same world, and one of
+    // them posting a hundred transactions nobody asked about.
+    const quiet = quickSave({}, 'still');
+    const busy = quickSave({}, 'still');
+    const account = busy.universe.people[busy.universe.playerId]!.primaryAccountId!;
+    for (let i = 0; i < 100; i += 1) busy.income(account, 1_00, 'Something Else Entirely', 'other');
+    expect(busy.nextId('person')).toBe(quiet.nextId('person'));
+    expect(busy.nextId('audition')).toBe(quiet.nextId('audition'));
+    expect(busy.nextId('txn')).not.toBe(quiet.nextId('txn'));
+  });
+
+  it('declares no namespace the game never asks for a name in', () => {
+    // The list is a value rather than a union so `nextId` can walk it, and
+    // `tools/wired.mjs` fails the gate on a namespace with no call site.
+    expect(new Set(ID_NAMESPACES).size, 'the same noun is in the list twice')
+      .toBe(ID_NAMESPACES.length);
   });
 });

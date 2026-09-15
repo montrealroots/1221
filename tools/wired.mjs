@@ -74,7 +74,7 @@ function group(name, what, dead, hint) {
 {
   const ids = readFileSync('src/engine/core/ids.ts', 'utf8');
   const declared = new Set();
-  const block = ids.slice(ids.indexOf('IdNamespace'), ids.indexOf('const COUNTER_KEY'));
+  const block = ids.slice(ids.indexOf('ID_NAMESPACES = ['), ids.indexOf('] as const;'));
   for (const m of block.matchAll(/'([a-z0-9_]+)'/g)) declared.add(m[1]);
   const used = new Set();
   for (const m of ALL.matchAll(/nextId\(\s*'([a-z0-9_]+)'/g)) used.add(m[1]);

@@ -22,6 +22,7 @@ import { costOfLiving } from '../content/tax';
 import { addDays, addMonths, instantFromZoned, MS_DAY } from '../core/time';
 import type { Money } from '../core/money';
 import { clamp } from '../core/rng';
+import { idAlreadyIssued } from '../core/ids';
 import { ETHNICITY_BY_ID } from '../content/ethnicity';
 import { GENRE_BY_ID, INTEREST_BY_ID } from '../content/interests';
 
@@ -430,7 +431,7 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, raw: NewSaveConfig
     createdAt: now,
   };
   universe.people[playerId] = player;
-  universe.__idCounter = 1;
+  idAlreadyIssued(universe, 'person', 1);
 
   return { universe, playerId };
 }

@@ -567,16 +567,34 @@ describe('finishing is not delivering', () => {
   });
 
   it('charges for being late, and charges more the later it is', () => {
-    const sim = world('late');
-    const id = makeIt(sim);
-    const project = () => sim.universe.projects[id]!;
-    sim.advanceTo(project().deliverBy! + 60 * MS_DAY);
-    const before = project().spentCents;
-    for (const element of heldUpBy(project())) {
-      run(sim, 'company.deliver', { projectId: id, elementId: element.id });
-    }
-    expect(project().stage).toBe('delivered');
-    expect(project().spentCents).toBeGreaterThan(before);
+    // Both halves of the name, because the second half had nothing reading it:
+    // the test asserted only that being late cost something, so a flat penalty
+    // would have passed it under a name that promised a curve.
+    const lateBy = (days: number): { charged: number; at: number } => {
+      const sim = world('late');
+      const id = makeIt(sim);
+      const project = () => sim.universe.projects[id]!;
+      // The work has to be finished before anybody can be late filing it, and
+      // finishing it is not one pass: a review can send the picture back down
+      // the ladder in the last week, and the paperwork goes over again behind
+      // the recut. Advancing a fixed span from `deliverBy` and filing once was
+      // a picture still in post on most worlds and delivered on some.
+      runItOut(sim, id);
+      const at = project().deliverBy! + days * MS_DAY;
+      if (sim.now < at) sim.advanceTo(at);
+      expect(sim.now, 'it has to actually be late for this to mean anything')
+        .toBeGreaterThan(project().deliverBy!);
+      const before = project().spentCents;
+      expect(deliverIt(sim, id), 'the picture never got delivered').toBe(true);
+      return { charged: project().spentCents - before, at: sim.now };
+    };
+
+    const soon = lateBy(60);
+    const later = lateBy(200);
+    expect(soon.charged, 'being late cost nothing').toBeGreaterThan(0);
+    expect(later.at, 'the two runs have to differ in when they filed')
+      .toBeGreaterThan(soon.at);
+    expect(later.charged, 'and being later cost no more').toBeGreaterThan(soon.charged);
   });
 
   it('charges nothing when it goes over on time', () => {

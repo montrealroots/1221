@@ -13,6 +13,7 @@ import type { Account, LedgerTransaction } from '../core/ledger';
 import type { ScheduledItem } from '../core/scheduler';
 import type { AuditRecord, HistoryRecord } from '../core/audit';
 import type { PerformerTitle } from '../core/performer';
+import type { IdNamespace } from '../core/ids';
 import type { AttributeSheet } from './attributes';
 import type { SkillSheet } from './skills';
 
@@ -1050,8 +1051,14 @@ export interface SaveUniverse {
   meta: SaveMeta;
   /** What this game is, stated in the save itself. See `Premise`. */
   premise: Premise;
-  /** Monotonic id counter. Keeps ids deterministic across a replay. */
+  /** Every id ever issued in this save. Keeps ids deterministic across a replay. */
   __idCounter: number;
+  /**
+   * And one counter per namespace, so a person's id does not move because a
+   * transaction was posted. Absent on a save written before they were told
+   * apart; `core/ids.ts` says how such a save is picked up without collisions.
+   */
+  __idCounters?: Partial<Record<IdNamespace, number>>;
 
   /** The one canonical world instant. */
   now: Instant;
