@@ -30,7 +30,7 @@ import {
   theyWantYou, whatTheyWant, whereYourWorkStands, WORKING_KIND,
 } from '@/engine/world/audition';
 import { whatHasThem } from '@/engine/world/diary';
-import { readiness } from '@/engine/systems/life';
+import { applySleep, readiness } from '@/engine/systems/life';
 import {
   AS_WRITTEN, A_WORKING_WEEK, CLOSE_ENOUGH, COLD, FURTHEST, KNOWN_OF, REMEMBERED, SHADES,
   TOO_FAR, WAYS, howFarById,
@@ -131,8 +131,8 @@ function playItOut(
  * `theyWantYou` is what a settled audition calls, so this asks it the same way
  * the engine does rather than writing a seat by hand.
  */
-function castOnSomething(sim: Simulation, weeks = 6): Audition {
-  const booking = shootingOnTheLot(sim, 'A Nordic Broadcaster', weeks);
+function castOnSomething(sim: Simulation, weeks = 6, inWeeks = 8): Audition {
+  const booking = shootingOnTheLot(sim, 'A Nordic Broadcaster', weeks, inWeeks);
   const audition: Audition = {
     id: sim.nextId('audition'),
     saveId: sim.universe.meta.id,
@@ -225,6 +225,78 @@ describe('what a week of it takes', () => {
     sim.advanceTo(sim.now + 7 * MS_DAY);
     expect(me.wellbeing.sleepDebt).toBeGreaterThan(25);
     expect(me.wellbeing.sleepDebt).toBeLessThan(50);
+  });
+
+  it('puts back less of a night when there is a debt behind it', () => {
+    // Energy had no memory: a night returned about ninety points whatever the
+    // last three months had been, so the only dial that carried anything was
+    // the debt and it barely reaches readiness. The drain side of this coupling
+    // was already declared and was measured dead; this is the half that makes
+    // the model remember.
+    const nightOn = (debt: number): number => {
+      const sim = world(`night-${debt}`);
+      const me = sim.universe.people[sim.universe.playerId]!;
+      me.wellbeing.sleepDebt = debt;
+      me.wellbeing.energy = 20;
+      applySleep(me, 8, 0.9, sim.now);
+      return me.wellbeing.energy - 20;
+    };
+    expect(nightOn(30)).toBeLessThan(nightOn(0));
+    expect(nightOn(30)).toBeGreaterThan(0);
+  });
+
+  it('starts a job tired where the last one left off, not from nought', () => {
+    const debtAcross = (rested: boolean): number => {
+      const sim = world(`carry-${rested}`);
+      sim.advanceTo(sim.now + 60 * MS_DAY);
+      if (!rested) {
+        const first = castOnSomething(sim, 12);
+        sim.advanceTo(first.to + MS_DAY);
+      }
+      const next = castOnSomething(sim, 12, 1);
+      sim.advanceTo(next.from);
+      const me = sim.universe.people[sim.universe.playerId]!;
+      const before = me.wellbeing.sleepDebt;
+      // The first fortnight of it, which on its own terms is the easy part.
+      sim.advanceTo(sim.now + 2 * MS_WEEK);
+      return me.wellbeing.sleepDebt - before;
+    };
+    // How far into this job today is resets with every engagement, so on its own
+    // it hands somebody who finished a twelve-weeker last week a run of ordinary
+    // nights while they are still carrying it. The penalty is the worse of how
+    // deep into this one and how worn they already were.
+    expect(debtAcross(false), 'the second job started as if the first had not happened')
+      .toBeGreaterThan(debtAcross(true));
+  });
+
+  it('makes the size of a gap between jobs decide something', () => {
+    const afterTwo = (gapDays: number) => {
+      const sim = world('gap');
+      sim.advanceTo(sim.now + 60 * MS_DAY);
+      const first = castOnSomething(sim, 12);
+      sim.advanceTo(first.to + MS_DAY);
+      const second = castOnSomething(sim, 12, gapDays / 7);
+      sim.advanceTo(second.from);
+      const ready = readiness(sim.universe.people[sim.universe.playerId]!);
+      sim.advanceTo(second.to + MS_WEEK);
+      return { ready, relied: sim.universe.people[sim.universe.playerId]!.reputation.reliability };
+    };
+
+    // This is what did not bite when the cost was first built. Energy had no
+    // memory — a night put back about ninety points whatever the last three
+    // months had been — so one week off and twelve weeks off left a career in
+    // exactly the same place, and the only lever a tired player had moved
+    // nothing at all.
+    const straightBackIn = afterTwo(7);
+    const aFortnight = afterTwo(21);
+    expect(straightBackIn.ready, 'a week off restored as much as three did')
+      .toBeLessThan(aFortnight.ready);
+    expect(straightBackIn.relied, 'going straight back in cost nothing')
+      .toBeLessThan(aFortnight.relied);
+    // And by enough to be a decision rather than a rounding difference. With
+    // neither half of this built the two runs came out identical; with only the
+    // weaker half they differed by four points, which nobody would ever feel.
+    expect(aFortnight.relied - straightBackIn.relied).toBeGreaterThan(20);
   });
 
   it('costs how reliable people found you, and never how good you were', () => {

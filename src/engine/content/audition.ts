@@ -360,6 +360,22 @@ export const A_WORKING_WEEK = {
    */
   shorterBy: 2.5,
   /**
+   * How much of a night's recovery a full debt holds back.
+   *
+   * The reason resting between jobs was worth nothing. Energy had no memory: a
+   * night put back about ninety points whatever came before it, so one week off
+   * and twelve weeks off left a career in exactly the same place, and the only
+   * lever a tired player had moved nothing at all.
+   *
+   * Debt already made somebody burn faster — `applyElapsedWellbeing` scales the
+   * drain by it — and that term was measured dead, because an ordinary debt of
+   * six makes the multiplier 1.125 and nothing notices. This is the other half
+   * of the same idea and it is what gives the model a memory: you cannot fill
+   * the tank while you are carrying one, so recovery is gradual and the size of
+   * the gap is a decision.
+   */
+  debtHolds: 0.62,
+  /**
    * The readiness below which turning up anyway is the thing people remember.
    *
    * Set under where a rested person starts a job and over where a long run

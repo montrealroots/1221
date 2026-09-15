@@ -211,7 +211,17 @@ export function applySleep(person: Person, hours: number, quality: number, at?: 
   const banked = at === undefined ? 1 : recoveryFactorAt(years);
   const effective = hours * quality;
 
-  w.energy = clamp(w.energy + effective * 13.5 * banked * personalityOf(person, 'energyRecovery'), 0, 100);
+  // And a night puts back less when there is a debt behind it. Without this,
+  // energy had no memory at all — one night refilled it whatever the last three
+  // months had been — so the debt was the only dial that carried anything and it
+  // barely reaches `readiness`. The drain side of this coupling was already
+  // declared and measured dead; this is the half that makes both of them bite.
+  const owing = 1 - Math.min(A_WORKING_WEEK.debtHolds,
+    (w.sleepDebt / 30) * A_WORKING_WEEK.debtHolds);
+  w.energy = clamp(
+    w.energy + effective * 13.5 * banked * personalityOf(person, 'energyRecovery') * owing,
+    0, 100,
+  );
   // Debt clears with the whole night, not only with the part of it above five
   // and a half hours.
   w.sleepDebt = Math.max(0, w.sleepDebt - Math.max(0, effective - 5.5) * 2.2 - effective * 1.4);
@@ -334,7 +344,14 @@ function liveTheUnattendedDay(sim: Simulation): void {
       // knows what one does — `applySleep` clears less debt from a short night
       // and adds debt below six hours, so a long run declines on its own and
       // goes on declining, which a fixed working ceiling cannot do.
-      const hours = clamp(7.8 - w.stress * 0.012 - A_WORKING_WEEK.shorterBy * intoIt, 5.4, 8.4);
+      // The worse of how deep into this job today is and how worn the person
+      // already was. `intoIt` resets with every engagement, so on its own it
+      // handed somebody who had rested a week and started another twelve-weeker
+      // a run of ordinary nights while they were still carrying the last one —
+      // and that is why the size of a gap decided almost nothing.
+      const worn = on ? Math.min(1, w.sleepDebt / 30) : 0;
+      const hard = Math.max(intoIt, worn);
+      const hours = clamp(7.8 - w.stress * 0.012 - A_WORKING_WEEK.shorterBy * hard, 5.4, 8.4);
       sleptHours = hours;
       applySleep(person, hours, quality, sim.now);
       person.lastSleptAt = sim.now;

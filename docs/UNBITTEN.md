@@ -440,6 +440,27 @@ guess of twelve a night; measured, it clears about two and a half, so the cap
 never once bound and was deleted along with a floor eighteen minutes away from
 the floor beside it.
 
+**Resting between jobs decided nothing, and now it decides a fortnight.** The
+first cut of the cost moved the dials but left the one lever a tired player has
+inert: measured, a one-week gap and a twelve-week gap left a career in precisely
+the same place. Energy had no memory — a night returned about ninety points
+whatever the last three months had been — so the only dial carrying anything was
+the debt, and the debt barely reaches readiness.
+
+Two halves of one idea fixed it, and both were needed. A night puts back less
+when there is a debt behind it, which is the other half of a coupling the build
+already declared on the drain side and the audit had measured dead. And the
+night's shortening is the worse of how deep into this job today is and how worn
+the person already was, because how-deep-into-this-job resets with every
+engagement and so handed somebody who finished a twelve-weeker last week a run
+of ordinary nights while they were still carrying it.
+
+Measured across four builds: with neither, a one-week gap and a three-week gap
+ended at 47 and 49 readiness and identical reliability. With only the weaker
+half, 35 and 49, four points of reliability apart. With both, 19 and 48, forty
+points apart. Under ten days is ruinous, thirteen days and over is fine, and the
+transition runs across days nine to thirteen.
+
 **Three different counts of one thing.** The reimbursement's conditions were
 called three in the law's own content, four in nine places across the module
 built on top of it, and tested as five. There is a test holding the three counts
