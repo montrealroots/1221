@@ -337,34 +337,6 @@ export interface Household {
 }
 
 // ---------------------------------------------------------------------------
-// Finance
-// ---------------------------------------------------------------------------
-
-export type BillFrequency = 'weekly' | 'biweekly' | 'monthly' | 'quarterly' | 'annual' | 'once';
-
-export interface Bill {
-  id: Id;
-  saveId: Id;
-  payerId: Id;
-  name: string;
-  category: string;
-  amount: Money;
-  frequency: BillFrequency;
-  nextDueAt: Instant;
-  autopayAccountId?: Id;
-  /** Account the money goes to conceptually, e.g. a mortgage account. */
-  targetAccountId?: Id;
-  active: boolean;
-  /** Payments missed in a row. Drives credit damage and shutoffs. */
-  missedCount: number;
-  lastPaidAt?: Instant;
-  refType?: string;
-  refId?: Id;
-  createdAt: Instant;
-  endsAt?: Instant;
-}
-
-// ---------------------------------------------------------------------------
 // Property
 // ---------------------------------------------------------------------------
 
@@ -537,138 +509,9 @@ export interface Zone {
 }
 
 // ---------------------------------------------------------------------------
-// Vehicles
+// What somebody wears
 // ---------------------------------------------------------------------------
 
-export interface VehicleConfiguration {
-  paint: string;
-  wheels: string;
-  interior: string;
-  /** Factory option codes selected at build. */
-  options: string[];
-  /** Aftermarket modification ids currently installed. */
-  modificationIds: Id[];
-}
-
-/**
- * What kind of thing a vehicle is. A car and a motorcycle count miles on the
- * road; a boat and a jet count hours, cost money standing still, and are
- * bought, insured and worked on by people who do only that.
- */
-export type VehicleKind = 'car' | 'motorcycle' | 'boat' | 'jet';
-
-/**
- * Where a vehicle is kept when it is not being used. A road vehicle in a
- * home's garage, on its driveway, on the street or in a paid unit; a boat at
- * a marina berth, in a dry stack, on a trailer at home or at a private dock;
- * an aircraft in a private or shared hangar, on a tie-down, or on the ramp
- * of an airport it was flown to.
- */
-export type KeepingKind =
-  | 'garage' | 'driveway' | 'street' | 'storage_unit'
-  | 'berth' | 'dry_stack' | 'trailer' | 'private_dock'
-  | 'hangar' | 'shared_hangar' | 'tie_down' | 'transient';
-
-export interface VehicleKeeping {
-  kind: KeepingKind;
-  cityId: string;
-  /** The home whose garage, driveway, dock or trailer space it is. */
-  propertyId?: Id;
-  /** The marina, storage yard or boat yard. */
-  placeId?: string;
-  /** The airport. */
-  airportId?: string;
-  since: Instant;
-  /** What it costs a month, after cost of living. Zero at home. */
-  monthly: Money;
-  /** The bill for it, when it costs anything. Ends when the vehicle moves or is sold. */
-  billId?: Id;
-}
-
-export interface Vehicle {
-  id: Id;
-  saveId: Id;
-  ownerId: Id;
-  ownerKind: 'person' | 'company';
-  /** Absent on a vehicle from before there was anything but cars; read as a car. */
-  kind?: VehicleKind;
-  catalogId: string;
-  make: string;
-  model: string;
-  year: number;
-  trim: string;
-  bodyStyle: string;
-  powertrain: 'gas' | 'diesel' | 'hybrid' | 'phev' | 'ev' | 'turbofan';
-  vin: string;
-  /** The car as it left the factory. Never changes. */
-  factoryConfiguration: VehicleConfiguration;
-  /** The car as it is now. */
-  currentConfiguration: VehicleConfiguration;
-  mileage: number;
-  condition: number;
-  /** 0-100 mechanical reliability, degrades if service is skipped. */
-  mechanicalHealth: number;
-  purchasePrice: Money;
-  currentValue: Money;
-  purchasedAt: Instant;
-  acquisition: 'cash' | 'financed' | 'leased';
-  loanAccountId?: Id;
-  leaseEndsAt?: Instant;
-  leaseMileageCap?: number;
-  insurancePolicyId?: Id;
-  registeredIn: string;
-  /**
-   * The city the car is in. A car driven somewhere is there until it is
-   * driven on; fly home and it stays behind. Absent on cars from before this
-   * existed, which are read as being with their owner.
-   */
-  locationId?: string;
-  registrationExpiresAt: Instant;
-  /** Manufacturer warranty; voided by certain modifications. */
-  warranty: { bumperToBumperUntil?: Instant; powertrainUntil?: Instant; voided: boolean; voidReason?: string };
-  serviceRecordIds: Id[];
-  nextServiceDueMileage: number;
-  storedAtPropertyId?: Id;
-  soldAt?: Instant;
-  /** Liters per 100km equivalent or kWh/100mi, kept abstract. */
-  efficiency: number;
-  /**
-   * What is in the tank, 0-100. A car from before fuel was tracked is read as
-   * full the first time somebody looks at it.
-   */
-  fuelPercent?: number;
-  horsepower: number;
-  zeroToSixty: number;
-  /**
-   * A car bought for delivery is not with you until the dealer brings it.
-   * Absent once it has arrived, and on every car from before deals existed.
-   */
-  deliveryDueAt?: Instant;
-  /** The deal it was bought under, if it was bought at a dealership. */
-  dealId?: Id;
-  /**
-   * The berth or hangar bill from before keeping was a place. Read once by the
-   * schema 39 migration and left alone after; new saves never set it.
-   */
-  upkeepBillId?: Id;
-  /** The crew retainer for a crewed yacht or an aircraft. Ends when it is sold. */
-  crewBillId?: Id;
-  /** What its owner calls it: the name on a tail or a transom. */
-  nickname?: string;
-  /** Where it is kept now. Absent on a vehicle from before keeping existed, until it is placed. */
-  keeping?: VehicleKeeping;
-  /** An aircraft's hangar at home while it sits on a ramp somewhere else. The hangar is still paid for. */
-  homeKeeping?: VehicleKeeping;
-}
-
-/**
- * A garment that does not exist yet.
- *
- * A costume house cutting one for you, a tailor altering one you own, or you
- * at your own machine. The same record covers all three because the questions
- * are the same: what is it, what is it cut from, who is making it, how many
- * fittings, what did it cost, and is it finished.
- */
 export interface Costume {
   id: Id;
   saveId: Id;
@@ -736,19 +579,6 @@ export interface Order {
 }
 
 /** Somebody's place in the education system where they live. */
-/** The state of somebody's teeth, and what has been done to them. */
-export interface Teeth {
-  personId: Id;
-  /** Out of a hundred, as it stood when anybody last looked. */
-  condition: number;
-  /** When that was. Everything decays from here rather than ticking. */
-  checkedAt: Instant;
-  /** How many months the practice asked to wait before the next look. */
-  recallMonths: number;
-  treatments: { id: string; at: Instant; paid: Money }[];
-}
-
-/** Training in a real art, with a real grading ladder behind it. */
 export interface Training {
   id: Id;
   saveId: Id;

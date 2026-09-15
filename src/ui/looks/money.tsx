@@ -237,16 +237,6 @@ function accountBody(a: Account, sim: Simulation) {
   if (a.last4) {
     stats.push(<Stat key="last4" label="Ends In" value={<span className="mono">{a.last4}</span>} note="How the bank knows it" />);
   }
-  if (a.monthlyPayment) {
-    stats.push(
-      <Stat
-        key="payment"
-        label="Every Month"
-        value={<span className="mono">{formatMoney(a.monthlyPayment)}</span>}
-        note={a.termMonthsRemaining ? `${a.termMonthsRemaining} months of it left` : 'What the terms ask for'}
-      />,
-    );
-  }
 
   return (
     <>

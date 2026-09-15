@@ -340,8 +340,6 @@ export interface Part {
   seconds: number;
   /** How far each dimension has come, by rung id. Absent means the bottom. */
   maturity?: Partial<Record<string, string>>;
-  /** When it transmits or is due, where the plan gives parts their own dates. */
-  dueAt?: Instant;
   /**
    * Seconds of this part the cutting room has to make again.
    *
