@@ -411,3 +411,50 @@ export const RELIED_ON = 0.3;
  * nobody has heard of anybody.
  */
 export const EXPECTED_OF_ANYBODY = 60;
+
+// ---------------------------------------------------------------------------
+// What an office thinks you are
+// ---------------------------------------------------------------------------
+
+/**
+ * How an office's picture of somebody becomes what they are offered.
+ *
+ * The premise puts the player at the ceiling of every scale and the industry is
+ * said to know it. That second half was never built: an office that had never
+ * laid eyes on the player offered them exactly what an office that had used them
+ * five times offered, because the only thing deciding the size of a part was how
+ * long the shoot was. At nine weeks or more `sizeCasting` returned the first row
+ * of `SIZES` for every roll there is, and the lot mostly books long — so the
+ * first job of every career was a lead, which is the wrong career.
+ *
+ * What a room can know about somebody is what it has seen of them. So the
+ * picture starts at nothing and climbs with every reading these particular
+ * people have sat through, including the ones that ended in no — being seen is
+ * the thing that teaches an office, whatever they decided afterwards.
+ *
+ * This is the answer to the prodigy constraint that the owner chose, stated as
+ * arithmetic: the forty-five attributes named for this room are not what the
+ * player has, they are what a room learns, and the gap between the two is the
+ * career.
+ */
+export const WHAT_THEY_OFFER = {
+  /**
+   * Readings one office sits through before it would hand somebody the top of a
+   * call sheet.
+   *
+   * Small on purpose. The player is the best there has ever been, so an office
+   * that watches them work out loud four times has genuinely learned what it
+   * needed to; what takes a career is getting into four rooms.
+   */
+  seenEnough: 4,
+  /**
+   * How much of that a reputation can stand in for.
+   *
+   * Under one, because it has to be: fame that bought the whole of it would
+   * make a famous player interchangeable with a known quantity, and the thing
+   * the research is most insistent about is that an office trusts what it has
+   * watched over what it has heard. Somebody at the top of the trade is still
+   * offered a day part by strangers, and that is the honest shape of it.
+   */
+  fameStandsIn: 0.55,
+} as const;

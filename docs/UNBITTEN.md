@@ -79,14 +79,25 @@ player's calendar before those days can cost anything, and today it does not:
 `theyWantYou` posts money, moves four reputation fields and schedules nothing,
 and `requiresPlayer` has one write site in the whole engine.
 
-**Then, the industry's picture lags the truth.** The player is at the ceiling and
-every office reads them correctly the instant they see them, because `shownOn`
-returns the truth on `person.isPlayer`. The machinery for the other answer is
-already built and already used on everybody else — `believedAt`, `howWide`,
-`offsetOn`. Turned on for the player, the forty-five attributes named for the
-audition room stop being what the player *has* and become what a room *learns*,
-which is what `DEPTH.md` means by typecasting: the industry's categorical
-picture of you, lagging what you can actually do.
+**Then, the industry's picture lags the truth.** Built. An office's picture of
+the player starts at nothing and climbs with every reading those particular
+people have sat through — including the ones that ended in no, because being
+watched is what teaches a room whatever it decided afterwards — and a reputation
+stands in for some of it and never all. That picture decides what size of part
+somebody is asked about, so a career opens on day parts among strangers and
+reaches a lead only where an office has watched enough.
+
+It also closed a defect. Size was decided by the length of the shoot alone, and
+at nine weeks or more that returned the first row of `SIZES` for every roll there
+is. The lot mostly books long, so the first job of every career was a lead, and
+one of the four authored size rows was unreachable.
+
+**What was not done, and why.** `shownOn` still returns the truth on
+`person.isPlayer`. Removing that would change nothing anybody could reach: the
+only company that calls it is the family's own, `putItOut` excludes the player
+from every pile another company draws, and the family has watched the player
+their whole life. Changing it would be a line that could never alter an answer,
+which is the trap this page is about.
 
 **Not chosen, and why it is worth writing down.** Cutting the sheet back to the
 twenty-nine anything writes is the cheapest honest answer and it was refused:
@@ -317,10 +328,6 @@ file reference rather than as a finding.
   arrives as one notification.
 - **Three signable guilds, a registry, a policy and a company form** can be
   reached only as a blocker chip.
-- **`sizeCasting` is inverted at both ends:** a long shoot always offers a lead
-  and a day player is unreachable, so a career's first job can only be a lead.
-  The Day Player row carries its own prose, rate, on-screen share and leans and
-  none of it is reachable.
 - **Three more guards at points the arithmetic already settles**, which is the
   same fault as the crowd guard below.
 - **The reimbursement's under-18 case**, which needs a picture to declare an

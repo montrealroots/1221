@@ -48,7 +48,7 @@ import { clamp } from '../core/rng';
 import {
   AS_WRITTEN, A_WORKING_WEEK, CLOSE_ENOUGH, COLD, EXPECTED_OF_ANYBODY, FURTHEST, KNOWN_OF,
   RELIED_ON, REMEMBERED,
-  SHADES, TOO_FAR, WELL_LIKED,
+  SHADES, TOO_FAR, WELL_LIKED, WHAT_THEY_OFFER,
   howFarById, shadeById, wayById, whyById, type Reading, type ShadeId, type WhyId,
 } from '../content/audition';
 import { SIZES, sizeById } from '../content/casting';
@@ -141,12 +141,47 @@ export function feeFor(booking: Booking, sizeId: string): Money {
 }
 
 /** The size of part a production of this length is likely to be casting. */
-export function sizeCasting(weeks: number, roll: number): string {
-  // Short jobs are day parts and long ones have leads in them, which is not a
-  // rule about money — it is that a commercial shooting for a week does not
-  // have a lead to cast and a nine-week series does.
-  const reach = clamp(weeks / 9, 0, 1);
-  const at = clamp(Math.floor((1 - reach * 0.75) * roll * SIZES.length), 0, SIZES.length - 1);
+/**
+ * What these people, in particular, think the player is.
+ *
+ * Nought when nobody there has ever seen them, one when they have seen enough.
+ * Read off the readings this holder has sat through — including every one that
+ * ended in no, because being watched is what teaches a room whatever it decided
+ * afterwards — with a reputation standing in for part of it and never all.
+ *
+ * It is the whole of what the prodigy constraint leaves room for. The player
+ * cannot be bad at this and the sheet cannot move, so what varies is not what
+ * they are, it is who has found out.
+ */
+export function believedOf(sim: Simulation, holder: string): number {
+  const seen = readFor(sim, holder).length;
+  const fame = (sim.universe.people[sim.universe.playerId]?.reputation.publicFame ?? 0) / 100;
+  return clamp(
+    seen / WHAT_THEY_OFFER.seenEnough + fame * WHAT_THEY_OFFER.fameStandsIn,
+    0, 1,
+  );
+}
+
+/**
+ * What size of part somebody is asked about.
+ *
+ * Two gates and they are different questions. A job has to contain the size at
+ * all — a commercial shooting for a week has no lead in it to cast, whoever is
+ * available — and the office has to be willing to hand it over. The smaller of
+ * the two decides the best somebody is offered, and the draw picks below it.
+ *
+ * Only the first of those existed, and at nine weeks or more it returned the
+ * first row of `SIZES` for every roll there is, so every long job offered a lead
+ * and the lot mostly books long. A career whose first job can only be the lead
+ * is not a career, and the four authored size rows had one that nothing could
+ * reach.
+ */
+export function sizeCasting(weeks: number, believed: number, roll: number): string {
+  const has = clamp(weeks / 9, 0, 1);
+  const top = Math.min(has, clamp(believed, 0, 1));
+  // SIZES runs biggest first, so a low ceiling starts further down the list.
+  const from = Math.floor((1 - top) * (SIZES.length - 1));
+  const at = clamp(from + Math.floor(roll * (SIZES.length - from)), 0, SIZES.length - 1);
   return SIZES[at]!.id;
 }
 
@@ -308,7 +343,7 @@ export function whatIsGoing(sim: Simulation): Audition[] {
     if (rng.next() > remembersYou(sim, booking.holder)) continue;
 
     const weeks = (booking.to - booking.from) / MS_WEEK;
-    const size = sizeCasting(weeks, rng.next());
+    const size = sizeCasting(weeks, believedOf(sim, booking.holder), rng.next());
     const audition: Audition = {
       id: sim.nextId('audition'),
       saveId: sim.universe.meta.id,

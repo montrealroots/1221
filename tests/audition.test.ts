@@ -27,15 +27,15 @@ import { MS_WEEK } from '@/engine/world/lot';
 import {
   AS_GOOD_AS_IT_GETS, ASKING_AT, SHUTS_AT, afterTheNote, alreadyUpFor, decideAudition, feeFor,
   freeAcross, goingNow, howFarOff, readingOf, remembersYou, shootingHere, theNote, whatIsGoing,
-  theyWantYou, whatTheyWant, whereYourWorkStands, WORKING_KIND,
+  theyWantYou, whatTheyWant, whereYourWorkStands, WORKING_KIND, believedOf, sizeCasting,
 } from '@/engine/world/audition';
 import { whatHasThem } from '@/engine/world/diary';
 import { applySleep, readiness } from '@/engine/systems/life';
 import {
   AS_WRITTEN, A_WORKING_WEEK, CLOSE_ENOUGH, COLD, FURTHEST, KNOWN_OF, REMEMBERED, SHADES,
-  TOO_FAR, WAYS, howFarById,
+  TOO_FAR, WAYS, WHAT_THEY_OFFER, howFarById,
 } from '@/engine/content/audition';
-import { sizeById } from '@/engine/content/casting';
+import { SIZES, sizeById } from '@/engine/content/casting';
 
 interface Done { ok: boolean; error?: string; at?: number; why?: string }
 const run = (sim: Simulation, kind: string, payload: Record<string, unknown> = {}): Done =>
@@ -151,6 +151,92 @@ function castOnSomething(sim: Simulation, weeks = 6, inWeeks = 8): Audition {
   theyWantYou(sim, audition);
   return audition;
 }
+
+describe('what an office thinks you are', () => {
+  const spread = (weeks: number, believed: number): Record<string, number> => {
+    const out: Record<string, number> = {};
+    for (let i = 0; i < 400; i += 1) {
+      const id = sizeCasting(weeks, believed, i / 400);
+      out[id] = (out[id] ?? 0) + 1;
+    }
+    return out;
+  };
+
+  it('offers a stranger nothing but the bottom of the call sheet', () => {
+    // The defect this replaces: the only thing deciding size was how long the
+    // shoot was, and at nine weeks or more it returned the first row of SIZES
+    // for every roll there is. The lot mostly books long, so the first job of
+    // every career was a lead — which is the wrong career, and it left one of
+    // the four authored size rows unreachable.
+    const cold = spread(9, 0);
+    expect(Object.keys(cold)).toEqual(['day']);
+    const known = spread(9, 1);
+    expect(Object.keys(known).sort()).toEqual(['day', 'guest', 'lead', 'support']);
+  });
+
+  it('keeps a lead out of a job that has no lead in it, however well you are known', () => {
+    expect(spread(1, 1).lead).toBeUndefined();
+    expect(spread(9, 1).lead).toBeGreaterThan(0);
+  });
+
+  it('leaves every authored size reachable', () => {
+    const every = new Set<string>();
+    for (const weeks of [1, 3, 6, 9, 14]) {
+      for (const believed of [0, 0.3, 0.6, 1]) {
+        for (let i = 0; i < 40; i += 1) every.add(sizeCasting(weeks, believed, i / 40));
+      }
+    }
+    expect([...every].sort()).toEqual(SIZES.map((one) => one.id).sort());
+  });
+
+  it('is what these people have seen, and not what anybody else has', () => {
+    const sim = world('per-office');
+    const booking = shootingOnTheLot(sim, 'One Office');
+    for (let i = 0; i < WHAT_THEY_OFFER.seenEnough; i += 1) {
+      sim.universe.auditions[`a${i}`] = {
+        id: `a${i}`, saveId: sim.universe.meta.id, bookingId: booking.id, holder: 'One Office',
+        size: 'day', feeCents: 1, from: sim.now, to: sim.now, closesAt: sim.now,
+        wants: AS_WRITTEN, state: 'over', why: 'went-another-way',
+      };
+    }
+    // Including the ones that ended in no, which is the point: being watched is
+    // what teaches a room, whatever it decided afterwards.
+    expect(believedOf(sim, 'One Office')).toBe(1);
+    expect(believedOf(sim, 'Another Office')).toBe(0);
+  });
+
+  it('actually asks the office what it thinks, when a part comes up', () => {
+    // Both ends of this were tested and the join between them was not, so the
+    // call site could hand `sizeCasting` a constant and every test still passed.
+    // One office's first offer is not enough to catch that — with the belief
+    // ignored, the bottom of the list is still one of the outcomes a roll can
+    // land on. Every office's first offer is, because a first offer is by
+    // definition one from people who have never seen anybody.
+    const sim = world('first-offers');
+    const firsts = new Map<string, string>();
+    for (let i = 0; i < 900; i += 1) {
+      sim.advanceTo(sim.now + 4 * MS_DAY);
+      for (const one of Object.values(sim.universe.auditions)) {
+        if (!firsts.has(one.holder)) firsts.set(one.holder, one.size);
+      }
+    }
+    expect(firsts.size, 'too few offices asked to prove anything').toBeGreaterThan(2);
+    expect([...new Set(firsts.values())]).toEqual([SIZES[SIZES.length - 1]!.id]);
+  });
+
+  it('lets a reputation stand in for some of it and never for all of it', () => {
+    const sim = world('famous');
+    const me = sim.universe.people[sim.universe.playerId]!;
+    me.reputation.publicFame = 0;
+    const unknown = believedOf(sim, 'A Stranger');
+    me.reputation.publicFame = 100;
+    const famous = believedOf(sim, 'A Stranger');
+    expect(famous).toBeGreaterThan(unknown);
+    // An office trusts what it has watched over what it has heard, so somebody
+    // at the top of the trade is still offered a day part by strangers.
+    expect(famous).toBeLessThan(1);
+  });
+});
 
 describe('what a week of it takes', () => {
   /** Runs the clock on and hands back readiness at each mark. */
