@@ -35,6 +35,8 @@ import {
   believedAt, decideOffer, reachOfBand, readOn, sheetFor, type Offer,
 } from './world/casting';
 import { AXES, BOOKABLE, TAPE_LEANS, passById, type AxisId } from './content/casting';
+import { TOO_FAR, whyById } from './content/audition';
+import { decideAudition, remembersYou } from './world/audition';
 import type { Looked } from './domain/company';
 import { ageOn } from './world/family';
 
@@ -555,5 +557,73 @@ defineDecider<Belief, string>({
     if (out < 12) return 'about right';
     if (out < 26) return 'out by a tier';
     return 'they have no idea';
+  },
+});
+
+// ---------------------------------------------------------------------------
+// The other side of the room
+// ---------------------------------------------------------------------------
+
+interface InTheRoom { off: number; sawYou: boolean; free: boolean; roll: number }
+
+defineDecider<InTheRoom, string>({
+  id: 'audition.said',
+  decides: 'Whether a room gives the player the part, and what the no is called.',
+  drawnIn: 'src/engine/world/audition.ts',
+  reads: {
+    // How far what they played was from what the room wanted. The whole of it,
+    // and deliberately the only thing about the performance that is read —
+    // the player cannot act badly, so nothing here asks whether they did.
+    played: (r, t) => ({ ...r, off: t * (TOO_FAR + 0.6) }),
+    // Whether anybody was in a room with them or watching a file, which
+    // decides what the no is called and nothing else. A tape's cost is paid
+    // earlier, in the note it never gave.
+    seen: (r, t) => ({ ...r, sawYou: t >= 0.5 }),
+    // And whether they are free, because no reading survives being unavailable
+    // and no amount of being right for something moves a shooting schedule.
+    dates: (r, t) => ({ ...r, free: t >= 0.5 }),
+    // The draw, because two people can both be right for something and one of
+    // them gets it.
+    luck: (r, t) => ({ ...r, roll: t }),
+  },
+  sample: (seed) => ({
+    off: ((seed % 7) / 7) * TOO_FAR,
+    sawYou: seed % 2 === 0,
+    free: seed % 5 !== 0,
+    roll: ((seed * 3) % 11) / 11,
+  }),
+  decide: ({ off, sawYou, free, roll }) =>
+    whyById(decideAudition({ off, sawYou, free }, roll))?.label.toLowerCase() ?? 'nothing',
+});
+
+interface Asked { sim: Simulation; readings: number }
+
+defineDecider<Asked, string>({
+  id: 'audition.asked',
+  decides: 'Whether a production shooting on the lot thinks of the player at all.',
+  drawnIn: 'src/engine/world/audition.ts',
+  reads: {
+    // How many times these people have had them in, whatever came of it. The
+    // research calls roster memory the main career ratchet and is explicit that
+    // it pays out from a pass, so this counts readings and not parts won.
+    memory: (a, t) => ({ ...a, readings: Math.round(t * 8) }),
+  },
+  sample: (seed) => ({ sim: quickSave({}, `asked-${seed % 4}`), readings: seed % 5 }),
+  decide: ({ sim, readings }) => {
+    const holder = 'RÚV, a limited series';
+    for (let i = 0; i < readings; i += 1) {
+      const id = `remembered-${i}`;
+      sim.universe.auditions[id] = {
+        id, saveId: sim.universe.meta.id, bookingId: `b-${i}`, holder, size: 'day',
+        feeCents: 1_00, from: sim.now, to: sim.now, closesAt: sim.now,
+        wants: {}, state: 'over', why: 'went-another-way',
+      };
+    }
+    const chance = remembersYou(sim, holder);
+    for (let i = 0; i < readings; i += 1) delete sim.universe.auditions[`remembered-${i}`];
+    if (chance < 0.2) return 'nobody has heard of them';
+    if (chance < 0.45) return 'they might think of them';
+    if (chance < 0.75) return 'they would call them in';
+    return 'they ask for them by name';
   },
 });

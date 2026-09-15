@@ -31,6 +31,7 @@ import { registerMaking } from './world/making';
 import { registerSelling } from './world/selling';
 import { registerCrew } from './world/crew';
 import { registerCasting } from './world/casting';
+import { registerAudition } from './world/audition';
 import {
   companiesOf, foundTheCompany, foundTheSugarGroup, holdingsOf, postsOf, projectsOf, registerCompanyCommands,
 } from './world/company';
@@ -60,6 +61,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerSelling(sim);
   registerCrew(sim);
   registerCasting(sim);
+  registerAudition(sim);
 }
 
 /** Recurring world processes every save needs running. */
@@ -321,6 +323,7 @@ export function migrate(universe: SaveUniverse): MigrationResult {
   record('holdings', 'the material it holds');
   record('posts', 'the posts it keeps');
   record('projects', 'the slate');
+  record('auditions', 'the parts you have been asked about');
   record('properties', 'the properties');
   record('stages', 'the stages on the lot');
   record('bookings', 'who is booked onto them');

@@ -977,6 +977,65 @@ export const PREMISE_STATEMENT =
  * to nothing else. There is no shared mutable state between saves anywhere in
  * SLATE; the only thing saves have in common is immutable reference data.
  */
+/**
+ * One part somebody outside the family has asked the player about.
+ *
+ * It exists because a production booked a stage on the lot and then needed
+ * people, which is the only way anybody in this world hears about work that is
+ * not their own family's. That makes the lot's business and the player's career
+ * one system rather than two, and it is why money spent telling people the
+ * stages are there eventually shows up as a part.
+ */
+export interface Audition {
+  id: Id;
+  saveId: Id;
+  /**
+   * The stage booking this production is, by the shooting row.
+   *
+   * A booking is written as three rows — build, shoot, strike — and the
+   * shooting one is the production. Held so the dates and the money can be read
+   * back off the thing that actually generated them rather than copied.
+   */
+  bookingId: Id;
+  /** Who is casting, in the world's words. Read off the booking's holder. */
+  holder: string;
+  /** How big the part is, by `content/casting.ts` size id. */
+  size: string;
+  /** What it pays, all in. */
+  feeCents: Money;
+  /** The dates it would hold the player. */
+  from: Instant;
+  to: Instant;
+  /** After this nobody is being seen. */
+  closesAt: Instant;
+  /**
+   * What the room wants, by shade id.
+   *
+   * Never shown and never derivable. The one note a room gives leaks one shade
+   * of it, once, which is the whole of what anybody is ever told. A want the
+   * player could read off a screen would make the reading a lookup.
+   */
+  wants: Record<string, number>;
+  /** What the player played, once they have played anything. */
+  played?: Record<string, number>;
+  /** Which way they went up for it, by `content/audition.ts` way id. */
+  way?: string;
+  /**
+   * The note, where a room gave one.
+   *
+   * Given on the shade the reading was closest on, because a room tells you
+   * about the part that nearly worked. `toward` is the direction, and how far
+   * is never said.
+   */
+  note?: { shade: string; toward: number };
+  /** How far the player took it, by `content/audition.ts` id. */
+  took?: string;
+  state: 'open' | 'waiting' | 'noted' | 'over';
+  /** Why it ended, by `content/audition.ts` id. */
+  why?: string;
+  decidedAt?: Instant;
+}
+
 export interface SaveUniverse {
   meta: SaveMeta;
   /** What this game is, stated in the save itself. See `Premise`. */
@@ -1014,6 +1073,18 @@ export interface SaveUniverse {
   holdings: Record<Id, Holding>;
   posts: Record<Id, Post>;
   projects: Record<Id, Project>;
+
+  /**
+   * Parts the player has been asked about, and what came of them.
+   *
+   * The other half of the slate, and it belongs to the person rather than to
+   * the company: these are not the family's pictures, they are whatever is
+   * shooting on the lot that needs somebody. Kept as a table rather than worked
+   * out from the bookings because a reading is a thing that happened — what was
+   * played, what note came back, what was said — and none of that is derivable
+   * from a stage being let to a broadcaster.
+   */
+  auditions: Record<Id, Audition>;
 
   accounts: Record<Id, Account>;
   transactions: LedgerTransaction[];

@@ -12,6 +12,7 @@ import { CommandError } from '../core/simulation';
 import type { DecisionItem, Id } from '../domain/model';
 import { addDays, MS_DAY } from '../core/time';
 import { CITIES } from '../content/geography';
+import { whatIsGoing } from './audition';
 
 /** How long answered or expired decisions stay in the save. */
 const DECISION_RETENTION_DAYS = 180;
@@ -85,6 +86,11 @@ export function registerWorld(sim: Simulation): void {
 function runWorldTick(sim: Simulation): void {
   expireDecisions(sim);
   prune(sim);
+  // And whatever is shooting on the lot goes looking for people. It rides this
+  // tick rather than one of its own because it is a question asked of a table
+  // that already exists — the bookings — and a second heartbeat to ask it would
+  // be a second thing to keep in step with the first.
+  whatIsGoing(sim);
 }
 
 /** Decisions do not sit in the list forever. */
