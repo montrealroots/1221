@@ -761,6 +761,10 @@ grep for readers is part of finishing, not part of tidying up later.
 
 ## What Holds It In Place
 
+- `docs/UNBITTEN.md` — the arrears against this page. Everything declared,
+  written, displayed or believed that changes no outcome, kept in one list and
+  worked a section at a time. This page argues for the standard; that one is
+  what is still owed against it.
 - `tools/wired.mjs --check` — the declared vocabulary against what reads it,
   ratcheted at `docs/UNWIRED.json`. The count may fall. It may not rise.
 - `tools/deciders.mjs --check` and `tests/deciders.test.ts` — every draw owned
