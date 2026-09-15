@@ -182,7 +182,15 @@ export const REBATE = {
   label: 'The Production Reimbursement',
   /** Every qualifying feature, series and documentary. No minimum spend, no cap. */
   share: 0.25,
-  /** The higher tier, and the three conditions a production has to meet for it. */
+  /**
+   * The higher tier, and what a production has to meet for it.
+   *
+   * Three conditions in the law and five things to test, because two of the
+   * three have two parts: days in the country of which some must be shooting
+   * days, and people taxed here for a number of days each. Five fields below,
+   * five limbs in `shortOn`, five labels — and a test holds those three counts
+   * to each other rather than to a number anybody typed here.
+   */
   higherShare: 0.35,
   higherNeeds: {
     /** Icelandic spend, in króna. */

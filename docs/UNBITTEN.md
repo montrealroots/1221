@@ -135,6 +135,54 @@ wired.
 
 ---
 
+## Measured: the one decision in the room the game is named after
+
+This is the best-evidenced entry on the page and the only one proven by
+exhausting the state space rather than by reading. It is also the worst, because
+it is the player's single craft-adjacent choice.
+
+A reading is three shades, each from -3 to +3. The room gives one note, on one
+shade, and the player picks how far to take it: Leave It, Halfway, All The Way,
+Past It. `afterTheNote` moves that shade by `share` of the real gap, and the
+magnitudes are `{0, 0.5, 1, 1.7}` — so All The Way lands exactly on the want by
+construction. `decideAudition` falls away monotonically with distance and reads
+nothing else.
+
+Every reachable state was enumerated: 117,306 of them give a note.
+
+| Magnitude | Times it is among the best |
+|---|---|
+| Leave It | 0 |
+| Halfway | 33,498 |
+| All The Way | 117,306 |
+| Past It | 23,240 |
+
+**All The Way is beaten zero times.** It wins outright in 66,151 states and ties
+in the other 51,155. **Leave It is never once among the best.** One button is
+never wrong and one is always wrong, in every state the game can reach.
+
+It is worse than a dominant option, though. In 14,202 states — 12.1% — all four
+magnitudes land inside `CLOSE_ENOUGH` and the chance of being cast is *identical
+whatever the player picks*. On a reading wrong on one shade only, that is 71.4%
+of states. The cause is structural: `howFarOff` is the mean across three shades
+and the note moves exactly one, so the worst possible single-shade error is 2.0
+against a `CLOSE_ENOUGH` of 1.2. A player who is wrong in one way cannot be
+wrong enough for the answer to matter.
+
+The file's own comment says of half-taking and over-taking that "both halves of
+that sentence are built". Both halves are present and neither is ever worth
+choosing. `content/audition.ts` describes the research's sharpest decision and
+`world/audition.ts` resolves it with arithmetic that has one answer.
+
+**This one needs a decision before it needs code.** Absolute steps that do not
+read the hidden gap only promote Halfway to dominance; a magnitude becomes a
+decision when it trades against something, and the room has nothing scarce in it
+— going in costs money from an account nothing can drain and three days that
+occupy no calendar. The fix is bound up with what the room is allowed to spend,
+which is the same question the prodigy constraint asks above.
+
+---
+
 ## From the audit of 2026-09-15
 
 Six scouts read the build against this standard and returned sixty-six
