@@ -52,16 +52,26 @@ stands now, and the only direction it is allowed to move:
 | 125 id namespaces | 17 | 20 |
 | 54 trait modifier keys | 7 | 7 |
 | 18 higher-is-worse guards | 12 | 12 |
-| 7 reputation axes | 0 | 7 |
+| 7 reputation axes | 0 | 3 |
 | 7 personality axes | 4 | 4 |
 | 813 acting attributes | 0 | 19 |
 
 The two rows that moved, moved for one reason: casting. Nineteen attributes are
-read as three axes that go three different places, and the seven reputation
-axes have writers because a cast is made of people whose standing, fame and
-conduct all decide something separately. Nineteen of eight hundred and thirteen
-is not a boast — it is a first reader on the largest unwired thing in the build,
-and the other seven hundred and ninety-four are still a promise.
+read as three axes that go three different places. Nineteen of eight hundred
+and thirteen is not a boast — it is a first reader on the largest unwired thing
+in the build, and the other seven hundred and ninety-four are still a promise.
+
+The reputation row said seven for a day and that was wrong, so it is worth
+saying how, because the mistake is the exact one this page exists to catch.
+`tools/wired.mjs` counts a dial as wired when something **moves** it, and all
+seven are moved now. The One Rule is stricter than that: it asks what **reads**
+one to decide something. Three do — `publicFame` decides whether a name can go
+off, `industryDemand` decides whether a part is beneath somebody, `controversy`
+decides what a picture takes and who an office will touch. `audienceAppeal`,
+`professionalReputation`, `reliability` and `prestige` are written at every
+seed and read by nothing that decides anything; one of them is printed on a
+screen and three are not read at all. Writing a number is not wiring it, and a
+tool that measures writers will say a thing is finished before it is.
 
 `tools/wired.mjs` walks the declared vocabulary, finds what nothing reads, and
 holds the count against `docs/UNWIRED.json`. It does not demand zero — content
