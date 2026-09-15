@@ -130,7 +130,15 @@ export const HOUSE = {
   bedrooms: 6,
   interiorSqft: 5_400,
   yearBuilt: 2024,
-  /** Full, because it is new and because the family keeps it that way. */
+  /**
+   * Full, because it is new. Nobody keeps it there.
+   *
+   * This said "because the family keeps it that way" and the engine has never
+   * done anything of the kind: `systems/life.ts` takes it down 0.012 a day and
+   * nothing anywhere puts a point back, so a house that starts here reaches
+   * nought in a little under twenty-three years — inside one career. The
+   * comment was the only place the family's upkeep existed.
+   */
   condition: 100,
 } as const;
 

@@ -258,8 +258,8 @@ defineLook<Property>('house', {
         ? `You sleep here, it’s at ${outOf(kept)}, and nothing in a house this new has had time to go `
           + 'wrong yet.'
         : kept >= 70
-          ? `You sleep here, it’s kept at ${outOf(kept)}, and a night in a house this well looked `
-            + 'after puts back more than a night in one that isn’t.'
+          ? `You sleep here, it’s at ${outOf(kept)}, and a night in a house in this shape puts `
+            + 'back more than a night in one that isn’t.'
           : `You sleep here, it’s down to ${outOf(kept)}, and the nights aren’t putting back what `
             + 'they should.',
       body: (
@@ -271,10 +271,11 @@ defineLook<Property>('house', {
             there’s no lease on it, no loan against it and nobody whose permission you need to be in it.
           </p>
           <p className="small">
-            Condition is the one figure in this house that moves on its own. It sets how much a night here
-            gives you back and it slips a little each day nobody tends to it — and at {outOf(kept)} it’s
+            Condition is the one figure in this house that moves on its own, and it only moves one way.
+            It sets how much a night here gives you back, and there’s nothing in this game you can buy,
+            book or ask anybody for that puts a point of it back. At {outOf(kept)} it’s
             {kept >= 100
-              ? ' as high as it goes. The house is barely a year old and the family keeps it that way.'
+              ? ' as high as it goes, because the house is barely a year old.'
               : kept >= 70 ? ' working for you.' : ' costing you sleep you’d otherwise have had.'}
           </p>
           <div className="grid grid-3">
