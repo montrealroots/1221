@@ -279,3 +279,31 @@ export const REMEMBERED = 0.16;
  * twice is worth more than the whole of the advantage. SLATE's own.
  */
 export const COLD = 0.35;
+
+/**
+ * What being known to the public on its own is worth, before anybody in the
+ * room has ever met you.
+ *
+ * The other half of the ratchet, and the half that travels. Being read twice by
+ * RÚV is worth a great deal to RÚV and nothing at all to a Nordic broadcaster
+ * who has never heard the name. Fame is the part that crosses: a production
+ * setting up on a stage does not need to have had somebody in to have an
+ * opinion about whether they want them, if enough people already know who they
+ * are.
+ *
+ * Set so that being a household name is worth more than any amount of history
+ * with one office, because it is — and so that it never quite reaches everybody,
+ * because somebody always has their own idea. SLATE's own.
+ */
+export const KNOWN_OF = 0.5;
+
+/**
+ * What carrying a whole picture does to how much an audience likes you.
+ *
+ * Scaled by how much of the thing the part was, so a day player is barely
+ * noticed and a lead is remembered. It only goes up, for this player, and that
+ * is not generosity — they hold every attribute at the ceiling, so there is no
+ * such thing as being bad in something. What they can still do is not be in
+ * anything, which is what the rest of this file is about. SLATE's own.
+ */
+export const WELL_LIKED = 18;

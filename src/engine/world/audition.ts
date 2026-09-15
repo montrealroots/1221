@@ -46,7 +46,7 @@ import type { Instant } from '../core/time';
 import type { Audition, Booking } from '../domain/model';
 import { clamp } from '../core/rng';
 import {
-  AS_WRITTEN, CLOSE_ENOUGH, COLD, FURTHEST, REMEMBERED, SHADES, TOO_FAR,
+  AS_WRITTEN, CLOSE_ENOUGH, COLD, FURTHEST, KNOWN_OF, REMEMBERED, SHADES, TOO_FAR, WELL_LIKED,
   howFarById, shadeById, wayById, whyById, type Reading, type ShadeId, type WhyId,
 } from '../content/audition';
 import { SIZES, sizeById } from '../content/casting';
@@ -83,13 +83,26 @@ export function readFor(sim: Simulation, holder: string): Audition[] {
 /**
  * Whether these people think of the player when they need somebody.
  *
- * Cold to begin with, because nobody has heard of anybody, and it climbs with
- * every reading they have sat through — including the ones that ended in no,
- * which is the entire point. Worked out from the readings rather than stored, so
- * it cannot drift from the thing that earned it.
+ * Two halves, and they are different kinds of thing. One is what these
+ * particular people remember, which climbs with every reading they have sat
+ * through — including the ones that ended in no, which is the entire point.
+ * The other is what everybody knows, which is fame, and fame is the half that
+ * travels: a production that has never had you in still has an opinion if
+ * enough people already know the name.
+ *
+ * Without the second half the whole ratchet was a cul-de-sac. Being cast moved
+ * a fame that nothing on this side read, so a household name was a stranger to
+ * anybody they had not personally sat in front of.
+ *
+ * Worked out from the readings and the person rather than stored, so it cannot
+ * drift from the things that earned it.
  */
 export function remembersYou(sim: Simulation, holder: string): number {
-  return clamp(COLD + readFor(sim, holder).length * REMEMBERED, 0, 1);
+  const fame = sim.universe.people[sim.universe.playerId]?.reputation.publicFame ?? 0;
+  return clamp(
+    COLD + readFor(sim, holder).length * REMEMBERED + (fame / 100) * KNOWN_OF,
+    0, 1,
+  );
 }
 
 // ---------------------------------------------------------------------------
@@ -470,6 +483,16 @@ export function theyWantYou(sim: Simulation, audition: Audition): void {
   me.reputation.industryDemand = clamp(Math.round(me.reputation.industryDemand + carries * 26), 0, 100);
   me.reputation.professionalReputation = clamp(
     Math.round(me.reputation.professionalReputation + carries * 22), 0, 100,
+  );
+  // And whether the people who know them are glad about it. For this player it
+  // only ever goes one way: they are the best there has ever been at this, so
+  // anything they are in, they are good in, and appeal is simply what being
+  // good in front of people accumulates into. It is the one axis that is not a
+  // measure of them at all — it is a measure of what an audience has come to
+  // feel, and the only way to get one is to have been somewhere they were
+  // looking.
+  me.reputation.audienceAppeal = clamp(
+    Math.round(me.reputation.audienceAppeal + carries * WELL_LIKED), 0, 100,
   );
 }
 

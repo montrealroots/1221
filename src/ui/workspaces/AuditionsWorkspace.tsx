@@ -57,7 +57,7 @@ export function AuditionsWorkspace() {
       <Panel title="Going Up For It" tight>
         {open.length === 0 ? (
           <Empty
-            title="Nobody is asking"
+            title="Nobody Is Asking"
             body="Nobody has heard of you and the stages are quiet. Both of those are the same problem seen from two ends."
           />
         ) : (

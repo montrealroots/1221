@@ -623,6 +623,21 @@ export const tightnessOf = (weeks: number, budgetCents: number): number =>
 /** How hard a squeezed schedule pushes back, in days per shooting week. SLATE's own. */
 export const SLIP_RATE = 0.9;
 
+/**
+ * How much of an overrun a cast is responsible for, end to end.
+ *
+ * A cast nobody can rely on stretches whatever the schedule was going to do
+ * anyway by about half again; one that turns up every morning takes about a
+ * third of it back. Never the whole of it, in either direction — a schedule cut
+ * below what the picture costs runs over with saints in it, and a picture with
+ * room in it loses a day to the weather whoever is in it.
+ *
+ * SLATE's own, and set below what the schedule itself is worth on purpose: the
+ * producer's decision about weeks is meant to matter more than their decision
+ * about people, because it does.
+ */
+export const TRUST_COSTS = 0.85;
+
 /** What an overrun day costs, against an ordinary day of the shoot. SLATE's own. */
 export const SLIP_COSTS = 1.35;
 

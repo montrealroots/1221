@@ -27,10 +27,10 @@ import { MS_WEEK } from '@/engine/world/lot';
 import {
   AS_GOOD_AS_IT_GETS, ASKING_AT, SHUTS_AT, afterTheNote, alreadyUpFor, decideAudition, feeFor,
   freeAcross, goingNow, howFarOff, readingOf, remembersYou, shootingHere, theNote, whatIsGoing,
-  whatTheyWant, whereYourWorkStands,
+  theyWantYou, whatTheyWant, whereYourWorkStands,
 } from '@/engine/world/audition';
 import {
-  AS_WRITTEN, CLOSE_ENOUGH, COLD, FURTHEST, REMEMBERED, SHADES, TOO_FAR, WAYS, howFarById,
+  AS_WRITTEN, CLOSE_ENOUGH, COLD, FURTHEST, KNOWN_OF, REMEMBERED, SHADES, TOO_FAR, WAYS, howFarById,
 } from '@/engine/content/audition';
 import { sizeById } from '@/engine/content/casting';
 
@@ -452,5 +452,52 @@ describe('the commands refuse what they should', () => {
     expect(alreadyUpFor(sim).length).toBe(before + 1);
     expect(whereYourWorkStands(sim)).toMatch(/reading/);
     expect(sizeById(audition.size)).toBeDefined();
+  });
+});
+
+describe('fame is the half of the ratchet that travels', () => {
+  it('gets you thought of by people you have never read for', () => {
+    // Without this the whole ratchet was a cul-de-sac: being cast moved a fame
+    // that nothing on this side read, so a household name was a stranger to
+    // anybody they had not personally sat in front of.
+    const sim = world('famous');
+    const me = sim.universe.people[sim.universe.playerId]!;
+    const nobody = 'a Nordic broadcaster, a limited series';
+    const cold = remembersYou(sim, nobody);
+    me.reputation.publicFame = 100;
+    const known = remembersYou(sim, nobody);
+    expect(known).toBeGreaterThan(cold);
+    expect(known - cold).toBeCloseTo(KNOWN_OF, 6);
+  });
+
+  it('is worth more on its own than any amount of history with one office', () => {
+    // Which is the right way round. Being read twice by RÚV is worth a great
+    // deal to RÚV and nothing at all to anybody else.
+    expect(KNOWN_OF).toBeGreaterThan(REMEMBERED * 2);
+  });
+
+  it('never quite reaches everybody, because somebody always has their own idea', () => {
+    const sim = world('household');
+    const me = sim.universe.people[sim.universe.playerId]!;
+    me.reputation.publicFame = 100;
+    expect(remembersYou(sim, 'an American studio, a feature')).toBeLessThan(1);
+  });
+
+  it('rises with being in things, and so does whether anybody is glad about it', () => {
+    const sim = world('liked');
+    const me = sim.universe.people[sim.universe.playerId]!;
+    const was = { ...me.reputation };
+    const booking = shootingOnTheLot(sim, 'RÚV, a limited series', 9);
+    const audition = untilTheyAsk(sim, booking)!;
+    theyWantYou(sim, audition);
+    expect(me.reputation.publicFame).toBeGreaterThan(was.publicFame);
+    expect(me.reputation.audienceAppeal).toBeGreaterThan(was.audienceAppeal);
+    expect(me.reputation.industryDemand).toBeGreaterThan(was.industryDemand);
+    // A lead is remembered and a day player is barely noticed.
+    const small = { ...audition, size: 'day' };
+    const before = me.reputation.audienceAppeal;
+    theyWantYou(sim, small);
+    expect(me.reputation.audienceAppeal - before)
+      .toBeLessThan(me.reputation.publicFame - was.publicFame);
   });
 });

@@ -37,7 +37,7 @@ import type { Project } from '../domain/company';
 import type { DimensionId } from '../content/maturity';
 import { MS_DAY, formatDate } from '../core/time';
 import {
-  DELIVERY, LATE_PENALTY_A_WEEK, SLIP_COSTS, SLIP_RATE,
+  DELIVERY, LATE_PENALTY_A_WEEK, SLIP_COSTS, SLIP_RATE, TRUST_COSTS,
   type Element, type Period, type Plan,
   elementById, elementsAfter, planById, tightnessOf,
 } from '../content/making';
@@ -55,7 +55,10 @@ import {
 } from './maturity';
 import { DIMENSIONS, dimensionById, rungsOf } from '../content/maturity';
 import { armTheCrew } from './crew';
-import { armTheCasting, castsPerformers, layTheRoles, takeFactor, theBiggestName } from './casting';
+import {
+  armTheCasting, castsPerformers, castsReliability, layTheRoles, ranOverOnThem, takeFactor,
+  theBiggestName,
+} from './casting';
 import { capabilitiesOf } from './company';
 
 export const MAKING_KIND = 'project.period';
@@ -272,6 +275,16 @@ export interface Squeeze {
   tightness: number;
   /** How long the shoot runs, in weeks. A longer shoot slips further. */
   weeks: number;
+  /**
+   * What the cast is trusted to finish, out of a hundred.
+   *
+   * The third thing a producer chose, months earlier, thinking about something
+   * else. Whether somebody turns up is not a claim about how good they are —
+   * the best performer alive can be the one who does not come out of the
+   * trailer — and it is the only thing about a cast that costs days. Absent
+   * where nobody is cast, which reads as the middle of the scale.
+   */
+  trusted?: number;
 }
 
 /**
@@ -287,9 +300,19 @@ export interface Squeeze {
  */
 export function decideSlip(input: Squeeze, roll: number): { days: number; because: string } {
   const pressure = Math.max(0, 1.15 - input.tightness);
-  const days = Math.round(input.weeks * SLIP_RATE * pressure * (0.4 + roll * 1.6));
+  // A cast nobody can rely on stretches whatever was going to happen anyway,
+  // and one that turns up takes some of it back. Never the whole of it: a
+  // schedule cut below what the picture costs runs over with saints in it.
+  const holds = 1 + ((50 - (input.trusted ?? 50)) / 100) * TRUST_COSTS;
+  const days = Math.round(input.weeks * SLIP_RATE * pressure * holds * (0.4 + roll * 1.6));
   if (days <= 0) {
     return { days: 0, because: 'The schedule holds. Wrap is where it was always going to be.' };
+  }
+  if ((input.trusted ?? 50) < 38) {
+    return {
+      days,
+      because: 'The cast was late every morning of it, and by the second week the call sheet had stopped pretending.',
+    };
   }
   if (input.tightness < 0.8) {
     return {
@@ -1075,7 +1098,10 @@ function weighTheSchedule(sim: Simulation, project: Project, shooting: Period): 
   const weeks = (window.to - window.from) / MS_WEEK;
   const tightness = tightnessOf(weeks, project.budgetCents ?? 0);
   const roll = sim.rng('making', 'slip', project.id).next();
-  const slip = decideSlip({ tightness, weeks }, roll);
+  const trusted = castsReliability(sim, project);
+  const slip = decideSlip(
+    { tightness, weeks, ...(trusted !== undefined ? { trusted } : {}) }, roll,
+  );
   if (slip.days <= 0) return;
 
   // The shoot gets longer and everything behind it moves by the same amount.
@@ -1098,6 +1124,11 @@ function weighTheSchedule(sim: Simulation, project: Project, shooting: Period): 
       { refType: 'project', refId: project.id });
     project.spentCents += over;
   }
+
+  // And it sticks to everybody who was on it. A production that overran is a
+  // production the whole cast was on, and the next producer reading the list
+  // does not know whose fault it was either.
+  ranOverOnThem(sim, project, slip.days);
 
   const kept = project.bookingId ? keepTheStage(sim, project, by) : true;
   sim.notify({

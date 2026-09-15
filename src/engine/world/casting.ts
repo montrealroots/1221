@@ -1087,6 +1087,71 @@ export function castsControversy(sim: Simulation, project: Project): number | un
 /** What an office will not touch. SLATE's own, and deliberately not a ban. */
 export const TOO_HOT = 55;
 
+/**
+ * What the cast is worth to the people who already like them, out of a hundred.
+ *
+ * Weighted the way every other cast figure is. It is deliberately not the same
+ * question as how a face reads: that is a property of the instrument and a
+ * newcomer can have it in full, while this is a relationship an audience has
+ * with somebody, and the only way to get one is to have been in things they
+ * watched. A beautiful stranger reads and does not appeal; somebody people have
+ * liked for fifteen years appeals whatever the lens makes of them.
+ */
+export function castsAppeal(sim: Simulation, project: Project): number | undefined {
+  const inIt = castOf(sim, project);
+  const at = (one: InIt) => one.share;
+  const weight = inIt.reduce((n, one) => n + at(one), 0);
+  if (weight <= 0) return undefined;
+  return inIt.reduce(
+    (n, one) => n + (one.person?.reputation.audienceAppeal ?? 50) * at(one), 0,
+  ) / weight;
+}
+
+/**
+ * What the cast is trusted to finish, out of a hundred.
+ *
+ * Read by the floor and by nothing else. A producer believing somebody will
+ * turn up is not a claim about how good they are — the best performer alive can
+ * be the one who does not come out of the trailer — and it is the one thing
+ * about a cast that costs days rather than money or an audience.
+ */
+export function castsReliability(sim: Simulation, project: Project): number | undefined {
+  const inIt = castOf(sim, project);
+  const at = (one: InIt) => one.share;
+  const weight = inIt.reduce((n, one) => n + at(one), 0);
+  if (weight <= 0) return undefined;
+  return inIt.reduce(
+    (n, one) => n + (one.person?.reputation.reliability ?? 50) * at(one), 0,
+  ) / weight;
+}
+
+/**
+ * Takes the shine off everybody who was on a picture that ran over.
+ *
+ * The writer that makes reliability a thing somebody has rather than a thing
+ * they were seeded with. It lands on the whole cast and not on whoever was
+ * actually late, because that is how it works: a production that overran is a
+ * production everybody on it was on, and the next producer reading the crew
+ * list does not know whose fault it was either.
+ */
+export function ranOverOnThem(sim: Simulation, project: Project, days: number): void {
+  if (days <= 0) return;
+  for (const one of castOf(sim, project)) {
+    if (!one.person) continue;
+    one.person.reputation.reliability = clamp(
+      Math.round(one.person.reputation.reliability - days * OVERRUNS_COST), 1, 100,
+    );
+  }
+}
+
+/**
+ * What a day over costs everybody on the picture, out of a hundred.
+ *
+ * Small, because one bad week should not end a career and a run of them should.
+ * SLATE's own.
+ */
+export const OVERRUNS_COST = 0.6;
+
 // ---------------------------------------------------------------------------
 // What the company believes, as against what is true
 // ---------------------------------------------------------------------------

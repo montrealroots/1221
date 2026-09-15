@@ -52,7 +52,7 @@ stands now, and the only direction it is allowed to move:
 | 125 id namespaces | 17 | 20 |
 | 54 trait modifier keys | 7 | 7 |
 | 18 higher-is-worse guards | 12 | 12 |
-| 7 reputation axes | 0 | 3 |
+| 7 reputation axes | 0 | 6 |
 | 7 personality axes | 4 | 4 |
 | 813 acting attributes | 0 | 19 |
 
@@ -61,17 +61,31 @@ read as three axes that go three different places. Nineteen of eight hundred
 and thirteen is not a boast — it is a first reader on the largest unwired thing
 in the build, and the other seven hundred and ninety-four are still a promise.
 
-The reputation row said seven for a day and that was wrong, so it is worth
-saying how, because the mistake is the exact one this page exists to catch.
-`tools/wired.mjs` counts a dial as wired when something **moves** it, and all
-seven are moved now. The One Rule is stricter than that: it asks what **reads**
-one to decide something. Three do — `publicFame` decides whether a name can go
-off, `industryDemand` decides whether a part is beneath somebody, `controversy`
-decides what a picture takes and who an office will touch. `audienceAppeal`,
-`professionalReputation`, `reliability` and `prestige` are written at every
-seed and read by nothing that decides anything; one of them is printed on a
-screen and three are not read at all. Writing a number is not wiring it, and a
-tool that measures writers will say a thing is finished before it is.
+The reputation row said seven for a day, and that was wrong, so it is worth
+saying how: `tools/wired.mjs` counts a dial as wired when something **moves**
+it, and all seven are moved. The One Rule is stricter — it asks what **reads**
+one to decide something. On the day it was corrected, three did.
+
+Six do now, and each one goes somewhere different. `publicFame` decides whether
+a name can go off, and whether a production that has never met you thinks of
+you. `industryDemand` decides whether a part is beneath somebody.
+`controversy` decides what a picture takes and who an office will touch.
+`audienceAppeal` decides what a picture takes by a second route, and is the one
+axis on this list a performer earns rather than arrives with — the only way to
+get one is to have been in things people watched. `reliability` decides how far
+a shoot runs past its wrap date, and falls on everybody who was on one that
+did. `professionalReputation` is what a hire is worth.
+
+**`prestige` is still read by nothing, on purpose.** Every honest reader for it
+is a reader something else already has: put it on the sale and it is
+`audienceAppeal` under another name; put it on who gets called and it is
+`publicFame`. It is awards-and-critics standing and there are no awards and no
+critics, so it stays a declared word until there are. Inventing the seventh
+reader to finish the row would be the disease this page is about, performed on
+the page about the disease.
+
+Writing a number is not wiring it, and a tool that measures writers will say a
+thing is finished before it is.
 
 `tools/wired.mjs` walks the declared vocabulary, finds what nothing reads, and
 holds the count against `docs/UNWIRED.json`. It does not demand zero — content

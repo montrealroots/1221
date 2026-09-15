@@ -32,7 +32,8 @@ import {
 } from '@/engine/content/casting';
 import type { Looked } from '@/engine/domain/company';
 import {
-  askFor, castOf, castOn, datesFor, decideOffer, freeToWork, howManyCast, openRoles, quoteOf,
+  askFor, castOf, castOn, castsAppeal, castsReliability, datesFor, decideOffer, freeToWork,
+  howManyCast, openRoles, quoteOf, ranOverOnThem,
   alreadyKnown, believedAt, goesOffBy, howWide, lookedAt, officeFillsAt, readOf, readOn,
   reachOfBand, seatFor, sheetFor, shownOf, SOMEBODY_KNOWS, takeFactor, tapeLean, theBiggestName,
   theDiary, theNameThatGoesOff, TOO_HOT, wantsOn, whereTheCastStands, whoCameIn, WHOEVER,
@@ -41,7 +42,7 @@ import { deckFor, somebodyGoesOff } from '@/engine/world/trouble';
 import { decideTake } from '@/engine/world/selling';
 import { cutsAWeek, ratioOf, weeksToConvert, willMakeIt } from '@/engine/world/inventory';
 import { MS_WEEK } from '@/engine/world/lot';
-import { finishesBy } from '@/engine/world/making';
+import { decideSlip, finishesBy } from '@/engine/world/making';
 import { MS_DAY } from '@/engine/core/time';
 import { deliverIt, openTheDoors } from './doors';
 
@@ -1336,5 +1337,82 @@ describe('the office picks on what it believes, like everybody else', () => {
       seen += readOf(whoTheydTake(sim, id, role.id)).truth;
     }
     expect(seen / many).toBeGreaterThan(blind / many + 2);
+  });
+});
+
+describe('three axes that had no reader now have one each', () => {
+  it('sells a picture for more when the audience already likes the cast', () => {
+    const money = 20_000_000_00;
+    const at = (appeal: number) => decideTake(
+      { negativeCents: money, dealId: 'studio', cast: { truth: 60, reads: 60 }, appeal }, 0.5,
+    ).cents;
+    expect(at(90)).toBeGreaterThan(at(50));
+    expect(at(50)).toBeGreaterThan(at(10));
+    // And it is not the same question as how they read. A newcomer can read
+    // beautifully and appeal to nobody, so the two have to move separately.
+    const beautiful = decideTake(
+      { negativeCents: money, dealId: 'studio', cast: { truth: 50, reads: 95 }, appeal: 10 }, 0.5,
+    ).cents;
+    const beloved = decideTake(
+      { negativeCents: money, dealId: 'studio', cast: { truth: 50, reads: 10 }, appeal: 95 }, 0.5,
+    ).cents;
+    expect(beautiful).not.toBe(beloved);
+  });
+
+  it('runs a shoot over for a cast nobody can rely on, and takes some back for one they can', () => {
+    // A shoot with real pressure on it, because days are whole and on a short
+    // easy schedule the rounding eats the difference — which is correct and is
+    // not what this test is about.
+    const at = (trusted: number) => decideSlip({ tightness: 0.6, weeks: 10, trusted }, 0.5).days;
+    expect(at(5)).toBeGreaterThan(at(50));
+    expect(at(50)).toBeGreaterThan(at(95));
+    // Never the whole of it. A schedule cut below what the picture costs runs
+    // over with saints in it.
+    expect(decideSlip({ tightness: 0.4, weeks: 8, trusted: 100 }, 0.9).days).toBeGreaterThan(0);
+  });
+
+  it('says so when it was the people rather than the schedule', () => {
+    expect(decideSlip({ tightness: 1, weeks: 8, trusted: 5 }, 0.9).because)
+      .toMatch(/late every morning/);
+    expect(decideSlip({ tightness: 0.5, weeks: 8, trusted: 90 }, 0.9).because)
+      .toMatch(/short of what the picture costs/);
+  });
+
+  it('takes the shine off everybody who was on a picture that ran over', () => {
+    const sim = world('overran');
+    const id = greenlit(sim, 'feature', 'Hvítserkur');
+    const shoot = sim.universe.projects[id]!.periods!.find((p) => p.id === 'shooting')!;
+    sim.advanceTo(shoot.from);
+    const project = sim.universe.projects[id]!;
+    const was = castOf(sim, project).map((one) => one.person!.reputation.reliability);
+    ranOverOnThem(sim, project, 6);
+    const now = castOf(sim, project).map((one) => one.person!.reputation.reliability);
+    for (const [i, one] of now.entries()) expect(one).toBeLessThan(was[i]!);
+    // A day is a day and nothing is nothing.
+    const flat = castOf(sim, project).map((one) => one.person!.reputation.reliability);
+    ranOverOnThem(sim, project, 0);
+    expect(castOf(sim, project).map((one) => one.person!.reputation.reliability)).toEqual(flat);
+  });
+
+  it('weighs both of them by how much of the picture each part is', () => {
+    const sim = world('weighed');
+    const id = greenlit(sim, 'feature', 'Hvítserkur');
+    const shoot = sim.universe.projects[id]!.periods!.find((p) => p.id === 'shooting')!;
+    sim.advanceTo(shoot.from);
+    const project = sim.universe.projects[id]!;
+    const set = (sizeId: string, appeal: number, reliability: number) => {
+      for (const one of castOf(sim, project)) {
+        if (one.size.id !== sizeId || !one.person) continue;
+        one.person.reputation = { ...one.person.reputation, audienceAppeal: appeal, reliability };
+      }
+    };
+    set('lead', 50, 50); set('support', 50, 50); set('guest', 50, 50); set('day', 50, 50);
+    const even = { appeal: castsAppeal(sim, project)!, trust: castsReliability(sim, project)! };
+    set('day', 100, 100);
+    const byDay = Math.abs(castsAppeal(sim, project)! - even.appeal);
+    set('day', 50, 50); set('lead', 100, 100);
+    const byLead = Math.abs(castsAppeal(sim, project)! - even.appeal);
+    expect(byLead).toBeGreaterThan(byDay * 3);
+    expect(even.trust).toBeCloseTo(50, 6);
   });
 });
