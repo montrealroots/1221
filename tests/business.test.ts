@@ -35,7 +35,12 @@ import { ESTATE_CITY_ID } from '@/engine/content/estate';
 import {
   computeAnnualTax, propertyTaxRate, resolveIncomeTaxLayers, salesTaxRate,
 } from '@/engine/content/tax';
-import { CORPORATION_TAX, GUILD_BY_ID, REBATE, REGISTRY_BY_ID, VAT_RATE } from '@/engine/content/incorporation';
+import {
+  CORPORATION_TAX, GUILD_BY_ID, REBATE, REGISTRY_BY_ID, VAT_ON_A_PURCHASE, VAT_RATE,
+} from '@/engine/content/incorporation';
+import { OVERHEAD, SMALL_STAGE_COST_CENTS } from '@/engine/content/lot';
+import { buildAStage } from '@/engine/world/lot';
+import { VAT_MEMO, boughtWithVat, reclaimable, whereTheVatStands } from '@/engine/world/vat';
 import {
   GREENLIGHT_FLOOR, americanArm, capabilitiesOf, companiesOf, companyCash, holdingsOf,
   parentCompany, policiesOf, postsOf, projectsOf, registrationsOf, signaturesOf, theSugarGroup,
@@ -702,5 +707,182 @@ describe('the sugar quota', () => {
     // Every year is its own answer with its own reason.
     expect(new Set(years.map((y) => y.fiscalYear)).size).toBe(years.length);
     for (const y of years) expect(y.because.length).toBeGreaterThan(10);
+  });
+});
+
+/**
+ * Reclaim The Tax, which for a long time was a door onto nothing.
+ *
+ * `capabilitiesOf` lists nine things a production company has to be able to do.
+ * Three are read by the engine at the greenlight, the delivery and the
+ * reimbursement; three more bite as greenlight blockers; hiring Americans is
+ * enforced in the casting room. This one said "claim back the value added tax
+ * on everything the company buys, which for a production is a fifth of the
+ * spend" and not one króna was ever reclaimed.
+ */
+describe('the tax on what the company buys', () => {
+  const threeYears = (seed: string, registered = true): Simulation => {
+    const sim = quickSave({}, seed);
+    if (!registered) {
+      for (const [id, one] of Object.entries(sim.universe.registrations)) {
+        if (one.registry === 'is_vat') delete sim.universe.registrations[id];
+      }
+    }
+    sim.advanceTo(sim.now + 3 * 365 * MS_DAY);
+    return sim;
+  };
+  const reclaimed = (sim: Simulation): number => sim.universe.transactions
+    .filter((one) => one.memo === VAT_MEMO)
+    .reduce((n, one) => n + one.postings.filter((p) => p.amount > 0).reduce((m, p) => m + p.amount, 0), 0);
+
+  it('takes the tax out of a price already paid, rather than a fifth of everything', () => {
+    // 24 over 124, not 24 over 100, because a quoted price includes the tax.
+    expect(VAT_ON_A_PURCHASE).toBeCloseTo(VAT_RATE / (1 + VAT_RATE), 10);
+    expect(VAT_ON_A_PURCHASE).toBeLessThan(VAT_RATE);
+    // And it is where the page's "a fifth of the spend" comes from.
+    expect(VAT_ON_A_PURCHASE).toBeGreaterThan(0.19);
+    expect(VAT_ON_A_PURCHASE).toBeLessThan(0.20);
+  });
+
+  it('reclaims on what was bought and not on wages, cover, rates or a reserve', () => {
+    // The reason this is a field on every line rather than one rate over the
+    // ledger. A wage carries no VSK, insurance is an exempt supply,
+    // fasteignaskattur is a tax, and money moved into the company's own sinking
+    // fund is not a purchase until the day it buys a roof.
+    const buys = OVERHEAD.filter((one) => one.carriesVat).map((one) => one.id);
+    expect(buys).toEqual(['selling', 'utilities', 'services']);
+    for (const id of ['crew', 'insurance', 'property_tax', 'sinking']) {
+      expect(OVERHEAD.find((one) => one.id === id)!.carriesVat, id).toBe(false);
+    }
+  });
+
+  it('pays real money back on a real lag, and none at all without the registration', () => {
+    const on = threeYears('vat-on');
+    const off = threeYears('vat-off', false);
+    const got = reclaimed(on);
+    expect(got, 'three years of a lot that buys power, services and its own selling')
+      .toBeGreaterThan(100_000_00);
+    // The whole of the door: the unregistered company pays exactly the same
+    // prices and keeps none of it.
+    expect(reclaimed(off)).toBe(0);
+    expect(boughtWithVat(off, 0, off.now), 'it bought the same things').toBeGreaterThan(0);
+    expect(reclaimable(off, 0, off.now)).toBe(0);
+    expect(whereTheVatStands(off)).toMatch(/isn’t on the VAT register/);
+    expect(validateUniverse(on.universe).errors).toEqual([]);
+    expect(on.ledger.audit()).toEqual([]);
+  });
+
+  it('gives a fifth of a build back, which is the largest claim this company makes', () => {
+    const plain = quickSave({}, 'vat-build');
+    const built = quickSave({}, 'vat-build');
+    buildAStage(built);
+    for (const sim of [plain, built]) sim.advanceTo(sim.now + 3 * 365 * MS_DAY);
+    const extra = reclaimed(built) - reclaimed(plain);
+    const onTheBuild = Math.round(SMALL_STAGE_COST_CENTS * VAT_ON_A_PURCHASE);
+    // The room costs what it costs and a registered company gets the tax in it
+    // back, so the real price of the fifth stage is not the price on the panel.
+    expect(extra).toBeGreaterThanOrEqual(onTheBuild);
+    // A little more than the build's own tax, and the little more is not slop:
+    // five rooms buy more power and more snow clearing than four, and that is
+    // bought from somebody who charges VSK on it too.
+    expect(extra - onTheBuild).toBeGreaterThan(0);
+    expect(extra).toBeLessThan(onTheBuild * 1.05);
+    expect(extra).toBeGreaterThan(3_000_000_00);
+  });
+});
+
+/**
+ * Walking the nine doors.
+ *
+ * The page's promise is that a shut door names the single thing keeping it shut
+ * and that thing is a door of its own. This holds the engine to the other half
+ * of that: every blocker it names must be one a player can actually clear, and
+ * clearing all of them must reach nine.
+ */
+describe('every door a company has to walk through', () => {
+  it('opens all nine, from the two it starts with, by clearing what it is told', () => {
+    const sim = quickSave({}, 'nine-doors');
+    const did = (kind: string, payload: Record<string, unknown>): void => {
+      const answer = sim.execute({ kind, payload }) as { value?: { ok: boolean; error?: string } };
+      expect(answer.value?.ok, `${kind} ${JSON.stringify(payload)} — ${answer.value?.error}`).toBe(true);
+    };
+    const open = (): number => capabilitiesOf(sim).filter((one) => one.can).length;
+
+    // A registered company with a VAT number and nothing else.
+    expect(open()).toBe(2);
+
+    did('company.register', { registry: 'is_employer' });
+    did('company.form_arm', {});
+    did('company.register', { registry: 'us_ein' });
+    did('company.sign', { guild: 'sag_aftra' });
+    did('company.option', { title: 'The Cane Field' });
+    for (const policy of ['general_liability', 'workers_comp', 'production_package']) {
+      did('company.insure', { policy });
+    }
+    // Errors and omissions is the one that cannot be bought first: an
+    // underwriter reads the chain of title before writing it, so it needs the
+    // option above to already exist. That ordering is the whole of why the
+    // material blocker needed a control of its own.
+    did('company.insure', { policy: 'errors_omissions' });
+    const people = Object.values(sim.universe.people).filter((one) => !one.isPlayer);
+    did('company.fill_post', { role: 'accountant', personId: people[0]!.id });
+    did('company.fill_post', { role: 'production', personId: (people[1] ?? people[0])!.id });
+
+    expect(open(), capabilitiesOf(sim).filter((one) => !one.can).map((one) => one.label).join(', '))
+      .toBe(9);
+    expect(whereItStands(sim)).toMatch(/Everything is in place/);
+    expect(validateUniverse(sim.universe).errors).toEqual([]);
+    expect(sim.ledger.audit()).toEqual([]);
+  });
+
+  it('names a fix for every blocker it can raise, and no blocker without one', () => {
+    // The page can only be walked if every `fixKind` it produces is one the
+    // screen has a control for. `holding` was produced by three doors and had
+    // none, so a player pressing everything offered stopped at six of nine.
+    // Two halves, and the first is the one a mutation walked straight through
+    // when this only checked the second: every blocker must SAY what sort of
+    // thing would clear it. A blocker with no `fixKind` renders as a sentence
+    // with no button, which is the failure this test exists to catch, and
+    // dropping the kind off one was invisible while the check was written as
+    // "of the ones that have a kind, every kind is known".
+    const HAS_A_CONTROL = new Set(['registry', 'guild', 'policy', 'arm', 'role', 'holding']);
+    // And the one kind that has no button on purpose, because no button makes
+    // money appear. It is cleared by the business working.
+    const CLEARED_BY_PLAYING = new Set(['money']);
+    const sim = quickSave({}, 'blockers');
+    const kinds = new Set<string>();
+    let raised = 0;
+    for (const door of capabilitiesOf(sim)) for (const one of door.blockers) {
+      raised += 1;
+      expect(one.need.length, 'a blocker has to say what it is').toBeGreaterThan(0);
+      expect(one.how.length, 'and how it is cleared').toBeGreaterThan(0);
+      expect(one.fixKind, `"${one.need}" names no kind of fix, so no screen can offer one`)
+        .toBeDefined();
+      kinds.add(one.fixKind!);
+    }
+    expect(raised).toBeGreaterThan(8);
+    expect(kinds.size).toBeGreaterThan(3);
+    for (const kind of kinds) {
+      expect(HAS_A_CONTROL.has(kind) || CLEARED_BY_PLAYING.has(kind), kind).toBe(true);
+    }
+  });
+
+  it('costs what it costs, and the company can carry it from what it starts with', () => {
+    const sim = quickSave({}, 'nine-cost');
+    const before = companyCash(sim.universe);
+    for (const [kind, payload] of [
+      ['company.register', { registry: 'is_employer' }],
+      ['company.form_arm', {}],
+      ['company.register', { registry: 'us_ein' }],
+      ['company.sign', { guild: 'sag_aftra' }],
+      ['company.option', { title: 'The Cane Field' }],
+      ['company.insure', { policy: 'general_liability' }],
+      ['company.insure', { policy: 'workers_comp' }],
+      ['company.insure', { policy: 'production_package' }],
+    ] as [string, Record<string, unknown>][]) sim.execute({ kind, payload });
+    const spent = before - companyCash(sim.universe);
+    expect(spent, 'walking the doors is not free').toBeGreaterThan(0);
+    expect(companyCash(sim.universe), 'and it does not bankrupt the company either')
+      .toBeGreaterThan(0);
   });
 });

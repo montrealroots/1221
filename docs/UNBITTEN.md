@@ -321,7 +321,31 @@ file reference rather than as a finding.
   and readiness still feeds nothing but the room.
 - **Travel fatigue is a second fitness bug**, unrecorded until now, and it takes
   openness down with it — the same shape as the fitness fault, on a second dial.
-- **The tax engine is a screen.** Real, correct, entirely unwired.
+- **The tax engine is a screen.** Real, correct, and read by one thing: the place
+  card, which works out what a reference wage would be taxed at and prints it.
+  Nothing taxes a fee, a wage or a company's profit. Iceland is at least IN the
+  tables now — it was in none of them, so the home screen told a player living
+  in Mosfellsbær that Iceland taxes a wage at 0% and charges no sales tax — but
+  a correct table nobody is charged from is still a screen.
+
+- ~~**Reclaim The Tax was a door onto nothing.**~~ **Fixed.** Of the nine
+  capability doors, three are read by the engine at the greenlight, the delivery
+  and the reimbursement; three more bite as greenlight blockers; hiring
+  Americans is enforced in the casting room. This one said "claim back the value
+  added tax on everything the company buys, which for a production is a fifth of
+  the spend" and not one króna was ever reclaimed. `VAT_RATE` had a single
+  reader and it was a test asserting the constant still equalled the number
+  written beside it.
+
+  It files a return every two months now, on the tax inside what was actually
+  bought — which is three of the lot's seven standing costs and not seven, since
+  a wage carries no VSK, insurance is an exempt supply, fasteignaskattur is a
+  tax and money moved into the company's own sinking fund is not a purchase
+  until the day it buys a roof. Measured over three years: about €690,000 back
+  on an idle lot, and €4.05m when the fifth stage is built, because a
+  construction bill is the largest single claim this company ever makes. An
+  unregistered company pays the same prices and keeps none of it, which is the
+  door.
 - **366 lines of `domain/model.ts`** are record shapes with no table, no
   importer and no writer.
 - **Four fields on every person, and the whole skill sheet.** The scout's view is
@@ -349,7 +373,12 @@ file reference rather than as a finding.
   has. The lever is money spent a year early and its effect is invisible until it
   arrives as one notification.
 - **Three signable guilds, a registry, a policy and a company form** can be
-  reached only as a blocker chip.
+  reached only as a blocker chip — which is fine, because the chip carries a
+  working control. Measured by driving the built app: a player who presses what
+  the panel offers goes from two doors to nine. It was six until the material
+  blocker got a control of its own; "Anything At All" named the thing keeping
+  three doors shut and then left the player to find the button for it a panel
+  away, under a heading that does not mention doors.
 - **Three more guards at points the arithmetic already settles**, which is the
   same fault as the crowd guard below.
 - **The reimbursement's under-18 case**, which needs a picture to declare an

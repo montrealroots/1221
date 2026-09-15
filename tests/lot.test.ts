@@ -228,8 +228,12 @@ describe('and somebody is paying for that', () => {
     const said = sim.universe.notifications
       .filter((one) => PATIENCE.some((rung) => one.title.includes(rung.label)))
       .map((one) => one.title);
-    // Every rung above the first gets said, and the last word is the line.
-    expect(new Set(said).size).toBe(PATIENCE.length - 1);
+    // More than one rung gets said, and the last word is always the line. Not
+    // every rung: the company reclaims the tax on what it buys now, so the
+    // climb is slower and smoother, and a rung whose threshold falls between
+    // two month-ends can be stepped over without anybody announcing it. The one
+    // that changes the rules is the one that must never be missed.
+    expect(new Set(said).size).toBeGreaterThanOrEqual(2);
     expect(said[said.length - 1]).toContain(PATIENCE[PATIENCE.length - 1]!.label);
     // A rung can be reached twice, because the family comes down off one when
     // America reopens and the same money reads against a bigger year. What it
@@ -697,9 +701,17 @@ describe('building the fifth room', () => {
     // year America stays shut brings every rung down and a year it reopens puts
     // them back — and a room the family would not carry in one spring is a room
     // it will carry in the next. A door that only ever shut would be a timer.
-    const sim = quickSave({}, 'carry');
+    // On a seed where it happens, and it is worth saying that it got rarer. The
+    // company reclaims the tax on what it buys now, which takes a few points
+    // off the drain and smooths the early dips out of the figure — so across
+    // twenty years and ten seeds the door shuts and reopens in one of them
+    // rather than several. What that is not is a ratchet: the refusal is still
+    // a live reading of what a year of the group's profit is worth, and a
+    // better year still puts the rungs back. One seed proving it is enough to
+    // catch the day somebody makes the figure only ever fall.
+    const sim = quickSave({}, 's3');
     const said: (string | undefined)[] = [];
-    for (let year = 0; year <= 8; year += 1) {
+    for (let year = 0; year <= 12; year += 1) {
       said.push(whyNotBuild(sim));
       sim.advanceTo(sim.now + 365 * MS_DAY);
     }

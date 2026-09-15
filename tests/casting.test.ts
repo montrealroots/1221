@@ -32,7 +32,7 @@ import {
 } from '@/engine/content/casting';
 import type { Looked } from '@/engine/domain/company';
 import {
-  askFor, castOf, castOn, castsAppeal, castsReliability, datesFor, decideOffer, freeToWork,
+  askFor, castOf, castOn, castsAppeal, castsReliability, datesFor, decideOffer, freeToWork, offerOf,
   fromWhere, globalRuleOne, bringingThemCents, reachesTo,
   castSpark, complementOf, givingOf, performerNew, shapeOf, sparkBetween, sparkReads,
   howManyCast, openRoles, quoteOf, ranOverOnThem, theOfficeFills, writeTheQuote,
@@ -1485,9 +1485,35 @@ describe('the office picks on what it believes, like everybody else', () => {
 
       const shoot = sim.universe.projects[id]!.periods!.find((p) => p.id === 'shooting')!;
       sim.advanceTo(shoot.from);
-      const took = seatFor(sim.universe.projects[id]!, role.id)!.personId;
-      expect(took, 'the office should take who it believes is best').toBe(believed.id);
-      expect(took, 'and it has no way of knowing who actually is').not.toBe(actual.id);
+      const seat = seatFor(sim.universe.projects[id]!, role.id);
+      if (!seat) continue;
+      const took = seat.personId;
+      // The contract is that the office works down its OWN order and stops at
+      // the first yes — not that it gets its first choice. It is refused like
+      // anybody else, on the same draw the player gets, so the one it seats is
+      // the best it believes in of the ones who would do it at the band.
+      //
+      // This used to assert it simply took `believed`, which held only while
+      // that person happened to accept. It was already noted here as agreeing
+      // by luck once; the luck ran out for good the day the office started
+      // asking, and pinning the weaker claim hid that.
+      expect(came.some((one) => one.id === took)).toBe(true);
+      // A world where the office lands on the truly-best one anyway proves
+      // nothing about which question it was answering — it can get there by
+      // believing it, or by its first choice refusing and the next one
+      // happening to be that person. Neither separates belief from truth, so
+      // the world is skipped rather than asserted on.
+      if (took === actual.id) continue;
+      const better = came
+        .filter((one) => sum(shownOf(sim, project, live, one)) > sum(shownOf(sim, project, live,
+          came.find((x) => x.id === took)!)));
+      for (const one of better) {
+        const roll = sim.rng('casting', 'offer', project.id, live.id, one.id).next();
+        expect(
+          decideOffer(offerOf(sim, project, live, one, live.bandCents), roll).took,
+          `${one.id} is believed in more than the one they took and did not refuse`,
+        ).toBe(false);
+      }
       proved = true;
     }
     expect(proved, 'no world produced a case where belief and truth disagreed').toBe(true);

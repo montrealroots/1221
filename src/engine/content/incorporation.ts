@@ -221,6 +221,32 @@ export const REBATE = {
 export const CORPORATION_TAX = 0.20;
 export const VAT_RATE = 0.24;
 
+/**
+ * How much of a price already paid was the tax.
+ *
+ * Not the rate. A quoted price includes the VSK, so the tax in it is the rate
+ * over one plus the rate — 24 over 124, which is 19.35% and is where the
+ * capability page's "a fifth of the spend" comes from. Deriving it rather than
+ * writing a fifth down is the difference between a figure and a round number
+ * that happens to be close.
+ *
+ * This is what a registered company gets back on what it buys, and what an
+ * unregistered one simply pays. It is the whole of the Reclaim The Tax door,
+ * which for a long time was a sentence on a screen with nothing behind it.
+ */
+export const VAT_ON_A_PURCHASE = VAT_RATE / (1 + VAT_RATE);
+
+/**
+ * How often the return goes in, in months.
+ *
+ * Icelandic VSK is filed for two-month periods. It matters that it is not
+ * monthly: a company reclaiming on a two-month lag is a company carrying the
+ * tax on everything it buys for up to two months before it comes back, which
+ * is exactly the cash-flow shape a production has and the reason the reclaim
+ * is worth having rather than a formality.
+ */
+export const VAT_PERIOD_MONTHS = 2;
+
 // ---------------------------------------------------------------------------
 // The guilds
 // ---------------------------------------------------------------------------

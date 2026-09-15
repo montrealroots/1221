@@ -332,6 +332,23 @@ export interface OverheadLine {
    * lot spends on being known is a decision rather than a consequence.
    */
   withTheFloor: boolean;
+  /**
+   * Whether the line is a purchase that carries VSK.
+   *
+   * Three of the seven are, and the other four are not, which is the reason
+   * this is a field rather than one rate across the table. A wage carries no
+   * value added tax and neither does the employer's side of it, so the standing
+   * crew is out. Insurance is an exempt supply in Iceland, so the cover is out.
+   * Fasteignaskattur is a tax and not a supply anybody makes. And the sinking
+   * fund is the company moving its own money into its own reserve, which is not
+   * a purchase at all — it only becomes one on the day the roof is actually
+   * replaced.
+   *
+   * What is left is electricity and heat, the contracted services, and what the
+   * lot spends on being known. Those are bought from somebody who charges VSK
+   * on them, and a registered company gets that part back.
+   */
+  carriesVat: boolean;
 }
 
 export const OVERHEAD: readonly OverheadLine[] = [
@@ -341,6 +358,7 @@ export const OVERHEAD: readonly OverheadLine[] = [
     monthlyCents: 200_000_00,
     said: 'One percent of what it cost to build, every year, against the day something big fails.',
     withTheFloor: true,
+    carriesVat: false,
   },
   {
     id: 'property_tax',
@@ -348,6 +366,7 @@ export const OVERHEAD: readonly OverheadLine[] = [
     monthlyCents: 176_000_00,
     said: 'Fasteignaskattur, at the commercial rate the municipality sets.',
     withTheFloor: true,
+    carriesVat: false,
   },
   {
     id: 'crew',
@@ -355,6 +374,7 @@ export const OVERHEAD: readonly OverheadLine[] = [
     monthlyCents: 154_000_00,
     said: 'Sixteen people who are there whether anybody is shooting or not, five of them on the gate.',
     withTheFloor: false,
+    carriesVat: false,
   },
   {
     id: 'insurance',
@@ -362,6 +382,7 @@ export const OVERHEAD: readonly OverheadLine[] = [
     monthlyCents: 57_000_00,
     said: 'Including the statutory catastrophe cover, which in Iceland means volcano and earthquake.',
     withTheFloor: true,
+    carriesVat: false,
   },
   {
     id: 'selling',
@@ -369,6 +390,7 @@ export const OVERHEAD: readonly OverheadLine[] = [
     monthlyCents: 50_000_00,
     said: 'A stage nobody has heard of has to be sold, continuously, at every market there is.',
     withTheFloor: false,
+    carriesVat: true,
   },
   {
     id: 'utilities',
@@ -376,6 +398,7 @@ export const OVERHEAD: readonly OverheadLine[] = [
     monthlyCents: 27_000_00,
     said: 'Cheap, because the heat comes out of the ground and the power off the grid behind it.',
     withTheFloor: true,
+    carriesVat: true,
   },
   {
     id: 'services',
@@ -383,6 +406,7 @@ export const OVERHEAD: readonly OverheadLine[] = [
     monthlyCents: 25_000_00,
     said: 'Fire and sprinkler certification, hoist inspection, snow clearing, waste.',
     withTheFloor: true,
+    carriesVat: true,
   },
 ];
 
@@ -785,6 +809,15 @@ export const CREW_BASE = 1_000;
  * paid for out of the same patience the greenlight spends from. Build the room
  * and get asked about parts, or keep the patience and greenlight your own
  * pictures — both are routes to a career and there is one pool.
+ *
+ * One figure above is no longer the whole price, and the correction makes the
+ * bet better rather than worse. A construction bill carries VSK, and a company
+ * on the VAT register gets that part back: a fifth of seventeen and a quarter
+ * million is about three and a third million, filed on the return for the
+ * period the money went out. The room costs what the panel says on the day and
+ * about fourteen million once the tax comes home, which is the largest single
+ * claim this company will ever make and the clearest reason the Reclaim The Tax
+ * door is worth opening before the build rather than after.
  */
 /**
  * How big the fifth room is, and why exactly this big.

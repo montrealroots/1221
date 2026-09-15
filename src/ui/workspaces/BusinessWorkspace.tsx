@@ -167,6 +167,7 @@ function Missing({ blocker }: { blocker: Blocker }) {
   const { run } = useGame();
   const [error, setError] = useState<string | undefined>();
   const [filling, setFilling] = useState(false);
+  const [taking, setTaking] = useState(false);
 
   const act = (kind: string, payload: Record<string, unknown>) => {
     const answer = run<{ ok: boolean; error?: string }>(kind, payload, { silent: true });
@@ -196,6 +197,19 @@ function Missing({ blocker }: { blocker: Blocker }) {
       // could walk every other step of the sequence and stop here for good.
       case 'role':
         return { label: 'Fill The Post', go: () => setFilling(true) };
+      // And material, which was the other one and was missed because there IS a
+      // control for it — over in What It Holds, a panel away, which a player has
+      // no reason to connect to the words "Anything At All" under a shut door.
+      // This page's whole promise is that a shut door names the single thing
+      // keeping it shut and that thing is a door of its own; a blocker that
+      // names something and then makes you go and find it does not keep it.
+      //
+      // Three doors say this one: having something to make, greenlighting it,
+      // and delivering it, which cannot be insured until there is a chain of
+      // title to read. Measured against the engine, a player who presses every
+      // button this row offers gets to six of nine and stops.
+      case 'holding':
+        return { label: id ? 'Close The Gap' : 'Take An Option', go: () => setTaking(true) };
       default:
         return undefined;
     }
@@ -209,6 +223,7 @@ function Missing({ blocker }: { blocker: Blocker }) {
         {error && <div className="xs negative" style={{ marginTop: 2 }}>{error}</div>}
       </div>
       {control && <button className="btn btn-sm" onClick={control.go}>{control.label}</button>}
+      {taking && <OptionForm onClose={() => setTaking(false)} />}
       {filling && (
         <PostForm
           role={id as RoleId}

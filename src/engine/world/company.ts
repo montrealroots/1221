@@ -23,7 +23,7 @@
 
 import type { Simulation } from '../core/simulation';
 import type { Id, SaveUniverse } from '../domain/model';
-import type { Money } from '../core/money';
+import { formatMoney, type Money } from '../core/money';
 import type {
   Company, CompanyForm, GuildId, Hold, Holding, Policy, PolicyKind, Post,
   Project, Provenance, Registration, RegistryId, RoleId, Signature,
@@ -507,7 +507,7 @@ function payFor(sim: Simulation, companyId: Id, amount: Money, purpose: string):
   const account = purse(sim, companyId);
   if (!account) return refuse('The company has no account to pay from.');
   if (account.balance < amount) {
-    return refuse(`That costs ${(amount / 100).toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 })} and the company hasn’t got it.`);
+    return refuse(`That costs ${formatMoney(amount, { cents: false })} and the company hasn’t got it.`);
   }
   sim.expense(account.id, amount, purpose, 'company');
   return { ok: true };
@@ -737,7 +737,8 @@ export function registerCompanyCommands(sim: Simulation): void {
     s.notify({
       category: 'personal',
       title: `${person.firstName} Is ${facts.label}`,
-      body: `${facts.what} It costs the company ${(facts.monthlyCents / 100).toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 })} a month, every month, whether anything is shooting or not.`,
+      body: `${facts.what} It costs the company ${formatMoney(facts.monthlyCents, { cents: false })} a month, `
+        + 'every month, whether anything is shooting or not.',
       importance: 50,
     });
     return { ok: true, id: post.id };
