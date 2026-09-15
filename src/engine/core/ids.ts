@@ -17,21 +17,23 @@ export type Id = string;
  * the names at runtime: the pick-up for a save written before every namespace
  * had its own counter, below, and `tools/wired.mjs`, which fails the gate on a
  * namespace nothing ever asks for.
+ *
+ * Twenty-one, and it was a hundred and twenty-five. The hundred and four that
+ * went were nouns from a game this one is not: vehicles and their servicing,
+ * bills and prescriptions, a track season, a streaming channel with its
+ * subscribers and its payouts, a school and a degree. Not one of them had a
+ * `nextId` call site, so not one of them could ever have had a record — a
+ * namespace nothing issues is a table the game never fills, and a hundred and
+ * four of those in a list of a hundred and twenty-five made the list read as a
+ * plan rather than as a fact. What is left is what SLATE is: people and the
+ * households they are in, money, the clock, a company with its registrations
+ * and posts and policies, pictures with parts in them, a lot with stages and
+ * bookings, the room, and the three logs.
  */
 export const ID_NAMESPACES = [
-  'save', 'person', 'household', 'account', 'txn', 'posting', 'bill', 'rx', 'job', 'shift',
-  'application', 'employer', 'rel', 'relmem', 'bond', 'event', 'sched', 'cal', 'company', 'reg',
-  'sign', 'policy', 'hold', 'post', 'project', 'prop', 'listing', 'offer', 'build', 'room',
-  'furn', 'stage', 'booking', 'veh', 'vehmod', 'service', 'part', 'trip', 'flight', 'stay',
-  'trade', 'deal', 'wave', 'press', 'acct', 'campaign', 'proj', 'script', 'draft', 'role', 'audition',
-  'contract', 'rights', 'shootday', 'posttask', 'release', 'award', 'nom', 'division', 'employee',
-  'equip', 'franchise', 'merch', 'order', 'item', 'asset', 'claim', 'appt', 'provider', 'course',
-  'history', 'audit', 'notice', 'decision', 'idem', 'scene', 'fact', 'membership', 'workout',
-  'plan', 'date', 'berth', 'statement', 'standing', 'dining', 'retail', 'worn', 'commission',
-  'costume', 'chan', 'vid', 'vcom', 'vsub', 'watch', 'vlist', 'stream', 'cpost', 'member', 'payout',
-  'vnotice', 'profile', 'sitem', 'follow', 'sroom', 'hire', 'shoot', 'film', 'screening', 'submission',
-  'ticket', 'invite', 'seat', 'parcel', 'school', 'uniapp', 'degree', 'season', 'running', 'meet',
-  'growing', 'firstjob', 'sitting', 'report', 'training', 'recall',
+  'person', 'household', 'account', 'txn', 'sched', 'company', 'reg', 'sign', 'policy', 'hold',
+  'post', 'project', 'prop', 'stage', 'booking', 'role', 'audition', 'history', 'audit', 'notice',
+  'decision',
 ] as const;
 
 export type IdNamespace = typeof ID_NAMESPACES[number];

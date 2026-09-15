@@ -1,7 +1,7 @@
 {
   "note": "Set by tools/wired.mjs --bless. These may fall. They may not rise.",
   "counts": {
-    "Id namespaces": 104,
+    "Id namespaces": 0,
     "Trait modifier keys": 47,
     "Higher-is-worse guards": 6,
     "Dials nothing moves": 0,
