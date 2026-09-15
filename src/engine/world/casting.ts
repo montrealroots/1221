@@ -50,7 +50,7 @@ import type { Id } from '../core/ids';
 import type { Money } from '../core/money';
 import type { Instant } from '../core/time';
 import type { Person } from '../domain/model';
-import type { Project, Role, Seat } from '../domain/company';
+import type { Looked, Project, Role, Seat } from '../domain/company';
 import type { AttributeSheet } from '../domain/attributes';
 import { rate, sheetOf } from '../domain/attributes';
 import { emptySkillSheet } from '../domain/skills';
@@ -59,8 +59,8 @@ import { impliedPerformerTitle } from '../core/performer';
 import { clamp } from '../core/rng';
 import { MEN, WOMEN, patronymic } from '../content/names';
 import {
-  AXES, CAST_SHARE, HAGGLE, QUOTE_LIFE, SIZES, axisById, passById, sizeById,
-  takesAt, type AxisId, type PassId, type Size,
+  AXES, CAST_SHARE, HAGGLE, QUOTE_LIFE, ROUNDS, SIZES, TAPE_LEANS, THE_TAPE, axisById,
+  passById, roundById, sizeById, takesAt, type AxisId, type PassId, type Round, type Size,
 } from '../content/casting';
 import type { Plan } from '../content/making';
 import { MS_WEEK } from './lot';
@@ -318,6 +318,12 @@ export function sheetFor(standing: number, next: () => number): AttributeSheet {
     const centre = clamp(standing + (next() - 0.5) * 46, 1, 100);
     for (const id of axis.of) of[id] = clamp(Math.round(centre + (next() - 0.5) * 14), 1, 100);
   }
+  // And their hand at taping, drawn on its own and against the middle of the
+  // scale rather than against their standing. Nothing about being a fine actor
+  // makes anybody good at lighting their own kitchen, and a version of this
+  // that hung off the standing would have quietly said it did.
+  const hand = clamp(Math.round(20 + next() * 70), 1, 100);
+  for (const id of THE_TAPE) of[id] = clamp(Math.round(hand + (next() - 0.5) * 18), 1, 100);
   return sheetOf(base, of);
 }
 
@@ -423,7 +429,7 @@ export function putItOut(sim: Simulation, project: Project, role: Role): Person[
     const standing = clamp(Math.round(reach - 18 + draw * 30), 1, 100);
     out.push(performerNew(sim, standing, () => making.next()));
   }
-  role.seen = out.map((person) => person.id);
+  role.seen = out.map((person) => ({ personId: person.id }));
   role.outAt = sim.now;
   return out;
 }
@@ -431,12 +437,16 @@ export function putItOut(sim: Simulation, project: Project, role: Role): Person[
 /** Who came in, for anybody drawing a screen. Never makes anybody. */
 export function whoCameIn(sim: Simulation, role: Role): Person[] {
   const out: Person[] = [];
-  for (const id of role.seen ?? []) {
-    const person = sim.universe.people[id];
+  for (const one of role.seen ?? []) {
+    const person = sim.universe.people[one.personId];
     if (person) out.push(person);
   }
   return out;
 }
+
+/** What the company has done about one person for one part. */
+export const lookedAt = (role: Role, personId: Id): Looked | undefined =>
+  role.seen?.find((one) => one.personId === personId);
 
 // ---------------------------------------------------------------------------
 // The offer
@@ -523,7 +533,17 @@ export interface InIt {
   /** Absent where nobody took it and whoever is playing it. */
   person?: Person;
   seat?: Seat;
+  /**
+   * What they actually are. The shoot and the sale read this and nobody else
+   * may: it is not a fact anybody in the world has access to.
+   */
   read: Read;
+  /**
+   * What the company believes they are, which is what a screen is allowed to
+   * print. Equal to `read` for the player and for anybody who has already
+   * finished a job here, and a guess with a known width for everybody else.
+   */
+  shown: Read;
   /** Share of the picture's screen time this part is, before normalising. */
   share: number;
 }
@@ -543,6 +563,7 @@ export function castOf(sim: Simulation, project: Project): InIt[] {
       ...(person ? { person } : {}),
       ...(seat ? { seat } : {}),
       read: person ? readOf(person) : whoeverReads(),
+      shown: person ? shownOf(sim, project, role, person) : whoeverReads(),
       share: size.across === 'title' ? size.onScreen : size.onScreen / parts,
     });
   }
@@ -683,7 +704,8 @@ export function castSomebody(sim: Simulation, casting: Casting): Cast {
     category: 'business',
     title: `${person.displayName} Is ${role.name}`,
     body: `${money(fee)} on ${project.title}${when ? `, from ${new Date(when.from).getUTCFullYear()}` : ''}.`
-      + ` ${sayTheRead(readOf(person))}`,
+      + ` ${sayTheRead(shownOf(sim, project, role, person))}`
+      + ` ${sureReads(howSure(sim, project, role, person))}.`,
     importance: 55,
     refType: 'project',
     refId: project.id,
@@ -780,6 +802,7 @@ const money = (cents: Money): string => `€${Math.round(cents / 100).toLocaleSt
 
 export function registerCasting(sim: Simulation): void {
   registerTheOffice(sim);
+  registerTheRoom(sim);
 
   /**
    * Offer a part to somebody.
@@ -817,6 +840,22 @@ export function registerCasting(sim: Simulation): void {
       if (!role) return { ok: false, error: 'There\u2019s no such part in it.' };
       if (seatFor(project, role.id)) return { ok: false, error: `${role.name} is cast.` };
       return { ok: true, came: putItOut(s, project, role).length };
+    },
+  );
+
+  /**
+   * Put somebody in the room, with or without a note.
+   *
+   * Separate from the breakdown and from the offer, because seeing somebody,
+   * advertising a part and hiring somebody are three things a production does
+   * on three different days for three different reasons. This one buys nothing
+   * but information, and information is the only thing in casting that is worth
+   * what it costs.
+   */
+  sim.onCommand<Booking, { ok: boolean; error?: string; at?: number }>(
+    'company.session', (payload, { sim: s }) => {
+      const done = bookTheRoom(s, payload);
+      return done.ok ? { ok: true, at: done.at } : { ok: false, error: done.error };
     },
   );
 
@@ -883,12 +922,15 @@ export function theOfficeFills(sim: Simulation, project: Project): number {
         return !when || freeToWork(sim, person.id, when.from, when.to);
       });
     if (seen.length === 0) continue;
-    const best = seen.reduce((top, person) => {
-      const one = readOf(person);
-      const other = readOf(top);
-      return one.truth + one.reads + one.repeatable > other.truth + other.reads + other.repeatable
-        ? person : top;
-    }, seen[0]!);
+    // On what the office believes, which is the whole of what an office has.
+    // Reading the truth here would have made the casting director clairvoyant
+    // and every round in the diary pointless: a producer who never saw anybody
+    // would get the same cast as one who saw everybody twice.
+    const worth = (person: Person): number => {
+      const one = shownOf(sim, project, role, person);
+      return one.truth + one.reads + one.repeatable;
+    };
+    const best = seen.reduce((top, person) => (worth(person) > worth(top) ? person : top), seen[0]!);
     if (!project.cast) project.cast = [];
     project.cast.push({ roleId: role.id, personId: best.id, feeCents: role.bandCents, castAt: sim.now });
     writeTheQuote(best, project.id, role.size, role.bandCents, sim.now);
@@ -984,3 +1026,353 @@ export function castsControversy(sim: Simulation, project: Project): number | un
 
 /** What an office will not touch. SLATE's own, and deliberately not a ban. */
 export const TOO_HOT = 55;
+
+// ---------------------------------------------------------------------------
+// What the company believes, as against what is true
+// ---------------------------------------------------------------------------
+
+/**
+ * Whether this company has already found out.
+ *
+ * Somebody who has finished a job here is not a person you have an opinion
+ * about, they are a person you know: you watched them work for eleven weeks and
+ * cut the results. So the estimate collapses to the truth and stays there, for
+ * good, and the fourth picture is cast by people the third one taught you
+ * about. It is the same recurrence the crew has, paying out on the axis that
+ * actually matters.
+ */
+export function alreadyKnown(sim: Simulation, companyId: Id, personId: Id): boolean {
+  for (const project of Object.values(sim.universe.projects)) {
+    if (project.companyId !== companyId) continue;
+    for (const seat of project.cast ?? []) {
+      if (seat.personId !== personId) continue;
+      const role = roleOn(project, seat.roleId);
+      const when = role ? datesFor(project, role) : undefined;
+      if (when && sim.now > when.to) return true;
+    }
+  }
+  return false;
+}
+
+/** The furthest round anybody has got to with somebody, which is the pile at worst. */
+export function furthestRound(looked: Looked | undefined): Round {
+  let best = roundById('pile')!;
+  for (const id of looked?.rounds ?? []) {
+    const round = roundById(id);
+    if (round && ROUNDS.indexOf(round) > ROUNDS.indexOf(best)) best = round;
+  }
+  return best;
+}
+
+/**
+ * How far out the estimate can be on one axis, and which way it leans.
+ *
+ * The note is the whole of the interesting part. A session is one note and a
+ * note is one axis, so naming an axis takes that one a round further than the
+ * session would have taken it and leaves the other two exactly where they were.
+ * On the last round there is nothing further to reach for, so it halves
+ * instead — which is the honest reading of a director spending the whole of a
+ * callback on one question.
+ */
+export function howWide(looked: Looked | undefined, axis: AxisId): { width: number; distorted: boolean } {
+  const round = furthestRound(looked);
+  const distorted = (round.distorts ?? []).includes(axis);
+  if (looked?.note !== axis) return { width: round.width[axis], distorted };
+  const next = ROUNDS[ROUNDS.indexOf(round) + 1];
+  return {
+    width: next ? next.width[axis] : round.width[axis] / 2,
+    // A note is somebody asking the question directly, in the room, to their
+    // face. Whatever the file was flattering does not survive that.
+    distorted: false,
+  };
+}
+
+/**
+ * How far this person's tape misrepresents them, out of a hundred, and which
+ * way.
+ *
+ * Off four attributes that are about equipment and deadlines rather than about
+ * acting, so it is genuinely independent of whether they are any good. Positive
+ * means the file is better than the person.
+ */
+export function tapeLean(sheet: AttributeSheet): number {
+  if (THE_TAPE.length === 0) return 0;
+  let total = 0;
+  for (const id of THE_TAPE) total += rate(sheet, id);
+  return ((total / THE_TAPE.length - 50) / 50) * TAPE_LEANS;
+}
+
+/**
+ * Where the estimate sits, for one person on one axis.
+ *
+ * Fixed for the life of the save, on the keys of the part and the person and
+ * the axis and nothing else — deliberately not on how far anybody has got,
+ * because an offset that redrew every round would make the shown figure jump
+ * about rather than close in. It closes in: the same point, seen from nearer.
+ */
+function offsetOn(sim: Simulation, role: Role, personId: Id, axis: AxisId): number {
+  return sim.rng('casting', 'shown', role.id, personId, axis).next() * 2 - 1;
+}
+
+/**
+ * What the company would say this person is, if asked today.
+ *
+ * Truth, pushed by whatever the round it was seen through flatters, and then
+ * displaced by a fixed amount of however wrong it is allowed to be. This is the
+ * number every screen prints and the number the casting office picks on. The
+ * true read is still what the shoot and the sale get, and the gap between the
+ * two is the entire cost of not having gone to the trouble.
+ */
+export function shownOn(
+  sim: Simulation, project: Project, role: Role, person: Person, axis: AxisId,
+): number {
+  const truth = readOn(person.attributes, axis);
+  if (person.isPlayer || alreadyKnown(sim, project.companyId, person.id)) return truth;
+  return believedAt(
+    truth, lookedAt(role, person.id), axis,
+    offsetOn(sim, role, person.id, axis), tapeLean(person.attributes),
+  );
+}
+
+/**
+ * The arithmetic of a belief, with nothing in it but numbers.
+ *
+ * Pulled out of `shownOn` so the decider sweep can call it with a world posed
+ * rather than played, and so the one line that actually decides what a producer
+ * sees can be read without a simulation around it.
+ */
+export function believedAt(
+  truth: number, looked: Looked | undefined, axis: AxisId, offset: number, lean = 0,
+): number {
+  const { width, distorted } = howWide(looked, axis);
+  return clamp(Math.round(truth + (distorted ? lean : 0) + offset * width), 1, 100);
+}
+
+/** All three, which is the only form anybody should be shown. */
+export function shownOf(sim: Simulation, project: Project, role: Role, person: Person): Read {
+  return {
+    truth: shownOn(sim, project, role, person, 'truth'),
+    repeatable: shownOn(sim, project, role, person, 'repeatable'),
+    reads: shownOn(sim, project, role, person, 'reads'),
+  };
+}
+
+/** How sure anybody is, out of a hundred, for a screen to say so in one word. */
+export function howSure(sim: Simulation, project: Project, role: Role, person: Person): number {
+  if (person.isPlayer || alreadyKnown(sim, project.companyId, person.id)) return 100;
+  const looked = lookedAt(role, person.id);
+  const pile = roundById('pile')!;
+  let widest = 0;
+  let worst = 0;
+  for (const axis of AXES) {
+    widest += pile.width[axis.id];
+    worst += howWide(looked, axis.id).width;
+  }
+  return widest <= 0 ? 100 : clamp(Math.round(100 - (worst / widest) * 100), 0, 100);
+}
+
+/** What a sureness reads as, in the words somebody would use. */
+export function sureReads(sure: number): string {
+  if (sure >= 96) return 'you have worked with them';
+  if (sure >= 70) return 'you have had them in twice';
+  if (sure >= 45) return 'you have met them';
+  if (sure >= 20) return 'you have watched a tape';
+  return 'you have seen a photograph';
+}
+
+// ---------------------------------------------------------------------------
+// The room
+// ---------------------------------------------------------------------------
+
+export const ROOM_KIND = 'project.room';
+
+/** A day, for a diary that is kept in days rather than weeks. */
+const MS_DAY = 24 * 60 * 60 * 1000;
+
+/**
+ * The first day this company's casting office is free.
+ *
+ * The office runs one thing at a time, and the schedule is the diary — there is
+ * no second record of what the office is doing, because a second record is a
+ * second thing to keep in step with the first. Whatever is already booked pushes
+ * everything after it, so a picture with twenty-one parts discovers that eleven
+ * weeks is not very long by trying to fill it.
+ */
+export function nextFreeDay(sim: Simulation, companyId: Id): Instant {
+  let free = sim.now;
+  for (const item of sim.universe.scheduled) {
+    if (item.kind !== ROOM_KIND || item.status !== 'pending') continue;
+    const project = sim.universe.projects[String(item.payload?.projectId ?? '')];
+    if (!project || project.companyId !== companyId) continue;
+    free = Math.max(free, item.at);
+  }
+  return free;
+}
+
+/** When the office stops waiting and fills whatever is left. */
+export function officeFillsAt(project: Project): Instant | undefined {
+  const shoot = project.periods?.find((p) => p.id === 'shooting')
+    ?? project.periods?.find((p) => p.id === 'field');
+  return shoot ? shoot.from - OFFICE_OPEN_UNTIL * MS_WEEK : undefined;
+}
+
+/**
+ * Weeks before the shoot that the office stops taking bookings.
+ *
+ * The same date it fills the open parts on, and it is the same number for the
+ * same reason: after this there is no point seeing anybody, because whoever is
+ * playing the part has already been told they are.
+ */
+export const OFFICE_OPEN_UNTIL = OFFICE_FILLS_AT;
+
+export interface Booking {
+  projectId: Id;
+  roleId: string;
+  personId: Id;
+  round: string;
+  /** The axis the note is on, where one is given. */
+  note?: string;
+}
+
+/**
+ * Books somebody into the room.
+ *
+ * Refuses for real reasons rather than politely: a part that is cast, a round
+ * that cannot follow what has happened so far, a round already done, and — the
+ * one that actually bites — a diary that has run past the day the office stops
+ * waiting. That last refusal is the whole shape of casting as a decision. There
+ * is enough room to see the people who matter and not enough to see everybody,
+ * and nothing tells you which is which.
+ */
+export function bookTheRoom(sim: Simulation, booking: Booking): { ok: true; at: Instant } | { ok: false; error: string } {
+  const project = sim.universe.projects[booking.projectId];
+  if (!project) return { ok: false, error: 'There’s no such picture.' };
+  if (project.shelvedAt) return { ok: false, error: `${project.title} is shelved.` };
+  const role = roleOn(project, booking.roleId);
+  if (!role) return { ok: false, error: 'There’s no such part in it.' };
+  if (seatFor(project, role.id)) return { ok: false, error: `${role.name} is cast. There’s nothing left to find out.` };
+  const round = roundById(booking.round);
+  if (!round || round.id === 'pile') return { ok: false, error: 'That isn’t a round anybody runs.' };
+  const person = sim.universe.people[booking.personId];
+  if (!person) return { ok: false, error: 'There’s nobody by that name.' };
+  const looked = lookedAt(role, person.id);
+  if (!looked) return { ok: false, error: `Nobody has put ${role.name} out yet, so nobody has come in for it.` };
+  if ((looked.rounds ?? []).includes(round.id)) {
+    return { ok: false, error: `${person.displayName} has already done that. Doing it again teaches nobody anything.` };
+  }
+  if (round.after && !round.after.some((id) => (looked.rounds ?? []).includes(id))) {
+    const names = round.after.map((id) => roundById(id)?.label.toLowerCase() ?? id);
+    return {
+      ok: false,
+      error: `Nobody calls a stranger back. ${names.join(' or ')} first.`,
+    };
+  }
+  if (booking.note !== undefined && !axisById(booking.note)) {
+    return { ok: false, error: 'That isn’t something anybody could give a note on.' };
+  }
+  if (person.isPlayer || alreadyKnown(sim, project.companyId, person.id)) {
+    return { ok: false, error: `You know what ${person.displayName} is. Seeing them again is a day spent learning nothing.` };
+  }
+
+  const at = nextFreeDay(sim, project.companyId) + Math.round(round.takes * MS_DAY);
+  const shuts = officeFillsAt(project);
+  if (shuts !== undefined && at > shuts) {
+    return {
+      ok: false,
+      error: `The office is booked solid until after ${new Date(at).toISOString().slice(0, 10)}, `
+        + 'and by then the parts are filled. Something else has to come off the diary.',
+    };
+  }
+
+  const account = Object.values(sim.universe.accounts)
+    .find((a) => a.ownerId === project.companyId && a.kind === 'company_cash' && !a.closedAt)?.id;
+  if (account && round.costsCents > 0) {
+    sim.expense(account, round.costsCents, `${project.title}: ${round.label} For ${role.name}`, 'business',
+      { refType: 'project', refId: project.id });
+    project.spentCents += round.costsCents;
+  }
+
+  sim.schedule({
+    at,
+    kind: ROOM_KIND,
+    label: `${project.title}: ${round.label} — ${person.displayName}`,
+    category: 'business',
+    priority: 50,
+    payload: {
+      projectId: project.id,
+      roleId: role.id,
+      personId: person.id,
+      round: round.id,
+      ...(booking.note ? { note: booking.note } : {}),
+    },
+    refType: 'project',
+    refId: project.id,
+  });
+  return { ok: true, at };
+}
+
+/** Everything the office has in the diary for a picture, soonest first. */
+export function theDiary(sim: Simulation, project: Project): { at: Instant; roleId: string; personId: Id; round: string }[] {
+  const out: { at: Instant; roleId: string; personId: Id; round: string }[] = [];
+  for (const item of sim.universe.scheduled) {
+    if (item.kind !== ROOM_KIND || item.status !== 'pending') continue;
+    if (String(item.payload?.projectId ?? '') !== project.id) continue;
+    out.push({
+      at: item.at,
+      roleId: String(item.payload?.roleId ?? ''),
+      personId: String(item.payload?.personId ?? ''),
+      round: String(item.payload?.round ?? ''),
+    });
+  }
+  return out.sort((a, b) => a.at - b.at);
+}
+
+export function registerTheRoom(sim: Simulation): void {
+  sim.onSchedule(ROOM_KIND, (item) => {
+    const project = sim.universe.projects[String(item.payload?.projectId ?? '')];
+    if (!project || project.shelvedAt) return;
+    const role = roleOn(project, String(item.payload?.roleId ?? ''));
+    const person = sim.universe.people[String(item.payload?.personId ?? '')];
+    const round = roundById(String(item.payload?.round ?? ''));
+    if (!role || !person || !round) return;
+    const looked = lookedAt(role, person.id);
+    if (!looked) return;
+
+    // What the company thought before anybody walked in, so the notification can
+    // say what the room actually bought. It is the only honest way to report a
+    // round: not what they are, which nobody in the world knows, but how far
+    // what you believed has just moved.
+    const before = shownOf(sim, project, role, person);
+    looked.rounds = [...(looked.rounds ?? []), round.id];
+    const note = item.payload?.note === undefined ? undefined : String(item.payload.note);
+    if (note) looked.note = note;
+    const after = shownOf(sim, project, role, person);
+
+    sim.notify({
+      category: 'business',
+      title: `${project.title}: ${person.displayName}, ${role.name}`,
+      body: `${sayTheRoom(before, after)} ${sureReads(howSure(sim, project, role, person))}.`,
+      importance: 40,
+      refType: 'project',
+      refId: project.id,
+    });
+  });
+}
+
+/**
+ * What a round moved, said as a change rather than as a state.
+ *
+ * Nobody in this world ever learns what somebody is. They learn that what they
+ * thought was wrong, and by how much, which is the only thing a round can
+ * honestly report.
+ */
+export function sayTheRoom(before: Read, after: Read): string {
+  const moved = AXES
+    .map((axis) => ({ axis, by: after[axis.id] - before[axis.id] }))
+    .filter((one) => Math.abs(one.by) >= 2)
+    .sort((a, b) => Math.abs(b.by) - Math.abs(a.by));
+  if (moved.length === 0) return 'The office thinks exactly what it thought before they walked in.';
+  const worst = moved[0]!;
+  return `${worst.axis.label} was ${Math.round(before[worst.axis.id])}/100 and reads `
+    + `${Math.round(after[worst.axis.id])}/100 now.`;
+}

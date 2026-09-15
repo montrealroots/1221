@@ -125,6 +125,174 @@ export const ATTRIBUTES_READ: readonly string[] =
   [...new Set(AXES.flatMap((axis) => axis.of))];
 
 // ---------------------------------------------------------------------------
+// Seeing somebody
+// ---------------------------------------------------------------------------
+
+/**
+ * How far a company has got with one person for one part.
+ *
+ * The rounds of a casting funnel, and the reason they are rows rather than a
+ * number is that they are not a ladder of *better looks at the same thing*.
+ * Each one tells you about different axes, and one of them tells you something
+ * false with great confidence.
+ *
+ * `pile` is not a round. It is what you have before you have done anything: a
+ * headshot, a résumé and a credit list. It is here so that the state of knowing
+ * nothing is a row with numbers in it rather than a special case somewhere.
+ */
+export type RoundId = 'pile' | 'tape' | 'preread' | 'callback';
+
+export interface Round {
+  id: RoundId;
+  /** Title Case, for a screen. */
+  label: string;
+  /** What actually happens, in the words of somebody who has sat through one. */
+  what: string;
+  /** What has to have happened before this one can. */
+  after?: readonly RoundId[];
+  /**
+   * Days of the casting office's diary one of them takes.
+   *
+   * The office runs one thing at a time, so this is the real scarcity: a
+   * picture with twenty-one parts and eleven weeks of prep cannot see everybody
+   * for everything, and deciding who is worth the room is the decision.
+   */
+  takes: number;
+  /** What one costs the production, in cents. */
+  costsCents: Money;
+  /**
+   * How far out the estimate can be on each axis afterwards, out of a hundred.
+   *
+   * Half-widths: the shown figure sits somewhere inside plus or minus this of
+   * the truth. Note what does *not* narrow. A tape tells you a great deal about
+   * whether somebody is any good and almost nothing about whether they can do
+   * it again, because a tape is one take they chose out of however many they
+   * shot. Only a callback closes that, because a callback is literally the
+   * request to do it again.
+   */
+  width: Readonly<Record<AxisId, number>>;
+  /**
+   * Axes this round shows through the actor's own equipment instead of the
+   * room's.
+   *
+   * Width and distortion are not the same failure, and conflating them would
+   * lose the most interesting row on this table. A wide estimate makes you
+   * uncertain. A distorted one makes you confident and wrong, which is worse.
+   *
+   * A tape is the whole of the reason this field exists. What arrives is not
+   * the actor, it is the actor's tape: shot at home, as many times as they
+   * liked, in whatever light they have, cut by them, and sent only if they
+   * judged it the good one. Some people are far better at that than at acting
+   * and some are far worse, and neither fact is visible in the file. So the
+   * distortion is signed and it is a property of the person rather than of the
+   * round — which is what makes a preread a correction rather than a zoom.
+   */
+  distorts?: readonly AxisId[];
+}
+
+/**
+ * The funnel, in the order it is walked.
+ *
+ * Costs are SLATE's own and deliberately small against a picture's money: what
+ * casting spends is never what makes casting expensive. The office's diary is
+ * what makes it expensive, and that is `takes`.
+ */
+export const ROUNDS: readonly Round[] = [
+  {
+    id: 'pile',
+    label: 'The Pile',
+    what: 'A headshot, a résumé and a credit list. You can see a face. Everything else is a guess wearing a number.',
+    takes: 0,
+    costsCents: 0,
+    width: { truth: 32, repeatable: 38, reads: 14 },
+  },
+  {
+    id: 'tape',
+    label: 'A Tape',
+    what: 'Sides go out and a file comes back. They shot it as many times as they liked at home and sent the one they liked best. That is the whole of what is wrong with it.',
+    takes: 0.25,
+    costsCents: 40_00,
+    width: { truth: 14, repeatable: 34, reads: 7 },
+    distorts: ['truth', 'reads'],
+  },
+  {
+    id: 'preread',
+    label: 'A Preread',
+    what: 'They come in, slate, read with the reader and leave. Eight minutes, and for a small part it is the only round there will ever be.',
+    takes: 0.5,
+    costsCents: 220_00,
+    width: { truth: 9, repeatable: 22, reads: 5 },
+  },
+  {
+    id: 'callback',
+    label: 'A Callback',
+    what: 'Back in with more sides, for the person who will actually direct them. The first time anybody is directing the read instead of assessing it, and the only time anybody finds out whether take nine matches take two.',
+    after: ['tape', 'preread'],
+    takes: 1.5,
+    costsCents: 900_00,
+    width: { truth: 6, repeatable: 7, reads: 4 },
+  },
+];
+
+export const roundById = (id: string): Round | undefined => ROUNDS.find((r) => r.id === id);
+
+/** Every round that is actually a round, which is all of them but the pile. */
+export const BOOKABLE: readonly Round[] = ROUNDS.filter((r) => r.id !== 'pile');
+
+/**
+ * What a tape shows, as against what the person is.
+ *
+ * Four attributes that have sat in the sheet unread since it was written, and
+ * they are the right four: frame, sound and performance out of a living room;
+ * trimming and joining takes into one clean file; knowing what to change
+ * between takes with nobody there to tell you; and getting the whole of it done
+ * between a late brief and a morning deadline.
+ *
+ * None of them is acting. That is the entire point of reading them here: the
+ * post-2020 complaint about self-tapes is not that they are a worse look at the
+ * same thing, it is that they select for people with a good room at home. A
+ * performer who is superb at this looks better on tape than they are, and one
+ * who is hopeless at it looks worse, and the file gives you no way to tell
+ * which you are holding.
+ */
+export const THE_TAPE: readonly string[] = [
+  'self_tape_craft', 'self_tape_editing', 'directing_your_own_tape', 'overnight_turnaround',
+];
+
+/**
+ * How far a tape can flatter somebody, or bury them, out of a hundred.
+ *
+ * SLATE's own. Set against the tape's own width of fourteen on truth, so that
+ * being very good or very bad at taping matters more than the ordinary
+ * uncertainty of watching one — which is the complaint, stated as a number.
+ */
+export const TAPE_LEANS = 17;
+
+/**
+ * What one note buys.
+ *
+ * A session is one note and a note is one axis — that is not a simplification,
+ * it is what a redirect is. Naming the axis moves it a whole round further than
+ * the session would otherwise have taken it, and leaves the other two where
+ * they were. So a probe is not extra information, it is the same information
+ * pointed somewhere, and pointing it at the wrong thing costs the round.
+ *
+ * SLATE's own.
+ */
+export const A_NOTE_IS_WORTH = 1;
+
+/**
+ * Days of diary the casting office has in a week.
+ *
+ * Five, because it is an office. The research's own figure for what one of
+ * those days holds is fifteen to forty actors seen, which is why a preread is
+ * half a day of the diary rather than a whole one and a callback is three
+ * times that: the director is in the room for a callback and the director does
+ * not have forty of anything.
+ */
+export const OFFICE_DAYS = 5;
+
+// ---------------------------------------------------------------------------
 // Sizes
 // ---------------------------------------------------------------------------
 

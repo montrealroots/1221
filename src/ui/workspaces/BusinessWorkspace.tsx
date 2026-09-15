@@ -29,9 +29,10 @@ import { rateById, throughput } from '@/engine/content/inventory';
 import { cuttingPeriod } from '@/engine/world/inventory';
 import { pullOn, sellsFor, stillToCarry } from '@/engine/world/lot';
 import { SELLING } from '@/engine/content/lot';
-import { AXES, feeReads } from '@/engine/content/casting';
+import { AXES, BOOKABLE, feeReads } from '@/engine/content/casting';
 import {
-  askFor, castOf, datesFor, howManyCast, quoteOf, readOf, seatFor, whereTheCastStands, whoCameIn,
+  askFor, castOf, datesFor, howManyCast, howSure, howWide, lookedAt, officeFillsAt, quoteOf,
+  seatFor, shownOf, sureReads, theDiary, whereTheCastStands, whoCameIn,
 } from '@/engine/world/casting';
 import {
   AIRDATE_WEEKS, LEAD_WEEKS, LONGEST_SHOOT, canHandOver, windowOf, wouldBe,
@@ -708,9 +709,23 @@ function CastForm({ projectId, onClose }: { projectId: string; onClose: () => vo
   const project = useWorld((s) => s.universe.projects[projectId]);
   const [open, setOpen] = useState<string | undefined>();
   const [asking, setAsking] = useState<Record<string, string>>({});
+  const [noting, setNoting] = useState<Record<string, string>>({});
   const [heard, setHeard] = useState<string | undefined>();
   const [error, setError] = useState<string | undefined>();
   if (!project) return null;
+
+  const see = (roleId: string, personId: string, round: string) => {
+    const note = noting[`${roleId}:${personId}`];
+    const answer = run<{ ok: boolean; error?: string; at?: number }>(
+      'company.session',
+      { projectId, roleId, personId, round, ...(note ? { note } : {}) },
+      { silent: true },
+    );
+    setError(answer.value?.ok ? undefined : answer.value?.error ?? answer.error);
+    setHeard(answer.value?.ok && answer.value.at !== undefined
+      ? `Booked for ${formatDate(answer.value.at, sim.homeZone)}. Nobody learns anything until then.`
+      : undefined);
+  };
 
   const put = (roleId: string) => {
     const answer = run<{ ok: boolean; error?: string }>(
@@ -737,6 +752,8 @@ function CastForm({ projectId, onClose }: { projectId: string; onClose: () => vo
   const inIt = castOf(sim, project);
   const filled = howManyCast(project);
   const me = sim.universe.people[sim.universe.playerId]!;
+  const diary = theDiary(sim, project);
+  const shuts = officeFillsAt(project);
 
   return (
     <Modal
@@ -757,6 +774,13 @@ function CastForm({ projectId, onClose }: { projectId: string; onClose: () => vo
         best there has ever been at this, so nobody is deciding whether you are right for it. What
         you cannot do is be in two things at once.
       </p>
+      {diary.length > 0 && (
+        <p className="small">
+          {`The office has ${said(diary.length, 'session')} in the diary, `}
+          {`running to ${formatDate(diary[diary.length - 1]!.at, sim.homeZone)}. `}
+          {shuts !== undefined && `It stops taking bookings on ${formatDate(shuts, sim.homeZone)}.`}
+        </p>
+      )}
       <div className="table-wrap">
         <table className="table">
           <thead>
@@ -792,7 +816,7 @@ function CastForm({ projectId, onClose }: { projectId: string; onClose: () => vo
                     )}
                   </td>
                   {AXES.map((axis) => (
-                    <td key={axis.id} className="nowrap small">{`${Math.round(one.read[axis.id])}/100`}</td>
+                    <td key={axis.id} className="nowrap small">{`${Math.round(one.shown[axis.id])}/100`}</td>
                   ))}
                   <td className="nowrap">
                     {seatFor(project, one.role.id)
@@ -842,12 +866,14 @@ function CastForm({ projectId, onClose }: { projectId: string; onClose: () => vo
                     {AXES.map((axis) => <th key={axis.id} className="nowrap">{axis.label}</th>)}
                     <th className="nowrap">Quote</th>
                     <th className="nowrap">They Want</th>
+                    <th>The Room</th>
                     <th />
                   </tr>
                 </thead>
                 <tbody>
                   {came.map((person) => {
-                    const read = readOf(person);
+                    const read = shownOf(sim, project, role, person);
+                    const looked = lookedAt(role, person.id);
                     const ask = askFor(person, role, sim.now);
                     const typed = asking[person.id];
                     const fee = typed === undefined || typed === ''
@@ -857,9 +883,15 @@ function CastForm({ projectId, onClose }: { projectId: string; onClose: () => vo
                       <tr key={person.id}>
                         <td className="nowrap">
                           <Open subject={at('person', person.id)}>{person.displayName}</Open>
+                          <div className="muted small">
+                            {sureReads(howSure(sim, project, role, person))}
+                          </div>
                         </td>
                         {AXES.map((axis) => (
-                          <td key={axis.id} className="nowrap small">{`${Math.round(read[axis.id])}/100`}</td>
+                          <td key={axis.id} className="nowrap small">
+                            {`${Math.round(read[axis.id])}/100`}
+                            <span className="dim">{` ±${Math.round(howWide(looked, axis.id).width)}`}</span>
+                          </td>
                         ))}
                         <td className="nowrap small">
                           {quoteOf(person, role.size, sim.now) > 0
@@ -867,6 +899,31 @@ function CastForm({ projectId, onClose }: { projectId: string; onClose: () => vo
                             : <span className="muted">Never been paid</span>}
                         </td>
                         <td className="nowrap small">{formatMoney(ask)}</td>
+                        <td className="nowrap">
+                          {BOOKABLE.map((round) => (
+                            <button
+                              key={round.id}
+                              className="btn btn-sm"
+                              style={{ marginRight: 'var(--s1)' }}
+                              title={round.what}
+                              onClick={() => see(role.id, person.id, round.id)}
+                            >
+                              {round.label}
+                            </button>
+                          ))}
+                          <select
+                            aria-label={`What to give ${person.displayName} a note on`}
+                            value={noting[`${role.id}:${person.id}`] ?? ''}
+                            onChange={(e) => setNoting({
+                              ...noting, [`${role.id}:${person.id}`]: e.target.value,
+                            })}
+                          >
+                            <option value="">No note</option>
+                            {AXES.map((axis) => (
+                              <option key={axis.id} value={axis.id}>{`A note on ${axis.label.toLowerCase()}`}</option>
+                            ))}
+                          </select>
+                        </td>
                         <td className="nowrap">
                           <input
                             aria-label={`What to offer ${person.displayName}`}

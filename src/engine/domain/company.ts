@@ -570,7 +570,7 @@ export interface Role {
   /** What the picture has set aside for it, before anybody argues. */
   bandCents: Money;
   /**
-   * Who came in for it, by person id, once the breakdown has gone out.
+   * Who came in for it, and how far anybody has got with them.
    *
    * Absent until somebody puts the part out, which is a dated act and not a
    * list that appears: the people on it exist because the part was advertised,
@@ -580,9 +580,37 @@ export interface Role {
    * pile every time, and choosing between four strangers who keep changing is
    * not a decision.
    */
-  seen?: Id[];
+  seen?: Looked[];
   /** When it went out. */
   outAt?: Instant;
+}
+
+/**
+ * One person the company has looked at for one part.
+ *
+ * The rounds are stored and what the company believes is not, which is the
+ * whole shape of it: a belief recomputed from the rounds every time anybody
+ * asks can never drift from what was actually done to earn it, and a stored
+ * belief would be a number that outlived its reason. What the company sees is a
+ * fixed distance from the truth, and the rounds are what shortens the distance.
+ */
+export interface Looked {
+  personId: Id;
+  /**
+   * Rounds done, in the order they were done, by `content/casting.ts` id.
+   *
+   * Absent means the pile — a headshot and a credit list and nothing else,
+   * which is a state with real numbers rather than an empty one.
+   */
+  rounds?: string[];
+  /**
+   * The axis the last note was given on, where one was.
+   *
+   * A session is one note and a note is one axis. Held here rather than beside
+   * the round because it is the last one that counts: you do not accumulate
+   * notes, you give the one you have and find out what it bought.
+   */
+  note?: string;
 }
 
 /**

@@ -28,12 +28,14 @@ import { ATTRIBUTE_BY_ID, sheetOf } from '@/engine/domain/attributes';
 import { projectsOf } from '@/engine/world/company';
 import { planById } from '@/engine/content/making';
 import {
-  ATTRIBUTES_READ, AXES, HAGGLE, SIZES, TAKES, takesAt,
+  ATTRIBUTES_READ, AXES, HAGGLE, SIZES, TAKES, THE_TAPE, roundById, takesAt,
 } from '@/engine/content/casting';
+import type { Looked } from '@/engine/domain/company';
 import {
   askFor, castOf, castOn, datesFor, decideOffer, freeToWork, howManyCast, openRoles, quoteOf,
-  goesOffBy, readOf, readOn, reachOfBand, seatFor, sheetFor, SOMEBODY_KNOWS, takeFactor,
-  theBiggestName, theNameThatGoesOff, TOO_HOT, whereTheCastStands, whoCameIn, WHOEVER,
+  alreadyKnown, believedAt, goesOffBy, howWide, lookedAt, officeFillsAt, readOf, readOn,
+  reachOfBand, seatFor, sheetFor, shownOf, SOMEBODY_KNOWS, takeFactor, tapeLean, theBiggestName,
+  theDiary, theNameThatGoesOff, TOO_HOT, whereTheCastStands, whoCameIn, WHOEVER,
 } from '@/engine/world/casting';
 import { deckFor, somebodyGoesOff } from '@/engine/world/trouble';
 import { decideTake } from '@/engine/world/selling';
@@ -657,7 +659,8 @@ describe('the player can be in the picture, which is the point of the game', () 
       run(sim, 'company.breakdown', { projectId: next, roleId: role.id });
     }
     for (const role of sim.universe.projects[next]!.roles!) {
-      expect(role.seen ?? []).not.toContain(sim.universe.playerId);
+      expect((role.seen ?? []).map((one) => one.personId))
+        .not.toContain(sim.universe.playerId);
     }
   });
 });
@@ -868,5 +871,360 @@ describe('a week of shooting is what the cast makes it', () => {
     // from inside the scale, which is what makes the table describe something.
     expect(takesAt(0)).toBe(TAKES.worst);
     expect(takesAt(100)).toBe(TAKES.best);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// The room
+// ---------------------------------------------------------------------------
+
+/** Books a round and runs the clock to the day it happens. */
+function sit(sim: Simulation, id: string, roleId: string, personId: string, round: string, note?: string): Done {
+  const done = run(sim, 'company.session', { projectId: id, roleId, personId, round, ...(note ? { note } : {}) });
+  if (done.ok) {
+    const at = (done as { at?: number }).at;
+    if (at !== undefined) sim.advanceTo(at + MS_DAY);
+  }
+  return done;
+}
+
+/** The candidate a company would take for a part, on what it believes today. */
+function whoTheydTake(sim: Simulation, id: string, roleId: string): Person {
+  const project = sim.universe.projects[id]!;
+  const role = project.roles!.find((r) => r.id === roleId)!;
+  const came = whoCameIn(sim, role);
+  return came.reduce((top, person) => {
+    const one = shownOf(sim, project, role, person);
+    const other = shownOf(sim, project, role, top);
+    return one.truth + one.reads + one.repeatable > other.truth + other.reads + other.repeatable
+      ? person : top;
+  }, came[0]!);
+}
+
+describe('nobody knows what a stranger is', () => {
+  it('shows a guess with a stated width, never the sheet', () => {
+    const sim = world('guess');
+    const id = greenlit(sim, 'feature', 'Hvítserkur');
+    const project = sim.universe.projects[id]!;
+    const role = openRoles(project).find((r) => r.size === 'lead')!;
+    run(sim, 'company.breakdown', { projectId: id, roleId: role.id });
+    const person = whoCameIn(sim, project.roles!.find((r) => r.id === role.id)!)[0]!;
+
+    // Off a headshot the office is allowed to be a long way out on all three,
+    // and furthest out on the one a photograph says least about.
+    const pile = roundById('pile')!;
+    for (const axis of AXES) {
+      expect(howWide(lookedAt(role, person.id), axis.id).width).toBe(pile.width[axis.id]);
+    }
+    expect(pile.width.repeatable).toBeGreaterThan(pile.width.reads);
+    expect(shownOf(sim, project, role, person)).not.toEqual(readOf(person));
+  });
+
+  it('never redraws the guess, only closes in on it', () => {
+    // A number that jumped about every time somebody looked would make choosing
+    // between four strangers meaningless. It is the same point, seen nearer.
+    const sim = world('converge');
+    const id = greenlit(sim, 'feature', 'Hvítserkur');
+    const project = sim.universe.projects[id]!;
+    const role = openRoles(project).find((r) => r.size === 'lead')!;
+    run(sim, 'company.breakdown', { projectId: id, roleId: role.id });
+    const person = whoCameIn(sim, project.roles!.find((r) => r.id === role.id)!)[0]!;
+    const truth = readOf(person);
+
+    const twice = shownOf(sim, project, role, person);
+    expect(shownOf(sim, project, role, person)).toEqual(twice);
+
+    const was = Math.abs(twice.truth - truth.truth);
+    sit(sim, id, role.id, person.id, 'preread');
+    const now = Math.abs(shownOf(sim, project, role, person).truth - truth.truth);
+    expect(now).toBeLessThanOrEqual(was);
+  });
+
+  it('knows exactly what somebody is once they have finished a job here', () => {
+    const sim = world('known');
+    const id = greenlit(sim, 'feature', 'Hvítserkur');
+    const shoot = sim.universe.projects[id]!.periods!.find((p) => p.id === 'shooting')!;
+    sim.advanceTo(shoot.from);
+    const project = sim.universe.projects[id]!;
+    const seat = project.cast![0]!;
+    const role = project.roles!.find((r) => r.id === seat.roleId)!;
+    const person = sim.universe.people[seat.personId]!;
+    expect(alreadyKnown(sim, project.companyId, person.id)).toBe(false);
+    sim.advanceTo(shoot.to + MS_WEEK);
+    expect(alreadyKnown(sim, project.companyId, person.id)).toBe(true);
+    expect(shownOf(sim, project, role, person)).toEqual(readOf(person));
+  });
+});
+
+describe('only a callback finds out whether they can do it again', () => {
+  it('leaves repeatability wide after a tape, because a tape is one take they chose', () => {
+    const tape = roundById('tape')!;
+    const preread = roundById('preread')!;
+    const callback = roundById('callback')!;
+    // Truth closes fast and repeatability does not, right up until somebody is
+    // asked to do it a second time.
+    expect(tape.width.truth).toBeLessThan(roundById('pile')!.width.truth * 0.6);
+    expect(tape.width.repeatable).toBeGreaterThan(roundById('pile')!.width.repeatable * 0.8);
+    expect(preread.width.repeatable).toBeGreaterThan(callback.width.repeatable * 2.5);
+    expect(callback.width.repeatable).toBeLessThan(callback.width.truth * 1.5);
+  });
+
+  it('refuses to call back somebody nobody has ever had in', () => {
+    const sim = world('stranger-callback');
+    const id = greenlit(sim, 'feature', 'Hvítserkur');
+    const role = openRoles(sim.universe.projects[id]!)[0]!;
+    run(sim, 'company.breakdown', { projectId: id, roleId: role.id });
+    const person = whoCameIn(sim, sim.universe.projects[id]!.roles!.find((r) => r.id === role.id)!)[0]!;
+    const done = run(sim, 'company.session', {
+      projectId: id, roleId: role.id, personId: person.id, round: 'callback',
+    });
+    expect(done.ok).toBe(false);
+    expect(done.error).toMatch(/calls a stranger back/);
+    expect(sit(sim, id, role.id, person.id, 'preread').ok).toBe(true);
+    expect(sit(sim, id, role.id, person.id, 'callback').ok).toBe(true);
+  });
+
+  it('refuses to run the same round twice', () => {
+    const sim = world('twice');
+    const id = greenlit(sim, 'feature', 'Hvítserkur');
+    const role = openRoles(sim.universe.projects[id]!)[0]!;
+    run(sim, 'company.breakdown', { projectId: id, roleId: role.id });
+    const person = whoCameIn(sim, sim.universe.projects[id]!.roles!.find((r) => r.id === role.id)!)[0]!;
+    expect(sit(sim, id, role.id, person.id, 'preread').ok).toBe(true);
+    expect(run(sim, 'company.session', {
+      projectId: id, roleId: role.id, personId: person.id, round: 'preread',
+    }).ok).toBe(false);
+  });
+});
+
+describe('a tape is the actor’s tape, not the actor', () => {
+  it('reads four attributes that have nothing to do with acting', () => {
+    for (const id of THE_TAPE) {
+      expect(ATTRIBUTE_BY_ID[id], `${id} is not an attribute`).toBeDefined();
+      // And none of them is on an axis, because none of them is a thing a
+      // picture buys.
+      for (const axis of AXES) expect(axis.of).not.toContain(id);
+    }
+  });
+
+  it('flatters somebody good at taping and buries somebody bad at it', () => {
+    const good = sheetOf(50, Object.fromEntries(THE_TAPE.map((id) => [id, 100])));
+    const bad = sheetOf(50, Object.fromEntries(THE_TAPE.map((id) => [id, 1])));
+    expect(tapeLean(good)).toBeGreaterThan(0);
+    expect(tapeLean(bad)).toBeLessThan(0);
+    const onTape: Looked = { personId: 'x', rounds: ['tape'] };
+    expect(believedAt(50, onTape, 'truth', 0, tapeLean(good))).toBeGreaterThan(50);
+    expect(believedAt(50, onTape, 'truth', 0, tapeLean(bad))).toBeLessThan(50);
+  });
+
+  it('stops flattering the moment somebody is in the room', () => {
+    const good = sheetOf(50, Object.fromEntries(THE_TAPE.map((id) => [id, 100])));
+    const seen: Looked = { personId: 'x', rounds: ['tape', 'preread'] };
+    expect(believedAt(50, seen, 'truth', 0, tapeLean(good))).toBe(50);
+  });
+
+  it('never touches repeatability, which a file says nothing about either way', () => {
+    const good = sheetOf(50, Object.fromEntries(THE_TAPE.map((id) => [id, 100])));
+    const onTape: Looked = { personId: 'x', rounds: ['tape'] };
+    expect(believedAt(50, onTape, 'repeatable', 0, tapeLean(good))).toBe(50);
+  });
+});
+
+describe('a session is one note and a note is one axis', () => {
+  it('takes the named axis a round further and leaves the other two', () => {
+    const noted: Looked = { personId: 'x', rounds: ['preread'], note: 'repeatable' };
+    const plain: Looked = { personId: 'x', rounds: ['preread'] };
+    expect(howWide(noted, 'repeatable').width).toBeLessThan(howWide(plain, 'repeatable').width);
+    expect(howWide(noted, 'truth').width).toBe(howWide(plain, 'truth').width);
+    expect(howWide(noted, 'reads').width).toBe(howWide(plain, 'reads').width);
+  });
+
+  it('halves it on the last round, where there is nothing further to reach for', () => {
+    const noted: Looked = { personId: 'x', rounds: ['preread', 'callback'], note: 'truth' };
+    const plain: Looked = { personId: 'x', rounds: ['preread', 'callback'] };
+    expect(howWide(noted, 'truth').width).toBe(howWide(plain, 'truth').width / 2);
+  });
+
+  it('is refused on something nobody could give a note on', () => {
+    const sim = world('bad-note');
+    const id = greenlit(sim, 'feature', 'Hvítserkur');
+    const role = openRoles(sim.universe.projects[id]!)[0]!;
+    run(sim, 'company.breakdown', { projectId: id, roleId: role.id });
+    const person = whoCameIn(sim, sim.universe.projects[id]!.roles!.find((r) => r.id === role.id)!)[0]!;
+    expect(run(sim, 'company.session', {
+      projectId: id, roleId: role.id, personId: person.id, round: 'preread', note: 'charm',
+    }).ok).toBe(false);
+  });
+});
+
+describe('the diary is the scarcity', () => {
+  it('queues, because the office runs one thing at a time', () => {
+    const sim = world('diary');
+    const id = greenlit(sim, 'feature', 'Hvítserkur');
+    const role = openRoles(sim.universe.projects[id]!)[0]!;
+    run(sim, 'company.breakdown', { projectId: id, roleId: role.id });
+    const came = whoCameIn(sim, sim.universe.projects[id]!.roles!.find((r) => r.id === role.id)!);
+    const first = run(sim, 'company.session', {
+      projectId: id, roleId: role.id, personId: came[0]!.id, round: 'preread',
+    });
+    const second = run(sim, 'company.session', {
+      projectId: id, roleId: role.id, personId: came[1]!.id, round: 'preread',
+    });
+    expect(first.ok && second.ok).toBe(true);
+    expect((second as { at?: number }).at!).toBeGreaterThan((first as { at?: number }).at!);
+    expect(theDiary(sim, sim.universe.projects[id]!)).toHaveLength(2);
+  });
+
+  it('lets a picture preread everybody, and makes that cost it the callbacks', () => {
+    // Twenty-one parts, four people for each, and eleven weeks of diary. The
+    // shape that falls out is the real one: an office can see everybody once
+    // and cannot see everybody twice, so the decision is never whether to
+    // preread — it is which of the eighty-four is worth the day that seeing
+    // them a second time takes.
+    const sim = world('runs-out');
+    const id = greenlit(sim, 'feature', 'Hvítserkur');
+    for (const role of openRoles(sim.universe.projects[id]!)) {
+      run(sim, 'company.breakdown', { projectId: id, roleId: role.id });
+    }
+    const everybody: { roleId: string; personId: string }[] = [];
+    for (const role of sim.universe.projects[id]!.roles!) {
+      for (const person of whoCameIn(sim, role)) {
+        everybody.push({ roleId: role.id, personId: person.id });
+      }
+    }
+    expect(everybody.length).toBeGreaterThan(60);
+
+    const book = (round: string) => {
+      let got = 0;
+      let last = sim.now;
+      for (const one of everybody) {
+        const done = run(sim, 'company.session', { projectId: id, ...one, round });
+        if (!done.ok) continue;
+        got += 1;
+        last = Math.max(last, (done as { at?: number }).at ?? last);
+      }
+      // And then the weeks those bookings represent actually pass, because a
+      // callback cannot be offered to somebody whose preread has not happened.
+      // The funnel is sequential in time and not only in order.
+      sim.advanceTo(last + MS_DAY);
+      return got;
+    };
+    // Everybody gets seen once.
+    expect(book('preread')).toBe(everybody.length);
+    // And nowhere near everybody gets seen twice.
+    const back = book('callback');
+    expect(back, 'some callbacks should fit').toBeGreaterThan(0);
+    expect(back, 'the diary should run out long before the actors do')
+      .toBeLessThan(everybody.length / 2);
+  });
+
+  it('shuts before the office fills, because after that it teaches nobody anything', () => {
+    const sim = world('shuts');
+    const id = greenlit(sim, 'feature', 'Hvítserkur');
+    const role = openRoles(sim.universe.projects[id]!)[0]!;
+    run(sim, 'company.breakdown', { projectId: id, roleId: role.id });
+    const person = whoCameIn(sim, sim.universe.projects[id]!.roles!.find((r) => r.id === role.id)!)[0]!;
+    const shuts = officeFillsAt(sim.universe.projects[id]!)!;
+    sim.advanceTo(shuts + MS_WEEK);
+    expect(run(sim, 'company.session', {
+      projectId: id, roleId: role.id, personId: person.id, round: 'preread',
+    }).ok).toBe(false);
+  });
+
+  it('charges for the room, and charges more for the one the director sits in', () => {
+    const company = (sim: Simulation) =>
+      Object.values(sim.universe.companies).find((one) => one.trade === 'film')!;
+    const cash = (sim: Simulation) => Object.values(sim.universe.accounts)
+      .find((a) => a.ownerId === company(sim).id && a.kind === 'company_cash' && !a.closedAt)!.balance;
+    const sim = world('room-costs');
+    const id = greenlit(sim, 'feature', 'Hvítserkur');
+    const role = openRoles(sim.universe.projects[id]!)[0]!;
+    run(sim, 'company.breakdown', { projectId: id, roleId: role.id });
+    const person = whoCameIn(sim, sim.universe.projects[id]!.roles!.find((r) => r.id === role.id)!)[0]!;
+    const before = cash(sim);
+    run(sim, 'company.session', {
+      projectId: id, roleId: role.id, personId: person.id, round: 'preread',
+    });
+    expect(cash(sim)).toBe(before - roundById('preread')!.costsCents);
+    expect(roundById('callback')!.costsCents).toBeGreaterThan(roundById('preread')!.costsCents);
+  });
+});
+
+describe('the office picks on what it believes, like everybody else', () => {
+  it('takes somebody different once it has seen them', () => {
+    // The falsifiable core. Find a world where the best-looking candidate off a
+    // headshot is not the best-looking one after a callback, and check the
+    // office takes the second, not the first — and not the truly best either,
+    // because nobody in this world can see that.
+    let moved = 0;
+    for (let seed = 0; seed < 14; seed += 1) {
+      const sim = world(`office-believes-${seed}`);
+      const id = greenlit(sim, 'feature', 'Hvítserkur');
+      const role = openRoles(sim.universe.projects[id]!).find((r) => r.size === 'lead')!;
+      run(sim, 'company.breakdown', { projectId: id, roleId: role.id });
+      const blind = whoTheydTake(sim, id, role.id).id;
+      for (const person of whoCameIn(sim, sim.universe.projects[id]!.roles!.find((r) => r.id === role.id)!)) {
+        sit(sim, id, role.id, person.id, 'preread');
+        sit(sim, id, role.id, person.id, 'callback');
+      }
+      if (whoTheydTake(sim, id, role.id).id !== blind) moved += 1;
+    }
+    expect(moved, 'seeing people should change who the office would take').toBeGreaterThan(2);
+  });
+
+  it('fills a part with the best it believes in, not the best there is', () => {
+    // The mechanism, asserted on the office itself rather than on a helper that
+    // mirrors it. An earlier version of this test recomputed the office's own
+    // arithmetic and checked it against itself, and passed happily with the
+    // office reading the truth — which is the exact failure this project has
+    // caught itself in before.
+    let proved = false;
+    for (let seed = 0; seed < 20 && !proved; seed += 1) {
+      const sim = world(`office-fills-${seed}`);
+      const id = greenlit(sim, 'feature', 'Hvítserkur');
+      const project = sim.universe.projects[id]!;
+      const role = openRoles(project).find((r) => r.size === 'lead')!;
+      run(sim, 'company.breakdown', { projectId: id, roleId: role.id });
+      const live = sim.universe.projects[id]!.roles!.find((r) => r.id === role.id)!;
+      const came = whoCameIn(sim, live);
+      const pick = (worth: (person: Person) => number) =>
+        came.reduce((top, one) => (worth(one) > worth(top) ? one : top), came[0]!);
+      const sum = (r: ReturnType<typeof readOf>) => r.truth + r.reads + r.repeatable;
+      const believed = pick((one) => sum(shownOf(sim, project, live, one)));
+      const actual = pick((one) => sum(readOf(one)));
+      if (believed.id === actual.id) continue;
+
+      const shoot = sim.universe.projects[id]!.periods!.find((p) => p.id === 'shooting')!;
+      sim.advanceTo(shoot.from);
+      const took = seatFor(sim.universe.projects[id]!, role.id)!.personId;
+      expect(took, 'the office should take who it believes is best').toBe(believed.id);
+      expect(took, 'and it has no way of knowing who actually is').not.toBe(actual.id);
+      proved = true;
+    }
+    expect(proved, 'no world produced a case where belief and truth disagreed').toBe(true);
+  });
+
+  it('gets a better cast for the same money by going to the trouble', () => {
+    // The claim the whole system exists to make, measured rather than asserted:
+    // across enough worlds, a producer who picks the best-looking lead after a
+    // callback ends up with a genuinely better actor than one who picks off a
+    // photograph. Neither of them can see the truth at any point. The
+    // difference is only that one of them is guessing less.
+    const many = 22;
+    let blind = 0;
+    let seen = 0;
+    for (let seed = 0; seed < many; seed += 1) {
+      const sim = world(`trouble-${seed}`);
+      const id = greenlit(sim, 'feature', 'Hvítserkur');
+      const role = openRoles(sim.universe.projects[id]!).find((r) => r.size === 'lead')!;
+      run(sim, 'company.breakdown', { projectId: id, roleId: role.id });
+      blind += readOf(whoTheydTake(sim, id, role.id)).truth;
+      for (const person of whoCameIn(sim, sim.universe.projects[id]!.roles!.find((r) => r.id === role.id)!)) {
+        sit(sim, id, role.id, person.id, 'preread');
+        sit(sim, id, role.id, person.id, 'callback');
+      }
+      seen += readOf(whoTheydTake(sim, id, role.id)).truth;
+    }
+    expect(seen / many).toBeGreaterThan(blind / many + 2);
   });
 });

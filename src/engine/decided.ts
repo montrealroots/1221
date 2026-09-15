@@ -31,8 +31,11 @@ import { FINDINGS } from './content/trouble';
 import { decideTake, type Prospects } from './world/selling';
 import { DEALS } from './content/selling';
 import { decideHire, standingReads, type Hiring } from './world/crew';
-import { decideOffer, reachOfBand, readOn, sheetFor, type Offer } from './world/casting';
-import { passById } from './content/casting';
+import {
+  believedAt, decideOffer, reachOfBand, readOn, sheetFor, type Offer,
+} from './world/casting';
+import { AXES, BOOKABLE, TAPE_LEANS, passById, type AxisId } from './content/casting';
+import type { Looked } from './domain/company';
 import { ageOn } from './world/family';
 
 // ---------------------------------------------------------------------------
@@ -494,5 +497,63 @@ defineDecider<Pile, string>({
     if (truth < 52) return 'working actors';
     if (truth < 70) return 'people you have heard of';
     return 'people who do not normally read for this';
+  },
+});
+
+interface Belief { truth: number; looked: Looked; axis: AxisId; offset: number; lean: number }
+
+defineDecider<Belief, string>({
+  id: 'casting.shown',
+  decides: 'What a company believes an actor is, before it has ever worked with them.',
+  drawnIn: 'src/engine/world/casting.ts',
+  reads: {
+    // What they actually are, which nobody in the world has access to and which
+    // every belief about them is nonetheless a distance from.
+    truth: (b, t) => ({ ...b, truth: Math.round(1 + t * 99) }),
+    // How far the office has got with them. A photograph, a tape they shot at
+    // home and chose the best take of, eight minutes in the room, or a second
+    // time with somebody directing.
+    round: (b, t) => ({
+      ...b,
+      looked: {
+        ...b.looked,
+        rounds: BOOKABLE.slice(0, Math.floor(t * (BOOKABLE.length + 1))).map((r) => r.id),
+      },
+    }),
+    // Which of the three the last note was on, where one was given. A session is
+    // one note and a note is one axis, so this is what the room spent itself on.
+    note: (b, t) => ({
+      ...b,
+      looked: { ...b.looked, ...(t < 0.5 ? {} : { note: b.axis }) },
+    }),
+    // And which axis is being asked about, because they do not close at the same
+    // rate: a tape tells you a great deal about one of them and almost nothing
+    // about another.
+    axis: (b, t) => ({
+      ...b,
+      axis: AXES[Math.min(AXES.length - 1, Math.floor(t * AXES.length))]!.id,
+    }),
+    // Where inside the width this particular belief fell. Fixed for the life of
+    // a save, so a round closes in on a point rather than redrawing it.
+    draw: (b, t) => ({ ...b, offset: t * 2 - 1 }),
+    // And how far this person's own tape misrepresents them, which is a fact
+    // about their kitchen and their deadlines rather than about their acting,
+    // and which only a round that watches a file can be fooled by.
+    tape: (b, t) => ({ ...b, lean: (t * 2 - 1) * TAPE_LEANS }),
+  },
+  sample: (seed) => ({
+    truth: 20 + (seed % 7) * 11,
+    looked: { personId: 'somebody', rounds: BOOKABLE.slice(0, seed % 4).map((r) => r.id) },
+    axis: AXES[seed % AXES.length]!.id,
+    offset: ((seed * 3) % 9) / 9 * 2 - 1,
+    lean: (((seed * 5) % 7) / 7 * 2 - 1) * TAPE_LEANS,
+  }),
+  decide: ({ truth, looked, axis, offset, lean }) => {
+    const believed = believedAt(truth, looked, axis, offset, lean);
+    const out = Math.abs(believed - truth);
+    if (out < 4) return 'they know';
+    if (out < 12) return 'about right';
+    if (out < 26) return 'out by a tier';
+    return 'they have no idea';
   },
 });
