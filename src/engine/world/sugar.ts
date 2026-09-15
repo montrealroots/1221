@@ -22,7 +22,7 @@
 
 import type { Simulation } from '../core/simulation';
 import type { Id, QuotaYear } from '../domain/model';
-import type { Money } from '../core/money';
+import { CURRENCY_SYMBOL, type Money } from '../core/money';
 import type { Instant } from '../core/time';
 import { instantFromZoned, zonedParts } from '../core/time';
 import {
@@ -167,7 +167,7 @@ export function registerSugar(sim: Simulation): void {
 
 const euros = (cents: Money): string => {
   const m = cents / 100 / 1_000_000;
-  return `€${m >= 100 ? Math.round(m) : m.toFixed(1)}m`;
+  return `${CURRENCY_SYMBOL}${m >= 100 ? Math.round(m) : m.toFixed(1)}m`;
 };
 
 /** Where the sugar stands, in a sentence. */

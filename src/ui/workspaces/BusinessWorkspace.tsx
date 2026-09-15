@@ -1266,7 +1266,7 @@ function TheFifthRoom() {
       ) : (
         <>
           <p className="small">
-            The smallest room here is two thousand square metres, and a week-long job has to pay for
+            The smallest room here is two thousand square meters, and a week-long job has to pay for
             all of it. {priced > 0 ? `${priced} enquiries have gone elsewhere on price.` : 'It\u2019s why the short work goes elsewhere.'}
           </p>
           <p className="xs dim" style={{ margin: 'var(--s2) 0 var(--s3)' }}>

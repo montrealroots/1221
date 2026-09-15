@@ -6,7 +6,7 @@
  */
 
 import { formatDaylight } from '@/engine/core/sun';
-import { RATES_NOTE } from '@/engine/content/currency';
+import { RATES_NOTE, formatAtlasCompact} from '@/engine/content/currency';
 import { titleCaseLabel } from '@/engine/core/text';
 import { placeProfile, placeKindLabel, formatPeople, type PlaceProfile } from '@/engine/world/place';
 import { WEATHER_EMOJI, forecastFor, weatherAt, weatherShort } from '@/engine/systems/weather';
@@ -22,7 +22,7 @@ import { CITIES } from '@/engine/content/geography';
 import {
   dateKey, formatDate, formatRelative, formatTime, formatWeekdayDate, seasonOf, zoneAbbreviation,
 } from '@/engine/core/time';
-import { formatMoney, formatMoneyCompact } from '@/engine/core/money';
+import { formatMoney } from '@/engine/core/money';
 import { ESTATE_ACRES, ESTATE_NAME, HOUSE, LOT_NAME } from '@/engine/content/estate';
 import { LookRegion, Open, at } from '@/ui/looks';
 
@@ -313,13 +313,13 @@ export function Home() {
                 <Stat
                   label="Cost Of Living"
                   value={place.costOfLivingIndex}
-                  note={`Rent about ${place.localRent ?? formatMoneyCompact(place.medianRentCents)}/mo`}
+                  note={`Rent about ${place.localRent ?? formatAtlasCompact(place.medianRentCents)}/mo`}
                   look={at('place', place.city.id)}
                 />
                 <Stat
                   label="Tax On A Wage"
                   value={`${Math.round(place.effectiveIncomeTax * 100)}%`}
-                  note="Income tax and payroll both, on $60,000"
+                  note="Income tax and payroll both, on a US$60,000 wage"
                   look={at('place', place.city.id)}
                 />
                 <Stat
@@ -349,7 +349,7 @@ export function Home() {
                 </div>
                 <p className="xs dim" style={{ margin: 'var(--s2) 0 0' }}>
                   <Open subject={at('country', place.city.countryId)}>
-                    Drives on the {place.drivesOn}. Distances in {place.units.distance === 'mi' ? 'miles' : 'kilometres'}, temperatures in °{place.units.temperature}.
+                    Drives on the {place.drivesOn}. Distances in {place.units.distance === 'mi' ? 'miles' : 'kilometers'}, temperatures in °{place.units.temperature}.
                   </Open>
                   {place.filmIncentive ? (
                     <>

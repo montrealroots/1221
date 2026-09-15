@@ -171,7 +171,7 @@ const PATTERN = new RegExp(`\\b(${WORDS.join('|')})\\b`, 'gi');
  * commented and only rewrites inside those, which is the same answer with far
  * less that can go wrong.
  */
-function editableSpans(line) {
+function editableSpans(line, tsx = false) {
   const spans = [];
   // A comment runs to the end of the line. The third element records that,
   // because a backtick means something different in a comment.
@@ -186,6 +186,13 @@ function editableSpans(line) {
   while ((m = re.exec(line)) !== null) {
     // An import path or a lone lowercase token is an id, not a sentence.
     const inner = m[0].slice(1, -1);
+    // A lone lowercase token is an id, not a sentence. This was widened once to
+    // make an exception for words the map below knows, on the theory that a
+    // real English word cannot be an identifier. It can: `'cancelled'` is a
+    // `ScheduleStatus` written into every save, `'neighbourhood'` is a record
+    // discriminant, and `of('theatre', 'Theater')` is an id whose label is
+    // already spelled the house way. The house style governs what the game
+    // says, and a discriminant is not something it says.
     if (/^[a-z0-9_./@-]+$/.test(inner)) continue;
     if (/\bfrom\s*$/.test(line.slice(0, m.index))) continue;
     const start = m.index + 1;
@@ -195,6 +202,23 @@ function editableSpans(line) {
     // than repaired afterwards.
     if (m[0][0] === '`') spans.push(...outsideInterpolations(line, start, end));
     else spans.push([start, end, false]);
+  }
+
+  // And the text between tags, which is where a game's sentences actually
+  // live. This swept comments and string literals only, so every rendered line
+  // in every .tsx in the build was invisible to it — `voice-check.mjs` next
+  // door had the JSX rule and this one did not. It was found by a screenshot
+  // with a stage size on it spelled the British way, in a sentence the player
+  // reads, after this tool had just called the whole repository clean.
+  if (tsx) {
+    const jsx = />([^<>{}]*[A-Za-z][^<>{}]*)</g;
+    let j;
+    while ((j = jsx.exec(line)) !== null) spans.push([j.index + 1, j.index + 1 + j[1].length, false]);
+    // A bare line of prose inside a JSX block, which is how a long sentence is
+    // wrapped and is therefore most of them.
+    if (/^\s*[A-Za-z][^{}<>=;()`'"]*$/.test(line) && /\s[a-z]+\s/.test(line)) {
+      spans.push([0, line.length, false]);
+    }
   }
   return spans;
 }
@@ -275,8 +299,8 @@ function partOfRealName(line, start, end) {
   });
 }
 
-function fixLine(line) {
-  const spans = editableSpans(line);
+function fixLine(line, tsx = false) {
+  const spans = editableSpans(line, tsx);
   if (spans.length === 0) return { line, changes: [] };
   const changes = [];
   let out = '';
@@ -312,9 +336,10 @@ const seen = new Map();
 for (const file of [...walk('src'), ...walk('tools'), ...walk('tests'), ...walk('docs')].filter(oursToFix)) {
   const original = readFileSync(file, 'utf8');
   const lines = original.split('\n');
+  const tsx = file.endsWith('.tsx');
   let touched = false;
   const fixed = lines.map((line) => {
-    const { line: next, changes } = fixLine(line);
+    const { line: next, changes } = fixLine(line, tsx);
     if (changes.length > 0) {
       touched = true;
       total += changes.length;

@@ -32,6 +32,9 @@ import { quickSave, validateUniverse } from '@/engine';
 import type { Simulation } from '@/engine';
 import { MS_DAY } from '@/engine/core/time';
 import { ESTATE_CITY_ID } from '@/engine/content/estate';
+import {
+  computeAnnualTax, propertyTaxRate, resolveIncomeTaxLayers, salesTaxRate,
+} from '@/engine/content/tax';
 import { CORPORATION_TAX, GUILD_BY_ID, REBATE, REGISTRY_BY_ID, VAT_RATE } from '@/engine/content/incorporation';
 import {
   GREENLIGHT_FLOOR, americanArm, capabilitiesOf, companiesOf, companyCash, holdingsOf,
@@ -381,9 +384,46 @@ describe('what the content claims about the real world', () => {
     expect(GUILD_BY_ID.sag_aftra.body).toBe('SAG-AFTRA');
   });
 
-  it('keeps the Icelandic tax figures as the published ones', () => {
+  it('keeps the Icelandic tax figures as the published ones, and spends them', () => {
     expect(CORPORATION_TAX).toBe(0.20);
     expect(VAT_RATE).toBe(0.24);
+
+    // The two lines above used to be the whole test, and a test that a constant
+    // still equals the number written beside it is a test that can only fail
+    // when somebody edits it on purpose. Meanwhile the country these figures
+    // describe was in no tax table at all, so the home screen told a player
+    // living in Mosfellsbær that Iceland taxes a wage at nothing and charges no
+    // sales tax — under a heading about a company paying 24% VSK.
+    const at = Date.UTC(2026, 2, 2);
+    expect(salesTaxRate(ESTATE_CITY_ID, at, 'general'), 'VSK, from the one declaration of it')
+      .toBe(VAT_RATE);
+    expect(resolveIncomeTaxLayers(ESTATE_CITY_ID, at).length).toBeGreaterThan(0);
+
+    // And it lands where an Icelandic wage lands: a quarter and a bit gone at
+    // the reference wage, well under the top marginal band.
+    const owed = computeAnnualTax(60_000_00, ESTATE_CITY_ID, at);
+    expect(owed.total).toBeGreaterThan(0);
+    expect(owed.effectiveRate).toBeGreaterThan(0.2);
+    expect(owed.effectiveRate).toBeLessThan(0.32);
+    // Banded, and this has to be tested at the MARGIN rather than on the
+    // effective rate. A flat rate with a fixed deduction also makes the
+    // effective rate climb with income, because the deduction shrinks as a
+    // share of it — so "twice the wage is a higher share" passes whether the
+    // bands exist or not, and a mutation that flattened the table survived it.
+    const marginal = (from: number, to: number): number =>
+      (computeAnnualTax(to, ESTATE_CITY_ID, at).total
+        - computeAnnualTax(from, ESTATE_CITY_ID, at).total) / (to - from);
+    const low = marginal(30_000_00, 35_000_00);
+    const high = marginal(200_000_00, 205_000_00);
+    // Both carry the 4% pension on top of the band, because that is withheld
+    // from the same wage and this figure is what leaves it.
+    expect(low).toBeCloseTo(0.3175 + 0.04, 3);
+    // The top band is the one an Icelander actually feels, and nothing else in
+    // this table reaches it: on a flat rule these two are the same number.
+    expect(high).toBeCloseTo(0.4682 + 0.04, 3);
+    expect(high - low).toBeGreaterThan(0.14);
+    // Fasteignaskattur at the residential band, not the table's foreign default.
+    expect(propertyTaxRate(ESTATE_CITY_ID, at)).toBeLessThan(0.005);
   });
 
   it('says the reimbursement is applied for before you shoot, and is audited', () => {

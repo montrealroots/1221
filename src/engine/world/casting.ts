@@ -47,7 +47,7 @@
 
 import type { Simulation } from '../core/simulation';
 import type { Id } from '../core/ids';
-import type { Money } from '../core/money';
+import { formatMoney, type Money } from '../core/money';
 import type { Instant } from '../core/time';
 import type { Person } from '../domain/model';
 import type { Looked, Project, Role, Seat } from '../domain/company';
@@ -990,7 +990,9 @@ export function sayTheRead(read: Read): string {
   return `${best.label} ${Math.round(read[best.id])}/100, ${worst.label.toLowerCase()} ${Math.round(read[worst.id])}/100.`;
 }
 
-const money = (cents: Money): string => `€${Math.round(cents / 100).toLocaleString('en-US')}`;
+/** Whole units, no cents. Routed through the one formatter so the ledger
+ *  has one currency rather than four opinions about it. */
+const money = (cents: Money): string => formatMoney(cents, { cents: false });
 
 export function registerCasting(sim: Simulation): void {
   registerTheOffice(sim);

@@ -17,7 +17,7 @@ import type { Simulation } from '../core/simulation';
 import type { Booking, BookingKind, Id, Property, SoundStage } from '../domain/model';
 import type { Instant } from '../core/time';
 import type { ScheduledItem } from '../core/scheduler';
-import type { Money } from '../core/money';
+import { formatMoney, type Money } from '../core/money';
 import { MS_DAY, instantFromZoned, zonedParts } from '../core/time';
 import {
   AROUND_THE_SHOOT, BUILD_COST_CENTS, CALLS_A_MONTH, CREW_BASE, CREW_PENALTY, LOT_FLOOR_SQM,
@@ -551,7 +551,9 @@ function startOfNextMonth(at: Instant, zone: string): Instant {
   return instantFromZoned({ year, month, day: 1, hour: 0, minute: 0 }, zone);
 }
 
-const money = (cents: Money): string => `€${Math.round(cents / 100).toLocaleString('en-US')}`;
+/** Whole units, no cents. Routed through the one formatter so the ledger
+ *  has one currency rather than four opinions about it. */
+const money = (cents: Money): string => formatMoney(cents, { cents: false });
 const weeks = (n: number): string => {
   const said = n < 1 ? n.toFixed(1) : String(Math.round(n));
   return `${said} stage ${said === '1' ? 'week' : 'weeks'}`;
