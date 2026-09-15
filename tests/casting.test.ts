@@ -34,7 +34,7 @@ import type { Looked } from '@/engine/domain/company';
 import {
   askFor, castOf, castOn, castsAppeal, castsReliability, datesFor, decideOffer, freeToWork,
   fromWhere, globalRuleOne, bringingThemCents, reachesTo,
-  castSpark, complementOf, shapeOf, sparkBetween, sparkReads,
+  castSpark, complementOf, givingOf, performerNew, shapeOf, sparkBetween, sparkReads,
   howManyCast, openRoles, quoteOf, ranOverOnThem,
   alreadyKnown, believedAt, goesOffBy, howWide, lookedAt, officeFillsAt, readOf, readOn,
   reachOfBand, seatFor, sheetFor, shownOf, SOMEBODY_KNOWS, takeFactor, tapeLean, theBiggestName,
@@ -113,6 +113,37 @@ function castEverybodyAt(sim: Simulation, id: string, at: Partial<Record<string,
 }
 
 // ---------------------------------------------------------------------------
+
+describe('what somebody gives the other person', () => {
+  it('is its own thing, and not craft standing wearing a second name', () => {
+    const sim = world('giving');
+    const next = sim.rng('probe', 'giving').next;
+    // Four hundred performers, every one of them at the same standing. If the
+    // six attributes chemistry reads are never written, they all sit at the
+    // sheet's base — which is a function of standing — and every one of these
+    // people is exactly as generous as every other. That is what happened: the
+    // giving term in sparkBetween was craft standing under another name, and
+    // the decider harness could not see it, because it sweeps the field itself
+    // and so proves only that something reads it, never that the world moves it.
+    const made = Array.from({ length: 400 }, () => performerNew(sim, 55, () => next()));
+    const giving = made.map((one) => givingOf(one.attributes));
+    expect(new Set(giving).size).toBeGreaterThan(50);
+    expect(Math.max(...giving) - Math.min(...giving)).toBeGreaterThan(40);
+  });
+
+  it('lets two equally good people be unequally good to act with', () => {
+    const sim = world('giving-pair');
+    const next = sim.rng('probe', 'pair').next;
+    const made = Array.from({ length: 200 }, () => performerNew(sim, 55, () => next()));
+    const mean = (one: Person) => givingOf(one.attributes);
+    const open = made.reduce((top, one) => (mean(one) > mean(top) ? one : top), made[0]!);
+    const shut = made.reduce((low, one) => (mean(one) < mean(low) ? one : low), made[0]!);
+    const partner = made[1]!;
+    expect(mean(open) - mean(shut)).toBeGreaterThan(30);
+    expect(sparkBetween(open, partner, 0.5))
+      .toBeGreaterThan(sparkBetween(shut, partner, 0.5));
+  });
+});
 
 describe('the acting sheet decides something', () => {
   it('reads only attributes that exist, on every axis', () => {
@@ -1234,17 +1265,24 @@ describe('different parts want different things', () => {
     const came = whoCameIn(sim, live);
     const bestUnder = (wants: Record<string, number>) => {
       live.wants = wants;
-      return came.reduce((top, one) => {
-        const worth = (person: Person) => AXES.reduce(
-          (n, axis) => n + shownOf(sim, project, live, person)[axis.id] * (wants[axis.id] ?? 1), 0,
-        );
-        return worth(one) > worth(top) ? one : top;
-      }, came[0]!).id;
+      const worth = (person: Person) => AXES.reduce(
+        (n, axis) => n + shownOf(sim, project, live, person)[axis.id] * (wants[axis.id] ?? 1), 0,
+      );
+      const order = [...came].sort((a, b) => worth(b) - worth(a)).map((one) => one.id);
+      return { order, top: order[0]! };
     };
+    // On the whole ordering rather than on the top of it. Whether one pile
+    // happens to contain somebody who is best on every axis at once is a fact
+    // about a draw, and pinning the test to that made it fail the moment an
+    // unrelated field was given its own draw and every person in the save
+    // shifted. If the two want-vectors induce the same order over the pile then
+    // the weighting decides nothing, and that is the failure worth catching.
     const forAFace = bestUnder({ truth: 0.2, repeatable: 0.2, reads: 2.6 });
     const forAGrind = bestUnder({ truth: 0.2, repeatable: 2.6, reads: 0.2 });
-    expect(forAFace, 'a part that is a face and a part that is a grind should not want the same person')
-      .not.toBe(forAGrind);
+    expect(came.length, 'too small a pile to order').toBeGreaterThan(2);
+    expect(forAFace.order, 'a face and a grind should not rank the pile identically')
+      .not.toEqual(forAGrind.order);
+    expect([forAFace.top, forAGrind.top].join()).toBeTruthy();
   });
 
   it('weighs a part that needs repeatability more heavily against the shoot', () => {
@@ -1309,7 +1347,14 @@ describe('the office picks on what it believes, like everybody else', () => {
       if (came.length < 2) continue;
       const pick = (worth: (person: Person) => number) =>
         came.reduce((top, one) => (worth(one) > worth(top) ? one : top), came[0]!);
-      const sum = (r: ReturnType<typeof readOf>) => r.truth + r.reads + r.repeatable;
+      // Weighted the way the office weighs it, on both sides. A flat sum here
+      // was comparing a different question to the one the office answers, and
+      // it agreed with the office only by luck — which ran out the moment an
+      // unrelated draw moved every person in the save along by two numbers.
+      // The variable this test is named for is belief against truth, so that
+      // has to be the only thing differing between the two picks.
+      const sum = (r: ReturnType<typeof readOf>) =>
+        AXES.reduce((n, axis) => n + r[axis.id] * wantsOn(live, axis.id), 0);
       const believed = pick((one) => sum(shownOf(sim, project, live, one)));
       const actual = pick((one) => sum(readOf(one)));
       if (believed.id === actual.id) continue;

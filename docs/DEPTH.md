@@ -706,6 +706,17 @@ price of a plane ticket. What found it was the one test that wrote out the whole
 sum term by term instead of asserting the direction it moved in. A test that
 only checks a number went down cannot tell one subtraction from two.
 
+**A decider sweep proves an input is read, never that the world varies it.**
+`tools/deciders.mjs` walks every declared input, moves it, and fails if the
+outcome does not move. `THE_GIVING` — the six attributes chemistry multiplies its
+whole non-separable term by — passed that sweep from the day it was written, and
+was dead in play the whole time, because nothing in the world ever wrote those
+six and the harness wrote them itself. Every performer carried them at the
+sheet's base, which is a function of craft standing, so the term was standing
+under a second name. The tool was green and the mechanic was arithmetic on a
+constant. Where a field is read by a decision, ask separately what writes it, and
+do not accept the test as the answer.
+
 **A field that means one thing is not an identifier for another.** `Period.per`
 is how long a period runs as a multiple of the base, and the comment above it
 said that exactly one period in a plan carries `per: 1` and that it is the base.

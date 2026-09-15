@@ -135,6 +135,47 @@ wired.
 
 ---
 
+## The bite audit of 2026-09-15
+
+Six slices of the engine, every lever enumerated and then **proven by running
+the engine** — probe scripts driving a real save, one input moved at a time,
+before and after printed. Not read. This is the one audit on this page whose
+findings are measurements.
+
+**372 levers tested. 283 bite. 89 do not.**
+
+| Verdict | Count |
+|---|---|
+| BITES | 283 |
+| DEAD — moved across its range, nothing observable moved | 71 |
+| UNREACHABLE — correct, and no play can get there | 18 |
+
+By how much it matters: 6 critical, 41 serious, 100 minor, 225 none.
+
+Three of the six critical findings are the prodigy constraint wearing different
+clothes, which is the section at the top of this page and not six separate jobs:
+`modifierFor(person, 'recoveryRate')` and `'stressPerShootDay'` are named in the
+prover's own words as THE PRODIGY TRAP, the player's `repeatable` read into the
+cutting room's ratio is the same fault, and `shootDayWeather` computes every
+factor and both temperature guards for nobody.
+
+The other three are their own work. `theOfficeFills` never calls `decideOffer`,
+so the office hires people the player is refused — it bites, and what it bites
+is the symmetry between the two halves of the game. `project.hands` cannot be
+changed after the greenlight, so the cutting room cannot be restaffed. And the
+other 46 exports of `content/lifespan.ts` are dead, which is the ageing claim
+above measured rather than asserted.
+
+Everything the audit found is in the workflow's own ledger rather than repeated
+here line by line; what is worth carrying is the shape. A quarter of this build's
+declared levers do not move anything, and the largest single cause is that the
+player is perfect.
+
+**One finding was fixed the day it was found and is in the section below**:
+`THE_GIVING`, which is the reason the audit is worth more than a read-through.
+
+---
+
 ## Measured: the one decision in the room the game is named after
 
 This is the best-evidenced entry on the page and the only one proven by
@@ -312,6 +353,22 @@ fifty-three thousand euros of travel incurred, nothing spent, and the
 reimbursement then took those fees off the certificate as money paid abroad on
 travel nobody had bought — wrong in two directions at once, from one missing
 line.
+
+**Chemistry's second term was craft standing under another name.** `sheetFor`
+wrote the three casting axes and the four tape attributes and never once wrote
+the six in `THE_GIVING`, so every performer carried them at the sheet's base —
+which is a function of `standing`. Two people equally good were equally generous,
+always, and `sparkBetween` multiplied its one genuinely non-separable term by a
+number it already knew. Four hundred performers at an identical standing now
+produce 271 distinct giving values across a range of 13 to 97; before, they
+produced one.
+
+The way it hid is worth more than the bug. `tools/deciders.mjs` sweeps every
+declared input and fails if the outcome never moves, and `THE_GIVING` passed that
+sweep from the day it was written — because the harness writes the field itself.
+A decider sweep proves something *reads* an input. It cannot prove the world ever
+*varies* it, and a field only the test ever varies is dead in play and green on
+the board.
 
 **Three different counts of one thing.** The reimbursement's conditions were
 called three in the law's own content, four in nine places across the module

@@ -373,6 +373,20 @@ export function sheetFor(standing: number, next: () => number): AttributeSheet {
   // that hung off the standing would have quietly said it did.
   const hand = clamp(Math.round(20 + next() * 70), 1, 100);
   for (const id of THE_TAPE) of[id] = clamp(Math.round(hand + (next() - 0.5) * 18), 1, 100);
+  // And what they give the other person, drawn on its own for the same reason
+  // and for a sharper one. Generosity on camera is a disposition and not a
+  // level: the most technically secure performer in the country can be the one
+  // who gives nothing back across the lens.
+  //
+  // This was missing, and the omission is worth keeping in the comment. Nothing
+  // wrote these six, so every performer carried them at the sheet's base — which
+  // is a function of `standing` — and `givingOf` handed chemistry a number that
+  // was craft standing under a second name. Two people equally good were
+  // equally generous, always. The decider harness could not see it, because it
+  // sweeps a declared input itself and so proves only that something reads the
+  // field, never that the world ever varies it.
+  const gives = clamp(Math.round(15 + next() * 80), 1, 100);
+  for (const id of THE_GIVING) of[id] = clamp(Math.round(gives + (next() - 0.5) * 16), 1, 100);
   return sheetOf(base, of);
 }
 
