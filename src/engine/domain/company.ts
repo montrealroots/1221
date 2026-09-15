@@ -537,6 +537,49 @@ export interface Project {
    * that produced it.
    */
   windowsPaid?: string[];
+
+  // --- What the state gives back -------------------------------------------
+
+  /**
+   * The reimbursement claim, once the picture has applied for one.
+   *
+   * Absent on a picture that never applied, which is the ordinary state of a
+   * picture whose producer forgot. The application closes on the first day of
+   * photography, so this field can only ever be written before the shoot and
+   * can never be written afterwards.
+   */
+  rebate?: Claim;
+
+  /**
+   * Of everything this picture has spent, what was not spent in Iceland.
+   *
+   * Counted as it goes rather than worked out afterwards, because the two
+   * things in it are not recoverable from a total: the flights that brought
+   * somebody here, and a penalty, which is money gone without being spend at
+   * all. Both come off the figure an auditor would certify, and neither leaves
+   * a trace in `spentCents` that says which it was.
+   */
+  notSpentHereCents?: Money;
+}
+
+/**
+ * A production's claim on the Icelandic reimbursement.
+ *
+ * The rate is stamped at the application and not recomputed at payment, the
+ * way the real thing works: you are told which tier you are on when the
+ * ministry accepts the file, and a picture that shrinks afterwards has already
+ * been told. That stamp is the whole reason the higher tier is worth aiming at
+ * before a shoot instead of hoping for one after it.
+ */
+export interface Claim {
+  appliedAt: Instant;
+  /** The share of certified spend this picture was accepted at. */
+  shareAt: number;
+  /** What an auditor certified as Icelandic spend, once one has. */
+  certifiedCents?: Money;
+  /** What the state actually paid, and when it landed. */
+  paidCents?: Money;
+  paidAt?: Instant;
 }
 
 // ---------------------------------------------------------------------------

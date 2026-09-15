@@ -60,6 +60,7 @@ import {
   theBiggestName,
 } from './casting';
 import { capabilitiesOf } from './company';
+import { armTheClaim } from './rebate';
 
 export const MAKING_KIND = 'project.period';
 export const DELIVERY_KIND = 'project.delivery';
@@ -1268,8 +1269,17 @@ export function settleDelivery(sim: Simulation, project: Project): boolean {
       sim.expense(account, fine, `${project.title}: Late Delivery`, 'business',
         { refType: 'project', refId: project.id });
       project.spentCents += fine;
+      // A penalty is money gone and it is not spend, so an auditor certifies
+      // none of it. Going over costs a picture three quarters of what it costs;
+      // being late costs it all of it.
+      project.notSpentHereCents = (project.notSpentHereCents ?? 0) + fine;
     }
   }
+
+  // And the claim, where there is one to make. It goes on the calendar here
+  // because a reimbursement is claimed against a finished production, and this
+  // is the moment the production is finished.
+  armTheClaim(sim, project);
 
   sim.notify({
     category: 'business',

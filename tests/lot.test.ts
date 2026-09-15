@@ -400,6 +400,16 @@ describe('the rebate is four tests and the country can fail one', () => {
       .toBe(REBATE.share);
     // Under the days, likewise.
     expect(tierFor(sim, { ...big, weeks: 1 }, from)).toBe(REBATE.share);
+
+    // And the fourth limb, which is a separate question from the third: a unit
+    // can be in the country for long enough to clear the working-days floor and
+    // still not be here for the fifty days the crew condition asks for. The two
+    // thresholds are thirty and fifty, so everything between them fails on one
+    // and passes on the other.
+    const short = { ...big, weeks: 5 };
+    expect(wholeHold(short) * 5).toBeGreaterThanOrEqual(REBATE.higherNeeds.workingDays);
+    expect(wholeHold(short) * 5).toBeLessThan(REBATE.higherNeeds.crewDays);
+    expect(tierFor(sim, short, from)).toBe(REBATE.share);
   });
 });
 

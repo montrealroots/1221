@@ -892,6 +892,10 @@ function payToBringThem(sim: Simulation, project: Project, person: Person, fee: 
   sim.expense(account, cost, `${project.title}: Bringing ${person.displayName} From ${from?.label ?? 'Abroad'}`,
     'business', { refType: 'project', refId: project.id });
   project.spentCents += cost;
+  // Flights and a hotel booked from here are still bought abroad, so none of it
+  // is Icelandic spend and none of it is certifiable. Recorded on the way out,
+  // because a total cannot be taken apart afterwards to find it.
+  project.notSpentHereCents = (project.notSpentHereCents ?? 0) + cost;
 }
 
 /**

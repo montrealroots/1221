@@ -22,6 +22,7 @@ import { LookRegion, Open } from '@/ui/looks/Look';
 import { at } from '@/ui/looks/subject';
 import { said, toStart } from '@/ui/looks/words';
 import { formatMoney } from '@/engine/core/money';
+import { plural } from '@/engine/core/text';
 import { formatDate } from '@/engine/core/time';
 import { DELIVERY, plansFor, planById } from '@/engine/content/making';
 import { DEALS, dealById } from '@/engine/content/selling';
@@ -39,6 +40,12 @@ import {
 import {
   AIRDATE_WEEKS, LEAD_WEEKS, LONGEST_SHOOT, canHandOver, windowOf, wouldBe,
 } from '@/engine/world/making';
+import { LIMB_LABELS, THE_CLAIM } from '@/engine/content/rebate';
+import { REBATE } from '@/engine/content/incorporation';
+import {
+  auditorsFee, awayOnTheCast, certifiable, limbsOf, shortOnFor, turnsOverOn,
+  whereTheClaimStands, whyNot, worthToday,
+} from '@/engine/world/rebate';
 import type { GuildId, PolicyKind, RegistryId, RoleId } from '@/engine/domain/company';
 import {
   GUILD_BY_ID, POLICY_BY_ID, REGISTRY_BY_ID, ROLE_BY_ID,
@@ -349,6 +356,7 @@ function Slate() {
   const [saying, setSaying] = useState<string | undefined>();
   const [casting, setCasting] = useState<string | undefined>();
   const [filing, setFiling] = useState<string | undefined>();
+  const [claiming, setClaiming] = useState<string | undefined>();
   const [selling, setSelling] = useState<string | undefined>();
 
   return (
@@ -384,6 +392,11 @@ function Slate() {
                   {project.planId !== undefined && project.stage !== 'delivered' && (
                     <button className="btn btn-sm" onClick={() => setFiling(project.id)}>The Delivery List</button>
                   )}
+                  {project.planId !== undefined && (
+                    <button className="btn btn-sm" onClick={() => setClaiming(project.id)}>
+                      The Reimbursement
+                    </button>
+                  )}
                   {project.stage === 'delivered' && project.dealId === undefined && (
                     <button className="btn btn-sm btn-primary" onClick={() => setSelling(project.id)}>Sell It</button>
                   )}
@@ -397,6 +410,7 @@ function Slate() {
       {saying && <GreenlightForm projectId={saying} onClose={() => setSaying(undefined)} />}
       {casting && <CastForm projectId={casting} onClose={() => setCasting(undefined)} />}
       {filing && <DeliveryForm projectId={filing} onClose={() => setFiling(undefined)} />}
+      {claiming && <RebateForm projectId={claiming} onClose={() => setClaiming(undefined)} />}
       {selling && <SellForm projectId={selling} onClose={() => setSelling(undefined)} />}
     </Panel>
   );
@@ -688,6 +702,128 @@ function DeliveryForm({ projectId, onClose }: { projectId: string; onClose: () =
           </tbody>
         </table>
       </div>
+      {error && <p className="small negative" style={{ marginTop: 'var(--s3)' }}>{error}</p>}
+    </Modal>
+  );
+}
+
+/**
+ * The reimbursement, and the day it stops being available.
+ *
+ * Everything on this screen is a figure the producer can work out in advance,
+ * which is deliberate. A reimbursement is what a picture is planned against,
+ * and a number drawn at the last moment cannot be planned against. So the four
+ * conditions are printed with what this picture puts up against each of them,
+ * the deadline is printed as a date, and the arithmetic of what will be
+ * certified is broken into the four things that decide it.
+ */
+function RebateForm({ projectId, onClose }: { projectId: string; onClose: () => void }) {
+  const { run, sim } = useGame();
+  const project = useWorld((s) => s.universe.projects[projectId]);
+  const [error, setError] = useState<string | undefined>();
+  if (!project) return null;
+
+  const claim = project.rebate;
+  const refused = whyNot(sim, project);
+  const on = claim ? 'books' : 'plan';
+  const limbs = limbsOf(sim, project, on);
+  const short = new Set(shortOnFor(sim, project, on));
+  const needs = REBATE.higherNeeds;
+  const turnsOver = turnsOverOn(project);
+  const certified = certifiable(sim, project);
+
+  const apply = () => {
+    const answer = run<{ ok: boolean; error?: string }>(
+      'company.claim_rebate', { projectId }, { silent: true },
+    );
+    setError(answer.value?.ok ? undefined : answer.value?.error ?? answer.error);
+  };
+
+  const row = (limb: keyof typeof LIMB_LABELS, put: string, wants: string) => (
+    <tr key={limb}>
+      <td className="nowrap">{LIMB_LABELS[limb]}</td>
+      <td className="small nowrap">{put}</td>
+      <td className="small nowrap dim">{wants}</td>
+      <td className="small nowrap">{short.has(limb) ? 'Short' : 'Met'}</td>
+    </tr>
+  );
+
+  return (
+    <Modal
+      title={`${THE_CLAIM.label}: ${project.title}`}
+      wide
+      onClose={onClose}
+      footer={(
+        <>
+          <button className="btn btn-ghost" onClick={onClose}>Close</button>
+          {!claim && refused === undefined && (
+            <button className="btn btn-primary" onClick={apply}>
+              {`Apply — ${formatMoney(THE_CLAIM.filingCents, { cents: false })}`}
+            </button>
+          )}
+        </>
+      )}
+    >
+      <p className="small">{whereTheClaimStands(sim, project)}</p>
+
+      <div className="row gap-3" style={{ flexWrap: 'wrap' }}>
+        <Stat
+          label="Applications Close"
+          value={turnsOver ? formatDate(turnsOver, sim.homeZone) : 'No dates yet'}
+          note="The first day of photography, and it never reopens"
+        />
+        <Stat
+          label="The Scheme Ends"
+          value={`${REBATE.endsOn.day}/${REBATE.endsOn.month}/${REBATE.endsOn.year}`}
+          note="It’s legislated to stop, and a review is already running"
+        />
+        <Stat
+          label="Certified So Far"
+          value={formatMoney(certified, { cents: false })}
+          note={`Of ${formatMoney(project.spentCents, { cents: false })} spent`}
+        />
+        <Stat
+          label="Worth Today"
+          value={formatMoney(worthToday(sim, project), { cents: false })}
+          note={`Less ${formatMoney(auditorsFee(certified), { cents: false })} for the certificate`}
+        />
+      </div>
+
+      <p className="xs dim" style={{ marginTop: 'var(--s3)' }}>
+        {`What comes off the certificate: ${Math.round(THE_CLAIM.leaks * 100)}% of the negative, `}
+        {'bought outside the country whatever anybody decides; '}
+        {`${formatMoney(project.notSpentHereCents ?? 0, { cents: false })} that left the country as it went; `}
+        {`and ${formatMoney(awayOnTheCast(sim, project), { cents: false })} of cast fees paid where the `}
+        {'people who took them live.'}
+      </p>
+
+      <div className="table-wrap" style={{ marginTop: 'var(--s3)' }}>
+        <table className="table">
+          <thead>
+            <tr>
+              <th>{`The Higher Rate — ${Math.round(REBATE.higherShare * 100)}%`}</th>
+              <th>This Picture</th>
+              <th>Wants</th>
+              <th>&nbsp;</th>
+            </tr>
+          </thead>
+          <tbody>
+            {row('spendIsk', `${Math.round(limbs.spendIsk / 1_000_000)}m kr`,
+              `${Math.round(needs.spendIsk / 1_000_000)}m kr`)}
+            {row('workingDays', plural(limbs.workingDays, 'day'), plural(needs.workingDays, 'day'))}
+            {row('shootingDays', plural(limbs.shootingDays, 'day'), plural(needs.shootingDays, 'day'))}
+            {row('crew', plural(limbs.crew, 'person', 'people'),
+              plural(needs.crew, 'person', 'people'))}
+            {row('crewDays', plural(limbs.crewDays, 'day'), plural(needs.crewDays, 'day'))}
+          </tbody>
+        </table>
+      </div>
+      <p className="xs dim" style={{ margin: 0 }}>
+        {`Miss any one of them and the claim goes in at ${Math.round(REBATE.share * 100)}%. `}
+        {'The rate is stamped when the ministry accepts the file and isn’t revised afterwards, '}
+        {'so a picture that shrinks has already been told what it is on.'}
+      </p>
+
       {error && <p className="small negative" style={{ marginTop: 'var(--s3)' }}>{error}</p>}
     </Modal>
   );

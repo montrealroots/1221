@@ -32,6 +32,7 @@ import { registerSelling } from './world/selling';
 import { registerCrew } from './world/crew';
 import { registerCasting } from './world/casting';
 import { registerAudition } from './world/audition';
+import { registerRebate } from './world/rebate';
 import {
   companiesOf, foundTheCompany, foundTheSugarGroup, holdingsOf, postsOf, projectsOf, registerCompanyCommands,
 } from './world/company';
@@ -62,6 +63,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerCrew(sim);
   registerCasting(sim);
   registerAudition(sim);
+  registerRebate(sim);
 }
 
 /** Recurring world processes every save needs running. */

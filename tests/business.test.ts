@@ -387,7 +387,8 @@ describe('what the content claims about the real world', () => {
   });
 
   it('says the reimbursement is applied for before you shoot, and is audited', () => {
-    expect(REBATE.appliedBefore).toBe(true);
+    // The deadline itself is a rule and is tested where it bites, in
+    // tests/rebate.test.ts. What this holds is the law it is written from.
     expect(REBATE.auditedBy).toContain('auditor');
     // And says plainly that the rate has moved rather than printing a guess.
     // Both rates are sourced now: 25% with no minimum spend and no cap, and a

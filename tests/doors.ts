@@ -64,6 +64,25 @@ export function openTheDoors(sim: Simulation, title = 'Something To Make'): void
 }
 
 /**
+ * Opens the reimbursement door, which is a different door from the greenlight.
+ *
+ * A company can make a picture without being able to claim anything back: the
+ * registers are there from the first day and the accountant is not. Somebody
+ * has to be in the post, because the claim is audited and an audit needs books
+ * a person kept from the beginning.
+ */
+export function openTheBooks(sim: Simulation): void {
+  if (capabilitiesOf(sim).find((one) => one.id === 'claim_rebate')?.can) return;
+  const somebody = Object.values(sim.universe.people).find((one) => !one.isPlayer)
+    ?? Object.values(sim.universe.people)[0]!;
+  expect(run(sim, 'company.fill_post', { role: 'accountant', personId: somebody.id }).ok,
+    'could not put anybody in as the production accountant').toBe(true);
+  const door = capabilitiesOf(sim).find((one) => one.id === 'claim_rebate')!;
+  expect(door.can, `the reimbursement door is still shut: ${door.blockers.map((b) => b.need).join(', ')}`)
+    .toBe(true);
+}
+
+/**
  * Runs a picture out to delivered, the way a producer actually gets one there.
  *
  * A week at a time, filing whatever paperwork the list is waiting on, until it

@@ -25,6 +25,7 @@ import {
   ENQUIRY_SHAPES, STAGES, type Enquiry,
 } from '../content/lot';
 import { REBATE } from '../content/incorporation';
+import { shortOn } from '../content/rebate';
 import { GROUP } from '../content/sugar';
 import { profitThisYear, shutYearsRunning } from './sugar';
 import { ESTATE_CITY_ID, LOT_NAME, estatePlaceLine, movedInAt } from '../content/estate';
@@ -640,24 +641,36 @@ export function crewInTheCountry(sim: Simulation): number {
 /**
  * Which rebate tier an enquiry would qualify for.
  *
- * All four limbs now, and they are cumulative. Spend, working days, shooting
- * days and fifty crew taxed in Iceland for fifty days — the last of which sat
- * in `REBATE.higherNeeds` being read by nothing while this function tested two
- * of the four and called it the band. It matters because it is the one limb the
+ * All four limbs, and they are cumulative. Spend, working days, shooting days
+ * and fifty crew taxed in Iceland for fifty days — the last of which sat in
+ * `REBATE.higherNeeds` being read by nothing while this function tested two of
+ * the four and called it the band. It matters because it is the one limb the
  * country can fail: two large productions at once want a hundred people between
  * them, and there are only so many in Iceland.
+ *
+ * The test itself lives in `content/rebate.ts`, where the family's own pictures
+ * reach it too. One piece of legislation, one implementation of it. What this
+ * file supplies is a foreign production's answers, and its answer on crew is a
+ * question about the country's supply — how many people are left after every
+ * unit already booked across the same weeks has taken its fifty.
  */
 export function tierFor(sim: Simulation, need: Enquiry, from: Instant): number {
   const needs = REBATE.higherNeeds;
-  const days = need.weeks * 5;
-  if (need.spendIsk < needs.spendIsk) return REBATE.share;
-  if (days < needs.workingDays || days < needs.shootingDays) return REBATE.share;
-  // And the crew, against what is left after everything already booked over the
-  // same weeks has taken its own. A country is a finite number of people.
   const to = from + wholeHold(need) * MS_WEEK;
   const spokenFor = Object.values(sim.universe.bookings)
     .filter((one) => one.kind === 'shooting' && one.from < to && from < one.to).length * needs.crew;
-  return crewInTheCountry(sim) - spokenFor >= needs.crew ? REBATE.higherShare : REBATE.share;
+  // Working days and crew days are the whole hold, prep and strike included,
+  // because a unit is in the country and on a payroll from the day it starts
+  // building. Shooting days are the shoot and only the shoot.
+  const here = wholeHold(need) * 5;
+  const short = shortOn({
+    spendIsk: need.spendIsk,
+    workingDays: here,
+    shootingDays: need.weeks * 5,
+    crew: crewInTheCountry(sim) - spokenFor,
+    crewDays: here,
+  }, needs);
+  return short.length === 0 ? REBATE.higherShare : REBATE.share;
 }
 
 /**

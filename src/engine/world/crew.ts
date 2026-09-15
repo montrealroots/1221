@@ -42,7 +42,9 @@ import { freshWellbeing } from '../systems/life';
 import { impliedPerformerTitle } from '../core/performer';
 import { clamp } from '../core/rng';
 import { MEN, WOMEN, patronymic } from '../content/names';
-import { POSTS, type Post, postById, prepScale } from '../content/crew';
+import {
+  CROWD_RUNS, DEPARTMENTS, FULLY_STAFFED_AT, POSTS, type Post, postById, prepScale,
+} from '../content/crew';
 import { MS_WEEK } from './lot';
 
 /**
@@ -71,6 +73,59 @@ export const CREW_KIND = 'project.crew';
  */
 export function postsFor(budgetCents: Money): Post[] {
   return POSTS.filter((post) => budgetCents >= post.carriedFrom);
+}
+
+/** The smallest budget that carries anybody in this department at all. */
+export function carriesFrom(departmentId: string): Money {
+  const posts = POSTS.filter((one) => one.department === departmentId);
+  return posts.length === 0 ? FULLY_STAFFED_AT : Math.min(...posts.map((one) => one.carriedFrom));
+}
+
+/**
+ * How many people a department carries under its named posts, at this budget.
+ *
+ * Scaled from the department's own floor and not from nought, which is what
+ * makes the head come first. A picture that has just afforded a set decorator
+ * has a set decorator and nobody behind them; the crowd arrives as the money
+ * climbs from there, and everything is staffed together at the top.
+ *
+ * Doing it this way is also what keeps this from needing a second test of the
+ * same fact. A department below its own floor has no head, and the arithmetic
+ * already hands back nobody, so a guard saying the same thing would be a line
+ * that could never change an answer.
+ */
+export function crowdIn(departmentId: string, budgetCents: Money): number {
+  const department = DEPARTMENTS.find((one) => one.id === departmentId);
+  if (!department) return 0;
+  const floor = carriesFrom(department.id);
+  const span = Math.max(1, FULLY_STAFFED_AT - floor);
+  const share = Math.min(1, Math.max(0, (budgetCents - floor) / span));
+  return Math.round(department.crowd * share);
+}
+
+/**
+ * How many people are on the picture, named and unnamed together.
+ *
+ * The number the payroll would show, which is not the number of posts and never
+ * was. Twenty-four named people is what a picture engages by name; what it
+ * employs is that plus everybody under them, and the gap between the two is the
+ * difference between a department head count and a crew.
+ */
+export function headcountOf(budgetCents: Money): number {
+  const named = postsFor(budgetCents).length;
+  const behind = DEPARTMENTS.reduce((n, department) => n + crowdIn(department.id, budgetCents), 0);
+  return named + behind;
+}
+
+/**
+ * The working days an ordinary crew engagement runs to.
+ *
+ * Counted on the crowd rather than on the named posts, because the crowd is
+ * where the fiftieth person is. A five-day week, the shoot, and a week either
+ * side of it.
+ */
+export function crewDaysOf(shootWeeks: number): number {
+  return Math.round((shootWeeks + CROWD_RUNS * 2) * 5);
 }
 
 /** When a post comes on, which is never before somebody said yes to the picture. */

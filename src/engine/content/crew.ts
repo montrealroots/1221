@@ -50,23 +50,42 @@ export interface Department {
   label: string;
   /** What it is responsible for, in the world's words. */
   what: string;
+  /**
+   * How many people sit under the named posts when the picture is fully staffed.
+   *
+   * The header of this file says the thing that changes between a four-week
+   * picture and a nine-month one is how many people sit under each head, and
+   * for a long time this file said it without counting it. `POSTS` below names
+   * the twenty-four people a picture engages by name. This is everybody else:
+   * the six electricians behind the gaffer, the two drivers behind the
+   * transport coordinator, the set dressers behind the decorator. They have no
+   * names and no dates of their own because nothing needs them to, and they are
+   * counted because Iceland's higher reimbursement rate asks a production for
+   * fifty people on an Icelandic payroll and a count of department heads can
+   * never answer that question.
+   *
+   * The numbers are the ordinary complement of a fully staffed mid-budget
+   * feature. Twenty-four named and fifty-six behind them is eighty people,
+   * which sits where the research puts a fully staffed picture.
+   */
+  crowd: number;
 }
 
 export const DEPARTMENTS: readonly Department[] = [
-  { id: 'production', label: 'Production', what: 'The office, the money and the schedule. It opens first and closes last.' },
-  { id: 'ad', label: 'Assistant Directors', what: 'Whoever actually runs the floor. The director decides what to shoot; this decides when.' },
-  { id: 'camera', label: 'Camera', what: 'What the picture looks like, and the only department the audience sees the work of directly.' },
-  { id: 'electric', label: 'Electric', what: 'Light, and the power to make it. The largest department on most stages.' },
-  { id: 'grip', label: 'Grip', what: 'Everything that holds something up, shapes light, or moves the camera.' },
-  { id: 'art', label: 'Art', what: 'What the world of the picture is, drawn and then built.' },
-  { id: 'setdec', label: 'Set Decoration', what: 'Everything inside a built room that somebody could pick up or sit on.' },
-  { id: 'property', label: 'Property', what: 'What a performer handles. A separate craft from set decoration, and separately represented.' },
-  { id: 'costume', label: 'Costume', what: 'What everybody wears, designed and then maintained across a shoot that films out of order.' },
-  { id: 'hairmakeup', label: 'Hair And Makeup', what: 'Two crafts under one roof, and the first people a performer sees every morning.' },
-  { id: 'sound', label: 'Production Sound', what: 'What is recorded on the day, which decides how much has to be replaced later.' },
-  { id: 'script', label: 'Script Supervision', what: 'Continuity, and the only continuous record of what was actually shot.' },
-  { id: 'locations', label: 'Locations', what: 'Somewhere to film that isn’t a stage, and permission to be there.' },
-  { id: 'transport', label: 'Transportation', what: 'Moving the picture. Trucks, trailers, and everybody who drives one.' },
+  { id: 'production', label: 'Production', what: 'The office, the money and the schedule. It opens first and closes last.', crowd: 5 },
+  { id: 'ad', label: 'Assistant Directors', what: 'Whoever actually runs the floor. The director decides what to shoot; this decides when.', crowd: 3 },
+  { id: 'camera', label: 'Camera', what: 'What the picture looks like, and the only department the audience sees the work of directly.', crowd: 4 },
+  { id: 'electric', label: 'Electric', what: 'Light, and the power to make it. The largest department on most stages.', crowd: 7 },
+  { id: 'grip', label: 'Grip', what: 'Everything that holds something up, shapes light, or moves the camera.', crowd: 7 },
+  { id: 'art', label: 'Art', what: 'What the world of the picture is, drawn and then built.', crowd: 4 },
+  { id: 'setdec', label: 'Set Decoration', what: 'Everything inside a built room that somebody could pick up or sit on.', crowd: 5 },
+  { id: 'property', label: 'Property', what: 'What a performer handles. A separate craft from set decoration, and separately represented.', crowd: 2 },
+  { id: 'costume', label: 'Costume', what: 'What everybody wears, designed and then maintained across a shoot that films out of order.', crowd: 4 },
+  { id: 'hairmakeup', label: 'Hair And Makeup', what: 'Two crafts under one roof, and the first people a performer sees every morning.', crowd: 3 },
+  { id: 'sound', label: 'Production Sound', what: 'What is recorded on the day, which decides how much has to be replaced later.', crowd: 1 },
+  { id: 'script', label: 'Script Supervision', what: 'Continuity, and the only continuous record of what was actually shot.', crowd: 0 },
+  { id: 'locations', label: 'Locations', what: 'Somewhere to film that isn’t a stage, and permission to be there.', crowd: 4 },
+  { id: 'transport', label: 'Transportation', what: 'Moving the picture. Trucks, trailers, and everybody who drives one.', crowd: 7 },
 ];
 
 export const departmentById = (id: string): Department | undefined =>
@@ -320,3 +339,26 @@ export const postsIn = (department: DepartmentId): Post[] =>
  */
 export const prepScale = (shootWeeks: number): number =>
   Math.max(0.35, Math.min(1.6, shootWeeks / 6));
+
+/**
+ * The budget at which every department carries its whole complement.
+ *
+ * Below it the crowd scales down and a picture is made by fewer people wearing
+ * more hats; at it and above it, it does not scale up. A hundred-million
+ * picture does not put twenty electricians behind one gaffer — it puts a second
+ * unit on the floor with a gaffer of its own, and second units are not modeled.
+ * Capping here rather than extrapolating is the honest version of that: the
+ * number stops where the thing it counts stops.
+ */
+export const FULLY_STAFFED_AT: Money = 12_000_000_00;
+
+/**
+ * Weeks either side of photography that somebody under a head is engaged for.
+ *
+ * The named posts carry their own offsets, some of them enormous — the
+ * accountant is on the picture for twelve weeks after wrap. Nobody in the crowd
+ * is. A grip comes on the week before the shoot and goes the week after it, and
+ * that is the whole of their engagement, which is what decides whether they are
+ * one of the fifty people Iceland wants to see on a payroll for fifty days.
+ */
+export const CROWD_RUNS = 1;

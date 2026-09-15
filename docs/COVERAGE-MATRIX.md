@@ -54,7 +54,7 @@ not coming back in this build.
 
 ## The engine, as it now stands
 
-Twenty-five commands and three routes, which is the honest size of what is left.
+Twenty-six commands and three routes, which is the honest size of what is left.
 The appendix below is generated from the code, so it is the count to trust; this
 paragraph had said fifteen for three commands longer than it was true.
 
@@ -72,8 +72,8 @@ notice costs nothing, calling off later costs more the later it is, and not
 going at all costs twice what the latest possible call-off does. Ordering
 them is what makes choosing between them a choice.
 
-Fourteen more are the family business, and they are one system rather than
-fourteen: a production company is a list of things it may and may not do, and
+Fifteen more are the family business, and they are one system rather than
+fifteen: a production company is a list of things it may and may not do, and
 each of these opens one of those doors. `company.register` puts it on a
 register (Fyrirtækjaskrá, the VAT roll, the employer roll, the IRS),
 `company.form_arm` forms the American subsidiary, `company.sign` signs a
@@ -93,6 +93,74 @@ for months because the music cue sheet was nobody's job.
 `company.sell` sells the finished thing, and it is the only one of the three
 that can pay the company back. A deal is chosen, a ten-year take is reckoned
 once and never revised, and the release windows are armed to pay as they open.
+
+`company.claim_rebate` applies for Iceland's production reimbursement, and it is
+the one command in the build whose whole weight is a deadline. The lot has
+weighed this scheme since the day it was built — every enquiry from abroad sets
+what Iceland gives back against what coming here costs, and books Budapest when
+the arithmetic says to — while the family's own pictures, made by an Icelandic
+company on Icelandic stages, claimed nothing at all. The people with the most
+straightforward claim in the country were the only ones in the save not making
+it.
+
+The application closes on the first day of photography and never reopens. That
+is the real rule and not a penalty invented to give the calendar teeth: a
+reimbursement which did not change the decision to shoot here was never an
+incentive, so the scheme will not look at a file opened after the camera turned
+over. A quarter of the negative is the price of having forgotten, and the screen
+says so with a date on it.
+
+Three things decide what comes back, and a producer can work out all three in
+advance. That is deliberate — a reimbursement is what a picture is planned
+against, and a figure drawn at the last moment cannot be planned against.
+
+**What was spent here, which is not what was spent.** Fourteen percent of any
+negative is bought outside the country whatever anybody decides: the camera
+package, the finish, the cover placed through a broker who is not here. On top
+of that come two things a decision moves. Flights are bought abroad, so what it
+cost to bring somebody here is recorded leaving the country as it goes. And two
+fifths of a fee paid to a performer who lives somewhere else lands where they
+live, with their agent and their manager and the company it was invoiced by.
+That is the half of local hire the casting screen could never argue: the band
+buys the fee and says nothing about where the money ends up. A penalty comes off
+as well, because a penalty is money gone without being spend — going over costs
+a picture three quarters of what it costs, and being late costs it all of it.
+
+**Which of the two rates, and the cliff between them.** Twenty-five percent
+ordinarily, thirty-five with four conditions under it, and the four are
+cumulative. The test itself lives in content and both askers reach it, so there
+is one piece of legislation and not two implementations drifting apart. What
+differs is the answers. A foreign production asks whether Iceland can supply
+fifty people; a domestic one asks whether its own picture employs them — and
+answering that meant counting something the crew content has declared since it
+was written and nothing had ever computed. A picture has named posts, which are
+the twenty-four people it engages by name, and it has everybody behind them: the
+electricians behind the gaffer, the drivers behind the transport coordinator.
+Each department carries its head first and its crowd as the money climbs, and
+the fiftieth person on an Icelandic payroll turns up somewhere north of six
+million. Below that a picture is on the lower rate however long it shoots, and
+an eight-week shoot is what puts the crowd on it for the fifty days the scheme
+wants. Two numbers a producer sets months apart, and the pair of them decide
+ten percent of the negative.
+
+**When it lands.** The rate is stamped when the ministry accepts the file and is
+never revised, so a picture that shrinks afterwards has already been told what
+it is on — which is the whole reason to build it big before the shoot rather
+than hope after it. The money itself arrives six months after delivery, less an
+auditor's fee for the certificate it is paid against, on a floor that makes a
+very small claim barely worth making. And the scheme has an end date in law: a
+shoot that starts after it gets nothing, and the date is close enough to the
+start of a save to be a thing worth planning around.
+
+**What is not built here.** The auditor certifies exactly what the books say and
+disallows nothing, so there is no argument about a line and no reason to keep
+better records than the minimum. Nobody borrows against the claim, which in the
+real business is an industry of its own and would turn a six-month wait into a
+financing decision. A picture that shoots partly abroad is not modeled, because
+nothing in the build shoots anywhere but the family's own stages yet. And the
+higher tier's unconditional case — work made for audiences of eighteen and under
+— is in the content and read by nothing, because no picture in the build has an
+audience declared.
 
 Four of them put people on screen, and they are four rather than one because
 advertising a part, seeing somebody, offering it to a named person, and letting
@@ -321,14 +389,14 @@ marking read (`world.take_decision_action`, `world.dismiss_decision`,
 
 
 <!-- inventory:begin -->
-Generated by `node tools/inventory.mjs --markdown`. 25 commands, 14 scheduled kinds, 3 events emitted, 0 event listeners, 0 scenes, 3 routes.
+Generated by `node tools/inventory.mjs --markdown`. 26 commands, 15 scheduled kinds, 3 events emitted, 0 event listeners, 0 scenes, 3 routes.
 
 ### Commands
 
 | System | Kinds | Owner |
 | --- | --- | --- |
 | calendar | `calendar.cancel` `calendar.schedule` `calendar.skip` | `src/engine/world/plans.ts` |
-| company | `company.breakdown` `company.cast` `company.deliver` `company.develop` `company.fill_post` `company.form_arm` `company.greenlight` `company.insure` `company.option` `company.register` `company.release` `company.sell` `company.session` `company.sign` | `src/engine/world/casting.ts`, `src/engine/world/company.ts`, `src/engine/world/making.ts`, `src/engine/world/selling.ts` |
+| company | `company.breakdown` `company.cast` `company.claim_rebate` `company.deliver` `company.develop` `company.fill_post` `company.form_arm` `company.greenlight` `company.insure` `company.option` `company.register` `company.release` `company.sell` `company.session` `company.sign` | `src/engine/world/casting.ts`, `src/engine/world/company.ts`, `src/engine/world/making.ts`, `src/engine/world/rebate.ts`, `src/engine/world/selling.ts` |
 | life | `life.go_up` `life.sleep` `life.take_note` | `src/engine/systems/life.ts`, `src/engine/world/audition.ts` |
 | lot | `lot.sell` | `src/engine/world/lot.ts` |
 | world | `world.dismiss_decision` `world.mark_read` `world.set_preferences` `world.take_decision_action` | `src/engine/world/world.ts` |
@@ -339,7 +407,7 @@ Generated by `node tools/inventory.mjs --markdown`. 25 commands, 14 scheduled ki
 | --- | --- | --- |
 | life | `life.commitment` `life.day_rollover` `life.reading` | `src/engine/systems/life.ts`, `src/engine/world/audition.ts`, `src/engine/world/plans.ts` |
 | lot | `lot.overhead` | `src/engine/world/lot.ts` |
-| project | `project.banked` `project.cast` `project.crew` `project.delivery` `project.part` `project.period` `project.room` `project.window` | `src/engine/world/casting.ts`, `src/engine/world/crew.ts`, `src/engine/world/making.ts`, `src/engine/world/selling.ts` |
+| project | `project.banked` `project.cast` `project.crew` `project.delivery` `project.part` `project.period` `project.rebate` `project.room` `project.window` | `src/engine/world/casting.ts`, `src/engine/world/crew.ts`, `src/engine/world/making.ts`, `src/engine/world/rebate.ts`, `src/engine/world/selling.ts` |
 | sugar | `sugar.quota` | `src/engine/world/sugar.ts` |
 | world | `world.tick` | `src/engine/world/world.ts` |
 

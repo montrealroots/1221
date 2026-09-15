@@ -170,6 +170,12 @@ export const REGISTRY_BY_ID: Readonly<Record<RegistryId, RegistryFacts>> =
  * a higher tier attached to conditions about the size and shape of the
  * production. SLATE uses the lower figure and says so rather than printing a
  * number it cannot stand behind.
+ *
+ * The application closes on the first day of photography and never reopens.
+ * That used to be said here as a field reading `true`, which is a sentence
+ * pretending to be a rule — nothing could ever read it and get a different
+ * answer. It is a rule now, in `world/rebate.ts`, and the refusal a producer
+ * meets when they are late is written in `content/rebate.ts` with the others.
  */
 export const REBATE = {
   body: 'Atvinnuvega- og nýsköpunarráðuneytið',
@@ -188,8 +194,6 @@ export const REBATE = {
     crew: 50,
     crewDays: 50,
   },
-  /** Applied for before a foot of film is shot, or not at all. */
-  appliedBefore: true,
   auditedBy: 'An Icelandic auditor, at the production’s cost',
   /** Roughly how long after delivery the money lands. SLATE's own. */
   paidAfterMonths: 6,

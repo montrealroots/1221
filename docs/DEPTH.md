@@ -124,7 +124,15 @@ lands here, and it cannot land without proving its inputs matter.**
 
 ## Where We Stand
 
-Measured on a booted save, not read off the source.
+Measured on a booted save, not read off the source, on the day it was measured.
+It is kept as it was written because the point of it is the shape of the hole
+this build started from, and rewriting the finding every time a line of it stops
+being true would leave nothing to have been wrong about. What has since been
+built against it is listed in `docs/COVERAGE-MATRIX.md`, which is generated and
+is the count to trust: the slate, the crew, the cast, the audition room, the
+lot's booking board, the two ledgers and the reimbursement all landed after
+this was taken, and the sentence below beginning "No auditions" is the list they
+were built from.
 
 **The world is unusually deep. The career does not exist.** Real time and
 timezones, NOAA sunrise and sunset including polar day and polar night, hourly
@@ -687,6 +695,33 @@ Two of three tests in that commit had the same shape, and one of them recomputed
 the engine's own arithmetic inside the test and checked it against itself.
 Reintroduce the fault, watch it go red, and only then believe the test — most of
 all when the fault is subtle enough that you wrote the test to catch it.
+
+**One fact subtracted in two places is a fault arithmetic cannot see.** The
+reimbursement takes what left the country off the certificate. The flights that
+bring a performer here leave it, so they were recorded on the picture as they
+went — and then counted a second time off the cast seats, because both pieces of
+code were written to be complete on their own. Every figure involved was
+correct, every test on either half passed, and the certificate was short by the
+price of a plane ticket. What found it was the one test that wrote out the whole
+sum term by term instead of asserting the direction it moved in. A test that
+only checks a number went down cannot tell one subtraction from two.
+
+**A comment that names the omission is not the same as fixing it.** `tierFor`
+carried a paragraph saying the higher rate has four conditions, that the crew
+limb "sat in `REBATE.higherNeeds` being read by nothing", and that all four were
+tested now. Three of those sentences were true. The function tested the shoot's
+length against two different thresholds and never asked the fourth question at
+all, and the comment describing the fix was better evidence than the fix. Grep
+the constant, not the paragraph about the constant.
+
+**A guard at a point the arithmetic already handles can never change an
+answer.** The crowd behind a department head was refused where the budget could
+not carry the head — and at every budget where that was true the scaling had
+already rounded the crowd to nobody, so the line was unfalsifiable. Five
+mutations were run at it and it survived all five, which is what unreachable
+code looks like from the outside. The fix was not a better test: it was scaling
+each department from its own floor, so the head comes first and the crowd
+arrives behind them, and the guard became a thing the arithmetic says by itself.
 
 **Exports nothing reads, in a module written an hour ago.** Five of them, in
 the first draft of the inventory ledger: a sentence for a screen, a ledger
