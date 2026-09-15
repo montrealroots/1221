@@ -32,13 +32,14 @@ import { decideTake, type Prospects } from './world/selling';
 import { DEALS } from './content/selling';
 import { decideHire, standingReads, type Hiring } from './world/crew';
 import {
-  believedAt, decideOffer, reachOfBand, readOn, sheetFor, type Offer,
+  believedAt, decideOffer, reachOfBand, readOn, sheetFor, sparkBetween, sparkReads, type Offer,
 } from './world/casting';
-import { AXES, BOOKABLE, TAPE_LEANS, passById, type AxisId } from './content/casting';
+import { AXES, BOOKABLE, TAPE_LEANS, THE_GIVING, passById, type AxisId } from './content/casting';
 import { TOO_FAR, whyById } from './content/audition';
 import { decideAudition, remembersYou } from './world/audition';
 import type { Looked } from './domain/company';
 import { ageOn } from './world/family';
+import { sheetOf, type AttributeSheet } from './domain/attributes';
 
 // ---------------------------------------------------------------------------
 // The sky
@@ -626,4 +627,49 @@ defineDecider<Asked, string>({
     if (chance < 0.75) return 'they would call them in';
     return 'they ask for them by name';
   },
+});
+
+interface Pair { one: AttributeSheet; other: AttributeSheet; draw: number }
+
+/** A sheet with a chosen shape on the three axes and a chosen generosity. */
+const sheetShaped = (at: Record<string, number>, giving: number): AttributeSheet => sheetOf(50, {
+  ...Object.fromEntries(AXES.flatMap((axis) => axis.of.map((a) => [a, at[axis.id] ?? 50]))),
+  ...Object.fromEntries(THE_GIVING.map((id) => [id, giving])),
+});
+
+defineDecider<Pair, string>({
+  id: 'casting.spark',
+  decides: 'What two people carrying a picture have between them.',
+  drawnIn: 'src/engine/world/casting.ts',
+  reads: {
+    // The shape of the first one, level taken out. Shape and never level,
+    // because level would make the best performer alive maximally different
+    // from everybody and therefore everybody's ideal partner.
+    shape: (p, t) => ({
+      ...p,
+      one: sheetShaped({ truth: 20 + t * 70, repeatable: 55, reads: 90 - t * 70 }, 70),
+    }),
+    // And the shape of the second, swept the other way, so the sweep walks the
+    // pair from identical through to opposite.
+    against: (p, t) => ({
+      ...p,
+      other: sheetShaped({ truth: 90 - t * 70, repeatable: 55, reads: 20 + t * 70 }, 70),
+    }),
+    // What the two of them give whoever is in the scene with them, which is the
+    // multiplier: generosity with nothing to be generous toward buys nothing.
+    giving: (p, t) => ({
+      ...p,
+      one: sheetShaped({ truth: 90, repeatable: 50, reads: 20 }, Math.round(1 + t * 99)),
+    }),
+    // And whether they got on, which nobody can account for.
+    rapport: (p, t) => ({ ...p, draw: t }),
+  },
+  sample: (seed) => ({
+    one: sheetShaped({ truth: 30 + (seed % 5) * 14, repeatable: 55, reads: 80 - (seed % 5) * 12 }, 60),
+    other: sheetShaped({ truth: 75 - (seed % 4) * 15, repeatable: 55, reads: 35 + (seed % 4) * 13 }, 65),
+    draw: ((seed * 7) % 9) / 9,
+  }),
+  decide: ({ one, other, draw }) => sparkReads(sparkBetween(
+    { attributes: one } as never, { attributes: other } as never, draw,
+  )),
 });

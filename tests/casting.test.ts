@@ -28,12 +28,13 @@ import { ATTRIBUTE_BY_ID, sheetOf } from '@/engine/domain/attributes';
 import { projectsOf } from '@/engine/world/company';
 import { planById } from '@/engine/content/making';
 import {
-  ATTRIBUTES_READ, AXES, HAGGLE, SIZES, TAKES, THE_TAPE, roundById, takesAt,
+  ATTRIBUTES_READ, AXES, HAGGLE, SIZES, TAKES, THE_GIVING, THE_TAPE, roundById, takesAt,
 } from '@/engine/content/casting';
 import type { Looked } from '@/engine/domain/company';
 import {
   askFor, castOf, castOn, castsAppeal, castsReliability, datesFor, decideOffer, freeToWork,
   fromWhere, globalRuleOne, bringingThemCents, reachesTo,
+  castSpark, complementOf, shapeOf, sparkBetween, sparkReads,
   howManyCast, openRoles, quoteOf, ranOverOnThem,
   alreadyKnown, believedAt, goesOffBy, howWide, lookedAt, officeFillsAt, readOf, readOn,
   reachOfBand, seatFor, sheetFor, shownOf, SOMEBODY_KNOWS, takeFactor, tapeLean, theBiggestName,
@@ -1545,5 +1546,108 @@ describe('Global Rule One is asked at the one place it exists for', () => {
       expect(globalRuleOne(sim, who), `${who.displayName} should not be on this picture`)
         .toBeUndefined();
     }
+  });
+});
+
+describe('chemistry is not two solo scores added up', () => {
+  /** Somebody with a chosen shape on the three axes and a chosen generosity. */
+  const madeOf = (at: Record<string, number>, giving: number): Person => ({
+    id: `pair-${JSON.stringify(at)}-${giving}`,
+    isPlayer: false,
+    attributes: sheetOf(50, {
+      ...Object.fromEntries(AXES.flatMap((axis) => axis.of.map((a) => [a, at[axis.id] ?? 50]))),
+      ...Object.fromEntries(THE_GIVING.map((id) => [id, giving])),
+    }),
+  } as never);
+
+  it('ranks the same partner differently depending on who is asking', () => {
+    // The definitive test, and the reason this exists at all. The research:
+    // "Chemistry cannot be computed from two solo scores. If the pairing matrix
+    // is separable, there is no chemistry read — there is only addition with a
+    // new name on it." If spark were f(a) + g(b), then whoever is the better
+    // partner for one person is the better partner for everybody, and no
+    // ranking could ever invert. This one does.
+    const peaked = madeOf({ truth: 90, repeatable: 50, reads: 20 }, 70);
+    const opposite = madeOf({ truth: 20, repeatable: 50, reads: 90 }, 70);
+    const alike = madeOf({ truth: 88, repeatable: 48, reads: 22 }, 70);
+    const flat = madeOf({ truth: 55, repeatable: 55, reads: 55 }, 70);
+
+    // For the peaked one, the opposite shape is the better partner.
+    expect(sparkBetween(peaked, opposite, 0.5)).toBeGreaterThan(sparkBetween(peaked, alike, 0.5));
+    // For the one shaped like them, it is the other way round.
+    expect(sparkBetween(alike, opposite, 0.5)).toBeGreaterThan(sparkBetween(alike, peaked, 0.5));
+    // And the flat one gets nothing from either, which no sum could produce.
+    expect(sparkBetween(flat, peaked, 0.5)).toBeLessThan(sparkBetween(opposite, peaked, 0.5));
+  });
+
+  it('is about shape and never about level, so the best alive is not the worst partner', () => {
+    // Level would make somebody at a hundred on everything maximally different
+    // from the whole world, and therefore everybody's ideal partner — which is
+    // absurd and would also be a craft check on a player who cannot fail one.
+    const best = madeOf({ truth: 100, repeatable: 100, reads: 100 }, 100);
+    const ordinary = madeOf({ truth: 50, repeatable: 50, reads: 50 }, 70);
+    const peaked = madeOf({ truth: 90, repeatable: 50, reads: 20 }, 70);
+    expect(complementOf(readOf(best), readOf(ordinary))).toBeCloseTo(0, 6);
+    expect(complementOf(readOf(best), readOf(peaked)))
+      .toBeGreaterThan(complementOf(readOf(best), readOf(ordinary)));
+    // Two people a long way apart in standing can be the same note twice.
+    expect(shapeOf(readOf(best))).toEqual(shapeOf(readOf(ordinary)));
+  });
+
+  it('buys nothing from generosity with nothing to be generous toward', () => {
+    const flatGiving = madeOf({ truth: 50, repeatable: 50, reads: 50 }, 100);
+    const flatMean = madeOf({ truth: 50, repeatable: 50, reads: 50 }, 10);
+    // Two people with no difference between them: how much they give changes
+    // nothing, because there is nothing for it to multiply.
+    expect(sparkBetween(flatGiving, flatGiving, 0.5)).toBe(sparkBetween(flatMean, flatMean, 0.5));
+    // Give them something to work with and generosity starts to matter.
+    const peakedGiving = madeOf({ truth: 90, repeatable: 50, reads: 20 }, 100);
+    const peakedMean = madeOf({ truth: 90, repeatable: 50, reads: 20 }, 10);
+    const other = madeOf({ truth: 20, repeatable: 50, reads: 90 }, 55);
+    expect(sparkBetween(peakedGiving, other, 0.5))
+      .toBeGreaterThan(sparkBetween(peakedMean, other, 0.5));
+  });
+
+  it('reads six attributes nothing else in the build reads', () => {
+    for (const id of THE_GIVING) {
+      expect(ATTRIBUTE_BY_ID[id], `${id} is not an attribute`).toBeDefined();
+      for (const axis of AXES) expect(axis.of).not.toContain(id);
+      expect(THE_TAPE).not.toContain(id);
+    }
+  });
+
+  it('sells a picture for more when something happens between the leads', () => {
+    const money = 20_000_000_00;
+    const at = (spark: number) => decideTake(
+      { negativeCents: money, dealId: 'studio', cast: { truth: 60, reads: 60 }, spark }, 0.5,
+    ).cents;
+    expect(at(90)).toBeGreaterThan(at(50));
+    expect(at(50)).toBeGreaterThan(at(15));
+  });
+
+  it('pairs only the people who are in it together for months', () => {
+    const sim = world('pairs');
+    const id = greenlit(sim, 'feature', 'Hvítserkur');
+    const shoot = sim.universe.projects[id]!.periods!.find((p) => p.id === 'shooting')!;
+    sim.advanceTo(shoot.from);
+    const project = sim.universe.projects[id]!;
+    expect(castSpark(sim, project)).toBeDefined();
+    // A day player is there for an afternoon and pairs with nobody, so changing
+    // one cannot move what the picture has between its leads.
+    const before = castSpark(sim, project)!;
+    for (const one of castOf(sim, project)) {
+      if (one.size.across === 'title' || !one.person) continue;
+      one.person.attributes = sheetOf(50, Object.fromEntries(THE_GIVING.map((g) => [g, 1])));
+    }
+    expect(castSpark(sim, project)).toBe(before);
+  });
+
+  it('says nothing at all about a picture with one person in it', () => {
+    const sim = world('alone');
+    const id = greenlit(sim, 'feature', 'Hvítserkur');
+    const project = sim.universe.projects[id]!;
+    project.cast = [];
+    expect(castSpark(sim, project)).toBeUndefined();
+    expect(sparkReads(90)).not.toBe(sparkReads(10));
   });
 });

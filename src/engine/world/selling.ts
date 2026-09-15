@@ -36,7 +36,7 @@ import {
   type Deal, type ReleaseWindow, type TierId,
   dealById, ultimateFor, windowById,
 } from '../content/selling';
-import { castOn, castsAppeal, castsControversy } from './casting';
+import { castOn, castSpark, castsAppeal, castsControversy } from './casting';
 import { MS_WEEK } from './lot';
 
 export const WINDOW_KIND = 'project.window';
@@ -82,6 +82,16 @@ export interface Prospects {
    * watched. Which is why this is the term a career moves and the other is not.
    */
   appeal?: number;
+  /**
+   * What the people carrying it have between them, out of a hundred.
+   *
+   * Deliberately not derivable from the other terms, and that is the whole of
+   * why it is here: the research is blunt that chemistry cannot be computed
+   * from two solo scores, so a picture with two superb leads who are the same
+   * note twice is worth less than one with two good ones who fill each other's
+   * gaps. Absent where there is nobody to pair with.
+   */
+  spark?: number;
 }
 
 /**
@@ -113,10 +123,14 @@ export function decideTake(prospects: Prospects, roll: number): { cents: Money }
   // And whether anybody was already glad to see them, which is the only term in
   // here a performer earns rather than arrives with.
   const glad = 1 + (((prospects.appeal ?? 50) - 50) / 100) * CAST_MOVES.appeal;
+  // And whether anything happens between the people carrying it, which is the
+  // one term here that is a fact about a pair rather than about anybody.
+  const together = 1 + (((prospects.spark ?? 50) - 50) / 100) * CAST_MOVES.spark;
   const cold = 1 - ((prospects.controversy ?? 0) / 100) * CAST_MOVES.controversy;
   return {
     cents: Math.round(
-      ultimateFor(prospects.negativeCents) * pull * band * Math.max(0.2, cast * cold * glad),
+      ultimateFor(prospects.negativeCents) * pull * band
+      * Math.max(0.2, cast * cold * glad * together),
     ),
   };
 }
@@ -131,7 +145,9 @@ export function decideTake(prospects: Prospects, roll: number): { cents: Money }
  * over half in each direction, which is less than the deal does and more than
  * the draw does.
  */
-export const CAST_MOVES = { truth: 0.34, reads: 0.46, controversy: 0.38, appeal: 0.3 } as const;
+export const CAST_MOVES = {
+  truth: 0.34, reads: 0.46, controversy: 0.38, appeal: 0.3, spark: 0.36,
+} as const;
 
 // ---------------------------------------------------------------------------
 // The waterfall
@@ -288,6 +304,7 @@ export function sellIt(sim: Simulation, sale: Sale): { ok: true } | { ok: false;
   const reads = castOn(sim, project, 'reads');
   const controversy = castsControversy(sim, project);
   const appeal = castsAppeal(sim, project);
+  const spark = castSpark(sim, project);
   project.takeCents = decideTake(
     {
       negativeCents: project.budgetCents ?? 0,
@@ -295,6 +312,7 @@ export function sellIt(sim: Simulation, sale: Sale): { ok: true } | { ok: false;
       ...(truth !== undefined && reads !== undefined ? { cast: { truth, reads } } : {}),
       ...(controversy !== undefined ? { controversy } : {}),
       ...(appeal !== undefined ? { appeal } : {}),
+      ...(spark !== undefined ? { spark } : {}),
     },
     roll,
   ).cents;

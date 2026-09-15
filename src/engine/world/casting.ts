@@ -60,7 +60,8 @@ import { clamp } from '../core/rng';
 import { MEN, WOMEN, patronymic } from '../content/names';
 import {
   AXES, A_PART_LEANS, CAST_SHARE, HAGGLE, QUOTE_LIFE, ROUNDS, SIZES, TAPE_LEANS, THE_TAPE,
-  WHERE_FROM, axisById, passById, roundById, sizeById, takesAt, whereFromById, whereFromCity,
+  PAIRING, THE_GIVING, WHERE_FROM, axisById, passById, roundById, sizeById, takesAt,
+  whereFromById, whereFromCity,
   type AxisId, type PassId, type Round, type Size, type WhereFrom,
 } from '../content/casting';
 import type { Plan } from '../content/making';
@@ -1604,4 +1605,112 @@ export function sayTheRoom(before: Read, after: Read): string {
   const worst = moved[0]!;
   return `${worst.axis.label} was ${Math.round(before[worst.axis.id])}/100 and reads `
     + `${Math.round(after[worst.axis.id])}/100 now.`;
+}
+
+// ---------------------------------------------------------------------------
+// What two of them have between them
+// ---------------------------------------------------------------------------
+
+/**
+ * A read with its own level taken out of it, leaving only its shape.
+ *
+ * The whole reason chemistry is not a sum. Two performers a long way apart in
+ * how good they are can be exactly the same note twice, and two identical in
+ * standing can fill each other's gaps completely — so what pairs is the second
+ * thing, and a level-blind shape is how you ask about it. It is also what keeps
+ * the player out of the trap: at a hundred on everything their shape is flat,
+ * not extreme, so they are neither the best nor the worst partner alive by
+ * construction.
+ */
+export function shapeOf(read: Read): Read {
+  const level = AXES.reduce((n, axis) => n + read[axis.id], 0) / AXES.length;
+  const out = { ...read };
+  for (const axis of AXES) out[axis.id] = read[axis.id] - level;
+  return out;
+}
+
+/**
+ * How far apart two people are in shape, out of a hundred.
+ *
+ * The term that cannot be split into two solo scores, and the reason this file
+ * can claim to have a pairing at all rather than addition with a new name.
+ */
+export function complementOf(one: Read, other: Read): number {
+  const a = shapeOf(one);
+  const b = shapeOf(other);
+  let apart = 0;
+  for (const axis of AXES) apart += Math.abs(a[axis.id] - b[axis.id]);
+  return apart / AXES.length;
+}
+
+/** What somebody gives whoever is in the scene with them, out of a hundred. */
+export function givingOf(sheet: AttributeSheet): number {
+  if (THE_GIVING.length === 0) return 0;
+  let total = 0;
+  for (const id of THE_GIVING) total += rate(sheet, id);
+  return total / THE_GIVING.length;
+}
+
+/**
+ * What two people have between them.
+ *
+ * Difference in shape, multiplied by how much the two of them give, plus the
+ * part nobody can account for. The multiplication is what makes it a pairing:
+ * generosity with nothing to be generous toward buys nothing, and two people
+ * who fill each other's gaps and will not look at each other buy nothing
+ * either.
+ */
+export function sparkBetween(one: Person, other: Person, draw: number): number {
+  const apart = complementOf(readOf(one), readOf(other));
+  const giving = (givingOf(one.attributes) + givingOf(other.attributes)) / 2 / 100;
+  return clamp(
+    Math.round(
+      PAIRING.middling
+      + Math.min(1, apart / PAIRING.apartAt) * PAIRING.complement * giving
+      + (draw - 0.5) * PAIRING.rapport,
+    ),
+    1, 100,
+  );
+}
+
+/**
+ * What the whole cast has between them, weighted by how much of the picture
+ * each pairing is actually in together.
+ *
+ * Only the parts engaged across the title, because those are the people who are
+ * in scenes with each other for months. A day player pairs with nobody: they
+ * are there for an afternoon and whoever they played it with was somebody
+ * else's problem.
+ *
+ * Undefined where there is nobody to pair with, which is a picture with one
+ * person in it and not a picture with no chemistry.
+ */
+export function castSpark(sim: Simulation, project: Project): number | undefined {
+  const together = castOf(sim, project).filter((one) => one.size.across === 'title' && one.person);
+  if (together.length < 2) return undefined;
+  let total = 0;
+  let weight = 0;
+  for (let i = 0; i < together.length; i += 1) {
+    for (let j = i + 1; j < together.length; j += 1) {
+      const a = together[i]!;
+      const b = together[j]!;
+      // How much of the picture the two of them are in at the same time, which
+      // is what makes a pairing of leads worth more than a pairing of the fifth
+      // and sixth names on the call sheet.
+      const share = a.share * b.share;
+      const draw = sim.rng('casting', 'spark', project.id, a.role.id, b.role.id).next();
+      total += sparkBetween(a.person!, b.person!, draw) * share;
+      weight += share;
+    }
+  }
+  return weight > 0 ? total / weight : undefined;
+}
+
+/** What a pairing reads as, in the words anybody would use about one. */
+export function sparkReads(spark: number): string {
+  if (spark >= 78) return 'something happens between them';
+  if (spark >= 60) return 'they play well together';
+  if (spark >= 42) return 'they are fine together';
+  if (spark >= 25) return 'two performances side by side';
+  return 'they do not look at each other';
 }

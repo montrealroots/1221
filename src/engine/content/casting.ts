@@ -329,6 +329,53 @@ export const BOOKABLE: readonly Round[] = ROUNDS.filter((r) => r.id !== 'pile');
 export const A_PART_LEANS = 0.45;
 
 /**
+ * What somebody gives the person they are in the scene with.
+ *
+ * Six attributes about whoever else is in the room, none of them on any of the
+ * three axes and none of them in `THE_TAPE`: a believable bond out of nothing,
+ * a stranger from the hallway looking like you go back years, live two-way
+ * contact instead of two performances side by side, serving the scene rather
+ * than your own coverage, a full performance given off camera for somebody
+ * else's eyeline, and the audience's eye handed to whoever the scene needs it
+ * on.
+ *
+ * It is read only as a multiplier on what two people have between them, never
+ * on its own. Generosity with nothing to be generous toward is a quality nobody
+ * can see.
+ */
+export const THE_GIVING: readonly string[] = [
+  'chemistry', 'chemistry_read', 'communion', 'ensemble_blending',
+  'feeding_off_camera_lines', 'giving_and_taking_focus',
+];
+
+/**
+ * What two people have between them, out of a hundred, and where it comes from.
+ *
+ * The research is blunt: "Chemistry cannot be computed from two solo scores. If
+ * the pairing matrix is separable, there is no chemistry read — there is only
+ * addition with a new name on it." So the term that carries it is the one that
+ * cannot be split: how different the two of them are in *shape*, multiplied by
+ * how much each of them gives.
+ *
+ * Shape and not level, because level would make the best performer alive the
+ * worst possible partner for everybody — maximum difference from the whole
+ * world. Two people can be a long way apart in how good they are and be exactly
+ * the same note twice, and two people can be identical in standing and fill
+ * each other's gaps completely. What pairs is the second thing.
+ *
+ * `middling` is what an ordinary pairing is worth. `complement` is how far the
+ * shape term can carry it, and `apartAt` is the difference in shape at which it
+ * is fully paid — without that second number the term ran off the top of the
+ * scale and every interesting pairing clamped at a hundred, which is a matrix
+ * with one value in it. `rapport` is the part nobody can account for: two
+ * people either got on in the room or they did not, and the research calls it
+ * an off-screen rapport roll because that is what it is.
+ *
+ * SLATE's own, all four.
+ */
+export const PAIRING = { middling: 50, complement: 42, rapport: 16, apartAt: 55 } as const;
+
+/**
  * What a tape shows, as against what the person is.
  *
  * Four attributes that have sat in the sheet unread since it was written, and

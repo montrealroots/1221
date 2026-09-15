@@ -31,9 +31,10 @@ import { pullOn, sellsFor, stillToCarry } from '@/engine/world/lot';
 import { SELLING } from '@/engine/content/lot';
 import { AXES, BOOKABLE, feeReads } from '@/engine/content/casting';
 import {
-  askFor, bringingThemCents, castOf, datesFor, fromWhere, globalRuleOne, howManyCast, howSure,
-  howWide, lookedAt, officeFillsAt, quoteOf, saysWhatItWants, seatFor, shownOf, sureReads,
-  theDiary, whereTheCastStands, whoCameIn,
+  askFor, bringingThemCents, castOf, castSpark, datesFor, fromWhere, globalRuleOne, howManyCast,
+  howSure,
+  howWide, lookedAt, officeFillsAt, quoteOf, saysWhatItWants, seatFor, shownOf, sparkReads,
+  sureReads, theDiary, whereTheCastStands, whoCameIn,
 } from '@/engine/world/casting';
 import {
   AIRDATE_WEEKS, LEAD_WEEKS, LONGEST_SHOOT, canHandOver, windowOf, wouldBe,
@@ -763,7 +764,11 @@ function CastForm({ projectId, onClose }: { projectId: string; onClose: () => vo
       onClose={onClose}
       footer={<button className="btn btn-ghost" onClick={onClose}>Close</button>}
     >
-      <p className="small">{whereTheCastStands(sim, project)}</p>
+      <p className="small">
+        {whereTheCastStands(sim, project)}
+        {castSpark(sim, project) !== undefined
+          && ` Between the people carrying it, ${sparkReads(castSpark(sim, project)!)}.`}
+      </p>
       <p className="muted small">
         Two weeks before the camera turns over the office fills whatever is left, at the band, out
         of whoever the band reaches. Paying over it is the only way to reach further, and the only

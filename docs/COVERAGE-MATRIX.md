@@ -121,6 +121,28 @@ at that looks better than they are while one who is hopeless at it looks worse.
 A preread is a correction rather than a zoom, and that is the post-2020
 complaint about self-taping stated as arithmetic instead of as an opinion.
 
+Two people carrying a picture have something between them, and it is not two
+solo scores added up. The research is blunt that a separable pairing matrix is
+addition with a new name on it, and this build was maximally separable — a
+strictly linear weighted mean over independent reads, which is the precondition
+for committing the failure rather than a defence against it. What carries the
+pairing is the one term that cannot be split: how far apart two people are in
+the *shape* of what they do, multiplied by how much each of them gives whoever
+is in the scene with them. Shape and never level, because level would make the
+best performer alive maximally different from the whole world and therefore
+everybody's ideal partner, which is absurd and would also be a craft check on a
+player who cannot fail one. Two people a long way apart in standing can be the
+same note twice; two identical in standing can fill each other's gaps
+completely, and what pairs is the second thing. Six attributes read it that
+nothing else in the build reads, none of them on any axis. The test that matters
+is the one that inverts a ranking: whoever is the better partner for one person
+is the worse partner for another, which no sum can produce.
+
+**What is not built there.** No chemistry read — a round that sees two people at
+once, which the round machinery takes one at a time. No optics: age gap, height
+and colouring are half the research's own pairing term and a role carries no age
+band to be wrong against, so it would be a number measured against nothing.
+
 Performers come from somewhere, and it is a real row in the gazetteer. Most of
 everybody is Icelandic, because Iceland is a country of four hundred thousand
 people with a working screen industry; the rest are Nordic, British or
