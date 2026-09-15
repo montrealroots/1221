@@ -120,7 +120,21 @@ export class Registry<T extends ReferenceRecord> {
     return this.aliasIndex.get(normalise(name));
   }
 
-  /** Ranked fuzzy search used by Go Anywhere. */
+  /**
+   * Ranked fuzzy search over everything in a registry.
+   *
+   * Nothing calls it. It was written for a Go Anywhere palette on `/`, and
+   * that palette was deleted with the rest of the unkept interface — the
+   * keybinding does nothing now and this is what is left behind it, a ranked
+   * search over a hundred and seventy thousand cities that no screen can
+   * reach. `byName` beside it has two real readers and is not this.
+   *
+   * Kept rather than deleted for one reason only, and it is a reason with a
+   * date on it: the rail lists two entries and most of what this build knows
+   * has no way in. If a way in is built, this is it, already written and
+   * already tested. If it is not, this and `scoreMatch` should go, and
+   * `docs/UNBITTEN.md` carries them until one of those happens.
+   */
   search(query: string, limit = 12): T[] {
     const q = normalise(query);
     if (!q) return [];

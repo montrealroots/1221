@@ -98,11 +98,18 @@ if (await begin.count()) {
     await shoot(name);
   }
 
-  // Go Anywhere, which is how most of the game is actually reached.
+  // There used to be a Go Anywhere palette on `/` and this walk shot it every
+  // run. It was deleted with the rest of the unkept interface and nothing
+  // replaced the keybinding, so the shot was the page behind it, filed under
+  // the name of a screen that no longer exists — which is the same fault as
+  // shooting one creation step under five names, and this file already warns
+  // about that one. So it presses the key and says whether anything opened,
+  // rather than photographing whatever was underneath.
   await page.keyboard.press('/').catch(() => {});
   await page.waitForTimeout(700);
-  await shoot('26-go-anywhere');
-  await page.keyboard.press('Escape').catch(() => {});
+  const palette = await page.locator('[role="dialog"], .palette, .command-palette').count();
+  if (palette > 0) { await shoot('26-go-anywhere'); await page.keyboard.press('Escape').catch(() => {}); }
+  else console.log('  (nothing opens on / — there is no Go Anywhere in this build)');
 }
 
 await browser.close();

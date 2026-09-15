@@ -36,7 +36,7 @@ import {
   MAX_PERSONALITY_TRAITS, PERSONALITY_GROUPS, PERSONALITY_TRAIT_BY_ID,
   conflictingPersonalityTraits, personalityTraitPairs,
 } from '@/engine/content/personality-traits';
-import { ALL_TRAITS, ATTRIBUTES, TRAITS } from '@/engine/domain/attributes';
+import { ATTRIBUTES, TRAITS } from '@/engine/domain/attributes';
 import { GENRE_MASTERIES } from '@/engine/content/genre-mastery';
 import {
   ESTATE_ACRES, ESTATE_COUNTRY_ID, ESTATE_NAME, ESTATE_NOTE, HOLDINGS, HOUSE, LOT_NAME,
@@ -782,7 +782,8 @@ function CareerStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
               <span className="chip chip-accent">{GOAT_LABEL}</span>
             </div>
             <div className="xs dim" style={{ marginTop: 4 }}>
-              All {ATTRIBUTES.length} Attributes At {CEILING} · All {ALL_TRAITS.length} Traits
+              All {ATTRIBUTES.length} Attributes At {CEILING} · All {TRAITS.length} Traits
+              · Every One Of {GENRE_MASTERIES.length} Genres
             </div>
             <div className="chip-row" style={{ marginTop: 8 }}>
               {goatTraitsIn(discipline).map((trait) => (
@@ -861,7 +862,7 @@ function StartingPointStep({ config, set }: { config: NewSaveConfig; set: Setter
           <div className="stat">
             <span className="stat-label">Industry Here</span>
             <span className="stat-value">None</span>
-            <span className="stat-note">No television, no film, until the family</span>
+            <span className="stat-note">No television and no film, until the family built some</span>
           </div>
         </div>
 
@@ -1061,8 +1062,9 @@ function ReviewStep({ config }: { config: NewSaveConfig }) {
         */}
         <p className="small">
           <strong>The Best There Has Ever Been.</strong>
-          {' '}All {ATTRIBUTES.length} acting attributes at {CEILING}, all {ALL_TRAITS.length}{' '}
-          acting traits, and the {GOAT_TRAITS.length} G.O.A.T. traits, held at once.
+          {' '}All {ATTRIBUTES.length} acting attributes at {CEILING}, all {TRAITS.length} acting
+          traits, mastery of every one of {GENRE_MASTERIES.length} genres, and the{' '}
+          {GOAT_TRAITS.length} G.O.A.T. traits, held at once.
         </p>
         <p className="xs dim" style={{ margin: '6px 0 0' }}>
           For anybody else that list contradicts itself and most of it is paid for with a weakness
