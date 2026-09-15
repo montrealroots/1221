@@ -32,7 +32,7 @@ import { SELLING } from '@/engine/content/lot';
 import { AXES, BOOKABLE, feeReads } from '@/engine/content/casting';
 import {
   askFor, castOf, datesFor, howManyCast, howSure, howWide, lookedAt, officeFillsAt, quoteOf,
-  seatFor, shownOf, sureReads, theDiary, whereTheCastStands, whoCameIn,
+  saysWhatItWants, seatFor, shownOf, sureReads, theDiary, whereTheCastStands, whoCameIn,
 } from '@/engine/world/casting';
 import {
   AIRDATE_WEEKS, LEAD_WEEKS, LONGEST_SHOOT, canHandOver, windowOf, wouldBe,
@@ -802,6 +802,7 @@ function CastForm({ projectId, onClose }: { projectId: string; onClose: () => vo
                     <div className="muted small">
                       {when ? formatDate(when.from, sim.homeZone) : one.size.label}
                     </div>
+                    <div className="dim xs">{`Needs ${saysWhatItWants(one.role)}`}</div>
                   </td>
                   <td className="nowrap">{formatMoney(one.role.bandCents)}</td>
                   <td className="small">

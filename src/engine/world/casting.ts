@@ -59,8 +59,9 @@ import { impliedPerformerTitle } from '../core/performer';
 import { clamp } from '../core/rng';
 import { MEN, WOMEN, patronymic } from '../content/names';
 import {
-  AXES, CAST_SHARE, HAGGLE, QUOTE_LIFE, ROUNDS, SIZES, TAPE_LEANS, THE_TAPE, axisById,
-  passById, roundById, sizeById, takesAt, type AxisId, type PassId, type Round, type Size,
+  AXES, A_PART_LEANS, CAST_SHARE, HAGGLE, QUOTE_LIFE, ROUNDS, SIZES, TAPE_LEANS, THE_TAPE,
+  axisById, passById, roundById, sizeById, takesAt,
+  type AxisId, type PassId, type Round, type Size,
 } from '../content/casting';
 import type { Plan } from '../content/making';
 import { MS_WEEK } from './lot';
@@ -163,16 +164,61 @@ export function layTheRoles(sim: Simulation, project: Project): Role[] {
   const pot = castPot(project);
   for (const one of counted) {
     ordinal += 1;
+    const id = sim.nextId('role');
     roles.push({
-      id: sim.nextId('role'),
+      id,
       ordinal,
       name: nameTheRole(one.size, ordinal),
       size: one.size.id,
       ...(one.partId ? { partId: one.partId } : {}),
       bandCents: weight > 0 ? Math.round((pot * one.size.weight) / weight) : 0,
+      wants: whatItWants(sim, project, id, one.size),
     });
   }
   return roles;
+}
+
+/**
+ * What one part needs, drawn once and kept.
+ *
+ * The size says what a part this big usually wants and the draw says what this
+ * one turned out to be. Normalised back to three afterwards, so no part is
+ * quietly worth more than another — a leaning is a shape, not a quantity, and a
+ * part that wanted more of everything would be a part with a bigger budget
+ * rather than a different one.
+ */
+export function whatItWants(
+  sim: Simulation, project: Project, roleId: string, size: Size,
+): Record<string, number> {
+  const draw = sim.rng('casting', 'wants', project.id, roleId);
+  const raw: Record<string, number> = {};
+  let total = 0;
+  for (const axis of AXES) {
+    const one = Math.max(0.1, size.leans[axis.id] + (draw.next() - 0.5) * 2 * A_PART_LEANS);
+    raw[axis.id] = one;
+    total += one;
+  }
+  const to = AXES.length;
+  for (const axis of AXES) raw[axis.id] = Math.round((raw[axis.id]! / total) * to * 100) / 100;
+  return raw;
+}
+
+/** How much this part cares about one axis, which is one where nobody said. */
+export const wantsOn = (role: Role, axis: AxisId): number => role.wants?.[axis] ?? 1;
+
+/**
+ * What a part needs, in the order it needs it.
+ *
+ * Said as an order rather than as three numbers, because three numbers summing
+ * to three is arithmetic and what a producer actually holds in their head is
+ * "this one is a face and that one is a fortnight of coverage".
+ */
+export function saysWhatItWants(role: Role): string {
+  const ranked = [...AXES].sort((a, b) => wantsOn(role, b.id) - wantsOn(role, a.id));
+  const top = ranked[0]!;
+  const bottom = ranked[ranked.length - 1]!;
+  if (wantsOn(role, top.id) - wantsOn(role, bottom.id) < 0.25) return 'a bit of everything';
+  return `${top.label.toLowerCase()} before ${bottom.label.toLowerCase()}`;
 }
 
 /**
@@ -430,7 +476,6 @@ export function putItOut(sim: Simulation, project: Project, role: Role): Person[
     out.push(performerNew(sim, standing, () => making.next()));
   }
   role.seen = out.map((person) => ({ personId: person.id }));
-  role.outAt = sim.now;
   return out;
 }
 
@@ -502,9 +547,14 @@ export function decideOffer(offer: Offer, roll: number): Answer {
   if (beneath > 45) return { took: false, passed: 'size' };
 
   // What is left is the ordinary business of somebody reading it twice. Money
-  // over the ask buys some of that down and never all of it.
-  const over = offer.askCents > 0 ? offer.feeCents / offer.askCents : 1;
-  const keen = clamp(0.52 + (over - 1) * 0.45 + (45 - beneath) * 0.004, 0.2, 0.96);
+  // over the ask buys some of that down and never all of it — and it stops
+  // buying anything at all past the point somebody can be talked into, which is
+  // why doubling an already-generous offer is money handed over for nothing.
+  const over = Math.min(
+    HAGGLE.over,
+    offer.askCents > 0 ? offer.feeCents / offer.askCents : 1,
+  );
+  const keen = clamp(0.52 + (over - 1) * 0.45 + (45 - beneath) * 0.004, 0.2, HAGGLE.most);
   return roll < keen
     ? { took: true, feeCents: offer.feeCents }
     : { took: false, passed: 'thought-about-it' };
@@ -581,9 +631,15 @@ export function castOf(sim: Simulation, project: Project): InIt[] {
  */
 export function castOn(sim: Simulation, project: Project, axis: AxisId): number | undefined {
   const inIt = castOf(sim, project);
-  const weight = inIt.reduce((n, one) => n + one.share, 0);
+  // How much of the picture the part is, times how much the part needs this of
+  // whoever plays it. Both, because they are different questions: a day player
+  // is a small part of the picture and what there is of them is almost entirely
+  // a face, and a lead is most of the picture and most of what it costs the
+  // floor is whether they can do it again.
+  const at = (one: InIt) => one.share * wantsOn(one.role, axis);
+  const weight = inIt.reduce((n, one) => n + at(one), 0);
   if (weight <= 0) return undefined;
-  return inIt.reduce((n, one) => n + one.read[axis] * one.share, 0) / weight;
+  return inIt.reduce((n, one) => n + one.read[axis] * at(one), 0) / weight;
 }
 
 /** How many of the parts have somebody in them. */
@@ -928,7 +984,11 @@ export function theOfficeFills(sim: Simulation, project: Project): number {
     // would get the same cast as one who saw everybody twice.
     const worth = (person: Person): number => {
       const one = shownOf(sim, project, role, person);
-      return one.truth + one.reads + one.repeatable;
+      // Weighted by what this part needs rather than summed flat, because an
+      // office casting a day player and an office casting a lead are not
+      // looking for the same thing, and a flat sum would have made every
+      // casting decision in the save the same decision wearing a vector.
+      return AXES.reduce((n, axis) => n + one[axis.id] * wantsOn(role, axis.id), 0);
     };
     const best = seen.reduce((top, person) => (worth(person) > worth(top) ? person : top), seen[0]!);
     if (!project.cast) project.cast = [];

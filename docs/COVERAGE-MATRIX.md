@@ -121,6 +121,15 @@ at that looks better than they are while one who is hopeless at it looks worse.
 A preread is a correction rather than a zoom, and that is the post-2020
 complaint about self-taping stated as arithmetic instead of as an opinion.
 
+What a part needs is its own fact, laid at the greenlight and kept. Three
+numbers coming to three: a day player is a face in one scene, so how they read
+is nearly the whole of it and nobody is going to ask them for take nine; a lead
+is in half the picture and every setup of it. Without that, the best buy for
+every part on every picture in the save is the same weighted sum forever, which
+is a casting system with one decision in it. It is not hidden from the player,
+because the player is the producer and a producer knows what their own picture
+needs; what is hidden is what the actor is.
+
 A session is one note and a note is one axis. Naming an axis takes that one a
 round further than the session would otherwise have taken it and leaves the
 other two where they were, so a note is not extra information — it is the same

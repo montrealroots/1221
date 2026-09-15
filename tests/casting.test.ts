@@ -35,7 +35,7 @@ import {
   askFor, castOf, castOn, datesFor, decideOffer, freeToWork, howManyCast, openRoles, quoteOf,
   alreadyKnown, believedAt, goesOffBy, howWide, lookedAt, officeFillsAt, readOf, readOn,
   reachOfBand, seatFor, sheetFor, shownOf, SOMEBODY_KNOWS, takeFactor, tapeLean, theBiggestName,
-  theDiary, theNameThatGoesOff, TOO_HOT, whereTheCastStands, whoCameIn, WHOEVER,
+  theDiary, theNameThatGoesOff, TOO_HOT, wantsOn, whereTheCastStands, whoCameIn, WHOEVER,
 } from '@/engine/world/casting';
 import { deckFor, somebodyGoesOff } from '@/engine/world/trouble';
 import { decideTake } from '@/engine/world/selling';
@@ -264,14 +264,16 @@ describe('truth and how a face reads are read by the sale and by nothing else', 
   it('leaves the shoot entirely alone', () => {
     // The other half. Two casts identical in repeatability and opposite in
     // everything else bank the same material.
-    const good = world('shoot-good');
-    const dull = world('shoot-dull');
-    const a = greenlit(good, 'feature', 'Hvítserkur');
-    const b = greenlit(dull, 'feature', 'Hvítserkur');
-    castEverybodyAt(good, a, { repeatable: 60, truth: 95, reads: 95 });
-    castEverybodyAt(dull, b, { repeatable: 60, truth: 5, reads: 5 });
-    expect(takeFactor(good, good.universe.projects[a]!))
-      .toBe(takeFactor(dull, dull.universe.projects[b]!));
+    //
+    // One world and one picture, because what each part needs is drawn per
+    // picture: two worlds would have been two different sets of parts, and the
+    // answer would have been the draw rather than the cast.
+    const sim = world('shoot-either-way');
+    const id = greenlit(sim, 'feature', 'Hvítserkur');
+    castEverybodyAt(sim, id, { repeatable: 60, truth: 95, reads: 95 });
+    const fine = takeFactor(sim, sim.universe.projects[id]!);
+    castEverybodyAt(sim, id, { repeatable: 60, truth: 5, reads: 5 });
+    expect(takeFactor(sim, sim.universe.projects[id]!)).toBe(fine);
   });
 });
 
@@ -409,7 +411,11 @@ describe('an offer is a person answering, not a form', () => {
   });
 
   it('is likelier the more it pays, which is the whole of a negotiation', () => {
-    const base = { askCents: 100_000_00, carries: 25, free: true, demand: 40 };
+    // Somebody wanted enough that the ceiling on what money buys is what binds,
+    // rather than the ceiling on how likely anybody ever is to say yes. With a
+    // performer nobody is asking for, both are hit and neither can be told from
+    // the other.
+    const base = { askCents: 100_000_00, carries: 20, free: true, demand: 70 };
     const tookAt = (times: number): number => {
       let took = 0;
       for (let i = 0; i < 100; i += 1) {
@@ -419,6 +425,11 @@ describe('an offer is a person answering, not a form', () => {
     };
     expect(tookAt(1.8)).toBeGreaterThan(tookAt(1));
     expect(tookAt(1)).toBeGreaterThan(tookAt(0.85));
+    // And it stops buying anything at the point somebody can be talked into.
+    // Past that a producer is handing money over for nothing, which is the
+    // reason there is a ceiling on the table at all.
+    expect(tookAt(HAGGLE.over)).toBe(tookAt(HAGGLE.over * 4));
+    expect(tookAt(HAGGLE.over)).toBeGreaterThan(tookAt(HAGGLE.over * 0.7));
   });
 });
 
@@ -1147,6 +1158,79 @@ describe('the diary is the scarcity', () => {
     });
     expect(cash(sim)).toBe(before - roundById('preread')!.costsCents);
     expect(roundById('callback')!.costsCents).toBeGreaterThan(roundById('preread')!.costsCents);
+  });
+});
+
+describe('different parts want different things', () => {
+  it('leans every size somewhere, and comes to the same total everywhere', () => {
+    for (const size of SIZES) {
+      const total = AXES.reduce((n, axis) => n + size.leans[axis.id], 0);
+      expect(total, `${size.id} should lean without being worth more`).toBeCloseTo(AXES.length, 6);
+    }
+    // A face in one scene against a fortnight of coverage, which is the shape
+    // the leanings exist to state.
+    const day = SIZES.find((one) => one.id === 'day')!;
+    const lead = SIZES.find((one) => one.id === 'lead')!;
+    expect(day.leans.reads).toBeGreaterThan(lead.leans.reads);
+    expect(lead.leans.repeatable).toBeGreaterThan(day.leans.repeatable);
+  });
+
+  it('writes what each part wants at the greenlight, and keeps it', () => {
+    const sim = world('wants');
+    const id = greenlit(sim, 'feature', 'Hvítserkur');
+    const project = sim.universe.projects[id]!;
+    for (const role of project.roles!) {
+      const total = AXES.reduce((n, axis) => n + wantsOn(role, axis.id), 0);
+      expect(total).toBeCloseTo(AXES.length, 1);
+    }
+    // And two parts of the same size are not the same buy.
+    const leads = project.roles!.filter((r) => r.size === 'lead');
+    expect(leads.length).toBeGreaterThan(1);
+    expect(leads[0]!.wants).not.toEqual(leads[1]!.wants);
+  });
+
+  it('makes the office want different people for different parts', () => {
+    // The failure this exists to kill: a flat sum means the best buy for every
+    // part on every picture in the save is the same weighted sum forever.
+    const sim = world('wants-differ');
+    const id = greenlit(sim, 'feature', 'Hvítserkur');
+    const project = sim.universe.projects[id]!;
+    const role = project.roles!.find((r) => r.size === 'lead')!;
+    run(sim, 'company.breakdown', { projectId: id, roleId: role.id });
+    const live = sim.universe.projects[id]!.roles!.find((r) => r.id === role.id)!;
+    const came = whoCameIn(sim, live);
+    const bestUnder = (wants: Record<string, number>) => {
+      live.wants = wants;
+      return came.reduce((top, one) => {
+        const worth = (person: Person) => AXES.reduce(
+          (n, axis) => n + shownOf(sim, project, live, person)[axis.id] * (wants[axis.id] ?? 1), 0,
+        );
+        return worth(one) > worth(top) ? one : top;
+      }, came[0]!).id;
+    };
+    const forAFace = bestUnder({ truth: 0.2, repeatable: 0.2, reads: 2.6 });
+    const forAGrind = bestUnder({ truth: 0.2, repeatable: 2.6, reads: 0.2 });
+    expect(forAFace, 'a part that is a face and a part that is a grind should not want the same person')
+      .not.toBe(forAGrind);
+  });
+
+  it('weighs a part that needs repeatability more heavily against the shoot', () => {
+    const sim = world('wants-shoot');
+    const id = greenlit(sim, 'feature', 'Hvítserkur');
+    const project = sim.universe.projects[id]!;
+    castEverybodyAt(sim, id, { repeatable: 60 });
+    // Make one lead unable to repeat, and ask the picture twice: once where
+    // that part is a coverage problem and once where it is a face.
+    const lead = castOf(sim, project).find((one) => one.size.id === 'lead')!;
+    lead.person!.attributes = sheetOf(50, Object.fromEntries(
+      AXES.flatMap((axis) => axis.of.map((attr) => [attr, axis.id === 'repeatable' ? 5 : 50])),
+    ));
+    const role = project.roles!.find((r) => r.id === lead.role.id)!;
+    role.wants = { truth: 1, repeatable: 2, reads: 0 };
+    const grind = castOn(sim, project, 'repeatable')!;
+    role.wants = { truth: 1, repeatable: 0.2, reads: 1.8 };
+    const face = castOn(sim, project, 'repeatable')!;
+    expect(grind).toBeLessThan(face);
   });
 });
 

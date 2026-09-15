@@ -240,6 +240,19 @@ export const roundById = (id: string): Round | undefined => ROUNDS.find((r) => r
 export const BOOKABLE: readonly Round[] = ROUNDS.filter((r) => r.id !== 'pile');
 
 /**
+ * How far a particular part can lean away from what its size usually wants.
+ *
+ * A lead is usually a coverage problem and occasionally a face in a window. The
+ * draw is what makes two leads on the same picture different buys, and it is
+ * deliberately not hidden from the player: they are the producer, and a producer
+ * knows what their own picture needs. What is hidden here is what the actor is,
+ * which is a different question and the one the room exists to answer.
+ *
+ * SLATE's own.
+ */
+export const A_PART_LEANS = 0.45;
+
+/**
  * What a tape shows, as against what the person is.
  *
  * Four attributes that have sat in the sheet unread since it was written, and
@@ -327,6 +340,23 @@ export interface Size {
   onScreen: number;
   /** How the cast money divides, before any one quote moves it. */
   weight: number;
+  /**
+   * What a part this size usually needs, before this particular one is written.
+   *
+   * Three numbers that come to three, so a part with no leaning at all is one,
+   * one and one. They exist because without them the best buy for any part on
+   * any picture is the same weighted sum forever, and a casting system where
+   * every decision is the same decision is a casting system with one decision
+   * in it. The research says so in as many words: the reason casting exists is
+   * that different rooms weight the same performer differently.
+   *
+   * The leanings are physical rather than tasteful. A day player is a face in
+   * one scene, so how they read is nearly the whole of it and nobody is going
+   * to ask them for take nine. A lead is in half the picture and every setup of
+   * it, so what they cost the floor when they cannot repeat is enormous and how
+   * they photograph is the least of three worries. SLATE's own.
+   */
+  leans: Readonly<Record<AxisId, number>>;
 }
 
 /**
@@ -349,6 +379,7 @@ export const SIZES: readonly Size[] = [
     across: 'title',
     onScreen: 0.55,
     weight: 1,
+    leans: { truth: 1.15, repeatable: 1.1, reads: 0.75 },
   },
   {
     id: 'support',
@@ -358,6 +389,7 @@ export const SIZES: readonly Size[] = [
     across: 'title',
     onScreen: 0.2,
     weight: 0.3,
+    leans: { truth: 1.1, repeatable: 1, reads: 0.9 },
   },
   {
     id: 'guest',
@@ -367,6 +399,7 @@ export const SIZES: readonly Size[] = [
     across: 'part',
     onScreen: 0.12,
     weight: 0.12,
+    leans: { truth: 1.05, repeatable: 0.85, reads: 1.1 },
   },
   {
     id: 'day',
@@ -376,6 +409,7 @@ export const SIZES: readonly Size[] = [
     across: 'part',
     onScreen: 0.03,
     weight: 0.03,
+    leans: { truth: 0.8, repeatable: 0.7, reads: 1.5 },
   },
 ];
 
@@ -396,14 +430,21 @@ export const sizeById = (id: string): Size | undefined => SIZES.find((s) => s.id
 export const CAST_SHARE = 0.18;
 
 /**
- * How much above their band a performer can be talked into, and how far below
- * their quote they will go before it is an insult.
+ * The three ends of a negotiation.
  *
- * Both SLATE's own. The floor is the interesting one: a quote is a ratchet
- * with memory, so the reason an actor will not take less is not pride, it is
- * that the number is read by everybody who hires them next.
+ * `under` is how far below their quote somebody will go before it is an insult,
+ * and it is the interesting one: the reason an actor will not take less is not
+ * pride, it is that the number is read by everybody who hires them next.
+ * `over` is the point past which more money buys nothing, so a producer who
+ * doubles an already-generous offer is handing money over for a yes they had.
+ * `most` is the likeliest anybody ever is to say yes, because nobody is a
+ * certainty and a deal that always closes is not a deal.
+ *
+ * All three SLATE's own. `most` used to be an unnamed 0.96 sitting inside the
+ * formula, which is a ceiling with nobody's name on it doing one of the two
+ * most important jobs in the file.
  */
-export const HAGGLE = { over: 1.6, under: 0.8 } as const;
+export const HAGGLE = { over: 1.6, under: 0.8, most: 0.96 } as const;
 
 /**
  * Years before an old quote stops being argued from.

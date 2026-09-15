@@ -570,6 +570,17 @@ export interface Role {
   /** What the picture has set aside for it, before anybody argues. */
   bandCents: Money;
   /**
+   * What this particular part needs, by axis id, three numbers coming to three.
+   *
+   * Laid at the greenlight and stored rather than derived, because it is a fact
+   * about how the part was written and not about how big it is: two leads on
+   * the same picture can be a coverage problem and a face in a window, and a
+   * figure recomputed from the size every time would say they were the same
+   * buy. It is what stops the best actor for every part in the save being the
+   * same weighted sum.
+   */
+  wants?: Partial<Record<string, number>>;
+  /**
    * Who came in for it, and how far anybody has got with them.
    *
    * Absent until somebody puts the part out, which is a dated act and not a
@@ -581,8 +592,6 @@ export interface Role {
    * not a decision.
    */
   seen?: Looked[];
-  /** When it went out. */
-  outAt?: Instant;
 }
 
 /**
@@ -628,8 +637,14 @@ export interface Seat {
   /** What was agreed, in cents. */
   feeCents: Money;
   castAt: Instant;
-  /** Whether the fee is owed whether or not the picture is ever made. */
-  payOrPlay?: true;
-  /** When they were let go, where they were. The fee stays owed. */
+  /**
+   * When they were let go, where they were. The fee stays owed.
+   *
+   * There is no flag beside this saying whether the engagement was pay or play,
+   * because every engagement in this build is: the money goes out when somebody
+   * says yes and letting them go afterwards never gets it back. A field
+   * distinguishing the two would be a field with one value, which is the
+   * shortest possible way to imply a choice nobody is offered.
+   */
   releasedAt?: Instant;
 }
