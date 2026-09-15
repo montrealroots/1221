@@ -30,8 +30,10 @@ import {
   theyWantYou, whatTheyWant, whereYourWorkStands, WORKING_KIND,
 } from '@/engine/world/audition';
 import { whatHasThem } from '@/engine/world/diary';
+import { readiness } from '@/engine/systems/life';
 import {
-  AS_WRITTEN, CLOSE_ENOUGH, COLD, FURTHEST, KNOWN_OF, REMEMBERED, SHADES, TOO_FAR, WAYS, howFarById,
+  AS_WRITTEN, A_WORKING_WEEK, CLOSE_ENOUGH, COLD, FURTHEST, KNOWN_OF, REMEMBERED, SHADES,
+  TOO_FAR, WAYS, howFarById,
 } from '@/engine/content/audition';
 import { sizeById } from '@/engine/content/casting';
 
@@ -149,6 +151,108 @@ function castOnSomething(sim: Simulation, weeks = 6): Audition {
   theyWantYou(sim, audition);
   return audition;
 }
+
+describe('what a week of it takes', () => {
+  /** Runs the clock on and hands back readiness at each mark. */
+  const track = (sim: Simulation, marks: number[]): number[] => {
+    const out: number[] = [];
+    for (const weeks of marks) {
+      sim.advanceTo(sim.now + weeks * MS_WEEK);
+      out.push(Math.round(readiness(sim.universe.people[sim.universe.playerId]!)));
+    }
+    return out;
+  };
+
+  it('moves a model that was a constant for five years', () => {
+    const sim = world('takes');
+    sim.advanceTo(sim.now + 60 * MS_DAY);
+    const settled = Math.round(readiness(sim.universe.people[sim.universe.playerId]!));
+
+    // Measured before any of this existed: seven of the nine wellbeing dials
+    // were constants by day thirty and eight by day three hundred and sixty
+    // five, and readiness sat on one number from the first month to the fifth
+    // year. The cause was not the arithmetic — it was that the autopilot
+    // restores to the same ceiling every day and no day had ever been different
+    // from any other. A week on a picture is the first thing that makes one.
+    castOnSomething(sim, 12);
+    const through = track(sim, [2, 6, 12]);
+    expect(Math.min(...through), 'work took nothing out of anybody').toBeLessThan(settled);
+
+    // And it comes back, so it is a cost rather than a ruin.
+    const after = track(sim, [8])[0]!;
+    expect(after).toBeGreaterThan(Math.min(...through));
+  });
+
+  it('gives an ordinary night early on and a short one at the end', () => {
+    const debtOver = (seed: string, weeks: number, skip: number, across: number): number => {
+      const sim = world(seed);
+      sim.advanceTo(sim.now + 60 * MS_DAY);
+      if (weeks > 0) castOnSomething(sim, weeks);
+      sim.advanceTo(sim.now + skip * MS_WEEK);
+      const before = sim.universe.people[sim.universe.playerId]!.wellbeing.sleepDebt;
+      sim.advanceTo(sim.now + across * MS_WEEK);
+      return sim.universe.people[sim.universe.playerId]!.wellbeing.sleepDebt - before;
+    };
+
+    // Week one of anything is an ordinary week and the last week of a long one
+    // is not. A flat working penalty makes both of them the end of a shoot,
+    // which is the same fixed point moved somewhere else — and it makes a short
+    // job cost as much per week as a marathon, for no reason anybody could name.
+    // shootingOnTheLot puts the first day eight weeks out, so the marks have to
+    // clear that before they are inside the job at all. Sampling at one week and
+    // at ten was sampling before it started and two weeks in — both of them the
+    // beginning, which is why an earlier version of this passed happily with the
+    // deepening torn out.
+    const idle = debtOver('nights-idle', 0, 9, 2);
+    const early = debtOver('nights-early', 14, 9, 2);
+    const late = debtOver('nights-late', 14, 19, 2);
+    expect(early, 'the first weeks of a long job were already the end of one')
+      .toBeLessThan(late);
+    expect(early - idle, 'week one of a shoot was harder than a week of nothing')
+      .toBeLessThan(late - idle);
+  });
+
+  it('leaves a debt behind that a night does not undo', () => {
+    const sim = world('clears');
+    sim.advanceTo(sim.now + 60 * MS_DAY);
+    const me = sim.universe.people[sim.universe.playerId]!;
+    me.wellbeing.sleepDebt = 50;
+    // Measured rather than reckoned. An earlier version of this capped how fast
+    // a night could clear, on an arithmetic guess that the model cleared twelve
+    // a night; it clears about two and a half net, so the cap never once bound
+    // and was a declared number deciding nothing. What is true is what this
+    // holds: a real debt is still most of a real debt a week later.
+    sim.advanceTo(sim.now + 7 * MS_DAY);
+    expect(me.wellbeing.sleepDebt).toBeGreaterThan(25);
+    expect(me.wellbeing.sleepDebt).toBeLessThan(50);
+  });
+
+  it('costs how reliable people found you, and never how good you were', () => {
+    const sim = world('relied');
+    const me = sim.universe.people[sim.universe.playerId]!;
+    sim.advanceTo(sim.now + 60 * MS_DAY);
+    const cast = castOnSomething(sim, 2);
+    expect(A_WORKING_WEEK.spentAt).toBeGreaterThan(0);
+    // Up to the morning it starts, then spend them, then let the first week run.
+    sim.advanceTo(cast.from - MS_DAY);
+    me.wellbeing.energy = 1;
+    me.wellbeing.stress = 95;
+    me.wellbeing.sleepDebt = 50;
+    const was = me.reputation.reliability;
+    sim.advanceTo(cast.from + MS_DAY);
+    expect(me.reputation.reliability).toBeLessThan(was);
+  });
+
+  it('makes an office think twice about somebody nobody could rely on', () => {
+    const sim = world('asks');
+    const me = sim.universe.people[sim.universe.playerId]!;
+    me.reputation.reliability = 100;
+    const trusted = remembersYou(sim, 'An Office');
+    me.reputation.reliability = 0;
+    const not = remembersYou(sim, 'An Office');
+    expect(not).toBeLessThan(trusted);
+  });
+});
 
 describe('being cast is time you no longer have', () => {
   it('lays the engagement on the calendar, a week at a time, and stops the clock', () => {

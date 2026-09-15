@@ -19,6 +19,8 @@ import { modifierFor } from '../domain/attributes';
 import { dispositionOf } from '../core/taste';
 import { ceilingAt, recoveryFactorAt } from '../content/lifespan';
 import { driftBonds, moralePullOf } from '../world/standing';
+import { whatHasThem } from '../world/diary';
+import { A_WORKING_WEEK } from '../content/audition';
 
 // ---------------------------------------------------------------------------
 // Wellbeing model
@@ -305,6 +307,20 @@ export function dailyRollover(sim: Simulation): void {
 function liveTheUnattendedDay(sim: Simulation): void {
   for (const person of Object.values(sim.universe.people)) {
     const w = person.wellbeing;
+    // Whether today is a day somebody else owns. It is the first thing in this
+    // game that makes one day different from another, and the reason the whole
+    // model was a fixed point until now: the autopilot restores to the same
+    // ceiling and the same floor every single day, so seven of these nine dials
+    // were constants by day thirty and readiness sat at 49 for five years.
+    const on = person.isPlayer ? whatHasThem(sim, sim.now, sim.now + MS_DAY) : undefined;
+    // And how far into it today is. Week one of anything is an ordinary week;
+    // the last week of a long one is not. A flat working penalty was the first
+    // draft and it only moved the fixed point somewhere else — every week cost
+    // the same from the first, so a fourteen-week job took a career from
+    // sixty-six to nothing and a two-week job cost a tenth of it for no reason.
+    const intoIt = on
+      ? clamp((sim.now - on.from) / Math.max(MS_DAY, on.to - on.from), 0, 1)
+      : 0;
 
     // A night they did not plan. Shorter, poorer, and it does not clear debt
     // the way a deliberate one does.
@@ -312,7 +328,13 @@ function liveTheUnattendedDay(sim: Simulation): void {
     let sleptHours = 0;
     if (sinceSlept >= 20 * MS_HOUR) {
       const quality = sleepQuality(sim, person) * 0.95;
-      const hours = clamp(7.8 - w.stress * 0.012, 5.4, 8.4);
+      // A night in the middle of a shoot is not a night anybody chose: the call
+      // is at six and there is an hour in the chair before it. Short nights are
+      // the mechanism rather than a second clamp, because the model already
+      // knows what one does — `applySleep` clears less debt from a short night
+      // and adds debt below six hours, so a long run declines on its own and
+      // goes on declining, which a fixed working ceiling cannot do.
+      const hours = clamp(7.8 - w.stress * 0.012 - A_WORKING_WEEK.shorterBy * intoIt, 5.4, 8.4);
       sleptHours = hours;
       applySleep(person, hours, quality, sim.now);
       person.lastSleptAt = sim.now;
@@ -320,6 +342,7 @@ function liveTheUnattendedDay(sim: Simulation): void {
       // Coasting keeps you going; it does not get you to your best. Choosing
       // when and how long to sleep is worth something, so autopilot stops
       // short of what a deliberate night reaches.
+      //
       w.energy = Math.min(w.energy, COASTING_ENERGY_CEILING);
       w.stress = Math.max(w.stress, COASTING_STRESS_FLOOR);
     }

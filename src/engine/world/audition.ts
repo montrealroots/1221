@@ -46,12 +46,15 @@ import type { Instant } from '../core/time';
 import type { Audition, Booking } from '../domain/model';
 import { clamp } from '../core/rng';
 import {
-  AS_WRITTEN, CLOSE_ENOUGH, COLD, FURTHEST, KNOWN_OF, REMEMBERED, SHADES, TOO_FAR, WELL_LIKED,
+  AS_WRITTEN, A_WORKING_WEEK, CLOSE_ENOUGH, COLD, EXPECTED_OF_ANYBODY, FURTHEST, KNOWN_OF,
+  RELIED_ON, REMEMBERED,
+  SHADES, TOO_FAR, WELL_LIKED,
   howFarById, shadeById, wayById, whyById, type Reading, type ShadeId, type WhyId,
 } from '../content/audition';
 import { SIZES, sizeById } from '../content/casting';
 import { MS_WEEK } from './lot';
 import { theyAreFree } from './diary';
+import { readiness } from '../systems/life';
 
 const MS_DAY = 24 * 60 * 60 * 1000;
 
@@ -100,9 +103,17 @@ export function readFor(sim: Simulation, holder: string): Audition[] {
  * drift from the things that earned it.
  */
 export function remembersYou(sim: Simulation, holder: string): number {
-  const fame = sim.universe.people[sim.universe.playerId]?.reputation.publicFame ?? 0;
+  const me = sim.universe.people[sim.universe.playerId];
+  const fame = me?.reputation.publicFame ?? 0;
+  // And whether they were easy to have there last time. Having been seen is what
+  // gets an office to think of you; having been reliable is what stops them
+  // hesitating. It is the only thing in this build that can take work away from
+  // somebody who is perfect at the work, which is what makes it the cost the
+  // premise leaves available.
+  const relied = Math.min(0,
+    ((me?.reputation.reliability ?? EXPECTED_OF_ANYBODY) - EXPECTED_OF_ANYBODY) / EXPECTED_OF_ANYBODY);
   return clamp(
-    COLD + readFor(sim, holder).length * REMEMBERED + (fame / 100) * KNOWN_OF,
+    COLD + readFor(sim, holder).length * REMEMBERED + (fame / 100) * KNOWN_OF + relied * RELIED_ON,
     0, 1,
   );
 }
@@ -499,6 +510,44 @@ function takeTheirWeeks(sim: Simulation, audition: Audition): void {
   }
 }
 
+/**
+ * What a week of it costs, which is never the work.
+ *
+ * The player cannot act badly, so nothing here touches whether the performance
+ * was good. What a week decides is whether they were easy to have there, and
+ * that is read off how much was left in them while they were doing it: somebody
+ * working from under `spentAt` was late once, was short with the second AD,
+ * needed an afternoon. None of that is about being able to act, and all of it is
+ * what an office remembers.
+ *
+ * It moves both ways on purpose. A run of weeks worked in good order earns a
+ * little back, so `reliability` is a record of how somebody works rather than a
+ * meter that only falls — and so the answer to being tired is to stop for a
+ * while, which is a decision, rather than to never work, which is not.
+ */
+function whatTheWeekTook(sim: Simulation, audition: Audition, week: number, of: number): void {
+  const me = sim.universe.people[sim.universe.playerId];
+  if (!me) return;
+  const left = readiness(me);
+  const was = me.reputation.reliability;
+  me.reputation.reliability = clamp(Math.round(
+    left < A_WORKING_WEEK.spentAt
+      ? was - A_WORKING_WEEK.costsAWeek
+      : was + A_WORKING_WEEK.earnsAWeek,
+  ), 0, 100);
+  if (me.reputation.reliability >= was) return;
+  sim.notify({
+    category: 'career',
+    title: `${audition.holder}: A Hard Week`,
+    body: 'You had nothing left and you went in anyway. Nobody says a word about the work — '
+      + 'they say you were late, and that they had to wait.'
+      + (week < of ? ` ${of - week} weeks of it still to go.` : ''),
+    importance: 50,
+    refType: 'audition',
+    refId: audition.id,
+  });
+}
+
 export function theyWantYou(sim: Simulation, audition: Audition): void {
   const me = sim.universe.people[sim.universe.playerId];
   if (!me) return;
@@ -568,6 +617,7 @@ export function registerAudition(sim: Simulation): void {
     if (!audition || audition.why !== 'cast') return;
     const week = Number(item.payload?.week ?? 0);
     const of = Number(item.payload?.of ?? 0);
+    whatTheWeekTook(sim, audition, week, of);
     if (week !== 1) return;
     sim.notify({
       category: 'career',

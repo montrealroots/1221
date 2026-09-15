@@ -144,18 +144,28 @@ so nothing reads it.
 
 ---
 
+## Measured, and one of the two is now fixed
+
+Both findings in `DEPTH.md`'s "Where We Stand" were re-measured on 2026-09-15.
+Both were true, and the first was worse than stated.
+
+**The fixed point was real and larger than recorded.** Not four of nine dials by
+day thirty: **seven of nine**, and eight of nine by day three hundred and sixty
+five. `readiness`, which the whole model rolls up to, sat on 49 from the first
+month to the fifth year without moving once, and `reliability` never moved at
+all. The cause was not the arithmetic. The autopilot restores to a fixed ceiling
+and a fixed floor every day, and no day had ever been different from any other
+day. **Fixed**, in the section below: a week on a picture is now a different kind
+of day, and readiness moves between 49 and 19 across a long run and comes back.
+
+**The ageing model still cannot fire.** Unverified and still standing.
+
+---
+
 ## Claimed, and not yet verified
 
-Two findings in `DEPTH.md`'s "Where We Stand" were measured on a booted save a
-long time ago and have not been re-measured since. If they still hold they are
-the most serious entries on this page.
-
-**The simulation is said to reach a fixed point in thirty days.** Fitness has no
-source of income — its only write is a subtraction — so it slides from 50 to 0
-in 277 days and stays there. The autopilot night sleeps at 95% quality, which
-always clears the restful threshold, so morale climbs to 100 and pins while its
-only counterweight waits on a nourishment floor the same autopilot prevents.
-Four of nine dials are said to be constants by day thirty.
+One finding in `DEPTH.md`'s "Where We Stand" was measured on a booted save a
+long time ago and has not been re-measured since.
 
 **The ageing model is said to be unable to fire**, because fitness is already at
 zero and the age ceiling clamp binds on 0 of 27,375 days. Eight authored bands,
@@ -410,6 +420,25 @@ sweep from the day it was written — because the harness writes the field itsel
 A decider sweep proves something *reads* an input. It cannot prove the world ever
 *varies* it, and a field only the test ever varies is dead in play and green on
 the board.
+
+**Work is the first thing that ever made a day different.** The wellbeing model
+was a fixed point because the autopilot restored to the same ceiling every
+morning and nothing ever asked more of anybody. A week on a picture is a shorter
+night, deepening the further into the run it is, so a long job declines and a
+short one costs nothing — and the cost lands on how reliable people found
+somebody, never on how good they were, because the premise forbids the second
+and leaves the first available. An office asks less about somebody who was
+trouble, and only about trouble: nobody gets extra calls for having been
+punctual.
+
+Three of its numbers did not survive being measured, which is the part worth
+keeping. A flat working penalty only moved the fixed point somewhere else and
+took a career from sixty-six to nothing on one job. Dropping the coasting floor
+made a shoot *restful*, because that floor was holding stress up rather than
+down. And a cap on how fast sleep debt clears was written against an arithmetic
+guess of twelve a night; measured, it clears about two and a half, so the cap
+never once bound and was deleted along with a floor eighteen minutes away from
+the floor beside it.
 
 **Three different counts of one thing.** The reimbursement's conditions were
 called three in the law's own content, four in nine places across the module

@@ -307,3 +307,91 @@ export const KNOWN_OF = 0.5;
  * anything, which is what the rest of this file is about. SLATE's own.
  */
 export const WELL_LIKED = 18;
+
+// ---------------------------------------------------------------------------
+// What a week of it takes
+// ---------------------------------------------------------------------------
+
+/**
+ * What working takes out of the person doing it.
+ *
+ * The premise forbids the obvious version of this. The player is the best there
+ * has ever been and cannot be bad at the work, so nothing here may decide how
+ * well a performance goes — that would be a craft check wearing a tiredness
+ * name, and it would be false. What a week on a picture decides is everything
+ * around the work: whether somebody was easy to have there, whether they could
+ * take the other thing, whether the people who booked them would book them
+ * again.
+ *
+ * It is also not a meter that stops you. Nothing in this build refuses the
+ * player a part for being tired. What it does is make them expensive to the
+ * people they work for, and being expensive to work with is the one thing that
+ * can take work away from somebody who is perfect at it.
+ *
+ * ## Why these numbers exist at all
+ *
+ * The wellbeing model was a fixed point. Measured on a booted save, seven of its
+ * nine dials were constants by day thirty and eight by day three hundred and
+ * sixty-five, and `readiness` — the figure the whole thing rolls up to — sat at
+ * 49 from the first month to the fifth year without moving once. The cause was
+ * not the arithmetic. It was that the autopilot restores to a fixed ceiling and
+ * a fixed floor every single day, and no day had ever been different from any
+ * other day.
+ *
+ * A week on a picture is the first thing in this game that makes a day
+ * different. That is what these are for.
+ */
+export const A_WORKING_WEEK = {
+  /**
+   * The night a shoot leaves you, in hours.
+   *
+   * Not a second clamp bolted onto the model — the model already knows what a
+   * short night does. `applySleep` clears less debt from a shorter night and
+   * adds debt below six hours, so a run of these declines on its own and keeps
+   * declining the longer it runs. The first draft set a fixed working ceiling
+   * instead and simply moved the fixed point: every week cost the same, from the
+   * first one, and a fourteen-week job took a career from sixty-six to nothing.
+   *
+   * A call at six with an hour in the chair before it is what this number is,
+   * and it arrives gradually: week one of anything is an ordinary night, and the
+   * last week of a long one is not. Scaled by how far into the engagement the
+   * day is, so a short job never gets deep enough to cost anything and a
+   * marathon does. That is the decision the whole thing exists to create.
+   */
+  shorterBy: 2.5,
+  /**
+   * The readiness below which turning up anyway is the thing people remember.
+   *
+   * Set under where a rested person starts a job and over where a long run
+   * takes them, so the early weeks of anything are fine and only a run that
+   * goes on costs. Short work keeps somebody reliable; one marathon does not.
+   */
+  spentAt: 38,
+  /** What a week worked from under there takes off how reliable people found you. */
+  costsAWeek: 3,
+  /** And what a week worked in good order gives back, because it goes both ways. */
+  earnsAWeek: 1,
+} as const;
+
+/**
+ * How far somebody's record of turning up moves what a stranger's office does.
+ *
+ * The other half of `REMEMBERED`. Having been seen is what gets an office to
+ * think of you; having been easy to have there is what stops them hesitating.
+ * A performer nobody can rely on is asked about less, and that is the only
+ * thing in this build that can take work away from a player who is perfect at
+ * the work itself.
+ */
+export const RELIED_ON = 0.3;
+
+/**
+ * What an office takes for granted about anybody.
+ *
+ * Above this, being reliable earns nothing: nobody gets extra calls for having
+ * been punctual, because turning up is the job rather than a distinction. Below
+ * it, it is remembered and it costs. The first draft measured against the middle
+ * of the scale and so handed a fresh player a bonus for a seeded number, which
+ * broke the thing the room is built on — that a career starts cold because
+ * nobody has heard of anybody.
+ */
+export const EXPECTED_OF_ANYBODY = 60;
