@@ -28,6 +28,7 @@ import { DELIVERY, plansFor, planById } from '@/engine/content/making';
 import { DEALS, dealById } from '@/engine/content/selling';
 import { rateById, throughput } from '@/engine/content/inventory';
 import { cuttingPeriod } from '@/engine/world/inventory';
+import { aRoomCosts, periodAtThisStaffing } from '@/engine/world/making';
 import {
   behindTheCompany, breakEvenShare, goingUp, pullOn, sellsFor, stillToCarry, theSmallStage,
   turnedAway, whereTheBuildStands, whyNotBuild,
@@ -620,6 +621,28 @@ function GreenlightForm({ projectId, onClose }: { projectId: string; onClose: ()
             ? `, ${Math.round(throughput(cuttingPeriod(plan)!.converts!.at, hands) / 60)} finished minutes a week between them.`
             : '.'}
         </p>
+        {plan && cuttingPeriod(plan) && (() => {
+          // The price of it, at the moment it is chosen. A room used to cost
+          // nothing, which made the largest number right on every picture in
+          // every state and the only staffing call the game offers a number
+          // nobody had a reason to lower.
+          const period = cuttingPeriod(plan)!;
+          const cents = Math.round(budget * 100);
+          const assumes = period.converts!.hands;
+          const each = formatMoney(aRoomCosts(period, cents), { cents: false });
+          const now = formatMoney(periodAtThisStaffing(period, cents, hands), { cents: false });
+          const asPlanned = formatMoney(periodAtThisStaffing(period, cents, assumes), { cents: false });
+          const where = period.label.toLowerCase();
+          return (
+            <p className="xs dim" style={{ margin: 'var(--s2) 0 0' }}>
+              {hands === assumes
+                ? `This plan assumes ${said(assumes, 'room')}. That is ${now} through ${where}, `
+                  + `and each room is ${each} up or down.`
+                : `This plan assumes ${said(assumes, 'room')} at ${each} each. `
+                  + `${said(hands, 'room')} puts ${now} through ${where}. The plan's own would be ${asPlanned}.`}
+            </p>
+          );
+        })()}
       </div>
 
       <div className="field">

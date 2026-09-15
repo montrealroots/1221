@@ -395,3 +395,106 @@ describe('the ledger holds together', () => {
     expect(rungOf(sim.universe.projects[id]!, 'picture')).toBe('locked');
   });
 });
+
+/**
+ * What the rooms cost.
+ *
+ * The staffing of the cutting room is the only crew decision this game offers,
+ * and it was free: `spends` is a flat share of the budget and knew nothing
+ * about how many rooms were running, so six editors cost exactly what one did.
+ * More hands cut faster and gave more room against the date, at no price —
+ * which made the largest number correct on every picture in every state.
+ */
+describe('the rooms on a picture are paid for', () => {
+  const spentOn = (planId: string, hands?: number): number => {
+    const sim = world(`cost-${planId}`);
+    const id = greenlit(sim, planId, `Cost ${planId}`, hands === undefined ? {} : { hands });
+    runItOut(sim, id);
+    return sim.universe.projects[id]!.spentCents;
+  };
+
+  it('charges a picture run the way its plan expects exactly what it always did', () => {
+    // The property that makes this safe to land: the ratio is against the
+    // staffing the plan itself assumes, so an untouched picture is unchanged
+    // and only a deliberate decision costs or saves anything.
+    for (const plan of PLANS) {
+      const converts = plan.periods.find((one) => one.converts)?.converts;
+      if (!converts) continue;
+      expect(spentOn(plan.id, converts.hands), plan.id).toBe(spentOn(plan.id));
+    }
+  });
+
+  it('charges more for more rooms and less for fewer, in proportion', () => {
+    for (const plan of PLANS) {
+      const converts = plan.periods.find((one) => one.converts)?.converts;
+      if (!converts) continue;
+      const lean = spentOn(plan.id, 1);
+      const asPlanned = spentOn(plan.id, converts.hands);
+      const heavy = spentOn(plan.id, converts.hands * 2);
+      expect(lean, `${plan.id}: one room has to be cheaper`).toBeLessThan(asPlanned);
+      expect(heavy, `${plan.id}: twice the rooms has to be dearer`).toBeGreaterThan(asPlanned);
+      // Each extra room costs the same as the last, because a room is a room.
+      const one = spentOn(plan.id, converts.hands + 1) - asPlanned;
+      const two = spentOn(plan.id, converts.hands + 2) - asPlanned;
+      expect(two / one).toBeCloseTo(2, 1);
+    }
+  });
+
+  it('leaves everything the period buys that is not a room alone', () => {
+    // Sound, music, color, the conform and the deliverables do not care how
+    // many people are cutting, so most of the period does not move. Halving the
+    // rooms cannot halve the period.
+    const plan = PLANS.find((one) => one.id === 'feature')!;
+    const converts = plan.periods.find((one) => one.converts)!.converts!;
+    const asPlanned = spentOn('feature', converts.hands);
+    const none = spentOn('feature', 1);
+    const saved = asPlanned - none;
+    const post = plan.periods.find((one) => one.converts)!;
+    const roomsAtPlan = 20_000_000_00 * post.spends * converts.ofTheSpend;
+    // Down to one room of two saves half the rooms, and nothing else.
+    expect(saved).toBeCloseTo(roomsAtPlan / 2, -4);
+    expect(saved).toBeLessThan(20_000_000_00 * post.spends);
+  });
+
+  it('says a form made in the edit spends more of its post on the rooms', () => {
+    // The claim `content/making.ts` makes about unscripted, stated as the
+    // comparison it is rather than as a number. An unscripted season is made in
+    // the cutting room instead of shot to a script, so the rooms are most of
+    // what its post buys; a feature or a series has a finish around them —
+    // sound, music, color, the conform — that does not care who is cutting.
+    const shareOf = (planId: string): number => PLANS.find((one) => one.id === planId)!
+      .periods.find((one) => one.converts)!.converts!.ofTheSpend;
+    expect(shareOf('unscripted')).toBeGreaterThan(shareOf('feature'));
+    expect(shareOf('unscripted')).toBeGreaterThan(shareOf('series'));
+    // And none of them is all of it, because a period is never only its rooms.
+    for (const plan of PLANS) {
+      const converts = plan.periods.find((one) => one.converts)?.converts;
+      if (!converts) continue;
+      expect(converts.ofTheSpend, plan.id).toBeGreaterThan(0);
+      expect(converts.ofTheSpend, plan.id).toBeLessThan(1);
+    }
+  });
+
+  it('makes the decision a trade rather than an answer', () => {
+    // The whole point. A room bought is a week bought, and it is bought with
+    // money the company does not get back — so the largest number stops being
+    // free and starts being a judgement about how much date risk is worth.
+    const sim = world('trade');
+    const id = greenlit(sim, 'unscripted', 'The Arena', { hands: 1 });
+    const post = windowOf(sim.universe.projects[id]!, 'post')!;
+    sim.advanceTo(post.from);
+    const thin = willMakeIt(sim.universe.projects[id]!, sim.now)!;
+
+    const rich = world('trade');
+    const richId = greenlit(rich, 'unscripted', 'The Arena', { hands: 6 });
+    const richPost = windowOf(rich.universe.projects[richId]!, 'post')!;
+    rich.advanceTo(richPost.from);
+    const wide = willMakeIt(rich.universe.projects[richId]!, rich.now)!;
+
+    expect(wide.shortBy, 'six rooms buy room against the date').toBeLessThan(thin.shortBy);
+    runItOut(sim, id);
+    runItOut(rich, richId);
+    expect(rich.universe.projects[richId]!.spentCents, 'and they are paid for')
+      .toBeGreaterThan(sim.universe.projects[id]!.spentCents);
+  });
+});

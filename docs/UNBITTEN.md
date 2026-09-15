@@ -387,15 +387,30 @@ file reference rather than as a finding.
 
 ### Found while building, and not yet fixed
 
-- **The hands on a feature decide nothing.** `project.hands` is the one staffing
-  decision the cutting room offers and it is a real lever on two plans of three:
-  measured across twelve worlds each, a series at its plan's own staffing misses
-  its date four times and the same series with one editor misses twelve; an
-  unscripted season, six and twelve. A feature misses **none out of twelve at
-  either staffing**. One editor and four editors deliver the same picture on the
-  same day, so on the form the game leads with, the decision is a number that
-  changes nothing. Either a feature's cut needs to be long enough to be worth
-  staffing, or the control should not be offered on one.
+- ~~**The hands on a feature decide nothing.**~~ **Fixed, and the first reading
+  of it was wrong.** The claim here was that a feature delivers on the same day
+  at one editor as at four. It does — but not because the staffing has no
+  effect. Measured at the start of post: a feature at one room has 1.6 weeks in
+  hand against its date and at four it has 11. The slack moves enormously; a
+  feature just never generates enough trouble to spend 1.6 weeks of it, because
+  it is one part rather than a season of them.
+
+  The real fault was underneath and applied to all three forms: **a room cost
+  nothing.** `spends` is a flat share of the budget and knew nothing about how
+  many rooms were running, so six editors cost exactly what one did. More hands
+  cut faster, bought weeks against the date, and were free — which made the
+  largest number correct on every picture in every state, and the only crew
+  decision the game offers a number nobody had a reason to lower.
+
+  The rooms are paid for now. `converts.ofTheSpend` says how much of a
+  converting period IS the rooms — a third on the scripted forms, and nearly
+  half on unscripted, which is made in the edit rather than shot to a script —
+  and that part moves with the staffing actually on it while the finish around
+  it does not. The ratio is against the staffing the plan itself assumes, so a
+  picture run as expected costs exactly what it always did and only a deliberate
+  change costs or saves anything. On a €20m picture: about €1m a room on a
+  feature, €0.47m on a series, €0.72m on an unscripted season, and the price is
+  now on the greenlight form beside the number.
 
 - **A default-staffed season misses its date a third to a half of the time**,
   and that is probably right rather than wrong — trouble is supposed to threaten

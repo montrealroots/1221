@@ -121,7 +121,30 @@ export interface Period {
    * is the rung a converted second has reached. Where inventory dwarfs the
    * timeline this is the bottleneck, and no amount of further acquiring helps.
    */
-  converts?: { at: string; hands: number; upTo: string };
+  converts?: {
+    at: string;
+    hands: number;
+    upTo: string;
+    /**
+     * How much of this period's spend is the rooms themselves.
+     *
+     * The rest of it is everything else the period buys, which does not care
+     * how many people are cutting: sound, music, color, the conform, the
+     * deliverables. Without this the staffing decision was free — `spends` is a
+     * flat share of the budget and knew nothing about how many rooms were
+     * running, so six editors cost exactly what one did. More hands was faster,
+     * safer and cost nothing, which made the maximum correct on every picture
+     * in every state and the decision a number nobody had a reason to lower.
+     *
+     * A third, which is where editorial sits on a post budget with no heavy
+     * visual effects on it — the cutting rooms, the assistants, the kit and the
+     * space — and the two thirds left are the finishing that happens whatever
+     * the room did. SLATE's own, and the figure the whole decision turns on, so
+     * it is declared here rather than folded into `spends` where nobody could
+     * see it.
+     */
+    ofTheSpend: number;
+  };
   /**
    * What a week of this period produces, counted the way the people in it
    * count it.
@@ -283,7 +306,7 @@ const FEATURE: Plan = {
       per: 2.4,
       spends: 0.3,
       advances: { picture: 'graded', sound: 'mixed', performance: 'complete', conform: 'mastered' },
-      converts: { at: 'picture-editor', hands: 2, upTo: 'cut' },
+      converts: { at: 'picture-editor', hands: 2, upTo: 'cut', ofTheSpend: 1 / 3 },
       unit: { one: 'week of post', many: 'weeks of post', aWeek: 1 },
     },
   ],
@@ -348,7 +371,7 @@ const SERIES: Plan = {
       runsWith: 'shooting',
       spends: 0.28,
       advances: { picture: 'graded', sound: 'mixed', performance: 'complete', conform: 'mastered' },
-      converts: { at: 'television-editor', hands: 4, upTo: 'cut' },
+      converts: { at: 'television-editor', hands: 4, upTo: 'cut', ofTheSpend: 1 / 3 },
       unit: { one: 'week of finishing', many: 'weeks of finishing', aWeek: 1 },
     },
   ],
@@ -447,7 +470,11 @@ const UNSCRIPTED: Plan = {
       runsWith: 'field',
       spends: 0.24,
       advances: { picture: 'locked', sound: 'mixed', performance: 'complete', conform: 'mastered' },
-      converts: { at: 'unscripted-editor', hands: 3, upTo: 'assembly' },
+      // Nearly half, and higher than the scripted forms on purpose: an
+      // unscripted season is made in the edit rather than shot to a script, so
+      // the rooms are most of what its post buys and the finishing around them
+      // is comparatively little.
+      converts: { at: 'unscripted-editor', hands: 3, upTo: 'assembly', ofTheSpend: 0.45 },
       unit: { one: 'cut minute', many: 'cut minutes', aWeek: 15 },
     },
     {

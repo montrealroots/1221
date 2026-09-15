@@ -43,7 +43,7 @@ import {
 } from '../content/making';
 import { LOT_NAME } from '../content/estate';
 import { MS_WEEK, bookingsFor, rateFor, stagesOn, stillToCarry, theLot } from './lot';
-import { bankAWeek, cuttingPeriod, cutsAWeek, weighTheCut } from './inventory';
+import { bankAWeek, cuttingPeriod, cutsAWeek, handsOn, weighTheCut } from './inventory';
 import {
   backToTheRoom, climbedTo, comesApart, deckFor, decideReview, exposureOf, knockEverything,
   somebodyGoesOff,
@@ -776,12 +776,51 @@ function settleWhatHasEnded(sim: Simulation, project: Project, plan: Plan): void
  * budget twice — which is exactly what happened before this guard, to the tune
  * of ninety-six per cent over on a season.
  */
+/**
+ * What a period actually costs, once the rooms on it are counted.
+ *
+ * `spends` is a share of the budget and it knew nothing about staffing, so a
+ * cutting room ran at whatever size the player set for exactly the same money:
+ * six editors cost what one did. More hands was faster, gave more slack against
+ * the date and cost nothing, which made the largest number correct on every
+ * picture in every state. A decision nobody has a reason to answer twice is not
+ * a decision, and this one is the only staffing call the game offers.
+ *
+ * So the part of the period that IS the rooms moves with the rooms, and the
+ * part that is everything else does not. `ofTheSpend` on the plan says which is
+ * which, and the ratio is against the staffing the plan itself assumes — so a
+ * picture run the way its plan expects costs exactly what it always did, and
+ * only a deliberate change costs or saves anything.
+ */
+export function whatThePeriodCost(project: Project, period: Period, budget: Money): Money {
+  return periodAtThisStaffing(period, budget, handsOn(project));
+}
+
+/**
+ * The same sum without a project, so a screen can price the decision before it
+ * is taken rather than after.
+ */
+export function periodAtThisStaffing(period: Period, budget: Money, hands: number): Money {
+  const base = budget * period.spends;
+  const converts = period.converts;
+  if (!converts || converts.hands <= 0) return Math.round(base);
+  const rooms = base * converts.ofTheSpend;
+  return Math.round((base - rooms) + rooms * (Math.max(0, hands) / converts.hands));
+}
+
+/** What one more room on this period costs, at this budget. */
+export function aRoomCosts(period: Period, budget: Money): Money {
+  const converts = period.converts;
+  if (!converts || converts.hands <= 0) return 0;
+  return Math.round((budget * period.spends * converts.ofTheSpend) / converts.hands);
+}
+
 function settlePeriod(sim: Simulation, project: Project, period: Period): void {
   if (project.settled?.includes(period.id)) return;
   project.settled = [...(project.settled ?? []), period.id];
   const account = cashFor(sim, project.companyId);
   const budget = project.budgetCents ?? 0;
-  const owed = Math.round(budget * period.spends);
+  const owed = whatThePeriodCost(project, period, budget);
   if (account && owed > 0) {
     sim.expense(account, owed, `${project.title}: ${period.label}`, 'business',
       { refType: 'project', refId: project.id });
