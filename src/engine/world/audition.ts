@@ -589,7 +589,6 @@ export function takeTheNote(sim: Simulation, taking: Taking): { ok: true; why: W
   }
   if (!howFarById(taking.howFar)) return { ok: false, error: 'That isn’t a way of taking a note.' };
 
-  audition.took = taking.howFar;
   // Whether they took in what was actually said. Its own draw, keyed to this
   // audition, so the same save answering the same note the same way gets the
   // same day — and so a player who saves before a reading cannot roll for a

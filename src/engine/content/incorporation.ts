@@ -168,8 +168,11 @@ export const REGISTRY_BY_ID: Readonly<Record<RegistryId, RegistryFacts>> =
  *
  * The rate has been raised at least once from twenty-five percent and there is
  * a higher tier attached to conditions about the size and shape of the
- * production. SLATE uses the lower figure and says so rather than printing a
- * number it cannot stand behind.
+ * production. Both are implemented: the lower one is what every qualifying
+ * picture gets, and the higher one is earned by meeting `higherNeeds`, which
+ * `world/rebate.ts` tests limb by limb and says which limb you are short on.
+ * This paragraph said SLATE used the lower figure only, and went on saying it
+ * after the higher one was built and printed on a screen.
  *
  * The application closes on the first day of photography and never reopens.
  * That used to be said here as a field reading `true`, which is a sentence
@@ -205,8 +208,8 @@ export const REBATE = {
   auditedBy: 'An Icelandic auditor, at the production’s cost',
   /** Roughly how long after delivery the money lands. SLATE's own. */
   paidAfterMonths: 6,
-  note: 'Both rates are the published ones. The higher tier also applies with no conditions at all to '
-    + 'work made for audiences of eighteen and under.',
+  note: 'Both rates are the published ones. The higher tier also applies unconditionally to work made '
+    + 'for audiences of eighteen and under, which SLATE doesn’t model: no picture declares an audience.',
   /**
    * The date the whole thing is legislated to stop.
    *

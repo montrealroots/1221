@@ -184,9 +184,28 @@ export function shortOnFor(sim: Simulation, project: Project, on: 'plan' | 'book
   return shortOn(limbsOf(sim, project, on), REBATE.higherNeeds);
 }
 
+/**
+ * The rate a production goes in at, given what it is short on.
+ *
+ * One line, and it exists because the same line was written four times. This
+ * file's own header says the point of it is "one legislated test and not two
+ * implementations of it drifting apart", and by the time anybody checked there
+ * were four: here, in `applyForRebate`, in `whereTheClaimStands`, and in
+ * `world/lot.ts` where an outside production works out what its own shoot is
+ * worth. Four copies of a rule is four places to forget when the law changes,
+ * and this law has an end date written into the content above it.
+ *
+ * Takes the shortfall rather than working it out, because two of the four
+ * callers have already asked and the fifth thing this file should not do is
+ * run the five-limb test twice for one answer.
+ */
+export function rateWhenShort(short: readonly (keyof Limbs)[]): number {
+  return short.length === 0 ? REBATE.higherShare : REBATE.share;
+}
+
 /** The rate this picture would be accepted at today. */
 export function rateFor(sim: Simulation, project: Project, on: 'plan' | 'books'): number {
-  return shortOnFor(sim, project, on).length === 0 ? REBATE.higherShare : REBATE.share;
+  return rateWhenShort(shortOnFor(sim, project, on));
 }
 
 /** What the claim is worth, at the rate it holds and on the books as they stand. */
@@ -248,7 +267,7 @@ export function applyForRebate(
   }
 
   const short = shortOnFor(sim, project, 'plan');
-  const shareAt = short.length === 0 ? REBATE.higherShare : REBATE.share;
+  const shareAt = rateWhenShort(short);
   project.rebate = { appliedAt: sim.now, shareAt };
 
   const account = cashFor(sim, project.companyId);
@@ -382,7 +401,7 @@ export function whereTheClaimStands(sim: Simulation, project: Project): string {
     }
     if (refused) return `${project.title} hasn’t applied. ${refusalById(refused)?.said ?? ''}`.trim();
     const short = shortOnFor(sim, project, 'plan');
-    const rate = short.length === 0 ? REBATE.higherShare : REBATE.share;
+    const rate = rateWhenShort(short);
     return `${project.title} has not applied yet. As planned it would go in at `
       + `${Math.round(rate * 100)}%`
       + `${short.length === 0 ? ', the higher of the two rates' : ''}.`;

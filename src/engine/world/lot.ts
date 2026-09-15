@@ -28,6 +28,7 @@ import {
 } from '../content/lot';
 import { REBATE } from '../content/incorporation';
 import { shortOn } from '../content/rebate';
+import { rateWhenShort } from './rebate';
 import { GROUP } from '../content/sugar';
 import { profitThisYear, shutYearsRunning } from './sugar';
 import { ESTATE_CITY_ID, LOT_NAME, estatePlaceLine, movedInAt } from '../content/estate';
@@ -883,7 +884,7 @@ export function tierFor(sim: Simulation, need: Enquiry, from: Instant): number {
     crew: crewInTheCountry(sim) - spokenFor,
     crewDays: here,
   }, needs);
-  return short.length === 0 ? REBATE.higherShare : REBATE.share;
+  return rateWhenShort(short);
 }
 
 /**

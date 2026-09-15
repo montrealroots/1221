@@ -28,6 +28,7 @@ import { MS_DAY } from '@/engine/core/time';
 import { companyCash, projectsOf } from '@/engine/world/company';
 import { MS_WEEK } from '@/engine/world/lot';
 import { REBATE } from '@/engine/content/incorporation';
+import { rateWhenShort } from '@/engine/world/rebate';
 import { LIMB_LABELS, REFUSALS, THE_CLAIM, shortOn } from '@/engine/content/rebate';
 import { bringingThemCents, fromWhere } from '@/engine/world/casting';
 import { CROWD_RUNS, DEPARTMENTS, FULLY_STAFFED_AT, POSTS } from '@/engine/content/crew';
@@ -89,6 +90,37 @@ function castFrom(sim: Simulation, projectId: string, where: string): { personId
 }
 
 // ---------------------------------------------------------------------------
+
+import { readFileSync } from 'node:fs';
+
+describe('one legislated test, and one implementation of it', () => {
+  it('reads the rate in a single place, because it used to read it in four', () => {
+    // This module's own header says the point of it is one legislated test and
+    // not two implementations of it drifting apart. By the time anybody counted
+    // there were four: `rateFor`, `applyForRebate`, `whereTheClaimStands`, and
+    // `world/lot.ts`, where an outside production works out what its own shoot
+    // here is worth. Four copies of a rule is four places to forget when the
+    // law changes, and this law has an end date written into the content above
+    // it.
+    expect(rateWhenShort([])).toBe(REBATE.higherShare);
+    expect(rateWhenShort(['spendIsk'])).toBe(REBATE.share);
+    expect(REBATE.higherShare).toBeGreaterThan(REBATE.share);
+
+    // And nobody spells it out a second time. Checked against the source rather
+    // than against behavior, because a fifth copy would agree with the other
+    // four on the day it was written — that is exactly how there came to be
+    // four — and only stop agreeing later.
+    const spelled = ['src/engine/world/rebate.ts', 'src/engine/world/lot.ts',
+      'src/engine/world/making.ts', 'src/engine/world/company.ts',
+      'src/ui/workspaces/BusinessWorkspace.tsx', 'src/ui/looks/business.tsx']
+      .flatMap((file) => readFileSync(file, 'utf8').split('\n')
+        .map((line, n) => ({ file, at: `${file}:${n + 1}`, line }))
+        .filter(({ line }) => /REBATE\.higherShare\s*:\s*REBATE\.share/.test(line)));
+    // Exactly one, and it is the body of `rateWhenShort` itself.
+    expect(spelled.map((one) => one.at)).toHaveLength(1);
+    expect(spelled[0]!.file).toBe('src/engine/world/rebate.ts');
+  });
+});
 
 describe('how many people are actually on a picture', () => {
   it('counts more than the posts, because a head is not a department', () => {

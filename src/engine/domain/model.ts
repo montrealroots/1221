@@ -859,8 +859,6 @@ export interface Audition {
    * is never said.
    */
   note?: { shade: string; toward: number };
-  /** How far the player took it, by `content/audition.ts` id. */
-  took?: string;
   /**
    * Whether the player took in what was actually said.
    *

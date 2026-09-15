@@ -1063,7 +1063,6 @@ describe('a note nobody answers', () => {
     // And it is decided on the reading as played, because the note went untaken.
     // Not on the note half-taken for them, which would be the game answering a
     // question it exists to make the player answer.
-    expect(done.took).toBeUndefined();
     expect(done.played).toEqual({ warmth: 0, size: 0, pace: 0 });
   });
 
