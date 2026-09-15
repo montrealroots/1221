@@ -345,6 +345,23 @@ file reference rather than as a finding.
   because the player can now be seated in the family's own pictures, so it is
   new in reach rather than new in code.
 
+- **An audition never expires.** `whatIsGoing` writes a row with a `closesAt`
+  on it, and nothing ever reads that date except the player going up for the
+  part. Measured on a save nobody plays: 66 auditions across 25 years, every
+  one of them still `open`, the oldest closed twelve years ago. So the one
+  field on the row that says *after this nobody is being seen* is a sentence
+  the game prints and does not keep, and the list a player opens is a list of
+  parts that were cast years ago by somebody else. Found while measuring
+  whether the fifth room buys the player more work — it does, and the count
+  measured was auditions **offered**, which is the right number for that
+  question and is not affected by this.
+
+  Not fixed here because the fix is a design decision and not a sweep: an
+  audition the player ignored could simply close, or it could cost something —
+  a holder who asks twice and is ignored twice is a holder who stops asking,
+  which is exactly the `remembersYou` ratchet running the other way. The second
+  one is the better game and it is not mine to choose.
+
 ### Wrong, rather than missing
 
 - **Nothing in the company ever ends.** An option you forgot to exercise never

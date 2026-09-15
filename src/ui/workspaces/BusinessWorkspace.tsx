@@ -28,8 +28,13 @@ import { DELIVERY, plansFor, planById } from '@/engine/content/making';
 import { DEALS, dealById } from '@/engine/content/selling';
 import { rateById, throughput } from '@/engine/content/inventory';
 import { cuttingPeriod } from '@/engine/world/inventory';
-import { pullOn, sellsFor, stillToCarry } from '@/engine/world/lot';
-import { SELLING } from '@/engine/content/lot';
+import {
+  behindTheCompany, breakEvenShare, goingUp, pullOn, sellsFor, stillToCarry, theSmallStage,
+  turnedAway, whereTheBuildStands, whyNotBuild,
+} from '@/engine/world/lot';
+import {
+  A_SMALL_STAGE, SELLING, SMALL_STAGE_COST_CENTS, buildRefusalById,
+} from '@/engine/content/lot';
 import { AXES, BOOKABLE, feeReads } from '@/engine/content/casting';
 import {
   askFor, bringingThemCents, castOf, castSpark, datesFor, fromWhere, globalRuleOne, howManyCast,
@@ -115,6 +120,7 @@ export function BusinessWorkspace() {
       <Holdings />
       <Slate />
       <TheLotsName />
+      <TheFifthRoom />
       <Standings />
 
       <p className="xs dim" style={{ marginTop: 'var(--s5)' }}>
@@ -1216,6 +1222,74 @@ function TheLotsName() {
         <div className="xs muted">{Math.round(pull.reach * 100)}/100 of the way to everybody who books a stage</div>
         <div className="xs muted">{pull.calls.toFixed(1)} calls a month</div>
       </div>
+      {error && <p className="small negative" style={{ marginTop: 'var(--s3)' }}>{error}</p>}
+    </Panel>
+  );
+}
+
+/**
+ * The one decision on this lot that changes what the lot is.
+ *
+ * Everything it can refuse on is shown before it refuses, because a door whose
+ * lock is invisible is not a decision. The money and the wait are said in the
+ * same breath as the reason, and so is the thing a page like this normally
+ * leaves out: what it costs to keep afterwards.
+ */
+function TheFifthRoom() {
+  const { run } = useGame();
+  const standing = useWorld((s) => theSmallStage(s));
+  const building = useWorld((s) => goingUp(s));
+  const saying = useWorld((s) => whereTheBuildStands(s));
+  const why = useWorld((s) => whyNotBuild(s));
+  const behind = useWorld((s) => behindTheCompany(s));
+  const bar = useWorld((s) => breakEvenShare(s));
+  const priced = useWorld((s) => turnedAway(s).find((one) => one.why === 'price')?.count ?? 0);
+  const [error, setError] = useState<string | undefined>();
+
+  const build = () => {
+    const answer = run<{ ok: boolean; error?: string }>('lot.build', {}, { silent: true });
+    setError(answer.value?.ok ? undefined : answer.value?.error ?? answer.error);
+  };
+
+  return (
+    <Panel title={A_SMALL_STAGE.name} tight look={at('lot')}>
+      {standing ? (
+        <>
+          <p className="small">{A_SMALL_STAGE.said}</p>
+          <div className="row-between">
+            <div className="xs muted">{A_SMALL_STAGE.floorSqm}m², {A_SMALL_STAGE.clearHeightM}m to the perms</div>
+            <div className="xs muted">{formatMoney(standing.weekRateCents, { cents: false })} a week</div>
+          </div>
+        </>
+      ) : building ? (
+        <p className="small">{saying}</p>
+      ) : (
+        <>
+          <p className="small">
+            The smallest room here is two thousand square metres, and a week-long job has to pay for
+            all of it. {priced > 0 ? `${priced} enquiries have gone elsewhere on price.` : 'It\u2019s why the short work goes elsewhere.'}
+          </p>
+          <p className="xs dim" style={{ margin: 'var(--s2) 0 var(--s3)' }}>
+            {A_SMALL_STAGE.floorSqm}m² at {formatMoney(A_SMALL_STAGE.weekRateCents, { cents: false })} a week.{' '}
+            {formatMoney(SMALL_STAGE_COST_CENTS, { cents: false })} now, {A_SMALL_STAGE.weeksToBuild} weeks
+            to stand it up, and five rooms cost more to keep dark than four
+            {bar === undefined ? '' : ` — the lot has to take ${Math.round(bar * 100)}% of a full month to cover one`}.
+          </p>
+          <div className="row-between">
+            <button type="button" className="btn" onClick={build} disabled={why !== undefined}>
+              Build It
+            </button>
+            <div className="xs muted">
+              {formatMoney(Math.max(0, behind), { cents: false })} behind the company
+            </div>
+          </div>
+          {why && (
+            <p className="small dim" style={{ marginTop: 'var(--s3)' }}>
+              {buildRefusalById(why)?.said}
+            </p>
+          )}
+        </>
+      )}
       {error && <p className="small negative" style={{ marginTop: 'var(--s3)' }}>{error}</p>}
     </Panel>
   );

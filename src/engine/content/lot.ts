@@ -314,6 +314,24 @@ export interface OverheadLine {
   label: string;
   monthlyCents: Money;
   said: string;
+  /**
+   * Whether the line moves with how much building there is.
+   *
+   * The table below is what four stages cost. It was the whole answer while
+   * four stages was the whole lot, and it stopped being one the moment the
+   * player could put up a fifth: a room that cost nothing to run would be a
+   * room worth building the instant the money existed, and the break-even
+   * figure beside it would have gone *down* when the lot got bigger.
+   *
+   * So the lines that are a function of what stands there scale with the floor
+   * that stands there, and the two that aren't, don't. The sinking fund is
+   * defined as a share of what the thing cost. Fasteignaskattur is levied on
+   * assessed value and insurance on replacement value, both of which are the
+   * building. Heat and light and the fire certificate are per square meter of
+   * room. But a gate is a gate however many stages are behind it, and what the
+   * lot spends on being known is a decision rather than a consequence.
+   */
+  withTheFloor: boolean;
 }
 
 export const OVERHEAD: readonly OverheadLine[] = [
@@ -322,42 +340,49 @@ export const OVERHEAD: readonly OverheadLine[] = [
     label: 'Set Aside For Repairs',
     monthlyCents: 200_000_00,
     said: 'One percent of what it cost to build, every year, against the day something big fails.',
+    withTheFloor: true,
   },
   {
     id: 'property_tax',
     label: 'Property Tax',
     monthlyCents: 176_000_00,
     said: 'Fasteignaskattur, at the commercial rate the municipality sets.',
+    withTheFloor: true,
   },
   {
     id: 'crew',
     label: 'Standing Crew',
     monthlyCents: 154_000_00,
     said: 'Sixteen people who are there whether anybody is shooting or not, five of them on the gate.',
+    withTheFloor: false,
   },
   {
     id: 'insurance',
     label: 'Insurance',
     monthlyCents: 57_000_00,
     said: 'Including the statutory catastrophe cover, which in Iceland means volcano and earthquake.',
+    withTheFloor: true,
   },
   {
     id: 'selling',
     label: 'Selling It',
     monthlyCents: 50_000_00,
     said: 'A stage nobody has heard of has to be sold, continuously, at every market there is.',
+    withTheFloor: false,
   },
   {
     id: 'utilities',
     label: 'Keeping The Lights On',
     monthlyCents: 27_000_00,
     said: 'Cheap, because the heat comes out of the ground and the power off the grid behind it.',
+    withTheFloor: true,
   },
   {
     id: 'services',
     label: 'Contracted Services',
     monthlyCents: 25_000_00,
     said: 'Fire and sprinkler certification, hoist inspection, snow clearing, waste.',
+    withTheFloor: true,
   },
 ];
 
@@ -720,3 +745,158 @@ export const CREW_PENALTY_SOURCE = 'Imported-build cost uplift over UK, 25–40%
  * existence who are still here afterwards, and they count.
  */
 export const CREW_BASE = 1_000;
+
+// ---------------------------------------------------------------------------
+// The room the lot does not have
+// ---------------------------------------------------------------------------
+
+/**
+ * The small stage, and what putting one up costs.
+ *
+ * `docs/DEPTH.md` has carried this as a decision rather than a defect since the
+ * lot was built, and the measurement bears it out: four rooms, and the smallest
+ * is larger than four of the ten enquiry shapes need. Both ordinary commercials
+ * and both documentaries — fifty-seven of the hundred and one weight between
+ * them — are turned away because the only room that will hold them costs well
+ * over half of everything they came here to spend. Nobody designed that. It fell
+ * out of pricing a whole hold against a budget.
+ *
+ * Half of that was a bug and this is where it was found. Pricing the room meant
+ * asking what the short work can actually pay, and the answer is €23 a square
+ * meter a week — all four short shapes land between €22.97 and €23.92, and the
+ * benchmark above is €23. They could always afford the going rate for a stage.
+ * What they could not afford was two thousand square meters of it, and on top of
+ * that `heldFor` was tripling their quote with a floor that only ever fired on
+ * them. Deleting the floor took the lot from about four and a half outside jobs
+ * a year to seven and a half, and the player from fifteen auditions in ten years
+ * to thirty-three, without a euro spent. Measurements taken before that was
+ * found — thirty-five shoots against eighty-six — were measuring the floor.
+ *
+ * What the room is worth after it, over six seeds and twenty-five years: the
+ * documentary, which is the one kind of production that cannot happen here at
+ * any hold length without it; a sixth holder; about thirteen more shoots a
+ * decade; and four more auditions by year ten, twelve by year twenty-five. It
+ * never pays for itself — seventeen million to put up and about four hundred
+ * thousand a year to keep, against under a hundred thousand a year of letting.
+ *
+ * That is the correct shape rather than a disappointment. Auditions are gated on
+ * whether a holder would think of the player at all, so a new holder is a door
+ * that takes years to open: the room does not buy work, it buys doors. And it is
+ * paid for out of the same patience the greenlight spends from. Build the room
+ * and get asked about parts, or keep the patience and greenlight your own
+ * pictures — both are routes to a career and there is one pool.
+ */
+/**
+ * How big the fifth room is, and why exactly this big.
+ *
+ * The smallest room that holds every short job that rings. The largest of them
+ * — a European agency's commercial — asks for nine hundred square meters, and
+ * a room that missed it would leave the dearest piece of short work on the
+ * table while carrying the floor to shoot it. Smaller than this is a room that
+ * turns away the work it was built for; larger is floor the short work does not
+ * need and has to pay the overhead on.
+ */
+export const A_SMALL_STAGE_SQM = 950;
+
+export const A_SMALL_STAGE = {
+  name: 'Stage 5',
+  floorSqm: A_SMALL_STAGE_SQM,
+  clearHeightM: 10,
+  /**
+   * What a week in it lets for: the published benchmark, by the square meter.
+   *
+   * Derived and not chosen, which took two goes to get right. The first figure
+   * here was picked because it made the commercials book, and at €11.58 a
+   * square meter it was the cheapest floor on a lot whose own rate card says
+   * small rooms are the dearest — a number tuned to an outcome with the
+   * reasoning written afterwards.
+   *
+   * What the arithmetic actually says is better than the invention. Every short
+   * job that rings — both commercials and both documentaries — will carry
+   * between €22.97 and €23.92 a square meter a week for a room this size, and
+   * the benchmark is €23. They can afford the going rate for a stage. What they
+   * cannot afford is two thousand square meters of it, which is the smallest
+   * room the lot has. The lot was never turning the short work away on price
+   * per meter. It was turning it away on the size of its smallest room, and
+   * that is a thing somebody can build their way out of.
+   */
+  weekRateCents: Math.round(A_SMALL_STAGE_SQM * THE_RATE_CARD.benchmarkPerSqmWeek * 100) as Money,
+  fitted: ['geothermal_floor', 'silent_hvac'] as readonly StageFeature[],
+  said: 'The small one, and the only room here a week-long job can afford.',
+  /**
+   * How long it takes to stand up, in weeks.
+   *
+   * Eighteen months. A stage is a steel frame, an acoustic liner and a power
+   * feed, and none of it is quick — which is the point of it as a decision. The
+   * money goes now and the work arrives in a year and a half, so it is the same
+   * bet as the selling spend and on a longer fuse.
+   */
+  weeksToBuild: 78,
+} as const;
+
+/**
+ * What new stage floor costs a square meter.
+ *
+ * Derived from what this lot cost rather than quoted fresh, so the two numbers
+ * cannot drift: `BUILD_COST_CENTS` is what the family paid to put up
+ * `LOT_FLOOR_SQM`, and a new room is priced at the same rate.
+ *
+ * It is higher than a pure construction quote, because it is the whole of what
+ * a lot costs by the meter — the workshops, the power, the road. A fifth room
+ * on land that already has all of that would be cheaper in life, and it is
+ * charged the full rate here anyway, for the same reason `ISK_A_EURO` is held
+ * flat: this is the only construction price the game knows, and a marginal
+ * discount invented to sit under it would be a second guess stacked on the
+ * first. The bet is dearer than it needs to be, and the game says so rather
+ * than quietly making it easier.
+ */
+export const A_SQUARE_METRE_CENTS: Money = Math.round(BUILD_COST_CENTS / LOT_FLOOR_SQM);
+
+/** What the small stage costs to build, all in. */
+export const SMALL_STAGE_COST_CENTS: Money =
+  Math.round(A_SQUARE_METRE_CENTS * A_SMALL_STAGE.floorSqm);
+
+export type WhyNotBuild = 'no-lot' | 'already' | 'going-up' | 'cannot-carry';
+
+export interface BuildRefusal {
+  id: WhyNotBuild;
+  /** Said to whoever asked for it, in the world's words. */
+  said: string;
+}
+
+/**
+ * Every way the fifth room is refused before the money moves.
+ *
+ * `cannot-carry` is the one a player will meet and the only one that ever
+ * changes its answer. The other three are facts about the lot; that one is a
+ * fact about the family, and it moves both ways — a year America stays shut
+ * brings the rungs down and closes a door that was open in the spring.
+ *
+ * What it tests is not the cash in the account. A building is committed to, not
+ * paid for out of the current month, and the same figure the greenlight asks
+ * about is the honest ceiling here too: what is in the account plus what the
+ * family will still put in before the money comes with a condition. A company
+ * that spends all of that on a room has nothing left to make a picture with,
+ * which is the whole of what makes this a decision instead of an upgrade.
+ */
+export const BUILD_REFUSALS: readonly BuildRefusal[] = [
+  {
+    id: 'no-lot',
+    said: 'There’s no lot to build it on.',
+  },
+  {
+    id: 'already',
+    said: `${A_SMALL_STAGE.name} is already standing.`,
+  },
+  {
+    id: 'going-up',
+    said: 'It’s already going up. Nobody builds the same room twice.',
+  },
+  {
+    id: 'cannot-carry',
+    said: 'The family won’t carry it on top of what it is already carrying.',
+  },
+];
+
+export const buildRefusalById = (id: WhyNotBuild): BuildRefusal | undefined =>
+  BUILD_REFUSALS.find((one) => one.id === id);

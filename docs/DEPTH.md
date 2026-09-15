@@ -255,18 +255,60 @@ on the day it opens. Studio lots are justified by trading income, by the land,
 and by an owner who wants the capacity — which is this family exactly, and is
 the frame the game should put it in.
 
-What is left on it is a decision rather than a defect: whether the player can
-build a small stage. Four rooms and the smallest is bigger than four of the ten
-enquiry shapes need, which is most of why it is empty.
-
-**The lot has no small stage, and that is most of why it is empty.** Four rooms
+**The lot has no small stage, and that is part of why it is empty.** Four rooms
 and the smallest is bigger than four of the ten enquiry shapes need. The
 ordinary Icelandic commercial and the ordinary Icelandic documentary — 40 of the
 101 weight between them — are turned away because the only room that will hold
 them costs well over half of everything they were going to spend in the country.
 Nobody designed that; it fell out of pricing the whole hold against the budget.
-It is also the research's own warning about phase one, arriving from the other
-direction, and the obvious lever for a player: build a small one.
+
+**And most of it was a floor nobody had looked at.** Building the small room
+meant pricing it, and pricing it honestly meant asking what the short work can
+actually pay. It can pay €23 a square meter a week — every one of the four short
+shapes lands between €22.97 and €23.92 — and the lot's published benchmark is
+€23. They could always afford the going rate for a stage. What they could not
+afford was two thousand square meters of it.
+
+That was only half the answer. `heldFor` put a floor under both ends of every
+booking: any kind that prepped at all prepped for at least a whole week, and
+struck for at least another. It never once fired on the work it was written for,
+because a feature's own share of its own weeks already rounds well past one. It
+fired on every piece of short work there is. A one-week commercial was held for
+three weeks against a table that says a third of a week; a two-week documentary
+for four against a table that says a third of one. The table's own sentence is
+that a documentary on a stage *arrives in the morning and is gone by the
+evening*, and the floor made that sentence false. **A guard that only ever fires
+where it is wrong is worse than no guard**, and this one tripled the quote on
+all the short work and priced every piece of it off the lot.
+
+Deleting it changes nothing for a feature or a limited series — the same numbers
+come out — and takes the lot from about 4.5 outside jobs a year to about 7.4,
+from two kinds of production to three, and the player from 15 auditions in ten
+years to 33. The lot was not short of a room. It was tripling its own quotes.
+
+**The room is still worth building, and it is worth much less than it looked.**
+Measured before the floor was found, a planted small stage took the lot from 35
+shoots to 86 and the player from 12 auditions to 29 — which was the bug being
+measured, not the room. Measured after, across six seeds and twenty-five years,
+the room buys: the documentary, which is the one kind of production that cannot
+happen here at any hold length without it; a sixth holder; about 13 more shoots
+a decade; and an audition count that moves +4 by year ten, +7.5 by twenty and
++12.8 by twenty-five. It never pays for itself. €17.3m to build and about
+€419k a year to keep, against under €100k a year of letting.
+
+That is the correct shape and not a disappointment. Auditions are gated on
+`remembersYou`, so a new holder who has never met the player is a door that
+takes years to open — the room does not buy work, it buys doors. And the money
+is spent in the currency that matters: €20.8m of the family's patience over ten
+years, out of the same pool the greenlight spends from. Build the room and get
+asked about parts, or keep the patience and greenlight your own pictures. Both
+are routes to a career and there is one pool.
+
+**The refusal is a live figure, not a timer.** What is behind the company is
+measured against a year of the group's profit, so a year America stays shut
+brings every rung down and a year it reopens puts them back. On one measured
+save the door is open at year 5, shut at 6, open again at 7, shut at 10 and
+shut for good from 11. A door that only ever shut would be a countdown.
 
 The order mattered and was nearly got wrong. Making demand respond to the world
 first would have produced a better-looking lot and an equally inert one, because

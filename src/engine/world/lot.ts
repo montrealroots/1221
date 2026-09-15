@@ -16,6 +16,7 @@
 import type { Simulation } from '../core/simulation';
 import type { Booking, BookingKind, Id, Property, SoundStage } from '../domain/model';
 import type { Instant } from '../core/time';
+import type { ScheduledItem } from '../core/scheduler';
 import type { Money } from '../core/money';
 import { MS_DAY, instantFromZoned, zonedParts } from '../core/time';
 import {
@@ -23,6 +24,7 @@ import {
   MOST_CALLS, MOST_OF_THE_SPEND, OVERHEAD, PATIENCE, RATE_SHARE,
   FOREIGN_REACH, SELLING, SHUT_YEAR_BITE, type Rung,
   ENQUIRY_SHAPES, STAGES, type Enquiry,
+  A_SMALL_STAGE, SMALL_STAGE_COST_CENTS, buildRefusalById, type WhyNotBuild,
 } from '../content/lot';
 import { REBATE } from '../content/incorporation';
 import { shortOn } from '../content/rebate';
@@ -165,10 +167,23 @@ export function breakEvenShare(sim: Simulation): number | undefined {
  */
 function lineCosts(sim: Simulation): { line: typeof OVERHEAD[number]; owed: Money }[] {
   const selling = sellsFor(sim);
+  // And the second thing that moves it: how much building there is. The table
+  // is what four stages cost, so every line that is a function of the floor is
+  // charged against the floor that actually stands. A fifth room that cost
+  // nothing to run would be a room worth putting up the moment the money
+  // existed — and the break-even figure would have fallen when the lot grew.
+  const grown = floorStanding(sim) / LOT_FLOOR_SQM;
   return OVERHEAD.map((line) => ({
     line,
-    owed: line.id === 'selling' ? selling : line.monthlyCents,
+    owed: line.id === 'selling' ? selling
+      : line.withTheFloor ? Math.round(line.monthlyCents * grown)
+        : line.monthlyCents,
   }));
+}
+
+/** Square meters of stage standing on the lot today. */
+export function floorStanding(sim: Simulation): number {
+  return stagesOn(sim).reduce((n, stage) => n + stage.floorSqm, 0);
 }
 
 /** What a month of the lot costs today, with the chosen line at what was chosen. */
@@ -244,6 +259,141 @@ export function buildTheLot(sim: Simulation, ownerCompanyId: Id): Property {
 }
 
 // ---------------------------------------------------------------------------
+// The fifth room
+// ---------------------------------------------------------------------------
+
+/** What the scheduler calls the day a stage is finished. */
+export const BUILT_KIND = 'lot.stage_built';
+
+/** What the money is posted under, which is the only record of the decision. */
+export const BUILD_MEMO = `${LOT_NAME}: Building ${A_SMALL_STAGE.name}`;
+
+/** The small stage, if it stands. */
+export function theSmallStage(sim: Simulation): SoundStage | undefined {
+  return stagesOn(sim).find((stage) => stage.name === A_SMALL_STAGE.name);
+}
+
+/** The build that is under way, if one is. */
+export function goingUp(sim: Simulation): ScheduledItem | undefined {
+  return sim.universe.scheduled.find((one) => one.kind === BUILT_KIND && one.status === 'pending');
+}
+
+/**
+ * What is behind the company today.
+ *
+ * The cash in the account plus what the family will still put in, which is the
+ * same figure the greenlight asks about and for the same reason: a company that
+ * is funded as it goes cannot be judged on the balance on one morning. It is
+ * the ceiling on what this company can commit to at all, and the room and the
+ * picture spend out of it together.
+ */
+export function behindTheCompany(sim: Simulation): Money {
+  const lot = theLot(sim);
+  const account = lot ? cashFor(sim, lot.ownerId) : undefined;
+  return (account ? sim.universe.accounts[account]?.balance ?? 0 : 0) + stillToCarry(sim);
+}
+
+/** Why the fifth room cannot be built today, if it cannot. */
+export function whyNotBuild(sim: Simulation): WhyNotBuild | undefined {
+  if (!theLot(sim)) return 'no-lot';
+  if (theSmallStage(sim)) return 'already';
+  if (goingUp(sim)) return 'going-up';
+  if (SMALL_STAGE_COST_CENTS > behindTheCompany(sim)) return 'cannot-carry';
+  return undefined;
+}
+
+/**
+ * Commits to the fifth room.
+ *
+ * The money goes now and the room arrives in eighteen months, and those are
+ * deliberately the two facts of it. A build draws down over its program in
+ * life; here it is charged in one line on the day it is signed, because what
+ * this models is the commitment rather than the cash flow — and because a
+ * half-paid stage on a company that ran out would be a state the game has no
+ * honest answer for. One expense, one memo, one line in the ledger anybody can
+ * open, and `familyCovers` turns it into what it really is at the end of the
+ * month: a quarter of the family's whole patience, spent on a room.
+ */
+export function buildAStage(sim: Simulation): { ok: boolean; error?: string; readyAt?: Instant } {
+  const why = whyNotBuild(sim);
+  if (why) {
+    const said = buildRefusalById(why)?.said ?? 'It can’t be built.';
+    return {
+      ok: false,
+      error: why === 'cannot-carry'
+        ? `${said} ${money(SMALL_STAGE_COST_CENTS)} against ${money(Math.max(0, behindTheCompany(sim)))} `
+          + 'in the account and left in the family’s patience.'
+        : said,
+    };
+  }
+  const lot = theLot(sim)!;
+  const account = cashFor(sim, lot.ownerId);
+  if (!account) return { ok: false, error: 'The company has no account to pay for it out of.' };
+
+  sim.expense(account, SMALL_STAGE_COST_CENTS, BUILD_MEMO, 'business');
+  const readyAt = sim.now + A_SMALL_STAGE.weeksToBuild * MS_WEEK;
+  sim.schedule({
+    at: readyAt,
+    kind: BUILT_KIND,
+    label: `${A_SMALL_STAGE.name} Is Finished`,
+    category: 'business',
+    priority: 5,
+    refType: 'property',
+    refId: lot.id,
+  });
+  sim.notify({
+    category: 'business',
+    title: `${A_SMALL_STAGE.name} Is Going Up`,
+    body: `${money(SMALL_STAGE_COST_CENTS)} goes out today and the room opens in `
+      + `${A_SMALL_STAGE.weeksToBuild} weeks. ${A_SMALL_STAGE.said} `
+      + `It also costs more to keep the lights on in five rooms than in four, `
+      + `so the lot has to be fuller to cover a month than it did this morning.`,
+    importance: 75,
+  });
+  return { ok: true, readyAt };
+}
+
+/**
+ * The day it opens.
+ *
+ * Put onto the lot with today's date, so `stagesOn` sorts it last and every
+ * reader of the lot — what it earns if full, what it costs a month, what fits
+ * on it — picks it up from the same place the other four come from. Nothing
+ * needed a special case for it, which is the test of whether the four were
+ * modeled or hard-coded.
+ */
+export function finishTheStage(sim: Simulation): SoundStage | undefined {
+  const lot = theLot(sim);
+  if (!lot || theSmallStage(sim)) return undefined;
+  const stage: SoundStage = {
+    id: sim.nextId('stage'),
+    saveId: sim.universe.meta.id,
+    propertyId: lot.id,
+    name: A_SMALL_STAGE.name,
+    floorSqm: A_SMALL_STAGE.floorSqm,
+    clearHeightM: A_SMALL_STAGE.clearHeightM,
+    weekRateCents: A_SMALL_STAGE.weekRateCents,
+    fitted: [...A_SMALL_STAGE.fitted],
+    builtAt: sim.now,
+  };
+  sim.universe.stages[stage.id] = stage;
+  // The property is worth what went into it. It was written once at the build
+  // and would otherwise have gone on saying what four stages cost.
+  lot.marketValue += SMALL_STAGE_COST_CENTS;
+  lot.interiorSqft = Math.round(floorStanding(sim) * 10.7639);
+  return stage;
+}
+
+/** Where the build stands, in a sentence, or nothing if none is under way. */
+export function whereTheBuildStands(sim: Simulation): string | undefined {
+  const build = goingUp(sim);
+  if (!build) return undefined;
+  const left = Math.max(0, Math.ceil((build.at - sim.now) / MS_WEEK));
+  return `${A_SMALL_STAGE.name} opens in ${left === 1 ? 'a week' : `${left} weeks`}. `
+    + `${money(SMALL_STAGE_COST_CENTS)} is already spent on it.`;
+}
+
+// ---------------------------------------------------------------------------
 // What it costs to own
 // ---------------------------------------------------------------------------
 
@@ -258,6 +408,21 @@ export const LOT_OVERHEAD_KIND = 'lot.overhead';
  * ever owned.
  */
 export function registerLot(sim: Simulation): void {
+  // Eighteen months after somebody signed for it, the room opens. Registered
+  // before anything is scheduled onto it, because `sim.schedule` refuses a kind
+  // with no handler rather than dropping it quietly at the far end.
+  sim.onSchedule(BUILT_KIND, () => {
+    const stage = finishTheStage(sim);
+    if (!stage) return;
+    sim.notify({
+      category: 'business',
+      title: `${stage.name} Is Finished`,
+      body: `${A_SMALL_STAGE.said} It lets at ${money(stage.weekRateCents)} a week, and the `
+        + `${Math.round(stage.floorSqm)}m² of it is on the month from now on whether anybody stands in it or not.`,
+      importance: 70,
+    });
+  });
+
   sim.onSchedule(LOT_OVERHEAD_KIND, () => {
     const lot = theLot(sim);
     const account = lot ? cashFor(sim, lot.ownerId) : undefined;
@@ -346,6 +511,18 @@ export function registerLot(sim: Simulation): void {
       company.sellsFor = Math.max(SELLING.floor, want);
       return { ok: true };
     },
+  );
+
+  /**
+   * Put up the fifth room.
+   *
+   * The one decision on this lot that changes what the lot is rather than how
+   * hard it is sold. Everything it refuses on is a fact the player can read
+   * somewhere else first, which is the difference between a locked door and a
+   * hidden one.
+   */
+  sim.onCommand<Record<string, never>, { ok: boolean; error?: string; readyAt?: Instant }>(
+    'lot.build', (_payload, { sim: s }) => buildAStage(s),
   );
 
   if (!sim.universe.scheduled.some((i) => i.kind === LOT_OVERHEAD_KIND && i.status === 'pending')) {
@@ -620,13 +797,24 @@ export interface Answer {
  * and earning the whole time. Counting only the shooting weeks understated what
  * a stage is occupied for by most of a half and understated what it earns by
  * about as much — on the same deals the engine was already writing.
+ *
+ * There used to be a floor under both ends: any kind that prepped at all
+ * prepped for at least a whole week. It never once fired on the work it was
+ * written for — a feature's share of its own weeks already rounds well past
+ * one — and it fired on every piece of short work there is. A one-week
+ * commercial was held for three weeks against a table that says a third of a
+ * week, and a two-week documentary for four against a table that says a third
+ * of one. The table's own sentence is that a documentary on a stage arrives in
+ * the morning and is gone by the evening; the floor made that sentence false,
+ * tripled what the short work was quoted, and priced every piece of it off the
+ * lot. A guard that only ever fires where it is wrong is worse than no guard.
  */
 export function heldFor(need: Enquiry): { prep: number; shoot: number; strike: number } {
   const around = AROUND_THE_SHOOT[need.kind];
   return {
-    prep: Math.max(around.prep > 0 ? 1 : 0, Math.round(need.weeks * around.prep)),
+    prep: Math.round(need.weeks * around.prep),
     shoot: need.weeks,
-    strike: Math.max(around.strike > 0 ? 1 : 0, Math.round(need.weeks * around.strike)),
+    strike: Math.round(need.weeks * around.strike),
   };
 }
 

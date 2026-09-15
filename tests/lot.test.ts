@@ -22,16 +22,19 @@ import { quickSave, validateUniverse } from '@/engine';
 import type { Simulation } from '@/engine';
 import { MS_DAY } from '@/engine/core/time';
 import {
-  AROUND_THE_SHOOT, CREW_BASE, ENQUIRY_SHAPES, OVERHEAD_FLOOR_CENTS, MOST_CALLS,
-  MOST_OF_THE_SPEND, OVERHEAD, PATIENCE, RATE_SHARE, SELLING, type Enquiry,
+  AROUND_THE_SHOOT, A_SMALL_STAGE, A_SQUARE_METRE_CENTS, BUILD_COST_CENTS, CREW_BASE,
+  ENQUIRY_SHAPES, LOT_FLOOR_SQM, OVERHEAD_FLOOR_CENTS, MOST_CALLS,
+  MOST_OF_THE_SPEND, OVERHEAD, PATIENCE, RATE_SHARE, SELLING, SMALL_STAGE_COST_CENTS,
+  THE_RATE_CARD, type Enquiry,
 } from '@/engine/content/lot';
 import { REBATE } from '@/engine/content/incorporation';
 import {
-  ISK_A_EURO, breakEvenShare, chargeTheMonth, crewInTheCountry, familyCovers, heldFor,
+  BUILD_MEMO, ISK_A_EURO, behindTheCompany, breakEvenShare, buildAStage, chargeTheMonth,
+  crewInTheCountry, familyCovers, floorStanding, goingUp, heldFor,
   monthlyOverhead, paidInSoFar, pullOn,
-  quotedFor, reachOf, rungFor, turnedAway,
+  quotedFor, reachOf, rungFor, stillToCarry, theSmallStage, turnedAway,
   MS_WEEK, stagesOn, standingWith, tierFor, utilisation, whatTheFamilySays,
-  whereTheLotStands, wholeHold,
+  whereTheBuildStands, whereTheLotStands, whyNotBuild, wholeHold,
   wouldBook,
 } from '@/engine/world/lot';
 import { capabilitiesOf } from '@/engine/world/company';
@@ -124,8 +127,8 @@ describe('and it does not fill', () => {
       // the rows would say the lot is three times busier than it is.
       const jobs = Object.values(sim.universe.bookings)
         .filter((one) => one.kind === 'shooting').length / 5;
-      expect(jobs, `${seed} took ${jobs} jobs a year`).toBeGreaterThan(2);
-      expect(jobs, `${seed} took ${jobs} jobs a year`).toBeLessThan(7);
+      expect(jobs, `${seed} took ${jobs} jobs a year`).toBeGreaterThan(5);
+      expect(jobs, `${seed} took ${jobs} jobs a year`).toBeLessThan(11);
     }
   });
 
@@ -322,7 +325,25 @@ describe('what a production is actually weighing', () => {
     for (const one of ENQUIRY_SHAPES) {
       const held = heldFor(one.of);
       expect(held.shoot).toBe(one.of.weeks);
-      expect(wholeHold(one.of)).toBeGreaterThan(one.of.weeks);
+    }
+    // The long work holds longer than it shoots, and the short work does not,
+    // which is the whole of what the table says and was for a long time not
+    // what the code did. A floor under both ends forced a week of prep and a
+    // week of strike onto every kind — it never fired on a feature, whose own
+    // share already rounds well past one, and it fired on every commercial and
+    // documentary there is, tripling what the short work was quoted and pricing
+    // all of it off the lot.
+    for (const one of ENQUIRY_SHAPES) {
+      const longer = wholeHold(one.of) > one.of.weeks;
+      const long = one.of.kind === 'feature' || one.of.kind === 'limited series';
+      expect(longer, `${one.of.kind}, ${one.of.weeks} weeks`).toBe(long);
+    }
+    // Held to the table itself, either way: what a kind is given is what its
+    // own share of its own weeks rounds to, and nothing is put under it.
+    for (const one of ENQUIRY_SHAPES) {
+      const around = AROUND_THE_SHOOT[one.of.kind];
+      expect(heldFor(one.of).prep).toBe(Math.round(one.of.weeks * around.prep));
+      expect(heldFor(one.of).strike).toBe(Math.round(one.of.weeks * around.strike));
     }
     // And the spread by kind is the point. A feature builds and strikes; a
     // documentary on a stage arrives in the morning and is gone by the evening.
@@ -353,11 +374,12 @@ describe('what a production is actually weighing', () => {
 
   it('turns away a room that costs too much of what the job has to spend', () => {
     const sim = quickSave({}, 'too-dear');
-    // The ordinary Icelandic commercial: a week on a stage, and the smallest
-    // room here is a great deal more room than it needs. It is not the rebate
-    // that turns this away and it is not the calendar — it is the price, which
-    // this engine used to work out and then never look at.
-    const answer = wouldBook(sim, shape('commercial-true'), at(sim));
+    // The ordinary Icelandic documentary: two weeks on a stage, five hundred
+    // square meters of need, and the smallest room here is four times that and
+    // has to be paid for whole. It is not the rebate that turns this away and
+    // it is not the calendar — it is the price, which this engine used to work
+    // out and then never look at.
+    const answer = wouldBook(sim, shape('documentary-true'), at(sim));
     expect(answer.stageId).toBeUndefined();
     expect(answer.because).toMatch(/too much of what it has to spend/);
     expect(answer.weekRateCents, 'it never even quoted').toBeGreaterThan(0);
@@ -365,7 +387,7 @@ describe('what a production is actually weighing', () => {
 
   it('takes the same job when the money behind it is bigger', () => {
     const sim = quickSave({}, 'affordable');
-    const dear = shape('commercial-true');
+    const dear = shape('documentary-true');
     expect(wouldBook(sim, dear, at(sim)).stageId).toBeUndefined();
     // Nothing about the room changed. The budget did.
     const funded = { ...dear, spendIsk: dear.spendIsk * 8 };
@@ -561,5 +583,184 @@ describe('how many people ring is something the lot earns', () => {
     const sim = tenYears('ring-sound', SELLING.most);
     expect(validateUniverse(sim.universe).errors).toEqual([]);
     expect(sim.ledger.audit()).toEqual([]);
+  });
+});
+
+/**
+ * The fifth room.
+ *
+ * The only decision on this lot that changes what the lot is rather than how
+ * hard it is sold, and the first one that spends capital. What these hold is
+ * that it is a bet and not an upgrade: the money goes before the room exists,
+ * the room costs more to keep than four did, and it does not pay for itself.
+ */
+describe('building the fifth room', () => {
+  const cash = (sim: Simulation): number => {
+    const lot = Object.values(sim.universe.properties).find((p) => p.kind === 'studio_lot')!;
+    return Object.values(sim.universe.accounts)
+      .find((a) => a.ownerId === lot.ownerId && a.kind === 'company_cash')!.balance;
+  };
+
+  it('prices the room off the published benchmark rather than off what makes it book', () => {
+    // The first figure here was chosen because it made the commercials book,
+    // and at €11.58 a square meter it was the cheapest floor on a lot whose own
+    // rate card says small rooms are the dearest. What it is now is arithmetic.
+    expect(A_SMALL_STAGE.weekRateCents)
+      .toBe(Math.round(A_SMALL_STAGE.floorSqm * THE_RATE_CARD.benchmarkPerSqmWeek * 100));
+    const per = A_SMALL_STAGE.weekRateCents / 100 / A_SMALL_STAGE.floorSqm;
+    // Dearer by the meter than the two-thousands, cheaper than Lón, which is
+    // the order the rate card's own sentence puts them in.
+    const sim = quickSave({}, 'priced');
+    const twoK = stagesOn(sim).find((one) => one.floorSqm === 2_000)!;
+    const askja = stagesOn(sim).find((one) => one.name === 'Askja')!;
+    expect(per).toBeGreaterThan(twoK.weekRateCents / 100 / twoK.floorSqm);
+    expect(per).toBeGreaterThan(askja.weekRateCents / 100 / askja.floorSqm);
+    expect(per).toBeLessThanOrEqual(THE_RATE_CARD.benchmarkPerSqmWeek + 3);
+  });
+
+  it('costs what this lot cost by the meter, so the two figures cannot drift', () => {
+    expect(A_SQUARE_METRE_CENTS).toBe(Math.round(BUILD_COST_CENTS / LOT_FLOOR_SQM));
+    expect(SMALL_STAGE_COST_CENTS).toBe(Math.round(A_SQUARE_METRE_CENTS * A_SMALL_STAGE.floorSqm));
+    // A real figure and not a token: a fifth room is an eighth of a year of
+    // everything the family's sugar business clears.
+    expect(SMALL_STAGE_COST_CENTS).toBeGreaterThan(10_000_000_00);
+  });
+
+  it('spends the money on the day and opens the room a year and a half later', () => {
+    const sim = quickSave({}, 'building');
+    const before = cash(sim);
+    expect(whyNotBuild(sim)).toBeUndefined();
+    const done = buildAStage(sim);
+    expect(done.ok).toBe(true);
+    // Gone before anything exists. That is the shape of the bet.
+    expect(cash(sim)).toBe(before - SMALL_STAGE_COST_CENTS);
+    expect(theSmallStage(sim)).toBeUndefined();
+    expect(goingUp(sim)).toBeDefined();
+    expect(whereTheBuildStands(sim)).toMatch(/opens in 78 weeks/);
+    expect(sim.universe.transactions.some((t) => t.memo === BUILD_MEMO)).toBe(true);
+
+    // A week short of the date, still nothing.
+    sim.advanceTo(sim.now + (A_SMALL_STAGE.weeksToBuild - 1) * MS_WEEK);
+    expect(theSmallStage(sim)).toBeUndefined();
+    sim.advanceTo(sim.now + 2 * MS_WEEK);
+    const room = theSmallStage(sim);
+    expect(room).toBeDefined();
+    expect(room!.floorSqm).toBe(A_SMALL_STAGE.floorSqm);
+    expect(room!.weekRateCents).toBe(A_SMALL_STAGE.weekRateCents);
+    expect(goingUp(sim)).toBeUndefined();
+    expect(stagesOn(sim)).toHaveLength(5);
+    // Last, because `stagesOn` sorts by when it went up, and every reader of
+    // the lot finds it without a special case for it.
+    expect(stagesOn(sim)[4]!.name).toBe(A_SMALL_STAGE.name);
+    expect(validateUniverse(sim.universe).errors).toEqual([]);
+    expect(sim.ledger.audit()).toEqual([]);
+  });
+
+  it('will not build the same room twice, nor while it is going up', () => {
+    const sim = quickSave({}, 'twice');
+    expect(buildAStage(sim).ok).toBe(true);
+    expect(whyNotBuild(sim)).toBe('going-up');
+    const again = buildAStage(sim);
+    expect(again.ok).toBe(false);
+    expect(again.error).toMatch(/already going up/);
+    sim.advanceTo(sim.now + (A_SMALL_STAGE.weeksToBuild + 1) * MS_WEEK);
+    expect(whyNotBuild(sim)).toBe('already');
+    expect(buildAStage(sim).ok).toBe(false);
+    expect(stagesOn(sim)).toHaveLength(5);
+  });
+
+  it('refuses a room the family will not carry, and the refusal moves with the family', () => {
+    // Not the cash in the account. What is behind the company is the cash plus
+    // what the family will still put in, which is the same figure the greenlight
+    // asks about — so a room and a picture spend out of one pool.
+    const sim = quickSave({}, 'carry');
+    expect(behindTheCompany(sim)).toBeGreaterThan(SMALL_STAGE_COST_CENTS);
+    expect(whyNotBuild(sim)).toBeUndefined();
+
+    // Eleven years of covering an empty lot and the patience is gone.
+    const late = quickSave({}, 'carry');
+    late.advanceTo(late.now + 11 * 365 * MS_DAY);
+    expect(stillToCarry(late)).toBeLessThan(SMALL_STAGE_COST_CENTS);
+    expect(whyNotBuild(late)).toBe('cannot-carry');
+    const said = buildAStage(late);
+    expect(said.ok).toBe(false);
+    expect(said.error).toMatch(/won’t carry it/);
+    // And it says both figures, because a refusal nobody can check is a wall.
+    expect(said.error).toMatch(/against/);
+    expect(goingUp(late)).toBeUndefined();
+    expect(late.universe.transactions.some((t) => t.memo === BUILD_MEMO)).toBe(false);
+  });
+
+  it('shuts the door and opens it again, because the family is a live figure', () => {
+    // The one refusal that changes its answer, and it is not a ratchet. What is
+    // behind the company is measured against a year of the group's profit, so a
+    // year America stays shut brings every rung down and a year it reopens puts
+    // them back — and a room the family would not carry in one spring is a room
+    // it will carry in the next. A door that only ever shut would be a timer.
+    const sim = quickSave({}, 'carry');
+    const said: (string | undefined)[] = [];
+    for (let year = 0; year <= 8; year += 1) {
+      said.push(whyNotBuild(sim));
+      sim.advanceTo(sim.now + 365 * MS_DAY);
+    }
+    expect(said.includes('cannot-carry'), said.join(',')).toBe(true);
+    const shut = said.indexOf('cannot-carry');
+    expect(said.slice(shut).includes(undefined), said.join(',')).toBe(true);
+  });
+
+  it('charges the family for the room, not the balance sheet', () => {
+    const sim = quickSave({}, 'who-pays');
+    const before = paidInSoFar(sim);
+    buildAStage(sim);
+    sim.advanceTo(sim.now + 40 * MS_DAY);
+    // The money did not come from nowhere. It came from the people who have
+    // been covering this lot since the first month, and it moves them up the
+    // ladder that ends in the money coming with a condition on it.
+    expect(paidInSoFar(sim) - before).toBeGreaterThanOrEqual(SMALL_STAGE_COST_CENTS);
+    expect(standingWith(sim).share).toBeGreaterThan(0.1);
+  });
+
+  it('costs more to keep five rooms dark than four', () => {
+    const sim = quickSave({}, 'darker');
+    const four = monthlyOverhead(sim);
+    expect(floorStanding(sim)).toBe(LOT_FLOOR_SQM);
+    buildAStage(sim);
+    sim.advanceTo(sim.now + (A_SMALL_STAGE.weeksToBuild + 1) * MS_WEEK);
+    const five = monthlyOverhead(sim);
+    expect(floorStanding(sim)).toBe(LOT_FLOOR_SQM + A_SMALL_STAGE.floorSqm);
+    expect(five).toBeGreaterThan(four);
+    // And only the lines that are a function of what stands there moved. A gate
+    // is a gate however many rooms are behind it, and what the lot spends on
+    // being known is a decision rather than a consequence.
+    const grew = OVERHEAD.filter((one) => one.withTheFloor)
+      .reduce((n, one) => n + one.monthlyCents, 0);
+    expect(five - four).toBe(Math.round(grew * (A_SMALL_STAGE.floorSqm / LOT_FLOOR_SQM)));
+    expect(OVERHEAD.find((one) => one.id === 'crew')!.withTheFloor).toBe(false);
+    expect(OVERHEAD.find((one) => one.id === 'selling')!.withTheFloor).toBe(false);
+  });
+
+  it('houses the short work the lot could not house, and does not pay for itself', () => {
+    const ten = (build: boolean): { kinds: Set<string>; took: number; out: number } => {
+      const sim = quickSave({}, 'short-work');
+      if (build) buildAStage(sim);
+      const from = sim.now;
+      sim.advanceTo(sim.now + 10 * 365 * MS_DAY);
+      const kinds = new Set(Object.values(sim.universe.bookings)
+        .filter((one) => one.kind === 'shooting')
+        .map((one) => one.holder.split(', ').pop()!));
+      const money = utilisation(sim, from, sim.now);
+      return { kinds, took: money.earnsCents, out: build ? SMALL_STAGE_COST_CENTS : 0 };
+    };
+    const without = ten(false);
+    const with5 = ten(true);
+    // The documentaries are the thing only the room can deliver: two weeks at
+    // five hundred meters cannot carry two thousand meters of stage at any
+    // hold, so without the room that kind of production never happens here.
+    expect(without.kinds.has('a documentary')).toBe(false);
+    expect(with5.kinds.has('a documentary')).toBe(true);
+    expect(with5.kinds.size).toBeGreaterThan(without.kinds.size);
+    // And it does not pay for itself, which is the honest half. Ten years of
+    // letting it does not come near what it cost to put up.
+    expect(with5.took - without.took).toBeLessThan(SMALL_STAGE_COST_CENTS);
   });
 });
