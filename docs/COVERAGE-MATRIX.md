@@ -102,19 +102,19 @@ people is to have more money behind the part rather than to look again.
 `company.cast` offers it at a number, and is the only command in the build
 whose refusal is a person saying no rather than the engine saying it could not
 be done. `company.release` lets somebody go, and never gets the money back:
-paid, used and credited are three different things, and actors are routinely
-paid and cut out.
+paid, used and credited are three different things, and performers are
+routinely paid and cut out.
 
 `company.session` books somebody into a room, and it is the only command in the
 build that buys nothing but information. Nobody in this world ever learns what
-an actor is. The pile shows a guess with a stated width — a photograph and a
+a performer is. The pile shows a guess with a stated width — a photograph and a
 credit list say a great deal about how a face reads and nothing whatever about
 whether somebody can do a thing twice — and each round of the funnel shortens
 the distance on some axes and not others. Only a callback closes repeatability,
 because a callback is literally the request to do it again.
 
-A tape is the row worth reading twice. What arrives is not the actor, it is the
-actor's tape: shot at home, as many times as they liked, and sent only if they
+A tape is the row worth reading twice. What arrives is not the performer, it is
+their tape: shot at home, as many times as they liked, and sent only if they
 judged it the good one. So a tape is read through four attributes about
 equipment and deadlines rather than about acting, and a performer who is superb
 at that looks better than they are while one who is hopeless at it looks worse.
@@ -128,7 +128,7 @@ is in half the picture and every setup of it. Without that, the best buy for
 every part on every picture in the save is the same weighted sum forever, which
 is a casting system with one decision in it. It is not hidden from the player,
 because the player is the producer and a producer knows what their own picture
-needs; what is hidden is what the actor is.
+needs; what is hidden is what the performer is.
 
 A session is one note and a note is one axis. Naming an axis takes that one a
 round further than the session would otherwise have taken it and leaves the
@@ -209,7 +209,7 @@ than regenerating one.
 The decision underneath them: the parent is an Icelandic `ehf.` and the
 American arm is earned. Global Rule One is why — a SAG-AFTRA member may not
 work for a producer who has not signed, anywhere on earth — so an Icelandic
-company that wants one American actor has to become, in part, an American
+company that wants one American performer has to become, in part, an American
 company. Nothing else in the build has that shape, and it is the reason the
 company is two records rather than one.
 

@@ -514,8 +514,8 @@ function alongCurve(curve: readonly { age: number; share: number }[], age: numbe
 /**
  * How much of what somebody will be, they already are.
  *
- * A twelve year old who will one day be a great actor is a good twelve year
- * old actor, not a great one: the instrument is not built yet, and neither is
+ * A twelve year old who will one day be great on screen is a good twelve year
+ * old performer, not a great one: the instrument is not built yet, and neither is
  * the judgement. This scales what a young character can actually bring to
  * anything, and it reaches one in the early twenties and stays there.
  *

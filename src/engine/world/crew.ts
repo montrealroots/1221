@@ -164,6 +164,7 @@ function somebodyNew(sim: Simulation, standing: number, next: () => number): Per
     // A required word, not a claim. Nobody on a crew is billed as either, and
     // nothing calls a key grip an actress — but the field has to hold
     // something, and what it holds is what their own pronouns imply.
+    // both-titles: the word itself, which is what this comment is about.
     performerTitle: impliedPerformerTitle(pronouns),
     birthInstant: sim.now - Math.round((24 + next() * 34) * 365.25 * 24 * 60 * 60 * 1000),
     gender: woman ? 'female' : 'male',

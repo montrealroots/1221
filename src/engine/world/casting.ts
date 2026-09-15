@@ -354,7 +354,7 @@ export function reachOfBand(bandCents: Money): number {
  * standing sets where the person sits, and then each axis is drawn its own
  * distance from that standing, wide enough that somebody at sixty can be
  * thirty-eight on one axis and eighty-two on another. That is a real person:
- * the actor the camera loves who cannot hit the same mark twice, and the
+ * the performer the camera loves who cannot hit the same mark twice, and the
  * technician nobody wants to look at.
  */
 export function sheetFor(standing: number, next: () => number): AttributeSheet {
@@ -365,7 +365,7 @@ export function sheetFor(standing: number, next: () => number): AttributeSheet {
     for (const id of axis.of) of[id] = clamp(Math.round(centre + (next() - 0.5) * 14), 1, 100);
   }
   // And their hand at taping, drawn on its own and against the middle of the
-  // scale rather than against their standing. Nothing about being a fine actor
+  // scale rather than against their standing. Nothing about being fine on screen
   // makes anybody good at lighting their own kitchen, and a version of this
   // that hung off the standing would have quietly said it did.
   const hand = clamp(Math.round(20 + next() * 70), 1, 100);
@@ -519,11 +519,11 @@ export type Answer =
  * Whether somebody takes the part.
  *
  * Four things, in the order they actually kill a deal. Dates first, because a
- * working actor cannot say yes however good the offer is and no amount of
+ * working performer cannot say yes however good the offer is and no amount of
  * money moves a shooting schedule somebody else already owns. Then price,
  * against their own quote rather than against the band, because the band is the
- * producer's problem. Then the part, because an actor in demand turns down
- * small ones and an actor who is not takes whatever comes. Then the draw, which
+ * producer's problem. Then the part, because somebody in demand turns down
+ * small ones and somebody who is not takes whatever comes. Then the draw, which
  * only decides the ones the first three left open — which is the honest shape
  * of it, since the reason people say no is frequently no reason at all.
  */
@@ -1025,7 +1025,7 @@ export function registerTheOffice(sim: Simulation): void {
 /**
  * The public fame at which somebody is known well enough to be news.
  *
- * SLATE's own. Under it a person is a working actor and what they do at the
+ * SLATE's own. Under it a person is a working performer and what they do at the
  * weekend is nobody's business; over it there is a market for it. Set so that a
  * picture with real money behind its leads has names on it and a cheap one does
  * not, which makes it the price of the thing the money bought.

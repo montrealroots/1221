@@ -19,7 +19,7 @@
  * But the business they are trying to enter is American, and the American
  * business is fenced. A member of SAG-AFTRA may not work for a producer who
  * has not signed with SAG-AFTRA — anywhere on earth, which is the whole point
- * of the rule — so the first time this family wants an American actor, an
+ * of the rule — so the first time this family wants an American performer, an
  * Icelandic company is not enough. They need an American subsidiary to sign
  * with, and forming one is a real, dated, costly step.
  *
@@ -576,7 +576,7 @@ export interface Role {
    * about how the part was written and not about how big it is: two leads on
    * the same picture can be a coverage problem and a face in a window, and a
    * figure recomputed from the size every time would say they were the same
-   * buy. It is what stops the best actor for every part in the save being the
+   * buy. It is what stops the best performer for every part in the save being the
    * same weighted sum.
    */
   wants?: Partial<Record<string, number>>;

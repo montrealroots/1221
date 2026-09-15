@@ -12,7 +12,7 @@
  * for anything that wants to average or filter by one.
  *
  * These belong to *performing*. Everybody else has their own skill model (see
- * `skills.ts`); flattening every profession onto an actor's rating sheet would
+ * `skills.ts`); flattening every profession onto a performer's rating sheet would
  * be lazy and wrong.
  *
  * The player holds all of it at once, and a mastery of every genre on top —
@@ -144,7 +144,7 @@ export const ATTRIBUTES: readonly AttributeDef[] = [
   attr('character_voices', 'Character Voices', 'Specialty', 'You build a voice that isn’t your own, hold it, and find it again cold on day two.', 0.9),
   attr('character_walk', 'Character Walk', 'Physical', 'A walk that belongs to another person, and it holds for two hours.', 1.1),
   attr('charisma', 'Charisma', 'Screen', 'The thing that makes an audience choose to watch you.', 0.5),
-  attr('cheating_out', 'Cheating Out', 'Stage', 'The body opens toward the house while the scene goes to the actor beside you.', 1.4),
+  attr('cheating_out', 'Cheating Out', 'Stage', 'The body opens toward the house while the scene goes to whoever is beside you.', 1.4),
   attr('cheating_to_camera', 'Cheating To Camera', 'Screen', 'Your body opens to the lens on a note, so a position that feels wrong reads right.', 1.2),
   attr('chemistry', 'Chemistry', 'Range', 'A believable bond with a scene partner, out of nothing at all.', 0.6),
   attr('chemistry_read', 'Chemistry Read', 'Craft', 'You and a stranger from the hallway, looking like you go back years.', 0.9),
@@ -201,7 +201,7 @@ export const ATTRIBUTES: readonly AttributeDef[] = [
   attr('corpsing_control', 'Corpsing Control', 'Comedy', 'You stay in character and don’t laugh, while a partner or a mishap tries to break you.'),
   attr('corpsing_recovery', 'Corpsing Recovery', 'Stage', 'Back inside the scene, after a person near you has started laughing.', 0.9),
   attr('corsetry_and_skirtwork', 'Corsetry And Skirtwork', 'Physical', 'You breathe, sit and turn in a corset, and steer a hooped skirt through a door.', 1.3),
-  attr('covering_a_dry', 'Covering A Dry', 'Stage', 'You feed a line, fill the gap or rewrite on your feet when an actor goes blank.'),
+  attr('covering_a_dry', 'Covering A Dry', 'Stage', 'You feed a line, fill the gap or rewrite on your feet when the scene goes blank.'),
   attr('covering_a_technical_failure', 'Covering A Technical Failure', 'Stage', 'You play on through a dead mic, a stuck door, or a scene change that hasn’t happened.'),
   attr('creature_and_non_human_playing', 'Creature And Non-Human Playing', 'Range', 'Building an animal, creature or machine out of movement, breath and sound. No costume does it.'),
   attr('creature_movement', 'Creature Movement', 'Specialty', 'Something non-human: four legs, the wrong joints, and a spine that bends the other way.', 1.1),
@@ -227,7 +227,7 @@ export const ATTRIBUTES: readonly AttributeDef[] = [
   attr('deal_negotiation', 'Deal Negotiation', 'Industry', 'Trading fee, credit, billing and perks toward a deal both sides will sign.'),
   attr('devising', 'Devising', 'Craft', 'Making a show with a company out of exercises, images and fragments, with no script to start from.'),
   attr('dialect_acquisition', 'Dialect Acquisition', 'Voice', 'How fast a new accent becomes usable.'),
-  attr('dialect_coaching', 'Dialect Coaching', 'Voice', 'Teaching another actor an accent and hearing what is wrong in theirs.', 1.1),
+  attr('dialect_coaching', 'Dialect Coaching', 'Voice', 'Teaching another performer an accent and hearing what is wrong in theirs.', 1.1),
   attr('dialect_work', 'Dialect Work', 'Range', 'Getting the words, grammar and music of one specific place, not just the sound of it.', 1.3, true),
   attr('diction', 'Diction', 'Voice', 'Being understood on the first pass, in the mix.', 1.2),
   attr('direct_lens_address', 'Direct Lens Address', 'Screen', 'You speak straight down the barrel and hold it, as a real address to one person.'),
@@ -377,7 +377,7 @@ export const ATTRIBUTES: readonly AttributeDef[] = [
   attr('kabuki_dance', 'Kabuki Dance', 'Physical', 'The buyo passages of a kabuki play, fan and sleeve included, in time with the shamisen.', 0.9, true),
   attr('kathakali_eye_technique', 'Kathakali Eye Technique', 'Physical', 'Eyes, brows and cheeks moved in isolation, so the face carries the story from a distance.', 0.7, true),
   attr('keeping_continuity_notes', 'Keeping Continuity Notes', 'Screen', 'You track your own props, buttons and hand positions across takes and days of shooting.', 1.4),
-  attr('keeping_overlaps_clean', 'Keeping Overlaps Clean', 'Screen', 'Leaving air around the other actor’s lines so the two performances can be cut apart in the edit.', 1.3),
+  attr('keeping_overlaps_clean', 'Keeping Overlaps Clean', 'Screen', 'Leaving air around your scene partner’s lines so the two performances can be cut apart in the edit.', 1.3),
   attr('kyogen_playing', 'Kyogen Playing', 'Tradition', 'Kyogen comedy in its fixed vocal patterns and wide stance: broad, and never once loose.'),
   attr('laban_effort_work', 'Laban Effort Work', 'Physical', 'Movement read as weight, time, space and flow, so one character punches where another glides.', 1.2),
   attr('language_patterns', 'Language Patterns', 'Craft', 'You notice how a character’s words, rhythm and sentence length differ from everyone else’s.', 1.2),
@@ -396,7 +396,7 @@ export const ATTRIBUTES: readonly AttributeDef[] = [
   attr('pressure_lines', 'Line Retention Under Pressure', 'Craft', 'You hold the text when the day is long and the crew is waiting.', 0.8, true),
   attr('line_set_consistency', 'Line Set Consistency', 'Voice', 'Holding one level, one energy and one voice across a thousand lines and three sessions.', 1.1),
   attr('lip_sync_to_playback', 'Lip Sync To Playback', 'Screen', 'You mouth a prerecorded track on camera and the words land exactly on the recording.', 1.2, true),
-  attr('listening_and_responding', 'Listening And Responding', 'Craft', 'You take in what the other actor actually did, and it changes what you do next.', 0.8, true),
+  attr('listening_and_responding', 'Listening And Responding', 'Craft', 'You take in what your scene partner actually did, and it changes what you do next.', 0.8, true),
   attr('live_virtual_audition', 'Live Virtual Audition', 'Screen', 'A read over a video call, with lag, a laptop eyeline and a panel you can barely see.', 1.3),
   attr('live_vocals_on_camera', 'Live Vocals On Camera', 'Screen', 'Singing live in the take on an earwig and a hidden mic instead of miming to playback.'),
   attr('living_newspaper_staging', 'Living Newspaper Staging', 'Tradition', 'News reports, statistics and documents turned into short staged scenes with a narrator.', 1.2),
@@ -468,7 +468,7 @@ export const ATTRIBUTES: readonly AttributeDef[] = [
   attr('operative_words', 'Operative Words', 'Craft', 'The words in a line that carry the sense. The rest can go by.', 1.1),
   attr('original_pronunciation', 'Original Pronunciation', 'Voice', 'Speaking Shakespeare in the reconstructed accent of his own day, recovering rhymes and puns.', 1.3, true),
   attr('overall_sensations', 'Overall Sensations', 'Tradition', 'A whole-body condition — sunburn, drunkenness, fever — built out of separate sensory pieces.', 1, true),
-  attr('overlapping_dialogue', 'Overlapping Dialogue', 'Voice', 'You cut in on another actor cleanly, both lines stay audible, and the scene sounds real.', 1.2),
+  attr('overlapping_dialogue', 'Overlapping Dialogue', 'Voice', 'You cut in on the line before yours cleanly, both lines stay audible, and the scene sounds real.', 1.2),
   attr('overnight_turnaround', 'Overnight Turnaround', 'Professionalism', 'A full tape prepped, shot and sent between a late brief and a morning deadline.', 1.1, true),
   attr('pace_control', 'Pace Control', 'Voice', 'The speed of speech, set and changed on purpose and never at the mercy of nerves.', 1.2),
   attr('panic_and_hyperventilation_acting', 'Panic And Hyperventilation Acting', 'Specialty', 'Breath and heart rate driven into panic on cue, and brought back down after the cut.', 0.9),
@@ -480,7 +480,7 @@ export const ATTRIBUTES: readonly AttributeDef[] = [
   attr('partnering_and_lifts', 'Partnering And Lifts', 'Physical', 'Weight taken and given in a lift or a catch, so both people land safely and on the beat.', 1.2, true),
   attr('patter_singing', 'Patter Singing', 'Musical', 'Dense, rapid lyrics fired at tempo, with never a pitch or a consonant dropped.', 1.2, true),
   attr('pausing', 'Pausing', 'Voice', 'A silence held long enough to do the work, and let go before it dies.'),
-  attr('performance_matching', 'Performance Matching', 'Voice', 'Another actor’s rhythm, pitch and breath, close enough to sit right on top of it.'),
+  attr('performance_matching', 'Performance Matching', 'Voice', 'Another performer’s rhythm, pitch and breath, close enough to sit right on top of it.'),
   attr('performing_for_processing', 'Performing For Processing', 'Specialty', 'Reading knowing a radio filter or a pitch shift is going on top of it.', 1.2),
   attr('period_deportment', 'Period Deportment', 'Range', 'Bows, gloves, fans, corsets and how a body sits in clothes that aren’t modern.', 1.3),
   attr('period_movement', 'Period Movement', 'Tradition', 'Bows, curtsies, entrances and how a body sat, walked and greeted in a given century.', 1.2),
@@ -528,7 +528,7 @@ export const ATTRIBUTES: readonly AttributeDef[] = [
   attr('playing_drunk', 'Playing Drunk', 'Specialty', 'Playing a character fighting the drink, not performing drunkenness from the outside.', 0.8),
   attr('playing_for_slow_motion', 'Playing For Slow Motion', 'Screen', 'Slowing and simplifying movement for an overcranked camera so it reads at speed.'),
   attr('playing_for_the_cut', 'Playing For The Cut', 'Screen', 'You shape takes so the editor has clean starts, clean ends and options to cut into.'),
-  attr('playing_forced_perspective', 'Playing Forced Perspective', 'Screen', 'Working at a distance from the other actor that makes one of you read as giant or tiny.'),
+  attr('playing_forced_perspective', 'Playing Forced Perspective', 'Screen', 'Working at a distance from your scene partner that makes one of you read as giant or tiny.'),
   attr('playing_illness', 'Playing Illness', 'Specialty', 'One specific illness, in the skin, the breath and the effort, and never a general weakness.', 0.9),
   attr('playing_in_a_language_you_do_not_speak', 'Playing In A Language You Do Not Speak', 'Range', 'Lines learned phonetically, and real intention played through sounds you don’t understand.', 1, true),
   attr('playing_in_the_round', 'Playing In The Round', 'Stage', 'A full circle of audience fed by turning through a scene, and never visibly spinning.', 1.1),
@@ -714,7 +714,7 @@ export const ATTRIBUTES: readonly AttributeDef[] = [
   attr('social_media_management', 'Social Media Management', 'Industry', 'Posting, promoting and staying quiet on your own accounts without creating a story.', 1.2, true),
   attr('soliloquy_and_direct_address', 'Soliloquy And Direct Address', 'Tradition', 'You talk straight to the house in soliloquy, thinking the thought out loud in front of them.'),
   attr('soliloquy_work', 'Soliloquy Work', 'Stage', 'A speech alone on stage as live thought, with the audience as the other party.'),
-  attr('solo_show_building', 'Solo Show Building', 'Craft', 'Shaping your own material into a one person show that runs an hour without another actor.', 0.9),
+  attr('solo_show_building', 'Solo Show Building', 'Craft', 'Shaping your own material into a one person show that runs an hour with nobody else on it.', 0.9),
   attr('song_and_dance_exercise', 'Song And Dance Exercise', 'Tradition', 'Strasberg’s exercise of holding one sustained note then breaking into movement to expose habits.', 1.2, true),
   attr('source_material_study', 'Source Material Study', 'Craft', 'You read the novel, case file or history a script came from, and you use what’s in it.', 1.3),
   attr('southern_american_speech', 'Southern American Speech', 'Voice', 'The American South, kept specific to a state. One general drawl fools nobody.', 1.3),
@@ -942,7 +942,7 @@ export interface TraitDef {
   /**
    * The two forms of a name that carries the word, for the traits where the
    * business has one of each: a method actor and a method actress. The plain
-   * name is the actor's, and a screen that knows whose sheet it is renders
+   * name is the performer's, and a screen that knows whose sheet it is renders
    * the right one through `traitName`.
    */
   nameByTitle?: Readonly<Record<PerformerTitle, string>>;
@@ -999,7 +999,7 @@ export const TRAITS: readonly TraitDef[] = [
   { id: 'chemistry_with_anyone', name: 'Chemistry With Anyone', category: 'Talent', description: 'Put them opposite almost anybody and something starts up between them on screen.' },
   { id: 'chip_on_the_shoulder', name: 'Chip On The Shoulder', category: 'Temperament', description: 'Works hardest right after being told they aren’t right for it.' },
   { id: 'classical_beauty', name: 'Classical Beauty', category: 'Talent', description: 'The kind of face a poster can run with nothing else on it.' },
-  { id: 'clean_overlaps', name: 'Clean Overlaps', category: 'Method', description: 'Stays off the end of the other actor’s line so both halves of the scene are usable.' },
+  { id: 'clean_overlaps', name: 'Clean Overlaps', category: 'Method', description: 'Stays off the end of your scene partner’s line so both halves of the scene are usable.' },
   { id: 'collaborative', name: 'Collaborative', category: 'Temperament', description: 'Directors ask for you again. That’s worth more than a quote bump.', attributeMods: { collaboration: 14, note_integration: 10, ensemble_blending: 8 }, systemMods: { repeatHireOdds: 1.4, crewFriction: 0.75 }, conflictsWith: ['difficult', 'diva'] },
   { id: 'comeback_story', name: 'Comeback Story', category: 'Public', description: 'The business loves the shape of their return and keeps writing the same article about it.' },
   { id: 'comedic_instinct', name: 'Comedic Instinct', category: 'Talent', description: 'You hear the joke inside the line before anyone points at it.', attributeMods: { comedy_timing: 14, dry_comedy: 8, broad_comedy: 8, improvisation: 6 } },
@@ -1045,7 +1045,7 @@ export const TRAITS: readonly TraitDef[] = [
   { id: 'franchise_face', name: 'Franchise Face', category: 'Public', description: 'One character owns them in public and every interview comes back around to it.' },
   { id: 'funny_bones', name: 'Funny Bones', category: 'Talent', description: 'They’re funny before they open their mouth, in the walk and the timing.' },
   { id: 'generous_partner', name: 'Generous Scene Partner', category: 'Temperament', description: 'Your co-stars are better in scenes with you. People notice.', attributeMods: { active_listening: 12, ensemble_blending: 12, chemistry: 8 }, systemMods: { coStarPerformance: 1.15, repeatHireOdds: 1.25 }, conflictsWith: ['scene_stealer'] },
-  { id: 'gives_it_off_camera', name: 'Gives It Off Camera', category: 'Social', description: 'Plays the scene full size on the other actor’s coverage at the end of a long day.' },
+  { id: 'gives_it_off_camera', name: 'Gives It Off Camera', category: 'Social', description: 'Plays the scene full size on the far side of the camera at the end of a long day.' },
   { id: 'gives_lines_back', name: 'Gives Lines Back', category: 'Method', description: 'Hands dialogue back, preferring to play the beat in the face than say it out loud.' },
   { id: 'goes_all_the_way', name: 'Goes All The Way', category: 'Method', description: 'Whatever the part says they did, they go and actually do it, weight and trade and all.' },
   { id: 'good_ear', name: 'Good Ear', category: 'Talent', description: 'They hear an accent or a speech rhythm once and can hold on to it.' },
@@ -1073,11 +1073,11 @@ export const TRAITS: readonly TraitDef[] = [
   { id: 'indie_credibility', name: 'Indie Credibility', category: 'Public', description: 'Small films get taken seriously because they said yes, and they usually do.' },
   { id: 'nepotism_adjacent', name: 'Industry Family', category: 'Social', description: 'Doors open early. Then you have to be good, and everyone is watching for whether you are.', systemMods: { earlyOpportunityRate: 2.0, meetingAccess: 1.8, criticalScrutiny: 1.3, audienceAppeal: 0.92 }, conflictsWith: ['outsider', 'self_made'] },
   { id: 'instantly_likable', name: 'Instantly Likable', category: 'Public', description: 'Audiences take their side in the first minute and mostly stay there.' },
-  { id: 'instinct_over_homework', name: 'Instinct Over Homework', category: 'Method', description: 'Reads it once and finds the rest on the floor with the other actor.' },
+  { id: 'instinct_over_homework', name: 'Instinct Over Homework', category: 'Method', description: 'Reads it once and finds the rest on the floor with whoever is in it with them.' },
   { id: 'insurance_risk', name: 'Insurance Risk', category: 'Social', description: 'Bonders charge extra or refuse them outright, and the schedule gets built around it.' },
-  { id: 'keeps_a_protege', name: 'Keeps A Protege', category: 'Social', description: 'You pick one young actor a decade and open every door you have for them.' },
+  { id: 'keeps_a_protege', name: 'Keeps A Protege', category: 'Social', description: 'You pick one young performer a decade and open every door you have for them.' },
   { id: 'keeps_score', name: 'Keeps Score', category: 'Temperament', description: 'Knows what everyone else got paid, got billed and got cast in.' },
-  { id: 'killer_instinct', name: 'Killer Instinct', category: 'Temperament', description: 'Wants it more than the other actor in the waiting room, and the room can tell.' },
+  { id: 'killer_instinct', name: 'Killer Instinct', category: 'Temperament', description: 'Wants it more than whoever else is in the waiting room, and the room can tell.' },
   { id: 'knows_the_crews_names', name: 'Knows The Crew’s Names', category: 'Social', description: 'You learn the grips, the drivers and the second team by name in the first week.' },
   { id: 'knows_when_they_have_it', name: 'Knows When They Have It', category: 'Temperament', description: 'Can tell the take is good and doesn’t go back asking for another one.' },
   { id: 'late_bloomer', name: 'Late Bloomer', category: 'Talent', description: 'Slow to start, hard to stop. Growth compounds instead of plateauing.', attributeMods: { emotional_truth: -4, charisma: -3 }, systemMods: { trainingGain: 1.35, ageCurveShift: 8 }, conflictsWith: ['natural_talent', 'prodigy'] },
@@ -1085,7 +1085,7 @@ export const TRAITS: readonly TraitDef[] = [
   { id: 'leaves_it_on_set', name: 'Leaves It On Set', category: 'Life', description: 'Drops the part at wrap and goes home as themselves.' },
   { id: 'leaves_the_door_open', name: 'Leaves The Door Open', category: 'Social', description: 'You finish a badly run job politely and stay on the list for the next one.' },
   { id: 'lifts_the_room', name: 'Lifts The Room', category: 'Temperament', description: 'Everybody in the scene is better on the day, including the ones who usually aren’t.' },
-  { id: 'listens', name: 'Listens', category: 'Talent', description: 'They take in what the other actor just did and change because of it.' },
+  { id: 'listens', name: 'Listens', category: 'Talent', description: 'They take in what their scene partner just did and change because of it.' },
   { id: 'lives_at_the_monitor', name: 'Lives At The Monitor', category: 'Method', description: 'Watches every take back and adjusts it frame by frame.' },
   { id: 'living_legend', name: 'Living Legend', category: 'Public', description: 'Younger casts go quiet when they walk onto the floor.' },
   { id: 'locks_in', name: 'Locks In', category: 'Temperament', description: 'Goes somewhere else between action and cut and hears none of the room.' },
@@ -1099,7 +1099,7 @@ export const TRAITS: readonly TraitDef[] = [
   { id: 'method_actor', name: 'Method Actor', nameByTitle: { actor: 'Method Actor', actress: 'Method Actress' }, category: 'Method', description: 'You live inside the part. The results can be extraordinary and the cost is real.', attributeMods: { emotional_truth: 12, vulnerability: 8, grief: 6 }, systemMods: { stressPerShootDay: 1.5, castingPrestige: 1.15, crewFriction: 1.2 }, conflictsWith: ['technical_actor'] },
   { id: 'mic_discipline', name: 'Mic Discipline', category: 'Method', description: 'Delivers at the same level take to take and doesn’t blow out the boom on the shout.' },
   { id: 'motor', name: 'Motor', category: 'Talent', description: 'Fourteen hours in they are the same as they were at call.' },
-  { id: 'moves_well', name: 'Moves Well', category: 'Talent', description: 'Walking, sitting down and handling objects all look like the character, not the actor.' },
+  { id: 'moves_well', name: 'Moves Well', category: 'Talent', description: 'Walking, sitting down and handling objects all look like the character, not the person playing them.' },
   { id: 'multilingual', name: 'Multilingual', category: 'Talent', description: 'International projects open up in a way they don’t for most people.', attributeMods: { dialect_acquisition: 10, accent_retention: 8 }, systemMods: { internationalCastingOdds: 1.4 } },
   { id: 'musical', name: 'Musical', category: 'Talent', description: 'Singing and rhythm are available to you as tools.', attributeMods: { singing: 16, vocal_range: 12, dance: 8 } },
   { id: 'national_punchline', name: 'National Punchline', category: 'Public', description: 'Hosts use their name as a joke that has outlived whatever started it.' },
@@ -1193,7 +1193,7 @@ export const TRAITS: readonly TraitDef[] = [
   { id: 'set_stories_follow_them', name: 'Set Stories Follow Them', category: 'Social', description: 'Crews trade accounts of their behavior and the stories reach producers before they do.' },
   { id: 'sex_appeal', name: 'Sex Appeal', category: 'Public', description: 'The lens picks up something carnal in them whether or not the scene asks for it.' },
   { id: 'sex_symbol', name: 'Sex Symbol', category: 'Public', description: 'Their face sells covers and posters long before anybody mentions the acting.' },
-  { id: 'sharp_elbows', name: 'Sharp Elbows', category: 'Social', description: 'You go after a part another actor is attached to and you come away with it.' },
+  { id: 'sharp_elbows', name: 'Sharp Elbows', category: 'Social', description: 'You go after a part another performer is attached to and you come away with it.' },
   { id: 'slow_burn', name: 'Slow Burn', category: 'Method', description: 'Deep preparation, and work that keeps deepening across a shoot.', systemMods: { trainingGain: 0.85, prepTimeRequired: 1.4, lateShootBonus: 1.2 }, conflictsWith: ['quick_study'] },
   { id: 'slow_burner', name: 'Slow Burner', category: 'Talent', description: 'It isn’t there at take three and it’s there at take twelve.' },
   { id: 'slow_to_warm', name: 'Slow To Warm', category: 'Temperament', description: 'Stiff and general for the first hour of any day, then unrecognizably good after it.' },
@@ -1233,7 +1233,7 @@ export const TRAITS: readonly TraitDef[] = [
   { id: 'union_to_the_bone', name: 'Union To The Bone', category: 'Social', description: 'You won’t cross a picket line and you say so before anybody asks.' },
   { id: 'unmistakable_voice', name: 'Unmistakable Voice', category: 'Talent', description: 'One line and you know exactly who it is, even off screen or in a booth.' },
   { id: 'unretires', name: 'Unretires', category: 'Life', description: 'You announce you’re done, and three years later a call comes that you take.' },
-  { id: 'upstager', name: 'Upstager', category: 'Social', description: 'You find the small move that pulls the frame to you while another actor talks.' },
+  { id: 'upstager', name: 'Upstager', category: 'Social', description: 'You find the small move that pulls the frame to you while the scene belongs to the other one.' },
   { id: 'viral_instinct', name: 'Viral Instinct', category: 'Public', description: 'You understand, without being taught, what an audience will share.', attributeMods: { social_instinct: 16 }, systemMods: { socialGrowth: 1.5, viralOdds: 1.6 } },
   { id: 'visible_intelligence', name: 'Visible Intelligence', category: 'Public', description: 'You can watch them work something out, so the clever parts never have to explain themselves.' },
   { id: 'voice_that_carries', name: 'Voice That Carries', category: 'Talent', description: 'The back row hears every word with no strain and no shouting.' },
@@ -1301,7 +1301,7 @@ export function conflictingTraits(held: readonly string[], candidate: string): s
  * trait in the game at once, which for anybody else would be incoherent — half
  * of these are alternatives to the other half, and most of them are paid for
  * with a weakness somewhere else. For the one person who is the best living
- * writer, director, producer, showrunner and actor, a trait costs nothing.
+ * writer, director, producer, showrunner and performer, a trait costs nothing.
  * That is the whole meaning of the flag: it does not add anything, it only
  * refuses to subtract.
  */

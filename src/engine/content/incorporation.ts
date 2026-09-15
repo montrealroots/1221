@@ -303,12 +303,12 @@ export const GUILD_BY_ID: Readonly<Record<GuildId, GuildFacts>> =
  *
  * A SAG-AFTRA member may not render services for a producer who has not signed
  * with SAG-AFTRA, anywhere in the world. It is called Global Rule One and it
- * is the reason an Icelandic company that wants one American actor has to
+ * is the reason an Icelandic company that wants one American performer has to
  * become, in part, an American company.
  */
 export const GLOBAL_RULE_ONE =
   'A SAG-AFTRA member may not work for a producer who hasn’t signed with SAG-AFTRA — anywhere on '
-  + 'earth. That’s what it’s for. An Icelandic company that wants one American actor has to '
+  + 'earth. That’s what it’s for. An Icelandic company that wants one American performer has to '
   + 'become, in part, an American company first.';
 
 // ---------------------------------------------------------------------------

@@ -427,7 +427,7 @@ interface Asking { offer: Offer; roll: number }
 
 defineDecider<Asking, string>({
   id: 'casting.answered',
-  decides: 'Whether an actor takes a part, counters, or passes — and on what.',
+  decides: 'Whether a performer takes a part, counters, or passes — and on what.',
   drawnIn: 'src/engine/world/casting.ts',
   reads: {
     // Whether the dates are clear, which is first because no amount of money
@@ -439,8 +439,8 @@ defineDecider<Asking, string>({
       ...a,
       offer: { ...a.offer, feeCents: Math.round(a.offer.askCents * (0.4 + t * 1.6)) },
     }),
-    // How much of the picture the part is. An actor in demand turns down small
-    // ones and an actor who is not takes whatever comes.
+    // How much of the picture the part is. Somebody in demand turns down small
+    // ones and somebody who is not takes whatever comes.
     size: (a, t) => ({ ...a, offer: { ...a.offer, carries: Math.round(3 + t * 52) } }),
     // And how wanted they are, which is what makes the same part an insult to
     // one person and a break for another.
@@ -494,7 +494,7 @@ defineDecider<Pile, string>({
     const sheet = sheetFor(standing, () => { n += 1; return ((n * 37) % 23) / 23; });
     const truth = readOn(sheet, 'truth');
     if (truth < 34) return 'whoever was free';
-    if (truth < 52) return 'working actors';
+    if (truth < 52) return 'working performers';
     if (truth < 70) return 'people you have heard of';
     return 'people who do not normally read for this';
   },
@@ -504,7 +504,7 @@ interface Belief { truth: number; looked: Looked; axis: AxisId; offset: number; 
 
 defineDecider<Belief, string>({
   id: 'casting.shown',
-  decides: 'What a company believes an actor is, before it has ever worked with them.',
+  decides: 'What a company believes a performer is, before it has ever worked with them.',
   drawnIn: 'src/engine/world/casting.ts',
   reads: {
     // What they actually are, which nobody in the world has access to and which

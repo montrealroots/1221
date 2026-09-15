@@ -151,7 +151,7 @@ Eight from TEW's side, eight from film's. Each is a bar, not a feature.
    what is being judged, on separate clocks. *Today: seven fields, no movers.*
 4. **Contracts and options as real objects.** Terms, exclusivity, holdbacks,
    pay-or-play, options the other side holds, and being locked into something
-   that turned bad. *Today: the actor side is at zero.*
+   that turned bad. *Today: the performing side is at zero.*
 5. **An industry that runs without you.** Parts cast whether or not you read
    for them. *Today: structurally absent — the save has no table that could
    hold one.*
@@ -174,7 +174,7 @@ Eight from TEW's side, eight from film's. Each is a bar, not a feature.
 11. **Casting: the market for a person.** Breakdowns, submissions, callbacks,
     chemistry reads, and the offer that never comes with no reason given.
 12. **Rights, windows and the life of a picture.** Chain of title, negative
-    cost apart from P&A, territory by territory, and what an actor sees of it.
+    cost apart from P&A, territory by territory, and what a performer sees of it.
 13. **An audience and a market that judges.** Founded on real geography, real
     populations and real holiday calendars, with critics as a different
     population from the audience.
@@ -431,7 +431,7 @@ script supervisor, a casting office, scene partners. Generated on demand,
 persisted, and recurring.
 
 **3. The engagement and the deal.** Person × title × role class × dates × fee ×
-billing × exclusivity. This is where TEW's contracts axis and the actor's deal
+billing × exclusivity. This is where TEW's contracts axis and the performer's deal
 turn out to be the same record.
 
 **4. The unit of work, declared by the plan.** Not the shoot day. The research

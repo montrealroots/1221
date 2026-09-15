@@ -87,7 +87,7 @@ export const AXES: readonly Axis[] = [
   {
     id: 'truth',
     label: 'Truth',
-    what: 'Whether what happens in the take reads as something happening to a person, or as an actor doing acting at you.',
+    what: 'Whether what happens in the take reads as something happening to a person, or as a performance aimed at you.',
     moves: 'What the finished picture is reckoned to take.',
     of: [
       'emotional_truth', 'active_listening', 'given_circumstances',
@@ -172,7 +172,7 @@ export interface Round {
    */
   width: Readonly<Record<AxisId, number>>;
   /**
-   * Axes this round shows through the actor's own equipment instead of the
+   * Axes this round shows through the performer's own equipment instead of the
    * room's.
    *
    * Width and distortion are not the same failure, and conflating them would
@@ -180,7 +180,7 @@ export interface Round {
    * uncertain. A distorted one makes you confident and wrong, which is worse.
    *
    * A tape is the whole of the reason this field exists. What arrives is not
-   * the actor, it is the actor's tape: shot at home, as many times as they
+   * the performer, it is their tape: shot at home, as many times as they
    * liked, in whatever light they have, cut by them, and sent only if they
    * judged it the good one. Some people are far better at that than at acting
    * and some are far worse, and neither fact is visible in the file. So the
@@ -245,7 +245,7 @@ export const BOOKABLE: readonly Round[] = ROUNDS.filter((r) => r.id !== 'pile');
  * A lead is usually a coverage problem and occasionally a face in a window. The
  * draw is what makes two leads on the same picture different buys, and it is
  * deliberately not hidden from the player: they are the producer, and a producer
- * knows what their own picture needs. What is hidden here is what the actor is,
+ * knows what their own picture needs. What is hidden here is what the performer is,
  * which is a different question and the one the room exists to answer.
  *
  * SLATE's own.
@@ -298,7 +298,7 @@ export const A_NOTE_IS_WORTH = 1;
  * Days of diary the casting office has in a week.
  *
  * Five, because it is an office. The research's own figure for what one of
- * those days holds is fifteen to forty actors seen, which is why a preread is
+ * those days holds is fifteen to forty people seen, which is why a preread is
  * half a day of the diary rather than a whole one and a callback is three
  * times that: the director is in the room for a callback and the director does
  * not have forty of anything.
@@ -433,7 +433,7 @@ export const CAST_SHARE = 0.18;
  * The three ends of a negotiation.
  *
  * `under` is how far below their quote somebody will go before it is an insult,
- * and it is the interesting one: the reason an actor will not take less is not
+ * and it is the interesting one: the reason a performer will not take less is not
  * pride, it is that the number is read by everybody who hires them next.
  * `over` is the point past which more money buys nothing, so a producer who
  * doubles an already-generous offer is handing money over for a yes they had.
@@ -475,7 +475,7 @@ export const QUOTE_LIFE = 4;
  * further, the delivery date.
  *
  * SLATE's own, all three numbers. End to end the curve is a bit under two to
- * one, which is about the distance between a technical actor and a
+ * one, which is about the distance between a technical performer and a
  * different-every-take one as the research describes it — and not the
  * difference between a good picture and a bad one, which is a different axis.
  */

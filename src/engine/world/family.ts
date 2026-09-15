@@ -171,6 +171,7 @@ function makeRelative(spec: {
     // and nothing calls a mother an actress — but the field has to hold
     // something, and the something it holds is what their own pronouns imply.
     // Copying the player's would bill an identical twin sister as an actor.
+    // both-titles: the word itself, which is what this comment is about.
     performerTitle: impliedPerformerTitle(
       gender === 'female' ? 'she/her' : gender === 'male' ? 'he/him' : 'they/them',
     ),

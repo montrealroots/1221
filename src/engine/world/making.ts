@@ -297,7 +297,7 @@ export function decideSlip(input: Squeeze, roll: number): { days: number; becaus
       because: 'The schedule was short of what the picture costs from the day it was set, and everybody on it knew.',
     };
   }
-  return { days, because: 'The ordinary attrition of a shoot: weather, a sick actor, a day that went twice.' };
+  return { days, because: 'The ordinary attrition of a shoot: weather, a cast member off sick, a day that went twice.' };
 }
 
 // ---------------------------------------------------------------------------

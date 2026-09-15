@@ -186,7 +186,7 @@ export const FINDINGS: readonly Finding[] = [
   {
     id: 'chain-gap',
     label: 'A Gap In The Chain',
-    what: 'A signature is missing from the paper trail that proves the company owns what it’s about to sell. An actor who never signed, a co-writer who won’t assign, an option that ran out while the picture was in post. The picture is fine. The company can’t show it owns it.',
+    what: 'A signature is missing from the paper trail that proves the company owns what it’s about to sell. A performer who never signed, a co-writer who won’t assign, an option that ran out while the picture was in post. The picture is fine. The company can’t show it owns it.',
     dimension: 'rights',
     down: 'floor',
     scope: 'whole',

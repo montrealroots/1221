@@ -1,8 +1,8 @@
 /**
  * SLATE — personality: who they are, not what they do.
  *
- * The craft traits are automatic. The player is the best living actor or
- * director, producer, showrunner and actor, so they hold every trait in every
+ * The craft traits are automatic. The player is the best living performer,
+ * director, producer and showrunner there is, so they hold every trait in every
  * one of those disciplines and there was never a choice to make about it.
  *
  * None of that says what kind of person they are. Being the best there has

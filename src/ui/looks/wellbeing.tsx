@@ -98,6 +98,7 @@ defineLook<Person>('person', {
       // A mother is not billed as an actress. Nobody on this land is billed at
       // all, and calling her one was the field standing in for a fact about
       // her that the save has had all along.
+      // both-titles: the word itself, which is what this comment is about.
       kind: isYou ? 'Yourself' : relation ?? PERFORMER_NOUN[person.performerTitle ?? 'actor'],
       // Two sentences rather than one joined by "and": the wellbeing line is
       // already a whole sentence, and stitching them made a fragment.

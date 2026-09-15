@@ -13,7 +13,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "validate": "npm run typecheck && npm run lint && npm run test",
-    "gate": "npm run validate && node tools/title-case.mjs --check && node tools/label-sweep.mjs && node tools/plural-check.mjs && node tools/voice-check.mjs --check && node tools/tics.mjs --check && node tools/doc-refs.mjs --check && node tools/wired.mjs --check && node tools/deciders.mjs --check && node tools/spelling.mjs && node tools/typos.mjs && npx vite-node tools/geo-check.mjs && node tools/inventory.mjs --check",
+    "gate": "npm run validate && node tools/title-case.mjs --check && node tools/label-sweep.mjs && node tools/plural-check.mjs && node tools/both-titles.mjs && node tools/voice-check.mjs --check && node tools/tics.mjs --check && node tools/doc-refs.mjs --check && node tools/wired.mjs --check && node tools/deciders.mjs --check && node tools/spelling.mjs && node tools/typos.mjs && npx vite-node tools/geo-check.mjs && node tools/inventory.mjs --check",
     "base44:contract": "vitest run tests/base44-contract.test.ts",
     "base44:smoke": "node tools/base44-smoke.mjs",
     "base44:deploy": "npm run build && npx --yes @base44/cli deploy --config base44/config.jsonc",

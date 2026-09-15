@@ -14,7 +14,7 @@
 /**
  * The frame every headshot ends up in.
  *
- * Four by five, because that is the shape an actor's headshot has been since
+ * Four by five, because that is the shape a performer's headshot has been since
  * eight-by-tens, and 512 across because it stays sharp on a retina screen at
  * the size it is actually shown while staying small enough to live in a save.
  */

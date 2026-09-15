@@ -9,7 +9,7 @@
  * The seam is a CAPABILITY. Every one of those nine is only interesting
  * because of a door it opens: VAT registration matters because a production
  * buys enormously and reclaims a fifth of it, an American subsidiary matters
- * because Global Rule One will not let you near an American actor without one,
+ * because Global Rule One will not let you near an American performer without one,
  * and errors and omissions cover matters because no distributor takes delivery
  * without a certificate. So the company does not have a list of features. It
  * has a list of things it may and may not do, and each thing it may not do
@@ -210,7 +210,7 @@ export function capabilitiesOf(sim: Simulation): Capability[] {
       [needRegistry(u, 'is_employer')]),
 
     of('employ_americans', 'Hire Americans',
-      'Cast an American actor, or employ an American writer or director.',
+      'Cast an American performer, or employ an American writer or director.',
       GLOBAL_RULE_ONE,
       [
         arm ? undefined : {

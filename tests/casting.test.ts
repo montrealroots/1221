@@ -1008,7 +1008,7 @@ describe('only a callback finds out whether they can do it again', () => {
   });
 });
 
-describe('a tape is the actor’s tape, not the actor', () => {
+describe('a tape is the performer’s tape, not the performer', () => {
   it('reads four attributes that have nothing to do with acting', () => {
     for (const id of THE_TAPE) {
       expect(ATTRIBUTE_BY_ID[id], `${id} is not an attribute`).toBeDefined();
@@ -1125,7 +1125,7 @@ describe('the diary is the scarcity', () => {
     // And nowhere near everybody gets seen twice.
     const back = book('callback');
     expect(back, 'some callbacks should fit').toBeGreaterThan(0);
-    expect(back, 'the diary should run out long before the actors do')
+    expect(back, 'the diary should run out long before the performers do')
       .toBeLessThan(everybody.length / 2);
   });
 
@@ -1317,7 +1317,7 @@ describe('the office picks on what it believes, like everybody else', () => {
   it('gets a better cast for the same money by going to the trouble', () => {
     // The claim the whole system exists to make, measured rather than asserted:
     // across enough worlds, a producer who picks the best-looking lead after a
-    // callback ends up with a genuinely better actor than one who picks off a
+    // callback ends up with a genuinely better performer than one who picks off a
     // photograph. Neither of them can see the truth at any point. The
     // difference is only that one of them is guessing less.
     const many = 22;
