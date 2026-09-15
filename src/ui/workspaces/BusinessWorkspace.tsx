@@ -31,8 +31,9 @@ import { pullOn, sellsFor, stillToCarry } from '@/engine/world/lot';
 import { SELLING } from '@/engine/content/lot';
 import { AXES, BOOKABLE, feeReads } from '@/engine/content/casting';
 import {
-  askFor, castOf, datesFor, howManyCast, howSure, howWide, lookedAt, officeFillsAt, quoteOf,
-  saysWhatItWants, seatFor, shownOf, sureReads, theDiary, whereTheCastStands, whoCameIn,
+  askFor, bringingThemCents, castOf, datesFor, fromWhere, globalRuleOne, howManyCast, howSure,
+  howWide, lookedAt, officeFillsAt, quoteOf, saysWhatItWants, seatFor, shownOf, sureReads,
+  theDiary, whereTheCastStands, whoCameIn,
 } from '@/engine/world/casting';
 import {
   AIRDATE_WEEKS, LEAD_WEEKS, LONGEST_SHOOT, canHandOver, windowOf, wouldBe,
@@ -887,6 +888,15 @@ function CastForm({ projectId, onClose }: { projectId: string; onClose: () => vo
                           <div className="muted small">
                             {sureReads(howSure(sim, project, role, person))}
                           </div>
+                          <div className="dim xs">
+                            {fromWhere(person)?.label ?? 'Here'}
+                            {bringingThemCents(person, ask) > 0
+                              ? ` · ${formatMoney(bringingThemCents(person, ask))} to bring`
+                              : ''}
+                          </div>
+                          {globalRuleOne(sim, person) && (
+                            <div className="xs negative">{globalRuleOne(sim, person)}</div>
+                          )}
                         </td>
                         {AXES.map((axis) => (
                           <td key={axis.id} className="nowrap small">

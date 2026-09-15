@@ -60,11 +60,13 @@ import { clamp } from '../core/rng';
 import { MEN, WOMEN, patronymic } from '../content/names';
 import {
   AXES, A_PART_LEANS, CAST_SHARE, HAGGLE, QUOTE_LIFE, ROUNDS, SIZES, TAPE_LEANS, THE_TAPE,
-  axisById, passById, roundById, sizeById, takesAt,
-  type AxisId, type PassId, type Round, type Size,
+  WHERE_FROM, axisById, passById, roundById, sizeById, takesAt, whereFromById, whereFromCity,
+  type AxisId, type PassId, type Round, type Size, type WhereFrom,
 } from '../content/casting';
 import type { Plan } from '../content/making';
 import { MS_WEEK } from './lot';
+import { americanArm, signedWith } from './company';
+import { isCitizenOf } from '../domain/citizenship';
 
 /** A year, for decaying a quote. */
 const MS_YEAR = 365.25 * 24 * 60 * 60 * 1000;
@@ -374,8 +376,9 @@ export function sheetFor(standing: number, next: () => number): AttributeSheet {
 }
 
 /** Somebody who acts, made because a part needed them. */
-export function performerNew(sim: Simulation, standing: number, next: () => number): Person {
-  const player = sim.universe.people[sim.universe.playerId]!;
+export function performerNew(
+  sim: Simulation, standing: number, next: () => number, from = whereFromById('here')!,
+): Person {
   const woman = next() < 0.5;
   const given = woman
     ? WOMEN[Math.floor(next() * WOMEN.length)] ?? 'Anna'
@@ -395,9 +398,13 @@ export function performerNew(sim: Simulation, standing: number, next: () => numb
     performerTitle: impliedPerformerTitle(pronouns),
     birthInstant: sim.now - Math.round((21 + next() * 40) * MS_YEAR),
     gender: woman ? 'female' : 'male',
-    homeRegionId: player.homeRegionId,
-    citizenshipId: player.citizenshipId,
-    currentLocationId: player.currentLocationId,
+    // Where they actually live, which is the first thing in casting to read a
+    // row out of the gazetteer. It used to be copied from the player, so every
+    // performer in every save was from the same town and three declared fields
+    // said nothing.
+    homeRegionId: from.cityId,
+    citizenshipId: from.citizenshipId,
+    currentLocationId: from.cityId,
     personality: {
       openness: dial(), conscientiousness: dial(), extraversion: dial(),
       agreeableness: dial(), emotionalStability: dial(), ambition: dial(),
@@ -406,7 +413,9 @@ export function performerNew(sim: Simulation, standing: number, next: () => numb
     interests: [],
     goals: [],
     lifestyle: 'modest',
-    background: 'Acts. Has done since before anybody was paying for it.',
+    background: from.id === 'here'
+      ? 'Acts. Has done since before anybody was paying for it.'
+      : `Acts, out of ${from.label}. Would have to be brought here and put up.`,
     attributes: sheetFor(standing, next),
     traits: [],
     skills: emptySkillSheet(),
@@ -428,6 +437,43 @@ export function performerNew(sim: Simulation, standing: number, next: () => numb
   };
   sim.universe.people[person.id] = person;
   return person;
+}
+
+/**
+ * Where the next person in the pile comes from.
+ *
+ * The band's reach is the gate. Nobody flies from Los Angeles to read for a
+ * part that pays four thousand euros, and no amount of wanting them changes it
+ * — so a cheap picture is cast out of the phone book and an expensive one is
+ * cast out of the world. Within whatever the money has opened up, the weights
+ * decide, and most of everybody is from here because this is Iceland.
+ */
+export function reachesTo(reach: number, draw: number): WhereFrom {
+  const open = WHERE_FROM.filter((one) => reach >= one.reaches);
+  const total = open.reduce((n, one) => n + one.weight, 0);
+  if (total <= 0) return whereFromById('here')!;
+  let at = draw * total;
+  for (const one of open) {
+    at -= one.weight;
+    if (at <= 0) return one;
+  }
+  return open[open.length - 1]!;
+}
+
+/** Where somebody lives, where it is a place this build knows about. */
+export const fromWhere = (person: Person): WhereFrom | undefined =>
+  whereFromCity(person.homeRegionId);
+
+/**
+ * What it costs on top of the fee to have somebody here for the run.
+ *
+ * Flights, a hotel and per diem, as a share of what they are paid, and nought
+ * for anybody who already lives here. This is the whole of why local hire is a
+ * budget decision and not only a casting one: the best person for the part can
+ * be a fifth more expensive than the number on their deal.
+ */
+export function bringingThemCents(person: Person, feeCents: Money): Money {
+  return Math.round(feeCents * (fromWhere(person)?.travel ?? 0));
 }
 
 /** How many people a part gets in front of anybody. */
@@ -473,7 +519,7 @@ export function putItOut(sim: Simulation, project: Project, role: Role): Person[
   for (let i = out.length; i < WANTED; i += 1) {
     const draw = making.next();
     const standing = clamp(Math.round(reach - 18 + draw * 30), 1, 100);
-    out.push(performerNew(sim, standing, () => making.next()));
+    out.push(performerNew(sim, standing, () => making.next(), reachesTo(reach, making.next())));
   }
   role.seen = out.map((person) => ({ personId: person.id }));
   return out;
@@ -712,12 +758,12 @@ export function castSomebody(sim: Simulation, casting: Casting): Cast {
   if (!project) return { ok: false, error: 'There’s no such picture.' };
   if (project.shelvedAt) return { ok: false, error: `${project.title} is shelved.` };
   const role = roleOn(project, casting.roleId);
-  if (!role) return { ok: false, error: 'There’s no such part in it.' };
+  if (!role) return { ok: false, error: 'No part by that id is in it.' };
   if (seatFor(project, role.id)) {
     return { ok: false, error: `${role.name} is cast. Let them go first, and the fee stays owed.` };
   }
   const person = sim.universe.people[casting.personId];
-  if (!person) return { ok: false, error: 'There’s nobody by that name.' };
+  if (!person) return { ok: false, error: 'Nobody by that name exists.' };
 
   // The shoot is the one thing an offer cannot be made behind. Everything else
   // about casting late is expensive; this is impossible, because the scenes
@@ -729,6 +775,9 @@ export function castSomebody(sim: Simulation, casting: Casting): Cast {
 
   const fee = Math.round(casting.feeCents);
   if (!Number.isFinite(fee) || fee < 0) return { ok: false, error: 'That isn’t an amount.' };
+
+  const shut = globalRuleOne(sim, person);
+  if (shut) return { ok: false, error: shut };
 
   const offer = offerOf(sim, project, role, person, fee);
   const roll = sim.rng('casting', 'offer', project.id, role.id, person.id).next();
@@ -754,6 +803,7 @@ export function castSomebody(sim: Simulation, casting: Casting): Cast {
   writeTheQuote(person, project.id, role.size, fee, sim.now);
   if (!person.isPlayer) person.careerTrack = 'actor';
   payTheOverage(sim, project, role, fee);
+  payToBringThem(sim, project, person, fee);
   payThePlayer(sim, project, person, fee);
 
   sim.notify({
@@ -767,6 +817,35 @@ export function castSomebody(sim: Simulation, casting: Casting): Cast {
     refId: project.id,
   });
   return { ok: true, answer };
+}
+
+/**
+ * Global Rule One, finally asked at the one place it exists for.
+ *
+ * A member of SAG-AFTRA may not work for a producer who has not signed with
+ * SAG-AFTRA — anywhere on earth, which is the whole point of the rule. It is
+ * the reason the family business is two companies rather than one, and
+ * `domain/company.ts` calls it the ladder the whole of that file exists to
+ * build. Until now nothing anywhere checked it: the arm could be formed, the
+ * agreement signed, and an American cast either way, which made the entire
+ * structure a screen that congratulated you.
+ *
+ * It asks for both, because both are real and they are different steps. An
+ * Icelandic company with no American arm has nobody to sign as; an arm that has
+ * not signed is a producer SAG-AFTRA has never heard of.
+ */
+export function globalRuleOne(sim: Simulation, person: Person): string | undefined {
+  if (person.isPlayer) return undefined;
+  if (!isCitizenOf(person, 'us')) return undefined;
+  if (!americanArm(sim.universe)) {
+    return `${person.displayName} is American, and an American can’t work for a producer who isn’t. `
+      + 'Form the arm first.';
+  }
+  if (!signedWith(sim.universe, 'sag_aftra')) {
+    return `${person.displayName} is American, and the arm has never signed with SAG-AFTRA. `
+      + 'Until it does, nobody who is a member may work for it — here or anywhere else.';
+  }
+  return undefined;
 }
 
 /**
@@ -792,6 +871,26 @@ function payTheOverage(sim: Simulation, project: Project, role: Role, fee: Money
   sim.expense(account, over, `${project.title}: Over The Band On ${role.name}`, 'business',
     { refType: 'project', refId: project.id });
   project.spentCents += over;
+}
+
+/**
+ * Pays what it costs to have somebody here who does not live here.
+ *
+ * Flights, a hotel for the run and per diem, charged on the day the deal
+ * closes, the same way the overage is. It is the half of local hire the
+ * casting screen cannot argue with: the band buys the fee and says nothing at
+ * all about what it takes to get them onto the stage.
+ */
+function payToBringThem(sim: Simulation, project: Project, person: Person, fee: Money): void {
+  const cost = bringingThemCents(person, fee);
+  if (cost <= 0) return;
+  const account = Object.values(sim.universe.accounts)
+    .find((a) => a.ownerId === project.companyId && a.kind === 'company_cash' && !a.closedAt)?.id;
+  if (!account) return;
+  const from = fromWhere(person);
+  sim.expense(account, cost, `${project.title}: Bringing ${person.displayName} From ${from?.label ?? 'Abroad'}`,
+    'business', { refType: 'project', refId: project.id });
+  project.spentCents += cost;
 }
 
 /**
@@ -974,6 +1073,11 @@ export function theOfficeFills(sim: Simulation, project: Project): number {
         // for explaining a booking to anybody. It passes, and `conduct history`
         // is one of the twenty pass reasons a real office records.
         if (person.reputation.controversy >= TOO_HOT) return false;
+        // And it cannot book somebody the company is not allowed to employ.
+        // The office fills parts without asking anybody, so this is the one
+        // place Global Rule One would otherwise be quietly got round by not
+        // going through the front door.
+        if (globalRuleOne(sim, person)) return false;
         const when = datesFor(project, role);
         return !when || freeToWork(sim, person.id, when.from, when.to);
       });
@@ -1374,12 +1478,12 @@ export function bookTheRoom(sim: Simulation, booking: Booking): { ok: true; at: 
   if (!project) return { ok: false, error: 'There’s no such picture.' };
   if (project.shelvedAt) return { ok: false, error: `${project.title} is shelved.` };
   const role = roleOn(project, booking.roleId);
-  if (!role) return { ok: false, error: 'There’s no such part in it.' };
-  if (seatFor(project, role.id)) return { ok: false, error: `${role.name} is cast. There’s nothing left to find out.` };
+  if (!role) return { ok: false, error: 'No part by that id is in it.' };
+  if (seatFor(project, role.id)) return { ok: false, error: `${role.name} is cast, so a room would teach nobody anything.` };
   const round = roundById(booking.round);
   if (!round || round.id === 'pile') return { ok: false, error: 'That isn’t a round anybody runs.' };
   const person = sim.universe.people[booking.personId];
-  if (!person) return { ok: false, error: 'There’s nobody by that name.' };
+  if (!person) return { ok: false, error: 'Nobody by that name exists.' };
   const looked = lookedAt(role, person.id);
   if (!looked) return { ok: false, error: `Nobody has put ${role.name} out yet, so nobody has come in for it.` };
   if ((looked.rounds ?? []).includes(round.id)) {

@@ -33,6 +33,7 @@ import {
 import type { Looked } from '@/engine/domain/company';
 import {
   askFor, castOf, castOn, castsAppeal, castsReliability, datesFor, decideOffer, freeToWork,
+  fromWhere, globalRuleOne, bringingThemCents, reachesTo,
   howManyCast, openRoles, quoteOf, ranOverOnThem,
   alreadyKnown, believedAt, goesOffBy, howWide, lookedAt, officeFillsAt, readOf, readOn,
   reachOfBand, seatFor, sheetFor, shownOf, SOMEBODY_KNOWS, takeFactor, tapeLean, theBiggestName,
@@ -501,7 +502,11 @@ describe('the office fills what nobody filled, at the band and no further', () =
     const id = greenlit(sim, 'feature', 'Hvítserkur');
     const role = openRoles(sim.universe.projects[id]!).find((r) => r.size === 'lead')!;
     run(sim, 'company.breakdown', { projectId: id, roleId: role.id });
-    const person = whoCameIn(sim, sim.universe.projects[id]!.roles!.find((r) => r.id === role.id)!)[0]!;
+    // Somebody the company is actually allowed to employ. A lead's band reaches
+    // America now, and an Icelandic company with no arm may not touch an
+    // American — which is a different test, two below this one.
+    const person = whoCameIn(sim, sim.universe.projects[id]!.roles!.find((r) => r.id === role.id)!)
+      .find((one) => globalRuleOne(sim, one) === undefined)!;
     const paid = Math.round(askFor(person, role, sim.now) * 2.5);
     run(sim, 'company.cast', { projectId: id, roleId: role.id, personId: person.id, feeCents: paid });
     const before = seatFor(sim.universe.projects[id]!, role.id)!;
@@ -1297,7 +1302,10 @@ describe('the office picks on what it believes, like everybody else', () => {
       const role = openRoles(project).find((r) => r.size === 'lead')!;
       run(sim, 'company.breakdown', { projectId: id, roleId: role.id });
       const live = sim.universe.projects[id]!.roles!.find((r) => r.id === role.id)!;
-      const came = whoCameIn(sim, live);
+      // Only the ones the company may legally employ, because those are the
+      // only ones the office is choosing between.
+      const came = whoCameIn(sim, live).filter((one) => globalRuleOne(sim, one) === undefined);
+      if (came.length < 2) continue;
       const pick = (worth: (person: Person) => number) =>
         came.reduce((top, one) => (worth(one) > worth(top) ? one : top), came[0]!);
       const sum = (r: ReturnType<typeof readOf>) => r.truth + r.reads + r.repeatable;
@@ -1414,5 +1422,128 @@ describe('three axes that had no reader now have one each', () => {
     const byLead = Math.abs(castsAppeal(sim, project)! - even.appeal);
     expect(byLead).toBeGreaterThan(byDay * 3);
     expect(even.trust).toBeCloseTo(50, 6);
+  });
+});
+
+describe('performers come from somewhere, and it costs to bring them', () => {
+  it('lives in a real place on the map, and not all in the same one', () => {
+    const sim = world('from-where');
+    const id = greenlit(sim, 'feature', 'Hvítserkur');
+    const seen = new Set<string>();
+    for (const role of openRoles(sim.universe.projects[id]!)) {
+      run(sim, 'company.breakdown', { projectId: id, roleId: role.id });
+      for (const person of whoCameIn(sim, sim.universe.projects[id]!.roles!.find((r) => r.id === role.id)!)) {
+        expect(fromWhere(person), `${person.homeRegionId} is not a place this build knows`).toBeDefined();
+        seen.add(person.homeRegionId);
+      }
+    }
+    // Everybody used to be copied from the player, so three declared fields on
+    // every performer in every save said exactly one thing.
+    expect(seen.size, 'a whole picture cast out of one town').toBeGreaterThan(1);
+  });
+
+  it('reaches abroad only when the part has the money to', () => {
+    // Nobody flies from Los Angeles to read for a part that pays four thousand
+    // euros, and no amount of wanting them changes it.
+    const poor = new Set<string>();
+    const rich = new Set<string>();
+    for (let i = 0; i < 40; i += 1) {
+      poor.add(reachesTo(reachOfBand(4_000_00), i / 40).id);
+      rich.add(reachesTo(reachOfBand(900_000_00), i / 40).id);
+    }
+    expect(poor).toEqual(new Set(['here']));
+    expect(rich.size).toBeGreaterThan(1);
+    expect(rich).toContain('here');
+  });
+
+  it('charges for the flight and the hotel, and nothing for somebody who lives here', () => {
+    const sim = world('travel');
+    const local = { homeRegionId: 'is-39-reykjavik' } as never;
+    const away = { homeRegionId: 'us-ca-losangeles' } as never;
+    expect(bringingThemCents(local, 100_000_00)).toBe(0);
+    expect(bringingThemCents(away, 100_000_00)).toBeGreaterThan(0);
+    // And it lands on the company's cash when the deal closes.
+    const cash = () => Object.values(sim.universe.accounts)
+      .find((a) => a.kind === 'company_cash' && !a.closedAt)!.balance;
+    const id = greenlit(sim, 'feature', 'Hvítserkur');
+    const role = openRoles(sim.universe.projects[id]!).find((r) => r.size === 'day')!;
+    run(sim, 'company.breakdown', { projectId: id, roleId: role.id });
+    const live = sim.universe.projects[id]!.roles!.find((r) => r.id === role.id)!;
+    const foreign = whoCameIn(sim, live)
+      .find((one) => (fromWhere(one)?.travel ?? 0) > 0 && globalRuleOne(sim, one) === undefined);
+    if (!foreign) return;
+    const before = cash();
+    run(sim, 'company.cast', {
+      projectId: id, roleId: role.id, personId: foreign.id, feeCents: role.bandCents,
+    });
+    if (!seatFor(sim.universe.projects[id]!, role.id)) return;
+    expect(before - cash()).toBe(bringingThemCents(foreign, role.bandCents));
+  });
+});
+
+describe('Global Rule One is asked at the one place it exists for', () => {
+  it('refuses an American until there is an arm, and until the arm has signed', () => {
+    // The reason the family business is two companies rather than one, and
+    // until now nothing anywhere checked it: the arm could be formed, the
+    // agreement signed, and an American cast either way.
+    const sim = world('rule-one');
+    const id = greenlit(sim, 'feature', 'Hvítserkur');
+    const role = openRoles(sim.universe.projects[id]!).find((r) => r.size === 'lead')!;
+    run(sim, 'company.breakdown', { projectId: id, roleId: role.id });
+    const live = sim.universe.projects[id]!.roles!.find((r) => r.id === role.id)!;
+    const american = whoCameIn(sim, live).find((one) => one.citizenshipId === 'us');
+    if (!american) return;
+
+    expect(globalRuleOne(sim, american)).toMatch(/Form the arm first/);
+    const done = run(sim, 'company.cast', {
+      projectId: id, roleId: role.id, personId: american.id, feeCents: role.bandCents,
+    });
+    expect(done.ok).toBe(false);
+    expect(seatFor(sim.universe.projects[id]!, role.id)).toBeUndefined();
+
+    expect(run(sim, 'company.form_arm', {}).ok).toBe(true);
+    expect(globalRuleOne(sim, american), 'an arm that has not signed is a stranger to the guild')
+      .toMatch(/never signed with SAG-AFTRA/);
+    expect(run(sim, 'company.sign', { guild: 'sag_aftra' }).ok).toBe(true);
+    expect(globalRuleOne(sim, american)).toBeUndefined();
+  });
+
+  it('never stands between the player and a part in their own family’s picture', () => {
+    const sim = world('rule-one-me');
+    const id = greenlit(sim, 'feature', 'Hvítserkur');
+    const me = sim.universe.people[sim.universe.playerId]!;
+    expect(globalRuleOne(sim, me)).toBeUndefined();
+    const role = openRoles(sim.universe.projects[id]!).find((r) => r.size === 'lead')!;
+    expect(run(sim, 'company.cast', {
+      projectId: id, roleId: role.id, personId: me.id, feeCents: role.bandCents,
+    }).ok).toBe(true);
+  });
+
+  it('is not got round by letting the office do it', () => {
+    // The office pushes seats without going through the offer, so it is the one
+    // place the rule could be walked past by not using the door. Built rather
+    // than hoped for: an American who would certainly be the office's first
+    // choice, planted in the pile before it fills.
+    const sim = world('rule-one-office');
+    const id = greenlit(sim, 'feature', 'Hvítserkur');
+    const role = openRoles(sim.universe.projects[id]!).find((r) => r.size === 'lead')!;
+    run(sim, 'company.breakdown', { projectId: id, roleId: role.id });
+    const live = sim.universe.projects[id]!.roles!.find((r) => r.id === role.id)!;
+    const best = whoCameIn(sim, live)[0]!;
+    best.citizenshipId = 'us';
+    best.homeRegionId = 'us-ca-losangeles';
+    best.attributes = sheetOf(100);
+    expect(globalRuleOne(sim, best)).toBeDefined();
+
+    const shoot = sim.universe.projects[id]!.periods!.find((p) => p.id === 'shooting')!;
+    sim.advanceTo(shoot.from);
+    const seat = seatFor(sim.universe.projects[id]!, role.id);
+    expect(seat, 'the office should still fill the part').toBeDefined();
+    expect(seat!.personId, 'and not with somebody the company may not employ').not.toBe(best.id);
+    for (const one of sim.universe.projects[id]!.cast ?? []) {
+      const who = sim.universe.people[one.personId]!;
+      expect(globalRuleOne(sim, who), `${who.displayName} should not be on this picture`)
+        .toBeUndefined();
+    }
   });
 });

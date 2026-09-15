@@ -121,6 +121,26 @@ at that looks better than they are while one who is hopeless at it looks worse.
 A preread is a correction rather than a zoom, and that is the post-2020
 complaint about self-taping stated as arithmetic instead of as an opinion.
 
+Performers come from somewhere, and it is a real row in the gazetteer. Most of
+everybody is Icelandic, because Iceland is a country of four hundred thousand
+people with a working screen industry; the rest are Nordic, British or
+American, and the part's band decides how far the search reaches. Nobody flies
+from Los Angeles to read for a part that pays four thousand euros, so a cheap
+picture is cast out of the phone book and an expensive one is cast out of the
+world. Bringing somebody costs flights, a hotel for the run and per diem, as a
+share of their fee and nothing for anybody who already lives here — which is
+the half of local hire the casting screen cannot argue with: the band buys the
+fee and says nothing about what it takes to get them onto the stage.
+
+And an American cannot be cast at all until the arm exists and has signed.
+Global Rule One — a member of SAG-AFTRA may not work for a producer who has not
+signed, anywhere on earth — is the reason the family business is two companies
+rather than one, and until now nothing anywhere asked it: the arm could be
+formed, the agreement signed, and an American cast either way. It is asked at
+the offer and again inside the casting office, which fills parts without going
+through the front door and was the one place the rule could have been walked
+past.
+
 What a part needs is its own fact, laid at the greenlight and kept. Three
 numbers coming to three: a day player is a face in one scene, so how they read
 is nearly the whole of it and nobody is going to ask them for take nine; a lead

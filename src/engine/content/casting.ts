@@ -125,6 +125,82 @@ export const ATTRIBUTES_READ: readonly string[] =
   [...new Set(AXES.flatMap((axis) => axis.of))];
 
 // ---------------------------------------------------------------------------
+// Where somebody is from
+// ---------------------------------------------------------------------------
+
+export interface WhereFrom {
+  id: string;
+  /** Title Case, for a screen. */
+  label: string;
+  /** Where they live, by gazetteer city id. */
+  cityId: string;
+  /** Whose passport, by country id. */
+  citizenshipId: string;
+  /** How many of the people who come in are from here, before money reaches. */
+  weight: number;
+  /**
+   * How far a part's band has to reach before anybody from here is in the pile
+   * at all, out of a hundred.
+   *
+   * The reason a cheap picture is cast out of the phone book and an expensive
+   * one is not. Nobody flies from Los Angeles to read for a part that pays four
+   * thousand euros, and no amount of wanting them changes it.
+   */
+  reaches: number;
+  /**
+   * What bringing them costs, as a share of their fee.
+   *
+   * Flights, a hotel for the run, and per diem for every day they are here.
+   * Nought for anybody who already lives here, which is the whole of why local
+   * hire is a budget decision and not only a casting one. SLATE's own, sized so
+   * that a lead flown in costs about a fifth again what they are paid.
+   */
+  travel: number;
+}
+
+/**
+ * The places the people who read for an Icelandic picture come from.
+ *
+ * Deliberately short and deliberately real. Iceland is a country of four
+ * hundred thousand people with a working screen industry, so most of everybody
+ * is from here, a good number are Nordic and come without much fuss, and the
+ * English-speaking world is a long way away in every sense: it costs money to
+ * reach, it costs money to bring, and one corner of it brings a union with it.
+ *
+ * Every city id is a real row in the gazetteer, which is the first time
+ * anything in casting has read one. Weights and travel shares are SLATE's own.
+ */
+export const WHERE_FROM: readonly WhereFrom[] = [
+  {
+    id: 'here', label: 'Iceland', cityId: 'is-39-reykjavik', citizenshipId: 'is',
+    weight: 62, reaches: 0, travel: 0,
+  },
+  {
+    id: 'nordic-dk', label: 'Denmark', cityId: 'dk-17-copenhagen', citizenshipId: 'dk',
+    weight: 12, reaches: 30, travel: 0.12,
+  },
+  {
+    id: 'nordic-se', label: 'Sweden', cityId: 'se-26-stockholm', citizenshipId: 'se',
+    weight: 10, reaches: 34, travel: 0.13,
+  },
+  {
+    id: 'uk', label: 'Britain', cityId: 'uk-eng-london', citizenshipId: 'uk',
+    weight: 9, reaches: 52, travel: 0.18,
+  },
+  {
+    id: 'us', label: 'America', cityId: 'us-ca-losangeles', citizenshipId: 'us',
+    weight: 7, reaches: 70, travel: 0.24,
+  },
+];
+
+export const whereFromById = (id: string): WhereFrom | undefined =>
+  WHERE_FROM.find((one) => one.id === id);
+
+/** Where somebody lives, by the city they live in. */
+export const whereFromCity = (cityId: string): WhereFrom | undefined =>
+  WHERE_FROM.find((one) => one.cityId === cityId);
+
+// ---------------------------------------------------------------------------
 // Seeing somebody
 // ---------------------------------------------------------------------------
 
