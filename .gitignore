@@ -16,6 +16,13 @@ screenshots/
 ui-audit/
 text-caps/
 
+# Throwaway measurement scripts. A probe has to sit inside the repository for
+# vite-node to resolve `@/engine` and for playwright to find its browser, so the
+# only place to write one is here — and none of them is worth carrying, because
+# every figure a probe produces is meant to end up in a doc, a comment or a test
+# rather than in the script that found it.
+probe/
+
 # Pull caches (rebuildable from Wikidata; large)
 tools/filmography/cache/
 tools/people/cache/
