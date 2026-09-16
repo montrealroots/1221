@@ -424,14 +424,22 @@ export const OVERHEAD: readonly OverheadLine[] = [
 export const OVERHEAD_FLOOR_CENTS: Money = OVERHEAD.reduce((n, line) => n + line.monthlyCents, 0);
 
 /**
- * The three rates a stage is let at, as a share of the shooting rate.
+ * The two rates a stage is let at, as a share of the shooting rate.
  *
- * Stages are quoted by the week, never by the day, and never at one price. A
- * production pre-lights and strikes at a lower rate than it shoots at, and
- * pays a lower one again to hold a standing set on a dark day. Anybody who has
- * booked one knows this; a game that charges one flat rate has not.
+ * Stages are quoted by the week, never by the day, and never at one price: a
+ * production pre-lights and strikes at a lower rate than it shoots at. Anybody
+ * who has booked one knows this; a game that charges one flat rate has not.
+ *
+ * There was a third, `hold`, for a standing set on a dark day, and it is worth
+ * saying why it went. It was true of the world and false of this build: nothing
+ * ever wrote a booking of that kind, so the rate was never once looked up. The
+ * measurement that settled it replaced this table with one that throws when
+ * anything reads `hold`, and then ran eighteen played years and the whole test
+ * suite — `shooting` was read seven hundred times, `prep` a hundred, `hold` not
+ * at all. A returning series that holds its sets between seasons is a good
+ * feature and the rate comes back with it.
  */
-export const RATE_SHARE = { shooting: 1, prep: 0.6, hold: 0.35 } as const;
+export const RATE_SHARE = { shooting: 1, prep: 0.6 } as const;
 
 /**
  * How long a stage is held either side of the shoot, as multiples of it.

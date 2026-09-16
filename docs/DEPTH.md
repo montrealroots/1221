@@ -740,6 +740,15 @@ million across a decade now saves five. The waste is still there and is on the
 screen, because a lever whose cost is hidden is the same trap facing the other
 way.
 
+**A rate that nothing writes is a price list, not a price.** The stage rate card
+carried three shares of the shooting rate — shooting, prep, and a lower one again
+for holding a standing set on a dark day. The third was true of the world and
+false of this build: `book` writes `shooting` and `prep` and has never once
+written `hold`, so across eighteen played years and the whole suite the key was
+read zero times, measured with a table that throws when anything asks for it. It
+is gone, with `BookingKind` narrowed to match, and it comes back the day a
+returning series holds its sets between seasons.
+
 **A rate card nothing reads is a price list, not a price.** `wouldBook` computed
 what the room cost on its third line and then never mentioned it again: the
 decision was size, then availability, then the rebate, so every stage on the lot

@@ -985,9 +985,17 @@ export function book(sim: Simulation, need: Enquiry, stageId: Id, from: Instant,
     return booking;
   };
 
-  // Three rows and not one, because they are three different things at three
-  // different prices, and a single row called shooting that covered the build
-  // and the strike would be the lie the flat rate used to be.
+  // Three rows and not one, because they are three different stretches of time,
+  // and a single row called shooting that covered the build and the strike would
+  // be the lie the flat rate used to be.
+  //
+  // Three rows at TWO prices, though, and the strike is the reason: it is the
+  // last of the three and it is written as `prep`, because striking a set and
+  // building one cost a production the same and `BookingKind` has no word for
+  // taking one down. So a reader of the rows sees a production prep twice and
+  // never strike. It is 6.5% of what the lot quotes, sitting under the wrong
+  // name — and the estate screen's Stages table is one line of TSX away from
+  // printing it.
   let at = from;
   if (held.prep > 0) { write('prep', at, held.prep, prepRate); at += held.prep * MS_WEEK; }
   const shooting = write('shooting', at, held.shoot, weekRateCents);

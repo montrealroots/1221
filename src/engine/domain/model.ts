@@ -441,17 +441,20 @@ export interface QuotaYear {
   because: string;
 }
 
-/** Whether a production is shooting on a stage, getting ready, or holding it. */
-export type BookingKind = 'shooting' | 'prep' | 'hold';
+/** Whether a production is shooting on a stage or getting ready on it. */
+export type BookingKind = 'shooting' | 'prep';
 
 /**
  * A production holding a stage for a run of dates.
  *
  * The unit is the week, because that is how stages are actually let, and the
- * rate depends on what the production is doing in there. Pre-lighting and
- * striking cost less than shooting; holding a standing set on a dark day costs
- * less again. A lot that charged one flat rate would be a lot nobody had ever
- * booked.
+ * rate depends on what the production is doing in there: pre-lighting and
+ * striking cost less than shooting. A lot that charged one flat rate would be a
+ * lot nobody had ever booked.
+ *
+ * Two kinds and not three. Holding a standing set on a dark day is a real thing
+ * a lot charges for, and nothing here ever wrote such a booking, so the word and
+ * its rate were a price list for something the game does not sell.
  */
 export interface Booking {
   id: Id;
