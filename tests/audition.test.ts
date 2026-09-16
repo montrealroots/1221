@@ -1116,3 +1116,92 @@ describe('a note nobody answers', () => {
       .toBeGreaterThan(0.2);
   });
 });
+
+describe('what the room actually pays out', () => {
+  /**
+   * The room's central number, held to six decimals.
+   *
+   * Nothing held it before, and that is how a comment came to assert the
+   * opposite of its own code for as long as it existed. Measured: moving
+   * `AS_GOOD_AS_IT_GETS` from 0.82 to 0.34 — a forty-eight point swing in the
+   * one number this whole file exists to produce — leaves 1,204 tests passing.
+   * Changing the hidden want of every audition in every save leaves all of them
+   * passing. A suite that cannot see either is not testing the room.
+   *
+   * Exact rather than sampled: every one of the 343 wants at its true weight,
+   * both halves of the misheard draw, and P(cast) bisected out of the real
+   * `decideAudition` rather than reimplemented. Nothing here is a model of the
+   * engine; it is the engine, enumerated.
+   */
+  const weightOf = (value: number): number => (Math.abs(value) === FURTHEST ? 1 / 12 : 1 / 6);
+  const EVERY = [-3, -2, -1, 0, 1, 2, 3];
+
+  function paysOut(opening: Reading, howFar: string, sure: number): number {
+    let total = 0;
+    for (const warmth of EVERY) for (const size of EVERY) for (const pace of EVERY) {
+      const wants = { warmth, size, pace };
+      const weight = weightOf(warmth) * weightOf(size) * weightOf(pace);
+      const note = theNote(opening, wants);
+      const ways: [number, Reading][] = note
+        ? [[sure, afterTheNote(opening, note, howFar, 1, 0)],
+          [1 - sure, afterTheNote(opening, note, howFar, 0, 0.5)]]
+        : [[1, opening]];
+      for (const [share, played] of ways) {
+        if (share <= 0) continue;
+        const off = howFarOff(readingOf(played), wants);
+        let yes = 0;
+        let no = 1;
+        for (let step = 0; step < 40; step += 1) {
+          const mid = (yes + no) / 2;
+          if (decideAudition({ off, sawYou: true, free: true }, mid) === 'cast') yes = mid;
+          else no = mid;
+        }
+        total += weight * share * yes;
+      }
+    }
+    return total;
+  }
+
+  /** What `heardItRight` returns at a given readiness, without building a save. */
+  const sureAt = (readiness: number): number => 1 - MISREAD_THE_ROOM * (1 - readiness / 100);
+
+  it('pays out what it pays out, to six decimals, at the readiness a played save has', () => {
+    // 49.17 is where readiness sits on any save nobody has deliberately slept
+    // on: measured flat there from day thirty to day three thousand six hundred.
+    const tired = sureAt(49.17);
+    expect(paysOut(AS_WRITTEN, 'none', tired)).toBeCloseTo(0.625851, 6);
+    expect(paysOut(AS_WRITTEN, 'touch', tired)).toBeCloseTo(0.680391, 6);
+    expect(paysOut(AS_WRITTEN, 'good', tired)).toBeCloseTo(0.706258, 6);
+    expect(paysOut(AS_WRITTEN, 'far', tired)).toBeCloseTo(0.693821, 6);
+  });
+
+  it('pays out more to somebody who slept, which is the one decision in the room', () => {
+    // A deliberate eight hours puts readiness at 95 for the rest of that day,
+    // and the note is answered the same afternoon. So the player can choose
+    // which of these two columns they are reading in.
+    const rested = sureAt(95);
+    expect(paysOut(AS_WRITTEN, 'good', rested)).toBeGreaterThan(paysOut(AS_WRITTEN, 'good', sureAt(49.17)));
+    expect(paysOut(AS_WRITTEN, 'far', rested)).toBeCloseTo(0.778041, 6);
+  });
+
+  it('flips which answer is right between a tired room and a rested one', () => {
+    // The whole of what `MISREAD_THE_ROOM` buys, and it was nearly written off
+    // as unreachable: four separate measurements concluded the flip could not
+    // happen because they only ever looked at a save nobody slept on.
+    const tired = sureAt(49.17);
+    const rested = sureAt(95);
+    expect(paysOut(AS_WRITTEN, 'good', tired)).toBeGreaterThan(paysOut(AS_WRITTEN, 'far', tired));
+    expect(paysOut(AS_WRITTEN, 'far', rested)).toBeGreaterThan(paysOut(AS_WRITTEN, 'good', rested));
+
+    // And the crossover sits between them rather than outside the reachable
+    // range, which is the part that makes it a decision rather than a fact.
+    let low = 49.17;
+    let high = 95;
+    for (let step = 0; step < 24; step += 1) {
+      const mid = (low + high) / 2;
+      if (paysOut(AS_WRITTEN, 'far', sureAt(mid)) > paysOut(AS_WRITTEN, 'good', sureAt(mid))) high = mid;
+      else low = mid;
+    }
+    expect(low).toBeCloseTo(76.31, 1);
+  });
+});
