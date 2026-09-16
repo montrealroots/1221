@@ -391,10 +391,27 @@ file reference rather than as a finding.
 
 ### Correct, and nothing can reach it
 
-- **The Decision Center is a room nothing ever writes to.** Every deadline in the
-  build goes unannounced, and the most expensive of them is the reimbursement.
-  Two commands — `world.take_decision_action` and `world.dismiss_decision` — read
-  a table the engine never fills.
+- ~~**The Decision Center is a room nothing ever writes to.**~~ **Fixed.** Two
+  commands — `world.take_decision_action` and `world.dismiss_decision` — read a
+  table the engine never filled, and the panel on Home rendered its Empty state
+  for every save anybody could play.
+
+  The world tick raises one thing now, and it is the deadline that was silent:
+  the reimbursement, whose application closes on the first day of photography
+  and never reopens. Raised on the tick rather than at the greenlight, because a
+  runway is not known when a picture is greenlit and a company that has nobody
+  keeping its books cannot claim at all — so the prompt has to be able to arrive
+  in week three. Measured on a twenty million euro feature: a hundred and five
+  days of runway, seventeen notices across it about crew and prep and stages,
+  and not one word about 5.98m euro.
+
+  The ledger's framing was wrong on two counts and both corrections are in the
+  code. "Every deadline in the build goes unannounced" is too broad: a delivery
+  past its date notifies twice and an audition arrives with its closing date in
+  the body of the notice. And this is a reminder rather than a decision — filing
+  on the first open day and on the last were played out to the money landing
+  across four budgets and two seeds each, and the difference was exactly nought
+  in all eight pairs. So it carries one button and the code says why.
 - **Nobody can see the booking board**, which is the only pipeline the career
   has. The lever is money spent a year early and its effect is invisible until it
   arrives as one notification.

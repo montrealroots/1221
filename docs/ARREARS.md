@@ -39,6 +39,7 @@ pushed.
 | the creation screen saying two axes are live when three are | `57f4044` |
 | the room's central outcome, pinned to six decimals | `62ab848` |
 | Leave It, the misheard no, and two false sentences | `df42a67` |
+| the Decision Center nothing writes to | option B, on the world tick — and the reimbursement is a reminder, not a decision |
 
 **Next, and each one needs a call before it can be built.**
 
@@ -59,8 +60,9 @@ under twenty-three years and there is no repair. Whether the family holds it
 up, whether the player can spend on it, or whether the decay goes entirely.
 
 Then the eighteen under Decisions below, of which the heaviest are `quoteOf`
-only ever going up, nothing in the company ever ending or recurring, the
-Decision Center nothing writes to, and `w.fitness` as a one-way ratchet.
+only ever going up, nothing in the company ever ending or recurring, and
+`w.fitness` as a one-way ratchet. The Decision Center was among them and is
+not any more: the owner's call went to option B and it is built.
 
 **Still counted by the gate, and all three are deliberate now rather than
 unexamined:** 47 trait modifier knobs and 3 personality axes, both dormant on
@@ -1223,7 +1225,7 @@ Add a monthly tick to src/engine/world/company.ts, modeled on `registerLot` / `L
 
 Three defensible answers for what 'act' means:
 (a) Silent lapse — set `lapsedAt` / `endedAt` / drop the holding, and shelve any Project whose `holdingId` points at the dead option. Cheapest, and it is literally what the ledger asks for.
-(b) Warn at 60 days via `sim.notify`, then lapse. RECOMMENDED. It makes the capability wall move on its own, which is what `capabilitiesOf`'s own doc comment already promises and what makes the consequence a decision rather than an ambush. It also gives the Decision Center (already noted elsewhere in UNBITTEN as a room nothing writes to) its first real writer.
+(b) Warn at 60 days via `sim.notify`, then lapse. RECOMMENDED. It makes the capability wall move on its own, which is what `capabilitiesOf`'s own doc comment already promises and what makes the consequence a decision rather than an ambush. It would also be the Decision Center's second writer — the room is fed now, by the reimbursement on the world tick, so a holding that is running out has a working room to be raised into rather than a room somebody would have to build first.
 (c) Auto-renew on payment, lapse only when the company is broke. Most forgiving, loses the drama, and turns three separate fields into one balance check.
 Separately, either add `company.exercise` (charge `purchasePriceCents`, flip `hold` to 'owned', clear `expiresAt`) or DELETE `purchasePriceCents` and `optionFeeCents` from domain/company.ts:262,264 — right now they are declarations with nothing that reads them, which is the ONE RULE violation in its purest form.
 
@@ -1814,7 +1816,44 @@ Either way, correct docs/UNBITTEN.md:216-218, which still lists this among "the 
 
 ### The Decision Center is a room nothing ever writes to. Two commands world.take_decision_action and world.dismiss_decision read a table the engine never fills. Every deadline in the build goes unannounced, and the most expensive of them is the reimbursement.
 
-**Cluster** `unreachable` · **Severity** serious · **Verdict** STILL_TRUE
+**Cluster** `unreachable` · **Severity** serious · **Verdict** WAS_TRUE, NOW BUILT
+
+**LANDED.** Option B, on the world tick, as the adversary recommended — with
+three corrections the options below did not have.
+
+1. THE QUIET RULE, not the urgency, was the thing that would have bitten. The
+   adversary put the gap at ~15 days from the ledger's 105-day runway; measured
+   it is ELEVEN. The row is raised 11 January, the door shuts 24 April, and the
+   season rule waved it away on 13 April. And it did not stay quiet: the raiser
+   re-asks every two days and `requireDecision` merges only into open rows, so a
+   second row with a new id appeared on 15 April. Fixed by exempting a dated row
+   from the ninety-day rule entirely — a raiser that put a date on a row has
+   already chosen where it ends. `expireDecisions`, world.ts.
+
+2. IT IS A REMINDER AND THE CODE SAYS SO. Filing on the first open day and on
+   the last were played to the money landing on four budgets (2m, 5m, 20m, 40m)
+   and two seeds each: identical rate, identical certified spend, identical
+   cents paid, identical closing balance. Difference exactly nought in all eight
+   pairs. One button, and the doc comment says why there is not a second.
+
+3. TWO THINGS THE OPTIONS MISSED. `world.take_decision_action` stamped
+   `resolvedAt` off `CommandResult.ok`, which says the handler ran and not that
+   it did the thing — so the row could be pressed after the camera turned over,
+   vanish off Home, and file nothing. And Dismiss undid itself two days later,
+   because the raiser re-asks; the raiser now reads the wave, and `prune` keeps a
+   closed row whose date is still ahead (a runway reaches 294 days on a
+   forty-week feature and 308 on a format season, both past the 180-day
+   retention).
+
+Category is `'reimbursement'` and not `'business'`, which removes the dedupe
+collision the Risk section below names: `requireDecision` keys on category plus
+refType plus refId, so `'business'` would have claimed that triple for good.
+
+The three tests that could not fail are dealt with: the `>= 0` assertion in
+smoke.test.ts is gone and its import narrowed, the vacuous cohesion loop now
+reads `commandKind:` literals out of the engine source and asserts the list is
+not empty, and the `it.todo` is six real tests. Seven mutations, each red on its
+own test.
 
 
 **Files** `/home/user/1221/src/engine/core/simulation.ts`, `/home/user/1221/src/engine/world/world.ts`, `/home/user/1221/src/ui/screens/Home.tsx`, `/home/user/1221/src/ui/looks/attention.tsx`, `/home/user/1221/src/engine/world/rebate.ts`, `/home/user/1221/src/engine/world/making.ts`, `/home/user/1221/src/ui/workspaces/BusinessWorkspace.tsx`
@@ -1970,7 +2009,7 @@ A picture was made from nothing and the world remembered none of it.
 
 THE LEDGER IS UNDERSTATED ON BOTH HALVES. "Persisted, empty table" undersells it: the audit trail's readers, its redaction rule and its factor-normaliser are all dead too — the whole of core/audit.ts's first stated job, roughly half the file. And "sleep diary" undersells it: history is EMPTY until the player manually issues `life.sleep`, and `Historian.timeline()` — the only function that could display it — is called by nothing. It is a write-only sleep diary.
 
-ONE THING HAS MOVED SINCE THE LEDGER (adjacent, deserves its own line). looks/subject.ts:43-49 still asserts "there is not one literal `refType` written anywhere in the engine today — every one is pass-through of a caller-supplied value that no caller supplies." That is now false: the engine writes `refType: 'project'` 40 times, `refType: 'audition'` 9 times, `refType: 'property'` once. `subjectForRef` resolves them — but `lookKinds()` has no 'audition' and no 'property' kind (it has 'house' and 'estate', not 'property'), so nine notifications resolve to a subject whose look is undefined and `resolveLook` (registry.ts:137-140) returns undefined.
+ONE THING HAS MOVED SINCE THE LEDGER (adjacent, deserves its own line). SETTLED: both comments were rewritten with the post-wire figures when the Decision Center was fed — 52 literal refTypes, 42 `project` (the 42nd is the reimbursement row), 9 `audition`, 1 `property`; the ten that do not resolve are the audition and property ones, and the reason is that no look is declared for either kind. What follows is what was true before that. looks/subject.ts:43-49 still asserts "there is not one literal `refType` written anywhere in the engine today — every one is pass-through of a caller-supplied value that no caller supplies." That is now false: the engine writes `refType: 'project'` 40 times, `refType: 'audition'` 9 times, `refType: 'property'` once. `subjectForRef` resolves them — but `lookKinds()` has no 'audition' and no 'property' kind (it has 'house' and 'estate', not 'property'), so nine notifications resolve to a subject whose look is undefined and `resolveLook` (registry.ts:137-140) returns undefined.
 
 
 **Fix**
@@ -2567,7 +2606,7 @@ PARTLY_TRUE, and refuted on three counts. Their structural facts hold — I re-r
 
 (5) THEY MISSED THE MECHANICAL DEFECT, which is cheaper and more falsifiable. By the falsifiability test the sentence at AuditionsWorkspace.tsx:43-44 is the thing that changes no outcome; by THE ONE RULE it is a promise with nothing behind it. It is also simply wrong about the engine by 2.4x-5x.
 
-(6) THEY FOUND THE WEAKER DEAD REF. `subjectForRef` at subject.ts:45-48 states "there is not one literal `refType` written anywhere in the engine today — every one is pass-through of a caller-supplied value that no caller supplies. So this resolves nothing yet, on purpose" — and attention.tsx:17 repeats it. There are 51 literal refTypes in src/engine: 41 `'project'`, 9 `'audition'` (audition.ts:467, 523, 542, 598, 647, 686, 698, 769, 798), 1 `'property'`. `hasKind('audition')=false` and there is no 'property' kind either, so probe shows all 5 "Is Casting" notifications resolve to UNDEFINED. `wayTo` (attention.tsx:131-135) guards on `lookExists`, so nothing dead is painted — but the career's own notification is the one that claims an address and has none, while two comments swear no caller ever fills one in. That is code contradicting its own comment, ten times, and it is the thing that would actually give the career pipeline somewhere to go.
+(6) THEY FOUND THE WEAKER DEAD REF. SETTLED — both comments now carry the real figures, and the engine writes a 52nd refType on the reimbursement decision. What follows is what was true before that. `subjectForRef` at subject.ts:45-48 states "there is not one literal `refType` written anywhere in the engine today — every one is pass-through of a caller-supplied value that no caller supplies. So this resolves nothing yet, on purpose" — and attention.tsx:17 repeats it. There are 51 literal refTypes in src/engine: 41 `'project'`, 9 `'audition'` (audition.ts:467, 523, 542, 598, 647, 686, 698, 769, 798), 1 `'property'`. `hasKind('audition')=false` and there is no 'property' kind either, so probe shows all 5 "Is Casting" notifications resolve to UNDEFINED. `wayTo` (attention.tsx:131-135) guards on `lookExists`, so nothing dead is painted — but the career's own notification is the one that claims an address and has none, while two comments swear no caller ever fills one in. That is code contradicting its own comment, ten times, and it is the thing that would actually give the career pipeline somewhere to go.
 
 (7) SEVERITY IS WRONG. Over 3 simulated years the outside pipeline produces 3 auditions (floor) / 5 (max), all `never-answered` in an unattended run, and ZERO pairs of auditions whose shoot dates overlap — so the one decision a forward board would inform (hold the diary clear for something bigger) never arises in three years. The board is invisible, but what it would inform is currently near-empty. Minor, not serious.
 

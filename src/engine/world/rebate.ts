@@ -47,6 +47,20 @@ import { estateCity } from '../content/estate';
 
 export const CLAIM_KIND = 'project.rebate';
 
+/**
+ * The category the Decision Center files the reminder under.
+ *
+ * Its own word and not the 'business' every other notice from the office
+ * carries, because `requireDecision` deduplicates on category, reference type
+ * and reference id together: filed under 'business' this would claim the triple
+ * ('business', 'project', id) for good, and the next business decision anybody
+ * writes about the same picture would quietly merge into this one and inherit
+ * its title and its button. Named here rather than in `world/world.ts` so the
+ * raiser and `applyForRebate`, which clears the row, spell it the same way
+ * without world importing from rebate and rebate importing back.
+ */
+export const CLAIM_DECISION = 'reimbursement';
+
 // ---------------------------------------------------------------------------
 // The dates the claim turns on
 // ---------------------------------------------------------------------------
@@ -269,6 +283,14 @@ export function applyForRebate(
   const short = shortOnFor(sim, project, 'plan');
   const shareAt = rateWhenShort(short);
   project.rebate = { appliedAt: sim.now, shareAt };
+
+  // And the Decision Center stops asking, whichever door the filing came
+  // through. `theClaimsStillOpen` (world/world.ts) raises the prompt every two
+  // days while `whyNot` is undefined, and filing makes it 'already' — but the
+  // row already on the list is not retracted by its raiser going quiet, and a
+  // player who filed from the Family Business screen would have watched a
+  // prompt to file sit there until its date went by.
+  sim.resolveDecision('project', project.id, CLAIM_DECISION);
 
   const account = cashFor(sim, project.companyId);
   if (account) {

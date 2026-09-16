@@ -25,7 +25,8 @@ import type { Simulation } from '@/engine';
 import { MS_DAY, MS_HOUR } from '@/engine/core/time';
 import '@/ui/looks/all';
 import { lookKinds, resolveLook, seedsFor, trailTo, type Looked, type Way } from '@/ui/looks/registry';
-import { openTheDoors } from './doors';
+import { openTheBooks, openTheDoors } from './doors';
+import { openDecisions } from '@/engine/world/world';
 import { at, subjectKey, type Subject } from '@/ui/looks/subject';
 
 const UI = new URL('../src/ui/', import.meta.url);
@@ -418,5 +419,41 @@ describe('what the screens name', () => {
       if (/useState<\s*Subject/.test(text)) offenders.push(path.split('/src/')[1]!);
     }
     expect(offenders, 'screens holding their own drill state').toEqual([]);
+  });
+});
+
+/**
+ * The pointer that resolved nothing, resolving something.
+ *
+ * `refType` and `refId` are declared on a decision and on a notification, and
+ * for the whole life of this build no decision anywhere carried either — the
+ * comment on `subjectForRef` said as much, twice. The reimbursement row the
+ * world tick raises is the first, so this is the way from a decision onto the
+ * thing it is about being walked rather than assumed. The crawl above cannot
+ * cover it: its decision is hand-made and carries no pointer at all.
+ */
+describe('a decision opens onto the thing it is about', () => {
+  it('walks from the reimbursement row to the picture it is about', () => {
+    const sim = quickSave({}, 'decision-way');
+    openTheDoors(sim);
+    openTheBooks(sim);
+    sim.execute({ kind: 'company.develop', payload: { title: 'Hvítserkur', medium: 'film' } });
+    const project = Object.values(sim.universe.projects).find((one) => one.title === 'Hvítserkur')!;
+    sim.execute({
+      kind: 'company.greenlight',
+      payload: { projectId: project.id, planId: 'feature', budgetCents: 20_000_000_00, shootWeeks: 8 },
+    });
+    sim.advanceTo(sim.now + 3 * MS_DAY);
+
+    const row = openDecisions(sim)[0]!;
+    expect(row.refType).toBe('project');
+    expect(row.refId).toBe(project.id);
+
+    const looked = resolveLook(sim, at('decision', row.id)) as Looked;
+    expect(looked.name).toBeTruthy();
+    expect(
+      (looked.ways ?? []).map((way) => way.to),
+      'the decision knows what it is about and paints no way onto it',
+    ).toContainEqual({ kind: 'project', id: project.id });
   });
 });
