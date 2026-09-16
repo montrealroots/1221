@@ -54,7 +54,7 @@ import {
 } from '../content/audition';
 import { SIZES, sizeById } from '../content/casting';
 import { MS_WEEK } from './lot';
-import { theyAreFree } from './diary';
+import { heldUntil, theyAreFree } from './diary';
 import { readiness } from '../systems/life';
 
 const MS_DAY = 24 * 60 * 60 * 1000;
@@ -686,9 +686,14 @@ export const IN_THE_ROOM = 90;
  * on a picture is not the production's unit anyway. What this says is only that
  * somebody is working and cannot be elsewhere, which is true of every kind of
  * thing that could ever be made.
+ *
+ * How many of those weeks is not this file's to say. `heldUntil` answers it for
+ * both halves of the game, and the calendar is written from that answer rather
+ * than beside it.
  */
 function takeTheirWeeks(sim: Simulation, audition: Audition): void {
-  const weeks = Math.max(1, Math.round((audition.to - audition.from) / MS_WEEK));
+  const until = heldUntil(audition.size, audition.from, audition.to);
+  const weeks = Math.max(1, Math.round((until - audition.from) / MS_WEEK));
   for (let i = 0; i < weeks; i += 1) {
     const at = audition.from + i * MS_WEEK;
     if (at < sim.now) continue;

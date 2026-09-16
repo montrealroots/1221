@@ -33,7 +33,7 @@ import {
   sayWhy,
   sizeCasting, readFor, ignoredBy,
 } from '@/engine/world/audition';
-import { whatHasThem } from '@/engine/world/diary';
+import { heldUntil, whatHasThem } from '@/engine/world/diary';
 import { applySleep, readiness } from '@/engine/systems/life';
 import {
   AS_WRITTEN, A_WORKING_WEEK, CLOSE_ENOUGH, COLD, FURTHEST, HOW_FAR, KNOWN_OF, MISREAD_THE_ROOM,
@@ -137,14 +137,14 @@ function playItOut(
  * `theyWantYou` is what a settled audition calls, so this asks it the same way
  * the engine does rather than writing a seat by hand.
  */
-function castOnSomething(sim: Simulation, weeks = 6, inWeeks = 8): Audition {
+function castOnSomething(sim: Simulation, weeks = 6, inWeeks = 8, size = 'lead'): Audition {
   const booking = shootingOnTheLot(sim, 'A Nordic Broadcaster', weeks, inWeeks);
   const audition: Audition = {
     id: sim.nextId('audition'),
     saveId: sim.universe.meta.id,
     bookingId: booking.id,
     holder: booking.holder,
-    size: 'lead',
+    size,
     feeCents: 1_000_00,
     from: booking.from,
     to: booking.to,
@@ -449,6 +449,62 @@ describe('being cast is time you no longer have', () => {
     const cast = castOnSomething(sim);
     const before = cast.from - MS_DAY;
     expect(whatHasThem(sim, before, before + MS_DAY)?.what).toBe(cast.holder);
+  });
+
+  it('takes the whole run for a part the whole thing is about, and a week for a scene', () => {
+    // `across` has said which sizes are scoped to one part of a thing since the
+    // sizes were written, and the diary was the one reader it never had. A day
+    // player on a fourteen-week feature was spoken for the whole fourteen weeks
+    // for one scene, which is not a trade the engine anywhere intends.
+    const at = 1_000_000_000_000;
+    const held = (size: string | undefined, weeks: number): number =>
+      Math.round((heldUntil(size, at, at + weeks * MS_WEEK) - at) / MS_WEEK);
+    expect(held('lead', 14)).toBe(14);
+    expect(held('support', 14)).toBe(14);
+    expect(held('guest', 14)).toBe(2);
+    expect(held('day', 14)).toBe(1);
+    // Off the run, not off a table: the same guest on a commercial is there for
+    // the week the commercial is, and on a long season for four.
+    expect(held('guest', 1)).toBe(1);
+    expect(held('guest', 30)).toBe(4);
+    // And a part nobody can name is held for the whole of it, because the safe
+    // answer to not knowing is that the player is unavailable.
+    expect(held(undefined, 14)).toBe(14);
+    expect(held('no-such-size', 14)).toBe(14);
+  });
+
+  it('is handed nothing but whole weeks, which is why it needs no far-end clamp', () => {
+    // `heldUntil` walks a part-scoped engagement forward from its first day and
+    // never checks that it landed inside the run, because on a whole number of
+    // weeks it cannot land outside one. That is an assumption about two other
+    // files, so it is pinned here rather than defended with a branch no input
+    // reaches: `layOut` lays every period as weeks * MS_WEEK and `book` takes a
+    // stage for at + weeks * MS_WEEK. Lay a period in days and this goes red.
+    const sim = quickSave({}, 'whole-weeks');
+    playACareer(sim, 8);
+    const spans = Object.values(sim.universe.auditions).map((one) => one.to - one.from);
+    expect(spans.length, 'nobody was asked, so this proves nothing')
+      .toBeGreaterThan(20);
+    expect(spans.filter((one) => one % MS_WEEK !== 0)).toEqual([]);
+    for (const one of Object.values(sim.universe.auditions)) {
+      expect(heldUntil(one.size, one.from, one.to)).toBeLessThanOrEqual(one.to);
+    }
+  });
+
+  it('leaves a day player free for the rest of the shoot they are on', () => {
+    // Through the real path, because the point is the calendar and not the
+    // arithmetic: the weeks have to actually not be there.
+    const sim = world('engaged-day');
+    const cast = castOnSomething(sim, 14, 8, 'day');
+    const mine = sim.universe.scheduled
+      .filter((one) => one.kind === WORKING_KIND && one.refId === cast.id);
+    expect(mine.length).toBe(1);
+    const late = cast.to - MS_WEEK;
+    expect(whatHasThem(sim, late, late + MS_DAY)).toBeUndefined();
+    expect(freeAcross(sim, late, cast.to)).toBe(true);
+    // The first week is still taken, so this is a shorter engagement and not a
+    // deleted one.
+    expect(whatHasThem(sim, cast.from, cast.from + MS_DAY)?.what).toBe(cast.holder);
   });
 });
 
@@ -869,13 +925,38 @@ describe('a part you took is a part you cannot take again', () => {
     const clash = untilTheyAsk(sim, second)!;
     // The first one landed, and it runs across the second one's shoot. Built
     // here rather than left to the draw, because the claim is about the dates.
+    // The size is pinned for the same reason: what a part this big holds is a
+    // different claim, and it is made in the test below.
     audition.state = 'over';
     audition.why = 'cast';
+    audition.size = 'lead';
     audition.from = clash.from - MS_WEEK;
     audition.to = clash.to + MS_WEEK;
     const done = run(sim, 'life.go_up', { auditionId: clash.id, way: 'tape', played: {} });
     expect(done.ok).toBe(false);
     expect(done.error).toMatch(/working on those dates/);
+  });
+
+  it('does not sell a whole season of dates for one day of work', () => {
+    // The same fixture, one word different. A day player is spoken for the week
+    // they are in, so the second reading goes ahead — where before this the
+    // engine refused it on their behalf and the refusal named a picture the
+    // player is in for one scene.
+    const sim = world('clash-day');
+    const first = shootingOnTheLot(sim, 'RÚV, a limited series', 8);
+    const audition = untilTheyAsk(sim, first)!;
+    const second = shootingOnTheLot(sim, 'a Nordic broadcaster, a limited series', 8, 10);
+    const clash = untilTheyAsk(sim, second)!;
+    audition.state = 'over';
+    audition.why = 'cast';
+    audition.size = 'day';
+    audition.from = clash.from - MS_WEEK;
+    audition.to = clash.to + MS_WEEK;
+    expect(run(sim, 'life.go_up', { auditionId: clash.id, way: 'tape', played: {} }).ok)
+      .toBe(true);
+    // And the week it does hold is still held, so this is a shorter engagement
+    // and not an absent one.
+    expect(freeAcross(sim, audition.from, audition.from + MS_WEEK)).toBe(false);
   });
 });
 
@@ -1365,8 +1446,12 @@ describe('an office that knows you still notices what you are', () => {
         }
       },
     });
+    // Thirty rather than forty because `heldUntil` gave the calendar a size:
+    // a career that no longer sells a season for one scene reads a different
+    // set of rooms, and this seed lands on 38. It is a floor against the test
+    // proving nothing, not a measurement — the claim below is 6 of 38.
     expect(seen.length, 'nobody was ever asked, so this proves nothing')
-      .toBeGreaterThan(40);
+      .toBeGreaterThan(30);
     expect(pinned.length / seen.length).toBeLessThan(0.5);
   });
 
