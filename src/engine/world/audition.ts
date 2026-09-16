@@ -47,7 +47,7 @@ import type { Audition, Booking } from '../domain/model';
 import { clamp } from '../core/rng';
 import {
   AS_WRITTEN, A_WORKING_WEEK, CLOSE_ENOUGH, COLD, EXPECTED_OF_ANYBODY, FURTHEST, KNOWN_OF,
-  RELIED_ON, REMEMBERED,
+  OF_THE_ROOM, RELIED_ON, REMEMBERED,
   HELD_AGAINST_YOU_YEARS, IGNORED, MISREAD_THE_ROOM, SHADES, TOO_FAR, WELL_LIKED,
   WHAT_THEY_OFFER,
   howFarById, shadeById, wayById, whyById, type Reading, type ShadeId, type WhyId,
@@ -245,6 +245,12 @@ export function remembersYou(sim: Simulation, holder: string): number {
  * A production that took a big stage for nine weeks is a production with money,
  * and there is no second table saying so.
  *
+ * The picture's own budget is not a term, and that is the part worth knowing:
+ * two productions of the same length in the same room pay a part the same fee,
+ * whatever either of them is spending. The rate card stands in for the money,
+ * and it stands in well enough only because a production that needs a big
+ * stage is usually a production with a big budget.
+ *
  * SLATE's own, and it has to be: the lot's rate card is what the stage costs,
  * not what the cast costs, and no published ratio between the two exists.
  */
@@ -252,7 +258,7 @@ export function feeFor(booking: Booking, sizeId: string): Money {
   const size = sizeById(sizeId);
   if (!size) return 0;
   const weeks = Math.max(1, (booking.to - booking.from) / MS_WEEK);
-  return Math.round(booking.weekRateCents * weeks * size.onScreen * 0.55);
+  return Math.round(booking.weekRateCents * weeks * size.onScreen * OF_THE_ROOM);
 }
 
 /** The size of part a production of this length is likely to be casting. */

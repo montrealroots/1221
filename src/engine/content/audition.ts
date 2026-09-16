@@ -548,6 +548,21 @@ export const WHAT_THEY_OFFER = {
 export const MISREAD_THE_ROOM = 0.35;
 
 /**
+ * The share of a room's weeks that a whole cast is priced at.
+ *
+ * The lot's rate card says what a stage costs. It does not say what a cast
+ * costs, and no published ratio between the two exists, so this figure is
+ * SLATE's own — which is exactly why it belongs on a line with a name on it
+ * rather than loose inside an expression.
+ *
+ * It is the same number as the lead's `onScreen` share in content/casting.ts,
+ * so a lead is paid 0.3025 of what the room cost. The two are independent and
+ * the match is a coincidence: move the lead's share of the screen and this
+ * figure stays where it is.
+ */
+export const OF_THE_ROOM = 0.55;
+
+/**
  * What it costs with these people to have been asked and not answered.
  *
  * The ratchet running backwards, and it is the whole reason an unanswered ask
