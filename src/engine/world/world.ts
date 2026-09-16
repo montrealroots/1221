@@ -169,7 +169,6 @@ export function simulationLoad(sim: Simulation) {
     totalScheduled: sim.universe.scheduled.length,
     transactions: sim.universe.transactions.length,
     history: sim.universe.history.length,
-    audits: sim.universe.audits.length,
     estimatedBytes: estimateSize(sim),
   };
 }
@@ -181,7 +180,6 @@ function estimateSize(sim: Simulation): number {
     Object.keys(u.people).length * 1400 +
     u.transactions.length * 260 +
     u.scheduled.length * 320 +
-    u.history.length * 280 +
-    u.audits.length * 620
+    u.history.length * 280
   );
 }

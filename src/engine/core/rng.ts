@@ -27,7 +27,7 @@ export interface Rng {
   shuffle<T>(items: readonly T[]): T[];
   /** Approximately normal via sum of 3 uniforms, clamped to +/- 3 sigma. */
   normal(mean: number, stdDev: number): number;
-  /** Number of draws taken so far — recorded in audits for replay. */
+  /** Number of draws taken so far, which is what makes a stream replayable. */
   readonly draws: number;
 }
 

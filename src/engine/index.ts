@@ -338,7 +338,6 @@ export function migrate(universe: SaveUniverse): MigrationResult {
   record('counters', 'the counters');
   list('transactions', 'the transactions');
   list('scheduled', 'the timeline');
-  list('audits', 'the audit trail');
   list('history', 'the history');
   list('notifications', 'the notifications');
   list('engineFailures', 'the failure log');
@@ -441,7 +440,6 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     stamp(Object.values(universe.decisions));
     stamp(universe.transactions);
     stamp(universe.scheduled);
-    stamp(universe.audits);
     stamp(universe.history);
     stamp(universe.notifications);
     if (reassigned > 0) steps.push(`Re-stamped ${reassigned} record${reassigned === 1 ? '' : 's'} onto this save.`);

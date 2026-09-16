@@ -253,7 +253,7 @@ export function emptyUniverse(
     stages: {},
     bookings: {},
     quotaYears: [],
-    scheduled: [], audits: [], history: [], decisions: {}, notifications: [],
+    scheduled: [], history: [], decisions: {}, notifications: [],
     preferences: {
       reducedMotion: false, audioEnabled: true, audioVolume: 0.6,
       timeSpeed: 'live', compactMode: false, showAdvancedNumbers: false,

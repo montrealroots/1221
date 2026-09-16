@@ -15,13 +15,11 @@ import type { Instant, TimeZone } from './time';
 import { addDays, addMonths, addYears, MS_MINUTE, MS_DAY, formatDateTime } from './time';
 import { Ledger, type LedgerTransaction, type Account } from './ledger';
 import { Timeline, type ScheduledItem, type Recurrence, nextRecurrence } from './scheduler';
-import { Historian, type AuditRecord, type HistoryRecord } from './audit';
+import { Historian, type HistoryRecord } from './audit';
 import { EventBus, type WorldEvent, worldEvent } from './events';
 import { createIdFactory, type IdNamespace } from './ids';
 import { rngFor, type Rng } from './rng';
 import type { Money } from './money';
-
-export const RULES_VERSION = '1.0.0';
 
 /** Handlers for scheduled items, keyed by `ScheduledItem.kind`. */
 export type ScheduleHandler = (item: ScheduledItem, sim: Simulation) => void;
@@ -591,16 +589,6 @@ export class Simulation {
     });
   }
 
-  audit(spec: Omit<AuditRecord, 'id' | 'saveId' | 'at' | 'rulesVersion'> & { at?: Instant; rulesVersion?: string }): AuditRecord {
-    return this.historian.recordAudit({
-      ...spec,
-      id: this.nextId('audit'),
-      saveId: this.universe.meta.id,
-      at: spec.at ?? this.now,
-      rulesVersion: spec.rulesVersion ?? RULES_VERSION,
-    });
-  }
-
   remember(spec: Omit<HistoryRecord, 'id' | 'saveId' | 'at'> & { at?: Instant }): HistoryRecord {
     return this.historian.recordHistory({
       ...spec,
@@ -690,13 +678,13 @@ export class Simulation {
 /**
  * Rollback support.
  *
- * `transactions`, `audits`, `history` and `notifications` are strictly
+ * `transactions`, `history` and `notifications` are strictly
  * append-only, so rolling them back is a truncation rather than a clone. That
  * matters: those four are the collections that grow without bound over a
  * decade of play, and cloning them on every command would make a long save
  * progressively slower to play.
  */
-const APPEND_ONLY_LOGS = ['transactions', 'audits', 'history', 'notifications'] as const;
+const APPEND_ONLY_LOGS = ['transactions', 'history', 'notifications'] as const;
 
 export interface UniverseSnapshot {
   clone: SaveUniverse;
