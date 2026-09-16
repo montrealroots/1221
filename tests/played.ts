@@ -20,6 +20,7 @@
  */
 
 import type { Simulation } from '@/engine';
+import type { Audition } from '@/engine/domain/model';
 import { SHADES, type Reading } from '@/engine/content/audition';
 import { freeAcross, goUpFor, goingNow, takeTheNote } from '@/engine/world/audition';
 import { MS_WEEK } from '@/engine/world/lot';
@@ -29,8 +30,16 @@ export interface HowTheyPlay {
   way?: 'tape' | 'room';
   /** How far the note is taken, every time. */
   howFar?: 'touch' | 'good' | 'far';
-  /** The reading sent in blind. Dead center unless something else is wanted. */
+  /** The reading sent in. Dead center unless something else is wanted. */
   opening?: Reading;
+  /**
+   * The reading sent in, chosen per ask rather than once.
+   *
+   * What `opening` cannot express, and the only way to play the policy the room
+   * is now built around: open on what this holder has kept asking for. Takes
+   * precedence over `opening` when both are given.
+   */
+  openingFor?: (sim: Simulation, audition: Audition) => Reading;
   /** Called at the end of every week, for whatever else is being measured. */
   eachWeek?: (sim: Simulation, week: number) => void;
   /**
@@ -96,7 +105,8 @@ export function playACareer(sim: Simulation, years: number, how: HowTheyPlay = {
     }
     for (const one of goingNow(sim)) {
       if (!freeAcross(sim, one.from, one.to)) { clashed += 1; continue; }
-      if (goUpFor(sim, { auditionId: one.id, way, played: opening }).ok) read += 1;
+      const played = how.openingFor?.(sim, one) ?? opening;
+      if (goUpFor(sim, { auditionId: one.id, way, played }).ok) read += 1;
     }
     for (const one of Object.values(sim.universe.auditions)) {
       if (one.state === 'noted') takeTheNote(sim, { auditionId: one.id, howFar });

@@ -46,8 +46,8 @@ import type { Instant } from '../core/time';
 import type { Audition, Booking } from '../domain/model';
 import { clamp } from '../core/rng';
 import {
-  AS_WRITTEN, A_WORKING_WEEK, CLOSE_ENOUGH, COLD, EXPECTED_OF_ANYBODY, FURTHEST, KNOWN_OF,
-  OF_THE_ROOM, RELIED_ON, REMEMBERED,
+  AS_WRITTEN, A_WORKING_WEEK, CLOSE_ENOUGH, COLD, EXPECTED_OF_ANYBODY, FURTHEST, HOUSE_HOLDS,
+  KNOWN_OF, OF_THE_ROOM, RELIED_ON, REMEMBERED,
   HELD_AGAINST_YOU_YEARS, IGNORED, MISREAD_THE_ROOM, SHADES, TOO_FAR, WELL_LIKED,
   WHAT_THEY_OFFER,
   howFarById, shadeById, wayById, whyById, type Reading, type ShadeId, type WhyId,
@@ -310,13 +310,105 @@ export function sizeCasting(weeks: number, believed: number, roll: number): stri
 // The want
 // ---------------------------------------------------------------------------
 
-/** What one room wants, drawn once and never shown. */
-export function whatTheyWant(next: () => number): Record<string, number> {
-  const out: Record<string, number> = {};
+/**
+ * What one room wants, drawn once and never shown directly.
+ *
+ * Two draws per shade rather than one, and the second is the whole of the
+ * change. The first is what this room would want if it belonged to nobody. The
+ * second asks whether it belongs to the house it is casting for, which it does
+ * `HOUSE_HOLDS` of the time — so a holder is a taste rather than a sequence of
+ * unrelated strangers, and what a player learns in one of their rooms is worth
+ * something in the next one.
+ *
+ * `HOUSE_HOLDS > 0 &&` is load-bearing and is not a micro-optimization. With it
+ * there, setting the constant to nought makes this function draw exactly once
+ * per shade again and the whole world becomes bit-identical to the game before
+ * the house existed — measured, on four ten-year played careers, digest for
+ * digest. Without it the second draw is taken and thrown away, every stream
+ * downstream of it shifts, and a save that should be the same save is a
+ * different one. The guard is what makes the constant a real dial the owner can
+ * turn all the way back.
+ *
+ * With no house, this is the old behavior exactly, which is what the tests that
+ * pin the shape of the draw still measure: one draw, rounded off the range, the
+ * two ends half as likely as everything between them.
+ */
+export function whatTheyWant(next: () => number, house?: Reading): Reading {
+  const out = { ...AS_WRITTEN };
   for (const shade of SHADES) {
-    out[shade.id] = Math.round((next() * 2 - 1) * FURTHEST);
+    const fresh = Math.round((next() * 2 - 1) * FURTHEST);
+    out[shade.id] = house !== undefined && HOUSE_HOLDS > 0 && next() < HOUSE_HOLDS
+      ? house[shade.id]
+      : fresh;
   }
   return out;
+}
+
+/**
+ * What these people like, across everything they ever cast.
+ *
+ * Drawn from the same distribution one room's want is drawn from, on its own
+ * stream keyed to the holder, so it is stable for the life of the save and
+ * costs the calling stream nothing. It is never written to the save and never
+ * shown: what a player can see is their own average of what they played in
+ * that holder's rooms, which is `whatTheyKeepAskingFor` and is a different
+ * number.
+ *
+ * The generator is hoisted into a const on purpose. Handing `whatTheyWant` a
+ * callback that builds the stream each time would hand it the same first draw
+ * three times over, and every holder in the world would want the same thing on
+ * all three shades.
+ */
+export function theHouse(sim: Simulation, holder: string): Reading {
+  const rng = sim.rng('audition', 'house', holder);
+  return whatTheyWant(() => rng.next());
+}
+
+/** What a player has worked out about a holder, and out of how many rooms. */
+export interface TheirTaste {
+  /** The average of what was played in their rooms. Not rounded to the grid. */
+  reading: Reading;
+  /** How many rooms it is built from. Nought means there is nothing to go on. */
+  rooms: number;
+}
+
+/**
+ * What this holder keeps asking for, as far as the player can tell.
+ *
+ * The player's own average of what they ended up playing in that holder's
+ * rooms — the reading after the note, because the note is the only thing that
+ * ever moved them toward the truth. It is an estimate and it is theirs: the
+ * engine never hands over `theHouse`, and a holder who went their own way on a
+ * shade three times in ten is a holder whose average lies.
+ *
+ * `way === 'room'` is the entire durable price of taping. A tape is a day and
+ * costs nothing and a room is three days and a hundred and twenty euros, and
+ * until now the only difference was one note on one part, spent and gone.
+ * Filtered this way, a tape adds nothing to what the player knows about
+ * anybody, forever — so the three days buy a note today and a share of every
+ * room these people ever hold.
+ *
+ * The filter is the way in and not the note, and those are different filters.
+ * A note is only ever written inside `if (way?.notes)`, so filtering on the
+ * note would keep the same tapes out and would also throw away the one reading
+ * worth most: the room that gave no note at all, which happens when the blind
+ * opening landed on all three shades exactly. A room that had nothing to say
+ * to you is the strongest thing your record can hold about these people, and
+ * an earlier draft of this line discarded it while looking like it was pricing
+ * the tape. Written this way, deleting `way === 'room'` puts every tape back in
+ * and a test goes red for it.
+ */
+export function whatTheyKeepAskingFor(sim: Simulation, holder: string): TheirTaste {
+  const rooms = readFor(sim, holder)
+    .filter((one) => one.way === 'room' && one.played !== undefined);
+  if (rooms.length === 0) return { reading: { ...AS_WRITTEN }, rooms: 0 };
+  const out = { ...AS_WRITTEN };
+  for (const shade of SHADES) {
+    let total = 0;
+    for (const one of rooms) total += readingOf(one.played)[shade.id];
+    out[shade.id] = total / rooms.length;
+  }
+  return { reading: out, rooms: rooms.length };
 }
 
 /** A reading, cleaned up into the range anybody could actually play. */
@@ -511,7 +603,10 @@ export function whatIsGoing(sim: Simulation): Audition[] {
       from: booking.from,
       to: booking.to,
       closesAt: closes,
-      wants: whatTheyWant(() => rng.next()),
+      // Mostly the house's taste and sometimes this room's own idea. The house
+      // draws on its own stream, so what these people like does not move
+      // because a different production happened to ask first.
+      wants: whatTheyWant(() => rng.next(), theHouse(sim, booking.holder)),
       state: 'open',
     };
     sim.universe.auditions[audition.id] = audition;
@@ -560,10 +655,15 @@ export interface GoingUp {
 /**
  * Goes up for a part, one way or the other.
  *
- * The reading is chosen here and it is chosen blind, which is the whole of the
- * first decision. Nobody has said anything about what this part is for and
- * nothing on any screen will, so what the player sends is a guess — perfectly
- * executed, because they are perfect, and a guess all the same.
+ * The reading is chosen here and it is chosen against a record rather than
+ * blind, which is the whole of the first decision. Nobody says anything about
+ * what this part in particular is for, and nothing on any screen will. What a
+ * screen can show is `whatTheyKeepAskingFor` — the player's own average of
+ * what they ended up playing in this holder's rooms — and `HOUSE_HOLDS` of
+ * each shade is the same across everything one holder casts, so that average
+ * is worth something and is never the answer. What the player sends is still a
+ * guess, perfectly executed, and now an informed one in proportion to how many
+ * times they have paid three days to be in the room.
  */
 export function goUpFor(sim: Simulation, going: GoingUp): { ok: true; at: Instant } | { ok: false; error: string } {
   const audition = sim.universe.auditions[going.auditionId];
@@ -904,7 +1004,7 @@ export function registerAudition(sim: Simulation): void {
     settle(sim, audition, way?.notes ?? false);
   });
 
-  /** Go up for a part, one way or the other, with a reading chosen blind. */
+  /** Go up for a part, one way or the other, with a reading chosen off a record. */
   sim.onCommand<GoingUp, { ok: boolean; error?: string; at?: number }>(
     'life.go_up', (payload, { sim: s }) => {
       const done = goUpFor(s, payload);

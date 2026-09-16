@@ -5,10 +5,18 @@
  * thing that is the player's, and it asks one question: what is anybody willing
  * to see you for, and what are you going to play when you get there?
  *
- * The page gives away nothing about what a room wants, because nothing in the
- * world knows it except the room. There are three sliders and no guidance under
- * them, which is not an omission — it is the whole of the first decision. The
- * only information anybody ever volunteers is one note, on one shade, once.
+ * The page gives away nothing the world has not already told the player. What
+ * a room wants is the room's, and nobody volunteers any of it except as one
+ * note, on one shade, once. What the page does show is the player's own
+ * arithmetic on their own past: the average of what they ended up playing in
+ * this holder's rooms, which is the only handle anybody has on what these
+ * people like.
+ *
+ * Showing it is not a convenience. A taste nobody can see is a taste nobody
+ * can play toward, and the whole of `HOUSE_HOLDS` would be a hidden correlation
+ * the player felt as noise. So the sliders open on that average rather than on
+ * dead center, and the sentence under them says how many rooms it is built
+ * from and that a tape never adds to it.
  */
 
 import { useState } from 'react';
@@ -22,7 +30,8 @@ import {
   FURTHEST, HOW_FAR, SHADES, WAYS, shadeById, whyById,
 } from '@/engine/content/audition';
 import {
-  alreadyUpFor, freeAcross, goingNow, heardItRight, readingOf, remembersYou, whereYourWorkStands,
+  alreadyUpFor, freeAcross, goingNow, heardItRight, readingOf, remembersYou,
+  whatTheyKeepAskingFor, whereYourWorkStands,
 } from '@/engine/world/audition';
 import type { Audition } from '@/engine/domain/model';
 
@@ -111,7 +120,7 @@ export function AuditionsWorkspace() {
         </Panel>
       )}
 
-      {going && <GoUpForm auditionId={going} onClose={() => setGoing(undefined)} />}
+      {going && <GoUpForm key={going} auditionId={going} onClose={() => setGoing(undefined)} />}
     </div>
   );
 }
@@ -121,13 +130,25 @@ export function AuditionsWorkspace() {
  *
  * Three sliders with no right answer shown anywhere, and a choice between a day
  * and three. The three days are not a better performance — the player cannot
- * give a worse one — they are the only way anybody will tell you anything.
+ * give a worse one — they are the only way anybody will tell you anything, and
+ * now also the only way anything is ever added to what the player knows about
+ * these people.
+ *
+ * The sliders open where the player's own record says this holder lives rather
+ * than at dead center. Dead center was the right answer against a room drawn
+ * from nothing — rank 1 of all 343 openings in seven of the nine cells a player
+ * can be in — so opening there was a decision with one answer, taken before the
+ * game started. Opening on the holder's own average makes the first move a
+ * reading of a record instead, and the record is thin until somebody has been
+ * in enough rooms to have one.
  */
 function GoUpForm({ auditionId, onClose }: { auditionId: string; onClose: () => void }) {
   const { run, sim } = useGame();
   const audition = useWorld((s) => s.universe.auditions[auditionId]);
+  const holder = audition?.holder ?? '';
+  const taste = useWorld((s) => whatTheyKeepAskingFor(s, holder));
   const [played, setPlayed] = useState<Record<string, number>>(
-    Object.fromEntries(SHADES.map((s) => [s.id, 0])),
+    Object.fromEntries(SHADES.map((s) => [s.id, Math.round(taste.reading[s.id])])),
   );
   const [error, setError] = useState<string | undefined>();
   if (!audition) return null;
@@ -152,9 +173,19 @@ function GoUpForm({ auditionId, onClose }: { auditionId: string; onClose: () => 
         <Stat label="It Holds You" value={`${formatDate(audition.from, sim.homeZone)} on`} />
       </div>
       <p className="small">
-        Nobody has told you what this is for and nobody is going to until you are standing in
+        Nobody has told you what this part is for and nobody is going to until you are standing in
         front of them. Whatever you choose you will do exactly; the only question is whether it
         was the right idea.
+      </p>
+      <p className="muted small">
+        {taste.rooms === 0
+          ? `You have never been in a room with ${audition.holder}, so the sliders start where `
+            + 'anybody would start. What you end up playing in their rooms is what you will have '
+            + 'to go on next time. A tape never adds to it — nobody gives a note to a file.'
+          : `The sliders start where you have ended up in ${taste.rooms} `
+            + `${taste.rooms === 1 ? 'room' : 'rooms'} with ${audition.holder}. That record is all `
+            + 'anybody has on what these people like. Most of what they cast is of a piece and some '
+            + 'of it isn’t. A tape never adds to this — nobody gives a note to a file.'}
       </p>
       {SHADES.map((shade) => (
         <div className="field" key={shade.id}>

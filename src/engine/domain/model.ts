@@ -845,9 +845,16 @@ export interface Audition {
   /**
    * What the room wants, by shade id.
    *
-   * Never shown and never derivable. The one note a room gives leaks one shade
-   * of it, once, which is the whole of what anybody is ever told. A want the
-   * player could read off a screen would make the reading a lookup.
+   * Never shown, and derivable only the way a person derives it: from having
+   * been in enough of these people's rooms. Most of each shade is the holder's
+   * own taste, held across everything they cast — `HOUSE_HOLDS` of it — and the
+   * rest is this room's own idea, so the average of what somebody has played
+   * for a holder converges on what that holder likes and never reaches it. The
+   * one note a room gives leaks one shade of this room in particular, once.
+   *
+   * A want the player could read off a screen would make the reading a lookup,
+   * which is why `whatTheyKeepAskingFor` hands back the player's own record
+   * rather than `theHouse`, and why the engine never writes the house down.
    */
   wants: Record<string, number>;
   /** What the player played, once they have played anything. */

@@ -25,11 +25,18 @@
  * Four things, and every one of them is a decision a person at the top of the
  * profession still gets wrong every week of their life:
  *
- * - **What to play**, before anybody has told you anything. A perfect reading
- *   of the wrong idea is a perfect reading of the wrong idea.
+ * - **What to play**, before anybody has told you anything about this part. A
+ *   perfect reading of the wrong idea is a perfect reading of the wrong idea.
+ *   What there is to go on is the record: `HOUSE_HOLDS` of each shade is the
+ *   same across everything one holder casts, so an average of what you played
+ *   in their rooms is a real handle on the next one.
  * - **Whether to go in or send a file.** A tape costs a day and the room costs
  *   three, and the difference is not quality — the player's tape is flawless —
- *   it is that nobody gives a note to a file. Taping is information forgone.
+ *   it is that nobody gives a note to a file. Taping is information forgone,
+ *   and that sentence was decoration until the house existed: a note about a
+ *   want drawn from nothing was worth one reading and nothing afterwards.
+ *   Now a room is the only thing that adds to what you know about a holder, and
+ *   a career of tapes learns nothing about anybody, ever.
  * - **How far to take the note.** Half-taking reads as not listening and
  *   over-taking spends the very thing that made them ask you again.
  * A fourth — when to stop talking, and whether to ask to go again — is the
@@ -114,6 +121,46 @@ export type Reading = Record<ShadeId, number>;
 /** The reading nobody could object to and nobody remembers. */
 export const AS_WRITTEN: Reading = { warmth: 0, size: 0, pace: 0 };
 
+/**
+ * The share of each shade a holder keeps across everything they cast.
+ *
+ * The first decision in this room used to have one right answer known before
+ * the game started. Every want was drawn from nothing, independently, every
+ * time — so the best opening against an unknown room was the opening that is
+ * closest to every possible want at once, which is dead center, which is where
+ * the sliders already sit. Enumerated over all 343 openings: dead center is
+ * rank 1 of 343 in seven of the nine readiness-and-answer cells a player can
+ * be in, and the joint optimum across all nine. A decision whose answer is the
+ * default is a decision nobody takes.
+ *
+ * So a holder has a taste. Seven times in ten, on each shade separately, what
+ * one of their rooms wants is what all of their rooms want; the other three
+ * times that room goes its own way. Per shade rather than per room, so a
+ * holder is recognizable without being a lookup — read for them nine times and
+ * you know roughly what they like, and the tenth room can still surprise you
+ * on one axis.
+ *
+ * The number is not arbitrary in its consequences and both ends are wrong. At
+ * nought this file is exactly the shipped game, bit for bit, and the opening is
+ * a constant again. At one a holder is a fixed answer, three readings solve
+ * them forever, and the room stops being a room.
+ *
+ * Seven tenths is where a career solves most of a holder and never all of one.
+ * Measured on twelve fifteen-year played careers, the distance between a
+ * player's own average and the holder's taste runs 1.500 with nothing behind
+ * them, 1.339 after one room, 1.222 after three, 1.077 from four to eight and
+ * 0.742 from nine on. It goes on creeping down and never arrives: 0.696 between
+ * twenty rooms and forty, and 0.633 past forty. What the player is averaging is
+ * what they ended up playing rather than what was wanted, and three rooms in ten
+ * went their own way, so the record can never quite close on the taste that made
+ * it. The floor is the thing being bought: a holder worth learning, who cannot
+ * be finished.
+ *
+ * SLATE's own. What it buys is measured in `tests/audition.test.ts` and on
+ * played careers rather than asserted here.
+ */
+export const HOUSE_HOLDS = 0.7;
+
 // ---------------------------------------------------------------------------
 // How you go up for it
 // ---------------------------------------------------------------------------
@@ -138,6 +185,16 @@ export interface Way {
    * everything the player learns about what this part wants, they learn by
    * being in a room. Taping is not a worse performance. It is a performance
    * nobody tells you anything about.
+   *
+   * That cost used to last one reading. `whatTheyKeepAskingFor` filters on
+   * `way === 'room'`, so it now lasts the save: a taped reading adds nothing to
+   * what the player knows about that holder, forever, however many of them they
+   * send. Measured on twelve fifteen-year careers, the two taped policies come
+   * out bit-identical — a player taping off their own history plays exactly what
+   * a player taping dead center plays, 709 parts out of the same 1,130
+   * readings, because there is no history to read. Three days and a hundred and
+   * twenty euros buy a note today and a share of every room these people ever
+   * hold.
    */
   notes: boolean;
 }

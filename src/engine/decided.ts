@@ -35,8 +35,8 @@ import {
   believedAt, decideOffer, reachOfBand, readOn, sheetFor, sparkBetween, sparkReads, type Offer,
 } from './world/casting';
 import { AXES, BOOKABLE, TAPE_LEANS, THE_GIVING, passById, type AxisId } from './content/casting';
-import { TOO_FAR, whyById } from './content/audition';
-import { decideAudition, remembersYou } from './world/audition';
+import { FURTHEST, HOUSE_HOLDS, SHADES, TOO_FAR, whyById, type Reading } from './content/audition';
+import { decideAudition, remembersYou, whatTheyWant } from './world/audition';
 import type { Looked } from './domain/company';
 import { ageOn } from './world/family';
 import { sheetOf, type AttributeSheet } from './domain/attributes';
@@ -626,6 +626,77 @@ defineDecider<Asked, string>({
     if (chance < 0.45) return 'they might think of them';
     if (chance < 0.75) return 'they would call them in';
     return 'they ask for them by name';
+  },
+});
+
+interface WhatARoomWants {
+  /** What these people like, across everything they ever cast. */
+  house: Reading;
+  /** The draw that decides whether this room keeps it. */
+  holds: number;
+  /** And what this room would have wanted if it belonged to nobody. */
+  own: number;
+}
+
+/**
+ * One room's want, built the way `whatIsGoing` builds it.
+ *
+ * `whatTheyWant` draws twice per shade — what the room would want alone, then
+ * whether the house holds — so the scripted stream alternates between the two.
+ * The per-shade shift on the first is there so the three shades are not one
+ * shade written out three times.
+ */
+const roomWants = ({ house, holds, own }: WhatARoomWants): Reading => {
+  let at = 0;
+  return whatTheyWant((): number => {
+    const draw = at;
+    at += 1;
+    return draw % 2 === 0 ? (own + Math.floor(draw / 2) * 0.29) % 1 : holds;
+  }, house);
+};
+
+defineDecider<WhatARoomWants, string>({
+  id: 'audition.house',
+  decides: 'What one room wants, and how much of that is the taste of the people casting it.',
+  drawnIn: 'src/engine/world/audition.ts',
+  reads: {
+    // What these people like. It is the same on every shade a room keeps, which
+    // is what makes a holder learnable at all — read for them enough times and
+    // the average of what you played is most of the way to this.
+    taste: (w, t) => ({
+      ...w,
+      house: {
+        warmth: Math.round((t * 2 - 1) * FURTHEST),
+        size: Math.round((1 - t * 2) * FURTHEST),
+        pace: Math.round((t * 2 - 1) * FURTHEST),
+      },
+    }),
+    // Whether this room keeps it. Below `HOUSE_HOLDS` the want is the house's
+    // and above it the room goes its own way, which is the three rooms in ten
+    // that stop a holder from being a lookup.
+    holds: (w, t) => ({ ...w, holds: t }),
+    // And what the room wants when it does go its own way. Inert while the
+    // house holds, which is the point of it being a separate input: sweeping
+    // this across a sample that keeps the house proves nothing, and the sweep
+    // runs six samples for exactly that reason.
+    own: (w, t) => ({ ...w, own: t }),
+  },
+  // Even samples keep the house and odd ones do not, whatever `HOUSE_HOLDS` is
+  // set to — so no sweep is measuring only one side of the branch. At nought
+  // the house does not exist and `taste` is genuinely inert, which this test
+  // would then say out loud rather than pass over.
+  sample: (seed) => ({
+    house: {
+      warmth: (seed % 7) - 3,
+      size: ((seed * 2) % 7) - 3,
+      pace: ((seed * 3) % 7) - 3,
+    },
+    holds: seed % 2 === 0 ? HOUSE_HOLDS * 0.4 : Math.min(0.999, HOUSE_HOLDS + (1 - HOUSE_HOLDS) * 0.6),
+    own: ((seed * 5) % 7) / 7,
+  }),
+  decide: (input) => {
+    const want = roomWants(input);
+    return SHADES.map((shade) => `${shade.label} ${want[shade.id]}`).join(', ');
   },
 });
 

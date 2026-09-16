@@ -41,9 +41,10 @@ for (const decider of ALL) {
         const sweep = sweepOne(decider, reads);
         expect(
           sweep.inert,
-          `${decider.id} says it reads '${reads}', but sweeping it end to end across six worlds `
-          + `never once changed the outcome. Either it does not read it, or the sweep is too narrow `
-          + `to reach anything. Both are worth knowing.`,
+          `${decider.id} says it reads '${reads}', but sweeping it end to end inside each of `
+          + `${sweep.samples} worlds, with everything else held still, never once changed the `
+          + `outcome. Either it does not read it, or the sweep is too narrow to reach anything. `
+          + `Both are worth knowing.`,
         ).toBe(false);
       });
     }

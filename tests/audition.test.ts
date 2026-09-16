@@ -31,12 +31,13 @@ import {
   freeAcross, goingNow, heardItRight, howFarOff, readingOf, remembersYou, shootingHere, theNote,
   whatIsGoing, theyWantYou, whatTheyWant, whereYourWorkStands, WORKING_KIND, believedOf,
   sayWhy,
-  sizeCasting, readFor, ignoredBy,
+  sizeCasting, readFor, ignoredBy, theHouse, whatTheyKeepAskingFor,
 } from '@/engine/world/audition';
 import { heldUntil, whatHasThem } from '@/engine/world/diary';
 import { applySleep, readiness } from '@/engine/systems/life';
 import {
-  AS_WRITTEN, A_WORKING_WEEK, CLOSE_ENOUGH, COLD, FURTHEST, HOW_FAR, KNOWN_OF, MISREAD_THE_ROOM,
+  AS_WRITTEN, A_WORKING_WEEK, CLOSE_ENOUGH, COLD, FURTHEST, HOUSE_HOLDS, HOW_FAR, KNOWN_OF,
+  MISREAD_THE_ROOM,
   HELD_AGAINST_YOU_YEARS, IGNORED, REMEMBERED, SHADES, TOO_FAR, WAYS, WHAT_THEY_OFFER,
   EXPECTED_OF_ANYBODY,
   type Reading,
@@ -718,6 +719,225 @@ describe('what the room wants, and how far off safe is', () => {
   });
 });
 
+describe('a room belongs to the people casting it', () => {
+  /** A want built from a scripted stream: the fresh draw, then the keep draw. */
+  const wantFrom = (fresh: number[], keep: number[], house?: Reading): Record<string, number> => {
+    let at = 0;
+    return whatTheyWant(() => {
+      const draw = at;
+      at += 1;
+      return draw % 2 === 0 ? fresh[draw / 2]! : keep[(draw - 1) / 2]!;
+    }, house);
+  };
+
+  it('takes two draws per shade with a house and one without, which is what lets the dial go back', () => {
+    // The whole of why `HOUSE_HOLDS > 0 &&` is in the expression. A second draw
+    // taken and thrown away is still a draw: every stream downstream of it
+    // shifts, and a save that should be identical is a different save.
+    // Measured on four ten-year played careers, digest for digest: with the
+    // guard, HOUSE_HOLDS at nought reproduces the world before the house
+    // existed exactly; without it, it does not.
+    let bare = 0;
+    whatTheyWant(() => { bare += 1; return 0.5; });
+    expect(bare, 'no house should cost one draw a shade').toBe(SHADES.length);
+
+    let withHouse = 0;
+    whatTheyWant(() => { withHouse += 1; return 0.5; }, AS_WRITTEN);
+    expect(withHouse, 'a house should cost two draws a shade').toBe(SHADES.length * 2);
+  });
+
+  it('keeps the house below the threshold and goes its own way above it', () => {
+    const house: Reading = { warmth: 3, size: -2, pace: 1 };
+    // Every keep draw under HOUSE_HOLDS, so every shade is the house's, and the
+    // fresh draws that would have said otherwise are ignored.
+    const kept = wantFrom([0, 0, 0], [0, 0, 0], house);
+    expect(kept).toEqual(house);
+    // Every keep draw at or above it, so the room wants what it drew. A fresh
+    // draw of 1 is the top of the range.
+    const own = wantFrom([1, 1, 1], [0.999, 0.999, 0.999], house);
+    expect(own).toEqual({ warmth: FURTHEST, size: FURTHEST, pace: FURTHEST });
+    // And one of each, which is the ordinary case: mostly theirs, sometimes not.
+    const mixed = wantFrom([1, 1, 1], [0, 0.999, 0], house);
+    expect(mixed).toEqual({ warmth: 3, size: FURTHEST, pace: 1 });
+  });
+
+  it('gives each holder a taste of their own, and each shade its own draw', () => {
+    const sim = world('house-taste');
+    const one = theHouse(sim, 'RÚV, a limited series');
+    // Stable for the life of the save, because it is the same stream and the
+    // same key. A taste that moved between two calls would be no taste at all.
+    expect(theHouse(sim, 'RÚV, a limited series')).toEqual(one);
+    // Different people like different things.
+    const other = theHouse(sim, 'an American studio, a feature');
+    expect(other).not.toEqual(one);
+    // And the three shades are drawn separately. Building the generator inside
+    // the callback instead of hoisting it hands the same first draw to all
+    // three, and every holder in the world wants one number on every axis.
+    const flat = [...new Set(SHADES.map((shade) => one[shade.id]))].length === 1
+      && [...new Set(SHADES.map((shade) => other[shade.id]))].length === 1;
+    expect(flat, 'both holders came out flat across all three shades').toBe(false);
+  });
+
+  it('holds about seven shades in ten across everything one holder casts', () => {
+    // The constant, measured rather than asserted. Not the exact share on any
+    // one holder — this is a draw — but across two hundred rooms it is close.
+    const sim = world('house-share');
+    const holder = 'a Nordic broadcaster, a series';
+    const house = theHouse(sim, holder);
+    const rng = makeRng('house-share-stream');
+    let held = 0;
+    let of = 0;
+    for (let i = 0; i < 2_000; i += 1) {
+      const want = whatTheyWant(() => rng.next(), house);
+      for (const shade of SHADES) {
+        of += 1;
+        if (want[shade.id] === house[shade.id]) held += 1;
+      }
+    }
+    // A shade that went its own way can still land on the house by chance, so
+    // the share seen is above HOUSE_HOLDS by about the chance of that.
+    const byChance = (1 - HOUSE_HOLDS) * (Math.abs(house.warmth) === FURTHEST ? 1 / 12 : 1 / 6);
+    expect(held / of).toBeGreaterThan(HOUSE_HOLDS);
+    expect(held / of).toBeLessThan(HOUSE_HOLDS + 3 * byChance);
+  });
+});
+
+describe('what the player can work out about a holder', () => {
+  /** A finished reading on the record, one way or the other. */
+  const readingOnTheRecord = (
+    sim: Simulation, holder: string, way: string, played: Reading, noted: boolean,
+  ): void => {
+    const id = sim.nextId('audition');
+    sim.universe.auditions[id] = {
+      id, saveId: sim.universe.meta.id, bookingId: `b-${id}`, holder, size: 'day', feeCents: 1_00,
+      from: sim.now, to: sim.now, closesAt: sim.now, wants: {}, state: 'over',
+      why: 'went-another-way', way, played,
+      ...(noted ? { note: { shade: 'warmth', toward: 1 } } : {}),
+    };
+  };
+
+  it('averages what they played in the rooms, and counts them', () => {
+    const sim = world('keep-asking');
+    expect(whatTheyKeepAskingFor(sim, 'them')).toEqual({ reading: AS_WRITTEN, rooms: 0 });
+    readingOnTheRecord(sim, 'them', 'room', { warmth: 3, size: 0, pace: -2 }, true);
+    readingOnTheRecord(sim, 'them', 'room', { warmth: 2, size: 1, pace: -1 }, true);
+    const got = whatTheyKeepAskingFor(sim, 'them');
+    expect(got.rooms).toBe(2);
+    expect(got.reading.warmth).toBeCloseTo(2.5, 6);
+    expect(got.reading.size).toBeCloseTo(0.5, 6);
+    expect(got.reading.pace).toBeCloseTo(-1.5, 6);
+    // And it is theirs alone. Reading for one office teaches you nothing about
+    // another, which is the same rule `remembersYou` runs on.
+    expect(whatTheyKeepAskingFor(sim, 'somebody else').rooms).toBe(0);
+  });
+
+  it('never adds a tape to it, which is the whole durable price of taping', () => {
+    // `way === 'room'` in one filter. Before the house existed, the cost of a
+    // tape was one note on one part, spent the moment the part was cast; now it
+    // is that a taped career learns nothing about anybody, ever. Measured on
+    // twelve fifteen-year careers, a player taping off their own history plays
+    // exactly what a player taping dead center plays — the same 709 parts of
+    // the same 1,130 readings, identically.
+    const sim = world('taping-teaches-nothing');
+    for (let i = 0; i < 20; i += 1) {
+      // No note on any of them, because nobody gives a note to a file — that is
+      // what the engine writes and it is what this has to be to prove anything.
+      readingOnTheRecord(sim, 'them', 'tape', { warmth: 3, size: 3, pace: 3 }, false);
+    }
+    // Twenty tapes, each of them a reading the player actually gave, and the
+    // record is still empty. Taking `way === 'room'` out of the filter puts all
+    // twenty in and moves the estimate to the far corner.
+    expect(whatTheyKeepAskingFor(sim, 'them')).toEqual({ reading: AS_WRITTEN, rooms: 0 });
+    // And the room that gave no note counts, because a room with nothing to say
+    // to you is the one that landed on all three shades at once. Filtering on
+    // the note instead of the way in would keep exactly the same tapes out and
+    // throw this away with them.
+    readingOnTheRecord(sim, 'them', 'room', { warmth: 2, size: 2, pace: 2 }, false);
+    expect(whatTheyKeepAskingFor(sim, 'them')).toEqual({
+      reading: { warmth: 2, size: 2, pace: 2 }, rooms: 1,
+    });
+  });
+
+  it('closes on the house with every room and never reaches it', () => {
+    // The measurement the mechanic exists for, on played careers because an
+    // idle save never goes up for anything. Over twelve fifteen-year careers
+    // the distance runs 1.500 cold, 1.339 after one room, 1.222 after three,
+    // 1.077 from four to eight and 0.742 from nine on, and it never arrives:
+    // 0.633 past forty rooms, because what is being averaged is what the player
+    // ended up playing and three rooms in ten went their own way.
+    const far: { rooms: number; off: number; cold: boolean }[] = [];
+    for (const seed of ['solving-0', 'solving-1', 'solving-2']) {
+      const sim = world(seed);
+      playACareer(sim, 12, {
+        way: 'room',
+        openingFor: (at, one) => {
+          const taste = whatTheyKeepAskingFor(at, one.holder);
+          far.push({
+            rooms: taste.rooms,
+            off: howFarOff(readingOf(taste.reading), theHouse(at, one.holder)),
+            cold: SHADES.every((shade) => taste.reading[shade.id] === AS_WRITTEN[shade.id]),
+          });
+          return readingOf(taste.reading);
+        },
+      });
+    }
+    // With nothing behind them the estimate is dead center exactly, so the
+    // stranger's 1.500 is this bucket by construction — the mean distance from
+    // dead center to a want is pinned on the draw itself, above.
+    const strangers = far.filter((r) => r.rooms === 0);
+    expect(strangers.length, 'nobody was ever asked cold').toBeGreaterThan(5);
+    expect(strangers.every((r) => r.cold)).toBe(true);
+
+    const mean = (of: (r: { rooms: number }) => boolean): number => {
+      const got = far.filter(of);
+      expect(got.length, 'nothing in this bucket, so it proves nothing').toBeGreaterThan(20);
+      return got.reduce((t, r) => t + r.off, 0) / got.length;
+    };
+    const early = mean((r) => r.rooms >= 1 && r.rooms <= 3);
+    const late = mean((r) => r.rooms >= 9);
+    expect(late).toBeLessThan(early);
+    expect(early).toBeLessThan(1.5);
+    // And never nearly solved, which is the failure mode at the top of the
+    // dial rather than a figure of speech. Measured on these same three seeds:
+    // at HOUSE_HOLDS = 1 the distance from nine rooms on is 0.462, and at 0.7
+    // it is 1.046. So this threshold is one an input can actually trip, and
+    // setting the constant to one trips it.
+    expect(late).toBeGreaterThan(0.75);
+  });
+
+  it('makes reading your own record the best play, where it used to be the worst', () => {
+    // The falsifiability test for the whole item, run as the game is played.
+    // Before the house, every want was drawn from nothing, so an average of
+    // what you happened to play was noise and following it cost you. Measured
+    // over twelve fifteen-year careers with HOUSE_HOLDS at nought, which is the
+    // shipped game before this landed, bit for bit: 61.7% cast against 64.3%
+    // for opening dead center every time, worse on nine of twelve seeds, level
+    // on two and better on one. At 0.7 the same measurement is 70.1% against
+    // 66.4%, better on eleven of twelve and worse on none. Three seeds here
+    // rather than twelve, because this runs in a suite.
+    const rate = (memory: boolean): { cast: number; read: number } => {
+      let cast = 0;
+      let read = 0;
+      for (const seed of ['policy-0', 'policy-1', 'policy-2']) {
+        const sim = world(seed);
+        const out = playACareer(sim, 12, {
+          way: 'room',
+          ...(memory
+            ? { openingFor: (at, one) => readingOf(whatTheyKeepAskingFor(at, one.holder).reading) }
+            : {}),
+        });
+        cast += out.cast;
+        read += out.read;
+      }
+      return { cast, read };
+    };
+    const blind = rate(false);
+    const remembering = rate(true);
+    expect(blind.read, 'nobody read for anything, so this proves nothing').toBeGreaterThan(100);
+    expect(remembering.cast / remembering.read).toBeGreaterThan(blind.cast / blind.read);
+  });
+});
+
 describe('the note is on the thing that is most wrong', () => {
   it('names the shade the reading was farthest off, and never one already right', () => {
     const wants = { warmth: 3, size: 0, pace: -3 };
@@ -1302,8 +1522,19 @@ describe('what the room actually pays out', () => {
    *
    * Exact rather than sampled: every one of the 343 wants at its true weight,
    * both halves of the misheard draw, and P(cast) bisected out of the real
-   * `decideAudition` rather than reimplemented. Nothing here is a model of the
-   * engine; it is the engine, enumerated.
+   * `decideAudition` rather than reimplemented. No line here is a model of the
+   * engine; it is the engine against a stranger, enumerated.
+   *
+   * Against a stranger, and that clause is `HOUSE_HOLDS`. The 343 wants at
+   * these weights are the marginal distribution of a room the player knows
+   * nothing about, which is what the first room a holder ever offers is and
+   * what every room was before the house existed. Once somebody has been read
+   * for a holder the wants are no longer independent of what that holder
+   * wanted last time, so these figures are the floor a career starts on rather
+   * than the rate it runs at. What the rate becomes is measured on played
+   * careers: over twelve fifteen-year careers the best available policy was
+   * 64.3% cast before the house existed and is 70.1% after, and which policy
+   * that is changed.
    */
   const weightOf = (value: number): number => (Math.abs(value) === FURTHEST ? 1 / 12 : 1 / 6);
   const EVERY = [-3, -2, -1, 0, 1, 2, 3];
