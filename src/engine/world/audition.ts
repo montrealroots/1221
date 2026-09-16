@@ -747,7 +747,16 @@ export function sayWhy(audition: Audition): string {
     return `${why?.said ?? 'They want you.'} ${size?.label ?? 'The part'}, `
       + `${Math.round(audition.feeCents / 100).toLocaleString('en-US')} euros.`;
   }
-  return why?.said ?? 'Nobody wrote back.';
+  // And whether the note went in backwards, which is the one thing a no can
+  // tell you that you could not have known in the room. `Audition.heard` has
+  // been written at every reading since the note existed and read by nothing,
+  // while its own docstring said the whole point of keeping it was that "a no
+  // you can open and find out you misheard is a different no from a no you
+  // played right". It is that no now.
+  const missed = audition.heard === false
+    ? ' You took the note the wrong way — it was a bad day to be told something once.'
+    : '';
+  return `${why?.said ?? 'Nobody wrote back.'}${missed}`;
 }
 
 /**

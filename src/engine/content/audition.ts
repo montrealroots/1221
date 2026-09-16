@@ -167,7 +167,7 @@ export const wayById = (id: string): Way | undefined => WAYS.find((w) => w.id ==
 // The redirect
 // ---------------------------------------------------------------------------
 
-export type HowFarId = 'none' | 'touch' | 'good' | 'far';
+export type HowFarId = 'touch' | 'good' | 'far';
 
 export interface HowFar {
   id: HowFarId;
@@ -203,16 +203,34 @@ export interface HowFar {
  *
  * Measured, so the claim is falsifiable: under the old rule one button was
  * among the best in 100.0% of states. Under this one the favorite is among
- * the best in about 80%, three different steps are uniquely best across the
- * situations a player can read, and which one is best moves with readiness.
- * That is better and it is not perfect — a single scalar guess against a known
- * distribution will always have a favorite, and `docs/UNBITTEN.md` keeps the
- * figure so nobody has to take this comment's word for it.
+ * the best in about 80% of the states a player can distinguish — their own
+ * opening and the note they were given — three different steps are uniquely
+ * best across those situations, and which one is best moves with readiness.
+ *
+ * ## Three buttons, because the fourth could never be pressed
+ *
+ * There was a fourth, Leave It, worth nought steps, and it is gone. Enumerated
+ * over 2,401 cells — every one of the 343 openings at seven readiness levels
+ * spanning the entire range `heardItRight` can return — it was the best answer
+ * in nought of them, and A Touch beat it everywhere by at least 0.0187. It was
+ * also bit-identical to never going up at all: the same reading, the same
+ * distance, in every one of the want-and-roll cells checked. So it was a button
+ * that spent three days, a hundred and twenty euros and an afternoon the clock
+ * stops for, to hand back the free tape's number.
+ *
+ * Nothing is lost by its going, because the thing it expressed is still
+ * expressible: a player who does not want to change what they played can
+ * decline to answer, and `shutWhatHasClosed` settles that on the first day of
+ * the shoot, on the reading as played. The button duplicated an act the game
+ * already models by inaction, and duplicated it at a price.
+ *
+ * That leaves three, and no state of the world in which one of them is
+ * dominated. `docs/UNBITTEN.md` keeps the figures so nobody has to take this
+ * comment's word for any of it.
  */
 export const HOW_FAR: readonly HowFar[] = [
-  { id: 'none', label: 'Leave It', what: 'You heard it and you do it again as it was. Sometimes that is the answer. Usually it is deafness.', steps: 0 },
   { id: 'touch', label: 'A Touch', what: 'The smallest move that counts as having moved. Safe, and it can read as not having listened.', steps: 1 },
-  { id: 'good', label: 'A Good Deal', what: 'A real change, and not the whole of what you have. Most notes want about this.', steps: 2 },
+  { id: 'good', label: 'A Good Deal', what: 'A real change, and not the whole of what you have. About half of all notes want exactly this, and two in five want more.', steps: 2 },
   { id: 'far', label: 'As Far As It Goes', what: 'Everything you have in that direction. It can be the thing that wins the room, and if you have misread the room it’s the thing that loses it.', steps: 3 },
 ];
 
@@ -248,10 +266,25 @@ export const TOO_FAR = 3.4;
 /**
  * What a reading has to be within to be the one they take.
  *
- * Deliberately tight. Most readings end in no, which is the research's own
- * first sentence about the pass, and a room that said yes to anything close
- * would be a room nobody had to think about. One note taken the whole way pulls
- * an average guess inside it, which is what makes going in worth three days.
+ * This said "most readings end in no" and it is the opposite of what the file
+ * does. Measured exactly, over all 343 wants at their true weights: a blind
+ * dead-center reading answered *a good deal* is cast 70.6% of the time at the
+ * readiness a played save sits at, and 77.6% rested. Most readings end in yes.
+ *
+ * Three claims stood here together and only two of them can: that most
+ * readings end in no, that one note pulls an average guess inside this
+ * threshold, and that inside it is `AS_GOOD_AS_IT_GETS`. The second is true —
+ * one note taken *a good deal* brings the expected distance from 1.500 to
+ * 0.920, well inside — and the third is 0.82 by declaration. So the first was
+ * the one that had to go, and what it was really describing is a room nobody
+ * built: a threshold this tight only bites if landing inside it is not nearly
+ * a yes.
+ *
+ * The figure is not defended here as right, only as measured. It is pinned in
+ * `tests/audition.test.ts` to six decimals, which is what this comment did not
+ * have: the rate could move forty-eight points and 1,204 tests would pass.
+ * Whether 70.6% is the rate the game wants is a question for whoever is
+ * holding it, and the test makes changing it a decision rather than a drift.
  */
 export const CLOSE_ENOUGH = 1.2;
 

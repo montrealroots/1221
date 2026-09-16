@@ -29,6 +29,7 @@ import {
   AS_GOOD_AS_IT_GETS, ASKING_AT, SHUTS_AT, afterTheNote, alreadyUpFor, decideAudition, feeFor,
   freeAcross, goingNow, heardItRight, howFarOff, readingOf, remembersYou, shootingHere, theNote,
   whatIsGoing, theyWantYou, whatTheyWant, whereYourWorkStands, WORKING_KIND, believedOf,
+  sayWhy,
   sizeCasting, readFor, ignoredBy,
 } from '@/engine/world/audition';
 import { whatHasThem } from '@/engine/world/diary';
@@ -107,7 +108,7 @@ function everybodyAt(sim: Simulation, base: number): void {
 
 /** Runs one whole audition, and reports every outcome it produced. */
 function playItOut(
-  sim: Simulation, audition: Audition, played: Record<string, number>, way: string, howFar = 'full',
+  sim: Simulation, audition: Audition, played: Record<string, number>, way: string, howFar = 'good',
 ): { why?: string; note?: string; toward?: number; off: number; fame: number; money: number } {
   const me = sim.universe.people[sim.universe.playerId]!;
   const going = run(sim, 'life.go_up', { auditionId: audition.id, way, played });
@@ -702,10 +703,16 @@ describe('the note is on the thing that is most wrong', () => {
     expect(off(afterTheNote(played, note, 'far'))).toBe(2);
   });
 
-  it('gives every magnitude a different number of steps and only one of them none', () => {
+  it('gives every magnitude a different number of steps, and none of them none', () => {
     const steps = HOW_FAR.map((one) => one.steps);
     expect(steps).toEqual([...new Set(steps)]);
-    expect(steps.filter((n) => n === 0)).toHaveLength(1);
+    // There used to be a nought-step button and it was never once the right
+    // answer — measured over 2,401 cells, every opening at every readiness
+    // `heardItRight` can return. It was also bit-identical to never going up,
+    // so it spent three days and a hundred and twenty euros to hand back the
+    // free tape's number. Declining to answer says the same thing for nothing.
+    expect(steps.filter((n) => n === 0)).toHaveLength(0);
+    expect(Math.min(...steps)).toBe(1);
     expect(Math.max(...steps)).toBe(FURTHEST);
   });
 
@@ -804,7 +811,9 @@ describe('the part is the first money that is yours', () => {
     const audition = untilTheyAsk(sim, booking)!;
     const before = sim.universe.accounts[me.primaryAccountId!]!.balance;
     // Play it exactly right, so the only thing left is the draw.
-    const out = playItOut(sim, audition, audition.wants, 'room', 'none');
+    // Played exactly right, so there is no note to answer and the only thing
+    // left is the draw.
+    const out = playItOut(sim, audition, audition.wants, 'room');
     if (out.why !== 'cast') return;
     const room = WAYS.find((one) => one.id === 'room')!;
     expect(out.money).toBe(before - room.costsCents + audition.feeCents);
@@ -825,7 +834,7 @@ describe('the part is the first money that is yours', () => {
       const booking = shootingOnTheLot(sim, `a Nordic broadcaster, a limited series ${i}`, 9, 8 + i * 12);
       const audition = untilTheyAsk(sim, booking);
       if (!audition) continue;
-      const out = playItOut(sim, audition, audition.wants, 'room', 'none');
+      const out = playItOut(sim, audition, audition.wants, 'room');
       if (out.why === 'cast') got = true;
     }
     expect(got, 'twelve goes at it should land one').toBe(true);
@@ -1117,6 +1126,56 @@ describe('a note nobody answers', () => {
   });
 });
 
+describe('a no you misheard is a different no', () => {
+  it('says so, on the one no where the player could not have known', () => {
+    // `Audition.heard` was written at every reading since the note existed and
+    // read by nothing, while its own docstring said the whole point of keeping
+    // it was that "a no you can open and find out you misheard is a different
+    // no from a no you played right". It was neither: it was a word.
+    const missed: Audition = {
+      id: 'audition_x', saveId: 's', bookingId: 'b', holder: 'somebody casting',
+      size: 'guest', feeCents: 1_000_00, from: 0, to: 0, closesAt: 0,
+      wants: { warmth: 0, size: 0, pace: 0 }, state: 'over', why: 'went-another-way',
+      heard: false,
+    };
+    const got = { ...missed, heard: true };
+    expect(sayWhy(missed)).toMatch(/wrong way/);
+    expect(sayWhy(got)).not.toMatch(/wrong way/);
+    // Never on a yes: being cast is not the moment to be told you misread it.
+    expect(sayWhy({ ...missed, why: 'cast' })).not.toMatch(/wrong way/);
+    // And never where nothing was recorded, which is every reading from before
+    // the field was written and every tape, since a tape gives no note.
+    expect(sayWhy({ ...missed, heard: undefined })).not.toMatch(/wrong way/);
+  });
+
+  it('records it on a real reading rather than only in a literal', () => {
+    // End to end, so the field is proved to be written where the sentence
+    // reads it. Fatigue has to be able to lose the note for this to fire, so
+    // the player is put somewhere near the floor of `heardItRight`.
+    const sim = quickSave({}, 'misheard');
+    const me = sim.universe.people[sim.universe.playerId]!;
+    me.wellbeing.energy = 0;
+    me.wellbeing.stress = 100;
+    me.wellbeing.sleepDebt = 40;
+    expect(heardItRight(sim)).toBeLessThan(1);
+
+    const booking = shootingOnTheLot(sim, 'somebody casting');
+    const ask = untilTheyAsk(sim, booking)!;
+    const played = Object.fromEntries(
+      SHADES.map((shade) => [shade.id, (ask.wants[shade.id] ?? 0) > 0 ? -FURTHEST : FURTHEST]),
+    );
+    const going = run(sim, 'life.go_up', { auditionId: ask.id, way: 'room', played });
+    expect(going.error).toBeUndefined();
+    sim.advanceTo(going.at! + MS_DAY);
+    if (sim.universe.auditions[ask.id]!.state !== 'noted') return;
+    run(sim, 'life.take_note', { auditionId: ask.id, howFar: 'far' });
+    const done = sim.universe.auditions[ask.id]!;
+    expect(typeof done.heard, 'the reading did not record whether the note went in')
+      .toBe('boolean');
+    expect(sayWhy(done).includes('wrong way')).toBe(done.heard === false && done.why !== 'cast');
+  });
+});
+
 describe('what the room actually pays out', () => {
   /**
    * The room's central number, held to six decimals.
@@ -1136,13 +1195,14 @@ describe('what the room actually pays out', () => {
   const weightOf = (value: number): number => (Math.abs(value) === FURTHEST ? 1 / 12 : 1 / 6);
   const EVERY = [-3, -2, -1, 0, 1, 2, 3];
 
-  function paysOut(opening: Reading, howFar: string, sure: number): number {
+  /** `howFar` of undefined means the note was never answered at all. */
+  function paysOut(opening: Reading, howFar: string | undefined, sure: number): number {
     let total = 0;
     for (const warmth of EVERY) for (const size of EVERY) for (const pace of EVERY) {
       const wants = { warmth, size, pace };
       const weight = weightOf(warmth) * weightOf(size) * weightOf(pace);
       const note = theNote(opening, wants);
-      const ways: [number, Reading][] = note
+      const ways: [number, Reading][] = note && howFar !== undefined
         ? [[sure, afterTheNote(opening, note, howFar, 1, 0)],
           [1 - sure, afterTheNote(opening, note, howFar, 0, 0.5)]]
         : [[1, opening]];
@@ -1169,10 +1229,20 @@ describe('what the room actually pays out', () => {
     // 49.17 is where readiness sits on any save nobody has deliberately slept
     // on: measured flat there from day thirty to day three thousand six hundred.
     const tired = sureAt(49.17);
-    expect(paysOut(AS_WRITTEN, 'none', tired)).toBeCloseTo(0.625851, 6);
+    // Undefined is the player who never answers the note, which is also exactly
+    // what the free tape pays and what the deleted Leave It button paid.
+    expect(paysOut(AS_WRITTEN, undefined, tired)).toBeCloseTo(0.625851, 6);
     expect(paysOut(AS_WRITTEN, 'touch', tired)).toBeCloseTo(0.680391, 6);
     expect(paysOut(AS_WRITTEN, 'good', tired)).toBeCloseTo(0.706258, 6);
     expect(paysOut(AS_WRITTEN, 'far', tired)).toBeCloseTo(0.693821, 6);
+    // And every button that remains beats saying nothing, at every readiness
+    // the room can be walked into with. That is what makes three a choice.
+    for (const ready of [49.17, 76.31, 95]) {
+      for (const one of HOW_FAR) {
+        expect(paysOut(AS_WRITTEN, one.id, sureAt(ready)), `${one.id} at ${ready}`)
+          .toBeGreaterThan(paysOut(AS_WRITTEN, undefined, sureAt(ready)));
+      }
+    }
   });
 
   it('pays out more to somebody who slept, which is the one decision in the room', () => {
