@@ -17,6 +17,7 @@ import {
   traitModifier, unknownTaste,
 } from '@/engine/core/taste';
 import { PERSONALITY_TRAIT_BY_ID } from '@/engine/content/personality-traits';
+import { TRAITS } from '@/engine/domain/attributes';
 import type { Person } from '@/engine/domain/model';
 
 function playerWith(seed: string, config: Partial<Parameters<typeof createSave>[2]>): Person {
@@ -120,6 +121,46 @@ describe('what the personality traits actually do', () => {
     expect(dormant).toEqual([
       'hygieneDrift', 'injuryRisk', 'moraleSwing', 'relationshipDecay', 'spendImpulse', 'trainingGain',
     ]);
+  });
+
+  it('names the acting traits\u2019 dormant knobs too, which nothing was watching', () => {
+    // The same care, one file over, where it had never been taken. The test
+    // above has held the personality traits\u2019 six dormant knobs by name since
+    // it was written; the acting traits carry forty-six knobs of their own on
+    // `TraitDef.systemMods`, two of them read, and nothing anywhere said which
+    // forty-four were not. A knob that is named is dormant on purpose. A knob
+    // nobody has counted is just a knob.
+    const declared = new Set<string>();
+    for (const trait of TRAITS) {
+      for (const key of Object.keys(trait.systemMods ?? {})) declared.add(key);
+    }
+    // Read off `modifierFor`, which is the only way an acting trait\u2019s knob is
+    // ever asked for, and off the one file that asks.
+    const life = readFileSync('src/engine/systems/life.ts', 'utf8');
+    const read = new Set([...life.matchAll(/modifierFor\(person, '(\w+)'\)/g)].map((m) => m[1]!));
+    expect([...read].sort()).toEqual(['recoveryRate', 'stressPerShootDay']);
+
+    const dormant = [...declared].filter((key) => !read.has(key)).sort();
+    expect(dormant).toHaveLength(44);
+    expect(dormant).toEqual([
+      'ageCurveShift', 'audienceAppeal', 'audienceVariance', 'brandDealOdds', 'breakoutOdds',
+      'burnoutRisk', 'careerLongevity', 'castingPrestige', 'coStarPerformance', 'crewFriction',
+      'crisisRecovery', 'criticalScrutiny', 'dealTerms', 'earlyOpportunityRate', 'fameGrowth',
+      'impulsePurchaseRate', 'injuryRisk', 'internationalCastingOdds', 'investmentReturn',
+      'lateShootBonus', 'leadCastingOdds', 'luckyBreakCharges', 'meetingAccess', 'opportunityRate',
+      'prepTimeRequired', 'productionCost', 'professionalReputation', 'publicityStress',
+      'qualityBonus', 'quoteMultiplier', 'rangePenalty', 'relationshipDecay', 'relationshipPrivacy',
+      'repeatHireOdds', 'resilienceBonus', 'savingsRate', 'scheduleEfficiency', 'socialGrowth',
+      'stuntInsuranceCost', 'supportCastingOdds', 'tabloidInterest', 'trainingGain', 'viralOdds',
+      'youthBonus',
+    ]);
+
+    // Two of these names are also fields on `Person.reputation` and one is a
+    // meter on the home screen, which is how a wide grep reads them as live and
+    // how they were nearly deleted as dead. A knob and a field can share a name
+    // and share nothing else.
+    expect(dormant).toContain('audienceAppeal');
+    expect(dormant).toContain('professionalReputation');
   });
 });
 

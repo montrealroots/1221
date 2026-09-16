@@ -122,12 +122,25 @@ critics. It stays declared until there are. Inventing a seventh reader to finish
 the row would be the disease `DEPTH.md` is about, performed on the page about
 the disease.
 
-**47 trait modifier keys** across 445 traits, of which seven are consulted:
-`ageCurveShift`, `audienceAppeal`, `audienceVariance`, `brandDealOdds`,
-`breakoutOdds`, `burnoutRisk`, `careerLongevity`, `castingPrestige`,
-`coStarPerformance`, `crewFriction`, `crisisRecovery`, `criticalScrutiny`,
-`dealTerms`, `earlyOpportunityRate` and thirty-three more. Each one is an effect
-a trait promises on screen and does not deliver.
+**54 trait modifier keys** across 445 traits, of which seven are consulted and
+forty-seven are not. The seven: `energyRecovery`, `recoveryRate`,
+`sleepQuality`, `stressGain`, `stressPerShootDay`, `stressRecovery` and
+`travelFatigue`. Every one of them is read in `systems/life.ts` and in no other
+file, at eight call sites.
+
+This entry used to read "47 trait modifier keys … of which seven are consulted:"
+and then list fourteen names, which are the *dead* ones — the colon made the
+sentence say the opposite of what it meant, and the total was the dead count
+rather than the declared count. Two people read it as a contradiction before
+anybody read it as a typo.
+
+The forty-seven split by family, and they are not in the same state. Six sit on
+the personality traits and `tests/taste.test.ts` has named them by hand since it
+was written, on the argument that a trait which says it costs something must not
+quietly cost nothing without anybody knowing which. The other forty-four sit on
+the acting traits, and until now nothing counted them at all. They are named in
+the same test now, so the two families are held to one standard: dormant on
+purpose, rather than dormant by nobody looking.
 
 **6 higher-is-worse guards** — `coverageDays`, `dealDays`, `decisionDays`,
 `draftDays`, `healthDrain`, `overrunOdds` — guarding keys no trait declares.
