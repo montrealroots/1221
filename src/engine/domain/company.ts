@@ -187,13 +187,15 @@ export interface Signature {
   agreement: string;
   since: Instant;
   /**
-   * Cash the guild holds against what you will owe.
+   * What the deposit was is not stored, deliberately.
    *
-   * Real, and it lands at the worst possible moment: a deposit against cast
-   * salaries is wanted before you shoot, which is when a production has spent
-   * everything and earned nothing.
+   * It is real and it lands at the worst possible moment — a deposit against
+   * cast salaries is wanted before you shoot, which is when a production has
+   * spent everything and earned nothing — but the figure lives on the guild's
+   * own row in `content/incorporation.ts`, which is what the screen prints and
+   * what `company.sign` charges. A copy on the record would be a second answer
+   * waiting to disagree with the first, and nothing ever read it.
    */
-  depositCents: Money;
   endedAt?: Instant;
 }
 
@@ -259,9 +261,15 @@ export interface Holding {
   acquiredAt: Instant;
   /** An option runs out. Ownership does not. */
   expiresAt?: Instant;
-  optionFeeCents?: Money;
-  /** What exercising the option would cost. */
-  purchasePriceCents?: Money;
+  /**
+   * What was paid for it, and what exercising would cost, are not stored.
+   *
+   * Both arrived on the payload, both were charged at the moment the hold was
+   * taken, and both then sat on the record with nothing that ever looked. There
+   * is no `company.exercise` to read a purchase price and no screen that prints
+   * an option fee, so the two figures were a price list for a shop with no
+   * door. The charge is in the ledger, where a payment belongs.
+   */
   chainComplete: boolean;
   /** What is missing from the chain, where anything is. */
   chainGap?: string;

@@ -483,11 +483,6 @@ function personRunning(universe: SaveUniverse, role: RoleId): Id | undefined {
   return Object.values(universe.people).find((one) => one.estateRole === wanted)?.id;
 }
 
-/** For the migration and the validator: the tables the company added. */
-export const COMPANY_TABLES = [
-  'companies', 'registrations', 'signatures', 'policies', 'holdings', 'posts', 'projects',
-] as const;
-
 export type { Instant };
 
 // ---------------------------------------------------------------------------
@@ -628,7 +623,6 @@ export function registerCompanyCommands(sim: Simulation): void {
       guild: payload.guild,
       agreement: facts.agreement,
       since: s.now,
-      depositCents: facts.depositCents,
     };
     s.universe.signatures[signature.id] = signature;
     s.notify({
@@ -705,8 +699,9 @@ export function registerCompanyCommands(sim: Simulation): void {
       acquiredAt: s.now,
       chainComplete: !payload.chainGap,
       ...(payload.chainGap ? { chainGap: payload.chainGap } : {}),
-      ...(hold === 'option' ? { expiresAt: addMonths(s.now, Math.max(1, Math.round(payload.months ?? 18)), s.homeZone), optionFeeCents: fee } : {}),
-      ...(payload.purchasePriceCents ? { purchasePriceCents: Math.round(payload.purchasePriceCents) } : {}),
+      ...(hold === 'option'
+        ? { expiresAt: addMonths(s.now, Math.max(1, Math.round(payload.months ?? 18)), s.homeZone) }
+        : {}),
     };
     s.universe.holdings[holding.id] = holding;
     return { ok: true, id: holding.id };
