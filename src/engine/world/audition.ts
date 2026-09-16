@@ -251,6 +251,20 @@ export function remembersYou(sim: Simulation, holder: string): number {
  * and it stands in well enough only because a production that needs a big
  * stage is usually a production with a big budget.
  *
+ * AND THAT LAST SENTENCE IS MEASURED, WHICH IS WHY THE OBVIOUS FIX IS WRONG.
+ * The obvious fix is to divide the room out — price the part per square meter
+ * per week instead of per week — because that deletes the cliff where the same
+ * guest part on the same commercial pays EUR 2,838 or EUR 1,442 depending on
+ * which stage happened to be free. It was built, and then it was costed. Rank
+ * correlation between a picture's budget and what its lead earns per shooting
+ * week, across all ten enquiry shapes: +0.934 before, MINUS 0.044 after. Floor
+ * area IS the proxy for the money, so dividing it out does not connect the fee
+ * to the budget, it disconnects it — and it inverts the lot, because the rate
+ * card's own docstring says large rooms let for less per square meter than
+ * small ones. Do not take that fix. Carrying the picture's real budget onto
+ * the booking is the version that works, and it wants the payroll balance
+ * check beside it.
+ *
  * SLATE's own, and it has to be: the lot's rate card is what the stage costs,
  * not what the cast costs, and no published ratio between the two exists.
  */
