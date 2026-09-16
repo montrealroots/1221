@@ -727,6 +727,34 @@ function takeTheirWeeks(sim: Simulation, audition: Audition): void {
  * little back, so `reliability` is a record of how somebody works rather than a
  * meter that only falls — and so the answer to being tired is to stop for a
  * while, which is a decision, rather than to never work, which is not.
+ *
+ * WHAT THE MEASUREMENT SAYS, AND WHERE THIS STOPS BEING TRUE. Stopping for a
+ * while is only an answer while resting still restores somebody, and on a
+ * played career it stops being one part way through. Three seeds, twenty-five
+ * years each, going up for everything the dates allow: the roll is under
+ * `spentAt` on 12% of working weeks in the first five years, 30% through year
+ * twelve, 69% through year nineteen and 100% after that, and `reliability`
+ * reaches zero in year 14, 16 and 20 on those three seeds and then reads zero
+ * for 84%, 95% and 100% of the weeks that are left.
+ *
+ * The cause is neither term on its own. It is the house and the shoot
+ * together, and either one alone is survivable. A residence loses 0.012
+ * condition a day with no writer anywhere in the build that raises it,
+ * `sleepQuality` reads that condition, and a shoot takes
+ * `A_WORKING_WEEK.shorterBy` off the night on top of it; between them the
+ * daily energy balance goes negative, and then `applyElapsedWellbeing`'s rule
+ * that empty costs stress cuts the next night shorter again and the person
+ * stays there. Measured one term at a time over five seeds of twenty-five
+ * played years. Hold the house at its starting condition and no career reaches
+ * zero: they end between 94 and 100, though readiness still reads under
+ * `spentAt` in 52 to 80 weeks of the 1300. Take the shoot's short nights away
+ * instead and let the house rot the whole way to nothing, and not one week of
+ * the 6500 reads under `spentAt` while readiness falls only from 49.2 to 42.9
+ * across the career — so a worn house by itself never reaches the line, and
+ * the sentence that the work is not implicated is the wrong one to write. Age
+ * is not it: pinning the ageing recovery factor at one moved the first zero by
+ * two years at most, and switching off the empty-costs-stress term delayed it by
+ * four to five years without removing it.
  */
 function whatTheWeekTook(sim: Simulation, audition: Audition, week: number, of: number): void {
   const me = sim.universe.people[sim.universe.playerId];

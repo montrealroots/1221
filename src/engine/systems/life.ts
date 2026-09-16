@@ -284,6 +284,31 @@ export function dailyRollover(sim: Simulation): void {
   // are held under what a body of that age can reach, so a seventy year old
   // with perfect habits is a very fit seventy year old rather than
   // indistinguishable from a very fit twenty five year old.
+  //
+  // There is no use for it to decay without, and building one was measured and
+  // changes nothing anybody can observe. Crediting fitness on a day the player
+  // is on a shoot — plus 0.42 worked against minus 0.18 otherwise, gated on
+  // `isPlayer` because this loop walks every person and `whatHasThem` answers
+  // about the player whoever is asking — was built and run over five seeds of
+  // twenty-five played years. Mean fitness by five-year block moved from 0.0 to
+  // anywhere between 2 and 58 depending on the seed, and condition followed it
+  // up by as much as 15 points, while every other number in the run stayed
+  // identical to the digit: energy, stress, sleep debt, morale, readiness,
+  // reliability, the week reliability first read zero, asks, readings, clashes
+  // and parts won. The reason is two lines up the file. `readiness` does not
+  // read condition, and the only reader of `w.condition` in src outside this
+  // file is the dial declared at ui/looks/wellbeing.tsx:37 and read at :47; the
+  // suite reads it twice, to assert it is above zero and to compare two seeds.
+  // A writer for fitness is a change to a dial until something downstream of
+  // condition decides something.
+  //
+  // Both clamps here are guards no played input trips. Over 27300 player-days
+  // on three seeds, `ceiling.fitness` was the binding arm of the first
+  // `Math.min` zero times — fitness is above zero for exactly the first 278
+  // days of every save and the ceiling never falls below 89.1 — and
+  // `ceiling.condition` bound the second zero times as well. For the other 97%
+  // of a career this block is `w.fitness` held at nought and `w.condition`
+  // pulled toward a constant sixty.
   for (const person of Object.values(sim.universe.people)) {
     const w = person.wellbeing;
     const ceiling = ceilingAt(yearsSince(person.birthInstant, sim.now));
