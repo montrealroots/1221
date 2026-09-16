@@ -20,6 +20,7 @@ import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Empty, Modal, Stat } from '@/ui/components/primitives';
 import { LookRegion, Open } from '@/ui/looks/Look';
 import { at } from '@/ui/looks/subject';
+import { fixFor } from './fix';
 import { said, toStart } from '@/ui/looks/words';
 import { formatMoney } from '@/engine/core/money';
 import { plural } from '@/engine/core/text';
@@ -53,7 +54,7 @@ import {
   auditorsFee, awayOnTheCast, certifiable, limbsOf, shortOnFor, turnsOverOn,
   whereTheClaimStands, whyNot, worthToday,
 } from '@/engine/world/rebate';
-import type { GuildId, PolicyKind, RegistryId, RoleId } from '@/engine/domain/company';
+import type { RoleId } from '@/engine/domain/company';
 import {
   GUILD_BY_ID, POLICY_BY_ID, REGISTRY_BY_ID, ROLE_BY_ID,
 } from '@/engine/content/incorporation';
@@ -167,7 +168,7 @@ function Door({ door }: { door: Capability }) {
 function Missing({ blocker }: { blocker: Blocker }) {
   const { run } = useGame();
   const [error, setError] = useState<string | undefined>();
-  const [filling, setFilling] = useState(false);
+  const [filling, setFilling] = useState<RoleId | undefined>();
   const [taking, setTaking] = useState(false);
 
   const act = (kind: string, payload: Record<string, unknown>) => {
@@ -175,46 +176,12 @@ function Missing({ blocker }: { blocker: Blocker }) {
     setError(answer.value?.ok ? undefined : answer.value?.error ?? answer.error);
   };
 
-  const id = blocker.fixId ?? '';
-  const control = (() => {
-    switch (blocker.fixKind) {
-      case 'registry': {
-        const facts = REGISTRY_BY_ID[id as RegistryId];
-        return facts && { label: `Register With ${facts.body}`, go: () => act('company.register', { registry: id }) };
-      }
-      case 'arm':
-        return { label: 'Form The American Arm', go: () => act('company.form_arm', {}) };
-      case 'guild': {
-        const facts = GUILD_BY_ID[id as GuildId];
-        return facts && facts.signable && { label: `Sign With ${facts.body}`, go: () => act('company.sign', { guild: id }) };
-      }
-      case 'policy': {
-        const facts = POLICY_BY_ID[id as PolicyKind];
-        return facts && { label: `Bind ${facts.label}`, go: () => act('company.insure', { policy: id }) };
-      }
-      // A post is the one blocker that cannot be fixed by pressing a button,
-      // because it needs a person and the company has to choose which. It was
-      // the only unreachable one, and it shut the greenlight door — so a player
-      // could walk every other step of the sequence and stop here for good.
-      case 'role':
-        return { label: 'Fill The Post', go: () => setFilling(true) };
-      // And material, which was the other one and was missed because there IS a
-      // control for it — over in What It Holds, a panel away, which a player has
-      // no reason to connect to the words "Anything At All" under a shut door.
-      // This page's whole promise is that a shut door names the single thing
-      // keeping it shut and that thing is a door of its own; a blocker that
-      // names something and then makes you go and find it does not keep it.
-      //
-      // Three doors say this one: having something to make, greenlighting it,
-      // and delivering it, which cannot be insured until there is a chain of
-      // title to read. Measured against the engine, a player who presses every
-      // button this row offers gets to six of nine and stops.
-      case 'holding':
-        return { label: id ? 'Close The Gap' : 'Take An Option', go: () => setTaking(true) };
-      default:
-        return undefined;
-    }
-  })();
+  const fix = fixFor(blocker);
+  const press = () => {
+    if (!fix) return;
+    if (!('asks' in fix)) { act(fix.kind, fix.payload); return; }
+    if (fix.asks === 'who') setFilling(fix.role); else setTaking(true);
+  };
 
   return (
     <div className="row-between">
@@ -223,13 +190,13 @@ function Missing({ blocker }: { blocker: Blocker }) {
         <div className="xs muted">{blocker.how}</div>
         {error && <div className="xs negative" style={{ marginTop: 2 }}>{error}</div>}
       </div>
-      {control && <button className="btn btn-sm" onClick={control.go}>{control.label}</button>}
+      {fix && <button className="btn btn-sm" onClick={press}>{fix.label}</button>}
       {taking && <OptionForm onClose={() => setTaking(false)} />}
       {filling && (
         <PostForm
-          role={id as RoleId}
-          onClose={() => setFilling(false)}
-          onDone={(said) => { setError(said); if (!said) setFilling(false); }}
+          role={filling}
+          onClose={() => setFilling(undefined)}
+          onDone={(said) => { setError(said); if (!said) setFilling(undefined); }}
         />
       )}
     </div>

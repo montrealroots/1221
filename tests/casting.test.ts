@@ -1702,13 +1702,30 @@ describe('Global Rule One is asked at the one place it exists for', () => {
     // The reason the family business is two companies rather than one, and
     // until now nothing anywhere checked it: the arm could be formed, the
     // agreement signed, and an American cast either way.
-    const sim = world('rule-one');
-    const id = greenlit(sim, 'feature', 'Hvítserkur');
-    const role = openRoles(sim.universe.projects[id]!).find((r) => r.size === 'lead')!;
-    run(sim, 'company.breakdown', { projectId: id, roleId: role.id });
-    const live = sim.universe.projects[id]!.roles!.find((r) => r.id === role.id)!;
-    const american = whoCameIn(sim, live).find((one) => one.citizenshipId === 'us');
-    if (!american) return;
+    // Whether an American walks into a room is a draw, and on six of sixteen
+    // seeds one does. This test used to run on 'rule-one', where none does,
+    // and return before its first assertion — so it passed for as long as it
+    // has existed without ever asking the question in its own title. So the
+    // room is drawn until an American is in it, and if none of the seeds
+    // produces one the test says so rather than passing quietly.
+    const rooms = ['a', 'b', 'g', 'k', 'm', 'n'].map((seed) => {
+      const world1 = world(seed);
+      const projectId = greenlit(world1, 'feature', 'Hvítserkur');
+      const opening = openRoles(world1.universe.projects[projectId]!).find((r) => r.size === 'lead')!;
+      run(world1, 'company.breakdown', { projectId, roleId: opening.id });
+      const room = world1.universe.projects[projectId]!.roles!.find((r) => r.id === opening.id)!;
+      return {
+        sim: world1,
+        id: projectId,
+        role: opening,
+        american: whoCameIn(world1, room).find((one) => one.citizenshipId === 'us'),
+      };
+    });
+    const room = rooms.find((one) => one.american);
+    expect(room, 'no American came into any of six rooms, so this test asserts nothing')
+      .toBeDefined();
+    const { sim, id, role } = room!;
+    const american = room!.american!;
 
     expect(globalRuleOne(sim, american)).toMatch(/Form the arm first/);
     const done = run(sim, 'company.cast', {
@@ -1725,7 +1742,7 @@ describe('Global Rule One is asked at the one place it exists for', () => {
   });
 
   it('never stands between the player and a part in their own family’s picture', () => {
-    const sim = world('rule-one-me');
+    const sim = world('rule-one-a');
     const id = greenlit(sim, 'feature', 'Hvítserkur');
     const me = sim.universe.people[sim.universe.playerId]!;
     expect(globalRuleOne(sim, me)).toBeUndefined();
@@ -1740,7 +1757,7 @@ describe('Global Rule One is asked at the one place it exists for', () => {
     // place the rule could be walked past by not using the door. Built rather
     // than hoped for: an American who would certainly be the office's first
     // choice, planted in the pile before it fills.
-    const sim = world('rule-one-office');
+    const sim = world('rule-one-a');
     const id = greenlit(sim, 'feature', 'Hvítserkur');
     const role = openRoles(sim.universe.projects[id]!).find((r) => r.size === 'lead')!;
     run(sim, 'company.breakdown', { projectId: id, roleId: role.id });

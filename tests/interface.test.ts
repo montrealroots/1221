@@ -21,7 +21,8 @@ import { describe, expect, it } from 'vitest';
 import { ALL_DESTINATIONS, DESTINATIONS } from '@/ui/shell/destinations';
 import { WEATHER_EMOJI } from '@/engine/systems/weather';
 import { quickSave } from '@/engine';
-import { capabilitiesOf } from '@/engine/world/company';
+import { capabilitiesOf, type Blocker } from '@/engine/world/company';
+import { fixFor } from '@/ui/workspaces/fix';
 import { wouldBe } from '@/engine/world/making';
 
 // Anything Unicode says may be drawn as a picture, plus the selectors and
@@ -266,16 +267,15 @@ describe('every door a player is stopped at has a way through it', () => {
   const SCREEN = 'src/ui/workspaces/BusinessWorkspace.tsx';
 
   /**
-   * The two kinds of blocker that deliberately have no button, and why.
+   * The one kind of blocker that deliberately has no button, and why.
    *
-   * Material has one, but it sits at the top of the panel that holds the
-   * rights rather than on the blocker, because taking an option is a thing a
-   * company does whether or not a door is shut on it. Money has none because
-   * there is no button that makes a company solvent — it is fixed by the
-   * business working, which is the whole point of the axis it belongs to.
+   * Money has none because there is no button that makes a company solvent —
+   * it is fixed by the business working, which is the whole point of the axis
+   * it belongs to. Material used to be listed here too, on the grounds that
+   * its control sat in another panel; `case 'holding'` has drawn a chip on the
+   * blocker itself for some time, so the exemption was excusing a live kind.
    */
   const NOT_A_BUTTON: Record<string, string> = {
-    holding: 'Take An Option',
     money: 'no control, and correctly so',
   };
 
@@ -283,8 +283,13 @@ describe('every door a player is stopped at has a way through it', () => {
     const screen = readFileSync(SCREEN, 'utf8');
     const sim = quickSave({}, 'doors-reachable');
     const raised = new Set<string>();
+    const A_BLOCKER: Record<string, Blocker> = {};
     for (const door of capabilitiesOf(sim)) {
-      for (const blocker of door.blockers) if (blocker.fixKind) raised.add(blocker.fixKind);
+      for (const blocker of door.blockers) {
+        if (!blocker.fixKind) continue;
+        raised.add(blocker.fixKind);
+        A_BLOCKER[blocker.fixKind] ??= blocker;
+      }
     }
     expect(raised.size, 'a cold save raises no blockers at all').toBeGreaterThan(3);
 
@@ -295,8 +300,10 @@ describe('every door a player is stopped at has a way through it', () => {
       // at and never get past, which is what happened to the head of production
       // for eight commits: every other step of the sequence was reachable and
       // that one was not, so the greenlight door could not be opened by hand.
-      expect(screen, `nothing in the interface fixes a '${kind}' blocker`)
-        .toContain(`case '${kind}'`);
+      const blocker = A_BLOCKER[kind];
+      expect(blocker, `no sample blocker for '${kind}'`).toBeDefined();
+      expect(fixFor(blocker!), `nothing in the interface fixes a '${kind}' blocker`).toBeDefined();
+      expect(screen, 'the panel grew a second table').toContain('fixFor(blocker)');
     }
   });
 
