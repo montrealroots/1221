@@ -20,8 +20,9 @@ import { describe, expect, it } from 'vitest';
 import { deliverIt, openTheDoors } from './doors';
 import { quickSave, validateUniverse } from '@/engine';
 import type { Simulation } from '@/engine';
+import type { Project } from '@/engine/domain/company';
 import { MS_DAY } from '@/engine/core/time';
-import { projectsOf } from '@/engine/world/company';
+import { parentCompany, projectsOf } from '@/engine/world/company';
 import { MS_WEEK } from '@/engine/world/lot';
 import { POSTS, postById, prepScale } from '@/engine/content/crew';
 import { MEN, WOMEN } from '@/engine/content/names';
@@ -447,5 +448,100 @@ describe('what the crew amounts to, said out loud', () => {
     deliver(sim, id);
     const said = whereTheCrewStands(sim, sim.universe.projects[id]!);
     expect(said).toContain('posts filled');
+  });
+});
+
+describe('who on this crew has been here before', () => {
+  /** A company that makes pictures back to back, so a crew can accumulate. */
+  function madeThreePictures(seed: string): { sim: Simulation; made: string[] } {
+    const sim = quickSave({}, seed);
+    openTheDoors(sim);
+    const made: string[] = [];
+    for (let n = 1; n <= 3; n += 1) {
+      const title = `Picture ${n}`;
+      run(sim, 'company.develop', { title, medium: 'film' });
+      const id = projectsOf(sim.universe).find((one) => one.title === title)!.id;
+      run(sim, 'company.greenlight', {
+        projectId: id, planId: 'feature', budgetCents: 20_000_000_00, shootWeeks: 6,
+      });
+      sim.advanceTo(sim.now + 30 * MS_WEEK);
+      made.push(id);
+    }
+    return { sim, made };
+  }
+
+  /** The question the sentence claims to answer, asked directly. */
+  const reallyBack = (sim: Simulation, project: Project): number =>
+    (project.crew ?? []).filter((seat) => Object.values(sim.universe.projects)
+      .some((other) => other.id !== project.id
+        && other.companyId === project.companyId
+        && (other.crew ?? []).some((one) => one.postId === seat.postId
+          && one.personId === seat.personId
+          && one.from < seat.from))).length;
+
+  it('counts the hands that really came back, and it used to undercount them', () => {
+    // It read `heldBefore` — everybody who has ever held the post, this picture
+    // included — and counted a seat when that list had more than one name in
+    // it, which is a fact about the post and not about the person in it.
+    // Measured across three pictures made back to back: it said six returning
+    // hands where there were eighteen, then eleven where there were eighteen.
+    // `docs/UNBITTEN.md` had it the other way round, as counting strangers as
+    // regulars. It did the opposite.
+    const { sim, made } = madeThreePictures('crew-back');
+    const said = (id: string): number => {
+      const out = whereTheCrewStands(sim, sim.universe.projects[id]!)
+        .match(/(\d+) of them by people who have worked/);
+      return out ? Number(out[1]) : 0;
+    };
+    for (const id of made) {
+      const project = sim.universe.projects[id]!;
+      expect((project.crew ?? []).length, 'nobody was hired, so this proves nothing')
+        .toBeGreaterThan(0);
+      expect(said(id), project.title).toBe(reallyBack(sim, project));
+    }
+    // And the first picture cannot have any: there is nothing behind it.
+    expect(said(made[0]!)).toBe(0);
+    // While a later one does, or the company never accumulated a crew at all
+    // and the whole claim this file opens with is untrue.
+    expect(said(made[2]!)).toBeGreaterThan(0);
+  });
+
+  it('counts the post and not only the person, so a move is not a return', () => {
+    // A gaffer who comes back as a grip has not held this post before, and the
+    // sentence is about the post. Dropping that from the predicate survives a
+    // whole played career unnoticed, because the office almost always rehires
+    // into the same post — so it is asserted directly rather than hoped for.
+    const { sim, made } = madeThreePictures('crew-moved');
+    const later = sim.universe.projects[made[2]!]!;
+    const earlier = sim.universe.projects[made[0]!]!;
+    const seat = (later.crew ?? [])[0]!;
+    const before = whereTheCrewStands(sim, later);
+
+    // The same person on the first picture, in a post they do not hold here.
+    const elsewhere = POSTS.find((one) => one.id !== seat.postId)!;
+    earlier.crew = [...(earlier.crew ?? []), {
+      ...seat, postId: elsewhere.id, from: seat.from - 400 * MS_DAY, to: seat.from - 300 * MS_DAY,
+    }];
+    expect(whereTheCrewStands(sim, later), 'a different post counted as the same hand')
+      .toBe(before);
+
+    // And the same person in the SAME post on an earlier picture does count.
+    earlier.crew = [...(earlier.crew ?? []), {
+      ...seat, from: seat.from - 400 * MS_DAY, to: seat.from - 300 * MS_DAY,
+    }];
+    expect(whereTheCrewStands(sim, later)).not.toBe(before);
+  });
+
+  it('gives every picture the same company, which is why that test cannot fire', () => {
+    // `whereTheCrewStands` filters on `companyId` and the filter can never
+    // change an answer today: `company.develop` writes `companyId: parent.id`
+    // on every project, so the American arm has never held a picture. The guard
+    // stays — the sentence claims "the company" and would go quietly false the
+    // day the arm makes something — and this is what tells somebody the day it
+    // stops being inert.
+    const { sim } = madeThreePictures('crew-onecompany');
+    const companies = new Set(Object.values(sim.universe.projects).map((one) => one.companyId));
+    expect(companies.size).toBe(1);
+    expect([...companies][0]).toBe(parentCompany(sim.universe)?.id);
   });
 });

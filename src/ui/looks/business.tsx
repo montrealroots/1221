@@ -30,7 +30,7 @@ import { DELIVERY, type Element } from '@/engine/content/making';
 import { TIERS, WINDOWS, dealById } from '@/engine/content/selling';
 import { standingOf, whereTheMoneyStands } from '@/engine/world/selling';
 import { departmentById } from '@/engine/content/crew';
-import { crewOf, postsFor, standingReads } from '@/engine/world/crew';
+import { crewOf, postsFor, standingReads, whereTheCrewStands } from '@/engine/world/crew';
 import {
   finishesBy, heldUpBy, periodOf, planOf, stillMissing, whereThePictureStands, windowOf,
 } from '@/engine/world/making';
@@ -531,6 +531,12 @@ defineLook<Project>('project', {
                   ? `Nobody yet. This picture carries ${carries} posts, and they come on over the weeks before the camera does — the money and the design first, the camera late.`
                   : `${crew.length} of ${carries} posts filled. Nobody starts on the first day: a unit production manager is here ten weeks before the camera turns over, a boom operator for one.`}
               </p>
+              {/* How much of this crew has worked for the company before, which
+                  is the whole reason the choice of who to hire has any weight —
+                  and which was written, counted wrongly and read by nothing. */}
+              {crew.length === 0 ? null : (
+                <p className="small dim">{whereTheCrewStands(sim, project)}</p>
+              )}
               {/* Six columns of short values. On a phone they get about fifty
                   pixels each and a word like "Production" comes apart across
                   three lines, so the whole table scrolls sideways in its own box

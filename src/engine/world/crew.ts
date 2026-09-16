@@ -402,10 +402,33 @@ export function whereTheCrewStands(sim: Simulation, project: Project): string {
   if (filled === 0) {
     return `Nobody is on ${project.title} yet. It carries ${carried} posts once it starts hiring.`;
   }
-  const back = (project.crew ?? []).filter((seat) => {
-    const others = heldBefore(sim, project.companyId, seat.postId);
-    return others.indexOf(seat.personId) > 0 || others.length > 1;
-  }).length;
+  // Somebody is a returning hand when they held THIS post on an EARLIER
+  // picture of this company. That is the whole question and it was not the one
+  // being asked: the old test read `heldBefore` — every person who has ever
+  // held the post, this picture included — and counted a seat when the list had
+  // more than one name in it, which is a fact about the post rather than about
+  // the person sitting in it. Measured over three pictures made back to back:
+  // it said six returning hands where there were eighteen, then eleven where
+  // there were eighteen. It undercounted, and `docs/UNBITTEN.md` had it the
+  // other way round, as counting strangers as regulars.
+  //
+  // `heldBefore` itself is left alone. `fillPost` depends on it walking every
+  // picture including this one, and changing it there would move who the office
+  // hires rather than what this sentence says.
+  //
+  // The company test cannot currently tell two pictures apart: `company.develop`
+  // writes `companyId: parent.id` on every one of them, so the American arm has
+  // never held a picture and every project in the save shares one company. It
+  // stays because the sentence says "worked for the company before" and would
+  // quietly stop being true the day the arm makes something — and the fact that
+  // it cannot differ today is pinned in `tests/crew.test.ts` rather than left
+  // as a thing somebody has to rediscover.
+  const back = (project.crew ?? []).filter((seat) => Object.values(sim.universe.projects)
+    .some((other) => other.id !== project.id
+      && other.companyId === project.companyId
+      && (other.crew ?? []).some((one) => one.postId === seat.postId
+        && one.personId === seat.personId
+        && one.from < seat.from))).length;
   return `${filled} of ${carried} posts filled on ${project.title}`
     + `${back > 0 ? `, ${back} of them by people who have worked for the company before` : ''}.`;
 }

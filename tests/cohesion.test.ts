@@ -12,6 +12,7 @@ import { readdirSync, readFileSync, statSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { ALL_TRAITS, ATTRIBUTES, ATTRIBUTE_GROUPS, TRAITS, attributesInGroup, rate } from '@/engine/domain/attributes';
 import { CEILING } from '@/engine/content/prodigy';
+import { ENQUIRY_SHAPES } from '@/engine/content/lot';
 import { COUNTRIES } from '@/engine/content/geography';
 import { ageOnDate } from '@/engine/core/time';
 import { createSave, defaultConfig, quickSave } from '@/engine';
@@ -51,6 +52,15 @@ describe('nothing is defined twice', () => {
     expect(duplicates(ATTRIBUTES, (a) => a.name)).toEqual([]);
     // A certificate's name repeats across boards on purpose — "General" is a
     // rung in four systems — so it is the pair that has to be unique.
+
+    // An enquiry's `from` is not decoration: it becomes `booking.holder`, and
+    // the holder string is the whole identity of a casting office. `readFor`,
+    // `remembersYou`, `believedOf` and `ignoredBy` all key off it, so two
+    // shapes sharing one produce two productions that share one memory of the
+    // player — read for one and the other remembers it. Two rows were both "an
+    // American studio, a feature": nine shapes, eight addressable offices, and
+    // nothing said which two were secretly one.
+    expect(duplicates(ENQUIRY_SHAPES, (one) => `${one.of.from}, ${one.of.kind}`)).toEqual([]);
   });
 
 

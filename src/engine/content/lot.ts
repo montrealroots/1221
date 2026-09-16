@@ -724,7 +724,7 @@ export const ENQUIRY_SHAPES: readonly { weight: number; of: Enquiry }[] = [
   },
   {
     weight: 4,
-    of: { kind: 'feature', from: 'an American studio', needsSqm: 5_200, needsHeightM: 24, needsTank: false, weeks: 14, spendIsk: 1_900_000_000, local: false },
+    of: { kind: 'feature', from: 'a Hollywood studio', needsSqm: 5_200, needsHeightM: 24, needsTank: false, weeks: 14, spendIsk: 1_900_000_000, local: false },
   },
   {
     weight: 3,
