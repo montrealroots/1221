@@ -153,10 +153,18 @@ Three findings are defects rather than gaps, and all three are live:
   at 95% quality, which always clears the restful threshold, so morale climbs
   to 100 and pins while its only counterweight waits on a nourishment floor the
   same autopilot prevents. Four of the nine dials are constants by day thirty.
-- **The ageing model can never fire.** Because fitness is already at zero, the
-  age ceiling clamp binds on 0 of 27,375 days. Eight authored bands, each with
-  its own prose, are dead arithmetic. `src/engine/content/lifespan.ts` is 540
-  lines with 2 of its 28 exports wired.
+- **The ageing model fires, and half of it is dead.** This entry used to say it
+  could never fire, and that was measured on a save nobody plays. Re-measured on
+  played careers, ten years each, three seeds against two birth years: age costs
+  between two and seven parts and fourteen to sixteen points of mean readiness.
+  Zero the `recovery` column of `AGING` and a seventy-five-year-old plays a
+  career identical to a twenty-five-year-old's on every seed, to three decimals
+  — so `recovery` is the whole of it. Zero the `fitness` column and the run is
+  byte-identical; zero `condition` and one dial nothing reads moves by a point.
+  The age ceiling clamp really does bind on 0 of 27,375 days in the default save,
+  and on exactly 1 day per person once somebody is old enough for it to matter.
+  `src/engine/content/lifespan.ts` is 540 lines with 2 of its 48 exports read
+  from outside it — the denominator was wrong too.
 - **Every attribute on every person is 100.** All 813, seeded to the ceiling.
   The craft sheet is not merely unread; it is uninformative even if read. And
   no look, workspace or screen displays it during play.

@@ -197,13 +197,18 @@ of day, and readiness moves between 49 and 19 across a long run and comes back.
 ## Claimed, and not yet verified
 
 One finding in `DEPTH.md`'s "Where We Stand" was measured on a booted save a
-long time ago and has not been re-measured since.
+long time ago. It has now been re-measured, and it was wrong.
 
-**The ageing model is said to be unable to fire**, because fitness is already at
-zero and the age ceiling clamp binds on 0 of 27,375 days. Eight authored bands,
-each with its own prose, would be dead arithmetic, and
-`src/engine/content/lifespan.ts` would be 540 lines with 2 of its 28 exports
-wired.
+**The ageing model was said to be unable to fire.** It fires. On played careers
+— ten years, three seeds, two birth years — age costs two to seven parts and
+fourteen to sixteen points of mean readiness, and the whole of that effect is
+the `recovery` column of `AGING`: zero it and a seventy-five-year-old plays an
+identical career to a twenty-five-year-old, on every seed. What is dead is the
+rest of the table. The `fitness` column changes nothing byte-for-byte, and the
+`condition` column moves one number nothing reads by about a point. So the
+finding was right that most of the file is unread and wrong about the part that
+matters, which is the same mistake in both directions: it was taken on a save
+where nobody ever went up for anything.
 
 ---
 
