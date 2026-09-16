@@ -102,7 +102,10 @@ function lean(value: number): number {
  * - Conscientiousness is routine, and routine is what sleep is made of, so it
  *   moves both how well a night goes and how much of it comes back as energy.
  * - Openness is how a new place lands. Somebody experimental is not worn down
- *   by being somewhere unfamiliar the way a conventional person is.
+ *   by being somewhere unfamiliar the way a conventional person is — which is
+ *   read here and reaches nothing, because it multiplies `travelFatigue` and
+ *   nobody in this build travels. Openness is the one axis that is wired and
+ *   still inert, and it is a different state from the three below.
  *
  * Extraversion, agreeableness and risk tolerance are about other people and
  * about choices, and this build has neither. They are recorded and read by

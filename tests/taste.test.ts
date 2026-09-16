@@ -315,14 +315,70 @@ describe('what the personality axes actually do', () => {
     }
   });
 
+  it('makes ambition cost something, which the screen said for months that it did not', () => {
+    // Every wellbeing-level test above runs an IDLE save, and on an idle save
+    // ambition moves nothing: the autopilot's fixed point absorbs it, because
+    // there is no work to push past the point somebody content would stop at.
+    // That is why the creation screen went on saying "two of them do something
+    // today" after shoots were built and ambition started biting. The same
+    // idle-versus-played trap has now flipped three separate answers in this
+    // project, so the axis is checked at the modifier, where it cannot hide.
+    const person = (v: number): Person => {
+      const sim = createSave(1, `ambition-${v}`, {
+        ...defaultConfig(), personality: { ...flat, ambition: v } as never,
+      });
+      return sim.universe.people[sim.universe.playerId]!;
+    };
+    const content = axisModifier(person(5), 'stressGain');
+    const driven = axisModifier(person(95), 'stressGain');
+    expect(driven).toBeGreaterThan(content);
+    // And it is the only knob ambition touches, so it cannot be read as a
+    // second emotional stability.
+    for (const key of ['stressRecovery', 'sleepQuality', 'energyRecovery', 'travelFatigue']) {
+      expect(axisModifier(person(5), key), key).toBe(axisModifier(person(95), key));
+    }
+  });
+
+  it('leaves openness wired to a knob nothing in this build ever moves', () => {
+    // The fourth state, and the one the screen keeps separate: read, and still
+    // inert. Openness multiplies travelFatigue, and nobody travels.
+    const person = (v: number): Person => {
+      const sim = createSave(1, `open-${v}`, {
+        ...defaultConfig(), personality: { ...flat, openness: v } as never,
+      });
+      return sim.universe.people[sim.universe.playerId]!;
+    };
+    expect(axisModifier(person(5), 'travelFatigue'))
+      .not.toBe(axisModifier(person(95), 'travelFatigue'));
+    // And travel is the only place it reaches. If openness ever touches a knob
+    // the life systems actually move, it stops being inert and the screen is
+    // wrong again — which is the whole way the last count went stale.
+    for (const key of ['stressGain', 'stressRecovery', 'sleepQuality', 'energyRecovery']) {
+      expect(axisModifier(person(5), key), key).toBe(axisModifier(person(95), key));
+    }
+    // Nothing ever raises it, which is the claim — not merely that it ends at
+    // nought. A starting value would decay back to nought on its own and the
+    // end state would look identical, so the run is sampled throughout.
+    const sim = createSave(1, 'open-run', { ...defaultConfig(), personality: flat as never });
+    const worn = () => sim.universe.people[sim.universe.playerId]!.wellbeing.travelFatigue;
+    for (let step = 0; step < 24; step += 1) {
+      expect(worn(), 'somebody traveled, so openness is no longer inert and the screen must say so')
+        .toBe(0);
+      sim.advanceTo(sim.now + month);
+    }
+  });
+
   it('says on the screen which ones are live, rather than implying all of them', () => {
     const source = readFileSync('src/ui/creation/CharacterCreation.tsx', 'utf8');
-    // Substance, not phrasing. The screen has to name the two that are live
+    // Substance, not phrasing. The screen has to name the three that are live
     // and say the rest are not; how it says it is free to be edited.
     expect(source).toMatch(/Emotional Stability/);
     expect(source).toMatch(/Conscientiousness/);
+    expect(source).toMatch(/Ambition/);
     // Whitespace-tolerant: the sentence wraps across lines in the source.
     expect(source.replace(/\s+/g, ' ')).toMatch(/change nothing yet/);
+    // The count is the part that went stale, so it is the part pinned.
+    expect(source.replace(/\s+/g, ' ')).toMatch(/Three of them do something today/);
     // The old copy promised all three of these, and none was true.
     expect(source).not.toContain('They shape how people respond to you');
   });

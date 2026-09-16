@@ -609,11 +609,12 @@ function PersonalStep({
           <div>
             <h2>Personality</h2>
             <p className="muted small">
-              Dispositions, not stats. Two of them do something today: Emotional Stability sets
-              how quickly stress arrives and how quickly it clears, and Conscientiousness sets
-              how well the nights go. The other five are written into the save and change nothing
-              yet — two of them wait on shoots and travel, three wait on other people, and none
-              of that is built.
+              Dispositions, not stats. Three of them do something today: Emotional Stability sets
+              how quickly stress arrives and how quickly it clears, Conscientiousness sets how
+              well the nights go, and Ambition is what pushing past the point a contented person
+              would have stopped at costs you in stress. The other four are written into the save
+              and change nothing yet — Openness waits on travel, and the last three wait on other
+              people. Neither is built.
             </p>
           </div>
         </div>
