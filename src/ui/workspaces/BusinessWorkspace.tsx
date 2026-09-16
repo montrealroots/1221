@@ -251,8 +251,12 @@ function PostForm({ role, onClose, onDone }: {
         </select>
       </div>
       <p className="xs dim" style={{ margin: 0 }}>
-        {facts?.what ?? ''} It pays {formatMoney(facts?.monthlyCents ?? 0, { cents: false })} a month
-        from the day they start, whether or not the company is making anything.
+        {/* The rate, said as a rate. This read "It pays X a month from the day
+            they start, whether or not the company is making anything", which
+            described a standing charge the engine does not make: no clock in
+            world/company.ts bills a filled post, once or monthly. */}
+        {facts?.what ?? ''} The going rate for the job is{' '}
+        {formatMoney(facts?.monthlyCents ?? 0, { cents: false })} a month.
       </p>
     </Modal>
   );
@@ -284,7 +288,7 @@ function Holdings() {
                   </div>
                   <div className="xs muted">
                     {holding.hold === 'option' ? 'Optioned' : holding.hold === 'owned' ? 'Owned outright' : 'Commissioned'}
-                    {holding.expiresAt ? ` · runs out ${formatDate(holding.expiresAt, 'UTC')}` : ''}
+                    {holding.expiresAt ? ` · optioned to ${formatDate(holding.expiresAt, 'UTC')}` : ''}
                   </div>
                 </div>
                 <span className={`chip ${holding.chainComplete ? '' : 'chip-accent'}`}>
@@ -330,9 +334,15 @@ function OptionForm({ onClose }: { onClose: () => void }) {
           onChange={(e) => { setTitle(e.target.value); setError(undefined); }}
         />
       </div>
+      {/* This said "It runs out, and when it does the rights go back to
+          whoever you took them from", which was the flattest promise of a
+          lapse anywhere in the build and the one a player would actually have
+          planned around. No clock takes an option back: the term is written
+          on the agreement, the date is printed on the holding's own page, and
+          a picture can still be greenlit off it in 2046. */}
       <p className="xs dim" style={{ margin: 0 }}>
-        An option is the right to make it for a while, not ownership of it. It runs out, and when it
-        does the rights go back to whoever you took them from.
+        An option is the right to make it for a while, not ownership of it. The term on this one is
+        eighteen months, and buying it outright is a different and dearer thing.
       </p>
       {error && <p className="small negative" style={{ marginTop: 'var(--s3)' }}>{error}</p>}
     </Modal>

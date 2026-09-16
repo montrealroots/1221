@@ -22,6 +22,7 @@ import { quickSave } from '@/engine';
 import type { Simulation } from '@/engine';
 import { GREENLIGHT_FLOOR, capabilitiesOf, companyCash } from '@/engine/world/company';
 import { fixFor } from '@/ui/workspaces/fix';
+import { ROLE_BY_ID } from '@/engine/content/incorporation';
 
 /** Priced, bought with a command, and read by nothing in the engine. */
 const PRICED_AND_QUIET = [
@@ -164,9 +165,12 @@ describe('what the five priced quiet entries decide', () => {
     for (const role of ['development', 'production', 'business_affairs', 'accountant']) {
       staffed.execute({ kind: 'company.fill_post', payload: { role, personId: who.id } });
     }
+    // Off the role's own row and not off the post, because the post no longer
+    // carries a copy of the figure — that copy was written and never read, and
+    // a second answer waiting to disagree with the first is what it would be.
     const promised = Object.values(staffed.universe.posts)
       .filter((one) => one.personId)
-      .reduce((sum, one) => sum + one.monthlyCents, 0);
+      .reduce((sum, one) => sum + (ROLE_BY_ID[one.role]?.monthlyCents ?? 0), 0);
     expect(promised, 'the posts promise nothing, so there is nothing to charge')
       .toBe(45_000_00);
     staffed.advanceTo(staffed.now + months);

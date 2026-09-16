@@ -173,10 +173,30 @@ export const GREENLIGHT_FLOOR: Money = 50_000_00;
 /**
  * Every door, open or shut, in the order a company walks through them.
  *
- * Read from the world every time. Nothing here is stored, because a
- * capability is not a fact about the company — it is an answer about the
- * company, and the moment a registration lapses the answer changes without
- * anybody having to remember to change it.
+ * Read from the world every time. None of it is stored, because a capability
+ * is not a fact about the company — it is an answer about the company, and the
+ * answer moves the moment the world does: put somebody in the head of
+ * production post and `greenlight` names one fewer thing; spend the company
+ * down past the floor and it names one more, with no flag anywhere to set.
+ *
+ * What moves it is what a player does, and only that. This used to say "the
+ * moment a registration lapses the answer changes without anybody having to
+ * remember to change it", which was a promise about a clock that does not
+ * exist: `world/company.ts` schedules nothing. A registration never lapses, a
+ * policy bound in 2026 is still bound in 2046, an option whose term ran out
+ * ten years ago still opens `own_material`, and a post that is filled is
+ * filled for good.
+ *
+ * So exactly two of these nine can ever shut again once they are open, and
+ * neither shuts through anything ending. `greenlight` shuts when the company
+ * falls under `GREENLIGHT_FLOOR`, which on a played career it does a great
+ * deal: across five seeds and twenty-five years the money blocker is on that
+ * door for between ten and fifteen weeks in a hundred. And `deliver` shuts
+ * when a holding with a gap in its
+ * chain of title is taken, because the gap is read every time rather than
+ * remembered. The other seven are one-way. That is the honest shape of a
+ * company with a first day and no subsequent ones, and the measurements
+ * behind it are in `docs/ARREARS.md`.
  */
 export function capabilitiesOf(sim: Simulation): Capability[] {
   const u = sim.universe;
@@ -445,7 +465,6 @@ export function foundTheCompany(sim: Simulation): Company {
       saveId: u.meta.id,
       companyId: company.id,
       role,
-      monthlyCents: ROLE_BY_ID[role].monthlyCents,
       ...(holder ? { personId: holder, filledAt: foundedAt } : {}),
     };
     u.posts[post.id] = post;
@@ -682,7 +701,6 @@ export function registerCompanyCommands(sim: Simulation): void {
       kind: payload.policy,
       insurer: INSURER,
       limitCents: facts.limitCents,
-      premiumCents: facts.premiumCents,
       boundAt: s.now,
       renewsAt: addMonths(s.now, 12, s.homeZone),
     };
@@ -758,7 +776,6 @@ export function registerCompanyCommands(sim: Simulation): void {
       saveId: s.universe.meta.id,
       companyId: parent.id,
       role: payload.role,
-      monthlyCents: facts.monthlyCents,
     };
     post.filledAt = s.now;
     post.personId = person.id;
@@ -766,8 +783,19 @@ export function registerCompanyCommands(sim: Simulation): void {
     s.notify({
       category: 'personal',
       title: `${person.firstName} Is ${facts.label}`,
-      body: `${facts.what} It costs the company ${formatMoney(facts.monthlyCents, { cents: false })} a month, `
-        + 'every month, whether anything is shooting or not.',
+      // What the post does, and what it unshuts. The sentence this replaces
+      // said the company was charged `facts.monthlyCents` "a month, every
+      // month, whether anything is shooting or not", which was the game
+      // telling the player about a standing charge that does not exist:
+      // `world/company.ts` schedules nothing and a filled post is never billed
+      // at all. The rate still stands on the post's own page as what the job
+      // is worth, which is a rate and not a promise.
+      //
+      // What stands in its place is `whereItStands`, which is the one sentence
+      // about this company that is recomputed from the world every time it is
+      // asked — so a hire that unshuts a door says so, and a hire that unshuts
+      // nothing says that too.
+      body: `${facts.what} ${whereItStands(s)}`,
       importance: 50,
     });
     return { ok: true, id: post.id };

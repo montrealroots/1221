@@ -315,6 +315,66 @@ describe('and somebody is paying for that', () => {
     expect(validateUniverse(sim.universe).errors).toEqual([]);
     expect(sim.ledger.audit()).toEqual([]);
   });
+
+  /**
+   * The direction of the money, pinned, because it has been read backwards.
+   *
+   * A reading of the ledger once put the minimum company balance at
+   * -EUR 638,961 and laid it at this function's door. The function only ever
+   * pays money in: it cannot take an account under, and on an account that is
+   * already square it does not move at all. What takes the company under is
+   * `sim.expense`, which carries no balance check — seven overhead lines
+   * charged one at a time by `chargeTheMonth` before this runs at the end of
+   * the same handler.
+   */
+  it('only ever pays in, and leaves a square account alone', () => {
+    const sim = yearsOn('lot-direction', 3);
+    const lot = Object.values(sim.universe.properties ?? {}).find((one) => one.kind === 'studio_lot');
+    const account = Object.values(sim.universe.accounts)
+      .find((one) => one.ownerId === lot!.ownerId && one.kind === 'company_cash')!;
+
+    // Square, and well short of a month of overhead: the family does nothing.
+    account.balance = 1_00;
+    const beforeSquare = paidInSoFar(sim);
+    expect(familyCovers(sim, account.id, 0), 'covered an account that was not under').toBe(0);
+    expect(account.balance, 'moved an account that was square').toBe(1_00);
+    expect(paidInSoFar(sim)).toBe(beforeSquare);
+
+    // Under, and the check goes one way. Three years in the family is still
+    // on an unconditional rung, so a month that earned nothing is covered.
+    account.balance = -250_000_00;
+    expect(standingWith(sim).conditional, 'three years in and already conditional').toBe(false);
+    const put = familyCovers(sim, account.id, 0);
+    expect(put, 'the family took money out').toBeGreaterThan(0);
+    expect(account.balance).toBeGreaterThanOrEqual(0);
+    expect(account.balance, 'topped up past a round hundred thousand').toBeLessThan(100_000_00);
+  });
+
+  /**
+   * And the dip nobody is ever in.
+   *
+   * `chargeTheMonth` posts every overhead line before it calls the family, so
+   * a running balance replayed off the ledger passes through a trough a whole
+   * month of overhead deep. The world is never in that state: the same handler
+   * call puts it right, and what a screen or a door reads is the figure after.
+   */
+  it('ends the month tick above water, however deep the tick went', () => {
+    const sim = yearsOn('lot-trough', 3);
+    const lot = Object.values(sim.universe.properties ?? {}).find((one) => one.kind === 'studio_lot');
+    const account = Object.values(sim.universe.accounts)
+      .find((one) => one.ownerId === lot!.ownerId && one.kind === 'company_cash')!;
+
+    // Enough to start the month square and nowhere near enough to finish it.
+    account.balance = 50_000_00;
+    const owed = monthlyOverhead(sim);
+    expect(owed, 'a month of it should dwarf what is in there').toBeGreaterThan(account.balance);
+
+    chargeTheMonth(sim, account.id, 0);
+    expect(account.balance, 'the month ended under water').toBeGreaterThanOrEqual(0);
+    // The trough the ledger passes through, said as arithmetic rather than as
+    // a state: what was there, less what a month costs.
+    expect(50_000_00 - owed).toBeLessThan(0);
+  });
 });
 
 describe('what a production is actually weighing', () => {

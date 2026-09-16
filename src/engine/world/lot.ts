@@ -605,9 +605,34 @@ export const PAID_IN = `Paid In By ${GROUP.name}`;
  * Without this the company's cash just goes negative and stays there, month
  * after month, with nothing on any screen saying who is actually funding it —
  * which is a number nobody can open, and the one thing this game is not
- * allowed to have. A private Icelandic company with no facility and no
- * revenue does not run thirteen million euros overdrawn. Somebody is paying,
- * and here it is the family, out of money the game has not modeled yet.
+ * allowed to have. Switched off and measured, a played career runs the company
+ * to between EUR 27.8m and EUR 30.9m overdrawn inside five years on three
+ * seeds, and it never comes back. A private Icelandic company with no facility
+ * and no revenue does not run twenty-eight million euros overdrawn. Somebody
+ * is paying, and here it is the family, out of money the game has not modeled
+ * yet.
+ *
+ * Which makes the direction worth saying out loud, because it has been read
+ * backwards: this function only ever pays money IN. It cannot take an account
+ * under. What takes the company under is `sim.expense`, which has no balance
+ * check — the seven overhead lines charged one at a time in `chargeTheMonth`
+ * above, and the periods spending a budget as they run. A running balance
+ * replayed off the ledger therefore dips by a whole month of overhead every
+ * first of the month, between the first line posting and this function running
+ * at the end of the same handler. That dip is real arithmetic, and FOR THE
+ * FIRST DECADE it is not a state the world is ever in: on the default seed the
+ * lowest a day ends in ten years, idle or played, is EUR 11,561 in hand.
+ *
+ * It stops being only arithmetic once the family reaches the last rung of
+ * `PATIENCE`. Past there, a month the lot earned nothing gets no check at all,
+ * and the account simply ends the month one whole overhead below where it
+ * started — so the same six-hundred-thousand figure stops being a value a
+ * replay passes through and becomes a balance the company sits at. Measured
+ * over twenty-five played years on the default seed, the lowest a day ENDS is
+ * EUR 1,601,071 under, on the first of February 2048, and eighteen separate
+ * days end under water. That is the company running out of family, and it is
+ * not fixed here: this paragraph exists so the next person reads the ten-year
+ * figure as the ten-year figure rather than as the whole of it.
  *
  * So the shortfall is topped up in round hundreds of thousands and posted
  * under the name of the business it comes out of. What it buys is the figure

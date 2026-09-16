@@ -102,7 +102,15 @@ export interface RegistryFacts {
   cost: Money;
   /** Whether the company must be on it to trade at all. */
   required: boolean;
-  /** How often it wants something filed, in months. Nought for never. */
+  /**
+   * How often the body wants something filed, in months. Nought for never.
+   *
+   * What the register asks for, and not a cadence this build keeps: nothing
+   * files, nothing charges a filing fee and no registration is ever struck off
+   * for missing one. It is used once, to date `Registration.nextDueAt` when a
+   * registration is written, and printed beside it. Read it as a fact about
+   * Fyrirtækjaskrá and Skatturinn.
+   */
   filesEveryMonths: number;
 }
 

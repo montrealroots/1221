@@ -266,16 +266,22 @@ defineLook<Register>('register', {
             <Stat
               label="Files Every"
               value={facts.filesEveryMonths === 0 ? 'Never' : said(facts.filesEveryMonths, 'month')}
-              note={facts.filesEveryMonths === 0 ? 'No filing to keep up' : 'For as long as it exists'}
+              note={facts.filesEveryMonths === 0 ? 'No filing to keep up' : 'What the body asks for'}
             />
           </div>
         </>
       ),
+      // A date on the record, said as one. This was labelled 'When It’s Next
+      // Due' and printed a countdown beside it, which twenty years into a save
+      // read as a filing overdue by two decades: the date is written once when
+      // the registration is and no clock in this build ever moves it or acts
+      // on it. The cadence beside it, in the stat above, is what the body
+      // actually wants.
       ways: on && on.nextDueAt
         ? [{
           to: at('day', ''),
-          label: 'When It’s Next Due',
-          detail: `${formatDate(on.nextDueAt, sim.homeZone)}, ${formatRelative(on.nextDueAt, sim.now)}`,
+          label: 'The Filing Date On Record',
+          detail: `${formatDate(on.nextDueAt, sim.homeZone)}, written with the registration and not moved since.`,
         }]
         : [],
       provenance: 'Body and mechanism are real. The fee is SLATE’s own estimate.',
@@ -367,7 +373,11 @@ defineLook<Covered>('cover', {
       kind: bound ? 'Cover The Company Carries' : 'Cover It Doesn’t Carry',
       parent: company ? at('firm', company.id) : undefined,
       summary: bound
-        ? `Bound with ${bound.insurer} to ${moneyOf(bound.limitCents)}, renewing ${formatRelative(bound.renewsAt, sim.now)}.`
+        // What the paper says, and not what happens next. This read "renewing
+        // in eight months", which promised a renewal the build has no clock to
+        // perform: cover bound once is carried for the life of the save.
+        ? `Bound with ${bound.insurer} to ${moneyOf(bound.limitCents)}, on a term written to `
+          + `${formatDate(bound.renewsAt, sim.homeZone)}.`
         : `Not bound. ${facts.why}`,
       body: (
         <>
@@ -376,7 +386,11 @@ defineLook<Covered>('cover', {
           <div className="grid grid-3">
             <Stat label="Bound" value={bound ? 'Yes' : 'No'} note={bound ? bound.insurer : 'Nothing behind it'} />
             <Stat label="Pays Out To" value={moneyOf(facts.limitCents)} note="At most" />
-            <Stat label="A Year Of It" value={moneyOf(facts.premiumCents)} note={facts.standing ? 'Carried always' : 'Carried while shooting'} />
+            <Stat
+              label="What It Was Written At"
+              value={moneyOf(facts.premiumCents)}
+              note={facts.standing ? 'A year of a policy a company carries always' : 'A year of a policy a company carries while shooting'}
+            />
           </div>
         </>
       ),
@@ -416,10 +430,16 @@ defineLook<Holding>('holding', {
       body: (
         <>
           <p className="small">
+            {/* The same lapse promise that stood in the Take An Option modal,
+                and the same correction: the agreement carries a term, the term
+                is printed below, and no clock in this build runs it out or
+                hands the rights back. Saying "owned outright is the only hold
+                with no clock on it" was the sharpest version of the lie,
+                because there is no clock on either. */}
             {holding.hold === 'option'
-              ? 'An option is the right to make it for a while, not ownership of it. It runs out, and when '
-                + 'it does the rights go back to whoever they came from.'
-              : 'Owned outright. It’s the only kind of hold with no clock on it.'}
+              ? 'An option is the right to make it for a while, not ownership of it. The term it was '
+                + 'written for is below, and buying it outright is a different and dearer thing.'
+              : 'Owned outright. There’s no term on it and nobody to hand it back to.'}
           </p>
           <p className="small">
             <strong>Chain of title. </strong>
@@ -432,9 +452,9 @@ defineLook<Holding>('holding', {
           <div className="grid grid-3">
             <Stat label="Held Since" value={formatDate(holding.acquiredAt, sim.homeZone)} note={formatRelative(holding.acquiredAt, sim.now)} />
             <Stat
-              label="Runs Out"
-              value={holding.expiresAt ? formatDate(holding.expiresAt, sim.homeZone) : 'Never'}
-              note={holding.expiresAt ? formatRelative(holding.expiresAt, sim.now) : 'Owned outright'}
+              label="Optioned To"
+              value={holding.expiresAt ? formatDate(holding.expiresAt, sim.homeZone) : 'No end date'}
+              note={holding.expiresAt ? 'The term on the agreement' : 'Owned outright'}
             />
             <Stat
               label="Chain Of Title"
@@ -896,9 +916,9 @@ defineLook<Roled>('role', {
           <div className="grid grid-3">
             <Stat label="Filled" value={who ?? 'Empty'} note={who ? 'In the post' : 'An empty chair runs nothing'} />
             <Stat
-              label="A Month Of It"
+              label="What The Job Is Worth"
               value={facts.monthlyCents === 0 ? 'Nothing' : moneyOf(facts.monthlyCents)}
-              note={facts.monthlyCents === 0 ? 'Whoever owns it does it' : 'Whether anything shoots or not'}
+              note={facts.monthlyCents === 0 ? 'Whoever owns it does it' : 'A month of it, at the going rate'}
             />
             <Stat label="Where" value="Sugar Land" note="There’s nowhere else" />
           </div>

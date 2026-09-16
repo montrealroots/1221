@@ -932,10 +932,20 @@ export function whatSayingYesCosts(role: Role, person: Person, fee: Money): Mone
  *
  * It is not refused, and getting to that was a wrong turn worth recording. A
  * company mid-picture is supposed to be overdrawn: the periods spend the
- * budget as they run and `familyCovers` tops the account back to zero at the
- * end of every month, so on the first day of a shoot this company is routinely
- * a couple of million under. A cash test on casting would have made casting
- * impossible at exactly the moment casting happens.
+ * budget as they run and `familyCovers` tops the account back up at the end of
+ * the month, so on the first day of a shoot this company is routinely a couple
+ * of million under. Measured on played careers, the account sits under water
+ * for thirty-four to sixty-two weeks out of thirteen hundred across five
+ * seeds, at worst EUR 2.5m down. A cash test on casting would have made
+ * casting impossible at exactly the moment casting happens.
+ *
+ * "Back to zero at the end of every month" is what this used to say, and it is
+ * two things too strong. The top-up goes in round hundreds of thousands, so
+ * the account lands a little above zero rather than on it — and past the last
+ * rung of `PATIENCE` the money carries a condition, so a month the lot earned
+ * nothing gets no check at all and the company stays under. Over twenty-five
+ * years that is eight to twenty months of the two hundred and ninety-nine, per
+ * seed, which is the family's patience working exactly as it was built to.
  *
  * What was actually wrong was the silence. The money goes, the family covers
  * it, the share of a year of the group's profit that has gone in ticks up, and
@@ -949,9 +959,10 @@ function sayIfItWentUnder(sim: Simulation, project: Project, before: Money): voi
   sim.notify({
     category: 'business',
     title: `${project.title} Is Spending Money The Company Hasn’t Got`,
-    body: `${money(-after)} under. ${GROUP.name} covers the difference at the end of the month, `
-      + 'and every euro of it is counted against what the family will still put in — which is the '
-      + 'same figure the next picture has to be greenlit against.',
+    body: `${money(-after)} under. ${GROUP.name} has been covering the difference at the end of `
+      + 'the month, and every euro of it is counted against what the family will still put in — '
+      + 'which is the same figure the next picture has to be greenlit against, and the figure that '
+      + 'decides whether the next check comes at all.',
     importance: 60,
     refType: 'project',
     refId: project.id,

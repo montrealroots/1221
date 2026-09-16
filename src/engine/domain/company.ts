@@ -96,6 +96,16 @@ export interface Company {
   /** What it says it is for. Buyers and talent both read this. */
   remit: string;
   foundedAt: Instant;
+  /**
+   * When it was wound up. Never, in this build.
+   *
+   * No command writes it — there is no `company.dissolve` — and five filters
+   * read it: three in `world/company.ts` and two in `ui/looks/estate.tsx`.
+   * Five guards against a state the save cannot reach. They stay because a
+   * company that cannot be wound up is a gap somebody will want closed, and
+   * the filters are where the closing would land; until then, read them as
+   * shape.
+   */
   dissolvedAt?: Instant;
   /**
    * The last thing the family said about carrying this, by rung id.
@@ -157,9 +167,26 @@ export interface Registration {
   /** The number it was given. Shaped like the real thing, invented by SLATE. */
   number: string;
   since: Instant;
-  /** When the next filing is due, where the register wants one. */
+  /**
+   * The date the register would next want something filed.
+   *
+   * Set once, from the cadence on the registry's own row, and never moved
+   * again: the build has no filing, so it has no roll-forward either. One
+   * screen prints the date and calls it what it is. Read it as a fact about
+   * the body rather than as a deadline the engine keeps, because there is no
+   * arrears, no fee and no consequence behind it.
+   */
   nextDueAt?: Instant;
-  /** Struck off, surrendered, or lapsed. */
+  /**
+   * Struck off, surrendered, or lapsed — none of which this build does.
+   *
+   * Registrations only ever start. There is no clock in `world/company.ts`
+   * and no `company.deregister`, so the engine never writes this: the one
+   * writer in the tree is a test that sets it by hand to prove the filter
+   * below it works. It stays because `registrationsOf` filters on it and that
+   * filter is what the test exercises, and because striking off is the shape
+   * the record would want on the day anybody builds it.
+   */
   endedAt?: Instant;
 }
 
@@ -195,6 +222,15 @@ export interface Signature {
    * own row in `content/incorporation.ts`, which is what the screen prints and
    * what `company.sign` charges. A copy on the record would be a second answer
    * waiting to disagree with the first, and nothing ever read it.
+   *
+   * And below it: when the company stopped being signatory, which is never.
+   * A signature only ever starts. `company.sign` writes one and no command
+   * anywhere ends one, so `endedAt` has no writer at all — not in the engine
+   * and not in a test. `signaturesOf` filters on it, which makes that filter a
+   * guard no reachable input trips. It is kept rather than cut because
+   * `globalRuleOne` reads `signedWith`, and the day a guild can pull a
+   * signature is the day that rule starts to bite backwards on a cast already
+   * seated. Until then, treat the filter as a shape and not a rule.
    */
   endedAt?: Instant;
 }
@@ -225,10 +261,39 @@ export interface Policy {
   insurer: string;
   /** What it pays out to, at most. */
   limitCents: Money;
-  /** What it costs a year. */
-  premiumCents: Money;
+  /**
+   * What the premium was is not stored, for the reason the deposit is not.
+   *
+   * It was copied onto the record at binding and then read by nobody: the
+   * screen prints `POLICY_BY_ID[kind].premiumCents` out of content and
+   * `company.insure` charges the same figure out of content, so the copy was a
+   * third voice in a conversation that already had two. The payment is in the
+   * ledger, where a payment belongs.
+   *
+   * Worth saying plainly, because the doc this replaces said "what it costs a
+   * year": the premium is charged once, on the day the cover is bound, and
+   * never again. A year of cover is what the quote describes, not what the
+   * engine bills.
+   */
   boundAt: Instant;
+  /**
+   * The date the term written on the policy runs to.
+   *
+   * A date on the paper, and not a thing that happens. No clock reads it, so
+   * cover bound in 2026 is still opening the `insure_a_shoot` and `greenlight`
+   * doors in 2046 — measured, ten years of it, in `docs/ARREARS.md`. It is set
+   * twelve months out because that is the term an underwriter writes, and it
+   * is printed on one screen as what the term is.
+   */
   renewsAt: Instant;
+  /**
+   * When the cover stopped. Never, in this build.
+   *
+   * There is no writer anywhere in the tree. `policiesOf` filters on it, which
+   * makes that filter the purest example in this file of a guard no reachable
+   * input can trip: a policy enters `policiesOf` on the day it is bound and
+   * stays there for the life of the save.
+   */
   lapsedAt?: Instant;
 }
 
@@ -259,7 +324,18 @@ export interface Holding {
   provenance: Provenance;
   hold: Hold;
   acquiredAt: Instant;
-  /** An option runs out. Ownership does not. */
+  /**
+   * The date an option's term runs to. Ownership carries none.
+   *
+   * What is written on the agreement, and not a thing the build acts on. An
+   * option whose date went by a decade ago is still in `holdingsOf`, still
+   * opens `own_material`, `deliver` and `greenlight`, and `company.develop`
+   * will still stamp a brand-new project `optioned` off it. That is measured
+   * in `docs/ARREARS.md` and it is the whole of why the ledger entry called
+   * "an option you forgot to exercise" names a mistake this build does not let
+   * a player make: there is no clock to run the term out and no
+   * `company.exercise` to beat it.
+   */
   expiresAt?: Instant;
   /**
    * What was paid for it, and what exercising would cost, are not stored.
@@ -298,9 +374,28 @@ export interface Post {
   role: RoleId;
   /** Empty where the post exists and nobody is in it. */
   personId?: Id;
+  /**
+   * What the post costs a month is not stored, and is not charged either.
+   *
+   * The rate was copied here from `ROLE_BY_ID` at boot and at every hire, and
+   * then read by nobody — both screens that print a monthly figure print it
+   * out of content. So the copy went, on the same argument as the guild
+   * deposit and the option fee above it.
+   *
+   * The larger fact the copy was standing in front of: `world/company.ts` has
+   * no clock, so a filled post is never charged at all — not once, not
+   * monthly. Filling development, production, business affairs and the
+   * accountant on the first morning quotes EUR 38,000 a month, which over five
+   * played years is EUR 2,280,000 by the words. Measured paired against the
+   * same three seeds with the posts left empty, the company account ends on
+   * the same cent, and the ledger carries nought lines naming any post.
+   *
+   * So filling a post is free, and free is why it is never a decision.
+   * Charging for it wants a monthly tick, which is a larger thing than a
+   * field, and it is the owner's to call: the rate is quoted on two screens
+   * and it should go on being quoted, because a rate is a fact about the job.
+   */
   filledAt?: Instant;
-  /** What the post costs the company a month. */
-  monthlyCents: Money;
 }
 
 // ---------------------------------------------------------------------------
