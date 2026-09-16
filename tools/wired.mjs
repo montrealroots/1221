@@ -116,28 +116,17 @@ function group(name, what, dead, hint) {
     'A guard on a key no trait declares is left over from a system that was deleted.');
 }
 
-// 4. The dials on a person that nothing moves. A field with one seed writer and
-//    no mover is a number the player watches never change.
-{
-  const model = SOURCE.get('src/engine/domain/model.ts');
-  const dead = [];
-  for (const shape of ['Reputation', 'Wellbeing']) {
-    const start = model.indexOf(`export interface ${shape} {`);
-    if (start < 0) continue;
-    const body = model.slice(start, model.indexOf('\n}', start));
-    for (const m of body.matchAll(/^\s{2}([a-zA-Z][a-zA-Z0-9]*)(\??):\s*number/gm)) {
-      const field = m[1];
-      // Moved when something assigns to it outside the model and outside the
-      // two constructors that seed a person.
-      const others = everywhereBut('src/engine/domain/model.ts', 'src/engine/world/bootstrap.ts', 'src/engine/world/family.ts');
-      const moves = new RegExp(`\\.${field}\\s*(?:=|\\+=|-=)`).test(others)
-        || new RegExp(`\\b${field}:\\s*clamp`).test(others);
-      if (!moves) dead.push(`${shape}.${field}`);
-    }
-  }
-  group('Dials nothing moves', 'every numeric field on Reputation and Wellbeing', dead,
-    'A dial seeded once and never moved is a number the player is invited to care about for no reason.');
-}
+// 4. The dials on a person that nothing moves USED to be asked here, and this
+//    file cannot answer it. Everything above is a question about whether a word
+//    is READ, which a regular expression over the source can settle. Whether a
+//    NUMBER MOVES is a question about what happens when the game runs, and the
+//    regex that stood here answered a different one: it matched any assignment,
+//    so a one-way ratchet like `w.fitness = clamp(Math.min(w.fitness - 0.18,
+//    ceiling), 0, 100)` scored as a live dial, and `travelFatigue`, whose only
+//    writes are subtractions from a seed of nought, scored as live while
+//    holding one value for a whole life. It reported nought dead. The honest
+//    figure is eight. `tools/dials.mjs` plays a career and counts them, and
+//    owns the "Dials nothing moves" key in the baseline this file writes.
 
 // 4b. The personality axes are a character sheet, not a set of dials: they are
 //     meant to be fixed at creation. So the honest question is not whether
@@ -188,7 +177,12 @@ for (const f of findings) {
 console.log(`\n${total} declared words that nothing reads.`);
 
 if (BLESS) {
-  writeFileSync(BASELINE, `${JSON.stringify({ note: 'Set by tools/wired.mjs --bless. These may fall. They may not rise.', counts }, null, 2)}\n`);
+  // Merge rather than overwrite: tools/dials.mjs owns a key in this file and
+  // has to run the game to work it out, so blessing from here must leave it be.
+  const held = existsSync(BASELINE) ? JSON.parse(readFileSync(BASELINE, 'utf8')).counts : {};
+  const note = 'Set by tools/wired.mjs --bless, except "Dials nothing moves", which is '
+    + 'tools/dials.mjs --bless. These may fall. They may not rise.';
+  writeFileSync(BASELINE, `${JSON.stringify({ note, counts: { ...held, ...counts } }, null, 2)}\n`);
   console.log(`\nBaseline written to ${BASELINE}.`);
   process.exit(0);
 }

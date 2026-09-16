@@ -1,10 +1,10 @@
 {
-  "note": "Set by tools/wired.mjs --bless. These may fall. They may not rise.",
+  "note": "Set by tools/wired.mjs --bless, except \"Dials nothing moves\", which is tools/dials.mjs --bless. These may fall. They may not rise.",
   "counts": {
     "Id namespaces": 0,
     "Trait modifier keys": 47,
     "Higher-is-worse guards": 0,
-    "Dials nothing moves": 0,
+    "Dials nothing moves": 8,
     "Personality axes nothing consults": 3,
     "Save tables nothing fills": 0
   }
