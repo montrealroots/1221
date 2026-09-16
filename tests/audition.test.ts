@@ -20,10 +20,11 @@ import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
 import type { Simulation } from '@/engine';
-import type { Audition, Booking } from '@/engine/domain/model';
+import type { Audition, Booking, Person } from '@/engine/domain/model';
 import { sheetOf } from '@/engine/domain/attributes';
 import { MS_DAY } from '@/engine/core/time';
 import { makeRng } from '@/engine/core/rng';
+import { playACareer } from './played';
 import { MS_WEEK } from '@/engine/world/lot';
 import {
   AS_GOOD_AS_IT_GETS, ASKING_AT, SHUTS_AT, afterTheNote, alreadyUpFor, decideAudition, feeFor,
@@ -37,6 +38,7 @@ import { applySleep, readiness } from '@/engine/systems/life';
 import {
   AS_WRITTEN, A_WORKING_WEEK, CLOSE_ENOUGH, COLD, FURTHEST, HOW_FAR, KNOWN_OF, MISREAD_THE_ROOM,
   HELD_AGAINST_YOU_YEARS, IGNORED, REMEMBERED, SHADES, TOO_FAR, WAYS, WHAT_THEY_OFFER,
+  EXPECTED_OF_ANYBODY,
   type Reading,
 } from '@/engine/content/audition';
 import { SIZES, sizeById } from '@/engine/content/casting';
@@ -547,7 +549,12 @@ describe('being remembered is the ratchet, and a no counts', () => {
       };
     }
     const now = remembersYou(sim, holder);
-    expect(now).toBeCloseTo(was + 3 * REMEMBERED, 6);
+    // Three readings are worth three readings' worth of the distance left to
+    // certainty, not three times `REMEMBERED` added into a ceiling. This
+    // assertion used to be `was + 3 * REMEMBERED` and it was the linear sum
+    // that saturated on the fifth reading and ate fame whole.
+    expect(now).toBeGreaterThan(was);
+    expect(now).toBeCloseTo(COLD + (1 - COLD) * (1 - Math.exp(-3 * REMEMBERED)), 6);
     // And it is these people only. Being read by RÚV is nothing to anybody else.
     expect(remembersYou(sim, 'an American studio, a feature')).toBeCloseTo(COLD, 6);
   });
@@ -908,7 +915,12 @@ describe('fame is the half of the ratchet that travels', () => {
     me.reputation.publicFame = 100;
     const known = remembersYou(sim, nobody);
     expect(known).toBeGreaterThan(cold);
-    expect(known - cold).toBeCloseTo(KNOWN_OF, 6);
+    // A full house's worth of fame closes `KNOWN_OF` of the distance a stranger
+    // has left to certainty, rather than adding `KNOWN_OF` outright. It used to
+    // add, which is why it could be worth 0.5 to a stranger and exactly nothing
+    // to anybody who had had you in five times.
+    expect(known).toBeCloseTo(COLD + (1 - COLD) * (1 - Math.exp(-KNOWN_OF)), 6);
+    expect(known - cold).toBeGreaterThan(0.2);
   });
 
   it('is worth more on its own than any amount of history with one office', () => {
@@ -1273,5 +1285,107 @@ describe('what the room actually pays out', () => {
       else low = mid;
     }
     expect(low).toBeCloseTo(76.31, 1);
+  });
+});
+
+describe('an office that knows you still notices what you are', () => {
+  /** A holder the player has read for this many times, and nothing else. */
+  function afterReadings(times: number): { sim: Simulation; me: Person } {
+    const sim = quickSave({}, 'ratchet-shape');
+    for (let i = 0; i < times; i += 1) {
+      const id = sim.nextId('audition');
+      sim.universe.auditions[id] = {
+        id, saveId: sim.universe.meta.id, bookingId: `b${i}`, holder: 'them',
+        size: 'guest', feeCents: 0, from: 0, to: 0, closesAt: 0,
+        wants: { warmth: 0, size: 0, pace: 0 }, state: 'over', why: 'went-another-way',
+      };
+    }
+    return { sim, me: sim.universe.people[sim.universe.playerId]! };
+  }
+
+  const worthOfFame = (times: number): number => {
+    const { sim, me } = afterReadings(times);
+    me.reputation.publicFame = 0;
+    const unknown = remembersYou(sim, 'them');
+    me.reputation.publicFame = 100;
+    return remembersYou(sim, 'them') - unknown;
+  };
+
+  it('never stops counting fame, however many times they have had you in', () => {
+    // It used to stop dead. `COLD` is 0.35 and a reading is worth 0.16, so the
+    // sum reached the top of its clamp on the fifth reading and fame was worth
+    // exactly nought from there on — measured at 0.5000, 0.4900, 0.3300,
+    // 0.0000, 0.0000, 0.0000, 0.0000 across 0, 1, 2, 5, 10, 20 and 40 readings.
+    // Three of those are a taper and four are a cliff.
+    for (const times of [0, 1, 2, 5, 10, 20, 40]) {
+      expect(worthOfFame(times), `${times} readings`).toBeGreaterThan(0);
+    }
+    // And it tapers, which is the shape the cliff was pretending to be: fame
+    // opens a door with people who do not know you, and people who have had you
+    // in forty times already know what you are.
+    expect(worthOfFame(0)).toBeGreaterThan(worthOfFame(5));
+    expect(worthOfFame(5)).toBeGreaterThan(worthOfFame(20));
+    expect(worthOfFame(20)).toBeGreaterThan(worthOfFame(40));
+  });
+
+  it('keeps every reading worth something, and each one worth less', () => {
+    const at = (times: number): number => {
+      const { sim } = afterReadings(times);
+      return remembersYou(sim, 'them');
+    };
+    // Every reading is worth more than nothing, and each is worth less than the
+    // one before it. Compared one reading at a time, so the steps are equal
+    // widths and the comparison means something.
+    let step = Infinity;
+    for (let times = 1; times <= 20; times += 1) {
+      const gained = at(times) - at(times - 1);
+      expect(gained, `reading ${times} was worth nothing`).toBeGreaterThan(0);
+      expect(gained, `reading ${times} was worth more than the one before`)
+        .toBeLessThanOrEqual(step + 1e-9);
+      step = gained;
+    }
+    // A stranger is `COLD` exactly, and nobody is ever certain.
+    expect(at(0)).toBe(COLD);
+    expect(at(200)).toBeLessThanOrEqual(1);
+  });
+
+  it('is not pinned at the top across a career somebody actually plays', () => {
+    // The measurement that found it, and the reason it is taken on a played
+    // save: 92.4% of the readings a player gives were to an office pinned at
+    // 1.000, so nothing they did afterwards changed how often it called.
+    const sim = quickSave({}, 'ratchet-career');
+    const pinned: number[] = [];
+    const seen: number[] = [];
+    playACareer(sim, 25, {
+      eachWeek: (at) => {
+        for (const one of goingNow(at)) {
+          const held = remembersYou(at, one.holder);
+          seen.push(held);
+          if (held >= 0.9999) pinned.push(held);
+        }
+      },
+    });
+    expect(seen.length, 'nobody was ever asked, so this proves nothing')
+      .toBeGreaterThan(40);
+    expect(pinned.length / seen.length).toBeLessThan(0.5);
+  });
+
+  it('makes being difficult cost work over a career, and smoothly', () => {
+    // It cost work before too, but as a cliff: reliability 0 gave 127 parts
+    // and 30 gave 171, which is a thirty-five percent jump between two numbers
+    // a player cannot tell apart. The curve is the fix, not the direction.
+    const run = (reliability: number): number => {
+      const sim = quickSave({}, 'ratchet-rel');
+      const me = sim.universe.people[sim.universe.playerId]!;
+      return playACareer(sim, 10, {
+        eachWeek: () => { me.reputation.reliability = reliability; },
+      }).cast;
+    };
+    const difficult = run(0);
+    const ordinary = run(EXPECTED_OF_ANYBODY);
+    expect(difficult).toBeLessThan(ordinary);
+    // Being better than expected buys nothing, which is deliberate and said in
+    // the docstring: it is a cost the premise leaves available, not a bonus.
+    expect(run(100)).toBe(ordinary);
   });
 });

@@ -184,6 +184,32 @@ export function shutWhatHasClosed(sim: Simulation): Audition[] {
  *
  * Worked out from the readings and the person rather than stored, so it cannot
  * drift from the things that earned it.
+ *
+ * ## Why it is a closing gap and not a sum
+ *
+ * It was a sum in a clamp, and the clamp ate the model. `COLD` is 0.35 and a
+ * reading is worth 0.16, so the fifth reading with anybody reached one before
+ * fame had contributed a thing — and `relied` is a penalty of at most 0.3,
+ * nowhere near enough to pull a saturated sum back under. Measured over three
+ * played careers of twenty-five years: pinned at 1.000 in 92.4% of the readings
+ * a player actually gives, and identical at reliability 0 and reliability 100
+ * for 93.3% of the offices they had ever met.
+ *
+ * `docs/DEPTH.md` has a task marked closed that reads *make fame, appeal and
+ * reliability decide something*. This is the function that was supposed to do
+ * it, and in nine readings out of ten none of the three decided anything at
+ * all: an office that had seen you five times thought of you exactly as often
+ * as one that had seen you fifty, whether you had been a pleasure or a
+ * liability, famous or unknown.
+ *
+ * So everything earned closes a share of the distance to certainty rather than
+ * adding into a ceiling. A stranger starts at `COLD`. Good things move you a
+ * fraction of what is left, which means the tenth reading is worth less than
+ * the first and still worth something, and nothing is ever swallowed. Bad
+ * things — asks you ignored, a reputation for being difficult — close the
+ * distance the other way, toward nought. It cannot reach either end, which is
+ * the point: there is no office that certainly calls and none that certainly
+ * will not.
  */
 export function remembersYou(sim: Simulation, holder: string): number {
   const me = sim.universe.people[sim.universe.playerId];
@@ -195,11 +221,16 @@ export function remembersYou(sim: Simulation, holder: string): number {
   // premise leaves available.
   const relied = Math.min(0,
     ((me?.reputation.reliability ?? EXPECTED_OF_ANYBODY) - EXPECTED_OF_ANYBODY) / EXPECTED_OF_ANYBODY);
-  return clamp(
-    COLD + readFor(sim, holder).length * REMEMBERED + (fame / 100) * KNOWN_OF + relied * RELIED_ON
-      - ignoredBy(sim, holder) * IGNORED,
-    0, 1,
-  );
+  const earned = readFor(sim, holder).length * REMEMBERED
+    + (fame / 100) * KNOWN_OF
+    + relied * RELIED_ON
+    - ignoredBy(sim, holder) * IGNORED;
+  // A share of what is left in whichever direction, so no term can be eaten by
+  // a ceiling and none of them ever stops counting.
+  const moved = earned >= 0
+    ? (1 - COLD) * (1 - Math.exp(-earned))
+    : COLD * (Math.exp(earned) - 1);
+  return clamp(COLD + moved, 0, 1);
 }
 
 // ---------------------------------------------------------------------------
