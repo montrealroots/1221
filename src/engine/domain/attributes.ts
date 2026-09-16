@@ -1310,11 +1310,24 @@ export interface TraitHolder {
   prodigy?: boolean;
 }
 
-/** System knobs where a bigger number is the worse outcome. */
+/**
+ * System knobs where a bigger number is the worse outcome.
+ *
+ * Seven, and it was thirteen. The six that went — `overrunOdds`, `draftDays`,
+ * `coverageDays`, `decisionDays`, `dealDays` and `healthDrain` — flipped the
+ * sign for knobs no trait in the game declares, so there was nothing for any of
+ * them to flip. They are the shape a deleted system leaves behind: a rule about
+ * a word, kept after the word went.
+ *
+ * The seven left all name a knob some trait really carries, which is the test
+ * `tests/taste.test.ts` holds this set to. It is a lower bar than being read —
+ * only `stressPerShootDay` of these is ever actually passed to
+ * `systemModifier` — and it is the right bar, because a dormant knob is dormant
+ * on purpose here and the guard is part of what it would mean when it wakes.
+ */
 export const SYSTEM_HIGHER_IS_WORSE: ReadonlySet<string> = new Set([
   'stressPerShootDay', 'injuryRisk', 'relationshipDecay', 'burnoutRisk',
-  'crewFriction', 'criticalScrutiny', 'audienceVariance', 'overrunOdds',
-  'draftDays', 'coverageDays', 'decisionDays', 'dealDays', 'healthDrain',
+  'crewFriction', 'criticalScrutiny', 'audienceVariance',
 ]);
 
 /**

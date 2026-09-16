@@ -142,9 +142,17 @@ the acting traits, and until now nothing counted them at all. They are named in
 the same test now, so the two families are held to one standard: dormant on
 purpose, rather than dormant by nobody looking.
 
-**6 higher-is-worse guards** — `coverageDays`, `dealDays`, `decisionDays`,
+~~**6 higher-is-worse guards** — `coverageDays`, `dealDays`, `decisionDays`,
 `draftDays`, `healthDrain`, `overrunOdds` — guarding keys no trait declares.
-Left over from systems that were deleted.
+Left over from systems that were deleted.~~ **Gone.** Verified before cutting:
+`SYSTEM_HIGHER_IS_WORSE` is consulted only inside `systemModifier`, which is
+reached only through `modifierFor`, which is called at three sites with two
+literal keys, neither of them one of the six. Deleting them could not move an
+outcome, and that is a proof rather than a run. The seven that remain each name
+a knob some trait really carries, which `tests/taste.test.ts` now holds the set
+to — a lower bar than being read, and the right one, because a dormant knob is
+dormant on purpose here and its guard is part of what it will mean when
+something wakes it.
 
 **104 id namespaces** of 125, each a noun with no `nextId` call site: a table
 the game never fills.

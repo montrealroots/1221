@@ -16,8 +16,8 @@ import {
   affinity, axisModifier, caresAbout, holdsTrait, lovesGenre, sharedGround, tasteOf,
   traitModifier, unknownTaste,
 } from '@/engine/core/taste';
-import { PERSONALITY_TRAIT_BY_ID } from '@/engine/content/personality-traits';
-import { TRAITS } from '@/engine/domain/attributes';
+import { PERSONALITY_HIGHER_IS_WORSE, PERSONALITY_TRAIT_BY_ID } from '@/engine/content/personality-traits';
+import { SYSTEM_HIGHER_IS_WORSE, TRAITS } from '@/engine/domain/attributes';
 import type { Person } from '@/engine/domain/model';
 
 function playerWith(seed: string, config: Partial<Parameters<typeof createSave>[2]>): Person {
@@ -161,6 +161,34 @@ describe('what the personality traits actually do', () => {
     // and share nothing else.
     expect(dormant).toContain('audienceAppeal');
     expect(dormant).toContain('professionalReputation');
+  });
+
+  it('guards no knob that no trait carries, which is what a deleted system leaves', () => {
+    // A higher-is-worse guard flips the sign on a knob. Six of the thirteen
+    // flipped the sign on knobs no trait in the game declares — `overrunOdds`,
+    // `draftDays`, `coverageDays`, `decisionDays`, `dealDays`, `healthDrain` —
+    // so there was nothing for any of them to flip. A rule about a word, kept
+    // after the word went.
+    //
+    // The bar here is deliberately lower than being READ: only
+    // `stressPerShootDay` of the seven is ever passed to `systemModifier`. A
+    // dormant knob is dormant on purpose in this codebase, and its guard is
+    // part of what it will mean when something wakes it. What cannot be
+    // defended is a guard on a knob that does not exist anywhere.
+    const carried = new Set<string>();
+    for (const trait of TRAITS) {
+      for (const key of Object.keys(trait.systemMods ?? {})) carried.add(key);
+    }
+    for (const trait of Object.values(PERSONALITY_TRAIT_BY_ID)) {
+      for (const key of Object.keys(trait.systemMods ?? {})) carried.add(key);
+    }
+    const orphaned = [...SYSTEM_HIGHER_IS_WORSE].filter((key) => !carried.has(key)).sort();
+    expect(orphaned, 'a guard on a knob no trait carries').toEqual([]);
+    const orphanedToo = [...PERSONALITY_HIGHER_IS_WORSE].filter((key) => !carried.has(key)).sort();
+    expect(orphanedToo, 'the same, one file over').toEqual([]);
+    // And the guards are a real subset, not every knob relabelled — a set that
+    // held everything would say nothing about direction.
+    expect(SYSTEM_HIGHER_IS_WORSE.size).toBeLessThan(carried.size);
   });
 });
 
