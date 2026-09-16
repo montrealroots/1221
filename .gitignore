@@ -32,3 +32,8 @@ shots-tour/
 shots-scene/
 shots-dealer/
 shots-date/
+
+# Worktrees the agent harness checks out while a workflow is running. They are
+# whole copies of this repository, they are locked while their agent is alive,
+# and they are gone when it finishes — so they are infrastructure, not content.
+.claude/worktrees/

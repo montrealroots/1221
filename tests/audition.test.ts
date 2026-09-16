@@ -473,6 +473,26 @@ describe('being cast is time you no longer have', () => {
     expect(held('no-such-size', 14)).toBe(14);
   });
 
+  it('refuses to report a career in which a scheduled system stopped running', () => {
+    // The guard exists because the failure it catches is invisible. A handler
+    // that throws is caught, marked missed and left as a notification, so the
+    // career runs to the end and every total it reports still looks reasonable.
+    // A measurement once read fitness at its seed of fifty and called that the
+    // effect it was hoping for, when the truth was that the daily model had
+    // thrown on its first line every day and never decayed anything.
+    const sim = quickSave({}, 'stopped');
+    sim.onSchedule('test.a_system_that_throws', () => { throw new Error('the roof fell in'); });
+    sim.schedule({
+      at: sim.now + MS_WEEK,
+      kind: 'test.a_system_that_throws',
+      label: 'A System That Throws',
+      category: 'system',
+      priority: 10,
+    });
+    expect(() => playACareer(sim, 1)).toThrow(/scheduled system failed/);
+    expect(() => playACareer(quickSave({}, 'stopped-b'), 1)).not.toThrow();
+  });
+
   it('is handed nothing but whole weeks, which is why it needs no far-end clamp', () => {
     // `heldUntil` walks a part-scoped engagement forward from its first day and
     // never checks that it landed inside the run, because on a whole number of

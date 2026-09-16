@@ -33,6 +33,13 @@ export interface HowTheyPlay {
   opening?: Reading;
   /** Called at the end of every week, for whatever else is being measured. */
   eachWeek?: (sim: Simulation, week: number) => void;
+  /**
+   * Lets the career run on even though a scheduled system is failing.
+   *
+   * Only for a measurement whose whole point is a broken handler. Everything
+   * else wants the throw, for the reason in `THE WEEK A SYSTEM STOPPED` below.
+   */
+  evenIfSomethingBroke?: boolean;
 }
 
 export interface WhatHappened {
@@ -63,6 +70,25 @@ export function playACareer(sim: Simulation, years: number, how: HowTheyPlay = {
 
   for (let week = 1; week <= years * 52; week += 1) {
     sim.advanceTo(sim.now + MS_WEEK);
+    // THE WEEK A SYSTEM STOPPED.
+    //
+    // A scheduled handler that throws is caught, marked missed, and left as a
+    // notification — the career goes on and every total it reports still looks
+    // reasonable. That is how a measurement once "proved" a causal chain from a
+    // mutation that threw a ReferenceError on its first line every single day:
+    // the daily wellbeing model never ran, fitness read its seed of fifty
+    // because it was never decayed, and the frozen number was mistaken for the
+    // effect somebody was hoping for. `npx vite-node` does not typecheck, so
+    // nothing else was going to catch it.
+    //
+    // So the instrument refuses to hand back numbers from a world where a
+    // system stopped. It is the cheapest possible guard and it is here because
+    // the expensive version of this lesson has already been paid for.
+    //
+    // Read off the notification and not off `AdvanceResult.missed`, because an
+    // item is also marked missed when its kind simply has no handler — which is
+    // an ordinary thing for a save written by another build. The notification is
+    // written on the throwing path and only there.
     for (const one of Object.values(sim.universe.auditions)) {
       if (seen.has(one.id)) continue;
       seen.add(one.id);
@@ -76,6 +102,18 @@ export function playACareer(sim: Simulation, years: number, how: HowTheyPlay = {
       if (one.state === 'noted') takeTheNote(sim, { auditionId: one.id, howFar });
     }
     how.eachWeek?.(sim, week);
+  }
+
+  const broke = sim.universe.notifications
+    .filter((note) => note.title === 'A Scheduled Event Could Not Be Processed');
+  if (broke.length > 0 && how.evenIfSomethingBroke !== true) {
+    const said = [...new Set(broke.map((note) => note.body))].slice(0, 5).map((why) => `  ${why}`).join('\n');
+    throw new Error(
+      `A scheduled system failed ${broke.length} time${broke.length === 1 ? '' : 's'} during this `
+      + `career, so these numbers describe a world where part of the engine stopped `
+      + `running:\n${said}\n`
+      + `Fix it, or pass evenIfSomethingBroke if a broken handler is what is being measured.`,
+    );
   }
 
   return {
