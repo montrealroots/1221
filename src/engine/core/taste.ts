@@ -101,15 +101,13 @@ function lean(value: number): number {
  *   content would stop, and it shows up as stress.
  * - Conscientiousness is routine, and routine is what sleep is made of, so it
  *   moves both how well a night goes and how much of it comes back as energy.
- * - Openness is how a new place lands. Somebody experimental is not worn down
- *   by being somewhere unfamiliar the way a conventional person is — which is
- *   read here and reaches nothing, because it multiplies `travelFatigue` and
- *   nobody in this build travels. Openness is the one axis that is wired and
- *   still inert, and it is a different state from the three below.
- *
- * Extraversion, agreeableness and risk tolerance are about other people and
- * about choices, and this build has neither. They are recorded and read by
- * nothing, and the creation screen says so rather than implying otherwise.
+ * Openness, extraversion, agreeableness and risk tolerance are about new
+ * places, other people and choices, and this build has none of the three.
+ * They are recorded and read by nothing, and the creation screen says so
+ * rather than implying otherwise. Openness used to be the fourth case here,
+ * scaling how fast `travelFatigue` came off — a decay on a number nothing
+ * ever raised, so the axis was wired and inert at once. The dial went, and
+ * the case went with it rather than being left reaching for a missing field.
  */
 export function axisModifier(person: Person, key: string): number {
   const p = person.personality;
@@ -117,7 +115,6 @@ export function axisModifier(person: Person, key: string): number {
   const steady = lean(p.emotionalStability);
   const driven = lean(p.ambition);
   const ordered = lean(p.conscientiousness);
-  const open = lean(p.openness);
 
   let value = 1;
   switch (key) {
@@ -125,8 +122,6 @@ export function axisModifier(person: Person, key: string): number {
     case 'stressRecovery': value = 1 + steady * 0.3; break;
     case 'sleepQuality': value = 1 + ordered * 0.1; break;
     case 'energyRecovery': value = 1 + ordered * 0.1; break;
-    // Read as "how much travel bothers you", so openness lowers it.
-    case 'travelFatigue': value = 1 - open * 0.2; break;
     default: return 1;
   }
   return Math.round(Math.max(0.5, Math.min(1.6, value)) * 1000) / 1000;

@@ -37,7 +37,6 @@ import type { Money } from '../core/money';
 import type { Person } from '../domain/model';
 import type { Project } from '../domain/company';
 import { emptyAttributeSheet } from '../domain/attributes';
-import { emptySkillSheet } from '../domain/skills';
 import { freshWellbeing } from '../systems/life';
 import { impliedPerformerTitle } from '../core/performer';
 import { clamp } from '../core/rng';
@@ -231,12 +230,9 @@ function somebodyNew(sim: Simulation, standing: number, next: () => number): Per
       riskTolerance: dial(),
     },
     interests: [],
-    goals: [],
-    lifestyle: 'modest',
     background: 'Crew. Came up through a department and stayed in it.',
     attributes: emptyAttributeSheet(),
     traits: [],
-    skills: emptySkillSheet(),
     wellbeing: freshWellbeing(),
     reputation: {
       publicFame: 0,
@@ -250,7 +246,6 @@ function somebodyNew(sim: Simulation, standing: number, next: () => number): Per
       controversy: 0,
     },
     careerTrack: 'crew',
-    creditScore: 600,
     createdAt: sim.now,
   };
   sim.universe.people[person.id] = person;

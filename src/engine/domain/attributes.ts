@@ -11,9 +11,9 @@
  * Range, Comedy, Musical, Specialty, Professionalism, Industry, Tradition —
  * for anything that wants to average or filter by one.
  *
- * These belong to *performing*. Everybody else has their own skill model (see
- * `skills.ts`); flattening every profession onto a performer's rating sheet would
- * be lazy and wrong.
+ * These belong to *performing*, and to nothing else. There was a second sheet
+ * for ordinary life skills once; it held the prodigy at a hundred and everybody
+ * else at five, moved for nobody, and was read by nothing, so it went.
  *
  * The player holds all of it at once, and a mastery of every genre on top —
  * see `ALL_TRAITS` and `content/genre-mastery.ts`.
@@ -954,8 +954,6 @@ export interface TraitDef {
    */
   /** Flat additions applied to attributes when the trait is held. */
   attributeMods?: Record<string, number>;
-  /** Flat additions applied to skills when the trait is held. */
-  skillMods?: Record<string, number>;
   /** Named multipliers other systems consult, e.g. `auditionVariance`. */
   systemMods?: Record<string, number>;
   /** Traits that cannot be held at the same time. */
@@ -1399,30 +1397,6 @@ export function systemCount(traits: readonly string[], key: string): number {
     if (typeof m === 'number') value += m;
   }
   return value;
-}
-
-/** A skill sheet with every held trait's skill modifiers applied. */
-export function effectiveSkills(
-  sheet: Record<string, number>,
-  traits: readonly string[],
-  opts: { floor?: number } = {},
-): Record<string, number> {
-  const out: Record<string, number> = { ...sheet };
-  for (const id of traits) {
-    const trait = TRAIT_BY_ID[id];
-    if (!trait?.skillMods) continue;
-    for (const [key, delta] of Object.entries(trait.skillMods)) {
-      const base = out[key] ?? 0;
-      const floor = Math.min(opts.floor ?? 0, base);
-      out[key] = Math.max(floor, Math.min(100, base + delta));
-    }
-  }
-  return out;
-}
-
-/** The same, read from the person, so the prodigy's floor is not forgotten. */
-export function skillsOf(person: TraitHolder & { skills: Record<string, number> }, extra: readonly string[] = []): Record<string, number> {
-  return effectiveSkills(person.skills, [...person.traits, ...extra], { floor: person.prodigy ? 100 : 0 });
 }
 
 

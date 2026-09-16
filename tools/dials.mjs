@@ -5,10 +5,15 @@
  * regular expression over the source — a field counts as moved when something
  * somewhere assigns to it — so `w.fitness = clamp(Math.min(w.fitness - 0.18,
  * ceiling), 0, 100)` reads as a live dial although it is a one-way ratchet to
- * nought, and `travelFatigue`, whose only two writes are subtractions from a
- * seed of zero, reads as live although it holds one value for a whole life. A
- * static read can prove a field is WRITTEN. It cannot prove a field MOVES. So
- * this one runs the game instead.
+ * nought. A static read can prove a field is WRITTEN. It cannot prove a field
+ * MOVES. So this one runs the game instead.
+ *
+ * It has already been paid for once. `travelFatigue` was seeded at nought and
+ * written twice, both times by a subtraction, so it held one value for a whole
+ * life while reading as live to every static check there was. This tool called
+ * it — "one value, 0" — and the field, its `axisModifier` case, the four trait
+ * modifiers that declared it, the higher-is-worse guard and the ninth dial on
+ * the screen were deleted together. The count fell from nine to eight.
  *
  * On a career somebody plays, and that part is not a detail. The most expensive
  * recurring mistake in this project is measuring on a save nobody plays: an

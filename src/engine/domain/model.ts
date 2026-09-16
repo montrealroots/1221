@@ -15,7 +15,6 @@ import type { HistoryRecord } from '../core/audit';
 import type { PerformerTitle } from '../core/performer';
 import type { IdNamespace } from '../core/ids';
 import type { AttributeSheet } from './attributes';
-import type { SkillSheet } from './skills';
 
 export type Id = string;
 
@@ -53,10 +52,8 @@ export interface Wellbeing {
   morale: number;
   /** 0-100 physical condition. Not a medical diagnosis, a game state. */
   condition: number;
-  /** 0-100 fitness, moved by exercise and lifestyle. */
+  /** 0-100 fitness, moved by what a body is asked to do and how it is kept. */
   fitness: number;
-  /** Accumulated travel fatigue, decays with time in one place. */
-  travelFatigue: number;
   /** Hunger 0-100 where 100 is fed. */
   nourishment: number;
   /**
@@ -145,8 +142,16 @@ export interface Person {
    * nothing in the simulation reads one to decide anything.
    */
   genres?: string[];
-  goals: string[];
-  lifestyle: 'frugal' | 'modest' | 'comfortable' | 'lavish';
+  /**
+   * The life before this one, in the player's own words.
+   *
+   * Flavor, and deliberately kept as flavor: no attribute, no modifier and
+   * no advantage hangs off it. What stops it being a dead word is that the
+   * game says it back — the person look prints it under their name, for the
+   * player and for every relative the family generator writes one for. A
+   * sentence somebody authored about their own character and never saw again
+   * would be worse than not asking.
+   */
   background: string;
 
   attributes: AttributeSheet;
@@ -160,26 +165,15 @@ export interface Person {
    * four of them, and unlike the craft traits they cost what they cost.
    */
   personalityTraits?: string[];
-  skills: SkillSheet;
-
-  /**
-   * The three that say what kind of actor or actress this is.
-   *
-   * They are not a second sheet. The eighty-eight attributes are the
-   * instrument; these sit on top of it and are the once-in-a-lifetime part.
-   * Unlike an ordinary trait, a G.O.A.T. trait is never paid for with a
-   * weakness somewhere else.
-   */
-  goatTraits?: string[];
 
   /**
    * The once-in-a-lifetime one, and there is exactly one of them in a save.
    *
-   * They hold every attribute, every skill and every trait in the game at the
-   * top of its scale at the same time. For anybody else that combination is
-   * incoherent — most traits are alternatives to each other and all of them
-   * are paid for with a weakness somewhere. The flag says the payment does not
-   * apply here: it never adds anything, it only refuses to subtract.
+   * They hold every attribute and every trait in the game at the top of its
+   * scale at the same time. For anybody else that combination is incoherent —
+   * most traits are alternatives to each other and all of them are paid for
+   * with a weakness somewhere. The flag says the payment does not apply here:
+   * it never adds anything, it only refuses to subtract.
    */
   prodigy?: boolean;
 
@@ -188,7 +182,6 @@ export interface Person {
 
   careerTrack: CareerTrack;
 
-  creditScore: number;
   /** Primary spending account. */
   primaryAccountId?: Id;
 
@@ -736,7 +729,7 @@ export interface Preferences {
  * A save from 76 or earlier has no company at all, which reads correctly as a
  * family that never formed one rather than as a broken save.
  */
-export const SAVE_SCHEMA_VERSION = 78;
+export const SAVE_SCHEMA_VERSION = 79;
 
 export interface SaveMeta {
   id: Id;

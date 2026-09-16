@@ -39,7 +39,7 @@ export const NOURISHMENT_DRAIN_PER_HOUR = 2.0;
 export function freshWellbeing(): Wellbeing {
   return {
     energy: 82, stress: 18, sleepDebt: 0, morale: 62,
-    condition: 88, fitness: 50, travelFatigue: 0, nourishment: 75, hygiene: 80,
+    condition: 88, fitness: 50, nourishment: 75, hygiene: 80,
   };
 }
 
@@ -73,8 +73,6 @@ export function applyElapsedWellbeing(person: Person, hours: number, opts: { asl
   const recovery = modifierFor(person, 'recoveryRate') * personalityOf(person, 'stressRecovery');
   w.stress = clamp(w.stress - hours * 0.35 * recovery, 0, 100);
 
-  // Travel wears off faster on somebody restless and slower on a homebody.
-  w.travelFatigue = clamp(w.travelFatigue - hours * 0.9 * (2 - personalityOf(person, 'travelFatigue')), 0, 100);
   w.hygiene = clamp((w.hygiene ?? 80) - hours * 1.6, 0, 100);
 }
 
@@ -89,11 +87,10 @@ export function readiness(person: Person): number {
   const debtPart = remap(w.sleepDebt, 0, 30, 1.05, 0.66);
   const nourishPart = remap(w.nourishment, 0, 100, 0.78, 1.05);
   const moralePart = remap(w.morale, 0, 100, 0.82, 1.12);
-  const travelPart = remap(w.travelFatigue, 0, 100, 1.0, 0.80);
   // Turning up to a room having not showered in two days is not nothing, but
   // it is not much either: a few points, not a career.
   const cleanPart = remap(w.hygiene ?? 80, 0, 100, 0.92, 1.03);
-  return clamp(100 * energyPart * stressPart * debtPart * nourishPart * moralePart * travelPart * cleanPart / 1.35, 5, 100);
+  return clamp(100 * energyPart * stressPart * debtPart * nourishPart * moralePart * cleanPart / 1.35, 5, 100);
 }
 
 export function wellbeingSummary(person: Person): string {
@@ -235,7 +232,6 @@ export function applySleep(person: Person, hours: number, quality: number, at?: 
   const ceiling = at === undefined ? 100 : ceilingAt(years).condition;
   w.condition = clamp(Math.min(w.condition + restful * 0.9 * (restful > 0 ? banked : 1), ceiling), 0, 100);
   w.morale = clamp(w.morale + restful * 1.6 * (restful > 0 ? banked : 1), 0, 100);
-  w.travelFatigue = clamp(w.travelFatigue - effective * 6, 0, 100);
   w.nourishment = clamp(w.nourishment - hours * 1.6, 0, 100);
 }
 

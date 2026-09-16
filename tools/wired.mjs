@@ -123,15 +123,27 @@ function group(name, what, dead, hint) {
 //    regex that stood here answered a different one: it matched any assignment,
 //    so a one-way ratchet like `w.fitness = clamp(Math.min(w.fitness - 0.18,
 //    ceiling), 0, 100)` scored as a live dial, and `travelFatigue`, whose only
-//    writes are subtractions from a seed of nought, scored as live while
+//    writes were subtractions from a seed of nought, scored as live while
 //    holding one value for a whole life. It reported nought dead. The honest
-//    figure is eight. `tools/dials.mjs` plays a career and counts them, and
+//    figure was eight. `tools/dials.mjs` plays a career and counts them, and
 //    owns the "Dials nothing moves" key in the baseline this file writes.
 
 // 4b. The personality axes are a character sheet, not a set of dials: they are
 //     meant to be fixed at creation. So the honest question is not whether
 //     anything moves one, but whether anything READS it. An axis the player is
 //     asked to set and no system consults is a question with no consequence.
+//
+//     This count has gone UP once, at 3 to 4, and the reason is written down
+//     because a rise is normally the thing this file exists to refuse.
+//     `openness` had one reader: a case in `axisModifier` scaling how fast
+//     `travelFatigue` came off. Nothing in the build ever put any on, so the
+//     read reached nothing. Deleting the dead dial deleted the case, and the
+//     axis stopped being read at all. No word was declared; a fake reader was
+//     removed, and this check went from counting six honestly to counting
+//     seven honestly. A rise for that reason is the count catching up, not the
+//     rot it guards against — which is the same blindness that made
+//     `travelFatigue` look like a live dial and made `tools/dials.mjs`
+//     necessary. A rise with no such entry beside it is still a defect.
 {
   const model = SOURCE.get('src/engine/domain/model.ts');
   const start = model.indexOf('export interface Personality {');

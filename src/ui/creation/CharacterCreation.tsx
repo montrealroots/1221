@@ -613,7 +613,7 @@ function PersonalStep({
               how quickly stress arrives and how quickly it clears, Conscientiousness sets how
               well the nights go, and Ambition is what pushing past the point a contented person
               would have stopped at costs you in stress. The other four are written into the save
-              and change nothing yet — Openness waits on travel, and the last three wait on other
+              and read by nothing. Openness waits on travel, and the last three wait on other
               people. Neither is built.
             </p>
           </div>
@@ -730,11 +730,27 @@ function PersonalStep({
         <Chips options={FILM_GENRES} chosen={config.genres} onToggle={toggleGenre} />
       </div>
 
+      {/*
+        There was a Lifestyle select under this — frugal, modest, comfortable,
+        lavish, each option promising something about how you spend. No system
+        spent it. It went with the sweep, because a question whose four answers
+        all lead to the same world is worse than not asking.
+
+        The textarea stays, and it is a different case. It is a sentence the
+        player writes about their own character rather than an option list
+        promising a consequence, and it is not dead: the person page prints it
+        under their name, the same way it prints the one the family generator
+        writes for a mother or a twin. It carries no number, and the copy here
+        says so rather than implying a stat is hiding behind it.
+      */}
       <div className="card">
         <div className="panel-head">
           <div>
             <h2>Background</h2>
-            <p className="muted small">Where the life before this one happened, and how you spend.</p>
+            <p className="muted small">
+              Where the life before this one happened. It carries no attribute and no
+              advantage — it is yours, and it is on your page from the first morning.
+            </p>
           </div>
         </div>
         <div className="field">
@@ -744,15 +760,6 @@ function PersonalStep({
             onChange={(e) => set('background', e.target.value)}
             placeholder="A sentence about the life before this one."
           />
-        </div>
-        <div className="field">
-          <label htmlFor="lifestyle">Lifestyle</label>
-          <select id="lifestyle" value={config.lifestyle} onChange={(e) => set('lifestyle', e.target.value as NewSaveConfig['lifestyle'])}>
-            <option value="frugal">Frugal — you keep what you earn</option>
-            <option value="modest">Modest — comfortable, not showy</option>
-            <option value="comfortable">Comfortable — you spend on quality</option>
-            <option value="lavish">Lavish — you spend like it will keep coming</option>
-          </select>
         </div>
       </div>
     </div>

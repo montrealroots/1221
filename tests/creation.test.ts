@@ -41,7 +41,7 @@ function filled() {
     personalityTraits: ['night_owl'],
     interests: ['film', 'television', 'cinematography'],
     genres: ['film_noir', 'western'],
-    lifestyle: 'lavish', background: 'Raised on the lot.',
+    background: 'Raised on the lot.',
     wealth: 'wealthy',
   });
 }
@@ -108,7 +108,6 @@ describe('Who You Are', () => {
     expect(p.personalityTraits).toContain('night_owl');
     expect(p.interests).toEqual(expect.arrayContaining(['film', 'television', 'cinematography']));
     expect(p.genres).toEqual(['film_noir', 'western']);
-    expect(p.lifestyle).toBe('lavish');
     expect(p.background).toBe('Raised on the lot.');
   });
 });

@@ -1,16 +1,21 @@
 /**
- * SLATE — you, and the nine dials the day moves.
+ * SLATE — you, and the eight dials the day moves.
  *
- * Home shows three of the nine. The other six are simulated every hour and
- * appear on no screen in the game: sleep debt, morale, condition, fitness,
- * travel fatigue, nourishment and hygiene are all real state that has never
+ * Home shows two of them under a readiness figure. The other six are simulated
+ * every hour and appear on no screen in the game: sleep debt, morale,
+ * condition, fitness, nourishment and hygiene are all real state that has never
  * been rendered. This is exposure, not invention — every sentence below is
  * `person.wellbeing`, read out.
  *
- * Readiness is the exception and is treated as one. It is a product of seven
- * of the nine (life.ts:82-94) and it is not stored anywhere. It opens into a
- * sentence about what is holding it back and ways into the dials actually
- * doing the holding, because a dial is a thing and a multiplication is not.
+ * Travel fatigue was a ninth until the sweep that took it out. Nothing in this
+ * build ever raised it, so it sat at nought for a whole life and its term in
+ * readiness was a fixed 1.0; a dial a player is invited to watch has to be able
+ * to move.
+ *
+ * Readiness is the exception and is treated as one. It is a product of six of
+ * the eight and it is not stored anywhere. It opens into a sentence about what
+ * is holding it back and ways into the dials actually doing the holding,
+ * because a dial is a thing and a multiplication is not.
  */
 
 import { PERFORMER_NOUN } from '@/engine/core/performer';
@@ -23,7 +28,7 @@ import { waysIntoSomebody, whatTheyAre } from './family';
 import { isAre, outOf, spokenList } from './words';
 
 /**
- * The nine, in the order a person would notice them.
+ * The eight, in the order a person would notice them.
  *
  * `behind` is what the way in says next to the figure. The figure alone —
  * "82/100" — names the dial twice and says nothing about what moves it, which
@@ -36,7 +41,6 @@ const DIALS = [
   { key: 'morale', name: 'Morale', unit: 'level', behind: 'whether the work feels worth doing' },
   { key: 'condition', name: 'Condition', unit: 'level', behind: 'what a long day would find' },
   { key: 'fitness', name: 'Fitness', unit: 'level', behind: 'what a physical day would cost' },
-  { key: 'travelFatigue', name: 'Travel Fatigue', unit: 'level', behind: 'how much of the moving is still in you' },
   { key: 'nourishment', name: 'Nourishment', unit: 'level', behind: 'how long since you ate properly' },
   { key: 'hygiene', name: 'Hygiene', unit: 'level', behind: 'what a room notices about you' },
 ] as const;
@@ -79,7 +83,7 @@ defineLook<Person>('person', {
     ways.push({
       to: at('readiness', person.id),
       label: 'Readiness',
-      detail: 'What all nine come to, for turning up today',
+      detail: 'What six of the eight come to, for turning up today',
     });
     if (isYou) {
       ways.push({
@@ -92,6 +96,12 @@ defineLook<Person>('person', {
     // of you stand and what they run on the land, ahead of their dials.
     const theirs = waysIntoSomebody(sim, person);
     const relation = whatTheyAre(sim, person);
+    // The life before this one, said back. For the player it is the sentence
+    // they wrote at creation; for everybody else it is the one the family and
+    // crew generators wrote for them. It carries no number and decides nothing,
+    // and it is here so that a sentence somebody authored is not written into
+    // the save and then never shown to anybody again.
+    const before = (person.background ?? '').trim();
 
     return {
       name: isYou ? (person.displayName || person.firstName) : person.displayName,
@@ -105,16 +115,24 @@ defineLook<Person>('person', {
       summary: isYou || !relation
         ? wellbeingSummary(person)
         : `${person.firstName} is your ${relation.toLowerCase()}. ${wellbeingSummary(person)}`,
+      body: before.length > 0
+        ? (
+          <p className="small">
+            <span className="dim">{isYou ? 'Where you come from. ' : 'Where they come from. '}</span>
+            {before}
+          </p>
+        )
+        : undefined,
       ways: [...theirs, ...ways],
       provenance: isYou
-        ? 'Nine dials, moved by the hours you keep. Six of them the game has never shown you.'
-        : 'The same nine dials you have, moved by the same days. Nobody here acts, and nothing bills them.',
+        ? 'Eight dials, moved by the hours you keep. Six of them the game has never shown you.'
+        : 'The same eight dials you have, moved by the same days. Nobody here acts, and nothing bills them.',
     };
   },
 });
 
 // ---------------------------------------------------------------------------
-// One of the nine
+// One of the eight
 // ---------------------------------------------------------------------------
 
 interface Dial { person: Person; key: DialKey; name: string; value: number; unit: string }
@@ -132,7 +150,7 @@ defineLook<Dial>('dial', {
   seeds: (sim) => DIALS.map((d) => `${sim.universe.playerId}/${d.key}`),
   look: (dial) => ({
     name: dial.name,
-    kind: 'One Of Nine',
+    kind: 'One Of Eight',
     parent: at('person', dial.person.id),
     summary: sentenceFor(dial),
     provenance: dial.unit === 'hours'
@@ -167,9 +185,6 @@ function sentenceFor(dial: Dial): string {
     case 'fitness':
       return n > 65 ? `${n}. You could do a physical day without paying for it after.`
         : `${n}. A stunt day would cost you a week.`;
-    case 'travelFatigue':
-      return n < 15 ? 'None. You’ve been in one place long enough to be in it.'
-        : `${n}. The moving is still in you, and it comes off slowly.`;
     case 'nourishment':
       return n > 70 ? `${n}. Fed, and not thinking about it.`
         : `${n}. Hungry, and it’s starting to show.`;
@@ -195,7 +210,6 @@ function dragsOn(w: Wellbeing): { key: DialKey; name: string; value: number }[] 
     { key: 'sleepDebt', name: 'Sleep Debt', value: w.sleepDebt, hurt: Math.min(100, w.sleepDebt * 3.3) },
     { key: 'nourishment', name: 'Nourishment', value: w.nourishment, hurt: 100 - w.nourishment },
     { key: 'morale', name: 'Morale', value: w.morale, hurt: 100 - w.morale },
-    { key: 'travelFatigue', name: 'Travel Fatigue', value: w.travelFatigue, hurt: w.travelFatigue },
     { key: 'hygiene', name: 'Hygiene', value: w.hygiene ?? 80, hurt: 100 - (w.hygiene ?? 80) },
   ];
   return cost.filter((c) => c.hurt > 12).sort((a, b) => b.hurt - a.hurt).slice(0, 3)
@@ -222,6 +236,6 @@ defineLook<Ready>('readiness', {
       label: d.name,
       detail: `At ${Math.round(d.value)}, and pulling on the rest`,
     })),
-    provenance: 'Seven of the nine, multiplied together. It isn’t stored anywhere — it’s what they come to.',
+    provenance: 'Six of the eight, multiplied together. It isn’t stored anywhere — it’s what they come to.',
   }),
 });

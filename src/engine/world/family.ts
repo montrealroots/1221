@@ -20,7 +20,6 @@ import type {
 } from '../domain/model';
 import { bondKey } from '../domain/model';
 import { emptyAttributeSheet } from '../domain/attributes';
-import { emptySkillSheet } from '../domain/skills';
 import { freshWellbeing } from '../systems/life';
 import { impliedPerformerTitle } from '../core/performer';
 import { clamp } from '../core/rng';
@@ -186,21 +185,17 @@ function makeRelative(spec: {
     householdId: like.householdId,
     personality: personalityFrom(next),
     interests: [],
-    goals: [],
-    lifestyle: like.lifestyle,
     background: spec.background,
     // Ordinary. Nothing reads a mother's acting technique, and pretending to
     // model one would put eighty-eight numbers in the save to say nothing.
     attributes: emptyAttributeSheet(),
     traits: [],
-    skills: emptySkillSheet(),
     wellbeing: freshWellbeing(),
     reputation: {
       publicFame: 0, audienceAppeal: 50, professionalReputation: 0,
       reliability: 55, prestige: 0, industryDemand: 0, controversy: 0,
     },
     careerTrack: like.careerTrack,
-    creditScore: like.creditScore,
     estateRole: role,
     createdAt: like.createdAt,
   };

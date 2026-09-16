@@ -20,7 +20,6 @@ import {
 } from '@/engine/world/family';
 import { bondKey } from '@/engine/domain/model';
 import { ATTRIBUTES, emptyAttributeSheet, rate } from '@/engine/domain/attributes';
-import { SKILLS, emptySkillSheet, level } from '@/engine/domain/skills';
 import type { Person, SaveUniverse } from '@/engine/domain/model';
 import { MS_DAY } from '@/engine/core/time';
 
@@ -120,7 +119,10 @@ describe('what kind of people they are', () => {
       // Nobody in the family acts, so every rating reads as the floor — and
       // that is a real answer, untrained, rather than an absent one.
       for (const a of ATTRIBUTES) expect(rate(person.attributes, a.id)).toBe(emptyAttributeSheet().base);
-      for (const k of SKILLS) expect(level(person.skills, k.id)).toBe(emptySkillSheet().base);
+      // There was a second sheet here, of ordinary life skills, and it held
+      // everybody in the family at five for as long as a save ran. It went in
+      // the person-field sweep, so the only sheet left is the one above.
+      expect('skills' in person).toBe(false);
     }
   });
 

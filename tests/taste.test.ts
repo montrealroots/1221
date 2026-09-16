@@ -19,6 +19,7 @@ import {
 import { PERSONALITY_HIGHER_IS_WORSE, PERSONALITY_TRAIT_BY_ID } from '@/engine/content/personality-traits';
 import { SYSTEM_HIGHER_IS_WORSE, TRAITS } from '@/engine/domain/attributes';
 import type { Person } from '@/engine/domain/model';
+import { playACareer } from './played';
 
 function playerWith(seed: string, config: Partial<Parameters<typeof createSave>[2]>): Person {
   const sim = createSave(1, seed, { ...defaultConfig(), ...config });
@@ -115,7 +116,7 @@ describe('what the personality traits actually do', () => {
       [...life.matchAll(/personalityOf\(person, '(\w+)'\)/g)].map((m) => m[1]!),
     );
     expect([...read].sort()).toEqual(
-      ['energyRecovery', 'sleepQuality', 'stressGain', 'stressRecovery', 'travelFatigue'],
+      ['energyRecovery', 'sleepQuality', 'stressGain', 'stressRecovery'],
     );
     const dormant = [...declared].filter((key) => !read.has(key)).sort();
     expect(dormant).toEqual([
@@ -261,7 +262,7 @@ describe('what the personality axes actually do', () => {
   it('leaves the middle of every scale at no modifier', () => {
     const sim = createSave(1, 'axis-mid', { ...defaultConfig(), personality: flat as never });
     const person = sim.universe.people[sim.universe.playerId]!;
-    for (const key of ['stressGain', 'stressRecovery', 'sleepQuality', 'energyRecovery', 'travelFatigue']) {
+    for (const key of ['stressGain', 'stressRecovery', 'sleepQuality', 'energyRecovery']) {
       expect(axisModifier(person, key), key).toBe(1);
     }
   });
@@ -334,38 +335,47 @@ describe('what the personality axes actually do', () => {
     expect(driven).toBeGreaterThan(content);
     // And it is the only knob ambition touches, so it cannot be read as a
     // second emotional stability.
-    for (const key of ['stressRecovery', 'sleepQuality', 'energyRecovery', 'travelFatigue']) {
+    for (const key of ['stressRecovery', 'sleepQuality', 'energyRecovery']) {
       expect(axisModifier(person(5), key), key).toBe(axisModifier(person(95), key));
     }
   });
 
-  it('leaves openness wired to a knob nothing in this build ever moves', () => {
-    // The fourth state, and the one the screen keeps separate: read, and still
-    // inert. Openness multiplies travelFatigue, and nobody travels.
+  it('leaves openness recorded, and read by nothing at all', () => {
+    // The fourth axis, and it used to be its own state: read, and still inert.
+    // It scaled how fast `travelFatigue` came off, and nothing in this build
+    // ever put any on, so the one axis that was wired reached nowhere. The dial
+    // went in the wellbeing sweep and the case went with it, which moves
+    // openness in beside extraversion, agreeableness and risk tolerance: asked
+    // for at creation, written into the save, consulted by no system.
     const person = (v: number): Person => {
       const sim = createSave(1, `open-${v}`, {
         ...defaultConfig(), personality: { ...flat, openness: v } as never,
       });
       return sim.universe.people[sim.universe.playerId]!;
     };
-    expect(axisModifier(person(5), 'travelFatigue'))
-      .not.toBe(axisModifier(person(95), 'travelFatigue'));
-    // And travel is the only place it reaches. If openness ever touches a knob
-    // the life systems actually move, it stops being inert and the screen is
-    // wrong again — which is the whole way the last count went stale.
+    // Every knob the life systems ask for, at both ends of the axis. If
+    // openness ever touches one it stops being inert and the screen is wrong
+    // again — which is the whole way the last count went stale.
     for (const key of ['stressGain', 'stressRecovery', 'sleepQuality', 'energyRecovery']) {
       expect(axisModifier(person(5), key), key).toBe(axisModifier(person(95), key));
     }
-    // Nothing ever raises it, which is the claim — not merely that it ends at
-    // nought. A starting value would decay back to nought on its own and the
-    // end state would look identical, so the run is sampled throughout.
-    const sim = createSave(1, 'open-run', { ...defaultConfig(), personality: flat as never });
-    const worn = () => sim.universe.people[sim.universe.playerId]!.wellbeing.travelFatigue;
-    for (let step = 0; step < 24; step += 1) {
-      expect(worn(), 'somebody traveled, so openness is no longer inert and the screen must say so')
-        .toBe(0);
-      sim.advanceTo(sim.now + month);
-    }
+    // And the engine does not name it anywhere outside the shape it is
+    // declared on and the generators that seed it, which is the difference
+    // between a read that reaches nothing and no read at all.
+    const engine = ['src/engine/core/taste.ts', 'src/engine/systems/life.ts']
+      .map((file) => readFileSync(file, 'utf8')).join('\n');
+    expect(engine).not.toMatch(/openness/);
+
+    // The falsifiable half: two saves differing only in openness, played a
+    // year apart, come out identical on every dial the day moves.
+    const dialsAfterAYear = (v: number) => {
+      const sim = createSave(1, 'open-run', {
+        ...defaultConfig(), personality: { ...flat, openness: v } as never,
+      });
+      playACareer(sim, 1);
+      return JSON.stringify(sim.universe.people[sim.universe.playerId]!.wellbeing);
+    };
+    expect(dialsAfterAYear(5)).toBe(dialsAfterAYear(95));
   });
 
   it('says on the screen which ones are live, rather than implying all of them', () => {
@@ -376,7 +386,11 @@ describe('what the personality axes actually do', () => {
     expect(source).toMatch(/Conscientiousness/);
     expect(source).toMatch(/Ambition/);
     // Whitespace-tolerant: the sentence wraps across lines in the source.
-    expect(source.replace(/\s+/g, ' ')).toMatch(/change nothing yet/);
+    // It used to read "change nothing yet", which was true of the other four
+    // in a weaker sense than it is now: openness was read, and reached a dial
+    // nothing moved. The dial went, so the read went, and the screen says the
+    // stronger thing.
+    expect(source.replace(/\s+/g, ' ')).toMatch(/read by nothing/);
     // The count is the part that went stale, so it is the part pinned.
     expect(source.replace(/\s+/g, ' ')).toMatch(/Three of them do something today/);
     // The old copy promised all three of these, and none was true.

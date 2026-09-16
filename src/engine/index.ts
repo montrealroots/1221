@@ -18,7 +18,7 @@ import { formatMoneyCompact } from './core/money';
 import { clamp } from './core/rng';
 import { PERFORMER_TITLES, impliedPerformerTitle, performerTitleOf } from './core/performer';
 import { unknownTaste } from './core/taste';
-import { titleCaseLabel } from './core/text';
+import { plural, titleCaseLabel } from './core/text';
 
 import { CITIES } from './content/geography';
 
@@ -520,13 +520,15 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     steps.push('Created the preferences.');
   }
 
-  // Schema 78: the attribute and skill sheets became a base plus its
-  // exceptions. Before this every person carried all 813 attribute ids and all
-  // 47 skill ids written out, and for almost everybody they were all the same
-  // number — 20KB of JSON per person, and 63ms of structuredClone on every
-  // command once a save held a thousand people. Both measured. The old shape
-  // is folded into the new one by taking the number that appears most often as
-  // the base and keeping only what differs.
+  // Schema 78: the attribute sheet became a base plus its exceptions. Before
+  // this every person carried all 813 attribute ids written out, and for almost
+  // everybody they were all the same number — 20KB of JSON per person, and 63ms
+  // of structuredClone on every command once a save held a thousand people.
+  // Both measured. The old shape is folded into the new one by taking the
+  // number that appears most often as the base and keeping only what differs.
+  //
+  // Schema 79 removed a second sheet that got the same treatment, and five
+  // fields beside it. See the loop below.
   const fold = (sheet: unknown, fallback: number): { base: number; of?: Record<string, number> } => {
     if (sheet === null || typeof sheet !== 'object') return { base: fallback };
     const flat = sheet as Record<string, unknown>;
@@ -541,17 +543,43 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     const of = Object.fromEntries(entries.filter(([, v]) => v !== base));
     return Object.keys(of).length > 0 ? { base, of } : { base };
   };
+  // Schema 79: six dead words go, five off the person and one off their
+  // wellbeing, because every one of them was written and read by nothing. The
+  // life-skill sheet held the prodigy at a hundred and everybody else at five
+  // and never moved for anybody; `goals` was not even asked for on a screen;
+  // `lifestyle` was a question whose four answers opened nothing; `creditScore`
+  // is kept where the creation review actually reads it, on `WEALTH_PROFILE`,
+  // and there is no lending to consult the copy on the person; `goatTraits` was
+  // a second copy of a content list the screen already reads from
+  // `content/prodigy.ts`. `travelFatigue` is the sixth and it is on the
+  // wellbeing rather than the person, which is exactly why the first draft of
+  // this loop missed it and shed only five — a partial migration under a
+  // comment claiming a whole one. Where You Come From stayed and was given a
+  // reader instead.
+  const SHED = ['skills', 'goals', 'lifestyle', 'creditScore', 'goatTraits'] as const;
   let folded = 0;
+  let shed = 0;
   for (const person of Object.values(universe.people ?? {})) {
     const p = person as unknown as Record<string, unknown>;
-    const wasFlat = typeof (p.attributes as Record<string, unknown>)?.base !== 'number'
-      || typeof (p.skills as Record<string, unknown>)?.base !== 'number';
+    const wasFlat = typeof (p.attributes as Record<string, unknown>)?.base !== 'number';
     p.attributes = fold(p.attributes, 10);
-    p.skills = fold(p.skills, 5);
     if (wasFlat) folded += 1;
+    let dropped = false;
+    for (const key of SHED) {
+      if (key in p) { delete p[key]; dropped = true; }
+    }
+    const well = p.wellbeing;
+    if (well !== null && typeof well === 'object' && 'travelFatigue' in well) {
+      delete (well as Record<string, unknown>).travelFatigue;
+      dropped = true;
+    }
+    if (dropped) shed += 1;
   }
   if (folded > 0) {
     steps.push(`Folded ${folded === 1 ? 'one sheet' : `${folded} sheets`} down to a base and its exceptions.`);
+  }
+  if (shed > 0) {
+    steps.push(`Dropped the dead fields from ${plural(shed, 'person', 'people')}.`);
   }
 
   const migrated = from < SAVE_SCHEMA_VERSION || steps.length > 0;

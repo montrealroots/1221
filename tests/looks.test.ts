@@ -457,3 +457,55 @@ describe('a decision opens onto the thing it is about', () => {
     ).toContainEqual({ kind: 'project', id: project.id });
   });
 });
+
+describe('the sentence the player wrote', () => {
+  /** Every string in a body, joined, so a body can be read the way a page is. */
+  function wordsIn(node: ReactNode, out: string[] = []): string[] {
+    if (node === null || node === undefined || typeof node === 'boolean') return out;
+    if (typeof node === 'string' || typeof node === 'number') {
+      out.push(String(node));
+      return out;
+    }
+    if (Array.isArray(node)) {
+      for (const child of node) wordsIn(child, out);
+      return out;
+    }
+    if (isValidElement(node)) wordsIn((node.props as { children?: ReactNode }).children, out);
+    return out;
+  }
+
+  /**
+   * `background` is the one field on a person that was kept as flavor rather
+   * than deleted with the rest of the sweep, and it was kept on one condition:
+   * the game says it back. A player who types a sentence about the life before
+   * this one and never sees it again has written into a hole. So the reader is
+   * held here, not left to a comment — this fails the moment the person look
+   * stops printing it, which is the state the field was rescued from.
+   */
+  it('prints a person’s background on their own page', () => {
+    const sim = quickSave({}, 'background-reader');
+    const player = sim.universe.people[sim.universe.playerId]!;
+    player.background = 'Raised three streets from a stage door and never went in.';
+
+    const found = resolveLook(sim, at('person', player.id)) as Looked;
+    expect(wordsIn(found.body).join(' ')).toContain('never went in');
+  });
+
+  it('prints it for a relative too, whose sentence the world wrote', () => {
+    const sim = world();
+    const mother = Object.values(sim.universe.people).find((one) => one.firstName === 'Halla')!;
+    expect(mother.background.length).toBeGreaterThan(20);
+
+    const found = resolveLook(sim, at('person', mother.id)) as Looked;
+    expect(wordsIn(found.body).join(' ')).toContain(mother.background);
+  });
+
+  it('says nothing at all rather than an empty line when there is no sentence', () => {
+    const sim = quickSave({}, 'background-empty');
+    const player = sim.universe.people[sim.universe.playerId]!;
+    player.background = '   ';
+
+    const found = resolveLook(sim, at('person', player.id)) as Looked;
+    expect(found.body).toBeUndefined();
+  });
+});

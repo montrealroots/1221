@@ -25,7 +25,6 @@ import {
 } from '@/engine/core/performer';
 import { CEILING, DISCIPLINES, DISCIPLINE_LABEL, GOAT_TRAITS, goatTraitsIn } from '@/engine/content/prodigy';
 import { ALL_TRAITS, ATTRIBUTES, rate } from '@/engine/domain/attributes';
-import { SKILLS } from '@/engine/domain/skills';
 import { deserialise, serialise } from '@/engine/persistence/adapter';
 import { settledTitle } from '@/ui/creation/CharacterCreation';
 import { GuardError, inspectPayload } from '../base44/shared/guard.js';
@@ -123,7 +122,6 @@ describe('actor and actress are equals', () => {
       now: u.now,
       wellbeing: u.people[u.playerId]?.wellbeing,
       attributes: u.people[u.playerId]?.attributes,
-      skills: u.people[u.playerId]?.skills,
       balances: Object.values(u.accounts).map((a) => a.balance).sort(),
       properties: Object.values(u.properties).map((p) => [p.marketValue, p.condition, p.bedrooms]),
       scheduled: u.scheduled.map((s) => [s.kind, s.at]),
@@ -326,9 +324,12 @@ describe('the craft is acting, and only acting', () => {
     // Every acting attribute at the ceiling.
     for (const attribute of ATTRIBUTES) expect(rate(player.attributes, attribute.id)).toBe(CEILING);
 
-    // Every acting trait, and the three that belong to one person.
+    // Every acting trait. The three that belong to one person are read off
+    // `content/prodigy.ts` wherever they are shown, so the save carries no
+    // second copy of them to drift from the first.
     expect(player.traits.sort()).toEqual(ALL_TRAITS.map((t) => t.id).sort());
-    expect(player.goatTraits?.sort()).toEqual(GOAT_TRAITS.map((t) => t.id).sort());
+    expect('goatTraits' in player).toBe(false);
+    expect(GOAT_TRAITS.length).toBe(3);
 
     // Nothing from a job this game no longer simulates.
     expect('founder' in player, 'the producer sheet is back on the player').toBe(false);
@@ -336,8 +337,39 @@ describe('the craft is acting, and only acting', () => {
     expect('professions' in player).toBe(false);
   });
 
-  it('leaves the skill sheet as ordinary life, not five crafts', () => {
-    for (const skill of SKILLS) expect(skill.domain).toBe('general');
+  it('carries no sheet but the acting one, and none of the fields nothing read', () => {
+    const { universe } = quickSave({}, 'premise-fields');
+    // Five person fields and a whole forty-seven-row skill sheet were written
+    // on every person in the save and read by nothing. The sheet held the
+    // prodigy at a hundred and everybody else at five and never moved for
+    // anybody; `goals` was not asked for on any screen; `lifestyle` offered
+    // four answers that opened the same world; `creditScore` is kept on
+    // `WEALTH_PROFILE`, where the creation review actually reads it, and there
+    // is no lending to consult a copy on a person; `goatTraits` duplicated a
+    // content list. None of them comes back without a reader arriving first.
+    for (const person of Object.values(universe.people)) {
+      for (const dead of ['skills', 'goals', 'lifestyle', 'creditScore', 'goatTraits']) {
+        expect(dead in person, `${dead} is back on a person`).toBe(false);
+      }
+      expect('travelFatigue' in person.wellbeing, 'travelFatigue is back on a wellbeing')
+        .toBe(false);
+    }
+  });
+
+  it('sheds the sixth dead word too, which is on the wellbeing and not the person', () => {
+    // The first draft of the migration shed five keys off the person and left
+    // `travelFatigue` on the wellbeing, under a comment that said six had gone.
+    // A field this loop misses is a field that persists forever in every save
+    // anybody already has, which is the one thing a migration exists to stop.
+    const { universe } = quickSave({}, 'premise-migrate');
+    universe.meta.schemaVersion = SAVE_SCHEMA_VERSION - 1;
+    for (const person of Object.values(universe.people)) {
+      (person.wellbeing as unknown as Record<string, unknown>).travelFatigue = 41;
+    }
+    migrate(universe);
+    for (const person of Object.values(universe.people)) {
+      expect('travelFatigue' in person.wellbeing, 'an old save keeps it forever').toBe(false);
+    }
   });
 });
 

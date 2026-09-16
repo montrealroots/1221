@@ -87,8 +87,8 @@ export const PERSONALITY_TRAITS: readonly PersonalityTrait[] = [
   {
     id: 'early_riser', name: 'Early Riser', group: 'Habits',
     description: 'Up before anybody wants you, and the best hours of your day are over by ten.',
-    cost: 'No use at all after nine at night, and time zones take you apart.',
-    systemMods: { sleepQuality: 1.12, energyRecovery: 1.1, travelFatigue: 1.18 },
+    cost: 'No use at all after nine at night.',
+    systemMods: { sleepQuality: 1.12, energyRecovery: 1.1 },
     conflictsWith: ['night_owl'],
   },
   {
@@ -115,15 +115,15 @@ export const PERSONALITY_TRAITS: readonly PersonalityTrait[] = [
   {
     id: 'homebody', name: 'Homebody', group: 'Habits',
     description: 'Your own house, your own kitchen, your own bed. That’s where you recover.',
-    cost: 'Being away takes more out of you than it takes out of anybody else.',
-    systemMods: { energyRecovery: 1.15, travelFatigue: 1.3 },
+    cost: 'Nowhere else puts it back the way home does, and the game has no away to charge you for yet.',
+    systemMods: { energyRecovery: 1.15 },
     conflictsWith: ['restless'],
   },
   {
     id: 'restless', name: 'Restless', group: 'Habits',
-    description: 'One place for long is beyond you. Airports don’t bother you in the slightest.',
+    description: 'One place for long is beyond you.',
     cost: 'You don’t rest properly, anywhere, ever.',
-    systemMods: { travelFatigue: 0.68, energyRecovery: 0.9 },
+    systemMods: { energyRecovery: 0.9 },
     conflictsWith: ['homebody'],
   },
 
@@ -167,7 +167,7 @@ export const PERSONALITY_TRAITS: readonly PersonalityTrait[] = [
     id: 'sleeps_anywhere', name: 'Sleeps Anywhere', group: 'Body',
     description: 'Cars, planes, floors, the twenty minutes between two things. You take it where you find it.',
     cost: 'Things get slept through, and some of them were people.',
-    systemMods: { sleepQuality: 1.18, travelFatigue: 0.85, relationshipDecay: 1.12 },
+    systemMods: { sleepQuality: 1.18, relationshipDecay: 1.12 },
     conflictsWith: ['light_sleeper'],
   },
 
@@ -361,7 +361,7 @@ export function conflictingPersonalityTraits(held: readonly string[], candidate:
  */
 export const PERSONALITY_HIGHER_IS_WORSE: ReadonlySet<string> = new Set([
   'stressGain', 'relationshipDecay', 'injuryRisk', 'hygieneDrift',
-  'travelFatigue', 'spendImpulse', 'moraleSwing',
+  'spendImpulse', 'moraleSwing',
 ]);
 
 /** The product of every held trait's multiplier for one knob. */

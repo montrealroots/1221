@@ -14,8 +14,7 @@ import { SAVE_SCHEMA_VERSION, PREMISE_STATEMENT } from '../domain/model';
 import {
   ALL_TRAITS, emptyAttributeSheet, attributesOf, type AttributeSheet,
 } from '../domain/attributes';
-import { emptySkillSheet, type SkillSheet } from '../domain/skills';
-import { CEILING, GOAT_TRAITS } from '../content/prodigy';
+import { CEILING } from '../content/prodigy';
 import { MAX_PERSONALITY_TRAITS, PERSONALITY_TRAIT_BY_ID } from '../content/personality-traits';
 import { CITIES } from '../content/geography';
 import { costOfLiving } from '../content/tax';
@@ -91,8 +90,7 @@ export interface NewSaveConfig {
   interests: string[];
   /** Genres they love watching. Carries nothing; see `content/interests.ts`. */
   genres: string[];
-  goals: string[];
-  lifestyle: Person['lifestyle'];
+  /** The life before this one, in their own words. Flavor, and said back to them. */
   background: string;
 
   /**
@@ -165,8 +163,8 @@ export function defaultConfig(): NewSaveConfig {
     homeRegionId: ESTATE_CITY_ID, livesWhereBorn: true,
     citizenshipId: ESTATE_COUNTRY_ID,
     personality: defaultPersonality(),
-    personalityTraits: [], traits: [], interests: ['film', 'television'], genres: [], goals: ['Make something that lasts'],
-    lifestyle: 'modest', background: 'Grew up outside the industry.',
+    personalityTraits: [], traits: [], interests: ['film', 'television'], genres: [],
+    background: 'Grew up outside the industry.',
     careerStage: 5,
     family: defaultFamily(),
     companyName: '',
@@ -265,14 +263,12 @@ export function emptyUniverse(
   };
 }
 
-/** Starting capability from the chosen track and stage. */
 /**
  * The instrument.
  *
  * There is nothing to seed. They are the best living actor or actress, so
- * every one of the 88 acting attributes starts at the ceiling, along with the
- * ordinary life skills anybody has. Nothing on the creation screen moves any
- * of it, because there is nowhere for it to go.
+ * every one of the 88 acting attributes starts at the ceiling. Nothing on the
+ * creation screen moves any of it, because there is nowhere for it to go.
  *
  * What creation still decides is everything the instrument does not cover:
  * who they are, where they live, and what they are starting with.
@@ -292,10 +288,10 @@ function everyTrait(): string[] {
 
 /**
  * The prodigy's sheet: everything at the ceiling, and no exceptions, which is
- * the whole of what the flag means. Two numbers, not eight hundred and sixty.
+ * the whole of what the flag means. One number, not eight hundred and thirteen.
  */
-function seedCapability(): { attributes: AttributeSheet; skills: SkillSheet } {
-  return { attributes: emptyAttributeSheet(CEILING), skills: emptySkillSheet(CEILING) };
+function seedCapability(): { attributes: AttributeSheet } {
+  return { attributes: emptyAttributeSheet(CEILING) };
 }
 
 function seedReputation(config: NewSaveConfig) {
@@ -371,7 +367,7 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, raw: NewSaveConfig
 
   const universe = emptyUniverse(meta, now, zone, playerId, premise);
 
-  const { attributes, skills } = seedCapability();
+  const { attributes } = seedCapability();
 
   const birthInstant = instantFromZoned(
     { year: config.birthYear, month: config.birthMonth, day: config.birthDay, hour: 3 },
@@ -404,8 +400,8 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, raw: NewSaveConfig
     // and what is read can never drift apart.
     interests: known(config.interests, INTEREST_BY_ID),
     genres: known(config.genres, GENRE_BY_ID),
-    goals: config.goals,
-    lifestyle: config.lifestyle,
+    // Kept as the player wrote it, and printed back on their own page. It
+    // decides nothing, and the character sheet says so.
     background: config.background,
     attributes,
     // Every acting trait in the game. Nothing was picked and nothing could
@@ -416,18 +412,10 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, raw: NewSaveConfig
     personalityTraits: config.personalityTraits
       .filter((id) => PERSONALITY_TRAIT_BY_ID[id])
       .slice(0, MAX_PERSONALITY_TRAITS),
-    skills,
-
-    // The three that say what kind of actor or actress. There is nothing
-    // else to be the best at any more: the writing, the directing, the
-    // producing and the showrunning went with the half of the game that
-    // used them.
-    goatTraits: GOAT_TRAITS.map((t) => t.id),
     prodigy: true,
     wellbeing: freshWellbeing(),
     reputation: seedReputation(config),
     careerTrack: 'actor',
-    creditScore: WEALTH_PROFILE[config.wealth].creditScore,
     createdAt: now,
   };
   universe.people[playerId] = player;

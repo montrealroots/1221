@@ -53,7 +53,6 @@ import type { Person } from '../domain/model';
 import type { Looked, Project, Role, Seat } from '../domain/company';
 import type { AttributeSheet } from '../domain/attributes';
 import { rate, sheetOf } from '../domain/attributes';
-import { emptySkillSheet } from '../domain/skills';
 import { freshWellbeing } from '../systems/life';
 import { impliedPerformerTitle } from '../core/performer';
 import { clamp } from '../core/rng';
@@ -428,14 +427,11 @@ export function performerNew(
       riskTolerance: dial(),
     },
     interests: [],
-    goals: [],
-    lifestyle: 'modest',
     background: from.id === 'here'
       ? 'Acts. Has done since before anybody was paying for it.'
       : `Acts, out of ${from.label}. Would have to be brought here and put up.`,
     attributes: sheetFor(standing, next),
     traits: [],
-    skills: emptySkillSheet(),
     wellbeing: freshWellbeing(),
     reputation: {
       // Known to the public only as far as the work has carried them, which at
@@ -449,7 +445,6 @@ export function performerNew(
       controversy: 0,
     },
     careerTrack: 'actor',
-    creditScore: 600,
     createdAt: sim.now,
   };
   sim.universe.people[person.id] = person;

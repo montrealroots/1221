@@ -687,7 +687,7 @@ export function goUpFor(sim: Simulation, going: GoingUp): { ok: true; at: Instan
   const way = wayById(going.way);
   if (!way) return { ok: false, error: 'That isn’t a way of going up for anything.' };
   if (!freeAcross(sim, audition.from, audition.to)) {
-    return { ok: false, error: 'You are working on those dates. There is no point reading for it.' };
+    return { ok: false, error: 'You’re working on those dates. There’s no point reading for it.' };
   }
 
   const account = sim.universe.people[sim.universe.playerId]?.primaryAccountId;

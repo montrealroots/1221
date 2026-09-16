@@ -106,9 +106,19 @@ them later costs more than carrying them. Reading more of them on everybody
 else is a background habit rather than an answer — it enriches the world around
 a character who still has nothing to decide.
 
-**3 of 7 personality axes** are in the same position for a different reason:
-`agreeableness`, `extraversion` and `riskTolerance` are asked for at character
-creation and consulted by nothing. A question with no consequence.
+**4 of 7 personality axes** are in the same position for a different reason:
+`agreeableness`, `extraversion`, `riskTolerance` and now `openness` are asked
+for at character creation and consulted by nothing. A question with no
+consequence.
+
+Openness was three until the wellbeing sweep, and it was the fourth state: read,
+and reaching nowhere. Its one case in `axisModifier` scaled how fast
+`travelFatigue` came off, and nothing in this build ever put any on, so the axis
+that looked wired was the axis with the emptiest reader in the game. The dial
+went and the case went with it, which is why `tools/wired.mjs` counts one more
+here than it did. The number went up because a fake reader came out, not because
+a new word went in — which is the one kind of rise that baseline is wrong to
+forbid, and it is recorded in the tool rather than absorbed quietly.
 
 ---
 
@@ -122,11 +132,19 @@ critics. It stays declared until there are. Inventing a seventh reader to finish
 the row would be the disease `DEPTH.md` is about, performed on the page about
 the disease.
 
-**54 trait modifier keys** across 445 traits, of which seven are consulted and
-forty-seven are not. The seven: `energyRecovery`, `recoveryRate`,
-`sleepQuality`, `stressGain`, `stressPerShootDay`, `stressRecovery` and
-`travelFatigue`. Every one of them is read in `systems/life.ts` and in no other
-file, at eight call sites.
+**53 trait modifier keys** across 445 traits, of which six are consulted and
+forty-seven are not. The six: `energyRecovery`, `recoveryRate`, `sleepQuality`,
+`stressGain`, `stressPerShootDay` and `stressRecovery`. Every one of them is
+read in `systems/life.ts` and in no other file, at seven call sites.
+
+There were fifty-four and seven. `travelFatigue` was the seventh, and the four
+personality traits that declared it — Early Riser, Homebody, Restless and Sleeps
+Anywhere — declared it onto a dial nothing raised. Key and declarations went
+together in the wellbeing sweep, so the dead count held at forty-seven rather
+than rising to forty-eight. Two of those four, Early Riser and Homebody, carried
+`travelFatigue` as their only live cost and now carry none, which leaves each of
+them ahead of its pair on every knob a system still reads. That is a balance
+question and it is open.
 
 This entry used to read "47 trait modifier keys … of which seven are consulted:"
 and then list fourteen names, which are the *dead* ones — the colon made the
@@ -353,11 +371,20 @@ file reference rather than as a finding.
 - **The whole wellbeing model**, and this is now half true rather than true.
   Readiness is read in exactly one place: `heardItRight` in the audition room,
   where how ready the player is decides how surely they took in the one note
-  anybody gives them. That is the first and so far only outcome any of the nine
+  anybody gives them. That is the first and so far only outcome any of the eight
   dials under it decides. The dials themselves still feed nothing but readiness,
   and readiness still feeds nothing but the room.
-- **Travel fatigue is a second fitness bug**, unrecorded until now, and it takes
-  openness down with it — the same shape as the fitness fault, on a second dial.
+- ~~**Travel fatigue is a second fitness bug**, and it takes openness down with
+  it — the same shape as the fitness fault, on a second dial.~~ **Deleted.** It
+  was seeded at nought and written twice, both times by a subtraction, so it held
+  one value for a whole life and `tools/dials.mjs` reported it as "one value, 0".
+  Its term in `readiness` was `remap(0, 0, 100, 1.0, 0.80)`, a fixed 1.0, so
+  dropping the factor changed the figure for nobody: readiness measured across
+  3,903 samples of a 25-year played career is bit-for-bit what it was. The term
+  itself was well built — forcing the input to 100 moves the best day from 81.73
+  to 65.38 — and it was the input that had no producer. Field, `axisModifier`
+  case, four trait modifiers, the higher-is-worse guard and the ninth dial on the
+  screen all went together. Openness went with it into the paragraph above.
 - **The tax engine is a screen.** Real, correct, and read by one thing: the place
   card, which works out what a reference wage would be taxed at and prints it.
   Nothing taxes a fee, a wage or a company's profit. Iceland is at least IN the
@@ -385,9 +412,23 @@ file reference rather than as a finding.
   door.
 - **366 lines of `domain/model.ts`** are record shapes with no table, no
   importer and no writer.
-- **Four fields on every person, and the whole skill sheet.** The scout's view is
-  that deletion is the honest answer here rather than wiring, because the prodigy
-  holds every skill at 100 and every other person at 5.
+- ~~**Four fields on every person, and the whole skill sheet.**~~ **Deleted**,
+  and it was five fields and a sheet. `goals` was not collected by any screen;
+  `lifestyle` was a select whose four options each promised something about how
+  you spend and opened the same world either way; `creditScore` stays on
+  `WEALTH_PROFILE`, where the creation review reads it, and came off the person,
+  where no lending consults it; `goatTraits` was a second copy of a content list
+  the screen already reads from `content/prodigy.ts`. The sheet held the prodigy
+  at 100 and everybody else at 5, with an empty exceptions map at boot and after
+  1,825 simulated days, so it was dead by construction.
+
+  `background` was the fifth field and it was kept, because it is the one the
+  player writes rather than picks, and a sentence somebody authored about their
+  own character is not the same kind of thing as an option list. It was kept on
+  a condition: the person look prints it now, for the player and for every
+  relative the family generator writes one for, and `tests/looks.test.ts` holds
+  that reader. Flavour with a reader is not a dead word. Flavour written into a
+  save and never shown to anybody would have been.
 - **The audit trail is a persisted, empty table**, and the history table is a
   sleep diary.
 - **`Audition.took`** is written and read by nothing, in the save record of the
