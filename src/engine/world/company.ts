@@ -590,6 +590,25 @@ export function registerCompanyCommands(sim: Simulation): void {
       foundedAt: s.now,
     };
     s.universe.companies[arm.id] = arm;
+
+    // Filing the form IS the Delaware registration, so the record is written
+    // here rather than waited for. Before this, `us_state` was on the registry
+    // table and unreachable by any route: `company.register` charges the
+    // registrant, the arm is opened with no account of its own, and the refusal
+    // a player got was 'The company has no account to pay from' — for a filing
+    // the parent had already paid for on the line above. The Delaware branch of
+    // `numberFor` had never once run.
+    const filed: Registration = {
+      id: s.nextId('reg'),
+      saveId: s.universe.meta.id,
+      companyId: arm.id,
+      registry: 'us_state',
+      number: numberFor('us_state', s.now / 1000 + Object.keys(s.universe.registrations).length * 7919),
+      since: s.now,
+      nextDueAt: addMonths(s.now, REGISTRY_BY_ID.us_state.filesEveryMonths, s.homeZone),
+    };
+    s.universe.registrations[filed.id] = filed;
+
     s.notify({
       category: 'personal',
       title: `${arm.legalName} Exists`,

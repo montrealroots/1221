@@ -199,6 +199,27 @@ describe('Global Rule One', () => {
     expect(companiesOf(sim.universe)).toHaveLength(2);
   });
 
+  it('files the Delaware registration the form it just filed already is', () => {
+    // `us_state` was on the registry table and unreachable by every route. The
+    // arm is opened with no account of its own and `company.register` charges
+    // the registrant, so the player's answer was 'The company has no account to
+    // pay from' — for a filing the parent had paid for on the line above. The
+    // Delaware branch of `numberFor` had never run in any save.
+    const sim = world();
+    const before = registrationsOf(sim.universe).length;
+    run(sim, 'company.form_arm', {});
+    const arm = americanArm(sim.universe)!;
+    const filed = registrationsOf(sim.universe).filter((one) => one.registry === 'us_state');
+    expect(registrationsOf(sim.universe)).toHaveLength(before + 1);
+    expect(filed).toHaveLength(1);
+    expect(filed[0]!.companyId).toBe(arm.id);
+    expect(filed[0]!.number).toMatch(/^\d+$/);
+    // And the refusal a player now gets is the truthful one, through the guard
+    // that was always there and could never be reached.
+    expect(run(sim, 'company.register', { registry: 'us_state' }).error)
+      .toBe('Already on Delaware Division of Corporations.');
+  });
+
   it('signs the guild with the arm, not with the parent', () => {
     const sim = world();
     run(sim, 'company.form_arm', {});
