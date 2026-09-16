@@ -581,7 +581,3 @@ export function primaryLanguageOf(countryId: string | undefined): string {
   return code || 'en';
 }
 
-/** The country a city is in, or undefined. */
-export function countryOfCity(cityId: string | undefined): string | undefined {
-  return CITIES.get(cityId ?? '')?.countryId;
-}
