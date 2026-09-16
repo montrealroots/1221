@@ -241,7 +241,13 @@ so the office hires people the player is refused — it bites, and what it bites
 is the symmetry between the two halves of the game. `project.hands` cannot be
 changed after the greenlight, so the cutting room cannot be restaffed. And the
 other 46 exports of `content/lifespan.ts` are dead, which is the ageing claim
-above measured rather than asserted.
+above measured rather than asserted. **Settled**, and the count was 43 rather
+than 46: an export with no import is not the same as an export with no reader,
+and `AGING`, `agingAt` and `AgingBand` are reached from inside the two that are
+imported. The file is 87 lines and 2 exports — the three the closure reaches
+stayed as file-private declarations, because an `export` on a name no module
+imports is the same defect one size down — and the authored tables are in
+`research/LIFESPAN.md`.
 
 Everything the audit found is in the workflow's own ledger rather than repeated
 here line by line; what is worth carrying is the shape. A quarter of this build's
@@ -335,10 +341,15 @@ file reference rather than as a finding.
 
 ### Declared, and nothing reads it
 
-- **Age decides nothing.** `content/lifespan.ts` is 540 lines with two exports
-  read, and a scout puts it at 2 of 48 rather than 2 of 28. It also strengthens
-  the ageing claim from an empirical one about 27,375 days to an arithmetic one
-  that holds for a save of any length. Verify the count before quoting it.
+- **Age decides nothing.** `content/lifespan.ts` was 540 lines with two exports
+  read, and a scout put it at 2 of 48 rather than 2 of 28. The count held; the
+  headline did not — `ARREARS.md` proved by A/B that both of the two decide
+  outcomes, so age decides plenty and what was dead was everything around it.
+  **Settled.** The file is 87 lines and 2 exports. Five names survived, which
+  is the transitive closure of the two that are read; the three the closure
+  reaches are file-private, so the module's public surface is only what
+  `systems/life.ts` imports. The forty-three the closure does not reach are
+  kept unwired in `research/LIFESPAN.md`.
 - **The whole wellbeing model**, and this is now half true rather than true.
   Readiness is read in exactly one place: `heardItRight` in the audition room,
   where how ready the player is decides how surely they took in the one note

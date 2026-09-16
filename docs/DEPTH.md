@@ -163,8 +163,15 @@ Three findings are defects rather than gaps, and all three are live:
   byte-identical; zero `condition` and one dial nothing reads moves by a point.
   The age ceiling clamp really does bind on 0 of 27,375 days in the default save,
   and on exactly 1 day per person once somebody is old enough for it to matter.
-  `src/engine/content/lifespan.ts` is 540 lines with 2 of its 48 exports read
-  from outside it — the denominator was wrong too.
+  `src/engine/content/lifespan.ts` was 540 lines with 2 of its 48 exports read
+  from outside it — the denominator was wrong too. It is now 87 lines and 2
+  exports. Five names survived, which is the transitive closure of those two:
+  `ceilingAt`, `recoveryFactorAt`, `agingAt`, `AGING` and `AgingBand`; only the
+  first two are exported, because an `export` nothing imports is a declared
+  word with no reader in its own right. The forty-three that
+  nothing read — the per-country expectancy and pension tables, the seven named
+  parts of a life, the age gates, the family constants and the maturation curve
+  — are kept unwired in `docs/research/LIFESPAN.md`.
 - **Every attribute on every person is 100.** All 813, seeded to the ceiling.
   The craft sheet is not merely unread; it is uninformative even if read. And
   no look, workspace or screen displays it during play.

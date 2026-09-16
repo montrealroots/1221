@@ -40,6 +40,44 @@ pushed.
 | the room's central outcome, pinned to six decimals | `62ab848` |
 | Leave It, the misheard no, and two false sentences | `df42a67` |
 | the Decision Center nothing writes to | option B, on the world tick — and the reimbursement is a reminder, not a decision |
+| the 43 dead exports of `content/lifespan.ts` | the file is 87 lines and 2 exports; the almanac is `docs/research/LIFESPAN.md` |
+
+**The lifespan cluster, and where its line numbers went.**
+
+`src/engine/content/lifespan.ts` was cut from 540 lines and 48 exports to 87
+lines and 2. What survived is the transitive closure of the two names anything
+outside the file ever read: `ceilingAt` and `recoveryFactorAt`, plus `agingAt`,
+`AGING` and `AgingBand`, which those two reach. Deleting by import count rather
+than by closure would have taken `AGING`, `agingAt` and `AgingBand` with it and
+broken `src/engine/systems/life.ts` in three places, which is the trap the
+entry at `2 of 48 rather than 2 of 28` names.
+
+The three the closure reaches stayed as file-private declarations rather than
+as exports. An `export` keyword on a name no other module imports is itself a
+declared word with nothing that reads it, which is the defect this cluster is
+about; the file already kept `ex`, `EXPECTANCY_BY_COUNTRY`, `NO_CHILD_MORTALITY`
+and `alongCurve` private on the same reasoning. So the module's public surface
+is the two functions `src/engine/systems/life.ts` actually imports, and no
+more.
+
+The authored material went to `docs/research/LIFESPAN.md` whole, verbatim and
+unwired: the per-country expectancy and pension tables, the adult-expectancy
+adjustment, the seven named parts of a life, the family constants, the
+birthday, milestone and passing lines, the age gates, and the maturation curve.
+The doctrine says a declared word with nothing that reads it must not stay in
+the code. It does not say the research has to be destroyed.
+
+Six entries below carry line numbers into that file, and every one of them
+describes the 540-line version. The map from then to now:
+
+| then | now |
+|---|---|
+| `AgingBand` :239, the fitness column :242-243 | :31-41, the fitness column :34-35 |
+| `AGING` :251, the eight bands :252-259 | :43-52, the eight bands :44-51 |
+| `agingAt` :276 | :55-59 |
+| `recoveryFactorAt` :269, its 0.55 floor :272 | :68-72, its floor :71 |
+| `ceilingAt` :283-295, the `Math.max(18, …)` floor :292 | :75-87, the floor :84 |
+| everything else, :22-228 and :297-540 | `docs/research/LIFESPAN.md` |
 
 **Next, and each one needs a call before it can be built.**
 
@@ -1461,6 +1499,8 @@ RISK IF YOU TOUCH IT:
 
 **Cluster** `lifespan` · **Severity** serious · **Verdict** STILL_TRUE
 
+> **Landed.** `src/engine/content/lifespan.ts` is now 87 lines and 2 exports. Line numbers into it below describe the 540-line file; the map from then to now is in **The lifespan cluster, and where its line numbers went** near the top of this document, and the deleted material is in `docs/research/LIFESPAN.md`.
+
 
 **Evidence**
 
@@ -1508,6 +1548,8 @@ I would recommend (a') if the owner wants a performer sim where staying in shape
 ### (follow-on) The other 46 exports of content/lifespan.ts are dead (docs/UNBITTEN.md:217)
 
 **Cluster** `lifespan` · **Severity** serious · **Verdict** STILL_TRUE
+
+> **Landed.** `src/engine/content/lifespan.ts` is now 87 lines and 2 exports. Line numbers into it below describe the 540-line file; the map from then to now is in **The lifespan cluster, and where its line numbers went** near the top of this document, and the deleted material is in `docs/research/LIFESPAN.md`.
 
 
 **Evidence**
@@ -2457,6 +2499,8 @@ Baseline: `npx vitest run` is green today, 44 files / 1175 passed / 1 todo. I ma
 
 **Cluster** `lifespan`
 
+> **Landed.** `src/engine/content/lifespan.ts` is now 87 lines and 2 exports. Line numbers into it below describe the 540-line file; the map from then to now is in **The lifespan cluster, and where its line numbers went** near the top of this document, and the deleted material is in `docs/research/LIFESPAN.md`.
+
 
 Their headline number survives — I confirmed 540 lines and 48 exports independently, and the only import anywhere is src/engine/systems/life.ts:20 `import { ceilingAt, recoveryFactorAt } from '../content/lifespan';`. Nothing else in src/, src/ui/, tests/, tools/ or any other directory touches the module (repo-wide case-insensitive grep for "lifespan" hits exactly two source files, and a per-name grep of all 48 identifiers returns only ceilingAt=3 and recoveryFactorAt=2). So "2 of 48, not 2 of 28" is right, and I could not refute it.
 
@@ -2481,6 +2525,8 @@ So: the count is STILL_TRUE; their verdict package — evidence, fix, kind and s
 ### The ageing model cannot fire, because fitness is already at zero and the age ceiling clamp binds on 0 of 27,375 days. (docs/DEPTH.md:156-159, docs/UNBITTEN.md:181-183)
 
 **Cluster** `lifespan`
+
+> **Landed.** `src/engine/content/lifespan.ts` is now 87 lines and 2 exports. Line numbers into it below describe the 540-line file; the map from then to now is in **The lifespan cluster, and where its line numbers went** near the top of this document, and the deleted material is in `docs/research/LIFESPAN.md`.
 
 
 I reproduced their headline numbers and then broke their analysis in three places. Their verdict label (PARTLY_TRUE) survives; their evidence, their proposed fix and their classification do not.
@@ -2521,6 +2567,8 @@ WHAT SURVIVES OF THE LEDGER CLAIM: "the ageing model can never fire" is wrong �
 ### (new, not in the ledger) Three more numbers inside the two exports that ARE read never execute
 
 **Cluster** `lifespan`
+
+> **Landed.** `src/engine/content/lifespan.ts` is now 87 lines and 2 exports. Line numbers into it below describe the 540-line file; the map from then to now is in **The lifespan cluster, and where its line numbers went** near the top of this document, and the deleted material is in `docs/research/LIFESPAN.md`.
 
 
 Two of their three "dead numbers" are alive and I made them move. Item 3 survives but is misclassified and their recommended fix measurably does not do what they say. Item 4 is true but mis-scoped and badly understated.
@@ -2884,6 +2932,8 @@ OVERSTATED BY: the entire headline. $25,000 leaves a real account, a broke compa
 ### Age decides nothing. (docs/UNBITTEN.md:293)
 
 **Cluster** `lifespan` · **Verdict** NEVER_TRUE
+
+> **Landed.** `src/engine/content/lifespan.ts` is now 87 lines and 2 exports. Line numbers into it below describe the 540-line file; the map from then to now is in **The lifespan cluster, and where its line numbers went** near the top of this document, and the deleted material is in `docs/research/LIFESPAN.md`.
 
 
 Both of the two live exports change outcomes, and I proved it by A/B, not by reading.
