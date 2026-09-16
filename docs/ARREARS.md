@@ -19,7 +19,8 @@ decision, the options are stated and not chosen — those are the owner's.
 
 ## Where this stands
 
-Paused here, deliberately, with the tree clean and everything pushed.
+Resumed after a pause, and further along. The tree is clean and everything is
+pushed.
 
 **Cleared — nothing below needs a decision from anybody any more.**
 
@@ -33,6 +34,11 @@ Paused here, deliberately, with the tree clean and everything pushed.
 | the house that rots while the screen blames you | `dd6c397` — the false sentences only |
 | the want distribution described twice wrong | `848b17e` |
 | 104 id namespaces nothing issues | `e2c8fd4` — the gate's dead-word floor, 160 down to 56 |
+| 47 trait modifier knobs, named rather than deleted | `a3daa25` — the ledger's "contradiction" was a colon |
+| 6 higher-is-worse guards on knobs no trait carries | `c8bdf57` — floor 56 down to 50 |
+| the creation screen saying two axes are live when three are | `57f4044` |
+| the room's central outcome, pinned to six decimals | `62ab848` |
+| Leave It, the misheard no, and two false sentences | `df42a67` |
 
 **Next, and each one needs a call before it can be built.**
 
@@ -56,10 +62,21 @@ Then the eighteen under Decisions below, of which the heaviest are `quoteOf`
 only ever going up, nothing in the company ever ending or recurring, the
 Decision Center nothing writes to, and `w.fitness` as a one-way ratchet.
 
-**Still counted by the gate, and not yet looked at:** 47 trait modifier keys,
-6 guards that can never fire, 3 personality axes. The trait count wants
-resolving before anything is cut — this document's own entry on it says the
-ledger claimed seven keys are consulted and then listed fifteen.
+**Still counted by the gate, and all three are deliberate now rather than
+unexamined:** 47 trait modifier knobs and 3 personality axes, both dormant on
+purpose and both named in `tests/taste.test.ts` so nothing can quietly join or
+leave the list. The guards are gone. `Account.closedAt` is the one thing
+knowingly left: no writer, twenty-two readers filtering on it, so removing it
+touches live code in twenty-two places and an account that can be closed may
+well be wanted.
+
+**The hazard this document should carry.** Three times in one run of work,
+measuring a save nobody plays produced a confident wrong answer: the fifth
+stage's value, this document's own reading of the personality axes, and the
+creation screen's count of them. Almost every test in this project runs an
+idle save, and an idle save sits at a fixed point where most levers do
+nothing. Anything measured about a lever should be measured on a save that is
+played, or at the mechanism where an idle world cannot hide it.
 
 
 ## Mechanical — one obviously right fix (2)

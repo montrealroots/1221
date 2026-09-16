@@ -1,20 +1,47 @@
 # The audition room, measured
 
 
-Paused mid-flight. Six measurement agents finished and two of three proposals;
-the third proposal and all three judges never ran. Everything below is what the
-finished agents returned, kept verbatim, plus the arithmetic I did myself
-alongside them.
+Finished: six measurement agents, three proposals, three judges scoring them.
+This file was written while it was still paused and said the judges never ran;
+they ran. Everything below is what the agents returned, kept verbatim, plus
+the arithmetic done alongside them.
 
-Nothing here has been acted on. The room is unchanged except for two prose
-fixes already committed (`848b17e`), which corrected the want distribution's
-description — a figure of 1.7 that is really 1.500, and a claim the draw is
-flat when it is not.
+## What was taken, and what was not
 
-**To resume the workflow:** `Workflow({scriptPath:
-'.../slate-room-calibration-wf_877bb0d2-6a8.js', resumeFromRunId:
-'wf_877bb0d2-6a8'})`. The eight finished agents replay from cache; only the
-missing proposal and the judges run live.
+Taken, because it is measured, was verified by an adversary who applied and
+ran it, and changes nothing about how the game feels:
+
+- **The pin** (`62ab848`) — landed first and alone, on all three judges'
+  advice. The room's central outcome was held by nothing: `AS_GOOD_AS_IT_GETS`
+  could move 0.82 to 0.34 and 1,204 tests still passed.
+- **Leave It deleted, the misheard no wired, two false sentences corrected**
+  (`df42a67`).
+
+Not taken, and these are the owner's:
+
+- **The house** — a want the note points toward, which breaks the opening
+  button outright (343/343 distinct best openings). Real build. One judge
+  measured its headline gain 29% lower than claimed, though the structure
+  held.
+- **Any constant change.** The proposal carrying them stated a blast-radius
+  claim with the word "measured" beside it that did not survive being applied.
+  If the rate is to come down, `AS_GOOD_AS_IT_GETS` alone is the defensible
+  knob — it is provably a pure scalar, best/A constant to six digits at every
+  value tested.
+
+## The finding that outgrew the room
+
+All three judges arrived at it separately. **Every currency that could price
+the room is dead.** `remembersYou` is pinned at 1.000 in 87.3% of real
+readings and identical at reliability 0 and 100 in 83.5%. Readiness is a daily
+fixed point. The diary commits in whole weeks, so it cannot tell a ninety
+minute slot from a free afternoon. Money is never scarce: 0 of 3,900 career
+weeks fall below the €120 fee. Four plausible prices, four dead.
+
+That is why the way-in decision in all three proposals rests on a two point
+`dates` side effect nobody designed — settling two days later re-checks
+`freeAcross`. It is not an audition finding. It is a wellbeing and standing
+finding, discovered in the audition room.
 
 
 ## What I measured myself
@@ -1128,3 +1155,170 @@ Neither judged. Neither acted on. Recorded as what they are: two of three.
 
 
 **The strongest argument against it** The strongest argument against this is that it buys about a decade of decision and then hands the button back with a different label on it. At HOUSE_HOLDS = 0.70, measured paired on 949 real readings, a player at k 25+ scores 0.7064 with a MEMORY TAPE — higher than a dead-center ROOM scores at any k, and within 0.89 points of a memory room. Twenty-five years in, the player has ground the house out, the note is worth nothing, the way in is decided, and the opening reading is a lookup rather than a guess. The lot only produces a handful of holders, so 43% of a long career sits in that solved state. I have moved the button, not removed it — the honest claim is that the first ten years now contain a decision and the last fifteen contain a habit, which is arguably the right shape for a career game and arguably just a slower button. Three smaller objections. First, it makes the game easier: best career cast rate goes 66.0% to 69.3%, further from the "most readings end in no" the file keeps asserting, so if the owner cares about that sentence this change costs them ground and has to be paid for in AS_GOOD_AS_IT_GETS. Second, the mechanic is unplayable without the UI change — the house is never shown by design, and a player who does not keep their own notes cannot act on it at all, which makes `whatTheyKeepAskingFor` load-bearing rather than advisory and puts a real decision behind a React default value. Third, and most uncomfortable: I could not find ANY currency in this build that a one-off cost on the room can be denominated in. Reliability is clamped away (remembersYou pinned at 1.000 in 87.3% of readings), readiness is a daily fixed point (a 12-point energy hit is gone by tomorrow), the diary commits in whole weeks so it cannot tell 90 minutes apart, and money is never scarce. The tape-or-room decision in this proposal rests entirely on the 2.0 points that two extra days cost through `settle`, which is a side effect nobody designed and no comment mentions. That is a thin beam to hang a decision on, and the more robust version of this task is to fix the clamp in `remembersYou` and the fixed point in the wellbeing model FIRST, and only then decide what the room should cost.
+
+## The three judges
+
+### Judge 1
+
+| proposal | truthfulness | premise | cost | decision |
+|---|---|---|---|---|
+| smallest-change — "Two sentences the roo | 10 | 9 | 10 | 3 |
+| make-it-a-decision — "The house: a room  | 7 | 8 | 3 | 7 |
+| fit-to-the-world — "Fit the room to the  | 9 | 7 | 2 | 5 |
+
+**smallest-change — "Two sentences the room could not keep, an** — Everything I checked reproduced. I re-ran its exact-enumeration figures through the real functions (P(cast|off) bisected out of the real decideAudition, 343 wants at exact weights): P(off<=CLOSE_ENOUGH) blind dead-center = 0.277778 and after 'good' at sure=0.8215 = 0.599090, P(cast) = 0.706024 — all three to six decimals, exactly as predicted. I then applied its actual patch to a repo copy: deleted the ten-line `heard` block from model.ts and the write at world/audition.ts:598, keeping line 597's `.next()` draw. `npx tsc --noEmit` exits 0. Six arms x 6 seeds x 12 years came back byte-identical on every outcome column — ups, answered, settled, cast, rate, and the full why-histogram. Grep confirms 1 write, 1 declaration, 0 reads, and `Audition.took` is genuinely gone from the type (the remaining `took` hits are casting/selling). Its one soft spot is the career pair 0.5541/0.6541: on my harness the same arms give 0.6285/0.6743 on a judged denominator and 0.4930/0.5043 on an all-rows one, so its figures sit between my two denominators rather than matching either. Not a falsification, but it never says which denominator it used. Scored low only on decisionQuality, because it says outright that it fixes the sentences and leaves the button — and it is right that it does.
+
+**make-it-a-decision — "The house: a room that wants the same ** — The headline mechanism is real and its numbers are exact. I transcribed the proposed `whatTheyWant` mixture verbatim and enumerated the house-conditioned want space: house (2,-1,0) -> best opening (2,-1,0) at 0.7888 against dead center 0.7363, gain +0.0525; (-3,2,3) -> 0.7597/0.4505/+0.3092; (3,3,3) -> 0.7493/0.3734/+0.3759; (0,0,0) -> 0.7965 with dead center still right. Every figure to four decimals. The marginal-invariance claim is both structurally true (the house is drawn from the same pmf, so H*P + (1-H)*P = P) and confirmed on 900k real draws at H=0, 0.5, 0.7, 1.0 with E|w| 1.4997-1.5009 throughout — so every threshold fitted to the want survives, as claimed. BUT its stated falsifiability guarantee is FALSE. "HOUSE_HOLDS = 0 reproduces the shipped game bit-for-bit, which is what makes it falsifiable" — I ran 200 seeds and got 4 identical, 196 different. The proposed body evaluates `next() < H` whenever a house is passed, so it burns two draws per shade even at H=0 and the fresh values come off stream positions 0,2,4 instead of 0,1,2. It also contradicts its own BREAKS section, which correctly says seeded outcomes move everywhere. The fix is one token — `house !== undefined && H > 0 && next() < H` — but as written the safety property the whole proposal leans on does not hold, and that is the claim I would most expect a reviewer to trust without checking. Costly besides: it moves every seeded want in every save, needs a UI change to be playable at all, and adds the only new constant in the set.
+
+**fit-to-the-world — "Fit the room to the producer-session rat** — The best-verified of the three, and it earns that on the hardest claims. I patched all four constants into a repo copy and ran the unmodified suite: 44 files, 1 failed, 43 passed; 1208 tests, 3 failed, 1204 passed, 1 todo, against its predicted 1207/3/1203/1. The three failures are exactly the three it names, at exactly those lines, and tests/audition.test.ts:1116 reported `walked/3 = 0.19273080241587578` — all seventeen digits it quoted. That is not a figure anyone reconstructs from reading code. Analytically everything holds: keen ladder 0.3400/0.2437/0.1303/0.0170 exact, naive 0.2536 at sure=0.8221 exact, tape 0.1803 exact, full-readiness naive 0.2964 exact, P(off>2.05 | dead center) = 0.115741 exact, far/good crossover 55.96 against its claimed 56.0. (I verified my parameterised `keen` against the real `decideAudition` to 1.1e-16 over all 19 attainable off values first.) End-to-end on my own harness, 6 seeds x 12 years: room/good 21.7% vs its 22.9%, far 22.6% vs 23.2%, touch 18.6% vs 21.1%, wrong-for-it 7.8% vs 9.5% — in band, right direction, right magnitude. Two blemishes. Its shipped baseline (55.4% room/good, 51.4% tape) runs about 5 points above what I measure on the matching all-rows denominator (50.4% / 49.3%), roughly 2 SE. And its claim that the best opening is "still at {0,0,0}" does not hold in my enumeration: at sure=0.8221 under its constants the best fixed-answer cell is (-1,0,0) 'far' at 0.2540, edging dead center — which is precisely the artifact it says choosing linear over exponent 1.4 avoids. Scored down hard on cost: it cuts career income ~78%, invalidates every saved career and doc figure, and by its own admission leaves best-minus-naive at 0.54 points, so it does not fix the thing the brief is actually about.
+
+**Recommendation**
+
+Take smallest-change whole, and graft two things onto it. It is the only proposal where every figure I re-ran reproduced AND the patch itself is byte-identical on a real career, so it costs nothing to land and it removes a genuine One Rule violation (`audition.heard`: 1 write, 1 declaration, 0 readers, nine lines of docstring). Its pinning test is the part that matters most — I confirmed the underlying gap by running the full suite against AS_GOOD_AS_IT_GETS = 0.34 and watching 1204 tests pass, so a 48-point swing in the game's central outcome is invisible to everything except three assertions.
+
+GRAFT FROM fit-to-the-world, two pieces, not the constants:
+(1) Its sleep finding, written into MISREAD_THE_ROOM's comment. I reproduced it on three seeds: readiness is a hard fixed point at 49.2 (peak over a further 365 days is exactly 49.2), and `applySleep(me, 8, 1.0)` takes it to 95.0, sure 0.9826. The far->good crossover is at 76.311, dead center in that gap, and `applySleep` has a real player-chosen call site at life.ts:148 behind `life.sleep_started`, not only the autopilot at :356. So 'As Far As It Goes' is NOT dead — it is correct exactly when you slept before the room. Four of the five agents concluded the flip was unreachable; it is reachable, and no comment in the file says so. This is the one sentence the room could keep that nobody has written.
+(2) Its test hardening at audition.test.ts:749 — derive the roll from AS_GOOD_AS_IT_GETS instead of hard-coding 0.5. That is correct at any value of the constant and stops the test silently assuming the ceiling is above a half.
+
+DO NOT take fit-to-the-world's constant changes on this pass. Its own argument-against is right: 0.34 is a residual fitted backwards from a 25% target and then dressed in a research band whose only figure with a real n (the SAG-AFTRA survey, n=9,300) says nothing about booking rates. Worse, its Shape B alternative — the variant with the better-sourced number — kills the sleep flip outright, which is the only live decision in the file. If the owner does want the rate down later, the minimal version (AS_GOOD_AS_IT_GETS alone, a pure level knob) is the defensible one, and it should wait on a denominator decision (see below).
+
+DO NOT take make-it-a-decision yet, but keep it. Its mechanism works and its numbers are exact; it needs the `H > 0 &&` fix before anyone can trust its H=0 escape hatch, and it should not land in the same week as a prose cleanup because it moves every seeded want in the game.
+
+ONE THING TO SETTLE FIRST, which no proposal raises: the three of them quote 65.4%, 66.0% and 55.4% for the same shipped arm, and the spread is almost entirely a denominator choice nobody states. In my 6-seed x 12-year run, `never-answered` is 105 of ~500 audition rows — a fifth of all auditions are ones the player never went up for at all. Counting those as "no" gives 50.4% for room/good; excluding them and `dates` gives 67.4%, which matches the exact analytic 0.706024 once availability is allowed for. The tape's judged rate came out 0.6285 against an exact 0.625851, which is the check that the judged denominator is the honest one. Before anybody fits a constant to a target rate, decide which number "most readings end in no" is supposed to be about.
+
+**What nobody proposed**
+
+Make going into the room cost readiness at the moment of the note — the decision the file already contains and nobody wired.
+
+The measurement nobody assembled from the pieces lying around: readiness is a hard fixed point at 49.2 under autopilot (I confirmed the peak over 365 further days is exactly 49.2 on three seeds), a deliberate `applySleep(8, 1.0)` takes it to 95.0, and the far->good crossover sits at 76.311 — dead centre in that gap. So the game ALREADY has a real, reachable, two-state decision: sleep before the room and 'As Far As It Goes' is correct (0.787 at sure=1); don't and 'A Good Deal' is correct (0.706 at sure=0.8221). It needs no new constant, no new content word, and no change to the want.
+
+What is missing is the cost that makes it a choice rather than a freebie. Nothing currently spends readiness on an audition — the 90-minute IN_THE_ROOM slot is diary decoration. Make `goUpFor('room')` spend it, and three dead things come alive at once: the tape becomes the way in you take when you cannot afford to arrive rested, `way.days` and `requiresPlayer` stop being decoration, and MISREAD_THE_ROOM stops being a passive multiplier on a number the player cannot move and becomes the thing they are choosing about.
+
+make-it-a-decision killed this idea (its item (b), "the room costs readiness/energy/sleepDebt") and killed it for the wrong reason: it tested a one-off hit against the DAILY ROLLOVER and found the fixed point erases it by tomorrow. True and irrelevant — the note is read the same afternoon, and `heardItRight` is sampled at `takeTheNote`, not the next morning. The right test is whether the hit survives from `goUpFor` to the note three days later, which nobody ran. fit-to-the-world found the sleep fact, correctly called it load-bearing, and then chose a recalibration that MOVES the crossover to 56.0 instead of wiring it. smallest-change patches prose around it.
+
+Second thing nobody proposed: fix the denominator before fitting anything to it. `never-answered` is 105 of ~500 audition rows in a played career — a fifth of all auditions are ones the player never went up for. Every rate anyone in this set quotes silently includes or excludes them, which is the entire reason three agents reported 65.4%, 66.0% and 55.4% for the same arm and each believed the others were wrong.
+
+**The figure this judge re-ran**
+
+I re-ran at least one predicted figure from each, all through the real functions with probes in my scratchpad; the repo was never written to.
+
+MOST DECISIVE — fit-to-the-world's test-breakage claim, which HELD exactly. I patched all four constants (AS_GOOD_AS_IT_GETS 0.82->0.34, TOO_FAR 3.4->2.05, CLOSE_ENOUGH 1.2->1.05, exponent deleted) into a copy and ran the unmodified suite: 44 files, 1 failed, 43 passed; 1208 tests, 3 failed, 1204 passed, 1 todo (predicted 1207/3/1203/1). The three failures are the three it named, at those lines, and tests/audition.test.ts:1116 printed `walked/3 = 0.19273080241587578` — the identical seventeen digits it quoted.
+
+smallest-change — HELD. Exact enumeration gave P(off<=1.2) = 0.277778 blind and 0.599090 after 'good' at sure=0.8215, and P(cast) = 0.706024, all to six decimals as predicted. Then I applied its patch: tsc exit 0, and six arms x 6 seeds x 12 years byte-identical on ups/answered/settled/cast/rate/why-histogram.
+
+make-it-a-decision — HELD on the mechanism, FAILED on the safety claim. House (2,-1,0) -> best opening (2,-1,0) 0.7888 vs dead centre 0.7363, gain +0.0525, and all three other houses exact to 4dp; marginal pmf invariant at H=0/0.5/0.7/1.0. But "HOUSE_HOLDS = 0 reproduces the shipped game bit-for-bit" is false: 200 seeds, 4 identical, 196 different, because the proposed body burns a second `next()` per shade even at H=0.
+
+Two cross-checks that validate the harness: my parameterised `keen` matched the real `decideAudition` to 1.1e-16 over all 19 attainable off values, and the measured career judged-rate for a tape (0.6285) matched the exact analytic 0.625851.
+
+CAVEAT: the working tree moved under me mid-measurement. HEAD went a3daa25 -> c8bdf57 and src/engine/systems/life.ts was rewritten at 01:50:21 while my career runs were in flight, which is what produced a 0.3-point drift in my readiness telemetry between two otherwise byte-identical runs. The audition constants themselves were unchanged throughout, and I re-ran the readiness and sleep probes against the final tree: still 49.2 and 95.0 on all three seeds.
+
+### Judge 2
+
+| proposal | truthfulness | premise | cost | decision |
+|---|---|---|---|---|
+| smallest-change — "Two sentences the roo | 9 | 8 | 10 | 2 |
+| make-it-a-decision — "The house: a room  | 7 | 9 | 4 | 8 |
+| fit-to-the-world — "Drop the ceiling, br | 9 | 6 | 6 | 4 |
+
+**smallest-change — "Two sentences the room could not keep, an** — The most honest document of the three and the least consequential. Every figure I re-ran reproduced: tape 0.625851, dead-center/room/'good' 0.706024 at sure=0.8215, 'far' 0.787229 at sure=1. Its Option B linearity claim is exactly right — I measured best/A = 0.861012 at A = 0.82, 0.65, 0.58 and 0.34, constant to six digits. But that IS the indictment. I enumerated all 343 openings x 2 ways x 4 answers at A = 0.82, 0.65, 0.58 and 0.34 and the answer-variety table is byte-identical at every value (none 98 / touch 276 / good 282 / far 912 / tie 196 across the 1,764 readable states), dead center stays uniquely rank 1/343, and the value of knowing the note beyond simply pressing 'good' stays at +0.000007. Option B moves the yes rate 19 points and moves the decision by precisely zero. Its argument-against is correct that the tape is the bigger failure, and it does not fix it. The pinning test is the one durable thing here and it is worth taking on its own.
+
+**make-it-a-decision — "The house: a room that wants the same ** — The only proposal that produces a decision, and I verified the mechanism rather than trusting it. Enumerating all 343 houses at their true draw weight with HOUSE_HOLDS = 0.7: 343/343 distinct best openings, and the best opening IS the house in 343/343. The opening stops being a button outright. The answer stops being 'far' by default — at the best opening the spread goes from (good 80, far 40, tie 0) with no house to (none 10, touch 51, far 37, tie 7). And the way in becomes a real trade: the room's premium over the tape at the oracle opening falls to 0.0150, BELOW the 0.0200 that P2 itself measured the two extra days cost through `settle`'s `freeAcross` re-check — so the tape genuinely becomes right once you know the house. Three buttons become three decisions. Marked down for one inflated figure (see checkedFigure) and for cost: every seeded want in every save moves, `whatTheyWant`'s signature changes, and the mechanic is unplayable without the React default-value change, which puts a load-bearing decision in the UI layer. Its four killed candidate costs — reliability clamped at 1.000 in 87.3% of readings, readiness a daily fixed point, the diary committing whole weeks, money never scarce — are the most valuable measurement in the entire set.
+
+**fit-to-the-world — "Drop the ceiling, bring the door in, str** — Its arithmetic is dead on — I predicted-checked its own headline and got naive 0.2535 against its 0.2536 and best 0.258828 against its 0.2590 — and it is admirably explicit that 0.34 is a residual fitted backwards from a 25% target, not a published figure. But it fixes the rate, not the room. Dead center is still uniquely rank 1/343. The note answer improves from +0.000007 to +0.005323 of P(cast), which is 760x a near-zero base and still only 2% of the 25% it now books. Worse, the recommended variant makes answer variety go BACKWARDS against shipped: 'far' is uniquely best in 1,078 of 1,764 readable states at played readiness, against shipped's 912. Its own rejected Shape B (A=0.42, CE=0.7, TF=2.05, e=1.4) is the better variant on every decision metric I measured — good 482 / far 980, note value +0.004344 — and it discarded it for a reason that my enumeration contradicts: the good/far flip survives Shape B at dead center (far 0.2951 vs good 0.3052 rested, so good wins; but the flip is alive across openings). It chose the worse shape.
+
+**Recommendation**
+
+Take make-it-a-decision as the spine. It is the only one of the three that survives the dominance test: I enumerated all 343 houses at their true draw weight and at HOUSE_HOLDS = 0.7 there are 343 distinct best openings, the best opening is the house every single time, and the oracle room premium (0.0150) falls below the two extra days' measured cost (0.0200), so all three buttons become decisions. Nothing else in the set changes the strategy space at all.
+
+Graft on from smallest-change, unconditionally and in the same commit, because they are free and orthogonal: the deletion of `Audition.heard` (one write at world/audition.ts:598, zero readers; keep line 597's `.next()` so no seed moves), the two false CLOSE_ENOUGH clauses, the HOW_FAR 'good' row's "Most notes want about this", and both stale UNBITTEN entries. Above all take its pinning test on the cast rate. I confirmed why it matters: A is a pure scalar — best/A = 0.861012 at every value I tested — so 1,203 tests cannot see a 19-point swing in the game's central outcome. That is how a comment came to assert the opposite of the code for as long as it existed.
+
+Graft on from fit-to-the-world ONE line and no others: AS_GOOD_AS_IT_GETS, if the owner wants the rate in the 15-30% band. It is provably shape-neutral, so it can be tuned independently of everything above without touching a single decision. Do NOT take its CLOSE_ENOUGH, TOO_FAR or exponent changes, and here is the measured reason nobody has stated: tightening CE makes the note worth MORE, which re-kills the tape decision the house just created. I ran the combination — house 0.7 + Shape B gives a room premium of 0.0427 at the oracle opening, back above the 0.0200 the extra days cost, so the tape is never right again. P3's shape work and P2's mechanism actively fight each other. Take P2's shape and P3's level.
+
+Sequencing caveat, and it is P2's own and I believe it: every way-in decision in all three proposals rests on a 2-point `dates` side effect that nobody designed and no comment mentions. Before shipping the house, unclamp `remembersYou` (pinned at 1.000 in 87.3% of readings) and give readiness memory past the daily rollover, so the room can be priced in something real instead of an accident of settlement timing.
+
+**What nobody proposed**
+
+Nobody proposed fixing the currencies first, and the measurements say that is the actual prerequisite. `afterTheNote(r, note, 'none', ...)` returns `r` unchanged, so the room's action set strictly contains the tape's and the room weakly dominates by construction — no constant in either file can change that. All three proposals accept it. P2 works around it by making the note worth less; P1 and P3 leave it standing. That means the way-in decision in every proposal hangs on a 2-point `dates` loss from settling two days later, which is a side effect of `settle` re-checking `freeAcross`, not a designed price.
+
+P2's own killed-costs probe already found why no designed price exists: reliability is clamped (`remembersYou` pinned at 1.000 in 87.3% of real readings, and identical at reliability 0 and 100 in 83.5%), readiness is a daily fixed point (a 12-point energy hit is gone by tomorrow), the diary commits in whole weeks so it cannot tell a 90-minute slot from a free afternoon, and money is never scarce (0 of 3,900 career-weeks below the €120 fee). Four plausible prices, four dead. That is not an audition-room finding — it is a finding about the wellbeing model and the standing ratchet, discovered in the audition room and buried in an argument-against-itself section.
+
+The option none of them wrote: unclamp `remembersYou`, give readiness memory across the rollover, ship the house, and leave all four constants exactly where they are. That fixes the opening (measured: 343/343 distinct best openings) and makes the way in pricable in something a player can feel, without asserting a single new number about how often rooms say yes.
+
+**The figure this judge re-ran**
+
+I re-ran make-it-a-decision's load-bearing prediction: "At H=0.70 the best opening IS the house, exactly, for every house tested... mean gain over dead center +0.1527" at sure=0.7361 answering 'good'. I enumerated all 343 houses at their exact draw weight (not a 58-holder sample) against all 343 openings, using the real `theNote`, `afterTheNote` and `howFarOff`. THE STRUCTURE HELD, completely: 343/343 distinct best openings, and the best opening equals the house in 343 of 343. THE MAGNITUDE DID NOT: I measure the mean gain at +0.1089, not +0.1527 — 4.4 points low, a 29% overstatement, most likely because their 58 sampled holders were drawn from real play rather than weighted by the true pmf. I also checked and confirmed the claim they were least sure of: the room premium at the oracle opening is 0.0150, which is below the 0.0200 they measured the two extra days cost, so the tape really does become the right choice once you know the house — and my exact figure supports that conclusion more strongly than their own noisy engine measurement (+0.0089 +- 0.0078) did.
+
+### Judge 3
+
+| proposal | truthfulness | premise | cost | decision |
+|---|---|---|---|---|
+| smallest-change — "Two sentences the roo | 9 | 8 | 10 | 4 |
+| make-it-a-decision — "The house: a room  | 7 | 8 | 4 | 8 |
+| fit-to-the-world — "Drop the ceiling, br | 4 | 5 | 2 | 3 |
+
+**smallest-change — "Two sentences the room could not keep, an** — TAKE IT. Every blast-radius claim it makes, I applied and ran, and every one held. Applied the Audition.heard deletion to a copy (the 10-line block at /home/user/1221/src/engine/domain/model.ts plus the write at /home/user/1221/src/engine/world/audition.ts:598, keeping the rng draw at :597): `npx tsc --noEmit` exits 0, `npx vitest run tests/audition.test.ts` is 57/57. `grep -rn '\.heard\b' src/ tests/` returns exactly one hit and it is the write itself — 0 readers, claim verified. Its central figure reproduces on my own independent exact enumeration over all 343 wants with P(cast) bisected out of the real decideAudition: naive (dead center, room, 'good') = 0.706024 at sure=0.8215 and 0.776374 at sure=1, to six decimals. Its weakness is the one it names itself: it changes nothing about whether the player has a choice, and it declines to fix the tape while proving the tape is dominated.
+
+**make-it-a-decision — "The house: a room that wants the same ** — RIGHT IDEA, NOT TODAY, AND ONE CLAIM IS FALSE. The mechanic genuinely works: I applied it (HOUSE_HOLDS, whatTheyWant(house), theHouse, the whatIsGoing call site), and the best opening equals the house in 5/5 houses tested, with gain over dead center from 0.0000 (house at center) to 0.3472 (house at a corner). The marginal want is genuinely unchanged — E|w| = 1.498710 over 900,000 real draws against the shipped 1.500000 — so every fitted threshold still means what it meant. tsc exits 0 and the FULL suite is 44 files, 1207 passed, 1 todo, ZERO failures. FALSIFIED: its falsifiability claim that 'HOUSE_HOLDS = 0 reproduces the shipped game bit-for-bit'. Same seed 'bitcheck', shipped gives wants {warmth:0,size:-1,pace:3}, H=0 gives {warmth:0,size:3,pace:-2}. Different world. The short-circuit in `house !== undefined && next() < HOUSE_HOLDS` means the second draw is always consumed once a house is passed, so H=0 reproduces the distribution, not the bits — and its stated rationale ('the draw count is fixed at two per shade') is backwards, it is one draw when house is undefined and two when it is defined. That asymmetry is the real reason the two shape-pinning tests survive. Cost is the problem: new constant, changed signature, new RNG stream, new exported accessor, and a UI default value that its own text admits is load-bearing rather than advisory. It passes the full suite only because nothing is pinned — that is the absence of a net, not safety.
+
+**fit-to-the-world — "Drop the ceiling, bring the door in, str** — DO NOT TAKE AS PROPOSED — its headline blast-radius claim is false and it says 'measured' beside it. Applied all four constant changes: the full suite gives 3 failed / 1204 passed / 1 todo, matching its claim of three failing TESTS, and its walked/3 = 0.19273080241587578 reproduces to all 17 digits, which proves it really did run the suite. Then I applied its OWN three proposed fixes (off 2.4→1.5, roll 0.5→AS_GOOD_AS_IT_GETS/2, 0.2→0.10) and re-ran: STILL RED. `expected 0 to be greater than 4` at /home/user/1221/tests/audition.test.ts:759. The proposal states 'the sibling assertions at :758-761 all still pass unchanged — measured.' They do not. Vitest stops at the first failing assertion in a test, so :749 failed first and :759 never ran; the proposal counted failing tests and reported them as failing assertions. In a project whose standard is that a number is measured and not asserted, that is the exact failure mode. Cost is also the worst of the three by a wide margin: by its own figures 3.81 → 1.57 parts per career-year, fee income down 78%, end fame 100.0 → 50.3, every saved game and screenshot stale. And it does not create a decision — its own numbers put best at 0.2590 against naive 0.2536, a 0.54-point gap. Its argument-against-itself is the best writing in the three proposals and concedes that 0.34 is a residual fitted backwards from a 25% target wearing the research band's clothes.
+
+**Recommendation**
+
+TAKE smallest-change, essentially as written, and graft four things onto it.
+
+WHY IT WINS ON MY AXIS: it is the only one of the three whose blast-radius claims survived being applied and run. Verified on a copy: tsc exit 0, audition suite 57/57, and the only two files that differ are model.ts and world/audition.ts. Zero seeded outcomes move, because it deletes the write at world/audition.ts:598 and keeps the draw at :597.
+
+GRAFT ON, IN ORDER OF VALUE:
+
+1. ITS OWN PINNING TEST IS THE MOST VALUABLE ITEM IN ALL THREE PROPOSALS — land it FIRST, before anything else. I measured why: proposal 2 changes the hidden want of every audition in every save in the game, and the full suite comes back 1207 passed / 0 failed. Nothing in 1,208 tests notices. Proposal 1's own claim that AS_GOOD_AS_IT_GETS can move 0.82 → 0.65 invisibly is the same hole from the other side. The room's central outcome is unpinned, which is precisely how a comment came to assert the opposite of it for as long as it existed. Pin it at 0.706 (dead centre, room, 'good', sure=0.8215) — my independent enumeration gives 0.706024.
+
+2. WHAT NOBODY PROPOSED, AND IT IS CHEAPER THAN ANY OF THEM — delete 'Leave It' from HOW_FAR in /home/user/1221/src/engine/content/audition.ts. Measured: across all 343 openings at six readiness levels spanning the entire reachable range (sure ∈ [0.65, 1], since heardItRight = 1 − 0.35(1−ready)), 'Leave It' is the best answer in 0 of 2,058 cells. 'A Touch' beats it everywhere by a minimum margin of 0.018653. It is also bit-identical to not going in at all — 1,368 (want × roll) cells, max |off difference| = 0. That is THE ONE RULE verbatim on a content constant: a declared button no state of the world can ever want pressed. Deleting it costs one array entry and touches two test call sites (:807, :828), and it turns the note into a genuine three-way choice with no dominated option. Proposal 1 patches the prose directly beside it; proposal 2 invents a new mechanism; proposal 3 rescales the constants around it. None of them names it.
+
+3. ALSO NOBODY'S — fix the test helper's dead default. /home/user/1221/tests/audition.test.ts:110 has `howFar = 'full'`, and 'full' is not a valid HowFarId; the suite's own line 873 asserts take_note REFUSES it. Line 470 — the flagship "decides exactly the same thing with every attribute in the save at fifty", commented "The whole file in one assertion" — passes 'full' explicitly, so take_note silently returns ok:false and the note is never answered. The one test that proves the room reads no attribute never exercises afterTheNote, heardItRight or MISREAD_THE_ROOM. I verified the fix: change :470 to 'good' and the test still passes while actually covering the note path. One word. (It is a coverage gap, not a live bug — readiness reads wellbeing, not attributes — but it is free to close.)
+
+4. FROM PROPOSAL 2, TAKE THE PROSE AND LEAVE THE CODE. Its "NOT PROPOSED — four costs I measured and killed" section is the most useful negative result on the table: reliability is clamped away, readiness is a daily fixed point, the diary commits in whole weeks, and the door window is never under three days. That is exactly why proposal 1's "make the room cost something" option has nowhere to land, and it belongs in docs/UNBITTEN.md so nobody re-proposes those four.
+
+ON AS_GOOD_AS_IT_GETS: proposal 1's Option B and proposal 3 agree it is the only true level knob, and that is structurally right — keen is A × shape(off) in both branches, so P(cast) is exactly linear in it. If the owner wants the room harder, cut A and nothing else. But do it as a separate, owner-decided commit AFTER the pinning test lands, never bundled — the pinning test is the only thing that will make the change visible. Do NOT take proposal 3's TOO_FAR/CLOSE_ENOUGH/exponent changes with it: narrowing the window to exactly 1.0 is what breaks :759, and it means one step of shade error takes you from the top of the ramp to a guaranteed no, which the proposal never mentions.
+
+WHAT I WOULD NOT DO: bundle proposal 2. It is the only proposal that creates a real decision and it deserves its own task, but it needs tests before it needs a UI, and today the suite would not catch it if it were wrong.
+
+**What nobody proposed**
+
+DELETE 'Leave It'. All three proposals leave a button in HOW_FAR that no state of the world can ever want pressed, and the project has a rule against exactly that.
+
+Measured over all 343 openings at six readiness levels spanning the whole reachable range of `sure` (heardItRight = 1 − MISREAD_THE_ROOM·(1−ready), so sure ∈ [0.65, 1] and nothing outside it exists):
+
+  sure=1.0000  none=0  touch=0    good=0  far=343
+  sure=0.9000  none=0  touch=0    good=1  far=342
+  sure=0.8215  none=0  touch=0    good=1  far=342
+  sure=0.7500  none=0  touch=0    good=7  far=336
+  sure=0.7000  none=0  touch=0    good=7  far=336
+  sure=0.6500  none=0  touch=7    good=4  far=332
+
+'Leave It' is best in 0 of 2,058 cells. At dead centre it is flat at 0.625851 at every readiness (it must be — steps=0, so the misheard direction cannot matter) while 'A Touch' beats it by a minimum of 0.018653 even at the fatigue floor. And it is bit-identical to never going in: 1,368 (want × roll) cells through the real afterTheNote, max |off difference| = 0.00e+0.
+
+So the room has four buttons and one of them returns the free tape's number after three days, EUR 120 and an afternoon the clock stops for. THE ONE RULE says a declared word with nothing that reads it is worse than no word at all; this is a declared word that everything reads and nothing can ever want. It is the cheapest genuine fix on the table — one array entry in /home/user/1221/src/engine/content/audition.ts, two test call sites at tests/audition.test.ts:807 and :828 — and it makes the note a real three-way choice with no dominated option, which is the thing proposal 2 spends a new constant, a changed signature, a new RNG stream, a new accessor and a UI rewrite trying to buy.
+
+Note this is NOT the same as the tape. The tape is weakly dominated and everyone said so; fixing it needs a price nobody can currently denominate (proposal 2 measured four candidate currencies and killed all four). 'Leave It' is strictly dominated with no such problem — deleting it costs nothing and needs no new number. The three proposals between them patch the prose beside it, build a mechanism around it, and rescale the constants under it. None of them looks at it.
+
+Second, smaller, also free: /home/user/1221/tests/audition.test.ts:110 defaults `howFar = 'full'`, which is not a valid button id — the suite's own :873 asserts take_note refuses it. Line 470, the flagship attribute-blindness test, passes it explicitly, so the note is never answered and the file's "whole file in one assertion" never touches afterTheNote, heardItRight or MISREAD_THE_ROOM. Verified fix: change :470 to 'good' and it still passes, now covering the note path.
+
+**The figure this judge re-ran**
+
+I re-ran proposal 3's claim that "the sibling assertions at tests/audition.test.ts:758-761 (monotone falloff, and at(0)/100 close to AS_GOOD_AS_IT_GETS) all still pass unchanged — measured." IT DID NOT HOLD.
+
+I copied the repo, applied all four of proposal 3's constant changes (AS_GOOD_AS_IT_GETS 0.82→0.34, TOO_FAR 3.4→2.05, CLOSE_ENOUGH 1.2→1.05, and deleted the `** 1.4`), then lifted the exact `at()` helper out of tests/audition.test.ts:751-758 and ran it against the real patched decideAudition:
+
+  at(CLOSE_ENOUGH)     = 34   (off 1.05)
+  at(CLOSE_ENOUGH + 1) = 0    (off 2.05)
+  at(TOO_FAR - 0.1)    = 4    (off 1.95)
+
+  assertion at(CE) > at(CE+1)      PASS
+  assertion at(CE+1) > at(TF-0.1)  FAIL   0 is not greater than 4
+  assertion at(0)/100 ≈ A (1dp)    PASS
+
+Then I confirmed it end to end rather than trusting my own arithmetic: I applied proposal 3's own three proposed test fixes to the same copy and re-ran `npx vitest run tests/audition.test.ts`. Result: 1 failed | 56 passed — "AssertionError: expected 0 to be greater than 4" at tests/audition.test.ts:759. Proposal 3's fix list is incomplete and its suite does not go green.
+
+Why it got this wrong, and it is instructive: the full suite under its constants reports exactly 3 failing tests, which matches its claim. But vitest stops at the first failing assertion inside a test, so tests/audition.test.ts:749 fails first and :759 never executes. The proposal ran the suite honestly, saw three failures, and reported "3 assertions". It also reproduced walked/3 = 0.19273080241587578 to all 17 digits, so it certainly ran the thing — it just read failing tests as failing assertions.
+
+Is the break the test being right or the test being stale? Both, and the right half matters more. The assertion's literal form is brittle: `at(CE+1) > at(TF-0.1)` only orders correctly when TOO_FAR − CLOSE_ENOUGH > 1.1, so it hardcodes an assumption about the window width. But the property it accidentally pins is real and load-bearing — proposal 3 narrows the falloff window from 2.2 to exactly 1.0, which means one extra step of shade error carries you from the top of the ramp to keen = 0, and off = TOO_FAR exactly now returns a guaranteed no still labelled 'went-another-way' rather than 'wrong-for-it'. That is a design consequence the proposal never mentions anywhere, and the stale-looking test is the only thing in the repo that caught it. Rewrite the assertion to be generically monotone; do not just move its magic numbers to make it pass.
