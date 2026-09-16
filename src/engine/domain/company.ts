@@ -442,15 +442,17 @@ export interface Project {
    * The plan's figure is a default, not a rule. Money buys capacity, capacity
    * buys progress at a rate, and money never buys progress directly — so the
    * number of editors is the decision that sits between a budget and a
-   * delivery date, and under-resourcing it is how a season misses air.
+   * delivery date, and under-resourcing it is how a season misses air. It is
+   * taken once, on the greenlight form, priced beside the number it sets, and
+   * no later week reopens it.
    */
   hands?: number;
   /**
    * Finished seconds the cutting room has produced, cumulative.
    *
    * The output side of the second ledger, and the only part of the cut that
-   * cannot be derived: it depends on how many hands the room had in every week
-   * it ran, and that is a decision that can change week to week. Parts reach
+   * cannot be derived: it depends on how many hands the room was given at the
+   * greenlight, which is the last moment anybody sets that number. Parts reach
    * the rung the cut takes them to, in order, as this covers their runtime.
    */
   cut?: number;

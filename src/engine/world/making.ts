@@ -856,10 +856,9 @@ function settlePeriod(sim: Simulation, project: Project, period: Period): void {
  *
  * One item at a time rather than the whole run laid out at greenlight, because
  * how long the cutting room needs is not known at greenlight — it is whatever
- * the room's rate and the room's hands turn out to make it, and hands can be
- * changed in any week. A season whose cut runs past the end of its own post
- * period keeps cutting; it does not stop unfinished because the calendar said
- * post was over.
+ * the room's rate and the hands it was given turn out to make it. A season
+ * whose cut runs past the end of its own post period keeps cutting; it does
+ * not stop unfinished because the calendar said post was over.
  */
 function aWeekOn(sim: Simulation, project: Project, at: Instant, since: Instant): void {
   sim.schedule({
