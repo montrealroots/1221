@@ -410,8 +410,17 @@ file reference rather than as a finding.
   construction bill is the largest single claim this company ever makes. An
   unregistered company pays the same prices and keeps none of it, which is the
   door.
-- **366 lines of `domain/model.ts`** are record shapes with no table, no
-  importer and no writer.
+- ~~**366 lines of `domain/model.ts`** are record shapes with no table, no
+  importer and no writer.~~ **Deleted**, and it was 199 lines across eight
+  names rather than 366: `Structure`, `Room`, `Zone`, `Costume`, `Order`,
+  `Training`, `Running` and its `Mark`. A house broken into rooms with
+  furnishings, a shop with a cart and a refund window, a gym with grading
+  panels, and a track season with wind readings and shoe contracts — the same
+  game `core/ids.ts` records losing a hundred and five id namespaces to. The
+  namespaces went in that cull and the shapes stayed. Cut by transitive closure
+  and not by region, which mattered: `Mark`'s only two readers are fields on
+  `Running`, so it is dead only once `Running` is, and `Booking` sits directly
+  above the region and is live.
 - ~~**Four fields on every person, and the whole skill sheet.**~~ **Deleted**,
   and it was five fields and a sheet. `goals` was not collected by any screen;
   `lifestyle` was a select whose four options each promised something about how
@@ -429,8 +438,22 @@ file reference rather than as a finding.
   relative the family generator writes one for, and `tests/looks.test.ts` holds
   that reader. Flavour with a reader is not a dead word. Flavour written into a
   save and never shown to anybody would have been.
-- **The audit trail is a persisted, empty table**, and the history table is a
-  sleep diary.
+- ~~**The audit trail is a persisted, empty table**~~ — deleted in `5a5232e` —
+  **and the history table is a sleep diary.** Measured rather than asserted, and
+  the truth is sharper than the claim in both directions. Structurally it is a
+  sleep diary exactly: `universe.history` has **one writer in the whole engine**,
+  `systems/life.ts` inside the sleep command. In practice it holds **nought rows
+  after twenty-five played years**, because that writer is a command the player
+  presses and a career that only acts never presses it. Its only readers count
+  its length for the save-size estimate and relabel it on migration; **no screen
+  reads it**, so nothing a player does is ever shown back to them from it.
+
+  That is the audit trail's shape again — persisted, validated, counted in the
+  size estimate, read by nobody — with one difference that stops it being the
+  same call: the audit trail had zero writers *and* zero readers, and this has a
+  writer that works. So it is either a table that wants a screen or a table that
+  wants deleting, and which of those it is belongs to the owner rather than to
+  whoever next reads this line.
 - **`Audition.took`** is written and read by nothing, in the save record of the
   system the game is named after.
 - **The guild signature is a gate with no money behind it.** The content says
