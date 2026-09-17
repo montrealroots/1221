@@ -21,6 +21,7 @@ import { ceilingAt, recoveryFactorAt } from '../content/lifespan';
 import { driftBonds, moralePullOf } from '../world/standing';
 import { whatHasThem } from '../world/diary';
 import { A_WORKING_WEEK } from '../content/audition';
+import { WEAR_A_DAY } from '../content/estate';
 
 // ---------------------------------------------------------------------------
 // Wellbeing model
@@ -270,10 +271,12 @@ export function dailyRollover(sim: Simulation): void {
   const player = sim.universe.people[sim.universe.playerId];
   if (!player) return;
 
-  // Homes wear.
+  // Homes wear. This is one of the two writers of `property.condition` and it
+  // is the one that costs nothing; the other is `haveTheWorkDone` in
+  // `world/house.ts`, which is what a player spends money to run the other way.
   for (const property of Object.values(sim.universe.properties)) {
     if (property.soldAt) continue;
-    property.condition = clamp(property.condition - 0.012, 0, 100);
+    property.condition = clamp(property.condition - WEAR_A_DAY, 0, 100);
   }
 
   // Fitness decays without use; condition slowly recovers toward fitness. Both

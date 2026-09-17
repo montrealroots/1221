@@ -271,9 +271,10 @@ defineLook<Property>('house', {
             there’s no lease on it, no loan against it and nobody whose permission you need to be in it.
           </p>
           <p className="small">
-            Condition is the one figure in this house that moves on its own, and it only moves one way.
-            It sets how much a night here gives you back, and there’s nothing in this game you can buy,
-            book or ask anybody for that puts a point of it back. At {outOf(kept)} it’s
+            Condition is the one figure in this house that moves on its own, and left alone it only
+            moves one way. It sets how much a night here gives you back. Having the work done puts it
+            back to a hundred and is charged by the point, so a year of it costs about what a year of
+            wear took off. At {outOf(kept)} it’s
             {kept >= 100
               ? ' as high as it goes, because the house is barely a year old.'
               : kept >= 70 ? ' working for you.' : ' costing you sleep you’d otherwise have had.'}

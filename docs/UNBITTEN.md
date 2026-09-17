@@ -559,8 +559,9 @@ file reference rather than as a finding.
 - **A directed night's sleep is added on top of the autopilot's**, which inverts
   the contract its own comment states, and the guard written for it has no
   caller.
-- **The house rots with no repair**, and the screen tells the player it is their
-  fault for a choice they do not have.
+- ~~**The house rots with no repair**, and the screen tells the player it is their
+  fault for a choice they do not have.~~ **Cleared**, and half of it was already
+  stale when it was cleared — see "Recently on this page, and no longer" below.
 - **The creation screen, `taste.ts` and the engine give three different counts**
   of which personality axes do anything — and the screen's copy exists precisely
   to be honest about that.
@@ -582,6 +583,34 @@ file reference rather than as a finding.
 ## Recently on this page, and no longer
 
 Kept because the shape of what went wrong is worth more than the fix.
+
+**The house rotted with no repair.** `property.condition` had one writer in the
+whole build and it was a subtraction: `systems/life.ts` took `WEAR_A_DAY` off
+every standing property every day, `sleepQuality` read the result every night,
+and nothing anywhere put a point back — so the house reached nought in a little
+under twenty-three years, inside one career. There is a command for it now
+(`life.upkeep`), the player pays for it out of their own account, and the price
+is a quotient rather than a taste: the trade's rule of thumb of a currency unit
+per square foot per year, divided by the 4.38 points a year of wear takes off.
+
+Two things came out of fixing it that are worth more than the fix. The first is
+that **the second half of this entry was already false when it was written** —
+the estate screen did not blame the player, it said plainly that nothing in the
+game could put a point back, which was true and was the reason to build one. An
+entry on this page was stale in exactly the way this page warns about.
+
+The second is the size of the prize, paired over six seeds of twenty-five played
+years, the same seeds both sides. Keeping the house prevents the late-career
+collapse outright — reliability ends at 94.3 rather than 0.0, no seed reaches
+nought where six of six did, readiness in the last third goes 19.3 to 46.6, and
+weeks spent under `spentAt` fall from 575 of 1300 to 77. And **parts won moves
+by three, from 115 to 119, while readings given does not move at all.** Career
+earnings move 14.8%, from EUR 1.92m to 2.20m, so the player wins better-paid
+work rather than more of it. Anybody reading the reliability row as the size of
+the prize is wrong by an order of magnitude. That gap — an enormous, real,
+measurable chain that arrives almost nowhere — is the open question this fix
+hands on, and it belongs to `readiness` and `reliability` rather than to the
+house.
 
 **An unscripted season hired nobody.** Twenty-four posts carried, zero people
 engaged, for as long as the crew looked for a period literally called

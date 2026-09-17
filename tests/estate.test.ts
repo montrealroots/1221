@@ -196,23 +196,20 @@ describe('the graph is walkable', () => {
   });
 });
 
-describe('the house falls and nobody can stop it', () => {
-  // The screen said condition "slips a little each day nobody tends to it",
-  // which reads as a choice the player keeps failing to make. There is no such
-  // choice, and `content/estate.ts` made it worse by commenting the starting
-  // value "because the family keeps it that way" — three sources, three
-  // different accounts of whose fault a falling number is.
+describe('the house falls, and now somebody can stop it', () => {
+  // This block used to be called "the house falls and nobody can stop it", and
+  // its first test pinned that: it asserted the command surface held nothing
+  // matching /repair|maintain|renovate|upkeep|fix/. That was an honest record
+  // of a real defect — one writer, and it was a subtraction — but it was a test
+  // whose passing depended on the defect surviving, so building `life.upkeep`
+  // turned it red. What is kept is the half that is still true and still worth
+  // holding: left alone, the fall is real, monotone and big enough to matter.
 
-  it('only ever falls, and offers nothing anybody can do about it', () => {
+  it('only ever falls when nobody pays to stop it', () => {
     const sim = world('no-repair');
     const id = Object.keys(sim.universe.properties)[0]!;
     const at = (): number => sim.universe.properties[id]!.condition;
     const start = at();
-
-    // Nothing in the whole command surface touches it. This is the half that
-    // makes the old sentence false rather than merely unkind.
-    expect(sim.commandKinds().filter((kind) => /repair|maintain|renovate|upkeep|fix/i.test(kind)))
-      .toEqual([]);
 
     let last = start;
     for (let step = 0; step < 40; step += 1) {
@@ -221,6 +218,14 @@ describe('the house falls and nobody can stop it', () => {
       last = at();
     }
     expect(last, 'ten years and the house is exactly as new').toBeLessThan(start);
+  });
+
+  it('offers exactly one way to put it back, and it is a command with a price', () => {
+    const sim = world('one-repair');
+    // The inverse of what this block used to assert. One, not none, and not
+    // two: a second way up would be a second answer to what the house costs.
+    expect(sim.commandKinds().filter((kind) => /repair|maintain|renovate|upkeep|fix/i.test(kind)))
+      .toEqual(['life.upkeep']);
   });
 
   it('does not tell the player somebody was supposed to be tending to it', () => {

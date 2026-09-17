@@ -852,8 +852,12 @@ function takeTheirWeeks(sim: Simulation, audition: Audition): void {
  * for 84%, 95% and 100% of the weeks that are left.
  *
  * The cause is neither term on its own. It is the house and the shoot
- * together, and either one alone is survivable. A residence loses 0.012
- * condition a day with no writer anywhere in the build that raises it,
+ * together, and either one alone is survivable. A residence loses `WEAR_A_DAY`
+ * of condition a day — and for the whole of the measurement above there was no
+ * writer anywhere in the build that raised it, which is the state this
+ * paragraph describes. There is one now: `haveTheWorkDone` in `world/house.ts`
+ * lets a player buy the points back, so a career that keeps the house does not
+ * take this path at all. What follows is what happens to one that does not.
  * `sleepQuality` reads that condition, and a shoot takes
  * `A_WORKING_WEEK.shorterBy` off the night on top of it; between them the
  * daily energy balance goes negative, and then `applyElapsedWellbeing`'s rule
