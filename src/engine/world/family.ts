@@ -193,7 +193,7 @@ function makeRelative(spec: {
     wellbeing: freshWellbeing(),
     reputation: {
       publicFame: 0, audienceAppeal: 50, professionalReputation: 0,
-      reliability: 55, prestige: 0, industryDemand: 0, controversy: 0,
+      reliability: 55, industryDemand: 0, controversy: 0,
     },
     careerTrack: like.careerTrack,
     estateRole: role,

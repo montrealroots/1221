@@ -465,7 +465,7 @@ export function performerNew(
       audienceAppeal: clamp(Math.round(40 + next() * 30), 1, 100),
       professionalReputation: clamp(Math.round(standing), 1, 100),
       reliability: clamp(Math.round(standing * 0.6 + 30), 1, 100),
-      prestige: clamp(Math.round(standing * 0.3 - 6 + next() * 10), 0, 100),
+
       industryDemand: clamp(Math.round(standing * 0.5 + next() * 20), 0, 100),
       controversy: 0,
     },

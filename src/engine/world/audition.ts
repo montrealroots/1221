@@ -906,8 +906,26 @@ export function theyWantYou(sim: Simulation, audition: Audition): void {
     sim.income(account, audition.feeCents, `${audition.holder}: Acting Fee`, 'career',
       { refType: 'audition', refId: audition.id });
   }
-  if (!me.quotes) me.quotes = [];
-  me.quotes.push({ projectId: audition.id, size: audition.size, cents: audition.feeCents, at: sim.now });
+  // The player's quote is not written here any more, and the decision behind
+  // that is worth keeping next to the line it removed.
+  //
+  // It used to push a row per part won — 96 to 115 of them over a played
+  // career — and nothing ever read one. `quoteOf` has a single engine reader,
+  // `askFor`, which is reached only through `offerOf`, and `seatThem` answers
+  // `{ took: true }` for the player before `offerOf` is built. Wiping every
+  // quote the player had, every week, left three careers bit-identical: the
+  // same sha256 over parts won, earnings, reliability, fame and energy.
+  //
+  // It was kept for a while because it was the input to an open question —
+  // whether the player's fee should be floored at their quote. That question is
+  // answered no: the floor was measured at x2.32 to x3.56 of lifetime acting
+  // income, which is a different game rather than a tuning, and it would make
+  // the player's pay a number that only ever rises. This build has found four
+  // of those already. Answering the question is what makes the field dead, so
+  // it goes with the answer rather than outliving it.
+  //
+  // `Person.quotes` itself stays: every other person in the save is priced
+  // through it by `askFor`, and for them it is live.
   const size = sizeById(audition.size);
   const carries = size?.onScreen ?? 0.1;
   me.reputation.publicFame = clamp(Math.round(me.reputation.publicFame + carries * 34), 0, 100);

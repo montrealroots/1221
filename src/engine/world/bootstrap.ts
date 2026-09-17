@@ -301,7 +301,7 @@ function seedReputation(config: NewSaveConfig) {
     audienceAppeal: 50,
     professionalReputation: Math.round(stage * 46),
     reliability: 55 + Math.round(config.personality.conscientiousness * 0.2),
-    prestige: Math.round(stage * stage * 30),
+
     industryDemand: Math.round(stage * 38),
     controversy: 0,
   };

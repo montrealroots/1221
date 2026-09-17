@@ -241,7 +241,7 @@ function somebodyNew(sim: Simulation, standing: number, next: () => number): Per
       // member that anybody reads, so it is the one thing the hire decides.
       professionalReputation: standing,
       reliability: clamp(Math.round(standing * 0.6 + 30), 1, 100),
-      prestige: 0,
+
       industryDemand: 0,
       controversy: 0,
     },

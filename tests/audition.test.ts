@@ -1107,7 +1107,7 @@ describe('what you played is the whole of what decides it', () => {
 });
 
 describe('the part is the first money that is yours', () => {
-  it('pays it into your own account and writes the number onto you', () => {
+  it('pays it into your own account and moves what being seen in something moves', () => {
     const sim = world('paid');
     const me = sim.universe.people[sim.universe.playerId]!;
     const booking = shootingOnTheLot(sim, 'an American studio, a feature', 12);
@@ -1120,7 +1120,12 @@ describe('the part is the first money that is yours', () => {
     if (out.why !== 'cast') return;
     const room = WAYS.find((one) => one.id === 'room')!;
     expect(out.money).toBe(before - room.costsCents + audition.feeCents);
-    expect(me.quotes?.some((q) => q.cents === audition.feeCents)).toBe(true);
+    // This used to assert the fee was also written onto `me.quotes`. It was,
+    // and nothing ever read it: `askFor` is the only engine reader of a quote
+    // and the player never reaches it, so wiping every quote left a played
+    // career bit-identical. The write is gone and so is the assertion, which
+    // was green for a line that decided nothing.
+    expect(me.quotes ?? [], 'the player is no longer priced through a quote').toHaveLength(0);
     expect(me.reputation.publicFame).toBeGreaterThan(0);
     expect(me.reputation.industryDemand).toBeGreaterThan(0);
   });

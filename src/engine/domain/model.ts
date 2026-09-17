@@ -94,8 +94,20 @@ export interface Reputation {
   professionalReputation: number;
   /** Whether producers believe you will finish the job, 0-100. */
   reliability: number;
-  /** Awards-and-critics standing, 0-100. */
-  prestige: number;
+  /**
+   * There was an awards-and-critics standing here and it is gone.
+   *
+   * `prestige` was written for 87 of the 146 people in a played save and read
+   * by no system, no screen decision and no rule — writers and no readers,
+   * which is the one shape The One Rule has no name for. The player's own held
+   * nought for twenty-five years, which is why `tools/dials.mjs` counted it.
+   *
+   * It came out rather than getting a reader, on the audit trail's precedent:
+   * the design is not lost, it is written down in `docs/AWARDS.md` with what it
+   * would cost and what it would be worth, and the honest place to rebuild it
+   * is the day there is a screen that asks for one. `controversy` below is the
+   * half that stayed, because two live mechanisms already read it.
+   */
   /** How many people currently want to hire you, 0-100. */
   industryDemand: number;
   /** Active negative attention, 0-100. Decays slowly. */

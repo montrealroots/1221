@@ -770,6 +770,56 @@ file reference rather than as a finding.
 
 ---
 
+## The six decisions, taken
+
+The owner handed these back to be decided rather than costed. They are recorded
+with their reasoning because a decision without its reasoning is a preference,
+and the next person to disagree with one of these should be able to find out
+what it was weighed against.
+
+**1. Income tax does not charge. Blocked on sinks, not on appetite.** It would
+take 34.0% — €605,928 of a €1,781,243 career. But the player has almost nothing
+to spend money on: `life.upkeep` is the only command in the build that spends
+their own money on themselves, and they cannot chase a bigger fee to make up
+the difference, because `feeFor` prices off the stage rate card and their quote
+is not read. A 34% drain would move the number and not one decision, which is
+the failure the falsifiability test exists to catch. Wire it the day money buys
+something.
+
+**2. The family's patience stays as it is.** The proposal was to make it a hard
+input to the greenlight door. Measuring first killed it: the company already
+runs away — four seeds in five end a career holding €141m to €197m — and the
+one that does not, stalls under `GREENLIGHT_FLOOR` early and never recovers,
+because the only way to earn is to greenlight and the only way to greenlight is
+to have earned. A harder wall makes dead saves commoner and does nothing about
+the runaway. The constraint is not missing on the downside.
+
+**3 and 6 are not decisions, they are defects.** `far` should win the two notes
+in five the content says want more than a good deal, and it wins nothing on any
+seed; that is overshoot being punished where it should pay. And the business
+out-earning the acting career by about **a hundred to one** — €141–197m against
+€1.78m over the same twenty-five years — inverts the premise of a game whose
+thesis is that the player is the talent and not the studio. Neither is a dial to
+set. Both are named here and neither is guessed at.
+
+**4. `prestige` is deleted.** Written for 87 of 146 people, read by nothing that
+decides anything, nought on the player for a whole career — and the standing
+screen called it "an economy of its own" while showing a number that never
+moved. A dial that lies is worse than no dial. The design survives in
+`docs/AWARDS.md`, which is the audit trail's precedent exactly. `tools/dials.mjs`
+falls from 8 to 7.
+
+**5. The player's fee is not floored at their quote, so the player's quote is
+deleted.** The floor measures at ×2.32–3.56 of lifetime acting income, which is
+a different game rather than a tuning, and it would make the player's pay a
+number that only ever rises — the fourth one-way ratchet this build has found.
+`c459c2e` already proved the obvious fee fix was backwards. Answering the
+question is what made the field dead, so it went with the answer instead of
+outliving it. `Person.quotes` stays: every other person in the save is priced
+through it.
+
+---
+
 ## Recently on this page, and no longer
 
 Kept because the shape of what went wrong is worth more than the fix.
