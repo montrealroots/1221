@@ -678,9 +678,40 @@ file reference rather than as a finding.
   to be honest about that.
 - **`whereTheCrewStands` counts strangers as returning hands**, and no screen
   reads it. Both halves of the One Rule at once.
-- **The note's magnitude has one right answer in every state**, and the tests pin
-  it. Four buttons, three decoys, in the second of only two decisions in the room
-  the game is named after.
+- ~~**The note's magnitude has one right answer in every state**, and the tests
+  pin it. Four buttons, three decoys, in the second of only two decisions in the
+  room the game is named after.~~ **Both halves measured, and both are wrong —
+  the truth is narrower and worse in a different way.**
+
+  There are **three** buttons, not four: `HOW_FAR` went to `touch`, `good`,
+  `far` at some point and this line did not follow.
+
+  And there is no one right answer. Playing each policy fixed for a whole
+  career, six seeds, twenty-five years each, counting parts won:
+
+  | seed | touch | good | far |
+  |---|---|---|---|
+  | n1 | **113** | 113 | 107 |
+  | n2 | 115 | **116** | 111 |
+  | n3 | **111** | 110 | 108 |
+  | n4 | 87 | **92** | 91 |
+  | n5 | 120 | **121** | 117 |
+  | n6 | **123** | 118 | 113 |
+
+  `touch` takes three seeds and `good` takes three, by margins of nought to
+  five parts in about a hundred and ten — which is to say they are the same
+  button wearing two labels, and over four seeds the ranking even flips by
+  metric: `touch` earns the most money while `good` wins the most parts.
+
+  **`far` wins nothing. Not one seed, on either count.** So the shape is not
+  four buttons with three decoys. It is **two buttons that cannot be told apart
+  and one that is never the right play** — which is a worse decision than the
+  page describes, because a dominated option at least teaches somebody something
+  the first time it loses. Two identical ones teach nobody anything, ever.
+
+  Not acted on: whether `far` should pay off somewhere, and whether `touch` and
+  `good` should be pulled apart, are balance calls, and this is the second of
+  only two decisions in the room the game is named after.
 - **The room's want is drawn from nothing**, so the opening reading is a constant.
 - **A part is priced off the stage rate card** — what the room costs, not what the
   cast costs.
