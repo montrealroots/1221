@@ -40,7 +40,7 @@ import { bondFor, standingWord } from '@/engine/world/standing';
 import { isAre, outOf, spokenList, toStart } from './words';
 import { SELLING } from '@/engine/content/lot';
 import {
-  breakEvenShare, monthlyOverhead, onStageAt, paidInSoFar, pullOn, sellsFor, stagesOn, standingWith,
+  bookingsFor, breakEvenShare, monthlyOverhead, onStageAt, paidInSoFar, pullOn, sellsFor, stagesOn, standingWith,
   turnedAway, utilisation, whatTheFamilySays, whereTheLotStands,
 } from '@/engine/world/lot';
 import { formatMoney } from '@/engine/core/money';
@@ -576,6 +576,16 @@ defineLook<TheLot>('lot', {
           <tbody>
             {stages.map((stage) => {
               const on = onStageAt(sim, stage.id, sim.now);
+              // What is booked after today, which is the part that was missing.
+              // This table said who was in a room right now and stopped, and
+              // the lot is the only pipeline a career has: every part the
+              // player is ever asked about comes from a production that booked
+              // a stage here, months before anybody rings. A board that shows
+              // only today is a board that cannot be read ahead, which is the
+              // one thing a board is for.
+              const coming = bookingsFor(sim, stage.id)
+                .filter((one) => one.from > sim.now && one.kind === 'shooting')
+                .slice(0, 2);
               return (
                 <tr key={stage.id}>
                   <td className="nowrap">{stage.name}</td>
@@ -583,6 +593,15 @@ defineLook<TheLot>('lot', {
                   <td className="small nowrap">{stage.clearHeightM} m to the grid</td>
                   <td className="small money nowrap">{moneyOf(stage.weekRateCents)} a week</td>
                   <td className="small">{on ? `${on.holder}, through ${formatDate(on.to, sim.homeZone)}` : 'Empty'}</td>
+                  <td className="small">
+                    {coming.length === 0
+                      ? <span className="dim">Open from today on</span>
+                      : coming.map((one) => (
+                        <div key={one.id}>
+                          {one.holder}, from {formatDate(one.from, sim.homeZone)}
+                        </div>
+                      ))}
+                  </td>
                 </tr>
               );
             })}

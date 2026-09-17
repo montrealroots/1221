@@ -602,9 +602,23 @@ file reference rather than as a finding.
   on the first open day and on the last were played out to the money landing
   across four budgets and two seeds each, and the difference was exactly nought
   in all eight pairs. So it carries one button and the code says why.
-- **Nobody can see the booking board**, which is the only pipeline the career
+- ~~**Nobody can see the booking board**, which is the only pipeline the career
   has. The lever is money spent a year early and its effect is invisible until it
-  arrives as one notification.
+  arrives as one notification.~~ **Fixed.** The Stages table on the estate look
+  said who was in a room *right now* and stopped, which is a board that cannot
+  be read ahead — and the lot is the only pipeline a career has: every part the
+  player is ever asked about comes from a production that booked a stage here,
+  months before anybody rings. It carries what is booked after today as well
+  now, off `bookingsFor`, so the money spent on being known has somewhere to
+  show up before the notification arrives.
+
+- **Three more guards at points the arithmetic already settles.** **Left, and
+  the reason is worth recording:** the entry names none of the three and its
+  cross-reference — "the same fault as the crowd guard below" — points at an
+  entry that is no longer on this page. An item that names nothing and cites
+  nothing cannot be verified or cleared, and guessing at which three guards were
+  meant would be inventing an arrears rather than paying one. It wants naming
+  before it wants fixing.
 - **Three signable guilds, a registry, a policy and a company form** can be
   reached only as a blocker chip — which is fine, because the chip carries a
   working control. Measured by driving the built app: a player who presses what
@@ -612,8 +626,6 @@ file reference rather than as a finding.
   blocker got a control of its own; "Anything At All" named the thing keeping
   three doors shut and then left the player to find the button for it a panel
   away, under a heading that does not mention doors.
-- **Three more guards at points the arithmetic already settles**, which is the
-  same fault as the crowd guard below.
 - **The reimbursement's under-18 case**, which needs a picture to declare an
   audience.
 - **The unscripted contributor cast board.**
