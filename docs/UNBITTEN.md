@@ -635,21 +635,30 @@ file reference rather than as a finding.
   twenty-five years on three seeds, running the pipeline the way a producer
   does — option, develop, greenlight, deliver, sell, repeat:
 
-  | seed | greenlit | delivered | lowest cash | weeks under water | ended |
-  |---|---|---|---|---|---|
-  | b1 | 35 | 31 | −€5,861,270 (week 35) | 12 of 1300 | +€196,632,956 |
-  | b2 | 7 | 6 | −€9,875,275 (week 151) | 62 of 1300 | +€128,970 |
-  | b3 | 36 | 33 | −€5,949,128 (week 35) | 20 of 1300 | +€162,808,126 |
+  | seed | greenlit | delivered | lowest cash | ended |
+  |---|---|---|---|---|
+  | b1 | 36 | 33 | −€5,903,416 | +€138,680,188 |
+  | b2 | 36 | 34 | −€9,960,698 | +€221,186,198 |
+  | b3 | 37 | 33 | −€9,834,132 | +€850,307 (mid-drawdown, €78m still owed) |
+  | b4 | 36 | 33 | −€5,860,533 | +€127,717,198 |
+  | b5 | 36 | 32 | −€9,834,047 | +€156,369,268 |
 
   So the overdraft is real, is six to ten times the figure this page records,
-  and is reachable inside the first year. Two things nobody had seen before sit
-  beside it and are bigger: **the same pipeline ends a career holding between
-  €129,000 and €197 million** depending only on the seed, and **the number of
-  pictures a company gets made in twenty-five years runs from seven to
-  thirty-six** on the same inputs. A business whose lifetime outcome spans three
-  orders of magnitude on seed alone is not a balance question yet; it is a
-  question about what the seed is deciding. Both are owner calls and neither is
-  costed here.
+  and is reachable inside the first year. And the company runs away: **thirty-six
+  pictures in twenty-five years on every seed**, ending on nine figures wherever
+  it is not caught mid-drawdown.
+
+  **An earlier version of this entry said the number of pictures ran from seven
+  to thirty-six on seed alone, and that one company in five stalled and never
+  recovered. Both were wrong, and both were the instrument.** `playABusiness`
+  asked for a twenty-million budget every week regardless of what stood behind
+  the company, and `greenlight` rightly refuses a budget larger than the cash
+  plus the family's remaining patience — so a company that dipped early asked
+  the same impossible question for fifteen years and was told no every time.
+  Sizing the ask to the money takes that seed from seven pictures to thirty-six.
+  There was no trap and there was no spread; there was a loop that could only
+  ask for one number. The runaway is the finding that survives, and it is
+  stronger for being on every seed rather than four in five.
 
 - ~~**An audition never expires.**~~ **Fixed.** `whatIsGoing` wrote a row with a
   `closesAt` on it and nothing ever read that date. Measured on a save nobody
@@ -787,12 +796,17 @@ the failure the falsifiability test exists to catch. Wire it the day money buys
 something.
 
 **2. The family's patience stays as it is.** The proposal was to make it a hard
-input to the greenlight door. Measuring first killed it: the company already
-runs away — four seeds in five end a career holding €141m to €197m — and the
-one that does not, stalls under `GREENLIGHT_FLOOR` early and never recovers,
-because the only way to earn is to greenlight and the only way to greenlight is
-to have earned. A harder wall makes dead saves commoner and does nothing about
-the runaway. The constraint is not missing on the downside.
+input to the greenlight door. Measuring killed it: the company already runs
+away — thirty-six pictures in twenty-five years on every seed, ending on nine
+figures — so the constraint is not missing on the downside, and a harder wall
+would only bite the case that is already working.
+
+The first version of this reasoning also said that one company in five stalls
+under `GREENLIGHT_FLOOR` and never recovers, and that a harder wall would make
+such dead saves commoner. **That was the instrument and not the game** — see the
+correction under "The company can pay the player money it does not have" above.
+The decision is unchanged, but it now rests on the runaway alone rather than on
+a trap that does not exist.
 
 **3. `far` is left alone and the sentence that sold it is corrected.** Asked to
 pick rather than diagnose, the diagnosis is the pick: the button was never the
@@ -844,10 +858,16 @@ Measured over the same five seeds:
 So it lands — the family is repaid on four seeds in five and the patience comes
 back — and **the runaway is not fixed.** One seed even rose. The reason is
 arithmetic: the family puts in tens of millions and the slate earns hundreds,
-so recouping the financing barely touches the surplus. **The absorbing state is
-not fixed either**: b2 never reached surplus, so never repaid, so never got its
-patience back. Repayment cannot be the way out of a trap whose defining property
-is having nothing to repay with.
+so recouping the financing barely touches the surplus.
+
+**The second claim made here has been retracted.** It said the absorbing state
+was not fixed either, because b2 never reached surplus and so never repaid.
+There is no absorbing state: b2 was stuck because `playABusiness` could only ask
+for twenty million, and sizing the ask to the money takes it to thirty-six
+pictures like every other seed. The table above is from the instrument before
+that was corrected, which is why b2's row reads as it does; the numbers on the
+other four rows stand, and the conclusion — that repaying the financier does not
+touch the runaway — stands with them.
 
 It is kept anyway, on its own merits rather than the one it was built for: a
 financier that never recoups is a modelling error whatever it does to the

@@ -23,7 +23,7 @@ import type { Simulation } from '@/engine';
 import type { Audition } from '@/engine/domain/model';
 import { SHADES, type Reading } from '@/engine/content/audition';
 import { freeAcross, goUpFor, goingNow, takeTheNote } from '@/engine/world/audition';
-import { MS_WEEK } from '@/engine/world/lot';
+import { MS_WEEK, stillToCarry } from '@/engine/world/lot';
 import { stillMissing } from '@/engine/world/making';
 import { parentCompany } from '@/engine/world/company';
 
@@ -143,6 +143,12 @@ export function playACareer(sim: Simulation, years: number, how: HowTheyPlay = {
 /** The stages a picture sits in before anybody has committed money to it. */
 const BEFORE_THE_GREENLIGHT = new Set(['idea', 'optioned', 'writing', 'draft', 'packaged']);
 
+/** The most this producer will put into one picture. */
+const A_PICTURE_AT_MOST = 20_000_000_00;
+
+/** How much of what stands behind the company one picture is allowed to be. */
+const SPENDS_OF_WHAT_IT_HAS = 0.9;
+
 export interface WhatTheCompanyDid {
   /** Pictures greenlit. */
   greenlit: number;
@@ -245,8 +251,25 @@ export function playABusiness(sim: Simulation, years: number): WhatTheCompanyDid
         // music cue sheet is what the first draft of this loop did, five
         // thousand times a save, while the company made nothing.
         if (BEFORE_THE_GREENLIGHT.has(project.stage)) {
+          // Sized to the money, which is the whole difference between a
+          // producer and a loop. The first version of this asked for twenty
+          // million every time regardless of what stood behind the company,
+          // and `greenlight` rightly refuses a budget larger than the cash
+          // plus what the family will still put in — so a company that dipped
+          // early asked for the same twenty million every week for fifteen
+          // years and was told no every week.
+          //
+          // That produced a finding, and the finding was about this function.
+          // It read as an absorbing state in the game: one seed in five making
+          // seven pictures and then nothing, cash pinned at `GREENLIGHT_FLOOR`
+          // from year fifteen. Sizing the ask to what is actually behind the
+          // company takes the same seed to thirty-six pictures. There was no
+          // trap. There was a loop that could only ask for one number.
+          const behind = cash() + stillToCarry(sim);
+          const budget = Math.max(0, Math.min(A_PICTURE_AT_MOST, Math.floor(behind * SPENDS_OF_WHAT_IT_HAS)));
+          if (budget <= 0) continue;
           const out = ask('company.greenlight', {
-            projectId: project.id, planId: 'feature', budgetCents: 20_000_000_00, shootWeeks: 6,
+            projectId: project.id, planId: 'feature', budgetCents: budget, shootWeeks: 6,
           });
           if (out.ok !== false && !out.error) greenlit += 1;
           continue;
