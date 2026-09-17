@@ -36,10 +36,10 @@ import {
   computeAnnualTax, propertyTaxRate, resolveIncomeTaxLayers, salesTaxRate,
 } from '@/engine/content/tax';
 import {
-  CORPORATION_TAX, GUILD_BY_ID, REBATE, REGISTRY_BY_ID, VAT_ON_A_PURCHASE, VAT_RATE,
+  CORPORATION_TAX, GUILD_BY_ID, REBATE, REGISTRY_BY_ID, ROLES, VAT_ON_A_PURCHASE, VAT_RATE,
 } from '@/engine/content/incorporation';
 import { OVERHEAD, SMALL_STAGE_COST_CENTS } from '@/engine/content/lot';
-import { buildAStage } from '@/engine/world/lot';
+import { buildAStage, chargeThePosts } from '@/engine/world/lot';
 import { VAT_MEMO, boughtWithVat, reclaimable, whereTheVatStands } from '@/engine/world/vat';
 import {
   GREENLIGHT_FLOOR, americanArm, capabilitiesOf, companiesOf, companyCash, holdingsOf,
@@ -931,5 +931,58 @@ describe('every door a company has to walk through', () => {
     expect(spent, 'walking the doors is not free').toBeGreaterThan(0);
     expect(companyCash(sim.universe), 'and it does not bankrupt the company either')
       .toBeGreaterThan(0);
+  });
+});
+
+describe('somebody in a post is somebody on a payroll', () => {
+  /**
+   * `ROLES` has carried a `monthlyCents` on every row since it was written —
+   * nine thousand for a head of development, eleven for a head of production,
+   * ten for business affairs — and nothing read one. Filling a post set
+   * `filledAt` and `personId` and charged nobody, so a company staffed itself
+   * completely on its first morning for nothing and the capability doors that
+   * open behind a filled post opened free.
+   */
+
+  it('charges the month for a post somebody is in', () => {
+    const sim = quickSave({}, 'posts-cost');
+    const company = parentCompany(sim.universe)!;
+    const account = Object.values(sim.universe.accounts)
+      .find((one) => one.ownerId === company.id && one.kind === 'company_cash')!;
+    const somebody = Object.values(sim.universe.people).find((one) => !one.isPlayer)!;
+
+    // A save opens with two posts already filled — the principal, and the
+    // facility manager who runs the lot — so this measures the difference one
+    // more makes rather than assuming an empty company. The facility manager
+    // was staffed from the first morning and cost nothing until now, which is
+    // the clearest single case of what this fixes.
+    const already = chargeThePosts(sim, account.id);
+    expect(already, 'the facility manager is on from day one').toBeGreaterThan(0);
+
+    const before = account.balance;
+    sim.execute({ kind: 'company.fill_post', payload: { role: 'production', personId: somebody.id } });
+    const owed = chargeThePosts(sim, account.id);
+
+    const facts = ROLES.find((one) => one.id === 'production')!;
+    expect(owed - already, 'one more post costs what the content says it costs')
+      .toBe(facts.monthlyCents);
+    expect(account.balance).toBe(before - owed);
+    expect(sim.ledger.audit()).toEqual([]);
+  });
+
+  it('leaves the principal free, because the principal is the family', () => {
+    // The principal is filled at boot and its row says nought, so it
+    // contributes nothing to the month. A family member drawing a salary from
+    // the family company to run the family company is money moving between two
+    // pockets with a line of bookkeeping on top.
+    expect(ROLES.find((one) => one.id === 'principal')!.monthlyCents).toBe(0);
+
+    const sim = quickSave({}, 'posts-principal');
+    const company = parentCompany(sim.universe)!;
+    const account = Object.values(sim.universe.accounts)
+      .find((one) => one.ownerId === company.id && one.kind === 'company_cash')!;
+    const facility = ROLES.find((one) => one.id === 'facility')!.monthlyCents;
+    // Two posts are filled at boot and only one of them costs anything.
+    expect(chargeThePosts(sim, account.id)).toBe(facility);
   });
 });

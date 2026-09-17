@@ -260,8 +260,17 @@ describe('the doors are a rule, not advice', () => {
     for (const policy of ['general_liability', 'workers_comp', 'production_package']) {
       run(sim, 'company.insure', { policy });
     }
-    // A small picture, so the company can still afford a certificate after it
-    // has started paying for one.
+    // A small picture, and money behind it, so that what this test measures is
+    // the door and not the bank balance. It used to rely on a company holding
+    // its opening cash being able to afford a certificate after paying for a
+    // picture, and that stopped being true the day the posts started costing
+    // what `ROLES` says they cost — the facility manager is in post from the
+    // first morning at seven thousand a month. The claim here is that a filing
+    // is refused without cover and goes through with it; affordability is
+    // scaffolding, so it is paid for rather than tuned around.
+    const account = Object.values(sim.universe.accounts)
+      .find((one) => one.kind === 'company_cash' && !one.closedAt)!;
+    sim.income(account.id, 2_000_000_00, 'A good year on the lot', 'business');
     const id = makeIt(sim, 'Hvítserkur', { budgetCents: 80_000_00 });
     // The certificate waits on prep, not on the whole picture, so this only has
     // to get past prep.
@@ -273,6 +282,16 @@ describe('the doors are a rule, not advice', () => {
     expect(sim.universe.projects[id]!.stage).not.toBe('delivered');
 
     // Buy the cover and the same filing goes through.
+    //
+    // Paid for immediately before buying it, on purpose. Prep runs for months
+    // and the lot charges its overhead every one of them, so what the company
+    // holds at this line is whatever is left over from the family's last
+    // top-up — and `familyCovers` tops up in hundred-thousand steps, which
+    // makes that residual essentially arbitrary. It happened to sit above the
+    // fourteen-thousand premium until the posts started costing what `ROLES`
+    // says, and then it sat two hundred and fifty-eight euros below it. A test
+    // about whether a door refuses should not turn on that.
+    sim.income(account.id, 100_000_00, 'A letting that cleared', 'business');
     expect(run(sim, 'company.insure', { policy: 'errors_omissions' }).ok).toBe(true);
     expect(run(sim, 'company.deliver', { projectId: id, elementId: 'eo' }).ok).toBe(true);
   });

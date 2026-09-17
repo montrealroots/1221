@@ -26,8 +26,8 @@ import {
   ENQUIRY_SHAPES, STAGES, type Enquiry,
   A_SMALL_STAGE, SMALL_STAGE_COST_CENTS, buildRefusalById, type WhyNotBuild,
 } from '../content/lot';
-import { REBATE } from '../content/incorporation';
-import { GREENLIGHT_FLOOR } from './company';
+import { REBATE, ROLES } from '../content/incorporation';
+import { GREENLIGHT_FLOOR, parentCompany } from './company';
 import { shortOn } from '../content/rebate';
 import { rateWhenShort } from './rebate';
 import { GROUP } from '../content/sugar';
@@ -594,8 +594,52 @@ export function chargeTheMonth(sim: Simulation, accountId: Id, earnedThisMonth: 
     sim.expense(accountId, owed, `${LOT_NAME}: ${line.label}`, 'business');
     spent += owed;
   }
+  // Charged on the same tick and deliberately NOT added to `spent`. What this
+  // function returns is what the LOT costs, and `monthlyOverhead` and
+  // `breakEvenShare` are measured against exactly that — so folding a company
+  // payroll into it would move the bar without moving the figure measuring it,
+  // which is the defect the `lineCosts` docstring above was written about. The
+  // people in the posts run the company; the rooms are the lot.
+  chargeThePosts(sim, accountId);
   familyCovers(sim, accountId, earnedThisMonth);
   familyTakesItBack(sim, accountId);
+  return spent;
+}
+
+/**
+ * What the people in the company's posts cost it, every month.
+ *
+ * `ROLES` has carried a `monthlyCents` on every row since it was written — nine
+ * thousand a month for a head of development, eleven for a head of production,
+ * ten for business affairs — and nothing in the build ever read one. Filling a
+ * post set `filledAt` and `personId` and charged nobody anything, so a company
+ * could staff itself completely on its first morning for nothing, and the nine
+ * capability doors that open when a post is filled opened for free.
+ *
+ * That is the half of "the monthly company clock" that is actually reachable
+ * with what exists. The rest of that specification — registrations lapsing,
+ * cover needing renewal, an option running out — needs a scheduler this file
+ * does not have and failed its own review twice for good reasons, and it is
+ * still open. This is the part where the content already holds the number and
+ * the month already has a tick to hang it on.
+ *
+ * The principal is free, and stays free: the row says nought because the
+ * principal is the family, and a family member drawing a salary from the family
+ * company to run the family company would be money moving from one pocket to
+ * another with a line of bookkeeping on top.
+ */
+export function chargeThePosts(sim: Simulation, accountId: Id): Money {
+  const company = parentCompany(sim.universe);
+  if (!company) return 0;
+  let spent = 0;
+  for (const post of Object.values(sim.universe.posts)) {
+    if (post.companyId !== company.id || post.personId === undefined) continue;
+    const facts = ROLES.find((one) => one.id === post.role);
+    const owed = facts?.monthlyCents ?? 0;
+    if (owed <= 0) continue;
+    sim.expense(accountId, owed, `${facts!.label}`, 'business');
+    spent += owed;
+  }
   return spent;
 }
 

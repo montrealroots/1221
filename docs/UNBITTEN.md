@@ -30,14 +30,25 @@ may not rise.
 
 | Declared | Nothing reads | Of |
 |---|---|---|
-| Id namespaces | 104 | 125 |
+| Id namespaces | 0 | 19 |
 | Trait modifier keys | 47 | 54 |
-| Higher-is-worse guards | 6 | 18 |
-| Personality axes | 3 | 7 |
-| Dials nothing moves | 0 | every field on Reputation and Wellbeing |
-| Save tables nothing fills | 0 | 24 |
+| Higher-is-worse guards | 0 | 18 |
+| Personality axes | 0 | 3 |
+| Dials nothing moves | 7 | every field on Reputation and Wellbeing |
+| Save tables nothing fills | 0 | 22 |
+| Draw streams no decider owns | 13 | 21 |
 
-160 declared words that nothing reads.
+**47 declared words that nothing reads.**
+
+This table said **160** for a long time after it was 47, with id namespaces at
+104 of 125 and personality axes at 3 of 7 — numbers from before the cull, the
+wellbeing sweep and the axes going. A summary that is wrong is worse than no
+summary, on the page whose whole subject is that, so it is read straight off
+`docs/UNWIRED.json` now and the figures above are that file's.
+
+The last row is new and it is the one that had been invisible: `deciders.mjs`
+checked draw ownership per FILE, so a stream added to a file that already owned
+one slid past. Thirteen were hiding there.
 
 The tool counts writers. The One Rule asks for readers, which is stricter, so
 the true arrears are larger than this table and the rest of this page is the
@@ -106,31 +117,41 @@ them later costs more than carrying them. Reading more of them on everybody
 else is a background habit rather than an answer — it enriches the world around
 a character who still has nothing to decide.
 
-**4 of 7 personality axes** are in the same position for a different reason:
-`agreeableness`, `extraversion`, `riskTolerance` and now `openness` are asked
-for at character creation and consulted by nothing. A question with no
-consequence.
+**The personality axes were in the same position and are not any more.**
+`agreeableness`, `extraversion`, `riskTolerance` and `openness` were asked for
+at character creation and consulted by nothing — four questions with no
+consequence, out of seven.
 
-Openness was three until the wellbeing sweep, and it was the fourth state: read,
-and reaching nowhere. Its one case in `axisModifier` scaled how fast
-`travelFatigue` came off, and nothing in this build ever put any on, so the axis
-that looked wired was the axis with the emptiest reader in the game. The dial
-went and the case went with it, which is why `tools/wired.mjs` counts one more
-here than it did. The number went up because a fake reader came out, not because
-a new word went in — which is the one kind of rise that baseline is wrong to
-forbid, and it is recorded in the tool rather than absorbed quietly.
+They are deleted. The creation screen had been honest about them, which is
+better than hiding them and is not the same as not having them; what settled it
+is that they appeared on that screen and on no other, so nothing ever showed
+them back. `background` survives exactly that test by being printed under a
+person's name. `Personality` holds three now and each one moves `axisModifier`.
+
+Openness was the last of the four to be read at all: its one case scaled how
+fast `travelFatigue` came off, and nothing in this build ever put any on, so the
+axis that looked wired had the emptiest reader in the game. The dial went in the
+wellbeing sweep, the case went with it, and the axis has now followed both.
 
 ---
 
 ## Dead: named, and confirmed
 
-**`prestige`**, one of seven reputation axes, deliberately. Every honest reader
-for it is a reader something else already has: put it on the sale and it is
-`audienceAppeal` under another name; put it on who gets called and it is
-`publicFame`. It is awards-and-critics standing, and there are no awards and no
-critics. It stays declared until there are. Inventing a seventh reader to finish
-the row would be the disease `DEPTH.md` is about, performed on the page about
-the disease.
+**`prestige`** was one of seven reputation axes and is deleted. Every honest
+reader for it was a reader something else already had: put it on the sale and it
+is `audienceAppeal` under another name; put it on who gets called and it is
+`publicFame`. It was awards-and-critics standing with no awards and no critics,
+so inventing a seventh reader to finish the row would have been the disease
+`DEPTH.md` is about, performed on the page about the disease.
+
+This entry used to end "it stays declared until there are". What changed the
+answer was measuring it: written for 87 of the 146 people in a played save, read
+by nothing that decides anything, nought on the player for a whole career — and
+`looks/standing.tsx` printed it while calling it "an economy of its own". A dial
+that lies is worse than no dial. `docs/AWARDS.md` holds the design, costed, for
+the day something reads it. Six axes now, and `controversy` is the one that
+stayed dead-but-declared, because two live mechanisms already read it and
+nothing ever raises it.
 
 **53 trait modifier keys** across 445 traits, of which six are consulted and
 forty-seven are not. The six: `energyRecovery`, `recoveryRate`, `sleepQuality`,
@@ -496,10 +517,15 @@ file reference rather than as a finding.
   inert JSON. No schema bump. What the log was for — years later, the player
   looks back at where they lived and what they made — is a good feature and is
   worth building the day there is a screen that asks for it. It was not this.
-- **`Audition.took`** is written and read by nothing, in the save record of the
-  system the game is named after.
-- **The guild signature is a gate with no money behind it.** The content says
-  what the agreement costs and nothing charges any of it.
+- ~~**`Audition.took`** is written and read by nothing, in the save record of the
+  system the game is named after.~~ **Stale — the field is gone.** It is not on
+  `Audition` any more; the only `.took` left in the tree is `Answer.took` on a
+  casting offer and `Split.took` on the selling tiers, both live.
+- ~~**The guild signature is a gate with no money behind it.** The content says
+  what the agreement costs and nothing charges any of it.~~ **Stale.**
+  `company.sign` calls `payFor` with the guild's own `depositCents`, so signing
+  charges the deposit. The handoff had already flagged this line as stale and it
+  was never struck through, which is how a page rots.
 - ~~**A season anchored on an airdate has no airdates.**~~ **Stale.** The
   defaulting was fixed: `AIRDATE_WEEKS` is 52, `greenlight` picks the lead
   against the end the plan actually anchors — `plan.anchor === 'delivery' ?
@@ -696,6 +722,22 @@ file reference rather than as a finding.
 - **Nothing in the company ever ends.** An option you forgot to exercise never
   lapses; cover you forgot to renew never lapses. The scout calls this the
   cheapest large consequence available, and it is pure calendar and money.
+
+  **Still true, verified rather than assumed.** `world/company.ts` says so in its
+  own words — *"`world/company.ts` schedules nothing. A registration never
+  lapses, a policy bound in 2026 is still bound in 2046"* — and the fields to
+  hang it on are already there and already read: `endedAt` filters
+  `registrationsOf` and `signaturesOf`, `lapsedAt` filters `policiesOf`, and
+  nothing ever sets either.
+
+  **This is the one substantial thing on this page nobody has managed to build.**
+  It failed specification twice: the second attempt needed fifty lines of
+  scaffolding whose every design choice moved the numbers, and its own ledger
+  figure was wrong by a million and a half. The post wages above are the piece
+  of it that was reachable with what exists, because the content already held
+  the number and the month already had a tick. The rest wants a scheduler this
+  file does not have, and it should be specified before it is attempted a third
+  time.
 - **A quote that can only go up.** `quoteOf` returns the maximum of every past
   fee, so taking a cheap job costs nothing. The research names quote protection
   as a ratchet that must bite in both directions.
@@ -729,17 +771,26 @@ file reference rather than as a finding.
   decoration this page exists to name.
 - **The strike week is booked as prep**, and `RATE_SHARE.hold` is dead. `DEPTH.md`
   records this one as fixed; only the prep third of it was.
-- **A directed night's sleep is added on top of the autopilot's**, which inverts
+- ~~**A directed night's sleep is added on top of the autopilot's**, which inverts
   the contract its own comment states, and the guard written for it has no
-  caller.
+  caller.~~ **Stale.** `life.sleep` sets `lastSleptAt`, and the unattended day
+  only sleeps somebody when `sinceSlept >= 20 * MS_HOUR`, so a deliberate night
+  blocks the automatic one for the rest of the day. The guard has a caller and it
+  is that comparison.
 - ~~**The house rots with no repair**, and the screen tells the player it is their
   fault for a choice they do not have.~~ **Cleared**, and half of it was already
   stale when it was cleared — see "Recently on this page, and no longer" below.
-- **The creation screen, `taste.ts` and the engine give three different counts**
+- ~~**The creation screen, `taste.ts` and the engine give three different counts**
   of which personality axes do anything — and the screen's copy exists precisely
-  to be honest about that.
-- **`whereTheCrewStands` counts strangers as returning hands**, and no screen
-  reads it. Both halves of the One Rule at once.
+  to be honest about that.~~ **Cleared by there being one count.** The four that
+  did nothing are deleted, so the screen asks three, `taste.ts` reads three and
+  `Personality` holds three. Nothing has to be honest about a discrepancy that no
+  longer exists.
+- ~~**`whereTheCrewStands` counts strangers as returning hands**, and no screen
+  reads it. Both halves of the One Rule at once.~~ **Both halves stale, and one
+  was backwards.** `looks/business.tsx` prints it, so a screen reads it. And the
+  function's own comment records the fix: it undercounted, saying six returning
+  hands where there were eighteen — the opposite of what this line claimed.
 - ~~**The note's magnitude has one right answer in every state**, and the tests
   pin it. Four buttons, three decoys, in the second of only two decisions in the
   room the game is named after.~~ **Both halves measured, and both are wrong —
@@ -774,7 +825,11 @@ file reference rather than as a finding.
   Not acted on: whether `far` should pay off somewhere, and whether `touch` and
   `good` should be pulled apart, are balance calls, and this is the second of
   only two decisions in the room the game is named after.
-- **The room's want is drawn from nothing**, so the opening reading is a constant.
+- ~~**The room's want is drawn from nothing**, so the opening reading is a constant.~~
+  **Stale.** `HOUSE_HOLDS` gave a holder a taste: seven tenths of each shade is
+  the same across everything one office casts, so what they asked for last time
+  is a real handle on the next one and dead center stopped being the best
+  opening against every room at once.
 - ~~**A part is priced off the stage rate card** — what the room costs, not what the
   cast costs.~~ **Fixed, the way `feeFor`'s own docstring said to.** The booking
   now carries `spendCents` from the enquiry that took the stage, and a part is
@@ -804,7 +859,23 @@ file reference rather than as a finding.
   the two that are one thing addressed twice are *an American studio, a feature*
   and *a Hollywood studio, a feature*. Not built on, because nothing shows the
   split biting; recorded because editing the copy silently moves the simulation.
-- **The posts cost nothing and nobody has to say yes.**
+- **The posts cost nothing and nobody has to say yes.** **Half fixed, and the
+  half that is fixed is the money.** `ROLES` carried a `monthlyCents` on every
+  row — nine thousand for a head of development, eleven for a head of
+  production, ten for business affairs, seven for the facility manager — and
+  nothing read one, so a company staffed itself completely on its first morning
+  for nothing and the capability doors behind a filled post opened free.
+  `chargeThePosts` bills them on the month now, off the same figures, and it
+  comes to €3,289,000 across twenty-five played years.
+
+  The clearest single case of what that fixes: **a save opens with the facility
+  manager already in post**, running the lot from the first morning, and until
+  now they were free.
+
+  **Nobody having to say yes is still open**, and deliberately separate: an offer
+  and a refusal is a decision with a shape, and bolting one onto a command that
+  currently cannot fail is a different piece of work from giving a declared
+  number a reader.
 
 ---
 
