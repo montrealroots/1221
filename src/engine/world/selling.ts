@@ -166,7 +166,20 @@ export interface Split {
   took: Record<TierId, Money>;
   /** What has come back to the company: its recoupment plus its share of the net. */
   toTheCompanyCents: Money;
-  /** What is still outstanding on the negative, interest included. */
+  /**
+   * What is still outstanding on the negative, interest included — up to the
+   * last receipt and not past it.
+   *
+   * Interest is applied inside the receipt loop below, for the gap since the
+   * previous receipt, so it compounds only when money arrives. The last window
+   * opens at week 260, and after it there are no more receipts, so this figure
+   * stops growing there and holds whatever it held. A real negative goes on
+   * costing whether or not anybody pays; this one is a debt that stops.
+   *
+   * Said rather than fixed, deliberately: two screens print this and nothing
+   * anywhere decides on it, so compounding it past the last window would move a
+   * printed number and no outcome at all.
+   */
   stillOwedCents: Money;
 }
 

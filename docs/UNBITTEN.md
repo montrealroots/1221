@@ -490,8 +490,14 @@ file reference rather than as a finding.
   what the agreement costs and nothing charges any of it.
 - **A season anchored on an airdate has no airdates.**
 - **The denominator never moves:** a cut that cannot run long.
-- **The collective floor under an Icelandic fee**, and **`canWorkIn`**, which has
-  no reader at all.
+- **The collective floor under an Icelandic fee.** Still true, and it is a
+  sentence and not a number: two rows in `content/incorporation.ts` carry
+  `binds: 'The collective floor, holiday pay, and the mandatory pension
+  contribution'` with `signable: false` and no figure anywhere, and no fee in
+  the build is ever checked against a minimum. **`canWorkIn` is stale on this
+  line** — it was deleted in `bcbf271`, with `workRefusalFor`, a duplicate
+  `countryOfCity` and the five tests whose own header admitted nothing called
+  the rule.
 - **Awards and critics**, which is where `prestige` above is waiting.
 
 ### Correct, and nothing can reach it
@@ -629,11 +635,36 @@ file reference rather than as a finding.
   lapses; cover you forgot to renew never lapses. The scout calls this the
   cheapest large consequence available, and it is pure calendar and money.
 - **A quote that can only go up.** `quoteOf` returns the maximum of every past
-  fee, so taking a cheap job costs nothing — and the code's own comment claims
-  the opposite mechanic. The research names quote protection as a ratchet that
-  must bite in both directions.
+  fee, so taking a cheap job costs nothing. The research names quote protection
+  as a ratchet that must bite in both directions.
+
+  **For the player it is worse than one-way: it is not read at all.** Proven
+  rather than argued. Over three seeds of twenty-five played years the player
+  accumulates 96, 115 and 99 quotes, and wiping every one of them each week
+  leaves the career **bit-identical** — same sha256 over parts won, earnings,
+  reliability, fame and energy, same purse to the euro, on all three. The reason
+  is one branch: `seatThem` answers `{ took: true }` for the player before
+  `offerOf` is built, so `askFor` — the only engine reader of `quoteOf` — is
+  never called about them.
+
+  It is **not deleted**, and that is the one place The One Rule is deliberately
+  not applied here: this field is the input to an owner decision already on the
+  books, *whether the player's fee should be floored at their quote*, measured
+  at ×2.32–3.56 of lifetime acting income. Deleting the number that decision
+  needs in order to satisfy a rule about dead words would be the rule eating the
+  thing it exists to protect. It stays until that call is made, and if the call
+  is no, it goes then.
+
 - **`stillOwedCents` stops accruing interest at week 260** and the screen still
-  says interest is included.
+  says interest is included. **True, and the cause is exact:** interest is
+  applied inside the receipt loop, for the gap since the previous receipt, so it
+  compounds only when money arrives — and the last window opens at week 260,
+  after which no receipt ever comes. The debt stops.
+
+  Said in the code rather than fixed. Two screens print `stillOwedCents` and
+  **nothing anywhere decides on it**, so compounding it past the last window
+  would move a printed number and no outcome, which is the definition of
+  decoration this page exists to name.
 - **The strike week is booked as prep**, and `RATE_SHARE.hold` is dead. `DEPTH.md`
   records this one as fixed; only the prep third of it was.
 - **A directed night's sleep is added on top of the autopilot's**, which inverts
