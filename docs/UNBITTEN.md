@@ -488,8 +488,39 @@ file reference rather than as a finding.
   system the game is named after.
 - **The guild signature is a gate with no money behind it.** The content says
   what the agreement costs and nothing charges any of it.
-- **A season anchored on an airdate has no airdates.**
-- **The denominator never moves:** a cut that cannot run long.
+- ~~**A season anchored on an airdate has no airdates.**~~ **Stale.** The
+  defaulting was fixed: `AIRDATE_WEEKS` is 52, `greenlight` picks the lead
+  against the end the plan actually anchors — `plan.anchor === 'delivery' ?
+  AIRDATE_WEEKS : LEAD_WEEKS` — under a comment saying it is there so a caller
+  that says nothing gets a sensible date for the kind of thing it is rather than
+  a start date silently used as an airdate. There is a refusal in front of it
+  too, for the date that is too near, because a delivery-anchored plan laid out
+  backward from a close airdate used to put casting, the rig and the field all
+  in the past and strand the picture in the save forever.
+
+  What is genuinely absent is narrower than the line said: **nothing in the
+  world supplies an airdate.** No broadcaster asks for an autumn slot; the date
+  is the caller's or the default. That is a feature nobody has built rather than
+  a mechanism that does not work.
+
+- **The denominator never moves:** a cut that cannot run long. **True, and
+  exactly true:** `project.owesSeconds` has one writer in the whole engine —
+  `making.ts` at the greenlight — and is never written again, so the shooting
+  ratio moves only through its numerator.
+
+  **It is not the defect it sounds like, and the difference matters.** The ratio
+  it feeds is live: `trouble.ts` reads it into the deck of things that go wrong,
+  and `cutsAWeek` sets how fast material becomes runtime. And a fixed
+  denominator is arguably what a delivery contract *is* — eight parts at fifty
+  minutes is a thing somebody signed, not a thing that drifts. What is missing
+  is the event where a network asks for a shorter cut or a picture runs long and
+  somebody pays for it, which is a feature, not a broken number.
+
+- ~~**The booking board is invisible to the player.**~~ **Stale for what it
+  says.** `looks/estate.tsx` prints, for every stage, `${on.holder}, through
+  ${date}` or `Empty`, off `onStageAt`. What is missing is the forward view:
+  the player can see who is on a stage **now** and not what is booked for next
+  month, so it is a board without the dates in front of it.
 - **The collective floor under an Icelandic fee.** Still true, and it is a
   sentence and not a number: two rows in `content/incorporation.ts` carry
   `binds: 'The collective floor, holiday pay, and the mandatory pension
