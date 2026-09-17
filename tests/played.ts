@@ -24,6 +24,8 @@ import type { Audition } from '@/engine/domain/model';
 import { SHADES, type Reading } from '@/engine/content/audition';
 import { freeAcross, goUpFor, goingNow, takeTheNote } from '@/engine/world/audition';
 import { MS_WEEK } from '@/engine/world/lot';
+import { stillMissing } from '@/engine/world/making';
+import { parentCompany } from '@/engine/world/company';
 
 export interface HowTheyPlay {
   /** Which way in, every time. A tape gives no note; a room does. */
@@ -132,4 +134,155 @@ export function playACareer(sim: Simulation, years: number, how: HowTheyPlay = {
     clashed,
     cast: Object.values(sim.universe.auditions).filter((one) => one.why === 'cast').length,
   };
+}
+
+// ---------------------------------------------------------------------------
+// The other half of the game
+// ---------------------------------------------------------------------------
+
+/** The stages a picture sits in before anybody has committed money to it. */
+const BEFORE_THE_GREENLIGHT = new Set(['idea', 'optioned', 'writing', 'draft', 'packaged']);
+
+export interface WhatTheCompanyDid {
+  /** Pictures greenlit. */
+  greenlit: number;
+  /** Pictures that reached delivered. */
+  delivered: number;
+  /** The lowest the company's cash account ever went, in cents. */
+  lowestCents: number;
+  /** The week it was lowest. */
+  lowestAt: number;
+  /** Weeks that ended with the company's cash account under water. */
+  weeksUnder: number;
+  /** What the account held at the end. */
+  endedCents: number;
+  /** Refusals the pipeline handed back, by the sentence they came with. */
+  refused: Record<string, number>;
+}
+
+/**
+ * A save somebody actually runs a company in.
+ *
+ * `playACareer` above plays the acting half, and for a long time it was the
+ * whole instrument — which meant every claim about the company was measured
+ * some other way, by hand, once, and then quoted from a page afterwards. That
+ * is the idle-save trap wearing a different coat: a career nobody finishes was
+ * the first version of it, and a company nobody runs is this one. Over
+ * twenty-five years of `playACareer` the company's cash account never moves off
+ * nought, because the player never options anything, so anything measured there
+ * about money the company has or has not got is measuring a company that has
+ * never traded.
+ *
+ * So this runs the pipeline the way a producer does, with the game's own
+ * commands: fill the post, option the material, register the payroll, bind the
+ * cover, then develop, greenlight, let the weeks run, file whatever the
+ * delivery list is waiting on, and do it again.
+ *
+ * It opens the doors here rather than calling `tests/doors.ts`, which asserts
+ * through `vitest`. `played.ts` is imported by `tools/` scripts that run under
+ * `vite-node`, and pulling vitest in through the side door is a thing this file
+ * has already been cleaned of once.
+ */
+export function playABusiness(sim: Simulation, years: number): WhatTheCompanyDid {
+  const refused: Record<string, number> = {};
+  const ask = (kind: string, payload: Record<string, unknown> = {}): { ok?: boolean; id?: string; error?: string } => {
+    const out = sim.execute<{ ok?: boolean; id?: string; error?: string }>({ kind, payload }).value ?? {};
+    if (out.error) refused[out.error] = (refused[out.error] ?? 0) + 1;
+    return out;
+  };
+
+  //  and not , which is Sugar Land — the estate,
+  // not the pictures company. The first draft read a cash account that does not
+  // exist, got nought every week, and would have reported that the company
+  // never once went under water.
+  const company = parentCompany(sim.universe);
+  const cash = (): number => Object.values(sim.universe.accounts)
+    .find((one) => one.ownerId === company?.id && one.kind === 'company_cash' && !one.closedAt)?.balance ?? 0;
+
+  const somebody = Object.values(sim.universe.people).find((one) => !one.isPlayer)
+    ?? Object.values(sim.universe.people)[0];
+  if (somebody) ask('company.fill_post', { role: 'production', personId: somebody.id });
+
+  // The material before the cover, and that order is the engine's rule rather
+  // than a preference: errors and omissions refuses with *an underwriter reads
+  // the chain of title before writing this, and there is nothing to read*. The
+  // first version of this function bound the cover first, and every picture it
+  // made then sat one certificate short of delivered for twenty-five years —
+  // 1,299 refusals of the same sentence, nought delivered, on every seed. The
+  // instrument was wrong and the engine was right, which is the outcome worth
+  // having from a new instrument's first run.
+  let made = 1;
+  ask('company.option', { title: 'Picture 1', hold: 'option', months: 18 });
+  ask('company.register', { registry: 'is_employer' });
+  for (const policy of ['general_liability', 'workers_comp', 'production_package', 'errors_omissions']) {
+    ask('company.insure', { policy });
+  }
+
+  let greenlit = 0;
+  let delivered = 0;
+  let lowestCents = cash();
+  let lowestAt = 0;
+  let weeksUnder = 0;
+  let optioned = 1;
+
+  for (let week = 1; week <= years * 52; week += 1) {
+    // One picture at a time, which is what a company this size can carry.
+    const live = Object.values(sim.universe.projects)
+      .filter((one) => one.stage !== 'delivered' && one.stage !== 'shelved');
+
+    if (live.length === 0) {
+      const title = `Picture ${made}`;
+      if (made > optioned) {
+        ask('company.option', { title, hold: 'option', months: 18 });
+        optioned = made;
+      }
+      ask('company.develop', { title, medium: 'film' });
+      made += 1;
+    } else {
+      for (const project of live) {
+        // A picture that has not been committed to yet is waiting for the
+        // greenlight, not for paperwork: asking a picture in `idea` to file its
+        // music cue sheet is what the first draft of this loop did, five
+        // thousand times a save, while the company made nothing.
+        if (BEFORE_THE_GREENLIGHT.has(project.stage)) {
+          const out = ask('company.greenlight', {
+            projectId: project.id, planId: 'feature', budgetCents: 20_000_000_00, shootWeeks: 6,
+          });
+          if (out.ok !== false && !out.error) greenlit += 1;
+          continue;
+        }
+        for (const element of stillMissing(project).filter((one) => one.by === 'business')) {
+          ask('company.deliver', { projectId: project.id, elementId: element.id });
+        }
+        // And sell it, because a producer who delivers and never sells is not a
+        // producer running out of money, it is an instrument forgetting to
+        // trade. Without this the company makes two pictures in twenty-five
+        // years and then cannot greenlight a third, which reads as a finding
+        // about the company and is a finding about the loop.
+        const now = sim.universe.projects[project.id];
+        if (now?.stage === 'delivered' && !now.dealId) {
+          ask('company.sell', { projectId: project.id, dealId: 'studio' });
+        }
+        if (sim.universe.projects[project.id]?.stage === 'delivered') delivered += 1;
+      }
+    }
+
+    sim.advanceTo(sim.now + MS_WEEK);
+
+    const held = cash();
+    if (held < lowestCents) { lowestCents = held; lowestAt = week; }
+    if (held < 0) weeksUnder += 1;
+  }
+
+  const broke = sim.universe.notifications
+    .filter((note) => note.title === 'A Scheduled Event Could Not Be Processed');
+  if (broke.length > 0) {
+    const said = [...new Set(broke.map((note) => note.body))].slice(0, 5).map((why) => `  ${why}`).join('\n');
+    throw new Error(
+      `A scheduled system failed ${broke.length} times while the company ran, so these numbers `
+      + `describe a world where part of the engine stopped:\n${said}`,
+    );
+  }
+
+  return { greenlit, delivered, lowestCents, lowestAt, weeksUnder, endedCents: cash(), refused };
 }

@@ -541,11 +541,38 @@ file reference rather than as a finding.
 - **The company can pay the player money it does not have.** Casting the player
   at a lead's band on a €20m picture paid €877,000 out of a company holding
   €117,000 and left it at minus €761,000. `sim.expense` has no balance check and
-  neither does `payThePlayer`, so the family's business goes negative silently
-  and the greenlight door then shuts on the next picture for want of money — the
-  right consequence arriving from the wrong cause. It was only reachable at all
-  because the player can now be seated in the family's own pictures, so it is
-  new in reach rather than new in code.
+  neither does `payThePlayer`. It was only reachable at all because the player
+  can now be seated in the family's own pictures, so it is new in reach rather
+  than new in code.
+
+  **Two halves of this are now measured rather than asserted, and one of them
+  was wrong.** "Goes negative *silently*" is false: `sayIfItWentUnder` raises a
+  notification naming the shortfall and saying it is counted against what the
+  family will still put in. And `tests/doors.ts` already records the €117,000
+  against €878,000 case in its own docstring, with *it goes under, which is
+  allowed and is said out loud* — so overdrawing is a deliberate, tested
+  position rather than an oversight.
+
+  What was never measured is how far it actually goes, because there was no
+  instrument that ran the company. `playABusiness` exists now. Over
+  twenty-five years on three seeds, running the pipeline the way a producer
+  does — option, develop, greenlight, deliver, sell, repeat:
+
+  | seed | greenlit | delivered | lowest cash | weeks under water | ended |
+  |---|---|---|---|---|---|
+  | b1 | 35 | 31 | −€5,861,270 (week 35) | 12 of 1300 | +€196,632,956 |
+  | b2 | 7 | 6 | −€9,875,275 (week 151) | 62 of 1300 | +€128,970 |
+  | b3 | 36 | 33 | −€5,949,128 (week 35) | 20 of 1300 | +€162,808,126 |
+
+  So the overdraft is real, is six to ten times the figure this page records,
+  and is reachable inside the first year. Two things nobody had seen before sit
+  beside it and are bigger: **the same pipeline ends a career holding between
+  €129,000 and €197 million** depending only on the seed, and **the number of
+  pictures a company gets made in twenty-five years runs from seven to
+  thirty-six** on the same inputs. A business whose lifetime outcome spans three
+  orders of magnitude on seed alone is not a balance question yet; it is a
+  question about what the seed is deciding. Both are owner calls and neither is
+  costed here.
 
 - ~~**An audition never expires.**~~ **Fixed.** `whatIsGoing` wrote a row with a
   `closesAt` on it and nothing ever read that date. Measured on a save nobody
