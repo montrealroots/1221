@@ -27,6 +27,7 @@ import {
   A_SMALL_STAGE, SMALL_STAGE_COST_CENTS, buildRefusalById, type WhyNotBuild,
 } from '../content/lot';
 import { REBATE } from '../content/incorporation';
+import { GREENLIGHT_FLOOR } from './company';
 import { shortOn } from '../content/rebate';
 import { rateWhenShort } from './rebate';
 import { GROUP } from '../content/sugar';
@@ -594,10 +595,12 @@ export function chargeTheMonth(sim: Simulation, accountId: Id, earnedThisMonth: 
     spent += owed;
   }
   familyCovers(sim, accountId, earnedThisMonth);
+  familyTakesItBack(sim, accountId);
   return spent;
 }
 
 export const PAID_IN = `Paid In By ${GROUP.name}`;
+export const PAID_BACK = `Paid Back To ${GROUP.name}`;
 
 /**
  * The parents write a check when the company cannot pay for itself.
@@ -764,10 +767,79 @@ export function whatTheFamilySays(sim: Simulation): string {
 export function paidInSoFar(sim: Simulation): Money {
   let total = 0;
   for (const txn of sim.universe.transactions) {
-    if (txn.memo !== PAID_IN) continue;
-    for (const posting of txn.postings) if (posting.amount > 0) total += posting.amount;
+    if (txn.memo === PAID_IN) {
+      for (const posting of txn.postings) if (posting.amount > 0) total += posting.amount;
+    } else if (txn.memo === PAID_BACK) {
+      for (const posting of txn.postings) if (posting.amount > 0) total -= posting.amount;
+    }
   }
-  return total;
+  return Math.max(0, total);
+}
+
+/**
+ * What the company still owes on work it has already said yes to.
+ *
+ * Derived from the two figures a picture already carries — what it was greenlit
+ * at and what it has actually spent — so this is the money that is committed
+ * rather than free, and it is the one thing the family cannot ask back without
+ * stopping a picture that is half made.
+ */
+function committedTo(sim: Simulation): Money {
+  let left = 0;
+  for (const project of Object.values(sim.universe.projects)) {
+    if (project.stage === 'delivered' || project.shelvedAt) continue;
+    left += Math.max(0, (project.budgetCents ?? 0) - (project.spentCents ?? 0));
+  }
+  return left;
+}
+
+/**
+ * The family gets its money back when there is money to get back.
+ *
+ * `familyCovers` above puts money in when the company goes under, and for a
+ * long time that was the whole of the relationship: it went in as income, it
+ * never came out, and `paidInSoFar` only ever rose. What that made, measured
+ * over twenty-five years with `playABusiness`, was a business that cannot lose.
+ * The company paid a picture's periods until it was five to ten million under,
+ * the family covered every month of it, the picture returned 1.44 to 1.63 times
+ * its negative, and the company kept all of that — then did it again with its
+ * own money. Four seeds in five ended a career holding between EUR 141m and
+ * EUR 197m, against the EUR 1.78m the same player earned acting: the family
+ * business out-earning the talent by about a hundred to one, in a game whose
+ * premise is that the player is the talent.
+ *
+ * The waterfall already has this idea in it. A distributor recoups its fee
+ * before anybody sees net and the negative recoups before the net is split,
+ * because that is what financing is. The family was the one financier in the
+ * build with no tier of its own.
+ *
+ * So it has one. What is repaid is whatever sits above what the company owes on
+ * work in progress plus the floor it needs to say yes to anything at all —
+ * `committedTo` and `GREENLIGHT_FLOOR`, both already here, so the float is
+ * derived rather than picked. A company mid-picture keeps every penny of what
+ * that picture still costs.
+ *
+ * The second thing this fixes was not what it was built for. The family's
+ * remaining patience is `stillToCarry`, which falls as `paidInSoFar` rises —
+ * so before this, a company that had once been deeply under stayed close to its
+ * limit forever, and one seed in five stalled under `GREENLIGHT_FLOOR` and
+ * never made another picture, because the only way to earn was to greenlight
+ * and the only way to greenlight was to have earned. Paying the family back
+ * gives the patience back. The way out of the trap is the business working,
+ * which is the same sentence `familyCovers` already makes about the way in.
+ */
+export function familyTakesItBack(sim: Simulation, accountId: Id): Money {
+  const account = sim.universe.accounts[accountId];
+  if (!account) return 0;
+  const owed = paidInSoFar(sim);
+  if (owed <= 0) return 0;
+  const keep = committedTo(sim) + GREENLIGHT_FLOOR;
+  const spare = account.balance - keep;
+  if (spare <= 0) return 0;
+  const back = Math.min(owed, spare);
+  if (back <= 0) return 0;
+  sim.expense(accountId, back, PAID_BACK, 'business');
+  return back;
 }
 
 /**

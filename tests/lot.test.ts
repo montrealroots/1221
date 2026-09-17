@@ -35,9 +35,9 @@ import {
   quotedFor, reachOf, rungFor, stillToCarry, theSmallStage, turnedAway,
   MS_WEEK, stagesOn, standingWith, tierFor, utilisation, whatTheFamilySays,
   whereTheBuildStands, whereTheLotStands, whyNotBuild, wholeHold,
-  wouldBook,
+  wouldBook, familyTakesItBack,
 } from '@/engine/world/lot';
-import { capabilitiesOf } from '@/engine/world/company';
+import { capabilitiesOf, parentCompany } from '@/engine/world/company';
 
 /** Five years of the world running, with nobody doing anything about it. */
 function fiveYears(seed: string): { sim: Simulation; from: number } {
@@ -834,5 +834,69 @@ describe('building the fifth room', () => {
     // And it does not pay for itself, which is the honest half. Ten years of
     // letting it does not come near what it cost to put up.
     expect(with5.took - without.took).toBeLessThan(SMALL_STAGE_COST_CENTS);
+  });
+});
+
+describe('the family is a financier and not a benefactor', () => {
+  /**
+   * `familyCovers` put money in when the company went under and nothing ever
+   * took it out, so `paidInSoFar` only ever rose and `stillToCarry` — the
+   * patience left — only ever fell. The fifth one-way ratchet this build has
+   * found, and the only one on the money.
+   */
+
+  it('takes its money back out of a surplus, and not out of committed work', () => {
+    const sim = quickSave({}, 'family-back');
+    const company = parentCompany(sim.universe)!;
+    const account = Object.values(sim.universe.accounts)
+      .find((one) => one.ownerId === company.id && one.kind === 'company_cash')!;
+
+    // Put the company under, so the family covers it.
+    sim.expense(account.id, account.balance + 400_000_00, 'Test: go under', 'business');
+    chargeTheMonth(sim, account.id, 1);
+    const owed = paidInSoFar(sim);
+    expect(owed, 'the family should have covered the shortfall').toBeGreaterThan(0);
+
+    // Now hand the company a real surplus and run the month again.
+    sim.income(account.id, 5_000_000_00, 'Test: a good year', 'business');
+    const before = account.balance;
+    familyTakesItBack(sim, account.id);
+
+    expect(paidInSoFar(sim), 'the family should be repaid out of the surplus').toBeLessThan(owed);
+    expect(account.balance, 'and the money should actually leave').toBeLessThan(before);
+    expect(sim.ledger.audit()).toEqual([]);
+  });
+
+  it('gives the patience back as it is repaid, so the trap has a way out', () => {
+    const sim = quickSave({}, 'family-patience');
+    const company = parentCompany(sim.universe)!;
+    const account = Object.values(sim.universe.accounts)
+      .find((one) => one.ownerId === company.id && one.kind === 'company_cash')!;
+
+    sim.expense(account.id, account.balance + 400_000_00, 'Test: go under', 'business');
+    chargeTheMonth(sim, account.id, 1);
+    const tight = stillToCarry(sim);
+
+    sim.income(account.id, 5_000_000_00, 'Test: a good year', 'business');
+    familyTakesItBack(sim, account.id);
+
+    expect(stillToCarry(sim), 'repaying should restore what the family will still put in')
+      .toBeGreaterThanOrEqual(tight);
+  });
+
+  it('asks for nothing back while the money is spoken for', () => {
+    // The float is what is owed on work in progress plus the greenlight floor,
+    // both read from the build rather than picked, so a company mid-picture
+    // keeps every penny that picture still costs.
+    const sim = quickSave({}, 'family-committed');
+    const company = parentCompany(sim.universe)!;
+    const account = Object.values(sim.universe.accounts)
+      .find((one) => one.ownerId === company.id && one.kind === 'company_cash')!;
+    sim.expense(account.id, account.balance + 400_000_00, 'Test: go under', 'business');
+    chargeTheMonth(sim, account.id, 1);
+    const owed = paidInSoFar(sim);
+    // No surplus: nothing goes back.
+    expect(familyTakesItBack(sim, account.id)).toBe(0);
+    expect(paidInSoFar(sim)).toBe(owed);
   });
 });

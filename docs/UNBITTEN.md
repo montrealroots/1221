@@ -828,11 +828,44 @@ dominates and the slate is self-funding forever. The waterfall already models
 exactly this idea for the distributor and for the negative; the family is the
 one financier in the build with no tier in it.
 
-That is a build rather than a dial, and it is deliberately not bolted onto the
-end of this run: it changes every number on this page that touches the company,
-and it wants its own measurement either side. It is the next piece of work, and
-it is specified here so that it starts from the finding rather than from a
-guess.
+**Built — and it did not do what it was built for.** `familyTakesItBack` now
+repays the family out of surplus, keeping back only what is owed on work in
+progress plus `GREENLIGHT_FLOOR`, both read from the build rather than picked.
+Measured over the same five seeds:
+
+| seed | ended before | ended after | family repaid | patience left |
+|---|---|---|---|---|
+| b1 | €196.6m | €188.2m | in full | €56.4m |
+| b2 | €0.13m | €0.17m | **no — €136m still owed** | €0 |
+| b3 | €162.8m | €101.8m | in full | €74.4m |
+| b4 | €141.4m | €125.0m | in full | €56.4m |
+| b5 | €177.2m | **€206.1m** | in full | €77.0m |
+
+So it lands — the family is repaid on four seeds in five and the patience comes
+back — and **the runaway is not fixed.** One seed even rose. The reason is
+arithmetic: the family puts in tens of millions and the slate earns hundreds,
+so recouping the financing barely touches the surplus. **The absorbing state is
+not fixed either**: b2 never reached surplus, so never repaid, so never got its
+patience back. Repayment cannot be the way out of a trap whose defining property
+is having nothing to repay with.
+
+It is kept anyway, on its own merits rather than the one it was built for: a
+financier that never recoups is a modelling error whatever it does to the
+balance, and this was the **fifth one-way ratchet** this build has found and the
+only one on the money. `paidInSoFar` rose forever and `stillToCarry` fell
+forever; both move both ways now.
+
+**And the framing that motivated it was overstated.** "A hundred to one inverts
+the premise" does not survive scrutiny: a company that makes thirty-five
+pictures across twenty-five years being worth €190m is not obviously wrong, and
+the player owns it either way. The real question is whether producing makes
+acting pointless — which is a question about what this game is, and the honest
+answer is that it should not be settled by quietly moving `ultimateFor`, a curve
+the content file marks as **SLATE's own** rather than anything researched. The
+measurement that matters stands and is recorded above: pictures gross 3.2× to
+5.6× their negative on the mean, sublinearly in the budget, and the slate
+returns 1.44–1.63× after the waterfall. What that should be is a decision about
+the game, not a calibration.
 
 **4. `prestige` is deleted.** Written for 87 of 146 people, read by nothing that
 decides anything, nought on the player for a whole career — and the standing
