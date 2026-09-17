@@ -1077,6 +1077,9 @@ export function book(sim: Simulation, need: Enquiry, stageId: Id, from: Instant,
       from: at,
       to: at + weeks * MS_WEEK,
       weekRateCents: rate,
+      // What this production is spending here, so the room stops standing in
+      // for the money when somebody prices a part off it.
+      spendCents: Math.round((need.spendIsk / ISK_A_EURO) * 100),
     };
     sim.universe.bookings[booking.id] = booking;
     return booking;

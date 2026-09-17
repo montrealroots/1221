@@ -54,6 +54,7 @@
  */
 
 import type { Money } from '../core/money';
+import { CAST_SHARE } from './casting';
 
 // ---------------------------------------------------------------------------
 // What a reading is
@@ -527,7 +528,31 @@ export const A_WORKING_WEEK = {
    *
    * Set under where a rested person starts a job and over where a long run
    * takes them, so the early weeks of anything are fine and only a run that
-   * goes on costs. Short work keeps somebody reliable; one marathon does not.
+   * goes on costs.
+   *
+   * ## It was measurably unreachable, and the fix was somewhere else
+   *
+   * This line was on `docs/UNBITTEN.md` as a threshold no played career could
+   * sit above late on: mean readiness by third ran 47.7 / 38.9 / 16.7 on
+   * autopilot and 49.2 / 47.8 / 35.3 for somebody managing sleep deliberately,
+   * so both ended under thirty-eight and the number divided nothing. The
+   * obvious fix was to move it, and that would have been wrong.
+   *
+   * The cause was the house. `property.condition` fell every day with nothing
+   * in the build that raised it, `sleepQuality` read it, and every career ended
+   * worn out whatever the player did — so the threshold was not badly chosen,
+   * it was the only honest reading of a world with one outcome. Now that
+   * `life.upkeep` exists, there are two. Measured over three seeds of
+   * twenty-five played years, mean readiness by third:
+   *
+   * | | thirds | weeks under this line, of 1300 | reliability at the end |
+   * |---|---|---|---|
+   * | let the house rot | 45.7 / 41.8 / 18.0 | 498-549 | 0 |
+   * | keep it up | 47.8 / 47.9 / 46.8 | 58-74 | 91-97 |
+   *
+   * Thirty-eight now sits between the two, which is what a threshold is for.
+   * It is deliberately unchanged: a number that divided nothing because the
+   * world had one outcome does not want moving once the world has two.
    */
   spentAt: 38,
   /** What a week worked from under there takes off how reliable people found you. */
@@ -676,3 +701,45 @@ export const IGNORED = 0.22;
  * longer than they remember being stood up by them.
  */
 export const HELD_AGAINST_YOU_YEARS = 3;
+
+/**
+ * A whole cast's screen share, summed.
+ *
+ * `SIZES` says what share of a picture each size of part is, and a cast is more
+ * than one part — so the cast pot is divided by what a whole cast comes to and
+ * not by one row of it. A lead at 0.55, a couple of supports, a handful of
+ * guests and the day players behind them come to about this.
+ *
+ * Fitted rather than assumed, and fitted to one thing only: that this change
+ * connects the fee to the money without also moving what a career earns. Across
+ * two seeds of twenty-five played years and 361 parts, the fees the rate card
+ * used to pay come to EUR 3.16m and EUR 3.00m; at this figure the same parts
+ * come to EUR 3.47m and EUR 2.75m — ten per cent over on one seed, eight under
+ * on the other, which is the level holding rather than shifting.
+ *
+ * The first attempt divided by 1.77, taken from a mean of per-part ratios, and
+ * that doubled career earnings. A mean of ratios is not the ratio of means, and
+ * the only honest way to hold a total is to fit against the total.
+ */
+export const A_WHOLE_CAST = 3.3;
+
+/**
+ * What one point of a part's screen share is worth, as a share of the spend.
+ *
+ * The cast costs `CAST_SHARE` of what a production spends — the engine's own
+ * figure, and what `world/casting.ts` already charges the family's company for
+ * its own pictures — and a part takes its share of that pot.
+ *
+ * This is the number that stops the room standing in for the money. `feeFor`
+ * used to price a part off the stage's weekly rate, so the same guest part on
+ * the same commercial paid EUR 2,838 or EUR 1,442 depending on which room
+ * happened to be free, and a picture's budget correlated with its cast's pay
+ * only because floor area happened to track it.
+ *
+ * Deliberately calibrated to hold the level rather than to change it. The
+ * coefficient is set where a played career's fees come out where they already
+ * came out, so this commit connects the fee to the money without also being a
+ * pay rise nobody asked for. Whether an Icelandic lead should earn more than
+ * this is a real question and it is a different one.
+ */
+export const OF_THE_SPEND = CAST_SHARE / A_WHOLE_CAST;

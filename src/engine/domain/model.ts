@@ -503,6 +503,20 @@ export interface Booking {
   to: Instant;
   /** What this booking is paying per week, in cents, after the rate share. */
   weekRateCents: Money;
+  /**
+   * What the production on it is spending in the country, in cents.
+   *
+   * Carried from the enquiry that booked the stage, because `feeFor` had no
+   * other way to know it and was pricing a part off the rate card instead —
+   * which meant the same guest part on the same commercial paid twice as much
+   * or half as much depending on which room happened to be free, and the
+   * correlation between a picture's money and its cast's pay was an accident
+   * of floor area rather than a fact about either.
+   *
+   * Optional because a save written before this carries bookings without it,
+   * and `feeFor` falls back to the old rate-card arithmetic when it is absent.
+   */
+  spendCents?: Money;
   /** Set once the money for it has been posted. */
   invoicedAt?: Instant;
 }

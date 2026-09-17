@@ -1730,3 +1730,51 @@ describe('an office that knows you still notices what you are', () => {
     expect(run(100)).toBe(ordinary);
   });
 });
+
+describe('what a part pays is what the production is spending', () => {
+  /**
+   * `feeFor` priced a part off the stage's weekly rate, so the same guest part
+   * on the same commercial paid twice as much or half as much depending on
+   * which room happened to be free, and a picture's budget correlated with its
+   * cast's pay only because floor area happened to track it.
+   *
+   * `docs/ARREARS.md` costed the obvious fix — dividing the room out — and
+   * refuted it: rank correlation between budget and lead pay went +0.934 to
+   * MINUS 0.044, because floor area WAS the proxy. The version that works is
+   * the one the docstring named: carry the production's real spend onto the
+   * booking and price against that.
+   */
+
+  it('pays the same for the same part whatever room it got', () => {
+    const spend = 2_000_000_00;
+    const small = {
+      id: 'b1', saveId: 's', stageId: 'st1', holder: 'a studio, a feature',
+      kind: 'shooting' as const, from: 0, to: 6 * 7 * 86_400_000,
+      weekRateCents: 40_000_00, spendCents: spend,
+    };
+    const big = { ...small, id: 'b2', stageId: 'st2', weekRateCents: 120_000_00 };
+    // Three times the room, same production: the part is worth the same.
+    expect(feeFor(big, 'guest')).toBe(feeFor(small, 'guest'));
+  });
+
+  it('pays more when the production is spending more', () => {
+    const base = {
+      id: 'b3', saveId: 's', stageId: 'st1', holder: 'a studio, a feature',
+      kind: 'shooting' as const, from: 0, to: 6 * 7 * 86_400_000,
+      weekRateCents: 40_000_00, spendCents: 1_000_000_00,
+    };
+    const richer = { ...base, id: 'b4', spendCents: 10_000_000_00 };
+    expect(feeFor(richer, 'guest')).toBeGreaterThan(feeFor(base, 'guest'));
+  });
+
+  it('falls back to the rate card for a booking written before the spend was carried', () => {
+    // An existing save's bookings carry no `spendCents`, and must go on pricing
+    // the way they always did rather than collapsing to nothing.
+    const old = {
+      id: 'b5', saveId: 's', stageId: 'st1', holder: 'a studio, a feature',
+      kind: 'shooting' as const, from: 0, to: 6 * 7 * 86_400_000,
+      weekRateCents: 40_000_00,
+    };
+    expect(feeFor(old, 'guest')).toBeGreaterThan(0);
+  });
+});

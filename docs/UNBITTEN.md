@@ -775,8 +775,25 @@ file reference rather than as a finding.
   `good` should be pulled apart, are balance calls, and this is the second of
   only two decisions in the room the game is named after.
 - **The room's want is drawn from nothing**, so the opening reading is a constant.
-- **A part is priced off the stage rate card** — what the room costs, not what the
-  cast costs.
+- ~~**A part is priced off the stage rate card** — what the room costs, not what the
+  cast costs.~~ **Fixed, the way `feeFor`'s own docstring said to.** The booking
+  now carries `spendCents` from the enquiry that took the stage, and a part is
+  priced as its share of a cast pot that is `CAST_SHARE` of that spend.
+
+  The obvious fix — dividing the room out — was already built and refuted here
+  (+0.934 to −0.044, because floor area *was* the proxy). Carrying the real
+  spend is the other version, and it measures: rank correlation between what a
+  production spends and what it pays a lead or support goes **0.292 and 0.511 to
+  0.995** across two seeds of twenty-five played years, and the same guest part
+  now pays the same whatever room happened to be free.
+
+  **Calibrated to hold the level, not to raise it.** Across 361 parts the old
+  fees came to €3.16m and €3.00m; the new ones come to €3.47m and €2.75m — ten
+  per cent over on one seed, eight under on the other. The first attempt was
+  fitted from a mean of per-part ratios and doubled career earnings, because a
+  mean of ratios is not the ratio of means; the divisor is fitted against the
+  total instead. Connecting the fee to the money and giving the player a pay
+  rise are two changes, and this is only the first.
 - ~~**Two functions answer whether the player is free, and they disagree.**~~
   **Cleared.** There were three, and the disagreement was 40.5% of spans — see
   below.
@@ -788,6 +805,32 @@ file reference rather than as a finding.
   and *a Hollywood studio, a feature*. Not built on, because nothing shows the
   split biting; recorded because editing the copy silently moves the simulation.
 - **The posts cost nothing and nobody has to say yes.**
+
+---
+
+## `A_WORKING_WEEK.spentAt` divides something now, and it was not moved
+
+It sat on the open list as a threshold no played career could hold: mean
+readiness by third ran 47.7 / 38.9 / 16.7 on autopilot and 49.2 / 47.8 / 35.3
+for a player managing sleep deliberately, so **both ended under thirty-eight**
+and the number separated nothing. The obvious answer was to lower it.
+
+That would have been wrong, and the reason is the house. `property.condition`
+fell every day with nothing that raised it, `sleepQuality` read it, and every
+career ended worn out whatever the player did — so the threshold was not badly
+chosen. It was the only honest reading of a world with one outcome.
+
+With `life.upkeep` there are two. Three seeds, twenty-five played years:
+
+| | readiness by third | weeks under the line, of 1300 | reliability at the end |
+|---|---|---|---|
+| let the house rot | 45.7 / 41.8 / 18.0 | 498–549 | 0 |
+| keep it up | 47.8 / 47.9 / 46.8 | 58–74 | 91–97 |
+
+Thirty-eight now sits between them. **Unchanged, deliberately:** a number that
+divided nothing because the world had one outcome does not want moving once the
+world has two, and the entry is cleared by the fix landing somewhere else
+entirely.
 
 ---
 

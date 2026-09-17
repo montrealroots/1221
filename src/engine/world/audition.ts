@@ -47,7 +47,7 @@ import type { Audition, Booking } from '../domain/model';
 import { clamp } from '../core/rng';
 import {
   AS_WRITTEN, A_WORKING_WEEK, CLOSE_ENOUGH, COLD, EXPECTED_OF_ANYBODY, FURTHEST, HOUSE_HOLDS,
-  KNOWN_OF, OF_THE_ROOM, RELIED_ON, REMEMBERED,
+  KNOWN_OF, OF_THE_ROOM, OF_THE_SPEND, RELIED_ON, REMEMBERED,
   HELD_AGAINST_YOU_YEARS, IGNORED, MISREAD_THE_ROOM, SHADES, TOO_FAR, WELL_LIKED,
   WHAT_THEY_OFFER,
   howFarById, shadeById, wayById, whyById, type Reading, type ShadeId, type WhyId,
@@ -271,6 +271,12 @@ export function remembersYou(sim: Simulation, holder: string): number {
 export function feeFor(booking: Booking, sizeId: string): Money {
   const size = sizeById(sizeId);
   if (!size) return 0;
+  // What the production is actually spending, where the booking knows it.
+  if (booking.spendCents !== undefined && booking.spendCents > 0) {
+    return Math.round(booking.spendCents * OF_THE_SPEND * size.onScreen);
+  }
+  // A booking written before the spend was carried. The old arithmetic, kept
+  // so an existing save prices its existing rooms the way it always did.
   const weeks = Math.max(1, (booking.to - booking.from) / MS_WEEK);
   return Math.round(booking.weekRateCents * weeks * size.onScreen * OF_THE_ROOM);
 }
