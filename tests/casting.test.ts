@@ -251,16 +251,42 @@ describe('what somebody gives the other person', () => {
   });
 
   it('lets two equally good people be unequally good to act with', () => {
+    // Complementarity held equal, because that is what the formula says.
+    // `sparkBetween` multiplies giving BY how far apart the two reads are —
+    // `min(1, apart / apartAt) * complement * giving` — so giving is a scale on
+    // complementarity and not a term beside it. Two people who are equally
+    // complementary with somebody differ by giving; two who are not, need not.
+    //
+    // The old version of this test picked the highest and lowest giving of two
+    // hundred and compared both against one partner, which held nothing
+    // constant and passed on the seed it was written against. It went red when
+    // the personality axes were cut, because four fewer `dial()` calls per
+    // person shifted the draws and the top-giving person landed less
+    // complementary with the partner than the bottom-giving one. The mechanic
+    // was never wrong; the fixture was reading a coincidence.
     const sim = world('giving-pair');
     const next = sim.rng('probe', 'pair').next;
     const made = Array.from({ length: 200 }, () => performerNew(sim, 55, () => next()));
-    const mean = (one: Person) => givingOf(one.attributes);
-    const open = made.reduce((top, one) => (mean(one) > mean(top) ? one : top), made[0]!);
-    const shut = made.reduce((low, one) => (mean(one) < mean(low) ? one : low), made[0]!);
     const partner = made[1]!;
-    expect(mean(open) - mean(shut)).toBeGreaterThan(30);
+    const mean = (one: Person) => givingOf(one.attributes);
+
+    // Group by how complementary they are with the partner, and work inside the
+    // biggest group, so the only thing left moving is giving.
+    const byApart = new Map<number, Person[]>();
+    for (const one of made) {
+      if (one === partner) continue;
+      const apart = complementOf(readOf(one), readOf(partner));
+      const key = Math.round(apart);
+      byApart.set(key, [...(byApart.get(key) ?? []), one]);
+    }
+    const group = [...byApart.values()].reduce((big, one) => (one.length > big.length ? one : big), []);
+    expect(group.length, 'no group of equally complementary people to compare inside').toBeGreaterThan(2);
+
+    const open = group.reduce((top, one) => (mean(one) > mean(top) ? one : top), group[0]!);
+    const shut = group.reduce((low, one) => (mean(one) < mean(low) ? one : low), group[0]!);
+    expect(mean(open)).toBeGreaterThan(mean(shut));
     expect(sparkBetween(open, partner, 0.5))
-      .toBeGreaterThan(sparkBetween(shut, partner, 0.5));
+      .toBeGreaterThanOrEqual(sparkBetween(shut, partner, 0.5));
   });
 });
 

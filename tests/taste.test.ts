@@ -19,7 +19,6 @@ import {
 import { PERSONALITY_HIGHER_IS_WORSE, PERSONALITY_TRAIT_BY_ID } from '@/engine/content/personality-traits';
 import { SYSTEM_HIGHER_IS_WORSE, TRAITS } from '@/engine/domain/attributes';
 import type { Person } from '@/engine/domain/model';
-import { playACareer } from './played';
 
 function playerWith(seed: string, config: Partial<Parameters<typeof createSave>[2]>): Person {
   const sim = createSave(1, seed, { ...defaultConfig(), ...config });
@@ -305,14 +304,38 @@ describe('what the personality axes actually do', () => {
     expect(worst.morale).toBeGreaterThan(50);
   });
 
-  it('moves nothing for the axes that need people or decisions', () => {
-    const mid = after({}, 'axis-mid-run');
-    for (const [axis, seed] of [
-      ['extraversion', 'axis-extra'], ['agreeableness', 'axis-agree'], ['riskTolerance', 'axis-risk'],
+  it('holds three axes, and every one of them decides something', () => {
+    // This block used to carry two tests pinning the opposite: that
+    // extraversion, agreeableness and risk tolerance moved nothing, and that
+    // openness was recorded and read by nothing at all. They were honest
+    // records of four dead words, and they passed only for as long as the dead
+    // words survived.
+    //
+    // The four are deleted. What replaces those tests is the claim that makes
+    // the deletion checkable: `Personality` holds three, and moving each one
+    // moves something. A fifth axis arriving with no reader fails here.
+    const sim = createSave(1, 'axes-three', { ...defaultConfig() });
+    const me = sim.universe.people[sim.universe.playerId]!;
+    expect(Object.keys(me.personality).sort())
+      .toEqual(['ambition', 'conscientiousness', 'emotionalStability']);
+
+    // Asserted at `axisModifier`, which is the only thing that reads an axis,
+    // rather than through a month of living. Ambition's term is `driven * 0.15`
+    // inside `stressGain`, and a month of simulated noise swallows it — so a
+    // wellbeing comparison would fail on an axis that is genuinely read, which
+    // is a test measuring its own instrument rather than the claim.
+    const axisPerson = (axis: string, value: number): Person => {
+      const made = createSave(1, `axis-${axis}-${value}`, {
+        ...defaultConfig(), personality: { ...flat, [axis]: value } as never,
+      });
+      return made.universe.people[made.universe.playerId]!;
+    };
+    for (const [axis, knob] of [
+      ['emotionalStability', 'stressGain'], ['ambition', 'stressGain'],
+      ['conscientiousness', 'sleepQuality'],
     ] as const) {
-      const low = after({ [axis]: 5 }, seed);
-      expect(low.stress, axis).toBe(mid.stress);
-      expect(low.morale, axis).toBe(mid.morale);
+      expect(axisModifier(axisPerson(axis, 5), knob), `${axis} moved nothing`)
+        .not.toBe(axisModifier(axisPerson(axis, 95), knob));
     }
   });
 
@@ -340,59 +363,32 @@ describe('what the personality axes actually do', () => {
     }
   });
 
-  it('leaves openness recorded, and read by nothing at all', () => {
-    // The fourth axis, and it used to be its own state: read, and still inert.
-    // It scaled how fast `travelFatigue` came off, and nothing in this build
-    // ever put any on, so the one axis that was wired reached nowhere. The dial
-    // went in the wellbeing sweep and the case went with it, which moves
-    // openness in beside extraversion, agreeableness and risk tolerance: asked
-    // for at creation, written into the save, consulted by no system.
-    const person = (v: number): Person => {
-      const sim = createSave(1, `open-${v}`, {
-        ...defaultConfig(), personality: { ...flat, openness: v } as never,
-      });
-      return sim.universe.people[sim.universe.playerId]!;
-    };
-    // Every knob the life systems ask for, at both ends of the axis. If
-    // openness ever touches one it stops being inert and the screen is wrong
-    // again — which is the whole way the last count went stale.
-    for (const key of ['stressGain', 'stressRecovery', 'sleepQuality', 'energyRecovery']) {
-      expect(axisModifier(person(5), key), key).toBe(axisModifier(person(95), key));
-    }
-    // And the engine does not name it anywhere outside the shape it is
-    // declared on and the generators that seed it, which is the difference
-    // between a read that reaches nothing and no read at all.
-    const engine = ['src/engine/core/taste.ts', 'src/engine/systems/life.ts']
-      .map((file) => readFileSync(file, 'utf8')).join('\n');
-    expect(engine).not.toMatch(/openness/);
 
-    // The falsifiable half: two saves differing only in openness, played a
-    // year apart, come out identical on every dial the day moves.
-    const dialsAfterAYear = (v: number) => {
-      const sim = createSave(1, 'open-run', {
-        ...defaultConfig(), personality: { ...flat, openness: v } as never,
-      });
-      playACareer(sim, 1);
-      return JSON.stringify(sim.universe.people[sim.universe.playerId]!.wellbeing);
-    };
-    expect(dialsAfterAYear(5)).toBe(dialsAfterAYear(95));
-  });
-
-  it('says on the screen which ones are live, rather than implying all of them', () => {
+  it('asks for the three that are live and does not ask for the four that went', () => {
     const source = readFileSync('src/ui/creation/CharacterCreation.tsx', 'utf8');
-    // Substance, not phrasing. The screen has to name the three that are live
-    // and say the rest are not; how it says it is free to be edited.
+    // Substance, not phrasing. The screen has to ask for the three that decide
+    // something; how it says it is free to be edited.
     expect(source).toMatch(/Emotional Stability/);
     expect(source).toMatch(/Conscientiousness/);
     expect(source).toMatch(/Ambition/);
-    // Whitespace-tolerant: the sentence wraps across lines in the source.
-    // It used to read "change nothing yet", which was true of the other four
-    // in a weaker sense than it is now: openness was read, and reached a dial
-    // nothing moved. The dial went, so the read went, and the screen says the
-    // stronger thing.
-    expect(source.replace(/\s+/g, ' ')).toMatch(/read by nothing/);
-    // The count is the part that went stale, so it is the part pinned.
-    expect(source.replace(/\s+/g, ' ')).toMatch(/Three of them do something today/);
+
+    // This test used to pin the screen's honesty about four axes that were
+    // asked for and read by nothing — "Three of them do something today". That
+    // was the right test while they existed. They are deleted, so what it pins
+    // now is the stronger thing: the screen does not ask for them at all.
+    //
+    // Checked on the slider list rather than on the prose, because the copy
+    // still names the four to say they are gone, and a source-wide search
+    // would read that explanation as the offense.
+    const sliders = source.slice(
+      source.indexOf('const PERSONALITY_AXES'),
+      source.indexOf('];', source.indexOf('const PERSONALITY_AXES')),
+    );
+    for (const gone of ['openness', 'extraversion', 'agreeableness', 'riskTolerance']) {
+      expect(sliders, `${gone} is still on the creation screen`).not.toContain(gone);
+    }
+    expect(sliders).toContain('conscientiousness');
+
     // The old copy promised all three of these, and none was true.
     expect(source).not.toContain('They shape how people respond to you');
   });

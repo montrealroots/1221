@@ -225,9 +225,7 @@ function somebodyNew(sim: Simulation, standing: number, next: () => number): Per
     citizenshipId: player.citizenshipId,
     currentLocationId: player.currentLocationId,
     personality: {
-      openness: dial(), conscientiousness: dial(), extraversion: dial(),
-      agreeableness: dial(), emotionalStability: dial(), ambition: dial(),
-      riskTolerance: dial(),
+      conscientiousness: dial(), emotionalStability: dial(), ambition: dial(),
     },
     interests: [],
     background: 'Crew. Came up through a department and stayed in it.',

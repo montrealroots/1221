@@ -447,9 +447,7 @@ export function performerNew(
     citizenshipId: from.citizenshipId,
     currentLocationId: from.cityId,
     personality: {
-      openness: dial(), conscientiousness: dial(), extraversion: dial(),
-      agreeableness: dial(), emotionalStability: dial(), ambition: dial(),
-      riskTolerance: dial(),
+      conscientiousness: dial(), emotionalStability: dial(), ambition: dial(),
     },
     interests: [],
     background: from.id === 'here'

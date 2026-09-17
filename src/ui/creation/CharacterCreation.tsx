@@ -85,13 +85,9 @@ const DRAFT_KEY = (slot: Slot) => `slate.draft.${slot}`;
 const WEALTH: StartingWealth[] = ['nothing', 'scraping', 'modest', 'comfortable', 'wealthy', 'inherited'];
 
 const PERSONALITY_AXES: { key: keyof Personality; label: string; low: string; high: string }[] = [
-  { key: 'openness', label: 'Openness', low: 'Conventional', high: 'Experimental' },
   { key: 'conscientiousness', label: 'Conscientiousness', low: 'Loose', high: 'Meticulous' },
-  { key: 'extraversion', label: 'Extraversion', low: 'Reserved', high: 'Outgoing' },
-  { key: 'agreeableness', label: 'Agreeableness', low: 'Blunt', high: 'Accommodating' },
   { key: 'emotionalStability', label: 'Emotional Stability', low: 'Volatile', high: 'Steady' },
   { key: 'ambition', label: 'Ambition', low: 'Content', high: 'Driven' },
-  { key: 'riskTolerance', label: 'Risk Tolerance', low: 'Cautious', high: 'Reckless' },
 ];
 
 
@@ -609,12 +605,14 @@ function PersonalStep({
           <div>
             <h2>Personality</h2>
             <p className="muted small">
-              Dispositions, not stats. Three of them do something today: Emotional Stability sets
-              how quickly stress arrives and how quickly it clears, Conscientiousness sets how
-              well the nights go, and Ambition is what pushing past the point a contented person
-              would have stopped at costs you in stress. The other four are written into the save
-              and read by nothing. Openness waits on travel, and the last three wait on other
-              people. Neither is built.
+              Dispositions, not stats, and all three of them decide something. Emotional
+              Stability sets how quickly stress arrives and how quickly it clears,
+              Conscientiousness sets how well the nights go, and Ambition is what pushing past
+              the point a contented person would have stopped at costs you in stress. There
+              were four more — openness, extraversion, agreeableness and risk tolerance. They
+              waited on travel and on other people, neither of which is built, so they were
+              written into every save, read by nothing, and shown back on no screen but this
+              one. So the screen stopped asking, and they’re gone.
             </p>
           </div>
         </div>

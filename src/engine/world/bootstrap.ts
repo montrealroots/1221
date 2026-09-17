@@ -131,8 +131,7 @@ export interface NewSaveConfig {
 
 export function defaultPersonality(): Personality {
   return {
-    openness: 55, conscientiousness: 55, extraversion: 55,
-    agreeableness: 55, emotionalStability: 55, ambition: 60, riskTolerance: 50,
+    conscientiousness: 55, emotionalStability: 55, ambition: 60,
   };
 }
 

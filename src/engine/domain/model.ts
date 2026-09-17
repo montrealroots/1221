@@ -52,14 +52,22 @@ export type {
 } from './company';
 
 export interface Personality {
-  /** Big five plus two industry-relevant dials, all 0-100. */
-  openness: number;
+  /**
+   * The three dispositions that decide something, all 0-100.
+   *
+   * There were seven, and four of them — openness, extraversion, agreeableness
+   * and risk tolerance — were written into every save and read by nothing. The
+   * creation screen was honest about it and said so in as many words, which
+   * made them honest dead words rather than dishonest ones, and dead either
+   * way: they appeared on that screen and on no other, so nothing ever showed
+   * them back. `background` survives the same test by being printed under a
+   * person's name; these had no such reader anywhere.
+   *
+   * The three left are the three `core/taste.ts` actually asks for.
+   */
   conscientiousness: number;
-  extraversion: number;
-  agreeableness: number;
   emotionalStability: number;
   ambition: number;
-  riskTolerance: number;
 }
 
 export interface Wellbeing {

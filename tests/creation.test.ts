@@ -35,8 +35,7 @@ function filled() {
     birthYear: 1998, birthMonth: 11, birthDay: 3,
     raceEthnicity: ['white', 'asian'],
     personality: {
-      openness: 11, conscientiousness: 22, extraversion: 33, agreeableness: 44,
-      emotionalStability: 55, ambition: 66, riskTolerance: 77,
+      conscientiousness: 22, emotionalStability: 55, ambition: 66,
     },
     personalityTraits: ['night_owl'],
     interests: ['film', 'television', 'cinematography'],
@@ -95,12 +94,13 @@ describe('Identity', () => {
 describe('Who You Are', () => {
   it('keeps all seven axes, and stores them exactly as set', () => {
     const p = filled().universe.people[filled().universe.playerId]!;
+    // Three, and it was seven. The four that went were written into every save
+    // and read by nothing, and shown back on no screen but the one that asked.
     expect(Object.keys(p.personality).sort()).toEqual([
-      'agreeableness', 'ambition', 'conscientiousness', 'emotionalStability',
-      'extraversion', 'openness', 'riskTolerance',
+      'ambition', 'conscientiousness', 'emotionalStability',
     ]);
-    expect(p.personality.openness).toBe(11);
-    expect(p.personality.riskTolerance).toBe(77);
+    expect(p.personality.conscientiousness).toBe(22);
+    expect(p.personality.ambition).toBe(66);
   });
 
   it('carries the traits, the interests, the genres and the rest', () => {

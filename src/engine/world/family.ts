@@ -109,13 +109,9 @@ export function defaultFamily(): FamilyConfig {
 function personalityFrom(next: () => number): Personality {
   const dial = () => Math.round(25 + next() * 50);
   return {
-    openness: dial(),
     conscientiousness: dial(),
-    extraversion: dial(),
-    agreeableness: dial(),
     emotionalStability: dial(),
     ambition: dial(),
-    riskTolerance: dial(),
   };
 }
 
