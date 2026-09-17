@@ -251,7 +251,7 @@ export function emptyUniverse(
     stages: {},
     bookings: {},
     quotaYears: [],
-    scheduled: [], history: [], decisions: {}, notifications: [],
+    scheduled: [], decisions: {}, notifications: [],
     preferences: {
       reducedMotion: false, audioEnabled: true, audioVolume: 0.6,
       timeSpeed: 'live', compactMode: false, showAdvancedNumbers: false,

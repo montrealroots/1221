@@ -422,14 +422,18 @@ describe('an older save catches up with the build', () => {
     const sim = quickSave({}, 'relabel-prose');
     const universe = sim.universe;
     universe.meta.schemaVersion = 9;
-    universe.history.push({
-      id: 'history_test', saveId: universe.meta.id, at: universe.now,
+    // On a notification rather than a history record, because the history log
+    // is gone — one writer, no screen, and `Historian.timeline` had no caller
+    // anywhere. `notifications` is relabelled on `title` by the same migration
+    // step, so this holds exactly what it always held.
+    universe.notifications.push({
+      id: 'notice_test', saveId: universe.meta.id, at: universe.now,
       category: 'life', title: 'You were too exhausted to work.',
-      detail: 'A missed shift.', refs: [], significance: 10, public: false,
-    } as (typeof universe.history)[number]);
+      body: 'A missed shift.', importance: 10, read: false,
+    } as (typeof universe.notifications)[number]);
 
     migrate(universe);
-    expect(universe.history.at(-1)?.title).toBe('You were too exhausted to work.');
+    expect(universe.notifications.at(-1)?.title).toBe('You were too exhausted to work.');
   });
 
   it('does not relabel a save that is already current', () => {

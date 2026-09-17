@@ -204,8 +204,13 @@ Eight from TEW's side, eight from film's. Each is a bar, not a feature.
    hold one.*
 6. **Incomplete information.** The gap between what is true and what the player
    is told. TEW cannot do this: there, the player has god-view of their own
-   promotion. *Today: `src/engine/core/audit.ts` is a complete, correct,
-   unused layer.*
+   promotion. *Today: built where it decides something and deleted where it did
+   not. An office's picture of the player lags the truth and that picture
+   decides what they are asked about (`world/audition.ts`). The explanation
+   layer that would have shown a decision's inputs back to the player, and the
+   history log that would have shown them their own past, were both complete,
+   both correct and both unread, and both are gone — the room they were for is
+   the honest place to rebuild them.*
 7. **Ageing and the career curve.** What you can play at forty as a consequence
    of what you did at twenty-five. *Today: written, and unreachable.*
 8. **Consequence memory that compounds.** Old decisions as the reason a door is

@@ -14,7 +14,7 @@ import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { Person, Wellbeing } from '../domain/model';
 import { clamp, remap } from '../core/rng';
-import { addDays, formatTime, instantFromZoned, zonedParts, MS_HOUR, MS_DAY } from '../core/time';
+import { addDays, instantFromZoned, zonedParts, MS_HOUR, MS_DAY } from '../core/time';
 import { modifierFor } from '../domain/attributes';
 import { dispositionOf } from '../core/taste';
 import { ceilingAt, recoveryFactorAt } from '../content/lifespan';
@@ -148,14 +148,6 @@ export function registerLife(sim: Simulation): void {
       const recovered = person.wellbeing.energy - before.energy;
 
       s.emit('life.woke', { personId: person.id, hours, quality, recovered });
-      s.remember({
-        category: 'life',
-        title: hours >= 7 ? 'Slept well' : 'Short night',
-        detail: `${hours.toFixed(1)} hours, waking at ${formatTime(s.now, s.zone)}.`,
-        refs: [{ type: 'person', id: person.id }],
-        significance: 3,
-        public: false,
-      });
 
       if (crossed.length > 0) {
         s.notify({

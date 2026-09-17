@@ -469,7 +469,7 @@ file reference rather than as a finding.
   that reader. Flavour with a reader is not a dead word. Flavour written into a
   save and never shown to anybody would have been.
 - ~~**The audit trail is a persisted, empty table**~~ — deleted in `5a5232e` —
-  **and the history table is a sleep diary.** Measured rather than asserted, and
+  **and the history table is a sleep diary.** **Deleted.** Measured rather than asserted, and
   the truth is sharper than the claim in both directions. Structurally it is a
   sleep diary exactly: `universe.history` has **one writer in the whole engine**,
   `systems/life.ts` inside the sleep command. In practice it holds **nought rows
@@ -479,11 +479,23 @@ file reference rather than as a finding.
   reads it**, so nothing a player does is ever shown back to them from it.
 
   That is the audit trail's shape again — persisted, validated, counted in the
-  size estimate, read by nobody — with one difference that stops it being the
-  same call: the audit trail had zero writers *and* zero readers, and this has a
-  writer that works. So it is either a table that wants a screen or a table that
-  wants deleting, and which of those it is belongs to the owner rather than to
-  whoever next reads this line.
+  size estimate, read by nobody — with one difference: the audit trail had zero
+  writers *and* zero readers, and this had a writer that works.
+
+  **It went anyway, and the deciding fact was `Historian.timeline`.** A query
+  API with category, refId, significance and limit filters, carefully built, and
+  **no caller anywhere in the tree**. A retrieval surface that considered over a
+  table nobody opens is the audit trail again by a longer route. So the second
+  half of `core/audit.ts` followed the first, the file is gone, `sim.remember`
+  is gone, the `history` id namespace is gone — nineteen now, from a hundred and
+  twenty-five — and `history` came out of `APPEND_ONLY_LOGS`, which is the
+  rollback path, so the cut had to be right rather than merely tidy.
+
+  A pre-cut save was the proof, exactly as the audit cut proved itself: it
+  migrates, validates with zero errors, reloads, and its stale array survives as
+  inert JSON. No schema bump. What the log was for — years later, the player
+  looks back at where they lived and what they made — is a good feature and is
+  worth building the day there is a screen that asks for it. It was not this.
 - **`Audition.took`** is written and read by nothing, in the save record of the
   system the game is named after.
 - **The guild signature is a gate with no money behind it.** The content says

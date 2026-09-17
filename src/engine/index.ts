@@ -340,7 +340,6 @@ export function migrate(universe: SaveUniverse): MigrationResult {
   record('counters', 'the counters');
   list('transactions', 'the transactions');
   list('scheduled', 'the timeline');
-  list('history', 'the history');
   list('notifications', 'the notifications');
   list('engineFailures', 'the failure log');
 
@@ -374,7 +373,6 @@ export function migrate(universe: SaveUniverse): MigrationResult {
   };
   relabel(universe.scheduled as unknown as Record<string, unknown>[], 'label');
   relabel(universe.notifications as unknown as Record<string, unknown>[], 'title');
-  relabel(universe.history as unknown as Record<string, unknown>[], 'title');
   relabel(Object.values(universe.decisions ?? {}) as unknown as Record<string, unknown>[], 'title');
   if (relabelled > 0) {
     steps.push(`Put ${relabelled} stored label${relabelled === 1 ? '' : 's'} into Title Case.`);
@@ -442,7 +440,6 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     stamp(Object.values(universe.decisions));
     stamp(universe.transactions);
     stamp(universe.scheduled);
-    stamp(universe.history);
     stamp(universe.notifications);
     if (reassigned > 0) steps.push(`Re-stamped ${reassigned} record${reassigned === 1 ? '' : 's'} onto this save.`);
   }

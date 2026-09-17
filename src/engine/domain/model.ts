@@ -33,7 +33,6 @@ import type { Instant, TimeZone } from '../core/time';
 import type { Money } from '../core/money';
 import type { Account, LedgerTransaction } from '../core/ledger';
 import type { ScheduledItem } from '../core/scheduler';
-import type { HistoryRecord } from '../core/audit';
 import type { PerformerTitle } from '../core/performer';
 import type { IdNamespace } from '../core/ids';
 import type { AttributeSheet } from './attributes';
@@ -794,7 +793,6 @@ export interface SaveUniverse {
   quotaYears: QuotaYear[];
 
   scheduled: ScheduledItem[];
-  history: HistoryRecord[];
   decisions: Record<Id, DecisionItem>;
   notifications: Notification[];
 
