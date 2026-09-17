@@ -96,10 +96,16 @@ export function playACareer(sim: Simulation, years: number, how: HowTheyPlay = {
     // system stopped. It is the cheapest possible guard and it is here because
     // the expensive version of this lesson has already been paid for.
     //
-    // Read off the notification and not off `AdvanceResult.missed`, because an
-    // item is also marked missed when its kind simply has no handler — which is
-    // an ordinary thing for a save written by another build. The notification is
-    // written on the throwing path and only there.
+    // Read off `universe.engineFailures`, which the kernel writes on the
+    // throwing path and only there. Not off `AdvanceResult.missed`, because an
+    // item is also marked missed when its kind simply has no handler — an
+    // ordinary thing for a save written by another build.
+    //
+    // This used to match on a notification's title, because a scheduled handler
+    // that threw was announced and never recorded: the guard had to read the
+    // announcement since there was nothing else to read. The kernel records it
+    // now, so this asks the log rather than matching a string that a rewording
+    // would have broken silently.
     for (const one of Object.values(sim.universe.auditions)) {
       if (seen.has(one.id)) continue;
       seen.add(one.id);
@@ -116,10 +122,9 @@ export function playACareer(sim: Simulation, years: number, how: HowTheyPlay = {
     how.eachWeek?.(sim, week);
   }
 
-  const broke = sim.universe.notifications
-    .filter((note) => note.title === 'A Scheduled Event Could Not Be Processed');
+  const broke = sim.universe.engineFailures;
   if (broke.length > 0 && how.evenIfSomethingBroke !== true) {
-    const said = [...new Set(broke.map((note) => note.body))].slice(0, 5).map((why) => `  ${why}`).join('\n');
+    const said = [...new Set(broke.map((one) => one.error))].slice(0, 5).map((why) => `  ${why}`).join('\n');
     throw new Error(
       `A scheduled system failed ${broke.length} time${broke.length === 1 ? '' : 's'} during this `
       + `career, so these numbers describe a world where part of the engine stopped `
@@ -297,10 +302,9 @@ export function playABusiness(sim: Simulation, years: number): WhatTheCompanyDid
     if (held < 0) weeksUnder += 1;
   }
 
-  const broke = sim.universe.notifications
-    .filter((note) => note.title === 'A Scheduled Event Could Not Be Processed');
+  const broke = sim.universe.engineFailures;
   if (broke.length > 0) {
-    const said = [...new Set(broke.map((note) => note.body))].slice(0, 5).map((why) => `  ${why}`).join('\n');
+    const said = [...new Set(broke.map((one) => one.error))].slice(0, 5).map((why) => `  ${why}`).join('\n');
     throw new Error(
       `A scheduled system failed ${broke.length} times while the company ran, so these numbers `
       + `describe a world where part of the engine stopped:\n${said}`,

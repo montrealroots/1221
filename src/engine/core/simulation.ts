@@ -328,10 +328,30 @@ export class Simulation {
           handler(due, this);
         } catch (err) {
           due.status = 'missed';
+          // Into `engineFailures` as well as onto a notification, and the
+          // difference is not cosmetic. A command that throws has always been
+          // recorded there; a scheduled handler that threw was only ever
+          // announced, and a notification is a thing a player dismisses.
+          //
+          // That gap has already cost this project its most expensive wrong
+          // answer. A mutation threw a ReferenceError on its first line every
+          // single day, `dailyRollover` never ran, the wellbeing model silently
+          // stopped, and fitness read its seed of fifty because nothing was
+          // decaying it — and the frozen number was reported as a causal
+          // finding. Every total in that run looked reasonable.
+          //
+          // `tests/played.ts` guards against exactly this by reading the
+          // notification back, which is a test standing where a record should
+          // be. Now the failure lands in the log the rest of the engine already
+          // uses, so anything that wants to ask "did this world run properly"
+          // has one place to ask rather than a string to match on.
+          const said = `'${due.label}' failed: ${(err as Error).message}`;
+          this.universe.engineFailures.push({ at: this.now, kind: due.kind, error: said });
+          if (this.universe.engineFailures.length > 200) this.universe.engineFailures.shift();
           this.notify({
             category: 'system',
             title: 'A Scheduled Event Could Not Be Processed',
-            body: `'${due.label}' failed: ${(err as Error).message}`,
+            body: said,
             importance: 40,
           });
           result.missed.push(due);

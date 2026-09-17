@@ -588,3 +588,66 @@ describe('a handler that refuses is a refusal', () => {
     expect(out.value).toBe(41);
   });
 });
+
+describe('a scheduled handler that throws is recorded, not just announced', () => {
+  /**
+   * The command path has always written a throw into `engineFailures`. The
+   * schedule path only notified, and a notification is a thing a player
+   * dismisses. That gap produced this project's most expensive wrong answer: a
+   * mutation threw on its first line every single day, `dailyRollover` never
+   * ran, the wellbeing model stopped, and the frozen numbers were reported as a
+   * causal finding, because every total in the run still looked reasonable.
+   */
+
+  it('writes the failure into engineFailures with the kind that failed', () => {
+    const sim = quickSave({}, 'sched-throws');
+    sim.onSchedule('test.explodes', () => { throw new Error('the floor gave way'); });
+    sim.schedule({
+      at: sim.now + MS_DAY, kind: 'test.explodes',
+      label: 'A Thing That Breaks', category: 'system', priority: 5,
+    });
+
+    const before = sim.universe.engineFailures.length;
+    sim.advanceTo(sim.now + 2 * MS_DAY);
+
+    const logged = sim.universe.engineFailures.slice(before);
+    expect(logged, 'a handler that threw left no record').toHaveLength(1);
+    expect(logged[0]!.kind).toBe('test.explodes');
+    expect(logged[0]!.error).toContain('the floor gave way');
+  });
+
+  it('still announces it, because the player is owed the sentence too', () => {
+    const sim = quickSave({}, 'sched-announces');
+    sim.onSchedule('test.explodes2', () => { throw new Error('nope'); });
+    sim.schedule({
+      at: sim.now + MS_DAY, kind: 'test.explodes2',
+      label: 'Another Thing', category: 'system', priority: 5,
+    });
+    sim.advanceTo(sim.now + 2 * MS_DAY);
+    expect(sim.universe.notifications
+      .some((n) => n.title === 'A Scheduled Event Could Not Be Processed')).toBe(true);
+  });
+
+  it('leaves the log alone when a handler simply does not exist', () => {
+    // An item is also marked `missed` when its kind has no handler, and that is
+    // not a failure — it must not read as one, or the guard in `played.ts`
+    // would refuse to report any save written by a build with one more system
+    // in it than this one.
+    //
+    // Written straight onto `universe.scheduled` because that is the only way
+    // this state is reachable: `schedule()` refuses an unregistered kind
+    // outright, so the only producer of an unhandled item is a save loaded
+    // from elsewhere. Which is exactly the case being pinned.
+    const sim = quickSave({}, 'sched-nohandler');
+    sim.universe.scheduled.push({
+      id: 'sched_from_another_build', saveId: sim.universe.meta.id,
+      at: sim.now + MS_DAY, kind: 'test.a_system_this_build_lacks',
+      label: 'From Another Build', category: 'system', priority: 5,
+      status: 'pending',
+    } as (typeof sim.universe.scheduled)[number]);
+
+    const before = sim.universe.engineFailures.length;
+    sim.advanceTo(sim.now + 2 * MS_DAY);
+    expect(sim.universe.engineFailures.length, 'a missing handler is not a failure').toBe(before);
+  });
+});
