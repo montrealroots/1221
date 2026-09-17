@@ -499,6 +499,16 @@ file reference rather than as a finding.
   `countryOfCity` and the five tests whose own header admitted nothing called
   the rule.
 - **Awards and critics**, which is where `prestige` above is waiting.
+  **Specified and costed in `docs/AWARDS.md`**, which is the deliverable this
+  section was scoped to rather than a built festival circuit. The finding that
+  shaped it: the two fields involved are half-connected in opposite directions.
+  `prestige` is written for 87 of 146 people in a played save and **read by
+  nothing at all**; `controversy` is **read by two live mechanisms** — a casting
+  office refuses anybody over `TOO_HOT = 55`, and the cast's controversy takes
+  up to 38% off what a picture sells for — and is **0 for every person at every
+  moment**, because every writer in the build sets the literal nought. So the
+  expensive half of an awards system is already built and waiting for a source,
+  which makes this a much smaller job than the page implies.
 
 ### Correct, and nothing can reach it
 
