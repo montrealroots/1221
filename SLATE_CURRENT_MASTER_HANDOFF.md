@@ -898,7 +898,23 @@ From `docs/UNBITTEN.md`, all needing re-derivation because **the page is demonst
 
 | # | Item | Only copy | How to preserve |
 |---|---|---|---|
-| 1 | **`SLATE-CURRENT-CLEANUP-FULL-CONTEXT.txt`** | Untracked file in this working tree. 205,415 bytes / 3,268 lines. The complete portable record of the cleanup session, **including the nine section briefs verbatim** | Back it up outside the repo before any `git clean`. It is **not** gitignored, so it can also be committed |
+| 1 | **`SLATE-CURRENT-CLEANUP-FULL-CONTEXT.txt`** | Untracked file in this working tree. 205,415 bytes / 3,268 lines. Was the only copy of the nine section briefs | **Backed up at `%USERPROFILE%\slate-backup\`. Deliberately NOT committed — see below.** |
+
+**Why the context export is not in the repository.** Its unique value was the nine
+section briefs, and that value is spent: all nine sections have been worked, and
+what came of each is in its own commit message, in `docs/UNBITTEN.md` and in
+`docs/AWARDS.md`. What is left is a terminal transcript with known mojibake
+(§20, gap 12) that nothing and nobody now reads.
+
+This repository spent this session deleting 199 lines of record shapes and 35
+lines of tax tables for exactly that property, and `b6f4061` — *Retire the
+handoff, keep what was worth keeping* — is the same call made once already. A
+205KB artifact with no reader is the thing The One Rule is about, and it does
+not stop being that because it is prose rather than code. It is backed up
+outside the repo, so nothing is lost; it is simply not carried.
+
+If a future session wants it in the history anyway, commit it deliberately and
+say why — do not let it drift in as an untracked file nobody decided about.
 | 2 | **`stash@{0}` = `227fa5a`** — `tools/cohesion-walk.mjs` +67 lines that exist nowhere else | The stash stack only | **Never** `stash drop`/`clear`. To make it durable: `git branch teleport-stash-backup 227fa5a` |
 | 3 | `SLATE-CLEANUP-FULL-CONTEXT.txt` (1,503 lines) — the **prior** session's export | Inside `stash@{0}` | Same as above |
 | 4 | `cohesion-walk/` — 22 walkthrough screenshots (~1.4 MB) | Inside `stash@{0}` | Same as above. Regenerable via `tools/cohesion-walk.mjs` but not for free |
