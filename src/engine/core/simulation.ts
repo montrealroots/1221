@@ -55,6 +55,32 @@ export interface CommandResult<R = unknown> {
   events?: string[];
 }
 
+/**
+ * A handler that returns a refusal has refused, and the envelope has to say so.
+ *
+ * Most handlers in this build answer `{ ok: false, error }` rather than
+ * throwing, because a refusal is an ordinary answer and a throw is for a broken
+ * world. `execute` wrapped every returned value in `{ ok: true }` regardless, so
+ * the refusal was inside a success: `CommandResult.ok` read true, and both
+ * places a player can press a button read `CommandResult.ok`.
+ *
+ * The Decision Center hit this and worked around it by throwing instead, which
+ * is why refusing a reimbursement reaches the player and refusing anything else
+ * did not. This is the general fix that workaround was standing in for.
+ *
+ * It reads the shape rather than a marker interface because that shape is
+ * already the convention in every world module — `{ ok: boolean; error?: string }`
+ * — and a handler answering anything else is untouched.
+ */
+function refusedBy(value: unknown): string | undefined {
+  if (typeof value !== 'object' || value === null) return undefined;
+  const said = value as { ok?: unknown; error?: unknown };
+  if (said.ok !== false) return undefined;
+  return typeof said.error === 'string' && said.error.length > 0
+    ? said.error
+    : 'That can’t be done.';
+}
+
 export class CommandError extends Error {
   constructor(message: string, readonly code = 'command_failed') {
     super(message);
@@ -420,7 +446,8 @@ export class Simulation {
       if (command.idempotencyKey) {
         this.universe.idempotency[command.idempotencyKey] = { at: this.now, result: value };
       }
-      return { ok: true, value };
+      const refused = refusedBy(value);
+      return refused ? { ok: false, error: refused, value } : { ok: true, value };
     }
 
     // Raised by a scheduled handler mid-advance: the item is the boundary.
@@ -431,7 +458,8 @@ export class Simulation {
         if (command.idempotencyKey) {
           this.universe.idempotency[command.idempotencyKey] = { at: this.now, result: value };
         }
-        return { ok: true, value };
+        const turnedDown = refusedBy(value);
+        return turnedDown ? { ok: false, error: turnedDown, value } : { ok: true, value };
       } catch (err) {
         const message = err instanceof CommandError ? err.message : `${command.kind} failed: ${(err as Error).message}`;
         this.universe.engineFailures.push({ at: this.now, kind: command.kind, error: message });
@@ -451,7 +479,8 @@ export class Simulation {
         this.universe.idempotency[command.idempotencyKey] = { at: this.now, result: value };
       }
       const events = this.pendingEvents.splice(eventsBefore).map((e) => e.kind);
-      return { ok: true, value, events };
+      const declined = refusedBy(value);
+      return declined ? { ok: false, error: declined, value, events } : { ok: true, value, events };
     } catch (err) {
       restoreUniverse(this.universe, snapshot);
       this.pendingEvents.length = eventsBefore;

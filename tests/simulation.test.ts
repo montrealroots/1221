@@ -544,3 +544,43 @@ describe('ids are told apart by namespace', () => {
       .toBe(ID_NAMESPACES.length);
   });
 });
+
+describe('a handler that refuses is a refusal', () => {
+  /**
+   * `execute` wrapped whatever a handler returned in `{ ok: true }`, so a
+   * handler answering `{ ok: false, error }` — which is how nearly every world
+   * module in this build declines — came back inside a successful envelope.
+   * Both places a player can press a button read `CommandResult.ok`, so the
+   * refusal reached nobody.
+   *
+   * The Decision Center worked around it by throwing instead. This is the fix
+   * that workaround was standing in for, so the workaround is no longer the
+   * only way to be heard.
+   */
+
+  it('reports a returned refusal as a failure, with its sentence', () => {
+    const sim = quickSave({}, 'refusal');
+    sim.onCommand<Record<string, never>, { ok: boolean; error?: string }>(
+      'test.refuses', () => ({ ok: false, error: 'Not today.' }),
+    );
+    const out = sim.execute({ kind: 'test.refuses', payload: {} });
+    expect(out.ok, 'a refusal inside a success is a refusal nobody hears').toBe(false);
+    expect(out.error).toBe('Not today.');
+  });
+
+  it('still reports a handler that succeeded as a success', () => {
+    const sim = quickSave({}, 'refusal-ok');
+    sim.onCommand<Record<string, never>, { ok: boolean }>('test.agrees', () => ({ ok: true }));
+    expect(sim.execute({ kind: 'test.agrees', payload: {} }).ok).toBe(true);
+  });
+
+  it('leaves a handler that answers something else alone', () => {
+    // The check reads the shape the world modules already use. A handler
+    // returning a number, or an object with no `ok` on it, is untouched.
+    const sim = quickSave({}, 'refusal-other');
+    sim.onCommand<Record<string, never>, number>('test.counts', () => 41);
+    const out = sim.execute<number>({ kind: 'test.counts', payload: {} });
+    expect(out.ok).toBe(true);
+    expect(out.value).toBe(41);
+  });
+});
