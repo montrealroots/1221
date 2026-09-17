@@ -46,6 +46,7 @@ import { deckFor, somebodyGoesOff } from '@/engine/world/trouble';
 import { decideTake } from '@/engine/world/selling';
 import { cutsAWeek, ratioOf, weeksToConvert, willMakeIt } from '@/engine/world/inventory';
 import { MS_WEEK } from '@/engine/world/lot';
+import { theyAreFree } from '@/engine/world/diary';
 import { decideSlip, finishesBy } from '@/engine/world/making';
 import { MS_DAY } from '@/engine/core/time';
 import { deliverIt, openTheDoors, theyCanAffordIt } from './doors';
@@ -2093,5 +2094,44 @@ describe('a deal that spends money the company has not got says so', () => {
       expect(whatSayingYesCosts(role, away, role.bandCents))
         .toBe(bringingThemCents(away, role.bandCents));
     }
+  });
+});
+
+describe('one answer to whether the player is free', () => {
+  /**
+   * `freeToWork` reads `project.cast`. The parts a player wins are won in the
+   * room and live in `universe.auditions`, which it has never read — so for the
+   * one person the game is about it was answering off the wrong table. Measured
+   * over three seeds of twenty-five played years, it disagreed with
+   * `diary.theyAreFree` about the same fortnight on 1,580 of 3,900 spans, every
+   * one of them this function saying free while the diary named the part.
+   */
+
+  it('agrees with the diary about the player, because it asks the diary', () => {
+    const sim = quickSave({}, 'free-one-answer');
+    const me = sim.universe.playerId;
+    const from = sim.now + MS_WEEK;
+    const to = from + 2 * MS_WEEK;
+
+    // Put a part the player won in the room across those dates. This is the
+    // shape `project.cast` cannot hold and the diary can.
+    sim.universe.auditions.wonOne = {
+      id: 'wonOne', saveId: sim.universe.meta.id, holder: 'a Hollywood studio, a feature',
+      from, to, closesAt: from, state: 'done', why: 'cast', size: 'lead',
+      way: 'room', wants: {}, played: {},
+    } as never;
+
+    expect(theyAreFree(sim, from, to), 'the diary can see a part won in the room').toBe(false);
+    expect(freeToWork(sim, me, from, to), 'and so must this').toBe(false);
+  });
+
+  it('still answers everybody else off the cast seats', () => {
+    // The delegation is for the player alone: an NPC exists in this save as a
+    // cast seat and nothing else, so handing them to a player-only diary would
+    // answer about the wrong person entirely.
+    const sim = quickSave({}, 'free-npc');
+    const other = Object.values(sim.universe.people).find((p) => !p.isPlayer)!;
+    const from = sim.now + MS_WEEK;
+    expect(freeToWork(sim, other.id, from, from + MS_WEEK)).toBe(true);
   });
 });

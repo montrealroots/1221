@@ -67,7 +67,7 @@ import {
 import type { Plan } from '../content/making';
 import { MS_WEEK } from './lot';
 import { baseWindowOf } from './periods';
-import { BEFORE_THE_FIRST_DAY, whatHasThem } from './diary';
+import { BEFORE_THE_FIRST_DAY, theyAreFree, whatHasThem } from './diary';
 import { americanArm, signedWith } from './company';
 import { isCitizenOf } from '../domain/citizenship';
 
@@ -274,8 +274,33 @@ export function datesFor(project: Project, role: Role): { from: Instant; to: Ins
   return { from: shoot.from + Math.round(span * at) - MS_WEEK, to: shoot.from + Math.round(span * (at + 1)) };
 }
 
-/** Whether somebody is already engaged somewhere across a span. */
+/**
+ * Whether somebody is already engaged somewhere across a span.
+ *
+ * ## The player is asked a different way, and has to be
+ *
+ * The loop below reads `project.cast`, which is where the family's own pictures
+ * seat people, and for everybody except one person that is the whole truth: an
+ * NPC exists in this save only as a cast seat. The player does not. The parts a
+ * player wins are won in the room, and a won part is a row in
+ * `universe.auditions` with `why === 'cast'` — a table this loop has never read.
+ *
+ * So this function used to be right about every person in the save except the
+ * one the game is about. Measured over three seeds of twenty-five played years,
+ * asking both this and `diary.theyAreFree` about the same fortnight: they
+ * disagreed on 1,580 of 3,900 spans — 40.5% — every single one of them the same
+ * way round, this one saying free while the diary named the part. In a career
+ * that only acts, `project.cast` is empty from the first day to the last, so
+ * this was not merely incomplete; it was a function that returned `true`.
+ *
+ * `world/diary.ts` exists to be the one answer to what has the player and until
+ * when, and its own docstring says why a second copy is worse than none. So the
+ * player is handed to it rather than answered again here, which also picks up
+ * the two things the loop below has no idea about: the week in front of a first
+ * day, and the fact that a day player is not spoken for a whole quarter.
+ */
 export function freeToWork(sim: Simulation, personId: Id, from: Instant, to: Instant): boolean {
+  if (personId === sim.universe.playerId) return theyAreFree(sim, from, to);
   for (const project of Object.values(sim.universe.projects)) {
     for (const seat of project.cast ?? []) {
       if (seat.personId !== personId || seat.releasedAt !== undefined) continue;

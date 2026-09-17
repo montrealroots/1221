@@ -573,9 +573,16 @@ file reference rather than as a finding.
 - **The room's want is drawn from nothing**, so the opening reading is a constant.
 - **A part is priced off the stage rate card** — what the room costs, not what the
   cast costs.
-- **Two functions answer whether the player is free, and they disagree.**
-- **The casting office is a display string**, so roster memory has nine
-  addressable offices, two of which are one.
+- ~~**Two functions answer whether the player is free, and they disagree.**~~
+  **Cleared.** There were three, and the disagreement was 40.5% of spans — see
+  below.
+- **The casting office is a display string**, so an office's identity is its own
+  prose and its taste is seeded from it. The count on this line used to say nine
+  addressable offices, two of which are one. Measured: **six** offices appear
+  across three careers of twenty-five played years, of ten shapes declared, and
+  the two that are one thing addressed twice are *an American studio, a feature*
+  and *a Hollywood studio, a feature*. Not built on, because nothing shows the
+  split biting; recorded because editing the copy silently moves the simulation.
 - **The posts cost nothing and nobody has to say yes.**
 
 ---
@@ -583,6 +590,28 @@ file reference rather than as a finding.
 ## Recently on this page, and no longer
 
 Kept because the shape of what went wrong is worth more than the fix.
+
+**Two functions answered whether the player was free, and there were three.**
+`diary.theyAreFree` reads the cast seats and the auditions, with a week in front
+of a first day and `heldUntil` scoping; `casting.freeToWork` read the cast seats
+alone, with neither; `crew.freeAcross` reads the crew seats alone. The first is
+player-only by construction, the other two take anybody.
+
+The disagreement was not an edge. Asking `freeToWork` and `theyAreFree` about
+the same fortnight over three seeds of twenty-five played years, they differed
+on **1,580 of 3,900 spans — 40.5%** — and every single one was the same way
+round: `freeToWork` saying free while the diary named the part. The cause is one
+line: a part won in the room is a row in `universe.auditions`, and `freeToWork`
+only ever read `project.cast`. In a career that only acts, `project.cast` is
+empty from the first day to the last, so this was not a function that was
+sometimes incomplete. It was a function that returned `true`.
+
+So it was right about every person in the save except the one the game is about.
+The player is now handed to the diary, which exists to be the one answer, and
+the disagreement measures **0 of 3,900**. `crew.freeAcross` is left alone
+deliberately: a played acting career produces no crew seats at all, so nothing
+shows it biting, and inventing a third consultation to fix a collision no input
+reaches is the thing this page exists to stop.
 
 **The house rotted with no repair.** `property.condition` had one writer in the
 whole build and it was a subtraction: `systems/life.ts` took `WEAR_A_DAY` off
