@@ -392,6 +392,36 @@ file reference rather than as a finding.
   in Mosfellsbær that Iceland taxes a wage at 0% and charges no sales tax — but
   a correct table nobody is charged from is still a screen.
 
+  **Costed, so the decision is a number rather than a preference.** Running
+  `computeAnnualTax` — the engine's own function, on its own tables, against the
+  year's takings — over three seeds of twenty-five played years in Mosfellsbær:
+
+  | seed | career gross | income tax that would fall due | effective |
+  |---|---|---|---|
+  | t1 | €1,836,230 | €628,406 | 34.2% |
+  | t2 | €1,607,992 | €566,292 | 35.2% |
+  | t3 | €1,899,507 | €623,086 | 32.8% |
+
+  A third of the career, about €606,000 of €1,781,000 on the mean. That is what
+  charging it costs the player, and it is the whole of the decision: the
+  machinery to compute it already exists and is already correct, so nothing has
+  to be built to find out — only wired.
+
+  **One half of the claim above is wrong, and this is the correction.** Income
+  tax is inert. **Corporation tax is not inert; it does not exist.** There is no
+  corporate rate table in `content/tax.ts` at all — income, payroll, sales,
+  property and the film incentives are the five, and a company's profit is taxed
+  by nothing because there is nothing to tax it with. Wiring income tax is
+  connecting a finished thing. Taxing the company is building one.
+
+  **And the vehicles are gone.** `VEHICLE_FEE_RULES` carried registration rates,
+  minimums, purchase-tax rates and whether an annual safety inspection was
+  required, across twelve jurisdictions, for a game with no vehicles in it — the
+  same cull `core/ids.ts` describes, surviving in a different file. Thirty-five
+  lines, with `vehicleFees` and `VehicleFeeRule`, read by nothing inside the
+  module or outside it. `PAYROLL_TAX_RULES` looked like the same thing and is
+  not: `computeAnnualTax` resolves it, so it stays.
+
 - ~~**Reclaim The Tax was a door onto nothing.**~~ **Fixed.** Of the nine
   capability doors, three are read by the engine at the greenlight, the delivery
   and the reimbursement; three more bite as greenlight blockers; hiring

@@ -68,18 +68,6 @@ export interface PropertyTaxRule {
   effectiveFrom: number;
 }
 
-export interface VehicleFeeRule {
-  jurisdictionCode: string;
-  /** Annual registration as a fraction of vehicle value. */
-  registrationRate: number;
-  registrationMinimum: Money;
-  /** One-time sales/use tax on purchase. */
-  purchaseTaxRate: number;
-  /** Whether an annual safety or emissions inspection is required. */
-  inspectionRequired: boolean;
-  effectiveFrom: number;
-}
-
 export interface FilmIncentiveRule {
   jurisdictionCode: string;
   label: string;
@@ -303,21 +291,6 @@ export const PROPERTY_TAX_RULES: readonly PropertyTaxRule[] = [
   { jurisdictionCode: 'IS', rate: 0.0028, effectiveFrom: YEAR(2024) },
 ];
 
-export const VEHICLE_FEE_RULES: readonly VehicleFeeRule[] = [
-  { jurisdictionCode: 'US-CA', registrationRate: 0.0065, registrationMinimum: 175_00, purchaseTaxRate: 0.0975, inspectionRequired: true, effectiveFrom: YEAR(2018) },
-  { jurisdictionCode: 'US-NY', registrationRate: 0.0030, registrationMinimum: 140_00, purchaseTaxRate: 0.08875, inspectionRequired: true, effectiveFrom: YEAR(2018) },
-  { jurisdictionCode: 'US-GA', registrationRate: 0.0000, registrationMinimum: 20_00, purchaseTaxRate: 0.070, inspectionRequired: false, effectiveFrom: YEAR(2018) },
-  { jurisdictionCode: 'US-TX', registrationRate: 0.0000, registrationMinimum: 75_00, purchaseTaxRate: 0.0625, inspectionRequired: true, effectiveFrom: YEAR(2018) },
-  { jurisdictionCode: 'US-FL', registrationRate: 0.0000, registrationMinimum: 225_00, purchaseTaxRate: 0.06, inspectionRequired: false, effectiveFrom: YEAR(2018) },
-  { jurisdictionCode: 'US-NV', registrationRate: 0.0035, registrationMinimum: 33_00, purchaseTaxRate: 0.0685, inspectionRequired: false, effectiveFrom: YEAR(2018) },
-  { jurisdictionCode: 'US-WA', registrationRate: 0.0110, registrationMinimum: 68_00, purchaseTaxRate: 0.065, inspectionRequired: false, effectiveFrom: YEAR(2018) },
-  { jurisdictionCode: 'US', registrationRate: 0.0020, registrationMinimum: 100_00, purchaseTaxRate: 0.055, inspectionRequired: false, effectiveFrom: YEAR(1900) },
-  { jurisdictionCode: 'CA', registrationRate: 0.0010, registrationMinimum: 90_00, purchaseTaxRate: 0.12, inspectionRequired: true, effectiveFrom: YEAR(2018) },
-  { jurisdictionCode: 'GB', registrationRate: 0.0000, registrationMinimum: 190_00, purchaseTaxRate: 0.20, inspectionRequired: true, effectiveFrom: YEAR(2018) },
-  { jurisdictionCode: 'AU', registrationRate: 0.0030, registrationMinimum: 400_00, purchaseTaxRate: 0.10, inspectionRequired: true, effectiveFrom: YEAR(2018) },
-  { jurisdictionCode: 'AE', registrationRate: 0.0000, registrationMinimum: 120_00, purchaseTaxRate: 0.05, inspectionRequired: true, effectiveFrom: YEAR(2018) },
-];
-
 export const FILM_INCENTIVE_RULES: readonly FilmIncentiveRule[] = [
   { jurisdictionCode: 'US-GA', label: 'Georgia Production Tax Credit', rate: 0.20, minimumSpend: 500_000_00, perProjectCap: 0, localHireUplift: 0.10, transferable: true, effectiveFrom: YEAR(2008), note: `${APPROX} Structure modeled: base credit plus an uplift, transferable.` },
   { jurisdictionCode: 'US-NM', label: 'New Mexico Film Production Credit', rate: 0.25, minimumSpend: 100_000_00, perProjectCap: 0, localHireUplift: 0.05, transferable: false, effectiveFrom: YEAR(2019), note: APPROX },
@@ -476,14 +449,6 @@ export function salesTaxRate(cityId: string, at: number, category: string): numb
 export function propertyTaxRate(cityId: string, at: number): number {
   return resolveRule(PROPERTY_TAX_RULES, cityId, at)?.rate ?? 0.011;
 }
-
-export function vehicleFees(cityId: string, at: number): VehicleFeeRule {
-  return resolveRule(VEHICLE_FEE_RULES, cityId, at) ?? {
-    jurisdictionCode: 'default', registrationRate: 0.002, registrationMinimum: 100_00,
-    purchaseTaxRate: 0.055, inspectionRequired: false, effectiveFrom: 0,
-  };
-}
-
 export function filmIncentive(cityId: string, at: number): FilmIncentiveRule | undefined {
   return resolveRule(FILM_INCENTIVE_RULES, cityId, at);
 }
