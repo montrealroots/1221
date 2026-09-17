@@ -794,13 +794,45 @@ because the only way to earn is to greenlight and the only way to greenlight is
 to have earned. A harder wall makes dead saves commoner and does nothing about
 the runaway. The constraint is not missing on the downside.
 
-**3 and 6 are not decisions, they are defects.** `far` should win the two notes
-in five the content says want more than a good deal, and it wins nothing on any
-seed; that is overshoot being punished where it should pay. And the business
-out-earning the acting career by about **a hundred to one** — €141–197m against
-€1.78m over the same twenty-five years — inverts the premise of a game whose
-thesis is that the player is the talent and not the studio. Neither is a dial to
-set. Both are named here and neither is guessed at.
+**3. `far` is left alone and the sentence that sold it is corrected.** Asked to
+pick rather than diagnose, the diagnosis is the pick: the button was never the
+defect. Measured over three seeds of twenty-five played years, 1,707
+shade-wants, the distribution is **nought 19.9%, one 33.0%, two 23.5%, three
+23.6%** — against copy claiming about half want a good deal and two in five want
+more. Both figures were wrong.
+
+And the reason `far` wins no seed is not that it is rarely right. It is right
+**as often as `good` is**, 23.6% against 23.5%. It loses because the commonest
+note wants **one** step and `far` misses that by two: mean error 1.49 steps
+against 0.91 for `touch` and 0.96 for `good`. That 6% gap between `touch` and
+`good` is the whole of why they split six seeds three-three.
+
+So a high-variance play that is usually wrong is a real thing to offer somebody;
+telling them it is right two times in five when it is right one in four is not.
+The copy now says the measured thing. **The want distribution was deliberately
+not touched** — making big wants common so that a button looks better is tuning
+the world to fit the interface.
+
+**6. The company must stop out-earning the career, and the lever is named.**
+Measured: of 31 and 33 pictures sold, 4 and 11 returned less than their
+negative — so pictures do fail. But the slate returns **1.44× to 1.63× the
+negative in aggregate**, reliably, and the company keeps all of it, which is the
+engine of the hundred-to-one. €620m of negative returned €1.01bn; €660m
+returned €949m.
+
+The specific lever is this: **the family finances the first pictures and never
+recoups.** `greenlight` refuses a budget larger than company cash plus
+`stillToCarry` — the family's remaining patience — so the first €20m picture is
+the family's money, its return goes to the company, and from then on cash
+dominates and the slate is self-funding forever. The waterfall already models
+exactly this idea for the distributor and for the negative; the family is the
+one financier in the build with no tier in it.
+
+That is a build rather than a dial, and it is deliberately not bolted onto the
+end of this run: it changes every number on this page that touches the company,
+and it wants its own measurement either side. It is the next piece of work, and
+it is specified here so that it starts from the finding rather than from a
+guess.
 
 **4. `prestige` is deleted.** Written for 87 of 146 people, read by nothing that
 decides anything, nought on the player for a whole career — and the standing

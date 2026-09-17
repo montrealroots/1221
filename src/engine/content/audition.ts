@@ -285,10 +285,32 @@ export interface HowFar {
  * dominated. `docs/UNBITTEN.md` keeps the figures so nobody has to take this
  * comment's word for any of it.
  */
+/**
+ * How far to take the note, and what each one is actually worth.
+ *
+ * The copy on `good` and `far` used to claim about half of all notes want a
+ * good deal and two in five want more. Measured over three seeds of
+ * twenty-five played years, 1,707 shade-wants: **nought 19.9%, one 33.0%, two
+ * 23.5%, three 23.6%**. So a good deal is exactly right a quarter of the time
+ * rather than half, and taking it further is right just as often — not two in
+ * five.
+ *
+ * Which explains the thing the measurement found and the old copy hid. Playing
+ * each magnitude fixed for a career, six seeds: `touch` wins three, `good` wins
+ * three, `far` wins none. It is not that `far` is rarely right; it is right as
+ * often as `good` is. It is that the commonest note wants **one** step, and
+ * `far` misses that by two — mean error 1.49 steps against 0.91 for `touch` and
+ * 0.96 for `good`.
+ *
+ * The button is not the defect, and it has not been changed. A high-variance
+ * play that is usually wrong is a real thing to offer somebody. Telling them it
+ * is right two times in five when it is right one in four is not, and that was
+ * the whole of what was wrong here.
+ */
 export const HOW_FAR: readonly HowFar[] = [
   { id: 'touch', label: 'A Touch', what: 'The smallest move that counts as having moved. Safe, and it can read as not having listened.', steps: 1 },
-  { id: 'good', label: 'A Good Deal', what: 'A real change, and not the whole of what you have. About half of all notes want exactly this, and two in five want more.', steps: 2 },
-  { id: 'far', label: 'As Far As It Goes', what: 'Everything you have in that direction. It can be the thing that wins the room, and if you have misread the room it’s the thing that loses it.', steps: 3 },
+  { id: 'good', label: 'A Good Deal', what: 'A real change, and not the whole of what you have. Close to a quarter of notes want exactly this, and about as many want more.', steps: 2 },
+  { id: 'far', label: 'As Far As It Goes', what: 'Everything you have in that direction. It’s exactly right about as often as a good deal is, and wrong by more when it’s wrong: the commonest note wants one step, and this overshoots that by two.', steps: 3 },
 ];
 
 export const howFarById = (id: string): HowFar | undefined => HOW_FAR.find((h) => h.id === id);
