@@ -56,7 +56,8 @@ import {
 import { VAT_MEMO, boughtWithVat, reclaimable, whereTheVatStands } from '@/engine/world/vat';
 import {
   GREENLIGHT_FLOOR, americanArm, capabilitiesOf, cashAccountFor, companiesOf, companyCash, holdingsOf,
-  parentCompany, policiesOf, postsOf, projectsOf, registrationsOf, signaturesOf, theSugarGroup,
+  filled, parentCompany, policiesOf, postFacts, postsOf, projectsOf, registrationsOf,
+  signaturesOf, theSugarGroup,
   whereItStands,
 } from '@/engine/world/company';
 
@@ -1362,5 +1363,71 @@ describe('everything else it takes to run a company, which the group did not hav
     expect(familyCovers(sim, account.id, 0)).toBe(0);
     // A month it earned something is funded again, so there is always a way back.
     expect(familyCovers(sim, account.id, 5_000_00)).toBeGreaterThan(0);
+  });
+});
+
+describe('the roster, on both companies', () => {
+  /**
+   * Both companies carry every key position they have as a real row. The group's
+   * are filled, because it has traded since 1946 and nobody in this game hires
+   * its managing director. The production company's four vacancies are the
+   * player's to fill, and filling the head of production is how the greenlight
+   * door opens — so the roster is complete and the decision is untouched.
+   */
+
+  it('carries all six of the production company’s posts, four of them vacant', () => {
+    const sim = world('roster-film');
+    const company = parentCompany(sim.universe)!;
+    const posts = postsOf(sim.universe, company.id);
+    expect(posts.map((one) => one.role).sort())
+      .toEqual([...ROLES].map((one) => one.id).sort());
+
+    // The four the creation step does not answer for are empty, and every one of
+    // them says what its absence costs rather than simply not being there. A
+    // vacancy nobody can see is not a decision — it is a shut door you find out
+    // about later.
+    const empty = posts.filter((one) => one.personId === undefined).map((one) => one.role).sort();
+    expect(empty).toEqual(['accountant', 'business_affairs', 'development', 'production']);
+    for (const role of empty) expect(postFacts(role)!.without.length).toBeGreaterThan(10);
+
+    // And the two the step does answer for are filled by the people it named.
+    const who = (role: string) => sim.universe
+      .people[posts.find((one) => one.role === role)!.personId!]?.estateRole;
+    expect(who('principal')).toBe('the company');
+    expect(who('facility')).toBe('the lot');
+  });
+
+  it('does not open the greenlight door by having the chair exist', () => {
+    // `personRunning` read `role === 'principal' ? 'the company' : 'the lot'`,
+    // which was right while exactly two posts existed and became a trapdoor the
+    // moment four more did: every one of them resolved to the lot manager, so the
+    // head of production was filled before anybody decided anything and the
+    // greenlight door opened at boot. An empty chair runs nothing.
+    const sim = world('roster-doors');
+    expect(filled(sim.universe, 'production'), 'somebody was made head of production at boot')
+      .toBeUndefined();
+    const greenlight = capabilitiesOf(sim).find((one) => one.id === 'greenlight')!;
+    expect(greenlight.can).toBe(false);
+    expect(greenlight.blockers.map((one) => one.need)).toContain('Head Of Production');
+
+    // Filling it reuses the row rather than making a second one.
+    const before = postsOf(sim.universe, parentCompany(sim.universe)!.id).length;
+    const somebody = Object.values(sim.universe.people).find((one) => !one.isPlayer)!;
+    expect(run(sim, 'company.fill_post', { role: 'production', personId: somebody.id }).ok).toBe(true);
+    expect(postsOf(sim.universe, parentCompany(sim.universe)!.id)).toHaveLength(before);
+    expect(filled(sim.universe, 'production')).toBeTruthy();
+  });
+
+  it('keeps the two rosters apart, so neither reads as the other’s', () => {
+    const sim = world('roster-apart');
+    const film = parentCompany(sim.universe)!;
+    const group = theSugarGroup(sim)!;
+    const ours = postsOf(sim.universe, film.id).map((one) => one.role);
+    const theirs = postsOf(sim.universe, group.id).map((one) => one.role);
+    // No role is on both lists. A head of development is not a job at a cane
+    // mill and a head of milling is not a job at a film company.
+    for (const role of ours) expect(theirs).not.toContain(role);
+    // And every post on either list resolves to facts, whichever table holds it.
+    for (const role of [...ours, ...theirs]) expect(postFacts(role)).toBeTruthy();
   });
 });

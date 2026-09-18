@@ -589,8 +589,22 @@ export function foundTheCompany(sim: Simulation): Company {
     balance: OPENING_BALANCE,
   });
 
-  // The posts, and whoever the player said runs what.
-  for (const role of ['principal', 'facility'] as const) {
+  // Every post the company has, and whoever the player said runs what.
+  //
+  // Two of these existed and four did not. A head of development, a head of
+  // production, business affairs and an accountant were conjured by
+  // `company.fill_post` at the moment somebody was put in one, which meant the
+  // company's own staffing panel listed two seats and the four that decide
+  // whether it can greenlight anything were not on it — a vacancy you cannot see
+  // is not a decision, it is a thing you find out about from a shut door.
+  //
+  // They are rows now, empty, each carrying the sentence about what its absence
+  // costs. Deliberately still empty: filling the head of production is how the
+  // greenlight door opens and is the player's decision to make, so the roster is
+  // complete and the choice is untouched. `filled()` asks for a post with
+  // somebody in it, so nothing opens by a chair existing, and `fill_post`
+  // already reuses an existing row rather than making a second one.
+  for (const role of ['principal', 'facility', 'production', 'development', 'business_affairs', 'accountant'] as const) {
     const holder = personRunning(u, role);
     const post: Post = {
       id: sim.nextId('post'),
@@ -630,7 +644,17 @@ function ownersOf(universe: SaveUniverse, playerId: Id): Company['ownerships'] {
  * facility. A step that only wrote prose now staffs a business.
  */
 function personRunning(universe: SaveUniverse, role: RoleId): Id | undefined {
-  const wanted = role === 'principal' ? 'the company' : 'the lot';
+  // Two roles, because the creation step asks about two things: who runs the
+  // company and who runs the lot. Everything else is empty at boot and is the
+  // player's to fill.
+  //
+  // This read `role === 'principal' ? 'the company' : 'the lot'`, which was
+  // correct while exactly two posts existed and became a trapdoor the moment
+  // four more did: every one of them came out as the lot manager, so the head of
+  // production was already filled when the save opened and the greenlight door
+  // was open before anybody decided anything. Fourteen tests caught it.
+  const wanted = role === 'principal' ? 'the company' : role === 'facility' ? 'the lot' : undefined;
+  if (!wanted) return undefined;
   return Object.values(universe.people).find((one) => one.estateRole === wanted)?.id;
 }
 
