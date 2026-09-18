@@ -59,7 +59,7 @@ import {
   armTheCasting, castsPerformers, castsReliability, layTheRoles, ranOverOnThem, takeFactor,
   theBiggestName,
 } from './casting';
-import { capabilitiesOf } from './company';
+import { capabilitiesOf, exerciseTheOption } from './company';
 import { armTheClaim } from './rebate';
 
 export const MAKING_KIND = 'project.period';
@@ -558,6 +558,12 @@ export function greenlight(sim: Simulation, spec: Greenlight): { ok: true; proje
   if (spec.hands !== undefined) project.hands = Math.max(1, Math.round(spec.hands));
   project.budgetCents = spec.budgetCents;
   project.stage = 'greenlit';
+  // And the rights are bought outright, because that is what committing to a
+  // picture is. An option carries a term and the term now runs — so this is the
+  // thing that stops a picture in production ever losing its material, and the
+  // reason an option running out is a mistake about hesitating rather than a
+  // punishment for making something.
+  exerciseTheOption(sim, project.holdingId);
   project.unitBaseId = theLot(sim)?.locationId;
   project.periods = laid.periods.map((p) => ({ ...p }));
   project.deliverBy = laid.deliverBy;

@@ -35,7 +35,7 @@ import {
 } from '../content/incorporation';
 import { ESTATE_CITY_ID, HOUSE, studioName } from '../content/estate';
 import { bondFor, standingWord } from './standing';
-import { addMonths, instantFromZoned, type Instant } from '../core/time';
+import { MS_DAY, addMonths, formatDate, instantFromZoned, type Instant } from '../core/time';
 import { estateCity } from '../content/estate';
 import {
   BOARD_SEATS, GROUP, GROUP_OPENING_BALANCE, GROUP_REGISTRIES, GROUP_ROLES, GROUP_ROLE_BY_ID,
@@ -81,8 +81,30 @@ export const signaturesOf = (universe: SaveUniverse, companyId?: Id): Signature[
 export const policiesOf = (universe: SaveUniverse, companyId?: Id): Policy[] =>
   all(universe.policies).filter((one) => !one.lapsedAt && (!companyId || one.companyId === companyId));
 
+/**
+ * What the company holds the rights to, now.
+ *
+ * `expiresAt` is the date an option's term runs to and it was read by nothing.
+ * An option whose date went by a decade ago stayed in this list, went on opening
+ * `own_material`, `deliver` and `greenlight`, and `company.develop` would still
+ * stamp a brand-new project `optioned` off it — which is why the ledger entry
+ * called "an option you forgot to exercise" named a mistake this build did not
+ * let a player make.
+ *
+ * It is read by `runTheClock`, which stamps `lapsedAt` when a term runs out, and
+ * this filters on that. Stamped rather than derived on the way past, for the
+ * reason `Policy.lapsedAt` is: a clock with no argument cannot be given one
+ * without changing every caller, and an optional `now` would have made this a
+ * guard that trips for the one caller that remembers to pass it. A lapse is also
+ * a dated event a screen can name, which a silent absence is not.
+ *
+ * The way to beat the clock is the greenlight, which exercises the option —
+ * buying the rights outright is what a producer does at the moment they commit.
+ * So a picture in production can never lose its material, and an option nobody
+ * greenlit runs out, which is the mistake the entry is actually about.
+ */
 export const holdingsOf = (universe: SaveUniverse, companyId?: Id): Holding[] =>
-  all(universe.holdings).filter((one) => !companyId || one.companyId === companyId);
+  all(universe.holdings).filter((one) => !one.lapsedAt && (!companyId || one.companyId === companyId));
 
 export const postsOf = (universe: SaveUniverse, companyId?: Id): Post[] =>
   all(universe.posts).filter((one) => !companyId || one.companyId === companyId);
@@ -1071,7 +1093,24 @@ export function registerCompanyCommands(sim: Simulation): void {
         return refuse('That one is already on the slate.');
       }
 
-      const holding = payload.holdingId ? s.universe.holdings[payload.holdingId] : undefined;
+      // The rights this is being made off, named or inferred from the title.
+      //
+      // Only `payload.holdingId` counted, and nothing passes it — so a company
+      // that optioned "Hvítserkur" and then developed "Hvítserkur" produced a
+      // project with no link to the option it was obviously for. Two effects,
+      // both latent until the clock started running: the project sat in `idea`
+      // rather than `optioned`, because `stage: holding ? 'optioned' : 'idea'`
+      // was a branch nothing could reach; and the greenlight had no holding to
+      // exercise, so a picture in production never secured its own rights and
+      // the option ran out from under it.
+      //
+      // Matching on the title is what the player means. It is also the only
+      // thing they gave: `company.option` takes a title and `company.develop`
+      // takes a title, and the screens never showed an id to pass.
+      const holding = payload.holdingId
+        ? s.universe.holdings[payload.holdingId]
+        : holdingsOf(s.universe, parent.id)
+          .find((one) => one.title.toLowerCase() === title.toLowerCase());
       const project: Project = {
         id: s.nextId('project'),
         saveId: s.universe.meta.id,
@@ -1082,7 +1121,7 @@ export function registerCompanyCommands(sim: Simulation): void {
         startedAt: s.now,
         spentCents: 0,
         delivered: [],
-        ...(payload.holdingId ? { holdingId: payload.holdingId } : {}),
+        ...(holding ? { holdingId: holding.id } : {}),
       };
       s.universe.projects[project.id] = project;
       return { ok: true, id: project.id };
@@ -1110,3 +1149,188 @@ export const DEFAULT_OPTION_FEE: Money = 5_000_00;
 
 /** What a title may run to before it stops being a title. */
 export const LONGEST_TITLE = 80;
+
+// ---------------------------------------------------------------------------
+// The clock nothing in the company had
+// ---------------------------------------------------------------------------
+
+export const RENEWALS_KIND = 'company.renewals';
+
+/**
+ * Exercising an option, which is what a greenlight is with the money attached.
+ *
+ * Called from `greenlight`. A producer who commits to a picture buys the rights
+ * outright, and this is the moment they do it — so the hold becomes ownership and
+ * the term stops mattering. It is also what makes the clock safe to run at all: a
+ * picture in production can never lose its material halfway through, because
+ * saying yes to it is the thing that secured the rights.
+ *
+ * It charges nothing, and that is deliberate rather than an oversight. What
+ * exercising costs is the purchase price, which this build does not store and has
+ * never stored — the docstring on `Holding` says so and says why. Inventing one
+ * here would be a figure with no derivation behind it sitting in the middle of
+ * every budget in the game. The option fee was paid when the option was taken;
+ * what the clock charges a player who lets a term run out is that fee again, and
+ * whatever the delay cost them.
+ */
+export function exerciseTheOption(sim: Simulation, holdingId: Id | undefined): boolean {
+  if (!holdingId) return false;
+  const holding = sim.universe.holdings[holdingId];
+  if (!holding || holding.hold !== 'option' || holding.lapsedAt) return false;
+  holding.hold = 'owned';
+  delete holding.expiresAt;
+  return true;
+}
+
+/** How long before a term runs out the company is told about it. */
+const WARNED_AT_DAYS = 60;
+
+/**
+ * A month of things running out, and the company paying to keep the ones it wants.
+ *
+ * This is the piece `docs/UNBITTEN.md` called the one substantial thing on the
+ * page nobody had managed to build, and the reason it failed twice is worth
+ * keeping: both attempts tried to build a general lapsing engine, and every
+ * design choice in the scaffolding moved the numbers it was supposed to measure.
+ * So this is narrower than that on purpose. Two things end, both of them already
+ * carried the date they end on, and both of the filters that hide them already
+ * existed with no writer:
+ *
+ * **An option runs out.** `Holding.expiresAt` is eighteen months by default and
+ * was read by nothing. Now the term runs and the rights go back, unless the
+ * picture was greenlit, which exercises the option.
+ *
+ * **Cover has to be renewed.** `Policy.renewsAt` is twelve months out because
+ * that is the term an underwriter writes, and `Policy.lapsedAt` was, in the words
+ * of its own docstring, the purest example in the file of a guard no reachable
+ * input could trip. The premium is charged again, out of the same content figure
+ * `company.insure` charges the first time — so a year of cover is now what the
+ * engine bills rather than only what the quote describes.
+ *
+ * Renewal is automatic while the company can pay, and that is the design decision
+ * in here. The alternative was a button per policy per year, six of them, which
+ * is not a decision a player makes — it is a chore that punishes forgetting to do
+ * the obvious thing. Insurers bill you; you pay or you are uncovered. So the
+ * consequence lands where consequences in this game belong, on the money: a
+ * company that cannot find the premium loses the cover, and the `insure_a_shoot`,
+ * `greenlight` and `deliver` doors shut until it can.
+ *
+ * What is deliberately not here: registrations and guild signatures. `endedAt`
+ * filters both and has no writer either, and both are named in the same ledger
+ * entry — but a registration lapsing shuts `trade`, which is the door everything
+ * else hangs off, and what it should cost to keep a company on the register is a
+ * question with an answer nobody has worked out yet. That is the next cut and it
+ * should be specified before it is attempted, which is the lesson of the two
+ * failures this one is the smaller version of.
+ */
+export function runTheClock(sim: Simulation): {
+  lapsed: number; renewed: number; owed: number; uncovered: number;
+} {
+  const out = { lapsed: 0, renewed: 0, owed: 0, uncovered: 0 };
+  const company = parentCompany(sim.universe);
+  if (!company) return out;
+
+  // Options first, because an option that has run out is not cover and is not a
+  // bill — it is a thing the company no longer has, and it should say so before
+  // anything else on the screen does.
+  for (const holding of Object.values(sim.universe.holdings)) {
+    if (holding.companyId !== company.id || holding.lapsedAt) continue;
+    if (holding.hold !== 'option' || holding.expiresAt === undefined) continue;
+    if (holding.expiresAt > sim.now) {
+      const days = Math.round((holding.expiresAt - sim.now) / MS_DAY);
+      if (days <= WARNED_AT_DAYS) {
+        sim.notify({
+          category: 'business',
+          title: `The Option On ${holding.title} Is Running Out`,
+          body: `${days} days left on the term. Greenlight it and the rights are bought outright; `
+            + 'let the date go by and they go back, and optioning it again costs what it cost the '
+            + 'first time.',
+          importance: 65,
+        });
+      }
+      continue;
+    }
+    holding.lapsedAt = holding.expiresAt;
+    out.lapsed += 1;
+    sim.notify({
+      category: 'business',
+      title: `The Option On ${holding.title} Has Run Out`,
+      body: 'Nobody said yes to it inside the term, so the rights have gone back. '
+        + `${whereItStands(sim)}`,
+      importance: 75,
+    });
+  }
+
+  // And the cover, which is a bill rather than a loss until it cannot be paid.
+  for (const policy of Object.values(sim.universe.policies)) {
+    if (policy.companyId !== company.id || policy.lapsedAt) continue;
+    if (policy.renewsAt > sim.now) continue;
+    const facts = POLICY_BY_ID[policy.kind];
+    const paid = payFor(sim, company.id, facts.premiumCents, `${facts.label}: Renewal`);
+    if (paid.ok) {
+      policy.renewsAt = addMonths(policy.renewsAt, 12, sim.homeZone);
+      delete policy.graceUntil;
+      out.renewed += 1;
+      continue;
+    }
+
+    // A month to find it. The company is settled to the cent every day by the
+    // family, so a premium falling due on any day but the one the monthly wire
+    // lands on finds a balance of nought — and taking the cover away for eight
+    // thousand euros the sugar has a billion of would be an outcome nobody chose.
+    if (policy.graceUntil === undefined) {
+      policy.graceUntil = addMonths(policy.renewsAt, 1, sim.homeZone);
+      out.owed += 1;
+      sim.notify({
+        category: 'business',
+        title: `${facts.label} Is Due For Renewal`,
+        body: `${formatMoney(facts.premiumCents, { cents: false })}, and the company hasn’t got it `
+          + `today. The insurer will wait until ${formatDate(policy.graceUntil, sim.homeZone)}. `
+          + `${facts.why}`,
+        importance: 70,
+      });
+      continue;
+    }
+    if (sim.now < policy.graceUntil) continue;
+
+    policy.lapsedAt = policy.graceUntil;
+    out.uncovered += 1;
+    sim.notify({
+      category: 'business',
+      title: `${facts.label} Has Lapsed`,
+      body: `A month went by and the company never found `
+        + `${formatMoney(facts.premiumCents, { cents: false })} for the renewal, so the cover has `
+        + `gone. ${facts.why} ${whereItStands(sim)}`,
+      importance: 85,
+    });
+  }
+  return out;
+}
+
+export function registerTheClock(sim: Simulation): void {
+  sim.onSchedule(RENEWALS_KIND, () => {
+    runTheClock(sim);
+    sim.schedule({
+      at: addMonths(sim.now, 1, sim.homeZone),
+      kind: RENEWALS_KIND,
+      label: 'What The Company Has To Renew',
+      // A sweep, not a commitment. `upcoming` shows the player everything that is
+      // not `system`, described as what they have to be at, and nobody attends a
+      // renewal — the notifications are how this reaches anybody.
+      category: 'system',
+      priority: 8,
+    });
+  });
+  if (!sim.universe.scheduled.some((one) => one.kind === RENEWALS_KIND && one.status === 'pending')) {
+    sim.schedule({
+      at: addMonths(sim.now, 1, sim.homeZone),
+      kind: RENEWALS_KIND,
+      label: 'What The Company Has To Renew',
+      // A sweep, not a commitment. `upcoming` shows the player everything that is
+      // not `system`, described as what they have to be at, and nobody attends a
+      // renewal — the notifications are how this reaches anybody.
+      category: 'system',
+      priority: 8,
+    });
+  }
+}

@@ -287,12 +287,31 @@ export interface Policy {
    */
   renewsAt: Instant;
   /**
-   * When the cover stopped. Never, in this build.
+   * How long the insurer will wait for a premium the company could not find.
    *
-   * There is no writer anywhere in the tree. `policiesOf` filters on it, which
-   * makes that filter the purest example in this file of a guard no reachable
-   * input can trip: a policy enters `policiesOf` on the day it is bound and
-   * stays there for the life of the save.
+   * A month, set the first time a renewal cannot be paid, and the date is said
+   * out loud in the notification so the shortfall is a thing a player can act on
+   * rather than a thing that happened. Cleared the moment it is paid.
+   *
+   * It exists because the company is funded to the cent every day by the family:
+   * a premium falling due on any day but the one the monthly wire lands on would
+   * otherwise find a balance of nought and take the cover away for the sake of
+   * eight thousand euros, which is not a decision anybody made.
+   */
+  graceUntil?: Instant;
+  /**
+   * When the cover stopped.
+   *
+   * This had no writer anywhere in the tree, which made `policiesOf`'s filter on
+   * it the purest example in the file of a guard no reachable input could trip: a
+   * policy entered `policiesOf` on the day it was bound and stayed there for the
+   * life of the save, so cover bound in 2026 was still opening the
+   * `insure_a_shoot` and `greenlight` doors in 2046.
+   *
+   * `runTheClock` writes it now, and only after the grace month has gone by
+   * without the premium being found — so the cover goes when the company truly
+   * cannot pay for it, which on a save with the sugar behind it means the family
+   * has stopped covering.
    */
   lapsedAt?: Instant;
 }
@@ -327,16 +346,26 @@ export interface Holding {
   /**
    * The date an option's term runs to. Ownership carries none.
    *
-   * What is written on the agreement, and not a thing the build acts on. An
-   * option whose date went by a decade ago is still in `holdingsOf`, still
-   * opens `own_material`, `deliver` and `greenlight`, and `company.develop`
-   * will still stamp a brand-new project `optioned` off it. That is measured
-   * in `docs/ARREARS.md` and it is the whole of why the ledger entry called
-   * "an option you forgot to exercise" names a mistake this build does not let
-   * a player make: there is no clock to run the term out and no
-   * `company.exercise` to beat it.
+   * It was what is written on the agreement and not a thing the build acted on:
+   * an option whose date went by a decade ago was still in `holdingsOf`, still
+   * opened `own_material`, `deliver` and `greenlight`, and `company.develop`
+   * would still stamp a brand-new project `optioned` off it.
+   *
+   * `runTheClock` reads it now, and the greenlight beats it — committing to a
+   * picture exercises the option and turns the hold into ownership, which is what
+   * a producer does with the money. So the mistake the ledger entry named is a
+   * mistake a player can now make: option something, sit on it for eighteen
+   * months without saying yes, and the rights go back.
    */
   expiresAt?: Instant;
+  /**
+   * When the term ran out, on an option nobody exercised.
+   *
+   * Set by `runTheClock` and filtered by `holdingsOf`, so the record stays in the
+   * save — a thing the company used to hold is part of its history — while the
+   * company stops holding it.
+   */
+  lapsedAt?: Instant;
   /**
    * What was paid for it, and what exercising would cost, are not stored.
    *

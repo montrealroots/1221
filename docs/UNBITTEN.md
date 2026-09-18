@@ -742,14 +742,45 @@ file reference rather than as a finding.
   `registrationsOf` and `signaturesOf`, `lapsedAt` filters `policiesOf`, and
   nothing ever sets either.
 
-  **This is the one substantial thing on this page nobody has managed to build.**
-  It failed specification twice: the second attempt needed fifty lines of
-  scaffolding whose every design choice moved the numbers, and its own ledger
-  figure was wrong by a million and a half. The post wages above are the piece
-  of it that was reachable with what exists, because the content already held
-  the number and the month already had a tick. The rest wants a scheduler this
-  file does not have, and it should be specified before it is attempted a third
-  time.
+  **Built, on the third attempt, by being smaller than the first two.** It failed
+  specification twice by trying for a general lapsing engine whose scaffolding
+  moved the numbers it was meant to measure. What landed instead ends the two
+  things the sentence above actually names, and ends nothing else — both already
+  carried the date they end on, and both of the filters that hide them already
+  existed with no writer.
+
+  **An option runs out.** `Holding.expiresAt` is eighteen months and was read by
+  nothing. `runTheClock` reads it, stamps `lapsedAt`, and `holdingsOf` filters
+  on that, so `own_material`, `deliver` and `greenlight` shut behind it. The
+  greenlight beats the clock by exercising the option — committing to a picture
+  buys the rights outright, which is what a producer does with the money, and is
+  what makes it safe: a picture in production can never lose its material, so
+  the mistake is hesitating rather than making something. Warned sixty days out.
+
+  **Cover has to be renewed.** `Policy.renewsAt` is twelve months and
+  `Policy.lapsedAt` was, in its own docstring's words, the purest example in the
+  file of a guard no reachable input could trip. The premium is charged again
+  now, out of the same content figure `company.insure` charges the first time —
+  **EUR 1,392,000 over twenty-five played years**, on a company that used to pay
+  each premium once and hold the cover for ever. Renewal is automatic while the
+  company can pay, because six buttons a year is a chore rather than a decision;
+  a company that cannot find the premium gets a month of grace with the date
+  said out loud, and loses the cover if the month goes by.
+
+  Two bugs fell out of it, both latent until a clock existed. `company.develop`
+  linked a project to its rights only when passed an explicit `holdingId`, which
+  nothing passes — so a company that optioned a title and developed the same
+  title made a project with no link to the option it was obviously for, sitting
+  in `idea` because `stage: holding ? 'optioned' : 'idea'` was a branch nothing
+  could reach. And the renewals sweep was `category: 'business'`, which put it on
+  the player's own calendar of things they have to be at.
+
+  **Still open, and deliberately:** registrations and guild signatures. `endedAt`
+  filters both and has no writer either, and both are named in the paragraph
+  above — but a registration lapsing shuts `trade`, which is the door everything
+  else hangs off, and what it should cost to keep a company on the register is a
+  question nobody has answered. That is the next cut, and it should be specified
+  before it is attempted.
 - **A quote that can only go up.** `quoteOf` returns the maximum of every past
   fee, so taking a cheap job costs nothing. The research names quote protection
   as a ratchet that must bite in both directions.
@@ -884,10 +915,27 @@ file reference rather than as a finding.
   manager already in post**, running the lot from the first morning, and until
   now they were free.
 
-  **Nobody having to say yes is still open**, and deliberately separate: an offer
-  and a refusal is a decision with a shape, and bolting one onto a command that
-  currently cannot fail is a different piece of work from giving a declared
-  number a reader.
+  **Nobody having to say yes is built too, and separately, for the reason it was
+  held back:** an offer and a refusal is a decision with a shape. Three reasons,
+  all read off the world. They barely know you — no bond at all, which is every
+  one of the sugar group's five executives, any of whom could be made head of
+  production. You stopped keeping up with them — `closeness` under forty, which
+  is `Cordial` in `STANDING_BANDS`, and which is the reason that costs
+  something, because closeness is a record of what the player did rather than a
+  fact about the save: four missed plans takes the opening 72 under the line, a
+  parent who moves out rests at 25, and warming it back is six a kept plan. And
+  they are already somewhere better, ordered by `monthlyCents`.
+
+  With it, the constraint this file has described from the beginning finally
+  costs something: **six posts, three relatives, and whoever you put in one is
+  not doing the other thing they were doing.** `post.personId = person.id` never
+  emptied the seat somebody already held, so one relative could hold all six and
+  every door behind them opened. One seat per company now — per company, because
+  both parents sit on the sugar group's board as well and those are not
+  competing jobs. Thirty-eight tests went red the moment that question was asked
+  of the right company, every one of them a helper putting one person in two
+  chairs a door each depended on. Only the head of production and the accountant
+  gate a door, so three people is still enough to open all nine. By one.
 
 ---
 

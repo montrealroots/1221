@@ -37,7 +37,8 @@ import {
   computeAnnualTax, propertyTaxRate, resolveIncomeTaxLayers, salesTaxRate,
 } from '@/engine/content/tax';
 import {
-  CORPORATION_TAX, GUILD_BY_ID, REBATE, REGISTRY_BY_ID, ROLES, VAT_ON_A_PURCHASE, VAT_RATE,
+  CORPORATION_TAX, GUILD_BY_ID, POLICY_BY_ID, REBATE, REGISTRY_BY_ID, ROLES, VAT_ON_A_PURCHASE,
+  VAT_RATE,
   WILL_TAKE_A_POST,
 } from '@/engine/content/incorporation';
 import { OVERHEAD, SMALL_STAGE_COST_CENTS } from '@/engine/content/lot';
@@ -55,12 +56,14 @@ import {
   TRYGGINGAGJALD,
 } from '@/engine/content/sugar';
 import { VAT_MEMO, boughtWithVat, reclaimable, whereTheVatStands } from '@/engine/world/vat';
+import { openTheDoors, theyCanAffordIt } from './doors';
 import {
   MISSED_COOLS, RESTING_APART, RESTING_UNDER_ONE_ROOF, TOGETHER_WARMS, bondFor, standingWord,
 } from '@/engine/world/standing';
 import {
   GREENLIGHT_FLOOR, americanArm, capabilitiesOf, cashAccountFor, companiesOf, companyCash, holdingsOf,
-  filled, parentCompany, policiesOf, postFacts, postsOf, projectsOf, registrationsOf,
+  carries, filled, parentCompany, policiesOf, postFacts, postsOf, projectsOf, registrationsOf,
+  runTheClock,
   seatHeldBy, whyNotTakeIt,
   signaturesOf, theSugarGroup,
   whereItStands,
@@ -1561,5 +1564,173 @@ describe('nobody has to say yes', () => {
     bondFor(sim.universe, sim.universe.playerId, father)!.closeness = 0;
     expect(whyNotTakeIt(sim, father, 'principal')).toBeUndefined();
     expect(whyNotTakeIt(sim, father, 'accountant')).toBeTruthy();
+  });
+});
+
+describe('things in the company end now', () => {
+  /**
+   * "Nothing in the company ever ends" was the one substantial entry on
+   * `docs/UNBITTEN.md` nobody had managed to build, and it failed specification
+   * twice — both times by trying to build a general lapsing engine whose
+   * scaffolding moved the numbers it was meant to measure.
+   *
+   * This is the smaller cut. Two things end, both already carried the date they
+   * end on, and both of the filters that hide them already existed with no
+   * writer: `Holding.expiresAt` against `holdingsOf`, and `Policy.renewsAt` and
+   * `Policy.lapsedAt` against `policiesOf` — the latter described by its own
+   * docstring as the purest example in the file of a guard no reachable input
+   * could trip.
+   */
+
+  const MONTH = 31 * MS_DAY;
+
+  it('runs an option out when nobody says yes inside the term', () => {
+    const sim = world('ends-option');
+    expect(run(sim, 'company.option', { title: 'Hvítserkur', hold: 'option', months: 18 }).ok)
+      .toBe(true);
+    const holding = holdingsOf(sim.universe)[0]!;
+    expect(holding.expiresAt, 'an option with no term is not an option').toBeDefined();
+    expect(doorFor(sim, 'own_material').can).toBe(true);
+
+    // A year in it is still there, and the company has been told it is coming.
+    sim.advanceTo(sim.now + 12 * MONTH);
+    expect(holdingsOf(sim.universe)).toHaveLength(1);
+    expect(sim.universe.holdings[holding.id]!.lapsedAt).toBeUndefined();
+
+    // Nineteen months in it is gone, and the door it opened is shut.
+    sim.advanceTo(sim.now + 8 * MONTH);
+    expect(sim.universe.holdings[holding.id]!.lapsedAt, 'the term ran out and nothing happened')
+      .toBeDefined();
+    expect(holdingsOf(sim.universe)).toHaveLength(0);
+    expect(doorFor(sim, 'own_material').can).toBe(false);
+    // The record stays in the save. A thing the company used to hold is history.
+    expect(sim.universe.holdings[holding.id]).toBeDefined();
+  });
+
+  it('warns before it goes, so it is a mistake rather than a surprise', () => {
+    const sim = world('ends-warned');
+    run(sim, 'company.option', { title: 'Dettifoss', hold: 'option', months: 18 });
+    const said = () => sim.universe.notifications
+      .filter((one) => one.title.includes('Dettifoss')).map((one) => one.title);
+
+    sim.advanceTo(sim.now + 12 * MONTH);
+    expect(said(), 'a year out is too early to be told').toEqual([]);
+    sim.advanceTo(sim.now + 5 * MONTH);
+    expect(said().some((one) => one.includes('Is Running Out')), 'no warning before the term ran out')
+      .toBe(true);
+    sim.advanceTo(sim.now + 3 * MONTH);
+    expect(said().some((one) => one.includes('Has Run Out'))).toBe(true);
+  });
+
+  it('is beaten by the greenlight, because that is when the rights are bought', () => {
+    // Which is also what makes the clock safe to run: a picture in production
+    // cannot lose its material, because saying yes to it secured the rights.
+    const sim = world('ends-exercised');
+    openTheDoors(sim, 'Askja');
+    const holding = holdingsOf(sim.universe).find((one) => one.title === 'Askja')!;
+    expect(holding.hold).toBe('option');
+    expect(holding.expiresAt).toBeDefined();
+
+    run(sim, 'company.develop', { title: 'Askja', medium: 'film' });
+    const project = projectsOf(sim.universe).find((one) => one.title === 'Askja')!;
+    // The project knows which rights it is being made off, which it did not: only
+    // an explicit `holdingId` counted and nothing passes one, so a company that
+    // optioned a title and then developed the same title produced a project with
+    // no link to the option it was obviously for.
+    expect(project.holdingId).toBe(holding.id);
+    expect(project.stage).toBe('optioned');
+
+    run(sim, 'company.greenlight', {
+      projectId: project.id, planId: 'feature', budgetCents: 2_000_000_00, shootWeeks: 6,
+    });
+    expect(sim.universe.holdings[holding.id]!.hold, 'the greenlight did not exercise it')
+      .toBe('owned');
+    expect(sim.universe.holdings[holding.id]!.expiresAt).toBeUndefined();
+
+    // And three years later it is still the company's.
+    sim.advanceTo(sim.now + 36 * MONTH);
+    expect(sim.universe.holdings[holding.id]!.lapsedAt).toBeUndefined();
+    expect(holdingsOf(sim.universe).map((one) => one.title)).toContain('Askja');
+  });
+
+  it('charges the premium again every year, which it never did', () => {
+    // "The premium is charged once, on the day the cover is bound, and never
+    // again. A year of cover is what the quote describes, not what the engine
+    // bills." It bills it now.
+    const sim = world('ends-renewal');
+    expect(run(sim, 'company.insure', { policy: 'general_liability' }).ok).toBe(true);
+    const policy = policiesOf(sim.universe)[0]!;
+    const label = POLICY_BY_ID[policy.kind].label;
+    const renewals = () => sim.universe.transactions
+      .filter((one) => one.memo === `${label}: Renewal`).length;
+    // Funded, because the claim here is that a year of cover is billed rather
+    // than that the company happens to have the premium on the day. Whether it
+    // can pay is the next test, and it is a different question.
+    theyCanAffordIt(sim);
+
+    expect(renewals(), 'nothing is due in the first year').toBe(0);
+    sim.advanceTo(sim.now + 13 * MONTH);
+    expect(renewals(), 'a year went by and the insurer never billed').toBe(1);
+    expect(policiesOf(sim.universe), 'it was paid, so the cover stands').toHaveLength(1);
+    expect(policy.renewsAt, 'the next term was never written').toBeGreaterThan(sim.now);
+    expect(policy.graceUntil, 'it was paid, so nothing is owed').toBeUndefined();
+    expect(sim.ledger.audit()).toEqual([]);
+  });
+
+  it('lapses cover the company cannot pay for, after a month of grace', () => {
+    // Reachable, and this is the part that matters: `lapsedAt` had no writer at
+    // all. The company is settled to the cent every day by the family, so the
+    // path to losing cover is the family refusing — which happens past the last
+    // rung in a month the lot let nothing.
+    const sim = world('ends-lapse');
+    run(sim, 'company.insure', { policy: 'general_liability' });
+    const policy = policiesOf(sim.universe)[0]!;
+    const account = cashAccountFor(sim.universe, parentCompany(sim.universe)!.id)!;
+
+    // Due today, and the company has nothing.
+    policy.renewsAt = sim.now;
+    sim.expense(account.id, account.balance, 'Test: spent to the last króna', 'business');
+    expect(account.balance).toBe(0);
+
+    // A month of grace, named out loud, and the cover still stands.
+    expect(runTheClock(sim)).toMatchObject({ owed: 1, uncovered: 0 });
+    expect(policy.graceUntil, 'no grace at all is not an insurer').toBeDefined();
+    expect(policy.lapsedAt).toBeUndefined();
+    expect(carries(sim.universe, 'general_liability')).toBeTruthy();
+    expect(sim.universe.notifications.some((one) => one.title.includes('Is Due For Renewal')))
+      .toBe(true);
+
+    // Paid inside the month and it is renewed, grace cleared.
+    const rich = world('ends-lapse-paid');
+    run(rich, 'company.insure', { policy: 'general_liability' });
+    const theirs = policiesOf(rich.universe)[0]!;
+    theirs.renewsAt = rich.now;
+    expect(runTheClock(rich)).toMatchObject({ renewed: 1, owed: 0, uncovered: 0 });
+    expect(theirs.graceUntil).toBeUndefined();
+
+    // Still nothing when the grace runs out and it goes, and the doors shut.
+    //
+    // The grace date is moved back rather than the clock forward, because
+    // advancing the save runs the scheduled sweep and the family's daily cover in
+    // between — which is the behavior the played-career measurement is for, and
+    // here it would decide the outcome instead of the thing being tested.
+    policy.graceUntil = sim.now - MS_DAY;
+    expect(runTheClock(sim)).toMatchObject({ uncovered: 1 });
+    expect(policy.lapsedAt, 'a guard no reachable input can trip').toBeDefined();
+    expect(carries(sim.universe, 'general_liability')).toBeUndefined();
+    expect(policiesOf(sim.universe)).toHaveLength(0);
+    expect(doorFor(sim, 'insure_a_shoot').can).toBe(false);
+    expect(sim.universe.notifications.some((one) => one.title.includes('Has Lapsed'))).toBe(true);
+  });
+
+  it('leaves ownership alone, because ownership has no term', () => {
+    const sim = world('ends-owned');
+    run(sim, 'company.option', { title: 'Skógafoss', hold: 'owned' });
+    const holding = holdingsOf(sim.universe)[0]!;
+    expect(holding.hold).toBe('owned');
+    expect(holding.expiresAt, 'ownership carries no term').toBeUndefined();
+    sim.advanceTo(sim.now + 120 * MONTH);
+    expect(sim.universe.holdings[holding.id]!.lapsedAt).toBeUndefined();
+    expect(holdingsOf(sim.universe)).toHaveLength(1);
   });
 });

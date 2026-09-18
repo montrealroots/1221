@@ -37,6 +37,7 @@ import { registerVat } from './world/vat';
 import { registerHouse } from './world/house';
 import {
   companiesOf, foundTheCompany, foundTheSugarGroup, holdingsOf, postsOf, projectsOf, registerCompanyCommands,
+  registerTheClock,
 } from './world/company';
 import { registerPlans } from './world/plans';
 import { registerWorld } from './world/world';
@@ -58,6 +59,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerWorld(sim);
   registerPlans(sim);
   registerCompanyCommands(sim);
+  registerTheClock(sim);
   registerLot(sim);
   registerSugar(sim);
   registerMaking(sim);
