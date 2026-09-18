@@ -699,7 +699,6 @@ docs/     16 files — DEPTH, UNBITTEN, ARREARS, COVERAGE-MATRIX, DRILL-DOWN,
           research/{KINDS,LIFESPAN,LOT,PIPELINE,STAGE,README}.md
 base44/   config.jsonc + 3 entities + 4 functions + shared/guard.js
 public/   454 files — the world gazetteer (per-country city data) + map topojson
-walk-tmp.mjs   STRAY 49-line Playwright scratch script at repo root (see §14)
 ```
 
 ### Data flow
@@ -727,7 +726,7 @@ persistence
 
 ### Testing & gating
 
-`npm run gate` is the whole bar — 14 checks, and it includes `npm run validate` (typecheck + lint + full suite). The prose tools are part of the gate and they do fail builds: `title-case`, `label-sweep`, `plural-check`, `both-titles`, `voice-check` (uncontracted-form budget, currently 40), `tics` (habit budgets), `doc-refs`, `wired` (dead-word floor, held against `docs/UNWIRED.json`), `dials` (dials nothing moves, plays a 25-year career), `deciders`, `spelling` (British→American), `typos`, `geo-check`, `inventory`.
+`npm run gate` is the whole bar — 15 checks, and it includes `npm run validate` (typecheck + lint + full suite). The prose tools are part of the gate and they do fail builds: `title-case`, `label-sweep`, `plural-check`, `both-titles`, `voice-check` (uncontracted-form budget, currently 40), `tics` (habit budgets), `doc-refs`, `wired` (dead-word floor, held against `docs/UNWIRED.json`), `claims` (present-tense comments saying nothing reads or writes a thing, checked against what does), `dials` (dials nothing moves, plays a 25-year career), `deciders`, `spelling` (British→American), `typos`, `geo-check`, `inventory`.
 
 ### Base44 integration
 
@@ -800,15 +799,15 @@ Deployment target providing server-checked persistence. Three entities (`SlateSa
 | `tools/wired.mjs` | Dead-word floor | Live, in the gate | Its old "Dials nothing moves" regex check was retired — a regex can prove a field is *written*, never that a number *moves* |
 | `tools/claims.mjs` | **NEW** — doc comments that claim nothing reads or writes a thing, checked against the tree | Live, in the gate | No baseline file and none wanted: a stale claim is a defect, not a debt to ratchet. Only the **present tense** is checked — past-tense history is what these comments are for |
 | `tools/cohesion-walk.mjs` | Screenshot walkthrough | **Has 67 uncommitted lines in the stash** (§9) | — |
-| `docs/UNWIRED.json` | Machine baseline for the gate | Live | 51 declared words total. **`docs/UNBITTEN.md`'s own headline table still says 160** — stale |
-| `walk-tmp.mjs` (repo root) | Stray Playwright scratch script | **Committed debt** | 49 lines, referenced by nothing, hardcodes a **Linux** browser path `/opt/pw-browsers/...` |
+| `docs/UNWIRED.json` | Machine baseline for the gate | Live | **All seven rows at 0.** Was 51 declared dead words. May fall, may not rise — so a new declared word with no reader fails the gate on the spot |
+| `walk-tmp.mjs` (repo root) | Stray Playwright scratch script | **Deleted, `c341aba`** | Was 49 committed lines referenced by nothing, hardcoding a Linux browser path. Gone |
 
 ## Documentation
 
 | Path | Purpose | State |
 |---|---|---|
 | `docs/DEPTH.md` | The standard, The One Rule, the 16 axes, build order | 885 lines. Live and authoritative |
-| `docs/UNBITTEN.md` | **The open-work ledger.** What does not bite | 687 lines. **Headline count table is STALE** (says 160 declared words; truth is 51) |
+| `docs/UNBITTEN.md` | **The open-work ledger.** What does not bite | 1,522 lines, verdicted through. Headline table now reads **nought** declared words that nothing reads, and keeps the record that it said 160 for a long time after it was 47 |
 | `docs/ARREARS.md` | The 60-agent audit verdict + what cleared | 3,023 lines. Live |
 | `docs/research/LIFESPAN.md` | The lifespan almanac, preserved unwired | 565 lines. New |
 | `README.md` | Project front door | **MATERIALLY STALE** — see §13 |
@@ -844,7 +843,7 @@ Deployment target providing server-checked persistence. Three entities (`SlateSa
 - **Crew + standing + family bonds + household** — `tests/crew.test.ts`, `tests/standing.test.ts`, `tests/family.test.ts`, `tests/household.test.ts`. CONFIRMED BY CODE
 - **The drill-down "looks" system** — `tests/looks.test.ts`, `tests/navigation.test.ts`, `tests/interface.test.ts`, `tests/cohesion.test.ts`. CONFIRMED BY CODE
 - **Endurance / long-save loadability** — `tests/endurance.test.ts` (includes a wall-clock ratio assertion; see §14). CONFIRMED BY CODE
-- **The gate (14 checks)** — CONFIRMED BY CODE + TEST OUTPUT
+- **The gate (15 checks)** — CONFIRMED BY CODE + TEST OUTPUT
 
 ## IMPLEMENTED BUT NOT FULLY VERIFIED
 
@@ -855,28 +854,46 @@ Deployment target providing server-checked persistence. Three entities (`SlateSa
 ## PARTIALLY IMPLEMENTED
 
 - **The wellbeing model** — 8 dials roll up into `readiness`; `readiness` has 4 readers but its only *outcome* is in the audition room. The dials feed nothing but readiness. CONFIRMED BY CODE
-- **Tax** — tables correct; only VAT actually charges. Income tax and corporation tax are inert. CONFIRMED BY CODE
-- **The quote ratchet** — live for NPCs; for the **player** the quote is written and read by nothing, and three sentences in the tree claim the opposite mechanic. CONFIRMED BY CODE
-- **Ageing** — fires, and the whole effect is the `recovery` column of `AGING`; the `fitness` and `condition` columns are inert. CONFIRMED BY TEST OUTPUT
-- **Personality axes** — 4 of 7 are read by nothing, and the creation screen asks the player to set all of them. CONFIRMED BY CODE (`UNWIRED.json`)
+- **Tax** — all three charge now. VAT always did; corporation tax is taken off the sugar group's year in `world/sugar.ts`; and income tax is settled annually on everything a person earned, through `computeAnnualTax` and the real `INCOME_TAX_RULES` bands, in `world/banking.ts`. What is *not* modelled is a company paying tax on the pictures — the lot's own corporation tax. CONFIRMED BY CODE
+- **The quote ratchet** — live for NPCs; for the **player** the quote was written and read by nothing, and three sentences in the tree claimed the opposite mechanic. **Not re-verified since**, so treat the shape as known and the count as stale
+- **Ageing** — fires, and all three columns of `AGING` are read: `recoveryFactorAt` for the night that stops fixing everything, and `ceilingAt` for both the `fitness` and the `condition` ceiling, in three places in `systems/life.ts`. CONFIRMED BY CODE
+- **Personality axes** — was 4 of 7 read by nothing. Now **0**: `docs/UNWIRED.json`'s "Personality axes nothing consults" is at nought and the ratchet will not let it rise. CONFIRMED BY TEST OUTPUT
 - **History log** — has writers and readers, but what it actually records over a played career is UNKNOWN ("a sleep diary" per UNBITTEN)
 
 ## SCAFFOLDED / PLACEHOLDER
 
-- **`prestige`** — a `Reputation` field that holds one value (nought) for an entire 25-year career. CONFIRMED BY TEST OUTPUT
-- **47 of 53 trait `systemMods` keys** — declared, nothing multiplies through them. CONFIRMED BY CODE
-- **`domain/model.ts` dead record shapes** — ~169 lines across 8 names. CONFIRMED BY CODE
-- **`walk-tmp.mjs`** — stray committed scratch script. CONFIRMED BY CODE
+**This section is empty.** All four entries that were here have been closed, and
+each is worth naming so nobody looks for them again:
+
+- **`prestige`** held one value — nought — for an entire 25-year career. Eight
+  files in `world/` move it now: the awards season names and wins, casting reads
+  it, selling prices off it, and it decays. `tools/dials.mjs` is what caught it
+  not moving for the player's own work.
+- **47 of 53 trait `systemMods` keys** were declared with nothing multiplying
+  through them. `docs/UNWIRED.json`'s "Trait modifier keys" is at **0**.
+- **`domain/model.ts` dead record shapes** were ~169 lines across 8 names. "Save
+  tables nothing fills" is at **0**.
+- **`walk-tmp.mjs`** was a stray committed scratch script. Deleted in `c341aba`.
+
+All seven rows of `docs/UNWIRED.json` are at nought, and the ratchet will not let
+any of them rise. The gate is the thing that keeps this section empty.
 
 ## DESIGNED / SPECIFIED BUT NOT IMPLEMENTED
 
-- **Awards and critics** — where `prestige` is waiting. Never built
-- **Mid-flight cutting-room restaff** — specified, measured, deliberately **not** built (a €1.39m exploit without per-week room accrual first)
-- **The monthly company clock** — specified **twice**, did not survive specification either time
+- **Mid-flight cutting-room restaff** — specified, measured, deliberately **not** built as a free action: `whyNotRestaff` is gated on the money left on the screen, which is what made it a €1.39m exploit. The per-week room accrual it wanted is still unbuilt
 - **Fee priced off the picture's budget** — the right fix; wants the payroll balance check first
-- **Flooring the player's fee at their quote** — measured at ×2.32–3.56 lifetime acting income. Owner decision, not taken
-- **Airdates for broadcast seasons** — `layOut` reads a delivery anchor; nothing supplies real airdates
-- **The unscripted contributor cast board** — listed correct-and-unreachable
+- **Flooring the player's fee at their quote** — measured at ×2.32–3.56 lifetime acting income. **Owner decision, still not taken** — the one genuinely arbitrary number on this list
+- **Airdates for broadcast seasons** — half done. `AIRDATE_WEEKS = 52` supplies a default anchor when nobody says, so a season lays out against a transmission date; what is not modelled is a broadcaster setting one and the season having to meet it
+- **Corporation tax on the pictures** — the sugar group pays its year; the film company does not
+
+Three things that were on this list are now built, named here so nobody
+re-specifies them: **awards and critics** (`content/awards.ts` and
+`world/awards.ts` — a season in February, named and won, with `prestige` as the
+payout and no academies or juries, per the spec), **the monthly company clock**
+(`runTheClock` in `world/company.ts`, which had been specified twice without
+surviving specification either time — it runs option terms and policy renewals
+and strikes a registration off), and **the unscripted contributor cast board**
+(`company.board` in `world/casting.ts`, which was listed correct-and-unreachable).
 
 ## UNKNOWN / NEEDS INVESTIGATION
 
@@ -1297,8 +1314,7 @@ From `docs/UNBITTEN.md`, all needing re-derivation because **the page is demonst
 ## Deployment risks
 
 - Base44 deploy state UNKNOWN; `base44/shared/guard.js` is the server-side authority and a schema change must move with it
-- `SAVE_SCHEMA_VERSION` is at 79 after the wellbeing sweep; older saves rely on `migrate()`
-- `walk-tmp.mjs` hardcodes a Linux browser path and ships in the repo
+- `SAVE_SCHEMA_VERSION` is at **82**, and `base44/shared/guard.js`'s `SUPPORTED_SCHEMA_VERSION` must be moved with it by hand — it cannot import the constant. Drift takes 22 tests down. Older saves rely on `migrate()`
 
 ## Performance risks
 
