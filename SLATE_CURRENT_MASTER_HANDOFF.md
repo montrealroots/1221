@@ -206,11 +206,11 @@ picture in production cannot lose its material. Premiums are charged again —
 **EUR 1,392,000 over twenty-five played years** — automatically while the company
 can pay, with a month of grace and the date said out loud when it cannot.
 
-**Registrations and guild signatures are the remaining cut**, deliberately. Both
-have `endedAt` with no writer, both are named in the same entry, but a registration
-lapsing shuts `trade` — the door everything else hangs off — and what it should
-cost to keep a company on the register is unanswered. Specify it before attempting
-it, which is the lesson of the two failures.
+**Registrations were the deferred half, and they were built next** — see "After
+the fee" below. What was unanswered at the time of this paragraph was what it
+should cost to keep a company on the register; the answer turned out to be
+nothing, because filing an annual return is a signature and not a fee. Guild
+signatures still have `endedAt` with no writer, and are still the remaining cut.
 
 **The slate's 1.44–1.63× return: the multiple was the wrong question and is
 untouched.** Asked who receives it: the company ends twenty-five years holding
@@ -234,6 +234,64 @@ player; whoever holds a seat can be asked to stand down now, on the same
 `closeness`. And nobody had an account to be paid into, so `purseFor` moved from
 `world/sugar.ts` to `world/money.ts`.
 
+### After the fee — nine commits the block above predates
+
+Everything from here down landed after the producer's fee and is not described
+anywhere above. Read this section as the current state; where it contradicts an
+earlier paragraph, this is the one that is true.
+
+**A company that stops being a company.** The registration half of "nothing in
+the company ever ends", deferred once for being unspecified. A registration that
+is not filed for is struck off, and the annual return costs nothing, because
+filing one is a signature rather than a fee — the first attempt charged
+`REGISTRY_BY_ID[].cost`, which is the one-off formation fee, and billed the
+company **EUR 3,120,000 over twenty-five years** for staying on a register it
+had already joined. What the filing is gated on is the principal's chair, not
+the accountant's: gating it on the accountant made a third seat mandatory in a
+save with three relatives and took six tests down with it. And the strike-off
+had no teeth until the greenlight was made to ask `needRegistry(u,
+'is_companies')` — nothing outside `world/company.ts` read the `trade` door, so
+a struck-off company went on making pictures.
+
+**Seven dials that only went one way.** `dials.mjs` counts a dial with a single
+writer, because a number that only ever rises is a constant with a delay on it.
+All seven have a second direction now, and the one worth knowing is reputation:
+`forgetsYou` drifts standing down daily toward nought, anchored on
+`reputationDriftedAt` so a save that sits still does not decay faster than one
+that is played, and `life.train` is the way back up. Training costs a day's
+energy and refuses under `TOO_SPENT_TO_TRAIN`.
+
+**Forty-seven trait knobs that promised something and delivered nothing.**
+Deleted, on the owner's instruction to keep only the attributes that actively
+read and bite. What survived is the set with engines behind it. The ratchet row
+"Trait modifier keys" went to nought and stays there.
+
+**Thirteen dice the registry could not see.** `decided.ts` is the register of
+every decision the engine draws for, and thirteen draw streams had no entry, so
+the sweep that proves a decision is described was passing over a third of them.
+Two new deciders (`sugar.staff`, `casting.wants`), and a `draws:` field on eight
+existing ones that name the streams they own — `tools/deciders.mjs` reads it.
+Every draw is owned and every decider owns a real one.
+
+**A day player on three hundred and sixty-one euros a week.** A collective
+agreement has a floor and the fee arithmetic went under it: a small part on a
+low-spend booking paid less than the scale minimum. `feeFor` now takes the
+greater of the share and `weeks * SCALE_A_WEEK_CENTS`. It is the law, not a
+kindness, and the test that holds it names the figure.
+
+**A cutting room that could be restaffed by the engine but never by the
+player.** `company.restaff` — the last of the "unreachable" cluster on
+`docs/ARREARS.md`, and the reason the project's own test used to write
+`projects[id]!.hands = 6` into the save. Priced off `aRoomCosts` against what is
+left of the picture's budget, with a two-week lead time. The full reasoning,
+including why the gate is the budget and not the company's cash balance, is in
+the ARREARS entry, which is now marked WAS_TRUE, NOW BUILT.
+
+**Also: a monthly payday** for the sugar group's 3,100 rather than a daily
+accrual, Tryggingagjald at 6.35% charged on the lot's posts as well as the
+group's, corporation tax filed in May, and pronouns on the crew table for the
+departments that are not cast.
+
 ### The PR is not open, and cannot be opened from here
 
 `gh` is **not installed** on this machine. The branch is pushed. Open it by hand:
@@ -243,7 +301,9 @@ player; whoever holds a seat can be asked to stand down now, on the same
 
 ### The commits
 
-**Branch `claude/slate-cleanup-e4apmx` is 32 commits past `dc52d64`.** Gate exit 0 on every one of them before it was committed — **1,323 tests over 47 files** at the latest, dead-word floor 51 and dials 8 both unmoved. One section per commit, each independently droppable. The nine numbered sections are the first pass; the remainder pass and the sugar company follow them.
+**Branch `claude/slate-cleanup-e4apmx` is 41 commits past `dc52d64`.** Gate exit 0 on every one of them before it was committed — **1,349 tests over 47 files** at the latest. One section per commit, each independently droppable. The nine numbered sections are the first pass; the remainder pass, the sugar company and everything in "After the fee" below follow them.
+
+**`docs/UNWIRED.json` now reads nought on every row.** It was a ratchet with seven baselines above zero — id namespaces, trait modifier keys, higher-is-worse guards, dials nothing moves, personality axes nothing consults, save tables nothing fills, draw streams no decider owns — and every one of them is now at nought. It is still a ratchet and it still may not rise, so the next thing that adds a declared word with no reader will fail the gate rather than raise a floor.
 
 | # | Section | Commit | What it was |
 |---|---|---|---|
