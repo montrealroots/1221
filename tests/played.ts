@@ -227,9 +227,31 @@ export function playABusiness(sim: Simulation, years: number): WhatTheCompanyDid
   const cash = (): number => Object.values(sim.universe.accounts)
     .find((one) => one.ownerId === company?.id && one.kind === 'company_cash' && !one.closedAt)?.balance ?? 0;
 
-  const somebody = Object.values(sim.universe.people).find((one) => !one.isPlayer)
-    ?? Object.values(sim.universe.people)[0];
-  if (somebody) ask('company.fill_post', { role: 'production', personId: somebody.id });
+  // Somebody to run production, and somebody to keep the books — two people,
+  // because nobody is two people and the two seats gate two different doors.
+  //
+  // The accountant is not optional any more and that is new: the company register
+  // wants an annual return, nobody but the accountant files it, and a company that
+  // goes a year without one is struck off and cannot greenlight anything. A
+  // producer employs an accountant, so this one does.
+  // Three relatives and two seats that gate a door, so it has to allocate rather
+  // than reach for whoever is nearest. Whoever holds nothing first, then whoever
+  // is in a seat no door depends on — the principal and the lot manager are both
+  // filled at boot and neither shuts anything by being emptied.
+  const GATING = new Set(['production', 'accountant']);
+  const pick = (): string | undefined => {
+    const ours = parentCompany(sim.universe)?.id;
+    const people = Object.values(sim.universe.people)
+      .filter((one) => one.careerTrack !== 'executive');
+    const seat = (id: string) => Object.values(sim.universe.posts)
+      .find((post) => post.personId === id && post.companyId === ours);
+    return (people.find((one) => !seat(one.id))
+      ?? people.find((one) => !GATING.has(seat(one.id)!.role)))?.id;
+  };
+  for (const role of ['production'] as const) {
+    const who = pick();
+    if (who) ask('company.fill_post', { role, personId: who });
+  }
 
   // The material before the cover, and that order is the engine's rule rather
   // than a preference: errors and omissions refuses with *an underwriter reads

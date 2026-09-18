@@ -385,6 +385,13 @@ export function capabilitiesOf(sim: Simulation): Capability[] {
       'A picture needs material to be of, a head of production to run it, a payroll to put a crew on, cover over the floor and money behind it — all of it true at once, before anybody says yes rather than after.',
       [
         material.length > 0 ? undefined : { need: 'Material', how: 'Option or buy something first.', fixKind: 'holding', fixId: '' },
+        // A company that is off the register cannot commit to anything, because
+        // there is no company to commit. This is what being struck off means, and
+        // without it the strike-off was a shut chip on a screen and nothing else:
+        // `trade` is the door the company register sits behind and nothing outside
+        // this file has ever read it, so a company that had lost its registration
+        // went on greenlighting pictures for another twenty-four years.
+        needRegistry(u, 'is_companies'),
         needRole(u, 'production'),
         // A crew is put on a payroll from the first week of prep, so a company
         // that cannot employ anybody cannot start a picture. This used to be
@@ -1265,8 +1272,9 @@ const WARNED_AT_DAYS = 60;
  */
 export function runTheClock(sim: Simulation): {
   lapsed: number; renewed: number; owed: number; uncovered: number;
+  filed: number; struck: number;
 } {
-  const out = { lapsed: 0, renewed: 0, owed: 0, uncovered: 0 };
+  const out = { lapsed: 0, renewed: 0, owed: 0, uncovered: 0, filed: 0, struck: 0 };
   const company = parentCompany(sim.universe);
   if (!company) return out;
 
@@ -1342,6 +1350,83 @@ export function runTheClock(sim: Simulation): {
         + `${formatMoney(facts.premiumCents, { cents: false })} for the renewal, so the cover has `
         + `gone. ${facts.why} ${whereItStands(sim)}`,
       importance: 85,
+    });
+  }
+
+  // And the filings, which is the other half of the entry the last cut deferred.
+  //
+  // A registration carries `nextDueAt` and its registry carries `filesEveryMonths`.
+  // Nothing read either: `Registration.endedAt` had no writer in the engine at all,
+  // only a test setting it by hand to prove the filter worked.
+  //
+  // It was deferred on a real question — a registration lapsing shuts `trade`, the
+  // door everything else in this build hangs from, and what it should cost to stay
+  // on the register was unanswered. It is not money, and the first version of this
+  // got that wrong in a way worth recording: it charged `REGISTRY_BY_ID[...].cost`
+  // on every filing, which is the one-off fee for *getting on* the register, so a
+  // company paid its formation fee again every year and the measurement came back
+  // at EUR 3,120,000 over twenty-five years. A recurring charge built out of a
+  // one-off figure is a number that looks researched and is not.
+  //
+  // What actually gets a company struck off is that nobody filed. In this build the
+  // person who would have is the production accountant, whose chair is one of the
+  // four that start empty — so the thing keeping the company on the register is the
+  // same scarcity everything else runs into: six posts and three relatives.
+  //
+  // Only the annual company-register filing can fail. VAT files every two months
+  // and the employer registration every month, and both are re-dated and nothing
+  // else, because inventing a way for them to go wrong would be inventing the
+  // mechanic. Twelve months of notice and a month of grace, which is a year and a
+  // month to put somebody in a chair.
+  for (const registration of Object.values(sim.universe.registrations)) {
+    if (registration.companyId !== company.id || registration.endedAt) continue;
+    if (registration.nextDueAt === undefined || registration.nextDueAt > sim.now) continue;
+    const facts = REGISTRY_BY_ID[registration.registry];
+
+    // Signed by whoever the company answers to. A director signs an annual return,
+    // which is what the principal is, and it is the seat that is filled at boot —
+    // so a company that has somebody answering for it stays on the register and one
+    // that does not comes off it.
+    //
+    // The first version wanted the accountant, which read well and was wrong for the
+    // build: it made a third seat mandatory when there are three relatives in the
+    // whole save, and six tests went red on a scarcity invented by a lapsing clock
+    // rather than by anything about lapsing. The principal costs nothing new and
+    // couples two things that belong together — the chair that pays the producer's
+    // fee is the chair that keeps the company alive.
+    const keptBy = registration.registry === 'is_companies'
+      ? filled(sim.universe, 'principal')
+      : true;
+    if (keptBy) {
+      registration.nextDueAt = addMonths(registration.nextDueAt, facts.filesEveryMonths, sim.homeZone);
+      delete registration.graceUntil;
+      out.filed += 1;
+      continue;
+    }
+
+    if (registration.graceUntil === undefined) {
+      registration.graceUntil = addMonths(registration.nextDueAt, 1, sim.homeZone);
+      out.owed += 1;
+      sim.notify({
+        category: 'business',
+        title: `${facts.label} Is Due And Nobody Answers For The Company`,
+        body: `${facts.body} wants the annual return and there’s nobody in the principal’s `
+          + `chair to sign it. They’ll wait until ${formatDate(registration.graceUntil, sim.homeZone)}. `
+          + `${facts.why}`,
+        importance: 85,
+      });
+      continue;
+    }
+    if (sim.now < registration.graceUntil) continue;
+
+    registration.endedAt = registration.graceUntil;
+    out.struck += 1;
+    sim.notify({
+      category: 'business',
+      title: `Struck Off ${facts.body}`,
+      body: 'A year went by with nobody answering for the company and the return went unsigned, '
+        + `so the company is off the register. ${whereItStands(sim)}`,
+      importance: 95,
     });
   }
   return out;

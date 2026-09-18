@@ -18,6 +18,7 @@
  */
 
 import { describe, expect, it } from 'vitest';
+import { readFileSync } from 'node:fs';
 import {
   PAID_IN, breakEvenShare, familyCovers, familyCoversToday, paidInAsShareOfAYear, paidInSoFar,
   stagesOn, standingWith, theLot, utilisation,
@@ -1936,5 +1937,114 @@ describe('somebody gets paid for making the pictures', () => {
     expect(run(other, 'company.fill_post', { role: 'principal', personId: other.universe.playerId }).ok)
       .toBe(false);
     expect(filled(other.universe, 'principal')!.personId).toBe(cold);
+  });
+});
+
+describe('a company that stops being a company', () => {
+  /**
+   * The other half of "nothing in the company ever ends", deferred last time on a
+   * real question: a registration lapsing shuts `trade`, the door everything else
+   * hangs from, and what it should cost to stay on the register was unanswered.
+   *
+   * `Registration.endedAt` had no writer in the engine at all — the only one in the
+   * tree was a test setting it by hand to prove the filter above it worked.
+   */
+
+  const DAY = 24 * 60 * 60 * 1000;
+  const emptyTheChair = (sim: Simulation): void => {
+    for (const post of postsOf(sim.universe, parentCompany(sim.universe)!.id)) {
+      if (post.role === 'principal') { delete post.personId; delete post.filledAt; }
+    }
+  };
+
+  it('files its annual return while somebody answers for it', () => {
+    const sim = world('struck-kept');
+    const ours = parentCompany(sim.universe)!.id;
+    const register = registrationsOf(sim.universe, ours)
+      .find((one) => one.registry === 'is_companies')!;
+    const due = register.nextDueAt!;
+
+    sim.advanceTo(sim.now + 430 * DAY);
+    expect(register.endedAt, 'struck off with a principal in the chair').toBeUndefined();
+    expect(register.nextDueAt, 'the return was filed and never re-dated')
+      .toBeGreaterThan(due);
+    expect(register.graceUntil).toBeUndefined();
+    // And nothing was charged for it. The first version billed
+    // `REGISTRY_BY_ID[...].cost` on every filing, which is the one-off fee for
+    // getting on the register — so the company paid its formation fee again every
+    // year, EUR 3,120,000 over twenty-five. A recurring charge built out of a
+    // one-off figure is a number that looks researched and is not.
+    expect(sim.universe.transactions.filter((one) => one.memo.endsWith(': Filing')))
+      .toHaveLength(0);
+  });
+
+  it('strikes off a company nobody answers for, after a year and a month', () => {
+    const sim = world('struck-off');
+    const ours = parentCompany(sim.universe)!.id;
+    const register = registrationsOf(sim.universe, ours)
+      .find((one) => one.registry === 'is_companies')!;
+    emptyTheChair(sim);
+
+    // A year of notice. The return is annual, so there is nothing to miss before it.
+    sim.advanceTo(sim.now + 300 * DAY);
+    expect(register.endedAt, 'struck off before the return was even due').toBeUndefined();
+
+    // Then it is due, nobody files it, and the registry says so with a date on it.
+    sim.advanceTo(sim.now + 100 * DAY);
+    expect(register.endedAt, 'a year went by unfiled and nothing happened').toBeDefined();
+    expect(sim.universe.notifications.some((one) => one.title.includes('Struck Off'))).toBe(true);
+    expect(registrationsOf(sim.universe, ours).map((one) => one.registry))
+      .not.toContain('is_companies');
+  });
+
+  it('cannot commit to a picture once it is off the register', () => {
+    // Which is what being struck off means, and what the first version of this
+    // missed: `trade` is the door the company register sits behind, nothing
+    // outside `world/company.ts` has ever read it, and a company that had lost its
+    // registration went on greenlighting pictures for another twenty-four years. A
+    // lapse nothing feels is a shut chip on a screen.
+    const sim = world('struck-greenlight');
+    emptyTheChair(sim);
+    expect(doorFor(sim, 'greenlight').blockers.map((one) => one.need))
+      .not.toContain('The Company Register');
+
+    sim.advanceTo(sim.now + 400 * DAY);
+    expect(doorFor(sim, 'greenlight').blockers.map((one) => one.need))
+      .toContain('The Company Register');
+    expect(doorFor(sim, 'trade').can, 'the door the register actually sits behind')
+      .toBe(false);
+  });
+
+  it('leaves the free filings alone, because nothing about them can fail', () => {
+    // VAT files every two months and the employer registration every month, both
+    // at nought, so they are filed and re-dated and that is all. Said plainly
+    // rather than papered over with a cost somebody invented to make three things
+    // look symmetrical.
+    const sim = world('struck-free');
+    const vat = registrationsOf(sim.universe, parentCompany(sim.universe)!.id)
+      .find((one) => one.registry === 'is_vat')!;
+    const due = vat.nextDueAt!;
+    emptyTheChair(sim);
+    sim.advanceTo(sim.now + 400 * DAY);
+    expect(vat.endedAt, 'a free filing failed at something').toBeUndefined();
+    expect(vat.nextDueAt).toBeGreaterThan(due);
+  });
+
+  it('never ends a guild signature, and that was decided rather than forgotten', () => {
+    // Every other thing that ends here ends on a date it already carried. A
+    // signature carries a deposit and nothing else, because that is what it is —
+    // you are signatory until you breach, not until a year is up. And the hazard
+    // is named on the field itself: the day a guild can pull a signature is the
+    // day Global Rule One starts biting backwards on a cast already seated.
+    // Asserted against the source, because the claim is that nothing writes it —
+    // which no amount of advancing a save can prove and one grep can.
+    const engine = readFileSync('src/engine/world/company.ts', 'utf8');
+    // The only writer of `endedAt` anywhere in the engine is the registration one
+    // added alongside this. If a second appears on a signature, this says so.
+    const writers = [...engine.matchAll(/(\w+)\.endedAt\s*=/g)].map((one) => one[1]);
+    expect(writers).toEqual(['registration']);
+    const signatures = readFileSync('src/engine/domain/company.ts', 'utf8');
+    expect(signatures, 'the reason it has no clock should be written down')
+      .toMatch(/signatory until you breach/);
   });
 });

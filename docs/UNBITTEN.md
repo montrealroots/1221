@@ -799,12 +799,35 @@ file reference rather than as a finding.
   could reach. And the renewals sweep was `category: 'business'`, which put it on
   the player's own calendar of things they have to be at.
 
-  **Still open, and deliberately:** registrations and guild signatures. `endedAt`
-  filters both and has no writer either, and both are named in the paragraph
-  above — but a registration lapsing shuts `trade`, which is the door everything
-  else hangs off, and what it should cost to keep a company on the register is a
-  question nobody has answered. That is the next cut, and it should be specified
-  before it is attempted.
+  **And the registrations, which was the deferred half.** `Registration.endedAt`
+  had no writer in the engine at all — the only one in the tree was a test setting
+  it by hand to prove the filter worked. The question it was deferred on was what
+  it should cost to stay on the register, and the answer is not money: what gets a
+  company struck off is that nobody filed. The annual return is signed by whoever
+  answers for the company, so a year with nobody in the principal's chair, plus a
+  month of grace, and it is off the register.
+
+  The first version got two things wrong and both are worth keeping. It charged
+  `REGISTRY_BY_ID[...].cost` on every filing, which is the one-off fee for getting
+  *on* the register — so a company paid its formation fee again every year and the
+  measurement came back at **EUR 3,120,000** over twenty-five. A recurring charge
+  built out of a one-off figure is a number that looks researched and is not. And
+  it gated the filing on the accountant, which read well and made a third seat
+  mandatory in a save with three relatives: six tests went red on a scarcity
+  invented by a lapsing clock rather than by anything about lapsing.
+
+  It also had to be given teeth. `trade` is the door the company register sits
+  behind and **nothing outside `world/company.ts` has ever read it**, so the first
+  working version struck a company off and it went on greenlighting pictures for
+  another twenty-four years. The greenlight asks for the register now, which is
+  what being struck off means.
+
+  **Guild signatures stay, and that was decided rather than forgotten.** Everything
+  else here ends on a date it already carried; a signature carries a deposit and
+  nothing else, because you are signatory until you breach rather than until a year
+  is up. The hazard is named on the field itself: the day a guild can pull a
+  signature is the day Global Rule One starts biting backwards on a cast already
+  seated.
 - **A quote that can only go up.** `quoteOf` returns the maximum of every past
   fee, so taking a cheap job costs nothing. The research names quote protection
   as a ratchet that must bite in both directions.

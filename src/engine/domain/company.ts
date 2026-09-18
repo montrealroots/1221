@@ -177,15 +177,25 @@ export interface Registration {
    * arrears, no fee and no consequence behind it.
    */
   nextDueAt?: Instant;
+  /** How long the registry will wait for a filing fee the company cannot find. */
+  graceUntil?: Instant;
   /**
-   * Struck off, surrendered, or lapsed — none of which this build does.
+   * Struck off, for not filing.
    *
-   * Registrations only ever start. There is no clock in `world/company.ts`
-   * and no `company.deregister`, so the engine never writes this: the one
-   * writer in the tree is a test that sets it by hand to prove the filter
-   * below it works. It stays because `registrationsOf` filters on it and that
-   * filter is what the test exercises, and because striking off is the shape
-   * the record would want on the day anybody builds it.
+   * Registrations only ever started. There was no clock in `world/company.ts` and
+   * no `company.deregister`, so the engine never wrote this: the one writer in the
+   * tree was a test setting it by hand to prove the filter above it worked.
+   *
+   * `runTheClock` writes it now. A registration carries `nextDueAt` and the
+   * registry carries `filesEveryMonths` and a fee, and a filing that is never paid
+   * for is a company that gets struck off — which for `is_companies` shuts `trade`,
+   * the door everything else in the build hangs from. That is the correct weight
+   * for it and the reason this was specified before it was attempted.
+   *
+   * Only the annual company-register filing can actually fail, because it is the
+   * only one with a fee: VAT files every two months and the employer registration
+   * every month, both at nought, so nothing about them can go wrong yet. Said
+   * plainly rather than papered over with an invented cost.
    */
   endedAt?: Instant;
 }
@@ -234,6 +244,15 @@ export interface Signature {
    */
   endedAt?: Instant;
 }
+
+// A guild signature still has no clock, and that was decided again rather than
+// forgotten. Every other thing in this file that ends, ends on a date it already
+// carried: an option's term, a policy's year, a registration's filing period. A
+// signature carries a deposit and nothing else, because that is what it is — you
+// are signatory until you breach, not until a year is up. Inventing a renewal
+// would be inventing the mechanic, and the paragraph above names the hazard
+// waiting behind it: the day a guild can pull a signature is the day Global Rule
+// One starts biting backwards on a cast already seated.
 
 // ---------------------------------------------------------------------------
 // Cover

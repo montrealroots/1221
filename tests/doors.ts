@@ -71,6 +71,7 @@ export function openTheDoors(sim: Simulation, title = 'Something To Make'): void
   expect(run(sim, 'company.fill_post', { role: 'production', personId: willTake(sim, 'production') }).ok,
     'could not fill the head of production post').toBe(true);
 
+
   // Something to make.
   expect(run(sim, 'company.option', { title, hold: 'option', months: 18 }).ok,
     'could not option any material').toBe(true);
