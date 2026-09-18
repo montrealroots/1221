@@ -25,6 +25,7 @@ import {
 import {
   americanArm, capabilitiesOf, companiesOf, companyCash, holdingsOf, parentCompany,
   policiesOf, postFacts, postsOf, projectsOf, registrationsOf, signaturesOf, whereItStands,
+  whyNotInsure, whyNotRegister, whyNotSign,
 } from '@/engine/world/company';
 import { GROUP_ROLES } from '@/engine/content/sugar';
 import { A_NEW_HAND_STARTS_IN_WEEKS } from '@/engine/content/making';
@@ -267,6 +268,40 @@ defineLook<Door>('door', {
   },
 });
 
+
+/**
+ * Take the thing this page describes.
+ *
+ * Until this existed, a register, a guild, a policy and the American arm could
+ * be reached through exactly one control anywhere in the build: a chip inside a
+ * shut capability door, which is a fix-what-is-broken affordance being used as
+ * the only shop. Three of the four signable guilds, one register, two policies
+ * and one company form are never named by any blocker, so forty-odd lines of
+ * authored content apiece — the deposit, the agreement, what it binds you to —
+ * could not be bought by any route a player could walk.
+ *
+ * The page that already prints every one of those facts is where the offer
+ * belongs. The chip stays as what it should have been all along: a shortcut to
+ * a page that exists anyway.
+ *
+ * The refusal is the line under the button rather than a tooltip on it, and it
+ * comes from the same function the command calls, so the screen cannot say yes
+ * to something the engine will refuse.
+ */
+function Take(
+  { label, kind, payload, whyNot }:
+  { label: string; kind: string; payload: Record<string, unknown>; whyNot: string | undefined },
+) {
+  const { run } = useGame();
+  return (
+    <div className="row gap-2" style={{ marginTop: 'var(--s2)' }}>
+      <button className="btn btn-sm" disabled={whyNot !== undefined} onClick={() => run(kind, payload)}>
+        {label}
+      </button>
+      {whyNot !== undefined && <span className="xs dim">{whyNot}</span>}
+    </div>
+  );
+}
 // ---------------------------------------------------------------------------
 // A register
 // ---------------------------------------------------------------------------
@@ -305,6 +340,14 @@ defineLook<Register>('register', {
               note={facts.filesEveryMonths === 0 ? 'No filing to keep up' : 'What the body asks for'}
             />
           </div>
+          {!on && (
+            <Take
+              label={`Register With ${facts.body}`}
+              kind="company.register"
+              payload={{ registry: id }}
+              whyNot={whyNotRegister(sim, id as RegistryId)}
+            />
+          )}
         </>
       ),
       // A date on the record, said as one. This was labelled 'When It’s Next
@@ -379,6 +422,14 @@ defineLook<Guilded>('guild', {
               note={facts.depositCents === 0 ? 'They hold none' : 'Held before you shoot'}
             />
           </div>
+          {!signed && facts.signable && (
+            <Take
+              label={`Sign With ${facts.body}`}
+              kind="company.sign"
+              payload={{ guild: id }}
+              whyNot={whyNotSign(sim, id as GuildId)}
+            />
+          )}
         </>
       ),
       ways,
@@ -428,6 +479,14 @@ defineLook<Covered>('cover', {
               note={facts.standing ? 'A year of a policy a company carries always' : 'A year of a policy a company carries while shooting'}
             />
           </div>
+          {!bound && (
+            <Take
+              label={`Bind ${facts.label}`}
+              kind="company.insure"
+              payload={{ policy: id }}
+              whyNot={whyNotInsure(sim, id as PolicyKind)}
+            />
+          )}
         </>
       ),
       ways: id === 'errors_omissions'

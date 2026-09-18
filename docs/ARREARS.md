@@ -19,8 +19,24 @@ decision, the options are stated and not chosen — those are the owner's.
 
 ## Where this stands
 
-Resumed after a pause, and further along. The tree is clean and everything is
-pushed.
+**Every entry below now carries an honest verdict, and none of them says
+STILL_TRUE.** That sentence is the whole state of this file: thirty-two claims
+across the four decidable sections, every one either built, cut, corrected or
+refuted, with a note under its verdict saying which and how.
+
+It got that way in a verdict pass, and the pass was worth doing on its own
+account. Fourteen entries had been fixed by earlier work and never re-verdicted,
+so a reader going entry by entry was told a claim was live when the code had
+moved under it — and two of the fourteen turned out to be half done rather than
+done, which is the thing a stale ledger hides. `availableFunds` was one: the
+overdraft fields were long gone and the function itself still had no production
+reader, next to two hand-rolled copies of it on the money screen. The four
+company doors reachable only as a blocker chip were the other.
+
+So: read a verdict, then read the note under it. Where a verdict disagrees with
+the evidence further down the entry, the verdict is the later reading and the
+evidence is what was true when the audit ran. Nothing has been deleted from the
+evidence, because a corrected claim is more useful with its own history attached.
 
 **Cleared — nothing below needs a decision from anybody any more.**
 
@@ -41,6 +57,21 @@ pushed.
 | Leave It, the misheard no, and two false sentences | `df42a67` |
 | the Decision Center nothing writes to | option B, on the world tick — and the reimbursement is a reminder, not a decision |
 | the 43 dead exports of `content/lifespan.ts` | the file is 87 lines and 2 exports; the almanac is `docs/research/LIFESPAN.md` |
+| nothing in the company ever ends | options lapse, cover renews with a month of grace, a register nobody files for strikes the company off — and the greenlight asks whether it is still on one |
+| nothing in the company ever recurs | `chargeThePosts` bills every filled post on the month, with Tryggingagjald on top |
+| the collective floor nothing read | `feeFor` takes the greater of the share and `weeks * SCALE_A_WEEK_CENTS`; a day player was coming out under the law |
+| a part priced off the room rather than the cast | `booking.spendCents`, carried from the enquiry that booked the stage |
+| the room's want drawn from nothing | a real draw, registered as `casting.wants` |
+| `w.fitness`, a one-way ratchet to zero | `life.train` puts it back; the last of the seven single-writer dials |
+| the house that rots with no repair | `life.upkeep`, and the sentences that were false without it |
+| `project.hands` unchangeable after the greenlight | `company.restaff`, priced off `aRoomCosts` against the budget, with a fortnight's lead time |
+| the strike week filed as prep | `BookingKind` has a word for a load-out, and `Utilisation.strike` reads it |
+| `foregone()`, exported and called by nothing | `Utilisation.ownWouldHaveLetFor`, beside the weeks it prices |
+| a property market in a game that never buys | sixteen fields off `Property` at schema 80, `PropertyKind` from seventeen kinds to two |
+| an office whose identity was its own prose | `Enquiry.officeId` at schema 81; `holder` only prints now |
+| four enquiry shapes that never book | not dead — `keepsRinging` names them, because that is the premise rather than a bug |
+| `availableFunds`, and the two copies of it on the screen | the screen asks the ledger; a test reads the file to stop the copies coming back |
+| seven things reachable only as a blocker chip | the pages that describe them offer them, asking the engine's own refusal |
 
 **The lifespan cluster, and where its line numbers went.**
 
@@ -126,7 +157,12 @@ The code contradicts itself or its own comment. No judgement call in these.
 
 ### The house rots with no repair, and the screen tells the player it is their fault for a choice they do not have.
 
-**Cluster** `wellbeing` · **Severity** minor · **Verdict** STILL_TRUE
+**Cluster** `wellbeing` · **Severity** minor · **Verdict** WAS_TRUE, NOW BUILT
+
+**CLEARED.** `life.upkeep` is a command, registered in `world/house.ts`, and
+`haveTheWorkDone` puts the condition back by the point — so the choice the screen
+blamed the player for not making is a choice they have. Both halves went: the
+lever, and the sentences that were false without it.
 
 
 **Files** `/home/user/1221/src/engine/systems/life.ts`, `/home/user/1221/src/ui/looks/estate.tsx`, `/home/user/1221/src/engine/content/estate.ts`, `/home/user/1221/src/ui/screens/Home.tsx`, `/home/user/1221/src/engine/domain/model.ts`
@@ -199,7 +235,14 @@ RISK IF YOU CHANGE THE DECAY. sleepQuality (life.ts:187-202) feeds `quality` int
 
 ### "The reimbursement's under-18 case" — REBATE.note says the higher rate applies unconditionally to work for audiences 18 and under; no picture declares an audience.
 
-**Cluster** `seasons-misc` · **Severity** minor · **Verdict** STILL_TRUE
+**Cluster** `seasons-misc` · **Severity** minor · **Verdict** WAS_TRUE, NOW SAID PLAINLY
+
+**CLEARED, by correcting the sentence rather than building the feature.**
+`content/incorporation.ts` now says it outright: the higher rate is for audiences
+of eighteen and under, "which SLATE doesn't model: no picture declares an
+audience." A note that describes a rule the engine cannot apply is a note that
+lies; one that names the gap is a note. The four spellings of the rate rule were
+collapsed to one in the same pass.
 
 
 **Files** `/home/user/1221/src/engine/content/incorporation.ts`, `/home/user/1221/src/engine/world/rebate.ts`, `/home/user/1221/src/engine/world/company.ts`, `/home/user/1221/src/engine/domain/company.ts`, `/home/user/1221/src/ui/looks/business.tsx`, `/home/user/1221/src/ui/workspaces/BusinessWorkspace.tsx`
@@ -269,7 +312,10 @@ A declared word with nothing that reads it is worse than no word at all.
 
 ### Audition.took is written and read by nothing. Grep for .took across src/.
 
-**Cluster** `audition-life` · **Severity** minor · **Verdict** STILL_TRUE
+**Cluster** `audition-life` · **Severity** minor · **Verdict** WAS_TRUE, NOW CUT
+
+**CLEARED.** `Audition.took` is gone from `domain/model.ts`. Nothing wrote it
+and nothing read it, so there was nothing to wire.
 
 
 **Files** `/home/user/1221/src/engine/world/audition.ts`, `/home/user/1221/src/engine/domain/model.ts`
@@ -337,7 +383,10 @@ ALSO FIX, separately and first, because it is a live regression and this one is 
 
 ### `canWorkIn` has no reader at all.
 
-**Cluster** `quote-fees` · **Severity** minor · **Verdict** STILL_TRUE
+**Cluster** `quote-fees` · **Severity** minor · **Verdict** WAS_TRUE, NOW CUT
+
+**CLEARED.** `canWorkIn` is gone. A repo-wide grep returns nothing — engine,
+tests and tools alike.
 
 
 **Files** `src/engine/domain/citizenship.ts`, `src/engine/world/casting.ts`, `src/engine/content/casting.ts`, `src/engine/content/geography.ts`, `src/ui/creation/CharacterCreation.tsx`
@@ -409,9 +458,6 @@ a dark day is true of the world and was false of this build, so it was a price
 list for something the game does not sell. `content/lot.ts` says so where the
 rate used to be, and says what would bring it back: a returning series that
 holds its sets between seasons.
-### RATE_SHARE.hold is dead. DEPTH.md records this one as fixed; only the prep third of it was. (part 2 of 2)
-
-**Cluster** `money-time` · **Severity** minor · **Verdict** STILL_TRUE
 
 
 **Files** `/home/user/1221/src/engine/content/lot.ts`, `/home/user/1221/src/engine/domain/model.ts`, `/home/user/1221/src/engine/world/lot.ts`, `/home/user/1221/src/engine/content/making.ts`, `/home/user/1221/src/engine/world/making.ts`, `/home/user/1221/docs/DEPTH.md`
@@ -485,7 +531,16 @@ Do not do this unless the owner wants the lot to bite. Under THE ONE RULE the de
 
 ### Four fields on every person, and the whole skill sheet — the scout's view is that deletion is the honest answer here rather than wiring, because the prodigy holds every skill at 100 and every other person at 5.
 
-**Cluster** `person-fields` · **Severity** serious · **Verdict** STILL_TRUE
+**Cluster** `person-fields` · **Severity** serious · **Verdict** WAS_TRUE, NOW CUT
+
+**CLEARED at schema 79**, and the scout's view was the right one. The whole
+forty-seven-row skill sheet went, along with `goals`, `lifestyle`, `creditScore`
+and `goatTraits`, and `travelFatigue` off the wellbeing beside them — the sheet
+held the prodigy at a hundred and everybody else at five and never moved for
+anybody. `creditScore` is kept where the creation review actually reads it, on
+`WEALTH_PROFILE`. Where You Come From stayed and was given a reader instead.
+The migration sheds all six from an existing save, and the first draft of it shed
+five under a comment claiming six, which is why there is a test for the sixth.
 
 
 **Files** `/home/user/1221/src/engine/domain/model.ts`, `/home/user/1221/src/engine/domain/skills.ts`, `/home/user/1221/src/engine/domain/attributes.ts`, `/home/user/1221/src/engine/world/bootstrap.ts`, `/home/user/1221/src/engine/world/family.ts`, `/home/user/1221/src/engine/world/casting.ts`, `/home/user/1221/src/engine/world/crew.ts`, `/home/user/1221/src/engine/index.ts`, `/home/user/1221/src/ui/creation/CharacterCreation.tsx`, `/home/user/1221/tests/family.test.ts`, `/home/user/1221/tests/premise.test.ts`, `/home/user/1221/tests/creation.test.ts`
@@ -677,7 +732,24 @@ RISK: essentially nil for the two cuts — nothing imports these names, no table
 
 ### The ledger has an affordability primitive and an overdraft model, and the spend paths use them.
 
-**Cluster** `balance` · **Severity** minor · **Verdict** STILL_TRUE
+**Cluster** `balance` · **Severity** minor · **Verdict** WAS_TRUE, NOW BOTH HALVES DONE
+
+**CLEARED in two passes, and the second found this entry had understated it.**
+`Account.overdraftLimit`, `overdraftOptIn` and `inCoverSince` are deleted: nothing
+wrote them, so the branch that read them was unreachable in every save the game
+can produce, and the cover fee they existed for does not exist.
+
+`availableFunds` is wired rather than deleted, and it was not simply a correct
+function nobody called. `ui/looks/money.tsx` was working out
+`Math.max(0, limit + balance)` inline in two places while the named function sat
+in the ledger with no reader — one idea, three implementations, and the one with
+the name on it the one nothing used. The screen asks the ledger now, and a test
+reads the file to stop the copies coming back.
+
+What it is NOT is the affordability question the game turns on, and the ledger
+says so where the function is: nothing a player can do spends out of a bank
+account, every door that costs money costs the company's, and the company's
+answer is `behindTheCompany()` — cash plus what the family will still put in.
 
 
 **Files** `/home/user/1221/src/engine/core/ledger.ts`, `/home/user/1221/src/engine/index.ts`, `/home/user/1221/tests/money.test.ts`, `/home/user/1221/tests/integrity.test.ts`
@@ -724,7 +796,12 @@ Three parts, in the order I would land them.
 
 ### A season anchored on an airdate has no airdates.
 
-**Cluster** `seasons-misc` · **Severity** minor · **Verdict** PARTLY_TRUE
+**Cluster** `seasons-misc` · **Severity** minor · **Verdict** WAS_TRUE OF ONE FIELD, NOW CUT
+
+**CLEARED.** The entry's own verdict was the right one — the season's airdate is
+real and load-bearing, and the dead thing was `Part.dueAt`, with no writer and no
+reader. It is gone from `domain/company.ts`. Nothing else in the claim needed
+doing, which is why the correction is the deletion of one field.
 
 
 **Files** `/home/user/1221/src/engine/domain/company.ts`, `/home/user/1221/src/engine/world/making.ts`, `/home/user/1221/src/engine/content/making.ts`, `/home/user/1221/src/ui/workspaces/BusinessWorkspace.tsx`, `/home/user/1221/src/engine/world/inventory.ts`
@@ -796,7 +873,14 @@ Several defensible answers. The options are laid out; none is taken here.
 
 ### The room's want is drawn from nothing, so the opening reading is a constant.
 
-**Cluster** `audition-room` · **Severity** serious · **Verdict** STILL_TRUE
+**Cluster** `audition-room` · **Severity** serious · **Verdict** WAS_TRUE, NOW BUILT
+
+**CLEARED.** The room's want is a draw now, registered as `casting.wants` in
+`decided.ts` — which is the register every decision the engine draws for has to
+appear in, so the sweep that proves a decision is described can see it. The
+opening reading is no longer a constant, and the distribution it draws from is
+pinned in a test rather than written out in prose, because the prose went two
+numbers wrong in a single sentence without anything noticing.
 
 
 **Files** `/home/user/1221/src/engine/world/audition.ts`, `/home/user/1221/src/engine/world/casting.ts`, `/home/user/1221/src/ui/workspaces/AuditionsWorkspace.tsx`, `/home/user/1221/src/engine/domain/model.ts`
@@ -889,7 +973,9 @@ RISK — what moves if you change this:
 
 ### BONUS (not in the ledger, found while verifying claim 1): audition.took is a declared word with nothing that reads it.
 
-**Cluster** `audition-room` · **Severity** minor · **Verdict** STILL_TRUE
+**Cluster** `audition-room` · **Severity** minor · **Verdict** WAS_TRUE, NOW CUT
+
+**CLEARED with the entry above it.** `Audition.took` is gone.
 
 
 **Files** `/home/user/1221/src/engine/domain/model.ts`, `/home/user/1221/src/engine/world/audition.ts`
@@ -941,7 +1027,15 @@ Whichever is chosen, update docs/UNBITTEN.md:332 — and note that heard is miss
 
 ### BONUS (not in the ledger): the comment that fitted TOO_FAR and CLOSE_ENOUGH cites a number the code does not produce.
 
-**Cluster** `audition-room` · **Severity** minor · **Verdict** STILL_TRUE
+**Cluster** `audition-room` · **Severity** minor · **Verdict** WAS_TRUE, NOW CORRECTED
+
+**CLEARED, and the comment says more than the number now.** The sentence above
+`TOO_FAR` explains that the want is not drawn flat, that 1.7 is what a flat draw
+would have given, and what the real shape is: nought, one and two a sixth of the
+time each either way, three a twelfth. It also says why the shape is kept — most
+parts want something near the middle — and refuses to write the distribution out
+a second time, because a distribution described in prose is one nothing checks.
+It is pinned in a test.
 
 
 **Files** `/home/user/1221/src/engine/content/audition.ts`
@@ -985,7 +1079,13 @@ DO NOT add their proposed test as written. "Pin howFarOff(AS_WRITTEN, ·) expect
 
 ### A part is priced off the stage rate card - feeFor() derives an actor's fee from what the ROOM costs (booking.weekRateCents) rather than what a cast costs. Still true after today's changes? Does a part on a documentary in Stage 5 now pay absurdly little?
 
-**Cluster** `audition-life` · **Severity** minor · **Verdict** STILL_TRUE
+**Cluster** `audition-life` · **Severity** minor · **Verdict** WAS_TRUE, NOW BUILT
+
+**CLEARED.** `feeFor` prices a part off what the production is spending —
+`booking.spendCents`, carried from the enquiry — and falls back to the room's rate
+only where a booking has no spend on it. A collective floor sits under the whole
+of it: `Math.max(share, weeks * SCALE_A_WEEK_CENTS)`, so a small part on a cheap
+booking cannot pay under scale.
 
 
 **Files** `/home/user/1221/src/engine/world/audition.ts`, `/home/user/1221/src/engine/world/casting.ts`, `/home/user/1221/src/engine/content/casting.ts`, `/home/user/1221/src/engine/world/lot.ts`, `/home/user/1221/src/engine/domain/model.ts`, `/home/user/1221/src/engine/content/lot.ts`
@@ -1082,7 +1182,14 @@ WHAT I'D ACTUALLY DO, in order:
 
 ### A quote that can only go up. `quoteOf` returns the maximum of every past fee, so taking a cheap job costs nothing — and the code's own comment claims the opposite mechanic.
 
-**Cluster** `quote-fees` · **Severity** serious · **Verdict** STILL_TRUE
+**Cluster** `quote-fees` · **Severity** serious · **Verdict** WAS_TRUE, NOW BUILT
+
+**CLEARED, and the code and its own comment agree now.** `quoteOf` decays every
+past fee by the years since it was paid — `1 - years / QUOTE_LIFE` — so an old
+number is argued down, and it counts only fees at the asked-for size or larger.
+It is still a ratchet, which is what the docstring says in as many words: taking
+a cheap job does not lower what you are worth, and the research is explicit that
+roster memory pays out from a pass.
 
 
 **Files** `src/engine/world/casting.ts`, `src/engine/content/casting.ts`, `src/engine/world/audition.ts`, `tests/casting.test.ts`
@@ -1165,7 +1272,12 @@ RISK SURFACE for any change to `quoteOf`: `askFor` (casting.ts:330) is its only 
 
 ### (sub-finding of claim 1, not in the ledger) `quoteOf`'s own docstring contradicts `quoteOf`'s own code about cross-size pricing.
 
-**Cluster** `quote-fees` · **Severity** serious · **Verdict** STILL_TRUE
+**Cluster** `quote-fees` · **Severity** serious · **Verdict** WAS_TRUE, NOW CORRECTED
+
+**CLEARED with the entry above it.** The size gate is
+`if (!had || had.weight < want.weight) continue;` and the docstring says exactly
+that: "a day player's check does not price a lead, and a lead's does not stop a
+day player being cheap." The two agree.
 
 
 **Files** `src/engine/world/casting.ts`, `tests/casting.test.ts`
@@ -1217,7 +1329,12 @@ RISK, whichever is chosen: `quoteOf` feeds `askFor` (casting.ts:329) -> `offerOf
 
 ### The collective floor under an Icelandic fee is declared and nothing reads it.
 
-**Cluster** `quote-fees` · **Severity** minor · **Verdict** STILL_TRUE
+**Cluster** `quote-fees` · **Severity** minor · **Verdict** WAS_TRUE, NOW BUILT
+
+**CLEARED.** `SCALE_A_WEEK_CENTS` is read in `feeFor`, as the floor under every
+fee the engine writes. It was reached the way a collective floor is reached — a
+day player was coming out at three hundred and sixty-one euros a week, which is
+below the law — and the test that holds it names the figure.
 
 
 **Files** `src/engine/content/incorporation.ts`, `src/engine/world/casting.ts`, `src/engine/world/company.ts`, `src/ui/looks/business.tsx`
@@ -1273,7 +1390,23 @@ Three options, not two. I would take (3).
 
 ### Nothing in the company ever ends. An option you forgot to exercise never lapses; cover you forgot to renew never lapses.
 
-**Cluster** `company-ends` · **Severity** serious · **Verdict** STILL_TRUE
+**Cluster** `company-ends` · **Severity** serious · **Verdict** WAS_TRUE, NOW BUILT
+
+**CLEARED on the third attempt, by being smaller than the two that failed.**
+Options run out on `expiresAt`, cover is renewed on `renewsAt` with a month of
+grace and `lapsedAt` written when the company cannot pay, and a registration
+nobody files for is struck off. The greenlight exercises the option, which is what
+buying the rights at the moment of commitment means and is what makes the clock
+safe: a picture in production cannot lose its material. Premiums come to
+EUR 1,392,000 over twenty-five played years.
+
+Two things this got wrong first, both caught by measurement. The annual return
+charged `REGISTRY_BY_ID[].cost` — the one-off formation fee — and billed the
+company EUR 3,120,000 over twenty-five years for staying on a register it had
+already joined; nothing is charged now and the filing is gated on the principal's
+chair. And the strike-off had no teeth until the greenlight was made to ask
+`needRegistry(u, 'is_companies')`, because nothing outside `world/company.ts` read
+the `trade` door.
 
 
 **Files** `/home/user/1221/src/engine/world/company.ts`, `/home/user/1221/src/engine/domain/company.ts`, `/home/user/1221/src/engine/world/lot.ts`, `/home/user/1221/src/ui/looks/business.tsx`, `/home/user/1221/tests/business.test.ts`
@@ -1350,7 +1483,12 @@ RISK — what moves if (A) lands:
 
 ### ADJACENT, NOT IN THE LEDGER — nothing in the company ever RECURS either: a filled post and a bound policy are charged once and never again.
 
-**Cluster** `company-ends` · **Severity** minor · **Verdict** STILL_TRUE
+**Cluster** `company-ends` · **Severity** minor · **Verdict** WAS_TRUE, NOW BUILT
+
+**CLEARED.** `chargeThePosts` bills every filled post on the month, off the
+`monthlyCents` the roles already carried, with Tryggingagjald on top — so a
+company no longer staffs itself completely on its first morning for nothing.
+Policies renew on their own date and lapse when the company cannot pay.
 
 
 **Files** `/home/user/1221/src/engine/world/company.ts`, `/home/user/1221/src/engine/domain/company.ts`, `/home/user/1221/src/engine/content/incorporation.ts`, `/home/user/1221/src/engine/world/lot.ts`
@@ -1525,7 +1663,12 @@ TEST, whichever option (their step 5 is unusable):
 
 ### Travel fatigue is a second fitness bug, and it takes openness down with it.
 
-**Cluster** `wellbeing` · **Severity** minor · **Verdict** STILL_TRUE
+**Cluster** `wellbeing` · **Severity** minor · **Verdict** WAS_TRUE, NOW CUT
+
+**CLEARED at schema 79, by deletion.** `travelFatigue` is gone from `Wellbeing`
+and the migration strips it from an existing save. There is no travel system for
+it to be a fact about, and openness — the axis it took down with it — went in the
+same pass as one of the four personality axes nothing consulted.
 
 
 **Files** `/home/user/1221/src/engine/systems/life.ts`, `/home/user/1221/src/engine/core/taste.ts`, `/home/user/1221/src/ui/looks/wellbeing.tsx`, `/home/user/1221/src/engine/content/personality-traits.ts`, `/home/user/1221/src/engine/domain/model.ts`, `/home/user/1221/src/ui/creation/CharacterCreation.tsx`
@@ -1589,7 +1732,12 @@ RISK IF YOU TOUCH IT:
 
 ### (root cause, implied by the ageing claim) w.fitness is a one-way ratchet to zero, and its own doc comment says otherwise
 
-**Cluster** `lifespan` · **Severity** serious · **Verdict** STILL_TRUE
+**Cluster** `lifespan` · **Severity** serious · **Verdict** WAS_TRUE, NOW BUILT
+
+**CLEARED.** `w.fitness` moves both ways: `systems/life.ts` adds what an hour of
+actually working at it puts back, and takes it down against the ceiling for an
+age. It was the last of the seven dials `tools/dials.mjs` counted as having a
+single writer, and the ratchet row for those reads nought now.
 
 > **Landed.** `src/engine/content/lifespan.ts` is now 87 lines and 2 exports. Line numbers into it below describe the 540-line file; the map from then to now is in **The lifespan cluster, and where its line numbers went** near the top of this document, and the deleted material is in `docs/research/LIFESPAN.md`.
 
@@ -1639,7 +1787,12 @@ I would recommend (a') if the owner wants a performer sim where staying in shape
 
 ### (follow-on) The other 46 exports of content/lifespan.ts are dead (docs/UNBITTEN.md:217)
 
-**Cluster** `lifespan` · **Severity** serious · **Verdict** STILL_TRUE
+**Cluster** `lifespan` · **Severity** serious · **Verdict** WAS_TRUE, NOW CUT
+
+**CLEARED.** `content/lifespan.ts` is down to four exports — `recoveryFactorAt`,
+`ceilingAt`, `TRAINING_AN_HOUR` and `LONGEST_SESSION_HOURS` — from forty-eight.
+The almanac the rest of it was is `docs/research/LIFESPAN.md`, where a table
+nothing executes belongs.
 
 > **Landed.** `src/engine/content/lifespan.ts` is now 87 lines and 2 exports. Line numbers into it below describe the 540-line file; the map from then to now is in **The lifespan cluster, and where its line numbers went** near the top of this document, and the deleted material is in `docs/research/LIFESPAN.md`.
 
@@ -1692,7 +1845,17 @@ RISK, specifically. Nothing but src/engine/systems/life.ts:20 imports this modul
 
 ### whereTheCrewStands counts strangers as returning hands, and no screen reads it. Both halves of the One Rule at once.
 
-**Cluster** `crew-office` · **Severity** minor · **Verdict** STILL_TRUE
+**Cluster** `crew-office` · **Severity** minor · **Verdict** WAS_TRUE BOTH WAYS ROUND, NOW BUILT
+
+**CLEARED, and the ledger had the direction backwards.** `whereTheCrewStands` is
+read on the screen, at `ui/looks/business.tsx`, so the half about nothing reading
+it is done. The counting half was real but inverted: the old test read
+`heldBefore`, which is every person who has ever held the post including on this
+picture, so it said six returning hands where there were eighteen and then eleven
+where there were eighteen. It undercounted. Somebody is a returning hand when they
+held THIS post on an EARLIER picture of this company, and that is the question
+asked now. `heldBefore` itself is left alone, because `fillPost` depends on it
+walking every picture.
 
 
 **Files** `/home/user/1221/src/engine/world/crew.ts`, `/home/user/1221/tests/crew.test.ts`, `/home/user/1221/src/ui/looks/business.tsx`
@@ -2223,7 +2386,14 @@ WHATEVER IS PICKED, note what their fix incidentally revives: `looks/attention.t
 
 ### The audit trail is a persisted, empty table, and the history table is a sleep diary.
 
-**Cluster** `unreachable` · **Severity** serious · **Verdict** STILL_TRUE
+**Cluster** `unreachable` · **Severity** serious · **Verdict** WAS_TRUE, NOW CUT
+
+**CLEARED, both halves, and `core/audit.ts` went with them.** The audit table had
+a call site that never issued an id, because the method holding it had no caller;
+the history table had one writer, inside the sleep command, and went anyway,
+because no screen ever read the log and `Historian.timeline` with all its filters
+had no caller either. A namespace that issues ids nobody can look at is the same
+empty table by a longer route.
 
 
 **Files** `/home/user/1221/src/engine/core/audit.ts`, `/home/user/1221/src/engine/core/simulation.ts`, `/home/user/1221/src/engine/systems/life.ts`, `/home/user/1221/src/engine/world/world.ts`, `/home/user/1221/src/engine/index.ts`, `/home/user/1221/src/ui/looks/subject.ts`
@@ -2299,7 +2469,33 @@ RISK, specifically:
 
 ### Three signable guilds, a registry, a policy and a company form can be reached only as a blocker chip.
 
-**Cluster** `seasons-misc` · **Severity** serious · **Verdict** PARTLY_TRUE
+**Cluster** `seasons-misc` · **Severity** serious · **Verdict** WAS_TRUE, NOW BUILT
+
+**CLEARED as the entry's option (a). Its count was right at three guilds, a
+register and a company form, and understated at two policies.**
+
+The blocker chip was the only control in the build that fired
+`company.register`, `company.sign` or `company.insure` — a fix-what-is-broken
+affordance being used as the only shop, so anything no shut door was waiting on
+could not be bought at all. The `register`, `guild` and `cover` looks in
+`ui/looks/business.tsx` already printed every fact about each one, including the
+deposit and what it binds you to, and carried no action. They offer it now,
+through a `Take` control, and the chip is what it should have been all along: a
+shortcut to a page that exists anyway.
+
+The refusal under the button is the engine's own. `whyNotRegister`, `whyNotSign`
+and `whyNotInsure` are exported from `world/company.ts` and the three command
+handlers were rewritten to call them, so there is one implementation of each set
+of guards and the screen cannot offer what the engine will refuse. Two tests hold
+it: one reads both files to check the asking goes both ways, and one signs `wga`,
+`dga` and `iatse` and binds `property` and `business_interruption` — the five
+nothing ever blocks on — through the commands themselves.
+
+THE `us_state` HALF WAS ALREADY DONE and this entry had not been updated.
+`company.form_arm` writes the Delaware registration itself, because filing the
+form IS that registration; before it did, `company.register` refused with "The
+company has no account to pay from" for a filing the parent had already paid for
+on the line above, and the Delaware branch of `numberFor` had never once run.
 
 
 **Files** `/home/user/1221/src/ui/workspaces/BusinessWorkspace.tsx`, `/home/user/1221/src/ui/looks/business.tsx`, `/home/user/1221/src/engine/world/company.ts`, `/home/user/1221/src/engine/content/incorporation.ts`, `/home/user/1221/src/engine/domain/company.ts`

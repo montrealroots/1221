@@ -165,7 +165,7 @@ function accountSentence(a: Account, sim: Simulation): string {
         ? `You owe nothing on it${where}, and the whole ${formatMoney(limit)} line is sitting there if you want it.`
         : `You owe nothing on it${where}, and it’s been clear for a while.`;
     }
-    const free = Math.max(0, limit + a.balance);
+    const free = sim.ledger.availableFunds(a.id);
     return limit > 0
       ? `You owe ${formatMoney(owed)} on it${where}, which leaves ${formatMoney(free)} of a ${formatMoney(limit)} line still free.`
       : `You owe ${formatMoney(owed)} on it${where}, and it comes down only as fast as you pay it down.`;
@@ -224,7 +224,7 @@ function accountBody(a: Account, sim: Simulation) {
       <Stat
         key="free"
         label="Still Free"
-        value={<span className="mono">{formatMoney(Math.max(0, limit + a.balance))}</span>}
+        value={<span className="mono">{formatMoney(sim.ledger.availableFunds(a.id))}</span>}
         note={`Of a ${formatMoney(limit)} line`}
       />,
     );

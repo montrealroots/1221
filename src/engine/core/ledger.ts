@@ -142,7 +142,23 @@ export class Ledger {
     return txn;
   }
 
-  /** Available spend: cash balance, or remaining credit on a revolving line. */
+  /**
+   * Available spend: cash balance, or remaining credit on a revolving line.
+   *
+   * One implementation, and it took a while to get to one. `docs/ARREARS.md` had
+   * this down as a correct function nobody called, which was half the story — the
+   * money screen was computing `Math.max(0, limit + balance)` inline in two
+   * places while this sat here, so the idea had three implementations and the
+   * named one had no reader. The screen asks this now.
+   *
+   * What it is NOT is the affordability question the game turns on. Nothing a
+   * player can do spends out of a bank account: every door that costs money
+   * costs the company's money, and the company's answer is `behindTheCompany()`
+   * in `world/lot.ts` — cash plus what the family will still put in, which is a
+   * different and larger question than what a bank would lend. Three fields that
+   * belonged to the bank's version of it (`overdraftLimit`, `overdraftOptIn`,
+   * `inCoverSince`) were cut for having no writer at all.
+   */
   availableFunds(accountId: string): Money {
     const a = this.account(accountId);
     if (a.kind === 'credit_card' || a.kind === 'company_credit') {

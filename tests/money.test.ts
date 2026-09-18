@@ -1,3 +1,4 @@
+import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import {
   CURRENCY_SYMBOL, applyRate, formatMoney, formatMoneyCompact, splitByWeights, splitEvenly, units,
@@ -139,6 +140,26 @@ describe('the ledger', () => {
 
     expect(ledger.account('card').balance).toBe(-120_000);
     expect(ledger.availableFunds('card')).toBe(380_000);
+    // Never below nought, whatever has been put on it. A line that has been
+    // overrun does not have negative headroom; it has none.
+    ledger.post({
+      id: 't2', saveId: 's', at: 0, memo: 'more', category: 'shopping',
+      postings: [{ accountId: 'card', amount: -500_000 }, { accountId: 'expense', amount: 500_000 }],
+    });
+    expect(ledger.availableFunds('card')).toBe(0);
+  });
+
+  it('is the only place that works out what is left on a line', () => {
+    // `docs/ARREARS.md` had `availableFunds` down as a correct function nobody
+    // called, and it was half the story: the money screen was working out
+    // `Math.max(0, limit + balance)` inline in two places while the named
+    // function sat here with no reader. One idea, three implementations, and the
+    // one with the name on it was the one nothing used. The screen asks the
+    // ledger now, and this is what stops the copies coming back.
+    const screen = readFileSync('src/ui/looks/money.tsx', 'utf8');
+    expect(screen).toContain('availableFunds');
+    expect(screen, 'the screen works out a credit line’s headroom for itself again')
+      .not.toMatch(/limit \+ a\.balance/);
   });
 });
 

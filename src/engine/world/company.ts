@@ -810,20 +810,85 @@ function payFor(sim: Simulation, companyId: Id, amount: Money, purpose: string):
   return { ok: true };
 }
 
+/** What a thing costs against what the company holds, or nothing if it can. */
+function whyNotAfford(sim: Simulation, companyId: Id | undefined, amount: Money): string | undefined {
+  if (amount <= 0) return undefined;
+  const account = companyId ? purse(sim, companyId) : undefined;
+  if (!account) return 'The company has no account to pay from.';
+  if (account.balance < amount) {
+    return `That costs ${formatMoney(amount, { cents: false })} and the company hasn’t got it.`;
+  }
+  return undefined;
+}
+
+/**
+ * Why the company cannot get on a register, or nothing if it can.
+ *
+ * Asked by the command and asked again by the screen, which is the whole reason
+ * it is a function rather than a run of guards inside the handler. Every one of
+ * these four things — a register, a guild, a policy, the American arm — used to
+ * be reachable through exactly one control: a chip inside a shut capability
+ * door, which is a fix-what-is-broken affordance being used as the only shop.
+ * Three guilds, a register, two policies and a company form were never named by
+ * any blocker, so forty-odd lines of authored content apiece could not be bought
+ * at all. The pages that describe them can offer them now, and they ask this.
+ */
+export function whyNotRegister(sim: Simulation, registry: RegistryId): string | undefined {
+  const facts = REGISTRY_BY_ID[registry];
+  if (!facts) return 'There’s no such register.';
+  if (onRegister(sim.universe, registry)) return `Already on ${facts.body}.`;
+  const company = facts.jurisdiction === 'us' ? americanArm(sim.universe) : parentCompany(sim.universe);
+  if (!company) {
+    return facts.jurisdiction === 'us'
+      ? 'There’s no American arm yet, and an American register wants an American company.'
+      : 'There’s no company to register.';
+  }
+  return whyNotAfford(sim, company.id, facts.cost);
+}
+
+/** Why the company cannot sign with a guild, or nothing if it can. */
+export function whyNotSign(sim: Simulation, guild: GuildId): string | undefined {
+  const facts = GUILD_BY_ID[guild];
+  if (!facts) return 'There’s no such guild.';
+  if (!facts.signable) {
+    return `${facts.body} isn’t signed with. Employ people here and the collective agreement covers them.`;
+  }
+  if (signedWith(sim.universe, guild)) return `Already signed with ${facts.body}.`;
+  const company = facts.jurisdiction === 'us' ? americanArm(sim.universe) : parentCompany(sim.universe);
+  if (!company) return 'An American guild signs with an American company, and there isn’t one yet.';
+  const parent = parentCompany(sim.universe);
+  return whyNotAfford(sim, parent ? parent.id : company.id, facts.depositCents);
+}
+
+/** Why the company cannot bind a policy, or nothing if it can. */
+export function whyNotInsure(sim: Simulation, policy: PolicyKind): string | undefined {
+  const facts = POLICY_BY_ID[policy];
+  if (!facts) return 'There’s no such cover.';
+  if (carries(sim.universe, policy)) return `${facts.label} is already bound.`;
+  const parent = parentCompany(sim.universe);
+  if (!parent) return 'There’s no company to insure.';
+  // The one policy that cannot be bought, only earned.
+  if (policy === 'errors_omissions') {
+    const holdings = holdingsOf(sim.universe);
+    if (holdings.length === 0) {
+      return 'An underwriter reads the chain of title before writing this, and there’s nothing to read.';
+    }
+    const broken = holdings.filter((one) => !one.chainComplete);
+    if (broken.length > 0) {
+      return `The underwriter read the chain of title on ${broken[0]!.title} and stopped. `
+        + `${broken[0]!.chainGap ?? 'There’s a gap in it.'}`;
+    }
+  }
+  return whyNotAfford(sim, parent.id, facts.premiumCents);
+}
+
 export function registerCompanyCommands(sim: Simulation): void {
   /** Get on a register. */
   sim.onCommand<{ registry: RegistryId }, Done>('company.register', (payload, { sim: s }) => {
-    const facts = REGISTRY_BY_ID[payload.registry];
-    if (!facts) return refuse('There’s no such register.');
-    if (onRegister(s.universe, payload.registry)) return refuse(`Already on ${facts.body}.`);
-
-    // An American register wants an American company to put on it.
-    const company = facts.jurisdiction === 'us' ? americanArm(s.universe) : parentCompany(s.universe);
-    if (!company) {
-      return refuse(facts.jurisdiction === 'us'
-        ? 'There’s no American arm yet, and an American register wants an American company.'
-        : 'There’s no company to register.');
-    }
+    const no = whyNotRegister(s, payload.registry);
+    if (no) return refuse(no);
+    const facts = REGISTRY_BY_ID[payload.registry]!;
+    const company = (facts.jurisdiction === 'us' ? americanArm(s.universe) : parentCompany(s.universe))!;
     const paid = payFor(s, company.id, facts.cost, `${facts.label}, ${facts.body}`);
     if (!paid.ok) return paid;
 
@@ -908,16 +973,10 @@ export function registerCompanyCommands(sim: Simulation): void {
 
   /** Sign with a guild. */
   sim.onCommand<{ guild: GuildId }, Done>('company.sign', (payload, { sim: s }) => {
-    const facts = GUILD_BY_ID[payload.guild];
-    if (!facts) return refuse('There’s no such guild.');
-    if (!facts.signable) {
-      return refuse(`${facts.body} isn’t signed with. Employ people here and the collective agreement covers them.`);
-    }
-    if (signedWith(s.universe, payload.guild)) return refuse(`Already signed with ${facts.body}.`);
-
-    const company = facts.jurisdiction === 'us' ? americanArm(s.universe) : parentCompany(s.universe);
-    if (!company) return refuse('An American guild signs with an American company, and there isn’t one yet.');
-
+    const no = whyNotSign(s, payload.guild);
+    if (no) return refuse(no);
+    const facts = GUILD_BY_ID[payload.guild]!;
+    const company = (facts.jurisdiction === 'us' ? americanArm(s.universe) : parentCompany(s.universe))!;
     const parent = parentCompany(s.universe);
     const paid = payFor(s, parent ? parent.id : company.id, facts.depositCents, `${facts.body} deposit`);
     if (!paid.ok) return paid;
@@ -942,23 +1001,10 @@ export function registerCompanyCommands(sim: Simulation): void {
 
   /** Bind a policy. */
   sim.onCommand<{ policy: PolicyKind }, Done>('company.insure', (payload, { sim: s }) => {
-    const facts = POLICY_BY_ID[payload.policy];
-    if (!facts) return refuse('There’s no such cover.');
-    if (carries(s.universe, payload.policy)) return refuse(`${facts.label} is already bound.`);
-    const parent = parentCompany(s.universe);
-    if (!parent) return refuse('There’s no company to insure.');
-
-    // The one policy that cannot be bought, only earned.
-    if (payload.policy === 'errors_omissions') {
-      const broken = holdingsOf(s.universe).filter((one) => !one.chainComplete);
-      if (holdingsOf(s.universe).length === 0) {
-        return refuse('An underwriter reads the chain of title before writing this, and there’s nothing to read.');
-      }
-      if (broken.length > 0) {
-        return refuse(`The underwriter read the chain of title on ${broken[0]!.title} and stopped. ${broken[0]!.chainGap ?? 'There’s a gap in it.'}`);
-      }
-    }
-
+    const no = whyNotInsure(s, payload.policy);
+    if (no) return refuse(no);
+    const facts = POLICY_BY_ID[payload.policy]!;
+    const parent = parentCompany(s.universe)!;
     const paid = payFor(s, parent.id, facts.premiumCents, `${facts.label} premium`);
     if (!paid.ok) return paid;
 

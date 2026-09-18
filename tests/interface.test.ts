@@ -21,7 +21,10 @@ import { describe, expect, it } from 'vitest';
 import { ALL_DESTINATIONS, DESTINATIONS } from '@/ui/shell/destinations';
 import { WEATHER_EMOJI } from '@/engine/systems/weather';
 import { quickSave } from '@/engine';
-import { capabilitiesOf, type Blocker } from '@/engine/world/company';
+import {
+  capabilitiesOf, parentCompany, whyNotInsure, whyNotSign, type Blocker,
+} from '@/engine/world/company';
+import type { GuildId, PolicyKind } from '@/engine/domain/company';
 import { fixFor } from '@/ui/workspaces/fix';
 import { wouldBe } from '@/engine/world/making';
 
@@ -324,6 +327,61 @@ describe('every door a player is stopped at has a way through it', () => {
     }
     const door = capabilitiesOf(sim).find((one) => one.id === 'greenlight')!;
     expect(door.can, `still shut: ${door.blockers.map((b) => b.need).join(', ')}`).toBe(true);
+  });
+
+  it('offers everything the content declares, and not only what a blocker names', () => {
+    // The blocker chip was the only control in the build that fired
+    // `company.register`, `company.sign` or `company.insure`, and a chip only
+    // appears for something a shut door is waiting on. Walking every door open
+    // and harvesting every blocker that ever appears leaves three of the four
+    // signable guilds, one register, two policies and a company form never named
+    // by anything — so forty-odd lines of authored content apiece, deposits and
+    // agreements and what they bind you to, could not be bought by any route.
+    //
+    // The pages that describe them offer them now, and this is what says so: the
+    // register, guild and cover looks each carry the command for the thing they
+    // are about. `Take` is the control; `whyNot…` is why it is sometimes off,
+    // asked of the same function the command itself calls.
+    const looks = readFileSync('src/ui/looks/business.tsx', 'utf8');
+    for (const kind of ['company.register', 'company.sign', 'company.insure']) {
+      expect(looks, `${kind} is still reachable only as a blocker chip`).toContain(kind);
+    }
+    for (const asked of ['whyNotRegister', 'whyNotSign', 'whyNotInsure']) {
+      expect(looks, `${asked} is not asked, so the screen can offer what the engine refuses`)
+        .toContain(asked);
+    }
+
+    // And the refusal is the engine's own, which is the half that keeps the two
+    // from drifting: every one of these commands asks the same question first.
+    const engine = readFileSync('src/engine/world/company.ts', 'utf8');
+    for (const asked of ['whyNotRegister(s,', 'whyNotSign(s,', 'whyNotInsure(s,']) {
+      expect(engine, `the handler has its own copy of the guards instead of asking ${asked}`)
+        .toContain(asked);
+    }
+  });
+
+  it('can sign a guild and bind a policy no blocker ever asks for', () => {
+    // The three guilds and two policies the walk above never reaches. Through
+    // the commands the pages now run, in a save with the money to do it.
+    const sim = quickSave({}, 'doors-unasked');
+    const ran = (kind: string, payload: Record<string, unknown>): boolean =>
+      sim.execute<{ ok: boolean; error?: string }>({ kind, payload }).value?.ok === true;
+    const account = Object.values(sim.universe.accounts)
+      .find((one) => one.ownerId === parentCompany(sim.universe)!.id && one.kind === 'company_cash')!;
+    sim.income(account.id, 5_000_000_00, 'Sugar Land: the group', 'business');
+
+    // The two standing policies nothing ever blocks on.
+    for (const policy of ['property', 'business_interruption']) {
+      expect(whyNotInsure(sim, policy as PolicyKind), `${policy} cannot be bound at all`).toBeUndefined();
+      expect(ran('company.insure', { policy }), `${policy} was refused`).toBe(true);
+    }
+    // And the three American guilds, which want the arm first — which is itself
+    // one of the four things only a chip used to offer.
+    expect(ran('company.form_arm', {})).toBe(true);
+    for (const guild of ['wga', 'dga', 'iatse']) {
+      expect(whyNotSign(sim, guild as GuildId), `${guild} cannot be signed at all`).toBeUndefined();
+      expect(ran('company.sign', { guild }), `${guild} was refused`).toBe(true);
+    }
   });
 });
 
