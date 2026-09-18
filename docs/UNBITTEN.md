@@ -708,21 +708,35 @@ file reference rather than as a finding.
   higher rate is for audiences of eighteen and under, "which SLATE doesn't model:
   no picture declares an audience." A note describing a rule the engine cannot
   apply is a note that lies.
-- **The unscripted contributor cast board** — and this one is an inventory line
-  rather than an open defect, which is worth saying because it reads like the
-  latter. The format season has no `cast: 'performers'` on purpose: choosing
-  twelve contributors is a different act from casting written parts, engaged and
-  paid on different terms, and a flag reading true for both would be the shortest
-  possible way to say something false. The season's cast-board *period* is real
-  and paid for — 12% of the spend, forty contributors seen a week — so nothing is
-  free here; what does not exist is a screen listing the twelve.
+- ~~**The unscripted contributor cast board**~~ — **built, and it was more than an
+  inventory line after all.** This entry said it was one, on the grounds that
+  everything downstream was written to be right the day the screen existed. That
+  was true and it missed the cost of the screen not existing.
 
-  `datesFor`, `layTheRoles` and the withdrawn-consent trouble are all written to
-  be right the day that screen exists, and `tests/crew.test.ts` says so in as many
-  words. An adversarial re-audit of this line is in `docs/ARREARS.md` under
-  Refuted, including the probe showing withdrawn consent fires on 10 of 10
-  unscripted seeds without any contributor record — so the downstream readers this
-  line looks like it is starving are not starved.
+  Measured: an unscripted season carries no `roles`, so `castOf` returns nothing
+  for it, so **all five cast terms the sale reads came back undefined** — appeal,
+  controversy, spark, truth and reads. A third of every career's pictures were sold
+  on the negative and the deal alone, blind to who was in them. The absence was not
+  neutral; it was a whole axis of the sale switched off for one of the three forms
+  this game makes.
+
+  Three of the five read the board now and two deliberately do not. Appeal,
+  controversy and spark are questions about people. `truth` and `reads` ask
+  `wantsOn(role, axis)` — what the written part wanted — and a format has no part
+  to want anything, so they stay undefined and the code says why.
+
+  The warning this entry rested on still stands and was not taken back: a flag
+  reading true for both would say something false. What made the build possible is
+  that `Plan.cast` was a union rather than a boolean, which is the design
+  anticipating exactly this — the format season says `'contributors'`,
+  `castsPerformers` is still only `'performers'`, and no role is laid, no audition
+  armed, and no slot offered to the player. Being on a format's cast board is a job
+  and it is not this job; the refusal says that in those words.
+
+  Twelve people, one at a time, out of a pool of civilians. Nothing is charged for
+  them — the casting period already spends 12% of the budget on filling the board,
+  and billing a contributor on top would charge the same money twice. Once the
+  field starts the board is fixed.
 
 ### Found by measuring rather than by reading
 

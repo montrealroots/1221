@@ -710,6 +710,31 @@ export interface Project {
    * money on the first is still owed.
    */
   cast?: Seat[];
+  /**
+   * The twelve on a format season's cast board.
+   *
+   * A separate list from `cast` above, and it has to be, because the two are not
+   * the same act. A seat is somebody in a written part, engaged for the dates the
+   * part shoots and paid for that part. A contributor is engaged for the season,
+   * has no part to play, and cannot be recast — you do not replace the person
+   * whose story episode four turned out to be.
+   *
+   * `content/making.ts` warned against a boolean here for exactly this reason and
+   * the warning still stands. What changed is that the plan's `cast` field is a
+   * union, which was the design anticipating this, so the format season says
+   * `'contributors'` and the performer machinery stays switched off: no role is
+   * laid, no audition is armed, and the player is never offered a slot. Being on
+   * a format's cast board is a job and it is not the job this game is about.
+   */
+  contributors?: Contributor[];
+  /**
+   * Whoever has been seen for the board, by id.
+   *
+   * The pool, kept on the picture rather than made fresh each time anybody looks,
+   * for the reason `Role.seen` is: a screen that regenerated the people it was
+   * about every render would be a screen nobody could choose from.
+   */
+  seenForBoard?: Id[];
 
   // --- The life after delivery ---------------------------------------------
   // Empty until somebody buys it. A picture nobody has bought is an asset with
@@ -872,6 +897,23 @@ export interface Looked {
  * picture often enough that collapsing them would make a whole category of
  * real disaster unrepresentable.
  */
+/**
+ * Somebody on a format season's cast board.
+ *
+ * Deliberately thinner than a `Seat`, and every field it does not have is a
+ * statement. There is no `roleId`, because there is no part — what a contributor
+ * is on the season is themselves. There is no `releasedAt`, because a season does
+ * not recast a contributor: the episodes are made of what happened to the people
+ * who were there, so letting one go is not a cast change, it is a different
+ * season. And there is no fee of its own, because the cast board is already paid
+ * for — the format plan's casting period spends twelve percent of the budget and
+ * charging a contributor on top would be charging the same money twice.
+ */
+export interface Contributor {
+  personId: Id;
+  chosenAt: Instant;
+}
+
 export interface Seat {
   roleId: Id;
   personId: Id;

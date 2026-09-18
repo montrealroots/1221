@@ -41,6 +41,7 @@ import {
   reachOfBand, seatFor, sheetFor, shownOf, SOMEBODY_KNOWS, takeFactor, tapeLean, theBiggestName,
   theDiary, theNameThatGoesOff, TOO_HOT, wantsOn, whatSayingYesCosts, whereTheCastStands,
   whoCameIn, WHOEVER,
+  ON_THE_BOARD, boardSeen, castsContributors, castsControversy, whyNotOnTheBoard,
 } from '@/engine/world/casting';
 import { deckFor, somebodyGoesOff } from '@/engine/world/trouble';
 import { decideTake } from '@/engine/world/selling';
@@ -2157,5 +2158,142 @@ describe('one answer to whether the player is free', () => {
     const other = Object.values(sim.universe.people).find((p) => !p.isPlayer)!;
     const from = sim.now + MS_WEEK;
     expect(freeToWork(sim, other.id, from, from + MS_WEEK)).toBe(true);
+  });
+});
+
+describe('a format season is cast off a board, not off a breakdown', () => {
+  /**
+   * The last of the things `docs/UNBITTEN.md` had down as correct-but-unreachable,
+   * and the reason it was worth building rather than deleting is what it left
+   * undone. An unscripted season carries no `roles`, so `castOf` returns nothing,
+   * so **all five cast terms the sale reads came back undefined** — appeal,
+   * controversy, spark, truth and reads. A third of every career's pictures were
+   * sold on the negative and the deal alone, blind to who was in them.
+   *
+   * What is built is the three that are about people rather than about parts.
+   * `castOn(truth)` and `castOn(reads)` stay undefined on purpose, because they
+   * ask `wantsOn(role, axis)` — what the written part wanted — and a format has no
+   * written part to want anything.
+   */
+  const boardFor = (sim: Simulation, id: string, pick: (pool: Person[]) => Person[]): number => {
+    const project = sim.universe.projects[id]!;
+    const pool = boardSeen(sim, project);
+    expect(pool.length, 'nobody was seen for the board').toBeGreaterThan(ON_THE_BOARD);
+    let on = 0;
+    for (const one of pick(pool)) {
+      const done = run(sim, 'company.board', { projectId: id, personId: one.id });
+      if (done.ok) on += 1;
+    }
+    return on;
+  };
+
+  it('fills a board of twelve, out of people who are not performers', () => {
+    const sim = world('board-fill');
+    const id = greenlit(sim, 'unscripted', 'The Arena');
+    const project = sim.universe.projects[id]!;
+    expect(castsContributors(planById('unscripted'))).toBe(true);
+    expect(project.roles ?? [], 'a format season laid written parts').toHaveLength(0);
+
+    const pool = boardSeen(sim, project);
+    // Civilians, which is the whole difference. A format does not audition actors;
+    // it finds people whose lives are the program.
+    for (const one of pool) {
+      expect(one.careerTrack, `${one.firstName} is on a career track`).toBe('civilian');
+      expect(one.reputation.publicFame).toBe(0);
+    }
+    // And the pool is not regenerated every time somebody looks at it.
+    expect(boardSeen(sim, project).map((one) => one.id)).toEqual(pool.map((one) => one.id));
+
+    const on = boardFor(sim, id, (p) => p.slice(0, ON_THE_BOARD));
+    expect(on).toBe(ON_THE_BOARD);
+    expect(project.contributors).toHaveLength(ON_THE_BOARD);
+    // Full is full, and nobody is paid on top — the casting period already spends
+    // its share of the budget on filling the board.
+    expect(whyNotOnTheBoard(sim, id, pool[ON_THE_BOARD + 1]!.id)).toContain('full');
+  });
+
+  it('makes the season’s sale read who is on it, where it read nothing', () => {
+    const sim = world('board-sale');
+    const id = greenlit(sim, 'unscripted', 'The Arena');
+    const project = sim.universe.projects[id]!;
+
+    // Before: every one of the five is undefined, which is the defect stated as a
+    // measurement rather than as a sentence.
+    expect(castsAppeal(sim, project)).toBeUndefined();
+    expect(castSpark(sim, project)).toBeUndefined();
+    expect(castsControversy(sim, project)).toBeUndefined();
+
+    boardFor(sim, id, (pool) => pool.slice(0, ON_THE_BOARD));
+    expect(castsAppeal(sim, project), 'the sale still cannot see the board').toBeDefined();
+    expect(castSpark(sim, project), 'twelve people and no pairing between them').toBeDefined();
+    expect(castsControversy(sim, project)).toBeDefined();
+
+    // And the two that are about written parts stay undefined, on purpose: they
+    // ask what the part wanted, and a format has no part.
+    expect(castOn(sim, project, 'truth'), 'a format was asked what its parts wanted')
+      .toBeUndefined();
+    expect(castOn(sim, project, 'reads')).toBeUndefined();
+  });
+
+  it('changes what the season is worth by who is chosen, which is the whole point', () => {
+    // THE FALSIFIABILITY TEST. Same seed, same budget, same deal — two boards
+    // picked out of the same pool by opposite rules. If the choice decides nothing
+    // the takes are identical.
+    const take = (pick: (pool: Person[]) => Person[]): number => {
+      const sim = world('board-worth');
+      theyCanAffordIt(sim, 5_000_000_00);
+      const id = greenlit(sim, 'unscripted', 'The Arena');
+      boardFor(sim, id, pick);
+      const project = sim.universe.projects[id]!;
+      return decideTake(
+        {
+          negativeCents: project.budgetCents ?? 0,
+          dealId: 'streamer_buyout',
+          ...(castsAppeal(sim, project) !== undefined ? { appeal: castsAppeal(sim, project)! } : {}),
+          ...(castsControversy(sim, project) !== undefined
+            ? { controversy: castsControversy(sim, project)! } : {}),
+          ...(castSpark(sim, project) !== undefined ? { spark: castSpark(sim, project)! } : {}),
+        },
+        0.5,
+      ).cents;
+    };
+
+    const byAppeal = (pool: Person[]): Person[] => [...pool]
+      .sort((a, b) => b.reputation.audienceAppeal - a.reputation.audienceAppeal)
+      .slice(0, ON_THE_BOARD);
+    const againstAppeal = (pool: Person[]): Person[] => [...pool]
+      .sort((a, b) => a.reputation.audienceAppeal - b.reputation.audienceAppeal)
+      .slice(0, ON_THE_BOARD);
+
+    const good = take(byAppeal);
+    const bad = take(againstAppeal);
+    expect(good, 'who is on the board decides nothing about what it sells for')
+      .toBeGreaterThan(bad);
+  });
+
+  it('refuses the player, and says why rather than going quiet', () => {
+    // A reasonable thing to try, and the answer is about what this game is rather
+    // than about what the engine can do.
+    const sim = world('board-player');
+    const id = greenlit(sim, 'unscripted', 'The Arena');
+    boardSeen(sim, sim.universe.projects[id]!);
+    const no = whyNotOnTheBoard(sim, id, sim.universe.playerId);
+    expect(no).toContain('different job');
+  });
+
+  it('will not cast a board on a picture with written parts, or after the field starts', () => {
+    const sim = world('board-shut');
+    const scripted = greenlit(sim, 'feature', 'Hvítserkur');
+    expect(whyNotOnTheBoard(sim, scripted, sim.universe.playerId)).toContain('parts are written');
+
+    const format = world('board-late');
+    const id = greenlit(format, 'unscripted', 'The Arena');
+    const project = format.universe.projects[id]!;
+    const pool = boardSeen(format, project);
+    // The board is what it is once the cameras roll: the episodes are made of what
+    // happened to the people who were there.
+    const field = (project.periods ?? []).find((one) => one.id === 'field')!;
+    format.advanceTo(field.from + MS_DAY);
+    expect(whyNotOnTheBoard(format, id, pool[0]!.id)).toContain('field has started');
   });
 });

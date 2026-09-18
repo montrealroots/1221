@@ -225,14 +225,23 @@ export interface Plan {
   /**
    * Who stands in front of the camera, where anybody does.
    *
-   * `performers` is people cast in written parts. It is deliberately not a
+   * `performers` is people cast in written parts. It was deliberately not a
    * boolean, because the other answer is not "nobody" — a format season puts
    * twelve contributors on a cast board and choosing them is the same act as
    * choosing every story the season can contain. Those are engaged, held and
    * paid on entirely different terms, and a flag reading true for both would
    * be the shortest possible way to say something false.
+   *
+   * `contributors` is that second answer, and the union existing for exactly
+   * this is why it could be added without taking the warning back. The format
+   * season carries it now. What follows from it is deliberately not the
+   * performer path: `castsPerformers` is still only `'performers'`, so no role
+   * is laid, no audition is armed, and the player is never offered a slot on a
+   * cast board — being a contributor on a format is a job and it is not this
+   * job. What contributors do reach is the three sale terms that are about
+   * people rather than about parts, and `world/casting.ts` says which and why.
    */
-  cast?: 'performers';
+  cast?: 'performers' | 'contributors';
   /**
    * The shooting ratio this plan's cutting rate is quoted at, by band id.
    *
@@ -419,6 +428,7 @@ const UNSCRIPTED: Plan = {
   id: 'unscripted',
   basePeriod: 'field',
   ratio: 'rig',
+  cast: 'contributors',
   label: 'A Format Season, Against An Airdate',
   what: 'A cast board, a built arena, a continuous shoot, and a cut that starts the same day the cameras do.',
   media: ['television'],

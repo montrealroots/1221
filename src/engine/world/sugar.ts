@@ -246,7 +246,7 @@ export function registerSugar(sim: Simulation): void {
         title: `${GROUP.name} Declares A Dividend`,
         body: `${euros(shared)} to the two shareholders, split by what each of them holds. The group `
           + `keeps ${euros(retainedByTheGroup())} in the business — a year of the worldwide payroll — `
-          + 'and that reserve is what the film company is funded out of, so the slate is not touched '
+          + 'and that reserve is what the film company is funded out of, so the slate isn’t touched '
           + 'by this. What leaves is the part the business had no use for.',
         importance: 35,
       });

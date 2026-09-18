@@ -33,7 +33,8 @@ import { decideTake, type Prospects } from './world/selling';
 import { DEALS } from './content/selling';
 import { decideHire, standingReads, type Hiring } from './world/crew';
 import {
-  believedAt, decideOffer, reachOfBand, readOn, sheetFor, sparkBetween, sparkReads, whatItWants,
+  ON_THE_BOARD, believedAt, decideOffer, reachOfBand, readOn, sheetFor, sparkBetween, sparkReads,
+  whatItWants,
   type Offer,
 } from './world/casting';
 import {
@@ -848,6 +849,49 @@ defineDecider<Wanted, string>({
   },
 });
 
+
+/**
+ * Who a format season is offered, which is a different draw from who reads for a
+ * part and had to be its own entry.
+ *
+ * `casting.seen` above is about a band buying a standard of performer: the money
+ * decides the spread and the draw places one submission in it. A cast board is not
+ * bought — the contributors are civilians on a stipend, and what varies between
+ * one pool and another is not how good they are at anything. It is whether the
+ * twelve people available are people an audience would watch, and whether any of
+ * them is already trouble.
+ *
+ * So the outcome reported is the shape of the pool rather than the quality of one
+ * person, because that is what the choice is made out of.
+ */
+defineDecider<{ draw: number }, string>({
+  id: 'casting.board',
+  decides: 'What kind of people are available for a format season’s cast board.',
+  drawnIn: 'src/engine/world/casting.ts',
+  reads: {
+    // The only input. There is no band to read: a format does not buy a standard
+    // of contributor, it sees who is around.
+    draw: (p, t) => ({ ...p, draw: t }),
+  },
+  sample: (seed) => ({ draw: ((seed * 7) % 13) / 13 }),
+  decide: ({ draw }) => {
+    let n = draw;
+    const next = (): number => { n = (n * 9301 + 49297) % 1; return Math.abs(n * 233280 % 1); };
+    // Twelve of them, which is a board's worth, read for the two things a format
+    // is cast on.
+    let appeal = 0;
+    let trouble = 0;
+    for (let i = 0; i < ON_THE_BOARD; i += 1) {
+      appeal += 10 + next() * 85;
+      if (next() < 0.25) trouble += 1;
+    }
+    const mean = appeal / ON_THE_BOARD;
+    const said = mean < 40 ? 'nobody the country would watch'
+      : mean < 60 ? 'a watchable dozen'
+        : 'people who would carry a season';
+    return `${said}, ${trouble === 0 ? 'none of them trouble' : `${trouble} already trouble`}`;
+  },
+});
 const WANTS = new Map<number, Simulation>();
 function wantsFor(seed: number): Simulation {
   const held = WANTS.get(seed);
