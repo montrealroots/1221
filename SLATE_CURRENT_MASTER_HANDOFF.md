@@ -182,11 +182,57 @@ player, whose name a test supplies. `\p{Lu}` is what was meant.
 
 ---
 
-### Still open, and owner-only
+### The three that were open are closed
 
-- **What the slate's 1.44–1.63× return should be.** A number only the owner can set.
-- **"Nothing in the company ever ends"** — the lapsing/renewal clock. Specced twice, failed both times; it needs a smaller first cut.
-- **Post consent** — "nobody has to say yes" to a post they are offered.
+**Post consent — "nobody has to say yes."** Three reasons, all read off the world:
+no bond at all (which is every one of the sugar group's five executives),
+`closeness` under `WILL_TAKE_A_POST` of forty, and already holding a bigger seat.
+Closeness is the one that costs something, because it records what the player did
+— six up a kept plan, ten down a missed one, resting at 60 under one roof and 25
+apart — so neglect is what shuts the door and four kept plans is what reopens it.
+
+With it, **one seat per company**, which finally charges for the scarcity this
+build has always described: six posts, three relatives. Per *company*, because
+both parents sit on the sugar group's board as well and those are not competing
+jobs — thirty-eight tests went red the moment that question was asked of the right
+company, every one a helper putting one person in two chairs a door depended on.
+
+**"Nothing in the company ever ends" — built, by being smaller than the two
+attempts that failed.** Options run out (`expiresAt`, read by nothing before) and
+cover has to be renewed (`renewsAt`, with `lapsedAt` previously having no writer
+anywhere in the tree). The greenlight exercises the option, which is what buying
+the rights at the moment of commitment means and is what makes the clock safe: a
+picture in production cannot lose its material. Premiums are charged again —
+**EUR 1,392,000 over twenty-five played years** — automatically while the company
+can pay, with a month of grace and the date said out loud when it cannot.
+
+**Registrations and guild signatures are the remaining cut**, deliberately. Both
+have `endedAt` with no writer, both are named in the same entry, but a registration
+lapsing shuts `trade` — the door everything else hangs off — and what it should
+cost to keep a company on the register is unanswered. Specify it before attempting
+it, which is the lesson of the two failures.
+
+**The slate's 1.44–1.63× return: the multiple was the wrong question and is
+untouched.** Asked who receives it: the company ends twenty-five years holding
+**EUR 238,755,876** and the player who ran all thirty-six pictures ends with
+**EUR 700**, holding nought percent, having received EUR 1,540 in a quarter of a
+century. The company was not out-earning the career; it was earning money the
+career could never reach, through no mechanism at all.
+
+What landed is a **producer's fee** — three percent of the greenlit budget, paid
+across the schedule to whoever holds the principal's chair, out of the budget
+rather than on top. **EUR 19,047,915 to the player over twenty-five years** where
+they hold the chair against EUR 700 where they do not, company still ending on
+EUR 238m for the family that financed it. Sized against acting rather than the
+slate: EUR 600,000 on a twenty-million feature against a lead part at about
+EUR 878,000, so producing pays a little less than a good part and the return on the
+bet stays with the people who took it.
+
+Two things had to exist first. The chair could not be taken — `fill_post` refused
+"Somebody is already the principal", so the fee's recipient could never be the
+player; whoever holds a seat can be asked to stand down now, on the same
+`closeness`. And nobody had an account to be paid into, so `purseFor` moved from
+`world/sugar.ts` to `world/money.ts`.
 
 ### The PR is not open, and cannot be opened from here
 
@@ -197,7 +243,7 @@ player, whose name a test supplies. `\p{Lu}` is what was meant.
 
 ### The commits
 
-**Branch `claude/slate-cleanup-e4apmx` is 27 commits past `dc52d64`.** Gate exit 0 on every one of them before it was committed — **1,305 tests over 47 files** at the latest, dead-word floor 51 and dials 8 both unmoved. One section per commit, each independently droppable. The nine numbered sections are the first pass; the remainder pass and the sugar company follow them.
+**Branch `claude/slate-cleanup-e4apmx` is 32 commits past `dc52d64`.** Gate exit 0 on every one of them before it was committed — **1,323 tests over 47 files** at the latest, dead-word floor 51 and dials 8 both unmoved. One section per commit, each independently droppable. The nine numbered sections are the first pass; the remainder pass and the sugar company follow them.
 
 | # | Section | Commit | What it was |
 |---|---|---|---|
