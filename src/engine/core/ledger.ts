@@ -10,10 +10,37 @@
 import type { Instant } from './time';
 import type { Money } from './money';
 
+/**
+ * The four kinds of account this game opens, and it used to declare twelve.
+ *
+ * Found by measuring rather than by reading: a probe over the ledger of a played
+ * career and a played business listed every account in both saves, and there were
+ * four kinds in them. `grep "kind: '<each>'"` across the engine then said why —
+ * eight of the twelve had no writer anywhere, so no save this build can produce
+ * has ever held one.
+ *
+ * What they were is worth recording, because most of them are the wreckage of
+ * worlds this project has already deleted rather than plans for one. `mortgage`
+ * and `auto_loan` outlived the property ladder and the vehicles — the last of the
+ * property market came off `Property` at schema 80 — and `brokerage`, `cash` and
+ * `loan` came with the American retail bank that `62c30ca` cut. `escrow` and
+ * `production_account` are the two that were a plan: money held against a
+ * delivery, and a picture banking its own float. Neither was ever built, and
+ * `world/making.ts` settles a period straight out of the company's cash.
+ *
+ * `company_credit` is the one worth arguing about and it goes for the same reason
+ * as the rest: a production company's overdraft is a real thing, and in this build
+ * the family's patience already does that job — `familyCovers` tops the account up
+ * from below zero every day, so a credit line would be a second answer to a
+ * question already answered. Measured: the company never ends a day under water on
+ * any seed, so an overdraft rate would never once have been charged.
+ *
+ * Any of them is three lines to put back on the day something opens one, and the
+ * `Account` fields they would need are still here — `creditLimit` and `apr` are
+ * read by the card.
+ */
 export type AccountKind =
-  | 'checking' | 'savings' | 'cash' | 'credit_card' | 'loan' | 'mortgage'
-  | 'auto_loan' | 'brokerage' | 'company_cash' | 'company_credit'
-  | 'escrow' | 'production_account'
+  | 'checking' | 'savings' | 'credit_card' | 'company_cash'
   // Nominal counter-accounts. These never hold player money; they exist so
   // every posting has a balancing partner and every dollar has a provenance.
   | 'income' | 'expense' | 'equity' | 'asset_value' | 'liability_other';
@@ -24,8 +51,15 @@ export function isNominal(kind: AccountKind): boolean {
   return NOMINAL_KINDS.includes(kind);
 }
 
-/** Liability accounts carry a negative balance when money is owed. */
-export const LIABILITY_KINDS: readonly AccountKind[] = ['credit_card', 'loan', 'mortgage', 'auto_loan', 'company_credit'];
+/**
+ * Liability accounts carry a negative balance when money is owed.
+ *
+ * One kind, where there were five. The other four — `loan`, `mortgage`,
+ * `auto_loan` and `company_credit` — were never opened by anything, so
+ * `isLiability` has only ever answered about a card, and the list read as though
+ * this game had a debt model.
+ */
+export const LIABILITY_KINDS: readonly AccountKind[] = ['credit_card'];
 
 export function isLiability(kind: AccountKind): boolean {
   return LIABILITY_KINDS.includes(kind);
@@ -161,7 +195,7 @@ export class Ledger {
    */
   availableFunds(accountId: string): Money {
     const a = this.account(accountId);
-    if (a.kind === 'credit_card' || a.kind === 'company_credit') {
+    if (isLiability(a.kind)) {
       return Math.max(0, (a.creditLimit ?? 0) + a.balance);
     }
     return a.balance;

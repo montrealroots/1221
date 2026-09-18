@@ -43,16 +43,8 @@ const RECENT_WORDS = 'thirty days';
 const ACCOUNT_KIND: Readonly<Record<AccountKind, string>> = {
   checking: 'What You Spend From',
   savings: 'What You Put Aside',
-  cash: 'Money In Hand',
   credit_card: 'A Line Of Credit',
-  loan: 'Money You Borrowed',
-  mortgage: 'The Loan On The Roof',
-  auto_loan: 'The Loan On The Car',
-  brokerage: 'Money At Work',
   company_cash: 'The Company Account',
-  company_credit: 'The Company Card',
-  escrow: 'Money Held For Later',
-  production_account: 'A Production Account',
   // Nominal accounts never resolve, so these are here for completeness only.
   income: 'Where Money Comes From',
   expense: 'Where Money Goes',
@@ -197,15 +189,12 @@ function movementSentence(inward: number, outward: number): string {
 
 /** What the money in this sort of account is for. */
 function tailFor(kind: AccountKind, spendsFromIt: boolean): string {
+  // Four kinds of account exist, so there are not many cases to answer. The
+  // three that were here for a brokerage, an escrow and money in hand went with
+  // the kinds themselves, which nothing had ever opened.
   switch (kind) {
     case 'savings':
-      return 'set aside, and not for spending.';
-    case 'brokerage':
-      return 'and what it’s worth moves with the market.';
-    case 'escrow':
-      return 'and it isn’t yours to touch until the thing it’s for happens.';
-    case 'cash':
-      return 'and it spends without asking anybody.';
+      return 'set aside, and earning while it sits there.';
     default:
       return spendsFromIt ? 'and that’s what today comes out of.' : 'and it sits there until you move it.';
   }

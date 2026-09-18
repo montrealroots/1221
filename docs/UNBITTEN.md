@@ -448,16 +448,26 @@ file reference rather than as a finding.
   to 65.38 — and it was the input that had no producer. Field, `axisModifier`
   case, four trait modifiers, the higher-is-worse guard and the ninth dial on the
   screen all went together. Openness went with it into the paragraph above.
-- **The income tax engine is a screen, and it is the only tax left that is.**
-  This line used to read "nothing taxes a fee, a wage or a company's profit", and
-  two thirds of that is now false. **The group pays corporation tax** at
-  `CORPORATION_TAX` of 20%, filed in May, out of `world/sugar.ts`. **Wages are
-  charged Tryggingagjald** at 6.35%, on the sugar group's payroll and on the
-  lot's own posts. **VAT is filed and reclaimed** on a real return out of
-  `world/vat.ts`. What is left unwired is income tax on the player, which is
-  `computeAnnualTax` — real, correct on its own tables, and read by one thing:
-  the place card, which works out what a reference wage would be taxed at and
-  prints it.
+- ~~**The tax engine is a screen.**~~ **Nothing about it is, any more, and this
+  line has now been wrong twice in one day in two different directions.** It first
+  read "nothing taxes a fee, a wage or a company's profit", which had become two
+  thirds false: the group pays corporation tax at `CORPORATION_TAX` of 20% filed
+  in May, wages carry Tryggingagjald at 6.35% on the group's payroll and the lot's
+  posts, and VAT is filed and reclaimed on a real return. It was corrected to say
+  income tax on the player was the one tax still unwired — and then the banking
+  build wired it three commits later, which made the correction false too.
+
+  `computeAnnualTax` is charged now. `settleTheReturn` assesses a person on what
+  their accounts actually took in the year gone and posts the bill out of the
+  pocket that can stand it, in the June after the year it was earned, for
+  everybody in the save rather than only the player. Measured over twenty-five
+  played years: EUR 227,263 off a career grossing EUR 938,000, and EUR 14.5m off
+  the parents against the EUR 26.6m they drew from the board.
+
+  The lesson is not about tax. **This entry was falsified by the same session that
+  wrote it**, which is what a live page does when it is edited faster than it is
+  re-read, and it is the third time in this run of work that a claim about the code
+  outlived the code. Read anything here against the tree before trusting it.
 
   Iceland is at least IN the tables — it was in none of them, so the home screen
   told a player living in Mosfellsbær that Iceland taxes a wage at 0% and charges
