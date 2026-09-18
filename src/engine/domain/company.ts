@@ -140,6 +140,23 @@ export interface Company {
    * also the only way to read what money spent on being known actually bought.
    */
   turnedAway?: Partial<Record<string, number>>;
+  /**
+   * The same enquiries again, counted by which office they came from.
+   *
+   * `turnedAway` above buckets a refusal by its reason, which answers "what is
+   * sending work away" and hides "who". Three of the ten offices in
+   * `ENQUIRY_SHAPES` — the European agency's commercials, the Nordic
+   * broadcaster's series, the streamer's documentaries, 26 of 101 in enquiry
+   * weight — are refused at every room size this lot can build, on the rebate
+   * arithmetic or on price. They ring every year and they always go to Budapest.
+   *
+   * That is the premise of the whole business working exactly as written, and it
+   * was invisible: a player saw an anonymous tally of reasons and could not tell
+   * a run of bad luck from three standing customers they are structurally unable
+   * to serve. The stage the player can choose to build is the decision this
+   * informs — it recovers one of the four, and no room recovers the other three.
+   */
+  rangAndWent?: Partial<Record<string, { times: number; because: string }>>;
 }
 
 // ---------------------------------------------------------------------------

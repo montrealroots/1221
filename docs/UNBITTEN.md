@@ -969,13 +969,25 @@ file reference rather than as a finding.
 - ~~**Two functions answer whether the player is free, and they disagree.**~~
   **Cleared.** There were three, and the disagreement was 40.5% of spans — see
   below.
-- **The casting office is a display string**, so an office's identity is its own
-  prose and its taste is seeded from it. The count on this line used to say nine
-  addressable offices, two of which are one. Measured: **six** offices appear
-  across three careers of twenty-five played years, of ten shapes declared, and
-  the two that are one thing addressed twice are *an American studio, a feature*
-  and *a Hollywood studio, a feature*. Not built on, because nothing shows the
-  split biting; recorded because editing the copy silently moves the simulation.
+- ~~**The casting office is a display string**, so an office's identity is its own
+  prose and its taste is seeded from it.~~ **Fixed, and the reason to fix it was
+  the last clause of this entry.** Nothing showed the split biting, which is why
+  it sat here for so long — but "editing the copy silently moves the simulation"
+  is a standing hazard on a project that rewrites its own prose weekly. Every
+  memory function keys on `Enquiry.officeId` now, `holder` does nothing but
+  print, and a test rewrites an office's sentence and checks that what the player
+  has built up with it survives. Schema 81 matches old rows on the sentence, once.
+
+  **And four of the ten shapes never book on the lot as the family built it** —
+  the Icelandic documentary on price, the European commercial and the streamer
+  documentary on the rebate against what it costs to bring a crew here, and the
+  Nordic series on price. Thirty-six of a hundred and one in enquiry weight.
+  That is the premise working, not dead content: every refusal is counted and
+  shown. What was wrong is that `turnedAway` buckets by reason, so the board
+  could not tell three standing customers it cannot serve from a run of awkward
+  weeks. `keepsRinging` names them now, with the reason each gave, which is also
+  what makes building a room readable: the fifth stage recovers exactly one of
+  the four and the three foreign ones go on ringing.
 - **The posts cost nothing and nobody has to say yes.** **Half fixed, and the
   half that is fixed is the money.** `ROLES` carried a `monthlyCents` on every
   row — nine thousand for a head of development, eleven for a head of

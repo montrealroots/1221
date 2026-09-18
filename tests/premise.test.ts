@@ -414,6 +414,33 @@ describe('the craft is acting, and only acting', () => {
       }
     }
   });
+
+  it('names the office an old save only had a sentence for', () => {
+    // Schema 81. A casting office's identity used to be the prose printed about
+    // it, so a save written before this has the sentence and no id. The
+    // migration matches on the sentence, once, and everything the player had
+    // built up with that office survives the change — which is the whole point
+    // of the change, because from here a rewrite of the sentence costs nothing.
+    const { universe } = quickSave({}, 'premise-offices');
+    universe.meta.schemaVersion = SAVE_SCHEMA_VERSION - 1;
+    const bookingId = 'booking_old';
+    universe.bookings[bookingId] = {
+      id: bookingId, saveId: universe.meta.id, stageId: 'stage_x',
+      holder: 'RÚV, a limited series', kind: 'shooting',
+      from: universe.now, to: universe.now + 1, weekRateCents: 1,
+    };
+    const auditionId = 'audition_old';
+    universe.auditions[auditionId] = {
+      id: auditionId, saveId: universe.meta.id, bookingId,
+      holder: 'a Hollywood studio, a feature', size: 'day', feeCents: 1,
+      from: universe.now, to: universe.now + 1, closesAt: universe.now + 1,
+      wants: {}, state: 'over', why: 'went-another-way',
+    } as unknown as typeof universe.auditions[string];
+
+    migrate(universe);
+    expect(universe.bookings[bookingId]!.officeId).toBe('ruv_series');
+    expect(universe.auditions[auditionId]!.officeId).toBe('hollywood_feature');
+  });
 });
 
 describe('the house rule holds in the source', () => {

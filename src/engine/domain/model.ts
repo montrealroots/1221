@@ -515,6 +515,15 @@ export interface Booking {
   id: Id;
   saveId: Id;
   stageId: Id;
+  /**
+   * Which office this is, off the enquiry that booked it.
+   *
+   * Absent on the family's own holds, which are not an office ringing up. The
+   * player's whole memory of a casting office keys on this: it used to key on
+   * `holder` below, which is a sentence, so rewording a line of prose wiped the
+   * history and changed the office's taste.
+   */
+  officeId?: string;
   /** Who is on it, in the world's words. */
   holder: string;
   /** Set when it is the family's own company on its own stage. */
@@ -606,7 +615,7 @@ export interface Preferences {
  * A save from 76 or earlier has no company at all, which reads correctly as a
  * family that never formed one rather than as a broken save.
  */
-export const SAVE_SCHEMA_VERSION = 80;
+export const SAVE_SCHEMA_VERSION = 81;
 
 export interface SaveMeta {
   id: Id;
@@ -701,6 +710,15 @@ export interface Audition {
    * back off the thing that actually generated them rather than copied.
    */
   bookingId: Id;
+  /**
+   * Which office is casting, off the booking.
+   *
+   * This is what every memory function keys on — how many of the player's rooms
+   * this office has sat through, what it keeps asking for, whether it has given
+   * up ringing. `holder` below is what a screen prints, and the two are kept
+   * apart on purpose: identity that doubles as display copy cannot be reworded.
+   */
+  officeId: string;
   /** Who is casting, in the world's words. Read off the booking's holder. */
   holder: string;
   /** How big the part is, by `content/casting.ts` size id. */

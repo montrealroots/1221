@@ -54,13 +54,16 @@ const run = (sim: Simulation, kind: string, payload: Record<string, unknown> = {
 const world = (seed: string): Simulation => quickSave({}, seed);
 
 /** Puts an outside production on a stage, the way the lot does. */
-function shootingOnTheLot(sim: Simulation, holder: string, weeks = 6, inWeeks = 8): Booking {
+function shootingOnTheLot(
+  sim: Simulation, holder: string, weeks = 6, inWeeks = 8, officeId = holder,
+): Booking {
   const stage = Object.values(sim.universe.stages)[0]!;
   const from = sim.now + inWeeks * MS_WEEK;
   const booking: Booking = {
     id: sim.nextId('booking'),
     saveId: sim.universe.meta.id,
     stageId: stage.id,
+    officeId,
     holder,
     kind: 'shooting',
     from,
@@ -86,7 +89,7 @@ function untilTheyAsk(sim: Simulation, booking: Booking): Audition | undefined {
   for (let i = 0; i < 2; i += 1) {
     const id = sim.nextId('audition');
     sim.universe.auditions[id] = {
-      id, saveId: sim.universe.meta.id, bookingId: `before-${id}`, holder: booking.holder,
+      id, saveId: sim.universe.meta.id, bookingId: `before-${id}`, officeId: booking.holder, holder: booking.holder,
       size: 'day', feeCents: 1_00, from: sim.now - 2 * MS_WEEK, to: sim.now - MS_WEEK,
       closesAt: sim.now - 3 * MS_WEEK, wants: {}, state: 'over', why: 'went-another-way',
     };
@@ -147,6 +150,7 @@ function castOnSomething(sim: Simulation, weeks = 6, inWeeks = 8, size = 'lead')
     id: sim.nextId('audition'),
     saveId: sim.universe.meta.id,
     bookingId: booking.id,
+    officeId: booking.holder,
     holder: booking.holder,
     size,
     feeCents: 1_000_00,
@@ -204,7 +208,7 @@ describe('what an office thinks you are', () => {
     const booking = shootingOnTheLot(sim, 'One Office');
     for (let i = 0; i < WHAT_THEY_OFFER.seenEnough; i += 1) {
       sim.universe.auditions[`a${i}`] = {
-        id: `a${i}`, saveId: sim.universe.meta.id, bookingId: booking.id, holder: 'One Office',
+        id: `a${i}`, saveId: sim.universe.meta.id, bookingId: booking.id, officeId: 'One Office', holder: 'One Office',
         size: 'day', feeCents: 1, from: sim.now, to: sim.now, closesAt: sim.now,
         wants: AS_WRITTEN, state: 'over', why: 'went-another-way',
       };
@@ -623,7 +627,7 @@ describe('being remembered is the ratchet, and a no counts', () => {
     for (let i = 0; i < 3; i += 1) {
       const id = sim.nextId('audition');
       sim.universe.auditions[id] = {
-        id, saveId: sim.universe.meta.id, bookingId: `b${i}`, holder, size: 'day',
+        id, saveId: sim.universe.meta.id, bookingId: `b${i}`, officeId: holder, holder, size: 'day',
         feeCents: 1_000_00, from: sim.now, to: sim.now + MS_WEEK, closesAt: sim.now,
         wants: {}, state: 'over', why: 'went-another-way',
       };
@@ -637,6 +641,53 @@ describe('being remembered is the ratchet, and a no counts', () => {
     expect(now).toBeCloseTo(COLD + (1 - COLD) * (1 - Math.exp(-3 * REMEMBERED)), 6);
     // And it is these people only. Being read by RÚV is nothing to anybody else.
     expect(remembersYou(sim, 'an American studio, a feature')).toBeCloseTo(COLD, 6);
+  });
+
+  it('survives the office being described differently, because a name is not an identity', () => {
+    // An office used to BE the sentence printed about it. `holder` is
+    // `${from}, ${kind}` in prose, every memory function keyed on it by string
+    // equality, and `theHouse` seeded that office's taste off the same string.
+    // So a copy edit in `content/lot.ts` — the kind this project makes weekly —
+    // silently wiped the player's whole history with that office and handed it
+    // different preferences, and two shapes whose sentences happened to match
+    // were one office. The table did once carry 'an American studio, a feature'
+    // twice, for a 5,200 m² picture and a 3,000 m² one.
+    const sim = world('reworded');
+    const office = 'ruv_series';
+    for (let i = 0; i < 3; i += 1) {
+      const id = sim.nextId('audition');
+      sim.universe.auditions[id] = {
+        id, saveId: sim.universe.meta.id, bookingId: `b${i}`, officeId: office,
+        holder: 'RÚV, a limited series', size: 'day',
+        feeCents: 1_000_00, from: sim.now, to: sim.now + MS_WEEK, closesAt: sim.now,
+        wants: {}, state: 'over', why: 'went-another-way',
+      };
+    }
+    const known = remembersYou(sim, office);
+    const believed = believedOf(sim, office);
+    const house = theHouse(sim, office);
+    expect(known).toBeGreaterThan(COLD);
+    expect(believed).toBeGreaterThan(0);
+
+    // Now say it another way, which is all a rewrite is.
+    for (const one of Object.values(sim.universe.auditions)) {
+      if (one.officeId === office) one.holder = 'Icelandic public television, a returning drama';
+    }
+    expect(remembersYou(sim, office), 'a copy edit wiped the player’s record').toBeCloseTo(known, 9);
+    expect(believedOf(sim, office)).toBe(believed);
+    expect(theHouse(sim, office), 'the office wants different things now').toEqual(house);
+
+    // And two offices that happen to be described alike are still two offices.
+    const twin = 'us_feature';
+    const id = sim.nextId('audition');
+    sim.universe.auditions[id] = {
+      id, saveId: sim.universe.meta.id, bookingId: 'twin', officeId: twin,
+      holder: 'Icelandic public television, a returning drama', size: 'day',
+      feeCents: 1_000_00, from: sim.now, to: sim.now + MS_WEEK, closesAt: sim.now,
+      wants: {}, state: 'over', why: 'went-another-way',
+    };
+    expect(readFor(sim, office)).toHaveLength(3);
+    expect(readFor(sim, twin), 'one sentence, two offices, one memory').toHaveLength(1);
   });
 });
 
@@ -812,7 +863,7 @@ describe('what the player can work out about a holder', () => {
   ): void => {
     const id = sim.nextId('audition');
     sim.universe.auditions[id] = {
-      id, saveId: sim.universe.meta.id, bookingId: `b-${id}`, holder, size: 'day', feeCents: 1_00,
+      id, saveId: sim.universe.meta.id, bookingId: `b-${id}`, officeId: holder, holder, size: 'day', feeCents: 1_00,
       from: sim.now, to: sim.now, closesAt: sim.now, wants: {}, state: 'over',
       why: 'went-another-way', way, played,
       ...(noted ? { note: { shade: 'warmth', toward: 1 } } : {}),
@@ -874,10 +925,10 @@ describe('what the player can work out about a holder', () => {
       playACareer(sim, 12, {
         way: 'room',
         openingFor: (at, one) => {
-          const taste = whatTheyKeepAskingFor(at, one.holder);
+          const taste = whatTheyKeepAskingFor(at, one.officeId);
           far.push({
             rooms: taste.rooms,
-            off: howFarOff(readingOf(taste.reading), theHouse(at, one.holder)),
+            off: howFarOff(readingOf(taste.reading), theHouse(at, one.officeId)),
             cold: SHADES.every((shade) => taste.reading[shade.id] === AS_WRITTEN[shade.id]),
           });
           return readingOf(taste.reading);
@@ -926,7 +977,7 @@ describe('what the player can work out about a holder', () => {
         const out = playACareer(sim, 12, {
           way: 'room',
           ...(memory
-            ? { openingFor: (at, one) => readingOf(whatTheyKeepAskingFor(at, one.holder).reading) }
+            ? { openingFor: (at, one) => readingOf(whatTheyKeepAskingFor(at, one.officeId).reading) }
             : {}),
         });
         cast += out.cast;
@@ -1327,7 +1378,7 @@ describe('an ask that is never answered', () => {
     const ask = (closesAt: number, why: string): void => {
       const id = sim.nextId('audition');
       sim.universe.auditions[id] = {
-        id, saveId: sim.universe.meta.id, bookingId: 'b', holder, size: 'guest', feeCents: 0,
+        id, saveId: sim.universe.meta.id, bookingId: 'b', officeId: holder, holder, size: 'guest', feeCents: 0,
         from: closesAt, to: closesAt, closesAt, wants: { warmth: 0, size: 0, pace: 0 },
         state: 'over', why,
       };
@@ -1349,7 +1400,7 @@ describe('an ask that is never answered', () => {
     const oldId = old.nextId('audition');
     const longAgo = old.now - (HELD_AGAINST_YOU_YEARS + 1) * 365 * MS_DAY;
     old.universe.auditions[oldId] = {
-      id: oldId, saveId: old.universe.meta.id, bookingId: 'b', holder, size: 'guest', feeCents: 0,
+      id: oldId, saveId: old.universe.meta.id, bookingId: 'b', officeId: holder, holder, size: 'guest', feeCents: 0,
       from: longAgo, to: longAgo, closesAt: longAgo, wants: { warmth: 0, size: 0, pace: 0 },
       state: 'over', why: 'never-answered',
     };
@@ -1474,7 +1525,7 @@ describe('a no you misheard is a different no', () => {
     // it was that "a no you can open and find out you misheard is a different
     // no from a no you played right". It was neither: it was a word.
     const missed: Audition = {
-      id: 'audition_x', saveId: 's', bookingId: 'b', holder: 'somebody casting',
+      id: 'audition_x', saveId: 's', bookingId: 'b', officeId: 'somebody casting', holder: 'somebody casting',
       size: 'guest', feeCents: 1_000_00, from: 0, to: 0, closesAt: 0,
       wants: { warmth: 0, size: 0, pace: 0 }, state: 'over', why: 'went-another-way',
       heard: false,
@@ -1635,7 +1686,7 @@ describe('an office that knows you still notices what you are', () => {
     for (let i = 0; i < times; i += 1) {
       const id = sim.nextId('audition');
       sim.universe.auditions[id] = {
-        id, saveId: sim.universe.meta.id, bookingId: `b${i}`, holder: 'them',
+        id, saveId: sim.universe.meta.id, bookingId: `b${i}`, officeId: 'them', holder: 'them',
         size: 'guest', feeCents: 0, from: 0, to: 0, closesAt: 0,
         wants: { warmth: 0, size: 0, pace: 0 }, state: 'over', why: 'went-another-way',
       };
@@ -1699,7 +1750,7 @@ describe('an office that knows you still notices what you are', () => {
     playACareer(sim, 25, {
       eachWeek: (at) => {
         for (const one of goingNow(at)) {
-          const held = remembersYou(at, one.holder);
+          const held = remembersYou(at, one.officeId);
           seen.push(held);
           if (held >= 0.9999) pinned.push(held);
         }

@@ -608,7 +608,7 @@ describe('the lot as a business', () => {
   it('sends a production somewhere else when nothing here is the right size', () => {
     const sim = quickSave({}, 'lot-toobig');
     const answer = wouldBook(sim, {
-      kind: 'feature', from: 'somebody enormous', needsSqm: 20_000, needsHeightM: 40,
+      officeId: 'a_room', kind: 'feature', from: 'somebody enormous', needsSqm: 20_000, needsHeightM: 40,
       needsTank: false, weeks: 10, spendIsk: 5_000_000_000, local: false,
     }, sim.now + 30 * MS_DAY);
     expect(answer.stageId).toBeUndefined();
@@ -620,6 +620,7 @@ describe('the lot as a business', () => {
     // Spending enough that the room is a small share of it, so the only thing
     // left to turn it away is where its crew is coming from.
     const small = {
+      officeId: 'streamer_doc',
       kind: 'documentary' as const, from: 'a streamer', needsSqm: 600, needsHeightM: 8,
       needsTank: false, weeks: 2, spendIsk: 300_000_000,
     };
@@ -637,7 +638,7 @@ describe('the lot as a business', () => {
   it('lets the big foreign ones in, because the higher tier is built for them', () => {
     const sim = quickSave({}, 'lot-tentpole');
     const answer = wouldBook(sim, {
-      kind: 'feature', from: 'an American studio', needsSqm: 5_200, needsHeightM: 24,
+      officeId: 'a_room', kind: 'feature', from: 'an American studio', needsSqm: 5_200, needsHeightM: 24,
       needsTank: false, weeks: 14, spendIsk: 1_900_000_000, local: false,
     }, sim.now + 30 * MS_DAY);
     expect(answer.stageId).toBeDefined();
@@ -658,7 +659,7 @@ describe('the lot as a business', () => {
   it('puts a production in the smallest room that holds it', () => {
     const sim = quickSave({}, 'lot-smallest');
     const answer = wouldBook(sim, {
-      kind: 'commercial', from: 'an agency', needsSqm: 500, needsHeightM: 8,
+      officeId: 'a_room', kind: 'commercial', from: 'an agency', needsSqm: 500, needsHeightM: 8,
       needsTank: false, weeks: 1, spendIsk: 400_000_000, local: true,
     }, sim.now + 30 * MS_DAY);
     const took = sim.universe.stages[answer.stageId!];

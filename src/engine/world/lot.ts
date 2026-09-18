@@ -892,6 +892,44 @@ export function turnedAway(sim: Simulation): { why: string; said: string; count:
 }
 
 /**
+ * Who rings and has never once booked, and what keeps sending them away.
+ *
+ * `turnedAway` above says what is refusing work and cannot say who. This says
+ * who, and the difference is the whole lever: three of the ten offices in
+ * `ENQUIRY_SHAPES` cannot book at any room size this lot can build — the
+ * European agency's commercials and the streamer's documentaries fail the
+ * rebate against what it costs to bring a crew here, the Nordic broadcaster's
+ * series fails on price — and a fourth, the Icelandic documentary, is recovered
+ * by building a fifth, smaller stage. Twenty-six of a hundred and one in
+ * enquiry weight rings every year and goes to Budapest regardless.
+ *
+ * That is the premise of the business working as written, and it read as noise:
+ * an anonymous tally of reasons cannot be told from a run of awkward weeks. It
+ * is also the one thing that makes `lot.build` an informed decision rather than
+ * a hopeful one, because the board can now say which of the refusals a room
+ * would answer.
+ *
+ * "Never once", not "mostly": an office that has booked even a single time is
+ * left off, because what this exists to surface is the structural case.
+ */
+export function keepsRinging(sim: Simulation): { officeId: string; from: string; times: number; because: string }[] {
+  const lot = theLot(sim);
+  const company = lot?.ownerId ? sim.universe.companies[lot.ownerId] : undefined;
+  const rang = company?.rangAndWent ?? {};
+  const booked = new Set(Object.values(sim.universe.bookings)
+    .map((one) => one.officeId).filter((one): one is string => one !== undefined));
+  return Object.entries(rang)
+    .filter(([officeId, one]) => one !== undefined && !booked.has(officeId))
+    .map(([officeId, one]) => ({
+      officeId,
+      from: ENQUIRY_SHAPES.find((shape) => shape.of.officeId === officeId)?.of.from ?? officeId,
+      times: one!.times,
+      because: one!.because,
+    }))
+    .sort((a, b) => b.times - a.times);
+}
+
+/**
  * What the family will still put in before the money comes with a condition.
  *
  * The honest ceiling on what this company can commit to, and it is not the
@@ -1249,6 +1287,7 @@ export function book(sim: Simulation, need: Enquiry, stageId: Id, from: Instant,
       id: sim.nextId('booking'),
       saveId: sim.universe.meta.id,
       stageId,
+      officeId: need.officeId,
       holder,
       kind,
       from: at,
@@ -1399,6 +1438,14 @@ export function takeAnEnquiry(sim: Simulation, nth = 0): Booking | undefined {
         : /doesn’t cover/.test(answer.because) ? 'rebate'
           : /too much of what it has to spend/.test(answer.because) ? 'price' : 'booked';
       company.turnedAway = { ...(company.turnedAway ?? {}), [why]: (company.turnedAway?.[why] ?? 0) + 1 };
+      // And by who, which the reason tally cannot say. An office that rings
+      // every year and never once books is a different fact from a run of
+      // awkward weeks, and the two used to look identical on the board.
+      const was = company.rangAndWent?.[need.officeId];
+      company.rangAndWent = {
+        ...(company.rangAndWent ?? {}),
+        [need.officeId]: { times: (was?.times ?? 0) + 1, because: answer.because },
+      };
     }
     return undefined;
   }

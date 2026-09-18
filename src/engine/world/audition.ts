@@ -90,9 +90,9 @@ export function shootingHere(sim: Simulation, from = sim.now): Booking[] {
  * nothing closed at all, and the day auditions started expiring it would have
  * meant ignoring somebody made them think of you more.
  */
-export function readFor(sim: Simulation, holder: string): Audition[] {
+export function readFor(sim: Simulation, officeId: string): Audition[] {
   return Object.values(sim.universe.auditions)
-    .filter((one) => one.holder === holder && one.state !== 'open' && one.why !== 'never-answered');
+    .filter((one) => one.officeId === officeId && one.state !== 'open' && one.why !== 'never-answered');
 }
 
 /**
@@ -105,10 +105,10 @@ export function readFor(sim: Simulation, holder: string): Audition[] {
  * a good one puts them back. Three years, the window the lot already judges its
  * own record over.
  */
-export function ignoredBy(sim: Simulation, holder: string): number {
+export function ignoredBy(sim: Simulation, officeId: string): number {
   const from = sim.now - HELD_AGAINST_YOU_YEARS * 365 * MS_DAY;
   return Object.values(sim.universe.auditions)
-    .filter((one) => one.holder === holder && one.why === 'never-answered' && one.closesAt >= from)
+    .filter((one) => one.officeId === officeId && one.why === 'never-answered' && one.closesAt >= from)
     .length;
 }
 
@@ -213,7 +213,7 @@ export function shutWhatHasClosed(sim: Simulation): Audition[] {
  * the point: there is no office that certainly calls and none that certainly
  * will not.
  */
-export function remembersYou(sim: Simulation, holder: string): number {
+export function remembersYou(sim: Simulation, officeId: string): number {
   const me = sim.universe.people[sim.universe.playerId];
   const fame = me?.reputation.publicFame ?? 0;
   // And whether they were easy to have there last time. Having been seen is what
@@ -223,10 +223,10 @@ export function remembersYou(sim: Simulation, holder: string): number {
   // premise leaves available.
   const relied = Math.min(0,
     ((me?.reputation.reliability ?? EXPECTED_OF_ANYBODY) - EXPECTED_OF_ANYBODY) / EXPECTED_OF_ANYBODY);
-  const earned = readFor(sim, holder).length * REMEMBERED
+  const earned = readFor(sim, officeId).length * REMEMBERED
     + (fame / 100) * KNOWN_OF
     + relied * RELIED_ON
-    - ignoredBy(sim, holder) * IGNORED;
+    - ignoredBy(sim, officeId) * IGNORED;
   // A share of what is left in whichever direction, so no term can be eaten by
   // a ceiling and none of them ever stops counting.
   const moved = earned >= 0
@@ -308,8 +308,8 @@ export function feeFor(booking: Booking, sizeId: string): Money {
  * cannot be bad at this and the sheet cannot move, so what varies is not what
  * they are, it is who has found out.
  */
-export function believedOf(sim: Simulation, holder: string): number {
-  const seen = readFor(sim, holder).length;
+export function believedOf(sim: Simulation, officeId: string): number {
+  const seen = readFor(sim, officeId).length;
   const fame = (sim.universe.people[sim.universe.playerId]?.reputation.publicFame ?? 0) / 100;
   return clamp(
     seen / WHAT_THEY_OFFER.seenEnough + fame * WHAT_THEY_OFFER.fameStandsIn,
@@ -393,8 +393,8 @@ export function whatTheyWant(next: () => number, house?: Reading): Reading {
  * three times over, and every holder in the world would want the same thing on
  * all three shades.
  */
-export function theHouse(sim: Simulation, holder: string): Reading {
-  const rng = sim.rng('audition', 'house', holder);
+export function theHouse(sim: Simulation, officeId: string): Reading {
+  const rng = sim.rng('audition', 'house', officeId);
   return whatTheyWant(() => rng.next());
 }
 
@@ -432,8 +432,8 @@ export interface TheirTaste {
  * the tape. Written this way, deleting `way === 'room'` puts every tape back in
  * and a test goes red for it.
  */
-export function whatTheyKeepAskingFor(sim: Simulation, holder: string): TheirTaste {
-  const rooms = readFor(sim, holder)
+export function whatTheyKeepAskingFor(sim: Simulation, officeId: string): TheirTaste {
+  const rooms = readFor(sim, officeId)
     .filter((one) => one.way === 'room' && one.played !== undefined);
   if (rooms.length === 0) return { reading: { ...AS_WRITTEN }, rooms: 0 };
   const out = { ...AS_WRITTEN };
@@ -623,14 +623,16 @@ export function whatIsGoing(sim: Simulation): Audition[] {
     if (Object.values(sim.universe.auditions).some((one) => one.bookingId === booking.id)) continue;
 
     const rng = sim.rng('audition', 'calls', booking.id);
-    if (rng.next() > remembersYou(sim, booking.holder)) continue;
+    const officeId = booking.officeId ?? booking.holder;
+    if (rng.next() > remembersYou(sim, officeId)) continue;
 
     const weeks = (booking.to - booking.from) / MS_WEEK;
-    const size = sizeCasting(weeks, believedOf(sim, booking.holder), rng.next());
+    const size = sizeCasting(weeks, believedOf(sim, officeId), rng.next());
     const audition: Audition = {
       id: sim.nextId('audition'),
       saveId: sim.universe.meta.id,
       bookingId: booking.id,
+      officeId,
       holder: booking.holder,
       size,
       feeCents: feeFor(booking, size),
@@ -640,7 +642,7 @@ export function whatIsGoing(sim: Simulation): Audition[] {
       // Mostly the house's taste and sometimes this room's own idea. The house
       // draws on its own stream, so what these people like does not move
       // because a different production happened to ask first.
-      wants: whatTheyWant(() => rng.next(), theHouse(sim, booking.holder)),
+      wants: whatTheyWant(() => rng.next(), theHouse(sim, officeId)),
       state: 'open',
     };
     sim.universe.auditions[audition.id] = audition;

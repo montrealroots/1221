@@ -21,6 +21,7 @@ import { unknownTaste } from './core/taste';
 import { plural, titleCaseLabel } from './core/text';
 
 import { CITIES } from './content/geography';
+import { ENQUIRY_SHAPES } from './content/lot';
 
 import { netWorth } from './systems/finance';
 import { registerLife, startOfLocalDay } from './systems/life';
@@ -610,6 +611,46 @@ export function migrate(universe: SaveUniverse): MigrationResult {
   }
   if (places > 0) {
     steps.push(`Dropped the property market from ${plural(places, 'place')}.`);
+  }
+
+  // Schema 81: a casting office stops being the sentence printed about it.
+  //
+  // Every memory the player builds up with an office — how many of their rooms
+  // it has sat through, what it keeps asking for, whether it has given up
+  // ringing — used to key on `holder`, which is `${from}, ${kind}` in prose, and
+  // `theHouse` seeded that office's taste off the same string. So rewording a
+  // line wiped the history and changed the preferences, and two rows whose
+  // sentences matched were one office. Both halves were live: the table once
+  // carried 'an American studio, a feature' twice, for a 5,200 m² picture and a
+  // 3,000 m² one, and roster memory could not tell them apart.
+  //
+  // An existing save has the sentence and not the id, so the sentence is what it
+  // is matched on, once, here. A row from a shape the content no longer carries
+  // keeps its old string as its id — it is still stable and still unique to that
+  // office, which is all the key has to be.
+  const officeFor = new Map<string, string>();
+  for (const shape of ENQUIRY_SHAPES) {
+    officeFor.set(`${shape.of.from}, ${/^[aeiou]/i.test(shape.of.kind) ? 'an' : 'a'} ${shape.of.kind}`,
+      shape.of.officeId);
+  }
+  const named = (holder: string): string => officeFor.get(holder) ?? holder;
+  let rooms = 0;
+  for (const booking of Object.values(universe.bookings ?? {})) {
+    // The family's own holds are not an office ringing up, and never were.
+    if (booking.companyId !== undefined || booking.officeId !== undefined) continue;
+    booking.officeId = named(booking.holder);
+    rooms += 1;
+  }
+  let asks = 0;
+  for (const audition of Object.values(universe.auditions ?? {})) {
+    const a = audition as unknown as { officeId?: string; holder: string };
+    if (a.officeId !== undefined) continue;
+    a.officeId = named(a.holder);
+    asks += 1;
+  }
+  if (rooms > 0 || asks > 0) {
+    steps.push(`Gave ${plural(rooms, 'booking')} and ${plural(asks, 'ask')} the office they belong `
+      + 'to, in place of the sentence about it.');
   }
 
   const migrated = from < SAVE_SCHEMA_VERSION || steps.length > 0;

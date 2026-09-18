@@ -44,7 +44,7 @@ import { isAre, outOf, spokenList, toStart } from './words';
 import { SELLING } from '@/engine/content/lot';
 import {
   bookingsFor, breakEvenShare, monthlyOverhead, onStageAt, paidInSoFar, pullOn, sellsFor, stagesOn, standingWith,
-  turnedAway, utilisation, whatTheFamilySays, whereTheLotStands,
+  keepsRinging, turnedAway, utilisation, whatTheFamilySays, whereTheLotStands,
 } from '@/engine/world/lot';
 import { formatMoney } from '@/engine/core/money';
 import { companyCash, holdingsOf, projectsOf } from '@/engine/world/company';
@@ -512,6 +512,7 @@ defineLook<TheLot>('lot', {
     const aYear = aMonth * 12;
     const pull = pullOn(sim);
     const away = turnedAway(sim);
+    const never = keepsRinging(sim);
     return {
     name: LOT_NAME,
     kind: 'What The Family Built',
@@ -584,6 +585,13 @@ defineLook<TheLot>('lot', {
                 <td className="nowrap">{one.count} Turned Away</td>
                 <td className="small nowrap" />
                 <td className="small">{one.said}.</td>
+              </tr>
+            ))}
+            {never.map((one) => (
+              <tr key={one.officeId}>
+                <td className="nowrap">{one.from}</td>
+                <td className="small nowrap">{said(one.times, 'call')}, none booked</td>
+                <td className="small">{one.because}</td>
               </tr>
             ))}
           </tbody>

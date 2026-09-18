@@ -669,7 +669,7 @@ defineDecider<Asked, string>({
     for (let i = 0; i < readings; i += 1) {
       const id = `remembered-${i}`;
       sim.universe.auditions[id] = {
-        id, saveId: sim.universe.meta.id, bookingId: `b-${i}`, holder, size: 'day',
+        id, saveId: sim.universe.meta.id, bookingId: `b-${i}`, officeId: holder, holder, size: 'day',
         feeCents: 1_00, from: sim.now, to: sim.now, closesAt: sim.now,
         wants: {}, state: 'over', why: 'went-another-way',
       };

@@ -1780,7 +1780,67 @@ Whichever is chosen, add the regression test they name: on a company's first eve
 
 ### The casting office is a display string, so roster memory has nine addressable offices, two of which are one.
 
-**Cluster** `crew-office` · **Severity** minor · **Verdict** PARTLY_TRUE
+**Cluster** `crew-office` · **Severity** minor · **Verdict** WAS_TRUE, NOW BUILT
+
+**LANDED**, as Option B, with the migration the Risk section demanded and with
+the separate finding it buried at the end.
+
+THE IDENTITY. `Enquiry` carries an `officeId`, one per row, and `book()` writes
+it onto every booking; `Booking.officeId` is optional because the family's own
+holds are not an office ringing up, and `Audition.officeId` is required because
+every ask comes from one. `readFor`, `ignoredBy`, `remembersYou`, `believedOf`,
+`theHouse` and `whatTheyKeepAskingFor` all key on it now. `holder` stays exactly
+where it was and does nothing but print, which is why none of the nine display
+sites the Risk section lists had to move.
+
+The consequence is the one worth stating plainly: a copy edit in
+`content/lot.ts` used to wipe the player's whole history with an office and hand
+it different preferences, because `theHouse` seeded that office's taste off the
+same sentence. The test that holds this rewrites the sentence on three existing
+asks and checks that `remembersYou`, `believedOf` and `theHouse` all come back
+unchanged — and that two offices described identically are still two offices,
+which is the collision this entry opened with.
+
+THE MIGRATION, schema 81. An old save has the sentence and no id, so the
+sentence is what it is matched on, once, at load. A row from a shape the content
+no longer carries keeps its old string as its id, which is still stable and
+still unique to that office.
+
+THE NAMED COLLISION WAS ALREADY GONE. Shape #7 reads 'a Hollywood studio' now,
+so the two American features are two sentences. The adversary's Option A had
+been taken at some point without this entry being updated; what was left was the
+mechanism, which is what Option B fixes.
+
+THE SEPARATE FINDING, which the entry called "a One Rule finding sitting next to
+this one and not in the ledger", and which turned out not to be a One Rule
+finding at all. Re-probed on the current build: four of the ten shapes never
+book on the lot as the family built it — the Icelandic producer's documentary
+(weight 10, refused on price), the European agency's commercial (12) and the
+streamer's documentary (5, both refused on the rebate against what it costs to
+bring a crew here), and the Nordic broadcaster's series (9, on price). Thirty-six
+of a hundred and one in enquiry weight.
+
+They are not dead content. Every refusal is counted and shown. What was wrong is
+subtler and worse: `turnedAway` buckets a refusal by its REASON, so the board
+showed an anonymous tally and a player could not tell three standing customers
+they are structurally unable to serve from a run of awkward weeks. Deleting the
+rows would have made the lot look busier than the premise says it is, and
+repricing them would have been tuning the economy to hide the premise.
+
+So they are named instead. `Company.rangAndWent` tallies refusals by office and
+`keepsRinging(sim)` returns the offices that have rung and never once booked,
+with the reason each last gave, printed in the estate screen's Who Rings table.
+That is the second reader `officeId` needed and the thing that makes `lot.build`
+an informed decision: building the small stage recovers exactly one of the four,
+the Icelandic documentary, and the three foreign ones go on ringing, because what
+sends them away is the arithmetic of bringing a crew to Iceland and no room
+changes that. Both halves are pinned by a test that builds the room and re-reads
+the list.
+
+Five mutations across the two halves, each taking down only the test written for
+it: key the memory on the sentence again, seed the taste on the sentence again,
+leave old asks unnamed in the migration, list offices that did book, and tally
+nothing by office.
 
 
 **Files** `/home/user/1221/src/engine/world/lot.ts`, `/home/user/1221/src/engine/content/lot.ts`, `/home/user/1221/src/engine/world/audition.ts`, `/home/user/1221/src/engine/domain/model.ts`, `/home/user/1221/src/engine/world/diary.ts`

@@ -33,7 +33,7 @@ import {
   crewInTheCountry, familyCovers, floorStanding, goingUp, heldFor,
   monthlyOverhead, paidInSoFar, pullOn,
   quotedFor, reachOf, rungFor, stillToCarry, theSmallStage, turnedAway,
-  MS_WEEK, stagesOn, standingWith, tierFor, utilisation, whatTheFamilySays,
+  MS_WEEK, keepsRinging, stagesOn, standingWith, tierFor, utilisation, whatTheFamilySays,
   whereTheBuildStands, whereTheLotStands, whyNotBuild, wholeHold,
   wouldBook, familyTakesItBack,
 } from '@/engine/world/lot';
@@ -459,6 +459,65 @@ describe('what a production is actually weighing', () => {
     }
   });
 
+  it('names the offices that ring every year and never book', () => {
+    // Three of the ten shapes cannot book at any room size this lot can build:
+    // the European agency's commercials and the streamer's documentaries fail
+    // the rebate against what it costs to bring a crew here, and the Nordic
+    // broadcaster's series fails on price. Twenty-six of a hundred and one in
+    // enquiry weight, ringing every year and going to Budapest every year.
+    //
+    // That is the premise of this business working exactly as written, and it
+    // used to read as noise: `turnedAway` buckets a refusal by its reason, so a
+    // player saw an anonymous tally and could not tell three standing customers
+    // they cannot serve from a run of awkward weeks.
+    const { sim } = fiveYears('lot-ringing');
+    const never = keepsRinging(sim).map((one) => one.officeId).sort();
+    // Four on the lot as the family built it. The Icelandic documentary is the
+    // one a room answers — it is refused on price at four big stages and books
+    // at a small one — and the other three are refused whatever is standing.
+    expect(never, 'somebody who cannot book here found a room').toEqual(
+      ['eu_agency_spot', 'is_doc', 'nordic_series', 'streamer_doc'],
+    );
+    for (const one of keepsRinging(sim)) {
+      expect(one.times, 'named as a standing customer on a single call').toBeGreaterThan(1);
+      expect(one.because.length, 'no reason given for going elsewhere').toBeGreaterThan(0);
+      expect(one.from, 'the id leaked onto the board in place of the sentence').not.toBe(one.officeId);
+    }
+
+    // And an office that has booked is not on the list, however often it has
+    // also been turned away. What this exists to surface is the structural case.
+    const booked = new Set(Object.values(sim.universe.bookings).map((one) => one.officeId));
+    expect(booked.has('ruv_series'), 'RÚV never once booked in five years').toBe(true);
+    expect(never).not.toContain('ruv_series');
+  });
+
+  it('is what makes building a room a decision somebody can read', () => {
+    // The point of naming them. A player looking at an anonymous count of
+    // refusals cannot tell which of them a room would answer; a player looking
+    // at four named offices and the reason each gave can. Building the small
+    // stage recovers exactly one of the four — the Icelandic documentary, whose
+    // refusal is about price and not about the rebate — and the three foreign
+    // ones go on ringing, because what sends them away is the arithmetic of
+    // bringing a crew to Iceland and no room changes that.
+    const { sim } = fiveYears('lot-ringing-build');
+    const before = keepsRinging(sim).map((one) => one.officeId).sort();
+    expect(before).toContain('is_doc');
+
+    expect(buildAStage(sim).ok, 'the family could not carry the room').toBe(true);
+    sim.advanceTo(sim.now + (A_SMALL_STAGE.weeksToBuild + 1) * MS_WEEK);
+    expect(stagesOn(sim)).toHaveLength(5);
+    sim.advanceTo(sim.now + 5 * 365 * MS_DAY);
+
+    const after = keepsRinging(sim).map((one) => one.officeId).sort();
+    expect(after, 'a fifth room answered nobody, or answered everybody').toEqual(
+      ['eu_agency_spot', 'nordic_series', 'streamer_doc'],
+    );
+    for (const one of keepsRinging(sim)) {
+      expect(one.because, 'the room was the thing standing in their way after all')
+        .not.toMatch(/right size/);
+    }
+  });
+
   it('counts the load-out as time the room was occupied and barely paid for', () => {
     // The reader the strike row was given, and the reason the word exists
     // rather than the rows simply being relabelled. Turnaround is a real
@@ -513,7 +572,7 @@ describe('what a production is actually weighing', () => {
     const sim = quickSave({}, 'harder-line');
     const stage = stagesOn(sim).sort((a, b) => a.floorSqm - b.floorSqm)[0]!;
     const sized: Enquiry = {
-      kind: 'limited series', from: 'somebody', needsSqm: stage.floorSqm - 10,
+      officeId: 'a_room', kind: 'limited series', from: 'somebody', needsSqm: stage.floorSqm - 10,
       needsHeightM: 6, needsTank: false, weeks: 8, spendIsk: 1, local: true,
     };
     // A budget worked backward from the quote so the room lands exactly between
@@ -539,7 +598,7 @@ describe('the rebate is four tests and the country can fail one', () => {
   it('takes the higher tier away when there is nobody left to crew it', () => {
     const sim = quickSave({}, 'crew-short');
     const big: Enquiry = {
-      kind: 'feature', from: 'an American studio', needsSqm: 5_200, needsHeightM: 24,
+      officeId: 'a_room', kind: 'feature', from: 'an American studio', needsSqm: 5_200, needsHeightM: 24,
       needsTank: false, weeks: 14, spendIsk: 1_900_000_000, local: false,
     };
     const from = sim.now + 60 * MS_DAY;
@@ -563,7 +622,7 @@ describe('the rebate is four tests and the country can fail one', () => {
     const sim = quickSave({}, 'crew-limbs');
     const from = sim.now + 60 * MS_DAY;
     const big: Enquiry = {
-      kind: 'feature', from: 'an American studio', needsSqm: 5_200, needsHeightM: 24,
+      officeId: 'a_room', kind: 'feature', from: 'an American studio', needsSqm: 5_200, needsHeightM: 24,
       needsTank: false, weeks: 14, spendIsk: 1_900_000_000, local: false,
     };
     // Under the spend, and no amount of crew in the country promotes it.

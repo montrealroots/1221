@@ -669,6 +669,21 @@ export const BREAK_EVEN_NOTE =
  */
 export interface Enquiry {
   kind: 'feature' | 'limited series' | 'commercial' | 'documentary';
+  /**
+   * Who this is, and it is not `from`.
+   *
+   * An office's identity used to be the sentence printed about it. Every memory
+   * the player builds up — how many of their rooms this office has sat through,
+   * what it keeps asking for, whether it has stopped ringing — was keyed on
+   * `${from}, ${kind}` by string equality, and `theHouse` seeded that office's
+   * taste off the same string. So rewording a line of prose wiped the player's
+   * history with that office and gave it different preferences, and two rows
+   * whose sentences happened to match were one office.
+   *
+   * Prose and identity are different jobs. This one never changes; the sentence
+   * above it can be rewritten any afternoon.
+   */
+  officeId: string;
   /** Where the money is from, in the world's words. */
   from: string;
   /** Floor it needs, square meters. */
@@ -708,46 +723,46 @@ export const ENQUIRY_SHAPES: readonly { weight: number; of: Enquiry }[] = [
   // Sugar Land against the stage in Gufunes rather than against Budapest.
   {
     weight: 30,
-    of: { kind: 'commercial', from: 'an Icelandic agency', needsSqm: 700, needsHeightM: 8, needsTank: false, weeks: 1, spendIsk: 25_000_000, local: true },
+    of: { officeId: 'is_agency_spot', kind: 'commercial', from: 'an Icelandic agency', needsSqm: 700, needsHeightM: 8, needsTank: false, weeks: 1, spendIsk: 25_000_000, local: true },
   },
   {
     weight: 18,
-    of: { kind: 'limited series', from: 'RÚV', needsSqm: 1_400, needsHeightM: 10, needsTank: false, weeks: 6, spendIsk: 260_000_000, local: true },
+    of: { officeId: 'ruv_series', kind: 'limited series', from: 'RÚV', needsSqm: 1_400, needsHeightM: 10, needsTank: false, weeks: 6, spendIsk: 260_000_000, local: true },
   },
   {
     weight: 10,
-    of: { kind: 'documentary', from: 'an Icelandic producer', needsSqm: 500, needsHeightM: 8, needsTank: false, weeks: 2, spendIsk: 35_000_000, local: true },
+    of: { officeId: 'is_doc', kind: 'documentary', from: 'an Icelandic producer', needsSqm: 500, needsHeightM: 8, needsTank: false, weeks: 2, spendIsk: 35_000_000, local: true },
   },
   {
     weight: 8,
-    of: { kind: 'feature', from: 'an Icelandic production', needsSqm: 1_800, needsHeightM: 12, needsTank: false, weeks: 5, spendIsk: 380_000_000, local: true },
+    of: { officeId: 'is_feature', kind: 'feature', from: 'an Icelandic production', needsSqm: 1_800, needsHeightM: 12, needsTank: false, weeks: 5, spendIsk: 380_000_000, local: true },
   },
   // And the rest is the world, which is where the stage-weeks are. Iceland
   // draws on the order of a dozen foreign projects in a year, so these are
   // rare, and each one is worth more than a season of the ones above.
   {
     weight: 12,
-    of: { kind: 'commercial', from: 'a European agency', needsSqm: 900, needsHeightM: 9, needsTank: false, weeks: 1, spendIsk: 40_000_000, local: false },
+    of: { officeId: 'eu_agency_spot', kind: 'commercial', from: 'a European agency', needsSqm: 900, needsHeightM: 9, needsTank: false, weeks: 1, spendIsk: 40_000_000, local: false },
   },
   {
     weight: 9,
-    of: { kind: 'limited series', from: 'a Nordic broadcaster', needsSqm: 1_800, needsHeightM: 12, needsTank: false, weeks: 9, spendIsk: 420_000_000, local: false },
+    of: { officeId: 'nordic_series', kind: 'limited series', from: 'a Nordic broadcaster', needsSqm: 1_800, needsHeightM: 12, needsTank: false, weeks: 9, spendIsk: 420_000_000, local: false },
   },
   {
     weight: 5,
-    of: { kind: 'documentary', from: 'a streamer', needsSqm: 600, needsHeightM: 8, needsTank: false, weeks: 2, spendIsk: 60_000_000, local: false },
+    of: { officeId: 'streamer_doc', kind: 'documentary', from: 'a streamer', needsSqm: 600, needsHeightM: 8, needsTank: false, weeks: 2, spendIsk: 60_000_000, local: false },
   },
   {
     weight: 4,
-    of: { kind: 'feature', from: 'a Hollywood studio', needsSqm: 5_200, needsHeightM: 24, needsTank: false, weeks: 14, spendIsk: 1_900_000_000, local: false },
+    of: { officeId: 'hollywood_feature', kind: 'feature', from: 'a Hollywood studio', needsSqm: 5_200, needsHeightM: 24, needsTank: false, weeks: 14, spendIsk: 1_900_000_000, local: false },
   },
   {
     weight: 3,
-    of: { kind: 'feature', from: 'a British production', needsSqm: 2_600, needsHeightM: 14, needsTank: true, weeks: 7, spendIsk: 780_000_000, local: false },
+    of: { officeId: 'uk_feature', kind: 'feature', from: 'a British production', needsSqm: 2_600, needsHeightM: 14, needsTank: true, weeks: 7, spendIsk: 780_000_000, local: false },
   },
   {
     weight: 2,
-    of: { kind: 'feature', from: 'an American studio', needsSqm: 3_000, needsHeightM: 16, needsTank: true, weeks: 11, spendIsk: 2_400_000_000, local: false },
+    of: { officeId: 'us_feature', kind: 'feature', from: 'an American studio', needsSqm: 3_000, needsHeightM: 16, needsTank: true, weeks: 11, spendIsk: 2_400_000_000, local: false },
   },
 ];
 
