@@ -33,9 +33,12 @@ import { decideTake, type Prospects } from './world/selling';
 import { DEALS } from './content/selling';
 import { decideHire, standingReads, type Hiring } from './world/crew';
 import {
-  believedAt, decideOffer, reachOfBand, readOn, sheetFor, sparkBetween, sparkReads, type Offer,
+  believedAt, decideOffer, reachOfBand, readOn, sheetFor, sparkBetween, sparkReads, whatItWants,
+  type Offer,
 } from './world/casting';
-import { AXES, BOOKABLE, TAPE_LEANS, THE_GIVING, passById, type AxisId } from './content/casting';
+import {
+  AXES, BOOKABLE, SIZES, TAPE_LEANS, THE_GIVING, passById, type AxisId,
+} from './content/casting';
 import { FURTHEST, HOUSE_HOLDS, SHADES, TOO_FAR, whyById, type Reading } from './content/audition';
 import { decideAudition, remembersYou, whatTheyWant } from './world/audition';
 import type { Looked } from './domain/company';
@@ -62,6 +65,7 @@ defineDecider<Sky, string>({
   id: 'weather.day',
   decides: 'What the sky does in one city on one day.',
   drawnIn: 'src/engine/systems/weather.ts',
+  draws: ['weather', 'weather-hours'],
   reads: {
     // Latitude and climate: Yakutsk and Singapore cannot have the same day.
     place: (sky, t) => ({
@@ -107,6 +111,7 @@ defineDecider<Household, string>({
   id: 'family.born',
   decides: 'How old your parents are when the save opens, and whether you were born alone.',
   drawnIn: 'src/engine/index.ts',
+  draws: ['family'],
   reads: {
     // The two answers creation actually asks for.
     motherAge: (h, t) => ({ ...h, motherAge: Math.round(16 + t * 42) }),
@@ -199,6 +204,7 @@ defineDecider<Ringing, string>({
   id: 'lot.rang',
   decides: 'How many productions ring about a stage in one month.',
   drawnIn: 'src/engine/world/lot.ts',
+  draws: ['lot', 'lot.how-many'],
   reads: {
     // People in the country to crew a picture with. It starts at the national
     // base and every picture made here adds two dozen who are still here
@@ -353,6 +359,7 @@ defineDecider<Review, string>({
   id: 'making.reviewed',
   decides: 'What a look at finished work turns up, and how far down it sends the work.',
   drawnIn: 'src/engine/world/making.ts',
+  draws: ['making.review', 'making.found'],
   reads: {
     // How far this part had climbed, taken the way done is taken: the lowest
     // of its six. This is the whole difference between a free regression and a
@@ -441,6 +448,7 @@ defineDecider<Hiring, string>({
   id: 'crew.hired',
   decides: 'Who gets a post on a picture, and whether they have worked here before.',
   drawnIn: 'src/engine/world/crew.ts',
+  draws: ['crew.hire', 'crew.make'],
   reads: {
     // How many people have held this post for the company already. A crew that
     // has worked together gets rehired, and nothing else about this decision
@@ -475,6 +483,7 @@ defineDecider<Asking, string>({
   id: 'casting.answered',
   decides: 'Whether a performer takes a part, counters, or passes — and on what.',
   drawnIn: 'src/engine/world/casting.ts',
+  draws: ['casting.offer'],
   reads: {
     // Whether the dates are clear, which is first because no amount of money
     // moves a shooting schedule somebody else already owns.
@@ -614,6 +623,7 @@ defineDecider<InTheRoom, string>({
   id: 'audition.said',
   decides: 'Whether a room gives the player the part, and what the no is called.',
   drawnIn: 'src/engine/world/audition.ts',
+  draws: ['audition.heard'],
   reads: {
     // How far what they played was from what the room wanted. The whole of it,
     // and deliberately the only thing about the performance that is read —
@@ -646,6 +656,7 @@ defineDecider<Asked, string>({
   id: 'audition.asked',
   decides: 'Whether a production shooting on the lot thinks of the player at all.',
   drawnIn: 'src/engine/world/audition.ts',
+  draws: ['audition.calls'],
   reads: {
     // How many times these people have had them in, whatever came of it. The
     // research calls roster memory the main career ratchet and is explicit that
@@ -787,3 +798,62 @@ defineDecider<Pair, string>({
     { attributes: one } as never, { attributes: other } as never, draw,
   )),
 });
+
+interface Wanted { sim: Simulation; sizeId: string; roleId: string }
+
+/**
+ * What one part is looking for, which was the last draw nothing accounted for.
+ *
+ * Twelve of the thirteen unowned streams turned out to belong to decisions that
+ * were already registered and already documented — `weather.day` takes two dice,
+ * `crew.hired` takes two, and so on — and they are declared on those deciders now.
+ * This one was not any of them. `whatItWants` rolls a shape for every part on a
+ * picture and nothing anywhere said what it was deciding or what it reads.
+ *
+ * What it decides: the size says what a part this big usually wants, and the draw
+ * says what *this* one turned out to be. It is normalised back afterwards, so no
+ * part is quietly worth more than another — a leaning is a shape, not a quantity,
+ * and a part that wanted more of everything would be a part with a bigger budget
+ * rather than a different one.
+ *
+ * It matters because it is the thing a player reads a room against. Every ask the
+ * player answers is answered into one of these, so a build where every part wanted
+ * the same thing is a build where the reading is a formality.
+ */
+defineDecider<Wanted, string>({
+  id: 'casting.wants',
+  decides: 'What one part on a picture is looking for.',
+  drawnIn: 'src/engine/world/casting.ts',
+  reads: {
+    // How big the part is, which is the half that is not a draw: the size's own
+    // leaning is what a part this size usually wants.
+    size: (w, t) => ({ ...w, sizeId: SIZES[Math.floor(t * SIZES.length)]?.id ?? w.sizeId }),
+    // And which part it is, because two parts of the same size on the same
+    // picture are not the same part. This is the draw itself, keyed by role id.
+    which: (w, t) => ({ ...w, roleId: `role_${Math.round(t * 1000)}` }),
+  },
+  sample: (seed) => ({
+    sim: wantsFor(seed),
+    sizeId: SIZES[seed % SIZES.length]!.id,
+    roleId: `role_${seed}`,
+  }),
+  decide: ({ sim, sizeId, roleId }) => {
+    const size = SIZES.find((one) => one.id === sizeId) ?? SIZES[0]!;
+    const project = Object.values(sim.universe.projects)[0];
+    if (!project) return 'nothing to be in';
+    const wants = whatItWants(sim, project, roleId, size);
+    // The shape, to one decimal, which is what a room is read against. Finer and
+    // every draw differs, which would pass the sweep while proving nothing.
+    return AXES.map((axis) => `${axis.id}:${(wants[axis.id] ?? 0).toFixed(1)}`).join(' ');
+  },
+});
+
+const WANTS = new Map<number, Simulation>();
+function wantsFor(seed: number): Simulation {
+  const held = WANTS.get(seed);
+  if (held) return held;
+  const made = quickSave({}, `decider-wants-${seed}`);
+  made.execute({ kind: 'company.develop', payload: { title: `A Thing ${seed}`, medium: 'film' } });
+  WANTS.set(seed, made);
+  return made;
+}

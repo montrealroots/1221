@@ -51,6 +51,24 @@ export interface Decider<Input, Outcome> {
    */
   drawnIn: string;
   /**
+   * The named draw streams this decision takes, where they are not its own id.
+   *
+   * `tools/deciders.mjs` counts streams as well as files, and it used to insist a
+   * stream be owned by a decider whose id matched it exactly. That is a rule about
+   * naming rather than about accounting, and it left thirteen streams unowned
+   * while the decisions they feed were all registered and documented: `weather.day`
+   * takes `weather` for the day and `weather-hours` for the hours inside it, and
+   * both are the same decision about the same sky.
+   *
+   * The alternative was renaming the streams to match, which is the one thing that
+   * must not happen: a stream key is an input to the generator, so changing one
+   * changes every seeded outcome in the build and every measured number that rests
+   * on them.
+   *
+   * So a decision declares what it draws from. One decision, however many dice.
+   */
+  draws?: readonly string[];
+  /**
    * Every input the outcome is supposed to depend on. Declaring one is a
    * claim that it changes the answer, and the harness will try it.
    */

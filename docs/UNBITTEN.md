@@ -1,4 +1,4 @@
-# What Does Not Bite
+| Draw streams no decider owns | 0 | 21 |# What Does Not Bite
 
 A standing list of everything in SLATE that is declared, written, displayed or
 believed, and that changes no outcome. It is kept separate from `DEPTH.md`

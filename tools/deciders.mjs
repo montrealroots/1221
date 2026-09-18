@@ -141,7 +141,17 @@ for (const file of stale) {
 }
 
 // The stream-level count, which is the one the file-level check could not see.
+// Every stream a decider accounts for: its own id, plus whatever it declares in
+// `draws`. A decision may take more than one die — `weather.day` takes `weather`
+// for the day and `weather-hours` for the hours inside it — and insisting the
+// stream be named after the decider is a rule about naming rather than about
+// accounting. Renaming the streams to match was the alternative and is the one
+// thing that must not happen: a stream key is an input to the generator, so
+// changing one changes every seeded outcome in the build.
 const registered = new Set([...owned.values()].flat());
+for (const m of registry.matchAll(/draws:\s*\[([^\]]*)\]/g)) {
+  for (const one of m[1].matchAll(/'([^']+)'/g)) registered.add(one[1]);
+}
 const unowned = [...streams.keys()].filter((id) => !registered.has(id)).sort();
 console.log(`\n${streams.size} draw streams, ${registered.size} of them registered.`);
 if (unowned.length > 0) {
