@@ -131,14 +131,15 @@ function runWorldTick(sim: Simulation): void {
 /**
  * The one dated thing in the build that nobody was ever told about.
  *
- * The dates in this save come in three sorts, and until now this was the only
- * one of the middle sort. Some dates bite and announce themselves: a picture
- * past its delivery date notifies twice, once for the work that is not done and
- * once for the elements that are not filed, and an audition arrives with the
- * last day anybody is seen printed in the body of the notice. Some dates are
- * printed and toothless: a registration's `renewsAt` and a holding's
- * `expiresAt` are rendered on the Family Business screen and read by nothing in
- * the engine at all, so the day comes and goes and the world does not notice.
+ * The dates in this save came in three sorts, and when this was written it was
+ * the only one of the middle sort. Some dates bite and announce themselves: a
+ * picture past its delivery date notifies twice, once for the work that is not
+ * done and once for the elements that are not filed, and an audition arrives with
+ * the last day anybody is seen printed in the body of the notice. Some dates were
+ * printed and toothless: a policy's `renewsAt` and a holding's `expiresAt` were
+ * rendered on the Family Business screen and read by nothing in the engine at
+ * all, so the day came and went and the world did not notice. That sort is empty
+ * now — `runTheClock` in `world/company.ts` runs both terms, a month at a time.
  *
  * And this one bit without ever announcing itself. `whyNot` shuts the door on
  * the first day of photography, and the only place the date had ever appeared

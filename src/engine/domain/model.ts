@@ -191,8 +191,13 @@ export interface Person {
   personality: Personality;
   interests: string[];
   /**
-   * Genres they love. On the character sheet because a person has them;
-   * nothing in the simulation reads one to decide anything.
+   * Genres they love. On the character sheet because a person has them.
+   *
+   * Two places in the engine touch the list and neither decides anything with
+   * it: `bootstrap` copies the player's answer onto the person at creation, and
+   * `core/taste.ts` is the door every system would go through to read it. Nothing
+   * goes through that door yet — `affinity` is written and tested and has no
+   * caller, because the questions it answers need somebody else to ask about.
    */
   genres?: string[];
   /**
@@ -265,8 +270,9 @@ export interface Person {
    * player: SLATE never asks it of anybody else and never guesses it from a
    * name, a country or a city.
    *
-   * It carries no attribute, no skill, no advantage and no penalty. Nothing in
-   * the simulation reads it, and nothing should: it is on the character sheet
+   * It carries no attribute, no skill, no advantage and no penalty. `bootstrap`
+   * copies what the player said onto the person and that is the last thing in the
+   * engine to touch it, and nothing else should: it is on the character sheet
    * because a person has one, not because the game does anything with it.
    */
   raceEthnicity?: readonly string[];

@@ -798,6 +798,7 @@ Deployment target providing server-checked persistence. Three entities (`SlateSa
 | `tests/decides.test.ts` | **NEW** — prices every company door entry | Live | Created in the guild-door work |
 | `tools/dials.mjs` | **NEW** — plays a 25-year career, counts dials nothing moves | Live, in the gate | Range test, not a one-value test. Blessed at **8** |
 | `tools/wired.mjs` | Dead-word floor | Live, in the gate | Its old "Dials nothing moves" regex check was retired — a regex can prove a field is *written*, never that a number *moves* |
+| `tools/claims.mjs` | **NEW** — doc comments that claim nothing reads or writes a thing, checked against the tree | Live, in the gate | No baseline file and none wanted: a stale claim is a defect, not a debt to ratchet. Only the **present tense** is checked — past-tense history is what these comments are for |
 | `tools/cohesion-walk.mjs` | Screenshot walkthrough | **Has 67 uncommitted lines in the stash** (§9) | — |
 | `docs/UNWIRED.json` | Machine baseline for the gate | Live | 51 declared words total. **`docs/UNBITTEN.md`'s own headline table still says 160** — stale |
 | `walk-tmp.mjs` (repo root) | Stray Playwright scratch script | **Committed debt** | 49 lines, referenced by nothing, hardcodes a **Linux** browser path `/opt/pw-browsers/...` |

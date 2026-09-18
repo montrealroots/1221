@@ -331,11 +331,15 @@ export interface Policy {
   /**
    * The date the term written on the policy runs to.
    *
-   * A date on the paper, and not a thing that happens. No clock reads it, so
-   * cover bound in 2026 is still opening the `insure_a_shoot` and `greenlight`
-   * doors in 2046 — measured, ten years of it, in `docs/ARREARS.md`. It is set
-   * twelve months out because that is the term an underwriter writes, and it
-   * is printed on one screen as what the term is.
+   * Twelve months out, because that is the term an underwriter writes, and the
+   * day the premium is charged again. `runTheClock` reads it: if the company can
+   * find the money the term rolls forward another year, and if it cannot the
+   * cover goes into grace and then lapses, and the doors `insure_a_shoot` and
+   * `greenlight` shut behind it.
+   *
+   * It was a date on the paper and not a thing that happened, which is why cover
+   * bound in 2026 was still opening those doors in 2046 — measured, ten years of
+   * it, in `docs/ARREARS.md`.
    */
   renewsAt: Instant;
   /**
