@@ -48,7 +48,7 @@ import { clamp } from '../core/rng';
 import {
   AS_WRITTEN, A_HARD_WEEK_COSTS_STANDING, A_WORKING_WEEK, CLOSE_ENOUGH, COLD,
   EXPECTED_OF_ANYBODY, FURTHEST, HOUSE_HOLDS,
-  KNOWN_OF, OF_THE_ROOM, OF_THE_SPEND, RELIED_ON, REMEMBERED,
+  KNOWN_OF, OF_THE_ROOM, OF_THE_SPEND, RELIED_ON, REMEMBERED, SCALE_A_WEEK_CENTS,
   HEADROOM, HELD_AGAINST_YOU_YEARS, IGNORED, MISREAD_THE_ROOM, SHADES, TALKED_ABOUT,
   TOO_FAR, WELL_LIKED,
   WHAT_THEY_OFFER,
@@ -273,14 +273,26 @@ export function remembersYou(sim: Simulation, holder: string): number {
 export function feeFor(booking: Booking, sizeId: string): Money {
   const size = sizeById(sizeId);
   if (!size) return 0;
-  // What the production is actually spending, where the booking knows it.
-  if (booking.spendCents !== undefined && booking.spendCents > 0) {
-    return Math.round(booking.spendCents * OF_THE_SPEND * size.onScreen);
-  }
-  // A booking written before the spend was carried. The old arithmetic, kept
-  // so an existing save prices its existing rooms the way it always did.
   const weeks = Math.max(1, (booking.to - booking.from) / MS_WEEK);
-  return Math.round(booking.weekRateCents * weeks * size.onScreen * OF_THE_ROOM);
+  // What the production is actually spending, where the booking knows it.
+  const share = booking.spendCents !== undefined && booking.spendCents > 0
+    ? Math.round(booking.spendCents * OF_THE_SPEND * size.onScreen)
+    // A booking written before the spend was carried. The old arithmetic, kept
+    // so an existing save prices its existing rooms the way it always did.
+    : Math.round(booking.weekRateCents * weeks * size.onScreen * OF_THE_ROOM);
+
+  // Or the collective floor, whichever is more. A share of the spend is the right
+  // model for a lead, who negotiates against the budget, and the wrong one for a
+  // day part at three percent of a cast: measured, that came to EUR 273 for a week
+  // on a small commercial, against an Icelandic minimum of about six hundred and
+  // fifty. `docs/ARREARS.md` found it and said plainly that the level claim was
+  // overstated and the structural one understated.
+  //
+  // Which is what a collective agreement is for, and the content has said so all
+  // along without anything reading it: a company employing people in Iceland is
+  // covered by the kjarasamningar because it employs people here, and those set the
+  // floor whatever anybody signs.
+  return Math.max(share, Math.round(weeks * SCALE_A_WEEK_CENTS));
 }
 
 /** The size of part a production of this length is likely to be casting. */

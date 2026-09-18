@@ -878,3 +878,36 @@ export const RELIABILITY_HEALS_A_DAY = 0.009;
  * much this person works. A hundred is for somebody who never stops.
  */
 export const HEADROOM = (standing: number): number => Math.max(0.04, 1 - standing / 100);
+
+/**
+ * The collective floor under any week of acting work in Iceland.
+ *
+ * `content/incorporation.ts` has declared this for as long as the guilds have
+ * existed and nothing has ever read it. The Icelandic actors' row says it in as
+ * many words — Icelandic employment does not work by signing up one production at
+ * a time, a company employing people here is covered by the kjarasamningar because
+ * it employs people here, and *"those set the floor whatever anybody signs"* — and
+ * `binds` names the floor first of the three things it binds. It bound nothing.
+ *
+ * What that cost is a specific, indefensible number. `docs/ARREARS.md` found it
+ * and could not fix it at the time: a day player on a small commercial earned
+ * **EUR 273 for the week**, against an Icelandic minimum of about six hundred and
+ * fifty. The entry's own words were that the "absurdly little" framing was
+ * overstated as a level claim and understated as a structural one — the lead on a
+ * four-hundred-thousand documentary at 3.3% of budget is defensible, and the day
+ * player is simply below the legal floor.
+ *
+ * It is below it because the fee is a share of what the production spends and a
+ * day part is three percent of a cast. That is the right model for a lead, who
+ * negotiates against the budget, and the wrong one for a small part, who is paid
+ * scale. A collective agreement exists precisely to make the second case not the
+ * first, so the floor is what it is: the share, or this, whichever is larger.
+ *
+ * The anchor is real and the conversion is SLATE's own. The Icelandic collective
+ * minimum for full-time work runs at ISK 425,000 a month, and `ISK_A_EURO` is the
+ * rate this build already converts every Icelandic figure at.
+ */
+export const A_MONTH_AT_LEAST_ISK = 425_000;
+export const SCALE_A_WEEK_CENTS: Money = Math.round(
+  ((A_MONTH_AT_LEAST_ISK / 150) * 100 * 12) / 52,
+);

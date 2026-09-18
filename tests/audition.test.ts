@@ -39,10 +39,13 @@ import {
   AS_WRITTEN, A_WORKING_WEEK, CLOSE_ENOUGH, COLD, FURTHEST, HOUSE_HOLDS, HOW_FAR, KNOWN_OF,
   MISREAD_THE_ROOM,
   HELD_AGAINST_YOU_YEARS, IGNORED, REMEMBERED, SHADES, TOO_FAR, WAYS, WHAT_THEY_OFFER,
-  EXPECTED_OF_ANYBODY,
+  EXPECTED_OF_ANYBODY, A_MONTH_AT_LEAST_ISK, OF_THE_SPEND, SCALE_A_WEEK_CENTS,
   type Reading,
 } from '@/engine/content/audition';
 import { SIZES, sizeById } from '@/engine/content/casting';
+import { ENQUIRY_SHAPES } from '@/engine/content/lot';
+import { ISK_A_EURO } from '@/engine/world/lot';
+import type { Money } from '@/engine/core/money';
 
 interface Done { ok: boolean; error?: string; at?: number; why?: string }
 const run = (sim: Simulation, kind: string, payload: Record<string, unknown> = {}): Done =>
@@ -1789,5 +1792,91 @@ describe('what a part pays is what the production is spending', () => {
       weekRateCents: 40_000_00,
     };
     expect(feeFor(old, 'guest')).toBeGreaterThan(0);
+  });
+});
+
+describe('the collective floor under a week of work', () => {
+  /**
+   * `content/incorporation.ts` has declared this since the guilds existed and
+   * nothing ever read it. The Icelandic actors' row says a company employing
+   * people here is covered by the kjarasamningar because it employs people here,
+   * and that "those set the floor whatever anybody signs" — and `binds` names the
+   * collective floor first of the three things it binds. It bound nothing.
+   *
+   * What that cost is one specific number `docs/ARREARS.md` found and could not fix
+   * at the time: a day player on a small commercial earned EUR 273 for the week.
+   */
+
+  const aWeek = (spendCents: number, weeks: number, sizeId: string): Money => feeFor({
+    id: 'b', saveId: 's', stageId: 'st', holder: 'somebody', kind: 'shooting',
+    from: 0, to: weeks * 7 * MS_DAY, weekRateCents: 0, spendCents,
+  } as Booking, sizeId);
+
+  it('is the real Icelandic minimum, converted at the rate the build already uses', () => {
+    // The anchor is real and the conversion is SLATE's own: the collective minimum
+    // for full-time work runs at ISK 425,000 a month, and every Icelandic figure in
+    // this build converts at the same rate the lot converts an enquiry's spend at.
+    expect(A_MONTH_AT_LEAST_ISK).toBe(425_000);
+    expect(SCALE_A_WEEK_CENTS).toBe(Math.round(((425_000 / ISK_A_EURO) * 100 * 12) / 52));
+    // About six hundred and fifty a week, which is the figure the day player was
+    // measured against and failed.
+    expect(SCALE_A_WEEK_CENTS).toBeGreaterThan(600_00);
+    expect(SCALE_A_WEEK_CENTS).toBeLessThan(700_00);
+  });
+
+  it('puts no week of any part below it, which a day part was', () => {
+    // The smallest job on the lot's own enquiry list, which is what a day part on a
+    // small commercial actually is.
+    const smallest = ENQUIRY_SHAPES
+      .reduce((least, one) => (one.of.spendIsk < least.of.spendIsk ? one : least));
+    const spend = Math.round((smallest.of.spendIsk / ISK_A_EURO) * 100);
+
+    for (const size of SIZES) {
+      const paid = aWeek(spend, smallest.of.weeks, size.id);
+      const perWeek = Math.round(paid / smallest.of.weeks);
+      expect(perWeek, `${size.id} is paid under the collective floor`)
+        .toBeGreaterThanOrEqual(SCALE_A_WEEK_CENTS);
+    }
+
+    // And the day part is the one the floor is actually holding up: the share of
+    // the spend on its own comes to EUR 273 for the week.
+    const day = SIZES.find((one) => one.id === 'day')!;
+    const share = Math.round(spend * OF_THE_SPEND * day.onScreen);
+    expect(Math.round(share / smallest.of.weeks)).toBeLessThan(SCALE_A_WEEK_CENTS);
+    expect(aWeek(spend, smallest.of.weeks, 'day'))
+      .toBe(Math.round(smallest.of.weeks * SCALE_A_WEEK_CENTS));
+  });
+
+  it('is a floor rather than a rate, so nothing good gets levelled down', () => {
+    // A share of the spend is the right model for a lead, who negotiates against
+    // the budget. The floor exists to stop it being the model for a day part, and
+    // it must not touch anything that already clears it.
+    const biggest = ENQUIRY_SHAPES
+      .reduce((most, one) => (one.of.spendIsk > most.of.spendIsk ? one : most));
+    const spend = Math.round((biggest.of.spendIsk / ISK_A_EURO) * 100);
+    const weeks = biggest.of.weeks;
+
+    for (const size of SIZES) {
+      const share = Math.round(spend * OF_THE_SPEND * size.onScreen);
+      expect(share, `${size.id} on the biggest job should clear the floor on its own`)
+        .toBeGreaterThan(weeks * SCALE_A_WEEK_CENTS);
+      expect(aWeek(spend, weeks, size.id), `${size.id} was levelled`).toBe(share);
+    }
+    // And a bigger part still pays more than a smaller one, which a flat rate
+    // would have destroyed.
+    expect(aWeek(spend, weeks, 'lead')).toBeGreaterThan(aWeek(spend, weeks, 'support'));
+    expect(aWeek(spend, weeks, 'support')).toBeGreaterThan(aWeek(spend, weeks, 'guest'));
+    expect(aWeek(spend, weeks, 'guest')).toBeGreaterThan(aWeek(spend, weeks, 'day'));
+  });
+
+  it('holds a booking written before the spend was carried, too', () => {
+    // The old rate-card arithmetic is still the fallback for a save that predates
+    // the budget being on the booking, and the floor is under that as well —
+    // otherwise the defect would survive in exactly the saves nobody looks at.
+    const old = feeFor({
+      id: 'b', saveId: 's', stageId: 'st', holder: 'somebody', kind: 'shooting',
+      from: 0, to: 2 * 7 * MS_DAY, weekRateCents: 1_000_00,
+    } as Booking, 'day');
+    expect(old).toBe(Math.round(2 * SCALE_A_WEEK_CENTS));
   });
 });
