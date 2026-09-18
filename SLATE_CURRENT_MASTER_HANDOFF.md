@@ -543,6 +543,54 @@ to pull in and the branch is clean against it.
 
 ---
 
+# WHERE THE BUILD IS — 2026-09-18
+
+**Schema 83. Gate exit 0 at 1,432 tests over 50 files, 17 checks.** Branch
+`claude/slate-cleanup-e4apmx`, latest `850c4d9`.
+
+## What the last phase added, and what each instrument caught
+
+**Monte Carlo (`tools/monte.mjs`).** 576 careers played and checked — 480 of five
+years and 96 of twenty-five — across 2,400 simulated years. Eight named invariants
+at every year boundary of every career: no-throw, ledger-balances,
+structurally-valid, all-finite, clock-forward, in-range, round-trips, deterministic.
+**Nought failures.** Both tiers converge under `--converge`, which compares two
+interleaved halves against the standard error of their difference rather than
+against the mean. Two defects in the instrument were found and fixed before it could
+be trusted; both made it cry wolf on a clean run.
+
+**Direction on the deciders (`sweepDirection` in `core/deciders.ts`).** The hole
+every other check left open: `sweepOne` proves an input changes the answer and
+nothing proved it changes it the *right* way, so an inverted sign anywhere in
+`decided.ts` passed the whole build. It failed 12–0 on its first run and found a
+field called `tightness` whose value was its opposite — `weeks /
+impliedShootWeeks`, where 1.2 means a schedule with room in it. The model was right;
+the name and two docstrings were backwards. Renamed `slack`. Fifteen directions
+declared across six deciders, floored, may rise and may not fall.
+
+**The teaching (`content/tutorial.ts`, `world/tutorial.ts`).** 39 lessons, one a
+week, on conditions read off the real world. Reachability went **22 → 38 of 39**
+once four of its own defects were fixed, the largest being that conditions written
+as "a company and *no* registration" close before the first weekly tick for any
+player who acts quickly — which made the entire eight-lesson Making Pictures strand
+unreachable on a career that delivered eight pictures. Coverage is read off the
+engine's own command registry, so a new command fails the build.
+
+## The one thing these instruments found and did not fix
+
+**The Decision Center raises exactly one kind of decision**, and no played career
+reaches it. `theClaimsStillOpen` prompts for a picture whose Icelandic
+reimbursement claim is still open, in the window between a greenlight and the first
+day of photography. `tests/smoke.test.ts` asserts the prompt by name so the state is
+reachable, but neither `playACareer` nor `playABusiness` enters that window — every
+picture reads `too-late` or `scheme-ended` by the time anything looks. Two things
+worth a later session: the instrument cannot drive the one decision this game has,
+and `scheme-ended` appears on pictures greenlit within a few years of the save
+opening, which means late-career pictures may never be able to claim at all. Neither
+is a broken invariant. Both are worth knowing.
+
+---
+
 # CANONICAL DEVELOPMENT BLUEPRINT
 
 **Established by the owner, 2026-09-18. Canonical unless the owner explicitly
@@ -801,7 +849,9 @@ persistence
 
 ### Testing & gating
 
-`npm run gate` is the whole bar — 15 checks, and it includes `npm run validate` (typecheck + lint + full suite). The prose tools are part of the gate and they do fail builds: `title-case`, `label-sweep`, `plural-check`, `both-titles`, `voice-check` (uncontracted-form budget, currently 40), `tics` (habit budgets), `doc-refs`, `wired` (dead-word floor, held against `docs/UNWIRED.json`), `claims` (present-tense comments saying nothing reads or writes a thing, checked against what does), `dials` (dials nothing moves, plays a 25-year career), `deciders`, `spelling` (British→American), `typos`, `geo-check`, `inventory`.
+`npm run gate` is the whole bar — 17 checks, and it includes `npm run validate` (typecheck + lint + full suite). The prose tools are part of the gate and they do fail builds: `title-case`, `label-sweep`, `plural-check`, `both-titles`, `voice-check` (uncontracted-form budget, currently 40), `tics` (habit budgets), `doc-refs`, `wired` (dead-word floor, held against `docs/UNWIRED.json`), `claims` (present-tense comments saying nothing reads or writes a thing, checked against what does), `dials` (dials nothing moves, plays a 25-year career), `deciders`, `spelling` (British→American), `typos`, `geo-check`, `inventory`, `monte:smoke` (many-seed invariant soak, 8 seeds × 3 years), `tutorial` (every lesson reachable on a played career).
+
+Two of those are played rather than read, and cost the gate about 100 seconds between them. The full sweeps are separate commands, because 480 careers is 50 minutes: `npm run monte:breadth` (480 × 5 years), `npm run monte:depth` (96 × 25 years).
 
 ### Base44 integration
 
@@ -918,7 +968,9 @@ Deployment target providing server-checked persistence. Three entities (`SlateSa
 - **Crew + standing + family bonds + household** — `tests/crew.test.ts`, `tests/standing.test.ts`, `tests/family.test.ts`, `tests/household.test.ts`. CONFIRMED BY CODE
 - **The drill-down "looks" system** — `tests/looks.test.ts`, `tests/navigation.test.ts`, `tests/interface.test.ts`, `tests/cohesion.test.ts`. CONFIRMED BY CODE
 - **Endurance / long-save loadability** — `tests/endurance.test.ts` (includes a wall-clock ratio assertion; see §14). CONFIRMED BY CODE
-- **The gate (15 checks)** — CONFIRMED BY CODE + TEST OUTPUT
+- **The gate (17 checks)** — CONFIRMED BY CODE + TEST OUTPUT
+- **Monte Carlo invariant sweep** — 576 careers, 2,400 simulated years, eight invariants checked at every year boundary, nought failures, converged. `tools/monte.mjs`. CONFIRMED BY TEST OUTPUT
+- **The teaching** — 39 lessons on conditions read off the real world, 38 provably reachable on a played career, every registered command covered. `content/tutorial.ts`, `world/tutorial.ts`, `tools/tutorial.mjs`. CONFIRMED BY TEST OUTPUT
 
 ## IMPLEMENTED BUT NOT FULLY VERIFIED
 
