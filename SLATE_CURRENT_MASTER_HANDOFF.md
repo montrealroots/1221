@@ -334,6 +334,62 @@ awkward weeks. `keepsRinging` names them. Deleting the rows would have made the
 lot look busier than the premise says, and repricing them would have been tuning
 the economy to hide it — so do neither.
 
+
+### And where it actually stands now — read this before picking anything up
+
+**Both ledgers are verdicted through and neither has an open defect in it.**
+`docs/ARREARS.md` carries an honest verdict on all thirty-two of its decidable
+entries and none says STILL_TRUE; `docs/UNBITTEN.md`'s open lists were passed over
+the same way. `docs/UNWIRED.json` reads nought on all seven rows and is still a
+ratchet, so the next declared word with no reader fails the gate rather than
+raising a floor.
+
+That means **the lists are exhausted, and the only place left to find a defect is
+running the game and looking at it.** Which is what turned up the last one.
+
+**THE INSTRUMENT WAS MEASURING A DERELICT HOUSE, AND HAD BEEN FOR ITS WHOLE
+LIFE.** This is the single most useful thing on this page for whoever reads it
+next. `playACareer` trains two hours a week and answers every ask, and it never
+had the work done on the roof — so the house went 100 to 0 over twenty-five years
+and took body condition, energy, stress, morale and readiness with it. Once energy
+sits under `TOO_SPENT_TO_TRAIN`, `life.train` refuses every week and fitness
+ratchets to the floor with nothing able to put it back: 94 at year fifteen, 36 at
+twenty, 0 at twenty-five.
+
+Read off the endpoint, that is "`w.fitness` is a one-way ratchet to zero" — a
+claim this project fixed and recorded as fixed. **A measurement that reproduces an
+already-fixed defect is the most expensive kind of wrong, and nothing about the
+numbers looked odd.** Kept, the same seeds end with fitness 88, professional
+standing 53 and 61 rather than 2 and 1, reliability 72 and 73 rather than 63 and
+58. `playACareer` keeps the house by default now; `letTheHouseGo` turns it off for
+the A/B in `tests/house.test.ts`.
+
+**So: before trusting any career figure on any page here, check what the
+instrument was doing when it was produced.** Three separate times now an
+instrument in this repository has reported confidently about a world nobody plays
+— cover bound before material was optioned, the sugar estate's account read
+instead of the company's, and this. All three returned numbers that looked
+reasonable. `tests/instrument.test.ts` exists for exactly this and has a test for
+each.
+
+**What the last four commits did**, beyond that one:
+
+- **`availableFunds` and the seven things reachable only as a blocker chip.** A
+  chip only appears for something a shut door is waiting on, so three of the four
+  signable guilds, one register, two policies and a company form could not be
+  bought by any route. The pages that describe them offer them now, asking
+  `whyNotRegister` / `whyNotSign` / `whyNotInsure` — which the command handlers
+  were rewritten to call, so each set of guards has one implementation.
+- **The verdict pass itself**, which is what found both of those.
+- **The session context export is gitignored.** `5204f7d` decided it once; it
+  keeps coming back on a handover and untracked-and-drifting is the one state a
+  file should not be in on a project that hands machines over.
+
+**The business half is healthy and was re-measured on the same pass:** 36 and 37
+pictures greenlit on two seeds, 34 and 35 delivered, no week under water, the
+group holding EUR 2.81bn and EUR 2.86bn against a year's profit of EUR 128m and
+EUR 152m.
+
 ### The PR is not open, and cannot be opened from here
 
 `gh` is **not installed** on this machine. The branch is pushed. Open it by hand:
@@ -343,7 +399,7 @@ the economy to hide it — so do neither.
 
 ### The commits
 
-**Branch `claude/slate-cleanup-e4apmx` is 45 commits past `dc52d64`.** Gate exit 0 on every one of them before it was committed — **1,356 tests over 47 files** at the latest. One section per commit, each independently droppable. The nine numbered sections are the first pass; the remainder pass, the sugar company and everything in "After the fee" below follow them.
+**Branch `claude/slate-cleanup-e4apmx` is 49 commits past `dc52d64`.** Gate exit 0 on every one of them before it was committed — **1,361 tests over 47 files** at the latest. One section per commit, each independently droppable. The nine numbered sections are the first pass; the remainder pass, the sugar company and everything in "After the fee" below follow them.
 
 **`docs/UNWIRED.json` now reads nought on every row.** It was a ratchet with seven baselines above zero — id namespaces, trait modifier keys, higher-is-worse guards, dials nothing moves, personality axes nothing consults, save tables nothing fills, draw streams no decider owns — and every one of them is now at nought. It is still a ratchet and it still may not rise, so the next thing that adds a declared word with no reader will fail the gate rather than raise a floor.
 
