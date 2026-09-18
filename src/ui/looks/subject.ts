@@ -41,12 +41,27 @@ export function parseSubject(key: string): Subject | undefined {
 /**
  * The typed pointer five record types carry, resolved into a subject.
  *
- * `refType` and `refId` are declared on decisions, notifications and history
- * records, and there is not one literal `refType` written anywhere in the
- * engine today — every one is pass-through of a caller-supplied value that no
- * caller supplies. So this resolves nothing yet, on purpose, and returns
- * undefined rather than inventing an address. The day something populates
- * them, notifications open onto what they are about and nothing here changes.
+ * `refType` and `refId` are declared on five record shapes — a decision, a
+ * notification, a ledger transaction, a scheduled item and a calendar entry —
+ * and this resolves the two the interface asks it about. The engine writes a
+ * literal `refType` in fifty-two places:
+ * forty-two `'project'`, nine `'audition'` and one `'property'`. Forty-one of
+ * the project ones are notifications and transactions about a picture; the
+ * forty-second is the reimbursement row the Decision Center raises, which is
+ * what made this comment worth rewriting, because it is the first decision in
+ * the build that carries an address at all.
+ *
+ * Forty-two of the fifty-two resolve. The other ten do not, and it is the kind
+ * and not the id that is missing: there is no `'audition'` look and no
+ * `'property'` look — the registry has `house` and `estate`, which are the same
+ * things under different names, and `person`, `project`, `role`, `rebate`,
+ * `lot` and the rest. So nine of the career’s own notifications and the one the
+ * lot writes about a stage point at a kind nothing has ever declared.
+ *
+ * This still returns undefined rather than inventing an address, and every
+ * caller guards on `lookExists` before painting a way, so a kind with no look
+ * paints nothing rather than a dead link. Declaring an `'audition'` look is
+ * what would make those nine open onto the room they are about.
  */
 export function subjectForRef(ref: { refType?: string; refId?: string }): Subject | undefined {
   if (!ref.refType || !ref.refId) return undefined;

@@ -16,6 +16,7 @@
 import { describe, expect, it } from 'vitest';
 import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
+import { quotaNow } from '@/engine/world/sugar';
 import { createSave, defaultConfig, loadSave, migrate, quickSave, validateUniverse } from '@/engine';
 import { PREMISE_STATEMENT, SAVE_SCHEMA_VERSION, type SaveUniverse } from '@/engine/domain/model';
 import {
@@ -24,10 +25,40 @@ import {
 } from '@/engine/core/performer';
 import { CEILING, DISCIPLINES, DISCIPLINE_LABEL, GOAT_TRAITS, goatTraitsIn } from '@/engine/content/prodigy';
 import { ALL_TRAITS, ATTRIBUTES, rate } from '@/engine/domain/attributes';
-import { SKILLS } from '@/engine/domain/skills';
 import { deserialise, serialise } from '@/engine/persistence/adapter';
 import { settledTitle } from '@/ui/creation/CharacterCreation';
 import { GuardError, inspectPayload } from '../base44/shared/guard.js';
+
+describe('every save starts on the same morning', () => {
+  it('opens on Monday 5 January 2026, and on a Monday for a reason', () => {
+    const sim = quickSave({}, 'starts');
+    const at = new Date(sim.now);
+    expect(at.getUTCFullYear()).toBe(2026);
+    expect(at.getUTCMonth() + 1).toBe(1);
+    expect(at.getUTCDate()).toBe(5);
+    // A Monday, because the week is the unit almost everything here is
+    // measured in: a stage is let by the week, a shoot is scheduled in weeks,
+    // and a save beginning mid-week spends its first days out of step with
+    // every window the engine lays. Held here because nothing else held it —
+    // the date could be moved and every test in the build still passed.
+    expect(at.getUTCDay(), 'the save has to open on a Monday').toBe(1);
+  });
+
+  it('inherits a world that is already settled, and owes the player nothing yet', () => {
+    const sim = quickSave({}, 'inherited');
+    // Everything the save is handed happened before the morning it opens: the
+    // family moved onto the land a year earlier, the lot went up on it, and
+    // America had already decided the quota for this fiscal year the previous
+    // July. If any of those drifted past the start the player would arrive
+    // before their own history.
+    const lot = Object.values(sim.universe.properties).find((one) => one.kind === 'studio_lot')!;
+    expect(lot.createdAt).toBeLessThan(sim.now);
+    expect(Object.values(sim.universe.stages).every((one) => one.builtAt < sim.now)).toBe(true);
+    const year = quotaNow(sim);
+    expect(year, 'the fiscal year the save opens in has already been decided').toBeDefined();
+    expect(year!.decidedAt).toBeLessThan(sim.now);
+  });
+});
 
 describe('every save says what game it is', () => {
   it('writes the premise into a brand new universe', () => {
@@ -91,7 +122,6 @@ describe('actor and actress are equals', () => {
       now: u.now,
       wellbeing: u.people[u.playerId]?.wellbeing,
       attributes: u.people[u.playerId]?.attributes,
-      skills: u.people[u.playerId]?.skills,
       balances: Object.values(u.accounts).map((a) => a.balance).sort(),
       properties: Object.values(u.properties).map((p) => [p.marketValue, p.condition, p.bedrooms]),
       scheduled: u.scheduled.map((s) => [s.kind, s.at]),
@@ -294,9 +324,12 @@ describe('the craft is acting, and only acting', () => {
     // Every acting attribute at the ceiling.
     for (const attribute of ATTRIBUTES) expect(rate(player.attributes, attribute.id)).toBe(CEILING);
 
-    // Every acting trait, and the three that belong to one person.
+    // Every acting trait. The three that belong to one person are read off
+    // `content/prodigy.ts` wherever they are shown, so the save carries no
+    // second copy of them to drift from the first.
     expect(player.traits.sort()).toEqual(ALL_TRAITS.map((t) => t.id).sort());
-    expect(player.goatTraits?.sort()).toEqual(GOAT_TRAITS.map((t) => t.id).sort());
+    expect('goatTraits' in player).toBe(false);
+    expect(GOAT_TRAITS.length).toBe(3);
 
     // Nothing from a job this game no longer simulates.
     expect('founder' in player, 'the producer sheet is back on the player').toBe(false);
@@ -304,8 +337,109 @@ describe('the craft is acting, and only acting', () => {
     expect('professions' in player).toBe(false);
   });
 
-  it('leaves the skill sheet as ordinary life, not five crafts', () => {
-    for (const skill of SKILLS) expect(skill.domain).toBe('general');
+  it('carries no sheet but the acting one, and none of the fields nothing read', () => {
+    const { universe } = quickSave({}, 'premise-fields');
+    // Five person fields and a whole forty-seven-row skill sheet were written
+    // on every person in the save and read by nothing. The sheet held the
+    // prodigy at a hundred and everybody else at five and never moved for
+    // anybody; `goals` was not asked for on any screen; `lifestyle` offered
+    // four answers that opened the same world; `creditScore` is kept on
+    // `WEALTH_PROFILE`, where the creation review actually reads it, and there
+    // is no lending to consult a copy on a person; `goatTraits` duplicated a
+    // content list. None of them comes back without a reader arriving first.
+    for (const person of Object.values(universe.people)) {
+      for (const dead of ['skills', 'goals', 'lifestyle', 'creditScore', 'goatTraits']) {
+        expect(dead in person, `${dead} is back on a person`).toBe(false);
+      }
+      expect('travelFatigue' in person.wellbeing, 'travelFatigue is back on a wellbeing')
+        .toBe(false);
+    }
+  });
+
+  it('sheds the sixth dead word too, which is on the wellbeing and not the person', () => {
+    // The first draft of the migration shed five keys off the person and left
+    // `travelFatigue` on the wellbeing, under a comment that said six had gone.
+    // A field this loop misses is a field that persists forever in every save
+    // anybody already has, which is the one thing a migration exists to stop.
+    const { universe } = quickSave({}, 'premise-migrate');
+    universe.meta.schemaVersion = SAVE_SCHEMA_VERSION - 1;
+    for (const person of Object.values(universe.people)) {
+      (person.wellbeing as unknown as Record<string, unknown>).travelFatigue = 41;
+    }
+    migrate(universe);
+    for (const person of Object.values(universe.people)) {
+      expect('travelFatigue' in person.wellbeing, 'an old save keeps it forever').toBe(false);
+    }
+  });
+
+  // The sixteen that came off a property at schema 80. They described a market
+  // — buying, borrowing, renting, listing, insuring, a garage and a dock — for
+  // a game whose premise is that the family already holds the two places that
+  // exist and never buys or sells any of it. `addressLine` and `lotSqft` are
+  // the two that were not empty: they stored what `estatePlaceLine()` and
+  // `ESTATE_ACRES` already say, frozen at the moment the save was written, and
+  // no screen read either.
+  const DEAD_ON_A_PLACE = [
+    'addressLine', 'neighbourhoodId', 'lotSqft', 'purchasePrice', 'purchasedAt', 'monthlyRent',
+    'leaseEndsAt', 'mortgageAccountId', 'annualPropertyTaxRate', 'hoaMonthly', 'insurancePolicyId',
+    'structureIds', 'garageSpaces', 'dockFeet', 'rentedOut', 'listedForSale',
+  ];
+
+  it('describes the two places it holds and not a property market', () => {
+    const { universe } = quickSave({}, 'premise-places');
+    const places = Object.values(universe.properties);
+    expect(places.length, 'the house and the lot').toBe(2);
+    for (const place of places) {
+      for (const dead of DEAD_ON_A_PLACE) {
+        expect(dead in place, `${dead} is back on ${place.name}`).toBe(false);
+      }
+    }
+    // And the kinds it can be are the two it is. Fifteen more were declared —
+    // apartments, a penthouse, a private island, retail — and no code path in
+    // the build could produce any of them.
+    expect(places.map((one) => one.kind).sort()).toEqual(['house', 'studio_lot']);
+  });
+
+  it('takes the property market off a save that already has one', () => {
+    const { universe } = quickSave({}, 'premise-places-migrate');
+    universe.meta.schemaVersion = SAVE_SCHEMA_VERSION - 1;
+    for (const place of Object.values(universe.properties)) {
+      const p = place as unknown as Record<string, unknown>;
+      for (const dead of DEAD_ON_A_PLACE) p[dead] = 1;
+    }
+    migrate(universe);
+    for (const place of Object.values(universe.properties)) {
+      for (const dead of DEAD_ON_A_PLACE) {
+        expect(dead in place, `an old save keeps ${dead} forever`).toBe(false);
+      }
+    }
+  });
+
+  it('names the office an old save only had a sentence for', () => {
+    // Schema 81. A casting office's identity used to be the prose printed about
+    // it, so a save written before this has the sentence and no id. The
+    // migration matches on the sentence, once, and everything the player had
+    // built up with that office survives the change — which is the whole point
+    // of the change, because from here a rewrite of the sentence costs nothing.
+    const { universe } = quickSave({}, 'premise-offices');
+    universe.meta.schemaVersion = SAVE_SCHEMA_VERSION - 1;
+    const bookingId = 'booking_old';
+    universe.bookings[bookingId] = {
+      id: bookingId, saveId: universe.meta.id, stageId: 'stage_x',
+      holder: 'RÚV, a limited series', kind: 'shooting',
+      from: universe.now, to: universe.now + 1, weekRateCents: 1,
+    };
+    const auditionId = 'audition_old';
+    universe.auditions[auditionId] = {
+      id: auditionId, saveId: universe.meta.id, bookingId,
+      holder: 'a Hollywood studio, a feature', size: 'day', feeCents: 1,
+      from: universe.now, to: universe.now + 1, closesAt: universe.now + 1,
+      wants: {}, state: 'over', why: 'went-another-way',
+    } as unknown as typeof universe.auditions[string];
+
+    migrate(universe);
+    expect(universe.bookings[bookingId]!.officeId).toBe('ruv_series');
+    expect(universe.auditions[auditionId]!.officeId).toBe('hollywood_feature');
   });
 });
 

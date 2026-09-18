@@ -12,11 +12,13 @@
  * them.
  *
  * Both kinds here do the same job. Say the figure the bar hides, say what
- * raised it, say when it stops asking, and — for a notice — offer the thing it
- * is about, which is a pointer five record types declare and no caller has
- * ever filled in. `subjectForRef` resolves nothing today and is used anyway.
- * The day something populates `refType`, a notification opens onto its subject
- * and not one line of this changes.
+ * raised it, say when it stops asking, and offer the thing it is about, which
+ * is a pointer five record shapes declare and the engine now fills in
+ * fifty-two times. `subjectForRef` resolves forty-two of those — every
+ * `'project'`, including the reimbursement row this file’s own decision look
+ * paints a way from. The ten it does not resolve are the nine `'audition'`
+ * notifications and the one `'property'`, and the reason is the same for all
+ * ten: no look has ever been declared for either kind.
  *
  * A decision’s actions are commands. They stay on Home, where pressing one
  * runs it through `game.run()`. This explains a decision; it never takes one,
@@ -33,7 +35,15 @@ import { defineLook, lookExists, resolveLook, type Way } from './registry';
 import { at, subjectForRef, type Subject } from './subject';
 import { outOf, spokenList } from './words';
 
-/** Untouched for this long and the world stops nagging. `expireDecisions`. */
+/**
+ * Untouched for this long and the world stops nagging. `expireDecisions`.
+ *
+ * Only where there is no date on it. A dated row is exempt from the season
+ * rule, because the raiser that wrote a date already said where the row ends —
+ * and the reimbursement, which carries a hundred and five days of runway, was
+ * being waved off eleven days before its own deadline while the claim was still
+ * worth millions.
+ */
 const QUIET_AFTER_DAYS = 90;
 
 /** And this long after it closes there is nothing left of it. `prune`. */
@@ -84,6 +94,8 @@ const RAISED_BY: Readonly<Record<string, string>> = {
   travel: 'the traveling',
   relationship: 'a person who knows you',
   legal: 'the paperwork',
+  business: 'the office',
+  reimbursement: 'the office, with the state’s clock running',
 };
 
 const raisedBy = (category: string): string =>
@@ -123,10 +135,11 @@ function weightOf(urgency: number): string {
 /**
  * A way onto the thing a record points at, labeled with that thing’s own name.
  *
- * Nothing yet: `refType` is pass-through of a value no caller supplies. It
- * returns undefined rather than painting a way onto nothing, which is also
- * what keeps the crawl honest the day the pointer starts arriving with a kind
- * the registry has never heard of.
+ * The `lookExists` guard is not belt and braces. Ten of the fifty-two pointers
+ * the engine writes carry a kind the registry has never heard of — nine
+ * `'audition'` and one `'property'` — so the guard fires on real records in an
+ * ordinary save, and what it buys is a row with no way out rather than a link
+ * onto a page that does not exist.
  */
 function wayTo(sim: Simulation, subject: Subject, detail: string): Way | undefined {
   if (!lookExists(sim, subject)) return undefined;
@@ -170,7 +183,9 @@ function decisionSentence(decision: DecisionItem, stage: Stage, sim: Simulation)
     case 'ran out':
       return 'Its date had already gone by the time it closed, so it isn’t asking you for anything now.';
     case 'let go':
-      return 'It isn’t waiting on you any more — either you waved it away or it sat ninety days without being touched.';
+      return decision.dueAt !== undefined
+        ? 'You waved this one away, and the thing that raised it took that as the answer and stopped asking.'
+        : 'It isn’t waiting on you any more — either you waved it away or it sat ninety days without being touched.';
   }
 }
 
@@ -206,7 +221,9 @@ defineLook<DecisionItem>('decision', {
       : `It closed ${formatRelative(closedAt ?? sim.now, sim.now)} and nothing on Home lists it now.`;
 
     const ending = stage === 'open'
-      ? `Left alone it goes quiet by itself, ninety days from the day it was raised, on ${formatDate(quietAt, sim.zone)}, the world takes it off the list unanswered.${decision.dueAt !== undefined ? ` The date on it comes first — once ${formatDate(decision.dueAt, sim.zone)} passes it closes itself, answered or not.` : ''} The world only looks in every ${countWord(TICK_DAYS)} days, so either one lands at the next look rather than on the stroke, and six months after it closes there’s no record of it at all.`
+      ? (decision.dueAt !== undefined
+        ? `It ends on its date and on nothing else: once ${formatDate(decision.dueAt, sim.zone)} passes it closes itself, answered or not. The ninety-day rule that quiets the undated things doesn’t touch it, because whatever raised it already said where it ends. The world only looks in every ${countWord(TICK_DAYS)} days, so the closing lands at the next look and not on the stroke. The save keeps the record until the date has passed and six months have gone by since it closed, whichever is later — so a row waved away early is dropped on the date itself.`
+        : `Left alone it goes quiet by itself, ninety days from the day it was raised, on ${formatDate(quietAt, sim.zone)}, the world takes it off the list unanswered. The world only looks in every ${countWord(TICK_DAYS)} days, so that lands at the next look rather than on the stroke, and six months after it closes there’s no record of it at all.`)
       : `The save forgets it entirely six months after it closed, on ${formatDate(forgottenAt, sim.zone)}.`;
 
     // Home renders the actions, a way through where there is a route, and
@@ -240,7 +257,18 @@ defineLook<DecisionItem>('decision', {
             <Stat
               label="Raised"
               value={formatDate(decision.createdAt, sim.zone)}
-              note={stage === 'open' ? `Quiet by ${formatDate(quietAt, sim.zone)}` : `Closed ${formatDate(closedAt ?? sim.now, sim.zone)}`}
+              // A dated row is exempt from the season rule, so printing the
+              // ninety-day date beside it put a figure on the panel that the
+              // paragraph underneath flatly contradicts: the reimbursement row
+              // raised on 7 January 2026 read "Quiet by April 7, 2026" while
+              // its own date was 20 April and the panel said the ninety-day
+              // rule does not touch it. There is nothing to say about a dated
+              // row here that the Due field is not already saying.
+              note={stage !== 'open'
+                ? `Closed ${formatDate(closedAt ?? sim.now, sim.zone)}`
+                : decision.dueAt !== undefined
+                  ? 'It ends on its own date'
+                  : `Quiet by ${formatDate(quietAt, sim.zone)}`}
             />
             <Stat
               label="Due"
@@ -262,7 +290,9 @@ defineLook<DecisionItem>('decision', {
         </>
       ),
       ways,
-      provenance: 'Urgency is SLATE’s own reading of how much a thing matters, nought to a hundred. Ninety days untouched closes it; six months after that the save drops it.',
+      provenance: decision.dueAt !== undefined
+        ? 'Urgency is SLATE’s own reading of how much a thing matters, nought to a hundred. A dated thing closes on its date, and the save drops it six months after it closed or on the date itself, whichever is later.'
+        : 'Urgency is SLATE’s own reading of how much a thing matters, nought to a hundred. Ninety days untouched closes an undated one; six months after that the save drops it.',
     };
   },
 });

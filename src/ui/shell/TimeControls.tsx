@@ -9,6 +9,7 @@ import { titleCaseLabel } from '@/engine/core/text';
 import { useEffect, useRef, useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { Modal } from '@/ui/components/primitives';
+import { LONGEST_SESSION_HOURS, TRAINING_AN_HOUR, ceilingAt } from '@/engine/content/lifespan';
 import { suggestedSleep, hoursUntilNextCommitment } from '@/engine/systems/life';
 import { missedBy, skipTargets } from '@/engine/world/calendar';
 import type { CalendarEntry } from '@/engine/world/calendar';
@@ -23,6 +24,7 @@ import type { ScheduledItem } from '@/engine/core/scheduler';
 export function TimeControls() {
   const { sim, advanceTo, run, refresh, toast, standingAt, clearStandingAt } = useGame();
   const [sleepOpen, setSleepOpen] = useState(false);
+  const [trainOpen, setTrainOpen] = useState(false);
   const [skipOpen, setSkipOpen] = useState(false);
   const [confirm, setConfirm] = useState<{ at: Instant; label: string; missed: CalendarEntry[] } | null>(null);
   const speed = sim.universe.preferences.timeSpeed;
@@ -58,6 +60,7 @@ export function TimeControls() {
           {speed === 'paused' ? 'Play' : 'Pause'}
         </button>
         <button className="btn btn-sm" onClick={() => setSleepOpen(true)}>Sleep</button>
+        <button className="btn btn-sm" onClick={() => setTrainOpen(true)}>Train</button>
         <AdvanceMenu
           onAdvance={(at, label) => {
             const missed = missedBy(sim, at);
@@ -90,6 +93,7 @@ export function TimeControls() {
       )}
 
       {sleepOpen && <SleepDialog onClose={() => setSleepOpen(false)} />}
+      {trainOpen && <TrainDialog onClose={() => setTrainOpen(false)} />}
       {skipOpen && <SkipDialog onClose={() => setSkipOpen(false)} onSkip={(at) => { advanceTo(at); setSkipOpen(false); }} />}
       {confirm && (
         <Modal
@@ -432,5 +436,82 @@ function AdvanceMenu({
         </div>
       )}
     </div>
+  );
+}
+
+/**
+ * An hour or two of keeping in shape, which is the only other thing a player can
+ * do with the clock on purpose.
+ *
+ * It sits beside Sleep because it is the same kind of act: hours spent
+ * deliberately, charged to the body the way any waking hours are, in exchange for
+ * a dial moving. Fitness had no second direction at all until now — it fell 0.18
+ * a day forever and reached nought inside the first year of every save — so this
+ * is the control that makes the dial a dial.
+ *
+ * The ceiling is printed rather than merely enforced, because the ceiling is the
+ * interesting part: `ceilingAt` is the most a body of this age can be brought to,
+ * and it falls every year. A player who reads "the 71 a body your age can hold"
+ * has been told something true about getting older that no other screen says.
+ */
+function TrainDialog({ onClose }: { onClose: () => void }) {
+  const { sim, run } = useGame();
+  const [hours, setHours] = useState(1);
+  const me = useWorld((s) => s.player);
+  const years = Math.floor((sim.now - me.birthInstant) / (365.2425 * 24 * MS_HOUR));
+  const ceiling = ceilingAt(years).fitness;
+  const now = me.wellbeing.fitness;
+  const would = Math.min(ceiling, now + hours * TRAINING_AN_HOUR);
+
+  const train = () => {
+    const result = run('life.train', { hours });
+    if (result.ok) onClose();
+  };
+
+  return (
+    <Modal
+      title="Train"
+      onClose={onClose}
+      footer={
+        <>
+          <button className="btn" onClick={onClose}>Not Today</button>
+          <button className="btn btn-primary" onClick={train}>
+            Train {hours} {hours === 1 ? 'Hour' : 'Hours'}
+          </button>
+        </>
+      }
+    >
+      <p className="muted">
+        Fitness falls a little every day whatever you do. This is the only thing that puts it back,
+        and it costs the hours it costs — they come off the same day everything else does.
+      </p>
+
+      <div className="field">
+        <div className="row-between">
+          <label htmlFor="train-hours" style={{ marginBottom: 0 }}>Hours</label>
+          <span className="mono">{hours}</span>
+        </div>
+        <input
+          id="train-hours" type="range" min={0.5} max={LONGEST_SESSION_HOURS} step={0.5}
+          value={hours} onChange={(e) => setHours(Number(e.target.value))}
+        />
+      </div>
+
+      <div className="grid grid-2">
+        <div className="stat">
+          <span className="stat-label">Fitness now</span>
+          <span className="small">{Math.round(now)}</span>
+        </div>
+        <div className="stat">
+          <span className="stat-label">After this</span>
+          <span className="small">{Math.round(would)} of {Math.round(ceiling)}</span>
+        </div>
+      </div>
+
+      <div className="callout" style={{ marginTop: 'var(--s4)' }}>
+        {Math.round(ceiling)} is as fit as a body {years} years old gets. Age is the one thing
+        training doesn’t argue with, and the ceiling comes down every year.
+      </div>
+    </Modal>
   );
 }

@@ -20,29 +20,47 @@ import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Empty, Modal, Stat } from '@/ui/components/primitives';
 import { LookRegion, Open } from '@/ui/looks/Look';
 import { at } from '@/ui/looks/subject';
+import { fixFor } from './fix';
 import { said, toStart } from '@/ui/looks/words';
 import { formatMoney } from '@/engine/core/money';
+import { plural } from '@/engine/core/text';
 import { formatDate } from '@/engine/core/time';
 import { DELIVERY, plansFor, planById } from '@/engine/content/making';
 import { DEALS, dealById } from '@/engine/content/selling';
 import { rateById, throughput } from '@/engine/content/inventory';
 import { cuttingPeriod } from '@/engine/world/inventory';
-import { pullOn, sellsFor, stillToCarry } from '@/engine/world/lot';
-import { SELLING } from '@/engine/content/lot';
-import { AXES, feeReads } from '@/engine/content/casting';
+import { aRoomCosts, periodAtThisStaffing } from '@/engine/world/making';
 import {
-  askFor, castOf, datesFor, howManyCast, quoteOf, readOf, seatFor, whereTheCastStands, whoCameIn,
+  behindTheCompany, breakEvenShare, goingUp, pullOn, sellsFor, stillToCarry, theSmallStage,
+  turnedAway, whereTheBuildStands, whyNotBuild,
+} from '@/engine/world/lot';
+import {
+  A_SMALL_STAGE, SELLING, SMALL_STAGE_COST_CENTS, buildRefusalById,
+} from '@/engine/content/lot';
+import { AXES, BOOKABLE, feeReads } from '@/engine/content/casting';
+import {
+  askFor, bringingThemCents, castOf, castSpark, datesFor, fromWhere, globalRuleOne, howManyCast,
+  howSure,
+  howWide, lookedAt, officeFillsAt, quoteOf, saysWhatItWants, seatFor, shownOf, sparkReads,
+  sureReads, theDiary, whatSayingYesCosts, whereTheCastStands, whoCameIn,
 } from '@/engine/world/casting';
 import {
   AIRDATE_WEEKS, LEAD_WEEKS, LONGEST_SHOOT, canHandOver, windowOf, wouldBe,
 } from '@/engine/world/making';
-import type { GuildId, PolicyKind, RegistryId, RoleId } from '@/engine/domain/company';
+import { LIMB_LABELS, THE_CLAIM } from '@/engine/content/rebate';
+import { basePeriodOf } from '@/engine/world/periods';
+import { REBATE } from '@/engine/content/incorporation';
+import {
+  auditorsFee, awayOnTheCast, certifiable, limbsOf, shortOnFor, turnsOverOn,
+  whereTheClaimStands, whyNot, worthToday,
+} from '@/engine/world/rebate';
+import type { RoleId } from '@/engine/domain/company';
 import {
   GUILD_BY_ID, POLICY_BY_ID, REGISTRY_BY_ID, ROLE_BY_ID,
 } from '@/engine/content/incorporation';
 import {
   americanArm, capabilitiesOf, companyCash, holdingsOf, parentCompany, policiesOf,
-  postsOf, projectsOf, registrationsOf, signaturesOf, whereItStands,
+  postFacts, postsOf, projectsOf, registrationsOf, signaturesOf, whereItStands,
   type Blocker, type Capability,
 } from '@/engine/world/company';
 
@@ -104,6 +122,7 @@ export function BusinessWorkspace() {
       <Holdings />
       <Slate />
       <TheLotsName />
+      <TheFifthRoom />
       <Standings />
 
       <p className="xs dim" style={{ marginTop: 'var(--s5)' }}>
@@ -149,40 +168,20 @@ function Door({ door }: { door: Capability }) {
 function Missing({ blocker }: { blocker: Blocker }) {
   const { run } = useGame();
   const [error, setError] = useState<string | undefined>();
-  const [filling, setFilling] = useState(false);
+  const [filling, setFilling] = useState<RoleId | undefined>();
+  const [taking, setTaking] = useState(false);
 
   const act = (kind: string, payload: Record<string, unknown>) => {
     const answer = run<{ ok: boolean; error?: string }>(kind, payload, { silent: true });
     setError(answer.value?.ok ? undefined : answer.value?.error ?? answer.error);
   };
 
-  const id = blocker.fixId ?? '';
-  const control = (() => {
-    switch (blocker.fixKind) {
-      case 'registry': {
-        const facts = REGISTRY_BY_ID[id as RegistryId];
-        return facts && { label: `Register With ${facts.body}`, go: () => act('company.register', { registry: id }) };
-      }
-      case 'arm':
-        return { label: 'Form The American Arm', go: () => act('company.form_arm', {}) };
-      case 'guild': {
-        const facts = GUILD_BY_ID[id as GuildId];
-        return facts && facts.signable && { label: `Sign With ${facts.body}`, go: () => act('company.sign', { guild: id }) };
-      }
-      case 'policy': {
-        const facts = POLICY_BY_ID[id as PolicyKind];
-        return facts && { label: `Bind ${facts.label}`, go: () => act('company.insure', { policy: id }) };
-      }
-      // A post is the one blocker that cannot be fixed by pressing a button,
-      // because it needs a person and the company has to choose which. It was
-      // the only unreachable one, and it shut the greenlight door — so a player
-      // could walk every other step of the sequence and stop here for good.
-      case 'role':
-        return { label: 'Fill The Post', go: () => setFilling(true) };
-      default:
-        return undefined;
-    }
-  })();
+  const fix = fixFor(blocker);
+  const press = () => {
+    if (!fix) return;
+    if (!('asks' in fix)) { act(fix.kind, fix.payload); return; }
+    if (fix.asks === 'who') setFilling(fix.role); else setTaking(true);
+  };
 
   return (
     <div className="row-between">
@@ -191,12 +190,13 @@ function Missing({ blocker }: { blocker: Blocker }) {
         <div className="xs muted">{blocker.how}</div>
         {error && <div className="xs negative" style={{ marginTop: 2 }}>{error}</div>}
       </div>
-      {control && <button className="btn btn-sm" onClick={control.go}>{control.label}</button>}
+      {fix && <button className="btn btn-sm" onClick={press}>{fix.label}</button>}
+      {taking && <OptionForm onClose={() => setTaking(false)} />}
       {filling && (
         <PostForm
-          role={id as RoleId}
-          onClose={() => setFilling(false)}
-          onDone={(said) => { setError(said); if (!said) setFilling(false); }}
+          role={filling}
+          onClose={() => setFilling(undefined)}
+          onDone={(said) => { setError(said); if (!said) setFilling(undefined); }}
         />
       )}
     </div>
@@ -251,8 +251,12 @@ function PostForm({ role, onClose, onDone }: {
         </select>
       </div>
       <p className="xs dim" style={{ margin: 0 }}>
-        {facts?.what ?? ''} It pays {formatMoney(facts?.monthlyCents ?? 0, { cents: false })} a month
-        from the day they start, whether or not the company is making anything.
+        {/* The rate, said as a rate. This read "It pays X a month from the day
+            they start, whether or not the company is making anything", which
+            described a standing charge the engine does not make: no clock in
+            world/company.ts bills a filled post, once or monthly. */}
+        {facts?.what ?? ''} The going rate for the job is{' '}
+        {formatMoney(facts?.monthlyCents ?? 0, { cents: false })} a month.
       </p>
     </Modal>
   );
@@ -284,7 +288,7 @@ function Holdings() {
                   </div>
                   <div className="xs muted">
                     {holding.hold === 'option' ? 'Optioned' : holding.hold === 'owned' ? 'Owned outright' : 'Commissioned'}
-                    {holding.expiresAt ? ` · runs out ${formatDate(holding.expiresAt, 'UTC')}` : ''}
+                    {holding.expiresAt ? ` · optioned to ${formatDate(holding.expiresAt, 'UTC')}` : ''}
                   </div>
                 </div>
                 <span className={`chip ${holding.chainComplete ? '' : 'chip-accent'}`}>
@@ -330,9 +334,15 @@ function OptionForm({ onClose }: { onClose: () => void }) {
           onChange={(e) => { setTitle(e.target.value); setError(undefined); }}
         />
       </div>
+      {/* This said "It runs out, and when it does the rights go back to
+          whoever you took them from", which was the flattest promise of a
+          lapse anywhere in the build and the one a player would actually have
+          planned around. No clock takes an option back: the term is written
+          on the agreement, the date is printed on the holding's own page, and
+          a picture can still be greenlit off it in 2046. */}
       <p className="xs dim" style={{ margin: 0 }}>
-        An option is the right to make it for a while, not ownership of it. It runs out, and when it
-        does the rights go back to whoever you took them from.
+        An option is the right to make it for a while, not ownership of it. The term on this one is
+        eighteen months, and buying it outright is a different and dearer thing.
       </p>
       {error && <p className="small negative" style={{ marginTop: 'var(--s3)' }}>{error}</p>}
     </Modal>
@@ -346,6 +356,7 @@ function Slate() {
   const [saying, setSaying] = useState<string | undefined>();
   const [casting, setCasting] = useState<string | undefined>();
   const [filing, setFiling] = useState<string | undefined>();
+  const [claiming, setClaiming] = useState<string | undefined>();
   const [selling, setSelling] = useState<string | undefined>();
 
   return (
@@ -381,6 +392,11 @@ function Slate() {
                   {project.planId !== undefined && project.stage !== 'delivered' && (
                     <button className="btn btn-sm" onClick={() => setFiling(project.id)}>The Delivery List</button>
                   )}
+                  {project.planId !== undefined && (
+                    <button className="btn btn-sm" onClick={() => setClaiming(project.id)}>
+                      The Reimbursement
+                    </button>
+                  )}
                   {project.stage === 'delivered' && project.dealId === undefined && (
                     <button className="btn btn-sm btn-primary" onClick={() => setSelling(project.id)}>Sell It</button>
                   )}
@@ -394,6 +410,7 @@ function Slate() {
       {saying && <GreenlightForm projectId={saying} onClose={() => setSaying(undefined)} />}
       {casting && <CastForm projectId={casting} onClose={() => setCasting(undefined)} />}
       {filing && <DeliveryForm projectId={filing} onClose={() => setFiling(undefined)} />}
+      {claiming && <RebateForm projectId={claiming} onClose={() => setClaiming(undefined)} />}
       {selling && <SellForm projectId={selling} onClose={() => setSelling(undefined)} />}
     </Panel>
   );
@@ -465,7 +482,7 @@ function DevelopForm({ onClose }: { onClose: () => void }) {
       </div>
       <p className="xs dim" style={{ margin: 0 }}>
         {ways.length === 1
-          ? `There is one way to make ${medium === 'film' ? 'a film' : 'television'} here: ${ways[0]!.label}.`
+          ? `There’s one way to make ${medium === 'film' ? 'a film' : 'television'} here: ${ways[0]!.label}.`
           : `${said(ways.length, 'way')} to make television here: ${ways.map((one) => one.label).join(', ')}.`}
         {' '}That choice is made at the greenlight, and this one is made now and not again.
       </p>
@@ -500,8 +517,11 @@ function GreenlightForm({ projectId, onClose }: { projectId: string; onClose: ()
   const [when, setWhen] = useState<string>('');
 
   // The week count does not set a shoot on every plan — an unscripted season
-  // does not shoot — so the label is the plan's own base period.
-  const shootLabel = plan?.periods.find((one) => one.per === 1)?.label ?? 'How Long It Shoots';
+  // does not shoot — so the label is the plan's own base period. Found by the
+  // plan naming it: looking for `per === 1` labelled this slider "The Rig" on a
+  // format season, which is a period that runs alongside casting and is not the
+  // one the number sets.
+  const shootLabel = basePeriodOf(plan)?.label ?? 'How Long It Shoots';
   const anchoredAt = plan?.anchor === 'delivery' ? AIRDATE_WEEKS : LEAD_WEEKS;
   const from = when
     ? new Date(`${when}T00:00:00Z`).getTime()
@@ -578,6 +598,28 @@ function GreenlightForm({ projectId, onClose }: { projectId: string; onClose: ()
             ? `, ${Math.round(throughput(cuttingPeriod(plan)!.converts!.at, hands) / 60)} finished minutes a week between them.`
             : '.'}
         </p>
+        {plan && cuttingPeriod(plan) && (() => {
+          // The price of it, at the moment it is chosen. A room used to cost
+          // nothing, which made the largest number right on every picture in
+          // every state and the only staffing call the game offers a number
+          // nobody had a reason to lower.
+          const period = cuttingPeriod(plan)!;
+          const cents = Math.round(budget * 100);
+          const assumes = period.converts!.hands;
+          const each = formatMoney(aRoomCosts(period, cents), { cents: false });
+          const now = formatMoney(periodAtThisStaffing(period, cents, hands), { cents: false });
+          const asPlanned = formatMoney(periodAtThisStaffing(period, cents, assumes), { cents: false });
+          const where = period.label.toLowerCase();
+          return (
+            <p className="xs dim" style={{ margin: 'var(--s2) 0 0' }}>
+              {hands === assumes
+                ? `This plan assumes ${said(assumes, 'room')}. That is ${now} through ${where}, `
+                  + `and each room is ${each} up or down.`
+                : `This plan assumes ${said(assumes, 'room')} at ${each} each. `
+                  + `${said(hands, 'room')} puts ${now} through ${where}. The plan's own would be ${asPlanned}.`}
+            </p>
+          );
+        })()}
       </div>
 
       <div className="field">
@@ -691,6 +733,128 @@ function DeliveryForm({ projectId, onClose }: { projectId: string; onClose: () =
 }
 
 /**
+ * The reimbursement, and the day it stops being available.
+ *
+ * Everything on this screen is a figure the producer can work out in advance,
+ * which is deliberate. A reimbursement is what a picture is planned against,
+ * and a number drawn at the last moment cannot be planned against. So the four
+ * conditions are printed with what this picture puts up against each of them,
+ * the deadline is printed as a date, and the arithmetic of what will be
+ * certified is broken into the four things that decide it.
+ */
+function RebateForm({ projectId, onClose }: { projectId: string; onClose: () => void }) {
+  const { run, sim } = useGame();
+  const project = useWorld((s) => s.universe.projects[projectId]);
+  const [error, setError] = useState<string | undefined>();
+  if (!project) return null;
+
+  const claim = project.rebate;
+  const refused = whyNot(sim, project);
+  const on = claim ? 'books' : 'plan';
+  const limbs = limbsOf(sim, project, on);
+  const short = new Set(shortOnFor(sim, project, on));
+  const needs = REBATE.higherNeeds;
+  const turnsOver = turnsOverOn(project);
+  const certified = certifiable(sim, project);
+
+  const apply = () => {
+    const answer = run<{ ok: boolean; error?: string }>(
+      'company.claim_rebate', { projectId }, { silent: true },
+    );
+    setError(answer.value?.ok ? undefined : answer.value?.error ?? answer.error);
+  };
+
+  const row = (limb: keyof typeof LIMB_LABELS, put: string, wants: string) => (
+    <tr key={limb}>
+      <td className="nowrap">{LIMB_LABELS[limb]}</td>
+      <td className="small nowrap">{put}</td>
+      <td className="small nowrap dim">{wants}</td>
+      <td className="small nowrap">{short.has(limb) ? 'Short' : 'Met'}</td>
+    </tr>
+  );
+
+  return (
+    <Modal
+      title={`${THE_CLAIM.label}: ${project.title}`}
+      wide
+      onClose={onClose}
+      footer={(
+        <>
+          <button className="btn btn-ghost" onClick={onClose}>Close</button>
+          {!claim && refused === undefined && (
+            <button className="btn btn-primary" onClick={apply}>
+              {`Apply — ${formatMoney(THE_CLAIM.filingCents, { cents: false })}`}
+            </button>
+          )}
+        </>
+      )}
+    >
+      <p className="small">{whereTheClaimStands(sim, project)}</p>
+
+      <div className="row gap-3" style={{ flexWrap: 'wrap' }}>
+        <Stat
+          label="Applications Close"
+          value={turnsOver ? formatDate(turnsOver, sim.homeZone) : 'No dates yet'}
+          note="The first day of photography, and it never reopens"
+        />
+        <Stat
+          label="The Scheme Ends"
+          value={`${REBATE.endsOn.day}/${REBATE.endsOn.month}/${REBATE.endsOn.year}`}
+          note="It’s legislated to stop, and a review is already running"
+        />
+        <Stat
+          label="Certified So Far"
+          value={formatMoney(certified, { cents: false })}
+          note={`Of ${formatMoney(project.spentCents, { cents: false })} spent`}
+        />
+        <Stat
+          label="Worth Today"
+          value={formatMoney(worthToday(sim, project), { cents: false })}
+          note={`Less ${formatMoney(auditorsFee(certified), { cents: false })} for the certificate`}
+        />
+      </div>
+
+      <p className="xs dim" style={{ marginTop: 'var(--s3)' }}>
+        {`What comes off the certificate: ${Math.round(THE_CLAIM.leaks * 100)}% of everything spent, `}
+        {'bought outside the country whatever anybody decides; '}
+        {`${formatMoney(project.notSpentHereCents ?? 0, { cents: false })} that left the country as it went; `}
+        {`and ${formatMoney(awayOnTheCast(sim, project), { cents: false })} of cast fees paid where the `}
+        {'people who took them live.'}
+      </p>
+
+      <div className="table-wrap" style={{ marginTop: 'var(--s3)' }}>
+        <table className="table">
+          <thead>
+            <tr>
+              <th>{`The Higher Rate — ${Math.round(REBATE.higherShare * 100)}%`}</th>
+              <th>This Picture</th>
+              <th>Wants</th>
+              <th>&nbsp;</th>
+            </tr>
+          </thead>
+          <tbody>
+            {row('spendIsk', `${Math.round(limbs.spendIsk / 1_000_000)}m kr`,
+              `${Math.round(needs.spendIsk / 1_000_000)}m kr`)}
+            {row('workingDays', plural(limbs.workingDays, 'day'), plural(needs.workingDays, 'day'))}
+            {row('shootingDays', plural(limbs.shootingDays, 'day'), plural(needs.shootingDays, 'day'))}
+            {row('crew', plural(limbs.crew, 'person', 'people'),
+              plural(needs.crew, 'person', 'people'))}
+            {row('crewDays', plural(limbs.crewDays, 'day'), plural(needs.crewDays, 'day'))}
+          </tbody>
+        </table>
+      </div>
+      <p className="xs dim" style={{ margin: 0 }}>
+        {`Miss any one of them and the claim goes in at ${Math.round(REBATE.share * 100)}%. `}
+        {'The rate is stamped when the ministry accepts the file and isn’t revised afterwards, '}
+        {'so a picture that shrinks has already been told what it is on.'}
+      </p>
+
+      {error && <p className="small negative" style={{ marginTop: 'var(--s3)' }}>{error}</p>}
+    </Modal>
+  );
+}
+
+/**
  * The parts, and who is in them.
  *
  * Two screens in one, and the seam between them is the whole mechanic. The
@@ -708,9 +872,23 @@ function CastForm({ projectId, onClose }: { projectId: string; onClose: () => vo
   const project = useWorld((s) => s.universe.projects[projectId]);
   const [open, setOpen] = useState<string | undefined>();
   const [asking, setAsking] = useState<Record<string, string>>({});
+  const [noting, setNoting] = useState<Record<string, string>>({});
   const [heard, setHeard] = useState<string | undefined>();
   const [error, setError] = useState<string | undefined>();
   if (!project) return null;
+
+  const see = (roleId: string, personId: string, round: string) => {
+    const note = noting[`${roleId}:${personId}`];
+    const answer = run<{ ok: boolean; error?: string; at?: number }>(
+      'company.session',
+      { projectId, roleId, personId, round, ...(note ? { note } : {}) },
+      { silent: true },
+    );
+    setError(answer.value?.ok ? undefined : answer.value?.error ?? answer.error);
+    setHeard(answer.value?.ok && answer.value.at !== undefined
+      ? `Booked for ${formatDate(answer.value.at, sim.homeZone)}. Nobody learns anything until then.`
+      : undefined);
+  };
 
   const put = (roleId: string) => {
     const answer = run<{ ok: boolean; error?: string }>(
@@ -737,6 +915,8 @@ function CastForm({ projectId, onClose }: { projectId: string; onClose: () => vo
   const inIt = castOf(sim, project);
   const filled = howManyCast(project);
   const me = sim.universe.people[sim.universe.playerId]!;
+  const diary = theDiary(sim, project);
+  const shuts = officeFillsAt(project);
 
   return (
     <Modal
@@ -745,7 +925,11 @@ function CastForm({ projectId, onClose }: { projectId: string; onClose: () => vo
       onClose={onClose}
       footer={<button className="btn btn-ghost" onClick={onClose}>Close</button>}
     >
-      <p className="small">{whereTheCastStands(sim, project)}</p>
+      <p className="small">
+        {whereTheCastStands(sim, project)}
+        {castSpark(sim, project) !== undefined
+          && ` Between the people carrying it, ${sparkReads(castSpark(sim, project)!)}.`}
+      </p>
       <p className="muted small">
         Two weeks before the camera turns over the office fills whatever is left, at the band, out
         of whoever the band reaches. Paying over it is the only way to reach further, and the only
@@ -753,10 +937,17 @@ function CastForm({ projectId, onClose }: { projectId: string; onClose: () => vo
         is ever shot.
       </p>
       <p className="muted small">
-        Play It puts you in the part at the band, and the company hands you the money. You are the
-        best there has ever been at this, so nobody is deciding whether you are right for it. What
-        you cannot do is be in two things at once.
+        Play It puts you in the part at the band, and the company hands you the money. You’re the
+        best there has ever been at this, so nobody is deciding whether you’re right for it. What
+        you can’t do is be in two things at once.
       </p>
+      {diary.length > 0 && (
+        <p className="small">
+          {`The office has ${said(diary.length, 'session')} in the diary, `}
+          {`running to ${formatDate(diary[diary.length - 1]!.at, sim.homeZone)}. `}
+          {shuts !== undefined && `It stops taking bookings on ${formatDate(shuts, sim.homeZone)}.`}
+        </p>
+      )}
       <div className="table-wrap">
         <table className="table">
           <thead>
@@ -778,6 +969,7 @@ function CastForm({ projectId, onClose }: { projectId: string; onClose: () => vo
                     <div className="muted small">
                       {when ? formatDate(when.from, sim.homeZone) : one.size.label}
                     </div>
+                    <div className="dim xs">{`Needs ${saysWhatItWants(one.role)}`}</div>
                   </td>
                   <td className="nowrap">{formatMoney(one.role.bandCents)}</td>
                   <td className="small">
@@ -792,7 +984,7 @@ function CastForm({ projectId, onClose }: { projectId: string; onClose: () => vo
                     )}
                   </td>
                   {AXES.map((axis) => (
-                    <td key={axis.id} className="nowrap small">{`${Math.round(one.read[axis.id])}/100`}</td>
+                    <td key={axis.id} className="nowrap small">{`${Math.round(one.shown[axis.id])}/100`}</td>
                   ))}
                   <td className="nowrap">
                     {seatFor(project, one.role.id)
@@ -842,24 +1034,42 @@ function CastForm({ projectId, onClose }: { projectId: string; onClose: () => vo
                     {AXES.map((axis) => <th key={axis.id} className="nowrap">{axis.label}</th>)}
                     <th className="nowrap">Quote</th>
                     <th className="nowrap">They Want</th>
+                    <th>The Room</th>
                     <th />
                   </tr>
                 </thead>
                 <tbody>
                   {came.map((person) => {
-                    const read = readOf(person);
+                    const read = shownOf(sim, project, role, person);
+                    const looked = lookedAt(role, person.id);
                     const ask = askFor(person, role, sim.now);
                     const typed = asking[person.id];
                     const fee = typed === undefined || typed === ''
                       ? ask
                       : Math.round(Number(typed) * 100);
+                    const today = whatSayingYesCosts(role, person, fee);
                     return (
                       <tr key={person.id}>
                         <td className="nowrap">
                           <Open subject={at('person', person.id)}>{person.displayName}</Open>
+                          <div className="muted small">
+                            {sureReads(howSure(sim, project, role, person))}
+                          </div>
+                          <div className="dim xs">
+                            {fromWhere(person)?.label ?? 'Here'}
+                            {bringingThemCents(person, ask) > 0
+                              ? ` · ${formatMoney(bringingThemCents(person, ask))} to bring`
+                              : ''}
+                          </div>
+                          {globalRuleOne(sim, person) && (
+                            <div className="xs negative">{globalRuleOne(sim, person)}</div>
+                          )}
                         </td>
                         {AXES.map((axis) => (
-                          <td key={axis.id} className="nowrap small">{`${Math.round(read[axis.id])}/100`}</td>
+                          <td key={axis.id} className="nowrap small">
+                            {`${Math.round(read[axis.id])}/100`}
+                            <span className="dim">{` ±${Math.round(howWide(looked, axis.id).width)}`}</span>
+                          </td>
                         ))}
                         <td className="nowrap small">
                           {quoteOf(person, role.size, sim.now) > 0
@@ -867,6 +1077,31 @@ function CastForm({ projectId, onClose }: { projectId: string; onClose: () => vo
                             : <span className="muted">Never been paid</span>}
                         </td>
                         <td className="nowrap small">{formatMoney(ask)}</td>
+                        <td className="nowrap">
+                          {BOOKABLE.map((round) => (
+                            <button
+                              key={round.id}
+                              className="btn btn-sm"
+                              style={{ marginRight: 'var(--s1)' }}
+                              title={round.what}
+                              onClick={() => see(role.id, person.id, round.id)}
+                            >
+                              {round.label}
+                            </button>
+                          ))}
+                          <select
+                            aria-label={`What to give ${person.displayName} a note on`}
+                            value={noting[`${role.id}:${person.id}`] ?? ''}
+                            onChange={(e) => setNoting({
+                              ...noting, [`${role.id}:${person.id}`]: e.target.value,
+                            })}
+                          >
+                            <option value="">No note</option>
+                            {AXES.map((axis) => (
+                              <option key={axis.id} value={axis.id}>{`A note on ${axis.label.toLowerCase()}`}</option>
+                            ))}
+                          </select>
+                        </td>
                         <td className="nowrap">
                           <input
                             aria-label={`What to offer ${person.displayName}`}
@@ -885,6 +1120,11 @@ function CastForm({ projectId, onClose }: { projectId: string; onClose: () => vo
                           >
                             Offer It
                           </button>
+                          <div className="dim xs" style={{ marginTop: 'var(--s1)' }}>
+                            {today > 0
+                              ? `${formatMoney(today)} leaves the company the day they say yes`
+                              : 'The budget pays this one as the periods run'}
+                          </div>
                         </td>
                       </tr>
                     );
@@ -1008,12 +1248,90 @@ function TheLotsName() {
   );
 }
 
-/** Where it stands with everybody it has to stand with. */
+/**
+ * The one decision on this lot that changes what the lot is.
+ *
+ * Everything it can refuse on is shown before it refuses, because a door whose
+ * lock is invisible is not a decision. The money and the wait are said in the
+ * same breath as the reason, and so is the thing a page like this normally
+ * leaves out: what it costs to keep afterwards.
+ */
+function TheFifthRoom() {
+  const { run } = useGame();
+  const standing = useWorld((s) => theSmallStage(s));
+  const building = useWorld((s) => goingUp(s));
+  const saying = useWorld((s) => whereTheBuildStands(s));
+  const why = useWorld((s) => whyNotBuild(s));
+  const behind = useWorld((s) => behindTheCompany(s));
+  const bar = useWorld((s) => breakEvenShare(s));
+  const priced = useWorld((s) => turnedAway(s).find((one) => one.why === 'price')?.count ?? 0);
+  const [error, setError] = useState<string | undefined>();
+
+  const build = () => {
+    const answer = run<{ ok: boolean; error?: string }>('lot.build', {}, { silent: true });
+    setError(answer.value?.ok ? undefined : answer.value?.error ?? answer.error);
+  };
+
+  return (
+    <Panel title={A_SMALL_STAGE.name} tight look={at('lot')}>
+      {standing ? (
+        <>
+          <p className="small">{A_SMALL_STAGE.said}</p>
+          <div className="row-between">
+            <div className="xs muted">{A_SMALL_STAGE.floorSqm}m², {A_SMALL_STAGE.clearHeightM}m to the perms</div>
+            <div className="xs muted">{formatMoney(standing.weekRateCents, { cents: false })} a week</div>
+          </div>
+        </>
+      ) : building ? (
+        <p className="small">{saying}</p>
+      ) : (
+        <>
+          <p className="small">
+            The smallest room here is two thousand square meters, and a week-long job has to pay for
+            all of it. {priced > 0 ? `${priced} enquiries have gone elsewhere on price.` : 'It\u2019s why the short work goes elsewhere.'}
+          </p>
+          <p className="xs dim" style={{ margin: 'var(--s2) 0 var(--s3)' }}>
+            {A_SMALL_STAGE.floorSqm}m² at {formatMoney(A_SMALL_STAGE.weekRateCents, { cents: false })} a week.{' '}
+            {formatMoney(SMALL_STAGE_COST_CENTS, { cents: false })} now, {A_SMALL_STAGE.weeksToBuild} weeks
+            to stand it up, and five rooms cost more to keep dark than four
+            {bar === undefined ? '' : ` — the lot has to take ${Math.round(bar * 100)}% of a full month to cover one`}.
+          </p>
+          <div className="row-between">
+            <button type="button" className="btn" onClick={build} disabled={why !== undefined}>
+              Build It
+            </button>
+            <div className="xs muted">
+              {formatMoney(Math.max(0, behind), { cents: false })} behind the company
+            </div>
+          </div>
+          {why && (
+            <p className="small dim" style={{ marginTop: 'var(--s3)' }}>
+              {buildRefusalById(why)?.said}
+            </p>
+          )}
+        </>
+      )}
+      {error && <p className="small negative" style={{ marginTop: 'var(--s3)' }}>{error}</p>}
+    </Panel>
+  );
+}
+
+/**
+ * Where it stands with everybody it has to stand with.
+ *
+ * Scoped to the production company, which it was not. These four read the whole
+ * save, and for as long as the sugar group was a name with a cap table and
+ * nothing under it that came to the same thing. The group is on three registers
+ * and carries seven posts now, so unscoped this panel told a producer their
+ * company employed a head of agronomy and had been VAT registered since 1946.
+ */
 function Standings() {
-  const registrations = useWorld((s) => registrationsOf(s.universe));
-  const signatures = useWorld((s) => signaturesOf(s.universe));
-  const policies = useWorld((s) => policiesOf(s.universe));
-  const posts = useWorld((s) => postsOf(s.universe));
+  const company = useWorld((s) => parentCompany(s.universe));
+  const id = company?.id;
+  const registrations = useWorld((s) => registrationsOf(s.universe, id));
+  const signatures = useWorld((s) => signaturesOf(s.universe, id));
+  const policies = useWorld((s) => policiesOf(s.universe, id));
+  const posts = useWorld((s) => postsOf(s.universe, id));
   const { sim } = useGame();
 
   return (
@@ -1075,7 +1393,7 @@ function Standings() {
             return (
               <div key={one.id} className="row-between">
                 <div className="small strong">
-                  <Open subject={at('role', one.role)}>{ROLE_BY_ID[one.role].label}</Open>
+                  <Open subject={at('role', one.role)}>{postFacts(one.role)?.label ?? one.role}</Open>
                 </div>
                 <span className="xs dim">{who ? who.displayName || who.firstName : 'Empty'}</span>
               </div>

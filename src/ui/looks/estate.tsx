@@ -15,11 +15,14 @@
  * company hangs beneath the lot, because that is where it works out of. Every
  * floor is a place, a thing or a person.
  *
- * The company is the honest one. It is named — the surname is the family name,
- * so it names itself — and that is the entire extent of it. There is no
- * company record in the universe, no slate, no picture and nothing anybody has
- * seen, and this says so in a sentence instead of printing a zero it cannot
- * stand behind.
+ * The company was the honest one and then stopped being. It is named — the
+ * surname is the family name, so it names itself — and on the day a save opens
+ * that really is the whole of it. This said so in a sentence rather than
+ * printing a zero it could not stand behind, which was right, and then it went
+ * on saying so for twenty-five years and thirty delivered pictures, which was
+ * not. It counts the slate, the material and the company’s cash now, and the
+ * empty save still reads the way it did, because on that day the counts are
+ * nought for real.
  */
 
 import { CITIES, type City } from '@/engine/content/geography';
@@ -38,12 +41,13 @@ import { at } from './subject';
 import { whatTheyAre } from './family';
 import { bondFor, standingWord } from '@/engine/world/standing';
 import { isAre, outOf, spokenList, toStart } from './words';
-import { MONTHLY_OVERHEAD_CENTS, SELLING } from '@/engine/content/lot';
+import { SELLING } from '@/engine/content/lot';
 import {
-  breakEvenShare, onStageAt, paidInSoFar, pullOn, sellsFor, stagesOn, standingWith,
-  turnedAway, utilisation, whatTheFamilySays, whereTheLotStands,
+  bookingsFor, breakEvenShare, monthlyOverhead, onStageAt, paidInSoFar, pullOn, sellsFor, stagesOn, standingWith,
+  keepsRinging, turnedAway, utilisation, whatTheFamilySays, whereTheLotStands,
 } from '@/engine/world/lot';
 import { formatMoney } from '@/engine/core/money';
+import { companyCash, holdingsOf, projectsOf } from '@/engine/world/company';
 import { formatDate, MS_DAY } from '@/engine/core/time';
 
 const moneyOf = (cents: number): string => formatMoney(cents, { cents: false });
@@ -106,7 +110,7 @@ function householdIn(sim: Simulation, id: string): Household | undefined {
  * the Home panel’s copy for a card and a way in has to say what is at the far
  * end of it before anybody takes it.
  */
-const COMPANY_DETAIL = 'Television and Film out of the lot, the family name on the gate and nothing made yet';
+const COMPANY_DETAIL = 'The company’s headquarters, Television and Film both, with the family name on the gate';
 
 /** The people under one roof, in the world’s words, nobody skipped. */
 function membersOf(sim: Simulation, household: Household): Person[] {
@@ -153,7 +157,12 @@ defineLook<TheLand>('estate', {
     };
   },
   seeds: () => [''],
-  look: (land) => {
+  look: (land, { sim }) => {
+    // "Nothing shot on one yet" was true for the first week of a save and then
+    // wrong for the rest of it, on the one way in that decides whether anybody
+    // opens the lot at all. Counted instead, off the bookings, which is where
+    // the rest of this file already reads occupancy from.
+    const everLet = stagesOn(sim).some((stage) => bookingsFor(sim, stage.id).length > 0);
     // Only what is really standing. A house that has been sold is not one of
     // the things on the land, and the sentence naming them does not name it.
     const standing = [
@@ -174,7 +183,9 @@ defineLook<TheLand>('estate', {
     ways.push({
       to: at('lot'),
       label: LOT_NAME,
-      detail: 'Newly built stages on the same land, close enough to walk to, and nothing shot on one yet',
+      detail: everLet
+        ? 'Four stages on the same land, close enough to walk to, and what they have been let for'
+        : 'Newly built stages on the same land, close enough to walk to, and nothing shot on one yet',
     });
     ways.push({
       to: at('company'),
@@ -258,8 +269,8 @@ defineLook<Property>('house', {
         ? `You sleep here, it’s at ${outOf(kept)}, and nothing in a house this new has had time to go `
           + 'wrong yet.'
         : kept >= 70
-          ? `You sleep here, it’s kept at ${outOf(kept)}, and a night in a house this well looked `
-            + 'after puts back more than a night in one that isn’t.'
+          ? `You sleep here, it’s at ${outOf(kept)}, and a night in a house in this shape puts `
+            + 'back more than a night in one that isn’t.'
           : `You sleep here, it’s down to ${outOf(kept)}, and the nights aren’t putting back what `
             + 'they should.',
       body: (
@@ -271,10 +282,12 @@ defineLook<Property>('house', {
             there’s no lease on it, no loan against it and nobody whose permission you need to be in it.
           </p>
           <p className="small">
-            Condition is the one figure in this house that moves on its own. It sets how much a night here
-            gives you back and it slips a little each day nobody tends to it — and at {outOf(kept)} it’s
+            Condition is the one figure in this house that moves on its own, and left alone it only
+            moves one way. It sets how much a night here gives you back. Having the work done puts it
+            back to a hundred and is charged by the point, so a year of it costs about what a year of
+            wear took off. At {outOf(kept)} it’s
             {kept >= 100
-              ? ' as high as it goes. The house is barely a year old and the family keeps it that way.'
+              ? ' as high as it goes, because the house is barely a year old.'
               : kept >= 70 ? ' working for you.' : ' costing you sleep you’d otherwise have had.'}
           </p>
           <div className="grid grid-3">
@@ -495,9 +508,11 @@ defineLook<TheLot>('lot', {
     const need = breakEvenShare(sim);
     const took = month.earnsShare ?? 0;
     const standing = standingWith(sim);
-    const aYear = MONTHLY_OVERHEAD_CENTS * 12;
+    const aMonth = monthlyOverhead(sim);
+    const aYear = aMonth * 12;
     const pull = pullOn(sim);
     const away = turnedAway(sim);
+    const never = keepsRinging(sim);
     return {
     name: LOT_NAME,
     kind: 'What The Family Built',
@@ -512,7 +527,7 @@ defineLook<TheLot>('lot', {
           between is here and Budapest.
         </p>
         <div className="grid grid-3">
-          <Stat label="What A Month Costs" value={moneyOf(MONTHLY_OVERHEAD_CENTS)}
+          <Stat label="What A Month Costs" value={moneyOf(aMonth)}
             note={`${moneyOf(aYear)} a year, whether or not anybody is standing on a stage`} />
           <Stat label="What Last Month Took"
             value={`${Math.round(took * 100)}/100`}
@@ -525,6 +540,20 @@ defineLook<TheLot>('lot', {
             note={`${Math.round(standing.share * 100)}/100 of a year of the group’s profit`} />
         </div>
         <p className="small">{whatTheFamilySays(sim)}</p>
+        <p className="small">
+          {month.taken <= 0
+            ? 'Nobody was on a stage at all last month.'
+            : <>
+              Of the {said(Math.round(month.taken), 'stage-week')} anybody was on last month,{' '}
+              {Math.round(month.strike) === 0
+                ? 'none was load-out'
+                : `${said(Math.round(month.strike), 'week')} of it was somebody taking a set down`}
+              {month.own > 0 && ` and ${said(Math.round(month.own), 'week')} of it was the family’s own
+                picture, which pays nothing and would have let for ${moneyOf(month.ownWouldHaveLetFor)}`}.
+              {' '}A room with a unit striking in it is a room nobody else can have, and load-out is
+              charged at the build rate. A busy month and a paid month are two different months.
+            </>}
+        </p>
         <h4>Who Rings</h4>
         <div className="table-wrap">
         <table className="table">
@@ -558,6 +587,13 @@ defineLook<TheLot>('lot', {
                 <td className="small">{one.said}.</td>
               </tr>
             ))}
+            {never.map((one) => (
+              <tr key={one.officeId}>
+                <td className="nowrap">{one.from}</td>
+                <td className="small nowrap">{said(one.times, 'call')}, none booked</td>
+                <td className="small">{one.because}</td>
+              </tr>
+            ))}
           </tbody>
         </table>
         </div>
@@ -573,6 +609,16 @@ defineLook<TheLot>('lot', {
           <tbody>
             {stages.map((stage) => {
               const on = onStageAt(sim, stage.id, sim.now);
+              // What is booked after today, which is the part that was missing.
+              // This table said who was in a room right now and stopped, and
+              // the lot is the only pipeline a career has: every part the
+              // player is ever asked about comes from a production that booked
+              // a stage here, months before anybody rings. A board that shows
+              // only today is a board that cannot be read ahead, which is the
+              // one thing a board is for.
+              const coming = bookingsFor(sim, stage.id)
+                .filter((one) => one.from > sim.now && one.kind === 'shooting')
+                .slice(0, 2);
               return (
                 <tr key={stage.id}>
                   <td className="nowrap">{stage.name}</td>
@@ -580,6 +626,15 @@ defineLook<TheLot>('lot', {
                   <td className="small nowrap">{stage.clearHeightM} m to the grid</td>
                   <td className="small money nowrap">{moneyOf(stage.weekRateCents)} a week</td>
                   <td className="small">{on ? `${on.holder}, through ${formatDate(on.to, sim.homeZone)}` : 'Empty'}</td>
+                  <td className="small">
+                    {coming.length === 0
+                      ? <span className="dim">Open from today on</span>
+                      : coming.map((one) => (
+                        <div key={one.id}>
+                          {one.holder}, from {formatDate(one.from, sim.homeZone)}
+                        </div>
+                      ))}
+                  </td>
                 </tr>
               );
             })}
@@ -617,6 +672,25 @@ defineLook<TheLot>('lot', {
 
 interface TheCompany { name: string; namesake: Person; surname: string }
 
+/**
+ * The family company, read out of the save rather than out of the day it opened.
+ *
+ * Every sentence on this page used to be a fact about a brand-new save, written
+ * once and true for about five minutes: there was nothing behind the name but
+ * empty stages, no slate, nothing in development, no credit, no deal, nobody
+ * had seen anything, and — in the provenance line — SLATE kept no books for it,
+ * so there were no figures and none were invented. By then the company had an
+ * account, a ledger, four posts with people in them, a slate and delivered
+ * pictures. A career could run twenty-five years, make thirty-odd films and
+ * clear two hundred million, and this page still said it had a name and not
+ * much else.
+ *
+ * That is the worse half of a stale page. A missing screen tells you nothing; a
+ * screen like this one told you something false and sounded certain about it.
+ * So all of it is counted now — `projectsOf`, `holdingsOf` and the company’s own
+ * cash — and the empty save reads the way it always did because the counts
+ * really are nought on the day it opens.
+ */
 defineLook<TheCompany>('company', {
   gone: 'There’s no name on the gate, so there’s no company to look at.',
   resolve: (sim, id) => {
@@ -628,37 +702,62 @@ defineLook<TheCompany>('company', {
     return { name, namesake, surname };
   },
   seeds: () => [''],
-  look: (company) => ({
-    name: company.name,
-    kind: 'The Family Company',
-    parent: at('lot'),
-    summary: 'The name on the gate is your family’s, not yours, and there’s nothing behind it yet but a '
-      + 'set of empty stages.',
-    body: (
-      <>
-        <p className="small">
-          Television and Film, run out of the lot on the family land. The name is the family’s, not yours.
-          It came off the surname, and it was on the gate before you were on the lot.
-        </p>
-        <p className="small">
-          That’s as far as it goes so far. There’s no slate, nothing in development, no credit and no deal.
-          Nobody has seen anything. It comes to a name, a set of empty stages, and a country that hasn’t
-          heard of either.
-        </p>
-        <p className="small">
-          Everybody who reads {company.name} on a call sheet will know which family it belongs to. That’s the
-          advantage. It’s also the problem.
-        </p>
-      </>
-    ),
-    ways: [{
-      to: at('person', company.namesake.id),
-      label: nameOf(company.namesake),
-      detail: company.surname
-        ? `The ${company.surname} the name comes from, and how they’re doing today`
-        : 'The person the name would come from, and how they’re doing today',
-    }],
-    provenance: 'It has a name and not much else. SLATE keeps no books or schedule for it yet, so there '
-      + 'are no figures here and none are invented.',
-  }),
+  look: (company, { sim }) => {
+    const projects = projectsOf(sim.universe);
+    const delivered = projects.filter((one) => one.stage === 'delivered').length;
+    const making = projects.length - delivered;
+    const rights = holdingsOf(sim.universe).length;
+    const cash = companyCash(sim.universe);
+    const nothingYet = projects.length === 0 && rights === 0;
+
+    return {
+      name: company.name,
+      kind: 'The Family Company',
+      parent: at('lot'),
+      summary: nothingYet
+        ? 'The name on the gate is your family’s, not yours, and there’s nothing behind it yet but a '
+          + 'set of empty stages.'
+        : `The name on the gate is your family’s, not yours, and ${delivered > 0
+          ? `${plural(delivered, 'picture')} ${delivered === 1 ? 'has' : 'have'} gone out under it`
+          : 'there’s work behind it now'}.`,
+      body: (
+        <>
+          <p className="small">
+            Television and Film, and this is where the company is headquartered — it doesn’t rent space on
+            somebody else’s lot, because the stages, the offices and the gate are all the same piece of
+            family land. The name is the family’s, not yours. It came off the surname, and it was on the
+            gate before you were on the lot.
+          </p>
+          <p className="small">
+            {nothingYet
+              ? 'That’s as far as it goes so far. There’s no slate, nothing in development, no credit and '
+                + 'no deal. Nobody has seen anything. It comes to a name, a set of empty stages, and a '
+                + 'country that hasn’t heard of either.'
+              : `${toStart(spokenList([
+                delivered > 0 ? `${plural(delivered, 'picture')} delivered` : '',
+                making > 0 ? `${plural(making, 'picture')} still in hand` : '',
+                rights > 0 ? `${plural(rights, 'piece')} of material held` : '',
+              ].filter((one) => one.length > 0)))}, and ${moneyOf(cash)} in the company account. `
+                + 'What that came from is on the lot’s own page and in the ledger, line by line.'}
+          </p>
+          <p className="small">
+            Everybody who reads {company.name} on a call sheet will know which family it belongs to. That’s
+            the advantage. It’s also the problem.
+          </p>
+        </>
+      ),
+      ways: [{
+        to: at('person', company.namesake.id),
+        label: nameOf(company.namesake),
+        detail: company.surname
+          ? `The ${company.surname} the name comes from, and how they’re doing today`
+          : 'The person the name would come from, and how they’re doing today',
+      }],
+      provenance: nothingYet
+        ? 'The slate, the material and the money are all nought because nothing has happened yet, and the '
+          + 'moment something does this page counts it. None of it is invented.'
+        : 'Counted off the save — the projects, the material held and the company’s own cash balance. Not '
+          + 'one figure here was typed by hand.',
+    };
+  },
 });

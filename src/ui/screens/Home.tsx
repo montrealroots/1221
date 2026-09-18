@@ -5,8 +5,9 @@
  * attention, how am I doing. A command surface, not a place to bury depth.
  */
 
+import { useState } from 'react';
 import { formatDaylight } from '@/engine/core/sun';
-import { RATES_NOTE } from '@/engine/content/currency';
+import { RATES_NOTE, formatAtlasCompact} from '@/engine/content/currency';
 import { titleCaseLabel } from '@/engine/core/text';
 import { placeProfile, placeKindLabel, formatPeople, type PlaceProfile } from '@/engine/world/place';
 import { WEATHER_EMOJI, forecastFor, weatherAt, weatherShort } from '@/engine/systems/weather';
@@ -22,8 +23,9 @@ import { CITIES } from '@/engine/content/geography';
 import {
   dateKey, formatDate, formatRelative, formatTime, formatWeekdayDate, seasonOf, zoneAbbreviation,
 } from '@/engine/core/time';
-import { formatMoney, formatMoneyCompact } from '@/engine/core/money';
+import { formatMoney } from '@/engine/core/money';
 import { ESTATE_ACRES, ESTATE_NAME, HOUSE, LOT_NAME } from '@/engine/content/estate';
+import { upkeepRefusal, whatTheWorkCosts, whyNotUpkeep } from '@/engine/world/house';
 import { LookRegion, Open, at } from '@/ui/looks';
 
 export function Home() {
@@ -313,13 +315,13 @@ export function Home() {
                 <Stat
                   label="Cost Of Living"
                   value={place.costOfLivingIndex}
-                  note={`Rent about ${place.localRent ?? formatMoneyCompact(place.medianRentCents)}/mo`}
+                  note={`Rent about ${place.localRent ?? formatAtlasCompact(place.medianRentCents)}/mo`}
                   look={at('place', place.city.id)}
                 />
                 <Stat
                   label="Tax On A Wage"
                   value={`${Math.round(place.effectiveIncomeTax * 100)}%`}
-                  note="Income tax and payroll both, on $60,000"
+                  note="Income tax and payroll both, on a US$60,000 wage"
                   look={at('place', place.city.id)}
                 />
                 <Stat
@@ -349,7 +351,7 @@ export function Home() {
                 </div>
                 <p className="xs dim" style={{ margin: 'var(--s2) 0 0' }}>
                   <Open subject={at('country', place.city.countryId)}>
-                    Drives on the {place.drivesOn}. Distances in {place.units.distance === 'mi' ? 'miles' : 'kilometres'}, temperatures in °{place.units.temperature}.
+                    Drives on the {place.drivesOn}. Distances in {place.units.distance === 'mi' ? 'miles' : 'kilometers'}, temperatures in °{place.units.temperature}.
                   </Open>
                   {place.filmIncentive ? (
                     <>
@@ -500,6 +502,7 @@ export function Home() {
                 value={snapshot.home?.condition ?? HOUSE.condition}
                 look={snapshot.home ? at('house', snapshot.home.id) : undefined}
               />
+              <KeepTheHouse />
               <Stat
                 label="Household"
                 value={`${snapshot.householdSize} ${snapshot.householdSize === 1 ? 'person' : 'people'}`}
@@ -511,6 +514,48 @@ export function Home() {
         </Panel>
       </div>
     </>
+  );
+}
+
+/**
+ * The one button on this page that spends the player's own money on themselves.
+ *
+ * Under the condition meter rather than on the house's own look, because a look
+ * is somewhere to read and this is somewhere to decide, and because the number
+ * it argues with is the line above it. It says the price before it is pressed:
+ * the work is charged by the point, so a player who has let it go for a decade
+ * can see what the decade costs without having to find out by pressing.
+ */
+function KeepTheHouse() {
+  const { run } = useGame();
+  const cost = useWorld(whatTheWorkCosts);
+  const why = useWorld(whyNotUpkeep);
+  const said = useWorld((s) => (why ? upkeepRefusal(s, why) : undefined));
+  const [error, setError] = useState<string | undefined>();
+
+  if (why === 'no-house') return null;
+
+  const keep = () => {
+    const answer = run<{ ok: boolean; error?: string }>('life.upkeep', {}, { silent: true });
+    setError(answer.value?.ok ? undefined : answer.value?.error ?? answer.error);
+  };
+
+  return (
+    <div>
+      <div className="row-between">
+        <button type="button" className="btn" onClick={keep} disabled={why !== undefined}>
+          Have The Work Done
+        </button>
+        <div className="xs muted">
+          {why === 'nothing-to-do' ? 'As good as it goes' : `${formatMoney(cost, { cents: false })} of work`}
+        </div>
+      </div>
+      {(error ?? (why && why !== 'nothing-to-do' ? said : undefined)) && (
+        <p className="xs dim" style={{ marginTop: 'var(--s2)' }}>
+          {error ?? said}
+        </p>
+      )}
+    </div>
   );
 }
 

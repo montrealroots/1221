@@ -20,8 +20,9 @@ import { describe, expect, it } from 'vitest';
 import { deliverIt, openTheDoors } from './doors';
 import { quickSave, validateUniverse } from '@/engine';
 import type { Simulation } from '@/engine';
+import type { Project } from '@/engine/domain/company';
 import { MS_DAY } from '@/engine/core/time';
-import { projectsOf } from '@/engine/world/company';
+import { parentCompany, projectsOf } from '@/engine/world/company';
 import { MS_WEEK } from '@/engine/world/lot';
 import { POSTS, postById, prepScale } from '@/engine/content/crew';
 import { MEN, WOMEN } from '@/engine/content/names';
@@ -30,6 +31,9 @@ import {
   standingReads, startFor, whereTheCrewStands,
 } from '@/engine/world/crew';
 import { finishesBy, windowOf } from '@/engine/world/making';
+import { baseWindowOf } from '@/engine/world/periods';
+import { datesFor } from '@/engine/world/casting';
+import { PLANS, planById } from '@/engine/content/making';
 
 interface Done { ok: boolean; id?: string; error?: string }
 
@@ -44,7 +48,9 @@ const world = (seed = 'crew'): Simulation => {
 
 /** Greenlights one and gives back its id. */
 function makeIt(sim: Simulation, title: string, over: Record<string, unknown> = {}): string {
-  run(sim, 'company.develop', { title, medium: 'film' });
+  const planId = (over.planId as string | undefined) ?? 'feature';
+  const medium = planById(planId)!.media.includes('film') ? 'film' : 'television';
+  run(sim, 'company.develop', { title, medium });
   const id = projectsOf(sim.universe).find((one) => one.title === title)!.id;
   const done = run(sim, 'company.greenlight', {
     projectId: id, planId: 'feature', budgetCents: 20_000_000_00, shootWeeks: 6, ...over,
@@ -52,6 +58,89 @@ function makeIt(sim: Simulation, title: string, over: Record<string, unknown> = 
   expect(done.error).toBeUndefined();
   return id;
 }
+
+// ---------------------------------------------------------------------------
+
+describe('which period the calendar hangs off', () => {
+  it('has every plan name its base period, and has that period exist', () => {
+    for (const plan of PLANS) {
+      const base = plan.periods.find((one) => one.id === plan.basePeriod);
+      expect(base, `${plan.id} names a base period it does not have`).toBeDefined();
+      expect(base!.per, `${plan.id}'s base period is not the one lengths are quoted against`).toBe(1);
+    }
+  });
+
+  it('does not let the base period be guessed from the one number that is not it', () => {
+    // The unscripted season's rig is exactly as long as its field, which is a
+    // true thing about an unscripted season and makes `per` useless as an
+    // identifier. Everything that guessed the base from it found the rig: a
+    // period that runs alongside casting, weeks before anybody points a camera
+    // at anything. This is the assertion that stops the guess coming back.
+    const unscripted = planById('unscripted')!;
+    expect(unscripted.periods.filter((one) => one.per === 1).length).toBeGreaterThan(1);
+    expect(unscripted.basePeriod).toBe('field');
+  });
+
+  it('puts a crew on a format season, which for a long time it did not', () => {
+    const sim = world('unscripted-crew');
+    const id = makeIt(sim, 'The Arena', { planId: 'unscripted' });
+    const project = sim.universe.projects[id]!;
+    expect(project.periods!.some((one) => one.id === 'shooting'))
+      .toBe(false);
+
+    // The bug this holds: the crew looked for a period called 'shooting', found
+    // nothing, gave every post the same start and no end at all, and hired
+    // nobody. Twenty-four posts carried, twenty-four people not engaged, and a
+    // screen reporting a season that had not started hiring yet — forever.
+    sim.advanceTo(finishesBy(project)! + MS_DAY);
+    const crew = crewOf(sim, sim.universe.projects[id]!);
+    expect(crew.length).toBe(postsFor(project.budgetCents ?? 0).length);
+    expect(crew.length).toBeGreaterThan(0);
+  });
+
+  it('dates a part on a format season off the field, though no plan can ask yet', () => {
+    // Casting, the office's own pass and the player's availability all read the
+    // same window, and all three used to hard-code 'shooting' with 'field'
+    // written in behind it. That second literal was never once reached: only a
+    // plan with `cast: 'performers'` lays any roles, and both plans that do have
+    // a period called 'shooting'. So the general version cannot be caught by
+    // greenlighting anything — a format season has no parts to date.
+    //
+    // It is asked of the function directly instead, which is where the contract
+    // actually lives. The day a contributor cast board exists, this is already
+    // right; a literal would have been found wrong by a player.
+    const sim = world('unscripted-parts');
+    const id = makeIt(sim, 'The Arena', { planId: 'unscripted' });
+    const project = sim.universe.projects[id]!;
+    const field = baseWindowOf(project)!;
+
+    const role = {
+      id: 'role_probe', ordinal: 1, name: 'The Host', size: 'lead', bandCents: 100_00,
+    };
+    const when = datesFor(project, role)!;
+    expect(when.to).toBe(field.to);
+    expect(when.from).toBe(field.from - MS_WEEK);
+    // And not the rig, which starts earlier and is the period the guesses found.
+    expect(when.from).not.toBe(windowOf(project, 'rig')!.from - MS_WEEK);
+  });
+
+  it('counts a format season’s offsets back from the field and not from the greenlight', () => {
+    const sim = world('unscripted-dates');
+    const id = makeIt(sim, 'The Arena', { planId: 'unscripted' });
+    const project = sim.universe.projects[id]!;
+    const field = baseWindowOf(project)!;
+    expect(field.id).toBe('field');
+
+    const upm = postById('upm')!;
+    const boom = postById('boom')!;
+    // The money is on it long before the floor is, the same as on a feature,
+    // and both are placed relative to the field. A version that fell back to
+    // the greenlight would put these two on the same day.
+    expect(startFor(project, upm, 0)).toBeLessThan(startFor(project, boom, 0));
+    expect(startFor(project, boom, 0)).toBeLessThan(field.from);
+    expect(endFor(project, upm)!).toBeGreaterThan(field.to);
+  });
+});
 
 /** Runs a picture all the way to delivered, however long that turns out to be. */
 function deliver(sim: Simulation, id: string): void {
@@ -359,5 +448,100 @@ describe('what the crew amounts to, said out loud', () => {
     deliver(sim, id);
     const said = whereTheCrewStands(sim, sim.universe.projects[id]!);
     expect(said).toContain('posts filled');
+  });
+});
+
+describe('who on this crew has been here before', () => {
+  /** A company that makes pictures back to back, so a crew can accumulate. */
+  function madeThreePictures(seed: string): { sim: Simulation; made: string[] } {
+    const sim = quickSave({}, seed);
+    openTheDoors(sim);
+    const made: string[] = [];
+    for (let n = 1; n <= 3; n += 1) {
+      const title = `Picture ${n}`;
+      run(sim, 'company.develop', { title, medium: 'film' });
+      const id = projectsOf(sim.universe).find((one) => one.title === title)!.id;
+      run(sim, 'company.greenlight', {
+        projectId: id, planId: 'feature', budgetCents: 20_000_000_00, shootWeeks: 6,
+      });
+      sim.advanceTo(sim.now + 30 * MS_WEEK);
+      made.push(id);
+    }
+    return { sim, made };
+  }
+
+  /** The question the sentence claims to answer, asked directly. */
+  const reallyBack = (sim: Simulation, project: Project): number =>
+    (project.crew ?? []).filter((seat) => Object.values(sim.universe.projects)
+      .some((other) => other.id !== project.id
+        && other.companyId === project.companyId
+        && (other.crew ?? []).some((one) => one.postId === seat.postId
+          && one.personId === seat.personId
+          && one.from < seat.from))).length;
+
+  it('counts the hands that really came back, and it used to undercount them', () => {
+    // It read `heldBefore` — everybody who has ever held the post, this picture
+    // included — and counted a seat when that list had more than one name in
+    // it, which is a fact about the post and not about the person in it.
+    // Measured across three pictures made back to back: it said six returning
+    // hands where there were eighteen, then eleven where there were eighteen.
+    // `docs/UNBITTEN.md` had it the other way round, as counting strangers as
+    // regulars. It did the opposite.
+    const { sim, made } = madeThreePictures('crew-back');
+    const said = (id: string): number => {
+      const out = whereTheCrewStands(sim, sim.universe.projects[id]!)
+        .match(/(\d+) of them by people who have worked/);
+      return out ? Number(out[1]) : 0;
+    };
+    for (const id of made) {
+      const project = sim.universe.projects[id]!;
+      expect((project.crew ?? []).length, 'nobody was hired, so this proves nothing')
+        .toBeGreaterThan(0);
+      expect(said(id), project.title).toBe(reallyBack(sim, project));
+    }
+    // And the first picture cannot have any: there is nothing behind it.
+    expect(said(made[0]!)).toBe(0);
+    // While a later one does, or the company never accumulated a crew at all
+    // and the whole claim this file opens with is untrue.
+    expect(said(made[2]!)).toBeGreaterThan(0);
+  });
+
+  it('counts the post and not only the person, so a move is not a return', () => {
+    // A gaffer who comes back as a grip has not held this post before, and the
+    // sentence is about the post. Dropping that from the predicate survives a
+    // whole played career unnoticed, because the office almost always rehires
+    // into the same post — so it is asserted directly rather than hoped for.
+    const { sim, made } = madeThreePictures('crew-moved');
+    const later = sim.universe.projects[made[2]!]!;
+    const earlier = sim.universe.projects[made[0]!]!;
+    const seat = (later.crew ?? [])[0]!;
+    const before = whereTheCrewStands(sim, later);
+
+    // The same person on the first picture, in a post they do not hold here.
+    const elsewhere = POSTS.find((one) => one.id !== seat.postId)!;
+    earlier.crew = [...(earlier.crew ?? []), {
+      ...seat, postId: elsewhere.id, from: seat.from - 400 * MS_DAY, to: seat.from - 300 * MS_DAY,
+    }];
+    expect(whereTheCrewStands(sim, later), 'a different post counted as the same hand')
+      .toBe(before);
+
+    // And the same person in the SAME post on an earlier picture does count.
+    earlier.crew = [...(earlier.crew ?? []), {
+      ...seat, from: seat.from - 400 * MS_DAY, to: seat.from - 300 * MS_DAY,
+    }];
+    expect(whereTheCrewStands(sim, later)).not.toBe(before);
+  });
+
+  it('gives every picture the same company, which is why that test cannot fire', () => {
+    // `whereTheCrewStands` filters on `companyId` and the filter can never
+    // change an answer today: `company.develop` writes `companyId: parent.id`
+    // on every project, so the American arm has never held a picture. The guard
+    // stays — the sentence claims "the company" and would go quietly false the
+    // day the arm makes something — and this is what tells somebody the day it
+    // stops being inert.
+    const { sim } = madeThreePictures('crew-onecompany');
+    const companies = new Set(Object.values(sim.universe.projects).map((one) => one.companyId));
+    expect(companies.size).toBe(1);
+    expect([...companies][0]).toBe(parentCompany(sim.universe)?.id);
   });
 });

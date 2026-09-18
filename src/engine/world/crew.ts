@@ -37,23 +37,15 @@ import type { Money } from '../core/money';
 import type { Person } from '../domain/model';
 import type { Project } from '../domain/company';
 import { emptyAttributeSheet } from '../domain/attributes';
-import { emptySkillSheet } from '../domain/skills';
 import { freshWellbeing } from '../systems/life';
 import { impliedPerformerTitle } from '../core/performer';
 import { clamp } from '../core/rng';
 import { MEN, WOMEN, patronymic } from '../content/names';
-import { POSTS, type Post, postById, prepScale } from '../content/crew';
+import {
+  CROWD_RUNS, DEPARTMENTS, FULLY_STAFFED_AT, POSTS, type Post, postById, prepScale,
+} from '../content/crew';
 import { MS_WEEK } from './lot';
-
-/**
- * The dates of one period.
- *
- * The same lookup `world/making.ts` exports, written out here rather than
- * imported, because making has to call this file at the greenlight and two
- * modules importing each other is a cycle waiting to bite.
- */
-const periodOn = (project: Project, id: string): { from: Instant; to: Instant } | undefined =>
-  project.periods?.find((p) => p.id === id);
+import { baseWindowOf } from './periods';
 
 export const CREW_KIND = 'project.crew';
 
@@ -73,9 +65,70 @@ export function postsFor(budgetCents: Money): Post[] {
   return POSTS.filter((post) => budgetCents >= post.carriedFrom);
 }
 
-/** When a post comes on, which is never before somebody said yes to the picture. */
+/** The smallest budget that carries anybody in this department at all. */
+export function carriesFrom(departmentId: string): Money {
+  const posts = POSTS.filter((one) => one.department === departmentId);
+  return posts.length === 0 ? FULLY_STAFFED_AT : Math.min(...posts.map((one) => one.carriedFrom));
+}
+
+/**
+ * How many people a department carries under its named posts, at this budget.
+ *
+ * Scaled from the department's own floor and not from nought, which is what
+ * makes the head come first. A picture that has just afforded a set decorator
+ * has a set decorator and nobody behind them; the crowd arrives as the money
+ * climbs from there, and everything is staffed together at the top.
+ *
+ * Doing it this way is also what keeps this from needing a second test of the
+ * same fact. A department below its own floor has no head, and the arithmetic
+ * already hands back nobody, so a guard saying the same thing would be a line
+ * that could never change an answer.
+ */
+export function crowdIn(departmentId: string, budgetCents: Money): number {
+  const department = DEPARTMENTS.find((one) => one.id === departmentId);
+  if (!department) return 0;
+  const floor = carriesFrom(department.id);
+  const span = Math.max(1, FULLY_STAFFED_AT - floor);
+  const share = Math.min(1, Math.max(0, (budgetCents - floor) / span));
+  return Math.round(department.crowd * share);
+}
+
+/**
+ * How many people are on the picture, named and unnamed together.
+ *
+ * The number the payroll would show, which is not the number of posts and never
+ * was. Twenty-four named people is what a picture engages by name; what it
+ * employs is that plus everybody under them, and the gap between the two is the
+ * difference between a department head count and a crew.
+ */
+export function headcountOf(budgetCents: Money): number {
+  const named = postsFor(budgetCents).length;
+  const behind = DEPARTMENTS.reduce((n, department) => n + crowdIn(department.id, budgetCents), 0);
+  return named + behind;
+}
+
+/**
+ * The working days an ordinary crew engagement runs to.
+ *
+ * Counted on the crowd rather than on the named posts, because the crowd is
+ * where the fiftieth person is. A five-day week, the shoot, and a week either
+ * side of it.
+ */
+export function crewDaysOf(shootWeeks: number): number {
+  return Math.round((shootWeeks + CROWD_RUNS * 2) * 5);
+}
+
+/**
+ * When a post comes on, which is never before somebody said yes to the picture.
+ *
+ * Counted back from the plan's base period and not from a period called
+ * 'shooting'. An unscripted season has no such period, so this used to hand
+ * every post the same date and `endFor` beside it handed back nothing, and
+ * `fillPost` walked away from all twenty-four. A format season was made by
+ * nobody, and the screen said it had not started hiring yet.
+ */
 export function startFor(project: Project, post: Post, notBefore: Instant): Instant {
-  const shoot = periodOn(project, 'shooting');
+  const shoot = baseWindowOf(project);
   if (!shoot) return notBefore;
   const scale = prepScale(((shoot.to - shoot.from) / MS_WEEK) || 6);
   const wanted = shoot.from - Math.round(post.startsAt * scale * MS_WEEK);
@@ -84,7 +137,7 @@ export function startFor(project: Project, post: Post, notBefore: Instant): Inst
 
 /** When they finish, which is after wrap for most and long after it for the money. */
 export function endFor(project: Project, post: Post): Instant | undefined {
-  const shoot = periodOn(project, 'shooting');
+  const shoot = baseWindowOf(project);
   if (!shoot) return undefined;
   const scale = prepScale(((shoot.to - shoot.from) / MS_WEEK) || 6);
   return shoot.to + Math.round(post.endsAt * scale * MS_WEEK);
@@ -164,6 +217,7 @@ function somebodyNew(sim: Simulation, standing: number, next: () => number): Per
     // A required word, not a claim. Nobody on a crew is billed as either, and
     // nothing calls a key grip an actress — but the field has to hold
     // something, and what it holds is what their own pronouns imply.
+    // both-titles: the word itself, which is what this comment is about.
     performerTitle: impliedPerformerTitle(pronouns),
     birthInstant: sim.now - Math.round((24 + next() * 34) * 365.25 * 24 * 60 * 60 * 1000),
     gender: woman ? 'female' : 'male',
@@ -171,17 +225,12 @@ function somebodyNew(sim: Simulation, standing: number, next: () => number): Per
     citizenshipId: player.citizenshipId,
     currentLocationId: player.currentLocationId,
     personality: {
-      openness: dial(), conscientiousness: dial(), extraversion: dial(),
-      agreeableness: dial(), emotionalStability: dial(), ambition: dial(),
-      riskTolerance: dial(),
+      conscientiousness: dial(), emotionalStability: dial(), ambition: dial(),
     },
     interests: [],
-    goals: [],
-    lifestyle: 'modest',
     background: 'Crew. Came up through a department and stayed in it.',
     attributes: emptyAttributeSheet(),
     traits: [],
-    skills: emptySkillSheet(),
     wellbeing: freshWellbeing(),
     reputation: {
       publicFame: 0,
@@ -190,12 +239,11 @@ function somebodyNew(sim: Simulation, standing: number, next: () => number): Per
       // member that anybody reads, so it is the one thing the hire decides.
       professionalReputation: standing,
       reliability: clamp(Math.round(standing * 0.6 + 30), 1, 100),
-      prestige: 0,
+
       industryDemand: 0,
       controversy: 0,
     },
     careerTrack: 'crew',
-    creditScore: 600,
     createdAt: sim.now,
   };
   sim.universe.people[person.id] = person;
@@ -347,10 +395,33 @@ export function whereTheCrewStands(sim: Simulation, project: Project): string {
   if (filled === 0) {
     return `Nobody is on ${project.title} yet. It carries ${carried} posts once it starts hiring.`;
   }
-  const back = (project.crew ?? []).filter((seat) => {
-    const others = heldBefore(sim, project.companyId, seat.postId);
-    return others.indexOf(seat.personId) > 0 || others.length > 1;
-  }).length;
+  // Somebody is a returning hand when they held THIS post on an EARLIER
+  // picture of this company. That is the whole question and it was not the one
+  // being asked: the old test read `heldBefore` — every person who has ever
+  // held the post, this picture included — and counted a seat when the list had
+  // more than one name in it, which is a fact about the post rather than about
+  // the person sitting in it. Measured over three pictures made back to back:
+  // it said six returning hands where there were eighteen, then eleven where
+  // there were eighteen. It undercounted, and `docs/UNBITTEN.md` had it the
+  // other way round, as counting strangers as regulars.
+  //
+  // `heldBefore` itself is left alone. `fillPost` depends on it walking every
+  // picture including this one, and changing it there would move who the office
+  // hires rather than what this sentence says.
+  //
+  // The company test cannot currently tell two pictures apart: `company.develop`
+  // writes `companyId: parent.id` on every one of them, so the American arm has
+  // never held a picture and every project in the save shares one company. It
+  // stays because the sentence says "worked for the company before" and would
+  // quietly stop being true the day the arm makes something — and the fact that
+  // it cannot differ today is pinned in `tests/crew.test.ts` rather than left
+  // as a thing somebody has to rediscover.
+  const back = (project.crew ?? []).filter((seat) => Object.values(sim.universe.projects)
+    .some((other) => other.id !== project.id
+      && other.companyId === project.companyId
+      && (other.crew ?? []).some((one) => one.postId === seat.postId
+        && one.personId === seat.personId
+        && one.from < seat.from))).length;
   return `${filled} of ${carried} posts filled on ${project.title}`
     + `${back > 0 ? `, ${back} of them by people who have worked for the company before` : ''}.`;
 }

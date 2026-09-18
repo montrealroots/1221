@@ -15,13 +15,14 @@
  */
 
 import { describe, expect, it } from 'vitest';
+import { isValidElement, type ReactNode } from 'react';
 import { quickSave } from '@/engine';
 import type { Simulation } from '@/engine';
 import {
   ESTATE_NAME, HOUSE, LOT_NAME, MOVED_IN, PEACE_RANKED_SINCE,
   SAFEGUARDS, SAFEGUARD_BY_ID, movedInAt,
 } from '@/engine/content/estate';
-import { zonedParts } from '@/engine/core/time';
+import { MS_DAY, zonedParts } from '@/engine/core/time';
 import { estateCity } from '@/engine/content/estate';
 import { resolveLook, seedsFor } from '@/ui/looks/registry';
 import type { Looked } from '@/ui/looks/registry';
@@ -34,6 +35,22 @@ function open(sim: Simulation, kind: string, id = ''): Looked {
   expect(found, `${kind}:${id} would not open`).toBeDefined();
   expect(found, `${kind}:${id} is gone`).not.toHaveProperty('gone');
   return found as Looked;
+}
+
+/** Every string in a look, body included, so the copy can be read as copy. */
+function textIn(node: ReactNode, out: string[] = []): string[] {
+  if (typeof node === 'string' || typeof node === 'number') { out.push(String(node)); return out; }
+  if (node === null || node === undefined || typeof node === 'boolean') return out;
+  if (Array.isArray(node)) { for (const child of node) textIn(child, out); return out; }
+  if (isValidElement(node)) {
+    const props = node.props as Record<string, unknown>;
+    for (const [key, value] of Object.entries(props)) {
+      if (key === 'children') textIn(value as ReactNode, out);
+      else if (typeof value === 'string') out.push(value);
+      else if (isValidElement(value) || Array.isArray(value)) textIn(value as ReactNode, out);
+    }
+  }
+  return out;
 }
 
 function wordsIn(look: Looked): string {
@@ -176,5 +193,49 @@ describe('the graph is walkable', () => {
     for (const guard of SAFEGUARDS) {
       expect(SAFEGUARD_BY_ID[guard.id], guard.id).toBe(guard);
     }
+  });
+});
+
+describe('the house falls, and now somebody can stop it', () => {
+  // This block used to be called "the house falls and nobody can stop it", and
+  // its first test pinned that: it asserted the command surface held nothing
+  // matching /repair|maintain|renovate|upkeep|fix/. That was an honest record
+  // of a real defect — one writer, and it was a subtraction — but it was a test
+  // whose passing depended on the defect surviving, so building `life.upkeep`
+  // turned it red. What is kept is the half that is still true and still worth
+  // holding: left alone, the fall is real, monotone and big enough to matter.
+
+  it('only ever falls when nobody pays to stop it', () => {
+    const sim = world('no-repair');
+    const id = Object.keys(sim.universe.properties)[0]!;
+    const at = (): number => sim.universe.properties[id]!.condition;
+    const start = at();
+
+    let last = start;
+    for (let step = 0; step < 40; step += 1) {
+      sim.advanceTo(sim.now + 90 * MS_DAY);
+      expect(at(), `condition went up at step ${step}`).toBeLessThanOrEqual(last);
+      last = at();
+    }
+    expect(last, 'ten years and the house is exactly as new').toBeLessThan(start);
+  });
+
+  it('offers exactly one way to put it back, and it is a command with a price', () => {
+    const sim = world('one-repair');
+    // The inverse of what this block used to assert. One, not none, and not
+    // two: a second way up would be a second answer to what the house costs.
+    expect(sim.commandKinds().filter((kind) => /repair|maintain|renovate|upkeep|fix/i.test(kind)))
+      .toEqual(['life.upkeep']);
+  });
+
+  it('does not tell the player somebody was supposed to be tending to it', () => {
+    const sim = world('house-copy');
+    const id = Object.keys(sim.universe.properties)[0]!;
+    const said = textIn(open(sim, 'house', id).body).join(' ');
+    expect(said.length, 'the body came back empty, so this test proves nothing')
+      .toBeGreaterThan(200);
+    expect(said).not.toMatch(/nobody tends to it|keeps it that way|well looked after/i);
+    // And it says the true thing in place of the false one.
+    expect(said).toMatch(/only moves one way/);
   });
 });

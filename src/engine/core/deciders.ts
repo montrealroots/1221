@@ -51,6 +51,24 @@ export interface Decider<Input, Outcome> {
    */
   drawnIn: string;
   /**
+   * The named draw streams this decision takes, where they are not its own id.
+   *
+   * `tools/deciders.mjs` counts streams as well as files, and it used to insist a
+   * stream be owned by a decider whose id matched it exactly. That is a rule about
+   * naming rather than about accounting, and it left thirteen streams unowned
+   * while the decisions they feed were all registered and documented: `weather.day`
+   * takes `weather` for the day and `weather-hours` for the hours inside it, and
+   * both are the same decision about the same sky.
+   *
+   * The alternative was renaming the streams to match, which is the one thing that
+   * must not happen: a stream key is an input to the generator, so changing one
+   * changes every seeded outcome in the build and every measured number that rests
+   * on them.
+   *
+   * So a decision declares what it draws from. One decision, however many dice.
+   */
+  draws?: readonly string[];
+  /**
    * Every input the outcome is supposed to depend on. Declaring one is a
    * claim that it changes the answer, and the harness will try it.
    */
@@ -89,9 +107,11 @@ export function deciders(): readonly Decider<never, never>[] {
 export interface Sweep {
   /** The input that was moved. */
   reads: string;
-  /** Every distinct outcome the sweep produced. */
+  /** Every distinct outcome the sweep produced, across every sample. */
   outcomes: string[];
-  /** True when moving this input changed nothing at all. */
+  /** How many samples were tried, which is what makes `inert` mean anything. */
+  samples: number;
+  /** True when moving this input changed nothing inside any single sample. */
   inert: boolean;
 }
 
@@ -103,6 +123,24 @@ export interface Sweep {
  * its space and alive everywhere else — a casting call nobody is right for
  * gives the same answer whatever you do to it. One sample proving nothing is
  * not evidence; every sample proving nothing is.
+ *
+ * ## Inside a sample, which is the only place the question means anything
+ *
+ * This pooled every outcome from every sample into one set and called the
+ * input live if that set had more than one thing in it. That is not the
+ * question. The samples differ from each other by construction — the seed is
+ * there to vary them — so a decider that ignores a declared input entirely
+ * still filled the pooled set and still passed. Measured on the registry the
+ * day this was found: an input made deliberately unreachable was live in the
+ * pooled reading and inert in every one of its six samples, and the suite said
+ * nothing.
+ *
+ * So the comparison is inside a sample, with everything else held still, which
+ * is what "change an input; does the outcome change?" has always meant. An
+ * input counts as read if it moved the answer in at least one of the six
+ * worlds, because a decider can be genuinely flat in one corner and alive
+ * everywhere else. All sixteen deciders registered on the day this changed were
+ * live under it, so it costs nothing today and holds tomorrow.
  */
 export function sweepOne<Input, Outcome>(
   decider: Decider<Input, Outcome>,
@@ -115,14 +153,19 @@ export function sweepOne<Input, Outcome>(
   if (!across) throw new Error(`'${decider.id}' doesn’t say it reads '${reads}'.`);
   const shape = decider.shape ?? ((o: Outcome) => JSON.stringify(o));
   const seen = new Set<string>();
+  let movedIn = 0;
   for (let s = 0; s < samples; s += 1) {
     const base = decider.sample(s);
+    const here = new Set<string>();
     for (let i = 0; i < steps; i += 1) {
       const t = steps === 1 ? 0 : i / (steps - 1);
-      seen.add(shape(decider.decide(across(base, t))));
+      const out = shape(decider.decide(across(base, t)));
+      here.add(out);
+      seen.add(out);
     }
+    if (here.size > 1) movedIn += 1;
   }
-  return { reads, outcomes: [...seen], inert: seen.size <= 1 };
+  return { reads, outcomes: [...seen], samples, inert: movedIn === 0 };
 }
 
 /** The same, for every input a decider claims to read. */

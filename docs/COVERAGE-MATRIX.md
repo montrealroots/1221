@@ -32,7 +32,7 @@ they need. Nothing below claims otherwise.
 | Weather | Implemented — a climate model per city from season, latitude and the kind of place it is, with a week ahead | `src/engine/systems/weather.ts` | `weather` |
 | Time controls | Implemented — live play, sleeping, and skipping to an event with what it would cross shown first | `src/ui/shell/TimeControls.tsx` | `simulation`, `realclock` |
 | Wellbeing and sleep | Partial — the model, the night, and the day that passes unattended. There is nothing else to spend a day on any more | `src/engine/systems/life.ts` | `simulation`, `smoke`, `endurance` |
-| Money | Partial — a ledger that conserves, the accounts a life starts with, and net worth derived from them. Nothing bills, earns or charges | `src/engine/core/ledger.ts`, `src/engine/systems/finance.ts` | `money`, `endurance` |
+| Money and banking | Implemented — a ledger that conserves, the accounts a life starts with, net worth derived from them, and the four things an account could not do until it was measured: a deposit earns, a card is charged at the rate written on it, money moves between accounts one person holds, and income tax falls due on the year gone | `src/engine/core/ledger.ts`, `src/engine/content/banking.ts`, `src/engine/world/banking.ts`, `src/engine/systems/finance.ts` | `money`, `banking`, `endurance` |
 | Server-checked persistence | Implemented — the guards between a browser and storage, and the client that speaks the platform's protocol | `base44/`, `src/engine/persistence/` | `server-guards`, `base44-adapter`, `base44-contract` |
 
 ## What was taken out
@@ -54,9 +54,10 @@ not coming back in this build.
 
 ## The engine, as it now stands
 
-Twenty-two commands and two routes, which is the honest size of what is left.
+Thirty-one commands and three routes, which is the honest size of what is left.
 The appendix below is generated from the code, so it is the count to trust; this
-paragraph had said fifteen for three commands longer than it was true.
+paragraph had said fifteen for three commands longer than it was true, and
+twenty-six for four longer than that.
 
 Three of them are a person deciding something rather than answering
 something. `calendar.schedule` puts a thing on the calendar, `calendar.cancel`
@@ -72,8 +73,8 @@ notice costs nothing, calling off later costs more the later it is, and not
 going at all costs twice what the latest possible call-off does. Ordering
 them is what makes choosing between them a choice.
 
-Thirteen more are the family business, and they are one system rather than
-thirteen: a production company is a list of things it may and may not do, and
+Sixteen more are the family business, and they are one system rather than
+sixteen: a production company is a list of things it may and may not do, and
 each of these opens one of those doors. `company.register` puts it on a
 register (Fyrirtækjaskrá, the VAT roll, the employer roll, the IRS),
 `company.form_arm` forms the American subsidiary, `company.sign` signs a
@@ -94,16 +95,209 @@ for months because the music cue sheet was nobody's job.
 that can pay the company back. A deal is chosen, a ten-year take is reckoned
 once and never revised, and the release windows are armed to pay as they open.
 
-Three of them put people on screen, and they are three rather than one because
-advertising a part, offering it to a named person, and letting that person go
-are three decisions taken days apart by different people. `company.breakdown`
+`life.transfer` is the thirty-first and the only one that is about the player's
+own money. It moves money between two accounts the same person holds, which
+sounds like nothing and is the hinge of the whole banking build: it is the only
+way to get money into the account that earns and the only way to clear the card
+faster than the minimum. Before it existed a player could not move a euro they
+owned, so where money sat was not a decision.
+
+What makes it one is measured rather than asserted. Read off the ledger of a
+played career before any of this existed: the savings account had **one posting
+in twenty-five years**, its own opening balance; the card carried EUR 840 from
+before the game started at a declared 22.49% and was **charged nothing**, so it
+was still exactly EUR 840 a quarter of a century later; and both parents' accounts
+took three and four hundred postings and **every single one was inbound**. An
+account was a number that only went one way.
+
+Four things answer that, and one of them was built, measured and taken out again.
+A deposit earns three percent a year, a twelfth at a time. A card is charged the
+rate written on it, against what is owed, so paying it down is worth something.
+Income tax falls due on the year gone — `content/tax.ts` has been real, correct
+and entirely unwired for the whole of this project, and it is the missing outflow
+that makes the parents' accounts two-directional. And a company's cash earns
+nothing, because the version that paid it three percent added EUR 1.33bn to the
+sugar group over twenty-five years, changed no decision anywhere, and inflated
+`stillToCarry` — the family's patience, which the greenlight door reads — by
+forty-seven percent for a reason no player chose.
+
+`company.restaff` changes the number of editors on a picture that is already
+being made, and it is here because the engine could always do it and no player
+could ever ask. `domain/company.ts` has called the hands on a cut "the decision
+that sits between a budget and a delivery date" since the file was written; the
+forecast warns, by name, that a room cannot make its date; and the only way to
+answer the warning was to edit the save, which is what this project's own test
+suite did for want of a door. The price is two halves and both are the point.
+The money comes off what is left of that picture's budget, at the same
+`aRoomCosts` the period settlement charges for a room — so a picture that has
+already spent everything cannot buy its way out of a late cut — and the hands
+do not walk in for a fortnight, because a restaff the week you notice makes
+under-staffing free in hindsight. Sending an editor home takes effect at once
+and gives nothing back: the weeks already cut are paid for.
+
+`company.claim_rebate` applies for Iceland's production reimbursement, and it is
+the one command in the build whose whole weight is a deadline. The lot has
+weighed this scheme since the day it was built — every enquiry from abroad sets
+what Iceland gives back against what coming here costs, and books Budapest when
+the arithmetic says to — while the family's own pictures, made by an Icelandic
+company on Icelandic stages, claimed nothing at all. The people with the most
+straightforward claim in the country were the only ones in the save not making
+it.
+
+The application closes on the first day of photography and never reopens. That
+is the real rule and not a penalty invented to give the calendar teeth: a
+reimbursement which did not change the decision to shoot here was never an
+incentive, so the scheme will not look at a file opened after the camera turned
+over. A quarter of the negative is the price of having forgotten, and the screen
+says so with a date on it.
+
+Three things decide what comes back, and a producer can work out all three in
+advance. That is deliberate — a reimbursement is what a picture is planned
+against, and a figure drawn at the last moment cannot be planned against.
+
+**What was spent here, which is not what was spent.** Fourteen percent of
+everything a picture spends is bought outside the country whatever anybody
+decides: the camera package, the finish, the cover placed through a broker who
+is not here. A share of what has gone out, and not a lump off the whole
+negative — the first version took a flat fourteen percent of the budget off a
+running total, which read nought through the whole of prep on a picture that had
+already filed and came right only once the last euro went out. On top
+of that come two things a decision moves. Flights are bought abroad, so what it
+cost to bring somebody here is recorded leaving the country as it goes. And two
+fifths of a fee paid to a performer who lives somewhere else lands where they
+live, with their agent and their manager and the company it was invoiced by.
+That is the half of local hire the casting screen could never argue: the band
+buys the fee and says nothing about where the money ends up. A penalty comes off
+as well, because a penalty is money gone without being spend — going over costs
+a picture three quarters of what it costs, and being late costs it all of it.
+
+**Which of the two rates, and the cliff between them.** Twenty-five percent
+ordinarily, thirty-five with three conditions under it and five things to test,
+because two of the three have two parts. They are cumulative. The test itself lives in content and both askers reach it, so there
+is one piece of legislation and not two implementations drifting apart. What
+differs is the answers. A foreign production asks whether Iceland can supply
+fifty people; a domestic one asks whether its own picture employs them — and
+answering that meant counting something the crew content has declared since it
+was written and nothing had ever computed. A picture has named posts, which are
+the twenty-four people it engages by name, and it has everybody behind them: the
+electricians behind the gaffer, the drivers behind the transport coordinator.
+Each department carries its head first and its crowd as the money climbs, and
+the fiftieth person on an Icelandic payroll turns up somewhere north of six
+million. Below that a picture is on the lower rate however long it shoots, and
+an eight-week shoot is what puts the crowd on it for the fifty days the scheme
+wants. Two numbers a producer sets months apart, and the pair of them decide
+ten percent of the negative.
+
+**When it lands.** The rate is stamped when the ministry accepts the file and is
+never revised, so a picture that shrinks afterwards has already been told what
+it is on — which is the whole reason to build it big before the shoot rather
+than hope after it. The money itself arrives six months after delivery, less an
+auditor's fee for the certificate it is paid against, on a floor that makes a
+very small claim barely worth making. And the scheme has an end date in law: a
+shoot that starts after it gets nothing, and the date is close enough to the
+start of a save to be a thing worth planning around.
+
+**What is not built here.** The auditor certifies exactly what the books say and
+disallows nothing, so there is no argument about a line and no reason to keep
+better records than the minimum. Nobody borrows against the claim, which in the
+real business is an industry of its own and would turn a six-month wait into a
+financing decision. A picture that shoots partly abroad is not modeled, because
+nothing in the build shoots anywhere but the family's own stages yet. And the
+higher tier's unconditional case — work made for audiences of eighteen and under
+— is in the content and read by nothing, because no picture in the build has an
+audience declared.
+
+Four of them put people on screen, and they are four rather than one because
+advertising a part, seeing somebody, offering it to a named person, and letting
+that person go are four decisions taken days apart by different people. `company.breakdown`
 puts a part out and writes down who came in — once, so the way to see better
 people is to have more money behind the part rather than to look again.
 `company.cast` offers it at a number, and is the only command in the build
 whose refusal is a person saying no rather than the engine saying it could not
 be done. `company.release` lets somebody go, and never gets the money back:
-paid, used and credited are three different things, and actors are routinely
-paid and cut out.
+paid, used and credited are three different things, and performers are
+routinely paid and cut out.
+
+`company.session` books somebody into a room, and it is the only command in the
+build that buys nothing but information. Nobody in this world ever learns what
+a performer is. The pile shows a guess with a stated width — a photograph and a
+credit list say a great deal about how a face reads and nothing whatever about
+whether somebody can do a thing twice — and each round of the funnel shortens
+the distance on some axes and not others. Only a callback closes repeatability,
+because a callback is literally the request to do it again.
+
+A tape is the row worth reading twice. What arrives is not the performer, it is
+their tape: shot at home, as many times as they liked, and sent only if they
+judged it the good one. So a tape is read through four attributes about
+equipment and deadlines rather than about acting, and a performer who is superb
+at that looks better than they are while one who is hopeless at it looks worse.
+A preread is a correction rather than a zoom, and that is the post-2020
+complaint about self-taping stated as arithmetic instead of as an opinion.
+
+Two people carrying a picture have something between them, and it is not two
+solo scores added up. The research is blunt that a separable pairing matrix is
+addition with a new name on it, and this build was maximally separable — a
+strictly linear weighted mean over independent reads, which is the precondition
+for committing the failure rather than a defence against it. What carries the
+pairing is the one term that cannot be split: how far apart two people are in
+the *shape* of what they do, multiplied by how much each of them gives whoever
+is in the scene with them. Shape and never level, because level would make the
+best performer alive maximally different from the whole world and therefore
+everybody's ideal partner, which is absurd and would also be a craft check on a
+player who cannot fail one. Two people a long way apart in standing can be the
+same note twice; two identical in standing can fill each other's gaps
+completely, and what pairs is the second thing. Six attributes read it that
+nothing else in the build reads, none of them on any axis. The test that matters
+is the one that inverts a ranking: whoever is the better partner for one person
+is the worse partner for another, which no sum can produce.
+
+**What is not built there.** No chemistry read — a round that sees two people at
+once, which the round machinery takes one at a time. No optics: age gap, height
+and colouring are half the research's own pairing term and a role carries no age
+band to be wrong against, so it would be a number measured against nothing.
+
+Performers come from somewhere, and it is a real row in the gazetteer. Most of
+everybody is Icelandic, because Iceland is a country of four hundred thousand
+people with a working screen industry; the rest are Nordic, British or
+American, and the part's band decides how far the search reaches. Nobody flies
+from Los Angeles to read for a part that pays four thousand euros, so a cheap
+picture is cast out of the phone book and an expensive one is cast out of the
+world. Bringing somebody costs flights, a hotel for the run and per diem, as a
+share of their fee and nothing for anybody who already lives here — which is
+the half of local hire the casting screen cannot argue with: the band buys the
+fee and says nothing about what it takes to get them onto the stage.
+
+And an American cannot be cast at all until the arm exists and has signed.
+Global Rule One — a member of SAG-AFTRA may not work for a producer who has not
+signed, anywhere on earth — is the reason the family business is two companies
+rather than one, and until now nothing anywhere asked it: the arm could be
+formed, the agreement signed, and an American cast either way. It is asked at
+the offer and again inside the casting office, which fills parts without going
+through the front door and was the one place the rule could have been walked
+past.
+
+What a part needs is its own fact, laid at the greenlight and kept. Three
+numbers coming to three: a day player is a face in one scene, so how they read
+is nearly the whole of it and nobody is going to ask them for take nine; a lead
+is in half the picture and every setup of it. Without that, the best buy for
+every part on every picture in the save is the same weighted sum forever, which
+is a casting system with one decision in it. It is not hidden from the player,
+because the player is the producer and a producer knows what their own picture
+needs; what is hidden is what the performer is.
+
+A session is one note and a note is one axis. Naming an axis takes that one a
+round further than the session would otherwise have taken it and leaves the
+other two where they were, so a note is not extra information — it is the same
+information pointed somewhere, and pointing it at the wrong thing costs the
+round.
+
+What makes any of it a decision is the diary. The casting office runs one thing
+at a time and the schedule is the diary, so a picture with twenty-one parts and
+eleven weeks discovers that it can see everybody once and cannot see everybody
+twice. Prereading the whole list is affordable and costs most of the calendar,
+which is to say it costs the callbacks. And the office picks on what it
+believes, like everybody else: a producer who never sat in a room gets the
+cast a photograph chose.
 
 Casting is also where the acting sheet stops being decoration. Every save has
 carried 813 acting attributes since the first commit and nothing read one of
@@ -146,12 +340,122 @@ constraint that can become unsatisfiable. No most-favoured-nations, no minors
 and their hours, no visas, no union clearance. A day out of days would make the
 schedule re-price the cast, and there is not one.
 
+Being cast now takes the time it takes. A settled audition lays the engagement
+across the player's own calendar a week at a time, every week marked as wanting
+them, so the clock stops on it and two things at once are flagged the way any
+other commitment is. Before this, `theyWantYou` posted the fee, moved four
+reputation fields and scheduled nothing at all — a nine-week picture stopped the
+player's clock for no time, and `requiresPlayer` had one write site in the whole
+engine, on a plan the player had typed themselves. A week rather than a day,
+because `docs/DEPTH.md` forbids anything downstream naming a shooting day and a
+performer's week on a picture is not the production's unit anyway.
+
+Going into a room is now an afternoon somebody has to be in, and sending a tape
+is not. That is the whole difference between the two ways in and it had no cost
+attached to it either way.
+
+And one question has one answer. Whether the player is free was asked by the
+room and never asked at all by `company.cast`, so Play It would seat them in a
+part shooting across one they had already won. `world/diary.ts` answers it for
+both, including the week in front of a first day, because a fitting and a
+read-through are as real a claim on somebody as the shoot.
+
+Four of them are the player's own, and they are the only four commands in the
+build that are not the family's business. `life.go_up` goes up for a part;
+`life.take_note` answers the one note anybody gives you; `life.upkeep` pays to
+put the house back, by way of the only thing in the build that reads what kind of
+night they had; and `life.train` is an hour or two of keeping in shape, which is
+the second direction fitness never had — it fell 0.18 a day forever and reached
+nought inside the first year of every save. A third route,
+`/workspace/auditions`, is where the first two live, because a career is a
+different subject from a company; upkeep sits under the condition meter on Home,
+next to the number it argues with, and training sits beside Sleep in the time
+controls, because spending hours deliberately is what both of them are.
+
+The work comes from the stages and from nowhere else. A production that has
+taken one is a production that needs people, so what the lot is letting a year
+from now is what the player will be asked about — which makes the lot's
+business and the player's career one system rather than two, and means money
+spent telling the world the stages are there eventually comes back as a part.
+It also means the player cannot make work happen by wanting it. They can make
+the lot busier, which is a different thing done a year earlier with somebody
+else's money, and that gap is the honest shape of a career.
+
+Nothing in the player's room reads the acting sheet, and that is the constraint
+the whole of it is built around rather than a shortcut. The player holds all
+813 attributes at the ceiling and forty-five of them are named for this room —
+`cold_reading`, `taking_a_redirect`, `nerve_management`, `walking_into_the_room`,
+`self_tape_craft`. A faithful port of the research would be forty-five lookups
+all returning a hundred. So whatever the player chooses to play, they play it
+exactly, and the game is entirely in the choosing: `tests/audition.test.ts`
+sets every attribute in the save to fifty and demands that every outcome come
+out identical.
+
+What is left when competence is removed is three decisions. What to play, in
+three shades — how much they want you liked, how much of it they want, and how
+fast it goes — chosen blind, because nobody has told you what the part is for
+and nobody is going to. Whether to send a tape or go in, which is a day against
+three and is not about quality: the player's tape is flawless, and what a tape
+does not do is come back with a note. And how far to take that note, which is
+the only decision anybody takes with information in it — the room names one
+shade and one direction, never how far, and it names the shade you had nearest
+right, so overcooking it spends the only thing that was working.
+
+Being remembered is the ratchet, and a no counts. The research calls roster
+memory the main career ratchet and is explicit that it pays out from a pass, so
+what a reading buys is not the part — it is that the next time these people need
+somebody, they think of you. About a third of them ask before anybody has seen
+anything, which is nepotism stated as arithmetic: the production is standing on
+a stage the family owns. Everything above that is earned by being read.
+
+A part taken pays into the player's own account, writes a quote everybody else
+argues from, and moves a fame that nothing else in this build has ever moved.
+It also holds the dates, so it is the first thing in the game that can cost the
+player their own family's picture.
+
+**What is not built.** The turn loop — six to fourteen beats, a patience clock,
+asking to go again, knowing when to stop talking — is not here, because one note
+and one answer is what this cut holds and a patience clock with one turn to
+spend is a clock with nothing to count. No chemistry read, no callback on the
+player's side, no agent, no competing offer to weigh a pin against, and no
+outside office with a taste of its own: there is one room and it wants what it
+wants.
+
 `lot.sell` is the odd one out and the only command taken again every month:
 what the lot spends telling people it exists. The overhead table's line is the
 floor and anything above it is a bet, read back off the ledger across three
 quarters rather than off the figure — so it cannot be bought the month before
 it is wanted, and it cannot be dropped without the market noticing two quarters
 later.
+
+The nine capability doors are walkable end to end, which was worth proving
+rather than assuming: from the two a registered company starts with, eleven
+commands open all nine — the employer registration, the American arm and its
+EIN, the guild signature, an option on something, four policies and two posts.
+It costs about ninety thousand and the company starts with a hundred and
+eighty. Every blocker the page raises now names a kind of fix, and every kind
+but one has a control beside it; the exception is money, which no button makes
+appear. The material blocker had none until recently, so a player pressing
+everything offered reached six of nine and stopped, with the button for the
+seventh sitting in a different panel under a heading that does not mention
+doors.
+
+What the doors decide, which is not the same question: three are read by the
+engine at the greenlight, the delivery and the reimbursement; three more bite as
+greenlight blockers; hiring Americans is enforced in the casting room. Reclaim
+The Tax decided nothing at all until it was built, and now files a VSK return
+every two months on the tax inside what the company actually bought.
+
+`lot.build` is its opposite: taken once or never, and it changes what the lot
+is rather than how hard it is sold. It puts up a fifth and much smaller room,
+priced at the published benchmark by the square meter, for the short cheap work
+the four big rooms cannot house at any price. The money goes on the day it is
+signed and the room opens seventy-eight weeks later; it is refused when the
+family will not carry it, measured as the cash plus what it will still put in —
+the same pool the greenlight spends from, so a room and a picture compete. It
+never pays for itself. What it buys is the documentary, which cannot happen here
+without it, a sixth holder, and a slow lift in how often the player is asked
+about anything at all.
 What arrives is run through a recoupment waterfall in the order it arrives: a
 distributor's fee off the top, then what was spent selling the picture, then
 the money that made it, with interest on whatever part of that is still
@@ -170,7 +474,7 @@ than regenerating one.
 The decision underneath them: the parent is an Icelandic `ehf.` and the
 American arm is earned. Global Rule One is why — a SAG-AFTRA member may not
 work for a producer who has not signed, anywhere on earth — so an Icelandic
-company that wants one American actor has to become, in part, an American
+company that wants one American performer has to become, in part, an American
 company. Nothing else in the build has that shape, and it is the reason the
 company is two records rather than one.
 
@@ -185,26 +489,28 @@ marking read (`world.take_decision_action`, `world.dismiss_decision`,
 
 
 <!-- inventory:begin -->
-Generated by `node tools/inventory.mjs --markdown`. 22 commands, 12 scheduled kinds, 3 events emitted, 0 event listeners, 0 scenes, 2 routes.
+Generated by `node tools/inventory.mjs --markdown`. 31 commands, 25 scheduled kinds, 3 events emitted, 0 event listeners, 0 scenes, 3 routes.
 
 ### Commands
 
 | System | Kinds | Owner |
 | --- | --- | --- |
 | calendar | `calendar.cancel` `calendar.schedule` `calendar.skip` | `src/engine/world/plans.ts` |
-| company | `company.breakdown` `company.cast` `company.deliver` `company.develop` `company.fill_post` `company.form_arm` `company.greenlight` `company.insure` `company.option` `company.register` `company.release` `company.sell` `company.sign` | `src/engine/world/casting.ts`, `src/engine/world/company.ts`, `src/engine/world/making.ts`, `src/engine/world/selling.ts` |
-| life | `life.sleep` | `src/engine/systems/life.ts` |
-| lot | `lot.sell` | `src/engine/world/lot.ts` |
+| company | `company.breakdown` `company.cast` `company.claim_rebate` `company.deliver` `company.develop` `company.fill_post` `company.form_arm` `company.greenlight` `company.insure` `company.option` `company.register` `company.release` `company.restaff` `company.sell` `company.session` `company.sign` | `src/engine/world/casting.ts`, `src/engine/world/company.ts`, `src/engine/world/making.ts`, `src/engine/world/rebate.ts`, `src/engine/world/selling.ts` |
+| life | `life.go_up` `life.sleep` `life.take_note` `life.train` `life.transfer` `life.upkeep` | `src/engine/systems/life.ts`, `src/engine/world/audition.ts`, `src/engine/world/banking.ts`, `src/engine/world/house.ts` |
+| lot | `lot.build` `lot.sell` | `src/engine/world/lot.ts` |
 | world | `world.dismiss_decision` `world.mark_read` `world.set_preferences` `world.take_decision_action` | `src/engine/world/world.ts` |
 
 ### Scheduled kinds
 
 | System | Kinds | Owner |
 | --- | --- | --- |
-| life | `life.commitment` `life.day_rollover` | `src/engine/systems/life.ts`, `src/engine/world/plans.ts` |
-| lot | `lot.overhead` | `src/engine/world/lot.ts` |
-| project | `project.banked` `project.cast` `project.crew` `project.delivery` `project.part` `project.period` `project.window` | `src/engine/world/casting.ts`, `src/engine/world/crew.ts`, `src/engine/world/making.ts`, `src/engine/world/selling.ts` |
-| sugar | `sugar.quota` | `src/engine/world/sugar.ts` |
+| bank | `bank.month` `bank.return` | `src/engine/world/banking.ts` |
+| company | `company.renewals` `company.vat_return` | `src/engine/world/company.ts`, `src/engine/world/vat.ts` |
+| life | `life.commitment` `life.day_rollover` `life.reading` `life.working` | `src/engine/systems/life.ts`, `src/engine/world/audition.ts`, `src/engine/world/plans.ts` |
+| lot | `lot.overhead` `lot.stage_built` | `src/engine/world/lot.ts` |
+| project | `project.banked` `project.cast` `project.crew` `project.delivery` `project.part` `project.period` `project.rebate` `project.restaff` `project.room` `project.window` | `src/engine/world/casting.ts`, `src/engine/world/crew.ts`, `src/engine/world/making.ts`, `src/engine/world/rebate.ts`, `src/engine/world/selling.ts` |
+| sugar | `sugar.day` `sugar.payday` `sugar.quota` `sugar.tax` | `src/engine/world/sugar.ts` |
 | world | `world.tick` | `src/engine/world/world.ts` |
 
 ### Events emitted
@@ -226,5 +532,5 @@ Generated by `node tools/inventory.mjs --markdown`. 22 commands, 12 scheduled ki
 
 ### Routes
 
-`/workspace/business` · `/workspace/calendar`
+`/workspace/auditions` · `/workspace/business` · `/workspace/calendar`
 <!-- inventory:end -->

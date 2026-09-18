@@ -1,5 +1,8 @@
+import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
-import { applyRate, dollars, formatMoney, formatMoneyCompact, splitByWeights, splitEvenly } from '@/engine/core/money';
+import {
+  CURRENCY_SYMBOL, applyRate, formatMoney, formatMoneyCompact, splitByWeights, splitEvenly, units,
+} from '@/engine/core/money';
 import { Ledger, type Account, type LedgerHost, type LedgerTransaction } from '@/engine/core/ledger';
 import { quickSave } from '@/engine';
 import { MS_DAY } from '@/engine/core/time';
@@ -18,8 +21,8 @@ function account(id: string, kind: Account['kind'] = 'checking'): Account {
 
 describe('money', () => {
   it('is always integer cents', () => {
-    expect(dollars(19.99)).toBe(1999);
-    expect(dollars(0.1) + dollars(0.2)).toBe(dollars(0.3));
+    expect(units(19.99)).toBe(1999);
+    expect(units(0.1) + units(0.2)).toBe(units(0.3));
     expect(Number.isInteger(applyRate(1999, 0.0725))).toBe(true);
   });
 
@@ -44,9 +47,21 @@ describe('money', () => {
   });
 
   it('formats compactly at scale', () => {
-    expect(formatMoney(199_99)).toBe('$199.99');
-    expect(formatMoneyCompact(1_500_000_00)).toBe('$1.5M');
-    expect(formatMoneyCompact(2_400_000_000_00)).toBe('$2.4B');
+    expect(formatMoney(199_99)).toBe('€199.99');
+    expect(formatMoneyCompact(1_500_000_00)).toBe('€1.5M');
+    expect(formatMoneyCompact(2_400_000_000_00)).toBe('€2.4B');
+  });
+
+  it('is kept in one currency, decided in one place', () => {
+    // This formatter printed dollars while every notification the engine wrote
+    // printed euros, for the same cents, on the same screen. The symbol is not
+    // typed anywhere any more: it is read back out of the formatter, so the
+    // long form, the compact form and the engine's own sentences cannot again
+    // be three opinions about what a cent is.
+    expect(CURRENCY_SYMBOL).toBe('€');
+    expect(formatMoney(1_000_00)).toContain(CURRENCY_SYMBOL);
+    expect(formatMoneyCompact(1_500_000_00)).toContain(CURRENCY_SYMBOL);
+    expect(formatMoney(199_99)).not.toContain('$');
   });
 });
 
@@ -125,6 +140,26 @@ describe('the ledger', () => {
 
     expect(ledger.account('card').balance).toBe(-120_000);
     expect(ledger.availableFunds('card')).toBe(380_000);
+    // Never below nought, whatever has been put on it. A line that has been
+    // overrun does not have negative headroom; it has none.
+    ledger.post({
+      id: 't2', saveId: 's', at: 0, memo: 'more', category: 'shopping',
+      postings: [{ accountId: 'card', amount: -500_000 }, { accountId: 'expense', amount: 500_000 }],
+    });
+    expect(ledger.availableFunds('card')).toBe(0);
+  });
+
+  it('is the only place that works out what is left on a line', () => {
+    // `docs/ARREARS.md` had `availableFunds` down as a correct function nobody
+    // called, and it was half the story: the money screen was working out
+    // `Math.max(0, limit + balance)` inline in two places while the named
+    // function sat here with no reader. One idea, three implementations, and the
+    // one with the name on it was the one nothing used. The screen asks the
+    // ledger now, and this is what stops the copies coming back.
+    const screen = readFileSync('src/ui/looks/money.tsx', 'utf8');
+    expect(screen).toContain('availableFunds');
+    expect(screen, 'the screen works out a credit line’s headroom for itself again')
+      .not.toMatch(/limit \+ a\.balance/);
   });
 });
 

@@ -12,6 +12,7 @@ import { readdirSync, readFileSync, statSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { ALL_TRAITS, ATTRIBUTES, ATTRIBUTE_GROUPS, TRAITS, attributesInGroup, rate } from '@/engine/domain/attributes';
 import { CEILING } from '@/engine/content/prodigy';
+import { ENQUIRY_SHAPES } from '@/engine/content/lot';
 import { COUNTRIES } from '@/engine/content/geography';
 import { ageOnDate } from '@/engine/core/time';
 import { createSave, defaultConfig, quickSave } from '@/engine';
@@ -51,6 +52,15 @@ describe('nothing is defined twice', () => {
     expect(duplicates(ATTRIBUTES, (a) => a.name)).toEqual([]);
     // A certificate's name repeats across boards on purpose — "General" is a
     // rung in four systems — so it is the pair that has to be unique.
+
+    // An enquiry's `from` is not decoration: it becomes `booking.holder`, and
+    // the holder string is the whole identity of a casting office. `readFor`,
+    // `remembersYou`, `believedOf` and `ignoredBy` all key off it, so two
+    // shapes sharing one produce two productions that share one memory of the
+    // player — read for one and the other remembers it. Two rows were both "an
+    // American studio, a feature": nine shapes, eight addressable offices, and
+    // nothing said which two were secretly one.
+    expect(duplicates(ENQUIRY_SHAPES, (one) => `${one.of.from}, ${one.of.kind}`)).toEqual([]);
   });
 
 
@@ -94,14 +104,30 @@ describe('everything is wired to something', () => {
     expect(dead, 'handlers that nothing anywhere schedules').toEqual([]);
   });
 
-  it('accepts every command the interface can ask for', () => {
+  it('accepts every command a decision offers a button for', () => {
+    // Asked of the source, and not of a booted save's `decisions` table.
+    //
+    // This walked `Object.values(sim.universe.decisions)` until today, on a
+    // save that had just been created, and that table is `{}` at boot. The
+    // loop body never ran once, so the test could not fail for any program
+    // anybody could write: green meant there had been nothing to check. The
+    // engine raises a decision now, but a fresh save still holds none until a
+    // picture is greenlit and the world tick comes round, so asking the save
+    // would only have moved the vacuousness rather than removing it.
+    //
+    // The source holds every action any decision can ever carry. The count is
+    // asserted first, because a check with an empty subject list is the exact
+    // fault being repaired and it would come back silently the day the last
+    // raiser is deleted.
+    const source = readFileSync('src/engine/index.ts', 'utf8')
+      + globSource('src/engine/systems')
+      + globSource('src/engine/world');
+    const offered = [...source.matchAll(/commandKind: '([a-z0-9_]+\.[a-z0-9_]+)'/g)].map((m) => m[1]!);
+    expect(offered.length, 'no decision anywhere offers an action, so this check checks nothing').toBeGreaterThan(0);
+
     const commands = new Set(sim.commandKinds());
-    // The list the interface uses, gathered from the decision actions the
-    // engine itself raises: those are the ones a button will call.
-    for (const decision of Object.values(sim.universe.decisions)) {
-      for (const action of decision.actions ?? []) {
-        expect(commands.has(action.commandKind), `a decision offers '${action.commandKind}', which no system handles`).toBe(true);
-      }
+    for (const kind of new Set(offered)) {
+      expect(commands.has(kind), `a decision offers '${kind}', which no system handles`).toBe(true);
     }
   });
 

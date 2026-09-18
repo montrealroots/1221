@@ -1,11 +1,12 @@
 {
-  "note": "Set by tools/wired.mjs --bless. These may fall. They may not rise.",
+  "note": "Set by tools/wired.mjs --bless, except \"Dials nothing moves\", which is tools/dials.mjs --bless. These may fall. They may not rise.",
   "counts": {
-    "Id namespaces": 105,
-    "Trait modifier keys": 47,
-    "Higher-is-worse guards": 6,
+    "Id namespaces": 0,
+    "Trait modifier keys": 0,
+    "Higher-is-worse guards": 0,
     "Dials nothing moves": 0,
-    "Personality axes nothing consults": 3,
-    "Save tables nothing fills": 0
+    "Personality axes nothing consults": 0,
+    "Save tables nothing fills": 0,
+    "Draw streams no decider owns": 0
   }
 }

@@ -59,13 +59,19 @@ export interface Period {
   /**
    * How long it runs, as a multiple of the plan's base period.
    *
-   * Exactly one period in a plan carries `per: 1`, and it is the one the
-   * producer actually chooses the length of — the shoot on a feature, the
-   * field on an unscripted season. Everything else is quoted against it, the
-   * way a real schedule is. Deliberately not called "shooting weeks" any
-   * more: a season that never shoots a scripted page still has a base period,
-   * and naming this after the live-action case is how an engine ends up
-   * unable to express anything else.
+   * Everything on a real schedule is quoted against the one period the producer
+   * actually chooses the length of, and so is everything here. Deliberately not
+   * called "shooting weeks" any more: a season that never shoots a scripted
+   * page still has a base period, and naming this after the live-action case is
+   * how an engine ends up unable to express anything else.
+   *
+   * This used to say that exactly one period in a plan carries `per: 1` and
+   * that it is the base. Both halves were wrong. The unscripted season carries
+   * two — the rig is as long as the field, which is a true thing about an
+   * unscripted season — so `per` was never an identifier, and everything that
+   * went looking for the base by it found the rig. `Plan.basePeriod` names it
+   * instead, because a plan should say which period that is and not leave it to
+   * be inferred from a number that means something else.
    */
   per: number;
   /**
@@ -115,7 +121,30 @@ export interface Period {
    * is the rung a converted second has reached. Where inventory dwarfs the
    * timeline this is the bottleneck, and no amount of further acquiring helps.
    */
-  converts?: { at: string; hands: number; upTo: string };
+  converts?: {
+    at: string;
+    hands: number;
+    upTo: string;
+    /**
+     * How much of this period's spend is the rooms themselves.
+     *
+     * The rest of it is everything else the period buys, which does not care
+     * how many people are cutting: sound, music, color, the conform, the
+     * deliverables. Without this the staffing decision was free — `spends` is a
+     * flat share of the budget and knew nothing about how many rooms were
+     * running, so six editors cost exactly what one did. More hands was faster,
+     * safer and cost nothing, which made the maximum correct on every picture
+     * in every state and the decision a number nobody had a reason to lower.
+     *
+     * A third, which is where editorial sits on a post budget with no heavy
+     * visual effects on it — the cutting rooms, the assistants, the kit and the
+     * space — and the two thirds left are the finishing that happens whatever
+     * the room did. SLATE's own, and the figure the whole decision turns on, so
+     * it is declared here rather than folded into `spends` where nobody could
+     * see it.
+     */
+    ofTheSpend: number;
+  };
   /**
    * What a week of this period produces, counted the way the people in it
    * count it.
@@ -139,6 +168,23 @@ export interface Plan {
   media: readonly ('film' | 'television')[];
   /** The periods, in the order they are declared. */
   periods: readonly Period[];
+  /**
+   * The id of the period the producer chooses the length of.
+   *
+   * The shoot on a feature, the field on an unscripted season. It is the one
+   * number a greenlight asks for, every other period is quoted against it, and
+   * it is the first day a camera runs — which makes it the date the crew's
+   * offsets count back from, the date the casting office works to, and the date
+   * the reimbursement's application closes on.
+   *
+   * Named here rather than found by searching the periods for one called
+   * 'shooting'. A season's base period is the field, and every reader that went
+   * looking for a literal either hard-coded two names or found nothing: the
+   * crew hired nobody onto an unscripted season for as long as this was
+   * inferred, because the lookup came back empty and the whole department
+   * walked past it.
+   */
+  basePeriod: string;
   /**
    * Weeks between the end of the work and the contractual delivery date. The
    * window exists so that finishing is not the same as delivering, because it
@@ -217,6 +263,7 @@ export interface Plan {
  */
 const FEATURE: Plan = {
   id: 'feature',
+  basePeriod: 'shooting',
   cast: 'performers',
   ratio: 'feature',
   label: 'A Feature, Shot On Stages',
@@ -259,7 +306,7 @@ const FEATURE: Plan = {
       per: 2.4,
       spends: 0.3,
       advances: { picture: 'graded', sound: 'mixed', performance: 'complete', conform: 'mastered' },
-      converts: { at: 'picture-editor', hands: 2, upTo: 'cut' },
+      converts: { at: 'picture-editor', hands: 2, upTo: 'cut', ofTheSpend: 1 / 3 },
       unit: { one: 'week of post', many: 'weeks of post', aWeek: 1 },
     },
   ],
@@ -280,6 +327,7 @@ const FEATURE: Plan = {
  */
 const SERIES: Plan = {
   id: 'series',
+  basePeriod: 'shooting',
   cast: 'performers',
   ratio: 'drama',
   label: 'A Series, Shot On Stages',
@@ -323,7 +371,7 @@ const SERIES: Plan = {
       runsWith: 'shooting',
       spends: 0.28,
       advances: { picture: 'graded', sound: 'mixed', performance: 'complete', conform: 'mastered' },
-      converts: { at: 'television-editor', hands: 4, upTo: 'cut' },
+      converts: { at: 'television-editor', hands: 4, upTo: 'cut', ofTheSpend: 1 / 3 },
       unit: { one: 'week of finishing', many: 'weeks of finishing', aWeek: 1 },
     },
   ],
@@ -369,6 +417,7 @@ const SERIES: Plan = {
  */
 const UNSCRIPTED: Plan = {
   id: 'unscripted',
+  basePeriod: 'field',
   ratio: 'rig',
   label: 'A Format Season, Against An Airdate',
   what: 'A cast board, a built arena, a continuous shoot, and a cut that starts the same day the cameras do.',
@@ -421,7 +470,11 @@ const UNSCRIPTED: Plan = {
       runsWith: 'field',
       spends: 0.24,
       advances: { picture: 'locked', sound: 'mixed', performance: 'complete', conform: 'mastered' },
-      converts: { at: 'unscripted-editor', hands: 3, upTo: 'assembly' },
+      // Nearly half, and higher than the scripted forms on purpose: an
+      // unscripted season is made in the edit rather than shot to a script, so
+      // the rooms are most of what its post buys and the finishing around them
+      // is comparatively little.
+      converts: { at: 'unscripted-editor', hands: 3, upTo: 'assembly', ofTheSpend: 0.45 },
       unit: { one: 'cut minute', many: 'cut minutes', aWeek: 15 },
     },
     {
@@ -623,8 +676,87 @@ export const tightnessOf = (weeks: number, budgetCents: number): number =>
 /** How hard a squeezed schedule pushes back, in days per shooting week. SLATE's own. */
 export const SLIP_RATE = 0.9;
 
+/**
+ * How much of an overrun a cast is responsible for, end to end.
+ *
+ * A cast nobody can rely on stretches whatever the schedule was going to do
+ * anyway by about half again; one that turns up every morning takes about a
+ * third of it back. Never the whole of it, in either direction — a schedule cut
+ * below what the picture costs runs over with saints in it, and a picture with
+ * room in it loses a day to the weather whoever is in it.
+ *
+ * SLATE's own, and set below what the schedule itself is worth on purpose: the
+ * producer's decision about weeks is meant to matter more than their decision
+ * about people, because it does.
+ */
+export const TRUST_COSTS = 0.85;
+
 /** What an overrun day costs, against an ordinary day of the shoot. SLATE's own. */
 export const SLIP_COSTS = 1.35;
 
 /** What missing the delivery date costs a week, as a share of the budget. SLATE's own. */
 export const LATE_PENALTY_A_WEEK = 0.004;
+
+/**
+ * The producer's fee, as a share of what the picture is greenlit at.
+ *
+ * This exists because of a measurement, and the measurement is the most damning
+ * one in the audit trail. Over twenty-five played years a company that greenlights
+ * thirty-six pictures and delivers thirty-three ends holding EUR 238,755,876 —
+ * and the player who ran every one of them ends with **EUR 700**, which is the
+ * balance they opened the save with. They own nought percent of the company,
+ * because the parents built it and the parents hold it, and across a quarter of a
+ * century exactly EUR 1,540 reached their own accounts.
+ *
+ * `docs/UNBITTEN.md` had this the other way round. It said the company must stop
+ * out-earning the career and that the slate returning 1.44 to 1.63 times its
+ * negative was the engine of a hundred-to-one — a decision about the game, left
+ * for the owner. It is not a calibration problem and moving the multiple would
+ * not have touched it: the company was not out-earning the career, it was earning
+ * money the career could never reach. There was no mechanism at all. No dividend,
+ * no ownership, no fee. A producer fee is the one every picture actually carries.
+ *
+ * Three percent, which is inside the ordinary range a producer's fee is quoted at
+ * and deliberately at the bottom of it. What that buys is the figure that makes
+ * this a balance rather than a lever: on a twenty-million-euro feature it is
+ * EUR 600,000, against a lead acting fee on the same picture of about
+ * EUR 878,000. So producing pays about what a good part pays, which is the whole
+ * answer to whether producing makes acting pointless — it does not, because the
+ * slate's return stays with the family that financed it and what reaches the
+ * person is a fee for the work.
+ *
+ * It is charged on top of the budget rather than out of it. Every period's spend
+ * is a share of `budgetCents` and those shares come to one, so folding the fee in
+ * would mean re-cutting all of them and moving every spend figure this build has
+ * measured, to no benefit. A picture therefore costs the company three percent
+ * more than the number it was greenlit at, which is also true of real pictures:
+ * the budget a producer quotes and the check a financier writes have never been
+ * the same number.
+ */
+export const PRODUCER_FEE = 0.03;
+
+/**
+ * How long a new pair of hands takes to actually start in the cutting room.
+ *
+ * `project.hands` had exactly one write site in the whole engine — inside
+ * `greenlight` — and no command anywhere. The field's own docstring said the
+ * opposite in three places: "the plan's figure is a default, not a rule", "the
+ * number of editors is the decision that sits between a budget and a delivery
+ * date", and "that is a decision that can change week to week". `aWeekOn` said
+ * hands can be changed in any week. `ui/looks/business.tsx` told the player "put
+ * one editor on this where the plan assumed two and it arrives half as fast".
+ *
+ * The lever worked and the door was missing. Measured on an unscripted season
+ * twenty-one days into post, with the save written directly because there was no
+ * path a player could walk: one editor cut 12,600 seconds and left 16,200 to go;
+ * six cut 28,800 and cleared the backlog. `tests/inventory.test.ts` had to reach
+ * around the command layer to exercise it, and a notification — "Back Inside Its
+ * Date" — could only ever fire after a restaff nobody could perform.
+ *
+ * Two weeks, because a free instant restaff is a strictly dominant button and
+ * every cutting room would end at six hands. The cost is the other half of that
+ * and is priced off `aRoomCosts`, which the build already has; the lead time is
+ * what stops a player watching the warning and fixing every picture the week it
+ * appears. Under-staffing a season still costs it its date.
+ */
+export const A_NEW_HAND_STARTS_IN_WEEKS = 2;

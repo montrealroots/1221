@@ -101,12 +101,23 @@ function lean(value: number): number {
  *   content would stop, and it shows up as stress.
  * - Conscientiousness is routine, and routine is what sleep is made of, so it
  *   moves both how well a night goes and how much of it comes back as energy.
- * - Openness is how a new place lands. Somebody experimental is not worn down
- *   by being somewhere unfamiliar the way a conventional person is.
+ * Three, and it was seven. Openness, extraversion, agreeableness and risk
+ * tolerance were about new places, other people and choices, and this build
+ * has none of the three — so they were written into every save, read by
+ * nothing, and asked for on a creation screen that was honest enough to say
+ * so in as many words.
  *
- * Extraversion, agreeableness and risk tolerance are about other people and
- * about choices, and this build has neither. They are recorded and read by
- * nothing, and the creation screen says so rather than implying otherwise.
+ * Being honest about a dead word is better than hiding one and is not the same
+ * as not having one. The deciding fact was that they appeared on that screen
+ * and on no other: nothing in the build ever showed them back, which is the
+ * test `background` survives by being printed under a person's name. So they
+ * are gone, and the screen asks for three questions that all decide something
+ * rather than seven of which three do.
+ *
+ * Openness was the last to be read at all. It scaled how fast `travelFatigue`
+ * came off — a decay on a number nothing ever raised, so the one axis that was
+ * wired reached nowhere. The dial went in the wellbeing sweep, the case here
+ * went with it, and now the axis has followed both.
  */
 export function axisModifier(person: Person, key: string): number {
   const p = person.personality;
@@ -114,7 +125,6 @@ export function axisModifier(person: Person, key: string): number {
   const steady = lean(p.emotionalStability);
   const driven = lean(p.ambition);
   const ordered = lean(p.conscientiousness);
-  const open = lean(p.openness);
 
   let value = 1;
   switch (key) {
@@ -122,8 +132,6 @@ export function axisModifier(person: Person, key: string): number {
     case 'stressRecovery': value = 1 + steady * 0.3; break;
     case 'sleepQuality': value = 1 + ordered * 0.1; break;
     case 'energyRecovery': value = 1 + ordered * 0.1; break;
-    // Read as "how much travel bothers you", so openness lowers it.
-    case 'travelFatigue': value = 1 - open * 0.2; break;
     default: return 1;
   }
   return Math.round(Math.max(0.5, Math.min(1.6, value)) * 1000) / 1000;

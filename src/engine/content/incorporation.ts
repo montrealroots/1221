@@ -102,7 +102,15 @@ export interface RegistryFacts {
   cost: Money;
   /** Whether the company must be on it to trade at all. */
   required: boolean;
-  /** How often it wants something filed, in months. Nought for never. */
+  /**
+   * How often the body wants something filed, in months. Nought for never.
+   *
+   * What the register asks for, and not a cadence this build keeps: nothing
+   * files, nothing charges a filing fee and no registration is ever struck off
+   * for missing one. It is used once, to date `Registration.nextDueAt` when a
+   * registration is written, and printed beside it. Read it as a fact about
+   * Fyrirtækjaskrá and Skatturinn.
+   */
   filesEveryMonths: number;
 }
 
@@ -168,15 +176,32 @@ export const REGISTRY_BY_ID: Readonly<Record<RegistryId, RegistryFacts>> =
  *
  * The rate has been raised at least once from twenty-five percent and there is
  * a higher tier attached to conditions about the size and shape of the
- * production. SLATE uses the lower figure and says so rather than printing a
- * number it cannot stand behind.
+ * production. Both are implemented: the lower one is what every qualifying
+ * picture gets, and the higher one is earned by meeting `higherNeeds`, which
+ * `world/rebate.ts` tests limb by limb and says which limb you are short on.
+ * This paragraph said SLATE used the lower figure only, and went on saying it
+ * after the higher one was built and printed on a screen.
+ *
+ * The application closes on the first day of photography and never reopens.
+ * That used to be said here as a field reading `true`, which is a sentence
+ * pretending to be a rule — nothing could ever read it and get a different
+ * answer. It is a rule now, in `world/rebate.ts`, and the refusal a producer
+ * meets when they are late is written in `content/rebate.ts` with the others.
  */
 export const REBATE = {
   body: 'Atvinnuvega- og nýsköpunarráðuneytið',
   label: 'The Production Reimbursement',
   /** Every qualifying feature, series and documentary. No minimum spend, no cap. */
   share: 0.25,
-  /** The higher tier, and the three conditions a production has to meet for it. */
+  /**
+   * The higher tier, and what a production has to meet for it.
+   *
+   * Three conditions in the law and five things to test, because two of the
+   * three have two parts: days in the country of which some must be shooting
+   * days, and people taxed here for a number of days each. Five fields below,
+   * five limbs in `shortOn`, five labels — and a test holds those three counts
+   * to each other rather than to a number anybody typed here.
+   */
   higherShare: 0.35,
   higherNeeds: {
     /** Icelandic spend, in króna. */
@@ -188,13 +213,11 @@ export const REBATE = {
     crew: 50,
     crewDays: 50,
   },
-  /** Applied for before a foot of film is shot, or not at all. */
-  appliedBefore: true,
   auditedBy: 'An Icelandic auditor, at the production’s cost',
   /** Roughly how long after delivery the money lands. SLATE's own. */
   paidAfterMonths: 6,
-  note: 'Both rates are the published ones. The higher tier also applies with no conditions at all to '
-    + 'work made for audiences of eighteen and under.',
+  note: 'Both rates are the published ones. The higher tier also applies unconditionally to work made '
+    + 'for audiences of eighteen and under, which SLATE doesn’t model: no picture declares an audience.',
   /**
    * The date the whole thing is legislated to stop.
    *
@@ -208,6 +231,32 @@ export const REBATE = {
 /** Corporate income tax on an Icelandic private limited company. */
 export const CORPORATION_TAX = 0.20;
 export const VAT_RATE = 0.24;
+
+/**
+ * How much of a price already paid was the tax.
+ *
+ * Not the rate. A quoted price includes the VSK, so the tax in it is the rate
+ * over one plus the rate — 24 over 124, which is 19.35% and is where the
+ * capability page's "a fifth of the spend" comes from. Deriving it rather than
+ * writing a fifth down is the difference between a figure and a round number
+ * that happens to be close.
+ *
+ * This is what a registered company gets back on what it buys, and what an
+ * unregistered one simply pays. It is the whole of the Reclaim The Tax door,
+ * which for a long time was a sentence on a screen with nothing behind it.
+ */
+export const VAT_ON_A_PURCHASE = VAT_RATE / (1 + VAT_RATE);
+
+/**
+ * How often the return goes in, in months.
+ *
+ * Icelandic VSK is filed for two-month periods. It matters that it is not
+ * monthly: a company reclaiming on a two-month lag is a company carrying the
+ * tax on everything it buys for up to two months before it comes back, which
+ * is exactly the cash-flow shape a production has and the reason the reclaim
+ * is worth having rather than a formality.
+ */
+export const VAT_PERIOD_MONTHS = 2;
 
 // ---------------------------------------------------------------------------
 // The guilds
@@ -303,12 +352,12 @@ export const GUILD_BY_ID: Readonly<Record<GuildId, GuildFacts>> =
  *
  * A SAG-AFTRA member may not render services for a producer who has not signed
  * with SAG-AFTRA, anywhere in the world. It is called Global Rule One and it
- * is the reason an Icelandic company that wants one American actor has to
+ * is the reason an Icelandic company that wants one American performer has to
  * become, in part, an American company.
  */
 export const GLOBAL_RULE_ONE =
   'A SAG-AFTRA member may not work for a producer who hasn’t signed with SAG-AFTRA — anywhere on '
-  + 'earth. That’s what it’s for. An Icelandic company that wants one American actor has to '
+  + 'earth. That’s what it’s for. An Icelandic company that wants one American performer has to '
   + 'become, in part, an American company first.';
 
 // ---------------------------------------------------------------------------
@@ -454,3 +503,32 @@ export const INCORPORATION_NOTE =
   + 'distributor takes delivery without errors and omissions cover. The money is quoted rather '
   + 'than legislated — formation fees, premiums and deposits all move, and every figure here is '
   + 'SLATE’s own estimate, not a current price.';
+
+/**
+ * How close somebody has to be to you before they will take a post.
+ *
+ * Nobody has to say yes. `company.fill_post` could not fail for a reason that
+ * was about the person: it checked the role existed, that the seat was empty and
+ * that the name was somebody the save had, and then it put them in the chair.
+ * Six posts, three relatives, and every one of them agreed to anything.
+ *
+ * So it is an offer now, and the thing it reads is the one number in this game
+ * that records how much of each other two people have actually had lately.
+ * `closeness` rests at 60 for two people under one roof and 25 for two people
+ * who are not, drifts toward that resting level at two percent a day, and moves
+ * when the player keeps a plan with somebody or misses one — six up, ten down.
+ * A save opens at 72 and 70, so the family says yes on the first morning and
+ * goes on saying yes to anybody who keeps up with them.
+ *
+ * Forty is the line, which is `Cordial` in `STANDING_BANDS`: fine with each
+ * other, politely and at a slight distance. That is a real answer to "will you
+ * run my company" and it is the honest one. Above it somebody who gets on with
+ * you says yes; below it they are not refusing out of spite, they are somebody
+ * you stopped seeing who is being asked for a favor.
+ *
+ * It is reachable in both directions and by playing rather than by waiting. A
+ * parent who moves out rests at 25 and is under the line inside a month. A
+ * player who misses four plans in a row takes 72 to 32. And warming it back is
+ * six a plan, so the door is never shut for good.
+ */
+export const WILL_TAKE_A_POST = 40;

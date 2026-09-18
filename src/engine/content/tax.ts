@@ -15,6 +15,7 @@
 import type { Money } from '../core/money';
 import { applyRate } from '../core/money';
 import { jurisdictionPath, CITIES } from './geography';
+import { VAT_RATE } from './incorporation';
 
 export interface TaxBracket {
   /** Lower bound of the bracket in cents. */
@@ -67,18 +68,6 @@ export interface PropertyTaxRule {
   effectiveFrom: number;
 }
 
-export interface VehicleFeeRule {
-  jurisdictionCode: string;
-  /** Annual registration as a fraction of vehicle value. */
-  registrationRate: number;
-  registrationMinimum: Money;
-  /** One-time sales/use tax on purchase. */
-  purchaseTaxRate: number;
-  /** Whether an annual safety or emissions inspection is required. */
-  inspectionRequired: boolean;
-  effectiveFrom: number;
-}
-
 export interface FilmIncentiveRule {
   jurisdictionCode: string;
   label: string;
@@ -104,6 +93,31 @@ const APPROX = 'Calibrated approximation of the real structure. Not tax advice.'
 function brackets(pairs: [number, number][]): TaxBracket[] {
   return pairs.map(([from, rate]) => ({ from: from * 100, rate }));
 }
+
+/**
+ * Iceland, which is where this game is played and was not in this table.
+ *
+ * Every other rule here was written for somewhere a production might travel to.
+ * The one country the player actually lives in had no row at all, so the home
+ * screen told them Iceland taxes a wage at 0% and charges no sales tax — beside
+ * a company the same build already describes as paying 20% corporation tax and
+ * 24% VSK.
+ *
+ * Three bands on the combined rate, which is how an Icelander experiences it:
+ * tekjuskattur to the state and útsvar to the municipality are withheld
+ * together and nobody quotes them apart. State 16.78 / 23.28 / 31.85 plus an
+ * average útsvar of 14.97. The thresholds are monthly in law — ISK 472,005 and
+ * ISK 1,325,127 — carried to a year and to this table's unit at the atlas's own
+ * ISK rate of 138 to the dollar.
+ *
+ * One honest substitution. Iceland's persónuafsláttur is a CREDIT against tax
+ * (ISK 68,691 a month, ISK 824,292 a year) and this table only has a deduction.
+ * A credit of that size at the first band's rate is worth the same as deducting
+ * about $18,800, so that is what is written, and it is the one figure here that
+ * is a translation rather than a number.
+ */
+const ICELAND_NOTE = 'Tekjuskattur and average útsvar together. The personal credit is written as the '
+  + 'deduction worth the same at the first band. Calibrated approximation. Not tax advice.';
 
 export const INCOME_TAX_RULES: readonly IncomeTaxRule[] = [
   {
@@ -158,6 +172,15 @@ export const INCOME_TAX_RULES: readonly IncomeTaxRule[] = [
   { jurisdictionCode: 'KR', label: 'South Korea Income Tax', kind: 'progressive', brackets: brackets([[0, 0.06], [12_000, 0.15], [46_000, 0.24], [88_000, 0.35], [150_000, 0.38], [300_000, 0.40]]), standardDeduction: 0, effectiveFrom: YEAR(2023), note: `${APPROX} Amounts modeled in USD-equivalent.` },
   { jurisdictionCode: 'MX', label: 'Mexico Income Tax', kind: 'progressive', brackets: brackets([[0, 0.0192], [4_000, 0.064], [34_000, 0.1088], [60_000, 0.16], [120_000, 0.2152], [250_000, 0.30], [400_000, 0.35]]), standardDeduction: 0, effectiveFrom: YEAR(2023), note: `${APPROX} Amounts modeled in USD-equivalent.` },
   { jurisdictionCode: 'AE', label: 'United Arab Emirates (No Personal Income Tax)', kind: 'none', brackets: [], standardDeduction: 0, effectiveFrom: YEAR(1900), note: 'The UAE levies no personal income tax on employment income.' },
+  {
+    jurisdictionCode: 'IS',
+    label: 'Icelandic Income Tax',
+    kind: 'progressive',
+    brackets: brackets([[0, 0.3175], [41_044, 0.3825], [115_228, 0.4682]]),
+    standardDeduction: 18_812_00,
+    effectiveFrom: YEAR(2024),
+    note: ICELAND_NOTE,
+  },
 ];
 
 export const PAYROLL_TAX_RULES: readonly PayrollTaxRule[] = [
@@ -167,6 +190,10 @@ export const PAYROLL_TAX_RULES: readonly PayrollTaxRule[] = [
   { jurisdictionCode: 'AU', socialRate: 0, socialWageBase: 0, medicalRate: 0.02, surchargeRate: 0, surchargeThreshold: 0, selfEmployedMultiplier: 1, effectiveFrom: YEAR(2024) },
   { jurisdictionCode: 'NZ', socialRate: 0.0153, socialWageBase: 142_283_00, medicalRate: 0, surchargeRate: 0, surchargeThreshold: 0, selfEmployedMultiplier: 1, effectiveFrom: YEAR(2024) },
   { jurisdictionCode: 'AE', socialRate: 0, socialWageBase: 0, medicalRate: 0, surchargeRate: 0, surchargeThreshold: 0, selfEmployedMultiplier: 1, effectiveFrom: YEAR(1900) },
+  // The employee side in Iceland is the mandatory pension contribution, 4% and
+  // uncapped. Tryggingagjald at 6.35% is the employer's and is not withheld from
+  // a wage, so it does not belong in a figure about what somebody takes home.
+  { jurisdictionCode: 'IS', socialRate: 0.04, socialWageBase: 0, medicalRate: 0, surchargeRate: 0, surchargeThreshold: 0, selfEmployedMultiplier: 1, effectiveFrom: YEAR(2024) },
 ];
 
 export const SALES_TAX_RULES: readonly SalesTaxRule[] = [
@@ -216,6 +243,12 @@ export const SALES_TAX_RULES: readonly SalesTaxRule[] = [
   { jurisdictionCode: 'KR', rate: 0.10, exemptCategories: [], effectiveFrom: YEAR(2000) },
   { jurisdictionCode: 'MX', rate: 0.16, exemptCategories: ['groceries'], effectiveFrom: YEAR(2014) },
   { jurisdictionCode: 'AE', rate: 0.05, exemptCategories: [], effectiveFrom: YEAR(2018) },
+  // VSK, taken from `VAT_RATE` rather than typed again, because the company side
+  // of this build already declares Iceland's rate and two copies of one number
+  // is how a screen comes to disagree with the page behind it. Nothing is listed
+  // exempt: Iceland charges a reduced 11% on food, books and heat rather than
+  // zero-rating them, and this table carries one rate per jurisdiction.
+  { jurisdictionCode: 'IS', rate: VAT_RATE, exemptCategories: [], effectiveFrom: YEAR(2024) },
 ];
 
 export const PROPERTY_TAX_RULES: readonly PropertyTaxRule[] = [
@@ -252,21 +285,10 @@ export const PROPERTY_TAX_RULES: readonly PropertyTaxRule[] = [
   { jurisdictionCode: 'MX', rate: 0.0010, effectiveFrom: YEAR(2018) },
   { jurisdictionCode: 'AE', rate: 0.0000, effectiveFrom: YEAR(2018) },
   { jurisdictionCode: 'IE', rate: 0.0018, effectiveFrom: YEAR(2018) },
-];
-
-export const VEHICLE_FEE_RULES: readonly VehicleFeeRule[] = [
-  { jurisdictionCode: 'US-CA', registrationRate: 0.0065, registrationMinimum: 175_00, purchaseTaxRate: 0.0975, inspectionRequired: true, effectiveFrom: YEAR(2018) },
-  { jurisdictionCode: 'US-NY', registrationRate: 0.0030, registrationMinimum: 140_00, purchaseTaxRate: 0.08875, inspectionRequired: true, effectiveFrom: YEAR(2018) },
-  { jurisdictionCode: 'US-GA', registrationRate: 0.0000, registrationMinimum: 20_00, purchaseTaxRate: 0.070, inspectionRequired: false, effectiveFrom: YEAR(2018) },
-  { jurisdictionCode: 'US-TX', registrationRate: 0.0000, registrationMinimum: 75_00, purchaseTaxRate: 0.0625, inspectionRequired: true, effectiveFrom: YEAR(2018) },
-  { jurisdictionCode: 'US-FL', registrationRate: 0.0000, registrationMinimum: 225_00, purchaseTaxRate: 0.06, inspectionRequired: false, effectiveFrom: YEAR(2018) },
-  { jurisdictionCode: 'US-NV', registrationRate: 0.0035, registrationMinimum: 33_00, purchaseTaxRate: 0.0685, inspectionRequired: false, effectiveFrom: YEAR(2018) },
-  { jurisdictionCode: 'US-WA', registrationRate: 0.0110, registrationMinimum: 68_00, purchaseTaxRate: 0.065, inspectionRequired: false, effectiveFrom: YEAR(2018) },
-  { jurisdictionCode: 'US', registrationRate: 0.0020, registrationMinimum: 100_00, purchaseTaxRate: 0.055, inspectionRequired: false, effectiveFrom: YEAR(1900) },
-  { jurisdictionCode: 'CA', registrationRate: 0.0010, registrationMinimum: 90_00, purchaseTaxRate: 0.12, inspectionRequired: true, effectiveFrom: YEAR(2018) },
-  { jurisdictionCode: 'GB', registrationRate: 0.0000, registrationMinimum: 190_00, purchaseTaxRate: 0.20, inspectionRequired: true, effectiveFrom: YEAR(2018) },
-  { jurisdictionCode: 'AU', registrationRate: 0.0030, registrationMinimum: 400_00, purchaseTaxRate: 0.10, inspectionRequired: true, effectiveFrom: YEAR(2018) },
-  { jurisdictionCode: 'AE', registrationRate: 0.0000, registrationMinimum: 120_00, purchaseTaxRate: 0.05, inspectionRequired: true, effectiveFrom: YEAR(2018) },
+  // Fasteignaskattur, A-flokkur: the residential band, which law caps at 0.5%
+  // and Mosfellsbær sets near the middle of. The lot pays the commercial band
+  // instead and pays it through its own overhead table, not this one.
+  { jurisdictionCode: 'IS', rate: 0.0028, effectiveFrom: YEAR(2024) },
 ];
 
 export const FILM_INCENTIVE_RULES: readonly FilmIncentiveRule[] = [
@@ -427,14 +449,6 @@ export function salesTaxRate(cityId: string, at: number, category: string): numb
 export function propertyTaxRate(cityId: string, at: number): number {
   return resolveRule(PROPERTY_TAX_RULES, cityId, at)?.rate ?? 0.011;
 }
-
-export function vehicleFees(cityId: string, at: number): VehicleFeeRule {
-  return resolveRule(VEHICLE_FEE_RULES, cityId, at) ?? {
-    jurisdictionCode: 'default', registrationRate: 0.002, registrationMinimum: 100_00,
-    purchaseTaxRate: 0.055, inspectionRequired: false, effectiveFrom: 0,
-  };
-}
-
 export function filmIncentive(cityId: string, at: number): FilmIncentiveRule | undefined {
   return resolveRule(FILM_INCENTIVE_RULES, cityId, at);
 }

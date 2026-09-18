@@ -18,25 +18,32 @@ import { formatMoneyCompact } from './core/money';
 import { clamp } from './core/rng';
 import { PERFORMER_TITLES, impliedPerformerTitle, performerTitleOf } from './core/performer';
 import { unknownTaste } from './core/taste';
-import { titleCaseLabel } from './core/text';
+import { plural, titleCaseLabel } from './core/text';
 
 import { CITIES } from './content/geography';
+import { ENQUIRY_SHAPES } from './content/lot';
 
 import { netWorth } from './systems/finance';
 import { registerLife, startOfLocalDay } from './systems/life';
 import { populateFamily } from './world/family';
 import { buildTheLot, registerLot } from './world/lot';
-import { registerSugar, seedTheQuota } from './world/sugar';
+import { registerSugar, seedTheQuota, staffTheGroup } from './world/sugar';
 import { registerMaking } from './world/making';
 import { registerSelling } from './world/selling';
 import { registerCrew } from './world/crew';
 import { registerCasting } from './world/casting';
+import { registerAudition } from './world/audition';
+import { registerRebate } from './world/rebate';
+import { registerVat } from './world/vat';
+import { registerHouse } from './world/house';
+import { registerBanking } from './world/banking';
 import {
   companiesOf, foundTheCompany, foundTheSugarGroup, holdingsOf, postsOf, projectsOf, registerCompanyCommands,
+  registerTheClock,
 } from './world/company';
 import { registerPlans } from './world/plans';
 import { registerWorld } from './world/world';
-import { ESTATE_ACRES, HOUSE, estateCity } from './content/estate';
+import { HOUSE } from './content/estate';
 import {
   createUniverse, defaultConfig, WEALTH_PROFILES, careerLabel, type NewSaveConfig,
 } from './world/bootstrap';
@@ -54,12 +61,18 @@ export function registerAllSystems(sim: Simulation): void {
   registerWorld(sim);
   registerPlans(sim);
   registerCompanyCommands(sim);
+  registerTheClock(sim);
   registerLot(sim);
   registerSugar(sim);
   registerMaking(sim);
   registerSelling(sim);
   registerCrew(sim);
   registerCasting(sim);
+  registerAudition(sim);
+  registerRebate(sim);
+  registerVat(sim);
+  registerHouse(sim);
+  registerBanking(sim);
 }
 
 /** Recurring world processes every save needs running. */
@@ -163,19 +176,15 @@ function populateWorld(sim: Simulation, config: NewSaveConfig): void {
     ownerKind: 'none',
     kind: 'house',
     name: HOUSE.name,
-    addressLine: `${ESTATE_ACRES.toLocaleString('en-US')} acres, ${estateCity().name}`,
     locationId: cityId,
     tenure: 'owned',
     bedrooms: HOUSE.bedrooms,
     bathrooms: 4,
     interiorSqft: HOUSE.interiorSqft,
-    lotSqft: ESTATE_ACRES * 43_560,
     yearBuilt: HOUSE.yearBuilt,
     features: [],
     marketValue: 0,
     condition: HOUSE.condition,
-    annualPropertyTaxRate: 0,
-    structureIds: [],
     isPrimaryResidence: true,
     createdAt: sim.now,
   };
@@ -199,6 +208,12 @@ function populateWorld(sim: Simulation, config: NewSaveConfig): void {
   // what pays for all of it. The family has been in cane since long before
   // anybody thought about a stage.
   foundTheSugarGroup(sim);
+  // And the five people who run it, which the board seats are not: those two are
+  // the parents and were written by the family generator a few lines up. A group
+  // that has been trading since 1946 does not have a vacancy where its managing
+  // director should be, and the screen that says who runs the family business
+  // could not answer the question until these existed.
+  staffTheGroup(sim);
   seedTheQuota(sim);
   const company = foundTheCompany(sim);
 
@@ -321,6 +336,7 @@ export function migrate(universe: SaveUniverse): MigrationResult {
   record('holdings', 'the material it holds');
   record('posts', 'the posts it keeps');
   record('projects', 'the slate');
+  record('auditions', 'the parts you have been asked about');
   record('properties', 'the properties');
   record('stages', 'the stages on the lot');
   record('bookings', 'who is booked onto them');
@@ -331,8 +347,6 @@ export function migrate(universe: SaveUniverse): MigrationResult {
   record('counters', 'the counters');
   list('transactions', 'the transactions');
   list('scheduled', 'the timeline');
-  list('audits', 'the audit trail');
-  list('history', 'the history');
   list('notifications', 'the notifications');
   list('engineFailures', 'the failure log');
 
@@ -366,7 +380,6 @@ export function migrate(universe: SaveUniverse): MigrationResult {
   };
   relabel(universe.scheduled as unknown as Record<string, unknown>[], 'label');
   relabel(universe.notifications as unknown as Record<string, unknown>[], 'title');
-  relabel(universe.history as unknown as Record<string, unknown>[], 'title');
   relabel(Object.values(universe.decisions ?? {}) as unknown as Record<string, unknown>[], 'title');
   if (relabelled > 0) {
     steps.push(`Put ${relabelled} stored label${relabelled === 1 ? '' : 's'} into Title Case.`);
@@ -392,6 +405,28 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     }
   }
 
+  // A part's pile of submissions used to be a list of person ids, and is now a
+  // list of people with the rounds anybody has run on them. A save written
+  // before the audition room would have kept its strings, found nothing in
+  // them, and quietly shown an empty pile for every part that had one — which
+  // is the worst kind of breakage, because it looks like a picture nobody has
+  // advertised rather than like a save that lost something.
+  {
+    let widened = 0;
+    for (const project of Object.values(universe.projects)) {
+      for (const role of project.roles ?? []) {
+        const seen = role.seen as unknown;
+        if (!Array.isArray(seen)) continue;
+        if (!seen.some((one) => typeof one === 'string')) continue;
+        role.seen = seen.map((one) => (typeof one === 'string' ? { personId: one } : one));
+        widened += 1;
+      }
+    }
+    if (widened > 0) {
+      steps.push(`Kept the ${widened} pile${widened === 1 ? '' : 's'} of submissions a part had.`);
+    }
+  }
+
   // Every record must belong to this save and nothing else. Cross-save
   // contamination is the one corruption that is invisible until it matters.
   {
@@ -412,8 +447,6 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     stamp(Object.values(universe.decisions));
     stamp(universe.transactions);
     stamp(universe.scheduled);
-    stamp(universe.audits);
-    stamp(universe.history);
     stamp(universe.notifications);
     if (reassigned > 0) steps.push(`Re-stamped ${reassigned} record${reassigned === 1 ? '' : 's'} onto this save.`);
   }
@@ -493,13 +526,15 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     steps.push('Created the preferences.');
   }
 
-  // Schema 78: the attribute and skill sheets became a base plus its
-  // exceptions. Before this every person carried all 813 attribute ids and all
-  // 47 skill ids written out, and for almost everybody they were all the same
-  // number — 20KB of JSON per person, and 63ms of structuredClone on every
-  // command once a save held a thousand people. Both measured. The old shape
-  // is folded into the new one by taking the number that appears most often as
-  // the base and keeping only what differs.
+  // Schema 78: the attribute sheet became a base plus its exceptions. Before
+  // this every person carried all 813 attribute ids written out, and for almost
+  // everybody they were all the same number — 20KB of JSON per person, and 63ms
+  // of structuredClone on every command once a save held a thousand people.
+  // Both measured. The old shape is folded into the new one by taking the
+  // number that appears most often as the base and keeping only what differs.
+  //
+  // Schema 79 removed a second sheet that got the same treatment, and five
+  // fields beside it. See the loop below.
   const fold = (sheet: unknown, fallback: number): { base: number; of?: Record<string, number> } => {
     if (sheet === null || typeof sheet !== 'object') return { base: fallback };
     const flat = sheet as Record<string, unknown>;
@@ -514,17 +549,110 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     const of = Object.fromEntries(entries.filter(([, v]) => v !== base));
     return Object.keys(of).length > 0 ? { base, of } : { base };
   };
+  // Schema 79: six dead words go, five off the person and one off their
+  // wellbeing, because every one of them was written and read by nothing. The
+  // life-skill sheet held the prodigy at a hundred and everybody else at five
+  // and never moved for anybody; `goals` was not even asked for on a screen;
+  // `lifestyle` was a question whose four answers opened nothing; `creditScore`
+  // is kept where the creation review actually reads it, on `WEALTH_PROFILE`,
+  // and there is no lending to consult the copy on the person; `goatTraits` was
+  // a second copy of a content list the screen already reads from
+  // `content/prodigy.ts`. `travelFatigue` is the sixth and it is on the
+  // wellbeing rather than the person, which is exactly why the first draft of
+  // this loop missed it and shed only five — a partial migration under a
+  // comment claiming a whole one. Where You Come From stayed and was given a
+  // reader instead.
+  const SHED = ['skills', 'goals', 'lifestyle', 'creditScore', 'goatTraits'] as const;
   let folded = 0;
+  let shed = 0;
   for (const person of Object.values(universe.people ?? {})) {
     const p = person as unknown as Record<string, unknown>;
-    const wasFlat = typeof (p.attributes as Record<string, unknown>)?.base !== 'number'
-      || typeof (p.skills as Record<string, unknown>)?.base !== 'number';
+    const wasFlat = typeof (p.attributes as Record<string, unknown>)?.base !== 'number';
     p.attributes = fold(p.attributes, 10);
-    p.skills = fold(p.skills, 5);
     if (wasFlat) folded += 1;
+    let dropped = false;
+    for (const key of SHED) {
+      if (key in p) { delete p[key]; dropped = true; }
+    }
+    const well = p.wellbeing;
+    if (well !== null && typeof well === 'object' && 'travelFatigue' in well) {
+      delete (well as Record<string, unknown>).travelFatigue;
+      dropped = true;
+    }
+    if (dropped) shed += 1;
   }
   if (folded > 0) {
     steps.push(`Folded ${folded === 1 ? 'one sheet' : `${folded} sheets`} down to a base and its exceptions.`);
+  }
+  if (shed > 0) {
+    steps.push(`Dropped the dead fields from ${plural(shed, 'person', 'people')}.`);
+  }
+
+  // Schema 80: sixteen dead words go off every property, which is two thirds of
+  // what a save used to say about a house. They described a property market —
+  // buying, borrowing, renting, listing, insuring, parking a car and mooring a
+  // boat — in a game where the family already owns the two places that exist
+  // and the premise is that it never buys or sells any of it. Two of the
+  // sixteen were not empty but duplicated: `addressLine` stored what
+  // `estatePlaceLine()` computes and `lotSqft` stored `ESTATE_ACRES` in square
+  // feet, both frozen at the moment the save was written, and no screen read
+  // either of them.
+  const SHED_FROM_PLACE = [
+    'addressLine', 'neighbourhoodId', 'lotSqft', 'purchasePrice', 'purchasedAt', 'monthlyRent',
+    'leaseEndsAt', 'mortgageAccountId', 'annualPropertyTaxRate', 'hoaMonthly', 'insurancePolicyId',
+    'structureIds', 'garageSpaces', 'dockFeet', 'rentedOut', 'listedForSale',
+  ] as const;
+  let places = 0;
+  for (const property of Object.values(universe.properties ?? {})) {
+    const p = property as unknown as Record<string, unknown>;
+    let dropped = false;
+    for (const key of SHED_FROM_PLACE) {
+      if (key in p) { delete p[key]; dropped = true; }
+    }
+    if (dropped) places += 1;
+  }
+  if (places > 0) {
+    steps.push(`Dropped the property market from ${plural(places, 'place')}.`);
+  }
+
+  // Schema 81: a casting office stops being the sentence printed about it.
+  //
+  // Every memory the player builds up with an office — how many of their rooms
+  // it has sat through, what it keeps asking for, whether it has given up
+  // ringing — used to key on `holder`, which is `${from}, ${kind}` in prose, and
+  // `theHouse` seeded that office's taste off the same string. So rewording a
+  // line wiped the history and changed the preferences, and two rows whose
+  // sentences matched were one office. Both halves were live: the table once
+  // carried 'an American studio, a feature' twice, for a 5,200 m² picture and a
+  // 3,000 m² one, and roster memory could not tell them apart.
+  //
+  // An existing save has the sentence and not the id, so the sentence is what it
+  // is matched on, once, here. A row from a shape the content no longer carries
+  // keeps its old string as its id — it is still stable and still unique to that
+  // office, which is all the key has to be.
+  const officeFor = new Map<string, string>();
+  for (const shape of ENQUIRY_SHAPES) {
+    officeFor.set(`${shape.of.from}, ${/^[aeiou]/i.test(shape.of.kind) ? 'an' : 'a'} ${shape.of.kind}`,
+      shape.of.officeId);
+  }
+  const named = (holder: string): string => officeFor.get(holder) ?? holder;
+  let rooms = 0;
+  for (const booking of Object.values(universe.bookings ?? {})) {
+    // The family's own holds are not an office ringing up, and never were.
+    if (booking.companyId !== undefined || booking.officeId !== undefined) continue;
+    booking.officeId = named(booking.holder);
+    rooms += 1;
+  }
+  let asks = 0;
+  for (const audition of Object.values(universe.auditions ?? {})) {
+    const a = audition as unknown as { officeId?: string; holder: string };
+    if (a.officeId !== undefined) continue;
+    a.officeId = named(a.holder);
+    asks += 1;
+  }
+  if (rooms > 0 || asks > 0) {
+    steps.push(`Gave ${plural(rooms, 'booking')} and ${plural(asks, 'ask')} the office they belong `
+      + 'to, in place of the sentence about it.');
   }
 
   const migrated = from < SAVE_SCHEMA_VERSION || steps.length > 0;

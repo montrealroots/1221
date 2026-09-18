@@ -14,14 +14,46 @@
 
 import { expect } from 'vitest';
 import type { Simulation } from '@/engine';
-import { capabilitiesOf } from '@/engine/world/company';
+import { capabilitiesOf, parentCompany, seatHeldBy, whyNotTakeIt } from '@/engine/world/company';
 import { MS_WEEK } from '@/engine/world/lot';
+import { LOT_NAME } from '@/engine/content/estate';
 import { stillMissing } from '@/engine/world/making';
 
 interface Done { ok: boolean; id?: string; error?: string }
 
 const run = (sim: Simulation, kind: string, payload: Record<string, unknown> = {}): Done =>
   sim.execute<Done>({ kind, payload }).value!;
+
+/**
+ * Somebody who will actually take the seat being offered.
+ *
+ * Both helpers below used to reach for the same relative, which worked because
+ * `company.fill_post` never emptied the chair somebody was already in — so one
+ * person held the head of production and the accountant at once and both doors
+ * opened. Nobody is two people now, and nobody has to say yes, so the path a
+ * player walks has to allocate: whoever holds nothing at this company, and
+ * failing that whoever the world says would still agree to move.
+ *
+ * Which is the scarcity `world/company.ts` has always described — six posts and
+ * three relatives — and it is why these two functions are separate. Only the
+ * head of production and the accountant gate a door, so three people is enough
+ * to open all nine, by one.
+ */
+const GATING = ['production', 'accountant'];
+
+function willTake(sim: Simulation, role: 'production' | 'accountant'): string {
+  const company = parentCompany(sim.universe)!.id;
+  const people = Object.values(sim.universe.people)
+    .filter((one) => one.careerTrack !== 'executive' && !whyNotTakeIt(sim, one.id, role));
+  const seat = (id: string) => seatHeldBy(sim, id, company);
+  // Never somebody already in a seat a door depends on. The first version of
+  // this fell back to whoever would agree, which was the player — who by then
+  // was the head of production, so seating them as the accountant emptied the
+  // chair the greenlight door reads and shut it again.
+  return (people.find((one) => !seat(one.id))
+    ?? people.find((one) => !GATING.includes(seat(one.id)!.role))
+    ?? people[0]!).id;
+}
 
 /**
  * Opens the greenlight door, and says so if it could not.
@@ -36,10 +68,9 @@ export function openTheDoors(sim: Simulation, title = 'Something To Make'): void
   if (capabilitiesOf(sim).find((one) => one.id === 'greenlight')?.can) return;
 
   // Somebody to run production. The family is who there is.
-  const somebody = Object.values(sim.universe.people).find((one) => !one.isPlayer)
-    ?? Object.values(sim.universe.people)[0]!;
-  expect(run(sim, 'company.fill_post', { role: 'production', personId: somebody.id }).ok,
+  expect(run(sim, 'company.fill_post', { role: 'production', personId: willTake(sim, 'production') }).ok,
     'could not fill the head of production post').toBe(true);
+
 
   // Something to make.
   expect(run(sim, 'company.option', { title, hold: 'option', months: 18 }).ok,
@@ -60,6 +91,23 @@ export function openTheDoors(sim: Simulation, title = 'Something To Make'): void
 
   const door = capabilitiesOf(sim).find((one) => one.id === 'greenlight')!;
   expect(door.can, `the greenlight door is still shut: ${door.blockers.map((b) => b.need).join(', ')}`)
+    .toBe(true);
+}
+
+/**
+ * Opens the reimbursement door, which is a different door from the greenlight.
+ *
+ * A company can make a picture without being able to claim anything back: the
+ * registers are there from the first day and the accountant is not. Somebody
+ * has to be in the post, because the claim is audited and an audit needs books
+ * a person kept from the beginning.
+ */
+export function openTheBooks(sim: Simulation): void {
+  if (capabilitiesOf(sim).find((one) => one.id === 'claim_rebate')?.can) return;
+  expect(run(sim, 'company.fill_post', { role: 'accountant', personId: willTake(sim, 'accountant') }).ok,
+    'could not put anybody in as the production accountant').toBe(true);
+  const door = capabilitiesOf(sim).find((one) => one.id === 'claim_rebate')!;
+  expect(door.can, `the reimbursement door is still shut: ${door.blockers.map((b) => b.need).join(', ')}`)
     .toBe(true);
 }
 
@@ -85,4 +133,31 @@ export function deliverIt(sim: Simulation, projectId: string, weeks = 400): bool
     sim.advanceTo(sim.now + MS_WEEK);
   }
   return sim.universe.projects[projectId]?.stage === 'delivered';
+}
+
+/**
+ * Puts enough in the company's account that a deal can be paid out of it.
+ *
+ * Everybody except the player is an abstraction the picture pays for out of the
+ * budget as the periods run, so seating them moves no cash at all. The player
+ * holds a real account, so their fee is the one cast payment that actually has
+ * to be handed over on the day — and a company on its first morning holds about
+ * a hundred and seventeen thousand against a lead band of eight hundred and
+ * seventy-eight thousand on a twenty million euro feature. It goes under, which
+ * is allowed and is said out loud; what this exists for is the other half of
+ * that test, where the same deal is closed by a company that can pay and
+ * nothing is said.
+ *
+ * Posted as a letting rather than as money from the family, because the family
+ * putting money in is a thing the game counts and spends standing on. The lot
+ * earning it is not: measured over ten years across three seeds, the cash the
+ * lot's lettings pile up between month-ends peaks between 1.86 and 2.2 million,
+ * so this is a reachable balance rather than an invented one.
+ */
+export function theyCanAffordIt(sim: Simulation, cents = 2_000_000_00): void {
+  const company = parentCompany(sim.universe);
+  const account = Object.values(sim.universe.accounts)
+    .find((one) => one.ownerId === company?.id && one.kind === 'company_cash' && !one.closedAt);
+  if (!account) return;
+  sim.income(account.id, cents, `${LOT_NAME}: Eldey Pictures`, 'business');
 }

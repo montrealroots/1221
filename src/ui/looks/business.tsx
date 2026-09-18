@@ -15,22 +15,27 @@
 
 import type { Simulation } from '@/engine';
 import type {
-  Company, GuildId, Holding, Policy, PolicyKind, Post, Project, Registration,
-  RegistryId, RoleId, Signature,
+  Company, GuildId, Holding, Policy, PolicyKind, Post, PostRole, Project, Registration,
+  RegistryId, Signature,
 } from '@/engine/domain/company';
 import {
   FORM_BY_ID, GLOBAL_RULE_ONE, GUILDS, GUILD_BY_ID, INCORPORATION_NOTE, POLICIES,
-  POLICY_BY_ID, REBATE, REGISTRIES, REGISTRY_BY_ID, ROLES, ROLE_BY_ID,
+  POLICY_BY_ID, REBATE, REGISTRIES, REGISTRY_BY_ID, ROLES,
 } from '@/engine/content/incorporation';
 import {
   americanArm, capabilitiesOf, companiesOf, companyCash, holdingsOf, parentCompany,
-  policiesOf, postsOf, projectsOf, registrationsOf, signaturesOf, whereItStands,
+  policiesOf, postFacts, postsOf, projectsOf, registrationsOf, signaturesOf, whereItStands,
+  whyNotInsure, whyNotRegister, whyNotSign,
 } from '@/engine/world/company';
+import { GROUP_ROLES } from '@/engine/content/sugar';
+import { A_NEW_HAND_STARTS_IN_WEEKS } from '@/engine/content/making';
+import { whatMoreHandsCost, whyNotRestaff } from '@/engine/world/making';
+import { useGame, useWorld } from '@/app/game-context';
 import { DELIVERY, type Element } from '@/engine/content/making';
 import { TIERS, WINDOWS, dealById } from '@/engine/content/selling';
 import { standingOf, whereTheMoneyStands } from '@/engine/world/selling';
 import { departmentById } from '@/engine/content/crew';
-import { crewOf, postsFor, standingReads } from '@/engine/world/crew';
+import { crewOf, postsFor, standingReads, whereTheCrewStands } from '@/engine/world/crew';
 import {
   finishesBy, heldUpBy, periodOf, planOf, stillMissing, whereThePictureStands, windowOf,
 } from '@/engine/world/making';
@@ -64,6 +69,38 @@ const whoIs = (sim: Simulation, post: Post): string | undefined => {
 // ---------------------------------------------------------------------------
 // The company
 // ---------------------------------------------------------------------------
+
+/**
+ * What the legal form means for this company, rather than in general.
+ *
+ * `FormFacts.what` was written for somebody choosing a form, and the `hf.` entry
+ * says what it says because that is true of the form: far more share capital, a
+ * real board, audited accounts, "and the form a company takes when outside money
+ * comes in at scale". Every share of the sugar group is held by two parents, and
+ * this look printed that sentence one line above their names. An Icelandic hf. is
+ * under no obligation to list, a 1946 cane group at this size takes the form for
+ * the capital and the board and the audit, and the page was telling a player
+ * about outside money that has never once come in.
+ *
+ * So the claim is cut, and only where it is false: a company whose whole cap
+ * table is people, holding a form whose blurb makes the claim. Read off
+ * `ownerships` rather than hardcoded against the sugar group, so it follows the
+ * world — sell a share to somebody outside the family and the form’s own
+ * sentence comes back by itself, which is the point of reading rather than
+ * asserting. A private company’s blurb never makes the claim and is returned
+ * untouched, because an ehf. is private by definition and has nothing to explain.
+ */
+const RAISING = /,? and the form a company takes when outside money comes in at scale\.?$/;
+
+function firmOwnership(company: Company, form: { what: string }): string {
+  if (!RAISING.test(form.what)) return form.what;
+  const held = company.ownerships.reduce((sum, one) => sum + one.percent, 0);
+  const allPeople = company.ownerships.every((one) => one.holderKind === 'person');
+  if (held < 100 || !allPeople) return form.what;
+  return `${form.what.replace(RAISING, '.')} Every share of it is held inside the family, `
+    + 'and a company of this form is under no obligation to list — the share capital, the board '
+    + 'and the audited accounts are the reasons to be one.';
+}
 
 defineLook<Company>('firm', {
   gone: 'That company was wound up, and whatever it held went somewhere else.',
@@ -136,7 +173,7 @@ defineLook<Company>('firm', {
       body: (
         <>
           <p className="small">
-            {form.what}{' '}
+            {firmOwnership(company, form)}{' '}
             {isParent
               ? `It was formed on ${formatDate(company.foundedAt, sim.homeZone)}, before the stages went up, `
                 + 'because you can’t build a sound stage through a company that doesn’t exist yet.'
@@ -231,6 +268,40 @@ defineLook<Door>('door', {
   },
 });
 
+
+/**
+ * Take the thing this page describes.
+ *
+ * Until this existed, a register, a guild, a policy and the American arm could
+ * be reached through exactly one control anywhere in the build: a chip inside a
+ * shut capability door, which is a fix-what-is-broken affordance being used as
+ * the only shop. Three of the four signable guilds, one register, two policies
+ * and one company form are never named by any blocker, so forty-odd lines of
+ * authored content apiece — the deposit, the agreement, what it binds you to —
+ * could not be bought by any route a player could walk.
+ *
+ * The page that already prints every one of those facts is where the offer
+ * belongs. The chip stays as what it should have been all along: a shortcut to
+ * a page that exists anyway.
+ *
+ * The refusal is the line under the button rather than a tooltip on it, and it
+ * comes from the same function the command calls, so the screen cannot say yes
+ * to something the engine will refuse.
+ */
+function Take(
+  { label, kind, payload, whyNot }:
+  { label: string; kind: string; payload: Record<string, unknown>; whyNot: string | undefined },
+) {
+  const { run } = useGame();
+  return (
+    <div className="row gap-2" style={{ marginTop: 'var(--s2)' }}>
+      <button className="btn btn-sm" disabled={whyNot !== undefined} onClick={() => run(kind, payload)}>
+        {label}
+      </button>
+      {whyNot !== undefined && <span className="xs dim">{whyNot}</span>}
+    </div>
+  );
+}
 // ---------------------------------------------------------------------------
 // A register
 // ---------------------------------------------------------------------------
@@ -266,16 +337,30 @@ defineLook<Register>('register', {
             <Stat
               label="Files Every"
               value={facts.filesEveryMonths === 0 ? 'Never' : said(facts.filesEveryMonths, 'month')}
-              note={facts.filesEveryMonths === 0 ? 'No filing to keep up' : 'For as long as it exists'}
+              note={facts.filesEveryMonths === 0 ? 'No filing to keep up' : 'What the body asks for'}
             />
           </div>
+          {!on && (
+            <Take
+              label={`Register With ${facts.body}`}
+              kind="company.register"
+              payload={{ registry: id }}
+              whyNot={whyNotRegister(sim, id as RegistryId)}
+            />
+          )}
         </>
       ),
+      // A date on the record, said as one. This was labelled 'When It’s Next
+      // Due' and printed a countdown beside it, which twenty years into a save
+      // read as a filing overdue by two decades: the date is written once when
+      // the registration is and no clock in this build ever moves it or acts
+      // on it. The cadence beside it, in the stat above, is what the body
+      // actually wants.
       ways: on && on.nextDueAt
         ? [{
           to: at('day', ''),
-          label: 'When It’s Next Due',
-          detail: `${formatDate(on.nextDueAt, sim.homeZone)}, ${formatRelative(on.nextDueAt, sim.now)}`,
+          label: 'The Filing Date On Record',
+          detail: `${formatDate(on.nextDueAt, sim.homeZone)}, written with the registration and not moved since.`,
         }]
         : [],
       provenance: 'Body and mechanism are real. The fee is SLATE’s own estimate.',
@@ -337,6 +422,14 @@ defineLook<Guilded>('guild', {
               note={facts.depositCents === 0 ? 'They hold none' : 'Held before you shoot'}
             />
           </div>
+          {!signed && facts.signable && (
+            <Take
+              label={`Sign With ${facts.body}`}
+              kind="company.sign"
+              payload={{ guild: id }}
+              whyNot={whyNotSign(sim, id as GuildId)}
+            />
+          )}
         </>
       ),
       ways,
@@ -367,7 +460,11 @@ defineLook<Covered>('cover', {
       kind: bound ? 'Cover The Company Carries' : 'Cover It Doesn’t Carry',
       parent: company ? at('firm', company.id) : undefined,
       summary: bound
-        ? `Bound with ${bound.insurer} to ${moneyOf(bound.limitCents)}, renewing ${formatRelative(bound.renewsAt, sim.now)}.`
+        // What the paper says, and not what happens next. This read "renewing
+        // in eight months", which promised a renewal the build has no clock to
+        // perform: cover bound once is carried for the life of the save.
+        ? `Bound with ${bound.insurer} to ${moneyOf(bound.limitCents)}, on a term written to `
+          + `${formatDate(bound.renewsAt, sim.homeZone)}.`
         : `Not bound. ${facts.why}`,
       body: (
         <>
@@ -376,8 +473,20 @@ defineLook<Covered>('cover', {
           <div className="grid grid-3">
             <Stat label="Bound" value={bound ? 'Yes' : 'No'} note={bound ? bound.insurer : 'Nothing behind it'} />
             <Stat label="Pays Out To" value={moneyOf(facts.limitCents)} note="At most" />
-            <Stat label="A Year Of It" value={moneyOf(facts.premiumCents)} note={facts.standing ? 'Carried always' : 'Carried while shooting'} />
+            <Stat
+              label="What It Was Written At"
+              value={moneyOf(facts.premiumCents)}
+              note={facts.standing ? 'A year of a policy a company carries always' : 'A year of a policy a company carries while shooting'}
+            />
           </div>
+          {!bound && (
+            <Take
+              label={`Bind ${facts.label}`}
+              kind="company.insure"
+              payload={{ policy: id }}
+              whyNot={whyNotInsure(sim, id as PolicyKind)}
+            />
+          )}
         </>
       ),
       ways: id === 'errors_omissions'
@@ -416,10 +525,16 @@ defineLook<Holding>('holding', {
       body: (
         <>
           <p className="small">
+            {/* The same lapse promise that stood in the Take An Option modal,
+                and the same correction: the agreement carries a term, the term
+                is printed below, and no clock in this build runs it out or
+                hands the rights back. Saying "owned outright is the only hold
+                with no clock on it" was the sharpest version of the lie,
+                because there is no clock on either. */}
             {holding.hold === 'option'
-              ? 'An option is the right to make it for a while, not ownership of it. It runs out, and when '
-                + 'it does the rights go back to whoever they came from.'
-              : 'Owned outright. It’s the only kind of hold with no clock on it.'}
+              ? 'An option is the right to make it for a while, not ownership of it. The term it was '
+                + 'written for is below, and buying it outright is a different and dearer thing.'
+              : 'Owned outright. There’s no term on it and nobody to hand it back to.'}
           </p>
           <p className="small">
             <strong>Chain of title. </strong>
@@ -432,9 +547,9 @@ defineLook<Holding>('holding', {
           <div className="grid grid-3">
             <Stat label="Held Since" value={formatDate(holding.acquiredAt, sim.homeZone)} note={formatRelative(holding.acquiredAt, sim.now)} />
             <Stat
-              label="Runs Out"
-              value={holding.expiresAt ? formatDate(holding.expiresAt, sim.homeZone) : 'Never'}
-              note={holding.expiresAt ? formatRelative(holding.expiresAt, sim.now) : 'Owned outright'}
+              label="Optioned To"
+              value={holding.expiresAt ? formatDate(holding.expiresAt, sim.homeZone) : 'No end date'}
+              note={holding.expiresAt ? 'The term on the agreement' : 'Owned outright'}
             />
             <Stat
               label="Chain Of Title"
@@ -531,6 +646,12 @@ defineLook<Project>('project', {
                   ? `Nobody yet. This picture carries ${carries} posts, and they come on over the weeks before the camera does — the money and the design first, the camera late.`
                   : `${crew.length} of ${carries} posts filled. Nobody starts on the first day: a unit production manager is here ten weeks before the camera turns over, a boom operator for one.`}
               </p>
+              {/* How much of this crew has worked for the company before, which
+                  is the whole reason the choice of who to hire has any weight —
+                  and which was written, counted wrongly and read by nothing. */}
+              {crew.length === 0 ? null : (
+                <p className="small dim">{whereTheCrewStands(sim, project)}</p>
+              )}
               {/* Six columns of short values. On a phone they get about fifty
                   pixels each and a word like "Production" comes apart across
                   three lines, so the whole table scrolls sideways in its own box
@@ -548,6 +669,12 @@ defineLook<Project>('project', {
                           <Open subject={at('person', seat.person.id)}>{seat.person.displayName}</Open>
                           {seat.post.head ? ' · Heads the department' : ''}
                         </td>
+                        {/* Their pronouns, which is the only thing this table ever
+                            wanted to say about who they are. Nobody on a crew is
+                            billed as an actor or an actress and this never said
+                            they were — but it said nothing at all, and a gaffer is
+                            a person before they are a line item. */}
+                        <td className="small nowrap">{seat.person.pronouns}</td>
                         <td className="small nowrap">{seat.post.label}</td>
                         <td className="small nowrap">{departmentById(seat.post.department)?.label ?? seat.post.department}</td>
                         <td className="small nowrap">{seat.post.local}</td>
@@ -629,6 +756,12 @@ defineLook<Project>('project', {
                           {rate
                             ? `${rate.who}, ${Math.round(cutsAWeek(project) / 60)} finished minutes a week between them.`
                             : 'This plan turns no material into runtime.'}
+                          {/* And the control, beside the number that tells the player
+                              they are short. `project.hands` had one write site in
+                              the engine — inside the greenlight — and no command at
+                              all, while three docstrings and this very panel called
+                              it a decision that can change week to week. */}
+                          {rate ? <Restaff project={project} /> : null}
                         </td>
                       </tr>
                       <tr>
@@ -639,7 +772,7 @@ defineLook<Project>('project', {
                         </td>
                         <td className="small">
                           {forecast === undefined
-                            ? 'There is no cutting room on this one.'
+                            ? 'There’s no cutting room on this one.'
                             : `Needs ${Math.ceil(forecast.needs)} more weeks and the calendar leaves ${Math.floor(forecast.has)}.`}
                         </td>
                       </tr>
@@ -711,7 +844,7 @@ defineLook<Project>('project', {
                         <td className="small">
                           {above > 2
                             ? 'A producer, an executive and a broadcaster, and every one of them can send it back down.'
-                            : 'A short ladder above the cut, so there is little to fall.'}
+                            : 'A short ladder above the cut, so there’s little to fall.'}
                         </td>
                       </tr>
                       {deck.map((finding) => (
@@ -859,17 +992,28 @@ defineLook<Project>('project', {
 
 interface Roled { id: string; post?: Post }
 
+/**
+ * A post at either company.
+ *
+ * This resolved out of `ROLE_BY_ID` and hung every post off `parentCompany`, so
+ * the seven seats at the sugar group opened onto “There’s no such post” and, had
+ * they resolved, would have claimed to sit at the film company. Both tables are
+ * tried now and the company comes off the post itself, which is where it has
+ * always been recorded.
+ */
 defineLook<Roled>('role', {
   gone: 'There’s no such post.',
   resolve: (sim, id) => {
-    if (!ROLE_BY_ID[id as RoleId]) return undefined;
+    if (!postFacts(id as PostRole)) return undefined;
     return { id, post: postsOf(sim.universe).find((one) => one.role === id) };
   },
-  seeds: () => ROLES.map((one) => one.id),
+  seeds: () => [...ROLES.map((one) => one.id), ...GROUP_ROLES.map((one) => one.id)],
   look: ({ id, post }, { sim }) => {
-    const facts = ROLE_BY_ID[id as RoleId];
+    const facts = postFacts(id as PostRole)!;
     const who = post ? whoIs(sim, post) : undefined;
-    const company = parentCompany(sim.universe);
+    const company = post
+      ? sim.universe.companies[post.companyId]
+      : parentCompany(sim.universe);
     const ways: Way[] = [];
     if (post?.personId) {
       ways.push({ to: at('person', post.personId), label: who ?? 'Them', detail: 'Who is in the post, and how they are' });
@@ -890,9 +1034,9 @@ defineLook<Roled>('role', {
           <div className="grid grid-3">
             <Stat label="Filled" value={who ?? 'Empty'} note={who ? 'In the post' : 'An empty chair runs nothing'} />
             <Stat
-              label="A Month Of It"
+              label="What The Job Is Worth"
               value={facts.monthlyCents === 0 ? 'Nothing' : moneyOf(facts.monthlyCents)}
-              note={facts.monthlyCents === 0 ? 'Whoever owns it does it' : 'Whether anything shoots or not'}
+              note={facts.monthlyCents === 0 ? 'Whoever owns it does it' : 'A month of it, at the going rate'}
             />
             <Stat label="Where" value="Sugar Land" note="There’s nowhere else" />
           </div>
@@ -954,3 +1098,52 @@ defineLook<Rebate>('rebate', {
 
 /** Everything the workspace needs to name. */
 export const cashOf = companyCash;
+
+/**
+ * One more pair of hands in the cutting room, or one fewer.
+ *
+ * It sits in the row that already prints how many hands there are, next to the row
+ * that already says how many weeks short the cut is. That is where the problem is
+ * shown, so that is where the answer to it belongs.
+ *
+ * Both prices are on the button before it is pressed: what the hands cost, out of
+ * the same budget the overrun draws from, and the fact that they do not start for a
+ * fortnight. A restaff that was free and instant would be a button every player
+ * presses on every picture the week the forecast goes red, which would make
+ * under-staffing free in hindsight and the decision no decision at all.
+ */
+function Restaff({ project }: { project: Project }) {
+  const { run } = useGame();
+  const hands = useWorld(() => handsOn(project));
+  const more = hands + 1;
+  const cost = useWorld(() => whatMoreHandsCost(project, more));
+  const whyNot = useWorld((s) => whyNotRestaff(s, project.id, more));
+
+  return (
+    <div className="row gap-2" style={{ marginTop: 'var(--s2)' }}>
+      {/* Everything a person needs to decide this is on the screen rather than in
+          a tooltip: the price is on the button, and the lead time or the refusal
+          is the line under it. A `title` that carries the only copy explaining a
+          control is a control that says nothing to anybody not holding a mouse. */}
+      <button
+        className="btn btn-sm"
+        disabled={whyNot !== undefined}
+        onClick={() => run('company.restaff', { projectId: project.id, hands: more })}
+      >
+        One More Hand · {moneyOf(cost)}
+      </button>
+      {hands > 1 && (
+        <button
+          className="btn btn-sm btn-ghost"
+          onClick={() => run('company.restaff', { projectId: project.id, hands: hands - 1 })}
+        >
+          One Fewer
+        </button>
+      )}
+      <span className="xs dim">
+        {whyNot ?? `They start in ${A_NEW_HAND_STARTS_IN_WEEKS} weeks, and nothing comes back for `
+          + 'sending one home — the weeks already cut are paid for.'}
+      </span>
+    </div>
+  );
+}

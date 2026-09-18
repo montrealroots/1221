@@ -28,13 +28,12 @@
 import { CITIES, COUNTRIES, REGIONS, type City, type Country, type Region } from '@/engine/content/geography';
 import { CLIMATE_NAMES, climateTypeFor, usesFahrenheit, usesMiles } from '@/engine/content/climate';
 import { ESTATE_CITY_ID } from '@/engine/content/estate';
-import { RATES_NOTE, currencyInfo, formatLocal, type CurrencyInfo } from '@/engine/content/currency';
+import { RATES_NOTE, currencyInfo, formatLocal, type CurrencyInfo, formatAtlasCompact} from '@/engine/content/currency';
 import { languageNames } from '@/engine/content/languages';
 import {
   PROPERTY_TAX_RULES, SALES_TAX_RULES, resolveIncomeTaxLayers, resolveRule,
 } from '@/engine/content/tax';
 import { formatDaylight, sunTimes, type SunTimes } from '@/engine/core/sun';
-import { formatMoneyCompact } from '@/engine/core/money';
 import { addDays, formatTime, zoneAbbreviation, zonedParts } from '@/engine/core/time';
 import { plural, titleCaseLabel } from '@/engine/core/text';
 import { formatPeople, homeCityOf, placeKindLabel, placeProfile, type PlaceProfile } from '@/engine/world/place';
@@ -169,7 +168,7 @@ defineLook<PlaceProfile>('place', {
     const climate = CLIMATE_NAMES[climateTypeFor(place.city)].toLowerCase();
     const label = placeKindLabel(place.city);
     const people = formatPeople(place.cityPopulation);
-    const rent = place.localRent ?? formatMoneyCompact(place.medianRentCents);
+    const rent = place.localRent ?? formatAtlasCompact(place.medianRentCents);
     const layers = resolveIncomeTaxLayers(place.city.id, sim.now);
     // A state with no income tax still has a rule, so that the resolver has
     // something to say. It is not a layer that takes anything, and printing it
@@ -274,7 +273,7 @@ defineLook<PlaceProfile>('place', {
             <Stat
               label="Tax On A Wage"
               value={layers.length > 0 ? `${Math.round(place.effectiveIncomeTax * 100)}%` : 'Not On File'}
-              note={layers.length > 0 ? 'Income tax and payroll both, on $60,000' : 'No table for this country yet'}
+              note={layers.length > 0 ? 'Income tax and payroll both, on a US$60,000 wage' : 'No table for this country yet'}
             />
             <Stat
               label="Sales Tax"

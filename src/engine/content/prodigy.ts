@@ -6,9 +6,14 @@
  * and there has never been another.
  *
  * So the instrument does not start low and climb. It starts at the ceiling of
- * the scale the game keeps for it — all 88 acting attributes, every acting
+ * the scale the game keeps for it — all 813 acting attributes, every acting
  * trait there is — and there is nothing on the creation screen that moves any
  * of it, because there is nowhere for it to go.
+ *
+ * What that premise costs, and what is being done about it, is in
+ * `docs/UNBITTEN.md`: a sheet nothing can move is a sheet nothing can read to
+ * decide, so the answer is to spend the instrument rather than test it, and to
+ * let the industry's picture of it lag what it is.
  *
  * There is no cheat mode in this build, because a cheat mode is for giving a
  * player something the game withheld, and this game withholds nothing about

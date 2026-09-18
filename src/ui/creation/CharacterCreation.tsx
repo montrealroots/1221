@@ -36,7 +36,7 @@ import {
   MAX_PERSONALITY_TRAITS, PERSONALITY_GROUPS, PERSONALITY_TRAIT_BY_ID,
   conflictingPersonalityTraits, personalityTraitPairs,
 } from '@/engine/content/personality-traits';
-import { ALL_TRAITS, ATTRIBUTES, TRAITS } from '@/engine/domain/attributes';
+import { ATTRIBUTES, TRAITS } from '@/engine/domain/attributes';
 import { GENRE_MASTERIES } from '@/engine/content/genre-mastery';
 import {
   ESTATE_ACRES, ESTATE_COUNTRY_ID, ESTATE_NAME, ESTATE_NOTE, HOLDINGS, HOUSE, LOT_NAME,
@@ -85,13 +85,9 @@ const DRAFT_KEY = (slot: Slot) => `slate.draft.${slot}`;
 const WEALTH: StartingWealth[] = ['nothing', 'scraping', 'modest', 'comfortable', 'wealthy', 'inherited'];
 
 const PERSONALITY_AXES: { key: keyof Personality; label: string; low: string; high: string }[] = [
-  { key: 'openness', label: 'Openness', low: 'Conventional', high: 'Experimental' },
   { key: 'conscientiousness', label: 'Conscientiousness', low: 'Loose', high: 'Meticulous' },
-  { key: 'extraversion', label: 'Extraversion', low: 'Reserved', high: 'Outgoing' },
-  { key: 'agreeableness', label: 'Agreeableness', low: 'Blunt', high: 'Accommodating' },
   { key: 'emotionalStability', label: 'Emotional Stability', low: 'Volatile', high: 'Steady' },
   { key: 'ambition', label: 'Ambition', low: 'Content', high: 'Driven' },
-  { key: 'riskTolerance', label: 'Risk Tolerance', low: 'Cautious', high: 'Reckless' },
 ];
 
 
@@ -609,11 +605,14 @@ function PersonalStep({
           <div>
             <h2>Personality</h2>
             <p className="muted small">
-              Dispositions, not stats. Two of them do something today: Emotional Stability sets
-              how quickly stress arrives and how quickly it clears, and Conscientiousness sets
-              how well the nights go. The other five are written into the save and change nothing
-              yet — two of them wait on shoots and travel, three wait on other people, and none
-              of that is built.
+              Dispositions, not stats, and all three of them decide something. Emotional
+              Stability sets how quickly stress arrives and how quickly it clears,
+              Conscientiousness sets how well the nights go, and Ambition is what pushing past
+              the point a contented person would have stopped at costs you in stress. There
+              were four more — openness, extraversion, agreeableness and risk tolerance. They
+              waited on travel and on other people, neither of which is built, so they were
+              written into every save, read by nothing, and shown back on no screen but this
+              one. So the screen stopped asking, and they’re gone.
             </p>
           </div>
         </div>
@@ -729,11 +728,27 @@ function PersonalStep({
         <Chips options={FILM_GENRES} chosen={config.genres} onToggle={toggleGenre} />
       </div>
 
+      {/*
+        There was a Lifestyle select under this — frugal, modest, comfortable,
+        lavish, each option promising something about how you spend. No system
+        spent it. It went with the sweep, because a question whose four answers
+        all lead to the same world is worse than not asking.
+
+        The textarea stays, and it is a different case. It is a sentence the
+        player writes about their own character rather than an option list
+        promising a consequence, and it is not dead: the person page prints it
+        under their name, the same way it prints the one the family generator
+        writes for a mother or a twin. It carries no number, and the copy here
+        says so rather than implying a stat is hiding behind it.
+      */}
       <div className="card">
         <div className="panel-head">
           <div>
             <h2>Background</h2>
-            <p className="muted small">Where the life before this one happened, and how you spend.</p>
+            <p className="muted small">
+              Where the life before this one happened. It carries no attribute and no
+              advantage — it’s yours, and it’s on your page from the first morning.
+            </p>
           </div>
         </div>
         <div className="field">
@@ -743,15 +758,6 @@ function PersonalStep({
             onChange={(e) => set('background', e.target.value)}
             placeholder="A sentence about the life before this one."
           />
-        </div>
-        <div className="field">
-          <label htmlFor="lifestyle">Lifestyle</label>
-          <select id="lifestyle" value={config.lifestyle} onChange={(e) => set('lifestyle', e.target.value as NewSaveConfig['lifestyle'])}>
-            <option value="frugal">Frugal — you keep what you earn</option>
-            <option value="modest">Modest — comfortable, not showy</option>
-            <option value="comfortable">Comfortable — you spend on quality</option>
-            <option value="lavish">Lavish — you spend like it will keep coming</option>
-          </select>
         </div>
       </div>
     </div>
@@ -782,7 +788,8 @@ function CareerStep({ config, set }: { config: NewSaveConfig; set: Setter }) {
               <span className="chip chip-accent">{GOAT_LABEL}</span>
             </div>
             <div className="xs dim" style={{ marginTop: 4 }}>
-              All {ATTRIBUTES.length} Attributes At {CEILING} · All {ALL_TRAITS.length} Traits
+              All {ATTRIBUTES.length} Attributes At {CEILING} · All {TRAITS.length} Traits
+              · Every One Of {GENRE_MASTERIES.length} Genres
             </div>
             <div className="chip-row" style={{ marginTop: 8 }}>
               {goatTraitsIn(discipline).map((trait) => (
@@ -861,7 +868,7 @@ function StartingPointStep({ config, set }: { config: NewSaveConfig; set: Setter
           <div className="stat">
             <span className="stat-label">Industry Here</span>
             <span className="stat-value">None</span>
-            <span className="stat-note">No television, no film, until the family</span>
+            <span className="stat-note">No television and no film, until the family built some</span>
           </div>
         </div>
 
@@ -1061,8 +1068,9 @@ function ReviewStep({ config }: { config: NewSaveConfig }) {
         */}
         <p className="small">
           <strong>The Best There Has Ever Been.</strong>
-          {' '}All {ATTRIBUTES.length} acting attributes at {CEILING}, all {ALL_TRAITS.length}{' '}
-          acting traits, and the {GOAT_TRAITS.length} G.O.A.T. traits, held at once.
+          {' '}All {ATTRIBUTES.length} acting attributes at {CEILING}, all {TRAITS.length} acting
+          traits, mastery of every one of {GENRE_MASTERIES.length} genres, and the{' '}
+          {GOAT_TRAITS.length} G.O.A.T. traits, held at once.
         </p>
         <p className="xs dim" style={{ margin: '6px 0 0' }}>
           For anybody else that list contradicts itself and most of it is paid for with a weakness

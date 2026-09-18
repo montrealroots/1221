@@ -266,9 +266,15 @@ describe('the cutting room is what a recut actually costs', () => {
     const part = partsOf(project())[0]!;
     part.maturity = { ...(part.maturity ?? {}), rights: 'nothing' };
     comesApart(project(), part, 'rights', planById('unscripted')!, 99);
+    // What the episode already owed before this test put the whole of it back.
+    // `comesApart` can have handed some of it back by itself, and overwriting
+    // rather than adding meant the expectation only held while that happened to
+    // be nothing — which it stopped being the day an unrelated system shifted
+    // every draw in the save along.
+    const was = part.recut ?? 0;
     const owed = part.seconds;
     part.recut = owed;
-    expect(leftToCut(project()), 'the forecast never noticed').toBe(before + owed);
+    expect(leftToCut(project()), 'the forecast never noticed').toBe(before - was + owed);
 
     // And the room works it off at the rate it runs at, with the hands it has.
     sim.advanceTo(sim.now + 4 * MS_WEEK);

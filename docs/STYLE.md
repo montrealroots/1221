@@ -69,7 +69,25 @@ options of the same weight, with no note explaining one of them as the
 exception. The article before both is "an", and the sentence around the word is
 where that goes wrong — "You are a " followed by the noun reads "a actor", and
 no search for that phrase will find it, because nothing in the file spells it.
+<!-- both-titles: the word itself, which is what this paragraph is about. -->
 `tests/premise.test.ts` holds the words, and the save that has to state them.
+
+<!-- both-titles: the word itself, which is what the next paragraph quotes. -->
+That covered the labels and the save and left the prose, which is where it
+actually slipped: a doc comment about what "an actor" handles, a refusal about
+casting "an American actor", a shoot day lost to "a sick actor". Every one of
+those quietly elects one of the two words as the one the other varies from,
+which is the thing the premise exists to refuse — and none of them is a label,
+so nothing was looking.
+
+`node tools/both-titles.mjs` is now looking, and the gate runs it. A bare
+`actor` or `actress` fails unless it is the pair said together, an identifier, a
+real name somebody is actually called, or a label that carries both words
+through `nameByTitle`. **The generic is "performer"**, which is what
+`content/casting.ts` already used. A line that is genuinely about one of the two
+words — a comment explaining why nobody calls a key grip an actress — carries
+`both-titles: the word itself` and is left alone; there are four of those in the
+tree and each one says why.
 
 ## Pictures
 

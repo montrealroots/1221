@@ -37,13 +37,16 @@ import type { Project } from '../domain/company';
 import type { DimensionId } from '../content/maturity';
 import { MS_DAY, formatDate } from '../core/time';
 import {
-  DELIVERY, LATE_PENALTY_A_WEEK, SLIP_COSTS, SLIP_RATE,
+  A_NEW_HAND_STARTS_IN_WEEKS, DELIVERY, LATE_PENALTY_A_WEEK, PRODUCER_FEE, SLIP_COSTS, SLIP_RATE,
+  TRUST_COSTS,
   type Element, type Period, type Plan,
   elementById, elementsAfter, planById, tightnessOf,
 } from '../content/making';
 import { LOT_NAME } from '../content/estate';
-import { MS_WEEK, bookingsFor, rateFor, stagesOn, stillToCarry, theLot } from './lot';
-import { bankAWeek, cuttingPeriod, cutsAWeek, weighTheCut } from './inventory';
+import { MS_WEEK, bookingsFor, stagesOn, stillToCarry, theLot } from './lot';
+import {
+  bankAWeek, cuttingPeriod, cutsAWeek, handsOn, weighTheCut, whereTheMaterialStands,
+} from './inventory';
 import {
   backToTheRoom, climbedTo, comesApart, deckFor, decideReview, exposureOf, knockEverything,
   somebodyGoesOff,
@@ -55,8 +58,13 @@ import {
 } from './maturity';
 import { DIMENSIONS, dimensionById, rungsOf } from '../content/maturity';
 import { armTheCrew } from './crew';
-import { armTheCasting, castsPerformers, layTheRoles, takeFactor, theBiggestName } from './casting';
-import { capabilitiesOf } from './company';
+import {
+  armTheCasting, castsPerformers, castsReliability, layTheRoles, ranOverOnThem, takeFactor,
+  theBiggestName,
+} from './casting';
+import { capabilitiesOf, exerciseTheOption, filled } from './company';
+import { purseFor } from './money';
+import { armTheClaim } from './rebate';
 
 export const MAKING_KIND = 'project.period';
 export const DELIVERY_KIND = 'project.delivery';
@@ -255,13 +263,11 @@ export function holdAStage(
   return booking;
 }
 
-/** What the lot gives up by housing its owner's picture, across the hold. */
-export function foregone(sim: Simulation, booking: Booking): Money {
-  const stage = sim.universe.stages[booking.stageId];
-  if (!stage) return 0;
-  const weeks = (booking.to - booking.from) / MS_WEEK;
-  return Math.round(weeks * rateFor(stage, 'shooting'));
-}
+// What the lot gives up by housing its owner's picture used to be a `foregone()`
+// here, one booking at a time, and nothing in the build ever called it. The
+// question is a real one and the answer now lives on `Utilisation` as
+// `ownWouldHaveLetFor`, beside the `own` weeks it prices, where the estate screen
+// reads it — one figure over a window rather than an export with no caller.
 
 // ---------------------------------------------------------------------------
 // Running over
@@ -272,6 +278,16 @@ export interface Squeeze {
   tightness: number;
   /** How long the shoot runs, in weeks. A longer shoot slips further. */
   weeks: number;
+  /**
+   * What the cast is trusted to finish, out of a hundred.
+   *
+   * The third thing a producer chose, months earlier, thinking about something
+   * else. Whether somebody turns up is not a claim about how good they are —
+   * the best performer alive can be the one who does not come out of the
+   * trailer — and it is the only thing about a cast that costs days. Absent
+   * where nobody is cast, which reads as the middle of the scale.
+   */
+  trusted?: number;
 }
 
 /**
@@ -287,9 +303,19 @@ export interface Squeeze {
  */
 export function decideSlip(input: Squeeze, roll: number): { days: number; because: string } {
   const pressure = Math.max(0, 1.15 - input.tightness);
-  const days = Math.round(input.weeks * SLIP_RATE * pressure * (0.4 + roll * 1.6));
+  // A cast nobody can rely on stretches whatever was going to happen anyway,
+  // and one that turns up takes some of it back. Never the whole of it: a
+  // schedule cut below what the picture costs runs over with saints in it.
+  const holds = 1 + ((50 - (input.trusted ?? 50)) / 100) * TRUST_COSTS;
+  const days = Math.round(input.weeks * SLIP_RATE * pressure * holds * (0.4 + roll * 1.6));
   if (days <= 0) {
     return { days: 0, because: 'The schedule holds. Wrap is where it was always going to be.' };
+  }
+  if ((input.trusted ?? 50) < 38) {
+    return {
+      days,
+      because: 'The cast was late every morning of it, and by the second week the call sheet had stopped pretending.',
+    };
   }
   if (input.tightness < 0.8) {
     return {
@@ -297,7 +323,7 @@ export function decideSlip(input: Squeeze, roll: number): { days: number; becaus
       because: 'The schedule was short of what the picture costs from the day it was set, and everybody on it knew.',
     };
   }
-  return { days, because: 'The ordinary attrition of a shoot: weather, a sick actor, a day that went twice.' };
+  return { days, because: 'The ordinary attrition of a shoot: weather, a cast member off sick, a day that went twice.' };
 }
 
 // ---------------------------------------------------------------------------
@@ -534,6 +560,12 @@ export function greenlight(sim: Simulation, spec: Greenlight): { ok: true; proje
   if (spec.hands !== undefined) project.hands = Math.max(1, Math.round(spec.hands));
   project.budgetCents = spec.budgetCents;
   project.stage = 'greenlit';
+  // And the rights are bought outright, because that is what committing to a
+  // picture is. An option carries a term and the term now runs — so this is the
+  // thing that stops a picture in production ever losing its material, and the
+  // reason an option running out is a mistake about hesitating rather than a
+  // punishment for making something.
+  exerciseTheOption(sim, project.holdingId);
   project.unitBaseId = theLot(sim)?.locationId;
   project.periods = laid.periods.map((p) => ({ ...p }));
   project.deliverBy = laid.deliverBy;
@@ -687,13 +719,7 @@ function enterPeriod(sim: Simulation, project: Project, periodId: string): void 
   if (!plan) return;
 
   if (periodId === WORK_DONE) {
-    // Every period that has not settled yet, not just the last declared one.
-    // With periods running alongside each other, more than one can still be
-    // open when the work finishes.
-    for (const one of plan.periods) {
-      const window = windowOf(project, one.id);
-      if (window && window.to <= sim.now) settlePeriod(sim, project, one);
-    }
+    settleWhatHasEnded(sim, project, plan);
     if (settleDelivery(sim, project)) return;
     const waiting = heldUpBy(project);
     sim.notify({
@@ -712,8 +738,7 @@ function enterPeriod(sim: Simulation, project: Project, periodId: string): void 
   const period = plan.periods.find((p) => p.id === periodId);
   if (!period) return;
 
-  const was = plan.periods[plan.periods.indexOf(period) - 1];
-  if (was) settlePeriod(sim, project, was);
+  settleWhatHasEnded(sim, project, plan);
 
   project.stage = period.stage;
   sim.notify({
@@ -729,6 +754,28 @@ function enterPeriod(sim: Simulation, project: Project, periodId: string): void 
 }
 
 /**
+ * Settles every period that has actually ended, and only those.
+ *
+ * The one rule, in the one place, because there were two and they disagreed.
+ * The end of the work swept for periods whose dates had passed; the start of a
+ * period settled whichever period was *declared* before it. On a feature those
+ * are the same thing, and a feature was honest. On anything with a `runsWith`
+ * they are not, and declaration order is not calendar order: a series paid
+ * fifty-eight percent of its budget on the shoot's first day, and a format
+ * season paid its post period out the day before that period opened.
+ *
+ * The docstring on `enterPeriod` has always said the money goes out at a
+ * period's end, "which is the only honest place to put it". This is that
+ * sentence, written as code.
+ */
+function settleWhatHasEnded(sim: Simulation, project: Project, plan: Plan): void {
+  for (const one of plan.periods) {
+    const window = windowOf(project, one.id);
+    if (window && window.to <= sim.now) settlePeriod(sim, project, one);
+  }
+}
+
+/**
  * Spends what a period costs and hands over what it made.
  *
  * Once, however many routes reach it. A period is settled at the boundary of
@@ -737,17 +784,89 @@ function enterPeriod(sim: Simulation, project: Project, periodId: string): void 
  * budget twice — which is exactly what happened before this guard, to the tune
  * of ninety-six per cent over on a season.
  */
+/**
+ * What a period actually costs, once the rooms on it are counted.
+ *
+ * `spends` is a share of the budget and it knew nothing about staffing, so a
+ * cutting room ran at whatever size the player set for exactly the same money:
+ * six editors cost what one did. More hands was faster, gave more slack against
+ * the date and cost nothing, which made the largest number correct on every
+ * picture in every state. A decision nobody has a reason to answer twice is not
+ * a decision, and this one is the only staffing call the game offers.
+ *
+ * So the part of the period that IS the rooms moves with the rooms, and the
+ * part that is everything else does not. `ofTheSpend` on the plan says which is
+ * which, and the ratio is against the staffing the plan itself assumes — so a
+ * picture run the way its plan expects costs exactly what it always did, and
+ * only a deliberate change costs or saves anything.
+ */
+export function whatThePeriodCost(project: Project, period: Period, budget: Money): Money {
+  return periodAtThisStaffing(period, budget, handsOn(project));
+}
+
+/**
+ * The same sum without a project, so a screen can price the decision before it
+ * is taken rather than after.
+ */
+export function periodAtThisStaffing(period: Period, budget: Money, hands: number): Money {
+  const base = budget * period.spends;
+  const converts = period.converts;
+  if (!converts || converts.hands <= 0) return Math.round(base);
+  const rooms = base * converts.ofTheSpend;
+  return Math.round((base - rooms) + rooms * (Math.max(0, hands) / converts.hands));
+}
+
+/**
+ * What the periods actually have to spend: the budget less the producer's fee.
+ *
+ * A producer's fee is a line in a budget and not an extra on top of one, so the
+ * picture is made for ninety-seven percent of the number it was greenlit at. The
+ * first version paid it on top, and the measurement was immediate and obvious in
+ * hindsight: a company that has just committed its whole balance to a budget
+ * cannot also find three percent of that budget, so it went to minus EUR 483,000
+ * and could not greenlight anything ever again.
+ *
+ * Which makes the fee a trade rather than a gift. Three percent of what was going
+ * on the screen goes to the person instead, and everything downstream of what a
+ * period spends — the cast pot, the rooms, the crew — is three percent smaller.
+ */
+export function onTheScreen(project: Project): Money {
+  return Math.round((project.budgetCents ?? 0) * (1 - PRODUCER_FEE));
+}
+
+/** What one more room on this period costs, at this budget. */
+export function aRoomCosts(period: Period, budget: Money): Money {
+  const converts = period.converts;
+  if (!converts || converts.hands <= 0) return 0;
+  return Math.round((budget * period.spends * converts.ofTheSpend) / converts.hands);
+}
+
 function settlePeriod(sim: Simulation, project: Project, period: Period): void {
   if (project.settled?.includes(period.id)) return;
   project.settled = [...(project.settled ?? []), period.id];
   const account = cashFor(sim, project.companyId);
-  const budget = project.budgetCents ?? 0;
-  const owed = Math.round(budget * period.spends);
+  // The budget less the producer's fee, which is a line in it and was paid at the
+  // greenlight. The periods spend what is left, so a picture still costs the
+  // company exactly what it was greenlit at — and three percent of it goes to
+  // whoever made it rather than onto the screen, which is the trade a real budget
+  // makes and the reason the fee is a decision rather than a bonus.
+  const budget = onTheScreen(project);
+  const owed = whatThePeriodCost(project, period, budget);
   if (account && owed > 0) {
     sim.expense(account, owed, `${project.title}: ${period.label}`, 'business',
       { refType: 'project', refId: project.id });
     project.spentCents += owed;
   }
+  // And the producer's share of this period, alongside it.
+  //
+  // Across the schedule rather than in a lump at the greenlight, which is how a
+  // producer's fee is actually paid and is also the only way it can be paid here.
+  // The first version took the whole fee the moment the picture was committed to,
+  // and a company that greenlights a twenty-million-euro picture on a hundred and
+  // seventeen thousand in the bank — which is the whole shape of this game, the
+  // family funds the budget as the periods run — went straight to minus EUR
+  // 483,000 and could never greenlight anything again.
+  payTheProducer(sim, project, period);
   for (const element of elementsAfter(period.id, 'production')) {
     if (project.delivered.includes(element.id)) continue;
     project.delivered.push(element.id);
@@ -778,10 +897,9 @@ function settlePeriod(sim: Simulation, project: Project, period: Period): void {
  *
  * One item at a time rather than the whole run laid out at greenlight, because
  * how long the cutting room needs is not known at greenlight — it is whatever
- * the room's rate and the room's hands turn out to make it, and hands can be
- * changed in any week. A season whose cut runs past the end of its own post
- * period keeps cutting; it does not stop unfinished because the calendar said
- * post was over.
+ * the room's rate and the hands it was given turn out to make it. A season
+ * whose cut runs past the end of its own post period keeps cutting; it does
+ * not stop unfinished because the calendar said post was over.
  */
 function aWeekOn(sim: Simulation, project: Project, at: Instant, since: Instant): void {
   sim.schedule({
@@ -1075,7 +1193,10 @@ function weighTheSchedule(sim: Simulation, project: Project, shooting: Period): 
   const weeks = (window.to - window.from) / MS_WEEK;
   const tightness = tightnessOf(weeks, project.budgetCents ?? 0);
   const roll = sim.rng('making', 'slip', project.id).next();
-  const slip = decideSlip({ tightness, weeks }, roll);
+  const trusted = castsReliability(sim, project);
+  const slip = decideSlip(
+    { tightness, weeks, ...(trusted !== undefined ? { trusted } : {}) }, roll,
+  );
   if (slip.days <= 0) return;
 
   // The shoot gets longer and everything behind it moves by the same amount.
@@ -1098,6 +1219,11 @@ function weighTheSchedule(sim: Simulation, project: Project, shooting: Period): 
       { refType: 'project', refId: project.id });
     project.spentCents += over;
   }
+
+  // And it sticks to everybody who was on it. A production that overran is a
+  // production the whole cast was on, and the next producer reading the list
+  // does not know whose fault it was either.
+  ranOverOnThem(sim, project, slip.days);
 
   const kept = project.bookingId ? keepTheStage(sim, project, by) : true;
   sim.notify({
@@ -1237,8 +1363,17 @@ export function settleDelivery(sim: Simulation, project: Project): boolean {
       sim.expense(account, fine, `${project.title}: Late Delivery`, 'business',
         { refType: 'project', refId: project.id });
       project.spentCents += fine;
+      // A penalty is money gone and it is not spend, so an auditor certifies
+      // none of it. Going over costs a picture three quarters of what it costs;
+      // being late costs it all of it.
+      project.notSpentHereCents = (project.notSpentHereCents ?? 0) + fine;
     }
   }
+
+  // And the claim, where there is one to make. It goes on the calendar here
+  // because a reimbursement is claimed against a finished production, and this
+  // is the moment the production is finished.
+  armTheClaim(sim, project);
 
   sim.notify({
     category: 'business',
@@ -1363,6 +1498,26 @@ export function registerMaking(sim: Simulation): void {
   sim.onCommand<{ projectId: Id; elementId: string }, { ok: boolean; error?: string }>(
     'company.deliver', (payload, { sim: s }) => handOver(s, payload.projectId, payload.elementId),
   );
+
+  // More hands in the cutting room, or fewer. The decision `domain/company.ts` has
+  // described from the beginning and nothing could reach.
+  sim.onCommand<{ projectId: Id; hands: number }, { ok: boolean; error?: string }>(
+    'company.restaff', (payload, { sim: s }) => restaff(s, payload.projectId, payload.hands),
+  );
+
+  // And the week they actually start, which is not the week they were hired.
+  sim.onSchedule(RESTAFF_KIND, (item) => {
+    const { projectId, hands } = (item.payload ?? {}) as { projectId?: Id; hands?: number };
+    const project = projectId ? sim.universe.projects[projectId] : undefined;
+    if (!project || project.shelvedAt !== undefined || hands === undefined) return;
+    project.hands = Math.max(1, Math.round(hands));
+    sim.notify({
+      category: 'business',
+      title: `${project.title}: The Room Is Up To ${project.hands}`,
+      body: whereTheMaterialStands(project, sim.now),
+      importance: 40,
+    });
+  });
 }
 
 /** Where a picture stands, in a sentence. */
@@ -1404,4 +1559,198 @@ function spokenDimensions(ids: readonly string[]): string {
 export function nobodysJob(plan: Plan): string[] {
   const moved = new Set(plan.periods.flatMap((p) => Object.keys(p.advances ?? {})));
   return DIMENSIONS.map((d) => d.id).filter((id) => !moved.has(id));
+}
+
+/**
+ * The producer's fee, paid to whoever the company answers to.
+ *
+ * The principal, and only the principal, because that is the seat the company
+ * answers to and producing is what that seat does. It is the piece that makes the
+ * post worth taking: `ROLES.principal` is costed at nought a month, on the
+ * reasoning that a family member drawing a salary from the family company is
+ * money moving between two pockets — which is right about a salary and says
+ * nothing about a fee for making a specific picture.
+ *
+ * So the chair is now a decision with money on it, and the decision has a price
+ * already built: one seat per company, so taking it means leaving whatever seat
+ * you were in, and nobody has to say yes to being moved. A player who wants the
+ * fee has to hold the chair their mother is sitting in.
+ *
+ * Nothing is paid when the post is empty and the money stays in the company,
+ * which is said out loud rather than passed over — a picture made by a company
+ * with nobody answering for it is a real thing, and the fee not being paid is the
+ * clearest statement of what the empty chair costs.
+ */
+export function payTheProducer(sim: Simulation, project: Project, period: Period): Money {
+  const budget = project.budgetCents ?? 0;
+  // This period's share of the fee. The shares come to one across the schedule,
+  // so the whole fee is paid exactly once by the time the picture is finished.
+  const owed = Math.round(budget * PRODUCER_FEE * period.spends);
+  if (owed <= 0) return 0;
+
+  const from = cashFor(sim, project.companyId);
+  if (!from) return 0;
+  const post = filled(sim.universe, 'principal');
+  const who = post?.personId ? sim.universe.people[post.personId] : undefined;
+  // Opened on demand: the family generator gives nobody an account, so a fee
+  // owed to a relative has nowhere to land until something makes one.
+  const purse = who ? purseFor(sim, who.id) : undefined;
+
+  if (!who || !purse) {
+    sim.notify({
+      category: 'business',
+      title: `Nobody Is Being Paid For Making ${project.title}`,
+      body: `The producer's fee on this one is ${formatMoney(owed, { cents: false })} and there is `
+        + 'nobody in the principal’s chair to pay it to, so it stays in the company. Whoever the '
+        + 'company answers to is the person who gets paid for making its pictures.',
+      importance: 55,
+    });
+    return 0;
+  }
+
+  // Attributed to the picture and counted in what it cost, because it is part of
+  // what it cost: the fee plus the periods come to the budget exactly, so a
+  // picture still spends what it was greenlit at and no test measuring that has
+  // to know the fee exists.
+  sim.transfer(from, purse, owed, `${project.title}: The Producer’s Fee`, 'business',
+    { refType: 'project', refId: project.id });
+  project.spentCents += owed;
+  sim.notify({
+    category: 'personal',
+    title: `${who.firstName} Is Paid For ${project.title}`,
+    body: `${formatMoney(owed, { cents: false })}, which is ${Math.round(PRODUCER_FEE * 100)} percent `
+      + 'of what the picture was greenlit at. The company keeps what the picture earns; this is what '
+      + 'the person who made it keeps.',
+    importance: 45,
+  });
+  return owed;
+}
+
+export const RESTAFF_KIND = 'project.restaff';
+
+/**
+ * Why the cutting room cannot be restaffed, or nothing if it can.
+ *
+ * Exported and asked before the offer, so a screen can say what the answer will be
+ * rather than finding out by being refused — the same shape as `whyNotTakeIt`.
+ */
+export function whyNotRestaff(sim: Simulation, projectId: Id, hands: number): string | undefined {
+  const project = sim.universe.projects[projectId];
+  if (!project) return 'There’s no such picture.';
+  if (!project.planId) return `Nobody has said yes to ${project.title} yet.`;
+  if (project.shelvedAt) return `${project.title} is shelved.`;
+  if (project.stage === 'delivered') return `${project.title} is delivered. It’s too late to cut it.`;
+  const plan = planOf(project);
+  const room = plan ? cuttingPeriod(plan) : undefined;
+  if (!room) return `${project.title} has no cutting room to staff.`;
+  const wanted = Math.max(1, Math.round(hands));
+  if (wanted === handsOn(project)) {
+    return `${project.title} already has ${wanted === 1 ? 'one editor' : `${wanted} editors`} on it.`;
+  }
+  if (wanted < handsOn(project)) return undefined;
+
+  // Against what is left of the picture's budget, and deliberately not against what
+  // the company happens to be holding. The company is hardly ever holding anything:
+  // `familyCovers` tops the cash account up from below zero as the periods settle,
+  // so a balance check would have answered "you can restaff on the days the family
+  // has just wired" and refused on every other day, which is a coin toss wearing a
+  // reason. What a picture has left is `committedTo`'s own figure — greenlit less
+  // spent — the money that is already behind this picture and nothing else, and
+  // hands in the cutting room come out of it the same way the overrun does.
+  //
+  // So the trap is the one worth having: a picture that has already spent its budget
+  // cannot buy its way out of a late cut, and the player who wants the option keeps
+  // room in the number at the greenlight.
+  const owed = whatMoreHandsCost(project, wanted);
+  const left = Math.max(0, onTheScreen(project) - project.spentCents);
+  if (owed > left) {
+    return `Another ${wanted - handsOn(project)} in the room costs `
+      + `${formatMoney(owed, { cents: false })} and there’s `
+      + `${formatMoney(left, { cents: false })} left of ${project.title}’s budget.`;
+  }
+  return undefined;
+}
+
+/**
+ * What putting more hands in the room costs, priced off what a room already costs.
+ *
+ * `aRoomCosts` is already here and already answers exactly this — "what one more
+ * room on this period costs, at this budget" — so adding hands eats the same money
+ * the overrun draws from, which is the honest version of what the screen already
+ * tells the player about money buying hands. Nothing invented.
+ *
+ * Taking hands away costs nothing and gives nothing back. The money for the weeks
+ * already cut is spent, and a refund for sending an editor home would be a way to
+ * make a picture cheaper by mismanaging it.
+ */
+export function whatMoreHandsCost(project: Project, hands: number): Money {
+  const plan = planOf(project);
+  const room = plan ? cuttingPeriod(plan) : undefined;
+  if (!room) return 0;
+  const more = Math.max(0, Math.max(1, Math.round(hands)) - handsOn(project));
+  return more * aRoomCosts(room, onTheScreen(project));
+}
+
+/**
+ * Puts more hands in the cutting room, or takes some away.
+ *
+ * The decision `domain/company.ts` has described from the beginning and the engine
+ * has honored all along without a door: "the number of editors is the decision
+ * that sits between a budget and a delivery date".
+ *
+ * It is charged and it is not instant. Both halves matter. A free restaff is
+ * strictly dominant and every cutting room ends at six hands; an instant one lets
+ * a player watch the forecast and fix every picture the week it goes red, which
+ * makes under-staffing free in hindsight. So the money goes now, off `aRoomCosts`,
+ * and the hands arrive in `A_NEW_HAND_STARTS_IN_WEEKS`.
+ *
+ * Fewer hands take effect at once, because sending somebody home is not a hire and
+ * nothing has to be waited for. It buys nothing back either.
+ */
+export function restaff(
+  sim: Simulation, projectId: Id, hands: number,
+): { ok: boolean; error?: string; startsAt?: Instant } {
+  const no = whyNotRestaff(sim, projectId, hands);
+  if (no) return { ok: false, error: no };
+  const project = sim.universe.projects[projectId]!;
+  const wanted = Math.max(1, Math.round(hands));
+  const was = handsOn(project);
+
+  if (wanted < was) {
+    project.hands = wanted;
+    sim.notify({
+      category: 'business',
+      title: `${project.title}: The Room Goes Down To ${wanted === 1 ? 'One' : wanted}`,
+      body: `${whereTheMaterialStands(project, sim.now)} Nothing comes back for it — the weeks `
+        + 'already cut are paid for.',
+      importance: 45,
+    });
+    return { ok: true, startsAt: sim.now };
+  }
+
+  const owed = whatMoreHandsCost(project, wanted);
+  const account = cashFor(sim, project.companyId);
+  if (account && owed > 0) {
+    sim.expense(account, owed, `${project.title}: More Hands In The Room`, 'business',
+      { refType: 'project', refId: project.id });
+    project.spentCents += owed;
+  }
+  const startsAt = sim.now + A_NEW_HAND_STARTS_IN_WEEKS * MS_WEEK;
+  sim.schedule({
+    at: startsAt,
+    kind: RESTAFF_KIND,
+    label: `${project.title}: The New Hands Start`,
+    category: 'business',
+    priority: 20,
+    payload: { projectId, hands: wanted },
+  });
+  sim.notify({
+    category: 'business',
+    title: `${project.title}: ${wanted - was} More In The Room`,
+    body: `${formatMoney(owed, { cents: false })} out of the budget, and they start on `
+      + `${formatDate(startsAt, sim.homeZone)} — a cutting room isn’t restaffed the week you `
+      + `decide to. ${whereTheMaterialStands(project, sim.now)}`,
+    importance: 55,
+  });
+  return { ok: true, startsAt };
 }

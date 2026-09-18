@@ -25,15 +25,25 @@ import { MS_DAY } from './core/time';
 import { CREW_BASE, ENQUIRY_SHAPES, type Enquiry } from './content/lot';
 import { MS_WEEK, pullOn, stagesOn, wouldBook } from './world/lot';
 import { decideQuota } from './world/sugar';
+import { MEN, WOMEN } from './content/names';
 import { decideSlip, type Squeeze } from './world/making';
 import { decideReview, type Review } from './world/trouble';
 import { FINDINGS } from './content/trouble';
 import { decideTake, type Prospects } from './world/selling';
 import { DEALS } from './content/selling';
 import { decideHire, standingReads, type Hiring } from './world/crew';
-import { decideOffer, reachOfBand, readOn, sheetFor, type Offer } from './world/casting';
-import { passById } from './content/casting';
+import {
+  believedAt, decideOffer, reachOfBand, readOn, sheetFor, sparkBetween, sparkReads, whatItWants,
+  type Offer,
+} from './world/casting';
+import {
+  AXES, BOOKABLE, SIZES, TAPE_LEANS, THE_GIVING, passById, type AxisId,
+} from './content/casting';
+import { FURTHEST, HOUSE_HOLDS, SHADES, TOO_FAR, whyById, type Reading } from './content/audition';
+import { decideAudition, remembersYou, whatTheyWant } from './world/audition';
+import type { Looked } from './domain/company';
 import { ageOn } from './world/family';
+import { sheetOf, type AttributeSheet } from './domain/attributes';
 
 // ---------------------------------------------------------------------------
 // The sky
@@ -55,6 +65,7 @@ defineDecider<Sky, string>({
   id: 'weather.day',
   decides: 'What the sky does in one city on one day.',
   drawnIn: 'src/engine/systems/weather.ts',
+  draws: ['weather', 'weather-hours'],
   reads: {
     // Latitude and climate: Yakutsk and Singapore cannot have the same day.
     place: (sky, t) => ({
@@ -100,6 +111,7 @@ defineDecider<Household, string>({
   id: 'family.born',
   decides: 'How old your parents are when the save opens, and whether you were born alone.',
   drawnIn: 'src/engine/index.ts',
+  draws: ['family'],
   reads: {
     // The two answers creation actually asks for.
     motherAge: (h, t) => ({ ...h, motherAge: Math.round(16 + t * 42) }),
@@ -192,6 +204,7 @@ defineDecider<Ringing, string>({
   id: 'lot.rang',
   decides: 'How many productions ring about a stage in one month.',
   drawnIn: 'src/engine/world/lot.ts',
+  draws: ['lot', 'lot.how-many'],
   reads: {
     // People in the country to crew a picture with. It starts at the national
     // base and every picture made here adds two dozen who are still here
@@ -258,6 +271,48 @@ defineDecider<Quota, string>({
   },
 });
 
+interface Hire { woman: boolean; given: number; years: number }
+
+/** The given name a draw lands on, the way `staffTheGroup` lands on it. */
+const nameFrom = (woman: boolean, t: number): string => (woman
+  ? WOMEN[Math.floor(t * WOMEN.length)] ?? 'Anna'
+  : MEN[Math.floor(t * MEN.length)]?.name ?? 'Jón');
+
+/**
+ * Who runs the sugar group, which is a draw and says so.
+ *
+ * Five seats at a company that has been trading since 1946, filled once when the
+ * save opens and never again. It is in the registry because every die this game
+ * rolls is, and because the alternative was a stream the ratchet could not see:
+ * the gate counts draw streams nothing owns and it went from thirteen to
+ * fourteen the moment this existed.
+ *
+ * What it decides is nobody's fortune. These five have no attribute sheet, hold
+ * no rights and appear in no casting; they exist so that the screen saying who
+ * runs the family business has an answer, and so that the head of milling is a
+ * person rather than an empty chair. The one thing the draw settles that anybody
+ * can feel is which name and which pronouns, which is why it is keyed per seat —
+ * adding a sixth post later must not rename the five already in a save.
+ */
+defineDecider<Hire, string>({
+  id: 'sugar.staff',
+  decides: 'Who holds each of the five salaried seats at the sugar group.',
+  drawnIn: 'src/engine/world/sugar.ts',
+  reads: {
+    // Whether they are a woman, which decides the given name, the patronymic
+    // ending and the pronouns the screens use for them.
+    woman: (h, t) => ({ ...h, woman: t < 0.5 }),
+    // Which name off the table, out of the country's own.
+    given: (h, t) => ({ ...h, given: t }),
+    // And how old. Senior, because nobody mills two point two million tonnes at
+    // twenty-six, so the range is the one a board of a seventy-year-old group
+    // actually has rather than the general population's.
+    years: (h, t) => ({ ...h, years: 41 + Math.floor(t * 23) }),
+  },
+  sample: (seed) => ({ woman: seed % 2 === 0, given: (seed % 11) / 11, years: 41 + (seed % 23) }),
+  decide: ({ woman, given, years }) => `${nameFrom(woman, given)}, ${woman ? 'she/her' : 'he/him'}, ${years}`,
+});
+
 // ---------------------------------------------------------------------------
 // The shoot
 // ---------------------------------------------------------------------------
@@ -304,6 +359,7 @@ defineDecider<Review, string>({
   id: 'making.reviewed',
   decides: 'What a look at finished work turns up, and how far down it sends the work.',
   drawnIn: 'src/engine/world/making.ts',
+  draws: ['making.review', 'making.found'],
   reads: {
     // How far this part had climbed, taken the way done is taken: the lowest
     // of its six. This is the whole difference between a free regression and a
@@ -392,6 +448,7 @@ defineDecider<Hiring, string>({
   id: 'crew.hired',
   decides: 'Who gets a post on a picture, and whether they have worked here before.',
   drawnIn: 'src/engine/world/crew.ts',
+  draws: ['crew.hire', 'crew.make'],
   reads: {
     // How many people have held this post for the company already. A crew that
     // has worked together gets rehired, and nothing else about this decision
@@ -424,8 +481,9 @@ interface Asking { offer: Offer; roll: number }
 
 defineDecider<Asking, string>({
   id: 'casting.answered',
-  decides: 'Whether an actor takes a part, counters, or passes — and on what.',
+  decides: 'Whether a performer takes a part, counters, or passes — and on what.',
   drawnIn: 'src/engine/world/casting.ts',
+  draws: ['casting.offer'],
   reads: {
     // Whether the dates are clear, which is first because no amount of money
     // moves a shooting schedule somebody else already owns.
@@ -436,8 +494,8 @@ defineDecider<Asking, string>({
       ...a,
       offer: { ...a.offer, feeCents: Math.round(a.offer.askCents * (0.4 + t * 1.6)) },
     }),
-    // How much of the picture the part is. An actor in demand turns down small
-    // ones and an actor who is not takes whatever comes.
+    // How much of the picture the part is. Somebody in demand turns down small
+    // ones and somebody who is not takes whatever comes.
     size: (a, t) => ({ ...a, offer: { ...a.offer, carries: Math.round(3 + t * 52) } }),
     // And how wanted they are, which is what makes the same part an insult to
     // one person and a break for another.
@@ -491,8 +549,311 @@ defineDecider<Pile, string>({
     const sheet = sheetFor(standing, () => { n += 1; return ((n * 37) % 23) / 23; });
     const truth = readOn(sheet, 'truth');
     if (truth < 34) return 'whoever was free';
-    if (truth < 52) return 'working actors';
+    if (truth < 52) return 'working performers';
     if (truth < 70) return 'people you have heard of';
-    return 'people who do not normally read for this';
+    return 'people who don’t normally read for this';
   },
 });
+
+interface Belief { truth: number; looked: Looked; axis: AxisId; offset: number; lean: number }
+
+defineDecider<Belief, string>({
+  id: 'casting.shown',
+  decides: 'What a company believes a performer is, before it has ever worked with them.',
+  drawnIn: 'src/engine/world/casting.ts',
+  reads: {
+    // What they actually are, which nobody in the world has access to and which
+    // every belief about them is nonetheless a distance from.
+    truth: (b, t) => ({ ...b, truth: Math.round(1 + t * 99) }),
+    // How far the office has got with them. A photograph, a tape they shot at
+    // home and chose the best take of, eight minutes in the room, or a second
+    // time with somebody directing.
+    round: (b, t) => ({
+      ...b,
+      looked: {
+        ...b.looked,
+        rounds: BOOKABLE.slice(0, Math.floor(t * (BOOKABLE.length + 1))).map((r) => r.id),
+      },
+    }),
+    // Which of the three the last note was on, where one was given. A session is
+    // one note and a note is one axis, so this is what the room spent itself on.
+    note: (b, t) => ({
+      ...b,
+      looked: { ...b.looked, ...(t < 0.5 ? {} : { note: b.axis }) },
+    }),
+    // And which axis is being asked about, because they do not close at the same
+    // rate: a tape tells you a great deal about one of them and almost nothing
+    // about another.
+    axis: (b, t) => ({
+      ...b,
+      axis: AXES[Math.min(AXES.length - 1, Math.floor(t * AXES.length))]!.id,
+    }),
+    // Where inside the width this particular belief fell. Fixed for the life of
+    // a save, so a round closes in on a point rather than redrawing it.
+    draw: (b, t) => ({ ...b, offset: t * 2 - 1 }),
+    // And how far this person's own tape misrepresents them, which is a fact
+    // about their kitchen and their deadlines rather than about their acting,
+    // and which only a round that watches a file can be fooled by.
+    tape: (b, t) => ({ ...b, lean: (t * 2 - 1) * TAPE_LEANS }),
+  },
+  sample: (seed) => ({
+    truth: 20 + (seed % 7) * 11,
+    looked: { personId: 'somebody', rounds: BOOKABLE.slice(0, seed % 4).map((r) => r.id) },
+    axis: AXES[seed % AXES.length]!.id,
+    offset: ((seed * 3) % 9) / 9 * 2 - 1,
+    lean: (((seed * 5) % 7) / 7 * 2 - 1) * TAPE_LEANS,
+  }),
+  decide: ({ truth, looked, axis, offset, lean }) => {
+    const believed = believedAt(truth, looked, axis, offset, lean);
+    const out = Math.abs(believed - truth);
+    if (out < 4) return 'they know';
+    if (out < 12) return 'about right';
+    if (out < 26) return 'out by a tier';
+    return 'they have no idea';
+  },
+});
+
+// ---------------------------------------------------------------------------
+// The other side of the room
+// ---------------------------------------------------------------------------
+
+interface InTheRoom { off: number; sawYou: boolean; free: boolean; roll: number }
+
+defineDecider<InTheRoom, string>({
+  id: 'audition.said',
+  decides: 'Whether a room gives the player the part, and what the no is called.',
+  drawnIn: 'src/engine/world/audition.ts',
+  draws: ['audition.heard'],
+  reads: {
+    // How far what they played was from what the room wanted. The whole of it,
+    // and deliberately the only thing about the performance that is read —
+    // the player cannot act badly, so nothing here asks whether they did.
+    played: (r, t) => ({ ...r, off: t * (TOO_FAR + 0.6) }),
+    // Whether anybody was in a room with them or watching a file, which
+    // decides what the no is called and nothing else. A tape's cost is paid
+    // earlier, in the note it never gave.
+    seen: (r, t) => ({ ...r, sawYou: t >= 0.5 }),
+    // And whether they are free, because no reading survives being unavailable
+    // and no amount of being right for something moves a shooting schedule.
+    dates: (r, t) => ({ ...r, free: t >= 0.5 }),
+    // The draw, because two people can both be right for something and one of
+    // them gets it.
+    luck: (r, t) => ({ ...r, roll: t }),
+  },
+  sample: (seed) => ({
+    off: ((seed % 7) / 7) * TOO_FAR,
+    sawYou: seed % 2 === 0,
+    free: seed % 5 !== 0,
+    roll: ((seed * 3) % 11) / 11,
+  }),
+  decide: ({ off, sawYou, free, roll }) =>
+    whyById(decideAudition({ off, sawYou, free }, roll))?.label.toLowerCase() ?? 'nothing',
+});
+
+interface Asked { sim: Simulation; readings: number }
+
+defineDecider<Asked, string>({
+  id: 'audition.asked',
+  decides: 'Whether a production shooting on the lot thinks of the player at all.',
+  drawnIn: 'src/engine/world/audition.ts',
+  draws: ['audition.calls'],
+  reads: {
+    // How many times these people have had them in, whatever came of it. The
+    // research calls roster memory the main career ratchet and is explicit that
+    // it pays out from a pass, so this counts readings and not parts won.
+    memory: (a, t) => ({ ...a, readings: Math.round(t * 8) }),
+  },
+  sample: (seed) => ({ sim: quickSave({}, `asked-${seed % 4}`), readings: seed % 5 }),
+  decide: ({ sim, readings }) => {
+    const holder = 'RÚV, a limited series';
+    for (let i = 0; i < readings; i += 1) {
+      const id = `remembered-${i}`;
+      sim.universe.auditions[id] = {
+        id, saveId: sim.universe.meta.id, bookingId: `b-${i}`, officeId: holder, holder, size: 'day',
+        feeCents: 1_00, from: sim.now, to: sim.now, closesAt: sim.now,
+        wants: {}, state: 'over', why: 'went-another-way',
+      };
+    }
+    const chance = remembersYou(sim, holder);
+    for (let i = 0; i < readings; i += 1) delete sim.universe.auditions[`remembered-${i}`];
+    if (chance < 0.2) return 'nobody has heard of them';
+    if (chance < 0.45) return 'they might think of them';
+    if (chance < 0.75) return 'they’d call them in';
+    return 'they ask for them by name';
+  },
+});
+
+interface WhatARoomWants {
+  /** What these people like, across everything they ever cast. */
+  house: Reading;
+  /** The draw that decides whether this room keeps it. */
+  holds: number;
+  /** And what this room would have wanted if it belonged to nobody. */
+  own: number;
+}
+
+/**
+ * One room's want, built the way `whatIsGoing` builds it.
+ *
+ * `whatTheyWant` draws twice per shade — what the room would want alone, then
+ * whether the house holds — so the scripted stream alternates between the two.
+ * The per-shade shift on the first is there so the three shades are not one
+ * shade written out three times.
+ */
+const roomWants = ({ house, holds, own }: WhatARoomWants): Reading => {
+  let at = 0;
+  return whatTheyWant((): number => {
+    const draw = at;
+    at += 1;
+    return draw % 2 === 0 ? (own + Math.floor(draw / 2) * 0.29) % 1 : holds;
+  }, house);
+};
+
+defineDecider<WhatARoomWants, string>({
+  id: 'audition.house',
+  decides: 'What one room wants, and how much of that is the taste of the people casting it.',
+  drawnIn: 'src/engine/world/audition.ts',
+  reads: {
+    // What these people like. It is the same on every shade a room keeps, which
+    // is what makes a holder learnable at all — read for them enough times and
+    // the average of what you played is most of the way to this.
+    taste: (w, t) => ({
+      ...w,
+      house: {
+        warmth: Math.round((t * 2 - 1) * FURTHEST),
+        size: Math.round((1 - t * 2) * FURTHEST),
+        pace: Math.round((t * 2 - 1) * FURTHEST),
+      },
+    }),
+    // Whether this room keeps it. Below `HOUSE_HOLDS` the want is the house's
+    // and above it the room goes its own way, which is the three rooms in ten
+    // that stop a holder from being a lookup.
+    holds: (w, t) => ({ ...w, holds: t }),
+    // And what the room wants when it does go its own way. Inert while the
+    // house holds, which is the point of it being a separate input: sweeping
+    // this across a sample that keeps the house proves nothing, and the sweep
+    // runs six samples for exactly that reason.
+    own: (w, t) => ({ ...w, own: t }),
+  },
+  // Even samples keep the house and odd ones do not, whatever `HOUSE_HOLDS` is
+  // set to — so no sweep is measuring only one side of the branch. At nought
+  // the house does not exist and `taste` is genuinely inert, which this test
+  // would then say out loud rather than pass over.
+  sample: (seed) => ({
+    house: {
+      warmth: (seed % 7) - 3,
+      size: ((seed * 2) % 7) - 3,
+      pace: ((seed * 3) % 7) - 3,
+    },
+    holds: seed % 2 === 0 ? HOUSE_HOLDS * 0.4 : Math.min(0.999, HOUSE_HOLDS + (1 - HOUSE_HOLDS) * 0.6),
+    own: ((seed * 5) % 7) / 7,
+  }),
+  decide: (input) => {
+    const want = roomWants(input);
+    return SHADES.map((shade) => `${shade.label} ${want[shade.id]}`).join(', ');
+  },
+});
+
+interface Pair { one: AttributeSheet; other: AttributeSheet; draw: number }
+
+/** A sheet with a chosen shape on the three axes and a chosen generosity. */
+const sheetShaped = (at: Record<string, number>, giving: number): AttributeSheet => sheetOf(50, {
+  ...Object.fromEntries(AXES.flatMap((axis) => axis.of.map((a) => [a, at[axis.id] ?? 50]))),
+  ...Object.fromEntries(THE_GIVING.map((id) => [id, giving])),
+});
+
+defineDecider<Pair, string>({
+  id: 'casting.spark',
+  decides: 'What two people carrying a picture have between them.',
+  drawnIn: 'src/engine/world/casting.ts',
+  reads: {
+    // The shape of the first one, level taken out. Shape and never level,
+    // because level would make the best performer alive maximally different
+    // from everybody and therefore everybody's ideal partner.
+    shape: (p, t) => ({
+      ...p,
+      one: sheetShaped({ truth: 20 + t * 70, repeatable: 55, reads: 90 - t * 70 }, 70),
+    }),
+    // And the shape of the second, swept the other way, so the sweep walks the
+    // pair from identical through to opposite.
+    against: (p, t) => ({
+      ...p,
+      other: sheetShaped({ truth: 90 - t * 70, repeatable: 55, reads: 20 + t * 70 }, 70),
+    }),
+    // What the two of them give whoever is in the scene with them, which is the
+    // multiplier: generosity with nothing to be generous toward buys nothing.
+    giving: (p, t) => ({
+      ...p,
+      one: sheetShaped({ truth: 90, repeatable: 50, reads: 20 }, Math.round(1 + t * 99)),
+    }),
+    // And whether they got on, which nobody can account for.
+    rapport: (p, t) => ({ ...p, draw: t }),
+  },
+  sample: (seed) => ({
+    one: sheetShaped({ truth: 30 + (seed % 5) * 14, repeatable: 55, reads: 80 - (seed % 5) * 12 }, 60),
+    other: sheetShaped({ truth: 75 - (seed % 4) * 15, repeatable: 55, reads: 35 + (seed % 4) * 13 }, 65),
+    draw: ((seed * 7) % 9) / 9,
+  }),
+  decide: ({ one, other, draw }) => sparkReads(sparkBetween(
+    { attributes: one } as never, { attributes: other } as never, draw,
+  )),
+});
+
+interface Wanted { sim: Simulation; sizeId: string; roleId: string }
+
+/**
+ * What one part is looking for, which was the last draw nothing accounted for.
+ *
+ * Twelve of the thirteen unowned streams turned out to belong to decisions that
+ * were already registered and already documented — `weather.day` takes two dice,
+ * `crew.hired` takes two, and so on — and they are declared on those deciders now.
+ * This one was not any of them. `whatItWants` rolls a shape for every part on a
+ * picture and nothing anywhere said what it was deciding or what it reads.
+ *
+ * What it decides: the size says what a part this big usually wants, and the draw
+ * says what *this* one turned out to be. It is normalised back afterwards, so no
+ * part is quietly worth more than another — a leaning is a shape, not a quantity,
+ * and a part that wanted more of everything would be a part with a bigger budget
+ * rather than a different one.
+ *
+ * It matters because it is the thing a player reads a room against. Every ask the
+ * player answers is answered into one of these, so a build where every part wanted
+ * the same thing is a build where the reading is a formality.
+ */
+defineDecider<Wanted, string>({
+  id: 'casting.wants',
+  decides: 'What one part on a picture is looking for.',
+  drawnIn: 'src/engine/world/casting.ts',
+  reads: {
+    // How big the part is, which is the half that is not a draw: the size's own
+    // leaning is what a part this size usually wants.
+    size: (w, t) => ({ ...w, sizeId: SIZES[Math.floor(t * SIZES.length)]?.id ?? w.sizeId }),
+    // And which part it is, because two parts of the same size on the same
+    // picture are not the same part. This is the draw itself, keyed by role id.
+    which: (w, t) => ({ ...w, roleId: `role_${Math.round(t * 1000)}` }),
+  },
+  sample: (seed) => ({
+    sim: wantsFor(seed),
+    sizeId: SIZES[seed % SIZES.length]!.id,
+    roleId: `role_${seed}`,
+  }),
+  decide: ({ sim, sizeId, roleId }) => {
+    const size = SIZES.find((one) => one.id === sizeId) ?? SIZES[0]!;
+    const project = Object.values(sim.universe.projects)[0];
+    if (!project) return 'nothing to be in';
+    const wants = whatItWants(sim, project, roleId, size);
+    // The shape, to one decimal, which is what a room is read against. Finer and
+    // every draw differs, which would pass the sweep while proving nothing.
+    return AXES.map((axis) => `${axis.id}:${(wants[axis.id] ?? 0).toFixed(1)}`).join(' ');
+  },
+});
+
+const WANTS = new Map<number, Simulation>();
+function wantsFor(seed: number): Simulation {
+  const held = WANTS.get(seed);
+  if (held) return held;
+  const made = quickSave({}, `decider-wants-${seed}`);
+  made.execute({ kind: 'company.develop', payload: { title: `A Thing ${seed}`, medium: 'film' } });
+  WANTS.set(seed, made);
+  return made;
+}

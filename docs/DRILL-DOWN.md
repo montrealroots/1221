@@ -86,7 +86,7 @@ Five real layers, every number already computed by `src/engine/systems/life.ts`
 and currently thrown away:
 
     You                     → the person. Four facets, not four descents.
-      How You Are           → all nine wellbeing dials. Six of the nine are
+      How You Are           → all eight wellbeing dials. Six of the eight are
                               simulated daily and appear on no screen today.
         Stress              → "Eighteen, and coming down. Nothing's adding to
                               it — that only starts when you're running on

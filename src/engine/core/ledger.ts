@@ -45,11 +45,6 @@ export interface Account {
   creditLimit?: Money;
   /** Annual percentage rate as a decimal, e.g. 0.2249. */
   apr?: number;
-  /** Original principal for amortising debts. */
-  originalPrincipal?: Money;
-  /** Remaining scheduled payments. */
-  termMonthsRemaining?: number;
-  monthlyPayment?: Money;
   openedAt: Instant;
   closedAt?: Instant;
   /** Nominal accounts are hidden from the player's account list. */
@@ -57,26 +52,6 @@ export interface Account {
   /** Grouping for statements: 'housing', 'transport', 'career', ... */
   category?: string;
   last4?: string;
-  /** The product it was opened on, from the banking catalog. Absent on an account from before products existed. */
-  productId?: string;
-  /** What the bank will let the balance go below zero by, before it declines. */
-  overdraftLimit?: Money;
-  /** Whether cover is switched on. Off means a payment is refused rather than covered for a fee. */
-  overdraftOptIn?: boolean;
-  /** Withdrawals made this statement month, for a savings product that limits them. */
-  withdrawalsThisMonth?: number;
-  /** When the balance last went below zero, so cover is charged once an episode rather than once a day. */
-  inCoverSince?: Instant;
-  /** A certificate's maturity. Money out before this costs a share of the interest. */
-  maturesAt?: Instant;
-  /** Interest a certificate has earned so far, so breaking it early can give some back. */
-  interestEarned?: Money;
-  /** The statement cycle: what the last one closed at, and when the payment is due. */
-  statementBalance?: Money;
-  statementAt?: Instant;
-  paymentDueAt?: Instant;
-  /** What has been paid against the current statement. */
-  paidSinceStatement?: Money;
 }
 
 export interface Posting {
@@ -167,17 +142,28 @@ export class Ledger {
     return txn;
   }
 
-  /** Available spend: cash balance, or remaining credit on a revolving line. */
+  /**
+   * Available spend: cash balance, or remaining credit on a revolving line.
+   *
+   * One implementation, and it took a while to get to one. `docs/ARREARS.md` had
+   * this down as a correct function nobody called, which was half the story — the
+   * money screen was computing `Math.max(0, limit + balance)` inline in two
+   * places while this sat here, so the idea had three implementations and the
+   * named one had no reader. The screen asks this now.
+   *
+   * What it is NOT is the affordability question the game turns on. Nothing a
+   * player can do spends out of a bank account: every door that costs money
+   * costs the company's money, and the company's answer is `behindTheCompany()`
+   * in `world/lot.ts` — cash plus what the family will still put in, which is a
+   * different and larger question than what a bank would lend. Three fields that
+   * belonged to the bank's version of it (`overdraftLimit`, `overdraftOptIn`,
+   * `inCoverSince`) were cut for having no writer at all.
+   */
   availableFunds(accountId: string): Money {
     const a = this.account(accountId);
     if (a.kind === 'credit_card' || a.kind === 'company_credit') {
       return Math.max(0, (a.creditLimit ?? 0) + a.balance);
     }
-    // Cover, where the bank offers it and it is switched on, spends like money
-    // and costs a fee per item. A certificate's money is not available at all
-    // until it matures; breaking it is its own decision.
-    if (a.maturesAt) return 0;
-    if (a.overdraftOptIn && a.overdraftLimit) return a.balance + a.overdraftLimit;
     return a.balance;
   }
 

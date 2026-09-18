@@ -19,7 +19,7 @@
  * But the business they are trying to enter is American, and the American
  * business is fenced. A member of SAG-AFTRA may not work for a producer who
  * has not signed with SAG-AFTRA — anywhere on earth, which is the whole point
- * of the rule — so the first time this family wants an American actor, an
+ * of the rule — so the first time this family wants an American performer, an
  * Icelandic company is not enough. They need an American subsidiary to sign
  * with, and forming one is a real, dated, costly step.
  *
@@ -96,6 +96,16 @@ export interface Company {
   /** What it says it is for. Buyers and talent both read this. */
   remit: string;
   foundedAt: Instant;
+  /**
+   * When it was wound up. Never, in this build.
+   *
+   * No command writes it — there is no `company.dissolve` — and five filters
+   * read it: three in `world/company.ts` and two in `ui/looks/estate.tsx`.
+   * Five guards against a state the save cannot reach. They stay because a
+   * company that cannot be wound up is a gap somebody will want closed, and
+   * the filters are where the closing would land; until then, read them as
+   * shape.
+   */
   dissolvedAt?: Instant;
   /**
    * The last thing the family said about carrying this, by rung id.
@@ -130,6 +140,23 @@ export interface Company {
    * also the only way to read what money spent on being known actually bought.
    */
   turnedAway?: Partial<Record<string, number>>;
+  /**
+   * The same enquiries again, counted by which office they came from.
+   *
+   * `turnedAway` above buckets a refusal by its reason, which answers "what is
+   * sending work away" and hides "who". Three of the ten offices in
+   * `ENQUIRY_SHAPES` — the European agency's commercials, the Nordic
+   * broadcaster's series, the streamer's documentaries, 26 of 101 in enquiry
+   * weight — are refused at every room size this lot can build, on the rebate
+   * arithmetic or on price. They ring every year and they always go to Budapest.
+   *
+   * That is the premise of the whole business working exactly as written, and it
+   * was invisible: a player saw an anonymous tally of reasons and could not tell
+   * a run of bad luck from three standing customers they are structurally unable
+   * to serve. The stage the player can choose to build is the decision this
+   * informs — it recovers one of the four, and no room recovers the other three.
+   */
+  rangAndWent?: Partial<Record<string, { times: number; because: string }>>;
 }
 
 // ---------------------------------------------------------------------------
@@ -157,9 +184,36 @@ export interface Registration {
   /** The number it was given. Shaped like the real thing, invented by SLATE. */
   number: string;
   since: Instant;
-  /** When the next filing is due, where the register wants one. */
+  /**
+   * The date the register would next want something filed.
+   *
+   * Set once, from the cadence on the registry's own row, and never moved
+   * again: the build has no filing, so it has no roll-forward either. One
+   * screen prints the date and calls it what it is. Read it as a fact about
+   * the body rather than as a deadline the engine keeps, because there is no
+   * arrears, no fee and no consequence behind it.
+   */
   nextDueAt?: Instant;
-  /** Struck off, surrendered, or lapsed. */
+  /** How long the registry will wait for a filing fee the company cannot find. */
+  graceUntil?: Instant;
+  /**
+   * Struck off, for not filing.
+   *
+   * Registrations only ever started. There was no clock in `world/company.ts` and
+   * no `company.deregister`, so the engine never wrote this: the one writer in the
+   * tree was a test setting it by hand to prove the filter above it worked.
+   *
+   * `runTheClock` writes it now. A registration carries `nextDueAt` and the
+   * registry carries `filesEveryMonths` and a fee, and a filing that is never paid
+   * for is a company that gets struck off — which for `is_companies` shuts `trade`,
+   * the door everything else in the build hangs from. That is the correct weight
+   * for it and the reason this was specified before it was attempted.
+   *
+   * Only the annual company-register filing can actually fail, because it is the
+   * only one with a fee: VAT files every two months and the employer registration
+   * every month, both at nought, so nothing about them can go wrong yet. Said
+   * plainly rather than papered over with an invented cost.
+   */
   endedAt?: Instant;
 }
 
@@ -187,15 +241,35 @@ export interface Signature {
   agreement: string;
   since: Instant;
   /**
-   * Cash the guild holds against what you will owe.
+   * What the deposit was is not stored, deliberately.
    *
-   * Real, and it lands at the worst possible moment: a deposit against cast
-   * salaries is wanted before you shoot, which is when a production has spent
-   * everything and earned nothing.
+   * It is real and it lands at the worst possible moment — a deposit against
+   * cast salaries is wanted before you shoot, which is when a production has
+   * spent everything and earned nothing — but the figure lives on the guild's
+   * own row in `content/incorporation.ts`, which is what the screen prints and
+   * what `company.sign` charges. A copy on the record would be a second answer
+   * waiting to disagree with the first, and nothing ever read it.
+   *
+   * And below it: when the company stopped being signatory, which is never.
+   * A signature only ever starts. `company.sign` writes one and no command
+   * anywhere ends one, so `endedAt` has no writer at all — not in the engine
+   * and not in a test. `signaturesOf` filters on it, which makes that filter a
+   * guard no reachable input trips. It is kept rather than cut because
+   * `globalRuleOne` reads `signedWith`, and the day a guild can pull a
+   * signature is the day that rule starts to bite backwards on a cast already
+   * seated. Until then, treat the filter as a shape and not a rule.
    */
-  depositCents: Money;
   endedAt?: Instant;
 }
+
+// A guild signature still has no clock, and that was decided again rather than
+// forgotten. Every other thing in this file that ends, ends on a date it already
+// carried: an option's term, a policy's year, a registration's filing period. A
+// signature carries a deposit and nothing else, because that is what it is — you
+// are signatory until you breach, not until a year is up. Inventing a renewal
+// would be inventing the mechanic, and the paragraph above names the hazard
+// waiting behind it: the day a guild can pull a signature is the day Global Rule
+// One starts biting backwards on a cast already seated.
 
 // ---------------------------------------------------------------------------
 // Cover
@@ -223,10 +297,58 @@ export interface Policy {
   insurer: string;
   /** What it pays out to, at most. */
   limitCents: Money;
-  /** What it costs a year. */
-  premiumCents: Money;
+  /**
+   * What the premium was is not stored, for the reason the deposit is not.
+   *
+   * It was copied onto the record at binding and then read by nobody: the
+   * screen prints `POLICY_BY_ID[kind].premiumCents` out of content and
+   * `company.insure` charges the same figure out of content, so the copy was a
+   * third voice in a conversation that already had two. The payment is in the
+   * ledger, where a payment belongs.
+   *
+   * Worth saying plainly, because the doc this replaces said "what it costs a
+   * year": the premium is charged once, on the day the cover is bound, and
+   * never again. A year of cover is what the quote describes, not what the
+   * engine bills.
+   */
   boundAt: Instant;
+  /**
+   * The date the term written on the policy runs to.
+   *
+   * A date on the paper, and not a thing that happens. No clock reads it, so
+   * cover bound in 2026 is still opening the `insure_a_shoot` and `greenlight`
+   * doors in 2046 — measured, ten years of it, in `docs/ARREARS.md`. It is set
+   * twelve months out because that is the term an underwriter writes, and it
+   * is printed on one screen as what the term is.
+   */
   renewsAt: Instant;
+  /**
+   * How long the insurer will wait for a premium the company could not find.
+   *
+   * A month, set the first time a renewal cannot be paid, and the date is said
+   * out loud in the notification so the shortfall is a thing a player can act on
+   * rather than a thing that happened. Cleared the moment it is paid.
+   *
+   * It exists because the company is funded to the cent every day by the family:
+   * a premium falling due on any day but the one the monthly wire lands on would
+   * otherwise find a balance of nought and take the cover away for the sake of
+   * eight thousand euros, which is not a decision anybody made.
+   */
+  graceUntil?: Instant;
+  /**
+   * When the cover stopped.
+   *
+   * This had no writer anywhere in the tree, which made `policiesOf`'s filter on
+   * it the purest example in the file of a guard no reachable input could trip: a
+   * policy entered `policiesOf` on the day it was bound and stayed there for the
+   * life of the save, so cover bound in 2026 was still opening the
+   * `insure_a_shoot` and `greenlight` doors in 2046.
+   *
+   * `runTheClock` writes it now, and only after the grace month has gone by
+   * without the premium being found — so the cover goes when the company truly
+   * cannot pay for it, which on a save with the sugar behind it means the family
+   * has stopped covering.
+   */
   lapsedAt?: Instant;
 }
 
@@ -257,11 +379,38 @@ export interface Holding {
   provenance: Provenance;
   hold: Hold;
   acquiredAt: Instant;
-  /** An option runs out. Ownership does not. */
+  /**
+   * The date an option's term runs to. Ownership carries none.
+   *
+   * It was what is written on the agreement and not a thing the build acted on:
+   * an option whose date went by a decade ago was still in `holdingsOf`, still
+   * opened `own_material`, `deliver` and `greenlight`, and `company.develop`
+   * would still stamp a brand-new project `optioned` off it.
+   *
+   * `runTheClock` reads it now, and the greenlight beats it — committing to a
+   * picture exercises the option and turns the hold into ownership, which is what
+   * a producer does with the money. So the mistake the ledger entry named is a
+   * mistake a player can now make: option something, sit on it for eighteen
+   * months without saying yes, and the rights go back.
+   */
   expiresAt?: Instant;
-  optionFeeCents?: Money;
-  /** What exercising the option would cost. */
-  purchasePriceCents?: Money;
+  /**
+   * When the term ran out, on an option nobody exercised.
+   *
+   * Set by `runTheClock` and filtered by `holdingsOf`, so the record stays in the
+   * save — a thing the company used to hold is part of its history — while the
+   * company stops holding it.
+   */
+  lapsedAt?: Instant;
+  /**
+   * What was paid for it, and what exercising would cost, are not stored.
+   *
+   * Both arrived on the payload, both were charged at the moment the hold was
+   * taken, and both then sat on the record with nothing that ever looked. There
+   * is no `company.exercise` to read a purchase price and no screen that prints
+   * an option fee, so the two figures were a price list for a shop with no
+   * door. The charge is in the ledger, where a payment belongs.
+   */
   chainComplete: boolean;
   /** What is missing from the chain, where anything is. */
   chainGap?: string;
@@ -283,16 +432,49 @@ export type RoleId =
   | 'principal' | 'development' | 'production' | 'business_affairs'
   | 'accountant' | 'facility';
 
+/**
+ * The posts at the sugar group, which are not the posts at a film company.
+ *
+ * A head of development and a production accountant are not jobs at a cane
+ * mill, and giving the group the film roles to avoid widening this union would
+ * have made the one screen that says who runs the business say something false
+ * about it. Two unions and one `Post` shape: the record is the same thing in
+ * both companies, and only the list of what a seat can be differs.
+ */
+export type GroupRoleId =
+  | 'chair' | 'board' | 'managing' | 'agronomy' | 'milling' | 'trade' | 'finance';
+
+export type PostRole = RoleId | GroupRoleId;
+
 export interface Post {
   id: Id;
   saveId: Id;
   companyId: Id;
-  role: RoleId;
+  role: PostRole;
   /** Empty where the post exists and nobody is in it. */
   personId?: Id;
+  /**
+   * What the post costs a month is not stored, and is not charged either.
+   *
+   * The rate was copied here from `ROLE_BY_ID` at boot and at every hire, and
+   * then read by nobody — both screens that print a monthly figure print it
+   * out of content. So the copy went, on the same argument as the guild
+   * deposit and the option fee above it.
+   *
+   * The larger fact the copy was standing in front of: `world/company.ts` has
+   * no clock, so a filled post is never charged at all — not once, not
+   * monthly. Filling development, production, business affairs and the
+   * accountant on the first morning quotes EUR 38,000 a month, which over five
+   * played years is EUR 2,280,000 by the words. Measured paired against the
+   * same three seeds with the posts left empty, the company account ends on
+   * the same cent, and the ledger carries nought lines naming any post.
+   *
+   * So filling a post is free, and free is why it is never a decision.
+   * Charging for it wants a monthly tick, which is a larger thing than a
+   * field, and it is the owner's to call: the rate is quoted on two screens
+   * and it should go on being quoted, because a rate is a fact about the job.
+   */
   filledAt?: Instant;
-  /** What the post costs the company a month. */
-  monthlyCents: Money;
 }
 
 // ---------------------------------------------------------------------------
@@ -340,8 +522,6 @@ export interface Part {
   seconds: number;
   /** How far each dimension has come, by rung id. Absent means the bottom. */
   maturity?: Partial<Record<string, string>>;
-  /** When it transmits or is due, where the plan gives parts their own dates. */
-  dueAt?: Instant;
   /**
    * Seconds of this part the cutting room has to make again.
    *
@@ -436,15 +616,17 @@ export interface Project {
    * The plan's figure is a default, not a rule. Money buys capacity, capacity
    * buys progress at a rate, and money never buys progress directly — so the
    * number of editors is the decision that sits between a budget and a
-   * delivery date, and under-resourcing it is how a season misses air.
+   * delivery date, and under-resourcing it is how a season misses air. It is
+   * taken once, on the greenlight form, priced beside the number it sets, and
+   * no later week reopens it.
    */
   hands?: number;
   /**
    * Finished seconds the cutting room has produced, cumulative.
    *
    * The output side of the second ledger, and the only part of the cut that
-   * cannot be derived: it depends on how many hands the room had in every week
-   * it ran, and that is a decision that can change week to week. Parts reach
+   * cannot be derived: it depends on how many hands the room was given at the
+   * greenlight, which is the last moment anybody sets that number. Parts reach
    * the rung the cut takes them to, in order, as this covers their runtime.
    */
   cut?: number;
@@ -537,6 +719,49 @@ export interface Project {
    * that produced it.
    */
   windowsPaid?: string[];
+
+  // --- What the state gives back -------------------------------------------
+
+  /**
+   * The reimbursement claim, once the picture has applied for one.
+   *
+   * Absent on a picture that never applied, which is the ordinary state of a
+   * picture whose producer forgot. The application closes on the first day of
+   * photography, so this field can only ever be written before the shoot and
+   * can never be written afterwards.
+   */
+  rebate?: Claim;
+
+  /**
+   * Of everything this picture has spent, what was not spent in Iceland.
+   *
+   * Counted as it goes rather than worked out afterwards, because the two
+   * things in it are not recoverable from a total: the flights that brought
+   * somebody here, and a penalty, which is money gone without being spend at
+   * all. Both come off the figure an auditor would certify, and neither leaves
+   * a trace in `spentCents` that says which it was.
+   */
+  notSpentHereCents?: Money;
+}
+
+/**
+ * A production's claim on the Icelandic reimbursement.
+ *
+ * The rate is stamped at the application and not recomputed at payment, the
+ * way the real thing works: you are told which tier you are on when the
+ * ministry accepts the file, and a picture that shrinks afterwards has already
+ * been told. That stamp is the whole reason the higher tier is worth aiming at
+ * before a shoot instead of hoping for one after it.
+ */
+export interface Claim {
+  appliedAt: Instant;
+  /** The share of certified spend this picture was accepted at. */
+  shareAt: number;
+  /** What an auditor certified as Icelandic spend, once one has. */
+  certifiedCents?: Money;
+  /** What the state actually paid, and when it landed. */
+  paidCents?: Money;
+  paidAt?: Instant;
 }
 
 // ---------------------------------------------------------------------------
@@ -570,7 +795,18 @@ export interface Role {
   /** What the picture has set aside for it, before anybody argues. */
   bandCents: Money;
   /**
-   * Who came in for it, by person id, once the breakdown has gone out.
+   * What this particular part needs, by axis id, three numbers coming to three.
+   *
+   * Laid at the greenlight and stored rather than derived, because it is a fact
+   * about how the part was written and not about how big it is: two leads on
+   * the same picture can be a coverage problem and a face in a window, and a
+   * figure recomputed from the size every time would say they were the same
+   * buy. It is what stops the best performer for every part in the save being the
+   * same weighted sum.
+   */
+  wants?: Partial<Record<string, number>>;
+  /**
+   * Who came in for it, and how far anybody has got with them.
    *
    * Absent until somebody puts the part out, which is a dated act and not a
    * list that appears: the people on it exist because the part was advertised,
@@ -580,9 +816,35 @@ export interface Role {
    * pile every time, and choosing between four strangers who keep changing is
    * not a decision.
    */
-  seen?: Id[];
-  /** When it went out. */
-  outAt?: Instant;
+  seen?: Looked[];
+}
+
+/**
+ * One person the company has looked at for one part.
+ *
+ * The rounds are stored and what the company believes is not, which is the
+ * whole shape of it: a belief recomputed from the rounds every time anybody
+ * asks can never drift from what was actually done to earn it, and a stored
+ * belief would be a number that outlived its reason. What the company sees is a
+ * fixed distance from the truth, and the rounds are what shortens the distance.
+ */
+export interface Looked {
+  personId: Id;
+  /**
+   * Rounds done, in the order they were done, by `content/casting.ts` id.
+   *
+   * Absent means the pile — a headshot and a credit list and nothing else,
+   * which is a state with real numbers rather than an empty one.
+   */
+  rounds?: string[];
+  /**
+   * The axis the last note was given on, where one was.
+   *
+   * A session is one note and a note is one axis. Held here rather than beside
+   * the round because it is the last one that counts: you do not accumulate
+   * notes, you give the one you have and find out what it bought.
+   */
+  note?: string;
 }
 
 /**
@@ -600,8 +862,14 @@ export interface Seat {
   /** What was agreed, in cents. */
   feeCents: Money;
   castAt: Instant;
-  /** Whether the fee is owed whether or not the picture is ever made. */
-  payOrPlay?: true;
-  /** When they were let go, where they were. The fee stays owed. */
+  /**
+   * When they were let go, where they were. The fee stays owed.
+   *
+   * There is no flag beside this saying whether the engagement was pay or play,
+   * because every engagement in this build is: the money goes out when somebody
+   * says yes and letting them go afterwards never gets it back. A field
+   * distinguishing the two would be a field with one value, which is the
+   * shortest possible way to imply a choice nobody is offered.
+   */
   releasedAt?: Instant;
 }

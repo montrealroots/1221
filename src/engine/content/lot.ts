@@ -314,6 +314,41 @@ export interface OverheadLine {
   label: string;
   monthlyCents: Money;
   said: string;
+  /**
+   * Whether the line moves with how much building there is.
+   *
+   * The table below is what four stages cost. It was the whole answer while
+   * four stages was the whole lot, and it stopped being one the moment the
+   * player could put up a fifth: a room that cost nothing to run would be a
+   * room worth building the instant the money existed, and the break-even
+   * figure beside it would have gone *down* when the lot got bigger.
+   *
+   * So the lines that are a function of what stands there scale with the floor
+   * that stands there, and the two that aren't, don't. The sinking fund is
+   * defined as a share of what the thing cost. Fasteignaskattur is levied on
+   * assessed value and insurance on replacement value, both of which are the
+   * building. Heat and light and the fire certificate are per square meter of
+   * room. But a gate is a gate however many stages are behind it, and what the
+   * lot spends on being known is a decision rather than a consequence.
+   */
+  withTheFloor: boolean;
+  /**
+   * Whether the line is a purchase that carries VSK.
+   *
+   * Three of the seven are, and the other four are not, which is the reason
+   * this is a field rather than one rate across the table. A wage carries no
+   * value added tax and neither does the employer's side of it, so the standing
+   * crew is out. Insurance is an exempt supply in Iceland, so the cover is out.
+   * Fasteignaskattur is a tax and not a supply anybody makes. And the sinking
+   * fund is the company moving its own money into its own reserve, which is not
+   * a purchase at all — it only becomes one on the day the roof is actually
+   * replaced.
+   *
+   * What is left is electricity and heat, the contracted services, and what the
+   * lot spends on being known. Those are bought from somebody who charges VSK
+   * on them, and a registered company gets that part back.
+   */
+  carriesVat: boolean;
 }
 
 export const OVERHEAD: readonly OverheadLine[] = [
@@ -322,57 +357,96 @@ export const OVERHEAD: readonly OverheadLine[] = [
     label: 'Set Aside For Repairs',
     monthlyCents: 200_000_00,
     said: 'One percent of what it cost to build, every year, against the day something big fails.',
+    withTheFloor: true,
+    carriesVat: false,
   },
   {
     id: 'property_tax',
     label: 'Property Tax',
     monthlyCents: 176_000_00,
     said: 'Fasteignaskattur, at the commercial rate the municipality sets.',
+    withTheFloor: true,
+    carriesVat: false,
   },
   {
     id: 'crew',
     label: 'Standing Crew',
     monthlyCents: 154_000_00,
     said: 'Sixteen people who are there whether anybody is shooting or not, five of them on the gate.',
+    withTheFloor: false,
+    carriesVat: false,
   },
   {
     id: 'insurance',
     label: 'Insurance',
     monthlyCents: 57_000_00,
     said: 'Including the statutory catastrophe cover, which in Iceland means volcano and earthquake.',
+    withTheFloor: true,
+    carriesVat: false,
   },
   {
     id: 'selling',
     label: 'Selling It',
     monthlyCents: 50_000_00,
     said: 'A stage nobody has heard of has to be sold, continuously, at every market there is.',
+    withTheFloor: false,
+    carriesVat: true,
   },
   {
     id: 'utilities',
     label: 'Keeping The Lights On',
     monthlyCents: 27_000_00,
     said: 'Cheap, because the heat comes out of the ground and the power off the grid behind it.',
+    withTheFloor: true,
+    carriesVat: true,
   },
   {
     id: 'services',
     label: 'Contracted Services',
     monthlyCents: 25_000_00,
     said: 'Fire and sprinkler certification, hoist inspection, snow clearing, waste.',
+    withTheFloor: true,
+    carriesVat: true,
   },
 ];
 
 /** What a dark month costs, in cents. */
-export const MONTHLY_OVERHEAD_CENTS: Money = OVERHEAD.reduce((n, line) => n + line.monthlyCents, 0);
+/**
+ * The floor: what a month costs with the one line somebody chooses at its least.
+ *
+ * Not what a month costs. The selling line is a decision and this table carries
+ * its smallest value, so the live figure is `monthlyOverhead(sim)` in
+ * `world/lot.ts` and it is larger whenever the lot is being sold harder than
+ * the minimum. This was named `MONTHLY_OVERHEAD_CENTS` and read as though it
+ * were the answer, which is how the break-even figure came to measure against a
+ * bar the player had already moved.
+ */
+export const OVERHEAD_FLOOR_CENTS: Money = OVERHEAD.reduce((n, line) => n + line.monthlyCents, 0);
 
 /**
- * The three rates a stage is let at, as a share of the shooting rate.
+ * The rates a stage is let at, as a share of the shooting rate.
  *
- * Stages are quoted by the week, never by the day, and never at one price. A
- * production pre-lights and strikes at a lower rate than it shoots at, and
- * pays a lower one again to hold a standing set on a dark day. Anybody who has
- * booked one knows this; a game that charges one flat rate has not.
+ * Stages are quoted by the week, never by the day, and never at one price: a
+ * production pre-lights and strikes at a lower rate than it shoots at. Anybody
+ * who has booked one knows this; a game that charges one flat rate has not.
+ *
+ * Building and striking are the same price on purpose, and that is the design
+ * rather than a shortcut — the crew, the rigging and the hours are the same
+ * going up as coming down. What was a shortcut was writing the strike weeks as
+ * `prep` rows because the rate matched, which made the two indistinguishable in
+ * the save and cost the board the one figure that says turnaround fills a room.
+ * Equal rates and equal names are different claims.
+ *
+ * There was a fourth, `hold`, for a standing set on a dark day, and it is worth
+ * saying why it went. It was true of the world and false of this build: nothing
+ * ever wrote a booking of that kind, so the rate was never once looked up. The
+ * measurement that settled it replaced this table with one that throws when
+ * anything reads `hold`, and then ran eighteen played years and the whole test
+ * suite — `shooting` was read seven hundred times, `prep` a hundred, `hold` not
+ * at all. A returning series that holds its sets between seasons is a good
+ * feature and the rate comes back with it.
  */
-export const RATE_SHARE = { shooting: 1, prep: 0.6, hold: 0.35 } as const;
+export const RATE_SHARE = { shooting: 1, prep: 0.6, strike: 0.6 } as const;
 
 /**
  * How long a stage is held either side of the shoot, as multiples of it.
@@ -595,6 +669,21 @@ export const BREAK_EVEN_NOTE =
  */
 export interface Enquiry {
   kind: 'feature' | 'limited series' | 'commercial' | 'documentary';
+  /**
+   * Who this is, and it is not `from`.
+   *
+   * An office's identity used to be the sentence printed about it. Every memory
+   * the player builds up — how many of their rooms this office has sat through,
+   * what it keeps asking for, whether it has stopped ringing — was keyed on
+   * `${from}, ${kind}` by string equality, and `theHouse` seeded that office's
+   * taste off the same string. So rewording a line of prose wiped the player's
+   * history with that office and gave it different preferences, and two rows
+   * whose sentences happened to match were one office.
+   *
+   * Prose and identity are different jobs. This one never changes; the sentence
+   * above it can be rewritten any afternoon.
+   */
+  officeId: string;
   /** Where the money is from, in the world's words. */
   from: string;
   /** Floor it needs, square meters. */
@@ -634,46 +723,46 @@ export const ENQUIRY_SHAPES: readonly { weight: number; of: Enquiry }[] = [
   // Sugar Land against the stage in Gufunes rather than against Budapest.
   {
     weight: 30,
-    of: { kind: 'commercial', from: 'an Icelandic agency', needsSqm: 700, needsHeightM: 8, needsTank: false, weeks: 1, spendIsk: 25_000_000, local: true },
+    of: { officeId: 'is_agency_spot', kind: 'commercial', from: 'an Icelandic agency', needsSqm: 700, needsHeightM: 8, needsTank: false, weeks: 1, spendIsk: 25_000_000, local: true },
   },
   {
     weight: 18,
-    of: { kind: 'limited series', from: 'RÚV', needsSqm: 1_400, needsHeightM: 10, needsTank: false, weeks: 6, spendIsk: 260_000_000, local: true },
+    of: { officeId: 'ruv_series', kind: 'limited series', from: 'RÚV', needsSqm: 1_400, needsHeightM: 10, needsTank: false, weeks: 6, spendIsk: 260_000_000, local: true },
   },
   {
     weight: 10,
-    of: { kind: 'documentary', from: 'an Icelandic producer', needsSqm: 500, needsHeightM: 8, needsTank: false, weeks: 2, spendIsk: 35_000_000, local: true },
+    of: { officeId: 'is_doc', kind: 'documentary', from: 'an Icelandic producer', needsSqm: 500, needsHeightM: 8, needsTank: false, weeks: 2, spendIsk: 35_000_000, local: true },
   },
   {
     weight: 8,
-    of: { kind: 'feature', from: 'an Icelandic production', needsSqm: 1_800, needsHeightM: 12, needsTank: false, weeks: 5, spendIsk: 380_000_000, local: true },
+    of: { officeId: 'is_feature', kind: 'feature', from: 'an Icelandic production', needsSqm: 1_800, needsHeightM: 12, needsTank: false, weeks: 5, spendIsk: 380_000_000, local: true },
   },
   // And the rest is the world, which is where the stage-weeks are. Iceland
   // draws on the order of a dozen foreign projects in a year, so these are
   // rare, and each one is worth more than a season of the ones above.
   {
     weight: 12,
-    of: { kind: 'commercial', from: 'a European agency', needsSqm: 900, needsHeightM: 9, needsTank: false, weeks: 1, spendIsk: 40_000_000, local: false },
+    of: { officeId: 'eu_agency_spot', kind: 'commercial', from: 'a European agency', needsSqm: 900, needsHeightM: 9, needsTank: false, weeks: 1, spendIsk: 40_000_000, local: false },
   },
   {
     weight: 9,
-    of: { kind: 'limited series', from: 'a Nordic broadcaster', needsSqm: 1_800, needsHeightM: 12, needsTank: false, weeks: 9, spendIsk: 420_000_000, local: false },
+    of: { officeId: 'nordic_series', kind: 'limited series', from: 'a Nordic broadcaster', needsSqm: 1_800, needsHeightM: 12, needsTank: false, weeks: 9, spendIsk: 420_000_000, local: false },
   },
   {
     weight: 5,
-    of: { kind: 'documentary', from: 'a streamer', needsSqm: 600, needsHeightM: 8, needsTank: false, weeks: 2, spendIsk: 60_000_000, local: false },
+    of: { officeId: 'streamer_doc', kind: 'documentary', from: 'a streamer', needsSqm: 600, needsHeightM: 8, needsTank: false, weeks: 2, spendIsk: 60_000_000, local: false },
   },
   {
     weight: 4,
-    of: { kind: 'feature', from: 'an American studio', needsSqm: 5_200, needsHeightM: 24, needsTank: false, weeks: 14, spendIsk: 1_900_000_000, local: false },
+    of: { officeId: 'hollywood_feature', kind: 'feature', from: 'a Hollywood studio', needsSqm: 5_200, needsHeightM: 24, needsTank: false, weeks: 14, spendIsk: 1_900_000_000, local: false },
   },
   {
     weight: 3,
-    of: { kind: 'feature', from: 'a British production', needsSqm: 2_600, needsHeightM: 14, needsTank: true, weeks: 7, spendIsk: 780_000_000, local: false },
+    of: { officeId: 'uk_feature', kind: 'feature', from: 'a British production', needsSqm: 2_600, needsHeightM: 14, needsTank: true, weeks: 7, spendIsk: 780_000_000, local: false },
   },
   {
     weight: 2,
-    of: { kind: 'feature', from: 'an American studio', needsSqm: 3_000, needsHeightM: 16, needsTank: true, weeks: 11, spendIsk: 2_400_000_000, local: false },
+    of: { officeId: 'us_feature', kind: 'feature', from: 'an American studio', needsSqm: 3_000, needsHeightM: 16, needsTank: true, weeks: 11, spendIsk: 2_400_000_000, local: false },
   },
 ];
 
@@ -710,3 +799,167 @@ export const CREW_PENALTY_SOURCE = 'Imported-build cost uplift over UK, 25–40%
  * existence who are still here afterwards, and they count.
  */
 export const CREW_BASE = 1_000;
+
+// ---------------------------------------------------------------------------
+// The room the lot does not have
+// ---------------------------------------------------------------------------
+
+/**
+ * The small stage, and what putting one up costs.
+ *
+ * `docs/DEPTH.md` has carried this as a decision rather than a defect since the
+ * lot was built, and the measurement bears it out: four rooms, and the smallest
+ * is larger than four of the ten enquiry shapes need. Both ordinary commercials
+ * and both documentaries — fifty-seven of the hundred and one weight between
+ * them — are turned away because the only room that will hold them costs well
+ * over half of everything they came here to spend. Nobody designed that. It fell
+ * out of pricing a whole hold against a budget.
+ *
+ * Half of that was a bug and this is where it was found. Pricing the room meant
+ * asking what the short work can actually pay, and the answer is €23 a square
+ * meter a week — all four short shapes land between €22.97 and €23.92, and the
+ * benchmark above is €23. They could always afford the going rate for a stage.
+ * What they could not afford was two thousand square meters of it, and on top of
+ * that `heldFor` was tripling their quote with a floor that only ever fired on
+ * them. Deleting the floor took the lot from about four and a half outside jobs
+ * a year to seven and a half, and the player from fifteen auditions in ten years
+ * to thirty-three, without a euro spent. Measurements taken before that was
+ * found — thirty-five shoots against eighty-six — were measuring the floor.
+ *
+ * What the room is worth after it, over six seeds and twenty-five years: the
+ * documentary, which is the one kind of production that cannot happen here at
+ * any hold length without it; a sixth holder; about thirteen more shoots a
+ * decade; and four more auditions by year ten, twelve by year twenty-five. It
+ * never pays for itself — seventeen million to put up and about four hundred
+ * thousand a year to keep, against under a hundred thousand a year of letting.
+ *
+ * That is the correct shape rather than a disappointment. Auditions are gated on
+ * whether a holder would think of the player at all, so a new holder is a door
+ * that takes years to open: the room does not buy work, it buys doors. And it is
+ * paid for out of the same patience the greenlight spends from. Build the room
+ * and get asked about parts, or keep the patience and greenlight your own
+ * pictures — both are routes to a career and there is one pool.
+ *
+ * One figure above is no longer the whole price, and the correction makes the
+ * bet better rather than worse. A construction bill carries VSK, and a company
+ * on the VAT register gets that part back: a fifth of seventeen and a quarter
+ * million is about three and a third million, filed on the return for the
+ * period the money went out. The room costs what the panel says on the day and
+ * about fourteen million once the tax comes home, which is the largest single
+ * claim this company will ever make and the clearest reason the Reclaim The Tax
+ * door is worth opening before the build rather than after.
+ */
+/**
+ * How big the fifth room is, and why exactly this big.
+ *
+ * The smallest room that holds every short job that rings. The largest of them
+ * — a European agency's commercial — asks for nine hundred square meters, and
+ * a room that missed it would leave the dearest piece of short work on the
+ * table while carrying the floor to shoot it. Smaller than this is a room that
+ * turns away the work it was built for; larger is floor the short work does not
+ * need and has to pay the overhead on.
+ */
+export const A_SMALL_STAGE_SQM = 950;
+
+export const A_SMALL_STAGE = {
+  name: 'Stage 5',
+  floorSqm: A_SMALL_STAGE_SQM,
+  clearHeightM: 10,
+  /**
+   * What a week in it lets for: the published benchmark, by the square meter.
+   *
+   * Derived and not chosen, which took two goes to get right. The first figure
+   * here was picked because it made the commercials book, and at €11.58 a
+   * square meter it was the cheapest floor on a lot whose own rate card says
+   * small rooms are the dearest — a number tuned to an outcome with the
+   * reasoning written afterwards.
+   *
+   * What the arithmetic actually says is better than the invention. Every short
+   * job that rings — both commercials and both documentaries — will carry
+   * between €22.97 and €23.92 a square meter a week for a room this size, and
+   * the benchmark is €23. They can afford the going rate for a stage. What they
+   * cannot afford is two thousand square meters of it, which is the smallest
+   * room the lot has. The lot was never turning the short work away on price
+   * per meter. It was turning it away on the size of its smallest room, and
+   * that is a thing somebody can build their way out of.
+   */
+  weekRateCents: Math.round(A_SMALL_STAGE_SQM * THE_RATE_CARD.benchmarkPerSqmWeek * 100) as Money,
+  fitted: ['geothermal_floor', 'silent_hvac'] as readonly StageFeature[],
+  said: 'The small one, and the only room here a week-long job can afford.',
+  /**
+   * How long it takes to stand up, in weeks.
+   *
+   * Eighteen months. A stage is a steel frame, an acoustic liner and a power
+   * feed, and none of it is quick — which is the point of it as a decision. The
+   * money goes now and the work arrives in a year and a half, so it is the same
+   * bet as the selling spend and on a longer fuse.
+   */
+  weeksToBuild: 78,
+} as const;
+
+/**
+ * What new stage floor costs a square meter.
+ *
+ * Derived from what this lot cost rather than quoted fresh, so the two numbers
+ * cannot drift: `BUILD_COST_CENTS` is what the family paid to put up
+ * `LOT_FLOOR_SQM`, and a new room is priced at the same rate.
+ *
+ * It is higher than a pure construction quote, because it is the whole of what
+ * a lot costs by the meter — the workshops, the power, the road. A fifth room
+ * on land that already has all of that would be cheaper in life, and it is
+ * charged the full rate here anyway, for the same reason `ISK_A_EURO` is held
+ * flat: this is the only construction price the game knows, and a marginal
+ * discount invented to sit under it would be a second guess stacked on the
+ * first. The bet is dearer than it needs to be, and the game says so rather
+ * than quietly making it easier.
+ */
+export const A_SQUARE_METRE_CENTS: Money = Math.round(BUILD_COST_CENTS / LOT_FLOOR_SQM);
+
+/** What the small stage costs to build, all in. */
+export const SMALL_STAGE_COST_CENTS: Money =
+  Math.round(A_SQUARE_METRE_CENTS * A_SMALL_STAGE.floorSqm);
+
+export type WhyNotBuild = 'no-lot' | 'already' | 'going-up' | 'cannot-carry';
+
+export interface BuildRefusal {
+  id: WhyNotBuild;
+  /** Said to whoever asked for it, in the world's words. */
+  said: string;
+}
+
+/**
+ * Every way the fifth room is refused before the money moves.
+ *
+ * `cannot-carry` is the one a player will meet and the only one that ever
+ * changes its answer. The other three are facts about the lot; that one is a
+ * fact about the family, and it moves both ways — a year America stays shut
+ * brings the rungs down and closes a door that was open in the spring.
+ *
+ * What it tests is not the cash in the account. A building is committed to, not
+ * paid for out of the current month, and the same figure the greenlight asks
+ * about is the honest ceiling here too: what is in the account plus what the
+ * family will still put in before the money comes with a condition. A company
+ * that spends all of that on a room has nothing left to make a picture with,
+ * which is the whole of what makes this a decision instead of an upgrade.
+ */
+export const BUILD_REFUSALS: readonly BuildRefusal[] = [
+  {
+    id: 'no-lot',
+    said: 'There’s no lot to build it on.',
+  },
+  {
+    id: 'already',
+    said: `${A_SMALL_STAGE.name} is already standing.`,
+  },
+  {
+    id: 'going-up',
+    said: 'It’s already going up. Nobody builds the same room twice.',
+  },
+  {
+    id: 'cannot-carry',
+    said: 'The family won’t carry it on top of what it is already carrying.',
+  },
+];
+
+export const buildRefusalById = (id: WhyNotBuild): BuildRefusal | undefined =>
+  BUILD_REFUSALS.find((one) => one.id === id);

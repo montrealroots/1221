@@ -12,6 +12,17 @@ back in.
 | [PIPELINE.md](PIPELINE.md) | Every process in making a picture | 19 domains, 1,178 processes, 516 option spaces, plus the engines synthesis |
 | [KINDS.md](KINDS.md) | How that process differs by what you are making | 12 kinds, plus the spine synthesis |
 
+One more document is here for a different reason. [LIFESPAN.md](LIFESPAN.md) is
+not a fleet's answer to a question: it is authored material that was already in
+the build, carried out of `src/engine/content/lifespan.ts` when that file was
+cut down to the five names something actually read. Life expectancy and the
+state pension age by country, the seven named parts of a life, the ages a
+country sets for driving and drinking and marrying, and a maturation curve —
+none of it had a reader, so none of it could stay in the code. The doctrine
+says a declared word with nothing that reads it must not stay in the code; it
+does not say the research has to be destroyed. So the code went and this did
+not.
+
 ## Nothing is missing
 
 Both fleets ran to completion on 2026-09-14: twenty of twenty pipeline agents

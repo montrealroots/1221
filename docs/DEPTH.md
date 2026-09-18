@@ -52,16 +52,40 @@ stands now, and the only direction it is allowed to move:
 | 125 id namespaces | 17 | 20 |
 | 54 trait modifier keys | 7 | 7 |
 | 18 higher-is-worse guards | 12 | 12 |
-| 7 reputation axes | 0 | 7 |
+| 7 reputation axes | 0 | 6 |
 | 7 personality axes | 4 | 4 |
 | 813 acting attributes | 0 | 19 |
 
 The two rows that moved, moved for one reason: casting. Nineteen attributes are
-read as three axes that go three different places, and the seven reputation
-axes have writers because a cast is made of people whose standing, fame and
-conduct all decide something separately. Nineteen of eight hundred and thirteen
-is not a boast — it is a first reader on the largest unwired thing in the build,
-and the other seven hundred and ninety-four are still a promise.
+read as three axes that go three different places. Nineteen of eight hundred
+and thirteen is not a boast — it is a first reader on the largest unwired thing
+in the build, and the other seven hundred and ninety-four are still a promise.
+
+The reputation row said seven for a day, and that was wrong, so it is worth
+saying how: `tools/wired.mjs` counts a dial as wired when something **moves**
+it, and all seven are moved. The One Rule is stricter — it asks what **reads**
+one to decide something. On the day it was corrected, three did.
+
+Six do now, and each one goes somewhere different. `publicFame` decides whether
+a name can go off, and whether a production that has never met you thinks of
+you. `industryDemand` decides whether a part is beneath somebody.
+`controversy` decides what a picture takes and who an office will touch.
+`audienceAppeal` decides what a picture takes by a second route, and is the one
+axis on this list a performer earns rather than arrives with — the only way to
+get one is to have been in things people watched. `reliability` decides how far
+a shoot runs past its wrap date, and falls on everybody who was on one that
+did. `professionalReputation` is what a hire is worth.
+
+**`prestige` is still read by nothing, on purpose.** Every honest reader for it
+is a reader something else already has: put it on the sale and it is
+`audienceAppeal` under another name; put it on who gets called and it is
+`publicFame`. It is awards-and-critics standing and there are no awards and no
+critics, so it stays a declared word until there are. Inventing the seventh
+reader to finish the row would be the disease this page is about, performed on
+the page about the disease.
+
+Writing a number is not wiring it, and a tool that measures writers will say a
+thing is finished before it is.
 
 `tools/wired.mjs` walks the declared vocabulary, finds what nothing reads, and
 holds the count against `docs/UNWIRED.json`. It does not demand zero — content
@@ -100,7 +124,15 @@ lands here, and it cannot land without proving its inputs matter.**
 
 ## Where We Stand
 
-Measured on a booted save, not read off the source.
+Measured on a booted save, not read off the source, on the day it was measured.
+It is kept as it was written because the point of it is the shape of the hole
+this build started from, and rewriting the finding every time a line of it stops
+being true would leave nothing to have been wrong about. What has since been
+built against it is listed in `docs/COVERAGE-MATRIX.md`, which is generated and
+is the count to trust: the slate, the crew, the cast, the audition room, the
+lot's booking board, the two ledgers and the reimbursement all landed after
+this was taken, and the sentence below beginning "No auditions" is the list they
+were built from.
 
 **The world is unusually deep. The career does not exist.** Real time and
 timezones, NOAA sunrise and sunset including polar day and polar night, hourly
@@ -121,10 +153,25 @@ Three findings are defects rather than gaps, and all three are live:
   at 95% quality, which always clears the restful threshold, so morale climbs
   to 100 and pins while its only counterweight waits on a nourishment floor the
   same autopilot prevents. Four of the nine dials are constants by day thirty.
-- **The ageing model can never fire.** Because fitness is already at zero, the
-  age ceiling clamp binds on 0 of 27,375 days. Eight authored bands, each with
-  its own prose, are dead arithmetic. `src/engine/content/lifespan.ts` is 540
-  lines with 2 of its 28 exports wired.
+- **The ageing model fires, and half of it is dead.** This entry used to say it
+  could never fire, and that was measured on a save nobody plays. Re-measured on
+  played careers, ten years each, three seeds against two birth years: age costs
+  between two and seven parts and fourteen to sixteen points of mean readiness.
+  Zero the `recovery` column of `AGING` and a seventy-five-year-old plays a
+  career identical to a twenty-five-year-old's on every seed, to three decimals
+  — so `recovery` is the whole of it. Zero the `fitness` column and the run is
+  byte-identical; zero `condition` and one dial nothing reads moves by a point.
+  The age ceiling clamp really does bind on 0 of 27,375 days in the default save,
+  and on exactly 1 day per person once somebody is old enough for it to matter.
+  `src/engine/content/lifespan.ts` was 540 lines with 2 of its 48 exports read
+  from outside it — the denominator was wrong too. It is now 87 lines and 2
+  exports. Five names survived, which is the transitive closure of those two:
+  `ceilingAt`, `recoveryFactorAt`, `agingAt`, `AGING` and `AgingBand`; only the
+  first two are exported, because an `export` nothing imports is a declared
+  word with no reader in its own right. The forty-three that
+  nothing read — the per-country expectancy and pension tables, the seven named
+  parts of a life, the age gates, the family constants and the maturation curve
+  — are kept unwired in `docs/research/LIFESPAN.md`.
 - **Every attribute on every person is 100.** All 813, seeded to the ceiling.
   The craft sheet is not merely unread; it is uninformative even if read. And
   no look, workspace or screen displays it during play.
@@ -151,14 +198,19 @@ Eight from TEW's side, eight from film's. Each is a bar, not a feature.
    what is being judged, on separate clocks. *Today: seven fields, no movers.*
 4. **Contracts and options as real objects.** Terms, exclusivity, holdbacks,
    pay-or-play, options the other side holds, and being locked into something
-   that turned bad. *Today: the actor side is at zero.*
+   that turned bad. *Today: the performing side is at zero.*
 5. **An industry that runs without you.** Parts cast whether or not you read
    for them. *Today: structurally absent — the save has no table that could
    hold one.*
 6. **Incomplete information.** The gap between what is true and what the player
    is told. TEW cannot do this: there, the player has god-view of their own
-   promotion. *Today: `src/engine/core/audit.ts` is a complete, correct,
-   unused layer.*
+   promotion. *Today: built where it decides something and deleted where it did
+   not. An office's picture of the player lags the truth and that picture
+   decides what they are asked about (`world/audition.ts`). The explanation
+   layer that would have shown a decision's inputs back to the player, and the
+   history log that would have shown them their own past, were both complete,
+   both correct and both unread, and both are gone — the room they were for is
+   the honest place to rebuild them.*
 7. **Ageing and the career curve.** What you can play at forty as a consequence
    of what you did at twenty-five. *Today: written, and unreachable.*
 8. **Consequence memory that compounds.** Old decisions as the reason a door is
@@ -174,7 +226,7 @@ Eight from TEW's side, eight from film's. Each is a bar, not a feature.
 11. **Casting: the market for a person.** Breakdowns, submissions, callbacks,
     chemistry reads, and the offer that never comes with no reason given.
 12. **Rights, windows and the life of a picture.** Chain of title, negative
-    cost apart from P&A, territory by territory, and what an actor sees of it.
+    cost apart from P&A, territory by territory, and what a performer sees of it.
 13. **An audience and a market that judges.** Founded on real geography, real
     populations and real holiday calendars, with critics as a different
     population from the audience.
@@ -223,18 +275,89 @@ on the day it opens. Studio lots are justified by trading income, by the land,
 and by an owner who wants the capacity — which is this family exactly, and is
 the frame the game should put it in.
 
-What is left on it is a decision rather than a defect: whether the player can
-build a small stage. Four rooms and the smallest is bigger than four of the ten
-enquiry shapes need, which is most of why it is empty.
-
-**The lot has no small stage, and that is most of why it is empty.** Four rooms
+**The lot has no small stage, and that is part of why it is empty.** Four rooms
 and the smallest is bigger than four of the ten enquiry shapes need. The
 ordinary Icelandic commercial and the ordinary Icelandic documentary — 40 of the
 101 weight between them — are turned away because the only room that will hold
 them costs well over half of everything they were going to spend in the country.
 Nobody designed that; it fell out of pricing the whole hold against the budget.
-It is also the research's own warning about phase one, arriving from the other
-direction, and the obvious lever for a player: build a small one.
+
+**And most of it was a floor nobody had looked at.** Building the small room
+meant pricing it, and pricing it honestly meant asking what the short work can
+actually pay. It can pay €23 a square meter a week — every one of the four short
+shapes lands between €22.97 and €23.92 — and the lot's published benchmark is
+€23. They could always afford the going rate for a stage. What they could not
+afford was two thousand square meters of it.
+
+That was only half the answer. `heldFor` put a floor under both ends of every
+booking: any kind that prepped at all prepped for at least a whole week, and
+struck for at least another. It never once fired on the work it was written for,
+because a feature's own share of its own weeks already rounds well past one. It
+fired on every piece of short work there is. A one-week commercial was held for
+three weeks against a table that says a third of a week; a two-week documentary
+for four against a table that says a third of one. The table's own sentence is
+that a documentary on a stage *arrives in the morning and is gone by the
+evening*, and the floor made that sentence false. **A guard that only ever fires
+where it is wrong is worse than no guard**, and this one tripled the quote on
+all the short work and priced every piece of it off the lot.
+
+Deleting it changes nothing for a feature or a limited series — the same numbers
+come out — and takes the lot from about 4.5 outside jobs a year to about 7.4,
+from two kinds of production to three, and the player from 15 auditions in ten
+years to 33. The lot was not short of a room. It was tripling its own quotes.
+
+**The room is worth building, and it took three measurements to find out what
+it is worth.** The first, before the `heldFor` floor was found, had a planted
+stage taking the lot from 35 shoots to 86 and the player from 12 auditions to
+29 — which was the bug being measured, not the room. The second, after the floor
+came out, had it worth +4 auditions by year ten. That one was measured on a save
+nobody played, and by then a save nobody played was a save where holders shut
+you out after two unanswered asks: the room was being judged on how often a
+player who answers nothing gets asked, which is a number about the player.
+
+Measured on a save somebody plays — goes in for everything the dates allow,
+answers every note — across six seeds and twenty-five years, the room buys:
+
+| | year 10 | year 20 | year 25 |
+|---|---|---|---|
+| asks | +8.0 | +23.0 | +29.5 |
+| readings | +5.2 | +15.7 | +18.5 |
+| **parts** | **+4.2** | **+11.2** | **+13.0** |
+
+And a sixth holder, on every seed: an Icelandic producer making documentaries,
+who books between 19 and 37 times across the twenty-five years and zero times
+without the room. That is the one kind of production that cannot happen here at
+all, and it is not about the floor area — a documentary needs 500 square meters
+and the lot's smallest existing room is 2,000. It is that nobody making one can
+carry 2,000 square meters at the going rate.
+
+**It still does not pay for itself, and it is much closer than it looked.**
+€17.3m to build and €418,864 a year to keep, against €358,373 a year of extra
+letting averaged over six seeds — 86% of its own upkeep, and nothing at all
+against the build. The spread is wide: €196k a year on the worst seed, €426k on
+the best, so on some worlds the room does carry itself and on others it does not
+come close.
+
+**More work, and less money for it.** The same six seeds, over twenty-five
+years: +13 parts, and €487,428 *less* in the player's account. The room books
+small cheap productions, small cheap productions pay small fees, and a week
+standing on a documentary is a week not free for the American studio feature
+shooting the same weeks. That is the trade, and it is a real one — the room does
+not upgrade a career, it changes what kind of career is available.
+
+Auditions are gated on `remembersYou`, so a new holder who has never met the
+player is a door that takes years to open — the room does not buy work, it buys
+doors, and the doors it buys open onto smaller rooms. The money is spent in the
+currency that matters: €20.8m of the family's patience over ten years, out of
+the same pool the greenlight spends from. Build the room and get asked about
+parts, or keep the patience and greenlight your own pictures. Both are routes to
+a career and there is one pool.
+
+**The refusal is a live figure, not a timer.** What is behind the company is
+measured against a year of the group's profit, so a year America stays shut
+brings every rung down and a year it reopens puts them back. On one measured
+save the door is open at year 5, shut at 6, open again at 7, shut at 10 and
+shut for good from 11. A door that only ever shut would be a countdown.
 
 The order mattered and was nearly got wrong. Making demand respond to the world
 first would have produced a better-looking lot and an equally inert one, because
@@ -431,7 +554,7 @@ script supervisor, a casting office, scene partners. Generated on demand,
 persisted, and recurring.
 
 **3. The engagement and the deal.** Person × title × role class × dates × fee ×
-billing × exclusivity. This is where TEW's contracts axis and the actor's deal
+billing × exclusivity. This is where TEW's contracts axis and the performer's deal
 turn out to be the same record.
 
 **4. The unit of work, declared by the plan.** Not the shoot day. The research
@@ -637,6 +760,15 @@ million across a decade now saves five. The waste is still there and is on the
 screen, because a lever whose cost is hidden is the same trap facing the other
 way.
 
+**A rate that nothing writes is a price list, not a price.** The stage rate card
+carried three shares of the shooting rate — shooting, prep, and a lower one again
+for holding a standing set on a dark day. The third was true of the world and
+false of this build: `book` writes `shooting` and `prep` and has never once
+written `hold`, so across eighteen played years and the whole suite the key was
+read zero times, measured with a table that throws when anything asks for it. It
+is gone, with `BookingKind` narrowed to match, and it comes back the day a
+returning series holds its sets between seasons.
+
 **A rate card nothing reads is a price list, not a price.** `wouldBook` computed
 what the room cost on its third line and then never mentioned it again: the
 decision was size, then availability, then the rebate, so every stage on the lot
@@ -664,6 +796,74 @@ the engine's own arithmetic inside the test and checked it against itself.
 Reintroduce the fault, watch it go red, and only then believe the test — most of
 all when the fault is subtle enough that you wrote the test to catch it.
 
+**One fact subtracted in two places is a fault arithmetic cannot see.** The
+reimbursement takes what left the country off the certificate. The flights that
+bring a performer here leave it, so they were recorded on the picture as they
+went — and then counted a second time off the cast seats, because both pieces of
+code were written to be complete on their own. Every figure involved was
+correct, every test on either half passed, and the certificate was short by the
+price of a plane ticket. What found it was the one test that wrote out the whole
+sum term by term instead of asserting the direction it moved in. A test that
+only checks a number went down cannot tell one subtraction from two.
+
+**A decider sweep proves an input is read, never that the world varies it.**
+`tools/deciders.mjs` walks every declared input, moves it, and fails if the
+outcome does not move. `THE_GIVING` — the six attributes chemistry multiplies its
+whole non-separable term by — passed that sweep from the day it was written, and
+was dead in play the whole time, because nothing in the world ever wrote those
+six and the harness wrote them itself. Every performer carried them at the
+sheet's base, which is a function of craft standing, so the term was standing
+under a second name. The tool was green and the mechanic was arithmetic on a
+constant. Where a field is read by a decision, ask separately what writes it, and
+do not accept the test as the answer.
+
+**A field that means one thing is not an identifier for another.** `Period.per`
+is how long a period runs as a multiple of the base, and the comment above it
+said that exactly one period in a plan carries `per: 1` and that it is the base.
+The unscripted season carries two — its rig is as long as its field, which is a
+true thing about an unscripted season — so `per` was never an identifier, and
+every reader that went looking for the base by it found the rig: a period that
+runs alongside casting, weeks before a camera is pointed at anything. The
+reimbursement's deadline landed there, and the greenlight form labelled its own
+week slider "The Rig". A plan names its base period now, because a fact the
+engine needs should be stated rather than inferred from a number that means
+something else.
+
+**Six copies of a lookup is five chances to answer differently, and all five
+were taken.** The same question — when does the camera run — was asked from six
+places. Two hard-coded the period id 'shooting' with 'field' written in behind
+it. Two inferred it from `per`. One hard-coded 'shooting' alone, found nothing
+on a format season, gave all twenty-four posts the same start and no end, and
+hired nobody: a season was made by nobody for as long as that stood, and the
+screen reported it as a season that had not started hiring yet. The tell was
+there the whole time in the shape of the code — a literal with a second literal
+behind it is a general question being answered by enumeration, and the next case
+is always the one nobody enumerated.
+
+And one of those six is still unreachable, which is worth saying rather than
+quietly fixing: only a plan that casts performers lays any parts, and both plans
+that do have a period called 'shooting', so no greenlight can tell the general
+version from the literal. The contract is tested directly on the function
+instead. A test that cannot fail today for a reason you can name is worth more
+than one that passes for a reason you cannot.
+
+**A comment that names the omission is not the same as fixing it.** `tierFor`
+carried a paragraph saying the higher rate has four conditions, that the crew
+limb "sat in `REBATE.higherNeeds` being read by nothing", and that all four were
+tested now. Three of those sentences were true. The function tested the shoot's
+length against two different thresholds and never asked the fourth question at
+all, and the comment describing the fix was better evidence than the fix. Grep
+the constant, not the paragraph about the constant.
+
+**A guard at a point the arithmetic already handles can never change an
+answer.** The crowd behind a department head was refused where the budget could
+not carry the head — and at every budget where that was true the scaling had
+already rounded the crowd to nobody, so the line was unfalsifiable. Five
+mutations were run at it and it survived all five, which is what unreachable
+code looks like from the outside. The fix was not a better test: it was scaling
+each department from its own floor, so the head comes first and the crowd
+arrives behind them, and the guard became a thing the arithmetic says by itself.
+
 **Exports nothing reads, in a module written an hour ago.** Five of them, in
 the first draft of the inventory ledger: a sentence for a screen, a ledger
 listing, a pressure figure, two label helpers. Writing the module is not the
@@ -672,6 +872,10 @@ grep for readers is part of finishing, not part of tidying up later.
 
 ## What Holds It In Place
 
+- `docs/UNBITTEN.md` — the arrears against this page. Everything declared,
+  written, displayed or believed that changes no outcome, kept in one list and
+  worked a section at a time. This page argues for the standard; that one is
+  what is still owed against it.
 - `tools/wired.mjs --check` — the declared vocabulary against what reads it,
   ratcheted at `docs/UNWIRED.json`. The count may fall. It may not rise.
 - `tools/deciders.mjs --check` and `tests/deciders.test.ts` — every draw owned

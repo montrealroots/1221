@@ -159,7 +159,7 @@ const PICTURE_LADDERS: Ladders = {
     rung('passed', 'Passed', 'Signed off, including whatever had to change to get there.'),
   ],
   conform: [
-    rung('nothing', 'Unmastered', 'The picture exists. A master a distributor would accept does not.'),
+    rung('nothing', 'Unmastered', 'The picture exists. A master a distributor would accept doesn’t.'),
     rung('mastered', 'Mastered', 'The master exists and hasn’t been checked.'),
     rung('accepted', 'Accepted', 'Through quality control, in every version the contract names.'),
   ],

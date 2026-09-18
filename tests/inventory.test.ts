@@ -17,8 +17,10 @@ import { describe, expect, it } from 'vitest';
 import { quickSave, validateUniverse } from '@/engine';
 import type { Simulation } from '@/engine';
 import { MS_DAY } from '@/engine/core/time';
-import { projectsOf } from '@/engine/world/company';
-import { PLANS, planById } from '@/engine/content/making';
+import { cashAccountFor, parentCompany, projectsOf } from '@/engine/world/company';
+import {
+  A_NEW_HAND_STARTS_IN_WEEKS, PLANS, PRODUCER_FEE, planById,
+} from '@/engine/content/making';
 import { rungsOf } from '@/engine/content/maturity';
 import { KNOWN_RATIOS, STOCKS, rateById, stockById, throughput } from '@/engine/content/inventory';
 import {
@@ -26,7 +28,9 @@ import {
   weeksToConvert, whereTheMaterialStands, willMakeIt,
 } from '@/engine/world/inventory';
 import { isFinished, owedSeconds, rungOf, secondsAtOrBeyond } from '@/engine/world/maturity';
-import { finishesBy, windowOf } from '@/engine/world/making';
+import {
+  finishesBy, onTheScreen, whatMoreHandsCost, whyNotRestaff, windowOf,
+} from '@/engine/world/making';
 import { deliverIt, openTheDoors } from './doors';
 
 interface Done { ok: boolean; id?: string; error?: string }
@@ -275,12 +279,36 @@ describe('the engine says so when the cut cannot make the date', () => {
     .filter((one) => one.title.includes('More Than It Can Cut'))
     .map((one) => one.body);
 
-  it('stays quiet on every plan that is staffed the way its plan assumes', () => {
-    for (const plan of PLANS) {
-      const sim = world(`quiet-${plan.id}`);
-      const id = greenlit(sim, plan.id, `Quiet ${plan.id}`);
-      runItOut(sim, id);
-      expect(warnings(sim), `${plan.id} warns about a cut it makes`).toEqual([]);
+  it('is quiet on a feature at the staffing its own plan assumes', () => {
+    // Only the feature, and the narrowing is a finding rather than a
+    // concession. This used to assert every plan stays quiet at default
+    // staffing, and it passed on the seed it was written against. Measured
+    // across twelve worlds each: a feature warns in none of them, a series in
+    // four, and an unscripted season in six. Trouble is supposed to threaten
+    // the date — a withdrawn consent hands an episode back and the room has to
+    // find the weeks — so a default room getting into difficulty a third to a
+    // half of the time is the system working and not a staffing error. What is
+    // not defensible is a test that says it never happens.
+    const sim = world('quiet-feature');
+    const id = greenlit(sim, 'feature', 'Quiet Feature');
+    runItOut(sim, id);
+    expect(warnings(sim), 'a feature warns about a cut it makes').toEqual([]);
+  });
+
+  it('makes the hands on it the difference between quiet and not', () => {
+    // The claim the one above was standing in for, and the one that is true:
+    // staffing decides it. Across twelve worlds a series at its plan's own
+    // staffing warns four times and the same series with one editor warns
+    // twelve. Two worlds are enough to catch the day that stops being so.
+    for (const planId of ['series', 'unscripted']) {
+      let short = 0;
+      for (const seed of ['hands-a', 'hands-b']) {
+        const sim = world(`${seed}-${planId}`);
+        const id = greenlit(sim, planId, `Thin ${planId}`, { hands: 1 });
+        runItOut(sim, id);
+        if (warnings(sim).length > 0) short += 1;
+      }
+      expect(short, `${planId} with one editor never once ran out of room`).toBe(2);
     }
   });
 
@@ -305,13 +333,126 @@ describe('the engine says so when the cut cannot make the date', () => {
     const post = windowOf(sim.universe.projects[id]!, 'post')!;
     sim.advanceTo(post.from + 21 * MS_DAY);
     expect(warnings(sim)).toHaveLength(1);
-    // Four editors instead of one, which is what the warning was for.
-    sim.universe.projects[id]!.hands = 6;
+    // Six editors instead of one, which is what the warning was for — and through
+    // the command, which is new. This line used to be `projects[id]!.hands = 6`:
+    // the project's own test suite wrote the save directly because there was no
+    // path a player could walk, and the "Back Inside Its Date" notification below
+    // could only ever fire after a restaff nobody could perform.
+    expect(run(sim, 'company.restaff', { projectId: id, hands: 6 }).ok).toBe(true);
     runItOut(sim, id);
     expect(sim.universe.notifications.some((one) => one.title.includes('Back Inside Its Date'))).toBe(true);
     expect(warnings(sim), 'it nagged about a cut it had already got back').toHaveLength(1);
     expect(deliverIt(sim, id)).toBe(true);
     expect(isFinished(sim.universe.projects[id]!)).toBe(true);
+  });
+});
+
+describe('the room can be restaffed after the greenlight', () => {
+  // The decision `domain/company.ts` has described from the first commit — "the
+  // number of editors is the decision that sits between a budget and a delivery
+  // date" — and which for most of this project's life had no door on it. The test
+  // above used to reach past the command layer and write `hands` into the save,
+  // because there was no command to call. These hold the door itself.
+
+  /** A picture three weeks into its cut, with one editor on it. */
+  function midCut(seed: string): { sim: Simulation; id: string } {
+    const sim = world(seed);
+    const id = greenlit(sim, 'unscripted', 'The Arena', { hands: 1 });
+    const post = windowOf(sim.universe.projects[id]!, 'post')!;
+    sim.advanceTo(post.from + 21 * MS_DAY);
+    return { sim, id };
+  }
+
+  const cashOf = (sim: Simulation): number =>
+    cashAccountFor(sim.universe, parentCompany(sim.universe)!.id)!.balance;
+
+  /** When the hands hired today actually walk in. */
+  const theyStart = (sim: Simulation): number =>
+    sim.now + A_NEW_HAND_STARTS_IN_WEEKS * 7 * MS_DAY + MS_DAY;
+
+  it('charges for the hands and does not deliver them the same day', () => {
+    // Both halves of the price, and the second one is the half that makes it a
+    // decision. A restaff that landed the week it was ordered would let a player
+    // watch the forecast and repair every picture the week it goes red, which
+    // makes under-staffing free in hindsight and the staffing choice no choice.
+    const { sim, id } = midCut('restaff-price');
+    const project = sim.universe.projects[id]!;
+    const owed = whatMoreHandsCost(project, 3);
+    expect(owed, 'two more editors were free').toBeGreaterThan(0);
+
+    const before = { cash: cashOf(sim), spent: project.spentCents };
+    const done = run(sim, 'company.restaff', { projectId: id, hands: 3 });
+    expect(done.error).toBeUndefined();
+
+    expect(cashOf(sim), 'the hands were not paid for').toBe(before.cash - owed);
+    expect(project.spentCents, 'the picture does not carry what its room cost').toBe(before.spent + owed);
+    expect(handsOn(project), 'the new hands started the day they were hired').toBe(1);
+
+    sim.advanceTo(theyStart(sim));
+    expect(handsOn(project), 'the new hands never started at all').toBe(3);
+    expect(sim.universe.notifications.some((one) => one.title.includes('The Room Is Up To 3'))).toBe(true);
+  });
+
+  it('prices each pair of hands the same as the last', () => {
+    // Off `aRoomCosts`, which already answers "what one more room on this period
+    // costs at this budget" and is what the period settlement itself is built on.
+    // If the price ever stops being a multiple of one room, it has become a
+    // number somebody typed.
+    const { sim, id } = midCut('restaff-scale');
+    const project = sim.universe.projects[id]!;
+    const one = whatMoreHandsCost(project, 2);
+    expect(whatMoreHandsCost(project, 4)).toBe(3 * one);
+    expect(whatMoreHandsCost(project, 6)).toBe(5 * one);
+    // And nothing at all for staffing down, or for the staffing it already has.
+    expect(whatMoreHandsCost(project, 1)).toBe(0);
+  });
+
+  it('refuses when the picture has spent what it was greenlit at', () => {
+    // Against the budget and not against the company's balance, which is the
+    // distinction the refusal exists for: `familyCovers` tops the cash account up
+    // from below zero as periods settle, so a balance test would answer yes on
+    // the days the family had just wired and no on the rest.
+    const { sim, id } = midCut('restaff-broke');
+    const project = sim.universe.projects[id]!;
+    expect(whyNotRestaff(sim, id, 3), 'a picture with budget left could not staff up').toBeUndefined();
+
+    project.spentCents = onTheScreen(project);
+    const no = whyNotRestaff(sim, id, 3);
+    expect(no, 'a picture that has spent everything staffed up anyway').toBeDefined();
+    expect(no!).toContain('left of');
+    expect(run(sim, 'company.restaff', { projectId: id, hands: 3 }).ok).toBe(false);
+    expect(handsOn(project)).toBe(1);
+  });
+
+  it('sends an editor home at once, and gives nothing back for it', () => {
+    // No lead time, because sending somebody home is not a hire and nothing has
+    // to be waited for. No refund either: the weeks already cut are paid for, and
+    // money back for mismanaging a room would be a way of making a picture cheaper
+    // by running it badly.
+    const { sim, id } = midCut('restaff-down');
+    const project = sim.universe.projects[id]!;
+    expect(run(sim, 'company.restaff', { projectId: id, hands: 4 }).ok).toBe(true);
+    sim.advanceTo(theyStart(sim));
+    expect(handsOn(project)).toBe(4);
+
+    const cash = cashOf(sim);
+    expect(run(sim, 'company.restaff', { projectId: id, hands: 2 }).ok).toBe(true);
+    expect(handsOn(project), 'sending two editors home took a fortnight').toBe(2);
+    expect(cashOf(sim), 'the company was paid for sending editors home').toBe(cash);
+  });
+
+  it('will not restaff a picture nobody said yes to, or one already delivered', () => {
+    const sim = world('restaff-shut');
+    run(sim, 'company.develop', { title: 'Never Made', medium: 'film' });
+    const idle = projectsOf(sim.universe).find((one) => one.title === 'Never Made')!.id;
+    expect(whyNotRestaff(sim, idle, 2)).toContain('Nobody has said yes');
+    expect(whyNotRestaff(sim, 'project_no_such', 2)).toBeDefined();
+
+    const id = greenlit(sim, 'unscripted', 'The Arena');
+    runItOut(sim, id);
+    expect(deliverIt(sim, id)).toBe(true);
+    expect(whyNotRestaff(sim, id, 6)).toContain('too late');
+    expect(run(sim, 'company.restaff', { projectId: id, hands: 6 }).ok).toBe(false);
   });
 });
 
@@ -369,5 +510,114 @@ describe('the ledger holds together', () => {
     expect(validateUniverse(sim.universe).errors).toEqual([]);
     expect(sim.ledger.audit()).toEqual([]);
     expect(rungOf(sim.universe.projects[id]!, 'picture')).toBe('locked');
+  });
+});
+
+/**
+ * What the rooms cost.
+ *
+ * The staffing of the cutting room is the only crew decision this game offers,
+ * and it was free: `spends` is a flat share of the budget and knew nothing
+ * about how many rooms were running, so six editors cost exactly what one did.
+ * More hands cut faster and gave more room against the date, at no price —
+ * which made the largest number correct on every picture in every state.
+ */
+describe('the rooms on a picture are paid for', () => {
+  const spentOn = (planId: string, hands?: number): number => {
+    const sim = world(`cost-${planId}`);
+    const id = greenlit(sim, planId, `Cost ${planId}`, hands === undefined ? {} : { hands });
+    runItOut(sim, id);
+    return sim.universe.projects[id]!.spentCents;
+  };
+
+  it('charges a picture run the way its plan expects exactly what it always did', () => {
+    // The property that makes this safe to land: the ratio is against the
+    // staffing the plan itself assumes, so an untouched picture is unchanged
+    // and only a deliberate decision costs or saves anything.
+    for (const plan of PLANS) {
+      const converts = plan.periods.find((one) => one.converts)?.converts;
+      if (!converts) continue;
+      expect(spentOn(plan.id, converts.hands), plan.id).toBe(spentOn(plan.id));
+    }
+  });
+
+  it('charges more for more rooms and less for fewer, in proportion', () => {
+    for (const plan of PLANS) {
+      const converts = plan.periods.find((one) => one.converts)?.converts;
+      if (!converts) continue;
+      const lean = spentOn(plan.id, 1);
+      const asPlanned = spentOn(plan.id, converts.hands);
+      const heavy = spentOn(plan.id, converts.hands * 2);
+      expect(lean, `${plan.id}: one room has to be cheaper`).toBeLessThan(asPlanned);
+      expect(heavy, `${plan.id}: twice the rooms has to be dearer`).toBeGreaterThan(asPlanned);
+      // Each extra room costs the same as the last, because a room is a room.
+      const one = spentOn(plan.id, converts.hands + 1) - asPlanned;
+      const two = spentOn(plan.id, converts.hands + 2) - asPlanned;
+      expect(two / one).toBeCloseTo(2, 1);
+    }
+  });
+
+  it('leaves everything the period buys that is not a room alone', () => {
+    // Sound, music, color, the conform and the deliverables do not care how
+    // many people are cutting, so most of the period does not move. Halving the
+    // rooms cannot halve the period.
+    const plan = PLANS.find((one) => one.id === 'feature')!;
+    const converts = plan.periods.find((one) => one.converts)!.converts!;
+    const asPlanned = spentOn('feature', converts.hands);
+    const none = spentOn('feature', 1);
+    const saved = asPlanned - none;
+    const post = plan.periods.find((one) => one.converts)!;
+    // Against what the periods have to spend, which is the budget less the
+    // producer's fee. A producer's fee is a line in a budget, so three percent of
+    // every picture goes to whoever made it rather than onto the screen, and
+    // everything downstream of a period's spend — the rooms included — is three
+    // percent smaller than the number the picture was greenlit at.
+    const onScreen = 20_000_000_00 * (1 - PRODUCER_FEE);
+    const roomsAtPlan = onScreen * post.spends * converts.ofTheSpend;
+    // Down to one room of two saves half the rooms, and nothing else.
+    expect(saved).toBeCloseTo(roomsAtPlan / 2, -4);
+    expect(saved).toBeLessThan(20_000_000_00 * post.spends);
+  });
+
+  it('says a form made in the edit spends more of its post on the rooms', () => {
+    // The claim `content/making.ts` makes about unscripted, stated as the
+    // comparison it is rather than as a number. An unscripted season is made in
+    // the cutting room instead of shot to a script, so the rooms are most of
+    // what its post buys; a feature or a series has a finish around them —
+    // sound, music, color, the conform — that does not care who is cutting.
+    const shareOf = (planId: string): number => PLANS.find((one) => one.id === planId)!
+      .periods.find((one) => one.converts)!.converts!.ofTheSpend;
+    expect(shareOf('unscripted')).toBeGreaterThan(shareOf('feature'));
+    expect(shareOf('unscripted')).toBeGreaterThan(shareOf('series'));
+    // And none of them is all of it, because a period is never only its rooms.
+    for (const plan of PLANS) {
+      const converts = plan.periods.find((one) => one.converts)?.converts;
+      if (!converts) continue;
+      expect(converts.ofTheSpend, plan.id).toBeGreaterThan(0);
+      expect(converts.ofTheSpend, plan.id).toBeLessThan(1);
+    }
+  });
+
+  it('makes the decision a trade rather than an answer', () => {
+    // The whole point. A room bought is a week bought, and it is bought with
+    // money the company does not get back — so the largest number stops being
+    // free and starts being a judgement about how much date risk is worth.
+    const sim = world('trade');
+    const id = greenlit(sim, 'unscripted', 'The Arena', { hands: 1 });
+    const post = windowOf(sim.universe.projects[id]!, 'post')!;
+    sim.advanceTo(post.from);
+    const thin = willMakeIt(sim.universe.projects[id]!, sim.now)!;
+
+    const rich = world('trade');
+    const richId = greenlit(rich, 'unscripted', 'The Arena', { hands: 6 });
+    const richPost = windowOf(rich.universe.projects[richId]!, 'post')!;
+    rich.advanceTo(richPost.from);
+    const wide = willMakeIt(rich.universe.projects[richId]!, rich.now)!;
+
+    expect(wide.shortBy, 'six rooms buy room against the date').toBeLessThan(thin.shortBy);
+    runItOut(sim, id);
+    runItOut(rich, richId);
+    expect(rich.universe.projects[richId]!.spentCents, 'and they are paid for')
+      .toBeGreaterThan(sim.universe.projects[id]!.spentCents);
   });
 });

@@ -130,9 +130,53 @@ export const HOUSE = {
   bedrooms: 6,
   interiorSqft: 5_400,
   yearBuilt: 2024,
-  /** Full, because it is new and because the family keeps it that way. */
+  /**
+   * Full, because it is new. Keeping it there is now somebody's decision.
+   *
+   * This said "because the family keeps it that way" and for a long time the
+   * engine did nothing of the kind: `systems/life.ts` took it down
+   * `WEAR_A_DAY` every day and nothing anywhere put a point back, so a house
+   * that starts here reached nought in a little under twenty-three years —
+   * inside one career — and took the back half of it down too. The comment was
+   * the only place the family's upkeep existed. There is a command for it now,
+   * and the family is not the one who pays.
+   */
   condition: 100,
 } as const;
+
+/**
+ * What a day takes off a standing property.
+ *
+ * Here rather than in `systems/life.ts`, which is where it is spent, because
+ * `A_POINT_OF_IT_CENTS` below is priced off it and a rate read from two places
+ * is a second answer waiting to disagree with the first.
+ */
+export const WEAR_A_DAY = 0.012;
+
+/** Days in the year the wear rate is quoted against. */
+const A_YEAR_OF_DAYS = 365.2425;
+
+/**
+ * What a point of condition costs to put back.
+ *
+ * Derived, not chosen, because a number somebody liked the look of is the
+ * thing this project is least able to defend. The trade's own rule of thumb
+ * for keeping a house standing still is about a currency unit per square foot
+ * per year; this house is `HOUSE.interiorSqft` of it, so a year of keeping it
+ * costs that many. A year of wear is `WEAR_A_DAY` x `A_YEAR_OF_DAYS` = 4.38
+ * points. One divided by the other is the figure below, and the only judgement
+ * in it is the rule of thumb itself.
+ *
+ * Priced by the point rather than by the visit, so a player who lets it slide
+ * for a decade and pays the lump pays exactly what paying every year would
+ * have cost. Deferred maintenance really does cost more than that in life, and
+ * charging for it here would be a second decision wearing the first one's
+ * clothes: the reason to keep the house up is that a worn house sleeps badly
+ * for the whole time it is worn, and that is already the entire mechanism.
+ */
+export const A_POINT_OF_IT_CENTS = Math.round(
+  (HOUSE.interiorSqft * 1_00) / (WEAR_A_DAY * A_YEAR_OF_DAYS),
+);
 
 export interface Holding {
   id: string;
@@ -157,7 +201,7 @@ export const HOLDINGS: readonly Holding[] = [
     label: () => 'Company Headquarters',
     // Named in its own card below rather than here, so the name is not printed
     // twice on one page under two different headings.
-    detail: 'Television and Film, out of the lot. It carries the family name and it has no record yet.',
+    detail: 'Television and Film, from its own headquarters on the family land. It carries the family name.',
   },
 ];
 

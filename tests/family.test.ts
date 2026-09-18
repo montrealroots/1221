@@ -20,7 +20,6 @@ import {
 } from '@/engine/world/family';
 import { bondKey } from '@/engine/domain/model';
 import { ATTRIBUTES, emptyAttributeSheet, rate } from '@/engine/domain/attributes';
-import { SKILLS, emptySkillSheet, level } from '@/engine/domain/skills';
 import type { Person, SaveUniverse } from '@/engine/domain/model';
 import { MS_DAY } from '@/engine/core/time';
 
@@ -32,8 +31,22 @@ const withTwin = (over: Partial<FamilyConfig['twin']> = {}): FamilyConfig => ({
   twin: { firstName: 'Katla', gender: 'female', identical: true, role: 'the house', ...over },
 });
 
-const kin = (u: SaveUniverse): Person[] =>
-  Object.values(u.people).filter((person) => !person.isPlayer);
+/**
+ * The player's actual family, off their own relations.
+ *
+ * This was everybody in the save who is not the player, which meant the family
+ * for exactly as long as the family were the only other people in it. The sugar
+ * group is staffed now — a managing director and four heads, because a company
+ * trading since 1946 does not have a vacancy where its management should be — so
+ * "not the player" counts five executives as relatives. The relations table is
+ * where kinship has always been recorded and is what this was always asking.
+ */
+const kin = (u: SaveUniverse): Person[] => {
+  const player = u.people[u.playerId]!;
+  return (player.relations ?? [])
+    .map((one) => u.people[one.toId])
+    .filter((person): person is Person => person !== undefined);
+};
 
 const named = (u: SaveUniverse, first: string): Person =>
   Object.values(u.people).find((person) => person.firstName === first)!;
@@ -120,7 +133,10 @@ describe('what kind of people they are', () => {
       // Nobody in the family acts, so every rating reads as the floor — and
       // that is a real answer, untrained, rather than an absent one.
       for (const a of ATTRIBUTES) expect(rate(person.attributes, a.id)).toBe(emptyAttributeSheet().base);
-      for (const k of SKILLS) expect(level(person.skills, k.id)).toBe(emptySkillSheet().base);
+      // There was a second sheet here, of ordinary life skills, and it held
+      // everybody in the family at five for as long as a save ran. It went in
+      // the person-field sweep, so the only sheet left is the one above.
+      expect('skills' in person).toBe(false);
     }
   });
 

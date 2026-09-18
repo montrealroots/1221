@@ -25,7 +25,8 @@ import type { Simulation } from '@/engine';
 import { MS_DAY, MS_HOUR } from '@/engine/core/time';
 import '@/ui/looks/all';
 import { lookKinds, resolveLook, seedsFor, trailTo, type Looked, type Way } from '@/ui/looks/registry';
-import { openTheDoors } from './doors';
+import { openTheBooks, openTheDoors } from './doors';
+import { openDecisions } from '@/engine/world/world';
 import { at, subjectKey, type Subject } from '@/ui/looks/subject';
 
 const UI = new URL('../src/ui/', import.meta.url);
@@ -238,7 +239,14 @@ describe('the shape of a look', () => {
       for (const [what, text] of [['name', look.name], ['kind', look.kind]] as const) {
         expect(text, `${key} ${what} reads as an identifier: ${text}`).not.toMatch(/_|\/|\d{4}/);
         expect(text, `${key} ${what} is a field name: ${text}`).not.toMatch(/\b[a-z]+[A-Z]/);
-        expect(text, `${key} ${what} does not start as a name does: ${text}`).toMatch(/^[A-Z0-9]/);
+        // Any uppercase letter, not A to Z. The rule is that a name starts
+        // capitalised; the first regex for it said ASCII, in a game set in
+        // Iceland whose own name table holds Ólafur, Árni, Ásta and Þóra. It
+        // went unnoticed because the only person this look seeded was the
+        // player, whose name a test supplies — the moment the sugar group's
+        // management became reachable, Ásta Einarsdóttir read as not starting
+        // like a name. `\p{Lu}` is the thing that was meant.
+        expect(text, `${key} ${what} does not start as a name does: ${text}`).toMatch(/^[\p{Lu}\p{N}]/u);
       }
     }
   });
@@ -418,5 +426,93 @@ describe('what the screens name', () => {
       if (/useState<\s*Subject/.test(text)) offenders.push(path.split('/src/')[1]!);
     }
     expect(offenders, 'screens holding their own drill state').toEqual([]);
+  });
+});
+
+/**
+ * The pointer that resolved nothing, resolving something.
+ *
+ * `refType` and `refId` are declared on a decision and on a notification, and
+ * for the whole life of this build no decision anywhere carried either — the
+ * comment on `subjectForRef` said as much, twice. The reimbursement row the
+ * world tick raises is the first, so this is the way from a decision onto the
+ * thing it is about being walked rather than assumed. The crawl above cannot
+ * cover it: its decision is hand-made and carries no pointer at all.
+ */
+describe('a decision opens onto the thing it is about', () => {
+  it('walks from the reimbursement row to the picture it is about', () => {
+    const sim = quickSave({}, 'decision-way');
+    openTheDoors(sim);
+    openTheBooks(sim);
+    sim.execute({ kind: 'company.develop', payload: { title: 'Hvítserkur', medium: 'film' } });
+    const project = Object.values(sim.universe.projects).find((one) => one.title === 'Hvítserkur')!;
+    sim.execute({
+      kind: 'company.greenlight',
+      payload: { projectId: project.id, planId: 'feature', budgetCents: 20_000_000_00, shootWeeks: 8 },
+    });
+    sim.advanceTo(sim.now + 3 * MS_DAY);
+
+    const row = openDecisions(sim)[0]!;
+    expect(row.refType).toBe('project');
+    expect(row.refId).toBe(project.id);
+
+    const looked = resolveLook(sim, at('decision', row.id)) as Looked;
+    expect(looked.name).toBeTruthy();
+    expect(
+      (looked.ways ?? []).map((way) => way.to),
+      'the decision knows what it is about and paints no way onto it',
+    ).toContainEqual({ kind: 'project', id: project.id });
+  });
+});
+
+describe('the sentence the player wrote', () => {
+  /** Every string in a body, joined, so a body can be read the way a page is. */
+  function wordsIn(node: ReactNode, out: string[] = []): string[] {
+    if (node === null || node === undefined || typeof node === 'boolean') return out;
+    if (typeof node === 'string' || typeof node === 'number') {
+      out.push(String(node));
+      return out;
+    }
+    if (Array.isArray(node)) {
+      for (const child of node) wordsIn(child, out);
+      return out;
+    }
+    if (isValidElement(node)) wordsIn((node.props as { children?: ReactNode }).children, out);
+    return out;
+  }
+
+  /**
+   * `background` is the one field on a person that was kept as flavor rather
+   * than deleted with the rest of the sweep, and it was kept on one condition:
+   * the game says it back. A player who types a sentence about the life before
+   * this one and never sees it again has written into a hole. So the reader is
+   * held here, not left to a comment — this fails the moment the person look
+   * stops printing it, which is the state the field was rescued from.
+   */
+  it('prints a person’s background on their own page', () => {
+    const sim = quickSave({}, 'background-reader');
+    const player = sim.universe.people[sim.universe.playerId]!;
+    player.background = 'Raised three streets from a stage door and never went in.';
+
+    const found = resolveLook(sim, at('person', player.id)) as Looked;
+    expect(wordsIn(found.body).join(' ')).toContain('never went in');
+  });
+
+  it('prints it for a relative too, whose sentence the world wrote', () => {
+    const sim = world();
+    const mother = Object.values(sim.universe.people).find((one) => one.firstName === 'Halla')!;
+    expect(mother.background.length).toBeGreaterThan(20);
+
+    const found = resolveLook(sim, at('person', mother.id)) as Looked;
+    expect(wordsIn(found.body).join(' ')).toContain(mother.background);
+  });
+
+  it('says nothing at all rather than an empty line when there is no sentence', () => {
+    const sim = quickSave({}, 'background-empty');
+    const player = sim.universe.people[sim.universe.playerId]!;
+    player.background = '   ';
+
+    const found = resolveLook(sim, at('person', player.id)) as Looked;
+    expect(found.body).toBeUndefined();
   });
 });

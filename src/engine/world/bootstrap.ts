@@ -14,14 +14,14 @@ import { SAVE_SCHEMA_VERSION, PREMISE_STATEMENT } from '../domain/model';
 import {
   ALL_TRAITS, emptyAttributeSheet, attributesOf, type AttributeSheet,
 } from '../domain/attributes';
-import { emptySkillSheet, type SkillSheet } from '../domain/skills';
-import { CEILING, GOAT_TRAITS } from '../content/prodigy';
+import { CEILING } from '../content/prodigy';
 import { MAX_PERSONALITY_TRAITS, PERSONALITY_TRAIT_BY_ID } from '../content/personality-traits';
 import { CITIES } from '../content/geography';
 import { costOfLiving } from '../content/tax';
 import { addDays, addMonths, instantFromZoned, MS_DAY } from '../core/time';
 import type { Money } from '../core/money';
 import { clamp } from '../core/rng';
+import { idAlreadyIssued } from '../core/ids';
 import { ETHNICITY_BY_ID } from '../content/ethnicity';
 import { GENRE_BY_ID, INTEREST_BY_ID } from '../content/interests';
 
@@ -90,8 +90,7 @@ export interface NewSaveConfig {
   interests: string[];
   /** Genres they love watching. Carries nothing; see `content/interests.ts`. */
   genres: string[];
-  goals: string[];
-  lifestyle: Person['lifestyle'];
+  /** The life before this one, in their own words. Flavor, and said back to them. */
   background: string;
 
   /**
@@ -132,8 +131,7 @@ export interface NewSaveConfig {
 
 export function defaultPersonality(): Personality {
   return {
-    openness: 55, conscientiousness: 55, extraversion: 55,
-    agreeableness: 55, emotionalStability: 55, ambition: 60, riskTolerance: 50,
+    conscientiousness: 55, emotionalStability: 55, ambition: 60,
   };
 }
 
@@ -164,15 +162,23 @@ export function defaultConfig(): NewSaveConfig {
     homeRegionId: ESTATE_CITY_ID, livesWhereBorn: true,
     citizenshipId: ESTATE_COUNTRY_ID,
     personality: defaultPersonality(),
-    personalityTraits: [], traits: [], interests: ['film', 'television'], genres: [], goals: ['Make something that lasts'],
-    lifestyle: 'modest', background: 'Grew up outside the industry.',
+    personalityTraits: [], traits: [], interests: ['film', 'television'], genres: [],
+    background: 'Grew up outside the industry.',
     careerStage: 5,
     family: defaultFamily(),
     companyName: '',
     // Home base is the family land, and it is not a choice on any screen.
     startLocationId: ESTATE_CITY_ID,
     wealth: 'scraping',
-    startYear: 2026, startMonth: 3, startDay: 2,
+    // Monday 5 January 2026. A Monday because the week is the unit almost
+    // everything here is measured in — a stage is let by it, a shoot is
+    // scheduled in it, and a save that began mid-week spent its first days
+    // out of step with every window the engine lays. And the first working
+    // Monday of the year because that is when a year's business starts: the
+    // quota for the 2026 fiscal year was announced the previous July and the
+    // family moved onto the land a year before that, so everything the save
+    // inherits is already settled and what happens next is the player's.
+    startYear: 2026, startMonth: 1, startDay: 5,
   };
 }
 
@@ -238,13 +244,13 @@ export function emptyUniverse(
     currentZone: zone,
     playerId,
     people: {}, households: {}, bonds: {},
-    companies: {}, registrations: {}, signatures: {}, policies: {}, holdings: {}, posts: {}, projects: {},
+    companies: {}, registrations: {}, signatures: {}, policies: {}, holdings: {}, posts: {}, projects: {}, auditions: {},
     accounts: {}, transactions: [],
     properties: {},
     stages: {},
     bookings: {},
     quotaYears: [],
-    scheduled: [], audits: [], history: [], decisions: {}, notifications: [],
+    scheduled: [], decisions: {}, notifications: [],
     preferences: {
       reducedMotion: false, audioEnabled: true, audioVolume: 0.6,
       timeSpeed: 'live', compactMode: false, showAdvancedNumbers: false,
@@ -256,14 +262,12 @@ export function emptyUniverse(
   };
 }
 
-/** Starting capability from the chosen track and stage. */
 /**
  * The instrument.
  *
  * There is nothing to seed. They are the best living actor or actress, so
- * every one of the 88 acting attributes starts at the ceiling, along with the
- * ordinary life skills anybody has. Nothing on the creation screen moves any
- * of it, because there is nowhere for it to go.
+ * every one of the 88 acting attributes starts at the ceiling. Nothing on the
+ * creation screen moves any of it, because there is nowhere for it to go.
  *
  * What creation still decides is everything the instrument does not cover:
  * who they are, where they live, and what they are starting with.
@@ -283,10 +287,10 @@ function everyTrait(): string[] {
 
 /**
  * The prodigy's sheet: everything at the ceiling, and no exceptions, which is
- * the whole of what the flag means. Two numbers, not eight hundred and sixty.
+ * the whole of what the flag means. One number, not eight hundred and thirteen.
  */
-function seedCapability(): { attributes: AttributeSheet; skills: SkillSheet } {
-  return { attributes: emptyAttributeSheet(CEILING), skills: emptySkillSheet(CEILING) };
+function seedCapability(): { attributes: AttributeSheet } {
+  return { attributes: emptyAttributeSheet(CEILING) };
 }
 
 function seedReputation(config: NewSaveConfig) {
@@ -296,7 +300,7 @@ function seedReputation(config: NewSaveConfig) {
     audienceAppeal: 50,
     professionalReputation: Math.round(stage * 46),
     reliability: 55 + Math.round(config.personality.conscientiousness * 0.2),
-    prestige: Math.round(stage * stage * 30),
+
     industryDemand: Math.round(stage * 38),
     controversy: 0,
   };
@@ -362,7 +366,7 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, raw: NewSaveConfig
 
   const universe = emptyUniverse(meta, now, zone, playerId, premise);
 
-  const { attributes, skills } = seedCapability();
+  const { attributes } = seedCapability();
 
   const birthInstant = instantFromZoned(
     { year: config.birthYear, month: config.birthMonth, day: config.birthDay, hour: 3 },
@@ -395,8 +399,8 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, raw: NewSaveConfig
     // and what is read can never drift apart.
     interests: known(config.interests, INTEREST_BY_ID),
     genres: known(config.genres, GENRE_BY_ID),
-    goals: config.goals,
-    lifestyle: config.lifestyle,
+    // Kept as the player wrote it, and printed back on their own page. It
+    // decides nothing, and the character sheet says so.
     background: config.background,
     attributes,
     // Every acting trait in the game. Nothing was picked and nothing could
@@ -407,22 +411,14 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, raw: NewSaveConfig
     personalityTraits: config.personalityTraits
       .filter((id) => PERSONALITY_TRAIT_BY_ID[id])
       .slice(0, MAX_PERSONALITY_TRAITS),
-    skills,
-
-    // The three that say what kind of actor or actress. There is nothing
-    // else to be the best at any more: the writing, the directing, the
-    // producing and the showrunning went with the half of the game that
-    // used them.
-    goatTraits: GOAT_TRAITS.map((t) => t.id),
     prodigy: true,
     wellbeing: freshWellbeing(),
     reputation: seedReputation(config),
     careerTrack: 'actor',
-    creditScore: WEALTH_PROFILE[config.wealth].creditScore,
     createdAt: now,
   };
   universe.people[playerId] = player;
-  universe.__idCounter = 1;
+  idAlreadyIssued(universe, 'person', 1);
 
   return { universe, playerId };
 }

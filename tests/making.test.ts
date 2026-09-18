@@ -22,7 +22,7 @@ import { stillToCarry } from '@/engine/world/lot';
 import { quickSave, validateUniverse } from '@/engine';
 import type { Simulation } from '@/engine';
 import { MS_DAY } from '@/engine/core/time';
-import { capabilitiesOf, projectsOf, parentCompany } from '@/engine/world/company';
+import { capabilitiesOf, cashAccountFor, projectsOf, parentCompany } from '@/engine/world/company';
 import { MS_WEEK, bookingsFor, howTheMonthWent, stagesOn, theLot, utilisation } from '@/engine/world/lot';
 import {
   DELIVERY, PLANS, impliedShootWeeks, planById, tightnessOf,
@@ -77,6 +77,48 @@ function makeIt(sim: Simulation, title = 'Hvítserkur', over: Record<string, unk
 
 // ---------------------------------------------------------------------------
 
+describe('when the money actually leaves', () => {
+  it('pays every period at its own end, on every plan', () => {
+    for (const planId of ['feature', 'series', 'unscripted']) {
+      const plan = planById(planId)!;
+      const sim = world(`settle-${planId}`);
+      const medium = plan.media.includes('film') ? 'film' : 'television';
+      const id = onTheSlate(sim, 'Settling', medium);
+      expect(run(sim, 'company.greenlight', {
+        projectId: id, planId, budgetCents: 20_000_000_00, shootWeeks: 6,
+      }).error).toBeUndefined();
+
+      const paidAt = new Map<string, number>();
+      const seen = new Set<string>();
+      for (let i = 0; i < 60; i += 1) {
+        for (const txn of sim.universe.transactions) {
+          if (txn.refId !== id || seen.has(txn.id)) continue;
+          seen.add(txn.id);
+          paidAt.set(txn.memo, txn.at);
+        }
+        const end = finishesBy(sim.universe.projects[id]!);
+        if (end === undefined || sim.now > end) break;
+        sim.advanceTo(sim.now + 14 * MS_DAY);
+      }
+
+      // The docstring has always said the money goes out at a period's end,
+      // "which is the only honest place to put it". It settled whichever period
+      // was DECLARED before this one, and declaration order stops being
+      // calendar order the moment anything carries `runsWith`: a series paid
+      // 58% of its budget on the shoot's first day and a format season paid its
+      // post period out the day before that period opened.
+      for (const period of plan.periods) {
+        const window = windowOf(sim.universe.projects[id]!, period.id);
+        if (!window) continue;
+        const memo = [...paidAt.keys()].find((one) => one.includes(period.label));
+        if (memo === undefined) continue;
+        expect(paidAt.get(memo)!, `${planId}: ${period.id} was paid before it had run`)
+          .toBeGreaterThanOrEqual(window.to);
+      }
+    }
+  });
+});
+
 describe('laying a plan onto dates', () => {
   it('runs the periods back to back and puts delivery after all of them', () => {
     const plan = planById('feature')!;
@@ -126,7 +168,10 @@ describe('every plan is a plan somebody could actually run', () => {
 
   it('measures itself against a shoot, and holds a stage for it', () => {
     for (const plan of PLANS) {
-      expect(plan.periods.some((p) => p.per === 1)).toBe(true);
+      // The period it is measured against, named by the plan. `some(per === 1)`
+      // stood here and was true of a plan with two of them, which is how every
+      // reader that inferred the base ended up on the wrong one.
+      expect(plan.periods.some((p) => p.id === plan.basePeriod)).toBe(true);
       expect(plan.periods.some((p) => p.holds === 'shooting')).toBe(true);
       expect(plan.media.length).toBeGreaterThan(0);
       for (const period of plan.periods) {
@@ -215,8 +260,16 @@ describe('the doors are a rule, not advice', () => {
     for (const policy of ['general_liability', 'workers_comp', 'production_package']) {
       run(sim, 'company.insure', { policy });
     }
-    // A small picture, so the company can still afford a certificate after it
-    // has started paying for one.
+    // A small picture, and money behind it, so that what this test measures is
+    // the door and not the bank balance. It used to rely on a company holding
+    // its opening cash being able to afford a certificate after paying for a
+    // picture, and that stopped being true the day the posts started costing
+    // what `ROLES` says they cost — the facility manager is in post from the
+    // first morning at seven thousand a month. The claim here is that a filing
+    // is refused without cover and goes through with it; affordability is
+    // scaffolding, so it is paid for rather than tuned around.
+    const account = cashAccountFor(sim.universe, parentCompany(sim.universe)!.id)!;
+    sim.income(account.id, 2_000_000_00, 'A good year on the lot', 'business');
     const id = makeIt(sim, 'Hvítserkur', { budgetCents: 80_000_00 });
     // The certificate waits on prep, not on the whole picture, so this only has
     // to get past prep.
@@ -228,6 +281,16 @@ describe('the doors are a rule, not advice', () => {
     expect(sim.universe.projects[id]!.stage).not.toBe('delivered');
 
     // Buy the cover and the same filing goes through.
+    //
+    // Paid for immediately before buying it, on purpose. Prep runs for months
+    // and the lot charges its overhead every one of them, so what the company
+    // holds at this line is whatever is left over from the family's last
+    // top-up — and `familyCovers` tops up in hundred-thousand steps, which
+    // makes that residual essentially arbitrary. It happened to sit above the
+    // fourteen-thousand premium until the posts started costing what `ROLES`
+    // says, and then it sat two hundred and fifty-eight euros below it. A test
+    // about whether a door refuses should not turn on that.
+    sim.income(account.id, 100_000_00, 'A letting that cleared', 'business');
     expect(run(sim, 'company.insure', { policy: 'errors_omissions' }).ok).toBe(true);
     expect(run(sim, 'company.deliver', { projectId: id, elementId: 'eo' }).ok).toBe(true);
   });
@@ -522,16 +585,34 @@ describe('finishing is not delivering', () => {
   });
 
   it('charges for being late, and charges more the later it is', () => {
-    const sim = world('late');
-    const id = makeIt(sim);
-    const project = () => sim.universe.projects[id]!;
-    sim.advanceTo(project().deliverBy! + 60 * MS_DAY);
-    const before = project().spentCents;
-    for (const element of heldUpBy(project())) {
-      run(sim, 'company.deliver', { projectId: id, elementId: element.id });
-    }
-    expect(project().stage).toBe('delivered');
-    expect(project().spentCents).toBeGreaterThan(before);
+    // Both halves of the name, because the second half had nothing reading it:
+    // the test asserted only that being late cost something, so a flat penalty
+    // would have passed it under a name that promised a curve.
+    const lateBy = (days: number): { charged: number; at: number } => {
+      const sim = world('late');
+      const id = makeIt(sim);
+      const project = () => sim.universe.projects[id]!;
+      // The work has to be finished before anybody can be late filing it, and
+      // finishing it is not one pass: a review can send the picture back down
+      // the ladder in the last week, and the paperwork goes over again behind
+      // the recut. Advancing a fixed span from `deliverBy` and filing once was
+      // a picture still in post on most worlds and delivered on some.
+      runItOut(sim, id);
+      const at = project().deliverBy! + days * MS_DAY;
+      if (sim.now < at) sim.advanceTo(at);
+      expect(sim.now, 'it has to actually be late for this to mean anything')
+        .toBeGreaterThan(project().deliverBy!);
+      const before = project().spentCents;
+      expect(deliverIt(sim, id), 'the picture never got delivered').toBe(true);
+      return { charged: project().spentCents - before, at: sim.now };
+    };
+
+    const soon = lateBy(60);
+    const later = lateBy(200);
+    expect(soon.charged, 'being late cost nothing').toBeGreaterThan(0);
+    expect(later.at, 'the two runs have to differ in when they filed')
+      .toBeGreaterThan(soon.at);
+    expect(later.charged, 'and being later cost no more').toBeGreaterThan(soon.charged);
   });
 
   it('charges nothing when it goes over on time', () => {
@@ -638,7 +719,7 @@ describe('the lot tells the truth about who is on it', () => {
 
   it('agrees with itself about one week and several', () => {
     const month = (taken: number, earnsCents: number) => ({
-      available: 4, taken, own: 0, share: taken / 4, earnsCents,
+      available: 4, taken, own: 0, strike: 0, ownWouldHaveLetFor: 0, share: taken / 4, earnsCents,
       ifFullCents: 400, earnsShare: earnsCents / 400,
     });
     expect(howTheMonthWent(month(0, 0))).toContain('Nobody was on a stage');

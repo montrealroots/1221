@@ -35,13 +35,12 @@ function filled() {
     birthYear: 1998, birthMonth: 11, birthDay: 3,
     raceEthnicity: ['white', 'asian'],
     personality: {
-      openness: 11, conscientiousness: 22, extraversion: 33, agreeableness: 44,
-      emotionalStability: 55, ambition: 66, riskTolerance: 77,
+      conscientiousness: 22, emotionalStability: 55, ambition: 66,
     },
     personalityTraits: ['night_owl'],
     interests: ['film', 'television', 'cinematography'],
     genres: ['film_noir', 'western'],
-    lifestyle: 'lavish', background: 'Raised on the lot.',
+    background: 'Raised on the lot.',
     wealth: 'wealthy',
   });
 }
@@ -95,12 +94,13 @@ describe('Identity', () => {
 describe('Who You Are', () => {
   it('keeps all seven axes, and stores them exactly as set', () => {
     const p = filled().universe.people[filled().universe.playerId]!;
+    // Three, and it was seven. The four that went were written into every save
+    // and read by nothing, and shown back on no screen but the one that asked.
     expect(Object.keys(p.personality).sort()).toEqual([
-      'agreeableness', 'ambition', 'conscientiousness', 'emotionalStability',
-      'extraversion', 'openness', 'riskTolerance',
+      'ambition', 'conscientiousness', 'emotionalStability',
     ]);
-    expect(p.personality.openness).toBe(11);
-    expect(p.personality.riskTolerance).toBe(77);
+    expect(p.personality.conscientiousness).toBe(22);
+    expect(p.personality.ambition).toBe(66);
   });
 
   it('carries the traits, the interests, the genres and the rest', () => {
@@ -108,7 +108,6 @@ describe('Who You Are', () => {
     expect(p.personalityTraits).toContain('night_owl');
     expect(p.interests).toEqual(expect.arrayContaining(['film', 'television', 'cinematography']));
     expect(p.genres).toEqual(['film_noir', 'western']);
-    expect(p.lifestyle).toBe('lavish');
     expect(p.background).toBe('Raised on the lot.');
   });
 });
@@ -219,7 +218,13 @@ describe('Your People', () => {
         twin: { firstName: 'Katla', gender: 'female', identical: true, role: 'the house' },
       },
     });
-    const people = Object.values(sim.universe.people);
+    // The player and their own relations. This read every person in the save and
+    // expected four, which was the family for as long as the family were the only
+    // people in it; the sugar group is staffed now, with a managing director and
+    // four heads who have their own patronymics and are nobody's relatives.
+    const player = sim.universe.people[sim.universe.playerId]!;
+    const people = [player, ...(player.relations ?? [])
+      .map((one) => sim.universe.people[one.toId]!)];
     const by = (first: string) => people.find((one) => one.firstName === first)!;
 
     expect(people).toHaveLength(4);

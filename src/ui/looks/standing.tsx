@@ -1,18 +1,23 @@
 /**
- * SLATE — where you stand, and the seven figures that say so.
+ * SLATE — where you stand, and the six figures that say so.
  *
  * Home prints three bars — Public Fame, Professional Reputation and Industry
- * Demand — and every one of them is a dead end. They are three of the seven
- * numbers on `Reputation` (`domain/model.ts:56`); the other four, audience
- * appeal, reliability, prestige and controversy, are real state that has never
- * been rendered anywhere. This is exposure, not invention.
+ * Demand — and every one of them is a dead end. They are three of the six
+ * numbers on `Reputation`; the other three, audience appeal, reliability and
+ * controversy, are real state that has never been rendered anywhere. This is
+ * exposure, not invention.
  *
- * The honest part. All seven are written once, by `seedReputation`
- * (`world/bootstrap.ts:278`), and nothing in the engine writes to a person’s
- * `reputation` again — one assignment, at bootstrap, and no second write
- * anywhere in `src/engine`. Four of them are worked out from `careerStage`,
- * which no creation screen asks about and which `defaultConfig` leaves at 5
- * out of 100, so fame comes out at nought, prestige at nought, and both
+ * Seven, until `prestige` came out. It was written for most of the people in a
+ * save and read by nothing that decides anything, and the player’s own held
+ * nought for a whole career while this file’s own copy called it “an economy of
+ * its own” — a dial that lies is worse than no dial. What it was for is
+ * specified in `docs/AWARDS.md` and it comes back the day something reads it.
+ *
+ * The honest part. All six are written once, by `seedReputation`, and nothing
+ * in the engine writes to a person’s `reputation` again — one assignment, at
+ * bootstrap, and no second write anywhere in `src/engine`. Three of them are
+ * worked out from `careerStage`, which no creation screen asks about and which
+ * `defaultConfig` leaves at 5 out of 100, so fame comes out at nought and both
  * professional reputation and industry demand at two, for everybody who has
  * ever played. Appeal is left flat at fifty, controversy at nothing, and
  * reliability is the one figure that comes from the person rather than from a
@@ -103,17 +108,6 @@ const FIGURES: readonly Figure[] = [
     means: 'It’s whether whoever hires you believes you’ll finish what you signed for. It moves slower than the rest of these and it’s worth more than it sounds.',
     since: 'It’s the only figure here taken from you instead of from a career you haven’t had: a flat fifty-five, plus a fifth of how conscientious you are. The game hasn’t tested it since.',
     provenance: 'Nought to a hundred. Fifty-five to start with, plus a fifth of how conscientious you are, and nothing in the game has tested it since.',
-    shown: false,
-  },
-  {
-    key: 'prestige',
-    name: 'Prestige',
-    short: 'prestige',
-    behind: 'it says where you sit with the awards and the critics',
-    note: 'Where you sit with the awards and the critics',
-    means: 'It’s where you stand with the awards and the critics. That’s an economy of its own, and it doesn’t pay in the same currency as the other six.',
-    since: FROM_A_CAREER,
-    provenance: 'Nought to a hundred, set on the first morning from how far along the career was, and untouched by any day since.',
     shown: false,
   },
   {
@@ -295,10 +289,6 @@ function sentenceFor(key: FigureKey, value: number): string {
       return n < 40 ? `${said}. A producer would want a minder on you.`
         : n < 70 ? `${said}. You’ve given nobody reason to doubt you’d finish, and nobody reason to be sure of it either.`
           : `${said}. Whoever hires you can stop wondering whether you’ll turn up.`;
-    case 'prestige':
-      return n < 5 ? `${said}. ${opening(spokenList(['no award', 'no notice', 'nothing a critic has ever had to file']))}.`
-        : n < 40 ? `${said}. Some notice, and some of it good.`
-          : `${said}. The kind of standing that gets a script sent to you before it goes out to anybody else.`;
     case 'industryDemand':
       return n < 5 ? `${said}. Nobody is trying to hire you this morning.`
         : n < 35 ? `${said}. The phone rings, but not often.`
