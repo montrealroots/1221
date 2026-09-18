@@ -292,6 +292,48 @@ accrual, Tryggingagjald at 6.35% charged on the lot's posts as well as the
 group's, corporation tax filed in May, and pronouns on the crew table for the
 departments that are not cast.
 
+### And four more after that, with two schema bumps in them
+
+**SAVE_SCHEMA_VERSION is 81.** It was 79 when the block above was written and it
+moved twice. Both bumps must also be made in `base44/shared/guard.js`, which
+pins the same number and cannot import it — `tests/server-guards.test.ts` and
+`tests/base44-contract.test.ts` take twenty-two tests down together when the two
+drift, which is the guard working rather than a problem.
+
+**A property market described in the save, in a game that never buys or sells
+(schema 80).** Sixteen dead fields off `Property`, two thirds of what a save said
+about a house: twelve never written by anything, four written at both
+construction sites and read by nothing. `addressLine` and `lotSqft` were the
+interesting pair — not blank but duplicated, storing what `estatePlaceLine()` and
+`ESTATE_ACRES` already say. `PropertyKind` went from seventeen kinds to the two
+the build can produce. This closed the last tentacle of the 367-line
+`domain/model.ts` cut, which `docs/ARREARS.md` had recorded as one dead field.
+
+**Six and a half percent of what the lot quotes, under the wrong name.** Every
+lot booking is three rows — build, shoot, load-out — and the load-out was written
+as `prep`, because the rates are equal. `BookingKind` has `strike` now, and the
+reader that justifies the word: `Utilisation.strike`, on the lot board. Found a
+second dead export while wiring it — `foregone()` in `world/making.ts`, called by
+nothing — whose question is now `ownWouldHaveLetFor` on the same record. The test
+that had been written to catch the mislabel could not see it, because it asserted
+counts and rates and both were true of the bug.
+
+**An office whose identity was the sentence printed about it (schema 81).** Every
+memory function keyed on `holder`, which is prose, and `theHouse` seeded an
+office's taste off the same string — so a copy edit wiped the player's history
+with that office and changed its preferences. `Enquiry.officeId` is the key now
+and `holder` only prints. Read this one before rewording anything in
+`content/lot.ts`: that used to be a save-breaking edit and is now free.
+
+**And the finding that came with it, which is worth keeping.** Four of the ten
+enquiry shapes never book on the lot as the family built it — thirty-six of a
+hundred and one in enquiry weight. That is the premise working, not dead content:
+the refusals are counted and shown. What was wrong is that `turnedAway` buckets
+by reason, so three standing customers the lot cannot serve looked like a run of
+awkward weeks. `keepsRinging` names them. Deleting the rows would have made the
+lot look busier than the premise says, and repricing them would have been tuning
+the economy to hide it — so do neither.
+
 ### The PR is not open, and cannot be opened from here
 
 `gh` is **not installed** on this machine. The branch is pushed. Open it by hand:
@@ -301,7 +343,7 @@ departments that are not cast.
 
 ### The commits
 
-**Branch `claude/slate-cleanup-e4apmx` is 41 commits past `dc52d64`.** Gate exit 0 on every one of them before it was committed — **1,349 tests over 47 files** at the latest. One section per commit, each independently droppable. The nine numbered sections are the first pass; the remainder pass, the sugar company and everything in "After the fee" below follow them.
+**Branch `claude/slate-cleanup-e4apmx` is 45 commits past `dc52d64`.** Gate exit 0 on every one of them before it was committed — **1,356 tests over 47 files** at the latest. One section per commit, each independently droppable. The nine numbered sections are the first pass; the remainder pass, the sugar company and everything in "After the fee" below follow them.
 
 **`docs/UNWIRED.json` now reads nought on every row.** It was a ratchet with seven baselines above zero — id namespaces, trait modifier keys, higher-is-worse guards, dials nothing moves, personality axes nothing consults, save tables nothing fills, draw streams no decider owns — and every one of them is now at nought. It is still a ratchet and it still may not rise, so the next thing that adds a declared word with no reader will fail the gate rather than raise a floor.
 
