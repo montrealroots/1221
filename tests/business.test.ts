@@ -46,11 +46,12 @@ import { buildAStage, chargeThePosts } from '@/engine/world/lot';
 import {
   aDayOfSugar, payTheBoard, payTheCorporationTax, payTheGroupPosts, profitThisYear,
   sugarAccount, sugarCoversThePictures,
-  EMPLOYER_TAX_MEMO, PAYROLL_MEMO,
+  EMPLOYER_TAX_MEMO, GOODS_MEMO, PAYROLL_MEMO, SALES_MEMO, aPayday,
 } from '@/engine/world/sugar';
 import {
-  A_PARENT_A_MONTH_CENTS, BOARD_SEATS, COST_OF_GOODS_A_DAY_CENTS, EMPLOYER_TAX_A_DAY_CENTS,
-  GROUP_OPENING_BALANCE, GROUP_POSTS_A_DAY_CENTS, GROUP_REGISTRIES, GROUP_ROLES,
+  A_PARENT_A_MONTH_CENTS, BOARD_SEATS, COST_OF_GOODS_A_DAY_CENTS,
+  EMPLOYER_TAX_A_DAY_CENTS, EMPLOYER_TAX_A_MONTH_CENTS, GROUP_OPENING_BALANCE,
+  GROUP_REGISTRIES, GROUP_ROLES, WAGES_A_MONTH_CENTS, A_MONTH_OF_DAYS, PAYROLL_A_MONTH_CENTS,
   PAYROLL_A_DAY_CENTS,
   GROUP_POSTS_A_MONTH_CENTS, KEPT_IN_HAND_CENTS, PROFIT_A_DAY_CENTS, REVENUE_A_DAY_CENTS,
   TRYGGINGAGJALD,
@@ -1057,16 +1058,16 @@ describe('the sugar is a business that trades, not a number in a file', () => {
     const after = sim.universe.accounts[account]!.balance;
 
     expect(kept, 'a day should clear what the margin says it clears').toBeGreaterThan(0);
-    // The day sells enough to cover the whole payroll and keeps the margin, but
-    // only pays the workforce — the seven named seats are paid once a month, by
-    // name, so the balance runs a day's worth of them ahead until payday.
-    expect(after - before).toBe(kept + GROUP_POSTS_A_DAY_CENTS);
-    // Four lines, not one net line: sold, wages, the employer's contribution on
-    // those wages, and everything else. One net line would hide the part with
-    // three thousand one hundred people on the end of it.
-    const memos = sim.universe.transactions.slice(-4).map((one) => one.memo);
-    expect(memos).toContain(PAYROLL_MEMO);
-    expect(memos).toContain(EMPLOYER_TAX_MEMO);
+    // The day sells at the full cost base and only the cane leaves the account, so
+    // the balance rises by the margin plus a day of wages nobody has been paid
+    // yet. That is what a payday is: the wages are earned every day and paid on
+    // the last one, so the money for them sits in the group until then.
+    expect(after - before).toBe(kept + PAYROLL_A_DAY_CENTS + EMPLOYER_TAX_A_DAY_CENTS);
+    // Two lines, and wages are not one of them today.
+    const memos = sim.universe.transactions.slice(-2).map((one) => one.memo);
+    expect(memos).toContain(`${GROUP.name}: Sugar Sold`);
+    expect(memos).toContain(GOODS_MEMO);
+    expect(memos, 'the wages went out on a day that is not payday').not.toContain(PAYROLL_MEMO);
     expect(sim.ledger.audit()).toEqual([]);
 
     // And what it sold is the whole cost base plus whatever margin the quota
@@ -1075,8 +1076,8 @@ describe('the sugar is a business that trades, not a number in a file', () => {
     // base is a day of turnover less a day of margin, whatever America did, and
     // only the margin moves. The save opens on a shut year, so `kept` here is
     // below a full day's profit and the sum still closes.
-    const sold = sim.universe.transactions.slice(-4)
-      .find((one) => one.memo === `${GROUP.name}: Sugar Sold`)!;
+    const sold = sim.universe.transactions.slice(-2)
+      .find((one) => one.memo === SALES_MEMO)!;
     const took = sold.postings.filter((one) => one.amount > 0)
       .reduce((sum, one) => sum + one.amount, 0);
     expect(took).toBe(REVENUE_A_DAY_CENTS - PROFIT_A_DAY_CENTS + kept);
@@ -1105,6 +1106,46 @@ describe('the sugar is a business that trades, not a number in a file', () => {
     // wage, and the parents draw it through `payTheBoard` instead.
     expect(GROUP_POSTS_A_MONTH_CENTS).toBe(83_000_00);
     expect(sim.ledger.audit()).toEqual([]);
+  });
+
+  it('has a payday, which is not the same as a wage smeared across the calendar', () => {
+    // The owner asked for money in every day and a payment to the parents and to
+    // everybody worldwide on a cycle. The first version paid all three thousand one
+    // hundred of them a slice every twenty-four hours, which kept the group's
+    // balance flat and was not a payroll — it was the cost of one spread so thin
+    // that nothing ever had to be held in hand for it.
+    const sim = quickSave({}, 'sugar-payday');
+    const account = sugarAccount(sim)!;
+
+    // A month of trading and nothing has gone out to anybody. The money is there.
+    for (let day = 0; day < 30; day += 1) aDayOfSugar(sim);
+    const wages = () => sim.universe.transactions.filter((one) => one.memo === PAYROLL_MEMO);
+    expect(wages(), 'a wage went out on a day that is not payday').toHaveLength(0);
+    const held = sim.universe.accounts[account]!.balance;
+    expect(held, 'a month of selling should leave a month of wages in hand')
+      .toBeGreaterThan(WAGES_A_MONTH_CENTS);
+
+    // And then payday, which is four lines because four different things happen.
+    const went = aPayday(sim);
+    expect(wages(), 'nobody was paid on payday').toHaveLength(1);
+    expect(went).toBe(
+      WAGES_A_MONTH_CENTS + EMPLOYER_TAX_A_MONTH_CENTS
+      + GROUP_POSTS_A_MONTH_CENTS + A_PARENT_A_MONTH_CENTS * 2,
+    );
+    expect(sim.universe.accounts[account]!.balance).toBe(held - went);
+    // The parents are paid on the same day as everybody else.
+    const player = sim.universe.people[sim.universe.playerId]!;
+    for (const one of (player.relations ?? []).filter((r) => r.kind === 'mother' || r.kind === 'father')) {
+      const purse = sim.universe.people[one.toId]!.primaryAccountId;
+      expect(sim.universe.accounts[purse!]!.balance).toBe(A_PARENT_A_MONTH_CENTS);
+    }
+    expect(sim.ledger.audit()).toEqual([]);
+
+    // And the wages and the money held back are the same figure, because a company
+    // that pays everybody on the last day of the month has to be holding a month's
+    // wages on the last day of the month. A fortnight was the wrong pairing.
+    expect(KEPT_IN_HAND_CENTS).toBe(Math.round(PAYROLL_A_DAY_CENTS * A_MONTH_OF_DAYS));
+    expect(WAGES_A_MONTH_CENTS + GROUP_POSTS_A_MONTH_CENTS).toBe(PAYROLL_A_MONTH_CENTS);
   });
 
   it('goes on trading through a shut year, because America is one market', () => {
@@ -1326,12 +1367,15 @@ describe('everything else it takes to run a company, which the group did not hav
 
     const sim = world('group-employer-tax');
     const account = sugarAccount(sim)!;
-    aDayOfSugar(sim);
-    const day = sim.universe.transactions.slice(-4).find((one) => one.memo === EMPLOYER_TAX_MEMO);
-    expect(day, 'three thousand one hundred people and no contribution on them').toBeTruthy();
-    expect(day!.postings.filter((one) => one.amount > 0)
+    // On payday, with the wages, because that is when an employer's contribution
+    // is remitted. It is earned every day and paid with the payroll.
+    for (let day = 0; day < 30; day += 1) aDayOfSugar(sim);
+    aPayday(sim);
+    const line = sim.universe.transactions.find((one) => one.memo === EMPLOYER_TAX_MEMO);
+    expect(line, 'three thousand one hundred people and no contribution on them').toBeTruthy();
+    expect(line!.postings.filter((one) => one.amount > 0)
       .reduce((sum, one) => sum + one.amount, 0))
-      .toBe(Math.round(PAYROLL_A_DAY_CENTS * TRYGGINGAGJALD));
+      .toBe(Math.round(PAYROLL_A_MONTH_CENTS * TRYGGINGAGJALD));
 
     // Derived from the payroll and taken out of the cost of goods, so naming it
     // invents nothing: the lines a day still come to what the day sold.

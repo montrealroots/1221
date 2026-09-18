@@ -346,16 +346,24 @@ export const COST_OF_GOODS_A_DAY_CENTS: Money =
  */
 export const A_PARENT_A_MONTH_CENTS: Money = 18_000_00;
 
+/** Days in the month every monthly figure here is quoted against. */
+export const A_MONTH_OF_DAYS = A_YEAR_OF_DAYS / 12;
+
 /**
  * What the group keeps in hand before it will send anything to the pictures.
  *
- * A fortnight of paying everybody. Below this the sugar business is covering
- * its own payroll out of reserves and has no business funding a film slate;
- * above it, the surplus is genuinely spare. It is the one figure standing
- * between "the pictures company cannot go broke" and "the sugar company can",
- * and it is deliberately a real operating constraint rather than nought.
+ * One payday. Below this the sugar business could not make its own payroll and
+ * has no business funding a film slate; above it, the surplus is genuinely spare.
+ * It is the one figure standing between "the pictures company cannot go broke"
+ * and "the sugar company can", and it is a real operating constraint rather than
+ * nought.
+ *
+ * It was a fortnight when the wages went out daily, which was the wrong pairing:
+ * a company that pays everybody on the last day of the month has to be holding a
+ * month's wages on the last day of the month, not half of them. Tied to the
+ * payday rather than written down, so the two can never drift apart.
  */
-export const KEPT_IN_HAND_CENTS: Money = Math.round(PAYROLL_A_DAY_CENTS * 14);
+export const KEPT_IN_HAND_CENTS: Money = Math.round(PAYROLL_A_DAY_CENTS * A_MONTH_OF_DAYS);
 
 /**
  * The two memos the money between the two companies is posted under.
@@ -465,9 +473,29 @@ export const BOARD_SEATS = ['chair', 'board'] as const;
  */
 export const GROUP_POSTS_A_MONTH_CENTS: Money =
   GROUP_ROLES.reduce((sum, one) => sum + one.monthlyCents, 0);
-export const GROUP_POSTS_A_DAY_CENTS: Money =
-  Math.round((GROUP_POSTS_A_MONTH_CENTS * 12) / A_YEAR_OF_DAYS);
-export const WAGES_A_DAY_CENTS: Money = PAYROLL_A_DAY_CENTS - GROUP_POSTS_A_DAY_CENTS;
+
+/**
+ * What the workforce is paid on a payday, and the contribution on it.
+ *
+ * Monthly, because that is how a payroll works and it is what the owner asked
+ * for: money comes in every day and goes out to people on a payday. The first
+ * version paid all three thousand one hundred of them a slice every twenty-four
+ * hours, which kept the group's balance flat and was not a payroll — it was the
+ * cost of one smeared across the calendar so that nothing ever had to be held in
+ * hand for it.
+ *
+ * So the cash sawtooths now, the way a real company's does: it builds through the
+ * month on what the group sells and drops on the last day when everybody is paid.
+ * `KEPT_IN_HAND_CENTS` is one payday for exactly that reason.
+ *
+ * Less the seven named seats, which are paid by name on the same day out of the
+ * same payroll rather than on top of it — so naming the management still costs the
+ * group nothing it was not already paying.
+ */
+export const PAYROLL_A_MONTH_CENTS: Money = Math.round(PAYROLL_A_YEAR_CENTS / 12);
+export const WAGES_A_MONTH_CENTS: Money = PAYROLL_A_MONTH_CENTS - GROUP_POSTS_A_MONTH_CENTS;
+export const EMPLOYER_TAX_A_MONTH_CENTS: Money =
+  Math.round(PAYROLL_A_MONTH_CENTS * TRYGGINGAGJALD);
 
 /**
  * The registers a 1946 hf. with three thousand people on it is obviously on.

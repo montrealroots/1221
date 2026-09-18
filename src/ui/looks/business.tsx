@@ -607,6 +607,12 @@ defineLook<Project>('project', {
                           <Open subject={at('person', seat.person.id)}>{seat.person.displayName}</Open>
                           {seat.post.head ? ' · Heads the department' : ''}
                         </td>
+                        {/* Their pronouns, which is the only thing this table ever
+                            wanted to say about who they are. Nobody on a crew is
+                            billed as an actor or an actress and this never said
+                            they were — but it said nothing at all, and a gaffer is
+                            a person before they are a line item. */}
+                        <td className="small nowrap">{seat.person.pronouns}</td>
                         <td className="small nowrap">{seat.post.label}</td>
                         <td className="small nowrap">{departmentById(seat.post.department)?.label ?? seat.post.department}</td>
                         <td className="small nowrap">{seat.post.local}</td>

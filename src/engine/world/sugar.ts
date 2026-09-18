@@ -27,8 +27,9 @@ import type { Instant } from '../core/time';
 import { instantFromZoned, zonedParts } from '../core/time';
 import {
   A_PARENT_A_MONTH_CENTS, COST_OF_GOODS_A_DAY_CENTS, GROUP, GROUP_PROFIT_CENTS,
-  A_YEAR_OF_DAYS, EMPLOYER_TAX_A_DAY_CENTS, GROUP_ROLE_BY_ID, KEPT_IN_HAND_CENTS, PAID_IN_MEMO,
-  PAYROLL_A_DAY_CENTS, QUOTA, TAX_RETURN_MONTH, THE_TARIFF, WAGES_A_DAY_CENTS,
+  A_YEAR_OF_DAYS, EMPLOYER_TAX_A_DAY_CENTS, EMPLOYER_TAX_A_MONTH_CENTS, GROUP_ROLE_BY_ID,
+  KEPT_IN_HAND_CENTS, PAID_IN_MEMO,
+  PAYROLL_A_DAY_CENTS, QUOTA, TAX_RETURN_MONTH, THE_TARIFF, WAGES_A_MONTH_CENTS,
   profitAfterQuota, type GroupRoleId,
 } from '../content/sugar';
 import { parentCompany, theSugarGroup } from './company';
@@ -153,14 +154,13 @@ export function registerSugar(sim: Simulation): void {
     });
   });
 
-  // And the board draws once a month, and the seven seats are paid.
+  // And everybody who works for the group is paid, once a month.
   sim.onSchedule(SUGAR_PAYDAY_KIND, () => {
-    payTheGroupPosts(sim);
-    payTheBoard(sim);
+    aPayday(sim);
     sim.schedule({
       at: startOfNextMonth(sim.now, sim.homeZone),
       kind: SUGAR_PAYDAY_KIND,
-      label: 'The Board Draws',
+      label: 'Payday At The Group',
       category: 'system',
       priority: 9,
     });
@@ -179,7 +179,7 @@ export function registerSugar(sim: Simulation): void {
     sim.schedule({
       at: startOfNextMonth(sim.now, sim.homeZone),
       kind: SUGAR_PAYDAY_KIND,
-      label: 'The Board Draws',
+      label: 'Payday At The Group',
       category: 'system',
       priority: 9,
     });
@@ -354,8 +354,11 @@ export function aDayOfSugar(sim: Simulation): Money {
   const account = sugarAccount(sim);
   if (!account) return 0;
   const quota = quotaNow(sim);
-  // The costs are the costs: three thousand one hundred people are paid and the
-  // cane is bought whatever Washington did.
+  // The costs are the costs, whatever Washington did: three thousand one hundred
+  // people are owed a day of wages and the cane is bought. A day sells at the full
+  // cost base even though only the cane leaves the account today, which is the
+  // whole point of a payday — the wages are earned daily and paid monthly, so the
+  // money for them sits in the group until the end of the month.
   const costs = PAYROLL_A_DAY_CENTS + EMPLOYER_TAX_A_DAY_CENTS + COST_OF_GOODS_A_DAY_CENTS;
   // And what America decides moves the PROFIT, not whether the group trades.
   //
@@ -370,17 +373,43 @@ export function aDayOfSugar(sim: Simulation): Money {
   const profit = Math.round(aYear / A_YEAR_OF_DAYS);
   const sold = costs + profit;
   sim.income(account, sold, SALES_MEMO, 'business');
-  // The workforce, less the seven whose seats are paid monthly by name. Over a
-  // year the two lines come to the same payroll; within a month the group runs a
-  // little ahead and then settles it, which is what a payroll actually does.
-  sim.expense(account, WAGES_A_DAY_CENTS, PAYROLL_MEMO, 'business');
-  // The employer's own contribution on those wages, as its own line. A real
-  // Icelandic tax at a real rate that no company in this save had ever paid: it
-  // was inside the cost of goods, unnamed, and `content/tax.ts` had a comment
-  // saying where it does not belong and nothing saying where it does.
-  sim.expense(account, EMPLOYER_TAX_A_DAY_CENTS, EMPLOYER_TAX_MEMO, 'business');
+  // The cane, the milling and the freight, which really are bought every day.
+  //
+  // The wages are not here, and that is the difference between a payroll and an
+  // accounting smear. Three thousand one hundred people used to be paid a slice of
+  // a day each, which kept the group's balance flat and meant nothing ever had to
+  // be held in hand for a payday. They are paid on a payday now, by `aPayday`, so
+  // the day sells at the full cost base and the money sits in the group until the
+  // end of the month.
   sim.expense(account, COST_OF_GOODS_A_DAY_CENTS, GOODS_MEMO, 'business');
   return profit;
+}
+
+/**
+ * Payday: everybody who works for the group, once a month.
+ *
+ * Which is what the owner asked for — money in every day and out to people on a
+ * payday — and what a payroll is. Iceland pays monthly, so the group does.
+ *
+ * Four lines, because four different things are happening: the workforce, the
+ * employer's own contribution on them, the seven named seats out of the same
+ * payroll rather than on top of it, and the two board seats drawing a director's
+ * fee, which is not a wage and carries no contribution.
+ *
+ * The group's cash sawtooths as a result, building through the month on what it
+ * sells and dropping on the last day. That is the shape a real company's balance
+ * has and it is why `KEPT_IN_HAND_CENTS` is one payday: a business that pays
+ * everybody on the last day of the month has to be holding a month's wages on the
+ * last day of the month.
+ */
+export function aPayday(sim: Simulation): Money {
+  const account = sugarAccount(sim);
+  if (!account) return 0;
+  sim.expense(account, WAGES_A_MONTH_CENTS, PAYROLL_MEMO, 'business');
+  sim.expense(account, EMPLOYER_TAX_A_MONTH_CENTS, EMPLOYER_TAX_MEMO, 'business');
+  const seats = payTheGroupPosts(sim);
+  const board = payTheBoard(sim);
+  return WAGES_A_MONTH_CENTS + EMPLOYER_TAX_A_MONTH_CENTS + seats + board;
 }
 
 /**
