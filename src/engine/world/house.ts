@@ -25,8 +25,24 @@
  * | parts won | 115 | 119 |
  * | career earnings | EUR 1.92m | EUR 2.20m |
  *
- * Two things in that table are worth saying out loud rather than leaving for
- * somebody to notice. The first is that the house is most of the late-career
+ * That table understates it by one row, and the missing row is the reason
+ * `playACareer` now has the work done every week by default. **Fitness goes to
+ * nought too, and cannot be put back.** Once the roof is far enough gone, a
+ * night restores little enough that energy sits under `TOO_SPENT_TO_TRAIN`, and
+ * `life.train` — the only thing that raises fitness — refuses every week from
+ * then on. Measured on one seed at a year's resolution: fitness tracks the age
+ * ceiling at 98, 96, 94 through year fifteen, then 36 at year twenty and 0 at
+ * twenty-five, while energy is pinned at 0 from year eighteen. Held, the same
+ * seed ends at 86.6 against a ceiling of 89.1.
+ *
+ * The consequence for anybody reading a number out of this project: every
+ * late-career figure the instrument produced before that default existed was
+ * measured on somebody in a derelict house, and one of them would have read as
+ * `w.fitness` still being the one-way ratchet `docs/ARREARS.md` records as
+ * built. The dial is fine. The measurement was not.
+ *
+ * Two more things in that table are worth saying out loud rather than leaving
+ * for somebody to notice. The first is that the house is most of the late-career
  * collapse: hold it and no career reaches nought at all, on any seed. The
  * second is the honest limit of it — parts won moves by three of a hundred and
  * fifteen, and readings given does not move at all. The fourteen per cent that

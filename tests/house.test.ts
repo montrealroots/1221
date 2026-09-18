@@ -181,13 +181,24 @@ describe('whether the condition reaches an outcome', () => {
     // being cheap, and the claim about the whole career — no seed reaching
     // reliability nought with the house kept, six of six without — is measured
     // and recorded in `world/house.ts` rather than paid for on every gate run.
+    // `playACareer` keeps the house itself now, and that is why the A/B is set up
+    // the way it is rather than by adding the upkeep on one side. It did not, for
+    // the whole of its life, and the measurement that changed it is the reason
+    // this lever matters: over twenty-five years with the house left alone the
+    // roof went 100 to 34 by year fifteen and 0 by year twenty-four, and
+    // everything downstream of a night's sleep went with it — body condition to
+    // 0, energy pinned at 0, stress at 90, morale at 0, readiness at 11. Energy
+    // under `TOO_SPENT_TO_TRAIN` also stops the training in that same loop, so
+    // fitness ratcheted from 98 to 0 with nothing able to put it back. Kept, the
+    // same seed holds the house at 99, readiness at 49 and fitness within three
+    // points of the age ceiling for the whole career.
     const ready = (keep: boolean) => {
       const sim = quickSave({}, 'house-career');
       fund(sim, 5_000_000_00);
       const seen: number[] = [];
       playACareer(sim, 12, {
+        letTheHouseGo: !keep,
         eachWeek: (s) => {
-          if (keep && whyNotUpkeep(s) === undefined) haveTheWorkDone(s);
           const me = s.universe.people[s.universe.playerId];
           if (me) seen.push(readiness(me));
         },

@@ -17,6 +17,7 @@
 import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
 import { playABusiness, playACareer } from './played';
+import { TOO_SPENT_TO_TRAIN, readiness } from '@/engine/systems/life';
 
 describe('the career instrument plays a career', () => {
   it('gets asked for, reads, and wins parts', () => {
@@ -25,6 +26,52 @@ describe('the career instrument plays a career', () => {
     expect(out.asked, 'nobody asked, so this measured an empty room').toBeGreaterThan(0);
     expect(out.read, 'nothing was read for, so the player never went up').toBeGreaterThan(0);
     expect(out.cast, 'no part was ever won in five years').toBeGreaterThan(0);
+  });
+
+  it('keeps the player in a state a player would be in, and not in a ruin', () => {
+    // THE THIRD TIME THIS INSTRUMENT MEASURED A WORLD NOBODY PLAYS, and the worst
+    // of the three, because nothing about the numbers looked wrong.
+    //
+    // The loop never had the work done on the house. Over twenty-five years the
+    // roof went 100 to 34 by year fifteen and 0 by year twenty-four, and
+    // everything a night's sleep feeds went with it: body condition to 0, energy
+    // pinned at 0 for the last seven years, stress at 90, sleep debt at 60,
+    // morale at 0, readiness at 11. Energy under `TOO_SPENT_TO_TRAIN` then stops
+    // the training this same loop does, so fitness ratcheted 98 at year fifteen
+    // to 0 at year twenty-five — which would have read as `w.fitness` still being
+    // a one-way ratchet, a claim `docs/ARREARS.md` records as built and which the
+    // dial passes when the character can train. Every late-career figure this
+    // file has ever produced was measured on somebody in a derelict house with
+    // EUR 1.2m in the bank.
+    //
+    // So: fifteen years, and the end state has to be a person rather than a
+    // wreck. The thresholds are deliberately loose — this is not pinning a
+    // balance, it is refusing to report from a ruin.
+    const sim = quickSave({}, 'instrument-upkeep');
+    playACareer(sim, 15);
+    const me = sim.universe.people[sim.universe.playerId]!;
+    const house = Object.values(sim.universe.properties).find((one) => one.kind === 'house')!;
+
+    expect(house.condition, 'the instrument let the roof fall in').toBeGreaterThan(50);
+    expect(me.wellbeing.energy, 'nothing left in the tank, so nothing can be trained')
+      .toBeGreaterThanOrEqual(TOO_SPENT_TO_TRAIN);
+    expect(me.wellbeing.condition, 'a body at nought after fifteen years').toBeGreaterThan(50);
+    expect(me.wellbeing.fitness, 'fitness ratcheted to the floor with nothing putting it back')
+      .toBeGreaterThan(50);
+    expect(readiness(me), 'readiness this low is a ruin rather than a hard career')
+      .toBeGreaterThan(25);
+  });
+
+  it('can still be told to let the house go, because that is a real way to play', () => {
+    // And when it is told to, the spiral is the whole of what it finds — which is
+    // what makes the default worth having rather than a thumb on the scale.
+    const kept = quickSave({}, 'instrument-paired');
+    playACareer(kept, 15);
+    const gone = quickSave({}, 'instrument-paired');
+    playACareer(gone, 15, { letTheHouseGo: true });
+
+    const readyIn = (sim: typeof kept): number => readiness(sim.universe.people[sim.universe.playerId]!);
+    expect(readyIn(gone), 'letting the house go cost nothing').toBeLessThan(readyIn(kept));
   });
 });
 

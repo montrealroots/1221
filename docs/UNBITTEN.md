@@ -714,6 +714,58 @@ file reference rather than as a finding.
   unscripted seeds without any contributor record — so the downstream readers this
   line looks like it is starving are not starved.
 
+### Found by measuring rather than by reading
+
+This one is here because it is the only place a defect could still come from.
+`docs/ARREARS.md` is verdicted through, this page is verdicted through, and
+`docs/UNWIRED.json` reads nought on every row — so the lists are exhausted and
+what is left is running the game and looking at it.
+
+**The instrument was measuring a derelict house, and had been for its whole
+life.** `playACareer` trains two hours a week and answers every ask, and it never
+once had the work done on the roof. Over twenty-five years, one seed at a year's
+resolution:
+
+| | year 15 | year 20 | year 25 |
+|---|---|---|---|
+| house condition | 34 | 21 | 0 |
+| body condition | 80 | 53 | 0 |
+| energy | 25 | 0 | 0 |
+| stress | 4 | 25 | 90 |
+| morale | 52 | 22 | 0 |
+| fitness | 94.0 | 36.1 | 0.0 |
+| readiness | 43 | 20 | 11 |
+
+Everything after the roof is downstream of a night's sleep. And the fitness row
+is the one that matters most, because it is not simply a low number: once energy
+is under `TOO_SPENT_TO_TRAIN`, `life.train` refuses every week, so the only thing
+that raises fitness stops working and the dial ratchets to the floor with nothing
+able to put it back. **Read off the endpoint, that is
+`w.fitness is a one-way ratchet to zero` — a claim this project has recorded as
+built, and which the dial passes the moment the character can train.** A
+measurement that reproduces a fixed defect is the most expensive kind of wrong.
+
+`playACareer` keeps the house now, and `letTheHouseGo` turns it off for the A/B
+that `tests/house.test.ts` runs. Kept, the same seeds end: house 99, body 94,
+energy 25, stress 4, morale 100, fitness 86.6 against an age ceiling of 89.1,
+readiness 49. Over the full career the figures that had looked like defects come
+back as ordinary: professional standing 53 and 61 rather than 2 and 1, reliability
+72 and 73 rather than 63 and 58, fitness 88 rather than 0.
+
+Two notes for whoever measures next. The default is on because a player told "the
+condition is the one figure in this house that moves on its own, and left alone it
+only moves one way", holding EUR 1.2m, keeps the house — the rotting career is a
+real way to play and it is not the ordinary one. And `haveTheWorkDone` charges by
+the point and refuses when there is nothing to do, so calling it every week is the
+cheap end of keeping it rather than a restoration bill.
+
+**The business half came out clean on the same pass**, which is worth recording
+because it is the half with the money in it: 36 and 37 greenlit, 34 and 35
+delivered, no week under water, the group holding EUR 2.81bn and EUR 2.86bn
+against a year's profit of EUR 128m and EUR 152m, 1,915–1,930 stage-weeks taken
+of which 147–153 are load-out, and the same four offices that can never book on
+either seed.
+
 ### Found while building, and not yet fixed
 
 - ~~**The hands on a feature decide nothing.**~~ **Fixed, and the first reading

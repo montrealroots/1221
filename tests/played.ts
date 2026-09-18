@@ -51,6 +51,15 @@ export interface HowTheyPlay {
    * else wants the throw, for the reason in `THE WEEK A SYSTEM STOPPED` below.
    */
   evenIfSomethingBroke?: boolean;
+  /**
+   * Whether the roof is kept up. On unless a measurement is about not keeping it.
+   *
+   * It defaults on because a player who is told the condition only moves one way,
+   * and who has EUR 1.2m in the bank, keeps the house — and because the shape of
+   * a career measured without it is not a worse career, it is a different game.
+   * The figures are in the loop below.
+   */
+  letTheHouseGo?: boolean;
 }
 
 export interface WhatHappened {
@@ -89,6 +98,25 @@ export function playACareer(sim: Simulation, years: number, how: HowTheyPlay = {
     // the whole reason this file exists.
     const endOfWeek = sim.now + MS_WEEK;
     sim.execute({ kind: 'life.train', payload: { hours: 2 } });
+    // And keeping the roof up, which is the other lever a player has on their own
+    // body and which this loop did not pull for the whole of its life.
+    //
+    // Measured before it did: the house went 100 → 34 by year fifteen and 0 by
+    // year twenty-four, and everything downstream of a night's sleep went with
+    // it. Body condition to 0, energy pinned at 0, stress at 90, sleep debt at
+    // 60, morale at 0, readiness at 11 — and once energy is under
+    // `TOO_SPENT_TO_TRAIN` the training above refuses every week, so fitness
+    // ratcheted from 98 at year fifteen to 0 at year twenty-five with nothing
+    // able to put it back. Every late-career figure this instrument has ever
+    // reported was measured on a character in a derelict house with EUR 1.2m in
+    // the bank, which is not a player and is not the game either.
+    //
+    // `haveTheWorkDone` charges by the point and refuses when there is nothing to
+    // do, so calling it every week is the cheap end of keeping it: it does
+    // nothing most weeks and a small amount of work often rather than a
+    // restoration once. That is also the behavior a screen that says "left alone
+    // it only moves one way" is asking for.
+    if (!how.letTheHouseGo) sim.execute({ kind: 'life.upkeep', payload: {} });
     sim.advanceTo(endOfWeek);
     // Which is a thing a played career now contains and an autopilot one did not.
     //
