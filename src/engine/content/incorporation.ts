@@ -503,3 +503,32 @@ export const INCORPORATION_NOTE =
   + 'distributor takes delivery without errors and omissions cover. The money is quoted rather '
   + 'than legislated — formation fees, premiums and deposits all move, and every figure here is '
   + 'SLATE’s own estimate, not a current price.';
+
+/**
+ * How close somebody has to be to you before they will take a post.
+ *
+ * Nobody has to say yes. `company.fill_post` could not fail for a reason that
+ * was about the person: it checked the role existed, that the seat was empty and
+ * that the name was somebody the save had, and then it put them in the chair.
+ * Six posts, three relatives, and every one of them agreed to anything.
+ *
+ * So it is an offer now, and the thing it reads is the one number in this game
+ * that records how much of each other two people have actually had lately.
+ * `closeness` rests at 60 for two people under one roof and 25 for two people
+ * who are not, drifts toward that resting level at two percent a day, and moves
+ * when the player keeps a plan with somebody or misses one — six up, ten down.
+ * A save opens at 72 and 70, so the family says yes on the first morning and
+ * goes on saying yes to anybody who keeps up with them.
+ *
+ * Forty is the line, which is `Cordial` in `STANDING_BANDS`: fine with each
+ * other, politely and at a slight distance. That is a real answer to "will you
+ * run my company" and it is the honest one. Above it somebody who gets on with
+ * you says yes; below it they are not refusing out of spite, they are somebody
+ * you stopped seeing who is being asked for a favor.
+ *
+ * It is reachable in both directions and by playing rather than by waiting. A
+ * parent who moves out rests at 25 and is under the line inside a month. A
+ * player who misses four plans in a row takes 72 to 32. And warming it back is
+ * six a plan, so the door is never shut for good.
+ */
+export const WILL_TAKE_A_POST = 40;

@@ -14,7 +14,7 @@
 
 import { expect } from 'vitest';
 import type { Simulation } from '@/engine';
-import { capabilitiesOf, parentCompany } from '@/engine/world/company';
+import { capabilitiesOf, parentCompany, seatHeldBy, whyNotTakeIt } from '@/engine/world/company';
 import { MS_WEEK } from '@/engine/world/lot';
 import { LOT_NAME } from '@/engine/content/estate';
 import { stillMissing } from '@/engine/world/making';
@@ -23,6 +23,37 @@ interface Done { ok: boolean; id?: string; error?: string }
 
 const run = (sim: Simulation, kind: string, payload: Record<string, unknown> = {}): Done =>
   sim.execute<Done>({ kind, payload }).value!;
+
+/**
+ * Somebody who will actually take the seat being offered.
+ *
+ * Both helpers below used to reach for the same relative, which worked because
+ * `company.fill_post` never emptied the chair somebody was already in — so one
+ * person held the head of production and the accountant at once and both doors
+ * opened. Nobody is two people now, and nobody has to say yes, so the path a
+ * player walks has to allocate: whoever holds nothing at this company, and
+ * failing that whoever the world says would still agree to move.
+ *
+ * Which is the scarcity `world/company.ts` has always described — six posts and
+ * three relatives — and it is why these two functions are separate. Only the
+ * head of production and the accountant gate a door, so three people is enough
+ * to open all nine, by one.
+ */
+const GATING = ['production', 'accountant'];
+
+function willTake(sim: Simulation, role: 'production' | 'accountant'): string {
+  const company = parentCompany(sim.universe)!.id;
+  const people = Object.values(sim.universe.people)
+    .filter((one) => one.careerTrack !== 'executive' && !whyNotTakeIt(sim, one.id, role));
+  const seat = (id: string) => seatHeldBy(sim, id, company);
+  // Never somebody already in a seat a door depends on. The first version of
+  // this fell back to whoever would agree, which was the player — who by then
+  // was the head of production, so seating them as the accountant emptied the
+  // chair the greenlight door reads and shut it again.
+  return (people.find((one) => !seat(one.id))
+    ?? people.find((one) => !GATING.includes(seat(one.id)!.role))
+    ?? people[0]!).id;
+}
 
 /**
  * Opens the greenlight door, and says so if it could not.
@@ -37,9 +68,7 @@ export function openTheDoors(sim: Simulation, title = 'Something To Make'): void
   if (capabilitiesOf(sim).find((one) => one.id === 'greenlight')?.can) return;
 
   // Somebody to run production. The family is who there is.
-  const somebody = Object.values(sim.universe.people).find((one) => !one.isPlayer)
-    ?? Object.values(sim.universe.people)[0]!;
-  expect(run(sim, 'company.fill_post', { role: 'production', personId: somebody.id }).ok,
+  expect(run(sim, 'company.fill_post', { role: 'production', personId: willTake(sim, 'production') }).ok,
     'could not fill the head of production post').toBe(true);
 
   // Something to make.
@@ -74,9 +103,7 @@ export function openTheDoors(sim: Simulation, title = 'Something To Make'): void
  */
 export function openTheBooks(sim: Simulation): void {
   if (capabilitiesOf(sim).find((one) => one.id === 'claim_rebate')?.can) return;
-  const somebody = Object.values(sim.universe.people).find((one) => !one.isPlayer)
-    ?? Object.values(sim.universe.people)[0]!;
-  expect(run(sim, 'company.fill_post', { role: 'accountant', personId: somebody.id }).ok,
+  expect(run(sim, 'company.fill_post', { role: 'accountant', personId: willTake(sim, 'accountant') }).ok,
     'could not put anybody in as the production accountant').toBe(true);
   const door = capabilitiesOf(sim).find((one) => one.id === 'claim_rebate')!;
   expect(door.can, `the reimbursement door is still shut: ${door.blockers.map((b) => b.need).join(', ')}`)

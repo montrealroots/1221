@@ -38,6 +38,7 @@ import {
 } from '@/engine/content/tax';
 import {
   CORPORATION_TAX, GUILD_BY_ID, REBATE, REGISTRY_BY_ID, ROLES, VAT_ON_A_PURCHASE, VAT_RATE,
+  WILL_TAKE_A_POST,
 } from '@/engine/content/incorporation';
 import { OVERHEAD, SMALL_STAGE_COST_CENTS } from '@/engine/content/lot';
 import { buildAStage, chargeThePosts } from '@/engine/world/lot';
@@ -55,8 +56,12 @@ import {
 } from '@/engine/content/sugar';
 import { VAT_MEMO, boughtWithVat, reclaimable, whereTheVatStands } from '@/engine/world/vat';
 import {
+  MISSED_COOLS, RESTING_APART, RESTING_UNDER_ONE_ROOF, TOGETHER_WARMS, bondFor, standingWord,
+} from '@/engine/world/standing';
+import {
   GREENLIGHT_FLOOR, americanArm, capabilitiesOf, cashAccountFor, companiesOf, companyCash, holdingsOf,
   filled, parentCompany, policiesOf, postFacts, postsOf, projectsOf, registrationsOf,
+  seatHeldBy, whyNotTakeIt,
   signaturesOf, theSugarGroup,
   whereItStands,
 } from '@/engine/world/company';
@@ -1429,5 +1434,132 @@ describe('the roster, on both companies', () => {
     for (const role of ours) expect(theirs).not.toContain(role);
     // And every post on either list resolves to facts, whichever table holds it.
     for (const role of [...ours, ...theirs]) expect(postFacts(role)).toBeTruthy();
+  });
+});
+
+describe('nobody has to say yes', () => {
+  /**
+   * `company.fill_post` could not fail for any reason that was about the person.
+   * It checked the role existed, that the seat was empty and that the name was
+   * somebody the save had, and then it put them in the chair. Six posts, three
+   * relatives, and every one of them agreed to anything — including to four jobs
+   * at once, because nothing ever emptied the seat they already held.
+   */
+
+  const offer = (sim: Simulation, role: string, personId: string): Done =>
+    run(sim, 'company.fill_post', { role, personId });
+
+  it('says yes on the first morning, because the family is close then', () => {
+    const sim = world('consent-yes');
+    const mother = personCalled(sim, 'Halla');
+    expect(bondFor(sim.universe, sim.universe.playerId, mother)!.closeness)
+      .toBeGreaterThan(WILL_TAKE_A_POST);
+    expect(whyNotTakeIt(sim, mother, 'production')).toBeUndefined();
+    expect(offer(sim, 'production', mother).ok).toBe(true);
+  });
+
+  it('says no once you have stopped keeping up with them', () => {
+    // The refusal reads `closeness`, which is not a fact about the save but a
+    // record of what the player did: keeping a plan warms it six, missing one
+    // cools it ten, and it drifts toward 60 under one roof or 25 apart.
+    const sim = world('consent-drifted');
+    const mother = personCalled(sim, 'Halla');
+    const bond = bondFor(sim.universe, sim.universe.playerId, mother)!;
+
+    const why = () => whyNotTakeIt(sim, mother, 'production');
+    expect(why(), 'close at boot, so there is nothing to refuse').toBeUndefined();
+
+    bond.closeness = WILL_TAKE_A_POST - 1;
+    expect(why()).toBeTruthy();
+    expect(why()).toContain('says no');
+    // And it names the standing rather than a number, in the world's own words.
+    expect(why()).toContain(standingWord(bond.closeness).toLowerCase());
+    expect(offer(sim, 'production', mother).ok).toBe(false);
+    expect(filled(sim.universe, 'production')).toBeUndefined();
+
+    // Recoverable, on purpose: warm it back and ask again. Four kept plans.
+    bond.closeness = WILL_TAKE_A_POST - 1 + TOGETHER_WARMS * 4;
+    expect(why()).toBeUndefined();
+    expect(offer(sim, 'production', mother).ok).toBe(true);
+  });
+
+  it('is reachable by playing, not only by writing to the bond', () => {
+    // The line has to be crossable by a player or it is a threshold no save can
+    // hold. Missing plans cools ten a time, so four missed plans takes the
+    // opening 72 under forty on its own — and a parent who no longer lives under
+    // the same roof rests at 25 and is under it inside a month whatever happens.
+    const sim = world('consent-reachable');
+    const mother = personCalled(sim, 'Halla');
+    const bond = bondFor(sim.universe, sim.universe.playerId, mother)!;
+    const opened = bond.closeness;
+    expect(opened - MISSED_COOLS * 4, 'four missed plans should not reach the line')
+      .toBeLessThan(WILL_TAKE_A_POST);
+    expect(RESTING_APART, 'somebody who moves out should drift under it')
+      .toBeLessThan(WILL_TAKE_A_POST);
+    // And the resting level for somebody still in the house is above it, so a
+    // player who simply lets time pass does not lose the family.
+    expect(RESTING_UNDER_ONE_ROOF).toBeGreaterThan(WILL_TAKE_A_POST);
+  });
+
+  it('says no to somebody who has no reason to know you', () => {
+    // The sugar group's five executives are in `universe.people` and every one of
+    // them could be made head of production. They have never met the player.
+    const sim = world('consent-stranger');
+    const group = theSugarGroup(sim)!;
+    const executive = postsOf(sim.universe, group.id)
+      .filter((one) => !BOARD_SEATS.includes(one.role as typeof BOARD_SEATS[number]))
+      .map((one) => one.personId!)[0]!;
+    expect(bondFor(sim.universe, sim.universe.playerId, executive)).toBeUndefined();
+    expect(whyNotTakeIt(sim, executive, 'production')).toContain('don’t really know');
+    expect(offer(sim, 'production', executive).ok).toBe(false);
+  });
+
+  it('will not let one person hold two seats, which is what it used to do', () => {
+    // `post.personId = person.id` never emptied the seat they were already in, so
+    // one relative could hold all six posts and every door behind them opened.
+    const sim = world('consent-two-seats');
+    const mother = personCalled(sim, 'Halla');
+    expect(seatHeldBy(sim, mother)!.role, 'the mother runs the company at boot')
+      .toBe('principal');
+
+    // A bigger job is worth leaving the one she has, and leaving it empties it.
+    expect(offer(sim, 'production', mother).ok).toBe(true);
+    expect(seatHeldBy(sim, mother)!.role).toBe('production');
+    expect(filled(sim.universe, 'principal'), 'she is in two chairs at once')
+      .toBeUndefined();
+    // One seat each, always.
+    const held = postsOf(sim.universe, parentCompany(sim.universe)!.id)
+      .filter((one) => one.personId).map((one) => one.personId!);
+    expect(new Set(held).size).toBe(held.length);
+  });
+
+  it('will not leave a bigger job for a smaller one, and says which', () => {
+    const sim = world('consent-bigger');
+    const mother = personCalled(sim, 'Halla');
+    expect(offer(sim, 'production', mother).ok).toBe(true);
+
+    // The accountant is worth less than the head of production, so she stays.
+    const production = ROLES.find((one) => one.id === 'production')!;
+    const accountant = ROLES.find((one) => one.id === 'accountant')!;
+    expect(accountant.monthlyCents).toBeLessThan(production.monthlyCents);
+
+    const why = whyNotTakeIt(sim, mother, 'accountant');
+    expect(why).toBeTruthy();
+    expect(why).toContain('the bigger job of the two');
+    expect(why).toContain(production.said);
+    expect(offer(sim, 'accountant', mother).ok).toBe(false);
+    expect(seatHeldBy(sim, mother)!.role, 'she was moved anyway').toBe('production');
+  });
+
+  it('never asks the player or the principal, because neither needs asking', () => {
+    const sim = world('consent-unasked');
+    // You do not ask yourself to do a job.
+    expect(whyNotTakeIt(sim, sim.universe.playerId, 'production')).toBeUndefined();
+    // And the principal is whoever the company answers to. Even a relative the
+    // player has entirely stopped seeing still owns what they own.
+    const father = personCalled(sim, 'Jón');
+    bondFor(sim.universe, sim.universe.playerId, father)!.closeness = 0;
+    expect(whyNotTakeIt(sim, father, 'principal')).toBeUndefined();
+    expect(whyNotTakeIt(sim, father, 'accountant')).toBeTruthy();
   });
 });

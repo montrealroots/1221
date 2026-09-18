@@ -31,8 +31,10 @@ import type {
 } from '../domain/company';
 import {
   FORM_BY_ID, GLOBAL_RULE_ONE, GUILD_BY_ID, POLICY_BY_ID, REGISTRY_BY_ID, ROLE_BY_ID,
+  WILL_TAKE_A_POST,
 } from '../content/incorporation';
 import { ESTATE_CITY_ID, HOUSE, studioName } from '../content/estate';
+import { bondFor, standingWord } from './standing';
 import { addMonths, instantFromZoned, type Instant } from '../core/time';
 import { estateCity } from '../content/estate';
 import {
@@ -671,6 +673,66 @@ export interface Done {
   error?: string;
 }
 
+/**
+ * The seat somebody is in at one company, if they are in one.
+ *
+ * Scoped to a company, and it has to be. Both parents chair the sugar group and
+ * one of them runs the production company, and those are not competing jobs — a
+ * family that owns two businesses sits on both boards. Unscoped, this found the
+ * mother's seat at the cane group and concluded she was unavailable to the film
+ * company she is the principal of.
+ *
+ * So the rule is one seat per company, not one seat in the world.
+ */
+export function seatHeldBy(sim: Simulation, personId: Id, companyId?: Id): Post | undefined {
+  const at = companyId ?? parentCompany(sim.universe)?.id;
+  return Object.values(sim.universe.posts)
+    .find((one) => one.personId === personId && one.companyId === at);
+}
+
+/**
+ * Why somebody would not take a post, or nothing if they would.
+ *
+ * Exported and asked before the offer rather than only inside it, so a screen can
+ * say what the answer will be instead of finding out by being refused. The
+ * sentence is the one the refusal uses, because there is no second version of
+ * this reasoning to disagree with the first.
+ */
+export function whyNotTakeIt(sim: Simulation, personId: Id, role: RoleId): string | undefined {
+  const facts = ROLE_BY_ID[role];
+  const person = sim.universe.people[personId];
+  if (!facts || !person) return 'There’s nobody to ask.';
+  const them = person.firstName;
+
+  // Two people never need asking. You do not ask yourself to do a job, and the
+  // principal is whoever the company answers to — the family does not seek its
+  // own permission to own the thing it owns. Every other seat is a job somebody
+  // agrees to do.
+  if (personId === sim.universe.playerId) return undefined;
+  if (role === 'principal') return undefined;
+
+  const bond = bondFor(sim.universe, sim.universe.playerId, personId);
+  if (!bond) {
+    return `You don’t really know ${them}, and wanting to work for you is the first thing this asks.`;
+  }
+  if (bond.closeness < WILL_TAKE_A_POST) {
+    return `${them} says no. You’re ${standingWord(bond.closeness).toLowerCase()} these days, `
+      + 'and at that distance this is a favor, not a job.';
+  }
+
+  // And nobody is two people. A better seat is worth leaving the one they have;
+  // a lesser one is not, and they say which they are keeping.
+  const held = seatHeldBy(sim, personId);
+  if (held && held.role !== role) {
+    const there = postFacts(held.role);
+    if (there && there.monthlyCents >= facts.monthlyCents) {
+      return `${them} is already ${there.said}, which is the bigger job of the two. `
+        + 'You’ll have to ask elsewhere for this one.';
+    }
+  }
+  return undefined;
+}
+
 const refuse = (error: string): Done => ({ ok: false, error });
 
 /** The account the company pays out of, where it has one. */
@@ -911,6 +973,32 @@ export function registerCompanyCommands(sim: Simulation): void {
    * And the only people this save has are the family, which is the whole
    * constraint: six posts, three relatives, and whoever you put in one is not
    * doing the other thing they were doing.
+   *
+   * Which nobody had to agree to. This could not fail for any reason that was
+   * about the person: it checked the role existed, that the seat was empty and
+   * that the name was somebody the save had, and then it put them in the chair.
+   * Three reasons to say no now, and every one of them is read off the world.
+   *
+   * **They barely know you.** No bond at all means somebody the player has never
+   * had anything to do with — the sugar group's five executives are in
+   * `universe.people` and every one of them could be made head of production.
+   *
+   * **You stopped keeping up with them.** `closeness` below `WILL_TAKE_A_POST`.
+   * This is the one that costs something, because closeness is not a fact about
+   * the save, it is a record of what the player did: keeping a plan warms it six,
+   * missing one cools it ten, and it drifts toward 60 under one roof or 25 apart.
+   * A save opens at 72 and 70 so the family says yes on the first morning; a
+   * player who neglects them for years is asking a favor of somebody they
+   * stopped seeing, and gets the answer that deserves.
+   *
+   * **They are already somewhere better.** Nobody can be two people, and this
+   * did not think so: `post.personId = person.id` never emptied the seat they
+   * already held, so one relative could hold all six posts at once and every
+   * door behind them opened. They take the better seat and leave the lesser one,
+   * and they decline a seat worth less than the one they are in — by
+   * `monthlyCents`, which is the only ordering these roles have.
+   *
+   * All three are recoverable, on purpose. Warm the bond and ask again.
    */
   sim.onCommand<{ role: RoleId; personId: Id }, Done>('company.fill_post', (payload, { sim: s }) => {
     const facts = ROLE_BY_ID[payload.role];
@@ -926,6 +1014,10 @@ export function registerCompanyCommands(sim: Simulation): void {
         : `The post of ${facts.said} needs somebody in it. An empty chair runs nothing.`);
     }
 
+    // Whether they say yes, and why not.
+    const no = whyNotTakeIt(s, person.id, payload.role);
+    if (no) return refuse(no);
+
     const existing = postsOf(s.universe, parent.id).find((one) => one.role === payload.role);
     const post: Post = existing ?? {
       id: s.nextId('post'),
@@ -933,6 +1025,14 @@ export function registerCompanyCommands(sim: Simulation): void {
       companyId: parent.id,
       role: payload.role,
     };
+    // Nobody is two people. Taking this seat leaves the one they were in, and the
+    // door behind it shuts — which is the trade the docstring above has always
+    // claimed and this never made them pay.
+    const held = seatHeldBy(s, person.id);
+    if (held && held.id !== post.id) {
+      delete held.personId;
+      delete held.filledAt;
+    }
     post.filledAt = s.now;
     post.personId = person.id;
     s.universe.posts[post.id] = post;

@@ -21,11 +21,12 @@ import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
 import type { Simulation } from '@/engine';
 import {
-  GREENLIGHT_FLOOR, capabilitiesOf, companyCash, parentCompany, postFacts,
+  GREENLIGHT_FLOOR, capabilitiesOf, companyCash, parentCompany, postFacts, seatHeldBy,
 } from '@/engine/world/company';
 import { fixFor } from '@/ui/workspaces/fix';
 import { EMPLOYER_TAX_ON_POSTS } from '@/engine/world/lot';
 import { TRYGGINGAGJALD } from '@/engine/content/sugar';
+import { ROLES } from '@/engine/content/incorporation';
 
 /** Priced, bought with a command, and read by nothing in the engine. */
 const PRICED_AND_QUIET = [
@@ -49,9 +50,37 @@ const answers = (sim: Simulation): string => capabilitiesOf(sim)
  * lands. Pressing a snapshot instead takes three options on three titles for
  * the one thing three doors each want, which is a sequence no player can see.
  */
+/**
+ * Somebody who can actually take a seat, the way a player would pick one.
+ *
+ * `walked` used to hand the same person every post, which the world allowed
+ * because `fill_post` never emptied the seat they were already in — so one
+ * relative held four chairs at once and every door behind them opened. Nobody is
+ * two people now, so the walk has to allocate: whoever is holding nothing first,
+ * and failing that whoever is in a seat no door depends on.
+ *
+ * That is the scarcity `world/company.ts` has always described and never charged
+ * for — six posts and three relatives. Only two of the six gate a door, the head
+ * of production and the accountant, so three people is still enough to open all
+ * nine. It is enough by one.
+ */
+const GATING = ['production', 'accountant'];
+
+function somebodyFree(sim: Simulation): { id: string } {
+  // At this company. Both parents sit on the sugar group's board as well, and
+  // those are not competing jobs — an unscoped look finds the mother's seat at
+  // the cane group, calls her free, and offers her a second film post she is
+  // already too senior to take.
+  const company = parentCompany(sim.universe)!.id;
+  const people = Object.values(sim.universe.people).filter((one) => one.careerTrack !== 'executive');
+  const seat = (id: string) => seatHeldBy(sim, id, company);
+  return people.find((one) => !seat(one.id))
+    ?? people.find((one) => !GATING.includes(seat(one.id)!.role))
+    ?? people[0]!;
+}
+
 function walked(seed: string): Simulation {
   const sim = quickSave({}, seed);
-  const who = Object.values(sim.universe.people)[0]!;
   let presses = 0;
   for (let guard = 0; guard < 60; guard += 1) {
     let pressed = false;
@@ -68,7 +97,7 @@ function walked(seed: string): Simulation {
           answer = sim.execute<{ ok: boolean }>({ kind: fix.kind, payload: fix.payload }).value;
         } else if (fix.asks === 'who') {
           answer = sim.execute<{ ok: boolean }>(
-            { kind: 'company.fill_post', payload: { role: fix.role, personId: who.id } },
+            { kind: 'company.fill_post', payload: { role: fix.role, personId: somebodyFree(sim).id } },
           ).value;
         } else {
           answer = sim.execute<{ ok: boolean }>(
@@ -143,7 +172,11 @@ describe('what the five priced quiet entries decide', () => {
       const sim = walked('decides-a');
       const was = answers(sim);
       const cash = companyCash(sim.universe);
-      const who = Object.values(sim.universe.people)[0]!;
+      // Somebody who is not already in a seat a door depends on. Taking the head
+      // of production out of their chair to be head of development shuts the
+      // greenlight door, which is a true and interesting thing and is not what
+      // this test is about: the claim here is that the post itself moves nothing.
+      const who = somebodyFree(sim);
       expect(sim.execute<{ ok: boolean }>(
         { kind: 'company.fill_post', payload: { role, personId: who.id } },
       ).value!.ok).toBe(true);
@@ -166,11 +199,16 @@ describe('what the five priced quiet entries decide', () => {
     // plus the employer's contribution on all of them, against what the screens
     // promise — which is what "the figure on the form is the figure debited"
     // actually means.
+    // And it staffs with a different person each time, because nobody is two
+    // people any more. The company cannot fill all six — six posts, three
+    // relatives — so what is charged is what is actually held, read off the save
+    // rather than assumed, which is the figure the claim is about anyway.
     const months = 400 * 24 * 60 * 60 * 1000;
     const staffed = walked('decides-a');
-    const who = Object.values(staffed.universe.people)[0]!;
     for (const role of ['development', 'production', 'business_affairs', 'accountant']) {
-      staffed.execute({ kind: 'company.fill_post', payload: { role, personId: who.id } });
+      staffed.execute({
+        kind: 'company.fill_post', payload: { role, personId: somebodyFree(staffed).id },
+      });
     }
     // Off the role's own row and not off the post, because the post no longer
     // carries a copy of the figure — that copy was written and never read, and
@@ -184,7 +222,11 @@ describe('what the five priced quiet entries decide', () => {
       .filter((one) => one.personId && one.companyId === ours);
     const promised = filled
       .reduce((sum, one) => sum + (postFacts(one.role)?.monthlyCents ?? 0), 0);
-    expect(promised, 'six posts filled, five of them priced').toBe(45_000_00);
+    // Six posts and three relatives, so not every seat can be held at once. What
+    // matters is that whatever IS held is charged, and the salaries are real
+    // money rather than a round number somebody chose for this test.
+    expect(promised, 'nobody is in a paid seat, so this proves nothing').toBeGreaterThan(0);
+    expect(filled.length).toBeLessThanOrEqual(ROLES.length);
 
     const before = staffed.universe.transactions.length;
     staffed.advanceTo(staffed.now + months);
