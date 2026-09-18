@@ -416,12 +416,27 @@ file reference rather than as a finding.
   reaches are file-private, so the module's public surface is only what
   `systems/life.ts` imports. The forty-three the closure does not reach are
   kept unwired in `research/LIFESPAN.md`.
-- **The whole wellbeing model**, and this is now half true rather than true.
-  Readiness is read in exactly one place: `heardItRight` in the audition room,
-  where how ready the player is decides how surely they took in the one note
-  anybody gives them. That is the first and so far only outcome any of the eight
-  dials under it decides. The dials themselves still feed nothing but readiness,
-  and readiness still feeds nothing but the room.
+- ~~**The whole wellbeing model.**~~ **Stale, and stale in the direction that
+  matters: readiness reaches the career now, not just the room.** This line said
+  "the dials feed nothing but readiness, and readiness feeds nothing but the
+  room", and it is wrong on the second half and on the first.
+
+  Readiness has three readers. `heardItRight` is the original one — how ready the
+  player is decides how surely they took in the one note anybody gives them.
+  `whatTheWeekTook` is the one that changes the shape of it: a week worked below
+  `A_WORKING_WEEK.spentAt` **costs reliability** and a week above it earns it, so
+  a run of exhausted weeks is a record of how somebody works. And reliability is
+  read twice by things that decide — `remembersYou`, where being unreliable is
+  the only thing in the build that can take work away from somebody perfect at
+  the work, and `castsReliability`, which feeds the slip model, so a picture cast
+  with tired people runs over more often.
+
+  The dials feed more than readiness too. Energy gates `life.train` at
+  `TOO_SPENT_TO_TRAIN`, and training moves fitness against a ceiling that falls
+  with age — which is also where the answer to "age decides nothing" ended up.
+  So the chain runs wellbeing → readiness → reliability → what you are offered
+  and whether the picture wraps on time, and none of it was there when this line
+  was written.
 - ~~**Travel fatigue is a second fitness bug**, and it takes openness down with
   it — the same shape as the fitness fault, on a second dial.~~ **Deleted.** It
   was seeded at nought and written twice, both times by a subtraction, so it held
@@ -433,12 +448,20 @@ file reference rather than as a finding.
   to 65.38 — and it was the input that had no producer. Field, `axisModifier`
   case, four trait modifiers, the higher-is-worse guard and the ninth dial on the
   screen all went together. Openness went with it into the paragraph above.
-- **The tax engine is a screen.** Real, correct, and read by one thing: the place
-  card, which works out what a reference wage would be taxed at and prints it.
-  Nothing taxes a fee, a wage or a company's profit. Iceland is at least IN the
-  tables now — it was in none of them, so the home screen told a player living
-  in Mosfellsbær that Iceland taxes a wage at 0% and charges no sales tax — but
-  a correct table nobody is charged from is still a screen.
+- **The income tax engine is a screen, and it is the only tax left that is.**
+  This line used to read "nothing taxes a fee, a wage or a company's profit", and
+  two thirds of that is now false. **The group pays corporation tax** at
+  `CORPORATION_TAX` of 20%, filed in May, out of `world/sugar.ts`. **Wages are
+  charged Tryggingagjald** at 6.35%, on the sugar group's payroll and on the
+  lot's own posts. **VAT is filed and reclaimed** on a real return out of
+  `world/vat.ts`. What is left unwired is income tax on the player, which is
+  `computeAnnualTax` — real, correct on its own tables, and read by one thing:
+  the place card, which works out what a reference wage would be taxed at and
+  prints it.
+
+  Iceland is at least IN the tables — it was in none of them, so the home screen
+  told a player living in Mosfellsbær that Iceland taxes a wage at 0% and charges
+  no sales tax — but a correct table nobody is charged from is still a screen.
 
   **Costed, so the decision is a number rather than a preference.** Running
   `computeAnnualTax` — the engine's own function, on its own tables, against the
@@ -586,14 +609,21 @@ file reference rather than as a finding.
   ${date}` or `Empty`, off `onStageAt`. What is missing is the forward view:
   the player can see who is on a stage **now** and not what is booked for next
   month, so it is a board without the dates in front of it.
-- **The collective floor under an Icelandic fee.** Still true, and it is a
-  sentence and not a number: two rows in `content/incorporation.ts` carry
+- ~~**The collective floor under an Icelandic fee.**~~ **Built.** It was a
+  sentence and not a number — two rows in `content/incorporation.ts` carrying
   `binds: 'The collective floor, holiday pay, and the mandatory pension
-  contribution'` with `signable: false` and no figure anywhere, and no fee in
-  the build is ever checked against a minimum. **`canWorkIn` is stale on this
-  line** — it was deleted in `bcbf271`, with `workRefusalFor`, a duplicate
-  `countryOfCity` and the five tests whose own header admitted nothing called
-  the rule.
+  contribution'` with no figure anywhere, and no fee in the build ever checked
+  against a minimum. It is a figure now: `A_MONTH_AT_LEAST_ISK` of 425,000,
+  carried to a week as `SCALE_A_WEEK_CENTS`, and `feeFor` takes the greater of
+  the share and `weeks * SCALE_A_WEEK_CENTS`.
+
+  The way it was reached is the part worth keeping. A small part on a low-spend
+  booking was paying **three hundred and sixty-one euros a week**, which is below
+  the law rather than merely mean, and nothing in the build could have noticed
+  because there was no minimum to notice against. **`canWorkIn` was stale on this
+  line too** — deleted in `bcbf271`, with `workRefusalFor`, a duplicate
+  `countryOfCity` and the five tests whose own header admitted nothing called the
+  rule.
 - **Awards and critics**, which is where `prestige` above is waiting.
   **Specified and costed in `docs/AWARDS.md`**, which is the deliverable this
   section was scoped to rather than a built festival circuit. The finding that
@@ -646,16 +676,43 @@ file reference rather than as a finding.
   nothing cannot be verified or cleared, and guessing at which three guards were
   meant would be inventing an arrears rather than paying one. It wants naming
   before it wants fixing.
-- **Three signable guilds, a registry, a policy and a company form** can be
+- ~~**Three signable guilds, a registry, a policy and a company form** can be
   reached only as a blocker chip — which is fine, because the chip carries a
-  working control. Measured by driving the built app: a player who presses what
-  the panel offers goes from two doors to nine. It was six until the material
-  blocker got a control of its own; "Anything At All" named the thing keeping
-  three doors shut and then left the player to find the button for it a panel
-  away, under a heading that does not mention doors.
-- **The reimbursement's under-18 case**, which needs a picture to declare an
-  audience.
-- **The unscripted contributor cast board.**
+  working control.~~ **It was not fine, and the count was short by a policy.**
+  The chip does carry a working control and a player who presses what the panel
+  offers does go from two doors to nine — that measurement stands. What it misses
+  is that a chip only appears for something a shut door is waiting on, and
+  walking every door open leaves three of the four signable guilds, one register,
+  **two** policies and a company form named by no blocker ever. A
+  fix-what-is-broken affordance was being used as the only shop, so forty-odd
+  lines of authored content apiece could not be bought by any route a player
+  could walk.
+
+  The `register`, `guild` and `cover` pages already printed every fact about each
+  one and carried no action. They offer it now, and the refusal under the button
+  is `whyNotRegister` / `whyNotSign` / `whyNotInsure` — the same functions the
+  command handlers were rewritten to call, so the screen cannot offer what the
+  engine will refuse.
+- ~~**The reimbursement's under-18 case**, which needs a picture to declare an
+  audience.~~ **Said plainly instead.** `content/incorporation.ts` states that the
+  higher rate is for audiences of eighteen and under, "which SLATE doesn't model:
+  no picture declares an audience." A note describing a rule the engine cannot
+  apply is a note that lies.
+- **The unscripted contributor cast board** — and this one is an inventory line
+  rather than an open defect, which is worth saying because it reads like the
+  latter. The format season has no `cast: 'performers'` on purpose: choosing
+  twelve contributors is a different act from casting written parts, engaged and
+  paid on different terms, and a flag reading true for both would be the shortest
+  possible way to say something false. The season's cast-board *period* is real
+  and paid for — 12% of the spend, forty contributors seen a week — so nothing is
+  free here; what does not exist is a screen listing the twelve.
+
+  `datesFor`, `layTheRoles` and the withdrawn-consent trouble are all written to
+  be right the day that screen exists, and `tests/crew.test.ts` says so in as many
+  words. An adversarial re-audit of this line is in `docs/ARREARS.md` under
+  Refuted, including the probe showing withdrawn consent fires on 10 of 10
+  unscripted seeds without any contributor record — so the downstream readers this
+  line looks like it is starving are not starved.
 
 ### Found while building, and not yet fixed
 
