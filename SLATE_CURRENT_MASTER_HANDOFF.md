@@ -82,6 +82,106 @@ It trades now. A daily tick sells, pays 3,100 people and buys cane; a monthly ti
 
 **Copy the owner asked about, fixed:** the company page said it was run out of the lot when the lot is its headquarters (three places), and hard-coded "no slate, no credit, nothing anybody has seen" plus "SLATE keeps no books for it" — frozen on the day the save opened and still printed after thirty delivered pictures. It counts the slate, the material and the cash now, and the empty save reads as it always did because those counts really are nought then. Same defect on the lot's way in ("nothing shot on one yet"). And nobody outside the family is billed as an actor: `performerTitle` is set on every generated person because the field is not optional, which made a default read as a fact, so the person who runs the lot was labelled an actor on the one screen that says who somebody is. Their pronouns instead.
 
+### The two companies, in full — the owner's "everything it takes to run a company, for both"
+
+The group had a name, a legal form and a cap table. The production company had
+registers, an account and posts. Both carry the same machinery now, and the
+difference between them is the difference between the two businesses rather than
+a gap in the build.
+
+| | Rivera Pictures ehf. | Sykurland hf. |
+|---|---|---|
+| form | Private Limited | Public Limited (and 100% family-held — see below) |
+| founded | 2024 | 1946 |
+| owners | both parents, 50/50 | both parents, 50/50 |
+| registers | companies, VAT | companies, VAT, **employer** |
+| own bank account | EUR 180,000 at boot | EUR 3,089,454 at boot (a fortnight of payroll) |
+| posts | 6 rows: 2 filled, 4 the player's to fill | 7 rows, all 7 filled |
+| payroll | the posts, **plus Tryggingagjald** | 3,100 people + 5 named seats, **plus Tryggingagjald** |
+| corporation tax | no profit to tax | **20%, ~EUR 29m a year** |
+| trades | pictures | sells, mills and ships every day |
+
+**Corporation tax existed only as a word.** `CORPORATION_TAX = 0.20` had been in
+`content/incorporation.ts` since there was a company in this game, and the only
+thing that read it was a test asserting it still equals 0.20 — a test that can
+fail only when somebody edits it on purpose. `docs/UNBITTEN.md` was blunt and
+correct: it is not inert, it does not exist. The group is the only company in the
+save with a profit to tax and it pays **EUR 725m** over twenty-five years, charged
+on the year it actually had so a shut American year is taxed less.
+
+**Tryggingagjald existed only as a comment.** `content/tax.ts` has always carried
+the sentence naming the employer's 6.35% contribution and saying it does not
+belong in a figure about what somebody takes home. It was right about where it
+does not belong and silent about where it does; no company here had ever paid a
+króna of it. Charged on both payrolls now — **EUR 128m** on the group's over
+twenty-five years — and derived from the payroll and taken out of the cost of
+goods rather than added on top, so naming it invents no money.
+
+### Five bugs this surfaced, each a shape that will recur
+
+1. **A second company makes "the company account" meaningless.** The group's
+   account made every `find(kind === 'company_cash')` ambiguous, and the group is
+   founded *first*, so eight test sites silently began watching the cane business.
+   This is the same defect the business instrument shipped once already reading
+   `companies[0]`. `cashAccountFor(universe, companyId)` is the question now.
+2. **Four "anywhere" helpers meant "anywhere in the save".** `onRegister`,
+   `signedWith`, `carries` and `filled` scanned every company, so the group's
+   employer registration opened the *production* company's Employ People Here door
+   for nothing — a gate reporting itself satisfied by a fact about a different
+   company in a different trade. Scoped to the film side.
+3. **Unscoped UI reads.** `Standings` on the business page and the `role` look
+   both read the whole save, so a producer's staffing panel listed a head of
+   agronomy, and the group's own seats opened onto "There's no such post".
+4. **A ternary that was a trapdoor.** `personRunning` read
+   `role === 'principal' ? 'the company' : 'the lot'` — correct while exactly two
+   posts existed, and wrong the instant four more did: every new post resolved to
+   the lot manager, so the head of production was filled at boot and the greenlight
+   door was open before anybody decided anything. **Fourteen tests caught it.**
+5. **The family's patience came alive and cost the owner's guarantee.** Once the
+   posts went on a payroll, `paidInSoFar` stopped being fully repaid, share reached
+   0.34 against a last rung bitten to 0.38 by shut years, and the company then sat
+   at **minus EUR 708,143 for a fortnight at a time while the group held EUR
+   172,091,226 spare.** Resolved by splitting what the refusal withholds: the
+   **day** settles what is owed, to the cent, whatever the family thinks; the
+   **month** declines to fund anything new. At nought the company is under
+   `GREENLIGHT_FLOOR`, so the greenlight door shuts — which is the consequence the
+   condition was written for and the one it still has. **Do not re-merge those two
+   clocks**; each extreme breaks something and `crew.test.ts`, `making.test.ts` and
+   `business.test.ts` each pin one end.
+
+### Who runs the group, and why they are people
+
+Five salaried seats — managing director, heads of agronomy, milling and trade, a
+finance director — filled at boot with generated people off the save's own seeded
+stream, so the same seed is the same board and two saves do not share a managing
+director. The two board seats are the parents'. Their pay comes out of the payroll
+the 3,100 are already in rather than on top of it, so naming the management costs
+the group nothing it was not paying and the 11% margin is untouched.
+
+`sugar.staff` is registered in `decided.ts`, because it is a draw and the ratchet
+counts streams nothing owns — it went from 13 to 14 the moment this existed. Its
+`given` read was itself a declared word the decider sweep proved changed nothing,
+before the sweep made it real.
+
+**Public in form, private in fact.** The group is an `hf.` and every share is held
+by two parents. The page printed the form's own blurb — "the form a company takes
+when outside money comes in at scale" — one line above their names. The claim is
+cut where it is false, read off `ownerships` rather than hardcoded, so selling a
+share to somebody outside the family brings the sentence back by itself.
+
+**And the pronoun fix from the commit before was in the wrong slot.** `kind` is a
+category, "she/her" is not one: it told a player nothing about the head of milling
+and tripped the rule against an identifier reaching a screen. What they are
+instead — what they are to you, then the seat they hold, then what they do — with
+the pronouns said in a sentence, which is where a pronoun belongs.
+
+**A second gate bug, worth knowing.** The look-shape rule required a name to match
+`^[A-Z0-9]`, in a game set in Iceland whose own name table holds Ólafur, Árni and
+Ásta. It went unnoticed for as long as the only person that look seeded was the
+player, whose name a test supplies. `\p{Lu}` is what was meant.
+
+---
+
 ### Still open, and owner-only
 
 - **What the slate's 1.44–1.63× return should be.** A number only the owner can set.
@@ -97,7 +197,7 @@ It trades now. A daily tick sells, pays 3,100 people and buys cane; a monthly ti
 
 ### The commits
 
-**Branch `claude/slate-cleanup-e4apmx` is 25 commits past `dc52d64`.** Gate exit 0 on every one of them before it was committed — **1,291 tests over 47 files** at the latest, dead-word floor 51 and dials 8 both unmoved. One section per commit, each independently droppable. The nine numbered sections are the first pass; the remainder pass and the sugar company follow them.
+**Branch `claude/slate-cleanup-e4apmx` is 27 commits past `dc52d64`.** Gate exit 0 on every one of them before it was committed — **1,305 tests over 47 files** at the latest, dead-word floor 51 and dials 8 both unmoved. One section per commit, each independently droppable. The nine numbered sections are the first pass; the remainder pass and the sugar company follow them.
 
 | # | Section | Commit | What it was |
 |---|---|---|---|
