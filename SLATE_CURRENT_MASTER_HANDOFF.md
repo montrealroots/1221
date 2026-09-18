@@ -335,6 +335,52 @@ lot look busier than the premise says, and repricing them would have been tuning
 the economy to hide it — so do neither.
 
 
+### The four open items are closed, and none of them was what it looked like
+
+All four of the things this page listed as deliberately open are built, each with
+tests and mutation checks, in commits `2f5051d`, `0bb4850`, `ec90b31` and
+`f311912`. What is worth reading is that **every one of them turned out to be a
+different shape than the entry describing it**, and in three cases the entry was
+understating the defect rather than overstating it.
+
+**Guild signatures never lapsed.** The half of the old reasoning that survived is
+that a signature has no term: you are signatory until you breach, not until a year
+is up, so a renewal would have invented the mechanic. What was missing was never a
+clock. **An agreement is with a legal entity and a struck-off entity is not one.**
+Every other breach was checked first and every one is unreachable — a cast fee is
+paid the moment somebody is cast, and `feeFor` floors at collective scale, so
+nobody is ever owed and nobody is ever underpaid. Finding the cause exposed a
+second defect: `us_state`, the Delaware filing, was the one registration in the
+build that could never come due, because the filing loop compared against the
+parent company's id and the arm is a different company.
+
+**The hoard was a defect and not a big number.** `sugarCoversThePictures` funds the
+film company out of `held - KEPT_IN_HAND_CENTS`, so the group's balance already
+decided whether the pictures get money — and against EUR 2.81bn that guard could
+never bind. The group retains a year of the worldwide payroll and distributes the
+rest to the two people who own it: balance down to EUR 142m, the film company
+untouched at 36 greenlit and no week under water, and each parent ending on about
+EUR 700m where `settleTheReturn` taxes it.
+
+**The contributor cast board was recorded here as an inventory line and was not
+one.** An unscripted season carries no roles, so `castOf` returns nothing, so **all
+five cast terms the sale reads came back undefined**. A third of every career's
+pictures were sold on the negative and the deal alone. Three of the five read the
+board now; `truth` and `reads` stay undefined because they ask what the written
+part wanted and a format has none.
+
+**Awards were specified and are built**, all three pieces, with the spec's own
+instruction followed — prestige came back with two readers in the same commit as
+its writers. `askFor` is refused with its number written down. The ceremony is
+still refused.
+
+**And the thing to carry forward from all four.** The awards build moved prestige
+for the company's pictures and never for the player's own work, because a played
+career acts for other people and those productions are `Booking` rows with no cast
+records. `tools/dials.mjs` caught it in one run. **The instruments are now the
+thing that finds defects here, and they have earned that twice in a day** — the
+derelict house and this. Run them.
+
 ### And where it actually stands now — read this before picking anything up
 
 **Both ledgers are verdicted through and neither has an open defect in it.**
@@ -448,7 +494,7 @@ to pull in and the branch is clean against it.
 
 ### The commits
 
-**Branch `claude/slate-cleanup-e4apmx` is 49 commits past `dc52d64`.** Gate exit 0 on every one of them before it was committed — **1,361 tests over 47 files** at the latest. One section per commit, each independently droppable. The nine numbered sections are the first pass; the remainder pass, the sugar company and everything in "After the fee" below follow them.
+**Branch `claude/slate-cleanup-e4apmx` is 60 commits past `dc52d64`, and 7 past the `d61c88a` merge.** Gate exit 0 on every one of them before it was committed — **1,400 tests over 50 files** at the latest. One section per commit, each independently droppable. The nine numbered sections are the first pass; the remainder pass, the sugar company and everything in "After the fee" below follow them.
 
 **`docs/UNWIRED.json` now reads nought on every row.** It was a ratchet with seven baselines above zero — id namespaces, trait modifier keys, higher-is-worse guards, dials nothing moves, personality axes nothing consults, save tables nothing fills, draw streams no decider owns — and every one of them is now at nought. It is still a ratchet and it still may not rise, so the next thing that adds a declared word with no reader will fail the gate rather than raise a floor.
 
