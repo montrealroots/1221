@@ -69,9 +69,12 @@ describe('reading a person’s taste', () => {
 
 describe('what the personality traits actually do', () => {
   it('multiplies the knob a trait names, and leaves the rest at one', () => {
-    const frugal = PERSONALITY_TRAIT_BY_ID['frugal']!;
-    const [key, factor] = Object.entries(frugal.systemMods ?? {})[0]!;
-    const person = playerWith('taste-mod', { personalityTraits: ['frugal'] });
+    // A trait whose knob is live, which is now the only kind there is: `frugal`
+    // stood here and its two knobs were savingsRate and impulsePurchaseRate, both
+    // of which have gone with the other forty-five nothing read.
+    const trait = PERSONALITY_TRAIT_BY_ID['even_tempered']!;
+    const [key, factor] = Object.entries(trait.systemMods ?? {})[0]!;
+    const person = playerWith('taste-mod', { personalityTraits: ['even_tempered'] });
     expect(traitModifier(person, key)).toBeCloseTo(factor, 5);
     expect(traitModifier(person, 'a_knob_no_trait_touches')).toBe(1);
   });
@@ -101,11 +104,18 @@ describe('what the personality traits actually do', () => {
     expect(light.morale).toBeLessThan(plain.morale);
   });
 
-  it('names the knobs nothing reads yet, so they are not mistaken for live', () => {
-    // Every knob a trait declares, against the ones the life systems ask for.
-    // The rest are dormant: the systems that read them went with the cut-down,
-    // and a trait that says it costs something must not quietly cost nothing
-    // without anybody knowing which.
+  it('declares no knob the life systems do not read', () => {
+    // This used to name the dormant six so they were not mistaken for live, on the
+    // argument that a trait which says it costs something must not quietly cost
+    // nothing without anybody knowing which. That was the right care and it has
+    // been overtaken: dormant turned out to mean dormant for good.
+    //
+    // Nobody but the player holds a trait — everybody the generators write gets
+    // `traits: []` — and the player is a prodigy whose sheet starts at the ceiling
+    // and whom `favourableOnly` protects from anything subtracting. So a knob no
+    // system reads was never going to wake up for anybody. Forty-seven of the
+    // fifty-three went, and the claim here is now the stronger one: every knob
+    // still declared is a knob something asks for by name.
     const declared = new Set<string>();
     for (const trait of Object.values(PERSONALITY_TRAIT_BY_ID)) {
       for (const key of Object.keys(trait.systemMods ?? {})) declared.add(key);
@@ -117,50 +127,52 @@ describe('what the personality traits actually do', () => {
     expect([...read].sort()).toEqual(
       ['energyRecovery', 'sleepQuality', 'stressGain', 'stressRecovery'],
     );
-    const dormant = [...declared].filter((key) => !read.has(key)).sort();
-    expect(dormant).toEqual([
-      'hygieneDrift', 'injuryRisk', 'moraleSwing', 'relationshipDecay', 'spendImpulse', 'trainingGain',
-    ]);
+    expect([...declared].filter((key) => !read.has(key)).sort()).toEqual([]);
+    expect(declared.size, 'a trait table that promises nothing at all').toBeGreaterThan(0);
   });
 
-  it('names the acting traits\u2019 dormant knobs too, which nothing was watching', () => {
-    // The same care, one file over, where it had never been taken. The test
-    // above has held the personality traits\u2019 six dormant knobs by name since
-    // it was written; the acting traits carry forty-six knobs of their own on
-    // `TraitDef.systemMods`, two of them read, and nothing anywhere said which
-    // forty-four were not. A knob that is named is dormant on purpose. A knob
-    // nobody has counted is just a knob.
+  it('declares no acting-trait knob nothing reads, which is forty-four fewer', () => {
+    // This named the forty-four by hand, on the argument that a knob nobody has
+    // counted is just a knob. They are gone rather than counted now, and the
+    // reason is the one the test above records: nobody but the player holds a
+    // trait, and the player is a prodigy at the ceiling whom `favourableOnly`
+    // protects from anything subtracting. A dormant knob here was never going to
+    // wake up for anybody, so forty-four of the forty-six went.
+    //
+    // Two of the names that went were also fields on `Person.reputation` —
+    // `audienceAppeal` and `professionalReputation` — which is how a wide grep
+    // reads them as live and how they were nearly kept as live. A knob and a
+    // field can share a name and share nothing else, and the fields are
+    // untouched: they are four of the seven dials this same run of work gave a
+    // second direction to.
     const declared = new Set<string>();
     for (const trait of TRAITS) {
       for (const key of Object.keys(trait.systemMods ?? {})) declared.add(key);
     }
-    // Read off `modifierFor`, which is the only way an acting trait\u2019s knob is
+    // Read off `modifierFor`, which is the only way an acting trait's knob is
     // ever asked for, and off the one file that asks.
     const life = readFileSync('src/engine/systems/life.ts', 'utf8');
     const read = new Set([...life.matchAll(/modifierFor\(person, '(\w+)'\)/g)].map((m) => m[1]!));
     expect([...read].sort()).toEqual(['recoveryRate', 'stressPerShootDay']);
 
-    const dormant = [...declared].filter((key) => !read.has(key)).sort();
-    expect(dormant).toHaveLength(44);
-    expect(dormant).toEqual([
-      'ageCurveShift', 'audienceAppeal', 'audienceVariance', 'brandDealOdds', 'breakoutOdds',
-      'burnoutRisk', 'careerLongevity', 'castingPrestige', 'coStarPerformance', 'crewFriction',
-      'crisisRecovery', 'criticalScrutiny', 'dealTerms', 'earlyOpportunityRate', 'fameGrowth',
-      'impulsePurchaseRate', 'injuryRisk', 'internationalCastingOdds', 'investmentReturn',
-      'lateShootBonus', 'leadCastingOdds', 'luckyBreakCharges', 'meetingAccess', 'opportunityRate',
-      'prepTimeRequired', 'productionCost', 'professionalReputation', 'publicityStress',
-      'qualityBonus', 'quoteMultiplier', 'rangePenalty', 'relationshipDecay', 'relationshipPrivacy',
-      'repeatHireOdds', 'resilienceBonus', 'savingsRate', 'scheduleEfficiency', 'socialGrowth',
-      'stuntInsuranceCost', 'supportCastingOdds', 'tabloidInterest', 'trainingGain', 'viralOdds',
-      'youthBonus',
-    ]);
+    expect([...declared].filter((key) => !read.has(key)).sort()).toEqual([]);
+    expect([...declared].sort()).toEqual(['recoveryRate', 'stressPerShootDay']);
+  });
 
-    // Two of these names are also fields on `Person.reputation` and one is a
-    // meter on the home screen, which is how a wide grep reads them as live and
-    // how they were nearly deleted as dead. A knob and a field can share a name
-    // and share nothing else.
-    expect(dormant).toContain('audienceAppeal');
-    expect(dormant).toContain('professionalReputation');
+  it('leaves the two reputation fields that share a name alone', () => {
+    // The trap the deleted list warned about, held as its own claim now that the
+    // list is gone: `audienceAppeal` and `professionalReputation` were knobs on a
+    // trait AND are fields on `Person.reputation`. The knobs went. The fields are
+    // live, and they move in both directions.
+    const sim = quickSave({}, 'taste-fields');
+    const me = sim.universe.people[sim.universe.playerId]!;
+    expect(typeof me.reputation.audienceAppeal).toBe('number');
+    expect(typeof me.reputation.professionalReputation).toBe('number');
+    me.reputation.audienceAppeal = 60;
+    me.reputation.professionalReputation = 60;
+    sim.advanceTo(sim.now + 400 * 86_400_000);
+    expect(me.reputation.audienceAppeal).toBeLessThan(60);
+    expect(me.reputation.professionalReputation).toBeLessThan(60);
   });
 
   it('guards no knob that no trait carries, which is what a deleted system leaves', () => {

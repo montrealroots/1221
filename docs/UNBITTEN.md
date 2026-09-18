@@ -31,10 +31,10 @@ may not rise.
 | Declared | Nothing reads | Of |
 |---|---|---|
 | Id namespaces | 0 | 19 |
-| Trait modifier keys | 47 | 54 |
-| Higher-is-worse guards | 0 | 18 |
+| Trait modifier keys | 0 | 6 |
+| Higher-is-worse guards | 0 | 2 |
 | Personality axes | 0 | 3 |
-| Dials nothing moves | 7 | every field on Reputation and Wellbeing |
+| Dials nothing moves | 0 | every field on Reputation and Wellbeing |
 | Save tables nothing fills | 0 | 22 |
 | Draw streams no decider owns | 13 | 21 |
 
@@ -153,10 +153,34 @@ the day something reads it. Six axes now, and `controversy` is the one that
 stayed dead-but-declared, because two live mechanisms already read it and
 nothing ever raises it.
 
-**53 trait modifier keys** across 445 traits, of which six are consulted and
-forty-seven are not. The six: `energyRecovery`, `recoveryRate`, `sleepQuality`,
-`stressGain`, `stressPerShootDay` and `stressRecovery`. Every one of them is
-read in `systems/life.ts` and in no other file, at seven call sites.
+**Six trait modifier keys** across 445 traits, and all six are consulted:
+`energyRecovery`, `recoveryRate`, `sleepQuality`, `stressGain`,
+`stressPerShootDay` and `stressRecovery`. Every one is read in `systems/life.ts`
+and in no other file, at seven call sites.
+
+**It was fifty-three, and forty-seven of them have been deleted.** Everything
+below this paragraph is the state before that, kept because the reasoning it
+records is the reasoning that was overturned — the argument for keeping them was
+that a dormant knob is dormant *on purpose*, and the thing that settled it was
+asking who a dormant knob could ever wake up for. Nobody. Every person the
+generators write gets `traits: []`; the only holder of a trait in the save is the
+player, who is a prodigy whose sheet starts at the ceiling and whom
+`favourableOnly` already protects from anything subtracting. A knob no system
+reads was not waiting for a system. It was waiting for nothing.
+
+One hundred and thirty-two entries went, across seventy-three traits, and forty
+traits lost `systemMods` entirely rather than carrying an empty object that reads
+as a promise. Six higher-is-worse guards went with them, because a guard exists to
+flip the sign on a key and a guard on a key no trait declares is — in the words
+already written above it — a rule about a word, kept after the word went. What is
+left is two guards and six keys, and `tests/taste.test.ts` now asserts the strong
+form: no declared knob goes unread, in either file.
+
+Two of the forty-seven shared a name with a field on `Person.reputation`,
+`audienceAppeal` and `professionalReputation`, which is how a wide grep reads them
+as live and how they were nearly kept. A knob and a field can share a name and
+share nothing else. The fields are untouched and are two of the four standings the
+same run of work gave a second direction to.
 
 There were fifty-four and seven. `travelFatigue` was the seventh, and the four
 personality traits that declared it — Early Riser, Homebody, Restless and Sleeps
