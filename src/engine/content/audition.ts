@@ -743,3 +743,138 @@ export const A_WHOLE_CAST = 3.3;
  * this is a real question and it is a different one.
  */
 export const OF_THE_SPEND = CAST_SHARE / A_WHOLE_CAST;
+
+/**
+ * What a year of not being in anything takes off each of the four, in points.
+ *
+ * The other half of `WELL_LIKED`, and the half its own docstring asked for and
+ * nothing built: *"It only goes up, for this player, and that is not generosity —
+ * they hold every attribute at the ceiling, so there is no such thing as being bad
+ * in something. What they can still do is not be in anything."* Being in nothing
+ * had no cost. Four dials rose on every part taken and fell on nothing ever, which
+ * `tools/dials.mjs` reported as four of its seven: publicFame, audienceAppeal,
+ * professionalReputation and industryDemand, all "never falls".
+ *
+ * So reputation is a flow rather than a stock. It is spent every day and bought
+ * back by working, which is what a reputation is.
+ *
+ * The four rates are different, and the ordering is the content rather than a
+ * tuning. **The public forgets fastest** — fame is nothing but being in front of
+ * people lately. **The industry forgets almost as fast**, because demand is the
+ * answer to what somebody has done this year. **What an audience feels about you
+ * is stickier than whether they remember you**, so appeal goes slowly. And **what
+ * the trade thinks of your work is stickiest of all**: a good reputation survives a
+ * quiet year, which is the whole reason it is worth having.
+ *
+ * Against the gains, which are 34, 26, 22 and 18 for carrying a whole picture: one
+ * lead a year leaves a career comfortably ahead on all four, two quiet years are
+ * felt, and a decade away takes the lot. That is the shape intended — the cost of
+ * absence is real and it is not a trap.
+ */
+export const FORGETTING = {
+  publicFame: 12,
+  industryDemand: 10,
+  audienceAppeal: 5,
+  professionalReputation: 3,
+} as const;
+
+/**
+ * What raises controversy, which nothing did.
+ *
+ * `Reputation.controversy` was the seventh dial on `tools/dials.mjs` and the
+ * flattest: "one value, 0". `content/maturity.ts` says it stayed dead-but-declared
+ * because two live mechanisms already read it and nothing ever raised it, which is
+ * the exact shape of a guard no input can trip.
+ *
+ * What raises it here is the one thing this player can actually do wrong. They
+ * cannot be bad in a part — every attribute sits at the ceiling — but they can
+ * turn up with nothing left and make a room wait, which is already measured:
+ * `whatTheWeekTook` reads `readiness` against `A_WORKING_WEEK.spentAt` every week
+ * of every job and takes reliability off them when they are under it. That week
+ * is the story that travels, so it raises controversy by the same event.
+ *
+ * And it fades, on the same principle as the rest: a bad fortnight is not a life
+ * sentence, and nothing about a person should only ever get worse. Slower than it
+ * arrives, because that is how being talked about works.
+ */
+export const TALKED_ABOUT = { aBadWeek: 4, forgottenAYear: 26 } as const;
+
+/**
+ * What a week of making a room wait takes off what the trade thinks of your work.
+ *
+ * The missing downward force on `professionalReputation`, and the one the content
+ * already argued for: the `difficult` trait carries `professionalReputation: 0.7`
+ * and its description is "the work may be great, the stories travel faster than
+ * the work". Being hard to have on a set is exactly what a professional standing
+ * is a measure of, and nothing connected the two.
+ *
+ * Without it the dial had no force on it but forgetting, which is the gentlest of
+ * the four at three points a year — so a career that kept working sat at its
+ * equilibrium and never moved again. The dials sweep reported 4.4 of its 71.2
+ * range through the whole last third.
+ *
+ * Smaller than what the same week costs reliability, because these are different
+ * things: how easy you were to have there is a fact about the fortnight, and what
+ * the trade thinks of your work is a slower judgement that a fortnight only dents.
+ */
+export const A_HARD_WEEK_COSTS_STANDING = 1.2;
+
+/**
+ * Where a record of turning up settles when nobody is complaining, and how fast.
+ *
+ * `reliability` was the fifth dial nothing moved, and it was not a one-way
+ * ratchet like the other four — it was a one-way trip. It moves only during a
+ * working week, `costsAWeek` is three against `earnsAWeek` of one, and measured
+ * readiness in the last third of a career runs between 16.7 and 35.3 against a
+ * `spentAt` of 38. So every week worked late in a career took three off it,
+ * nothing gave any back, and nothing moved it at all between jobs: it reached
+ * nought and sat there, which `tools/dials.mjs` reported as 2.0 of its 100.0
+ * range in the last third.
+ *
+ * What was missing is the obvious thing: you are not unreliable while you are
+ * resting. A reputation for being hard to have on a set is a memory, and the
+ * trade's memory is short — the same principle as `TALKED_ABOUT.forgottenAYear`,
+ * and for the same reason, which is that nothing about a person should only ever
+ * get worse.
+ *
+ * Seventy is where it settles, because seventy is nobody having a complaint
+ * rather than anybody being impressed. The asymmetry stays: three off a bad
+ * week against one back for a good one is how reputations actually move, and it
+ * still means a run of hard weeks costs more than a run of easy ones earns.
+ */
+export const RELIABILITY_RESTS_AT = 70;
+/**
+ * How fast it closes the gap to that, per day.
+ *
+ * Proportional rather than flat, the way `driftBonds` closes on its resting
+ * level, because the distance is the thing that heals: somebody at nought has
+ * further to come back than somebody at sixty and comes back faster at first.
+ *
+ * Sized against what working costs it. A week under `spentAt` takes three off,
+ * which is a hundred and fifty-six a year for somebody working constantly, so at
+ * this rate a career of hard weeks settles around twenty rather than pinning at
+ * nought. It moves, and where it moves to is how hard the work has been.
+ */
+export const RELIABILITY_HEALS_A_DAY = 0.009;
+
+/**
+ * How much of a gain the last few points of a standing are worth.
+ *
+ * Four dials rose by a flat amount on every part taken, and two of them then
+ * pinned themselves against the ceiling: `audienceAppeal` sat between 94.7 and
+ * 100 through the last third of a career and `professionalReputation` between
+ * 98.5 and 100. A dial at its ceiling is as dead as a dial at its floor — it
+ * had stopped being a measure of anything and become a receipt.
+ *
+ * So a gain is scaled by the headroom above it, which is the ordinary shape of
+ * every standing that is about what other people think: going from forty to
+ * forty-five in an audience's affection is a part, and going from ninety to
+ * ninety-five is a career. It is not a cap and it is not a curve anybody tuned —
+ * it is the difference between what is left to win and what has been won.
+ *
+ * What it buys is an equilibrium rather than a total. Against `FORGETTING`, a
+ * career that carries one picture a year settles near sixty-five on fame and one
+ * that carries two settles near eighty, so the number on the screen answers how
+ * much this person works. A hundred is for somebody who never stops.
+ */
+export const HEADROOM = (standing: number): number => Math.max(0.04, 1 - standing / 100);

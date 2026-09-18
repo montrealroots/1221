@@ -80,7 +80,24 @@ export function playACareer(sim: Simulation, years: number, how: HowTheyPlay = {
   let clashed = 0;
 
   for (let week = 1; week <= years * 52; week += 1) {
-    sim.advanceTo(sim.now + MS_WEEK);
+    // Two hours a week keeping in shape, taken out of the week rather than added
+    // to it, and this is not a detail. Training advances the clock, so calling it
+    // after a full week made every week a week and two hours: over twenty-five
+    // years the schedule drifted a hundred and eight days, the weekly tick fired
+    // fewer times, and the number of parts the player was asked about fell from
+    // thirty-one to fifteen. An instrument that changes the thing it measures is
+    // the whole reason this file exists.
+    const endOfWeek = sim.now + MS_WEEK;
+    sim.execute({ kind: 'life.train', payload: { hours: 2 } });
+    sim.advanceTo(endOfWeek);
+    // Which is a thing a played career now contains and an autopilot one did not.
+    //
+    // This loop answered auditions and did nothing else with the body, so every
+    // dial the player has a command for read as a dial nothing moves — which was
+    // true of the instrument rather than of the game. `life.train` is the second
+    // direction fitness never had, and two hours a week is what it takes to stay
+    // ahead of the decay once a body stops being twenty. It refuses on an empty
+    // tank and at the age ceiling, and both refusals are ordinary here.
     // THE WEEK A SYSTEM STOPPED.
     //
     // A scheduled handler that throws is caught, marked missed, and left as a

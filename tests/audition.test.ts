@@ -1702,12 +1702,25 @@ describe('an office that knows you still notices what you are', () => {
         }
       },
     });
-    // Thirty rather than forty because `heldUntil` gave the calendar a size:
-    // a career that no longer sells a season for one scene reads a different
-    // set of rooms, and this seed lands on 38. It is a floor against the test
-    // proving nothing, not a measurement — the claim below is 6 of 38.
+    // The sample is every ask the dates refused, because those are the moments
+    // this loop catches an audition still going. It is a floor against the test
+    // proving nothing, not a measurement.
+    //
+    // Twelve rather than thirty, and the reason is worth keeping because it is a
+    // result rather than a recalibration. `reliability` used to reach nought
+    // inside the first third of a career and stay there — it moves only during a
+    // working week, three off against one back, and late-career readiness is under
+    // `spentAt` almost every week. It heals toward seventy between jobs now.
+    //
+    // Measured on this seed, before and after: asks 177 against 171, readings 164
+    // against 166, parts 104 against 101 — the career is the same size. What
+    // changed is that it collides with itself far less, 38 clashes down to 15. A
+    // performer nobody could rely on was being asked about at the same rate and
+    // colliding twice as often, and the collisions were the sample.
+    //
+    // The claim is unchanged and still passes on the smaller sample: 6 of 15.
     expect(seen.length, 'nobody was ever asked, so this proves nothing')
-      .toBeGreaterThan(30);
+      .toBeGreaterThan(12);
     expect(pinned.length / seen.length).toBeLessThan(0.5);
   });
 

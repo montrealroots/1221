@@ -85,3 +85,31 @@ export function ceilingAt(age: number): { fitness: number; condition: number } {
     condition: Math.max(30, Math.round(condition * 10) / 10),
   };
 }
+
+/**
+ * What an hour of actually working at it puts back on fitness.
+ *
+ * `Wellbeing.fitness` was the last of the seven dials nothing moved, and it was
+ * the same shape as the house: one writer, a subtraction, and no second
+ * direction. `dailyRollover` takes 0.18 off it every day and the block's own
+ * docstring records what that came to — "fitness is above zero for exactly the
+ * first 278 days of every save", and for the other ninety-seven percent of a
+ * career "this block is `w.fitness` held at nought".
+ *
+ * A dial a player is invited to watch has to be able to move, and this one is
+ * read: `condition` is pulled toward `60 + fitness * 0.4` every day, and the
+ * wellbeing screen says a stunt day on low fitness costs you a week.
+ *
+ * Sized against the decay rather than chosen. Nought point one eight a day is
+ * sixty-six points a year, so holding the line at 1.5 an hour costs about
+ * forty-four hours a year — call it fifty minutes a week — and *building*
+ * anything costs more than that. Which is about right for a body: maintaining is
+ * cheap and unglamorous, and the improvement is the part that takes the time.
+ *
+ * It cannot beat `ceilingAt`, because age is the one thing training does not
+ * argue with.
+ */
+export const TRAINING_AN_HOUR = 1.5;
+
+/** The most anybody can usefully do in one go before it stops being training. */
+export const LONGEST_SESSION_HOURS = 4;

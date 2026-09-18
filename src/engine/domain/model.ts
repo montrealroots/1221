@@ -228,6 +228,15 @@ export interface Person {
 
   /** When they last deliberately slept, so the world knows to fill the gap. */
   lastSleptAt?: Instant;
+  /**
+   * The last day reputation was charged for not being in anything.
+   *
+   * Anchored and caught up in whole days, for the reason `Bond.lastDriftedAt` is:
+   * a career must not fade differently because the player skipped forward in one
+   * jump rather than two. Only the player carries it — everybody else's reputation
+   * is a standing the casting office reads once, not a career being lived.
+   */
+  reputationDriftedAt?: Instant;
 
   /**
    * Whether this person is somebody's mother or somebody's father.

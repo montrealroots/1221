@@ -18,6 +18,9 @@ import { quickSave } from '@/engine';
 import type { Simulation } from '@/engine';
 import { MS_DAY } from '@/engine/core/time';
 import { A_POINT_OF_IT_CENTS, HOUSE, WEAR_A_DAY } from '@/engine/content/estate';
+import { HEADROOM, RELIABILITY_RESTS_AT } from '@/engine/content/audition';
+import { TRAINING_AN_HOUR, ceilingAt } from '@/engine/content/lifespan';
+import { TOO_SPENT_TO_TRAIN } from '@/engine/systems/life';
 import {
   haveTheWorkDone, theHouse, upkeepRefusal, whatTheWorkCosts, whyNotUpkeep,
 } from '@/engine/world/house';
@@ -201,3 +204,143 @@ describe('whether the condition reaches an outcome', () => {
 function readSource(path: string): string {
   return readFileSync(new URL(`../${path}`, import.meta.url), 'utf8');
 }
+
+describe('the seven dials that only went one way', () => {
+  /**
+   * `tools/dials.mjs` sweeps fourteen numeric fields on `Reputation` and
+   * `Wellbeing` over a played career and reports the ones nothing moves. It
+   * reported seven, and they were three different defects wearing one name:
+   * four standings that rose on every part and fell on nothing ever, one that
+   * reached nought and stayed, one that had no writer at all, and a body that
+   * could only decay.
+   */
+
+  const MONTH = 31 * MS_DAY;
+
+  it('forgets you, which is the only thing this player can do wrong', () => {
+    // `WELL_LIKED`'s own docstring asked for this: the player holds every
+    // attribute at the ceiling, so there is no such thing as being bad in
+    // something. "What they can still do is not be in anything." It had no cost.
+    const sim = quickSave({}, 'dials-forget');
+    const me = sim.universe.people[sim.universe.playerId]!;
+    me.reputation.publicFame = 80;
+    me.reputation.industryDemand = 70;
+    me.reputation.audienceAppeal = 60;
+    me.reputation.professionalReputation = 50;
+
+    sim.advanceTo(sim.now + 12 * MONTH);
+    const rep = me.reputation;
+    expect(rep.publicFame, 'a year of being in nothing cost nothing').toBeLessThan(80);
+    expect(rep.industryDemand).toBeLessThan(70);
+    expect(rep.audienceAppeal).toBeLessThan(60);
+    expect(rep.professionalReputation).toBeLessThan(50);
+
+    // And they fall at different rates, which is the content rather than a
+    // tuning: the public forgets fastest, the trade slowest.
+    const lostFame = 80 - rep.publicFame;
+    const lostDemand = 70 - rep.industryDemand;
+    const lostAppeal = 60 - rep.audienceAppeal;
+    const lostStanding = 50 - rep.professionalReputation;
+    expect(lostFame).toBeGreaterThan(lostDemand);
+    expect(lostDemand).toBeGreaterThan(lostAppeal);
+    expect(lostAppeal).toBeGreaterThan(lostStanding);
+    // A year off is felt and is not ruinous. Nothing here is a countdown.
+    expect(lostFame).toBeLessThan(20);
+  });
+
+  it('charges a long jump exactly what living the days would have', () => {
+    // The trap `driftBonds` already names: a career must not fade differently
+    // because the player skipped forward in one jump rather than two.
+    const once = quickSave({}, 'dials-anchor');
+    const twice = quickSave({}, 'dials-anchor');
+    once.advanceTo(once.now + 12 * MONTH);
+    twice.advanceTo(twice.now + 6 * MONTH);
+    twice.advanceTo(twice.now + 6 * MONTH);
+    const a = once.universe.people[once.universe.playerId]!.reputation;
+    const b = twice.universe.people[twice.universe.playerId]!.reputation;
+    expect(Math.round(a.publicFame)).toBe(Math.round(b.publicFame));
+    expect(Math.round(a.industryDemand)).toBe(Math.round(b.industryDemand));
+  });
+
+  it('leaves everybody else alone, because they have no career to fade', () => {
+    // Decaying theirs would empty the pool the casting office reads from: their
+    // reputation is a standing seeded once, not a record of work being done.
+    const sim = quickSave({}, 'dials-others');
+    const them = Object.values(sim.universe.people).filter((one) => !one.isPlayer);
+    const before = them.map((one) => one.reputation.publicFame);
+    sim.advanceTo(sim.now + 24 * MONTH);
+    expect(them.map((one) => one.reputation.publicFame)).toEqual(before);
+  });
+
+  it('is worth less near the ceiling, so a standing is not a running total', () => {
+    // Flat gains pinned two of these against the top: appeal sat between 94.7
+    // and 100 for the whole last third of a career. A dial at its ceiling has
+    // stopped being a measure and become a receipt.
+    expect(HEADROOM(0)).toBeGreaterThan(HEADROOM(50));
+    expect(HEADROOM(50)).toBeGreaterThan(HEADROOM(95));
+    expect(HEADROOM(100)).toBeGreaterThan(0);
+    // Never nought, because a career at a hundred must still be able to climb
+    // back after a decade away rather than being stuck wherever it landed.
+    expect(HEADROOM(100)).toBeLessThan(0.1);
+  });
+
+  it('heals a record of turning up, because resting is not being unreliable', () => {
+    // It moves only during a working week, three off against one back, and
+    // late-career readiness is under `spentAt` almost every week. So it reached
+    // nought and sat there for a third of the game.
+    const sim = quickSave({}, 'dials-reliable');
+    const me = sim.universe.people[sim.universe.playerId]!;
+    me.reputation.reliability = 0;
+    sim.advanceTo(sim.now + 6 * MONTH);
+    expect(me.reputation.reliability, 'nought is where it stayed').toBeGreaterThan(0);
+    expect(me.reputation.reliability).toBeLessThan(RELIABILITY_RESTS_AT);
+
+    // And it settles at nobody having a complaint rather than at anybody being
+    // impressed, from either side.
+    const high = quickSave({}, 'dials-reliable-high');
+    const them = high.universe.people[high.universe.playerId]!;
+    them.reputation.reliability = 100;
+    high.advanceTo(high.now + 60 * MONTH);
+    expect(them.reputation.reliability).toBeLessThan(100);
+    expect(them.reputation.reliability).toBeGreaterThanOrEqual(RELIABILITY_RESTS_AT);
+  });
+
+  it('puts fitness back, which nothing could', () => {
+    // One writer and that writer a subtraction — 0.18 a day, forever. The same
+    // shape as the house, and the same fix: a second direction that costs.
+    const sim = quickSave({}, 'dials-train');
+    const me = sim.universe.people[sim.universe.playerId]!;
+    me.wellbeing.fitness = 40;
+    me.wellbeing.energy = 90;
+    const was = me.wellbeing.fitness;
+    const began = sim.now;
+
+    const done = sim.execute<{ fitness: number; gained: number; ceiling: number }>(
+      { kind: 'life.train', payload: { hours: 2 } },
+    ).value!;
+    expect(done.gained).toBeCloseTo(2 * TRAINING_AN_HOUR, 5);
+    expect(me.wellbeing.fitness).toBeGreaterThan(was);
+    // And it cost the hours. They are charged where every waking hour is charged
+    // — at the day rollover, by `applyElapsedWellbeing` — rather than on the spot,
+    // so what this proves is that the clock moved and the day is that much shorter.
+    expect(sim.now).toBe(began + 2 * 60 * 60 * 1000);
+  });
+
+  it('refuses on an empty tank and at the age ceiling, and says which', () => {
+    const spent = quickSave({}, 'dials-spent');
+    const tired = spent.universe.people[spent.universe.playerId]!;
+    tired.wellbeing.energy = TOO_SPENT_TO_TRAIN - 1;
+    expect(spent.execute({ kind: 'life.train', payload: { hours: 1 } }).error)
+      .toMatch(/nothing left/i);
+
+    const done = quickSave({}, 'dials-ceiling');
+    const me = done.universe.people[done.universe.playerId]!;
+    const years = Math.floor((done.now - me.birthInstant) / (365.2425 * MS_DAY));
+    me.wellbeing.energy = 90;
+    me.wellbeing.fitness = ceilingAt(years).fitness;
+    expect(done.execute({ kind: 'life.train', payload: { hours: 1 } }).error)
+      .toMatch(/as fit as a body your age gets/i);
+    // Age is the one thing training does not argue with.
+    expect(ceilingAt(60).fitness).toBeLessThan(ceilingAt(25).fitness);
+  });
+});

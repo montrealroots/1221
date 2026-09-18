@@ -17,10 +17,14 @@ import { clamp, remap } from '../core/rng';
 import { addDays, instantFromZoned, zonedParts, MS_HOUR, MS_DAY } from '../core/time';
 import { modifierFor } from '../domain/attributes';
 import { dispositionOf } from '../core/taste';
-import { ceilingAt, recoveryFactorAt } from '../content/lifespan';
+import {
+  LONGEST_SESSION_HOURS, TRAINING_AN_HOUR, ceilingAt, recoveryFactorAt,
+} from '../content/lifespan';
 import { driftBonds, moralePullOf } from '../world/standing';
 import { whatHasThem } from '../world/diary';
-import { A_WORKING_WEEK } from '../content/audition';
+import {
+  A_WORKING_WEEK, FORGETTING, RELIABILITY_HEALS_A_DAY, RELIABILITY_RESTS_AT, TALKED_ABOUT,
+} from '../content/audition';
 import { WEAR_A_DAY } from '../content/estate';
 
 // ---------------------------------------------------------------------------
@@ -36,6 +40,15 @@ export const ENERGY_DRAIN_PER_HOUR = 3.0;
  * day, which is what one person feeding themselves actually eats.
  */
 export const NOURISHMENT_DRAIN_PER_HOUR = 2.0;
+
+/**
+ * The energy below which training costs more than it gives.
+ *
+ * A real refusal rather than a defensive one: a session on an empty tank adds
+ * stress, adds sleep debt and puts nothing back, so the game says so instead of
+ * taking the hours and charging for them.
+ */
+export const TOO_SPENT_TO_TRAIN = 20;
 
 export function freshWellbeing(): Wellbeing {
   return {
@@ -160,6 +173,65 @@ export function registerLife(sim: Simulation): void {
       }
 
       return { wokeAt: s.now, quality, recovered };
+    },
+  );
+
+  // --- Keeping in shape ----------------------------------------------------
+
+  /**
+   * An hour of working at it, which is the second direction fitness never had.
+   *
+   * `dailyRollover` takes 0.18 off fitness every day and nothing anywhere put a
+   * point back: it reached nought inside the first year of every save and stayed
+   * there, which `tools/dials.mjs` reported as the flattest of its seven — "never
+   * rises". The same shape as the house, whose condition also had one writer and
+   * that writer a subtraction.
+   *
+   * It costs time rather than money, because time is what the wellbeing model is
+   * denominated in. The hours are spent on the clock like any other waking hours,
+   * so `applyElapsedWellbeing` charges the energy, the hunger and the sleep debt
+   * for them — training is not free and a session on an empty tank is a bad idea
+   * the game lets you have and then bills you for.
+   *
+   * Two refusals, and both are real rather than defensive. Nobody trains with
+   * nothing left, and nothing above the age ceiling counts: `ceilingAt` is the most
+   * a body of this age can be brought to, and age is the one thing training does
+   * not argue with. Saying so is the point — a refusal that names the ceiling tells
+   * a player something true about getting older that no other screen says.
+   */
+  sim.onCommand<{ hours?: number }, { fitness: number; gained: number; ceiling: number }>(
+    'life.train',
+    (p, { sim: s }) => {
+      const person = s.player;
+      const hours = clamp(p.hours ?? 1, 0.25, LONGEST_SESSION_HOURS);
+      const ceiling = ceilingAt(yearsSince(person.birthInstant, s.now)).fitness;
+      const was = person.wellbeing.fitness;
+
+      if (person.wellbeing.energy < TOO_SPENT_TO_TRAIN) {
+        throw new CommandError(
+          'You have nothing left today. Training on this would cost you more than it gives.',
+        );
+      }
+      if (was >= ceiling) {
+        throw new CommandError(
+          `You’re at ${Math.round(ceiling)}. That’s as fit as a body your age gets.`,
+        );
+      }
+
+      s.advanceTo(s.now + Math.round(hours * MS_HOUR));
+      const gained = Math.min(hours * TRAINING_AN_HOUR, ceiling - person.wellbeing.fitness);
+      person.wellbeing.fitness = clamp(person.wellbeing.fitness + gained, 0, 100);
+
+      s.notify({
+        category: 'personal',
+        title: gained > 0 ? 'You Put The Work In' : 'Nothing In It Today',
+        body: `${hours === 1 ? 'An hour' : `${hours} hours`} of it, and fitness is `
+          + `${Math.round(person.wellbeing.fitness)} out of the ${Math.round(ceiling)} a body your `
+          + 'age can hold. Condition follows fitness, slowly, so this is the thing a long day '
+          + 'finds later.',
+        importance: 25,
+      });
+      return { fitness: person.wellbeing.fitness, gained, ceiling };
     },
   );
 }
@@ -308,6 +380,9 @@ export function dailyRollover(sim: Simulation): void {
     w.condition = clamp(Math.min(w.condition + (target - w.condition) * 0.02, ceiling.condition), 0, 100);
   }
 
+  // A day of not being in anything, charged to the four dials that only ever rose.
+  forgetsYou(sim);
+
   // A day of neither of you doing anything about it, charged to every bond,
   // and then what the people around you are worth to the person having the day.
   driftBonds(sim.universe, sim.now);
@@ -411,4 +486,64 @@ export function suggestedSleep(sim: Simulation): { hours: number; reason: string
     };
   }
   return { hours: Math.round(ideal * 2) / 2, reason: debt > 8 ? 'You’re carrying real sleep debt.' : 'A normal night.' };
+}
+
+/**
+ * A day of not being in anything, charged to the reputation it was bought with.
+ *
+ * Four of the seven dials `tools/dials.mjs` reported were "never falls", and they
+ * were the same defect four times: `publicFame`, `industryDemand`,
+ * `audienceAppeal` and `professionalReputation` rose on every part taken and fell
+ * on nothing ever. A number that cannot go down is not a measure of anything —
+ * it is a running total of what you have done, printed where a standing should be.
+ *
+ * `WELL_LIKED`'s own docstring asked for this and said why: the player holds every
+ * attribute at the ceiling, so there is no such thing as being bad in something.
+ * The one downside available to them is being in nothing. It had no cost.
+ *
+ * ## The player only, and that is not a special case
+ *
+ * Everybody else's reputation is a standing the casting office reads, seeded once
+ * from a band and never touched again, because they have no tracked career for it
+ * to be a record of. Decaying theirs would fade every actor in the world to nought
+ * over a quarter of a century and quietly empty the pool the office casts from,
+ * which is a worse defect than the one being fixed. The player is the person whose
+ * work this game actually follows, so the player is who a career happens to.
+ *
+ * ## Whole days, anchored, for the reason bonds are
+ *
+ * `driftBonds` catches up in whole days off `lastDriftedAt` so that a bond cannot
+ * drift differently because the player skipped forward in one jump rather than two.
+ * The same trap is here and the same answer: anchored to `reputationDriftedAt`, in
+ * whole days, so Skip To Event and a long jump cost exactly what living the days
+ * would have cost.
+ */
+export function forgetsYou(sim: Simulation): void {
+  const me = sim.universe.people[sim.universe.playerId];
+  if (!me) return;
+  const since = me.reputationDriftedAt ?? sim.now;
+  const days = Math.floor((sim.now - since) / MS_DAY);
+  if (days <= 0) {
+    me.reputationDriftedAt ??= sim.now;
+    return;
+  }
+  me.reputationDriftedAt = since + days * MS_DAY;
+
+  const rep = me.reputation;
+  const aYear = 365.2425;
+  for (const [key, points] of Object.entries(FORGETTING)) {
+    const was = rep[key as keyof typeof FORGETTING];
+    rep[key as keyof typeof FORGETTING] = clamp(was - (points / aYear) * days, 0, 100);
+  }
+  // And being talked about fades too, slower than it arrives. Nothing about a
+  // person should only ever get worse either.
+  rep.controversy = clamp(rep.controversy - (TALKED_ABOUT.forgottenAYear / aYear) * days, 0, 100);
+  // And a record of turning up heals toward where nobody has a complaint, because
+  // you are not unreliable while you are resting. Without this it only ever fell:
+  // it moves during a working week alone, three off against one back, and
+  // late-career readiness is under `spentAt` almost every week — so it reached
+  // nought and stayed there for a third of the game.
+  const rest = RELIABILITY_RESTS_AT;
+  const remaining = (1 - RELIABILITY_HEALS_A_DAY) ** days;
+  rep.reliability = clamp(rest + (rep.reliability - rest) * remaining, 0, 100);
 }
