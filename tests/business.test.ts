@@ -73,7 +73,7 @@ import {
   whyNotStepAside,
   runTheClock,
   seatHeldBy, whyNotTakeIt,
-  signaturesOf, theSugarGroup,
+  signaturesOf, signedWith, theSugarGroup,
   whereItStands,
 } from '@/engine/world/company';
 
@@ -2031,21 +2031,74 @@ describe('a company that stops being a company', () => {
     expect(vat.nextDueAt).toBeGreaterThan(due);
   });
 
-  it('never ends a guild signature, and that was decided rather than forgotten', () => {
-    // Every other thing that ends here ends on a date it already carried. A
-    // signature carries a deposit and nothing else, because that is what it is —
-    // you are signatory until you breach, not until a year is up. And the hazard
-    // is named on the field itself: the day a guild can pull a signature is the
-    // day Global Rule One starts biting backwards on a cast already seated.
-    // Asserted against the source, because the claim is that nothing writes it —
-    // which no amount of advancing a save can prove and one grep can.
+  it('ends a guild signature only when the company holding it stops existing', () => {
+    // THIS TEST USED TO ASSERT THE OPPOSITE AND WAS RIGHT TO. It read "never ends
+    // a guild signature, and that was decided rather than forgotten", and pinned
+    // the source to prove `signature.endedAt` had no writer at all.
+    //
+    // The half of that reasoning that survives is the important half: a signature
+    // has no term and does not renew, because you are signatory until you breach
+    // and not until a year is up. What was missing was not a clock. **An agreement
+    // is with a legal entity, and a struck-off entity is not one.** Every other
+    // breach this build might have detected was checked and is unreachable — a cast
+    // fee is paid the moment somebody is cast, so nobody is ever owed, and `feeFor`
+    // floors at collective scale, so nobody is ever paid under a minimum.
+    //
+    // So there are still exactly two writers and neither is a term.
     const engine = readFileSync('src/engine/world/company.ts', 'utf8');
-    // The only writer of `endedAt` anywhere in the engine is the registration one
-    // added alongside this. If a second appears on a signature, this says so.
     const writers = [...engine.matchAll(/(\w+)\.endedAt\s*=/g)].map((one) => one[1]);
-    expect(writers).toEqual(['registration']);
+    expect(writers, 'a signature grew a clock of its own').toEqual(['registration', 'signature']);
     const signatures = readFileSync('src/engine/domain/company.ts', 'utf8');
-    expect(signatures, 'the reason it has no clock should be written down')
+    expect(signatures, 'the reason it has no term of its own should still be written down')
       .toMatch(/signatory until you breach/);
+  });
+
+  it('pulls the American agreements when the arm comes off Delaware', () => {
+    // The whole chain, which is the thing worth testing rather than the field.
+    // Nobody answers for the company, so nobody signs the annual returns; the
+    // Delaware filing goes unsigned like the Icelandic one; the arm comes off the
+    // register; and SAG-AFTRA's agreement ends with the entity that held it.
+    //
+    // `us_state` was the one registration in the build that could never come due,
+    // because the filing loop compared against the parent company's id and the arm
+    // is a different company. It files every twelve months and nothing ever asked.
+    const sim = world('guild-pulled');
+    theyCanAffordIt(sim, 5_000_000_00);
+    expect(run(sim, 'company.form_arm', {}).ok).toBe(true);
+    expect(run(sim, 'company.sign', { guild: 'sag_aftra' }).ok).toBe(true);
+
+    const arm = americanArm(sim.universe)!;
+    const delaware = registrationsOf(sim.universe, arm.id).find((one) => one.registry === 'us_state');
+    expect(delaware, 'forming the arm is the Delaware filing, so there should be one').toBeDefined();
+    const signature = signaturesOf(sim.universe).find((one) => one.guild === 'sag_aftra')!;
+    expect(signature.endedAt).toBeUndefined();
+    expect(signedWith(sim.universe, 'sag_aftra')).toBeDefined();
+
+    emptyTheChair(sim);
+    sim.advanceTo(sim.now + 430 * DAY);
+
+    expect(delaware!.endedAt, 'the arm’s own filing never came due').toBeDefined();
+    expect(signature.endedAt, 'the agreement outlived the company that held it').toBeDefined();
+    expect(signature.endedAt).toBe(delaware!.endedAt);
+    // `signedWith` reads through `signaturesOf`, which filters on `endedAt` — the
+    // guard that had no reachable input until now.
+    expect(signedWith(sim.universe, 'sag_aftra'), 'still signatory to a pulled agreement')
+      .toBeUndefined();
+    expect(sim.universe.notifications.some((one) => one.title.includes('Pulls The Agreement'))).toBe(true);
+
+    // And it bites backwards, which `domain/company.ts` warned it would and which
+    // is the correct outcome rather than a regrettable one.
+    expect(doorFor(sim, 'employ_americans').can, 'Americans are still employable').toBe(false);
+  });
+
+  it('leaves an Icelandic collective agreement alone, because nobody signs one', () => {
+    // `is_actors` and `is_crew` are `signable: false` — coverage is automatic
+    // because you employ people here — so there is no agreement for a strike-off
+    // to pull and nothing should pretend there is.
+    const sim = world('guild-collective');
+    emptyTheChair(sim);
+    sim.advanceTo(sim.now + 430 * DAY);
+    expect(signaturesOf(sim.universe).filter((one) => one.guild === 'is_actors')).toHaveLength(0);
+    expect(run(sim, 'company.sign', { guild: 'is_actors' }).ok).toBe(false);
   });
 });

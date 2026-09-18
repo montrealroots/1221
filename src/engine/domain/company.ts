@@ -250,26 +250,42 @@ export interface Signature {
    * what `company.sign` charges. A copy on the record would be a second answer
    * waiting to disagree with the first, and nothing ever read it.
    *
-   * And below it: when the company stopped being signatory, which is never.
-   * A signature only ever starts. `company.sign` writes one and no command
-   * anywhere ends one, so `endedAt` has no writer at all — not in the engine
-   * and not in a test. `signaturesOf` filters on it, which makes that filter a
-   * guard no reachable input trips. It is kept rather than cut because
-   * `globalRuleOne` reads `signedWith`, and the day a guild can pull a
-   * signature is the day that rule starts to bite backwards on a cast already
-   * seated. Until then, treat the filter as a shape and not a rule.
+   * And below it: when the company stopped being signatory, which used to be
+   * never.
+   *
+   * This said "a signature only ever starts" and that a guild pulling one was
+   * "the day that rule starts to bite backwards on a cast already seated". That
+   * day has come and the writer is `runTheClock`. The cause is not a renewal —
+   * you are signatory until you breach, not until a year is up, and that part of
+   * the old reasoning was right. **An agreement is with a legal entity, and a
+   * struck-off entity is not one.** When the company comes off its companies
+   * register, or the American arm comes off Delaware, every agreement that
+   * company held ends with the registration.
+   *
+   * Every other breach this build might have used turned out to be unreachable,
+   * and each was checked: a cast fee is paid the moment somebody is cast, so
+   * nobody is ever owed one, and `feeFor` floors at collective scale, so nobody
+   * is ever paid under a minimum. Inventing one would have invented the mechanic.
+   *
+   * It does bite backwards, and that is correct rather than regrettable:
+   * `signedWith` goes false, `globalRuleOne` starts applying to Americans already
+   * in seats, and `employ_americans` shuts. A company that has stopped existing
+   * in Delaware cannot hold an American guild agreement, whoever is already cast.
    */
   endedAt?: Instant;
 }
 
-// A guild signature still has no clock, and that was decided again rather than
-// forgotten. Every other thing in this file that ends, ends on a date it already
-// carried: an option's term, a policy's year, a registration's filing period. A
-// signature carries a deposit and nothing else, because that is what it is — you
-// are signatory until you breach, not until a year is up. Inventing a renewal
-// would be inventing the mechanic, and the paragraph above names the hazard
-// waiting behind it: the day a guild can pull a signature is the day Global Rule
-// One starts biting backwards on a cast already seated.
+// A guild signature still has no clock of its own, and that stayed decided. Every
+// other thing in this file that ends, ends on a date it already carried: an
+// option's term, a policy's year, a registration's filing period. A signature
+// carries a deposit and nothing else, because that is what it is — you are
+// signatory until you breach, not until a year is up.
+//
+// What changed is that it now ends on somebody else's date. It has no term and it
+// does not renew; it dies with the registration of the company that holds it,
+// which is the one cause here that is a breach rather than an expiry. So the
+// hazard this paragraph used to describe as waiting is live, and the field above
+// says what it does when it fires.
 
 // ---------------------------------------------------------------------------
 // Cover
