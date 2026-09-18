@@ -390,12 +390,23 @@ pictures greenlit on two seeds, 34 and 35 delivered, no week under water, the
 group holding EUR 2.81bn and EUR 2.86bn against a year's profit of EUR 128m and
 EUR 152m.
 
-### The PR is open
+### The PR is merged, and `main` is this work
 
-**[#15](https://github.com/yvcbcjhsy7-prog/1221/pull/15)**, against `main`, OPEN
-and MERGEABLE. 118 commits by `git`, of which GitHub lists the first hundred; 126
-files, +30,617 −2,621. The body is `~/slate-backup/PR-BODY.md`, which is carried
-here and kept level with the branch.
+**[#15](https://github.com/yvcbcjhsy7-prog/1221/pull/15) is MERGED**, on the
+owner's instruction, as a merge commit rather than a squash — all 118 commit
+messages survive in `main`'s history, which matters on this project because
+several of them are the only place a measurement is written down. 126 files,
++30,617 −2,621. The merge commit is `d61c88a`.
+
+**`main`'s tree is byte-identical to the branch tip it merged**, checked with
+`git rev-parse origin/main^{tree}` against `42f963d^{tree}`, so the gate run on
+that tip — exit 0, 1,376 tests — is the gate for `main` and did not need repeating.
+
+The branch was **not** deleted and is one commit ahead of `main` again with this
+paragraph on it, which is the state the three merges before this one left too.
+Local `main` has been fast-forwarded to `d61c88a`, so the staleness trap recorded
+below no longer applies to this clone. The stash and the single worktree are
+untouched.
 
 **How `gh` got onto this machine, because the next account will need it too.**
 `winget install --id GitHub.cli` ran for ten minutes and printed nothing, so it
