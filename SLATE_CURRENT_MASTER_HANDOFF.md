@@ -543,6 +543,81 @@ to pull in and the branch is clean against it.
 
 ---
 
+# CANONICAL DEVELOPMENT BLUEPRINT
+
+**Established by the owner, 2026-09-18. Canonical unless the owner explicitly
+changes it.** It governs everything below this line, applies to past and future
+work alike, and binds **both** Claude Code accounts. The full text is the
+permanent project instruction in **`CLAUDE.md`** at the repository root, which is
+the authority; this is the short form for a session that starts here.
+
+## The Operating Model
+
+| Layer | Owns |
+|---|---|
+| **Claude Code** | Reasoning, coding, architecture, debugging, orchestration |
+| **PowerShell** | Execution and system access on Windows — files, Git, Node and npm, tests, builds, verification scripts, logs, Base44 tooling, deployment tooling, environment and configuration, automation, diagnostics |
+| **Git** | Versioning, recovery, audit trail and safety |
+
+## The Seventeen Rules
+
+1. Work against the real canonical SLATE Git repository, not disposable copies.
+2. Inspect current Git state before beginning substantial work.
+3. Never assume repository state from conversation memory alone.
+4. Break large development work into coherent modules.
+5. Validate each substantial module before integrating or moving forward.
+6. Run relevant tests, typechecking, linting, verification and regression checks.
+7. Never mark work complete solely because code was written.
+8. Keep commits coherent and recoverable.
+9. Do not perform destructive Git operations unless explicitly justified and safe.
+10. Preserve uncommitted work, stashes, branches, worktrees and handoff context
+    before operations that could affect them.
+11. Update this file whenever a major development phase completes and before
+    switching Claude accounts.
+12. The repository and verified test results outrank stale conversation
+    assumptions.
+13. Claude should explain materially risky operations before executing them.
+14. Base44 deployment should occur only after the applicable verification gate
+    passes.
+15. Maintain an auditable trail of important architecture decisions, fixes, tests
+    and deployment state.
+16. Both Claude Code accounts must follow this same workflow.
+17. This workflow remains canonical unless the owner explicitly changes it.
+
+## What They Mean Where They Bite
+
+- **Rules 2, 3 and 12 are one idea.** The repository is the truth and a summary of
+  it is not. Run `git status -sb`, `git log --oneline -5`, `git stash list` and
+  `git worktree list` before substantial work, and always after a compaction or an
+  account switch. When a document and the tree disagree, the tree wins and the
+  document gets corrected. **This file has been wrong about the tree before** —
+  see §5, where four closed items were still listed as placeholders and a deleted
+  file was named in four places.
+- **Rules 5, 6 and 7 are the bar.** `npm run gate` is the whole of it: fifteen
+  checks, `npm run validate` among them. Read its exit status **from a file, never
+  a pipe.** Measure on a **played career, never an idle save**. Code written is
+  not work finished.
+- **Rules 9 and 10 are the owner's standing constraints made permanent.** Never
+  apply, pop or drop the stash (§9). Never merge worktrees (§8). Never force-push
+  the working branch. Do not merge to `main` without the owner. See §16, the
+  DO-NOT-LOSE list.
+- **Rules 11 and 16 are why this file exists.** Two accounts alternate and this
+  document is the only state that crosses between them.
+- **Rule 13 is about destroying and publishing, not deciding.** The owner has said
+  repeatedly that Claude should make design and judgement calls itself and report
+  them afterwards rather than opening with a menu of options. What gets announced
+  first is the destructive or outward-facing operation.
+- **Rule 14 is ahead of deployment.** And `SAVE_SCHEMA_VERSION` is pinned in two
+  files that cannot import from each other — `src/engine/domain/model.ts` and
+  `base44/shared/guard.js`. Both move by hand, together, or 22 tests fall.
+- **Rule 15's trail is four places:** commit messages (which say what was decided
+  and why, because the diff already says what changed), this file,
+  `docs/UNBITTEN.md` and `docs/ARREARS.md` as the open-work ledgers, and
+  `docs/UNWIRED.json` as the machine ratchet whose counts may fall and may not
+  rise.
+
+---
+
 # 1. SLATE PROJECT IDENTITY
 
 **SLATE is an actor-and-actress life simulator.** The player is the *talent* — not the studio boss, not the booker. That single choice is the project's thesis, because every reference game in the genre puts the player on the buying side.
