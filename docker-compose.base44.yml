@@ -1,0 +1,19 @@
+# Base44 development environment for SLATE.
+# SLATE is a browser-only Vite SPA — no backend, no database, no external
+# credentials. The whole simulation runs in the browser; saves go to local
+# storage. This compose just runs the Vite dev server with live reload.
+
+services:
+  web:
+    image: node:22
+    working_dir: /app
+    volumes:
+      - .:/app
+    # Vite 5 — bind all interfaces so the preview proxy can reach the dev
+    # server, and accept any host header (the sandbox host rotates).
+    command: sh -c "npm install && npx vite --host 0.0.0.0 --port 5173"
+    ports:
+      - "3000:5173"
+    environment:
+      # Vite 5.4+: allow the preview's external hostname.
+      - __VITE_ADDITIONAL_SERVER_ALLOWED_HOSTS
