@@ -29,6 +29,7 @@ import {
   OVERHEAD_FLOOR_CENTS, THE_RATE_CARD,
 } from '@/engine/content/lot';
 import { GROUP, GROUP_PROFIT_CENTS, ORGANIC_SHARE_OF_WORLD, QUOTA, profitAfterQuota } from '@/engine/content/sugar';
+import { purseFor } from '@/engine/world/money';
 import { quotaYears, decideQuota } from '@/engine/world/sugar';
 import { quickSave, validateUniverse } from '@/engine';
 import type { Simulation } from '@/engine';
@@ -45,7 +46,8 @@ import {
 import { OVERHEAD, SMALL_STAGE_COST_CENTS } from '@/engine/content/lot';
 import { buildAStage, chargeThePosts } from '@/engine/world/lot';
 import {
-  aDayOfSugar, payTheBoard, payTheCorporationTax, payTheGroupPosts, profitThisYear,
+  aDayOfSugar, declareTheDividend, payTheBoard, payTheCorporationTax, payTheGroupPosts, profitThisYear,
+  retainedByTheGroup,
   sugarAccount, sugarCoversThePictures,
   EMPLOYER_TAX_MEMO, GOODS_MEMO, PAYROLL_MEMO, SALES_MEMO, aPayday,
 } from '@/engine/world/sugar';
@@ -54,7 +56,8 @@ import {
   EMPLOYER_TAX_A_DAY_CENTS, EMPLOYER_TAX_A_MONTH_CENTS, GROUP_OPENING_BALANCE,
   GROUP_REGISTRIES, GROUP_ROLES, WAGES_A_MONTH_CENTS, A_MONTH_OF_DAYS, PAYROLL_A_MONTH_CENTS,
   PAYROLL_A_DAY_CENTS,
-  GROUP_POSTS_A_MONTH_CENTS, KEPT_IN_HAND_CENTS, PROFIT_A_DAY_CENTS, REVENUE_A_DAY_CENTS,
+  GROUP_POSTS_A_MONTH_CENTS, KEPT_IN_HAND_CENTS, PROFIT_A_DAY_CENTS, RETAINED_MONTHS_OF_PAYROLL,
+  REVENUE_A_DAY_CENTS,
   TRYGGINGAGJALD,
 } from '@/engine/content/sugar';
 import { VAT_MEMO, boughtWithVat, reclaimable, whereTheVatStands } from '@/engine/world/vat';
@@ -1361,6 +1364,70 @@ describe('everything else it takes to run a company, which the group did not hav
     expect(payTheCorporationTax(shut)).toBeLessThan(payTheCorporationTax(open));
   });
 
+
+  it('distributes what it is not keeping, so the hoard stops being unreachable', () => {
+    // THE HOARD WAS A DEFECT AND NOT A BIG NUMBER, and what made it one is a check
+    // that already existed. `sugarCoversThePictures` funds the film company out of
+    // `held - KEPT_IN_HAND_CENTS`, so the group's balance already decides whether
+    // the pictures get money — and measured over twenty-five played years the group
+    // ended holding EUR 2.81bn, against which that guard could never bind. The one
+    // thing standing between the slate and the group's floor was a formality.
+    const sim = world('group-dividend');
+    const account = sugarAccount(sim)!;
+    const group = theSugarGroup(sim)!;
+    const holders = group.ownerships.filter((one) => one.holderKind === 'person');
+    expect(holders.length, 'the group should be held by people').toBeGreaterThan(0);
+
+    // Nothing to distribute while the group is at or under what it retains, which
+    // is the whole of the safety in it.
+    expect(declareTheDividend(sim), 'distributed out of a reserve it has not reached').toBe(0);
+
+    const spare = 500_000_000_00;
+    sim.income(account, retainedByTheGroup() + spare - sim.universe.accounts[account]!.balance,
+      'A year of cane, for this test', 'business');
+    // Resolved through `purseFor`, which opens an account for somebody who has
+    // none — the family generator writes people and gives nobody a purse. Reading
+    // `primaryAccountId` here instead measured accounts that did not exist yet,
+    // so the sum below was nought against a dividend of half a billion.
+    const purses = holders.map((one) => purseFor(sim, one.holderId)!).filter(Boolean);
+    const before = purses.map((id) => sim.universe.accounts[id]!.balance);
+
+    const paid = declareTheDividend(sim);
+    expect(paid, 'nothing was distributed with half a billion spare').toBeGreaterThan(0);
+    expect(paid, 'it distributed more than it had spare').toBeLessThanOrEqual(spare);
+    // What is left is the reserve, to the cent it could not split.
+    expect(sim.universe.accounts[account]!.balance).toBe(retainedByTheGroup() + (spare - paid));
+    // And it landed on the people who own it, split by what they hold.
+    const after = purses.map((id) => sim.universe.accounts[id]!.balance);
+    for (const [i, was] of before.entries()) expect(after[i]!).toBeGreaterThan(was);
+    expect(after.reduce((n, one) => n + one, 0) - before.reduce((n, one) => n + one, 0)).toBe(paid);
+    expect(sim.ledger.audit()).toEqual([]);
+  });
+
+  it('keeps a year of the payroll, which is what the pictures are funded out of', () => {
+    // The owner's instruction is that the film company can never run out of money,
+    // so the reserve is the part of this that matters. A year of the worldwide
+    // payroll stays in the business against a deepest-ever film drawdown of about
+    // EUR 10m — the reserve covers the worst call the slate has ever made on it
+    // eight times over.
+    expect(retainedByTheGroup()).toBe(PAYROLL_A_MONTH_CENTS * RETAINED_MONTHS_OF_PAYROLL);
+    expect(retainedByTheGroup(), 'a reserve this thin would put the slate at risk')
+      .toBeGreaterThan(50_000_000_00);
+
+    // Measured rather than asserted: twenty-five played years of a company running
+    // the pipeline, with the dividend live. The group ends on EUR 142m instead of
+    // EUR 2.81bn, and the film company is untouched — 36 greenlit, 34 delivered,
+    // and never a week under water. This is the cheap version of that check.
+    const sim = world('group-dividend-slate');
+    const account = sugarAccount(sim)!;
+    sim.advanceTo(sim.now + 3 * 365 * 24 * 60 * 60 * 1000);
+    expect(sim.universe.accounts[account]!.balance, 'the group went under its own reserve')
+      .toBeGreaterThanOrEqual(retainedByTheGroup());
+    // And the pictures can still be funded out of what is left, which is the guard
+    // that used to be unreachable and now is not.
+    expect(sim.universe.accounts[account]!.balance - KEPT_IN_HAND_CENTS)
+      .toBeGreaterThan(20_000_000_00);
+  });
   it('pays the employer’s own contribution, which no company here ever had', () => {
     // Tryggingagjald: 6.35%, real, named in a comment in `content/tax.ts` that
     // was right about where it does not belong — a wage somebody takes home —

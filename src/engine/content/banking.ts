@@ -87,10 +87,13 @@ export const DEPOSIT_A_YEAR = 0.03;
  * the greenlight door reads — so a rate nobody chose raised the ceiling on what
  * the pictures may commit to by forty-seven percent.
  *
- * The hoard is the real finding and it is not a banking one. Two point eight
- * billion sits in that account because SLATE gives a cane group nothing to do
- * with its profit. `world/banking.ts` says the same thing where the code would
- * have gone.
+ * The hoard was the real finding and it was not a banking one. It has since been
+ * answered where it belonged, in `content/sugar.ts`: the group retains a year of
+ * the worldwide payroll and distributes the rest to the two people who own it, so
+ * the balance is EUR 142m rather than EUR 2.81bn and the money lands on people
+ * whose accounts something reads. Which is also why paying a rate on it would have
+ * been the wrong answer twice over — it would have grown a pile that should not
+ * have been there.
  */
 
 /**

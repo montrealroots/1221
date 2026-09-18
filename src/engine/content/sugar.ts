@@ -530,3 +530,58 @@ export const TAX_RETURN_MONTH = 5;
  * business — the money comes from selling something.
  */
 export const GROUP_OPENING_BALANCE: Money = KEPT_IN_HAND_CENTS;
+
+/**
+ * What the group keeps before it distributes anything, and what it does with the
+ * rest.
+ *
+ * ## The hoard, and why it was a defect rather than a big number
+ *
+ * Measured over twenty-five played years, the group ends holding **EUR 2.81bn**
+ * against a year's profit of EUR 128m. It never spends it, because SLATE gives a
+ * cane group nothing to do with its profit — no acquisition, no reinvestment in
+ * the estate, and no distribution beyond the seven salaried seats.
+ *
+ * A large number is not itself a problem. What made this one a defect is what it
+ * did to a check that already existed and is load-bearing:
+ * `sugarCoversThePictures` will only send money to the film company out of
+ * `held - KEPT_IN_HAND_CENTS`, so **the group's balance already decides whether
+ * the pictures get funded at all**. Against two point eight billion that check
+ * can never bind, which turns the one guard standing between the slate and the
+ * group's floor into a formality. A guard nothing can trip is the defect this
+ * project has spent fifty commits removing, and this was the largest of them
+ * hiding behind the largest balance in the save.
+ *
+ * ## What it does instead, and why the pictures are still safe
+ *
+ * A privately held group whose whole share register is two people retains what
+ * the business needs and distributes the rest to its shareholders. That is what
+ * this is. A year of the worldwide payroll stays in the company — twelve times
+ * the one payday `KEPT_IN_HAND_CENTS` holds back — and whatever is above that at
+ * the end of the year goes to the two parents, who own it.
+ *
+ * The owner's instruction was that the film company can never run out of money,
+ * and this keeps it. Measured against what the pictures actually draw: the
+ * deepest the film company has ever gone is about EUR 10m, and the family has put
+ * in EUR 21.8m across twenty-five years on its heaviest seed — against a retained
+ * year of payroll of roughly EUR 80m. The reserve covers the worst call the slate
+ * has ever made on it eight times over, so the check binds on a real figure
+ * rather than on an unreachable one, and never binds when it matters.
+ *
+ * And the money stops vanishing into an account nothing reads. It lands on two
+ * people, where `settleTheReturn` taxes it as income and net worth counts it —
+ * which is the difference between money a business has and money a family has.
+ */
+export const RETAINED_MONTHS_OF_PAYROLL = 12;
+
+/** The memo a distribution is posted under. */
+export const DIVIDEND_MEMO = `${GROUP.name}: Dividend`;
+
+/**
+ * The month the group declares, which is the month after the tax is settled.
+ *
+ * You do not distribute profit you still owe the state. Corporation tax is filed
+ * at the end of May for the year before; the dividend follows in June, out of
+ * what is left.
+ */
+export const DIVIDEND_MONTH = 6;

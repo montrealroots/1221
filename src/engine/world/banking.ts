@@ -123,11 +123,12 @@ export function aMonthOfInterest(sim: Simulation): { earned: Money; charged: Mon
     // nothing, attached to the largest balance in the save, is worse than no
     // figure: it inflates the one number the film economics hang off.
     //
-    // The group's hoard is the real finding here and it is not a banking problem.
-    // Two point eight billion sits there because SLATE has nothing for a cane
-    // group to do with its profit — no acquisition, no dividend beyond the board's
-    // pay, no reinvestment in the estate. The day there is something, the money
-    // should go there rather than into a rate.
+    // The group's hoard was the real finding here and it was not a banking
+    // problem. It is answered in `world/sugar.ts` now — `declareTheDividend`
+    // retains a year of the payroll and distributes the rest to the shareholders,
+    // which took the balance from EUR 2.81bn to EUR 142m. So the money went where
+    // it should have gone rather than into a rate, which is what this comment said
+    // to do on the day there was somewhere to put it.
 
     // What a card costs. On what is owed, so paying it down is worth
     // something the month after and not only in the abstract.
