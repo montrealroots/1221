@@ -713,6 +713,27 @@ export function seatHeldBy(sim: Simulation, personId: Id, companyId?: Id): Post 
 }
 
 /**
+ * Why whoever is in a seat would not give it up, or nothing if they would.
+ *
+ * The same question as taking one, asked the other way, and it reads the same
+ * number for the same reason: this is a favor, and a favor is something you ask
+ * somebody you have kept up with. The player always steps aside for anybody,
+ * because nobody has to talk themselves into it.
+ */
+export function whyNotStepAside(sim: Simulation, personId: Id, role: RoleId): string | undefined {
+  if (personId === sim.universe.playerId) return undefined;
+  const person = sim.universe.people[personId];
+  const facts = ROLE_BY_ID[role];
+  if (!person || !facts) return undefined;
+  const bond = bondFor(sim.universe, sim.universe.playerId, personId);
+  if (!bond || bond.closeness < WILL_TAKE_A_POST) {
+    return `${person.firstName} is ${facts.said} and won’t stand down for you. `
+      + 'That’s the kind of thing you ask family you’re on better terms with.';
+  }
+  return undefined;
+}
+
+/**
  * Why somebody would not take a post, or nothing if they would.
  *
  * Exported and asked before the offer rather than only inside it, so a screen can
@@ -1027,7 +1048,26 @@ export function registerCompanyCommands(sim: Simulation): void {
     if (!facts) return refuse('There’s no such post.');
     const parent = parentCompany(s.universe);
     if (!parent) return refuse('There’s no company to work for.');
-    if (filled(s.universe, payload.role)) return refuse(`Somebody is already ${facts.said}.`);
+    // An occupied seat can be taken, if whoever is in it will step aside.
+    //
+    // It could not be, and that made the producer's fee unreachable: the fee goes
+    // to the principal, a parent holds the principal from the first morning, and
+    // "Somebody is already the principal" meant the player could never be the one
+    // who gets paid for making the company's pictures. A mechanism nobody can
+    // reach is the thing this whole cleanup exists to remove.
+    //
+    // Stepping aside is the same question as taking a seat, asked the other way,
+    // and it reads the same number: somebody close to you does you the favor and
+    // somebody you stopped seeing does not. So the chair the fee is attached to is
+    // held by a relationship rather than by a rule.
+    const sitting = filled(s.universe, payload.role);
+    if (sitting && sitting.personId === payload.personId) {
+      return refuse(`Somebody is already ${facts.said}.`);
+    }
+    if (sitting) {
+      const no = whyNotStepAside(s, sitting.personId!, payload.role);
+      if (no) return refuse(no);
+    }
 
     const person = payload.personId ? s.universe.people[payload.personId] : undefined;
     if (!person) {

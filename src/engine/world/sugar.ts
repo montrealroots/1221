@@ -32,6 +32,7 @@ import {
   profitAfterQuota, type GroupRoleId,
 } from '../content/sugar';
 import { parentCompany, theSugarGroup } from './company';
+import { purseFor } from './money';
 import { CORPORATION_TAX } from '../content/incorporation';
 import type { Person } from '../domain/model';
 import { emptyAttributeSheet } from '../domain/attributes';
@@ -442,25 +443,11 @@ export function payTheGroupPosts(sim: Simulation): Money {
   return paid;
 }
 
-/** An account for somebody who did not have one, so a wage can land in it. */
-function purseFor(sim: Simulation, personId: Id): Id | undefined {
-  const person = sim.universe.people[personId];
-  if (!person) return undefined;
-  if (person.primaryAccountId && sim.universe.accounts[person.primaryAccountId]) {
-    return person.primaryAccountId;
-  }
-  const opened = sim.openAccount({
-    id: sim.nextId('account'),
-    kind: 'checking',
-    name: `${person.displayName || person.firstName} Checking`,
-    ownerId: person.id,
-    institution: 'Landsbankinn',
-    openedAt: sim.now,
-    balance: 0,
-  });
-  person.primaryAccountId = opened.id;
-  return opened.id;
-}
+// `purseFor` moved to `world/money.ts`. It was written here for the board's
+// monthly draw and is not about sugar at all: the producer's fee needs the same
+// thing for the same reason — the family generator writes people and gives none
+// of them an account, so money owed to a relative has nowhere to land. A helper
+// two unrelated systems need is not a detail of either of them.
 
 /**
  * The parents draw from the group, monthly.

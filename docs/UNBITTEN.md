@@ -1064,14 +1064,54 @@ forever; both move both ways now.
 **And the framing that motivated it was overstated.** "A hundred to one inverts
 the premise" does not survive scrutiny: a company that makes thirty-five
 pictures across twenty-five years being worth €190m is not obviously wrong, and
-the player owns it either way. The real question is whether producing makes
+the player owns it either way — which is false, and is the finding below: they own
+nought percent of it. The real question is whether producing makes
 acting pointless — which is a question about what this game is, and the honest
 answer is that it should not be settled by quietly moving `ultimateFor`, a curve
-the content file marks as **SLATE's own** rather than anything researched. The
-measurement that matters stands and is recorded above: pictures gross 3.2× to
+the content file marks as **SLATE's own** rather than anything researched.
+
+The measurement that matters stands and is recorded above: pictures gross 3.2× to
 5.6× their negative on the mean, sublinearly in the budget, and the slate
-returns 1.44–1.63× after the waterfall. What that should be is a decision about
-the game, not a calibration.
+returns 1.44–1.63× after the waterfall.
+
+**And it was the wrong question, which one further measurement settled.** The
+multiple was never moved and should not be. Asked who actually receives the
+slate's return: over twenty-five years a company that greenlights thirty-six
+pictures and delivers thirty-three ends holding **EUR 238,755,876**, and the
+player who ran every one of them ends with **EUR 700** — the balance the save
+opened with. They hold **nought percent** of the company, because the parents
+built it and the parents hold it, and **EUR 1,540** reached their own accounts in
+a quarter of a century.
+
+So the company was not out-earning the career. It was earning money the career
+could never reach, and there was no mechanism of any kind — no dividend, no
+ownership, no fee. Moving `ultimateFor` would have changed how much money the
+player could not have.
+
+**What landed is the line every picture actually carries: a producer's fee.**
+Three percent of what the picture was greenlit at, paid across the schedule to
+whoever holds the principal's chair, out of the budget rather than on top of it —
+so a picture is made for ninety-seven percent of its number, costs the company
+exactly its number, and three percent of what was going on the screen goes to the
+person who made it instead. Measured: **EUR 19,047,915 to the player over
+twenty-five years** where they hold the chair, against EUR 700 where they do not,
+with the company still ending on EUR 238m for the family that financed it.
+
+It is sized against acting rather than against the slate, which is the whole
+answer to whether producing makes acting pointless. Three percent of a
+twenty-million feature is EUR 600,000; a lead part on the same picture is about
+EUR 878,000. So producing pays a little less than a good part, per picture, and
+the return on the bet stays with the people who took it.
+
+Two things had to be built for it to be reachable at all. The chair could not be
+taken — a parent holds the principal from the first morning and `fill_post`
+refused with "Somebody is already the principal", so the fee's recipient could
+never be the player. Whoever is in a seat can be asked to stand down now, and it
+reads the same `closeness` that consent does, so the chair the money is attached
+to is held by a relationship. And nobody in this save had an account to be paid
+into: `purseFor` moved out of `world/sugar.ts`, where it had been written for the
+board's monthly draw, into `world/money.ts`, because the family generator writes
+people and gives none of them a bank.
 
 **4. `prestige` is deleted.** Written for 87 of 146 people, read by nothing that
 decides anything, nought on the player for a whole career — and the standing

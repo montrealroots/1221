@@ -37,7 +37,7 @@ import type { Project } from '../domain/company';
 import type { DimensionId } from '../content/maturity';
 import { MS_DAY, formatDate } from '../core/time';
 import {
-  DELIVERY, LATE_PENALTY_A_WEEK, SLIP_COSTS, SLIP_RATE, TRUST_COSTS,
+  DELIVERY, LATE_PENALTY_A_WEEK, PRODUCER_FEE, SLIP_COSTS, SLIP_RATE, TRUST_COSTS,
   type Element, type Period, type Plan,
   elementById, elementsAfter, planById, tightnessOf,
 } from '../content/making';
@@ -59,7 +59,8 @@ import {
   armTheCasting, castsPerformers, castsReliability, layTheRoles, ranOverOnThem, takeFactor,
   theBiggestName,
 } from './casting';
-import { capabilitiesOf, exerciseTheOption } from './company';
+import { capabilitiesOf, exerciseTheOption, filled } from './company';
+import { purseFor } from './money';
 import { armTheClaim } from './rebate';
 
 export const MAKING_KIND = 'project.period';
@@ -814,6 +815,24 @@ export function periodAtThisStaffing(period: Period, budget: Money, hands: numbe
   return Math.round((base - rooms) + rooms * (Math.max(0, hands) / converts.hands));
 }
 
+/**
+ * What the periods actually have to spend: the budget less the producer's fee.
+ *
+ * A producer's fee is a line in a budget and not an extra on top of one, so the
+ * picture is made for ninety-seven percent of the number it was greenlit at. The
+ * first version paid it on top, and the measurement was immediate and obvious in
+ * hindsight: a company that has just committed its whole balance to a budget
+ * cannot also find three percent of that budget, so it went to minus EUR 483,000
+ * and could not greenlight anything ever again.
+ *
+ * Which makes the fee a trade rather than a gift. Three percent of what was going
+ * on the screen goes to the person instead, and everything downstream of what a
+ * period spends — the cast pot, the rooms, the crew — is three percent smaller.
+ */
+export function onTheScreen(project: Project): Money {
+  return Math.round((project.budgetCents ?? 0) * (1 - PRODUCER_FEE));
+}
+
 /** What one more room on this period costs, at this budget. */
 export function aRoomCosts(period: Period, budget: Money): Money {
   const converts = period.converts;
@@ -825,13 +844,28 @@ function settlePeriod(sim: Simulation, project: Project, period: Period): void {
   if (project.settled?.includes(period.id)) return;
   project.settled = [...(project.settled ?? []), period.id];
   const account = cashFor(sim, project.companyId);
-  const budget = project.budgetCents ?? 0;
+  // The budget less the producer's fee, which is a line in it and was paid at the
+  // greenlight. The periods spend what is left, so a picture still costs the
+  // company exactly what it was greenlit at — and three percent of it goes to
+  // whoever made it rather than onto the screen, which is the trade a real budget
+  // makes and the reason the fee is a decision rather than a bonus.
+  const budget = onTheScreen(project);
   const owed = whatThePeriodCost(project, period, budget);
   if (account && owed > 0) {
     sim.expense(account, owed, `${project.title}: ${period.label}`, 'business',
       { refType: 'project', refId: project.id });
     project.spentCents += owed;
   }
+  // And the producer's share of this period, alongside it.
+  //
+  // Across the schedule rather than in a lump at the greenlight, which is how a
+  // producer's fee is actually paid and is also the only way it can be paid here.
+  // The first version took the whole fee the moment the picture was committed to,
+  // and a company that greenlights a twenty-million-euro picture on a hundred and
+  // seventeen thousand in the bank — which is the whole shape of this game, the
+  // family funds the budget as the periods run — went straight to minus EUR
+  // 483,000 and could never greenlight anything again.
+  payTheProducer(sim, project, period);
   for (const element of elementsAfter(period.id, 'production')) {
     if (project.delivered.includes(element.id)) continue;
     project.delivered.push(element.id);
@@ -1504,4 +1538,69 @@ function spokenDimensions(ids: readonly string[]): string {
 export function nobodysJob(plan: Plan): string[] {
   const moved = new Set(plan.periods.flatMap((p) => Object.keys(p.advances ?? {})));
   return DIMENSIONS.map((d) => d.id).filter((id) => !moved.has(id));
+}
+
+/**
+ * The producer's fee, paid to whoever the company answers to.
+ *
+ * The principal, and only the principal, because that is the seat the company
+ * answers to and producing is what that seat does. It is the piece that makes the
+ * post worth taking: `ROLES.principal` is costed at nought a month, on the
+ * reasoning that a family member drawing a salary from the family company is
+ * money moving between two pockets — which is right about a salary and says
+ * nothing about a fee for making a specific picture.
+ *
+ * So the chair is now a decision with money on it, and the decision has a price
+ * already built: one seat per company, so taking it means leaving whatever seat
+ * you were in, and nobody has to say yes to being moved. A player who wants the
+ * fee has to hold the chair their mother is sitting in.
+ *
+ * Nothing is paid when the post is empty and the money stays in the company,
+ * which is said out loud rather than passed over — a picture made by a company
+ * with nobody answering for it is a real thing, and the fee not being paid is the
+ * clearest statement of what the empty chair costs.
+ */
+export function payTheProducer(sim: Simulation, project: Project, period: Period): Money {
+  const budget = project.budgetCents ?? 0;
+  // This period's share of the fee. The shares come to one across the schedule,
+  // so the whole fee is paid exactly once by the time the picture is finished.
+  const owed = Math.round(budget * PRODUCER_FEE * period.spends);
+  if (owed <= 0) return 0;
+
+  const from = cashFor(sim, project.companyId);
+  if (!from) return 0;
+  const post = filled(sim.universe, 'principal');
+  const who = post?.personId ? sim.universe.people[post.personId] : undefined;
+  // Opened on demand: the family generator gives nobody an account, so a fee
+  // owed to a relative has nowhere to land until something makes one.
+  const purse = who ? purseFor(sim, who.id) : undefined;
+
+  if (!who || !purse) {
+    sim.notify({
+      category: 'business',
+      title: `Nobody Is Being Paid For Making ${project.title}`,
+      body: `The producer's fee on this one is ${formatMoney(owed, { cents: false })} and there is `
+        + 'nobody in the principal’s chair to pay it to, so it stays in the company. Whoever the '
+        + 'company answers to is the person who gets paid for making its pictures.',
+      importance: 55,
+    });
+    return 0;
+  }
+
+  // Attributed to the picture and counted in what it cost, because it is part of
+  // what it cost: the fee plus the periods come to the budget exactly, so a
+  // picture still spends what it was greenlit at and no test measuring that has
+  // to know the fee exists.
+  sim.transfer(from, purse, owed, `${project.title}: The Producer’s Fee`, 'business',
+    { refType: 'project', refId: project.id });
+  project.spentCents += owed;
+  sim.notify({
+    category: 'personal',
+    title: `${who.firstName} Is Paid For ${project.title}`,
+    body: `${formatMoney(owed, { cents: false })}, which is ${Math.round(PRODUCER_FEE * 100)} percent `
+      + 'of what the picture was greenlit at. The company keeps what the picture earns; this is what '
+      + 'the person who made it keeps.',
+    importance: 45,
+  });
+  return owed;
 }

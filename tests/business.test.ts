@@ -56,13 +56,19 @@ import {
   TRYGGINGAGJALD,
 } from '@/engine/content/sugar';
 import { VAT_MEMO, boughtWithVat, reclaimable, whereTheVatStands } from '@/engine/world/vat';
-import { openTheDoors, theyCanAffordIt } from './doors';
+import { openTheBooks, openTheDoors, theyCanAffordIt } from './doors';
+import { PRODUCER_FEE } from '@/engine/content/making';
+import { onTheScreen, finishesBy } from '@/engine/world/making';
+import { CAST_SHARE } from '@/engine/content/casting';
+import { A_WHOLE_CAST } from '@/engine/content/audition';
+import type { Money } from '@/engine/core/money';
 import {
   MISSED_COOLS, RESTING_APART, RESTING_UNDER_ONE_ROOF, TOGETHER_WARMS, bondFor, standingWord,
 } from '@/engine/world/standing';
 import {
   GREENLIGHT_FLOOR, americanArm, capabilitiesOf, cashAccountFor, companiesOf, companyCash, holdingsOf,
   carries, filled, parentCompany, policiesOf, postFacts, postsOf, projectsOf, registrationsOf,
+  whyNotStepAside,
   runTheClock,
   seatHeldBy, whyNotTakeIt,
   signaturesOf, theSugarGroup,
@@ -1732,5 +1738,159 @@ describe('things in the company end now', () => {
     sim.advanceTo(sim.now + 120 * MONTH);
     expect(sim.universe.holdings[holding.id]!.lapsedAt).toBeUndefined();
     expect(holdingsOf(sim.universe)).toHaveLength(1);
+  });
+});
+
+describe('somebody gets paid for making the pictures', () => {
+  /**
+   * The measurement that put this here is the most damning one in the audit
+   * trail. Over twenty-five played years a company that greenlights thirty-six
+   * pictures and delivers thirty-three ends holding EUR 238,755,876, and the
+   * player who ran every one of them ends with EUR 700 — the balance the save
+   * opened with. They hold nought percent of the company, because the parents
+   * built it and the parents hold it, and EUR 1,540 reached their accounts in a
+   * quarter of a century.
+   *
+   * `docs/UNBITTEN.md` had it the other way round: the company must stop
+   * out-earning the career, and the slate's 1.44–1.63x return is the engine of a
+   * hundred-to-one, left for the owner as a decision about the game. It is not a
+   * calibration and moving the multiple would not have touched it. The company was
+   * not out-earning the career; it was earning money the career could never reach.
+   * There was no mechanism at all — no dividend, no ownership, no fee.
+   */
+
+  /** Runs the picture out to the end of its work, re-reading the end as it moves. */
+  const runItOut = (sim: Simulation, id: string): void => {
+    for (let i = 0; i < 12; i += 1) {
+      const done = finishesBy(sim.universe.projects[id]!);
+      if (done === undefined || sim.now > done) break;
+      sim.advanceTo(done + MS_DAY);
+    }
+  };
+
+  const feesIn = (sim: Simulation, personId: string): Money => sim.universe.transactions
+    .filter((one) => one.memo.includes('The Producer’s Fee'))
+    .reduce((sum, one) => sum + one.postings
+      .filter((p) => p.amount > 0 && sim.universe.accounts[p.accountId]?.ownerId === personId)
+      .reduce((m, p) => m + p.amount, 0), 0);
+
+  it('pays whoever the company answers to, across the schedule', () => {
+    const sim = world('fee-paid');
+    // The chair first, and then the doors. Taking a seat leaves the one you were
+    // in, so opening the doors first puts the player in the head of production —
+    // and moving them to the principal's chair then empties it and shuts the
+    // greenlight door, which is the scarcity working rather than a bug.
+    expect(run(sim, 'company.fill_post', { role: 'principal', personId: sim.universe.playerId }).ok)
+      .toBe(true);
+    openTheDoors(sim, 'Hvítserkur');
+
+    run(sim, 'company.develop', { title: 'Hvítserkur', medium: 'film' });
+    const id = projectsOf(sim.universe).find((one) => one.title === 'Hvítserkur')!.id;
+    const budget = 20_000_000_00;
+    expect(run(sim, 'company.greenlight', {
+      projectId: id, planId: 'feature', budgetCents: budget, shootWeeks: 6,
+    }).ok).toBe(true);
+
+    // Nothing at the greenlight. The first version took the whole fee the moment
+    // the picture was committed to, and a company that greenlights twenty million
+    // on a hundred and seventeen thousand in the bank — which is the shape of this
+    // game, the family funds the budget as the periods run — went to minus
+    // EUR 483,000 and could never greenlight anything again.
+    expect(feesIn(sim, sim.universe.playerId)).toBe(0);
+
+    runItOut(sim, id);
+    const paid = feesIn(sim, sim.universe.playerId);
+    expect(paid, 'nobody was paid for making it').toBeGreaterThan(0);
+    expect(paid, 'the whole fee, paid exactly once across the periods')
+      .toBe(Math.round(budget * PRODUCER_FEE));
+    expect(sim.ledger.audit()).toEqual([]);
+  });
+
+  it('comes out of the budget rather than on top of it', () => {
+    // A producer's fee is a line in a budget. So the picture is made for
+    // ninety-seven percent of what it was greenlit at, the company pays exactly
+    // what it was greenlit at, and the trade is real: three percent of what was
+    // going on the screen goes to the person instead.
+    const sim = world('fee-inside');
+    run(sim, 'company.fill_post', { role: 'principal', personId: sim.universe.playerId });
+    openTheDoors(sim, 'Askja');
+    run(sim, 'company.develop', { title: 'Askja', medium: 'film' });
+    const id = projectsOf(sim.universe).find((one) => one.title === 'Askja')!.id;
+    const budget = 20_000_000_00;
+    run(sim, 'company.greenlight', {
+      projectId: id, planId: 'feature', budgetCents: budget, shootWeeks: 6,
+    });
+    expect(onTheScreen(sim.universe.projects[id]!))
+      .toBe(Math.round(budget * (1 - PRODUCER_FEE)));
+
+    runItOut(sim, id);
+    // What the picture cost counts the fee, because the fee is part of what it
+    // cost. So a picture still spends what it was greenlit at.
+    const project = sim.universe.projects[id]!;
+    expect(project.spentCents).toBeGreaterThanOrEqual(budget);
+    expect(feesIn(sim, sim.universe.playerId) + Math.round(budget * (1 - PRODUCER_FEE)))
+      .toBeLessThanOrEqual(project.spentCents);
+  });
+
+  it('pays nobody when the chair is empty, and says so', () => {
+    // Which is reachable and not a corner: six posts and three relatives, so
+    // filling the head of production can be what empties the principal's chair.
+    const sim = world('fee-nobody');
+    openTheDoors(sim, 'Dettifoss');
+    openTheBooks(sim);
+    for (const post of postsOf(sim.universe, parentCompany(sim.universe)!.id)) {
+      if (post.role === 'principal') { delete post.personId; delete post.filledAt; }
+    }
+    expect(filled(sim.universe, 'principal')).toBeUndefined();
+
+    run(sim, 'company.develop', { title: 'Dettifoss', medium: 'film' });
+    const id = projectsOf(sim.universe).find((one) => one.title === 'Dettifoss')!.id;
+    run(sim, 'company.greenlight', {
+      projectId: id, planId: 'feature', budgetCents: 20_000_000_00, shootWeeks: 6,
+    });
+    runItOut(sim, id);
+
+    expect(sim.universe.transactions.filter((one) => one.memo.includes('The Producer’s Fee')))
+      .toHaveLength(0);
+    expect(sim.universe.notifications
+      .some((one) => one.title.includes('Nobody Is Being Paid For Making Dettifoss')),
+    'the money stayed in the company and nothing said why').toBe(true);
+  });
+
+  it('is the size of a good part rather than the size of the slate', () => {
+    // The answer to whether producing makes acting pointless, as a comparison
+    // rather than an opinion. Three percent of a twenty-million feature is
+    // EUR 600,000 against a lead fee on the same picture of about EUR 878,000 —
+    // so producing pays about what a good part pays, and the slate's return stays
+    // with the family that financed it.
+    const fee = Math.round(20_000_000_00 * PRODUCER_FEE);
+    expect(fee).toBe(600_000_00);
+    const leadBand = Math.round(20_000_000_00 * CAST_SHARE / A_WHOLE_CAST);
+    expect(fee).toBeLessThan(leadBand);
+    expect(fee).toBeGreaterThan(leadBand / 2);
+  });
+
+  it('needs the chair, and the chair has somebody in it', () => {
+    // The fee was unreachable for the player before this: it goes to the
+    // principal, a parent holds the principal from the first morning, and
+    // "Somebody is already the principal" meant the answer was never.
+    const sim = world('fee-chair');
+    const me = sim.universe.playerId;
+    const mother = personCalled(sim, 'Halla');
+    expect(filled(sim.universe, 'principal')!.personId).toBe(mother);
+
+    // Close enough and she stands down.
+    expect(whyNotStepAside(sim, mother, 'principal')).toBeUndefined();
+    expect(run(sim, 'company.fill_post', { role: 'principal', personId: me }).ok).toBe(true);
+    expect(filled(sim.universe, 'principal')!.personId).toBe(me);
+
+    // Drifted, and she does not. Asking for the family company is a favor.
+    const other = world('fee-chair-cold');
+    const cold = personCalled(other, 'Halla');
+    bondFor(other.universe, other.universe.playerId, cold)!.closeness = WILL_TAKE_A_POST - 1;
+    expect(whyNotStepAside(other, cold, 'principal')).toContain('won’t stand down');
+    expect(run(other, 'company.fill_post', { role: 'principal', personId: other.universe.playerId }).ok)
+      .toBe(false);
+    expect(filled(other.universe, 'principal')!.personId).toBe(cold);
   });
 });

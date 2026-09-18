@@ -18,7 +18,7 @@ import { quickSave, validateUniverse } from '@/engine';
 import type { Simulation } from '@/engine';
 import { MS_DAY } from '@/engine/core/time';
 import { projectsOf } from '@/engine/world/company';
-import { PLANS, planById } from '@/engine/content/making';
+import { PLANS, PRODUCER_FEE, planById } from '@/engine/content/making';
 import { rungsOf } from '@/engine/content/maturity';
 import { KNOWN_RATIOS, STOCKS, rateById, stockById, throughput } from '@/engine/content/inventory';
 import {
@@ -450,7 +450,13 @@ describe('the rooms on a picture are paid for', () => {
     const none = spentOn('feature', 1);
     const saved = asPlanned - none;
     const post = plan.periods.find((one) => one.converts)!;
-    const roomsAtPlan = 20_000_000_00 * post.spends * converts.ofTheSpend;
+    // Against what the periods have to spend, which is the budget less the
+    // producer's fee. A producer's fee is a line in a budget, so three percent of
+    // every picture goes to whoever made it rather than onto the screen, and
+    // everything downstream of a period's spend — the rooms included — is three
+    // percent smaller than the number the picture was greenlit at.
+    const onScreen = 20_000_000_00 * (1 - PRODUCER_FEE);
+    const roomsAtPlan = onScreen * post.spends * converts.ofTheSpend;
     // Down to one room of two saves half the rooms, and nothing else.
     expect(saved).toBeCloseTo(roomsAtPlan / 2, -4);
     expect(saved).toBeLessThan(20_000_000_00 * post.spends);

@@ -696,3 +696,41 @@ export const SLIP_COSTS = 1.35;
 
 /** What missing the delivery date costs a week, as a share of the budget. SLATE's own. */
 export const LATE_PENALTY_A_WEEK = 0.004;
+
+/**
+ * The producer's fee, as a share of what the picture is greenlit at.
+ *
+ * This exists because of a measurement, and the measurement is the most damning
+ * one in the audit trail. Over twenty-five played years a company that greenlights
+ * thirty-six pictures and delivers thirty-three ends holding EUR 238,755,876 —
+ * and the player who ran every one of them ends with **EUR 700**, which is the
+ * balance they opened the save with. They own nought percent of the company,
+ * because the parents built it and the parents hold it, and across a quarter of a
+ * century exactly EUR 1,540 reached their own accounts.
+ *
+ * `docs/UNBITTEN.md` had this the other way round. It said the company must stop
+ * out-earning the career and that the slate returning 1.44 to 1.63 times its
+ * negative was the engine of a hundred-to-one — a decision about the game, left
+ * for the owner. It is not a calibration problem and moving the multiple would
+ * not have touched it: the company was not out-earning the career, it was earning
+ * money the career could never reach. There was no mechanism at all. No dividend,
+ * no ownership, no fee. A producer fee is the one every picture actually carries.
+ *
+ * Three percent, which is inside the ordinary range a producer's fee is quoted at
+ * and deliberately at the bottom of it. What that buys is the figure that makes
+ * this a balance rather than a lever: on a twenty-million-euro feature it is
+ * EUR 600,000, against a lead acting fee on the same picture of about
+ * EUR 878,000. So producing pays about what a good part pays, which is the whole
+ * answer to whether producing makes acting pointless — it does not, because the
+ * slate's return stays with the family that financed it and what reaches the
+ * person is a fee for the work.
+ *
+ * It is charged on top of the budget rather than out of it. Every period's spend
+ * is a share of `budgetCents` and those shares come to one, so folding the fee in
+ * would mean re-cutting all of them and moving every spend figure this build has
+ * measured, to no benefit. A picture therefore costs the company three percent
+ * more than the number it was greenlit at, which is also true of real pictures:
+ * the budget a producer quotes and the check a financier writes have never been
+ * the same number.
+ */
+export const PRODUCER_FEE = 0.03;
