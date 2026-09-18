@@ -577,11 +577,15 @@ export const RETAINED_MONTHS_OF_PAYROLL = 12;
 /** The memo a distribution is posted under. */
 export const DIVIDEND_MEMO = `${GROUP.name}: Dividend`;
 
-/**
- * The month the group declares, which is the month after the tax is settled.
- *
- * You do not distribute profit you still owe the state. Corporation tax is filed
- * at the end of May for the year before; the dividend follows in June, out of
- * what is left.
- */
-export const DIVIDEND_MONTH = 6;
+// THE GROUP DECLARES ON THE DAY IT FILES, and there is no constant for the month
+// because there is no second date. This carried a `DIVIDEND_MONTH` of 6 and a
+// paragraph about the dividend following in June — and the code hung the
+// distribution on the tax tick, in May, immediately after the return is settled.
+// So the constant had no reader and the sentence explaining it was false, which is
+// two of this project's own defects in eight lines, committed an hour after the
+// commit that deleted eight of them.
+//
+// The ordering that mattered is real and is kept: you do not hand out profit you
+// still owe the state, so `payTheCorporationTax` runs and then
+// `declareTheDividend` runs, in that order, in one handler. Same day, after the
+// bill. `TAX_RETURN_MONTH` above is the only date either of them needs.

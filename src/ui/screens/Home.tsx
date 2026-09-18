@@ -453,10 +453,11 @@ export function Home() {
 
         <Panel title="Standing" tight look={at('reputation', player.id)}>
           {/*
-            Three of the seven figures the business keeps on you. The other
-            four — audience appeal, reliability, prestige and controversy — are
-            in the save and have never been on a screen; they are behind the
-            standing itself, which the sentence above the bars names.
+            Three of the seven figures the business keeps on you. The other four
+            — audience appeal, reliability, standing with the industry and
+            controversy — are behind the standing itself, and all four open from
+            it. Every one of the seven moves now, which was not true when these
+            bars were written.
           */}
           <LookRegion>
             <div className="col gap-3">

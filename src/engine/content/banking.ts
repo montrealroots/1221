@@ -42,19 +42,18 @@
 
 import type { Money } from '../core/money';
 
-/**
- * What a current account pays, and it is nought on purpose.
- *
- * A current account is for money that is moving. Paying it a rate would make
- * the decision this file exists for — move it or leave it — into no decision at
- * all, and it would also be false: a transaction account pays nothing like a
- * deposit account anywhere, which is the entire reason deposit accounts exist.
- *
- * It is declared rather than assumed so that the sentence above has somewhere to
- * live and so the day somebody wants a current account to pay something, there
- * is one number to change.
- */
-export const CURRENT_ACCOUNT_A_YEAR = 0;
+// A CURRENT ACCOUNT PAYS NOTHING, and there is no constant for that either.
+//
+// It is for money that is moving. Paying it a rate would make the decision this
+// file exists for — move it or leave it — into no decision at all, and it would be
+// false besides: a transaction account pays nothing like a deposit account
+// anywhere, which is the entire reason deposit accounts exist.
+//
+// This was a `CURRENT_ACCOUNT_A_YEAR = 0`, declared so the paragraph had somewhere
+// to live. Its only readers turned out to be a comment in `world/banking.ts` and a
+// test asserting it equals nought — which is a constant no code reads and a test
+// protecting nothing, and `RATE_SHARE.hold` was deleted from this build for
+// precisely that. The reasoning is worth keeping and the number was not.
 
 /**
  * What money left on deposit earns, a year.

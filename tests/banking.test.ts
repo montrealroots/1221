@@ -21,7 +21,7 @@ import { quickSave } from '@/engine';
 import type { Simulation } from '@/engine';
 import { isLiability, type Account } from '@/engine/core/ledger';
 import {
-  CARD_A_YEAR, CARD_LEAST_FLOOR, CURRENT_ACCOUNT_A_YEAR, DEPOSIT_A_YEAR,
+  CARD_A_YEAR, CARD_LEAST_FLOOR, DEPOSIT_A_YEAR,
 } from '@/engine/content/banking';
 import {
   accountsOf, aMonthOfInterest, earnedInTheYear, leastOnTheCard, settleTheReturn,
@@ -65,7 +65,6 @@ describe('a deposit earns and a current account does not', () => {
     // And that is the design rather than an omission. A transaction account
     // paying a rate would make "leave it or move it" into no decision, and it
     // would be false besides — it is the whole reason deposit accounts exist.
-    expect(CURRENT_ACCOUNT_A_YEAR).toBe(0);
     const sim = quickSave({}, 'bank-current');
     const checking = kindOf(sim, 'checking');
     fund(sim, checking, 100_000_00);

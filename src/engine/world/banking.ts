@@ -96,8 +96,8 @@ export function aMonthOfInterest(sim: Simulation): { earned: Money; charged: Mon
   for (const account of Object.values(sim.universe.accounts)) {
     if (account.nominal || account.closedAt) continue;
 
-    // What a deposit pays. A current account pays `CURRENT_ACCOUNT_A_YEAR`,
-    // which is nought and says why in the content, so it is simply not here.
+    // What a deposit pays. A current account pays nothing and `content/banking.ts`
+    // says why where the constant for it used to be, so it is simply not here.
     if (account.kind === 'savings' && account.balance > 0) {
       const paid = Math.round(account.balance * aMonthOf(DEPOSIT_A_YEAR));
       if (paid > 0) {
