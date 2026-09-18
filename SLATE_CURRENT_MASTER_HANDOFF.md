@@ -408,12 +408,22 @@ Local `main` has been fast-forwarded to `d61c88a`, so the staleness trap recorde
 below no longer applies to this clone. The stash and the single worktree are
 untouched.
 
-**How `gh` got onto this machine, because the next account will need it too.**
-`winget install --id GitHub.cli` ran for ten minutes and printed nothing, so it
-was not waited for. What worked is the portable route and it needs no installer
-and no elevation: the `gh_*_windows_amd64.zip` from the `cli/cli` releases,
-extracted to `%LOCALAPPDATA%\gh-cli`, with `%LOCALAPPDATA%\gh-cli\bin` appended
-to the **user** PATH. `gh --version` reports 2.101.0.
+**`gh` is installed by winget, at `C:\Program Files\GitHub CLI\`, on the machine
+PATH.** Version 2.101.0. `winget upgrade` maintains it, which is the reason it is
+the copy that survived.
+
+That is worth two sentences of history, because the obvious conclusion from
+watching it was the wrong one. `winget install --id GitHub.cli --silent
+--disable-interactivity` printed **nothing at all for over ten minutes** — no
+progress, no download line — so it looked hung and was left running while the
+portable route went ahead: the `gh_*_windows_amd64.zip` from the `cli/cli`
+releases, extracted to `%LOCALAPPDATA%\gh-cli`. That worked immediately and is
+still the fallback worth knowing, since it needs no installer and no elevation.
+
+Then winget finished, exit 0, after about twenty-two minutes. So both were
+installed, both on PATH, same version. The portable copy and its user-PATH entry
+have been removed, leaving one `gh` that updates itself. **It was slow, not
+broken** — if you run it, give it half an hour before concluding anything.
 
 **And how it is authenticated, which is the part with a trap in it.** There is no
 `gh` login on this machine and `gh auth login --with-token` refuses the token that
