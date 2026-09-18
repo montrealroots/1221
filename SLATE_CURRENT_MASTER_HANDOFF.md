@@ -44,15 +44,60 @@ Account 2 (Google) picked this handoff up the same day it was written, on the sa
 
 **What is unchanged and still true:** `stash@{0}` (commit `227fa5aaccca381835257824988fd616147ad51c`, short `227fa5a`) and the `teleport-stash-backup` ref pointing at it remain **completely untouched** — no apply, pop, drop, or clear. The recovery gaps in §20 are **unchanged and still gaps**: the three paused-workflow worktree commits (`a67f5c5`, `653ca3d`, `ae94910`) and the `wf_cc2a6ca8-f9d` run cache (script + journal + cached agent results) remain confirmed absent from this machine and the remote, and remain recoverable only if the original Linux environment is still reachable. Nothing done today changes that assessment.
 
-**What today's session did NOT do, and has not started:** none of the nine open UNBITTEN sections (house rot, company money, note magnitude, who-is-free, tax engine, production calendar, save dead shapes, three one-way money rules, awards-as-specification) has been touched, built, measured, or landed. **All nine remain fully open exactly as §7 describes.** Today was validation only — no application code was written or changed, nothing was committed, nothing was pushed. Harmless untracked scratch files (`gate.log`, `gate2.log`, `gate.exit`, `gate2.exit`, `test.log`, `test.exit`, `typecheck.log`) were left in the working tree from this validation; they are not gitignored but are not referenced by anything and can be deleted freely.
+**What the validation pass itself did NOT do:** at the point the paragraphs above were written, none of the nine open UNBITTEN sections had been touched. That was true then and is **no longer true** — see the next block, which supersedes it. Validation was validation only; the work came after, on explicit instruction. Harmless untracked scratch files (`gate.log`, `gate2.log`, `gate.exit`, `gate2.exit`, `test.log`, `test.exit`, `typecheck.log`) were left in the working tree from this validation; they are not gitignored but are not referenced by anything and can be deleted freely.
 
-**Account 2 status: has sufficient context to continue independently, without Account 1.** The handoff has now survived two independent verification passes — Account 1's own self-correction while writing it, and Account 2's from-scratch re-derivation of every claim plus a real fast-forward and full gate run. **The first UNBITTEN section was house rot** (`property.condition` in `src/engine/systems/life.ts` has exactly one writer, a daily subtraction, and nothing that ever raises it — measured this cleanup as half the cause of the career-wide reliability collapse; the recommended order is: read the section's live code and the corresponding page in `docs/UNBITTEN.md`, verify the page against current code since it is demonstrably stale in places, build, measure paired over 25 years and multiple seeds, mutation-test, gate, then commit that one section on its own).
+**Account 2 status: has sufficient context to continue independently, without Account 1.** (Historical note: the "first UNBITTEN section was house rot" recommendation below was written before any of it was built. It was followed, and all nine sections have since landed — see the next block.) The handoff has now survived two independent verification passes — Account 1's own self-correction while writing it, and Account 2's from-scratch re-derivation of every claim plus a real fast-forward and full gate run. **The first UNBITTEN section was house rot** (`property.condition` in `src/engine/systems/life.ts` has exactly one writer, a daily subtraction, and nothing that ever raises it — measured this cleanup as half the cause of the career-wide reliability collapse; the recommended order is: read the section's live code and the corresponding page in `docs/UNBITTEN.md`, verify the page against current code since it is demonstrably stale in places, build, measure paired over 25 years and multiple seeds, mutation-test, gate, then commit that one section on its own).
 
 ---
 
-## ✅ ACCOUNT 2 — ALL NINE UNBITTEN SECTIONS WORKED, 2026-09-17
+## ✅ ACCOUNT 2 — ALL NINE UNBITTEN SECTIONS LANDED, PLUS THE SUGAR COMPANY — 2026-09-17
 
-**Branch `claude/slate-cleanup-e4apmx` is nine commits past `dc52d64`.** Gate exit 0 on every one of them before it was committed, 1,272 tests, 47 files, dead-word floor 51 and dials 8 both unmoved. One section per commit, each independently droppable.
+This block supersedes the two paragraphs above about what had not been started. Everything below is on `claude/slate-cleanup-e4apmx`, each section its own commit, each gated at exit 0 read from a file.
+
+**The nine, all closed:** house rot, company money, note magnitude, who-is-free, the tax engine, the production calendar, save dead shapes, the three one-way money rules, and awards-as-specification. Then a full remainder pass over the rest of `docs/UNBITTEN.md`.
+
+**What the remainder pass found, which is the part worth carrying forward:** of eight page entries checked against live code, **four were wrong or stale, and almost always *less* alarming than the reality.** The headline count table said 160 where the true figure was 47. `docs/UNBITTEN.md` is a useful index of *where* to look and an unreliable account of *what is there* — verify every entry against current code before costing it, and correct the page in the same commit as the fix.
+
+### The sugar company — the owner's own request, and the largest single change
+
+The family's cane business was a constant. `GROUP_PROFIT_CENTS` said the group cleared about EUR 154m a year; the group owned no account, sold nothing and paid nobody, and the figure existed only to size how much of the lot's losses the family would tolerate. `familyCovers` posted `sim.income` — money from a nominal, rounded to the nearest hundred thousand, because the thing doing the paying had nothing to debit.
+
+It trades now. A daily tick sells, pays 3,100 people and buys cane; a monthly tick pays both parents into purses the family generator never gave them. **Measured, 25 years, `playABusiness`, two seeds, before and after:**
+
+| | before | after |
+|---|---|---|
+| lowest company balance | **−EUR 9,891,111** / −EUR 9,855,952 | **EUR 0** / EUR 0 |
+| weeks under water | **37** / 31 | **0** / 0 |
+| group's own balance at year 25 | (no account existed) | EUR 3.59bn / EUR 3.52bn |
+| sold / wages over 25y | (nothing posted) | EUR 34.6bn / EUR 2.0bn |
+| each parent's purse | (no purse existed) | EUR 5,382,000 |
+
+**Three defects the tests caught that measurement alone would not have.** Recorded because each is a shape that will recur:
+
+1. **A correct posting under a new name is a dead posting.** The transfer went out under its own memo, so `paidInSoFar` counted nothing, the patience rungs stayed at nought and the family became infinitely patient again. The ledger was right and the sentence about it was dead. Both memos now live in `content/sugar.ts`, shared by the reader and the writer.
+2. **A repayment with no counterparty destroys money.** `familyTakesItBack` used `sim.expense`; the money left the company and arrived nowhere, because the family had no account. It is a transfer now.
+3. **The two clocks want different roundings, and both extremes break something.** Cover to the cent on both and the company sits at nought forever — under `GREENLIGHT_FLOOR` — so nothing is ever greenlit and nobody is hired (`crew.test.ts` caught it). Wire a round hundred thousand on both and a picture that empties the company is flush by morning, so the greenlight door can never shut on money (`making.test.ts` caught it). **The day keeps the company out of the red; the month is when the family decides to fund it.** Relatedly, the daily tick first called `sugarCoversThePictures` directly, which cut `familyCovers` out of its own decision so the one thing that can refuse the money never ran.
+
+**A reachability check worth not repeating.** On `playABusiness` the family's patience reads `share 0.000, rung nothing` **both before and after** this work — which looks like a dead mechanism and is not. Measured on a save that owns the lot and never makes its own pictures: **share 0.90 / 0.93, the `conditional` rung reached on both seeds**, with `whatTheFamilySays` changing accordingly. The rungs are live; they simply do not bite a producer who repays what the parent advanced, which is correct. **Do not re-open this as a ONE RULE violation.**
+
+**Copy the owner asked about, fixed:** the company page said it was run out of the lot when the lot is its headquarters (three places), and hard-coded "no slate, no credit, nothing anybody has seen" plus "SLATE keeps no books for it" — frozen on the day the save opened and still printed after thirty delivered pictures. It counts the slate, the material and the cash now, and the empty save reads as it always did because those counts really are nought then. Same defect on the lot's way in ("nothing shot on one yet"). And nobody outside the family is billed as an actor: `performerTitle` is set on every generated person because the field is not optional, which made a default read as a fact, so the person who runs the lot was labelled an actor on the one screen that says who somebody is. Their pronouns instead.
+
+### Still open, and owner-only
+
+- **What the slate's 1.44–1.63× return should be.** A number only the owner can set.
+- **"Nothing in the company ever ends"** — the lapsing/renewal clock. Specced twice, failed both times; it needs a smaller first cut.
+- **Post consent** — "nobody has to say yes" to a post they are offered.
+
+### The PR is not open, and cannot be opened from here
+
+`gh` is **not installed** on this machine. The branch is pushed. Open it by hand:
+
+- URL: `https://github.com/yvcbcjhsy7-prog/1221/compare/main...claude/slate-cleanup-e4apmx?expand=1`
+- Body: already written, at `~/slate-backup/PR-BODY.md`
+
+### The commits
+
+**Branch `claude/slate-cleanup-e4apmx` is 25 commits past `dc52d64`.** Gate exit 0 on every one of them before it was committed — **1,291 tests over 47 files** at the latest, dead-word floor 51 and dials 8 both unmoved. One section per commit, each independently droppable. The nine numbered sections are the first pass; the remainder pass and the sugar company follow them.
 
 | # | Section | Commit | What it was |
 |---|---|---|---|
