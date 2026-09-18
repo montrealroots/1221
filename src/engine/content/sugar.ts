@@ -255,3 +255,91 @@ export function profitAfterQuota(profitCents: Money, tonnes: number): Money {
   const lost = QUOTA.shareOfProfitAtRisk * QUOTA.lostWhenShut * (1 - open);
   return Math.round(profitCents * (1 - lost));
 }
+
+// ---------------------------------------------------------------------------
+// The group as a business that actually trades
+// ---------------------------------------------------------------------------
+
+/** Days in the year every daily figure here is quoted against. */
+export const A_YEAR_OF_DAYS = 365.2425;
+
+/**
+ * The people who actually grow, mill and ship it.
+ *
+ * SLATE's own, and sized off the one figure above that is load-bearing: two
+ * point two million tonnes a year. Cane is labor at the growing end and plant
+ * at the milling end, and a group at this tonnage running its own estates sits
+ * in the low thousands rather than the hundreds or the tens of thousands.
+ *
+ * The wage is a worldwide average and is meant to read as one: most of these
+ * people are in cane-growing countries and a minority are in Reykjavík, so the
+ * mean is far under what an Icelandic salary would be and far over what a
+ * field wage in the tropics is. A single average is the honest simplification
+ * here, because the alternative is a payroll table by country that decides
+ * nothing this build can reach.
+ */
+export const WORKFORCE = {
+  people: 3_100,
+  /** A year of one of them, averaged worldwide, in cents. */
+  aYearEachCents: 26_000_00,
+} as const;
+
+/** What the whole payroll costs a year, and then a day. */
+export const PAYROLL_A_YEAR_CENTS: Money = WORKFORCE.people * WORKFORCE.aYearEachCents;
+export const PAYROLL_A_DAY_CENTS: Money = Math.round(PAYROLL_A_YEAR_CENTS / A_YEAR_OF_DAYS);
+
+/** What it sells in a day, and what the cane, the milling and the freight cost. */
+export const REVENUE_A_DAY_CENTS: Money = Math.round(GROUP.revenueCents / A_YEAR_OF_DAYS);
+export const PROFIT_A_DAY_CENTS: Money = Math.round(GROUP_PROFIT_CENTS / A_YEAR_OF_DAYS);
+
+/**
+ * Everything that is not wages: cane bought in, milling, freight, duty.
+ *
+ * Derived rather than declared, so the three lines cannot drift out of
+ * agreement with the margin they are supposed to produce. Revenue less profit
+ * is the whole cost base; wages are the part of it with people on the end, and
+ * this is the rest.
+ */
+export const COST_OF_GOODS_A_DAY_CENTS: Money =
+  REVENUE_A_DAY_CENTS - PROFIT_A_DAY_CENTS - PAYROLL_A_DAY_CENTS;
+
+/**
+ * What the two of them draw for sitting on the board of it.
+ *
+ * The parents are the group, and a family that owns a billion-euro sugar
+ * business does not live on a salary from it — but something has to arrive in
+ * their own accounts or "the parents are paid" is a sentence rather than a
+ * transaction. A director's fee each, monthly, which is what the arrangement
+ * actually is.
+ */
+export const A_PARENT_A_MONTH_CENTS: Money = 18_000_00;
+
+/**
+ * What the group keeps in hand before it will send anything to the pictures.
+ *
+ * A fortnight of paying everybody. Below this the sugar business is covering
+ * its own payroll out of reserves and has no business funding a film slate;
+ * above it, the surplus is genuinely spare. It is the one figure standing
+ * between "the pictures company cannot go broke" and "the sugar company can",
+ * and it is deliberately a real operating constraint rather than nought.
+ */
+export const KEPT_IN_HAND_CENTS: Money = Math.round(PAYROLL_A_DAY_CENTS * 14);
+
+/**
+ * The two memos the money between the two companies is posted under.
+ *
+ * They live here rather than in `world/lot.ts`, where they were, because both
+ * ends now need them and only one end can own them. The lot's side reads them
+ * to work out how much of the sugar money has gone into the bet — which is the
+ * figure the family's patience is made of — and the group's side writes them
+ * when it actually sends the money. While the group was a nominal there was
+ * only a writer, so the name could sit next to the reader; now there are two.
+ *
+ * The wrong version of this fix is a second memo for the real transfer, which
+ * is what the first pass did: the sugar paid out of a real balance, the ledger
+ * was correct, and `paidInSoFar` saw nothing, so the rungs stayed at nought,
+ * the greenlight condition never bit and the family was infinitely patient
+ * again. The postings were right and the sentence about them was dead.
+ */
+export const PAID_IN_MEMO = `Paid In By ${GROUP.name}`;
+export const PAID_BACK_MEMO = `Paid Back To ${GROUP.name}`;

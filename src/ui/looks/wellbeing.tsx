@@ -105,11 +105,20 @@ defineLook<Person>('person', {
 
     return {
       name: isYou ? (person.displayName || person.firstName) : person.displayName,
-      // A mother is not billed as an actress. Nobody on this land is billed at
-      // all, and calling her one was the field standing in for a fact about
-      // her that the save has had all along.
+      // A mother is not billed as an actress, and neither is a facility
+      // manager or a head of production. Nobody on this land is billed at all.
+      //
+      // The relation case was fixed and the rest was not: anybody without a
+      // family tie to the player still fell through to the performer noun, so
+      // the person who runs the lot was labelled an actor on the one screen
+      // that says who somebody is. `performerTitle` is set on every person the
+      // generators write because the field is not optional, which made it read
+      // as a fact about them when it is only a default.
+      //
+      // Their pronouns instead, which the save has always held and which is
+      // true of everybody rather than of performers only.
       // both-titles: the word itself, which is what this comment is about.
-      kind: isYou ? 'Yourself' : relation ?? PERFORMER_NOUN[person.performerTitle ?? 'actor'],
+      kind: isYou ? 'Yourself' : relation ?? person.pronouns ?? PERFORMER_NOUN[person.performerTitle ?? 'actor'],
       // Two sentences rather than one joined by "and": the wellbeing line is
       // already a whole sentence, and stitching them made a fragment.
       summary: isYou || !relation

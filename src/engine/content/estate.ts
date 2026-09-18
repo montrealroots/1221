@@ -201,7 +201,7 @@ export const HOLDINGS: readonly Holding[] = [
     label: () => 'Company Headquarters',
     // Named in its own card below rather than here, so the name is not printed
     // twice on one page under two different headings.
-    detail: 'Television and Film, out of the lot. It carries the family name and it has no record yet.',
+    detail: 'Television and Film, from its own headquarters on the family land. It carries the family name.',
   },
 ];
 

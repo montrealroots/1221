@@ -30,8 +30,8 @@ import { REBATE, ROLES } from '../content/incorporation';
 import { GREENLIGHT_FLOOR, parentCompany } from './company';
 import { shortOn } from '../content/rebate';
 import { rateWhenShort } from './rebate';
-import { GROUP } from '../content/sugar';
-import { profitThisYear, shutYearsRunning } from './sugar';
+import { GROUP, PAID_BACK_MEMO, PAID_IN_MEMO } from '../content/sugar';
+import { profitThisYear, shutYearsRunning, sugarAccount, sugarCoversThePictures } from './sugar';
 import { ESTATE_CITY_ID, LOT_NAME, estatePlaceLine, movedInAt } from '../content/estate';
 
 /** A week, which is the unit a stage is let in. */
@@ -546,7 +546,13 @@ function cashFor(sim: Simulation, ownerId: Id | undefined): Id | undefined {
 }
 
 /** Midnight on the first of the month after this one, in a zone. */
-function startOfNextMonth(at: Instant, zone: string): Instant {
+/** Midnight on the first of the month `at` falls in. */
+export function startOfThisMonth(at: Instant, zone: string): Instant {
+  const parts = zonedParts(at, zone);
+  return instantFromZoned({ year: parts.year, month: parts.month, day: 1, hour: 0, minute: 0 }, zone);
+}
+
+export function startOfNextMonth(at: Instant, zone: string): Instant {
   const parts = zonedParts(at, zone);
   const year = parts.month === 12 ? parts.year + 1 : parts.year;
   const month = parts.month === 12 ? 1 : parts.month + 1;
@@ -585,6 +591,34 @@ export function howTheMonthWent(month: Utilisation): string {
  * on a month when nothing happened. One line saying "overhead" would be a
  * number nobody could open.
  */
+/**
+ * The same cover as the monthly one, asked once a day.
+ *
+ * The daily tick used to call `sugarCoversThePictures` directly, which was a
+ * shortcut that quietly cut the family out of its own decision: `familyCovers`
+ * is where the condition lives — past the last rung, a month the lot let
+ * nothing is a month the money stops — and the cover ran ahead of it every day,
+ * so the balance was never negative by the time the monthly charge looked. The
+ * rungs, `standingWith` and `whatTheFamilySays` all still computed, and not one
+ * of them could change anything. Faster money is fine; money that skips the
+ * only thing that can refuse it is not.
+ *
+ * So the day asks the same question the month asks, against the month's
+ * earnings so far. Being carried within the day is the owner's ask; being
+ * carried by a family that has stopped agreeing to carry you is not.
+ *
+ * And it covers the overdraft to the cent rather than wiring a round hundred
+ * thousand. The month is when the family decides to fund the company and the
+ * leftover above the hole is its working cash; the day is only treasury, and
+ * handing over spending money every twenty-four hours would mean a picture that
+ * emptied the company was flush again by morning and the greenlight door could
+ * never shut on money at all.
+ */
+export function familyCoversToday(sim: Simulation, accountId: Id): Money {
+  const earned = utilisation(sim, startOfThisMonth(sim.now, sim.homeZone), sim.now).earnsCents;
+  return familyCovers(sim, accountId, earned, TO_THE_CENT);
+}
+
 export function chargeTheMonth(sim: Simulation, accountId: Id, earnedThisMonth: Money = 0): Money {
   let spent = 0;
   // Itemised, because one line saying "overhead" would be a number nobody could
@@ -643,8 +677,23 @@ export function chargeThePosts(sim: Simulation, accountId: Id): Money {
   return spent;
 }
 
-export const PAID_IN = `Paid In By ${GROUP.name}`;
-export const PAID_BACK = `Paid Back To ${GROUP.name}`;
+// Both ends of this money need the two memos and only one end can own them, so
+// they are defined next to the group they name. `paidInSoFar` below reads them;
+// the group's own side writes them when it sends the money.
+export const PAID_IN = PAID_IN_MEMO;
+export const PAID_BACK = PAID_BACK_MEMO;
+
+/**
+ * How round the family's money is, on each of the two clocks it moves on.
+ *
+ * Nobody wires twelve thousand three hundred and forty-seven euros and
+ * twenty-two cents at a parent, and this code never did — the hundred thousand
+ * was always here. What is new is that there are now two clocks and they want
+ * different answers, so the number has a name and a reason instead of sitting
+ * inline in the one place that used to need it.
+ */
+const A_ROUND_WIRE: Money = 100_000_00;
+const TO_THE_CENT: Money = 1;
 
 /**
  * The parents write a check when the company cannot pay for itself.
@@ -687,7 +736,9 @@ export const PAID_BACK = `Paid Back To ${GROUP.name}`;
  * into this bet, which only ever goes up, and which anybody can add up from
  * the ledger and set against what the group makes in a year.
  */
-export function familyCovers(sim: Simulation, accountId: Id, earnedThisMonth: Money = 0): Money {
+export function familyCovers(
+  sim: Simulation, accountId: Id, earnedThisMonth: Money = 0, step: Money = A_ROUND_WIRE,
+): Money {
   const account = sim.universe.accounts[accountId];
   if (!account || account.balance >= 0) return 0;
   // Past the last rung the money comes with a condition on it, and the
@@ -700,9 +751,22 @@ export function familyCovers(sim: Simulation, accountId: Id, earnedThisMonth: Mo
   // paying, so there is always a way back, and the way back is the business
   // working rather than somebody relenting.
   if (standingWith(sim).conditional && earnedThisMonth <= 0) return 0;
-  const short = -account.balance;
-  const step = 100_000_00;
-  const put = Math.ceil(short / step) * step;
+
+  // The sugar pays for it, out of an account that had to earn what it sends.
+  //
+  // This used to post `sim.income` — money appearing from a nominal, rounded up
+  // to the nearest hundred thousand, because the thing doing the paying had no
+  // account to debit. The family's willingness was real and the family's money
+  // was a figure in `content/sugar.ts` that no ledger stood behind. Now the
+  // group trades every day and this is a transfer between two real balances.
+  const sent = sugarCoversThePictures(sim, accountId, step);
+  if (sent > 0) return sent;
+
+  // And if the sugar cannot reach it — the group holds back a fortnight of its
+  // worldwide payroll before it funds a film slate — the old behavior is what
+  // is left, so a save whose group has been shut out of America is not simply
+  // abandoned mid-month.
+  const put = Math.ceil(-account.balance / step) * step;
   sim.income(accountId, put, PAID_IN, 'business');
   return put;
 }
@@ -882,7 +946,17 @@ export function familyTakesItBack(sim: Simulation, accountId: Id): Money {
   if (spare <= 0) return 0;
   const back = Math.min(owed, spare);
   if (back <= 0) return 0;
-  sim.expense(accountId, back, PAID_BACK, 'business');
+  // Back into the account it came out of. This was `sim.expense`: the money
+  // left the company and arrived nowhere, because the family it was owed to had
+  // no account to be repaid into, so a repaid loan quietly destroyed money. The
+  // group has a balance now, so the loop shuts — what the sugar sends, the
+  // sugar can get back, and the same transfer moves both ends of the figure.
+  const home = sugarAccount(sim);
+  if (home === undefined || home === accountId) {
+    sim.expense(accountId, back, PAID_BACK, 'business');
+    return back;
+  }
+  sim.transfer(accountId, home, back, PAID_BACK, 'business');
   return back;
 }
 

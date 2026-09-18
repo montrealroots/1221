@@ -40,6 +40,10 @@ import {
 } from '@/engine/content/incorporation';
 import { OVERHEAD, SMALL_STAGE_COST_CENTS } from '@/engine/content/lot';
 import { buildAStage, chargeThePosts } from '@/engine/world/lot';
+import {
+  aDayOfSugar, payTheBoard, sugarAccount, sugarCoversThePictures, PAYROLL_MEMO,
+} from '@/engine/world/sugar';
+import { A_PARENT_A_MONTH_CENTS, KEPT_IN_HAND_CENTS } from '@/engine/content/sugar';
 import { VAT_MEMO, boughtWithVat, reclaimable, whereTheVatStands } from '@/engine/world/vat';
 import {
   GREENLIGHT_FLOOR, americanArm, capabilitiesOf, companiesOf, companyCash, holdingsOf,
@@ -984,5 +988,130 @@ describe('somebody in a post is somebody on a payroll', () => {
     const facility = ROLES.find((one) => one.id === 'facility')!.monthlyCents;
     // Two posts are filled at boot and only one of them costs anything.
     expect(chargeThePosts(sim, account.id)).toBe(facility);
+  });
+});
+
+describe('the sugar is a business that trades, not a number in a file', () => {
+  /**
+   * `GROUP_PROFIT_CENTS` said the group cleared about a hundred and fifty-four
+   * million a year and nothing stood behind it: the group owned no account,
+   * sold nothing, paid nobody, and the figure existed only to size how much of
+   * the lot's losses the family would tolerate. `familyCovers` then posted
+   * money into the pictures company from a nominal, rounded to the nearest
+   * hundred thousand, because the thing doing the paying had no account to
+   * debit. The willingness was real and the money was not.
+   */
+
+  it('sells, pays its people and keeps what is left, every day', () => {
+    const sim = quickSave({}, 'sugar-trades');
+    const account = sugarAccount(sim)!;
+    expect(account, 'the group should have an account of its own').toBeTruthy();
+
+    const before = sim.universe.accounts[account]!.balance;
+    const kept = aDayOfSugar(sim);
+    const after = sim.universe.accounts[account]!.balance;
+
+    expect(kept, 'a day should clear what the margin says it clears').toBeGreaterThan(0);
+    expect(after - before).toBe(kept);
+    // Three lines, not one net line, because the payroll is the part with
+    // three thousand one hundred people on the end of it.
+    const memos = sim.universe.transactions.slice(-3).map((one) => one.memo);
+    expect(memos).toContain(PAYROLL_MEMO);
+    expect(sim.ledger.audit()).toEqual([]);
+  });
+
+  it('goes on trading through a shut year, because America is one market', () => {
+    // The first version scaled the day's SALES by the quota, so a shut year
+    // sold nothing while still paying the wages and buying the cane — one
+    // point two million a day out, which took the group's own account to minus
+    // thirty-two million. The quota moves the profit, not whether it trades.
+    const sim = quickSave({}, 'sugar-shut');
+    const account = sugarAccount(sim)!;
+    sim.universe.quotaYears.push({
+      fiscalYear: 2030, tonnes: 0, decidedAt: sim.now, because: 'Shut, for this test.',
+    });
+    const kept = aDayOfSugar(sim);
+    expect(kept, 'a shut year is thinner, not fatal').toBeGreaterThan(0);
+    expect(sim.universe.accounts[account]!.balance).toBeGreaterThan(0);
+  });
+
+  it('pays both parents into accounts of their own', () => {
+    const sim = quickSave({}, 'sugar-board');
+    const player = sim.universe.people[sim.universe.playerId]!;
+    const parents = (player.relations ?? [])
+      .filter((one) => one.kind === 'mother' || one.kind === 'father')
+      .map((one) => one.toId);
+    expect(parents).toHaveLength(2);
+
+    // The family generator wrote people and gave nobody a purse.
+    for (const id of parents) expect(sim.universe.people[id]!.primaryAccountId).toBeUndefined();
+
+    aDayOfSugar(sim);
+    const paid = payTheBoard(sim);
+    expect(paid).toBe(A_PARENT_A_MONTH_CENTS * 2);
+    for (const id of parents) {
+      const purse = sim.universe.people[id]!.primaryAccountId;
+      expect(purse, 'a parent should have somewhere for it to land').toBeTruthy();
+      expect(sim.universe.accounts[purse!]!.balance).toBe(A_PARENT_A_MONTH_CENTS);
+    }
+    expect(sim.ledger.audit()).toEqual([]);
+  });
+
+  it('covers the pictures out of its own balance, not out of nowhere', () => {
+    const sim = quickSave({}, 'sugar-covers');
+    const company = parentCompany(sim.universe)!;
+    const pictures = Object.values(sim.universe.accounts)
+      .find((one) => one.ownerId === company.id && one.kind === 'company_cash')!;
+    // Trade for a while so there is something to send.
+    for (let day = 0; day < 60; day += 1) aDayOfSugar(sim);
+    const sugar = sugarAccount(sim)!;
+    const held = sim.universe.accounts[sugar]!.balance;
+
+    sim.expense(pictures.id, pictures.balance + 4_321_987_65, 'Test: overspend', 'business');
+    expect(pictures.balance).toBe(-4_321_987_65);
+
+    const sent = sugarCoversThePictures(sim, pictures.id);
+    expect(sent, 'the sugar should cover it').toBe(4_321_987_65);
+    expect(pictures.balance, 'and cover it exactly, on the daily clock').toBe(0);
+    // The money left the group rather than appearing from a nominal.
+    expect(sim.universe.accounts[sugar]!.balance).toBe(held - sent);
+    expect(sim.ledger.audit()).toEqual([]);
+  });
+
+  it('wires a round hundred thousand on the monthly clock, and only there', () => {
+    // The two clocks want different answers and the difference is load-bearing.
+    // Cover to the cent on both and the company sits at nought forever, under
+    // GREENLIGHT_FLOOR, so nothing is ever greenlit. Wire a round hundred
+    // thousand on both and a picture that empties the company is flush again by
+    // morning, so the greenlight door can never shut on money at all.
+    const sim = quickSave({}, 'sugar-round');
+    const company = parentCompany(sim.universe)!;
+    const pictures = Object.values(sim.universe.accounts)
+      .find((one) => one.ownerId === company.id && one.kind === 'company_cash')!;
+    for (let day = 0; day < 60; day += 1) aDayOfSugar(sim);
+    const sugar = sugarAccount(sim)!;
+    const held = sim.universe.accounts[sugar]!.balance;
+
+    sim.expense(pictures.id, pictures.balance + 4_321_987_65, 'Test: overspend', 'business');
+    const sent = sugarCoversThePictures(sim, pictures.id, 100_000_00);
+    expect(sent, 'rounded up to the next hundred thousand').toBe(4_400_000_00);
+    expect(pictures.balance, 'and the leftover is the company’s working cash')
+      .toBe(4_400_000_00 - 4_321_987_65);
+    // The money left the group rather than appearing from a nominal.
+    expect(sim.universe.accounts[sugar]!.balance).toBe(held - sent);
+    expect(sim.ledger.audit()).toEqual([]);
+  });
+
+  it('will not send the wages, so the group cannot be emptied', () => {
+    const sim = quickSave({}, 'sugar-floor');
+    const company = parentCompany(sim.universe)!;
+    const pictures = Object.values(sim.universe.accounts)
+      .find((one) => one.ownerId === company.id && one.kind === 'company_cash')!;
+    aDayOfSugar(sim);
+    const sugar = sugarAccount(sim)!;
+    // One day's trading leaves less than the fortnight of payroll it holds back.
+    expect(sim.universe.accounts[sugar]!.balance).toBeLessThan(KEPT_IN_HAND_CENTS);
+    sim.expense(pictures.id, pictures.balance + 1_000_000_00, 'Test: overspend', 'business');
+    expect(sugarCoversThePictures(sim, pictures.id)).toBe(0);
   });
 });
