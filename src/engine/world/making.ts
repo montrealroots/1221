@@ -37,13 +37,16 @@ import type { Project } from '../domain/company';
 import type { DimensionId } from '../content/maturity';
 import { MS_DAY, formatDate } from '../core/time';
 import {
-  DELIVERY, LATE_PENALTY_A_WEEK, PRODUCER_FEE, SLIP_COSTS, SLIP_RATE, TRUST_COSTS,
+  A_NEW_HAND_STARTS_IN_WEEKS, DELIVERY, LATE_PENALTY_A_WEEK, PRODUCER_FEE, SLIP_COSTS, SLIP_RATE,
+  TRUST_COSTS,
   type Element, type Period, type Plan,
   elementById, elementsAfter, planById, tightnessOf,
 } from '../content/making';
 import { LOT_NAME } from '../content/estate';
 import { MS_WEEK, bookingsFor, rateFor, stagesOn, stillToCarry, theLot } from './lot';
-import { bankAWeek, cuttingPeriod, cutsAWeek, handsOn, weighTheCut } from './inventory';
+import {
+  bankAWeek, cuttingPeriod, cutsAWeek, handsOn, weighTheCut, whereTheMaterialStands,
+} from './inventory';
 import {
   backToTheRoom, climbedTo, comesApart, deckFor, decideReview, exposureOf, knockEverything,
   somebodyGoesOff,
@@ -1497,6 +1500,26 @@ export function registerMaking(sim: Simulation): void {
   sim.onCommand<{ projectId: Id; elementId: string }, { ok: boolean; error?: string }>(
     'company.deliver', (payload, { sim: s }) => handOver(s, payload.projectId, payload.elementId),
   );
+
+  // More hands in the cutting room, or fewer. The decision `domain/company.ts` has
+  // described from the beginning and nothing could reach.
+  sim.onCommand<{ projectId: Id; hands: number }, { ok: boolean; error?: string }>(
+    'company.restaff', (payload, { sim: s }) => restaff(s, payload.projectId, payload.hands),
+  );
+
+  // And the week they actually start, which is not the week they were hired.
+  sim.onSchedule(RESTAFF_KIND, (item) => {
+    const { projectId, hands } = (item.payload ?? {}) as { projectId?: Id; hands?: number };
+    const project = projectId ? sim.universe.projects[projectId] : undefined;
+    if (!project || project.shelvedAt !== undefined || hands === undefined) return;
+    project.hands = Math.max(1, Math.round(hands));
+    sim.notify({
+      category: 'business',
+      title: `${project.title}: The Room Is Up To ${project.hands}`,
+      body: whereTheMaterialStands(project, sim.now),
+      importance: 40,
+    });
+  });
 }
 
 /** Where a picture stands, in a sentence. */
@@ -1603,4 +1626,133 @@ export function payTheProducer(sim: Simulation, project: Project, period: Period
     importance: 45,
   });
   return owed;
+}
+
+export const RESTAFF_KIND = 'project.restaff';
+
+/**
+ * Why the cutting room cannot be restaffed, or nothing if it can.
+ *
+ * Exported and asked before the offer, so a screen can say what the answer will be
+ * rather than finding out by being refused — the same shape as `whyNotTakeIt`.
+ */
+export function whyNotRestaff(sim: Simulation, projectId: Id, hands: number): string | undefined {
+  const project = sim.universe.projects[projectId];
+  if (!project) return 'There’s no such picture.';
+  if (!project.planId) return `Nobody has said yes to ${project.title} yet.`;
+  if (project.shelvedAt) return `${project.title} is shelved.`;
+  if (project.stage === 'delivered') return `${project.title} is delivered. It’s too late to cut it.`;
+  const plan = planOf(project);
+  const room = plan ? cuttingPeriod(plan) : undefined;
+  if (!room) return `${project.title} has no cutting room to staff.`;
+  const wanted = Math.max(1, Math.round(hands));
+  if (wanted === handsOn(project)) {
+    return `${project.title} already has ${wanted === 1 ? 'one editor' : `${wanted} editors`} on it.`;
+  }
+  if (wanted < handsOn(project)) return undefined;
+
+  // Against what is left of the picture's budget, and deliberately not against what
+  // the company happens to be holding. The company is hardly ever holding anything:
+  // `familyCovers` tops the cash account up from below zero as the periods settle,
+  // so a balance check would have answered "you can restaff on the days the family
+  // has just wired" and refused on every other day, which is a coin toss wearing a
+  // reason. What a picture has left is `committedTo`'s own figure — greenlit less
+  // spent — the money that is already behind this picture and nothing else, and
+  // hands in the cutting room come out of it the same way the overrun does.
+  //
+  // So the trap is the one worth having: a picture that has already spent its budget
+  // cannot buy its way out of a late cut, and the player who wants the option keeps
+  // room in the number at the greenlight.
+  const owed = whatMoreHandsCost(project, wanted);
+  const left = Math.max(0, onTheScreen(project) - project.spentCents);
+  if (owed > left) {
+    return `Another ${wanted - handsOn(project)} in the room costs `
+      + `${formatMoney(owed, { cents: false })} and there’s `
+      + `${formatMoney(left, { cents: false })} left of ${project.title}’s budget.`;
+  }
+  return undefined;
+}
+
+/**
+ * What putting more hands in the room costs, priced off what a room already costs.
+ *
+ * `aRoomCosts` is already here and already answers exactly this — "what one more
+ * room on this period costs, at this budget" — so adding hands eats the same money
+ * the overrun draws from, which is the honest version of what the screen already
+ * tells the player about money buying hands. Nothing invented.
+ *
+ * Taking hands away costs nothing and gives nothing back. The money for the weeks
+ * already cut is spent, and a refund for sending an editor home would be a way to
+ * make a picture cheaper by mismanaging it.
+ */
+export function whatMoreHandsCost(project: Project, hands: number): Money {
+  const plan = planOf(project);
+  const room = plan ? cuttingPeriod(plan) : undefined;
+  if (!room) return 0;
+  const more = Math.max(0, Math.max(1, Math.round(hands)) - handsOn(project));
+  return more * aRoomCosts(room, onTheScreen(project));
+}
+
+/**
+ * Puts more hands in the cutting room, or takes some away.
+ *
+ * The decision `domain/company.ts` has described from the beginning and the engine
+ * has honored all along without a door: "the number of editors is the decision
+ * that sits between a budget and a delivery date".
+ *
+ * It is charged and it is not instant. Both halves matter. A free restaff is
+ * strictly dominant and every cutting room ends at six hands; an instant one lets
+ * a player watch the forecast and fix every picture the week it goes red, which
+ * makes under-staffing free in hindsight. So the money goes now, off `aRoomCosts`,
+ * and the hands arrive in `A_NEW_HAND_STARTS_IN_WEEKS`.
+ *
+ * Fewer hands take effect at once, because sending somebody home is not a hire and
+ * nothing has to be waited for. It buys nothing back either.
+ */
+export function restaff(
+  sim: Simulation, projectId: Id, hands: number,
+): { ok: boolean; error?: string; startsAt?: Instant } {
+  const no = whyNotRestaff(sim, projectId, hands);
+  if (no) return { ok: false, error: no };
+  const project = sim.universe.projects[projectId]!;
+  const wanted = Math.max(1, Math.round(hands));
+  const was = handsOn(project);
+
+  if (wanted < was) {
+    project.hands = wanted;
+    sim.notify({
+      category: 'business',
+      title: `${project.title}: The Room Goes Down To ${wanted === 1 ? 'One' : wanted}`,
+      body: `${whereTheMaterialStands(project, sim.now)} Nothing comes back for it — the weeks `
+        + 'already cut are paid for.',
+      importance: 45,
+    });
+    return { ok: true, startsAt: sim.now };
+  }
+
+  const owed = whatMoreHandsCost(project, wanted);
+  const account = cashFor(sim, project.companyId);
+  if (account && owed > 0) {
+    sim.expense(account, owed, `${project.title}: More Hands In The Room`, 'business',
+      { refType: 'project', refId: project.id });
+    project.spentCents += owed;
+  }
+  const startsAt = sim.now + A_NEW_HAND_STARTS_IN_WEEKS * MS_WEEK;
+  sim.schedule({
+    at: startsAt,
+    kind: RESTAFF_KIND,
+    label: `${project.title}: The New Hands Start`,
+    category: 'business',
+    priority: 20,
+    payload: { projectId, hands: wanted },
+  });
+  sim.notify({
+    category: 'business',
+    title: `${project.title}: ${wanted - was} More In The Room`,
+    body: `${formatMoney(owed, { cents: false })} out of the budget, and they start on `
+      + `${formatDate(startsAt, sim.homeZone)} — a cutting room isn’t restaffed the week you `
+      + `decide to. ${whereTheMaterialStands(project, sim.now)}`,
+    importance: 55,
+  });
+  return { ok: true, startsAt };
 }

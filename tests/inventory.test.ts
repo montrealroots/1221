@@ -17,8 +17,10 @@ import { describe, expect, it } from 'vitest';
 import { quickSave, validateUniverse } from '@/engine';
 import type { Simulation } from '@/engine';
 import { MS_DAY } from '@/engine/core/time';
-import { projectsOf } from '@/engine/world/company';
-import { PLANS, PRODUCER_FEE, planById } from '@/engine/content/making';
+import { cashAccountFor, parentCompany, projectsOf } from '@/engine/world/company';
+import {
+  A_NEW_HAND_STARTS_IN_WEEKS, PLANS, PRODUCER_FEE, planById,
+} from '@/engine/content/making';
 import { rungsOf } from '@/engine/content/maturity';
 import { KNOWN_RATIOS, STOCKS, rateById, stockById, throughput } from '@/engine/content/inventory';
 import {
@@ -26,7 +28,9 @@ import {
   weeksToConvert, whereTheMaterialStands, willMakeIt,
 } from '@/engine/world/inventory';
 import { isFinished, owedSeconds, rungOf, secondsAtOrBeyond } from '@/engine/world/maturity';
-import { finishesBy, windowOf } from '@/engine/world/making';
+import {
+  finishesBy, onTheScreen, whatMoreHandsCost, whyNotRestaff, windowOf,
+} from '@/engine/world/making';
 import { deliverIt, openTheDoors } from './doors';
 
 interface Done { ok: boolean; id?: string; error?: string }
@@ -329,13 +333,126 @@ describe('the engine says so when the cut cannot make the date', () => {
     const post = windowOf(sim.universe.projects[id]!, 'post')!;
     sim.advanceTo(post.from + 21 * MS_DAY);
     expect(warnings(sim)).toHaveLength(1);
-    // Four editors instead of one, which is what the warning was for.
-    sim.universe.projects[id]!.hands = 6;
+    // Six editors instead of one, which is what the warning was for — and through
+    // the command, which is new. This line used to be `projects[id]!.hands = 6`:
+    // the project's own test suite wrote the save directly because there was no
+    // path a player could walk, and the "Back Inside Its Date" notification below
+    // could only ever fire after a restaff nobody could perform.
+    expect(run(sim, 'company.restaff', { projectId: id, hands: 6 }).ok).toBe(true);
     runItOut(sim, id);
     expect(sim.universe.notifications.some((one) => one.title.includes('Back Inside Its Date'))).toBe(true);
     expect(warnings(sim), 'it nagged about a cut it had already got back').toHaveLength(1);
     expect(deliverIt(sim, id)).toBe(true);
     expect(isFinished(sim.universe.projects[id]!)).toBe(true);
+  });
+});
+
+describe('the room can be restaffed after the greenlight', () => {
+  // The decision `domain/company.ts` has described from the first commit — "the
+  // number of editors is the decision that sits between a budget and a delivery
+  // date" — and which for most of this project's life had no door on it. The test
+  // above used to reach past the command layer and write `hands` into the save,
+  // because there was no command to call. These hold the door itself.
+
+  /** A picture three weeks into its cut, with one editor on it. */
+  function midCut(seed: string): { sim: Simulation; id: string } {
+    const sim = world(seed);
+    const id = greenlit(sim, 'unscripted', 'The Arena', { hands: 1 });
+    const post = windowOf(sim.universe.projects[id]!, 'post')!;
+    sim.advanceTo(post.from + 21 * MS_DAY);
+    return { sim, id };
+  }
+
+  const cashOf = (sim: Simulation): number =>
+    cashAccountFor(sim.universe, parentCompany(sim.universe)!.id)!.balance;
+
+  /** When the hands hired today actually walk in. */
+  const theyStart = (sim: Simulation): number =>
+    sim.now + A_NEW_HAND_STARTS_IN_WEEKS * 7 * MS_DAY + MS_DAY;
+
+  it('charges for the hands and does not deliver them the same day', () => {
+    // Both halves of the price, and the second one is the half that makes it a
+    // decision. A restaff that landed the week it was ordered would let a player
+    // watch the forecast and repair every picture the week it goes red, which
+    // makes under-staffing free in hindsight and the staffing choice no choice.
+    const { sim, id } = midCut('restaff-price');
+    const project = sim.universe.projects[id]!;
+    const owed = whatMoreHandsCost(project, 3);
+    expect(owed, 'two more editors were free').toBeGreaterThan(0);
+
+    const before = { cash: cashOf(sim), spent: project.spentCents };
+    const done = run(sim, 'company.restaff', { projectId: id, hands: 3 });
+    expect(done.error).toBeUndefined();
+
+    expect(cashOf(sim), 'the hands were not paid for').toBe(before.cash - owed);
+    expect(project.spentCents, 'the picture does not carry what its room cost').toBe(before.spent + owed);
+    expect(handsOn(project), 'the new hands started the day they were hired').toBe(1);
+
+    sim.advanceTo(theyStart(sim));
+    expect(handsOn(project), 'the new hands never started at all').toBe(3);
+    expect(sim.universe.notifications.some((one) => one.title.includes('The Room Is Up To 3'))).toBe(true);
+  });
+
+  it('prices each pair of hands the same as the last', () => {
+    // Off `aRoomCosts`, which already answers "what one more room on this period
+    // costs at this budget" and is what the period settlement itself is built on.
+    // If the price ever stops being a multiple of one room, it has become a
+    // number somebody typed.
+    const { sim, id } = midCut('restaff-scale');
+    const project = sim.universe.projects[id]!;
+    const one = whatMoreHandsCost(project, 2);
+    expect(whatMoreHandsCost(project, 4)).toBe(3 * one);
+    expect(whatMoreHandsCost(project, 6)).toBe(5 * one);
+    // And nothing at all for staffing down, or for the staffing it already has.
+    expect(whatMoreHandsCost(project, 1)).toBe(0);
+  });
+
+  it('refuses when the picture has spent what it was greenlit at', () => {
+    // Against the budget and not against the company's balance, which is the
+    // distinction the refusal exists for: `familyCovers` tops the cash account up
+    // from below zero as periods settle, so a balance test would answer yes on
+    // the days the family had just wired and no on the rest.
+    const { sim, id } = midCut('restaff-broke');
+    const project = sim.universe.projects[id]!;
+    expect(whyNotRestaff(sim, id, 3), 'a picture with budget left could not staff up').toBeUndefined();
+
+    project.spentCents = onTheScreen(project);
+    const no = whyNotRestaff(sim, id, 3);
+    expect(no, 'a picture that has spent everything staffed up anyway').toBeDefined();
+    expect(no!).toContain('left of');
+    expect(run(sim, 'company.restaff', { projectId: id, hands: 3 }).ok).toBe(false);
+    expect(handsOn(project)).toBe(1);
+  });
+
+  it('sends an editor home at once, and gives nothing back for it', () => {
+    // No lead time, because sending somebody home is not a hire and nothing has
+    // to be waited for. No refund either: the weeks already cut are paid for, and
+    // money back for mismanaging a room would be a way of making a picture cheaper
+    // by running it badly.
+    const { sim, id } = midCut('restaff-down');
+    const project = sim.universe.projects[id]!;
+    expect(run(sim, 'company.restaff', { projectId: id, hands: 4 }).ok).toBe(true);
+    sim.advanceTo(theyStart(sim));
+    expect(handsOn(project)).toBe(4);
+
+    const cash = cashOf(sim);
+    expect(run(sim, 'company.restaff', { projectId: id, hands: 2 }).ok).toBe(true);
+    expect(handsOn(project), 'sending two editors home took a fortnight').toBe(2);
+    expect(cashOf(sim), 'the company was paid for sending editors home').toBe(cash);
+  });
+
+  it('will not restaff a picture nobody said yes to, or one already delivered', () => {
+    const sim = world('restaff-shut');
+    run(sim, 'company.develop', { title: 'Never Made', medium: 'film' });
+    const idle = projectsOf(sim.universe).find((one) => one.title === 'Never Made')!.id;
+    expect(whyNotRestaff(sim, idle, 2)).toContain('Nobody has said yes');
+    expect(whyNotRestaff(sim, 'project_no_such', 2)).toBeDefined();
+
+    const id = greenlit(sim, 'unscripted', 'The Arena');
+    runItOut(sim, id);
+    expect(deliverIt(sim, id)).toBe(true);
+    expect(whyNotRestaff(sim, id, 6)).toContain('too late');
+    expect(run(sim, 'company.restaff', { projectId: id, hands: 6 }).ok).toBe(false);
   });
 });
 

@@ -1780,7 +1780,53 @@ RISK IF YOU CHANGE HOLDER AT ALL: it is read for display in src/ui/workspaces/Au
 
 ### project.hands cannot be changed after the greenlight, so the cutting room cannot be restaffed.
 
-**Cluster** `crew-office` · **Severity** minor · **Verdict** STILL_TRUE
+**Cluster** `crew-office` · **Severity** minor · **Verdict** WAS_TRUE, NOW BUILT
+
+**LANDED.** `company.restaff`, in `src/engine/world/making.ts`, with the
+adversary's own recommended answer to the design question below: (a) priced
+against the budget, plus the short lead time. Four things it settled that the
+entry left open.
+
+1. THE PRICE IS `aRoomCosts`, NOT A NEW NUMBER. The period settlement already
+   asks "what does one more room on this period cost, at this budget" and
+   charges it. More hands in the cutting room cost the same thing per hand, so
+   nothing was invented for this and the price moves with the budget the way
+   every other cost on the picture does.
+
+2. THE GATE IS THE BUDGET, NOT THE BALANCE, and the first version had it wrong.
+   Gating on company cash refused a restaff that the picture could plainly
+   afford: `familyCovers` tops the cash account up from below zero as periods
+   settle, so the company is holding EUR 157,141 in the middle of a twenty
+   million euro picture, and a balance test answers yes on the days the family
+   has just wired and no on all the others. It is now `committedTo`'s own
+   figure — greenlit less spent — so a picture that has already spent its budget
+   cannot buy its way out of a late cut, which is the trap worth having.
+
+3. THE LEAD TIME IS TWO WEEKS and it is why this is a decision. The money alone
+   would not have been enough: a player who can repair a room the week the
+   forecast goes red has made under-staffing free in hindsight. The hire is
+   charged now and arrives on `A_NEW_HAND_STARTS_IN_WEEKS`, through
+   `RESTAFF_KIND` on the schedule, so the weeks between the warning and the
+   fortnight are weeks the room is still short.
+
+4. STAFFING DOWN IS FREE AND IMMEDIATE, both halves on purpose. Sending an
+   editor home is not a hire and nothing has to be waited for; and it buys
+   nothing back, because a refund would be a way of making a picture cheaper by
+   running it badly.
+
+The test the entry named, `tests/inventory.test.ts` 'says so again when the room
+is put right', now goes through the command instead of writing `hands` into the
+save, and five more hold the door itself: the charge and the fortnight, the
+price being a multiple of one room, the refusal on a spent budget, the way down,
+and the refusals on a picture nobody greenlit or one already delivered. Every
+one of them was mutation-checked — made the restaff instant, made it free,
+flattened the price, dropped the budget gate, paid a refund for sending an
+editor home, made staffing down wait too, and dropped the delivered guard — and
+each mutation took down the test that was written for it and no other.
+
+The control is where the entry said to put it: `src/ui/looks/business.tsx`, in
+the row that already prints how many hands there are, beside the forecast that
+already says how many weeks short the cut is.
 
 
 **Files** `/home/user/1221/src/engine/world/making.ts`, `/home/user/1221/src/engine/world/inventory.ts`, `/home/user/1221/src/engine/domain/company.ts`, `/home/user/1221/src/ui/looks/business.tsx`, `/home/user/1221/src/ui/workspaces/BusinessWorkspace.tsx`, `/home/user/1221/tests/inventory.test.ts`

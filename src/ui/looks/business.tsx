@@ -27,6 +27,9 @@ import {
   policiesOf, postFacts, postsOf, projectsOf, registrationsOf, signaturesOf, whereItStands,
 } from '@/engine/world/company';
 import { GROUP_ROLES } from '@/engine/content/sugar';
+import { A_NEW_HAND_STARTS_IN_WEEKS } from '@/engine/content/making';
+import { whatMoreHandsCost, whyNotRestaff } from '@/engine/world/making';
+import { useGame, useWorld } from '@/app/game-context';
 import { DELIVERY, type Element } from '@/engine/content/making';
 import { TIERS, WINDOWS, dealById } from '@/engine/content/selling';
 import { standingOf, whereTheMoneyStands } from '@/engine/world/selling';
@@ -694,6 +697,12 @@ defineLook<Project>('project', {
                           {rate
                             ? `${rate.who}, ${Math.round(cutsAWeek(project) / 60)} finished minutes a week between them.`
                             : 'This plan turns no material into runtime.'}
+                          {/* And the control, beside the number that tells the player
+                              they are short. `project.hands` had one write site in
+                              the engine — inside the greenlight — and no command at
+                              all, while three docstrings and this very panel called
+                              it a decision that can change week to week. */}
+                          {rate ? <Restaff project={project} /> : null}
                         </td>
                       </tr>
                       <tr>
@@ -1030,3 +1039,52 @@ defineLook<Rebate>('rebate', {
 
 /** Everything the workspace needs to name. */
 export const cashOf = companyCash;
+
+/**
+ * One more pair of hands in the cutting room, or one fewer.
+ *
+ * It sits in the row that already prints how many hands there are, next to the row
+ * that already says how many weeks short the cut is. That is where the problem is
+ * shown, so that is where the answer to it belongs.
+ *
+ * Both prices are on the button before it is pressed: what the hands cost, out of
+ * the same budget the overrun draws from, and the fact that they do not start for a
+ * fortnight. A restaff that was free and instant would be a button every player
+ * presses on every picture the week the forecast goes red, which would make
+ * under-staffing free in hindsight and the decision no decision at all.
+ */
+function Restaff({ project }: { project: Project }) {
+  const { run } = useGame();
+  const hands = useWorld(() => handsOn(project));
+  const more = hands + 1;
+  const cost = useWorld(() => whatMoreHandsCost(project, more));
+  const whyNot = useWorld((s) => whyNotRestaff(s, project.id, more));
+
+  return (
+    <div className="row gap-2" style={{ marginTop: 'var(--s2)' }}>
+      {/* Everything a person needs to decide this is on the screen rather than in
+          a tooltip: the price is on the button, and the lead time or the refusal
+          is the line under it. A `title` that carries the only copy explaining a
+          control is a control that says nothing to anybody not holding a mouse. */}
+      <button
+        className="btn btn-sm"
+        disabled={whyNot !== undefined}
+        onClick={() => run('company.restaff', { projectId: project.id, hands: more })}
+      >
+        One More Hand · {moneyOf(cost)}
+      </button>
+      {hands > 1 && (
+        <button
+          className="btn btn-sm btn-ghost"
+          onClick={() => run('company.restaff', { projectId: project.id, hands: hands - 1 })}
+        >
+          One Fewer
+        </button>
+      )}
+      <span className="xs dim">
+        {whyNot ?? `They start in ${A_NEW_HAND_STARTS_IN_WEEKS} weeks, and nothing comes back for `
+          + 'sending one home — the weeks already cut are paid for.'}
+      </span>
+    </div>
+  );
+}

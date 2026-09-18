@@ -734,3 +734,29 @@ export const LATE_PENALTY_A_WEEK = 0.004;
  * the same number.
  */
 export const PRODUCER_FEE = 0.03;
+
+/**
+ * How long a new pair of hands takes to actually start in the cutting room.
+ *
+ * `project.hands` had exactly one write site in the whole engine — inside
+ * `greenlight` — and no command anywhere. The field's own docstring said the
+ * opposite in three places: "the plan's figure is a default, not a rule", "the
+ * number of editors is the decision that sits between a budget and a delivery
+ * date", and "that is a decision that can change week to week". `aWeekOn` said
+ * hands can be changed in any week. `ui/looks/business.tsx` told the player "put
+ * one editor on this where the plan assumed two and it arrives half as fast".
+ *
+ * The lever worked and the door was missing. Measured on an unscripted season
+ * twenty-one days into post, with the save written directly because there was no
+ * path a player could walk: one editor cut 12,600 seconds and left 16,200 to go;
+ * six cut 28,800 and cleared the backlog. `tests/inventory.test.ts` had to reach
+ * around the command layer to exercise it, and a notification — "Back Inside Its
+ * Date" — could only ever fire after a restaff nobody could perform.
+ *
+ * Two weeks, because a free instant restaff is a strictly dominant button and
+ * every cutting room would end at six hands. The cost is the other half of that
+ * and is priced off `aRoomCosts`, which the build already has; the lead time is
+ * what stops a player watching the warning and fixing every picture the week it
+ * appears. Under-staffing a season still costs it its date.
+ */
+export const A_NEW_HAND_STARTS_IN_WEEKS = 2;
