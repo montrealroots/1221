@@ -47,3 +47,6 @@ shots-date/
 # is dropped deliberately rather than dropped by neglect. What is worth keeping
 # from a handover is in `SLATE_CURRENT_MASTER_HANDOFF.md`, which is carried.
 SLATE-CURRENT-CLEANUP-FULL-CONTEXT.txt
+out/
+out2/
+out25/

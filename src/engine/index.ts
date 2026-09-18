@@ -38,6 +38,7 @@ import { registerVat } from './world/vat';
 import { registerHouse } from './world/house';
 import { registerBanking } from './world/banking';
 import { registerAwards } from './world/awards';
+import { registerTutorial } from './world/tutorial';
 import {
   companiesOf, foundTheCompany, foundTheSugarGroup, holdingsOf, postsOf, projectsOf, registerCompanyCommands,
   registerTheClock,
@@ -75,6 +76,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerHouse(sim);
   registerBanking(sim);
   registerAwards(sim);
+  registerTutorial(sim);
 }
 
 /** Recurring world processes every save needs running. */
@@ -351,6 +353,15 @@ export function migrate(universe: SaveUniverse): MigrationResult {
   list('scheduled', 'the timeline');
   list('notifications', 'the notifications');
   list('engineFailures', 'the failure log');
+
+  // Schema 83 added the teaching. An older save gets an empty one rather than
+  // nothing, so `tutorial.seen` is a map everywhere instead of being read with a
+  // fallback in every condition — and it opens switched on, which is right: a save
+  // made before the teaching existed has not dismissed it, it has never been asked.
+  if (universe.tutorial === undefined) {
+    universe.tutorial = { seen: {}, dismissed: false };
+    steps.push('Started the teaching, with nothing taught yet.');
+  }
 
   if (typeof universe.__idCounter !== 'number') {
     universe.__idCounter = 100_000;

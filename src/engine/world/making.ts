@@ -19,7 +19,7 @@
  * **The overrun is decided from the schedule, not rolled.** A picture given
  * four weeks to shoot what the money says takes six will run over, and the
  * amount is read off how far apart those two numbers are. The draw only says
- * how badly, inside a range the tightness sets. `decideSlip` is registered in
+ * how badly, inside a range the slack sets. `decideSlip` is registered in
  * `decided.ts` and the sweep in `tests/deciders.test.ts` holds it to it.
  *
  * **Finishing is not delivering.** A picture that is shot, cut and mixed is
@@ -40,7 +40,7 @@ import {
   A_NEW_HAND_STARTS_IN_WEEKS, DELIVERY, LATE_PENALTY_A_WEEK, PRODUCER_FEE, SLIP_COSTS, SLIP_RATE,
   TRUST_COSTS,
   type Element, type Period, type Plan,
-  elementById, elementsAfter, planById, tightnessOf,
+  elementById, elementsAfter, planById, slackOf,
 } from '../content/making';
 import { LOT_NAME } from '../content/estate';
 import { MS_WEEK, bookingsFor, stagesOn, stillToCarry, theLot } from './lot';
@@ -274,8 +274,8 @@ export function holdAStage(
 // ---------------------------------------------------------------------------
 
 export interface Squeeze {
-  /** The schedule against what the money says it takes. 1 is matched. */
-  tightness: number;
+  /** The schedule against what the money says it takes. 1 is matched, higher has room. */
+  slack: number;
   /** How long the shoot runs, in weeks. A longer shoot slips further. */
   weeks: number;
   /**
@@ -302,7 +302,7 @@ export interface Squeeze {
  * plan, and a model that let it would be worse than one that did not.
  */
 export function decideSlip(input: Squeeze, roll: number): { days: number; because: string } {
-  const pressure = Math.max(0, 1.15 - input.tightness);
+  const pressure = Math.max(0, 1.15 - input.slack);
   // A cast nobody can rely on stretches whatever was going to happen anyway,
   // and one that turns up takes some of it back. Never the whole of it: a
   // schedule cut below what the picture costs runs over with saints in it.
@@ -317,7 +317,7 @@ export function decideSlip(input: Squeeze, roll: number): { days: number; becaus
       because: 'The cast was late every morning of it, and by the second week the call sheet had stopped pretending.',
     };
   }
-  if (input.tightness < 0.8) {
+  if (input.slack < 0.8) {
     return {
       days,
       because: 'The schedule was short of what the picture costs from the day it was set, and everybody on it knew.',
@@ -384,7 +384,14 @@ export interface Prospect {
   /** Hands in the cutting room. */
   hands: number;
   /**
-   * How far the schedule is cut below what the money implies.
+   * How much room the schedule has against what the money implies.
+   *
+   * The weeks given divided by the weeks the budget implies: 1 is matched, 0.6 is
+   * a squeeze, 1.2 has room in it. **Higher is better**, which is worth saying
+   * plainly because this field was called `tightness` and documented as "how far
+   * the schedule is cut below what the money implies" — a sentence that says the
+   * opposite of what the number does, and one that had already produced a
+   * backwards direction in `decided.ts` before `sweepDirection` caught it.
    *
    * Not committed by the greenlight and returned anyway, because it is the one
    * figure a producer is deciding with and the engine works it out twice: here,
@@ -392,7 +399,7 @@ export interface Prospect {
    * drawn. Handing back the same number means a screen that shows it is showing
    * what the slip will be decided from rather than a second estimate of it.
    */
-  tightness: number;
+  slack: number;
 }
 
 /**
@@ -527,7 +534,7 @@ export function wouldBe(
       secondsEach: seconds,
       parts: plan.delivers.parts,
       hands: Math.max(1, Math.round(spec.hands ?? cuttingPeriod(plan)?.converts?.hands ?? 1)),
-      tightness: tightnessOf(weeks, spec.budgetCents),
+      slack: slackOf(weeks, spec.budgetCents),
     },
   };
 }
@@ -1191,11 +1198,11 @@ function weighTheSchedule(sim: Simulation, project: Project, shooting: Period): 
   const window = windowOf(project, shooting.id);
   if (!window) return;
   const weeks = (window.to - window.from) / MS_WEEK;
-  const tightness = tightnessOf(weeks, project.budgetCents ?? 0);
+  const slack = slackOf(weeks, project.budgetCents ?? 0);
   const roll = sim.rng('making', 'slip', project.id).next();
   const trusted = castsReliability(sim, project);
   const slip = decideSlip(
-    { tightness, weeks, ...(trusted !== undefined ? { trusted } : {}) }, roll,
+    { slack, weeks, ...(trusted !== undefined ? { trusted } : {}) }, roll,
   );
   if (slip.days <= 0) return;
 

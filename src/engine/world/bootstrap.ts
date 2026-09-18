@@ -259,6 +259,10 @@ export function emptyUniverse(
     idempotency: {},
     counters: {},
     engineFailures: [],
+    // Switched on for a new save, with nothing taught. A player who does not want
+    // it turns it off and the game is measurably identical either way, which
+    // `tests/tutorial.test.ts` proves by playing the same seed both ways.
+    tutorial: { seen: {}, dismissed: false },
   };
 }
 

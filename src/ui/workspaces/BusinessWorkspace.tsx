@@ -572,9 +572,9 @@ function GreenlightForm({ projectId, onClose }: { projectId: string; onClose: ()
         <label htmlFor="gl-weeks">{shootLabel}</label>
         <input id="gl-weeks" type="number" min={1} max={LONGEST_SHOOT} value={weeks}
           onChange={(e) => setWeeks(Math.max(1, Number(e.target.value)))} />
-        <p className={`xs ${answer.ok && answer.prospect.tightness < 0.8 ? 'negative' : 'dim'}`} style={{ margin: 'var(--s2) 0 0' }}>
+        <p className={`xs ${answer.ok && answer.prospect.slack < 0.8 ? 'negative' : 'dim'}`} style={{ margin: 'var(--s2) 0 0' }}>
           {answer.ok
-            ? `The money implies about ${Math.round(weeks / Math.max(0.01, answer.prospect.tightness))} weeks and you have set ${weeks}. `
+            ? `The money implies about ${Math.round(weeks / Math.max(0.01, answer.prospect.slack))} weeks and you have set ${weeks}. `
               + `A schedule cut below what it costs is what an overrun is drawn from.`
             : 'The schedule against the money is worked out once the rest of it holds.'}
         </p>

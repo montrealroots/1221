@@ -267,6 +267,14 @@ defineDecider<Quota, string>({
     roll: (q, t) => ({ ...q, roll: t }),
   },
   sample: (seed) => ({ was: seed % 2 === 0 ? 0 : 90_000, shutRunning: seed % 3, roll: (seed % 7) / 7 }),
+  ladder: ['shut', 'open'],
+  // Both directions are read straight off the two comments above, which is the
+  // method: declare what the model says it does, and let the sweep say whether it
+  // does it. A bigger quota last year makes an open year more likely because last
+  // year is the honest majority of the answer, and a longer run of shut years
+  // builds pressure to reopen. `roll` is left undeclared — it is the political
+  // decision the game admits it cannot model, and a draw owes no direction.
+  rises: { lastYear: 'up', shutRunning: 'up' },
   decide: ({ was, shutRunning, roll }) => {
     const answer = decideQuota(was, shutRunning, roll);
     return answer.tonnes === 0 ? 'shut' : 'open';
@@ -324,15 +332,28 @@ defineDecider<Squeeze, string>({
   decides: 'How many days past wrap a shoot runs.',
   drawnIn: 'src/engine/world/making.ts',
   reads: {
-    // How far the schedule was cut below what the budget says the picture
-    // takes. This is the read that matters: an overrun is mostly a decision
-    // somebody made months earlier, not weather.
-    tightness: (sq, t) => ({ ...sq, tightness: 0.45 + t * 0.85 }),
+    // How much room the schedule has against what the budget says the picture
+    // takes: the weeks given divided by the weeks the money implies, so 1 is
+    // matched, 0.6 is a squeeze and 1.2 has room in it. This is the read that
+    // matters, because an overrun is mostly a decision somebody made months
+    // earlier and not weather.
+    slack: (sq, t) => ({ ...sq, slack: 0.45 + t * 0.85 }),
     // And how long the shoot is, because a twenty-week picture has four times
     // as many chances to lose a day as a five-week one.
     weeks: (sq, t) => ({ ...sq, weeks: Math.round(2 + t * 22) }),
   },
-  sample: (seed) => ({ tightness: 0.5 + (seed % 8) * 0.1, weeks: 3 + (seed % 12) * 2 }),
+  sample: (seed) => ({ slack: 0.5 + (seed % 8) * 0.1, weeks: 3 + (seed % 12) * 2 }),
+  ladder: ['on schedule', 'a few days over', 'a week or two over', 'badly over'],
+  // `slack` rises **down**, and finding that out is what this check was built
+  // for. The number was called `tightness` and the comment above it said "how far
+  // the schedule was cut below what the money implies", both of which say a higher
+  // value is a worse schedule. It is the opposite: the value is `weeks /
+  // impliedShootWeeks`, so a higher one has more room in it and runs over less.
+  // The model was right the whole time and read backwards to everybody, including
+  // to the first version of this declaration, which said 'up' and failed in all
+  // twelve worlds. `weeks` genuinely rises up: a longer shoot has more weeks in
+  // which to lose a day.
+  rises: { slack: 'down', weeks: 'up' },
   decide: (squeeze) => {
     const days = decideSlip(squeeze, ((squeeze.weeks * 7 + 3) % 11) / 11).days;
     if (days === 0) return 'on schedule';
@@ -428,6 +449,14 @@ defineDecider<Prospects, string>({
     cast: { truth: 35 + (seed % 5) * 9, reads: 40 + (seed % 4) * 8 },
     controversy: (seed % 3) * 12,
   }),
+  ladder: ['never earns it back', 'earns its cost back', 'a real hit', 'a phenomenon'],
+  // `budget` rises **down**, and that is the whole point of declaring these.
+  // Scale buys audience sublinearly, so a bigger picture takes more money and a
+  // smaller multiple of what it cost — which is the band this decider answers in.
+  // Written the way it sounds, `budget: 'up'`, it would pass every other check in
+  // the build. `deal` is not declared: `DEALS` is ordered by shape, not by what it
+  // pays, so there is no honest direction to claim along it.
+  rises: { budget: 'down', cast: 'up', conduct: 'down' },
   decide: (prospects) => {
     const roll = ((prospects.negativeCents / 100_000) % 13) / 13;
     const took = decideTake(prospects, roll).cents;
@@ -468,6 +497,14 @@ defineDecider<Hiring, string>({
     negativeCents: (1_000_000 + (seed % 7) * 5_000_000) * 100,
     head: seed % 2 === 0,
   }),
+  // The ladder is the standing half of the answer, because that is the half with
+  // an order in it. `returning` is deliberately not declared: it moves the other
+  // half of the outcome — whether the person has worked here before — and better
+  // and more-familiar are two different axes, not two ends of one. A decider gets
+  // one ladder, so an input that pushes along a different axis owes no direction.
+  ladder: ['unproven', 'solid', 'sought after', 'the best in the country'],
+  // Money reaches further, and a head is drawn from a shallower, better pool.
+  rises: { budget: 'up', head: 'up' },
   decide: (hiring) => {
     const roll = ((hiring.negativeCents / 1_000) % 17) / 17;
     const answer = decideHire(hiring, roll);
@@ -516,6 +553,17 @@ defineDecider<Asking, string>({
     },
     roll: ((seed * 7) % 13) / 13,
   }),
+  // Passing is the bottom, a counter is the middle, taking it is the top. Which
+  // reason they passed on is not a rung — every pass is the same answer to the
+  // question this decider asks — so the ladder matches on the stem.
+  ladder: ['they pass on', 'their people name a number', 'they take it'],
+  // Money up and clear dates up push toward yes. `demand` pushes **down**: the
+  // more wanted somebody is, the more the same part is an insult rather than a
+  // break, which is the sentence in the comment above turned into a claim a sweep
+  // can refuse. `size` and `draw` are left off — `size` cuts both ways in the
+  // model by design (a bigger part is more attractive and more of a commitment)
+  // and a draw owes no direction.
+  rises: { money: 'up', dates: 'up', demand: 'down' },
   decide: ({ offer, roll }) => {
     const answer = decideOffer(offer, roll);
     if (answer.took) return 'they take it';
@@ -878,6 +926,17 @@ defineDecider<{ onScreen: number; form: number; draw: number }, string>({
     form: AWARDABLE_FORMS[seed % AWARDABLE_FORMS.length] ?? 1,
     draw: ((seed * 3) % 11) / 11,
   }),
+  ladder: [
+    'not in the conversation', 'in the conversation', 'one of the year’s',
+    'the one everybody expects to win',
+  ],
+  // All three up, and all three declarable because the weighting is a stated
+  // blend rather than a hidden one: `NOTICED` gives the cast 0.55, the form 0.2
+  // and the jury 0.25, and every term is added. The draw is declared here where
+  // it was not on `sugar.quota`, because a quarter weight on a term that is added
+  // is a direction — a kinder jury notices more — where a political decision
+  // about a quota is not.
+  rises: { onScreen: 'up', form: 'up', draw: 'up' },
   decide: ({ onScreen, form, draw }) => {
     const at = Math.max(0, Math.min(100, Math.round(
       onScreen * NOTICED.cast + form * 100 * NOTICED.form + draw * 100 * NOTICED.draw,

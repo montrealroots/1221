@@ -1608,18 +1608,18 @@ describe('three axes that had no reader now have one each', () => {
     // A shoot with real pressure on it, because days are whole and on a short
     // easy schedule the rounding eats the difference — which is correct and is
     // not what this test is about.
-    const at = (trusted: number) => decideSlip({ tightness: 0.6, weeks: 10, trusted }, 0.5).days;
+    const at = (trusted: number) => decideSlip({ slack: 0.6, weeks: 10, trusted }, 0.5).days;
     expect(at(5)).toBeGreaterThan(at(50));
     expect(at(50)).toBeGreaterThan(at(95));
     // Never the whole of it. A schedule cut below what the picture costs runs
     // over with saints in it.
-    expect(decideSlip({ tightness: 0.4, weeks: 8, trusted: 100 }, 0.9).days).toBeGreaterThan(0);
+    expect(decideSlip({ slack: 0.4, weeks: 8, trusted: 100 }, 0.9).days).toBeGreaterThan(0);
   });
 
   it('says so when it was the people rather than the schedule', () => {
-    expect(decideSlip({ tightness: 1, weeks: 8, trusted: 5 }, 0.9).because)
+    expect(decideSlip({ slack: 1, weeks: 8, trusted: 5 }, 0.9).because)
       .toMatch(/late every morning/);
-    expect(decideSlip({ tightness: 0.5, weeks: 8, trusted: 90 }, 0.9).because)
+    expect(decideSlip({ slack: 0.5, weeks: 8, trusted: 90 }, 0.9).because)
       .toMatch(/short of what the picture costs/);
   });
 

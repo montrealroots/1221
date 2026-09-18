@@ -680,7 +680,7 @@ export const impliedShootWeeks = (budgetCents: number): number => {
  * above 1 when a picture has been given room. A crew knows this figure on day
  * one, without being told it, and so should the player.
  */
-export const tightnessOf = (weeks: number, budgetCents: number): number =>
+export const slackOf = (weeks: number, budgetCents: number): number =>
   weeks / impliedShootWeeks(budgetCents);
 
 /** How hard a squeezed schedule pushes back, in days per shooting week. SLATE's own. */

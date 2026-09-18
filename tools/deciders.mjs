@@ -153,7 +153,12 @@ for (const m of registry.matchAll(/draws:\s*\[([^\]]*)\]/g)) {
   for (const one of m[1].matchAll(/'([^']+)'/g)) registered.add(one[1]);
 }
 const unowned = [...streams.keys()].filter((id) => !registered.has(id)).sort();
-console.log(`\n${streams.size} draw streams, ${registered.size} of them registered.`);
+// Two different counts, and saying "N streams, M of them registered" made a
+// nonsense of them: M was larger than N, because the registered set holds every
+// decider id as well as every stream a decider declares, and a decider id is not
+// always a stream key. So both numbers are named for what they actually count.
+console.log(`\n${streams.size} draw streams in the engine, against ${registered.size} names`
+  + ` registered by the deciders (their own ids, plus every stream they declare).`);
 if (unowned.length > 0) {
   console.log(`${unowned.length} that no decider owns:`);
   for (const id of unowned) {

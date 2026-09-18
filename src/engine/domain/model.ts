@@ -633,7 +633,7 @@ export interface Preferences {
  * A save from 76 or earlier has no company at all, which reads correctly as a
  * family that never formed one rather than as a broken save.
  */
-export const SAVE_SCHEMA_VERSION = 82;
+export const SAVE_SCHEMA_VERSION = 83;
 
 export interface SaveMeta {
   id: Id;
@@ -889,4 +889,29 @@ export interface SaveUniverse {
    * disappearing silently. Capped: this is a symptom log, not history.
    */
   engineFailures: { at: Instant; kind: string; error: string }[];
+
+  /**
+   * What the game has already explained to this player, and whether to go on.
+   *
+   * Optional because every save written before schema 83 has none, and `migrate`
+   * creates an empty one rather than this being read with a fallback in thirty
+   * places. A save that has never had the teaching on looks identical to one that
+   * has dismissed it on its first week, which is correct: neither has been told
+   * anything and only one of them wants to be.
+   */
+  tutorial?: Tutorial;
+}
+
+/**
+ * The teaching's whole state. Two fields, and both are the player's.
+ *
+ * `seen` is a map rather than a list so that the date a lesson was given is kept —
+ * the screen shows when each one arrived, and a lesson is never repeated on the
+ * strength of it being missing from an array somebody filtered wrongly.
+ */
+export interface Tutorial {
+  /** Lesson id to the instant it was given. */
+  seen: Record<string, Instant>;
+  /** Whether the player has switched the teaching off. */
+  dismissed: boolean;
 }
