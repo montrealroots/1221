@@ -64,7 +64,7 @@ import {
   whereFromById, whereFromCity,
   type AxisId, type PassId, type Round, type Size, type WhereFrom,
 } from '../content/casting';
-import type { Plan } from '../content/making';
+import { planById, type Plan } from '../content/making';
 import { MS_WEEK } from './lot';
 import { baseWindowOf } from './periods';
 import { BEFORE_THE_FIRST_DAY, theyAreFree, whatHasThem } from './diary';
@@ -465,6 +465,7 @@ export function performerNew(
       reliability: clamp(Math.round(standing * 0.6 + 30), 1, 100),
 
       industryDemand: clamp(Math.round(standing * 0.5 + next() * 20), 0, 100),
+      prestige: 0,
       controversy: 0,
     },
     careerTrack: 'actor',
@@ -677,6 +678,67 @@ export interface InIt {
   shown: Read;
   /** Share of the picture's screen time this part is, before normalising. */
   share: number;
+}
+
+/**
+ * Somebody a cast figure can be weighted over, whether or not they have a part.
+ *
+ * The three figures the sale reads that are about people rather than about parts
+ * — appeal, controversy and spark — need a person, a weight and something stable
+ * to seed a draw from. They do not need a role, and a format season has none: a
+ * contributor is engaged for the season and what they are on it is themselves.
+ *
+ * Deliberately not `InIt`. Forcing a contributor into that shape meant giving it
+ * a synthetic `Role` and a fifth `SizeId`, which would have put a person with no
+ * part into every piece of code that walks parts — and `castOn` would then have
+ * asked `wantsOn` what a nonexistent part wants on an axis. The two lists stay
+ * separate and only the three functions that can honestly take either are shared.
+ */
+interface Counted {
+  person?: Person;
+  /** How much of the title they are, before normalising. */
+  share: number;
+  /** Stable per title, for seeding a pairwise draw. */
+  key: string;
+  /**
+   * Whether they are on the whole title rather than one part of it.
+   *
+   * Carried rather than re-derived, and it is here because dropping it broke a
+   * scripted picture. `castSpark` has always paired only the people who are in it
+   * together for months, off `size.across === 'title'`; the first version of this
+   * shape had no such field, so the swap paired every guest and day player on a
+   * feature too and moved a pinned chemistry figure by three points. A contributor
+   * is across the title by construction — a format board is engaged for the season
+   * — which is exactly why the board pairs and why that is the point rather than a
+   * side effect.
+   */
+  acrossTitle: boolean;
+}
+
+/**
+ * Everybody the sale should weigh on this picture, from whichever list it keeps.
+ *
+ * A format season's board is an equal share each rather than a hierarchy, because
+ * a cast board is not a call sheet: there is no lead on a format, and which of the
+ * twelve the season turns out to be about is not decided when they are chosen.
+ */
+export function whoIsInIt(sim: Simulation, project: Project): Counted[] {
+  const board = project.contributors ?? [];
+  if (board.length > 0) {
+    const share = 1 / board.length;
+    const out: Counted[] = [];
+    for (const one of board) {
+      const person = sim.universe.people[one.personId];
+      if (person) out.push({ person, share, key: one.personId, acrossTitle: true });
+    }
+    return out;
+  }
+  return castOf(sim, project).map((one) => ({
+    ...(one.person ? { person: one.person } : {}),
+    share: one.share,
+    key: one.role.id,
+    acrossTitle: one.size.across === 'title',
+  }));
 }
 
 /** Every part and who is in it, uncast ones included. */
@@ -1158,6 +1220,18 @@ export function registerCasting(sim: Simulation): void {
   );
 
   /**
+   * Put somebody on a format season's cast board.
+   *
+   * One at a time, twelve times, and not as a list, because that is the shape of
+   * the decision: a cast board is assembled person by person against the eleven
+   * already on it, and the whole reason it is a decision is that the twelfth
+   * choice is different from the first.
+   */
+  sim.onCommand<{ projectId: Id; personId: Id }, { ok: boolean; error?: string; onIt?: number }>(
+    'company.board', (payload, { sim: s }) => putOnTheBoard(s, payload.projectId, payload.personId),
+  );
+
+  /**
    * Put somebody in the room, with or without a note.
    *
    * Separate from the breakdown and from the offer, because seeing somebody,
@@ -1372,7 +1446,7 @@ export const goesOffBy = (fame: number): number =>
  * somebody the trade is currently writing about.
  */
 export function castsControversy(sim: Simulation, project: Project): number | undefined {
-  const inIt = castOf(sim, project);
+  const inIt = whoIsInIt(sim, project);
   const weight = inIt.reduce((n, one) => n + one.share, 0);
   if (weight <= 0) return undefined;
   return inIt.reduce((n, one) => n + (one.person?.reputation.controversy ?? 0) * one.share, 0) / weight;
@@ -1392,12 +1466,11 @@ export const TOO_HOT = 55;
  * liked for fifteen years appeals whatever the lens makes of them.
  */
 export function castsAppeal(sim: Simulation, project: Project): number | undefined {
-  const inIt = castOf(sim, project);
-  const at = (one: InIt) => one.share;
-  const weight = inIt.reduce((n, one) => n + at(one), 0);
+  const inIt = whoIsInIt(sim, project);
+  const weight = inIt.reduce((n, one) => n + one.share, 0);
   if (weight <= 0) return undefined;
   return inIt.reduce(
-    (n, one) => n + (one.person?.reputation.audienceAppeal ?? 50) * at(one), 0,
+    (n, one) => n + (one.person?.reputation.audienceAppeal ?? 50) * one.share, 0,
   ) / weight;
 }
 
@@ -1874,7 +1947,11 @@ export function sparkBetween(one: Person, other: Person, draw: number): number {
  * person in it and not a picture with no chemistry.
  */
 export function castSpark(sim: Simulation, project: Project): number | undefined {
-  const together = castOf(sim, project).filter((one) => one.size.across === 'title' && one.person);
+  // Only the people who are in it together for months, which on a scripted
+  // picture is the leads and the regulars. A format season's whole board passes
+  // this by construction — twelve people engaged for the season — and that is why
+  // a board sparks at all, which is the single thing a cast board is chosen for.
+  const together = whoIsInIt(sim, project).filter((one) => one.acrossTitle && one.person);
   if (together.length < 2) return undefined;
   let total = 0;
   let weight = 0;
@@ -1886,7 +1963,7 @@ export function castSpark(sim: Simulation, project: Project): number | undefined
       // is what makes a pairing of leads worth more than a pairing of the fifth
       // and sixth names on the call sheet.
       const share = a.share * b.share;
-      const draw = sim.rng('casting', 'spark', project.id, a.role.id, b.role.id).next();
+      const draw = sim.rng('casting', 'spark', project.id, a.key, b.key).next();
       total += sparkBetween(a.person!, b.person!, draw) * share;
       weight += share;
     }
@@ -1901,4 +1978,144 @@ export function sparkReads(spark: number): string {
   if (spark >= 42) return 'they’re fine together';
   if (spark >= 25) return 'two performances side by side';
   return 'they don’t look at each other';
+}
+
+// ---------------------------------------------------------------------------
+// A format season's cast board
+// ---------------------------------------------------------------------------
+
+/**
+ * How many go on the board, and how many are seen to fill it.
+ *
+ * Twelve is the plan's own figure — `content/making.ts` says "Choosing twelve
+ * people" in the casting period's own words, and forty contributors are seen a
+ * week — so neither number is invented here. They are read off the plan rather
+ * than restated, except the twelve, which the plan states in prose and cannot be
+ * read from, so it is declared once and the plan's sentence points at it.
+ */
+export const ON_THE_BOARD = 12;
+
+/** Whether this plan casts a board rather than parts. */
+export const castsContributors = (plan: Plan | undefined): boolean => plan?.cast === 'contributors';
+
+/**
+ * Whoever has been seen for the board, making the pool the first time somebody
+ * looks.
+ *
+ * They are civilians, not performers, and that is the whole difference between
+ * this and `whoCameIn`. A format does not audition actors; it finds people whose
+ * lives are the program. So `careerTrack` is `civilian`, there is no acting
+ * instrument on them worth reading, and the one thing about them that matters
+ * commercially is the one thing a format is cast on: whether an audience will
+ * like them and whether they will go off.
+ */
+export function boardSeen(sim: Simulation, project: Project): Person[] {
+  const already: Person[] = [];
+  for (const id of project.seenForBoard ?? []) {
+    const person = sim.universe.people[id];
+    if (person) already.push(person);
+  }
+  if (already.length > 0) return already;
+
+  const plan = project.planId ? planById(project.planId) : undefined;
+  const period = plan?.periods.find((one) => one.id === 'casting');
+  // Four weeks of the casting period's own throughput, which is where the size of
+  // the pool comes from rather than a number somebody liked.
+  const wanted = Math.max(ON_THE_BOARD * 2, Math.round((period?.unit.aWeek ?? 40) * 4));
+  const making = sim.rng('casting', 'board', project.id);
+  const out: Person[] = [];
+  for (let i = 0; i < wanted; i += 1) out.push(civilianNew(sim, () => making.next()));
+  project.seenForBoard = out.map((one) => one.id);
+  return out;
+}
+
+/** Somebody with a life rather than a career, which is who a format is made of. */
+function civilianNew(sim: Simulation, next: () => number): Person {
+  const person = performerNew(sim, Math.round(20 + next() * 30), next);
+  person.careerTrack = 'civilian';
+  person.background = 'Has never acted and isn’t trying to. Would be on television for the '
+    + 'reason anybody ordinary is: a producer thought the country would want to watch them.';
+  // What a format is cast on, and it is not the instrument. Appeal across the
+  // whole range, because a cast board wants some people an audience will love and
+  // some it will not, and controversy already present on a few of them, because
+  // the person who goes off is the person the season is about.
+  person.reputation.audienceAppeal = clamp(Math.round(10 + next() * 85), 1, 100);
+  person.reputation.controversy = next() < 0.25 ? Math.round(next() * 40) : 0;
+  person.reputation.publicFame = 0;
+  person.reputation.industryDemand = 0;
+  return person;
+}
+
+/** Why somebody cannot go on the board, or nothing if they can. */
+export function whyNotOnTheBoard(sim: Simulation, projectId: Id, personId: Id): string | undefined {
+  const project = sim.universe.projects[projectId];
+  if (!project) return 'There’s no such picture.';
+  if (!castsContributors(project.planId ? planById(project.planId) : undefined)) {
+    return `${project.title} isn’t cast off a board. Its parts are written.`;
+  }
+  if (project.shelvedAt) return `${project.title} is shelved.`;
+  const board = project.contributors ?? [];
+  if (board.length >= ON_THE_BOARD) return `The board is full at ${ON_THE_BOARD}.`;
+  if (board.some((one) => one.personId === personId)) return 'They’re already on it.';
+  const person = sim.universe.people[personId];
+  if (!person) return 'There’s no such person.';
+  if (person.isPlayer) {
+    // Said rather than silently refused, because a player who tries this is asking
+    // a reasonable question and deserves the actual answer.
+    return 'You’re an actor. A format casts people to be themselves — a different job '
+      + 'from the one this career is.';
+  }
+  if (!(project.seenForBoard ?? []).includes(personId)) {
+    return 'Nobody has seen them for this. The casting period is how the board gets filled.';
+  }
+  // Once the field starts, the board is what it is. The episodes are made of what
+  // happened to the people who were there.
+  // Read straight off the project's own periods rather than through
+  // `windowOf`, which lives in `world/making.ts` — the module that imports this
+  // one.
+  const field = project.periods?.find((one) => one.id === 'field');
+  if (field && sim.now >= field.from) {
+    return 'The field has started. The season is made of whoever was on the board when it did.';
+  }
+  return undefined;
+}
+
+/** Puts somebody on a format season's cast board. */
+export function putOnTheBoard(
+  sim: Simulation, projectId: Id, personId: Id,
+): { ok: boolean; error?: string; onIt?: number } {
+  const no = whyNotOnTheBoard(sim, projectId, personId);
+  if (no) return { ok: false, error: no };
+  const project = sim.universe.projects[projectId]!;
+  project.contributors = [...(project.contributors ?? []), { personId, chosenAt: sim.now }];
+  const person = sim.universe.people[personId]!;
+  const onIt = project.contributors.length;
+  sim.notify({
+    category: 'business',
+    title: `${project.title}: ${person.displayName || person.firstName} Is On The Board`,
+    body: onIt >= ON_THE_BOARD
+      ? `That’s the board full at ${ON_THE_BOARD}, and the field will fix it there: the episodes `
+        + 'are made of what happens to the people who are on it.'
+      : `${onIt} of ${ON_THE_BOARD}, at no cost on top — the casting period already spends its `
+        + 'share of the budget on filling the board.',
+    importance: 35,
+    refType: 'project',
+    refId: project.id,
+  });
+  return { ok: true, onIt };
+}
+
+/**
+ * What the people in a picture are thought of by the industry, out of a hundred.
+ *
+ * Weighted the way every other cast figure is, and it reads the cast board on a
+ * format season for the same reason the others do. Nought for everybody until a
+ * season names something, which is what lets it be added to the sale without
+ * moving a figure anybody has already measured.
+ */
+export function castsPrestige(sim: Simulation, project: Project): number | undefined {
+  const inIt = whoIsInIt(sim, project);
+  const weight = inIt.reduce((n, one) => n + one.share, 0);
+  if (weight <= 0) return undefined;
+  return inIt.reduce((n, one) => n + (one.person?.reputation.prestige ?? 0) * one.share, 0) / weight;
 }

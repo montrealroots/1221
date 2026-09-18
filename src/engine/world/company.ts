@@ -1424,8 +1424,14 @@ export function runTheClock(sim: Simulation): {
   // else, because inventing a way for them to go wrong would be inventing the
   // mechanic. Twelve months of notice and a month of grace, which is a year and a
   // month to put somebody in a chair.
+  // The arm's own filings are on this clock too, and they were not. This loop read
+  // `registration.companyId !== company.id`, and the American arm is a different
+  // company — so `us_state`, the Delaware filing, was the one registration in the
+  // build that could never come due. It files every twelve months like the
+  // Icelandic register and nothing ever asked it to.
+  const ours = new Set([company.id, americanArm(sim.universe)?.id].filter((one): one is Id => one !== undefined));
   for (const registration of Object.values(sim.universe.registrations)) {
-    if (registration.companyId !== company.id || registration.endedAt) continue;
+    if (!ours.has(registration.companyId) || registration.endedAt) continue;
     if (registration.nextDueAt === undefined || registration.nextDueAt > sim.now) continue;
     const facts = REGISTRY_BY_ID[registration.registry];
 
@@ -1440,7 +1446,7 @@ export function runTheClock(sim: Simulation): {
     // rather than by anything about lapsing. The principal costs nothing new and
     // couples two things that belong together — the chair that pays the producer's
     // fee is the chair that keeps the company alive.
-    const keptBy = registration.registry === 'is_companies'
+    const keptBy = registration.registry === 'is_companies' || registration.registry === 'us_state'
       ? filled(sim.universe, 'principal')
       : true;
     if (keptBy) {
@@ -1474,6 +1480,51 @@ export function runTheClock(sim: Simulation): {
         + `so the company is off the register. ${whereItStands(sim)}`,
       importance: 95,
     });
+
+    // AND THE GUILDS PULL THEIR AGREEMENTS, which is what finally gives
+    // `Signature.endedAt` a writer.
+    //
+    // `domain/company.ts` has said for a long time that a signature only ever
+    // starts: `company.sign` writes one, nothing anywhere ends one, and the
+    // `!endedAt` filter in `signaturesOf` was a guard no reachable input tripped.
+    // It was left that way on purpose and the reasoning was right — you are
+    // signatory until you breach, not until a year is up, and inventing a renewal
+    // would have invented the mechanic.
+    //
+    // What was missing was not a renewal. It is that an agreement is with a legal
+    // entity, and a struck-off entity is not one. Every breach this build could
+    // otherwise see turned out to be unreachable: a cast fee is paid the moment
+    // somebody is cast, so nobody is ever owed; `feeFor` floors at scale, so nobody
+    // is ever paid under a minimum. This is the one cause that is real and that the
+    // engine can already detect, and it costs nothing new — the strike-off above
+    // was built for the Icelandic register a fortnight ago.
+    //
+    // It bites backwards, exactly as `domain/company.ts` warned it would: the
+    // American arm coming off Delaware ends the SAG-AFTRA agreement, `signedWith`
+    // goes false, `globalRuleOne` starts applying to a cast already seated, and
+    // `employ_americans` shuts. That is the consequence the deferral was nervous
+    // about, and it is the correct one — a company that stopped existing in
+    // Delaware cannot hold an American guild agreement.
+    for (const signature of Object.values(sim.universe.signatures)) {
+      if (signature.companyId !== registration.companyId || signature.endedAt) continue;
+      const guild = GUILD_BY_ID[signature.guild];
+      // Only the register an entity exists on ends an agreement — a company off
+      // the VAT roll is still a company, one off its companies register is not.
+      // There is no test for that here and there should not be, because `keptBy`
+      // above already settles it: VAT and the employer roll are always kept, so
+      // they can never reach this line. Guarding it again would be a guard a prior
+      // clamp forces, which a mutation deleting it proved by taking nothing red.
+      signature.endedAt = registration.endedAt;
+      sim.notify({
+        category: 'business',
+        title: `${guild.body} Pulls The Agreement`,
+        body: `The ${signature.agreement} was with a company that’s no longer on `
+          + `${facts.body}, so it ends with the registration. ${guild.binds} An entity that does `
+          + 'not exist can owe none of that. So the agreement goes outright and doesn’t lapse: '
+          + 'signing again means putting the company back on the register first.',
+        importance: 90,
+      });
+    }
   }
   return out;
 }

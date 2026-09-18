@@ -7,26 +7,35 @@
  * controversy, are real state that has never been rendered anywhere. This is
  * exposure, not invention.
  *
- * Seven, until `prestige` came out. It was written for most of the people in a
- * save and read by nothing that decides anything, and the player’s own held
- * nought for a whole career while this file’s own copy called it “an economy of
- * its own” — a dial that lies is worse than no dial. What it was for is
- * specified in `docs/AWARDS.md` and it comes back the day something reads it.
+ * Seven again. `prestige` was taken out of this file for being written by most
+ * of the people in a save and read by nothing that decides anything — the
+ * player’s own held nought for a whole career while this file’s own copy called
+ * it "an economy of its own", and a dial that lies is worse than no dial. It came
+ * back with two readers written alongside its writers: `remembersYou`, so an
+ * office that has never met you has heard of the work, and the sale, because a
+ * picture people will talk about is worth more to a buyer.
  *
- * The honest part. All six are written once, by `seedReputation`, and nothing
- * in the engine writes to a person’s `reputation` again — one assignment, at
- * bootstrap, and no second write anywhere in `src/engine`. Three of them are
- * worked out from `careerStage`, which no creation screen asks about and which
- * `defaultConfig` leaves at 5 out of 100, so fame comes out at nought and both
- * professional reputation and industry demand at two, for everybody who has
- * ever played. Appeal is left flat at fifty, controversy at nothing, and
- * reliability is the one figure that comes from the person rather than from a
- * career they have not had.
+ * ## THE REST OF THIS HEADER USED TO SAY NOTHING MOVES, AND THAT IS NOW FALSE
  *
- * So these looks say that, in the world’s words rather than as a defect
- * report: what each figure would mean if it moved, and the plain fact that
- * nothing has moved it. A look that dressed a stalled number as a career
- * would be lying, and the rule is that a look only reads.
+ * It read: "All six are written once, by `seedReputation`, and nothing in the
+ * engine writes to a person’s `reputation` again — one assignment, at bootstrap,
+ * and no second write anywhere in `src/engine`." True when it was written, and
+ * comprehensively untrue since. Every one of the seven moves now:
+ *
+ *   - **fame, appeal, standing and demand** drift down daily through
+ *     `forgetsYou`, anchored on `reputationDriftedAt` so an idle save does not
+ *     decay faster than a played one, and up off work done
+ *   - **reliability** moves every working week through `whatTheWeekTook`, three
+ *     off against one back, and heals toward `RELIABILITY_RESTS_AT` while resting
+ *   - **controversy** is raised by a week that goes badly and fades slower than it
+ *     arrives
+ *   - **prestige** is moved by the year’s judgement and fades about four points a
+ *     year
+ *
+ * Measured over twenty-five played years with the house kept up: standing reaches
+ * 53 and 61 on two seeds, reliability 72 and 73, fame 23 and 48. So these looks
+ * say what each figure counts and what has actually moved it, which is what they
+ * were always for — the difference is that there is now something to say.
  */
 
 import { performerNoun } from '@/engine/core/performer';
@@ -120,6 +129,17 @@ const FIGURES: readonly Figure[] = [
     since: FROM_A_CAREER,
     provenance: 'Nought to a hundred, set on the first morning from how far along the career was, and untouched by any day since.',
     shown: true,
+  },
+  {
+    key: 'prestige',
+    name: 'Standing With The Industry',
+    short: 'standing with the industry',
+    behind: 'it says whether the work is thought well of',
+    note: 'Whether the work is thought well of',
+    means: 'It’s what the people who give things out make of the work — not whether it sold and not whether anybody watched, but whether it was any good. A season names five things a year and gives one of them the award.',
+    since: 'It starts at nothing for everybody, because nothing has been said about work nobody has done yet. Being named moves it, winning moves it more, and it fades if nothing follows.',
+    provenance: 'Nought to a hundred. Moved by the year’s judgement, read by what an office thinks of you and by what a buyer pays, and fading about four points a year.',
+    shown: false,
   },
   {
     key: 'controversy',
@@ -294,6 +314,11 @@ function sentenceFor(key: FigureKey, value: number): string {
         : n < 35 ? `${said}. The phone rings, but not often.`
           : n < 70 ? `${said}. There’s more being offered than you can take.`
             : `${said}. Everybody wants you, and the only question left is which one to say yes to.`;
+    case 'prestige':
+      return n < 3 ? `${said}. None of the work has been named for anything.`
+        : n < 25 ? `${said}. One or two people have noticed, and it hasn’t traveled.`
+          : n < 60 ? `${said}. The work is thought well of by people who have never met you.`
+            : `${said}. You’re one of the people the business points at when it wants to say it’s any good.`;
     case 'controversy':
       return n < 3 ? `${said}. There’s nothing hanging over you and nothing anybody could run.`
         : n < 30 ? `${said}. Something’s being said quietly, and it hasn’t reached anybody who matters.`

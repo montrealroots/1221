@@ -3204,6 +3204,28 @@ WHAT IS LITERALLY TRUE AND INERT: yes, `familyCovers` (lot.ts:617, called once a
 
 ### "The unscripted contributor cast board" is unreachable — no plan carries cast:'performers' for the unscripted season.
 
+
+**Cluster** `seasons-misc` · **Verdict** WAS_AN_INVENTORY_LINE, NOW BUILT
+
+**LANDED, and the refutation below was right about everything except how much it
+cost.** Every word of it holds: the ledger did not misdiagnose, no forbidden fix
+was implied, and the downstream readers were not starved — withdrawn consent does
+fire on 10 of 10 unscripted seeds with no contributor record anywhere.
+
+What both sides missed is what the missing screen cost at the sale. An unscripted
+season carries no `roles`, so `castOf` returns nothing for one, so **all five cast
+terms `sellIt` reads came back undefined** — appeal, controversy, spark, truth and
+reads. A third of every career's pictures were sold on the negative and the deal
+alone. The absence was not neutral and it was not only a screen.
+
+`company.board` builds it. Three of the five read the board — appeal, controversy
+and spark, which are questions about people — and `truth` and `reads` stay
+undefined on purpose, because they ask what the written part wanted and a format
+has none. `Plan.cast` being a union rather than a boolean is what made this
+possible without taking back the warning it carries: the format says
+`'contributors'`, `castsPerformers` is still only `'performers'`, and the performer
+machinery stays switched off.
+
 **Cluster** `seasons-misc`
 
 

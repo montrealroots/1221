@@ -878,6 +878,12 @@ grep for readers is part of finishing, not part of tidying up later.
   what is still owed against it.
 - `tools/wired.mjs --check` — the declared vocabulary against what reads it,
   ratcheted at `docs/UNWIRED.json`. The count may fall. It may not rise.
+- `tools/claims.mjs --check` — the other direction, and the one this page had no
+  guard for. Prose here is load-bearing, which means it can go out of date, and a
+  comment saying a field is dead when something now depends on it is worse than no
+  comment. So every present-tense sentence claiming nothing reads or writes a
+  named thing is checked against the tree. The past tense is deliberately not
+  checked: keeping what a thing used to be is the point of writing it down.
 - `tools/deciders.mjs --check` and `tests/deciders.test.ts` — every draw owned
   by a registered decider, and every decider swept until it proves the inputs
   it named change what it decides.

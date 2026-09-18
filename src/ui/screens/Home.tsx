@@ -27,6 +27,7 @@ import { formatMoney } from '@/engine/core/money';
 import { ESTATE_ACRES, ESTATE_NAME, HOUSE, LOT_NAME } from '@/engine/content/estate';
 import { upkeepRefusal, whatTheWorkCosts, whyNotUpkeep } from '@/engine/world/house';
 import { LookRegion, Open, at } from '@/ui/looks';
+import { LESSONS, STRANDS } from '@/engine/content/tutorial';
 
 export function Home() {
   const { sim, navigate, run } = useGame();
@@ -453,10 +454,11 @@ export function Home() {
 
         <Panel title="Standing" tight look={at('reputation', player.id)}>
           {/*
-            Three of the seven figures the business keeps on you. The other
-            four — audience appeal, reliability, prestige and controversy — are
-            in the save and have never been on a screen; they are behind the
-            standing itself, which the sentence above the bars names.
+            Three of the seven figures the business keeps on you. The other four
+            — audience appeal, reliability, standing with the industry and
+            controversy — are behind the standing itself, and all four open from
+            it. Every one of the seven moves now, which was not true when these
+            bars were written.
           */}
           <LookRegion>
             <div className="col gap-3">
@@ -513,7 +515,72 @@ export function Home() {
           </LookRegion>
         </Panel>
       </div>
+
+      <LearningPanel />
     </>
+  );
+}
+
+/**
+ * The teaching, and the three things a player can do about it.
+ *
+ * It lives on Home rather than behind a settings menu because the lessons arrive
+ * here, in the same notice list as everything else, and a control for a thing
+ * belongs next to the thing. It is also the only surface the three `learning.*`
+ * commands have, which `tests/interface.test.ts` holds the build to: a command
+ * nobody can reach is engine work the game does not have, and this panel exists
+ * because that test refused the feature without it.
+ *
+ * What it does not do is show the lessons again as a list to browse. They are
+ * notifications, they are already in the notice list, and a second place to read
+ * them would be the same words twice.
+ */
+function LearningPanel() {
+  const { sim, run, refresh } = useGame();
+  const taught = Object.keys(sim.universe.tutorial?.seen ?? {}).length;
+  const off = sim.universe.tutorial?.dismissed === true;
+  const set = (next: boolean) => { run('learning.set', { off: next }, { silent: true }); refresh(); };
+
+  return (
+    <Panel
+      title="Learning The Game"
+      subtitle={off
+        ? 'Switched off. The game itself is exactly as it was.'
+        : `${taught} of ${LESSONS.length} explained so far, one a week as things come up.`}
+      actions={(
+        <div className="row gap-1">
+          <button className="btn btn-ghost btn-sm" onClick={() => set(!off)}>
+            {off ? 'Turn It Back On' : 'Turn It Off'}
+          </button>
+          {taught > 0 && (
+            <button
+              className="btn btn-ghost btn-sm"
+              onClick={() => { run('learning.again', {}, { silent: true }); refresh(); }}
+            >
+              Start Again
+            </button>
+          )}
+        </div>
+      )}
+    >
+      <p className="small dim" style={{ margin: 0 }}>
+        {off
+          ? 'You won’t get any more notes about how things work. Turn it back on whenever you like — '
+            + 'nothing has been lost and nothing was gated on it.'
+          : 'A note arrives when something you can now do has become possible, and never more than one '
+            + 'a week. They go in the notice list with everything else, they never stop the clock, and '
+            + 'they hold nothing up.'}
+      </p>
+      {taught > 0 && !off && (
+        <p className="xs dim" style={{ marginTop: 'var(--s3)', marginBottom: 0 }}>
+          {STRANDS.map((strand) => {
+            const mine = LESSONS.filter((one) => one.strand === strand.id);
+            const got = mine.filter((one) => sim.universe.tutorial?.seen?.[one.id] !== undefined).length;
+            return `${strand.name} ${got}/${mine.length}`;
+          }).join(' · ')}
+        </p>
+      )}
+    </Panel>
   );
 }
 

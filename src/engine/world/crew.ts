@@ -241,6 +241,7 @@ function somebodyNew(sim: Simulation, standing: number, next: () => number): Per
       reliability: clamp(Math.round(standing * 0.6 + 30), 1, 100),
 
       industryDemand: 0,
+      prestige: 0,
       controversy: 0,
     },
     careerTrack: 'crew',

@@ -42,19 +42,18 @@
 
 import type { Money } from '../core/money';
 
-/**
- * What a current account pays, and it is nought on purpose.
- *
- * A current account is for money that is moving. Paying it a rate would make
- * the decision this file exists for — move it or leave it — into no decision at
- * all, and it would also be false: a transaction account pays nothing like a
- * deposit account anywhere, which is the entire reason deposit accounts exist.
- *
- * It is declared rather than assumed so that the sentence above has somewhere to
- * live and so the day somebody wants a current account to pay something, there
- * is one number to change.
- */
-export const CURRENT_ACCOUNT_A_YEAR = 0;
+// A CURRENT ACCOUNT PAYS NOTHING, and there is no constant for that either.
+//
+// It is for money that is moving. Paying it a rate would make the decision this
+// file exists for — move it or leave it — into no decision at all, and it would be
+// false besides: a transaction account pays nothing like a deposit account
+// anywhere, which is the entire reason deposit accounts exist.
+//
+// This was a `CURRENT_ACCOUNT_A_YEAR = 0`, declared so the paragraph had somewhere
+// to live. Its only readers turned out to be a comment in `world/banking.ts` and a
+// test asserting it equals nought — which is a constant no code reads and a test
+// protecting nothing, and `RATE_SHARE.hold` was deleted from this build for
+// precisely that. The reasoning is worth keeping and the number was not.
 
 /**
  * What money left on deposit earns, a year.
@@ -87,10 +86,13 @@ export const DEPOSIT_A_YEAR = 0.03;
  * the greenlight door reads — so a rate nobody chose raised the ceiling on what
  * the pictures may commit to by forty-seven percent.
  *
- * The hoard is the real finding and it is not a banking one. Two point eight
- * billion sits in that account because SLATE gives a cane group nothing to do
- * with its profit. `world/banking.ts` says the same thing where the code would
- * have gone.
+ * The hoard was the real finding and it was not a banking one. It has since been
+ * answered where it belonged, in `content/sugar.ts`: the group retains a year of
+ * the worldwide payroll and distributes the rest to the two people who own it, so
+ * the balance is EUR 142m rather than EUR 2.81bn and the money lands on people
+ * whose accounts something reads. Which is also why paying a rate on it would have
+ * been the wrong answer twice over — it would have grown a pile that should not
+ * have been there.
  */
 
 /**

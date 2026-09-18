@@ -43,9 +43,10 @@ import {
   howSure,
   howWide, lookedAt, officeFillsAt, quoteOf, saysWhatItWants, seatFor, shownOf, sparkReads,
   sureReads, theDiary, whatSayingYesCosts, whereTheCastStands, whoCameIn,
+  ON_THE_BOARD, boardSeen, castsContributors, whyNotOnTheBoard,
 } from '@/engine/world/casting';
 import {
-  AIRDATE_WEEKS, LEAD_WEEKS, LONGEST_SHOOT, canHandOver, windowOf, wouldBe,
+  AIRDATE_WEEKS, LEAD_WEEKS, LONGEST_SHOOT, canHandOver, planOf, windowOf, wouldBe,
 } from '@/engine/world/making';
 import { LIMB_LABELS, THE_CLAIM } from '@/engine/content/rebate';
 import { basePeriodOf } from '@/engine/world/periods';
@@ -54,7 +55,7 @@ import {
   auditorsFee, awayOnTheCast, certifiable, limbsOf, shortOnFor, turnsOverOn,
   whereTheClaimStands, whyNot, worthToday,
 } from '@/engine/world/rebate';
-import type { RoleId } from '@/engine/domain/company';
+import type { Project, RoleId } from '@/engine/domain/company';
 import {
   GUILD_BY_ID, POLICY_BY_ID, REGISTRY_BY_ID, ROLE_BY_ID,
 } from '@/engine/content/incorporation';
@@ -571,9 +572,9 @@ function GreenlightForm({ projectId, onClose }: { projectId: string; onClose: ()
         <label htmlFor="gl-weeks">{shootLabel}</label>
         <input id="gl-weeks" type="number" min={1} max={LONGEST_SHOOT} value={weeks}
           onChange={(e) => setWeeks(Math.max(1, Number(e.target.value)))} />
-        <p className={`xs ${answer.ok && answer.prospect.tightness < 0.8 ? 'negative' : 'dim'}`} style={{ margin: 'var(--s2) 0 0' }}>
+        <p className={`xs ${answer.ok && answer.prospect.slack < 0.8 ? 'negative' : 'dim'}`} style={{ margin: 'var(--s2) 0 0' }}>
           {answer.ok
-            ? `The money implies about ${Math.round(weeks / Math.max(0.01, answer.prospect.tightness))} weeks and you have set ${weeks}. `
+            ? `The money implies about ${Math.round(weeks / Math.max(0.01, answer.prospect.slack))} weeks and you have set ${weeks}. `
               + `A schedule cut below what it costs is what an overrun is drawn from.`
             : 'The schedule against the money is worked out once the rest of it holds.'}
         </p>
@@ -912,8 +913,19 @@ function CastForm({ projectId, onClose }: { projectId: string; onClose: () => vo
     setHeard(undefined);
   };
 
+  const board = (personId: string) => {
+    const answer = run<{ ok: boolean; error?: string }>(
+      'company.board', { projectId, personId }, { silent: true },
+    );
+    setError(answer.value?.ok ? undefined : answer.value?.error ?? answer.error);
+    setHeard(undefined);
+  };
+
   const inIt = castOf(sim, project);
   const filled = howManyCast(project);
+  // A format season has no written parts, so everything below about bands and
+  // breakdowns is about a picture this is not. It gets its own table.
+  const isFormat = castsContributors(planOf(project));
   const me = sim.universe.people[sim.universe.playerId]!;
   const diary = theDiary(sim, project);
   const shuts = officeFillsAt(project);
@@ -948,6 +960,8 @@ function CastForm({ projectId, onClose }: { projectId: string; onClose: () => vo
           {shuts !== undefined && `It stops taking bookings on ${formatDate(shuts, sim.homeZone)}.`}
         </p>
       )}
+      {isFormat && <TheBoard project={project} onPick={board} />}
+      {!isFormat && (
       <div className="table-wrap">
         <table className="table">
           <thead>
@@ -1014,6 +1028,7 @@ function CastForm({ projectId, onClose }: { projectId: string; onClose: () => vo
           </tbody>
         </table>
       </div>
+      )}
 
       {open && (() => {
         const role = project.roles?.find((r) => r.id === open);
@@ -1402,5 +1417,85 @@ function Standings() {
         </div>
       </Panel>
     </div>
+  );
+}
+
+/**
+ * A format season's cast board.
+ *
+ * Twelve people out of whoever has been seen, and the thing a player is actually
+ * deciding is not which twelve are best — it is which twelve are a season. So the
+ * table shows the two facts a format is cast on and nothing else: whether an
+ * audience will like them, and whether they are trouble. There is no band, no
+ * quote and no haggle, because a contributor is not paid per part — the casting
+ * period already spends its share of the budget on filling the board.
+ *
+ * It is one press per person rather than a list to submit, because the twelfth
+ * choice is a different decision from the first: by then there are eleven people
+ * on it and what the season needs is whatever they are not.
+ */
+function TheBoard(
+  { project, onPick }:
+  { project: Project; onPick: (personId: string) => void },
+) {
+  const { sim } = useGame();
+  const on = project.contributors ?? [];
+  const pool = boardSeen(sim, project);
+  const onIt = new Set(on.map((one) => one.personId));
+
+  return (
+    <>
+      <p className="small">
+        {`${on.length} of ${ON_THE_BOARD} on the board. `}
+        {on.length >= ON_THE_BOARD
+          ? 'That’s the season, and the field will fix it there: the episodes are made of what '
+            + 'happens to the people who are on it.'
+          : 'Nobody here is an actor and nobody is playing a part. What you are choosing is '
+            + 'every story the season can contain.'}
+      </p>
+      <div className="table-wrap">
+        <table className="table">
+          <thead>
+            <tr>
+              <th>Who</th>
+              <th className="nowrap">Will Be Liked</th>
+              <th className="nowrap">Trouble</th>
+              <th />
+            </tr>
+          </thead>
+          <tbody>
+            {pool.map((person) => {
+              const whyNot = whyNotOnTheBoard(sim, project.id, person.id);
+              const already = onIt.has(person.id);
+              return (
+                <tr key={person.id} className={already ? 'strong' : undefined}>
+                  <td className="small">
+                    <Open subject={at('person', person.id)}>{person.displayName}</Open>
+                    {already && <div className="muted small">On the board</div>}
+                  </td>
+                  <td className="small nowrap">{`${Math.round(person.reputation.audienceAppeal)}/100`}</td>
+                  <td className="small nowrap">
+                    {person.reputation.controversy > 0
+                      ? `${Math.round(person.reputation.controversy)}/100`
+                      : <span className="dim">None known</span>}
+                  </td>
+                  <td>
+                    {!already && (
+                      <button
+                        className="btn btn-sm"
+                        disabled={whyNot !== undefined}
+                        onClick={() => onPick(person.id)}
+                      >
+                        Put On The Board
+                      </button>
+                    )}
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    </>
   );
 }

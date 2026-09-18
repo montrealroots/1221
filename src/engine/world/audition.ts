@@ -48,7 +48,7 @@ import { clamp } from '../core/rng';
 import {
   AS_WRITTEN, A_HARD_WEEK_COSTS_STANDING, A_WORKING_WEEK, CLOSE_ENOUGH, COLD,
   EXPECTED_OF_ANYBODY, FURTHEST, HOUSE_HOLDS,
-  KNOWN_OF, OF_THE_ROOM, OF_THE_SPEND, RELIED_ON, REMEMBERED, SCALE_A_WEEK_CENTS,
+  KNOWN_OF, OF_THE_ROOM, OF_THE_SPEND, RELIED_ON, REMEMBERED, SCALE_A_WEEK_CENTS, THOUGHT_WELL_OF,
   HEADROOM, HELD_AGAINST_YOU_YEARS, IGNORED, MISREAD_THE_ROOM, SHADES, TALKED_ABOUT,
   TOO_FAR, WELL_LIKED,
   WHAT_THEY_OFFER,
@@ -223,8 +223,15 @@ export function remembersYou(sim: Simulation, officeId: string): number {
   // premise leaves available.
   const relied = Math.min(0,
     ((me?.reputation.reliability ?? EXPECTED_OF_ANYBODY) - EXPECTED_OF_ANYBODY) / EXPECTED_OF_ANYBODY);
+  // And whether the work is thought well of, which is the reader `prestige` came
+  // back with. An office that has never met you has still heard about the picture,
+  // which is the one thing an award does for somebody in this business that money
+  // cannot — `docs/AWARDS.md` named this as the cheapest of the three candidates
+  // and it is a fourth term of exactly the kind the function already takes.
+  const thoughtWellOf = (me?.reputation.prestige ?? 0) / 100;
   const earned = readFor(sim, officeId).length * REMEMBERED
     + (fame / 100) * KNOWN_OF
+    + thoughtWellOf * THOUGHT_WELL_OF
     + relied * RELIED_ON
     - ignoredBy(sim, officeId) * IGNORED;
   // A share of what is left in whichever direction, so no term can be eaten by

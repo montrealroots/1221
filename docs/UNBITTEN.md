@@ -448,16 +448,26 @@ file reference rather than as a finding.
   to 65.38 — and it was the input that had no producer. Field, `axisModifier`
   case, four trait modifiers, the higher-is-worse guard and the ninth dial on the
   screen all went together. Openness went with it into the paragraph above.
-- **The income tax engine is a screen, and it is the only tax left that is.**
-  This line used to read "nothing taxes a fee, a wage or a company's profit", and
-  two thirds of that is now false. **The group pays corporation tax** at
-  `CORPORATION_TAX` of 20%, filed in May, out of `world/sugar.ts`. **Wages are
-  charged Tryggingagjald** at 6.35%, on the sugar group's payroll and on the
-  lot's own posts. **VAT is filed and reclaimed** on a real return out of
-  `world/vat.ts`. What is left unwired is income tax on the player, which is
-  `computeAnnualTax` — real, correct on its own tables, and read by one thing:
-  the place card, which works out what a reference wage would be taxed at and
-  prints it.
+- ~~**The tax engine is a screen.**~~ **Nothing about it is, any more, and this
+  line has now been wrong twice in one day in two different directions.** It first
+  read "nothing taxes a fee, a wage or a company's profit", which had become two
+  thirds false: the group pays corporation tax at `CORPORATION_TAX` of 20% filed
+  in May, wages carry Tryggingagjald at 6.35% on the group's payroll and the lot's
+  posts, and VAT is filed and reclaimed on a real return. It was corrected to say
+  income tax on the player was the one tax still unwired — and then the banking
+  build wired it three commits later, which made the correction false too.
+
+  `computeAnnualTax` is charged now. `settleTheReturn` assesses a person on what
+  their accounts actually took in the year gone and posts the bill out of the
+  pocket that can stand it, in the June after the year it was earned, for
+  everybody in the save rather than only the player. Measured over twenty-five
+  played years: EUR 227,263 off a career grossing EUR 938,000, and EUR 14.5m off
+  the parents against the EUR 26.6m they drew from the board.
+
+  The lesson is not about tax. **This entry was falsified by the same session that
+  wrote it**, which is what a live page does when it is edited faster than it is
+  re-read, and it is the third time in this run of work that a claim about the code
+  outlived the code. Read anything here against the tree before trusting it.
 
   Iceland is at least IN the tables — it was in none of them, so the home screen
   told a player living in Mosfellsbær that Iceland taxes a wage at 0% and charges
@@ -624,17 +634,31 @@ file reference rather than as a finding.
   line too** — deleted in `bcbf271`, with `workRefusalFor`, a duplicate
   `countryOfCity` and the five tests whose own header admitted nothing called the
   rule.
-- **Awards and critics**, which is where `prestige` above is waiting.
-  **Specified and costed in `docs/AWARDS.md`**, which is the deliverable this
-  section was scoped to rather than a built festival circuit. The finding that
-  shaped it: the two fields involved are half-connected in opposite directions.
-  `prestige` is written for 87 of 146 people in a played save and **read by
-  nothing at all**; `controversy` is **read by two live mechanisms** — a casting
-  office refuses anybody over `TOO_HOT = 55`, and the cast's controversy takes
-  up to 38% off what a picture sells for — and is **0 for every person at every
-  moment**, because every writer in the build sets the literal nought. So the
-  expensive half of an awards system is already built and waiting for a source,
-  which makes this a much smaller job than the page implies.
+- ~~**Awards and critics**, which is where `prestige` above is waiting.~~
+  **Built, all three pieces, and `docs/AWARDS.md` now records what landed against
+  what it proposed.** The finding that shaped the spec was that the two fields were
+  half-connected in opposite directions: `prestige` was written for 87 of 146
+  people and read by nothing at all, while `controversy` was read by two live
+  mechanisms and was nought for everybody at every moment. Both halves are whole
+  now — controversy got its writer with the seven dials, and prestige came back
+  with two readers written in the same commit as its writers, because the spec was
+  blunt that doing otherwise reproduces the defect it opens by describing.
+
+  A season names five a year and one wins, judged on what is on the screen and the
+  form and **never on the budget**. `remembersYou` takes prestige as a fourth term
+  and the sale prices it. `askFor` — the third candidate — is refused with its
+  number written down: the closest measured analogue came out at ×2.32 to ×3.56 of
+  lifetime acting income, which is a different economy rather than a term. And the
+  ceremony is still refused, as §5 asked: no academies, no categories, no juries.
+
+  **The build found one thing the spec could not have predicted.** A season reading
+  `universe.projects` sees the family's own slate, and in a played career the
+  player acts for other people — productions that book the lot, which are `Booking`
+  rows with no cast records and no delivery. So the first version moved prestige for
+  the company's pictures and never for the player's own work, and `tools/dials.mjs`
+  caught it at once: twenty-five played years, "one value, 0". A won audition
+  already records what the part wanted and what was played, so the season names
+  performances too, and the dial moves in the career this game is about.
 
 ### Correct, and nothing can reach it
 
@@ -698,21 +722,35 @@ file reference rather than as a finding.
   higher rate is for audiences of eighteen and under, "which SLATE doesn't model:
   no picture declares an audience." A note describing a rule the engine cannot
   apply is a note that lies.
-- **The unscripted contributor cast board** — and this one is an inventory line
-  rather than an open defect, which is worth saying because it reads like the
-  latter. The format season has no `cast: 'performers'` on purpose: choosing
-  twelve contributors is a different act from casting written parts, engaged and
-  paid on different terms, and a flag reading true for both would be the shortest
-  possible way to say something false. The season's cast-board *period* is real
-  and paid for — 12% of the spend, forty contributors seen a week — so nothing is
-  free here; what does not exist is a screen listing the twelve.
+- ~~**The unscripted contributor cast board**~~ — **built, and it was more than an
+  inventory line after all.** This entry said it was one, on the grounds that
+  everything downstream was written to be right the day the screen existed. That
+  was true and it missed the cost of the screen not existing.
 
-  `datesFor`, `layTheRoles` and the withdrawn-consent trouble are all written to
-  be right the day that screen exists, and `tests/crew.test.ts` says so in as many
-  words. An adversarial re-audit of this line is in `docs/ARREARS.md` under
-  Refuted, including the probe showing withdrawn consent fires on 10 of 10
-  unscripted seeds without any contributor record — so the downstream readers this
-  line looks like it is starving are not starved.
+  Measured: an unscripted season carries no `roles`, so `castOf` returns nothing
+  for it, so **all five cast terms the sale reads came back undefined** — appeal,
+  controversy, spark, truth and reads. A third of every career's pictures were sold
+  on the negative and the deal alone, blind to who was in them. The absence was not
+  neutral; it was a whole axis of the sale switched off for one of the three forms
+  this game makes.
+
+  Three of the five read the board now and two deliberately do not. Appeal,
+  controversy and spark are questions about people. `truth` and `reads` ask
+  `wantsOn(role, axis)` — what the written part wanted — and a format has no part
+  to want anything, so they stay undefined and the code says why.
+
+  The warning this entry rested on still stands and was not taken back: a flag
+  reading true for both would say something false. What made the build possible is
+  that `Plan.cast` was a union rather than a boolean, which is the design
+  anticipating exactly this — the format season says `'contributors'`,
+  `castsPerformers` is still only `'performers'`, and no role is laid, no audition
+  armed, and no slot offered to the player. Being on a format's cast board is a job
+  and it is not this job; the refusal says that in those words.
+
+  Twelve people, one at a time, out of a pool of civilians. Nothing is charged for
+  them — the casting period already spends 12% of the budget on filling the board,
+  and billing a contributor on top would charge the same money twice. Once the
+  field starts the board is fixed.
 
 ### Found by measuring rather than by reading
 

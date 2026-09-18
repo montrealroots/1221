@@ -28,8 +28,9 @@ import { instantFromZoned, zonedParts } from '../core/time';
 import {
   A_PARENT_A_MONTH_CENTS, COST_OF_GOODS_A_DAY_CENTS, GROUP, GROUP_PROFIT_CENTS,
   A_YEAR_OF_DAYS, EMPLOYER_TAX_A_DAY_CENTS, EMPLOYER_TAX_A_MONTH_CENTS, GROUP_ROLE_BY_ID,
-  KEPT_IN_HAND_CENTS, PAID_IN_MEMO,
-  PAYROLL_A_DAY_CENTS, QUOTA, TAX_RETURN_MONTH, THE_TARIFF, WAGES_A_MONTH_CENTS,
+  DIVIDEND_MEMO, KEPT_IN_HAND_CENTS, PAID_IN_MEMO, PAYROLL_A_MONTH_CENTS,
+  PAYROLL_A_DAY_CENTS, QUOTA, RETAINED_MONTHS_OF_PAYROLL, TAX_RETURN_MONTH, THE_TARIFF,
+  WAGES_A_MONTH_CENTS,
   profitAfterQuota, type GroupRoleId,
 } from '../content/sugar';
 import { parentCompany, theSugarGroup } from './company';
@@ -230,6 +231,24 @@ export function registerSugar(sim: Simulation): void {
         body: `${euros(paid)} of corporation tax on the year, at ${Math.round(CORPORATION_TAX * 100)} percent. `
           + 'The group has always cleared this much and has never been taxed on it until now.',
         importance: 30,
+      });
+    }
+
+    // And then it distributes what it is not keeping, which is the answer to a
+    // balance that reached EUR 2.81bn over twenty-five years and was spent on
+    // nothing. In this order and not the other: you do not hand out profit you
+    // still owe the state, so the tax is settled first and the dividend comes out
+    // of what is left.
+    const shared = declareTheDividend(sim);
+    if (shared > 0) {
+      sim.notify({
+        category: 'business',
+        title: `${GROUP.name} Declares A Dividend`,
+        body: `${euros(shared)} to the two shareholders, split by what each of them holds. The group `
+          + `keeps ${euros(retainedByTheGroup())} in the business — a year of the worldwide payroll — `
+          + 'and that reserve is what the film company is funded out of, so the slate isn’t touched '
+          + 'by this. What leaves is the part the business had no use for.',
+        importance: 35,
       });
     }
     const zone = sim.homeZone;
@@ -442,6 +461,55 @@ export function payTheCorporationTax(sim: Simulation): Money {
   return owed;
 }
 
+/** What the group keeps in the business before it distributes anything. */
+export function retainedByTheGroup(): Money {
+  return PAYROLL_A_MONTH_CENTS * RETAINED_MONTHS_OF_PAYROLL;
+}
+
+/**
+ * The group distributes what it is not keeping, to the two people who own it.
+ *
+ * The answer to the hoard, and the reason it was a defect rather than a large
+ * number is in `content/sugar.ts` beside `RETAINED_MONTHS_OF_PAYROLL`: the
+ * group's balance is already read by `sugarCoversThePictures`, which funds the
+ * film company out of `held - KEPT_IN_HAND_CENTS`, so against EUR 2.81bn the one
+ * guard between the slate and the group's floor could never bind.
+ *
+ * Split by the share register rather than evenly, because that is what a dividend
+ * is — `ownerships` says who holds what and the money follows it. The two parents
+ * hold fifty percent each today, so the halves are equal; the day one of them
+ * holds more, this follows without being told.
+ *
+ * Nothing is distributed while the group is at or under what it retains, which is
+ * the whole of the safety in it. A year of the worldwide payroll stays in the
+ * company against a deepest-ever film drawdown of about EUR 10m.
+ */
+export function declareTheDividend(sim: Simulation): Money {
+  const account = sugarAccount(sim);
+  const group = theSugarGroup(sim);
+  if (!account || !group) return 0;
+  const held = sim.universe.accounts[account]?.balance ?? 0;
+  const spare = held - retainedByTheGroup();
+  if (spare <= 0) return 0;
+
+  const holders = group.ownerships.filter((one) => one.holderKind === 'person' && one.percent > 0);
+  const total = holders.reduce((n, one) => n + one.percent, 0);
+  if (holders.length === 0 || total <= 0) return 0;
+
+  let paid = 0;
+  for (const holder of holders) {
+    const purse = purseFor(sim, holder.holderId);
+    if (!purse) continue;
+    // Whole cents, and the last holder takes the rounding, so the group never
+    // distributes a cent more than it has spare.
+    const share = Math.floor(spare * (holder.percent / total));
+    if (share <= 0) continue;
+    sim.transfer(account, purse, share, DIVIDEND_MEMO, 'business');
+    paid += share;
+  }
+  return paid;
+}
+
 /**
  * The seven posts, paid monthly, the way the production company's are.
  *
@@ -644,6 +712,7 @@ export function staffTheGroup(sim: Simulation): Person[] {
         professionalReputation: dial(),
         reliability: dial(),
         industryDemand: 0,
+        prestige: 0,
         controversy: 0,
       },
       careerTrack: 'executive',

@@ -25,7 +25,7 @@ import { MS_DAY } from '@/engine/core/time';
 import { capabilitiesOf, cashAccountFor, projectsOf, parentCompany } from '@/engine/world/company';
 import { MS_WEEK, bookingsFor, howTheMonthWent, stagesOn, theLot, utilisation } from '@/engine/world/lot';
 import {
-  DELIVERY, PLANS, impliedShootWeeks, planById, tightnessOf,
+  DELIVERY, PLANS, impliedShootWeeks, planById, slackOf,
 } from '@/engine/content/making';
 import {
   comesOn, decideSlip, finishesBy, freeAcross, heldUpBy, inProduction, layOut,
@@ -205,8 +205,8 @@ describe('what the money says a schedule should be', () => {
 
   it('reads 1 when the schedule matches the money', () => {
     const weeks = impliedShootWeeks(20_000_000_00);
-    expect(tightnessOf(weeks, 20_000_000_00)).toBeCloseTo(1, 6);
-    expect(tightnessOf(weeks / 2, 20_000_000_00)).toBeCloseTo(0.5, 6);
+    expect(slackOf(weeks, 20_000_000_00)).toBeCloseTo(1, 6);
+    expect(slackOf(weeks / 2, 20_000_000_00)).toBeCloseTo(0.5, 6);
   });
 });
 
@@ -464,21 +464,21 @@ describe('walking the calendar', () => {
 
 describe('running over', () => {
   it('slips further the harder the schedule was cut', () => {
-    const roomy = decideSlip({ tightness: 1.2, weeks: 8 }, 0.5);
-    const matched = decideSlip({ tightness: 1, weeks: 8 }, 0.5);
-    const squeezed = decideSlip({ tightness: 0.6, weeks: 8 }, 0.5);
+    const roomy = decideSlip({ slack: 1.2, weeks: 8 }, 0.5);
+    const matched = decideSlip({ slack: 1, weeks: 8 }, 0.5);
+    const squeezed = decideSlip({ slack: 0.6, weeks: 8 }, 0.5);
     expect(roomy.days).toBeLessThanOrEqual(matched.days);
     expect(matched.days).toBeLessThan(squeezed.days);
   });
 
   it('slips further on a long shoot than a short one', () => {
-    expect(decideSlip({ tightness: 0.7, weeks: 20 }, 0.5).days)
-      .toBeGreaterThan(decideSlip({ tightness: 0.7, weeks: 4 }, 0.5).days);
+    expect(decideSlip({ slack: 0.7, weeks: 20 }, 0.5).days)
+      .toBeGreaterThan(decideSlip({ slack: 0.7, weeks: 4 }, 0.5).days);
   });
 
   it('says why, and says something different when the schedule was the problem', () => {
-    expect(decideSlip({ tightness: 0.5, weeks: 10 }, 0.9).because).toContain('short of what the picture costs');
-    expect(decideSlip({ tightness: 1.05, weeks: 10 }, 0.9).because).toContain('ordinary attrition');
+    expect(decideSlip({ slack: 0.5, weeks: 10 }, 0.9).because).toContain('short of what the picture costs');
+    expect(decideSlip({ slack: 1.05, weeks: 10 }, 0.9).because).toContain('ordinary attrition');
   });
 
   it('moves post and the delivery date with it, not just wrap', () => {

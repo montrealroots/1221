@@ -32,8 +32,10 @@ import { FINDINGS } from './content/trouble';
 import { decideTake, type Prospects } from './world/selling';
 import { DEALS } from './content/selling';
 import { decideHire, standingReads, type Hiring } from './world/crew';
+import { AWARDABLE, IN_THE_CONVERSATION, NOTICED } from './content/awards';
 import {
-  believedAt, decideOffer, reachOfBand, readOn, sheetFor, sparkBetween, sparkReads, whatItWants,
+  ON_THE_BOARD, believedAt, decideOffer, reachOfBand, readOn, sheetFor, sparkBetween, sparkReads,
+  whatItWants,
   type Offer,
 } from './world/casting';
 import {
@@ -63,7 +65,7 @@ interface Sky { sim: Simulation; cityId: string; instant: number }
 
 defineDecider<Sky, string>({
   id: 'weather.day',
-  decides: 'What the sky does in one city on one day.',
+  decides: 'The sky over one city on one day.',
   drawnIn: 'src/engine/systems/weather.ts',
   draws: ['weather', 'weather-hours'],
   reads: {
@@ -265,6 +267,14 @@ defineDecider<Quota, string>({
     roll: (q, t) => ({ ...q, roll: t }),
   },
   sample: (seed) => ({ was: seed % 2 === 0 ? 0 : 90_000, shutRunning: seed % 3, roll: (seed % 7) / 7 }),
+  ladder: ['shut', 'open'],
+  // Both directions are read straight off the two comments above, which is the
+  // method: declare what the model says it does, and let the sweep say whether it
+  // does it. A bigger quota last year makes an open year more likely because last
+  // year is the honest majority of the answer, and a longer run of shut years
+  // builds pressure to reopen. `roll` is left undeclared — it is the political
+  // decision the game admits it cannot model, and a draw owes no direction.
+  rises: { lastYear: 'up', shutRunning: 'up' },
   decide: ({ was, shutRunning, roll }) => {
     const answer = decideQuota(was, shutRunning, roll);
     return answer.tonnes === 0 ? 'shut' : 'open';
@@ -322,15 +332,28 @@ defineDecider<Squeeze, string>({
   decides: 'How many days past wrap a shoot runs.',
   drawnIn: 'src/engine/world/making.ts',
   reads: {
-    // How far the schedule was cut below what the budget says the picture
-    // takes. This is the read that matters: an overrun is mostly a decision
-    // somebody made months earlier, not weather.
-    tightness: (sq, t) => ({ ...sq, tightness: 0.45 + t * 0.85 }),
+    // How much room the schedule has against what the budget says the picture
+    // takes: the weeks given divided by the weeks the money implies, so 1 is
+    // matched, 0.6 is a squeeze and 1.2 has room in it. This is the read that
+    // matters, because an overrun is mostly a decision somebody made months
+    // earlier and not weather.
+    slack: (sq, t) => ({ ...sq, slack: 0.45 + t * 0.85 }),
     // And how long the shoot is, because a twenty-week picture has four times
     // as many chances to lose a day as a five-week one.
     weeks: (sq, t) => ({ ...sq, weeks: Math.round(2 + t * 22) }),
   },
-  sample: (seed) => ({ tightness: 0.5 + (seed % 8) * 0.1, weeks: 3 + (seed % 12) * 2 }),
+  sample: (seed) => ({ slack: 0.5 + (seed % 8) * 0.1, weeks: 3 + (seed % 12) * 2 }),
+  ladder: ['on schedule', 'a few days over', 'a week or two over', 'badly over'],
+  // `slack` rises **down**, and finding that out is what this check was built
+  // for. The number was called `tightness` and the comment above it said "how far
+  // the schedule was cut below what the money implies", both of which say a higher
+  // value is a worse schedule. It is the opposite: the value is `weeks /
+  // impliedShootWeeks`, so a higher one has more room in it and runs over less.
+  // The model was right the whole time and read backwards to everybody, including
+  // to the first version of this declaration, which said 'up' and failed in all
+  // twelve worlds. `weeks` genuinely rises up: a longer shoot has more weeks in
+  // which to lose a day.
+  rises: { slack: 'down', weeks: 'up' },
   decide: (squeeze) => {
     const days = decideSlip(squeeze, ((squeeze.weeks * 7 + 3) % 11) / 11).days;
     if (days === 0) return 'on schedule';
@@ -398,7 +421,7 @@ defineDecider<Review, string>({
 
 defineDecider<Prospects, string>({
   id: 'selling.take',
-  decides: 'What a finished picture takes across ten years.',
+  decides: 'A finished picture’s take across ten years.',
   drawnIn: 'src/engine/world/selling.ts',
   reads: {
     // What it cost, because scale buys audience — sublinearly, but it buys it.
@@ -426,6 +449,14 @@ defineDecider<Prospects, string>({
     cast: { truth: 35 + (seed % 5) * 9, reads: 40 + (seed % 4) * 8 },
     controversy: (seed % 3) * 12,
   }),
+  ladder: ['never earns it back', 'earns its cost back', 'a real hit', 'a phenomenon'],
+  // `budget` rises **down**, and that is the whole point of declaring these.
+  // Scale buys audience sublinearly, so a bigger picture takes more money and a
+  // smaller multiple of what it cost — which is the band this decider answers in.
+  // Written the way it sounds, `budget: 'up'`, it would pass every other check in
+  // the build. `deal` is not declared: `DEALS` is ordered by shape, not by what it
+  // pays, so there is no honest direction to claim along it.
+  rises: { budget: 'down', cast: 'up', conduct: 'down' },
   decide: (prospects) => {
     const roll = ((prospects.negativeCents / 100_000) % 13) / 13;
     const took = decideTake(prospects, roll).cents;
@@ -466,6 +497,14 @@ defineDecider<Hiring, string>({
     negativeCents: (1_000_000 + (seed % 7) * 5_000_000) * 100,
     head: seed % 2 === 0,
   }),
+  // The ladder is the standing half of the answer, because that is the half with
+  // an order in it. `returning` is deliberately not declared: it moves the other
+  // half of the outcome — whether the person has worked here before — and better
+  // and more-familiar are two different axes, not two ends of one. A decider gets
+  // one ladder, so an input that pushes along a different axis owes no direction.
+  ladder: ['unproven', 'solid', 'sought after', 'the best in the country'],
+  // Money reaches further, and a head is drawn from a shallower, better pool.
+  rises: { budget: 'up', head: 'up' },
   decide: (hiring) => {
     const roll = ((hiring.negativeCents / 1_000) % 17) / 17;
     const answer = decideHire(hiring, roll);
@@ -514,6 +553,17 @@ defineDecider<Asking, string>({
     },
     roll: ((seed * 7) % 13) / 13,
   }),
+  // Passing is the bottom, a counter is the middle, taking it is the top. Which
+  // reason they passed on is not a rung — every pass is the same answer to the
+  // question this decider asks — so the ladder matches on the stem.
+  ladder: ['they pass on', 'their people name a number', 'they take it'],
+  // Money up and clear dates up push toward yes. `demand` pushes **down**: the
+  // more wanted somebody is, the more the same part is an insult rather than a
+  // break, which is the sentence in the comment above turned into a claim a sweep
+  // can refuse. `size` and `draw` are left off — `size` cuts both ways in the
+  // model by design (a bigger part is more attractive and more of a commitment)
+  // and a draw owes no direction.
+  rises: { money: 'up', dates: 'up', demand: 'down' },
   decide: ({ offer, roll }) => {
     const answer = decideOffer(offer, roll);
     if (answer.took) return 'they take it';
@@ -848,6 +898,101 @@ defineDecider<Wanted, string>({
   },
 });
 
+/**
+ * Whether a year notices a picture, which is a judgement and is declared as one.
+ *
+ * The draw carries a quarter of it and that quarter is the honest part. Awards are
+ * decided by people watching things, and a model that made the outcome a pure
+ * function of what is on the screen would be claiming to know how a jury votes —
+ * which is a stronger claim than any game is entitled to. The other three quarters
+ * are the cast and the form, both of which the player chose.
+ */
+defineDecider<{ onScreen: number; form: number; draw: number }, string>({
+  id: 'awards.noticed',
+  decides: 'Whether the year’s judgement notices a finished picture.',
+  drawnIn: 'src/engine/world/awards.ts',
+  reads: {
+    // What is on the screen, off the cast's real reads rather than the believed
+    // ones — a voting body has seen the picture.
+    onScreen: (p, t) => ({ ...p, onScreen: t * 100 }),
+    // Which form it is. A feature and a commercial are not judged against each
+    // other, and the money is deliberately not a term at all.
+    form: (p, t) => ({ ...p, form: t }),
+    // And the jury.
+    draw: (p, t) => ({ ...p, draw: t }),
+  },
+  sample: (seed) => ({
+    onScreen: 30 + (seed % 7) * 10,
+    form: AWARDABLE_FORMS[seed % AWARDABLE_FORMS.length] ?? 1,
+    draw: ((seed * 3) % 11) / 11,
+  }),
+  ladder: [
+    'not in the conversation', 'in the conversation', 'one of the year’s',
+    'the one everybody expects to win',
+  ],
+  // All three up, and all three declarable because the weighting is a stated
+  // blend rather than a hidden one: `NOTICED` gives the cast 0.55, the form 0.2
+  // and the jury 0.25, and every term is added. The draw is declared here where
+  // it was not on `sugar.quota`, because a quarter weight on a term that is added
+  // is a direction — a kinder jury notices more — where a political decision
+  // about a quota is not.
+  rises: { onScreen: 'up', form: 'up', draw: 'up' },
+  decide: ({ onScreen, form, draw }) => {
+    const at = Math.max(0, Math.min(100, Math.round(
+      onScreen * NOTICED.cast + form * 100 * NOTICED.form + draw * 100 * NOTICED.draw,
+    )));
+    if (at < IN_THE_CONVERSATION) return 'not in the conversation';
+    if (at < 60) return 'in the conversation';
+    if (at < 75) return 'one of the year’s';
+    return 'the one everybody expects to win';
+  },
+});
+
+const AWARDABLE_FORMS = Object.values(AWARDABLE);
+
+
+/**
+ * Who a format season is offered, which is a different draw from who reads for a
+ * part and had to be its own entry.
+ *
+ * `casting.seen` above is about a band buying a standard of performer: the money
+ * decides the spread and the draw places one submission in it. A cast board is not
+ * bought — the contributors are civilians on a stipend, and what varies between
+ * one pool and another is not how good they are at anything. It is whether the
+ * twelve people available are people an audience would watch, and whether any of
+ * them is already trouble.
+ *
+ * So the outcome reported is the shape of the pool rather than the quality of one
+ * person, because that is what the choice is made out of.
+ */
+defineDecider<{ draw: number }, string>({
+  id: 'casting.board',
+  decides: 'Who is around to be put on a format season’s cast board.',
+  drawnIn: 'src/engine/world/casting.ts',
+  reads: {
+    // The only input. There is no band to read: a format does not buy a standard
+    // of contributor, it sees who is around.
+    draw: (p, t) => ({ ...p, draw: t }),
+  },
+  sample: (seed) => ({ draw: ((seed * 7) % 13) / 13 }),
+  decide: ({ draw }) => {
+    let n = draw;
+    const next = (): number => { n = (n * 9301 + 49297) % 1; return Math.abs(n * 233280 % 1); };
+    // Twelve of them, which is a board's worth, read for the two things a format
+    // is cast on.
+    let appeal = 0;
+    let trouble = 0;
+    for (let i = 0; i < ON_THE_BOARD; i += 1) {
+      appeal += 10 + next() * 85;
+      if (next() < 0.25) trouble += 1;
+    }
+    const mean = appeal / ON_THE_BOARD;
+    const said = mean < 40 ? 'nobody the country would watch'
+      : mean < 60 ? 'a watchable dozen'
+        : 'people who would carry a season';
+    return `${said}, ${trouble === 0 ? 'none of them trouble' : `${trouble} already trouble`}`;
+  },
+});
 const WANTS = new Map<number, Simulation>();
 function wantsFor(seed: number): Simulation {
   const held = WANTS.get(seed);

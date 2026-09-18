@@ -29,6 +29,7 @@ import {
   OVERHEAD_FLOOR_CENTS, THE_RATE_CARD,
 } from '@/engine/content/lot';
 import { GROUP, GROUP_PROFIT_CENTS, ORGANIC_SHARE_OF_WORLD, QUOTA, profitAfterQuota } from '@/engine/content/sugar';
+import { purseFor } from '@/engine/world/money';
 import { quotaYears, decideQuota } from '@/engine/world/sugar';
 import { quickSave, validateUniverse } from '@/engine';
 import type { Simulation } from '@/engine';
@@ -45,7 +46,8 @@ import {
 import { OVERHEAD, SMALL_STAGE_COST_CENTS } from '@/engine/content/lot';
 import { buildAStage, chargeThePosts } from '@/engine/world/lot';
 import {
-  aDayOfSugar, payTheBoard, payTheCorporationTax, payTheGroupPosts, profitThisYear,
+  aDayOfSugar, declareTheDividend, payTheBoard, payTheCorporationTax, payTheGroupPosts, profitThisYear,
+  retainedByTheGroup,
   sugarAccount, sugarCoversThePictures,
   EMPLOYER_TAX_MEMO, GOODS_MEMO, PAYROLL_MEMO, SALES_MEMO, aPayday,
 } from '@/engine/world/sugar';
@@ -54,7 +56,8 @@ import {
   EMPLOYER_TAX_A_DAY_CENTS, EMPLOYER_TAX_A_MONTH_CENTS, GROUP_OPENING_BALANCE,
   GROUP_REGISTRIES, GROUP_ROLES, WAGES_A_MONTH_CENTS, A_MONTH_OF_DAYS, PAYROLL_A_MONTH_CENTS,
   PAYROLL_A_DAY_CENTS,
-  GROUP_POSTS_A_MONTH_CENTS, KEPT_IN_HAND_CENTS, PROFIT_A_DAY_CENTS, REVENUE_A_DAY_CENTS,
+  GROUP_POSTS_A_MONTH_CENTS, KEPT_IN_HAND_CENTS, PROFIT_A_DAY_CENTS, RETAINED_MONTHS_OF_PAYROLL,
+  REVENUE_A_DAY_CENTS,
   TRYGGINGAGJALD,
 } from '@/engine/content/sugar';
 import { VAT_MEMO, boughtWithVat, reclaimable, whereTheVatStands } from '@/engine/world/vat';
@@ -73,7 +76,7 @@ import {
   whyNotStepAside,
   runTheClock,
   seatHeldBy, whyNotTakeIt,
-  signaturesOf, theSugarGroup,
+  signaturesOf, signedWith, theSugarGroup,
   whereItStands,
 } from '@/engine/world/company';
 
@@ -1361,6 +1364,70 @@ describe('everything else it takes to run a company, which the group did not hav
     expect(payTheCorporationTax(shut)).toBeLessThan(payTheCorporationTax(open));
   });
 
+
+  it('distributes what it is not keeping, so the hoard stops being unreachable', () => {
+    // THE HOARD WAS A DEFECT AND NOT A BIG NUMBER, and what made it one is a check
+    // that already existed. `sugarCoversThePictures` funds the film company out of
+    // `held - KEPT_IN_HAND_CENTS`, so the group's balance already decides whether
+    // the pictures get money — and measured over twenty-five played years the group
+    // ended holding EUR 2.81bn, against which that guard could never bind. The one
+    // thing standing between the slate and the group's floor was a formality.
+    const sim = world('group-dividend');
+    const account = sugarAccount(sim)!;
+    const group = theSugarGroup(sim)!;
+    const holders = group.ownerships.filter((one) => one.holderKind === 'person');
+    expect(holders.length, 'the group should be held by people').toBeGreaterThan(0);
+
+    // Nothing to distribute while the group is at or under what it retains, which
+    // is the whole of the safety in it.
+    expect(declareTheDividend(sim), 'distributed out of a reserve it has not reached').toBe(0);
+
+    const spare = 500_000_000_00;
+    sim.income(account, retainedByTheGroup() + spare - sim.universe.accounts[account]!.balance,
+      'A year of cane, for this test', 'business');
+    // Resolved through `purseFor`, which opens an account for somebody who has
+    // none — the family generator writes people and gives nobody a purse. Reading
+    // `primaryAccountId` here instead measured accounts that did not exist yet,
+    // so the sum below was nought against a dividend of half a billion.
+    const purses = holders.map((one) => purseFor(sim, one.holderId)!).filter(Boolean);
+    const before = purses.map((id) => sim.universe.accounts[id]!.balance);
+
+    const paid = declareTheDividend(sim);
+    expect(paid, 'nothing was distributed with half a billion spare').toBeGreaterThan(0);
+    expect(paid, 'it distributed more than it had spare').toBeLessThanOrEqual(spare);
+    // What is left is the reserve, to the cent it could not split.
+    expect(sim.universe.accounts[account]!.balance).toBe(retainedByTheGroup() + (spare - paid));
+    // And it landed on the people who own it, split by what they hold.
+    const after = purses.map((id) => sim.universe.accounts[id]!.balance);
+    for (const [i, was] of before.entries()) expect(after[i]!).toBeGreaterThan(was);
+    expect(after.reduce((n, one) => n + one, 0) - before.reduce((n, one) => n + one, 0)).toBe(paid);
+    expect(sim.ledger.audit()).toEqual([]);
+  });
+
+  it('keeps a year of the payroll, which is what the pictures are funded out of', () => {
+    // The owner's instruction is that the film company can never run out of money,
+    // so the reserve is the part of this that matters. A year of the worldwide
+    // payroll stays in the business against a deepest-ever film drawdown of about
+    // EUR 10m — the reserve covers the worst call the slate has ever made on it
+    // eight times over.
+    expect(retainedByTheGroup()).toBe(PAYROLL_A_MONTH_CENTS * RETAINED_MONTHS_OF_PAYROLL);
+    expect(retainedByTheGroup(), 'a reserve this thin would put the slate at risk')
+      .toBeGreaterThan(50_000_000_00);
+
+    // Measured rather than asserted: twenty-five played years of a company running
+    // the pipeline, with the dividend live. The group ends on EUR 142m instead of
+    // EUR 2.81bn, and the film company is untouched — 36 greenlit, 34 delivered,
+    // and never a week under water. This is the cheap version of that check.
+    const sim = world('group-dividend-slate');
+    const account = sugarAccount(sim)!;
+    sim.advanceTo(sim.now + 3 * 365 * 24 * 60 * 60 * 1000);
+    expect(sim.universe.accounts[account]!.balance, 'the group went under its own reserve')
+      .toBeGreaterThanOrEqual(retainedByTheGroup());
+    // And the pictures can still be funded out of what is left, which is the guard
+    // that used to be unreachable and now is not.
+    expect(sim.universe.accounts[account]!.balance - KEPT_IN_HAND_CENTS)
+      .toBeGreaterThan(20_000_000_00);
+  });
   it('pays the employer’s own contribution, which no company here ever had', () => {
     // Tryggingagjald: 6.35%, real, named in a comment in `content/tax.ts` that
     // was right about where it does not belong — a wage somebody takes home —
@@ -2031,21 +2098,74 @@ describe('a company that stops being a company', () => {
     expect(vat.nextDueAt).toBeGreaterThan(due);
   });
 
-  it('never ends a guild signature, and that was decided rather than forgotten', () => {
-    // Every other thing that ends here ends on a date it already carried. A
-    // signature carries a deposit and nothing else, because that is what it is —
-    // you are signatory until you breach, not until a year is up. And the hazard
-    // is named on the field itself: the day a guild can pull a signature is the
-    // day Global Rule One starts biting backwards on a cast already seated.
-    // Asserted against the source, because the claim is that nothing writes it —
-    // which no amount of advancing a save can prove and one grep can.
+  it('ends a guild signature only when the company holding it stops existing', () => {
+    // THIS TEST USED TO ASSERT THE OPPOSITE AND WAS RIGHT TO. It read "never ends
+    // a guild signature, and that was decided rather than forgotten", and pinned
+    // the source to prove `signature.endedAt` had no writer at all.
+    //
+    // The half of that reasoning that survives is the important half: a signature
+    // has no term and does not renew, because you are signatory until you breach
+    // and not until a year is up. What was missing was not a clock. **An agreement
+    // is with a legal entity, and a struck-off entity is not one.** Every other
+    // breach this build might have detected was checked and is unreachable — a cast
+    // fee is paid the moment somebody is cast, so nobody is ever owed, and `feeFor`
+    // floors at collective scale, so nobody is ever paid under a minimum.
+    //
+    // So there are still exactly two writers and neither is a term.
     const engine = readFileSync('src/engine/world/company.ts', 'utf8');
-    // The only writer of `endedAt` anywhere in the engine is the registration one
-    // added alongside this. If a second appears on a signature, this says so.
     const writers = [...engine.matchAll(/(\w+)\.endedAt\s*=/g)].map((one) => one[1]);
-    expect(writers).toEqual(['registration']);
+    expect(writers, 'a signature grew a clock of its own').toEqual(['registration', 'signature']);
     const signatures = readFileSync('src/engine/domain/company.ts', 'utf8');
-    expect(signatures, 'the reason it has no clock should be written down')
+    expect(signatures, 'the reason it has no term of its own should still be written down')
       .toMatch(/signatory until you breach/);
+  });
+
+  it('pulls the American agreements when the arm comes off Delaware', () => {
+    // The whole chain, which is the thing worth testing rather than the field.
+    // Nobody answers for the company, so nobody signs the annual returns; the
+    // Delaware filing goes unsigned like the Icelandic one; the arm comes off the
+    // register; and SAG-AFTRA's agreement ends with the entity that held it.
+    //
+    // `us_state` was the one registration in the build that could never come due,
+    // because the filing loop compared against the parent company's id and the arm
+    // is a different company. It files every twelve months and nothing ever asked.
+    const sim = world('guild-pulled');
+    theyCanAffordIt(sim, 5_000_000_00);
+    expect(run(sim, 'company.form_arm', {}).ok).toBe(true);
+    expect(run(sim, 'company.sign', { guild: 'sag_aftra' }).ok).toBe(true);
+
+    const arm = americanArm(sim.universe)!;
+    const delaware = registrationsOf(sim.universe, arm.id).find((one) => one.registry === 'us_state');
+    expect(delaware, 'forming the arm is the Delaware filing, so there should be one').toBeDefined();
+    const signature = signaturesOf(sim.universe).find((one) => one.guild === 'sag_aftra')!;
+    expect(signature.endedAt).toBeUndefined();
+    expect(signedWith(sim.universe, 'sag_aftra')).toBeDefined();
+
+    emptyTheChair(sim);
+    sim.advanceTo(sim.now + 430 * DAY);
+
+    expect(delaware!.endedAt, 'the arm’s own filing never came due').toBeDefined();
+    expect(signature.endedAt, 'the agreement outlived the company that held it').toBeDefined();
+    expect(signature.endedAt).toBe(delaware!.endedAt);
+    // `signedWith` reads through `signaturesOf`, which filters on `endedAt` — the
+    // guard that had no reachable input until now.
+    expect(signedWith(sim.universe, 'sag_aftra'), 'still signatory to a pulled agreement')
+      .toBeUndefined();
+    expect(sim.universe.notifications.some((one) => one.title.includes('Pulls The Agreement'))).toBe(true);
+
+    // And it bites backwards, which `domain/company.ts` warned it would and which
+    // is the correct outcome rather than a regrettable one.
+    expect(doorFor(sim, 'employ_americans').can, 'Americans are still employable').toBe(false);
+  });
+
+  it('leaves an Icelandic collective agreement alone, because nobody signs one', () => {
+    // `is_actors` and `is_crew` are `signable: false` — coverage is automatic
+    // because you employ people here — so there is no agreement for a strike-off
+    // to pull and nothing should pretend there is.
+    const sim = world('guild-collective');
+    emptyTheChair(sim);
+    sim.advanceTo(sim.now + 430 * DAY);
+    expect(signaturesOf(sim.universe).filter((one) => one.guild === 'is_actors')).toHaveLength(0);
+    expect(run(sim, 'company.sign', { guild: 'is_actors' }).ok).toBe(false);
   });
 });

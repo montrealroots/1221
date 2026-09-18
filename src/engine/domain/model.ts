@@ -102,19 +102,31 @@ export interface Reputation {
   /** Whether producers believe you will finish the job, 0-100. */
   reliability: number;
   /**
-   * There was an awards-and-critics standing here and it is gone.
+   * What the industry's own judgement of the work has come to, 0-100.
    *
-   * `prestige` was written for 87 of the 146 people in a played save and read
-   * by no system, no screen decision and no rule — writers and no readers,
-   * which is the one shape The One Rule has no name for. The player's own held
-   * nought for twenty-five years, which is why `tools/dials.mjs` counted it.
+   * This was here, was deleted, and is back — and the round trip is the whole
+   * reason the field is worth trusting now. It was written for 87 of the 146
+   * people in a played save and read by no system, no screen decision and no
+   * rule: writers and no readers, which is the one shape The One Rule has no
+   * name for. The player's own held nought for twenty-five years.
    *
-   * It came out rather than getting a reader, on the audit trail's precedent:
-   * the design is not lost, it is written down in `docs/AWARDS.md` with what it
-   * would cost and what it would be worth, and the honest place to rebuild it
-   * is the day there is a screen that asks for one. `controversy` below is the
-   * half that stayed, because two live mechanisms already read it.
+   * It came out rather than getting a reader, on the precedent of the audit
+   * trail, and the design went to `docs/AWARDS.md` with what it would cost and
+   * what it would be worth. That document's own instruction was that piece three
+   * — giving prestige a reader — must not be skipped, "because piece two on its
+   * own produces exactly the defect this document opens by describing".
+   *
+   * So it comes back with two readers written in the same commit. `remembersYou`
+   * takes it as a fourth term beside fame, rooms read and reliability, so an
+   * office that has never met you has heard of the work. And the sale prices it,
+   * because a picture people are going to talk about is worth more to a buyer
+   * than one they are not.
+   *
+   * It decays, for the same reason `controversy` below had to: a career is a
+   * thing you keep having, and a number that only ever rises is the ratchet this
+   * project has now found five times.
    */
+  prestige: number;
   /** How many people currently want to hire you, 0-100. */
   industryDemand: number;
   /** Active negative attention, 0-100. Decays slowly. */
@@ -179,8 +191,13 @@ export interface Person {
   personality: Personality;
   interests: string[];
   /**
-   * Genres they love. On the character sheet because a person has them;
-   * nothing in the simulation reads one to decide anything.
+   * Genres they love. On the character sheet because a person has them.
+   *
+   * Two places in the engine touch the list and neither decides anything with
+   * it: `bootstrap` copies the player's answer onto the person at creation, and
+   * `core/taste.ts` is the door every system would go through to read it. Nothing
+   * goes through that door yet — `affinity` is written and tested and has no
+   * caller, because the questions it answers need somebody else to ask about.
    */
   genres?: string[];
   /**
@@ -253,8 +270,9 @@ export interface Person {
    * player: SLATE never asks it of anybody else and never guesses it from a
    * name, a country or a city.
    *
-   * It carries no attribute, no skill, no advantage and no penalty. Nothing in
-   * the simulation reads it, and nothing should: it is on the character sheet
+   * It carries no attribute, no skill, no advantage and no penalty. `bootstrap`
+   * copies what the player said onto the person and that is the last thing in the
+   * engine to touch it, and nothing else should: it is on the character sheet
    * because a person has one, not because the game does anything with it.
    */
   raceEthnicity?: readonly string[];
@@ -615,7 +633,7 @@ export interface Preferences {
  * A save from 76 or earlier has no company at all, which reads correctly as a
  * family that never formed one rather than as a broken save.
  */
-export const SAVE_SCHEMA_VERSION = 81;
+export const SAVE_SCHEMA_VERSION = 83;
 
 export interface SaveMeta {
   id: Id;
@@ -871,4 +889,29 @@ export interface SaveUniverse {
    * disappearing silently. Capped: this is a symptom log, not history.
    */
   engineFailures: { at: Instant; kind: string; error: string }[];
+
+  /**
+   * What the game has already explained to this player, and whether to go on.
+   *
+   * Optional because every save written before schema 83 has none, and `migrate`
+   * creates an empty one rather than this being read with a fallback in thirty
+   * places. A save that has never had the teaching on looks identical to one that
+   * has dismissed it on its first week, which is correct: neither has been told
+   * anything and only one of them wants to be.
+   */
+  tutorial?: Tutorial;
+}
+
+/**
+ * The teaching's whole state. Two fields, and both are the player's.
+ *
+ * `seen` is a map rather than a list so that the date a lesson was given is kept —
+ * the screen shows when each one arrived, and a lesson is never repeated on the
+ * strength of it being missing from an array somebody filtered wrongly.
+ */
+export interface Tutorial {
+  /** Lesson id to the instant it was given. */
+  seen: Record<string, Instant>;
+  /** Whether the player has switched the teaching off. */
+  dismissed: boolean;
 }

@@ -335,6 +335,52 @@ lot look busier than the premise says, and repricing them would have been tuning
 the economy to hide it — so do neither.
 
 
+### The four open items are closed, and none of them was what it looked like
+
+All four of the things this page listed as deliberately open are built, each with
+tests and mutation checks, in commits `2f5051d`, `0bb4850`, `ec90b31` and
+`f311912`. What is worth reading is that **every one of them turned out to be a
+different shape than the entry describing it**, and in three cases the entry was
+understating the defect rather than overstating it.
+
+**Guild signatures never lapsed.** The half of the old reasoning that survived is
+that a signature has no term: you are signatory until you breach, not until a year
+is up, so a renewal would have invented the mechanic. What was missing was never a
+clock. **An agreement is with a legal entity and a struck-off entity is not one.**
+Every other breach was checked first and every one is unreachable — a cast fee is
+paid the moment somebody is cast, and `feeFor` floors at collective scale, so
+nobody is ever owed and nobody is ever underpaid. Finding the cause exposed a
+second defect: `us_state`, the Delaware filing, was the one registration in the
+build that could never come due, because the filing loop compared against the
+parent company's id and the arm is a different company.
+
+**The hoard was a defect and not a big number.** `sugarCoversThePictures` funds the
+film company out of `held - KEPT_IN_HAND_CENTS`, so the group's balance already
+decided whether the pictures get money — and against EUR 2.81bn that guard could
+never bind. The group retains a year of the worldwide payroll and distributes the
+rest to the two people who own it: balance down to EUR 142m, the film company
+untouched at 36 greenlit and no week under water, and each parent ending on about
+EUR 700m where `settleTheReturn` taxes it.
+
+**The contributor cast board was recorded here as an inventory line and was not
+one.** An unscripted season carries no roles, so `castOf` returns nothing, so **all
+five cast terms the sale reads came back undefined**. A third of every career's
+pictures were sold on the negative and the deal alone. Three of the five read the
+board now; `truth` and `reads` stay undefined because they ask what the written
+part wanted and a format has none.
+
+**Awards were specified and are built**, all three pieces, with the spec's own
+instruction followed — prestige came back with two readers in the same commit as
+its writers. `askFor` is refused with its number written down. The ceremony is
+still refused.
+
+**And the thing to carry forward from all four.** The awards build moved prestige
+for the company's pictures and never for the player's own work, because a played
+career acts for other people and those productions are `Booking` rows with no cast
+records. `tools/dials.mjs` caught it in one run. **The instruments are now the
+thing that finds defects here, and they have earned that twice in a day** — the
+derelict house and this. Run them.
+
 ### And where it actually stands now — read this before picking anything up
 
 **Both ledgers are verdicted through and neither has an open defect in it.**
@@ -390,19 +436,40 @@ pictures greenlit on two seeds, 34 and 35 delivered, no week under water, the
 group holding EUR 2.81bn and EUR 2.86bn against a year's profit of EUR 128m and
 EUR 152m.
 
-### The PR is open
+### The PR is merged, and `main` is this work
 
-**[#15](https://github.com/yvcbcjhsy7-prog/1221/pull/15)**, against `main`, OPEN
-and MERGEABLE. 118 commits by `git`, of which GitHub lists the first hundred; 126
-files, +30,617 −2,621. The body is `~/slate-backup/PR-BODY.md`, which is carried
-here and kept level with the branch.
+**[#15](https://github.com/yvcbcjhsy7-prog/1221/pull/15) is MERGED**, on the
+owner's instruction, as a merge commit rather than a squash — all 118 commit
+messages survive in `main`'s history, which matters on this project because
+several of them are the only place a measurement is written down. 126 files,
++30,617 −2,621. The merge commit is `d61c88a`.
 
-**How `gh` got onto this machine, because the next account will need it too.**
-`winget install --id GitHub.cli` ran for ten minutes and printed nothing, so it
-was not waited for. What worked is the portable route and it needs no installer
-and no elevation: the `gh_*_windows_amd64.zip` from the `cli/cli` releases,
-extracted to `%LOCALAPPDATA%\gh-cli`, with `%LOCALAPPDATA%\gh-cli\bin` appended
-to the **user** PATH. `gh --version` reports 2.101.0.
+**`main`'s tree is byte-identical to the branch tip it merged**, checked with
+`git rev-parse origin/main^{tree}` against `42f963d^{tree}`, so the gate run on
+that tip — exit 0, 1,376 tests — is the gate for `main` and did not need repeating.
+
+The branch was **not** deleted and is one commit ahead of `main` again with this
+paragraph on it, which is the state the three merges before this one left too.
+Local `main` has been fast-forwarded to `d61c88a`, so the staleness trap recorded
+below no longer applies to this clone. The stash and the single worktree are
+untouched.
+
+**`gh` is installed by winget, at `C:\Program Files\GitHub CLI\`, on the machine
+PATH.** Version 2.101.0. `winget upgrade` maintains it, which is the reason it is
+the copy that survived.
+
+That is worth two sentences of history, because the obvious conclusion from
+watching it was the wrong one. `winget install --id GitHub.cli --silent
+--disable-interactivity` printed **nothing at all for over ten minutes** — no
+progress, no download line — so it looked hung and was left running while the
+portable route went ahead: the `gh_*_windows_amd64.zip` from the `cli/cli`
+releases, extracted to `%LOCALAPPDATA%\gh-cli`. That worked immediately and is
+still the fallback worth knowing, since it needs no installer and no elevation.
+
+Then winget finished, exit 0, after about twenty-two minutes. So both were
+installed, both on PATH, same version. The portable copy and its user-PATH entry
+have been removed, leaving one `gh` that updates itself. **It was slow, not
+broken** — if you run it, give it half an hour before concluding anything.
 
 **And how it is authenticated, which is the part with a trap in it.** There is no
 `gh` login on this machine and `gh auth login --with-token` refuses the token that
@@ -427,7 +494,7 @@ to pull in and the branch is clean against it.
 
 ### The commits
 
-**Branch `claude/slate-cleanup-e4apmx` is 49 commits past `dc52d64`.** Gate exit 0 on every one of them before it was committed — **1,361 tests over 47 files** at the latest. One section per commit, each independently droppable. The nine numbered sections are the first pass; the remainder pass, the sugar company and everything in "After the fee" below follow them.
+**Branch `claude/slate-cleanup-e4apmx` is 60 commits past `dc52d64`, and 7 past the `d61c88a` merge.** Gate exit 0 on every one of them before it was committed — **1,400 tests over 50 files** at the latest. One section per commit, each independently droppable. The nine numbered sections are the first pass; the remainder pass, the sugar company and everything in "After the fee" below follow them.
 
 **`docs/UNWIRED.json` now reads nought on every row.** It was a ratchet with seven baselines above zero — id namespaces, trait modifier keys, higher-is-worse guards, dials nothing moves, personality axes nothing consults, save tables nothing fills, draw streams no decider owns — and every one of them is now at nought. It is still a ratchet and it still may not rise, so the next thing that adds a declared word with no reader will fail the gate rather than raise a floor.
 
@@ -473,6 +540,129 @@ to pull in and the branch is clean against it.
 - `universe.history` has **one writer** (the sleep command) and holds **nought rows** after twenty-five played years, because a career that only acts never presses Sleep. No screen reads it. The audit trail's shape, with a writer that works.
 - `core.autocrlf=false` is set **local to this repo only**; the system default is untouched. Without it `voice-check` miscounts by one and the gate fails on a CRLF artifact.
 - Git identity is set repo-locally to `Claude <noreply@anthropic.com>`, matching all 87 prior commits.
+
+---
+
+# WHERE THE BUILD IS — 2026-09-18
+
+**Schema 83. Gate exit 0 at 1,432 tests over 50 files, 17 checks.** Branch
+`claude/slate-cleanup-e4apmx`, latest `850c4d9`.
+
+## What the last phase added, and what each instrument caught
+
+**Monte Carlo (`tools/monte.mjs`).** 576 careers played and checked — 480 of five
+years and 96 of twenty-five — across 2,400 simulated years. Eight named invariants
+at every year boundary of every career: no-throw, ledger-balances,
+structurally-valid, all-finite, clock-forward, in-range, round-trips, deterministic.
+**Nought failures.** Both tiers converge under `--converge`, which compares two
+interleaved halves against the standard error of their difference rather than
+against the mean. Two defects in the instrument were found and fixed before it could
+be trusted; both made it cry wolf on a clean run.
+
+**Direction on the deciders (`sweepDirection` in `core/deciders.ts`).** The hole
+every other check left open: `sweepOne` proves an input changes the answer and
+nothing proved it changes it the *right* way, so an inverted sign anywhere in
+`decided.ts` passed the whole build. It failed 12–0 on its first run and found a
+field called `tightness` whose value was its opposite — `weeks /
+impliedShootWeeks`, where 1.2 means a schedule with room in it. The model was right;
+the name and two docstrings were backwards. Renamed `slack`. Fifteen directions
+declared across six deciders, floored, may rise and may not fall.
+
+**The teaching (`content/tutorial.ts`, `world/tutorial.ts`).** 39 lessons, one a
+week, on conditions read off the real world. Reachability went **22 → 38 of 39**
+once four of its own defects were fixed, the largest being that conditions written
+as "a company and *no* registration" close before the first weekly tick for any
+player who acts quickly — which made the entire eight-lesson Making Pictures strand
+unreachable on a career that delivered eight pictures. Coverage is read off the
+engine's own command registry, so a new command fails the build.
+
+## The one thing these instruments found and did not fix
+
+**The Decision Center raises exactly one kind of decision**, and no played career
+reaches it. `theClaimsStillOpen` prompts for a picture whose Icelandic
+reimbursement claim is still open, in the window between a greenlight and the first
+day of photography. `tests/smoke.test.ts` asserts the prompt by name so the state is
+reachable, but neither `playACareer` nor `playABusiness` enters that window — every
+picture reads `too-late` or `scheme-ended` by the time anything looks. Two things
+worth a later session: the instrument cannot drive the one decision this game has,
+and `scheme-ended` appears on pictures greenlit within a few years of the save
+opening, which means late-career pictures may never be able to claim at all. Neither
+is a broken invariant. Both are worth knowing.
+
+---
+
+# CANONICAL DEVELOPMENT BLUEPRINT
+
+**Established by the owner, 2026-09-18. Canonical unless the owner explicitly
+changes it.** It governs everything below this line, applies to past and future
+work alike, and binds **both** Claude Code accounts. The full text is the
+permanent project instruction in **`CLAUDE.md`** at the repository root, which is
+the authority; this is the short form for a session that starts here.
+
+## The Operating Model
+
+| Layer | Owns |
+|---|---|
+| **Claude Code** | Reasoning, coding, architecture, debugging, orchestration |
+| **PowerShell** | Execution and system access on Windows — files, Git, Node and npm, tests, builds, verification scripts, logs, Base44 tooling, deployment tooling, environment and configuration, automation, diagnostics |
+| **Git** | Versioning, recovery, audit trail and safety |
+
+## The Seventeen Rules
+
+1. Work against the real canonical SLATE Git repository, not disposable copies.
+2. Inspect current Git state before beginning substantial work.
+3. Never assume repository state from conversation memory alone.
+4. Break large development work into coherent modules.
+5. Validate each substantial module before integrating or moving forward.
+6. Run relevant tests, typechecking, linting, verification and regression checks.
+7. Never mark work complete solely because code was written.
+8. Keep commits coherent and recoverable.
+9. Do not perform destructive Git operations unless explicitly justified and safe.
+10. Preserve uncommitted work, stashes, branches, worktrees and handoff context
+    before operations that could affect them.
+11. Update this file whenever a major development phase completes and before
+    switching Claude accounts.
+12. The repository and verified test results outrank stale conversation
+    assumptions.
+13. Claude should explain materially risky operations before executing them.
+14. Base44 deployment should occur only after the applicable verification gate
+    passes.
+15. Maintain an auditable trail of important architecture decisions, fixes, tests
+    and deployment state.
+16. Both Claude Code accounts must follow this same workflow.
+17. This workflow remains canonical unless the owner explicitly changes it.
+
+## What They Mean Where They Bite
+
+- **Rules 2, 3 and 12 are one idea.** The repository is the truth and a summary of
+  it is not. Run `git status -sb`, `git log --oneline -5`, `git stash list` and
+  `git worktree list` before substantial work, and always after a compaction or an
+  account switch. When a document and the tree disagree, the tree wins and the
+  document gets corrected. **This file has been wrong about the tree before** —
+  see §5, where four closed items were still listed as placeholders and a deleted
+  file was named in four places.
+- **Rules 5, 6 and 7 are the bar.** `npm run gate` is the whole of it: fifteen
+  checks, `npm run validate` among them. Read its exit status **from a file, never
+  a pipe.** Measure on a **played career, never an idle save**. Code written is
+  not work finished.
+- **Rules 9 and 10 are the owner's standing constraints made permanent.** Never
+  apply, pop or drop the stash (§9). Never merge worktrees (§8). Never force-push
+  the working branch. Do not merge to `main` without the owner. See §16, the
+  DO-NOT-LOSE list.
+- **Rules 11 and 16 are why this file exists.** Two accounts alternate and this
+  document is the only state that crosses between them.
+- **Rule 13 is about destroying and publishing, not deciding.** The owner has said
+  repeatedly that Claude should make design and judgement calls itself and report
+  them afterwards rather than opening with a menu of options. What gets announced
+  first is the destructive or outward-facing operation.
+- **Rule 14 is ahead of deployment.** And `SAVE_SCHEMA_VERSION` is pinned in two
+  files that cannot import from each other — `src/engine/domain/model.ts` and
+  `base44/shared/guard.js`. Both move by hand, together, or 22 tests fall.
+- **Rule 15's trail is four places:** commit messages (which say what was decided
+  and why, because the diff already says what changed), this file,
+  `docs/UNBITTEN.md` and `docs/ARREARS.md` as the open-work ledgers, and
+  `docs/UNWIRED.json` as the machine ratchet whose counts may fall and may not
+  rise.
 
 ---
 
@@ -632,7 +822,6 @@ docs/     16 files — DEPTH, UNBITTEN, ARREARS, COVERAGE-MATRIX, DRILL-DOWN,
           research/{KINDS,LIFESPAN,LOT,PIPELINE,STAGE,README}.md
 base44/   config.jsonc + 3 entities + 4 functions + shared/guard.js
 public/   454 files — the world gazetteer (per-country city data) + map topojson
-walk-tmp.mjs   STRAY 49-line Playwright scratch script at repo root (see §14)
 ```
 
 ### Data flow
@@ -660,7 +849,9 @@ persistence
 
 ### Testing & gating
 
-`npm run gate` is the whole bar — 14 checks, and it includes `npm run validate` (typecheck + lint + full suite). The prose tools are part of the gate and they do fail builds: `title-case`, `label-sweep`, `plural-check`, `both-titles`, `voice-check` (uncontracted-form budget, currently 40), `tics` (habit budgets), `doc-refs`, `wired` (dead-word floor, held against `docs/UNWIRED.json`), `dials` (dials nothing moves, plays a 25-year career), `deciders`, `spelling` (British→American), `typos`, `geo-check`, `inventory`.
+`npm run gate` is the whole bar — 17 checks, and it includes `npm run validate` (typecheck + lint + full suite). The prose tools are part of the gate and they do fail builds: `title-case`, `label-sweep`, `plural-check`, `both-titles`, `voice-check` (uncontracted-form budget, currently 40), `tics` (habit budgets), `doc-refs`, `wired` (dead-word floor, held against `docs/UNWIRED.json`), `claims` (present-tense comments saying nothing reads or writes a thing, checked against what does), `dials` (dials nothing moves, plays a 25-year career), `deciders`, `spelling` (British→American), `typos`, `geo-check`, `inventory`, `monte:smoke` (many-seed invariant soak, 8 seeds × 3 years), `tutorial` (every lesson reachable on a played career).
+
+Two of those are played rather than read, and cost the gate about 100 seconds between them. The full sweeps are separate commands, because 480 careers is 50 minutes: `npm run monte:breadth` (480 × 5 years), `npm run monte:depth` (96 × 25 years).
 
 ### Base44 integration
 
@@ -731,16 +922,17 @@ Deployment target providing server-checked persistence. Three entities (`SlateSa
 | `tests/decides.test.ts` | **NEW** — prices every company door entry | Live | Created in the guild-door work |
 | `tools/dials.mjs` | **NEW** — plays a 25-year career, counts dials nothing moves | Live, in the gate | Range test, not a one-value test. Blessed at **8** |
 | `tools/wired.mjs` | Dead-word floor | Live, in the gate | Its old "Dials nothing moves" regex check was retired — a regex can prove a field is *written*, never that a number *moves* |
+| `tools/claims.mjs` | **NEW** — doc comments that claim nothing reads or writes a thing, checked against the tree | Live, in the gate | No baseline file and none wanted: a stale claim is a defect, not a debt to ratchet. Only the **present tense** is checked — past-tense history is what these comments are for |
 | `tools/cohesion-walk.mjs` | Screenshot walkthrough | **Has 67 uncommitted lines in the stash** (§9) | — |
-| `docs/UNWIRED.json` | Machine baseline for the gate | Live | 51 declared words total. **`docs/UNBITTEN.md`'s own headline table still says 160** — stale |
-| `walk-tmp.mjs` (repo root) | Stray Playwright scratch script | **Committed debt** | 49 lines, referenced by nothing, hardcodes a **Linux** browser path `/opt/pw-browsers/...` |
+| `docs/UNWIRED.json` | Machine baseline for the gate | Live | **All seven rows at 0.** Was 51 declared dead words. May fall, may not rise — so a new declared word with no reader fails the gate on the spot |
+| `walk-tmp.mjs` (repo root) | Stray Playwright scratch script | **Deleted, `c341aba`** | Was 49 committed lines referenced by nothing, hardcoding a Linux browser path. Gone |
 
 ## Documentation
 
 | Path | Purpose | State |
 |---|---|---|
 | `docs/DEPTH.md` | The standard, The One Rule, the 16 axes, build order | 885 lines. Live and authoritative |
-| `docs/UNBITTEN.md` | **The open-work ledger.** What does not bite | 687 lines. **Headline count table is STALE** (says 160 declared words; truth is 51) |
+| `docs/UNBITTEN.md` | **The open-work ledger.** What does not bite | 1,522 lines, verdicted through. Headline table now reads **nought** declared words that nothing reads, and keeps the record that it said 160 for a long time after it was 47 |
 | `docs/ARREARS.md` | The 60-agent audit verdict + what cleared | 3,023 lines. Live |
 | `docs/research/LIFESPAN.md` | The lifespan almanac, preserved unwired | 565 lines. New |
 | `README.md` | Project front door | **MATERIALLY STALE** — see §13 |
@@ -776,7 +968,9 @@ Deployment target providing server-checked persistence. Three entities (`SlateSa
 - **Crew + standing + family bonds + household** — `tests/crew.test.ts`, `tests/standing.test.ts`, `tests/family.test.ts`, `tests/household.test.ts`. CONFIRMED BY CODE
 - **The drill-down "looks" system** — `tests/looks.test.ts`, `tests/navigation.test.ts`, `tests/interface.test.ts`, `tests/cohesion.test.ts`. CONFIRMED BY CODE
 - **Endurance / long-save loadability** — `tests/endurance.test.ts` (includes a wall-clock ratio assertion; see §14). CONFIRMED BY CODE
-- **The gate (14 checks)** — CONFIRMED BY CODE + TEST OUTPUT
+- **The gate (17 checks)** — CONFIRMED BY CODE + TEST OUTPUT
+- **Monte Carlo invariant sweep** — 576 careers, 2,400 simulated years, eight invariants checked at every year boundary, nought failures, converged. `tools/monte.mjs`. CONFIRMED BY TEST OUTPUT
+- **The teaching** — 39 lessons on conditions read off the real world, 38 provably reachable on a played career, every registered command covered. `content/tutorial.ts`, `world/tutorial.ts`, `tools/tutorial.mjs`. CONFIRMED BY TEST OUTPUT
 
 ## IMPLEMENTED BUT NOT FULLY VERIFIED
 
@@ -787,28 +981,46 @@ Deployment target providing server-checked persistence. Three entities (`SlateSa
 ## PARTIALLY IMPLEMENTED
 
 - **The wellbeing model** — 8 dials roll up into `readiness`; `readiness` has 4 readers but its only *outcome* is in the audition room. The dials feed nothing but readiness. CONFIRMED BY CODE
-- **Tax** — tables correct; only VAT actually charges. Income tax and corporation tax are inert. CONFIRMED BY CODE
-- **The quote ratchet** — live for NPCs; for the **player** the quote is written and read by nothing, and three sentences in the tree claim the opposite mechanic. CONFIRMED BY CODE
-- **Ageing** — fires, and the whole effect is the `recovery` column of `AGING`; the `fitness` and `condition` columns are inert. CONFIRMED BY TEST OUTPUT
-- **Personality axes** — 4 of 7 are read by nothing, and the creation screen asks the player to set all of them. CONFIRMED BY CODE (`UNWIRED.json`)
+- **Tax** — all three charge now. VAT always did; corporation tax is taken off the sugar group's year in `world/sugar.ts`; and income tax is settled annually on everything a person earned, through `computeAnnualTax` and the real `INCOME_TAX_RULES` bands, in `world/banking.ts`. What is *not* modelled is a company paying tax on the pictures — the lot's own corporation tax. CONFIRMED BY CODE
+- **The quote ratchet** — live for NPCs; for the **player** the quote was written and read by nothing, and three sentences in the tree claimed the opposite mechanic. **Not re-verified since**, so treat the shape as known and the count as stale
+- **Ageing** — fires, and all three columns of `AGING` are read: `recoveryFactorAt` for the night that stops fixing everything, and `ceilingAt` for both the `fitness` and the `condition` ceiling, in three places in `systems/life.ts`. CONFIRMED BY CODE
+- **Personality axes** — was 4 of 7 read by nothing. Now **0**: `docs/UNWIRED.json`'s "Personality axes nothing consults" is at nought and the ratchet will not let it rise. CONFIRMED BY TEST OUTPUT
 - **History log** — has writers and readers, but what it actually records over a played career is UNKNOWN ("a sleep diary" per UNBITTEN)
 
 ## SCAFFOLDED / PLACEHOLDER
 
-- **`prestige`** — a `Reputation` field that holds one value (nought) for an entire 25-year career. CONFIRMED BY TEST OUTPUT
-- **47 of 53 trait `systemMods` keys** — declared, nothing multiplies through them. CONFIRMED BY CODE
-- **`domain/model.ts` dead record shapes** — ~169 lines across 8 names. CONFIRMED BY CODE
-- **`walk-tmp.mjs`** — stray committed scratch script. CONFIRMED BY CODE
+**This section is empty.** All four entries that were here have been closed, and
+each is worth naming so nobody looks for them again:
+
+- **`prestige`** held one value — nought — for an entire 25-year career. Eight
+  files in `world/` move it now: the awards season names and wins, casting reads
+  it, selling prices off it, and it decays. `tools/dials.mjs` is what caught it
+  not moving for the player's own work.
+- **47 of 53 trait `systemMods` keys** were declared with nothing multiplying
+  through them. `docs/UNWIRED.json`'s "Trait modifier keys" is at **0**.
+- **`domain/model.ts` dead record shapes** were ~169 lines across 8 names. "Save
+  tables nothing fills" is at **0**.
+- **`walk-tmp.mjs`** was a stray committed scratch script. Deleted in `c341aba`.
+
+All seven rows of `docs/UNWIRED.json` are at nought, and the ratchet will not let
+any of them rise. The gate is the thing that keeps this section empty.
 
 ## DESIGNED / SPECIFIED BUT NOT IMPLEMENTED
 
-- **Awards and critics** — where `prestige` is waiting. Never built
-- **Mid-flight cutting-room restaff** — specified, measured, deliberately **not** built (a €1.39m exploit without per-week room accrual first)
-- **The monthly company clock** — specified **twice**, did not survive specification either time
+- **Mid-flight cutting-room restaff** — specified, measured, deliberately **not** built as a free action: `whyNotRestaff` is gated on the money left on the screen, which is what made it a €1.39m exploit. The per-week room accrual it wanted is still unbuilt
 - **Fee priced off the picture's budget** — the right fix; wants the payroll balance check first
-- **Flooring the player's fee at their quote** — measured at ×2.32–3.56 lifetime acting income. Owner decision, not taken
-- **Airdates for broadcast seasons** — `layOut` reads a delivery anchor; nothing supplies real airdates
-- **The unscripted contributor cast board** — listed correct-and-unreachable
+- **Flooring the player's fee at their quote** — measured at ×2.32–3.56 lifetime acting income. **Owner decision, still not taken** — the one genuinely arbitrary number on this list
+- **Airdates for broadcast seasons** — half done. `AIRDATE_WEEKS = 52` supplies a default anchor when nobody says, so a season lays out against a transmission date; what is not modelled is a broadcaster setting one and the season having to meet it
+- **Corporation tax on the pictures** — the sugar group pays its year; the film company does not
+
+Three things that were on this list are now built, named here so nobody
+re-specifies them: **awards and critics** (`content/awards.ts` and
+`world/awards.ts` — a season in February, named and won, with `prestige` as the
+payout and no academies or juries, per the spec), **the monthly company clock**
+(`runTheClock` in `world/company.ts`, which had been specified twice without
+surviving specification either time — it runs option terms and policy renewals
+and strikes a registration off), and **the unscripted contributor cast board**
+(`company.board` in `world/casting.ts`, which was listed correct-and-unreachable).
 
 ## UNKNOWN / NEEDS INVESTIGATION
 
@@ -1229,8 +1441,7 @@ From `docs/UNBITTEN.md`, all needing re-derivation because **the page is demonst
 ## Deployment risks
 
 - Base44 deploy state UNKNOWN; `base44/shared/guard.js` is the server-side authority and a schema change must move with it
-- `SAVE_SCHEMA_VERSION` is at 79 after the wellbeing sweep; older saves rely on `migrate()`
-- `walk-tmp.mjs` hardcodes a Linux browser path and ships in the repo
+- `SAVE_SCHEMA_VERSION` is at **82**, and `base44/shared/guard.js`'s `SUPPORTED_SCHEMA_VERSION` must be moved with it by hand — it cannot import the constant. Drift takes 22 tests down. Older saves rely on `migrate()`
 
 ## Performance risks
 
