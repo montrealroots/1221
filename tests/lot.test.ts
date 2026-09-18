@@ -421,18 +421,69 @@ describe('what a production is actually weighing', () => {
   });
 
   it('writes the prep and the strike as their own rows, at their own rate', () => {
+    // This test used to be blind to the thing its own title promises. It
+    // asserted that there were at least as many `prep` rows as `shooting` ones
+    // and that every `prep` row sat at the prep rate — both of which were true
+    // while the strike weeks were written into the save as `prep`, because the
+    // rate is the same. A test that cannot tell a build from a load-out cannot
+    // catch the two being filed under one word, and for a long time it did not.
+    //
+    // Structural instead, and it does not depend on counts: a build abuts the
+    // start of a shoot on the same stage and a strike abuts the end of one.
     const { sim } = fiveYears('hold-rows');
     const rows = Object.values(sim.universe.bookings);
-    const prep = rows.filter((one) => one.kind === 'prep');
     const shooting = rows.filter((one) => one.kind === 'shooting');
+    const prep = rows.filter((one) => one.kind === 'prep');
+    const strike = rows.filter((one) => one.kind === 'strike');
     expect(prep.length, 'nothing was ever booked as prep').toBeGreaterThan(0);
-    // One shoot, and a build and a strike around it.
-    expect(prep.length).toBeGreaterThanOrEqual(shooting.length);
-    // At the lower rate, because that is what the table has always said.
+    expect(strike.length, 'five years and nobody ever struck a set').toBeGreaterThan(0);
+
     for (const row of prep) {
-      const stage = sim.universe.stages[row.stageId]!;
-      expect(row.weekRateCents).toBe(Math.round(stage.weekRateCents * RATE_SHARE.prep));
+      expect(
+        shooting.some((one) => one.stageId === row.stageId && one.from === row.to),
+        'a build that runs up to nothing shooting',
+      ).toBe(true);
     }
+    for (const row of strike) {
+      expect(
+        shooting.some((one) => one.stageId === row.stageId && one.to === row.from),
+        'a load-out with no shoot in front of it',
+      ).toBe(true);
+    }
+    // Both at the lower rate, because that is what the table has always said:
+    // the crew and the hours are the same going up as coming down.
+    for (const row of [...prep, ...strike]) {
+      const stage = sim.universe.stages[row.stageId]!;
+      const share = row.kind === 'prep' ? RATE_SHARE.prep : RATE_SHARE.strike;
+      expect(row.weekRateCents).toBe(Math.round(stage.weekRateCents * share));
+    }
+  });
+
+  it('counts the load-out as time the room was occupied and barely paid for', () => {
+    // The reader the strike row was given, and the reason the word exists
+    // rather than the rows simply being relabelled. Turnaround is a real
+    // occupation of a stage that reads as an empty one: nobody else can have
+    // the room, and it is charged at the build rate rather than the shooting
+    // one, so a month two thirds full at half the money is usually a month with
+    // a lot of load-out in it. Nothing could say so while a strike was a prep.
+    const { sim } = fiveYears('hold-strike');
+    const from = sim.now - 5 * 365 * MS_DAY;
+    const all = utilisation(sim, from, sim.now);
+    expect(all.strike, 'no load-out in five years of bookings').toBeGreaterThan(0);
+    expect(all.strike, 'more load-out than there were weeks on stages').toBeLessThan(all.taken);
+
+    // And it is the same weeks the rows themselves carry, rather than a second
+    // count that could drift from them. Clipped to the window the way every
+    // other figure on this record is, because a strike that runs past the end
+    // of the month is not a month's worth of load-out.
+    const weeks = Object.values(sim.universe.bookings)
+      .filter((one) => one.kind === 'strike')
+      .reduce((n, one) => {
+        const start = Math.max(one.from, from);
+        const end = Math.min(one.to, sim.now);
+        return end > start ? n + (end - start) / MS_WEEK : n;
+      }, 0);
+    expect(all.strike).toBeCloseTo(weeks, 6);
   });
 
   it('turns away a room that costs too much of what the job has to spend', () => {

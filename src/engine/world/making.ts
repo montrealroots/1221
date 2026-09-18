@@ -43,7 +43,7 @@ import {
   elementById, elementsAfter, planById, tightnessOf,
 } from '../content/making';
 import { LOT_NAME } from '../content/estate';
-import { MS_WEEK, bookingsFor, rateFor, stagesOn, stillToCarry, theLot } from './lot';
+import { MS_WEEK, bookingsFor, stagesOn, stillToCarry, theLot } from './lot';
 import {
   bankAWeek, cuttingPeriod, cutsAWeek, handsOn, weighTheCut, whereTheMaterialStands,
 } from './inventory';
@@ -263,13 +263,11 @@ export function holdAStage(
   return booking;
 }
 
-/** What the lot gives up by housing its owner's picture, across the hold. */
-export function foregone(sim: Simulation, booking: Booking): Money {
-  const stage = sim.universe.stages[booking.stageId];
-  if (!stage) return 0;
-  const weeks = (booking.to - booking.from) / MS_WEEK;
-  return Math.round(weeks * rateFor(stage, 'shooting'));
-}
+// What the lot gives up by housing its owner's picture used to be a `foregone()`
+// here, one booking at a time, and nothing in the build ever called it. The
+// question is a real one and the answer now lives on `Utilisation` as
+// `ownWouldHaveLetFor`, beside the `own` weeks it prices, where the estate screen
+// reads it — one figure over a window rather than an export with no caller.
 
 // ---------------------------------------------------------------------------
 // Running over

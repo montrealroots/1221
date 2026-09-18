@@ -81,6 +81,29 @@ export interface Utilisation {
    * that would be the single most misleading number on the screen.
    */
   own: number;
+  /**
+   * Of those, the ones that were somebody taking a set down again.
+   *
+   * Counted because turnaround is a real occupation of a room and reads as an
+   * empty one. A stage with a unit striking on it cannot be let to anybody, and
+   * the weeks are charged at the build rate rather than the shooting rate, so a
+   * month that looks two thirds full at half the money is usually a month with
+   * a lot of load-out in it. Nothing could say so while the strike weeks were
+   * written into the save as prep.
+   */
+  strike: number;
+  /**
+   * What the owner's own weeks would have been let for at the rate card.
+   *
+   * `own` says how many weeks the family's own pictures sat on, and those rows
+   * are written at a rate of nought — a company does not invoice itself. This is
+   * the same weeks priced the way a tenant would have been priced for them, so
+   * the screen can say what housing your own picture cost the lot rather than
+   * only that it was busy. `making.ts` had a `foregone()` that answered this one
+   * booking at a time and nothing ever called it; the figure belongs on the
+   * record that already counts the weeks.
+   */
+  ownWouldHaveLetFor: Money;
   /** 0-1, in stage-weeks. Undefined when the window holds no stage-weeks. */
   share: number | undefined;
   /** What those bookings are worth across the window, in cents. */
@@ -114,6 +137,8 @@ export function utilisation(sim: Simulation, from: Instant, to: Instant): Utilis
   const available = (span / MS_WEEK) * stages.length;
   let taken = 0;
   let own = 0;
+  let strike = 0;
+  let ownWouldHaveLetFor = 0;
   let earnsCents = 0;
   const owner = theLot(sim)?.ownerId;
   for (const stage of stages) {
@@ -123,7 +148,11 @@ export function utilisation(sim: Simulation, from: Instant, to: Instant): Utilis
       if (end <= start) continue;
       const weeks = (end - start) / MS_WEEK;
       taken += weeks;
-      if (owner !== undefined && booking.companyId === owner) own += weeks;
+      if (owner !== undefined && booking.companyId === owner) {
+        own += weeks;
+        ownWouldHaveLetFor += Math.round(weeks * rateFor(stage, booking.kind));
+      }
+      if (booking.kind === 'strike') strike += weeks;
       earnsCents += Math.round(weeks * booking.weekRateCents);
     }
   }
@@ -133,6 +162,8 @@ export function utilisation(sim: Simulation, from: Instant, to: Instant): Utilis
     available,
     taken,
     own,
+    strike,
+    ownWouldHaveLetFor,
     share: available > 0 ? Math.min(1, taken / available) : undefined,
     earnsCents,
     ifFullCents,
@@ -1191,11 +1222,19 @@ export function wouldBook(sim: Simulation, need: Enquiry, from: Instant): Answer
  */
 export const ISK_A_EURO = 150;
 
-/** What the whole hold costs, prep and strike at their own rate. */
+/**
+ * What the whole hold costs, prep and strike each at its own rate.
+ *
+ * The two rates are equal and the terms are still split, because the quote and
+ * the rows it becomes have to agree about which rate is which. Folding the
+ * strike weeks into the prep term gave the right total for the wrong reason,
+ * and the day either share moves it would give the wrong one.
+ */
 export function quotedFor(stage: SoundStage, need: Enquiry): Money {
   const held = heldFor(need);
   return Math.round(held.shoot * rateFor(stage, 'shooting')
-    + (held.prep + held.strike) * rateFor(stage, 'prep'));
+    + held.prep * rateFor(stage, 'prep')
+    + held.strike * rateFor(stage, 'strike'));
 }
 
 /** Writes a booking onto a stage. */
@@ -1204,6 +1243,7 @@ export function book(sim: Simulation, need: Enquiry, stageId: Id, from: Instant,
   const holder = `${need.from}, ${aOrAn(need.kind)}`;
   const stage = sim.universe.stages[stageId];
   const prepRate = stage ? rateFor(stage, 'prep') : Math.round(weekRateCents * RATE_SHARE.prep);
+  const strikeRate = stage ? rateFor(stage, 'strike') : Math.round(weekRateCents * RATE_SHARE.strike);
   const write = (kind: BookingKind, at: Instant, weeks: number, rate: Money): Booking => {
     const booking: Booking = {
       id: sim.nextId('booking'),
@@ -1226,18 +1266,16 @@ export function book(sim: Simulation, need: Enquiry, stageId: Id, from: Instant,
   // and a single row called shooting that covered the build and the strike would
   // be the lie the flat rate used to be.
   //
-  // Three rows at TWO prices, though, and the strike is the reason: it is the
-  // last of the three and it is written as `prep`, because striking a set and
-  // building one cost a production the same and `BookingKind` has no word for
-  // taking one down. So a reader of the rows sees a production prep twice and
-  // never strike. It is 6.5% of what the lot quotes, sitting under the wrong
-  // name — and the estate screen's Stages table is one line of TSX away from
-  // printing it.
+  // Three rows at three names and two prices. The strike used to be written as
+  // `prep` — the rate is the same, and `BookingKind` had no word for taking a
+  // set down — so a reader of the rows saw every production prep twice and
+  // never strike, and the 6.5% of the lot's quote that is turnaround could not
+  // be told from the 6.5% that is the build. Equal prices are not equal things.
   let at = from;
   if (held.prep > 0) { write('prep', at, held.prep, prepRate); at += held.prep * MS_WEEK; }
   const shooting = write('shooting', at, held.shoot, weekRateCents);
   at += held.shoot * MS_WEEK;
-  if (held.strike > 0) write('prep', at, held.strike, prepRate);
+  if (held.strike > 0) write('strike', at, held.strike, strikeRate);
   return shooting;
 }
 

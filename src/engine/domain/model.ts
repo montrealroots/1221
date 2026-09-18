@@ -488,8 +488,11 @@ export interface QuotaYear {
   because: string;
 }
 
-/** Whether a production is shooting on a stage or getting ready on it. */
-export type BookingKind = 'shooting' | 'prep';
+/**
+ * Whether a production is building on a stage, shooting on it, or taking it
+ * down again.
+ */
+export type BookingKind = 'prep' | 'shooting' | 'strike';
 
 /**
  * A production holding a stage for a run of dates.
@@ -499,9 +502,14 @@ export type BookingKind = 'shooting' | 'prep';
  * striking cost less than shooting. A lot that charged one flat rate would be a
  * lot nobody had ever booked.
  *
- * Two kinds and not three. Holding a standing set on a dark day is a real thing
- * a lot charges for, and nothing here ever wrote such a booking, so the word and
- * its rate were a price list for something the game does not sell.
+ * Three kinds, and there used to be a fourth. Holding a standing set on a dark
+ * day is a real thing a lot charges for, and nothing here ever wrote such a
+ * booking, so the word and its rate were a price list for something the game
+ * does not sell. `strike` is the opposite case and is why the union is three
+ * again: the lot wrote a strike on every booking it took and filed it under
+ * `prep`, because the rate is the same and there was no word for taking a set
+ * down. It is 6.5% of what the lot quotes, and a board reading these rows saw
+ * productions prep twice and never strike.
  */
 export interface Booking {
   id: Id;

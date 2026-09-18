@@ -862,8 +862,32 @@ file reference rather than as a finding.
   **nothing anywhere decides on it**, so compounding it past the last window
   would move a printed number and no outcome, which is the definition of
   decoration this page exists to name.
-- **The strike week is booked as prep**, and `RATE_SHARE.hold` is dead. `DEPTH.md`
-  records this one as fixed; only the prep third of it was.
+- ~~**The strike week is booked as prep**, and `RATE_SHARE.hold` is dead. `DEPTH.md`
+  records this one as fixed; only the prep third of it was.~~ **Both halves are
+  done, and by opposite answers.** `hold` was deleted: a table that throws when
+  anything reads it, run across eighteen played years and the whole suite, was
+  read seven hundred times for `shooting`, a hundred for `prep` and never once
+  for `hold`. The strike was built: `BookingKind` has a word for a load-out now,
+  `book()` writes it as its own row, and `quotedFor` splits the term instead of
+  folding the strike weeks into the prep one — the total is unchanged, and what
+  changes is that the quote and the rows agree about which rate is which.
+
+  The reader is the part that made it worth doing rather than relabelling.
+  `Utilisation` carries the strike weeks and the estate screen says how much of
+  the month anybody was on a stage was somebody taking a set down. Turnaround is
+  a real occupation of a room that reads as an empty one: the stage cannot be
+  let, and the weeks go at the build rate, so a month two thirds full at half the
+  money is usually a month with a lot of load-out in it.
+
+  A second dead word went with it. `foregone()` — "what the lot gives up by
+  housing its owner's picture" — was exported from `world/making.ts` and called
+  by nothing. It is `Utilisation.ownWouldHaveLetFor` now, beside the weeks it
+  prices, and the screen names the figure.
+
+  And the test that was written to catch this could not see it. It asserted that
+  prep rows outnumbered shooting rows and sat at the prep rate — both true of the
+  bug, because the two rates are equal. It is structural now: a build abuts the
+  start of a shoot, a load-out abuts the end of one.
 - ~~**A directed night's sleep is added on top of the autopilot's**, which inverts
   the contract its own comment states, and the guard written for it has no
   caller.~~ **Stale.** `life.sleep` sets `lastSleptAt`, and the unattended day

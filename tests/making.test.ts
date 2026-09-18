@@ -719,7 +719,7 @@ describe('the lot tells the truth about who is on it', () => {
 
   it('agrees with itself about one week and several', () => {
     const month = (taken: number, earnsCents: number) => ({
-      available: 4, taken, own: 0, share: taken / 4, earnsCents,
+      available: 4, taken, own: 0, strike: 0, ownWouldHaveLetFor: 0, share: taken / 4, earnsCents,
       ifFullCents: 400, earnsShare: earnsCents / 400,
     });
     expect(howTheMonthWent(month(0, 0))).toContain('Nobody was on a stage');

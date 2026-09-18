@@ -424,13 +424,20 @@ export const OVERHEAD: readonly OverheadLine[] = [
 export const OVERHEAD_FLOOR_CENTS: Money = OVERHEAD.reduce((n, line) => n + line.monthlyCents, 0);
 
 /**
- * The two rates a stage is let at, as a share of the shooting rate.
+ * The rates a stage is let at, as a share of the shooting rate.
  *
  * Stages are quoted by the week, never by the day, and never at one price: a
  * production pre-lights and strikes at a lower rate than it shoots at. Anybody
  * who has booked one knows this; a game that charges one flat rate has not.
  *
- * There was a third, `hold`, for a standing set on a dark day, and it is worth
+ * Building and striking are the same price on purpose, and that is the design
+ * rather than a shortcut — the crew, the rigging and the hours are the same
+ * going up as coming down. What was a shortcut was writing the strike weeks as
+ * `prep` rows because the rate matched, which made the two indistinguishable in
+ * the save and cost the board the one figure that says turnaround fills a room.
+ * Equal rates and equal names are different claims.
+ *
+ * There was a fourth, `hold`, for a standing set on a dark day, and it is worth
  * saying why it went. It was true of the world and false of this build: nothing
  * ever wrote a booking of that kind, so the rate was never once looked up. The
  * measurement that settled it replaced this table with one that throws when
@@ -439,7 +446,7 @@ export const OVERHEAD_FLOOR_CENTS: Money = OVERHEAD.reduce((n, line) => n + line
  * at all. A returning series that holds its sets between seasons is a good
  * feature and the rate comes back with it.
  */
-export const RATE_SHARE = { shooting: 1, prep: 0.6 } as const;
+export const RATE_SHARE = { shooting: 1, prep: 0.6, strike: 0.6 } as const;
 
 /**
  * How long a stage is held either side of the shoot, as multiples of it.

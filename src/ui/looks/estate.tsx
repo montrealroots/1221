@@ -539,6 +539,20 @@ defineLook<TheLot>('lot', {
             note={`${Math.round(standing.share * 100)}/100 of a year of the group’s profit`} />
         </div>
         <p className="small">{whatTheFamilySays(sim)}</p>
+        <p className="small">
+          {month.taken <= 0
+            ? 'Nobody was on a stage at all last month.'
+            : <>
+              Of the {said(Math.round(month.taken), 'stage-week')} anybody was on last month,{' '}
+              {Math.round(month.strike) === 0
+                ? 'none was load-out'
+                : `${said(Math.round(month.strike), 'week')} of it was somebody taking a set down`}
+              {month.own > 0 && ` and ${said(Math.round(month.own), 'week')} of it was the family’s own
+                picture, which pays nothing and would have let for ${moneyOf(month.ownWouldHaveLetFor)}`}.
+              {' '}A room with a unit striking in it is a room nobody else can have, and load-out is
+              charged at the build rate. A busy month and a paid month are two different months.
+            </>}
+        </p>
         <h4>Who Rings</h4>
         <div className="table-wrap">
         <table className="table">

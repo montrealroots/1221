@@ -395,7 +395,20 @@ WHY DELETE RATHER THAN BUILD. The player is always Icelandic, every unit is base
 
 IF THE OWNER WANTS THE FEATURE ANYWAY, build option (3), not (2). Add `bloc?: 'eea'` to `Country` (src/engine/content/geography.ts:19-37 — confirmed: no such field today, and `COUNTRIES.get('is')` has keys id,name,aliases,type,iso2,currency,currencyName,jurisdictionCode,drivesOn,capital,continent,population,areaKm2,phone,languages,source,confidence,version), set it on is/dk/se/no/fi, then charge a permit fee and a lead time on a non-EEA hire inside `payToBringThem` rather than refusing at `castSomebody`. A cost keeps the uk and us rows reachable, keeps `castFrom(sim, id, 'uk')` working so tests/rebate.test.ts:213 and :250 stay green, and gives the permit somewhere to show up in the ledger — and since the permit is bought abroad it belongs in `notSpentHereCents` alongside the flights, which is a second real consequence for free. Option (2) as they wrote it is the one to avoid.
 
+### RATE_SHARE.hold is dead. DEPTH.md records this one as fixed; only the prep third of it was. (part 2 of 2)
 
+
+**Cluster** `money-time` · **Severity** minor · **Verdict** WAS_TRUE, NOW CUT
+
+**LANDED, by deletion rather than by wiring.** `hold` is gone from `RATE_SHARE`
+and from `BookingKind`. The measurement that settled it is worth keeping: the
+table was replaced with one that throws when anything reads `hold`, and then
+eighteen played years and the whole suite were run — `shooting` was read seven
+hundred times, `prep` a hundred, `hold` not at all. A rate for a standing set on
+a dark day is true of the world and was false of this build, so it was a price
+list for something the game does not sell. `content/lot.ts` says so where the
+rate used to be, and says what would bring it back: a returning series that
+holds its sets between seasons.
 ### RATE_SHARE.hold is dead. DEPTH.md records this one as fixed; only the prep third of it was. (part 2 of 2)
 
 **Cluster** `money-time` · **Severity** minor · **Verdict** STILL_TRUE
@@ -1396,7 +1409,46 @@ ONE THING TO SETTLE BEFORE CHARGING `facility`: the lot's OVERHEAD already carri
 
 ### The strike week is booked as prep. (part 1 of 2)
 
-**Cluster** `money-time` · **Severity** minor · **Verdict** STILL_TRUE
+**Cluster** `money-time` · **Severity** minor · **Verdict** WAS_TRUE, NOW BUILT
+
+**LANDED**, as the adversary's Option B, including the reader it insisted on.
+`BookingKind` is `'prep' | 'shooting' | 'strike'`, `RATE_SHARE` carries
+`strike: 0.6`, `book()` writes the load-out as its own row at its own rate, and
+`quotedFor` splits the term rather than folding the strike weeks into the prep
+one — the total is unchanged and the point is that the quote and the rows it
+becomes now agree about which rate is which.
+
+THE READER, without which the word would have been born dead: `Utilisation`
+carries `strike` weeks, counted off the rows, and the estate screen's lot board
+says how much of the month anybody was on a stage was somebody taking a set
+down. Turnaround is a real occupation of a room that reads as an empty one — the
+stage cannot be let, and the weeks are charged at the build rate rather than the
+shooting one, so a month two thirds full at half the money is usually a month
+with a lot of load-out in it. Nothing could say so while a strike was a prep.
+
+A SECOND DEAD WORD WENT WITH IT, found while wiring the first. `foregone()` in
+`world/making.ts` — "what the lot gives up by housing its owner's picture" — was
+exported and called by nothing anywhere in the build. The question is a good one
+and the answer is now `Utilisation.ownWouldHaveLetFor`, beside the `own` weeks it
+prices, printed in the same sentence: the family's own picture pays nothing and
+would have let for a figure the screen now names.
+
+THE TEST WAS THE INTERESTING PART. `tests/lot.test.ts` had a test titled "writes
+the prep and the strike as their own rows, at their own rate" that asserted only
+that there were at least as many prep rows as shooting rows and that every prep
+row sat at the prep rate. Both were true of the bug — the rate is the same, which
+is why the conflation was invisible — so a test written to catch this could not
+see it. It is structural now and depends on no counts: a build abuts the start of
+a shoot on the same stage, a load-out abuts the end of one. Three mutations
+checked: filing the strike as a prep again takes down both new tests, dropping
+the strike weeks from `utilisation` takes down the counting one, and writing the
+strike row before the shoot instead of after takes down the structural one.
+
+Do not read the equal rates as a shortcut. Building and striking cost a
+production the same — the crew, the rigging and the hours are the same going up
+as coming down — and `content/lot.ts` says so where the figures are. Equal rates
+and equal names were the two claims this entry was about, and only the second one
+was wrong.
 
 
 **Files** `/home/user/1221/src/engine/world/lot.ts`, `/home/user/1221/src/engine/domain/model.ts`, `/home/user/1221/src/engine/content/lot.ts`, `/home/user/1221/tests/lot.test.ts`
