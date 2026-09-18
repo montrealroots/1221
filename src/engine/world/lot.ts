@@ -32,7 +32,7 @@ import { shortOn } from '../content/rebate';
 import { rateWhenShort } from './rebate';
 import { GROUP, PAID_BACK_MEMO, PAID_IN_MEMO, TRYGGINGAGJALD } from '../content/sugar';
 import { profitThisYear, shutYearsRunning, sugarAccount, sugarCoversThePictures } from './sugar';
-import { ESTATE_CITY_ID, LOT_NAME, estatePlaceLine, movedInAt } from '../content/estate';
+import { ESTATE_CITY_ID, LOT_NAME, movedInAt } from '../content/estate';
 
 /** A week, which is the unit a stage is let in. */
 export const MS_WEEK = 7 * MS_DAY;
@@ -223,19 +223,15 @@ export function buildTheLot(sim: Simulation, ownerCompanyId: Id): Property {
     ownerKind: 'company',
     kind: 'studio_lot',
     name: LOT_NAME,
-    addressLine: estatePlaceLine(),
     locationId: ESTATE_CITY_ID,
     tenure: 'owned',
     bedrooms: 0,
     bathrooms: 0,
     interiorSqft: Math.round(LOT_FLOOR_SQM * 10.7639),
-    lotSqft: 0,
     yearBuilt: new Date(at).getUTCFullYear(),
     features: ['Sound Stages', 'Water Tank', 'Workshops', 'Production Offices'],
     marketValue: BUILD_COST_CENTS,
     condition: 100,
-    annualPropertyTaxRate: 0,
-    structureIds: [],
     isPrimaryResidence: false,
     createdAt: at,
   };

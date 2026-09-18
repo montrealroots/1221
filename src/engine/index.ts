@@ -41,7 +41,7 @@ import {
 } from './world/company';
 import { registerPlans } from './world/plans';
 import { registerWorld } from './world/world';
-import { ESTATE_ACRES, HOUSE, estateCity } from './content/estate';
+import { HOUSE } from './content/estate';
 import {
   createUniverse, defaultConfig, WEALTH_PROFILES, careerLabel, type NewSaveConfig,
 } from './world/bootstrap';
@@ -173,19 +173,15 @@ function populateWorld(sim: Simulation, config: NewSaveConfig): void {
     ownerKind: 'none',
     kind: 'house',
     name: HOUSE.name,
-    addressLine: `${ESTATE_ACRES.toLocaleString('en-US')} acres, ${estateCity().name}`,
     locationId: cityId,
     tenure: 'owned',
     bedrooms: HOUSE.bedrooms,
     bathrooms: 4,
     interiorSqft: HOUSE.interiorSqft,
-    lotSqft: ESTATE_ACRES * 43_560,
     yearBuilt: HOUSE.yearBuilt,
     features: [],
     marketValue: 0,
     condition: HOUSE.condition,
-    annualPropertyTaxRate: 0,
-    structureIds: [],
     isPrimaryResidence: true,
     createdAt: sim.now,
   };
@@ -587,6 +583,33 @@ export function migrate(universe: SaveUniverse): MigrationResult {
   }
   if (shed > 0) {
     steps.push(`Dropped the dead fields from ${plural(shed, 'person', 'people')}.`);
+  }
+
+  // Schema 80: sixteen dead words go off every property, which is two thirds of
+  // what a save used to say about a house. They described a property market —
+  // buying, borrowing, renting, listing, insuring, parking a car and mooring a
+  // boat — in a game where the family already owns the two places that exist
+  // and the premise is that it never buys or sells any of it. Two of the
+  // sixteen were not empty but duplicated: `addressLine` stored what
+  // `estatePlaceLine()` computes and `lotSqft` stored `ESTATE_ACRES` in square
+  // feet, both frozen at the moment the save was written, and no screen read
+  // either of them.
+  const SHED_FROM_PLACE = [
+    'addressLine', 'neighbourhoodId', 'lotSqft', 'purchasePrice', 'purchasedAt', 'monthlyRent',
+    'leaseEndsAt', 'mortgageAccountId', 'annualPropertyTaxRate', 'hoaMonthly', 'insurancePolicyId',
+    'structureIds', 'garageSpaces', 'dockFeet', 'rentedOut', 'listedForSale',
+  ] as const;
+  let places = 0;
+  for (const property of Object.values(universe.properties ?? {})) {
+    const p = property as unknown as Record<string, unknown>;
+    let dropped = false;
+    for (const key of SHED_FROM_PLACE) {
+      if (key in p) { delete p[key]; dropped = true; }
+    }
+    if (dropped) places += 1;
+  }
+  if (places > 0) {
+    steps.push(`Dropped the property market from ${plural(places, 'place')}.`);
   }
 
   const migrated = from < SAVE_SCHEMA_VERSION || steps.length > 0;

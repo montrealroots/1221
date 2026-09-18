@@ -547,7 +547,47 @@ THE ONE PLACE A REASONABLE OWNER COULD DISAGREE, which they flatten: `background
 
 ### 366 lines of domain/model.ts are record shapes with no table, no importer and no writer.
 
-**Cluster** `unreachable` · **Severity** serious · **Verdict** STILL_TRUE
+**Cluster** `unreachable` · **Severity** serious · **Verdict** WAS_TRUE, NOW CUT
+
+**LANDED, in two passes.** The main body went with the nine sections — `Vehicle`
+and its four satellites, `Costume`, `Order`, `Training`, `Teeth`, `Bill`,
+`BillFrequency`, `Structure`, `Room`, `Zone`, `Running` and `Mark` are all gone,
+`core/audit.ts` went with both of its halves, and `core/ids.ts` no longer issues
+a namespace for any of them. `domain/model.ts` is 844 lines against the 1,143 the
+entry measured.
+
+What was left was the tentacle the adversary was right to single out, and it was
+bigger than either write-up said. `structureIds` was not one dead field on
+`Property` but one of sixteen: `addressLine`, `neighbourhoodId`, `lotSqft`,
+`purchasePrice`, `purchasedAt`, `monthlyRent`, `leaseEndsAt`,
+`mortgageAccountId`, `annualPropertyTaxRate`, `hoaMonthly`, `insurancePolicyId`,
+`structureIds`, `garageSpaces`, `dockFeet`, `rentedOut` and `listedForSale`.
+Twelve of them were never written by anything; four were written at both
+construction sites and read by nothing. Together they described a property
+market — buying, borrowing, renting, listing, insuring, parking a car and
+mooring a boat — in a game whose premise is that the family already holds the
+two places that exist and never buys or sells any of it. `PropertyKind` went
+with them, from seventeen kinds to the two the build can produce.
+
+Two of the sixteen are worth naming apart, because they were not empty but
+duplicated. `addressLine` stored what `estatePlaceLine()` computes and `lotSqft`
+stored `ESTATE_ACRES` in square feet, both frozen at the moment the save was
+written, and the estate screen prints the acreage from the content constant
+rather than from the field. Wiring either would have put a second source under
+one fact; the file's own `SoundStage` comment says why that is the wrong answer.
+
+Settled against the adversary's recommendation, and the other way. It suggested
+leaving stored data alone rather than bumping the schema. `SAVE_SCHEMA_VERSION`
+is 80 and the migration sheds all sixteen keys, on the precedent of schema 79,
+which did exactly this for six dead words on a person — a field a migration
+misses is a field that persists in every save anybody already has. That bump
+also has to be made in two places: `base44/shared/guard.js` pins the same number
+and `tests/server-guards.test.ts` and `tests/base44-contract.test.ts` take
+twenty-two tests down when it drifts, which is the guard working.
+
+Two tests in `tests/premise.test.ts`, both mutation-checked: a key dropped from
+the migration's list takes down the migration test, and a field written back at
+a construction site takes down the new-save test. Neither takes down the other.
 
 
 **Files** `/home/user/1221/src/engine/domain/model.ts`, `/home/user/1221/src/engine/index.ts`, `/home/user/1221/src/engine/core/audit.ts`

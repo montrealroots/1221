@@ -371,6 +371,49 @@ describe('the craft is acting, and only acting', () => {
       expect('travelFatigue' in person.wellbeing, 'an old save keeps it forever').toBe(false);
     }
   });
+
+  // The sixteen that came off a property at schema 80. They described a market
+  // — buying, borrowing, renting, listing, insuring, a garage and a dock — for
+  // a game whose premise is that the family already holds the two places that
+  // exist and never buys or sells any of it. `addressLine` and `lotSqft` are
+  // the two that were not empty: they stored what `estatePlaceLine()` and
+  // `ESTATE_ACRES` already say, frozen at the moment the save was written, and
+  // no screen read either.
+  const DEAD_ON_A_PLACE = [
+    'addressLine', 'neighbourhoodId', 'lotSqft', 'purchasePrice', 'purchasedAt', 'monthlyRent',
+    'leaseEndsAt', 'mortgageAccountId', 'annualPropertyTaxRate', 'hoaMonthly', 'insurancePolicyId',
+    'structureIds', 'garageSpaces', 'dockFeet', 'rentedOut', 'listedForSale',
+  ];
+
+  it('describes the two places it holds and not a property market', () => {
+    const { universe } = quickSave({}, 'premise-places');
+    const places = Object.values(universe.properties);
+    expect(places.length, 'the house and the lot').toBe(2);
+    for (const place of places) {
+      for (const dead of DEAD_ON_A_PLACE) {
+        expect(dead in place, `${dead} is back on ${place.name}`).toBe(false);
+      }
+    }
+    // And the kinds it can be are the two it is. Fifteen more were declared —
+    // apartments, a penthouse, a private island, retail — and no code path in
+    // the build could produce any of them.
+    expect(places.map((one) => one.kind).sort()).toEqual(['house', 'studio_lot']);
+  });
+
+  it('takes the property market off a save that already has one', () => {
+    const { universe } = quickSave({}, 'premise-places-migrate');
+    universe.meta.schemaVersion = SAVE_SCHEMA_VERSION - 1;
+    for (const place of Object.values(universe.properties)) {
+      const p = place as unknown as Record<string, unknown>;
+      for (const dead of DEAD_ON_A_PLACE) p[dead] = 1;
+    }
+    migrate(universe);
+    for (const place of Object.values(universe.properties)) {
+      for (const dead of DEAD_ON_A_PLACE) {
+        expect(dead in place, `an old save keeps ${dead} forever`).toBe(false);
+      }
+    }
+  });
 });
 
 describe('the house rule holds in the source', () => {

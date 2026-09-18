@@ -383,13 +383,38 @@ export interface Household {
 // Property
 // ---------------------------------------------------------------------------
 
-export type PropertyKind =
-  | 'apartment' | 'condo' | 'townhouse' | 'house' | 'villa' | 'mansion'
-  | 'estate' | 'penthouse' | 'ranch' | 'farm' | 'cabin' | 'land'
-  | 'private_island' | 'office' | 'studio_lot' | 'sound_stage' | 'retail';
+/**
+ * The two things the family owns, and nothing else.
+ *
+ * This union used to carry seventeen kinds — apartments, condos, penthouses, a
+ * private island, retail — for a game whose whole premise is that the family
+ * already holds one estate and never buys or sells any of it. Fifteen of them
+ * could not be produced by any code path in the build. A kind nothing issues is
+ * a market this game does not have, written down as though it did.
+ */
+export type PropertyKind = 'house' | 'studio_lot';
 
 export type TenureKind = 'owned' | 'rented' | 'leased' | 'under_construction';
 
+/**
+ * A place that stands on the estate.
+ *
+ * Sixteen fields came off this record at schema 80, which was two thirds of
+ * what a save used to say about a house, and all sixteen the same defect: a
+ * property market described in the model and absent from the game. Nothing
+ * bought, so no `purchasePrice` or `purchasedAt`; nothing borrowed against, so
+ * no `mortgageAccountId`; nothing rented, listed, or covered by a policy of its
+ * own. `garageSpaces` and `dockFeet` outlived the vehicles and the boats they
+ * were for. `structureIds` pointed at a table that had already been deleted and
+ * was written as `[]` on every save ever made.
+ *
+ * Two of them are worth naming separately, because they were not empty — they
+ * were duplicates. `addressLine` stored what `estatePlaceLine()` computes and
+ * `lotSqft` stored `ESTATE_ACRES` in square feet, both fixed at the moment the
+ * save was written, and no screen read either. A second copy of a fact is a
+ * fact that can drift from itself, which is the reason `SoundStage` below works
+ * its numbers out of the bookings instead of storing them.
+ */
 export interface Property {
   id: Id;
   saveId: Id;
@@ -397,39 +422,18 @@ export interface Property {
   ownerKind: 'person' | 'company' | 'none';
   kind: PropertyKind;
   name: string;
-  addressLine: string;
   locationId: string;
-  neighbourhoodId?: string;
   tenure: TenureKind;
   bedrooms: number;
   bathrooms: number;
   interiorSqft: number;
-  lotSqft: number;
   yearBuilt: number;
   features: string[];
   /** Current market value in cents; moves with the market model. */
   marketValue: Money;
-  purchasePrice?: Money;
-  purchasedAt?: Instant;
-  /** Monthly rent when rented, in cents. */
-  monthlyRent?: Money;
-  leaseEndsAt?: Instant;
-  mortgageAccountId?: Id;
   /** 0-100 physical condition; decays without maintenance. */
   condition: number;
-  annualPropertyTaxRate: number;
-  hoaMonthly?: Money;
-  insurancePolicyId?: Id;
-  /** Structures on the parcel. */
-  structureIds: Id[];
-  /** Covered spaces for road vehicles. Absent on a home from before, and read from its kind, features and structures instead. */
-  garageSpaces?: number;
-  /** The longest boat a private dock here takes, in feet. Absent means no dock. */
-  dockFeet?: number;
   isPrimaryResidence: boolean;
-  /** Rented out to tenants for income. */
-  rentedOut?: { monthlyIncome: Money; tenantName: string; since: Instant };
-  listedForSale?: { price: Money; since: Instant; agentId?: Id };
   soldAt?: Instant;
   createdAt: Instant;
 }
@@ -594,7 +598,7 @@ export interface Preferences {
  * A save from 76 or earlier has no company at all, which reads correctly as a
  * family that never formed one rather than as a broken save.
  */
-export const SAVE_SCHEMA_VERSION = 79;
+export const SAVE_SCHEMA_VERSION = 80;
 
 export interface SaveMeta {
   id: Id;
