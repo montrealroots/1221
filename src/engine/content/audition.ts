@@ -446,6 +446,22 @@ export const COLD = 0.35;
 export const KNOWN_OF = 0.5;
 
 /**
+ * What the work being thought well of does to whether an office thinks of you.
+ *
+ * The first of the two readers `prestige` came back with, and `docs/AWARDS.md`
+ * named this as the cheapest of the three candidates: `remembersYou` already
+ * closes a gap toward certainty using fame, rooms read and reliability, and this
+ * is a fourth term of exactly that kind.
+ *
+ * Smaller than `KNOWN_OF`, and the ordering is the claim. Being famous is worth
+ * more to a casting office than being respected, because an office fills parts
+ * and fame sells tickets — that is the business being unsentimental about itself.
+ * But it is larger than `REMEMBERED`, because one award reaches offices that have
+ * never met you and a reading only ever reaches the room it happened in.
+ */
+export const THOUGHT_WELL_OF = 0.28;
+
+/**
  * What carrying a whole picture does to how much an audience likes you.
  *
  * Scaled by how much of the thing the part was, so a day player is barely

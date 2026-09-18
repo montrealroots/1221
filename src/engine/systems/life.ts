@@ -17,6 +17,7 @@ import { clamp, remap } from '../core/rng';
 import { addDays, instantFromZoned, zonedParts, MS_HOUR, MS_DAY } from '../core/time';
 import { modifierFor } from '../domain/attributes';
 import { dispositionOf } from '../core/taste';
+import { forgottenPrestige } from '../world/awards';
 import {
   LONGEST_SESSION_HOURS, TRAINING_AN_HOUR, ceilingAt, recoveryFactorAt,
 } from '../content/lifespan';
@@ -538,6 +539,11 @@ export function forgetsYou(sim: Simulation): void {
   // And being talked about fades too, slower than it arrives. Nothing about a
   // person should only ever get worse either.
   rep.controversy = clamp(rep.controversy - (TALKED_ABOUT.forgottenAYear / aYear) * days, 0, 100);
+  // And being thought well of fades, for exactly the same reason. `docs/AWARDS.md`
+  // is explicit that prestige must decay or it becomes the fifth one-way ratchet
+  // this project has found: a career is a thing you keep having, and an award ten
+  // years ago is not what an office is thinking about today.
+  forgottenPrestige(me, days, aYear);
   // And a record of turning up heals toward where nobody has a complaint, because
   // you are not unreliable while you are resting. Without this it only ever fell:
   // it moves during a working week alone, three off against one back, and

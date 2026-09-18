@@ -102,19 +102,31 @@ export interface Reputation {
   /** Whether producers believe you will finish the job, 0-100. */
   reliability: number;
   /**
-   * There was an awards-and-critics standing here and it is gone.
+   * What the industry's own judgement of the work has come to, 0-100.
    *
-   * `prestige` was written for 87 of the 146 people in a played save and read
-   * by no system, no screen decision and no rule — writers and no readers,
-   * which is the one shape The One Rule has no name for. The player's own held
-   * nought for twenty-five years, which is why `tools/dials.mjs` counted it.
+   * This was here, was deleted, and is back — and the round trip is the whole
+   * reason the field is worth trusting now. It was written for 87 of the 146
+   * people in a played save and read by no system, no screen decision and no
+   * rule: writers and no readers, which is the one shape The One Rule has no
+   * name for. The player's own held nought for twenty-five years.
    *
-   * It came out rather than getting a reader, on the audit trail's precedent:
-   * the design is not lost, it is written down in `docs/AWARDS.md` with what it
-   * would cost and what it would be worth, and the honest place to rebuild it
-   * is the day there is a screen that asks for one. `controversy` below is the
-   * half that stayed, because two live mechanisms already read it.
+   * It came out rather than getting a reader, on the precedent of the audit
+   * trail, and the design went to `docs/AWARDS.md` with what it would cost and
+   * what it would be worth. That document's own instruction was that piece three
+   * — giving prestige a reader — must not be skipped, "because piece two on its
+   * own produces exactly the defect this document opens by describing".
+   *
+   * So it comes back with two readers written in the same commit. `remembersYou`
+   * takes it as a fourth term beside fame, rooms read and reliability, so an
+   * office that has never met you has heard of the work. And the sale prices it,
+   * because a picture people are going to talk about is worth more to a buyer
+   * than one they are not.
+   *
+   * It decays, for the same reason `controversy` below had to: a career is a
+   * thing you keep having, and a number that only ever rises is the ratchet this
+   * project has now found five times.
    */
+  prestige: number;
   /** How many people currently want to hire you, 0-100. */
   industryDemand: number;
   /** Active negative attention, 0-100. Decays slowly. */
@@ -615,7 +627,7 @@ export interface Preferences {
  * A save from 76 or earlier has no company at all, which reads correctly as a
  * family that never formed one rather than as a broken save.
  */
-export const SAVE_SCHEMA_VERSION = 81;
+export const SAVE_SCHEMA_VERSION = 82;
 
 export interface SaveMeta {
   id: Id;

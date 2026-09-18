@@ -465,6 +465,7 @@ export function performerNew(
       reliability: clamp(Math.round(standing * 0.6 + 30), 1, 100),
 
       industryDemand: clamp(Math.round(standing * 0.5 + next() * 20), 0, 100),
+      prestige: 0,
       controversy: 0,
     },
     careerTrack: 'actor',
@@ -2102,4 +2103,19 @@ export function putOnTheBoard(
     refId: project.id,
   });
   return { ok: true, onIt };
+}
+
+/**
+ * What the people in a picture are thought of by the industry, out of a hundred.
+ *
+ * Weighted the way every other cast figure is, and it reads the cast board on a
+ * format season for the same reason the others do. Nought for everybody until a
+ * season names something, which is what lets it be added to the sale without
+ * moving a figure anybody has already measured.
+ */
+export function castsPrestige(sim: Simulation, project: Project): number | undefined {
+  const inIt = whoIsInIt(sim, project);
+  const weight = inIt.reduce((n, one) => n + one.share, 0);
+  if (weight <= 0) return undefined;
+  return inIt.reduce((n, one) => n + (one.person?.reputation.prestige ?? 0) * one.share, 0) / weight;
 }

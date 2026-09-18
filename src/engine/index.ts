@@ -37,6 +37,7 @@ import { registerRebate } from './world/rebate';
 import { registerVat } from './world/vat';
 import { registerHouse } from './world/house';
 import { registerBanking } from './world/banking';
+import { registerAwards } from './world/awards';
 import {
   companiesOf, foundTheCompany, foundTheSugarGroup, holdingsOf, postsOf, projectsOf, registerCompanyCommands,
   registerTheClock,
@@ -73,6 +74,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerVat(sim);
   registerHouse(sim);
   registerBanking(sim);
+  registerAwards(sim);
 }
 
 /** Recurring world processes every save needs running. */
@@ -650,6 +652,21 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     a.officeId = named(a.holder);
     asks += 1;
   }
+  // Schema 82: prestige comes back, so a save written while it was gone needs it.
+  //
+  // Nought rather than anything guessed, and that is the honest value: prestige is
+  // what the industry has said about the work, and a save in which no season ever
+  // ran has had nothing said. Seeding it from fame or from standing would be
+  // inventing an award history for somebody who was never named.
+  let judged = 0;
+  for (const person of Object.values(universe.people ?? {})) {
+    const rep = person.reputation as unknown as Record<string, unknown>;
+    if (typeof rep.prestige !== 'number') { rep.prestige = 0; judged += 1; }
+  }
+  if (judged > 0) {
+    steps.push(`Gave ${plural(judged, 'person', 'people')} a standing with the industry again.`);
+  }
+
   if (rooms > 0 || asks > 0) {
     steps.push(`Gave ${plural(rooms, 'booking')} and ${plural(asks, 'ask')} the office they belong `
       + 'to, in place of the sentence about it.');

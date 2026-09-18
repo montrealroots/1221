@@ -36,7 +36,7 @@ import {
   type Deal, type ReleaseWindow, type TierId,
   dealById, ultimateFor, windowById,
 } from '../content/selling';
-import { castOn, castSpark, castsAppeal, castsControversy } from './casting';
+import { castOn, castSpark, castsAppeal, castsControversy, castsPrestige } from './casting';
 import { MS_WEEK } from './lot';
 
 export const WINDOW_KIND = 'project.window';
@@ -83,6 +83,14 @@ export interface Prospects {
    */
   appeal?: number;
   /**
+   * What the people in it are thought of by the industry, out of a hundred.
+   *
+   * Nought for everybody until a season names something, so a picture made before
+   * anybody has won anything is priced exactly as it was — which is what makes
+   * this a term that can be added without moving any figure already measured.
+   */
+  prestige?: number;
+  /**
    * What the people carrying it have between them, out of a hundred.
    *
    * Deliberately not derivable from the other terms, and that is the whole of
@@ -127,10 +135,15 @@ export function decideTake(prospects: Prospects, roll: number): { cents: Money }
   // one term here that is a fact about a pair rather than about anybody.
   const together = 1 + (((prospects.spark ?? 50) - 50) / 100) * CAST_MOVES.spark;
   const cold = 1 - ((prospects.controversy ?? 0) / 100) * CAST_MOVES.controversy;
+  // And whether the people in it are thought well of, which is the second reader
+  // `prestige` came back with. A buyer pays more for a picture that will be talked
+  // about, and this is the term that makes an award worth money to the company
+  // rather than only worth a sentence to the person who won it.
+  const talked = 1 + (((prospects.prestige ?? 0) - 0) / 100) * CAST_MOVES.prestige;
   return {
     cents: Math.round(
       ultimateFor(prospects.negativeCents) * pull * band
-      * Math.max(0.2, cast * cold * glad * together),
+      * Math.max(0.2, cast * cold * glad * together * talked),
     ),
   };
 }
@@ -147,6 +160,17 @@ export function decideTake(prospects: Prospects, roll: number): { cents: Money }
  */
 export const CAST_MOVES = {
   truth: 0.34, reads: 0.46, controversy: 0.38, appeal: 0.3, spark: 0.36,
+  /**
+   * What being thought well of is worth at the sale.
+   *
+   * One-sided where the others are two-sided, and that is the difference between
+   * this term and every other one here: a cast reads well or badly around a
+   * middle, and prestige starts at nought for everybody and only goes up. So this
+   * is a bonus a career earns rather than a spread it sits in, and it is the
+   * smallest of the five because an award moves what a buyer pays and does not
+   * decide it.
+   */
+  prestige: 0.22,
 } as const;
 
 // ---------------------------------------------------------------------------
@@ -318,6 +342,7 @@ export function sellIt(sim: Simulation, sale: Sale): { ok: true } | { ok: false;
   const controversy = castsControversy(sim, project);
   const appeal = castsAppeal(sim, project);
   const spark = castSpark(sim, project);
+  const prestige = castsPrestige(sim, project);
   project.takeCents = decideTake(
     {
       negativeCents: project.budgetCents ?? 0,
@@ -326,6 +351,7 @@ export function sellIt(sim: Simulation, sale: Sale): { ok: true } | { ok: false;
       ...(controversy !== undefined ? { controversy } : {}),
       ...(appeal !== undefined ? { appeal } : {}),
       ...(spark !== undefined ? { spark } : {}),
+      ...(prestige !== undefined ? { prestige } : {}),
     },
     roll,
   ).cents;

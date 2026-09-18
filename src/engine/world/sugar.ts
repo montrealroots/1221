@@ -712,6 +712,7 @@ export function staffTheGroup(sim: Simulation): Person[] {
         professionalReputation: dial(),
         reliability: dial(),
         industryDemand: 0,
+        prestige: 0,
         controversy: 0,
       },
       careerTrack: 'executive',

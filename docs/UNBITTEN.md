@@ -634,17 +634,31 @@ file reference rather than as a finding.
   line too** — deleted in `bcbf271`, with `workRefusalFor`, a duplicate
   `countryOfCity` and the five tests whose own header admitted nothing called the
   rule.
-- **Awards and critics**, which is where `prestige` above is waiting.
-  **Specified and costed in `docs/AWARDS.md`**, which is the deliverable this
-  section was scoped to rather than a built festival circuit. The finding that
-  shaped it: the two fields involved are half-connected in opposite directions.
-  `prestige` is written for 87 of 146 people in a played save and **read by
-  nothing at all**; `controversy` is **read by two live mechanisms** — a casting
-  office refuses anybody over `TOO_HOT = 55`, and the cast's controversy takes
-  up to 38% off what a picture sells for — and is **0 for every person at every
-  moment**, because every writer in the build sets the literal nought. So the
-  expensive half of an awards system is already built and waiting for a source,
-  which makes this a much smaller job than the page implies.
+- ~~**Awards and critics**, which is where `prestige` above is waiting.~~
+  **Built, all three pieces, and `docs/AWARDS.md` now records what landed against
+  what it proposed.** The finding that shaped the spec was that the two fields were
+  half-connected in opposite directions: `prestige` was written for 87 of 146
+  people and read by nothing at all, while `controversy` was read by two live
+  mechanisms and was nought for everybody at every moment. Both halves are whole
+  now — controversy got its writer with the seven dials, and prestige came back
+  with two readers written in the same commit as its writers, because the spec was
+  blunt that doing otherwise reproduces the defect it opens by describing.
+
+  A season names five a year and one wins, judged on what is on the screen and the
+  form and **never on the budget**. `remembersYou` takes prestige as a fourth term
+  and the sale prices it. `askFor` — the third candidate — is refused with its
+  number written down: the closest measured analogue came out at ×2.32 to ×3.56 of
+  lifetime acting income, which is a different economy rather than a term. And the
+  ceremony is still refused, as §5 asked: no academies, no categories, no juries.
+
+  **The build found one thing the spec could not have predicted.** A season reading
+  `universe.projects` sees the family's own slate, and in a played career the
+  player acts for other people — productions that book the lot, which are `Booking`
+  rows with no cast records and no delivery. So the first version moved prestige for
+  the company's pictures and never for the player's own work, and `tools/dials.mjs`
+  caught it at once: twenty-five played years, "one value, 0". A won audition
+  already records what the part wanted and what was played, so the season names
+  performances too, and the dial moves in the career this game is about.
 
 ### Correct, and nothing can reach it
 

@@ -32,6 +32,7 @@ import { FINDINGS } from './content/trouble';
 import { decideTake, type Prospects } from './world/selling';
 import { DEALS } from './content/selling';
 import { decideHire, standingReads, type Hiring } from './world/crew';
+import { AWARDABLE, IN_THE_CONVERSATION, NOTICED } from './content/awards';
 import {
   ON_THE_BOARD, believedAt, decideOffer, reachOfBand, readOn, sheetFor, sparkBetween, sparkReads,
   whatItWants,
@@ -64,7 +65,7 @@ interface Sky { sim: Simulation; cityId: string; instant: number }
 
 defineDecider<Sky, string>({
   id: 'weather.day',
-  decides: 'What the sky does in one city on one day.',
+  decides: 'The sky over one city on one day.',
   drawnIn: 'src/engine/systems/weather.ts',
   draws: ['weather', 'weather-hours'],
   reads: {
@@ -399,7 +400,7 @@ defineDecider<Review, string>({
 
 defineDecider<Prospects, string>({
   id: 'selling.take',
-  decides: 'What a finished picture takes across ten years.',
+  decides: 'A finished picture’s take across ten years.',
   drawnIn: 'src/engine/world/selling.ts',
   reads: {
     // What it cost, because scale buys audience — sublinearly, but it buys it.
@@ -849,6 +850,47 @@ defineDecider<Wanted, string>({
   },
 });
 
+/**
+ * Whether a year notices a picture, which is a judgement and is declared as one.
+ *
+ * The draw carries a quarter of it and that quarter is the honest part. Awards are
+ * decided by people watching things, and a model that made the outcome a pure
+ * function of what is on the screen would be claiming to know how a jury votes —
+ * which is a stronger claim than any game is entitled to. The other three quarters
+ * are the cast and the form, both of which the player chose.
+ */
+defineDecider<{ onScreen: number; form: number; draw: number }, string>({
+  id: 'awards.noticed',
+  decides: 'Whether the year’s judgement notices a finished picture.',
+  drawnIn: 'src/engine/world/awards.ts',
+  reads: {
+    // What is on the screen, off the cast's real reads rather than the believed
+    // ones — a voting body has seen the picture.
+    onScreen: (p, t) => ({ ...p, onScreen: t * 100 }),
+    // Which form it is. A feature and a commercial are not judged against each
+    // other, and the money is deliberately not a term at all.
+    form: (p, t) => ({ ...p, form: t }),
+    // And the jury.
+    draw: (p, t) => ({ ...p, draw: t }),
+  },
+  sample: (seed) => ({
+    onScreen: 30 + (seed % 7) * 10,
+    form: AWARDABLE_FORMS[seed % AWARDABLE_FORMS.length] ?? 1,
+    draw: ((seed * 3) % 11) / 11,
+  }),
+  decide: ({ onScreen, form, draw }) => {
+    const at = Math.max(0, Math.min(100, Math.round(
+      onScreen * NOTICED.cast + form * 100 * NOTICED.form + draw * 100 * NOTICED.draw,
+    )));
+    if (at < IN_THE_CONVERSATION) return 'not in the conversation';
+    if (at < 60) return 'in the conversation';
+    if (at < 75) return 'one of the year’s';
+    return 'the one everybody expects to win';
+  },
+});
+
+const AWARDABLE_FORMS = Object.values(AWARDABLE);
+
 
 /**
  * Who a format season is offered, which is a different draw from who reads for a
@@ -866,7 +908,7 @@ defineDecider<Wanted, string>({
  */
 defineDecider<{ draw: number }, string>({
   id: 'casting.board',
-  decides: 'What kind of people are available for a format season’s cast board.',
+  decides: 'Who is around to be put on a format season’s cast board.',
   drawnIn: 'src/engine/world/casting.ts',
   reads: {
     // The only input. There is no band to read: a format does not buy a standard

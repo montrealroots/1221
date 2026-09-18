@@ -1,12 +1,61 @@
 # Awards and critics, as a costed specification
 
-**This is a specification and not a build.** `docs/UNBITTEN.md` scopes this
-section that way deliberately: awards are a feature rather than a fix, and the
-deliverable is what it would cost and what it would buy, in numbers, so that
-whether to build it is a decision somebody can actually take.
+**This was a specification and it is now a build.** It was written as one
+deliberately — awards are a feature rather than a fix, and the deliverable was what
+it would cost and what it would buy, in numbers, so that whether to build it was a
+decision somebody could actually take. That decision was taken and the answer was
+yes, so the section below records what landed against what was proposed.
 
-Everything below marked MEASURED was run on this build. Everything marked
-PROPOSED is a design and has not been written.
+Everything marked MEASURED was run on the build it was written against. Everything
+marked PROPOSED was the design; read it against the BUILT section for what the
+implementation did differently and why.
+
+---
+
+## BUILT. What this document specified is in the tree.
+
+All three pieces, in the order this document set out, and its central instruction
+was followed: **piece three was not skipped.** Prestige came back with two readers
+written in the same commit as its writers, because the warning here was that
+"piece two on its own produces exactly the defect this document opens by
+describing".
+
+- **Piece one — conduct moves controversy.** Already built, with the seven dials.
+  `whatTheWeekTook` raises it on a week worked below `spentAt` and `forgetsYou`
+  decays it. Both readers this document named are live.
+- **Piece two — a season, and nominations off work that exists.** `world/awards.ts`.
+  Five named a year, one wins, judged on what is on the screen and the form, and
+  **never on the budget** — money buys scale and a campaign and does not buy the
+  opinion.
+- **Piece three — the readers.** `remembersYou` takes prestige as a fourth term
+  (`THOUGHT_WELL_OF`, smaller than `KNOWN_OF` because an office fills parts and
+  fame sells tickets, larger than `REMEMBERED` because an award reaches offices
+  that have never met you). The sale prices it through `CAST_MOVES.prestige`,
+  one-sided where the others are two-sided, because prestige starts at nought for
+  everybody.
+
+**`askFor` was the third candidate and is deliberately refused.** This document
+put the closest measured analogue — flooring the fee at the quote — at ×2.32 to
+×3.56 of lifetime acting income. That is not a term, it is a different economy, and
+adding it on the strength of an analogy would be the largest unmeasured change this
+project has ever made. It stays available, unbuilt, with the number written down.
+
+**The ceremony is still refused, as §5 asked.** No academies, no categories, no
+juries, no red carpet. `content/awards.ts` is a hundred and twenty lines.
+
+**And the build found a defect this document could not have predicted**, because it
+is about the shape of the save rather than about awards. A season reading
+`universe.projects` sees the family's own slate — and in a played career the player
+acts almost entirely for other people, in productions that book the lot, which are
+`Booking` rows with no cast records and no delivery. So the first version moved
+prestige for the company's pictures and never once for the player's own work, and
+`tools/dials.mjs` said so immediately: twenty-five played years, "one value, 0".
+
+`theSeasonForPerformances` is the answer. A won audition already records `wants`
+and `played`; `howFarOff` between them is the same figure the room itself was
+decided on, read again a year later by people who have now seen it. So the season
+names performances as well as pictures, and the dial moves in the career this game
+is actually about.
 
 ---
 

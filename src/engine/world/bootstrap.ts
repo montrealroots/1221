@@ -302,6 +302,7 @@ function seedReputation(config: NewSaveConfig) {
     reliability: 55 + Math.round(config.personality.conscientiousness * 0.2),
 
     industryDemand: Math.round(stage * 38),
+    prestige: 0,
     controversy: 0,
   };
 }
