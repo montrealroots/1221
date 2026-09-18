@@ -239,7 +239,14 @@ describe('the shape of a look', () => {
       for (const [what, text] of [['name', look.name], ['kind', look.kind]] as const) {
         expect(text, `${key} ${what} reads as an identifier: ${text}`).not.toMatch(/_|\/|\d{4}/);
         expect(text, `${key} ${what} is a field name: ${text}`).not.toMatch(/\b[a-z]+[A-Z]/);
-        expect(text, `${key} ${what} does not start as a name does: ${text}`).toMatch(/^[A-Z0-9]/);
+        // Any uppercase letter, not A to Z. The rule is that a name starts
+        // capitalised; the first regex for it said ASCII, in a game set in
+        // Iceland whose own name table holds Ólafur, Árni, Ásta and Þóra. It
+        // went unnoticed because the only person this look seeded was the
+        // player, whose name a test supplies — the moment the sugar group's
+        // management became reachable, Ásta Einarsdóttir read as not starting
+        // like a name. `\p{Lu}` is the thing that was meant.
+        expect(text, `${key} ${what} does not start as a name does: ${text}`).toMatch(/^[\p{Lu}\p{N}]/u);
       }
     }
   });

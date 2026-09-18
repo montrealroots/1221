@@ -22,7 +22,7 @@ import { stillToCarry } from '@/engine/world/lot';
 import { quickSave, validateUniverse } from '@/engine';
 import type { Simulation } from '@/engine';
 import { MS_DAY } from '@/engine/core/time';
-import { capabilitiesOf, projectsOf, parentCompany } from '@/engine/world/company';
+import { capabilitiesOf, cashAccountFor, projectsOf, parentCompany } from '@/engine/world/company';
 import { MS_WEEK, bookingsFor, howTheMonthWent, stagesOn, theLot, utilisation } from '@/engine/world/lot';
 import {
   DELIVERY, PLANS, impliedShootWeeks, planById, tightnessOf,
@@ -268,8 +268,7 @@ describe('the doors are a rule, not advice', () => {
     // first morning at seven thousand a month. The claim here is that a filing
     // is refused without cover and goes through with it; affordability is
     // scaffolding, so it is paid for rather than tuned around.
-    const account = Object.values(sim.universe.accounts)
-      .find((one) => one.kind === 'company_cash' && !one.closedAt)!;
+    const account = cashAccountFor(sim.universe, parentCompany(sim.universe)!.id)!;
     sim.income(account.id, 2_000_000_00, 'A good year on the lot', 'business');
     const id = makeIt(sim, 'Hvítserkur', { budgetCents: 80_000_00 });
     // The certificate waits on prep, not on the whole picture, so this only has

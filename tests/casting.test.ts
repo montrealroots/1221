@@ -25,7 +25,7 @@ import { migrate, quickSave } from '@/engine';
 import type { Simulation } from '@/engine';
 import type { Person } from '@/engine/domain/model';
 import { ATTRIBUTE_BY_ID, sheetOf } from '@/engine/domain/attributes';
-import { projectsOf } from '@/engine/world/company';
+import { cashAccountFor, parentCompany, projectsOf } from '@/engine/world/company';
 import { formatMoney } from '@/engine/core/money';
 import { planById } from '@/engine/content/making';
 import {
@@ -1706,8 +1706,7 @@ describe('performers come from somewhere, and it costs to bring them', () => {
     expect(bringingThemCents(local, 100_000_00)).toBe(0);
     expect(bringingThemCents(away, 100_000_00)).toBeGreaterThan(0);
     // And it lands on the company's cash when the deal closes.
-    const cash = () => Object.values(sim.universe.accounts)
-      .find((a) => a.kind === 'company_cash' && !a.closedAt)!.balance;
+    const cash = () => cashAccountFor(sim.universe, parentCompany(sim.universe)!.id)!.balance;
     const id = greenlit(sim, 'feature', 'Hvítserkur');
     const role = openRoles(sim.universe.projects[id]!).find((r) => r.size === 'day')!;
     run(sim, 'company.breakdown', { projectId: id, roleId: role.id });
@@ -2025,8 +2024,7 @@ describe('a deal that spends money the company has not got says so', () => {
   // measured against what is left. The consequence was right and arrived with
   // no cause attached to it.
 
-  const purse = (sim: Simulation): number => Object.values(sim.universe.accounts)
-    .find((one) => one.kind === 'company_cash' && !one.closedAt)!.balance;
+  const purse = (sim: Simulation): number => cashAccountFor(sim.universe, parentCompany(sim.universe)!.id)!.balance;
 
   const said = (sim: Simulation, from: number): string[] => sim.universe.notifications
     .slice(from).filter((one) => /Hasn’t Got/.test(one.title)).map((one) => one.body);

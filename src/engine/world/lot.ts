@@ -27,10 +27,10 @@ import {
   A_SMALL_STAGE, SMALL_STAGE_COST_CENTS, buildRefusalById, type WhyNotBuild,
 } from '../content/lot';
 import { REBATE, ROLES } from '../content/incorporation';
-import { GREENLIGHT_FLOOR, parentCompany } from './company';
+import { GREENLIGHT_FLOOR, cashAccountFor, parentCompany } from './company';
 import { shortOn } from '../content/rebate';
 import { rateWhenShort } from './rebate';
-import { GROUP, PAID_BACK_MEMO, PAID_IN_MEMO } from '../content/sugar';
+import { GROUP, PAID_BACK_MEMO, PAID_IN_MEMO, TRYGGINGAGJALD } from '../content/sugar';
 import { profitThisYear, shutYearsRunning, sugarAccount, sugarCoversThePictures } from './sugar';
 import { ESTATE_CITY_ID, LOT_NAME, estatePlaceLine, movedInAt } from '../content/estate';
 
@@ -539,11 +539,8 @@ export function registerLot(sim: Simulation): void {
 }
 
 /** The company's cash account, which is what the lot is charged against. */
-function cashFor(sim: Simulation, ownerId: Id | undefined): Id | undefined {
-  if (!ownerId) return undefined;
-  return Object.values(sim.universe.accounts)
-    .find((a) => a.ownerId === ownerId && a.kind === 'company_cash' && !a.closedAt)?.id;
-}
+const cashFor = (sim: Simulation, ownerId: Id | undefined): Id | undefined =>
+  cashAccountFor(sim.universe, ownerId)?.id;
 
 /** Midnight on the first of the month after this one, in a zone. */
 /** Midnight on the first of the month `at` falls in. */
@@ -616,7 +613,7 @@ export function howTheMonthWent(month: Utilisation): string {
  */
 export function familyCoversToday(sim: Simulation, accountId: Id): Money {
   const earned = utilisation(sim, startOfThisMonth(sim.now, sim.homeZone), sim.now).earnsCents;
-  return familyCovers(sim, accountId, earned, TO_THE_CENT);
+  return familyCovers(sim, accountId, earned, TO_THE_CENT, false);
 }
 
 export function chargeTheMonth(sim: Simulation, accountId: Id, earnedThisMonth: Money = 0): Money {
@@ -674,8 +671,21 @@ export function chargeThePosts(sim: Simulation, accountId: Id): Money {
     sim.expense(accountId, owed, `${facts!.label}`, 'business');
     spent += owed;
   }
+  // And the employer's own contribution on all of it, which is not withheld
+  // from a wage and so is not in `PAYROLL_TAX_RULES`. The comment in
+  // `content/tax.ts` naming Tryggingagjald at 6.35% has been right about where
+  // it does not belong for as long as it has existed, and until now nothing
+  // anywhere said where it does. A post costs more than it is paid.
+  if (spent > 0) {
+    const owed = Math.round(spent * TRYGGINGAGJALD);
+    sim.expense(accountId, owed, EMPLOYER_TAX_ON_POSTS, 'business');
+    spent += owed;
+  }
   return spent;
 }
+
+/** What the company pays on top of what it pays them. */
+export const EMPLOYER_TAX_ON_POSTS = 'Tryggingagjald On The Posts';
 
 // Both ends of this money need the two memos and only one end can own them, so
 // they are defined next to the group they name. `paidInSoFar` below reads them;
@@ -738,6 +748,7 @@ const TO_THE_CENT: Money = 1;
  */
 export function familyCovers(
   sim: Simulation, accountId: Id, earnedThisMonth: Money = 0, step: Money = A_ROUND_WIRE,
+  theFamilyMayRefuse = true,
 ): Money {
   const account = sim.universe.accounts[accountId];
   if (!account || account.balance >= 0) return 0;
@@ -747,10 +758,22 @@ export function familyCovers(
   // company's cash goes under, and the greenlight door — which already asks
   // for money behind a picture — shuts until the lot lets a stage again.
   //
+  // What the refusal withholds is the money to do something with, not the money
+  // to settle what is already owed, and the difference is the whole reason the
+  // daily clock passes `false` here. Measured over twenty-five played years: the
+  // patience came alive once the posts went on a payroll — share 0.34 against a
+  // last rung bitten to 0.38 by shut years — and the company then sat at minus
+  // EUR 708,143 for a fortnight at a time while the group held EUR 172,091,226
+  // spare. A cane business with a hundred and seventy million in the bank does
+  // not let the film company it owns bounce the electricity bill to make a point.
+  // It declines to fund another picture, which it does by leaving the balance at
+  // nought — under `GREENLIGHT_FLOOR`, so the greenlight door shuts, which is the
+  // consequence this condition was written for and the one it still has.
+  //
   // Recoverable on purpose. Enquiries keep arriving whether or not anybody is
   // paying, so there is always a way back, and the way back is the business
   // working rather than somebody relenting.
-  if (standingWith(sim).conditional && earnedThisMonth <= 0) return 0;
+  if (theFamilyMayRefuse && standingWith(sim).conditional && earnedThisMonth <= 0) return 0;
 
   // The sugar pays for it, out of an account that had to earn what it sends.
   //

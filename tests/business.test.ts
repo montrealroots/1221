@@ -19,7 +19,8 @@
 
 import { describe, expect, it } from 'vitest';
 import {
-  breakEvenShare, paidInAsShareOfAYear, paidInSoFar, stagesOn, theLot, utilisation,
+  PAID_IN, breakEvenShare, familyCovers, familyCoversToday, paidInAsShareOfAYear, paidInSoFar,
+  stagesOn, standingWith, theLot, utilisation,
   whereTheLotStands, wouldBook,
 } from '@/engine/world/lot';
 import {
@@ -41,12 +42,20 @@ import {
 import { OVERHEAD, SMALL_STAGE_COST_CENTS } from '@/engine/content/lot';
 import { buildAStage, chargeThePosts } from '@/engine/world/lot';
 import {
-  aDayOfSugar, payTheBoard, sugarAccount, sugarCoversThePictures, PAYROLL_MEMO,
+  aDayOfSugar, payTheBoard, payTheCorporationTax, payTheGroupPosts, profitThisYear,
+  sugarAccount, sugarCoversThePictures,
+  EMPLOYER_TAX_MEMO, PAYROLL_MEMO,
 } from '@/engine/world/sugar';
-import { A_PARENT_A_MONTH_CENTS, KEPT_IN_HAND_CENTS } from '@/engine/content/sugar';
+import {
+  A_PARENT_A_MONTH_CENTS, BOARD_SEATS, COST_OF_GOODS_A_DAY_CENTS, EMPLOYER_TAX_A_DAY_CENTS,
+  GROUP_OPENING_BALANCE, GROUP_POSTS_A_DAY_CENTS, GROUP_REGISTRIES, GROUP_ROLES,
+  PAYROLL_A_DAY_CENTS,
+  GROUP_POSTS_A_MONTH_CENTS, KEPT_IN_HAND_CENTS, PROFIT_A_DAY_CENTS, REVENUE_A_DAY_CENTS,
+  TRYGGINGAGJALD,
+} from '@/engine/content/sugar';
 import { VAT_MEMO, boughtWithVat, reclaimable, whereTheVatStands } from '@/engine/world/vat';
 import {
-  GREENLIGHT_FLOOR, americanArm, capabilitiesOf, companiesOf, companyCash, holdingsOf,
+  GREENLIGHT_FLOOR, americanArm, capabilitiesOf, cashAccountFor, companiesOf, companyCash, holdingsOf,
   parentCompany, policiesOf, postsOf, projectsOf, registrationsOf, signaturesOf, theSugarGroup,
   whereItStands,
 } from '@/engine/world/company';
@@ -89,8 +98,19 @@ describe('the company the family already has', () => {
   });
 
   it('is on the two registers it must have been on to build anything', () => {
-    const on = registrationsOf(world().universe).map((one) => one.registry).sort();
+    // The production company's own two, not every registration in the save. The
+    // sugar group carries three of its own — it has traded since 1946 and pays
+    // three thousand one hundred people — and an unscoped read here would count
+    // a different company's standing as this one's.
+    const sim = world();
+    const on = registrationsOf(sim.universe, parentCompany(sim.universe)!.id)
+      .map((one) => one.registry).sort();
     expect(on).toEqual(['is_companies', 'is_vat']);
+    // And the employer registration in particular is NOT one of them, because
+    // it is a door the player has to open. The group having it must not count.
+    expect(on).not.toContain('is_employer');
+    expect(doorFor(sim, 'employ_here').can, 'the group’s standing opened this company’s door')
+      .toBe(false);
   });
 
   it('has its own money, which is not the player’s money', () => {
@@ -161,7 +181,12 @@ describe('the doors', () => {
   it('is read from the world rather than stored, so a lapse changes the answer', () => {
     const sim = world();
     expect(doorFor(sim, 'reclaim_vat').can).toBe(true);
-    const vat = registrationsOf(sim.universe).find((one) => one.registry === 'is_vat')!;
+    // This company's VAT number. The group has one too, and is founded first, so
+    // an unscoped find ends the cane business's registration and asks whether the
+    // film company can still reclaim — which it can, correctly, and the test
+    // would have been passing for the wrong reason ever since.
+    const ours = parentCompany(sim.universe)!.id;
+    const vat = registrationsOf(sim.universe, ours).find((one) => one.registry === 'is_vat')!;
     vat.endedAt = sim.now;
     expect(doorFor(sim, 'reclaim_vat').can).toBe(false);
   });
@@ -315,8 +340,7 @@ describe('everything costs, and it comes out of the company', () => {
 
   it('refuses when the company hasn’t got it, and says so', () => {
     const sim = world();
-    const account = Object.values(sim.universe.accounts)
-      .find((one) => one.kind === 'company_cash')!;
+    const account = cashAccountFor(sim.universe, parentCompany(sim.universe)!.id)!;
     account.balance = 100;
     expect(run(sim, 'company.insure', { policy: 'property' }).error).toContain('hasn’t got it');
   });
@@ -519,7 +543,7 @@ describe('the lot as a business', () => {
 
   it('costs money on a month when nobody is on it', () => {
     const sim = quickSave({}, 'lot-dark');
-    const cash = Object.values(sim.universe.accounts).find((a) => a.kind === 'company_cash')!;
+    const cash = cashAccountFor(sim.universe, parentCompany(sim.universe)!.id)!;
     const opening = sim.universe.transactions.length;
     sim.advanceTo(sim.now + 40 * MS_DAY);
     expect(
@@ -627,7 +651,7 @@ describe('the lot as a business', () => {
 
   it('says who is paying for it, rather than letting the company go quietly broke', () => {
     const sim = quickSave({}, 'lot-funded');
-    const cash = Object.values(sim.universe.accounts).find((a) => a.kind === 'company_cash')!;
+    const cash = cashAccountFor(sim.universe, parentCompany(sim.universe)!.id)!;
     for (let month = 0; month < 24; month++) sim.advanceTo(sim.now + 30 * MS_DAY);
     expect(cash.balance, 'the company is running overdrawn with nothing explaining it').toBeGreaterThanOrEqual(0);
     expect(paidInSoFar(sim), 'nobody has put a króna in').toBeGreaterThan(0);
@@ -968,8 +992,11 @@ describe('somebody in a post is somebody on a payroll', () => {
     const owed = chargeThePosts(sim, account.id);
 
     const facts = ROLES.find((one) => one.id === 'production')!;
+    // Plus the employer's contribution on it, which is what a post actually
+    // costs the company: a wage of eleven thousand is 6.35 percent more than
+    // that out the door, and Tryggingagjald is not withheld from the wage.
     expect(owed - already, 'one more post costs what the content says it costs')
-      .toBe(facts.monthlyCents);
+      .toBe(Math.round(facts.monthlyCents * (1 + TRYGGINGAGJALD)));
     expect(account.balance).toBe(before - owed);
     expect(sim.ledger.audit()).toEqual([]);
   });
@@ -986,8 +1013,11 @@ describe('somebody in a post is somebody on a payroll', () => {
     const account = Object.values(sim.universe.accounts)
       .find((one) => one.ownerId === company.id && one.kind === 'company_cash')!;
     const facility = ROLES.find((one) => one.id === 'facility')!.monthlyCents;
-    // Two posts are filled at boot and only one of them costs anything.
-    expect(chargeThePosts(sim, account.id)).toBe(facility);
+    // Two posts are filled at boot and only one of them is paid anything — and
+    // the contribution is charged on what is paid, so a principal on nought adds
+    // nothing to it either.
+    expect(chargeThePosts(sim, account.id))
+      .toBe(Math.round(facility * (1 + TRYGGINGAGJALD)));
   });
 });
 
@@ -1012,11 +1042,53 @@ describe('the sugar is a business that trades, not a number in a file', () => {
     const after = sim.universe.accounts[account]!.balance;
 
     expect(kept, 'a day should clear what the margin says it clears').toBeGreaterThan(0);
-    expect(after - before).toBe(kept);
-    // Three lines, not one net line, because the payroll is the part with
+    // The day sells enough to cover the whole payroll and keeps the margin, but
+    // only pays the workforce — the seven named seats are paid once a month, by
+    // name, so the balance runs a day's worth of them ahead until payday.
+    expect(after - before).toBe(kept + GROUP_POSTS_A_DAY_CENTS);
+    // Four lines, not one net line: sold, wages, the employer's contribution on
+    // those wages, and everything else. One net line would hide the part with
     // three thousand one hundred people on the end of it.
-    const memos = sim.universe.transactions.slice(-3).map((one) => one.memo);
+    const memos = sim.universe.transactions.slice(-4).map((one) => one.memo);
     expect(memos).toContain(PAYROLL_MEMO);
+    expect(memos).toContain(EMPLOYER_TAX_MEMO);
+    expect(sim.ledger.audit()).toEqual([]);
+
+    // And what it sold is the whole cost base plus whatever margin the quota
+    // left, to the cent. This is the check that naming two new costs — the
+    // employer's contribution and the seven seats — invented no money: the cost
+    // base is a day of turnover less a day of margin, whatever America did, and
+    // only the margin moves. The save opens on a shut year, so `kept` here is
+    // below a full day's profit and the sum still closes.
+    const sold = sim.universe.transactions.slice(-4)
+      .find((one) => one.memo === `${GROUP.name}: Sugar Sold`)!;
+    const took = sold.postings.filter((one) => one.amount > 0)
+      .reduce((sum, one) => sum + one.amount, 0);
+    expect(took).toBe(REVENUE_A_DAY_CENTS - PROFIT_A_DAY_CENTS + kept);
+    expect(kept, 'the save opens on a shut year, so the margin is thinner')
+      .toBeLessThan(PROFIT_A_DAY_CENTS);
+  });
+
+  it('pays the seven seats every month, and the year comes to one payroll', () => {
+    // `GROUP_ROLES.monthlyCents` is read here or it is a salary on a screen that
+    // nothing debits — the exact shape this cleanup exists to remove. The five
+    // salaried seats come out of the same payroll the three thousand one hundred
+    // are in rather than on top of it, so the year has to close: twelve months of
+    // named seats plus three hundred and sixty-five days of workforce wages is
+    // the one payroll figure the workforce was sized from.
+    const sim = quickSave({}, 'sugar-seats');
+    const group = theSugarGroup(sim)!;
+    const seats = postsOf(sim.universe, group.id);
+    expect(seats, 'the group should carry its own posts').toHaveLength(7);
+
+    const account = sugarAccount(sim)!;
+    const before = sim.universe.accounts[account]!.balance;
+    const paid = payTheGroupPosts(sim);
+    expect(paid, 'the five salaried seats are charged').toBe(GROUP_POSTS_A_MONTH_CENTS);
+    expect(sim.universe.accounts[account]!.balance).toBe(before - paid);
+    // The two board seats are filled and cost nothing: a director's fee is not a
+    // wage, and the parents draw it through `payTheBoard` instead.
+    expect(GROUP_POSTS_A_MONTH_CENTS).toBe(83_000_00);
     expect(sim.ledger.audit()).toEqual([]);
   });
 
@@ -1107,11 +1179,188 @@ describe('the sugar is a business that trades, not a number in a file', () => {
     const company = parentCompany(sim.universe)!;
     const pictures = Object.values(sim.universe.accounts)
       .find((one) => one.ownerId === company.id && one.kind === 'company_cash')!;
-    aDayOfSugar(sim);
     const sugar = sugarAccount(sim)!;
-    // One day's trading leaves less than the fortnight of payroll it holds back.
+    // The group opens holding exactly the fortnight of payroll it refuses to go
+    // under, so the save begins at the floor and the first day of trading is what
+    // puts it above the line. That is the right shape for a business: the money
+    // to fund a film comes from having sold something, not from the boot.
+    expect(sim.universe.accounts[sugar]!.balance).toBe(GROUP_OPENING_BALANCE);
+    expect(GROUP_OPENING_BALANCE).toBe(KEPT_IN_HAND_CENTS);
+    expect(sugarCoversThePictures(sim, pictures.id), 'nothing is spare at the floor').toBe(0);
+
+    // A bad enough year takes it under, and then the wages come first.
+    sim.expense(sugar, 1_000_000_00, 'Test: a year that went badly', 'business');
     expect(sim.universe.accounts[sugar]!.balance).toBeLessThan(KEPT_IN_HAND_CENTS);
     sim.expense(pictures.id, pictures.balance + 1_000_000_00, 'Test: overspend', 'business');
+    expect(pictures.balance).toBeLessThan(0);
     expect(sugarCoversThePictures(sim, pictures.id)).toBe(0);
+  });
+});
+
+describe('everything else it takes to run a company, which the group did not have', () => {
+  /**
+   * The group had a name, a legal form and a cap table, and that was all of it.
+   * The production company was put on its registers, given its own account and
+   * given its posts at boot; the company that actually employed three thousand
+   * one hundred people had no standing to employ anybody, no account until
+   * something asked for one, and nobody named as running it.
+   */
+
+  it('is on the three registers a 1946 employer is obviously on', () => {
+    const sim = world('group-registers');
+    const group = theSugarGroup(sim)!;
+    const on = registrationsOf(sim.universe, group.id);
+    expect(on.map((one) => one.registry).sort()).toEqual([...GROUP_REGISTRIES].sort());
+    // Dated from the founding. A company trading since 1946 did not register
+    // last Tuesday, and every one of them carries a real number.
+    for (const one of on) {
+      expect(one.since).toBe(group.foundedAt);
+      expect(one.number.length).toBeGreaterThan(0);
+      expect(one.nextDueAt, 'a registration with nothing due is one nobody files')
+        .toBeGreaterThan(sim.now);
+    }
+    expect(new Date(group.foundedAt).getUTCFullYear()).toBe(GROUP.since);
+  });
+
+  it('has an account of its own from the first morning, not on demand', () => {
+    const sim = world('group-account');
+    const group = theSugarGroup(sim)!;
+    const account = cashAccountFor(sim.universe, group.id);
+    expect(account, 'the group should bank somewhere').toBeTruthy();
+    expect(account!.balance).toBe(GROUP_OPENING_BALANCE);
+    expect(account!.ownerId).toBe(group.id);
+    // And it is not the film company's account. Two companies, two accounts, and
+    // the group is founded first — so anything reaching for "the company
+    // account" by kind alone finds the cane business.
+    const pictures = cashAccountFor(sim.universe, parentCompany(sim.universe)!.id);
+    expect(pictures!.id).not.toBe(account!.id);
+    expect(companyCash(sim.universe), 'the group is not part of the film side’s cash')
+      .toBe(pictures!.balance);
+  });
+
+  it('is run by five people with names, and the same seed gives the same five', () => {
+    const sim = world('group-staff');
+    const group = theSugarGroup(sim)!;
+    const seats = postsOf(sim.universe, group.id);
+    expect(seats).toHaveLength(GROUP_ROLES.length);
+
+    const salaried = seats.filter((one) => !BOARD_SEATS
+      .includes(one.role as typeof BOARD_SEATS[number]));
+    expect(salaried).toHaveLength(5);
+    for (const post of salaried) {
+      const who = sim.universe.people[post.personId!];
+      expect(who, `${post.role} is an empty chair at a company trading since 1946`).toBeTruthy();
+      expect(who!.displayName.length).toBeGreaterThan(0);
+      expect(who!.careerTrack).toBe('executive');
+      // Senior. Nobody mills two point two million tonnes a year at twenty-six.
+      const age = (sim.now - who!.birthInstant) / (365.2425 * 24 * 60 * 60 * 1000);
+      expect(age).toBeGreaterThanOrEqual(41);
+      expect(age).toBeLessThan(64);
+      // And nothing invented about them beyond that: no fame, no attribute
+      // sheet with anything in it. Nothing reads a head of milling's technique.
+      expect(who!.reputation.publicFame).toBe(0);
+    }
+
+    // The two board seats are the parents', not hired.
+    const board = seats.filter((one) => BOARD_SEATS
+      .includes(one.role as typeof BOARD_SEATS[number]));
+    const owners = group.ownerships.map((one) => one.holderId).sort();
+    expect(board.map((one) => one.personId!).sort()).toEqual(owners);
+
+    // Deterministic, and keyed per seat: the same seed is the same board.
+    const names = (s: Simulation) => postsOf(s.universe, theSugarGroup(s)!.id)
+      .map((one) => `${one.role}:${s.universe.people[one.personId!]?.displayName ?? ''}`).sort();
+    expect(names(world('group-staff'))).toEqual(names(sim));
+    // And a different seed is a different company's management.
+    expect(names(world('group-staff-other'))).not.toEqual(names(sim));
+  });
+
+  it('pays corporation tax on the year, which nothing in this game had ever paid', () => {
+    // `CORPORATION_TAX` has been 0.20 for as long as there has been a company
+    // here, and the only thing that read it was a test asserting it still
+    // equals 0.20. `docs/UNBITTEN.md` put it plainly: corporation tax is not
+    // inert, it does not exist. This is the only company with a profit to tax.
+    const sim = world('group-tax');
+    const account = sugarAccount(sim)!;
+    const before = sim.universe.accounts[account]!.balance;
+    const owed = payTheCorporationTax(sim);
+
+    expect(owed, 'a hundred and fifty-four million of untaxed profit').toBeGreaterThan(0);
+    expect(owed).toBe(Math.round(profitThisYear(sim) * CORPORATION_TAX));
+    expect(sim.universe.accounts[account]!.balance).toBe(before - owed);
+    expect(sim.ledger.audit()).toEqual([]);
+
+    // It is charged on the year the group actually had, so a shut year is taxed
+    // less. That is the check that it reads the world rather than a constant.
+    const shut = world('group-tax-shut');
+    shut.universe.quotaYears.push({
+      fiscalYear: 2031, tonnes: 0, decidedAt: shut.now, because: 'Shut, for this test.',
+    });
+    const open = world('group-tax-open');
+    open.universe.quotaYears.push({
+      fiscalYear: 2031, tonnes: QUOTA.ordinaryTonnes, decidedAt: open.now, because: 'Open, for this test.',
+    });
+    expect(payTheCorporationTax(shut)).toBeLessThan(payTheCorporationTax(open));
+  });
+
+  it('pays the employer’s own contribution, which no company here ever had', () => {
+    // Tryggingagjald: 6.35%, real, named in a comment in `content/tax.ts` that
+    // was right about where it does not belong — a wage somebody takes home —
+    // and silent about where it does.
+    expect(TRYGGINGAGJALD).toBe(0.0635);
+
+    const sim = world('group-employer-tax');
+    const account = sugarAccount(sim)!;
+    aDayOfSugar(sim);
+    const day = sim.universe.transactions.slice(-4).find((one) => one.memo === EMPLOYER_TAX_MEMO);
+    expect(day, 'three thousand one hundred people and no contribution on them').toBeTruthy();
+    expect(day!.postings.filter((one) => one.amount > 0)
+      .reduce((sum, one) => sum + one.amount, 0))
+      .toBe(Math.round(PAYROLL_A_DAY_CENTS * TRYGGINGAGJALD));
+
+    // Derived from the payroll and taken out of the cost of goods, so naming it
+    // invents nothing: the lines a day still come to what the day sold.
+    expect(COST_OF_GOODS_A_DAY_CENTS)
+      .toBe(REVENUE_A_DAY_CENTS - PROFIT_A_DAY_CENTS - PAYROLL_A_DAY_CENTS - EMPLOYER_TAX_A_DAY_CENTS);
+    expect(sim.universe.accounts[account]!.balance).toBeGreaterThan(0);
+  });
+
+  it('keeps the family’s refusal, and gives it teeth that are not an overdraft', () => {
+    // The condition is real and it bites: past the last rung, a month the lot
+    // let nothing is a month the company funds itself. What it withholds is the
+    // money to do something with, not the money to settle what is owed.
+    //
+    // The first version refused on both clocks, and measured over twenty-five
+    // years the company then sat at minus EUR 708,143 for a fortnight at a time
+    // while the group held EUR 172,091,226 spare. A cane business with a hundred
+    // and seventy million in the bank does not let the film company it owns
+    // bounce a bill to make a point; it declines to fund another picture.
+    const sim = world('refusal-teeth');
+    const company = parentCompany(sim.universe)!;
+    const account = cashAccountFor(sim.universe, company.id)!;
+    for (let day = 0; day < 120; day += 1) aDayOfSugar(sim);
+
+    // Put the family past the last rung, with the lot having earned nothing.
+    const sugar = sugarAccount(sim)!;
+    sim.transfer(sugar, account.id, Math.round(GROUP_PROFIT_CENTS * 0.9), PAID_IN, 'business');
+    expect(standingWith(sim).conditional, 'the last rung should be reachable').toBe(true);
+
+    // Spend it under, then let the day run.
+    sim.expense(account.id, account.balance + 2_000_000_00, 'Test: a month that earned nothing', 'business');
+    expect(account.balance).toBeLessThan(0);
+    const put = familyCoversToday(sim, account.id);
+
+    expect(put, 'the day settles what is owed whatever the family thinks').toBeGreaterThan(0);
+    expect(account.balance, 'and settles it exactly, with nothing to spend').toBe(0);
+    // Which is the teeth: at nought the company is under the greenlight floor,
+    // so it cannot say yes to anything until the lot lets a stage again.
+    expect(account.balance).toBeLessThan(GREENLIGHT_FLOOR);
+    expect(capabilitiesOf(sim).find((one) => one.id === 'greenlight')!.can).toBe(false);
+
+    // And the month refuses, which is where the refusal lives now.
+    sim.expense(account.id, 1_000_000_00, 'Test: another month of it', 'business');
+    expect(familyCovers(sim, account.id, 0)).toBe(0);
+    // A month it earned something is funded again, so there is always a way back.
+    expect(familyCovers(sim, account.id, 5_000_00)).toBeGreaterThan(0);
   });
 });

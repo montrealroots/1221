@@ -60,7 +60,7 @@ import {
 } from '@/engine/content/incorporation';
 import {
   americanArm, capabilitiesOf, companyCash, holdingsOf, parentCompany, policiesOf,
-  postsOf, projectsOf, registrationsOf, signaturesOf, whereItStands,
+  postFacts, postsOf, projectsOf, registrationsOf, signaturesOf, whereItStands,
   type Blocker, type Capability,
 } from '@/engine/world/company';
 
@@ -1316,12 +1316,22 @@ function TheFifthRoom() {
   );
 }
 
-/** Where it stands with everybody it has to stand with. */
+/**
+ * Where it stands with everybody it has to stand with.
+ *
+ * Scoped to the production company, which it was not. These four read the whole
+ * save, and for as long as the sugar group was a name with a cap table and
+ * nothing under it that came to the same thing. The group is on three registers
+ * and carries seven posts now, so unscoped this panel told a producer their
+ * company employed a head of agronomy and had been VAT registered since 1946.
+ */
 function Standings() {
-  const registrations = useWorld((s) => registrationsOf(s.universe));
-  const signatures = useWorld((s) => signaturesOf(s.universe));
-  const policies = useWorld((s) => policiesOf(s.universe));
-  const posts = useWorld((s) => postsOf(s.universe));
+  const company = useWorld((s) => parentCompany(s.universe));
+  const id = company?.id;
+  const registrations = useWorld((s) => registrationsOf(s.universe, id));
+  const signatures = useWorld((s) => signaturesOf(s.universe, id));
+  const policies = useWorld((s) => policiesOf(s.universe, id));
+  const posts = useWorld((s) => postsOf(s.universe, id));
   const { sim } = useGame();
 
   return (
@@ -1383,7 +1393,7 @@ function Standings() {
             return (
               <div key={one.id} className="row-between">
                 <div className="small strong">
-                  <Open subject={at('role', one.role)}>{ROLE_BY_ID[one.role].label}</Open>
+                  <Open subject={at('role', one.role)}>{postFacts(one.role)?.label ?? one.role}</Open>
                 </div>
                 <span className="xs dim">{who ? who.displayName || who.firstName : 'Empty'}</span>
               </div>

@@ -27,10 +27,17 @@ import type { Instant } from '../core/time';
 import { instantFromZoned, zonedParts } from '../core/time';
 import {
   A_PARENT_A_MONTH_CENTS, COST_OF_GOODS_A_DAY_CENTS, GROUP, GROUP_PROFIT_CENTS,
-  A_YEAR_OF_DAYS, KEPT_IN_HAND_CENTS, PAID_IN_MEMO, PAYROLL_A_DAY_CENTS, QUOTA, THE_TARIFF,
-  profitAfterQuota,
+  A_YEAR_OF_DAYS, EMPLOYER_TAX_A_DAY_CENTS, GROUP_ROLE_BY_ID, KEPT_IN_HAND_CENTS, PAID_IN_MEMO,
+  PAYROLL_A_DAY_CENTS, QUOTA, TAX_RETURN_MONTH, THE_TARIFF, WAGES_A_DAY_CENTS,
+  profitAfterQuota, type GroupRoleId,
 } from '../content/sugar';
 import { parentCompany, theSugarGroup } from './company';
+import { CORPORATION_TAX } from '../content/incorporation';
+import type { Person } from '../domain/model';
+import { emptyAttributeSheet } from '../domain/attributes';
+import { freshWellbeing } from '../systems/life';
+import { impliedPerformerTitle } from '../core/performer';
+import { MEN, WOMEN, patronymic } from '../content/names';
 import { familyCoversToday, startOfNextMonth } from './lot';
 
 export const QUOTA_KIND = 'sugar.quota';
@@ -145,8 +152,9 @@ export function registerSugar(sim: Simulation): void {
     });
   });
 
-  // And the board draws once a month.
+  // And the board draws once a month, and the seven seats are paid.
   sim.onSchedule(SUGAR_PAYDAY_KIND, () => {
+    payTheGroupPosts(sim);
     payTheBoard(sim);
     sim.schedule({
       at: startOfNextMonth(sim.now, sim.homeZone),
@@ -211,6 +219,44 @@ export function registerSugar(sim: Simulation): void {
     });
   });
 
+  // Corporation tax, once a year, when the return is due.
+  sim.onSchedule(SUGAR_TAX_KIND, () => {
+    const paid = payTheCorporationTax(sim);
+    if (paid > 0) {
+      sim.notify({
+        category: 'business',
+        title: `${GROUP.name} Files Its Return`,
+        body: `${euros(paid)} of corporation tax on the year, at ${Math.round(CORPORATION_TAX * 100)} percent. `
+          + 'The group has always cleared this much and has never been taxed on it until now.',
+        importance: 30,
+      });
+    }
+    const zone = sim.homeZone;
+    sim.schedule({
+      at: instantFromZoned(
+        { year: zonedParts(sim.now, zone).year + 1, month: TAX_RETURN_MONTH, day: 31, hour: 9, minute: 0 },
+        zone,
+      ),
+      kind: SUGAR_TAX_KIND,
+      label: 'The Group’s Tax Return',
+      category: 'system',
+      priority: 7,
+    });
+  });
+
+  if (!sim.universe.scheduled.some((i) => i.kind === SUGAR_TAX_KIND && i.status === 'pending')) {
+    const zone = sim.homeZone;
+    const here = zonedParts(sim.now, zone);
+    const next = here.month <= TAX_RETURN_MONTH ? here.year : here.year + 1;
+    sim.schedule({
+      at: instantFromZoned({ year: next, month: TAX_RETURN_MONTH, day: 31, hour: 9, minute: 0 }, zone),
+      kind: SUGAR_TAX_KIND,
+      label: 'The Group’s Tax Return',
+      category: 'system',
+      priority: 7,
+    });
+  }
+
   if (!sim.universe.scheduled.some((i) => i.kind === QUOTA_KIND && i.status === 'pending')) {
     const zone = sim.homeZone;
     const here = zonedParts(sim.now, zone);
@@ -254,12 +300,15 @@ export function chairOf(sim: Simulation, groupId: Id): Id | undefined {
 
 export const SUGAR_DAY_KIND = 'sugar.day';
 export const SUGAR_PAYDAY_KIND = 'sugar.payday';
+export const SUGAR_TAX_KIND = 'sugar.tax';
 
 /** What the group sells under, so `profitThisYear`'s figure has a ledger behind it. */
 export const SALES_MEMO = `${GROUP.name}: Sugar Sold`;
 export const PAYROLL_MEMO = `${GROUP.name}: Wages`;
 export const GOODS_MEMO = `${GROUP.name}: Cane, Milling And Freight`;
 export const BOARD_MEMO = `${GROUP.name}: Directors`;
+export const EMPLOYER_TAX_MEMO = `${GROUP.name}: Tryggingagjald`;
+export const CORPORATION_TAX_MEMO = `${GROUP.name}: Corporation Tax`;
 // What it sends the pictures goes out under `PAID_IN_MEMO`, not under a memo of
 // its own: that memo is what the lot's patience is counted from, and a second
 // name for the same money is a posting nobody reads.
@@ -306,7 +355,7 @@ export function aDayOfSugar(sim: Simulation): Money {
   const quota = quotaNow(sim);
   // The costs are the costs: three thousand one hundred people are paid and the
   // cane is bought whatever Washington did.
-  const costs = PAYROLL_A_DAY_CENTS + COST_OF_GOODS_A_DAY_CENTS;
+  const costs = PAYROLL_A_DAY_CENTS + EMPLOYER_TAX_A_DAY_CENTS + COST_OF_GOODS_A_DAY_CENTS;
   // And what America decides moves the PROFIT, not whether the group trades.
   //
   // The first version of this scaled the day's sales by the quota, so a shut
@@ -320,9 +369,77 @@ export function aDayOfSugar(sim: Simulation): Money {
   const profit = Math.round(aYear / A_YEAR_OF_DAYS);
   const sold = costs + profit;
   sim.income(account, sold, SALES_MEMO, 'business');
-  sim.expense(account, PAYROLL_A_DAY_CENTS, PAYROLL_MEMO, 'business');
+  // The workforce, less the seven whose seats are paid monthly by name. Over a
+  // year the two lines come to the same payroll; within a month the group runs a
+  // little ahead and then settles it, which is what a payroll actually does.
+  sim.expense(account, WAGES_A_DAY_CENTS, PAYROLL_MEMO, 'business');
+  // The employer's own contribution on those wages, as its own line. A real
+  // Icelandic tax at a real rate that no company in this save had ever paid: it
+  // was inside the cost of goods, unnamed, and `content/tax.ts` had a comment
+  // saying where it does not belong and nothing saying where it does.
+  sim.expense(account, EMPLOYER_TAX_A_DAY_CENTS, EMPLOYER_TAX_MEMO, 'business');
   sim.expense(account, COST_OF_GOODS_A_DAY_CENTS, GOODS_MEMO, 'business');
   return profit;
+}
+
+/**
+ * Corporation tax, once a year, on the year the group actually had.
+ *
+ * `CORPORATION_TAX` has been 0.20 in `content/incorporation.ts` for as long as
+ * there has been a company in this game, and the only thing that had ever read
+ * it was a test asserting it still equals 0.20 — a test that can fail only when
+ * somebody edits it on purpose. `docs/UNBITTEN.md` records the state correctly
+ * and bluntly: corporation tax is not inert, it does not exist.
+ *
+ * It exists here because this is the only company in the save with a profit to
+ * tax. The production company spends what it is given and delivers pictures at
+ * a margin the family absorbs; the group clears a hundred and fifty-four million
+ * a year, and a hundred and fifty-four million of untaxed profit is the single
+ * least believable number in the save.
+ *
+ * Charged on the operating profit for the year, which is what `profitThisYear`
+ * means and goes on meaning — the patience rungs are calibrated against that
+ * figure and moving it to an after-tax basis would silently recalibrate the
+ * family's whole tolerance for the lot. What the tax changes is the balance,
+ * which is the thing a tax should change.
+ */
+export function payTheCorporationTax(sim: Simulation): Money {
+  const account = sugarAccount(sim);
+  if (!account) return 0;
+  const owed = Math.round(profitThisYear(sim) * CORPORATION_TAX);
+  if (owed <= 0) return 0;
+  sim.expense(account, owed, CORPORATION_TAX_MEMO, 'business');
+  return owed;
+}
+
+/**
+ * The seven posts, paid monthly, the way the production company's are.
+ *
+ * Their pay comes out of the same payroll the three thousand one hundred are in
+ * rather than on top of it — `WAGES_A_DAY_CENTS` is the workforce less these
+ * seven — so naming them costs the group nothing it was not already paying. The
+ * alternative was `monthlyCents` on `GROUP_ROLES` being a figure printed on a
+ * screen and charged to nobody, which is the defect this whole cleanup is about,
+ * or leaving the group's management inside an average and having no answer at
+ * all to who runs it.
+ *
+ * The two board seats are costed at nought and skipped here. The parents draw
+ * through `payTheBoard`, a director's fee is not a wage, and no employer
+ * contribution is due on one.
+ */
+export function payTheGroupPosts(sim: Simulation): Money {
+  const account = sugarAccount(sim);
+  const group = theSugarGroup(sim);
+  if (!account || !group) return 0;
+  let paid = 0;
+  for (const post of Object.values(sim.universe.posts)) {
+    if (post.companyId !== group.id) continue;
+    const facts = GROUP_ROLE_BY_ID[post.role as GroupRoleId];
+    if (!facts || facts.monthlyCents <= 0) continue;
+    sim.expense(account, facts.monthlyCents, `${GROUP.name}: ${facts.label}`, 'business');
+    paid += facts.monthlyCents;
+  }
+  return paid;
 }
 
 /** An account for somebody who did not have one, so a wage can land in it. */
@@ -426,4 +543,100 @@ export function sugarCoversThePictures(sim: Simulation, accountId: Id, step: Mon
   if (sent <= 0) return 0;
   sim.transfer(from, accountId, sent, PAID_IN_MEMO, 'business');
   return sent;
+}
+
+// ---------------------------------------------------------------------------
+// The people who actually run it
+// ---------------------------------------------------------------------------
+
+/**
+ * Whoever holds the five salaried seats, as people rather than as empty chairs.
+ *
+ * A post with nobody in it is the right shape for the film company, where
+ * filling one is a decision the player makes and a door it opens. It is the
+ * wrong shape here. The group has been trading since 1946 and employs three
+ * thousand one hundred people; its managing director is not a vacancy waiting
+ * for the player, and the screen that says who runs the business should be able
+ * to answer.
+ *
+ * Built on the same generator shape the crew uses — a name off `content/names.ts`
+ * with a real Icelandic patronymic, a draw for who they are, `performerTitle`
+ * from their own pronouns because the field is not optional and is not a claim
+ * about them — and drawn off the save's own seeded stream, so the same seed gives
+ * the same board every time and two saves do not share a managing director.
+ *
+ * What is deliberately not here: an attribute sheet with anything in it. Nothing
+ * reads a head of milling's technique, and eighty-eight numbers saying nothing is
+ * the shape this project deletes rather than the shape it writes.
+ */
+export function staffTheGroup(sim: Simulation): Person[] {
+  const group = theSugarGroup(sim);
+  if (!group) return [];
+  const player = sim.universe.people[sim.universe.playerId];
+  if (!player) return [];
+
+  const made: Person[] = [];
+  for (const post of Object.values(sim.universe.posts)) {
+    if (post.companyId !== group.id || post.personId !== undefined) continue;
+    const facts = GROUP_ROLE_BY_ID[post.role as GroupRoleId];
+    if (!facts) continue;
+    // One stream per seat, keyed by the seat, so adding a post later does not
+    // rename everybody already in the save.
+    const stream = sim.rng('sugar', 'staff', post.role);
+    const next = (): number => stream.next();
+    const woman = next() < 0.5;
+    const given = woman
+      ? WOMEN[Math.floor(next() * WOMEN.length)] ?? 'Anna'
+      : MEN[Math.floor(next() * MEN.length)]?.name ?? 'Jón';
+    const father = MEN[Math.floor(next() * MEN.length)] ?? MEN[0]!;
+    const surname = patronymic(father, woman ? 'dóttir' : 'son');
+    const pronouns = woman ? 'she/her' : 'he/him';
+    const dial = () => Math.round(30 + next() * 45);
+    // Senior people. Nobody runs the milling of two point two million tonnes at
+    // twenty-six, and the range is what a board of a seventy-year-old group
+    // actually looks like.
+    const years = 41 + Math.floor(next() * 23);
+
+    const person: Person = {
+      id: sim.nextId('person'),
+      saveId: sim.universe.meta.id,
+      isPlayer: false,
+      firstName: given,
+      lastName: surname,
+      displayName: `${given} ${surname}`,
+      pronouns,
+      // A required word and not a claim. Nobody at a sugar mill is billed as
+      // either, and what it holds is what their own pronouns imply.
+      // both-titles: the word itself, which is what this comment is about.
+      performerTitle: impliedPerformerTitle(pronouns),
+      birthInstant: sim.now - Math.round(years * 365.2425 * 24 * 60 * 60 * 1000),
+      gender: woman ? 'female' : 'male',
+      homeRegionId: player.homeRegionId,
+      citizenshipId: player.citizenshipId,
+      currentLocationId: player.currentLocationId,
+      personality: {
+        conscientiousness: dial(), emotionalStability: dial(), ambition: dial(),
+      },
+      interests: [],
+      background: `${facts.label} at ${GROUP.name}. ${facts.what}`,
+      attributes: emptyAttributeSheet(),
+      traits: [],
+      wellbeing: freshWellbeing(),
+      reputation: {
+        publicFame: 0,
+        audienceAppeal: 50,
+        professionalReputation: dial(),
+        reliability: dial(),
+        industryDemand: 0,
+        controversy: 0,
+      },
+      careerTrack: 'executive',
+      createdAt: sim.now,
+    };
+    sim.universe.people[person.id] = person;
+    post.personId = person.id;
+    post.filledAt = group.foundedAt < sim.now ? sim.now : group.foundedAt;
+    made.push(person);
+  }
+  return made;
 }

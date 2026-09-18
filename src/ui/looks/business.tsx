@@ -15,17 +15,18 @@
 
 import type { Simulation } from '@/engine';
 import type {
-  Company, GuildId, Holding, Policy, PolicyKind, Post, Project, Registration,
-  RegistryId, RoleId, Signature,
+  Company, GuildId, Holding, Policy, PolicyKind, Post, PostRole, Project, Registration,
+  RegistryId, Signature,
 } from '@/engine/domain/company';
 import {
   FORM_BY_ID, GLOBAL_RULE_ONE, GUILDS, GUILD_BY_ID, INCORPORATION_NOTE, POLICIES,
-  POLICY_BY_ID, REBATE, REGISTRIES, REGISTRY_BY_ID, ROLES, ROLE_BY_ID,
+  POLICY_BY_ID, REBATE, REGISTRIES, REGISTRY_BY_ID, ROLES,
 } from '@/engine/content/incorporation';
 import {
   americanArm, capabilitiesOf, companiesOf, companyCash, holdingsOf, parentCompany,
-  policiesOf, postsOf, projectsOf, registrationsOf, signaturesOf, whereItStands,
+  policiesOf, postFacts, postsOf, projectsOf, registrationsOf, signaturesOf, whereItStands,
 } from '@/engine/world/company';
+import { GROUP_ROLES } from '@/engine/content/sugar';
 import { DELIVERY, type Element } from '@/engine/content/making';
 import { TIERS, WINDOWS, dealById } from '@/engine/content/selling';
 import { standingOf, whereTheMoneyStands } from '@/engine/world/selling';
@@ -64,6 +65,38 @@ const whoIs = (sim: Simulation, post: Post): string | undefined => {
 // ---------------------------------------------------------------------------
 // The company
 // ---------------------------------------------------------------------------
+
+/**
+ * What the legal form means for this company, rather than in general.
+ *
+ * `FormFacts.what` was written for somebody choosing a form, and the `hf.` entry
+ * says what it says because that is true of the form: far more share capital, a
+ * real board, audited accounts, "and the form a company takes when outside money
+ * comes in at scale". Every share of the sugar group is held by two parents, and
+ * this look printed that sentence one line above their names. An Icelandic hf. is
+ * under no obligation to list, a 1946 cane group at this size takes the form for
+ * the capital and the board and the audit, and the page was telling a player
+ * about outside money that has never once come in.
+ *
+ * So the claim is cut, and only where it is false: a company whose whole cap
+ * table is people, holding a form whose blurb makes the claim. Read off
+ * `ownerships` rather than hardcoded against the sugar group, so it follows the
+ * world — sell a share to somebody outside the family and the form’s own
+ * sentence comes back by itself, which is the point of reading rather than
+ * asserting. A private company’s blurb never makes the claim and is returned
+ * untouched, because an ehf. is private by definition and has nothing to explain.
+ */
+const RAISING = /,? and the form a company takes when outside money comes in at scale\.?$/;
+
+function firmOwnership(company: Company, form: { what: string }): string {
+  if (!RAISING.test(form.what)) return form.what;
+  const held = company.ownerships.reduce((sum, one) => sum + one.percent, 0);
+  const allPeople = company.ownerships.every((one) => one.holderKind === 'person');
+  if (held < 100 || !allPeople) return form.what;
+  return `${form.what.replace(RAISING, '.')} Every share of it is held inside the family, `
+    + 'and a company of this form is under no obligation to list — the share capital, the board '
+    + 'and the audited accounts are the reasons to be one.';
+}
 
 defineLook<Company>('firm', {
   gone: 'That company was wound up, and whatever it held went somewhere else.',
@@ -136,7 +169,7 @@ defineLook<Company>('firm', {
       body: (
         <>
           <p className="small">
-            {form.what}{' '}
+            {firmOwnership(company, form)}{' '}
             {isParent
               ? `It was formed on ${formatDate(company.foundedAt, sim.homeZone)}, before the stages went up, `
                 + 'because you can’t build a sound stage through a company that doesn’t exist yet.'
@@ -885,17 +918,28 @@ defineLook<Project>('project', {
 
 interface Roled { id: string; post?: Post }
 
+/**
+ * A post at either company.
+ *
+ * This resolved out of `ROLE_BY_ID` and hung every post off `parentCompany`, so
+ * the seven seats at the sugar group opened onto “There’s no such post” and, had
+ * they resolved, would have claimed to sit at the film company. Both tables are
+ * tried now and the company comes off the post itself, which is where it has
+ * always been recorded.
+ */
 defineLook<Roled>('role', {
   gone: 'There’s no such post.',
   resolve: (sim, id) => {
-    if (!ROLE_BY_ID[id as RoleId]) return undefined;
+    if (!postFacts(id as PostRole)) return undefined;
     return { id, post: postsOf(sim.universe).find((one) => one.role === id) };
   },
-  seeds: () => ROLES.map((one) => one.id),
+  seeds: () => [...ROLES.map((one) => one.id), ...GROUP_ROLES.map((one) => one.id)],
   look: ({ id, post }, { sim }) => {
-    const facts = ROLE_BY_ID[id as RoleId];
+    const facts = postFacts(id as PostRole)!;
     const who = post ? whoIs(sim, post) : undefined;
-    const company = parentCompany(sim.universe);
+    const company = post
+      ? sim.universe.companies[post.companyId]
+      : parentCompany(sim.universe);
     const ways: Way[] = [];
     if (post?.personId) {
       ways.push({ to: at('person', post.personId), label: who ?? 'Them', detail: 'Who is in the post, and how they are' });

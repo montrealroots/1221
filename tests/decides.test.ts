@@ -20,9 +20,12 @@
 import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
 import type { Simulation } from '@/engine';
-import { GREENLIGHT_FLOOR, capabilitiesOf, companyCash } from '@/engine/world/company';
+import {
+  GREENLIGHT_FLOOR, capabilitiesOf, companyCash, parentCompany, postFacts,
+} from '@/engine/world/company';
 import { fixFor } from '@/ui/workspaces/fix';
-import { ROLE_BY_ID } from '@/engine/content/incorporation';
+import { EMPLOYER_TAX_ON_POSTS } from '@/engine/world/lot';
+import { TRYGGINGAGJALD } from '@/engine/content/sugar';
 
 /** Priced, bought with a command, and read by nothing in the engine. */
 const PRICED_AND_QUIET = [
@@ -149,17 +152,21 @@ describe('what the five priced quiet entries decide', () => {
     }
   });
 
-  it('never charges the salary the screen promises for any of them', () => {
-    // `RoleFacts.monthlyCents` is written onto the post and printed three times
-    // as a recurring cost: on the fill form, in the hire notification, and on
-    // the post's own page. Nothing debits it. Paired, because the company does
-    // have running costs — the lot's overhead alone takes it from €90,800 to
-    // €18,161.29 over the same thirteen months — and an absolute figure would
-    // be measuring those instead.
+  it('charges every salary the screen promises, and the tax on top of it', () => {
+    // This test used to assert the opposite and pass for a reason that had
+    // nothing to do with salaries. `RoleFacts.monthlyCents` was printed three
+    // times as a recurring cost and debited nowhere, so it compared the ending
+    // balance of a staffed company against an empty one and expected them equal.
+    // They were — because `familyCovers` tops the company up to a round hundred
+    // thousand whenever it goes under, so both arms landed on the same round
+    // number no matter what either had spent. The salaries are charged now, and
+    // an ending balance is the one figure that cannot see it.
+    //
+    // So it reads the postings. Every króna charged under a post's own label,
+    // plus the employer's contribution on all of them, against what the screens
+    // promise — which is what "the figure on the form is the figure debited"
+    // actually means.
     const months = 400 * 24 * 60 * 60 * 1000;
-    const empty = walked('decides-a');
-    empty.advanceTo(empty.now + months);
-
     const staffed = walked('decides-a');
     const who = Object.values(staffed.universe.people)[0]!;
     for (const role of ['development', 'production', 'business_affairs', 'accountant']) {
@@ -168,14 +175,38 @@ describe('what the five priced quiet entries decide', () => {
     // Off the role's own row and not off the post, because the post no longer
     // carries a copy of the figure — that copy was written and never read, and
     // a second answer waiting to disagree with the first is what it would be.
-    const promised = Object.values(staffed.universe.posts)
-      .filter((one) => one.personId)
-      .reduce((sum, one) => sum + (ROLE_BY_ID[one.role]?.monthlyCents ?? 0), 0);
-    expect(promised, 'the posts promise nothing, so there is nothing to charge')
-      .toBe(45_000_00);
+    // The production company's posts, not every post in the save: the sugar group
+    // carries seven of its own and two of them are filled, and it only happens to
+    // come to the same figure because a director's fee is not a salary and both
+    // board seats are costed at nought.
+    const ours = parentCompany(staffed.universe)!.id;
+    const filled = Object.values(staffed.universe.posts)
+      .filter((one) => one.personId && one.companyId === ours);
+    const promised = filled
+      .reduce((sum, one) => sum + (postFacts(one.role)?.monthlyCents ?? 0), 0);
+    expect(promised, 'six posts filled, five of them priced').toBe(45_000_00);
+
+    const before = staffed.universe.transactions.length;
     staffed.advanceTo(staffed.now + months);
 
-    expect(companyCash(staffed.universe), 'a salary was charged, so this test is stale')
-      .toBe(companyCash(empty.universe));
+    const labels = new Set(filled.map((one) => postFacts(one.role)!.label));
+    const since = staffed.universe.transactions.slice(before);
+    const paid = (memo: (one: string) => boolean): number => since
+      .filter((one) => memo(one.memo))
+      .reduce((sum, one) => sum + one.postings
+        .filter((p) => p.amount > 0).reduce((m, p) => m + p.amount, 0), 0);
+
+    const wages = paid((memo) => labels.has(memo));
+    const onTop = paid((memo) => memo === EMPLOYER_TAX_ON_POSTS);
+    expect(wages, 'the posts are on a payroll and it runs every month')
+      .toBeGreaterThan(0);
+    // Thirteen months of it, so the two figures are each other's check: the
+    // contribution is a fixed share of what was actually paid, and if either
+    // line drifts the ratio says so rather than a balance somewhere swallowing it.
+    expect(wages % promised, 'a whole number of months, or a month was missed').toBe(0);
+    expect(wages / promised, 'thirteen months between the two dates').toBe(13);
+    expect(onTop, 'the employer pays on top of the wage, and it is not withheld')
+      .toBe(Math.round(promised * TRYGGINGAGJALD) * 13);
+    expect(staffed.ledger.audit()).toEqual([]);
   });
 });

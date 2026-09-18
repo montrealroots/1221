@@ -37,7 +37,7 @@ import {
   whereTheBuildStands, whereTheLotStands, whyNotBuild, wholeHold,
   wouldBook, familyTakesItBack,
 } from '@/engine/world/lot';
-import { capabilitiesOf, parentCompany } from '@/engine/world/company';
+import { capabilitiesOf, cashAccountFor, parentCompany } from '@/engine/world/company';
 
 /** Five years of the world running, with nobody doing anything about it. */
 function fiveYears(seed: string): { sim: Simulation; from: number } {
@@ -110,8 +110,7 @@ describe('what the lot measures itself against', () => {
   it('charges exactly what it says a month costs', () => {
     const sim = quickSave({}, 'break-even-charge');
     sim.execute({ kind: 'lot.sell', payload: { monthlyCents: SELLING.most } });
-    const account = Object.values(sim.universe.accounts)
-      .find((a) => a.kind === 'company_cash' && !a.closedAt)!;
+    const account = cashAccountFor(sim.universe, parentCompany(sim.universe)!.id)!;
     const said = monthlyOverhead(sim);
     const spent = chargeTheMonth(sim, account.id);
     expect(spent).toBe(said);

@@ -218,7 +218,13 @@ describe('Your People', () => {
         twin: { firstName: 'Katla', gender: 'female', identical: true, role: 'the house' },
       },
     });
-    const people = Object.values(sim.universe.people);
+    // The player and their own relations. This read every person in the save and
+    // expected four, which was the family for as long as the family were the only
+    // people in it; the sugar group is staffed now, with a managing director and
+    // four heads who have their own patronymics and are nobody's relatives.
+    const player = sim.universe.people[sim.universe.playerId]!;
+    const people = [player, ...(player.relations ?? [])
+      .map((one) => sim.universe.people[one.toId]!)];
     const by = (first: string) => people.find((one) => one.firstName === first)!;
 
     expect(people).toHaveLength(4);

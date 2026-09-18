@@ -26,7 +26,7 @@ import { netWorth } from './systems/finance';
 import { registerLife, startOfLocalDay } from './systems/life';
 import { populateFamily } from './world/family';
 import { buildTheLot, registerLot } from './world/lot';
-import { registerSugar, seedTheQuota } from './world/sugar';
+import { registerSugar, seedTheQuota, staffTheGroup } from './world/sugar';
 import { registerMaking } from './world/making';
 import { registerSelling } from './world/selling';
 import { registerCrew } from './world/crew';
@@ -207,6 +207,12 @@ function populateWorld(sim: Simulation, config: NewSaveConfig): void {
   // what pays for all of it. The family has been in cane since long before
   // anybody thought about a stage.
   foundTheSugarGroup(sim);
+  // And the five people who run it, which the board seats are not: those two are
+  // the parents and were written by the family generator a few lines up. A group
+  // that has been trading since 1946 does not have a vacancy where its managing
+  // director should be, and the screen that says who runs the family business
+  // could not answer the question until these existed.
+  staffTheGroup(sim);
   seedTheQuota(sim);
   const company = foundTheCompany(sim);
 

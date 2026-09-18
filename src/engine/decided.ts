@@ -25,6 +25,7 @@ import { MS_DAY } from './core/time';
 import { CREW_BASE, ENQUIRY_SHAPES, type Enquiry } from './content/lot';
 import { MS_WEEK, pullOn, stagesOn, wouldBook } from './world/lot';
 import { decideQuota } from './world/sugar';
+import { MEN, WOMEN } from './content/names';
 import { decideSlip, type Squeeze } from './world/making';
 import { decideReview, type Review } from './world/trouble';
 import { FINDINGS } from './content/trouble';
@@ -262,6 +263,48 @@ defineDecider<Quota, string>({
     const answer = decideQuota(was, shutRunning, roll);
     return answer.tonnes === 0 ? 'shut' : 'open';
   },
+});
+
+interface Hire { woman: boolean; given: number; years: number }
+
+/** The given name a draw lands on, the way `staffTheGroup` lands on it. */
+const nameFrom = (woman: boolean, t: number): string => (woman
+  ? WOMEN[Math.floor(t * WOMEN.length)] ?? 'Anna'
+  : MEN[Math.floor(t * MEN.length)]?.name ?? 'Jón');
+
+/**
+ * Who runs the sugar group, which is a draw and says so.
+ *
+ * Five seats at a company that has been trading since 1946, filled once when the
+ * save opens and never again. It is in the registry because every die this game
+ * rolls is, and because the alternative was a stream the ratchet could not see:
+ * the gate counts draw streams nothing owns and it went from thirteen to
+ * fourteen the moment this existed.
+ *
+ * What it decides is nobody's fortune. These five have no attribute sheet, hold
+ * no rights and appear in no casting; they exist so that the screen saying who
+ * runs the family business has an answer, and so that the head of milling is a
+ * person rather than an empty chair. The one thing the draw settles that anybody
+ * can feel is which name and which pronouns, which is why it is keyed per seat —
+ * adding a sixth post later must not rename the five already in a save.
+ */
+defineDecider<Hire, string>({
+  id: 'sugar.staff',
+  decides: 'Who holds each of the five salaried seats at the sugar group.',
+  drawnIn: 'src/engine/world/sugar.ts',
+  reads: {
+    // Whether they are a woman, which decides the given name, the patronymic
+    // ending and the pronouns the screens use for them.
+    woman: (h, t) => ({ ...h, woman: t < 0.5 }),
+    // Which name off the table, out of the country's own.
+    given: (h, t) => ({ ...h, given: t }),
+    // And how old. Senior, because nobody mills two point two million tonnes at
+    // twenty-six, so the range is the one a board of a seventy-year-old group
+    // actually has rather than the general population's.
+    years: (h, t) => ({ ...h, years: 41 + Math.floor(t * 23) }),
+  },
+  sample: (seed) => ({ woman: seed % 2 === 0, given: (seed % 11) / 11, years: 41 + (seed % 23) }),
+  decide: ({ woman, given, years }) => `${nameFrom(woman, given)}, ${woman ? 'she/her' : 'he/him'}, ${years}`,
 });
 
 // ---------------------------------------------------------------------------

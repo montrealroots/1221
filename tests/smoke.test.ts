@@ -1,11 +1,12 @@
 import { describe, expect, it } from 'vitest';
 import { quickSave, validateUniverse } from '@/engine';
+import { BOARD_SEATS, GROUP_ROLES } from '@/engine/content/sugar';
+import { postsOf, projectsOf, theSugarGroup } from '@/engine/world/company';
 import type { Simulation } from '@/engine';
 import { estateCity } from '@/engine/content/estate';
 import { formatDateTime, MS_DAY, MS_HOUR } from '@/engine/core/time';
 import { openDecisions, simulationLoad } from '@/engine/world/world';
 import { netWorth } from '@/engine/systems/finance';
-import { projectsOf } from '@/engine/world/company';
 import { whyNot } from '@/engine/world/rebate';
 import { openTheBooks, openTheDoors } from './doors';
 import { playACareer } from './played';
@@ -18,13 +19,31 @@ describe('a new universe boots and runs', () => {
     expect(report.errors).toEqual([]);
     expect(sim.player.displayName).toBeTruthy();
     expect(sim.player.primaryAccountId).toBeTruthy();
-    // A new save is one household: the player and the two people whose land
-    // it is. The systems that used to populate a world around them — agents,
-    // providers, the industry — are gone, and nothing outside the family
-    // generates a name any more.
-    expect(Object.keys(sim.universe.people)).toHaveLength(3);
+    // A new save is one household: the player and the two people whose land it
+    // is. The systems that used to populate a world around them — agents,
+    // providers, the industry — are gone.
+    //
+    // "And nothing outside the family generates a name any more" is what this
+    // said, and it is no longer true: the sugar group is staffed at boot, with a
+    // managing director and four heads. That is a deliberate change and not a
+    // leak of the old world-population. A company that has been trading since
+    // 1946 and employs three thousand one hundred people cannot have a vacancy
+    // where its management should be, and the screen that says who runs the
+    // family business had no answer to give until these five existed. They are
+    // five, they are the group's posts, and they are in nobody's household.
+    const household = 3;
+    const runTheGroup = GROUP_ROLES.filter((one) => one.monthlyCents > 0).length;
+    expect(runTheGroup).toBe(5);
+    expect(Object.keys(sim.universe.people)).toHaveLength(household + runTheGroup);
     expect(Object.keys(sim.universe.people)).toContain(sim.universe.playerId);
     expect(Object.keys(sim.universe.households)).toHaveLength(1);
+    // Nobody the group employs is under the family's roof.
+    const group = theSugarGroup(sim)!;
+    for (const post of postsOf(sim.universe, group.id)) {
+      if (!post.personId || BOARD_SEATS.includes(post.role as typeof BOARD_SEATS[number])) continue;
+      expect(sim.universe.people[post.personId]!.householdId,
+        `${post.role} was housed with the family`).toBeUndefined();
+    }
   });
 
   it('has a player who exists somewhere in time and space', () => {

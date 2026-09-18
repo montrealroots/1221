@@ -18,7 +18,7 @@
  * because a dial is a thing and a multiplication is not.
  */
 
-import { PERFORMER_NOUN } from '@/engine/core/performer';
+import { postFacts, postsOf } from '@/engine/world/company';
 import { readiness, wellbeingSummary } from '@/engine/systems/life';
 import type { Person, Wellbeing } from '@/engine/domain/model';
 import type { Simulation } from '@/engine';
@@ -60,6 +60,32 @@ function splitDialId(id: string): { personId: string; key: string } | undefined 
 const personIn = (sim: Simulation, id: string): Person | undefined =>
   sim.universe.people[id];
 
+/**
+ * What somebody does, where no relation and no seat says it better.
+ *
+ * A category rather than a job title, because that is what `kind` is. The seat
+ * they hold is tried before any of these and is always more specific. `none` and
+ * `civilian` are real tracks that mean nothing to a player, so they fall through
+ * to the plainest true thing instead of being dressed up.
+ */
+const WHAT_THEY_DO: Partial<Record<Person['careerTrack'], string>> = {
+  actor: 'Another Actor',
+  crew: 'Crew',
+  executive: 'Somebody Who Runs Part Of It',
+  writer: 'A Writer',
+  director: 'A Director',
+  producer: 'A Producer',
+  showrunner: 'A Showrunner',
+  agent: 'An Agent',
+  creator: 'A Creator',
+};
+
+/** The seat they hold at either company, which is the best answer when it exists. */
+const seatOf = (sim: Simulation, person: Person): string | undefined => {
+  const post = postsOf(sim.universe).find((one) => one.personId === person.id);
+  return post ? postFacts(post.role)?.label : undefined;
+};
+
 // ---------------------------------------------------------------------------
 // You
 // ---------------------------------------------------------------------------
@@ -96,6 +122,7 @@ defineLook<Person>('person', {
     // of you stand and what they run on the land, ahead of their dials.
     const theirs = waysIntoSomebody(sim, person);
     const relation = whatTheyAre(sim, person);
+    const seat = isYou ? undefined : seatOf(sim, person);
     // The life before this one, said back. For the player it is the sentence
     // they wrote at creation; for everybody else it is the one the family and
     // crew generators wrote for them. It carries no number and decides nothing,
@@ -115,15 +142,27 @@ defineLook<Person>('person', {
       // generators write because the field is not optional, which made it read
       // as a fact about them when it is only a default.
       //
-      // Their pronouns instead, which the save has always held and which is
-      // true of everybody rather than of performers only.
+      // What they actually are instead, in the order a person would say it:
+      // what they are to you, then the seat they hold, then what they do. The
+      // first attempt at this put their pronouns here, which was true and was
+      // the wrong slot — `kind` is a category and "she/her" is not one, so it
+      // told a player nothing about the head of milling and tripped the rule
+      // against an identifier reaching a screen. The pronouns are said below,
+      // in a sentence, which is where a pronoun belongs.
       // both-titles: the word itself, which is what this comment is about.
-      kind: isYou ? 'Yourself' : relation ?? person.pronouns ?? PERFORMER_NOUN[person.performerTitle ?? 'actor'],
+      kind: isYou ? 'Yourself' : relation ?? seat ?? WHAT_THEY_DO[person.careerTrack] ?? 'Somebody You Know',
       // Two sentences rather than one joined by "and": the wellbeing line is
       // already a whole sentence, and stitching them made a fragment.
-      summary: isYou || !relation
+      //
+      // And their pronouns, for anybody who is not you and not family, said as a
+      // sentence rather than filed as a category. Nobody on this land is billed
+      // as an actor or an actress, and this is the screen where that used to
+      // happen.
+      summary: isYou
         ? wellbeingSummary(person)
-        : `${person.firstName} is your ${relation.toLowerCase()}. ${wellbeingSummary(person)}`,
+        : relation
+          ? `${person.firstName} is your ${relation.toLowerCase()}. ${wellbeingSummary(person)}`
+          : `${person.firstName} goes by ${person.pronouns}. ${wellbeingSummary(person)}`,
       body: before.length > 0
         ? (
           <p className="small">

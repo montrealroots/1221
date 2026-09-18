@@ -292,16 +292,48 @@ export const PAYROLL_A_DAY_CENTS: Money = Math.round(PAYROLL_A_YEAR_CENTS / A_YE
 export const REVENUE_A_DAY_CENTS: Money = Math.round(GROUP.revenueCents / A_YEAR_OF_DAYS);
 export const PROFIT_A_DAY_CENTS: Money = Math.round(GROUP_PROFIT_CENTS / A_YEAR_OF_DAYS);
 
+
+/**
+ * The employer's own contribution on a wage, which nothing was charging.
+ *
+ * `content/tax.ts` has carried the sentence for as long as the tax rules have
+ * existed — "Tryggingagjald at 6.35% is the employer's and is not withheld from
+ * a wage, so it does not belong in a figure about what somebody takes home" —
+ * and it was right about where it does not belong and silent about where it
+ * does. The employee side is in `PAYROLL_TAX_RULES` and reaches a screen. The
+ * employer side was a named, rated, real Icelandic tax in a comment, and no
+ * company in this save had ever paid a króna of it.
+ *
+ * It is charged on both payrolls now: the group's three thousand one hundred
+ * people and the production company's posts. A wage is not what a wage costs,
+ * and a company that thought it was would be a company whose accounts a player
+ * cannot reason about.
+ */
+export const TRYGGINGAGJALD = 0.0635;
+
+/**
+ * The employer's own contribution on that payroll, as a day of it.
+ *
+ * Derived from the payroll and the published rate rather than written down, and
+ * deducted from the cost of goods below rather than added to the cost base — so
+ * naming it does not invent a króna of new money. It was always inside the
+ * eighty-nine percent of turnover that is not profit; it just had no name, and
+ * a real Icelandic tax with a real rate that nothing in the save had ever paid
+ * was sitting inside a line labelled "cane, milling and freight".
+ */
+export const EMPLOYER_TAX_A_DAY_CENTS: Money = Math.round(PAYROLL_A_DAY_CENTS * TRYGGINGAGJALD);
+
 /**
  * Everything that is not wages: cane bought in, milling, freight, duty.
  *
- * Derived rather than declared, so the three lines cannot drift out of
- * agreement with the margin they are supposed to produce. Revenue less profit
- * is the whole cost base; wages are the part of it with people on the end, and
- * this is the rest.
+ * Derived rather than declared, so the lines cannot drift out of agreement with
+ * the margin they are supposed to produce. Revenue less profit is the whole cost
+ * base; wages and the contribution on them are the part with people on the end,
+ * and this is the rest. Every line the group posts in a day sums to what it
+ * sold, exactly, because this one is whatever is left after the others.
  */
 export const COST_OF_GOODS_A_DAY_CENTS: Money =
-  REVENUE_A_DAY_CENTS - PROFIT_A_DAY_CENTS - PAYROLL_A_DAY_CENTS;
+  REVENUE_A_DAY_CENTS - PROFIT_A_DAY_CENTS - PAYROLL_A_DAY_CENTS - EMPLOYER_TAX_A_DAY_CENTS;
 
 /**
  * What the two of them draw for sitting on the board of it.
@@ -343,3 +375,130 @@ export const KEPT_IN_HAND_CENTS: Money = Math.round(PAYROLL_A_DAY_CENTS * 14);
  */
 export const PAID_IN_MEMO = `Paid In By ${GROUP.name}`;
 export const PAID_BACK_MEMO = `Paid Back To ${GROUP.name}`;
+
+// ---------------------------------------------------------------------------
+// Everything else it takes to run a company, which the group did not have
+// ---------------------------------------------------------------------------
+/**
+ * The posts a cane group has, as against the ones a film company has.
+ *
+ * `ROLES` in `content/incorporation.ts` is the film side and is right to be —
+ * a head of development and a production accountant are not jobs at a sugar
+ * mill. Giving the group those posts to save writing six lines would have made
+ * the one screen that says who runs the business say something false about it.
+ *
+ * The two seats with no salary are the parents'. They are the board, they draw
+ * from it monthly through `payTheBoard`, and a director's fee is not a wage —
+ * which is also why no employer contribution is charged on them.
+ */
+export const GROUP_ROLES = [
+  {
+    id: 'chair', label: 'The Chair', said: 'the chair',
+    what: 'Holds the board. Decides what the group does with a year it didn’t expect, '
+      + 'good or bad, and answers for it to nobody but the family.',
+    without: 'Nobody holds the board, so a year the group didn’t expect is a year nobody answers for.',
+    monthlyCents: 0,
+  },
+  {
+    id: 'board', label: 'The Other Seat On The Board', said: 'the other seat on the board',
+    what: 'The second family holding, and the second signature on anything that commits the group.',
+    without: 'One signature commits a billion-euro group on its own.',
+    monthlyCents: 0,
+  },
+  {
+    id: 'managing', label: 'The Managing Director', said: 'the managing director',
+    what: 'Runs it day to day. The board decides what the group is for; this is whoever '
+      + 'makes two point two million tonnes a year actually happen.',
+    without: 'Two point two million tonnes a year with nobody running it day to day.',
+    monthlyCents: 21_000_00,
+  },
+  {
+    id: 'agronomy', label: 'Head Of Agronomy', said: 'head of agronomy',
+    what: 'The estates, the cane and the certification the organic premium depends on.',
+    without: 'The certification lapses, and organic cane sells at the conventional price.',
+    monthlyCents: 14_000_00,
+  },
+  {
+    id: 'milling', label: 'Head Of Milling', said: 'head of milling',
+    what: 'The plant. Crush rates, downtime and the difference between raw and refined.',
+    without: 'The plant runs on whatever it did last year, and downtime nobody owns.',
+    monthlyCents: 15_000_00,
+  },
+  {
+    id: 'trade', label: 'Head Of Trade', said: 'head of trade',
+    what: 'Sells it, and is the person in the building who reads the quota announcement '
+      + 'the morning it lands.',
+    without: 'Nobody in the building is watching the one announcement that decides the year.',
+    monthlyCents: 17_000_00,
+  },
+  {
+    id: 'finance', label: 'The Finance Director', said: 'the finance director',
+    what: 'The group accounts, the audit an hf. files as a matter of course, and the '
+      + 'corporation tax return.',
+    without: 'An hf. that doesn’t file. The form requires the audit and somebody has to sign it.',
+    monthlyCents: 16_000_00,
+  },
+] as const;
+
+export type GroupRoleId = typeof GROUP_ROLES[number]['id'];
+export const GROUP_ROLE_BY_ID = Object.fromEntries(
+  GROUP_ROLES.map((one) => [one.id, one]),
+) as Record<GroupRoleId, typeof GROUP_ROLES[number]>;
+
+/** The two the parents hold, in the order the family generator writes them. */
+export const BOARD_SEATS = ['chair', 'board'] as const;
+
+/**
+ * What the seven posts cost a month, and what that leaves for everybody else.
+ *
+ * The five salaried seats are paid out of the payroll the three thousand one
+ * hundred are already in, not on top of it, so `WAGES_A_DAY_CENTS` is the
+ * workforce less them. Naming the management therefore costs the group nothing
+ * it was not paying, and the margin, the turnover and every figure derived from
+ * them are untouched.
+ *
+ * Two shapes were available and this is the one that leaves no dead words. The
+ * other was to charge the posts on top, which would have quietly raised the
+ * group's costs by a million a year and made the eleven percent margin a lie; or
+ * to cost them at nought, which would have put a salary on a screen and charged
+ * it to nobody — the exact defect this cleanup exists to remove.
+ */
+export const GROUP_POSTS_A_MONTH_CENTS: Money =
+  GROUP_ROLES.reduce((sum, one) => sum + one.monthlyCents, 0);
+export const GROUP_POSTS_A_DAY_CENTS: Money =
+  Math.round((GROUP_POSTS_A_MONTH_CENTS * 12) / A_YEAR_OF_DAYS);
+export const WAGES_A_DAY_CENTS: Money = PAYROLL_A_DAY_CENTS - GROUP_POSTS_A_DAY_CENTS;
+
+/**
+ * The registers a 1946 hf. with three thousand people on it is obviously on.
+ *
+ * The production company is put on two at boot because it could not have built
+ * a stage otherwise. The group was put on none, which made it the only company
+ * in the save employing anybody without standing to employ anybody — and
+ * `is_employer` exists, says "Nobody can be paid a wage by this company until
+ * it exists", and is the door the production company has to open before it can
+ * greenlight. The group was paying three thousand one hundred people through a
+ * door it had never opened.
+ */
+export const GROUP_REGISTRIES = ['is_companies', 'is_vat', 'is_employer'] as const;
+
+/**
+ * The month the group's corporation tax return is due.
+ *
+ * Iceland takes corporate returns at the end of May for the year before, which
+ * is why the tax lands seven months after the year it is charged on rather than
+ * on the last day of it. Real, and the reason the money leaves when it does.
+ */
+export const TAX_RETURN_MONTH = 5;
+
+/**
+ * What the group's own account opens with.
+ *
+ * SLATE's own, and deliberately a fortnight of the worldwide payroll rather
+ * than a round number with nothing behind it: it is the same figure
+ * `KEPT_IN_HAND_CENTS` holds back before the group will fund a film, so the
+ * save opens at exactly the floor the group refuses to go under. The first day
+ * of trading is what puts it above the line, which is the correct shape for a
+ * business — the money comes from selling something.
+ */
+export const GROUP_OPENING_BALANCE: Money = KEPT_IN_HAND_CENTS;

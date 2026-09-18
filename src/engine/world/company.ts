@@ -23,9 +23,10 @@
 
 import type { Simulation } from '../core/simulation';
 import type { Id, SaveUniverse } from '../domain/model';
+import type { Account } from '../core/ledger';
 import { formatMoney, type Money } from '../core/money';
 import type {
-  Company, CompanyForm, GuildId, Hold, Holding, Policy, PolicyKind, Post,
+  Company, CompanyForm, GuildId, Hold, Holding, Policy, PolicyKind, Post, PostRole,
   Project, Provenance, Registration, RegistryId, RoleId, Signature,
 } from '../domain/company';
 import {
@@ -34,7 +35,9 @@ import {
 import { ESTATE_CITY_ID, HOUSE, studioName } from '../content/estate';
 import { addMonths, instantFromZoned, type Instant } from '../core/time';
 import { estateCity } from '../content/estate';
-import { GROUP } from '../content/sugar';
+import {
+  BOARD_SEATS, GROUP, GROUP_OPENING_BALANCE, GROUP_REGISTRIES, GROUP_ROLES, GROUP_ROLE_BY_ID,
+} from '../content/sugar';
 
 // ---------------------------------------------------------------------------
 // Reading the world
@@ -85,21 +88,86 @@ export const postsOf = (universe: SaveUniverse, companyId?: Id): Post[] =>
 export const projectsOf = (universe: SaveUniverse, companyId?: Id): Project[] =>
   all(universe.projects).filter((one) => !one.shelvedAt && (!companyId || one.companyId === companyId));
 
-/** Whether the family is on a given register anywhere. */
-export const onRegister = (universe: SaveUniverse, registry: RegistryId): Registration | undefined =>
-  registrationsOf(universe).find((one) => one.registry === registry);
+/**
+ * The film side's own ids, which is what "anywhere" means in the four below.
+ *
+ * It has to mean that. Every one of these four answers a question about whether
+ * a door on the capability page is open, and the sugar group is not behind any
+ * of those doors — it is on the company register and the VAT register and the
+ * employer register, because it has traded since 1946 and pays three thousand
+ * one hundred people, and none of that is standing that a film company can
+ * borrow. Unscoped, `onRegister(u, 'is_employer')` finds the group's
+ * registration and the production company's Employ People Here door opens for
+ * nothing, which would be a gate that reports itself satisfied by a fact about
+ * a different company in a different trade.
+ */
+const filmIds = (universe: SaveUniverse): Set<Id> =>
+  new Set(companiesOf(universe).map((one) => one.id));
 
-/** Whether anybody in the group has signed with a guild. */
-export const signedWith = (universe: SaveUniverse, guild: GuildId): Signature | undefined =>
-  signaturesOf(universe).find((one) => one.guild === guild);
+/** Whether the film side is on a given register anywhere. */
+export const onRegister = (universe: SaveUniverse, registry: RegistryId): Registration | undefined => {
+  const ours = filmIds(universe);
+  return registrationsOf(universe).find((one) => one.registry === registry && ours.has(one.companyId));
+};
 
-/** Whether the group carries a policy. */
-export const carries = (universe: SaveUniverse, kind: PolicyKind): Policy | undefined =>
-  policiesOf(universe).find((one) => one.kind === kind);
+/** Whether anybody on the film side has signed with a guild. */
+export const signedWith = (universe: SaveUniverse, guild: GuildId): Signature | undefined => {
+  const ours = filmIds(universe);
+  return signaturesOf(universe).find((one) => one.guild === guild && ours.has(one.companyId));
+};
 
-/** Whether a post exists and somebody is in it. */
-export const filled = (universe: SaveUniverse, role: RoleId): Post | undefined =>
-  postsOf(universe).find((one) => one.role === role && one.personId !== undefined);
+/** Whether the film side carries a policy. */
+export const carries = (universe: SaveUniverse, kind: PolicyKind): Policy | undefined => {
+  const ours = filmIds(universe);
+  return policiesOf(universe).find((one) => one.kind === kind && ours.has(one.companyId));
+};
+
+/** Whether a post exists on the film side and somebody is in it. */
+export const filled = (universe: SaveUniverse, role: RoleId): Post | undefined => {
+  const ours = filmIds(universe);
+  return postsOf(universe).find((one) => one.role === role && one.personId !== undefined
+    && ours.has(one.companyId));
+};
+
+/**
+ * What a post is, whichever company it is at.
+ *
+ * Two role tables, one `Post` record, so the lookup has to try both. Written
+ * once here rather than at each screen that prints a post, because the version
+ * where each caller reaches into `ROLE_BY_ID` directly is the version that
+ * throws the day somebody opens the sugar group's page.
+ */
+export interface PostFacts {
+  label: string;
+  said: string;
+  what: string;
+  without: string;
+  monthlyCents: Money;
+}
+
+export const postFacts = (role: PostRole): PostFacts | undefined =>
+  (ROLE_BY_ID as Record<string, PostFacts>)[role]
+  ?? (GROUP_ROLE_BY_ID as Record<string, PostFacts>)[role];
+
+/**
+ * One company's own cash account.
+ *
+ * There are two now. The sugar group is opened with a fortnight of its payroll
+ * in hand at boot, the production company with its two years of family money,
+ * and until the group had an account at all a `find` on `kind === 'company_cash'`
+ * could only return the one. It cannot any more, and the group is founded first,
+ * so anything asking that way silently started reading the cane business — which
+ * is the same defect the business instrument shipped once already, reading
+ * `companies[0]` and watching an account the pictures company does not own.
+ *
+ * So the question takes a company. There is no answer to "the company account"
+ * in a save with two companies in it.
+ */
+export function cashAccountFor(universe: SaveUniverse, companyId: Id | undefined): Account | undefined {
+  if (!companyId) return undefined;
+  return Object.values(universe.accounts)
+    .find((one) => one.ownerId === companyId && one.kind === 'company_cash' && !one.closedAt);
+}
 
 /** What the company has in the bank, across every account it owns. */
 export function companyCash(universe: SaveUniverse): Money {
@@ -377,7 +445,20 @@ function numberFor(registry: RegistryId, seed: number): string {
  * It is a public limited company rather than a private one — an hf. rather
  * than an ehf. — because a group this size with foreign subsidiaries is, and
  * because the two forms are already modeled and the difference should mean
- * something.
+ * something. Public in form and not in ownership: every share is held by the
+ * two parents, an Icelandic hf. is under no obligation to be listed, and the
+ * form is what a group this size takes for the share capital, the board and the
+ * audited accounts. `firmOwnership` in `ui/looks/business.tsx` is what stops
+ * the form's own blurb claiming outside money that never came in.
+ *
+ * Everything below the company record is the part that was missing. The
+ * production company was put on its registers, given its own account and given
+ * its posts at boot; the group was given a name, a legal form and a cap table
+ * and nothing else — so the only company in the save that actually employed
+ * anybody had no standing to employ anybody, no account until something asked
+ * for one, and nobody named as running it. It has all three now, on the same
+ * shapes the film side uses, because a second set of tables for the same idea
+ * is how two answers to one question get built.
  */
 export function foundTheSugarGroup(sim: Simulation): Company {
   const u = sim.universe;
@@ -398,6 +479,57 @@ export function foundTheSugarGroup(sim: Simulation): Company {
     foundedAt,
   };
   u.companies[group.id] = group;
+
+  // The registers. Dated from the founding, because a company that has been
+  // trading since 1946 did not register last Tuesday.
+  let seed = 11;
+  for (const registry of GROUP_REGISTRIES) {
+    const registration: Registration = {
+      id: sim.nextId('reg'),
+      saveId: u.meta.id,
+      companyId: group.id,
+      registry,
+      number: numberFor(registry, foundedAt / 1000 + seed * 7919),
+      since: foundedAt,
+      nextDueAt: addMonths(u.now, REGISTRY_BY_ID[registry].filesEveryMonths, zone),
+    };
+    u.registrations[registration.id] = registration;
+    seed += 1;
+  }
+
+  // Its own money, opened here rather than on demand. `sugarAccount` still
+  // opens one lazily so an older save gains it on load, but a save booted today
+  // has the account before anything asks, which is the difference between a
+  // company that has a bank and one that turns out to have had one all along.
+  sim.openAccount({
+    id: sim.nextId('account'),
+    kind: 'company_cash',
+    name: `${group.name} Operating`,
+    ownerId: group.id,
+    institution: 'Landsbankinn',
+    openedAt: foundedAt,
+    last4: '1946',
+    balance: GROUP_OPENING_BALANCE,
+  });
+
+  // Who runs it. The two board seats are the parents', in the order the family
+  // generator wrote them; the five salaried posts are filled by the group and
+  // are not people this game needs records for, so they are named posts with
+  // nobody in them rather than five invented biographies.
+  const parents = group.ownerships.map((one) => one.holderId);
+  for (const role of GROUP_ROLES) {
+    const seat = BOARD_SEATS.indexOf(role.id as typeof BOARD_SEATS[number]);
+    const holder = seat >= 0 ? parents[seat] : undefined;
+    const post: Post = {
+      id: sim.nextId('post'),
+      saveId: u.meta.id,
+      companyId: group.id,
+      role: role.id,
+      ...(holder ? { personId: holder, filledAt: foundedAt } : {}),
+    };
+    u.posts[post.id] = post;
+  }
+
   return group;
 }
 

@@ -367,11 +367,25 @@ export type RoleId =
   | 'principal' | 'development' | 'production' | 'business_affairs'
   | 'accountant' | 'facility';
 
+/**
+ * The posts at the sugar group, which are not the posts at a film company.
+ *
+ * A head of development and a production accountant are not jobs at a cane
+ * mill, and giving the group the film roles to avoid widening this union would
+ * have made the one screen that says who runs the business say something false
+ * about it. Two unions and one `Post` shape: the record is the same thing in
+ * both companies, and only the list of what a seat can be differs.
+ */
+export type GroupRoleId =
+  | 'chair' | 'board' | 'managing' | 'agronomy' | 'milling' | 'trade' | 'finance';
+
+export type PostRole = RoleId | GroupRoleId;
+
 export interface Post {
   id: Id;
   saveId: Id;
   companyId: Id;
-  role: RoleId;
+  role: PostRole;
   /** Empty where the post exists and nobody is in it. */
   personId?: Id;
   /**
