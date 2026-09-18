@@ -772,7 +772,7 @@ defineLook<Project>('project', {
                         </td>
                         <td className="small">
                           {forecast === undefined
-                            ? 'There is no cutting room on this one.'
+                            ? 'There’s no cutting room on this one.'
                             : `Needs ${Math.ceil(forecast.needs)} more weeks and the calendar leaves ${Math.floor(forecast.has)}.`}
                         </td>
                       </tr>
@@ -844,7 +844,7 @@ defineLook<Project>('project', {
                         <td className="small">
                           {above > 2
                             ? 'A producer, an executive and a broadcaster, and every one of them can send it back down.'
-                            : 'A short ladder above the cut, so there is little to fall.'}
+                            : 'A short ladder above the cut, so there’s little to fall.'}
                         </td>
                       </tr>
                       {deck.map((finding) => (

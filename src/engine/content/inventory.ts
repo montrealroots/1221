@@ -82,19 +82,19 @@ export const STOCKS: readonly Stock[] = [
   {
     id: 'beats',
     label: 'Logged Beats',
-    what: 'Moments a story producer has found and marked in the rushes. The raw material of a story, and the thing they are actually paid for.',
+    what: 'Moments a story producer has found and marked in the rushes. The raw material of a story, and the thing they’re actually paid for.',
     unit: { one: 'beat', many: 'beats' },
   },
   {
     id: 'shots',
     label: 'Shots In Hand',
-    what: 'Authored work at some stage short of final. It is the animation equivalent of rushes and behaves the same way.',
+    what: 'Authored work at some stage short of final. It’s the animation equivalent of rushes and behaves the same way.',
     unit: { one: 'shot', many: 'shots' },
   },
   {
     id: 'archive',
     label: 'Licensed Archive',
-    what: 'Bought in from outside, priced by the second, and payable again every time it is used.',
+    what: 'Bought in from outside, priced by the second, and payable again every time it’s used.',
     unit: { one: 'second', many: 'seconds' },
   },
 ];
@@ -200,7 +200,7 @@ export interface Band {
  * to and `world/inventory.ts` reads the distance from it.
  */
 export const KNOWN_RATIOS: readonly Band[] = [
-  { id: 'cg', label: 'Computer Animation', ratio: 1, source: 'Nothing is rendered that is not used' },
+  { id: 'cg', label: 'Computer Animation', ratio: 1, source: 'Nothing is rendered that isn’t used' },
   { id: 'drama', label: 'A Scripted Drama Series', ratio: 10, source: 'Shot to a plan, faster than a feature, with less coverage per page' },
   { id: 'feature', label: 'A Scripted Feature', ratio: 15, source: 'Ordinary digital-era coverage' },
   { id: 'wiseman', label: 'Observational Documentary', ratio: 50, source: 'Frederick Wiseman' },

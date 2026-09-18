@@ -48,9 +48,9 @@ export function AuditionsWorkspace() {
         <LookRegion>
           <p className="small">{whereYourWorkStands(sim)}</p>
           <p className="muted small">
-            Work that is not the family’s comes from the stages. A production that has taken one is
+            Work that isn’t the family’s comes from the stages. A production that has taken one is
             a production that needs people, so what the lot is letting a year from now is what you
-            will be asked about — and there is nothing you can do this week to change that.
+            will be asked about — and there’s nothing you can do this week to change that.
           </p>
         </LookRegion>
       </Panel>
@@ -90,7 +90,7 @@ export function AuditionsWorkspace() {
                     </div>
                     {free
                       ? <button className="btn btn-sm btn-primary" onClick={() => setGoing(one.id)}>Go Up For It</button>
-                      : <span className="chip">You are working</span>}
+                      : <span className="chip">You’re working</span>}
                   </div>
                 </div>
               );
@@ -173,14 +173,14 @@ function GoUpForm({ auditionId, onClose }: { auditionId: string; onClose: () => 
         <Stat label="It Holds You" value={`${formatDate(audition.from, sim.homeZone)} on`} />
       </div>
       <p className="small">
-        Nobody has told you what this part is for and nobody is going to until you are standing in
+        Nobody has told you what this part is for and nobody is going to until you’re standing in
         front of them. Whatever you choose you will do exactly; the only question is whether it
         was the right idea.
       </p>
       <p className="muted small">
         {taste.rooms === 0
           ? `You have never been in a room with ${audition.holder}, so the sliders start where `
-            + 'anybody would start. What you end up playing in their rooms is what you will have '
+            + 'anybody would start. What you end up playing in their rooms is what you’ll have '
             + 'to go on next time. A tape never adds to it — nobody gives a note to a file.'
           : `The sliders start where you have ended up in ${taste.rooms} `
             + `${taste.rooms === 1 ? 'room' : 'rooms'} with ${audition.holder}. That record is all `
@@ -254,7 +254,7 @@ function TheNote({ audition }: { audition: Audition }) {
     <div className="holding">
       <div className="strong">{`${audition.holder}: “${asked}.”`}</div>
       <p className="muted small">
-        {`That is the note, and it is on ${shade.label.toLowerCase()} — the one you were `}
+        {`That’s the note, and it’s on ${shade.label.toLowerCase()} — the one you were `}
         furthest off on. You played it at {now} of {FURTHEST}. How far they meant, they did not
         say, and nobody is going to tell you.
       </p>

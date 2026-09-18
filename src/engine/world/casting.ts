@@ -1068,7 +1068,7 @@ export function letThemGo(sim: Simulation, projectId: Id, roleId: string): { ok:
   sim.notify({
     category: 'business',
     title: `${person?.displayName ?? 'Somebody'} Is Off ${project.title}`,
-    body: `${money(seat.feeCents)} was agreed and it is still owed. Paid, used and credited are three different things,`
+    body: `${money(seat.feeCents)} was agreed and it’s still owed. Paid, used and credited are three different things,`
       + ' and this is the first of them without the other two.',
     importance: 50,
     refType: 'project',
@@ -1898,7 +1898,7 @@ export function castSpark(sim: Simulation, project: Project): number | undefined
 export function sparkReads(spark: number): string {
   if (spark >= 78) return 'something happens between them';
   if (spark >= 60) return 'they play well together';
-  if (spark >= 42) return 'they are fine together';
+  if (spark >= 42) return 'they’re fine together';
   if (spark >= 25) return 'two performances side by side';
-  return 'they do not look at each other';
+  return 'they don’t look at each other';
 }

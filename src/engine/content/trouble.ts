@@ -143,7 +143,7 @@ export const FINDINGS: readonly Finding[] = [
   {
     id: 'notes-round',
     label: 'A Note From The People Paying',
-    what: 'The cut comes back from one level up with notes about structure and people rather than frames. The game is confusing, find a hero, we don’t care about her. It goes back a step, and on a form with a producer, an executive and a broadcaster stacked above the room, a step is not far and there are a lot of them.',
+    what: 'The cut comes back from one level up with notes about structure and people rather than frames. The game is confusing, find a hero, we don’t care about her. It goes back a step, and on a form with a producer, an executive and a broadcaster stacked above the room, a step isn’t far and there are a lot of them.',
     dimension: 'picture',
     down: 1,
     scope: 'part',
@@ -160,7 +160,7 @@ export const FINDINGS: readonly Finding[] = [
     scope: 'part',
     weight: 0.14,
     needs: { ratioAbove: 40 },
-    source: 'KINDS.md: a high ratio is not coverage — what is missing is discovered in the edit, months after the person is reachable',
+    source: 'KINDS.md: a high ratio isn’t coverage — what is missing is discovered in the edit, months after the person is reachable',
   },
   {
     id: 'master-rejected',

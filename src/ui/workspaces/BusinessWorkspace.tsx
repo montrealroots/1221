@@ -482,7 +482,7 @@ function DevelopForm({ onClose }: { onClose: () => void }) {
       </div>
       <p className="xs dim" style={{ margin: 0 }}>
         {ways.length === 1
-          ? `There is one way to make ${medium === 'film' ? 'a film' : 'television'} here: ${ways[0]!.label}.`
+          ? `There’s one way to make ${medium === 'film' ? 'a film' : 'television'} here: ${ways[0]!.label}.`
           : `${said(ways.length, 'way')} to make television here: ${ways.map((one) => one.label).join(', ')}.`}
         {' '}That choice is made at the greenlight, and this one is made now and not again.
       </p>
@@ -937,9 +937,9 @@ function CastForm({ projectId, onClose }: { projectId: string; onClose: () => vo
         is ever shot.
       </p>
       <p className="muted small">
-        Play It puts you in the part at the band, and the company hands you the money. You are the
-        best there has ever been at this, so nobody is deciding whether you are right for it. What
-        you cannot do is be in two things at once.
+        Play It puts you in the part at the band, and the company hands you the money. You’re the
+        best there has ever been at this, so nobody is deciding whether you’re right for it. What
+        you can’t do is be in two things at once.
       </p>
       {diary.length > 0 && (
         <p className="small">

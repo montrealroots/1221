@@ -50,6 +50,28 @@ const PREPOSITIONS = [
   'into', 'under', 'over', 'all', 'both', 'half', 'but', 'behind', 'beyond', 'without', 'against',
 ];
 
+/**
+ * Verbs that take "it" as their object, after which "it is" is two clauses.
+ *
+ * Found by a sweep getting one line wrong out of thirty-five, and it is the only
+ * kind of mistake this fixer can make that is worse than the thing it fixes.
+ * `world/lot.ts` said "Every stage that would hold it is booked across the weeks
+ * it needs" — where "it" is what the stage would hold and "is booked" belongs to
+ * "every stage". Contracted, it becomes "every stage that would hold it's
+ * booked", which is not the same sentence and is not a sentence.
+ *
+ * The rule is the one already used for prepositions: look at the word in front.
+ * "it" after a preposition is an object, and "it" after a verb that takes an
+ * object is an object too. Kept short and only for verbs that actually appear in
+ * front of "it is" in this tree, because a long list of guesses would start
+ * refusing contractions that are right.
+ */
+const TAKES_AN_OBJECT = [
+  'hold', 'holds', 'held', 'read', 'reads', 'make', 'makes', 'made',
+  'take', 'takes', 'took', 'want', 'wants', 'wanted', 'need', 'needs', 'needed',
+  'show', 'shows', 'showed', 'leave', 'leaves', 'left', 'keep', 'keeps', 'kept',
+];
+
 /** [pattern, replacement builder, label]. Order matters: "not" forms go first. */
 const RULES = [
   [/\b(do|does|did|is|are|was|were|have|has|had|would|should|could|must) not\b(?! only\b)/g, (m, v) => `${v}n${APOS}t`, 'x not'],
@@ -60,15 +82,15 @@ const RULES = [
   [/\bCannot\b(?! only\b)/g, () => `Can${APOS}t`, 'Cannot'],
   // "here is" and "that is" after a preposition are an adverb and an object
   // ("the figure here is ours", "half of it is technique"), not a subject.
-  [new RegExp(`${NOT_AFTER(PREPOSITIONS)}\\b(it|that|there) is\\b(?! to\\b)${NOT_BEFORE_CLAUSE_END}`, 'g'), (m, v) => `${v}${APOS}s`, 'x is'],
+  [new RegExp(`${NOT_AFTER([...PREPOSITIONS, ...TAKES_AN_OBJECT])}\\b(it|that|there) is\\b(?! to\\b)${NOT_BEFORE_CLAUSE_END}`, 'g'), (m, v) => `${v}${APOS}s`, 'x is'],
   [new RegExp(`\\b(It|That|There|Here) is\\b(?! to\\b)${NOT_BEFORE_CLAUSE_END}`, 'g'), (m, v) => `${v}${APOS}s`, 'X is'],
-  [new RegExp(`${NOT_AFTER(PREPOSITIONS)}\\b(you|we|they) are\\b${NOT_BEFORE_CLAUSE_END}`, 'g'), (m, v) => `${v}${APOS}re`, 'x are'],
+  [new RegExp(`${NOT_AFTER([...PREPOSITIONS, ...TAKES_AN_OBJECT])}\\b(you|we|they) are\\b${NOT_BEFORE_CLAUSE_END}`, 'g'), (m, v) => `${v}${APOS}re`, 'x are'],
   [new RegExp(`\\b(You|We|They) are\\b${NOT_BEFORE_CLAUSE_END}`, 'g'), (m, v) => `${v}${APOS}re`, 'X are'],
   [new RegExp(`\\b(you|we|they|You|We|They) will\\b${NOT_BEFORE_CLAUSE_END}`, 'g'), (m, v) => `${v}${APOS}ll`, 'x will'],
   [new RegExp(`\\b(you|we|they|You|We|They) would\\b${NOT_BEFORE_CLAUSE_END}`, 'g'), (m, v) => `${v}${APOS}d`, 'x would'],
   [/\bI am\b(?! (?:not|only)\b)/g, () => `I${APOS}m`, 'I am'],
   [/\bI will\b/g, () => `I${APOS}ll`, 'I will'],
-  [new RegExp(`${NOT_AFTER(PREPOSITIONS)}\\b(he|she) is\\b${NOT_BEFORE_CLAUSE_END}`, 'g'), (m, v) => `${v}${APOS}s`, 'he is'],
+  [new RegExp(`${NOT_AFTER([...PREPOSITIONS, ...TAKES_AN_OBJECT])}\\b(he|she) is\\b${NOT_BEFORE_CLAUSE_END}`, 'g'), (m, v) => `${v}${APOS}s`, 'he is'],
   [/\b(l|L)et us\b(?! (?:know|say|be|see|go|have)\b)/g, (m, l) => `${l}et${APOS}s`, 'let us'],
 ];
 

@@ -634,7 +634,7 @@ describe('being paid, months after the picture is finished', () => {
   it('says where the claim stands, at every point it can stand anywhere', () => {
     const sim = world();
     const id = makeIt(sim);
-    expect(whereTheClaimStands(sim, projectIn(sim, id))).toContain('has not applied yet');
+    expect(whereTheClaimStands(sim, projectIn(sim, id))).toContain('hasn’t applied yet');
     expect(applyForRebate(sim, id).ok).toBe(true);
     expect(whereTheClaimStands(sim, projectIn(sim, id))).toContain('35%');
     expect(deliverIt(sim, id)).toBe(true);

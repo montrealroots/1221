@@ -1079,8 +1079,8 @@ export function registerAudition(sim: Simulation): void {
           category: 'career',
           title: `${audition.holder}: They Give You A Note`,
           body: `“${shade ? (note.toward > 0 ? shade.high : shade.low) : 'Again'}.” `
-            + 'That is all anybody is going to tell you about what this part is for. '
-            + 'How far they meant, they did not say.',
+            + 'That’s all anybody is going to tell you about what this part is for. '
+            + 'How far they meant, they didn’t say.',
           importance: 70,
           refType: 'audition',
           refId: audition.id,

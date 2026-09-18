@@ -212,7 +212,7 @@ export const WAYS: readonly Way[] = [
   {
     id: 'room',
     label: 'Go In',
-    what: 'Eight minutes in a room with a reader and whoever is casting. They give you one note. It is the only thing anybody will ever tell you about what this part is for.',
+    what: 'Eight minutes in a room with a reader and whoever is casting. They give you one note. It’s the only thing anybody will ever tell you about what this part is for.',
     days: 3,
     costsCents: 120_00,
     notes: true,

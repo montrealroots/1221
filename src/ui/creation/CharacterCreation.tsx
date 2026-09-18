@@ -747,7 +747,7 @@ function PersonalStep({
             <h2>Background</h2>
             <p className="muted small">
               Where the life before this one happened. It carries no attribute and no
-              advantage — it is yours, and it is on your page from the first morning.
+              advantage — it’s yours, and it’s on your page from the first morning.
             </p>
           </div>
         </div>

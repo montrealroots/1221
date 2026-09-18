@@ -551,7 +551,7 @@ defineDecider<Pile, string>({
     if (truth < 34) return 'whoever was free';
     if (truth < 52) return 'working performers';
     if (truth < 70) return 'people you have heard of';
-    return 'people who do not normally read for this';
+    return 'people who don’t normally read for this';
   },
 });
 
@@ -678,7 +678,7 @@ defineDecider<Asked, string>({
     for (let i = 0; i < readings; i += 1) delete sim.universe.auditions[`remembered-${i}`];
     if (chance < 0.2) return 'nobody has heard of them';
     if (chance < 0.45) return 'they might think of them';
-    if (chance < 0.75) return 'they would call them in';
+    if (chance < 0.75) return 'they’d call them in';
     return 'they ask for them by name';
   },
 });

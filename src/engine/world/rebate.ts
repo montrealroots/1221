@@ -276,7 +276,7 @@ export function applyForRebate(
   if (!project) return { ok: false, error: 'There’s no such picture on the slate.' };
   const refused = whyNot(sim, project);
   if (refused) {
-    const said = refusalById(refused)?.said ?? 'The claim cannot be made.';
+    const said = refusalById(refused)?.said ?? 'The claim can’t be made.';
     return { ok: false, error: `${project.title}: ${said}` };
   }
 
@@ -424,7 +424,7 @@ export function whereTheClaimStands(sim: Simulation, project: Project): string {
     if (refused) return `${project.title} hasn’t applied. ${refusalById(refused)?.said ?? ''}`.trim();
     const short = shortOnFor(sim, project, 'plan');
     const rate = rateWhenShort(short);
-    return `${project.title} has not applied yet. As planned it would go in at `
+    return `${project.title} hasn’t applied yet. As planned it would go in at `
       + `${Math.round(rate * 100)}%`
       + `${short.length === 0 ? ', the higher of the two rates' : ''}.`;
   }

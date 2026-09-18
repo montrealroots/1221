@@ -222,7 +222,7 @@ defineLook<DecisionItem>('decision', {
 
     const ending = stage === 'open'
       ? (decision.dueAt !== undefined
-        ? `It ends on its date and on nothing else: once ${formatDate(decision.dueAt, sim.zone)} passes it closes itself, answered or not. The ninety-day rule that quiets the undated things does not touch it, because whatever raised it already said where it ends. The world only looks in every ${countWord(TICK_DAYS)} days, so the closing lands at the next look and not on the stroke. The save keeps the record until the date has passed and six months have gone by since it closed, whichever is later — so a row waved away early is dropped on the date itself.`
+        ? `It ends on its date and on nothing else: once ${formatDate(decision.dueAt, sim.zone)} passes it closes itself, answered or not. The ninety-day rule that quiets the undated things doesn’t touch it, because whatever raised it already said where it ends. The world only looks in every ${countWord(TICK_DAYS)} days, so the closing lands at the next look and not on the stroke. The save keeps the record until the date has passed and six months have gone by since it closed, whichever is later — so a row waved away early is dropped on the date itself.`
         : `Left alone it goes quiet by itself, ninety days from the day it was raised, on ${formatDate(quietAt, sim.zone)}, the world takes it off the list unanswered. The world only looks in every ${countWord(TICK_DAYS)} days, so that lands at the next look rather than on the stroke, and six months after it closes there’s no record of it at all.`)
       : `The save forgets it entirely six months after it closed, on ${formatDate(forgottenAt, sim.zone)}.`;
 

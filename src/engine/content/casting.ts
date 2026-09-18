@@ -285,7 +285,7 @@ export const ROUNDS: readonly Round[] = [
   {
     id: 'tape',
     label: 'A Tape',
-    what: 'Sides go out and a file comes back. They shot it as many times as they liked at home and sent the one they liked best. That is the whole of what is wrong with it.',
+    what: 'Sides go out and a file comes back. They shot it as many times as they liked at home and sent the one they liked best. Everything wrong with a tape is in that sentence.',
     takes: 0.25,
     costsCents: 40_00,
     width: { truth: 14, repeatable: 34, reads: 7 },
@@ -294,7 +294,7 @@ export const ROUNDS: readonly Round[] = [
   {
     id: 'preread',
     label: 'A Preread',
-    what: 'They come in, slate, read with the reader and leave. Eight minutes, and for a small part it is the only round there will ever be.',
+    what: 'They come in, slate, read with the reader and leave. Eight minutes, and for a small part it’s the only round there will ever be.',
     takes: 0.5,
     costsCents: 220_00,
     width: { truth: 9, repeatable: 22, reads: 5 },
@@ -517,7 +517,7 @@ export const SIZES: readonly Size[] = [
   {
     id: 'guest',
     label: 'Guest',
-    what: 'One part, one block, one story. On a season that is an episode; on a feature it is a sequence.',
+    what: 'One part, one block, one story. On a season that’s an episode; on a feature it’s a sequence.',
     perHour: 3,
     across: 'part',
     onScreen: 0.12,
