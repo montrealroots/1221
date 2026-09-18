@@ -29,6 +29,9 @@ import type { Person, Property } from '@/engine/domain/model';
 import type { Simulation } from '@/engine';
 import { Stat } from '@/ui/components/primitives';
 import { defineLook, type Way } from './registry';
+import { useGame, useWorld } from '@/app/game-context';
+import { accountsOf, whyNotTransfer } from '@/engine/world/banking';
+import { DEPOSIT_A_YEAR } from '@/engine/content/banking';
 import { at } from './subject';
 import { isAre, spokenList } from './words';
 
@@ -145,9 +148,13 @@ defineLook<Account>('account', {
       summary: accountSentence(account, sim),
       body: accountBody(account, sim),
       ways,
+      // This used to end "and nothing has charged it against you yet", which was
+      // true for the whole of this project’s life and is not any more. A comment
+      // or a provenance line a change falsifies is part of that change.
       provenance: account.apr === undefined
         ? 'The balance is the sum of the postings against it, not a figure anybody typed in.'
-        : 'The balance is the sum of the postings against it. The rate is the one written on the account, and nothing has charged it against you yet.',
+        : 'The balance is the sum of the postings against it. The rate is the one written on the '
+          + 'account, and it’s charged on what is owed at the start of every month.',
     };
   },
 });
@@ -244,11 +251,81 @@ function accountBody(a: Account, sim: Simulation) {
         {a.institution ?? 'The bank'} opened it {heldFor(sim, a.openedAt)}
         {a.last4 ? `, and it ends ${a.last4}` : ''}.{' '}
         {a.apr !== undefined
-          ? `Anything left on it is written at ${ratePercent(a.apr)} a year, against what’s still owing, not against what it started at.`
-          : 'It charges you nothing for the privilege of holding your money.'}
+          ? `Anything left on it is charged at ${ratePercent(a.apr)} a year, against what’s still owing `
+            + 'and not against what it started at. A twelfth of that goes on every month it isn’t cleared.'
+          : a.kind === 'savings'
+            ? `It pays ${ratePercent(DEPOSIT_A_YEAR)} a year on whatever is sitting in it, a twelfth at a time, `
+              + 'which is the only thing in this game that pays you for doing nothing.'
+            : 'It charges you nothing for holding your money and pays you nothing for leaving it — '
+              + 'a current account is for money that’s moving.'}
       </p>
       <p className="small">{movementSentence(inward, outward)}</p>
       <div className="grid grid-3">{stats}</div>
+      <Move account={a} />
+    </>
+  );
+}
+
+/**
+ * Moving money out of this account into another one you hold.
+ *
+ * The only way to get money from one pocket into another, and therefore the only
+ * way to clear a card faster than the minimum. It sits on the account page rather
+ * than on a screen of its own because the decision is always about *this*
+ * account: what is in it, and whether it is doing anything where it sits.
+ *
+ * Three buttons rather than an amount field, and that is the design rather than a
+ * shortcut. The decision worth offering is "put the spare somewhere it earns" or
+ * "clear what is owed", not "type a number" — and every one of the three names
+ * the sum it will move, so nothing is hidden behind a press. The refusal under
+ * them is `whyNotTransfer`, which is the same function the command calls.
+ */
+function Move({ account }: { account: Account }) {
+  const { run } = useGame();
+  const mine = useWorld((s) => accountsOf(s, account.ownerId).filter((one) => one.id !== account.id));
+  const owed = useWorld(() => mine.filter((one) => isLiability(one.kind) && owedOn(one) > 0));
+  const savings = mine.filter((one) => one.kind === 'savings');
+  const spending = mine.filter((one) => !isLiability(one.kind) && one.kind !== 'savings');
+
+  if (isLiability(account.kind) || mine.length === 0) return null;
+
+  const offers: { to: Account; cents: number; label: string }[] = [];
+  for (const card of owed) {
+    const clear = Math.min(account.balance, owedOn(card));
+    if (clear > 0) offers.push({ to: card, cents: clear, label: `Clear ${card.name}` });
+  }
+  for (const other of [...savings, ...spending]) {
+    // Half, rather than everything, because a current account with nothing in it
+    // is an account that cannot pay for anything this month.
+    const some = Math.floor(account.balance / 2);
+    if (some > 0) offers.push({ to: other, cents: some, label: `Half To ${other.name}` });
+  }
+
+  if (offers.length === 0) return null;
+  return (
+    <div className="row gap-2" style={{ marginTop: 'var(--s2)', flexWrap: 'wrap' }}>
+      {offers.map((offer) => (
+        <Offer key={`${offer.to.id}-${offer.cents}`} from={account} offer={offer} run={run} />
+      ))}
+    </div>
+  );
+}
+
+function Offer(
+  { from, offer, run }:
+  { from: Account; offer: { to: Account; cents: number; label: string }; run: (k: string, p: Record<string, unknown>) => void },
+) {
+  const whyNot = useWorld((s) => whyNotTransfer(s, from.id, offer.to.id, offer.cents));
+  return (
+    <>
+      <button
+        className="btn btn-sm"
+        disabled={whyNot !== undefined}
+        onClick={() => run('life.transfer', { from: from.id, to: offer.to.id, cents: offer.cents })}
+      >
+        {offer.label} Â· {formatMoney(offer.cents)}
+      </button>
+      {whyNot !== undefined && <span className="xs dim">{whyNot}</span>}
     </>
   );
 }
