@@ -1,4 +1,4 @@
-| Draw streams no decider owns | 0 | 21 |# What Does Not Bite
+# What Does Not Bite
 
 A standing list of everything in SLATE that is declared, written, displayed or
 believed, and that changes no outcome. It is kept separate from `DEPTH.md`
@@ -36,9 +36,12 @@ may not rise.
 | Personality axes | 0 | 3 |
 | Dials nothing moves | 0 | every field on Reputation and Wellbeing |
 | Save tables nothing fills | 0 | 22 |
-| Draw streams no decider owns | 13 | 21 |
+| Draw streams no decider owns | 0 | 21 |
 
-**47 declared words that nothing reads.**
+**Nought declared words that nothing reads.** Every row above was above nought
+when this cleanup started, and the four that were not already nought — the trait
+modifier keys, the higher-is-worse guards, the dials and the draw streams — came
+down in one run of work. The ratchet may fall. It may not rise.
 
 This table said **160** for a long time after it was 47, with id namespaces at
 104 of 125 and personality axes at 3 of 7 — numbers from before the cull, the
