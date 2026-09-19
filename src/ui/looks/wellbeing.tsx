@@ -22,6 +22,7 @@ import { postFacts, postsOf } from '@/engine/world/company';
 import { readiness, wellbeingSummary } from '@/engine/systems/life';
 import type { Person, Wellbeing } from '@/engine/domain/model';
 import type { Simulation } from '@/engine';
+import { isTalent } from '@/engine/production/talent';
 import { defineLook, type Way } from './registry';
 import { at } from './subject';
 import { waysIntoSomebody, whatTheyAre } from './family';
@@ -116,6 +117,13 @@ defineLook<Person>('person', {
         to: at('plans'),
         label: 'Your Own Plans',
         detail: 'Everything you have put on the calendar yourself',
+      });
+    }
+    if (isTalent(sim, person.id)) {
+      ways.push({
+        to: at('talent', person.id),
+        label: 'Career Profile',
+        detail: 'Credits, quotes, acting strengths, availability and production history',
       });
     }
     // Anybody who is somebody to you opens onto what they are, where the two
