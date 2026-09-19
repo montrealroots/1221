@@ -363,6 +363,7 @@ function Slate() {
   const [putting, setPutting] = useState(false);
   const [saying, setSaying] = useState<string | undefined>();
   const [developing, setDeveloping] = useState<string | undefined>();
+  const [packaging, setPackaging] = useState<string | undefined>();
   const [casting, setCasting] = useState<string | undefined>();
   const [filing, setFiling] = useState<string | undefined>();
   const [claiming, setClaiming] = useState<string | undefined>();
@@ -395,8 +396,17 @@ function Slate() {
                       {`Development ${project.development.screenplay.quality}/100`}
                     </button>
                   )}
-                  {project.planId === undefined && !project.shelvedAt && developmentReadiness(project).ready && (
-                    <button className="btn btn-sm" onClick={() => setSaying(project.id)}>Say Yes To It</button>
+                  {project.development?.screenplay.status === 'locked' && project.planId === undefined && !project.shelvedAt && (
+                    <button className="btn btn-sm" onClick={() => setPackaging(project.id)}>
+                      {project.package ? 'Production Package' : 'Package It'}
+                    </button>
+                  )}
+                  {project.planId === undefined && !project.shelvedAt
+                    && developmentReadiness(project).ready
+                    && (!project.development || Boolean(project.package)) && (
+                    <button className="btn btn-sm" onClick={() => setSaying(project.id)}>
+                      {project.development ? 'Greenlight' : 'Say Yes To It'}
+                    </button>
                   )}
                   {(project.roles ?? []).length > 0 && project.stage !== 'delivered' && (
                     <button className="btn btn-sm" onClick={() => setCasting(project.id)}>
@@ -422,6 +432,7 @@ function Slate() {
       )}
       {putting && <DevelopForm onClose={() => setPutting(false)} />}
       {developing && <DevelopmentForm projectId={developing} onClose={() => setDeveloping(undefined)} />}
+      {packaging && <PackageForm projectId={packaging} onClose={() => setPackaging(undefined)} />}
       {saying && <GreenlightForm projectId={saying} onClose={() => setSaying(undefined)} />}
       {casting && <CastForm projectId={casting} onClose={() => setCasting(undefined)} />}
       {filing && <DeliveryForm projectId={filing} onClose={() => setFiling(undefined)} />}
@@ -682,6 +693,134 @@ function DevelopmentForm({ projectId, onClose }: { projectId: string; onClose: (
       )}
       {heard && <p className="small" style={{ marginTop: 'var(--s3)' }}>{heard}</p>}
       {error && <p className="small negative" style={{ marginTop: 'var(--s3)' }}>{error}</p>}
+    </Modal>
+  );
+}
+
+function PackageForm({ projectId, onClose }: { projectId: string; onClose: () => void }) {
+  const { run, sim } = useGame();
+  const project = useWorld((s) => s.universe.projects[projectId]);
+  const ways = project ? plansFor(project.medium) : [];
+  const existing = project?.package;
+  const [planId, setPlanId] = useState(existing?.planId ?? ways[0]?.id ?? 'feature');
+  const plan = planById(planId);
+  const [budget, setBudget] = useState(Math.round((existing?.budgetCents ?? 4_000_000_00) / 100));
+  const [weeks, setWeeks] = useState(existing?.shootWeeks ?? 5);
+  const [minutes, setMinutes] = useState(Math.round((existing?.secondsEach ?? plan?.delivers.secondsEach ?? 6_000) / 60));
+  const [hands, setHands] = useState(existing?.hands ?? 2);
+  const [when, setWhen] = useState<string>(
+    existing ? new Date(existing.from).toISOString().slice(0, 10) : '',
+  );
+  const [error, setError] = useState<string | undefined>();
+  if (!project) return null;
+
+  const anchoredAt = plan?.anchor === 'delivery' ? AIRDATE_WEEKS : LEAD_WEEKS;
+  const from = when
+    ? new Date(`${when}T00:00:00Z`).getTime()
+    : existing?.from ?? sim.now + anchoredAt * 7 * 24 * 60 * 60 * 1000;
+  const spec = {
+    projectId,
+    planId,
+    budgetCents: Math.round(budget * 100),
+    shootWeeks: weeks,
+    secondsEach: minutes * 60,
+    hands,
+    from,
+    ...(existing?.stageId ? { stageId: existing.stageId } : {}),
+  };
+  const preview = wouldBe(sim, spec);
+
+  const save = () => {
+    const done = run<{ ok: boolean; error?: string }>(
+      'production.package.set',
+      spec,
+      { silent: true },
+    );
+    if (done.value?.ok) {
+      setError(undefined);
+      onClose();
+      return;
+    }
+    setError(done.value?.error ?? done.error ?? 'The project could not be packaged.');
+  };
+
+  return (
+    <Modal
+      title={`Production Package: ${project.title}`}
+      wide
+      onClose={onClose}
+      footer={(
+        <>
+          <button className="btn btn-ghost" onClick={onClose}>Close</button>
+          <button className="btn btn-primary" onClick={save} disabled={!preview.ok}>
+            {existing ? 'Update Package' : 'Package Project'}
+          </button>
+        </>
+      )}
+    >
+      <p className="small">
+        Packaging turns the locked screenplay into the version the company can cast and finance:
+        format, budget, runtime, schedule and cutting-room capacity. It does not greenlight the project
+        and it does not reserve the stage yet.
+      </p>
+
+      <div className="field">
+        <label htmlFor="package-plan">Production Plan</label>
+        <select id="package-plan" value={planId} onChange={(e) => setPlanId(e.target.value)}>
+          {ways.map((one) => <option key={one.id} value={one.id}>{one.label}</option>)}
+        </select>
+      </div>
+      <div className="field">
+        <label htmlFor="package-budget">Production Budget</label>
+        <input
+          id="package-budget" type="number" min={1} step={100_000} value={budget}
+          onChange={(e) => setBudget(Math.max(1, Number(e.target.value)))}
+        />
+      </div>
+      <div className="field">
+        <label htmlFor="package-weeks">Shoot Weeks</label>
+        <input
+          id="package-weeks" type="number" min={1} max={LONGEST_SHOOT} value={weeks}
+          onChange={(e) => setWeeks(Math.max(1, Number(e.target.value)))}
+        />
+      </div>
+      <div className="field">
+        <label htmlFor="package-minutes">Runtime Per Part</label>
+        <input
+          id="package-minutes" type="number" min={1} value={minutes}
+          onChange={(e) => setMinutes(Math.max(1, Number(e.target.value)))}
+        />
+      </div>
+      <div className="field">
+        <label htmlFor="package-hands">Cutting Room</label>
+        <input
+          id="package-hands" type="number" min={1} value={hands}
+          onChange={(e) => setHands(Math.max(1, Math.round(Number(e.target.value))))}
+        />
+      </div>
+      <div className="field">
+        <label htmlFor="package-date">{plan?.anchor === 'delivery' ? 'Target Delivery / Airdate' : 'Production Start'}</label>
+        <input id="package-date" type="date" value={when} onChange={(e) => setWhen(e.target.value)} />
+      </div>
+
+      {preview.ok ? (
+        <div className="grid grid-4">
+          <Stat label="Budget" value={formatMoney(spec.budgetCents, { cents: false })} note="The negative being packaged" />
+          <Stat label="Schedule" value={`${preview.prospect.weeks} weeks`} note={`Slack ${preview.prospect.slack.toFixed(2)}×`} />
+          <Stat label="Delivery" value={formatDate(preview.prospect.deliverBy, sim.homeZone)} note="Contractual due date" />
+          <Stat label="Parts" value={preview.prospect.parts} note={`${minutes} minutes each`} />
+        </div>
+      ) : (
+        <p className="small negative">{preview.error}</p>
+      )}
+
+      {existing && (project.cast ?? []).length > 0 && (
+        <p className="small negative">
+          Casting commitments already exist against this package. The engine will refuse a changed package
+          until those commitments are cleared.
+        </p>
+      )}
+      {error && <p className="small negative">{error}</p>}
     </Modal>
   );
 }
