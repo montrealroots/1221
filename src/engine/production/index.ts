@@ -66,3 +66,10 @@ export {
   optionFeeCents,
   type ActingTermsInput,
 } from './contracts';
+
+export {
+  packageMatchesGreenlight,
+  packageProject,
+  registerPackaging,
+  type PackageResult,
+} from './package';
