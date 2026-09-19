@@ -51,3 +51,17 @@ export {
   type PassSpec,
   type StartDevelopment,
 } from './development';
+
+export {
+  BILLING_POSITIONS,
+  MAX_BACKEND_BPS,
+  MAX_OPTION_RAISE,
+  MAX_SEQUEL_OPTIONS,
+  MIN_OPTION_RAISE,
+  actingTermsAcceptanceDelta,
+  actingTermsSummary,
+  defaultActingTerms,
+  normalizeActingTerms,
+  optionFeeCents,
+  type ActingTermsInput,
+} from './contracts';
