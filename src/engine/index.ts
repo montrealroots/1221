@@ -28,16 +28,11 @@ import { registerLife, startOfLocalDay } from './systems/life';
 import { populateFamily } from './world/family';
 import { buildTheLot, registerLot } from './world/lot';
 import { registerSugar, seedTheQuota, staffTheGroup } from './world/sugar';
-import { registerMaking } from './world/making';
-import { registerSelling } from './world/selling';
-import { registerCrew } from './world/crew';
-import { registerCasting } from './world/casting';
-import { registerAudition } from './world/audition';
+import { registerProduction } from './production';
 import { registerRebate } from './world/rebate';
 import { registerVat } from './world/vat';
 import { registerHouse } from './world/house';
 import { registerBanking } from './world/banking';
-import { registerAwards } from './world/awards';
 import { registerTutorial } from './world/tutorial';
 import {
   companiesOf, foundTheCompany, foundTheSugarGroup, holdingsOf, postsOf, projectsOf, registerCompanyCommands,
@@ -66,16 +61,11 @@ export function registerAllSystems(sim: Simulation): void {
   registerTheClock(sim);
   registerLot(sim);
   registerSugar(sim);
-  registerMaking(sim);
-  registerSelling(sim);
-  registerCrew(sim);
-  registerCasting(sim);
-  registerAudition(sim);
+  registerProduction(sim);
   registerRebate(sim);
   registerVat(sim);
   registerHouse(sim);
   registerBanking(sim);
-  registerAwards(sim);
   registerTutorial(sim);
 }
 
