@@ -330,11 +330,7 @@ function completePass(sim: Simulation, projectId: Id, sequence: number): void {
 
 export function developmentReadiness(project: Project): DevelopmentReadiness {
   const development = project.development;
-  if (!development) {
-    return project.productionVersion === 2
-      ? { ready: false, blockers: ['a development brief and screenplay'] }
-      : { ready: true, blockers: [] };
-  }
+  if (!development) return { ready: true, blockers: [] };
 
   const blockers: string[] = [];
   if (development.genreIds.length === 0) blockers.push('a genre');
