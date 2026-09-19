@@ -266,7 +266,10 @@ export const openRoles = (project: Project): Role[] =>
  * only reason a guest is cheaper than a regular.
  */
 export function datesFor(project: Project, role: Role): { from: Instant; to: Instant } | undefined {
-  const shoot = baseWindowOf(project);
+  const shoot = baseWindowOf(project)
+    ?? (project.package?.performerFrom !== undefined && project.package.performerTo !== undefined
+      ? { from: project.package.performerFrom, to: project.package.performerTo }
+      : undefined);
   if (!shoot) return undefined;
   const opens = shoot.from - MS_WEEK;
   if (!role.partId) return { from: opens, to: shoot.to };
