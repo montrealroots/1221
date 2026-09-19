@@ -132,3 +132,19 @@ export function formatMoneyCompact(cents: Money): string {
 export function formatSignedMoney(cents: Money): string {
   return `${cents > 0 ? '+' : ''}${formatMoney(cents)}`;
 }
+
+/**
+ * Cents in a million of the ledger currency.
+ *
+ * Named because it was got wrong in five places at once. `cents / 100_00 / 100`
+ * reads like a million and is a million *cents*, which is ten thousand euro — so
+ * every figure the production system printed came out a hundred times too large
+ * and looked plausible the whole way, because they were all wrong together.
+ * A shared constant is the cheap fix; the expensive one was believing the output.
+ */
+export const CENTS_IN_A_MILLION = 100_000_000;
+
+/** A money figure as millions of the ledger currency, to two places. */
+export function millions(cents: Money): string {
+  return `${(cents / CENTS_IN_A_MILLION).toFixed(2)}m`;
+}

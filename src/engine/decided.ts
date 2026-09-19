@@ -27,6 +27,10 @@ import { MS_WEEK, pullOn, stagesOn, wouldBook } from './world/lot';
 import { decideQuota } from './world/sugar';
 import { MEN, WOMEN } from './content/names';
 import { ageOn } from './world/family';
+import { CENTS_IN_A_MILLION } from './core/money';
+import { FORMAT_BY_ID } from './content/format';
+import { bendTheRun } from './content/release';
+import { reckon, type Spec as BoxSpec } from './world/boxoffice';
 
 // ---------------------------------------------------------------------------
 // The sky
@@ -306,4 +310,135 @@ defineDecider<Hire, string>({
   },
   sample: (seed) => ({ woman: seed % 2 === 0, given: (seed % 11) / 11, years: 41 + (seed % 23) }),
   decide: ({ woman, given, years }) => `${nameFrom(woman, given)}, ${woman ? 'she/her' : 'he/him'}, ${years}`,
+});
+
+// ---------------------------------------------------------------------------
+// What a release takes, and what shape it takes it in
+// ---------------------------------------------------------------------------
+
+/**
+ * The height of a run, as a rung.
+ *
+ * `world/boxoffice.ts` is a chain of eight named links, each of which may move a
+ * carried figure. Every one of them is a place a sign can be inverted, and an
+ * inverted sign there would read perfectly: "a bigger campaign means a smaller
+ * opening" is a sentence, and until `sweepDirection` existed it was a sentence the
+ * build could not tell from the truth. `making.slip` shipped exactly that bug for
+ * the whole of its life.
+ *
+ * So the chain declares its directions here and the sweep pushes each input from
+ * one end of its range to the other. Five inputs, five claims, and the test fails
+ * if any of them goes the other way.
+ */
+interface Opening {
+  spentCents: number;
+  craft: string;
+  draw: string;
+  campaignCents: number;
+  field: number;
+  month: number;
+}
+
+const BANDS_LOW_TO_HIGH = ['starting', 'working', 'sought', 'first'];
+const bandAt = (t: number): string =>
+  BANDS_LOW_TO_HIGH[Math.min(BANDS_LOW_TO_HIGH.length - 1, Math.floor(t * BANDS_LOW_TO_HIGH.length))]!;
+
+const openingSpec = (o: Opening): BoxSpec => ({
+  format: FORMAT_BY_ID.feature!,
+  parts: 1,
+  secondsEach: 110 * 60,
+  spentCents: o.spentCents,
+  campaignCents: o.campaignCents,
+  staffing: {
+    director: o.craft, writer: o.craft, photography: o.craft, cutting: o.craft,
+    casting: o.draw, music: o.draw,
+    production: 'working',
+  },
+  month: o.month,
+  field: o.field,
+});
+
+/** Where a take lands, worst first. Wide rungs, because the model spans decades. */
+const HEIGHTS = ['quiet', 'modest', 'solid', 'strong', 'enormous'];
+const heightOf = (cents: number): string => {
+  const m = cents / CENTS_IN_A_MILLION;
+  if (m < 4) return 'quiet';
+  if (m < 12) return 'modest';
+  if (m < 30) return 'solid';
+  if (m < 70) return 'strong';
+  return 'enormous';
+};
+
+defineDecider<Opening, string>({
+  id: 'release.height',
+  decides: 'How much a finished picture takes when it opens.',
+  drawnIn: 'src/engine/world/boxoffice.ts',
+  deterministic: true,
+  reads: {
+    // What was spent making it, across three orders of magnitude.
+    spend: (o, t) => ({ ...o, spentCents: Math.round((200_000_00 + t * 80_000_000_00)) }),
+    // Who directed, wrote, shot and cut it.
+    craft: (o, t) => ({ ...o, craft: bandAt(t) }),
+    // Who is in it and what it sounds like.
+    draw: (o, t) => ({ ...o, draw: bandAt(t) }),
+    // What was spent telling anybody, from nothing to ten times the floor.
+    campaign: (o, t) => ({ ...o, campaignCents: Math.round(t * 2_500_000_00) }),
+    // How much of the week was already spoken for.
+    field: (o, t) => ({ ...o, field: t }),
+    // And when in the year it opened.
+    month: (o, t) => ({ ...o, month: Math.min(11, Math.floor(t * 12)) }),
+  },
+  sample: (seed) => ({
+    spentCents: 1_500_000_00 + (seed % 5) * 900_000_00,
+    craft: BANDS_LOW_TO_HIGH[seed % 4]!,
+    draw: BANDS_LOW_TO_HIGH[(seed + 2) % 4]!,
+    campaignCents: 250_000_00 + (seed % 3) * 200_000_00,
+    field: ((seed % 4) / 4),
+    month: seed % 12,
+  }),
+  ladder: HEIGHTS,
+  // Four up and one down, and each one is read straight off the link that makes
+  // the claim. `month` is left undeclared: the seasonal table has two peaks and
+  // two troughs, so later in the year is not monotonically better and declaring
+  // a direction for it would be declaring something false.
+  rises: { spend: 'up', craft: 'up', draw: 'up', campaign: 'up', field: 'down' },
+  decide: (o) => heightOf(reckon(openingSpec(o)).cents),
+});
+
+/**
+ * The shape of a run, as a rung.
+ *
+ * Separate from the height because they are separate, and the build kept
+ * conflating them. A picture can open enormous and vanish, or open quietly and
+ * play until March, and a model where quality only scales the total can produce
+ * neither. This is the check that they really are independent: it sweeps the
+ * inputs that bend the curve and reads only the curve.
+ */
+interface Shaped { mouth: number; legs: number }
+
+const SHAPES = ['front-loaded', 'even', 'long legs'];
+
+defineDecider<Shaped, string>({
+  id: 'release.shape',
+  decides: 'Whether a run is front-loaded or has legs.',
+  drawnIn: 'src/engine/content/release.ts',
+  deterministic: true,
+  reads: {
+    // How well people speak of it.
+    mouth: (s, t) => ({ ...s, mouth: t * 2 - 1 }),
+    // And how much the format lets that matter at all.
+    legs: (s, t) => ({ ...s, legs: t }),
+  },
+  sample: (seed) => ({ mouth: ((seed % 5) / 4) * 2 - 1, legs: 0.3 + (seed % 4) * 0.2 }),
+  ladder: SHAPES,
+  rises: { mouth: 'up', legs: 'up' },
+  decide: ({ mouth, legs }) => {
+    const curve = bendTheRun(mouth, legs);
+    // The share of the run that lands after the first four weeks. A blunt
+    // measure on purpose: it is the one an exhibitor actually cares about.
+    const tail = curve.slice(4).reduce((sum, w) => sum + w, 0);
+    if (tail < 0.30) return 'front-loaded';
+    if (tail < 0.42) return 'even';
+    return 'long legs';
+  },
 });

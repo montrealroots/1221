@@ -114,10 +114,17 @@ for (const file of files) {
 // registers something at runtime and hides it from the file.
 const registry = readFileSync('src/engine/decided.ts', 'utf8');
 const owned = new Map();
-for (const m of registry.matchAll(/id:\s*'([^']+)'[\s\S]{0,400}?drawnIn:\s*'([^']+)'/g)) {
-  const list = owned.get(m[2]) ?? [];
-  list.push(m[1]);
-  owned.set(m[2], list);
+// Deciders that say they take no dice. Read per block rather than per file,
+// because one file could hold both a drawing decision and a deterministic one.
+const diceless = new Set();
+for (const block of registry.split('defineDecider').slice(1)) {
+  const id = block.match(/id:\s*'([^']+)'/);
+  const file = block.match(/drawnIn:\s*'([^']+)'/);
+  if (!id || !file) continue;
+  const list = owned.get(file[1]) ?? [];
+  list.push(id[1]);
+  owned.set(file[1], list);
+  if (/deterministic:\s*true/.test(block)) diceless.add(id[1]);
 }
 
 console.log(`${files.length} engine files. ${drawing.size} of them draw.\n`);
@@ -135,9 +142,26 @@ for (const [file, at] of [...drawing].sort()) {
 
 // A decider claiming a file that no longer draws is stale, and stale is how
 // this kind of check quietly stops covering anything.
-const stale = [...owned.keys()].filter((file) => !drawing.has(file));
+//
+// Except where the decider says the decision takes no dice. This check was
+// written when every decision was a place the world rolled, and the release
+// model is not one: the take is a chain of named links over a declared input
+// and it draws nothing, on purpose, because a figure that cannot be reproduced
+// cannot be argued with. Calling that stale was the tool being right about the
+// rule and wrong about the code, so the rule widened. The orphan test above is
+// untouched — a file that does draw with nothing accounting for it is the case
+// worth failing on, and no flag here can excuse one.
+const stale = [...owned.keys()].filter(
+  (file) => !drawing.has(file) && !owned.get(file).every((id) => diceless.has(id)),
+);
 for (const file of stale) {
   console.log(`  STALE    ${file}  is claimed by ${owned.get(file).join(', ')} and does not draw`);
+}
+const settled = [...owned.keys()].filter(
+  (file) => !drawing.has(file) && owned.get(file).every((id) => diceless.has(id)),
+);
+for (const file of settled) {
+  console.log(`  no dice  ${file}  →  ${owned.get(file).join(', ')}  (decides without drawing)`);
 }
 
 // The stream-level count, which is the one the file-level check could not see.

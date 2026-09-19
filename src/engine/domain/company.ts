@@ -614,6 +614,45 @@ export interface Project {
   budgetCents?: Money;
   shelvedAt?: Instant;
 
+  // --- The shape it is being made in ---------------------------------------
+  // `medium` used to be the real format decision: taken first, in a modal,
+  // before anybody knew the budget, and never writable again. It is derived
+  // from the format now, and the format is chosen with everything known.
+
+  /** Which format, by id from `content/format.ts`. */
+  formatId?: string;
+  /**
+   * Seconds of finished screen time per part.
+   *
+   * Held separately from `owesSeconds` because the two answer different
+   * questions: this is what one part runs to, and that is what the whole thing
+   * owes. A twelve-part series changes the second when a part is cut and the
+   * first only when somebody re-plans it.
+   */
+  secondsEach?: number;
+  /**
+   * Which standing of person fills each department, by department id.
+   *
+   * Absent means the engine's own pick, which is `DEFAULT_BAND` — not nobody.
+   * An unfilled post is a choice not taken rather than a hole in the crew.
+   */
+  staffing?: Record<string, string>;
+  /**
+   * Which doors have shut, by lock id from `world/production.ts`.
+   *
+   * The whole of what makes the choices above weigh anything. Read by every
+   * refusal in that file: past a lock the thing it covers cannot be changed,
+   * and the reason is always inside the fiction rather than outside it.
+   */
+  locked?: string[];
+
+  // --- Once it is out -------------------------------------------------------
+
+  /** Which channel it opened down. */
+  channel?: 'theatrical' | 'broadcast' | 'streaming';
+  /** What was spent telling anybody about it. */
+  campaignCents?: Money;
+
   // --- The dated life, once it is greenlit ---------------------------------
   // Empty until then. A picture that has not been greenlit has no dates and
   // saying otherwise would be a schedule nobody has agreed to.

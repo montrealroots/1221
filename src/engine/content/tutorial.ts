@@ -402,6 +402,65 @@ export const LESSONS: readonly Lesson[] = [
     screen: 'business',
     importance: 45,
   },
+  {
+    id: 'shape',
+    strand: 'the-pictures',
+    title: 'What Shape It Is Made In',
+    body: 'A feature is one sitting and opens in cinemas. A limited series is one story across '
+      + 'a few parts. An anthology shares a frame and nothing else, so every part has to find '
+      + 'its audience again. A continuing series is the opposite — each part arrives at the '
+      + 'audience the last one built, which is why it holds them longest. The format decides how '
+      + 'many parts you may make, how long each runs, and where it can be sold at all: nothing '
+      + 'very short opens in a cinema, and the refusal says so rather than pricing it badly.',
+    teaches: ['production.shape'],
+    screen: 'production',
+    after: ['conceive'],
+    importance: 62,
+  },
+  {
+    id: 'heads',
+    strand: 'the-pictures',
+    title: 'Engaging The Heads Settles The Shape',
+    body: 'Seven departments, and each takes a head from Starting Out to First Call. Direction, '
+      + 'writing, photography and cutting decide how good it turns out. Casting and music decide '
+      + 'how many people come at all — and those are not the same thing, which is the whole game '
+      + 'here. A cheap head is worse than leaving the post alone, not merely cheaper. And the '
+      + 'moment you engage the first one the shape is settled: you cannot promise a first-call '
+      + 'director twelve parts, agree their fee, and then make three.',
+    teaches: ['production.staff'],
+    screen: 'production',
+    after: ['shape'],
+    importance: 60,
+  },
+  {
+    id: 'commit',
+    strand: 'the-pictures',
+    title: 'Committing Pays Them Whatever Happens',
+    body: 'The heads are paid at the greenlight, out of company cash, before anybody has seen a '
+      + 'frame. That is the point: a picture that fails still cost every penny of its crew, so '
+      + 'the standing you chose is a bet and not a preference. Committing also contracts them — '
+      + 'past it the staffing cannot simply be changed. A picture you no longer want can be taken '
+      + 'off the slate instead, and put back later.',
+    teaches: ['production.commit', 'production.shelve'],
+    screen: 'production',
+    after: ['heads'],
+    importance: 64,
+  },
+  {
+    id: 'release',
+    strand: 'the-pictures',
+    title: 'The Run, And Why The Month Matters',
+    body: 'Pick a channel the format can open on, and a campaign. Spending under what the format '
+      + 'expects is worse than spending nothing — a half-campaign buys awareness without reach. '
+      + 'Then the run plays over twenty weeks, and its shape is decided by how people speak of it '
+      + 'rather than by how much it took: a well-made picture moves its money into the tail and a '
+      + 'loud empty one takes it all in a fortnight. Half a cinema gross never leaves the cinemas. '
+      + 'What arrives afterwards — abroad, home, a service, a broadcaster — is each its own line.',
+    teaches: ['production.release'],
+    screen: 'production',
+    after: ['commit'],
+    importance: 66,
+  },
 
   // -------------------------------------------------------------------------
   // The lot

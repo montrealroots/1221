@@ -49,6 +49,11 @@ export const DESTINATIONS: readonly DestinationGroup[] = [
         label: 'Family Business',
         detail: 'What the company may do, and what is stopping it',
       },
+      {
+        route: '/workspace/production',
+        label: 'The Production Floor',
+        detail: 'Shape it, engage the heads, commit the money, let it out',
+      },
     ],
   },
 ];

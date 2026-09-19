@@ -51,6 +51,30 @@ export interface Decider<Input, Outcome> {
    */
   drawnIn: string;
   /**
+   * True when the decision takes no dice at all.
+   *
+   * `drawnIn` was written on the assumption that a decision is a place the world
+   * rolls, and for the first six deciders it was. The release model broke it: the
+   * take is a chain of eight named links over a declared input, and it draws
+   * nothing — the same plan in the same month against the same field returns the
+   * same figure every time, by design, because a model whose output cannot be
+   * reproduced cannot be argued with.
+   *
+   * That left the tool calling a correct registration stale, which is the worst
+   * kind of check failure: it is right about the rule and wrong about the code.
+   * So the rule widened rather than the file pretending to roll. A decider is a
+   * decision, and this field says whether the decision has any randomness under
+   * it. `tools/deciders.mjs` skips the stale test for a file whose only claimants
+   * say so, and the orphan test — a file that *does* draw with nothing accounting
+   * for it — is untouched, because that is the one that catches real gaps.
+   *
+   * Worth saying plainly: a deterministic decider needs the sweep more, not less.
+   * An inverted sign in a model with a die in it shows up as noise somebody
+   * eventually investigates. An inverted sign in a deterministic one is simply
+   * wrong, quietly, forever.
+   */
+  deterministic?: boolean;
+  /**
    * The named draw streams this decision takes, where they are not its own id.
    *
    * `tools/deciders.mjs` counts streams as well as files, and it used to insist a

@@ -42,7 +42,7 @@ export type Id = string;
  */
 export const ID_NAMESPACES = [
   'person', 'household', 'account', 'txn', 'sched', 'company', 'reg', 'sign', 'policy', 'hold',
-  'post', 'project', 'prop', 'stage', 'booking', 'notice',
+  'post', 'project', 'part', 'prop', 'stage', 'booking', 'notice',
   'decision',
 ] as const;
 

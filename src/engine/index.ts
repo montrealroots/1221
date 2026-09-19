@@ -33,6 +33,7 @@ import { registerHouse } from './world/house';
 import { registerBanking } from './world/banking';
 import { registerTutorial } from './world/tutorial';
 import { registerConcept } from './world/concept';
+import { registerProduction } from './world/production';
 import {
   companiesOf, foundTheCompany, foundTheSugarGroup, holdingsOf, postsOf, projectsOf, registerCompanyCommands,
   registerTheClock,
@@ -64,6 +65,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerHouse(sim);
   registerBanking(sim);
   registerConcept(sim);
+  registerProduction(sim);
   registerTutorial(sim);
 }
 
