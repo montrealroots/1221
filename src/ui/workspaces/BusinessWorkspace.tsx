@@ -58,7 +58,7 @@ import {
 } from '@/engine/world/rebate';
 import type { ActingTerms, Project, RoleId } from '@/engine/domain/company';
 import { talentForRole } from '@/engine/production/talent';
-import { BILLING_POSITIONS, defaultActingTerms } from '@/engine/production/contracts';
+import { BILLING_POSITIONS, actingTermsSummary, defaultActingTerms } from '@/engine/production/contracts';
 import {
   DEVELOPMENT_AUDIENCES, DEVELOPMENT_FOCI, DEVELOPMENT_PASSES, DEVELOPMENT_TONES,
   MINIMUM_LOCK_QUALITY, developmentReadiness, pendingDevelopmentPass,
@@ -1196,6 +1196,7 @@ function CastForm({ projectId, onClose }: { projectId: string; onClose: () => vo
                       <div className="muted small">
                         {formatMoney(one.seat.feeCents)}
                         {` · ${feeReads(one.seat.feeCents, one.role.bandCents)}`}
+                        {one.seat.terms ? <div className="dim xs">{actingTermsSummary(one.seat.terms)}</div> : null}
                       </div>
                     )}
                   </td>
