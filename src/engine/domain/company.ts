@@ -595,6 +595,24 @@ export interface ProjectDevelopment {
   screenplay: ScreenplayState;
 }
 
+export interface BoxOfficeWeek {
+  week: number;
+  at: Instant;
+  grossCents: Money;
+  cumulativeCents: Money;
+  dropPct?: number;
+}
+
+export interface BoxOfficeRun {
+  openedAt: Instant;
+  targetCents: Money;
+  wordOfMouth: number;
+  openingAwareness: number;
+  weeklyDecay: number;
+  weeks: BoxOfficeWeek[];
+  completedAt?: Instant;
+}
+
 export type TestScreeningFocus = 'story' | 'character' | 'pace' | 'clarity';
 
 export interface TestScreening {
@@ -698,6 +716,8 @@ export interface Project {
   marketing?: ProjectMarketing;
   /** Test audiences and any edit passes commissioned in response. */
   testing?: ProjectTesting;
+  /** Weekly theatrical realization for deals that have a theatrical window. */
+  boxOffice?: BoxOfficeRun;
   /**
    * A priced and scheduled version of the locked screenplay, before greenlight.
    * This is a proposal, not a booking: dates and stage availability are checked
