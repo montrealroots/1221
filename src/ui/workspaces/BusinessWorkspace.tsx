@@ -56,8 +56,9 @@ import {
   auditorsFee, awayOnTheCast, certifiable, limbsOf, shortOnFor, turnsOverOn,
   whereTheClaimStands, whyNot, worthToday,
 } from '@/engine/world/rebate';
-import type { Project, RoleId } from '@/engine/domain/company';
+import type { ActingTerms, Project, RoleId } from '@/engine/domain/company';
 import { talentForRole } from '@/engine/production/talent';
+import { BILLING_POSITIONS, defaultActingTerms } from '@/engine/production/contracts';
 import {
   DEVELOPMENT_AUDIENCES, DEVELOPMENT_FOCI, DEVELOPMENT_PASSES, DEVELOPMENT_TONES,
   MINIMUM_LOCK_QUALITY, developmentReadiness, pendingDevelopmentPass,
@@ -1067,6 +1068,12 @@ function CastForm({ projectId, onClose }: { projectId: string; onClose: () => vo
   const [open, setOpen] = useState<string | undefined>();
   const [directoryRole, setDirectoryRole] = useState<string | undefined>();
   const [talentQuery, setTalentQuery] = useState('');
+  const [dealTerms, setDealTerms] = useState<ActingTerms>({
+    sequelOptions: 0,
+    optionRaisePct: 0.15,
+    backendPointsBps: 0,
+    billing: 'standard',
+  });
   const [asking, setAsking] = useState<Record<string, string>>({});
   const [noting, setNoting] = useState<Record<string, string>>({});
   const [heard, setHeard] = useState<string | undefined>();
@@ -1093,9 +1100,9 @@ function CastForm({ projectId, onClose }: { projectId: string; onClose: () => vo
     setError(answer.value?.ok ? undefined : answer.value?.error ?? answer.error);
     setHeard(undefined);
   };
-  const offer = (roleId: string, personId: string, feeCents: number) => {
+  const offer = (roleId: string, personId: string, feeCents: number, terms?: ActingTerms) => {
     const answer = run<{ ok: boolean; error?: string; said?: string }>(
-      'company.cast', { projectId, roleId, personId, feeCents }, { silent: true },
+      'company.cast', { projectId, roleId, personId, feeCents, ...(terms ? { terms } : {}) }, { silent: true },
     );
     setError(answer.value?.ok ? undefined : answer.value?.error ?? answer.error);
     setHeard(answer.value?.said);
@@ -1211,7 +1218,9 @@ function CastForm({ projectId, onClose }: { projectId: string; onClose: () => vo
                             className="btn btn-sm"
                             style={{ marginLeft: 'var(--s2)' }}
                             onClick={() => {
-                              setDirectoryRole(directoryRole === one.role.id ? undefined : one.role.id);
+                              const opening = directoryRole !== one.role.id;
+                              setDirectoryRole(opening ? one.role.id : undefined);
+                              if (opening) setDealTerms(defaultActingTerms(one.role));
                               setTalentQuery('');
                             }}
                           >
@@ -1380,6 +1389,67 @@ function CastForm({ projectId, onClose }: { projectId: string; onClose: () => vo
                 onChange={(e) => setTalentQuery(e.target.value)}
               />
             </div>
+            <div className="grid grid-4" style={{ marginTop: 'var(--s3)' }}>
+              <div className="field">
+                <label htmlFor="deal-billing">Billing</label>
+                <select
+                  id="deal-billing"
+                  value={dealTerms.billing}
+                  onChange={(e) => setDealTerms({ ...dealTerms, billing: e.target.value as ActingTerms['billing'] })}
+                >
+                  {BILLING_POSITIONS.map((one) => <option key={one.id} value={one.id}>{one.label}</option>)}
+                </select>
+              </div>
+              <div className="field">
+                <label htmlFor="deal-options">Sequel Options</label>
+                <input
+                  id="deal-options"
+                  type="number"
+                  min={0}
+                  max={4}
+                  step={1}
+                  value={dealTerms.sequelOptions}
+                  onChange={(e) => setDealTerms({
+                    ...dealTerms,
+                    sequelOptions: Math.max(0, Math.min(4, Math.round(Number(e.target.value)))),
+                  })}
+                />
+              </div>
+              <div className="field">
+                <label htmlFor="deal-raise">Option Raise %</label>
+                <input
+                  id="deal-raise"
+                  type="number"
+                  min={5}
+                  max={50}
+                  step={1}
+                  value={Math.round(dealTerms.optionRaisePct * 100)}
+                  onChange={(e) => setDealTerms({
+                    ...dealTerms,
+                    optionRaisePct: Math.max(5, Math.min(50, Number(e.target.value))) / 100,
+                  })}
+                />
+              </div>
+              <div className="field">
+                <label htmlFor="deal-backend">Contingent Gross %</label>
+                <input
+                  id="deal-backend"
+                  type="number"
+                  min={0}
+                  max={5}
+                  step={0.25}
+                  value={dealTerms.backendPointsBps / 100}
+                  onChange={(e) => setDealTerms({
+                    ...dealTerms,
+                    backendPointsBps: Math.max(0, Math.min(500, Math.round(Number(e.target.value) * 100))),
+                  })}
+                />
+              </div>
+            </div>
+            <p className="xs dim">
+              Acting fees remain guaranteed once the deal closes. Options reserve future sequel availability at the negotiated raise;
+              contingent gross participates only if later commercial accounting produces eligible receipts.
+            </p>
             {directory.length === 0 ? (
               <p className="small muted" style={{ marginTop: 'var(--s3)' }}>Nobody in the known talent pool matches that search.</p>
             ) : (
@@ -1437,7 +1507,7 @@ function CastForm({ projectId, onClose }: { projectId: string; onClose: () => vo
                               className="btn btn-sm btn-primary"
                               style={{ marginLeft: 'var(--s2)' }}
                               disabled={!fit.available}
-                              onClick={() => offer(role.id, person.id, fee)}
+                              onClick={() => offer(role.id, person.id, fee, dealTerms)}
                             >
                               Offer Role
                             </button>
