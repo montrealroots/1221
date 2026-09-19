@@ -723,8 +723,28 @@ export interface Project {
     campaignCents: Money;
     reckonedCents: Money;
     wordOfMouth: number;
+    /**
+     * What the year did to the windows that had not opened yet.
+     *
+     * Absent until a ceremony. A win does not make a finished picture earn
+     * retroactively — it makes the part of its life still ahead of it worth more,
+     * which is the honest mechanism and the reason the ceremony sits in February
+     * rather than alongside the releases it judges.
+     */
+    liftedBy?: number;
+    /** Whether the people on it have had the result written onto their records. */
+    settled?: boolean;
     weeksPaid: number;
   };
+  /** Which awards it won, by id from `content/awards.ts`. */
+  won?: string[];
+  /**
+   * When a ceremony last considered it.
+   *
+   * Without this a picture released in December is eligible at two consecutive
+   * ceremonies and can win the same award twice.
+   */
+  consideredAt?: Instant;
 
   // --- The dated life, once it is greenlit ---------------------------------
   // Empty until then. A picture that has not been greenlit has no dates and

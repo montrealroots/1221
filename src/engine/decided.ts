@@ -37,6 +37,7 @@ import { whatTheyOpen } from './world/field';
 import { POSTS } from './content/craft';
 import { rungOf } from './content/talent';
 import { shortlistFor } from './world/production';
+import { standsWithTheRoom } from './content/awards';
 
 // ---------------------------------------------------------------------------
 // The sky
@@ -531,5 +532,52 @@ defineDecider<Casting, string>({
     return list
       .map((one) => one.standingId)
       .reduce((best, id) => (rungOf(id) > rungOf(best) ? id : best), 'starting');
+  },
+});
+
+/**
+ * What the room thought of one picture.
+ *
+ * The ceremony reads how it was made, how well the page served the audience its
+ * genre brought, and what people said — and no figure from the ledger appears in it
+ * anywhere. That is the whole reason awards sit beside a box office rather than
+ * duplicating it: the two are allowed to disagree, so a quiet picture nobody went to
+ * can win and a hit can go home with nothing.
+ *
+ * The draw is small and declared. A room that ranked strictly by a figure would make
+ * the night an announcement of something already knowable, and every year would go
+ * to whoever spent most on a director.
+ */
+interface Judged { craft: number; serves: number; mouth: number }
+
+const HOW_IT_STOOD = ['nowhere', 'in the room', 'in front'];
+
+defineDecider<Judged, string>({
+  id: 'awards.room',
+  decides: 'What the year thinks of one picture.',
+  drawnIn: 'src/engine/world/awards.ts',
+  draws: ['awards'],
+  reads: {
+    // How it was made, which is most of what the room is looking at.
+    craft: (j, t) => ({ ...j, craft: 0.7 + t * 0.9 }),
+    // Whether the page served the audience its own genre brought.
+    serves: (j, t) => ({ ...j, serves: t * 1.5 }),
+    // And what people said, which the craft produced in the first place.
+    mouth: (j, t) => ({ ...j, mouth: t * 2 - 1 }),
+  },
+  sample: (seed) => ({
+    craft: 0.72 + (seed % 5) * 0.18,
+    serves: 0.4 + (seed % 4) * 0.3,
+    mouth: ((seed % 5) / 4) * 2 - 1,
+  }),
+  ladder: HOW_IT_STOOD,
+  // All three up, and each is read straight off the weighting. There is nothing here
+  // that could push a picture down the room's order by getting better.
+  rises: { craft: 'up', serves: 'up', mouth: 'up' },
+  decide: ({ craft, serves, mouth }) => {
+    const at = standsWithTheRoom(craft, serves, mouth);
+    if (at < 0.85) return 'nowhere';
+    if (at < 1.15) return 'in the room';
+    return 'in front';
   },
 });

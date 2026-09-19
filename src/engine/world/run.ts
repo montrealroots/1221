@@ -45,8 +45,8 @@ import { formatById } from '../content/format';
 import {
   LAST_WEEK_ANYTHING_PAYS, WEEKS_OF_RUN, runFor, windowsAfter,
 } from '../content/release';
-import type { Deal } from '../content/talent';
-import { reachesUs, receive } from './takings';
+import { A_RUN_IS, standingAfter, type Deal } from '../content/talent';
+import { reachesUs, receive, returnedBy } from './takings';
 import { projectsOf } from './company';
 
 export const RUN_KIND = 'release.week';
@@ -67,6 +67,16 @@ export interface Opening {
   reckonedCents: Money;
   /** What the craft produced, which is what bends the curve. */
   wordOfMouth: number;
+  /**
+   * What the year did to the windows that had not opened yet.
+   *
+   * Absent until a ceremony. A win does not make a finished picture earn
+   * retroactively — it makes the part of its life still ahead of it worth more,
+   * which is why the multiplier lands here rather than at the reckoning.
+   */
+  liftedBy?: number;
+  /** Whether the people on it have had the result written onto their records. */
+  settled?: boolean;
   /** How many weeks of the run have been paid so far. */
   weeksPaid: number;
 }
@@ -107,7 +117,10 @@ export function windowsInWeek(
   for (const window of windowsAfter(opening.channel)) {
     const into = week - window.opensAtWeek;
     if (into < 0 || into >= window.overWeeks) continue;
-    const whole = Math.round(fromChannel * window.share);
+    // What the year did to it, where the year did anything. A win lifts only the
+    // windows still ahead of the ceremony, which is why this multiplies here rather
+    // than at the reckoning.
+    const whole = Math.round(fromChannel * window.share * (opening.liftedBy ?? 1));
     paying.push({ id: window.id, label: window.label, cents: Math.round(whole / window.overWeeks) });
   }
   return paying;
@@ -176,13 +189,39 @@ export function armTheRun(sim: Simulation, projectId: Id, title: string): void {
     at: sim.now + MS_WEEK,
     kind: RUN_KIND,
     label: `${title}, Week By Week`,
-    category: 'business',
+    category: 'system',
     priority: 40,
     refType: 'project',
     refId: projectId,
     recurrence: { unit: 'week', interval: 1 },
     payload: { projectId },
   });
+}
+
+/**
+ * Writes the result onto everybody who was on it, once the last window has shut.
+ *
+ * The missing half of `content/talent.ts`. `standingAfter` decides where a career
+ * goes on three results in a row and had nowhere to read them from: the results
+ * array existed on every person and nothing ever appended to it, so a standing could
+ * never move and the whole table was a price list.
+ *
+ * It waits for the last window rather than settling at the opening, and that is the
+ * point. A picture that opened badly and was carried by the foreign sale returned its
+ * cost, and the people on it are owed the credit for the year it actually had — not
+ * for the weekend.
+ */
+export function settleTheTalent(sim: Simulation, projectId: Id): void {
+  const project = projectsOf(sim.universe).find((p) => p.id === projectId);
+  if (!project?.opening || project.opening.settled) return;
+  const won = returnedBy(sim, projectId) >= 1;
+  for (const seat of Object.values(project.engaged ?? {})) {
+    const talent = sim.universe.talent?.[seat.talentId];
+    if (!talent) continue;
+    talent.results = [won, ...(talent.results ?? [])].slice(0, A_RUN_IS * 3);
+    talent.standingId = standingAfter(talent.standingId, talent.results);
+  }
+  project.opening.settled = true;
 }
 
 export function registerTheRun(sim: Simulation): void {
@@ -195,7 +234,10 @@ export function registerTheRun(sim: Simulation): void {
     payAWeek(s, projectId, week);
     // Past the last window there is nothing left to pay, and an item that fires
     // forever to do nothing is the shape of a save that grows without bound.
-    if (week >= LAST_WEEK_ANYTHING_PAYS) s.timeline.cancel(item.id, s.now);
+    if (week >= LAST_WEEK_ANYTHING_PAYS) {
+      settleTheTalent(s, projectId);
+      s.timeline.cancel(item.id, s.now);
+    }
   });
 }
 

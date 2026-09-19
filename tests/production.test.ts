@@ -46,6 +46,11 @@ import {
 import {
   SOURCES, SOURCE_BY_ID, carriedInto, floorAfter, whyNotFrom,
 } from '@/engine/content/source';
+import {
+  AWARDS, AWARD_BY_ID, CEREMONY_MONTH, CONSIDERS_MONTHS, ROOM_WEIGHS,
+  THE_ROOM_IS_A_ROOM, standsWithTheRoom,
+} from '@/engine/content/awards';
+import { nextCeremony } from '@/engine/world/awards';
 
 // ---------------------------------------------------------------------------
 
@@ -563,5 +568,80 @@ describe('where it came from', () => {
     expect(whyNotFrom(SOURCE_BY_ID.format!, 'feature', 'A Feature Film', label)).toBeDefined();
     expect(whyNotFrom(SOURCE_BY_ID.format!, 'serial', 'A Continuing Series', label)).toBeUndefined();
     expect(whyNotFrom(SOURCE_BY_ID.play!, 'micro', 'A Micro-Series', label)).toBeDefined();
+  });
+});
+
+describe('what the year decides', () => {
+  it('gives every craft award a post the engine actually models', () => {
+    // A category for a job nothing models could not credit anybody, and crediting
+    // people is two of the three things a win is for.
+    for (const award of AWARDS) {
+      if (award.id === 'picture') { expect(award.postId).toBeUndefined(); continue; }
+      expect(POSTS.map((p) => p.id), `${award.id} credits a post that does not exist`)
+        .toContain(award.postId);
+    }
+    expect(new Set(AWARDS.map((a) => a.id)).size).toBe(AWARDS.length);
+  });
+
+  it('lifts a picture more than any single craft award', () => {
+    const picture = AWARD_BY_ID.picture!;
+    for (const award of AWARDS) {
+      if (award.id !== 'picture') expect(picture.liftsWindows).toBeGreaterThan(award.liftsWindows);
+      expect(award.liftsWindows).toBeGreaterThan(1);
+    }
+  });
+
+  it('reads how it was made and never what it took', () => {
+    // The whole reason awards sit beside a box office instead of repeating it. All
+    // three inputs raise the room's view and there is no money term at all.
+    const base = standsWithTheRoom(1, 1, 0);
+    expect(standsWithTheRoom(1.4, 1, 0)).toBeGreaterThan(base);
+    expect(standsWithTheRoom(1, 1.4, 0)).toBeGreaterThan(base);
+    expect(standsWithTheRoom(1, 1, 1)).toBeGreaterThan(base);
+    // And craft carries more of it than the page, so the dials do not win twice.
+    const byCraft = standsWithTheRoom(1.4, 1, 0) - base;
+    const byPage = standsWithTheRoom(1, 1.4, 0) - base;
+    expect(byCraft).toBeGreaterThan(byPage);
+    expect(ROOM_WEIGHS.craft + ROOM_WEIGHS.page + ROOM_WEIGHS.mouth).toBeCloseTo(1, 6);
+  });
+
+  it('leaves the favorite usually winning and sometimes not', () => {
+    // A room that ranked strictly by a figure would be an announcement rather than a
+    // ceremony. The draw has to be smaller than the gap it is allowed to close.
+    expect(THE_ROOM_IS_A_ROOM).toBeGreaterThan(0);
+    expect(THE_ROOM_IS_A_ROOM).toBeLessThan(0.5);
+  });
+
+  it('only lifts the windows still ahead of the night', () => {
+    // A win does not make a finished picture earn retroactively. The multiplier is
+    // applied where the windows are paid, so anything already paid is untouched.
+    const before: Opening = {
+      at: 0, channel: 'theatrical', campaignCents: 0,
+      reckonedCents: 100_000_000_00, wordOfMouth: 0, weeksPaid: 0,
+    };
+    const after: Opening = { ...before, liftedBy: 1.55 };
+    const plain = windowsInWeek(before, 30).find((w) => w.id === 'service')!;
+    const lifted = windowsInWeek(after, 30).find((w) => w.id === 'service')!;
+    expect(lifted.cents).toBeGreaterThan(plain.cents);
+    expect(lifted.cents / plain.cents).toBeCloseTo(1.55, 2);
+  });
+
+  it('holds the ceremony in a month with something left to lift', () => {
+    // February, so a picture opened in October to be seen by the room is still
+    // inside its run when the room votes. A ceremony beside the releases it judges
+    // would have nothing ahead of it.
+    const at = nextCeremony(Date.UTC(1998, 5, 1));
+    expect(new Date(at).getUTCMonth()).toBe(CEREMONY_MONTH);
+    expect(at).toBeGreaterThan(Date.UTC(1998, 5, 1));
+    // And it rolls to the next year once this year's has gone.
+    expect(new Date(nextCeremony(Date.UTC(1998, 0, 1))).getUTCFullYear()).toBe(1998);
+    expect(new Date(nextCeremony(Date.UTC(1998, 8, 1))).getUTCFullYear()).toBe(1999);
+    expect(CONSIDERS_MONTHS).toBeGreaterThan(12);
+  });
+
+  it('arms a ceremony on a fresh save, and only one', () => {
+    const sim = quickSave({}, 'awards-armed');
+    const armed = sim.timeline.pending().filter((one) => one.kind === 'awards.year');
+    expect(armed.length).toBe(1);
   });
 });
