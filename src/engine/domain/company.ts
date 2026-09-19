@@ -651,6 +651,25 @@ export interface ProjectPackage {
   packagedAt: Instant;
 }
 
+export interface CommercialWeek {
+  week: number;
+  at: Instant;
+  grossCents: Money;
+  cumulativeCents: Money;
+}
+
+export interface CommercialRun {
+  criticScore: number;
+  audienceScore: number;
+  wordOfMouth: number;
+  awareness: number;
+  theatricalTargetCents: Money;
+  plannedWeeklyCents: Money[];
+  openedAt?: Instant;
+  weeks: CommercialWeek[];
+  completedAt?: Instant;
+}
+
 export interface Project {
   id: Id;
   saveId: Id;
@@ -879,6 +898,14 @@ export interface Project {
    * that produced it.
    */
   windowsPaid?: string[];
+  /**
+   * Public release performance, separate from distributor accounting.
+   *
+   * The long-run take remains the contractual/commercial total used by the
+   * waterfall. This record is the audience-facing shape of the release:
+   * reviews, word of mouth, and week-by-week theatrical gross.
+   */
+  commercial?: CommercialRun;
 
   // --- What the state gives back -------------------------------------------
 
