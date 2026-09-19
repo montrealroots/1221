@@ -65,6 +65,7 @@ import {
 import { capabilitiesOf, exerciseTheOption, filled } from './company';
 import { purseFor } from './money';
 import { armTheClaim } from './rebate';
+import { developmentReadiness } from '../production/development';
 
 export const MAKING_KIND = 'project.period';
 export const DELIVERY_KIND = 'project.delivery';
@@ -419,6 +420,15 @@ export function wouldBe(
   if (!project) return { ok: false, error: 'There’s no such picture on the slate.' };
   if (project.shelvedAt) return { ok: false, error: 'That one came off the slate.' };
   if (project.planId) return { ok: false, error: `${project.title} is already being made.` };
+
+  const development = developmentReadiness(project);
+  if (!development.ready) {
+    return {
+      ok: false,
+      error: project.title + ' is not ready to greenlight. It still needs '
+        + development.blockers.join(', ') + '.',
+    };
+  }
 
   // The door, and it refuses. The Family Business screen has always listed the
   // nine things a production company has to be able to do and said which were
