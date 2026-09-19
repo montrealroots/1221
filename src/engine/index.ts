@@ -35,6 +35,7 @@ import { registerTutorial } from './world/tutorial';
 import { registerConcept } from './world/concept';
 import { registerProduction } from './world/production';
 import { registerTheRun } from './world/run';
+import { registerLibrary } from './world/library';
 import { armTheCeremony, registerAwards } from './world/awards';
 import { armTheBooks, registerRuin } from './world/ruin';
 import {
@@ -75,6 +76,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerRuin(sim);
   armTheBooks(sim);
   registerProduction(sim);
+  registerLibrary(sim);
   registerTutorial(sim);
 }
 

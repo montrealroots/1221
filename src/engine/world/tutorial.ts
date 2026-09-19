@@ -202,6 +202,12 @@ export const WHEN: Readonly<Record<string, (w: LessonWorld) => boolean>> = {
   opening: (w) => w.projects.greenlit > 0 || w.projects.finished > 0,
   world: (w) => w.projects.developing > 0,
   again: (w) => w.projects.delivered > 0,
+  // The library market. Selling once something is out, because there is nothing to
+  // quote on before that; buying as soon as the company is in the business at all,
+  // because a position on the market is a use for cash whether or not anything of
+  // ours has opened.
+  library: (w) => w.projects.delivered > 0,
+  market: (w) => w.projects.developing > 0,
 
   // The lot and the estate.
   lot: (w) => w.stages.built > 0,

@@ -77,6 +77,25 @@ export interface Opening {
   liftedBy?: number;
   /** Whether the people on it have had the result written onto their records. */
   settled?: boolean;
+  /**
+   * When the rest of the run was sold, where it was.
+   *
+   * The presence of this is what stops the tick paying. It is an instant rather than a
+   * flag because a screen wants to say when, and because a sale in week four and a
+   * sale in week forty are different decisions that should not look the same later.
+   */
+  soldAt?: number;
+  /** Which studio took it, by id from `content/rivals.ts`. */
+  soldToId?: string;
+  /** What they paid, before the back end came out of it. */
+  soldForCents?: Money;
+  /**
+   * Whether this run was bought rather than made.
+   *
+   * Read by the ceremony, which refuses it. A picture somebody else made and somebody
+   * else released was judged the year it came out, by a room that was not ours.
+   */
+  boughtIn?: boolean;
   /** How many weeks of the run have been paid so far. */
   weeksPaid: number;
 }
@@ -161,6 +180,10 @@ export function payAWeek(sim: Simulation, projectId: Id, week: number): WeekPaid
   const project = projectsOf(sim.universe).find((p) => p.id === projectId);
   const opening = project?.opening;
   if (!project || !opening) return undefined;
+
+  // Sold runs pay their new owner. The tick is canceled at the sale, so this is the
+  // guard for the instrument and for anything else that pays a week by hand.
+  if (opening.soldAt !== undefined) return undefined;
 
   const deals = dealsOn(project);
   // And whatever was sold off the picture before it opened, which comes out of the

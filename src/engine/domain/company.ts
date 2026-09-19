@@ -774,6 +774,20 @@ export interface Project {
     liftedBy?: number;
     /** Whether the people on it have had the result written onto their records. */
     settled?: boolean;
+    /**
+     * When the rest of the run was sold, where it was.
+     *
+     * Written by `library.sell` and read by the weekly tick, which stops, and by the
+     * ceremony, which refuses it. Taking cash early on something good costs the
+     * trophy, and the trophy is what lifts everybody who worked on it.
+     */
+    soldAt?: Instant;
+    /** Which studio took it. */
+    soldToId?: string;
+    /** What they paid, before the back end came out of it. */
+    soldForCents?: Money;
+    /** Whether this run was bought rather than made. */
+    boughtIn?: boolean;
     weeksPaid: number;
   };
   /**
@@ -784,6 +798,13 @@ export interface Project {
    * is taken out of every receipt as it lands, the same way the back end is.
    */
   ancillaries?: Record<string, { kind: 'guarantee' | 'share'; guaranteeCents: Money; share: number }>;
+  /**
+   * Which listing this was bought as, where it was bought rather than made.
+   *
+   * Kept so that the same position cannot be bought twice out of a market that is
+   * drawn fresh every time it is asked rather than stored.
+   */
+  boughtAs?: string;
   /** Which awards it won, by id from `content/awards.ts`. */
   won?: string[];
   /**

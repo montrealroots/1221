@@ -547,6 +547,39 @@ export const LESSONS: readonly Lesson[] = [
     after: ['opening'],
     importance: 58,
   },
+  {
+    id: 'library',
+    strand: 'the-pictures',
+    title: 'A Run Can Be Sold While It Is Still Running',
+    body: 'Three weeks after it opens, the other studios will quote on whatever is left '
+      + 'of a picture. What is left is a real figure, not an estimate — it is the same '
+      + 'windows the tick pays, added up — and what you are offered against it depends '
+      + 'on who is asking and on what people said. A studio that wants cinema will pay '
+      + 'over the odds for something an audience loved, and nobody pays much for a '
+      + 'picture nobody liked. The catch is the year: a sold picture is out of the '
+      + 'ceremony, and the trophy was going to lift the windows and everybody who '
+      + 'worked on it. Cash in November against February.',
+    teaches: ['library.sell'],
+    screen: 'production',
+    after: ['opening'],
+    importance: 56,
+  },
+  {
+    id: 'market',
+    strand: 'the-pictures',
+    title: 'Buying A Run Another Studio Made',
+    body: 'The same market runs the other way, and a few positions come up every month. '
+      + 'A listing says what it is asking and what its windows will actually pay, so '
+      + 'there is no trick in it: about half of them are asking more than they are '
+      + 'worth and exist to be turned down. The real question is the other one. Money '
+      + 'in a cheap library comes back over about seven months and cannot lose, and the '
+      + 'same money in a greenlight can triple or go entirely. A studio that only buys '
+      + 'libraries never has a bad year and never has a good one.',
+    teaches: ['library.buy'],
+    screen: 'business',
+    after: ['library'],
+    importance: 50,
+  },
 
   // -------------------------------------------------------------------------
   // The lot

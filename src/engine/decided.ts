@@ -39,6 +39,8 @@ import { BILLINGS } from './content/roles';
 import { rungOf } from './content/talent';
 import { shortlistFor } from './world/production';
 import { standsWithTheRoom } from './content/awards';
+import { APPETITES, APPETITE_BY_STUDIO, offerOn } from './content/library';
+import { onTheMarket } from './world/library';
 
 // ---------------------------------------------------------------------------
 // The sky
@@ -587,5 +589,94 @@ defineDecider<Judged, string>({
     if (at < 0.85) return 'nowhere';
     if (at < 1.15) return 'in the room';
     return 'in front';
+  },
+});
+
+/**
+ * What a library position fetches.
+ *
+ * The sweep that decides whether the market is a market. A flat discount would move
+ * with the remainder and with nothing else, so the two adjustments — who is buying and
+ * what people said — are exactly what has to be shown to bite. If either sweeps inert,
+ * the honest thing is to delete it and call the mechanic a discount.
+ */
+interface Quoted { leftCents: number; mouth: number; studioId: string }
+
+const FETCHED = ['a fraction', 'half of it', 'most of it', 'over the odds'];
+
+defineDecider<Quoted, string>({
+  id: 'library.quote',
+  decides: 'What a studio pays for the rest of a run it did not make.',
+  drawnIn: 'src/engine/content/library.ts',
+  deterministic: true,
+  reads: {
+    // What people said about it, which is the market's only opinion.
+    mouth: (q, t) => ({ ...q, mouth: t * 2 - 1 }),
+    // And which of the five is asking.
+    buyer: (q, t) => ({
+      ...q,
+      studioId: APPETITES[Math.min(APPETITES.length - 1, Math.floor(t * APPETITES.length))]!.studioId,
+    }),
+  },
+  sample: (seed) => ({
+    leftCents: 400_000_00 + (seed % 6) * 1_800_000_00,
+    mouth: ((seed % 5) / 4) * 2 - 1,
+    studioId: APPETITES[seed % APPETITES.length]!.studioId,
+  }),
+  ladder: FETCHED,
+  // Word of mouth up, and `buyer` declared with no direction because the five have no
+  // order to be monotonic along.
+  //
+  // `left` was declared here and the sweep deleted it. It scales the price and the
+  // thing the price is measured against in the same breath, so it moved the cash and
+  // never the rung, across forty million either way in six worlds. That is the claim
+  // this decider actually makes and it is worth stating plainly: what a run fetches
+  // as a share of what it has left is a fact about the picture's name and about who
+  // is buying, and not about how big it is.
+  rises: { mouth: 'up' },
+  decide: ({ leftCents, mouth, studioId }) => {
+    const share = offerOn(APPETITE_BY_STUDIO[studioId]!, leftCents, mouth) / leftCents;
+    if (share < 0.45) return 'a fraction';
+    if (share < 0.7) return 'half of it';
+    if (share < 1) return 'most of it';
+    return 'over the odds';
+  },
+});
+
+/**
+ * What is up for sale this month.
+ *
+ * Owns the `library` stream. There is no ladder and the absence is the claim, the same
+ * way it is for a casting shortlist: what somebody else happens to be clearing out this
+ * month sits on a scale — a cheap position with thirty weeks left beats a dear one with
+ * six — but neither input pushes along it. A later month is not a better market and
+ * another save is not a richer one. Declaring a direction here would assert an order
+ * the model does not have.
+ */
+interface Market { sim: Simulation; at: number }
+
+defineDecider<Market, string>({
+  id: 'library.market',
+  decides: 'Which library positions the other studios are clearing this month.',
+  drawnIn: 'src/engine/world/library.ts',
+  draws: ['library'],
+  reads: {
+    // Which month is being asked about. The market is redrawn in them.
+    month: (m, t) => ({ ...m, at: Date.UTC(2031, Math.min(11, Math.floor(t * 12)), 8) }),
+    // And which world is asking, because two saves do not see the same market.
+    save: (m, t) => ({ ...m, sim: quickSave(defaultConfig(), `library-${Math.floor(t * 40)}`) }),
+  },
+  sample: (seed) => ({
+    sim: quickSave(defaultConfig(), `library-${seed}`),
+    at: Date.UTC(2031, seed % 12, 8),
+  }),
+  decide: ({ sim, at }) => {
+    const listings = onTheMarket(sim, at);
+    if (listings.length === 0) return 'nothing on the market';
+    const best = listings.reduce(
+      (most, one) => Math.max(most, (one.leftCents - one.askingCents) / one.leftCents),
+      -Infinity,
+    );
+    return `${listings.length} on the market, best at ${Math.round(best * 20)}`;
   },
 });

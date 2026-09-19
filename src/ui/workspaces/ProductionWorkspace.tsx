@@ -40,6 +40,7 @@ import {
   type Lock,
 } from '@/engine/world/production';
 import { theWeeksAhead } from '@/engine/world/field';
+import { quotesOn } from '@/engine/world/library';
 import { receivedBy, costOf } from '@/engine/world/takings';
 import { companyCash, projectsOf } from '@/engine/world/company';
 import type { Project } from '@/engine/domain/company';
@@ -89,6 +90,7 @@ export function ProductionWorkspace() {
       <CommitPanel project={project} />
       <OpenPanel project={project} />
       <OutPanel project={project} />
+      <LibraryPanel project={project} />
     </div>
   );
 }
@@ -625,6 +627,70 @@ function CastPanel({ project }: { project: Project }) {
           );
         })}
       </ul>
+      {said ? <p className="small">{said}</p> : null}
+    </Panel>
+  );
+}
+
+/**
+ * What the other studios would pay for the rest of a run.
+ *
+ * All five are listed, refusals included, because the market is a thing to learn: a
+ * player who never sees Halvard refuse a cinema picture never finds out that Halvard
+ * only does broadcast. The line about February is the panel's whole job — the price is
+ * visible and the cost of taking it is not, unless something says so.
+ */
+function LibraryPanel({ project }: { project: Project }) {
+  const { run } = useGame();
+  const [said, setSaid] = useState<string | undefined>(undefined);
+  const quotes = useWorld(
+    (s) => quotesOn(s, project.id),
+    [project.id, project.opening?.weeksPaid, project.opening?.soldAt],
+  );
+  if (!project.opening) return null;
+
+  const sold = project.opening.soldAt !== undefined;
+  const sell = (studioId: string) => {
+    const done = run<{ ok: boolean; error?: string; cents?: number }>(
+      'library.sell', { projectId: project.id, studioId }, { silent: true },
+    );
+    setSaid(done.value?.error ?? (done.value?.ok
+      ? `Sold for ${formatMoney(done.value.cents ?? 0, { cents: false })}. What is left of `
+        + 'the run pays the buyer now.'
+      : done.error));
+  };
+
+  return (
+    <Panel title="The Library" tight>
+      {sold ? (
+        <p className="small">
+          Sold for {formatMoney(project.opening.soldForCents ?? 0, { cents: false })}. The
+          rest of its run belongs to the buyer, and it is out of the ceremony.
+        </p>
+      ) : (
+        <>
+          <p className="xs dim">
+            What is quoted is what its remaining windows would have paid, discounted — and
+            then moved by who is asking and by what people said. A sold picture is out of
+            the year&rsquo;s awards, which is the part the price does not show.
+          </p>
+          <ul className="plain small">
+            {quotes.map((quote) => (
+              <li key={quote.studioId} style={{ marginBottom: '0.4rem' }}>
+                <strong>{quote.name}</strong> — <span className="xs dim">{quote.wants}</span>
+                <br />
+                {quote.why ? (
+                  <span className="xs warn">{quote.why}</span>
+                ) : (
+                  <button className="btn btn-sm" onClick={() => sell(quote.studioId)}>
+                    {formatMoney(quote.cents, { cents: false })}
+                  </button>
+                )}
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
       {said ? <p className="small">{said}</p> : null}
     </Panel>
   );

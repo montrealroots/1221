@@ -66,6 +66,10 @@ export function eligible(sim: Simulation, at: number): readonly Project[] {
     const opening = p.opening;
     if (!opening) return false;
     if (opening.at > at) return false;
+    // Sold, and bought. A run that belongs to somebody else is not ours to be judged
+    // on, and one that was already released by another studio was judged the year it
+    // came out. Selling a hit in November and losing February is the price of the cash.
+    if (opening.soldAt !== undefined || opening.boughtIn) return false;
     if (at - opening.at > CONSIDERS_MONTHS * A_MONTH) return false;
     return (p.won ?? []).length === 0 || !(p.consideredAt !== undefined && p.consideredAt >= at - A_MONTH);
   });
