@@ -116,7 +116,7 @@ function noise(center: number, roll: number, width = 10): number {
 
 function completeScreening(sim: Simulation, projectId: Id, sequence: number): void {
   const project = sim.universe.projects[projectId];
-  if (!project || project.stage !== 'post') return;
+  if (!project) return;
   const row = project.testing?.screenings.find((one) => one.sequence === sequence);
   if (!row || row.status !== 'pending') return;
 
@@ -206,7 +206,7 @@ export function commissionRevision(
 
 function completeRevision(sim: Simulation, projectId: Id, sequence: number): void {
   const project = sim.universe.projects[projectId];
-  if (!project || project.stage !== 'post') return;
+  if (!project) return;
   const row = project.testing?.revisions.find((one) => one.sequence === sequence);
   if (!row || row.status !== 'pending') return;
   const screening = latestScreening(project);
