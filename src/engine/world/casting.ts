@@ -50,7 +50,7 @@ import type { Id } from '../core/ids';
 import { formatMoney, type Money } from '../core/money';
 import type { Instant } from '../core/time';
 import type { Person } from '../domain/model';
-import type { Looked, Project, Role, Seat } from '../domain/company';
+import type { ActingTerms, Looked, Project, Role, Seat } from '../domain/company';
 import type { AttributeSheet } from '../domain/attributes';
 import { rate, sheetOf } from '../domain/attributes';
 import { freshWellbeing } from '../systems/life';
@@ -70,6 +70,9 @@ import { baseWindowOf } from './periods';
 import { BEFORE_THE_FIRST_DAY, theyAreFree, whatHasThem } from './diary';
 import { americanArm, signedWith } from './company';
 import { isCitizenOf } from '../domain/citizenship';
+import {
+  actingTermsAcceptanceDelta, normalizeActingTerms, type ActingTermsInput,
+} from '../production/contracts';
 
 /** A year, for decaying a quote. */
 const MS_YEAR = 365.25 * 24 * 60 * 60 * 1000;
@@ -590,6 +593,8 @@ export interface Offer {
   free: boolean;
   /** How much the person is in demand, out of a hundred. */
   demand: number;
+  /** The negotiated non-fee terms attached to the offer. */
+  terms: ActingTerms;
 }
 
 export type Answer =
@@ -636,14 +641,20 @@ export function decideOffer(offer: Offer, roll: number): Answer {
     HAGGLE.over,
     offer.askCents > 0 ? offer.feeCents / offer.askCents : 1,
   );
-  const keen = clamp(0.52 + (over - 1) * 0.45 + (45 - beneath) * 0.004, 0.2, HAGGLE.most);
+  const keen = clamp(
+    0.52 + (over - 1) * 0.45 + (45 - beneath) * 0.004 + actingTermsAcceptanceDelta(offer.terms),
+    0.2,
+    HAGGLE.most,
+  );
   return roll < keen
     ? { took: true, feeCents: offer.feeCents }
     : { took: false, passed: 'thought-about-it' };
 }
 
 /** The offer, as the engine sees it, for one person and one part. */
-export function offerOf(sim: Simulation, project: Project, role: Role, person: Person, feeCents: Money): Offer {
+export function offerOf(
+  sim: Simulation, project: Project, role: Role, person: Person, feeCents: Money, terms?: ActingTermsInput,
+): Offer {
   const when = datesFor(project, role);
   const size = sizeById(role.size);
   return {
@@ -652,6 +663,7 @@ export function offerOf(sim: Simulation, project: Project, role: Role, person: P
     carries: Math.round((size?.onScreen ?? 0) * 100),
     free: when ? freeToWork(sim, person.id, when.from, when.to) : true,
     demand: person.reputation.industryDemand,
+    terms: normalizeActingTerms(role, terms),
   };
 }
 
@@ -832,6 +844,7 @@ export interface Casting {
   roleId: string;
   personId: Id;
   feeCents: Money;
+  terms?: ActingTermsInput;
 }
 
 export type Cast =
@@ -872,6 +885,7 @@ export function castSomebody(sim: Simulation, casting: Casting): Cast {
 
   const fee = Math.round(casting.feeCents);
   if (!Number.isFinite(fee) || fee < 0) return { ok: false, error: 'That isn’t an amount.' };
+  const terms = normalizeActingTerms(role, casting.terms);
 
   const shut = globalRuleOne(sim, person);
   if (shut) return { ok: false, error: shut };
@@ -907,7 +921,7 @@ export function castSomebody(sim: Simulation, casting: Casting): Cast {
   const answer: Answer = person.isPlayer
     ? { took: true, feeCents: fee }
     : decideOffer(
-      offerOf(sim, project, role, person, fee),
+      offerOf(sim, project, role, person, fee, terms),
       sim.rng('casting', 'offer', project.id, role.id, person.id).next(),
     );
 
@@ -924,7 +938,7 @@ export function castSomebody(sim: Simulation, casting: Casting): Cast {
   }
 
   if (!project.cast) project.cast = [];
-  project.cast.push({ roleId: role.id, personId: person.id, feeCents: fee, castAt: sim.now });
+  project.cast.push({ roleId: role.id, personId: person.id, feeCents: fee, castAt: sim.now, terms });
   // The number goes on their record whatever it was, which is the reason a
   // producer thinks twice before buying somebody cheap: it is not this picture
   // the cheap number costs them, it is the next three.
