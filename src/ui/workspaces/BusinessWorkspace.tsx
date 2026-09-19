@@ -63,6 +63,7 @@ import {
   DEVELOPMENT_AUDIENCES, DEVELOPMENT_FOCI, DEVELOPMENT_PASSES, DEVELOPMENT_TONES,
   MINIMUM_LOCK_QUALITY, developmentReadiness, pendingDevelopmentPass,
 } from '@/engine/production/development';
+import { MARKETING_STRATEGIES, marketingAwareness } from '@/engine/production/marketing';
 import {
   GUILD_BY_ID, POLICY_BY_ID, REGISTRY_BY_ID, ROLE_BY_ID,
 } from '@/engine/content/incorporation';
@@ -367,6 +368,7 @@ function Slate() {
   const [casting, setCasting] = useState<string | undefined>();
   const [filing, setFiling] = useState<string | undefined>();
   const [claiming, setClaiming] = useState<string | undefined>();
+  const [marketing, setMarketing] = useState<string | undefined>();
   const [selling, setSelling] = useState<string | undefined>();
 
   return (
@@ -421,6 +423,13 @@ function Slate() {
                       The Reimbursement
                     </button>
                   )}
+                  {(project.stage === 'post' || project.stage === 'delivered') && project.dealId === undefined && (
+                    <button className="btn btn-sm" onClick={() => setMarketing(project.id)}>
+                      {project.marketing
+                        ? `Marketing ${marketingAwareness(project) ?? 0}/100`
+                        : 'Set Marketing'}
+                    </button>
+                  )}
                   {project.stage === 'delivered' && project.dealId === undefined && (
                     <button className="btn btn-sm btn-primary" onClick={() => setSelling(project.id)}>Sell It</button>
                   )}
@@ -437,6 +446,7 @@ function Slate() {
       {casting && <CastForm projectId={casting} onClose={() => setCasting(undefined)} />}
       {filing && <DeliveryForm projectId={filing} onClose={() => setFiling(undefined)} />}
       {claiming && <RebateForm projectId={claiming} onClose={() => setClaiming(undefined)} />}
+      {marketing && <MarketingForm projectId={marketing} onClose={() => setMarketing(undefined)} />}
       {selling && <SellForm projectId={selling} onClose={() => setSelling(undefined)} />}
     </Panel>
   );
@@ -1680,6 +1690,123 @@ function CastForm({ projectId, onClose }: { projectId: string; onClose: () => vo
           Nobody is cast yet, so every figure above is what the part would be if it stayed that way.
         </p>
       )}
+    </Modal>
+  );
+}
+
+/**
+ * Producer marketing before the sale.
+ *
+ * This is money the company commits itself, distinct from the distributor's
+ * later P&A recoupment. Raising the budget charges only the increase; reducing
+ * it is impossible because the spend has already happened.
+ */
+function MarketingForm({ projectId, onClose }: { projectId: string; onClose: () => void }) {
+  const { run } = useGame();
+  const project = useWorld((s) => s.universe.projects[projectId]);
+  const initialStrategy = project?.marketing?.strategy ?? 'targeted';
+  const initialSpend = Math.round(
+    (project?.marketing?.spendCents
+      ?? (project?.budgetCents ?? 0) * (MARKETING_STRATEGIES.find((one) => one.id === initialStrategy)?.recommendedShare ?? 0.05))
+    / 100,
+  );
+  const [strategy, setStrategy] = useState(initialStrategy);
+  const [spend, setSpend] = useState(String(initialSpend));
+  const [heard, setHeard] = useState<string | undefined>();
+  const [error, setError] = useState<string | undefined>();
+  if (!project) return null;
+
+  const plan = MARKETING_STRATEGIES.find((one) => one.id === strategy)!;
+  const currentAwareness = marketingAwareness(project);
+  const maximum = Math.round((project.budgetCents ?? 0) * 0.5 / 100);
+
+  const commit = () => {
+    const dollars = Number(spend);
+    const answer = run<{ ok: boolean; error?: string; awareness?: number; chargedCents?: number }>(
+      'production.marketing.commit',
+      {
+        projectId,
+        strategy,
+        spendCents: Number.isFinite(dollars) ? Math.round(dollars * 100) : -1,
+      },
+      { silent: true },
+    );
+    if (!answer.value?.ok) {
+      setError(answer.value?.error ?? answer.error ?? 'The campaign could not be committed.');
+      return;
+    }
+    setError(undefined);
+    setHeard(
+      `Campaign committed at ${answer.value.awareness ?? marketingAwareness(project) ?? 0}/100 awareness`
+      + (answer.value.chargedCents
+        ? `; ${formatMoney(answer.value.chargedCents, { cents: false })} left the company now.`
+        : '; no additional money left the company.'),
+    );
+  };
+
+  return (
+    <Modal
+      title={`Marketing: ${project.title}`}
+      onClose={onClose}
+      footer={(
+        <>
+          <button className="btn btn-ghost" onClick={onClose}>Close</button>
+          <button className="btn btn-primary" onClick={commit}>Commit Campaign</button>
+        </>
+      )}
+    >
+      <div className="grid grid-3">
+        <Stat
+          label="Committed"
+          value={formatMoney(project.marketing?.spendCents ?? 0, { cents: false })}
+          note="Producer-side campaign spend"
+        />
+        <Stat
+          label="Awareness"
+          value={project.marketing ? `${currentAwareness ?? 0}/100` : 'Not Set'}
+          note="A real input to the commercial outcome"
+        />
+        <Stat
+          label="Maximum"
+          value={formatMoney(Math.round((project.budgetCents ?? 0) * 0.5), { cents: false })}
+          note="Half the production budget"
+        />
+      </div>
+      <div className="field">
+        <label htmlFor="marketing-strategy">Strategy</label>
+        <select
+          id="marketing-strategy"
+          value={strategy}
+          onChange={(e) => {
+            const next = e.target.value as typeof strategy;
+            setStrategy(next);
+            const chosen = MARKETING_STRATEGIES.find((one) => one.id === next);
+            if (!project.marketing && chosen) {
+              setSpend(String(Math.round((project.budgetCents ?? 0) * chosen.recommendedShare / 100)));
+            }
+          }}
+        >
+          {MARKETING_STRATEGIES.map((one) => <option key={one.id} value={one.id}>{one.label}</option>)}
+        </select>
+        <div className="xs dim">{plan.description}</div>
+      </div>
+      <div className="field">
+        <label htmlFor="marketing-spend">Total Campaign Budget</label>
+        <input
+          id="marketing-spend"
+          type="number"
+          min={0}
+          max={maximum}
+          step={10_000}
+          value={spend}
+          onChange={(e) => setSpend(e.target.value)}
+        />
+        <div className="xs dim">
+          Enter the full campaign total, not the increase. Money already committed cannot be unspent.
+        </div>
+      </div>
+      {heard && <p className="small">{heard}</p>}
+      {error && <p className="small negative">{error}</p>}
     </Modal>
   );
 }
