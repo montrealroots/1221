@@ -842,13 +842,16 @@ function GreenlightForm({ projectId, onClose }: { projectId: string; onClose: ()
   const { run, sim } = useGame();
   const project = useWorld((s) => s.universe.projects[projectId]);
   const ways = project ? plansFor(project.medium) : [];
-  const [planId, setPlanId] = useState(ways[0]?.id ?? 'feature');
+  const lockedPackage = project?.package;
+  const [planId, setPlanId] = useState(lockedPackage?.planId ?? ways[0]?.id ?? 'feature');
   const plan = planById(planId);
-  const [budget, setBudget] = useState(4_000_000);
-  const [weeks, setWeeks] = useState(5);
-  const [minutes, setMinutes] = useState(Math.round((plan?.delivers.secondsEach ?? 6_000) / 60));
-  const [hands, setHands] = useState(2);
-  const [when, setWhen] = useState<string>('');
+  const [budget, setBudget] = useState(Math.round((lockedPackage?.budgetCents ?? 4_000_000_00) / 100));
+  const [weeks, setWeeks] = useState(lockedPackage?.shootWeeks ?? 5);
+  const [minutes, setMinutes] = useState(Math.round((lockedPackage?.secondsEach ?? plan?.delivers.secondsEach ?? 6_000) / 60));
+  const [hands, setHands] = useState(lockedPackage?.hands ?? 2);
+  const [when, setWhen] = useState<string>(
+    lockedPackage ? new Date(lockedPackage.from).toISOString().slice(0, 10) : '',
+  );
 
   // The week count does not set a shoot on every plan — an unscripted season
   // does not shoot — so the label is the plan's own base period. Found by the
@@ -859,10 +862,11 @@ function GreenlightForm({ projectId, onClose }: { projectId: string; onClose: ()
   const anchoredAt = plan?.anchor === 'delivery' ? AIRDATE_WEEKS : LEAD_WEEKS;
   const from = when
     ? new Date(`${when}T00:00:00Z`).getTime()
-    : sim.now + anchoredAt * 7 * 24 * 60 * 60 * 1000;
+    : lockedPackage?.from ?? sim.now + anchoredAt * 7 * 24 * 60 * 60 * 1000;
   const spec = {
     projectId, planId, budgetCents: Math.round(budget * 100), shootWeeks: weeks,
     secondsEach: minutes * 60, hands, from,
+    ...(lockedPackage?.stageId ? { stageId: lockedPackage.stageId } : {}),
   };
   const answer = wouldBe(sim, spec);
 
@@ -873,19 +877,25 @@ function GreenlightForm({ projectId, onClose }: { projectId: string; onClose: ()
 
   return (
     <Modal
-      title={`Say Yes To ${project?.title ?? 'It'}`}
+      title={`${lockedPackage ? 'Greenlight' : 'Say Yes To'} ${project?.title ?? 'It'}`}
       wide
       onClose={onClose}
       footer={(
         <>
           <button className="btn btn-ghost" onClick={onClose}>Never Mind</button>
-          <button className="btn btn-primary" onClick={say} disabled={!answer.ok}>Say Yes</button>
+          <button className="btn btn-primary" onClick={say} disabled={!answer.ok}>{lockedPackage ? 'Greenlight' : 'Say Yes'}</button>
         </>
       )}
     >
+      {lockedPackage && (
+        <p className="small">
+          This is the package the company already cast against. Greenlight commits these exact terms;
+          change them through Production Package before committing the picture.
+        </p>
+      )}
       <div className="field">
         <label htmlFor="gl-plan">How It Gets Made</label>
-        <select id="gl-plan" value={planId} onChange={(e) => setPlanId(e.target.value)}>
+        <select id="gl-plan" value={planId} disabled={Boolean(lockedPackage)} onChange={(e) => setPlanId(e.target.value)}>
           {ways.map((one) => <option key={one.id} value={one.id}>{one.label}</option>)}
         </select>
         {plan && <p className="xs dim" style={{ margin: 'var(--s2) 0 0' }}>{plan.what}</p>}
@@ -893,7 +903,7 @@ function GreenlightForm({ projectId, onClose }: { projectId: string; onClose: ()
 
       <div className="field">
         <label htmlFor="gl-budget">What It Costs</label>
-        <input id="gl-budget" type="number" min={1} step={100_000} value={budget}
+        <input id="gl-budget" type="number" min={1} step={100_000} value={budget} disabled={Boolean(lockedPackage)}
           onChange={(e) => setBudget(Math.max(1, Number(e.target.value)))} />
         <p className="xs dim" style={{ margin: 'var(--s2) 0 0' }}>
           {formatMoney(Math.round(budget * 100), { cents: false })}, against{' '}
@@ -903,7 +913,7 @@ function GreenlightForm({ projectId, onClose }: { projectId: string; onClose: ()
 
       <div className="field">
         <label htmlFor="gl-weeks">{shootLabel}</label>
-        <input id="gl-weeks" type="number" min={1} max={LONGEST_SHOOT} value={weeks}
+        <input id="gl-weeks" type="number" min={1} max={LONGEST_SHOOT} value={weeks} disabled={Boolean(lockedPackage)}
           onChange={(e) => setWeeks(Math.max(1, Number(e.target.value)))} />
         <p className={`xs ${answer.ok && answer.prospect.slack < 0.8 ? 'negative' : 'dim'}`} style={{ margin: 'var(--s2) 0 0' }}>
           {answer.ok
@@ -915,7 +925,7 @@ function GreenlightForm({ projectId, onClose }: { projectId: string; onClose: ()
 
       <div className="field">
         <label htmlFor="gl-minutes">What Each Part Runs To</label>
-        <input id="gl-minutes" type="number" min={1} value={minutes}
+        <input id="gl-minutes" type="number" min={1} value={minutes} disabled={Boolean(lockedPackage)}
           onChange={(e) => setMinutes(Math.max(1, Number(e.target.value)))} />
         <p className="xs dim" style={{ margin: 'var(--s2) 0 0' }}>
           {said(plan?.delivers.parts ?? 1, 'part')} at {minutes} minutes.
@@ -924,7 +934,7 @@ function GreenlightForm({ projectId, onClose }: { projectId: string; onClose: ()
 
       <div className="field">
         <label htmlFor="gl-hands">The Cutting Room</label>
-        <input id="gl-hands" type="number" min={1} value={hands}
+        <input id="gl-hands" type="number" min={1} value={hands} disabled={Boolean(lockedPackage)}
           onChange={(e) => setHands(Math.max(1, Number(e.target.value)))} />
         <p className="xs dim" style={{ margin: 'var(--s2) 0 0' }}>
           {rateById(plan ? cuttingPeriod(plan)?.converts?.at ?? '' : '')?.who ?? 'Nobody'}
@@ -960,7 +970,7 @@ function GreenlightForm({ projectId, onClose }: { projectId: string; onClose: ()
         <label htmlFor="gl-when">
           {plan?.anchor === 'delivery' ? 'The Transmission Date' : 'The First Day Of Prep'}
         </label>
-        <input id="gl-when" type="date" value={when}
+        <input id="gl-when" type="date" value={when} disabled={Boolean(lockedPackage)}
           onChange={(e) => setWhen(e.target.value)} />
         <p className="xs dim" style={{ margin: 'var(--s2) 0 0' }}>
           Left alone it is {formatDate(from, sim.homeZone)}, which is the engine’s own default of{' '}
