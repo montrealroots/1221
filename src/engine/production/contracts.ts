@@ -66,7 +66,8 @@ export function normalizeActingTerms(role: Role, input?: ActingTermsInput): Acti
  * The number is intentionally small compared with the fee: a producer cannot
  * replace salary with a vanity credit, but a strong package can settle a close call.
  */
-export function actingTermsAcceptanceDelta(terms: ActingTerms): number {
+export function actingTermsAcceptanceDelta(terms: ActingTerms | undefined): number {
+  if (!terms) return 0;
   const billing =
     terms.billing === 'first'
       ? 0.055
@@ -101,4 +102,17 @@ export function actingTermsSummary(terms: ActingTerms): string {
     pieces.push((terms.backendPointsBps / 100).toFixed(2).replace(/\.00$/, '') + '% contingent gross');
   }
   return pieces.join(' · ');
+}
+
+
+/**
+ * What a contingent-gross clause earns from one contractual receipt.
+ *
+ * Kept as a pure function so the accounting layer can post the payment exactly
+ * once at the moment the receipt arrives. Basis points make small percentages
+ * exact enough for contract storage without putting floating-point shares in a save.
+ */
+export function backendParticipationCents(receiptCents: number, terms: ActingTerms | undefined): number {
+  if (!terms || terms.backendPointsBps <= 0 || receiptCents <= 0) return 0;
+  return Math.max(0, Math.round(receiptCents * terms.backendPointsBps / 10_000));
 }
