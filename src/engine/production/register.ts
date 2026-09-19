@@ -20,6 +20,7 @@ import { registerCrew } from '../world/crew';
 import { registerCasting } from '../world/casting';
 import { registerAudition } from '../world/audition';
 import { registerAwards } from '../world/awards';
+import { registerDevelopment } from './development';
 
 /**
  * Registers the complete production/career surface.
@@ -29,6 +30,7 @@ import { registerAwards } from '../world/awards';
  * surface or requiring a flag day.
  */
 export function registerProduction(sim: Simulation): void {
+  registerDevelopment(sim);
   registerMaking(sim);
   registerSelling(sim);
   registerCrew(sim);
