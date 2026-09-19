@@ -27,6 +27,7 @@ import { netWorth } from './systems/finance';
 import { registerLife, startOfLocalDay } from './systems/life';
 import { populateFamily } from './world/family';
 import { buildTheLot, registerLot } from './world/lot';
+import { registerProduction } from './world/production';
 import { registerSugar, seedTheQuota, staffTheGroup } from './world/sugar';
 import { registerVat } from './world/vat';
 import { registerHouse } from './world/house';
@@ -60,6 +61,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerCompanyCommands(sim);
   registerTheClock(sim);
   registerTheCompanyMonth(sim);
+  registerProduction(sim);
   registerLot(sim);
   registerSugar(sim);
   registerVat(sim);
