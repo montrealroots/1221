@@ -65,6 +65,10 @@ import {
 } from '@/engine/production/development';
 import { MARKETING_STRATEGIES, marketingAwareness } from '@/engine/production/marketing';
 import {
+  REVISION_COST_CENTS, SCREENING_COST_CENTS, SCREENING_FOCI,
+  latestScreening, pendingRevision, pendingScreening, postRevisionAdjustment,
+} from '@/engine/production/testing';
+import {
   GUILD_BY_ID, POLICY_BY_ID, REGISTRY_BY_ID, ROLE_BY_ID,
 } from '@/engine/content/incorporation';
 import {
@@ -368,6 +372,7 @@ function Slate() {
   const [casting, setCasting] = useState<string | undefined>();
   const [filing, setFiling] = useState<string | undefined>();
   const [claiming, setClaiming] = useState<string | undefined>();
+  const [testing, setTesting] = useState<string | undefined>();
   const [marketing, setMarketing] = useState<string | undefined>();
   const [selling, setSelling] = useState<string | undefined>();
 
@@ -423,6 +428,13 @@ function Slate() {
                       The Reimbursement
                     </button>
                   )}
+                  {project.stage === 'post' && (
+                    <button className="btn btn-sm" onClick={() => setTesting(project.id)}>
+                      {latestScreening(project)
+                        ? 'Test Cut ' + (latestScreening(project)!.audienceScore ?? '—') + '/100'
+                        : 'Test The Cut'}
+                    </button>
+                  )}
                   {(project.stage === 'post' || project.stage === 'delivered') && project.dealId === undefined && (
                     <button className="btn btn-sm" onClick={() => setMarketing(project.id)}>
                       {project.marketing
@@ -446,6 +458,7 @@ function Slate() {
       {casting && <CastForm projectId={casting} onClose={() => setCasting(undefined)} />}
       {filing && <DeliveryForm projectId={filing} onClose={() => setFiling(undefined)} />}
       {claiming && <RebateForm projectId={claiming} onClose={() => setClaiming(undefined)} />}
+      {testing && <TestingForm projectId={testing} onClose={() => setTesting(undefined)} />}
       {marketing && <MarketingForm projectId={marketing} onClose={() => setMarketing(undefined)} />}
       {selling && <SellForm projectId={selling} onClose={() => setSelling(undefined)} />}
     </Panel>
@@ -1690,6 +1703,132 @@ function CastForm({ projectId, onClose }: { projectId: string; onClose: () => vo
           Nobody is cast yet, so every figure above is what the part would be if it stayed that way.
         </p>
       )}
+    </Modal>
+  );
+}
+
+/**
+ * A real audience on the current cut, and the edit that may follow.
+ */
+function TestingForm({ projectId, onClose }: { projectId: string; onClose: () => void }) {
+  const { run, sim } = useGame();
+  const project = useWorld((s) => s.universe.projects[projectId]);
+  const [heard, setHeard] = useState<string | undefined>();
+  const [error, setError] = useState<string | undefined>();
+  if (!project) return null;
+
+  const screening = latestScreening(project);
+  const screeningPending = pendingScreening(project);
+  const revisionPending = pendingRevision(project);
+  const adjustment = postRevisionAdjustment(project);
+
+  const screen = () => {
+    const answer = run<{ ok: boolean; error?: string; completesAt?: number }>(
+      'production.testing.screen',
+      { projectId },
+      { silent: true },
+    );
+    if (!answer.value?.ok) {
+      setError(answer.value?.error ?? answer.error ?? 'The screening could not be booked.');
+      return;
+    }
+    setError(undefined);
+    setHeard(answer.value.completesAt
+      ? 'The screening is booked for ' + formatDate(answer.value.completesAt, sim.homeZone) + '.'
+      : 'The screening is booked.');
+  };
+
+  const revise = (focus: typeof SCREENING_FOCI[number]['id']) => {
+    const answer = run<{ ok: boolean; error?: string; completesAt?: number }>(
+      'production.testing.revise',
+      { projectId, focus },
+      { silent: true },
+    );
+    if (!answer.value?.ok) {
+      setError(answer.value?.error ?? answer.error ?? 'The re-edit could not be commissioned.');
+      return;
+    }
+    setError(undefined);
+    setHeard(answer.value.completesAt
+      ? 'The re-edit is due ' + formatDate(answer.value.completesAt, sim.homeZone) + '.'
+      : 'The re-edit is underway.');
+  };
+
+  return (
+    <Modal
+      title={'Test The Cut: ' + project.title}
+      wide
+      onClose={onClose}
+      footer={<button className="btn btn-ghost" onClick={onClose}>Close</button>}
+    >
+      <p className="small muted">
+        A screening tells you what the current cut is doing. It does not improve the picture by itself.
+        A re-edit costs time and money and can help or hurt the commercial result.
+      </p>
+      <div className="grid grid-3">
+        <Stat
+          label="Audience"
+          value={screening?.audienceScore === undefined ? 'Not Screened' : screening.audienceScore + '/100'}
+          note={screening ? 'The latest completed screening' : 'No audience has seen this cut'}
+        />
+        <Stat
+          label="Re-Edit Adjustment"
+          value={adjustment >= 0 ? '+' + adjustment : String(adjustment)}
+          note="Carried into the commercial model"
+        />
+        <Stat
+          label="Work Underway"
+          value={screeningPending ? 'Screening' : revisionPending ? 'Re-Edit' : 'None'}
+          note={screeningPending
+            ? formatDate(screeningPending.completesAt, sim.homeZone)
+            : revisionPending
+              ? formatDate(revisionPending.completesAt, sim.homeZone)
+              : 'The cutting room is free for this decision'}
+        />
+      </div>
+
+      {screening && (
+        <div className="grid grid-4" style={{ marginTop: 'var(--s3)' }}>
+          <Stat label="Story" value={(screening.story ?? 0) + '/100'} note="Whether the story lands" />
+          <Stat label="Character" value={(screening.character ?? 0) + '/100'} note="Whether the people carry it" />
+          <Stat label="Pace" value={(screening.pace ?? 0) + '/100'} note="Whether it moves" />
+          <Stat label="Clarity" value={(screening.clarity ?? 0) + '/100'} note="Whether the audience follows it" />
+        </div>
+      )}
+
+      <div className="row gap-2" style={{ marginTop: 'var(--s3)' }}>
+        <button
+          className="btn btn-primary"
+          disabled={Boolean(screeningPending || revisionPending)}
+          onClick={screen}
+        >
+          {'Screen Current Cut · ' + formatMoney(SCREENING_COST_CENTS, { cents: false })}
+        </button>
+      </div>
+
+      {screening && (
+        <>
+          <h4>Re-Edit</h4>
+          <p className="small muted">
+            Pick the problem the cutting room is trying to solve. A new re-edit has to be screened before another one can be ordered.
+          </p>
+          <div className="row gap-2">
+            {SCREENING_FOCI.map((focus) => (
+              <button
+                key={focus.id}
+                className="btn btn-sm"
+                disabled={Boolean(screeningPending || revisionPending)}
+                onClick={() => revise(focus.id)}
+              >
+                {focus.label + ' · ' + formatMoney(REVISION_COST_CENTS, { cents: false })}
+              </button>
+            ))}
+          </div>
+        </>
+      )}
+
+      {heard && <p className="small">{heard}</p>}
+      {error && <p className="small negative">{error}</p>}
     </Modal>
   );
 }
