@@ -128,8 +128,26 @@ const note = (r: Reckoning, by: string, became: number, why: string): Reckoning 
  * The floor of the model, and the only link that does not multiply. Drawn off seconds
  * of finished screen time rather than off the part count, because twelve micro-parts
  * and one feature are not the same object and should not start from the same figure.
+ *
+ * ## The figure, and how it was arrived at
+ *
+ * Measured rather than chosen, on a played career. `tools/studio.mjs` puts the same
+ * six-picture slate through the real command path across twelve worlds and reports
+ * what the year came to.
+ *
+ * At 750,000 it was **twelve profitable years out of twelve**, the worst of them
+ * +35.15m against 37m spent. Every picture a hit, which is not a studio game — the
+ * decisions were being made and none of them could be wrong.
+ *
+ * At 310,000 the same twelve worlds give **nine profitable years, a worst of −2.31m
+ * and a median of +3.94m**, with an 11.92m spread produced by nothing but which week
+ * each picture opened and what it opened against. A losing year is reachable, the
+ * median is a modest profit, and the date is worth about six million either way.
+ *
+ * Re-measure this before moving it. The link is the base every other one multiplies,
+ * so it is the one number in the file that moves everything.
  */
-export const RATE_PER_ROOT_MINUTE_CENTS = 750_000_00;
+export const RATE_PER_ROOT_MINUTE_CENTS = 310_000_00;
 
 export function fromTheShape(r: Reckoning, spec: Spec): Reckoning {
   const minutes = (spec.parts * spec.secondsEach) / 60;

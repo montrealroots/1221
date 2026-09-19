@@ -347,30 +347,50 @@ export const pointsGiven = (project: Project): number =>
 // The greenlight
 // ---------------------------------------------------------------------------
 
-export function whyNotCommit(sim: Simulation, projectId: Id): string | undefined {
+export function whyNotCommit(sim: Simulation, projectId: Id, budgetCents = 0): string | undefined {
   const project = projectById(sim, projectId);
   if (!project) return 'No such project.';
   if (project.stage === 'greenlit' || project.stage === 'delivered') return 'The money is already committed.';
   if (project.shelvedAt) return 'Take it off the shelf first.';
   if (!project.formatId || !project.parts?.length) return 'No format has been chosen for it yet.';
+  if (budgetCents < 0) return 'A picture cannot cost less than nothing to make.';
   const cash = cashAccountFor(sim.universe, project.companyId);
   if (!cash) return 'The company has no cash account.';
-  const owed = feesOn(project);
+  const owed = feesOn(project) + budgetCents;
   if (cash.balance < owed) {
-    return `The fees come to ${millions(owed)} and the company has ${millions(cash.balance)}. `
-      + 'One of them would have to take points instead.';
+    return `Committing costs ${millions(owed)} and the company has ${millions(cash.balance)}. `
+      + 'One of them would have to take points instead, or it has to be made for less.';
   }
   return undefined;
 }
 
-export function commit(sim: Simulation, projectId: Id): { ok: boolean; error?: string; cents: Money } {
-  const no = whyNotCommit(sim, projectId);
+/**
+ * Commits the money and shuts the cast.
+ *
+ * Two figures leave here and they are different kinds of money. The **fees** are
+ * what the people cost. The **budget** is what the picture costs — the unit, the
+ * stages, the build, the days — and until this took it, nothing in the build ever
+ * charged it. `budgetCents` sat on a project with no writer while the box office
+ * read `spentCents` to decide what the money on the screen bought, so a player could
+ * declare an eighty million pound picture and pay for seven department heads.
+ *
+ * Both go out at the greenlight, before a frame exists, which is the single most
+ * important thing a studio simulation has to get right: a failure has to cost
+ * everything it cost.
+ */
+export function commit(
+  sim: Simulation,
+  projectId: Id,
+  budgetCents = 0,
+): { ok: boolean; error?: string; cents: Money } {
+  const no = whyNotCommit(sim, projectId, budgetCents);
   if (no) return { ok: false, error: no, cents: 0 };
   const project = projectById(sim, projectId)!;
-  const cents = feesOn(project);
+  const cents = feesOn(project) + budgetCents;
   const paid = chargeTheFees(sim, project.companyId, project.id, cents);
   if (!paid.ok) return { ok: false, error: paid.error, cents: 0 };
   project.stage = 'greenlit';
+  project.budgetCents = budgetCents;
   project.spentCents += cents;
   shut(project, 'shape');
   shut(project, 'cast');
@@ -589,7 +609,9 @@ export function registerProduction(sim: Simulation): void {
   sim.onCommand<Shape, Done>('production.shape', (p) => setShape(sim, p));
   sim.onCommand<Writing, Done>('production.write', (p) => writeIt(sim, p));
   sim.onCommand<Engaging, Done>('production.engage', (p) => engage(sim, p));
-  sim.onCommand<{ projectId: Id }, Done>('production.commit', (p) => commit(sim, p.projectId));
+  sim.onCommand<{ projectId: Id; budgetCents?: number }, Done>(
+    'production.commit', (p) => commit(sim, p.projectId, Math.max(0, Math.round(p.budgetCents ?? 0))),
+  );
   sim.onCommand<Opening, Opened>('production.open', (p) => open(sim, p));
   sim.onCommand<{ projectId: Id; off?: boolean }, Done>(
     'production.shelve', (p) => shelve(sim, p.projectId, p.off === true),
