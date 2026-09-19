@@ -555,6 +555,46 @@ export interface Part {
   recut?: number;
 }
 
+export type ProjectAudience = 'general' | 'family' | 'young_adult' | 'adult';
+
+export type ProjectTone = 'commercial' | 'balanced' | 'prestige' | 'experimental';
+
+export type ScriptPassKind = 'outline' | 'draft' | 'rewrite' | 'polish';
+
+export type ScriptFocus = 'story' | 'character' | 'dialogue' | 'structure' | 'pace';
+
+export interface DevelopmentPass {
+  sequence: number;
+  kind: ScriptPassKind;
+  focus: ScriptFocus;
+  startedAt: Instant;
+  completesAt: Instant;
+  costCents: Money;
+  writerId?: Id;
+  status: 'pending' | 'completed';
+  qualityBefore: number;
+  qualityAfter?: number;
+}
+
+export interface ScreenplayState {
+  status: 'concept' | 'outlining' | 'drafting' | 'rewriting' | 'polishing' | 'draft' | 'locked';
+  quality: number;
+  draft: number;
+  writerId?: Id;
+  lockedAt?: Instant;
+  passes: DevelopmentPass[];
+}
+
+export interface ProjectDevelopment {
+  version: 1;
+  startedAt: Instant;
+  genreIds: string[];
+  audience: ProjectAudience;
+  tone: ProjectTone;
+  targetBudgetCents?: Money;
+  screenplay: ScreenplayState;
+}
+
 export interface Project {
   id: Id;
   saveId: Id;
@@ -570,6 +610,15 @@ export interface Project {
   /** What making it is reckoned to cost, once anybody has reckoned. */
   budgetCents?: Money;
   shelvedAt?: Instant;
+  /**
+   * The replacement production-development record.
+   *
+   * Optional during the overhaul so saves and test fixtures written by the
+   * previous production engine continue to load. Once a project opts into the
+   * new pipeline, this record becomes its development authority and greenlight
+   * will not let it skip a locked screenplay.
+   */
+  development?: ProjectDevelopment;
 
   // --- The dated life, once it is greenlit ---------------------------------
   // Empty until then. A picture that has not been greenlit has no dates and
