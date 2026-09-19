@@ -371,6 +371,23 @@ export const LESSONS: readonly Lesson[] = [
     after: ['company'],
     importance: 50,
   },
+  {
+    id: 'staffing',
+    strand: 'the-company',
+    title: 'What A Picture Costs Is Two Decisions',
+    body: 'The material decides how many months each department works — a story with a '
+      + 'world to build keeps the design shop busy whatever you do about it. You decide '
+      + 'what one of those months costs, by hiring a better team or a cheaper one. So the '
+      + 'budget is never a number you set; it is those two multiplied, department by '
+      + 'department, and it moves when either one does. Hiring up buys quality and not '
+      + 'time: the same people finish on the same date, they just cost more getting '
+      + 'there. And a department your material asks nothing of is not on the picture at '
+      + 'all, which is what makes a small film cheap rather than a big one with gaps.',
+    teaches: ['company.staff'],
+    screen: 'business',
+    after: ['option'],
+    importance: 48,
+  },
 
   // -------------------------------------------------------------------------
   // The pictures

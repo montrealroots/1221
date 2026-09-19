@@ -631,6 +631,16 @@ export interface Project {
   spentCents: Money;
   /** What making it is reckoned to cost, once anybody has reckoned. */
   budgetCents?: Money;
+  /**
+   * Which team was hired into each department, by department id.
+   *
+   * The player's half of the budget. What the material asks for decides how many
+   * months a department works; this decides what one of those months costs. A
+   * department with no entry is at the cheapest team there is, which is why absence
+   * means the floor rather than nothing — every department a picture needs is
+   * staffed by somebody, and choosing is choosing to do better than that.
+   */
+  levels?: Record<string, number>;
   shelvedAt?: Instant;
 
   // --- The dated life, once it is greenlit ---------------------------------

@@ -27,6 +27,9 @@ import { formatDate } from '@/engine/core/time';
 import { CADENCE_LABEL, ENGINES, RENEWAL_SAID, engineById } from '@/engine/content/concept';
 import { CITIES } from '@/engine/content/geography';
 import {
+  BEST_TEAM, DEPARTMENTS, LEAST_TEAM, monthsFor, rateFor,
+} from '@/engine/content/departments';
+import {
   behindTheCompany, breakEvenShare, goingUp, pullOn, sellsFor, theSmallStage,
   turnedAway, whereTheBuildStands, whyNotBuild,
 } from '@/engine/world/lot';
@@ -100,6 +103,7 @@ export function BusinessWorkspace() {
 
       <Holdings />
       <Slate />
+      <Staffing />
       <TheLotsName />
       <TheFifthRoom />
       <Standings />
@@ -716,5 +720,97 @@ function Standings() {
         </div>
       </Panel>
     </div>
+  );
+}
+
+/**
+ * Who is hired into each of a picture's departments, and what that makes it cost.
+ *
+ * The two halves of a budget, side by side, because the whole point of the engine
+ * behind this is that they are different things. The months are the material's and
+ * cannot be argued with here; the team is the player's and is the only thing on the
+ * screen they can change. Showing the rate beside the months is what makes the
+ * multiplication legible — the total is never presented as a figure without the two
+ * numbers it came from sitting next to it.
+ *
+ * Only the departments a picture actually needs are listed. One that its material
+ * asks nothing of is absent rather than shown at zero, which is the same rule the
+ * schedule follows and the reason a small picture reads as small.
+ */
+function Staffing() {
+  const { run } = useGame();
+  const slate = useWorld((s) => projectsOf(s.universe).filter((one) => !one.shelvedAt));
+  const holdings = useWorld((s) => s.universe.holdings);
+  const [chosenId, setChosenId] = useState<string | undefined>(undefined);
+  const [said, setSaid] = useState<string | undefined>(undefined);
+
+  const project = slate.find((one) => one.id === chosenId) ?? slate[0];
+  const holding = project?.holdingId ? holdings[project.holdingId] : undefined;
+  if (!project || !holding) return null;
+
+  const needed = DEPARTMENTS
+    .map((department) => ({ department, months: monthsFor(department, holding.demands) }))
+    .filter((one) => one.months > 0);
+
+  const hire = (departmentId: string, level: number) => {
+    const done = run<{ ok: boolean; error?: string }>(
+      'company.staff', { projectId: project.id, departmentId, level }, { silent: true },
+    );
+    setSaid(done.value?.error ?? (done.value?.ok ? undefined : done.error));
+  };
+
+  return (
+    <Panel title="What It Will Cost" tight>
+      {slate.length > 1 && (
+        <div className="field">
+          <label htmlFor="staffing-which">Which Picture</label>
+          <select
+            id="staffing-which"
+            value={project.id}
+            onChange={(e) => setChosenId(e.target.value)}
+          >
+            {slate.map((one) => <option key={one.id} value={one.id}>{one.title}</option>)}
+          </select>
+        </div>
+      )}
+      <p className="muted small" style={{ marginBottom: 'var(--s3)' }}>
+        The material decides the months. You decide what a month costs. A better team
+        finishes on the same date and charges more for getting there.
+      </p>
+      <div className="col gap-2">
+        {needed.map(({ department, months }) => {
+          const level = project.levels?.[department.id] ?? LEAST_TEAM;
+          return (
+            <div className="holding" key={department.id}>
+              <div className="row-between">
+                <div className="grow">
+                  <span className="strong">{department.label}</span>
+                  <div className="small muted" style={{ marginTop: 2 }}>
+                    {months} months at {formatMoney(rateFor(department, level), { cents: false })} a month
+                  </div>
+                </div>
+                <div className="row gap-2">
+                  {Array.from({ length: BEST_TEAM - LEAST_TEAM + 1 }, (_, i) => i + LEAST_TEAM)
+                    .map((at) => (
+                      <button
+                        key={at}
+                        className={`btn btn-sm ${at === level ? 'btn-primary' : ''}`}
+                        onClick={() => hire(department.id, at)}
+                      >
+                        {at}
+                      </button>
+                    ))}
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+      <p className="small" style={{ marginTop: 'var(--s3)' }}>
+        <strong>{formatMoney(project.budgetCents ?? 0, { cents: false })}</strong> to make,
+        as it stands.
+      </p>
+      {said ? <p className="small warn">{said}</p> : null}
+    </Panel>
   );
 }

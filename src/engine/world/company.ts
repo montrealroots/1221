@@ -36,6 +36,9 @@ import {
 import { ESTATE_CITY_ID, HOUSE, studioName } from '../content/estate';
 import { bondFor, standingWord } from './standing';
 import { demandsForTyped, listingById } from './material';
+import {
+  BEST_TEAM, DEPARTMENT_BY_ID, LEAST_TEAM, monthsFor,
+} from '../content/departments';
 import { layOut } from './schedule';
 import {
   MS_DAY, addMonths, formatDate, instantFromZoned, startOfNextMonth, type Instant,
@@ -1026,6 +1029,43 @@ export function registerCompanyCommands(sim: Simulation): void {
     s.universe.policies[policy.id] = policy;
     return { ok: true, id: policy.id };
   });
+
+  /**
+   * Hire a team into one of a picture's departments, and reprice it.
+   *
+   * The other half of the budget. `world/schedule.ts` reads what the material asks
+   * of a department to decide how many months it works; this decides what one of
+   * those months costs. Nothing about the schedule's length moves — hiring better
+   * people does not make them faster, which is the distinction the whole engine is
+   * built on and the easiest one to lose.
+   *
+   * The budget is recomputed rather than adjusted. There is no arithmetic here that
+   * adds a difference to a stored figure, because a figure maintained by deltas
+   * drifts and a figure recomputed from its inputs cannot.
+   */
+  sim.onCommand<{ projectId: Id; departmentId: string; level: number }, Done>(
+    'company.staff', (payload, { sim: s }) => {
+      const project = s.universe.projects[payload.projectId];
+      if (!project) return refuse('No such project.');
+      const department = DEPARTMENT_BY_ID[payload.departmentId];
+      if (!department) return refuse('There’s no department by that name.');
+
+      const holding = project.holdingId ? s.universe.holdings[project.holdingId] : undefined;
+      if (!holding) return refuse('That one has no material under it to cost.');
+
+      const want = Math.round(payload.level);
+      if (!Number.isFinite(want) || want < LEAST_TEAM || want > BEST_TEAM) {
+        return refuse(`A team is hired somewhere between ${LEAST_TEAM} and ${BEST_TEAM}.`);
+      }
+      if (monthsFor(department, holding.demands) <= 0) {
+        return refuse(`This one asks nothing of ${department.label.toLowerCase()}.`);
+      }
+
+      project.levels = { ...(project.levels ?? {}), [department.id]: want };
+      project.budgetCents = layOut(holding.demands, project.levels, s.now, s.homeZone).budgetCents;
+      return { ok: true };
+    },
+  );
 
   /**
    * Take rights to something, either something you thought of or something listed.

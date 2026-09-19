@@ -196,3 +196,96 @@ describe('and it reaches a project', () => {
     expect(holdingsOf(again.universe)[0]!.demands).toEqual(first);
   });
 });
+
+describe('hiring a team is the other half of the budget', () => {
+  /** A save with a project that has real material under it. */
+  function aPicture(seed: string) {
+    const sim = quickSave({}, seed);
+    // A typed title rather than something off the market, deliberately. These cases
+    // are about staffing and a holding from either route carries demands, so drawing
+    // from the pool would only make them fail on seeds for reasons about the market.
+    //
+    // The first version did search the pool, forward through months until it found
+    // something — and then optioned that id against `sim.now`. `listingById` resolves
+    // against the current month because the market churns, so a listing from six
+    // months ahead correctly did not exist yet and the option was refused. The API was
+    // right and the test was wrong.
+    sim.execute({ kind: 'company.option', payload: { title: `Something For ${seed}` } });
+    const holding = holdingsOf(sim.universe)[0]!;
+    sim.execute({
+      kind: 'company.develop',
+      payload: { title: holding.title, holdingId: holding.id },
+    });
+    const project = projectsOf(sim.universe).find((one) => one.title === holding.title)!;
+    return { sim, holding, project };
+  }
+
+  const staff = (sim: ReturnType<typeof quickSave>, payload: Record<string, unknown>) => {
+    const done = sim.execute({ kind: 'company.staff', payload });
+    const said = done.value as { ok: boolean; error?: string } | undefined;
+    return { ok: said?.ok ?? done.ok, why: said?.error ?? done.error ?? '' };
+  };
+
+  /** A department this picture actually needs, so the case is never vacuous. */
+  const needed = (holding: { demands: Demands }) =>
+    DEPARTMENTS.find((d) => monthsFor(d, holding.demands) > 0)!;
+
+  it('raises what it costs and not how long it takes', () => {
+    const { sim, holding, project } = aPicture('staff-cost');
+    const before = project.budgetCents!;
+    const beforeMonths = layOut(holding.demands, project.levels ?? {}, sim.now, sim.homeZone).months;
+
+    const done = staff(sim, { projectId: project.id, departmentId: needed(holding).id, level: BEST_TEAM });
+    expect(done.ok, done.why).toBe(true);
+
+    expect(project.budgetCents!).toBeGreaterThan(before);
+    expect(layOut(holding.demands, project.levels ?? {}, sim.now, sim.homeZone).months)
+      .toBe(beforeMonths);
+  });
+
+  it('recomputes rather than adjusting, so hiring twice is not hiring twice over', () => {
+    const { sim, holding, project } = aPicture('staff-twice');
+    const d = needed(holding);
+    staff(sim, { projectId: project.id, departmentId: d.id, level: BEST_TEAM });
+    const once = project.budgetCents!;
+    staff(sim, { projectId: project.id, departmentId: d.id, level: BEST_TEAM });
+    expect(project.budgetCents!).toBe(once);
+  });
+
+  it('comes back down when a cheaper team is hired instead', () => {
+    const { sim, holding, project } = aPicture('staff-down');
+    const d = needed(holding);
+    staff(sim, { projectId: project.id, departmentId: d.id, level: BEST_TEAM });
+    const dear = project.budgetCents!;
+    staff(sim, { projectId: project.id, departmentId: d.id, level: LEAST_TEAM });
+    expect(project.budgetCents!).toBeLessThan(dear);
+  });
+
+  it('refuses a department that does not exist', () => {
+    const { sim, project } = aPicture('staff-nodept');
+    expect(staff(sim, { projectId: project.id, departmentId: 'catering', level: 3 }).ok).toBe(false);
+  });
+
+  it('refuses a team nobody could be hired at', () => {
+    const { sim, holding, project } = aPicture('staff-range');
+    const d = needed(holding).id;
+    expect(staff(sim, { projectId: project.id, departmentId: d, level: 0 }).ok).toBe(false);
+    expect(staff(sim, { projectId: project.id, departmentId: d, level: 99 }).ok).toBe(false);
+  });
+
+  it('refuses a department this picture asks nothing of', () => {
+    const { sim, holding, project } = aPicture('staff-unneeded');
+    const spare = DEPARTMENTS.find((d) => monthsFor(d, holding.demands) <= 0);
+    if (spare) {
+      expect(staff(sim, { projectId: project.id, departmentId: spare.id, level: 3 }).ok).toBe(false);
+    }
+  });
+
+  it('refuses a picture with no material under it to cost', () => {
+    const sim = quickSave({}, 'staff-bare');
+    sim.execute({ kind: 'company.develop', payload: { title: 'Nothing Behind It' } });
+    const bare = projectsOf(sim.universe).find((one) => one.title === 'Nothing Behind It')!;
+    expect(staff(sim, { projectId: bare.id, departmentId: DEPARTMENTS[0]!.id, level: 3 }).ok)
+      .toBe(false);
+  });
+});
