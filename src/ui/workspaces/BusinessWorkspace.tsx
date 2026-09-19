@@ -56,6 +56,7 @@ import {
   whereTheClaimStands, whyNot, worthToday,
 } from '@/engine/world/rebate';
 import type { Project, RoleId } from '@/engine/domain/company';
+import { talentForRole } from '@/engine/production/talent';
 import {
   GUILD_BY_ID, POLICY_BY_ID, REGISTRY_BY_ID, ROLE_BY_ID,
 } from '@/engine/content/incorporation';
@@ -872,6 +873,8 @@ function CastForm({ projectId, onClose }: { projectId: string; onClose: () => vo
   const { run, sim } = useGame();
   const project = useWorld((s) => s.universe.projects[projectId]);
   const [open, setOpen] = useState<string | undefined>();
+  const [directoryRole, setDirectoryRole] = useState<string | undefined>();
+  const [talentQuery, setTalentQuery] = useState('');
   const [asking, setAsking] = useState<Record<string, string>>({});
   const [noting, setNoting] = useState<Record<string, string>>({});
   const [heard, setHeard] = useState<string | undefined>();
@@ -988,7 +991,7 @@ function CastForm({ projectId, onClose }: { projectId: string; onClose: () => vo
                   <td className="nowrap">{formatMoney(one.role.bandCents)}</td>
                   <td className="small">
                     {one.person
-                      ? <Open subject={at('person', one.person.id)}>{one.person.displayName}</Open>
+                      ? <Open subject={at('talent', one.person.id)}>{one.person.displayName}</Open>
                       : <span className="muted">Whoever is free</span>}
                     {one.seat && (
                       <div className="muted small">
@@ -1012,6 +1015,16 @@ function CastForm({ projectId, onClose }: { projectId: string; onClose: () => vo
                               </button>
                             )
                             : <button className="btn btn-sm" onClick={() => put(one.role.id)}>Put It Out</button>}
+                          <button
+                            className="btn btn-sm"
+                            style={{ marginLeft: 'var(--s2)' }}
+                            onClick={() => {
+                              setDirectoryRole(directoryRole === one.role.id ? undefined : one.role.id);
+                              setTalentQuery('');
+                            }}
+                          >
+                            {directoryRole === one.role.id ? 'Close Talent' : 'Talent Database'}
+                          </button>
                           <button
                             className="btn btn-sm btn-primary"
                             style={{ marginLeft: 'var(--s2)' }}
@@ -1147,6 +1160,103 @@ function CastForm({ projectId, onClose }: { projectId: string; onClose: () => vo
                 </tbody>
               </table>
             </div>
+          </div>
+        );
+      })()}
+
+      {directoryRole && (() => {
+        const role = project.roles?.find((one) => one.id === directoryRole);
+        if (!role) return null;
+        const directory = talentForRole(sim, project, role, talentQuery, 40);
+        return (
+          <div className="card" style={{ marginTop: 'var(--s4)' }}>
+            <div className="row spread gap-2">
+              <div>
+                <div className="strong">{`Talent Database · ${role.name}`}</div>
+                <div className="muted small">
+                  Every performer the world has actually discovered, compared against what this part needs.
+                  Fit, dates and money stay separate so a high score never hides a scheduling conflict.
+                </div>
+              </div>
+              <button className="btn btn-sm btn-ghost" onClick={() => setDirectoryRole(undefined)}>Close</button>
+            </div>
+            <div style={{ marginTop: 'var(--s3)' }}>
+              <input
+                aria-label={`Search talent for ${role.name}`}
+                placeholder="Search by name"
+                value={talentQuery}
+                onChange={(e) => setTalentQuery(e.target.value)}
+              />
+            </div>
+            {directory.length === 0 ? (
+              <p className="small muted" style={{ marginTop: 'var(--s3)' }}>Nobody in the known talent pool matches that search.</p>
+            ) : (
+              <div className="table-wrap" style={{ marginTop: 'var(--s3)' }}>
+                <table className="table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th className="nowrap">Role Fit</th>
+                      <th className="nowrap">Dates</th>
+                      <th className="nowrap">Reputation</th>
+                      <th className="nowrap">Demand</th>
+                      <th className="nowrap">Quote</th>
+                      <th />
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {directory.map(({ profile, fit }) => {
+                      const person = profile.person;
+                      const ask = askFor(person, role, sim.now);
+                      const key = `directory:${role.id}:${person.id}`;
+                      const typed = asking[key];
+                      const fee = typed === undefined || typed === ''
+                        ? ask
+                        : Math.round(Number(typed) * 100);
+                      return (
+                        <tr key={person.id}>
+                          <td className="nowrap">
+                            <Open subject={at('talent', person.id)}>{person.displayName}</Open>
+                            <div className="dim xs">
+                              {profile.location} · {profile.age} · {profile.actingRating}/100 acting
+                            </div>
+                          </td>
+                          <td className="small nowrap">{fit.fit}/100</td>
+                          <td className={`small nowrap${fit.available ? '' : ' negative'}`}>
+                            {fit.available ? 'Available' : 'Conflict'}
+                          </td>
+                          <td className="small nowrap">{Math.round(person.reputation.professionalReputation)}/100</td>
+                          <td className="small nowrap">{Math.round(person.reputation.industryDemand)}/100</td>
+                          <td className="small nowrap">
+                            {fit.quoteCents > 0 ? formatMoney(fit.quoteCents) : 'No prior quote'}
+                          </td>
+                          <td className="nowrap">
+                            <input
+                              aria-label={`Direct offer to ${person.displayName}`}
+                              type="number"
+                              min={0}
+                              step={1_000}
+                              style={{ width: '7rem' }}
+                              placeholder={String(Math.round(ask / 100))}
+                              value={typed ?? ''}
+                              onChange={(e) => setAsking({ ...asking, [key]: e.target.value })}
+                            />
+                            <button
+                              className="btn btn-sm btn-primary"
+                              style={{ marginLeft: 'var(--s2)' }}
+                              disabled={!fit.available}
+                              onClick={() => offer(role.id, person.id, fee)}
+                            >
+                              Offer Role
+                            </button>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            )}
           </div>
         );
       })()}
