@@ -38,6 +38,7 @@ import { axisStands } from '../content/craft';
 import { SEASON } from '../content/release';
 import { inherits, type Entry } from '../content/lineage';
 import { whatItReads, type Dial, type Genre } from '../content/story';
+import { floorAfter, type Source } from '../content/source';
 
 // ---------------------------------------------------------------------------
 // What a reckoning is
@@ -87,6 +88,15 @@ export interface Spec {
   genre?: Genre;
   /** The six dials the writer set. */
   dials?: Readonly<Partial<Record<Dial, number>>>;
+  /**
+   * Where the story came from, where it came from anywhere.
+   *
+   * Read by the campaign term and nowhere else. Material an audience already knows
+   * has paid part of the floor, which lowers what a campaign has to reach rather
+   * than lifting what the picture takes — a discount changes what a producer should
+   * do, and a bonus would only change the number.
+   */
+  source?: Source;
   /** The story engine underneath it, where there is one. */
   engine?: StoryEngine;
   /** Month of release, 0 for January. */
@@ -281,7 +291,10 @@ export function fromTheSeason(r: Reckoning, spec: Spec): Reckoning {
 export const CAMPAIGN_FLOOR_COSTS = 0.35;
 
 export function fromTheCampaign(r: Reckoning, spec: Spec): Reckoning {
-  const ratio = spec.campaignCents / spec.format.expectsCampaignCents;
+  // The floor the material leaves, not the one the format states. A novel people
+  // have read has already paid part of it, and that is the whole reason to buy one.
+  const floor = floorAfter(spec.format.expectsCampaignCents, spec.source);
+  const ratio = spec.campaignCents / floor;
   const mult = ratio < 1
     ? 1 - (1 - Math.max(0, ratio)) * CAMPAIGN_FLOOR_COSTS
     : 1 + Math.log10(ratio) * 0.55;

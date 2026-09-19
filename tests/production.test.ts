@@ -43,6 +43,9 @@ import {
   ATTENTION, DIALS, GENRES, GENRE_BY_ID, MOST, UNWRITTEN, leftToSpend, servesIts,
   spent, whatItReads, whyNotWrite,
 } from '@/engine/content/story';
+import {
+  SOURCES, SOURCE_BY_ID, carriedInto, floorAfter, whyNotFrom,
+} from '@/engine/content/source';
 
 // ---------------------------------------------------------------------------
 
@@ -485,5 +488,80 @@ describe('the script', () => {
     const before = reckon(BASE).cents;
     expect(reckon({ ...BASE, genre: GENRE_BY_ID.drama! }).cents).toBe(before);
     expect(UNWRITTEN.pace).toBe(3);
+  });
+});
+
+describe('where it came from', () => {
+  it('gives every provenance in the domain model a row, and no more', () => {
+    // The list is fixed by `Provenance`, which is already written into saves. This
+    // fills those six in rather than inventing a list beside them.
+    expect(SOURCES.map((s) => s.id).sort()).toEqual(
+      ['article', 'format', 'life_rights', 'novel', 'original', 'play'].sort(),
+    );
+  });
+
+  it('differs on the fields something reads, not on the description', () => {
+    const prints = SOURCES.map((s) => JSON.stringify([
+      s.aboutCents, s.knownAlready, s.carriesInto, s.suits,
+    ]));
+    expect(new Set(prints).size, 'two sources are one row twice').toBe(SOURCES.length);
+  });
+
+  it('makes an original the cheapest thing in the business and the emptiest', () => {
+    const original = SOURCE_BY_ID.original!;
+    // The trade the whole table turns on: nothing to pay and no audience at all.
+    expect(original.knownAlready).toBe(0);
+    expect(original.carriesInto).toBe(0);
+    for (const other of SOURCES) {
+      if (other.id === 'original') continue;
+      expect(other.aboutCents).toBeGreaterThan(original.aboutCents);
+    }
+  });
+
+  it('brings the campaign floor down for material people already know', () => {
+    const feature = FORMAT_BY_ID.feature!;
+    const bare = floorAfter(feature.expectsCampaignCents, undefined);
+    const novel = floorAfter(feature.expectsCampaignCents, SOURCE_BY_ID.novel!);
+    expect(bare).toBe(feature.expectsCampaignCents);
+    expect(novel).toBeLessThan(bare);
+    // And that is a discount rather than a bonus, so the same campaign reads as a
+    // bigger campaign instead of the picture simply taking more.
+    const spend = 150_000_00;
+    const withIt = reckon({ ...BASE, campaignCents: spend, source: SOURCE_BY_ID.novel! });
+    const without = reckon({ ...BASE, campaignCents: spend });
+    expect(withIt.cents).toBeGreaterThan(without.cents);
+  });
+
+  it('widens what a script may carry without making a thin one score better', () => {
+    const full = { depth: 4, dialogue: 4, pace: 4, turns: 3, threads: 3, spectacle: 4 };
+    expect(spent(full)).toBe(22);
+    // Refused on its own, allowed off a novel — which hands over people and a world
+    // that already work.
+    expect(whyNotWrite(full)).toBeDefined();
+    expect(whyNotWrite(full, carriedInto(SOURCE_BY_ID.novel!))).toBeUndefined();
+    expect(leftToSpend(full, carriedInto(SOURCE_BY_ID.novel!))).toBe(0);
+    // The room is not a result. A thin script off a novel is still a thin script.
+    const thin = { depth: 1, dialogue: 1, pace: 1, turns: 1, threads: 1, spectacle: 1 };
+    const genre = GENRE_BY_ID.drama!;
+    expect(servesIts(genre, thin)).toBeLessThan(servesIts(genre, full));
+  });
+
+  it('refuses a format the material cannot honestly become, and says what it suits', () => {
+    const play = SOURCE_BY_ID.play!;
+    const label = (id: string) => FORMAT_BY_ID[id]?.label ?? id;
+    const no = whyNotFrom(play, 'serial', 'A Continuing Series', label);
+    expect(no).toBeDefined();
+    expect(no).toContain('A Feature Film');
+    expect(whyNotFrom(play, 'feature', 'A Feature Film', label)).toBeUndefined();
+    // An original suits everything, which is what an empty list means.
+    expect(SOURCE_BY_ID.original!.suits).toEqual([]);
+    expect(whyNotFrom(SOURCE_BY_ID.original!, 'micro', 'A Micro-Series', label)).toBeUndefined();
+  });
+
+  it('keeps a licensed format out of a cinema and a play out of a service', () => {
+    const label = (id: string) => FORMAT_BY_ID[id]?.label ?? id;
+    expect(whyNotFrom(SOURCE_BY_ID.format!, 'feature', 'A Feature Film', label)).toBeDefined();
+    expect(whyNotFrom(SOURCE_BY_ID.format!, 'serial', 'A Continuing Series', label)).toBeUndefined();
+    expect(whyNotFrom(SOURCE_BY_ID.play!, 'micro', 'A Micro-Series', label)).toBeDefined();
   });
 });

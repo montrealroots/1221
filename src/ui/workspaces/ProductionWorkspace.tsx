@@ -29,9 +29,11 @@ import { MOST_POINTS } from '@/engine/content/talent';
 import {
   ATTENTION, DIALS, DIAL_BY_ID, GENRES, MOST, genreById, leftToSpend, servesIts,
 } from '@/engine/content/story';
+import { carriedInto } from '@/engine/content/source';
 import {
   LOCKS, LOCK_SAID, feesOn, isLocked, offersFor, pointsGiven, shortlistFor,
-  whyNotCommit, whyNotFollowUp, whyNotOpen, whyNotShape, whyNotWriteIt, dialsOn, type Lock,
+  whyNotCommit, whyNotFollowUp, whyNotOpen, whyNotShape, whyNotWriteIt, dialsOn, sourceOf,
+  type Lock,
 } from '@/engine/world/production';
 import { theWeeksAhead } from '@/engine/world/field';
 import { receivedBy, costOf } from '@/engine/world/takings';
@@ -400,6 +402,7 @@ function WritePanel({ project }: { project: Project }) {
   const [dials, setDials] = useState<Record<string, number>>({ ...dialsOn(project) });
   const [said, setSaid] = useState<string | undefined>(undefined);
   const genre = genreById(genreId);
+  const carried = useWorld((s) => carriedInto(sourceOf(s, project)), [project.id, project.holdingId]);
   const refusal = useWorld(
     (s) => whyNotWriteIt(s, { projectId: project.id, genreId, dials }),
     [project.id, genreId, JSON.stringify(dials)],
@@ -435,7 +438,8 @@ function WritePanel({ project }: { project: Project }) {
         </div>
       ))}
       <p className="small">
-        {leftToSpend(dials)} of {ATTENTION} points left.
+        {leftToSpend(dials, carried)} of {ATTENTION + carried} points left.
+        {carried > 0 ? ` The material carries ${carried} of them.` : ''}
         {genre ? ` The page serves its audience at ${servesIts(genre, dials).toFixed(2)}.` : ''}
       </p>
       {refusal ? <p className="small warn">{refusal}</p> : null}

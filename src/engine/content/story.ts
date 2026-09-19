@@ -117,9 +117,17 @@ export const ATTENTION = 18;
 export const spent = (dials: Readonly<Partial<Record<Dial, number>>>): number =>
   DIALS.reduce((sum, d) => sum + Math.max(0, Math.min(MOST, dials[d] ?? 0)), 0);
 
-/** What is left to spend. */
-export const leftToSpend = (dials: Readonly<Partial<Record<Dial, number>>>): number =>
-  ATTENTION - spent(dials);
+/**
+ * What is left to spend, given whatever the source material already did.
+ *
+ * `carried` is room and not reward. A novel hands over people and a world that
+ * already work, so more of the page can go elsewhere — and a player who takes one
+ * and then writes a thin script has wasted it, which a flat bonus could never say.
+ */
+export const leftToSpend = (
+  dials: Readonly<Partial<Record<Dial, number>>>,
+  carried = 0,
+): number => ATTENTION + carried - spent(dials);
 
 /**
  * Why this script cannot be written as set.
@@ -127,7 +135,10 @@ export const leftToSpend = (dials: Readonly<Partial<Record<Dial, number>>>): num
  * One refusal, and it names both numbers, because a refusal that does not say how far
  * over you are is a wall.
  */
-export function whyNotWrite(dials: Readonly<Partial<Record<Dial, number>>>): string | undefined {
+export function whyNotWrite(
+  dials: Readonly<Partial<Record<Dial, number>>>,
+  carried = 0,
+): string | undefined {
   for (const d of DIALS) {
     const at = dials[d];
     if (at === undefined) continue;
@@ -136,8 +147,9 @@ export function whyNotWrite(dials: Readonly<Partial<Record<Dial, number>>>): str
     }
   }
   const used = spent(dials);
-  if (used > ATTENTION) {
-    return `A script carries ${ATTENTION} points across all six and this asks for ${used}. `
+  const pool = ATTENTION + carried;
+  if (used > pool) {
+    return `A script carries ${pool} points across all six and this asks for ${used}. `
       + 'Something has to come down.';
   }
   return undefined;

@@ -51,6 +51,7 @@ import {
 import { MEN, WOMEN, patronymic } from '../content/names';
 import { inherits, type Entry } from '../content/lineage';
 import { UNWRITTEN, genreById, whyNotWrite, type Dial } from '../content/story';
+import { carriedInto, sourceById, whyNotFrom, type Source } from '../content/source';
 import { reckon, type Spec } from './boxoffice';
 import { chargeTheCampaign, chargeTheFees, returnedBy } from './takings';
 import { armTheRun } from './run';
@@ -78,6 +79,20 @@ const shut = (project: Project, lock: Lock): void => {
 
 export const projectById = (sim: Simulation, id: Id): Project | undefined =>
   projectsOf(sim.universe).find((p) => p.id === id);
+
+/**
+ * Where this picture's story came from, where it hangs off a right at all.
+ *
+ * `Provenance` sat on every holding since the day holdings were added and nothing in
+ * the tree ever read it — six declared words with no reader, which is THE ONE RULE
+ * broken six times in one enum. Three things read it now: what a script may carry,
+ * what the format can honestly be, and how much of the campaign floor is already
+ * paid. This is the lookup all three go through.
+ */
+export function sourceOf(sim: Simulation, project: Project): Source | undefined {
+  const holding = project.holdingId ? sim.universe.holdings[project.holdingId] : undefined;
+  return sourceById(holding?.provenance);
+}
 
 // ---------------------------------------------------------------------------
 // Who is available
@@ -178,6 +193,16 @@ export function whyNotShape(sim: Simulation, spec: Shape): string | undefined {
   const wrong = whyNotThisShape(format, spec.parts, spec.secondsEach);
   if (wrong) return wrong;
 
+  // What the material can honestly become. A stage play is two hours in one room and
+  // does not turn into a twenty-four part serial; a licensed format is a machine for
+  // making episodes and makes a poor feature. A refusal rather than a bad price,
+  // because pricing it badly would let a player do it and never learn why it failed.
+  const source = sourceOf(sim, project);
+  if (source) {
+    const unsuited = whyNotFrom(source, format.id, format.label, (id) => formatById(id)?.label ?? id);
+    if (unsuited) return unsuited;
+  }
+
   if (format.medium === 'television') {
     const engine = engineById(project.concept?.engineId);
     if (!engine) {
@@ -240,7 +265,7 @@ export function whyNotWriteIt(sim: Simulation, spec: Writing): string | undefine
     return 'The script is settled. Everybody engaged read this page before they signed.';
   }
   if (!genreById(spec.genreId)) return `There’s no genre called '${spec.genreId}'.`;
-  return whyNotWrite(spec.dials as Partial<Record<Dial, number>>);
+  return whyNotWrite(spec.dials as Partial<Record<Dial, number>>, carriedInto(sourceOf(sim, project)));
 }
 
 export function writeIt(sim: Simulation, spec: Writing): { ok: boolean; error?: string } {
@@ -438,6 +463,7 @@ export function open(sim: Simulation, spec: Opening): Opened {
     reach: reachOf(project),
     genre: genreById(project.genreId),
     dials: dialsOn(project) as Partial<Record<Dial, number>>,
+    source: sourceOf(sim, project),
     engine: engineById(project.concept?.engineId),
     month: new Date(spec.at).getUTCMonth(),
     crowding: crowding(sim, spec.at, spec.channel, project.title),
