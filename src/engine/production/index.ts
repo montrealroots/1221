@@ -78,3 +78,14 @@ export {
   packageMatchesPlan,
   type ProductionPlanSpec,
 } from './package-spec';
+export {
+  MARKETING_BY_ID,
+  MARKETING_STRATEGIES,
+  MAX_PRODUCER_MARKETING_SHARE,
+  commitMarketing,
+  marketingAwareness,
+  registerMarketing,
+  type CommitMarketing,
+  type MarketingPlan,
+  type MarketingResult,
+} from './marketing';
