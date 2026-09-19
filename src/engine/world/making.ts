@@ -66,6 +66,7 @@ import { capabilitiesOf, exerciseTheOption, filled } from './company';
 import { purseFor } from './money';
 import { armTheClaim } from './rebate';
 import { developmentReadiness } from '../production/development';
+import { packageMatchesGreenlight } from '../production/package';
 
 export const MAKING_KIND = 'project.period';
 export const DELIVERY_KIND = 'project.delivery';
@@ -430,6 +431,13 @@ export function wouldBe(
     };
   }
 
+  if (project.package && !packageMatchesGreenlight(project, spec)) {
+    return {
+      ok: false,
+      error: project.title + ' was packaged on different production terms. Repackage it before changing the greenlight.',
+    };
+  }
+
   // The door, and it refuses. The Family Business screen has always listed the
   // nine things a production company has to be able to do and said which were
   // shut — and then let a picture be greenlit through a shut one, so the whole
@@ -679,7 +687,7 @@ export function greenlight(sim: Simulation, spec: Greenlight): { ok: true; proje
   // priced before any of those would be a number somebody made up. Nobody is
   // in one yet, and nothing forces anybody ever to be.
   if (castsPerformers(plan)) {
-    project.roles = layTheRoles(sim, project);
+    if (!project.roles || project.roles.length === 0) project.roles = layTheRoles(sim, project);
     armTheCasting(sim, project);
   }
 
