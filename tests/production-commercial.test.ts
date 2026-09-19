@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { decideTake, STORY_MOVES } from '@/engine/world/selling';
+import { decideTake, MARKETING_MOVES, STORY_MOVES } from '@/engine/world/selling';
 
 describe('production development reaches the commercial outcome', () => {
   const base = {
@@ -21,9 +21,19 @@ describe('production development reaches the commercial outcome', () => {
     expect(middle).toBeGreaterThan(weak);
   });
 
+  it('makes producer-built awareness a separate commercial input', () => {
+    const quiet = decideTake({ ...base, marketingAwareness: 20 }, 0.5).cents;
+    const neutral = decideTake({ ...base, marketingAwareness: 50 }, 0.5).cents;
+    const loud = decideTake({ ...base, marketingAwareness: 90 }, 0.5).cents;
+
+    expect(loud).toBeGreaterThan(neutral);
+    expect(neutral).toBeGreaterThan(quiet);
+    expect(MARKETING_MOVES.awareness).toBeGreaterThan(0);
+  });
+
   it('keeps a legacy picture neutral when it has no replacement screenplay record', () => {
     const legacy = decideTake(base, 0.5).cents;
-    const neutral = decideTake({ ...base, screenplayQuality: 50 }, 0.5).cents;
+    const neutral = decideTake({ ...base, screenplayQuality: 50, marketingAwareness: 50 }, 0.5).cents;
     expect(legacy).toBe(neutral);
   });
 
