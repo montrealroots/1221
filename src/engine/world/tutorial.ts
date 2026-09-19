@@ -189,14 +189,15 @@ export const WHEN: Readonly<Record<string, (w: LessonWorld) => boolean>> = {
   crew: (w) => w.projects.greenlit > 0,
 
   // The production floor. Conditioned on the capability rather than on the step
-  // being outstanding, for the reason set out above: a player who shapes, staffs
-  // and commits in one sitting would otherwise close every window before the
-  // weekly tick runs and be told none of it. `after` on each lesson keeps them in
-  // order; the condition only says the subject has become relevant at all.
+  // being outstanding, for the reason set out above: somebody who shapes, engages
+  // and commits in one sitting would otherwise close every window before the weekly
+  // tick runs and be told none of it. `after` on each lesson keeps them in order;
+  // the condition only says the subject has become relevant at all.
   shape: (w) => w.projects.developing > 0,
-  heads: (w) => w.projects.developing > 0,
+  engage: (w) => w.projects.developing > 0,
   commit: (w) => w.projects.developing > 0,
-  release: (w) => w.projects.greenlit > 0 || w.projects.finished > 0,
+  opening: (w) => w.projects.greenlit > 0 || w.projects.finished > 0,
+  again: (w) => w.projects.delivered > 0,
 
   // The lot and the estate.
   lot: (w) => w.stages.built > 0,

@@ -381,7 +381,7 @@ export const LESSONS: readonly Lesson[] = [
     title: 'Putting Something On The Slate, And Saying What It Is',
     body: 'A film is one story. A television series is a machine that makes one every week, and '
       + 'the machine is the thing you are choosing. A case that walks in the door never runs out. '
-      + 'People who cannot get away from each other never run out. Somebody becoming somebody '
+      + 'People who cannot get away from each other never run out. A person becoming somebody '
       + 'else runs out the moment they have become them — so it can be a limited run and it can '
       + 'never be a show that keeps coming back. The greenlight checks this and refuses the ones '
       + 'that cannot work.',
@@ -406,60 +406,82 @@ export const LESSONS: readonly Lesson[] = [
     id: 'shape',
     strand: 'the-pictures',
     title: 'What Shape It Is Made In',
-    body: 'A feature is one sitting and opens in cinemas. A limited series is one story across '
-      + 'a few parts. An anthology shares a frame and nothing else, so every part has to find '
-      + 'its audience again. A continuing series is the opposite — each part arrives at the '
-      + 'audience the last one built, which is why it holds them longest. The format decides how '
-      + 'many parts you may make, how long each runs, and where it can be sold at all: nothing '
-      + 'very short opens in a cinema, and the refusal says so rather than pricing it badly.',
+    body: 'A feature is one sitting and opens in cinemas. A limited series is one story '
+      + 'across a few parts. An anthology shares a frame and nothing else, so every part '
+      + 'has to find its audience again. A continuing series is the opposite — each part '
+      + 'arrives at the audience the last one built, which is what makes it hold them '
+      + 'longest. The format decides how many parts you may make, how long each runs, and '
+      + 'where it can be sold at all: anything very short opens on a service or it opens '
+      + 'nowhere, and you are told so instead of being quietly priced badly.',
     teaches: ['production.shape'],
     screen: 'production',
     after: ['conceive'],
     importance: 62,
   },
   {
-    id: 'heads',
+    id: 'engage',
     strand: 'the-pictures',
-    title: 'Engaging The Heads Settles The Shape',
-    body: 'Seven departments, and each takes a head from Starting Out to First Call. Direction, '
-      + 'writing, photography and cutting decide how good it turns out. Casting and music decide '
-      + 'how many people come at all — and those are not the same thing, which is the whole game '
-      + 'here. A cheap head is worse than leaving the post alone, not merely cheaper. And the '
-      + 'moment you engage the first one the shape is settled: you cannot promise a first-call '
-      + 'director twelve parts, agree their fee, and then make three.',
-    teaches: ['production.staff'],
+    title: 'A Fee, Or A Share Of What Comes In',
+    body: 'Seven posts, and each one is a named person rather than a price. They will take '
+      + 'a fee, or — if an audience has heard of them — much less now for a share of '
+      + 'everything the picture brings in. That choice is the most interesting decision '
+      + 'here, because you and they are betting against each other about the same future '
+      + 'before anybody knows anything. Direction, writing, photography and cutting decide '
+      + 'how good it turns out; the lead and the music decide how many people come at all. '
+      + 'Those are not the same thing. And engaging the first person settles the shape — '
+      + 'a person on a share priced it against the picture you described.',
+    teaches: ['production.engage'],
     screen: 'production',
     after: ['shape'],
-    importance: 60,
+    importance: 63,
   },
   {
     id: 'commit',
     strand: 'the-pictures',
     title: 'Committing Pays Them Whatever Happens',
-    body: 'The heads are paid at the greenlight, out of company cash, before anybody has seen a '
-      + 'frame. That is the point: a picture that fails still cost every penny of its crew, so '
-      + 'the standing you chose is a bet and not a preference. Committing also contracts them — '
-      + 'past it the staffing cannot simply be changed. A picture you no longer want can be taken '
-      + 'off the slate instead, and put back later.',
+    body: 'Fees go out at the greenlight, out of company cash, before a frame exists. That '
+      + 'is the point of them: a picture that fails still cost every penny of the people '
+      + 'who made it, so the standing you chose was a bet rather than a preference. If the '
+      + 'fees are more than the company has, one of them has to take a share instead — which '
+      + 'is how a short week decides who is in your picture. A thing you no longer want can '
+      + 'go on the shelf instead, and come back off it later.',
     teaches: ['production.commit', 'production.shelve'],
     screen: 'production',
-    after: ['heads'],
+    after: ['engage'],
     importance: 64,
   },
   {
-    id: 'release',
+    id: 'opening',
     strand: 'the-pictures',
-    title: 'The Run, And Why The Month Matters',
-    body: 'Pick a channel the format can open on, and a campaign. Spending under what the format '
-      + 'expects is worse than spending nothing — a half-campaign buys awareness without reach. '
-      + 'Then the run plays over twenty weeks, and its shape is decided by how people speak of it '
-      + 'rather than by how much it took: a well-made picture moves its money into the tail and a '
-      + 'loud empty one takes it all in a fortnight. Half a cinema gross never leaves the cinemas. '
-      + 'What arrives afterwards — abroad, home, a service, a broadcaster — is each its own line.',
-    teaches: ['production.release'],
+    title: 'The Week You Open Is A Decision',
+    body: 'Pick a channel the format can open on, a week, and a campaign. Spending under '
+      + 'what the format expects is worse than spending nothing — a half-campaign buys '
+      + 'awareness without reach. The good months are the good months, and they are also '
+      + 'where the other studios are, so a clear week in a poor month can beat a crowded '
+      + 'one in a good month. You can see what is already booked before you choose. Then '
+      + 'it plays: twenty weeks of run whose shape depends on how people speak of it, then '
+      + 'abroad at six weeks, home at fourteen, a service at thirty, a broadcaster at a '
+      + 'year. Half a cinema takings never leaves the cinemas.',
+    teaches: ['production.open'],
     screen: 'production',
     after: ['commit'],
     importance: 66,
+  },
+  {
+    id: 'again',
+    strand: 'the-pictures',
+    title: 'Making Another One Of Something',
+    body: 'A picture that worked can be followed. The next one arrives at an audience the '
+      + 'last one made, so it opens above where its own merits would put it — and how far '
+      + 'above depends on what the last one returned and on whether the format is the kind '
+      + 'of thing anybody remembers the name of. But the same audience tires, and faster '
+      + 'than most studios believe. The second is usually the best business you will do. '
+      + 'Somewhere after that the inheritance stops being worth the obligation, and nothing '
+      + 'will stop you finding out where.',
+    teaches: ['production.follow_up'],
+    screen: 'production',
+    after: ['opening'],
+    importance: 58,
   },
 
   // -------------------------------------------------------------------------

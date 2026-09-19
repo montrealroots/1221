@@ -8,8 +8,9 @@
  * least information anybody would ever have.
  *
  * A format is the decision that question was standing in front of. It says how many
- * parts there are, how long each one runs, where the thing can be sold, and how long
- * an audience stays with it. `medium` falls out of the format rather than gating it.
+ * parts there are, how long each one runs, where the thing can be sold, how long an
+ * audience stays with it, and how far a follow-up can carry. `medium` falls out of
+ * the format rather than gating it.
  *
  * ## The test every row here had to pass
  *
@@ -23,25 +24,23 @@
  *   - `cadences` is checked against the story engine. A transformation engine has a
  *     bottom to it, so it cannot carry a returning series, and a format that asks for
  *     one is refused in the room.
- *   - `parts` and `secondsEach` build the `Part[]` array and set `owesSeconds`, which
- *     is what the cutting room and the schedule are measured in.
- *   - `channels` decides where it can be sold. A micro-series cannot open in cinemas,
- *     and that is not flavor — the theatrical channel is simply absent from its row,
- *     so `whyNotRelease` refuses it with the list of what is open.
- *   - `expectsCampaignCents` is the floor a channel's audience expects. Under it, the
- *     campaign modifier goes negative rather than merely small.
- *   - `legs` is how long the thing holds its audience once the run starts, and it is
- *     the one number here that had to be set from the shape of the object rather than
- *     from anything measurable: a feature has one opening and a serial has as many
- *     openings as it has parts.
+ *   - `parts` and `secondsEach` build the part list and set what the thing owes,
+ *     which is what the schedule and the cutting room are measured in.
+ *   - `channels` decides where it can be sold. Anything very short opens on a
+ *     service or it opens nowhere, and that is a refusal rather than a bad price.
+ *   - `expectsCampaignCents` is the floor an audience expects before it has heard of
+ *     the thing. Under it the campaign term goes negative rather than merely small.
+ *   - `legs` is how long it holds an audience once the run starts.
+ *   - `carriesForward` is how much of a hit a follow-up inherits, which is the whole
+ *     difference between a format that can found a franchise and one that cannot.
  *
  * ## Why a made-for-television film is its own row and not a feature with a flag
  *
- * Because it differs on four of the five fields at once — one part like a feature,
- * broadcast-only like a series, a campaign floor an order of magnitude below a
- * theatrical one, and no legs at all because it airs once. A boolean on the feature
- * row would have had four things reading it, which is four branches, which is the
- * shape of a row that wanted to be a row.
+ * Because it differs on five fields at once — one part like a feature, broadcast-only
+ * like a series, a campaign floor an order of magnitude below a theatrical one, no
+ * legs because it airs once, and almost nothing carried forward. A boolean on the
+ * feature row would have had five things reading it, which is five branches, which is
+ * the shape of a row that wanted to be a row.
  */
 
 import type { Cadence } from './concept';
@@ -49,11 +48,13 @@ import type { Cadence } from './concept';
 /**
  * Where a finished thing can be sold.
  *
- * Three, and the separation is what makes ancillary money mean anything: a channel
- * has its own audience, its own run and its own share of the take. A format that
- * lists one channel is not a format with a restriction, it is a different object.
+ * Three, and the separation is what makes the windows mean anything: a channel has
+ * its own audience, its own run and its own tail behind it. A format that lists one
+ * channel is not a format with a restriction, it is a different object.
  */
 export type Channel = 'theatrical' | 'broadcast' | 'streaming';
+
+export const CHANNELS: readonly Channel[] = ['theatrical', 'broadcast', 'streaming'];
 
 /** What a channel is called on a screen. */
 export const CHANNEL_LABEL: Readonly<Record<Channel, string>> = {
@@ -80,31 +81,39 @@ export interface Format {
   /** Where it can be sold. Absence is a refusal, not a penalty. */
   channels: readonly Channel[];
   /**
-   * What a campaign has to reach before the audience has heard of it.
+   * What a campaign has to reach before an audience has heard of it.
    *
-   * Not a cost and not a minimum the player is stopped at — a threshold the
-   * campaign modifier is measured against. Spending under it is worse than
-   * spending nothing, because a half-campaign buys awareness without reach.
+   * Not a cost and not a minimum anybody is stopped at — a threshold the campaign
+   * term is measured against. Spending under it is worse than spending nothing,
+   * because a half-campaign buys awareness without reach.
    */
   expectsCampaignCents: number;
   /**
-   * How long it holds its audience, as a share of the run's weight that falls
-   * after the opening.
+   * How long it holds an audience, as the share of the run's weight falling after
+   * the opening.
    *
-   * Zero means it airs once and there is no second week. One means the thing is
-   * all tail. Set from the shape of the object: a feature opens and decays, a
-   * serial re-opens every part, an anthology sits between because each part has
-   * to find its own audience again.
+   * Zero means it airs once and there is no second week. Set from the shape of the
+   * object: a feature opens and decays, a continuing series re-opens every part, an
+   * anthology sits between because each part has to find its audience again.
    */
   legs: number;
+  /**
+   * How much of a success a follow-up inherits.
+   *
+   * The franchise term reads this. A feature founds a franchise and a
+   * made-for-television film does not, and the difference is a number here rather
+   * than a branch somewhere else. Zero means a follow-up starts from nothing, which
+   * is the honest answer for a thing nobody remembers the name of.
+   */
+  carriesForward: number;
 }
 
 /**
  * The formats, and the axes they differ on.
  *
- * Six. The list stopped at six because the seventh candidate — a two-part event
- * film — differed from the miniseries row on nothing but its name, and a row that
- * changes no outcome is the exact thing `tools/wired.mjs` exists to catch.
+ * Six. The list stopped there because the seventh candidate — a two-part event film —
+ * differed from the limited series row on nothing but its name, and a row that changes
+ * no outcome is the exact thing `tools/wired.mjs` exists to catch.
  */
 export const FORMATS: readonly Format[] = [
   {
@@ -119,6 +128,9 @@ export const FORMATS: readonly Format[] = [
     channels: ['theatrical', 'broadcast', 'streaming'],
     expectsCampaignCents: 250_000_00,
     legs: 0.62,
+    // The highest here. A feature is the thing an audience remembers the name of,
+    // so it is the thing a follow-up can be sold on.
+    carriesForward: 0.55,
   },
   {
     id: 'tv-movie',
@@ -134,6 +146,7 @@ export const FORMATS: readonly Format[] = [
     // None at all. It airs on a night and there is no second night, and that is the
     // whole difference between this row and the feature above it.
     legs: 0,
+    carriesForward: 0.08,
   },
   {
     id: 'miniseries',
@@ -147,6 +160,9 @@ export const FORMATS: readonly Format[] = [
     channels: ['broadcast', 'streaming'],
     expectsCampaignCents: 60_000_00,
     legs: 0.55,
+    // A limited series says it is finished in its own title, so what a follow-up
+    // inherits is the maker's name rather than the story's.
+    carriesForward: 0.30,
   },
   {
     id: 'anthology',
@@ -158,11 +174,14 @@ export const FORMATS: readonly Format[] = [
     parts: { least: 4, most: 12 },
     secondsEach: { least: 30 * 60, most: 60 * 60 },
     channels: ['broadcast', 'streaming'],
-    expectsCampaignCents: 45_000_00,
-    // Between the two, and for a reason that is the format's whole problem: every
-    // part has to find its audience again from nearly nothing, so the tail is real
-    // but it never compounds the way a continuing story's does.
+    // Between the two, for a reason that is the format's whole problem: every part
+    // has to find its audience again from nearly nothing, so the tail is real and it
+    // never compounds the way a continuing story's does.
     legs: 0.40,
+    expectsCampaignCents: 45_000_00,
+    // And the flip side of the same problem: the frame is the brand, so it carries
+    // further than any one part of it ever could.
+    carriesForward: 0.48,
   },
   {
     id: 'serial',
@@ -175,9 +194,10 @@ export const FORMATS: readonly Format[] = [
     secondsEach: { least: 40 * 60, most: 60 * 60 },
     channels: ['broadcast', 'streaming'],
     expectsCampaignCents: 80_000_00,
-    // The highest here, because a serial does not have one opening — it has as
-    // many as it has parts, and each one arrives at an audience the last one built.
+    // The highest, because a serial does not have one opening — it has as many as it
+    // has parts, and each arrives at an audience the last one built.
     legs: 0.78,
+    carriesForward: 0.62,
   },
   {
     id: 'micro',
@@ -189,10 +209,11 @@ export const FORMATS: readonly Format[] = [
     parts: { least: 8, most: 40 },
     secondsEach: { least: 3 * 60, most: 8 * 60 },
     // One channel, and it is the reason this row exists. Anything this short opens
-    // here or it opens nowhere, and `whyNotRelease` says so instead of pricing it badly.
+    // here or it opens nowhere, and the refusal says so instead of pricing it badly.
     channels: ['streaming'],
     expectsCampaignCents: 8_000_00,
     legs: 0.70,
+    carriesForward: 0.22,
   },
 ];
 
@@ -215,26 +236,15 @@ export const formatsOn = (channel: Channel): readonly Format[] =>
  * The most parts any format asks for, which is the ceiling everything else clamps to.
  *
  * Derived from the rows rather than typed, because a typed ceiling and a row that
- * exceeds it is a bug nobody notices until a season of forty-one arrives.
+ * exceeds it is a defect nobody notices until a season of forty-one arrives.
  */
 export const MOST_PARTS_ANY_FORMAT = FORMATS.reduce((most, one) => Math.max(most, one.parts.most), 0);
 
 /**
- * Seconds a plan of this shape owes in total.
- *
- * The engine's native measure is seconds of finished screen time, so a format plus
- * a part count plus a runtime is a number the schedule and the cutting room can both
- * read. Everything else — pages, shooting days, cut minutes — converts into it.
- */
-export function secondsOwed(parts: number, secondsEach: number): number {
-  return parts * secondsEach;
-}
-
-/**
  * Why this many parts at this length cannot be made in this format.
  *
- * Returns the reason, or undefined when it can. A refusal names the range, because
- * a refusal that does not say where to go is a wall rather than a rule.
+ * Returns the reason, or undefined when it can. A refusal names the range, because a
+ * refusal that does not say where to go is a wall rather than a rule.
  */
 export function whyNotThisShape(
   format: Format,
@@ -252,4 +262,16 @@ export function whyNotThisShape(
       + `and ${Math.round(secondsEach / 60)} is not in that range.`;
   }
   return undefined;
+}
+
+/**
+ * Why this format cannot be sold down this channel.
+ *
+ * The refusal that makes `channels` a fact rather than a hint, and the reason a
+ * micro-series row can carry one entry without anybody having to special-case it.
+ */
+export function whyNotThisChannel(format: Format, channel: Channel): string | undefined {
+  if (format.channels.includes(channel)) return undefined;
+  return `${format.label} does not open ${channel === 'theatrical' ? 'in cinemas' : `on ${channel}`}. `
+    + `What is open to it: ${format.channels.map((c) => CHANNEL_LABEL[c]).join(', ')}.`;
 }

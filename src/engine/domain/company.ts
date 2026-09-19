@@ -586,6 +586,45 @@ export interface Concept {
   at: Instant;
 }
 
+/**
+ * Somebody who can be engaged, and what their pictures have come to.
+ *
+ * A record rather than a tier on a project, and the difference is the whole point of
+ * the rebuild. A tier cannot be hired away from a rival, cannot get more expensive
+ * after a hit, cannot take a share of the back end instead of a fee, and cannot be
+ * the same person you used last time. All four are decisions, and a tier is a price.
+ */
+export interface Talent {
+  id: Id;
+  saveId: Id;
+  /** Given name and patronymic, as this country forms them. */
+  name: string;
+  /** Which post they work in, from `content/craft.ts`. Nobody does two. */
+  postId: string;
+  /** Their rung, from `content/talent.ts`. Moves on results and nowhere else. */
+  standingId: string;
+  /**
+   * How their last pictures did, newest first: true where it returned its cost.
+   *
+   * The only input to `standingAfter`, and the reason this is a table. Three in a row
+   * either way moves them, and a broken run moves nobody — the business forgives one
+   * of anything.
+   */
+  results: boolean[];
+  /** How many pictures they have made for this company, which a shortlist reads. */
+  worked: number;
+}
+
+/** One person, in one post, on one picture, on agreed terms. */
+export interface Engagement {
+  talentId: Id;
+  /** Copied at engagement, because what they were paid does not change if they do. */
+  name: string;
+  standingId: string;
+  /** Fee or points, from `content/talent.ts`. */
+  deal: { kind: 'fee' | 'points'; feeCents: Money; points: number };
+}
+
 export interface Project {
   id: Id;
   saveId: Id;
@@ -614,7 +653,7 @@ export interface Project {
   budgetCents?: Money;
   shelvedAt?: Instant;
 
-  // --- The shape it is being made in ---------------------------------------
+  // --- What shape it is, who is on it, and what has settled ----------------
   // `medium` used to be the real format decision: taken first, in a modal,
   // before anybody knew the budget, and never writable again. It is derived
   // from the format now, and the format is chosen with everything known.
@@ -624,34 +663,51 @@ export interface Project {
   /**
    * Seconds of finished screen time per part.
    *
-   * Held separately from `owesSeconds` because the two answer different
-   * questions: this is what one part runs to, and that is what the whole thing
-   * owes. A twelve-part series changes the second when a part is cut and the
-   * first only when somebody re-plans it.
+   * Held apart from what the whole thing owes because the two answer different
+   * questions: this is what one part runs to, and that is the total. A season
+   * changes the second when a part is cut and the first only on a re-plan.
    */
   secondsEach?: number;
   /**
-   * Which standing of person fills each department, by department id.
+   * Who is in each post, by post id, on what terms.
    *
-   * Absent means the engine's own pick, which is `DEFAULT_BAND` — not nobody.
-   * An unfilled post is a choice not taken rather than a hole in the crew.
+   * Absent posts are not holes — the production office engaged somebody ordinary
+   * without being asked, which is what `UNFILLED_REACH` means. Filling one is a
+   * decision to do better or cheaper, never a chore to avoid a gap.
    */
-  staffing?: Record<string, string>;
+  engaged?: Record<string, Engagement>;
   /**
    * Which doors have shut, by lock id from `world/production.ts`.
    *
-   * The whole of what makes the choices above weigh anything. Read by every
-   * refusal in that file: past a lock the thing it covers cannot be changed,
-   * and the reason is always inside the fiction rather than outside it.
+   * What makes every choice above weigh anything. Read by each refusal in that
+   * file, and each lock has a reason inside the fiction: somebody who took points
+   * priced them against the shape they were told about, so the shape cannot move
+   * once they have signed.
    */
   locked?: string[];
 
-  // --- Once it is out -------------------------------------------------------
+  // --- Where it sits in a line of them -------------------------------------
 
-  /** Which channel it opened down. */
-  channel?: 'theatrical' | 'broadcast' | 'streaming';
-  /** What was spent telling anybody about it. */
-  campaignCents?: Money;
+  /** The line this belongs to. Absent means it founded nothing and follows nothing. */
+  lineageId?: string;
+  /** Which one of the line it is, counting the first as one. */
+  ordinal?: number;
+
+  /**
+   * The release, once it is out: what was reckoned and how far it has paid.
+   *
+   * Shaped in `world/run.ts`. Held here rather than in a table because a release
+   * belongs to exactly one picture and outlives nothing, so a second table would
+   * be a join to keep in step for no gain.
+   */
+  opening?: {
+    at: Instant;
+    channel: 'theatrical' | 'broadcast' | 'streaming';
+    campaignCents: Money;
+    reckonedCents: Money;
+    wordOfMouth: number;
+    weeksPaid: number;
+  };
 
   // --- The dated life, once it is greenlit ---------------------------------
   // Empty until then. A picture that has not been greenlit has no dates and

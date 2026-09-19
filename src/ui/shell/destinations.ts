@@ -52,7 +52,7 @@ export const DESTINATIONS: readonly DestinationGroup[] = [
       {
         route: '/workspace/production',
         label: 'The Production Floor',
-        detail: 'Shape it, engage the heads, commit the money, let it out',
+        detail: 'Shape it, engage people, commit the money, pick a week',
       },
     ],
   },

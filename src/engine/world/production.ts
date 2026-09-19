@@ -2,107 +2,178 @@
  * SLATE — the production, and the doors that shut behind you.
  *
  * The complaint this file answers was exact: *I do not have full control over the
- * production process at all.* It was accurate. Across the whole old pipeline the
- * player supplied nine numbers and three enum picks, and the engine decided the
- * periods, every date but one, the stage, the crew, the part count, the roles, the
- * overrun, the fee and the sale. The rebuild inverts that. Here the player chooses
- * the format, the shape, every department head and the campaign, and the engine
- * decides only what a producer genuinely would not: what the audience does.
+ * production process at all.* It was accurate. Across the old pipeline the player
+ * supplied nine numbers and three enum picks, and the engine decided the periods,
+ * every date but one, the stage, the crew, the part count, the roles, the overrun,
+ * the fee and the sale. This inverts it. Here the player chooses the format, the
+ * shape, every person by name, the terms they are on, the channel and the week. The
+ * engine decides only what a producer genuinely could not: what an audience does.
  *
  * ## The progressive lock, which is the actual mechanic
  *
  * Control without consequence is a form with more fields on it. What makes these
- * choices weigh anything is that they stop being changeable, in an order, and each
+ * choices weigh anything is that they stop being changeable, in an order, and every
  * lock has a reason inside the fiction rather than outside it:
  *
- *   1. **The shape locks when you engage the heads.** You cannot tell a first-call
- *      director this is a twelve-part series, agree their fee, and then make three
- *      parts. Their price was quoted against the work.
- *   2. **The staffing locks at the greenlight.** After the money is committed the
- *      cast and crew are contracted, and firing one is a different kind of act
- *      than not hiring them.
- *   3. **The campaign locks at release.** Most of it is already spent by then, and
- *      the run has started.
+ *   1. **The shape locks when the first person is engaged.** Somebody who took a
+ *      share of the back end priced it against the format and the part count they
+ *      were told about. If the shape could be cut afterwards, every deal would be
+ *      signed against a promise the producer could withdraw, and taking points would
+ *      be a mistake nobody should ever make. The lock is what makes that deal safe
+ *      enough to be interesting.
+ *   2. **The cast locks at the greenlight.** After the money is committed people are
+ *      contracted, and letting one go is a different act from not hiring them.
+ *   3. **Everything locks at the opening.** Most of the campaign is spent and the run
+ *      has begun.
  *
- * Every one of those refusals reads a field that something else also reads, which
- * is the test. A lock that only guarded itself would be ceremony.
+ * Each of those refusals reads a field something else also reads. A lock that only
+ * guarded itself would be ceremony.
  *
  * ## What is deliberately not here
  *
  * No stage booking, no period ladder, no overrun model, no delivery elements. Those
- * went with the old system and they will come back as their own modules if and when
- * something reads them. A pipeline that declares eleven stages and moves a cursor
- * through them without any of them changing an outcome is what the last one was.
+ * went with the old system and they come back as their own modules the day something
+ * reads them. A pipeline that declares eleven stages and walks a cursor through them
+ * without any of them changing an outcome is what the last one was.
  */
 
 import type { Simulation } from '../core/simulation';
 import type { Id } from '../core/ids';
 import { millions, type Money } from '../core/money';
-import type { Project } from '../domain/company';
+import type { Engagement, Project, Talent } from '../domain/company';
 import type { Channel } from '../content/format';
-import { formatById, whyNotThisShape } from '../content/format';
+import { formatById, whyNotThisChannel, whyNotThisShape } from '../content/format';
 import { engineById } from '../content/concept';
-import { BAND_BY_ID, DEFAULT_BAND, DEPARTMENTS, headsCostCents } from '../content/department';
-import { whyNotThisChannel } from '../content/release';
-import { reckonTheRun, type Spec } from './boxoffice';
-import { bankTheRun, chargeTheCampaign, chargeTheHeads } from './takings';
-import { projectsOf, cashAccountFor } from './company';
+import { POSTS, UNFILLED_REACH, postById } from '../content/craft';
+import {
+  MOST_POINTS, STANDINGS, offersFrom, standingById, upFrontCents, type DealKind,
+} from '../content/talent';
+import { MEN, WOMEN, patronymic } from '../content/names';
+import { inherits, type Entry } from '../content/lineage';
+import { reckon, type Spec } from './boxoffice';
+import { chargeTheCampaign, chargeTheFees, returnedBy } from './takings';
+import { armTheRun } from './run';
+import { crowding } from './field';
+import { cashAccountFor, projectsOf } from './company';
+import { MS_WEEK } from './lot';
 
 /** The three locks, in the order they shut. */
-export type Lock = 'shape' | 'staffing' | 'campaign';
+export type Lock = 'shape' | 'cast' | 'opening';
 
-export const LOCKS: readonly Lock[] = ['shape', 'staffing', 'campaign'];
+export const LOCKS: readonly Lock[] = ['shape', 'cast', 'opening'];
 
 export const LOCK_SAID: Readonly<Record<Lock, string>> = {
   shape: 'The format, the part count and the runtime are settled.',
-  staffing: 'The heads are contracted.',
-  campaign: 'The campaign is placed and the run has begun.',
+  cast: 'Everybody is contracted.',
+  opening: 'It is out, and the campaign is spent.',
 };
 
-const locksOf = (project: Project): readonly string[] => project.locked ?? [];
-
-/** Whether a lock has shut on this project. */
-export const isLocked = (project: Project, lock: Lock): boolean => locksOf(project).includes(lock);
+export const isLocked = (project: Project, lock: Lock): boolean =>
+  (project.locked ?? []).includes(lock);
 
 const shut = (project: Project, lock: Lock): void => {
-  if (!isLocked(project, lock)) project.locked = [...locksOf(project), lock];
+  if (!isLocked(project, lock)) project.locked = [...(project.locked ?? []), lock];
 };
 
-/** The project with this id, on this save, or undefined. */
-export function projectById(sim: Simulation, projectId: Id): Project | undefined {
-  return projectsOf(sim.universe).find((p) => p.id === projectId);
+export const projectById = (sim: Simulation, id: Id): Project | undefined =>
+  projectsOf(sim.universe).find((p) => p.id === id);
+
+// ---------------------------------------------------------------------------
+// Who is available
+// ---------------------------------------------------------------------------
+
+/** How many candidates a post is offered. Few enough to read, enough to choose. */
+export const A_SHORTLIST_IS = 5;
+
+/** A name this country would actually form. */
+function aName(t: number, u: number): string {
+  const woman = t < 0.5;
+  const given = woman
+    ? WOMEN[Math.floor(u * WOMEN.length) % WOMEN.length]!
+    : MEN[Math.floor(u * MEN.length) % MEN.length]!.name;
+  const father = MEN[Math.floor(t * MEN.length) % MEN.length]!;
+  return `${given} ${patronymic(father, woman ? 'dóttir' : 'son')}`;
+}
+
+/**
+ * Who is up for a post, drawn once and then remembered.
+ *
+ * Persisted into the talent table on the first ask rather than regenerated, because
+ * the whole point of a named person is that they are the same person next time — a
+ * director you used and who then made two more that worked has a standing that moved,
+ * and a list redrawn each time could not carry that.
+ *
+ * Anybody who has worked for this company before and is right for the post comes
+ * first, which is the one piece of favouritism the model has and it is the true one:
+ * a producer rings the people who did not let them down.
+ */
+export function shortlistFor(sim: Simulation, projectId: Id, postId: string): readonly Talent[] {
+  const post = postById(postId);
+  if (!post) return [];
+  const known = Object.values(sim.universe.talent ?? {})
+    .filter((one) => one.postId === postId);
+  const before = known.filter((one) => one.worked > 0).slice(0, 2);
+
+  const want = A_SHORTLIST_IS - before.length;
+  const drawn: Talent[] = [];
+  const rng = sim.rng('casting', projectId, postId);
+  for (let i = 0; i < want; i += 1) {
+    const roll = rng.next();
+    // Weighted down the rungs: plenty of people are working and very few are first
+    // call, which is what makes the top of the list feel like a decision rather than
+    // a default.
+    const standing = STANDINGS[roll < 0.42 ? 0 : roll < 0.74 ? 1 : roll < 0.92 ? 2 : 3]!;
+    const made: Talent = {
+      id: sim.nextId('talent'),
+      saveId: sim.universe.meta.id,
+      name: aName(rng.next(), rng.next()),
+      postId,
+      standingId: standing.id,
+      results: [],
+      worked: 0,
+    };
+    sim.universe.talent[made.id] = made;
+    drawn.push(made);
+  }
+  return [...before, ...drawn];
+}
+
+/** What the two offers from one person would be, for this much work. */
+export function offersFor(talent: Talent, parts: number) {
+  const standing = standingById(talent.standingId) ?? STANDINGS[1]!;
+  return offersFrom(standing, parts);
+}
+
+/** The reach of whoever fills each post, which is what the box office reads. */
+export function reachOf(project: Project): Readonly<Record<string, number>> {
+  const out: Record<string, number> = {};
+  for (const post of POSTS) {
+    const seat = project.engaged?.[post.id];
+    const standing = standingById(seat?.standingId);
+    out[post.id] = standing ? standing.reach : UNFILLED_REACH;
+  }
+  return out;
 }
 
 // ---------------------------------------------------------------------------
-// Choosing the shape
+// The shape
 // ---------------------------------------------------------------------------
 
 export interface Shape {
   projectId: Id;
   formatId: string;
   parts: number;
-  /** Seconds of finished screen time per part. */
   secondsEach: number;
 }
 
-/**
- * Why this shape cannot be set on this project.
- *
- * Four refusals, and the third is the one that ties this file to the story engine
- * rather than leaving the two systems side by side. A format declares which
- * cadences it can take; an engine declares which cadences it can sustain; a
- * television project with an engine that cannot carry the format's cadence is
- * refused here with both names in the message.
- */
 export function whyNotShape(sim: Simulation, spec: Shape): string | undefined {
   const project = projectById(sim, spec.projectId);
   if (!project) return 'No such project.';
   if (isLocked(project, 'shape')) {
-    return 'The shape is settled. The heads were engaged against this many parts at this length.';
+    return 'The shape is settled. Everybody engaged was priced against this much work.';
   }
   const format = formatById(spec.formatId);
   if (!format) return `There is no format called '${spec.formatId}'.`;
-
   const wrong = whyNotThisShape(format, spec.parts, spec.secondsEach);
   if (wrong) return wrong;
 
@@ -112,14 +183,13 @@ export function whyNotShape(sim: Simulation, spec: Shape): string | undefined {
       return `${format.label} is television, and television needs a story engine under it. `
         + 'Conceive it first.';
     }
-    const canTake = format.cadences.filter((c) => engine.cadences.includes(c));
-    if (canTake.length === 0) {
+    if (!format.cadences.some((c) => engine.cadences.includes(c))) {
       return `${engine.label} cannot sustain ${format.label}. It carries `
         + `${engine.cadences.join(' or ')}, and this format asks for ${format.cadences.join(' or ')}.`;
     }
     if (engine.carries !== undefined && spec.parts > engine.carries) {
-      return `${engine.label} carries ${engine.carries} parts and you have asked for ${spec.parts}. `
-        + 'It would run dry before the end.';
+      return `${engine.label} carries ${engine.carries} parts and you have asked for `
+        + `${spec.parts}. It would run dry before the end.`;
     }
   }
   return undefined;
@@ -134,8 +204,7 @@ export function setShape(sim: Simulation, spec: Shape): { ok: boolean; error?: s
   project.medium = format.medium;
   project.secondsEach = spec.secondsEach;
   project.owesSeconds = spec.parts * spec.secondsEach;
-  // The parts array is the thing the cutting room and the schedule read, and it
-  // is rebuilt rather than patched: a shape change before the lock is a different
+  // Rebuilt rather than patched: a shape change before the lock is a different
   // production, not an edit to this one.
   project.parts = Array.from({ length: spec.parts }, (_, i) => ({
     id: sim.nextId('part'),
@@ -146,53 +215,66 @@ export function setShape(sim: Simulation, spec: Shape): { ok: boolean; error?: s
 }
 
 // ---------------------------------------------------------------------------
-// Staffing
+// Engaging a person
 // ---------------------------------------------------------------------------
 
-export interface Staffing {
+export interface Engaging {
   projectId: Id;
-  /** Department id to band id. Departments left out keep whatever they had. */
-  posts: Readonly<Record<string, string>>;
+  postId: string;
+  talentId: Id;
+  /** Fee or points. The decision this whole file is arranged around. */
+  dealKind: DealKind;
 }
 
-export function whyNotStaff(sim: Simulation, spec: Staffing): string | undefined {
+export function whyNotEngage(sim: Simulation, spec: Engaging): string | undefined {
   const project = projectById(sim, spec.projectId);
   if (!project) return 'No such project.';
-  if (isLocked(project, 'staffing')) {
-    return 'The heads are contracted. Past the greenlight they cannot simply be changed.';
+  if (isLocked(project, 'cast')) return 'Everybody is contracted. The money has gone out.';
+  if (!project.formatId || !project.parts?.length) return 'Choose a format before engaging anybody.';
+  const post = postById(spec.postId);
+  if (!post) return `There is no post called '${spec.postId}'.`;
+  const talent = sim.universe.talent?.[spec.talentId];
+  if (!talent) return 'Nobody of that name.';
+  if (talent.postId !== spec.postId) return `${talent.name} does not do that job.`;
+  if (spec.dealKind === 'points' && !post.aboveTheLine) {
+    return `A ${post.title.toLowerCase()} is paid a fee. Only people an audience has `
+      + 'heard of are offered a share of the back end.';
   }
-  if (!project.formatId) return 'Choose a format before engaging anybody.';
-  for (const [deptId, bandId] of Object.entries(spec.posts)) {
-    if (!DEPARTMENTS.some((d) => d.id === deptId)) return `There is no department called '${deptId}'.`;
-    if (!BAND_BY_ID[bandId]) return `There is no standing called '${bandId}'.`;
+  if (spec.dealKind === 'points') {
+    const already = Object.values(project.engaged ?? {}).reduce((sum, one) => sum + one.deal.points, 0);
+    const standing = standingById(talent.standingId);
+    if (standing && already + standing.wantsPoints > MOST_POINTS) {
+      return `That would give away ${Math.round(already + standing.wantsPoints)}% of the picture, `
+        + `and nothing may go past ${MOST_POINTS}%.`;
+    }
   }
   return undefined;
 }
 
-/**
- * Engages heads, and shuts the shape behind them.
- *
- * The lock is here rather than in its own command on purpose. A lock the player
- * has to remember to set is a lock that records carelessness rather than
- * commitment, and the fiction is that engaging somebody *is* the act that settles
- * what they were engaged for.
- */
-export function staff(sim: Simulation, spec: Staffing): { ok: boolean; error?: string } {
-  const no = whyNotStaff(sim, spec);
+export function engage(sim: Simulation, spec: Engaging): { ok: boolean; error?: string } {
+  const no = whyNotEngage(sim, spec);
   if (no) return { ok: false, error: no };
   const project = projectById(sim, spec.projectId)!;
-  project.staffing = { ...(project.staffing ?? {}), ...spec.posts };
+  const talent = sim.universe.talent[spec.talentId]!;
+  const deal = offersFor(talent, project.parts!.length)[spec.dealKind];
+  const seat: Engagement = {
+    talentId: talent.id, name: talent.name, standingId: talent.standingId, deal,
+  };
+  project.engaged = { ...(project.engaged ?? {}), [spec.postId]: seat };
+  // The lock is here rather than in a command of its own, deliberately. A lock a
+  // player has to remember to set records carelessness rather than commitment, and
+  // the fiction is that engaging somebody *is* what settles what they signed for.
   shut(project, 'shape');
   return { ok: true };
 }
 
-/** What every post stands at, with the engine's own pick where nobody chose. */
-export function staffingOf(project: Project): Readonly<Record<string, string>> {
-  const chosen = project.staffing ?? {};
-  const full: Record<string, string> = {};
-  for (const dept of DEPARTMENTS) full[dept.id] = chosen[dept.id] ?? DEFAULT_BAND;
-  return full;
-}
+/** What everybody engaged is owed at the greenlight. */
+export const feesOn = (project: Project): Money =>
+  upFrontCents(Object.values(project.engaged ?? {}).map((one) => one.deal));
+
+/** What share of the back end has been given away. */
+export const pointsGiven = (project: Project): number =>
+  Object.values(project.engaged ?? {}).reduce((sum, one) => sum + one.deal.points, 0);
 
 // ---------------------------------------------------------------------------
 // The greenlight
@@ -201,69 +283,59 @@ export function staffingOf(project: Project): Readonly<Record<string, string>> {
 export function whyNotCommit(sim: Simulation, projectId: Id): string | undefined {
   const project = projectById(sim, projectId);
   if (!project) return 'No such project.';
-  if (project.stage === 'greenlit' || project.stage === 'delivered') return 'It is already committed.';
-  if (project.shelvedAt) return 'It is shelved. Take it off the shelf first.';
-  if (!project.formatId) return 'It has no format.';
-  if (!project.parts || project.parts.length === 0) return 'It has no parts.';
+  if (project.stage === 'greenlit' || project.stage === 'delivered') return 'The money is already committed.';
+  if (project.shelvedAt) return 'Take it off the shelf first.';
+  if (!project.formatId || !project.parts?.length) return 'No format has been chosen for it yet.';
   const cash = cashAccountFor(sim.universe, project.companyId);
   if (!cash) return 'The company has no cash account.';
-  const owed = headsCostCents(staffingOf(project), project.parts.length);
+  const owed = feesOn(project);
   if (cash.balance < owed) {
-    return `The heads want ${millions(owed)} and the company has `
-      + `${millions(cash.balance)}.`;
+    return `The fees come to ${millions(owed)} and the company has ${millions(cash.balance)}. `
+      + 'Somebody would have to take points instead.';
   }
   return undefined;
 }
 
-/**
- * Commits the money and shuts the staffing.
- *
- * The heads are paid here rather than at release, because that is when the money
- * actually leaves — and because a model where crew are paid out of the takings
- * would make a failure free, which is the single most important thing a studio
- * simulation has to get right.
- */
 export function commit(sim: Simulation, projectId: Id): { ok: boolean; error?: string; cents: Money } {
   const no = whyNotCommit(sim, projectId);
   if (no) return { ok: false, error: no, cents: 0 };
   const project = projectById(sim, projectId)!;
-  const cents = headsCostCents(staffingOf(project), project.parts!.length);
-  const paid = chargeTheHeads(sim, project.companyId, project.id, cents);
+  const cents = feesOn(project);
+  const paid = chargeTheFees(sim, project.companyId, project.id, cents);
   if (!paid.ok) return { ok: false, error: paid.error, cents: 0 };
   project.stage = 'greenlit';
   project.spentCents += cents;
   shut(project, 'shape');
-  shut(project, 'staffing');
+  shut(project, 'cast');
+  for (const seat of Object.values(project.engaged ?? {})) {
+    const talent = sim.universe.talent[seat.talentId];
+    if (talent) talent.worked += 1;
+  }
   return { ok: true, cents };
 }
 
 // ---------------------------------------------------------------------------
-// The release
+// Letting it out
 // ---------------------------------------------------------------------------
 
-export interface Releasing {
+export interface Opening {
   projectId: Id;
   channel: Channel;
+  /** When it opens. The decision the calendar exists to make interesting. */
+  at: number;
   campaignCents: Money;
-  /**
-   * How much else is opening against it, 0 to 1.
-   *
-   * Supplied by the caller rather than drawn here, because the field is a fact
-   * about the world on a date and this function is about one picture. The text
-   * simulation computes it from what else released that month.
-   */
-  field?: number;
 }
 
-export function whyNotRelease(sim: Simulation, spec: Releasing): string | undefined {
+export function whyNotOpen(sim: Simulation, spec: Opening): string | undefined {
   const project = projectById(sim, spec.projectId);
   if (!project) return 'No such project.';
-  if (project.stage !== 'greenlit') return 'It has not been committed yet.';
-  if (isLocked(project, 'campaign')) return 'It has already been released.';
+  if (project.stage !== 'greenlit') return 'Nobody has committed the money yet.';
+  if (isLocked(project, 'opening')) return 'This one opened already.';
   const format = formatById(project.formatId);
-  if (!format) return 'It has no format.';
-  const wrongChannel = whyNotThisChannel(format, spec.channel);
-  if (wrongChannel) return wrongChannel;
+  if (!format) return 'Choose a format first.';
+  const wrong = whyNotThisChannel(format, spec.channel);
+  if (wrong) return wrong;
+  if (spec.at < sim.now) return 'A release cannot open in a week that has gone.';
   if (spec.campaignCents < 0) return 'A campaign cannot cost less than nothing.';
   const cash = cashAccountFor(sim.universe, project.companyId);
   if (!cash) return 'The company has no cash account.';
@@ -274,97 +346,184 @@ export function whyNotRelease(sim: Simulation, spec: Releasing): string | undefi
   return undefined;
 }
 
-export interface Released {
+/** Where this picture sits in its line, for the box office to read. */
+export function entryFor(sim: Simulation, project: Project): Entry | undefined {
+  const format = formatById(project.formatId);
+  if (!format || !project.lineageId || (project.ordinal ?? 1) <= 1) return undefined;
+  const before = projectsOf(sim.universe)
+    .filter((p) => p.lineageId === project.lineageId && (p.ordinal ?? 1) < (project.ordinal ?? 1))
+    .sort((a, b) => (b.ordinal ?? 0) - (a.ordinal ?? 0))[0];
+  if (!before?.opening) return undefined;
+  return {
+    ordinal: project.ordinal ?? 1,
+    lastReturned: returnedBy(sim, before.id),
+    gapYears: Math.max(0, (sim.now - before.opening.at) / (MS_WEEK * 52)),
+    carriesForward: format.carriesForward,
+  };
+}
+
+export interface Opened {
   ok: boolean;
   error?: string;
-  /** What reached the company, in cents. */
-  cents: Money;
-  /** The run, receipt and all, for the report. */
-  run?: ReturnType<typeof reckonTheRun>;
+  reckonedCents: Money;
+  wordOfMouth: number;
+  receipt: readonly string[];
 }
 
 /**
- * Releases it: charges the campaign, reckons the run, banks every window.
+ * Opens it: charges the campaign, reckons the run once, and arms the weekly tick.
  *
- * The order is the order money actually moves, and it matters that the campaign is
- * charged first. A company that cannot afford the campaign never finds out what the
- * picture would have taken, which is the correct and unpleasant shape of the thing.
+ * The order is the order money actually moves, and the campaign going first matters —
+ * a company that cannot afford it never finds out what the picture would have taken,
+ * which is the correct and unpleasant shape of the thing.
  */
-export function release(sim: Simulation, spec: Releasing): Released {
-  const no = whyNotRelease(sim, spec);
-  if (no) return { ok: false, error: no, cents: 0 };
+export function open(sim: Simulation, spec: Opening): Opened {
+  const nothing = { reckonedCents: 0, wordOfMouth: 0, receipt: [] as readonly string[] };
+  const no = whyNotOpen(sim, spec);
+  if (no) return { ok: false, error: no, ...nothing };
   const project = projectById(sim, spec.projectId)!;
   const format = formatById(project.formatId)!;
 
   const charged = chargeTheCampaign(sim, project.companyId, project.id, spec.campaignCents);
-  if (!charged.ok) return { ok: false, error: charged.error, cents: 0 };
+  if (!charged.ok) return { ok: false, error: charged.error, ...nothing };
 
-  const month = new Date(sim.now).getUTCMonth();
-  const reckoning: Spec = {
+  const spec2: Spec = {
     format,
     parts: project.parts!.length,
     secondsEach: project.secondsEach ?? format.secondsEach.least,
-    spentCents: project.spentCents,
+    spentCents: project.spentCents + spec.campaignCents,
     campaignCents: spec.campaignCents,
-    staffing: staffingOf(project),
+    reach: reachOf(project),
     engine: engineById(project.concept?.engineId),
-    month,
-    field: spec.field ?? 0,
+    month: new Date(spec.at).getUTCMonth(),
+    crowding: crowding(sim, spec.at, spec.channel, project.title),
+    entry: entryFor(sim, project),
   };
-  const run = reckonTheRun(reckoning, spec.channel);
+  const reckoning = reckon(spec2);
 
-  const banked = bankTheRun(sim, project.companyId, project.id, run);
-  if (!banked.ok) return { ok: false, error: banked.error, cents: 0 };
-
+  project.opening = {
+    at: spec.at,
+    channel: spec.channel,
+    campaignCents: spec.campaignCents,
+    reckonedCents: reckoning.cents,
+    wordOfMouth: reckoning.wordOfMouth,
+    weeksPaid: 0,
+  };
   project.stage = 'delivered';
-  project.channel = spec.channel;
-  project.campaignCents = spec.campaignCents;
-  project.releasedAt = sim.now;
-  shut(project, 'campaign');
-  return { ok: true, cents: banked.cents, run };
+  project.releasedAt = spec.at;
+  shut(project, 'opening');
+  armTheRun(sim, project.id, project.title);
+
+  return {
+    ok: true,
+    reckonedCents: reckoning.cents,
+    wordOfMouth: reckoning.wordOfMouth,
+    receipt: reckoning.said.map((n) => `${n.by}: ${n.why}`),
+  };
 }
 
 // ---------------------------------------------------------------------------
-// Shelving, which nothing used to write
+// Shelving, and following up
 // ---------------------------------------------------------------------------
 
 /**
- * Takes a project off the slate, or puts it back.
+ * Takes a picture off the slate, or puts it back.
  *
- * `Project.shelvedAt` was read by six things and written by nothing in the whole
- * of `src/`. A guard no input can trip is the defect class the gate already fails
- * on, and it stayed that way because the command was never built rather than
- * because anybody decided a picture could not be shelved.
+ * `shelvedAt` was read by six things and written by nothing in the whole of `src/`,
+ * which is a guard no input could trip. It stayed that way because the command was
+ * never built, not because anybody decided a picture could not be shelved.
  */
 export function shelve(sim: Simulation, projectId: Id, off: boolean): { ok: boolean; error?: string } {
   const project = projectById(sim, projectId);
   if (!project) return { ok: false, error: 'No such project.' };
-  if (project.stage === 'delivered') return { ok: false, error: 'It is already out.' };
+  if (project.opening) return { ok: false, error: 'This one opened already.' };
   if (off) {
-    if (!project.shelvedAt) return { ok: false, error: 'It is not shelved.' };
+    if (!project.shelvedAt) return { ok: false, error: 'There is nothing shelved to bring back.' };
     delete project.shelvedAt;
-    if (project.stage === 'shelved') project.stage = project.formatId ? 'packaged' : 'idea';
+    project.stage = project.formatId ? 'packaged' : 'idea';
     return { ok: true };
   }
-  if (project.shelvedAt) return { ok: false, error: 'It is already shelved.' };
+  if (project.shelvedAt) return { ok: false, error: 'The shelf has it already.' };
   project.shelvedAt = sim.now;
   project.stage = 'shelved';
   return { ok: true };
 }
 
-// ---------------------------------------------------------------------------
-// Registration
+export function whyNotFollowUp(sim: Simulation, projectId: Id): string | undefined {
+  const project = projectById(sim, projectId);
+  if (!project) return 'No such project.';
+  if (!project.opening) return 'There is nothing to follow yet: it has not come out.';
+  const format = formatById(project.formatId);
+  if (!format) return 'Choose a format first.';
+  if (format.carriesForward <= 0.1) {
+    return `${format.label} carries almost nothing forward. A follow-up would be starting `
+      + 'from nothing with a familiar title on it.';
+  }
+  return undefined;
+}
+
+/**
+ * Starts the next one in the line.
+ *
+ * Deliberately allowed when the line is past its best rather than refused. A player
+ * has to be able to make a fourth one that should not exist, because discovering
+ * where inheritance stops outrunning fatigue is the whole of the mechanic and a
+ * refusal would teach it for free.
+ */
+export function followUp(
+  sim: Simulation,
+  projectId: Id,
+  title: string,
+): { ok: boolean; error?: string; projectId?: Id; inherits?: number } {
+  const no = whyNotFollowUp(sim, projectId);
+  if (no) return { ok: false, error: no };
+  const from = projectById(sim, projectId)!;
+  const lineageId = from.lineageId ?? from.id;
+  if (!from.lineageId) { from.lineageId = lineageId; from.ordinal = 1; }
+  const ordinal = projectsOf(sim.universe)
+    .filter((p) => p.lineageId === lineageId)
+    .reduce((most, p) => Math.max(most, p.ordinal ?? 1), 0) + 1;
+
+  const made: Project = {
+    id: sim.nextId('project'),
+    saveId: sim.universe.meta.id,
+    companyId: from.companyId,
+    title,
+    medium: from.medium,
+    stage: 'idea',
+    startedAt: sim.now,
+    spentCents: 0,
+    delivered: [],
+    concept: from.concept,
+    holdingId: from.holdingId,
+    lineageId,
+    ordinal,
+  };
+  sim.universe.projects[made.id] = made;
+
+  const format = formatById(from.formatId)!;
+  const would = inherits({
+    ordinal,
+    lastReturned: returnedBy(sim, from.id),
+    gapYears: Math.max(0, (sim.now - from.opening!.at) / (MS_WEEK * 52)),
+    carriesForward: format.carriesForward,
+  });
+  return { ok: true, projectId: made.id, inherits: would };
+}
+
 // ---------------------------------------------------------------------------
 
 type Done = { ok: boolean; error?: string };
 
 export function registerProduction(sim: Simulation): void {
-  sim.onCommand<Shape, Done>('production.shape', (payload) => setShape(sim, payload));
-  sim.onCommand<Staffing, Done>('production.staff', (payload) => staff(sim, payload));
-  sim.onCommand<{ projectId: Id }, Done>('production.commit', (payload) => commit(sim, payload.projectId));
-  sim.onCommand<Releasing, Released>('production.release', (payload) => release(sim, payload));
+  sim.onCommand<Shape, Done>('production.shape', (p) => setShape(sim, p));
+  sim.onCommand<Engaging, Done>('production.engage', (p) => engage(sim, p));
+  sim.onCommand<{ projectId: Id }, Done>('production.commit', (p) => commit(sim, p.projectId));
+  sim.onCommand<Opening, Opened>('production.open', (p) => open(sim, p));
   sim.onCommand<{ projectId: Id; off?: boolean }, Done>(
-    'production.shelve',
-    (payload) => shelve(sim, payload.projectId, payload.off === true),
+    'production.shelve', (p) => shelve(sim, p.projectId, p.off === true),
+  );
+  sim.onCommand<{ projectId: Id; title: string }, Done>(
+    'production.follow_up', (p) => followUp(sim, p.projectId, p.title),
   );
 }

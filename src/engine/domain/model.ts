@@ -42,13 +42,13 @@ export type Id = string;
 // The business. Declared next door, in `domain/company.ts`, because seven
 // linked types about one subject are a file rather than a section.
 import type {
-  Company, Holding, Policy, Post, Project, Registration, Signature,
+  Company, Holding, Policy, Post, Project, Registration, Signature, Talent,
 } from './company';
 
 export type {
   Company, CompanyForm, Concept, GuildId, Holding, Hold, Jurisdiction, Ownership, Policy,
   PolicyKind, Post, Project, Provenance, Registration, RegistryId, RoleId,
-  Signature, Stage,
+  Signature, Stage, Talent, Engagement,
 } from './company';
 
 export interface Personality {
@@ -752,6 +752,17 @@ export interface SaveUniverse {
   holdings: Record<Id, Holding>;
   posts: Record<Id, Post>;
   projects: Record<Id, Project>;
+  /**
+   * Everybody who has ever been engaged, and how their pictures went.
+   *
+   * A table rather than a field on the project, because the whole point of a named
+   * person is that they outlive the picture: a director who made three that returned
+   * their cost asks for more next time, and a run of three that did not brings their
+   * price down. `standingAfter` in `content/talent.ts` reads these results, and the
+   * first pass had no table at all — engagements carried a tier, so a career could
+   * not move and that function had nowhere to write to.
+   */
+  talent: Record<Id, Talent>;
 
   /**
    * Parts the player has been asked about, and what came of them.

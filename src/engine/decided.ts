@@ -30,7 +30,13 @@ import { ageOn } from './world/family';
 import { CENTS_IN_A_MILLION } from './core/money';
 import { FORMAT_BY_ID } from './content/format';
 import { bendTheRun } from './content/release';
+import { STANDING_BY_ID } from './content/talent';
+import { STUDIOS, STUDIO_BY_ID } from './content/rivals';
 import { reckon, type Spec as BoxSpec } from './world/boxoffice';
+import { whatTheyOpen } from './world/field';
+import { POSTS } from './content/craft';
+import { rungOf } from './content/talent';
+import { shortlistFor } from './world/production';
 
 // ---------------------------------------------------------------------------
 // The sky
@@ -312,53 +318,54 @@ defineDecider<Hire, string>({
   decide: ({ woman, given, years }) => `${nameFrom(woman, given)}, ${woman ? 'she/her' : 'he/him'}, ${years}`,
 });
 
+
 // ---------------------------------------------------------------------------
-// What a release takes, and what shape it takes it in
+// What a release takes, what shape it takes it in, and who else is out that week
 // ---------------------------------------------------------------------------
 
 /**
  * The height of a run, as a rung.
  *
- * `world/boxoffice.ts` is a chain of eight named links, each of which may move a
- * carried figure. Every one of them is a place a sign can be inverted, and an
- * inverted sign there would read perfectly: "a bigger campaign means a smaller
- * opening" is a sentence, and until `sweepDirection` existed it was a sentence the
- * build could not tell from the truth. `making.slip` shipped exactly that bug for
- * the whole of its life.
+ * `world/boxoffice.ts` is a chain of nine named links, each of which may move a
+ * carried figure. Every one is a place a sign can be inverted, and an inverted sign
+ * there reads perfectly: "a bigger campaign means a smaller opening" is a sentence,
+ * and until `sweepDirection` existed it was a sentence this build could not tell from
+ * the truth.
  *
- * So the chain declares its directions here and the sweep pushes each input from
- * one end of its range to the other. Five inputs, five claims, and the test fails
- * if any of them goes the other way.
+ * So the chain declares its directions and the sweep pushes each input end to end.
+ * Six inputs, six claims. It takes no dice at all, which is why it says so: the same
+ * plan in the same week returns the same figure every time, because a figure that
+ * cannot be reproduced cannot be argued with.
  */
 interface Opening {
   spentCents: number;
   craft: string;
   draw: string;
   campaignCents: number;
-  field: number;
+  crowding: number;
   month: number;
 }
 
-const BANDS_LOW_TO_HIGH = ['starting', 'working', 'sought', 'first'];
-const bandAt = (t: number): string =>
-  BANDS_LOW_TO_HIGH[Math.min(BANDS_LOW_TO_HIGH.length - 1, Math.floor(t * BANDS_LOW_TO_HIGH.length))]!;
-
-const openingSpec = (o: Opening): BoxSpec => ({
+const REACH_UP = ['starting', 'working', 'sought', 'first'];
+const asOpening = (o: Opening): BoxSpec => ({
   format: FORMAT_BY_ID.feature!,
   parts: 1,
   secondsEach: 110 * 60,
   spentCents: o.spentCents,
   campaignCents: o.campaignCents,
-  staffing: {
-    director: o.craft, writer: o.craft, photography: o.craft, cutting: o.craft,
-    casting: o.draw, music: o.draw,
-    production: 'working',
+  reach: {
+    director: STANDING_BY_ID[o.craft]!.reach,
+    writer: STANDING_BY_ID[o.craft]!.reach,
+    photography: STANDING_BY_ID[o.craft]!.reach,
+    cutting: STANDING_BY_ID[o.craft]!.reach,
+    lead: STANDING_BY_ID[o.draw]!.reach,
+    music: STANDING_BY_ID[o.draw]!.reach,
+    line: 1,
   },
   month: o.month,
-  field: o.field,
+  crowding: o.crowding,
 });
 
-/** Where a take lands, worst first. Wide rungs, because the model spans decades. */
 const HEIGHTS = ['quiet', 'modest', 'solid', 'strong', 'enormous'];
 const heightOf = (cents: number): string => {
   const m = cents / CENTS_IN_A_MILLION;
@@ -376,47 +383,44 @@ defineDecider<Opening, string>({
   deterministic: true,
   reads: {
     // What was spent making it, across three orders of magnitude.
-    spend: (o, t) => ({ ...o, spentCents: Math.round((200_000_00 + t * 80_000_000_00)) }),
+    spend: (o, t) => ({ ...o, spentCents: Math.round(200_000_00 + t * 80_000_000_00) }),
     // Who directed, wrote, shot and cut it.
-    craft: (o, t) => ({ ...o, craft: bandAt(t) }),
-    // Who is in it and what it sounds like.
-    draw: (o, t) => ({ ...o, draw: bandAt(t) }),
+    craft: (o, t) => ({ ...o, craft: REACH_UP[Math.min(3, Math.floor(t * 4))]! }),
+    // Whose face is on it, and what it sounds like.
+    draw: (o, t) => ({ ...o, draw: REACH_UP[Math.min(3, Math.floor(t * 4))]! }),
     // What was spent telling anybody, from nothing to ten times the floor.
     campaign: (o, t) => ({ ...o, campaignCents: Math.round(t * 2_500_000_00) }),
     // How much of the week was already spoken for.
-    field: (o, t) => ({ ...o, field: t }),
+    crowding: (o, t) => ({ ...o, crowding: t }),
     // And when in the year it opened.
     month: (o, t) => ({ ...o, month: Math.min(11, Math.floor(t * 12)) }),
   },
   sample: (seed) => ({
     spentCents: 1_500_000_00 + (seed % 5) * 900_000_00,
-    craft: BANDS_LOW_TO_HIGH[seed % 4]!,
-    draw: BANDS_LOW_TO_HIGH[(seed + 2) % 4]!,
+    craft: REACH_UP[seed % 4]!,
+    draw: REACH_UP[(seed + 2) % 4]!,
     campaignCents: 250_000_00 + (seed % 3) * 200_000_00,
-    field: ((seed % 4) / 4),
+    crowding: (seed % 4) / 4,
     month: seed % 12,
   }),
   ladder: HEIGHTS,
-  // Four up and one down, and each one is read straight off the link that makes
-  // the claim. `month` is left undeclared: the seasonal table has two peaks and
-  // two troughs, so later in the year is not monotonically better and declaring
-  // a direction for it would be declaring something false.
-  rises: { spend: 'up', craft: 'up', draw: 'up', campaign: 'up', field: 'down' },
-  decide: (o) => heightOf(reckon(openingSpec(o)).cents),
+  // Four up and one down, each read straight off the link that makes the claim.
+  // `month` is left undeclared: the seasonal table has two peaks and two troughs, so
+  // later in the year is not monotonically better and a direction would be false.
+  rises: { spend: 'up', craft: 'up', draw: 'up', campaign: 'up', crowding: 'down' },
+  decide: (o) => heightOf(reckon(asOpening(o)).cents),
 });
 
 /**
  * The shape of a run, as a rung.
  *
- * Separate from the height because they are separate, and the build kept
- * conflating them. A picture can open enormous and vanish, or open quietly and
- * play until March, and a model where quality only scales the total can produce
- * neither. This is the check that they really are independent: it sweeps the
- * inputs that bend the curve and reads only the curve.
+ * Separate from the height because they are separate, and the build kept conflating
+ * them. A picture can open enormous and vanish, or open quietly and play until March,
+ * and a model where quality only scales the total produces neither. This is the check
+ * that the two really are independent: it sweeps what bends the curve and reads only
+ * the curve.
  */
 interface Shaped { mouth: number; legs: number }
-
-const SHAPES = ['front-loaded', 'even', 'long legs'];
 
 defineDecider<Shaped, string>({
   id: 'release.shape',
@@ -430,15 +434,102 @@ defineDecider<Shaped, string>({
     legs: (s, t) => ({ ...s, legs: t }),
   },
   sample: (seed) => ({ mouth: ((seed % 5) / 4) * 2 - 1, legs: 0.3 + (seed % 4) * 0.2 }),
-  ladder: SHAPES,
+  ladder: ['front-loaded', 'even', 'long legs'],
   rises: { mouth: 'up', legs: 'up' },
   decide: ({ mouth, legs }) => {
-    const curve = bendTheRun(mouth, legs);
-    // The share of the run that lands after the first four weeks. A blunt
-    // measure on purpose: it is the one an exhibitor actually cares about.
-    const tail = curve.slice(4).reduce((sum, w) => sum + w, 0);
+    // The share landing after the first four weeks. A blunt measure on purpose: it
+    // is the one an exhibitor actually cares about.
+    const tail = bendTheRun(mouth, legs).slice(4).reduce((sum, w) => sum + w, 0);
     if (tail < 0.30) return 'front-loaded';
     if (tail < 0.42) return 'even';
     return 'long legs';
+  },
+});
+
+/**
+ * Whether a rival studio opens something in a given week.
+ *
+ * The one decision in the release model that genuinely takes a die, and it has to:
+ * what somebody else does is not a thing this company can derive. Drawn per studio
+ * per week so a slate never has to be stored, which keeps the field knowable — a
+ * player can read the weeks ahead and move their own date, and a rival who behaved
+ * unpredictably would make that a coin toss rather than a judgement.
+ */
+interface Week { sim: Simulation; studioId: string; at: number }
+
+defineDecider<Week, string>({
+  id: 'rivals.open',
+  decides: 'Whether another studio opens something this week, and how big.',
+  drawnIn: 'src/engine/world/field.ts',
+  draws: ['rivals'],
+  reads: {
+    // Which studio. Four a year and fourteen a year cannot behave the same.
+    studio: (w, t) => ({
+      ...w,
+      studioId: STUDIOS[Math.min(STUDIOS.length - 1, Math.floor(t * STUDIOS.length))]!.id,
+    }),
+    // And when, all the way round the year, because they cluster.
+    when: (w, t) => ({ ...w, at: w.at + Math.round(t * 51) * MS_WEEK }),
+  },
+  sample: (seed) => ({
+    sim: quickSave(defaultConfig(), `rivals-${seed}`),
+    studioId: STUDIOS[seed % STUDIOS.length]!.id,
+    at: Date.UTC(1998, 0, 5) + (seed % 7) * MS_WEEK,
+  }),
+  decide: ({ sim, studioId, at }) => {
+    const out = whatTheyOpen(sim, STUDIO_BY_ID[studioId]!, at);
+    if (!out) return 'nothing';
+    return out.pull > 0.5 ? 'something large' : 'something';
+  },
+});
+
+/**
+ * Who is up for a post when a shortlist is drawn.
+ *
+ * The other decision in this system that genuinely takes a die. Who happens to be
+ * available and how far their name reaches is not a thing the company derives — it
+ * is the world's answer — and the shortlist is where that lands.
+ *
+ * The rungs are weighted down hard on purpose: plenty of people are working and very
+ * few are first call, so the top of a list feels like a decision rather than a
+ * default. What the sweep checks is that the draw reaches more than one answer and
+ * that the post asked for changes who turns up, because a shortlist that ignored the
+ * post would be five names with a job title printed above them.
+ */
+interface Casting { sim: Simulation; projectId: string; postId: string }
+
+defineDecider<Casting, string>({
+  id: 'casting.shortlist',
+  decides: 'Who is available for a post, and how far their names reach.',
+  drawnIn: 'src/engine/world/production.ts',
+  draws: ['casting'],
+  reads: {
+    // Which job. A shortlist that ignored this would be names under a heading.
+    post: (c, t) => ({
+      ...c,
+      postId: POSTS[Math.min(POSTS.length - 1, Math.floor(t * POSTS.length))]!.id,
+    }),
+    // And which picture is asking, because two projects do not see the same room.
+    project: (c, t) => ({ ...c, projectId: `p${Math.floor(t * 40)}` }),
+  },
+  sample: (seed) => ({
+    sim: quickSave(defaultConfig(), `casting-${seed}`),
+    projectId: `p${seed}`,
+    postId: POSTS[seed % POSTS.length]!.id,
+  }),
+  // No ladder, and the absence is the claim. The outcome sits on a scale — a room
+  // with a first call in it beats one without — but neither input pushes along it:
+  // asking for a composer instead of a director does not make the room better or
+  // worse, and nor does asking on behalf of a different picture. Who happens to be
+  // free is the world's answer rather than a consequence of what was asked. A ladder
+  // declared here with no direction to push along it would be decoration, which is
+  // what `tests/deciders.test.ts` refuses, and inventing a direction to satisfy it
+  // would be worse: a claim the model does not make.
+  decide: ({ sim, projectId, postId }) => {
+    const list = shortlistFor(sim, projectId, postId);
+    if (list.length === 0) return 'starting';
+    return list
+      .map((one) => one.standingId)
+      .reduce((best, id) => (rungOf(id) > rungOf(best) ? id : best), 'starting');
   },
 });

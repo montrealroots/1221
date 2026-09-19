@@ -244,7 +244,7 @@ export function emptyUniverse(
     currentZone: zone,
     playerId,
     people: {}, households: {}, bonds: {},
-    companies: {}, registrations: {}, signatures: {}, policies: {}, holdings: {}, posts: {}, projects: {},
+    companies: {}, registrations: {}, signatures: {}, policies: {}, holdings: {}, posts: {}, projects: {}, talent: {},
     accounts: {}, transactions: [],
     properties: {},
     stages: {},
