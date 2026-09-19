@@ -16,7 +16,7 @@ import type { Simulation } from '../core/simulation';
 import { zonedParts, type Instant } from '../core/time';
 import { ATTRIBUTES, overallRating, rate } from '../domain/attributes';
 import type { Audition, Person } from '../domain/model';
-import type { Project, Role, Seat } from '../domain/company';
+import type { ActingTerms, Project, Role, Seat } from '../domain/company';
 import { AXES, sizeById, type AxisId } from '../content/casting';
 import { CITIES } from '../content/geography';
 import {
@@ -53,6 +53,7 @@ export interface TalentEngagement {
   sizeId: string;
   size: string;
   feeCents: number;
+  terms?: ActingTerms;
   from?: Instant;
   to?: Instant;
   signedAt?: Instant;
@@ -141,6 +142,7 @@ function projectEngagement(
     sizeId: role.size,
     size: size?.label ?? role.size,
     feeCents: seat.feeCents,
+    ...(seat.terms ? { terms: seat.terms } : {}),
     ...(when ? { from: when.from, to: when.to } : {}),
     signedAt: seat.castAt,
     ...(seat.releasedAt !== undefined ? { releasedAt: seat.releasedAt } : {}),
