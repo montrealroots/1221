@@ -20,8 +20,9 @@
 import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
 import {
-  ASKS_AROUND, CARRIES_OVER, COSTS_LIKE, MOST_ON_THE_MARKET, PROVENANCES,
-  asksFor, provenanceFrom, titleFrom,
+  APPEAL_STRAYS, ASKS_AROUND, CARRIES_OVER, COSTS_LIKE, MOST_ON_THE_MARKET,
+  PROVENANCES, PROVENANCE_SAID, READS_AS, appealFrom, asksFor, provenanceFrom,
+  readsAs, titleFrom,
 } from '@/engine/content/material';
 import { monthKey, onTheMarket } from '@/engine/world/material';
 import { holdingsOf } from '@/engine/world/company';
@@ -191,5 +192,77 @@ describe('what a property is and what it costs', () => {
   it('keeps carrying-over a minority by its own constant', () => {
     expect(CARRIES_OVER).toBeGreaterThan(0);
     expect(CARRIES_OVER).toBeLessThan(0.5);
+  });
+});
+
+/**
+ * How far a property carries, and how that is said to a person.
+ *
+ * `APPEAL_STRAYS` exists because a career measurement found the hiring decision was
+ * not there: with reach a pure function of the three demands, every property of a
+ * given shape was the same property, and a policy costing out every team picked the
+ * same team every time. These guard the two halves of the fix — that the number moves,
+ * and that what a player is shown moves with it.
+ */
+describe('how far a property carries', () => {
+  it('strays either side of ordinary, and ordinary is one', () => {
+    expect(appealFrom(0.5)).toBeCloseTo(1, 10);
+    expect(appealFrom(0)).toBeCloseTo(1 - APPEAL_STRAYS, 10);
+    expect(appealFrom(1)).toBeCloseTo(1 + APPEAL_STRAYS, 10);
+  });
+
+  it('prices it into the asking, so good material is not free', () => {
+    const plain = asksFor('novel', 0.5, 1);
+    const wanted = asksFor('novel', 0.5, 1 + APPEAL_STRAYS);
+    expect(wanted).toBeGreaterThan(plain);
+  });
+
+  it('says it in a word, and reaches every word across the range of the draw', () => {
+    const seen = new Set(
+      Array.from({ length: 400 }, (_, i) => readsAs(appealFrom(i / 400))),
+    );
+    expect(seen.size).toBe(READS_AS.length);
+    for (const word of READS_AS) expect(seen.has(word)).toBe(true);
+  });
+
+  it('never says a worse word about a better property', () => {
+    // The falsifiability test for the ladder: the word is read off the number, so it
+    // may never go backwards as the number goes up.
+    let last = -1;
+    for (let i = 0; i <= 400; i += 1) {
+      const at = READS_AS.indexOf(readsAs(appealFrom(i / 400)));
+      expect(at).toBeGreaterThanOrEqual(last);
+      last = at;
+    }
+  });
+
+  it('answers sensibly outside the range it was built for', () => {
+    expect(READS_AS).toContain(readsAs(-5));
+    expect(READS_AS).toContain(readsAs(99));
+  });
+
+  it('has a word for every kind of source, and shows no raw handle', () => {
+    for (const one of PROVENANCES) {
+      const said = PROVENANCE_SAID[one];
+      expect(said, `${one} has no words`).toBeTruthy();
+      expect(said).not.toContain('_');
+      expect(said[0]).toMatch(/[A-Z]/);
+    }
+  });
+
+  it('gives the market a property whose carry a player can be shown', () => {
+    const sim = quickSave({}, 'market-appeal');
+    // Six months, because a month can legitimately list nothing.
+    let at = sim.now;
+    const going = [];
+    for (let i = 0; i < 6; i += 1) {
+      going.push(...onTheMarket(sim, at));
+      at = addMonths(at, 1, sim.homeZone);
+    }
+    expect(going.length).toBeGreaterThan(0);
+    for (const one of going) {
+      expect(one.appeal).toBeGreaterThan(0);
+      expect(READS_AS).toContain(readsAs(one.appeal));
+    }
   });
 });

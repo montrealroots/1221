@@ -232,3 +232,42 @@ export function asksFor(provenance: Provenance, t: number, appeal = 1): Money {
  */
 export const appealFrom = (t: number): number =>
   1 + (Math.max(0, Math.min(1, t)) * 2 - 1) * APPEAL_STRAYS;
+
+/**
+ * What a kind of source is called on a screen.
+ *
+ * `Provenance` is six enum values and one of them is `life_rights`, which is not a
+ * thing to show a person. Kept beside the values rather than in the interface, because
+ * the day a seventh is added this file is where somebody will be looking.
+ */
+export const PROVENANCE_SAID: Readonly<Record<Provenance, string>> = {
+  original: 'An Original',
+  novel: 'A Novel',
+  article: 'An Article',
+  play: 'A Play',
+  life_rights: 'Somebody’s Life',
+  format: 'A Format',
+};
+
+/**
+ * What a reader makes of a property, in five words rather than a number.
+ *
+ * The appeal is the single most decision-relevant fact about a property — everything
+ * the studio collects is a share of it — and showing it as `1.27` would be showing
+ * the machine's working rather than the judgement. These are the judgement.
+ *
+ * Five bands across the range `appealFrom` can produce, which is a little over a half
+ * to a little under half again. They are read off the number and nothing else, so the
+ * falsifiability test holds: move the appeal and the word moves.
+ */
+export const READS_AS: readonly string[] = [
+  'Thin', 'Modest', 'Ordinary', 'Strong', 'Exceptional',
+];
+
+/** Where on that ladder a property sits. */
+export function readsAs(appeal: number): string {
+  const step = (APPEAL_STRAYS * 2) / READS_AS.length;
+  const from = 1 - APPEAL_STRAYS;
+  const at = Math.floor((appeal - from) / step);
+  return READS_AS[Math.max(0, Math.min(READS_AS.length - 1, at))]!;
+}

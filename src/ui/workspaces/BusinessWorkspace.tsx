@@ -30,6 +30,9 @@ import {
   BEST_TEAM, DEPARTMENTS, LEAST_TEAM, monthsFor, rateFor,
 } from '@/engine/content/departments';
 import { LOCK_BY_ID, canReopen, undoCosts, wouldForeclose } from '@/engine/content/locks';
+import { PROVENANCE_SAID, readsAs } from '@/engine/content/material';
+import { whatItCouldReach } from '@/engine/content/release';
+import { onTheMarket } from '@/engine/world/material';
 import {
   behindTheCompany, breakEvenShare, goingUp, pullOn, sellsFor, theSmallStage,
   turnedAway, whereTheBuildStands, whyNotBuild,
@@ -102,6 +105,7 @@ export function BusinessWorkspace() {
         </div>
       </Panel>
 
+      <TheMarket />
       <Holdings />
       <Slate />
       <Staffing />
@@ -274,6 +278,16 @@ function Holdings() {
                     {holding.hold === 'option' ? 'Optioned' : holding.hold === 'owned' ? 'Owned outright' : 'Commissioned'}
                     {holding.expiresAt ? ` · optioned to ${formatDate(holding.expiresAt, 'UTC')}` : ''}
                   </div>
+                  {/* The same two facts the market showed, kept after it was taken.
+                      Without them the hiring decision loses its inputs the moment the
+                      property leaves the market, which is the moment it starts to
+                      matter. */}
+                  <div className="xs dim" style={{ marginTop: 2 }}>
+                    {`Reads ${readsAs(holding.appeal).toLowerCase()}. `}
+                    {`Scope ${holding.demands.scope}, spectacle ${holding.demands.spectacle}, `}
+                    {`period ${holding.demands.period}. `}
+                    {`At its very best it takes ${formatMoney(whatItCouldReach(holding.demands, holding.appeal))}.`}
+                  </div>
                 </div>
                 <span className={`chip ${holding.chainComplete ? '' : 'chip-accent'}`}>
                   {holding.chainComplete ? 'Chain Clean' : 'Chain Broken'}
@@ -284,6 +298,76 @@ function Holdings() {
         </div>
       )}
       {taking && <OptionForm onClose={() => setTaking(false)} />}
+    </Panel>
+  );
+}
+
+/**
+ * What is going, this month.
+ *
+ * The engine has had a churning market since the material commit and nothing drew it,
+ * so the only way to take anything was to type a title and accept whatever the world
+ * drew behind it. That made the two facts the whole production decision rests on —
+ * what a property asks of the departments, and how far it carries — things a player
+ * could not see until after they had paid for them.
+ *
+ * Both are on this panel now, and so is what it could take, because the hiring
+ * decision is arithmetic between that figure and what a team costs. Nothing here is
+ * a secret the game is keeping: the risk is the draw, not the ignorance.
+ */
+function TheMarket() {
+  const { run } = useGame();
+  const going = useWorld((s) => onTheMarket(s));
+  const [error, setError] = useState<string | undefined>();
+
+  const take = (listingId: string) => {
+    const answer = run<{ ok: boolean; error?: string }>(
+      'company.option', { listingId }, { silent: true },
+    );
+    if (answer.value?.ok) { setError(undefined); return; }
+    setError(answer.value?.error ?? answer.error ?? 'The company couldn’t take it.');
+  };
+
+  return (
+    <Panel title="What Is Going" tight>
+      {going.length === 0 ? (
+        <p className="muted small">
+          Nothing this month. The market is not a catalog; it is whoever happens to be
+          selling, and some months that is nobody.
+        </p>
+      ) : (
+        <div className="col gap-2">
+          {going.map((one) => (
+            <div key={one.id} className="holding">
+              <div className="row-between">
+                <div>
+                  <div className="strong">{one.title}</div>
+                  <div className="xs muted">
+                    {PROVENANCE_SAID[one.provenance]}
+                    {' · asks '}
+                    {formatMoney(one.asksCents)}
+                    {one.carriedOver ? ' · has been sitting' : ''}
+                  </div>
+                </div>
+                <button className="btn btn-sm btn-primary" onClick={() => take(one.id)}>
+                  Take It
+                </button>
+              </div>
+              <div className="xs dim">
+                {`Reads ${readsAs(one.appeal).toLowerCase()}. `}
+                {`Asks the departments for scope ${one.demands.scope}, `}
+                {`spectacle ${one.demands.spectacle}, period ${one.demands.period}. `}
+                {`At its very best it takes ${formatMoney(whatItCouldReach(one.demands, one.appeal))}.`}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+      <p className="xs dim" style={{ marginTop: 'var(--s3)' }}>
+        Scope and spectacle bring an audience. Period does not — it buys months of design
+        and months on the floor and sells no tickets at all.
+      </p>
+      {error && <p className="small negative" style={{ marginTop: 'var(--s3)' }}>{error}</p>}
     </Panel>
   );
 }

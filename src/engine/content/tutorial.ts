@@ -362,10 +362,15 @@ export const LESSONS: readonly Lesson[] = [
     id: 'option',
     strand: 'the-company',
     title: 'Material, Optioned Or Owned',
-    body: 'A picture has to be *of* something. An option is eighteen months of the right to '
-      + 'make it and then the rights go back — unless you greenlight, which exercises the option '
-      + 'and turns it into ownership. Sitting on an option without saying yes is how you lose '
-      + 'material you paid for.',
+    body: 'A picture has to be *of* something, and what is going this month is on the '
+      + 'business page with everything you need to judge it: what it asks of the '
+      + 'departments, what a reader makes of it, and the most it could ever take. Scope '
+      + 'and spectacle bring an audience. Period does not — it buys months of design and '
+      + 'months on the floor and sells no tickets at all, so a world to build is a cost '
+      + 'you carry rather than a reason anybody comes. An option is eighteen months of '
+      + 'the right to make it and then the rights go back, unless you greenlight, which '
+      + 'exercises it and turns it into ownership. Sitting on one without saying yes is '
+      + 'how you lose material you paid for.',
     teaches: ['company.option'],
     screen: 'business',
     after: ['company'],
@@ -381,8 +386,12 @@ export const LESSONS: readonly Lesson[] = [
       + 'budget is never a number you set; it is those two multiplied, department by '
       + 'department, and it moves when either one does. Hiring up buys quality and not '
       + 'time: the same people finish on the same date, they just cost more getting '
-      + 'there. And a department your material asks nothing of is not on the picture at '
-      + 'all, which is what makes a small film cheap rather than a big one with gaps.',
+      + 'there. It is also not always right. What a picture takes is a share of what its '
+      + 'material could reach, and no crew alive lifts it past that — so on a property '
+      + 'that reads thin the best team is an expensive way to lose, and on one that '
+      + 'reads strong a cheap team leaves money on the table. Match the team to the '
+      + 'material. And a department your material asks nothing of is not on the picture '
+      + 'at all, which is what makes a small film cheap rather than a big one with gaps.',
     teaches: ['company.staff'],
     screen: 'business',
     after: ['option'],
