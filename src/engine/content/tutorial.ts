@@ -452,6 +452,22 @@ export const LESSONS: readonly Lesson[] = [
     importance: 63,
   },
   {
+    id: 'sell',
+    strand: 'the-pictures',
+    title: 'Selling What Is Not The Picture',
+    body: 'A partner will make the toys, and a label will put the music out — but only '
+      + 'off the kind of picture anybody wants those from, so a romance cannot sell '
+      + 'action figures and that is a fact about romances. They will pay a guarantee now '
+      + 'or take a share of what arrives later, which is the same argument your cast just '
+      + 'had with you, from the other side of the table. The guarantee is money somebody '
+      + 'committed while the outcome was unknown, so it is the cash to reach for when the '
+      + 'greenlight is short. A share is the better end of it if you are right.',
+    teaches: ['production.sell'],
+    screen: 'production',
+    after: ['write'],
+    importance: 55,
+  },
+  {
     id: 'commit',
     strand: 'the-pictures',
     title: 'Committing Pays Them Whatever Happens',

@@ -190,7 +190,7 @@ export const CRAFT_MOVES_HEIGHT = 0.30;
 export const CRAFT_MOVES_MOUTH = 2.4;
 
 export function fromTheCraft(r: Reckoning, spec: Spec): Reckoning {
-  const stands = axisStands('craft', (id) => spec.reach[id]);
+  const stands = axisStands('craft', (id) => spec.reach[id], spec.format.medium);
   const after = note(r, 'the craft', r.cents * (1 + (stands - 1) * CRAFT_MOVES_HEIGHT),
     `Direction, writing, photography and cutting stand at ${stands.toFixed(2)}.`);
   // The distance from an ordinary picture, clamped. An ordinarily made one says
@@ -209,7 +209,7 @@ export function fromTheCraft(r: Reckoning, spec: Spec): Reckoning {
 export const DRAW_MOVES_HEIGHT = 0.85;
 
 export function fromTheDraw(r: Reckoning, spec: Spec): Reckoning {
-  const stands = axisStands('draw', (id) => spec.reach[id]);
+  const stands = axisStands('draw', (id) => spec.reach[id], spec.format.medium);
   return note(r, 'the draw', r.cents * (1 + (stands - 1) * DRAW_MOVES_HEIGHT),
     `The cast and the music stand at ${stands.toFixed(2)}.`);
 }

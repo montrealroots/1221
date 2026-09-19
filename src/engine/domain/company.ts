@@ -621,8 +621,22 @@ export interface Engagement {
   /** Copied at engagement, because what they were paid does not change if they do. */
   name: string;
   standingId: string;
-  /** Fee or points, from `content/talent.ts`. */
-  deal: { kind: 'fee' | 'points'; feeCents: Money; points: number };
+  /**
+   * What was agreed, from `content/talent.ts`.
+   *
+   * Three shapes: the fee, a share of everything that arrives, or most of the fee
+   * given up against a bonus if the picture runs away. `feeCents` is what the
+   * company pays and `theyGetCents` what the person receives, and the gap between
+   * them is their agent — which is why somebody starting out, who has nobody, is
+   * cheaper than their standing suggests.
+   */
+  deal: {
+    kind: 'fee' | 'points' | 'threshold';
+    feeCents: Money;
+    theyGetCents: Money;
+    points: number;
+    threshold?: boolean;
+  };
 }
 
 export interface Project {
@@ -736,6 +750,14 @@ export interface Project {
     settled?: boolean;
     weeksPaid: number;
   };
+  /**
+   * What has been sold off the picture besides the picture, by ancillary id.
+   *
+   * Agreed before it opens, because the whole value of a guarantee is that it is
+   * money somebody committed while the outcome was still unknown. A share instead
+   * is taken out of every receipt as it lands, the same way the back end is.
+   */
+  ancillaries?: Record<string, { kind: 'guarantee' | 'share'; guaranteeCents: Money; share: number }>;
   /** Which awards it won, by id from `content/awards.ts`. */
   won?: string[];
   /**

@@ -79,6 +79,16 @@ export interface Post {
    * pictures in a lineage. A grip does not sell a sequel.
    */
   aboveTheLine: boolean;
+  /**
+   * The medium this post exists in, where it exists in only one.
+   *
+   * One row uses it. A showrunner is the job television has and film does not —
+   * somebody has to hold twelve hours together across a writers' room and a year of
+   * production, and a feature has a director for that. Modeling it as a post the
+   * player leaves empty on films would be a decision nobody should have to take,
+   * and a post that is simply absent says the true thing.
+   */
+  onlyFor?: 'film' | 'television';
 }
 
 /**
@@ -130,6 +140,17 @@ export const POSTS: readonly Post[] = [
       + 'admits, and can’t recover all of them.',
   },
   {
+    id: 'showrunner',
+    department: 'The Room',
+    title: 'Showrunner',
+    axis: 'craft',
+    weight: 34,
+    aboveTheLine: true,
+    onlyFor: 'television',
+    what: 'Holds twelve hours together across a writers’ room and a year of '
+      + 'production. The job television has and a film does not.',
+  },
+  {
     id: 'lead',
     department: 'The Cast',
     title: 'Lead',
@@ -168,8 +189,18 @@ export const POST_BY_ID: Readonly<Record<string, Post>> = Object.fromEntries(
 export const postById = (id: string | undefined): Post | undefined =>
   (id === undefined ? undefined : POST_BY_ID[id]);
 
-/** The posts on a given axis. */
-export const postsOn = (axis: Axis): readonly Post[] => POSTS.filter((p) => p.axis === axis);
+/**
+ * The posts that exist for a given medium.
+ *
+ * A film has no showrunner and is not judged on one. Passing nothing gives every
+ * post, which is what a screen listing the whole craft wants.
+ */
+export const postsFor = (medium?: 'film' | 'television'): readonly Post[] =>
+  POSTS.filter((p) => p.onlyFor === undefined || medium === undefined || p.onlyFor === medium);
+
+/** The posts on a given axis, for a medium where one is given. */
+export const postsOn = (axis: Axis, medium?: 'film' | 'television'): readonly Post[] =>
+  postsFor(medium).filter((p) => p.axis === axis);
 
 /** The posts whose occupant an audience has heard of. */
 export const ABOVE_THE_LINE: readonly Post[] = POSTS.filter((p) => p.aboveTheLine);
@@ -182,10 +213,14 @@ export const ABOVE_THE_LINE: readonly Post[] = POSTS.filter((p) => p.aboveTheLin
  * in counts as `UNFILLED_REACH` rather than as zero, because an empty post means the
  * production office found a working professional unasked, not that the job went undone.
  */
-export function axisStands(axis: Axis, reachOf: (postId: string) => number | undefined): number {
+export function axisStands(
+  axis: Axis,
+  reachOf: (postId: string) => number | undefined,
+  medium?: 'film' | 'television',
+): number {
   let weighted = 0;
   let total = 0;
-  for (const post of postsOn(axis)) {
+  for (const post of postsOn(axis, medium)) {
     weighted += (reachOf(post.id) ?? UNFILLED_REACH) * post.weight;
     total += post.weight;
   }

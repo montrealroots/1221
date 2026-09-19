@@ -51,6 +51,17 @@ import {
   THE_ROOM_IS_A_ROOM, standsWithTheRoom,
 } from '@/engine/content/awards';
 import { nextCeremony } from '@/engine/world/awards';
+import {
+  A_CHART_IS, HOUSE_WEIGHS, MOST_A_HOUSE_MOVES, ORDINARY, REMEMBERS_WEEKS,
+  byWhatItReturned, howTheHouseDraws, saidOfTheHouse, theChart, whereTheHouseStands,
+} from '@/engine/world/charts';
+import {
+  ANCILLARY_BY_ID, MOST_SHARE, ancillariesFor, howKeen, offersOn, shareOutOf,
+} from '@/engine/content/ancillary';
+import {
+  AGENT_TAKES, THRESHOLD_AT, THRESHOLD_PAYS, asksFor, costsTheCompany, thresholdOwed,
+} from '@/engine/content/talent';
+import { postsFor } from '@/engine/content/craft';
 
 // ---------------------------------------------------------------------------
 
@@ -643,5 +654,158 @@ describe('what the year decides', () => {
     const sim = quickSave({}, 'awards-armed');
     const armed = sim.timeline.pending().filter((one) => one.kind === 'awards.year');
     expect(armed.length).toBe(1);
+  });
+});
+
+describe('where the house stands', () => {
+  it('starts an unknown studio at exactly ordinary', () => {
+    // Neither a draw nor a warning. Starting below ordinary would make the first
+    // picture harder than every one after it for a reason no player could act on.
+    const sim = quickSave({}, 'house-new');
+    const house = whereTheHouseStands(sim);
+    expect(house.pictures).toBe(0);
+    expect(house.stands).toBe(ORDINARY);
+    expect(howTheHouseDraws(house.stands)).toBe(0);
+  });
+
+  it('moves the shortlist draw, and only so far', () => {
+    // The compounding loop: a good run puts better people in front of you. Clamped
+    // hard, because the whole business does not become available off one hit.
+    expect(howTheHouseDraws(2.5)).toBeGreaterThan(0);
+    expect(howTheHouseDraws(0.2)).toBeLessThan(0);
+    expect(howTheHouseDraws(99)).toBeLessThanOrEqual(MOST_A_HOUSE_MOVES);
+    expect(howTheHouseDraws(-99)).toBeGreaterThanOrEqual(-MOST_A_HOUSE_MOVES);
+    expect(MOST_A_HOUSE_MOVES).toBeLessThan(0.42);
+  });
+
+  it('weighs the ledger above the room, and says so in one line', () => {
+    // A studio people will work for is first a studio that finishes pictures and
+    // pays for them. Respect moves it and does not decide it.
+    expect(HOUSE_WEIGHS.ledger).toBeGreaterThan(HOUSE_WEIGHS.room);
+    expect(HOUSE_WEIGHS.ledger + HOUSE_WEIGHS.room).toBeCloseTo(1, 6);
+    const said = saidOfTheHouse({ onTheLedger: 2, inTheRoom: 2, stands: 2, pictures: 4 });
+    expect(said.length).toBeGreaterThan(12);
+    expect(saidOfTheHouse({ onTheLedger: 1, inTheRoom: 1, stands: 1, pictures: 0 }))
+      .not.toBe(said);
+  });
+
+  it('reads an empty library as an empty chart rather than throwing', () => {
+    const sim = quickSave({}, 'house-chart');
+    expect(theChart(sim)).toEqual([]);
+    expect(byWhatItReturned(sim)).toEqual([]);
+    expect(A_CHART_IS).toBeGreaterThan(4);
+    // Three years, so a picture from two years ago still carries the house.
+    expect(REMEMBERS_WEEKS).toBeGreaterThan(52);
+  });
+});
+
+describe('what is sold off the picture', () => {
+  it('will not back a genre nobody makes toys for', () => {
+    // A partner who would back anything is not a partner, it is a subsidy. And a
+    // romance that cannot sell action figures is a fact about romances.
+    expect(ancillariesFor('action').map((a) => a.id)).toContain('merchandise');
+    expect(ancillariesFor('romance').map((a) => a.id)).not.toContain('merchandise');
+    expect(ancillariesFor('romance').map((a) => a.id)).toContain('soundtrack');
+    expect(ancillariesFor(undefined)).toEqual([]);
+  });
+
+  it('reads one dial, because a partner judges the thing they can sell', () => {
+    const merch = ANCILLARY_BY_ID.merchandise!;
+    expect(merch.reads).toBe('spectacle');
+    expect(howKeen(merch, MOST, MOST)).toBeGreaterThan(howKeen(merch, 0, MOST));
+    // Merchandise swings harder than a soundtrack: a spectacle picture and a talky
+    // one are not the same proposition to anybody selling figures.
+    expect(merch.dialSwings).toBeGreaterThan(ANCILLARY_BY_ID.soundtrack!.dialSwings);
+  });
+
+  it('offers a guarantee now against a share later, and the producer picks', () => {
+    // The same argument as a talent deal, from the other side of the table.
+    const merch = ANCILLARY_BY_ID.merchandise!;
+    const both = offersOn(merch, 10_000_000_00, MOST, MOST);
+    expect(both.guarantee.guaranteeCents).toBeGreaterThan(0);
+    expect(both.guarantee.share).toBe(0);
+    expect(both.share.guaranteeCents).toBe(0);
+    expect(both.share.share).toBeGreaterThan(0);
+  });
+
+  it('pays a bigger guarantee on a bigger picture, because it is off the budget', () => {
+    const merch = ANCILLARY_BY_ID.merchandise!;
+    const small = offersOn(merch, 1_000_000_00, 3, MOST).guarantee.guaranteeCents;
+    const large = offersOn(merch, 20_000_000_00, 3, MOST).guarantee.guaranteeCents;
+    expect(large).toBeGreaterThan(small);
+  });
+
+  it('caps what the partners can take between them', () => {
+    const greedy = Array.from({ length: 9 }, () => ({ kind: 'share' as const, guaranteeCents: 0, share: 0.2 }));
+    expect(shareOutOf(greedy, 1_000_000_00)).toBe(Math.round(1_000_000_00 * MOST_SHARE));
+    expect(shareOutOf([], 1_000_000_00)).toBe(0);
+  });
+
+  it('registers the command that signs one', () => {
+    const sim = quickSave({}, 'ancillary-command');
+    expect(sim.hasCommand('production.sell')).toBe(true);
+    expect(sim.execute({ kind: 'production.sell', payload: { projectId: 'nope', ancillaryId: 'merchandise', kind: 'guarantee' } }).ok)
+      .toBe(false);
+  });
+});
+
+describe('the deal, in three shapes', () => {
+  const first = STANDINGS[3]!;
+  const green = STANDINGS[0]!;
+
+  it('takes an agent off the top, and leaves an unknown with nobody', () => {
+    // A small, real edge for taking somebody starting out that has nothing to do
+    // with their reach: there is no one standing between you and their price.
+    expect(AGENT_TAKES.starting).toBe(0);
+    expect(AGENT_TAKES.first).toBeGreaterThan(0);
+    expect(costsTheCompany(green, 1)).toBe(asksFor(green, 1));
+    expect(costsTheCompany(first, 1)).toBeGreaterThan(asksFor(first, 1));
+  });
+
+  it('shows what the company pays and what the person sees', () => {
+    const offers = offersFrom(first, 1);
+    expect(offers.fee.feeCents).toBeGreaterThan(offers.fee.theyGetCents);
+    const plain = offersFrom(green, 1);
+    expect(plain.fee.feeCents).toBe(plain.fee.theyGetCents);
+  });
+
+  it('offers a threshold between the fee and the points', () => {
+    const offers = offersFrom(first, 1);
+    // Points give up the most now because they pay from the first euro. A threshold
+    // gives up less, because it pays nothing at all unless the picture runs away.
+    expect(offers.points.feeCents).toBeLessThan(offers.threshold.feeCents);
+    expect(offers.threshold.feeCents).toBeLessThan(offers.fee.feeCents);
+    expect(offers.threshold.threshold).toBe(true);
+    expect(offers.threshold.points).toBe(0);
+  });
+
+  it('pays a threshold only on a picture that ran away', () => {
+    const deals = [offersFrom(first, 1).threshold, offersFrom(first, 1).fee];
+    expect(thresholdOwed(deals, 1)).toBe(0);
+    expect(thresholdOwed(deals, THRESHOLD_AT - 0.01)).toBe(0);
+    const owed = thresholdOwed(deals, THRESHOLD_AT);
+    expect(owed).toBeGreaterThan(0);
+    // And only to the person who agreed one.
+    expect(owed).toBe(Math.round(offersFrom(first, 1).threshold.feeCents * THRESHOLD_PAYS));
+    expect(THRESHOLD_AT).toBeGreaterThan(2);
+  });
+
+  it('gives television a showrunner and a film none', () => {
+    const forTv = postsFor('television').map((p) => p.id);
+    const forFilm = postsFor('film').map((p) => p.id);
+    expect(forTv).toContain('showrunner');
+    expect(forFilm).not.toContain('showrunner');
+    // And a film is not judged on a post it cannot fill.
+    expect(postsOn('craft', 'film').map((p) => p.id)).not.toContain('showrunner');
+    expect(postsOn('craft', 'television').map((p) => p.id)).toContain('showrunner');
+    // Passing nothing gives the whole craft, which is what a reference screen wants.
+    expect(postsFor().map((p) => p.id)).toContain('showrunner');
+  });
+
+  it('leaves an unstaffed television picture standing at ordinary all the same', () => {
+    // The showrunner joining the craft axis must not make an unchosen television
+    // picture worse than an unchosen film — an empty post is the office's own pick.
+    expect(axisStands('craft', () => undefined, 'television')).toBe(UNFILLED_REACH);
+    expect(axisStands('craft', () => undefined, 'film')).toBe(UNFILLED_REACH);
   });
 });

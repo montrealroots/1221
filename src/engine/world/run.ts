@@ -45,8 +45,8 @@ import { formatById } from '../content/format';
 import {
   LAST_WEEK_ANYTHING_PAYS, WEEKS_OF_RUN, runFor, windowsAfter,
 } from '../content/release';
-import { A_RUN_IS, standingAfter, type Deal } from '../content/talent';
-import { reachesUs, receive, returnedBy } from './takings';
+import { A_RUN_IS, standingAfter, thresholdOwed, type Deal } from '../content/talent';
+import { payTheThreshold, reachesUs, receive, returnedBy } from './takings';
 import { projectsOf } from './company';
 
 export const RUN_KIND = 'release.week';
@@ -151,6 +151,9 @@ export function payAWeek(sim: Simulation, projectId: Id, week: number): WeekPaid
   if (!project || !opening) return undefined;
 
   const deals = dealsOn(project);
+  // And whatever was sold off the picture before it opened, which comes out of the
+  // same receipts the back end does.
+  const offers = Object.values(project.ancillaries ?? {});
   let pointsCents = 0;
 
   const grossCents = openingWeek(opening, project.formatId, week);
@@ -158,7 +161,7 @@ export function payAWeek(sim: Simulation, projectId: Id, week: number): WeekPaid
   if (grossCents > 0) {
     const got = receive(
       sim, project.companyId, project.id, opening.channel, 'Rental',
-      reachesUs(grossCents, opening.channel), deals, `${project.id}:rental:${week}`,
+      reachesUs(grossCents, opening.channel), deals, `${project.id}:rental:${week}`, offers,
     );
     toUsCents = got.grossToUsCents;
     pointsCents += got.pointsPaidCents;
@@ -168,7 +171,7 @@ export function payAWeek(sim: Simulation, projectId: Id, week: number): WeekPaid
   for (const window of windows) {
     const got = receive(
       sim, project.companyId, project.id, window.id, window.label,
-      window.cents, deals, `${project.id}:${window.id}:${week}`,
+      window.cents, deals, `${project.id}:${window.id}:${week}`, offers,
     );
     pointsCents += got.pointsPaidCents;
   }
@@ -214,7 +217,15 @@ export function armTheRun(sim: Simulation, projectId: Id, title: string): void {
 export function settleTheTalent(sim: Simulation, projectId: Id): void {
   const project = projectsOf(sim.universe).find((p) => p.id === projectId);
   if (!project?.opening || project.opening.settled) return;
-  const won = returnedBy(sim, projectId) >= 1;
+  const returned = returnedBy(sim, projectId);
+
+  // The bonus nobody budgets for. It falls due only where the picture ran away, so
+  // it costs nothing on most of them and a great deal on the one that worked — which
+  // is the point of having agreed it instead of a fee.
+  const owed = thresholdOwed(dealsOn(project), returned);
+  if (owed > 0) payTheThreshold(sim, project.companyId, project.id, owed);
+
+  const won = returned >= 1;
   for (const seat of Object.values(project.engaged ?? {})) {
     const talent = sim.universe.talent?.[seat.talentId];
     if (!talent) continue;

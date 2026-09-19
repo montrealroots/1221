@@ -98,14 +98,30 @@ export const rungOf = (id: string): number => RUNGS.indexOf(id);
  * this person carrying any of the risk — with numbers attached that nothing in this
  * build would read differently. They can be rows the day something does.
  */
-export type DealKind = 'fee' | 'points';
+export type DealKind = 'fee' | 'points' | 'threshold';
 
 export interface Deal {
   kind: DealKind;
-  /** What goes out at the greenlight, whatever happens afterwards. */
+  /**
+   * What the company pays at the greenlight, whatever happens afterwards.
+   *
+   * Inclusive of whatever the agent takes, because this is the figure that leaves
+   * the bank and the ledger should hold one authoritative number rather than two
+   * that have to be added up correctly at every call site.
+   */
   feeCents: number;
+  /** What the person themselves receives out of it, which is less. */
+  theyGetCents: number;
   /** Percent of everything the company receives, where they took points. */
   points: number;
+  /**
+   * Whether a bonus falls due if the picture runs away.
+   *
+   * The third shape of money, and the one that costs nothing on most pictures. A
+   * producer who gave somebody a threshold instead of a fee and then had a hit pays
+   * for it out of the hit.
+   */
+  threshold?: boolean;
 }
 
 /**
@@ -117,9 +133,67 @@ export interface Deal {
  */
 export const POINTS_COST_OF_THE_FEE = 0.72;
 
-/** What a person on this rung asks for, straight, for this many parts. */
+/**
+ * What an agent takes off the top, by rung.
+ *
+ * The company pays the fee and the person receives less than it, which is the whole
+ * of what an agent is here. It matters because it is not flat: somebody starting out
+ * has nobody representing them, so their price is exactly their price — and that is
+ * a real, small edge for taking an unknown that has nothing to do with their reach.
+ *
+ * Read by the fee the company is charged, and by nothing else. An agent who also
+ * negotiated, packaged their other clients or refused a lowball would be a system
+ * rather than a percentage, and should arrive as one.
+ */
+export const AGENT_TAKES: Readonly<Record<string, number>> = {
+  starting: 0,
+  working: 0.10,
+  sought: 0.10,
+  first: 0.15,
+};
+
+/** What the person on this rung actually receives, before anybody takes a cut. */
 export function asksFor(standing: Standing, parts: number): number {
   return Math.round(standing.asksPerPartCents * parts);
+}
+
+/** What the company is charged, which is what they ask plus what their agent takes. */
+export function costsTheCompany(standing: Standing, parts: number): number {
+  return Math.round(asksFor(standing, parts) * (1 + (AGENT_TAKES[standing.id] ?? 0)));
+}
+
+// ---------------------------------------------------------------------------
+// The threshold, which is the bonus nobody budgets for
+// ---------------------------------------------------------------------------
+
+/**
+ * What a picture has to return before a bonus falls due.
+ *
+ * Two and a half times what it cost. Deliberately well past washing its face: a
+ * threshold a picture crosses routinely is a salary paid late, and the point of one
+ * is that it costs nothing on most pictures and a great deal on the rare one that
+ * runs away. A producer who gave somebody a threshold instead of a fee, and then had
+ * a hit, pays for it out of the hit — which is the correct and unpleasant shape.
+ */
+export const THRESHOLD_AT = 2.5;
+
+/**
+ * What crossing it is worth, as a multiple of what they were originally paid.
+ *
+ * Read by the settlement when the last window shuts, and only for people above the
+ * line. A grip does not have a threshold in their deal.
+ */
+export const THRESHOLD_PAYS = 1.5;
+
+/** What a set of deals owes now that the picture has returned this much. */
+export function thresholdOwed(
+  deals: readonly { feeCents: number; threshold?: boolean }[],
+  returned: number,
+): number {
+  if (returned < THRESHOLD_AT) return 0;
+  return deals
+    .filter((d) => d.threshold === true)
+    .reduce((sum, d) => sum + Math.round(d.feeCents * THRESHOLD_PAYS), 0);
 }
 
 /**
@@ -130,16 +204,29 @@ export function asksFor(standing: Standing, parts: number): number {
  * no right answer to it in advance — which is the point.
  */
 export function offersFrom(standing: Standing, parts: number): Readonly<Record<DealKind, Deal>> {
-  const full = asksFor(standing, parts);
+  const theyGet = asksFor(standing, parts);
+  const full = costsTheCompany(standing, parts);
+  const cut = (share: number) => ({
+    feeCents: Math.round(full * share),
+    theyGetCents: Math.round(theyGet * share),
+  });
   return {
-    fee: { kind: 'fee', feeCents: full, points: 0 },
-    points: {
-      kind: 'points',
-      feeCents: Math.round(full * (1 - POINTS_COST_OF_THE_FEE)),
-      points: standing.wantsPoints,
-    },
+    fee: { kind: 'fee', ...cut(1), points: 0 },
+    points: { kind: 'points', ...cut(1 - POINTS_COST_OF_THE_FEE), points: standing.wantsPoints },
+    // Between the two: most of the fee now, and a bonus only if it runs away. It
+    // costs a producer nothing on the pictures that do what they were expected to.
+    threshold: { kind: 'threshold', ...cut(THRESHOLD_TAKES_OFF), points: 0, threshold: true },
   };
 }
+
+/**
+ * How much of the fee comes off to take a threshold instead.
+ *
+ * Far less than points takes off, because a threshold is a far worse bet for the
+ * person: it pays nothing at all unless the picture returns two and a half times its
+ * cost, where points pay from the first euro that arrives.
+ */
+export const THRESHOLD_TAKES_OFF = 0.8;
 
 /**
  * What a set of deals costs at the greenlight.

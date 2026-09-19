@@ -44,18 +44,22 @@ import type { Engagement, Project, Talent } from '../domain/company';
 import type { Channel } from '../content/format';
 import { formatById, whyNotThisChannel, whyNotThisShape } from '../content/format';
 import { engineById } from '../content/concept';
-import { POSTS, UNFILLED_REACH, postById } from '../content/craft';
+import { UNFILLED_REACH, postById, postsFor } from '../content/craft';
 import {
   MOST_POINTS, STANDINGS, offersFrom, standingById, upFrontCents, type DealKind,
 } from '../content/talent';
 import { MEN, WOMEN, patronymic } from '../content/names';
 import { inherits, type Entry } from '../content/lineage';
-import { UNWRITTEN, genreById, whyNotWrite, type Dial } from '../content/story';
+import { MOST, UNWRITTEN, genreById, whyNotWrite, type Dial } from '../content/story';
 import { carriedInto, sourceById, whyNotFrom, type Source } from '../content/source';
+import {
+  ancillaryById, offersOn, type Ancillary, type AncillaryDeal, type Offer,
+} from '../content/ancillary';
 import { reckon, type Spec } from './boxoffice';
-import { chargeTheCampaign, chargeTheFees, returnedBy } from './takings';
+import { bankTheGuarantee, chargeTheCampaign, chargeTheFees, returnedBy } from './takings';
 import { armTheRun } from './run';
 import { crowding } from './field';
+import { howTheHouseDraws, whereTheHouseStands } from './charts';
 import { cashAccountFor, projectsOf } from './company';
 import { MS_WEEK } from './lot';
 
@@ -133,8 +137,15 @@ export function shortlistFor(sim: Simulation, projectId: Id, postId: string): re
   const want = A_SHORTLIST_IS - before.length;
   const drawn: Talent[] = [];
   const rng = sim.rng('casting', projectId, postId);
+  // What the house has been doing lately, which is the compounding loop the build
+  // did not have: every picture used to be cast out of the same pool whatever the
+  // company had done. A good run puts first-call people in front of a producer who
+  // could not get them last year, and a bad run takes them away again. It shifts the
+  // draw rather than handing over a better list, so a hit makes the top of the pool
+  // likelier and never certain.
+  const house = howTheHouseDraws(whereTheHouseStands(sim).stands);
   for (let i = 0; i < want; i += 1) {
-    const roll = rng.next();
+    const roll = Math.max(0, Math.min(0.999, rng.next() + house));
     // Weighted down the rungs: plenty of people are working and very few are first
     // call, which is what makes the top of the list feel like a decision rather than
     // a default.
@@ -163,7 +174,7 @@ export function offersFor(talent: Talent, parts: number) {
 /** The reach of whoever fills each post, which is what the box office reads. */
 export function reachOf(project: Project): Readonly<Record<string, number>> {
   const out: Record<string, number> = {};
-  for (const post of POSTS) {
+  for (const post of postsFor(project.medium)) {
     const seat = project.engaged?.[post.id];
     const standing = standingById(seat?.standingId);
     out[post.id] = standing ? standing.reach : UNFILLED_REACH;
@@ -303,9 +314,9 @@ export function whyNotEngage(sim: Simulation, spec: Engaging): string | undefine
   const talent = sim.universe.talent?.[spec.talentId];
   if (!talent) return 'Nobody of that name.';
   if (talent.postId !== spec.postId) return `${talent.name} doesn’t do that job.`;
-  if (spec.dealKind === 'points' && !post.aboveTheLine) {
+  if (spec.dealKind !== 'fee' && !post.aboveTheLine) {
     return `A ${post.title.toLowerCase()} is paid a fee. Only people an audience has `
-      + 'heard of are offered a share of the back end.';
+      + 'heard of are offered a share of the back end or a bonus on a threshold.';
   }
   if (spec.dealKind === 'points') {
     const already = Object.values(project.engaged ?? {}).reduce((sum, one) => sum + one.deal.points, 0);
@@ -342,6 +353,67 @@ export const feesOn = (project: Project): Money =>
 /** What share of the back end has been given away. */
 export const pointsGiven = (project: Project): number =>
   Object.values(project.engaged ?? {}).reduce((sum, one) => sum + one.deal.points, 0);
+
+// ---------------------------------------------------------------------------
+// Selling what is not the picture
+// ---------------------------------------------------------------------------
+
+export interface Selling {
+  projectId: Id;
+  ancillaryId: string;
+  /** A guarantee now, or a share of what arrives. */
+  kind: AncillaryDeal;
+}
+
+/**
+ * Why nobody will do this deal.
+ *
+ * The genre refusal is the interesting one. A partner who would back anything is
+ * not a partner, so a romance cannot sell action figures — and that is a fact about
+ * romances rather than a penalty on one.
+ */
+export function whyNotSell(sim: Simulation, spec: Selling): string | undefined {
+  const project = projectById(sim, spec.projectId);
+  if (!project) return 'No such project.';
+  if (isLocked(project, 'opening')) return 'This one opened already. The deals are done.';
+  const ancillary = ancillaryById(spec.ancillaryId);
+  if (!ancillary) return `Nobody sells anything called '${spec.ancillaryId}'.`;
+  if (!project.genreId) return 'Write it before anybody will talk about the merchandise.';
+  if (!ancillary.suits.includes(project.genreId)) {
+    const genre = genreById(project.genreId);
+    return `Nobody is buying ${ancillary.label.toLowerCase()} off ${genre?.label ?? 'that'}. `
+      + `What sells: ${ancillary.suits.join(', ')}.`;
+  }
+  if (project.ancillaries?.[spec.ancillaryId]) return 'That one is already sold.';
+  return undefined;
+}
+
+/** What both partners would offer on this picture as it stands. */
+export function offersOnIt(project: Project, ancillary: Ancillary) {
+  const budget = project.budgetCents ?? project.spentCents;
+  return offersOn(ancillary, budget, dialsOn(project)[ancillary.reads] ?? 0, MOST);
+}
+
+export function sell(sim: Simulation, spec: Selling): { ok: boolean; error?: string; cents: Money } {
+  const no = whyNotSell(sim, spec);
+  if (no) return { ok: false, error: no, cents: 0 };
+  const project = projectById(sim, spec.projectId)!;
+  const ancillary = ancillaryById(spec.ancillaryId)!;
+  const offer = offersOnIt(project, ancillary)[spec.kind];
+
+  if (offer.guaranteeCents > 0) {
+    const banked = bankTheGuarantee(
+      sim, project.companyId, project.id, ancillary.id, ancillary.label, offer.guaranteeCents,
+    );
+    if (!banked.ok) return { ok: false, error: banked.error, cents: 0 };
+  }
+  project.ancillaries = { ...(project.ancillaries ?? {}), [spec.ancillaryId]: offer };
+  return { ok: true, cents: offer.guaranteeCents };
+}
+
+/** Every share deal a picture is carrying, for the run to take out of each receipt. */
+export const soldOn = (project: Project): readonly Offer[] =>
+  Object.values(project.ancillaries ?? {});
 
 // ---------------------------------------------------------------------------
 // The greenlight
@@ -609,6 +681,7 @@ export function registerProduction(sim: Simulation): void {
   sim.onCommand<Shape, Done>('production.shape', (p) => setShape(sim, p));
   sim.onCommand<Writing, Done>('production.write', (p) => writeIt(sim, p));
   sim.onCommand<Engaging, Done>('production.engage', (p) => engage(sim, p));
+  sim.onCommand<Selling, Done>('production.sell', (p) => sell(sim, p));
   sim.onCommand<{ projectId: Id; budgetCents?: number }, Done>(
     'production.commit', (p) => commit(sim, p.projectId, Math.max(0, Math.round(p.budgetCents ?? 0))),
   );

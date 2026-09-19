@@ -23,16 +23,18 @@ import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Empty } from '@/ui/components/primitives';
 import { formatMoney } from '@/engine/core/money';
 import { FORMATS, FORMAT_BY_ID, CHANNEL_LABEL, type Channel } from '@/engine/content/format';
-import { POSTS } from '@/engine/content/craft';
+import { postsFor } from '@/engine/content/craft';
 import { MONTH_SAID } from '@/engine/content/release';
-import { MOST_POINTS } from '@/engine/content/talent';
+import { MOST_POINTS, THRESHOLD_AT, type DealKind } from '@/engine/content/talent';
 import {
   ATTENTION, DIALS, DIAL_BY_ID, GENRES, MOST, genreById, leftToSpend, servesIts,
 } from '@/engine/content/story';
 import { carriedInto } from '@/engine/content/source';
+import { ancillariesFor, type AncillaryDeal } from '@/engine/content/ancillary';
 import {
   LOCKS, LOCK_SAID, feesOn, isLocked, offersFor, pointsGiven, shortlistFor,
   whyNotCommit, whyNotFollowUp, whyNotOpen, whyNotShape, whyNotWriteIt, dialsOn, sourceOf,
+  offersOnIt,
   type Lock,
 } from '@/engine/world/production';
 import { theWeeksAhead } from '@/engine/world/field';
@@ -80,6 +82,7 @@ export function ProductionWorkspace() {
       <WritePanel project={project} />
       <ShapePanel project={project} />
       <EngagePanel project={project} />
+      <SellPanel project={project} />
       <CommitPanel project={project} />
       <OpenPanel project={project} />
       <OutPanel project={project} />
@@ -170,14 +173,15 @@ function EngagePanel({ project }: { project: Project }) {
   const { run } = useGame();
   const [postId, setPostId] = useState('director');
   const [said, setSaid] = useState<string | undefined>(undefined);
-  const post = POSTS.find((p) => p.id === postId)!;
+  const posts = postsFor(project.medium);
+  const post = posts.find((p) => p.id === postId) ?? posts[0]!;
   const parts = project.parts?.length ?? 1;
   const shortlist = useWorld(
     (s) => shortlistFor(s, project.id, postId),
     [project.id, postId, project.parts?.length],
   );
 
-  const take = (talentId: string, dealKind: 'fee' | 'points') => {
+  const take = (talentId: string, dealKind: DealKind) => {
     const done = run<{ ok: boolean; error?: string }>(
       'production.engage', { projectId: project.id, postId, talentId, dealKind }, { silent: true },
     );
@@ -189,7 +193,7 @@ function EngagePanel({ project }: { project: Project }) {
       <div className="field">
         <label htmlFor="post">Post</label>
         <select id="post" value={postId} onChange={(e) => setPostId(e.target.value)}>
-          {POSTS.map((p) => (
+          {posts.map((p) => (
             <option key={p.id} value={p.id}>
               {p.title}{project.engaged?.[p.id] ? ` — ${project.engaged[p.id]!.name}` : ''}
             </option>
@@ -215,8 +219,23 @@ function EngagePanel({ project }: { project: Project }) {
                     {formatMoney(offers.points.feeCents, { cents: false })} and{' '}
                     {offers.points.points}% of what comes in
                   </button>
+                  {' '}
+                  <button className="btn btn-sm" onClick={() => take(one.id, 'threshold')}>
+                    {formatMoney(offers.threshold.feeCents, { cents: false })} and a bonus
+                    {' '}past {THRESHOLD_AT}x
+                  </button>
                 </>
               ) : null}
+              {offers.fee.feeCents > offers.fee.theyGetCents ? (
+                <p className="xs dim" style={{ margin: '3px 0 0' }}>
+                  They see {formatMoney(offers.fee.theyGetCents, { cents: false })} of the flat
+                  fee. The rest is their agent.
+                </p>
+              ) : (
+                <p className="xs dim" style={{ margin: '3px 0 0' }}>
+                  Nobody represents them, so the price is the price.
+                </p>
+              )}
             </li>
           );
         })}
@@ -447,6 +466,66 @@ function WritePanel({ project }: { project: Project }) {
       <button className="btn btn-primary" onClick={write} disabled={refusal !== undefined}>
         Write It
       </button>
+    </Panel>
+  );
+}
+
+/**
+ * What can be sold off the picture before it opens, and on what terms.
+ *
+ * The producer is on the other side of the table here. A guarantee is money
+ * somebody committed while the outcome was unknown, so it is the cash to reach for
+ * when the greenlight is short — and a share is the better end of it if you turn
+ * out to be right.
+ */
+function SellPanel({ project }: { project: Project }) {
+  const { run } = useGame();
+  const [said, setSaid] = useState<string | undefined>(undefined);
+  const could = ancillariesFor(project.genreId);
+
+  const take = (ancillaryId: string, kind: AncillaryDeal) => {
+    const done = run<{ ok: boolean; error?: string; cents?: number }>(
+      'production.sell', { projectId: project.id, ancillaryId, kind }, { silent: true },
+    );
+    setSaid(done.value?.error ?? (done.value?.ok
+      ? (done.value.cents ? `Signed. ${formatMoney(done.value.cents, { cents: false })} in.` : 'Signed.')
+      : done.error));
+  };
+
+  return (
+    <Panel title="Sold Off It" tight>
+      {could.length === 0 ? (
+        <p className="small">
+          Nobody is buying merchandise or a soundtrack off this one. That is a fact
+          about the genre, not a mark against the picture.
+        </p>
+      ) : could.map((one) => {
+        const offers = offersOnIt(project, one);
+        const done = project.ancillaries?.[one.id];
+        return (
+          <div key={one.id} style={{ marginBottom: '0.5rem' }}>
+            <strong>{one.label}</strong>
+            <p className="xs dim" style={{ margin: '2px 0 5px' }}>{one.what}</p>
+            {done ? (
+              <p className="small">
+                {done.kind === 'guarantee'
+                  ? `Sold for ${formatMoney(done.guaranteeCents, { cents: false })}, paid.`
+                  : `Sold for ${(done.share * 100).toFixed(1)}% of what comes in.`}
+              </p>
+            ) : (
+              <>
+                <button className="btn btn-sm" onClick={() => take(one.id, 'guarantee')}>
+                  {formatMoney(offers.guarantee.guaranteeCents, { cents: false })} now
+                </button>{' '}
+                <button className="btn btn-sm" onClick={() => take(one.id, 'share')}>
+                  {(offers.share.share * 100).toFixed(1)}% of what comes in
+                </button>
+              </>
+            )}
+          </div>
+        );
+      })}
+      {said ? <p className="small">{said}</p> : null}
     </Panel>
   );
 }

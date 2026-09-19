@@ -79,7 +79,7 @@ export function eligible(sim: Simulation, at: number): readonly Project[] {
  * anywhere in it.
  */
 export function standing(project: Project): number {
-  const craft = axisStands('craft', (id) => reachOf(project)[id]);
+  const craft = axisStands('craft', (id) => reachOf(project)[id], project.medium);
   const genre = genreById(project.genreId);
   const serves = genre ? servesIts(genre, dialsOn(project)) : 1;
   return standsWithTheRoom(craft, serves, project.opening?.wordOfMouth ?? 0);

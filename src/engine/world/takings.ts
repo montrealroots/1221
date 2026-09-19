@@ -43,6 +43,7 @@ import type { Id } from '../core/ids';
 import { millions, type Money } from '../core/money';
 import type { Deal } from '../content/talent';
 import { pointsOutOf } from '../content/talent';
+import { shareOutOf, type Offer } from '../content/ancillary';
 import { CAMPAIGN_UPFRONT, DISTRIBUTION_FEE, EXHIBITOR_KEEPS } from '../content/release';
 import type { Channel } from '../content/format';
 import { cashAccountFor } from './company';
@@ -58,6 +59,12 @@ export const FEES_ACCOUNT = 'expense:fees';
 
 /** Where a share of the back end going out to the people who took one is charged. */
 export const POINTS_ACCOUNT = 'expense:points';
+
+/** Where a partner's share of the picture is charged. */
+export const SOLD_ACCOUNT = 'expense:sold';
+
+/** Where a bonus that fell due on a runaway picture is charged. */
+export const THRESHOLD_ACCOUNT = 'expense:threshold';
 
 /** The statement category every posting here carries. */
 export const CATEGORY = 'production';
@@ -120,6 +127,7 @@ export function receive(
   grossToUsCents: Money,
   deals: readonly Deal[],
   key: string,
+  offers: readonly Offer[] = [],
 ): Received {
   const nothing = { grossToUsCents: 0, pointsPaidCents: 0, keptCents: 0 };
   if (grossToUsCents <= 0) return nothing;
@@ -127,13 +135,20 @@ export function receive(
   if (!cash) return nothing;
 
   const owed = pointsOutOf(deals, grossToUsCents);
-  const kept = grossToUsCents - owed;
+  // And whatever was sold off the picture before it opened. A partner on a share
+  // takes theirs out of the same receipt the back end comes out of, which is what
+  // makes selling the merchandise a real cost rather than free money.
+  const sold = shareOutOf(offers, grossToUsCents);
+  const kept = grossToUsCents - owed - sold;
   const postings = [
     { accountId: nominal(sim, `${INCOME_PREFIX}${windowId}`, label, 'income'), amount: -grossToUsCents },
     { accountId: cash.id, amount: kept },
   ];
   if (owed > 0) {
     postings.push({ accountId: nominal(sim, POINTS_ACCOUNT, 'Back End', 'expense'), amount: owed });
+  }
+  if (sold > 0) {
+    postings.push({ accountId: nominal(sim, SOLD_ACCOUNT, 'Sold Off It', 'expense'), amount: sold });
   }
   sim.post({
     memo: label,
@@ -144,6 +159,39 @@ export function receive(
     idempotencyKey: key,
   });
   return { grossToUsCents, pointsPaidCents: owed, keptCents: kept };
+}
+
+/**
+ * Banks a guarantee the moment it is agreed.
+ *
+ * Not at the opening. The whole value of a guarantee is that somebody committed the
+ * money while the outcome was unknown, so it arrives while the picture is still a
+ * plan — which is exactly what makes it the cash a short company reaches for, and
+ * why taking it is a decision rather than a formality.
+ */
+export function bankTheGuarantee(
+  sim: Simulation,
+  companyId: Id,
+  projectId: Id,
+  ancillaryId: string,
+  label: string,
+  cents: Money,
+): { ok: boolean; error?: string } {
+  const cash = cashAccountFor(sim.universe, companyId);
+  if (!cash) return { ok: false, error: 'The company has no cash account.' };
+  if (cents <= 0) return { ok: true };
+  sim.post({
+    memo: `${label}, guaranteed`,
+    category: CATEGORY,
+    postings: [
+      { accountId: nominal(sim, `${INCOME_PREFIX}${ancillaryId}`, label, 'income'), amount: -cents },
+      { accountId: cash.id, amount: cents },
+    ],
+    refType: 'project',
+    refId: projectId,
+    idempotencyKey: `${projectId}:${ancillaryId}:guarantee`,
+  });
+  return { ok: true };
 }
 
 /**
@@ -232,7 +280,7 @@ export function receivedBy(sim: Simulation, projectId: Id): Money {
 
 /** What one project has cost, the same way and for the same reason. */
 export function costOf(sim: Simulation, projectId: Id): Money {
-  const charged = new Set([CAMPAIGN_ACCOUNT, FEES_ACCOUNT, POINTS_ACCOUNT]);
+  const charged = new Set([CAMPAIGN_ACCOUNT, FEES_ACCOUNT, POINTS_ACCOUNT, SOLD_ACCOUNT, THRESHOLD_ACCOUNT]);
   let sum = 0;
   for (const txn of sim.universe.transactions) {
     if (txn.refType !== 'project' || txn.refId !== projectId) continue;
@@ -251,4 +299,35 @@ export function returnedBy(sim: Simulation, projectId: Id): number {
   const cost = costOf(sim, projectId);
   if (cost <= 0) return 0;
   return receivedBy(sim, projectId) / cost;
+}
+
+/**
+ * Pays a bonus that fell due because the picture ran away.
+ *
+ * Charged when the last window shuts rather than as the money arrives, because a
+ * threshold is a fact about the whole life of a picture and cannot be known until
+ * that life is over. It is the one cost in the model a producer cannot plan for,
+ * which is exactly what makes agreeing one a decision.
+ */
+export function payTheThreshold(
+  sim: Simulation,
+  companyId: Id,
+  projectId: Id,
+  cents: Money,
+): { ok: boolean; error?: string } {
+  const cash = cashAccountFor(sim.universe, companyId);
+  if (!cash) return { ok: false, error: 'The company has no cash account.' };
+  if (cents <= 0) return { ok: true };
+  sim.post({
+    memo: 'Bonus, on the threshold',
+    category: CATEGORY,
+    postings: [
+      { accountId: cash.id, amount: -cents },
+      { accountId: nominal(sim, THRESHOLD_ACCOUNT, 'Thresholds', 'expense'), amount: cents },
+    ],
+    refType: 'project',
+    refId: projectId,
+    idempotencyKey: `${projectId}:threshold`,
+  });
+  return { ok: true };
 }
