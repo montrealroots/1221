@@ -1066,7 +1066,7 @@ function CastForm({ projectId, onClose }: { projectId: string; onClose: () => vo
                     return (
                       <tr key={person.id}>
                         <td className="nowrap">
-                          <Open subject={at('person', person.id)}>{person.displayName}</Open>
+                          <Open subject={at('talent', person.id)}>{person.displayName}</Open>
                           <div className="muted small">
                             {sureReads(howSure(sim, project, role, person))}
                           </div>
