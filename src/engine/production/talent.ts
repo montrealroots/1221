@@ -297,46 +297,60 @@ export function searchTalent(sim: Simulation, search: TalentSearch = {}): Talent
   const needle = search.query?.trim().toLocaleLowerCase() ?? '';
   const from = search.availableFrom;
   const to = search.availableTo;
-  const profiles = Object.values(sim.universe.people)
+  const ratingCache = new Map<string, number>();
+  const acting = (person: Person): number => {
+    const cached = ratingCache.get(person.id);
+    if (cached !== undefined) return cached;
+    const value = Math.round(overallRating(person.attributes));
+    ratingCache.set(person.id, value);
+    return value;
+  };
+
+  const people = Object.values(sim.universe.people)
     .filter((person) => isTalent(sim, person.id))
     .filter((person) => search.profession === undefined || person.careerTrack === search.profession)
-    .map((person) => talentProfile(sim, person.id)!)
-    .filter((profile) => {
+    .filter((person) => {
       if (needle) {
-        const name = `${profile.person.displayName} ${profile.person.stageName ?? ''}`.toLocaleLowerCase();
+        const name = `${person.displayName} ${person.stageName ?? ''}`.toLocaleLowerCase();
         if (!name.includes(needle)) return false;
       }
-      if (search.minActingRating !== undefined && profile.actingRating < search.minActingRating) return false;
+      if (search.minActingRating !== undefined && acting(person) < search.minActingRating) return false;
       if (
         search.minProfessionalReputation !== undefined
-        && profile.person.reputation.professionalReputation < search.minProfessionalReputation
+        && person.reputation.professionalReputation < search.minProfessionalReputation
       ) return false;
-      if (from !== undefined && to !== undefined && !freeToWork(sim, profile.person.id, from, to)) return false;
+      if (from !== undefined && to !== undefined && !freeToWork(sim, person.id, from, to)) return false;
       return true;
     });
 
   const sort = search.sort ?? 'reputation';
-  profiles.sort((a, b) => {
+  people.sort((a, b) => {
     switch (sort) {
       case 'name':
-        return a.person.displayName.localeCompare(b.person.displayName);
+        return a.displayName.localeCompare(b.displayName);
       case 'acting':
-        return b.actingRating - a.actingRating || a.person.displayName.localeCompare(b.person.displayName);
+        return acting(b) - acting(a) || a.displayName.localeCompare(b.displayName);
       case 'demand':
-        return b.person.reputation.industryDemand - a.person.reputation.industryDemand
-          || a.person.displayName.localeCompare(b.person.displayName);
+        return b.reputation.industryDemand - a.reputation.industryDemand
+          || a.displayName.localeCompare(b.displayName);
       case 'fame':
-        return b.person.reputation.publicFame - a.person.reputation.publicFame
-          || a.person.displayName.localeCompare(b.person.displayName);
+        return b.reputation.publicFame - a.reputation.publicFame
+          || a.displayName.localeCompare(b.displayName);
       case 'reputation':
       default:
-        return b.person.reputation.professionalReputation - a.person.reputation.professionalReputation
-          || b.actingRating - a.actingRating
-          || a.person.displayName.localeCompare(b.person.displayName);
+        return b.reputation.professionalReputation - a.reputation.professionalReputation
+          || acting(b) - acting(a)
+          || a.displayName.localeCompare(b.displayName);
     }
   });
 
-  return profiles.slice(0, Math.max(1, search.limit ?? 100));
+  // Build the expensive career projection only for the rows the screen can
+  // actually show. A long-running save can know thousands of performers, and
+  // sorting 813 skills for every one of them just to discard all but forty
+  // would turn opening a casting list into a simulation event of its own.
+  return people
+    .slice(0, Math.max(1, search.limit ?? 100))
+    .map((person) => talentProfile(sim, person.id)!);
 }
 
 /**
