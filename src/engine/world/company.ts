@@ -1211,6 +1211,7 @@ export function registerCompanyCommands(sim: Simulation): void {
         title,
         medium: payload.medium ?? 'film',
         stage: holding ? 'optioned' : 'idea',
+        productionVersion: 2,
         startedAt: s.now,
         spentCents: 0,
         delivered: [],
