@@ -71,7 +71,7 @@ import { BEFORE_THE_FIRST_DAY, theyAreFree, whatHasThem } from './diary';
 import { americanArm, signedWith } from './company';
 import { isCitizenOf } from '../domain/citizenship';
 import {
-  actingTermsAcceptanceDelta, normalizeActingTerms, type ActingTermsInput,
+  actingTermsAcceptanceDelta, actingTermsSummary, normalizeActingTerms, type ActingTermsInput,
 } from '../production/contracts';
 
 /** A year, for decaying a quote. */
@@ -594,7 +594,7 @@ export interface Offer {
   /** How much the person is in demand, out of a hundred. */
   demand: number;
   /** The negotiated non-fee terms attached to the offer. */
-  terms: ActingTerms;
+  terms?: ActingTerms;
 }
 
 export type Answer =
@@ -960,6 +960,7 @@ export function castSomebody(sim: Simulation, casting: Casting): Cast {
       // there is nothing to be unsure about, and the sentence it reads as —
       // *you have worked with them* — would be the game telling the player
       // they have met themselves.
+      + ` Contract: ${actingTermsSummary(terms)}.`
       + (person.isPlayer ? '' : ` ${saidAsASentence(sureReads(howSure(sim, project, role, person)))}`),
     importance: 55,
     refType: 'project',
