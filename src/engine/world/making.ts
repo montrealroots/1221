@@ -66,7 +66,7 @@ import { capabilitiesOf, exerciseTheOption, filled } from './company';
 import { purseFor } from './money';
 import { armTheClaim } from './rebate';
 import { developmentReadiness } from '../production/development';
-import { packageMatchesGreenlight } from '../production/package';
+import { packageMatchesPlan } from '../production/package-spec';
 
 export const MAKING_KIND = 'project.period';
 export const DELIVERY_KIND = 'project.delivery';
@@ -431,7 +431,7 @@ export function wouldBe(
     };
   }
 
-  if (project.package && !packageMatchesGreenlight(project, spec)) {
+  if (project.package && !packageMatchesPlan(project, spec)) {
     return {
       ok: false,
       error: project.title + ' was packaged on different production terms. Repackage it before changing the greenlight.',
