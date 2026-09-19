@@ -81,9 +81,21 @@ export interface Opening {
   weeksPaid: number;
 }
 
-/** The deals a picture is carrying, for the people who took a share. */
-export function dealsOn(project: { engaged?: Record<string, { deal: Deal }> }): readonly Deal[] {
-  return Object.values(project.engaged ?? {}).map((one) => one.deal);
+/**
+ * The deals a picture is carrying, for the people who took a share.
+ *
+ * Both halves. A post is a job the picture has and a billed part is a person on the
+ * screen, and either of them may be on points — so a settlement that read only the
+ * posts would quietly stop paying the cast the moment the cast became a list.
+ */
+export function dealsOn(project: {
+  engaged?: Record<string, { deal: Deal }>;
+  billed?: Record<string, { deal: Deal }>;
+}): readonly Deal[] {
+  return [
+    ...Object.values(project.engaged ?? {}),
+    ...Object.values(project.billed ?? {}),
+  ].map((one) => one.deal);
 }
 
 /**
@@ -226,7 +238,12 @@ export function settleTheTalent(sim: Simulation, projectId: Id): void {
   if (owed > 0) payTheThreshold(sim, project.companyId, project.id, owed);
 
   const won = returned >= 1;
-  for (const seat of Object.values(project.engaged ?? {})) {
+  // Posts and cast alike. A result belongs to everybody who was on it.
+  const everybody = [
+    ...Object.values(project.engaged ?? {}),
+    ...Object.values(project.billed ?? {}),
+  ];
+  for (const seat of everybody) {
     const talent = sim.universe.talent?.[seat.talentId];
     if (!talent) continue;
     talent.results = [won, ...(talent.results ?? [])].slice(0, A_RUN_IS * 3);

@@ -31,8 +31,11 @@ import { FORMATS, FORMAT_BY_ID, CHANNEL_LABEL } from '../src/engine/content/form
 import { GENRES, GENRE_BY_ID, DIALS, DIAL_BY_ID, MOST, ATTENTION, leftToSpend } from '../src/engine/content/story.ts';
 import { SOURCES, SOURCE_BY_ID, carriedInto } from '../src/engine/content/source.ts';
 import { POSTS } from '../src/engine/content/craft.ts';
+import { castingFor } from '../src/engine/content/roles.ts';
 import { LAST_WEEK_ANYTHING_PAYS, MONTH_SAID } from '../src/engine/content/release.ts';
-import { shortlistFor, offersFor, sourceOf, feesOn, pointsGiven } from '../src/engine/world/production.ts';
+import {
+  shortlistFor, castingShortlist, offersFor, sourceOf, feesOn, pointsGiven,
+} from '../src/engine/world/production.ts';
 import { payAWeek } from '../src/engine/world/run.ts';
 import { receivedBy, costOf } from '../src/engine/world/takings.ts';
 import { theWeeksAhead } from '../src/engine/world/field.ts';
@@ -202,6 +205,21 @@ function make(sim, plan, weeksOut) {
     const kind = post?.aboveTheLine && want === 'first' ? 'points' : 'fee';
     must(sim, 'production.engage', { projectId, postId, talentId: pick.id, dealKind: kind });
     engaged.push({ name: pick.name, post: post?.title ?? postId, standing: want, kind });
+  }
+
+  // And the cast, which is a list decided by the shape rather than one chair. The
+  // plan says what standing it wants at the top and the rest fall away from it, the
+  // way a real cast list does.
+  const billings = castingFor(FORMAT_BY_ID[plan.formatId].medium, plan.parts);
+  for (let i = 0; i < billings.length; i += 1) {
+    const billing = billings[i];
+    const want = i === 0 ? (plan.leads ?? 'sought') : i < 3 ? 'working' : 'starting';
+    const list = castingShortlist(sim, projectId, billing.id);
+    const pick = list.find((one) => one.standingId === want) ?? list[0];
+    if (!pick) continue;
+    const kind = i === 0 && want === 'first' ? 'points' : 'fee';
+    must(sim, 'production.cast', { projectId, billingId: billing.id, talentId: pick.id, dealKind: kind });
+    engaged.push({ name: pick.name, post: billing.label, standing: pick.standingId, kind });
   }
 
   const project = projectsOf(sim.universe).find((p) => p.id === projectId);

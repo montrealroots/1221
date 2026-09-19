@@ -435,6 +435,22 @@ export const LESSONS: readonly Lesson[] = [
     importance: 61,
   },
   {
+    id: 'cast',
+    strand: 'the-pictures',
+    title: 'Casting The Parts, Not A Part',
+    body: 'How many parts a picture is cast with is read off its shape, not '
+      + 'chosen: a feature has three or four worth naming and a long series has a company. '
+      + 'Billing falls steeply, so the first part is most of the reason anybody turns up to '
+      + 'something they have heard nothing about and the fourth is worth having a real name '
+      + 'in without being worth a fortune. Actors come from one pool, so the person '
+      + 'who was fourth billed for you last year can be first billed now — and will cost '
+      + 'what their last three results say they cost.',
+    teaches: ['production.cast'],
+    screen: 'production',
+    after: ['shape'],
+    importance: 64,
+  },
+  {
     id: 'engage',
     strand: 'the-pictures',
     title: 'A Fee, Or A Share Of What Comes In',
@@ -473,7 +489,7 @@ export const LESSONS: readonly Lesson[] = [
     title: 'Committing Pays Them Whatever Happens',
     body: 'Fees go out at the greenlight, out of company cash, before a frame exists. That '
       + 'is the point of them: a picture that fails still cost every penny of the people '
-      + 'who made it, so the standing you chose was a bet rather than a preference. If the '
+      + 'who made it, so the standing you chose was a bet, not a preference. If the '
       + 'fees are more than the company has, one of them has to take a share instead — which '
       + 'is how a short week decides who is in your picture. A thing you no longer want can '
       + 'go on the shelf instead, and come back off it later.',

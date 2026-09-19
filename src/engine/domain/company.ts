@@ -717,6 +717,15 @@ export interface Project {
    */
   engaged?: Record<string, Engagement>;
   /**
+   * Who is in each billed part, by billing id from `content/roles.ts`.
+   *
+   * Separate from `engaged` because a part and a post are different things: a post
+   * is a job the picture has whatever it is about, and a part is a person on the
+   * screen. How many parts there are is read off the shape rather than chosen, so a
+   * two-hander is cast with two decisions and a company with six.
+   */
+  billed?: Record<string, Engagement>;
+  /**
    * Which doors have shut, by lock id from `world/production.ts`.
    *
    * What makes every choice above weigh anything. Read by each refusal in that

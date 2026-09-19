@@ -66,6 +66,9 @@ import {
   AGENT_TAKES, THRESHOLD_AT, THRESHOLD_PAYS, asksFor, costsTheCompany, thresholdOwed,
 } from '@/engine/content/talent';
 import { postsFor } from '@/engine/content/craft';
+import {
+  BILLINGS, CAST_IS_OF_THE_DRAW, FEWEST, castStands, castingFor, howManyParts,
+} from '@/engine/content/roles';
 
 // ---------------------------------------------------------------------------
 
@@ -140,9 +143,13 @@ describe('the posts', () => {
   });
 
   it('only lets people an audience has heard of be offered points', () => {
+    // The cast used to be a post called Lead and is a list now, so the above-the-line
+    // posts are the ones a picture has whatever it is about. Everybody billed is
+    // above the line by construction rather than by a flag.
     const above = POSTS.filter((p) => p.aboveTheLine).map((p) => p.id);
     expect(above).toContain('director');
-    expect(above).toContain('lead');
+    expect(above).toContain('writer');
+    expect(above).toContain('showrunner');
     expect(above).not.toContain('line');
   });
 });
@@ -257,8 +264,13 @@ describe('the accumulator', () => {
   it('lets the draw move the height and the craft barely move it', () => {
     // The asymmetry the model turns on. A famous cast fills an opening; a fine
     // picture earns its money over twenty weeks instead.
+    // The cast lives in `castReach` now rather than in a post called Lead, so the
+    // draw side of this is a starry cast and a sought-after composer together.
     const base = heightOf();
-    const draw = heightOf({ reach: { ...evenly(1), lead: 1.55, music: 1.55 } });
+    const draw = heightOf({
+      reach: { ...evenly(1), music: 1.55 },
+      castReach: { first: 1.55, second: 1.55, third: 1.55, fourth: 1.55 },
+    });
     const craft = heightOf({
       reach: { ...evenly(1), director: 1.55, writer: 1.55, photography: 1.55, cutting: 1.55 },
     });
@@ -591,7 +603,18 @@ describe('what the year decides', () => {
     // A category for a job nothing models could not credit anybody, and crediting
     // people is two of the three things a win is for.
     for (const award of AWARDS) {
-      if (award.id === 'picture') { expect(award.postId).toBeUndefined(); continue; }
+      if (award.id === 'picture') {
+        expect(award.postId).toBeUndefined();
+        expect(award.billingId).toBeUndefined();
+        continue;
+      }
+      // Performance credits a billed part rather than a job, because the cast
+      // stopped being a post called Lead. Everything else still names a post.
+      if (award.billingId) {
+        expect(BILLINGS.map((b) => b.id), `${award.id} credits a part that does not exist`)
+          .toContain(award.billingId);
+        continue;
+      }
       expect(POSTS.map((p) => p.id), `${award.id} credits a post that does not exist`)
         .toContain(award.postId);
     }
@@ -925,6 +948,67 @@ describe('a shared world', () => {
     expect(sim.hasCommand('production.join')).toBe(true);
     expect(sim.execute({
       kind: 'production.join', payload: { projectId: 'nope', universeId: 'The North' },
+    }).ok).toBe(false);
+  });
+});
+
+describe('the cast', () => {
+  it('reads how many parts off the shape rather than asking', () => {
+    // A cast size is a fact about the object: a ninety-minute film has a handful of
+    // people in it and a twenty-part series has a company.
+    expect(howManyParts('film', 1)).toBeLessThan(howManyParts('television', 12));
+    expect(castingFor('film', 1).length).toBe(howManyParts('film', 1));
+    expect(howManyParts('film', 1)).toBeGreaterThanOrEqual(FEWEST);
+    // And it stops where the choosing stops rather than running on forever.
+    expect(howManyParts('television', 40)).toBe(BILLINGS.length);
+  });
+
+  it('falls steeply down the billing, so later parts are worth having and not a fortune', () => {
+    for (let i = 1; i < BILLINGS.length; i += 1) {
+      expect(BILLINGS[i]!.weight).toBeLessThan(BILLINGS[i - 1]!.weight);
+      expect(BILLINGS[i]!.weight).toBeGreaterThan(0);
+    }
+    expect(BILLINGS[0]!.weight).toBeGreaterThan(BILLINGS[3]!.weight * 3);
+  });
+
+  it('judges a two-hander on two people and a company on six', () => {
+    // The thing one chair called Lead could never do. The same first-billed name
+    // carries a small cast further than a large one, because there is less else.
+    const onlyFirst = (id: string) => (id === 'first' ? 1.55 : 1);
+    const small = castStands('film', 1, onlyFirst);
+    const large = castStands('television', 24, onlyFirst);
+    expect(small).toBeGreaterThan(large);
+  });
+
+  it('treats an uncast part as ordinary, the same as an empty post', () => {
+    expect(castStands('film', 1, () => undefined)).toBe(1);
+    expect(castStands('television', 12, () => undefined)).toBe(1);
+  });
+
+  it('gives the cast most of the draw and leaves the music real', () => {
+    expect(CAST_IS_OF_THE_DRAW).toBeGreaterThan(0.5);
+    expect(CAST_IS_OF_THE_DRAW).toBeLessThan(1);
+  });
+
+  it('moves the reckoning, and names the cast size on the receipt', () => {
+    const bare = reckon(BASE);
+    const starry = reckon({ ...BASE, castReach: { first: 1.55, second: 1.55, third: 1.55 } });
+    expect(starry.cents).toBeGreaterThan(bare.cents);
+    const line = starry.said.find((n) => n.by === 'the draw')!;
+    expect(line.why).toContain('cast of');
+  });
+
+  it('has no post called Lead any more, because the cast is a list', () => {
+    expect(POSTS.map((p) => p.id)).not.toContain('lead');
+    expect(postsOn('draw').map((p) => p.id)).toEqual(['music']);
+  });
+
+  it('registers the command and refuses a part this shape does not have', () => {
+    const sim = quickSave({}, 'cast-command');
+    expect(sim.hasCommand('production.cast')).toBe(true);
+    expect(sim.execute({
+      kind: 'production.cast',
+      payload: { projectId: 'nope', billingId: 'first', talentId: 'x', dealKind: 'fee' },
     }).ok).toBe(false);
   });
 });

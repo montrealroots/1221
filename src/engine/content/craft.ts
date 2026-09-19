@@ -151,16 +151,6 @@ export const POSTS: readonly Post[] = [
       + 'production. The job television has and a film does not.',
   },
   {
-    id: 'lead',
-    department: 'The Cast',
-    title: 'Lead',
-    axis: 'draw',
-    weight: 62,
-    aboveTheLine: true,
-    what: 'Whose face is on it. Most of the reason anybody turns up to something '
-      + 'they haven’t heard of.',
-  },
-  {
     id: 'music',
     department: 'Music',
     title: 'Composer',

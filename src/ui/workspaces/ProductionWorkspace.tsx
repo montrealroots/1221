@@ -24,6 +24,7 @@ import { Panel, Empty } from '@/ui/components/primitives';
 import { formatMoney } from '@/engine/core/money';
 import { FORMATS, FORMAT_BY_ID, CHANNEL_LABEL, type Channel } from '@/engine/content/format';
 import { postsFor } from '@/engine/content/craft';
+import { castingFor } from '@/engine/content/roles';
 import { MONTH_SAID } from '@/engine/content/release';
 import { MOST_POINTS, THRESHOLD_AT, type DealKind } from '@/engine/content/talent';
 import {
@@ -34,7 +35,7 @@ import { ancillariesFor, type AncillaryDeal } from '@/engine/content/ancillary';
 import {
   LOCKS, LOCK_SAID, feesOn, isLocked, offersFor, pointsGiven, shortlistFor,
   whyNotCommit, whyNotFollowUp, whyNotJoin, whyNotOpen, whyNotShape, whyNotWriteIt,
-  dialsOn, sourceOf,
+  dialsOn, sourceOf, castingShortlist,
   offersOnIt,
   type Lock,
 } from '@/engine/world/production';
@@ -82,6 +83,7 @@ export function ProductionWorkspace() {
       <Settled project={project} />
       <WritePanel project={project} />
       <ShapePanel project={project} />
+      <CastPanel project={project} />
       <EngagePanel project={project} />
       <SellPanel project={project} />
       <CommitPanel project={project} />
@@ -551,6 +553,78 @@ function SellPanel({ project }: { project: Project }) {
           </div>
         );
       })}
+      {said ? <p className="small">{said}</p> : null}
+    </Panel>
+  );
+}
+
+/**
+ * The cast, which is a list decided by the shape rather than one chair called Lead.
+ *
+ * Billing falls steeply, so the panel shows each part's share of the draw next to it
+ * — a player deciding where to spend should be able to see that the fourth part is
+ * worth somebody real and is not worth a fortune.
+ */
+function CastPanel({ project }: { project: Project }) {
+  const { run } = useGame();
+  const parts = project.parts?.length ?? 1;
+  const billings = castingFor(project.medium, parts);
+  const [billingId, setBillingId] = useState(billings[0]?.id ?? 'first');
+  const [said, setSaid] = useState<string | undefined>(undefined);
+  const billing = billings.find((b) => b.id === billingId) ?? billings[0]!;
+  const shortlist = useWorld(
+    (s) => castingShortlist(s, project.id, billing.id),
+    [project.id, billing.id, parts],
+  );
+  const share = billings.reduce((sum, b) => sum + b.weight, 0);
+
+  const take = (talentId: string, dealKind: DealKind) => {
+    const done = run<{ ok: boolean; error?: string }>(
+      'production.cast', { projectId: project.id, billingId: billing.id, talentId, dealKind },
+      { silent: true },
+    );
+    setSaid(done.value?.error ?? (done.value?.ok ? 'Cast. The shape is now settled.' : done.error));
+  };
+
+  return (
+    <Panel title="The Cast" tight>
+      <div className="field">
+        <label htmlFor="billing">Part</label>
+        <select id="billing" value={billing.id} onChange={(e) => setBillingId(e.target.value)}>
+          {billings.map((b) => (
+            <option key={b.id} value={b.id}>
+              {b.label}{project.billed?.[b.id] ? ` — ${project.billed[b.id]!.name}` : ''}
+            </option>
+          ))}
+        </select>
+        <p className="xs dim" style={{ margin: 0 }}>
+          {billings.length} parts on a picture this shape. This one is{' '}
+          {Math.round((billing.weight / share) * 100)}% of what the cast brings.
+        </p>
+      </div>
+      <ul className="plain small">
+        {shortlist.map((one) => {
+          const offers = offersFor(one, parts);
+          return (
+            <li key={one.id} style={{ marginBottom: '0.4rem' }}>
+              <strong>{one.name}</strong>
+              {one.worked > 0 ? ` — ${one.worked} for us` : ''}
+              <br />
+              <button className="btn btn-sm" onClick={() => take(one.id, 'fee')}>
+                {formatMoney(offers.fee.feeCents, { cents: false })} flat
+              </button>{' '}
+              <button className="btn btn-sm" onClick={() => take(one.id, 'points')}>
+                {formatMoney(offers.points.feeCents, { cents: false })} and{' '}
+                {offers.points.points}%
+              </button>{' '}
+              <button className="btn btn-sm" onClick={() => take(one.id, 'threshold')}>
+                {formatMoney(offers.threshold.feeCents, { cents: false })} and a bonus
+                {' '}past {THRESHOLD_AT}x
+              </button>
+            </li>
+          );
+        })}
+      </ul>
       {said ? <p className="small">{said}</p> : null}
     </Panel>
   );

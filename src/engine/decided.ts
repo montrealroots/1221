@@ -35,6 +35,7 @@ import { STUDIOS, STUDIO_BY_ID } from './content/rivals';
 import { reckon, type Spec as BoxSpec } from './world/boxoffice';
 import { whatTheyOpen } from './world/field';
 import { POSTS } from './content/craft';
+import { BILLINGS } from './content/roles';
 import { rungOf } from './content/talent';
 import { shortlistFor } from './world/production';
 import { standsWithTheRoom } from './content/awards';
@@ -359,10 +360,17 @@ const asOpening = (o: Opening): BoxSpec => ({
     writer: STANDING_BY_ID[o.craft]!.reach,
     photography: STANDING_BY_ID[o.craft]!.reach,
     cutting: STANDING_BY_ID[o.craft]!.reach,
-    lead: STANDING_BY_ID[o.draw]!.reach,
     music: STANDING_BY_ID[o.draw]!.reach,
     line: 1,
   },
+  // The cast, which is most of the draw and used to be a post called Lead. Left out
+  // when the cast became a list, and the sweep caught it within the hour: `draw`
+  // was moving the composer alone, twenty-eight per cent of its own axis, and never
+  // shifted a rung across six worlds. An input that no longer reaches what it names
+  // is exactly what this test is for.
+  castReach: Object.fromEntries(
+    BILLINGS.map((b) => [b.id, STANDING_BY_ID[o.draw]!.reach]),
+  ),
   month: o.month,
   crowding: o.crowding,
 });

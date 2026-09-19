@@ -35,6 +35,7 @@ import { millions } from '../core/money';
 import type { Format } from '../content/format';
 import type { StoryEngine } from '../content/concept';
 import { axisStands } from '../content/craft';
+import { CAST_IS_OF_THE_DRAW, castStands, castingFor } from '../content/roles';
 import { SEASON } from '../content/release';
 import { fromTheWorld, inherits, type Entry } from '../content/lineage';
 import { whatItReads, type Dial, type Genre } from '../content/story';
@@ -84,6 +85,14 @@ export interface Spec {
   campaignCents: number;
   /** The reach of whoever filled each post, by post id. Absent means nobody chose. */
   reach: Readonly<Record<string, number>>;
+  /**
+   * The reach of whoever is in each billed part, by billing id.
+   *
+   * Separate from the posts because a part and a job are different things, and
+   * because how many parts there are is a fact about the shape rather than a fixed
+   * list. A two-hander is judged on two people and a company on six.
+   */
+  castReach?: Readonly<Record<string, number>>;
   /** What it is, which decides which dials its audience came for. */
   genre?: Genre;
   /** The six dials the writer set. */
@@ -148,15 +157,26 @@ const note = (r: Reckoning, by: string, became: number, why: string): Reckoning 
  * +35.15m against 37m spent. Every picture a hit, which is not a studio game — the
  * decisions were being made and none of them could be wrong.
  *
- * At 310,000 the same twelve worlds give **nine profitable years, a worst of −2.31m
- * and a median of +3.94m**, with an 11.92m spread produced by nothing but which week
- * each picture opened and what it opened against. A losing year is reachable, the
- * median is a modest profit, and the date is worth about six million either way.
+ * At 310,000 it read nine profitable years out of twelve. That measurement was taken
+ * before the cast was a list, when one Lead post stood in for everybody, and the cast
+ * falsified it: six billed parts against one post raised the draw more than the extra
+ * fees cost, and the same rate went back to twelve out of twelve. So it was measured
+ * again, and the band turned out to be narrow — 270,000 gives one profitable year out
+ * of twelve and 310,000 gives all of them, which is the whole game inside forty
+ * thousand.
  *
- * Re-measure this before moving it. The link is the base every other one multiplies,
- * so it is the one number in the file that moves everything.
+ * At 290,000 the twelve worlds give **eight profitable years, a worst of −1.81m and a
+ * median of +299k** against about 27m spent, with a 3.75m spread produced by nothing
+ * but which week each picture opened and what it opened against. A third of years
+ * lose money, the median year roughly washes its face, and the calendar alone is
+ * worth more than the median. A studio that grows has to be run, not merely started.
+ *
+ * Re-measure this before moving it, and re-measure it after anything that changes what
+ * a picture draws. The link is the base every other one multiplies, so it is the one
+ * number in the file that moves everything — and the cast is the proof that a figure
+ * measured once goes stale silently.
  */
-export const RATE_PER_ROOT_MINUTE_CENTS = 310_000_00;
+export const RATE_PER_ROOT_MINUTE_CENTS = 290_000_00;
 
 export function fromTheShape(r: Reckoning, spec: Spec): Reckoning {
   const minutes = (spec.parts * spec.secondsEach) / 60;
@@ -218,9 +238,17 @@ export function fromTheCraft(r: Reckoning, spec: Spec): Reckoning {
 export const DRAW_MOVES_HEIGHT = 0.85;
 
 export function fromTheDraw(r: Reckoning, spec: Spec): Reckoning {
-  const stands = axisStands('draw', (id) => spec.reach[id], spec.format.medium);
+  // Two halves, weighted. Whose face is on the poster brings people who have heard
+  // of nothing else; what it sounds like in a trailer is the other way anybody
+  // arrives at something cold. The cast half is a weighted mean over the parts this
+  // picture actually has, so a two-hander is judged on two people and a company on
+  // six — where the old model had one chair called Lead standing in for everybody.
+  const cast = castStands(spec.format.medium, spec.parts, (id) => spec.castReach?.[id]);
+  const rest = axisStands('draw', (id) => spec.reach[id], spec.format.medium);
+  const stands = cast * CAST_IS_OF_THE_DRAW + rest * (1 - CAST_IS_OF_THE_DRAW);
   return note(r, 'the draw', r.cents * (1 + (stands - 1) * DRAW_MOVES_HEIGHT),
-    `The cast and the music stand at ${stands.toFixed(2)}.`);
+    `A cast of ${castingFor(spec.format.medium, spec.parts).length} and the music `
+    + `stand at ${stands.toFixed(2)}.`);
 }
 
 /**

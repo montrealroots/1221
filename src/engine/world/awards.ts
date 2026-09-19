@@ -37,7 +37,7 @@
 
 import type { Simulation } from '../core/simulation';
 import type { Id } from '../core/ids';
-import type { Project } from '../domain/company';
+import type { Engagement, Project } from '../domain/company';
 import {
   AWARDS, CEREMONY_MONTH, CONSIDERS_MONTHS, THE_ROOM_IS_A_ROOM, standsWithTheRoom,
   type Award,
@@ -85,6 +85,19 @@ export function standing(project: Project): number {
   return standsWithTheRoom(craft, serves, project.opening?.wordOfMouth ?? 0);
 }
 
+/**
+ * The person an award would credit on a given picture, where it credits anybody.
+ *
+ * One lookup for both kinds. A craft award names a post; performance names a billed
+ * part; the picture itself names nobody and credits everybody above the line.
+ */
+export function seatFor(project: Project, award: Award): Engagement | undefined {
+  if (award.postId) return project.engaged?.[award.postId];
+  if (award.billingId) return project.billed?.[award.billingId];
+  // The picture credits the whole company, so any one of them proves it is castable.
+  return Object.values(project.engaged ?? {})[0] ?? Object.values(project.billed ?? {})[0];
+}
+
 /** Who the room actually gives it to, once the draw has had its say. */
 export function whoWins(
   sim: Simulation,
@@ -92,11 +105,11 @@ export function whoWins(
   year: number,
   among: readonly Project[],
 ): Project | undefined {
-  // A craft award needs somebody in the post to credit. A picture where the office
-  // filled it is not in the running, which is the cost of never choosing.
-  const running = award.postId === undefined
-    ? among
-    : among.filter((p) => p.engaged?.[award.postId!] !== undefined);
+  // An award that credits anybody needs somebody there to credit. A picture where
+  // the office filled the chair is not in the running, which is the cost of never
+  // choosing. Performance reads a billed part rather than a post, because the cast
+  // stopped being a job called Lead and became a list.
+  const running = among.filter((p) => seatFor(p, award) !== undefined);
   if (running.length === 0) return undefined;
 
   let best: Project | undefined;
@@ -142,9 +155,9 @@ export function holdTheCeremony(sim: Simulation, at = sim.now): readonly Given[]
 
     // Two: everybody it credits gets the credit, which moves a standing. The picture
     // credits everybody above the line, a craft award credits its own post.
-    const credits = award.postId
-      ? [won.engaged?.[award.postId]].filter((one) => one !== undefined)
-      : Object.values(won.engaged ?? {});
+    const credits = (award.postId || award.billingId)
+      ? [seatFor(won, award)].filter((one) => one !== undefined)
+      : [...Object.values(won.engaged ?? {}), ...Object.values(won.billed ?? {})];
     for (const seat of credits) {
       const talent = sim.universe.talent?.[seat!.talentId];
       if (!talent) continue;
@@ -157,7 +170,7 @@ export function holdTheCeremony(sim: Simulation, at = sim.now): readonly Given[]
       label: award.label,
       projectId: won.id,
       title: won.title,
-      toName: award.postId ? won.engaged?.[award.postId]?.name : undefined,
+      toName: (award.postId || award.billingId) ? seatFor(won, award)?.name : undefined,
     });
   }
 

@@ -49,6 +49,7 @@ import {
   MOST_POINTS, STANDINGS, offersFrom, standingById, upFrontCents, type DealKind,
 } from '../content/talent';
 import { MEN, WOMEN, patronymic } from '../content/names';
+import { billingById, castingFor } from '../content/roles';
 import { inherits, type Entry } from '../content/lineage';
 import { MOST, UNWRITTEN, genreById, whyNotWrite, type Dial } from '../content/story';
 import { carriedInto, sourceById, whyNotFrom, type Source } from '../content/source';
@@ -128,15 +129,26 @@ function aName(t: number, u: number): string {
  * a producer rings the people who did not let them down.
  */
 export function shortlistFor(sim: Simulation, projectId: Id, postId: string): readonly Talent[] {
-  const post = postById(postId);
-  if (!post) return [];
-  const known = Object.values(sim.universe.talent ?? {})
-    .filter((one) => one.postId === postId);
+  if (!postById(postId)) return [];
+  return drawAPool(sim, projectId, postId);
+}
+
+/**
+ * The draw itself, shared by the posts and the cast.
+ *
+ * `key` is what makes two shortlists differ — a project and a post for a job, a
+ * project and a billing for a part — and `pool` is which trade the people come
+ * from. Extracted when the cast stopped being a single post called Lead, because
+ * both halves want the same behavior: people who have worked here before come
+ * first, and the house's recent run shifts the rungs the strangers are drawn at.
+ */
+export function drawAPool(sim: Simulation, key: string, pool: string): readonly Talent[] {
+  const known = Object.values(sim.universe.talent ?? {}).filter((one) => one.postId === pool);
   const before = known.filter((one) => one.worked > 0).slice(0, 2);
 
   const want = A_SHORTLIST_IS - before.length;
   const drawn: Talent[] = [];
-  const rng = sim.rng('casting', projectId, postId);
+  const rng = sim.rng('casting', key, pool);
   // What the house has been doing lately, which is the compounding loop the build
   // did not have: every picture used to be cast out of the same pool whatever the
   // company had done. A good run puts first-call people in front of a producer who
@@ -154,7 +166,7 @@ export function shortlistFor(sim: Simulation, projectId: Id, postId: string): re
       id: sim.nextId('talent'),
       saveId: sim.universe.meta.id,
       name: aName(rng.next(), rng.next()),
-      postId,
+      postId: pool,
       standingId: standing.id,
       results: [],
       worked: 0,
@@ -249,6 +261,79 @@ export function setShape(sim: Simulation, spec: Shape): { ok: boolean; error?: s
     seconds: spec.secondsEach,
   }));
   return { ok: true };
+}
+
+// ---------------------------------------------------------------------------
+// The cast
+// ---------------------------------------------------------------------------
+
+/**
+ * The pool actors are drawn from.
+ *
+ * Every billed part draws from one pool rather than each having its own, because an
+ * actor is an actor — the same person can be first billed on one picture and fourth
+ * on another, and a pool per slot would make those two different people.
+ */
+export const THE_ACTORS = 'actor';
+
+/** Who is up for a billed part. Draws from the actors, and remembers them. */
+export function castingShortlist(
+  sim: Simulation,
+  projectId: Id,
+  billingId: string,
+): readonly Talent[] {
+  return drawAPool(sim, `${projectId}:${billingId}`, THE_ACTORS);
+}
+
+export interface Casting {
+  projectId: Id;
+  billingId: string;
+  talentId: Id;
+  dealKind: DealKind;
+}
+
+export function whyNotCast(sim: Simulation, spec: Casting): string | undefined {
+  const project = projectById(sim, spec.projectId);
+  if (!project) return 'No such project.';
+  if (isLocked(project, 'cast')) return 'Everybody is contracted. The money has gone out.';
+  if (!project.formatId || !project.parts?.length) return 'Choose a format before casting anybody.';
+  const billing = billingById(spec.billingId);
+  if (!billing) return `There is no part called '${spec.billingId}'.`;
+  const wanted = castingFor(project.medium, project.parts.length);
+  if (!wanted.some((one) => one.id === spec.billingId)) {
+    return `${formatById(project.formatId)?.label ?? 'This'} at this length is cast with `
+      + `${wanted.length} parts, and ${billing.label.toLowerCase()} is not one of them.`;
+  }
+  const talent = sim.universe.talent?.[spec.talentId];
+  if (!talent) return 'Nobody of that name.';
+  if (talent.postId !== THE_ACTORS) return `${talent.name} does not act.`;
+  const already = Object.entries(project.billed ?? {})
+    .find(([id, seat]) => id !== spec.billingId && seat.talentId === spec.talentId);
+  if (already) return `${talent.name} is already ${billingById(already[0])?.label.toLowerCase()}.`;
+  return undefined;
+}
+
+export function castThem(sim: Simulation, spec: Casting): { ok: boolean; error?: string } {
+  const no = whyNotCast(sim, spec);
+  if (no) return { ok: false, error: no };
+  const project = projectById(sim, spec.projectId)!;
+  const talent = sim.universe.talent[spec.talentId]!;
+  const deal = offersFor(talent, project.parts!.length)[spec.dealKind];
+  project.billed = {
+    ...(project.billed ?? {}),
+    [spec.billingId]: { talentId: talent.id, name: talent.name, standingId: talent.standingId, deal },
+  };
+  shut(project, 'shape');
+  return { ok: true };
+}
+
+/** The reach of whoever is in each billed part, which the draw reads. */
+export function castReachOf(project: Project): Readonly<Record<string, number>> {
+  const out: Record<string, number> = {};
+  for (const one of castingFor(project.medium, project.parts?.length ?? 1)) {
+    out[one.id] = standingById(project.billed?.[one.id]?.standingId)?.reach ?? 1;
+  }
+  return out;
 }
 
 // ---------------------------------------------------------------------------
@@ -347,12 +432,17 @@ export function engage(sim: Simulation, spec: Engaging): { ok: boolean; error?: 
 }
 
 /** What everybody engaged is owed at the greenlight. */
+export const dealsOnIt = (project: Project) => [
+  ...Object.values(project.engaged ?? {}),
+  ...Object.values(project.billed ?? {}),
+];
+
 export const feesOn = (project: Project): Money =>
-  upFrontCents(Object.values(project.engaged ?? {}).map((one) => one.deal));
+  upFrontCents(dealsOnIt(project).map((one) => one.deal));
 
 /** What share of the back end has been given away. */
 export const pointsGiven = (project: Project): number =>
-  Object.values(project.engaged ?? {}).reduce((sum, one) => sum + one.deal.points, 0);
+  dealsOnIt(project).reduce((sum, one) => sum + one.deal.points, 0);
 
 // ---------------------------------------------------------------------------
 // Selling what is not the picture
@@ -611,6 +701,7 @@ export function open(sim: Simulation, spec: Opening): Opened {
     spentCents: project.spentCents + spec.campaignCents,
     campaignCents: spec.campaignCents,
     reach: reachOf(project),
+    castReach: castReachOf(project),
     genre: genreById(project.genreId),
     dials: dialsOn(project) as Partial<Record<Dial, number>>,
     source: sourceOf(sim, project),
@@ -742,6 +833,7 @@ export function registerProduction(sim: Simulation): void {
   sim.onCommand<Engaging, Done>('production.engage', (p) => engage(sim, p));
   sim.onCommand<Selling, Done>('production.sell', (p) => sell(sim, p));
   sim.onCommand<Joining, Done>('production.join', (p) => join(sim, p));
+  sim.onCommand<Casting, Done>('production.cast', (p) => castThem(sim, p));
   sim.onCommand<{ projectId: Id; budgetCents?: number }, Done>(
     'production.commit', (p) => commit(sim, p.projectId, Math.max(0, Math.round(p.budgetCents ?? 0))),
   );

@@ -195,6 +195,7 @@ export const WHEN: Readonly<Record<string, (w: LessonWorld) => boolean>> = {
   // the condition only says the subject has become relevant at all.
   write: (w) => w.projects.developing > 0,
   shape: (w) => w.projects.developing > 0,
+  cast: (w) => w.projects.developing > 0,
   engage: (w) => w.projects.developing > 0,
   sell: (w) => w.projects.developing > 0,
   commit: (w) => w.projects.developing > 0,

@@ -49,6 +49,13 @@ export interface Award {
    */
   postId?: string;
   /**
+   * The billed part it credits, where it credits one of those instead.
+   *
+   * Performance is the one award that belongs to a part rather than a job, and it
+   * needed its own field the day the cast stopped being a post called Lead.
+   */
+  billingId?: string;
+  /**
    * What the remaining windows are worth after winning this, as a multiplier.
    *
    * The picture carries more than any single craft award, which is the true shape of
@@ -90,7 +97,7 @@ export const AWARDS: readonly Award[] = [
   {
     id: 'performance',
     label: 'Lead Performance',
-    postId: 'lead',
+    billingId: 'first',
     liftsWindows: 1.26,
     rewards: 'The face people came for, doing more than turning up.',
   },
