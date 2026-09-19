@@ -500,6 +500,22 @@ export const LESSONS: readonly Lesson[] = [
     importance: 66,
   },
   {
+    id: 'world',
+    strand: 'the-pictures',
+    title: 'Putting Things In The Same World',
+    body: 'Two pictures can share a world without sharing a story, and an audience that '
+      + 'liked one will partly turn out for the other. Partly is the word: a shared world '
+      + 'carries about half what a direct follow-up does, because people come back for the '
+      + 'next chapter of something they finished more reliably than for a different story '
+      + 'with the same badge on it. It also tires faster, and it tires on how much of it '
+      + 'there is, not on how long the story ran — so answering one good picture by '
+      + 'scheduling four more a year is the mistake this makes available to you.',
+    teaches: ['production.join'],
+    screen: 'production',
+    after: ['shape'],
+    importance: 52,
+  },
+  {
     id: 'again',
     strand: 'the-pictures',
     title: 'Making Another One Of Something',

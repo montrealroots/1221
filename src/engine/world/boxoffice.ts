@@ -36,7 +36,7 @@ import type { Format } from '../content/format';
 import type { StoryEngine } from '../content/concept';
 import { axisStands } from '../content/craft';
 import { SEASON } from '../content/release';
-import { inherits, type Entry } from '../content/lineage';
+import { fromTheWorld, inherits, type Entry } from '../content/lineage';
 import { whatItReads, type Dial, type Genre } from '../content/story';
 import { floorAfter, type Source } from '../content/source';
 
@@ -110,6 +110,15 @@ export interface Spec {
   crowding: number;
   /** Where this sits in a line of follow-ups, where it is one. */
   entry?: Entry;
+  /**
+   * Where it sits in a shared world, where it is in one.
+   *
+   * Separate from `entry` because the two are separate: a line is the next chapter
+   * of one story and a universe is a different story with the same badge on it. A
+   * picture can be both, and the receipt shows them as two lines because a player
+   * reading a number wants to know which of the two is carrying it.
+   */
+  inAWorld?: Entry;
 }
 
 const note = (r: Reckoning, by: string, became: number, why: string): Reckoning => ({
@@ -289,6 +298,29 @@ export function fromTheLine(r: Reckoning, spec: Spec): Reckoning {
     + `which returned ${spec.entry.lastReturned.toFixed(2)}x.`);
 }
 
+/**
+ * What the badge on it is worth by now.
+ *
+ * The second channel of inheritance, and its own link rather than a term folded into
+ * the line above — because a player reading a figure wants to know which of the two
+ * is carrying it. A picture can be the fourth of its own story and the ninth thing
+ * in a shared world, and those are different problems with different answers.
+ *
+ * A universe carries half what a line does and tires faster, so the failure this
+ * makes available is the one studios actually make: answering one good picture by
+ * scheduling four more a year.
+ */
+export function fromTheWorldItIsIn(r: Reckoning, spec: Spec): Reckoning {
+  if (!spec.inAWorld || spec.inAWorld.ordinal <= 1) {
+    return note(r, 'the world', r.cents,
+      spec.inAWorld ? 'The first thing in its world.' : 'It belongs to no wider world.');
+  }
+  const mult = Math.max(0.4, fromTheWorld(spec.inAWorld));
+  return note(r, 'the world', r.cents * mult,
+    `Number ${spec.inAWorld.ordinal} of a shared world, `
+    + `${spec.inAWorld.gapYears.toFixed(1)} years after the last of it.`);
+}
+
 /** What else an audience was doing the month it opened. */
 export function fromTheSeason(r: Reckoning, spec: Spec): Reckoning {
   const month = ((spec.month % 12) + 12) % 12;
@@ -352,6 +384,7 @@ export const THE_CHAIN: readonly { id: string; run: (r: Reckoning, s: Spec) => R
   { id: 'the script', run: fromTheScript },
   { id: 'the engine', run: fromTheEngine },
   { id: 'the line', run: fromTheLine },
+  { id: 'the world', run: fromTheWorldItIsIn },
   { id: 'the season', run: fromTheSeason },
   { id: 'the campaign', run: fromTheCampaign },
   { id: 'the field', run: againstTheField },

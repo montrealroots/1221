@@ -33,7 +33,9 @@ import {
   A_RUN_IS, MOST_POINTS, POINTS_COST_OF_THE_FEE, STANDINGS, offersFrom, pointsOutOf,
   standingAfter, upFrontCents,
 } from '@/engine/content/talent';
-import { inherits, pastItsBest } from '@/engine/content/lineage';
+import {
+  A_UNIVERSE_CARRIES, A_UNIVERSE_TIRES, fromTheWorld, inherits, pastItsBest,
+} from '@/engine/content/lineage';
 import { A_WEEK_HOLDS, STUDIOS, studiosOn } from '@/engine/content/rivals';
 import { THE_CHAIN, reckon, theReceipt, type Spec } from '@/engine/world/boxoffice';
 import { openingWeek, windowsInWeek, type Opening } from '@/engine/world/run';
@@ -855,5 +857,74 @@ describe('the end of it', () => {
     expect(howBadItIs(sim).gone).toBe(false);
     windUp(sim, parentCompany(sim.universe)!);
     expect(howBadItIs(sim).gone).toBe(true);
+  });
+});
+
+describe('a shared world', () => {
+  const asALine = (over = {}) => inherits({
+    ordinal: 3, lastReturned: 1.6, gapYears: 2.5, carriesForward: 0.55, ...over,
+  });
+  const asAWorld = (over = {}) => fromTheWorld({
+    ordinal: 3, lastReturned: 1.6, gapYears: 2.5, carriesForward: 0.55, ...over,
+  });
+
+  it('leaves the first thing in a world alone', () => {
+    expect(asAWorld({ ordinal: 1 })).toBe(1);
+  });
+
+  it('carries less than a direct follow-up, which is the honest ordering', () => {
+    // An audience comes back for the next chapter of something they finished more
+    // reliably than for a different story wearing the same badge.
+    expect(asAWorld()).toBeLessThan(asALine());
+    expect(asAWorld()).toBeGreaterThan(1);
+    expect(A_UNIVERSE_CARRIES).toBeLessThan(1);
+  });
+
+  it('runs out of welcome after fewer pictures than a line does', () => {
+    // "Tires faster" is a claim about *when it crosses*, and only that. Damping the
+    // inheritance by half damps the penalty with it, so deep in, a world is the
+    // gentler of the two at the same number — the first version of this test
+    // asserted the opposite and was wrong about the model rather than finding a bug.
+    // What is true, and what the ordinal shift produces, is that a world stops
+    // being worth belonging to after fewer entries.
+    const gap = { lastReturned: 1.6, gapYears: 2.5, carriesForward: 0.55 };
+    const crossesAt = (f: (e: typeof gap & { ordinal: number }) => number) => {
+      for (let n = 2; n < 40; n += 1) if (f({ ...gap, ordinal: n }) <= 1) return n;
+      return 40;
+    };
+    expect(crossesAt(fromTheWorld)).toBeLessThan(crossesAt(inherits));
+    expect(A_UNIVERSE_TIRES).toBeGreaterThan(1);
+    // The failure this makes available is the one studios actually make: answering
+    // one good picture by scheduling four more a year.
+    expect(fromTheWorld({ ...gap, ordinal: 14 })).toBeLessThan(1);
+  });
+
+  it('is its own link on the receipt, not folded into the line', () => {
+    // A picture can be the fourth of its own story and the ninth thing in a shared
+    // world. Those are different problems and a player reading a figure wants to
+    // know which one is carrying it.
+    const said = reckon(BASE).said.map((n) => n.by);
+    expect(said).toContain('the line');
+    expect(said).toContain('the world');
+  });
+
+  it('moves the reckoning when a picture is in a tired world', () => {
+    const fresh = reckon({
+      ...BASE,
+      inAWorld: { ordinal: 2, lastReturned: 2, gapYears: 2.5, carriesForward: 0.55 },
+    });
+    const tired = reckon({
+      ...BASE,
+      inAWorld: { ordinal: 12, lastReturned: 0.6, gapYears: 0.4, carriesForward: 0.55 },
+    });
+    expect(tired.cents).toBeLessThan(fresh.cents);
+  });
+
+  it('registers the command and refuses a project that is not there', () => {
+    const sim = quickSave({}, 'world-command');
+    expect(sim.hasCommand('production.join')).toBe(true);
+    expect(sim.execute({
+      kind: 'production.join', payload: { projectId: 'nope', universeId: 'The North' },
+    }).ok).toBe(false);
   });
 });

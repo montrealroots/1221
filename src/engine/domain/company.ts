@@ -732,6 +732,14 @@ export interface Project {
   lineageId?: string;
   /** Which one of the line it is, counting the first as one. */
   ordinal?: number;
+  /**
+   * The shared world this belongs to, where it belongs to one.
+   *
+   * A second channel of inheritance that crosses titles. A line is the next
+   * chapter of one story; a universe is a different story wearing the same badge,
+   * and an audience turns out for the first more reliably than the second.
+   */
+  universeId?: string;
 
   /**
    * The release, once it is out: what was reckoned and how far it has paid.

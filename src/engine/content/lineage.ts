@@ -118,6 +118,48 @@ export function pastItsBest(entry: Entry): boolean {
   return inherits(entry) <= 1;
 }
 
+// ---------------------------------------------------------------------------
+// A universe, which is a line that crosses titles
+// ---------------------------------------------------------------------------
+
+/**
+ * How much of a line's strength a shared world carries.
+ *
+ * Half. A universe is a real second channel of inheritance and a weaker one than a
+ * direct follow-up, which is the honest ordering: an audience turns out for the next
+ * chapter of a story they finished more reliably than for a different story wearing
+ * the same badge.
+ *
+ * It matters that this is under one rather than over. A universe that paid more than
+ * a sequel would make every picture a franchise entry and the decision would stop
+ * being a decision — and the failure worth being able to make here is exactly the
+ * one studios actually make, which is putting out four a year off one good picture.
+ */
+export const A_UNIVERSE_CARRIES = 0.5;
+
+/**
+ * How fast a shared world tires, against how fast one line does.
+ *
+ * Faster. A line tires because the same story keeps going; a universe tires because
+ * there is too much of it, and there is more of it per year by construction. So the
+ * same audience gets to the end of its patience sooner, and a studio that answers a
+ * hit by scheduling four more finds out within about three years.
+ */
+export const A_UNIVERSE_TIRES = 1.4;
+
+/**
+ * What belonging to a shared world is worth, as a multiplier on the opening.
+ *
+ * Takes the same shape as `inherits` and then damps it, rather than being its own
+ * curve — because the two forces are the same two forces, and a second set of
+ * constants would be a second thing to keep in step for no gain.
+ */
+export function fromTheWorld(entry: Entry): number {
+  if (entry.ordinal <= 1) return 1;
+  const asALine = inherits({ ...entry, ordinal: Math.round((entry.ordinal - 1) * A_UNIVERSE_TIRES) + 1 });
+  return 1 + (asALine - 1) * A_UNIVERSE_CARRIES;
+}
+
 /** What to call an entry in a line, on a screen. */
 export function saidAs(ordinal: number): string {
   if (ordinal <= 1) return 'The first of it';

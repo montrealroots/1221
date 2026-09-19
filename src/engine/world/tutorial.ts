@@ -199,6 +199,7 @@ export const WHEN: Readonly<Record<string, (w: LessonWorld) => boolean>> = {
   sell: (w) => w.projects.developing > 0,
   commit: (w) => w.projects.developing > 0,
   opening: (w) => w.projects.greenlit > 0 || w.projects.finished > 0,
+  world: (w) => w.projects.developing > 0,
   again: (w) => w.projects.delivered > 0,
 
   // The lot and the estate.

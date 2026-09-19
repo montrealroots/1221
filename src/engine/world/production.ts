@@ -521,6 +521,64 @@ export function entryFor(sim: Simulation, project: Project): Entry | undefined {
   };
 }
 
+/**
+ * Where this picture sits in a shared world, where it is in one.
+ *
+ * The same shape as the line entry and read off a different set of pictures: every
+ * title carrying the badge rather than every chapter of one story. A picture can be
+ * in both, and the two are counted separately because they are separately true.
+ */
+export function worldEntryFor(sim: Simulation, project: Project): Entry | undefined {
+  const format = formatById(project.formatId);
+  if (!format || !project.universeId) return undefined;
+  const others = projectsOf(sim.universe)
+    .filter((p) => p.universeId === project.universeId && p.id !== project.id && p.opening)
+    .sort((a, b) => (b.opening!.at) - (a.opening!.at));
+  if (others.length === 0) return undefined;
+  const last = others[0]!;
+  return {
+    ordinal: others.length + 1,
+    lastReturned: returnedBy(sim, last.id),
+    gapYears: Math.max(0, (sim.now - last.opening!.at) / (MS_WEEK * 52)),
+    carriesForward: format.carriesForward,
+  };
+}
+
+export interface Joining {
+  projectId: Id;
+  /** The world it joins. Any name; the first picture to use one founds it. */
+  universeId: string;
+}
+
+/**
+ * Why this cannot join that world.
+ *
+ * Behind the shape lock, because what a picture is part of is a thing the people
+ * signing on to it were told. And refused outright for a format that carries almost
+ * nothing forward — a shared world made of things nobody remembers the name of is a
+ * badge on an empty box.
+ */
+export function whyNotJoin(sim: Simulation, spec: Joining): string | undefined {
+  const project = projectById(sim, spec.projectId);
+  if (!project) return 'No such project.';
+  if (isLocked(project, 'shape')) return 'The shape is settled, and so is what it belongs to.';
+  if (!spec.universeId.trim()) return 'A world needs a name.';
+  const format = formatById(project.formatId);
+  if (!format) return 'Choose a format first.';
+  if (format.carriesForward <= 0.1) {
+    return `${format.label} carries almost nothing forward, so a shared world built `
+      + 'on it would be a badge and nothing else.';
+  }
+  return undefined;
+}
+
+export function join(sim: Simulation, spec: Joining): { ok: boolean; error?: string } {
+  const no = whyNotJoin(sim, spec);
+  if (no) return { ok: false, error: no };
+  projectById(sim, spec.projectId)!.universeId = spec.universeId.trim().slice(0, 60);
+  return { ok: true };
+}
+
 export interface Opened {
   ok: boolean;
   error?: string;
@@ -560,6 +618,7 @@ export function open(sim: Simulation, spec: Opening): Opened {
     month: new Date(spec.at).getUTCMonth(),
     crowding: crowding(sim, spec.at, spec.channel, project.title),
     entry: entryFor(sim, project),
+    inAWorld: worldEntryFor(sim, project),
   };
   const reckoning = reckon(spec2);
 
@@ -682,6 +741,7 @@ export function registerProduction(sim: Simulation): void {
   sim.onCommand<Writing, Done>('production.write', (p) => writeIt(sim, p));
   sim.onCommand<Engaging, Done>('production.engage', (p) => engage(sim, p));
   sim.onCommand<Selling, Done>('production.sell', (p) => sell(sim, p));
+  sim.onCommand<Joining, Done>('production.join', (p) => join(sim, p));
   sim.onCommand<{ projectId: Id; budgetCents?: number }, Done>(
     'production.commit', (p) => commit(sim, p.projectId, Math.max(0, Math.round(p.budgetCents ?? 0))),
   );

@@ -33,7 +33,8 @@ import { carriedInto } from '@/engine/content/source';
 import { ancillariesFor, type AncillaryDeal } from '@/engine/content/ancillary';
 import {
   LOCKS, LOCK_SAID, feesOn, isLocked, offersFor, pointsGiven, shortlistFor,
-  whyNotCommit, whyNotFollowUp, whyNotOpen, whyNotShape, whyNotWriteIt, dialsOn, sourceOf,
+  whyNotCommit, whyNotFollowUp, whyNotJoin, whyNotOpen, whyNotShape, whyNotWriteIt,
+  dialsOn, sourceOf,
   offersOnIt,
   type Lock,
 } from '@/engine/world/production';
@@ -114,7 +115,18 @@ function ShapePanel({ project }: { project: Project }) {
   const [parts, setParts] = useState(project.parts?.length ?? 1);
   const [mins, setMins] = useState(Math.round((project.secondsEach ?? 110 * 60) / 60));
   const [said, setSaid] = useState<string | undefined>(undefined);
+  const [world, setWorld] = useState(project.universeId ?? '');
   const format = FORMAT_BY_ID[formatId];
+  const joinRefusal = useWorld(
+    (s) => whyNotJoin(s, { projectId: project.id, universeId: world }),
+    [project.id, world, project.formatId],
+  );
+  const putInWorld = () => {
+    const done = run<{ ok: boolean; error?: string }>(
+      'production.join', { projectId: project.id, universeId: world }, { silent: true },
+    );
+    setSaid(done.value?.error ?? (done.value?.ok ? `In ${world}.` : done.error));
+  };
   const refusal = useWorld(
     (s) => whyNotShape(s, { projectId: project.id, formatId, parts, secondsEach: mins * 60 }),
     [project.id, formatId, parts, mins],
@@ -164,6 +176,20 @@ function ShapePanel({ project }: { project: Project }) {
       {said ? <p className="small">{said}</p> : null}
       <button className="btn btn-primary" onClick={settle} disabled={refusal !== undefined}>
         Settle The Shape
+      </button>
+
+      <div className="field" style={{ marginTop: '0.6rem' }}>
+        <label htmlFor="world">Part Of A Shared World</label>
+        <input id="world" value={world} placeholder="Leave empty for a world of its own"
+          onChange={(e) => setWorld(e.target.value)} />
+        <p className="xs dim" style={{ margin: 0 }}>
+          Two pictures can share a world without sharing a story. It carries about half
+          what a direct follow-up does, and it tires on how much of it there is.
+        </p>
+      </div>
+      {joinRefusal ? <p className="small warn">{joinRefusal}</p> : null}
+      <button className="btn" onClick={putInWorld} disabled={joinRefusal !== undefined}>
+        Put It In That World
       </button>
     </Panel>
   );
