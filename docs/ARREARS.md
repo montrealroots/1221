@@ -1,5 +1,13 @@
 # The arrears, verified
 
+> **The production system was deleted on 2026-09-19, and is being rebuilt from the
+> front.** Entries below that name a file under `making`, `casting`, `crew`, `selling`,
+> `inventory`, `trouble`, `rebate`, `maturity`, `awards` or `audition` are about code
+> that no longer exists. They are kept as history rather than deleted, because what a
+> thing was measured to do is the most useful record of it — but they are no longer
+> open work, and the paths in them are written **without backticks and marked gone**
+> so that `tools/doc-refs.mjs` is not made to vouch for files nobody can open.
+
 
 What `docs/UNBITTEN.md` claimed, checked against the code that is actually in
 the tree. Sixty agents: one per subsystem cluster reading and probing, then one
@@ -389,7 +397,7 @@ ALSO FIX, separately and first, because it is a live regression and this one is 
 tests and tools alike.
 
 
-**Files** `src/engine/domain/citizenship.ts`, `src/engine/world/casting.ts`, `src/engine/content/casting.ts`, `src/engine/content/geography.ts`, `src/ui/creation/CharacterCreation.tsx`
+**Files** `src/engine/domain/citizenship.ts`, **src/engine/world/casting.ts** (gone), **src/engine/content/casting.ts** (gone), `src/engine/content/geography.ts`, `src/ui/creation/CharacterCreation.tsx`
 
 
 **Evidence**
@@ -1192,7 +1200,7 @@ a cheap job does not lower what you are worth, and the research is explicit that
 roster memory pays out from a pass.
 
 
-**Files** `src/engine/world/casting.ts`, `src/engine/content/casting.ts`, `src/engine/world/audition.ts`, `tests/casting.test.ts`
+**Files** **src/engine/world/casting.ts** (gone), **src/engine/content/casting.ts** (gone), **src/engine/world/audition.ts** (gone), **tests/casting.test.ts** (gone)
 
 
 **Evidence**
@@ -1280,7 +1288,7 @@ that: "a day player's check does not price a lead, and a lead's does not stop a
 day player being cheap." The two agree.
 
 
-**Files** `src/engine/world/casting.ts`, `tests/casting.test.ts`
+**Files** **src/engine/world/casting.ts** (gone), **tests/casting.test.ts** (gone)
 
 
 **Evidence**
@@ -1337,7 +1345,7 @@ day player was coming out at three hundred and sixty-one euros a week, which is
 below the law — and the test that holds it names the figure.
 
 
-**Files** `src/engine/content/incorporation.ts`, `src/engine/world/casting.ts`, `src/engine/world/company.ts`, `src/ui/looks/business.tsx`
+**Files** `src/engine/content/incorporation.ts`, **src/engine/world/casting.ts** (gone), `src/engine/world/company.ts`, `src/ui/looks/business.tsx`
 
 
 **Evidence**
@@ -2097,7 +2105,7 @@ RISK IF YOU CHANGE HOLDER AT ALL: it is read for display in src/ui/workspaces/Au
 
 **Cluster** `crew-office` · **Severity** minor · **Verdict** WAS_TRUE, NOW BUILT
 
-**LANDED.** `company.restaff`, in `src/engine/world/making.ts`, with the
+**LANDED.** `company.restaff`, in **src/engine/world/making.ts** (gone), with the
 adversary's own recommended answer to the design question below: (a) priced
 against the budget, plus the short lead time. Four things it settled that the
 entry left open.
@@ -2129,7 +2137,7 @@ entry left open.
    nothing back, because a refund would be a way of making a picture cheaper by
    running it badly.
 
-The test the entry named, `tests/inventory.test.ts` 'says so again when the room
+The test the entry named, **tests/inventory.test.ts** (gone) 'says so again when the room
 is put right', now goes through the command instead of writing `hands` into the
 save, and five more hold the door itself: the charge and the fortnight, the
 price being a multiple of one room, the refusal on a spent budget, the way down,
@@ -2573,10 +2581,10 @@ MY RECOMMENDED FIX (differs from theirs in sequencing):
 3. I would take (c) further than they do: `inc` is spare and so, arguably, are `property` and `business_interruption` — they describe a lot-fire risk the simulation does not model at all (no peril event exists in world/lot.ts or content/lot.ts). Wiring them buys a premium payment and nothing else. The falsifiability test says delete, not wire, unless a lot peril is actually coming.
 
 RISK / WHAT MOVES:
-- `tests/business.test.ts:296` — `expect(run(sim, 'company.insure', { policy: 'property' }).error).toContain('hasn’t got it')` is the ONLY test naming `property`. Deleting `property` from `PolicyKind` (src/engine/domain/company.ts:216) turns that error into "There's no such cover." and the test fails. They did not name this caller.
-- Writing the us_state registration in form_arm shifts `numberFor`'s seed for every subsequently-created registration, because the seed is `s.now / 1000 + Object.keys(s.universe.registrations).length * 7919` (company.ts:551). us_ein's printed number changes. No test asserts a registration number (grep `\.number\b` over tests/ returns nothing), and `nextDueAt` is read only for display at src/ui/looks/business.tsx:274-278 — nothing charges or lapses on it — so the blast radius is cosmetic. `tests/business.test.ts:88` asserts the boot registry list only, before any arm exists, so it is untouched.
+- **tests/business.test.ts:296` — `expect(run(sim, 'company.insure', { policy: 'property' }).error).toContain('hasn’t got it')` is the ONLY test naming `property`. Deleting `property` from `PolicyKind` (src/engine/domain/company.ts:216) turns that error into "There's no such cover." and the test fails. They did not name this caller.
+- Writing the us_state registration in form_arm shifts `numberFor`'s seed for every subsequently-created registration, because the seed is `s.now / 1000 + Object.keys(s.universe.registrations).length * 7919` (company.ts:551). us_ein's printed number changes. No test asserts a registration number (grep `\.number\b` over tests/ returns nothing), and `nextDueAt` is read only for display at src/ui/looks/business.tsx:274-278 — nothing charges or lapses on it — so the blast radius is cosmetic. **tests/business.test.ts:88` asserts the boot registry list only, before any arm exists, so it is untouched.
 - Deleting `'inc'`: `FORM_BY_ID` is `Record<CompanyForm, FormFacts>` built from `FORMS`, so removing the member and the entry together keeps the record total and typecheck green. Nothing in the save writes form 'inc' (`grep "form: "` over src/engine/ gives only 'hf' at :372, 'ehf' at :395, and `payload.form ?? 'llc'` at :572), so no persisted save can carry it.
-- Adding capabilities (option b) moves `openDoors()` — `tests/business.test.ts:349` asserts `expect(openDoors(sim)).toBe(2)` at boot and `toBe(9)` after the ladder, and `whereItStands` prints "Everything is in place". Both break on any new `CapabilityId`.
+- Adding capabilities (option b) moves `openDoors()` — **tests/business.test.ts:349` asserts `expect(openDoors(sim)).toBe(2)` at boot and `toBe(9)` after the ladder, and `whereItStands` prints "Everything is in place". Both break on any new `CapabilityId`.
 
 
 ## Refuted (20)
@@ -2705,7 +2713,7 @@ WHAT SURVIVES (one item, theirs, reproduced): the stale-`noted` path. `shutWhatH
 
 REFUTED on the half the severity rests on, and they missed a reader.
 
-**1. They missed `src/engine/decided.ts:412-424`.** They wrote "`decideHire`'s entire output is dead too... produces one adjective on one screen." It is the registered decider `crew.hired` (`drawnIn: 'src/engine/world/crew.ts'`), reading `answer.returning` AND `answer.standing` at :420-421. `tests/deciders.test.ts` sweeps every declared input end-to-end and fails if the outcome never moves. I ran it verbose:
+**1. They missed **src/engine/decided.ts** (the decider at those lines went with the production system).** They wrote "`decideHire`'s entire output is dead too... produces one adjective on one screen." It is the registered decider `crew.hired` (`drawnIn: 'src/engine/world/crew.ts'`), reading `answer.returning` AND `answer.standing` at :420-421. `tests/deciders.test.ts` sweeps every declared input end-to-end and fails if the outcome never moves. I ran it verbose:
 ```
 ✓ crew.hired — ... > is actually changed by returning
 ✓ crew.hired — ... > is actually changed by budget
@@ -2728,11 +2736,11 @@ WHAT THE CREW LIMB IS WORTH on a EUR 6,000,000 picture:
   higher rate 1,806,000 EUR back
   difference    516,000 EUR
 ```
-24 of the 50 people gating a 0.25→0.35 rate flip (incorporation.ts:194-201) ARE the named posts. `tests/rebate.test.ts:322-328` is live and green with `'crew'` as the sole blocker.
+24 of the 50 people gating a 0.25→0.35 rate flip (incorporation.ts:194-201) ARE the named posts. **tests/rebate.test.ts:322-328` is live and green with `'crew'` as the sole blocker.
 
 **5. Both proposed fixes are inert or break named live tests.**
 - Fix (b) "MAKE IT MARGINAL" cannot work as described. They say "carrying a camera operator then trades against carrying a second AD" — the player never chooses either. `sum(weeklyCents over postsFor(budget))` is a pure function of budget, subtracted from a period share that is also a pure function of budget. Identical output for every picture. It would add `weeklyCents` to 24 Posts with nothing able to vary it — a fresh violation of THE ONE RULE, in an audit that exists to remove them.
-- Fix REFUSAL breaks, by name: `tests/crew.test.ts:96` and `:249` (both `expect(crew.length).toBe(postsFor(budget).length)` — full staffing at delivery); `tests/crew.test.ts:351,353,362-363,369` (five calls reading `.returning`/`.standing` off the bare result — type errors against a `{took:false}|{took:true,...}` union); and `src/engine/decided.ts:420-421`. All 139 tests in crew/rebate/deciders pass today.
+- Fix REFUSAL breaks, by name: **tests/crew.test.ts** (gone), at what were lines 96 and 249 (both `expect(crew.length).toBe(postsFor(budget).length)` — full staffing at delivery); **tests/crew.test.ts:351,353,362-363,369` (five calls reading `.returning`/`.standing` off the bare result — type errors against a `{took:false}|{took:true,...}` union); and **src/engine/decided.ts** (the decider at those lines went with the production system). All 139 tests in crew/rebate/deciders pass today.
 - And they got the mechanism wrong. `registerCrew` (crew.ts:372-386) schedules one tick per start date and never retries; `fillPost` already returns `undefined` twice and the handler already swallows it silently (`if (came.length === 0) return;` suppresses the notification entirely). A refusal is not "a re-rolled name" — it is a permanently empty post with no message. And since `headcountOf` is budget-derived, the rebate does not move. Their own falsifiability test fails: change the input, only the sentence at business.tsx:530 ("N of 24 posts filled") changes.
 
 **6. Severity is wrong: serious → minor.** "Serious" would be right if crew were free labor on top of the negative — a real economic hole. It is not. What actually survives: two comments that promise an "engagement and the deal" record that does not exist, and one write-only number.

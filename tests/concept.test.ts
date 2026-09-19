@@ -22,8 +22,23 @@ import { quickSave } from '@/engine';
 import {
   CADENCE_LABEL, ENGINES, ENGINE_BY_ID, MOST_PARTS, enginesFor, engineById,
 } from '@/engine/content/concept';
-import { PLANS, planById } from '@/engine/content/making';
-import { whyNotConceive, whyNotMakeAs, couldBeMadeAs, enginesThatCarry } from '@/engine/world/concept';
+import {
+  whyNotConceive, whyNotMakeAs, couldBeMadeAs, enginesThatCarry, type MadeAs,
+} from '@/engine/world/concept';
+
+/**
+ * Ways of making something, standing in for the plans.
+ *
+ * The production system that held `WAYS` has gone, and the engine deliberately
+ * no longer imports one — it states its own contract, `MadeAs`, and whatever is
+ * built next conforms to it. These three are the shapes the engine has to be able
+ * to refuse and allow, written here so the refusals can be tested before the thing
+ * they refuse exists.
+ */
+const A_FEATURE: MadeAs = { id: 'feature', label: 'A Feature', cadence: 'single', parts: 1 };
+const A_SERIES: MadeAs = { id: 'series', label: 'A Series', cadence: 'returning', parts: 8 };
+const A_SEASON: MadeAs = { id: 'season', label: 'A Season', cadence: 'closed', parts: 8 };
+const WAYS: readonly MadeAs[] = [A_FEATURE, A_SERIES, A_SEASON];
 import type { Project } from '@/engine/domain/model';
 
 /** A project with a concept on it, without going through the whole pipeline. */
@@ -93,7 +108,7 @@ describe('the engines themselves', () => {
 
 describe('every plan declares what shape of commitment it is', () => {
   it('and something can carry each one', () => {
-    for (const plan of PLANS) {
+    for (const plan of WAYS) {
       expect(['single', 'closed', 'returning'], `${plan.id} has no cadence`).toContain(plan.cadence);
       expect(
         enginesThatCarry(plan).length,
@@ -104,8 +119,8 @@ describe('every plan declares what shape of commitment it is', () => {
 
   it('lets a film be made with no concept at all, and refuses television', () => {
     const bare = { ...withConcept('case'), concept: undefined, medium: 'film' } as Project;
-    const feature = planById('feature')!;
-    const series = planById('series')!;
+    const feature = A_FEATURE;
+    const series = A_SERIES;
     expect(whyNotMakeAs(bare, feature)).toBeUndefined();
     // The refusal the research is blunt about: a television premise with no weekly
     // generator dies in the room.
@@ -115,7 +130,7 @@ describe('every plan declares what shape of commitment it is', () => {
 
 describe('the four refusals', () => {
   it('refuses an engine that finishes when the plan keeps coming back', () => {
-    const series = planById('series')!;
+    const series = A_SERIES;
     expect(series.cadence).toBe('returning');
     const why = whyNotMakeAs(withConcept('transformation'), series);
     expect(why).toBeDefined();
@@ -125,12 +140,12 @@ describe('the four refusals', () => {
   });
 
   it('allows the same plan on an engine that never runs out', () => {
-    expect(whyNotMakeAs(withConcept('case'), planById('series')!)).toBeUndefined();
+    expect(whyNotMakeAs(withConcept('case'), A_SERIES)).toBeUndefined();
   });
 
   it('refuses a plan asking for more parts than the engine has fuel for', () => {
     const serial = ENGINE_BY_ID.serial!;
-    const tooLong = { ...planById('unscripted')!, delivers: { parts: serial.carries! + 1, secondsEach: 3_000 } };
+    const tooLong: MadeAs = { ...A_SEASON, parts: serial.carries! + 1 };
     const why = whyNotMakeAs(withConcept('serial'), tooLong);
     expect(why).toContain('nothing left to');
     expect(why).toContain(String(serial.carries));
@@ -138,14 +153,14 @@ describe('the four refusals', () => {
 
   it('refuses an ensemble too small to run the engine', () => {
     const needs = ENGINE_BY_ID.ensemble!.leastPeople;
-    const why = whyNotMakeAs(withConcept('ensemble', needs - 1), planById('series')!);
+    const why = whyNotMakeAs(withConcept('ensemble', needs - 1), A_SERIES);
     expect(why).toContain(String(needs));
   });
 
   it('refuses an engine the build does not have', () => {
     const odd = withConcept('case');
     odd.concept!.engineId = 'gone';
-    expect(whyNotMakeAs(odd, planById('series')!)).toContain('not one this build has');
+    expect(whyNotMakeAs(odd, A_SERIES)).toContain('not one this build has');
   });
 });
 
@@ -191,7 +206,7 @@ describe('conceiving something', () => {
     const { sim, project } = start();
     expect(whyNotConceive(sim, {
       projectId: project.id, engineId: 'case', worldId: 'is-39-reykjavik', people: 0,
-    })).toContain('about somebody');
+    })).toContain('at least one person');
     expect(whyNotConceive(sim, {
       projectId: 'nope', engineId: 'case', worldId: 'is-39-reykjavik', people: 5,
     })).toContain('no such picture');
@@ -216,12 +231,12 @@ describe('conceiving something', () => {
 
 describe('what the screen can offer', () => {
   it('offers only the plans the engine can honestly carry', () => {
-    const could = couldBeMadeAs(withConcept('transformation'), PLANS);
+    const could = couldBeMadeAs(withConcept('transformation'), WAYS);
     expect(could.length).toBeGreaterThan(0);
     for (const plan of could) expect(plan.cadence).not.toBe('returning');
     // And the distinction stated directly rather than by counting: a renewable
     // engine is offered the returning plan and a finishing one never is.
-    const renewable = couldBeMadeAs(withConcept('case'), PLANS);
+    const renewable = couldBeMadeAs(withConcept('case'), WAYS);
     expect(renewable.some((one) => one.cadence === 'returning')).toBe(true);
     expect(could.some((one) => one.cadence === 'returning')).toBe(false);
   });

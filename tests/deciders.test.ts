@@ -26,6 +26,12 @@ describe('the deciders', () => {
   });
 
   it('declares which way its inputs push, on every decision that has a scale', () => {
+    // The floor was fifteen directions across six deciders and is two across one.
+    // It fell because five of the six went with the production system — making.slip,
+    // selling.take, crew.hired, casting.answered and awards.noticed — and a floor
+    // that cannot be met is worse than no floor. It rises again as the rebuild
+    // gives the new deciders ladders, and it may not fall for any other reason.
+    //
     // A floor rather than a target, and it only goes up. `sweepOne` proves an
     // input changes the answer and cannot prove it changes it the right way, so a
     // decider with no declared direction is a decider where an inverted sign would
@@ -41,8 +47,8 @@ describe('the deciders', () => {
     // it and never falls.
     const declared = ALL.flatMap((d) => Object.keys(d.rises ?? {}));
     const withLadder = ALL.filter((d) => d.ladder !== undefined);
-    expect(declared.length, 'fewer declared directions than there were').toBeGreaterThanOrEqual(15);
-    expect(withLadder.length, 'fewer deciders with a ladder than there were').toBeGreaterThanOrEqual(6);
+    expect(declared.length, 'fewer declared directions than there were').toBeGreaterThanOrEqual(2);
+    expect(withLadder.length, 'fewer deciders with a ladder than there were').toBeGreaterThanOrEqual(1);
     // A ladder nothing pushes along is decoration, and so is a direction with no
     // ladder to push along. Both are caught here rather than at the sweep.
     for (const d of ALL) {

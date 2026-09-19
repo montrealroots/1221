@@ -27,13 +27,12 @@ import {
   MOST_OF_THE_SPEND, OVERHEAD, PATIENCE, RATE_SHARE, SELLING, SMALL_STAGE_COST_CENTS,
   THE_RATE_CARD, type Enquiry,
 } from '@/engine/content/lot';
-import { REBATE } from '@/engine/content/incorporation';
 import {
   BUILD_MEMO, ISK_A_EURO, behindTheCompany, breakEvenShare, buildAStage, chargeTheMonth,
   crewInTheCountry, familyCovers, floorStanding, goingUp, heldFor,
   monthlyOverhead, paidInSoFar, pullOn,
-  quotedFor, reachOf, rungFor, stillToCarry, theSmallStage, turnedAway,
-  MS_WEEK, keepsRinging, stagesOn, standingWith, tierFor, utilisation, whatTheFamilySays,
+  quotedFor, reachOf, rungFor, stillToCarry, theSmallStage,
+  MS_WEEK, stagesOn, standingWith, utilisation, whatTheFamilySays,
   whereTheBuildStands, whereTheLotStands, whyNotBuild, wholeHold,
   wouldBook, familyTakesItBack,
 } from '@/engine/world/lot';
@@ -459,64 +458,7 @@ describe('what a production is actually weighing', () => {
     }
   });
 
-  it('names the offices that ring every year and never book', () => {
-    // Three of the ten shapes cannot book at any room size this lot can build:
-    // the European agency's commercials and the streamer's documentaries fail
-    // the rebate against what it costs to bring a crew here, and the Nordic
-    // broadcaster's series fails on price. Twenty-six of a hundred and one in
-    // enquiry weight, ringing every year and going to Budapest every year.
-    //
-    // That is the premise of this business working exactly as written, and it
-    // used to read as noise: `turnedAway` buckets a refusal by its reason, so a
-    // player saw an anonymous tally and could not tell three standing customers
-    // they cannot serve from a run of awkward weeks.
-    const { sim } = fiveYears('lot-ringing');
-    const never = keepsRinging(sim).map((one) => one.officeId).sort();
-    // Four on the lot as the family built it. The Icelandic documentary is the
-    // one a room answers — it is refused on price at four big stages and books
-    // at a small one — and the other three are refused whatever is standing.
-    expect(never, 'somebody who cannot book here found a room').toEqual(
-      ['eu_agency_spot', 'is_doc', 'nordic_series', 'streamer_doc'],
-    );
-    for (const one of keepsRinging(sim)) {
-      expect(one.times, 'named as a standing customer on a single call').toBeGreaterThan(1);
-      expect(one.because.length, 'no reason given for going elsewhere').toBeGreaterThan(0);
-      expect(one.from, 'the id leaked onto the board in place of the sentence').not.toBe(one.officeId);
-    }
 
-    // And an office that has booked is not on the list, however often it has
-    // also been turned away. What this exists to surface is the structural case.
-    const booked = new Set(Object.values(sim.universe.bookings).map((one) => one.officeId));
-    expect(booked.has('ruv_series'), 'RÚV never once booked in five years').toBe(true);
-    expect(never).not.toContain('ruv_series');
-  });
-
-  it('is what makes building a room a decision somebody can read', () => {
-    // The point of naming them. A player looking at an anonymous count of
-    // refusals cannot tell which of them a room would answer; a player looking
-    // at four named offices and the reason each gave can. Building the small
-    // stage recovers exactly one of the four — the Icelandic documentary, whose
-    // refusal is about price and not about the rebate — and the three foreign
-    // ones go on ringing, because what sends them away is the arithmetic of
-    // bringing a crew to Iceland and no room changes that.
-    const { sim } = fiveYears('lot-ringing-build');
-    const before = keepsRinging(sim).map((one) => one.officeId).sort();
-    expect(before).toContain('is_doc');
-
-    expect(buildAStage(sim).ok, 'the family could not carry the room').toBe(true);
-    sim.advanceTo(sim.now + (A_SMALL_STAGE.weeksToBuild + 1) * MS_WEEK);
-    expect(stagesOn(sim)).toHaveLength(5);
-    sim.advanceTo(sim.now + 5 * 365 * MS_DAY);
-
-    const after = keepsRinging(sim).map((one) => one.officeId).sort();
-    expect(after, 'a fifth room answered nobody, or answered everybody').toEqual(
-      ['eu_agency_spot', 'nordic_series', 'streamer_doc'],
-    );
-    for (const one of keepsRinging(sim)) {
-      expect(one.because, 'the room was the thing standing in their way after all')
-        .not.toMatch(/right size/);
-    }
-  });
 
   it('counts the load-out as time the room was occupied and barely paid for', () => {
     // The reader the strike row was given, and the reason the word exists
@@ -595,52 +537,7 @@ describe('the rebate is four tests and the country can fail one', () => {
     expect(crewInTheCountry(sim)).toBeGreaterThanOrEqual(CREW_BASE);
   });
 
-  it('takes the higher tier away when there is nobody left to crew it', () => {
-    const sim = quickSave({}, 'crew-short');
-    const big: Enquiry = {
-      officeId: 'a_room', kind: 'feature', from: 'an American studio', needsSqm: 5_200, needsHeightM: 24,
-      needsTank: false, weeks: 14, spendIsk: 1_900_000_000, local: false,
-    };
-    const from = sim.now + 60 * MS_DAY;
-    expect(tierFor(sim, big, from), 'a tentpole could not reach the higher tier')
-      .toBe(REBATE.higherShare);
 
-    // Now fill the country. Every shooting booking across those weeks wants
-    // fifty people of its own, and there are only so many in Iceland.
-    const stage = stagesOn(sim)[0]!;
-    for (let i = 0; i < Math.ceil(crewInTheCountry(sim) / REBATE.higherNeeds.crew); i += 1) {
-      sim.universe.bookings[`b${i}`] = {
-        id: `b${i}`, saveId: sim.universe.meta.id, stageId: stage.id, holder: 'somebody',
-        kind: 'shooting', from, to: from + 20 * MS_WEEK, weekRateCents: 1,
-      };
-    }
-    expect(tierFor(sim, big, from), 'the country ran out of crew and nobody noticed')
-      .toBe(REBATE.share);
-  });
-
-  it('keeps the limbs cumulative, so failing one is failing the band', () => {
-    const sim = quickSave({}, 'crew-limbs');
-    const from = sim.now + 60 * MS_DAY;
-    const big: Enquiry = {
-      officeId: 'a_room', kind: 'feature', from: 'an American studio', needsSqm: 5_200, needsHeightM: 24,
-      needsTank: false, weeks: 14, spendIsk: 1_900_000_000, local: false,
-    };
-    // Under the spend, and no amount of crew in the country promotes it.
-    expect(tierFor(sim, { ...big, spendIsk: REBATE.higherNeeds.spendIsk - 1 }, from))
-      .toBe(REBATE.share);
-    // Under the days, likewise.
-    expect(tierFor(sim, { ...big, weeks: 1 }, from)).toBe(REBATE.share);
-
-    // And the fourth limb, which is a separate question from the third: a unit
-    // can be in the country for long enough to clear the working-days floor and
-    // still not be here for the fifty days the crew condition asks for. The two
-    // thresholds are thirty and fifty, so everything between them fails on one
-    // and passes on the other.
-    const short = { ...big, weeks: 5 };
-    expect(wholeHold(short) * 5).toBeGreaterThanOrEqual(REBATE.higherNeeds.workingDays);
-    expect(wholeHold(short) * 5).toBeLessThan(REBATE.higherNeeds.crewDays);
-    expect(tierFor(sim, short, from)).toBe(REBATE.share);
-  });
 });
 
 describe('how many people ring is something the lot earns', () => {
@@ -728,29 +625,6 @@ describe('how many people ring is something the lot earns', () => {
     expect(done.value?.error).toMatch(/nobody left to tell/);
   });
 
-  it('says what the money bought, refusals and all', () => {
-    const loud = tenYears('ring-away', SELLING.most);
-    const quiet = tenYears('ring-away-quiet', SELLING.floor);
-    const by = (sim: Simulation, why: string): number =>
-      turnedAway(sim).find((one) => one.why === why)?.count ?? 0;
-    expect(turnedAway(loud).length, 'nothing was ever turned away').toBeGreaterThan(0);
-    expect(by(loud, 'rebate')).toBeGreaterThan(by(quiet, 'rebate'));
-    for (const one of turnedAway(loud)) expect(one.said.length).toBeGreaterThan(20);
-
-    // And it bought different calls, not only more of them. A desk in Los
-    // Angeles is what the money reaches; a producer in Reykjavik knows the
-    // stages are there whatever anybody spends. Read off who actually booked,
-    // because a share that did not move would mean the money bought volume and
-    // nothing else — which is a multiplier, not a demand model.
-    const abroad = new Set(ENQUIRY_SHAPES.filter((one) => !one.of.local).map((one) => one.of.from));
-    const share = (sim: Simulation): number => {
-      const jobs = Object.values(sim.universe.bookings).filter((one) => one.kind === 'shooting');
-      const foreign = jobs.filter((one) => [...abroad].some((who) => one.holder.startsWith(who)));
-      return jobs.length > 0 ? foreign.length / jobs.length : 0;
-    };
-    expect(share(loud), 'the money bought more of exactly the same calls')
-      .toBeGreaterThan(share(quiet) + 0.05);
-  });
 
   it('keeps the books straight through all of that', () => {
     const sim = tenYears('ring-sound', SELLING.most);

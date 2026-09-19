@@ -39,12 +39,29 @@
 
 import type { Simulation } from '../core/simulation';
 import type { Id, Project } from '../domain/model';
-import type { Plan } from '../content/making';
+
 import {
-  CADENCE_LABEL, MOST_PARTS, engineById, enginesFor, type StoryEngine,
+  CADENCE_LABEL, MOST_PARTS, engineById, enginesFor, type Cadence, type StoryEngine,
 } from '../content/concept';
 import { CITIES } from '../content/geography';
+import { plural } from '../core/text';
 import { MAKING } from '../domain/company';
+
+/**
+ * What the engine needs to know about a way of making something.
+ *
+ * Declared here rather than imported, and that is the point. The engine used to
+ * take a `Plan` off the production system, which made the first thing in the
+ * pipeline depend on the last. It now states its own contract — an id, a label,
+ * how many parts it delivers and what shape of commitment it is — and whatever
+ * production system is built next conforms to it rather than the other way round.
+ */
+export interface MadeAs {
+  id: string;
+  label: string;
+  cadence: Cadence;
+  parts: number;
+}
 
 /** What the player is asking for when they conceive something. */
 export interface Conceiving {
@@ -77,7 +94,7 @@ export function whyNotConceive(sim: Simulation, spec: Conceiving): string | unde
   if (!CITIES.get(spec.worldId)) return 'There’s nowhere by that name to set it.';
 
   if (!Number.isFinite(spec.people) || spec.people < 1) {
-    return 'It has to be about somebody.';
+    return 'It has to be about at least one person.';
   }
   if (spec.people < engine.leastPeople) {
     return `${engine.label} runs on people rubbing against each other, and ${spec.people} `
@@ -104,7 +121,7 @@ export function conceive(
     category: 'business',
     title: `${project.title}: What It Is`,
     body: `${engine.label}. ${engine.asks} Set in ${CITIES.get(spec.worldId)?.name ?? 'somewhere'}, `
-      + `${spec.people} people. ${engine.rules}`,
+      + `${plural(spec.people, 'person')}. ${engine.rules}`,
     importance: 40,
     route: '/workspace/business',
     refType: 'project',
@@ -118,15 +135,15 @@ export function conceive(
  *
  * The gate. Called from `wouldBe` before any date is laid, so a refused greenlight
  * writes nothing — and called from the screen, on the same function, so the form can
- * grey out a plan rather than letting somebody find out by pressing the button.
+ * gray out a plan rather than letting somebody find out by pressing the button.
  */
-export function whyNotMakeAs(project: Project, plan: Plan): string | undefined {
+export function whyNotMakeAs(project: Project, plan: MadeAs): string | undefined {
   const concept = project.concept;
 
   // 1. Television with nothing underneath it.
   if (concept === undefined) {
     if (plan.cadence === 'single') return undefined;
-    return `${plan.label} is a machine that has to make ${plan.delivers.parts} of something, `
+    return `${plan.label} is a machine that has to make ${plan.parts} of something, `
       + 'and nobody has said what makes the next one. Say what it is first.';
   }
 
@@ -143,29 +160,29 @@ export function whyNotMakeAs(project: Project, plan: Plan): string | undefined {
 
   // 3. More parts than there is fuel for.
   const fuel = engine.carries;
-  if (fuel !== undefined && plan.delivers.parts > fuel) {
+  if (fuel !== undefined && plan.parts > fuel) {
     return `${engine.label} has about ${fuel} parts in it before there’s nothing left to `
-      + `reveal, and ${plan.label} asks for ${plan.delivers.parts}.`;
+      + `reveal, and ${plan.label} asks for ${plan.parts}.`;
   }
-  if (plan.delivers.parts > MOST_PARTS) {
-    return `${plan.delivers.parts} parts is more than anybody makes of one thing.`;
+  if (plan.parts > MOST_PARTS) {
+    return `${plan.parts} parts is more than anybody makes of one thing.`;
   }
 
   // 4. Not enough people to run it.
   if (concept.people < engine.leastPeople) {
-    return `${engine.label} needs ${engine.leastPeople} people and this one has ${concept.people}.`;
+    return `${engine.label} needs ${plural(engine.leastPeople, 'person')} and this one has ${concept.people}.`;
   }
   return undefined;
 }
 
 /** The plans this project could honestly be made as, for a screen to offer. */
-export function couldBeMadeAs(project: Project, plans: readonly Plan[]): readonly Plan[] {
+export function couldBeMadeAs<T extends MadeAs>(project: Project, plans: readonly T[]): readonly T[] {
   return plans.filter((one) => whyNotMakeAs(project, one) === undefined);
 }
 
 /** The engines that could carry a given plan, for a screen to explain a refusal with. */
-export function enginesThatCarry(plan: Plan): readonly StoryEngine[] {
-  return enginesFor(plan.cadence).filter((one) => one.carries === undefined || one.carries >= plan.delivers.parts);
+export function enginesThatCarry(plan: MadeAs): readonly StoryEngine[] {
+  return enginesFor(plan.cadence).filter((one) => one.carries === undefined || one.carries >= plan.parts);
 }
 
 /** "a, b and c", because a refusal reads as a sentence or it does not get read. */

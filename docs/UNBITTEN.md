@@ -1,5 +1,13 @@
 # What Does Not Bite
 
+> **The production system was deleted on 2026-09-19, and is being rebuilt from the
+> front.** Entries below that name a file under `making`, `casting`, `crew`, `selling`,
+> `inventory`, `trouble`, `rebate`, `maturity`, `awards` or `audition` are about code
+> that no longer exists. They are kept as history rather than deleted, because what a
+> thing was measured to do is the most useful record of it — but they are no longer
+> open work, and the paths in them are written **without backticks and marked gone**
+> so that `tools/doc-refs.mjs` is not made to vouch for files nobody can open.
+
 A standing list of everything in SLATE that is declared, written, displayed or
 believed, and that changes no outcome. It is kept separate from `DEPTH.md`
 because that page argues for the standard and this page is the arrears against
@@ -70,7 +78,7 @@ axes, and every one of those reads happens on somebody who is not the player.
 for the audition room specifically — `cold_reading`, `taking_a_redirect`,
 `nerve_management`, `walking_into_the_room`, `self_tape_craft`. A faithful port
 of the research would be forty-five lookups all returning a hundred, which is
-why `src/engine/world/audition.ts` deliberately reads no attribute anywhere and
+why **src/engine/world/audition.ts** (gone) deliberately reads no attribute anywhere and
 a test enforces that by grepping the file.
 
 This is the largest single entry on this page and it is not a bug. It is the
@@ -227,7 +235,7 @@ the game never fills.
 
 ## Unreachable: correct, and nothing can get there
 
-**`datesFor` on a plan with no shoot** (`src/engine/world/casting.ts`). It dates
+**`datesFor` on a plan with no shoot** (**src/engine/world/casting.ts** (gone)). It dates
 a part off the plan's base period, which is right for a format season. No
 greenlight can reach it: only a plan carrying `cast: 'performers'` lays any
 parts, and both plans that do have a period called `shooting`. The contract is

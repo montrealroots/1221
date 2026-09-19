@@ -18,14 +18,12 @@ import { quickSave } from '@/engine';
 import type { Simulation } from '@/engine';
 import { MS_DAY } from '@/engine/core/time';
 import { A_POINT_OF_IT_CENTS, HOUSE, WEAR_A_DAY } from '@/engine/content/estate';
-import { HEADROOM, RELIABILITY_RESTS_AT } from '@/engine/content/audition';
 import { TRAINING_AN_HOUR, ceilingAt } from '@/engine/content/lifespan';
 import { TOO_SPENT_TO_TRAIN } from '@/engine/systems/life';
 import {
   haveTheWorkDone, theHouse, upkeepRefusal, whatTheWorkCosts, whyNotUpkeep,
 } from '@/engine/world/house';
-import { readiness, sleepQuality } from '@/engine/systems/life';
-import { playACareer } from './played';
+import { RELIABILITY_RESTS_AT, sleepQuality } from '@/engine/systems/life';
 
 /** Puts the house down by hand, which is what the days would have done. */
 function wearItDownTo(sim: Simulation, condition: number): void {
@@ -165,51 +163,6 @@ describe('whether the condition reaches an outcome', () => {
     expect(rested).toBeGreaterThan(worn);
   });
 
-  it('decides how ready somebody is over a career, which is what the room reads', () => {
-    // The falsifiability test, run as a test. Same seed both sides; the only
-    // difference is whether the work is ever had done.
-    //
-    // It asserts readiness rather than parts won, and the reason is a number
-    // worth knowing before trusting this lever: paired over six seeds of
-    // twenty-five played years, keeping the house moves readiness in the last
-    // third from 19.3 to 46.6 and career earnings from EUR 1.92m to 2.20m, and
-    // moves parts won by three of a hundred and fifteen. Parts are too small
-    // and too noisy to pin on one seed. Readiness is the term `heardItRight`
-    // reads on every reading, so it is the mechanism rather than a meter.
-    //
-    // Twelve years rather than twenty-five because that is where this stops
-    // being cheap, and the claim about the whole career — no seed reaching
-    // reliability nought with the house kept, six of six without — is measured
-    // and recorded in `world/house.ts` rather than paid for on every gate run.
-    // `playACareer` keeps the house itself now, and that is why the A/B is set up
-    // the way it is rather than by adding the upkeep on one side. It did not, for
-    // the whole of its life, and the measurement that changed it is the reason
-    // this lever matters: over twenty-five years with the house left alone the
-    // roof went 100 to 34 by year fifteen and 0 by year twenty-four, and
-    // everything downstream of a night's sleep went with it — body condition to
-    // 0, energy pinned at 0, stress at 90, morale at 0, readiness at 11. Energy
-    // under `TOO_SPENT_TO_TRAIN` also stops the training in that same loop, so
-    // fitness ratcheted from 98 to 0 with nothing able to put it back. Kept, the
-    // same seed holds the house at 99, readiness at 49 and fitness within three
-    // points of the age ceiling for the whole career.
-    const ready = (keep: boolean) => {
-      const sim = quickSave({}, 'house-career');
-      fund(sim, 5_000_000_00);
-      const seen: number[] = [];
-      playACareer(sim, 12, {
-        letTheHouseGo: !keep,
-        eachWeek: (s) => {
-          const me = s.universe.people[s.universe.playerId];
-          if (me) seen.push(readiness(me));
-        },
-      });
-      return seen.slice(-52).reduce((a, b) => a + b, 0) / 52;
-    };
-
-    const left = ready(false);
-    const kept = ready(true);
-    expect(kept).toBeGreaterThan(left + 1);
-  });
 });
 
 function readSource(path: string): string {
@@ -228,36 +181,6 @@ describe('the seven dials that only went one way', () => {
 
   const MONTH = 31 * MS_DAY;
 
-  it('forgets you, which is the only thing this player can do wrong', () => {
-    // `WELL_LIKED`'s own docstring asked for this: the player holds every
-    // attribute at the ceiling, so there is no such thing as being bad in
-    // something. "What they can still do is not be in anything." It had no cost.
-    const sim = quickSave({}, 'dials-forget');
-    const me = sim.universe.people[sim.universe.playerId]!;
-    me.reputation.publicFame = 80;
-    me.reputation.industryDemand = 70;
-    me.reputation.audienceAppeal = 60;
-    me.reputation.professionalReputation = 50;
-
-    sim.advanceTo(sim.now + 12 * MONTH);
-    const rep = me.reputation;
-    expect(rep.publicFame, 'a year of being in nothing cost nothing').toBeLessThan(80);
-    expect(rep.industryDemand).toBeLessThan(70);
-    expect(rep.audienceAppeal).toBeLessThan(60);
-    expect(rep.professionalReputation).toBeLessThan(50);
-
-    // And they fall at different rates, which is the content rather than a
-    // tuning: the public forgets fastest, the trade slowest.
-    const lostFame = 80 - rep.publicFame;
-    const lostDemand = 70 - rep.industryDemand;
-    const lostAppeal = 60 - rep.audienceAppeal;
-    const lostStanding = 50 - rep.professionalReputation;
-    expect(lostFame).toBeGreaterThan(lostDemand);
-    expect(lostDemand).toBeGreaterThan(lostAppeal);
-    expect(lostAppeal).toBeGreaterThan(lostStanding);
-    // A year off is felt and is not ruinous. Nothing here is a countdown.
-    expect(lostFame).toBeLessThan(20);
-  });
 
   it('charges a long jump exactly what living the days would have', () => {
     // The trap `driftBonds` already names: a career must not fade differently
@@ -283,17 +206,6 @@ describe('the seven dials that only went one way', () => {
     expect(them.map((one) => one.reputation.publicFame)).toEqual(before);
   });
 
-  it('is worth less near the ceiling, so a standing is not a running total', () => {
-    // Flat gains pinned two of these against the top: appeal sat between 94.7
-    // and 100 for the whole last third of a career. A dial at its ceiling has
-    // stopped being a measure and become a receipt.
-    expect(HEADROOM(0)).toBeGreaterThan(HEADROOM(50));
-    expect(HEADROOM(50)).toBeGreaterThan(HEADROOM(95));
-    expect(HEADROOM(100)).toBeGreaterThan(0);
-    // Never nought, because a career at a hundred must still be able to climb
-    // back after a decade away rather than being stuck wherever it landed.
-    expect(HEADROOM(100)).toBeLessThan(0.1);
-  });
 
   it('heals a record of turning up, because resting is not being unreliable', () => {
     // It moves only during a working week, three off against one back, and

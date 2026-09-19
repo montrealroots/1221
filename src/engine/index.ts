@@ -28,16 +28,9 @@ import { registerLife, startOfLocalDay } from './systems/life';
 import { populateFamily } from './world/family';
 import { buildTheLot, registerLot } from './world/lot';
 import { registerSugar, seedTheQuota, staffTheGroup } from './world/sugar';
-import { registerMaking } from './world/making';
-import { registerSelling } from './world/selling';
-import { registerCrew } from './world/crew';
-import { registerCasting } from './world/casting';
-import { registerAudition } from './world/audition';
-import { registerRebate } from './world/rebate';
 import { registerVat } from './world/vat';
 import { registerHouse } from './world/house';
 import { registerBanking } from './world/banking';
-import { registerAwards } from './world/awards';
 import { registerTutorial } from './world/tutorial';
 import { registerConcept } from './world/concept';
 import {
@@ -67,16 +60,9 @@ export function registerAllSystems(sim: Simulation): void {
   registerTheClock(sim);
   registerLot(sim);
   registerSugar(sim);
-  registerMaking(sim);
-  registerSelling(sim);
-  registerCrew(sim);
-  registerCasting(sim);
-  registerAudition(sim);
-  registerRebate(sim);
   registerVat(sim);
   registerHouse(sim);
   registerBanking(sim);
-  registerAwards(sim);
   registerConcept(sim);
   registerTutorial(sim);
 }
@@ -342,7 +328,6 @@ export function migrate(universe: SaveUniverse): MigrationResult {
   record('holdings', 'the material it holds');
   record('posts', 'the posts it keeps');
   record('projects', 'the slate');
-  record('auditions', 'the parts you have been asked about');
   record('properties', 'the properties');
   record('stages', 'the stages on the lot');
   record('bookings', 'who is booked onto them');
@@ -658,13 +643,7 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     booking.officeId = named(booking.holder);
     rooms += 1;
   }
-  let asks = 0;
-  for (const audition of Object.values(universe.auditions ?? {})) {
-    const a = audition as unknown as { officeId?: string; holder: string };
-    if (a.officeId !== undefined) continue;
-    a.officeId = named(a.holder);
-    asks += 1;
-  }
+  const asks = 0;
   // Schema 82: prestige comes back, so a save written while it was gone needs it.
   //
   // Nought rather than anything guessed, and that is the honest value: prestige is

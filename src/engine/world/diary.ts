@@ -17,9 +17,7 @@
 
 import type { Simulation } from '../core/simulation';
 import type { Instant } from '../core/time';
-import { sizeById } from '../content/casting';
 import { MS_WEEK } from './lot';
-import { baseWindowOf } from './periods';
 
 /**
  * How long before the first day somebody is already spoken for.
@@ -74,11 +72,13 @@ export const BEFORE_THE_FIRST_DAY = MS_WEEK;
  * therefore free late in a picture they are technically still on, which is a
  * simplification and not an oversight.
  */
-export function heldUntil(sizeId: string | undefined, from: Instant, to: Instant): Instant {
-  const size = sizeById(sizeId ?? '');
-  if (!size || size.across === 'title') return to;
-  const whole = Math.max(1, Math.round((to - from) / MS_WEEK));
-  return from + Math.max(1, Math.round(whole * size.onScreen)) * MS_WEEK;
+export function heldUntil(_sizeId: string | undefined, _from: Instant, to: Instant): Instant {
+  // Part sizes went with the casting system, so a booking is held for the whole
+  // of its window rather than for the days somebody is actually called. Both
+  // arguments are kept and unread on purpose: the signature is what casting will
+  // hand back when it returns, and changing it twice is worse than once.
+  return to;
+  return to;
 }
 
 export interface Taken {
@@ -103,44 +103,15 @@ export interface Taken {
  * calendar items are written from these and asking the derived copy would be a
  * second answer waiting to disagree with the first.
  */
-export function whatHasThem(sim: Simulation, from: Instant, to: Instant): Taken | undefined {
-  const me = sim.universe.playerId;
-
-  for (const project of Object.values(sim.universe.projects)) {
-    for (const seat of project.cast ?? []) {
-      if (seat.personId !== me || seat.releasedAt !== undefined) continue;
-      const role = project.roles?.find((one) => one.id === seat.roleId);
-      if (!role) continue;
-      const shoot = baseWindowOf(project);
-      if (!shoot) continue;
-      const opens = shoot.from - BEFORE_THE_FIRST_DAY;
-      // The whole run first, and only then what this size actually holds. This
-      // is asked once a day against every record a save has ever made, and
-      // `heldUntil` is never past `shoot.to`, so anything the full span rejects
-      // the short one rejects too. Costing the lookup before the reject is what
-      // turned the ten-year endurance run superlinear.
-      if (opens >= to || from >= shoot.to) continue;
-      const until = heldUntil(role.size, shoot.from, shoot.to);
-      if (from < until) {
-        return { what: `${role.name} on ${project.title}`, from: opens, to: until };
-      }
-    }
-  }
-
-  for (const one of Object.values(sim.universe.auditions)) {
-    if (one.why !== 'cast') continue;
-    // The same week in front of it. Whose picture it is makes no difference to
-    // whether somebody is already spoken for, and giving the lead-in to one of
-    // these two branches and not the other would be this file answering its own
-    // question twice — which is the thing it exists to stop.
-    const opens = one.from - BEFORE_THE_FIRST_DAY;
-    if (opens >= to || from >= one.to) continue;
-    const until = heldUntil(one.size, one.from, one.to);
-    if (from < until) {
-      return { what: one.holder, from: opens, to: until };
-    }
-  }
-
+export function whatHasThem(_sim: Simulation, _from: Instant, _to: Instant): Taken | undefined {
+  // Nothing takes days out of a diary at the moment, and that is the honest state
+  // rather than a stub. Two things used to: a seat on one of the family's own
+  // pictures, through its roles and its shooting window, and a part won at an
+  // audition, through the booking behind it. Both went with the production system.
+  //
+  // The function stays and is still called, because whether somebody is already
+  // spoken for is a question the rest of the build asks and will need answered
+  // again the moment there is work. What it must not do is guess.
   return undefined;
 }
 

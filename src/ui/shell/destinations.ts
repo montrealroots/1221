@@ -38,11 +38,7 @@ export const DESTINATIONS: readonly DestinationGroup[] = [
     label: 'Your Day',
     items: [
       { route: '/workspace/calendar', label: 'Calendar', detail: 'Every commitment you have', homeOnly: true },
-      {
-        route: '/workspace/auditions',
-        label: 'Your Work',
-        detail: 'What anybody outside the family will see you for',
-      },
+      
     ],
   },
   {

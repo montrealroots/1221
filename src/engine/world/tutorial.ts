@@ -88,23 +88,7 @@ export function theLessonWorld(sim: Simulation): LessonWorld {
   ).length;
 
   const house = u.properties[me?.residenceId ?? ''];
-  // 'open' is being asked and 'waiting' is having read and not heard, and both are
-  // an audition the player could still be doing something about. 'noted' and 'over'
-  // are finished with.
-  const openAuditions = Object.values(u.auditions).filter(
-    (one) => one.state === 'open' || one.state === 'waiting',
-  ).length;
 
-  // A part is filled by a live `Seat` on the picture, not by a field on the role
-  // and not by anything on the audition — an audition is the player being seen,
-  // and the company's own casting is a different table. A seat that has been
-  // released leaves the part open again, which is what `restaff` does.
-  const roles = projects.flatMap((one) => one.roles ?? []);
-  const seated = new Set(
-    projects.flatMap((one) => one.cast ?? [])
-      .filter((seat) => seat.releasedAt === undefined)
-      .map((seat) => seat.roleId),
-  );
 
   const termsOut = [
     ...Object.values(u.registrations).map((one) => one.nextDueAt),
@@ -117,16 +101,7 @@ export function theLessonWorld(sim: Simulation): LessonWorld {
     hasCompany: companiesOf(u).length > 0,
     registrations: live(u.registrations),
     holdings: live(u.holdings),
-    filledPosts: Object.values(u.posts).filter((one) => one.personId !== undefined).length,
     projects: counted,
-    openParts: roles.filter((role) => !seated.has(role.id)).length,
-    openAuditions,
-    // A part the player won is an audition that came back 'cast', not a seat on one
-    // of the family's own pictures. Those are two different things and the first
-    // version of this counted the wrong one, so `partsWon` was nought for every
-    // acting career ever played and the lesson about clashes could not fire. An
-    // office that asked for you is not the company you own.
-    partsWon: Object.values(u.auditions).filter((one) => one.why === 'cast').length,
     stages: { built: Object.keys(u.stages).length, booked: bookedNow },
     houseNeedsWork: house !== undefined && house.condition < 80,
     tiredness: 100 - (me?.wellbeing?.energy ?? 100),
@@ -136,7 +111,6 @@ export function theLessonWorld(sim: Simulation): LessonWorld {
       (one) => one.resolvedAt === undefined && one.dismissedAt === undefined,
     ).length,
     termRunningOut: termsOut,
-    unsoldFinished: counted.finished,
     // The real memo, imported rather than spelled again. The first version looked
     // for 'Distribution' and the memo says 'Dividend', so the lesson could never
     // fire — and a substring somebody typed is the kind of link that breaks
@@ -171,9 +145,6 @@ export const WHEN: Readonly<Record<string, (w: LessonWorld) => boolean>> = {
   // The work. Being asked is the trigger for the first, having been in a room for
   // the second, and having a part in hand for the third — because a clash cannot
   // happen to somebody with nothing booked.
-  auditions: (w) => w.openAuditions > 0,
-  'the-note': (w) => w.openAuditions > 0 || w.partsWon > 0,
-  clashes: (w) => w.partsWon > 0,
 
   // The body. Training after a week of the game, and the tiredness lesson only
   // when they are actually running down, which is the moment it means something.
@@ -215,14 +186,7 @@ export const WHEN: Readonly<Record<string, (w: LessonWorld) => boolean>> = {
 
   // The pictures, walked in the order a picture walks.
   conceive: (w) => w.holdings > 0,
-  develop: (w) => w.holdings > 0 && w.filledPosts > 0,
-  greenlight: (w) => w.projects.developing > 0,
-  casting: (w) => w.openParts > 0,
-  board: (w) => w.projects.greenlit > 0 || w.projects.shooting > 0,
   crew: (w) => w.projects.greenlit > 0,
-  restaff: (w) => w.projects.shooting > 0,
-  deliver: (w) => w.projects.finished > 0 || w.projects.shooting > 0,
-  sell: (w) => w.unsoldFinished > 0 || w.projects.delivered > 0,
 
   // The lot and the estate.
   lot: (w) => w.stages.built > 0,
@@ -234,7 +198,6 @@ export const WHEN: Readonly<Record<string, (w: LessonWorld) => boolean>> = {
   // been seen for anything, sugar from the start because it is running whether the
   // player looks at it or not.
   awards: (w) => w.projects.delivered > 0,
-  standing: (w) => w.partsWon > 0 || w.openAuditions > 0,
   sugar: (w) => w.week >= 6,
   dividend: (w) => w.dividendPaid,
 

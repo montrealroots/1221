@@ -159,21 +159,6 @@ describe('what the personality traits actually do', () => {
     expect([...declared].sort()).toEqual(['recoveryRate', 'stressPerShootDay']);
   });
 
-  it('leaves the two reputation fields that share a name alone', () => {
-    // The trap the deleted list warned about, held as its own claim now that the
-    // list is gone: `audienceAppeal` and `professionalReputation` were knobs on a
-    // trait AND are fields on `Person.reputation`. The knobs went. The fields are
-    // live, and they move in both directions.
-    const sim = quickSave({}, 'taste-fields');
-    const me = sim.universe.people[sim.universe.playerId]!;
-    expect(typeof me.reputation.audienceAppeal).toBe('number');
-    expect(typeof me.reputation.professionalReputation).toBe('number');
-    me.reputation.audienceAppeal = 60;
-    me.reputation.professionalReputation = 60;
-    sim.advanceTo(sim.now + 400 * 86_400_000);
-    expect(me.reputation.audienceAppeal).toBeLessThan(60);
-    expect(me.reputation.professionalReputation).toBeLessThan(60);
-  });
 
   it('guards no knob that no trait carries, which is what a deleted system leaves', () => {
     // A higher-is-worse guard flips the sign on a knob. Six of the thirteen

@@ -20,16 +20,14 @@ import type { ScheduledItem } from '../core/scheduler';
 import { formatMoney, type Money } from '../core/money';
 import { MS_DAY, instantFromZoned, zonedParts } from '../core/time';
 import {
-  AROUND_THE_SHOOT, BUILD_COST_CENTS, CALLS_A_MONTH, CREW_BASE, CREW_PENALTY, LOT_FLOOR_SQM,
+  AROUND_THE_SHOOT, BUILD_COST_CENTS, CALLS_A_MONTH, CREW_BASE, LOT_FLOOR_SQM,
   MOST_CALLS, MOST_OF_THE_SPEND, OVERHEAD, PATIENCE, RATE_SHARE,
   FOREIGN_REACH, SELLING, SHUT_YEAR_BITE, type Rung,
   ENQUIRY_SHAPES, STAGES, type Enquiry,
   A_SMALL_STAGE, SMALL_STAGE_COST_CENTS, buildRefusalById, type WhyNotBuild,
 } from '../content/lot';
-import { REBATE, ROLES } from '../content/incorporation';
+import { ROLES } from '../content/incorporation';
 import { GREENLIGHT_FLOOR, cashAccountFor, parentCompany } from './company';
-import { shortOn } from '../content/rebate';
-import { rateWhenShort } from './rebate';
 import { GROUP, PAID_BACK_MEMO, PAID_IN_MEMO, TRYGGINGAGJALD } from '../content/sugar';
 import { profitThisYear, shutYearsRunning, sugarAccount, sugarCoversThePictures } from './sugar';
 import { ESTATE_CITY_ID, LOT_NAME, movedInAt } from '../content/estate';
@@ -1155,40 +1153,6 @@ export function crewInTheCountry(sim: Simulation): number {
   return CREW_BASE + made;
 }
 
-/**
- * Which rebate tier an enquiry would qualify for.
- *
- * Every limb, and they are cumulative. Spend, working days, shooting days and
- * fifty crew taxed in Iceland for fifty days — the last of which sat in
- * `REBATE.higherNeeds` being read by nothing while this function tested two of
- * the four and called it the band. It matters because it is the one limb the
- * country can fail: two large productions at once want a hundred people between
- * them, and there are only so many in Iceland.
- *
- * The test itself lives in `content/rebate.ts`, where the family's own pictures
- * reach it too. One piece of legislation, one implementation of it. What this
- * file supplies is a foreign production's answers, and its answer on crew is a
- * question about the country's supply — how many people are left after every
- * unit already booked across the same weeks has taken its fifty.
- */
-export function tierFor(sim: Simulation, need: Enquiry, from: Instant): number {
-  const needs = REBATE.higherNeeds;
-  const to = from + wholeHold(need) * MS_WEEK;
-  const spokenFor = Object.values(sim.universe.bookings)
-    .filter((one) => one.kind === 'shooting' && one.from < to && from < one.to).length * needs.crew;
-  // Working days and crew days are the whole hold, prep and strike included,
-  // because a unit is in the country and on a payroll from the day it starts
-  // building. Shooting days are the shoot and only the shoot.
-  const here = wholeHold(need) * 5;
-  const short = shortOn({
-    spendIsk: need.spendIsk,
-    workingDays: here,
-    shootingDays: need.weeks * 5,
-    crew: crewInTheCountry(sim) - spokenFor,
-    crewDays: here,
-  }, needs);
-  return rateWhenShort(short);
-}
 
 /**
  * Whether an enquiry books, and where.
@@ -1212,19 +1176,16 @@ export function wouldBook(sim: Simulation, need: Enquiry, from: Instant): Answer
     };
   }
   const rate = rateFor(room, 'shooting');
-  // What the rebate is worth against what coming here costs, as shares of the
-  // same spend, so they can be set against each other. A production whose crew
-  // is already in the country pays none of that cost and is not weighing
-  // Iceland against anywhere — it is weighing this stage against the one in
-  // Gufunes, and the rebate is a straight gain.
-  const penalty = need.local ? 0 : CREW_PENALTY;
-  const back = tierFor(sim, need, from);
-  if (back - penalty <= 0) {
-    return {
-      because: `${Math.round(back * 100)}% back doesn’t cover what it costs to bring a crew and a build here.`,
-      weekRateCents: rate,
-    };
-  }
+  // There were three gates here and there are two. The middle one weighed what
+  // the Icelandic rebate is worth against what it costs a foreign production to
+  // bring a crew and a build, and it was the refusal that sent the European
+  // agency, the Nordic broadcaster and the streamer to Budapest every year. Its
+  // implementation of the tiers lived in the production system and went with it.
+  //
+  // Nothing stands in for it, deliberately. A guessed gate here would be a number
+  // nobody measured deciding who books a stage, and the honest state is that a
+  // foreign production is now weighed on room and on price alone until the
+  // reimbursement comes back with the rebuild.
 
   // And then the price, which this used to work out and throw away. What the
   // rooms cost across the whole hold, against everything the production is
@@ -1244,8 +1205,8 @@ export function wouldBook(sim: Simulation, need: Enquiry, from: Instant): Answer
     stageId: room.id,
     because: need.local
       ? `Its crew is already here, and ${room.name} is free for the ${wholeHold(need)} weeks.`
-      : `${Math.round(back * 100)}% back covers the crew it has to fly in, and ${room.name} is free `
-        + `for the ${held.prep} of prep, ${held.shoot} of shooting and ${held.strike} of strike.`,
+      : `${room.name} is free for the ${held.prep} of prep, ${held.shoot} of shooting `
+        + `and ${held.strike} of strike.`,
     weekRateCents: rate,
   };
 }

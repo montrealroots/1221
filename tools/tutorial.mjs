@@ -37,7 +37,7 @@
 import { quickSave } from '../src/engine/index.ts';
 import { LESSONS, STRANDS } from '../src/engine/content/tutorial.ts';
 import { theTeachingWeek } from '../src/engine/world/tutorial.ts';
-import { playACareer, playABusiness } from '../tests/played.ts';
+import { playACareer } from '../tests/played.ts';
 
 const arg = (name, fallback) => {
   const at = process.argv.indexOf(`--${name}`);
@@ -56,22 +56,20 @@ const CHECK = process.argv.includes('--check');
  * and like every other ratchet in this repo it may rise and may not fall. A lesson
  * that stops being reachable takes this under the floor and fails the gate.
  */
-const FLOOR = 38;
+const FLOOR = 18;
 
 /**
- * The one lesson no instrument reaches, and why it stays.
+ * The one lesson no played game reaches, and why it stays.
  *
- * `decisions` fires when something is open in the Decision Center, and this build
- * raises exactly one kind of decision: a picture whose Icelandic reimbursement
- * claim is still open, in the window between a greenlight and the first day of
- * photography. Neither instrument enters that window — `playABusiness` greenlights
- * and lets whole weeks run, and by the time anything is looked at the claim reads
- * `too-late` or `scheme-ended`.
+ * It fires when something is open in the Decision Center, and nothing in this
+ * build raises one any more. The only kind it ever raised was a picture whose
+ * Icelandic reimbursement claim was still open, and that went with the production
+ * system.
  *
- * It is not decoration, and the proof is not an argument: `tests/smoke.test.ts`
- * asserts the prompt by name, so the state is reachable and something already holds
- * the engine to it. What this tool has found is a gap in the instrument, which is
- * recorded here rather than fixed by deleting a true lesson.
+ * The lesson stays because the Decision Center itself does: the screen, the two
+ * commands and the row are all still here, and the rebuild will give them
+ * something to hold. A lesson kept for a system that exists and has nothing to say
+ * yet is a different thing from a lesson nothing can ever satisfy.
  */
 const KNOWN_UNREACHED = ['decisions'];
 
@@ -89,18 +87,10 @@ for (let seed = 0; seed < SEEDS; seed += 1) {
     fired.set(id, (fired.get(id) ?? 0) + 1);
   }
 
-  // The company half, in its own save, because the two instruments drive the same
-  // player in incompatible ways and a save that ran both would be a third thing
-  // neither of them measures.
-  const business = quickSave({}, `tutorial-business-${seed}`);
-  playABusiness(business, YEARS);
-  // `playABusiness` runs the clock through the scheduler the same way, so the
-  // weekly tick fires here too. This tops it up at the end for anything whose
-  // condition became true on the last week.
-  theTeachingWeek(business);
-  for (const id of Object.keys(business.universe.tutorial?.seen ?? {})) {
-    fired.set(id, (fired.get(id) ?? 0) + 1);
-  }
+  // There was a company half here, which ran the production pipeline and reached
+  // the lessons about making pictures. It went with that pipeline, and so did those
+  // lessons, so what is measured now is the life: the clock, sleep, training, the
+  // roof, the money and the company's own doors.
 }
 
 const reached = [...fired].filter(([, n]) => n > 0);

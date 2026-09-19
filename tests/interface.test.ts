@@ -26,7 +26,6 @@ import {
 } from '@/engine/world/company';
 import type { GuildId, PolicyKind } from '@/engine/domain/company';
 import { fixFor } from '@/ui/workspaces/fix';
-import { wouldBe } from '@/engine/world/making';
 
 // Anything Unicode says may be drawn as a picture, plus the selectors and
 // joiners that make one. A tick or a cross in the Dingbats block that has no
@@ -386,21 +385,7 @@ describe('every door a player is stopped at has a way through it', () => {
 });
 
 describe('the production side is reachable by hand', () => {
-  const SCREEN = 'src/ui/workspaces/BusinessWorkspace.tsx';
 
-  it('runs every command a picture needs from a screen, not only from a test', () => {
-    const screen = readFileSync(SCREEN, 'utf8');
-    // Eight commits of engine work was driven only by the suite. A command with
-    // no caller outside a test has never been given an argument nobody thought
-    // of, which is how `company.greenlight` came to accept an airdate that laid
-    // the whole schedule into weeks that had already happened.
-    for (const kind of [
-      'company.fill_post', 'company.develop', 'company.greenlight',
-      'company.deliver', 'company.sell', 'lot.sell',
-    ]) {
-      expect(screen, `${kind} is still reachable only from a test`).toContain(`'${kind}'`);
-    }
-  });
 
   it('leaves no engine command that a person cannot reach', () => {
     // The whole point of the exercise, stated as the thing that has to stay
@@ -420,56 +405,6 @@ describe('the production side is reachable by hand', () => {
     }
   });
 
-  it('shows the schedule off the same function that lays it', () => {
-    // Not a second calculation calibrated near the first. `wouldBe` runs every
-    // check and lays every date and commits nothing; `greenlight` is that plus
-    // the commit. Two mechanisms would drift, and the first time they did a
-    // producer would be shown one set of dates and handed another.
-    const screen = readFileSync(SCREEN, 'utf8');
-    expect(screen).toContain('wouldBe(');
-    expect(screen, 'the form lays its own dates').not.toContain('layOut(');
-  });
 
-  it('agrees with itself: what it would be is what it becomes', () => {
-    const sim = quickSave({}, 'prospect');
-    const somebody = Object.values(sim.universe.people).find((one) => !one.isPlayer)!;
-    sim.execute({ kind: 'company.fill_post', payload: { role: 'production', personId: somebody.id } });
-    sim.execute({ kind: 'company.option', payload: { title: 'Something To Make' } });
-    sim.execute({ kind: 'company.register', payload: { registry: 'is_employer' } });
-    for (const policy of ['general_liability', 'workers_comp', 'production_package']) {
-      sim.execute({ kind: 'company.insure', payload: { policy } });
-    }
-    sim.execute({ kind: 'company.develop', payload: { title: 'Hvítserkur', medium: 'film' } });
-    const id = Object.values(sim.universe.projects).find((one) => one.title === 'Hvítserkur')!.id;
 
-    const spec = {
-      projectId: id, planId: 'feature', budgetCents: 4_000_000_00, shootWeeks: 5,
-      secondsEach: 100 * 60, hands: 2,
-    };
-    const shown = wouldBe(sim, spec);
-    expect(shown.ok, 'the form would have shown a refusal').toBe(true);
-    if (!shown.ok) return;
-
-    expect(sim.execute<{ ok: boolean }>({ kind: 'company.greenlight', payload: spec }).value?.ok).toBe(true);
-    const made = sim.universe.projects[id]!;
-    // Every date the form put on screen is a date the picture actually has.
-    expect(made.periods?.map((one) => [one.id, one.from, one.to]))
-      .toEqual(shown.prospect.periods.map((one) => [one.id, one.from, one.to]));
-    expect(made.deliverBy).toBe(shown.prospect.deliverBy);
-    expect(made.stageId).toBe(shown.prospect.stageId);
-    expect(made.owesSeconds).toBe(shown.prospect.secondsEach * shown.prospect.parts);
-  });
-
-  it('refuses in the form exactly as it refuses at the button', () => {
-    const sim = quickSave({}, 'prospect-no');
-    sim.execute({ kind: 'company.develop', payload: { title: 'No Doors', medium: 'film' } });
-    const id = Object.values(sim.universe.projects).find((one) => one.title === 'No Doors')!.id;
-    const spec = { projectId: id, planId: 'feature', budgetCents: 4_000_000_00, shootWeeks: 5 };
-    const shown = wouldBe(sim, spec);
-    const done = sim.execute<{ ok: boolean; error?: string }>({ kind: 'company.greenlight', payload: spec });
-    expect(shown.ok).toBe(false);
-    expect(done.value?.ok).toBe(false);
-    if (shown.ok) return;
-    expect(done.value?.error, 'the screen says one thing and the button another').toBe(shown.error);
-  });
 });

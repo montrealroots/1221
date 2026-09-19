@@ -708,88 +708,6 @@ export const PREMISE_STATEMENT =
  * to nothing else. There is no shared mutable state between saves anywhere in
  * SLATE; the only thing saves have in common is immutable reference data.
  */
-/**
- * One part somebody outside the family has asked the player about.
- *
- * It exists because a production booked a stage on the lot and then needed
- * people, which is the only way anybody in this world hears about work that is
- * not their own family's. That makes the lot's business and the player's career
- * one system rather than two, and it is why money spent telling people the
- * stages are there eventually shows up as a part.
- */
-export interface Audition {
-  id: Id;
-  saveId: Id;
-  /**
-   * The stage booking this production is, by the shooting row.
-   *
-   * A booking is written as three rows — build, shoot, strike — and the
-   * shooting one is the production. Held so the dates and the money can be read
-   * back off the thing that actually generated them rather than copied.
-   */
-  bookingId: Id;
-  /**
-   * Which office is casting, off the booking.
-   *
-   * This is what every memory function keys on — how many of the player's rooms
-   * this office has sat through, what it keeps asking for, whether it has given
-   * up ringing. `holder` below is what a screen prints, and the two are kept
-   * apart on purpose: identity that doubles as display copy cannot be reworded.
-   */
-  officeId: string;
-  /** Who is casting, in the world's words. Read off the booking's holder. */
-  holder: string;
-  /** How big the part is, by `content/casting.ts` size id. */
-  size: string;
-  /** What it pays, all in. */
-  feeCents: Money;
-  /** The dates it would hold the player. */
-  from: Instant;
-  to: Instant;
-  /** After this nobody is being seen. */
-  closesAt: Instant;
-  /**
-   * What the room wants, by shade id.
-   *
-   * Never shown, and derivable only the way a person derives it: from having
-   * been in enough of these people's rooms. Most of each shade is the holder's
-   * own taste, held across everything they cast — `HOUSE_HOLDS` of it — and the
-   * rest is this room's own idea, so the average of what somebody has played
-   * for a holder converges on what that holder likes and never reaches it. The
-   * one note a room gives leaks one shade of this room in particular, once.
-   *
-   * A want the player could read off a screen would make the reading a lookup,
-   * which is why `whatTheyKeepAskingFor` hands back the player's own record
-   * rather than `theHouse`, and why the engine never writes the house down.
-   */
-  wants: Record<string, number>;
-  /** What the player played, once they have played anything. */
-  played?: Record<string, number>;
-  /** Which way they went up for it, by `content/audition.ts` way id. */
-  way?: string;
-  /**
-   * The note, where a room gave one.
-   *
-   * Given on the shade the reading was farthest off, because a room tells you
-   * about the thing that is most wrong. `toward` is the direction, and how far
-   * is never said.
-   */
-  note?: { shade: string; toward: number };
-  /**
-   * Whether the player took in what was actually said.
-   *
-   * False when a bad day cost them the one sentence anybody was going to give
-   * them, and they moved the shade the wrong way. Kept on the record rather
-   * than recomputed because readiness has moved on by the time anybody reads
-   * this back, and a no you can open and find out you misheard is a different
-   * no from a no you played right.
-   */
-  heard?: boolean;
-  state: 'open' | 'waiting' | 'noted' | 'over';
-  /** Why it ended, by `content/audition.ts` id. */
-  why?: string;
-  decidedAt?: Instant;
-}
 
 export interface SaveUniverse {
   meta: SaveMeta;
@@ -845,7 +763,6 @@ export interface SaveUniverse {
    * played, what note came back, what was said — and none of that is derivable
    * from a stage being let to a broadcaster.
    */
-  auditions: Record<Id, Audition>;
 
   accounts: Record<Id, Account>;
   transactions: LedgerTransaction[];

@@ -469,7 +469,7 @@ describe('ids are told apart by namespace', () => {
 
   it('starts every namespace of a new world at one', () => {
     const next = createIdFactory(host() as never);
-    for (const ns of ['person', 'txn', 'stage', 'audition'] as const) {
+    for (const ns of ['person', 'txn', 'stage', 'booking'] as const) {
       expect(next(ns)).toBe(`${ns}_000001`);
     }
   });
@@ -537,7 +537,7 @@ describe('ids are told apart by namespace', () => {
     const account = busy.universe.people[busy.universe.playerId]!.primaryAccountId!;
     for (let i = 0; i < 100; i += 1) busy.income(account, 1_00, 'Something Else Entirely', 'other');
     expect(busy.nextId('person')).toBe(quiet.nextId('person'));
-    expect(busy.nextId('audition')).toBe(quiet.nextId('audition'));
+    expect(busy.nextId('booking')).toBe(quiet.nextId('booking'));
     expect(busy.nextId('txn')).not.toBe(quiet.nextId('txn'));
   });
 

@@ -2,7 +2,7 @@
  * SLATE — what a thing is before anybody writes it, and the machine underneath it.
  *
  * This is the front of the pipeline, and until now the build had nothing here at
- * all. A picture went title → film or television → greenlight, and at no point did
+ * all. A picture went title → Film or Television → greenlight, and at no point did
  * anything ask what the thing actually was. The parts were laid out from a runtime
  * and named `Lead 1` and `Support 2` because there was nothing to lift them off.
  *
@@ -138,7 +138,7 @@ export const ENGINES: readonly StoryEngine[] = [
     renewal: 'arrives',
     cadences: ['returning', 'closed'],
     leastPeople: 3,
-    rules: 'The case is solved by the end and the people go back to how they were. '
+    rules: 'It is solved by the end and the people go back to how they were. '
       + 'What changes across a season is them, slowly, and never the job.',
   },
   {
@@ -156,30 +156,30 @@ export const ENGINES: readonly StoryEngine[] = [
   {
     id: 'dilemma',
     label: 'A Question With No Right Answer',
-    what: 'Every week puts the same moral problem in a new shape and makes somebody '
+    what: 'Every week puts the same moral problem in a new shape and makes one of them '
       + 'choose, and neither choice is clean.',
     asks: 'What would you have done?',
     renewal: 'unresolved',
     cadences: ['returning', 'closed'],
     leastPeople: 3,
-    rules: 'The show never rules on the question. A week that answers it is a week '
+    rules: 'It never rules on the question. A week that answers it is a week '
       + 'that has spent something it cannot get back.',
   },
   {
     id: 'realities',
     label: 'A Different World Each Time',
-    what: 'The premise lets the show visit somewhere new whenever it likes — another '
+    what: 'Its premise lets the show visit somewhere new whenever it likes — another '
       + 'place, another time, another version of these people.',
     asks: 'Where are we this week?',
     renewal: 'arrives',
     cadences: ['returning', 'closed'],
     leastPeople: 2,
-    rules: 'The rules of travel are fixed and stated. A show that can go anywhere for '
+    rules: 'How travel works is fixed and stated. A show that can go anywhere for '
       + 'any reason has no jeopardy anywhere.',
   },
   {
     id: 'transformation',
-    label: 'Somebody Becoming Somebody Else',
+    label: 'One Person Becoming Another',
     what: 'One person is changing into a different person, and the show is the length '
       + 'of that change.',
     asks: 'How far gone are they now?',
@@ -189,7 +189,7 @@ export const ENGINES: readonly StoryEngine[] = [
     carries: 60,
     cadences: ['closed', 'single'],
     leastPeople: 2,
-    rules: 'The change only goes one way and every episode must move it. Once they '
+    rules: 'It only goes one way and every episode must move it. Once they '
       + 'have become the other person the show is over, whatever the schedule says.',
   },
   {
@@ -230,7 +230,7 @@ export const CADENCE_LABEL: Readonly<Record<Cadence, string>> = {
 /** What a renewal is called on a screen, and why it matters. */
 export const RENEWAL_SAID: Readonly<Record<Renewal, string>> = {
   arrives: 'The next one walks in the door, so it never runs out.',
-  unresolved: 'Nothing here can be settled, so it never runs out.',
+  unresolved: 'None of this can be settled, so it never runs out.',
   revealed: 'It is spending something as it goes, and there is a bottom to it.',
 };
 

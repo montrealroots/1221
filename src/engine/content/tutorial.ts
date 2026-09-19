@@ -115,16 +115,8 @@ export interface LessonWorld {
   registrations: number;
   /** Material the company holds, optioned or owned. */
   holdings: number;
-  /** Posts with somebody in them. */
-  filledPosts: number;
   /** Projects by where they have got to. */
   projects: { developing: number; greenlit: number; shooting: number; finished: number; delivered: number };
-  /** Parts on the player's own projects with nobody cast. */
-  openParts: number;
-  /** Auditions the player could still answer. */
-  openAuditions: number;
-  /** Parts the player has been cast in. */
-  partsWon: number;
   /** Sound stages on the lot, and how many are booked this week. */
   stages: { built: number; booked: number };
   /** Whether the estate's house needs work. */
@@ -139,8 +131,6 @@ export interface LessonWorld {
   decisionsOpen: number;
   /** Whether a term is inside its warning window. */
   termRunningOut: boolean;
-  /** Whether a finished picture has never been sold. */
-  unsoldFinished: number;
   /** Whether the sugar group has paid a dividend yet. */
   dividendPaid: boolean;
 }
@@ -207,43 +197,6 @@ export const LESSONS: readonly Lesson[] = [
   // -------------------------------------------------------------------------
   // The work
   // -------------------------------------------------------------------------
-  {
-    id: 'auditions',
-    strand: 'the-work',
-    title: 'An Office Has Asked For You',
-    body: 'An office wants to see you for a part. You can send a tape or go into the room, and '
-      + 'the difference matters: a tape gets an answer, a room gets a note about what they '
-      + 'actually wanted. There’s a last day to be seen by, and being asked and not answering '
-      + 'is the one thing an office remembers about a performer it has never met.',
-    teaches: ['life.go_up'],
-    screen: 'auditions',
-    importance: 60,
-  },
-  {
-    id: 'the-note',
-    strand: 'the-work',
-    title: 'The Note Is The Whole Game',
-    body: 'A room tells you what it was looking for, and how far you take that note decides '
-      + 'what you send next time. Take it a touch, take it seriously, or take it all the way — '
-      + 'the far end of that is a different performance and not always a better one. What a room '
-      + 'wants is a real thing you can learn, and the same holder keeps wanting it.',
-    teaches: ['life.take_note'],
-    screen: 'auditions',
-    after: ['auditions'],
-    importance: 50,
-  },
-  {
-    id: 'clashes',
-    strand: 'the-work',
-    title: 'Work You Take Costs You Work You Can’t',
-    body: 'A part you’re cast in owns its shooting dates, and anything that wants the same '
-      + 'weeks is refused. That refusal isn’t a bug and it isn’t bad luck — it’s the price '
-      + 'of the job you already said yes to, and it’s the main thing that shapes a career.',
-    teaches: [],
-    screen: 'plans',
-    after: ['auditions'],
-    importance: 40,
-  },
 
   // -------------------------------------------------------------------------
   // The body
@@ -425,68 +378,17 @@ export const LESSONS: readonly Lesson[] = [
   {
     id: 'conceive',
     strand: 'the-pictures',
-    title: 'Say What It Is Before You Say Yes',
+    title: 'Putting Something On The Slate, And Saying What It Is',
     body: 'A film is one story. A television series is a machine that makes one every week, and '
       + 'the machine is the thing you are choosing. A case that walks in the door never runs out. '
       + 'People who cannot get away from each other never run out. Somebody becoming somebody '
       + 'else runs out the moment they have become them — so it can be a limited run and it can '
       + 'never be a show that keeps coming back. The greenlight checks this and refuses the ones '
       + 'that cannot work.',
-    teaches: ['company.conceive'],
+    teaches: ['company.develop', 'company.conceive'],
     screen: 'business',
     after: ['option'],
     importance: 58,
-  },
-  {
-    id: 'develop',
-    strand: 'the-pictures',
-    title: 'Putting A Picture Into Development',
-    body: 'Development is where a picture gets a plan, a budget and a shape. It’s cheap and it '
-      + 'commits you to nothing, and it’s the only place the decisions that decide everything '
-      + 'later are still cheap to change.',
-    teaches: ['company.develop', 'company.breakdown'],
-    screen: 'business',
-    after: ['posts', 'option'],
-    importance: 50,
-  },
-  {
-    id: 'greenlight',
-    strand: 'the-pictures',
-    title: 'The Greenlight Decides The Overrun',
-    body: 'Saying yes sets the schedule, and the schedule is where an overrun comes from. Give '
-      + 'a picture four weeks to shoot what the money says takes six and it will run over; the '
-      + 'draw only decides how badly. This is the single most consequential number you will '
-      + 'ever set, and you set it months before anybody feels it.',
-    teaches: ['company.greenlight'],
-    screen: 'business',
-    after: ['develop'],
-    importance: 70,
-  },
-  {
-    id: 'casting',
-    strand: 'the-pictures',
-    title: 'Casting Is Bought Months Earlier',
-    body: 'What a part costs decides who comes in for it, so greenlighting cheap is a casting '
-      + 'decision long before anybody thinks of it as one. You hold sessions, read people, and '
-      + 'make offers — and a performer in demand turns down a small part that another would '
-      + 'take as a break.',
-    teaches: ['company.session', 'company.cast'],
-    screen: 'business',
-    after: ['greenlight'],
-    importance: 55,
-  },
-  {
-    id: 'board',
-    strand: 'the-pictures',
-    title: 'A Format Season Has A Cast Board',
-    body: 'An unscripted season isn’t cast like a picture. Twelve civilians are around on a '
-      + 'stipend, and what varies isn’t how good they’re at anything — it’s whether an '
-      + 'audience would watch them, and whether any of them is already trouble. You pick who '
-      + 'goes on the board.',
-    teaches: ['company.board'],
-    screen: 'business',
-    after: ['greenlight'],
-    importance: 45,
   },
   {
     id: 'crew',
@@ -498,47 +400,7 @@ export const LESSONS: readonly Lesson[] = [
       + 'is drawn from a shallower, better pool than anybody under them.',
     teaches: [],
     screen: 'business',
-    after: ['greenlight'],
     importance: 45,
-  },
-  {
-    id: 'restaff',
-    strand: 'the-pictures',
-    title: 'Replacing A Person Mid-Flight',
-    body: 'You can replace a person once the work is running, and it’s paid for out of what is '
-      + 'left on the screen, not out of thin air. If the budget is spent, the answer is '
-      + 'no, and that constraint is the whole reason the option exists at all.',
-    teaches: ['company.restaff'],
-    screen: 'business',
-    after: ['greenlight'],
-    importance: 40,
-  },
-  {
-    id: 'deliver',
-    strand: 'the-pictures',
-    title: 'Delivery Is A Date And A List',
-    body: 'A finished picture isn’t a delivered one. There’s a contractual date and a list of '
-      + 'elements that have to be filed, and being past the date notifies you twice — once for '
-      + 'the work that isn’t done and once for the elements that aren’t. A picture can only be sold '
-      + 'before it is delivered.',
-    teaches: ['company.deliver', 'company.claim_rebate'],
-    screen: 'business',
-    after: ['greenlight'],
-    importance: 55,
-  },
-  {
-    id: 'sell',
-    strand: 'the-pictures',
-    title: 'Selling It, And What A Buyer Is Pricing',
-    body: 'A buyer prices what it cost, how it is being sold, who is in it, what the trade is '
-      + 'currently writing about them, and whether the year noticed it. A streamer buyout '
-      + 'reaches nobody after the check clears; a studio release reaches everybody for a decade. '
-      + 'Scale buys audience, but sublinearly — a bigger picture usually earns a *smaller* '
-      + 'multiple of what it cost.',
-    teaches: ['company.sell', 'company.release'],
-    screen: 'business',
-    after: ['deliver'],
-    importance: 60,
   },
 
   // -------------------------------------------------------------------------
@@ -566,7 +428,7 @@ export const LESSONS: readonly Lesson[] = [
       + 'the advantage. Using them is the price.',
     teaches: [],
     screen: 'estate',
-    after: ['lot', 'greenlight'],
+    after: ['lot'],
     importance: 50,
   },
   {
@@ -622,22 +484,7 @@ export const LESSONS: readonly Lesson[] = [
       + 'long as it is remembered.',
     teaches: [],
     screen: 'standing',
-    after: ['deliver'],
     importance: 50,
-  },
-  {
-    id: 'standing',
-    strand: 'the-year',
-    title: 'What The Industry Thinks Of You',
-    body: 'Seven separate things, on four different clocks: how many people know your name, '
-      + 'whether they rate the work, whether you’re easy to work with, what the trade is '
-      + 'writing, and what the year noticed. They aren’t one number and they don’t move '
-      + 'together — being difficult costs you work early and reputation is slower to build than '
-      + 'to lose.',
-    teaches: [],
-    screen: 'standing',
-    after: ['auditions'],
-    importance: 45,
   },
   {
     id: 'teaching',

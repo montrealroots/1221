@@ -1,10 +1,10 @@
 {
-  "note": "Set by tools/wired.mjs --bless, except \"Dials nothing moves\", which is tools/dials.mjs --bless. These may fall. They may not rise.",
+  "note": "Set by tools/wired.mjs --bless, except \"Dials nothing moves\", which is tools/dials.mjs --bless. These may fall. They may not rise — with one recorded exception: on 2026-09-19 the production system was deleted whole (making, casting, crew, selling, inventory, trouble, rebate, maturity, awards and auditions), and the dials count rose from 0 to 12 because the systems that moved reputation and wellbeing went with it. It was re-blessed once, deliberately, at the new figure. It falls again as the rebuild gives those dials movers, and it may not rise for any other reason.",
   "counts": {
     "Id namespaces": 0,
     "Trait modifier keys": 0,
     "Higher-is-worse guards": 0,
-    "Dials nothing moves": 0,
+    "Dials nothing moves": 12,
     "Personality axes nothing consults": 0,
     "Save tables nothing fills": 0,
     "Draw streams no decider owns": 0

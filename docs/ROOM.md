@@ -1,5 +1,13 @@
 # The audition room, measured
 
+> **The production system was deleted on 2026-09-19, and is being rebuilt from the
+> front.** Entries below that name a file under `making`, `casting`, `crew`, `selling`,
+> `inventory`, `trouble`, `rebate`, `maturity`, `awards` or `audition` are about code
+> that no longer exists. They are kept as history rather than deleted, because what a
+> thing was measured to do is the most useful record of it — but they are no longer
+> open work, and the paths in them are written **without backticks and marked gone**
+> so that `tools/doc-refs.mjs` is not made to vouch for files nobody can open.
+
 
 Finished: six measurement agents, three proposals, three judges scoring them.
 This file was written while it was still paused and said the judges never ran;
@@ -559,7 +567,7 @@ Checksums of both audition files were taken before and after the play matrix and
 
 ## 1. The crux: `sawYou` is a label, not a probability
 
-`src/engine/world/audition.ts:415-426` — `sawYou` appears on exactly one line, *after* the cast decision is already made:
+**src/engine/world/audition.ts:415-426` — `sawYou` appears on exactly one line, *after* the cast decision is already made:
 
 ```ts
 export function decideAudition(reckoning: Reckoning, roll: number): WhyId {
@@ -872,7 +880,7 @@ The "best two-stage play" figure buckets wants by the observable (note shade, di
 
 **Surprises**
 
-**The comment quoted in the brief no longer exists.** `src/engine/content/audition.ts` was already corrected today in commit 848b17e ("The room's want was described in prose, twice wrong"). TOO_FAR's comment now reads "a reading played dead center is 1.5 out" and describes the 1/6–1/12 shape explicitly, and `tests/audition.test.ts:596` ("draws the two ends half as often as everything between them") pins P(±3)=1/12 and P(−2..2)=1/6 over 120,000 draws, with a second test pinning the 1.5 mean. So the independent auditor's finding has already landed and is now tested. I re-derived it independently and it is right: 1.5000 exactly, not 1.7; 1.714286 is what a flat draw would give.
+**The comment quoted in the brief no longer exists.** **src/engine/content/audition.ts** (gone) was already corrected today in commit 848b17e ("The room's want was described in prose, twice wrong"). TOO_FAR's comment now reads "a reading played dead center is 1.5 out" and describes the 1/6–1/12 shape explicitly, and **tests/audition.test.ts:596` ("draws the two ends half as often as everything between them") pins P(±3)=1/12 and P(−2..2)=1/6 over 120,000 draws, with a second test pinning the 1.5 mean. So the independent auditor's finding has already landed and is now tested. I re-derived it independently and it is right: 1.5000 exactly, not 1.7; 1.714286 is what a flat draw would give.
 
 **TOO_FAR = 3.4 is dead code for the only reading anyone should play.** A dead-center reading's off has support [0, 3.0]. The `wrong-for-it` branch cannot fire. More generally a total miss on one shade is only off = 2.0; you need two of three shades maxed to reach 3.4. So TOO_FAR's own comment — "playing it safe lands between the two thresholds" — is true of the *mean* but hides that the entire distribution is below the upper one. The threshold only ever bites a player who deliberately plays an extreme reading (336 of 343 readings can reach it, but 'safe' is in the 7 that cannot), or one who answers a note with `far` on a bad day (0.578% at readiness 49). That is the falsifiability test failing for TOO_FAR against the reading a rational player picks.
 
@@ -1024,13 +1032,13 @@ Neither judged. Neither acted on. Recorded as what they are: two of three.
 **Changes**
 
 
-- `src/engine/content/audition.ts` — Lines 251-254, the body of CLOSE_ENOUGH's docstring. Delete the two false clauses — "Deliberately tight. Most readings end in no, which is the research's own first sentence about the pass, and a room that said yes to anything close would be a room nobody had to think about." and "One note taken the whole way pulls an average guess inside it, which is what makes going in worth three days." — and replace with what the number measurably does: it is the flat top of `keen`, worth AS_GOOD_AS_IT_GETS and no more, and the point the falloff to TOO_FAR starts from; it catches 27.78% of blind dead-centre readings before anybody speaks, and one note answered A Good Deal takes that to 59.91% at played readiness; that is what going in buys, and it buys yes more often than no. Say outright that this comment claimed the opposite for as long as it existed, and that whether the room SHOULD say yes this often is a question for AS_GOOD_AS_IT_GETS, not for this constant. Add the grid caveat: `howFarOff` is a mean of three integers so attainable values are thirds, and as a pure threshold anything in [1.0, 1.3333) selects the same readings — it is not dead, because it also sets the falloff slope. The constant on line 256 does not move.
+- **src/engine/content/audition.ts** (gone) — Lines 251-254, the body of CLOSE_ENOUGH's docstring. Delete the two false clauses — "Deliberately tight. Most readings end in no, which is the research's own first sentence about the pass, and a room that said yes to anything close would be a room nobody had to think about." and "One note taken the whole way pulls an average guess inside it, which is what makes going in worth three days." — and replace with what the number measurably does: it is the flat top of `keen`, worth AS_GOOD_AS_IT_GETS and no more, and the point the falloff to TOO_FAR starts from; it catches 27.78% of blind dead-centre readings before anybody speaks, and one note answered A Good Deal takes that to 59.91% at played readiness; that is what going in buys, and it buys yes more often than no. Say outright that this comment claimed the opposite for as long as it existed, and that whether the room SHOULD say yes this often is a question for AS_GOOD_AS_IT_GETS, not for this constant. Add the grid caveat: `howFarOff` is a mean of three integers so attainable values are thirds, and as a pure threshold anything in [1.0, 1.3333) selects the same readings — it is not dead, because it also sets the falloff slope. The constant on line 256 does not move.
 
   - why: Both clauses fail the falsifiability test. The prose is the thing that is wrong, so the prose is what changes.
 
   - predicted: Zero behaviour change. The figures the new prose states are the ones I measured: P(off <= 1.2) is 0.277778 for a blind dead-centre reading and 0.599090 after A Good Deal at sure=0.8215; played career 4 seeds x 12 years, tape casts 164/296 = 0.5541 and room/A Good Deal casts 191/292 = 0.6541. The grid claim: the largest attainable off clearing 1.2 is 1.0000, the next is 1.3333. The slope claim, measured by running the real code with CLOSE_ENOUGH = 1.0: best play at played readiness falls 0.7060 -> 0.6814, a 2.5-point swing.
 
-- `src/engine/content/audition.ts` — Line 215, the HOW_FAR 'good' row's `what` string. Replace "A real change, and not the whole of what you have. Most notes want about this." with "A real change, and not the whole of what you have. The single likeliest thing a safe reading is asked for, and rarer the bolder you played." The `steps: 2` does not move.
+- **src/engine/content/audition.ts** (gone) — Line 215, the HOW_FAR 'good' row's `what` string. Replace "A real change, and not the whole of what you have. Most notes want about this." with "A real change, and not the whole of what you have. The single likeliest thing a safe reading is asked for, and rarer the bolder you played." The `steps: 2` does not move.
 
   - why: "Most" is false. 2 steps is a plurality only for a player who plays dead centre, and it is the second-rarest magnitude averaged over every reading a player could actually play. The replacement is true on both halves and says the thing that makes the button a decision rather than a default.
 
@@ -1042,7 +1050,7 @@ Neither judged. Neither acted on. Recorded as what they are: two of three.
 
   - predicted: `npx tsc --noEmit` exits 0. tests/audition.test.ts 57/57 pass. Measured on a repo copy with the change applied: the played career is byte-identical to the unmodified tree — tape 164/296, room/A Good Deal 191/292, room/As Far 183/294 — so no seeded outcome moves.
 
-- `src/engine/world/audition.ts` — Delete line 598, `audition.heard = roll < sure;`. KEEP line 597, `const roll = sim.rng('audition', 'heard', audition.id).next();` — it feeds `afterTheNote` on the next line and removing it would move every seeded outcome in the game.
+- **src/engine/world/audition.ts** (gone) — Delete line 598, `audition.heard = roll < sure;`. KEEP line 597, `const roll = sim.rng('audition', 'heard', audition.id).next();` — it feeds `afterTheNote` on the next line and removing it would move every seeded outcome in the game.
 
   - why: The write half of the same dead word. Removing the assignment without touching the draw is what makes this a zero-behaviour change.
 
@@ -1054,13 +1062,13 @@ Neither judged. Neither acted on. Recorded as what they are: two of three.
 
   - predicted: Zero behaviour change. Verified by grep: `took` appears in model.ts's Audition block only inside prose (line 863, "took in what was actually said"); `audition.heard` has exactly 1 write (world/audition.ts:598) and 0 reads across src/ and tests/.
 
-- `tests/audition.test.ts` — Add one test in the existing `what the room wants, and how far off safe is` describe block, alongside the want-shape test that was added for the same reason. 120,000 rounds on `makeRng`: draw a want with `whatTheyWant`, play `AS_WRITTEN`, take the note with `theNote` and answer it `'good'` via `afterTheNote(played, note, 'good', sure, rng.next())` at sure = 0.8215, then `decideAudition({off: howFarOff(...), sawYou: true, free: true}, rng.next())`. Assert the cast share is greater than 0.5 and `toBeCloseTo(0.70, 1)`. Comment it with why it exists: CLOSE_ENOUGH's comment asserted the opposite of this for as long as it existed and nothing checked it.
+- **tests/audition.test.ts** (gone) — Add one test in the existing `what the room wants, and how far off safe is` describe block, alongside the want-shape test that was added for the same reason. 120,000 rounds on `makeRng`: draw a want with `whatTheyWant`, play `AS_WRITTEN`, take the note with `theNote` and answer it `'good'` via `afterTheNote(played, note, 'good', sure, rng.next())` at sure = 0.8215, then `decideAudition({off: howFarOff(...), sawYou: true, free: true}, rng.next())`. Assert the cast share is greater than 0.5 and `toBeCloseTo(0.70, 1)`. Comment it with why it exists: CLOSE_ENOUGH's comment asserted the opposite of this for as long as it existed and nothing checked it.
 
   - why: The project's own remedy, already used three lines above for the want shape: "A distribution described in prose is a distribution nothing checks." I measured that the full suite passes with AS_GOOD_AS_IT_GETS moved from 0.82 to 0.65 — a 19-point swing in the game's central outcome that 1,203 tests do not notice. That gap is the reason this drifted.
 
   - predicted: The assertion I measured: 120,000 rounds at sure=0.8215 gives cast 0.7049 (exact enumeration over all 343 wants: 0.706024). The same harness gives tape 0.6271, none 0.6277, touch 0.6800, far 0.6908; and at sure=1, tape 0.6271, touch 0.7174, good 0.7770, far 0.7860. Runs in about a second, like the neighbouring want-shape test.
 
-- `src/engine/world/audition.ts` — OPTIONAL, AND ONLY IF THE OWNER WANTS THE SENTENCE TRUE RATHER THAN DELETED. Line 761, `export const AS_GOOD_AS_IT_GETS = 0.82` -> `0.65` (career denominator) or `-> 0.58` (conditional denominator). Nothing else moves. If this lands, the CLOSE_ENOUGH prose patch above should keep "most readings end in no" and name which denominator it means, and AS_GOOD_AS_IT_GETS's own comment gains a line saying it was cut to hit a target rate and that it is a pure level knob.
+- **src/engine/world/audition.ts** (gone) — OPTIONAL, AND ONLY IF THE OWNER WANTS THE SENTENCE TRUE RATHER THAN DELETED. Line 761, `export const AS_GOOD_AS_IT_GETS = 0.82` -> `0.65` (career denominator) or `-> 0.58` (conditional denominator). Nothing else moves. If this lands, the CLOSE_ENOUGH prose patch above should keep "most readings end in no" and name which denominator it means, and AS_GOOD_AS_IT_GETS's own comment gains a line saying it was cut to hit a target rate and that it is a pure level knob.
 
   - why: It is the ONLY constant that reaches the target, and the only one that reaches it without falsifying anything else in the file. Measured: P(cast) is exactly linear in it — best/A = 0.96000 at sure=1 and 0.86097 at sure=0.8215 at every value I tested (0.82, 0.70, 0.68, 0.65, 0.60, 0.58, 0.50). The best opening, the best answer, the 76.311 crossover, P(wrong-for-it)=0.0058 and the note-magnitude distribution are all unchanged by it. No shape knob can get there: CLOSE_ENOUGH driven all the way to 0.0 still leaves best play at 0.4759 and kills the far/good decision entirely (good becomes uniquely best at every readiness); TOO_FAR at 2.0 leaves it at 0.6136 and inflates wrong-for-it from 0.6% to 12.9%; the 1.4 exponent at 3.0 leaves it at 0.6491.
 
@@ -1098,7 +1106,7 @@ Neither judged. Neither acted on. Recorded as what they are: two of three.
 
   - predicted: Distinct best openings across 58 sampled houses (exact enumeration over 343 wants at their house-conditioned weights, answering 'good', sure=0.7361): H=0.00 gives 1, mean gain over dead centre +0.0000. H=0.50 gives 52, +0.0852. H=0.70 gives 58, +0.1527. H=0.85 gives 58, +0.1932. At H=0.70 the best opening IS the house, exactly, for every house tested: house (2,-1,0) best (2,-1,0) 0.7888 against dead centre 0.7363 (+0.0525); house (-3,2,3) best (-3,2,3) 0.7597 against dead centre 0.4505 (+0.3092); house (3,3,3) best (3,3,3) 0.7493 against dead centre 0.3734 (+0.3759); house (0,0,0) best (0,0,0) 0.7965, dead centre unchanged and still right.
 
-- `src/engine/world/audition.ts:277 — `whatTheyWant`` — Signature `whatTheyWant(next: () => number)` becomes `whatTheyWant(next: () => number, house?: Reading)`. Body changes from `out[shade.id] = Math.round((next() * 2 - 1) * FURTHEST);` to `const fresh = Math.round((next() * 2 - 1) * FURTHEST); out[shade.id] = house !== undefined && next() < HOUSE_HOLDS ? house[shade.id] : fresh;`. Import HOUSE_HOLDS from ../content/audition. `fresh` is drawn unconditionally so the draw count is fixed at two per shade.
+- **src/engine/world/audition.ts:277 — `whatTheyWant`` — Signature `whatTheyWant(next: () => number)` becomes `whatTheyWant(next: () => number, house?: Reading)`. Body changes from `out[shade.id] = Math.round((next() * 2 - 1) * FURTHEST);` to `const fresh = Math.round((next() * 2 - 1) * FURTHEST); out[shade.id] = house !== undefined && next() < HOUSE_HOLDS ? house[shade.id] : fresh;`. Import HOUSE_HOLDS from ../content/audition. `fresh` is drawn unconditionally so the draw count is fixed at two per shade.
 
   - why: A mixture, not a shift. Because the house is itself drawn from this same function with no house, the MARGINAL want is mathematically identical to today's — so every threshold fitted to it (CLOSE_ENOUGH, TOO_FAR, the 1.4 exponent, the 1.5 sentence above TOO_FAR) still means exactly what it meant, and the two tests that pin the shape pass verbatim because they call this with one argument. What changes is not what one room wants; it is whether two rooms belonging to the same people want the same thing.
 
@@ -1110,7 +1118,7 @@ Neither judged. Neither acted on. Recorded as what they are: two of three.
 
   - predicted: Career cast rate, 3 seeds x 25 years daily, real engine, answering 'good'. Today (H=0): dead centre + always room 66.0%, dead centre + always tape 62.2%, memory + always room 63.5% — memory HURTS by 2.5 points. At H=0.70: dead centre + always room 60.4%, memory + always room 69.4%, memory + room-if-rested 68.7%. The sign of the memory policy flips from -2.5 to +9.0 points.
 
-- `src/engine/world/audition.ts:477 — inside `whatIsGoing`` — `wants: whatTheyWant(() => rng.next()),` becomes `wants: whatTheyWant(() => rng.next(), theHouse(sim, booking.holder)),`
+- **src/engine/world/audition.ts:477 — inside `whatIsGoing`` — `wants: whatTheyWant(() => rng.next()),` becomes `wants: whatTheyWant(() => rng.next(), theHouse(sim, booking.holder)),`
 
   - why: The only call site. This is the line that makes the holder's name mean something to the want for the first time.
 
@@ -1128,7 +1136,7 @@ Neither judged. Neither acted on. Recorded as what they are: two of three.
 
   - predicted: Nothing in the engine moves; this is the instrument, not the mechanism. The engine-side falsifiability is already carried by HOUSE_HOLDS. Measured value of what it shows: at H=0.70 the reading it proposes beats dead centre by +0.0337 +-0.0069 on real careers, and by +0.1527 in exact expectation across 58 houses.
 
-- `src/engine/content/audition.ts:145-162 — `WAYS`. NO EDIT. Listed so the owner sees the dial that was already there.` — Leave `tape` at days 1 / costsCents 0 and `room` at days 3 / costsCents 120_00. I tested four ways to make the room cost something and killed all four; this one already works once the house exists.
+- **src/engine/content/audition.ts:145-162 — `WAYS`. NO EDIT. Listed so the owner sees the dial that was already there.` — Leave `tape` at days 1 / costsCents 0 and `room` at days 3 / costsCents 120_00. I tested four ways to make the room cost something and killed all four; this one already works once the house exists.
 
   - why: The room's only live price is the two extra days, which bite through `settle`'s re-check of `freeAcross` and nothing else. The house is what makes that price decisive, because it makes the room's value decay with how well you already know the holder. If the owner wants the crossover earlier, `days: 3 -> 4` or `costsCents: 120_00 -> 600_00` are the two dials, and the euro table below says exactly where each lands.
 

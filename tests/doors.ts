@@ -15,9 +15,7 @@
 import { expect } from 'vitest';
 import type { Simulation } from '@/engine';
 import { capabilitiesOf, parentCompany, seatHeldBy, whyNotTakeIt } from '@/engine/world/company';
-import { MS_WEEK } from '@/engine/world/lot';
 import { LOT_NAME } from '@/engine/content/estate';
-import { stillMissing } from '@/engine/world/making';
 
 interface Done { ok: boolean; id?: string; error?: string }
 
@@ -111,29 +109,6 @@ export function openTheBooks(sim: Simulation): void {
     .toBe(true);
 }
 
-/**
- * Runs a picture out to delivered, the way a producer actually gets one there.
- *
- * A week at a time, filing whatever paperwork the list is waiting on, until it
- * is over or the patience runs out. Not one pass and a hand-over, because
- * finished work comes apart now: a review can send an episode back down the
- * ladder in the last week before delivery, and what happens next is that
- * somebody re-cuts it and files the certificate again. A test that advanced
- * once and handed over once would be testing a world where nothing ever goes
- * wrong, which is exactly the world this engine stopped being.
- */
-export function deliverIt(sim: Simulation, projectId: string, weeks = 400): boolean {
-  for (let i = 0; i < weeks; i += 1) {
-    const project = sim.universe.projects[projectId];
-    if (!project || project.stage === 'delivered') return true;
-    for (const element of stillMissing(project).filter((one) => one.by === 'business')) {
-      run(sim, 'company.deliver', { projectId, elementId: element.id });
-    }
-    if (sim.universe.projects[projectId]?.stage === 'delivered') return true;
-    sim.advanceTo(sim.now + MS_WEEK);
-  }
-  return sim.universe.projects[projectId]?.stage === 'delivered';
-}
 
 /**
  * Puts enough in the company's account that a deal can be paid out of it.

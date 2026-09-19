@@ -20,28 +20,9 @@
  */
 
 import type { Simulation } from '@/engine';
-import type { Audition } from '@/engine/domain/model';
-import { SHADES, type Reading } from '@/engine/content/audition';
-import { freeAcross, goUpFor, goingNow, takeTheNote } from '@/engine/world/audition';
-import { MS_WEEK, stillToCarry } from '@/engine/world/lot';
-import { stillMissing } from '@/engine/world/making';
-import { parentCompany } from '@/engine/world/company';
+import { MS_WEEK } from '@/engine/world/lot';
 
 export interface HowTheyPlay {
-  /** Which way in, every time. A tape gives no note; a room does. */
-  way?: 'tape' | 'room';
-  /** How far the note is taken, every time. */
-  howFar?: 'touch' | 'good' | 'far';
-  /** The reading sent in. Dead center unless something else is wanted. */
-  opening?: Reading;
-  /**
-   * The reading sent in, chosen per ask rather than once.
-   *
-   * What `opening` cannot express, and the only way to play the policy the room
-   * is now built around: open on what this holder has kept asking for. Takes
-   * precedence over `opening` when both are given.
-   */
-  openingFor?: (sim: Simulation, audition: Audition) => Reading;
   /** Called at the end of every week, for whatever else is being measured. */
   eachWeek?: (sim: Simulation, week: number) => void;
   /**
@@ -57,36 +38,25 @@ export interface HowTheyPlay {
    * It defaults on because a player who is told the condition only moves one way,
    * and who has EUR 1.2m in the bank, keeps the house — and because the shape of
    * a career measured without it is not a worse career, it is a different game.
-   * The figures are in the loop below.
    */
   letTheHouseGo?: boolean;
 }
 
+/**
+ * What a life came to.
+ *
+ * This counted asks, readings, parts and clashes, all of which came from the
+ * audition system. That system went with the production system, and rather than
+ * leave four counters reading nought — which is the exact shape of a measurement
+ * that looks like a result — it reports the weeks it actually ran. When work comes
+ * back, what work came to goes here.
+ */
 export interface WhatHappened {
-  /** Asks that arrived, whether or not they were answered. */
-  asked: number;
-  /** Readings actually given. */
-  read: number;
-  /** Parts won. */
-  cast: number;
-  /** Asks the dates refused, which is the cost of the work already taken. */
-  clashed: number;
+  /** Weeks the career ran for. */
+  weeks: number;
 }
 
-/**
- * Runs a career and reports what came of it.
- *
- * Weekly rather than daily, because `whatIsGoing` runs on the weekly tick and a
- * daily loop measures the same asks fifty-two times over.
- */
 export function playACareer(sim: Simulation, years: number, how: HowTheyPlay = {}): WhatHappened {
-  const way = how.way ?? 'room';
-  const howFar = how.howFar ?? 'good';
-  const opening = how.opening ?? Object.fromEntries(SHADES.map((one) => [one.id, 0])) as Reading;
-  const seen = new Set<string>();
-  let asked = 0;
-  let read = 0;
-  let clashed = 0;
 
   for (let week = 1; week <= years * 52; week += 1) {
     // Two hours a week keeping in shape, taken out of the week rather than added
@@ -151,19 +121,6 @@ export function playACareer(sim: Simulation, years: number, how: HowTheyPlay = {
     // announcement since there was nothing else to read. The kernel records it
     // now, so this asks the log rather than matching a string that a rewording
     // would have broken silently.
-    for (const one of Object.values(sim.universe.auditions)) {
-      if (seen.has(one.id)) continue;
-      seen.add(one.id);
-      asked += 1;
-    }
-    for (const one of goingNow(sim)) {
-      if (!freeAcross(sim, one.from, one.to)) { clashed += 1; continue; }
-      const played = how.openingFor?.(sim, one) ?? opening;
-      if (goUpFor(sim, { auditionId: one.id, way, played }).ok) read += 1;
-    }
-    for (const one of Object.values(sim.universe.auditions)) {
-      if (one.state === 'noted') takeTheNote(sim, { auditionId: one.id, howFar });
-    }
     how.eachWeek?.(sim, week);
   }
 
@@ -178,12 +135,7 @@ export function playACareer(sim: Simulation, years: number, how: HowTheyPlay = {
     );
   }
 
-  return {
-    asked,
-    read,
-    clashed,
-    cast: Object.values(sim.universe.auditions).filter((one) => one.why === 'cast').length,
-  };
+  return { weeks: years * 52 };
 }
 
 // ---------------------------------------------------------------------------
@@ -191,192 +143,4 @@ export function playACareer(sim: Simulation, years: number, how: HowTheyPlay = {
 // ---------------------------------------------------------------------------
 
 /** The stages a picture sits in before anybody has committed money to it. */
-const BEFORE_THE_GREENLIGHT = new Set(['idea', 'optioned', 'writing', 'draft', 'packaged']);
-
 /** The most this producer will put into one picture. */
-const A_PICTURE_AT_MOST = 20_000_000_00;
-
-/** How much of what stands behind the company one picture is allowed to be. */
-const SPENDS_OF_WHAT_IT_HAS = 0.9;
-
-export interface WhatTheCompanyDid {
-  /** Pictures greenlit. */
-  greenlit: number;
-  /** Pictures that reached delivered. */
-  delivered: number;
-  /** The lowest the company's cash account ever went, in cents. */
-  lowestCents: number;
-  /** The week it was lowest. */
-  lowestAt: number;
-  /** Weeks that ended with the company's cash account under water. */
-  weeksUnder: number;
-  /** What the account held at the end. */
-  endedCents: number;
-  /** Refusals the pipeline handed back, by the sentence they came with. */
-  refused: Record<string, number>;
-}
-
-/**
- * A save somebody actually runs a company in.
- *
- * `playACareer` above plays the acting half, and for a long time it was the
- * whole instrument — which meant every claim about the company was measured
- * some other way, by hand, once, and then quoted from a page afterwards. That
- * is the idle-save trap wearing a different coat: a career nobody finishes was
- * the first version of it, and a company nobody runs is this one. Over
- * twenty-five years of `playACareer` the company's cash account never moves off
- * nought, because the player never options anything, so anything measured there
- * about money the company has or has not got is measuring a company that has
- * never traded.
- *
- * So this runs the pipeline the way a producer does, with the game's own
- * commands: fill the post, option the material, register the payroll, bind the
- * cover, then develop, greenlight, let the weeks run, file whatever the
- * delivery list is waiting on, and do it again.
- *
- * It opens the doors here rather than calling `tests/doors.ts`, which asserts
- * through `vitest`. `played.ts` is imported by `tools/` scripts that run under
- * `vite-node`, and pulling vitest in through the side door is a thing this file
- * has already been cleaned of once.
- */
-export function playABusiness(sim: Simulation, years: number): WhatTheCompanyDid {
-  const refused: Record<string, number> = {};
-  const ask = (kind: string, payload: Record<string, unknown> = {}): { ok?: boolean; id?: string; error?: string } => {
-    const out = sim.execute<{ ok?: boolean; id?: string; error?: string }>({ kind, payload }).value ?? {};
-    if (out.error) refused[out.error] = (refused[out.error] ?? 0) + 1;
-    return out;
-  };
-
-  //  and not , which is Sugar Land — the estate,
-  // not the pictures company. The first draft read a cash account that does not
-  // exist, got nought every week, and would have reported that the company
-  // never once went under water.
-  const company = parentCompany(sim.universe);
-  const cash = (): number => Object.values(sim.universe.accounts)
-    .find((one) => one.ownerId === company?.id && one.kind === 'company_cash' && !one.closedAt)?.balance ?? 0;
-
-  // Somebody to run production, and somebody to keep the books — two people,
-  // because nobody is two people and the two seats gate two different doors.
-  //
-  // The accountant is not optional any more and that is new: the company register
-  // wants an annual return, nobody but the accountant files it, and a company that
-  // goes a year without one is struck off and cannot greenlight anything. A
-  // producer employs an accountant, so this one does.
-  // Three relatives and two seats that gate a door, so it has to allocate rather
-  // than reach for whoever is nearest. Whoever holds nothing first, then whoever
-  // is in a seat no door depends on — the principal and the lot manager are both
-  // filled at boot and neither shuts anything by being emptied.
-  const GATING = new Set(['production', 'accountant']);
-  const pick = (): string | undefined => {
-    const ours = parentCompany(sim.universe)?.id;
-    const people = Object.values(sim.universe.people)
-      .filter((one) => one.careerTrack !== 'executive');
-    const seat = (id: string) => Object.values(sim.universe.posts)
-      .find((post) => post.personId === id && post.companyId === ours);
-    return (people.find((one) => !seat(one.id))
-      ?? people.find((one) => !GATING.has(seat(one.id)!.role)))?.id;
-  };
-  for (const role of ['production'] as const) {
-    const who = pick();
-    if (who) ask('company.fill_post', { role, personId: who });
-  }
-
-  // The material before the cover, and that order is the engine's rule rather
-  // than a preference: errors and omissions refuses with *an underwriter reads
-  // the chain of title before writing this, and there is nothing to read*. The
-  // first version of this function bound the cover first, and every picture it
-  // made then sat one certificate short of delivered for twenty-five years —
-  // 1,299 refusals of the same sentence, nought delivered, on every seed. The
-  // instrument was wrong and the engine was right, which is the outcome worth
-  // having from a new instrument's first run.
-  let made = 1;
-  ask('company.option', { title: 'Picture 1', hold: 'option', months: 18 });
-  ask('company.register', { registry: 'is_employer' });
-  for (const policy of ['general_liability', 'workers_comp', 'production_package', 'errors_omissions']) {
-    ask('company.insure', { policy });
-  }
-
-  let greenlit = 0;
-  let delivered = 0;
-  let lowestCents = cash();
-  let lowestAt = 0;
-  let weeksUnder = 0;
-  let optioned = 1;
-
-  for (let week = 1; week <= years * 52; week += 1) {
-    // One picture at a time, which is what a company this size can carry.
-    const live = Object.values(sim.universe.projects)
-      .filter((one) => one.stage !== 'delivered' && one.stage !== 'shelved');
-
-    if (live.length === 0) {
-      const title = `Picture ${made}`;
-      if (made > optioned) {
-        ask('company.option', { title, hold: 'option', months: 18 });
-        optioned = made;
-      }
-      ask('company.develop', { title, medium: 'film' });
-      made += 1;
-    } else {
-      for (const project of live) {
-        // A picture that has not been committed to yet is waiting for the
-        // greenlight, not for paperwork: asking a picture in `idea` to file its
-        // music cue sheet is what the first draft of this loop did, five
-        // thousand times a save, while the company made nothing.
-        if (BEFORE_THE_GREENLIGHT.has(project.stage)) {
-          // Sized to the money, which is the whole difference between a
-          // producer and a loop. The first version of this asked for twenty
-          // million every time regardless of what stood behind the company,
-          // and `greenlight` rightly refuses a budget larger than the cash
-          // plus what the family will still put in — so a company that dipped
-          // early asked for the same twenty million every week for fifteen
-          // years and was told no every week.
-          //
-          // That produced a finding, and the finding was about this function.
-          // It read as an absorbing state in the game: one seed in five making
-          // seven pictures and then nothing, cash pinned at `GREENLIGHT_FLOOR`
-          // from year fifteen. Sizing the ask to what is actually behind the
-          // company takes the same seed to thirty-six pictures. There was no
-          // trap. There was a loop that could only ask for one number.
-          const behind = cash() + stillToCarry(sim);
-          const budget = Math.max(0, Math.min(A_PICTURE_AT_MOST, Math.floor(behind * SPENDS_OF_WHAT_IT_HAS)));
-          if (budget <= 0) continue;
-          const out = ask('company.greenlight', {
-            projectId: project.id, planId: 'feature', budgetCents: budget, shootWeeks: 6,
-          });
-          if (out.ok !== false && !out.error) greenlit += 1;
-          continue;
-        }
-        for (const element of stillMissing(project).filter((one) => one.by === 'business')) {
-          ask('company.deliver', { projectId: project.id, elementId: element.id });
-        }
-        // And sell it, because a producer who delivers and never sells is not a
-        // producer running out of money, it is an instrument forgetting to
-        // trade. Without this the company makes two pictures in twenty-five
-        // years and then cannot greenlight a third, which reads as a finding
-        // about the company and is a finding about the loop.
-        const now = sim.universe.projects[project.id];
-        if (now?.stage === 'delivered' && !now.dealId) {
-          ask('company.sell', { projectId: project.id, dealId: 'studio' });
-        }
-        if (sim.universe.projects[project.id]?.stage === 'delivered') delivered += 1;
-      }
-    }
-
-    sim.advanceTo(sim.now + MS_WEEK);
-
-    const held = cash();
-    if (held < lowestCents) { lowestCents = held; lowestAt = week; }
-    if (held < 0) weeksUnder += 1;
-  }
-
-  const broke = sim.universe.engineFailures;
-  if (broke.length > 0) {
-    const said = [...new Set(broke.map((one) => one.error))].slice(0, 5).map((why) => `  ${why}`).join('\n');
-    throw new Error(
-      `A scheduled system failed ${broke.length} times while the company ran, so these numbers `
-      + `describe a world where part of the engine stopped:\n${said}`,
-    );
-  }
-
-  return { greenlit, delivered, lowestCents, lowestAt, weeksUnder, endedCents: cash(), refused };
-}

@@ -17,15 +17,11 @@ import { clamp, remap } from '../core/rng';
 import { addDays, instantFromZoned, zonedParts, MS_HOUR, MS_DAY } from '../core/time';
 import { modifierFor } from '../domain/attributes';
 import { dispositionOf } from '../core/taste';
-import { forgottenPrestige } from '../world/awards';
 import {
   LONGEST_SESSION_HOURS, TRAINING_AN_HOUR, ceilingAt, recoveryFactorAt,
 } from '../content/lifespan';
 import { driftBonds, moralePullOf } from '../world/standing';
 import { whatHasThem } from '../world/diary';
-import {
-  A_WORKING_WEEK, FORGETTING, RELIABILITY_HEALS_A_DAY, RELIABILITY_RESTS_AT, TALKED_ABOUT,
-} from '../content/audition';
 import { WEAR_A_DAY } from '../content/estate';
 
 // ---------------------------------------------------------------------------
@@ -50,6 +46,89 @@ export const NOURISHMENT_DRAIN_PER_HOUR = 2.0;
  * taking the hours and charging for them.
  */
 export const TOO_SPENT_TO_TRAIN = 20;
+
+/**
+ * What a week of work does to a body, re-homed.
+ *
+ * These were declared in `content/audition.ts` and read here, which was the wrong
+ * way round from the day it was written: what a shoot costs a person is a fact
+ * about living, not about being asked to read for something. The audition content
+ * went with the production system and these stayed, because this file is the only
+ * thing that ever read them and the life model still needs them.
+ */
+export const A_WORKING_WEEK = {
+  /**
+   * The night a shoot leaves you, in hours.
+   *
+   * Not a second clamp bolted onto the model — the model already knows what a
+   * short night does. `applySleep` clears less debt from a shorter night and
+   * adds debt below six hours, so a run of these declines on its own and keeps
+   * declining the longer it runs. The first draft set a fixed working ceiling
+   * instead and simply moved the fixed point: every week cost the same, from the
+   * first one, and a fourteen-week job took a career from sixty-six to nothing.
+   *
+   * A call at six with an hour in the chair before it is what this number is,
+   * and it arrives gradually: week one of anything is an ordinary night, and the
+   * last week of a long one is not. Scaled by how far into the engagement the
+   * day is, so a short job never gets deep enough to cost anything and a
+   * marathon does. That is the decision the whole thing exists to create.
+   */
+  shorterBy: 2.5,
+  /**
+   * How much of a night's recovery a full debt holds back.
+   *
+   * The reason resting between jobs was worth nothing. Energy had no memory: a
+   * night put back about ninety points whatever came before it, so one week off
+   * and twelve weeks off left a career in exactly the same place, and the only
+   * lever a tired player had moved nothing at all.
+   *
+   * Debt already made somebody burn faster — `applyElapsedWellbeing` scales the
+   * drain by it — and that term was measured dead, because an ordinary debt of
+   * six makes the multiplier 1.125 and nothing notices. This is the other half
+   * of the same idea and it is what gives the model a memory: you cannot fill
+   * the tank while you are carrying one, so recovery is gradual and the size of
+   * the gap is a decision.
+   */
+  debtHolds: 0.62,
+  /**
+   * The readiness below which turning up anyway is the thing people remember.
+   *
+   * Set under where a rested person starts a job and over where a long run
+   * takes them, so the early weeks of anything are fine and only a run that
+   * goes on costs.
+   *
+   * ## It was measurably unreachable, and the fix was somewhere else
+   *
+   * This line was on `docs/UNBITTEN.md` as a threshold no played career could
+   * sit above late on: mean readiness by third ran 47.7 / 38.9 / 16.7 on
+   * autopilot and 49.2 / 47.8 / 35.3 for somebody managing sleep deliberately,
+   * so both ended under thirty-eight and the number divided nothing. The
+   * obvious fix was to move it, and that would have been wrong.
+   *
+   * The cause was the house. `property.condition` fell every day with nothing
+   * in the build that raised it, `sleepQuality` read it, and every career ended
+   * worn out whatever the player did — so the threshold was not badly chosen,
+   * it was the only honest reading of a world with one outcome. Now that
+   * `life.upkeep` exists, there are two. Measured over three seeds of
+   * twenty-five played years, mean readiness by third:
+   *
+   * | | thirds | weeks under this line, of 1300 | reliability at the end |
+   * |---|---|---|---|
+   * | let the house rot | 45.7 / 41.8 / 18.0 | 498-549 | 0 |
+   * | keep it up | 47.8 / 47.9 / 46.8 | 58-74 | 91-97 |
+   *
+   * Thirty-eight now sits between the two, which is what a threshold is for.
+   * It is deliberately unchanged: a number that divided nothing because the
+   * world had one outcome does not want moving once the world has two.
+   */
+  spentAt: 38,
+  /** What a week worked from under there takes off how reliable people found you. */
+  costsAWeek: 3,
+  /** And what a week worked in good order gives back, because it goes both ways. */
+  earnsAWeek: 1,
+} as const;
+export const RELIABILITY_RESTS_AT = 70;
+export const RELIABILITY_HEALS_A_DAY = 0.009;
 
 export function freshWellbeing(): Wellbeing {
   return {
@@ -530,25 +609,22 @@ export function forgetsYou(sim: Simulation): void {
   }
   me.reputationDriftedAt = since + days * MS_DAY;
 
-  const rep = me.reputation;
-  const aYear = 365.2425;
-  for (const [key, points] of Object.entries(FORGETTING)) {
-    const was = rep[key as keyof typeof FORGETTING];
-    rep[key as keyof typeof FORGETTING] = clamp(was - (points / aYear) * days, 0, 100);
-  }
+  // What the industry forgets, and how fast, was declared in the audition content
+  // and read here. Both went with the production system. Reputation now holds
+  // where it is until the systems that move it come back — which is honest, and
+  // is why nothing here invents a decay rate nobody measured.
   // And being talked about fades too, slower than it arrives. Nothing about a
   // person should only ever get worse either.
-  rep.controversy = clamp(rep.controversy - (TALKED_ABOUT.forgottenAYear / aYear) * days, 0, 100);
   // And being thought well of fades, for exactly the same reason. `docs/AWARDS.md`
   // is explicit that prestige must decay or it becomes the fifth one-way ratchet
   // this project has found: a career is a thing you keep having, and an award ten
   // years ago is not what an office is thinking about today.
-  forgottenPrestige(me, days, aYear);
   // And a record of turning up heals toward where nobody has a complaint, because
   // you are not unreliable while you are resting. Without this it only ever fell:
   // it moves during a working week alone, three off against one back, and
   // late-career readiness is under `spentAt` almost every week — so it reached
   // nought and stayed there for a third of the game.
+  const rep = me.reputation;
   const rest = RELIABILITY_RESTS_AT;
   const remaining = (1 - RELIABILITY_HEALS_A_DAY) ** days;
   rep.reliability = clamp(rest + (rep.reliability - rest) * remaining, 0, 100);

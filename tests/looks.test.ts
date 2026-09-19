@@ -25,8 +25,7 @@ import type { Simulation } from '@/engine';
 import { MS_DAY, MS_HOUR } from '@/engine/core/time';
 import '@/ui/looks/all';
 import { lookKinds, resolveLook, seedsFor, trailTo, type Looked, type Way } from '@/ui/looks/registry';
-import { openTheBooks, openTheDoors } from './doors';
-import { openDecisions } from '@/engine/world/world';
+import { openTheDoors } from './doors';
 import { at, subjectKey, type Subject } from '@/ui/looks/subject';
 
 const UI = new URL('../src/ui/', import.meta.url);
@@ -439,31 +438,6 @@ describe('what the screens name', () => {
  * thing it is about being walked rather than assumed. The crawl above cannot
  * cover it: its decision is hand-made and carries no pointer at all.
  */
-describe('a decision opens onto the thing it is about', () => {
-  it('walks from the reimbursement row to the picture it is about', () => {
-    const sim = quickSave({}, 'decision-way');
-    openTheDoors(sim);
-    openTheBooks(sim);
-    sim.execute({ kind: 'company.develop', payload: { title: 'Hvítserkur', medium: 'film' } });
-    const project = Object.values(sim.universe.projects).find((one) => one.title === 'Hvítserkur')!;
-    sim.execute({
-      kind: 'company.greenlight',
-      payload: { projectId: project.id, planId: 'feature', budgetCents: 20_000_000_00, shootWeeks: 8 },
-    });
-    sim.advanceTo(sim.now + 3 * MS_DAY);
-
-    const row = openDecisions(sim)[0]!;
-    expect(row.refType).toBe('project');
-    expect(row.refId).toBe(project.id);
-
-    const looked = resolveLook(sim, at('decision', row.id)) as Looked;
-    expect(looked.name).toBeTruthy();
-    expect(
-      (looked.ways ?? []).map((way) => way.to),
-      'the decision knows what it is about and paints no way onto it',
-    ).toContainEqual({ kind: 'project', id: project.id });
-  });
-});
 
 describe('the sentence the player wrote', () => {
   /** Every string in a body, joined, so a body can be read the way a page is. */
