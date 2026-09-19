@@ -7,6 +7,7 @@ import { projectsOf } from '@/engine/world/company';
 import { decideOffer, seatFor } from '@/engine/world/casting';
 import {
   actingTermsAcceptanceDelta,
+  backendParticipationCents,
   defaultActingTerms,
   normalizeActingTerms,
   optionFeeCents,
@@ -33,6 +34,19 @@ function greenlit(sim: Simulation, title = 'Contract Test') {
 }
 
 describe('acting contracts', () => {
+  it('keeps an old offer neutral when no contract terms were supplied', () => {
+    const base = {
+      askCents: 100_000_00,
+      feeCents: 100_000_00,
+      carries: 30,
+      free: true,
+      demand: 50,
+    };
+    expect(actingTermsAcceptanceDelta(undefined)).toBe(0);
+    expect(decideOffer(base, 0.69).took).toBe(true);
+    expect(decideOffer(base, 0.70).took).toBe(false);
+  });
+
   it('normalizes sequel, raise, backend and billing terms into safe ranges', () => {
     const sim = quickSave({}, 'contract-normalize');
     const project = greenlit(sim);
@@ -102,6 +116,17 @@ describe('acting contracts', () => {
     expect(optionFeeCents(1_000_000_00, terms, 1)).toBe(1_200_000_00);
     expect(optionFeeCents(1_000_000_00, terms, 2)).toBe(1_440_000_00);
     expect(optionFeeCents(1_000_000_00, terms, 4)).toBeUndefined();
+  });
+
+  it('pays contingent gross in basis points off the receipt that actually arrived', () => {
+    const terms = {
+      sequelOptions: 0,
+      optionRaisePct: 0.15,
+      backendPointsBps: 250,
+      billing: 'featured' as const,
+    };
+    expect(backendParticipationCents(10_000_000_00, terms)).toBe(250_000_00);
+    expect(backendParticipationCents(10_000_000_00, undefined)).toBe(0);
   });
 
   it('persists negotiated terms on the signed role', () => {
