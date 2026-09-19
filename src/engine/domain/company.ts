@@ -595,6 +595,16 @@ export interface ProjectDevelopment {
   screenplay: ScreenplayState;
 }
 
+export type MarketingStrategy = 'minimal' | 'targeted' | 'wide' | 'event';
+
+export interface ProjectMarketing {
+  strategy: MarketingStrategy;
+  /** Money the producer has actually committed, separate from distributor P&A. */
+  spendCents: Money;
+  startedAt: Instant;
+  updatedAt: Instant;
+}
+
 export interface ProjectPackage {
   planId: string;
   budgetCents: Money;
@@ -635,6 +645,8 @@ export interface Project {
    * will not let it skip a locked screenplay.
    */
   development?: ProjectDevelopment;
+  /** Producer-side campaign committed before sale/release. */
+  marketing?: ProjectMarketing;
   /**
    * A priced and scheduled version of the locked screenplay, before greenlight.
    * This is a proposal, not a booking: dates and stage availability are checked
