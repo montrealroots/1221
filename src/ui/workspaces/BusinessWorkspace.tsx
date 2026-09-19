@@ -26,6 +26,7 @@ import { formatMoney } from '@/engine/core/money';
 import { plural } from '@/engine/core/text';
 import { formatDate } from '@/engine/core/time';
 import { DELIVERY, plansFor, planById } from '@/engine/content/making';
+import { FILM_GENRES } from '@/engine/content/interests';
 import { DEALS, dealById } from '@/engine/content/selling';
 import { rateById, throughput } from '@/engine/content/inventory';
 import { cuttingPeriod } from '@/engine/world/inventory';
@@ -57,6 +58,10 @@ import {
 } from '@/engine/world/rebate';
 import type { Project, RoleId } from '@/engine/domain/company';
 import { talentForRole } from '@/engine/production/talent';
+import {
+  DEVELOPMENT_AUDIENCES, DEVELOPMENT_FOCI, DEVELOPMENT_PASSES, DEVELOPMENT_TONES,
+  MINIMUM_LOCK_QUALITY, developmentReadiness, pendingDevelopmentPass,
+} from '@/engine/production/development';
 import {
   GUILD_BY_ID, POLICY_BY_ID, REGISTRY_BY_ID, ROLE_BY_ID,
 } from '@/engine/content/incorporation';
@@ -356,6 +361,7 @@ function Slate() {
   const slate = useWorld((s) => projectsOf(s.universe));
   const [putting, setPutting] = useState(false);
   const [saying, setSaying] = useState<string | undefined>();
+  const [developing, setDeveloping] = useState<string | undefined>();
   const [casting, setCasting] = useState<string | undefined>();
   const [filing, setFiling] = useState<string | undefined>();
   const [claiming, setClaiming] = useState<string | undefined>();
@@ -383,7 +389,12 @@ function Slate() {
                 <div className="row gap-2">
                   {/* The stage is an id. A chip is a label, so it is read as one. */}
                   <span className="chip">{toStart(project.stage)}</span>
-                  {project.planId === undefined && !project.shelvedAt && (
+                  {project.development && project.planId === undefined && !project.shelvedAt && (
+                    <button className="btn btn-sm" onClick={() => setDeveloping(project.id)}>
+                      {`Development ${project.development.screenplay.quality}/100`}
+                    </button>
+                  )}
+                  {project.planId === undefined && !project.shelvedAt && developmentReadiness(project).ready && (
                     <button className="btn btn-sm" onClick={() => setSaying(project.id)}>Say Yes To It</button>
                   )}
                   {(project.roles ?? []).length > 0 && project.stage !== 'delivered' && (
@@ -409,6 +420,7 @@ function Slate() {
         </div>
       )}
       {putting && <DevelopForm onClose={() => setPutting(false)} />}
+      {developing && <DevelopmentForm projectId={developing} onClose={() => setDeveloping(undefined)} />}
       {saying && <GreenlightForm projectId={saying} onClose={() => setSaying(undefined)} />}
       {casting && <CastForm projectId={casting} onClose={() => setCasting(undefined)} />}
       {filing && <DeliveryForm projectId={filing} onClose={() => setFiling(undefined)} />}
@@ -431,14 +443,29 @@ function DevelopForm({ onClose }: { onClose: () => void }) {
   const [title, setTitle] = useState('');
   const [medium, setMedium] = useState<'film' | 'television'>('film');
   const [holdingId, setHoldingId] = useState('');
+  const [genreId, setGenreId] = useState(FILM_GENRES[0]?.id ?? 'drama');
+  const [audience, setAudience] = useState(DEVELOPMENT_AUDIENCES[0]?.id ?? 'general');
+  const [tone, setTone] = useState(DEVELOPMENT_TONES[1]?.id ?? 'balanced');
   const [error, setError] = useState<string | undefined>();
 
   const put = () => {
-    const answer = run<{ ok: boolean; error?: string }>(
+    const answer = run<{ ok: boolean; id?: string; error?: string }>(
       'company.develop', { title, medium, holdingId: holdingId || undefined }, { silent: true },
     );
-    if (answer.value?.ok) { onClose(); return; }
-    setError(answer.value?.error ?? answer.error ?? 'It couldn’t go on the slate.');
+    if (!answer.value?.ok || !answer.value.id) {
+      setError(answer.value?.error ?? answer.error ?? 'It could not go on the slate.');
+      return;
+    }
+    const started = run<{ ok: boolean; error?: string }>(
+      'production.development.start',
+      { projectId: answer.value.id, genreIds: [genreId], audience, tone },
+      { silent: true },
+    );
+    if (!started.value?.ok) {
+      setError(started.value?.error ?? started.error ?? 'Development could not start.');
+      return;
+    }
+    onClose();
   };
 
   const ways = plansFor(medium);
@@ -450,7 +477,7 @@ function DevelopForm({ onClose }: { onClose: () => void }) {
         <>
           <button className="btn btn-ghost" onClick={onClose}>Never Mind</button>
           <button className="btn btn-primary" onClick={put} disabled={title.trim().length === 0}>
-            Put It On
+            Start Development
           </button>
         </>
       )}
@@ -476,18 +503,183 @@ function DevelopForm({ onClose }: { onClose: () => void }) {
       <div className="field">
         <label htmlFor="develop-holding">What It Is Made From</label>
         <select id="develop-holding" value={holdingId} onChange={(e) => setHoldingId(e.target.value)}>
-          <option value="">An idea, and no rights behind it</option>
+          <option value="">An original idea</option>
           {held.map((one) => (
             <option key={one.id} value={one.id}>{one.title}</option>
           ))}
         </select>
       </div>
+      <div className="field">
+        <label htmlFor="develop-genre">Primary Genre</label>
+        <select id="develop-genre" value={genreId} onChange={(e) => setGenreId(e.target.value)}>
+          {FILM_GENRES.map((genre) => <option key={genre.id} value={genre.id}>{genre.label}</option>)}
+        </select>
+      </div>
+      <div className="field">
+        <label htmlFor="develop-audience">Audience</label>
+        <select id="develop-audience" value={audience} onChange={(e) => setAudience(e.target.value as typeof audience)}>
+          {DEVELOPMENT_AUDIENCES.map((one) => <option key={one.id} value={one.id}>{one.label}</option>)}
+        </select>
+      </div>
+      <div className="field">
+        <label htmlFor="develop-tone">Creative Position</label>
+        <select id="develop-tone" value={tone} onChange={(e) => setTone(e.target.value as typeof tone)}>
+          {DEVELOPMENT_TONES.map((one) => <option key={one.id} value={one.id}>{one.label}</option>)}
+        </select>
+      </div>
       <p className="xs dim" style={{ margin: 0 }}>
         {ways.length === 1
-          ? `There’s one way to make ${medium === 'film' ? 'a film' : 'television'} here: ${ways[0]!.label}.`
-          : `${said(ways.length, 'way')} to make television here: ${ways.map((one) => one.label).join(', ')}.`}
-        {' '}That choice is made at the greenlight, and this one is made now and not again.
+          ? `There is one current production plan for this medium: ${ways[0]!.label}.`
+          : `${said(ways.length, 'production plan')} can eventually make it: ${ways.map((one) => one.label).join(', ')}.`}
+        {' '}The production plan comes later. First the project has to survive development.
       </p>
+      {error && <p className="small negative" style={{ marginTop: 'var(--s3)' }}>{error}</p>}
+    </Modal>
+  );
+}
+
+function DevelopmentForm({ projectId, onClose }: { projectId: string; onClose: () => void }) {
+  const { run, sim } = useGame();
+  const project = useWorld((s) => s.universe.projects[projectId]);
+  const [focus, setFocus] = useState(DEVELOPMENT_FOCI[0]?.id ?? 'story');
+  const [heard, setHeard] = useState<string | undefined>();
+  const [error, setError] = useState<string | undefined>();
+  if (!project?.development) return null;
+
+  const development = project.development;
+  const screenplay = development.screenplay;
+  const pending = pendingDevelopmentPass(project);
+  const readiness = developmentReadiness(project);
+
+  const commission = (kind: 'outline' | 'draft' | 'rewrite' | 'polish') => {
+    const done = run<{ ok: boolean; error?: string; completesAt?: number }>(
+      'production.development.pass',
+      { projectId, kind, focus },
+      { silent: true },
+    );
+    if (!done.value?.ok) {
+      setError(done.value?.error ?? done.error ?? 'That pass could not start.');
+      return;
+    }
+    setError(undefined);
+    setHeard(done.value.completesAt
+      ? `That pass is due ${formatDate(done.value.completesAt, sim.homeZone)}.`
+      : 'That pass is underway.');
+  };
+
+  const lock = () => {
+    const done = run<{ ok: boolean; error?: string; quality?: number }>(
+      'production.development.lock',
+      { projectId },
+      { silent: true },
+    );
+    if (!done.value?.ok) {
+      setError(done.value?.error ?? done.error ?? 'The screenplay could not be locked.');
+      return;
+    }
+    setError(undefined);
+    setHeard(`Screenplay locked at ${done.value.quality ?? screenplay.quality}/100.`);
+  };
+
+  const completed = screenplay.passes.filter((one) => one.status === 'completed');
+  const hasOutline = completed.some((one) => one.kind === 'outline');
+  const hasDraft = screenplay.draft > 0;
+
+  return (
+    <Modal
+      title={`Development: ${project.title}`}
+      wide
+      onClose={onClose}
+      footer={<button className="btn btn-ghost" onClick={onClose}>Close</button>}
+    >
+      <div className="grid grid-4">
+        <Stat label="Screenplay" value={`${screenplay.quality}/100`} note={toStart(screenplay.status)} />
+        <Stat label="Draft" value={screenplay.draft} note={screenplay.draft === 1 ? 'Completed draft' : 'Completed versions'} />
+        <Stat label="Development Spend" value={formatMoney(project.spentCents, { cents: false })} note="Spent whether the project shoots or not" />
+        <Stat label="Greenlight" value={readiness.ready ? 'Ready' : 'Not Ready'} note={readiness.ready ? 'The script gate is clear' : readiness.blockers[0]} />
+      </div>
+
+      <p className="small">
+        {development.genreIds.map((id) => FILM_GENRES.find((one) => one.id === id)?.label ?? id).join(' · ')}
+        {' · '}{DEVELOPMENT_AUDIENCES.find((one) => one.id === development.audience)?.label ?? development.audience}
+        {' · '}{DEVELOPMENT_TONES.find((one) => one.id === development.tone)?.label ?? development.tone}
+      </p>
+
+      <div className="field">
+        <label htmlFor="development-focus">What The Next Pass Concentrates On</label>
+        <select id="development-focus" value={focus} onChange={(e) => setFocus(e.target.value as typeof focus)}>
+          {DEVELOPMENT_FOCI.map((one) => <option key={one.id} value={one.id}>{one.label}</option>)}
+        </select>
+      </div>
+
+      <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
+        {!hasOutline && (
+          <button className="btn btn-sm btn-primary" disabled={Boolean(pending)} onClick={() => commission('outline')}>
+            Commission Outline
+          </button>
+        )}
+        {hasOutline && !hasDraft && (
+          <button className="btn btn-sm btn-primary" disabled={Boolean(pending)} onClick={() => commission('draft')}>
+            Commission First Draft
+          </button>
+        )}
+        {hasDraft && screenplay.status !== 'locked' && (
+          <>
+            <button className="btn btn-sm" disabled={Boolean(pending)} onClick={() => commission('rewrite')}>Rewrite</button>
+            <button className="btn btn-sm" disabled={Boolean(pending)} onClick={() => commission('polish')}>Polish</button>
+            <button
+              className="btn btn-sm btn-primary"
+              disabled={Boolean(pending) || screenplay.quality < MINIMUM_LOCK_QUALITY}
+              onClick={lock}
+            >
+              Lock Screenplay
+            </button>
+          </>
+        )}
+      </div>
+
+      {pending && (
+        <p className="small">
+          {DEVELOPMENT_PASSES.find((one) => one.id === pending.kind)?.label ?? toStart(pending.kind)}
+          {' '}is underway and due {formatDate(pending.completesAt, sim.homeZone)}.
+        </p>
+      )}
+
+      {screenplay.passes.length > 0 && (
+        <div className="table-wrap" style={{ marginTop: 'var(--s3)' }}>
+          <table className="table">
+            <thead>
+              <tr>
+                <th>Pass</th>
+                <th>Focus</th>
+                <th>Cost</th>
+                <th>Result</th>
+              </tr>
+            </thead>
+            <tbody>
+              {screenplay.passes.map((one) => (
+                <tr key={one.sequence}>
+                  <td>{DEVELOPMENT_PASSES.find((pass) => pass.id === one.kind)?.label ?? toStart(one.kind)}</td>
+                  <td className="small">{toStart(one.focus)}</td>
+                  <td className="small nowrap">{formatMoney(one.costCents, { cents: false })}</td>
+                  <td className="small nowrap">
+                    {one.status === 'pending'
+                      ? `Due ${formatDate(one.completesAt, sim.homeZone)}`
+                      : `${one.qualityBefore}/100 → ${one.qualityAfter ?? one.qualityBefore}/100`}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+
+      {!readiness.ready && screenplay.status !== 'locked' && (
+        <p className="xs dim">
+          Greenlight still needs {readiness.blockers.join(', ')}.
+        </p>
+      )}
+      {heard && <p className="small" style={{ marginTop: 'var(--s3)' }}>{heard}</p>}
       {error && <p className="small negative" style={{ marginTop: 'var(--s3)' }}>{error}</p>}
     </Modal>
   );
