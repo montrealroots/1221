@@ -35,6 +35,7 @@ import {
 } from '../content/incorporation';
 import { ESTATE_CITY_ID, HOUSE, studioName } from '../content/estate';
 import { bondFor, standingWord } from './standing';
+import { listingById } from './material';
 import {
   MS_DAY, addMonths, formatDate, instantFromZoned, startOfNextMonth, type Instant,
 } from '../core/time';
@@ -1025,21 +1026,36 @@ export function registerCompanyCommands(sim: Simulation): void {
     return { ok: true, id: policy.id };
   });
 
-  /** Take rights to something. */
+  /**
+   * Take rights to something, either something you thought of or something listed.
+   *
+   * Two ways in, and the older one is unchanged. A typed title is an original idea and
+   * costs the default fee; it is what the tutorial teaches and what every seed script
+   * uses. A `listingId` takes a property off the market in `world/material.ts`
+   * instead, at that property's own asking price and with its own provenance — dearer
+   * than thinking of something yourself, because the pool is a convenience and it is
+   * priced like one.
+   *
+   * A listing that is no longer offered is refused rather than quietly invented. The
+   * market churns, so a player who waited may find it gone, and being told so is the
+   * point of having a market at all.
+   */
   sim.onCommand<{
-    title: string; provenance?: Provenance; hold?: Hold;
+    title?: string; listingId?: string; provenance?: Provenance; hold?: Hold;
     optionFeeCents?: Money; purchasePriceCents?: Money; months?: number; chainGap?: string;
   }, Done>('company.option', (payload, { sim: s }) => {
     const parent = parentCompany(s.universe);
     if (!parent) return refuse('There’s no company to hold anything.');
-    const title = String(payload.title ?? '').replace(/\s+/g, ' ').trim().slice(0, LONGEST_TITLE);
+    const listing = payload.listingId ? listingById(s, payload.listingId) : undefined;
+    if (payload.listingId && !listing) return refuse('That one is not on the market any more.');
+    const title = String(listing?.title ?? payload.title ?? '').replace(/\s+/g, ' ').trim().slice(0, LONGEST_TITLE);
     if (!title) return refuse('It needs a title.');
     if (holdingsOf(s.universe).some((one) => one.title.toLowerCase() === title.toLowerCase())) {
       return refuse('The company already holds that one.');
     }
 
     const hold: Hold = payload.hold ?? 'option';
-    const fee = Math.max(0, Math.round(payload.optionFeeCents ?? DEFAULT_OPTION_FEE));
+    const fee = Math.max(0, Math.round(listing?.asksCents ?? payload.optionFeeCents ?? DEFAULT_OPTION_FEE));
     const paid = payFor(s, parent.id, hold === 'option' ? fee : Math.max(fee, Math.round(payload.purchasePriceCents ?? fee)), `Rights to ${title}`);
     if (!paid.ok) return paid;
 
@@ -1048,7 +1064,7 @@ export function registerCompanyCommands(sim: Simulation): void {
       saveId: s.universe.meta.id,
       companyId: parent.id,
       title,
-      provenance: payload.provenance ?? 'original',
+      provenance: listing?.provenance ?? payload.provenance ?? 'original',
       hold,
       acquiredAt: s.now,
       chainComplete: !payload.chainGap,

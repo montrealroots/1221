@@ -27,6 +27,7 @@ import { MS_WEEK, pullOn, stagesOn, wouldBook } from './world/lot';
 import { decideQuota } from './world/sugar';
 import { MEN, WOMEN } from './content/names';
 import { ageOn } from './world/family';
+import { onTheMarket } from './world/material';
 
 // ---------------------------------------------------------------------------
 // The sky
@@ -306,4 +307,43 @@ defineDecider<Hire, string>({
   },
   sample: (seed) => ({ woman: seed % 2 === 0, given: (seed % 11) / 11, years: 41 + (seed % 23) }),
   decide: ({ woman, given, years }) => `${nameFrom(woman, given)}, ${woman ? 'she/her' : 'he/him'}, ${years}`,
+});
+
+/**
+ * What is on the market to option this month.
+ *
+ * Owns the `material` stream. There is no ladder and the absence is the claim, the
+ * same way it is for a family's name: what somebody else happens to be selling sits
+ * on a scale — a cheap original with a good title beats an expensive one — but
+ * neither input pushes along it. A later month is not a better market and another
+ * save is not a richer one. Declaring a direction here would assert an order the
+ * model does not have.
+ *
+ * What it does check is that both inputs reach the outcome at all, which is the whole
+ * point of the pool being drawn: a market that answered the same in every month, or
+ * the same in every save, would be a catalog wearing a market's clothes.
+ */
+interface Market { sim: Simulation; at: number }
+
+defineDecider<Market, string>({
+  id: 'material.market',
+  decides: 'Which properties are out there to be optioned this month.',
+  drawnIn: 'src/engine/world/material.ts',
+  draws: ['material'],
+  reads: {
+    // Which month is being asked about. The pool is redrawn in them.
+    month: (m, t) => ({ ...m, at: Date.UTC(2031, Math.min(11, Math.floor(t * 12)), 8) }),
+    // And which world is asking, because two saves do not see the same market.
+    save: (m, t) => ({ ...m, sim: quickSave(defaultConfig(), `material-${Math.floor(t * 40)}`) }),
+  },
+  sample: (seed) => ({
+    sim: quickSave(defaultConfig(), `material-${seed}`),
+    at: Date.UTC(2031, seed % 12, 8),
+  }),
+  decide: ({ sim, at }) => {
+    const out = onTheMarket(sim, at);
+    if (out.length === 0) return 'nothing worth reading this month';
+    const dearest = out.reduce((most, one) => Math.max(most, one.asksCents), 0);
+    return `${out.length} listed, dearest at ${Math.round(dearest / 1_000_00)}`;
+  },
 });
