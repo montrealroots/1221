@@ -73,3 +73,8 @@ export {
   registerPackaging,
   type PackageResult,
 } from './package';
+
+export {
+  packageMatchesPlan,
+  type ProductionPlanSpec,
+} from './package-spec';
