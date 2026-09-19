@@ -602,8 +602,6 @@ export interface Project {
   title: string;
   medium: 'film' | 'television';
   stage: Stage;
-  /** Projects created by the replacement production pipeline opt into its gates. */
-  productionVersion?: 2;
   /** The right this hangs off, where the company holds one. */
   holdingId?: Id;
   startedAt: Instant;
