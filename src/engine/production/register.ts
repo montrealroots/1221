@@ -23,6 +23,7 @@ import { registerAwards } from '../world/awards';
 import { registerDevelopment } from './development';
 import { registerMarketing } from './marketing';
 import { registerPackaging } from './package';
+import { registerTesting } from './testing';
 
 /**
  * Registers the complete production/career surface.
@@ -35,6 +36,7 @@ export function registerProduction(sim: Simulation): void {
   registerDevelopment(sim);
   registerMarketing(sim);
   registerPackaging(sim);
+  registerTesting(sim);
   registerMaking(sim);
   registerSelling(sim);
   registerCrew(sim);
