@@ -50,6 +50,7 @@ import {
 } from '../content/talent';
 import { MEN, WOMEN, patronymic } from '../content/names';
 import { inherits, type Entry } from '../content/lineage';
+import { UNWRITTEN, genreById, whyNotWrite, type Dial } from '../content/story';
 import { reckon, type Spec } from './boxoffice';
 import { chargeTheCampaign, chargeTheFees, returnedBy } from './takings';
 import { armTheRun } from './run';
@@ -65,7 +66,7 @@ export const LOCKS: readonly Lock[] = ['shape', 'cast', 'opening'];
 export const LOCK_SAID: Readonly<Record<Lock, string>> = {
   shape: 'The format, the part count and the runtime are settled.',
   cast: 'Everybody is contracted.',
-  opening: 'It is out, and the campaign is spent.',
+  opening: 'It’s out, and the campaign is spent.',
 };
 
 export const isLocked = (project: Project, lock: Lock): boolean =>
@@ -173,7 +174,7 @@ export function whyNotShape(sim: Simulation, spec: Shape): string | undefined {
     return 'The shape is settled. Everybody engaged was priced against this much work.';
   }
   const format = formatById(spec.formatId);
-  if (!format) return `There is no format called '${spec.formatId}'.`;
+  if (!format) return `There’s no format called '${spec.formatId}'.`;
   const wrong = whyNotThisShape(format, spec.parts, spec.secondsEach);
   if (wrong) return wrong;
 
@@ -184,7 +185,7 @@ export function whyNotShape(sim: Simulation, spec: Shape): string | undefined {
         + 'Conceive it first.';
     }
     if (!format.cadences.some((c) => engine.cadences.includes(c))) {
-      return `${engine.label} cannot sustain ${format.label}. It carries `
+      return `${engine.label} can’t sustain ${format.label}. It carries `
         + `${engine.cadences.join(' or ')}, and this format asks for ${format.cadences.join(' or ')}.`;
     }
     if (engine.carries !== undefined && spec.parts > engine.carries) {
@@ -215,6 +216,47 @@ export function setShape(sim: Simulation, spec: Shape): { ok: boolean; error?: s
 }
 
 // ---------------------------------------------------------------------------
+// Writing it
+// ---------------------------------------------------------------------------
+
+export interface Writing {
+  projectId: Id;
+  genreId: string;
+  /** The six dials, by id from `content/story.ts`. */
+  dials: Readonly<Record<string, number>>;
+}
+
+/**
+ * Why this script cannot be set.
+ *
+ * Behind the shape lock with everything else, and for the same reason: a writer who
+ * took a share of the back end read this page before they signed. Rewriting it
+ * afterwards would make every deal a promise the producer could withdraw.
+ */
+export function whyNotWriteIt(sim: Simulation, spec: Writing): string | undefined {
+  const project = projectById(sim, spec.projectId);
+  if (!project) return 'No such project.';
+  if (isLocked(project, 'shape')) {
+    return 'The script is settled. Everybody engaged read this page before they signed.';
+  }
+  if (!genreById(spec.genreId)) return `There’s no genre called '${spec.genreId}'.`;
+  return whyNotWrite(spec.dials as Partial<Record<Dial, number>>);
+}
+
+export function writeIt(sim: Simulation, spec: Writing): { ok: boolean; error?: string } {
+  const no = whyNotWriteIt(sim, spec);
+  if (no) return { ok: false, error: no };
+  const project = projectById(sim, spec.projectId)!;
+  project.genreId = spec.genreId;
+  project.dials = { ...spec.dials };
+  return { ok: true };
+}
+
+/** What the writer set, with an even spread where nobody set anything. */
+export const dialsOn = (project: Project): Readonly<Record<string, number>> =>
+  project.dials ?? UNWRITTEN;
+
+// ---------------------------------------------------------------------------
 // Engaging a person
 // ---------------------------------------------------------------------------
 
@@ -232,10 +274,10 @@ export function whyNotEngage(sim: Simulation, spec: Engaging): string | undefine
   if (isLocked(project, 'cast')) return 'Everybody is contracted. The money has gone out.';
   if (!project.formatId || !project.parts?.length) return 'Choose a format before engaging anybody.';
   const post = postById(spec.postId);
-  if (!post) return `There is no post called '${spec.postId}'.`;
+  if (!post) return `There’s no post called '${spec.postId}'.`;
   const talent = sim.universe.talent?.[spec.talentId];
   if (!talent) return 'Nobody of that name.';
-  if (talent.postId !== spec.postId) return `${talent.name} does not do that job.`;
+  if (talent.postId !== spec.postId) return `${talent.name} doesn’t do that job.`;
   if (spec.dealKind === 'points' && !post.aboveTheLine) {
     return `A ${post.title.toLowerCase()} is paid a fee. Only people an audience has `
       + 'heard of are offered a share of the back end.';
@@ -291,7 +333,7 @@ export function whyNotCommit(sim: Simulation, projectId: Id): string | undefined
   const owed = feesOn(project);
   if (cash.balance < owed) {
     return `The fees come to ${millions(owed)} and the company has ${millions(cash.balance)}. `
-      + 'Somebody would have to take points instead.';
+      + 'One of them would have to take points instead.';
   }
   return undefined;
 }
@@ -335,8 +377,8 @@ export function whyNotOpen(sim: Simulation, spec: Opening): string | undefined {
   if (!format) return 'Choose a format first.';
   const wrong = whyNotThisChannel(format, spec.channel);
   if (wrong) return wrong;
-  if (spec.at < sim.now) return 'A release cannot open in a week that has gone.';
-  if (spec.campaignCents < 0) return 'A campaign cannot cost less than nothing.';
+  if (spec.at < sim.now) return 'A release can’t open in a week that has gone.';
+  if (spec.campaignCents < 0) return 'A campaign can’t cost less than nothing.';
   const cash = cashAccountFor(sim.universe, project.companyId);
   if (!cash) return 'The company has no cash account.';
   if (cash.balance < spec.campaignCents) {
@@ -394,6 +436,8 @@ export function open(sim: Simulation, spec: Opening): Opened {
     spentCents: project.spentCents + spec.campaignCents,
     campaignCents: spec.campaignCents,
     reach: reachOf(project),
+    genre: genreById(project.genreId),
+    dials: dialsOn(project) as Partial<Record<Dial, number>>,
     engine: engineById(project.concept?.engineId),
     month: new Date(spec.at).getUTCMonth(),
     crowding: crowding(sim, spec.at, spec.channel, project.title),
@@ -438,7 +482,7 @@ export function shelve(sim: Simulation, projectId: Id, off: boolean): { ok: bool
   if (!project) return { ok: false, error: 'No such project.' };
   if (project.opening) return { ok: false, error: 'This one opened already.' };
   if (off) {
-    if (!project.shelvedAt) return { ok: false, error: 'There is nothing shelved to bring back.' };
+    if (!project.shelvedAt) return { ok: false, error: 'There’s nothing shelved to bring back.' };
     delete project.shelvedAt;
     project.stage = project.formatId ? 'packaged' : 'idea';
     return { ok: true };
@@ -452,7 +496,7 @@ export function shelve(sim: Simulation, projectId: Id, off: boolean): { ok: bool
 export function whyNotFollowUp(sim: Simulation, projectId: Id): string | undefined {
   const project = projectById(sim, projectId);
   if (!project) return 'No such project.';
-  if (!project.opening) return 'There is nothing to follow yet: it has not come out.';
+  if (!project.opening) return 'There’s nothing to follow yet: it hasn’t come out.';
   const format = formatById(project.formatId);
   if (!format) return 'Choose a format first.';
   if (format.carriesForward <= 0.1) {
@@ -517,6 +561,7 @@ type Done = { ok: boolean; error?: string };
 
 export function registerProduction(sim: Simulation): void {
   sim.onCommand<Shape, Done>('production.shape', (p) => setShape(sim, p));
+  sim.onCommand<Writing, Done>('production.write', (p) => writeIt(sim, p));
   sim.onCommand<Engaging, Done>('production.engage', (p) => engage(sim, p));
   sim.onCommand<{ projectId: Id }, Done>('production.commit', (p) => commit(sim, p.projectId));
   sim.onCommand<Opening, Opened>('production.open', (p) => open(sim, p));

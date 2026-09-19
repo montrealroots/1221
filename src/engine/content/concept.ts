@@ -138,13 +138,13 @@ export const ENGINES: readonly StoryEngine[] = [
     renewal: 'arrives',
     cadences: ['returning', 'closed'],
     leastPeople: 3,
-    rules: 'It is solved by the end and the people go back to how they were. '
+    rules: 'It’s solved by the end and the people go back to how they were. '
       + 'What changes across a season is them, slowly, and never the job.',
   },
   {
     id: 'ensemble',
-    label: 'People Who Cannot Get Away From Each Other',
-    what: 'A group who would not choose each other are stuck in one place, and the '
+    label: 'People Who Can’t Get Away From Each Other',
+    what: 'A group who wouldn’t choose each other are stuck in one place, and the '
       + 'friction between them is the show.',
     asks: 'What set them off this week?',
     renewal: 'unresolved',
@@ -162,8 +162,8 @@ export const ENGINES: readonly StoryEngine[] = [
     renewal: 'unresolved',
     cadences: ['returning', 'closed'],
     leastPeople: 3,
-    rules: 'It never rules on the question. A week that answers it is a week '
-      + 'that has spent something it cannot get back.',
+    rules: 'It never rules on the question. A week that answers it’s a week '
+      + 'that has spent something it can’t get back.',
   },
   {
     id: 'realities',
@@ -231,7 +231,7 @@ export const CADENCE_LABEL: Readonly<Record<Cadence, string>> = {
 export const RENEWAL_SAID: Readonly<Record<Renewal, string>> = {
   arrives: 'The next one walks in the door, so it never runs out.',
   unresolved: 'None of this can be settled, so it never runs out.',
-  revealed: 'It is spending something as it goes, and there is a bottom to it.',
+  revealed: 'It’s spending something as it goes, and there’s a bottom to it.',
 };
 
 /**

@@ -148,7 +148,7 @@ export function whyNotMakeAs(project: Project, plan: MadeAs): string | undefined
   }
 
   const engine = engineById(concept.engineId);
-  if (!engine) return 'The engine this was conceived on is not one this build has.';
+  if (!engine) return 'The engine this was conceived on isn’t one this build has.';
 
   // 2. An engine that cannot sustain the shape of the commitment.
   if (!engine.cadences.includes(plan.cadence)) {

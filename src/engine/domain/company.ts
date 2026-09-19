@@ -658,6 +658,23 @@ export interface Project {
   // before anybody knew the budget, and never writable again. It is derived
   // from the format now, and the format is chosen with everything known.
 
+  /**
+   * What it is, by genre id from `content/story.ts`.
+   *
+   * A genre multiplies nothing. What it does is decide which of the six dials the
+   * audience it brings actually came for, so the same script is a good horror
+   * picture and a poor drama without any number being scaled to say so.
+   */
+  genreId?: string;
+  /**
+   * The six dials the writer set, by dial id.
+   *
+   * The one place a player authors rather than hires. They spend from a single pool,
+   * so a picture cannot be dense, fast, full of turns and carrying four sub-plots at
+   * once — and they pull against each other: pace and turns fill an opening, depth
+   * and dialogue make people recommend it afterwards.
+   */
+  dials?: Record<string, number>;
   /** Which format, by id from `content/format.ts`. */
   formatId?: string;
   /**

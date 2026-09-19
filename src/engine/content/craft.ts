@@ -107,13 +107,13 @@ export const POSTS: readonly Post[] = [
     axis: 'craft',
     weight: 26,
     aboveTheLine: true,
-    what: 'Whether there is anything underneath. The one post whose failure cannot '
+    what: 'Whether there’s anything underneath. The one post whose failure can’t '
       + 'be fixed later by spending more.',
   },
   {
     id: 'photography',
     department: 'Photography',
-    title: 'Director of Photography',
+    title: 'Director Of Photography',
     axis: 'craft',
     weight: 18,
     aboveTheLine: false,
@@ -127,7 +127,7 @@ export const POSTS: readonly Post[] = [
     weight: 16,
     aboveTheLine: false,
     what: 'What it turns out to have been. Recovers more bad days than anybody '
-      + 'admits, and cannot recover all of them.',
+      + 'admits, and can’t recover all of them.',
   },
   {
     id: 'lead',
@@ -137,7 +137,7 @@ export const POSTS: readonly Post[] = [
     weight: 62,
     aboveTheLine: true,
     what: 'Whose face is on it. Most of the reason anybody turns up to something '
-      + 'they have not heard of.',
+      + 'they haven’t heard of.',
   },
   {
     id: 'music',

@@ -193,6 +193,7 @@ export const WHEN: Readonly<Record<string, (w: LessonWorld) => boolean>> = {
   // and commits in one sitting would otherwise close every window before the weekly
   // tick runs and be told none of it. `after` on each lesson keeps them in order;
   // the condition only says the subject has become relevant at all.
+  write: (w) => w.projects.developing > 0,
   shape: (w) => w.projects.developing > 0,
   engage: (w) => w.projects.developing > 0,
   commit: (w) => w.projects.developing > 0,

@@ -27,8 +27,11 @@ import { POSTS } from '@/engine/content/craft';
 import { MONTH_SAID } from '@/engine/content/release';
 import { MOST_POINTS } from '@/engine/content/talent';
 import {
+  ATTENTION, DIALS, DIAL_BY_ID, GENRES, MOST, genreById, leftToSpend, servesIts,
+} from '@/engine/content/story';
+import {
   LOCKS, LOCK_SAID, feesOn, isLocked, offersFor, pointsGiven, shortlistFor,
-  whyNotCommit, whyNotFollowUp, whyNotOpen, whyNotShape, type Lock,
+  whyNotCommit, whyNotFollowUp, whyNotOpen, whyNotShape, whyNotWriteIt, dialsOn, type Lock,
 } from '@/engine/world/production';
 import { theWeeksAhead } from '@/engine/world/field';
 import { receivedBy, costOf } from '@/engine/world/takings';
@@ -57,7 +60,7 @@ export function ProductionWorkspace() {
     <div className="stack">
       <Panel title="The Slate" tight>
         <div className="field">
-          <label htmlFor="which">Which picture</label>
+          <label htmlFor="which">Which Picture</label>
           <select id="which" value={project.id} onChange={(e) => setChosenId(e.target.value)}>
             {slate.map((one) => (
               <option key={one.id} value={one.id}>
@@ -72,6 +75,7 @@ export function ProductionWorkspace() {
       </Panel>
 
       <Settled project={project} />
+      <WritePanel project={project} />
       <ShapePanel project={project} />
       <EngagePanel project={project} />
       <CommitPanel project={project} />
@@ -296,7 +300,7 @@ function OpenPanel({ project }: { project: Project }) {
   return (
     <Panel title="Letting It Out" tight>
       <div className="field">
-        <label htmlFor="channel">Where it opens</label>
+        <label htmlFor="channel">Where It Opens</label>
         <select id="channel" value={channel} onChange={(e) => setChannel(e.target.value as Channel)}>
           {(format?.channels ?? (['theatrical'] as Channel[])).map((c) => (
             <option key={c} value={c}>{CHANNEL_LABEL[c]}</option>
@@ -304,7 +308,7 @@ function OpenPanel({ project }: { project: Project }) {
         </select>
       </div>
       <div className="field">
-        <label htmlFor="week">Which week</label>
+        <label htmlFor="week">Which Week</label>
         <select id="week" value={weeksOut} onChange={(e) => setWeeksOut(Number(e.target.value))}>
           {ahead.map((w, i) => (
             <option key={w.at} value={i}>
@@ -370,7 +374,7 @@ function OutPanel({ project }: { project: Project }) {
         as each one lands.
       </p>
       <div className="field">
-        <label htmlFor="again">Follow it with</label>
+        <label htmlFor="again">Follow It With</label>
         <input id="again" value={title} placeholder={`${project.title} II`}
           onChange={(e) => setTitle(e.target.value)} />
       </div>
@@ -378,6 +382,66 @@ function OutPanel({ project }: { project: Project }) {
       {said ? <p className="small">{said}</p> : null}
       <button className="btn btn-primary" onClick={again} disabled={refusal !== undefined}>
         Make Another
+      </button>
+    </Panel>
+  );
+}
+
+/**
+ * The authoring panel: a genre, and six dials paid for out of one pool.
+ *
+ * The pool is shown as what is left rather than as what is spent, because the
+ * question in front of the player is always "can I afford another point of this",
+ * and a screen that made them do the subtraction would be a form.
+ */
+function WritePanel({ project }: { project: Project }) {
+  const { run } = useGame();
+  const [genreId, setGenreId] = useState(project.genreId ?? 'drama');
+  const [dials, setDials] = useState<Record<string, number>>({ ...dialsOn(project) });
+  const [said, setSaid] = useState<string | undefined>(undefined);
+  const genre = genreById(genreId);
+  const refusal = useWorld(
+    (s) => whyNotWriteIt(s, { projectId: project.id, genreId, dials }),
+    [project.id, genreId, JSON.stringify(dials)],
+  );
+
+  const write = () => {
+    const done = run<{ ok: boolean; error?: string }>(
+      'production.write', { projectId: project.id, genreId, dials }, { silent: true },
+    );
+    setSaid(done.value?.error ?? (done.value?.ok ? 'Written.' : done.error));
+  };
+
+  return (
+    <Panel title="What It Is" tight>
+      <div className="field">
+        <label htmlFor="genre">Genre</label>
+        <select id="genre" value={genreId} onChange={(e) => setGenreId(e.target.value)}>
+          {GENRES.map((g) => <option key={g.id} value={g.id}>{g.label}</option>)}
+        </select>
+      </div>
+      {genre ? <p className="xs dim">{genre.what}</p> : null}
+      {DIALS.map((d) => (
+        <div className="field" key={d}>
+          <label htmlFor={`d-${d}`}>
+            {DIAL_BY_ID[d]!.label} — {dials[d] ?? 0} of {MOST}
+            {genre && genre.wants[d] >= 2 ? ' · this audience came for it' : ''}
+          </label>
+          <input
+            id={`d-${d}`} type="range" min={0} max={MOST} value={dials[d] ?? 0}
+            onChange={(e) => setDials({ ...dials, [d]: Number(e.target.value) })}
+          />
+          <p className="xs dim" style={{ margin: 0 }}>{DIAL_BY_ID[d]!.what}</p>
+        </div>
+      ))}
+      <p className="small">
+        {leftToSpend(dials)} of {ATTENTION} points left.
+        {genre ? ` The page serves its audience at ${servesIts(genre, dials).toFixed(2)}.` : ''}
+      </p>
+      {refusal ? <p className="small warn">{refusal}</p> : null}
+      {said ? <p className="small">{said}</p> : null}
+      <button className="btn btn-primary" onClick={write} disabled={refusal !== undefined}>
+        Write It
       </button>
     </Panel>
   );

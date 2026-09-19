@@ -39,6 +39,10 @@ import { THE_CHAIN, reckon, theReceipt, type Spec } from '@/engine/world/boxoffi
 import { openingWeek, windowsInWeek, type Opening } from '@/engine/world/run';
 import { crowding, theWeeksAhead, weekIndex } from '@/engine/world/field';
 import { ENGINE_BY_ID } from '@/engine/content/concept';
+import {
+  ATTENTION, DIALS, GENRES, GENRE_BY_ID, MOST, UNWRITTEN, leftToSpend, servesIts,
+  spent, whatItReads, whyNotWrite,
+} from '@/engine/content/story';
 
 // ---------------------------------------------------------------------------
 
@@ -418,5 +422,68 @@ describe('the pipeline', () => {
       const done = sim.execute({ kind, payload: payload as Record<string, unknown> });
       expect(done.ok, `${kind} did not refuse a project that does not exist`).toBe(false);
     }
+  });
+});
+
+describe('the script', () => {
+  const evens = { depth: 3, dialogue: 3, pace: 3, turns: 3, threads: 3, spectacle: 3 };
+  const loud = { depth: 0, dialogue: 0, pace: 5, turns: 5, threads: 0, spectacle: 5 };
+  const quiet = { depth: 5, dialogue: 5, pace: 1, turns: 1, threads: 5, spectacle: 0 };
+
+  it('makes the player spend from one pool, so nothing can be everything', () => {
+    expect(spent(evens)).toBe(ATTENTION);
+    expect(whyNotWrite(evens)).toBeUndefined();
+    const everything = Object.fromEntries(DIALS.map((d) => [d, MOST]));
+    const no = whyNotWrite(everything);
+    expect(no).toBeDefined();
+    expect(no).toContain(`${ATTENTION}`);
+    expect(leftToSpend(evens)).toBe(0);
+  });
+
+  it('refuses a dial outside its range and names the range', () => {
+    expect(whyNotWrite({ pace: 9 })).toContain(`${MOST}`);
+    expect(whyNotWrite({ pace: -1 })).toBeDefined();
+  });
+
+  it('wants different things in different genres, which is all a genre does', () => {
+    // A genre multiplies nothing. It decides which dials the audience it brings came
+    // for, so the same script is a good horror picture and a poor drama.
+    const thriller = GENRE_BY_ID.thriller!;
+    const romance = GENRE_BY_ID.romance!;
+    expect(servesIts(thriller, loud)).toBeGreaterThan(servesIts(romance, loud));
+    expect(servesIts(romance, quiet)).toBeGreaterThan(servesIts(thriller, quiet));
+  });
+
+  it('gives every genre a different shape of want', () => {
+    const prints = GENRES.map((g) => DIALS.map((d) => g.wants[d]).join(','));
+    expect(new Set(prints).size, 'two genres want the same things').toBe(GENRES.length);
+    // And none of them is simply better than another: the totals are close, so a
+    // genre is a different audience and not a harder difficulty.
+    const totals = GENRES.map((g) => DIALS.reduce((s, d) => s + g.wants[d], 0));
+    expect(Math.max(...totals) - Math.min(...totals)).toBeLessThan(1.5);
+  });
+
+  it('splits the dials so a picture built to open is not built to last', () => {
+    const thriller = GENRE_BY_ID.thriller!;
+    const fast = whatItReads(thriller, loud);
+    const deep = whatItReads(thriller, quiet);
+    expect(fast.draw).toBeGreaterThan(deep.draw);
+    expect(deep.craft).toBeGreaterThan(fast.craft);
+  });
+
+  it('reaches the reckoning, and moves both the height and the word of mouth', () => {
+    const base = { ...BASE, genre: GENRE_BY_ID.action!, dials: evens };
+    const opened = reckon({ ...base, dials: loud });
+    const lasted = reckon({ ...base, dials: quiet });
+    expect(opened.cents).toBeGreaterThan(lasted.cents);
+    expect(lasted.wordOfMouth).toBeGreaterThan(opened.wordOfMouth);
+    // And the receipt grew a link rather than a number changing quietly.
+    expect(reckon(base).said.map((n) => n.by)).toContain('the script');
+  });
+
+  it('leaves a picture nobody wrote exactly where it was', () => {
+    const before = reckon(BASE).cents;
+    expect(reckon({ ...BASE, genre: GENRE_BY_ID.drama! }).cents).toBe(before);
+    expect(UNWRITTEN.pace).toBe(3);
   });
 });

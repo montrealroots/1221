@@ -160,7 +160,10 @@ describe('the four refusals', () => {
   it('refuses an engine the build does not have', () => {
     const odd = withConcept('case');
     odd.concept!.engineId = 'gone';
-    expect(whyNotMakeAs(odd, A_SERIES)).toContain('not one this build has');
+    // On a fragment that survives the house voice. This asserted across 'is not',
+    // which `tools/voice-check.mjs --fix` contracts, so the refusal stayed correct
+    // and the test broke on the apostrophe.
+    expect(whyNotMakeAs(odd, A_SERIES)).toContain('one this build has');
   });
 });
 

@@ -175,7 +175,7 @@ export function armTheRun(sim: Simulation, projectId: Id, title: string): void {
   sim.schedule({
     at: sim.now + MS_WEEK,
     kind: RUN_KIND,
-    label: `${title}, week by week`,
+    label: `${title}, Week By Week`,
     category: 'business',
     priority: 40,
     refType: 'project',

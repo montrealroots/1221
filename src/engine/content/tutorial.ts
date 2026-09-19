@@ -380,11 +380,11 @@ export const LESSONS: readonly Lesson[] = [
     strand: 'the-pictures',
     title: 'Putting Something On The Slate, And Saying What It Is',
     body: 'A film is one story. A television series is a machine that makes one every week, and '
-      + 'the machine is the thing you are choosing. A case that walks in the door never runs out. '
-      + 'People who cannot get away from each other never run out. A person becoming somebody '
+      + 'the machine is the thing you’re choosing. A case that walks in the door never runs out. '
+      + 'People who can’t get away from each other never run out. A person becoming somebody '
       + 'else runs out the moment they have become them — so it can be a limited run and it can '
       + 'never be a show that keeps coming back. The greenlight checks this and refuses the ones '
-      + 'that cannot work.',
+      + 'that can’t work.',
     teaches: ['company.develop', 'company.conceive'],
     screen: 'business',
     after: ['option'],
@@ -412,23 +412,39 @@ export const LESSONS: readonly Lesson[] = [
       + 'arrives at the audience the last one built, which is what makes it hold them '
       + 'longest. The format decides how many parts you may make, how long each runs, and '
       + 'where it can be sold at all: anything very short opens on a service or it opens '
-      + 'nowhere, and you are told so instead of being quietly priced badly.',
+      + 'nowhere, and you’re told so instead of being quietly priced badly.',
     teaches: ['production.shape'],
     screen: 'production',
     after: ['conceive'],
     importance: 62,
   },
   {
+    id: 'write',
+    strand: 'the-pictures',
+    title: 'Setting The Dials Before Anybody Reads It',
+    body: 'Six dials and one pool between them, so a picture can’t be deep, fast, full '
+      + 'of turns and carrying four sub-plots at once. Pace, plot turns and spectacle fill '
+      + 'an opening. Depth, dialogue and sub-plots are what makes anybody recommend it '
+      + 'afterwards. Those are different jobs and the pool is what stops you pretending '
+      + 'otherwise. The genre doesn’t make a picture better or worse — it decides which '
+      + 'of the six its audience actually came for, so a talky action film and a frantic '
+      + 'romance are both at odds with the people who turned up.',
+    teaches: ['production.write'],
+    screen: 'production',
+    after: ['conceive'],
+    importance: 61,
+  },
+  {
     id: 'engage',
     strand: 'the-pictures',
     title: 'A Fee, Or A Share Of What Comes In',
-    body: 'Seven posts, and each one is a named person rather than a price. They will take '
+    body: 'Seven posts, and each one is a named person rather than a price. They’ll take '
       + 'a fee, or — if an audience has heard of them — much less now for a share of '
       + 'everything the picture brings in. That choice is the most interesting decision '
-      + 'here, because you and they are betting against each other about the same future '
+      + 'here, because you and they’re betting against each other about the same future '
       + 'before anybody knows anything. Direction, writing, photography and cutting decide '
       + 'how good it turns out; the lead and the music decide how many people come at all. '
-      + 'Those are not the same thing. And engaging the first person settles the shape — '
+      + 'Those aren’t the same thing. And engaging the first person settles the shape — '
       + 'a person on a share priced it against the picture you described.',
     teaches: ['production.engage'],
     screen: 'production',
@@ -456,7 +472,7 @@ export const LESSONS: readonly Lesson[] = [
     title: 'The Week You Open Is A Decision',
     body: 'Pick a channel the format can open on, a week, and a campaign. Spending under '
       + 'what the format expects is worse than spending nothing — a half-campaign buys '
-      + 'awareness without reach. The good months are the good months, and they are also '
+      + 'awareness without reach. The good months are the good months, and they’re also '
       + 'where the other studios are, so a clear week in a poor month can beat a crowded '
       + 'one in a good month. You can see what is already booked before you choose. Then '
       + 'it plays: twenty weeks of run whose shape depends on how people speak of it, then '
@@ -475,7 +491,7 @@ export const LESSONS: readonly Lesson[] = [
       + 'last one made, so it opens above where its own merits would put it — and how far '
       + 'above depends on what the last one returned and on whether the format is the kind '
       + 'of thing anybody remembers the name of. But the same audience tires, and faster '
-      + 'than most studios believe. The second is usually the best business you will do. '
+      + 'than most studios believe. The second is usually the best business you’ll do. '
       + 'Somewhere after that the inheritance stops being worth the obligation, and nothing '
       + 'will stop you finding out where.',
     teaches: ['production.follow_up'],

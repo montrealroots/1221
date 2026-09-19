@@ -37,6 +37,7 @@ import type { StoryEngine } from '../content/concept';
 import { axisStands } from '../content/craft';
 import { SEASON } from '../content/release';
 import { inherits, type Entry } from '../content/lineage';
+import { whatItReads, type Dial, type Genre } from '../content/story';
 
 // ---------------------------------------------------------------------------
 // What a reckoning is
@@ -82,6 +83,10 @@ export interface Spec {
   campaignCents: number;
   /** The reach of whoever filled each post, by post id. Absent means nobody chose. */
   reach: Readonly<Record<string, number>>;
+  /** What it is, which decides which dials its audience came for. */
+  genre?: Genre;
+  /** The six dials the writer set. */
+  dials?: Readonly<Partial<Record<Dial, number>>>;
   /** The story engine underneath it, where there is one. */
   engine?: StoryEngine;
   /** Month of release, 0 for January. */
@@ -179,6 +184,35 @@ export function fromTheDraw(r: Reckoning, spec: Spec): Reckoning {
   const stands = axisStands('draw', (id) => spec.reach[id]);
   return note(r, 'the draw', r.cents * (1 + (stands - 1) * DRAW_MOVES_HEIGHT),
     `The cast and the music stand at ${stands.toFixed(2)}.`);
+}
+
+/**
+ * What was on the page, and whether its own audience came for it.
+ *
+ * The authoring link, and the only one that moves both sides at once — because the
+ * dials themselves are split. Pace, turns and spectacle fill an opening; depth,
+ * dialogue and sub-plots are what makes anybody recommend it afterwards. A script
+ * built to do both is refused by the pool in `content/story.ts` rather than here.
+ *
+ * The genre never multiplies the figure. It decides how much of the script the
+ * audience it brought actually came for, and that scales how far either side moves.
+ * A talky action picture and a frantic romance both read low here, and no number
+ * anywhere was scaled to say so.
+ */
+export function fromTheScript(r: Reckoning, spec: Spec): Reckoning {
+  if (!spec.genre || !spec.dials) {
+    return note(r, 'the script', r.cents, 'Nobody set the dials, so it’s whatever it is.');
+  }
+  const read = whatItReads(spec.genre, spec.dials);
+  const after = note(r, 'the script', r.cents * read.draw,
+    `${spec.genre.label}, and the page serves that audience at ${read.serves.toFixed(2)}.`);
+  // Word of mouth is moved rather than replaced: the craft posts wrote it and the
+  // page argues with them. A fine director of a thin script and a plain director of
+  // a good one land in different places, which is the point of having both.
+  return {
+    ...after,
+    wordOfMouth: Math.max(-1, Math.min(1, after.wordOfMouth + (read.craft - 1) * 1.6)),
+  };
 }
 
 /**
@@ -284,6 +318,7 @@ export const THE_CHAIN: readonly { id: string; run: (r: Reckoning, s: Spec) => R
   { id: 'the spend', run: fromTheSpend },
   { id: 'the craft', run: fromTheCraft },
   { id: 'the draw', run: fromTheDraw },
+  { id: 'the script', run: fromTheScript },
   { id: 'the engine', run: fromTheEngine },
   { id: 'the line', run: fromTheLine },
   { id: 'the season', run: fromTheSeason },

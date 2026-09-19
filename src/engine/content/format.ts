@@ -253,13 +253,13 @@ export function whyNotThisShape(
 ): string | undefined {
   if (!Number.isInteger(parts) || parts < format.parts.least || parts > format.parts.most) {
     return `${format.label} runs to between ${format.parts.least} and ${format.parts.most} parts, `
-      + `and ${parts} is not in that range.`;
+      + `and ${parts} isn’t in that range.`;
   }
   const leastMin = Math.round(format.secondsEach.least / 60);
   const mostMin = Math.round(format.secondsEach.most / 60);
   if (secondsEach < format.secondsEach.least || secondsEach > format.secondsEach.most) {
     return `A part of ${format.label} runs between ${leastMin} and ${mostMin} minutes, `
-      + `and ${Math.round(secondsEach / 60)} is not in that range.`;
+      + `and ${Math.round(secondsEach / 60)} isn’t in that range.`;
   }
   return undefined;
 }
@@ -272,6 +272,6 @@ export function whyNotThisShape(
  */
 export function whyNotThisChannel(format: Format, channel: Channel): string | undefined {
   if (format.channels.includes(channel)) return undefined;
-  return `${format.label} does not open ${channel === 'theatrical' ? 'in cinemas' : `on ${channel}`}. `
+  return `${format.label} doesn’t open ${channel === 'theatrical' ? 'in cinemas' : `on ${channel}`}. `
     + `What is open to it: ${format.channels.map((c) => CHANNEL_LABEL[c]).join(', ')}.`;
 }
