@@ -4,6 +4,7 @@ import type { Id } from '../domain/model';
 import type { Project, ProjectPackage } from '../domain/company';
 import { castsPerformers, layTheRoles } from '../world/casting';
 import { wouldBe, type Greenlight } from '../world/making';
+import { packageMatchesPlan } from './package-spec';
 
 export interface PackageResult {
   ok: boolean;
@@ -17,21 +18,7 @@ function castingHasStarted(project: Project): boolean {
   return (project.roles ?? []).some((role) => (role.seen?.length ?? 0) > 0);
 }
 
-export function packageMatchesGreenlight(project: Project, spec: Greenlight): boolean {
-  const pack = project.package;
-  if (!pack) return true;
-  const secondsEach = Math.max(60, Math.round(spec.secondsEach ?? pack.secondsEach));
-  const hands = Math.max(1, Math.round(spec.hands ?? pack.hands));
-  const from = spec.from ?? pack.from;
-  const stageId = spec.stageId ?? pack.stageId;
-  return spec.planId === pack.planId
-    && Math.round(spec.budgetCents) === pack.budgetCents
-    && Math.round(spec.shootWeeks) === pack.shootWeeks
-    && secondsEach === pack.secondsEach
-    && hands === pack.hands
-    && from === pack.from
-    && stageId === pack.stageId;
-}
+export const packageMatchesGreenlight = packageMatchesPlan;
 
 export function packageProject(sim: Simulation, spec: Greenlight): PackageResult {
   const project = sim.universe.projects[spec.projectId];
