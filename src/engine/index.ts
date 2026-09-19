@@ -33,11 +33,6 @@ import { registerHouse } from './world/house';
 import { registerBanking } from './world/banking';
 import { registerTutorial } from './world/tutorial';
 import { registerConcept } from './world/concept';
-import { registerProduction } from './world/production';
-import { registerTheRun } from './world/run';
-import { registerLibrary } from './world/library';
-import { armTheCeremony, registerAwards } from './world/awards';
-import { armTheBooks, registerRuin } from './world/ruin';
 import {
   companiesOf, foundTheCompany, foundTheSugarGroup, holdingsOf, postsOf, projectsOf, registerCompanyCommands,
   registerTheClock,
@@ -69,14 +64,6 @@ export function registerAllSystems(sim: Simulation): void {
   registerHouse(sim);
   registerBanking(sim);
   registerConcept(sim);
-  registerTheRun(sim);
-  registerAwards(sim);
-  // Idempotent: it checks for one already pending, so a load does not stack them.
-  armTheCeremony(sim);
-  registerRuin(sim);
-  armTheBooks(sim);
-  registerProduction(sim);
-  registerLibrary(sim);
   registerTutorial(sim);
 }
 

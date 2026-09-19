@@ -26,8 +26,6 @@ import { formatMoney } from '@/engine/core/money';
 import { formatDate } from '@/engine/core/time';
 import { CADENCE_LABEL, ENGINES, RENEWAL_SAID, engineById } from '@/engine/content/concept';
 import { CITIES } from '@/engine/content/geography';
-import { CHANNEL_LABEL } from '@/engine/content/format';
-import { onTheMarket, whyNotBuy } from '@/engine/world/library';
 import {
   behindTheCompany, breakEvenShare, goingUp, pullOn, sellsFor, theSmallStage,
   turnedAway, whereTheBuildStands, whyNotBuild,
@@ -102,7 +100,6 @@ export function BusinessWorkspace() {
 
       <Holdings />
       <Slate />
-      <TheMarket company={company} />
       <TheLotsName />
       <TheFifthRoom />
       <Standings />
@@ -719,79 +716,5 @@ function Standings() {
         </div>
       </Panel>
     </div>
-  );
-}
-
-
-/**
- * Library positions the other studios are clearing this month.
- *
- * Both figures are printed — what it asks and what its windows will pay — because the
- * remainder here is not an estimate and dressing a known number up as a judgement call
- * would be a lie the screen tells. About half of these ask more than they are worth.
- * The panel says which, and leaves the buying to the player.
- */
-function TheMarket({ company }: { company: { id: string } }) {
-  const { run } = useGame();
-  const [said, setSaid] = useState<string | undefined>(undefined);
-  const listings = useWorld((s) => onTheMarket(s));
-  const refusals = useWorld(
-    (s) => Object.fromEntries(onTheMarket(s).map((one) => [one.id, whyNotBuy(s, company.id, one.id)])),
-    [company.id],
-  );
-
-  const buy = (listingId: string) => {
-    const done = run<{ ok: boolean; error?: string }>(
-      'library.buy', { companyId: company.id, listingId }, { silent: true },
-    );
-    setSaid(done.value?.error ?? (done.value?.ok
-      ? 'Bought. It pays its remaining windows week by week, the same as one of ours.'
-      : done.error));
-  };
-
-  return (
-    <Panel title="Libraries For Sale" tight>
-      {listings.length === 0 ? (
-        <p className="small muted">Nobody is clearing anything this month.</p>
-      ) : (
-        <>
-          <p className="muted small" style={{ marginBottom: 'var(--s3)' }}>
-            What each one asks, beside what its remaining windows will actually pay. The
-            difference is all of it — and a position bought is money back over months
-            rather than money in a picture that might do anything.
-          </p>
-          <div className="col gap-2">
-            {listings.map((one) => {
-              const worth = one.askingCents <= one.leftCents;
-              const why = refusals[one.id];
-              return (
-                <div className="holding" key={one.id}>
-                  <div className="row-between">
-                    <div className="grow">
-                      <div className="row gap-2">
-                        <span className={`chip ${worth ? 'chip-accent' : ''}`}>
-                          {worth ? 'Under' : 'Over'}
-                        </span>
-                        <span className="strong">{one.title}</span>
-                      </div>
-                      <div className="small muted" style={{ marginTop: 2 }}>
-                        {one.seller} · {CHANNEL_LABEL[one.channel]} · week {one.weeksRun} of
-                        its run · asking {formatMoney(one.askingCents, { cents: false })} for
-                        windows worth {formatMoney(one.leftCents, { cents: false })}
-                      </div>
-                    </div>
-                    <button className="btn btn-sm" disabled={why !== undefined}
-                      onClick={() => buy(one.id)}>
-                      {why ?? 'Buy'}
-                    </button>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </>
-      )}
-      {said ? <p className="small" style={{ marginTop: 'var(--s3)' }}>{said}</p> : null}
-    </Panel>
   );
 }

@@ -120,85 +120,12 @@ is laid, and by the form on the same function, so the screen and the refusal can
 disagree. The world writes too: `unitBaseId` is the city the unit works out of, and it
 was the lot's own town for the life of the build because nothing else ever wrote it.
 
-The production floor is eight commands and the doors that shut between them.
-`production.shape` chooses the format, the part count and the runtime, and it is
-the decision `medium` used to stand in front of — taken first, in a modal, with
-the least information anybody would ever have. `production.join` puts a picture
-in a shared world, which is a second channel of inheritance that crosses titles:
-an audience comes back for the next chapter of one story more reliably than for
-a different story wearing the same badge, so a world carries about half what a
-line does and runs out of welcome after fewer entries. It is refused on a format
-that carries almost nothing forward, because a shared world built out of things
-nobody remembers the name of is a badge on an empty box. `production.write` sets the genre
-and the six dials, which is the one place a player authors rather than hires:
-they spend from a single pool, so a picture cannot be deep, fast, full of turns
-and carrying four sub-plots at once, and they split the same way the posts do —
-pace, turns and spectacle fill an opening while depth, dialogue and sub-plots
-decide whether anybody recommends it. The genre multiplies nothing. It says which
-of the six that audience came for, so a talky action film is at odds with the
-people who turned up and no figure was scaled to say so.
-`production.cast` fills the billed parts, and how many there are is read off
-the shape rather than chosen: a feature has three or four worth naming and a long
-series has a company. Billing falls steeply — first billed is worth eight times
-sixth — so the cast is a weighted mean and it is most of the draw. Actors come
-from one pool with the crafts, so the person who was fourth billed last year can
-be first billed now at the price their standing has since become.
-`production.engage` puts a named
-person in a post on agreed terms, and engaging the first one settles the shape,
-because anybody on a share of the back end priced it against the picture they
-were described. Three shapes of terms: the fee, a share of everything that
-arrives, or most of the fee given up against a bonus if the picture returns two
-and a half times its cost. What the company pays and what the person receives
-are different figures, and the gap is their agent — so somebody starting out,
-who has nobody, is cheaper than their standing suggests.
-`production.sell` sells what is not the picture. Merchandise and a soundtrack
-are the only revenue a producer can commit to before knowing whether the thing
-works, so a partner will pay a guarantee now or take a share of what arrives —
-the same argument the cast just had, from the other side of the table. Neither
-is offered on a genre nobody wants it from.
-`production.commit` pays the fees and the budget out of company cash before a
-frame exists, which is what makes the standing chosen a bet and not a preference,
-and contracts everybody. `production.open` charges the campaign, reckons the run
-once and arms the weekly tick that pays it. `production.shelve` takes a picture
-off the slate and puts it back, and it exists because `shelvedAt` was read by six
-things and written by nothing in the whole of `src/`. `production.follow_up`
-starts the next one in a line.
-
-`library.sell` sells what is left of a run while it is still running. What is
-left is not an estimate — it is the same windows the weekly tick pays, walked and
-totalled — and what is offered against it depends on which of the five studios is
-asking and on what people said about the picture. A studio that wants cinema pays
-over the remainder for something an audience loved, and nobody pays much for a
-picture nobody liked, so the tail of a hit is worth more to somebody else than it
-is to you and the tail of a failure is worth more to you than the market will
-give. The back end comes out of the sale the same way it comes out of a receipt,
-which is what stops selling being a way to escape points given away in a short
-week. What it does cost is the year: a sold picture is out of the ceremony, and
-the trophy would have lifted both the windows and everybody who worked on it.
-`library.buy` is the same market from the other side. A few positions come up
-each month, each showing what it asks beside what its windows will pay, and about
-half of them ask more than they are worth. A bought position arrives as a real
-picture with a real weekly tick, it never founds a line, and the ceremony refuses
-it, because a studio's standing should come from what it made.
-
-A first pass of this shipped and was torn out rather than extended, and what it
-got wrong is worth keeping. It reckoned a release and posted the whole life of it
-in one transaction on the opening day, so the opening week each window carried was
-a declared word nothing read. It took the crowding of a release week as an
-argument, so the date was never a decision. And it filled posts with price tiers,
-which cannot be hired away, cannot get dearer after a hit, and cannot take a share
-instead of a fee.
-
-What the release reads is the part worth stating. The take is a chain of nine
-named links, each of which writes down what it did, so a figure can be taken apart
-afterwards instead of believed. Height and shape are separate: the craft posts
-barely move the total and decide the word of mouth that bends a twenty-week curve,
-while the lead and the composer do the reverse. A well-made picture nobody has
-heard of and a loud empty one are both ordinary, and both fall out of the model.
-Money lands as postings against an account per window — rental, sold abroad, home,
-a service, a broadcaster, sold on, renewed — on the week each one opens, with the
-back end going out to whoever took points as every receipt lands. What a picture
-earned is a sum and never a stored total.
+The production floor was deleted whole, for the second time, and nothing on it is
+described here any more. What stood on this page until then — the eight commands, the
+cast, the accumulator, the release windows, the ceremony, the charts, the library
+market — came out in one commit rather than being pared back, because the owner asked
+for a clean start and a system half removed is worse than either state. The tag
+`production-system-before-deletion-2` holds it if any of it is wanted back.
 
 `learning.set` and `learning.again` are the player's two controls over the teaching,
 and they are the whole of it. The lessons themselves arrive on a weekly tick as
@@ -631,7 +558,7 @@ marking read (`world.take_decision_action`, `world.dismiss_decision`,
 
 
 <!-- inventory:begin -->
-Generated by `node tools/inventory.mjs --markdown`. 35 commands, 17 scheduled kinds, 3 events emitted, 0 event listeners, 0 scenes, 3 routes.
+Generated by `node tools/inventory.mjs --markdown`. 23 commands, 14 scheduled kinds, 3 events emitted, 0 event listeners, 0 scenes, 2 routes.
 
 ### Commands
 
@@ -640,23 +567,19 @@ Generated by `node tools/inventory.mjs --markdown`. 35 commands, 17 scheduled ki
 | calendar | `calendar.cancel` `calendar.schedule` `calendar.skip` | `src/engine/world/plans.ts` |
 | company | `company.conceive` `company.develop` `company.fill_post` `company.form_arm` `company.insure` `company.option` `company.register` `company.sign` | `src/engine/world/company.ts`, `src/engine/world/concept.ts` |
 | learning | `learning.again` `learning.set` | `src/engine/world/tutorial.ts` |
-| library | `library.buy` `library.sell` | `src/engine/world/library.ts` |
 | life | `life.sleep` `life.train` `life.transfer` `life.upkeep` | `src/engine/systems/life.ts`, `src/engine/world/banking.ts`, `src/engine/world/house.ts` |
 | lot | `lot.build` `lot.sell` | `src/engine/world/lot.ts` |
-| production | `production.cast` `production.commit` `production.engage` `production.follow_up` `production.join` `production.open` `production.sell` `production.shape` `production.shelve` `production.write` | `src/engine/world/production.ts` |
 | world | `world.dismiss_decision` `world.mark_read` `world.set_preferences` `world.take_decision_action` | `src/engine/world/world.ts` |
 
 ### Scheduled kinds
 
 | System | Kinds | Owner |
 | --- | --- | --- |
-| awards | `awards.year` | `src/engine/world/awards.ts` |
 | bank | `bank.month` `bank.return` | `src/engine/world/banking.ts` |
-| company | `company.arrears` `company.renewals` `company.vat_return` | `src/engine/world/company.ts`, `src/engine/world/ruin.ts`, `src/engine/world/vat.ts` |
+| company | `company.renewals` `company.vat_return` | `src/engine/world/company.ts`, `src/engine/world/vat.ts` |
 | learning | `learning.week` | `src/engine/world/tutorial.ts` |
 | life | `life.commitment` `life.day_rollover` | `src/engine/systems/life.ts`, `src/engine/world/plans.ts` |
 | lot | `lot.overhead` `lot.stage_built` | `src/engine/world/lot.ts` |
-| release | `release.week` | `src/engine/world/run.ts` |
 | sugar | `sugar.day` `sugar.payday` `sugar.quota` `sugar.tax` | `src/engine/world/sugar.ts` |
 | world | `world.tick` | `src/engine/world/world.ts` |
 
@@ -679,5 +602,5 @@ Generated by `node tools/inventory.mjs --markdown`. 35 commands, 17 scheduled ki
 
 ### Routes
 
-`/workspace/business` · `/workspace/calendar` · `/workspace/production`
+`/workspace/business` · `/workspace/calendar`
 <!-- inventory:end -->
