@@ -21,6 +21,7 @@ import { registerCasting } from '../world/casting';
 import { registerAudition } from '../world/audition';
 import { registerAwards } from '../world/awards';
 import { registerDevelopment } from './development';
+import { registerMarketing } from './marketing';
 import { registerPackaging } from './package';
 
 /**
@@ -32,6 +33,7 @@ import { registerPackaging } from './package';
  */
 export function registerProduction(sim: Simulation): void {
   registerDevelopment(sim);
+  registerMarketing(sim);
   registerPackaging(sim);
   registerMaking(sim);
   registerSelling(sim);
