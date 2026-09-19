@@ -389,11 +389,9 @@ export function talentForRole(
   query = '',
   limit = 40,
 ): Array<{ profile: TalentProfile; fit: RoleFit }> {
-  const when = datesFor(project, role);
   return searchTalent(sim, {
     query,
     profession: 'actor',
-    ...(when ? { availableFrom: when.from, availableTo: when.to } : {}),
     limit,
     sort: 'reputation',
   })
@@ -402,7 +400,8 @@ export function talentForRole(
       fit: talentFitForRole(sim, project.id, role.id, profile.person.id)!,
     }))
     .sort((a, b) =>
-      b.fit.fit - a.fit.fit
+      Number(b.fit.available) - Number(a.fit.available)
+      || b.fit.fit - a.fit.fit
       || b.profile.person.reputation.professionalReputation - a.profile.person.reputation.professionalReputation
       || a.profile.person.displayName.localeCompare(b.profile.person.displayName));
 }
