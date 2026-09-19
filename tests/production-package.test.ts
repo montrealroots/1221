@@ -72,7 +72,10 @@ describe('production packaging', () => {
 
     const role = project.roles![0]!;
     expect(role.bandCents).toBeGreaterThan(0);
-    expect(datesFor(project, role)).toBeDefined();
+    const dates = datesFor(project, role);
+    expect(dates).toBeDefined();
+    expect(dates!.from).toBe(project.package!.performerFrom! - 7 * 24 * 60 * 60 * 1000);
+    expect(dates!.to).toBe(project.package!.performerTo);
   });
 
   it('allows casting against the package and carries the signed seat through greenlight', () => {
