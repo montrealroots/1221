@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { decideTake, MARKETING_MOVES, STORY_MOVES } from '@/engine/world/selling';
+import { decideTake, MARKETING_MOVES, POST_MOVES, STORY_MOVES } from '@/engine/world/selling';
 
 describe('production development reaches the commercial outcome', () => {
   const base = {
@@ -31,9 +31,25 @@ describe('production development reaches the commercial outcome', () => {
     expect(MARKETING_MOVES.awareness).toBeGreaterThan(0);
   });
 
+  it('makes completed re-edits move the outcome without letting them dominate it', () => {
+    const hurt = decideTake({ ...base, postAdjustment: -8 }, 0.5).cents;
+    const untouched = decideTake({ ...base, postAdjustment: 0 }, 0.5).cents;
+    const helped = decideTake({ ...base, postAdjustment: 12 }, 0.5).cents;
+
+    expect(helped).toBeGreaterThan(untouched);
+    expect(untouched).toBeGreaterThan(hurt);
+    expect(POST_MOVES.revision).toBeGreaterThan(0);
+    expect(helped / untouched).toBeLessThan(1.2);
+  });
+
   it('keeps a legacy picture neutral when it has no replacement screenplay record', () => {
     const legacy = decideTake(base, 0.5).cents;
-    const neutral = decideTake({ ...base, screenplayQuality: 50, marketingAwareness: 50 }, 0.5).cents;
+    const neutral = decideTake({
+      ...base,
+      screenplayQuality: 50,
+      marketingAwareness: 50,
+      postAdjustment: 0,
+    }, 0.5).cents;
     expect(legacy).toBe(neutral);
   });
 
