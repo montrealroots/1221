@@ -595,6 +595,22 @@ export interface ProjectDevelopment {
   screenplay: ScreenplayState;
 }
 
+export interface ProjectPackage {
+  planId: string;
+  budgetCents: Money;
+  shootWeeks: number;
+  secondsEach: number;
+  hands: number;
+  from: Instant;
+  periods: { id: string; from: Instant; to: Instant }[];
+  deliverBy: Instant;
+  stageId?: Id;
+  /** Performer hold used before greenlight so casting can check availability. */
+  performerFrom?: Instant;
+  performerTo?: Instant;
+  packagedAt: Instant;
+}
+
 export interface Project {
   id: Id;
   saveId: Id;
@@ -619,6 +635,12 @@ export interface Project {
    * will not let it skip a locked screenplay.
    */
   development?: ProjectDevelopment;
+  /**
+   * A priced and scheduled version of the locked screenplay, before greenlight.
+   * This is a proposal, not a booking: dates and stage availability are checked
+   * again when the company commits.
+   */
+  package?: ProjectPackage;
 
   // --- The dated life, once it is greenlit ---------------------------------
   // Empty until then. A picture that has not been greenlit has no dates and
