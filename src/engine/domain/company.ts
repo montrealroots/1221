@@ -967,12 +967,26 @@ export interface Contributor {
   chosenAt: Instant;
 }
 
+export type BillingPosition = 'first' | 'featured' | 'shared' | 'standard';
+
+export interface ActingTerms {
+  /** Guaranteed future-picture options held by the producer. */
+  sequelOptions: number;
+  /** Percentage raise applied each time an option is exercised. */
+  optionRaisePct: number;
+  /** Contingent gross participation in basis points. 100 bps = 1%. */
+  backendPointsBps: number;
+  billing: BillingPosition;
+}
+
 export interface Seat {
   roleId: Id;
   personId: Id;
   /** What was agreed, in cents. */
   feeCents: Money;
   castAt: Instant;
+  /** Negotiated terms beyond the guaranteed acting fee. */
+  terms?: ActingTerms;
   /**
    * When they were let go, where they were. The fee stays owed.
    *
