@@ -7,6 +7,116 @@
 
 ---
 
+## ▶ CURRENT STATE — 2026-09-19 — THE PRODUCTION SYSTEM IS DELETED, ON PURPOSE, AWAITING A REBUILD
+
+Read this block before the historical ones below it. Everything under it is older and
+some of it is superseded.
+
+**Where the tree is.** Branch `claude/slate-cleanup-e4apmx`, local HEAD `4963670`,
+**12 ahead of origin and unpushed**. Working tree clean. Gate green at exit 0, read from
+a file: typecheck, lint, 786 tests across 38 files, the seventeen checks, the tic
+budgets, and the teaching floor at 24 against a floor of 18.
+
+**What happened, in three commits.** `74b847c` made the cast a list of billed parts
+rather than one post called Lead, and re-measured `RATE_PER_ROOT_MINUTE_CENTS` because
+the cast falsified the measurement written in its own docstring — six billed parts
+raised the draw more than the extra fees cost, and the old rate went from nine
+profitable years out of twelve back to all twelve. `10c41da` added the library market —
+selling the remainder of a run, and buying a rival's. Then `4963670` **deleted the
+entire production system**, on the owner's explicit instruction, ahead of a fresh start.
+
+**The deletion was total and the wiring went with it.** Twenty-five files and 8,115
+lines: twelve content tables, nine world files, both test files, the text instrument and
+the production screen. Then five registrations in the engine entry, seven deciders and
+thirteen imports from `decided.ts`, the market panel, the production route in four
+places, twelve lessons and their conditions, the `Talent` and `Engagement` interfaces,
+the `talent` save table, two id namespaces and the whole shape block on `Project`.
+`tools/wired.mjs` went to three dead words mid-pass and is back to zero.
+
+**Nothing is lost. The tag `production-system-before-deletion-2` points at `10c41da`**,
+which is the complete system with the cast and the library market, gate green. One
+checkout brings any of it back. The stash was not applied, popped or dropped; no branch
+was moved; nothing was force-pushed.
+
+**What is still standing**, read off `tools/inventory.mjs` rather than off memory:
+**23 commands, and only three of them touch pictures at all** — `company.option`,
+`company.conceive` and `company.develop`. Material can be optioned, a thing can be said
+to be, and money can be spent developing it. After that there is nothing: no greenlight,
+no schedule, no crew, no casting, no auditions, no shooting, no post, no release, no box
+office, no awards, no charts. Everything else alive is the world around the studio — the
+family and the household, the estate and the lot, the sugar group, banking and the
+ledger, the calendar, weather and geography, company formation and its capability doors,
+and the teaching.
+
+**A correction worth recording, because it was made twice.** The session's own deletion
+report said the older making/casting/crew/audition pipeline was still standing and that
+removing it would be a separate cut. That was wrong both times it was said. Those files
+— `content/making.ts`, `content/crew.ts`, `world/casting.ts`, `world/crew.ts`,
+`world/audition.ts` — were deleted in `1b9e0e7`, the **first** teardown, earlier in the
+same session. The claim came from reading `.claude/plans/dazzling-booping-widget.md`,
+which describes the tree as it stood before that commit, instead of checking the tree.
+Rules 2, 3 and 12 exist for exactly this, and a plan file is as stale a document as any
+handoff. Verify against `git log --diff-filter=D -- <path>` and the inventory tool.
+
+### The capability that changed the plan: the reference game can be watched live
+
+The owner installed the commercial studio-management game SLATE is being measured
+against, and it runs on this machine. **PowerShell can read its files, it is already
+running, and its window can be captured and read as an image.** That turned out to be
+worth more than any static artifact.
+
+How, so a resuming session does not rediscover it. The install sits under Steam's
+`steamapps/common` directory; the process is named for the game; its main window was at
+(0,0) at 1920x1152. `GetWindowRect` plus `System.Drawing.Graphics.CopyFromScreen`
+captures **only that window** — not the rest of the desktop, which is the right default
+— into the scratchpad as a PNG the Read tool can then view. `SetForegroundWindow` with
+`SetCursorPos` and `mouse_event` can click it; that was used once, on a report screen
+with no padlock on it, to prove to the owner that the capture was live rather than
+fabricated. Prefer navigation-only targets: padlocked rows are the committing actions.
+
+**The standing line on the reference game, which the owner set and has reaffirmed.**
+Mechanics, systems and the film industry's own vocabulary are free and should be matched
+without hedging — the owner wants the behavior matched exactly. Its expression is not
+free: the source, a statement-by-statement port of it, its screen prose, its art, or its
+tuning tables lifted as a set. The working method that makes this a non-issue in
+practice: **write SLATE's sentences from the mechanics, never from their sentences.**
+Reading a screen to learn what a system does is fine and is how the survey below works.
+This is settled and should not be re-argued; reopening it reads to the owner as stalling.
+
+### What the next session is for
+
+The owner is writing the plan for the rebuild themselves and wants research and
+constraints supplied, then followed. The agreed next step, **not yet started**, is a
+systematic screen survey — walk every department, capture every screen, and turn it into
+a specification in SLATE's own terms: what each system reads, what it writes, what it
+refuses, and where SLATE already has the machinery for it. No code until that exists.
+
+Four mechanics were already read off two screens, each one something the deleted build
+did not have:
+
+- **Development cost is itemised and summed** — source cost plus screenplay cost plus
+  rewrite cost, with the parts still on screen beside the total. The same rule SLATE
+  already holds: a balance is the sum of its postings.
+- **Participation sits on top of a fee rather than instead of it.** Every cash figure
+  carries a percentage beside it, defaulting to zero. SLATE's three deal shapes forced
+  an either/or, which was a simplification that did not need to be one.
+- **Source material is bought from a named person**, not chosen from a category — a
+  novel by a named author, at a price, with a percentage. SLATE's `Provenance` was six
+  enum values with no counterparty behind them.
+- **Rewrites are counted and costed**, which is the cost multiplier the research kept
+  naming and which SLATE never built in any form.
+
+Per-role depth is the other large gap. A role there carries a difficulty rating,
+character attributes including whether the character dies, and separately rated demands
+for stunts, make-up and intimate scenes. SLATE's roles were named `Lead 1` and
+`Support 2` with a size and a band.
+
+Two smaller observations worth keeping: locks are pervasive rather than the three SLATE
+had, with a lock per stage driving the whole flow and an explicit way back; and
+animation versus live action is a project-level axis that reaches down into each role.
+
+---
+
 ## ⚠️ READ THIS BOX FIRST — FIVE PREMISES IN THE HANDOFF REQUEST ARE WRONG
 
 The request that produced this file was written from the memory of a session that ran on a **different machine** (a Linux remote environment at `/home/user/1221`). This file was written on **Windows** at `C:\Users\sande\Downloads\1221-GIT`. Those are two different clones, and five stated premises do not survive contact with this machine.
