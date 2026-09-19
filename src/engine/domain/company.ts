@@ -595,6 +595,36 @@ export interface ProjectDevelopment {
   screenplay: ScreenplayState;
 }
 
+export type TestScreeningFocus = 'story' | 'character' | 'pace' | 'clarity';
+
+export interface TestScreening {
+  sequence: number;
+  requestedAt: Instant;
+  completesAt: Instant;
+  costCents: Money;
+  status: 'pending' | 'completed';
+  story?: number;
+  character?: number;
+  pace?: number;
+  clarity?: number;
+  audienceScore?: number;
+}
+
+export interface PostRevision {
+  sequence: number;
+  focus: TestScreeningFocus;
+  startedAt: Instant;
+  completesAt: Instant;
+  costCents: Money;
+  status: 'pending' | 'completed';
+  effect?: number;
+}
+
+export interface ProjectTesting {
+  screenings: TestScreening[];
+  revisions: PostRevision[];
+}
+
 export type MarketingStrategy = 'minimal' | 'targeted' | 'wide' | 'event';
 
 export interface ProjectMarketing {
@@ -647,6 +677,8 @@ export interface Project {
   development?: ProjectDevelopment;
   /** Producer-side campaign committed before sale/release. */
   marketing?: ProjectMarketing;
+  /** Test audiences and any edit passes commissioned in response. */
+  testing?: ProjectTesting;
   /**
    * A priced and scheduled version of the locked screenplay, before greenlight.
    * This is a proposal, not a booking: dates and stage availability are checked
