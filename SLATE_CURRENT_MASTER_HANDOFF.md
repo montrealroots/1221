@@ -1,121 +1,133 @@
 # SLATE — CURRENT MASTER HANDOFF
 
-**Written:** 2026-09-17
+**Written:** 2026-09-17, current-state block rewritten 2026-09-19
 **Written on:** Windows 11, `C:\Users\sande\Downloads\1221-GIT` (PowerShell 5.1, Node v24.20.0, npm 11.19.0)
-**Purpose:** transfer SLATE from Claude Account 1 (Apple) to Claude Account 2 (Google) with zero prior conversation history.
-**Author's constraint while writing:** no application code modified, no commit, no push, no stash applied/popped/dropped, no worktree merged, workflow not resumed.
+**Purpose:** transfer SLATE between the two alternating Claude Code accounts with zero prior conversation history.
 
 ---
 
-## ▶ CURRENT STATE — 2026-09-19 — THE PRODUCTION SYSTEM IS DELETED, ON PURPOSE, AWAITING A REBUILD
+## ▶ CURRENT STATE — 2026-09-19 — THE STUDIO IS REBUILT AND THE ECONOMY IS MEASURED
 
 Read this block before the historical ones below it. Everything under it is older and
-some of it is superseded.
+much of it is superseded — in particular, the block that said the production system was
+deleted and awaiting a rebuild described the tree eleven commits ago.
 
-**Where the tree is.** Branch `claude/slate-cleanup-e4apmx`, local HEAD `4963670`,
-**12 ahead of origin and unpushed**. Working tree clean. Gate green at exit 0, read from
-a file: typecheck, lint, 786 tests across 38 files, the seventeen checks, the tic
-budgets, and the teaching floor at 24 against a floor of 18.
+**Where the tree is.** Branch `claude/slate-cleanup-e4apmx`, local HEAD `5514a8f`,
+**23 ahead of origin and unpushed**. Working tree clean. Gate green at exit 0, read
+from a file: typecheck, lint, **885 tests**, the seventeen checks, the tic budgets, and
+the teaching reached at 24 against a floor of 18. Inventory: **27 commands, 17
+scheduled kinds, 2 routes.**
 
-**What happened, in three commits.** `74b847c` made the cast a list of billed parts
-rather than one post called Lead, and re-measured `RATE_PER_ROOT_MINUTE_CENTS` because
-the cast falsified the measurement written in its own docstring — six billed parts
-raised the draw more than the extra fees cost, and the old rate went from nine
-profitable years out of twelve back to all twelve. `10c41da` added the library market —
-selling the remainder of a run, and buying a rival's. Then `4963670` **deleted the
-entire production system**, on the owner's explicit instruction, ahead of a fresh start.
+### What was built, in nine commits
 
-**The deletion was total and the wiring went with it.** Twenty-five files and 8,115
-lines: twelve content tables, nine world files, both test files, the text instrument and
-the production screen. Then five registrations in the engine entry, seven deciders and
-thirteen imports from `decided.ts`, the market panel, the production route in four
-places, twelve lessons and their conditions, the `Talent` and `Engagement` interfaces,
-the `talent` save table, two id namespaces and the whole shape block on `Project`.
-`tools/wired.mjs` went to three dead words mid-pass and is back to zero.
+The production system was deleted whole in `4963670` on the owner's instruction. It was
+then rebuilt from nothing against `docs/STUDIO-DESIGN.md`, which is the decision
+document and the build order. Steps one to four of that design, plus the release half,
+are done and each shipped gate-green:
 
-**Nothing is lost. The tag `production-system-before-deletion-2` points at `10c41da`**,
-which is the complete system with the cast and the library market, gate green. One
-checkout brings any of it back. The stash was not applied, popped or dropped; no branch
-was moved; nothing was force-pushed.
+| commit | what it added |
+|---|---|
+| `1479035` | the design document and the 2,619-line mechanics survey behind it |
+| `87a1a0a` | the company's own month — admin, employer tax on posts, its own tick |
+| `037f2df` | the material market: a churning pool of listings that can be optioned |
+| `1898bb0` | the department engine, and the first writer `Project.budgetCents` ever had |
+| `de73f7c` | hiring a team per department, which is the half of the budget the player owns |
+| `488f437` | the lock chain — shutting the budget, and what reopening it costs |
+| `58a29e8` | the production clock that walks a picture through prep, shoot and post |
+| `bda048f` | letting a picture out, and taking the money over ten months |
+| `d7ec8a0`, `5514a8f` | the economy, measured twice and reshaped both times |
 
-**What is still standing**, read off `tools/inventory.mjs` rather than off memory:
-**23 commands, and only three of them touch pictures at all** — `company.option`,
-`company.conceive` and `company.develop`. Material can be optioned, a thing can be said
-to be, and money can be spent developing it. After that there is nothing: no greenlight,
-no schedule, no crew, no casting, no auditions, no shooting, no post, no release, no box
-office, no awards, no charts. Everything else alive is the world around the studio — the
-family and the household, the estate and the lot, the sugar group, banking and the
-ledger, the calendar, weather and geography, company formation and its capability doors,
-and the teaching.
+**The loop runs end to end**: option material from a market that churns → develop →
+hire a team per department → shut the budget → greenlight and pay → prep, shoot, post →
+release → the money comes back across ten months.
 
-**A correction worth recording, because it was made twice.** The session's own deletion
-report said the older making/casting/crew/audition pipeline was still standing and that
-removing it would be a separate cut. That was wrong both times it was said. Those files
-— `content/making.ts`, `content/crew.ts`, `world/casting.ts`, `world/crew.ts`,
-`world/audition.ts` — were deleted in `1b9e0e7`, the **first** teardown, earlier in the
-same session. The claim came from reading `.claude/plans/dazzling-booping-widget.md`,
-which describes the tree as it stood before that commit, instead of checking the tree.
-Rules 2, 3 and 12 exist for exactly this, and a plan file is as stale a document as any
-handoff. Verify against `git log --diff-filter=D -- <path>` and the inventory tool.
+### The economics, which took three findings to get right
 
-### The capability that changed the plan: the reference game can be watched live
+This is the part most worth carrying, because each finding falsified the fix before it.
+The reasoning is all in `src/engine/content/release.ts`.
 
-The owner installed the commercial studio-management game SLATE is being measured
-against, and it runs on this machine. **PowerShell can read its files, it is already
-running, and its window can be captured and read as an image.** That turned out to be
-worth more than any static artifact.
+1. **A take that was a multiple of the budget could never make hiring a decision.** The
+   multiple rose with craft faster than the budget rose with the team, so spending more
+   always returned more and the best crew was correct on every picture at every level
+   of capital. `tools/career.mjs` proved it over five-year careers. No value of the
+   three constants involved could have changed it — the shape of the formula was wrong.
 
-How, so a resuming session does not rediscover it. The install sits under Steam's
-`steamapps/common` directory; the process is named for the game; its main window was at
-(0,0) at 1920x1152. `GetWindowRect` plus `System.Drawing.Graphics.CopyFromScreen`
-captures **only that window** — not the rest of the desktop, which is the right default
-— into the scratchpad as a PNG the Read tool can then view. `SetForegroundWindow` with
-`SetCursorPos` and `mouse_event` can click it; that was used once, on a report screen
-with no padlock on it, to prove to the owner that the capture was live rather than
-fabricated. Prefer navigation-only targets: padlocked rows are the committing actions.
+2. **So the take became a share of what the material could reach**, fixed before a
+   penny is spent. Craft decides how much gets collected; the budget decides nothing,
+   because an audience has no opinion about a budget. Reach reads scope and spectacle
+   and **deliberately does not read period** — building a world costs design and the
+   floor and puts nobody in a seat, so period material is a trap dressed as prestige.
+   `PERIOD_PULLS` is declared as nought so the claim is findable, and the decider
+   sweeps `period` as `'down'`, so the gate fails if it ever stops being true.
 
-**The standing line on the reference game, which the owner set and has reaffirmed.**
-Mechanics, systems and the film industry's own vocabulary are free and should be matched
-without hedging — the owner wants the behavior matched exactly. Its expression is not
-free: the source, a statement-by-statement port of it, its screen prose, its art, or its
-tuning tables lifted as a set. The working method that makes this a non-issue in
-practice: **write SLATE's sentences from the mechanics, never from their sentences.**
-Reading a screen to learn what a system does is fine and is how the survey below works.
-This is settled and should not be re-argued; reopening it reads to the owner as stalling.
+3. **Two more shapes had to change before the decision was real.** The best team
+   costing 3.5x the cheapest forced margins so fat that nothing else could matter, so
+   the department `perLevel` rates came down to put it at a little over twice. A
+   straight craft ladder put the answer at an end of the scale every time — team one
+   four times, team five ten, three dead rungs between — so `CRAFT_BENDS` makes each
+   extra rung buy less. And then the career run found the decision *still* was not
+   there: a policy costing out every rung chose the same rung every time, because reach
+   was a pure function of the three demands and every property of a given shape was the
+   same property. `APPEAL_STRAYS` fixed that — two stories the same size do not reach
+   the same audience — and the asking price reads it, so good material is not free.
 
-### What the next session is for
+**The number that says it worked.** Over five years on thirty million of capital,
+matching the team to the material ends on 5.3m against 4.2m for the best fixed rung —
+**1.27x** — and is refused a greenlight *less* often while doing it, because it never
+over-hires. Under the old formula the same comparison came back dead level.
 
-The owner is writing the plan for the rebuild themselves and wants research and
-constraints supplied, then followed. The agreed next step, **not yet started**, is a
-systematic screen survey — walk every department, capture every screen, and turn it into
-a specification in SLATE's own terms: what each system reads, what it writes, what it
-refuses, and where SLATE already has the machinery for it. No code until that exists.
+### The two instruments, and what each can and cannot see
 
-Four mechanics were already read off two screens, each one something the deleted build
-did not have:
+Both play the real command path through `sim.execute`; neither reimplements anything.
+They disagreed twice, and the career run was right both times.
 
-- **Development cost is itemised and summed** — source cost plus screenplay cost plus
-  rewrite cost, with the parts still on screen beside the total. The same rule SLATE
-  already holds: a balance is the sum of its postings.
-- **Participation sits on top of a fee rather than instead of it.** Every cash figure
-  carries a percentage beside it, defaulting to zero. SLATE's three deal shapes forced
-  an either/or, which was a simplification that did not need to be one.
-- **Source material is bought from a named person**, not chosen from a category — a
-  novel by a named author, at a price, with a percentage. SLATE's `Provenance` was six
-  enum values with no counterparty behind them.
-- **Rewrites are counted and costed**, which is the cost multiplier the research kept
-  naming and which SLATE never built in any form.
+- **`tools/slate.mjs`** — one picture at a time, cash effectively infinite. Asks which
+  team a property *deserved*. Its second table, naming the right team property by
+  property, is the one that matters: a spread of medians only says the teams differ.
+- **`tools/career.mjs`** — five-year careers on finite cash with the scheduler running.
+  Asks which team a studio could *afford*. Its `match` row is the falsifiability test
+  for the whole economy: if reading the property before hiring is worth nothing, then
+  hiring is decoration however varied one picture looks.
 
-Per-role depth is the other large gap. A role there carries a difficulty rating,
-character attributes including whether the character dies, and separately rated demands
-for stunts, make-up and intimate scenes. SLATE's roles were named `Lead 1` and
-`Support 2` with a size and a band.
+Re-run **both** after anything that moves a department rate, a month count, or what a
+demand asks for. The deleted build's rate constant carried a real measurement and was
+falsified later by an upstream change nobody thought to re-run.
 
-Two smaller observations worth keeping: locks are pervasive rather than the three SLATE
-had, with a lock per stage driving the whole flow and an explicit way back; and
-animation versus live action is a project-level axis that reaches down into each role.
+### What is next, and what is knowingly missing
+
+`docs/STUDIO-DESIGN.md` has twelve steps and five are done. The remainder, in its
+order: **people** (attribute vectors, temperament, dated engagements, ageing) ·
+**contracts** (control terms, sequel escalator) · **roles as characters** · **film and
+series as two pipelines** · **rating and demographics** · **campaigns** · **valuation,
+borrowing and bungalows** · **player credit and drawings**.
+
+Two known gaps worth naming before somebody rediscovers them:
+
+- **There is no market screen.** `company.option` takes a `listingId` and nothing in
+  `src/ui` displays a listing, so a player cannot yet see a property's demands, its
+  appeal or its asking price — which is exactly the information the hiring decision
+  needs. The engine reads all of it; the interface shows none of it. The gate tracks
+  this as unreached teaching: `conceive`, `staffing`, `shutting`, `saying-yes`,
+  `letting-it-out` and `crew` are all lessons no played game entered.
+- **Rating, campaigns and word of mouth do not exist.** `world/release.ts` says so in
+  its own header. When they arrive they belong on the **reach** side, never the
+  spending side, or the model goes straight back to rewarding budget.
+
+### Standing constraints, unchanged
+
+Never apply, pop or drop the stash. Never merge worktrees. Never force-push the working
+branch. Do not merge to `main` without the owner. The tag
+`production-system-before-deletion-2` still points at `10c41da`, the complete old
+system, gate green — one checkout brings any of it back.
 
 ---
+
+## 🕳 SUPERSEDED — everything below describes the tree before the rebuild
+
+Kept because the reasoning is still good history: why the production system was deleted
+twice, what the reference-game survey found, and the standing line on what may and may
+not be taken from it. Where any of it disagrees with the block above, the block above
+is the tree and these are the memory.
 
 ## ⚠️ READ THIS BOX FIRST — FIVE PREMISES IN THE HANDOFF REQUEST ARE WRONG
 
