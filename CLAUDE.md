@@ -98,7 +98,7 @@ npm run gate
 ```
 
 It runs `npm run validate` (typecheck, lint, the full vitest suite) followed by
-fifteen checks. Read its exit status **from a file, never from a pipe**, because a
+seventeen checks. Read its exit status **from a file, never from a pipe**, because a
 piped exit code in PowerShell reports the pipeline and not the command:
 
 ```powershell
