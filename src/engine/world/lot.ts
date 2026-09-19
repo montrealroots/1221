@@ -18,7 +18,7 @@ import type { Booking, BookingKind, Id, Property, SoundStage } from '../domain/m
 import type { Instant } from '../core/time';
 import type { ScheduledItem } from '../core/scheduler';
 import { formatMoney, type Money } from '../core/money';
-import { MS_DAY, instantFromZoned, zonedParts } from '../core/time';
+import { MS_DAY, startOfNextMonth, startOfThisMonth } from '../core/time';
 import {
   AROUND_THE_SHOOT, BUILD_COST_CENTS, CALLS_A_MONTH, CREW_BASE, LOT_FLOOR_SQM,
   MOST_CALLS, MOST_OF_THE_SPEND, OVERHEAD, PATIENCE, RATE_SHARE,
@@ -567,20 +567,6 @@ export function registerLot(sim: Simulation): void {
 const cashFor = (sim: Simulation, ownerId: Id | undefined): Id | undefined =>
   cashAccountFor(sim.universe, ownerId)?.id;
 
-/** Midnight on the first of the month after this one, in a zone. */
-/** Midnight on the first of the month `at` falls in. */
-export function startOfThisMonth(at: Instant, zone: string): Instant {
-  const parts = zonedParts(at, zone);
-  return instantFromZoned({ year: parts.year, month: parts.month, day: 1, hour: 0, minute: 0 }, zone);
-}
-
-export function startOfNextMonth(at: Instant, zone: string): Instant {
-  const parts = zonedParts(at, zone);
-  const year = parts.month === 12 ? parts.year + 1 : parts.year;
-  const month = parts.month === 12 ? 1 : parts.month + 1;
-  return instantFromZoned({ year, month, day: 1, hour: 0, minute: 0 }, zone);
-}
-
 /** Whole units, no cents. Routed through the one formatter so the ledger
  *  has one currency rather than four opinions about it. */
 const money = (cents: Money): string => formatMoney(cents, { cents: false });
@@ -650,13 +636,13 @@ export function chargeTheMonth(sim: Simulation, accountId: Id, earnedThisMonth: 
     sim.expense(accountId, owed, `${LOT_NAME}: ${line.label}`, 'business');
     spent += owed;
   }
-  // Charged on the same tick and deliberately NOT added to `spent`. What this
-  // function returns is what the LOT costs, and `monthlyOverhead` and
-  // `breakEvenShare` are measured against exactly that — so folding a company
-  // payroll into it would move the bar without moving the figure measuring it,
-  // which is the defect the `lineCosts` docstring above was written about. The
-  // people in the posts run the company; the rooms are the lot.
-  chargeThePosts(sim, accountId);
+  // The company's payroll used to be charged here too, deliberately left out of
+  // `spent` so that what this returns stayed the cost of the LOT and could be
+  // measured against `breakEvenShare` without the bar moving. That distinction was
+  // right and the clock was wrong: this handler returns early when there is no lot,
+  // so a company with no estate staffed itself for nothing. The posts moved to
+  // `company.month`, which is armed whether or not the family owns land. The people
+  // in the posts run the company; the rooms are the lot.
   familyCovers(sim, accountId, earnedThisMonth);
   familyTakesItBack(sim, accountId);
   return spent;

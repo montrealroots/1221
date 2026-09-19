@@ -41,7 +41,8 @@ import { emptyAttributeSheet } from '../domain/attributes';
 import { freshWellbeing } from '../systems/life';
 import { impliedPerformerTitle } from '../core/performer';
 import { MEN, WOMEN, patronymic } from '../content/names';
-import { familyCoversToday, startOfNextMonth } from './lot';
+import { familyCoversToday } from './lot';
+import { startOfNextMonth } from '../core/time';
 
 export const QUOTA_KIND = 'sugar.quota';
 

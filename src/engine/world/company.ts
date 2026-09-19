@@ -30,15 +30,18 @@ import type {
   Project, Provenance, Registration, RegistryId, RoleId, Signature,
 } from '../domain/company';
 import {
-  FORM_BY_ID, GLOBAL_RULE_ONE, GUILD_BY_ID, POLICY_BY_ID, REGISTRY_BY_ID, ROLE_BY_ID,
+  FORM_BY_ID, GLOBAL_RULE_ONE, GUILD_BY_ID, POLICY_BY_ID, REGISTRY_BY_ID, ROLES, ROLE_BY_ID,
   WILL_TAKE_A_POST,
 } from '../content/incorporation';
 import { ESTATE_CITY_ID, HOUSE, studioName } from '../content/estate';
 import { bondFor, standingWord } from './standing';
-import { MS_DAY, addMonths, formatDate, instantFromZoned, type Instant } from '../core/time';
+import {
+  MS_DAY, addMonths, formatDate, instantFromZoned, startOfNextMonth, type Instant,
+} from '../core/time';
 import { estateCity } from '../content/estate';
 import {
   BOARD_SEATS, GROUP, GROUP_OPENING_BALANCE, GROUP_REGISTRIES, GROUP_ROLES, GROUP_ROLE_BY_ID,
+  TRYGGINGAGJALD,
 } from '../content/sugar';
 
 // ---------------------------------------------------------------------------
@@ -1553,6 +1556,147 @@ export function registerTheClock(sim: Simulation): void {
       // renewal — the notifications are how this reaches anybody.
       category: 'system',
       priority: 8,
+    });
+  }
+}
+
+// ---------------------------------------------------------------------------
+// The company's own month
+// ---------------------------------------------------------------------------
+
+export const COMPANY_MONTH_KIND = 'company.month';
+
+/**
+ * What it costs to be a company at all, before anybody is paid.
+ *
+ * The accountant, the filings, the bank's charges, the software nobody notices
+ * until it stops. Deliberately small — under a fifth of the cheapest post in
+ * `ROLES` — because this is the floor rather than the substance. The substance is
+ * the people, and a figure large enough to compete with them would make the posts
+ * look free by comparison.
+ *
+ * It is here rather than in a content table because it is not a choice: there is
+ * no version of the company that does not pay it, and nothing reads it but the
+ * month.
+ */
+export const BASE_ADMIN_CENTS: Money = 1_500_00;
+
+/** What the company pays on top of what it pays them. */
+export const EMPLOYER_TAX_ON_POSTS = 'Tryggingagjald On The Posts';
+
+/**
+ * What the people in the company's posts cost it, every month.
+ *
+ * `ROLES` has carried a `monthlyCents` on every row since it was written and
+ * nothing read one for a long time: filling a post set `filledAt` and `personId`
+ * and charged nobody anything, so a company could staff itself completely on its
+ * first morning for nothing, and the nine capability doors that open when a post
+ * is filled opened for free.
+ *
+ * This lived in `world/lot.ts` until the company got a clock of its own. That was
+ * the only monthly tick in the build when it was written, so the payroll was hung
+ * on it — and the lot's handler returns early when there is no lot, which meant a
+ * company without an estate still staffed itself for nothing. The bug was not the
+ * charge, it was the clock it was nailed to. That file's own comment had already
+ * worked out the distinction it could not act on: the people in the posts run the
+ * company, and the rooms are the lot.
+ *
+ * Itemised by role rather than posted as one payroll line, for the reason the
+ * ledger exists: a figure nobody can open is a figure nobody can argue with.
+ */
+export function chargeThePosts(sim: Simulation, accountId: Id): Money {
+  const company = parentCompany(sim.universe);
+  if (!company) return 0;
+  let spent = 0;
+  for (const post of Object.values(sim.universe.posts)) {
+    if (post.companyId !== company.id || post.personId === undefined) continue;
+    const facts = ROLES.find((one) => one.id === post.role);
+    const owed = facts?.monthlyCents ?? 0;
+    if (owed <= 0) continue;
+    sim.expense(accountId, owed, `${facts!.label}`, 'business');
+    spent += owed;
+  }
+  // And the employer's own contribution on all of it, which is not withheld from
+  // a wage and so is not in `PAYROLL_TAX_RULES`. A post costs more than it is paid.
+  if (spent > 0) {
+    const owed = Math.round(spent * TRYGGINGAGJALD);
+    sim.expense(accountId, owed, EMPLOYER_TAX_ON_POSTS, 'business');
+    spent += owed;
+  }
+  return spent;
+}
+
+/**
+ * A month of being a going concern, charged whether or not anything happened.
+ *
+ * This is the thing that makes time cost money. Before it, a company with no lot
+ * could sit on a property for a year at no cost, which is why deciding *when* to
+ * do anything was never a decision — waiting was free, so waiting was always
+ * available. A standing burn prices every month of delay, and a development that
+ * takes four months now costs four months of running the company on top of
+ * whatever was paid for the script.
+ *
+ * Returns what went out, so a caller can say so.
+ */
+export function chargeTheCompanyMonth(sim: Simulation, accountId: Id): Money {
+  let spent = chargeThePosts(sim, accountId);
+  sim.expense(accountId, BASE_ADMIN_CENTS, 'Running The Company', 'business');
+  spent += BASE_ADMIN_CENTS;
+  return spent;
+}
+
+/**
+ * Arms the company's month and keeps it running.
+ *
+ * Armed from the moment the save has a company rather than from the moment it has
+ * a lot, which is the whole point of separating the two.
+ */
+export function registerTheCompanyMonth(sim: Simulation): void {
+  sim.onSchedule(COMPANY_MONTH_KIND, () => {
+    const company = parentCompany(sim.universe);
+    const account = company ? cashAccountFor(sim.universe, company.id) : undefined;
+    // Charged and not announced, which took a failing test to work out. The first
+    // version notified every month, and `tests/lot.test.ts` went red on a count of
+    // how many times the family's patience had been mentioned across twenty years.
+    // The economics were never wrong — the family climbed exactly the rungs it
+    // always had. What broke was the record of it: `sim.notify` keeps the last five
+    // hundred notifications and drops the oldest, and two hundred and forty monthly
+    // lines about payroll evicted the announcements that mattered.
+    //
+    // So the money goes out quietly. It is already in the ledger under each role's
+    // own name, which is where a figure belongs; the lot's month already tells the
+    // player a month has passed; and a second monthly notice saying the company paid
+    // itself is the nagging this build keeps refusing to do.
+    if (company && account) chargeTheCompanyMonth(sim, account.id);
+    sim.schedule({
+      at: startOfNextMonth(sim.now, sim.homeZone),
+      kind: COMPANY_MONTH_KIND,
+      label: 'The Company’s Month',
+      category: 'system',
+      // Ahead of the lot's month, which is priority 5 — lower runs first. The
+      // order is load-bearing: `chargeTheMonth` in `world/lot.ts` asks the family
+      // to cover what the company is short, and it has to be asked against
+      // everything the month costs rather than against the rooms alone. When the
+      // payroll lived on the lot's own tick it was charged before the cover for
+      // exactly this reason; moving it to its own clock had to keep that, and
+      // `tests/lot.test.ts` caught it within one run when it did not.
+      priority: 4,
+    });
+  });
+  if (!sim.universe.scheduled.some((one) => one.kind === COMPANY_MONTH_KIND && one.status === 'pending')) {
+    sim.schedule({
+      at: startOfNextMonth(sim.now, sim.homeZone),
+      kind: COMPANY_MONTH_KIND,
+      label: 'The Company’s Month',
+      category: 'system',
+      // Ahead of the lot's month, which is priority 5 — lower runs first. The
+      // order is load-bearing: `chargeTheMonth` in `world/lot.ts` asks the family
+      // to cover what the company is short, and it has to be asked against
+      // everything the month costs rather than against the rooms alone. When the
+      // payroll lived on the lot's own tick it was charged before the cover for
+      // exactly this reason; moving it to its own clock had to keep that, and
+      // `tests/lot.test.ts` caught it within one run when it did not.
+      priority: 4,
     });
   }
 }

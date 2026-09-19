@@ -36,6 +36,7 @@ import { registerConcept } from './world/concept';
 import {
   companiesOf, foundTheCompany, foundTheSugarGroup, holdingsOf, postsOf, projectsOf, registerCompanyCommands,
   registerTheClock,
+  registerTheCompanyMonth,
 } from './world/company';
 import { registerPlans } from './world/plans';
 import { registerWorld } from './world/world';
@@ -58,6 +59,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerPlans(sim);
   registerCompanyCommands(sim);
   registerTheClock(sim);
+  registerTheCompanyMonth(sim);
   registerLot(sim);
   registerSugar(sim);
   registerVat(sim);

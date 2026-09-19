@@ -403,3 +403,24 @@ export function tomorrowAt(now: Instant, hour: number, zone: TimeZone): Instant 
   const parts = zonedParts(addDays(now, 1, zone), zone);
   return instantFromZoned({ year: parts.year, month: parts.month, day: parts.day, hour, minute: 0 }, zone);
 }
+
+/**
+ * Midnight on the first of the month an instant falls in, in a zone.
+ *
+ * Lived in `world/lot.ts` while the lot owned the only monthly tick in the build.
+ * It moved here when the company got a month of its own, because two systems that
+ * have to fire on the *same* instant cannot each carry their own idea of when a
+ * month starts — and because neither function knows anything about a lot.
+ */
+export function startOfThisMonth(at: Instant, zone: TimeZone): Instant {
+  const parts = zonedParts(at, zone);
+  return instantFromZoned({ year: parts.year, month: parts.month, day: 1, hour: 0, minute: 0 }, zone);
+}
+
+/** Midnight on the first of the month after the one an instant falls in. */
+export function startOfNextMonth(at: Instant, zone: TimeZone): Instant {
+  const parts = zonedParts(at, zone);
+  const year = parts.month === 12 ? parts.year + 1 : parts.year;
+  const month = parts.month === 12 ? 1 : parts.month + 1;
+  return instantFromZoned({ year, month, day: 1, hour: 0, minute: 0 }, zone);
+}

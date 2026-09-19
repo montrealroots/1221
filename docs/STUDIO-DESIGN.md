@@ -53,26 +53,44 @@ corporation, SLATE models **a household that owns one**. So:
 
 # Part 1 — The economic spine
 
-## 1.1 The company gets a monthly burn. This is the first thing to build.
+## 1.1 The company's burn gets a clock of its own. This is the first thing to build.
 
-**Decision: the company has standing monthly costs, charged on the month tick, whether
-or not anything is happening.**
+**Decision: the company charges its own standing costs on its own monthly tick,
+independent of whether the family owns a lot.**
 
-This is the highest-value single change available and it is nearly free to implement.
-SLATE's company has never had an operating cost of its own — only the lot's — which
-means **time has always been free**. A player could sit in development indefinitely at
-no cost, which is exactly why development was never a decision worth making.
+An earlier draft of this section claimed SLATE's company had never had an operating
+cost. **That was wrong, and reading the tree rather than the survey corrected it.**
+`chargeThePosts` in `src/engine/world/lot.ts` already reads `monthlyCents` off every
+filled role and bills it, with the employer's contribution on top — a post has cost
+money since that function was written.
 
-With a burn, every month of delay is priced. A slow cheap writer and a fast dear one
-become genuinely comparable. Sitting on a property has a cost. And the whole
-development phase becomes a set of real trades without needing a single new screen.
+The real defect is subtler and worth stating precisely: **the company's payroll is
+charged inside the *lot's* monthly tick**, and that handler returns early when there is
+no lot. So a company without an estate staffs itself for nothing, and the nine
+capability doors that open when a post is filled open for free.
 
-**What it reads:** payroll for whoever is in post, the lot's overhead, the offices, and
-a base administrative figure. It should be **a sum of postings, never a constant** —
-which the ledger already enforces.
+That file already knows these are two different things. Its own comment, explaining why
+the payroll is deliberately excluded from what the lot's month *returns*, says it
+outright: *the people in the posts run the company; the rooms are the lot.* The
+separation was understood and only the clock was shared.
 
-**Falsifiability:** cut a post, the burn falls, and the runway lengthens. Measurable on
-a played career.
+**So the change is a move, not an invention.** The company gets `company.month`. It
+charges the posts and a base administrative figure. The lot keeps charging its rooms,
+and keeps the family's cover, because the cover is about carrying the estate.
+
+**What it adds that did not exist:** a standing cost that does not depend on owning
+land, so **time costs money from the day the company is formed**. That is what makes a
+month of development a real expenditure and a slow writer genuinely more expensive than
+a fast one.
+
+**What it reads:** whoever is in post, and a base administrative figure. **A sum of
+postings, never a constant** — which the ledger already enforces, and which
+`chargeThePosts` already does by itemising every role separately rather than posting
+one line saying "payroll."
+
+**Falsifiability:** cut a post and the burn falls; form a company without a lot and it
+still burns. Both measurable on a played career, and the second one is the regression
+this change exists to fix.
 
 ## 1.2 A budget is a product, never a figure
 
