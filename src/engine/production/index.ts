@@ -59,6 +59,7 @@ export {
   MAX_SEQUEL_OPTIONS,
   MIN_OPTION_RAISE,
   actingTermsAcceptanceDelta,
+  backendParticipationCents,
   actingTermsSummary,
   defaultActingTerms,
   normalizeActingTerms,
