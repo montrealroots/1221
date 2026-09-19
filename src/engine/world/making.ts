@@ -564,13 +564,25 @@ export function greenlight(sim: Simulation, spec: Greenlight): { ok: true; proje
   if (existing?.development && !existing.package) {
     return { ok: false, error: existing.title + ' has a locked development path but no production package.' };
   }
-  if (existing?.package && !packageMatchesPlan(existing, spec)) {
+  const committed: Greenlight = existing?.package
+    ? {
+      ...spec,
+      planId: existing.package.planId,
+      budgetCents: existing.package.budgetCents,
+      shootWeeks: existing.package.shootWeeks,
+      secondsEach: existing.package.secondsEach,
+      hands: existing.package.hands,
+      from: existing.package.from,
+      ...(existing.package.stageId ? { stageId: existing.package.stageId } : {}),
+    }
+    : spec;
+  if (existing?.package && !packageMatchesPlan(existing, committed)) {
     return {
       ok: false,
       error: existing.title + ' was packaged on different production terms. Repackage it before changing the greenlight.',
     };
   }
-  const answer = wouldBe(sim, spec);
+  const answer = wouldBe(sim, committed);
   if (!answer.ok) return answer;
   const { prospect } = answer;
   const { project, plan, weeks, from, held, stageId } = prospect;
@@ -585,8 +597,8 @@ export function greenlight(sim: Simulation, spec: Greenlight): { ok: true; proje
     seconds,
   }));
   project.owesSeconds = seconds * plan.delivers.parts;
-  if (spec.hands !== undefined) project.hands = Math.max(1, Math.round(spec.hands));
-  project.budgetCents = spec.budgetCents;
+  if (committed.hands !== undefined) project.hands = Math.max(1, Math.round(committed.hands));
+  project.budgetCents = committed.budgetCents;
   project.stage = 'greenlit';
   // And the rights are bought outright, because that is what committing to a
   // picture is. An option carries a term and the term now runs — so this is the
