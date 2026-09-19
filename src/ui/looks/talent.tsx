@@ -10,7 +10,7 @@
 import { formatMoney } from '@/engine/core/money';
 import { formatDate } from '@/engine/core/time';
 import { TRAIT_BY_ID } from '@/engine/domain/attributes';
-import { talentProfile, type TalentEngagement } from '@/engine/production/talent';
+import { talentProfile, type TalentEngagement, type TalentProfile } from '@/engine/production/talent';
 import { Stat } from '@/ui/components/primitives';
 import { defineLook, type Way } from './registry';
 import { at } from './subject';
@@ -26,7 +26,7 @@ const engagementLine = (one: TalentEngagement, zone: string): string => {
   return one.role;
 };
 
-defineLook('talent', {
+defineLook<TalentProfile>('talent', {
   gone: 'That career is no longer in the talent database.',
   resolve: (sim, id) => talentProfile(sim, id),
   seeds: (sim) => Object.values(sim.universe.people)
