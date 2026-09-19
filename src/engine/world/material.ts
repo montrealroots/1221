@@ -32,7 +32,8 @@ import type { Money } from '../core/money';
 import type { Provenance } from '../domain/company';
 import { zonedParts } from '../core/time';
 import {
-  CARRIES_OVER, MOST_ON_THE_MARKET, asksFor, provenanceFrom, titleFrom,
+  CARRIES_OVER, MOST_ON_THE_MARKET, asksFor, demandsFor, provenanceFrom, titleFrom,
+  type Demands,
 } from '../content/material';
 import { holdingsOf } from './company';
 
@@ -44,6 +45,8 @@ export interface Listing {
   provenance: Provenance;
   /** What the rights holder is asking. */
   asksCents: Money;
+  /** What making it will ask of the departments. */
+  demands: Demands;
   /** Whether this is a fresh listing or one that has been sitting. */
   carriedOver: boolean;
 }
@@ -81,6 +84,7 @@ export function drawnIn(sim: Simulation, key: string): readonly Listing[] {
       title: titleFrom(Math.floor(rng.next() * 997), Math.floor(rng.next() * 997)),
       provenance,
       asksCents: asksFor(provenance, rng.next()),
+      demands: demandsFor(provenance, rng.next(), rng.next(), rng.next()),
       carriedOver: false,
     });
   }
@@ -118,4 +122,24 @@ export function onTheMarket(sim: Simulation, at: number = sim.now): readonly Lis
  */
 export function listingById(sim: Simulation, id: string, at: number = sim.now): Listing | undefined {
   return onTheMarket(sim, at).find((one) => one.id === id);
+}
+
+/**
+ * What a property nobody listed asks for.
+ *
+ * A typed title has no listing behind it and still has to be made, so its demands are
+ * drawn around whatever its kind leans toward. Keyed on the title so the same idea
+ * always asks for the same thing — a player who options something, drops it and
+ * options it again does not get to reroll the picture.
+ *
+ * The draw lives here rather than at the call site so that the `material` stream stays
+ * in the one file `material.market` declares it is drawn in.
+ */
+export function demandsForTyped(sim: Simulation, title: string, provenance: Provenance): Demands {
+  // One key rather than two, so this stays inside the `material` stream rather than
+  // minting a `material.typed` one nothing owns. It is the same source of randomness
+  // answering the same question — what a property asks for — and splitting it would
+  // have been a second die for no reason.
+  const rng = sim.rng('material', `typed:${title.toLowerCase()}`);
+  return demandsFor(provenance, rng.next(), rng.next(), rng.next());
 }

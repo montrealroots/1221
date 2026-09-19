@@ -31,6 +31,7 @@
 import type { Id } from '../core/ids';
 import type { Money } from '../core/money';
 import type { Instant } from '../core/time';
+import type { Demands } from '../content/material';
 
 // ---------------------------------------------------------------------------
 // The company itself
@@ -406,6 +407,15 @@ export interface Holding {
   companyId: Id;
   title: string;
   provenance: Provenance;
+  /**
+   * What making this will ask of each department, on a scale of one to five.
+   *
+   * Set when the rights are taken and never revised, because it is a fact about the
+   * material rather than about the company's plans for it. Read by
+   * `world/schedule.ts` to lay a picture out, which is what finally gives
+   * `Project.budgetCents` a writer after two teardowns with none.
+   */
+  demands: Demands;
   hold: Hold;
   acquiredAt: Instant;
   /**

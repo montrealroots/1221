@@ -22,13 +22,12 @@
  * so a player can look, think, and come back — which is what turns "option it now or
  * lose it" into a decision rather than a reflex.
  *
- * ## What is deliberately not here yet
+ * ## The demands, which arrived with the engine that reads them
  *
- * **No demand ratings.** The build order this came from put a demand vector on
- * material in this step and the department engine that reads it in the next one. That
- * would have left a declared word with nothing reading it for the length of one
- * commit, which is the defect this project fails its own gate on. The vector lands
- * with the engine that consumes it.
+ * A property says what making it will ask for. Those three ratings were written out of
+ * this file when it was first built, deliberately, because the departments that read
+ * them did not exist yet and a declared word nothing reads is the defect this project
+ * fails its own gate on. `content/departments.ts` consumes them now, so they are here.
  */
 
 import type { Money } from '../core/money';
@@ -103,6 +102,63 @@ export const ASKS_AROUND: Money = 14_000_00;
 
 /** How far an asking price strays either side of the middle. */
 export const ASKING_STRAYS = 0.6;
+
+/**
+ * What making a property will ask for, on a scale of one to five.
+ *
+ * Three, not seven. Each one has to be read by at least two departments in different
+ * phases or it is a label, and three that bite are worth more than seven that tint a
+ * screen. What they are is chosen so that no two move together:
+ *
+ * - **scope** is how much picture there is — how many days, how many people, how long
+ *   the cut takes. It reaches every phase, because size is not a department.
+ * - **spectacle** is how much of it cannot be photographed as found. It reaches the
+ *   effects unit on the floor and the finishing that follows, and nothing else.
+ * - **period** is how much of the world has to be built rather than borrowed. It
+ *   reaches design in prep and the unit on the floor, and stops at the cut.
+ *
+ * A picture can be large and plain, small and impossible, or modern and enormous, and
+ * the three vectors say which without any of them standing in for another.
+ */
+export interface Demands {
+  scope: number;
+  spectacle: number;
+  period: number;
+}
+
+/** The most any one demand can ask for. */
+export const MOST_DEMANDED = 5;
+
+/**
+ * What a kind of source tends to ask for.
+ *
+ * Leanings rather than rules — the draw moves around them — but they are not
+ * arbitrary. A novel carries more world than an article does; a play is built for a
+ * room and asks for the least of everything; a format is a machine for making
+ * episodes and is deliberately modest so it can be repeated.
+ */
+export const LEANS: Readonly<Record<Provenance, Demands>> = {
+  original: { scope: 3, spectacle: 3, period: 2 },
+  article: { scope: 2, spectacle: 1, period: 2 },
+  play: { scope: 1, spectacle: 1, period: 2 },
+  novel: { scope: 4, spectacle: 3, period: 4 },
+  format: { scope: 2, spectacle: 2, period: 1 },
+  life_rights: { scope: 3, spectacle: 1, period: 4 },
+};
+
+/** One demand, drawn around what its kind leans toward and clamped to the scale. */
+const askedFor = (leaning: number, t: number): number =>
+  Math.max(1, Math.min(MOST_DEMANDED, Math.round(leaning + (t * 2 - 1) * 1.4)));
+
+/** What a property of this kind asks for, given three draws. */
+export function demandsFor(provenance: Provenance, a: number, b: number, c: number): Demands {
+  const leans = LEANS[provenance];
+  return {
+    scope: askedFor(leans.scope, a),
+    spectacle: askedFor(leans.spectacle, b),
+    period: askedFor(leans.period, c),
+  };
+}
 
 /**
  * Words a property is called, in two halves.

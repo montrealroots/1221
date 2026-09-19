@@ -35,7 +35,8 @@ import {
 } from '../content/incorporation';
 import { ESTATE_CITY_ID, HOUSE, studioName } from '../content/estate';
 import { bondFor, standingWord } from './standing';
-import { listingById } from './material';
+import { demandsForTyped, listingById } from './material';
+import { layOut } from './schedule';
 import {
   MS_DAY, addMonths, formatDate, instantFromZoned, startOfNextMonth, type Instant,
 } from '../core/time';
@@ -1065,6 +1066,8 @@ export function registerCompanyCommands(sim: Simulation): void {
       companyId: parent.id,
       title,
       provenance: listing?.provenance ?? payload.provenance ?? 'original',
+      demands: listing?.demands
+        ?? demandsForTyped(s, title, listing?.provenance ?? payload.provenance ?? 'original'),
       hold,
       acquiredAt: s.now,
       chainComplete: !payload.chainGap,
@@ -1234,6 +1237,15 @@ export function registerCompanyCommands(sim: Simulation): void {
         spentCents: 0,
         delivered: [],
         ...(holding ? { holdingId: holding.id } : {}),
+        // What it would cost to make, laid out at the cheapest team in every
+        // department. `budgetCents` survived two teardowns as a declared word with no
+        // writer; this is the first thing that has ever filled it, and it fills it the
+        // only way the house rule allows — as the sum of a schedule rather than a
+        // figure anybody chose. It is a floor and a starting point: hiring better
+        // teams raises it, and it is recomputed rather than edited.
+        ...(holding
+          ? { budgetCents: layOut(holding.demands, {}, s.now, s.homeZone).budgetCents }
+          : {}),
       };
       s.universe.projects[project.id] = project;
       return { ok: true, id: project.id };
