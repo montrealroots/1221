@@ -46,7 +46,7 @@ import type {
 } from './company';
 
 export type {
-  Company, CompanyForm, GuildId, Holding, Hold, Jurisdiction, Ownership, Policy,
+  Company, CompanyForm, Concept, GuildId, Holding, Hold, Jurisdiction, Ownership, Policy,
   PolicyKind, Post, Project, Provenance, Registration, RegistryId, RoleId,
   Signature, Stage,
 } from './company';
@@ -633,7 +633,7 @@ export interface Preferences {
  * A save from 76 or earlier has no company at all, which reads correctly as a
  * family that never formed one rather than as a broken save.
  */
-export const SAVE_SCHEMA_VERSION = 83;
+export const SAVE_SCHEMA_VERSION = 84;
 
 export interface SaveMeta {
   id: Id;

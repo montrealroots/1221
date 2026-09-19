@@ -161,3 +161,25 @@ export function theyCanAffordIt(sim: Simulation, cents = 2_000_000_00): void {
   if (!account) return;
   sim.income(account.id, cents, `${LOT_NAME}: Eldey Pictures`, 'business');
 }
+
+/**
+ * Says what a television project is, so the greenlight will take it.
+ *
+ * A film can be made without a concept and television cannot: a series is a machine
+ * that makes episodes, and `whyNotMakeAs` refuses one with nothing underneath it.
+ * That refusal is the point of the engine, so it is not weakened here — instead
+ * every test that needs a working television project says what the thing is, the
+ * way a producer would have to.
+ *
+ * `case` by default because it is the one engine that can carry anything: its
+ * stories arrive from outside, so it never runs out and no plan is too long for it.
+ * A test about a *refusal* passes its own engine instead.
+ */
+export function sayWhatItIs(
+  sim: Simulation, projectId: string, engineId = 'case', people = 8,
+): void {
+  const out = run(sim, 'company.conceive', {
+    projectId, engineId, worldId: 'is-39-reykjavik', people,
+  });
+  expect(out.ok, `could not say what ${projectId} is: ${out.error}`).toBe(true);
+}

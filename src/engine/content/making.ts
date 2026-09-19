@@ -42,6 +42,7 @@
 import type { BookingKind } from '../domain/model';
 import type { Stage } from '../domain/company';
 import type { DimensionId } from './maturity';
+import type { Cadence } from './concept';
 import type { StockId } from './inventory';
 
 // ---------------------------------------------------------------------------
@@ -194,6 +195,15 @@ export interface Plan {
   /** Which ladder set its maturity is measured against. */
   ladders: string;
   /**
+   * What shape of commitment this is, which is what an engine is checked against.
+   *
+   * `single` is one complete thing, `closed` is a run that ends, `returning` is
+   * something that keeps coming back. A story engine declares which of these it can
+   * sustain, so a transformation — which finishes — cannot be made as a returning
+   * series, and the greenlight says so rather than making it badly.
+   */
+  cadence: Cadence;
+  /**
    * What a finished one of these actually is: how many parts, and how long.
    *
    * The runtime is a default, not a rule — a producer sets what a picture runs
@@ -281,6 +291,7 @@ const FEATURE: Plan = {
   deliveryWeeks: 6,
   anchor: 'start',
   ladders: 'picture',
+  cadence: 'single',
   delivers: { parts: 1, secondsEach: 6_000 },
   partsFinish: 'together',
   periods: [
@@ -345,6 +356,9 @@ const SERIES: Plan = {
   deliveryWeeks: 4,
   anchor: 'start',
   ladders: 'picture',
+  // Returning: a series shot on stages is the thing a company keeps making, so it
+  // needs an engine that does not run out.
+  cadence: 'returning',
   delivers: { parts: 8, secondsEach: 3_000 },
   partsFinish: 'inOrder',
   periods: [
@@ -435,6 +449,10 @@ const UNSCRIPTED: Plan = {
   deliveryWeeks: 2,
   anchor: 'delivery',
   ladders: 'season',
+  // Closed rather than returning: this plan is one season against one airdate. A
+  // format that comes back every year would be a second plan, not this one with a
+  // different word on it.
+  cadence: 'closed',
   delivers: { parts: 8, secondsEach: 3_600 },
   partsFinish: 'inOrder',
   periods: [

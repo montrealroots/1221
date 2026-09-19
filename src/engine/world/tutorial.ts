@@ -214,6 +214,7 @@ export const WHEN: Readonly<Record<string, (w: LessonWorld) => boolean>> = {
   option: (w) => w.hasCompany,
 
   // The pictures, walked in the order a picture walks.
+  conceive: (w) => w.holdings > 0,
   develop: (w) => w.holdings > 0 && w.filledPosts > 0,
   greenlight: (w) => w.projects.developing > 0,
   casting: (w) => w.openParts > 0,

@@ -44,6 +44,7 @@ import {
 } from '../content/making';
 import { LOT_NAME } from '../content/estate';
 import { MS_WEEK, bookingsFor, stagesOn, stillToCarry, theLot } from './lot';
+import { whyNotMakeAs } from './concept';
 import {
   bankAWeek, cuttingPeriod, cutsAWeek, handsOn, weighTheCut, whereTheMaterialStands,
 } from './inventory';
@@ -442,6 +443,13 @@ export function wouldBe(
   if (!plan.media.includes(project.medium)) {
     return { ok: false, error: `${plan.label} isn’t how you make ${project.medium === 'film' ? 'a film' : 'television'}.` };
   }
+  // What it is, checked against how it is being made. Four refusals live in
+  // `world/concept.ts` and they are the whole reason a concept is not a form: a
+  // transformation cannot carry something that keeps coming back, a withheld secret
+  // runs out, an ensemble engine needs an ensemble, and television needs an engine
+  // at all. Asked here, before a single date is laid, so a refusal writes nothing.
+  const wrongShape = whyNotMakeAs(project, plan);
+  if (wrongShape) return { ok: false, error: wrongShape };
   if (!Number.isFinite(spec.budgetCents) || spec.budgetCents <= 0) {
     return { ok: false, error: 'A greenlight needs a budget behind it.' };
   }
@@ -573,7 +581,10 @@ export function greenlight(sim: Simulation, spec: Greenlight): { ok: true; proje
   // reason an option running out is a mistake about hesitating rather than a
   // punishment for making something.
   exerciseTheOption(sim, project.holdingId);
-  project.unitBaseId = theLot(sim)?.locationId;
+  // Out of the world it is set in, and only out of the lot's own town when nobody
+  // has said. This field existed from the beginning and was always the lot, because
+  // nothing but this line ever wrote it.
+  project.unitBaseId = project.concept?.worldId ?? theLot(sim)?.locationId;
   project.periods = laid.periods.map((p) => ({ ...p }));
   project.deliverBy = laid.deliverBy;
 

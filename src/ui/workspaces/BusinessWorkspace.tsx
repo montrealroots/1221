@@ -26,6 +26,9 @@ import { formatMoney } from '@/engine/core/money';
 import { plural } from '@/engine/core/text';
 import { formatDate } from '@/engine/core/time';
 import { DELIVERY, plansFor, planById } from '@/engine/content/making';
+import { CADENCE_LABEL, ENGINES, RENEWAL_SAID, engineById } from '@/engine/content/concept';
+import { whyNotMakeAs } from '@/engine/world/concept';
+import { CITIES } from '@/engine/content/geography';
 import { DEALS, dealById } from '@/engine/content/selling';
 import { rateById, throughput } from '@/engine/content/inventory';
 import { cuttingPeriod } from '@/engine/world/inventory';
@@ -355,6 +358,7 @@ function Slate() {
   const slate = useWorld((s) => projectsOf(s.universe));
   const [putting, setPutting] = useState(false);
   const [saying, setSaying] = useState<string | undefined>();
+  const [conceiving, setConceiving] = useState<string | undefined>();
   const [casting, setCasting] = useState<string | undefined>();
   const [filing, setFiling] = useState<string | undefined>();
   const [claiming, setClaiming] = useState<string | undefined>();
@@ -383,6 +387,11 @@ function Slate() {
                   {/* The stage is an id. A chip is a label, so it is read as one. */}
                   <span className="chip">{toStart(project.stage)}</span>
                   {project.planId === undefined && !project.shelvedAt && (
+                    <button className="btn btn-sm" onClick={() => setConceiving(project.id)}>
+                      {project.concept ? 'What It Is' : 'Say What It Is'}
+                    </button>
+                  )}
+                  {project.planId === undefined && !project.shelvedAt && (
                     <button className="btn btn-sm" onClick={() => setSaying(project.id)}>Say Yes To It</button>
                   )}
                   {(project.roles ?? []).length > 0 && project.stage !== 'delivered' && (
@@ -409,6 +418,12 @@ function Slate() {
       )}
       {putting && <DevelopForm onClose={() => setPutting(false)} />}
       {saying && <GreenlightForm projectId={saying} onClose={() => setSaying(undefined)} />}
+      {conceiving && slate.find((one) => one.id === conceiving) && (
+        <ConceiveForm
+          project={slate.find((one) => one.id === conceiving)!}
+          onClose={() => setConceiving(undefined)}
+        />
+      )}
       {casting && <CastForm projectId={casting} onClose={() => setCasting(undefined)} />}
       {filing && <DeliveryForm projectId={filing} onClose={() => setFiling(undefined)} />}
       {claiming && <RebateForm projectId={claiming} onClose={() => setClaiming(undefined)} />}
@@ -493,6 +508,85 @@ function DevelopForm({ onClose }: { onClose: () => void }) {
 }
 
 /**
+ * Saying what a thing is.
+ *
+ * The first act in the real process and the last one this screen learned. Three
+ * answers, and none of them is a label: the engine decides what the thing can be
+ * made as, the ensemble is checked against what that engine needs, and the world is
+ * where the unit works out of.
+ *
+ * The engine list says what each one asks every week, because "A Case Every Week" is
+ * a name and "What came in this week?" is the thing a person is actually choosing.
+ */
+function ConceiveForm({ project, onClose }: { project: Project; onClose: () => void }) {
+  const { sim, run, refresh } = useGame();
+  const held = project.concept;
+  const [engineId, setEngineId] = useState(held?.engineId ?? ENGINES[0]!.id);
+  const [worldId, setWorldId] = useState(held?.worldId ?? sim.player.currentLocationId);
+  const [people, setPeople] = useState(held?.people ?? 4);
+  const [error, setError] = useState<string | undefined>();
+  const engine = engineById(engineId);
+
+  const say = () => {
+    const answer = run<{ ok: boolean; error?: string }>('company.conceive', { projectId: project.id, engineId, worldId, people });
+    if (answer.value?.ok) { refresh(); onClose(); return; }
+    setError(answer.value?.error ?? answer.error ?? 'It wouldn’t take.');
+  };
+
+  // Somewhere to set it. The player's own town first, then the cities the world
+  // already knows about, because a list of every city on earth is not a choice.
+  const places = [...CITIES.all()].slice(0, 60);
+
+  return (
+    <Modal
+      title={`${project.title}: What Is It`}
+      onClose={onClose}
+      footer={(
+        <>
+          <button className="btn btn-ghost" onClick={onClose}>Never Mind</button>
+          <button className="btn btn-primary" onClick={say}>That’s What It Is</button>
+        </>
+      )}
+    >
+      <div className="field">
+        <label htmlFor="conceive-engine">What Makes The Next One</label>
+        <select id="conceive-engine" value={engineId} onChange={(e) => { setEngineId(e.target.value); setError(undefined); }}>
+          {ENGINES.map((one) => (
+            <option key={one.id} value={one.id}>{one.label}</option>
+          ))}
+        </select>
+      </div>
+      {engine && (
+        <p className="xs dim" style={{ margin: '0 0 var(--s4)' }}>
+          {engine.what}{' '}<strong>{engine.asks}</strong>{' '}{RENEWAL_SAID[engine.renewal]}
+          {engine.carries !== undefined && ` About ${engine.carries} parts in it.`}
+          {' '}It can be made as {engine.cadences.map((c) => CADENCE_LABEL[c].toLowerCase()).join(' or ')}.
+        </p>
+      )}
+      <div className="field">
+        <label htmlFor="conceive-world">Where It Is Set</label>
+        <select id="conceive-world" value={worldId} onChange={(e) => { setWorldId(e.target.value); setError(undefined); }}>
+          {places.map((one) => (
+            <option key={one.id} value={one.id}>{one.name}</option>
+          ))}
+        </select>
+      </div>
+      <div className="field">
+        <label htmlFor="conceive-people">How Many People It Is About</label>
+        <input
+          id="conceive-people" type="number" min={1} max={40} value={people}
+          onChange={(e) => { setPeople(Number(e.target.value)); setError(undefined); }}
+        />
+      </div>
+      <p className="xs dim" style={{ margin: 0 }}>
+        {engine ? `${engine.label} needs ${engine.leastPeople} of them. ${engine.rules}` : ''}
+      </p>
+      {error && <p className="small negative" style={{ marginTop: 'var(--s3)' }}>{error}</p>}
+    </Modal>
+  );
+}
+
+/**
  * Saying yes to something.
  *
  * Seven choices and they are not seven questions. The plan decides what the
@@ -511,6 +605,9 @@ function GreenlightForm({ projectId, onClose }: { projectId: string; onClose: ()
   const ways = project ? plansFor(project.medium) : [];
   const [planId, setPlanId] = useState(ways[0]?.id ?? 'feature');
   const plan = planById(planId);
+  // Why this engine cannot be made this way, where it cannot. The same function the
+  // greenlight itself asks, so the form and the refusal can never disagree.
+  const wrongShape = project && plan ? whyNotMakeAs(project, plan) : undefined;
   const [budget, setBudget] = useState(4_000_000);
   const [weeks, setWeeks] = useState(5);
   const [minutes, setMinutes] = useState(Math.round((plan?.delivers.secondsEach ?? 6_000) / 60));
@@ -553,9 +650,20 @@ function GreenlightForm({ projectId, onClose }: { projectId: string; onClose: ()
       <div className="field">
         <label htmlFor="gl-plan">How It Gets Made</label>
         <select id="gl-plan" value={planId} onChange={(e) => setPlanId(e.target.value)}>
-          {ways.map((one) => <option key={one.id} value={one.id}>{one.label}</option>)}
+          {ways.map((one) => (
+            <option
+              key={one.id}
+              value={one.id}
+              disabled={project !== undefined && whyNotMakeAs(project, one) !== undefined}
+            >
+              {one.label}
+            </option>
+          ))}
         </select>
         {plan && <p className="xs dim" style={{ margin: 'var(--s2) 0 0' }}>{plan.what}</p>}
+        {plan && project && wrongShape !== undefined && (
+          <p className="xs negative" style={{ margin: 'var(--s2) 0 0' }}>{wrongShape}</p>
+        )}
       </div>
 
       <div className="field">

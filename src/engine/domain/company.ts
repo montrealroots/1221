@@ -555,6 +555,37 @@ export interface Part {
   recut?: number;
 }
 
+/**
+ * What a thing is, before anybody writes it.
+ *
+ * Three answers and none of them decoration: the engine decides what the thing can
+ * be made as, the ensemble is checked against what that engine needs to run, and the
+ * world is where the unit works out of. Tone is deliberately absent — the craft
+ * counts it as a component of an engine rather than a fourth choice, so it lives on
+ * the engine row in `content/concept.ts`.
+ */
+export interface Concept {
+  /** The story engine, by id from `content/concept.ts`. */
+  engineId: string;
+  /**
+   * Where it is set, as a city id.
+   *
+   * Read by the greenlight: the unit works out of this city rather than out of the
+   * lot's own town, which is what `unitBaseId` always used to be because nothing
+   * else ever wrote it.
+   */
+  worldId: string;
+  /**
+   * How many people the show turns on.
+   *
+   * Television runs on a web of characters rather than one lead, and each engine
+   * declares the smallest ensemble it can run on. Checked at the greenlight.
+   */
+  people: number;
+  /** When it was conceived. */
+  at: Instant;
+}
+
 export interface Project {
   id: Id;
   saveId: Id;
@@ -562,6 +593,18 @@ export interface Project {
   title: string;
   medium: 'film' | 'television';
   stage: Stage;
+  /**
+   * What this is, before anybody writes it.
+   *
+   * The first thing in the real process and the last thing this build acquired. A
+   * picture used to go from a title straight to a runtime, which is why its parts
+   * are called `Lead 1` and `Support 2` — there was nothing to lift them off.
+   *
+   * Optional because a film can be made without one, and required for television by
+   * `whyNotMakeAs`: a series is a machine that makes episodes, and a television
+   * premise with no engine under it is refused rather than made badly.
+   */
+  concept?: Concept;
   /** The right this hangs off, where the company holds one. */
   holdingId?: Id;
   startedAt: Instant;

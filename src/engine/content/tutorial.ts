@@ -423,6 +423,21 @@ export const LESSONS: readonly Lesson[] = [
   // The pictures
   // -------------------------------------------------------------------------
   {
+    id: 'conceive',
+    strand: 'the-pictures',
+    title: 'Say What It Is Before You Say Yes',
+    body: 'A film is one story. A television series is a machine that makes one every week, and '
+      + 'the machine is the thing you are choosing. A case that walks in the door never runs out. '
+      + 'People who cannot get away from each other never run out. Somebody becoming somebody '
+      + 'else runs out the moment they have become them — so it can be a limited run and it can '
+      + 'never be a show that keeps coming back. The greenlight checks this and refuses the ones '
+      + 'that cannot work.',
+    teaches: ['company.conceive'],
+    screen: 'business',
+    after: ['option'],
+    importance: 58,
+  },
+  {
     id: 'develop',
     strand: 'the-pictures',
     title: 'Putting A Picture Into Development',
