@@ -39,6 +39,7 @@ import {
 import { castOn, castSpark, castsAppeal, castsControversy, castsPrestige } from './casting';
 import { MS_WEEK } from './lot';
 import { backendParticipationCents } from '../production/contracts';
+import { marketingAwareness as campaignAwareness } from '../production/marketing';
 
 export const WINDOW_KIND = 'project.window';
 
@@ -53,6 +54,8 @@ export interface Prospects {
    * replacement development pipeline. Missing is neutral for legacy projects.
    */
   screenplayQuality?: number;
+  /** Producer-built awareness, 0-100. Missing is neutral for legacy projects. */
+  marketingAwareness?: number;
   /** Which deal it is being sold on, by id. */
   dealId: string;
   /**
@@ -127,12 +130,14 @@ export interface Prospects {
  * bonus applied to a picture that was going to be fine.
  */
 export const STORY_MOVES = { screenplay: 0.42 } as const;
+export const MARKETING_MOVES = { awareness: 0.5 } as const;
 
 export function decideTake(prospects: Prospects, roll: number): { cents: Money } {
   const deal = dealById(prospects.dealId);
   const pull = deal ? 0.6 + 0.4 * deal.reach : 1;
   const band = 0.45 + roll * 1.7;
   const story = 1 + (((prospects.screenplayQuality ?? 50) - 50) / 100) * STORY_MOVES.screenplay;
+  const marketing = 1 + (((prospects.marketingAwareness ?? 50) - 50) / 100) * MARKETING_MOVES.awareness;
   const cast = prospects.cast
     ? 1 + ((prospects.cast.truth - 50) / 100) * CAST_MOVES.truth
         + ((prospects.cast.reads - 50) / 100) * CAST_MOVES.reads
@@ -152,7 +157,7 @@ export function decideTake(prospects: Prospects, roll: number): { cents: Money }
   return {
     cents: Math.round(
       ultimateFor(prospects.negativeCents) * pull * band
-      * Math.max(0.2, story * cast * cold * glad * together * talked),
+      * Math.max(0.2, story * marketing * cast * cold * glad * together * talked),
     ),
   };
 }
@@ -389,6 +394,7 @@ export function sellIt(sim: Simulation, sale: Sale): { ok: true } | { ok: false;
   const appeal = castsAppeal(sim, project);
   const spark = castSpark(sim, project);
   const prestige = castsPrestige(sim, project);
+  const awareness = campaignAwareness(project);
   project.takeCents = decideTake(
     {
       negativeCents: project.budgetCents ?? 0,
@@ -396,6 +402,7 @@ export function sellIt(sim: Simulation, sale: Sale): { ok: true } | { ok: false;
       ...(project.development
         ? { screenplayQuality: project.development.screenplay.quality }
         : {}),
+      ...(awareness !== undefined ? { marketingAwareness: awareness } : {}),
       ...(truth !== undefined && reads !== undefined ? { cast: { truth, reads } } : {}),
       ...(controversy !== undefined ? { controversy } : {}),
       ...(appeal !== undefined ? { appeal } : {}),
