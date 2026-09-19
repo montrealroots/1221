@@ -11,6 +11,7 @@ import { formatMoney } from '@/engine/core/money';
 import { formatDate } from '@/engine/core/time';
 import { TRAIT_BY_ID } from '@/engine/domain/attributes';
 import { talentProfile, type TalentEngagement, type TalentProfile } from '@/engine/production/talent';
+import { actingTermsSummary } from '@/engine/production/contracts';
 import { Stat } from '@/ui/components/primitives';
 import { defineLook, type Way } from './registry';
 import { at } from './subject';
@@ -141,7 +142,10 @@ defineLook<TalentProfile>('talent', {
                           <td>{one.title}</td>
                           <td className="small nowrap">{one.role}</td>
                           <td className="small nowrap">{money(one.feeCents)}</td>
-                          <td className="small">{engagementLine(one, sim.homeZone)}</td>
+                          <td className="small">
+                            {engagementLine(one, sim.homeZone)}
+                            {one.terms ? <div className="dim xs">{actingTermsSummary(one.terms)}</div> : null}
+                          </td>
                         </tr>
                       ))}
                     </tbody>
