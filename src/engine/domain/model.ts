@@ -629,11 +629,15 @@ export interface Preferences {
  * 77 added the business — seven tables for the company, and the removal of the
  * `Company`, `Division` and `Employee` types that had been declared for a
  * build that was cut and never stored a single record.
+ * 84 adds the optional replacement-production development record to a project:
+ * creative brief, screenplay passes, quality, writer and lock state. Older
+ * projects intentionally remain without it and continue on the grandfathered
+ * production path until the player explicitly develops them.
  *
  * A save from 76 or earlier has no company at all, which reads correctly as a
  * family that never formed one rather than as a broken save.
  */
-export const SAVE_SCHEMA_VERSION = 83;
+export const SAVE_SCHEMA_VERSION = 84;
 
 export interface SaveMeta {
   id: Id;
