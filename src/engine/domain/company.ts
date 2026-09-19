@@ -641,6 +641,23 @@ export interface Project {
    * staffed by somebody, and choosing is choosing to do better than that.
    */
   levels?: Record<string, number>;
+  /**
+   * Which doors have shut, by lock id from `content/locks.ts`.
+   *
+   * An array rather than a set of booleans because the order they were taken in is
+   * the thing that matters: a lock may only be taken once everything below it is
+   * shut, and a later one can foreclose an earlier one's reversal.
+   */
+  locked?: string[];
+  /**
+   * When the money was committed and the clock started.
+   *
+   * The one date stored. Everything else about the schedule — when each phase runs,
+   * when it delivers — is derived from this plus the material's demands and who was
+   * hired, because a date written down beside the inputs that produce it is a second
+   * answer waiting to disagree with the first.
+   */
+  greenlitAt?: Instant;
   shelvedAt?: Instant;
 
   // --- The dated life, once it is greenlit ---------------------------------

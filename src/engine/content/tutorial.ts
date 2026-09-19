@@ -388,6 +388,35 @@ export const LESSONS: readonly Lesson[] = [
     after: ['option'],
     importance: 48,
   },
+  {
+    id: 'shutting',
+    strand: 'the-company',
+    title: 'Shutting The Budget, And What It Costs To Open It',
+    body: 'Once you stop moving people around, shut the budget. That is what makes the '
+      + 'figure something a department can be told, and nothing else can happen until '
+      + 'you do. It is not final: opening it again costs a slice of the budget, because '
+      + 'going back on what people were told costs in proportion to what they were told. '
+      + 'Being wrong once is affordable. Being wrong twice is felt.',
+    teaches: ['company.lock_budget'],
+    screen: 'business',
+    after: ['staffing'],
+    importance: 46,
+  },
+  {
+    id: 'saying-yes',
+    strand: 'the-company',
+    title: 'Saying Yes Is When The Money Goes',
+    body: 'The budget leaves the company here, not when it was worked out. Up to this '
+      + 'point everything was a plan; this is the commitment, and it is the moment the '
+      + 'budget stops being something you can reopen at a price — the money is gone and '
+      + 'no fee brings it back. You are told exactly that before you do it. What you get '
+      + 'back is a date: when each phase runs and when the thing is finished, worked out '
+      + 'from what the material asks and who you hired to answer it.',
+    teaches: ['company.greenlight'],
+    screen: 'business',
+    after: ['shutting'],
+    importance: 52,
+  },
 
   // -------------------------------------------------------------------------
   // The pictures

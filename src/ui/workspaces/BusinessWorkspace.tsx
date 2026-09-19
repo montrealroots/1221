@@ -29,6 +29,7 @@ import { CITIES } from '@/engine/content/geography';
 import {
   BEST_TEAM, DEPARTMENTS, LEAST_TEAM, monthsFor, rateFor,
 } from '@/engine/content/departments';
+import { LOCK_BY_ID, canReopen, undoCosts, wouldForeclose } from '@/engine/content/locks';
 import {
   behindTheCompany, breakEvenShare, goingUp, pullOn, sellsFor, theSmallStage,
   turnedAway, whereTheBuildStands, whyNotBuild,
@@ -810,7 +811,80 @@ function Staffing() {
         <strong>{formatMoney(project.budgetCents ?? 0, { cents: false })}</strong> to make,
         as it stands.
       </p>
+      <Committing project={project} />
       {said ? <p className="small warn">{said}</p> : null}
     </Panel>
+  );
+}
+
+/**
+ * Shutting the budget, and saying yes.
+ *
+ * The two links of the chain, with the foreclosure named before it happens rather
+ * than after. A player about to greenlight is told which reversal they are spending,
+ * by name — "these doors close" is a briefing and "this is permanent" is only a
+ * warning, and the difference is whether somebody can decide against it.
+ */
+function Committing({ project }: { project: Project }) {
+  const { run } = useGame();
+  const [said, setSaid] = useState<string | undefined>(undefined);
+  const shut = project.locked ?? [];
+  const budgetShut = shut.includes('budget');
+  const greenlit = shut.includes('greenlit');
+  const reopens = canReopen(LOCK_BY_ID.budget!, shut);
+  const losing = wouldForeclose(LOCK_BY_ID.greenlit!, shut);
+
+  const go = (kind: string, payload: Record<string, unknown>) => {
+    const done = run<{ ok: boolean; error?: string }>(kind, payload, { silent: true });
+    setSaid(done.value?.error ?? (done.value?.ok ? undefined : done.error));
+  };
+
+  if (greenlit) {
+    return (
+      <p className="small" style={{ marginTop: 'var(--s3)' }}>
+        Greenlit. The money has gone out and the budget is shut for good.
+      </p>
+    );
+  }
+
+  return (
+    <div style={{ marginTop: 'var(--s3)' }}>
+      <div className="row gap-2">
+        {!budgetShut && (
+          <button className="btn btn-sm" onClick={() => go('company.lock_budget', { projectId: project.id })}>
+            Shut The Budget
+          </button>
+        )}
+        {budgetShut && reopens && (
+          <button
+            className="btn btn-sm"
+            onClick={() => go('company.lock_budget', { projectId: project.id, off: true })}
+          >
+            Open It Again
+          </button>
+        )}
+        {budgetShut && (
+          <button
+            className="btn btn-sm btn-primary"
+            onClick={() => go('company.greenlight', { projectId: project.id })}
+          >
+            Say Yes
+          </button>
+        )}
+      </div>
+      {budgetShut && reopens && (
+        <p className="xs dim" style={{ marginTop: 'var(--s2)' }}>
+          Opening it again costs{' '}
+          {formatMoney(undoCosts(LOCK_BY_ID.budget!, project.budgetCents ?? 0), { cents: false })}.
+        </p>
+      )}
+      {losing.length > 0 && (
+        <p className="xs warn" style={{ marginTop: 'var(--s2)' }}>
+          Saying yes pays the budget out and closes one door for good:{' '}
+          {losing.map((one) => one.label.toLowerCase()).join(', ')} can no longer be reopened.
+        </p>
+      )}
+      {said ? <p className="small warn">{said}</p> : null}
+    </div>
   );
 }

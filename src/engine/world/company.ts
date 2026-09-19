@@ -40,6 +40,7 @@ import {
   BEST_TEAM, DEPARTMENT_BY_ID, LEAST_TEAM, monthsFor,
 } from '../content/departments';
 import { layOut } from './schedule';
+import { LOCK_BY_ID, canReopen, readyFor, undoCosts } from '../content/locks';
 import {
   MS_DAY, addMonths, formatDate, instantFromZoned, startOfNextMonth, type Instant,
 } from '../core/time';
@@ -1031,6 +1032,84 @@ export function registerCompanyCommands(sim: Simulation): void {
   });
 
   /**
+   * Shut the budget, or open it again at a price.
+   *
+   * Shutting it freezes who is hired into every department, which is what makes the
+   * figure something a department can be told. Opening it again costs a share of the
+   * budget, because going back on what people were told costs in proportion to what
+   * they were told — and it stops being possible at all once the greenlight has
+   * foreclosed it, which the greenlight says before it does it.
+   */
+  sim.onCommand<{ projectId: Id; off?: boolean }, Done>(
+    'company.lock_budget', (payload, { sim: s }) => {
+      const project = s.universe.projects[payload.projectId];
+      if (!project) return refuse('No such project.');
+      const parent = parentCompany(s.universe);
+      if (!parent) return refuse('There’s no company.');
+      const lock = LOCK_BY_ID.budget!;
+      const shut = project.locked ?? [];
+
+      if (payload.off) {
+        if (!shut.includes(lock.id)) return refuse('The budget is already open.');
+        if (!canReopen(lock, shut)) {
+          return refuse('The money has gone out. There’s no reopening it now.');
+        }
+        const owed = undoCosts(lock, project.budgetCents ?? 0);
+        const paid = payFor(s, parent.id, owed, `Reopening the budget on ${project.title}`);
+        if (!paid.ok) return paid;
+        project.locked = shut.filter((one) => one !== lock.id);
+        return { ok: true };
+      }
+
+      if (shut.includes(lock.id)) return refuse('The budget is already shut.');
+      if (!project.holdingId) return refuse('That one has no material under it to cost.');
+      if (!readyFor(lock, shut)) return refuse('Something earlier has to be settled first.');
+      project.locked = [...shut, lock.id];
+      return { ok: true };
+    },
+  );
+
+  /**
+   * Say yes, and pay for it.
+   *
+   * The budget leaves the company here rather than when it was computed, because a
+   * figure on a screen is a plan and this is the commitment. It is also what
+   * forecloses reopening the budget: the money is gone, and a fee cannot bring it
+   * back, so pretending the door still opens would make the whole chain a gesture.
+   *
+   * Only the date is stored. When each phase runs and when it delivers are derived
+   * from it, the material's demands and who was hired — because a date written down
+   * beside the inputs that produce it is a second answer waiting to disagree.
+   */
+  sim.onCommand<{ projectId: Id }, Done & { deliversAt?: Instant }>(
+    'company.greenlight', (payload, { sim: s }) => {
+      const project = s.universe.projects[payload.projectId];
+      if (!project) return refuse('No such project.');
+      const parent = parentCompany(s.universe);
+      if (!parent) return refuse('There’s no company.');
+      const holding = project.holdingId ? s.universe.holdings[project.holdingId] : undefined;
+      if (!holding) return refuse('That one has no material under it.');
+
+      const lock = LOCK_BY_ID.greenlit!;
+      const shut = project.locked ?? [];
+      if (shut.includes(lock.id)) return refuse('That one is already greenlit.');
+      if (!readyFor(lock, shut)) {
+        return refuse('The budget has to be shut before the money can go out.');
+      }
+
+      const laid = layOut(holding.demands, project.levels ?? {}, s.now, s.homeZone);
+      const paid = payFor(s, parent.id, laid.budgetCents, `Making ${project.title}`);
+      if (!paid.ok) return paid;
+
+      project.budgetCents = laid.budgetCents;
+      project.greenlitAt = s.now;
+      project.stage = 'greenlit';
+      project.locked = [...shut, lock.id];
+      return { ok: true, deliversAt: laid.deliversAt };
+    },
+  );
+
+  /**
    * Hire a team into one of a picture's departments, and reprice it.
    *
    * The other half of the budget. `world/schedule.ts` reads what the material asks
@@ -1056,6 +1135,9 @@ export function registerCompanyCommands(sim: Simulation): void {
       const want = Math.round(payload.level);
       if (!Number.isFinite(want) || want < LEAST_TEAM || want > BEST_TEAM) {
         return refuse(`A team is hired somewhere between ${LEAST_TEAM} and ${BEST_TEAM}.`);
+      }
+      if ((project.locked ?? []).includes('budget')) {
+        return refuse('The budget is shut. Open it again before moving anybody.');
       }
       if (monthsFor(department, holding.demands) <= 0) {
         return refuse(`This one asks nothing of ${department.label.toLowerCase()}.`);
