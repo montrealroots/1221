@@ -830,29 +830,24 @@ export interface Project {
   seenForBoard?: Id[];
 
   // --- The life after delivery ---------------------------------------------
-  // Empty until somebody buys it. A picture nobody has bought is an asset with
-  // no price, and saying otherwise would be inventing a market.
+  // These outlived the release system that wrote them. `dealId` and `windowsPaid`
+  // were declared for a sales model that was deleted twice and never came back, and
+  // nothing in `src/` has written either since — so they are gone rather than left
+  // as words waiting for a reader. `releasedAt` and `takeCents` were in the same
+  // state until `company.release` finally filled them.
 
-  /** How it was sold, by deal id. */
-  dealId?: string;
   soldAt?: Instant;
+  /** When it opened. Absent until somebody lets it out. */
   releasedAt?: Instant;
   /**
-   * What it is reckoned to take across ten years, all in, for what it cost and
-   * the way it is being released. Decided once at the sale and not revised,
-   * because a figure that moved every time somebody looked at it would be a
-   * number nobody could plan against.
+   * What the whole run was reckoned at, on the day it opened.
+   *
+   * Worked out once and never revised, which was the intent when this field was
+   * first declared and is now actually true of it. Everything arriving afterwards is
+   * arithmetic on this, so the figure a player was shown at the opening stays the
+   * figure they get — a receipt explains a reckoning rather than chasing one.
    */
   takeCents?: Money;
-  /**
-   * Which windows have paid, by id.
-   *
-   * The only thing stored about the money. Everything else — gross to date,
-   * what each tier took, what the company has seen — is recomputed from this
-   * and the deal, so a recoupment figure can never drift from the receipts
-   * that produced it.
-   */
-  windowsPaid?: string[];
 
   // --- What the state gives back -------------------------------------------
 

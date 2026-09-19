@@ -839,10 +839,36 @@ function Committing({ project }: { project: Project }) {
     setSaid(done.value?.error ?? (done.value?.ok ? undefined : done.error));
   };
 
+  if (project.releasedAt !== undefined) {
+    return (
+      <p className="small" style={{ marginTop: 'var(--s3)' }}>
+        Out, and paying. What it takes was settled the day it opened.
+      </p>
+    );
+  }
+
+  if (project.stage === 'delivered') {
+    return (
+      <div style={{ marginTop: 'var(--s3)' }}>
+        <button
+          className="btn btn-sm btn-primary"
+          onClick={() => go('company.release', { projectId: project.id })}
+        >
+          Let It Out
+        </button>
+        <p className="xs dim" style={{ marginTop: 'var(--s2)' }}>
+          What it takes is worked out once, on the day it opens, and paid over the best
+          part of a year.
+        </p>
+        {said ? <p className="small warn">{said}</p> : null}
+      </div>
+    );
+  }
+
   if (greenlit) {
     return (
       <p className="small" style={{ marginTop: 'var(--s3)' }}>
-        Greenlit. The money has gone out and the budget is shut for good.
+        Greenlit, and being made. The money has gone out and the budget is shut for good.
       </p>
     );
   }

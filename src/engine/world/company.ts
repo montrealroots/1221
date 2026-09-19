@@ -41,6 +41,7 @@ import {
 } from '../content/departments';
 import { layOut } from './schedule';
 import { LOCK_BY_ID, canReopen, readyFor, undoCosts } from '../content/locks';
+import { payWhatIsDue, wouldTake } from './release';
 import {
   MS_DAY, addMonths, formatDate, instantFromZoned, startOfNextMonth, type Instant,
 } from '../core/time';
@@ -1030,6 +1031,38 @@ export function registerCompanyCommands(sim: Simulation): void {
     s.universe.policies[policy.id] = policy;
     return { ok: true, id: policy.id };
   });
+
+  /**
+   * Let a finished picture out.
+   *
+   * Only a finished one. A picture still being made has nothing to show, and the
+   * refusal says which of the two it is rather than a general no.
+   *
+   * The whole run is reckoned here and stored, and nothing revises it afterwards. It
+   * reads what the picture cost and the craft that went into it — thin, and honestly
+   * thin: there is no audience, no rating, no campaign and no season yet, and each of
+   * those will move this when it arrives. Both inputs already bite, which is the bar
+   * for shipping it.
+   */
+  sim.onCommand<{ projectId: Id }, Done & { takeCents?: Money }>(
+    'company.release', (payload, { sim: s }) => {
+      const project = s.universe.projects[payload.projectId];
+      if (!project) return refuse('No such project.');
+      if (project.releasedAt !== undefined) return refuse('That one is already out.');
+      if (project.stage !== 'delivered') {
+        return refuse(project.greenlitAt === undefined
+          ? 'That one has not been made yet.'
+          : 'That one is still being made.');
+      }
+      const takeCents = wouldTake(s, project);
+      project.releasedAt = s.now;
+      project.takeCents = takeCents;
+      // The first month lands on the day it opens rather than waiting for a tick, so
+      // a release is something that happened rather than something scheduled.
+      payWhatIsDue(s, project, s.now);
+      return { ok: true, takeCents };
+    },
+  );
 
   /**
    * Shut the budget, or open it again at a price.

@@ -417,6 +417,21 @@ export const LESSONS: readonly Lesson[] = [
     after: ['shutting'],
     importance: 52,
   },
+  {
+    id: 'letting-it-out',
+    strand: 'the-company',
+    title: 'A Finished Picture Is Not Money Yet',
+    body: 'Something finished sits there earning nothing until you let it out. What it '
+      + 'takes is worked out once, on the day it opens, from what it cost and how well '
+      + 'it was made — and then it pays over the best part of a year, most of it early '
+      + 'and a tail after that. The figure stands once it is set, so the number you '
+      + 'are shown when it opens is the number you get. Which means the decisions that '
+      + 'made it are already behind you: the team you hired is the picture you have.',
+    teaches: ['company.release'],
+    screen: 'business',
+    after: ['saying-yes'],
+    importance: 54,
+  },
 
   // -------------------------------------------------------------------------
   // The pictures

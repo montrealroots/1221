@@ -28,6 +28,7 @@ import { decideQuota } from './world/sugar';
 import { MEN, WOMEN } from './content/names';
 import { ageOn } from './world/family';
 import { onTheMarket } from './world/material';
+import { reckon } from './content/release';
 
 // ---------------------------------------------------------------------------
 // The sky
@@ -345,5 +346,55 @@ defineDecider<Market, string>({
     if (out.length === 0) return 'nothing worth reading this month';
     const dearest = out.reduce((most, one) => Math.max(most, one.asksCents), 0);
     return `${out.length} listed, dearest at ${Math.round(dearest / 1_000_00)}`;
+  },
+});
+
+/**
+ * What a picture takes across its whole run.
+ *
+ * Deterministic in everything but the one draw, which is the point: an audience is
+ * not a calculation, but it is not a coin toss either. A well made picture usually
+ * does well and sometimes does not.
+ *
+ * Both declared inputs push the same way and say so. A dearer picture reaches
+ * further, and better craft returns more — neither claim is subtle, and both are the
+ * kind of thing a sign flip would invert while still reading perfectly in prose.
+ */
+interface Took { budgetCents: number; craft: number; luck: number }
+
+const TOOK = ['lost money', 'washed its face', 'did well', 'ran away'];
+
+defineDecider<Took, string>({
+  id: 'release.took',
+  decides: 'What a finished picture returns against what it cost.',
+  drawnIn: 'src/engine/world/release.ts',
+  draws: ['release'],
+  reads: {
+    // The craft that went into it, floor to ceiling. The only input that reaches the
+    // rung, and the whole claim of the model.
+    craft: (t, at) => ({ ...t, craft: at }),
+  },
+  sample: (seed) => ({
+    budgetCents: 4_000_000_00 + (seed % 6) * 9_000_000_00,
+    craft: (seed % 5) / 4,
+    luck: ((seed % 7) / 7),
+  }),
+  ladder: TOOK,
+  // Craft up, and nothing else declared.
+  //
+  // `spend` was declared here and the sweep deleted it, which is the second time this
+  // session a decider has claimed an input its own comment had already explained away.
+  // The outcome is a *ratio*: a bigger picture takes more money and costs more to make
+  // in the same breath, so the budget cancels and moves the cash without ever moving
+  // the rung. That is the claim this model actually makes, and it is worth stating
+  // rather than burying — what a picture returns **against what it cost** is about how
+  // well it was made, not how much was spent on it.
+  rises: { craft: 'up' },
+  decide: ({ budgetCents, craft, luck }) => {
+    const share = reckon(budgetCents, craft, luck) / budgetCents;
+    if (share < 1) return 'lost money';
+    if (share < 1.15) return 'washed its face';
+    if (share < 1.5) return 'did well';
+    return 'ran away';
   },
 });
