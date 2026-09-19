@@ -28,7 +28,9 @@ import { decideQuota } from './world/sugar';
 import { MEN, WOMEN } from './content/names';
 import { ageOn } from './world/family';
 import { onTheMarket } from './world/material';
-import { reckon } from './content/release';
+import { appealFrom } from './content/material';
+import { reckon, whatItCouldReach } from './content/release';
+import { BEST_TEAM, DEPARTMENTS, LEAST_TEAM, monthsFor, rateFor } from './content/departments';
 
 // ---------------------------------------------------------------------------
 // The sky
@@ -360,9 +362,21 @@ defineDecider<Market, string>({
  * further, and better craft returns more — neither claim is subtle, and both are the
  * kind of thing a sign flip would invert while still reading perfectly in prose.
  */
-interface Took { budgetCents: number; craft: number; luck: number }
+interface Took {
+  scope: number; spectacle: number; period: number;
+  appeal: number; level: number; luck: number;
+}
 
 const TOOK = ['lost money', 'washed its face', 'did well', 'ran away'];
+
+/** What the departments would charge for this shape of picture at this team level. */
+const wouldCost = (t: Took): number => {
+  const demands = { scope: t.scope, spectacle: t.spectacle, period: t.period };
+  const level = Math.max(LEAST_TEAM, Math.min(BEST_TEAM, Math.round(t.level)));
+  return DEPARTMENTS.reduce(
+    (sum, one) => sum + rateFor(one, level) * monthsFor(one, demands), 0,
+  );
+};
 
 defineDecider<Took, string>({
   id: 'release.took',
@@ -370,28 +384,55 @@ defineDecider<Took, string>({
   drawnIn: 'src/engine/world/release.ts',
   draws: ['release'],
   reads: {
-    // The craft that went into it, floor to ceiling. The only input that reaches the
-    // rung, and the whole claim of the model.
-    craft: (t, at) => ({ ...t, craft: at }),
+    // How much picture there is. The heaviest pull on an audience, and it costs across
+    // all three phases, so it has to earn its keep on both sides at once.
+    scope: (t, at) => ({ ...t, scope: 1 + Math.round(at * 4) }),
+    // How much of it cannot be photographed as found. Pulls less than scope and costs
+    // only on the floor and in finishing.
+    spectacle: (t, at) => ({ ...t, spectacle: 1 + Math.round(at * 4) }),
+    // How much of the world has to be built. Costs in design and on the floor, and
+    // draws nobody, so this one is expected to push the rung the other way.
+    period: (t, at) => ({ ...t, period: 1 + Math.round(at * 4) }),
+    // Which team was hired. Not declared in `rises`, because it genuinely is not
+    // monotone and that is the entire point of the model.
+    level: (t, at) => ({ ...t, level: LEAST_TEAM + at * (BEST_TEAM - LEAST_TEAM) }),
+    // How far the property carries, which costs nothing to make and is worth
+    // everything to have. The only input that moves the take without touching the
+    // budget at all.
+    appeal: (t, at) => ({ ...t, appeal: appealFrom(at) }),
   },
   sample: (seed) => ({
-    budgetCents: 4_000_000_00 + (seed % 6) * 9_000_000_00,
-    craft: (seed % 5) / 4,
-    luck: ((seed % 7) / 7),
+    scope: 1 + (seed % 5),
+    spectacle: 1 + ((seed * 3) % 5),
+    period: 1 + ((seed * 7) % 5),
+    appeal: appealFrom(((seed * 11) % 13) / 13),
+    level: LEAST_TEAM + (seed % (BEST_TEAM - LEAST_TEAM + 1)),
+    luck: (seed % 7) / 7,
   }),
   ladder: TOOK,
-  // Craft up, and nothing else declared.
+  // Scope up, spectacle up, period **down**, and the team level deliberately silent.
   //
-  // `spend` was declared here and the sweep deleted it, which is the second time this
-  // session a decider has claimed an input its own comment had already explained away.
-  // The outcome is a *ratio*: a bigger picture takes more money and costs more to make
-  // in the same breath, so the budget cancels and moves the cash without ever moving
-  // the rung. That is the claim this model actually makes, and it is worth stating
-  // rather than burying — what a picture returns **against what it cost** is about how
-  // well it was made, not how much was spent on it.
-  rises: { craft: 'up' },
-  decide: ({ budgetCents, craft, luck }) => {
-    const share = reckon(budgetCents, craft, luck) / budgetCents;
+  // `spend` was declared here once as a bare budget and the sweep deleted it, because
+  // under the old model the outcome was a ratio in which the budget canceled: a
+  // bigger picture took more money and cost more to make in the same breath. That is
+  // no longer true and the deletion no longer holds. What a picture takes is now
+  // capped by what its material could reach, so the budget sits in the denominator
+  // alone and every input that moves it moves the rung.
+  //
+  // Period is the sharp one. It buys months of design and of the unit and reaches
+  // nobody, so more of it can only make a picture return less against its cost. If
+  // this ever sweeps up or inert, `PERIOD_PULLS` stopped being nought and the claim
+  // that period is a trap dressed as prestige is no longer in the code.
+  rises: { scope: 'up', spectacle: 'up', period: 'down', appeal: 'up' },
+  decide: (t) => {
+    const budgetCents = wouldCost(t);
+    if (budgetCents <= 0) return 'lost money';
+    const craft = (Math.max(LEAST_TEAM, Math.min(BEST_TEAM, t.level)) - LEAST_TEAM)
+      / (BEST_TEAM - LEAST_TEAM);
+    const reach = whatItCouldReach(
+      { scope: t.scope, spectacle: t.spectacle, period: t.period }, t.appeal,
+    );
+    const share = reckon(reach, craft, t.luck) / budgetCents;
     if (share < 1) return 'lost money';
     if (share < 1.15) return 'washed its face';
     if (share < 1.5) return 'did well';

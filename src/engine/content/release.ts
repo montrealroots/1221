@@ -23,76 +23,95 @@
  * release date, so a year of earnings arrived in an afternoon and nobody could see
  * where any of it came from. Both halves matter: reckon once, and pay slowly.
  *
+ * ## An audience is finite, and that is the whole model
+ *
+ * What a picture takes is a share of **what its material could ever reach**, and that
+ * ceiling is set before a penny is spent. Craft decides how much of the reach is
+ * actually collected and the draw moves it either way, but neither can lift a picture
+ * past the audience its story was able to find.
+ *
+ * This replaced a model where the take was a multiple **of the budget**, and the
+ * replacement was forced by measurement rather than taste. Under a multiple, spending
+ * more returned more without any bound at all: the best team cost about three and a
+ * half times the cheapest and multiplied the take by more than it multiplied the cost,
+ * so hiring the best was correct on every picture, at every level of capital, forever.
+ * `tools/career.mjs` showed exactly that — five years, finite cash, best team richest
+ * every time — and no value of the three constants involved could have changed it,
+ * because the shape of the formula was the problem and not its numbers.
+ *
+ * The rates moved with the formula. The best team used to cost three and a half times
+ * the cheapest; it now costs a little over twice, because a rung has to be able to pay
+ * for itself on ordinary material and at the old ramp the margin needed to justify one
+ * was so fat that nothing else in the game could have mattered.
+ *
+ * With a ceiling the arithmetic inverts into a decision. Reach is fixed by the
+ * material; budget is chosen by the player. The best team is worth its money only when
+ * the material can carry it, and on a small property it is simply an expensive way to
+ * lose. Which property deserves which team is now a question with a wrong answer.
+ *
+ * ## What draws an audience, and what merely costs
+ *
+ * Reach reads two of the three demands and pointedly ignores the third.
+ *
+ * **Scope** pulls hardest: how much picture there is, is most of how many people will
+ * come to it. **Spectacle** pulls, but less — something worth seeing brings an
+ * audience, though not as many as something big brings. **Period** pulls **nothing at
+ * all**, and that is the sharpest claim in this file. Building a world rather than
+ * borrowing one costs real money in design and on the floor, and no part of it puts a
+ * single person in a seat. Period material is therefore a trap dressed as prestige,
+ * and the only defense against it is optioning it cheaply.
+ *
+ * That gives the demand vector three genuinely different meanings instead of three
+ * synonyms for *bigger*, and it is falsifiable in the plainest way: move `period` and
+ * the budget moves while the take does not.
+ *
  * ## What these were measured against
  *
- * They shipped reasoned and unmeasured, and this file said so. Two instruments settled
- * them. `tools/slate.mjs` puts sixteen properties through the real command path —
- * optioned, developed, staffed, locked, greenlit, walked to delivery, released and paid
- * out — at every team level, with the save seed held still so that only the hiring
- * differs. `tools/career.mjs` runs whole studios for five years on finite cash with the
- * company's own month turning underneath.
+ * Every constant below was moved by a measurement, and three of them were moved twice.
+ * The department rates moved with them, because the crossover is a relationship
+ * between what a team costs and what it collects and neither half can be tuned alone.
  *
- * The constants moved twice, and both readings are kept because each falsified a
- * different assumption.
- *
- * **First reading.** At craft swinging 0.55 against luck at 0.2 the outcome was all but
- * determined by the team: the cheapest lost **every** picture and the best won **every**
- * picture, with no overlap anywhere. Hiring stopped being a decision, because the answer
- * was always the same. At 0.35 against 0.45 the bands overlapped and the medians climbed
- * from 0.78x to 1.62x, which looked right on one picture at a time.
- *
- * **Second reading, which said it was not.** A median of 0.78x means the cheapest team
- * loses a fifth of every budget, and over a career that compounds: a studio hiring cheap
- * bled until it could not afford the next picture. At 30m of capital, teams one to three
- * were refused a greenlight fourteen to nineteen times and managed eight or nine
- * pictures, while teams four and five were refused nothing and managed twelve. Cheap was
- * not the affordable option. It was the path to having less money, which made it wrong
- * at every level of capital rather than only at the comfortable ones.
- *
- * So the floor came up. At 1.25 around, craft swinging 0.2:
+ * On forty properties through the real command path (`tools/slate.mjs`):
  *
  * | team | worst | median | best | returned its cost |
  * |---|---|---|---|---|
- * | 1 | 0.59x | 1.04x | 1.35x | 10 of 16 |
- * | 2 | 0.66x | 1.17x | 1.52x | 10 of 16 |
- * | 3 | 0.73x | 1.30x | 1.68x | 13 of 16 |
- * | 4 | 0.81x | 1.43x | 1.85x | 14 of 16 |
- * | 5 | 0.88x | 1.56x | 2.02x | 15 of 16 |
+ * | 1 | 0.33x | 1.21x | 2.84x | 25 of 40 |
+ * | 2 | 0.34x | 1.24x | 2.90x | 28 of 40 |
+ * | 3 | 0.32x | 1.18x | 2.73x | 25 of 40 |
+ * | 4 | 0.30x | 1.11x | 2.56x | 25 of 40 |
+ * | 5 | 0.29x | 1.05x | 2.42x | 23 of 40 |
  *
- * The cheapest team sits on break-even rather than under it, so hiring cheap treads
- * water instead of drowning, and the careers agreed: at 30m every level survived the
- * five years, every level made ten to twelve pictures, and the refusals moved to where
- * they belong — seven to nine at the cheap teams, none to one at the dear ones.
+ * The medians barely separate, and that is the point rather than a failure: the dear
+ * team is not better on average, it is better **on the right property**. Played with
+ * the right team for each one, the median picture returned 1.24x and twelve of the
+ * forty still lost money.
  *
- * Both tails are still real. The best team lost money on one picture in sixteen and the
- * cheapest cleared its cost on ten. That is the shape wanted: better craft is reliably
- * better and never a guarantee.
+ * On five-year careers at thirty million of capital (`tools/career.mjs`), against a
+ * policy that hires the same rung whatever turns up:
  *
- * ## What is still not settled, and why no constant fixes it
+ * | policy | greenlights refused | lowest cash | ended on |
+ * |---|---|---|---|
+ * | always team 1 | 0.0 | 2.8m | 2.9m |
+ * | always team 2 | 0.0 | 3.9m | 4.2m |
+ * | always team 3 | 0.8 | 2.5m | 3.2m |
+ * | always team 4 | 2.8 | 739k | 1.8m |
+ * | always team 5 | 8.8 | 192k | 1.1m |
+ * | **match the material** | **0.0** | **5.1m** | **5.3m** |
  *
- * The best team ended richest at every level of capital measured — 16.7m against 894k
- * across five years on 30m. Hiring is better than a lookup now, and it is not yet a
- * dilemma, and no value of these three numbers makes it one.
+ * Reading the property before hiring is worth **1.27x** the best rung that never
+ * looks, and it is safer as well as richer — it never over-hires, so it is never
+ * refused a greenlight for money. That is the whole model in one row. Under the old
+ * multiple-of-budget formula the same comparison came back dead level, because there
+ * was nothing about the material worth reading.
  *
- * The reason is structural and sits in `reckon` itself. What a picture takes is a pure
- * multiple **of what it cost**, and the multiple rises with craft, so spending more
- * returns more without bound and the only way to lose is a bad draw. What is missing is
- * a ceiling: an audience is finite, and a picture that spends far past anything its
- * material could reach should stop being paid for the excess. That belongs to the
- * demand side — what the material is worth, how it is rated, who it is for, what a
- * campaign buys — which the market already carries as `Demands` and which nothing yet
- * reads for money.
- *
- * Until that lands these constants are honest about a picture in isolation, and the
- * balance between craft and cash stays open. Re-measure on both instruments when the
- * reach term arrives, because it moves the very thing they measure.
- *
- * And re-measure after anything else that changes what a picture costs or returns. The
- * deleted build's rate constant carried a genuine measurement on twelve careers and
- * was falsified later by a change upstream of it that nobody thought to re-run.
+ * Re-measure on both instruments after anything that moves a department rate, a month
+ * count, or what a demand asks for. The deleted build's rate constant carried a
+ * genuine measurement on twelve careers and was falsified later by a change upstream
+ * of it that nobody thought to re-run.
  */
 
 import type { Money } from '../core/money';
+import type { Demands } from './material';
 
 /**
  * How many months a run pays for.
@@ -119,47 +138,111 @@ export const PAYS_IN: readonly number[] = [
 export const SHARES_TOTAL = PAYS_IN.reduce((sum, one) => sum + one, 0);
 
 /**
- * What a picture returns against what it cost, before craft or luck.
+ * How far a point of scope carries an audience.
  *
- * The middle of the model, and above one on purpose. A picture at the middle of the
- * draw with a middling team returns a quarter more than it cost, which sounds generous
- * until the burn is counted: the company pays admin and payroll every month a picture
- * is being made, so a quarter over is a living rather than a fortune.
- *
- * It was 1.15 and rose, because at 1.15 the cheapest team's median came out at 0.78x —
- * a loss on the typical picture, which made hiring cheap not a budget choice but a
- * mistake. What this number has to do is keep the floor of the craft band above water.
+ * The heaviest of the three, because size is the thing a wide audience turns up for.
  */
-export const RETURNS_AROUND = 1.25;
+export const SCOPE_PULLS = 1;
 
 /**
- * How far the craft that went in moves what comes back.
+ * How far a point of spectacle carries one.
  *
- * Measured twice. At 0.55 this drowned the draw entirely and every band was decided
- * before the dice were thrown. At 0.35 the bands overlapped, but the swing was wide
- * enough that the bottom of it lost money on the median picture — which read as merely
- * weak on one picture and turned out over a career to be fatal. At 0.2 the medians
- * still climb across the five teams, 1.04x to 1.56x, and the worst team's median
- * clears its cost.
- *
- * Craft is worth about half a turn of the budget from the cheapest team to the best,
- * which is deliberately less than the draw is worth. A studio that could buy certainty
- * would only ever be shopping.
+ * Lighter than scope on purpose. Something worth seeing brings people; it does not
+ * bring as many as something big brings, and a small picture full of effects is the
+ * most reliable way in this model to spend like a large one and be seen like a small
+ * one.
  */
-export const CRAFT_SWINGS = 0.2;
+export const SPECTACLE_PULLS = 0.7;
+
+/**
+ * How far a point of period carries one, which is nowhere.
+ *
+ * Declared rather than omitted, because the omission is the claim and a claim nothing
+ * states is a claim nobody can find. Period costs design in prep and the unit on the
+ * floor and returns not one ticket for any of it.
+ *
+ * This is a real number that is really read — `whatItCouldReach` multiplies by it —
+ * so the falsifiability test has something to bite on: set it above nought and period
+ * material stops being a trap.
+ */
+export const PERIOD_PULLS = 0;
+
+/**
+ * What one point of pull is worth at the box office.
+ *
+ * The scale of the whole economy, and the number everything else is read against. The
+ * best team costs a little over twice the cheapest and collects 1/`CRAFT_REACHES` as
+ * much of the reach, so where this sits decides which properties can carry which rung.
+ * Set it low and no material is ever worth a good team; set it high and every material
+ * is, which is the failure the old multiple-of-budget model had.
+ *
+ * Measured down twice, from 3.2m through 2.2m to here. At 3.2m every picture made
+ * money — forty of forty — and a median return of 2.9x meant nothing a studio did
+ * could hurt it. At 1.05m the median picture played right returns 1.24x and twelve of
+ * forty lose money anyway, which is a business rather than an annuity.
+ */
+export const REACH_PER_PULL: Money = 1_050_000_00;
+
+/**
+ * How much of the reach the cheapest team collects.
+ *
+ * The floor of the craft band, and the other half of the crossover. It is not nought,
+ * because a picture made plainly still opens and people still go; and it is well under
+ * one, because the gap between it and one is the entire argument for spending money on
+ * a crew.
+ */
+export const CRAFT_REACHES = 0.55;
+
+/**
+ * How the craft band bends, which is what puts the answer anywhere but the ends.
+ *
+ * Craft buys reach with diminishing returns: the distance from a poor crew to a decent
+ * one is worth far more than the distance from a very good one to the best. That is
+ * true of the thing being modeled, and it is also the only reason a middling team is
+ * ever the right answer.
+ *
+ * Measured, and the first reading is the reason this constant exists at all. At a
+ * straight line — this at one — what a picture cost and what it took both rose evenly
+ * with the team, so the best choice was always an end of the scale and never anywhere
+ * in between: across fourteen properties the answer came back as team one four times
+ * and team five ten times, and teams two, three and four were never right about
+ * anything. Three dead rungs on a five-rung ladder is the defect this project fails a
+ * gate for.
+ *
+ * Below one the ladder bends and each extra rung buys less, so the rung that pays for
+ * itself depends on how far the material can reach — which is the decision. At 0.7 all
+ * five rungs win properties.
+ */
+export const CRAFT_BENDS = 0.7;
 
 /**
  * How much of a run is simply luck.
  *
- * An audience is not a calculation. Measured at 0.45 and left there through both
- * retunes, because it is wide enough that the best team still lost money on one picture
- * in sixteen — the tail a studio has to plan around. At 0.2 that never happened and a
- * slate was a formality.
- *
- * It is wider than the craft band, which is the ordering wanted. Hiring well shifts the
- * odds. It does not buy the result.
+ * An audience is not a calculation. Wide enough that the best team loses money on a
+ * picture now and then — the tail a studio has to plan around — and it is wider than
+ * the craft band on purpose. Hiring well shifts the odds. It does not buy the result.
  */
 export const LUCK_SWINGS = 0.45;
+
+/**
+ * The most an audience would ever pay for this material, before anyone makes it.
+ *
+ * Reads the shape of the property and how far it carries, and nothing else. Not the
+ * budget, not the team, not the asking price — a property is worth what it is worth,
+ * and everything the studio does afterwards decides how much of that it collects.
+ *
+ * `appeal` is one for an ordinary property. It exists because the shape alone was not
+ * enough: with reach a pure function of the three demands, every property of the same
+ * size was the same property, and a policy that costed out every team against the
+ * material picked the same team every single time. Two stories the same size do not
+ * reach the same audience, and now they do not here either.
+ */
+export function whatItCouldReach(demands: Demands, appeal = 1): Money {
+  const pull = Math.max(0, demands.scope) * SCOPE_PULLS
+    + Math.max(0, demands.spectacle) * SPECTACLE_PULLS
+    + Math.max(0, demands.period) * PERIOD_PULLS;
+  return Math.max(0, Math.round(REACH_PER_PULL * pull * Math.max(0, appeal)));
+}
 
 /**
  * What a picture takes across its whole run.
@@ -169,10 +252,11 @@ export const LUCK_SWINGS = 0.45;
  * handing in something out of range should get a sensible answer rather than a
  * negative box office.
  */
-export function reckon(budgetCents: Money, craft: number, luck: number): Money {
-  const atCraft = 1 + (Math.max(0, Math.min(1, craft)) * 2 - 1) * CRAFT_SWINGS;
+export function reckon(reachCents: Money, craft: number, luck: number): Money {
+  const got = CRAFT_REACHES
+    + (1 - CRAFT_REACHES) * Math.max(0, Math.min(1, craft)) ** CRAFT_BENDS;
   const atLuck = 1 + (Math.max(0, Math.min(1, luck)) * 2 - 1) * LUCK_SWINGS;
-  return Math.max(0, Math.round(budgetCents * RETURNS_AROUND * atCraft * atLuck));
+  return Math.max(0, Math.round(reachCents * got * atLuck));
 }
 
 /** What arrives in one month of a run, counting the first as month one. */

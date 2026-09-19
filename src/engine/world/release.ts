@@ -17,15 +17,20 @@
  *
  * ## What a release reads, and what it does not
  *
- * Two things: what the picture cost, and the craft that went into it. That is thin and
- * it is honest about being thin — there is no audience model yet, no rating, no
- * campaign, no season, and no word of mouth. Each of those is a real thing to add and
- * each will move this figure when it arrives.
+ * Two things: the reach of the **material**, and the craft that went into making it.
+ * What the picture cost is deliberately not one of them. It used to be — the take was
+ * a multiple of the budget — and that made spending money on a crew unconditionally
+ * correct, which `tools/career.mjs` demonstrated over five-year careers. An audience
+ * has no opinion about a budget, and now neither does this.
  *
- * What matters is that both inputs already **bite**: a picture made by the cheapest
- * team in every department returns materially less than the same picture made by the
- * best, and that difference is the reason hiring is a decision rather than a
- * formality.
+ * It is still thin and honest about being thin: there is no rating, no campaign, no
+ * season and no word of mouth. Each is a real thing to add, each will move this figure,
+ * and each of them belongs on the reach side rather than the spending side.
+ *
+ * What matters is that both inputs **bite**, and that they now pull against each
+ * other. Better craft collects more of the reach and costs more to hire, so the same
+ * team is right on one property and wrong on another — which is what makes hiring a
+ * decision rather than a formality.
  */
 
 import type { Simulation } from '../core/simulation';
@@ -35,7 +40,7 @@ import type { Instant } from '../core/time';
 import { startOfNextMonth, zonedParts } from '../core/time';
 import type { Project } from '../domain/company';
 import { BEST_TEAM, LEAST_TEAM } from '../content/departments';
-import { PAYS_FOR_MONTHS, paysInMonth, reckon } from '../content/release';
+import { PAYS_FOR_MONTHS, paysInMonth, reckon, whatItCouldReach } from '../content/release';
 import { layOut } from './schedule';
 import { cashAccountFor, parentCompany, projectsOf } from './company';
 
@@ -205,8 +210,17 @@ export function registerRelease(sim: Simulation): void {
   }
 }
 
-/** What a picture would take if it opened now, for a screen that wants to say so. */
+/**
+ * What a picture would take if it opened now, for a screen that wants to say so.
+ *
+ * The ceiling comes from the material it was made from, not from the project, because
+ * an audience was never going to care what the studio spent. A project with no holding
+ * behind it reaches nobody — which cannot happen through the commands, since
+ * developing requires a property, and is the honest answer if it ever did.
+ */
 export function wouldTake(sim: Simulation, project: Project): Money {
+  const holding = project.holdingId ? sim.universe.holdings[project.holdingId] : undefined;
+  const reach = holding ? whatItCouldReach(holding.demands, holding.appeal) : 0;
   const rng = sim.rng('release', project.id);
-  return reckon(project.budgetCents ?? 0, craftOf(sim, project), rng.next());
+  return reckon(reach, craftOf(sim, project), rng.next());
 }

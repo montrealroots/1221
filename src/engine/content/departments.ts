@@ -30,7 +30,7 @@
  * department twice with a different label — which is the version of this that looks
  * deep and is not.
  *
- * The set is small on purpose. Five that each move the schedule differently are worth
+ * The set is small on purpose. Six that each move the schedule differently are worth
  * more than fifteen that mostly move together, and this build has deleted enough
  * elaborate content tables nothing read to be careful about it.
  */
@@ -72,12 +72,24 @@ export interface Department {
    * The level is the player's decision and the demand is the material's, which is the
    * whole separation this engine exists to make legible: you choose what you spend per
    * month, the property chooses how many months you spend it for.
+   *
+   * `perLevel` was measured down, and by roughly half. It used to put the best team at
+   * about three and a half times the cheapest, which sounds like a real choice and was
+   * not one: a rung that expensive only paid for itself on material so profitable that
+   * nothing else about the picture could have mattered. At a little over twice, the
+   * rung worth hiring depends on what the property could reach, which is the decision
+   * `content/release.ts` exists to create. Move this and that file's crossover moves
+   * with it, so re-measure both instruments together.
+   *
+   * The ramps differ by department on purpose and not by much: upgrading a specialist
+   * costs more than upgrading a scheduler, so effects and finishing climb hardest and
+   * scheduling climbs least.
    */
   rate: { atLevelOne: Money; perLevel: Money };
 }
 
 /**
- * Five departments, each answering to a different demand in a different phase.
+ * Six departments, each answering to a different demand in a different phase.
  *
  * Read down the `reads` column and no pair repeats inside a phase, which is the test
  * a department has to pass to be here at all. **Scope** reaches all three phases
@@ -93,7 +105,7 @@ export const DEPARTMENTS: readonly Department[] = [
     phase: 'prep',
     reads: 'period',
     months: { atLeast: 1, perPoint: 0.6 },
-    rate: { atLevelOne: 90_000_00, perLevel: 55_000_00 },
+    rate: { atLevelOne: 90_000_00, perLevel: 27_000_00 },
   },
   {
     id: 'planning',
@@ -101,7 +113,7 @@ export const DEPARTMENTS: readonly Department[] = [
     phase: 'prep',
     reads: 'scope',
     months: { atLeast: 1, perPoint: 0.35 },
-    rate: { atLevelOne: 45_000_00, perLevel: 20_000_00 },
+    rate: { atLevelOne: 45_000_00, perLevel: 9_000_00 },
   },
   {
     id: 'unit',
@@ -109,7 +121,7 @@ export const DEPARTMENTS: readonly Department[] = [
     phase: 'shoot',
     reads: 'scope',
     months: { atLeast: 1, perPoint: 0.8 },
-    rate: { atLevelOne: 320_000_00, perLevel: 180_000_00 },
+    rate: { atLevelOne: 320_000_00, perLevel: 80_000_00 },
   },
   {
     id: 'effects',
@@ -117,7 +129,7 @@ export const DEPARTMENTS: readonly Department[] = [
     phase: 'shoot',
     reads: 'spectacle',
     months: { atLeast: 0, perPoint: 0.7 },
-    rate: { atLevelOne: 140_000_00, perLevel: 110_000_00 },
+    rate: { atLevelOne: 140_000_00, perLevel: 50_000_00 },
   },
   {
     id: 'cutting',
@@ -125,7 +137,7 @@ export const DEPARTMENTS: readonly Department[] = [
     phase: 'post',
     reads: 'scope',
     months: { atLeast: 2, perPoint: 0.5 },
-    rate: { atLevelOne: 60_000_00, perLevel: 30_000_00 },
+    rate: { atLevelOne: 60_000_00, perLevel: 14_000_00 },
   },
   {
     id: 'finishing',
@@ -133,7 +145,7 @@ export const DEPARTMENTS: readonly Department[] = [
     phase: 'post',
     reads: 'spectacle',
     months: { atLeast: 1, perPoint: 0.9 },
-    rate: { atLevelOne: 110_000_00, perLevel: 95_000_00 },
+    rate: { atLevelOne: 110_000_00, perLevel: 36_000_00 },
   },
 ];
 

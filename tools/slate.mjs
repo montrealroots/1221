@@ -10,6 +10,15 @@
  * schedule or a payout — which is the whole point, because a measurement taken against
  * a reimplementation measures the reimplementation.
  *
+ * The cash is set past anything a picture can cost, deliberately: this instrument is
+ * asking which team a property **deserved**, not which one a studio could have paid
+ * for. `tools/career.mjs` is what asks the second question, and the two disagreed
+ * twice — both times the career run was right and the model changed.
+ *
+ * The second table is the one that matters. A spread of medians says the teams differ;
+ * only naming the right team property by property says whether that difference is a
+ * decision. If one team wins everything, the ceiling on the take is not working.
+ *
  *   npx vite-node tools/slate.mjs              a spread across seeds and craft
  *   npx vite-node tools/slate.mjs --seeds 24   more of them
  */
@@ -17,7 +26,7 @@
 import { quickSave } from '../src/engine/index.ts';
 import { parentCompany, holdingsOf, projectsOf } from '../src/engine/world/company.ts';
 import { DEPARTMENTS, monthsFor, BEST_TEAM, LEAST_TEAM } from '../src/engine/content/departments.ts';
-import { PAYS_FOR_MONTHS } from '../src/engine/content/release.ts';
+import { PAYS_FOR_MONTHS, whatItCouldReach } from '../src/engine/content/release.ts';
 import { walkTheMonth } from '../src/engine/world/production.ts';
 import { payWhatIsDue, takenSoFar, craftOf } from '../src/engine/world/release.ts';
 import { addMonths } from '../src/engine/core/time.ts';
@@ -104,6 +113,7 @@ function onePicture(seed, level) {
 
   return {
     cost,
+    reach: whatItCouldReach(holding.demands, holding.appeal),
     took: takenSoFar(sim, project.id),
     craft: craftOf(sim, project),
     demands: holding.demands,
@@ -111,9 +121,10 @@ function onePicture(seed, level) {
   };
 }
 
-console.log('='.repeat(76));
+console.log('='.repeat(78));
 console.log('WHAT A PICTURE RETURNS, PLAYED THROUGH THE REAL COMMANDS');
-console.log('='.repeat(76));
+console.log('='.repeat(78));
+console.log();
 console.log();
 console.log(`${pad('team', 6)}${rpad('pictures', 9)}${rpad('worst', 10)}${rpad('median', 10)}${rpad('best', 10)}${rpad('profitable', 12)}`);
 console.log('-'.repeat(76));
@@ -136,18 +147,64 @@ for (let level = LEAST_TEAM; level <= BEST_TEAM; level += 1) {
   );
 }
 
+// Which team was actually RIGHT, property by property. This is the question the ratio
+// table cannot answer and the whole reason the take was capped by the material: if the
+// answer is always the best team, hiring is a lookup and the ceiling did not work.
 console.log();
-console.log('-'.repeat(76));
-const cheap = byLevel[0];
-const dear = byLevel[byLevel.length - 1];
-console.log(`Craft is worth ${(dear.median - cheap.median).toFixed(2)}x between the worst team and the best.`);
-console.log(`At the cheapest team ${cheap.won} of ${cheap.ratios.length} pictures returned their cost.`);
-console.log(`At the best team ${dear.won} of ${dear.ratios.length} did.`);
+console.log('-'.repeat(78));
+console.log('WHICH TEAM WAS RIGHT, PROPERTY BY PROPERTY');
+console.log();
+console.log(pad('material', 12) + rpad('reach', 10) + rpad('best team', 11)
+  + rpad('it made', 10) + rpad('worst team would', 18) + rpad('cost of getting it wrong', 26));
+console.log('-'.repeat(78));
+
+const wins = new Map();
+for (let seed = 1; seed <= SEEDS; seed += 1) {
+  const profits = byLevel.map(({ level, runs }) => {
+    const one = runs[seed - 1];
+    return { level, profit: one.took - one.cost, one };
+  });
+  const best = profits.reduce((most, x) => (x.profit > most.profit ? x : most));
+  const worst = profits.reduce((least, x) => (x.profit < least.profit ? x : least));
+  wins.set(best.level, (wins.get(best.level) ?? 0) + 1);
+  const d = best.one.demands;
+  console.log(
+    pad(`${d.scope}/${d.spectacle}/${d.period}`, 12)
+    + rpad(m(best.one.reach), 10)
+    + rpad(best.level, 11)
+    + rpad(m(best.profit), 10)
+    + rpad(`${worst.level}, ${m(worst.profit)}`, 18)
+    + rpad(m(best.profit - worst.profit), 26),
+  );
+}
+
+console.log();
+console.log('-'.repeat(78));
+const rightRatios = [];
+const rightLost = [];
+for (let seed = 1; seed <= SEEDS; seed += 1) {
+  const profits = byLevel.map(({ level, runs }) => ({ level, one: runs[seed - 1], profit: runs[seed - 1].took - runs[seed - 1].cost }));
+  const best = profits.reduce((most, x) => (x.profit > most.profit ? x : most));
+  rightRatios.push(best.one.took / best.one.cost);
+  if (best.profit < 0) rightLost.push(seed);
+}
+rightRatios.sort((a, b) => a - b);
+const rightMedian = rightRatios[Math.floor(rightRatios.length / 2)];
+const spread = [...wins.entries()].sort((a, b) => a[0] - b[0])
+  .map(([level, n]) => `team ${level} on ${n}`).join(', ');
+console.log(`Right team, across ${SEEDS} properties: ${spread}.`);
+console.log(`${wins.size} of the ${BEST_TEAM - LEAST_TEAM + 1} teams was the right answer at least once.`);
+console.log(`Played right, the median picture returned ${rightMedian.toFixed(2)}x `
+  + `and ${rightLost.length} of ${SEEDS} lost money anyway.`);
+console.log();
+console.log('If one team wins every property, hiring is a lookup and the ceiling on the');
+console.log('take is not doing its job. The numbers above are the falsifiability test for');
+console.log('the whole model: change the material, and the right answer has to change.');
 console.log();
 
 const sample = byLevel[2].runs[0];
 console.log(`A middling picture: cost ${m(sample.cost)}, took ${m(sample.took)}, `
-  + `made in ${sample.madeIn} months, craft ${sample.craft.toFixed(2)}.`);
+  + `reach ${m(sample.reach)}, made in ${sample.madeIn} months, craft ${sample.craft.toFixed(2)}.`);
 console.log(`Its material asked for scope ${sample.demands.scope}, `
   + `spectacle ${sample.demands.spectacle}, period ${sample.demands.period}.`);
-console.log('='.repeat(76));
+console.log('='.repeat(78));

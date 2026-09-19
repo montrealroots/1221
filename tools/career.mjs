@@ -2,9 +2,9 @@
  * SLATE — a studio run for years, to see whether it survives.
  *
  * `tools/slate.mjs` measures one picture at a time with the company's cash effectively
- * infinite, and says in its own output that this is an artefact: if money is free, the
- * best team is always right and hiring is not a decision. This is the instrument that
- * reads the thing that one cannot.
+ * infinite, which means it can say which team a property deserved but never whether a
+ * studio could have afforded to hire it. This is the instrument that reads the part
+ * money decides.
  *
  * Here the money is finite, the company's month runs underneath, and the world clock
  * actually turns — so a picture takes real months to make, the burn eats the runway
@@ -18,33 +18,41 @@
  * release payouts. Nothing here reimplements any of it, which is the only way a
  * measurement is worth taking.
  *
- * ## The policy is deliberately dumb
+ * ## Five dumb policies and one that looks
  *
- * One rule: if there is enough cash and room on the slate, start a picture at a fixed
- * team level. It is not trying to play well. A clever policy would measure the policy,
- * and what is wanted is whether the *economics* leave room for any policy at all.
+ * The fixed rows hire the same team whatever turns up. They are not trying to play
+ * well; they are there so that the last row has something to be measured against.
+ *
+ * The `match` row is the only one that reads the property before hiring, and it is the
+ * point of the whole instrument. If costing every rung against what the material could
+ * reach is worth nothing over five years, then hiring is decoration however varied it
+ * looks on a single picture.
  *
  * ## What it found, and what it changed
  *
- * It falsified a reading `tools/slate.mjs` could not see. Per picture, a cheapest-team
- * median of 0.78x looked like a weak-but-viable budget option. Over five years it was
- * nothing of the kind: losing a fifth of every budget compounds, so those studios ran
- * out of money and stopped making pictures. At 30m of capital the cheap teams were
- * refused a greenlight fourteen to nineteen times and the dear teams were refused
- * nothing at all — the expensive option was *more* affordable, because it paid for
- * itself and the cheap one did not.
+ * Twice it falsified something `tools/slate.mjs` could not see, and both times the
+ * model changed rather than the numbers.
  *
- * `RETURNS_AROUND` and `CRAFT_SWINGS` moved because of that, and the whole story is in
- * `src/engine/content/release.ts`. Afterwards every team level survived five years,
- * made ten to twelve pictures, and was refused in proportion to how well it earned.
+ * **First.** Per picture, a cheapest-team median of 0.78x looked like a weak but
+ * viable budget option. Over five years it was nothing of the kind: losing a fifth of
+ * every budget compounds, so those studios ran dry and stopped making pictures, while
+ * the dear teams were never refused a greenlight at all. The expensive option was the
+ * *more* affordable one. Raising the floor fixed the symptom and left the cause: with
+ * a take that was a multiple of the budget, spending more returned more without bound,
+ * so the best team ended richest at every level of capital and hiring was a lookup.
  *
- * What it has *not* been able to show is a level of capital at which hiring cheap is
- * right. The best team ends richest everywhere, because a picture's take is a multiple
- * of its budget and the multiple rises with craft. That is a missing ceiling on the
- * demand side rather than a number wanting a nudge, and this instrument should be run
- * again when one exists.
+ * **Second.** Capping the take at what the material could reach made the rungs
+ * genuinely differ — and then this instrument found the decision still was not there.
+ * A policy that costed out every rung chose the *same rung every time*, because reach
+ * was a pure function of the three demands and every property of a given shape was the
+ * same property. Variety that only appears once the draw has landed is hindsight, not
+ * a decision. `APPEAL_STRAYS` exists because of that run.
  *
- *   npx vite-node tools/career.mjs                 five years, each team level
+ * With both in place, matching the team to the material ends five years on 1.27x what
+ * the best fixed rung manages, and is refused a greenlight less often while doing it.
+ * The full table is in `src/engine/content/release.ts`.
+ *
+ *   npx vite-node tools/career.mjs                 five years, each policy
  *   npx vite-node tools/career.mjs --years 8       longer
  *   npx vite-node tools/career.mjs --seeds 3       more worlds
  *   npx vite-node tools/career.mjs --capital 12    on less money
@@ -55,6 +63,7 @@ import { parentCompany, holdingsOf, projectsOf, companyCash } from '../src/engin
 import { DEPARTMENTS, monthsFor, BEST_TEAM, LEAST_TEAM } from '../src/engine/content/departments.ts';
 import { layOut } from '../src/engine/world/schedule.ts';
 import { addMonths } from '../src/engine/core/time.ts';
+import { reckon, whatItCouldReach } from '../src/engine/content/release.ts';
 
 const arg = (name, fallback) => {
   const at = process.argv.indexOf(`--${name}`);
@@ -95,7 +104,28 @@ function fund(sim, cents) {
 const ok = (done) => (done.value?.ok ?? done.ok) === true;
 const run = (sim, kind, payload) => sim.execute({ kind, payload });
 
-/** One studio, run for a while at one team level. */
+/**
+ * The team this material is actually worth, at the middle of the draw.
+ *
+ * The only policy here that reads anything. It costs out every rung against what the
+ * property could reach and takes the best of them, which is the decision the ceiling
+ * on the take was added to create. If this does not beat the best fixed rung over a
+ * career, the decision is decoration and the model failed.
+ */
+function worthIt(holding, at, zone) {
+  let best = { level: LEAST_TEAM, profit: -Infinity };
+  const reach = whatItCouldReach(holding.demands, holding.appeal);
+  for (let level = LEAST_TEAM; level <= BEST_TEAM; level += 1) {
+    const levels = {};
+    for (const d of DEPARTMENTS) levels[d.id] = level;
+    const cost = layOut(holding.demands, levels, at, zone).budgetCents;
+    const profit = reckon(reach, (level - LEAST_TEAM) / (BEST_TEAM - LEAST_TEAM), 0.5) - cost;
+    if (profit > best.profit) best = { level, profit };
+  }
+  return best.level;
+}
+
+/** One studio, run for a while at one team level, or matching the team to the material. */
 function aCareer(seed, level) {
   const sim = quickSave({}, `career-${seed}`);
   fund(sim, START_WITH);
@@ -131,9 +161,10 @@ function aCareer(seed, level) {
     if (!ok(run(sim, 'company.develop', { title, holdingId: holding.id }))) continue;
     const project = projectsOf(sim.universe).find((one) => one.title === title);
 
+    const hire = level === 'match' ? worthIt(holding, sim.now, sim.homeZone) : level;
     for (const d of DEPARTMENTS) {
       if (monthsFor(d, holding.demands) > 0) {
-        run(sim, 'company.staff', { projectId: project.id, departmentId: d.id, level });
+        run(sim, 'company.staff', { projectId: project.id, departmentId: d.id, level: hire });
       }
     }
     const wants = layOut(holding.demands, project.levels ?? {}, sim.now, sim.homeZone).budgetCents;
@@ -164,11 +195,18 @@ console.log(pad('team', 6) + rpad('started', 9) + rpad('released', 10)
   + rpad('too dear', 10) + rpad('lowest', 12) + rpad('ended', 12) + rpad('survived', 10));
 console.log('-'.repeat(78));
 
-for (let level = LEAST_TEAM; level <= BEST_TEAM; level += 1) {
+const policies = [];
+for (let level = LEAST_TEAM; level <= BEST_TEAM; level += 1) policies.push(level);
+policies.push('match');
+
+const ended = new Map();
+for (const level of policies) {
   const runs = [];
   for (let seed = 1; seed <= SEEDS; seed += 1) runs.push(aCareer(seed, level));
   const mean = (pick) => runs.reduce((sum, one) => sum + pick(one), 0) / runs.length;
   const alive = runs.filter((one) => one.ended > 0).length;
+  ended.set(level, mean((o) => o.ended));
+  if (level === 'match') console.log('-'.repeat(78));
   console.log(
     pad(level, 6)
     + rpad(mean((o) => o.started).toFixed(1), 9)
@@ -185,4 +223,16 @@ console.log('-'.repeat(78));
 console.log('"Too dear" counts greenlights the company could not pay for. A level that never');
 console.log('refuses is a level the studio can always afford, which means cash is not the');
 console.log('constraint and the best team is simply correct.');
+console.log();
+
+// The falsifiability test for the whole model. "Match" is the only policy here that
+// reads the material before hiring; every other row hires the same way whatever turns
+// up. If reading it is worth nothing, there was no decision to make.
+const best = [...ended.entries()].filter(([l]) => l !== 'match')
+  .reduce((most, one) => (one[1] > most[1] ? one : most));
+const matched = ended.get('match');
+console.log(`The best fixed rung was team ${best[0]}, ending on ${m(best[1])}.`);
+console.log(`Matching the team to the material ended on ${m(matched)}, which is `
+  + `${matched > best[1] ? 'more' : 'no better'} — `
+  + `${matched > best[1] ? `${(matched / best[1]).toFixed(2)}x the best rung that never looks` : 'and the decision is decoration'}.`);
 console.log('='.repeat(78));

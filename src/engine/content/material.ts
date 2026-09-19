@@ -100,6 +100,22 @@ export const PROVENANCES: readonly Provenance[] = [
  */
 export const ASKS_AROUND: Money = 14_000_00;
 
+/**
+ * How far a property's appeal strays either side of ordinary.
+ *
+ * Two stories the same size do not reach the same audience, and until this existed
+ * they did: reach was a pure function of the three demands, so every property with the
+ * same shape was the same property. `tools/career.mjs` caught it in the plainest
+ * way — a policy that costed every team against the material chose the same team every
+ * single time, because there was nothing about the material left to read. Variety that
+ * only shows up in hindsight, once the draw has landed, is not a decision.
+ *
+ * At 0.45 a property carries between about a half and about half again of what its
+ * shape alone would suggest, which is enough that the team worth hiring genuinely
+ * differs from one to the next.
+ */
+export const APPEAL_STRAYS = 0.45;
+
 /** How far an asking price strays either side of the middle. */
 export const ASKING_STRAYS = 0.6;
 
@@ -201,7 +217,18 @@ export function provenanceFrom(t: number): Provenance {
 }
 
 /** What a property of this kind asks, given a draw for where in the spread it sits. */
-export function asksFor(provenance: Provenance, t: number): Money {
+export function asksFor(provenance: Provenance, t: number, appeal = 1): Money {
   const spread = 1 + (Math.max(0, Math.min(1, t)) * 2 - 1) * ASKING_STRAYS;
-  return Math.max(1_000_00, Math.round(ASKS_AROUND * COSTS_LIKE[provenance] * spread));
+  const worth = Math.max(0, appeal);
+  return Math.max(1_000_00, Math.round(ASKS_AROUND * COSTS_LIKE[provenance] * spread * worth));
 }
+
+/**
+ * How far a property carries beyond what its shape alone would suggest.
+ *
+ * One is ordinary. Everything a studio does afterwards is a share of this, so it is
+ * the single most valuable thing to know about a property before taking it — and the
+ * asking price reads it too, which is what stops good material being free.
+ */
+export const appealFrom = (t: number): number =>
+  1 + (Math.max(0, Math.min(1, t)) * 2 - 1) * APPEAL_STRAYS;

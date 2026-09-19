@@ -20,8 +20,11 @@
 import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
 import { addMonths } from '@/engine/core/time';
-import { PAYS_FOR_MONTHS, PAYS_IN, RETURNS_AROUND, SHARES_TOTAL, reckon } from '@/engine/content/release';
-import { BEST_TEAM, DEPARTMENTS, monthsFor } from '@/engine/content/departments';
+import {
+  CRAFT_REACHES, LUCK_SWINGS, PAYS_FOR_MONTHS, PAYS_IN, SCOPE_PULLS, SHARES_TOTAL,
+  SPECTACLE_PULLS, reckon, whatItCouldReach,
+} from '@/engine/content/release';
+import { BEST_TEAM, DEPARTMENTS, monthsFor, rateFor } from '@/engine/content/departments';
 import {
   craftOf, monthsPaid, onRelease, payWhatIsDue, stillPaying, takenSoFar,
 } from '@/engine/world/release';
@@ -214,15 +217,23 @@ describe('what decides the figure', () => {
     expect(Math.abs(SHARES_TOTAL - 1)).toBeLessThan(0.0001);
   });
 
-  it('returns more for better craft, on the same budget and the same luck', () => {
+  it('returns more for better craft, on the same reach and the same luck', () => {
     const poor = reckon(10_000_000_00, 0, 0.5);
     const good = reckon(10_000_000_00, 1, 0.5);
     expect(good).toBeGreaterThan(poor);
   });
 
-  it('sits around its own multiple at middling craft and middling luck', () => {
-    const at = reckon(10_000_000_00, 0.5, 0.5);
-    expect(at).toBe(Math.round(10_000_000_00 * RETURNS_AROUND));
+  it('collects the floor of the reach at the worst craft and all of it at the best', () => {
+    expect(reckon(10_000_000_00, 0, 0.5)).toBe(Math.round(10_000_000_00 * CRAFT_REACHES));
+    expect(reckon(10_000_000_00, 1, 0.5)).toBe(10_000_000_00);
+  });
+
+  it('never lets a picture out-earn the audience its material could find', () => {
+    // The ceiling is the point of the model. Best craft, luckiest draw there is: still
+    // bounded by the reach, times what the draw is allowed to add and no more.
+    const reach = 10_000_000_00;
+    const luckiest = reckon(reach, 1, 1);
+    expect(luckiest).toBe(Math.round(reach * (1 + LUCK_SWINGS)));
   });
 
   it('never returns a negative run, whatever it is handed', () => {
@@ -234,5 +245,55 @@ describe('what decides the figure', () => {
     const cheap = aFinishedPicture('rel-craft-low');
     const dear = aFinishedPicture('rel-craft-high', true);
     expect(craftOf(dear.sim, dear.project)).toBeGreaterThan(craftOf(cheap.sim, cheap.project));
+  });
+});
+
+/**
+ * The ceiling, which is the claim that makes hiring a decision.
+ *
+ * Before this, a take was a multiple of a budget, so spending more returned more with
+ * no bound and the best team was correct on every picture ever made — measured over
+ * five-year careers in `tools/career.mjs`, not guessed at. Reach is what stops that:
+ * the audience is fixed by the material before anybody is hired, and the crew decides
+ * only how much of it gets collected.
+ */
+describe('the ceiling is the material, not the money', () => {
+  const at = (scope: number, spectacle: number, period: number) => ({ scope, spectacle, period });
+  const costOf = (demands: { scope: number; spectacle: number; period: number }, level: number) =>
+    DEPARTMENTS.reduce((sum, one) => sum + rateFor(one, level) * monthsFor(one, demands), 0);
+
+  it('reaches further for more scope and for more spectacle', () => {
+    expect(whatItCouldReach(at(4, 2, 2))).toBeGreaterThan(whatItCouldReach(at(2, 2, 2)));
+    expect(whatItCouldReach(at(2, 4, 2))).toBeGreaterThan(whatItCouldReach(at(2, 2, 2)));
+  });
+
+  it('weighs scope above spectacle, because size is what a wide audience turns up for', () => {
+    expect(SCOPE_PULLS).toBeGreaterThan(SPECTACLE_PULLS);
+    expect(whatItCouldReach(at(4, 2, 2))).toBeGreaterThan(whatItCouldReach(at(2, 4, 2)));
+  });
+
+  it('charges for period and reaches nobody with it, which is what makes it a trap', () => {
+    // The sharpest claim in the model, and the one most worth a test: building a world
+    // rather than borrowing one is paid for in design and on the floor, and does not
+    // put a single person in a seat. Change `PERIOD_PULLS` and this is the case that
+    // says so.
+    const plain = at(3, 3, 1);
+    const dressed = at(3, 3, 5);
+    expect(whatItCouldReach(dressed)).toBe(whatItCouldReach(plain));
+    expect(costOf(dressed, 3)).toBeGreaterThan(costOf(plain, 3));
+  });
+
+  it('makes the best team wrong on small material and right on large', () => {
+    // The crossover, stated as the two cases that bracket it. Both are played at the
+    // median draw, so the only thing differing is the hiring and the property.
+    const draw = 0.5;
+    const profit = (d: { scope: number; spectacle: number; period: number }, level: number) => {
+      const craft = (level - 1) / 4;
+      return reckon(whatItCouldReach(d), craft, draw) - costOf(d, level);
+    };
+    const small = at(1, 1, 3);
+    const large = at(5, 4, 1);
+    expect(profit(small, 5)).toBeLessThan(profit(small, 1));
+    expect(profit(large, 5)).toBeGreaterThan(profit(large, 1));
   });
 });

@@ -35,7 +35,7 @@ import {
 } from '../content/incorporation';
 import { ESTATE_CITY_ID, HOUSE, studioName } from '../content/estate';
 import { bondFor, standingWord } from './standing';
-import { demandsForTyped, listingById } from './material';
+import { appealForTyped, demandsForTyped, listingById } from './material';
 import {
   BEST_TEAM, DEPARTMENT_BY_ID, LEAST_TEAM, monthsFor,
 } from '../content/departments';
@@ -1223,6 +1223,8 @@ export function registerCompanyCommands(sim: Simulation): void {
       provenance: listing?.provenance ?? payload.provenance ?? 'original',
       demands: listing?.demands
         ?? demandsForTyped(s, title, listing?.provenance ?? payload.provenance ?? 'original'),
+      appeal: listing?.appeal
+        ?? appealForTyped(s, title, listing?.provenance ?? payload.provenance ?? 'original'),
       hold,
       acquiredAt: s.now,
       chainComplete: !payload.chainGap,

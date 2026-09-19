@@ -416,6 +416,16 @@ export interface Holding {
    * `Project.budgetCents` a writer after two teardowns with none.
    */
   demands: Demands;
+  /**
+   * How far it carries, against an ordinary property of the same shape. One is ordinary.
+   *
+   * Set when the rights are taken, like the demands, and for the same reason: it is a
+   * fact about the material and not about the plans. The two are read by opposite
+   * sides of the business — the demands decide what making it costs, the appeal
+   * decides what an audience there is to collect — which is what makes a property with
+   * a small shape and a large pull a different proposition from its neighbor.
+   */
+  appeal: number;
   hold: Hold;
   acquiredAt: Instant;
   /**
