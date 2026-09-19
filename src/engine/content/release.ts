@@ -23,17 +23,47 @@
  * release date, so a year of earnings arrived in an afternoon and nobody could see
  * where any of it came from. Both halves matter: reckon once, and pay slowly.
  *
- * ## The figures here have not been measured yet
+ * ## What these were measured against
  *
- * Stated plainly because this project fails builds for less. Every constant below is
- * **reasoned, not measured**. They are set so that a competently made picture roughly
- * returns its cost and a well made one does better, which is the shape a studio game
- * needs — but that is an intention, not an observation.
+ * They shipped reasoned and unmeasured, and this file said so. `tools/slate.mjs`
+ * settles it: sixteen properties put through the real command path — optioned,
+ * developed, staffed, locked, greenlit, walked to delivery, released and paid out —
+ * at every team level, with the save seed held still so that only the hiring differs.
  *
- * What is owed before any of them is trusted: play a career, several seeds, and read
- * what a slate actually returns. The deleted build's own rate constant carried a
- * measurement taken on twelve played careers and was still falsified later by a change
- * upstream of it. These have not even had the first pass.
+ * The first reading was bad and the constants moved because of it. At craft swinging
+ * 0.55 against luck at 0.2 the outcome was all but determined by the team: the
+ * cheapest lost **every** picture and the best won **every** picture, with no overlap
+ * anywhere. Hiring stopped being a decision, because the answer was always the same.
+ *
+ * At 0.35 against 0.45 the bands overlap and the medians still climb:
+ *
+ * | team | worst | median | best | returned its cost |
+ * |---|---|---|---|---|
+ * | 1 | 0.44x | 0.78x | 1.01x | 2 of 16 |
+ * | 2 | 0.56x | 0.99x | 1.28x | 7 of 16 |
+ * | 3 | 0.68x | 1.20x | 1.55x | 12 of 16 |
+ * | 4 | 0.79x | 1.41x | 1.82x | 13 of 16 |
+ * | 5 | 0.91x | 1.62x | 2.09x | 15 of 16 |
+ *
+ * Both tails are real: the best team still lost money on one picture in sixteen, and
+ * the cheapest scraped its cost back on one. That is the shape wanted — better craft
+ * is reliably better and never a guarantee.
+ *
+ * ## What this measurement does not settle
+ *
+ * The instrument funds the company with more money than it can spend, so the best team
+ * is close to dominant in it: if cash is free, always hire the best. **That is an
+ * artefact of the measurement, not a finding about the game.** The real constraint on
+ * hiring is affordability across a slate — how many pictures a studio can carry at
+ * once, against a monthly burn — and nothing here reads that.
+ *
+ * So a career measurement is still owed, and it is a different instrument: several
+ * pictures, real cash limits, and the company's own month running underneath. Until
+ * it exists, treat the balance between craft and cash as unverified.
+ *
+ * And re-measure after anything that changes what a picture costs or returns. The
+ * deleted build's rate constant carried a genuine measurement on twelve careers and
+ * was falsified later by a change upstream of it that nobody thought to re-run.
  */
 
 import type { Money } from '../core/money';
@@ -75,21 +105,22 @@ export const RETURNS_AROUND = 1.15;
 /**
  * How far the craft that went in moves what comes back.
  *
- * At the cheapest team everywhere a picture returns well under its cost; at the best
- * everywhere, comfortably over. That spread is the whole reason hiring is a decision
- * rather than a formality, and it has to be wide enough to notice and narrow enough
- * that money alone does not guarantee a hit.
+ * Measured. At 0.55 this drowned the draw entirely and every band was decided before
+ * the dice were thrown; at 0.35 the medians still climb from 0.78x to 1.62x across the
+ * five teams while the bands overlap, which is what makes hiring a judgement rather
+ * than a lookup.
  */
-export const CRAFT_SWINGS = 0.55;
+export const CRAFT_SWINGS = 0.35;
 
 /**
  * How much of a run is simply luck.
  *
- * An audience is not a calculation. A fifth either way means a well made picture
- * usually does well and sometimes does not, which is what makes a slate worth having
- * rather than a single perfect bet.
+ * An audience is not a calculation. Measured at 0.45, which is wide enough that the
+ * best team lost money on one picture in sixteen and the cheapest got its cost back on
+ * one — both tails a studio has to plan around. At 0.2 neither happened and a slate
+ * was a formality.
  */
-export const LUCK_SWINGS = 0.2;
+export const LUCK_SWINGS = 0.45;
 
 /**
  * What a picture takes across its whole run.
