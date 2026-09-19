@@ -89,3 +89,21 @@ export {
   type MarketingPlan,
   type MarketingResult,
 } from './marketing';
+export {
+  MAX_REVISIONS,
+  REVISION_COST_CENTS,
+  REVISION_DAYS,
+  REVISION_KIND,
+  SCREENING_COST_CENTS,
+  SCREENING_DAYS,
+  SCREENING_FOCI,
+  SCREENING_KIND,
+  commissionRevision,
+  commissionScreening,
+  latestScreening,
+  pendingRevision,
+  pendingScreening,
+  postRevisionAdjustment,
+  registerTesting,
+  type TestingResult,
+} from './testing';
