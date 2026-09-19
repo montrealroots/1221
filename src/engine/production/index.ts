@@ -1,0 +1,1 @@
+export { registerProduction } from './register';
