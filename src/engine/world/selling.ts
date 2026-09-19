@@ -38,6 +38,7 @@ import {
 } from '../content/selling';
 import { castOn, castSpark, castsAppeal, castsControversy, castsPrestige } from './casting';
 import { MS_WEEK } from './lot';
+import { backendParticipationCents } from '../production/contracts';
 
 export const WINDOW_KIND = 'project.window';
 
@@ -47,6 +48,11 @@ export const WINDOW_KIND = 'project.window';
 
 export interface Prospects {
   negativeCents: Money;
+  /**
+   * Locked screenplay quality, 0-100, where this project went through the
+   * replacement development pipeline. Missing is neutral for legacy projects.
+   */
+  screenplayQuality?: number;
   /** Which deal it is being sold on, by id. */
   dealId: string;
   /**
@@ -105,7 +111,7 @@ export interface Prospects {
 /**
  * What a picture will take across ten years, decided once at the sale.
  *
- * Three things move it and all three are decisions somebody made. What it cost,
+ * Four things move it and all four are decisions somebody made. What it cost,
  * because scale buys audience sublinearly. How it is being sold, because a wide
  * release across a decade of windows reaches an audience a buyout never puts in
  * a room. And who is in it — which is the one of the three that is chosen part
@@ -120,10 +126,13 @@ export interface Prospects {
  * than the same picture with the same money and the same deal. Casting is not a
  * bonus applied to a picture that was going to be fine.
  */
+export const STORY_MOVES = { screenplay: 0.42 } as const;
+
 export function decideTake(prospects: Prospects, roll: number): { cents: Money } {
   const deal = dealById(prospects.dealId);
   const pull = deal ? 0.6 + 0.4 * deal.reach : 1;
   const band = 0.45 + roll * 1.7;
+  const story = 1 + (((prospects.screenplayQuality ?? 50) - 50) / 100) * STORY_MOVES.screenplay;
   const cast = prospects.cast
     ? 1 + ((prospects.cast.truth - 50) / 100) * CAST_MOVES.truth
         + ((prospects.cast.reads - 50) / 100) * CAST_MOVES.reads
@@ -143,7 +152,7 @@ export function decideTake(prospects: Prospects, roll: number): { cents: Money }
   return {
     cents: Math.round(
       ultimateFor(prospects.negativeCents) * pull * band
-      * Math.max(0.2, cast * cold * glad * together * talked),
+      * Math.max(0.2, story * cast * cold * glad * together * talked),
     ),
   };
 }
@@ -316,6 +325,43 @@ export interface Sale {
   dealId: string;
 }
 
+
+/**
+ * Pays contingent gross participation when a contractual receipt actually
+ * arrives. It is a company-side cost after distribution accounting, not part of
+ * the negative cost and not something that changes the distributor waterfall.
+ */
+function payBackendParticipation(
+  sim: Simulation,
+  project: Project,
+  receiptCents: Money,
+  memo: string,
+): void {
+  if (receiptCents <= 0) return;
+  const from = cashFor(sim, project.companyId);
+  if (!from) return;
+
+  for (const seat of project.cast ?? []) {
+    if (seat.releasedAt !== undefined) continue;
+    const due = backendParticipationCents(receiptCents, seat.terms);
+    if (due <= 0) continue;
+
+    const person = sim.universe.people[seat.personId];
+    const to = person?.primaryAccountId
+      ?? Object.values(sim.universe.accounts)
+        .find((account) => account.ownerId === seat.personId && !account.closedAt)?.id;
+
+    const line = project.title + ': ' + memo + ' Participation'
+      + (person ? ' — ' + person.displayName : '');
+
+    if (to) {
+      sim.transfer(from, to, due, line, 'business', { refType: 'project', refId: project.id });
+    } else {
+      sim.expense(from, due, line, 'business', { refType: 'project', refId: project.id });
+    }
+  }
+}
+
 /**
  * Sells a delivered picture on one of the deals on the table.
  *
@@ -347,6 +393,9 @@ export function sellIt(sim: Simulation, sale: Sale): { ok: true } | { ok: false;
     {
       negativeCents: project.budgetCents ?? 0,
       dealId: deal.id,
+      ...(project.development
+        ? { screenplayQuality: project.development.screenplay.quality }
+        : {}),
       ...(truth !== undefined && reads !== undefined ? { cast: { truth, reads } } : {}),
       ...(controversy !== undefined ? { controversy } : {}),
       ...(appeal !== undefined ? { appeal } : {}),
@@ -358,6 +407,10 @@ export function sellIt(sim: Simulation, sale: Sale): { ok: true } | { ok: false;
   project.windowsPaid = [];
 
   collect(sim, project, 0, 'The Sale');
+  const upfrontReceipt = deal.upFront > 0
+    ? Math.round((project.budgetCents ?? 0) * deal.upFront)
+    : 0;
+  payBackendParticipation(sim, project, upfrontReceipt, 'The Sale');
 
   if (deal.reach > 0) {
     for (const window of WINDOWS) {
@@ -389,9 +442,14 @@ export function sellIt(sim: Simulation, sale: Sale): { ok: true } | { ok: false;
 function payWindow(sim: Simulation, project: Project, window: ReleaseWindow): void {
   if (!project.windowsPaid) project.windowsPaid = [];
   if (project.windowsPaid.includes(window.id)) return;
+  const deal = project.dealId ? dealById(project.dealId) : undefined;
   const was = standingOf(project)?.toTheCompanyCents ?? 0;
+  const receipt = deal
+    ? Math.round((project.takeCents ?? 0) * deal.reach * window.share)
+    : 0;
   project.windowsPaid.push(window.id);
   collect(sim, project, was, window.label);
+  payBackendParticipation(sim, project, receipt, window.label);
 }
 
 // ---------------------------------------------------------------------------
