@@ -431,13 +431,6 @@ export function wouldBe(
     };
   }
 
-  if (project.package && !packageMatchesPlan(project, spec)) {
-    return {
-      ok: false,
-      error: project.title + ' was packaged on different production terms. Repackage it before changing the greenlight.',
-    };
-  }
-
   // The door, and it refuses. The Family Business screen has always listed the
   // nine things a production company has to be able to do and said which were
   // shut — and then let a picture be greenlit through a shut one, so the whole
@@ -567,6 +560,16 @@ export function wouldBe(
  * saying no to the family.
  */
 export function greenlight(sim: Simulation, spec: Greenlight): { ok: true; project: Project } | { ok: false; error: string } {
+  const existing = sim.universe.projects[spec.projectId];
+  if (existing?.development && !existing.package) {
+    return { ok: false, error: existing.title + ' has a locked development path but no production package.' };
+  }
+  if (existing?.package && !packageMatchesPlan(existing, spec)) {
+    return {
+      ok: false,
+      error: existing.title + ' was packaged on different production terms. Repackage it before changing the greenlight.',
+    };
+  }
   const answer = wouldBe(sim, spec);
   if (!answer.ok) return answer;
   const { prospect } = answer;
