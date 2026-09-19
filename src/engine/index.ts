@@ -36,6 +36,7 @@ import { registerConcept } from './world/concept';
 import { registerProduction } from './world/production';
 import { registerTheRun } from './world/run';
 import { armTheCeremony, registerAwards } from './world/awards';
+import { armTheBooks, registerRuin } from './world/ruin';
 import {
   companiesOf, foundTheCompany, foundTheSugarGroup, holdingsOf, postsOf, projectsOf, registerCompanyCommands,
   registerTheClock,
@@ -71,6 +72,8 @@ export function registerAllSystems(sim: Simulation): void {
   registerAwards(sim);
   // Idempotent: it checks for one already pending, so a load does not stack them.
   armTheCeremony(sim);
+  registerRuin(sim);
+  armTheBooks(sim);
   registerProduction(sim);
   registerTutorial(sim);
 }

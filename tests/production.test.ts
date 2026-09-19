@@ -55,6 +55,8 @@ import {
   A_CHART_IS, HOUSE_WEIGHS, MOST_A_HOUSE_MOVES, ORDINARY, REMEMBERS_WEEKS,
   byWhatItReturned, howTheHouseDraws, saidOfTheHouse, theChart, whereTheHouseStands,
 } from '@/engine/world/charts';
+import { GRACE_MONTHS, howBadItIs, takeTheMonth, windUp } from '@/engine/world/ruin';
+import { companiesOf, parentCompany } from '@/engine/world/company';
 import {
   ANCILLARY_BY_ID, MOST_SHARE, ancillariesFor, howKeen, offersOn, shareOutOf,
 } from '@/engine/content/ancillary';
@@ -807,5 +809,51 @@ describe('the deal, in three shapes', () => {
     // picture worse than an unchosen film — an empty post is the office's own pick.
     expect(axisStands('craft', () => undefined, 'television')).toBe(UNFILLED_REACH);
     expect(axisStands('craft', () => undefined, 'film')).toBe(UNFILLED_REACH);
+  });
+});
+
+describe('the end of it', () => {
+  it('arms a monthly look at the books, and only one', () => {
+    const sim = quickSave({}, 'ruin-armed');
+    expect(sim.timeline.pending().filter((one) => one.kind === 'company.arrears').length).toBe(1);
+  });
+
+  it('leaves a solvent company alone forever', () => {
+    // Insolvency alone is not ruin, and neither is time. A company that is never
+    // under water is never counted against, however many months go by.
+    const sim = quickSave({}, 'ruin-solvent');
+    for (let month = 0; month < GRACE_MONTHS * 3; month += 1) takeTheMonth(sim);
+    expect(howBadItIs(sim).months).toBe(0);
+  });
+
+  it('gives a company long enough for a release to save it', () => {
+    // Four months, because a picture opens and the foreign sale is six weeks behind
+    // it. A producer overdrawn the month before an opening is in trouble and is not
+    // finished, and the gap between those two is the tension worth having.
+    expect(GRACE_MONTHS).toBeGreaterThanOrEqual(3);
+  });
+
+  it('writes the one field nothing in the build had ever written', () => {
+    // `dissolvedAt` had five readers and no writer for the life of the project.
+    // Winding up is what makes those five guards reachable.
+    // A fresh save already has the family's company on it, so this takes the one
+    // that is there rather than founding a second.
+    const sim = quickSave({}, 'ruin-winds-up');
+    const company = parentCompany(sim.universe)!;
+    expect(company).toBeDefined();
+    windUp(sim, company);
+    expect(company.dissolvedAt).toBeDefined();
+    // And every door downstream shuts without a line of new refusal code.
+    expect(parentCompany(sim.universe)).toBeUndefined();
+    expect(companiesOf(sim.universe).some((one) => one.id === company.id)).toBe(false);
+  });
+
+  it('reports a live company as live, and a wound-up one as gone', () => {
+    // A fresh save carries the family's company from the first day, so the honest
+    // pair to check is before and after rather than absent and present.
+    const sim = quickSave({}, 'ruin-nobody');
+    expect(howBadItIs(sim).gone).toBe(false);
+    windUp(sim, parentCompany(sim.universe)!);
+    expect(howBadItIs(sim).gone).toBe(true);
   });
 });

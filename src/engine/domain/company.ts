@@ -108,6 +108,15 @@ export interface Company {
    */
   dissolvedAt?: Instant;
   /**
+   * How many months in a row it has been overdrawn with the family on terms.
+   *
+   * Reset to nought the moment it is solvent again, because four bad months with a
+   * good one in the middle is a company having a hard year and not a company that
+   * failed. Read by `world/ruin.ts`, which is the only thing that writes
+   * `dissolvedAt` above.
+   */
+  monthsUnder?: number;
+  /**
    * The last thing the family said about carrying this, by rung id.
    *
    * Stored because it is the only part of the conversation that is not
