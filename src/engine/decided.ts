@@ -29,6 +29,10 @@ import { MEN, WOMEN } from './content/names';
 import { ageOn } from './world/family';
 import { onTheMarket } from './world/material';
 import { appealFrom } from './content/material';
+import {
+  BEST_STANDING, LEAST_STANDING, RETIRES_AT, STANDING_SAID, STARTS_AT, TEMPERAMENTS,
+  standingFor, standingSaid, temperamentFrom,
+} from './content/people';
 import { reckon, whatItCouldReach } from './content/release';
 import { BEST_TEAM, DEPARTMENTS, LEAST_TEAM, monthsFor, rateFor } from './content/departments';
 
@@ -437,5 +441,39 @@ defineDecider<Took, string>({
     if (share < 1.15) return 'washed its face';
     if (share < 1.5) return 'did well';
     return 'ran away';
+  },
+});
+
+interface Pooled { reach: number; age: number; temper: number }
+
+defineDecider<Pooled, string>({
+  id: 'people.pool',
+  decides: 'What rung a person stands at, and what they are like to work with.',
+  drawnIn: 'src/engine/world/people.ts',
+  draws: ['people'],
+  reads: {
+    // How far they were ever going to get. The only input that can be declared
+    // monotone, because it is the ceiling everything else is a share of.
+    reach: (t, at) => ({ ...t, reach: LEAST_STANDING + at * (BEST_STANDING - LEAST_STANDING) }),
+    // How old they are the day they are asked about. Not declared in `rises`, and
+    // that is the claim: a career climbs to a peak and comes back down, so the same
+    // person is a different hire at thirty, at fifty and at sixty-five.
+    age: (t, at) => ({ ...t, age: STARTS_AT + at * (RETIRES_AT - STARTS_AT) }),
+    // What they are like, which moves what they cost and how long they take without
+    // moving the rung at all.
+    temper: (t, at) => ({ ...t, temper: at }),
+  },
+  sample: (seed) => ({
+    reach: LEAST_STANDING + ((seed % 9) / 8) * (BEST_STANDING - LEAST_STANDING),
+    age: STARTS_AT + ((seed * 5) % 44),
+    temper: ((seed * 3) % 11) / 11,
+  }),
+  ladder: STANDING_SAID.flatMap(
+    (rung) => TEMPERAMENTS.map((one) => `${rung}, ${one.said.toLowerCase()}`),
+  ),
+  rises: { reach: 'up' },
+  decide: ({ reach, age, temper }) => {
+    const standing = standingFor(reach, age);
+    return `${standingSaid(standing)}, ${temperamentFrom(temper).said.toLowerCase()}`;
   },
 });

@@ -384,9 +384,9 @@ export const LESSONS: readonly Lesson[] = [
       + 'world to build keeps the design shop busy whatever you do about it. You decide '
       + 'what one of those months costs, by hiring a better team or a cheaper one. So the '
       + 'budget is never a number you set; it is those two multiplied, department by '
-      + 'department, and it moves when either one does. Hiring up buys quality and not '
-      + 'time: the same people finish on the same date, they just cost more getting '
-      + 'there. It is also not always right. What a picture takes is a share of what its '
+      + 'department, and it moves when either one does. Hiring up mostly buys quality '
+      + 'rather than time, though a head of department with habits of their own can move '
+      + 'the calendar too. It is also not always right. What a picture takes is a share of what its '
       + 'material could reach, and no crew alive lifts it past that — so on a property '
       + 'that reads thin the best team is an expensive way to lose, and on one that '
       + 'reads strong a cheap team leaves money on the table. Match the team to the '
@@ -464,10 +464,14 @@ export const LESSONS: readonly Lesson[] = [
     id: 'crew',
     strand: 'the-pictures',
     title: 'The People Who Actually Make It',
-    body: 'A crew that has worked for you before gets rehired, and that matters more than '
-      + 'anything else about the decision. Money reaches further — a quarter of a million euro '
-      + 'gets who is available and forty million gets who is wanted — and a head of department '
-      + 'is drawn from a shallower, better pool than anybody under them.',
+    body: 'Every department is run by a person, and two things are true about each of '
+      + 'them. Their standing is what you pay for: it sets the monthly rate and it is the '
+      + 'same rung the budget has always been priced off. Their temperament is what you '
+      + 'actually get, and it is not the same axis — an exacting head takes longer and the '
+      + 'work is better for it, a brisk one finishes early and it shows, and an extravagant '
+      + 'one simply costs more without any of it reaching the screen. The trade is also '
+      + 'finite. A head already running a department on another of your pictures across '
+      + 'those months cannot run this one, and the shortlist shows only who is free.',
     teaches: [],
     screen: 'business',
     importance: 45,

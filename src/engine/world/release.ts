@@ -41,7 +41,7 @@ import { startOfNextMonth, zonedParts } from '../core/time';
 import type { Project } from '../domain/company';
 import { BEST_TEAM, LEAST_TEAM } from '../content/departments';
 import { PAYS_FOR_MONTHS, paysInMonth, reckon, whatItCouldReach } from '../content/release';
-import { layOut } from './schedule';
+import { layOut, staffingOf } from './schedule';
 import { cashAccountFor, parentCompany, projectsOf } from './company';
 
 export const RELEASE_MONTH_KIND = 'release.month';
@@ -60,14 +60,18 @@ export const TAKINGS_ACCOUNT = 'income:takings';
 export function craftOf(sim: Simulation, project: Project): number {
   const holding = project.holdingId ? sim.universe.holdings[project.holdingId] : undefined;
   if (!holding || project.greenlitAt === undefined) return 0;
-  const laid = layOut(holding.demands, project.levels ?? {}, project.greenlitAt, sim.homeZone);
+  const laid = layOut(holding.demands, staffingOf(project), project.greenlitAt, sim.homeZone);
 
   let months = 0;
   let weighted = 0;
   for (const phase of laid.phases) {
     for (const line of phase.lines) {
       months += line.months;
-      weighted += line.months * (line.level - LEAST_TEAM);
+      // The rung the work is read at, not the rung that was paid for. They are the
+      // same number until somebody with a temperament is hired, and then they are
+      // the whole point: an exacting department delivers above what it cost and a
+      // brisk one below it, which is the trade the shortlist is asking about.
+      weighted += line.months * (line.reads - LEAST_TEAM);
     }
   }
   if (months === 0) return 0;

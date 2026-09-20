@@ -26,7 +26,7 @@ import type { Id, SaveUniverse } from '../domain/model';
 import type { Account } from '../core/ledger';
 import { formatMoney, type Money } from '../core/money';
 import type {
-  Company, CompanyForm, GuildId, Hold, Holding, Policy, PolicyKind, Post, PostRole,
+  Company, CompanyForm, Engagement, GuildId, Hold, Holding, Policy, PolicyKind, Post, PostRole,
   Project, Provenance, Registration, RegistryId, RoleId, Signature,
 } from '../domain/company';
 import {
@@ -35,11 +35,14 @@ import {
 } from '../content/incorporation';
 import { ESTATE_CITY_ID, HOUSE, studioName } from '../content/estate';
 import { bondFor, standingWord } from './standing';
-import { appealForTyped, demandsForTyped, listingById } from './material';
+import { listingById, typedProperty } from './material';
 import {
-  BEST_TEAM, DEPARTMENT_BY_ID, LEAST_TEAM, monthsFor,
+  DEPARTMENT_BY_ID, monthsFor,
 } from '../content/departments';
-import { layOut } from './schedule';
+import { layOut, restamp, staffingOf } from './schedule';
+import {
+  asksToSign, freeBetween, handById, heldUntil, standingOn, working,
+} from './people';
 import { LOCK_BY_ID, canReopen, readyFor, undoCosts } from '../content/locks';
 import { payWhatIsDue, wouldTake } from './release';
 import {
@@ -121,6 +124,18 @@ export const postsOf = (universe: SaveUniverse, companyId?: Id): Post[] =>
 
 export const projectsOf = (universe: SaveUniverse, companyId?: Id): Project[] =>
   all(universe.projects).filter((one) => !one.shelvedAt && (!companyId || one.companyId === companyId));
+
+/**
+ * Every engagement the studio is holding, across every picture.
+ *
+ * Read off the projects rather than kept in a list beside them, for the same reason a
+ * balance is read off its postings: a second copy is a second answer. It lives here
+ * rather than with the pool because the projects are here — `world/people.ts` is
+ * asked whether somebody is free and is handed the engagements to decide against, so
+ * it never has to know that a project is a thing that exists.
+ */
+export const engagementsOf = (universe: SaveUniverse): readonly Engagement[] =>
+  projectsOf(universe).flatMap((one) => Object.values(one.hires ?? {}));
 
 /**
  * The film side's own ids, which is what "anywhere" means in the four below.
@@ -1130,7 +1145,7 @@ export function registerCompanyCommands(sim: Simulation): void {
         return refuse('The budget has to be shut before the money can go out.');
       }
 
-      const laid = layOut(holding.demands, project.levels ?? {}, s.now, s.homeZone);
+      const laid = layOut(holding.demands, staffingOf(project), s.now, s.homeZone);
       const paid = payFor(s, parent.id, laid.budgetCents, `Making ${project.title}`);
       if (!paid.ok) return paid;
 
@@ -1143,19 +1158,30 @@ export function registerCompanyCommands(sim: Simulation): void {
   );
 
   /**
-   * Hire a team into one of a picture's departments, and reprice it.
+   * Put somebody on one of a picture's departments, and reprice it.
    *
    * The other half of the budget. `world/schedule.ts` reads what the material asks
-   * of a department to decide how many months it works; this decides what one of
-   * those months costs. Nothing about the schedule's length moves — hiring better
-   * people does not make them faster, which is the distinction the whole engine is
-   * built on and the easiest one to lose.
+   * of a department to decide how many months it works; this decides who answers,
+   * and therefore what one of those months costs.
+   *
+   * It used to take a bare rung from one to five, and the docstring here said that
+   * nothing about the schedule's length moved when it changed — hiring better people
+   * did not make them faster. That was true of a rung and is not true of a person. A
+   * temperament moves three things the build already reads: what a month costs, how
+   * many months there are, and the rung the work is finally read at. So an exacting
+   * designer now genuinely delays the shoot, which is the distinction that used to be
+   * missing rather than the one that has been lost.
+   *
+   * Hiring costs a signing fee on top, charged here, because a decision with no price
+   * on it is not one. The rung is stamped onto the engagement rather than looked up
+   * later, since standing is a function of age and a birthday during post-production
+   * must not re-price a budget that has already been shut.
    *
    * The budget is recomputed rather than adjusted. There is no arithmetic here that
    * adds a difference to a stored figure, because a figure maintained by deltas
    * drifts and a figure recomputed from its inputs cannot.
    */
-  sim.onCommand<{ projectId: Id; departmentId: string; level: number }, Done>(
+  sim.onCommand<{ projectId: Id; departmentId: string; personId: string }, Done>(
     'company.staff', (payload, { sim: s }) => {
       const project = s.universe.projects[payload.projectId];
       if (!project) return refuse('No such project.');
@@ -1165,10 +1191,6 @@ export function registerCompanyCommands(sim: Simulation): void {
       const holding = project.holdingId ? s.universe.holdings[project.holdingId] : undefined;
       if (!holding) return refuse('That one has no material under it to cost.');
 
-      const want = Math.round(payload.level);
-      if (!Number.isFinite(want) || want < LEAST_TEAM || want > BEST_TEAM) {
-        return refuse(`A team is hired somewhere between ${LEAST_TEAM} and ${BEST_TEAM}.`);
-      }
       if ((project.locked ?? []).includes('budget')) {
         return refuse('The budget is shut. Open it again before moving anybody.');
       }
@@ -1176,9 +1198,65 @@ export function registerCompanyCommands(sim: Simulation): void {
         return refuse(`This one asks nothing of ${department.label.toLowerCase()}.`);
       }
 
-      project.levels = { ...(project.levels ?? {}), [department.id]: want };
-      project.budgetCents = layOut(holding.demands, project.levels, s.now, s.homeZone).budgetCents;
-      return { ok: true };
+      const hand = handById(s, payload.personId);
+      if (!hand) return refuse('There’s nobody in the trade by that name.');
+      if (hand.discipline !== department.id) {
+        return refuse(`They don’t run ${department.label.toLowerCase()}.`);
+      }
+      if (!working(hand, s.now, s.homeZone)) {
+        return refuse('They aren’t working — too early in a career, or past the end of one.');
+      }
+
+      // What the picture would ask of them, laid out as it stands before they are on
+      // it. Provisional by design: hiring somebody exacting into another department
+      // moves this window, and `restamp` below is what keeps every engagement on the
+      // picture agreeing with the schedule rather than with the day it was signed.
+      const before = layOut(holding.demands, staffingOf(project), s.now, s.homeZone);
+      const line = before.phases
+        .flatMap((one) => one.lines.map((each) => ({ phase: one, line: each })))
+        .find((one) => one.line.department.id === department.id);
+      const from = line?.phase.from ?? s.now;
+      const to = line ? addMonths(from, line.line.months, s.homeZone) : s.now;
+
+      // Somebody already on this department is being replaced, and their own months
+      // must not be what makes them unavailable to replace themselves.
+      const sitting = (project.hires ?? {})[department.id];
+      const booked = engagementsOf(s.universe)
+        .filter((one) => one !== sitting);
+      if (!freeBetween(booked, hand.id, from, to)) {
+        const until = heldUntil(booked, hand.id);
+        return refuse(until === undefined
+          ? 'They’re working. Another picture has them.'
+          : `They’re working until ${formatDate(until, s.homeZone)}.`);
+      }
+
+      const firm = parentCompany(s.universe);
+      if (!firm) return refuse('There’s no company to hire anybody.');
+      const at = standingOn(hand, s.now, s.homeZone);
+      const fee = asksToSign(hand, s.now, s.homeZone);
+      const paid = payFor(s, firm.id, fee, `${hand.name} on ${project.title}`);
+      if (!paid.ok) return paid;
+
+      project.hires = {
+        ...(project.hires ?? {}),
+        [department.id]: {
+          handId: hand.id,
+          name: hand.name,
+          discipline: department.id,
+          // The rung the day they signed, and it does not move afterwards. Standing
+          // is a function of age, so without this a birthday during post-production
+          // would quietly re-price a budget that had already been shut.
+          standing: at,
+          temperamentId: hand.temperament.id,
+          from,
+          to,
+        },
+      };
+      restamp(project, holding.demands, s.now, s.homeZone);
+      project.budgetCents = layOut(
+        holding.demands, staffingOf(project), s.now, s.homeZone,
+      ).budgetCents;
+      return { ok: true, feeCents: fee };
     },
   );
 
@@ -1198,7 +1276,7 @@ export function registerCompanyCommands(sim: Simulation): void {
    */
   sim.onCommand<{
     title?: string; listingId?: string; provenance?: Provenance; hold?: Hold;
-    optionFeeCents?: Money; purchasePriceCents?: Money; months?: number; chainGap?: string;
+    purchasePriceCents?: Money; months?: number; chainGap?: string;
   }, Done>('company.option', (payload, { sim: s }) => {
     const parent = parentCompany(s.universe);
     if (!parent) return refuse('There’s no company to hold anything.');
@@ -1211,7 +1289,12 @@ export function registerCompanyCommands(sim: Simulation): void {
     }
 
     const hold: Hold = payload.hold ?? 'option';
-    const fee = Math.max(0, Math.round(listing?.asksCents ?? payload.optionFeeCents ?? DEFAULT_OPTION_FEE));
+    // A typed title is priced the same way a listed one is: off what it could reach.
+    // It used to cost a flat five thousand, which made thinking of something yourself
+    // the cheapest way to acquire anything and the market a thing to ignore.
+    const kind = listing?.provenance ?? payload.provenance ?? 'original';
+    const typed = listing ? undefined : typedProperty(s, title, kind);
+    const fee = Math.max(0, Math.round(listing?.asksCents ?? typed?.asksCents ?? 0));
     const paid = payFor(s, parent.id, hold === 'option' ? fee : Math.max(fee, Math.round(payload.purchasePriceCents ?? fee)), `Rights to ${title}`);
     if (!paid.ok) return paid;
 
@@ -1220,11 +1303,9 @@ export function registerCompanyCommands(sim: Simulation): void {
       saveId: s.universe.meta.id,
       companyId: parent.id,
       title,
-      provenance: listing?.provenance ?? payload.provenance ?? 'original',
-      demands: listing?.demands
-        ?? demandsForTyped(s, title, listing?.provenance ?? payload.provenance ?? 'original'),
-      appeal: listing?.appeal
-        ?? appealForTyped(s, title, listing?.provenance ?? payload.provenance ?? 'original'),
+      provenance: kind,
+      demands: listing?.demands ?? typed!.demands,
+      appeal: listing?.appeal ?? typed!.appeal,
       hold,
       acquiredAt: s.now,
       chainComplete: !payload.chainGap,
@@ -1425,8 +1506,6 @@ export const US_ARM_CITY = 'us-ca-losangeles';
 /** Who writes the cover. One name, so a screen has something to print. */
 export const INSURER = 'Sjóvá';
 
-/** What an option costs when nobody has said. SLATE's own. */
-export const DEFAULT_OPTION_FEE: Money = 5_000_00;
 
 /** What a title may run to before it stops being a title. */
 export const LONGEST_TITLE = 80;

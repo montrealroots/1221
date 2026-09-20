@@ -19,12 +19,33 @@ import {
   BEST_TEAM, DEPARTMENTS, LEAST_TEAM, PHASES, departmentsIn, monthsFor, rateFor,
 } from '@/engine/content/departments';
 import { layOut, whatHoldsItUp } from '@/engine/world/schedule';
-import { holdingsOf, projectsOf } from '@/engine/world/company';
+import { engagementsOf, holdingsOf, parentCompany, projectsOf } from '@/engine/world/company';
+import { somebodyAt } from '@/engine/world/people';
 import { onTheMarket } from '@/engine/world/material';
 import { addMonths } from '@/engine/core/time';
 
 const ZONE = 'Atlantic/Reykjavik';
 const AT = Date.UTC(2031, 0, 1);
+
+/** Money in, so a signing fee has something to come out of. */
+function fund(sim: ReturnType<typeof quickSave>, cents: number) {
+  const company = parentCompany(sim.universe)!;
+  const cash = Object.values(sim.universe.accounts)
+    .find((one) => one.ownerId === company.id && one.kind === 'company_cash' && !one.closedAt)!;
+  if (!sim.ledger.tryAccount('equity:capital')) {
+    sim.ledger.open({
+      id: 'equity:capital', saveId: sim.universe.meta.id, kind: 'equity', name: 'Capital',
+      ownerId: 'world', balance: 0, openedAt: sim.now, nominal: true, category: 'business',
+    });
+  }
+  const short = cents - cash.balance;
+  if (short > 0) {
+    sim.post({
+      memo: 'Capital In', category: 'business',
+      postings: [{ accountId: 'equity:capital', amount: -short }, { accountId: cash.id, amount: short }],
+    });
+  }
+}
 const plain = (over: Partial<Demands> = {}): Demands =>
   ({ scope: 3, spectacle: 3, period: 3, ...over });
 
@@ -197,7 +218,7 @@ describe('and it reaches a project', () => {
   });
 });
 
-describe('hiring a team is the other half of the budget', () => {
+describe('putting somebody on a department is the other half of the budget', () => {
   /** A save with a project that has real material under it. */
   function aPicture(seed: string) {
     const sim = quickSave({}, seed);
@@ -210,6 +231,7 @@ describe('hiring a team is the other half of the budget', () => {
     // against the current month because the market churns, so a listing from six
     // months ahead correctly did not exist yet and the option was refused. The API was
     // right and the test was wrong.
+    fund(sim, 50_000_000_00);
     sim.execute({ kind: 'company.option', payload: { title: `Something For ${seed}` } });
     const holding = holdingsOf(sim.universe)[0]!;
     sim.execute({
@@ -230,54 +252,139 @@ describe('hiring a team is the other half of the budget', () => {
   const needed = (holding: { demands: Demands }) =>
     DEPARTMENTS.find((d) => monthsFor(d, holding.demands) > 0)!;
 
-  it('raises what it costs and not how long it takes', () => {
+  /** Somebody plain at a rung, which is how a case isolates the rung from the person. */
+  const someone = (sim: ReturnType<typeof quickSave>, discipline: string, standing: number) =>
+    somebodyAt(sim, engagementsOf(sim.universe), discipline, standing, sim.now, sim.now)!;
+
+  it('raises what it costs when a better person is put on it', () => {
+    // This case used to assert that the months did *not* move, and that was true of a
+    // bare rung: hiring up bought quality and never time. It stopped being true when
+    // rungs became people, because a temperament moves the months as well as the rate.
+    // The claim that survives is the one about money, and the months became the
+    // subject of their own case below rather than a clause in this one.
     const { sim, holding, project } = aPicture('staff-cost');
-    const before = project.budgetCents!;
-    const beforeMonths = layOut(holding.demands, project.levels ?? {}, sim.now, sim.homeZone).months;
+    const d = needed(holding);
+    staff(sim, {
+      projectId: project.id, departmentId: d.id, personId: someone(sim, d.id, LEAST_TEAM).id,
+    });
+    const cheap = project.budgetCents!;
 
-    const done = staff(sim, { projectId: project.id, departmentId: needed(holding).id, level: BEST_TEAM });
+    const dear = someone(sim, d.id, BEST_TEAM);
+    const done = staff(sim, { projectId: project.id, departmentId: d.id, personId: dear.id });
     expect(done.ok, done.why).toBe(true);
+    expect(project.budgetCents!).toBeGreaterThan(cheap);
+  });
 
-    expect(project.budgetCents!).toBeGreaterThan(before);
-    expect(layOut(holding.demands, project.levels ?? {}, sim.now, sim.homeZone).months)
-      .toBe(beforeMonths);
+  it('lets a temperament move the months, which a rung never could', () => {
+    // The falsifiability test for temperament. Same picture, same rung, and the
+    // schedule has to disagree — otherwise `takes` is a number nothing reads and the
+    // distinction between what somebody can do and what they are like is decoration.
+    const demands = { scope: 3, spectacle: 3, period: 3 };
+    const plain = layOut(demands, { unit: { level: 3, spends: 1, takes: 1, lifts: 0 } }, AT, ZONE);
+    const slow = layOut(demands, { unit: { level: 3, spends: 1, takes: 1.2, lifts: 0 } }, AT, ZONE);
+    const quick = layOut(demands, { unit: { level: 3, spends: 1, takes: 0.85, lifts: 0 } }, AT, ZONE);
+    expect(slow.months).toBeGreaterThan(plain.months);
+    expect(quick.months).toBeLessThanOrEqual(plain.months);
+    expect(slow.deliversAt).toBeGreaterThan(plain.deliversAt);
+  });
+
+  it('charges more for somebody who spends more, at the very same rung', () => {
+    const demands = { scope: 3, spectacle: 3, period: 3 };
+    const thrifty = layOut(demands, { unit: { level: 3, spends: 1, takes: 1, lifts: 0 } }, AT, ZONE);
+    const loose = layOut(demands, { unit: { level: 3, spends: 1.25, takes: 1, lifts: 0 } }, AT, ZONE);
+    expect(loose.budgetCents).toBeGreaterThan(thrifty.budgetCents);
+    expect(loose.months).toBe(thrifty.months);
+  });
+
+  it('reads the work at a rung the money did not buy', () => {
+    // `spends` and `takes` reach the ledger and the calendar. `lifts` reaches neither:
+    // it moves the rung the craft is read at, which is what a picture's take reads.
+    // Without this an exacting hire would cost more, take longer and be worth nothing
+    // for either.
+    const demands = { scope: 3, spectacle: 3, period: 3 };
+    const steady = layOut(demands, { unit: { level: 3, spends: 1, takes: 1, lifts: 0 } }, AT, ZONE);
+    const exacting = layOut(demands, { unit: { level: 3, spends: 1, takes: 1, lifts: 0.5 } }, AT, ZONE);
+    const unit = (one: typeof steady) => one.phases
+      .flatMap((phase) => phase.lines).find((each) => each.department.id === 'unit')!;
+    expect(unit(exacting).reads).toBeGreaterThan(unit(steady).reads);
+    expect(unit(exacting).level).toBe(unit(steady).level);
   });
 
   it('recomputes rather than adjusting, so hiring twice is not hiring twice over', () => {
     const { sim, holding, project } = aPicture('staff-twice');
     const d = needed(holding);
-    staff(sim, { projectId: project.id, departmentId: d.id, level: BEST_TEAM });
+    const who = someone(sim, d.id, BEST_TEAM);
+    staff(sim, { projectId: project.id, departmentId: d.id, personId: who.id });
     const once = project.budgetCents!;
-    staff(sim, { projectId: project.id, departmentId: d.id, level: BEST_TEAM });
+    staff(sim, { projectId: project.id, departmentId: d.id, personId: who.id });
     expect(project.budgetCents!).toBe(once);
   });
 
-  it('comes back down when a cheaper team is hired instead', () => {
+  it('comes back down when somebody cheaper is put on instead', () => {
     const { sim, holding, project } = aPicture('staff-down');
     const d = needed(holding);
-    staff(sim, { projectId: project.id, departmentId: d.id, level: BEST_TEAM });
+    staff(sim, {
+      projectId: project.id, departmentId: d.id, personId: someone(sim, d.id, BEST_TEAM).id,
+    });
     const dear = project.budgetCents!;
-    staff(sim, { projectId: project.id, departmentId: d.id, level: LEAST_TEAM });
+    staff(sim, {
+      projectId: project.id, departmentId: d.id, personId: someone(sim, d.id, LEAST_TEAM).id,
+    });
     expect(project.budgetCents!).toBeLessThan(dear);
+  });
+
+  it('will not put the same person on two pictures across the same months', () => {
+    // The whole reason an engagement carries dates. A pool where nobody is ever
+    // unavailable is a price list with names on it.
+    const { sim, holding, project } = aPicture('staff-clash');
+    const d = needed(holding);
+    const who = someone(sim, d.id, BEST_TEAM);
+    expect(staff(sim, { projectId: project.id, departmentId: d.id, personId: who.id }).ok)
+      .toBe(true);
+
+    sim.execute({ kind: 'company.option', payload: { title: 'The Other One' } });
+    const other = holdingsOf(sim.universe).find((one) => one.title === 'The Other One')!;
+    sim.execute({
+      kind: 'company.develop',
+      payload: { title: other.title, holdingId: other.id },
+    });
+    const second = projectsOf(sim.universe).find((one) => one.title === other.title)!;
+    if (monthsFor(d, other.demands) > 0) {
+      const clash = staff(sim, { projectId: second.id, departmentId: d.id, personId: who.id });
+      expect(clash.ok).toBe(false);
+      expect(clash.why).toContain('working');
+    }
+  });
+
+  it('refuses somebody who does not run this department', () => {
+    const { sim, holding, project } = aPicture('staff-wrongtrade');
+    const d = needed(holding);
+    const elsewhere = DEPARTMENTS.find((one) => one.id !== d.id)!;
+    const who = someone(sim, elsewhere.id, 3);
+    expect(staff(sim, { projectId: project.id, departmentId: d.id, personId: who.id }).ok)
+      .toBe(false);
   });
 
   it('refuses a department that does not exist', () => {
     const { sim, project } = aPicture('staff-nodept');
-    expect(staff(sim, { projectId: project.id, departmentId: 'catering', level: 3 }).ok).toBe(false);
+    expect(staff(sim, { projectId: project.id, departmentId: 'catering', personId: 'unit:0' }).ok)
+      .toBe(false);
   });
 
-  it('refuses a team nobody could be hired at', () => {
-    const { sim, holding, project } = aPicture('staff-range');
+  it('refuses somebody the trade has never heard of', () => {
+    const { sim, holding, project } = aPicture('staff-nobody');
     const d = needed(holding).id;
-    expect(staff(sim, { projectId: project.id, departmentId: d, level: 0 }).ok).toBe(false);
-    expect(staff(sim, { projectId: project.id, departmentId: d, level: 99 }).ok).toBe(false);
+    expect(staff(sim, { projectId: project.id, departmentId: d, personId: 'nobody:99' }).ok)
+      .toBe(false);
   });
 
   it('refuses a department this picture asks nothing of', () => {
     const { sim, holding, project } = aPicture('staff-unneeded');
     const spare = DEPARTMENTS.find((d) => monthsFor(d, holding.demands) <= 0);
     if (spare) {
-      expect(staff(sim, { projectId: project.id, departmentId: spare.id, level: 3 }).ok).toBe(false);
+      const who = someone(sim, spare.id, 3);
+      expect(staff(sim, { projectId: project.id, departmentId: spare.id, personId: who.id }).ok)
+        .toBe(false);
     }
   });
 
@@ -285,7 +392,8 @@ describe('hiring a team is the other half of the budget', () => {
     const sim = quickSave({}, 'staff-bare');
     sim.execute({ kind: 'company.develop', payload: { title: 'Nothing Behind It' } });
     const bare = projectsOf(sim.universe).find((one) => one.title === 'Nothing Behind It')!;
-    expect(staff(sim, { projectId: bare.id, departmentId: DEPARTMENTS[0]!.id, level: 3 }).ok)
-      .toBe(false);
+    expect(staff(sim, {
+      projectId: bare.id, departmentId: DEPARTMENTS[0]!.id, personId: 'unit:0',
+    }).ok).toBe(false);
   });
 });

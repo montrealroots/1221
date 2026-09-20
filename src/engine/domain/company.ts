@@ -389,6 +389,25 @@ export interface Policy {
 /** Where a story came from before it was yours. */
 export type Provenance = 'original' | 'novel' | 'article' | 'play' | 'life_rights' | 'format';
 
+/**
+ * Somebody hired onto a department, and the months they are on it for.
+ *
+ * Lives here rather than beside the pool that draws them, because it is a thing the
+ * save holds and the pool is not — the trade is redrawn from the seed every time it
+ * is asked for, and this is the only record that anybody was ever actually hired.
+ */
+export interface Engagement {
+  /** Their id in the trade, which carries the discipline it was drawn for. */
+  handId: string;
+  name: string;
+  discipline: string;
+  /** The rung they stood at the day they were hired, which is what the budget priced. */
+  standing: number;
+  temperamentId: string;
+  from: Instant;
+  to: Instant;
+}
+
 /** What the company actually holds over it. */
 export type Hold = 'option' | 'owned' | 'commissioned';
 
@@ -650,7 +669,21 @@ export interface Project {
    * means the floor rather than nothing — every department a picture needs is
    * staffed by somebody, and choosing is choosing to do better than that.
    */
-  levels?: Record<string, number>;
+  /**
+   * Who is actually on each department, by department id.
+   *
+   * `levels` above said what a department cost and nothing about who was in it, so
+   * two pictures at the same price were staffed by the same nobody. This is the same
+   * decision made about a person: it carries the rung they stood at on the day they
+   * were hired — which is what the budget was priced off and must not drift when they
+   * have a birthday — their temperament, and the months they are engaged for.
+   *
+   * Dated, because a pool where nobody is ever unavailable is a price list. The
+   * engagement is what makes the same person unable to run two departments across the
+   * same months, and it is read by `world/people.ts` rather than kept in a list
+   * beside the projects, for the reason a balance is read off its postings.
+   */
+  hires?: Record<string, Engagement>;
   /**
    * Which doors have shut, by lock id from `content/locks.ts`.
    *

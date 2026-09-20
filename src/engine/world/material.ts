@@ -35,6 +35,7 @@ import {
   CARRIES_OVER, MOST_ON_THE_MARKET, appealFrom, asksFor, demandsFor, provenanceFrom, titleFrom,
   type Demands,
 } from '../content/material';
+import { whatItCouldReach } from '../content/release';
 import { holdingsOf } from './company';
 
 /** One property, as the market offers it. */
@@ -88,12 +89,13 @@ export function drawnIn(sim: Simulation, key: string): readonly Listing[] {
   for (let i = 0; i < many; i += 1) {
     const provenance = provenanceFrom(rng.next());
     const appeal = appealFrom(rng.next());
+    const demands = demandsFor(provenance, rng.next(), rng.next(), rng.next());
     out.push({
       id: `${key}:${i}`,
       title: titleFrom(Math.floor(rng.next() * 997), Math.floor(rng.next() * 997)),
       provenance,
-      asksCents: asksFor(provenance, rng.next(), appeal),
-      demands: demandsFor(provenance, rng.next(), rng.next(), rng.next()),
+      asksCents: asksFor(provenance, rng.next(), whatItCouldReach(demands, appeal)),
+      demands,
       appeal,
       carriedOver: false,
     });
@@ -145,26 +147,24 @@ export function listingById(sim: Simulation, id: string, at: number = sim.now): 
  * The draw lives here rather than at the call site so that the `material` stream stays
  * in the one file `material.market` declares it is drawn in.
  */
-export function demandsForTyped(sim: Simulation, title: string, provenance: Provenance): Demands {
-  // One key rather than two, so this stays inside the `material` stream rather than
-  // minting a `material.typed` one nothing owns. It is the same source of randomness
-  // answering the same question — what a property asks for — and splitting it would
-  // have been a second die for no reason.
+export function typedProperty(
+  sim: Simulation, title: string, provenance: Provenance,
+): { demands: Demands; appeal: number; asksCents: Money } {
+  // One key rather than several, so this stays inside the `material` stream rather
+  // than minting one nothing owns — and one *call* rather than several, because a
+  // stream is a sequence. Two functions asking the same key for different parts of
+  // the answer had to burn each other's draws to stay in step, which worked and was
+  // one edit away from quietly disagreeing about what a title was.
   const rng = sim.rng('material', `typed:${title.toLowerCase()}`);
-  return demandsFor(provenance, rng.next(), rng.next(), rng.next());
-}
-
-/**
- * How far a property nobody listed carries, keyed on its title for the same reason.
- *
- * Takes the fourth draw off the same key the demands came from, so a typed title is
- * one property answering four questions rather than two properties that share a name
- * and disagree about everything else.
- */
-export function appealForTyped(sim: Simulation, title: string, provenance: Provenance): number {
-  const rng = sim.rng('material', `typed:${title.toLowerCase()}`);
-  // Three draws burned to reach the fourth, because the demands took the first three
-  // off this key and a stream is a sequence rather than a bag.
-  demandsFor(provenance, rng.next(), rng.next(), rng.next());
-  return appealFrom(rng.next());
+  const demands = demandsFor(provenance, rng.next(), rng.next(), rng.next());
+  const appeal = appealFrom(rng.next());
+  return {
+    demands,
+    appeal,
+    // Priced off its reach like anything on the market. A property you thought of
+    // yourself is not free — somebody still has to write it — and pricing it any
+    // other way would make typing a title the cheapest way to acquire anything,
+    // which is the loophole a market exists to close.
+    asksCents: asksFor(provenance, rng.next(), whatItCouldReach(demands, appeal)),
+  };
 }

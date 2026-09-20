@@ -29,7 +29,8 @@ import {
   craftOf, monthsPaid, onRelease, payWhatIsDue, stillPaying, takenSoFar,
 } from '@/engine/world/release';
 import { walkTheMonth } from '@/engine/world/production';
-import { holdingsOf, projectsOf, parentCompany } from '@/engine/world/company';
+import { engagementsOf, holdingsOf, projectsOf, parentCompany } from '@/engine/world/company';
+import { somebodyAt } from '@/engine/world/people';
 
 type Said = { ok: boolean; error?: string; takeCents?: number };
 
@@ -88,9 +89,11 @@ function aFinishedPicture(seed: string, best = false) {
 
   if (best) {
     for (const d of DEPARTMENTS) {
-      if (monthsFor(d, holding.demands) > 0) {
-        ran(sim, 'company.staff', { projectId: project.id, departmentId: d.id, level: BEST_TEAM });
-      }
+      if (monthsFor(d, holding.demands) <= 0) continue;
+      const who = somebodyAt(
+        sim, engagementsOf(sim.universe), d.id, BEST_TEAM, sim.now, sim.now,
+      );
+      if (who) ran(sim, 'company.staff', { projectId: project.id, departmentId: d.id, personId: who.id });
     }
   }
   ran(sim, 'company.lock_budget', { projectId: project.id });

@@ -18,13 +18,19 @@ import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
 import { LOCKS, LOCK_BY_ID, canReopen, inOrder, readyFor, undoCosts, wouldForeclose } from '@/engine/content/locks';
 import { DEPARTMENTS, monthsFor } from '@/engine/content/departments';
-import { holdingsOf, projectsOf, companyCash, parentCompany } from '@/engine/world/company';
+import { somebodyAt } from '@/engine/world/people';
+import { engagementsOf, holdingsOf, projectsOf, companyCash, parentCompany } from '@/engine/world/company';
 
 type Said = { ok: boolean; error?: string };
 
 /** A company with money, a holding and a project on the slate. */
 function aPicture(seed: string) {
   const sim = quickSave({}, seed);
+  // Funded before the option, because a property is priced off what it could reach
+  // and a company with nothing in the account can no longer take one. Enough for the
+  // rights and not a penny more, so the case about a company that cannot pay for a
+  // greenlight still has a company that cannot pay for a greenlight.
+  fund(sim, 900_000_00);
   sim.execute({ kind: 'company.option', payload: { title: `Something For ${seed}` } });
   const holding = holdingsOf(sim.universe)[0]!;
   sim.execute({
@@ -113,11 +119,15 @@ describe('shutting the budget', () => {
   it('freezes who is hired', () => {
     const { sim, holding, project } = aPicture('lock-freeze');
     const department = DEPARTMENTS.find((d) => monthsFor(d, holding.demands) > 0)!;
-    expect(ran(sim, 'company.staff', { projectId: project.id, departmentId: department.id, level: 3 }).ok)
+    fund(sim, 50_000_000_00);
+    const who = (at: number) => somebodyAt(
+      sim, engagementsOf(sim.universe), department.id, at, sim.now, sim.now,
+    )!;
+    expect(ran(sim, 'company.staff', { projectId: project.id, departmentId: department.id, personId: who(3).id }).ok)
       .toBe(true);
 
     expect(ran(sim, 'company.lock_budget', { projectId: project.id }).ok).toBe(true);
-    const after = ran(sim, 'company.staff', { projectId: project.id, departmentId: department.id, level: 4 });
+    const after = ran(sim, 'company.staff', { projectId: project.id, departmentId: department.id, personId: who(4).id });
     expect(after.ok).toBe(false);
     expect(after.why).toContain('shut');
   });
@@ -148,7 +158,8 @@ describe('shutting the budget', () => {
     const department = DEPARTMENTS.find((d) => monthsFor(d, holding.demands) > 0)!;
     ran(sim, 'company.lock_budget', { projectId: project.id });
     ran(sim, 'company.lock_budget', { projectId: project.id, off: true });
-    expect(ran(sim, 'company.staff', { projectId: project.id, departmentId: department.id, level: 4 }).ok)
+    const who = somebodyAt(sim, engagementsOf(sim.universe), department.id, 4, sim.now, sim.now)!;
+    expect(ran(sim, 'company.staff', { projectId: project.id, departmentId: department.id, personId: who.id }).ok)
       .toBe(true);
   });
 

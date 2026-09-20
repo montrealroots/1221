@@ -33,7 +33,7 @@ import type { Instant } from '../core/time';
 import { addMonths } from '../core/time';
 import type { Project, Stage } from '../domain/company';
 import type { Phase } from '../content/departments';
-import { layOut } from './schedule';
+import { layOut, staffingOf } from './schedule';
 import { parentCompany, projectsOf } from './company';
 import { startOfNextMonth } from '../core/time';
 
@@ -63,7 +63,7 @@ export function stageAt(sim: Simulation, project: Project, at: Instant): Stage |
   const holding = project.holdingId ? sim.universe.holdings[project.holdingId] : undefined;
   if (!holding) return undefined;
 
-  const laid = layOut(holding.demands, project.levels ?? {}, project.greenlitAt, sim.homeZone);
+  const laid = layOut(holding.demands, staffingOf(project), project.greenlitAt, sim.homeZone);
   for (const phase of laid.phases) {
     if (at < phase.to) return STAGE_OF[phase.phase];
   }
@@ -75,7 +75,7 @@ export function deliversAt(sim: Simulation, project: Project): Instant | undefin
   if (project.greenlitAt === undefined) return undefined;
   const holding = project.holdingId ? sim.universe.holdings[project.holdingId] : undefined;
   if (!holding) return undefined;
-  return layOut(holding.demands, project.levels ?? {}, project.greenlitAt, sim.homeZone).deliversAt;
+  return layOut(holding.demands, staffingOf(project), project.greenlitAt, sim.homeZone).deliversAt;
 }
 
 export interface Moved {

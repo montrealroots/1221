@@ -48,9 +48,14 @@
  * same property. Variety that only appears once the draw has landed is hindsight, not
  * a decision. `APPEAL_STRAYS` exists because of that run.
  *
- * With both in place, matching the team to the material ends five years on 1.27x what
+ * With both in place, matching the team to the material ends five years on 1.16x what
  * the best fixed rung manages, and is refused a greenlight less often while doing it.
  * The full table is in `src/engine/content/release.ts`.
+ *
+ * That edge is a floor and not a ceiling. `match` reads the property it has been
+ * handed and never decides **which** property to take — it options whatever the
+ * market offers first, good or bad — so the larger half of the same judgement is not
+ * in this measurement at all.
  *
  *   npx vite-node tools/career.mjs                 five years, each policy
  *   npx vite-node tools/career.mjs --years 8       longer
@@ -59,11 +64,14 @@
  */
 
 import { quickSave } from '../src/engine/index.ts';
-import { parentCompany, holdingsOf, projectsOf, companyCash } from '../src/engine/world/company.ts';
+import {
+  parentCompany, holdingsOf, projectsOf, companyCash, engagementsOf,
+} from '../src/engine/world/company.ts';
 import { DEPARTMENTS, monthsFor, BEST_TEAM, LEAST_TEAM } from '../src/engine/content/departments.ts';
 import { layOut } from '../src/engine/world/schedule.ts';
 import { addMonths } from '../src/engine/core/time.ts';
 import { reckon, whatItCouldReach } from '../src/engine/content/release.ts';
+import { somebodyAt } from '../src/engine/world/people.ts';
 
 const arg = (name, fallback) => {
   const at = process.argv.indexOf(`--${name}`);
@@ -163,9 +171,11 @@ function aCareer(seed, level) {
 
     const hire = level === 'match' ? worthIt(holding, sim.now, sim.homeZone) : level;
     for (const d of DEPARTMENTS) {
-      if (monthsFor(d, holding.demands) > 0) {
-        run(sim, 'company.staff', { projectId: project.id, departmentId: d.id, level: hire });
-      }
+      if (monthsFor(d, holding.demands) <= 0) continue;
+      const who = somebodyAt(
+        sim, engagementsOf(sim.universe), d.id, hire, sim.now, sim.now,
+      );
+      if (who) run(sim, 'company.staff', { projectId: project.id, departmentId: d.id, personId: who.id });
     }
     const wants = layOut(holding.demands, project.levels ?? {}, sim.now, sim.homeZone).budgetCents;
     run(sim, 'company.lock_budget', { projectId: project.id });

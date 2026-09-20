@@ -20,11 +20,12 @@
 import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
 import {
-  APPEAL_STRAYS, ASKS_AROUND, CARRIES_OVER, COSTS_LIKE, MOST_ON_THE_MARKET,
+  APPEAL_STRAYS, ASKS_AT_LEAST, ASKS_SHARE, CARRIES_OVER, COSTS_LIKE, MOST_ON_THE_MARKET,
   PROVENANCES, PROVENANCE_SAID, READS_AS, appealFrom, asksFor, provenanceFrom,
   readsAs, titleFrom,
 } from '@/engine/content/material';
 import { monthKey, onTheMarket } from '@/engine/world/material';
+import { whatItCouldReach } from '@/engine/content/release';
 import { holdingsOf } from '@/engine/world/company';
 import { addMonths } from '@/engine/core/time';
 
@@ -147,17 +148,26 @@ describe('taking something is what removes it', () => {
 });
 
 describe('what a property is and what it costs', () => {
-  it('prices each kind against the same middle', () => {
+  const REACH = 5_000_000_00;
+
+  it('asks a share of what the thing could reach, by kind', () => {
+    // It used to ask a flat figure whatever the property was worth, and the market
+    // screen showed what that meant: the dearest thing on offer asked twenty-three
+    // thousand against a reach of four and a third million, so taking everything was
+    // always right. A rights holder prices against the thing.
     for (const p of PROVENANCES) {
-      const mid = asksFor(p, 0.5);
-      expect(mid).toBe(Math.round(ASKS_AROUND * COSTS_LIKE[p]));
+      expect(asksFor(p, 0.5, REACH)).toBe(Math.round(REACH * ASKS_SHARE * COSTS_LIKE[p]));
     }
   });
 
+  it('asks more for a property that could reach further', () => {
+    expect(asksFor('novel', 0.5, REACH * 2)).toBeGreaterThan(asksFor('novel', 0.5, REACH));
+  });
+
   it('makes a novel dearer than an original, and life rights dearest', () => {
-    expect(asksFor('novel', 0.5)).toBeGreaterThan(asksFor('original', 0.5));
+    expect(asksFor('novel', 0.5, REACH)).toBeGreaterThan(asksFor('original', 0.5, REACH));
     const dearest = PROVENANCES.reduce(
-      (most, p) => (asksFor(p, 0.5) > asksFor(most, 0.5) ? p : most),
+      (most, p) => (asksFor(p, 0.5, REACH) > asksFor(most, 0.5, REACH) ? p : most),
       PROVENANCES[0]!,
     );
     expect(dearest).toBe('life_rights');
@@ -165,8 +175,8 @@ describe('what a property is and what it costs', () => {
 
   it('spreads a price either side of the middle and never below the floor', () => {
     for (const p of PROVENANCES) {
-      expect(asksFor(p, 0)).toBeLessThan(asksFor(p, 1));
-      expect(asksFor(p, 0)).toBeGreaterThanOrEqual(1_000_00);
+      expect(asksFor(p, 0, REACH)).toBeLessThan(asksFor(p, 1, REACH));
+      expect(asksFor(p, 0, 1)).toBe(ASKS_AT_LEAST);
     }
   });
 
@@ -212,9 +222,9 @@ describe('how far a property carries', () => {
   });
 
   it('prices it into the asking, so good material is not free', () => {
-    const plain = asksFor('novel', 0.5, 1);
-    const wanted = asksFor('novel', 0.5, 1 + APPEAL_STRAYS);
-    expect(wanted).toBeGreaterThan(plain);
+    const plain = whatItCouldReach({ scope: 3, spectacle: 3, period: 3 }, 1);
+    const wanted = whatItCouldReach({ scope: 3, spectacle: 3, period: 3 }, 1 + APPEAL_STRAYS);
+    expect(asksFor('novel', 0.5, wanted)).toBeGreaterThan(asksFor('novel', 0.5, plain));
   });
 
   it('says it in a word, and reaches every word across the range of the draw', () => {

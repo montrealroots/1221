@@ -30,6 +30,8 @@ import { PAYS_FOR_MONTHS, whatItCouldReach } from '../src/engine/content/release
 import { walkTheMonth } from '../src/engine/world/production.ts';
 import { payWhatIsDue, takenSoFar, craftOf } from '../src/engine/world/release.ts';
 import { addMonths } from '../src/engine/core/time.ts';
+import { somebodyAt } from '../src/engine/world/people.ts';
+import { engagementsOf } from '../src/engine/world/company.ts';
 
 const arg = (name, fallback) => {
   const at = process.argv.indexOf(`--${name}`);
@@ -87,10 +89,15 @@ function onePicture(seed, level) {
   must(sim, 'company.develop', { title: holding.title, holdingId: holding.id });
   const project = projectsOf(sim.universe).find((one) => one.title === holding.title);
 
+  // Somebody plain at the wanted rung, so the five bands differ by the rung and not
+  // by whichever temperament happened to be free that month.
   for (const d of DEPARTMENTS) {
-    if (monthsFor(d, holding.demands) > 0) {
-      must(sim, 'company.staff', { projectId: project.id, departmentId: d.id, level });
-    }
+    if (monthsFor(d, holding.demands) <= 0) continue;
+    const who = somebodyAt(
+      sim, engagementsOf(sim.universe), d.id, level, sim.now, sim.now,
+    );
+    if (!who) throw new Error(`nobody free in ${d.id}`);
+    must(sim, 'company.staff', { projectId: project.id, departmentId: d.id, personId: who.id });
   }
 
   must(sim, 'company.lock_budget', { projectId: project.id });

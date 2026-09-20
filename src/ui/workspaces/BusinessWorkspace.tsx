@@ -23,14 +23,17 @@ import { at } from '@/ui/looks/subject';
 import { fixFor } from './fix';
 import { toStart } from '@/ui/looks/words';
 import { formatMoney } from '@/engine/core/money';
-import { formatDate } from '@/engine/core/time';
+import { addMonths, formatDate } from '@/engine/core/time';
 import { CADENCE_LABEL, ENGINES, RENEWAL_SAID, engineById } from '@/engine/content/concept';
 import { CITIES } from '@/engine/content/geography';
 import {
-  BEST_TEAM, DEPARTMENTS, LEAST_TEAM, monthsFor, rateFor,
+  DEPARTMENTS, monthsFor, rateFor,
 } from '@/engine/content/departments';
 import { LOCK_BY_ID, canReopen, undoCosts, wouldForeclose } from '@/engine/content/locks';
 import { PROVENANCE_SAID, readsAs } from '@/engine/content/material';
+import { TEMPERAMENT_BY_ID, standingSaid } from '@/engine/content/people';
+import { asksToSign, offered, standingOn } from '@/engine/world/people';
+import { layOut, staffingOf } from '@/engine/world/schedule';
 import { whatItCouldReach } from '@/engine/content/release';
 import { onTheMarket } from '@/engine/world/material';
 import {
@@ -45,7 +48,7 @@ import {
 } from '@/engine/content/incorporation';
 import type { Project, RoleId } from '@/engine/domain/company';
 import {
-  americanArm, capabilitiesOf, companyCash, holdingsOf, parentCompany, policiesOf,
+  americanArm, capabilitiesOf, companyCash, engagementsOf, holdingsOf, parentCompany, policiesOf,
   postFacts, postsOf, projectsOf, registrationsOf, signaturesOf, whereItStands,
   type Blocker, type Capability,
 } from '@/engine/world/company';
@@ -824,8 +827,10 @@ function Standings() {
  */
 function Staffing() {
   const { run } = useGame();
+  const sim = useWorld((s) => s);
   const slate = useWorld((s) => projectsOf(s.universe).filter((one) => !one.shelvedAt));
   const holdings = useWorld((s) => s.universe.holdings);
+  const booked = useWorld((s) => engagementsOf(s.universe));
   const [chosenId, setChosenId] = useState<string | undefined>(undefined);
   const [said, setSaid] = useState<string | undefined>(undefined);
 
@@ -833,13 +838,23 @@ function Staffing() {
   const holding = project?.holdingId ? holdings[project.holdingId] : undefined;
   if (!project || !holding) return null;
 
+  // The picture as it stands, so each department's shortlist is drawn for the months
+  // that department would actually be working — which is what makes somebody being
+  // unavailable a fact about this picture rather than about the calendar in general.
+  const from = project.greenlitAt ?? sim.now;
+  const laid = layOut(holding.demands, staffingOf(project), from, sim.homeZone);
+  const windows = new Map(laid.phases.flatMap((phase) => phase.lines.map((line) => [
+    line.department.id,
+    { from: phase.from, to: addMonths(phase.from, line.months, sim.homeZone), months: line.months },
+  ] as const)));
+
   const needed = DEPARTMENTS
     .map((department) => ({ department, months: monthsFor(department, holding.demands) }))
     .filter((one) => one.months > 0);
 
-  const hire = (departmentId: string, level: number) => {
+  const hire = (departmentId: string, personId: string) => {
     const done = run<{ ok: boolean; error?: string }>(
-      'company.staff', { projectId: project.id, departmentId, level }, { silent: true },
+      'company.staff', { projectId: project.id, departmentId, personId }, { silent: true },
     );
     setSaid(done.value?.error ?? (done.value?.ok ? undefined : done.error));
   };
@@ -859,33 +874,64 @@ function Staffing() {
         </div>
       )}
       <p className="muted small" style={{ marginBottom: 'var(--s3)' }}>
-        The material decides the months. You decide what a month costs. A better team
-        finishes on the same date and charges more for getting there.
+        The material decides the months. Who you put on it decides what a month costs,
+        and some of them decide how many months there are.
       </p>
       <div className="col gap-2">
         {needed.map(({ department, months }) => {
-          const level = project.levels?.[department.id] ?? LEAST_TEAM;
+          const sitting = project.hires?.[department.id];
+          const window = windows.get(department.id);
+          const shortlist = offered(
+            sim, booked.filter((one) => one !== sitting), department.id,
+            window?.from ?? from, window?.to ?? from,
+          );
           return (
             <div className="holding" key={department.id}>
               <div className="row-between">
                 <div className="grow">
                   <span className="strong">{department.label}</span>
                   <div className="small muted" style={{ marginTop: 2 }}>
-                    {months} months at {formatMoney(rateFor(department, level), { cents: false })} a month
+                    {sitting
+                      ? `${sitting.name}, ${standingSaid(sitting.standing).toLowerCase()}, `
+                        + `${TEMPERAMENT_BY_ID[sitting.temperamentId]?.said.toLowerCase() ?? 'steady'}`
+                      : `Nobody yet. It asks for about ${months} months.`}
                   </div>
                 </div>
-                <div className="row gap-2">
-                  {Array.from({ length: BEST_TEAM - LEAST_TEAM + 1 }, (_, i) => i + LEAST_TEAM)
-                    .map((at) => (
+              </div>
+              <div className="col gap-2" style={{ marginTop: 'var(--s2)' }}>
+                {shortlist.map((one) => {
+                  const at = standingOn(one, sim.now, sim.homeZone);
+                  const mine = sitting?.handId === one.id;
+                  return (
+                    <div className="row-between" key={one.id}>
+                      <div className="grow">
+                        <div className="small">
+                          {one.name}
+                          {' · '}
+                          {standingSaid(at)}
+                          {' · '}
+                          {one.temperament.said}
+                        </div>
+                        <div className="xs dim">
+                          {one.temperament.what}
+                          {` Asks ${formatMoney(asksToSign(one, sim.now, sim.homeZone), { cents: false })} to sign, `}
+                          {`then ${formatMoney(rateFor(department, at), { cents: false })} a month.`}
+                        </div>
+                      </div>
                       <button
-                        key={at}
-                        className={`btn btn-sm ${at === level ? 'btn-primary' : ''}`}
-                        onClick={() => hire(department.id, at)}
+                        className={`btn btn-sm ${mine ? 'btn-primary' : ''}`}
+                        onClick={() => hire(department.id, one.id)}
                       >
-                        {at}
+                        {mine ? 'On It' : 'Hire'}
                       </button>
-                    ))}
-                </div>
+                    </div>
+                  );
+                })}
+                {shortlist.length === 0 && (
+                  <p className="xs dim" style={{ margin: 0 }}>
+                    Nobody in this trade is free for those months.
+                  </p>
+                )}
               </div>
             </div>
           );

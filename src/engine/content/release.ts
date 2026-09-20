@@ -75,34 +75,44 @@
  *
  * | team | worst | median | best | returned its cost |
  * |---|---|---|---|---|
- * | 1 | 0.33x | 1.21x | 2.84x | 25 of 40 |
- * | 2 | 0.34x | 1.24x | 2.90x | 28 of 40 |
+ * | 1 | 0.36x | 1.22x | 2.97x | 26 of 40 |
+ * | 2 | 0.34x | 1.23x | 3.23x | 28 of 40 |
  * | 3 | 0.32x | 1.18x | 2.73x | 25 of 40 |
- * | 4 | 0.30x | 1.11x | 2.56x | 25 of 40 |
- * | 5 | 0.29x | 1.05x | 2.42x | 23 of 40 |
+ * | 4 | 0.30x | 1.11x | 2.56x | 24 of 40 |
+ * | 5 | 0.30x | 1.04x | 2.60x | 21 of 40 |
  *
  * The medians barely separate, and that is the point rather than a failure: the dear
- * team is not better on average, it is better **on the right property**. Played with
- * the right team for each one, the median picture returned 1.24x and twelve of the
- * forty still lost money.
+ * team is not better on average, it is better **on the right property**. Across the
+ * forty, every one of the five rungs was the right answer at least once — ten, then
+ * fourteen, five, five and six — and played with the right team each time the median
+ * picture returned 1.25x while twelve of the forty still lost money.
+ *
+ * That ratio is take against **budget** and flatters, because it counts neither what
+ * the rights cost nor what the heads asked to sign. The career run below counts every
+ * penny, which is why it is the one to believe.
  *
  * On five-year careers at thirty million of capital (`tools/career.mjs`), against a
  * policy that hires the same rung whatever turns up:
  *
  * | policy | greenlights refused | lowest cash | ended on |
  * |---|---|---|---|
- * | always team 1 | 0.0 | 2.8m | 2.9m |
- * | always team 2 | 0.0 | 3.9m | 4.2m |
- * | always team 3 | 0.8 | 2.5m | 3.2m |
- * | always team 4 | 2.8 | 739k | 1.8m |
- * | always team 5 | 8.8 | 192k | 1.1m |
- * | **match the material** | **0.0** | **5.1m** | **5.3m** |
+ * | always team 1 | 0.8 | 2.4m | 2.5m |
+ * | always team 2 | 0.5 | 2.6m | 3.1m |
+ * | always team 3 | 2.0 | 1.8m | 2.2m |
+ * | always team 4 | 3.0 | 788k | 2.0m |
+ * | always team 5 | 7.3 | 154k | 1.8m |
+ * | **match the material** | **0.0** | **3.2m** | **3.6m** |
  *
- * Reading the property before hiring is worth **1.27x** the best rung that never
+ * Reading the property before hiring is worth **1.16x** the best rung that never
  * looks, and it is safer as well as richer — it never over-hires, so it is never
  * refused a greenlight for money. That is the whole model in one row. Under the old
  * multiple-of-budget formula the same comparison came back dead level, because there
  * was nothing about the material worth reading.
+ *
+ * The edge was 1.27x before the rights and the signing fees were priced properly, and
+ * it is a floor rather than a ceiling either way: the matching policy reads the
+ * property it has been handed and never decides **which** property to take, which is
+ * the larger half of the same judgement and is left to a player.
  *
  * Re-measure on both instruments after anything that moves a department rate, a month
  * count, or what a demand asks for. The deleted build's rate constant carried a

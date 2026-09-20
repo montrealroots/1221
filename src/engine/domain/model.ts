@@ -632,8 +632,13 @@ export interface Preferences {
  *
  * A save from 76 or earlier has no company at all, which reads correctly as a
  * family that never formed one rather than as a broken save.
+ *
+ * 86 added the people who make a picture: `appeal` on a holding, and `hires` on a
+ * project in place of `levels`. A save from 85 has pictures staffed at a rung with
+ * nobody in the chair, which reads as departments that were never cast rather than
+ * as a broken save, and material with no appeal reads as ordinary.
  */
-export const SAVE_SCHEMA_VERSION = 85;
+export const SAVE_SCHEMA_VERSION = 86;
 
 export interface SaveMeta {
   id: Id;

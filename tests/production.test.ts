@@ -16,7 +16,7 @@ import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
 import { addMonths } from '@/engine/core/time';
 import { DEPARTMENTS, monthsFor } from '@/engine/content/departments';
-import { layOut } from '@/engine/world/schedule';
+import { layOut, staffingOf } from '@/engine/world/schedule';
 import { deliversAt, inFlight, stageAt, walkTheMonth } from '@/engine/world/production';
 import { holdingsOf, projectsOf, parentCompany } from '@/engine/world/company';
 
@@ -81,7 +81,7 @@ function aCommittedPicture(seed: string) {
   ran(sim, 'company.lock_budget', { projectId: project.id });
   const said = ran(sim, 'company.greenlight', { projectId: project.id });
   expect(said.ok, said.why).toBe(true);
-  const laid = layOut(holding.demands, project.levels ?? {}, project.greenlitAt!, sim.homeZone);
+  const laid = layOut(holding.demands, staffingOf(project), project.greenlitAt!, sim.homeZone);
   return { sim, holding, project, laid };
 }
 

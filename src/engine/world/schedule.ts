@@ -33,16 +33,24 @@ import type { Money } from '../core/money';
 import type { Instant } from '../core/time';
 import { addMonths } from '../core/time';
 import type { Demands } from '../content/material';
+import type { Project } from '../domain/company';
+import { TEMPERAMENT_BY_ID } from '../content/people';
 import type { Department, Phase } from '../content/departments';
 import {
-  LEAST_TEAM, PHASES, PHASE_SAID, departmentsIn, monthsFor, rateFor,
+  BEST_TEAM, LEAST_TEAM, PHASES, PHASE_SAID, departmentsIn, monthsFor, rateFor,
 } from '../content/departments';
 
 /** What one department costs and how long it is at work. */
 export interface Line {
   department: Department;
-  /** The level this team was hired at. */
+  /** The level this team was hired at, which is what its rate was priced off. */
   level: number;
+  /**
+   * The rung its work is read at, which a temperament can move away from the rung
+   * that was paid for. An exacting department delivers above its pay grade and a
+   * brisk one below it, and this is the number a picture’s take reads.
+   */
+  reads: number;
   months: number;
   /** What one month of it costs. */
   rateCents: Money;
@@ -77,16 +85,59 @@ export interface Schedule {
   deliversAt: Instant;
 }
 
-/** What level a department was hired at, by department id. Absent means the floor. */
-export type Levels = Readonly<Record<string, number>>;
+/**
+ * Who is on a department: either a bare rung, or somebody in particular.
+ *
+ * A bare number means "a team at that rung, with nothing remarkable about them". That
+ * is what the whole game was before people existed, and it is still what an instrument
+ * wants when it is isolating the rung and nothing else — `tools/slate.mjs` compares
+ * five rungs on one property, and would learn less about the rung if each one also
+ * arrived with a temperament attached.
+ *
+ * A `Hired` is a real engagement, and it carries the three multipliers a temperament
+ * moves. They arrive as plain numbers rather than as the temperament itself, so this
+ * file stays arithmetic: it prices what it is handed and never looks anybody up.
+ */
+export interface Hired {
+  level: number;
+  /** Multiplies what a month costs. One is somebody who keeps to a budget. */
+  spends: number;
+  /** Multiplies how many months it takes. One is somebody who works to a schedule. */
+  takes: number;
+  /** Moves the rung the craft is read at. Nought is somebody with no habits. */
+  lifts: number;
+}
+
+export type Staffed = number | Hired;
+
+export type Levels = Readonly<Record<string, Staffed>>;
+
+/** Whichever of the two was handed in, as the fuller one. */
+export const asHired = (one: Staffed | undefined): Hired => (
+  typeof one === 'number' || one === undefined
+    ? { level: one ?? LEAST_TEAM, spends: 1, takes: 1, lifts: 0 }
+    : one
+);
 
 /** One department's line, or nothing where the picture does not need it. */
 function lineFor(department: Department, demands: Demands, levels: Levels): Line | undefined {
-  const months = monthsFor(department, demands);
-  if (months <= 0) return undefined;
-  const level = levels[department.id] ?? LEAST_TEAM;
-  const rateCents = rateFor(department, level);
-  return { department, level, months, rateCents, costCents: rateCents * months };
+  const asked = monthsFor(department, demands);
+  if (asked <= 0) return undefined;
+  const hired = asHired(levels[department.id]);
+
+  // The material asks for the months and whoever answers moves them. Rounded to a
+  // whole month and never below one, because half a month of a department is not
+  // something a call sheet can say, and a department on the picture for no time at
+  // all is a department that is not on it.
+  const months = Math.max(1, Math.round(asked * hired.takes));
+  const rateCents = Math.round(rateFor(department, hired.level) * hired.spends);
+
+  // The rung the work is read at, which is not always the rung that was paid for.
+  const reads = Math.max(LEAST_TEAM, Math.min(BEST_TEAM, hired.level + hired.lifts));
+
+  return {
+    department, level: hired.level, reads, months, rateCents, costCents: rateCents * months,
+  };
 }
 
 /**
@@ -134,6 +185,54 @@ export function layOut(demands: Demands, levels: Levels, from: Instant, zone: st
   }
 
   return { phases, months, budgetCents, from, deliversAt: at };
+}
+
+/**
+ * Who is on each department, in the shape this file prices.
+ *
+ * The join between a person and the arithmetic. Everything above knows nothing about
+ * temperaments and should not — it prices what it is handed — so the three
+ * multipliers are looked up here and passed across as plain numbers.
+ */
+export function staffingOf(project: Project): Levels {
+  const out: Record<string, Hired> = {};
+  for (const [departmentId, one] of Object.entries(project.hires ?? {})) {
+    const temperament = TEMPERAMENT_BY_ID[one.temperamentId];
+    out[departmentId] = {
+      level: one.standing,
+      spends: temperament?.spends ?? 1,
+      takes: temperament?.takes ?? 1,
+      lifts: temperament?.lifts ?? 0,
+    };
+  }
+  return out;
+}
+
+/**
+ * Re-dates every engagement on a picture from the schedule it now has.
+ *
+ * The windows are derived rather than typed, because a department's months depend on
+ * who is in the *other* departments: a phase is as long as its longest line, so
+ * hiring an exacting designer moves the shooting unit's start date. Storing the dates
+ * somebody was hired for and never revisiting them would have given two answers to
+ * when a person is busy, and the wrong one would have been the stored one.
+ */
+export function restamp(
+  project: Project, demands: Demands, from: Instant, zone: string,
+): void {
+  if (!project.hires) return;
+  const laid = layOut(demands, staffingOf(project), from, zone);
+  for (const phase of laid.phases) {
+    for (const line of phase.lines) {
+      const one = project.hires[line.department.id];
+      if (!one) continue;
+      one.from = phase.from;
+      // The line's own months, not the phase's. A department that finishes before the
+      // phase does is free before the phase is, which is part of what makes a short
+      // line worth hiring.
+      one.to = addMonths(phase.from, line.months, zone);
+    }
+  }
 }
 
 /**

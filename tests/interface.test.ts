@@ -318,6 +318,36 @@ describe('every door a player is stopped at has a way through it', () => {
       sim.execute<{ ok: boolean }>({ kind, payload }).value?.ok === true;
     const somebody = Object.values(sim.universe.people).find((one) => !one.isPlayer)!;
 
+    // Money first, which it did not used to need. Rights are priced against what a
+    // property could reach now rather than at a flat five thousand, so a company
+    // starting on a hundred and eighty thousand can option something and insure
+    // itself and still land under `GREENLIGHT_FLOOR` — with the door correctly shut
+    // and the money blocker correctly naming why. That is the economy working; this
+    // case is about the paperwork doors, so it puts the money question out of the way
+    // rather than pretending it is not one.
+    const parent = parentCompany(sim.universe)!;
+    const cash = Object.values(sim.universe.accounts)
+      .find((one) => one.ownerId === parent.id && one.kind === 'company_cash' && !one.closedAt)!;
+    sim.ledger.open({
+      id: 'equity:capital',
+      saveId: sim.universe.meta.id,
+      kind: 'equity',
+      name: 'Capital',
+      ownerId: 'world',
+      balance: 0,
+      openedAt: sim.now,
+      nominal: true,
+      category: 'business',
+    });
+    sim.post({
+      memo: 'Capital In',
+      category: 'business',
+      postings: [
+        { accountId: 'equity:capital', amount: -5_000_000_00 },
+        { accountId: cash.id, amount: 5_000_000_00 },
+      ],
+    });
+
     expect(ran('company.fill_post', { role: 'production', personId: somebody.id })).toBe(true);
     expect(ran('company.option', { title: 'Something To Make', hold: 'option', months: 18 })).toBe(true);
     expect(ran('company.register', { registry: 'is_employer' })).toBe(true);

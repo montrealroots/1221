@@ -54,12 +54,13 @@ export const MOST_ON_THE_MARKET = 4;
 export const CARRIES_OVER = 0.45;
 
 /**
- * What each kind of source is worth, as a multiple of the base asking price.
+ * What each kind of source asks, as a multiple of the ordinary share of its reach.
  *
  * `Provenance` has carried six values since it was written. These are the first thing
- * to price them differently: a novel with an audience already attached costs more than
- * somebody's original screenplay, and life rights cost most of all because the person
- * has to agree.
+ * to price them differently: a novel with an audience already attached asks a bigger
+ * cut of the same reach than somebody's original screenplay, because the rights holder
+ * knows what they have. Life rights cost most of all, because the person has to agree
+ * and there is nowhere else to buy it.
  */
 export const COSTS_LIKE: Readonly<Record<Provenance, number>> = {
   original: 0.55,
@@ -92,13 +93,30 @@ export const PROVENANCES: readonly Provenance[] = [
 ];
 
 /**
- * The middle of what a property asks, before its kind is taken into account.
+ * What a property asks, as a share of what it could ever reach.
  *
- * Set against `DEFAULT_OPTION_FEE` in `world/company.ts`, which is what a typed title
- * costs. Material somebody else wrote is dearer than material you thought of yourself,
- * which is the point: the pool is a convenience you pay for.
+ * A share and not a figure, which is the correction. This was a flat middle of
+ * fourteen thousand euro modulated by the kind of source, and the market screen made
+ * the consequence impossible to miss: the dearest property on offer asked twenty-three
+ * thousand against a reach of four and a third million. Optioning was rounding error,
+ * so there was never a reason not to take everything, and a market nobody has to
+ * choose in is a queue.
+ *
+ * Rights holders price against what the thing is worth. At three per cent, a property
+ * that could take four and a half million asks about a hundred and thirty thousand —
+ * enough that taking the wrong one hurts, small enough that the money in this game is
+ * still overwhelmingly what it costs to make a picture rather than what it costs to
+ * own one.
  */
-export const ASKS_AROUND: Money = 14_000_00;
+export const ASKS_SHARE = 0.03;
+
+/**
+ * The least anybody parts with anything for.
+ *
+ * A floor rather than a middle. Three per cent of a very small reach is a number no
+ * agent would take a meeting for.
+ */
+export const ASKS_AT_LEAST: Money = 9_000_00;
 
 /**
  * How far a property's appeal strays either side of ordinary.
@@ -216,11 +234,21 @@ export function provenanceFrom(t: number): Provenance {
   return PROVENANCES[PROVENANCES.length - 1]!;
 }
 
-/** What a property of this kind asks, given a draw for where in the spread it sits. */
-export function asksFor(provenance: Provenance, t: number, appeal = 1): Money {
+/**
+ * What a property asks, given what it could reach and a draw for where it sits.
+ *
+ * Takes the reach as a figure rather than working it out, because reach lives in
+ * `content/release.ts` and that file already imports the demands from this one.
+ * `world/material.ts` knows both and is where the two meet.
+ *
+ * The kind of source still modulates it, and now it means something sharper: a novel
+ * asks a bigger share of the same reach than an original does, because the rights
+ * holder has an audience already and knows it.
+ */
+export function asksFor(provenance: Provenance, t: number, reachCents: Money): Money {
   const spread = 1 + (Math.max(0, Math.min(1, t)) * 2 - 1) * ASKING_STRAYS;
-  const worth = Math.max(0, appeal);
-  return Math.max(1_000_00, Math.round(ASKS_AROUND * COSTS_LIKE[provenance] * spread * worth));
+  const asks = Math.max(0, reachCents) * ASKS_SHARE * COSTS_LIKE[provenance] * spread;
+  return Math.max(ASKS_AT_LEAST, Math.round(asks));
 }
 
 /**
