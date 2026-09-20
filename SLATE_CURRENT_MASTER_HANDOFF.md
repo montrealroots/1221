@@ -12,13 +12,13 @@ Read this block before the historical ones below it. Everything under it is olde
 much of it is superseded — in particular, the block that said the production system was
 deleted and awaiting a rebuild described the tree eleven commits ago.
 
-**Where the tree is.** Branch `claude/slate-cleanup-e4apmx`, local HEAD `5514a8f`,
-**23 ahead of origin and unpushed**. Working tree clean. Gate green at exit 0, read
-from a file: typecheck, lint, **885 tests**, the seventeen checks, the tic budgets, and
+**Where the tree is.** Branch `claude/slate-cleanup-e4apmx`, local HEAD `8faebd2`,
+**26 ahead of origin and unpushed**. Working tree clean. Gate green at exit 0, read
+from a file: typecheck, lint, **903 tests**, the seventeen checks, the tic budgets, and
 the teaching reached at 24 against a floor of 18. Inventory: **27 commands, 17
-scheduled kinds, 2 routes.**
+scheduled kinds, 2 routes.** Save schema **86**.
 
-### What was built, in nine commits
+### What was built, in twelve commits
 
 The production system was deleted whole in `4963670` on the owner's instruction. It was
 then rebuilt from nothing against `docs/STUDIO-DESIGN.md`, which is the decision
@@ -36,10 +36,13 @@ are done and each shipped gate-green:
 | `58a29e8` | the production clock that walks a picture through prep, shoot and post |
 | `bda048f` | letting a picture out, and taking the money over ten months |
 | `d7ec8a0`, `5514a8f` | the economy, measured twice and reshaped both times |
+| `817eb1e` | the market screen, so the decision has its inputs on a page |
+| `8faebd2` | **step five, people** — rungs became persons, and two prices got measured |
 
 **The loop runs end to end**: option material from a market that churns → develop →
-hire a team per department → shut the budget → greenlight and pay → prep, shoot, post →
-release → the money comes back across ten months.
+put a named head on each department → shut the budget → greenlight and pay → prep,
+shoot, post → release → the money comes back across ten months. All of it is reachable
+from the business page.
 
 ### The economics, which took three findings to get right
 
@@ -72,9 +75,34 @@ The reasoning is all in `src/engine/content/release.ts`.
    the same audience — and the asking price reads it, so good material is not free.
 
 **The number that says it worked.** Over five years on thirty million of capital,
-matching the team to the material ends on 5.3m against 4.2m for the best fixed rung —
-**1.27x** — and is refused a greenlight *less* often while doing it, because it never
-over-hires. Under the old formula the same comparison came back dead level.
+matching the team to the material ends on 3.6m against 3.1m for the best fixed rung —
+**1.16x** — and is refused a greenlight *less* often while doing it, because it never
+over-hires. Under the old formula the same comparison came back dead level. It was
+1.27x before the rights and the signing fees were priced properly, and it is a floor
+rather than a ceiling either way: the matching policy reads the property it is handed
+and never chooses **which** property to take, which is the larger half of the same
+judgement and is left to a player.
+
+### Step five, people, and the two prices the screen exposed
+
+A department is run by a person rather than hired at a rung. **Standing** is what you
+pay for and is deliberately the same rung the budget was always priced off, so the
+economy above did not move underneath it. **Temperament** is what you get, on a
+different axis, and its three multipliers each reach something that already existed:
+the rate to the ledger, the months to the calendar, the rung the craft is read at to
+what a picture takes. The trade is drawn from the seed rather than minted into
+`universe.people` — a crew of full `Person` records would have been walked daily by
+`systems/life.ts`, which is what the Monte Carlo invariants are measured over — and
+what is stored is the dated engagement, so nobody runs two departments at once.
+
+Two measurements inside that module are worth carrying. The trade first held **nobody**
+at the top rung and eleven at the one below, because standing needed peak reach and
+peak age at the same instant; a sixteen-year peak and a bent reach draw fixed it to
+11/26/33/30/7. And building the market screen exposed two prices that had been
+reasoned and never measured — rights asking a flat fourteen thousand against millions
+of reach, and a top head asking a hundred and seventy-five thousand to sign. Rights
+are now a share of reach and signing was flattened. **Looking at a screen found both
+of them in a minute, after weeks of reading the numbers in isolation.**
 
 ### The two instruments, and what each can and cannot see
 
@@ -95,9 +123,9 @@ falsified later by an upstream change nobody thought to re-run.
 
 ### What is next, and what is knowingly missing
 
-`docs/STUDIO-DESIGN.md` has twelve steps and five are done. The remainder, in its
-order: **people** (attribute vectors, temperament, dated engagements, ageing) ·
-**contracts** (control terms, sequel escalator) · **roles as characters** · **film and
+`docs/STUDIO-DESIGN.md` has twelve steps and six are done. The remainder, in its
+order: **contracts** (control terms, per-discipline norms, the sequel escalator, and
+the negotiation the design asks for in 3.8) · **roles as characters** · **film and
 series as two pipelines** · **rating and demographics** · **campaigns** · **valuation,
 borrowing and bungalows** · **player credit and drawings**.
 
