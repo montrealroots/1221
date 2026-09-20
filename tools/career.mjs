@@ -48,18 +48,28 @@
  * same property. Variety that only appears once the draw has landed is hindsight, not
  * a decision. `APPEAL_STRAYS` exists because of that run.
  *
- * With both in place, matching the team to the material ends five years on 1.16x what
- * the best fixed rung manages, and is refused a greenlight less often while doing it.
- * The full table is in `src/engine/content/release.ts`.
+ * With both in place, matching the team to the material ends five years on 1.04x what
+ * the best fixed rung manages. The full table is in `src/engine/content/release.ts`.
  *
- * That edge is a floor and not a ceiling. `match` reads the property it has been
- * handed and never decides **which** property to take — it options whatever the
- * market offers first, good or bad — so the larger half of the same judgement is not
- * in this measurement at all.
+ * **Third, and about this instrument rather than the game.** That figure was recorded
+ * as 1.16x from a four-world run, and ten worlds do not support it. Four worlds of a
+ * five-year career is not a sample; the spread between seeds is wider than the effect
+ * being measured. Run this at ten or more before writing a number into a docstring,
+ * and prefer a difference that survives doubling the worlds to one that does not.
  *
- *   npx vite-node tools/career.mjs                 five years, each policy
+ * ## What `match` is and is not
+ *
+ * It is a floor on what the decision is worth, and a loose one. It reads the property
+ * it has been handed and never decides **which** property to take — it options
+ * whatever the market offers first, good or bad. And it maximises profit *per
+ * picture*, which the rows above say is the wrong objective: at the top rung the
+ * studio is refused a greenlight fifteen times and makes three fewer pictures, so
+ * what binds is cash rather than slots, and a policy that weighed return against
+ * money tied up should beat this one. Nobody has measured that yet.
+ *
+ *   npx vite-node tools/career.mjs                 five years, ten worlds, each policy
  *   npx vite-node tools/career.mjs --years 8       longer
- *   npx vite-node tools/career.mjs --seeds 3       more worlds
+ *   npx vite-node tools/career.mjs --seeds 20      more worlds
  *   npx vite-node tools/career.mjs --capital 12    on less money
  */
 
@@ -78,7 +88,10 @@ const arg = (name, fallback) => {
   return at >= 0 && process.argv[at + 1] ? process.argv[at + 1] : fallback;
 };
 const YEARS = Number(arg('years', 5));
-const SEEDS = Number(arg('seeds', 2));
+// Ten rather than two. The spread between worlds is wider than most of the effects
+// this instrument is used to read, and a four-world run once produced a 1.16x that
+// ten worlds put at 1.04x — which was written into a docstring before it was checked.
+const SEEDS = Number(arg('seeds', 10));
 const START_WITH = Number(arg('capital', 60)) * 1_000_000_00;
 const AT_ONCE = 2;
 
@@ -117,8 +130,15 @@ const run = (sim, kind, payload) => sim.execute({ kind, payload });
  *
  * The only policy here that reads anything. It costs out every rung against what the
  * property could reach and takes the best of them, which is the decision the ceiling
- * on the take was added to create. If this does not beat the best fixed rung over a
- * career, the decision is decoration and the model failed.
+ * on the take was added to create.
+ *
+ * It beats the best fixed rung by 1.04x, which is thin, and the thinness is at least
+ * partly this function rather than the game. Maximising profit **per picture** is the
+ * right objective when slots bind and the wrong one when cash does, and the rows this
+ * instrument prints say cash is what binds: the dear policies are refused greenlights
+ * and make fewer pictures. Weighing return against money tied up is the obvious next
+ * policy to try, and until somebody tries it this row understates the decision by an
+ * unknown amount rather than measuring it.
  */
 function worthIt(holding, at, zone) {
   let best = { level: LEAST_TEAM, profit: -Infinity };
@@ -170,12 +190,19 @@ function aCareer(seed, level) {
     const project = projectsOf(sim.universe).find((one) => one.title === title);
 
     const hire = level === 'match' ? worthIt(holding, sim.now, sim.homeZone) : level;
+    // Stepping down when the rung asked for will not take the picture, which is what
+    // a player does and what the minimum-budget term is for. Without it the dear
+    // policies would simply leave departments empty on small pictures and read as
+    // cheap, which would flatter them.
     for (const d of DEPARTMENTS) {
       if (monthsFor(d, holding.demands) <= 0) continue;
-      const who = somebodyAt(
-        sim, engagementsOf(sim.universe), d.id, hire, sim.now, sim.now,
-      );
-      if (who) run(sim, 'company.staff', { projectId: project.id, departmentId: d.id, personId: who.id });
+      for (let rung = hire; rung >= LEAST_TEAM; rung -= 1) {
+        const who = somebodyAt(
+          sim, engagementsOf(sim.universe), d.id, rung, sim.now, sim.now,
+        );
+        if (!who) continue;
+        if (ok(run(sim, 'company.staff', { projectId: project.id, departmentId: d.id, personId: who.id }))) break;
+      }
     }
     const wants = layOut(holding.demands, project.levels ?? {}, sim.now, sim.homeZone).budgetCents;
     run(sim, 'company.lock_budget', { projectId: project.id });

@@ -15,12 +15,19 @@
 import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
 import type { Demands } from '@/engine/content/material';
+import type { Project } from '@/engine/domain/company';
 import {
   BEST_TEAM, DEPARTMENTS, LEAST_TEAM, PHASES, departmentsIn, monthsFor, rateFor,
 } from '@/engine/content/departments';
-import { layOut, whatHoldsItUp } from '@/engine/world/schedule';
-import { engagementsOf, holdingsOf, parentCompany, projectsOf } from '@/engine/world/company';
-import { somebodyAt } from '@/engine/world/people';
+import { layOut, staffingOf, whatHoldsItUp } from '@/engine/world/schedule';
+import {
+  companyCash, engagementsOf, holdingsOf, parentCompany, projectsOf,
+} from '@/engine/world/company';
+import {
+  signsPayOrPlay, somebodyAt, standingOn, theTrade, working, worksAboveOn,
+} from '@/engine/world/people';
+import { wantsPayOrPlay, worksAboveFor } from '@/engine/content/people';
+import { walkTheMonth } from '@/engine/world/production';
 import { onTheMarket } from '@/engine/world/material';
 import { addMonths } from '@/engine/core/time';
 
@@ -252,9 +259,31 @@ describe('putting somebody on a department is the other half of the budget', () 
   const needed = (holding: { demands: Demands }) =>
     DEPARTMENTS.find((d) => monthsFor(d, holding.demands) > 0)!;
 
-  /** Somebody plain at a rung, which is how a case isolates the rung from the person. */
-  const someone = (sim: ReturnType<typeof quickSave>, discipline: string, standing: number) =>
-    somebodyAt(sim, engagementsOf(sim.universe), discipline, standing, sim.now, sim.now)!;
+  /**
+   * Somebody plain at a rung who will actually take this picture.
+   *
+   * Steps down when the rung asked for will not have it, which is what a player does
+   * and what the minimum-budget term is for: a small picture cannot have the best
+   * designer at any price. Without the stepping these cases asked for the top rung on
+   * a typed original and were correctly refused.
+   */
+  const someone = (
+    sim: ReturnType<typeof quickSave>, project: Project, discipline: string, standing: number,
+  ) => {
+    const holding = sim.universe.holdings[project.holdingId!]!;
+    for (let rung = standing; rung >= LEAST_TEAM; rung -= 1) {
+      const who = somebodyAt(
+        sim, engagementsOf(sim.universe), discipline, rung, sim.now, sim.now,
+      );
+      if (!who) continue;
+      const at = standingOn(who, sim.now, sim.homeZone);
+      const would = layOut(
+        holding.demands, { ...staffingOf(project), [discipline]: at }, sim.now, sim.homeZone,
+      ).budgetCents;
+      if (worksAboveOn(who, sim.now, sim.homeZone) <= would) return who;
+    }
+    throw new Error(`nobody in ${discipline} will take this one`);
+  };
 
   it('raises what it costs when a better person is put on it', () => {
     // This case used to assert that the months did *not* move, and that was true of a
@@ -265,11 +294,11 @@ describe('putting somebody on a department is the other half of the budget', () 
     const { sim, holding, project } = aPicture('staff-cost');
     const d = needed(holding);
     staff(sim, {
-      projectId: project.id, departmentId: d.id, personId: someone(sim, d.id, LEAST_TEAM).id,
+      projectId: project.id, departmentId: d.id, personId: someone(sim, project, d.id, LEAST_TEAM).id,
     });
     const cheap = project.budgetCents!;
 
-    const dear = someone(sim, d.id, BEST_TEAM);
+    const dear = someone(sim, project, d.id, BEST_TEAM);
     const done = staff(sim, { projectId: project.id, departmentId: d.id, personId: dear.id });
     expect(done.ok, done.why).toBe(true);
     expect(project.budgetCents!).toBeGreaterThan(cheap);
@@ -313,7 +342,7 @@ describe('putting somebody on a department is the other half of the budget', () 
   it('recomputes rather than adjusting, so hiring twice is not hiring twice over', () => {
     const { sim, holding, project } = aPicture('staff-twice');
     const d = needed(holding);
-    const who = someone(sim, d.id, BEST_TEAM);
+    const who = someone(sim, project, d.id, BEST_TEAM);
     staff(sim, { projectId: project.id, departmentId: d.id, personId: who.id });
     const once = project.budgetCents!;
     staff(sim, { projectId: project.id, departmentId: d.id, personId: who.id });
@@ -324,11 +353,11 @@ describe('putting somebody on a department is the other half of the budget', () 
     const { sim, holding, project } = aPicture('staff-down');
     const d = needed(holding);
     staff(sim, {
-      projectId: project.id, departmentId: d.id, personId: someone(sim, d.id, BEST_TEAM).id,
+      projectId: project.id, departmentId: d.id, personId: someone(sim, project, d.id, BEST_TEAM).id,
     });
     const dear = project.budgetCents!;
     staff(sim, {
-      projectId: project.id, departmentId: d.id, personId: someone(sim, d.id, LEAST_TEAM).id,
+      projectId: project.id, departmentId: d.id, personId: someone(sim, project, d.id, LEAST_TEAM).id,
     });
     expect(project.budgetCents!).toBeLessThan(dear);
   });
@@ -338,7 +367,7 @@ describe('putting somebody on a department is the other half of the budget', () 
     // unavailable is a price list with names on it.
     const { sim, holding, project } = aPicture('staff-clash');
     const d = needed(holding);
-    const who = someone(sim, d.id, BEST_TEAM);
+    const who = someone(sim, project, d.id, BEST_TEAM);
     expect(staff(sim, { projectId: project.id, departmentId: d.id, personId: who.id }).ok)
       .toBe(true);
 
@@ -360,7 +389,7 @@ describe('putting somebody on a department is the other half of the budget', () 
     const { sim, holding, project } = aPicture('staff-wrongtrade');
     const d = needed(holding);
     const elsewhere = DEPARTMENTS.find((one) => one.id !== d.id)!;
-    const who = someone(sim, elsewhere.id, 3);
+    const who = someone(sim, project, elsewhere.id, 3);
     expect(staff(sim, { projectId: project.id, departmentId: d.id, personId: who.id }).ok)
       .toBe(false);
   });
@@ -382,7 +411,7 @@ describe('putting somebody on a department is the other half of the budget', () 
     const { sim, holding, project } = aPicture('staff-unneeded');
     const spare = DEPARTMENTS.find((d) => monthsFor(d, holding.demands) <= 0);
     if (spare) {
-      const who = someone(sim, spare.id, 3);
+      const who = someone(sim, project, spare.id, 3);
       expect(staff(sim, { projectId: project.id, departmentId: spare.id, personId: who.id }).ok)
         .toBe(false);
     }
@@ -395,5 +424,186 @@ describe('putting somebody on a department is the other half of the budget', () 
     expect(staff(sim, {
       projectId: bare.id, departmentId: DEPARTMENTS[0]!.id, personId: 'unit:0',
     }).ok).toBe(false);
+  });
+});
+
+/**
+ * The two terms that are not a price, and the state they finally made reachable.
+ *
+ * A contract in this build had been money and nothing else: a rate, a fee. These are
+ * the first two terms that transfer something other than cash, and each was chosen
+ * because something already in the build could read it.
+ *
+ * **What somebody will not do at any price** is the hard edge of the decision the
+ * ceiling on the take created. Matching the team to the material was an argument about
+ * arithmetic, and a player with deep pockets could simply eat being wrong. A minimum
+ * budget makes the small picture *unable* to have the best designer.
+ *
+ * **Pay-or-play** is what gives stopping a price. `Project.shelvedAt` had been read in
+ * six places and written by nothing since before the first teardown — five guards
+ * against a state no input could reach — and the reason to write it now rather than
+ * then is that there is finally something for it to cost.
+ */
+describe('a contract is more than a price', () => {
+
+  it('asks nothing of the bottom rung and a great deal of the top', () => {
+    expect(worksAboveFor(LEAST_TEAM, 0.5)).toBe(0);
+    expect(worksAboveFor(BEST_TEAM, 0.5)).toBeGreaterThan(worksAboveFor(3, 0.5));
+    expect(worksAboveFor(3, 0.5)).toBeGreaterThan(worksAboveFor(2, 0.5));
+  });
+
+  it('lets two people at the same rung insist on different things', () => {
+    // Without this the term is a second name for standing, and a shortlist of four
+    // would offer four identical answers to the only question it asks.
+    expect(worksAboveFor(BEST_TEAM, 0)).toBeLessThan(worksAboveFor(BEST_TEAM, 1));
+  });
+
+  it('refuses somebody who will not work on a picture this small', () => {
+    // The falsifiability test for the term: it has to be able to stop a hire that
+    // money alone would have bought.
+    const sim = quickSave({}, 'terms-small');
+    fund(sim, 900_000_000_00);
+    sim.execute({ kind: 'company.option', payload: { title: 'A Very Small One' } });
+    const holding = holdingsOf(sim.universe)[0]!;
+    sim.execute({
+      kind: 'company.develop',
+      payload: { title: holding.title, holdingId: holding.id },
+    });
+    const project = projectsOf(sim.universe).find((one) => one.title === holding.title)!;
+    const d = DEPARTMENTS.find((one) => monthsFor(one, holding.demands) > 0)!;
+
+    // Whoever in this trade insists on the most, against the smallest possible
+    // picture. If nobody insists on more than it costs, there is nothing to assert.
+    const free = theTrade(sim, d.id)
+      .filter((one) => working(one, sim.now, sim.homeZone));
+    const fussiest = free.reduce((most, one) => (
+      worksAboveOn(one, sim.now, sim.homeZone) > worksAboveOn(most, sim.now, sim.homeZone)
+        ? one : most
+    ));
+    // The picture at their standard, which is the figure the command judges by —
+    // not the budget as it stands. Asking the old way made this case disagree with
+    // the command about what a picture costs, and it was the case that was wrong.
+    const at = standingOn(fussiest, sim.now, sim.homeZone);
+    const scale: Record<string, number> = {};
+    for (const one of DEPARTMENTS) {
+      if (monthsFor(one, holding.demands) > 0) scale[one.id] = at;
+    }
+    const would = layOut(holding.demands, scale, sim.now, sim.homeZone).budgetCents;
+
+    if (worksAboveOn(fussiest, sim.now, sim.homeZone) > would) {
+      const done = sim.execute({
+        kind: 'company.staff',
+        payload: { projectId: project.id, departmentId: d.id, personId: fussiest.id },
+      });
+      const said = done.value as { ok: boolean; error?: string } | undefined;
+      expect(said?.ok).toBe(false);
+      expect(said?.error).toContain('under');
+    }
+  });
+
+  it('signs pay-or-play at the top far more often than at the bottom', () => {
+    const share = (standing: number) => Array.from({ length: 200 }, (_, i) => i / 200)
+      .filter((t) => wantsPayOrPlay(standing, t)).length / 200;
+    expect(share(BEST_TEAM)).toBeGreaterThan(share(LEAST_TEAM));
+    expect(share(LEAST_TEAM)).toBeLessThan(0.2);
+  });
+});
+
+describe('taking one off the slate', () => {
+  /** A picture with one department staffed, and the money to have done it. */
+  function aStaffedPicture(seed: string) {
+    const sim = quickSave({}, seed);
+    fund(sim, 900_000_000_00);
+    sim.execute({ kind: 'company.option', payload: { title: `Dropping ${seed}` } });
+    const holding = holdingsOf(sim.universe)[0]!;
+    sim.execute({
+      kind: 'company.develop',
+      payload: { title: holding.title, holdingId: holding.id },
+    });
+    const project = projectsOf(sim.universe).find((one) => one.title === holding.title)!;
+    return { sim, holding, project };
+  }
+
+  const ran = (sim: ReturnType<typeof quickSave>, kind: string, payload: Record<string, unknown>) => {
+    const done = sim.execute({ kind, payload });
+    const said = done.value as { ok: boolean; error?: string; owedCents?: number } | undefined;
+    return {
+      ok: said?.ok ?? done.ok,
+      why: said?.error ?? done.error ?? '',
+      owed: said?.owedCents,
+    };
+  };
+
+  it('writes the one field on a project that nothing could ever write', () => {
+    // Six things read `shelvedAt` and nothing set it, which is a guard against a
+    // state the save could not reach. This is the writer.
+    const { sim, project } = aStaffedPicture('drop-writes');
+    expect(project.shelvedAt).toBeUndefined();
+    expect(ran(sim, 'company.shelve', { projectId: project.id }).ok).toBe(true);
+    expect(project.shelvedAt).toBe(sim.now);
+  });
+
+  it('takes it out of the slate the rest of the build reads', () => {
+    const { sim, project } = aStaffedPicture('drop-gone');
+    expect(projectsOf(sim.universe).some((one) => one.id === project.id)).toBe(true);
+    ran(sim, 'company.shelve', { projectId: project.id });
+    expect(projectsOf(sim.universe).some((one) => one.id === project.id)).toBe(false);
+  });
+
+  it('costs nothing when nobody was promised it would happen', () => {
+    const { sim, project } = aStaffedPicture('drop-free');
+    const before = companyCash(sim.universe);
+    const done = ran(sim, 'company.shelve', { projectId: project.id });
+    expect(done.ok, done.why).toBe(true);
+    expect(done.owed).toBe(0);
+    expect(companyCash(sim.universe)).toBe(before);
+  });
+
+  it('costs real money when somebody on it signed pay-or-play', () => {
+    // The whole point of the term. What stopping costs has to depend on who is
+    // attached, or it is a flat cancellation fee wearing a better name.
+    const { sim, holding, project } = aStaffedPicture('drop-owed');
+    const d = DEPARTMENTS.find((one) => monthsFor(one, holding.demands) > 0)!;
+    const signed = theTrade(sim, d.id).find((one) => (
+      working(one, sim.now, sim.homeZone)
+      && signsPayOrPlay(one, sim.now, sim.homeZone)
+      && worksAboveOn(one, sim.now, sim.homeZone) === 0
+    ));
+    // Only assertable where the trade actually offers such a person for this
+    // department, which is most seeds and is checked rather than assumed.
+    if (!signed) return;
+
+    const hired = ran(sim, 'company.staff', {
+      projectId: project.id, departmentId: d.id, personId: signed.id,
+    });
+    expect(hired.ok, hired.why).toBe(true);
+    expect(project.hires?.[d.id]?.payOrPlay).toBe(true);
+
+    const before = companyCash(sim.universe);
+    const done = ran(sim, 'company.shelve', { projectId: project.id });
+    expect(done.ok, done.why).toBe(true);
+    expect(done.owed!).toBeGreaterThan(0);
+    expect(companyCash(sim.universe)).toBe(before - done.owed!);
+  });
+
+  it('will not drop the same one twice', () => {
+    const { sim, project } = aStaffedPicture('drop-twice');
+    expect(ran(sim, 'company.shelve', { projectId: project.id }).ok).toBe(true);
+    expect(ran(sim, 'company.shelve', { projectId: project.id }).ok).toBe(false);
+  });
+
+  it('refuses one that is finished, because that is a release and not a drop', () => {
+    const { sim, project } = aStaffedPicture('drop-done');
+    ran(sim, 'company.lock_budget', { projectId: project.id });
+    ran(sim, 'company.greenlight', { projectId: project.id });
+    let at = project.greenlitAt!;
+    for (let m = 0; m < 60 && project.stage !== 'delivered'; m += 1) {
+      at = addMonths(at, 1, sim.homeZone);
+      walkTheMonth(sim, at);
+    }
+    expect(project.stage).toBe('delivered');
+    const done = ran(sim, 'company.shelve', { projectId: project.id });
+    expect(done.ok).toBe(false);
+    expect(done.why).toContain('finished');
   });
 });

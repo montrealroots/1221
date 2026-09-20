@@ -96,8 +96,15 @@ function onePicture(seed, level) {
     const who = somebodyAt(
       sim, engagementsOf(sim.universe), d.id, level, sim.now, sim.now,
     );
-    if (!who) throw new Error(`nobody free in ${d.id}`);
-    must(sim, 'company.staff', { projectId: project.id, departmentId: d.id, personId: who.id });
+    if (!who) return undefined;
+    // A rung that will not take this picture is not a measurement, it is a refusal.
+    // The driver drops the property from every band rather than from this one, so
+    // the five rows keep comparing the same forty properties.
+    const said = sim.execute({
+      kind: 'company.staff',
+      payload: { projectId: project.id, departmentId: d.id, personId: who.id },
+    });
+    if (!(said.value?.ok ?? said.ok)) return undefined;
   }
 
   must(sim, 'company.lock_budget', { projectId: project.id });
@@ -136,10 +143,28 @@ console.log();
 console.log(`${pad('team', 6)}${rpad('pictures', 9)}${rpad('worst', 10)}${rpad('median', 10)}${rpad('best', 10)}${rpad('profitable', 12)}`);
 console.log('-'.repeat(76));
 
+// Every seed at every rung first, so a property the top of the trade will not take is
+// dropped from all five rows rather than only from that one. Comparing rows that saw
+// different material is the confound this instrument already made once.
+const attempts = new Map();
+for (let level = LEAST_TEAM; level <= BEST_TEAM; level += 1) {
+  for (let seed = 1; seed <= SEEDS; seed += 1) {
+    attempts.set(`${level}:${seed}`, onePicture(seed, level));
+  }
+}
+const usable = [];
+for (let seed = 1; seed <= SEEDS; seed += 1) {
+  let all = true;
+  for (let level = LEAST_TEAM; level <= BEST_TEAM; level += 1) {
+    if (!attempts.get(`${level}:${seed}`)) all = false;
+  }
+  if (all) usable.push(seed);
+}
+const refused = SEEDS - usable.length;
+
 const byLevel = [];
 for (let level = LEAST_TEAM; level <= BEST_TEAM; level += 1) {
-  const runs = [];
-  for (let seed = 1; seed <= SEEDS; seed += 1) runs.push(onePicture(seed, level));
+  const runs = usable.map((seed) => attempts.get(`${level}:${seed}`));
   const ratios = runs.map((one) => one.took / one.cost).sort((a, b) => a - b);
   const median = ratios[Math.floor(ratios.length / 2)];
   const won = ratios.filter((one) => one >= 1).length;
@@ -166,9 +191,9 @@ console.log(pad('material', 12) + rpad('reach', 10) + rpad('best team', 11)
 console.log('-'.repeat(78));
 
 const wins = new Map();
-for (let seed = 1; seed <= SEEDS; seed += 1) {
+for (let i = 0; i < usable.length; i += 1) {
   const profits = byLevel.map(({ level, runs }) => {
-    const one = runs[seed - 1];
+    const one = runs[i];
     return { level, profit: one.took - one.cost, one };
   });
   const best = profits.reduce((most, x) => (x.profit > most.profit ? x : most));
@@ -189,20 +214,24 @@ console.log();
 console.log('-'.repeat(78));
 const rightRatios = [];
 const rightLost = [];
-for (let seed = 1; seed <= SEEDS; seed += 1) {
-  const profits = byLevel.map(({ level, runs }) => ({ level, one: runs[seed - 1], profit: runs[seed - 1].took - runs[seed - 1].cost }));
+for (let i = 0; i < usable.length; i += 1) {
+  const profits = byLevel.map(({ level, runs }) => ({ level, one: runs[i], profit: runs[i].took - runs[i].cost }));
   const best = profits.reduce((most, x) => (x.profit > most.profit ? x : most));
   rightRatios.push(best.one.took / best.one.cost);
-  if (best.profit < 0) rightLost.push(seed);
+  if (best.profit < 0) rightLost.push(i);
 }
 rightRatios.sort((a, b) => a - b);
 const rightMedian = rightRatios[Math.floor(rightRatios.length / 2)];
 const spread = [...wins.entries()].sort((a, b) => a[0] - b[0])
   .map(([level, n]) => `team ${level} on ${n}`).join(', ');
-console.log(`Right team, across ${SEEDS} properties: ${spread}.`);
+console.log(`Right team, across ${usable.length} properties: ${spread}.`);
+if (refused > 0) {
+  console.log(`${refused} of ${SEEDS} were dropped: too small for somebody the trade offered,`);
+  console.log('which is the minimum-budget term doing exactly what it is for.');
+}
 console.log(`${wins.size} of the ${BEST_TEAM - LEAST_TEAM + 1} teams was the right answer at least once.`);
 console.log(`Played right, the median picture returned ${rightMedian.toFixed(2)}x `
-  + `and ${rightLost.length} of ${SEEDS} lost money anyway.`);
+  + `and ${rightLost.length} of ${usable.length} lost money anyway.`);
 console.log();
 console.log('If one team wins every property, hiring is a lookup and the ceiling on the');
 console.log('take is not doing its job. The numbers above are the falsifiability test for');

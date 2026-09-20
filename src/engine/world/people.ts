@@ -50,7 +50,7 @@ import type { Engagement } from '../domain/company';
 import { MEN, WOMEN, patronymic } from '../content/names';
 import {
   HOW_MANY_OFFERED, RETIRES_AT, STARTS_AT, reachFrom,
-  type Temperament, signsFor, standingFor, temperamentFrom,
+  type Temperament, signsFor, standingFor, temperamentFrom, wantsPayOrPlay, worksAboveFor,
 } from '../content/people';
 
 /**
@@ -75,6 +75,15 @@ export interface Hand {
   discipline: string;
   /** How far they were ever going to get, before age is taken into account. */
   reach: number;
+  /**
+   * Their own draw for what they insist on, held rather than resolved.
+   *
+   * The terms it decides — the least a picture can cost before they will take it,
+   * and whether they sign pay-or-play — both read their standing, and standing moves
+   * with age. Resolving them at the draw would freeze a twenty-six-year-old’s terms
+   * onto the head of department they become.
+   */
+  asks: number;
   bornAt: Instant;
   temperament: Temperament;
 }
@@ -120,6 +129,7 @@ export function theTrade(sim: Simulation, discipline: string): readonly Hand[] {
       name: nameFrom(rng.next(), rng.next(), rng.next()),
       discipline,
       reach: reachFrom(rng.next()),
+      asks: rng.next(),
       bornAt: sim.universe.meta.createdAt - Math.round(age * 365.2425 * MS_DAY),
       temperament: temperamentFrom(rng.next()),
     });
@@ -145,6 +155,20 @@ export const standingOn = (hand: Hand, at: Instant, zone: string): number =>
 /** What they ask to sign today. */
 export const asksToSign = (hand: Hand, at: Instant, zone: string): Money =>
   signsFor(standingOn(hand, at, zone));
+
+/**
+ * The least a picture can cost before they will take it, today.
+ *
+ * Reads their standing, so it climbs as a career does and falls again at the end of
+ * one: somebody who would not look at a small picture at fifty will look at it at
+ * sixty-five, which is a thing about this trade worth having in the model.
+ */
+export const worksAboveOn = (hand: Hand, at: Instant, zone: string): Money =>
+  worksAboveFor(standingOn(hand, at, zone), hand.asks);
+
+/** Whether they sign pay-or-play, today. */
+export const signsPayOrPlay = (hand: Hand, at: Instant, zone: string): boolean =>
+  wantsPayOrPlay(standingOn(hand, at, zone), hand.asks);
 
 /** One person by id, whichever discipline they belong to. */
 export function handById(sim: Simulation, id: string): Hand | undefined {

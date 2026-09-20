@@ -187,6 +187,9 @@ export const WHEN: Readonly<Record<string, (w: LessonWorld) => boolean>> = {
   // about a screen with nothing on it.
   staffing: (w) => w.projects.developing > 0,
   shutting: (w) => w.projects.developing > 0,
+  // Worth saying once there is something that could be dropped, which is the same
+  // moment staffing becomes a question: a picture in development with money on it.
+  dropping: (w) => w.projects.developing > 0,
   'saying-yes': (w) => w.projects.developing > 0,
   'letting-it-out': (w) => w.projects.finished > 0 || w.projects.delivered > 0,
 

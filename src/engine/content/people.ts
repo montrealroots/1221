@@ -232,6 +232,91 @@ export function standingFor(reach: number, age: number): number {
 }
 
 /**
+ * The least a picture can cost before the best of the trade will take it.
+ *
+ * A term, not a price. Standing already says what somebody charges; this says what
+ * they will not do at any price, which is a different kind of fact and the first one
+ * in this build that transfers something other than money.
+ *
+ * It is the hard edge of the decision the ceiling on the take created. Matching the
+ * team to the material was an argument about arithmetic — over-hire and you lose
+ * money — and a player with deep pockets could simply eat that. This makes the small
+ * picture *unable* to have the best designer, whatever it is willing to pay, because
+ * people who are sought after do not spend a year on something nobody will see.
+ *
+ * Nought at the bottom rung: somebody starting out will work on anything, which is
+ * how starting out works.
+ *
+ * **What it does and does not do**, both measured, because the second half is the
+ * kind of thing a constant quietly gets credit for. It bites: at this figure the top
+ * of the trade refuses about a quarter of the properties `tools/slate.mjs` draws, and
+ * turning it off changes which hires are possible. It does **not** change what a
+ * career comes to — ten worlds with it on and ten with it off both put the matching
+ * policy at 1.04x the best fixed rung — because a policy that is refused simply
+ * steps down a rung, which is what a player does too.
+ *
+ * So this is a constraint rather than an economy. It stops the absurd hire and makes
+ * a small picture a different kind of thing to staff; it does not make hiring worth
+ * more money. Claiming otherwise was the first draft of this comment.
+ */
+export const WORKS_ABOVE: Money = 400_000_00;
+
+/**
+ * How steeply that climbs with the rung.
+ *
+ * Faster than the rung does, because refusing work is a luxury and the top of a trade
+ * has much more of it than the middle. At 1.5 the five rungs insist on nothing, four
+ * hundred thousand, one and an eighth million, two and a tenth, and three and a fifth.
+ */
+export const WORKS_ABOVE_BENDS = 1.5;
+
+/** How far one person strays from what their rung usually insists on. */
+export const WORKS_ABOVE_STRAYS = 0.45;
+
+/**
+ * The least a picture can cost before this person will take it.
+ *
+ * `t` is their own draw, so two people at the same rung are not the same hire: one of
+ * the four on a shortlist will usually take something the others will not, which is
+ * what keeps this from being a second name for standing.
+ */
+export function worksAboveFor(standing: number, t: number): Money {
+  const rungs = Math.max(0, standing - LEAST_STANDING);
+  if (rungs <= 0) return 0;
+  const strayed = 1 + (Math.max(0, Math.min(1, t)) * 2 - 1) * WORKS_ABOVE_STRAYS;
+  return Math.max(0, Math.round(WORKS_ABOVE * rungs ** WORKS_ABOVE_BENDS * strayed));
+}
+
+/**
+ * How likely somebody is to insist on being paid whether or not it gets made.
+ *
+ * Pay-or-play is the other kind of term: it does not change what a picture costs to
+ * make, it changes what it costs to **stop**. Common at the top, where an agent can
+ * ask for it, and rare at the bottom, where nobody can.
+ */
+export const PAY_OR_PLAY_AT_TOP = 0.8;
+export const PAY_OR_PLAY_AT_FLOOR = 0.05;
+
+/** Whether this person signs pay-or-play, from their rung and their own draw. */
+export function wantsPayOrPlay(standing: number, t: number): boolean {
+  const through = (Math.max(LEAST_STANDING, Math.min(BEST_STANDING, standing)) - LEAST_STANDING)
+    / (BEST_STANDING - LEAST_STANDING);
+  return t < PAY_OR_PLAY_AT_FLOOR + (PAY_OR_PLAY_AT_TOP - PAY_OR_PLAY_AT_FLOOR) * through;
+}
+
+/**
+ * What a pay-or-play engagement costs when the picture does not happen.
+ *
+ * Half of what they would have been paid for the whole engagement. A real one is
+ * usually the whole fee, and the whole fee was refused here on the evidence of what
+ * it would do: attaching anybody good to a picture you might not make would be a
+ * commitment no sensible player ever takes, and a term nobody agrees to is a term
+ * that does nothing. Half is enough that shelving a staffed picture hurts in
+ * proportion to who is on it, which is the entire job of this number.
+ */
+export const PAY_OR_PLAY_SHARE = 0.5;
+
+/**
  * What a shortlist offers at once.
  *
  * Four, matching the material market, and for the same reason: a list long enough to

@@ -37,11 +37,12 @@ import { ESTATE_CITY_ID, HOUSE, studioName } from '../content/estate';
 import { bondFor, standingWord } from './standing';
 import { listingById, typedProperty } from './material';
 import {
-  DEPARTMENT_BY_ID, monthsFor,
+  DEPARTMENTS, DEPARTMENT_BY_ID, monthsFor,
 } from '../content/departments';
-import { layOut, restamp, staffingOf } from './schedule';
+import { layOut, payOrPlayOwed, restamp, staffingOf } from './schedule';
 import {
-  asksToSign, freeBetween, handById, heldUntil, standingOn, working,
+  asksToSign, freeBetween, handById, heldUntil, signsPayOrPlay, standingOn, working,
+  worksAboveOn,
 } from './people';
 import { LOCK_BY_ID, canReopen, readyFor, undoCosts } from '../content/locks';
 import { payWhatIsDue, wouldTake } from './release';
@@ -1059,6 +1060,52 @@ export function registerCompanyCommands(sim: Simulation): void {
    * those will move this when it arrives. Both inputs already bite, which is the bar
    * for shipping it.
    */
+  /**
+   * Take a picture off the slate, and pay whoever was promised it would happen.
+   *
+   * `Project.shelvedAt` has been on the record since before the first teardown and
+   * **nothing has ever written it**. Six things read it — the projects list, the
+   * concept screen, the lot's own walk, two panels — so the build carried five
+   * guards against a state no input could reach. That is the same defect as a
+   * declared word nothing reads, wearing the other face.
+   *
+   * What makes it worth writing now rather than then is that there is finally a
+   * price on it. Pay-or-play is the term that says somebody is paid whether or not
+   * the thing gets made, so what stopping costs depends on **who is attached** rather
+   * than on a flat penalty — which is the only version of a cancellation worth
+   * modeling. A picture nobody signed pay-or-play on is free to drop, and that is
+   * correct: nobody was promised anything.
+   *
+   * The money that has already gone does not come back. Shelving after a greenlight
+   * loses the budget and owes the term on top, which is why the lock chain exists and
+   * why saying yes is the decision it is.
+   */
+  sim.onCommand<{ projectId: Id }, Done & { owedCents?: Money }>(
+    'company.shelve', (payload, { sim: s }) => {
+      const project = s.universe.projects[payload.projectId];
+      if (!project) return refuse('No such project.');
+      if (project.shelvedAt !== undefined) return refuse('That one is already off the slate.');
+      if (project.releasedAt !== undefined) return refuse('That one is already out.');
+      if (project.stage === 'delivered') {
+        return refuse('That one is finished. Let it out; there is nothing left to stop.');
+      }
+      const parent = parentCompany(s.universe);
+      if (!parent) return refuse('There’s no company.');
+
+      const holding = project.holdingId ? s.universe.holdings[project.holdingId] : undefined;
+      const owed = holding
+        ? payOrPlayOwed(project, holding.demands, project.greenlitAt ?? s.now, s.homeZone)
+        : 0;
+      if (owed > 0) {
+        const settled = payFor(s, parent.id, owed, `Paying off ${project.title}`);
+        if (!settled.ok) return settled;
+      }
+
+      project.shelvedAt = s.now;
+      return { ok: true, owedCents: owed };
+    },
+  );
+
   sim.onCommand<{ projectId: Id }, Done & { takeCents?: Money }>(
     'company.release', (payload, { sim: s }) => {
       const project = s.universe.projects[payload.projectId];
@@ -1233,6 +1280,42 @@ export function registerCompanyCommands(sim: Simulation): void {
       const firm = parentCompany(s.universe);
       if (!firm) return refuse('There’s no company to hire anybody.');
       const at = standingOn(hand, s.now, s.homeZone);
+
+      // The picture as it would be if it were made to their standard — every
+      // department at their rung — which is the question somebody is actually
+      // answering when they ask how big it is.
+      //
+      // Not the budget as it stands, which was the first version and was wrong in a
+      // way worth recording: the departments are staffed one at a time, so the
+      // running figure counts whoever has not been hired yet at the floor. The first
+      // head hired judged a picture that looked half the size of the one the last
+      // head judged, and the same five hires in a different order got a different
+      // answer. A term whose outcome depends on the order it was asked in is not a
+      // term.
+      const scale: Record<string, number> = {};
+      for (const one of DEPARTMENTS) {
+        if (monthsFor(one, holding.demands) > 0) scale[one.id] = at;
+      }
+      const would = layOut(holding.demands, scale, s.now, s.homeZone).budgetCents;
+      const insists = worksAboveOn(hand, s.now, s.homeZone);
+      if (would < insists) {
+        return refuse(
+          `They don’t take pictures under ${formatMoney(insists, { cents: false })}. `
+          + `This one is ${formatMoney(would, { cents: false })}.`,
+        );
+      }
+
+      // Somebody being replaced who signed pay-or-play is owed whether or not they
+      // ever shoot a day, which is the entire term. Charged before the new fee, so a
+      // company that cannot afford both keeps the head it already has.
+      if (sitting?.payOrPlay) {
+        const owed = payOrPlayOwed(project, holding.demands, s.now, s.homeZone, department.id);
+        if (owed > 0) {
+          const settled = payFor(s, firm.id, owed, `${sitting.name} off ${project.title}`);
+          if (!settled.ok) return settled;
+        }
+      }
+
       const fee = asksToSign(hand, s.now, s.homeZone);
       const paid = payFor(s, firm.id, fee, `${hand.name} on ${project.title}`);
       if (!paid.ok) return paid;
@@ -1248,6 +1331,7 @@ export function registerCompanyCommands(sim: Simulation): void {
           // would quietly re-price a budget that had already been shut.
           standing: at,
           temperamentId: hand.temperament.id,
+          payOrPlay: signsPayOrPlay(hand, s.now, s.homeZone),
           from,
           to,
         },

@@ -32,8 +32,10 @@ import {
 import { LOCK_BY_ID, canReopen, undoCosts, wouldForeclose } from '@/engine/content/locks';
 import { PROVENANCE_SAID, readsAs } from '@/engine/content/material';
 import { TEMPERAMENT_BY_ID, standingSaid } from '@/engine/content/people';
-import { asksToSign, offered, standingOn } from '@/engine/world/people';
-import { layOut, staffingOf } from '@/engine/world/schedule';
+import {
+  asksToSign, offered, signsPayOrPlay, standingOn, worksAboveOn,
+} from '@/engine/world/people';
+import { layOut, payOrPlayOwed, staffingOf } from '@/engine/world/schedule';
 import { whatItCouldReach } from '@/engine/content/release';
 import { onTheMarket } from '@/engine/world/material';
 import {
@@ -422,9 +424,31 @@ function OptionForm({ onClose }: { onClose: () => void }) {
 
 /** What it is trying to make. */
 function Slate() {
+  const { run } = useGame();
+  const sim = useWorld((s) => s);
   const slate = useWorld((s) => projectsOf(s.universe));
+  const holdings = useWorld((s) => s.universe.holdings);
   const [putting, setPutting] = useState(false);
   const [conceiving, setConceiving] = useState<string | undefined>();
+  const [said, setSaid] = useState<string | undefined>();
+
+  // What walking away would cost, so the control says the price before it is pressed
+  // rather than after. Nought where nobody signed pay-or-play, which is most of the
+  // time and is why the button usually reads plainly.
+  const owedOn = (project: Project) => {
+    const holding = project.holdingId ? holdings[project.holdingId] : undefined;
+    if (!holding) return 0;
+    return payOrPlayOwed(
+      project, holding.demands, project.greenlitAt ?? sim.now, sim.homeZone,
+    );
+  };
+
+  const shelve = (projectId: string) => {
+    const done = run<{ ok: boolean; error?: string }>(
+      'company.shelve', { projectId }, { silent: true },
+    );
+    setSaid(done.value?.error ?? (done.value?.ok ? undefined : done.error));
+  };
 
   return (
     <Panel
@@ -453,12 +477,25 @@ function Slate() {
                       {project.concept ? 'What It Is' : 'Say What It Is'}
                     </button>
                   )}
+                  {project.releasedAt === undefined && project.stage !== 'delivered' && (
+                    <button className="btn btn-sm btn-ghost" onClick={() => shelve(project.id)}>
+                      {owedOn(project) > 0
+                        ? `Drop It · ${formatMoney(owedOn(project), { cents: false })}`
+                        : 'Drop It'}
+                    </button>
+                  )}
                 </div>
               </div>
+              {owedOn(project) > 0 && (
+                <div className="xs dim" style={{ marginTop: 2 }}>
+                  A head on this one is paid whether or not it gets made.
+                </div>
+              )}
             </div>
           ))}
         </div>
       )}
+      {said ? <p className="small warn" style={{ marginTop: 'var(--s3)' }}>{said}</p> : null}
       {putting && <DevelopForm onClose={() => setPutting(false)} />}
       {conceiving && slate.find((one) => one.id === conceiving) && (
         <ConceiveForm
@@ -916,6 +953,11 @@ function Staffing() {
                           {one.temperament.what}
                           {` Asks ${formatMoney(asksToSign(one, sim.now, sim.homeZone), { cents: false })} to sign, `}
                           {`then ${formatMoney(rateFor(department, at), { cents: false })} a month.`}
+                          {worksAboveOn(one, sim.now, sim.homeZone) > 0 && (
+                            ` Won’t take a picture under ${formatMoney(worksAboveOn(one, sim.now, sim.homeZone), { cents: false })}.`
+                          )}
+                          {signsPayOrPlay(one, sim.now, sim.homeZone)
+                            && ' Paid whether or not it gets made.'}
                         </div>
                       </div>
                       <button

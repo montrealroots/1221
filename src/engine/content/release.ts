@@ -91,28 +91,38 @@
  * the rights cost nor what the heads asked to sign. The career run below counts every
  * penny, which is why it is the one to believe.
  *
- * On five-year careers at thirty million of capital (`tools/career.mjs`), against a
- * policy that hires the same rung whatever turns up:
+ * On five-year careers at thirty million of capital (`tools/career.mjs`), ten worlds
+ * each, against a policy that hires the same rung whatever turns up:
  *
- * | policy | greenlights refused | lowest cash | ended on |
- * |---|---|---|---|
- * | always team 1 | 0.8 | 2.4m | 2.5m |
- * | always team 2 | 0.5 | 2.6m | 3.1m |
- * | always team 3 | 2.0 | 1.8m | 2.2m |
- * | always team 4 | 3.0 | 788k | 2.0m |
- * | always team 5 | 7.3 | 154k | 1.8m |
- * | **match the material** | **0.0** | **3.2m** | **3.6m** |
+ * | policy | started | greenlights refused | lowest cash | ended on |
+ * |---|---|---|---|---|
+ * | always team 1 | 11.7 | 0.9 | 2.7m | 2.8m |
+ * | always team 2 | 11.9 | 0.6 | 1.9m | 2.5m |
+ * | always team 3 | 11.5 | 2.5 | 679k | 1.3m |
+ * | always team 4 | 10.1 | 9.6 | 342k | 1.3m |
+ * | always team 5 | 8.9 | 15.6 | 180k | 706k |
+ * | **match the material** | 11.7 | 0.7 | 2.2m | **2.9m** |
  *
- * Reading the property before hiring is worth **1.16x** the best rung that never
- * looks, and it is safer as well as richer — it never over-hires, so it is never
- * refused a greenlight for money. That is the whole model in one row. Under the old
- * multiple-of-budget formula the same comparison came back dead level, because there
- * was nothing about the material worth reading.
+ * **Choosing badly is expensive and choosing well is barely better than choosing
+ * cheap.** Always hiring the best ends on a quarter of what always hiring the
+ * cheapest does, which is a five-fold spread and says the rung matters enormously.
+ * But the *best fixed* policy is the cheapest one, and reading the property beats it
+ * by only 1.04x.
  *
- * The edge was 1.27x before the rights and the signing fees were priced properly, and
- * it is a floor rather than a ceiling either way: the matching policy reads the
- * property it has been handed and never decides **which** property to take, which is
- * the larger half of the same judgement and is left to a player.
+ * That figure is a correction. It was recorded here as 1.16x, measured over **four**
+ * worlds, and ten worlds do not support it. Re-running with the minimum-budget term
+ * switched off gives the same 1.04x, so the term did not cost the edge either — the
+ * first number was simply under-sampled, and a four-world reading should not have
+ * been written down as a finding.
+ *
+ * The honest reading of 1.04x is that the policy is naive rather than the decision
+ * thin. At the top rung the studio is refused a greenlight fifteen times and makes
+ * 8.9 pictures against 11.7 at the bottom, so **cash is what binds, not slots** — and
+ * `worthIt` maximises profit per picture, which is the wrong objective when the
+ * constraint is capital. A policy that weighed return against money tied up would do
+ * better, and until one is measured this row is a floor on what the decision is worth
+ * rather than an estimate of it. The same caveat applies twice over, because the
+ * policy also never chooses *which* property to take.
  *
  * Re-measure on both instruments after anything that moves a department rate, a month
  * count, or what a demand asks for. The deleted build's rate constant carried a

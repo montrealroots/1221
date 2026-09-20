@@ -34,7 +34,7 @@ import type { Instant } from '../core/time';
 import { addMonths } from '../core/time';
 import type { Demands } from '../content/material';
 import type { Project } from '../domain/company';
-import { TEMPERAMENT_BY_ID } from '../content/people';
+import { PAY_OR_PLAY_SHARE, TEMPERAMENT_BY_ID } from '../content/people';
 import type { Department, Phase } from '../content/departments';
 import {
   BEST_TEAM, LEAST_TEAM, PHASES, PHASE_SAID, departmentsIn, monthsFor, rateFor,
@@ -233,6 +233,32 @@ export function restamp(
       one.to = addMonths(phase.from, line.months, zone);
     }
   }
+}
+
+/**
+ * What walking away from a picture owes the people already on it.
+ *
+ * Pay-or-play is the term that makes stopping cost something, and what it costs
+ * depends on who is attached rather than on a flat penalty — which is the whole
+ * reason to have it rather than a cancellation fee. Somebody without the term is owed
+ * nothing, because they were never promised anything but the work.
+ *
+ * `only` narrows it to one department, which is what replacing a single head asks.
+ */
+export function payOrPlayOwed(
+  project: Project, demands: Demands, from: Instant, zone: string, only?: string,
+): Money {
+  const laid = layOut(demands, staffingOf(project), from, zone);
+  let owed = 0;
+  for (const phase of laid.phases) {
+    for (const line of phase.lines) {
+      if (only !== undefined && line.department.id !== only) continue;
+      const hire = (project.hires ?? {})[line.department.id];
+      if (!hire?.payOrPlay) continue;
+      owed += line.costCents * PAY_OR_PLAY_SHARE;
+    }
+  }
+  return Math.round(owed);
 }
 
 /**

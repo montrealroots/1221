@@ -398,6 +398,22 @@ export const LESSONS: readonly Lesson[] = [
     importance: 48,
   },
   {
+    id: 'dropping',
+    strand: 'the-company',
+    title: 'Taking One Off The Slate',
+    body: 'Not everything you develop should get made, and stopping is a decision the '
+      + 'same way starting is. What it costs depends on who you already put on it. Most '
+      + 'people are owed nothing — they were promised work, not a picture — but anybody '
+      + 'sought after enough to ask for it signs pay-or-play, and they are paid whether '
+      + 'or not it happens. The control tells you the figure before you press it. What '
+      + 'has already gone does not come back, so dropping one after you have said yes '
+      + 'loses the budget as well.',
+    teaches: ['company.shelve'],
+    screen: 'business',
+    after: ['staffing'],
+    importance: 44,
+  },
+  {
     id: 'shutting',
     strand: 'the-company',
     title: 'Shutting The Budget, And What It Costs To Open It',

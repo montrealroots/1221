@@ -404,6 +404,16 @@ export interface Engagement {
   /** The rung they stood at the day they were hired, which is what the budget priced. */
   standing: number;
   temperamentId: string;
+  /**
+   * Whether they are paid whether or not it gets made.
+   *
+   * The first term in this build that is not a price. It changes nothing about what a
+   * picture costs to make and everything about what it costs to **stop**, which is
+   * why it is stored on the engagement rather than looked up: what somebody insisted
+   * on the day they signed is a fact about the agreement, and their standing — and so
+   * what they would insist on now — moves with their age.
+   */
+  payOrPlay: boolean;
   from: Instant;
   to: Instant;
 }
