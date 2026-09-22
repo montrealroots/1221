@@ -192,7 +192,7 @@ export function CalendarWorkspace() {
         {next30.length === 0 ? (
           <Empty
             title="No Plans Ahead"
-            body="No plans or commitments in the next thirty days. Holidays are marked on the month above rather than listed here."
+            body="No plans or commitments in the next thirty days. Holidays are marked on the month above, not listed here."
           />
         ) : (
           <div className="list">

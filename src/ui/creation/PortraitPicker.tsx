@@ -216,7 +216,7 @@ export function PortraitPicker({
           </div>
         )}
 
-        <p className="hint">
+        <p className="hint" role={problem ? 'alert' : undefined}>
           {problem
             ? problem
             : source

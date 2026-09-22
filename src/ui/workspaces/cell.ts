@@ -5,10 +5,10 @@
  * print is a rule, not markup, so it lives here where it can be argued with
  * and tested rather than inside a `.slice(0, 1)` nobody reads twice.
  *
- * The rule that matters: a life keeps two calendars, so two holidays land on
- * one day often enough — Whit Monday and Memorial Day are both 25 May 2026 —
- * and printing one and hiding the other is the calendar deciding for you
- * which country's year you care about. Both show.
+ * The rule that matters: more than one holiday can land on one day — one the
+ * country keeps and one its region keeps on top, or two of the country's own —
+ * and printing one and hiding the other is the calendar deciding for you which
+ * of them you care about. Both show.
  */
 
 import { formatDate } from '@/engine/core/time';

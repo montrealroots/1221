@@ -439,6 +439,8 @@ label, .label { display: block; font-size: var(--size-xs); font-weight: 600; col
 .hint { font-size: var(--size-xs); color: var(--text-dim); line-height: 1.45; margin: var(--s1) 0 0; }
 /* The same line saying something went wrong is not a hint, and is not dimmed. */
 .hint[role="alert"] { color: var(--warning); }
+/* Alone inside the town list, a hint is centered by the list's own padding. */
+.picker-results .hint { margin: 0; }
 
 /* Chromium gives a range input a default side margin, which pushes it a few
    pixels past the field it sits in. */

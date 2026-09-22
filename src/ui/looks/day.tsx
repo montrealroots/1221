@@ -359,7 +359,13 @@ defineLook<TheDay>('day', {
               note={`${day.season} here`}
               look={at('daylight', city.id)}
             />
-            <Stat label="On The Calendar" value={entries.length} note={entries.length === 0 ? 'Clear' : 'Things the day is carrying'} />
+            <Stat
+              label="On The Calendar"
+              value={entries.length}
+              note={entries.length > 0
+                ? 'Things the day is carrying'
+                : holidays.length > 0 ? 'No plans, and a holiday' : 'No plans'}
+            />
             <Stat
               label="Wants You"
               value={wants.length}
@@ -396,7 +402,7 @@ defineLook<TheDay>('day', {
         }]
         : undefined,
       ways,
-      provenance: 'The light is worked out from the tilt, the date and this latitude — not looked up. The observances are the ones your calendars keep: where you’re standing, and the business’s own.',
+      provenance: 'The light is worked out from the tilt, the date and this latitude — not looked up. The observances are the ones kept where you’re standing.',
     };
   },
 });
