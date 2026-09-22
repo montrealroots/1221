@@ -13,6 +13,7 @@ import type { Account, LedgerTransaction } from '../core/ledger';
 import type { ScheduledItem } from '../core/scheduler';
 import type { HistoryRecord } from '../core/audit';
 import type { IdNamespace } from '../core/ids';
+import type { PerformerTitle } from '../core/performer';
 
 export type Id = string;
 
@@ -49,6 +50,13 @@ export interface Person {
   /** What the player and NPCs call them day to day. */
   displayName: string;
   pronouns: string;
+  /**
+   * Actor, or actress. Stored, not worked out wherever it is needed, because
+   * under they/them it is the player's to state and the pronouns cannot say
+   * it back. It is a word, not a stat: it decides what they are
+   * called and nothing else. See `core/performer.ts`.
+   */
+  performerTitle: PerformerTitle;
   /**
    * Their headshot, as a data URL.
    *
@@ -333,10 +341,11 @@ export interface Preferences {
 
 /**
  * 80 took out the character sheet, the film career, the family business, the
- * family itself, the land and the house. `migrate` in `engine/index.ts` says
- * what an older save sheds on the way in and what it keeps as inert JSON.
+ * family itself, the land and the house. 81 put the performer title back on
+ * the player. `migrate` in `engine/index.ts` says what an older save sheds on
+ * the way in, what it keeps as inert JSON, and what it is given.
  */
-export const SAVE_SCHEMA_VERSION = 80;
+export const SAVE_SCHEMA_VERSION = 81;
 
 export interface SaveMeta {
   id: Id;
@@ -352,6 +361,8 @@ export interface SaveMeta {
   /** The player's headshot, mirrored here so a slot can show it without
    *  deserialising the whole universe behind it. */
   portrait?: string;
+  /** The player's title, Actor or Actress, for the line under their name on
+   *  the slot. The hosted save table keeps it in its career column. */
   careerLabel: string;
   locationLabel: string;
   worldDateLabel: string;

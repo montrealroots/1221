@@ -103,6 +103,12 @@ for (const [label, value] of [[/first name/i, FIRST], [/last name/i, 'Castellano
   const f = page.getByLabel(label).first();
   if (await f.count()) await f.fill(value).catch(() => {});
 }
+// They/them is the default and settles no title, so Identity will not advance
+// until a word is picked. A walk that does not pick never leaves the first
+// step, and then reports the screens it never reached as broken.
+const billed = page.getByRole('button', { name: /^(actor|actress)$/i }).first();
+if (await billed.count()) { await billed.click({ timeout: 3000 }).catch(() => {}); await settle(300); }
+else note('02-creation-identity', 'flow', 'Identity does not offer a billing to answer');
 await seen('02-creation-identity');
 
 const stepName = () => page.locator('.creation-step[data-state="active"]').first().innerText().catch(() => '');

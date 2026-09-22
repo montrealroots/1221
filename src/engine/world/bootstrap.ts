@@ -22,6 +22,7 @@ function known(ids: readonly string[] | undefined, table: Readonly<Record<string
   return [...new Set((ids ?? []).filter((id) => table[id] !== undefined))];
 }
 import { freshWellbeing } from '../systems/life';
+import { PERFORMER_NOUN, impliedPerformerTitle, isPerformerTitle, type PerformerTitle } from '../core/performer';
 
 export const APP_VERSION = '1.1.0';
 
@@ -37,6 +38,11 @@ export interface NewSaveConfig {
   lastName: string;
   displayName?: string;
   pronouns: string;
+  /**
+   * Actor or actress. Settled by the pronouns where they settle it, and the
+   * player's pick under they/them. Absent, the pronouns decide.
+   */
+  performerTitle?: PerformerTitle;
   /** Local date of birth in the starting city's zone. */
   /** A second passport, for somebody naturalised where they live now. */
   secondCitizenshipId?: string;
@@ -183,6 +189,11 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, raw: NewSaveConfig
   );
 
   const playerId = 'person_000001';
+  // Stated where the player stated it. Where they said nothing, which the
+  // creation screen never lets happen, their pronouns decide.
+  const performerTitle = isPerformerTitle(config.performerTitle)
+    ? config.performerTitle
+    : impliedPerformerTitle(config.pronouns);
 
   const meta: SaveMeta = {
     id: `save_${slot}_${seed.slice(0, 8)}`,
@@ -194,9 +205,7 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, raw: NewSaveConfig
     seed,
     characterName: `${config.firstName} ${config.lastName}`,
     portrait: config.portrait,
-    // There is no career to name yet. The column stays because the hosted
-    // save table has it, and the slot prints a dash until something fills it.
-    careerLabel: '',
+    careerLabel: PERFORMER_NOUN[performerTitle],
     locationLabel: city.name,
     worldDateLabel: '',
     netWorthLabel: '',
@@ -221,6 +230,7 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, raw: NewSaveConfig
     displayName: config.displayName?.trim() || `${config.firstName} ${config.lastName}`,
     portrait: config.portrait,
     pronouns: config.pronouns,
+    performerTitle,
     birthInstant,
     // Who they are, kept exactly as they said it. Only the player is asked,
     // and nothing reads it to decide anything.

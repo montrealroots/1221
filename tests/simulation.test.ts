@@ -323,6 +323,48 @@ describe('migrations and validation', () => {
     expect(validateUniverse(sim.universe).ok).toBe(true);
   });
 
+  it('keeps the title a save from before 80 was made with, and names the slot by it', () => {
+    const sim = quickSave({ pronouns: 'they/them', performerTitle: 'actress' }, 'title-79');
+    const universe = sim.universe;
+    universe.meta.schemaVersion = 79;
+    const row = universe.people[universe.playerId] as unknown as Record<string, unknown>;
+    row.careerTrack = 'actor';
+    // The film career named the slot, and the summary carried its own copy.
+    universe.meta.careerLabel = 'Writer';
+    (universe.meta as unknown as Record<string, unknown>).performerTitle = 'actress';
+
+    const result = migrate(universe);
+
+    expect(result.migrated).toBe(true);
+    expect(row.performerTitle).toBe('actress');
+    expect('careerTrack' in row).toBe(false);
+    expect(universe.meta.careerLabel).toBe('Actress');
+    expect('performerTitle' in universe.meta).toBe(false);
+    expect(result.steps.join(' ')).not.toMatch(/a title from their pronouns/);
+    expect(validateUniverse(universe).ok).toBe(true);
+  });
+
+  it('gives a save written under 80 a title from its pronouns', () => {
+    for (const [pronouns, title, word] of [
+      ['she/her', 'actress', 'Actress'], ['he/him', 'actor', 'Actor'], ['they/them', 'actor', 'Actor'],
+    ] as const) {
+      const sim = quickSave({ pronouns }, `title-80-${pronouns}`);
+      const universe = sim.universe;
+      universe.meta.schemaVersion = 80;
+      // 80 shed the title and left the career line empty.
+      delete (universe.people[universe.playerId] as unknown as Record<string, unknown>).performerTitle;
+      universe.meta.careerLabel = '';
+
+      const result = migrate(universe);
+
+      expect(result.migrated).toBe(true);
+      expect(universe.people[universe.playerId]!.performerTitle, pronouns).toBe(title);
+      expect(universe.meta.careerLabel, pronouns).toBe(word);
+      expect(result.steps.join(' ')).toMatch(/Gave 1 person a title from their pronouns/);
+      expect(validateUniverse(universe).ok).toBe(true);
+    }
+  });
+
   it('re-stamps records that carry the wrong save id', () => {
     const sim = quickSave();
     sim.universe.meta.schemaVersion = 1;

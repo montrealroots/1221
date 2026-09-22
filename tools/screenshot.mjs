@@ -31,6 +31,12 @@ await shoot('01-startup');
 
 const start = page.getByRole('button', { name: /new (save|game)|start|empty slot|create/i }).first();
 if (await start.count()) { await start.click().catch(() => {}); await page.waitForTimeout(1000); }
+
+// They/them is the default and settles no title: Identity asks which word to
+// bill you under and will not advance until it is answered. Without this the
+// walk never leaves the first step.
+const billed = page.getByRole('button', { name: /^(actor|actress)$/i }).first();
+if (await billed.count()) { await billed.click().catch(() => {}); await page.waitForTimeout(300); }
 await shoot('02-identity');
 
 // Walk the creation steps, and say so when one of them does not open. A walk

@@ -27,6 +27,7 @@ import {
 import {
   ALL_INTERESTS, CRAFT_INTERESTS, FILM_GENRES, GENERAL_INTERESTS, type Interest,
 } from '@/engine/content/interests';
+import { PERFORMER_NOUN, PERFORMER_TITLES, settledTitle, type PerformerTitle } from '@/engine/core/performer';
 
 /**
  * How far back the last year a character can be born in sits from the year
@@ -121,7 +122,7 @@ export function CharacterCreation({
               <div className="eyebrow">Slot {slot}</div>
               <h1 style={{ fontSize: 'var(--size-lg)' }}>Who Are You Going To Be?</h1>
               <p className="muted small" style={{ marginTop: 2 }}>
-                SLATE is a life simulator. This is the person you play.
+                SLATE is a life simulator. This is the {billedAs(config).toLowerCase()} you play.
               </p>
             </div>
           </div>
@@ -206,6 +207,22 @@ function ageAtStart(config: NewSaveConfig): number {
   );
 }
 
+/**
+ * The word this character is billed with: settled by their pronouns where
+ * their pronouns settle it, and otherwise the one they picked. Undefined only
+ * while somebody on they/them has not picked yet, which the Identity step
+ * will not let past.
+ */
+function titleOf(config: NewSaveConfig): PerformerTitle | undefined {
+  return settledTitle(config.pronouns) ?? config.performerTitle;
+}
+
+/** The same, as a word, and both words while it is still open. */
+function billedAs(config: NewSaveConfig): string {
+  const title = titleOf(config);
+  return title ? PERFORMER_NOUN[title] : 'Actor Or Actress';
+}
+
 type Setter = <K extends keyof NewSaveConfig>(key: K, value: NewSaveConfig[K]) => void;
 
 /** Every country, by name, for the two passport lists. */
@@ -216,6 +233,8 @@ function IdentityStep({ config, set, setConfig }: {
   set: Setter;
   setConfig: React.Dispatch<React.SetStateAction<NewSaveConfig>>;
 }) {
+  const settled = settledTitle(config.pronouns);
+
   return (
     <div className="card">
       <div className="panel-head">
@@ -261,11 +280,55 @@ function IdentityStep({ config, set, setConfig }: {
             </div>
             <div className="field">
               <label htmlFor="pronouns">Pronouns</label>
-              <select id="pronouns" value={config.pronouns} onChange={(e) => set('pronouns', e.target.value)}>
+              <select
+                id="pronouns"
+                value={config.pronouns}
+                onChange={(e) => {
+                  const pronouns = e.target.value;
+                  // The title is written into the config, so it has to move
+                  // with the pronouns: settled where they settle it, and
+                  // cleared where they do not, so a pick made under they/them
+                  // cannot survive behind he/him.
+                  setConfig((c) => ({ ...c, pronouns, performerTitle: settledTitle(pronouns) }));
+                }}
+              >
                 <option value="she/her">She/Her</option>
                 <option value="he/him">He/Him</option>
                 <option value="they/them">They/Them</option>
               </select>
+            </div>
+            <div className="field">
+              <span className="label">Billed As</span>
+              {settled ? (
+                <>
+                  <output className="settled-title" htmlFor="pronouns">{PERFORMER_NOUN[settled]}</output>
+                  <p className="xs dim" style={{ marginTop: 4 }}>
+                    Your pronouns say which of the two words is yours, so there’s nothing to pick.
+                    Change them and this changes with them.
+                  </p>
+                </>
+              ) : (
+                <>
+                  <div className="row gap-2" role="group" aria-label="Billed As">
+                    {PERFORMER_TITLES.map((option) => (
+                      <button
+                        key={option}
+                        type="button"
+                        className="trait grow"
+                        aria-pressed={config.performerTitle === option}
+                        onClick={() => set('performerTitle', option)}
+                      >
+                        <div className="trait-name">{PERFORMER_NOUN[option]}</div>
+                      </button>
+                    ))}
+                  </div>
+                  <p className="xs dim" style={{ marginTop: 4 }}>
+                    He/Him settles this by itself, and so does She/Her. They/Them doesn’t, so the
+                    choice is yours. Actor and Actress are two words for the same craft and the game
+                    treats them as equals. Pick the one you want to be called, and it will call you by it.
+                  </p>
+                </>
+              )}
             </div>
           </div>
         </div>
@@ -674,7 +737,7 @@ function ReviewStep({ config }: { config: NewSaveConfig }) {
             {config.displayName?.trim() || `${config.firstName} ${config.lastName}`}
           </h1>
           <p className="muted">
-            {age} · {city?.name}
+            {age} · {billedAs(config)} · {city?.name}
           </p>
         </div>
       </div>
@@ -684,6 +747,7 @@ function ReviewStep({ config }: { config: NewSaveConfig }) {
           <div className="eyebrow" style={{ marginBottom: 'var(--s3)' }}>Identity</div>
           <Line label="Legal Name" value={[config.firstName, config.middleName, config.lastName].filter(Boolean).join(' ')} />
           <Line label="Pronouns" value={config.pronouns} />
+          <Line label="Billed As" value={billedAs(config)} />
           <Line
             label="Race Or Ethnicity"
             value={describeEthnicity(config.raceEthnicity, config.raceEthnicityOwn)}
@@ -743,6 +807,9 @@ function validate(config: NewSaveConfig, step: StepIndex): string[] {
   if (step === STEP.Identity) {
     if (!config.firstName.trim()) issues.push('A first name is needed.');
     if (!config.lastName.trim()) issues.push('A last name is needed.');
+    if (!titleOf(config)) {
+      issues.push('Choose whether you’re billed as an actor or an actress.');
+    }
     const age = ageAtStart(config);
     // The year, not the age. A birth year at the cap can still leave somebody
     // seventeen when the save opens, and that is a life this game will run.

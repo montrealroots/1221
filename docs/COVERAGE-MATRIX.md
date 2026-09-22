@@ -20,9 +20,10 @@ claims otherwise.
 | --- | --- | --- | --- |
 | Startup sequence | Implemented — the mark, the storage it picks, the schema it reads, and the slots it hands on | `src/ui/startup/StartupSequence.tsx` | `persistence`, `base44-adapter` |
 | Save slots | Implemented — three slots, each its own universe, with migration and validation on the way in, and a backup that says which world date it holds so restoring and deleting are not blind | `src/ui/saves/SaveSlots.tsx` | `integrity`, `persistence` |
-| Character creation | Implemented — identity, race or ethnicity, the passports held, where the player was born and where they live, interests, genres, a background in their own words, and the money they start with | `src/ui/creation/CharacterCreation.tsx` | `creation`, `citizenship`, `portrait`, `world-map` |
+| Character creation | Implemented — identity, whether the player is billed as an actor or an actress, race or ethnicity, the passports held, where the player was born and where they live, interests, genres, a background in their own words, and the money they start with | `src/ui/creation/CharacterCreation.tsx` | `creation`, `citizenship`, `portrait`, `world-map` |
 | The geography map | Implemented — every country drawn from the projected world map, 170,911 cities behind it, loaded a country at a time, on the creation screen twice | `src/ui/creation/WorldMap.tsx`, `src/ui/creation/LocationPicker.tsx`, `src/engine/content/geography.ts` | `geography`, `world-map` |
 | Portrait | Implemented — a headshot cropped to a fixed frame and carried on the person | `src/ui/creation/PortraitPicker.tsx` | `portrait` |
+| Performer title | Implemented — actor or actress, settled by the pronouns and picked under they/them, stored on the player and said back on Home, the rail and the save slot. It is a word and decides nothing else | `src/engine/core/performer.ts` | `creation`, `simulation` |
 | Home | Implemented — the day, where you are, what needs you, what happens next, how you are, the weather and money | `src/ui/screens/Home.tsx` | `interface`, `navigation`, `smoke` |
 | Calendar | Implemented — the month, collisions, the observances of the country you are standing in, and plans of your own | `src/ui/workspaces/CalendarWorkspace.tsx`, `src/engine/world/calendar.ts`, `src/engine/world/plans.ts` | `calendar`, `holidays`, `plans` |
 | Weather | Implemented — a climate model per city from season, latitude and the kind of place it is, with a week ahead | `src/engine/systems/weather.ts` | `weather` |
@@ -39,8 +40,9 @@ The revamp removed, with their screens, their content, their tests and their
 tools:
 
 - **The character sheet.** The 813 acting attributes, the prodigy, the
-  personality and its traits, taste and genre mastery, the performer's title
-  and the premise record that carried it.
+  personality and its traits, taste and genre mastery, and the premise record
+  that carried the performer's title. The title itself came back: see the
+  row above.
 - **The film career and the family business.** Casting and the audition room,
   the company and its incorporation, the lot, making a picture, selling it, the
   reimbursement, VAT, the inventory ledger, the crew, the trouble a shoot can
@@ -55,7 +57,9 @@ relationships and the rest; those are listed in the history of this file.
 
 A save written by an older build still opens — `migrate` sheds the fields this
 build no longer reads and leaves the collections it has no screen for in place
-as inert records — but none of those screens is coming back in this build.
+as inert records — but none of those screens is coming back in this build. The
+title is the one field that came back: a save from before 80 keeps the one it
+was made with, and one written under 80 is given one from its pronouns.
 
 ## The engine, as it now stands
 

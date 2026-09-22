@@ -11,6 +11,7 @@ import { titleCaseLabel } from '@/engine/core/text';
 import { placeProfile, placeKindLabel, formatPeople, type PlaceProfile } from '@/engine/world/place';
 import { WEATHER_EMOJI, forecastFor, weatherAt, weatherShort } from '@/engine/systems/weather';
 import { WEEKDAY_NAMES } from '@/engine/core/time';
+import { PERFORMER_NOUN } from '@/engine/core/performer';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Meter, MoneyText, Empty } from '@/ui/components/primitives';
 import { openDecisions, lifeSnapshot, unreadNotifications } from '@/engine/world/world';
@@ -48,13 +49,15 @@ export function Home() {
   return (
     <>
       {/*
-        Five nouns in three lines, and until now not one of them opened: the
-        date, your own name, the city, the season and the sky. Each names the
-        thing it is, and the thing knows what it opens into.
+        Six nouns in three lines, and until now not one of them opened: the
+        date, your title, your own name, the city, the season and the sky.
+        Each names the thing it is, and the thing knows what it opens into.
       */}
       <LookRegion className="page-head">
         <div className="eyebrow">
           <Open subject={at('day', today)}>{formatWeekdayDate(sim.now, sim.zone)}</Open>
+          {' · '}
+          <Open subject={at('person', player.id)}>{PERFORMER_NOUN[player.performerTitle]}</Open>
         </div>
         <h1>
           Good {partOfDay(sim.now, sim.zone)},{' '}

@@ -64,9 +64,10 @@ part the tool cannot see.
   for them and the person look prints them, which is what keeps them from being
   a question with no answer. Nothing in the simulation reads either, and
   `tests/cohesion.test.ts` holds that nothing starts to without saying so.
-- **`careerLabel` on the save slot is always empty.** There is no career to
-  name. The field stays because the hosted save table has a column for it, and
-  the slot prints a dash.
+- **The performer title is said back and nothing more.** Actor or actress,
+  settled by the pronouns or picked under they/them, and printed on Home, the
+  rail and the save slot. It is a word and not a stat, so that is all it
+  claims to do, but nothing in the simulation reads it either.
 - **`search()` in `content/reference.ts`** is a ranked search over every city
   with no caller. The note on it says it stays only while a way in might be
   built, and this page carries it until one is or it goes.

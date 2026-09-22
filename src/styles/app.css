@@ -433,6 +433,14 @@ input[readonly]:focus { border-color: var(--line-strong); }
 textarea { resize: vertical; min-height: 72px; }
 label, .label { display: block; font-size: var(--size-xs); font-weight: 600; color: var(--text-muted); margin-bottom: var(--s1); }
 
+/* A value the form worked out, not one it asked for. It sits where the input
+   it replaces would, so a field that settles itself does not shift the row. */
+.settled-title {
+  display: block; padding: var(--s2) 0;
+  font-size: var(--size-sm); font-weight: 650;
+  color: var(--accent-strong);
+}
+
 /* A helper line under a control: what it takes, or how many there are to
    choose from. The same size and color as every other hint on a form, which
    the pickers write as a class rather than as `xs dim`. */

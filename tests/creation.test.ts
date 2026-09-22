@@ -1,10 +1,11 @@
 /**
  * The four creation steps, pinned to their shape.
  *
- * The screen used to ask about a character sheet, a performer's title, a
- * family and a family business, and to state where the player was born and
- * lived rather than ask. All of that went with the revamp, and place of birth,
- * where you live and the passports you hold are questions again.
+ * The screen used to ask about a character sheet, a family and a family
+ * business, and to state where the player was born and lived rather than ask.
+ * All of that went with the revamp, and place of birth, where you live and the
+ * passports you hold are questions again. The performer's title went with it
+ * and came back: the pronouns settle it, and under they/them the player picks.
  *
  * So this holds the shape rather than the wording. What each step asks, and
  * what comes out the other end in the save.
@@ -12,10 +13,11 @@
 
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
-import { createSave, defaultConfig } from '@/engine';
+import { createSave, defaultConfig, refreshMeta } from '@/engine';
 import { citizenshipsOf } from '@/engine/domain/citizenship';
 import { CITIES } from '@/engine/content/geography';
 import { latestBirthYear } from '@/ui/creation/CharacterCreation';
+import { settledTitle } from '@/engine/core/performer';
 
 const SOURCE = readFileSync(new URL('../src/ui/creation/CharacterCreation.tsx', import.meta.url), 'utf8');
 
@@ -24,7 +26,7 @@ function filled() {
   return createSave(1, 'creation-shape', {
     ...defaultConfig(),
     firstName: 'Sigrún', middleName: 'Erla', lastName: 'Halldórsdóttir',
-    displayName: 'Siggi', pronouns: 'she/her',
+    displayName: 'Siggi', pronouns: 'she/her', performerTitle: 'actress',
     birthYear: 1998, birthMonth: 11, birthDay: 3,
     raceEthnicity: ['white', 'asian'],
     homeRegionId: 'is-1-reykjavik', livesWhereBorn: false,
@@ -55,7 +57,7 @@ describe('the steps', () => {
   });
 
   it('leave no trace of the ones that went', () => {
-    for (const gone of ['CareerStep', 'YourPeopleStep', 'performerTitle', 'personality', 'ESTATE_', 'studioName', 'family']) {
+    for (const gone of ['CareerStep', 'YourPeopleStep', 'personality', 'ESTATE_', 'studioName', 'family']) {
       expect(SOURCE, `${gone} is back in creation`).not.toContain(gone);
     }
   });
@@ -71,6 +73,28 @@ describe('Identity', () => {
     expect(step, 'the credit name is back').not.toContain('id="stage"');
   });
 
+  it('bills them as an actor or an actress, and will not go on until it is settled', () => {
+    const step = stepSource('function IdentityStep', 'function PersonalStep');
+    expect(step, 'Billed As is gone').toContain('<span className="label">Billed As</span>');
+    // Settled by the pronouns, it is said back. Left open, both words are offered.
+    expect(step, 'the settled title is not shown').toContain('className="settled-title"');
+    expect(step, 'they/them is offered no choice').toContain('aria-label="Billed As"');
+    // A pick made under they/them must not survive a change to he/him.
+    expect(step, 'the title does not move with the pronouns')
+      .toContain('performerTitle: settledTitle(pronouns)');
+    expect(stepSource('function validate'), 'Continue opens with no title')
+      .toContain('Choose whether you’re billed as an actor or an actress.');
+  });
+
+  it('settles the title from the pronouns, and only they/them opens the choice', () => {
+    expect(settledTitle('he/him')).toBe('actor');
+    expect(settledTitle('she/her')).toBe('actress');
+    expect(settledTitle('they/them')).toBeUndefined();
+    // Case and spacing do not get to change the answer.
+    expect(settledTitle('  He/Him ')).toBe('actor');
+    expect(settledTitle('She/Her')).toBe('actress');
+  });
+
   it('caps the birth year so nobody starts under eighteen', () => {
     expect(latestBirthYear(2026)).toBe(2008);
     expect(latestBirthYear(2030)).toBe(2012);
@@ -83,9 +107,37 @@ describe('Identity', () => {
     expect(p.lastName).toBe('Halldórsdóttir');
     expect(p.displayName).toBe('Siggi');
     expect(p.pronouns).toBe('she/her');
+    expect(p.performerTitle).toBe('actress');
     expect(p.raceEthnicity).toEqual(['white', 'asian']);
     expect(citizenshipsOf(p)).toEqual(['is', 'us']);
     expect(p.homeRegionId).toBe('is-1-reykjavik');
+  });
+});
+
+describe('the title', () => {
+  const titleOf = (pronouns: string, performerTitle?: 'actor' | 'actress') => {
+    const sim = createSave(2, `title-${pronouns}-${performerTitle ?? 'none'}`, { ...defaultConfig(), pronouns, performerTitle });
+    return sim.universe.people[sim.universe.playerId]!.performerTitle;
+  };
+
+  it('keeps a pick made under they/them, either way', () => {
+    expect(titleOf('they/them', 'actress')).toBe('actress');
+    expect(titleOf('they/them', 'actor')).toBe('actor');
+  });
+
+  it('lets the pronouns decide a save the engine was handed with no title', () => {
+    expect(titleOf('she/her')).toBe('actress');
+    expect(titleOf('he/him')).toBe('actor');
+    // The screen never sends this. The engine still has to make a person.
+    expect(titleOf('they/them')).toBe('actor');
+  });
+
+  it('names the slot by it, and keeps naming it after the clock runs', () => {
+    const sim = filled();
+    expect(sim.universe.meta.careerLabel).toBe('Actress');
+    sim.universe.meta.careerLabel = '';
+    refreshMeta(sim);
+    expect(sim.universe.meta.careerLabel).toBe('Actress');
   });
 });
 
@@ -139,7 +191,7 @@ describe('Review', () => {
   it('shows every line the three steps decided', () => {
     const step = stepSource('function ReviewStep');
     for (const line of [
-      'Legal Name', 'Pronouns', 'Born', 'Place Of Birth', 'Citizenship',
+      'Legal Name', 'Pronouns', 'Billed As', 'Born', 'Place Of Birth', 'Citizenship',
       'Where You Live', 'Checking', 'Savings', 'Credit Score', 'Interests', 'Genres',
     ]) {
       expect(step, `Review stopped showing ${line}`).toContain(line);

@@ -339,6 +339,12 @@ for (const size of WIDTHS.filter((w) => ONLY.length === 0 || ONLY.includes(w.nam
     const field = page.locator(selector).first();
     if (await field.count()) await field.fill(value).catch(() => {});
   }
+  // They/them settles no title, so Continue stays shut until one is picked.
+  const billed = page.getByRole('group', { name: 'Billed As' });
+  if (await billed.count()) {
+    await billed.getByRole('button', { name: 'Actress' }).click().catch(() => {});
+    await page.waitForTimeout(300);
+  }
   const race = page.getByRole('group', { name: 'Race Or Ethnicity' });
   if (await race.count()) {
     await race.getByRole('button', { name: 'Black Or African' }).click().catch(() => {});

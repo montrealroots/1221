@@ -17,6 +17,7 @@ import { addDays, formatDate, instantFromZoned, zonedParts, MS_DAY } from './cor
 import { formatMoneyCompact } from './core/money';
 import { clamp } from './core/rng';
 import { plural, titleCaseLabel } from './core/text';
+import { PERFORMER_NOUN, impliedPerformerTitle, isPerformerTitle } from './core/performer';
 
 import { CITIES } from './content/geography';
 
@@ -125,6 +126,7 @@ export function refreshMeta(sim: Simulation): void {
   const worth = netWorth(sim, player.id);
   sim.universe.meta.characterName = player.displayName;
   sim.universe.meta.portrait = player.portrait;
+  sim.universe.meta.careerLabel = PERFORMER_NOUN[player.performerTitle];
   sim.universe.meta.locationLabel = CITIES.get(player.currentLocationId)?.name ?? 'Unknown';
   sim.universe.meta.worldDateLabel = formatDate(sim.now, sim.homeZone);
   sim.universe.meta.netWorthLabel = formatMoneyCompact(worth.total);
@@ -317,16 +319,19 @@ export function migrate(universe: SaveUniverse): MigrationResult {
 
   // Schema 80 took out the whole character sheet, the film career and the
   // family: the attributes and the prodigy flag, the personality and its
-  // traits, the acting traits, the performer title, the industry reputation,
-  // the career track, the role on the estate, the quote history, who somebody
-  // is to whom, their gender, the house they slept in, the household they
-  // shared it with and the name their work was credited under. Nothing in this build reads any of them. Earlier removals
-  // are in the same list, so a save from any older build sheds all of it in
-  // one pass. The relatives themselves, the households and the house stay in
-  // an older save as inert records, like every other part this build has no
-  // screen for.
+  // traits, the acting traits, the industry reputation, the career track, the
+  // role on the estate, the quote history, who somebody is to whom, their
+  // gender, the house they slept in, the household they shared it with and
+  // the name their work was credited under. Nothing in this build reads any
+  // of them. Earlier removals are in the same list, so a save from any older
+  // build sheds all of it in one pass. The relatives themselves, the
+  // households and the house stay in an older save as inert records, like
+  // every other part this build has no screen for.
+  //
+  // 80 shed the performer title too, and 81 put it back, so it is not on the
+  // list: a save from before 80 keeps the title it was made with.
   const SHED = [
-    'attributes', 'prodigy', 'personality', 'personalityTraits', 'traits', 'performerTitle',
+    'attributes', 'prodigy', 'personality', 'personalityTraits', 'traits',
     'reputation', 'careerTrack', 'estateRole', 'quotes', 'relations', 'gender', 'residenceId',
     'householdId', 'stageName', 'skills', 'goals', 'lifestyle', 'creditScore', 'goatTraits',
   ] as const;
@@ -344,13 +349,32 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     }
     if (dropped) shed += 1;
   }
+  // Older builds mirrored the title onto the save's own summary. It lives on
+  // the person now, and the slot reads it through the career line.
   const meta = universe.meta as unknown as Record<string, unknown>;
   if ('performerTitle' in meta) delete meta.performerTitle;
-  // The slot's career line named the film career, and there is none now.
-  if (from < 80 && universe.meta.careerLabel) universe.meta.careerLabel = '';
   if (shed > 0) {
     steps.push(`Dropped the fields this build no longer reads from ${plural(shed, 'person', 'people')}.`);
   }
+
+  // A save written under 80 lost the title, and one from before the title was
+  // kept never had it. Either way the pronouns decide, as they would have at
+  // creation, and anybody on they/them who picked comes back an actor: the
+  // pick went with 80 and there is nothing left to read it from.
+  let titled = 0;
+  for (const person of Object.values(universe.people ?? {})) {
+    const p = person as unknown as Record<string, unknown>;
+    if (isPerformerTitle(p.performerTitle)) continue;
+    p.performerTitle = impliedPerformerTitle(typeof p.pronouns === 'string' ? p.pronouns : '');
+    titled += 1;
+  }
+  if (titled > 0) {
+    steps.push(`Gave ${plural(titled, 'person', 'people')} a title from their pronouns.`);
+  }
+  // The slot's career line is the player's title. Before 80 it named the film
+  // career, and under 80 it was left empty.
+  const player = universe.people?.[universe.playerId];
+  if (player) universe.meta.careerLabel = PERFORMER_NOUN[player.performerTitle];
 
   const migrated = from < SAVE_SCHEMA_VERSION || steps.length > 0;
   if (from < SAVE_SCHEMA_VERSION) steps.push(`Schema ${from} to ${SAVE_SCHEMA_VERSION}.`);
