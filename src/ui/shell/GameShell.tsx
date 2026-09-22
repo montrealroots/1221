@@ -134,7 +134,7 @@ export function GameShell() {
             <div className="rail-you">
               <div className="small strong truncate">{sim.player.displayName}</div>
               <div className="xs dim truncate">
-                {unread > 0 ? `${unread} Unread` : 'Nothing Unread'}
+                {unread > 0 ? `${unread} Unread` : 'All Read'}
               </div>
             </div>
           </div>

@@ -79,7 +79,7 @@ const TICS = [
     what: 'A sentence that opens with "Nothing"',
     hint: 'Turn it round: say what there is, or who does what.',
     re: /(^|[.!?]\s+|>\s*)Nothing\b/g,
-    budget: 10,
+    budget: 0,
   },
   {
     id: 'somebody',

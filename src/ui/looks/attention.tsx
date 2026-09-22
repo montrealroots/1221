@@ -281,7 +281,7 @@ defineLook<DecisionItem>('decision', {
             <Stat
               label="Ways Out"
               value={decision.actions.length > 0 ? decision.actions.length : 'Dismiss only'}
-              note={decision.actions.length > 0 ? 'Offered on Home, taken on Home' : 'Nothing to answer, only to wave away'}
+              note={decision.actions.length > 0 ? 'Offered on Home, taken on Home' : 'It can be waved away, not answered'}
             />
           </div>
         </>

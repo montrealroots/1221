@@ -652,7 +652,7 @@ defineLook<TheLight>('daylight', {
             <Stat
               label="Sunset"
               value={today.polar ? 'None Today' : formatTime(today.sunset ?? 0, city.timeZone)}
-              note={today.polar ? 'Nothing crosses the horizon' : 'Local clock'}
+              note={today.polar ? 'The sun never crosses the horizon' : 'Local clock'}
             />
             <Stat
               label="Length"

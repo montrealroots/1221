@@ -69,6 +69,6 @@ export function dayLabel(day: CalendarDay, zone: string): string {
   return [
     formatDate(day.date, zone),
     kept.length > 0 ? `${kept.join('. ')}.` : '',
-    booked || (kept.length > 0 ? '' : 'Nothing on it.'),
+    booked || (kept.length > 0 ? '' : 'No plans on it.'),
   ].filter(Boolean).join(' ');
 }

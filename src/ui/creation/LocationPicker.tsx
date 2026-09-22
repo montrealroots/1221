@@ -193,7 +193,7 @@ export function LocationPicker({
       <div className="picker-results" role="listbox" aria-label="Matching Places">
         {matches.length === 0 && !loading && (
           <p className="hint" style={{ padding: 'var(--s3)' }}>
-            Nothing matches “{query}” there. Try a different spelling, or widen the region.
+            No town or city matches “{query}” there. Try a different spelling, or widen the region.
           </p>
         )}
         {matches.slice(0, VISIBLE_MATCHES).map((c) => (

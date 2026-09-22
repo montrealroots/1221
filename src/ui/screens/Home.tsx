@@ -159,7 +159,7 @@ export function Home() {
         >
           {decisions.length === 0 && unread.length === 0 ? (
             <Empty
-              title="Nothing Pressing"
+              title="All Clear"
               body="You’re not late for anything and the calendar doesn’t clash. Go and do something you want to do."
             />
           ) : (

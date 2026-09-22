@@ -52,7 +52,7 @@ export function CalendarWorkspace() {
     <>
       <div className="page-head">
         <div className="eyebrow">Calendar</div>
-        <h1>Every commitment you have.</h1>
+        <h1>Every Commitment You Have.</h1>
         <p className="muted">
           Everything on your calendar, and the holidays kept where you’re
           standing. If two things want you at once, they’re flagged here
@@ -156,7 +156,7 @@ export function CalendarWorkspace() {
         >
           {selectedDay.entries.length === 0 ? (
             <Empty
-              title="Nothing Scheduled"
+              title="No Plans"
               body={canPlan(selectedDay, sim.now)
                 ? 'That day is entirely yours. Put something on it if you want it spoken for.'
                 : 'That day was entirely yours.'}

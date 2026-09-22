@@ -126,11 +126,11 @@ counted, and all nine were right; the land panel has gone since, and one of the
 four below went with it:
 
 - Four were the words *between* the nouns — "Good Morning, ", " in · · ·",
-  "Nothing scheduled. … is yours.", and a line under the land panel that the
+  "No plans or commitments ahead. … is yours.", and a line under the land panel that the
   revamp took out. Grammar is not a thing in the world, and a sentence whose
   every word opened would be unreadable.
-- Four say that nothing is there: "Nothing is waiting on a decision.",
-  "Nothing Pressing", and the two lines under it. There is no object behind an
+- Four say that nothing is there: "No decision is waiting on you.",
+  "All Clear", and the two lines under it. There is no object behind an
   absence, and rule 3 says a name is not painted as a way in unless it is one.
 - One is the heading "What Needs You", which names a set rather than a thing
   and has nothing declared behind it.

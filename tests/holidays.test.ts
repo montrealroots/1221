@@ -156,7 +156,7 @@ describe('a day in the grid', () => {
     expect(standingIn(day(0, 3, 'missed'))).toHaveLength(3);
     expect(standingIn(day(0, 3, 'done'))).toHaveLength(3);
     expect(hiddenIn(day(0, 5, 'cancelled'))).toBe(0);
-    expect(dayLabel(day(0, 3, 'cancelled'), 'UTC')).toMatch(/Nothing on it\.$/);
+    expect(dayLabel(day(0, 3, 'cancelled'), 'UTC')).toMatch(/No plans on it\.$/);
     expect(stillStands({ status: 'pending' } as never)).toBe(true);
     expect(stillStands({ status: 'cancelled' } as never)).toBe(false);
   });
@@ -172,6 +172,6 @@ describe('a day in the grid', () => {
     const said = dayLabel(whit, sim.homeZone);
     expect(said).toContain('Whit Monday');
     const quiet = may.find((d) => d.inMonth && d.dayOfMonth === 12)!;
-    expect(dayLabel(quiet, sim.homeZone)).toMatch(/Nothing on it\.$/);
+    expect(dayLabel(quiet, sim.homeZone)).toMatch(/No plans on it\.$/);
   });
 });

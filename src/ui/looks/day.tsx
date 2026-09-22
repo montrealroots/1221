@@ -614,7 +614,7 @@ defineLook<TheEntry>('entry', {
             {clashes.length > 0
               ? ` ${spokenList(clashes.map((c) => asName(c.title)))} ${isAre(clashes.length)} inside the same hour, and both want you.`
               : entry.requiresPlayer && entry.status === 'pending'
-                ? ' Nothing else is booked against it.'
+                ? ' No other booking clashes with it.'
                 : ''}
           </p>
           <div className="grid grid-2">

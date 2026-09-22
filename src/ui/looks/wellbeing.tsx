@@ -185,7 +185,7 @@ function sentenceFor(dial: Dial): string {
         : n > 40 ? `${n}. Level. Neither carrying you nor dragging.`
           : `${n}. Flat — the work is fine, the feeling isn’t.`;
     case 'condition':
-      return n > 70 ? `${n}. Nothing hurts, and nothing’s waiting to.`
+      return n > 70 ? `${n}. Sound, with no ache waiting to surface.`
         : `${n}. Something isn’t right, and long days will find it.`;
     case 'fitness':
       return n > 65 ? `${n}. You could do a physical day without paying for it after.`

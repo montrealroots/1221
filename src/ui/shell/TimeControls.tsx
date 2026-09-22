@@ -316,7 +316,7 @@ function SkipDialog({ onClose, onSkip }: { onClose: () => void; onSkip: (at: num
                   </ul>
                 </div>
               ) : (
-                <p className="small muted">Nothing you have to attend falls before it.</p>
+                <p className="small muted">You have no commitment before it.</p>
               )}
 
               <p className="xs dim">
@@ -382,7 +382,7 @@ function AdvanceMenu({
     { label: 'Tomorrow Morning', detail: `7:00 AM · ${formatDate(addDays(todayAt(7), 1, zone), zone)}`, at: addDays(todayAt(7), 1, zone) },
     {
       label: 'Next Event',
-      detail: nextEvent ? `${nextEvent.entry.title} · ${formatDateTime(nextEvent.item.at, zone)}` : 'Nothing is scheduled',
+      detail: nextEvent ? `${nextEvent.entry.title} · ${formatDateTime(nextEvent.item.at, zone)}` : 'No plans or commitments ahead',
       at: nextEvent?.item.at,
     },
     { label: 'Next Monday', detail: `9:00 AM · ${formatDate(addDays(todayAt(9), untilMonday, zone), zone)}`, at: addDays(todayAt(9), untilMonday, zone) },
