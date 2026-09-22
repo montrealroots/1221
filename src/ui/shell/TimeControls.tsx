@@ -188,8 +188,8 @@ function SleepDialog({ onClose }: { onClose: () => void }) {
       )}
 
       <p className="xs dim" style={{ marginTop: 'var(--s4)' }}>
-        The world keeps running while you sleep. Bills come due, messages arrive and other people
-        get on with their lives.
+        The world keeps running while you sleep. The clock moves on, and anything on your
+        calendar in those hours happens without you.
       </p>
     </Modal>
   );
