@@ -13,7 +13,8 @@
  * guards on keys no trait declared, a seven-axis reputation nothing moved, and
  * a hundred and twenty-five id namespaces for systems long deleted. The revamp
  * took all of that out, and what is left to walk is the vocabulary that
- * survived it: the id namespaces and the tables in the save.
+ * survived it and what has come back since: the id namespaces, the tables in
+ * the save, and the personality's knobs and axes.
  *
  * So this walks the declared vocabulary, finds what nothing reads, and holds
  * the number against a baseline in `docs/UNWIRED.json`. It does not demand the
@@ -93,6 +94,42 @@ function group(name, what, dead, hint) {
   group('Save tables nothing fills', tables.length, dead,
     'A collection only bootstrap writes is a shape in the save, not a system in the game.');
 }
+
+// 3. Personality knobs. A trait may only declare a knob named in
+//    `PersonalityKnob`, so the vocabulary is that union, and a knob is read
+//    where the life system asks `personalityOf(…, 'knob')`. The helper that
+//    answers the question is not a reader of it.
+{
+  const content = SOURCE.get('src/engine/content/personality-traits.ts');
+  const union = content.slice(content.indexOf('export type PersonalityKnob ='), content.indexOf(';', content.indexOf('export type PersonalityKnob =')));
+  const knobs = [...union.matchAll(/'([a-zA-Z]+)'/g)].map((m) => m[1]);
+  const others = everywhereBut('src/engine/content/personality-traits.ts', 'src/engine/systems/personality.ts');
+  const asked = new Set([...others.matchAll(/personalityOf\([^,()]+,\s*'([a-zA-Z]+)'\)/g)].map((m) => m[1]));
+  group('Personality knobs nothing reads', knobs.length, knobs.filter((k) => !asked.has(k)),
+    'A knob a trait can move and the game never asks about is a trait that says it does something and does not.');
+}
+
+// 4. Personality axes. An axis is consulted where the engine reads it by name,
+//    `.axis` or `'axis'`, anywhere but the model that declares it.
+{
+  const model = SOURCE.get('src/engine/domain/model.ts');
+  const start = model.indexOf('export interface Personality {');
+  const body = model.slice(start, model.indexOf('\n}', start));
+  const axes = [...body.matchAll(/^\s{2}([a-zA-Z][a-zA-Z0-9]*):\s*number/gm)].map((m) => m[1]);
+  const engine = FILES.filter((f) => f.startsWith('src/engine') && f !== 'src/engine/domain/model.ts')
+    .map((f) => SOURCE.get(f)).join('\n');
+  group('Personality axes nothing consults', axes.length,
+    axes.filter((a) => !new RegExp(`'${a}'|\\.${a}\\b`).test(engine)),
+    'A slider the player sets and nothing reads.');
+}
+
+// The axes came back at four when the Personality step did, and that is a
+// rise, so the reason is here. The page came back whole, all seven sliders,
+// and it says on it which three do something today and that the other four
+// are kept and read by nothing: openness waits on travel, and extraversion,
+// agreeableness and risk tolerance on other people. None of those is built.
+// The knobs came back at nought, and a trait can only declare one that
+// something reads.
 
 // Both of these rose by one when the family went, and a rise is normally the
 // thing this file exists to refuse, so the reason is written down. The family

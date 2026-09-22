@@ -1,12 +1,13 @@
 /**
- * The four creation steps, pinned to their shape.
+ * The five creation steps, pinned to their shape.
  *
  * The screen used to ask about a character sheet, a family and a family
  * business, and to state where the player was born and lived rather than ask.
  * All of that went with the revamp, and place of birth and where you live are
  * questions again. Citizenship is not: the place of birth decides it. The
  * performer's title went with the revamp and came back: the pronouns settle
- * it, and under they/them the player picks.
+ * it, and under they/them the player picks. The personality came back too, as
+ * its own step ahead of Who You Are.
  *
  * So this holds the shape rather than the wording. What each step asks, and
  * what comes out the other end in the save.
@@ -27,6 +28,11 @@ function filled() {
     ...defaultConfig(),
     firstName: 'Sigrún', middleName: 'Erla', lastName: 'Halldórsdóttir',
     displayName: 'Siggi', pronouns: 'she/her', performerTitle: 'actress',
+    personality: {
+      openness: 80, conscientiousness: 30, extraversion: 20, agreeableness: 65,
+      emotionalStability: 90, ambition: 40, riskTolerance: 10,
+    },
+    personalityTraits: ['early_riser', 'orderly'],
     birthYear: 1998, birthMonth: 11, birthDay: 3,
     raceEthnicity: ['white', 'asian'],
     homeRegionId: 'is-1-reykjavik', livesWhereBorn: false,
@@ -51,12 +57,12 @@ function stepSource(from: string, to?: string): string {
 }
 
 describe('the steps', () => {
-  it('are the four that are left, in order', () => {
-    expect(SOURCE).toContain("const STEPS = ['Identity', 'Who You Are', 'Starting Point', 'Review'] as const;");
+  it('are the five there are, Personality before Who You Are', () => {
+    expect(SOURCE).toContain("const STEPS = ['Identity', 'Personality', 'Who You Are', 'Starting Point', 'Review'] as const;");
   });
 
   it('leave no trace of the ones that went', () => {
-    for (const gone of ['CareerStep', 'YourPeopleStep', 'personality', 'ESTATE_', 'studioName', 'family']) {
+    for (const gone of ['CareerStep', 'YourPeopleStep', 'ESTATE_', 'studioName', 'family']) {
       expect(SOURCE, `${gone} is back in creation`).not.toContain(gone);
     }
   });
@@ -64,7 +70,7 @@ describe('the steps', () => {
 
 describe('Identity', () => {
   it('asks for the name, the pronouns, the birthday and the birthplace', () => {
-    const step = stepSource('function IdentityStep', 'function PersonalStep');
+    const step = stepSource('function IdentityStep', 'function PersonalityStep');
     for (const id of ['first', 'last', 'display', 'pronouns', 'birth-year', 'birth-month', 'birth-day']) {
       expect(step, `Identity lost the ${id} field`).toContain(`id="${id}"`);
     }
@@ -73,7 +79,7 @@ describe('Identity', () => {
   });
 
   it('bills them as an actor or an actress, and will not go on until it is settled', () => {
-    const step = stepSource('function IdentityStep', 'function PersonalStep');
+    const step = stepSource('function IdentityStep', 'function PersonalityStep');
     expect(step, 'Billed As is gone').toContain('<span className="label" id="billed-as">Billed As</span>');
     // Settled by the pronouns, it is said back. Left open, both words are
     // offered. In that order: the settled branch is the one that shows the
@@ -114,6 +120,33 @@ describe('Identity', () => {
     // Born in Reykjavík and living in New York: a citizen of Iceland.
     expect(p.citizenshipId).toBe('is');
     expect(p.homeRegionId).toBe('is-1-reykjavik');
+  });
+});
+
+describe('Personality', () => {
+  it('asks for all seven dispositions and up to four traits', () => {
+    const step = stepSource('function PersonalityStep', 'function PersonalStep');
+    // One slider per row of the table, drawn by the step.
+    for (const axis of [
+      'openness', 'conscientiousness', 'extraversion', 'agreeableness', 'emotionalStability', 'ambition', 'riskTolerance',
+    ]) {
+      expect(SOURCE, `the ${axis} slider is gone`).toContain(`{ key: '${axis}',`);
+    }
+    expect(step, 'the sliders are not drawn from the table').toContain('PERSONALITY_AXES.map((axis) =>');
+    expect(step, 'the sliders are gone').toContain('type="range"');
+    expect(step, 'the traits are gone').toContain('<h2>Traits</h2>');
+    expect(step, 'the traits are no longer drawn in their pairs').toContain('personalityTraitPairs(group)');
+    // A trait that can't be picked says why, on the trait.
+    expect(step, 'a blocked trait no longer says why').toContain('className="trait-why"');
+  });
+
+  it('carries every disposition and trait into the save', () => {
+    const p = filled().universe.people[filled().universe.playerId]!;
+    expect(p.personality).toEqual({
+      openness: 80, conscientiousness: 30, extraversion: 20, agreeableness: 65,
+      emotionalStability: 90, ambition: 40, riskTolerance: 10,
+    });
+    expect(p.personalityTraits).toEqual(['early_riser', 'orderly']);
   });
 });
 
@@ -195,7 +228,7 @@ describe('Review', () => {
   it('shows every line the three steps decided', () => {
     const step = stepSource('function ReviewStep');
     for (const line of [
-      'Legal Name', 'Pronouns', 'Billed As', 'Born', 'Place Of Birth', 'Citizenship',
+      'Legal Name', 'Pronouns', 'Billed As', 'Born', 'Place Of Birth', 'Citizenship', 'Personality',
       'Where You Live', 'Checking', 'Savings', 'Credit Score', 'Interests', 'Genres',
     ]) {
       expect(step, `Review stopped showing ${line}`).toContain(line);

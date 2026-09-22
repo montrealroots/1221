@@ -11,7 +11,7 @@
  */
 
 import { Simulation, type Command, type CommandResult } from './core/simulation';
-import type { SaveUniverse } from './domain/model';
+import type { Personality, SaveUniverse } from './domain/model';
 import { SAVE_SCHEMA_VERSION } from './domain/model';
 import { addDays, formatDate, instantFromZoned, zonedParts, MS_DAY } from './core/time';
 import { formatMoneyCompact } from './core/money';
@@ -19,6 +19,7 @@ import { clamp } from './core/rng';
 import { plural, titleCaseLabel } from './core/text';
 import { PERFORMER_NOUN, impliedPerformerTitle, isPerformerTitle } from './core/performer';
 import { citizenshipFor } from './domain/citizenship';
+import { cleanPersonality, cleanPersonalityTraits } from './systems/personality';
 
 import { CITIES } from './content/geography';
 
@@ -319,21 +320,21 @@ export function migrate(universe: SaveUniverse): MigrationResult {
   }
 
   // Schema 80 took out the whole character sheet, the film career and the
-  // family: the attributes and the prodigy flag, the personality and its
-  // traits, the acting traits, the industry reputation, the career track, the
-  // role on the estate, the quote history, who somebody is to whom, their
-  // gender, the house they slept in, the household they shared it with and
-  // the name their work was credited under. Nothing in this build reads any
-  // of them. Earlier removals are in the same list, so a save from any older
+  // family: the attributes and the prodigy flag, the acting traits, the
+  // industry reputation, the career track, the role on the estate, the quote
+  // history, who somebody is to whom, their gender, the house they slept in,
+  // the household they shared it with and the name their work was credited
+  // under. Nothing in this build reads any of them. Earlier removals are in the same list, so a save from any older
   // build sheds all of it in one pass. The relatives themselves, the
   // households and the house stay in an older save as inert records, like
   // every other part this build has no screen for.
   //
   // 80 shed the performer title too, and 81 put it back, so it is not on the
-  // list: a save from before 80 keeps the title it was made with. 82 shed the
-  // second citizenship.
+  // list: a save from before 80 keeps the title it was made with. 80 shed the
+  // personality and its traits as well, and 83 put those back the same way.
+  // 82 shed the second citizenship.
   const SHED = [
-    'attributes', 'prodigy', 'personality', 'personalityTraits', 'traits',
+    'attributes', 'prodigy', 'traits',
     'reputation', 'careerTrack', 'estateRole', 'quotes', 'relations', 'gender', 'residenceId',
     'householdId', 'stageName', 'skills', 'goals', 'lifestyle', 'creditScore', 'goatTraits',
     'secondCitizenshipId',
@@ -389,6 +390,30 @@ export function migrate(universe: SaveUniverse): MigrationResult {
   if (titled > 0) {
     steps.push(`Gave ${plural(titled, 'person', 'people')} a title from their pronouns.`);
   }
+  // A save written under 80 to 82 lost the personality, and nothing is left
+  // to read it back from, so it gets the one creation starts everybody on,
+  // with no traits. A save from before 80 kept its own, and is only tidied:
+  // every axis a number on the slider, and only traits that can be held
+  // together, four at most.
+  let personalised = 0;
+  for (const person of Object.values(universe.people ?? {})) {
+    const p = person as unknown as Record<string, unknown>;
+    const was = p.personality as Partial<Personality> | undefined;
+    const personality = cleanPersonality(was);
+    const held = Array.isArray(p.personalityTraits) ? (p.personalityTraits as string[]) : undefined;
+    const traits = cleanPersonalityTraits(held);
+    const same = was !== undefined && typeof was === 'object'
+      && (Object.keys(personality) as (keyof Personality)[]).every((key) => was[key] === personality[key])
+      && held !== undefined && held.length === traits.length && held.every((id, i) => id === traits[i]);
+    if (same) continue;
+    p.personality = personality;
+    p.personalityTraits = traits;
+    personalised += 1;
+  }
+  if (personalised > 0) {
+    steps.push(`Gave ${plural(personalised, 'person', 'people')} a personality this build can read.`);
+  }
+
   // Citizenship is the country somebody was born in, and until 82 it was asked
   // for, so a save can hold one that disagrees with the birthplace. It follows
   // the birthplace now. A birthplace that names no real country leaves what

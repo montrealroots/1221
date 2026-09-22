@@ -17,6 +17,24 @@ import type { PerformerTitle } from '../core/performer';
 
 export type Id = string;
 
+/**
+ * Seven dispositions, each 0-100, set on the Personality step. Three of them
+ * move the wellbeing model through `systems/personality.ts`: emotional
+ * stability sets how fast stress arrives and clears, ambition adds to what
+ * running on empty costs, and conscientiousness sets how well the nights go.
+ * Openness, extraversion, agreeableness and risk tolerance are kept and read
+ * by nothing yet; `tools/wired.mjs` counts them.
+ */
+export interface Personality {
+  openness: number;
+  conscientiousness: number;
+  extraversion: number;
+  agreeableness: number;
+  emotionalStability: number;
+  ambition: number;
+  riskTolerance: number;
+}
+
 export interface Wellbeing {
   /** 0-100. Drains with activity, restored by sleep and rest. */
   energy: number;
@@ -81,6 +99,12 @@ export interface Person {
   /** Reference city id where they currently are. */
   currentLocationId: string;
 
+  personality: Personality;
+  /**
+   * The personality traits they chose, up to four, by id from
+   * `content/personality-traits.ts`. Never two that rule each other out.
+   */
+  personalityTraits: string[];
   /**
    * What they care about, and below it the genres they love. On the
    * character sheet because a person has them; nothing in the simulation
@@ -343,11 +367,11 @@ export interface Preferences {
  * 80 took out the character sheet, the film career, the family business, the
  * family itself, the land and the house. 81 put the performer title back on
  * the player. 82 took out the second citizenship and made the first the
- * country of the place of birth. `migrate` in `engine/index.ts` says what an
- * older save sheds on the way in, what it keeps as inert JSON, and what it is
- * given.
+ * country of the place of birth. 83 put the personality and its traits back.
+ * `migrate` in `engine/index.ts` says what an older save sheds on the way in,
+ * what it keeps as inert JSON, and what it is given.
  */
-export const SAVE_SCHEMA_VERSION = 82;
+export const SAVE_SCHEMA_VERSION = 83;
 
 export interface SaveMeta {
   id: Id;

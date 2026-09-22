@@ -2,6 +2,8 @@
   "note": "Set by tools/wired.mjs --bless. These may fall. They may not rise.",
   "counts": {
     "Id namespaces": 1,
-    "Save tables nothing fills": 1
+    "Save tables nothing fills": 1,
+    "Personality knobs nothing reads": 0,
+    "Personality axes nothing consults": 4
   }
 }

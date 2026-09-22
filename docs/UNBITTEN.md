@@ -33,11 +33,15 @@ may not rise.
 |---|---|---|
 | Id namespaces | 1 | 7 |
 | Save tables nothing fills | 1 | 9 |
+| Personality knobs nothing reads | 0 | 6 |
+| Personality axes nothing consults | 4 | 7 |
 
-Both are the player. The family was the only thing that made a person after
+The first two are the player. The family was the only thing that made a person after
 boot, so `person` has no `nextId` call and `people` is filled only by
 bootstrap, which writes the player by hand. They are counted honestly and they
-are not dead words; the tool says so beside the check.
+are not dead words; the tool says so beside the check. The four axes are
+openness, extraversion, agreeableness and risk tolerance, set on the
+Personality step and read by nothing; the step says so, and they are below.
 
 The tool counts writers. The One Rule asks for readers, which is stricter, so
 the true arrears are larger than this table and the rest of this page is the
@@ -51,7 +55,18 @@ part the tool cannot see.
   every hour and every night, stress sets how well the nights go and the nights
   set the energy, and all of it comes out as readiness on Home. Readiness had
   one reader, in the audition room, and the room is gone. So the dials feed each
-  other and a figure on a screen, and no outcome anywhere turns on them.
+  other and a figure on a screen, and no outcome anywhere turns on them. The
+  personality now moves the dials too, which makes it bite on them and on the
+  sleep the game suggests, and on nothing past that.
+- **Four of the seven dispositions are kept and read by nothing.** Openness
+  waits on travel, and extraversion, agreeableness and risk tolerance on other
+  people. The Personality step says so beside the sliders, and
+  `tools/wired.mjs` counts them.
+- **The money traits are said back and nothing more.** Frugal, Spender,
+  Generous and Keeps Accounts declare no knob, because nothing in the game
+  spends. The other traits' costs about other people are the same: written for
+  a whole life, and charged only where they touch stress, sleep, energy,
+  hygiene or mood.
 - **The tax engine is a screen.** Real, correct, and read by one thing: the
   place card, which works out what a reference wage would be taxed at and prints
   it. Nothing taxes a wage.

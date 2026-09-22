@@ -43,7 +43,7 @@ await shoot('02-identity');
 // that shoots the same page under five names is worse than one that stops:
 // the shots look like a full set and the fault is in every one of them.
 const stepName = () => page.locator('.creation-step[data-state="active"]').first().innerText();
-for (const step of ['03-personal', '04-starting-point', '05-review']) {
+for (const step of ['03-personality', '04-personal', '05-starting-point', '06-review']) {
   const before = await stepName().catch(() => '');
   const next = page.getByRole('button', { name: /^(next|continue)/i }).first();
   if (!(await next.count())) break;
@@ -63,7 +63,7 @@ const begin = page.getByRole('button', { name: /^begin$|start save/i }).first();
 if (await begin.count()) {
   await begin.click().catch(() => {});
   await page.waitForTimeout(3000);
-  await shoot('06-home');
+  await shoot('07-home');
 
   // Every workspace the game still has, in the order the rail lists them.
   const openRail = async () => {

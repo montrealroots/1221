@@ -112,7 +112,7 @@ else note('02-creation-identity', 'flow', 'Identity does not offer a billing to 
 await seen('02-creation-identity');
 
 const stepName = () => page.locator('.creation-step[data-state="active"]').first().innerText().catch(() => '');
-for (const step of ['03-creation-who-you-are', '04-creation-starting-point', '05-creation-review']) {
+for (const step of ['03-creation-personality', '04-creation-who-you-are', '05-creation-starting-point', '06-creation-review']) {
   const before = await stepName();
   const next = page.getByRole('button', { name: /^(next|continue)/i }).first();
   if (!(await next.count())) { note(step, 'flow', 'no Next button to reach this step'); break; }
@@ -126,18 +126,18 @@ for (const step of ['03-creation-who-you-are', '04-creation-starting-point', '05
     break;
   }
   const facts = await seen(step);
-  if (step === '05-creation-review' && !facts.body.includes(FIRST)) note(step, 'flow', 'the review does not show the name typed on the first step');
+  if (step === '06-creation-review' && !facts.body.includes(FIRST)) note(step, 'flow', 'the review does not show the name typed on the first step');
 }
 const begin = page.getByRole('button', { name: /^begin$|start save/i }).first();
-if (!(await begin.count())) note('05-creation-review', 'flow', 'no way to begin the life from the review');
+if (!(await begin.count())) note('06-creation-review', 'flow', 'no way to begin the life from the review');
 await begin.click({ timeout: 3000 }).catch(() => {});
 await settle(3800);
 await dismissCoachMark();
 const guidedOff = page.getByRole('button', { name: /turn guided mode off/i }).first();
 if (await guidedOff.count()) { await guidedOff.click({ timeout: 3000 }).catch(() => {}); await settle(400); }
-const home = await seen('06-home');
-if (!home.body.includes(FIRST)) note('06-home', 'flow', 'Home does not greet the character that was just made');
-if (!/^Home/.test(home.rail)) note('06-home', 'rail', `the rail marks "${home.rail}" rather than Home`);
+const home = await seen('07-home');
+if (!home.body.includes(FIRST)) note('07-home', 'flow', 'Home does not greet the character that was just made');
+if (!/^Home/.test(home.rail)) note('07-home', 'rail', `the rail marks "${home.rail}" rather than Home`);
 
 // --- Every destination in the rail, and every tab behind it -------------------
 const items = await page.evaluate(() => [...document.querySelectorAll('.rail .rail-item')].map((el) => ({

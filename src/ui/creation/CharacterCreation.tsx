@@ -1,7 +1,7 @@
 /**
  * SLATE — character creation.
  *
- * Identity, Who You Are, Starting Point, Review, then Start.
+ * Identity, Personality, Who You Are, Starting Point, Review, then Start.
  * Progress is written to a draft on every change, so a closed tab or a dropped
  * connection never costs the setup.
  */
@@ -30,6 +30,13 @@ import {
   ALL_INTERESTS, CRAFT_INTERESTS, FILM_GENRES, GENERAL_INTERESTS, type Interest,
 } from '@/engine/content/interests';
 import { PERFORMER_NOUN, PERFORMER_TITLES, settledTitle, type PerformerTitle } from '@/engine/core/performer';
+import type { Personality } from '@/engine/domain/model';
+import {
+  MAX_PERSONALITY_TRAITS, PERSONALITY_GROUPS, PERSONALITY_TRAIT_BY_ID,
+  conflictingPersonalityTraits, personalityTraitPairs,
+} from '@/engine/content/personality-traits';
+import { AXIS_MAX, AXIS_MIN } from '@/engine/systems/personality';
+import { outOf, said } from '@/ui/looks/words';
 
 /**
  * How far back the last year a character can be born in sits from the year
@@ -47,7 +54,7 @@ export function latestBirthYear(startYear: number): number {
   return startYear - BIRTH_YEARS_BEFORE_START;
 }
 
-const STEPS = ['Identity', 'Who You Are', 'Starting Point', 'Review'] as const;
+const STEPS = ['Identity', 'Personality', 'Who You Are', 'Starting Point', 'Review'] as const;
 
 /**
  * Which step is which, by name rather than by number.
@@ -64,6 +71,17 @@ type StepIndex = number;
 const DRAFT_KEY = (slot: Slot) => `slate.draft.${slot}`;
 
 const WEALTH: StartingWealth[] = ['nothing', 'scraping', 'modest', 'comfortable', 'wealthy', 'inherited'];
+
+/** The seven sliders, each with the word for either end. */
+const PERSONALITY_AXES: { key: keyof Personality; label: string; low: string; high: string }[] = [
+  { key: 'openness', label: 'Openness', low: 'Conventional', high: 'Experimental' },
+  { key: 'conscientiousness', label: 'Conscientiousness', low: 'Loose', high: 'Meticulous' },
+  { key: 'extraversion', label: 'Extraversion', low: 'Reserved', high: 'Outgoing' },
+  { key: 'agreeableness', label: 'Agreeableness', low: 'Blunt', high: 'Accommodating' },
+  { key: 'emotionalStability', label: 'Emotional Stability', low: 'Volatile', high: 'Steady' },
+  { key: 'ambition', label: 'Ambition', low: 'Content', high: 'Driven' },
+  { key: 'riskTolerance', label: 'Risk Tolerance', low: 'Cautious', high: 'Reckless' },
+];
 
 export function CharacterCreation({
   slot, onCancel, onStart,
@@ -158,6 +176,7 @@ export function CharacterCreation({
         </div>
 
         {step === STEP.Identity && <IdentityStep config={config} set={set} setConfig={setConfig} />}
+        {step === STEP.Personality && <PersonalityStep config={config} setConfig={setConfig} />}
         {step === STEP['Who You Are'] && <PersonalStep config={config} set={set} setConfig={setConfig} />}
         {step === STEP['Starting Point'] && <StartingPointStep config={config} set={set} setConfig={setConfig} />}
         {step === STEP.Review && <ReviewStep config={config} />}
@@ -466,6 +485,124 @@ function placeLine(city: City): string {
     .filter(Boolean).join(', ');
 }
 
+/**
+ * Who they are, before what they like: the seven dispositions and up to four
+ * traits.
+ *
+ * Its own step, ahead of Who You Are, because it is the one part of the
+ * character that changes how the days go, and the page says which parts do
+ * and which are only kept.
+ */
+function PersonalityStep({ config, setConfig }: {
+  config: NewSaveConfig;
+  setConfig: React.Dispatch<React.SetStateAction<NewSaveConfig>>;
+}) {
+  const held = config.personalityTraits;
+
+  const toggle = (id: string) => {
+    setConfig((c) => {
+      const now = c.personalityTraits;
+      if (now.includes(id)) return { ...c, personalityTraits: now.filter((t) => t !== id) };
+      if (now.length >= MAX_PERSONALITY_TRAITS) return c;
+      if (conflictingPersonalityTraits(now, id).length > 0) return c;
+      return { ...c, personalityTraits: [...now, id] };
+    });
+  };
+
+  return (
+    <div className="col gap-5">
+      <div className="card">
+        <div className="panel-head">
+          <div>
+            <h2>Personality</h2>
+            <p className="muted small">
+              Dispositions, not stats. Three of them do something today: Emotional Stability sets
+              how quickly stress arrives and how quickly it clears, Conscientiousness sets how well
+              the nights go, and Ambition sets what running yourself into the ground costs you in
+              stress. The other four are written into the save and read by nothing yet. Openness
+              waits on travel, and the last three wait on other people. Neither is built.
+            </p>
+          </div>
+        </div>
+        {PERSONALITY_AXES.map((axis) => (
+          <div key={axis.key} className="field">
+            <div className="row-between">
+              <label htmlFor={`p-${axis.key}`} style={{ marginBottom: 0 }}>{axis.label}</label>
+              <span className="mono small">{config.personality[axis.key]}</span>
+            </div>
+            <input
+              id={`p-${axis.key}`} type="range" min={AXIS_MIN} max={AXIS_MAX}
+              value={config.personality[axis.key]}
+              onChange={(e) => setConfig((c) => ({
+                ...c,
+                personality: { ...c.personality, [axis.key]: Number(e.target.value) },
+              }))}
+            />
+            <div className="row-between xs dim">
+              <span>{axis.low}</span><span>{axis.high}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="card">
+        <div className="panel-head">
+          <div>
+            <h2>Traits</h2>
+            <p className="muted small">
+              Pick up to four. Each pair here is one trait written against another, and the two
+              sides can’t both be held. Today they change how stress arrives and clears, how well
+              you sleep, how much a night puts back, how quickly you stop being clean and how far
+              your mood swings. What they say about money and other people is said back and
+              nothing more until the game has either.
+            </p>
+          </div>
+          <span className="chip chip-accent">{held.length} / {MAX_PERSONALITY_TRAITS}</span>
+        </div>
+
+        {PERSONALITY_GROUPS.map((group) => (
+          <div key={group} style={{ marginBottom: 'var(--s4)' }}>
+            <div className="eyebrow" style={{ marginBottom: 'var(--s2)' }}>{group}</div>
+            {/* A row per opposing pair. One flowing grid would wrap a pair
+                across two rows at some widths and the opposition would stop
+                being visible, which is the only reason the order exists. */}
+            {personalityTraitPairs(group).map((pair) => (
+              <div className="trait-pair" key={pair[0]!.id}>
+                {pair.map((trait) => {
+                  const selected = held.includes(trait.id);
+                  const conflicts = conflictingPersonalityTraits(held, trait.id);
+                  // A trait that can't be picked says why, on the trait.
+                  const why = selected ? undefined
+                    : conflicts.length > 0
+                      ? `Can’t be held with ${conflicts.map((c) => PERSONALITY_TRAIT_BY_ID[c]?.name).join(' or ')}.`
+                      : held.length >= MAX_PERSONALITY_TRAITS
+                        ? `You already hold ${said(MAX_PERSONALITY_TRAITS, 'trait')}.`
+                        : undefined;
+                  return (
+                    <button
+                      key={trait.id}
+                      type="button"
+                      className="trait"
+                      aria-pressed={selected}
+                      disabled={why !== undefined}
+                      onClick={() => toggle(trait.id)}
+                    >
+                      <div className="trait-name">{trait.name}</div>
+                      <div className="trait-desc">{trait.description}</div>
+                      <div className="xs dim" style={{ marginTop: 4 }}>{trait.cost}</div>
+                      {why && <div className="trait-why">{why}</div>}
+                    </button>
+                  );
+                })}
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function PersonalStep({
   config, set, setConfig,
 }: {
@@ -768,6 +905,35 @@ function ReviewStep({ config }: { config: NewSaveConfig }) {
           <Line label="Checking" value={formatMoney(wealth.checking, { cents: false })} />
           <Line label="Savings" value={formatMoney(wealth.savings, { cents: false })} />
           <Line label="Credit Score" value={String(wealth.creditScore)} />
+        </div>
+      </div>
+
+      <div className="card">
+        <div className="eyebrow" style={{ marginBottom: 'var(--s3)' }}>Personality</div>
+        {PERSONALITY_AXES.map((axis) => (
+          <Line key={axis.key} label={axis.label} value={outOf(config.personality[axis.key])} />
+        ))}
+        <div style={{ marginTop: 'var(--s3)' }}>
+          {config.personalityTraits.length === 0 ? (
+            <p className="muted small">
+              You haven’t picked any traits. You’ll be nobody in particular about sleep, temper
+              and money. That’s allowed.
+            </p>
+          ) : (
+            <div className="col gap-3">
+              {config.personalityTraits.map((id) => {
+                const trait = PERSONALITY_TRAIT_BY_ID[id];
+                if (!trait) return null;
+                return (
+                  <div key={id}>
+                    <div className="strong small">{trait.name}</div>
+                    <div className="xs muted">{trait.description}</div>
+                    <div className="xs dim" style={{ marginTop: 2 }}>{trait.cost}</div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
         </div>
       </div>
 

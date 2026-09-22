@@ -25,6 +25,7 @@ import { defineLook, type Way } from './registry';
 import { at } from './subject';
 import { isAre, outOf, spokenList } from './words';
 import { GENRE_BY_ID, INTEREST_BY_ID } from '@/engine/content/interests';
+import { PERSONALITY_TRAIT_BY_ID } from '@/engine/content/personality-traits';
 
 /**
  * The eight, in the order a person would notice them.
@@ -102,7 +103,18 @@ defineLook<Person>('person', {
     // an answer given at creation is seen again.
     const cares = person.interests.map((id) => INTEREST_BY_ID[id]?.label).filter((one): one is string => !!one);
     const loves = (person.genres ?? []).map((id) => GENRE_BY_ID[id]?.label).filter((one): one is string => !!one);
+    // The traits they picked, which unlike the rest of this do move the dials
+    // below: the nights of a light sleeper and the stress of an even temper
+    // are theirs.
+    const traits = (person.personalityTraits ?? [])
+      .map((id) => PERSONALITY_TRAIT_BY_ID[id]?.name).filter((one): one is string => !!one);
     const said = [
+      traits.length > 0 && (
+        <p key="traits" className="small">
+          <span className="dim">{isYou ? 'Who you are. ' : 'Who they are. '}</span>
+          {spokenList(traits)}.
+        </p>
+      ),
       before.length > 0 && (
         <p key="before" className="small">
           <span className="dim">{isYou ? 'Where you come from. ' : 'Where they come from. '}</span>
@@ -130,7 +142,7 @@ defineLook<Person>('person', {
       body: said.length > 0 ? <>{said}</> : undefined,
       ways,
       provenance: isYou
-        ? 'Eight dials, moved by the hours you keep. Six of them the game has never shown you.'
+        ? 'Eight dials, moved by the hours you keep and the person you are. Six of them the game has never shown you.'
         : 'The same eight dials you have, moved by the same days.',
     };
   },

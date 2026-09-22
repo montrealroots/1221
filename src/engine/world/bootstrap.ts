@@ -7,7 +7,7 @@
  * arrived.
  */
 
-import type { Person, SaveMeta, SaveUniverse } from '../domain/model';
+import type { Person, Personality, SaveMeta, SaveUniverse } from '../domain/model';
 import { SAVE_SCHEMA_VERSION } from '../domain/model';
 import { CITIES } from '../content/geography';
 import { costOfLiving } from '../content/tax';
@@ -23,6 +23,7 @@ function known(ids: readonly string[] | undefined, table: Readonly<Record<string
 }
 import { freshWellbeing } from '../systems/life';
 import { citizenshipFor } from '../domain/citizenship';
+import { cleanPersonality, cleanPersonalityTraits, defaultPersonality } from '../systems/personality';
 import { PERFORMER_NOUN, impliedPerformerTitle, isPerformerTitle, type PerformerTitle } from '../core/performer';
 
 export const APP_VERSION = '1.1.0';
@@ -69,6 +70,10 @@ export interface NewSaveConfig {
   /** Headshot as a data URL, already fitted to the portrait frame. */
   portrait?: string;
 
+  /** Personality: seven dispositions, and up to four traits that cost. */
+  personality: Personality;
+  personalityTraits: string[];
+
   /** Personal */
   interests: string[];
   /** Genres they love watching. Carries nothing; see `content/interests.ts`. */
@@ -102,6 +107,7 @@ export function defaultConfig(): NewSaveConfig {
     birthYear: 2001, birthMonth: 6, birthDay: 14,
     raceEthnicity: [],
     homeRegionId: DEFAULT_CITY_ID, livesWhereBorn: true,
+    personality: defaultPersonality(), personalityTraits: [],
     interests: ['film', 'television'], genres: [],
     background: '',
     startLocationId: DEFAULT_CITY_ID,
@@ -225,6 +231,11 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveCon
     homeRegionId: config.homeRegionId,
     citizenshipId,
     currentLocationId: config.startLocationId,
+    // Inside the slider's range, and only traits that can be held together:
+    // the screen enforces both, and a save built straight from the engine
+    // gets the same person the screen would have made.
+    personality: cleanPersonality(config.personality),
+    personalityTraits: cleanPersonalityTraits(config.personalityTraits),
     // Cleaned by the same rule the engine reads them by, so what is written
     // and what is read can never drift apart.
     interests: known(config.interests, INTEREST_BY_ID),

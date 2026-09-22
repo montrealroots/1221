@@ -20,10 +20,11 @@ claims otherwise.
 | --- | --- | --- | --- |
 | Startup sequence | Implemented — the mark, the storage it picks, the schema it reads, and the slots it hands on | `src/ui/startup/StartupSequence.tsx` | `persistence`, `base44-adapter` |
 | Save slots | Implemented — three slots, each its own universe, with migration and validation on the way in, and a backup that says which world date it holds so restoring and deleting are not blind | `src/ui/saves/SaveSlots.tsx` | `integrity`, `persistence` |
-| Character creation | Implemented — identity, whether the player is billed as an actor or an actress, race or ethnicity, where the player was born and so which country they are a citizen of, where they live, interests, genres, a background in their own words, and the money they start with | `src/ui/creation/CharacterCreation.tsx` | `creation`, `citizenship`, `portrait`, `world-map` |
+| Character creation | Implemented — identity, whether the player is billed as an actor or an actress, a personality of seven dispositions and up to four traits, race or ethnicity, where the player was born and so which country they are a citizen of, where they live, interests, genres, a background in their own words, and the money they start with | `src/ui/creation/CharacterCreation.tsx` | `creation`, `citizenship`, `portrait`, `world-map` |
 | The geography map | Implemented — every country drawn from the projected world map, 170,911 cities behind it, loaded a country at a time, on the creation screen twice | `src/ui/creation/WorldMap.tsx`, `src/ui/creation/LocationPicker.tsx`, `src/engine/content/geography.ts` | `geography`, `world-map` |
 | Portrait | Implemented — a headshot cropped to a fixed frame and carried on the person | `src/ui/creation/PortraitPicker.tsx` | `portrait` |
 | Performer title | Implemented — actor or actress, settled by the pronouns and picked under they/them, stored on the player and said back on Home, the rail and the save slot. It is a word and decides nothing else | `src/engine/core/performer.ts` | `creation`, `simulation` |
+| Personality | Partial — seven dispositions and thirty-five traits, picked on their own step and stored on the player. Three dispositions and every trait's declared knobs move stress, sleep, the energy a night puts back, hygiene and mood, and the sleep the game suggests counts them. The other four dispositions and the four money traits are kept and read by nothing | `src/engine/content/personality-traits.ts`, `src/engine/systems/personality.ts` | `personality`, `creation` |
 | Home | Implemented — the day, where you are, what needs you, what happens next, how you are, the weather and money | `src/ui/screens/Home.tsx` | `interface`, `navigation`, `smoke` |
 | Calendar | Implemented — the month, collisions, the observances of the country you are standing in, and plans of your own | `src/ui/workspaces/CalendarWorkspace.tsx`, `src/engine/world/calendar.ts`, `src/engine/world/plans.ts` | `calendar`, `holidays`, `plans` |
 | Weather | Implemented — a climate model per city from season, latitude and the kind of place it is, with a week ahead | `src/engine/systems/weather.ts` | `weather` |
@@ -39,10 +40,9 @@ claims otherwise.
 The revamp removed, with their screens, their content, their tests and their
 tools:
 
-- **The character sheet.** The 813 acting attributes, the prodigy, the
-  personality and its traits, taste and genre mastery, and the premise record
-  that carried the performer's title. The title itself came back: see the
-  row above.
+- **The character sheet.** The 813 acting attributes, the prodigy, taste and
+  genre mastery, and the premise record that carried the performer's title.
+  The title and the personality came back: see the rows above.
 - **The film career and the family business.** Casting and the audition room,
   the company and its incorporation, the lot, making a picture, selling it, the
   reimbursement, VAT, the inventory ledger, the crew, the trouble a shoot can
@@ -64,7 +64,9 @@ title is the one field that came back: a save from before 80 keeps the one it
 was made with, and one written under 80 takes the player's back from the
 premise record 80 left in place, or from their pronouns where there is none.
 From 82 an older save's second citizenship is dropped, and its citizenship
-becomes the country of the birthplace.
+becomes the country of the birthplace. From 83 a save from before 80 keeps the
+personality it was made with, and one written since is given the one creation
+starts everybody on, with no traits.
 
 ## The engine, as it now stands
 

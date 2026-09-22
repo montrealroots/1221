@@ -16,6 +16,7 @@ import type { Person, Wellbeing } from '../domain/model';
 import { clamp, remap } from '../core/rng';
 import { addDays, formatTime, instantFromZoned, zonedParts, MS_HOUR, MS_DAY } from '../core/time';
 import { ceilingAt, recoveryFactorAt } from '../content/lifespan';
+import { personalityOf } from './personality';
 
 // ---------------------------------------------------------------------------
 // Wellbeing model
@@ -62,17 +63,18 @@ export function applyElapsedWellbeing(person: Person, hours: number, opts: { asl
   w.nourishment = clamp(w.nourishment - NOURISHMENT_DRAIN_PER_HOUR * hours, 0, 100);
   w.sleepDebt = Math.min(60, w.sleepDebt + hours * 0.34);
 
-  // Running on empty costs you.
-  if (w.energy < 15) w.stress = clamp(w.stress + hours * 1.6, 0, 100);
+  // Running on empty costs you, and it costs a highly strung or driven person
+  // more than an even-tempered one.
+  if (w.energy < 15) w.stress = clamp(w.stress + hours * 1.6 * personalityOf(person, 'stressGain'), 0, 100);
   if (w.nourishment < 20) {
     w.condition = clamp(w.condition - hours * 0.5, 0, 100);
-    w.morale = clamp(w.morale - hours * 0.7, 0, 100);
+    w.morale = clamp(w.morale - hours * 0.7 * personalityOf(person, 'moraleSwing'), 0, 100);
   }
   if (w.stress > 75) w.condition = clamp(w.condition - hours * 0.25, 0, 100);
 
-  w.stress = clamp(w.stress - hours * 0.35, 0, 100);
+  w.stress = clamp(w.stress - hours * 0.35 * personalityOf(person, 'stressRecovery'), 0, 100);
 
-  w.hygiene = clamp((w.hygiene ?? 80) - hours * 1.6, 0, 100);
+  w.hygiene = clamp((w.hygiene ?? 80) - hours * 1.6 * personalityOf(person, 'hygieneDrift'), 0, 100);
 }
 
 /**
@@ -180,7 +182,7 @@ export function startOfLocalDay(sim: Simulation): number {
 }
 
 /**
- * 0-1 quality of a night's sleep, from the stress and the hour.
+ * 0-1 quality of a night's sleep, from the stress, the person and the hour.
  *
  * The house used to add to it, by its condition. The house is gone, and the
  * base is what a night in it gave on the first morning, so taking it out did
@@ -190,6 +192,9 @@ export function sleepQuality(sim: Simulation, person: Person): number {
   let quality = 0.82;
 
   quality -= remap(person.wellbeing.stress, 0, 100, 0, 0.24);
+  // A light sleeper and a night owl both lose here; somebody who can sleep
+  // anywhere gains it back.
+  quality *= personalityOf(person, 'sleepQuality');
 
   const hour = zonedParts(sim.now, sim.zone).hour;
   if (hour >= 1 && hour < 5) quality -= 0.08; // going to bed very late
@@ -211,7 +216,7 @@ export function applySleep(person: Person, hours: number, quality: number, at?: 
   // barely reaches `readiness`. The drain side of this coupling was already
   // declared and measured dead; this is the half that makes both of them bite.
   const owing = 1 - Math.min(DEBT_HOLDS, (w.sleepDebt / 30) * DEBT_HOLDS);
-  w.energy = clamp(w.energy + effective * 13.5 * banked * owing, 0, 100);
+  w.energy = clamp(w.energy + effective * 13.5 * banked * personalityOf(person, 'energyRecovery') * owing, 0, 100);
   // Debt clears with the whole night, not only with the part of it above five
   // and a half hours.
   w.sleepDebt = Math.max(0, w.sleepDebt - Math.max(0, effective - 5.5) * 2.2 - effective * 1.4);
@@ -224,7 +229,9 @@ export function applySleep(person: Person, hours: number, quality: number, at?: 
   // reach. The daily clamp is not enough on its own: sleep runs after it.
   const ceiling = at === undefined ? 100 : ceilingAt(years).condition;
   w.condition = clamp(Math.min(w.condition + restful * 0.9 * (restful > 0 ? banked : 1), ceiling), 0, 100);
-  w.morale = clamp(w.morale + restful * 1.6 * (restful > 0 ? banked : 1), 0, 100);
+  // How far a night moves the mood, either way, is the person's as much as
+  // the night's: an even temper takes the edge off both.
+  w.morale = clamp(w.morale + restful * 1.6 * (restful > 0 ? banked : 1) * personalityOf(person, 'moraleSwing'), 0, 100);
   w.nourishment = clamp(w.nourishment - hours * 1.6, 0, 100);
 }
 
@@ -302,7 +309,13 @@ function liveTheUnattendedDay(sim: Simulation): void {
     let sleptHours = 0;
     if (sinceSlept >= 20 * MS_HOUR) {
       const quality = sleepQuality(sim, person) * 0.95;
-      const hours = clamp(7.8 - w.stress * 0.012, 5.4, 8.4);
+      // Somebody who sleeps badly lies in longer when nobody is waking them,
+      // and still does not make all of it up: the square root splits the
+      // difference, so the trait costs something on autopilot too without
+      // wearing a life down to nothing. A good sleeper's night is not cut
+      // short for it.
+      const lieIn = Math.sqrt(Math.min(1, personalityOf(person, 'sleepQuality')));
+      const hours = clamp((7.8 - w.stress * 0.012) / lieIn, 5.4, 9.5);
       sleptHours = hours;
       applySleep(person, hours, quality, sim.now);
       person.lastSleptAt = sim.now;
@@ -331,11 +344,30 @@ export function hoursUntilNextCommitment(sim: Simulation): number | undefined {
   return (next.at - sim.now) / MS_HOUR;
 }
 
-/** A sensible default bedtime given tomorrow's first commitment. */
+/**
+ * The rest a normal night gives, counted in hours of sound sleep: eight hours
+ * at the quality a calm person with nothing unusual about their sleep gets.
+ * It is what a night has to put back for a day to be paid for, before any
+ * debt is.
+ */
+const A_NORMAL_NIGHT = 8 * 0.82;
+
+/**
+ * A sensible default bedtime given tomorrow's first commitment.
+ *
+ * Counted in rest, not in hours. A night's rest is its hours times how well
+ * this person sleeps tonight, and what it puts back is that times how much an
+ * hour of it restores them, so somebody stressed, a light sleeper or somebody
+ * who never quite recovers needs longer in bed for the same night. Seven and a
+ * half flat hours used to be the advice for everybody, which sat under what a
+ * day costs, and a player who took it every night wore down.
+ */
 export function suggestedSleep(sim: Simulation): { hours: number; reason: string } {
   const next = sim.timeline.next(sim.now, (i) => i.requiresPlayer === true);
-  const debt = sim.player.wellbeing.sleepDebt;
-  const ideal = clamp(7.5 + debt * 0.12, 6, 11);
+  const person = sim.player;
+  const debt = person.wellbeing.sleepDebt;
+  const restores = sleepQuality(sim, person) * personalityOf(person, 'energyRecovery');
+  const ideal = clamp((A_NORMAL_NIGHT + debt * 0.1) / restores, 6, 12);
   if (!next) return { hours: Math.round(ideal * 2) / 2, reason: 'Your calendar’s clear, so sleep as long as you need.' };
 
   const available = (next.at - sim.now) / MS_HOUR - 1.5;
@@ -345,5 +377,15 @@ export function suggestedSleep(sim: Simulation): { hours: number; reason: string
       reason: `"${next.label}" is in ${available.toFixed(1)} hours, so a full night isn’t available.`,
     };
   }
-  return { hours: Math.round(ideal * 2) / 2, reason: debt > 8 ? 'You’re carrying real sleep debt.' : 'A normal night.' };
+  return { hours: Math.round(ideal * 2) / 2, reason: sleepReason(person, debt) };
+}
+
+/** Why tonight wants the hours it does. */
+function sleepReason(person: Person, debt: number): string {
+  if (debt > 8) return 'You’re carrying real sleep debt.';
+  if (personalityOf(person, 'sleepQuality') * personalityOf(person, 'energyRecovery') < 0.97) {
+    return 'You don’t sleep deeply, so a normal night takes longer.';
+  }
+  if (person.wellbeing.stress > 50) return 'Stress is costing you sleep, so a normal night takes longer.';
+  return 'A normal night.';
 }
