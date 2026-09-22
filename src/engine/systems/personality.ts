@@ -15,7 +15,7 @@
 
 import type { Person, Personality } from '../domain/model';
 import {
-  MAX_PERSONALITY_TRAITS, PERSONALITY_TRAIT_BY_ID, conflictingPersonalityTraits, personalityModifier,
+  MAX_PERSONALITY_TRAITS, conflictingPersonalityTraits, isPersonalityTrait, personalityModifier,
   type PersonalityKnob,
 } from '../content/personality-traits';
 
@@ -53,7 +53,7 @@ export function cleanPersonalityTraits(ids: readonly string[] | undefined): stri
   const held: string[] = [];
   for (const id of ids ?? []) {
     if (held.length >= MAX_PERSONALITY_TRAITS) break;
-    if (!PERSONALITY_TRAIT_BY_ID[id] || held.includes(id)) continue;
+    if (!isPersonalityTrait(id) || held.includes(id)) continue;
     if (conflictingPersonalityTraits(held, id).length > 0) continue;
     held.push(id);
   }
@@ -81,25 +81,35 @@ export function axisModifier(personality: Personality | undefined, knob: Persona
 }
 
 /**
- * How far one knob can be moved, all told.
+ * The two values each knob approaches and never reaches, traits and
+ * dispositions together.
  *
- * About what the single strongest trait on each does, so stacking four that
- * pull the same way reaches the worst sleeper or the calmest temper there is
- * and stops. Without a bound, four legal picks multiplied a night's rest down
- * to a quarter of anybody else's, and no amount of sleep paid for a day.
+ * Unbounded, four legal picks and the worst sliders multiplied a night's rest
+ * down to under half of anybody else's, and no amount of sleep paid for a day.
+ * A hard stop fixed that and cost something else: a person already at the
+ * stop found a slider did nothing at all, which the page says it does. So the
+ * limit is soft: a small lean passes nearly as it is, a large one bends
+ * toward the limit, and every step of a slider or a trait still moves the
+ * knob a little.
  */
-const KNOB_RANGE: Readonly<Record<PersonalityKnob, readonly [number, number]>> = {
-  stressGain: [0.55, 1.6],
-  stressRecovery: [0.7, 1.4],
-  sleepQuality: [0.8, 1.2],
-  energyRecovery: [0.85, 1.2],
-  hygieneDrift: [0.8, 1.3],
-  moraleSwing: [0.7, 1.3],
+export const KNOB_LIMITS: Readonly<Record<PersonalityKnob, readonly [number, number]>> = {
+  stressGain: [0.5, 1.8],
+  stressRecovery: [0.6, 1.5],
+  sleepQuality: [0.75, 1.25],
+  energyRecovery: [0.8, 1.25],
+  hygieneDrift: [0.75, 1.35],
+  moraleSwing: [0.65, 1.35],
 };
+
+/** A multiplier bent toward its limits: in log terms, a tanh of the lean. */
+function bend(value: number, [low, high]: readonly [number, number]): number {
+  const lean = Math.log(value);
+  const limit = lean < 0 ? -Math.log(low) : Math.log(high);
+  return Math.exp(limit * Math.tanh(lean / limit));
+}
 
 /** One of this person's knobs: 1 unless their traits or dispositions move it. */
 export function personalityOf(person: Pick<Person, 'personality' | 'personalityTraits'>, knob: PersonalityKnob): number {
-  const [low, high] = KNOB_RANGE[knob];
   const value = personalityModifier(person.personalityTraits ?? [], knob) * axisModifier(person.personality, knob);
-  return Math.min(high, Math.max(low, value));
+  return bend(value, KNOB_LIMITS[knob]);
 }

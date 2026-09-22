@@ -486,11 +486,26 @@ function placeLine(city: City): string {
 }
 
 /**
+ * Why a trait can't be picked right now, or undefined when it can, or is
+ * already held and can be put down. A trait it clashes with comes first,
+ * because putting one of those down is the way to it; being full comes second.
+ */
+export function blockedTraitReason(held: readonly string[], id: string): string | undefined {
+  if (held.includes(id)) return undefined;
+  const conflicts = conflictingPersonalityTraits(held, id);
+  if (conflicts.length > 0) {
+    return `Can’t be held with ${conflicts.map((c) => PERSONALITY_TRAIT_BY_ID[c]?.name ?? c).join(' or ')}.`;
+  }
+  if (held.length >= MAX_PERSONALITY_TRAITS) return `You already hold ${said(MAX_PERSONALITY_TRAITS, 'trait')}.`;
+  return undefined;
+}
+
+/**
  * Who they are, before what they like: the seven dispositions and up to four
  * traits.
  *
- * Its own step, ahead of Who You Are, because it is the one part of the
- * character that changes how the days go, and the page says which parts do
+ * Its own step, ahead of Who You Are, because it is the part of the character
+ * chosen as a disposition, and the page says which parts of it do something
  * and which are only kept.
  */
 function PersonalityStep({ config, setConfig }: {
@@ -553,8 +568,9 @@ function PersonalityStep({ config, setConfig }: {
               Pick up to four. Each pair here is one trait written against another, and the two
               sides can’t both be held. Today they change how stress arrives and clears, how well
               you sleep, how much a night puts back, how quickly you stop being clean and how far
-              your mood swings. What they say about money and other people is said back and
-              nothing more until the game has either.
+              your mood swings. Each description and cost is written for a whole life, and the game
+              charges only the part of it that touches those. The money traits change nothing yet,
+              because nothing in the game spends.
             </p>
           </div>
           <span className="chip chip-accent">{held.length} / {MAX_PERSONALITY_TRAITS}</span>
@@ -570,14 +586,8 @@ function PersonalityStep({ config, setConfig }: {
               <div className="trait-pair" key={pair[0]!.id}>
                 {pair.map((trait) => {
                   const selected = held.includes(trait.id);
-                  const conflicts = conflictingPersonalityTraits(held, trait.id);
                   // A trait that can't be picked says why, on the trait.
-                  const why = selected ? undefined
-                    : conflicts.length > 0
-                      ? `Can’t be held with ${conflicts.map((c) => PERSONALITY_TRAIT_BY_ID[c]?.name).join(' or ')}.`
-                      : held.length >= MAX_PERSONALITY_TRAITS
-                        ? `You already hold ${said(MAX_PERSONALITY_TRAITS, 'trait')}.`
-                        : undefined;
+                  const why = blockedTraitReason(held, trait.id);
                   return (
                     <button
                       key={trait.id}
@@ -916,8 +926,8 @@ function ReviewStep({ config }: { config: NewSaveConfig }) {
         <div style={{ marginTop: 'var(--s3)' }}>
           {config.personalityTraits.length === 0 ? (
             <p className="muted small">
-              You haven’t picked any traits. You’ll be nobody in particular about sleep, temper
-              and money. That’s allowed.
+              You haven’t picked any traits, so only the sliders above lean your sleep and your
+              temper. That’s allowed.
             </p>
           ) : (
             <div className="col gap-3">

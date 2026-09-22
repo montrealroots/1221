@@ -196,7 +196,7 @@ npm test
 | `weather` | The climate model: normals by latitude and season, the week ahead, the units a country reads it in. |
 | `geography`, `world-map` | The gazetteer and the projection drawn from it. |
 | `creation`, `portrait`, `citizenship` | The creation steps and what they put in the save, the headshot frame, and the citizenship a place of birth gives. |
-| `personality` | The seven dispositions and the traits: the pairs the page draws, what each one moves, what it says moves nothing, and that no legal pick wears a life down on autopilot or on the sleep the game suggests. |
+| `personality` | The seven dispositions and the traits: the pairs the page draws, what each one moves, what it says moves nothing, the sleep the game suggests and why, and that no single trait or disposition wears a life down on autopilot or on the suggested hours, at twenty-five or at sixty. |
 | `plans`, `looks` | Plans of your own on the calendar, and the drill-down graph crawled end to end. |
 | `endurance` | A day, a week, a month, a year, five years and ten: money drift, stranded schedules, corrupt history, duplicated ids, contradictory ownership, unbounded collections, and cost per simulated year. |
 | `integrity` | Retries and replays, save isolation, round trips, malformed and hostile input, what the player is allowed to know. |

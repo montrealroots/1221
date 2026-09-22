@@ -257,7 +257,7 @@ if (await click(/^Pause$/)) {
 
 if (await click(/^Sleep$/)) {
   await page.waitForTimeout(700);
-  // The confirm button reads "Sleep 7.5 hours"; the one in the bar is just
+  // The confirm button reads "Sleep N Hours"; the one in the bar is just
   // "Sleep", and it comes first in the document.
   await click(/^Sleep \d/);
   await page.waitForTimeout(3200);

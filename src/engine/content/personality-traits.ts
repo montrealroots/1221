@@ -9,10 +9,15 @@
  * What a trait changes is declared in `systemMods`, and only against the knobs
  * the life half of the game reads: how stress arrives and clears, how good a
  * night is, how much a night puts back, how fast somebody stops being clean
- * and how far their mood swings. `systems/personality.ts` reads them. The
- * traits about money and other people declared knobs once for systems that
- * are gone; those knobs went with them, and the traits are said back and
- * nothing more until something spends or somebody else is in the game.
+ * and how far their mood swings. `systems/life.ts` asks for them through
+ * `personalityOf` in `systems/personality.ts`. Traits also declared knobs once
+ * for systems that are gone: relationships, injury, training and spending.
+ * Those knobs went with the systems. The people traits kept their stress and
+ * mood knobs; the money traits had no other, so they declare none and are
+ * said back and nothing more until something in the game spends.
+ *
+ * A trait's description and cost are written for a whole life. The game
+ * charges the part of them its knobs reach, and says the rest back.
  */
 
 export type PersonalityGroup =
@@ -23,9 +28,10 @@ export const PERSONALITY_GROUPS: readonly PersonalityGroup[] = [
 ];
 
 /**
- * The knobs a trait may move, and every one of them has a reader in
- * `systems/personality.ts`. A trait that wants to move something else has to
- * wait for the system it would move.
+ * The knobs a trait may move. Every one of them is asked for in
+ * `systems/life.ts` through `personalityOf`, which `tools/wired.mjs` counts. A
+ * trait that wants to move something else has to wait for the system it would
+ * move.
  */
 export type PersonalityKnob =
   | 'stressGain' | 'stressRecovery' | 'sleepQuality' | 'energyRecovery'
@@ -303,6 +309,14 @@ export const PERSONALITY_TRAITS: readonly PersonalityTrait[] = [
 export const PERSONALITY_TRAIT_BY_ID: Readonly<Record<string, PersonalityTrait>> =
   Object.fromEntries(PERSONALITY_TRAITS.map((t) => [t.id, t]));
 
+/**
+ * Whether an id names a trait this build knows. Its own entries only: a save
+ * saying `constructor` is not holding a trait because every object has one.
+ */
+export function isPersonalityTrait(id: string): boolean {
+  return Object.prototype.hasOwnProperty.call(PERSONALITY_TRAIT_BY_ID, id);
+}
+
 export function personalityTraitsIn(group: PersonalityGroup): readonly PersonalityTrait[] {
   return PERSONALITY_TRAITS.filter((t) => t.group === group);
 }
@@ -345,8 +359,8 @@ export const MAX_PERSONALITY_TRAITS = 4;
 
 /** Which held traits a candidate cannot sit alongside. Always mutual. */
 export function conflictingPersonalityTraits(held: readonly string[], candidate: string): string[] {
-  const def = PERSONALITY_TRAIT_BY_ID[candidate];
-  if (!def) return [];
+  if (!isPersonalityTrait(candidate)) return [];
+  const def = PERSONALITY_TRAIT_BY_ID[candidate]!;
   const out = new Set<string>();
   for (const id of held) {
     if (def.conflictsWith?.includes(id)) out.add(id);
@@ -359,7 +373,8 @@ export function conflictingPersonalityTraits(held: readonly string[], candidate:
 export function personalityModifier(held: readonly string[], key: PersonalityKnob): number {
   let value = 1;
   for (const id of held) {
-    const mod = PERSONALITY_TRAIT_BY_ID[id]?.systemMods?.[key];
+    if (!isPersonalityTrait(id)) continue;
+    const mod = PERSONALITY_TRAIT_BY_ID[id]!.systemMods?.[key];
     if (typeof mod === 'number') value *= mod;
   }
   return value;

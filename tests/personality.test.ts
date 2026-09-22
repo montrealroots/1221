@@ -6,9 +6,10 @@
  * the page allows that the engine would refuse. Every knob a trait can move
  * moves its dial when it changes, and the sliders the page says do nothing
  * do nothing, so neither half of what the page claims can drift. And no legal
- * pick wears a life down: not on autopilot, and not for a player who sleeps
- * the hours the game suggests, which a flat seven and a half used to fail for
- * everybody.
+ * single trait or disposition wears a life down, on autopilot or for a
+ * player who sleeps the hours the game suggests, at twenty-five or at sixty.
+ * Seven and a half hours, plus a little for any debt, used to be the
+ * suggestion, and it failed everybody.
  */
 
 import { describe, expect, it } from 'vitest';
@@ -19,9 +20,11 @@ import {
   conflictingPersonalityTraits, personalityTraitPairs, type PersonalityKnob,
 } from '@/engine/content/personality-traits';
 import {
-  AXIS_MAX, AXIS_MIN, cleanPersonality, cleanPersonalityTraits, defaultPersonality, personalityOf,
+  AXIS_MAX, AXIS_MIN, KNOB_LIMITS, cleanPersonality, cleanPersonalityTraits, defaultPersonality, personalityOf,
 } from '@/engine/systems/personality';
-import { applyElapsedWellbeing, applySleep, freshWellbeing, suggestedSleep } from '@/engine/systems/life';
+import {
+  applyElapsedWellbeing, applySleep, freshWellbeing, suggestedSleep, unattendedNight,
+} from '@/engine/systems/life';
 import { MS_DAY, instantFromZoned, zonedParts } from '@/engine/core/time';
 import type { Simulation } from '@/engine';
 
@@ -44,17 +47,27 @@ function person(traits: string[] = [], personality: Partial<Personality> = {}): 
   } as unknown as Person;
 }
 
-/** Every pick of four the page allows, and the one that sleeps and recovers worst. */
-function worstLegalPick(): string[] {
+type Case = { name: string; traits: string[]; personality?: Partial<Personality> };
+
+/**
+ * Of every pick of four the page allows, the one that moves a knob furthest
+ * down or up. For sleep, down counts what a night puts back as well.
+ */
+function pickFor(knob: PersonalityKnob, way: 'down' | 'up'): string[] {
   const ids = PERSONALITY_TRAITS.map((t) => t.id);
-  let worst: string[] = [];
+  const score = (held: string[]) => {
+    const p = person(held);
+    const value = knob === 'sleepQuality'
+      ? personalityOf(p, 'sleepQuality') * personalityOf(p, 'energyRecovery')
+      : personalityOf(p, knob);
+    return way === 'down' ? value : -value;
+  };
+  let chosen: string[] = [];
   let lowest = Infinity;
   const walk = (from: number, held: string[]) => {
     if (held.length === MAX_PERSONALITY_TRAITS) {
-      const p = person(held);
-      const score = personalityOf(p, 'sleepQuality') * personalityOf(p, 'energyRecovery')
-        * personalityOf(p, 'stressRecovery') / personalityOf(p, 'stressGain');
-      if (score < lowest) { lowest = score; worst = [...held]; }
+      const value = score(held);
+      if (value < lowest) { lowest = value; chosen = [...held]; }
       return;
     }
     for (let i = from; i < ids.length; i += 1) {
@@ -65,7 +78,14 @@ function worstLegalPick(): string[] {
     }
   };
   walk(0, []);
-  return worst;
+  return chosen;
+}
+
+/** A save for a case, born in a given year. */
+function build(c: Case, birthYear: number, seed: string): Simulation {
+  return quickSave({
+    personality: { ...defaultPersonality(), ...c.personality }, personalityTraits: c.traits, birthYear,
+  }, seed);
 }
 
 /** Something on the calendar days away, so the suggestion gives its reason. */
@@ -75,13 +95,13 @@ function booked(sim: Simulation): Simulation {
   return sim;
 }
 
-/** Bed at eleven, for the hours the game suggests, every night. */
-function sleepAsSuggested(sim: Simulation, nights: number): { hours: number[] } {
+/** To bed at the same hour every night, for the hours the game suggests. */
+function sleepAsSuggested(sim: Simulation, nights: number, bedtime = 23): { hours: number[] } {
   const hours: number[] = [];
   for (let night = 0; night < nights; night += 1) {
     const p = zonedParts(sim.now, sim.zone);
-    let bed = instantFromZoned({ year: p.year, month: p.month, day: p.day, hour: 23 }, sim.zone);
-    if (bed <= sim.now) bed = instantFromZoned({ year: p.year, month: p.month, day: p.day + 1, hour: 23 }, sim.zone);
+    let bed = instantFromZoned({ year: p.year, month: p.month, day: p.day, hour: bedtime }, sim.zone);
+    while (bed <= sim.now) bed += MS_DAY;
     sim.advanceTo(bed);
     const tonight = suggestedSleep(sim).hours;
     hours.push(tonight);
@@ -111,7 +131,7 @@ describe('the content', () => {
     }
   });
 
-  it('draws every trait exactly once, beside the one it rules out where there is one', () => {
+  it('draws every trait exactly once, and every pair it draws is two that rule each other out', () => {
     const drawn = PERSONALITY_GROUPS.flatMap((group) => personalityTraitPairs(group).flat().map((t) => t.id));
     expect([...drawn].sort()).toEqual(PERSONALITY_TRAITS.map((t) => t.id).sort());
     for (const group of PERSONALITY_GROUPS) {
@@ -191,6 +211,21 @@ describe('what it does', () => {
     expect(strung.wellbeing.stress).toBeGreaterThan(calm.wellbeing.stress);
   });
 
+  it('makes running on empty cost the detached less stress than nobody in particular', () => {
+    // Detached moves stress gain and nothing else, so this is that knob alone.
+    const detached = person(['detached']);
+    const plain = person();
+    for (const p of [detached, plain]) { p.wellbeing.energy = 5; p.wellbeing.stress = 20; applyElapsedWellbeing(p, 6); }
+    expect(detached.wellbeing.stress).toBeLessThan(plain.wellbeing.stress);
+  });
+
+  it('makes hunger cost the self-critical more mood than the self-assured', () => {
+    const harsh = person(['self_critical']);
+    const sure = person(['self_assured']);
+    for (const p of [harsh, sure]) { p.wellbeing.nourishment = 10; p.wellbeing.morale = 60; applyElapsedWellbeing(p, 6); }
+    expect(harsh.wellbeing.morale).toBeLessThan(sure.wellbeing.morale);
+  });
+
   it('clears stress faster in somebody resilient than in somebody who burns out', () => {
     const resilient = person(['resilient']);
     const burns = person(['burns_out']);
@@ -237,53 +272,182 @@ describe('what it does', () => {
     }
   });
 
-  it('stops four traits pulling the same way at what the worst single one does', () => {
-    const worst = person(worstLegalPick(), { conscientiousness: 5 });
-    expect(personalityOf(worst, 'sleepQuality')).toBeGreaterThanOrEqual(0.8);
-    expect(personalityOf(worst, 'energyRecovery')).toBeGreaterThanOrEqual(0.85);
+  it('keeps every knob inside its limits, whatever is held', () => {
+    const worstSliders = { emotionalStability: 5, ambition: 95, conscientiousness: 5 };
+    const bestSliders = { emotionalStability: 95, ambition: 5, conscientiousness: 95 };
+    for (const knob of KNOBS) {
+      const [low, high] = KNOB_LIMITS[knob];
+      const down = person(pickFor(knob, 'down'), knob === 'stressGain' ? bestSliders : worstSliders);
+      const up = person(pickFor(knob, 'up'), knob === 'stressGain' ? worstSliders : bestSliders);
+      expect(personalityOf(down, knob), `${knob} past its floor`).toBeGreaterThan(low);
+      expect(personalityOf(up, knob), `${knob} past its ceiling`).toBeLessThan(high);
+    }
+  });
+
+  it('lets a slider lean even when the traits have already gone as far as they can', () => {
+    const sleepless = pickFor('sleepQuality', 'down');
+    expect(personalityOf(person(sleepless, { conscientiousness: 95 }), 'sleepQuality'))
+      .toBeGreaterThan(personalityOf(person(sleepless, { conscientiousness: 5 }), 'sleepQuality'));
+    const strung = pickFor('stressGain', 'up');
+    expect(personalityOf(person(strung, { ambition: 95 }), 'stressGain'))
+      .toBeGreaterThan(personalityOf(person(strung, { ambition: 5 }), 'stressGain'));
+    const slow = pickFor('stressRecovery', 'down');
+    expect(personalityOf(person(slow, { emotionalStability: 95 }), 'stressRecovery'))
+      .toBeGreaterThan(personalityOf(person(slow, { emotionalStability: 5 }), 'stressRecovery'));
+  });
+
+  it('charges running on empty for the hours spent there, not the whole stretch', () => {
+    const late = person();
+    const already = person();
+    late.wellbeing.energy = 40;
+    already.wellbeing.energy = 10;
+    for (const p of [late, already]) { p.wellbeing.stress = 20; applyElapsedWellbeing(p, 12); }
+    // Both end the stretch empty. Only one spent all of it there.
+    expect(late.wellbeing.energy).toBeLessThan(15);
+    expect(late.wellbeing.stress).toBeLessThan(already.wellbeing.stress);
   });
 });
 
-describe('no legal pick wears a life down', () => {
-  const cases: { name: string; traits: string[]; personality?: Partial<Personality> }[] = [
+describe('a night nobody planned', () => {
+  it('is a sound sleeper’s night for anybody who sleeps well', () => {
+    for (const traits of [[], ['sleeps_anywhere'], ['early_riser', 'homebody']]) {
+      const { sound, hours } = unattendedNight(person(traits));
+      expect(hours, traits.join('+') || 'nobody in particular').toBe(sound);
+    }
+  });
+
+  it('runs longer for somebody who sleeps or recovers badly, and not past ten hours', () => {
+    for (const traits of [['light_sleeper'], ['restless'], ['night_owl']]) {
+      const { sound, hours } = unattendedNight(person(traits));
+      expect(hours, traits.join('+')).toBeGreaterThan(sound);
+    }
+    const worst = unattendedNight(person(pickFor('sleepQuality', 'down'), { conscientiousness: 5 }));
+    expect(worst.hours).toBeLessThanOrEqual(10);
+  });
+});
+
+describe('the sleep the game suggests, and why', () => {
+  /** Tonight's suggestion for somebody, at an hour, calm and owing nothing unless told. */
+  function tonight(opts: {
+    traits?: string[]; personality?: Partial<Personality>; birthYear?: number;
+    hour?: number; stress?: number; debt?: number;
+  } = {}) {
+    const sim = quickSave({
+      personality: { ...defaultPersonality(), ...opts.personality },
+      personalityTraits: opts.traits ?? [],
+      ...(opts.birthYear ? { birthYear: opts.birthYear } : {}),
+    }, 'p-tonight');
+    const p = zonedParts(sim.now, sim.zone);
+    let at = instantFromZoned({ year: p.year, month: p.month, day: p.day, hour: opts.hour ?? 23 }, sim.zone);
+    if (at <= sim.now) at += MS_DAY;
+    sim.advanceTo(at);
+    booked(sim);
+    sim.player.wellbeing.stress = opts.stress ?? 0;
+    sim.player.wellbeing.sleepDebt = opts.debt ?? 0;
+    return suggestedSleep(sim);
+  }
+
+  it('tells a calm person eight hours and calls it a normal night', () => {
+    expect(tonight()).toEqual({ hours: 8, reason: 'A normal night.' });
+  });
+
+  it('says whichever thing stretched the night', () => {
+    expect(tonight({ stress: 60 }).reason).toBe('Stress is costing you sleep, so a normal night takes longer.');
+    expect(tonight({ traits: ['light_sleeper'] }).reason).toBe('You don’t sleep deeply, so a normal night takes longer.');
+    expect(tonight({ traits: ['restless'] }).reason).toBe('A night puts back less for you than for most, so it takes longer.');
+    expect(tonight({ hour: 2 }).reason).toBe('It’s late, and a night that starts now is a worse one, so it takes longer.');
+    expect(tonight({ birthYear: 1955 }).reason).toBe('A night puts back less than it used to, so it takes longer.');
+    expect(tonight({ debt: 12 }).reason).toBe('You’re carrying real sleep debt.');
+    for (const one of [{ stress: 60 }, { traits: ['light_sleeper'] }, { hour: 2 }, { birthYear: 1955 }]) {
+      expect(tonight(one).hours, JSON.stringify(one)).toBeGreaterThan(8);
+    }
+  });
+
+  it('calls a short night a normal one when that is all somebody needs', () => {
+    const good = tonight({ traits: ['sleeps_anywhere', 'early_riser'] });
+    expect(good.hours).toBeLessThan(8);
+    expect(good.reason).toBe('A normal night.');
+  });
+
+  it('never asks past the dial, and says so when the dial is not enough', () => {
+    const hopeless = tonight({
+      traits: pickFor('sleepQuality', 'down'), birthYear: 1945, hour: 2,
+      personality: { emotionalStability: 5, ambition: 95, conscientiousness: 5 },
+    });
+    expect(hopeless.hours).toBe(14);
+    expect(hopeless.reason).toMatch(/not even fourteen hours makes up a whole day/);
+  });
+});
+
+describe('no single trait or disposition wears a life down', () => {
+  const BAD = { emotionalStability: 5, ambition: 95, conscientiousness: 5 };
+  const singles: Case[] = [
     { name: 'nobody in particular', traits: [] },
     ...PERSONALITY_TRAITS.filter((t) => t.systemMods).map((t) => ({ name: t.id, traits: [t.id] })),
-    { name: 'the worst pick, at its worst', traits: worstLegalPick(), personality: { emotionalStability: 5, ambition: 95, conscientiousness: 5 } },
+    ...(['emotionalStability', 'ambition', 'conscientiousness'] as const).flatMap((axis) => [
+      { name: `${axis} at 5`, traits: [], personality: { [axis]: 5 } },
+      { name: `${axis} at 95`, traits: [], personality: { [axis]: 95 } },
+    ]),
   ];
+  const worst: Case[] = (['sleepQuality', 'stressGain', 'moraleSwing'] as const).map((knob) => ({
+    name: `the worst four for ${knob}, and the worst sliders`, traits: pickFor(knob, knob === 'sleepQuality' ? 'down' : 'up'), personality: BAD,
+  }));
 
-  it('left on autopilot for a year', () => {
-    for (const c of cases) {
-      const sim = quickSave({ personality: { ...defaultPersonality(), ...c.personality }, personalityTraits: c.traits }, 'p-year');
+  it('left on autopilot for a year, at twenty-five and at sixty', () => {
+    for (const birthYear of [2001, 1966]) {
+      for (const c of singles) {
+        const sim = build(c, birthYear, 'p-year');
+        let lowest = 100;
+        for (let day = 0; day < 365; day += 1) {
+          sim.advanceTo(sim.now + MS_DAY);
+          lowest = Math.min(lowest, sim.player.wellbeing.condition);
+        }
+        expect(lowest, `${c.name}, born ${birthYear}, wore down on autopilot`).toBeGreaterThan(65);
+        expect(sim.player.wellbeing.morale, `${c.name}, born ${birthYear}, ended flat`).toBeGreaterThan(80);
+        expect(sim.player.wellbeing.stress, `${c.name}, born ${birthYear}, ended stretched`).toBeLessThan(25);
+      }
+    }
+  });
+
+  it('sleeping the hours the game suggests for two months, at eleven and at one, at twenty-five and at sixty', () => {
+    for (const birthYear of [2001, 1966]) {
+      for (const bedtime of [23, 1]) {
+        for (const c of singles) {
+          const sim = build(c, birthYear, 'p-nights');
+          const { hours } = sleepAsSuggested(sim, 60, bedtime);
+          const w = sim.player.wellbeing;
+          const who = `${c.name}, born ${birthYear}, to bed at ${bedtime}`;
+          expect(w.condition, `${who} wore down on the suggested hours`).toBeGreaterThan(80);
+          expect(w.stress, `${who} is stretched on the suggested hours`).toBeLessThan(25);
+          expect(Math.max(...hours), `${who} was told to sleep past the dial`).toBeLessThanOrEqual(14);
+        }
+      }
+    }
+  });
+
+  it('holds even the worst four with the worst sliders on the suggested hours, at sixty', () => {
+    for (const c of worst) {
+      const sim = build(c, 1966, 'p-worst');
+      sleepAsSuggested(sim, 60, 23);
+      expect(sim.player.wellbeing.condition, c.name).toBeGreaterThan(80);
+      expect(sim.player.wellbeing.stress, c.name).toBeLessThan(25);
+    }
+  });
+
+  it('keeps the worst four with the worst sliders on their feet on autopilot, at twenty-five', () => {
+    // At sixty the same people left alone for a year keep their condition and
+    // end flat: the costs of those traits are mood as well as sleep, and a
+    // life nobody tends pays them. Sleeping the suggested hours holds them.
+    for (const c of worst) {
+      const sim = build(c, 2001, 'p-worst-year');
       let lowest = 100;
       for (let day = 0; day < 365; day += 1) {
         sim.advanceTo(sim.now + MS_DAY);
         lowest = Math.min(lowest, sim.player.wellbeing.condition);
       }
-      expect(lowest, `${c.name} wore down on autopilot`).toBeGreaterThan(60);
-      expect(sim.player.wellbeing.morale, `${c.name} ended flat`).toBeGreaterThan(50);
-      expect(sim.player.wellbeing.energy, `${c.name} ended empty`).toBeGreaterThan(10);
+      expect(lowest, c.name).toBeGreaterThan(65);
+      expect(sim.player.wellbeing.stress, c.name).toBeLessThan(25);
     }
-  });
-
-  it('sleeping the hours the game suggests, every night for two months', () => {
-    for (const c of cases) {
-      const sim = quickSave({ personality: { ...defaultPersonality(), ...c.personality }, personalityTraits: c.traits }, 'p-nights');
-      const { hours } = sleepAsSuggested(sim, 60);
-      const w = sim.player.wellbeing;
-      expect(w.condition, `${c.name} wore down on the suggested hours`).toBeGreaterThan(80);
-      expect(w.stress, `${c.name} is stretched on the suggested hours`).toBeLessThan(30);
-      expect(Math.max(...hours), `${c.name} was told to sleep past the dial`).toBeLessThanOrEqual(12);
-    }
-  });
-
-  it('tells a calm person eight hours and calls it a normal night', () => {
-    const sim = quickSave({}, 'p-normal');
-    const p = zonedParts(sim.now, sim.zone);
-    sim.advanceTo(instantFromZoned({ year: p.year, month: p.month, day: p.day, hour: 23 }, sim.zone));
-    booked(sim);
-    sim.player.wellbeing.stress = 0;
-    sim.player.wellbeing.sleepDebt = 0;
-    expect(suggestedSleep(sim)).toEqual({ hours: 8, reason: 'A normal night.' });
   });
 });
 

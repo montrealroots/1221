@@ -103,9 +103,9 @@ defineLook<Person>('person', {
     // an answer given at creation is seen again.
     const cares = person.interests.map((id) => INTEREST_BY_ID[id]?.label).filter((one): one is string => !!one);
     const loves = (person.genres ?? []).map((id) => GENRE_BY_ID[id]?.label).filter((one): one is string => !!one);
-    // The traits they picked, which unlike the rest of this do move the dials
-    // below: the nights of a light sleeper and the stress of an even temper
-    // are theirs.
+    // The traits they picked. Most of them, unlike the rest of this, move the
+    // dials below: the nights of a light sleeper and the stress of an even
+    // temper are theirs. The money traits are only said back.
     const traits = (person.personalityTraits ?? [])
       .map((id) => PERSONALITY_TRAIT_BY_ID[id]?.name).filter((one): one is string => !!one);
     const said = [

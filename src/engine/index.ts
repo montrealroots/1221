@@ -402,7 +402,7 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     const personality = cleanPersonality(was);
     const held = Array.isArray(p.personalityTraits) ? (p.personalityTraits as string[]) : undefined;
     const traits = cleanPersonalityTraits(held);
-    const same = was !== undefined && typeof was === 'object'
+    const same = was !== undefined && was !== null && typeof was === 'object'
       && (Object.keys(personality) as (keyof Personality)[]).every((key) => was[key] === personality[key])
       && held !== undefined && held.length === traits.length && held.every((id, i) => id === traits[i]);
     if (same) continue;

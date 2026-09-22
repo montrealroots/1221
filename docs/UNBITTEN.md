@@ -64,9 +64,13 @@ part the tool cannot see.
   `tools/wired.mjs` counts them.
 - **The money traits are said back and nothing more.** Frugal, Spender,
   Generous and Keeps Accounts declare no knob, because nothing in the game
-  spends. The other traits' costs about other people are the same: written for
-  a whole life, and charged only where they touch stress, sleep, energy,
-  hygiene or mood.
+  spends.
+- **Most of what a trait's cost says is said back, not charged.** Each is
+  written for a whole life, and the game charges only the part its knobs
+  reach: stress, sleep, the energy a night puts back, hygiene and mood. Early
+  Riser's "No use at all after nine at night", every cost about other people,
+  and Resilient's illness and injury are not charged, and Early Riser and a
+  few others help and cost nothing in play. The Traits card says so.
 - **The tax engine is a screen.** Real, correct, and read by one thing: the
   place card, which works out what a reference wage would be taxed at and prints
   it. Nothing taxes a wage.

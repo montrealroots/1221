@@ -17,7 +17,7 @@ import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { createSave, defaultConfig, refreshMeta } from '@/engine';
 import { CITIES } from '@/engine/content/geography';
-import { latestBirthYear } from '@/ui/creation/CharacterCreation';
+import { blockedTraitReason, latestBirthYear } from '@/ui/creation/CharacterCreation';
 import { settledTitle } from '@/engine/core/performer';
 
 const SOURCE = readFileSync(new URL('../src/ui/creation/CharacterCreation.tsx', import.meta.url), 'utf8');
@@ -136,8 +136,23 @@ describe('Personality', () => {
     expect(step, 'the sliders are gone').toContain('type="range"');
     expect(step, 'the traits are gone').toContain('<h2>Traits</h2>');
     expect(step, 'the traits are no longer drawn in their pairs').toContain('personalityTraitPairs(group)');
-    // A trait that can't be picked says why, on the trait.
-    expect(step, 'a blocked trait no longer says why').toContain('className="trait-why"');
+    // A trait that can't be picked says why, on the trait, and can't be pressed.
+    expect(step, 'a blocked trait no longer says why').toContain('{why && <div className="trait-why">{why}</div>}');
+    expect(step, 'a blocked trait can be pressed').toContain('disabled={why !== undefined}');
+    expect(step, 'the fifth trait gets through').toContain('if (now.length >= MAX_PERSONALITY_TRAITS) return c;');
+  });
+
+  it('says why a trait can’t be picked, and says nothing when it can', () => {
+    expect(blockedTraitReason(['early_riser'], 'night_owl')).toBe('Can’t be held with Early Riser.');
+    expect(blockedTraitReason(['even_tempered', 'unshakeable'], 'quick_tempered'))
+      .toBe('Can’t be held with Even Tempered or Unshakeable.');
+    const four = ['frugal', 'loyal', 'curious', 'orderly'];
+    expect(blockedTraitReason(four, 'resilient')).toBe('You already hold four traits.');
+    // A clash is the thing to fix first, so it is the thing said.
+    expect(blockedTraitReason(four, 'chaotic')).toBe('Can’t be held with Orderly.');
+    // Held, it can be put down. Free, it can be picked.
+    expect(blockedTraitReason(four, 'loyal')).toBeUndefined();
+    expect(blockedTraitReason(['frugal'], 'loyal')).toBeUndefined();
   });
 
   it('carries every disposition and trait into the save', () => {
@@ -225,7 +240,7 @@ describe('Starting Point', () => {
 });
 
 describe('Review', () => {
-  it('shows every line the three steps decided', () => {
+  it('shows every line the four steps before it decided', () => {
     const step = stepSource('function ReviewStep');
     for (const line of [
       'Legal Name', 'Pronouns', 'Billed As', 'Born', 'Place Of Birth', 'Citizenship', 'Personality',
@@ -233,5 +248,9 @@ describe('Review', () => {
     ]) {
       expect(step, `Review stopped showing ${line}`).toContain(line);
     }
+    // Every disposition, and every trait held, not only the card's heading.
+    expect(step, 'Review stopped listing the dispositions')
+      .toContain('<Line key={axis.key} label={axis.label} value={outOf(config.personality[axis.key])} />');
+    expect(step, 'Review stopped listing the traits').toContain('config.personalityTraits.map((id) =>');
   });
 });

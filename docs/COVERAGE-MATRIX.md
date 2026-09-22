@@ -60,8 +60,8 @@ relationships and the rest; those are listed in the history of this file.
 A save written by an older build still opens — `migrate` sheds the fields this
 build no longer reads and leaves the collections it has no screen for in place
 as inert records — but none of those screens is coming back in this build. The
-title is the one field that came back: a save from before 80 keeps the one it
-was made with, and one written under 80 takes the player's back from the
+title and the personality are the fields that came back. For the title, a save
+from before 80 keeps the one it was made with, and one written under 80 takes the player's back from the
 premise record 80 left in place, or from their pronouns where there is none.
 From 82 an older save's second citizenship is dropped, and its citizenship
 becomes the country of the birthplace. From 83 a save from before 80 keeps the

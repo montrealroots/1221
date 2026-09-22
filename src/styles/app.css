@@ -957,12 +957,12 @@ kbd {
 .trait-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: var(--s2); }
 
 /* Two traits written against each other, kept on one row so the trade-off
-   between them is visible. Narrow enough and they stack, which still reads as
-   a pair because nothing else comes between them. */
+   between them is visible. Narrow enough and they stack, and the pair still
+   reads as one because the space after it is twice the space inside it. */
 .trait-pair {
   display: grid; gap: var(--s2);
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  margin-bottom: var(--s2);
+  margin-bottom: var(--s4);
 }
 
 .trait {
@@ -971,11 +971,13 @@ kbd {
 }
 .trait:hover:not(:disabled) { border-color: var(--line-strong); }
 .trait[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-dim); }
-.trait:disabled { opacity: .55; cursor: not-allowed; }
+.trait:disabled { cursor: not-allowed; }
+/* A trait that can't be picked fades, all but the line saying why. */
+.trait:disabled > :not(.trait-why) { opacity: .55; }
 .trait-name { font-weight: 650; font-size: var(--size-sm); margin-bottom: 2px; }
 .trait-desc { font-size: var(--size-xs); color: var(--text-muted); line-height: 1.4; }
-/* Why a trait can't be picked, said on the trait. Not dimmed with the rest of
-   it, because it is the part that has to be read. */
+/* Why a trait can't be picked, said on the trait. Left out of the fading
+   above, because it is the part that has to be read. */
 .trait-why { font-size: var(--size-xs); color: var(--warning); font-weight: 600; margin-top: var(--s1); }
 
 /* ---------- God mode ----------
