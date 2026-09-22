@@ -70,11 +70,11 @@ export interface NewSaveConfig {
   /** Headshot as a data URL, already fitted to the portrait frame. */
   portrait?: string;
 
-  /** Personality: seven dispositions, and up to four traits that cost. */
+  /** Dispositions & Traits: seven dispositions, and up to four traits that cost. */
   personality: Personality;
   personalityTraits: string[];
 
-  /** Personal */
+  /** Interests & Background */
   interests: string[];
   /** Genres they love watching. Carries nothing; see `content/interests.ts`. */
   genres: string[];

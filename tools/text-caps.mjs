@@ -360,11 +360,6 @@ for (const size of WIDTHS.filter((w) => ONLY.length === 0 || ONLY.includes(w.nam
   ]) {
     if (!(await click(/^Continue$/))) { console.log(`  (could not reach ${step})`); break; }
     await page.waitForTimeout(900);
-    if (screen === '04-interests-and-background') {
-      // Open a folded list so its contents are measured rather than its lid.
-      const more = page.getByRole('button', { name: /^Show All/ }).first();
-      if (await more.count()) { await more.click().catch(() => {}); await page.waitForTimeout(500); }
-    }
     await check(screen);
   }
 

@@ -1,8 +1,8 @@
 /**
  * SLATE — character creation.
  *
- * Identity, Dispositions & Traits, Interests & Background, Starting Point, Review,
- * then Start.
+ * Identity, Dispositions & Traits, Interests & Background, Starting Point and
+ * Review, then Begin.
  * Progress is written to a draft on every change, so a closed tab or a dropped
  * connection never costs the setup.
  */
@@ -171,7 +171,8 @@ export function CharacterCreation({
               role="listitem"
               data-state={index === step ? 'active' : index < step ? 'done' : 'waiting'}
             >
-              {label}
+              {/* Where a name wraps, it breaks after the ampersand, never before. */}
+              {label.replace(' & ', '\u00A0& ')}
             </div>
           ))}
         </div>
@@ -532,11 +533,11 @@ function PersonalityStep({ config, setConfig }: {
           <div>
             <h2>Dispositions</h2>
             <p className="muted small">
-              Dispositions, not stats. Three of them do something today: Emotional Stability sets
-              how quickly stress arrives and how quickly it clears, Conscientiousness sets how well
+              How you lean, not what you can do. Three of them do something today: Emotional Stability
+              sets how quickly stress arrives and how quickly it clears, Conscientiousness sets how well
               the nights go, and Ambition sets what running yourself into the ground costs you in
-              stress. The other four are written into the save and read by nothing yet. Openness
-              waits on travel, and the last three wait on other people. Neither is built.
+              stress. The other four are written into the save and read by nothing yet. Openness waits
+              on travel, and the last three wait on other people. Neither is built.
             </p>
           </div>
         </div>
@@ -949,9 +950,19 @@ function ReviewStep({ config }: { config: NewSaveConfig }) {
       </div>
 
       <div className="card">
-        <div className="eyebrow" style={{ marginBottom: 'var(--s3)' }}>Interests And Genres</div>
+        <div className="eyebrow" style={{ marginBottom: 'var(--s3)' }}>Interests &amp; Background</div>
         <Line label="Interests" value={namesOf(ALL_INTERESTS, config.interests)} />
         <Line label="Genres" value={namesOf(FILM_GENRES, config.genres)} />
+        {/* A sentence of the player's own, so it is set as one, not squeezed
+            into the right-hand column a line gives a value. */}
+        {config.background.trim() ? (
+          <div style={{ padding: '3px 0' }}>
+            <span className="small muted">Background</span>
+            <p className="small" style={{ margin: '2px 0 0' }}>{config.background.trim()}</p>
+          </div>
+        ) : (
+          <Line label="Background" value="—" />
+        )}
       </div>
 
       <div className="callout callout-accent">

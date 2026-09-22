@@ -134,7 +134,9 @@ describe('Dispositions & Traits', () => {
     }
     expect(step, 'the sliders are not drawn from the table').toContain('PERSONALITY_AXES.map((axis) =>');
     expect(step, 'the sliders are gone').toContain('type="range"');
-    expect(step, 'the traits are gone').toContain('<h2>Traits</h2>');
+    for (const card of ['Dispositions', 'Traits']) {
+      expect(step, `${card} is gone`).toContain(`<h2>${card}</h2>`);
+    }
     expect(step, 'the traits are no longer drawn in their pairs').toContain('personalityTraitPairs(group)');
     // A trait that can't be picked says why, on the trait, and can't be pressed.
     expect(step, 'a blocked trait no longer says why').toContain('{why && <div className="trait-why">{why}</div>}');
@@ -244,7 +246,7 @@ describe('Review', () => {
     const step = stepSource('function ReviewStep');
     for (const line of [
       'Legal Name', 'Pronouns', 'Billed As', 'Born', 'Place Of Birth', 'Citizenship', 'Dispositions &amp; Traits',
-      'Where You Live', 'Checking', 'Savings', 'Credit Score', 'Interests', 'Genres',
+      'Where You Live', 'Checking', 'Savings', 'Credit Score', 'Interests', 'Genres', 'Background',
     ]) {
       expect(step, `Review stopped showing ${line}`).toContain(line);
     }

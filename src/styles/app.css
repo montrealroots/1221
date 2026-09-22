@@ -946,10 +946,19 @@ kbd {
 
 .creation { max-width: 780px; margin: 0 auto; padding: var(--s6) var(--s4); }
 .creation-steps { display: flex; gap: var(--s1); margin-bottom: var(--s6); flex-wrap: wrap; }
+/* On a phone the five share the width and a long name takes two lines, so
+   every name is centered in its box and a one-line tab sits level with a
+   two-line one, and the side padding is kept small so "Dispositions &" fits
+   on its first line. With room for all five on one line, each is as wide as
+   its name and none of them wraps. */
 .creation-step {
-  flex: 1; min-width: 92px; padding: var(--s2) var(--s3);
+  flex: 1; min-width: 92px; padding: var(--s2) var(--s1);
   border-bottom: 2px solid var(--line); font-size: var(--size-xs);
   color: var(--text-dim); text-align: center; font-weight: 600;
+  display: flex; align-items: center; justify-content: center; line-height: 1.25;
+}
+@media (min-width: 700px) {
+  .creation-step { flex: 1 1 auto; white-space: nowrap; padding: var(--s2) var(--s3); }
 }
 .creation-step[data-state="active"] { border-bottom-color: var(--accent); color: var(--accent-strong); }
 .creation-step[data-state="done"] { border-bottom-color: var(--text-dim); color: var(--text-muted); }
