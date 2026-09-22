@@ -7,7 +7,7 @@
  * questions again. Citizenship is not: the place of birth decides it. The
  * performer's title went with the revamp and came back: the pronouns settle
  * it, and under they/them the player picks. The personality came back too, as
- * its own step ahead of Who You Are.
+ * its own step, Dispositions & Traits, ahead of Interests & Background.
  *
  * So this holds the shape rather than the wording. What each step asks, and
  * what comes out the other end in the save.
@@ -57,8 +57,8 @@ function stepSource(from: string, to?: string): string {
 }
 
 describe('the steps', () => {
-  it('are the five there are, Personality before Who You Are', () => {
-    expect(SOURCE).toContain("const STEPS = ['Identity', 'Personality', 'Who You Are', 'Starting Point', 'Review'] as const;");
+  it('are the five there are, Dispositions & Traits before Interests & Background', () => {
+    expect(SOURCE).toContain("const STEPS = ['Identity', 'Dispositions & Traits', 'Interests & Background', 'Starting Point', 'Review'] as const;");
   });
 
   it('leave no trace of the ones that went', () => {
@@ -123,7 +123,7 @@ describe('Identity', () => {
   });
 });
 
-describe('Personality', () => {
+describe('Dispositions & Traits', () => {
   it('asks for all seven dispositions and up to four traits', () => {
     const step = stepSource('function PersonalityStep', 'function PersonalStep');
     // One slider per row of the table, drawn by the step.
@@ -193,7 +193,7 @@ describe('the title', () => {
   });
 });
 
-describe('Who You Are', () => {
+describe('Interests & Background', () => {
   it('asks for interests, genres and a background, and nothing with a number on it', () => {
     const step = stepSource('function PersonalStep', 'function StartingPointStep');
     for (const card of ['Interests', 'Genres', 'Background']) {
@@ -243,7 +243,7 @@ describe('Review', () => {
   it('shows every line the four steps before it decided', () => {
     const step = stepSource('function ReviewStep');
     for (const line of [
-      'Legal Name', 'Pronouns', 'Billed As', 'Born', 'Place Of Birth', 'Citizenship', 'Personality',
+      'Legal Name', 'Pronouns', 'Billed As', 'Born', 'Place Of Birth', 'Citizenship', 'Dispositions &amp; Traits',
       'Where You Live', 'Checking', 'Savings', 'Credit Score', 'Interests', 'Genres',
     ]) {
       expect(step, `Review stopped showing ${line}`).toContain(line);

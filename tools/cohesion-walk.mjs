@@ -112,7 +112,7 @@ else note('02-creation-identity', 'flow', 'Identity does not offer a billing to 
 await seen('02-creation-identity');
 
 const stepName = () => page.locator('.creation-step[data-state="active"]').first().innerText().catch(() => '');
-for (const step of ['03-creation-personality', '04-creation-who-you-are', '05-creation-starting-point', '06-creation-review']) {
+for (const step of ['03-creation-dispositions-and-traits', '04-creation-interests-and-background', '05-creation-starting-point', '06-creation-review']) {
   const before = await stepName();
   const next = page.getByRole('button', { name: /^(next|continue)/i }).first();
   if (!(await next.count())) { note(step, 'flow', 'no Next button to reach this step'); break; }

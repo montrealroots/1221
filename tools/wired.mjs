@@ -123,8 +123,8 @@ function group(name, what, dead, hint) {
     'A slider the player sets and nothing reads.');
 }
 
-// The axes came back at four when the Personality step did, and that is a
-// rise, so the reason is here. The page came back whole, all seven sliders,
+// The axes came back at four with the Dispositions & Traits step, and that is
+// a rise, so the reason is here. The page came back whole, all seven sliders,
 // and it says on it which three do something today and that the other four
 // are kept and read by nothing: openness waits on travel, and extraversion,
 // agreeableness and risk tolerance on other people. None of those is built.

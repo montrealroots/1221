@@ -353,14 +353,14 @@ for (const size of WIDTHS.filter((w) => ONLY.length === 0 || ONLY.includes(w.nam
   await check('02-identity');
 
   for (const [step, screen] of [
-    ['personality', '03-personality'],
-    ['who you are', '04-who-you-are'],
+    ['dispositions and traits', '03-dispositions-and-traits'],
+    ['interests and background', '04-interests-and-background'],
     ['starting point', '05-starting-point'],
     ['review', '06-review'],
   ]) {
     if (!(await click(/^Continue$/))) { console.log(`  (could not reach ${step})`); break; }
     await page.waitForTimeout(900);
-    if (screen === '04-who-you-are') {
+    if (screen === '04-interests-and-background') {
       // Open a folded list so its contents are measured rather than its lid.
       const more = page.getByRole('button', { name: /^Show All/ }).first();
       if (await more.count()) { await more.click().catch(() => {}); await page.waitForTimeout(500); }

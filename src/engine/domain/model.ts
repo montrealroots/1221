@@ -18,12 +18,13 @@ import type { PerformerTitle } from '../core/performer';
 export type Id = string;
 
 /**
- * Seven dispositions, each 0-100, set on the Personality step. Three of them
- * move the wellbeing model through `systems/personality.ts`: emotional
- * stability sets how fast stress arrives and clears, ambition adds to what
- * running on empty costs, and conscientiousness sets how well the nights go.
- * Openness, extraversion, agreeableness and risk tolerance are kept and read
- * by nothing yet; `tools/wired.mjs` counts them.
+ * Seven dispositions, each on the 5-95 slider of the Dispositions & Traits
+ * step. Three of them move the wellbeing model through
+ * `systems/personality.ts`: emotional stability sets how fast stress arrives
+ * and clears, ambition adds to what running on empty costs, and
+ * conscientiousness sets how well the nights go. Openness, extraversion,
+ * agreeableness and risk tolerance are kept and read by nothing yet;
+ * `tools/wired.mjs` counts them.
  */
 export interface Personality {
   openness: number;

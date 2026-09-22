@@ -43,7 +43,7 @@ await shoot('02-identity');
 // that shoots the same page under five names is worse than one that stops:
 // the shots look like a full set and the fault is in every one of them.
 const stepName = () => page.locator('.creation-step[data-state="active"]').first().innerText();
-for (const step of ['03-personality', '04-personal', '05-starting-point', '06-review']) {
+for (const step of ['03-dispositions-and-traits', '04-interests-and-background', '05-starting-point', '06-review']) {
   const before = await stepName().catch(() => '');
   const next = page.getByRole('button', { name: /^(next|continue)/i }).first();
   if (!(await next.count())) break;

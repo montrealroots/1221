@@ -1,7 +1,8 @@
 /**
  * SLATE — character creation.
  *
- * Identity, Personality, Who You Are, Starting Point, Review, then Start.
+ * Identity, Dispositions & Traits, Interests & Background, Starting Point, Review,
+ * then Start.
  * Progress is written to a draft on every change, so a closed tab or a dropped
  * connection never costs the setup.
  */
@@ -54,7 +55,7 @@ export function latestBirthYear(startYear: number): number {
   return startYear - BIRTH_YEARS_BEFORE_START;
 }
 
-const STEPS = ['Identity', 'Personality', 'Who You Are', 'Starting Point', 'Review'] as const;
+const STEPS = ['Identity', 'Dispositions & Traits', 'Interests & Background', 'Starting Point', 'Review'] as const;
 
 /**
  * Which step is which, by name rather than by number.
@@ -176,8 +177,8 @@ export function CharacterCreation({
         </div>
 
         {step === STEP.Identity && <IdentityStep config={config} set={set} setConfig={setConfig} />}
-        {step === STEP.Personality && <PersonalityStep config={config} setConfig={setConfig} />}
-        {step === STEP['Who You Are'] && <PersonalStep config={config} set={set} setConfig={setConfig} />}
+        {step === STEP['Dispositions & Traits'] && <PersonalityStep config={config} setConfig={setConfig} />}
+        {step === STEP['Interests & Background'] && <PersonalStep config={config} set={set} setConfig={setConfig} />}
         {step === STEP['Starting Point'] && <StartingPointStep config={config} set={set} setConfig={setConfig} />}
         {step === STEP.Review && <ReviewStep config={config} />}
 
@@ -504,9 +505,9 @@ export function blockedTraitReason(held: readonly string[], id: string): string 
  * Who they are, before what they like: the seven dispositions and up to four
  * traits.
  *
- * Its own step, ahead of Who You Are, because it is the part of the character
- * chosen as a disposition, and the page says which parts of it do something
- * and which are only kept.
+ * Its own step, Dispositions & Traits, ahead of Interests & Background,
+ * because it is the part of the character chosen as a disposition, and the
+ * page says which parts of it do something and which are only kept.
  */
 function PersonalityStep({ config, setConfig }: {
   config: NewSaveConfig;
@@ -529,7 +530,7 @@ function PersonalityStep({ config, setConfig }: {
       <div className="card">
         <div className="panel-head">
           <div>
-            <h2>Personality</h2>
+            <h2>Dispositions</h2>
             <p className="muted small">
               Dispositions, not stats. Three of them do something today: Emotional Stability sets
               how quickly stress arrives and how quickly it clears, Conscientiousness sets how well
@@ -919,7 +920,7 @@ function ReviewStep({ config }: { config: NewSaveConfig }) {
       </div>
 
       <div className="card">
-        <div className="eyebrow" style={{ marginBottom: 'var(--s3)' }}>Personality</div>
+        <div className="eyebrow" style={{ marginBottom: 'var(--s3)' }}>Dispositions &amp; Traits</div>
         {PERSONALITY_AXES.map((axis) => (
           <Line key={axis.key} label={axis.label} value={outOf(config.personality[axis.key])} />
         ))}

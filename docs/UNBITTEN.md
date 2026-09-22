@@ -41,7 +41,8 @@ boot, so `person` has no `nextId` call and `people` is filled only by
 bootstrap, which writes the player by hand. They are counted honestly and they
 are not dead words; the tool says so beside the check. The four axes are
 openness, extraversion, agreeableness and risk tolerance, set on the
-Personality step and read by nothing; the step says so, and they are below.
+Dispositions & Traits step and read by nothing; the step says so, and they
+are below.
 
 The tool counts writers. The One Rule asks for readers, which is stricter, so
 the true arrears are larger than this table and the rest of this page is the
@@ -60,7 +61,7 @@ part the tool cannot see.
   sleep the game suggests, and on nothing past that.
 - **Four of the seven dispositions are kept and read by nothing.** Openness
   waits on travel, and extraversion, agreeableness and risk tolerance on other
-  people. The Personality step says so beside the sliders, and
+  people. The Dispositions & Traits step says so beside the sliders, and
   `tools/wired.mjs` counts them.
 - **The money traits are said back and nothing more.** Frugal, Spender,
   Generous and Keeps Accounts declare no knob, because nothing in the game
