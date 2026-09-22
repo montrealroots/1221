@@ -297,6 +297,11 @@ function IdentityStep({ config, set, setConfig }: {
                 <option value="they/them">They/Them</option>
               </select>
             </div>
+          </div>
+
+          {/* A row of its own: beside the pronouns it wraps into half a
+              column, and the note under it runs eight lines deep. */}
+          <div className="field-row">
             <div className="field">
               <span className="label">Billed As</span>
               {settled ? (
