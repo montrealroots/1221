@@ -18,6 +18,7 @@ import { formatMoneyCompact } from './core/money';
 import { clamp } from './core/rng';
 import { plural, titleCaseLabel } from './core/text';
 import { PERFORMER_NOUN, impliedPerformerTitle, isPerformerTitle } from './core/performer';
+import { citizenshipFor } from './domain/citizenship';
 
 import { CITIES } from './content/geography';
 
@@ -329,11 +330,13 @@ export function migrate(universe: SaveUniverse): MigrationResult {
   // every other part this build has no screen for.
   //
   // 80 shed the performer title too, and 81 put it back, so it is not on the
-  // list: a save from before 80 keeps the title it was made with.
+  // list: a save from before 80 keeps the title it was made with. 82 shed the
+  // second citizenship.
   const SHED = [
     'attributes', 'prodigy', 'personality', 'personalityTraits', 'traits',
     'reputation', 'careerTrack', 'estateRole', 'quotes', 'relations', 'gender', 'residenceId',
     'householdId', 'stageName', 'skills', 'goals', 'lifestyle', 'creditScore', 'goatTraits',
+    'secondCitizenshipId',
   ] as const;
   let shed = 0;
   for (const person of Object.values(universe.people ?? {})) {
@@ -386,6 +389,22 @@ export function migrate(universe: SaveUniverse): MigrationResult {
   if (titled > 0) {
     steps.push(`Gave ${plural(titled, 'person', 'people')} a title from their pronouns.`);
   }
+  // Citizenship is the country somebody was born in, and until 82 it was asked
+  // for, so a save can hold one that disagrees with the birthplace. It follows
+  // the birthplace now. A birthplace that names no real country leaves what
+  // was there alone, because there is nothing better to put in its place.
+  let rebased = 0;
+  for (const person of Object.values(universe.people ?? {})) {
+    const p = person as unknown as Record<string, unknown>;
+    const born = typeof p.homeRegionId === 'string' ? citizenshipFor(p.homeRegionId) : undefined;
+    if (!born || p.citizenshipId === born) continue;
+    p.citizenshipId = born;
+    rebased += 1;
+  }
+  if (rebased > 0) {
+    steps.push(`Made ${plural(rebased, 'person', 'people')} a citizen of the country they were born in.`);
+  }
+
   // The slot's career line is the player's title. Before 80 it named the film
   // career, and under 80 it was left empty.
   const player = universe.people?.[universe.playerId];

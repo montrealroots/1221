@@ -195,7 +195,7 @@ npm test
 | `calendar`, `holidays` | The month grid, entries between two instants, collisions, and the observances of a country. |
 | `weather` | The climate model: normals by latitude and season, the week ahead, the units a country reads it in. |
 | `geography`, `world-map` | The gazetteer and the projection drawn from it. |
-| `creation`, `portrait`, `citizenship` | The creation steps and what they put in the save, the headshot frame, and who holds which passport. |
+| `creation`, `portrait`, `citizenship` | The creation steps and what they put in the save, the headshot frame, and the citizenship a place of birth gives. |
 | `plans`, `looks` | Plans of your own on the calendar, and the drill-down graph crawled end to end. |
 | `endurance` | A day, a week, a month, a year, five years and ten: money drift, stranded schedules, corrupt history, duplicated ids, contradictory ownership, unbounded collections, and cost per simulated year. |
 | `integrity` | Retries and replays, save isolation, round trips, malformed and hostile input, what the player is allowed to know. |

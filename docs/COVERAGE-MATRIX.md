@@ -20,7 +20,7 @@ claims otherwise.
 | --- | --- | --- | --- |
 | Startup sequence | Implemented — the mark, the storage it picks, the schema it reads, and the slots it hands on | `src/ui/startup/StartupSequence.tsx` | `persistence`, `base44-adapter` |
 | Save slots | Implemented — three slots, each its own universe, with migration and validation on the way in, and a backup that says which world date it holds so restoring and deleting are not blind | `src/ui/saves/SaveSlots.tsx` | `integrity`, `persistence` |
-| Character creation | Implemented — identity, whether the player is billed as an actor or an actress, race or ethnicity, the passports held, where the player was born and where they live, interests, genres, a background in their own words, and the money they start with | `src/ui/creation/CharacterCreation.tsx` | `creation`, `citizenship`, `portrait`, `world-map` |
+| Character creation | Implemented — identity, whether the player is billed as an actor or an actress, race or ethnicity, where the player was born and so which country they are a citizen of, where they live, interests, genres, a background in their own words, and the money they start with | `src/ui/creation/CharacterCreation.tsx` | `creation`, `citizenship`, `portrait`, `world-map` |
 | The geography map | Implemented — every country drawn from the projected world map, 170,911 cities behind it, loaded a country at a time, on the creation screen twice | `src/ui/creation/WorldMap.tsx`, `src/ui/creation/LocationPicker.tsx`, `src/engine/content/geography.ts` | `geography`, `world-map` |
 | Portrait | Implemented — a headshot cropped to a fixed frame and carried on the person | `src/ui/creation/PortraitPicker.tsx` | `portrait` |
 | Performer title | Implemented — actor or actress, settled by the pronouns and picked under they/them, stored on the player and said back on Home, the rail and the save slot. It is a word and decides nothing else | `src/engine/core/performer.ts` | `creation`, `simulation` |
@@ -51,6 +51,8 @@ tools:
 - **The family and the land.** The parents and the twin, who they are to the
   player and where the player stands with them, the household, the land, the
   house on it and the security around it.
+- **The second citizenship, and the question of the first.** A player is a
+  citizen of the country they were born in, and the place of birth decides it.
 
 Earlier cut-downs took out the shops, the schools, the phone, travel,
 relationships and the rest; those are listed in the history of this file.
@@ -61,6 +63,8 @@ as inert records — but none of those screens is coming back in this build. The
 title is the one field that came back: a save from before 80 keeps the one it
 was made with, and one written under 80 takes the player's back from the
 premise record 80 left in place, or from their pronouns where there is none.
+From 82 an older save's second citizenship is dropped, and its citizenship
+becomes the country of the birthplace.
 
 ## The engine, as it now stands
 

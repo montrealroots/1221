@@ -433,9 +433,10 @@ input[readonly]:focus { border-color: var(--line-strong); }
 textarea { resize: vertical; min-height: 72px; }
 label, .label { display: block; font-size: var(--size-xs); font-weight: 600; color: var(--text-muted); margin-bottom: var(--s1); }
 
-/* A value the form worked out, not one it asked for, shown where the choice
-   would otherwise be. It is shorter than the buttons it stands in for, so the
-   form below moves up when the pronouns settle it. */
+/* A value the form worked out, not one it asked for: the billing the pronouns
+   settle, and the citizenship the place of birth decides. Standing in for the
+   Billed As buttons it is shorter than they are, so the form below moves up
+   when the pronouns settle it. */
 .settled-title {
   display: block; padding: var(--s2) 0;
   font-size: var(--size-sm); font-weight: 650;

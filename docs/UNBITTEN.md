@@ -68,6 +68,9 @@ part the tool cannot see.
   settled by the pronouns or picked under they/them, and printed on Home, the
   rail and the save slot. It is a word and not a stat, so that is all it
   claims to do, but nothing in the simulation reads it either.
+- **Citizenship is kept and never read.** The save writes the country of the
+  birthplace onto the player, and nothing reads it back: creation says it from
+  the birthplace, not from the save, and no screen in the game shows it.
 - **`search()` in `content/reference.ts`** is a ranked search over every city
   with no caller. The note on it says it stays only while a way in might be
   built, and this page carries it until one is or it goes.

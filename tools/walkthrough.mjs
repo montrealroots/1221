@@ -170,7 +170,7 @@ if (await race.count()) {
   await page.waitForTimeout(300);
 }
 
-await sections('creation-1-identity', 'step 1 of 4: name, portrait, how you are billed, passports, where you are from');
+await sections('creation-1-identity', 'step 1 of 4: name, portrait, how you are billed, where you are from and the citizenship it gives');
 
 const dataUrl = await page.evaluate(() => {
   const canvas = document.createElement('canvas');

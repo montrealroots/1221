@@ -70,13 +70,12 @@ export interface Person {
   birthInstant: Instant;
   /** Reference city id where they are from. */
   homeRegionId: string;
-  citizenshipId: string;
   /**
-   * A second passport. Born in one country, naturalised in the one they live
-   * in now, and they carry both for the rest of their life. Absent for most
-   * people, and never the same as the first.
+   * The country they are a citizen of: the one they were born in, worked out
+   * from `homeRegionId` when the save is made and never asked. See
+   * `domain/citizenship.ts`.
    */
-  secondCitizenshipId?: string;
+  citizenshipId: string;
 
   /** Reference city id where they currently are. */
   currentLocationId: string;
@@ -342,10 +341,12 @@ export interface Preferences {
 /**
  * 80 took out the character sheet, the film career, the family business, the
  * family itself, the land and the house. 81 put the performer title back on
- * the player. `migrate` in `engine/index.ts` says what an older save sheds on
- * the way in, what it keeps as inert JSON, and what it is given.
+ * the player. 82 took out the second citizenship and made the first the
+ * country of the place of birth. `migrate` in `engine/index.ts` says what an
+ * older save sheds on the way in, what it keeps as inert JSON, and what it is
+ * given.
  */
-export const SAVE_SCHEMA_VERSION = 81;
+export const SAVE_SCHEMA_VERSION = 82;
 
 export interface SaveMeta {
   id: Id;

@@ -14,13 +14,15 @@ import {
 } from '@/engine/world/bootstrap';
 import { LocationPicker } from './LocationPicker';
 import { PortraitPicker } from './PortraitPicker';
-import { CITIES, COUNTRIES, REGIONS, isCountryLoaded, loadCountryCities } from '@/engine/content/geography';
+import {
+  CITIES, COUNTRIES, REGIONS, countryOfPlace, isCountryLoaded, loadCountryCities,
+} from '@/engine/content/geography';
 import type { City } from '@/engine/content/geography';
 import { formatMoney } from '@/engine/core/money';
 import { SAVE_SCHEMA_VERSION } from '@/engine/domain/model';
 import { formatPeople } from '@/engine/world/place';
 import { ageOnDate, zoneAbbreviation } from '@/engine/core/time';
-import { citizenshipLabel } from '@/engine/domain/citizenship';
+import { citizenshipFor } from '@/engine/domain/citizenship';
 import {
   ETHNICITIES, ETHNICITY_NOTE, ETHNICITY_OTHER, describeEthnicity,
 } from '@/engine/content/ethnicity';
@@ -225,8 +227,11 @@ function billedAs(config: NewSaveConfig): string {
 
 type Setter = <K extends keyof NewSaveConfig>(key: K, value: NewSaveConfig[K]) => void;
 
-/** Every country, by name, for the two passport lists. */
-const COUNTRY_OPTIONS = () => [...COUNTRIES.all()].sort((a, b) => a.name.localeCompare(b.name));
+/** The country somebody born where the config says is a citizen of, by name. */
+function citizenshipName(config: NewSaveConfig): string | undefined {
+  const country = citizenshipFor(config.homeRegionId);
+  return country ? COUNTRIES.get(country)?.name : undefined;
+}
 
 function IdentityStep({ config, set, setConfig }: {
   config: NewSaveConfig;
@@ -405,28 +410,6 @@ function IdentityStep({ config, set, setConfig }: {
         </div>
       </div>
 
-      <div className="field-row">
-        <div className="field">
-          <label htmlFor="citizenship">Citizenship</label>
-          <select id="citizenship" value={config.citizenshipId} onChange={(e) => set('citizenshipId', e.target.value)}>
-            {COUNTRY_OPTIONS().map((c) => <option key={c.id} value={c.id} data-source="gazetteer">{c.name}</option>)}
-          </select>
-        </div>
-        <div className="field">
-          <label htmlFor="citizenship-second">Second Citizenship (Optional)</label>
-          <select
-            id="citizenship-second"
-            value={config.secondCitizenshipId ?? ''}
-            onChange={(e) => set('secondCitizenshipId', e.target.value || undefined)}
-          >
-            <option value="">None</option>
-            {COUNTRY_OPTIONS()
-              .filter((c) => c.id !== config.citizenshipId)
-              .map((c) => <option key={c.id} value={c.id} data-source="gazetteer">{c.name}</option>)}
-          </select>
-        </div>
-      </div>
-
       <hr className="divider" />
 
       <div className="panel-head">
@@ -450,6 +433,19 @@ function IdentityStep({ config, set, setConfig }: {
           ...(c.livesWhereBorn ? { startLocationId: picked.id } : {}),
         }))}
       />
+
+      {/* Not asked: the place of birth decides it, so it sits under the
+          picker that does the deciding and moves when it does. */}
+      <div className="field" style={{ marginTop: 'var(--s4)' }}>
+        <span className="label" id="citizenship">Citizenship</span>
+        <output className="settled-title" aria-labelledby="citizenship">
+          {citizenshipName(config) ?? '—'}
+        </output>
+        <p className="xs dim" style={{ marginTop: 4 }}>
+          You’re a citizen of the country you were born in, so there’s nothing to pick.
+          Change your place of birth and this changes with it.
+        </p>
+      </div>
 
       <div className="callout">
         You will be <strong>{ageAtStart(config)}</strong> when the save begins.
@@ -759,7 +755,7 @@ function ReviewStep({ config }: { config: NewSaveConfig }) {
           />
           <Line label="Born" value={`${MONTHS[config.birthMonth - 1]} ${config.birthDay}, ${config.birthYear}`} />
           <Line label="Place Of Birth" value={birthplace ? placeLine(birthplace) : '—'} />
-          <Line label={config.secondCitizenshipId ? 'Citizenships' : 'Citizenship'} value={citizenshipLabel(config)} />
+          <Line label="Citizenship" value={citizenshipName(config) ?? '—'} />
         </div>
 
         <div className="card">
@@ -873,18 +869,11 @@ function loadDraft(slot: Slot): NewSaveConfig | null {
       merged.startLocationId = defaultConfig().startLocationId;
     }
     if (!countryOfPlace(merged.homeRegionId)) merged.homeRegionId = merged.startLocationId;
-    if (!COUNTRIES.get(merged.citizenshipId)) merged.citizenshipId = defaultConfig().citizenshipId;
 
     return merged;
   } catch {
     return null;
   }
-}
-
-/** The country a place id belongs to, or nothing if it names no real country. */
-function countryOfPlace(placeId: string): string | undefined {
-  const code = placeId.split('-')[0];
-  return code && COUNTRIES.get(code) ? code : undefined;
 }
 
 function saveDraft(slot: Slot, config: NewSaveConfig): void {

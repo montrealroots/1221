@@ -3,9 +3,10 @@
  *
  * The screen used to ask about a character sheet, a family and a family
  * business, and to state where the player was born and lived rather than ask.
- * All of that went with the revamp, and place of birth, where you live and the
- * passports you hold are questions again. The performer's title went with it
- * and came back: the pronouns settle it, and under they/them the player picks.
+ * All of that went with the revamp, and place of birth and where you live are
+ * questions again. Citizenship is not: the place of birth decides it. The
+ * performer's title went with the revamp and came back: the pronouns settle
+ * it, and under they/them the player picks.
  *
  * So this holds the shape rather than the wording. What each step asks, and
  * what comes out the other end in the save.
@@ -14,7 +15,6 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { createSave, defaultConfig, refreshMeta } from '@/engine';
-import { citizenshipsOf } from '@/engine/domain/citizenship';
 import { CITIES } from '@/engine/content/geography';
 import { latestBirthYear } from '@/ui/creation/CharacterCreation';
 import { settledTitle } from '@/engine/core/performer';
@@ -31,7 +31,6 @@ function filled() {
     raceEthnicity: ['white', 'asian'],
     homeRegionId: 'is-1-reykjavik', livesWhereBorn: false,
     startLocationId: 'us-ny-newyork',
-    citizenshipId: 'is', secondCitizenshipId: 'us',
     interests: ['film', 'television', 'cinematography'],
     genres: ['film_noir', 'western'],
     background: 'Raised by the sea.',
@@ -64,9 +63,9 @@ describe('the steps', () => {
 });
 
 describe('Identity', () => {
-  it('asks for the name, the pronouns, the birthday, the passports and the birthplace', () => {
+  it('asks for the name, the pronouns, the birthday and the birthplace', () => {
     const step = stepSource('function IdentityStep', 'function PersonalStep');
-    for (const id of ['first', 'last', 'display', 'pronouns', 'birth-year', 'birth-month', 'birth-day', 'citizenship', 'citizenship-second']) {
+    for (const id of ['first', 'last', 'display', 'pronouns', 'birth-year', 'birth-month', 'birth-day']) {
       expect(step, `Identity lost the ${id} field`).toContain(`id="${id}"`);
     }
     expect(step, 'the birthplace is no longer asked').toContain('idPrefix="born"');
@@ -112,7 +111,8 @@ describe('Identity', () => {
     expect(p.pronouns).toBe('she/her');
     expect(p.performerTitle).toBe('actress');
     expect(p.raceEthnicity).toEqual(['white', 'asian']);
-    expect(citizenshipsOf(p)).toEqual(['is', 'us']);
+    // Born in Reykjavík and living in New York: a citizen of Iceland.
+    expect(p.citizenshipId).toBe('is');
     expect(p.homeRegionId).toBe('is-1-reykjavik');
   });
 });

@@ -22,6 +22,7 @@ function known(ids: readonly string[] | undefined, table: Readonly<Record<string
   return [...new Set((ids ?? []).filter((id) => table[id] !== undefined))];
 }
 import { freshWellbeing } from '../systems/life';
+import { citizenshipFor } from '../domain/citizenship';
 import { PERFORMER_NOUN, impliedPerformerTitle, isPerformerTitle, type PerformerTitle } from '../core/performer';
 
 export const APP_VERSION = '1.1.0';
@@ -44,8 +45,6 @@ export interface NewSaveConfig {
    */
   performerTitle?: PerformerTitle;
   /** Local date of birth in the starting city's zone. */
-  /** A second passport, for somebody naturalised where they live now. */
-  secondCitizenshipId?: string;
   birthYear: number;
   birthMonth: number;
   birthDay: number;
@@ -67,7 +66,6 @@ export interface NewSaveConfig {
    * from whether the two places happen to match.
    */
   livesWhereBorn: boolean;
-  citizenshipId: string;
   /** Headshot as a data URL, already fitted to the portrait frame. */
   portrait?: string;
 
@@ -89,18 +87,6 @@ export interface NewSaveConfig {
 }
 
 /**
- * A config whose two passports do not name the same country.
- *
- * Picking the same country twice is not dual citizenship, it is the same
- * passport printed twice, so the second is dropped. A second passport that
- * names somewhere else is theirs and is left alone.
- */
-export function withSettledCitizenship(config: NewSaveConfig): NewSaveConfig {
-  if (config.secondCitizenshipId !== config.citizenshipId) return config;
-  return { ...config, secondCitizenshipId: undefined };
-}
-
-/**
  * Where a new save is born and lives until the player says otherwise.
  *
  * Mosfellsbær, outside Reykjavík, because that is where the family land was
@@ -109,7 +95,6 @@ export function withSettledCitizenship(config: NewSaveConfig): NewSaveConfig {
  * one if the player wants it.
  */
 export const DEFAULT_CITY_ID = 'is-39-mosfellsbr';
-export const DEFAULT_COUNTRY_ID = 'is';
 
 export function defaultConfig(): NewSaveConfig {
   return {
@@ -117,7 +102,6 @@ export function defaultConfig(): NewSaveConfig {
     birthYear: 2001, birthMonth: 6, birthDay: 14,
     raceEthnicity: [],
     homeRegionId: DEFAULT_CITY_ID, livesWhereBorn: true,
-    citizenshipId: DEFAULT_COUNTRY_ID,
     interests: ['film', 'television'], genres: [],
     background: '',
     startLocationId: DEFAULT_CITY_ID,
@@ -177,11 +161,13 @@ export interface BootstrapResult {
  * Builds the raw universe object. Systems are wired separately by
  * `createSimulation`, which then runs `populateWorld` to fill it in.
  */
-export function createUniverse(slot: 1 | 2 | 3, seed: string, raw: NewSaveConfig): BootstrapResult {
-  // Settled here rather than trusted, so a save built straight from the engine
-  // holds the same two passports a save built through the screen does.
-  const config = withSettledCitizenship(raw);
+export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveConfig): BootstrapResult {
   const city = CITIES.require(config.startLocationId);
+  // Nobody is asked for a citizenship: it is the country they were born in.
+  // A birthplace naming no real country cannot make a person, the same way a
+  // home that is not on the map cannot.
+  const citizenshipId = citizenshipFor(config.homeRegionId);
+  if (!citizenshipId) throw new Error(`No country has a place with the id ${config.homeRegionId}.`);
   const zone = city.timeZone;
   const now = instantFromZoned(
     { year: config.startYear, month: config.startMonth, day: config.startDay, hour: 7, minute: 30 },
@@ -237,8 +223,7 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, raw: NewSaveConfig
     raceEthnicity: [...new Set((config.raceEthnicity ?? []).filter((id) => ETHNICITY_BY_ID[id]))],
     ...(config.raceEthnicityOwn?.trim() ? { raceEthnicityOwn: config.raceEthnicityOwn.trim() } : {}),
     homeRegionId: config.homeRegionId,
-    citizenshipId: config.citizenshipId,
-    ...(config.secondCitizenshipId ? { secondCitizenshipId: config.secondCitizenshipId } : {}),
+    citizenshipId,
     currentLocationId: config.startLocationId,
     // Cleaned by the same rule the engine reads them by, so what is written
     // and what is read can never drift apart.

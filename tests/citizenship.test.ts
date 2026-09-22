@@ -1,68 +1,103 @@
 /**
- * Two passports.
+ * One citizenship, and nobody is asked for it.
  *
- * Born in one country, naturalised in the one they moved to and live in now,
- * carrying both for the rest of their life. An ordinary biography, and one the
- * save could not express.
- *
- * The work-permit rule that used to sit beside it is gone, and the note that
- * used to stand here is why: it said the arithmetic had no caller and was being
- * kept because the company would hire people one day. Five tests proved a rule
- * nothing asked, under a header admitting nothing asked it — which is the most
- * expensive kind of green there is, because it reads as coverage. What these
- * hold now is what the game actually reads: who holds which passports, how that
- * reads out loud, and that both survive a save.
+ * A person is a citizen of the country they were born in. Creation used to ask
+ * for a citizenship and offered a second passport besides; now the place of
+ * birth decides it, the screen says it back, and the save keeps it on the
+ * person. What these hold is that rule: where it comes from, that it follows
+ * the birthplace and not where somebody lives, that an older save is brought
+ * round to it, and that neither question is back on the screen.
  */
 
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
-import { createSave, defaultConfig, quickSave } from '@/engine';
-import { citizenshipLabel, citizenshipsOf } from '@/engine/domain/citizenship';
+import { createSave, defaultConfig, migrate, quickSave } from '@/engine';
+import { citizenshipFor } from '@/engine/domain/citizenship';
 
-const dual = { citizenshipId: 'us', secondCitizenshipId: 'ca' };
-const single = { citizenshipId: 'us' };
-
-describe('holding one passport or two', () => {
-  it('lists them in the order they are held', () => {
-    expect(citizenshipsOf(single)).toEqual(['us']);
-    expect(citizenshipsOf(dual)).toEqual(['us', 'ca']);
+describe('where a citizenship comes from', () => {
+  it('is the country of the place somebody was born in', () => {
+    expect(citizenshipFor('is-39-mosfellsbr')).toBe('is');
+    expect(citizenshipFor('us-ny-newyork')).toBe('us');
+    expect(citizenshipFor('jp-13-tokyo')).toBe('jp');
   });
 
-  it('never counts the same country twice', () => {
-    expect(citizenshipsOf({ citizenshipId: 'us', secondCitizenshipId: 'us' })).toEqual(['us']);
-    expect(citizenshipsOf({ citizenshipId: 'us', secondCitizenshipId: undefined })).toEqual(['us']);
-  });
-
-  it('reads both names on a screen', () => {
-    expect(citizenshipLabel(single)).toBe('United States');
-    expect(citizenshipLabel(dual)).toBe('United States And Canada');
+  it('is nothing at all for a place in no real country', () => {
+    expect(citizenshipFor('zz-1-nowhere')).toBeUndefined();
+    expect(citizenshipFor('')).toBeUndefined();
   });
 });
 
 describe('against a real save', () => {
-  it('carries the second passport onto the person and through a save', () => {
-    const sim = createSave(1, 'cit-save', {
+  it('follows the birthplace, not where they live', () => {
+    const sim = createSave(1, 'cit-born', {
       ...defaultConfig(), firstName: 'Robin', lastName: 'Vance',
-      citizenshipId: 'us', secondCitizenshipId: 'ca',
+      homeRegionId: 'jp-13-tokyo', livesWhereBorn: false, startLocationId: 'us-ny-newyork',
     });
-    expect(sim.player.citizenshipId).toBe('us');
-    expect(sim.player.secondCitizenshipId).toBe('ca');
-    expect(citizenshipsOf(sim.player)).toEqual(['us', 'ca']);
+    expect(sim.player.citizenshipId).toBe('jp');
+    expect(sim.player.currentLocationId).toBe('us-ny-newyork');
   });
 
-  it('keeps the passport it was given, and drops a second that names the same country', () => {
-    // The family passport was pinned to Iceland while there was a family.
-    // There is not, so the save holds whatever creation said.
-    const abroad = quickSave({ homeRegionId: 'jp-13-tokyo', citizenshipId: 'jp' }, 'cit-abroad');
-    expect(abroad.player.citizenshipId).toBe('jp');
-    const twice = quickSave({ citizenshipId: 'is', secondCitizenshipId: 'is' }, 'cit-twice');
-    expect(citizenshipsOf(twice.player)).toEqual(['is']);
-    expect(twice.player.secondCitizenshipId).toBeUndefined();
+  it('moves when the birthplace does', () => {
+    expect(quickSave({ homeRegionId: 'is-1-reykjavik' }, 'cit-is').player.citizenshipId).toBe('is');
+    expect(quickSave({ homeRegionId: 'us-ny-newyork' }, 'cit-us').player.citizenshipId).toBe('us');
   });
 
-  it('asks for both passports on the screen', () => {
+  it('holds one, and never a second', () => {
+    const player = quickSave({}, 'cit-one').player as unknown as Record<string, unknown>;
+    expect(typeof player.citizenshipId).toBe('string');
+    expect('secondCitizenshipId' in player).toBe(false);
+  });
+
+  it('refuses a birthplace in no real country', () => {
+    expect(() => quickSave({ homeRegionId: 'zz-1-nowhere' }, 'cit-nowhere')).toThrow(/zz-1-nowhere/);
+  });
+});
+
+describe('an older save', () => {
+  it('drops the second passport and takes the country of the birthplace', () => {
+    const sim = quickSave({ homeRegionId: 'is-1-reykjavik' }, 'cit-81');
+    const universe = sim.universe;
+    universe.meta.schemaVersion = 81;
+    // How 81 left it: a citizenship picked from a list, and a second passport.
+    const row = universe.people[universe.playerId] as unknown as Record<string, unknown>;
+    row.citizenshipId = 'us';
+    row.secondCitizenshipId = 'ca';
+
+    const result = migrate(universe);
+
+    expect(result.migrated).toBe(true);
+    expect(row.citizenshipId).toBe('is');
+    expect('secondCitizenshipId' in row).toBe(false);
+    expect(result.steps.join(' ')).toMatch(/Made 1 person a citizen of the country they were born in/);
+  });
+
+  it('leaves a citizenship alone when it already agrees, or when the birthplace names nowhere', () => {
+    const agrees = quickSave({ homeRegionId: 'is-1-reykjavik' }, 'cit-agrees');
+    agrees.universe.meta.schemaVersion = 81;
+    const quiet = migrate(agrees.universe);
+    expect(agrees.player.citizenshipId).toBe('is');
+    expect(quiet.steps.join(' ')).not.toMatch(/citizen/);
+
+    const lost = quickSave({}, 'cit-lost');
+    lost.universe.meta.schemaVersion = 81;
+    const row = lost.universe.people[lost.universe.playerId] as unknown as Record<string, unknown>;
+    row.homeRegionId = 'zz-1-nowhere';
+    row.citizenshipId = 'is';
+    migrate(lost.universe);
+    expect(row.citizenshipId).toBe('is');
+  });
+});
+
+describe('the screen', () => {
+  it('asks for neither, and says the one back under the place of birth', () => {
     const creation = readFileSync('src/ui/creation/CharacterCreation.tsx', 'utf8');
-    expect(creation, 'creation has no citizenship dropdown').toMatch(/id="citizenship"[\s\S]{0,80}<select|<select id="citizenship"/);
-    expect(creation, 'creation offers no second citizenship').toMatch(/citizenship-second/);
+    expect(creation, 'the citizenship list is back').not.toMatch(/<select[^>]*id="citizenship"/);
+    expect(creation, 'the second citizenship is back').not.toContain('citizenship-second');
+    expect(creation, 'the second citizenship is back').not.toContain('secondCitizenshipId');
+    const identity = creation.slice(creation.indexOf('function IdentityStep'), creation.indexOf('function PersonalStep'));
+    const picker = identity.indexOf('idPrefix="born"');
+    const said = identity.indexOf('<span className="label" id="citizenship">Citizenship</span>');
+    expect(said, 'Identity does not say the citizenship back').toBeGreaterThan(-1);
+    expect(said, 'the citizenship is not under the place of birth').toBeGreaterThan(picker);
   });
 });
