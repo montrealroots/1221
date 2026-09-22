@@ -71,8 +71,9 @@ export interface Person {
   /** Reference city id where they are from. */
   homeRegionId: string;
   /**
-   * The country they are a citizen of: the one they were born in, worked out
-   * from `homeRegionId` when the save is made and never asked. See
+   * The country they are a citizen of: the one their place of birth gives,
+   * which for a territory is the state it belongs to. Worked out from
+   * `homeRegionId` when the save is made, and never asked. See
    * `domain/citizenship.ts`.
    */
   citizenshipId: string;

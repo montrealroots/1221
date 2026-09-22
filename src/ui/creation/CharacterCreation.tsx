@@ -6,7 +6,7 @@
  * connection never costs the setup.
  */
 
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import type { Slot } from '@/engine/persistence/adapter';
 import {
   APP_VERSION, WEALTH_PROFILES, defaultConfig, wealthNote,
@@ -80,7 +80,8 @@ export function CharacterCreation({
   useEffect(() => { saveDraft(slot, config); }, [slot, config]);
 
   // A restored draft can name towns too small to be bundled. Fetch the
-  // countries they belong to so the names, and the validation, come back.
+  // countries they belong to so the names, and the validation, come back:
+  // the tick re-renders the step, and the validation below looks again.
   const [, setResolved] = useState(0);
   useEffect(() => {
     let cancelled = false;
@@ -99,7 +100,10 @@ export function CharacterCreation({
     setConfig((c) => ({ ...c, [key]: value }));
   }, []);
 
-  const issues = useMemo(() => validate(config, step), [config, step]);
+  // Worked out on every render, not memoized on the config: validate reads the
+  // town registry, which a country arriving changes without the config
+  // changing, and the tick above re-renders when one does.
+  const issues = validate(config, step);
   const canAdvance = issues.length === 0;
 
   // Continue was at the foot of the last step, so without this the next step
@@ -228,7 +232,7 @@ function billedAs(config: NewSaveConfig): string {
 type Setter = <K extends keyof NewSaveConfig>(key: K, value: NewSaveConfig[K]) => void;
 
 /** The country somebody born where the config says is a citizen of, by name. */
-function citizenshipName(config: NewSaveConfig): string | undefined {
+export function citizenshipName(config: Pick<NewSaveConfig, 'homeRegionId'>): string | undefined {
   const country = citizenshipFor(config.homeRegionId);
   return country ? COUNTRIES.get(country)?.name : undefined;
 }

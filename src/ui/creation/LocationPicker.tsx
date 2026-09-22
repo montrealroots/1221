@@ -17,7 +17,7 @@
 
 import { useEffect, useId, useMemo, useState } from 'react';
 import {
-  CITIES, COUNTRIES, REGIONS, cityCount, isCountryLoaded, loadCountryCities,
+  CITIES, COUNTRIES, REGIONS, cityCount, countryOfPlace, isCountryLoaded, loadCountryCities,
 } from '@/engine/content/geography';
 import type { City } from '@/engine/content/geography';
 import { WorldMap } from './WorldMap';
@@ -37,8 +37,11 @@ export function LocationPicker({
 }) {
   const fallbackPrefix = useId();
   const prefix = idPrefix ?? fallbackPrefix;
+  // A town too small to be bundled is not in memory until its country is, but
+  // its id still names that country, so the picker opens on the right one and
+  // pulls the country in. The United States is only for an id that names none.
   const selected = CITIES.get(cityId);
-  const [countryId, setCountryId] = useState(selected?.countryId ?? 'us');
+  const [countryId, setCountryId] = useState(selected?.countryId ?? countryOfPlace(cityId) ?? 'us');
   const [regionId, setRegionId] = useState<string>('');
   const [query, setQuery] = useState('');
   const [loading, setLoading] = useState(false);
@@ -49,9 +52,9 @@ export function LocationPicker({
   // Somebody else changed the selection — the birthplace following the home
   // town, a draft loading — so follow it rather than sitting on a stale country.
   useEffect(() => {
-    const city = CITIES.get(cityId);
-    if (city && city.countryId !== countryId) {
-      setCountryId(city.countryId);
+    const country = CITIES.get(cityId)?.countryId ?? countryOfPlace(cityId);
+    if (country && country !== countryId) {
+      setCountryId(country);
       setRegionId('');
       setQuery('');
     }
