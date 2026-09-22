@@ -433,6 +433,13 @@ input[readonly]:focus { border-color: var(--line-strong); }
 textarea { resize: vertical; min-height: 72px; }
 label, .label { display: block; font-size: var(--size-xs); font-weight: 600; color: var(--text-muted); margin-bottom: var(--s1); }
 
+/* A helper line under a control: what it takes, or how many there are to
+   choose from. The same size and color as every other hint on a form, which
+   the pickers write as a class rather than as `xs dim`. */
+.hint { font-size: var(--size-xs); color: var(--text-dim); line-height: 1.45; margin: var(--s1) 0 0; }
+/* The same line saying something went wrong is not a hint, and is not dimmed. */
+.hint[role="alert"] { color: var(--warning); }
+
 /* Chromium gives a range input a default side margin, which pushes it a few
    pixels past the field it sits in. */
 input[type="range"] {
@@ -811,6 +818,9 @@ button.link.is-open { color: var(--accent-strong); text-decoration-style: solid;
   padding: var(--s5);
 }
 .main-inner { max-width: 1180px; margin: 0 auto; }
+/* A card standing on its own in the page gets the same room below it as a row
+   of cards does, so two stacked panels never share a border. */
+.main-inner > .card { margin-bottom: var(--s5); }
 
 .breadcrumbs {
   display: flex; align-items: center; gap: var(--s2); flex-wrap: wrap;

@@ -54,10 +54,9 @@ export function CalendarWorkspace() {
         <div className="eyebrow">Calendar</div>
         <h1>Every commitment you have.</h1>
         <p className="muted">
-          Everything the world has put on your calendar, and the days both your
-          calendars keep — the country you’re standing in, and the one the
-          business runs on. If two things want you at once, they’re flagged
-          here first.
+          Everything on your calendar, and the holidays kept where you’re
+          standing. If two things want you at once, they’re flagged here
+          first.
         </p>
       </div>
 
@@ -191,7 +190,10 @@ export function CalendarWorkspace() {
 
       <Panel title="Next Thirty Days" flush>
         {next30.length === 0 ? (
-          <Empty title="Clear Ahead" body="Nothing is on the calendar for the next month." />
+          <Empty
+            title="No Plans Ahead"
+            body="No plans or commitments in the next thirty days. Holidays are marked on the month above rather than listed here."
+          />
         ) : (
           <div className="list">
             {next30.slice(0, 20).map((entry) => (

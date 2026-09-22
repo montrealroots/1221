@@ -122,7 +122,7 @@ export function Home() {
             </div>
           ) : (
             <p className="muted small" style={{ margin: 0 }}>
-              The calendar’s empty. <Open subject={at('day', today)}>The day</Open> is yours.
+              No plans or commitments ahead. <Open subject={at('day', today)}>The day</Open> is yours.
             </p>
           )}
 
