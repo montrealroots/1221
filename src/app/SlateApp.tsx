@@ -43,7 +43,6 @@ function citiesToLoad(universe: SaveUniverse): string[] {
     want(person.currentLocationId);
     want(person.homeRegionId);
   }
-  for (const property of Object.values(universe.properties ?? {})) want(property.locationId);
   return [...ids];
 }
 

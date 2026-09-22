@@ -111,12 +111,12 @@ describe('the payload a client sends', () => {
   it('refuses a save carrying a record from another universe', () => {
     const a = realPayload(1);
     const b = realPayload(2);
-    // The only person in a save is its player, so the record smuggled across
-    // is the home they live in.
-    const donor = Object.values(b.sim.universe.properties)[0];
+    // The record smuggled across is one of the other save's accounts, filed
+    // under a key this one has not used.
+    const donor = Object.values(b.sim.universe.accounts)[0];
     expect(donor).toBeDefined();
 
-    a.sim.universe.properties[donor!.id] = donor!;
+    a.sim.universe.accounts[`${donor!.id}-smuggled`] = donor!;
     expect(() => inspectPayload(serialise(a.sim.universe), 1)).toThrow(/cross-save contamination/i);
   });
 

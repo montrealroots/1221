@@ -336,13 +336,10 @@ describe('migrations and validation', () => {
 
   it('catches a corrupted universe', () => {
     const sim = quickSave();
-    const property = Object.values(sim.universe.properties)[0];
-    if (property) {
-      property.ownerId = 'person_does_not_exist';
-      const report = validateUniverse(sim.universe);
-      expect(report.ok).toBe(false);
-      expect(report.errors.some((e) => /does(n’t| not) exist/.test(e))).toBe(true);
-    }
+    sim.player.primaryAccountId = 'account_does_not_exist';
+    const report = validateUniverse(sim.universe);
+    expect(report.ok).toBe(false);
+    expect(report.errors.some((e) => /does(n’t| not) exist/.test(e))).toBe(true);
   });
 });
 
@@ -379,13 +376,14 @@ describe('an older save catches up with the build', () => {
 
     const onTheRecord = new Set<string>([
       ...Object.keys(universe.people), ...Object.keys(universe.accounts),
-      ...Object.keys(universe.companies), ...Object.keys(universe.stages),
       ...universe.transactions.map((one) => one.id),
       ...universe.scheduled.map((one) => one.id),
+      ...universe.notifications.map((one) => one.id),
+      ...universe.history.map((one) => one.id),
     ]);
     expect(onTheRecord.size, 'nothing on the record to collide with').toBeGreaterThan(20);
 
-    for (const ns of ['person', 'account', 'company', 'stage', 'txn', 'sched'] as const) {
+    for (const ns of ['person', 'account', 'txn', 'sched', 'notice', 'history'] as const) {
       for (let i = 0; i < 3; i += 1) {
         const id = sim.nextId(ns);
         expect(onTheRecord.has(id), `${id} is on the record already`).toBe(false);
@@ -443,11 +441,10 @@ describe('an older save catches up with the build', () => {
 
 describe('ids are told apart by namespace', () => {
   // One counter for the whole save made an id in one namespace a function of
-  // how much work every other namespace had done — and several of the engine's
-  // seeded streams are keyed on an id, so posting a transaction anywhere in the
-  // save changed which performer walked into the audition room. It cost six
-  // tests across three files when the VAT return landed, and an hour each time
-  // before it turned out to be this.
+  // how much work every other namespace had done — and some of the engine's
+  // seeded streams were keyed on an id, so posting a transaction anywhere in
+  // the save changed what they drew. It cost six tests across three files
+  // once, and an hour each time before it turned out to be this.
 
   const host = (): { __idCounter: number; __idCounters?: Record<string, number> } =>
     ({ __idCounter: 0, __idCounters: {} });
@@ -465,7 +462,7 @@ describe('ids are told apart by namespace', () => {
 
   it('starts every namespace of a new world at one', () => {
     const next = createIdFactory(host() as never);
-    for (const ns of ['person', 'txn', 'stage', 'audition'] as const) {
+    for (const ns of ['person', 'txn', 'notice', 'decision'] as const) {
       expect(next(ns)).toBe(`${ns}_000001`);
     }
   });
@@ -473,7 +470,7 @@ describe('ids are told apart by namespace', () => {
   it('never hands the same id out twice, in any order', () => {
     const next = createIdFactory(host() as never);
     const seen = new Set<string>();
-    const order = ['person', 'txn', 'person', 'stage', 'txn', 'txn', 'stage', 'person'] as const;
+    const order = ['person', 'txn', 'person', 'notice', 'txn', 'txn', 'notice', 'person'] as const;
     for (let round = 0; round < 40; round += 1) {
       for (const ns of order) {
         const id = next(ns);
@@ -492,7 +489,7 @@ describe('ids are told apart by namespace', () => {
     const next = createIdFactory(old as never);
     expect(next('person')).toBe(`person_${(43).toString(36).padStart(6, '0')}`);
     expect(next('txn')).toBe(`txn_${(43).toString(36).padStart(6, '0')}`);
-    expect(next('stage')).toBe(`stage_${(43).toString(36).padStart(6, '0')}`);
+    expect(next('notice')).toBe(`notice_${(43).toString(36).padStart(6, '0')}`);
     expect(next('person')).toBe(`person_${(44).toString(36).padStart(6, '0')}`);
   });
 
@@ -533,7 +530,7 @@ describe('ids are told apart by namespace', () => {
     const account = busy.universe.people[busy.universe.playerId]!.primaryAccountId!;
     for (let i = 0; i < 100; i += 1) busy.income(account, 1_00, 'Something Else Entirely', 'other');
     expect(busy.nextId('person')).toBe(quiet.nextId('person'));
-    expect(busy.nextId('audition')).toBe(quiet.nextId('audition'));
+    expect(busy.nextId('decision')).toBe(quiet.nextId('decision'));
     expect(busy.nextId('txn')).not.toBe(quiet.nextId('txn'));
   });
 

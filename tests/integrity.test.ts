@@ -72,13 +72,13 @@ describe('one save is one universe', () => {
     const a = quickSave({}, 'donor', 1);
     const b = quickSave({}, 'host', 2);
 
-    // The only person in a save is its player, so the record smuggled across
-    // is the home they live in.
-    const donorHome = Object.values(a.universe.properties)[0];
-    expect(donorHome).toBeDefined();
+    // The record smuggled across is one of the donor's accounts, filed under
+    // a key the host has not used.
+    const donorAccount = Object.values(a.universe.accounts)[0];
+    expect(donorAccount).toBeDefined();
 
     // Simulate a payload that arrived carrying someone else's saveId.
-    b.universe.properties[donorHome!.id] = { ...donorHome!, ownerId: undefined };
+    b.universe.accounts[`${donorAccount!.id}-smuggled`] = donorAccount!;
     expect(validateUniverse(b.universe).errors.join(' ')).toMatch(/Cross-save contamination|belongs to save/);
   });
 

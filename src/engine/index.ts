@@ -11,37 +11,21 @@
  */
 
 import { Simulation, type Command, type CommandResult } from './core/simulation';
-import type { Household, Premise, Property, SaveUniverse } from './domain/model';
-import { SAVE_SCHEMA_VERSION, PREMISE_STATEMENT } from './domain/model';
+import type { SaveUniverse } from './domain/model';
+import { SAVE_SCHEMA_VERSION } from './domain/model';
 import { addDays, formatDate, instantFromZoned, zonedParts, MS_DAY } from './core/time';
 import { formatMoneyCompact } from './core/money';
 import { clamp } from './core/rng';
-import { PERFORMER_TITLES, impliedPerformerTitle, performerTitleOf } from './core/performer';
-import { unknownTaste } from './core/taste';
 import { plural, titleCaseLabel } from './core/text';
 
 import { CITIES } from './content/geography';
 
 import { netWorth } from './systems/finance';
 import { registerLife, startOfLocalDay } from './systems/life';
-import { populateFamily } from './world/family';
-import { buildTheLot, registerLot } from './world/lot';
-import { registerSugar, seedTheQuota } from './world/sugar';
-import { registerMaking } from './world/making';
-import { registerSelling } from './world/selling';
-import { registerCrew } from './world/crew';
-import { registerCasting } from './world/casting';
-import { registerAudition } from './world/audition';
-import { registerRebate } from './world/rebate';
-import { registerVat } from './world/vat';
-import {
-  companiesOf, foundTheCompany, foundTheSugarGroup, holdingsOf, postsOf, projectsOf, registerCompanyCommands,
-} from './world/company';
 import { registerPlans } from './world/plans';
 import { registerWorld } from './world/world';
-import { ESTATE_ACRES, HOUSE, estateCity } from './content/estate';
 import {
-  createUniverse, defaultConfig, WEALTH_PROFILES, careerLabel, type NewSaveConfig,
+  createUniverse, defaultConfig, WEALTH_PROFILES, type NewSaveConfig,
 } from './world/bootstrap';
 
 export * from './world/bootstrap';
@@ -56,16 +40,6 @@ export function registerAllSystems(sim: Simulation): void {
   registerLife(sim);
   registerWorld(sim);
   registerPlans(sim);
-  registerCompanyCommands(sim);
-  registerLot(sim);
-  registerSugar(sim);
-  registerMaking(sim);
-  registerSelling(sim);
-  registerCrew(sim);
-  registerCasting(sim);
-  registerAudition(sim);
-  registerRebate(sim);
-  registerVat(sim);
 }
 
 /** Recurring world processes every save needs running. */
@@ -88,22 +62,7 @@ function armWorldClock(sim: Simulation): void {
 /** Builds the player's starting situation. */
 function populateWorld(sim: Simulation, config: NewSaveConfig): void {
   const player = sim.player;
-  const cityId = config.startLocationId;
   const wealth = WEALTH_PROFILES[config.wealth];
-
-  // --- Household ----------------------------------------------------------
-  const household: Household = {
-    id: sim.nextId('household'),
-    saveId: sim.universe.meta.id,
-    name: `${player.lastName} household`,
-    memberIds: [player.id],
-    dependentIds: [],
-    headIds: [player.id],
-    formedAt: sim.now,
-    historyNotes: [],
-  };
-  sim.universe.households[household.id] = household;
-  player.householdId = household.id;
 
   // --- Accounts -----------------------------------------------------------
   const checking = sim.openAccount({
@@ -156,64 +115,6 @@ function populateWorld(sim: Simulation, config: NewSaveConfig): void {
     }
   }
 
-  // --- Housing ------------------------------------------------------------
-  // The house on the family land. Not bought, not rented, not a rung on any
-  // ladder: the tenure, the monthly rent, the market value and the bedroom
-  // count that stood for how well you were doing all described somebody
-  // working their way up, and that is not who this is. What survives is the
-  // one thing the simulation needs — a roof with a condition, so a night in it
-  // goes better than a night without one.
-  const property: Property = {
-    id: sim.nextId('prop'),
-    saveId: sim.universe.meta.id,
-    ownerKind: 'none',
-    kind: 'house',
-    name: HOUSE.name,
-    addressLine: `${ESTATE_ACRES.toLocaleString('en-US')} acres, ${estateCity().name}`,
-    locationId: cityId,
-    tenure: 'owned',
-    bedrooms: HOUSE.bedrooms,
-    bathrooms: 4,
-    interiorSqft: HOUSE.interiorSqft,
-    lotSqft: ESTATE_ACRES * 43_560,
-    yearBuilt: HOUSE.yearBuilt,
-    features: [],
-    marketValue: 0,
-    condition: HOUSE.condition,
-    annualPropertyTaxRate: 0,
-    structureIds: [],
-    isPrimaryResidence: true,
-    createdAt: sim.now,
-  };
-  sim.universe.properties[property.id] = property;
-  player.residenceId = property.id;
-  household.residenceId = property.id;
-
-  // --- The family ---------------------------------------------------------
-  // Last, because everybody in it lives in the house the lines above just
-  // built and belongs to the household above that. The land has been theirs
-  // since before the player was born; until this ran, none of them existed.
-  const stream = sim.rng('family');
-  populateFamily(sim.universe, config.family, (ns) => sim.nextId(ns), () => stream.next());
-
-  // --- The business -------------------------------------------------------
-  // After the family, because the company is owned by the parents and staffed
-  // by whoever the player said runs what. The Your People step decides who is
-  // the principal of a production company, which is a heavier thing than the
-  // step lets on.
-  // The sugar first, because it is older than everything else here and it is
-  // what pays for all of it. The family has been in cane since long before
-  // anybody thought about a stage.
-  foundTheSugarGroup(sim);
-  seedTheQuota(sim);
-  const company = foundTheCompany(sim);
-
-  // --- The lot ------------------------------------------------------------
-  // After the company, because the company owns it. The land was the family's
-  // already; the stages on it were built, and they have been costing money
-  // every month since.
-  buildTheLot(sim, company.id);
-
   armWorldClock(sim);
 }
 
@@ -224,8 +125,6 @@ export function refreshMeta(sim: Simulation): void {
   const worth = netWorth(sim, player.id);
   sim.universe.meta.characterName = player.displayName;
   sim.universe.meta.portrait = player.portrait;
-  sim.universe.meta.performerTitle = player.performerTitle;
-  sim.universe.meta.careerLabel = careerLabel(player.careerTrack, performerTitleOf(player));
   sim.universe.meta.locationLabel = CITIES.get(player.currentLocationId)?.name ?? 'Unknown';
   sim.universe.meta.worldDateLabel = formatDate(sim.now, sim.homeZone);
   sim.universe.meta.netWorthLabel = formatMoneyCompact(worth.total);
@@ -286,7 +185,7 @@ export interface MigrationResult {
  * This build reads a much smaller world than the ones before it: the shops,
  * the studios, the schools and the rest are gone, and so are the collections
  * that held them. A save from one of those builds still opens — its player,
- * its money, its home, its calendar and its history are all still here — and
+ * its money, its calendar and its history are all still here — and
  * the parts this build has no screen for are left on the object untouched
  * rather than deleted, so a save is never made smaller than the build that
  * wrote it. Anything genuinely missing is created empty.
@@ -318,20 +217,6 @@ export function migrate(universe: SaveUniverse): MigrationResult {
   };
 
   record('people', 'the people');
-  record('households', 'the households');
-  record('bonds', 'the bonds between people');
-  record('companies', 'the family business');
-  record('registrations', 'the registers it’s on');
-  record('signatures', 'the guilds it has signed with');
-  record('policies', 'the cover it carries');
-  record('holdings', 'the material it holds');
-  record('posts', 'the posts it keeps');
-  record('projects', 'the slate');
-  record('auditions', 'the parts you have been asked about');
-  record('properties', 'the properties');
-  record('stages', 'the stages on the lot');
-  record('bookings', 'who is booked onto them');
-  list('quotaYears', 'what America let in each year');
   record('accounts', 'the accounts');
   record('decisions', 'the decision center');
   record('idempotency', 'the command receipts');
@@ -398,28 +283,6 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     }
   }
 
-  // A part's pile of submissions used to be a list of person ids, and is now a
-  // list of people with the rounds anybody has run on them. A save written
-  // before the audition room would have kept its strings, found nothing in
-  // them, and quietly shown an empty pile for every part that had one — which
-  // is the worst kind of breakage, because it looks like a picture nobody has
-  // advertised rather than like a save that lost something.
-  {
-    let widened = 0;
-    for (const project of Object.values(universe.projects)) {
-      for (const role of project.roles ?? []) {
-        const seen = role.seen as unknown;
-        if (!Array.isArray(seen)) continue;
-        if (!seen.some((one) => typeof one === 'string')) continue;
-        role.seen = seen.map((one) => (typeof one === 'string' ? { personId: one } : one));
-        widened += 1;
-      }
-    }
-    if (widened > 0) {
-      steps.push(`Kept the ${widened} pile${widened === 1 ? '' : 's'} of submissions a part had.`);
-    }
-  }
-
   // Every record must belong to this save and nothing else. Cross-save
   // contamination is the one corruption that is invisible until it matters.
   {
@@ -434,8 +297,6 @@ export function migrate(universe: SaveUniverse): MigrationResult {
       }
     };
     stamp(Object.values(universe.people));
-    stamp(Object.values(universe.households));
-    stamp(Object.values(universe.properties));
     stamp(Object.values(universe.accounts));
     stamp(Object.values(universe.decisions));
     stamp(universe.transactions);
@@ -443,72 +304,6 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     stamp(universe.history);
     stamp(universe.notifications);
     if (reassigned > 0) steps.push(`Re-stamped ${reassigned} record${reassigned === 1 ? '' : 's'} onto this save.`);
-  }
-
-  // Schema 72 made the premise part of the save. SLATE is an actor and actress
-  // simulator; a save that does not say so is brought forward rather than
-  // refused, and the title it should have been carrying all along is settled
-  // from what the player stated, or from their pronouns where they stated
-  // nothing. Both routes are recorded, because which one happened is itself
-  // worth keeping.
-  {
-    const player = universe.people?.[universe.playerId];
-    for (const person of Object.values(universe.people ?? {})) {
-      if (!person.performerTitle) {
-        person.performerTitle = impliedPerformerTitle(person.pronouns);
-        steps.push(`Settled ${person.displayName}'s title from their pronouns.`);
-      }
-    }
-    if (player && universe.meta.performerTitle !== player.performerTitle) {
-      universe.meta.performerTitle = player.performerTitle;
-      steps.push('Mirrored the player’s title onto the save.');
-    }
-    // A save written before the genre was named in full carries the old kind.
-    // It is the same game, so it is restated rather than refused.
-    const KNOWN_KINDS = ['actor-actress-life-simulator', 'actor-actress-simulator'];
-    if (universe.premise && KNOWN_KINDS.includes(universe.premise.kind as string)
-        && universe.premise.kind !== 'actor-actress-life-simulator') {
-      universe.premise.kind = 'actor-actress-life-simulator';
-      steps.push('Named the game in full: an actor and actress life simulator.');
-    }
-    if (!universe.premise || universe.premise.kind !== 'actor-actress-life-simulator') {
-      const premise: Premise = {
-        kind: 'actor-actress-life-simulator',
-        statement: PREMISE_STATEMENT,
-        titles: PERFORMER_TITLES,
-        equalStanding: true,
-        playerTitle: player?.performerTitle ?? 'actor',
-        playerTitleSource: 'implied',
-        recordedAt: universe.meta.createdAt ?? universe.now,
-      };
-      universe.premise = premise;
-      steps.push('Wrote the premise into the save: an actor and actress life simulator.');
-    } else {
-      // It is there, but it must still agree with the person it is about.
-      if (player && universe.premise.playerTitle !== player.performerTitle) {
-        universe.premise.playerTitle = player.performerTitle;
-        steps.push('Brought the premise’s title back into step with the player.');
-      }
-      if (universe.premise.statement !== PREMISE_STATEMENT) {
-        universe.premise.statement = PREMISE_STATEMENT;
-        steps.push('Restated the premise in this build’s words.');
-      }
-    }
-  }
-
-  // Schema 78: a company says which business it is in. Before the sugar group
-  // there was only one, so anything without a trade is a film company.
-  let traded = 0;
-  for (const company of Object.values(universe.companies ?? {})) {
-    const c = company as unknown as Record<string, unknown>;
-    if (c.trade === undefined) { c.trade = 'film'; traded += 1; }
-  }
-  if (traded > 0) steps.push(`Marked ${traded === 1 ? 'one company' : `${traded} companies`} as being in film.`);
-
-  // Schema 78: a picture carries the elements it has handed over.
-  for (const project of Object.values(universe.projects ?? {})) {
-    const p = project as unknown as Record<string, unknown>;
-    if (!Array.isArray(p.delivered)) p.delivered = [];
   }
 
   if (!universe.preferences) {
@@ -520,50 +315,24 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     steps.push('Created the preferences.');
   }
 
-  // Schema 78: the attribute sheet became a base plus its exceptions. Before
-  // this every person carried all 813 attribute ids written out, and for almost
-  // everybody they were all the same number — 20KB of JSON per person, and 63ms
-  // of structuredClone on every command once a save held a thousand people.
-  // Both measured. The old shape is folded into the new one by taking the
-  // number that appears most often as the base and keeping only what differs.
-  //
-  // Schema 79 removed a second sheet that got the same treatment, and five
-  // fields beside it. See the loop below.
-  const fold = (sheet: unknown, fallback: number): { base: number; of?: Record<string, number> } => {
-    if (sheet === null || typeof sheet !== 'object') return { base: fallback };
-    const flat = sheet as Record<string, unknown>;
-    if (typeof flat.base === 'number') return sheet as { base: number; of?: Record<string, number> };
-    const entries = Object.entries(flat).filter(([, v]) => typeof v === 'number') as [string, number][];
-    if (entries.length === 0) return { base: fallback };
-    const seen = new Map<number, number>();
-    for (const [, v] of entries) seen.set(v, (seen.get(v) ?? 0) + 1);
-    let base = fallback;
-    let most = -1;
-    for (const [value, n] of seen) if (n > most) { most = n; base = value; }
-    const of = Object.fromEntries(entries.filter(([, v]) => v !== base));
-    return Object.keys(of).length > 0 ? { base, of } : { base };
-  };
-  // Schema 79: six dead words go, five off the person and one off their
-  // wellbeing, because every one of them was written and read by nothing. The
-  // life-skill sheet held the prodigy at a hundred and everybody else at five
-  // and never moved for anybody; `goals` was not even asked for on a screen;
-  // `lifestyle` was a question whose four answers opened nothing; `creditScore`
-  // is kept where the creation review actually reads it, on `WEALTH_PROFILE`,
-  // and there is no lending to consult the copy on the person; `goatTraits` was
-  // a second copy of a content list the screen already reads from
-  // `content/prodigy.ts`. `travelFatigue` is the sixth and it is on the
-  // wellbeing rather than the person, which is exactly why the first draft of
-  // this loop missed it and shed only five — a partial migration under a
-  // comment claiming a whole one. Where You Come From stayed and was given a
-  // reader instead.
-  const SHED = ['skills', 'goals', 'lifestyle', 'creditScore', 'goatTraits'] as const;
-  let folded = 0;
+  // Schema 80 took out the whole character sheet, the film career and the
+  // family: the attributes and the prodigy flag, the personality and its
+  // traits, the acting traits, the performer title, the industry reputation,
+  // the career track, the role on the estate, the quote history, who somebody
+  // is to whom, their gender, the house they slept in, the household they
+  // shared it with and the name their work was credited under. Nothing in this build reads any of them. Earlier removals
+  // are in the same list, so a save from any older build sheds all of it in
+  // one pass. The relatives themselves, the households and the house stay in
+  // an older save as inert records, like every other part this build has no
+  // screen for.
+  const SHED = [
+    'attributes', 'prodigy', 'personality', 'personalityTraits', 'traits', 'performerTitle',
+    'reputation', 'careerTrack', 'estateRole', 'quotes', 'relations', 'gender', 'residenceId',
+    'householdId', 'stageName', 'skills', 'goals', 'lifestyle', 'creditScore', 'goatTraits',
+  ] as const;
   let shed = 0;
   for (const person of Object.values(universe.people ?? {})) {
     const p = person as unknown as Record<string, unknown>;
-    const wasFlat = typeof (p.attributes as Record<string, unknown>)?.base !== 'number';
-    p.attributes = fold(p.attributes, 10);
-    if (wasFlat) folded += 1;
     let dropped = false;
     for (const key of SHED) {
       if (key in p) { delete p[key]; dropped = true; }
@@ -575,11 +344,12 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     }
     if (dropped) shed += 1;
   }
-  if (folded > 0) {
-    steps.push(`Folded ${folded === 1 ? 'one sheet' : `${folded} sheets`} down to a base and its exceptions.`);
-  }
+  const meta = universe.meta as unknown as Record<string, unknown>;
+  if ('performerTitle' in meta) delete meta.performerTitle;
+  // The slot's career line named the film career, and there is none now.
+  if (from < 80 && universe.meta.careerLabel) universe.meta.careerLabel = '';
   if (shed > 0) {
-    steps.push(`Dropped the dead fields from ${plural(shed, 'person', 'people')}.`);
+    steps.push(`Dropped the fields this build no longer reads from ${plural(shed, 'person', 'people')}.`);
   }
 
   const migrated = from < SAVE_SCHEMA_VERSION || steps.length > 0;
@@ -615,111 +385,14 @@ export function validateUniverse(universe: SaveUniverse): ValidationReport {
   for (const problem of sim.ledger.audit()) errors.push(problem);
   checked += universe.transactions.length;
 
-  // The premise must be in the save, and it must be about the person it names.
-  // SLATE is an actor and actress life simulator; a universe that has lost that is
-  // not one this build will vouch for.
-  checked++;
-  const premise = universe.premise;
-  if (!premise) errors.push('The save doesn’t say what game it is: the premise is missing.');
-  else {
-    if (premise.kind !== 'actor-actress-life-simulator') {
-      errors.push(`The save claims to be a '${premise.kind}', which SLATE isn’t.`);
-    }
-    if (premise.equalStanding !== true) {
-      errors.push('The premise no longer holds actor and actress as equals.');
-    }
-    if (![...PERFORMER_TITLES].every((title) => premise.titles.includes(title))) {
-      errors.push('The premise has lost one of the two titles the game is about.');
-    }
-    if (!PERFORMER_TITLES.includes(premise.playerTitle)) {
-      errors.push(`The premise gives the player the title '${premise.playerTitle}', which is neither actor nor actress.`);
-    }
-  }
-
   // The player must exist and be coherent.
   const player = universe.people[universe.playerId];
   if (!player) errors.push('The save has no player.');
   else {
     if (!player.isPlayer) errors.push('The player record isn’t flagged as the player.');
-    if (!PERFORMER_TITLES.includes(player.performerTitle)) {
-      errors.push(`The player’s title is '${player.performerTitle}', which is neither actor nor actress.`);
-    }
-    if (premise && premise.playerTitle !== player.performerTitle) {
-      errors.push(
-        `The premise says the player is an ${premise.playerTitle} and the player record says ${player.performerTitle}.`,
-      );
-    }
-    if (universe.meta.performerTitle !== player.performerTitle) {
-      errors.push(
-        `The save summary says ${universe.meta.performerTitle} and the player record says ${player.performerTitle}.`,
-      );
-    }
     if (!CITIES.get(player.currentLocationId)) errors.push(`Player is in an unknown location '${player.currentLocationId}'.`);
     if (player.primaryAccountId && !universe.accounts[player.primaryAccountId]) {
       errors.push('Player primary account points at an account that doesn’t exist.');
-    }
-  }
-
-  // --- The business -------------------------------------------------------
-  // Seven tables that point at each other and at people, so every pointer is
-  // checked. A company owned by nobody, an arm with no parent or a project
-  // hanging off a right that was never acquired are all silent until the day
-  // a screen tries to open one.
-  const companies = companiesOf(universe);
-  const parents = companies.filter((one) => !one.parentId);
-  if (Object.keys(universe.companies).length > 0 && parents.length !== 1) {
-    errors.push(`The family holds ${parents.length} parent companies, and it has to hold exactly one.`);
-  }
-  for (const company of companies) {
-    const total = company.ownerships.reduce((sum, one) => sum + one.percent, 0);
-    if (company.ownerships.length > 0 && total !== 100) {
-      errors.push(`${company.name} is ${total}% owned, which isn’t how owning something works.`);
-    }
-    for (const owner of company.ownerships) {
-      const known = owner.holderKind === 'person' ? universe.people[owner.holderId] : universe.companies[owner.holderId];
-      if (!known) errors.push(`${company.name} is part-owned by somebody the save doesn’t have.`);
-    }
-    if (company.parentId && !universe.companies[company.parentId]) {
-      errors.push(`${company.name} is an arm of a company that doesn’t exist.`);
-    }
-    if (!CITIES.get(company.locationId)) {
-      errors.push(`${company.name} is registered in an unknown place '${company.locationId}'.`);
-    }
-  }
-  const companyIds = new Set(Object.keys(universe.companies));
-  const belongsTo = (companyId: string, what: string): void => {
-    if (!companyIds.has(companyId)) errors.push(`${what} belongs to a company that doesn’t exist.`);
-  };
-  for (const one of Object.values(universe.registrations)) belongsTo(one.companyId, `Registration ${one.number}`);
-  for (const one of Object.values(universe.signatures)) belongsTo(one.companyId, `The ${one.guild} signature`);
-  for (const one of Object.values(universe.policies)) belongsTo(one.companyId, `The ${one.kind} policy`);
-  for (const one of holdingsOf(universe)) belongsTo(one.companyId, `The rights to ${one.title}`);
-  for (const one of postsOf(universe)) {
-    belongsTo(one.companyId, `The ${one.role} post`);
-    if (one.personId && !universe.people[one.personId]) {
-      errors.push(`The ${one.role} post is filled by somebody the save doesn’t have.`);
-    }
-  }
-  for (const one of projectsOf(universe)) {
-    belongsTo(one.companyId, one.title);
-    if (one.holdingId && !universe.holdings[one.holdingId]) {
-      errors.push(`${one.title} hangs off rights the save doesn’t have.`);
-    }
-  }
-
-  // Nobody may carry a trait, an interest or a genre this build has never
-  // heard of. It is a warning rather than an error: the save is still sound,
-  // the engine drops what it does not know, and the player loses only a line
-  // on a sheet. Saying so is what stops it being noticed years later.
-  for (const person of Object.values(universe.people)) {
-    checked++;
-    const strange = unknownTaste(person);
-    if (strange.length > 0) {
-      warnings.push(
-        `${person.displayName} carries ${strange.length} taste${strange.length === 1 ? '' : 's'} `
-        + `this build doesn’t know: ${strange.slice(0, 4).join(', ')}`
-        + `${strange.length > 4 ? ', and more' : ''}. They’ll be ignored.`,
-      );
     }
   }
 
@@ -735,35 +408,8 @@ export function validateUniverse(universe: SaveUniverse): ValidationReport {
     }
   };
   check('person', Object.values(universe.people));
-  check('property', Object.values(universe.properties));
   check('account', Object.values(universe.accounts));
   check('scheduled', universe.scheduled);
-
-  // Ownership conservation: nothing owned by someone who does not exist.
-  // A property is owned by a person or by a company, and `ownerKind` says
-  // which — the lot is owned by the family business, not by anybody in it.
-  for (const property of Object.values(universe.properties)) {
-    checked++;
-    if (!property.ownerId) continue;
-    const owner = property.ownerKind === 'company'
-      ? universe.companies[property.ownerId]
-      : universe.people[property.ownerId];
-    if (!owner) {
-      const who = property.ownerKind === 'company' ? 'a company that' : 'somebody who';
-      errors.push(`Property ${property.id} is owned by '${property.ownerId}', ${who} doesn’t exist.`);
-    }
-  }
-
-  // Households must hold real people.
-  for (const household of Object.values(universe.households)) {
-    checked++;
-    for (const memberId of household.memberIds) {
-      if (!universe.people[memberId]) {
-        errors.push(`Household ${household.id} lists '${memberId}', who doesn’t exist.`);
-        break;
-      }
-    }
-  }
 
   // The timeline must be sorted and every pending item in the future or due.
   for (let i = 1; i < universe.scheduled.length; i++) {
@@ -771,16 +417,6 @@ export function validateUniverse(universe: SaveUniverse): ValidationReport {
     const cur = universe.scheduled[i];
     if (prev && cur && prev.at > cur.at) {
       errors.push('The timeline isn’t sorted by time. Advancement would process events out of order.');
-      break;
-    }
-  }
-
-  // Everybody in a save carries one of the two titles. Nobody is untitled and
-  // nobody is something else.
-  for (const person of Object.values(universe.people)) {
-    checked++;
-    if (!PERFORMER_TITLES.includes(person.performerTitle)) {
-      errors.push(`${person.displayName} has the title '${person.performerTitle}', which is neither actor nor actress.`);
       break;
     }
   }

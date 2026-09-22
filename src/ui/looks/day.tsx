@@ -38,11 +38,8 @@ import {
 } from '@/engine/core/time';
 import { forecastFor } from '@/engine/systems/weather';
 import { LEGEND_BY_CATEGORY, entriesBetween, keptCalendars, upcoming, type CalendarEntry } from '@/engine/world/calendar';
-import { PLAN_KIND, peopleOn } from '@/engine/world/plans';
-import { relationFrom } from '@/engine/world/family';
-import { MISSED_COOLS, TOGETHER_WARMS, bondFor, standingWord } from '@/engine/world/standing';
+import { PLAN_KIND } from '@/engine/world/plans';
 import type { Simulation } from '@/engine';
-import type { Person } from '@/engine/domain/model';
 import { Stat } from '@/ui/components/primitives';
 import { Open } from './Look';
 import { defineLook, type Way } from './registry';
@@ -257,12 +254,10 @@ defineLook<TheDay>('day', {
     const clashes = entries.filter((e) => e.conflicted);
     const country = COUNTRIES.get(city.countryId)?.name ?? city.countryId.toUpperCase();
     const observed = holidays.map((h) => h.englishName || h.name);
-    // Whose day it is matters now that a life keeps two calendars.
-    // Thanksgiving is not kept "here" on the family land in Iceland; it is
-    // kept where the work is, and saying otherwise is wrong about the day.
+    // Whose day it is: the calendar keeps the year of where the player is
+    // standing, and a day says so in that country’s name.
     const named = (h: KeptHoliday) => h.englishName || h.name;
     const keptHere = holidays.filter((h) => h.countryId === city.countryId).map(named);
-    const keptAway = holidays.filter((h) => h.countryId !== city.countryId).map(named);
     // `holidaysAcross` has already dropped the ones kept in another region, so
     // anything still carrying a subdivision code is kept here and not nationally.
     const regional = holidays.filter((h) => h.regionCode).length;
@@ -322,7 +317,7 @@ defineLook<TheDay>('day', {
       // A day falls on a city whether or not the tax tables can reach it, so
       // the parent is declared only where it would open.
       parent: placeOpens(city) ? at('place', city.id) : undefined,
-      summary: daySentence(day, sim, keptHere, keptAway),
+      summary: daySentence(day, sim, keptHere),
       body: (
         <>
           <p className="small muted">
@@ -340,7 +335,6 @@ defineLook<TheDay>('day', {
             {wants.length > 0 && ` You have to be at ${count(wants.length, 'of them', 'of them')}.`}
             {clashes.length > 0 && ` The calendar has flagged ${count(clashes.length, 'of them', 'of them')} as landing on top of each other.`}
             {keptHere.length > 0 && ` ${spokenList(keptHere)} ${isAre(keptHere.length)} kept in ${country} that day.`}
-            {keptAway.length > 0 && ` ${spokenList(keptAway)} ${isAre(keptAway.length)} kept where the work is.`}
           </p>
           {sim.zone !== zone && (
             <p className="small muted">
@@ -426,21 +420,14 @@ function loadOf(day: TheDay, when: 'before' | 'after' | 'around' = 'around'): st
 }
 
 /** The one sentence a day leads with. */
-function daySentence(day: TheDay, sim: Simulation, keptHere: string[], keptAway: string[]): string {
+function daySentence(day: TheDay, sim: Simulation, keptHere: string[]): string {
   const { city, entries, offset } = day;
   const past = offset < 0;
-  // What is kept where you are standing, and what is kept where the work is,
-  // are two different facts about a day and the sentence says which is which.
-  const observance = keptHere.length > 0 && keptAway.length > 0
-    ? `and it’s ${spokenList(keptHere)} here and ${spokenList(keptAway)} where the work is`
-    : keptHere.length > 0
-      ? `and it’s ${spokenList(keptHere)} here`
-      : `and it’s ${spokenList(keptAway)} where the work is`;
   // What is booked outranks what is kept: a commitment is the thing you act on.
   const tail = entries.length > 0
     ? `with ${count(entries.length, 'thing')} on the calendar`
-    : keptHere.length + keptAway.length > 0
-      ? observance
+    : keptHere.length > 0
+      ? `and it’s ${spokenList(keptHere)} here`
       : offset === 0
         ? 'and the day is entirely yours'
         : past ? 'and nothing was on it' : 'and nothing is on it yet';
@@ -503,15 +490,6 @@ interface TheEntry {
   elsewhere: City | undefined;
 }
 
-/** Everybody a plan was made with, as people the save still knows. */
-function withOn(sim: Simulation, entryId: string): Person[] {
-  const item = sim.timeline.get(entryId);
-  if (!item) return [];
-  return peopleOn(item)
-    .map((id) => sim.universe.people[id])
-    .filter((person): person is Person => person !== undefined);
-}
-
 defineLook<TheEntry>('entry', {
   gone: 'That’s off the calendar now. Whatever it was, it isn’t waiting on you.',
   resolve: (sim, id) => {
@@ -565,21 +543,6 @@ defineLook<TheEntry>('entry', {
         to: at('stretch', entry.id),
         label: `${formatTime(entry.at, clock)} To ${formatTime(endOf(entry), clock)}`,
         detail: 'How many hours it takes, and what the sky is doing across them',
-      });
-    }
-    // Who it is with. The one field on a plan that reaches outside the
-    // calendar, and until it was drawn here a person could put somebody on a
-    // plan and never see them on it again.
-    for (const person of withOn(sim, entry.id)) {
-      const bond = bondFor(sim.universe, sim.universe.playerId, person.id);
-      const relation = relationFrom(sim.universe, sim.universe.playerId, person.id);
-      ways.push({
-        to: at('person', person.id),
-        label: person.displayName || person.firstName,
-        detail: entry.status === 'missed'
-          ? `${relation ? `Your ${relation.toLowerCase()}` : 'On this one'}, and you weren’t there`
-          : `${relation ? `Your ${relation.toLowerCase()}` : 'On this one'}${
-            bond ? `, and the two of you are ${standingWord(Math.round(bond.closeness)).toLowerCase()}` : ''}`,
       });
     }
     // Everything else you decided to do, where this is one of them.
@@ -648,19 +611,6 @@ defineLook<TheEntry>('entry', {
                 ? ' Nothing else is booked against it.'
                 : ''}
           </p>
-          {withOn(sim, entry.id).length > 0 && (
-            <p className="small">
-              {`It’s with ${spokenList(withOn(sim, entry.id).map((one) => one.firstName))}. `}
-              {entry.status === 'missed'
-                ? `Being somewhere else cost you ${MISSED_COOLS} points of where you stand with `
-                  + `${withOn(sim, entry.id).length === 1 ? 'them' : 'each of them'}.`
-                : entry.status === 'pending'
-                  ? `Turning up is worth ${TOGETHER_WARMS} points of where you stand with `
-                    + `${withOn(sim, entry.id).length === 1 ? 'them' : 'each of them'}, and not turning up costs ${MISSED_COOLS}.`
-                  : `You were there. That was worth ${TOGETHER_WARMS} points of where you stand with `
-                    + `${withOn(sim, entry.id).length === 1 ? 'them' : 'each of them'}.`}
-            </p>
-          )}
           <div className="grid grid-2">
             <Stat
               label="When"

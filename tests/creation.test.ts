@@ -1,28 +1,21 @@
 /**
- * The six creation steps, pinned to their final shape.
+ * The four creation steps, pinned to their shape.
  *
- * Each of these pages settled after a long run of changes, and most of what
- * settled was a decision to stop asking something. Where you live, where you
- * were born, what passport you hold and what you are good at are all facts
- * now, not questions, and the way they went wrong before was quietly: a
- * picker left on a page, a default pointing at the wrong country, a locked
- * field that still had an editable twin somewhere.
+ * The screen used to ask about a character sheet, a performer's title, a
+ * family and a family business, and to state where the player was born and
+ * lived rather than ask. All of that went with the revamp, and place of birth,
+ * where you live and the passports you hold are questions again.
  *
- * So this holds the shape rather than the wording. What the step asks, what it
- * only reports, and what comes out the other end in the save.
+ * So this holds the shape rather than the wording. What each step asks, and
+ * what comes out the other end in the save.
  */
 
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
-import { createSave, defaultConfig, quickSave } from '@/engine';
-import { ESTATE_ACRES, ESTATE_CITY_ID, ESTATE_COUNTRY_ID, studioName } from '@/engine/content/estate';
-import { ALL_TRAITS, ATTRIBUTES, attributesOf, effectiveAttributes, emptyAttributeSheet, rate, sheetOf } from '@/engine/domain/attributes';
-import { CEILING } from '@/engine/content/prodigy';
+import { createSave, defaultConfig } from '@/engine';
 import { citizenshipsOf } from '@/engine/domain/citizenship';
 import { CITIES } from '@/engine/content/geography';
-import { familyIssues, latestBirthYear, settledTitle } from '@/ui/creation/CharacterCreation';
-import type { NewSaveConfig } from '@/engine/world/bootstrap';
-import type { EstateRole } from '@/engine/domain/model';
+import { latestBirthYear } from '@/ui/creation/CharacterCreation';
 
 const SOURCE = readFileSync(new URL('../src/ui/creation/CharacterCreation.tsx', import.meta.url), 'utf8');
 
@@ -34,83 +27,15 @@ function filled() {
     displayName: 'Siggi', pronouns: 'she/her',
     birthYear: 1998, birthMonth: 11, birthDay: 3,
     raceEthnicity: ['white', 'asian'],
-    personality: {
-      openness: 11, conscientiousness: 22, extraversion: 33, agreeableness: 44,
-      emotionalStability: 55, ambition: 66, riskTolerance: 77,
-    },
-    personalityTraits: ['night_owl'],
+    homeRegionId: 'is-1-reykjavik', livesWhereBorn: false,
+    startLocationId: 'us-ny-newyork',
+    citizenshipId: 'is', secondCitizenshipId: 'us',
     interests: ['film', 'television', 'cinematography'],
     genres: ['film_noir', 'western'],
-    background: 'Raised on the lot.',
+    background: 'Raised by the sea.',
     wealth: 'wealthy',
   });
 }
-
-describe('Identity', () => {
-  it('asks for the name, the pronouns, the birthday and nothing else', () => {
-    // The four it still asks.
-    for (const id of ['first', 'last', 'display', 'stage', 'pronouns', 'birth-year', 'birth-month', 'birth-day']) {
-      expect(SOURCE, `Identity lost the ${id} field`).toContain(`id="${id}"`);
-    }
-    // The two it stopped asking, and now states.
-    for (const id of ['citizenship', 'birthplace']) {
-      const field = SOURCE.slice(SOURCE.indexOf(`id="${id}"`));
-      expect(field.slice(0, 220), `${id} is editable again`).toMatch(/readOnly/);
-    }
-    // And the one that is gone entirely.
-    expect(SOURCE, 'the second citizenship field is back').not.toContain('citizenship-second');
-  });
-
-  it('settles the title from the pronouns, and only they/them opens the choice', () => {
-    expect(settledTitle('he/him')).toBe('actor');
-    expect(settledTitle('she/her')).toBe('actress');
-    expect(settledTitle('they/them')).toBeUndefined();
-    // Case and spacing do not get to change the answer.
-    expect(settledTitle('  He/Him ')).toBe('actor');
-    expect(settledTitle('She/Her')).toBe('actress');
-  });
-
-  it('caps the birth year so nobody starts under eighteen', () => {
-    expect(latestBirthYear(2026)).toBe(2008);
-    expect(latestBirthYear(2030)).toBe(2012);
-  });
-
-  it('carries every answer into the save, including the ones only shown', () => {
-    const sim = filled();
-    const p = sim.universe.people[sim.universe.playerId]!;
-    expect(p.firstName).toBe('Sigrún');
-    expect(p.lastName).toBe('Halldórsdóttir');
-    expect(p.displayName).toBe('Siggi');
-    expect(p.pronouns).toBe('she/her');
-    expect(p.performerTitle).toBe('actress');
-    expect(p.raceEthnicity).toEqual(['white', 'asian']);
-    // Stated, not asked: one passport, born on the land, living on it.
-    expect(citizenshipsOf(p)).toEqual([ESTATE_COUNTRY_ID]);
-    expect(p.homeRegionId).toBe(ESTATE_CITY_ID);
-    expect(p.currentLocationId).toBe(ESTATE_CITY_ID);
-    expect(sim.universe.homeZone).toBe(CITIES.get(ESTATE_CITY_ID)!.timeZone);
-  });
-});
-
-describe('Who You Are', () => {
-  it('keeps all seven axes, and stores them exactly as set', () => {
-    const p = filled().universe.people[filled().universe.playerId]!;
-    expect(Object.keys(p.personality).sort()).toEqual([
-      'agreeableness', 'ambition', 'conscientiousness', 'emotionalStability',
-      'extraversion', 'openness', 'riskTolerance',
-    ]);
-    expect(p.personality.openness).toBe(11);
-    expect(p.personality.riskTolerance).toBe(77);
-  });
-
-  it('carries the traits, the interests, the genres and the rest', () => {
-    const p = filled().universe.people[filled().universe.playerId]!;
-    expect(p.personalityTraits).toContain('night_owl');
-    expect(p.interests).toEqual(expect.arrayContaining(['film', 'television', 'cinematography']));
-    expect(p.genres).toEqual(['film_noir', 'western']);
-    expect(p.background).toBe('Raised on the lot.');
-  });
-});
 
 /** A step's own source, and never an empty string: a slice that missed its
  *  anchor makes every "this is not there any more" assertion pass on nothing. */
@@ -124,44 +49,76 @@ function stepSource(from: string, to?: string): string {
   return slice;
 }
 
-describe('My Skills', () => {
-  it('hands over every skill at the ceiling and every trait at once', () => {
-    const p = filled().universe.people[filled().universe.playerId]!;
-    expect(ATTRIBUTES.filter((a) => rate(p.attributes, a.id) !== CEILING)).toEqual([]);
-    expect(p.traits).toHaveLength(ALL_TRAITS.length);
-    for (const trait of ALL_TRAITS) expect(p.traits, trait.name).toContain(trait.id);
+describe('the steps', () => {
+  it('are the four that are left, in order', () => {
+    expect(SOURCE).toContain("const STEPS = ['Identity', 'Who You Are', 'Starting Point', 'Review'] as const;");
   });
 
-  it('asks nothing and offers the three sheets', () => {
-    const step = stepSource('function CareerStep', 'function StartingPointStep');
-    expect(step, 'My Skills is asking something again').not.toMatch(/<input|<select/);
-    for (const sheet of ['Every Acting Skill', 'Every Acting Trait', 'Mastery Of Every Genre']) {
-      expect(step, `the ${sheet} sheet is gone`).toContain(sheet);
+  it('leave no trace of the ones that went', () => {
+    for (const gone of ['CareerStep', 'YourPeopleStep', 'performerTitle', 'personality', 'ESTATE_', 'studioName', 'family']) {
+      expect(SOURCE, `${gone} is back in creation`).not.toContain(gone);
     }
-    // The card describing a rebuild that is not happening any more.
-    expect(step, 'the Under Construction card is back').not.toContain('Under Construction');
+  });
+});
+
+describe('Identity', () => {
+  it('asks for the name, the pronouns, the birthday, the passports and the birthplace', () => {
+    const step = stepSource('function IdentityStep', 'function PersonalStep');
+    for (const id of ['first', 'last', 'display', 'pronouns', 'birth-year', 'birth-month', 'birth-day', 'citizenship', 'citizenship-second']) {
+      expect(step, `Identity lost the ${id} field`).toContain(`id="${id}"`);
+    }
+    expect(step, 'the birthplace is no longer asked').toContain('idPrefix="born"');
+    expect(step, 'the credit name is back').not.toContain('id="stage"');
+  });
+
+  it('caps the birth year so nobody starts under eighteen', () => {
+    expect(latestBirthYear(2026)).toBe(2008);
+    expect(latestBirthYear(2030)).toBe(2012);
+  });
+
+  it('carries every answer into the save', () => {
+    const sim = filled();
+    const p = sim.universe.people[sim.universe.playerId]!;
+    expect(p.firstName).toBe('Sigrún');
+    expect(p.lastName).toBe('Halldórsdóttir');
+    expect(p.displayName).toBe('Siggi');
+    expect(p.pronouns).toBe('she/her');
+    expect(p.raceEthnicity).toEqual(['white', 'asian']);
+    expect(citizenshipsOf(p)).toEqual(['is', 'us']);
+    expect(p.homeRegionId).toBe('is-1-reykjavik');
+  });
+});
+
+describe('Who You Are', () => {
+  it('asks for interests, genres and a background, and nothing with a number on it', () => {
+    const step = stepSource('function PersonalStep', 'function StartingPointStep');
+    for (const card of ['Interests', 'Genres', 'Background']) {
+      expect(step, `${card} is gone`).toContain(`<h2>${card}</h2>`);
+    }
+    expect(step, 'a slider is back').not.toContain('type="range"');
+  });
+
+  it('carries the interests, the genres and the background', () => {
+    const p = filled().universe.people[filled().universe.playerId]!;
+    expect(p.interests).toEqual(expect.arrayContaining(['film', 'television', 'cinematography']));
+    expect(p.genres).toEqual(['film_noir', 'western']);
+    expect(p.background).toBe('Raised by the sea.');
   });
 });
 
 describe('Starting Point', () => {
-  it('reports the land and asks only about money', () => {
+  it('asks where you live and what you start with', () => {
     const step = stepSource('function StartingPointStep', 'function ReviewStep');
-    for (const card of ['Home Base', 'ESTATE_NAME', 'What Is Yours']) {
-      expect(step, `${card} is gone`).toContain(card);
-    }
-    // Everything it used to ask.
-    expect(step, 'the city picker is back').not.toMatch(/LocationPicker/);
-    expect(step, 'the housing options are back').not.toMatch(/HOUSING|roommates|A Friend’s Couch/);
-    // The one control left.
+    expect(step).toContain('id="live-here"');
+    expect(step).toContain('idPrefix="live"');
     expect(step).toContain('id="wealth"');
   });
 
-  it('puts everybody on the family land, with the company named off the surname', () => {
+  it('puts the player where they said they live, on that place’s clock', () => {
     const sim = filled();
     const p = sim.universe.people[sim.universe.playerId]!;
-    expect(p.currentLocationId).toBe(ESTATE_CITY_ID);
-    expect(studioName(p.lastName)).toBe('Halldórsdóttir Pictures');
-    expect(ESTATE_ACRES).toBe(2_000);
+    expect(p.currentLocationId).toBe('us-ny-newyork');
+    expect(sim.universe.homeZone).toBe(CITIES.get('us-ny-newyork')!.timeZone);
   });
 
   it('opens the accounts the money answer promises, and balances them', () => {
@@ -178,142 +135,14 @@ describe('Starting Point', () => {
   });
 });
 
-describe('Your People', () => {
-  it('asks for each of the three things about a parent, and nothing else', () => {
-    const step = stepSource('function ParentCard', 'function Choice');
-    for (const field of ['-name', '-age']) {
-      expect(step, `the parent card lost the ${field} field`).toContain(`id={\`\${idPrefix}${field}\`}`);
-    }
-    expect(step, 'the parent card asks what they do').toContain('What They Do On The Land');
-    // A parent is not a performer and is never asked to be one.
-    expect(step, 'a parent is asked to be billed').not.toMatch(/actor|actress|billed/i);
-    expect(step, 'a parent is asked for a skill').not.toMatch(/attribute|trait|skill/i);
-  });
-
-  it('offers every role the engine has a word for, and no role it does not', () => {
-    const roles: EstateRole[] = ['the house', 'the lot', 'the company', 'nothing in particular'];
-    const step = stepSource('const ESTATE_ROLES', 'const TWIN_GENDERS');
-    for (const role of roles) {
-      expect(step, `no way to pick ${role}`).toContain(`'${role}'`);
-    }
-  });
-
-  it('lets a twin be a brother, a sister, or neither', () => {
-    const step = stepSource('const TWIN_GENDERS', 'The step where the house');
-    expect(step).toContain("id: 'female'");
-    expect(step).toContain("id: 'male'");
-    expect(step).toContain("id: 'nonbinary'");
-    // Never the word the game does not use for one.
-    expect(step, 'a twin is called a sibling').not.toMatch(/sibling/i);
-  });
-
-  it('carries what was picked all the way into the save', () => {
-    const sim = createSave(1, 'creation-family', {
-      ...defaultConfig(),
-      firstName: 'Sigrún', lastName: 'Halldórsdóttir',
-      birthYear: 1998, birthMonth: 11, birthDay: 3,
-      family: {
-        mother: { firstName: 'Bryndís', ageAtBirth: 27, role: 'the company' },
-        father: { firstName: 'Ólafur', ageAtBirth: 34, role: 'the lot' },
-        twin: { firstName: 'Katla', gender: 'female', identical: true, role: 'the house' },
-      },
-    });
-    const people = Object.values(sim.universe.people);
-    const by = (first: string) => people.find((one) => one.firstName === first)!;
-
-    expect(people).toHaveLength(4);
-    expect(by('Bryndís').estateRole).toBe('the company');
-    expect(by('Ólafur').estateRole).toBe('the lot');
-    expect(by('Katla').estateRole).toBe('the house');
-    // The family name is the one the player gave, for all of them.
-    for (const person of people) expect(person.lastName).toBe('Halldórsdóttir');
-  });
-
-  it('refuses a family the player has left half-said', () => {
-    const base = defaultConfig();
-    const complain = (family: NewSaveConfig['family']): string[] =>
-      familyIssues({ ...base, firstName: 'Sigrún', family });
-
-    expect(complain(base.family)).toEqual([]);
-    expect(complain({ ...base.family, mother: { ...base.family.mother, firstName: '  ' } }))
-      .toContain('Your mother needs a first name.');
-    expect(complain({ ...base.family, father: { ...base.family.father, ageAtBirth: 4 } })
-      .join(' ')).toMatch(/between 15 and 60/);
-    expect(complain({ ...base.family, twin: { firstName: '', gender: 'female', identical: false, role: 'the house' } }))
-      .toContain('Your twin needs a first name, or you were born alone.');
-  });
-
-  it('refuses two people in one house with one name', () => {
-    const base = defaultConfig();
-    const clash = familyIssues({
-      ...base,
-      firstName: 'Katla',
-      family: {
-        ...base.family,
-        twin: { firstName: 'katla', gender: 'female', identical: true, role: 'the house' },
-      },
-    });
-    // Said in the name the player typed, not the one the comparison lowercased.
-    expect(clash).toContain('You and your twin can’t both be called Katla.');
-  });
-});
-
 describe('Review', () => {
-  it('shows the people as well as the person', () => {
-    const step = stepSource('function ReviewStep');
-    for (const line of ['Your Mother', 'Your Father', 'Your People']) {
-      expect(step, `Review stopped showing ${line}`).toContain(line);
-    }
-  });
-
-  it('shows every line the five steps decided', () => {
+  it('shows every line the three steps decided', () => {
     const step = stepSource('function ReviewStep');
     for (const line of [
-      'Legal Name', 'Pronouns', 'Billed As', 'Born', 'Place Of Birth',
-      'Home Base', 'ESTATE_NAME', 'The Company', 'Checking', 'Savings', 'Credit Score',
+      'Legal Name', 'Pronouns', 'Born', 'Place Of Birth', 'Citizenship',
+      'Where You Live', 'Checking', 'Savings', 'Credit Score', 'Interests', 'Genres',
     ]) {
       expect(step, `Review stopped showing ${line}`).toContain(line);
     }
-    // The two it used to show and cannot any more.
-    expect(step, 'Review shows a housing rung again').not.toMatch(/HOUSING\.find/);
-    expect(step, 'Review shows a chosen city again').not.toMatch(/label="City"/);
-  });
-});
-
-describe('the sheet is a base and its exceptions', () => {
-  // The shape is the point: 813 attributes written out cost 20KB per person
-  // and 63ms of structuredClone per command at a thousand people, to say one
-  // number. These hold the shape, not the size.
-  it('costs one number for a person who is ordinary at everything', () => {
-    const sheet = emptyAttributeSheet(10);
-    expect(sheet.of, 'a sheet with no exceptions carries none').toBeUndefined();
-    expect(JSON.stringify(sheet).length).toBeLessThan(20);
-    for (const a of ATTRIBUTES) expect(rate(sheet, a.id)).toBe(10);
-  });
-
-  it('keeps only what differs, and reads the rest off the base', () => {
-    const sheet = sheetOf(40, { [ATTRIBUTES[0]!.id]: 91, [ATTRIBUTES[1]!.id]: 40 });
-    // The one that matches the base is not an exception.
-    expect(Object.keys(sheet.of ?? {})).toEqual([ATTRIBUTES[0]!.id]);
-    expect(rate(sheet, ATTRIBUTES[0]!.id)).toBe(91);
-    expect(rate(sheet, ATTRIBUTES[1]!.id)).toBe(40);
-    expect(rate(sheet, 'an_attribute_that_does_not_exist')).toBe(40);
-  });
-
-  it('is what the prodigy means: the ceiling, and nothing written down', () => {
-    const player = quickSave({}, 'sheet-prodigy').player;
-    expect(player.attributes.base).toBe(CEILING);
-    expect(player.attributes.of ?? {}, 'the prodigy has no exceptions').toEqual({});
-    // And the traits, which subtract for everybody else, cannot move it.
-    const effective = attributesOf(player);
-    for (const a of ATTRIBUTES) expect(rate(effective, a.id), a.id).toBe(CEILING);
-  });
-
-  it('lets a trait move one attribute without writing the other 812', () => {
-    const sheet = emptyAttributeSheet(50);
-    const moved = effectiveAttributes(sheet, ALL_TRAITS.map((t) => t.id));
-    expect(moved.base, 'the base is untouched').toBe(50);
-    expect(Object.keys(moved.of ?? {}).length, 'only what the traits named').toBeLessThan(ATTRIBUTES.length);
-    expect(Object.keys(moved.of ?? {}).length).toBeGreaterThan(0);
   });
 });

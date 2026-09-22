@@ -170,6 +170,6 @@ describe('money conservation in a live universe', () => {
     const worth = netWorth(sim, sim.player.id);
     expect(Number.isFinite(worth.total)).toBe(true);
     expect(Number.isInteger(worth.cash)).toBe(true);
-    expect(worth.total).toBe(worth.cash + worth.assets - worth.liabilities);
+    expect(worth.total).toBe(worth.cash - worth.liabilities);
   });
 });

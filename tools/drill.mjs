@@ -76,15 +76,12 @@ await page.getByRole('button', { name: /^New Save$/ }).first().waitFor({ timeout
 await click(/^New Save$/);
 await page.waitForTimeout(1200);
 
-const billed = page.getByRole('group', { name: 'Billed As' });
-if (await billed.count()) { await billed.getByRole('button', { name: 'Actress' }).click(); await page.waitForTimeout(300); }
-
 for (let i = 0; i < 6; i++) {
   if (!(await click(/^Continue$/))) break;
   await page.waitForTimeout(700);
 }
-// The last button on Review is the world's own words, not "Start".
-await click(/Time To Be Great/);
+// The last button on Review says Begin.
+await click(/^Begin$/);
 await page.waitForTimeout(2500);
 
 const onHome = await page.getByRole('heading', { level: 1 }).first().textContent().catch(() => null);

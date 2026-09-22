@@ -1,14 +1,11 @@
 import { describe, expect, it } from 'vitest';
 import { quickSave, validateUniverse } from '@/engine';
 import type { Simulation } from '@/engine';
-import { estateCity } from '@/engine/content/estate';
+import { DEFAULT_CITY_ID } from '@/engine/world/bootstrap';
+import { CITIES } from '@/engine/content/geography';
 import { formatDateTime, MS_DAY, MS_HOUR } from '@/engine/core/time';
 import { openDecisions, simulationLoad } from '@/engine/world/world';
 import { netWorth } from '@/engine/systems/finance';
-import { projectsOf } from '@/engine/world/company';
-import { whyNot } from '@/engine/world/rebate';
-import { openTheBooks, openTheDoors } from './doors';
-import { playACareer } from './played';
 
 describe('a new universe boots and runs', () => {
   it('creates a coherent save', () => {
@@ -18,19 +15,16 @@ describe('a new universe boots and runs', () => {
     expect(report.errors).toEqual([]);
     expect(sim.player.displayName).toBeTruthy();
     expect(sim.player.primaryAccountId).toBeTruthy();
-    // A new save is one household: the player and the two people whose land
-    // it is. The systems that used to populate a world around them — agents,
-    // providers, the industry — are gone, and nothing outside the family
-    // generates a name any more.
-    expect(Object.keys(sim.universe.people)).toHaveLength(3);
-    expect(Object.keys(sim.universe.people)).toContain(sim.universe.playerId);
-    expect(Object.keys(sim.universe.households)).toHaveLength(1);
+    // A new save is the player and nobody else. The systems that used to
+    // populate a world around them — the industry, and then the family — are
+    // gone, and nothing generates a name any more.
+    expect(Object.keys(sim.universe.people)).toEqual([sim.universe.playerId]);
   });
 
   it('has a player who exists somewhere in time and space', () => {
     const sim = quickSave();
     expect(formatDateTime(sim.now, sim.homeZone)).toContain('2026');
-    expect(sim.universe.homeZone).toBe(estateCity().timeZone);
+    expect(sim.universe.homeZone).toBe(CITIES.get(DEFAULT_CITY_ID)?.timeZone);
     expect(sim.ledger.audit()).toEqual([]);
   });
 
@@ -63,19 +57,12 @@ describe('a new universe boots and runs', () => {
   });
 
   it('runs three years without breaking anything', () => {
-    // The lot bills the company every month now, so the claim is no longer
-    // that the ledger sits still — it is that everything it does conserves.
     // `audit()` re-derives every balance from the postings and proves each
     // transaction sums to zero, which is the invariant worth holding: money
     // may move as much as it likes and may not appear.
     const sim = quickSave();
-    const opening = sim.universe.transactions.length;
     for (let month = 0; month < 36; month++) sim.advanceTo(sim.now + 30 * MS_DAY);
 
-    expect(
-      sim.universe.transactions.length,
-      'three years and the lot never charged anybody for standing there',
-    ).toBeGreaterThan(opening);
     expect(sim.ledger.audit()).toEqual([]);
     expect(validateUniverse(sim.universe).errors).toEqual([]);
 
@@ -126,161 +113,99 @@ describe('a new universe boots and runs', () => {
 });
 
 /**
- * The Decision Center, which was a room nothing ever wrote to.
+ * The Decision Center.
  *
- * `world.take_decision_action` and `world.dismiss_decision` have always read a
- * `decisions` table the engine never filled, and what stood here instead of
- * these tests was an honest `it.todo` saying so. The world tick raises one
- * thing now — the reimbursement, whose application closes on the first day of
- * photography and which went entirely unannounced — so this is the room being
- * exercised rather than the room being described.
+ * Nothing in this build raises a decision on its own: the one thing that did
+ * was the reimbursement on the family's pictures, and it went with them. The
+ * room is kept for whatever the revamp puts in it, so these raise a row by
+ * hand through `requireDecision` and hold the room itself — answering,
+ * waving away, closing on its date, and staying open when the button behind
+ * it refuses.
  */
-describe('the Decision Center has something in it', () => {
+describe('the Decision Center', () => {
   const run = (sim: Simulation, kind: string, payload: Record<string, unknown> = {}) =>
     sim.execute<{ ok: boolean; id?: string; error?: string }>({ kind, payload }).value!;
 
-  /** Opens both doors and puts a feature on the floor. Returns its id. */
-  function greenlightOne(sim: Simulation, title = 'Hvítserkur'): string {
-    openTheDoors(sim);
-    openTheBooks(sim);
-    run(sim, 'company.develop', { title, medium: 'film' });
-    const id = projectsOf(sim.universe).find((one) => one.title === title)!.id;
-    const done = run(sim, 'company.greenlight', {
-      projectId: id, planId: 'feature', budgetCents: 20_000_000_00, shootWeeks: 8,
+  /** Puts a plan on the calendar and raises a row whose one button calls it off. */
+  function raiseOne(sim: Simulation, dueInDays?: number): { entryId: string } {
+    const put = run(sim, 'calendar.schedule', { title: 'Dentist', at: sim.now + 10 * MS_DAY });
+    expect(put.ok, put.error).toBe(true);
+    sim.requireDecision({
+      urgency: 60,
+      category: 'personal',
+      title: 'Keep The Dentist?',
+      detail: 'It is on the calendar in ten days.',
+      actions: [{ label: 'Call It Off', commandKind: 'calendar.cancel', payload: { entryId: put.id } }],
+      ...(dueInDays !== undefined ? { dueAt: sim.now + dueInDays * MS_DAY } : {}),
+      refType: 'sched',
+      refId: put.id,
     });
-    expect(done.error, 'the picture would not greenlight').toBeUndefined();
-    return id;
+    return { entryId: put.id! };
   }
 
-  it('fills over a played career that greenlights a picture and runs it', () => {
-    const sim = quickSave({}, 'decisions');
-    const projectId = greenlightOne(sim);
-
-    // Played rather than idled, because the whole room hangs off the world
-    // tick and an idle save is where this project has been wrong five times.
-    const seen = new Map<string, string>();
-    const eachWeek = (s: Simulation) => {
-      for (const one of openDecisions(s)) seen.set(one.id, one.title);
-    };
-    playACareer(sim, 0.5, { eachWeek });
-
-    expect(
-      Object.keys(sim.universe.decisions).length,
-      'half a played year with a picture on the floor and the Decision Center is still empty',
-    ).toBeGreaterThan(0);
-    expect([...seen.values()]).toContain('Hvítserkur: File The Reimbursement Claim');
-
-    // One row for one picture, and not a fresh one every tick for fifteen weeks.
-    expect(seen.size).toBe(1);
-
-    // And it closed on its own date rather than being waved off before it.
-    const row = Object.values(sim.universe.decisions)[0]!;
-    expect(row.refType).toBe('project');
-    expect(row.refId).toBe(projectId);
-    expect(row.dismissedAt, 'the ninety-day quiet rule took a dated row off the list').toBeUndefined();
-    expect(row.resolvedAt).toBeDefined();
-    expect(row.resolvedAt!).toBeGreaterThanOrEqual(row.dueAt!);
-
-    // Then the save forgets it, which is the other half of the room working.
-    // Half a year of play leaves the closed row in place because `prune` keeps
-    // one for a hundred and eighty days past its close; another year and a half
-    // takes it out, and a save played for a decade does not carry every prompt
-    // it ever raised.
-    playACareer(sim, 1.5, { eachWeek });
-    expect(Object.keys(sim.universe.decisions)).toEqual([]);
+  it('raises one row for one thing, however often it is asked', () => {
+    const sim = quickSave({}, 'decisions-once');
+    raiseOne(sim);
+    const [row] = openDecisions(sim);
+    sim.requireDecision({
+      urgency: 80, category: row!.category, title: row!.title, detail: 'Still there.',
+      refType: row!.refType, refId: row!.refId,
+    });
+    expect(openDecisions(sim)).toHaveLength(1);
+    expect(openDecisions(sim)[0]!.urgency).toBe(80);
   });
 
-  it('files the claim when the button on it is pressed', () => {
+  it('does the thing when the button on it is pressed', () => {
     const sim = quickSave({}, 'decisions-press');
-    const projectId = greenlightOne(sim);
-    sim.advanceTo(sim.now + 3 * MS_DAY);
-
+    const { entryId } = raiseOne(sim);
     const row = openDecisions(sim)[0]!;
-    expect(row.actions).toHaveLength(1);
-    expect(row.actions[0]!.commandKind).toBe('company.claim_rebate');
-    expect(sim.universe.projects[projectId]!.rebate).toBeUndefined();
 
     const done = run(sim, 'world.take_decision_action', { decisionId: row.id, actionIndex: 0 });
     expect(done.ok).toBe(true);
-    expect(sim.universe.projects[projectId]!.rebate?.shareAt).toBe(0.35);
+    expect(sim.timeline.get(entryId)?.status).toBe('cancelled');
     expect(sim.universe.decisions[row.id]!.resolvedAt).toBeDefined();
     expect(openDecisions(sim)).toHaveLength(0);
   });
 
-  it('clears the row when the claim is filed from the workspace instead', () => {
-    const sim = quickSave({}, 'decisions-workspace');
-    const projectId = greenlightOne(sim);
-    sim.advanceTo(sim.now + 3 * MS_DAY);
-    expect(openDecisions(sim)).toHaveLength(1);
-
-    expect(run(sim, 'company.claim_rebate', { projectId }).ok).toBe(true);
-    expect(openDecisions(sim), 'filed elsewhere and the room went on asking').toHaveLength(0);
-  });
-
   it('stops asking once the row is waved away', () => {
     const sim = quickSave({}, 'decisions-dismiss');
-    greenlightOne(sim);
-    sim.advanceTo(sim.now + 3 * MS_DAY);
+    raiseOne(sim);
     const row = openDecisions(sim)[0]!;
 
     run(sim, 'world.dismiss_decision', { decisionId: row.id });
     expect(sim.universe.decisions[row.id]!.dismissedAt).toBeDefined();
-    // Four ticks: without the check on a waved-away row the raiser puts a
-    // fresh one back on the list at the first of them.
     sim.advanceTo(sim.now + 8 * MS_DAY);
-    expect(openDecisions(sim), 'Dismiss is a button that undoes itself').toHaveLength(0);
+    expect(openDecisions(sim)).toHaveLength(0);
   });
 
-  it('remembers the wave for longer than it keeps the row by the calendar', () => {
-    // A forty-week feature carries 294 days between the greenlight and the
-    // first day of photography, and `prune` drops a closed decision a hundred
-    // and eighty days after it closes. So the dismissal that stops the raiser
-    // asking again is deleted with four months of runway left, and without the
-    // rule that a closed row about a date still ahead is kept, the prompt comes
-    // back on a picture the player waved away in week one.
-    const sim = quickSave({}, 'decisions-long');
-    openTheDoors(sim);
-    openTheBooks(sim);
-    run(sim, 'company.develop', { title: 'Langur', medium: 'film' });
-    const id = projectsOf(sim.universe).find((one) => one.title === 'Langur')!.id;
-    expect(run(sim, 'company.greenlight', {
-      projectId: id, planId: 'feature', budgetCents: 20_000_000_00, shootWeeks: 40,
-    }).error).toBeUndefined();
-    sim.advanceTo(sim.now + 3 * MS_DAY);
-
+  it('closes a dated row on its date, and forgets it a season later', () => {
+    const sim = quickSave({}, 'decisions-dated');
+    raiseOne(sim, 5);
     const row = openDecisions(sim)[0]!;
-    expect(Math.round((row.dueAt! - sim.now) / MS_DAY), 'the runway is not long enough to reach past the retention').toBeGreaterThan(200);
-    run(sim, 'world.dismiss_decision', { decisionId: row.id });
+
+    sim.advanceTo(sim.now + 8 * MS_DAY);
+    expect(sim.universe.decisions[row.id]!.resolvedAt).toBeDefined();
+    expect(sim.universe.decisions[row.id]!.resolvedAt!).toBeGreaterThanOrEqual(row.dueAt!);
+    expect(sim.universe.decisions[row.id]!.dismissedAt).toBeUndefined();
 
     sim.advanceTo(sim.now + 200 * MS_DAY);
-    expect(openDecisions(sim), 'the wave was pruned and the raiser started again').toHaveLength(0);
-    expect(sim.universe.decisions[row.id], 'the row carrying the wave was dropped while its date was still ahead').toBeDefined();
+    expect(sim.universe.decisions[row.id], 'a closed row outlived its retention').toBeUndefined();
   });
 
   it('keeps the row open when the command behind the button refuses', () => {
     const sim = quickSave({}, 'decisions-late');
-    const projectId = greenlightOne(sim);
-    sim.advanceTo(sim.now + 3 * MS_DAY);
+    const { entryId } = raiseOne(sim);
     const row = openDecisions(sim)[0]!;
 
-    // The gap between the camera turning over and the tick that closes the
-    // row. `CommandResult.ok` says the handler ran, not that it did the thing,
-    // so reading the envelope alone marked this answered and took a claim
-    // worth 5,984,927.96 EUR off the list without filing anything.
-    sim.advanceTo(row.dueAt! + MS_HOUR);
-    expect(whyNot(sim, sim.universe.projects[projectId]!), 'the door was meant to be shut by now').toBe('too-late');
-    expect(sim.universe.decisions[row.id]!.resolvedAt, 'the tick closed it before the test could press it').toBeUndefined();
+    // Past the start, a plan can no longer be called off, and the command
+    // says so inside a successful envelope. The dated row would close on its
+    // own, so this one is undated.
+    sim.advanceTo(sim.timeline.get(entryId)!.at + MS_HOUR);
 
     // Read off the envelope, because the envelope is what the screen reads.
-    // `game-context.tsx` shows the player a message when `CommandResult.ok` is
-    // false and shows nothing at all otherwise, and Home throws the returned
-    // value away. A refusal reported inside a successful envelope is a button
-    // that does nothing and says nothing, so this asserts the field the player
-    // is on the other end of rather than the one the engine finds convenient.
     const done = sim.execute({ kind: 'world.take_decision_action', payload: { decisionId: row.id, actionIndex: 0 } });
     expect(done.ok, 'the refusal came back inside a successful envelope, so nobody is told').toBe(false);
-    expect(done.error).toContain('The camera has turned over');
-    expect(sim.universe.projects[projectId]!.rebate).toBeUndefined();
+    expect(done.error).toMatch(/already/);
     expect(sim.universe.decisions[row.id]!.resolvedAt).toBeUndefined();
   });
 });

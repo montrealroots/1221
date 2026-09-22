@@ -153,15 +153,6 @@ await sections('save-slots-empty', 'three slots, nothing in any of them');
 await click(/^New Save$/);
 await page.waitForTimeout(1100);
 
-// The default pronouns are they/them, which settles neither title, so the step
-// will not advance until one is picked. Pick one here rather than changing the
-// pronouns, so the walk goes through the branch a player actually meets.
-const billed = page.getByRole('group', { name: 'Billed As' });
-if (await billed.count()) {
-  await billed.getByRole('button', { name: 'Actress' }).click();
-  await page.waitForTimeout(400);
-}
-
 // Something to say about who she is, so the field is photographed filled in
 // rather than empty.
 const race = page.getByRole('group', { name: 'Race Or Ethnicity' });
@@ -170,7 +161,7 @@ if (await race.count()) {
   await page.waitForTimeout(300);
 }
 
-await sections('creation-1-identity', 'step 1 of 5: name, portrait, where you are from');
+await sections('creation-1-identity', 'step 1 of 4: name, portrait, passports, where you are from');
 
 const dataUrl = await page.evaluate(() => {
   const canvas = document.createElement('canvas');
@@ -193,15 +184,13 @@ if (await upload.count()) {
   await shoot('creation-1-portrait', 'a photo dropped in, cropped to the headshot frame');
 }
 
-// The birthplace picker and its map are no longer on this page. Both are
-// intact in LocationPicker and WorldMap for whatever screen wants them next,
-// and there is nothing here to photograph.
+// The birthplace picker and its map are on this page again, and are
+// photographed with the rest of it above.
 
 const STEPS = [
-  ['creation-2-who-you-are', 'step 2 of 5: personality, traits, interests, genres and background'],
-  ['creation-3-my-skills', 'step 3 of 5: the craft, and how far along it already is'],
-  ['creation-4-starting-point', 'step 4 of 5: the city, the housing and the money'],
-  ['creation-5-review', 'step 5 of 5: all of it, before it becomes a save'],
+  ['creation-2-who-you-are', 'step 2 of 4: interests, genres and background'],
+  ['creation-3-starting-point', 'step 3 of 4: where you live and the money'],
+  ['creation-4-review', 'step 4 of 4: all of it, before it becomes a save'],
 ];
 for (const [name, note] of STEPS) {
   if (!(await click(/^Continue$/))) break;
@@ -213,7 +202,7 @@ for (const [name, note] of STEPS) {
 // 4. Home
 // ---------------------------------------------------------------------------
 
-await click(/it.s time to be great/i);
+await click(/^Begin$/);
 await page.waitForTimeout(4500);
 await sections('home', 'the hub: the day, what needs you, how you are, where you are, the weather, money');
 

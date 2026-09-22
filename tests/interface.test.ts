@@ -20,10 +20,6 @@ import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { ALL_DESTINATIONS, DESTINATIONS } from '@/ui/shell/destinations';
 import { WEATHER_EMOJI } from '@/engine/systems/weather';
-import { quickSave } from '@/engine';
-import { capabilitiesOf, type Blocker } from '@/engine/world/company';
-import { fixFor } from '@/ui/workspaces/fix';
-import { wouldBe } from '@/engine/world/making';
 
 // Anything Unicode says may be drawn as a picture, plus the selectors and
 // joiners that make one. A tick or a cross in the Dingbats block that has no
@@ -263,87 +259,7 @@ describe('reading the world', () => {
 
 // ---------------------------------------------------------------------------
 
-describe('every door a player is stopped at has a way through it', () => {
-  const SCREEN = 'src/ui/workspaces/BusinessWorkspace.tsx';
-
-  /**
-   * The one kind of blocker that deliberately has no button, and why.
-   *
-   * Money has none because there is no button that makes a company solvent —
-   * it is fixed by the business working, which is the whole point of the axis
-   * it belongs to. Material used to be listed here too, on the grounds that
-   * its control sat in another panel; `case 'holding'` has drawn a chip on the
-   * blocker itself for some time, so the exemption was excusing a live kind.
-   */
-  const NOT_A_BUTTON: Record<string, string> = {
-    money: 'no control, and correctly so',
-  };
-
-  it('offers a control for every blocker the capability doors can raise', () => {
-    const screen = readFileSync(SCREEN, 'utf8');
-    const sim = quickSave({}, 'doors-reachable');
-    const raised = new Set<string>();
-    const A_BLOCKER: Record<string, Blocker> = {};
-    for (const door of capabilitiesOf(sim)) {
-      for (const blocker of door.blockers) {
-        if (!blocker.fixKind) continue;
-        raised.add(blocker.fixKind);
-        A_BLOCKER[blocker.fixKind] ??= blocker;
-      }
-    }
-    expect(raised.size, 'a cold save raises no blockers at all').toBeGreaterThan(3);
-
-    for (const kind of raised) {
-      if (NOT_A_BUTTON[kind]) continue;
-      // The switch in `Missing` is what turns a blocker into something a person
-      // can press. A kind with no case there is a door a player can be stopped
-      // at and never get past, which is what happened to the head of production
-      // for eight commits: every other step of the sequence was reachable and
-      // that one was not, so the greenlight door could not be opened by hand.
-      const blocker = A_BLOCKER[kind];
-      expect(blocker, `no sample blocker for '${kind}'`).toBeDefined();
-      expect(fixFor(blocker!), `nothing in the interface fixes a '${kind}' blocker`).toBeDefined();
-      expect(screen, 'the panel grew a second table').toContain('fixFor(blocker)');
-    }
-  });
-
-  it('can walk the whole sequence to a greenlight with the commands the screen runs', () => {
-    // The same path the buttons take, in the order the doors present it. If
-    // this passes and the screen has no control for one of them, the test
-    // above is the one that catches it.
-    const sim = quickSave({}, 'doors-walk');
-    const ran = (kind: string, payload: Record<string, unknown>): boolean =>
-      sim.execute<{ ok: boolean }>({ kind, payload }).value?.ok === true;
-    const somebody = Object.values(sim.universe.people).find((one) => !one.isPlayer)!;
-
-    expect(ran('company.fill_post', { role: 'production', personId: somebody.id })).toBe(true);
-    expect(ran('company.option', { title: 'Something To Make', hold: 'option', months: 18 })).toBe(true);
-    expect(ran('company.register', { registry: 'is_employer' })).toBe(true);
-    for (const policy of ['general_liability', 'workers_comp', 'production_package']) {
-      expect(ran('company.insure', { policy })).toBe(true);
-    }
-    const door = capabilitiesOf(sim).find((one) => one.id === 'greenlight')!;
-    expect(door.can, `still shut: ${door.blockers.map((b) => b.need).join(', ')}`).toBe(true);
-  });
-});
-
-describe('the production side is reachable by hand', () => {
-  const SCREEN = 'src/ui/workspaces/BusinessWorkspace.tsx';
-
-  it('runs every command a picture needs from a screen, not only from a test', () => {
-    const screen = readFileSync(SCREEN, 'utf8');
-    // Eight commits of engine work was driven only by the suite. A command with
-    // no caller outside a test has never been given an argument nobody thought
-    // of, which is how `company.greenlight` came to accept an airdate that laid
-    // the whole schedule into weeks that had already happened.
-    for (const kind of [
-      'company.fill_post', 'company.develop', 'company.greenlight',
-      'company.deliver', 'company.sell', 'lot.sell',
-    ]) {
-      expect(screen, `${kind} is still reachable only from a test`).toContain(`'${kind}'`);
-    }
-  });
-
+describe('every command is reachable by hand', () => {
   it('leaves no engine command that a person cannot reach', () => {
     // The whole point of the exercise, stated as the thing that has to stay
     // true. A command nobody can run is engine work the game does not have.
@@ -355,63 +271,10 @@ describe('the production side is reachable by hand', () => {
       .filter((one) => one.endsWith('.ts'))
       .flatMap((one) => [...readFileSync(`src/engine/${one}`, 'utf8')
         .matchAll(/onCommand<[^(]*\(\s*'([a-z_]+\.[a-z_]+)'/g)].map((m) => m[1]!));
-    expect(engine.length, 'no commands were found at all').toBeGreaterThan(10);
+    expect(engine.length, 'no commands were found at all').toBeGreaterThan(5);
     for (const kind of new Set(engine)) {
       expect(everywhere, `${kind} is registered and nothing in the interface runs it`)
         .toContain(`'${kind}'`);
     }
-  });
-
-  it('shows the schedule off the same function that lays it', () => {
-    // Not a second calculation calibrated near the first. `wouldBe` runs every
-    // check and lays every date and commits nothing; `greenlight` is that plus
-    // the commit. Two mechanisms would drift, and the first time they did a
-    // producer would be shown one set of dates and handed another.
-    const screen = readFileSync(SCREEN, 'utf8');
-    expect(screen).toContain('wouldBe(');
-    expect(screen, 'the form lays its own dates').not.toContain('layOut(');
-  });
-
-  it('agrees with itself: what it would be is what it becomes', () => {
-    const sim = quickSave({}, 'prospect');
-    const somebody = Object.values(sim.universe.people).find((one) => !one.isPlayer)!;
-    sim.execute({ kind: 'company.fill_post', payload: { role: 'production', personId: somebody.id } });
-    sim.execute({ kind: 'company.option', payload: { title: 'Something To Make' } });
-    sim.execute({ kind: 'company.register', payload: { registry: 'is_employer' } });
-    for (const policy of ['general_liability', 'workers_comp', 'production_package']) {
-      sim.execute({ kind: 'company.insure', payload: { policy } });
-    }
-    sim.execute({ kind: 'company.develop', payload: { title: 'Hvítserkur', medium: 'film' } });
-    const id = Object.values(sim.universe.projects).find((one) => one.title === 'Hvítserkur')!.id;
-
-    const spec = {
-      projectId: id, planId: 'feature', budgetCents: 4_000_000_00, shootWeeks: 5,
-      secondsEach: 100 * 60, hands: 2,
-    };
-    const shown = wouldBe(sim, spec);
-    expect(shown.ok, 'the form would have shown a refusal').toBe(true);
-    if (!shown.ok) return;
-
-    expect(sim.execute<{ ok: boolean }>({ kind: 'company.greenlight', payload: spec }).value?.ok).toBe(true);
-    const made = sim.universe.projects[id]!;
-    // Every date the form put on screen is a date the picture actually has.
-    expect(made.periods?.map((one) => [one.id, one.from, one.to]))
-      .toEqual(shown.prospect.periods.map((one) => [one.id, one.from, one.to]));
-    expect(made.deliverBy).toBe(shown.prospect.deliverBy);
-    expect(made.stageId).toBe(shown.prospect.stageId);
-    expect(made.owesSeconds).toBe(shown.prospect.secondsEach * shown.prospect.parts);
-  });
-
-  it('refuses in the form exactly as it refuses at the button', () => {
-    const sim = quickSave({}, 'prospect-no');
-    sim.execute({ kind: 'company.develop', payload: { title: 'No Doors', medium: 'film' } });
-    const id = Object.values(sim.universe.projects).find((one) => one.title === 'No Doors')!.id;
-    const spec = { projectId: id, planId: 'feature', budgetCents: 4_000_000_00, shootWeeks: 5 };
-    const shown = wouldBe(sim, spec);
-    const done = sim.execute<{ ok: boolean; error?: string }>({ kind: 'company.greenlight', payload: spec });
-    expect(shown.ok).toBe(false);
-    expect(done.value?.ok).toBe(false);
-    if (shown.ok) return;
-    expect(done.value?.error, 'the screen says one thing and the button another').toBe(shown.error);
   });
 });

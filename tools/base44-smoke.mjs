@@ -115,24 +115,14 @@ record('refuses a caller who is not signed in', anon.status === 401, `http ${ano
 const badSlot = await call('saveUniverse', { slot: 9, payload: payloadFor(SLOT) });
 record('refuses a slot that is not one, two or three', badSlot.body?.ok === false, badSlot.body?.error);
 
-// 3. A save that does not say what game it is is refused. SLATE is an actor
-// and actress simulator, every payload says so, and the server will not store
-// one that does not.
-const foreign = JSON.parse(payloadFor(SLOT));
-delete foreign.premise;
-const noPremise = await call('saveUniverse', { slot: SLOT, payload: JSON.stringify(foreign) });
-record('refuses a save that does not say it is an actor and actress simulator',
-  noPremise.body?.ok === false && /what game it is/i.test(noPremise.body?.error ?? ''),
-  noPremise.body?.error);
-
-// 4. An unbalanced ledger is refused.
+// 3. An unbalanced ledger is refused.
 const unbalanced = JSON.parse(payloadFor(SLOT));
 unbalanced.transactions[0].postings[0].amount += 1;
 const bad = await call('saveUniverse', { slot: SLOT, payload: JSON.stringify(unbalanced) });
 record('refuses a ledger that does not balance',
   bad.body?.ok === false && /balance/i.test(bad.body?.error ?? ''), bad.body?.error);
 
-// 5. A real write lands.
+// 4. A real write lands.
 const payload = payloadFor(SLOT);
 const written = await call('saveUniverse', { slot: SLOT, payload });
 record('writes a save', written.body?.ok === true, written.body?.error ?? `${written.body?.bytes} bytes`);
@@ -141,12 +131,12 @@ if (!written.body?.ok) {
   process.exit(1);
 }
 
-// 6. It reads back byte for byte.
+// 5. It reads back byte for byte.
 const readBack = await call('loadUniverse', { slot: SLOT });
 record('reads it back unchanged', readBack.body?.payload === payload,
   readBack.body?.payload === payload ? undefined : 'what came back is not what went in');
 
-// 7. A retry with the same key writes once.
+// 6. A retry with the same key writes once.
 const key = `smoke-${Date.now()}`;
 const once = await call('saveUniverse', { slot: SLOT, payload, idempotencyKey: key });
 const twice = await call('saveUniverse', { slot: SLOT, payload, idempotencyKey: key });
@@ -154,7 +144,7 @@ record('a retried write does not write twice',
   twice.body?.ok === true && twice.body?.replayed === true && twice.body?.id === once.body?.id,
   twice.body?.replayed ? 'replayed the first answer' : 'the retry was treated as a new write');
 
-// 8. A stale tab cannot overwrite newer progress.
+// 7. A stale tab cannot overwrite newer progress.
 const advanced = JSON.parse(payload);
 advanced.now += 86_400_000;
 advanced.meta.playtimeSeconds = 9_000;
@@ -163,12 +153,12 @@ const stale = await call('saveUniverse', { slot: SLOT, payload });
 record('refuses a stale tab writing over newer progress',
   stale.body?.ok === false && /behind|playtime/i.test(stale.body?.error ?? ''), stale.body?.error);
 
-// 9. The backup is there.
+// 8. The backup is there.
 const backup = await call('loadUniverse', { slot: SLOT, backup: 'true' });
 record('keeps the previous payload as a backup',
   backup.body?.ok === true && Boolean(backup.body?.payload), backup.body?.fromBackup ? 'from backup' : undefined);
 
-// 10. Clearing releases the slot for a different universe.
+// 9. Clearing releases the slot for a different universe.
 const cleared = await call('clearSlot', { slot: SLOT });
 record('clears the slot', cleared.body?.ok === true && cleared.body?.cleared === true, cleared.body?.error);
 const different = JSON.parse(payloadFor(SLOT));
@@ -176,7 +166,7 @@ different.meta.id = `smoke_other_${Date.now()}`;
 const reused = await call('saveUniverse', { slot: SLOT, payload: JSON.stringify(different) });
 record('lets a different universe use the cleared slot', reused.body?.ok === true, reused.body?.error);
 
-// 11. Put back whatever was there.
+// 10. Put back whatever was there.
 await call('clearSlot', { slot: SLOT });
 if (priorPayload) {
   const restored = await call('saveUniverse', { slot: SLOT, payload: priorPayload });

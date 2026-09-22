@@ -10,9 +10,6 @@
 
 import { readdirSync, readFileSync, statSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
-import { ALL_TRAITS, ATTRIBUTES, ATTRIBUTE_GROUPS, TRAITS, attributesInGroup, rate } from '@/engine/domain/attributes';
-import { CEILING } from '@/engine/content/prodigy';
-import { ENQUIRY_SHAPES } from '@/engine/content/lot';
 import { COUNTRIES } from '@/engine/content/geography';
 import { ageOnDate } from '@/engine/core/time';
 import { createSave, defaultConfig, quickSave } from '@/engine';
@@ -20,10 +17,6 @@ import { describeEthnicity } from '@/engine/content/ethnicity';
 import {
   CRAFT_INTERESTS, FILM_GENRES, GENERAL_INTERESTS, isAlphabetical,
 } from '@/engine/content/interests';
-import { GENRE_MASTERIES, masteryForGenre } from '@/engine/content/genre-mastery';
-import {
-  PERSONALITY_GROUPS, personalityTraitPairs, personalityTraitsIn,
-} from '@/engine/content/personality-traits';
 import { BIRTH_YEARS_BEFORE_START, latestBirthYear } from '@/ui/creation/CharacterCreation';
 
 /** Every source file in a directory, joined, so a check can ask about the whole of it. */
@@ -43,27 +36,10 @@ function duplicates<T>(items: readonly T[], key: (item: T) => string): string[] 
 
 describe('nothing is defined twice', () => {
   it('keeps every registry id unique', () => {
-    expect(duplicates(ATTRIBUTES, (a) => a.id)).toEqual([]);
-    expect(duplicates(ALL_TRAITS, (t) => t.id)).toEqual([]);
     expect(duplicates(COUNTRIES.all(), (c) => c.id)).toEqual([]);
+    expect(duplicates([...CRAFT_INTERESTS, ...GENERAL_INTERESTS], (one) => one.id)).toEqual([]);
+    expect(duplicates(FILM_GENRES, (one) => one.id)).toEqual([]);
   });
-
-  it('keeps every name unique where a name is how you find the thing', () => {
-    expect(duplicates(ATTRIBUTES, (a) => a.name)).toEqual([]);
-    // A certificate's name repeats across boards on purpose — "General" is a
-    // rung in four systems — so it is the pair that has to be unique.
-
-    // An enquiry's `from` is not decoration: it becomes `booking.holder`, and
-    // the holder string is the whole identity of a casting office. `readFor`,
-    // `remembersYou`, `believedOf` and `ignoredBy` all key off it, so two
-    // shapes sharing one produce two productions that share one memory of the
-    // player — read for one and the other remembers it. Two rows were both "an
-    // American studio, a feature": nine shapes, eight addressable offices, and
-    // nothing said which two were secretly one.
-    expect(duplicates(ENQUIRY_SHAPES, (one) => `${one.of.from}, ${one.of.kind}`)).toEqual([]);
-  });
-
-
 });
 
 describe('everything is wired to something', () => {
@@ -105,25 +81,24 @@ describe('everything is wired to something', () => {
   });
 
   it('accepts every command a decision offers a button for', () => {
-    // Asked of the source, and not of a booted save's `decisions` table.
+    // Asked of the source, and not of a booted save's `decisions` table,
+    // which is `{}` at boot: walking it would pass for any program anybody
+    // could write.
     //
-    // This walked `Object.values(sim.universe.decisions)` until today, on a
-    // save that had just been created, and that table is `{}` at boot. The
-    // loop body never ran once, so the test could not fail for any program
-    // anybody could write: green meant there had been nothing to check. The
-    // engine raises a decision now, but a fresh save still holds none until a
-    // picture is greenlit and the world tick comes round, so asking the save
-    // would only have moved the vacuousness rather than removing it.
-    //
-    // The source holds every action any decision can ever carry. The count is
-    // asserted first, because a check with an empty subject list is the exact
-    // fault being repaired and it would come back silently the day the last
-    // raiser is deleted.
+    // The source holds every action any decision can ever carry. Nothing in
+    // this build raises a decision — the one raiser went with the family's
+    // pictures — so the empty case is stated rather than passed through: the
+    // day a raiser comes back, this has to find what it offers or fail.
     const source = readFileSync('src/engine/index.ts', 'utf8')
       + globSource('src/engine/systems')
       + globSource('src/engine/world');
     const offered = [...source.matchAll(/commandKind: '([a-z0-9_]+\.[a-z0-9_]+)'/g)].map((m) => m[1]!);
-    expect(offered.length, 'no decision anywhere offers an action, so this check checks nothing').toBeGreaterThan(0);
+    const raisers = [...source.matchAll(/requireDecision\(/g)].length;
+    if (raisers === 0) {
+      expect(offered, 'an action is offered with nothing raising a decision to carry it').toEqual([]);
+      return;
+    }
+    expect(offered.length, 'a decision is raised and this finds nothing it offers').toBeGreaterThan(0);
 
     const commands = new Set(sim.commandKinds());
     for (const kind of new Set(offered)) {
@@ -131,15 +106,6 @@ describe('everything is wired to something', () => {
     }
   });
 
-});
-
-describe('a fact stated twice is stated the same way', () => {
-
-  it('gives every trait a category the interface knows how to show', () => {
-    const categories = new Set(TRAITS.map((t) => t.category));
-    for (const trait of TRAITS) expect(categories.has(trait.category)).toBe(true);
-    expect(duplicates(TRAITS, (t) => t.name)).toEqual([]);
-  });
 });
 
 describe('the year a character can be born in', () => {
@@ -231,43 +197,6 @@ describe('race and ethnicity on the character sheet', () => {
   });
 });
 
-describe('the order the personality traits are offered in', () => {
-  it('puts every trait beside the one it rules out', () => {
-    for (const group of PERSONALITY_GROUPS) {
-      for (const row of personalityTraitPairs(group)) {
-        if (row.length !== 2) continue;
-        const [left, right] = row;
-        expect(left!.conflictsWith ?? [], `${left!.name} beside ${right!.name}`).toContain(right!.id);
-        expect(right!.conflictsWith ?? [], `${right!.name} beside ${left!.name}`).toContain(left!.id);
-      }
-    }
-  });
-
-  it('offers every trait exactly once', () => {
-    for (const group of PERSONALITY_GROUPS) {
-      const ordered = personalityTraitPairs(group).flat().map((t) => t.id);
-      const expected = personalityTraitsIn(group).map((t) => t.id);
-      expect([...ordered].sort()).toEqual([...expected].sort());
-      expect(ordered.length).toBe(new Set(ordered).size);
-    }
-  });
-
-  it('stands a trait alone only when its opposite is already spoken for', () => {
-    for (const group of PERSONALITY_GROUPS) {
-      const rows = personalityTraitPairs(group);
-      const paired = new Set(rows.filter((r) => r.length === 2).flat().map((t) => t.id));
-      for (const row of rows) {
-        if (row.length !== 1) continue;
-        const alone = row[0]!;
-        const inGroup = new Set(personalityTraitsIn(group).map((t) => t.id));
-        const partners = (alone.conflictsWith ?? []).filter((id) => inGroup.has(id));
-        // Every one of its in-group opposites is in a pair with somebody else.
-        for (const id of partners) expect(paired.has(id)).toBe(true);
-      }
-    }
-  });
-});
-
 describe('the interests and the genres', () => {
   it('offers film and television, and the trades that make them', () => {
     const general = GENERAL_INTERESTS.map((one) => one.id);
@@ -278,7 +207,7 @@ describe('the interests and the genres', () => {
       'cinematography', 'screenwriting', 'editing', 'sound_design', 'costume_design',
       'production_design', 'stunts', 'visual_effects', 'casting', 'directing',
       'producing', 'showrunning', 'voice_acting', 'film_scoring',
-    ]) expect(crafts, `${trade} is a trade this industry has`).toContain(trade);
+    ]) expect(crafts, `${trade} is a trade film and television have`).toContain(trade);
   });
 
   it('keeps every list in the order a reader would look in', () => {
@@ -305,7 +234,7 @@ describe('the interests and the genres', () => {
     ]) expect(labels).toContain(label);
   });
 
-  it('puts both on the player, and reads them through one door', () => {
+  it('puts both on the player, and nothing in the simulation reads them', () => {
     const sim = createSave(1, 'interests', {
       ...defaultConfig(), interests: ['cinematography', 'film'], genres: ['film_noir', 'western'],
     });
@@ -313,19 +242,17 @@ describe('the interests and the genres', () => {
     expect(player.interests).toEqual(['cinematography', 'film']);
     expect(player.genres).toEqual(['film_noir', 'western']);
 
-    // `core/taste.ts` is the door. Everything else asks it, so the rules about
-    // what an interest means live in one file rather than in each caller.
-    //
-    // The rule is about reading them off a PERSON — `person.genres` — not about
-    // the word. The genre catalog itself is public: `content/genre-mastery.ts`
-    // builds a mastery per genre from it and never touches anybody's save.
+    // `core/taste.ts` was the one reader, and it went with the attributes. So
+    // the rule now is the one race and ethnicity keep: the moment something
+    // in the engine branches on them they stop being who somebody is and
+    // start being a stat. The person look says them back, and that is all.
     const readers = readdirSync('src/engine', { recursive: true, encoding: 'utf8' })
       .filter((f) => f.endsWith('.ts'))
       .map((f) => `src/engine/${f.replace(/\\/g, '/')}`)
       .filter((f) => statSync(f).isFile())
-      .filter((f) => !/core\/taste\.ts|world\/bootstrap\.ts|domain\/model\.ts/.test(f))
-      .filter((f) => /\.(genres|interests|personalityTraits)\b/.test(readFileSync(f, 'utf8')));
-    expect(readers, 'these reach past core/taste.ts for somebody’s taste').toEqual([]);
+      .filter((f) => !/world\/bootstrap\.ts|domain\/model\.ts/.test(f))
+      .filter((f) => /\.(genres|interests)\b/.test(readFileSync(f, 'utf8')));
+    expect(readers, 'these read somebody’s taste out of a save').toEqual([]);
   });
 
   it('drops an id that is not on any list', () => {
@@ -335,77 +262,5 @@ describe('the interests and the genres', () => {
     const player = sim.universe.people[sim.universe.playerId]!;
     expect(player.interests).toEqual(['film']);
     expect(player.genres).toEqual(['western']);
-  });
-});
-
-describe('mastery of every genre', () => {
-  it('gives every genre one, and nothing a mastery without a genre', () => {
-    expect(GENRE_MASTERIES).toHaveLength(FILM_GENRES.length);
-    for (const genre of FILM_GENRES) {
-      const mastery = masteryForGenre(genre.id);
-      expect(mastery, `${genre.label} has no mastery`).toBeDefined();
-      expect(mastery!.name).toBe(`${genre.label} Mastery`);
-      expect(mastery!.category).toBe('Genre');
-    }
-    const genreIds = new Set(FILM_GENRES.map((g) => g.id));
-    for (const mastery of GENRE_MASTERIES) {
-      expect(genreIds.has(mastery.id.replace(/^genre_/, ''))).toBe(true);
-    }
-  });
-
-  it('lists them alphabetically by their own name, not the genre’s', () => {
-    // Adding a word to the end reorders any pair where one genre name begins
-    // the other: Horror Comedy Mastery comes before Horror Mastery, where the
-    // genres run Horror then Horror Comedy.
-    const names = GENRE_MASTERIES.map((m) => m.name);
-    expect(names).toEqual([...names].sort((a, b) => a.localeCompare(b, 'en')));
-    expect(names.indexOf('Horror Comedy Mastery')).toBeLessThan(names.indexOf('Horror Mastery'));
-  });
-
-  it('keeps every id and name unique', () => {
-    expect(new Set(GENRE_MASTERIES.map((m) => m.id)).size).toBe(GENRE_MASTERIES.length);
-    expect(new Set(GENRE_MASTERIES.map((m) => m.name)).size).toBe(GENRE_MASTERIES.length);
-  });
-});
-
-describe('the acting sheet', () => {
-  it('lists every skill and every trait alphabetically', () => {
-    const skills = ATTRIBUTES.map((a) => a.name);
-    expect(skills).toEqual([...skills].sort((a, b) => a.localeCompare(b, 'en')));
-    const traits = TRAITS.map((t) => t.name);
-    expect(traits).toEqual([...traits].sort((a, b) => a.localeCompare(b, 'en')));
-  });
-
-  it('keeps the ids the traits point at', () => {
-    // A trait's attributeMods name attribute ids. One that no longer exists
-    // would write into a key nothing reads, and nothing would say so.
-    const ids = new Set(ATTRIBUTES.map((a) => a.id));
-    for (const trait of TRAITS) {
-      for (const id of Object.keys(trait.attributeMods ?? {})) {
-        expect(ids.has(id), `${trait.name} modifies unknown attribute '${id}'`).toBe(true);
-      }
-    }
-  });
-
-  it('gives every skill a group the interface knows', () => {
-    const groups = new Set(ATTRIBUTE_GROUPS);
-    for (const skill of ATTRIBUTES) {
-      expect(groups.has(skill.group), `${skill.name} is in unknown group '${skill.group}'`).toBe(true);
-    }
-    // Every group carries something; an empty one is a group that died.
-    for (const group of ATTRIBUTE_GROUPS) {
-      expect(attributesInGroup(group).length, `${group} is empty`).toBeGreaterThan(0);
-    }
-  });
-
-  it('hands the player all of it, at the ceiling', () => {
-    const sim = createSave(1, 'goat-sheet', { ...defaultConfig() });
-    const player = sim.universe.people[sim.universe.playerId]!;
-    for (const attribute of ATTRIBUTES) expect(rate(player.attributes, attribute.id)).toBe(CEILING);
-    // Every acting trait and a mastery of every genre, held at once.
-    expect(ALL_TRAITS).toHaveLength(TRAITS.length + GENRE_MASTERIES.length);
-    for (const trait of ALL_TRAITS) {
-      expect(player.traits, `${trait.name} not held`).toContain(trait.id);
-    }
   });
 });

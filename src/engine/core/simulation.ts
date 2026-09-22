@@ -169,8 +169,8 @@ export class Simulation {
 
   /**
    * Emits an event and runs every reactor, synchronously, inside the current
-   * transaction. Buying a mansion emits one event; finance, tax, insurance,
-   * household, calendar, utilities and publicity all respond to it here.
+   * transaction. One event can have any number of reactors, and all of them
+   * run here, before the command that emitted it returns.
    */
   emit<P>(kind: string, payload: P, opts: { at?: Instant; subjectId?: string; tags?: string[] } = {}): WorldEvent[] {
     const event = worldEvent(kind, opts.at ?? this.now, payload, opts);

@@ -15,12 +15,7 @@ import { CommandError } from '../core/simulation';
 import type { Person, Wellbeing } from '../domain/model';
 import { clamp, remap } from '../core/rng';
 import { addDays, formatTime, instantFromZoned, zonedParts, MS_HOUR, MS_DAY } from '../core/time';
-import { modifierFor } from '../domain/attributes';
-import { dispositionOf } from '../core/taste';
 import { ceilingAt, recoveryFactorAt } from '../content/lifespan';
-import { driftBonds, moralePullOf } from '../world/standing';
-import { whatHasThem } from '../world/diary';
-import { A_WORKING_WEEK } from '../content/audition';
 
 // ---------------------------------------------------------------------------
 // Wellbeing model
@@ -36,16 +31,22 @@ export const ENERGY_DRAIN_PER_HOUR = 3.0;
  */
 export const NOURISHMENT_DRAIN_PER_HOUR = 2.0;
 
+/**
+ * How much of a night's recovery a full sleep debt holds back.
+ *
+ * What gives energy a memory. Without it a night put back about ninety points
+ * whatever came before it, so one week of rest and twelve left a person in
+ * exactly the same place. With it, you cannot fill the tank while you are
+ * carrying one, and recovery is gradual. It used to live beside the working
+ * week in the audition content; it was never about work, so it lives here.
+ */
+export const DEBT_HOLDS = 0.62;
+
 export function freshWellbeing(): Wellbeing {
   return {
     energy: 82, stress: 18, sleepDebt: 0, morale: 62,
     condition: 88, fitness: 50, nourishment: 75, hygiene: 80,
   };
-}
-
-/** One of this person's personality knobs, or 1 when they hold nothing that touches it. */
-export function personalityOf(person: Person, key: string): number {
-  return dispositionOf(person, key);
 }
 
 /**
@@ -57,21 +58,19 @@ export function applyElapsedWellbeing(person: Person, hours: number, opts: { asl
   const w = person.wellbeing;
   if (opts.asleep) return;
 
-  const traitDrain = modifierFor(person, 'stressPerShootDay') * personalityOf(person, 'stressGain');
   w.energy = clamp(w.energy - ENERGY_DRAIN_PER_HOUR * hours * (1 + (w.sleepDebt / 24) * 0.5), 0, 100);
   w.nourishment = clamp(w.nourishment - NOURISHMENT_DRAIN_PER_HOUR * hours, 0, 100);
   w.sleepDebt = Math.min(60, w.sleepDebt + hours * 0.34);
 
   // Running on empty costs you.
-  if (w.energy < 15) w.stress = clamp(w.stress + hours * 1.6 * traitDrain, 0, 100);
+  if (w.energy < 15) w.stress = clamp(w.stress + hours * 1.6, 0, 100);
   if (w.nourishment < 20) {
     w.condition = clamp(w.condition - hours * 0.5, 0, 100);
     w.morale = clamp(w.morale - hours * 0.7, 0, 100);
   }
   if (w.stress > 75) w.condition = clamp(w.condition - hours * 0.25, 0, 100);
 
-  const recovery = modifierFor(person, 'recoveryRate') * personalityOf(person, 'stressRecovery');
-  w.stress = clamp(w.stress - hours * 0.35 * recovery, 0, 100);
+  w.stress = clamp(w.stress - hours * 0.35, 0, 100);
 
   w.hygiene = clamp((w.hygiene ?? 80) - hours * 1.6, 0, 100);
 }
@@ -180,19 +179,17 @@ export function startOfLocalDay(sim: Simulation): number {
   return instantFromZoned({ year: p.year, month: p.month, day: p.day }, sim.homeZone);
 }
 
-/** 0-1 quality of a night's sleep, from the bed, the stress and the hour. */
+/**
+ * 0-1 quality of a night's sleep, from the stress and the hour.
+ *
+ * The house used to add to it, by its condition. The house is gone, and the
+ * base is what a night in it gave on the first morning, so taking it out did
+ * not make every night worse.
+ */
 export function sleepQuality(sim: Simulation, person: Person): number {
-  let quality = 0.72;
-
-  const property = person.residenceId ? sim.universe.properties[person.residenceId] : undefined;
-  if (!property) quality -= 0.18;
-  else quality += remap(property.condition, 0, 100, -0.12, 0.10);
+  let quality = 0.82;
 
   quality -= remap(person.wellbeing.stress, 0, 100, 0, 0.24);
-  quality += modifierFor(person, 'recoveryRate') * 0.06 - 0.06;
-  // A light sleeper and a night owl both lose here; somebody who can sleep
-  // anywhere gains it back.
-  quality *= personalityOf(person, 'sleepQuality');
 
   const hour = zonedParts(sim.now, sim.zone).hour;
   if (hour >= 1 && hour < 5) quality -= 0.08; // going to bed very late
@@ -213,12 +210,8 @@ export function applySleep(person: Person, hours: number, quality: number, at?: 
   // months had been — so the debt was the only dial that carried anything and it
   // barely reaches `readiness`. The drain side of this coupling was already
   // declared and measured dead; this is the half that makes both of them bite.
-  const owing = 1 - Math.min(A_WORKING_WEEK.debtHolds,
-    (w.sleepDebt / 30) * A_WORKING_WEEK.debtHolds);
-  w.energy = clamp(
-    w.energy + effective * 13.5 * banked * personalityOf(person, 'energyRecovery') * owing,
-    0, 100,
-  );
+  const owing = 1 - Math.min(DEBT_HOLDS, (w.sleepDebt / 30) * DEBT_HOLDS);
+  w.energy = clamp(w.energy + effective * 13.5 * banked * owing, 0, 100);
   // Debt clears with the whole night, not only with the part of it above five
   // and a half hours.
   w.sleepDebt = Math.max(0, w.sleepDebt - Math.max(0, effective - 5.5) * 2.2 - effective * 1.4);
@@ -265,60 +258,25 @@ const COASTING_NOURISHMENT_TARGET = 76;
 /** What the unattended day accounts for, sleep included. */
 const HOURS_IN_A_DAY = 24;
 
-/** Runs once per local day: the home wears, and bodies move toward their age. */
+/** Runs once per local day: bodies move toward their age. */
 export function dailyRollover(sim: Simulation): void {
   const player = sim.universe.people[sim.universe.playerId];
   if (!player) return;
-
-  // Homes wear.
-  for (const property of Object.values(sim.universe.properties)) {
-    if (property.soldAt) continue;
-    property.condition = clamp(property.condition - 0.012, 0, 100);
-  }
 
   // Fitness decays without use; condition slowly recovers toward fitness. Both
   // are held under what a body of that age can reach, so a seventy year old
   // with perfect habits is a very fit seventy year old rather than
   // indistinguishable from a very fit twenty five year old.
   //
-  // There is no use for it to decay without, and building one was measured and
-  // changes nothing anybody can observe. Crediting fitness on a day the player
-  // is on a shoot — plus 0.42 worked against minus 0.18 otherwise, gated on
-  // `isPlayer` because this loop walks every person and `whatHasThem` answers
-  // about the player whoever is asking — was built and run over five seeds of
-  // twenty-five played years. Mean fitness by five-year block moved from 0.0 to
-  // anywhere between 2 and 58 depending on the seed, and condition followed it
-  // up by as much as 15 points, while every other number in the run stayed
-  // identical to the digit: energy, stress, sleep debt, morale, readiness,
-  // reliability, the week reliability first read zero, asks, readings, clashes
-  // and parts won. The reason is two lines up the file. `readiness` does not
-  // read condition, and the only reader of `w.condition` in src outside this
-  // file is the dial declared at ui/looks/wellbeing.tsx:37 and read at :47; the
-  // suite reads it twice, to assert it is above zero and to compare two seeds.
-  // A writer for fitness is a change to a dial until something downstream of
-  // condition decides something.
-  //
-  // Both clamps here are guards no played input trips. Over 27300 player-days
-  // on three seeds, `ceiling.fitness` was the binding arm of the first
-  // `Math.min` zero times — fitness is above zero for exactly the first 278
-  // days of every save and the ceiling never falls below 89.1 — and
-  // `ceiling.condition` bound the second zero times as well. For the other 97%
-  // of a career this block is `w.fitness` held at nought and `w.condition`
-  // pulled toward a constant sixty.
+  // Fitness has no writer that raises it, and a writer for it would change a
+  // dial rather than an outcome until something downstream of condition
+  // decides something: `readiness` does not read condition.
   for (const person of Object.values(sim.universe.people)) {
     const w = person.wellbeing;
     const ceiling = ceilingAt(yearsSince(person.birthInstant, sim.now));
     w.fitness = clamp(Math.min(w.fitness - 0.18, ceiling.fitness), 0, 100);
     const target = Math.min(60 + w.fitness * 0.4, ceiling.condition);
     w.condition = clamp(Math.min(w.condition + (target - w.condition) * 0.02, ceiling.condition), 0, 100);
-  }
-
-  // A day of neither of you doing anything about it, charged to every bond,
-  // and then what the people around you are worth to the person having the day.
-  driftBonds(sim.universe, sim.now);
-  for (const person of Object.values(sim.universe.people)) {
-    const pull = moralePullOf(sim.universe, person.id, person.wellbeing.morale);
-    if (pull !== 0) person.wellbeing.morale = clamp(person.wellbeing.morale + pull, 0, 100);
   }
 
   liveTheUnattendedDay(sim);
@@ -338,41 +296,13 @@ export function dailyRollover(sim: Simulation): void {
 function liveTheUnattendedDay(sim: Simulation): void {
   for (const person of Object.values(sim.universe.people)) {
     const w = person.wellbeing;
-    // Whether today is a day somebody else owns. It is the first thing in this
-    // game that makes one day different from another, and the reason the whole
-    // model was a fixed point until now: the autopilot restores to the same
-    // ceiling and the same floor every single day, so seven of these nine dials
-    // were constants by day thirty and readiness sat at 49 for five years.
-    const on = person.isPlayer ? whatHasThem(sim, sim.now, sim.now + MS_DAY) : undefined;
-    // And how far into it today is. Week one of anything is an ordinary week;
-    // the last week of a long one is not. A flat working penalty was the first
-    // draft and it only moved the fixed point somewhere else — every week cost
-    // the same from the first, so a fourteen-week job took a career from
-    // sixty-six to nothing and a two-week job cost a tenth of it for no reason.
-    const intoIt = on
-      ? clamp((sim.now - on.from) / Math.max(MS_DAY, on.to - on.from), 0, 1)
-      : 0;
-
     // A night they did not plan. Shorter, poorer, and it does not clear debt
     // the way a deliberate one does.
     const sinceSlept = person.lastSleptAt === undefined ? Number.POSITIVE_INFINITY : sim.now - person.lastSleptAt;
     let sleptHours = 0;
     if (sinceSlept >= 20 * MS_HOUR) {
       const quality = sleepQuality(sim, person) * 0.95;
-      // A night in the middle of a shoot is not a night anybody chose: the call
-      // is at six and there is an hour in the chair before it. Short nights are
-      // the mechanism rather than a second clamp, because the model already
-      // knows what one does — `applySleep` clears less debt from a short night
-      // and adds debt below six hours, so a long run declines on its own and
-      // goes on declining, which a fixed working ceiling cannot do.
-      // The worse of how deep into this job today is and how worn the person
-      // already was. `intoIt` resets with every engagement, so on its own it
-      // handed somebody who had rested a week and started another twelve-weeker
-      // a run of ordinary nights while they were still carrying the last one —
-      // and that is why the size of a gap decided almost nothing.
-      const worn = on ? Math.min(1, w.sleepDebt / 30) : 0;
-      const hard = Math.max(intoIt, worn);
-      const hours = clamp(7.8 - w.stress * 0.012 - A_WORKING_WEEK.shorterBy * hard, 5.4, 8.4);
+      const hours = clamp(7.8 - w.stress * 0.012, 5.4, 8.4);
       sleptHours = hours;
       applySleep(person, hours, quality, sim.now);
       person.lastSleptAt = sim.now;

@@ -13,12 +13,10 @@
  *
  * Both kinds here do the same job. Say the figure the bar hides, say what
  * raised it, say when it stops asking, and offer the thing it is about, which
- * is a pointer five record shapes declare and the engine now fills in
- * fifty-two times. `subjectForRef` resolves forty-two of those — every
- * `'project'`, including the reimbursement row this file’s own decision look
- * paints a way from. The ten it does not resolve are the nine `'audition'`
- * notifications and the one `'property'`, and the reason is the same for all
- * ten: no look has ever been declared for either kind.
+ * is a pointer five record shapes declare. Nothing in the engine fills it in
+ * any more — everything that did went with the film side — so the pointer is
+ * whatever an older save carries or a caller supplies, and `subjectForRef`
+ * resolves it only when a look has been declared for its kind.
  *
  * A decision’s actions are commands. They stay on Home, where pressing one
  * runs it through `game.run()`. This explains a decision; it never takes one,
@@ -135,11 +133,10 @@ function weightOf(urgency: number): string {
 /**
  * A way onto the thing a record points at, labeled with that thing’s own name.
  *
- * The `lookExists` guard is not belt and braces. Ten of the fifty-two pointers
- * the engine writes carry a kind the registry has never heard of — nine
- * `'audition'` and one `'property'` — so the guard fires on real records in an
- * ordinary save, and what it buys is a row with no way out rather than a link
- * onto a page that does not exist.
+ * The `lookExists` guard is not belt and braces. An older save carries pointers
+ * of kinds the registry has never heard of — `'project'`, `'audition'` and
+ * `'property'` — so the guard fires on real records, and what it buys is a row
+ * with no way out rather than a link onto a page that does not exist.
  */
 function wayTo(sim: Simulation, subject: Subject, detail: string): Way | undefined {
   if (!lookExists(sim, subject)) return undefined;

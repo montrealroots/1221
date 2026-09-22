@@ -2,9 +2,8 @@
  * SLATE — The master calendar.
  *
  * Calendar is the collision detector of the universe. Everything that occupies
- * the player's time lands here: work, classes, appointments, dates, filming,
- * flights, deadlines, ceremonies. It also carries the things that are not
- * commitments but matter anyway — birthdays, holidays, seasons.
+ * the player's time lands here. It also carries the things that are not
+ * commitments but matter anyway — holidays and seasons.
  */
 
 import { holidaysAcross, type Calendar, type KeptHoliday } from '../content/holidays';
@@ -17,7 +16,7 @@ import {
 } from '../core/time';
 import { CITIES } from '../content/geography';
 
-export type CalendarCategory = 'personal' | 'family' | 'holiday' | 'birthday' | 'system';
+export type CalendarCategory = 'personal' | 'holiday' | 'system';
 
 export interface CalendarLegendEntry {
   category: CalendarCategory;
@@ -35,9 +34,7 @@ export interface CalendarLegendEntry {
  */
 export const CALENDAR_LEGEND: readonly CalendarLegendEntry[] = [
   { category: 'personal', label: 'Personal', colour: '#a86b8c', description: 'Time that’s yours.' },
-  { category: 'family', label: 'Family', colour: '#b5859a', description: 'Anniversaries and family commitments.' },
   { category: 'holiday', label: 'Holiday', colour: '#8c8c8c', description: 'Public holidays and observances.' },
-  { category: 'birthday', label: 'Birthday', colour: '#c98b8b', description: 'Birthdays of people you know.' },
   { category: 'system', label: 'World', colour: '#6a6a6a', description: 'Background world processing.' },
 ];
 
@@ -123,27 +120,16 @@ export function entriesBetween(sim: Simulation, from: Instant, to: Instant): Cal
 }
 
 /**
- * The country whose year the business runs on.
+ * The calendars this life keeps: where you are standing.
  *
- * The work is American — the studios, the guilds, the awards, the release
- * calendar — so its holidays are kept wherever the player is standing. A
- * Thanksgiving nobody in the industry is working through is a fact about the
- * week whether or not the shops in Reykjavík are open.
- */
-export const INDUSTRY_COUNTRY = 'us';
-
-/**
- * The calendars this life keeps: where you are standing, and the industry's.
- *
- * Where you are comes first, because that is whose shops are shut and whose
- * roads are quiet. The two collapse to one when the player is in America.
+ * That is whose shops are shut and whose roads are quiet. There used to be a
+ * second, the American one the film business runs on, kept wherever the
+ * player stood; it went with the business.
  */
 export function keptCalendars(sim: Simulation): Calendar[] {
   const player = sim.universe.people[sim.universe.playerId];
   const here = player ? CITIES.get(player.currentLocationId) : undefined;
-  const out: Calendar[] = here ? [{ countryId: here.countryId, regionId: here.parentId }] : [];
-  if (!out.some((c) => c.countryId === INDUSTRY_COUNTRY)) out.push({ countryId: INDUSTRY_COUNTRY });
-  return out;
+  return here ? [{ countryId: here.countryId, regionId: here.parentId }] : [];
 }
 
 /** A full month grid, Sunday-first, including leading and trailing days. */
@@ -253,7 +239,7 @@ export function skipTargets(sim: Simulation, limit = 12): SkipTarget[] {
  * The commitments the player would miss by jumping straight to `at`.
  *
  * The Advance menu asks before it moves, because time only goes forwards and
- * an audition skipped is an audition missed.
+ * a plan skipped is a plan missed.
  */
 export function missedBy(sim: Simulation, at: Instant): CalendarEntry[] {
   return sim.timeline

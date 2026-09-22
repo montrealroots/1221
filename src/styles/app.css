@@ -433,14 +433,6 @@ input[readonly]:focus { border-color: var(--line-strong); }
 textarea { resize: vertical; min-height: 72px; }
 label, .label { display: block; font-size: var(--size-xs); font-weight: 600; color: var(--text-muted); margin-bottom: var(--s1); }
 
-/* A value the form worked out rather than asked for. It sits where the input
-   it replaces would, so a field that settles itself does not shift the row. */
-.settled-title {
-  display: block; padding: var(--s2) 0;
-  font-size: var(--size-sm); font-weight: 650;
-  color: var(--accent-strong);
-}
-
 /* Chromium gives a range input a default side margin, which pushes it a few
    pixels past the field it sits in. */
 input[type="range"] {
@@ -570,29 +562,6 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-sp
 }
 .slot-name { font-size: var(--size-xl); font-weight: 600; }
 .slot-meta { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s3); }
-
-/* A long list the player can open and read, rather than take on trust. */
-.sheet > summary {
-  display: flex; align-items: center; justify-content: space-between; gap: var(--s3);
-  cursor: pointer; list-style: none;
-}
-.sheet > summary::-webkit-details-marker { display: none; }
-.sheet-title { font-size: var(--size-md); font-weight: 650; }
-/* The toggle reads last, after the name and the count, so the row says what
-   the list is before it says what the click does. */
-.sheet > summary::after {
-  content: 'Show'; font-size: var(--size-xs); font-weight: 600;
-  color: var(--accent-strong);
-}
-.sheet-title { margin-right: auto; }
-.sheet[open] > summary::after { content: 'Hide'; }
-.sheet-grid {
-  display: grid; gap: var(--s3);
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  max-height: 460px; overflow-y: auto;
-  padding-right: var(--s2);
-}
-.sheet-item { min-width: 0; }
 
 /* The production companies, one card each. */
 /* ---------- Looking at things ----------
@@ -963,23 +932,8 @@ kbd {
 .creation-step[data-state="active"] { border-bottom-color: var(--accent); color: var(--accent-strong); }
 .creation-step[data-state="done"] { border-bottom-color: var(--text-dim); color: var(--text-muted); }
 
-/* One thing on the land: what it is, then what it is. Boxed so three of them
-   read as three, not as a paragraph with bold in it. */
-.holding {
-  padding: var(--s3); border: 1px solid var(--line);
-  border-radius: var(--radius-sm); background: var(--surface-2);
-}
-
 .trait-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: var(--s2); }
 
-/* Two traits written against each other, kept on one row so the trade-off
-   between them is visible. Narrow enough and they stack, which still reads as
-   a pair because nothing else comes between them. */
-.trait-pair {
-  display: grid; gap: var(--s2);
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  margin-bottom: var(--s2);
-}
 .trait {
   padding: var(--s3); border: 1px solid var(--line); border-radius: var(--radius-sm);
   background: var(--surface-2); text-align: left; cursor: pointer; color: inherit; font: inherit;

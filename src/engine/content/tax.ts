@@ -15,7 +15,6 @@
 import type { Money } from '../core/money';
 import { applyRate } from '../core/money';
 import { jurisdictionPath, CITIES } from './geography';
-import { VAT_RATE } from './incorporation';
 
 export interface TaxBracket {
   /** Lower bound of the bracket in cents. */
@@ -78,22 +77,6 @@ export interface VehicleFeeRule {
   /** Whether an annual safety or emissions inspection is required. */
   inspectionRequired: boolean;
   effectiveFrom: number;
-}
-
-export interface FilmIncentiveRule {
-  jurisdictionCode: string;
-  label: string;
-  /** Percentage of qualified local spend returned. */
-  rate: number;
-  /** Minimum qualified spend to be eligible, in cents. */
-  minimumSpend: Money;
-  /** Cap per project, in cents. Zero means uncapped. */
-  perProjectCap: Money;
-  /** Extra rate for hiring local crew. */
-  localHireUplift: number;
-  transferable: boolean;
-  effectiveFrom: number;
-  note: string;
 }
 
 const YEAR = (y: number) => Date.UTC(y, 0, 1);
@@ -255,12 +238,10 @@ export const SALES_TAX_RULES: readonly SalesTaxRule[] = [
   { jurisdictionCode: 'KR', rate: 0.10, exemptCategories: [], effectiveFrom: YEAR(2000) },
   { jurisdictionCode: 'MX', rate: 0.16, exemptCategories: ['groceries'], effectiveFrom: YEAR(2014) },
   { jurisdictionCode: 'AE', rate: 0.05, exemptCategories: [], effectiveFrom: YEAR(2018) },
-  // VSK, taken from `VAT_RATE` rather than typed again, because the company side
-  // of this build already declares Iceland's rate and two copies of one number
-  // is how a screen comes to disagree with the page behind it. Nothing is listed
-  // exempt: Iceland charges a reduced 11% on food, books and heat rather than
-  // zero-rating them, and this table carries one rate per jurisdiction.
-  { jurisdictionCode: 'IS', rate: VAT_RATE, exemptCategories: [], effectiveFrom: YEAR(2024) },
+  // VSK. It was taken from the company side's `VAT_RATE` rather than typed
+  // twice; that side is gone, so the rate lives here now, where the only thing
+  // that reads a tax table is.
+  { jurisdictionCode: 'IS', rate: 0.24, exemptCategories: [], effectiveFrom: YEAR(2024) },
 ];
 
 export const PROPERTY_TAX_RULES: readonly PropertyTaxRule[] = [
@@ -298,8 +279,7 @@ export const PROPERTY_TAX_RULES: readonly PropertyTaxRule[] = [
   { jurisdictionCode: 'AE', rate: 0.0000, effectiveFrom: YEAR(2018) },
   { jurisdictionCode: 'IE', rate: 0.0018, effectiveFrom: YEAR(2018) },
   // Fasteignaskattur, A-flokkur: the residential band, which law caps at 0.5%
-  // and Mosfellsbær sets near the middle of. The lot pays the commercial band
-  // instead and pays it through its own overhead table, not this one.
+  // and Mosfellsbær sets near the middle of.
   { jurisdictionCode: 'IS', rate: 0.0028, effectiveFrom: YEAR(2024) },
 ];
 
@@ -316,24 +296,6 @@ export const VEHICLE_FEE_RULES: readonly VehicleFeeRule[] = [
   { jurisdictionCode: 'GB', registrationRate: 0.0000, registrationMinimum: 190_00, purchaseTaxRate: 0.20, inspectionRequired: true, effectiveFrom: YEAR(2018) },
   { jurisdictionCode: 'AU', registrationRate: 0.0030, registrationMinimum: 400_00, purchaseTaxRate: 0.10, inspectionRequired: true, effectiveFrom: YEAR(2018) },
   { jurisdictionCode: 'AE', registrationRate: 0.0000, registrationMinimum: 120_00, purchaseTaxRate: 0.05, inspectionRequired: true, effectiveFrom: YEAR(2018) },
-];
-
-export const FILM_INCENTIVE_RULES: readonly FilmIncentiveRule[] = [
-  { jurisdictionCode: 'US-GA', label: 'Georgia Production Tax Credit', rate: 0.20, minimumSpend: 500_000_00, perProjectCap: 0, localHireUplift: 0.10, transferable: true, effectiveFrom: YEAR(2008), note: `${APPROX} Structure modeled: base credit plus an uplift, transferable.` },
-  { jurisdictionCode: 'US-NM', label: 'New Mexico Film Production Credit', rate: 0.25, minimumSpend: 100_000_00, perProjectCap: 0, localHireUplift: 0.05, transferable: false, effectiveFrom: YEAR(2019), note: APPROX },
-  { jurisdictionCode: 'US-LA', label: 'Louisiana Motion Picture Incentive', rate: 0.25, minimumSpend: 300_000_00, perProjectCap: 20_000_000_00, localHireUplift: 0.05, transferable: true, effectiveFrom: YEAR(2015), note: APPROX },
-  { jurisdictionCode: 'US-NY', label: 'New York State Film Production Credit', rate: 0.30, minimumSpend: 1_000_000_00, perProjectCap: 0, localHireUplift: 0.0, transferable: false, effectiveFrom: YEAR(2020), note: APPROX },
-  { jurisdictionCode: 'US-CA', label: 'California Film And Television Tax Credit', rate: 0.20, minimumSpend: 1_000_000_00, perProjectCap: 20_000_000_00, localHireUplift: 0.05, transferable: false, effectiveFrom: YEAR(2020), note: APPROX },
-  { jurisdictionCode: 'US-NC', label: 'North Carolina Film Grant', rate: 0.25, minimumSpend: 1_500_000_00, perProjectCap: 15_000_000_00, localHireUplift: 0, transferable: false, effectiveFrom: YEAR(2015), note: APPROX },
-  { jurisdictionCode: 'CA-BC', label: 'British Columbia Production Services Credit', rate: 0.28, minimumSpend: 250_000_00, perProjectCap: 0, localHireUplift: 0.06, transferable: false, effectiveFrom: YEAR(2018), note: APPROX },
-  { jurisdictionCode: 'CA-ON', label: 'Ontario Production Services Credit', rate: 0.215, minimumSpend: 250_000_00, perProjectCap: 0, localHireUplift: 0.05, transferable: false, effectiveFrom: YEAR(2018), note: APPROX },
-  { jurisdictionCode: 'CA-QC', label: 'Quebec Production Services Credit', rate: 0.25, minimumSpend: 250_000_00, perProjectCap: 0, localHireUplift: 0.08, transferable: false, effectiveFrom: YEAR(2018), note: `${APPROX} Uplift models the visual-effects bonus.` },
-  { jurisdictionCode: 'GB', label: 'United Kingdom Audio-visual Expenditure Credit', rate: 0.255, minimumSpend: 1_000_000_00, perProjectCap: 0, localHireUplift: 0, transferable: false, effectiveFrom: YEAR(2024), note: APPROX },
-  { jurisdictionCode: 'IE', label: 'Ireland Section 481 Relief', rate: 0.32, minimumSpend: 250_000_00, perProjectCap: 125_000_000_00, localHireUplift: 0.08, transferable: false, effectiveFrom: YEAR(2019), note: APPROX },
-  { jurisdictionCode: 'AU', label: 'Australia Location And Producer Offsets', rate: 0.30, minimumSpend: 20_000_000_00, perProjectCap: 0, localHireUplift: 0.05, transferable: false, effectiveFrom: YEAR(2021), note: APPROX },
-  { jurisdictionCode: 'NZ', label: 'New Zealand Screen Production Grant', rate: 0.20, minimumSpend: 15_000_000_00, perProjectCap: 0, localHireUplift: 0.05, transferable: false, effectiveFrom: YEAR(2018), note: APPROX },
-  { jurisdictionCode: 'ES', label: 'Spain Audiovisual Production Deduction', rate: 0.30, minimumSpend: 1_000_000_00, perProjectCap: 20_000_000_00, localHireUplift: 0, transferable: false, effectiveFrom: YEAR(2021), note: APPROX },
-  { jurisdictionCode: 'IT', label: 'Italy Tax Credit For Film Production', rate: 0.40, minimumSpend: 1_000_000_00, perProjectCap: 20_000_000_00, localHireUplift: 0, transferable: false, effectiveFrom: YEAR(2021), note: APPROX },
 ];
 
 // --- Resolution -------------------------------------------------------------
@@ -482,10 +444,6 @@ export function vehicleFees(cityId: string, at: number): VehicleFeeRule {
     jurisdictionCode: 'default', registrationRate: 0.002, registrationMinimum: 100_00,
     purchaseTaxRate: 0.055, inspectionRequired: false, effectiveFrom: 0,
   };
-}
-
-export function filmIncentive(cityId: string, at: number): FilmIncentiveRule | undefined {
-  return resolveRule(FILM_INCENTIVE_RULES, cityId, at);
 }
 
 /** Cost-of-living multiplier relative to the national baseline. */

@@ -1,11 +1,10 @@
 /**
  * SLATE — the opening.
  *
- * The first thing the screen says is what the game is: an actor and actress
- * simulator. It is under the mark rather than buried in an about box because
- * it is the premise, and because both words belong there — this is a game
- * about the one craft under its two names, and it does not hold either of them
- * as the default.
+ * The first thing the screen says is what the game is: a life simulator. It
+ * is under the mark rather than buried in an about box because it is the
+ * premise, and the revamp will say more about it there when it has more to
+ * say.
  *
  * The progression is real. Each stage does actual work — resolving persistence,
  * reading the slots, validating what is stored, checking schema versions — and
@@ -165,7 +164,7 @@ export function StartupSequence({ onReady }: { onReady: (result: StartupResult) 
           phone. Left to itself it wraps after "life" and leaves "simulator"
           alone on the second line.
         */}
-        <div className="wordmark-sub">An actor and actress life{'\u00A0'}simulator</div>
+        <div className="wordmark-sub">A life{'\u00A0'}simulator</div>
 
         <div
           className="startup-bar"

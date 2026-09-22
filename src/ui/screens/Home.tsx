@@ -11,7 +11,6 @@ import { titleCaseLabel } from '@/engine/core/text';
 import { placeProfile, placeKindLabel, formatPeople, type PlaceProfile } from '@/engine/world/place';
 import { WEATHER_EMOJI, forecastFor, weatherAt, weatherShort } from '@/engine/systems/weather';
 import { WEEKDAY_NAMES } from '@/engine/core/time';
-import { PERFORMER_NOUN } from '@/engine/core/performer';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Meter, MoneyText, Empty } from '@/ui/components/primitives';
 import { openDecisions, lifeSnapshot, unreadNotifications } from '@/engine/world/world';
@@ -23,7 +22,6 @@ import {
   dateKey, formatDate, formatRelative, formatTime, formatWeekdayDate, seasonOf, zoneAbbreviation,
 } from '@/engine/core/time';
 import { formatMoney } from '@/engine/core/money';
-import { ESTATE_ACRES, ESTATE_NAME, HOUSE, LOT_NAME } from '@/engine/content/estate';
 import { LookRegion, Open, at } from '@/ui/looks';
 
 export function Home() {
@@ -50,15 +48,13 @@ export function Home() {
   return (
     <>
       {/*
-        Six nouns in three lines, and until now not one of them opened: the
+        Five nouns in three lines, and until now not one of them opened: the
         date, your own name, the city, the season and the sky. Each names the
         thing it is, and the thing knows what it opens into.
       */}
       <LookRegion className="page-head">
         <div className="eyebrow">
           <Open subject={at('day', today)}>{formatWeekdayDate(sim.now, sim.zone)}</Open>
-          {' · '}
-          <Open subject={at('person', player.id)}>{PERFORMER_NOUN[player.performerTitle]}</Open>
         </div>
         <h1>
           Good {partOfDay(sim.now, sim.zone)},{' '}
@@ -351,14 +347,6 @@ export function Home() {
                   <Open subject={at('country', place.city.countryId)}>
                     Drives on the {place.drivesOn}. Distances in {place.units.distance === 'mi' ? 'miles' : 'kilometers'}, temperatures in °{place.units.temperature}.
                   </Open>
-                  {place.filmIncentive ? (
-                    <>
-                      {' '}
-                      <Open subject={at('place', place.city.id)}>
-                        {Math.round(place.filmIncentive * 100)}% film incentive here.
-                      </Open>
-                    </>
-                  ) : ''}
                   {place.currency.code !== 'USD' ? (
                     <>
                       {' '}
@@ -435,7 +423,7 @@ export function Home() {
             <Stat
               label="Net Worth"
               value={<MoneyText amount={worth.total} compact />}
-              note={`${formatMoney(worth.assets, { cents: false })} in assets`}
+              note={`${formatMoney(worth.cash, { cents: false })} in the bank`}
               look={at('networth', player.id)}
             />
             {worth.liabilities > 0 && (
@@ -445,68 +433,6 @@ export function Home() {
                 look={at('debt', player.id)}
               />
             )}
-          </LookRegion>
-        </Panel>
-
-
-        <Panel title="Standing" tight look={at('reputation', player.id)}>
-          {/*
-            Three of the seven figures the business keeps on you. The other
-            four — audience appeal, reliability, prestige and controversy — are
-            in the save and have never been on a screen; they are behind the
-            standing itself, which the sentence above the bars names.
-          */}
-          <LookRegion>
-            <div className="col gap-3">
-              <Meter label="Public Fame" value={player.reputation.publicFame} look={at('standing', 'publicFame')} />
-              <Meter label="Professional Reputation" value={player.reputation.professionalReputation} look={at('standing', 'professionalReputation')} />
-              <Meter label="Industry Demand" value={player.reputation.industryDemand} look={at('standing', 'industryDemand')} />
-            </div>
-          </LookRegion>
-        </Panel>
-      </div>
-
-      <div className="grid grid-2">
-
-        {/*
-          The land, not a lease. This panel used to report a tenure, an address
-          the game had made up and a monthly rent, which is what the old
-          housing model had to say about somebody climbing a ladder. Nobody
-          here is on one.
-        */}
-        <Panel title={ESTATE_NAME} tight look={at('estate')}>
-          {/*
-            The premise, and the one place on Home where the whole of it is
-            reachable. The land opens onto the house, the lot and the company;
-            the house opens onto the household. Everything the family holds is
-            two presses from here and none of it needed a screen of its own.
-          */}
-          <LookRegion>
-            <p className="small muted" style={{ marginBottom: 'var(--s3)' }}>
-              <Open subject={at('estate')}>
-                {ESTATE_ACRES.toLocaleString('en-US')} acres
-              </Open>
-              {`, held by the family, with ${HOUSE.name}, ${LOT_NAME} and the company all standing on it.`}
-            </p>
-            <div className="col gap-3">
-              <Stat
-                label="Home"
-                value={<span style={{ fontSize: 'var(--size-md)' }}>{HOUSE.name}</span>}
-                note="No rent, no lease, no landlord"
-                look={snapshot.home ? at('house', snapshot.home.id) : undefined}
-              />
-              <Meter
-                label="Condition"
-                value={snapshot.home?.condition ?? HOUSE.condition}
-                look={snapshot.home ? at('house', snapshot.home.id) : undefined}
-              />
-              <Stat
-                label="Household"
-                value={`${snapshot.householdSize} ${snapshot.householdSize === 1 ? 'person' : 'people'}`}
-                note={snapshot.householdSize === 1 ? 'Just you, in a house built for more' : 'Under the one roof'}
-                look={player.householdId ? at('household', player.householdId) : undefined}
-              />
-            </div>
           </LookRegion>
         </Panel>
       </div>

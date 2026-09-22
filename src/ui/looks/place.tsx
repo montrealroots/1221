@@ -15,11 +15,6 @@
  * footnote, because the sun does polar things up there and a person standing
  * in it would say so.
  *
- * Reykjavík’s industry presence is zero, and that is a fact rather than a
- * hole. There is no Film and Television business in Iceland to walk into,
- * which is the premise of the whole game, so the look says it instead of
- * hiding it behind a dash.
- *
  * Where a figure is SLATE’s calibration rather than public record — a rent, a
  * cost index, an exchange rate, an industry rating — one provenance line at
  * the foot of the body says so, and that is the whole of it.
@@ -27,7 +22,6 @@
 
 import { CITIES, COUNTRIES, REGIONS, type City, type Country, type Region } from '@/engine/content/geography';
 import { CLIMATE_NAMES, climateTypeFor, usesFahrenheit, usesMiles } from '@/engine/content/climate';
-import { ESTATE_CITY_ID } from '@/engine/content/estate';
 import { RATES_NOTE, currencyInfo, formatLocal, type CurrencyInfo, formatAtlasCompact} from '@/engine/content/currency';
 import { languageNames } from '@/engine/content/languages';
 import {
@@ -157,7 +151,7 @@ defineLook<PlaceProfile>('place', {
   gone: 'There’s nowhere by that name on the map, or nothing SLATE knows well enough to tell you about.',
   resolve: (sim, id) => profileFor(sim, cityFor(sim, id)),
   seeds: (sim) => {
-    const ids = [standingIn(sim)?.id, homeCityOf(sim)?.id, ESTATE_CITY_ID];
+    const ids = [standingIn(sim)?.id, homeCityOf(sim)?.id];
     return [...new Set(ids.filter((id): id is string => !!id))];
   },
   look: (place, { sim }) => {
@@ -314,17 +308,9 @@ function summaryOfPlace(place: PlaceProfile, isHere: boolean, isHome: boolean): 
   return `It’s ${place.localTime} there, ${place.distanceFromHome} from home, and you’re not in it.`;
 }
 
-/** What the industry rating means, which at zero is the whole premise. */
+/** What the two work ratings come to, side by side. */
 function industryLine(place: PlaceProfile): string {
-  if (place.industryPresence === 0) {
-    return place.city.id === ESTATE_CITY_ID
-      ? `Film and Television rate 0/100 here, and that isn’t a gap in the data — there’s no business in ${theCountry(place.countryName)} to walk into. The only lot in the country is the one the family built, and you were born onto it.`
-      : `Film and Television rate 0/100 here, so work in it means working remotely or moving.`;
-  }
-  const incentive = place.filmIncentive
-    ? ` A production that spends its money locally gets ${Math.round(place.filmIncentive * 100)}% of it back, which is why so much of it shoots here.`
-    : '';
-  return `Film and Television rate ${outOf(place.industryPresence)} here, against ${outOf(place.jobMarketDepth)} for ordinary work.${incentive}`;
+  return `Film and Television rate ${outOf(place.industryPresence)} here, against ${outOf(place.jobMarketDepth)} for ordinary work.`;
 }
 
 // ---------------------------------------------------------------------------
@@ -369,7 +355,7 @@ defineLook<Region>('region', {
   gone: 'Somebody redrew the map, and it isn’t one of the pieces any more.',
   resolve: (sim, id) => REGIONS.get(id || standingIn(sim)?.parentId || ''),
   seeds: (sim) => {
-    const ids = [standingIn(sim)?.parentId, homeCityOf(sim)?.parentId, CITIES.get(ESTATE_CITY_ID)?.parentId];
+    const ids = [standingIn(sim)?.parentId, homeCityOf(sim)?.parentId];
     return [...new Set(ids.filter((id): id is string => !!id && !!REGIONS.get(id)))];
   },
   look: (region, { sim }) => {
@@ -453,7 +439,7 @@ defineLook<Country>('country', {
   gone: 'There’s no country by that name to be in.',
   resolve: (sim, id) => COUNTRIES.get(id || standingIn(sim)?.countryId || ''),
   seeds: (sim) => {
-    const ids = [standingIn(sim)?.countryId, homeCityOf(sim)?.countryId, CITIES.get(ESTATE_CITY_ID)?.countryId];
+    const ids = [standingIn(sim)?.countryId, homeCityOf(sim)?.countryId];
     return [...new Set(ids.filter((id): id is string => !!id))];
   },
   look: (country, { sim }) => {
@@ -546,7 +532,7 @@ defineLook<TheMoney>('currency', {
   seeds: (sim) => {
     const codes = [
       COUNTRIES.get(standingIn(sim)?.countryId ?? '')?.currency,
-      COUNTRIES.get(CITIES.get(ESTATE_CITY_ID)?.countryId ?? '')?.currency,
+      COUNTRIES.get(homeCityOf(sim)?.countryId ?? '')?.currency,
     ];
     return [...new Set(codes.filter((c): c is string => !!c))];
   },
@@ -629,7 +615,7 @@ defineLook<TheLight>('daylight', {
     };
   },
   seeds: (sim) => {
-    const ids = [standingIn(sim)?.id, ESTATE_CITY_ID];
+    const ids = [standingIn(sim)?.id, homeCityOf(sim)?.id];
     return [...new Set(ids.filter((id): id is string => !!id))];
   },
   look: (light, { sim }) => {

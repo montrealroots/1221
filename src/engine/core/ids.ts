@@ -18,24 +18,13 @@ export type Id = string;
  * had its own counter, below, and `tools/wired.mjs`, which fails the gate on a
  * namespace nothing ever asks for.
  *
- * Twenty, and it was a hundred and twenty-five. The hundred and five that
- * went were nouns from a game this one is not: vehicles and their servicing,
- * bills and prescriptions, a track season, a streaming channel with its
- * subscribers and its payouts, a school and a degree. Not one of them had a
- * `nextId` call site, so not one of them could ever have had a record — a
- * namespace nothing issues is a table the game never fills, and a hundred and
- * five of those in a list of a hundred and twenty-five made the list read as a
- * plan rather than as a fact. The last of them to go was `audit`, which had a
- * call site and still never issued an id, because the method holding that call
- * site had no caller of its own. What is left is what SLATE is: people and the
- * households they are in, money, the clock, a company with its registrations
- * and posts and policies, pictures with parts in them, a lot with stages and
- * bookings, the room, and the two logs.
+ * Seven, and it was a hundred and twenty-five. A namespace nothing issues is
+ * a table the game never fills, so the list holds only the nouns something in
+ * this build actually creates: the player, money, the clock, and the three
+ * logs.
  */
 export const ID_NAMESPACES = [
-  'person', 'household', 'account', 'txn', 'sched', 'company', 'reg', 'sign', 'policy', 'hold',
-  'post', 'project', 'prop', 'stage', 'booking', 'role', 'audition', 'history', 'notice',
-  'decision',
+  'person', 'account', 'txn', 'sched', 'history', 'notice', 'decision',
 ] as const;
 
 export type IdNamespace = typeof ID_NAMESPACES[number];

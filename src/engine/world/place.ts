@@ -14,7 +14,7 @@ import type { Simulation } from '../core/simulation';
 import { MS_HOUR, formatTime, zoneAbbreviation, zoneOffsetMs } from '../core/time';
 import { sunTimes, type SunTimes } from '../core/sun';
 import { CITIES, COUNTRIES, REGIONS, distanceKm, type City } from '../content/geography';
-import { computeAnnualTax, filmIncentive, propertyTaxRate, salesTaxRate } from '../content/tax';
+import { computeAnnualTax, propertyTaxRate, salesTaxRate } from '../content/tax';
 import { currencyInfo, formatLocalCompact, type CurrencyInfo } from '../content/currency';
 import { languageNames } from '../content/languages';
 import { usesFahrenheit, usesMiles } from '../content/climate';
@@ -92,15 +92,19 @@ export interface PlaceProfile {
   effectiveIncomeTax: number;
   salesTax: number;
   propertyTax: number;
-  filmIncentive?: number;
   tags: string[];
 }
 
-/** The city the player lives in: their residence, else where they are from. */
+/**
+ * The city the player lives in.
+ *
+ * This was the house's city, and the house is gone. Nothing in this build
+ * moves the player, so where they live is where they are, and where they are
+ * from stands in only if that place is unknown.
+ */
 export function homeCityOf(sim: Simulation): City | undefined {
   const player = sim.player;
-  const residence = player.residenceId ? sim.universe.properties[player.residenceId] : undefined;
-  return CITIES.get(residence?.locationId ?? player.homeRegionId) ?? CITIES.get(player.currentLocationId);
+  return CITIES.get(player.currentLocationId) ?? CITIES.get(player.homeRegionId);
 }
 
 export function placeProfile(sim: Simulation, cityId: string): PlaceProfile | undefined {
@@ -117,7 +121,6 @@ export function placeProfile(sim: Simulation, cityId: string): PlaceProfile | un
 
   const tax = computeAnnualTax(TAX_REFERENCE_INCOME, city.id, sim.now);
   const totalTax = tax.lines.reduce((sum, line) => sum + line.amount, 0);
-  const incentive = filmIncentive(city.id, sim.now);
 
   const km = home && away ? distanceKm(home, city) : 0;
   // Thousands separated, because a distance from home is usually a four-digit
@@ -160,7 +163,6 @@ export function placeProfile(sim: Simulation, cityId: string): PlaceProfile | un
     effectiveIncomeTax: totalTax / TAX_REFERENCE_INCOME,
     salesTax: salesTaxRate(city.id, sim.now, 'general'),
     propertyTax: propertyTaxRate(city.id, sim.now),
-    filmIncentive: incentive ? incentive.rate : undefined,
     tags: city.tags,
   };
 }

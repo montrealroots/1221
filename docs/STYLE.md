@@ -50,45 +50,6 @@ a purchase, a relationship change or an outcome that a validated command has
 not committed. A real name carries its provenance; an invented one is never
 called real.
 
-## Actor, or actress
-
-SLATE is an actor and actress life simulator. The two words name one craft, and
-game gives them equal standing: neither is the default, neither is the variant,
-and no string calls one of them the other one.
-
-A person's title is their own word. It comes from `performerTitleOf` and is
-printed through `PERFORMER_NOUN`, never typed into a string, because a
-hardcoded "Actor" is wrong for half the people it lands on. A label that
-arrives as a single "Method Actor/Actress" string is read back for one person
-through `forTitle`. A list of people is split by `splitByTitle`, and both
-halves are headed with their own word, neither introduced as the other one's
-counterpart.
-
-Where the choice is offered it is offered flat: **Actor** and **Actress**, two
-options of the same weight, with no note explaining one of them as the
-exception. The article before both is "an", and the sentence around the word is
-where that goes wrong — "You are a " followed by the noun reads "a actor", and
-no search for that phrase will find it, because nothing in the file spells it.
-<!-- both-titles: the word itself, which is what this paragraph is about. -->
-`tests/premise.test.ts` holds the words, and the save that has to state them.
-
-<!-- both-titles: the word itself, which is what the next paragraph quotes. -->
-That covered the labels and the save and left the prose, which is where it
-actually slipped: a doc comment about what "an actor" handles, a refusal about
-casting "an American actor", a shoot day lost to "a sick actor". Every one of
-those quietly elects one of the two words as the one the other varies from,
-which is the thing the premise exists to refuse — and none of them is a label,
-so nothing was looking.
-
-`node tools/both-titles.mjs` is now looking, and the gate runs it. A bare
-`actor` or `actress` fails unless it is the pair said together, an identifier, a
-real name somebody is actually called, or a label that carries both words
-through `nameByTitle`. **The generic is "performer"**, which is what
-`content/casting.ts` already used. A line that is genuinely about one of the two
-words — a comment explaining why nobody calls a key grip an actress — carries
-`both-titles: the word itself` and is left alone; there are four of those in the
-tree and each one says why.
-
 ## Pictures
 
 The interface is text. No emoji on any tab, tile, breadcrumb, search result,
@@ -144,9 +105,8 @@ question, a colon and the thing itself.
 
 Displayed labels are free to change; command kinds, entity ids, save keys,
 schedule kinds and event names are not renamed to improve a label. A label
-map (`PERFORMER_NOUN`, `DISCIPLINE_LABEL`) sits between the id and the
-screen. A person's title is the strictest case of it: every screen reads the
-word through `performerNoun`, never writes it out.
+map (`LEGEND_BY_CATEGORY`, `INTEREST_BY_ID`) sits between the id and the
+screen.
 
 ## What holds it in place
 

@@ -15,18 +15,13 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
-import { estateCity } from '@/engine/content/estate';
+import { CITIES } from '@/engine/content/geography';
 import type { Simulation } from '@/engine';
 import { MS_DAY, MS_HOUR, MS_MINUTE } from '@/engine/core/time';
 import { entriesBetween, nextCommitment, upcoming } from '@/engine/world/calendar';
 import { unreadNotifications } from '@/engine/world/world';
-import { MISSED_COOLS, TOGETHER_WARMS } from '@/engine/world/standing';
-import { resolveLook } from '@/ui/looks/registry';
-import type { Looked } from '@/ui/looks/registry';
-import '@/ui/looks/all';
 import {
-  CALLING_OFF_COSTS, FURTHEST_AHEAD_DAYS, LONGEST_MINUTES, LONGEST_TITLE, NOTICE_FREE_HOURS,
-  PLAN_KIND, callingOffCosts, checkPlan, couldPlanWith,
+  FURTHEST_AHEAD_DAYS, LONGEST_MINUTES, LONGEST_TITLE, PLAN_KIND, checkPlan,
 } from '@/engine/world/plans';
 
 const PLANS_SOURCE = readFileSync(new URL('../src/engine/world/plans.ts', import.meta.url), 'utf8');
@@ -157,9 +152,9 @@ describe('when the moment comes', () => {
     const told = unreadNotifications(sim).find((n) => /Missed/.test(n.title));
     expect(told, 'nothing said you had missed it').toBeDefined();
     expect(told!.body).toMatch(/Los Angeles/);
-    // Named from the estate rather than typed out, so moving the family does
-    // not quietly turn this into a test of where they used to live.
-    expect(told!.body).toContain(estateCity().name);
+    // Named from where the player is rather than typed out, so changing the
+    // default town does not quietly turn this into a test of the old one.
+    expect(told!.body).toContain(CITIES.get(sim.player.currentLocationId)!.name);
   });
 });
 
@@ -184,109 +179,23 @@ describe('a plan survives being saved', () => {
   });
 });
 
-describe('who a plan can be with', () => {
-  const family = {
-    mother: { firstName: 'Halla', ageAtBirth: 29, role: 'the company' as const },
-    father: { firstName: 'Jón', ageAtBirth: 31, role: 'the lot' as const },
-    twin: { firstName: 'Katla', gender: 'female' as const, identical: true, role: 'the house' as const },
-  };
-
-  it('offers everybody you have a standing with, closest first', () => {
-    const sim = quickSave({ family }, 'plan-with-list');
-    const offered = couldPlanWith(sim);
-
-    expect(offered.map((one) => one.person.firstName)).toEqual(['Katla', 'Halla', 'Jón']);
-    for (let i = 1; i < offered.length; i += 1) {
-      expect(offered[i - 1]!.closeness).toBeGreaterThanOrEqual(offered[i]!.closeness);
-    }
-  });
-
-  it('says what each of them is to you, so a screen never works it out again', () => {
-    const sim = quickSave({ family }, 'plan-with-relations');
-    const said = Object.fromEntries(couldPlanWith(sim).map((one) => [one.person.firstName, one.relation]));
-    expect(said).toEqual({ Halla: 'Mother', Jón: 'Father', Katla: 'Twin Sister' });
-  });
-
-  it('never offers you yourself', () => {
-    const sim = quickSave({ family }, 'plan-with-not-you');
-    expect(couldPlanWith(sim).map((one) => one.person.id)).not.toContain(sim.universe.playerId);
-  });
-
-  it('offers nobody at all when you have no people', () => {
-    const sim = quickSave({}, 'plan-with-nobody');
-    sim.universe.bonds = {};
-    expect(couldPlanWith(sim)).toEqual([]);
-  });
-
-  it('offers exactly what the calendar will take, and nothing it will refuse', () => {
-    // The list and the rule are the same rule read two ways round. A screen
-    // that offered anybody else would be offering a refusal.
-    const sim = quickSave({ family }, 'plan-with-agrees');
-    for (const { person } of couldPlanWith(sim)) {
-      const answer = checkPlan(sim, {
-        title: 'Dinner', at: sim.now + MS_HOUR, withIds: [person.id],
-      });
-      expect(answer.ok, `${person.firstName} is offered and refused`).toBe(true);
-    }
-  });
-});
-
-describe('the loop the form closes', () => {
-  it('moves a standing through the same payload the screen sends', () => {
-    // The whole point of the field. Before it existed the engine took people
-    // on a plan, the standing model read them and five floors of drill-down
-    // described what they did — and no screen could send one, so every bond
-    // in every save drifted to its resting level and stayed there.
-    const sim = quickSave({
-      family: {
-        mother: { firstName: 'Halla', ageAtBirth: 29, role: 'the company' },
-        father: { firstName: 'Jón', ageAtBirth: 31, role: 'the lot' },
-      },
-    }, 'plan-with-loop');
-    const halla = couldPlanWith(sim).find((one) => one.person.firstName === 'Halla')!;
-    const jon = couldPlanWith(sim).find((one) => one.person.firstName === 'Jón')!;
-
-    // Exactly the shape PlanForm builds.
-    const answer = put(sim, {
-      title: 'Dinner With Mum',
-      at: sim.now + 2 * MS_HOUR,
-      durationMinutes: 120,
-      category: 'family',
-      withIds: [halla.person.id],
-    });
-    expect(answer.ok).toBe(true);
-
-    sim.advanceTo(sim.now + 3 * MS_HOUR);
-    const after = couldPlanWith(sim).find((one) => one.person.firstName === 'Halla')!;
-    expect(after.closeness).toBeGreaterThan(halla.closeness);
-    // And nobody who was not on it moved.
-    expect(couldPlanWith(sim).find((one) => one.person.firstName === 'Jón')!.closeness)
-      .toBe(jon.closeness);
-  });
-
-  it('takes an empty list, because most plans are with nobody', () => {
-    const sim = quickSave({}, 'plan-with-empty');
-    expect(put(sim, { title: 'An Hour Of My Own', at: sim.now + MS_HOUR, withIds: [] }).ok).toBe(true);
-  });
-});
-
 describe('the form and the engine agree about what a plan has', () => {
   const FORM = readFileSync(new URL('../src/ui/workspaces/CalendarWorkspace.tsx', import.meta.url), 'utf8');
 
   it('sends every part of a plan the engine acts on', () => {
-    // This is the gate that would have caught a whole subsystem going quiet.
-    // `withIds` was taken by the command, read by the standing model and
-    // described by five floors of drill-down, and no screen sent one — so
-    // every bond in every save drifted to its resting level and stayed.
+    // This is the gate that once caught a whole subsystem going quiet: a
+    // field the command took and no screen sent.
     //
-    // `locationId` is the deliberate absence: nothing in the game moves you
-    // anywhere, so offering a city would be offering a plan you are certain
-    // to miss. It goes on this list the day travel does.
-    const NOT_ASKED = new Set(['locationId']);
+    // Two are deliberate absences. `locationId`: nothing in the game moves
+    // you anywhere, so offering a city would be offering a plan you are
+    // certain to miss; it goes on this list the day travel does. `category`:
+    // there is one kind of day a person can plan now, and the engine fills it
+    // in.
+    const NOT_ASKED = new Set(['locationId', 'category']);
     const declared = [...PLANS_SOURCE.matchAll(/^\s{2}(\w+)\??:/gm)]
       .map((match) => match[1]!)
       .filter((field, index, all) => all.indexOf(field) === index);
-    const inSpec = declared.slice(declared.indexOf('title'), declared.indexOf('withIds') + 1);
+    const inSpec = declared.slice(declared.indexOf('title'), declared.indexOf('locationId') + 1);
 
     // The payload itself, not the file. The first draft of this asked whether
     // the field appeared anywhere in the source, which every one of them does
@@ -351,99 +260,25 @@ describe('the form and the engine agree about what a plan has', () => {
     expect(loop, 'the live clock runs over what wants you').toContain('stopOnPlayerRequired: true');
     expect(loop, 'the live clock does not halt').toContain('halt(');
   });
-
-  it('offers the people rather than only sending them', () => {
-    // A payload field with no control behind it is the same bug wearing a
-    // different hat: it would always send an empty list.
-    expect(FORM, 'nothing on the form lists who a plan could be with').toContain('couldPlanWith');
-    expect(FORM, 'the people are not a control').toMatch(/aria-labelledby="plan-with-label"/);
-  });
-});
-
-describe('a plan remembers who it is with', () => {
-  const family = {
-    mother: { firstName: 'Halla', ageAtBirth: 29, role: 'the company' as const },
-    father: { firstName: 'Jón', ageAtBirth: 31, role: 'the lot' as const },
-  };
-  const words = (look: Looked): string =>
-    [look.name, look.summary, JSON.stringify(look.body), ...(look.ways ?? []).flatMap((w) => [w.label, w.detail])]
-      .join(' ');
-
-  const madeWithHalla = (seed: string, over: Record<string, unknown> = {}) => {
-    const sim = quickSave({ family }, seed);
-    const halla = couldPlanWith(sim).find((one) => one.person.firstName === 'Halla')!.person.id;
-    const made = put(sim, {
-      title: 'Dinner', at: sim.now + 2 * MS_HOUR, durationMinutes: 90, withIds: [halla], ...over,
-    });
-    return { sim, halla, id: made.id! };
-  };
-
-  it('names her on the entry, and opens onto her', () => {
-    const { sim, halla, id } = madeWithHalla('plan-remembers');
-    const look = resolveLook(sim, { kind: 'entry', id }) as Looked;
-    expect(look, 'the entry would not open').toBeDefined();
-
-    expect(words(look)).toContain('Halla');
-    const toHer = (look.ways ?? []).find((way) => way.to.kind === 'person' && way.to.id === halla);
-    expect(toHer, 'the entry does not open onto the person it is with').toBeDefined();
-    expect(toHer!.detail).toContain('Your mother');
-  });
-
-  it('says what turning up is worth while it is still ahead of you', () => {
-    const { sim, id } = madeWithHalla('plan-remembers-ahead');
-    const look = resolveLook(sim, { kind: 'entry', id }) as Looked;
-    expect(words(look)).toContain(`worth ${TOGETHER_WARMS} points`);
-    expect(words(look)).toContain(`costs ${MISSED_COOLS}`);
-  });
-
-  it('says you were there once it has been and gone', () => {
-    const { sim, id } = madeWithHalla('plan-remembers-kept');
-    sim.advanceTo(sim.now + 3 * MS_HOUR);
-    expect(words(resolveLook(sim, { kind: 'entry', id }) as Looked)).toContain('You were there');
-  });
-
-  it('says you weren’t, when you weren’t', () => {
-    const { sim, id } = madeWithHalla('plan-remembers-missed', { locationId: 'us-ca-losangeles' });
-    sim.advanceTo(sim.now + 3 * MS_HOUR);
-    const look = resolveLook(sim, { kind: 'entry', id }) as Looked;
-    expect(words(look)).toContain('you weren’t there');
-    expect(words(look)).toContain(`cost you ${MISSED_COOLS} points`);
-  });
-
-  it('says nothing about people on a plan with nobody on it', () => {
-    const sim = quickSave({ family }, 'plan-remembers-alone');
-    const made = put(sim, { title: 'An Hour Of My Own', at: sim.now + 2 * MS_HOUR });
-    const look = resolveLook(sim, { kind: 'entry', id: made.id! }) as Looked;
-    expect(words(look)).not.toContain('It’s with');
-    expect((look.ways ?? []).some((way) => way.to.kind === 'person')).toBe(false);
-  });
 });
 
 describe('not going', () => {
-  const family = {
-    mother: { firstName: 'Halla', ageAtBirth: 29, role: 'the company' as const },
-    father: { firstName: 'Jón', ageAtBirth: 31, role: 'the lot' as const },
-  };
   const skip = (sim: Simulation, entryId: string): Answer =>
     sim.execute<Answer>({ kind: 'calendar.skip', payload: { entryId } }).value!;
-  const closeness = (sim: Simulation, first: string): number =>
-    couldPlanWith(sim).find((one) => one.person.firstName === first)!.closeness;
 
   const dinner = (seed: string) => {
-    const sim = quickSave({ family }, seed);
-    const halla = couldPlanWith(sim).find((one) => one.person.firstName === 'Halla')!.person.id;
-    const made = put(sim, { title: 'Dinner', at: sim.now + 2 * MS_HOUR, durationMinutes: 90, withIds: [halla] });
-    return { sim, halla, id: made.id! };
+    const sim = quickSave({}, seed);
+    const made = put(sim, { title: 'Dinner', at: sim.now + 2 * MS_HOUR, durationMinutes: 90 });
+    return { sim, id: made.id! };
   };
 
   it('is refused before the thing has come round', () => {
     const { sim, id } = dinner('skip-too-early');
-    expect(skip(sim, id).error).toBe('It hasn’t come round yet. Call it off instead, and they’ll know.');
+    expect(skip(sim, id).error).toBe('It hasn’t come round yet. Call it off instead.');
   });
 
-  it('costs the full price once you are standing at it', () => {
+  it('marks it missed once you are standing at it', () => {
     const { sim, id } = dinner('skip-at-it');
-    const before = closeness(sim, 'Halla');
 
     // The clock stops at it rather than running over it.
     const stopped = sim.advanceTo(sim.now + MS_DAY, { stopOnPlayerRequired: true });
@@ -452,24 +287,8 @@ describe('not going', () => {
 
     expect(skip(sim, id).ok).toBe(true);
     expect(sim.timeline.get(id)!.status).toBe('missed');
-    expect(closeness(sim, 'Halla')).toBeCloseTo(before - MISSED_COOLS, 5);
-  });
-
-  it('says who waited, by name', () => {
-    const { sim, id } = dinner('skip-said');
-    sim.advanceTo(sim.now + MS_DAY, { stopOnPlayerRequired: true });
-    skip(sim, id);
     const said = unreadNotifications(sim).map((one) => `${one.title} ${one.body}`).join(' ');
     expect(said).toContain('You Didn’t Go To Dinner');
-    expect(said).toContain('Halla waited');
-  });
-
-  it('costs nothing but the plan when nobody was on it', () => {
-    const sim = quickSave({ family }, 'skip-alone');
-    const made = put(sim, { title: 'An Hour Of My Own', at: sim.now + 2 * MS_HOUR });
-    sim.advanceTo(sim.now + MS_DAY, { stopOnPlayerRequired: true });
-    expect(skip(sim, made.id!).ok).toBe(true);
-    const said = unreadNotifications(sim).map((one) => one.body).join(' ');
     expect(said).toContain('Nobody was waiting on it but you');
   });
 
@@ -480,71 +299,13 @@ describe('not going', () => {
     expect(skip(sim, id).error).toBe('That’s already settled one way or the other.');
     expect(skip(sim, 'sched_nope').error).toBe('There’s nothing by that name on the calendar.');
   });
-
-  it('leaves going the thing that warms it', () => {
-    // The other side of the same fork, so the two are visibly opposite.
-    const { sim } = dinner('skip-or-go');
-    const before = closeness(sim, 'Halla');
-    sim.advanceTo(sim.now + MS_DAY);
-    expect(closeness(sim, 'Halla')).toBeCloseTo(before + TOGETHER_WARMS, 5);
-  });
 });
 
 describe('calling it off', () => {
-  const family = {
-    mother: { firstName: 'Halla', ageAtBirth: 29, role: 'the company' as const },
-    father: { firstName: 'Jón', ageAtBirth: 31, role: 'the lot' as const },
-  };
-  const closeness = (sim: Simulation, first: string): number =>
-    couldPlanWith(sim).find((one) => one.person.firstName === first)!.closeness;
-
-  const dinnerIn = (seed: string, ms: number) => {
-    const sim = quickSave({ family }, seed);
-    const halla = couldPlanWith(sim).find((one) => one.person.firstName === 'Halla')!.person.id;
-    const made = put(sim, { title: 'Dinner', at: sim.now + ms, durationMinutes: 90, withIds: [halla] });
-    return { sim, id: made.id! };
-  };
-
-  it('is free with a day’s notice or more', () => {
-    const { sim, id } = dinnerIn('calloff-early', 3 * MS_DAY);
-    const before = closeness(sim, 'Halla');
-    expect(callOff(sim, id).ok).toBe(true);
-    expect(closeness(sim, 'Halla')).toBe(before);
-  });
-
-  it('costs more the later it gets, and never as much as not going', () => {
-    const late = dinnerIn('calloff-late', MS_HOUR);
-    const before = closeness(late.sim, 'Halla');
-    expect(callOff(late.sim, late.id).ok).toBe(true);
-    const cost = before - closeness(late.sim, 'Halla');
-
-    expect(cost).toBeGreaterThan(0);
-    expect(cost).toBeLessThan(MISSED_COOLS);
-    expect(cost).toBeCloseTo(callingOffCosts(MS_HOUR), 5);
-  });
-
-  it('prices the whole run of notice in order', () => {
-    // Nought a day out, rising in a straight line to the full cost at the
-    // moment it starts. Three prices that have to stay in this order or the
-    // choice between telling them and not is not a choice.
-    expect(callingOffCosts(2 * MS_DAY)).toBe(0);
-    expect(callingOffCosts(NOTICE_FREE_HOURS * MS_HOUR)).toBe(0);
-    expect(callingOffCosts(NOTICE_FREE_HOURS * MS_HOUR / 2)).toBeCloseTo(CALLING_OFF_COSTS / 2, 5);
-    expect(callingOffCosts(0)).toBe(CALLING_OFF_COSTS);
-    expect(CALLING_OFF_COSTS).toBeLessThan(MISSED_COOLS);
-  });
-
   it('is refused once the thing has started', () => {
-    const { sim, id } = dinnerIn('calloff-started', 2 * MS_HOUR);
+    const sim = quickSave({}, 'calloff-started');
+    const made = put(sim, { title: 'Dinner', at: sim.now + 2 * MS_HOUR, durationMinutes: 90 });
     sim.advanceTo(sim.now + MS_DAY, { stopOnPlayerRequired: true });
-    expect(callOff(sim, id).error).toBe('It’s already started. You either went or you didn’t.');
-  });
-
-  it('tells them, when the notice was short enough to cost', () => {
-    const { sim, id } = dinnerIn('calloff-told', MS_HOUR);
-    callOff(sim, id);
-    const said = unreadNotifications(sim).map((one) => `${one.title} ${one.body}`).join(' ');
-    expect(said).toContain('You Called Off Dinner');
-    expect(said).toContain('Halla');
+    expect(callOff(sim, made.id!).error).toBe('It’s already started. You either went or you didn’t.');
   });
 });

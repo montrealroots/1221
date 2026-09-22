@@ -8,15 +8,12 @@
  * effect, an id namespace for every noun. It reads as a deep game to anybody
  * scrolling the source, and it plays as nothing at all.
  *
- * The disease is already here and was found by measurement, not by argument:
- *
- *   - 813 acting attributes, every one of them set to 100 on every person, and
- *     no system that reads a single id.
- *   - 54 `systemMods` keys across 445 traits, of which two are consulted.
- *   - Six entries in SYSTEM_HIGHER_IS_WORSE guarding keys no trait declares.
- *   - A seven-axis Reputation with two seed writers and nothing that moves it.
- *   - Id namespaces for jobs, flights, schools and channels whose systems were
- *     deleted a long time ago.
+ * The disease was found here by measurement, not by argument: 813 acting
+ * attributes nothing read, 54 trait modifier keys of which two were consulted,
+ * guards on keys no trait declared, a seven-axis reputation nothing moved, and
+ * a hundred and twenty-five id namespaces for systems long deleted. The revamp
+ * took all of that out, and what is left to walk is the vocabulary that
+ * survived it: the id namespaces and the tables in the save.
  *
  * So this walks the declared vocabulary, finds what nothing reads, and holds
  * the number against a baseline in `docs/UNWIRED.json`. It does not demand the
@@ -82,82 +79,7 @@ function group(name, what, dead, hint) {
     'A noun with no nextId call site is a table the game never fills.');
 }
 
-// 2. `systemMods` keys. A key nothing multiplies through is an effect the trait
-//    claims and does not have.
-{
-  const declared = new Set();
-  for (const file of ['src/engine/domain/attributes.ts', 'src/engine/content/personality-traits.ts']) {
-    for (const block of SOURCE.get(file).matchAll(/systemMods:\s*\{([^}]*)\}/g)) {
-      for (const m of block[1].matchAll(/([a-zA-Z][a-zA-Z0-9]*)\s*:/g)) declared.add(m[1]);
-    }
-  }
-  // A key is read when some file asks for it by name.
-  const asked = new Set();
-  for (const m of ALL.matchAll(/(?:modifierFor|personalityOf|dispositionOf|traitModifier|axisModifier|systemModifier|personalityModifier)\([^)]*'([a-zA-Z][a-zA-Z0-9]*)'/g)) {
-    asked.add(m[1]);
-  }
-  group('Trait modifier keys', declared.size, [...declared].filter((d) => !asked.has(d)),
-    'A key no system asks for by name is an effect the trait promises and does not deliver.');
-}
-
-// 3. The higher-is-worse guards. These exist to flip the sign on a key; one
-//    guarding a key no trait declares is rot left by a deleted system.
-{
-  const src = SOURCE.get('src/engine/domain/attributes.ts') + SOURCE.get('src/engine/content/personality-traits.ts');
-  const guards = new Set();
-  for (const m of src.matchAll(/(?:SYSTEM|PERSONALITY)_HIGHER_IS_WORSE[^=]*=\s*(?:new Set\()?\[([^\]]*)\]/g)) {
-    for (const k of m[1].matchAll(/'([a-zA-Z][a-zA-Z0-9]*)'/g)) guards.add(k[1]);
-  }
-  const declared = new Set();
-  for (const block of src.matchAll(/systemMods:\s*\{([^}]*)\}/g)) {
-    for (const m of block[1].matchAll(/([a-zA-Z][a-zA-Z0-9]*)\s*:/g)) declared.add(m[1]);
-  }
-  group('Higher-is-worse guards', guards.size, [...guards].filter((g) => !declared.has(g)),
-    'A guard on a key no trait declares is left over from a system that was deleted.');
-}
-
-// 4. The dials on a person that nothing moves USED to be asked here, and this
-//    file cannot answer it. Everything above is a question about whether a word
-//    is READ, which a regular expression over the source can settle. Whether a
-//    NUMBER MOVES is a question about what happens when the game runs, and the
-//    regex that stood here answered a different one: it matched any assignment,
-//    so a one-way ratchet like `w.fitness = clamp(Math.min(w.fitness - 0.18,
-//    ceiling), 0, 100)` scored as a live dial, and `travelFatigue`, whose only
-//    writes were subtractions from a seed of nought, scored as live while
-//    holding one value for a whole life. It reported nought dead. The honest
-//    figure was eight. `tools/dials.mjs` plays a career and counts them, and
-//    owns the "Dials nothing moves" key in the baseline this file writes.
-
-// 4b. The personality axes are a character sheet, not a set of dials: they are
-//     meant to be fixed at creation. So the honest question is not whether
-//     anything moves one, but whether anything READS it. An axis the player is
-//     asked to set and no system consults is a question with no consequence.
-//
-//     This count has gone UP once, at 3 to 4, and the reason is written down
-//     because a rise is normally the thing this file exists to refuse.
-//     `openness` had one reader: a case in `axisModifier` scaling how fast
-//     `travelFatigue` came off. Nothing in the build ever put any on, so the
-//     read reached nothing. Deleting the dead dial deleted the case, and the
-//     axis stopped being read at all. No word was declared; a fake reader was
-//     removed, and this check went from counting six honestly to counting
-//     seven honestly. A rise for that reason is the count catching up, not the
-//     rot it guards against — which is the same blindness that made
-//     `travelFatigue` look like a live dial and made `tools/dials.mjs`
-//     necessary. A rise with no such entry beside it is still a defect.
-{
-  const model = SOURCE.get('src/engine/domain/model.ts');
-  const start = model.indexOf('export interface Personality {');
-  const body = model.slice(start, model.indexOf('\n}', start));
-  const axes = [...body.matchAll(/^\s{2}([a-zA-Z][a-zA-Z0-9]*)\??:\s*number/gm)].map((m) => m[1]);
-  // Creation asks about every axis by name, so its own list does not count.
-  const engine = FILES.filter((f) => f.startsWith('src/engine') && f !== 'src/engine/domain/model.ts')
-    .map((f) => SOURCE.get(f)).join('\n');
-  const dead = axes.filter((a) => !new RegExp(`'${a}'|\\.${a}\\b`).test(engine));
-  group('Personality axes nothing consults', axes.length, dead,
-    'An axis creation asks the player to set, and no system in the engine ever reads, is a question with no consequence.');
-}
-
-// 5. Tables in the save that nothing writes. A collection only bootstrap fills
+// 2. Tables in the save that nothing writes. A collection only bootstrap fills
 //    is a shape, not a system.
 {
   const model = SOURCE.get('src/engine/domain/model.ts');
@@ -171,6 +93,15 @@ function group(name, what, dead, hint) {
   group('Save tables nothing fills', tables.length, dead,
     'A collection only bootstrap writes is a shape in the save, not a system in the game.');
 }
+
+// Both of these rose by one when the family went, and a rise is normally the
+// thing this file exists to refuse, so the reason is written down. The family
+// was the only thing that made a person after boot. The player is written by
+// bootstrap, by hand, as `person_000001`, so the `person` namespace has no
+// `nextId` call and `people` is filled only by bootstrap. Both findings are the
+// player — the one record this build is about — counted honestly: the count
+// caught up with a deletion rather than a word being declared ahead of its
+// system. A rise with no such entry beside it is still a defect.
 
 // --- the report --------------------------------------------------------------
 
@@ -189,12 +120,8 @@ for (const f of findings) {
 console.log(`\n${total} declared words that nothing reads.`);
 
 if (BLESS) {
-  // Merge rather than overwrite: tools/dials.mjs owns a key in this file and
-  // has to run the game to work it out, so blessing from here must leave it be.
-  const held = existsSync(BASELINE) ? JSON.parse(readFileSync(BASELINE, 'utf8')).counts : {};
-  const note = 'Set by tools/wired.mjs --bless, except "Dials nothing moves", which is '
-    + 'tools/dials.mjs --bless. These may fall. They may not rise.';
-  writeFileSync(BASELINE, `${JSON.stringify({ note, counts: { ...held, ...counts } }, null, 2)}\n`);
+  const note = 'Set by tools/wired.mjs --bless. These may fall. They may not rise.';
+  writeFileSync(BASELINE, `${JSON.stringify({ note, counts }, null, 2)}\n`);
   console.log(`\nBaseline written to ${BASELINE}.`);
   process.exit(0);
 }

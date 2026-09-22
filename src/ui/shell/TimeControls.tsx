@@ -16,8 +16,7 @@ import {
   addDays, formatDate, formatDateTime, formatDuration, formatTime, instantFromZoned, zonedParts, MS_HOUR,
   type Instant,
 } from '@/engine/core/time';
-import { PLAN_KIND, namesOn, saidAsList } from '@/engine/world/plans';
-import { MISSED_COOLS, TOGETHER_WARMS } from '@/engine/world/standing';
+import { PLAN_KIND } from '@/engine/world/plans';
 import type { ScheduledItem } from '@/engine/core/scheduler';
 
 export function TimeControls() {
@@ -201,7 +200,7 @@ function SleepDialog({ onClose }: { onClose: () => void }) {
  *
  * The one place in the game where turning up is a decision rather than a
  * consequence. Going costs the hours it takes, which is why not going is a
- * real option and not a way of throwing points away for nothing.
+ * real option.
  */
 function DueNow({ item, wanted, onGo, onStay, onClose }: {
   item: ScheduledItem;
@@ -213,7 +212,6 @@ function DueNow({ item, wanted, onGo, onStay, onClose }: {
   const { sim } = useGame();
   const zone = sim.zone;
   const mine = item.kind === PLAN_KIND;
-  const names = namesOn(sim, item);
   const runs = item.durationMinutes ?? 60;
   const ahead = Math.max(0, wanted - item.at);
 
@@ -226,7 +224,7 @@ function DueNow({ item, wanted, onGo, onStay, onClose }: {
           <button className="btn btn-ghost" onClick={onClose}>Stand Here</button>
           {mine && (
             <button className="btn" onClick={onStay}>
-              {names.length > 0 ? 'Don’t Go' : 'Skip It'}
+              Skip It
             </button>
           )}
           <button className="btn btn-primary" onClick={onGo}>Go</button>
@@ -238,13 +236,6 @@ function DueNow({ item, wanted, onGo, onStay, onClose }: {
         {' '}Going takes {formatDuration(runs * 60_000)} of the day
         {ahead > 0 ? `, and the clock carries on to ${formatDateTime(wanted, zone)} after.` : '.'}
       </p>
-      {names.length > 0 && (
-        <p className="small">
-          {`It’s with ${saidAsList(names)}. Going is worth ${TOGETHER_WARMS} points of where you stand with `
-            + `${names.length === 1 ? 'them' : 'each of them'}. Not going costs ${MISSED_COOLS}, and `
-            + `${names.length === 1 ? 'they’ll' : 'they’ll each'} know you weren’t there.`}
-        </p>
-      )}
       {!mine && (
         <p className="small muted">
           This one isn’t yours to walk away from — it’s the world’s. Go, or leave the clock where it is.

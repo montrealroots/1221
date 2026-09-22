@@ -290,15 +290,9 @@ for (const size of WIDTHS) {
   await shoot('01-save-slots');
   let scrollsSideways = await probe('save slots');
 
-  // Creation. They/them settles no title, so Continue stays shut until one is
-  // picked — without this the walk measures step one five times.
+  // Creation.
   await click(/^New Save$/);
   await page.waitForTimeout(1200);
-  const billed = page.getByRole('group', { name: 'Billed As' });
-  if (await billed.count()) {
-    await billed.getByRole('button', { name: 'Actress' }).click().catch(() => {});
-    await page.waitForTimeout(300);
-  }
   const race = page.getByRole('group', { name: 'Race Or Ethnicity' });
   if (await race.count()) {
     await race.getByRole('button', { name: 'Black Or African' }).click().catch(() => {});
@@ -307,7 +301,7 @@ for (const size of WIDTHS) {
   await shoot('02-creation-identity');
   scrollsSideways = (await probe('creation, identity')) || scrollsSideways;
 
-  const STEPS = ['who you are', 'my skills', 'starting point', 'review'];
+  const STEPS = ['who you are', 'starting point', 'review'];
   for (const step of STEPS) {
     if (!(await click(/^Continue$/))) break;
     await page.waitForTimeout(900);
@@ -315,7 +309,7 @@ for (const size of WIDTHS) {
   }
   await shoot('03-creation-review');
 
-  if (await click(/it.s time to be great/i)) {
+  if (await click(/^Begin$/)) {
     await page.waitForTimeout(4000);
     await shoot('04-home');
     scrollsSideways = (await probe('home')) || scrollsSideways;

@@ -18,14 +18,13 @@
  * because a dial is a thing and a multiplication is not.
  */
 
-import { PERFORMER_NOUN } from '@/engine/core/performer';
 import { readiness, wellbeingSummary } from '@/engine/systems/life';
 import type { Person, Wellbeing } from '@/engine/domain/model';
 import type { Simulation } from '@/engine';
 import { defineLook, type Way } from './registry';
 import { at } from './subject';
-import { waysIntoSomebody, whatTheyAre } from './family';
 import { isAre, outOf, spokenList } from './words';
+import { GENRE_BY_ID, INTEREST_BY_ID } from '@/engine/content/interests';
 
 /**
  * The eight, in the order a person would notice them.
@@ -92,41 +91,47 @@ defineLook<Person>('person', {
         detail: 'Everything you have put on the calendar yourself',
       });
     }
-    // Anybody who is somebody to you opens onto what they are, where the two
-    // of you stand and what they run on the land, ahead of their dials.
-    const theirs = waysIntoSomebody(sim, person);
-    const relation = whatTheyAre(sim, person);
-    // The life before this one, said back. For the player it is the sentence
-    // they wrote at creation; for everybody else it is the one the family and
-    // crew generators wrote for them. It carries no number and decides nothing,
-    // and it is here so that a sentence somebody authored is not written into
-    // the save and then never shown to anybody again.
+    // The life before this one, said back: the sentence the player wrote at
+    // creation, or the one an older build wrote for somebody else. It carries
+    // no number and decides nothing, and it is here so that a sentence
+    // somebody authored is not written into the save and then never shown to
+    // anybody again.
     const before = (person.background ?? '').trim();
+    // What they care about and the films they love, said back for the same
+    // reason. Nothing in the simulation reads either, so this is the one place
+    // an answer given at creation is seen again.
+    const cares = person.interests.map((id) => INTEREST_BY_ID[id]?.label).filter((one): one is string => !!one);
+    const loves = (person.genres ?? []).map((id) => GENRE_BY_ID[id]?.label).filter((one): one is string => !!one);
+    const said = [
+      before.length > 0 && (
+        <p key="before" className="small">
+          <span className="dim">{isYou ? 'Where you come from. ' : 'Where they come from. '}</span>
+          {before}
+        </p>
+      ),
+      cares.length > 0 && (
+        <p key="cares" className="small">
+          <span className="dim">{isYou ? 'What you care about. ' : 'What they care about. '}</span>
+          {spokenList(cares)}.
+        </p>
+      ),
+      loves.length > 0 && (
+        <p key="loves" className="small">
+          <span className="dim">{isYou ? 'The films you love. ' : 'The films they love. '}</span>
+          {spokenList(loves)}.
+        </p>
+      ),
+    ].filter(Boolean);
 
     return {
       name: isYou ? (person.displayName || person.firstName) : person.displayName,
-      // A mother is not billed as an actress. Nobody on this land is billed at
-      // all, and calling her one was the field standing in for a fact about
-      // her that the save has had all along.
-      // both-titles: the word itself, which is what this comment is about.
-      kind: isYou ? 'Yourself' : relation ?? PERFORMER_NOUN[person.performerTitle ?? 'actor'],
-      // Two sentences rather than one joined by "and": the wellbeing line is
-      // already a whole sentence, and stitching them made a fragment.
-      summary: isYou || !relation
-        ? wellbeingSummary(person)
-        : `${person.firstName} is your ${relation.toLowerCase()}. ${wellbeingSummary(person)}`,
-      body: before.length > 0
-        ? (
-          <p className="small">
-            <span className="dim">{isYou ? 'Where you come from. ' : 'Where they come from. '}</span>
-            {before}
-          </p>
-        )
-        : undefined,
-      ways: [...theirs, ...ways],
+      kind: isYou ? 'Yourself' : 'Somebody',
+      summary: wellbeingSummary(person),
+      body: said.length > 0 ? <>{said}</> : undefined,
+      ways,
       provenance: isYou
         ? 'Eight dials, moved by the hours you keep. Six of them the game has never shown you.'
-        : 'The same eight dials you have, moved by the same days. Nobody here acts, and nothing bills them.',
+        : 'The same eight dials you have, moved by the same days.',
     };
   },
 });

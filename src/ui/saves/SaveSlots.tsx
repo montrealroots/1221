@@ -4,7 +4,6 @@
 
 import { useCallback, useEffect, useState } from 'react';
 import type { SaveAdapter, SaveSlotInfo, Slot } from '@/engine/persistence/adapter';
-import { PERFORMER_NOUN } from '@/engine/core/performer';
 import type { SaveUniverse } from '@/engine/domain/model';
 import { SAVE_SCHEMA_VERSION } from '@/engine/domain/model';
 import { migrate, validateUniverse } from '@/engine';
@@ -124,7 +123,7 @@ export function SaveSlots({
                   <p className="small dim center" style={{ maxWidth: 220 }}>
                     {info.hasBackup
                       ? 'Empty, but the save that was here is still kept as a backup.'
-                      : 'An empty universe, waiting for an actor or an actress to live in it.'}
+                      : 'An empty universe, waiting for somebody to live in it.'}
                   </p>
                   <div className="col gap-2" style={{ alignItems: 'center' }}>
                     <button className="btn btn-primary" onClick={() => onNew(slot)} disabled={working}>
@@ -178,7 +177,7 @@ export function SaveSlots({
                       )}
                       <div style={{ minWidth: 0 }}>
                         <div className="slot-name">{meta?.characterName}</div>
-                        <div className="muted small">{meta?.performerTitle ? PERFORMER_NOUN[meta.performerTitle] : (meta?.careerLabel || '—')}</div>
+                        <div className="muted small">{meta?.careerLabel || '—'}</div>
                       </div>
                     </div>
 

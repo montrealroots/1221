@@ -4,8 +4,8 @@
  * Home prints four money facts and every one of them is a dead end: the name
  * of the account you spend from, the balance in it, a net worth, and what is
  * owed. None of them is a made-up figure. A balance is the sum of its postings
- * (`core/ledger.ts`), net worth is recomputed from the ledger and the deeds
- * every time it is asked for (`systems/finance.ts`), and neither is stored
+ * (`core/ledger.ts`), net worth is recomputed from the ledger every time it
+ * is asked for (`systems/finance.ts`), and neither is stored
  * anywhere a screen could get them wrong.
  *
  * Three kinds live here. An `account` is a thing — a real account at a real
@@ -25,7 +25,7 @@ import { Ledger, isLiability, type Account, type AccountKind } from '@/engine/co
 import { MS_DAY } from '@/engine/core/time';
 import { titleCaseLabel } from '@/engine/core/text';
 import { netWorth, type Worth } from '@/engine/systems/finance';
-import type { Person, Property } from '@/engine/domain/model';
+import type { Person } from '@/engine/domain/model';
 import type { Simulation } from '@/engine';
 import { Stat } from '@/ui/components/primitives';
 import { defineLook, type Way } from './registry';
@@ -99,12 +99,6 @@ function movement(sim: Simulation, accountId: string): { inward: number; outward
     else outward += -delta;
   }
   return { inward, outward };
-}
-
-/** The properties somebody owns outright and has not sold. */
-function ownedBy(sim: Simulation, ownerId: string): Property[] {
-  return Object.values(sim.universe.properties)
-    .filter((p) => p.ownerId === ownerId && p.tenure === 'owned' && !p.soldAt);
 }
 
 /** The accounts with something standing against them, worst first. */
@@ -261,7 +255,6 @@ interface Holdings {
   person: Person;
   worth: Worth;
   accounts: Account[];
-  owned: Property[];
 }
 
 defineLook<Holdings>('networth', {
@@ -273,7 +266,6 @@ defineLook<Holdings>('networth', {
       person,
       worth: netWorth(sim, person.id),
       accounts: sim.ledger.accountsOf(person.id),
-      owned: ownedBy(sim, person.id),
     };
   },
   seeds: (sim) => [sim.universe.playerId],
@@ -309,26 +301,25 @@ defineLook<Holdings>('networth', {
         },
       ],
       ways,
-      provenance: 'Added up from the ledger and the deeds every time you ask, and stored nowhere. Every entry behind it has a matching entry somewhere else, and the books come to zero to the cent.',
+      provenance: 'Added up from the ledger every time you ask, and stored nowhere. Every entry behind it has a matching entry somewhere else, and the books come to zero to the cent.',
     };
   },
 });
 
-/** The three halves of it, spoken. */
+/** Both sides of it, spoken. */
 function worthSentence(w: Worth): string {
   const parts: string[] = [];
   if (w.cash > 0) parts.push(`${formatMoney(w.cash)} in the bank`);
   if (w.cash < 0) parts.push(`${formatMoney(-w.cash)} overdrawn`);
-  if (w.assets > 0) parts.push(`${formatMoney(w.assets)} in what you own`);
   if (w.liabilities > 0) parts.push(`${formatMoney(w.liabilities)} owed against it`);
   if (parts.length === 0) {
-    return 'You’re worth nothing at all today — no money anywhere, nothing owned and nothing owed.';
+    return 'You’re worth nothing at all today — no money anywhere and nothing owed.';
   }
   return `You’re worth ${formatMoney(w.total)}: ${spokenList(parts)}.`;
 }
 
 function worthBody(held: Holdings) {
-  const { worth, accounts, owned } = held;
+  const { worth, accounts } = held;
   const names = accounts.map((a) => a.name);
   const spending = accounts.find((a) => a.id === held.person.primaryAccountId);
 
@@ -340,14 +331,8 @@ function worthBody(held: Holdings) {
           : `${spokenList(names)} ${isAre(names.length)} open in your name`}
         {names.length > 0 && spending ? `, and ${spending.name} is the one the day comes out of.` : names.length > 0 ? '.' : ''}
       </p>
-      <p className="small">
-        {owned.length === 0
-          ? 'None of the deeds carry your name, so what you’re worth is money and not things.'
-          : `${spokenList(owned.map((p) => p.name))} ${isAre(owned.length)} counted at ${formatMoney(worth.assets)} between them.`}
-      </p>
-      <div className="grid grid-4">
+      <div className="grid grid-3">
         <Stat label="In The Bank" value={<span className="mono">{formatMoney(worth.cash)}</span>} note="Across every account" />
-        <Stat label="In What You Own" value={<span className="mono">{formatMoney(worth.assets)}</span>} note="What the deeds are worth" />
         <Stat
           label="Owed"
           value={<span className="mono">{formatMoney(worth.liabilities)}</span>}

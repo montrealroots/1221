@@ -121,13 +121,14 @@ A share of elements is the wrong measure and it flatters as often as it
 damns: most of a page is wrappers, and a wrapper is not a dead end. The
 question that matters is whether any text stating a fact sits outside a
 control, and `tools/drill.mjs` answers it directly — it walks the leaves and
-prints every one no control contains. On Home that is **nine**, and all nine
-are right:
+prints every one no control contains. On Home that was **nine** when it was
+counted, and all nine were right; the land panel has gone since, and one of the
+four below went with it:
 
-- Four are the words *between* the nouns — "Good Morning, ", " in · · ·",
-  "Nothing scheduled. … is yours.", ", held by the family, with the house, the
-  lot and the company all standing on it." Grammar is not a thing in the
-  world, and a sentence whose every word opened would be unreadable.
+- Four were the words *between* the nouns — "Good Morning, ", " in · · ·",
+  "Nothing scheduled. … is yours.", and a line under the land panel that the
+  revamp took out. Grammar is not a thing in the world, and a sentence whose
+  every word opened would be unreadable.
 - Four say that nothing is there: "Nothing is waiting on a decision.",
   "Nothing Pressing", and the two lines under it. There is no object behind an
   absence, and rule 3 says a name is not painted as a way in unless it is one.
@@ -166,9 +167,7 @@ the sixth is answered but unpopulated:
    never appear in `tools/inventory.mjs`.
 3. **Looks cannot exist before the save does.** `GameProvider` wraps only the
    `playing` phase (`SlateApp.tsx:147`). Save slots and character creation get
-   no `sim`, so nothing on the creation screens can open — including the
-   estate, the studio lot and the company, which is where the premise is
-   introduced.
+   no `sim`, so nothing on the creation screens can open.
 4. **Favourites and recents are global across slots.** `slate.favourites` in
    `localStorage` holds bare routes across every universe, and ids restart per
    universe. A favourited address would resolve to a different person in

@@ -93,10 +93,8 @@ export function LocationPicker({
       && (regionId === '' || c.parentId === regionId)
       && (needle === '' || c.name.toLowerCase().includes(needle))
     ));
-    // The places most people mean come first: where the industry is, then size.
-    pool.sort((a, b) => b.industryPresence - a.industryPresence
-      || b.population - a.population
-      || a.name.localeCompare(b.name));
+    // The places most people mean come first: the biggest.
+    pool.sort((a, b) => b.population - a.population || a.name.localeCompare(b.name));
     return pool;
   }, [countryId, regionId, query, loadedTick]);
 
@@ -214,12 +212,10 @@ export function LocationPicker({
               title={[
                 REGIONS.get(c.parentId)?.name ?? COUNTRIES.get(c.countryId)?.name,
                 c.population > 0 ? `${c.population.toLocaleString('en-US')} people` : '',
-                c.industryPresence > 0 ? `industry ${c.industryPresence}/100` : '',
               ].filter(Boolean).join(' · ')}
             >
               {REGIONS.get(c.parentId)?.name ?? COUNTRIES.get(c.countryId)?.name}
               {c.population > 0 && ` · ${c.population.toLocaleString('en-US')} people`}
-              {c.industryPresence > 0 && ` · industry ${c.industryPresence}/100`}
             </span>
           </button>
         ))}
