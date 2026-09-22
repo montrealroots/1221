@@ -37,9 +37,9 @@ export function settledTitle(pronouns: string): PerformerTitle | undefined {
  * actor where they settle nothing.
  *
  * Only for a save that reaches the engine without a title, which the creation
- * screen never sends: one built straight from the engine, or one written
- * before the title was kept. A fallback is not a default, and the screen does
- * not use it.
+ * screen never sends: one built straight from the engine, one written under
+ * schema 80, which shed the title, or one from before the title was kept. A
+ * fallback is not a default, and the screen does not use it.
  */
 export function impliedPerformerTitle(pronouns: string): PerformerTitle {
   return settledTitle(pronouns) ?? 'actor';

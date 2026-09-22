@@ -59,7 +59,8 @@ A save written by an older build still opens — `migrate` sheds the fields this
 build no longer reads and leaves the collections it has no screen for in place
 as inert records — but none of those screens is coming back in this build. The
 title is the one field that came back: a save from before 80 keeps the one it
-was made with, and one written under 80 is given one from its pronouns.
+was made with, and one written under 80 takes the player's back from the
+premise record 80 left in place, or from their pronouns where there is none.
 
 ## The engine, as it now stands
 

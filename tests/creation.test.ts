@@ -75,10 +75,13 @@ describe('Identity', () => {
 
   it('bills them as an actor or an actress, and will not go on until it is settled', () => {
     const step = stepSource('function IdentityStep', 'function PersonalStep');
-    expect(step, 'Billed As is gone').toContain('<span className="label">Billed As</span>');
-    // Settled by the pronouns, it is said back. Left open, both words are offered.
-    expect(step, 'the settled title is not shown').toContain('className="settled-title"');
-    expect(step, 'they/them is offered no choice').toContain('aria-label="Billed As"');
+    expect(step, 'Billed As is gone').toContain('<span className="label" id="billed-as">Billed As</span>');
+    // Settled by the pronouns, it is said back. Left open, both words are
+    // offered. In that order: the settled branch is the one that shows the
+    // word, and the open one is the one with the buttons.
+    expect(step, 'the settled and open branches are the wrong way round').toMatch(
+      /\{settled \? \([\s\S]*?className="settled-title"[\s\S]*?\) : \([\s\S]*?aria-label="Billed As"/,
+    );
     // A pick made under they/them must not survive a change to he/him.
     expect(step, 'the title does not move with the pronouns')
       .toContain('performerTitle: settledTitle(pronouns)');
@@ -132,9 +135,10 @@ describe('the title', () => {
     expect(titleOf('they/them')).toBe('actor');
   });
 
-  it('names the slot by it, and keeps naming it after the clock runs', () => {
-    const sim = filled();
+  it('names the slot by the title it stored, which the pronouns cannot supply', () => {
+    const sim = createSave(1, 'title-slot', { ...defaultConfig(), pronouns: 'they/them', performerTitle: 'actress' });
     expect(sim.universe.meta.careerLabel).toBe('Actress');
+    // The summary is rewritten every time the save is, and it writes the same.
     sim.universe.meta.careerLabel = '';
     refreshMeta(sim);
     expect(sim.universe.meta.careerLabel).toBe('Actress');

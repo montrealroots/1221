@@ -365,6 +365,35 @@ describe('migrations and validation', () => {
     }
   });
 
+  it('takes the player’s pick back from the premise record an 80 save still carries', () => {
+    const sim = quickSave({ pronouns: 'they/them', performerTitle: 'actress' }, 'title-80-premise');
+    const universe = sim.universe;
+    universe.meta.schemaVersion = 80;
+    // A save made under 79 and brought up to 80: the title shed from the
+    // person, and the premise record left behind with the pick in it.
+    const row = universe.people[universe.playerId] as unknown as Record<string, unknown>;
+    delete row.performerTitle;
+    universe.meta.careerLabel = '';
+    (universe as unknown as Record<string, unknown>).premise = {
+      kind: 'actor-actress-life-simulator', playerTitle: 'actress', playerTitleSource: 'stated',
+    };
+
+    const result = migrate(universe);
+
+    expect(row.performerTitle).toBe('actress');
+    expect(universe.meta.careerLabel).toBe('Actress');
+    expect(result.steps.join(' ')).toMatch(/title the save recorded/);
+    expect(result.steps.join(' ')).not.toMatch(/from their pronouns/);
+
+    // A premise naming neither word is no help, and the pronouns decide.
+    const other = quickSave({ pronouns: 'they/them', performerTitle: 'actress' }, 'title-80-bad-premise');
+    other.universe.meta.schemaVersion = 80;
+    delete (other.universe.people[other.universe.playerId] as unknown as Record<string, unknown>).performerTitle;
+    (other.universe as unknown as Record<string, unknown>).premise = { playerTitle: 'star' };
+    migrate(other.universe);
+    expect(other.universe.people[other.universe.playerId]!.performerTitle).toBe('actor');
+  });
+
   it('re-stamps records that carry the wrong save id', () => {
     const sim = quickSave();
     sim.universe.meta.schemaVersion = 1;

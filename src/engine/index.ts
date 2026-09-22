@@ -357,17 +357,32 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     steps.push(`Dropped the fields this build no longer reads from ${plural(shed, 'person', 'people')}.`);
   }
 
-  // A save written under 80 lost the title, and one from before the title was
-  // kept never had it. Either way the pronouns decide, as they would have at
-  // creation, and anybody on they/them who picked comes back an actor: the
-  // pick went with 80 and there is nothing left to read it from.
+  // A save written under 80 lost the title from the person, and one from
+  // before the title was kept never had it.
+  //
+  // The player's own can still be there. Every save made from 72 on carried a
+  // premise record naming the player's title, including the pick somebody on
+  // they/them made, and 80 left that record in place as inert JSON while it
+  // shed the title everywhere else. So the player's comes back from there when
+  // it is. Where it is not, which is a save made under 80 or one from before
+  // 72, the pronouns decide as they would have at creation, and a pick made
+  // under they/them is gone: it comes back an actor.
+  const premise = (universe as unknown as { premise?: { playerTitle?: unknown } }).premise;
+  const recorded = isPerformerTitle(premise?.playerTitle) ? premise.playerTitle : undefined;
+  let recovered = 0;
   let titled = 0;
   for (const person of Object.values(universe.people ?? {})) {
     const p = person as unknown as Record<string, unknown>;
     if (isPerformerTitle(p.performerTitle)) continue;
+    if (p.id === universe.playerId && recorded) {
+      p.performerTitle = recorded;
+      recovered += 1;
+      continue;
+    }
     p.performerTitle = impliedPerformerTitle(typeof p.pronouns === 'string' ? p.pronouns : '');
     titled += 1;
   }
+  if (recovered > 0) steps.push('Gave the player back the title the save recorded for them.');
   if (titled > 0) {
     steps.push(`Gave ${plural(titled, 'person', 'people')} a title from their pronouns.`);
   }

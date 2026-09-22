@@ -303,10 +303,10 @@ function IdentityStep({ config, set, setConfig }: {
               column, and the note under it runs eight lines deep. */}
           <div className="field-row">
             <div className="field">
-              <span className="label">Billed As</span>
+              <span className="label" id="billed-as">Billed As</span>
               {settled ? (
                 <>
-                  <output className="settled-title" htmlFor="pronouns">{PERFORMER_NOUN[settled]}</output>
+                  <output className="settled-title" htmlFor="pronouns" aria-labelledby="billed-as">{PERFORMER_NOUN[settled]}</output>
                   <p className="xs dim" style={{ marginTop: 4 }}>
                     Your pronouns say which of the two words is yours, so there’s nothing to pick.
                     Change them and this changes with them.
