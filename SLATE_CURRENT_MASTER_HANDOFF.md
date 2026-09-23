@@ -512,7 +512,7 @@ The handoff and `CLAUDE.md` live at the repository root, so the gate's text tool
 - Two worktrees (`wf_cc2a6ca8-f9d-3` and `-5`, both at `dc52d64`) hold uncommitted audition, tax, lot and place edits.
 - The `wf_cc2a6ca8-f9d` workflow run cache, which the previous handoff called unrecoverable, is in this container's Claude project folder.
 - A stale local `main` sits at `8c633d7` (09-04), and the reflog still reaches `4a00db8`.
-- All of it was left alone, not archived. Pushing any of it under an `archive/` prefix is possible only if the owner asks.
+- The owner decided on 2026-09-23 to let all of it go with the container, unarchived. Don't try to recover or push any of it.
 
 **On the Windows machine** (per the previous handoff):
 - `stash@{0}` (`227fa5a`, with the branch `teleport-stash-backup`). Per the previous handoff, it holds 23 files: +67 lines in `tools/cohesion-walk.mjs`, a context export, and screenshots under `cohesion-walk/`.
@@ -531,12 +531,10 @@ Keep all of them until the owner says otherwise.
 ## 12. Next steps, in order
 
 1. **On Windows, run §3.** Confirm `core.autocrlf=false`, move the clone over without losing the old line, then `npm ci`. Confirm that the gate exits 0 with 478 tests and that the build passes.
-2. **Owner decisions.** These come before any merge or deploy:
-   - **`main`:** should this branch become `main`? The options:
-     - Open a PR from this branch and resolve every conflict in this branch's favor. That needs a merge commit, and the owner's approval.
-     - Or leave `main` as the record of the old line.
-     - Either way, don't merge, reset or force-push without the owner.
-   - **Container leftovers:** archive the §11 commits, or let them go.
+2. **Owner decision, before any merge or deploy:** should this branch become `main`? The options:
+   - Open a PR from this branch and resolve every conflict in this branch's favor. That needs a merge commit, and the owner's approval.
+   - Or leave `main` as the record of the old line.
+   - Either way, don't merge, reset or force-push without the owner.
 3. **Retire the schema collision.** At the next schema bump, jump past the old line's numbers (to 87, for example) and move `base44/shared/guard.js` with it. Every save from either line then runs through the shape-based `migrate()`. Consider bumping `APP_VERSION` too, so old creation drafts are dropped.
 4. **Windows hygiene commit:**
    - Add `.gitattributes` (`* text=auto eol=lf`).
