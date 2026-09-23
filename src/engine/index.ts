@@ -250,7 +250,7 @@ export function migrate(universe: SaveUniverse): MigrationResult {
   // forever while a fresh one read 'New Day'.
   //
   // This is the one pass that goes by the number, because the shape can't tell
-  // an old label from a title somebody typed: a plan named 'Lunch with Mum'
+  // an old label from a title somebody typed: a plan named 'Lunch with Mom'
   // looks like a label from before 11. It ran on every save from this line once
   // 87 made all of them older than the build, and rewrote what players typed.
   let relabelled = 0;
@@ -476,7 +476,9 @@ export function migrate(universe: SaveUniverse): MigrationResult {
  * A save that changed is written back, after a checkpoint of what was stored.
  * One opened out of the backup is not: restoring has already swapped the two,
  * and a checkpoint then copied the restored save over the newer one it had
- * just set aside, so the slot lost it. The first autosave writes it instead.
+ * just set aside, so the slot lost it. The first autosave writes it instead,
+ * on this device. On Base44 the restore itself doesn't take yet; §10 of
+ * `SLATE_CURRENT_MASTER_HANDOFF.md` says why.
  */
 export async function openSlot(
   adapter: SaveAdapter,

@@ -15,9 +15,9 @@ When this file and the tree disagree, the tree wins. Correct this file in the sa
 ## 0. Read this box first
 
 1. **Work on `claude/slate-cleanup-e4apmx`.** Everything described here is on that branch, pushed, and level with GitHub. Since 2026-09-23 `main` carries the same line (§0.2). Keep developing on the working branch, and bring it into `main` by PR, with the owner.
-2. **This branch replaced `main` on 2026-09-23, by the owner's decision.** The old `main` (`e139e06`, 2026-09-18) carried 67 commits from the line the owner chose to drop, merged through PR #15 and PR #16 (72 counting the merge commits for PRs #12 to #16). The owner chose a merge over a force-push. Merge `4aab498` records `e139e06` as a parent and keeps this branch's tree exactly (`git merge -s ours`), and a PR from this branch carried it into `main`. That history is still reachable from `main`, but none of its files are in the tree. This line forked from it at `dc52d64` (2026-09-16) and has 15 code commits of its own since (14 on 09-22, and the schema-87 commit on 09-23), plus the 09-23 commits that leave the build alone (§4). The schema-87 commit is on the working branch; it reaches `main` only by PR, with the owner.
+2. **This branch replaced `main` on 2026-09-23, by the owner's decision.** The old `main` (`e139e06`, 2026-09-18) carried 67 commits from the line the owner chose to drop, merged through PR #15 and PR #16 (72 counting the merge commits for PRs #12 to #16). The owner chose a merge over a force-push. Merge `4aab498` records `e139e06` as a parent and keeps this branch's tree exactly (`git merge -s ours`), and a PR from this branch carried it into `main`. That history is still reachable from `main`, but none of its files are in the tree. This line forked from it at `dc52d64` (2026-09-16) and has 16 code commits of its own since (14 on 09-22, and the two schema-87 commits on 09-23), plus the 09-23 commits that leave the build alone (§4). Commits after `cd8d6ef` reach `main` only by PR, with the owner.
 3. **The Windows clone is probably still on the dropped line.** The previous handoff says the Windows branch matched the remote on 2026-09-21. The remote tip that day was `4a00db8`. **Don't `git pull` there**: it would try to merge about 157 commits of removed game into this branch. Follow §3, which moves the clone over without losing anything.
-4. **Schema numbers 83 to 86 were used twice, and this line has moved past them.** On the old `main` (before 2026-09-23), 83 was the old family-and-film build, and the dropped line went up to 86. This line used 83 for "personality restored" until the schema-87 commit moved both pins to 87 (`src/engine/domain/model.ts:388`, `base44/shared/guard.js:25`). Until then, an old-`main` save at 83 opened without `migrate()` and every player command on it threw, because it had no `history`; a save at 84 to 86 was refused as newer. Now a save from either line, 83 to 86, opens through `migrate()`, which works from the shape of the data: it drops the old person fields, keeps the old collections as inert records, and fills what is missing. Old creation drafts (`1.1.0/83`, `1.1.0/86`) are discarded, because drafts are now stamped `1.1.0/87`. Opening an old save rewrites it, so copy the `slate.*` keys out first if they matter (§3, step 7).
+4. **Schema numbers 83 to 86 were used twice, and this line has moved past them.** On the old `main` (before 2026-09-23), 83 was the old family-and-film build, and the dropped line went up to 86. This line used 83 for "personality restored" until the schema-87 commit moved both pins to 87 (`src/engine/domain/model.ts:391`, `base44/shared/guard.js:25`). Until then, an old-`main` save at 83 opened without `migrate()` and every player command on it threw, because it had no `history`; a save at 84 to 86 was refused as newer. Now a save from either line, 83 to 86, opens through `migrate()`, which works from the shape of the data: it drops the old person fields, keeps the old collections as inert records, and fills what is missing. Old creation drafts (`1.1.0/83`, `1.1.0/86`) are discarded, because drafts are now stamped `1.1.0/87`. Opening an old save rewrites it, so copy the `slate.*` keys out first if they matter (§3, step 7).
 5. **`CLAUDE.md` is on this branch now.** The owner asked on 2026-09-23 for their blueprint to come over from `main`, corrected for this branch. The seventeen rules and the standing constraints are unchanged; §7 summarizes them. A clone still on the old line has the old `CLAUDE.md` on disk, and a session started there has loaded it, until §3's switch.
 
 ---
@@ -27,13 +27,13 @@ When this file and the tree disagree, the tree wins. Correct this file in the sa
 | Item | State |
 |---|---|
 | Branch | `claude/slate-cleanup-e4apmx`, pushed, 0 ahead / 0 behind `origin` |
-| Last verified code commit | The schema-87 commit (2026-09-23). The one before it is `36d2cea` (2026-09-22). |
+| Last verified code commit | `f10f1b0` (2026-09-23), which fixed what review found in `20da24e` (schema 87). Before them, `36d2cea` (2026-09-22). |
 | GitHub `main` | Replaced by this line on 2026-09-23: merge `4aab498`, carried in by a PR. The old tip `e139e06` (2026-09-18, "Merge pull request #16") is one of that merge's parents. |
 | Fork point with the old line | `dc52d64` (2026-09-16, schema 79) |
 | The replacement on 2026-09-22 | `abd4727` ("the gut") was pushed over `4a00db8` with the owner's explicit approval. That dropped 157 commits dated 09-17 to 09-21 from three other sessions. 67 of them reached `main` through PRs #15/#16. The other 90 (`46f48f3..4a00db8`) are on no GitHub branch. The owner's words: "destroy those 157 commits, the real work is what we're doing now." |
-| Save schema | `SAVE_SCHEMA_VERSION = 87` (`src/engine/domain/model.ts:388`) and `SUPPORTED_SCHEMA_VERSION = 87` (`base44/shared/guard.js:25`). Move both together. 84 to 86 are skipped on purpose (§0.4). |
+| Save schema | `SAVE_SCHEMA_VERSION = 87` (`src/engine/domain/model.ts:391`) and `SUPPORTED_SCHEMA_VERSION = 87` (`base44/shared/guard.js:25`). Move both together. 84 to 86 are skipped on purpose (§0.4). |
 | App version | `APP_VERSION = '1.1.0'` (`src/engine/world/bootstrap.ts`). `package.json` says `1.0.0`, and the two don't match. |
-| Gate | `npm run gate` exits **0**: 28 test files, **485 tests**, and every gate tool, on the schema-87 commits. 480 at `20da24e`; 478 at `36d2cea`, `d0636b8` and `beda4d9`. |
+| Gate | `npm run gate` exits **0**: 28 test files, **485 tests** at the tip, and every gate tool. 480 at `20da24e`; 478 at `36d2cea`, `d0636b8` and `beda4d9`. |
 | Build | `npm run build` exits **0** (102 modules). |
 | Browser walk | A scratch Playwright script (not in the repo) walked all nine pages at 1440 wide against `vite preview`: **0 page errors**, and no `undefined`, `NaN` or `[object Object]` on the eight pages after the start screen. The start screen was only photographed. |
 | Working tree | Clean, with everything pushed. |
@@ -243,7 +243,7 @@ The owner's instructions that shaped the gut and what came after, verbatim from 
   - `interests.ts` holds 43 craft interests, 20 general interests and 149 genres.
   - `personality-traits.ts` was **restored**.
 - **`engine/persistence/`**: `local.ts` (localStorage, gzipped when it can), `base44.ts` (`resolveAdapter`), `adapter.ts`.
-- **`engine/index.ts`**: `registerAllSystems`, `createSave`, `loadSave`, `migrate`, `validateUniverse`, `refreshMeta`.
+- **`engine/index.ts`**: `registerAllSystems`, `createSave`, `loadSave`, `migrate`, `openSlot`, `validateUniverse`, `refreshMeta`.
 - **`ui/`**:
   - `creation/`: `CharacterCreation.tsx`, `LocationPicker.tsx`, `WorldMap.tsx`, `PortraitPicker.tsx`.
   - `screens/Home.tsx`.
@@ -265,16 +265,16 @@ The owner's instructions that shaped the gut and what came after, verbatim from 
 - **Local keys:** `slate.save.{n}`, `slate.backup.{n}` (the previous payload, kept on every write), `slate.draft.{n}` and `slate.favourites`.
 - **Loading** (`openSlot` in `src/engine/index.ts`, called by `src/ui/saves/SaveSlots.tsx`):
   - A save newer than 87 is refused.
-  - Every other save runs through `migrate()`, whatever its number. One that changed is checkpointed and written back, unless it came out of the backup: restoring has already swapped the two, and the first autosave writes it.
+  - Every other save runs through `migrate()`, whatever its number. One that changed is checkpointed and written back, unless it came out of the backup: restoring has already swapped the two, and the first autosave writes it on this device. On Base44 the restore itself doesn't take (§10).
   - `SaveSlots` then runs `validateUniverse()`.
   - The schema-11 Title Case pass is the one step that goes by the number (`from < 11`), because it can't tell an old label from a title a player typed.
 - **How `migrate()` works** (`src/engine/index.ts`):
-  - The passes work from the **shape** of the data, not the version number.
+  - The passes work from the **shape** of the data, not the version number, except the schema-11 Title Case pass.
   - `SHED` lists 19 removed person keys, from `attributes` through `reputationDriftedAt`.
   - Then it fills a missing title. A save from 72 to 79 still has one and keeps it. A save brought up to 80 from those lost it from the person but kept the premise record, so the player's title, a they/them pick included, is read back from there. Otherwise, as for a save created at 80 or one from before 72, the pronouns decide, and they/them comes back an actor.
   - Then it cleans or fills the personality, re-derives citizenship from the place of birth, and sets `careerLabel` to the title.
 - **Creation drafts** are stamped `DRAFT_BUILD = "${APP_VERSION}/${SAVE_SCHEMA_VERSION}"`. A draft from another build is discarded.
-- **Schema history.** The comment above `SAVE_SCHEMA_VERSION` (`model.ts:367-387`) covers 80 to 87:
+- **Schema history.** The comment above `SAVE_SCHEMA_VERSION` (`model.ts:367-390`) covers 80 to 87:
   - 80: the gut.
   - 81: the performer title comes back.
   - 82: one citizenship, from the place of birth.
@@ -502,7 +502,8 @@ The handoff and `CLAUDE.md` live at the repository root, so the gate's text tool
 **Deployment:**
 - **If a Base44 deployment exists, it must be redeployed from this branch before it will store this branch's saves.**
   - Any guard deployed before the schema-87 commit (83 from this line or the old `main`, 86 from the dropped line) refuses every save this branch now writes on schema, with a 409: "That save is in format 87 and this deployment understands 83" (or 86). Before that commit, a guard from the old `main` (83) or from the dropped line (86) accepted schema 83 but refused every save from this branch with "The save does not say what game it is", because those guards require `universe.premise`, which this branch no longer writes.
-  - Once redeployed (guard at 87, no premise check), the deployment accepts a save at any number up to 87, one from either old line included. Opening a save migrates it before it's written, so what it sends is at 87. Restore Backup first re-sends the backup as stored, which can carry an older number; a guard at 87 accepts that too. Deploy the guard before or with the client, never after: a client at 87 is refused by a guard at 83.
+  - Once redeployed (guard at 87, no premise check), the deployment accepts a save at any number up to 87, one from either old line included. Opening a save migrates it before it's written, so what it sends is at 87. Deploy the guard before or with the client, never after: a client at 87 is refused by a guard at 83.
+  - **Restore Backup doesn't take on Base44, and never has.** With the backend functions and the `SlateSave` entity both present, as in a real deployment, `restoreBackup` (`src/engine/persistence/base44.ts`) sends the backup through `saveUniverse`. If the backup was written by this build, its idempotency key matches its own first write, so the server replays that answer and writes nothing. If it was written earlier, the server refuses it for a world clock behind the stored one. Either way the server keeps the newer save, and the next autosave is refused as "older than the one already stored". The adapter tests miss it because their fake client has no entity. The fix is a server-side `restoreSlot` that swaps `payload` and `backup_payload`, with a contract test that wires the adapter to the real handlers.
   - The idempotency key now includes the schema. Bringing a save forward moves neither its clock nor its playtime, and before the fix the write-back after a migration reused the last write's key, was taken for a retry, and never reached the server.
 - Deploy only after `npm run gate` passes. `npm run base44:deploy` only builds and deploys, doesn't run the gate itself, and needs Base44 credentials.
 - Which guard the live deployment runs now isn't recorded anywhere.
@@ -539,7 +540,7 @@ Keep all of them until the owner says otherwise.
 
 1. **On Windows, run §3.** Confirm `core.autocrlf=false`, move the clone over without losing the old line, then `npm ci`. Confirm that the gate exits 0 with 485 tests and that the build passes.
 2. **Done on 2026-09-23: this branch replaced `main`** (§0.2). Future work still goes on the working branch and reaches `main` by PR, with the owner. Never reset or force-push `main`.
-3. **Done on 2026-09-23 (the schema-87 commit): the schema collision is retired.** Both pins moved from 83 to 87, past the old line's numbers. Every save from either line now runs through the shape-based `migrate()`, and drafts are stamped `1.1.0/87`, so old creation drafts are dropped without bumping `APP_VERSION`. The commit is on the working branch; bringing it into `main` is a PR for the owner.
+3. **Done on 2026-09-23 (`20da24e` and `f10f1b0`): the schema collision is retired.** Both pins moved from 83 to 87, past the old line's numbers, and opening a slot runs `migrate()` whatever the number. Drafts are stamped `1.1.0/87`, so old creation drafts are dropped without bumping `APP_VERSION`. Both commits reached `main` by PR, with the owner's approval.
 4. **Windows hygiene commit:**
    - Add `.gitattributes` (`* text=auto eol=lf`).
    - Make the five browser tools fall back to Playwright's own Chromium, and `drill.mjs` use `os.tmpdir()`.
@@ -549,7 +550,7 @@ Keep all of them until the owner says otherwise.
 5. **Fix the midnight rollover** to charge the hours actually awake since the last wake, not by moving the stamp (§10). Recalibrate `A_NORMAL_NIGHT` and the personality calibration tests, and add a test above 60 measured against `ceilingAt`.
 6. **Correct the stale words** in §10: DRILL-DOWN counts and row, README gate line, test table and calibration claim, the UNBITTEN audit entry, the "end flat" test comment, `place.tsx` "out of 100", the plural-check allowlist, the stale comments, `decided.ts`'s London id, and `base44/config.jsonc`.
 7. **Owner's direction for what comes next.** Something that reads the four idle axes, the money traits or citizenship would retire entries from `docs/UNWIRED.json` and `docs/UNBITTEN.md`. Take one `UNBITTEN` section at a time and prove each fix bites.
-8. **Deploy** to Base44 only after the gate passes; any existing deployment needs this redeploy before it will store this branch's saves (§10). Then run `tools/base44-smoke.mjs` against it.
+8. **Deploy** to Base44 only after the gate passes; any existing deployment needs this redeploy before it will store this branch's saves (§10). Then run `tools/base44-smoke.mjs` against it. Fix Restore Backup on Base44 first (§10): today it never takes on the server.
 
 ---
 
