@@ -459,3 +459,23 @@ describe('the sentence the player wrote', () => {
     expect(found.body).toBeUndefined();
   });
 });
+
+describe('the sleep debt dial', () => {
+  it('calls an ordinary day’s debt the day’s, the way the Sleep dialog does', () => {
+    // The clock charges the day as it moves, so by eleven a day up from seven
+    // has put 5.4 hours on the books, and the Sleep dialog calls the night
+    // that pays it a normal one. The dial called it owed.
+    const sim = quickSave({}, 'dial-ordinary-day');
+    const dial = () => (resolveLook(sim, at('dial', `${sim.universe.playerId}/sleepDebt`)) as Looked).summary;
+    // To bed at eleven for eight hours, then the whole next day up to eleven.
+    const elevenAfter = (from: number) => from + 15.5 * MS_HOUR;
+    sim.advanceTo(elevenAfter(sim.now));
+    expect(sim.execute({ kind: 'life.sleep', payload: { hours: 8 } }).ok).toBe(true);
+    sim.advanceTo(sim.now + 16 * MS_HOUR);
+    expect(sim.player.wellbeing.sleepDebt).toBeCloseTo(16 * 0.34, 9);
+    expect(dial()).toBe('5 hours, about what a day awake puts on the books. A night pays it back.');
+    // Kept up through the night an hour at a time, it is owed.
+    for (let hour = 0; hour < 8; hour += 1) sim.advanceTo(sim.now + MS_HOUR);
+    expect(dial()).toBe('8 hours owed. One long night would clear it.');
+  });
+});

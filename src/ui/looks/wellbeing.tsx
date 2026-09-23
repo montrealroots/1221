@@ -18,7 +18,7 @@
  * because a dial is a thing and a multiplication is not.
  */
 
-import { readiness, wellbeingSummary } from '@/engine/systems/life';
+import { A_NORMAL_DAYS_DEBT, readiness, wellbeingSummary } from '@/engine/systems/life';
 import type { Person, Wellbeing } from '@/engine/domain/model';
 import type { Simulation } from '@/engine';
 import { defineLook, type Way } from './registry';
@@ -189,9 +189,14 @@ function sentenceFor(dial: Dial): string {
         : n < 60 ? `${n}. Present, manageable, and slower to clear than it was.`
           : `${n}. High enough that sleep is going badly and it feeds itself.`;
     case 'sleepDebt':
+      // A day awake puts debt on the books as it goes, 5.4 hours by eleven
+      // after a day up from seven, and a night pays it back. Counted as owed,
+      // this said "5 hours owed. One long night would clear it." while the
+      // Sleep dialog called the same evening a normal night.
       return n < 2 ? 'None to speak of. You’re square with the nights you’ve had.'
-        : n < 12 ? `${n} hours owed. One long night would clear it.`
-          : `${n} hours owed. Everything is harder than it should be, and it will stay that way.`;
+        : dial.value < A_NORMAL_DAYS_DEBT + 2 ? `${n} hours, about what a day awake puts on the books. A night pays it back.`
+          : n < 12 ? `${n} hours owed. One long night would clear it.`
+            : `${n} hours owed. Everything is harder than it should be, and it will stay that way.`;
     case 'morale':
       return n > 70 ? `${n}. The work feels worth doing.`
         : n > 40 ? `${n}. Level. Neither carrying you nor dragging.`
