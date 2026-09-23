@@ -71,7 +71,8 @@ export function TimeControls() {
         <DueNow
           item={due.item}
           wanted={due.wanted}
-          onGo={() => { clearStandingAt(); advanceTo(due.wanted); }}
+          // Carrying on is the same jump the stop broke off, not a new one.
+          onGo={() => { clearStandingAt(); advanceTo(due.wanted, due.sentFrom); }}
           onStay={() => {
             // Not silent: if the world refuses to let you walk away from
             // something, the reason is the answer and it belongs on screen.
@@ -82,7 +83,7 @@ export function TimeControls() {
               refresh();
               return;
             }
-            advanceTo(due.wanted);
+            advanceTo(due.wanted, due.sentFrom);
           }}
           onClose={clearStandingAt}
         />

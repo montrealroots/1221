@@ -75,6 +75,8 @@ export type AdvanceProgress = (processed: number, total: number, at: Instant) =>
 export interface AdvanceResult {
   from: Instant;
   to: Instant;
+  /** Where the jump was sent from: `from`, or the start of the jump it resumed (`advancing`). */
+  sentFrom: Instant;
   itemsProcessed: number;
   /** Items that needed the player but were passed while they were unavailable. */
   missed: ScheduledItem[];
@@ -97,7 +99,9 @@ export class Simulation {
   private commandHandlers = new Map<string, CommandHandler<never, unknown>>();
   private pendingEvents: WorldEvent[] = [];
   /** The advance in progress, for `advancing` and `advancingTo`. */
-  private advance: { readonly from: Instant; readonly target: Instant; readonly stopsForPlayer: boolean } | undefined;
+  private advance: {
+    readonly from: Instant; readonly target: Instant; readonly sentFrom: Instant; readonly stopsForPlayer: boolean;
+  } | undefined;
   private depth = 0;
 
   constructor(public universe: SaveUniverse) {
@@ -168,7 +172,9 @@ export class Simulation {
    * for a plan or the morning a skip was sent to, and pays a night a stop in
    * its first hour left unpaid. It said at first that the clock had to carry
    * them more than an hour on, which was the rule until presence was judged
-   * by how far the clock was sent. They run in the order they were
+   * by how far the clock was sent; a jump the player carries on after a stop
+   * is judged by how far it was sent in the first place (`advancing`). They
+   * run in the order they were
    * registered, so the night comes before the drain that would otherwise
    * charge its hours as awake.
    */
@@ -190,10 +196,17 @@ export class Simulation {
    * player is back before long; a skip carries it through whole nights.
    * People sleep through a night nobody stays up with them (`life.ts`), and
    * nobody can tell that at midnight from the midnight alone.
+   *
+   * `sentFrom` is where the jump it resumes was sent from, when a stop for the
+   * player broke one off and the player then carried on to where it was going
+   * (Go, or Skip It, on what stopped it), and `from` otherwise. Every advance
+   * used to be judged as the player's own move by its own length, so the last
+   * stretch of a skip the player sent through the night, carried on after a
+   * stop in its first hour, counted as the player keeping them up in it.
    */
-  get advancing(): { readonly from: Instant; readonly target: Instant } | undefined {
+  get advancing(): { readonly from: Instant; readonly target: Instant; readonly sentFrom: Instant } | undefined {
     const advance = this.advance;
-    return advance && { from: advance.from, target: advance.target };
+    return advance && { from: advance.from, target: advance.target, sentFrom: advance.sentFrom };
   }
 
   /**
@@ -331,7 +344,10 @@ export class Simulation {
    * It is also why what time does on its own (`onPassage`) is run from here:
    * every way of moving the clock pays it, and at the same rate.
    */
-  advanceTo(target: Instant, opts: { onProgress?: AdvanceProgress; stopOnPlayerRequired?: boolean } = {}): AdvanceResult {
+  advanceTo(
+    target: Instant,
+    opts: { onProgress?: AdvanceProgress; stopOnPlayerRequired?: boolean; resumes?: Instant } = {},
+  ): AdvanceResult {
     if (this.advancing) {
       throw new Error('advanceTo called re-entrantly. A handler tried to move the clock itself.');
     }
@@ -342,8 +358,10 @@ export class Simulation {
       );
     }
 
-    this.advance = { from, target, stopsForPlayer: opts.stopOnPlayerRequired === true };
-    const result: AdvanceResult = { from, to: target, itemsProcessed: 0, missed: [], events: [] };
+    // A jump can only be resumed from where it stopped or later.
+    const sentFrom = opts.resumes !== undefined && opts.resumes <= from ? opts.resumes : from;
+    this.advance = { from, target, sentFrom, stopsForPlayer: opts.stopOnPlayerRequired === true };
+    const result: AdvanceResult = { from, to: target, sentFrom, itemsProcessed: 0, missed: [], events: [] };
 
     // Time acts on the world wherever the clock stops, before anything due
     // there. Several items due at one instant are one stop, not several.

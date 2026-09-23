@@ -37,9 +37,10 @@ export interface GameContextValue {
   run: <R = unknown>(kind: string, payload?: Record<string, unknown>, options?: { idempotencyKey?: string; silent?: boolean }) => CommandResult<R>;
   /** Advances world time through the one advancement path. */
   advance: (ms: number) => AdvanceResult | undefined;
-  advanceTo: (instant: number) => AdvanceResult | undefined;
-  /** What the clock stopped at, waiting on the player to decide. */
-  standingAt: { item: ScheduledItem; wanted: number } | null;
+  /** `resumes` carries on a jump a stop broke off: where that jump was sent from. */
+  advanceTo: (instant: number, resumes?: number) => AdvanceResult | undefined;
+  /** What the clock stopped at, waiting on the player to decide, and the jump it broke off. */
+  standingAt: { item: ScheduledItem; wanted: number; sentFrom: number } | null;
   clearStandingAt: () => void;
   /** Forces a re-read without mutating. */
   refresh: () => void;
@@ -123,13 +124,14 @@ export function GameProvider({
   const [favourites, setFavourites] = useState<NavEntry[]>(() => readFavourites());
   const [toasts, setToasts] = useState<Toast[]>([]);
   /**
-   * The thing the clock stopped at, and where it was trying to get to.
+   * The thing the clock stopped at, where it was trying to get to, and where
+   * that jump was sent from, so carrying on to it is the same jump.
    *
    * Held here rather than on the control that happened to move the clock,
    * because every way of moving it can be halted — the Advance menu, Skip To
    * Event, and the live tick that runs while nobody touches anything.
    */
-  const [standingAt, setStandingAt] = useState<{ item: ScheduledItem; wanted: number } | null>(null);
+  const [standingAt, setStandingAt] = useState<{ item: ScheduledItem; wanted: number; sentFrom: number } | null>(null);
   const [saving, setSaving] = useState(false);
   const [saveError, setSaveError] = useState<string | undefined>();
   const toastId = useRef(0);
@@ -185,7 +187,7 @@ export function GameProvider({
   const halt = useCallback((result: AdvanceResult, wanted: number) => {
     if (!result.interruptedBy) return;
     sim.execute({ kind: 'world.set_preferences', payload: { timeSpeed: 'paused' } });
-    setStandingAt({ item: result.interruptedBy, wanted });
+    setStandingAt({ item: result.interruptedBy, wanted, sentFrom: result.sentFrom });
   }, [sim]);
 
   const advance = useCallback((ms: number): AdvanceResult | undefined => {
@@ -204,9 +206,9 @@ export function GameProvider({
     }
   }, [sim, toast, refresh, halt]);
 
-  const advanceTo = useCallback((instant: number): AdvanceResult | undefined => {
+  const advanceTo = useCallback((instant: number, resumes?: number): AdvanceResult | undefined => {
     try {
-      const result = sim.advanceTo(instant, { stopOnPlayerRequired: true });
+      const result = sim.advanceTo(instant, { stopOnPlayerRequired: true, resumes });
       dirty.current = true;
       halt(result, instant);
       refresh();

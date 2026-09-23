@@ -189,6 +189,32 @@ function aYearOfLatePlans(sim: Simulation, plan: boolean): { lowest: number } {
   return { lowest };
 }
 
+/**
+ * A year of Skip To Event at half past eleven to something at half past one,
+ * with a plan at half past twelve on the way, gone on from with Go, as the
+ * UI's Go does: the same jump, carried on. With no plan, the same year
+ * without the stop.
+ */
+function aYearOfSkipsWithAPlanOnTheWay(sim: Simulation, plan: boolean): { lowest: number } {
+  let lowest = 100;
+  const at = (days: number, hour: number, minute = 0) => {
+    const p = zonedParts(sim.now, sim.zone);
+    return addDays(instantFromZoned({ year: p.year, month: p.month, day: p.day, hour, minute }, sim.zone), days, sim.zone);
+  };
+  for (let day = 0; day < 365; day += 1) {
+    sim.advanceTo(at(sim.now >= at(0, 23, 30) ? 1 : 0, 23, 30), { stopOnPlayerRequired: true });
+    const event = at(1, 1, 30);
+    expect(sim.execute({ kind: 'calendar.schedule', payload: { title: 'Event', at: event } }).ok).toBe(true);
+    if (plan) expect(sim.execute({ kind: 'calendar.schedule', payload: { title: 'On The Way', at: at(1, 0, 30) } }).ok).toBe(true);
+    let moved = sim.advanceTo(event, { stopOnPlayerRequired: true });
+    while (moved.interruptedBy && sim.now < event) {
+      moved = sim.advanceTo(event, { stopOnPlayerRequired: true, resumes: moved.sentFrom });
+    }
+    lowest = Math.min(lowest, sim.player.wellbeing.condition);
+  }
+  return { lowest };
+}
+
 describe('the content', () => {
   it('is the thirty-five traits in six groups the page draws', () => {
     expect(PERSONALITY_TRAITS).toHaveLength(35);
@@ -568,6 +594,25 @@ describe('no single trait or disposition wears a life down', () => {
         const without = build(c, birthYear, 'p-plans');
         expect(aYearOfLatePlans(without, false).lowest, `${c.name}, born ${birthYear}`).toBe(lowest);
         expect(sim.player.wellbeing, `${c.name}, born ${birthYear}`).toEqual(without.player.wellbeing);
+      }
+    }
+  });
+
+  it('with a plan in the night’s first hour every night, on the way of a skip gone on from with Go, for a year', () => {
+    // Go carries on the skip the plan broke off. It was taken for the player
+    // keeping them up for an hour, the night was forfeit and started again at
+    // half past one, late, and nine of the seventy-six wore down, light
+    // sleepers and the highly strung at both ages among them. Carried on as
+    // the skip, the plan costs the hour they are up for it and no more.
+    for (const birthYear of [2001, 1966]) {
+      for (const c of singles.filter((one) => ['light_sleeper', 'highly_strung'].includes(one.name))) {
+        const sim = build(c, birthYear, 'p-plans');
+        const { lowest } = aYearOfSkipsWithAPlanOnTheWay(sim, true);
+        expect(lowest, `${c.name}, born ${birthYear}, wore down with the plans`).toBeGreaterThan(65);
+        expect(sim.player.wellbeing.morale, `${c.name}, born ${birthYear}, ended flat`).toBeGreaterThan(80);
+        expect(sim.player.wellbeing.stress, `${c.name}, born ${birthYear}, ended stretched`).toBeLessThan(25);
+        const without = build(c, birthYear, 'p-plans');
+        expect(aYearOfSkipsWithAPlanOnTheWay(without, false).lowest, `${c.name}, born ${birthYear}`).toBeCloseTo(lowest, 0);
       }
     }
   });

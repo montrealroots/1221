@@ -108,18 +108,22 @@ describe('time advancement', () => {
     expect(sim.advanceTo(start + 8 * MS_HOUR, { stopOnPlayerRequired: true }).interruptedBy?.kind).toBe('test.call');
     // Going on from the call, the call is not a stop: the advance only stops
     // for something after where it started, and never for something past
-    // where it was asked to go.
+    // where it was asked to go. Carried on as the jump the call broke off, it
+    // says where that jump was sent from.
     where(start + 3 * MS_HOUR, 50);
     call(start + 10 * MS_HOUR);
-    sim.advanceTo(start + 8 * MS_HOUR, { stopOnPlayerRequired: true });
-    // And not asked to stop, it runs to its target.
+    const resumed = sim.advanceTo(start + 8 * MS_HOUR, { stopOnPlayerRequired: true, resumes: start });
+    expect(resumed.sentFrom).toBe(start);
+    // And not asked to stop, it runs to its target. A jump can only be
+    // resumed from where it stopped or earlier, so one said to resume from
+    // later is its own.
     where(start + 9 * MS_HOUR);
-    sim.advanceTo(start + 12 * MS_HOUR);
+    expect(sim.advanceTo(start + 12 * MS_HOUR, { resumes: start + 9 * MS_HOUR }).sentFrom).toBe(start + 8 * MS_HOUR);
     expect(seen).toEqual([start + 3 * MS_HOUR, start + 8 * MS_HOUR, start + 12 * MS_HOUR]);
     expect(asked).toEqual([
-      { from: start, target: start + 8 * MS_HOUR },
-      { from: start + 3 * MS_HOUR, target: start + 8 * MS_HOUR },
-      { from: start + 8 * MS_HOUR, target: start + 12 * MS_HOUR },
+      { from: start, target: start + 8 * MS_HOUR, sentFrom: start },
+      { from: start + 3 * MS_HOUR, target: start + 8 * MS_HOUR, sentFrom: start },
+      { from: start + 8 * MS_HOUR, target: start + 12 * MS_HOUR, sentFrom: start + 8 * MS_HOUR },
     ]);
     expect(sim.advancingTo).toBeUndefined();
     expect(sim.advancing).toBeUndefined();
@@ -639,6 +643,117 @@ describe('the waking day', () => {
     expect(kept.sim.player.nightOwedFrom).toBeUndefined();
   });
 
+  it('carries on a skip that something in the night’s first hour stopped as that skip, and charges only the stretch carried on', () => {
+    // Skip To Event at half past eleven, to something at half past one, with
+    // a call at half past twelve on the way. Go carries on to where the skip
+    // was going. It was taken for the player keeping them up, being an hour,
+    // and the night nobody chose was forfeit and started again at half past
+    // one, late: a year of it wore nine of the seventy-six down, where main
+    // and 0e80f13 wore none.
+    const skip = (seed: string, withCall: boolean) => {
+      const sim = rested(seed);
+      sim.onSchedule('test.call', () => undefined);
+      sim.advanceTo(next(sim, 23) + 30 * MS_MINUTE);
+      const midnight = next(sim, 0);
+      const target = midnight + 90 * MS_MINUTE;
+      if (withCall) {
+        sim.schedule({ at: midnight + 30 * MS_MINUTE, kind: 'test.call', label: 'A Call', category: 'personal', requiresPlayer: true });
+      }
+      const first = sim.advanceTo(target, { stopOnPlayerRequired: true });
+      return { sim, midnight, target, first };
+    };
+
+    const straight = skip('a-call-on-the-way', false);
+    const broken = skip('a-call-on-the-way', true);
+    expect(broken.first.interruptedBy?.kind).toBe('test.call');
+    expect(broken.sim.player.nightOwedFrom).toBe(broken.midnight);
+    // Go: the same jump, carried on.
+    broken.sim.advanceTo(broken.target, { stopOnPlayerRequired: true, resumes: broken.first.sentFrom });
+    expect(broken.sim.player.nightOwedFrom).toBeUndefined();
+    expect(broken.sim.player.lastSleptAt).toBe(broken.midnight);
+    expect(broken.sim.player.nightEndsAt).toBe(straight.sim.player.nightEndsAt);
+
+    // The same hour moved by the player themselves, One Hour, is theirs: the
+    // night is forfeit, and the next jump starts one where they are.
+    const own = skip('a-call-on-the-way', true);
+    own.sim.advanceTo(own.target, { stopOnPlayerRequired: true });
+    expect(own.sim.player.nightOwedFrom).toBeUndefined();
+    expect(own.sim.player.nightEndsAt).toBeUndefined();
+
+    // Sent on to the evening, the skip the call broke off reads as the skip
+    // that nothing broke off, but for the hour they were up for the call:
+    // back in bed until the night would have ended, and charged the hour.
+    const evening = straight.midnight + 18 * MS_HOUR;
+    for (const one of [straight, broken, own]) one.sim.advanceTo(evening, { stopOnPlayerRequired: true });
+    expect(broken.sim.player.awakeSince).toBe(straight.sim.player.awakeSince);
+    expect(broken.sim.player.wellbeing.condition).toBe(straight.sim.player.wellbeing.condition);
+    expect(broken.sim.player.wellbeing.morale).toBe(straight.sim.player.wellbeing.morale);
+    expect(broken.sim.player.wellbeing.energy).toBeCloseTo(straight.sim.player.wellbeing.energy - 3, 1);
+    expect(own.sim.player.lastSleptAt).toBe(own.target);
+
+    // Carried on to somewhere still in the night's first hour, it is what the
+    // skip would have been: the night stays owed, to be paid when the clock
+    // goes on, not paid for the fifty minutes the skip would have carried.
+    const short = rested('a-call-on-a-short-skip');
+    short.onSchedule('test.call', () => undefined);
+    short.advanceTo(next(short, 23) + 30 * MS_MINUTE);
+    const midnight = next(short, 0);
+    short.schedule({ at: midnight + 20 * MS_MINUTE, kind: 'test.call', label: 'A Call', category: 'personal', requiresPlayer: true });
+    const stopped = short.advanceTo(midnight + 50 * MS_MINUTE, { stopOnPlayerRequired: true });
+    expect(stopped.interruptedBy?.kind).toBe('test.call');
+    short.advanceTo(midnight + 50 * MS_MINUTE, { stopOnPlayerRequired: true, resumes: stopped.sentFrom });
+    expect(short.player.nightOwedFrom).toBe(midnight);
+    expect(short.player.lastSleptAt).toBeLessThan(midnight);
+  });
+
+  it('charges the time in bed before the stop to a player who keeps them up in a night not yet paid', () => {
+    // Forfeit, the night reads as for a player who kept them up from the
+    // start. The stretch from midnight to the stop was left uncharged at
+    // first, as well as unpaid, and the two read the same only where the
+    // next night reached the ceiling autopilot stops at and hid it: kept up
+    // to half past six after a stop at half past twelve, a save played on
+    // autopilot read 62.53 by six in the evening, where no stop read 60.86.
+    for (const [seed, played] of [['kept-from-the-start', false], ['kept-on-autopilot', true]] as const) {
+      const make = () => {
+        const sim = played ? quickSave({}, seed) : rested(seed);
+        if (played) for (let day = 0; day < 5; day += 1) sim.advanceTo(next(sim, 7), { stopOnPlayerRequired: true });
+        sim.advanceTo(next(sim, 23) + 30 * MS_MINUTE);
+        return { sim, midnight: next(sim, 0) };
+      };
+      const stopped = make();
+      const kept = make();
+      const sixThirty = stopped.midnight + 6.5 * MS_HOUR;
+      stopped.sim.advanceTo(stopped.midnight + 31 * MS_MINUTE);
+      expect(stopped.sim.player.nightOwedFrom, seed).toBe(stopped.midnight);
+      for (const one of [stopped, kept]) {
+        while (one.sim.now < sixThirty) one.sim.advanceTo(Math.min(sixThirty, one.sim.now + MS_HOUR));
+        one.sim.advanceTo(one.midnight + 18 * MS_HOUR);
+      }
+      expect(stopped.sim.player.lastSleptAt, seed).toBe(sixThirty);
+      // Charged in two pieces where the player kept them up in one, so equal
+      // to the last few digits a float carries, not to the bit.
+      for (const [key, value] of Object.entries(kept.sim.player.wellbeing)) {
+        expect(stopped.sim.player.wellbeing[key as keyof Wellbeing], `${seed}: ${key}`).toBeCloseTo(value, 9);
+      }
+    }
+  });
+
+  it('forfeits a night not yet paid to live play as well as to One Hour', () => {
+    // Play moves the clock a second a tick. A forfeit that only a longer move
+    // made, or only one past the night's first hour, passed every test.
+    const sim = rested('kept-up-by-play');
+    sim.advanceTo(next(sim, 23) + 30 * MS_MINUTE);
+    const midnight = next(sim, 0);
+    sim.advanceTo(midnight + 31 * MS_MINUTE);
+    expect(sim.player.nightOwedFrom).toBe(midnight);
+    sim.advanceBy(1000, { stopOnPlayerRequired: true });
+    expect(sim.player.nightOwedFrom).toBeUndefined();
+    for (let second = 1; second < 60; second += 1) sim.advanceBy(1000, { stopOnPlayerRequired: true });
+    const left = sim.now;
+    sim.advanceTo(midnight + 18 * MS_HOUR);
+    expect(sim.player.lastSleptAt).toBe(left);
+  });
+
   it('drains a save from before 88 by the debt it woke with, through a night put to bed and not paid', () => {
     // Such a save works out the debt it woke with from the hours it has been
     // up, until its first wake writes it down. Put to bed from midnight by a
@@ -722,7 +837,7 @@ describe('the waking day', () => {
     }
   });
 
-  it('pays a sleep chosen in the middle of a night nobody chose on top of it, and puts them back to bed after', () => {
+  it('pays a sleep chosen in the middle of a night nobody chose that is paid already on top of it, and puts them back to bed after', () => {
     // Up for a call at half past one, an hour's sleep, and on to seven: the
     // night was paid at midnight, the hour is paid on top, and the rest of
     // the skip has them in bed until the night would have ended. Dropped at
@@ -891,19 +1006,37 @@ describe('the waking day', () => {
     expect(sleepStandsForTheNight(sim, 1)).toBe(false);
 
     // Nor while one is under way and not yet paid, woken by a call half an
-    // hour into it: sent on after the sleep, the whole night is paid on top
-    // of it, and they are in bed until it would have ended.
-    const woken = rested('woken-in-the-first-hour');
-    woken.onSchedule('test.call', () => undefined);
-    woken.advanceTo(next(woken, 23) + 30 * MS_MINUTE);
-    woken.schedule({ at: midnight + 30 * MS_MINUTE, kind: 'test.call', label: 'A Late Call', category: 'personal', requiresPlayer: true });
-    expect(woken.advanceTo(midnight + 7 * MS_HOUR, { stopOnPlayerRequired: true }).interruptedBy?.label).toBe('A Late Call');
-    expect(woken.player.nightOwedFrom).toBe(midnight);
-    expect(sleepStandsForTheNight(woken, 3)).toBe(false);
-    expect(woken.execute({ kind: 'life.sleep', payload: { hours: 3 } }).ok).toBe(true);
-    woken.advanceTo(midnight + 12 * MS_HOUR);
-    expect(woken.player.lastSleptAt).toBe(midnight);
-    expect(woken.player.awakeSince).toBeGreaterThan(midnight + 7 * MS_HOUR);
+    // hour into it: sent on after the sleep, the night is paid after it, and
+    // they are in bed until it would have ended. The night is paid from its
+    // bedtime and stops at the ceiling autopilot does, so it keeps the more
+    // of what the sleep and the night give, not both: a nap too short to pass
+    // that ceiling puts nothing back and costs what a short sleep costs.
+    const woken = (seed: string, hours: number) => {
+      const sim = rested(seed);
+      sim.onSchedule('test.call', () => undefined);
+      sim.advanceTo(next(sim, 23) + 30 * MS_MINUTE);
+      sim.schedule({ at: midnight + 30 * MS_MINUTE, kind: 'test.call', label: 'A Late Call', category: 'personal', requiresPlayer: true });
+      expect(sim.advanceTo(midnight + 7 * MS_HOUR, { stopOnPlayerRequired: true }).interruptedBy?.label).toBe('A Late Call');
+      expect(sim.player.nightOwedFrom).toBe(midnight);
+      expect(sleepStandsForTheNight(sim, 3)).toBe(false);
+      const ends = sim.player.nightEndsAt;
+      if (hours > 0) expect(sim.execute({ kind: 'life.sleep', payload: { hours } }).ok).toBe(true);
+      // A sleep of an hour is a move of an hour, which the rule would take
+      // for the player's own, but asleep in it they have not kept them up.
+      expect(sim.player.nightOwedFrom, `${hours} h`).toBe(midnight);
+      expect(sim.player.nightEndsAt, `${hours} h`).toBe(ends);
+      sim.advanceTo(midnight + 7 * MS_HOUR);
+      expect(sim.player.lastSleptAt, `${hours} h`).toBe(midnight);
+      return sim;
+    };
+    const none = woken('woken-in-the-first-hour', 0);
+    const nap = woken('woken-in-the-first-hour', 1);
+    const three = woken('woken-in-the-first-hour', 3);
+    expect(nap.player.wellbeing.energy).toBe(none.player.wellbeing.energy);
+    expect(nap.player.wellbeing.sleepDebt).toBeGreaterThan(none.player.wellbeing.sleepDebt);
+    expect(three.player.wellbeing.energy).toBeGreaterThan(none.player.wellbeing.energy);
+    three.advanceTo(midnight + 12 * MS_HOUR);
+    expect(three.player.awakeSince).toBeGreaterThan(midnight + 7 * MS_HOUR);
   });
 
   it('gives no night nobody chose on the way to a night booked for the morning', () => {
