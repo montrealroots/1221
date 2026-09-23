@@ -97,6 +97,8 @@ export class Simulation {
   private commandHandlers = new Map<string, CommandHandler<never, unknown>>();
   private pendingEvents: WorldEvent[] = [];
   private advancing = false;
+  /** The advance in progress, for `advancingTo`. */
+  private advance: { from: Instant; target: Instant; stopsForPlayer: boolean } | undefined;
   private depth = 0;
 
   constructor(public universe: SaveUniverse) {
@@ -159,9 +161,13 @@ export class Simulation {
    * stopped, and a command that fails rolls the clock back with everything
    * that was charged on the way.
    *
-   * Waking drain is the first. It used to be charged by the midnight rollover,
-   * for the whole day ahead in one lump, so nothing on Home moved while a day
-   * was played and energy fell seventy-two points at midnight.
+   * Waking drain was the first. It used to be charged by the midnight
+   * rollover, for the whole day ahead in one lump, so nothing on Home moved
+   * while a day was played and energy fell seventy-two points at midnight.
+   * The second puts somebody to bed when the clock is carried through the
+   * rest of a night the player kept them up in. They run in the order they
+   * were registered, so the night comes before the drain that would
+   * otherwise charge its hours as awake.
    */
   onPassage(name: string, reactor: PassageReactor): this {
     if (this.passageReactors.has(name)) {
@@ -169,6 +175,29 @@ export class Simulation {
     }
     this.passageReactors.set(name, reactor);
     return this;
+  }
+
+  /**
+   * Where the advance in progress will stop, or undefined outside one: its
+   * target, or the first thing before it that needs the player, when it was
+   * asked to stop for one.
+   *
+   * It is how the world tells a player who is there from one who has jumped
+   * the clock. Live play moves it a second at a time and never more than half
+   * an hour, and One Hour on the Advance menu an hour, and either way the
+   * player is back before long; a skip carries it through whole nights.
+   * People sleep through a night nobody stays up with them (`life.ts`), and
+   * nobody can tell that at midnight from the midnight alone. Something
+   * scheduled during the advance that stops it for the player is not
+   * foreseen.
+   */
+  get advancingTo(): Instant | undefined {
+    const advance = this.advance;
+    if (!advance) return undefined;
+    if (!advance.stopsForPlayer) return advance.target;
+    const after = this.universe.now > advance.from ? this.universe.now - 1 : advance.from;
+    const stop = this.timeline.next(after, (item) => item.requiresPlayer === true);
+    return stop !== undefined && stop.at <= advance.target ? stop.at : advance.target;
   }
 
   onCommand<P, R>(kind: string, handler: CommandHandler<P, R>): this {
@@ -297,6 +326,7 @@ export class Simulation {
     }
 
     this.advancing = true;
+    this.advance = { from, target, stopsForPlayer: opts.stopOnPlayerRequired === true };
     const result: AdvanceResult = { from, to: target, itemsProcessed: 0, missed: [], events: [] };
 
     // Time acts on the world wherever the clock stops, before anything due
@@ -398,6 +428,7 @@ export class Simulation {
       return result;
     } finally {
       this.advancing = false;
+      this.advance = undefined;
     }
   }
 

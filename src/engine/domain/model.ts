@@ -130,21 +130,25 @@ export interface Person {
   primaryAccountId?: Id;
 
   /**
-   * When their last deliberate night ends, so the world knows to fill the gap.
-   * Stamped at bedtime with the wake, so it is ahead of the clock while they
-   * sleep; before schema 88 it was stamped at the wake. A night nobody chose
-   * stamps the midnight it is given at.
+   * Their last night, as one instant, so the world knows whether a night has
+   * been slept since midnight (`sleepAlone` in `systems/life.ts`). A night
+   * they chose is its wake, put on record when it is booked, so it is ahead
+   * of the clock from the booking to the wake; before schema 88 it was
+   * stamped at the wake. A night nobody chose is its bedtime: the midnight,
+   * or later for somebody the player stayed up with. A new save starts with
+   * the moment the world does.
    */
   lastSleptAt?: Instant;
   /**
    * When their waking day began: the moment they woke, or will wake if it is
    * still ahead of the clock, which is a night they are asleep in. A night
    * the player chose runs to its wake, and one nobody chose to a sound
-   * sleeper's waking. The clock charges waking time from here as it moves,
-   * at the drain set by the sleep debt they woke with. Absent means the count
-   * starts the first time the clock moves. A save from before 88 is given
-   * the next midnight, ahead of the clock while they are awake. See
-   * `chargeWakingHours` in `systems/life.ts`.
+   * sleeper's waking, or to where the clock stopped if that came first. The
+   * clock charges waking time from here as it moves, at the drain set by the
+   * sleep debt they woke with. Absent means the count starts the first time
+   * the clock moves. A save from before 88 is given the next midnight, ahead
+   * of the clock while they are awake. See `chargeWakingHours` in
+   * `systems/life.ts`.
    */
   awakeSince?: Instant;
   /**
