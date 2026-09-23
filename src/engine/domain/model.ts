@@ -142,10 +142,18 @@ export interface Person {
    * the player chose runs to its wake, and one nobody chose to a sound
    * sleeper's waking. The clock charges waking time from here as it moves,
    * at the drain set by the sleep debt they woke with. Absent means the count
-   * starts the first time the clock moves. See `chargeWakingHours` in
-   * `systems/life.ts`.
+   * starts the first time the clock moves. A save from before 88 is given
+   * the next midnight, ahead of the clock while they are awake. See
+   * `chargeWakingHours` in `systems/life.ts`.
    */
   awakeSince?: Instant;
+  /**
+   * The sleep debt they woke with, which sets how fast their waking day
+   * drains. Written at every wake, chosen or not, and at the start of a
+   * waking day with none on record; absent on a save from before 88 until
+   * its first wake, when it is worked out from the debt instead.
+   */
+  wokeWithDebt?: number;
 
   /**
    * Who this person is, in their own terms. Set at creation and only for the
@@ -401,10 +409,13 @@ export interface Preferences {
  * inert JSON.
  *
  * 88 charged the waking day as the clock moves instead of all at once at
- * midnight, and gave every person `awakeSince`, when their waking day began.
- * A save from before 88, this line's 87 included, was charged at its last
- * midnight for the whole day ahead, so its people come in charged up to the
- * next midnight, and their waking day starts there.
+ * midnight. It gave every person `awakeSince`, when their waking day began,
+ * and from their next wake `wokeWithDebt`, the sleep debt they woke with. A
+ * save from before 88, this line's 87 included, was charged at its last
+ * midnight for the whole day ahead, or, saved before its first midnight, was
+ * never charged for that day. Either way its people come in charged up to the
+ * next midnight, as that build would have left them, and their waking day
+ * starts there.
  *
  * `migrate` in `engine/index.ts` says what an older save sheds on the way in,
  * what it keeps as inert JSON, and what it is given.

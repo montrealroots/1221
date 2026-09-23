@@ -4,7 +4,7 @@
 **Written for:** the next Claude Code session, running on the owner's Windows machine under PowerShell 7.
 **Repository:** `github.com/yvcbcjhsy7-prog/1221`
 **Working branch:** `claude/slate-cleanup-e4apmx`
-**Verified at:** the schema-87 commits (2026-09-23), the last code commits: `20da24e` moved the save schema from 83 to 87 (§0.4), and the commit after it fixed what review found in it. Before them, `36d2cea` ("Fit the new step names, and match Review to them") was the last, and every commit between leaves the build alone: `d0636b8` removes an unreferenced scratch file; `acf5e10`, `6c18b6b` and `63b757b` write and correct this file; `beda4d9` brings `CLAUDE.md` over; `ad44f5c` and `297dbfe` correct both files; `4aab498` merges the old `main` in without changing a file; and `cd8d6ef` (PR #17) carries this line into `main`.
+**Verified at:** the rollover fix (2026-09-23), the last code commits: `7a373c2` charged the waking day as the clock moves (schema 88; §5, §10), and the commit after it fixed what review found. Before them, the schema-87 commits: `20da24e` moved the save schema from 83 to 87 (§0.4), `f10f1b0` fixed what review found in it, `a5f1f53` corrected the documents and two comments, and `ed0cab7` (PR #18) merged them into `main`. Before those, `36d2cea` ("Fit the new step names, and match Review to them") was the last code commit, and every commit between it and `20da24e` leaves the build alone: `d0636b8` removes an unreferenced scratch file; `acf5e10`, `6c18b6b` and `63b757b` write and correct this file; `beda4d9` brings `CLAUDE.md` over; `ad44f5c` and `297dbfe` correct both files; `4aab498` merges the old `main` in without changing a file; and `cd8d6ef` (PR #17) carries this line into `main`.
 
 This is the one handoff. The owner's `CLAUDE.md` names `SLATE_CURRENT_MASTER_HANDOFF.md` as the only state that passes between sessions; `CLAUDE.md` itself carries the owner's rules. `PROJECT_HANDOFF.md` was retired in `b6f4061`, and keeping a single file stops two handoffs drifting apart. Earlier versions of this file are on GitHub `main` (as of `46f48f3`, 09-18) and, newer, at `4a00db8` (09-21), which is on no GitHub branch. Both describe the line the owner replaced on 2026-09-22 (see §1), so read them only as history.
 
@@ -15,9 +15,9 @@ When this file and the tree disagree, the tree wins. Correct this file in the sa
 ## 0. Read this box first
 
 1. **Work on `claude/slate-cleanup-e4apmx`.** Everything described here is on that branch, pushed, and level with GitHub. Since 2026-09-23 `main` carries the same line (§0.2). Keep developing on the working branch, and bring it into `main` by PR, with the owner.
-2. **This branch replaced `main` on 2026-09-23, by the owner's decision.** The old `main` (`e139e06`, 2026-09-18) carried 67 commits from the line the owner chose to drop, merged through PR #15 and PR #16 (72 counting the merge commits for PRs #12 to #16). The owner chose a merge over a force-push. Merge `4aab498` records `e139e06` as a parent and keeps this branch's tree exactly (`git merge -s ours`), and a PR from this branch carried it into `main`. That history is still reachable from `main`, but none of its files are in the tree. This line forked from it at `dc52d64` (2026-09-16) and has 16 code commits of its own since (14 on 09-22, and the two schema-87 commits on 09-23), plus the 09-23 commits that leave the build alone (§4). Commits after `cd8d6ef` reach `main` only by PR, with the owner.
+2. **This branch replaced `main` on 2026-09-23, by the owner's decision.** The old `main` (`e139e06`, 2026-09-18) carried 67 commits from the line the owner chose to drop, merged through PR #15 and PR #16 (72 counting the merge commits for PRs #12 to #16). The owner chose a merge over a force-push. Merge `4aab498` records `e139e06` as a parent and keeps this branch's tree exactly (`git merge -s ours`), and a PR from this branch carried it into `main`. That history is still reachable from `main`, but none of its files are in the tree. This line forked from it at `dc52d64` (2026-09-16) and has 18 code commits of its own since (14 on 09-22; on 09-23 the two schema-87 commits, the rollover fix `7a373c2` and the commit that fixed what review found in it), plus the 09-23 commits that leave the build alone (§4). Commits after `cd8d6ef` reach `main` only by PR, with the owner.
 3. **The Windows clone is probably still on the dropped line.** The previous handoff says the Windows branch matched the remote on 2026-09-21. The remote tip that day was `4a00db8`. **Don't `git pull` there**: it would try to merge about 157 commits of removed game into this branch. Follow §3, which moves the clone over without losing anything.
-4. **Schema numbers 83 to 86 were used twice, and this line has moved past them.** On the old `main` (before 2026-09-23), 83 was the old family-and-film build, and the dropped line went up to 86. This line used 83 for "personality restored" until the schema-87 commit moved both pins to 87; the rollover fix moved them to 88 (`src/engine/domain/model.ts:412`, `base44/shared/guard.js:25`). Until then, an old-`main` save at 83 opened without `migrate()` and every player command on it threw, because it had no `history`; a save at 84 to 86 was refused as newer. Now a save from either line, 83 to 86, opens through `migrate()`, which works from the shape of the data: it drops the old person fields, keeps the old collections as inert records, and fills what is missing. Old creation drafts (`1.1.0/83`, `1.1.0/86`, `1.1.0/87`) are discarded, because drafts are now stamped `1.1.0/88`. Opening an old save rewrites it, so copy the `slate.*` keys out first if they matter (§3, step 7).
+4. **Schema numbers 83 to 86 were used twice, and this line has moved past them.** On the old `main` (before 2026-09-23), 83 was the old family-and-film build, and the dropped line went up to 86. This line used 83 for "personality restored" until the schema-87 commit moved both pins to 87. Until then, an old-`main` save at 83 opened without `migrate()` and every player command on it threw, because it had no `history`; a save at 84 to 86 was refused as newer. The rollover fix (`7a373c2`) then moved both pins to 88 (`src/engine/domain/model.ts`, `base44/shared/guard.js:25`). Now a save from either line, 83 to 86, opens through `migrate()`, which works from the shape of the data: it drops the old person fields, keeps the old collections as inert records, and fills what is missing. Old creation drafts (`1.1.0/83`, `1.1.0/86`, `1.1.0/87`) are discarded, because drafts are now stamped `1.1.0/88`. Opening an old save rewrites it, so copy the `slate.*` keys out first if they matter (§3, step 7).
 5. **`CLAUDE.md` is on this branch now.** The owner asked on 2026-09-23 for their blueprint to come over from `main`, corrected for this branch. The seventeen rules and the standing constraints are unchanged; §7 summarizes them. A clone still on the old line has the old `CLAUDE.md` on disk, and a session started there has loaded it, until §3's switch.
 
 ---
@@ -27,17 +27,17 @@ When this file and the tree disagree, the tree wins. Correct this file in the sa
 | Item | State |
 |---|---|
 | Branch | `claude/slate-cleanup-e4apmx`, pushed, 0 ahead / 0 behind `origin` |
-| Last verified code commit | `f10f1b0` (2026-09-23), which fixed what review found in `20da24e` (schema 87). Before them, `36d2cea` (2026-09-22). |
-| GitHub `main` | Replaced by this line on 2026-09-23: merge `4aab498`, carried in by a PR. The old tip `e139e06` (2026-09-18, "Merge pull request #16") is one of that merge's parents. |
+| Last verified code commit | The rollover fix (2026-09-23): `7a373c2` and the commit after it that fixed what review found (schema 88). Before them, `f10f1b0` (2026-09-23), which fixed what review found in `20da24e` (schema 87), and `36d2cea` (2026-09-22). |
+| GitHub `main` | Replaced by this line on 2026-09-23: merge `4aab498`, carried in by a PR. The old tip `e139e06` (2026-09-18, "Merge pull request #16") is one of that merge's parents. Its tip is `ed0cab7` (PR #18, schema 87); the rollover fix is not on `main` yet. |
 | Fork point with the old line | `dc52d64` (2026-09-16, schema 79) |
 | The replacement on 2026-09-22 | `abd4727` ("the gut") was pushed over `4a00db8` with the owner's explicit approval. That dropped 157 commits dated 09-17 to 09-21 from three other sessions. 67 of them reached `main` through PRs #15/#16. The other 90 (`46f48f3..4a00db8`) are on no GitHub branch. The owner's words: "destroy those 157 commits, the real work is what we're doing now." |
 | Save schema | `SAVE_SCHEMA_VERSION = 88` (`src/engine/domain/model.ts:412`) and `SUPPORTED_SCHEMA_VERSION = 88` (`base44/shared/guard.js:25`). Move both together. 84 to 86 are skipped on purpose (§0.4). 88 added `awakeSince` on every person (§5, Sleep and energy). |
 | App version | `APP_VERSION = '1.1.0'` (`src/engine/world/bootstrap.ts`). `package.json` says `1.0.0`, and the two don't match. |
-| Gate | `npm run gate` exits **0**: 28 test files, **500 tests** at the tip, and every gate tool. 485 at `ed0cab7`; 480 at `20da24e`; 478 at `36d2cea`, `d0636b8` and `beda4d9`. |
+| Gate | `npm run gate` exits **0**: 28 test files, **504 tests** at the tip, and every gate tool. 500 at `7a373c2`; 485 at `ed0cab7`; 480 at `20da24e`; 478 at `36d2cea`, `d0636b8` and `beda4d9`. |
 | Build | `npm run build` exits **0** (102 modules). |
 | Browser walk | A scratch Playwright script (not in the repo) walked all nine pages at 1440 wide against `vite preview`: **0 page errors**, and no `undefined`, `NaN` or `[object Object]` on the eight pages after the start screen. The start screen was only photographed. |
 | Working tree | Clean, with everything pushed. |
-| Tracked files | 624 at `36d2cea`, 625 at `beda4d9` |
+| Tracked files | 624 at `36d2cea`, 625 at `beda4d9` and after |
 
 ---
 
@@ -74,7 +74,7 @@ From the player's side:
    - **Advance ▾**: One Hour through One Week, Next Event, and Choose An Event…, which opens Skip To Event.
    - The prompt when a commitment comes due.
 
-The engine registers 8 commands, 3 scheduled kinds and 1 route. `tools/inventory.mjs --check` holds `docs/COVERAGE-MATRIX.md` to exactly that.
+The engine registers 8 commands, 3 scheduled kinds, 1 passage reactor (`life.waking`) and 1 route. `tools/inventory.mjs --check` holds `docs/COVERAGE-MATRIX.md` to exactly that.
 
 ---
 
@@ -102,7 +102,7 @@ The previous handoff recorded these things on that machine: `stash@{0}` = `227fa
 **Step 2: Fetch.** This only updates remote-tracking refs.
 ```powershell
 git fetch origin    # the branch's line says "(forced update)": that's the 09-22 replacement, and it's expected
-git diff --stat 36d2cea origin/claude/slate-cleanup-e4apmx   # expect CLAUDE.md, SLATE_CURRENT_MASTER_HANDOFF.md, walk-tmp.mjs (deleted), and the schema-87 commits' files: base44/shared/guard.js, docs/COVERAGE-MATRIX.md, src/engine/domain/model.ts, src/engine/index.ts, src/engine/persistence/base44.ts, src/ui/saves/SaveSlots.tsx, tests/base44-adapter.test.ts, tests/persistence.test.ts, tests/simulation.test.ts
+git diff --stat 36d2cea origin/claude/slate-cleanup-e4apmx   # expect CLAUDE.md, SLATE_CURRENT_MASTER_HANDOFF.md, walk-tmp.mjs (deleted), and the schema-87 commits' files: base44/shared/guard.js, docs/COVERAGE-MATRIX.md, src/engine/domain/model.ts, src/engine/index.ts, src/engine/persistence/base44.ts, src/ui/saves/SaveSlots.tsx, tests/base44-adapter.test.ts, tests/persistence.test.ts, tests/simulation.test.ts, and the rollover fix's: README.md, src/engine/core/simulation.ts, src/engine/systems/life.ts, src/engine/world/bootstrap.ts, tests/personality.test.ts, tools/inventory.mjs (18 files)
 ```
 
 **Step 3: Line endings, before any switch.** The index is all LF, and there's no `.gitattributes`. The Git for Windows installer sets `core.autocrlf=true` system-wide. The previous session set a repo-local `false` after the old line's voice-check counted 41 against its budget of 40 under CRLF. This line's gate passed under CRLF in a test on 2026-09-23, so the setting is no longer what makes the gate pass. It keeps the working tree byte-identical to what's committed. Files written by a switch take the setting in force at that moment, so confirm it first:
@@ -149,7 +149,7 @@ Get-Content "$env:TEMP\gate-exit.txt"      # expect exit=0
 Select-String -Path "$env:TEMP\gate.txt" -Pattern 'Test Files|Tests ' -CaseSensitive
 npm run build; "build exit=$LASTEXITCODE"
 ```
-Expect gate exit 0 and **500 tests in 28 files**. A different number means something differs between the machines. Investigate it before building anything.
+Expect gate exit 0 and **504 tests in 28 files**. A different number means something differs between the machines. Investigate it before building anything.
 
 **Step 6: Run it.**
 ```powershell
@@ -181,9 +181,9 @@ node tools/walkthrough.mjs walkthrough
 ## 4. What this session did (2026-09-09 to 2026-09-23)
 
 These are the commits that carry `Claude-Session: https://claude.ai/code/session_01Na7AwFNze8QYVWFfuUXBhY`:
-- 179 of them lead up to `36d2cea`. The first is `62c30ca` ("Cut SLATE back to six things", 09-09), and the last of them to change code is `36d2cea` (09-22). The schema-87 commits (09-23) are the last code commits overall.
+- 179 of them lead up to `36d2cea`. The first is `62c30ca` ("Cut SLATE back to six things", 09-09), and the last of them to change code is `36d2cea` (09-22). After the schema-87 commits, the rollover fix (`7a373c2` and the commit after it, 09-23, schema 88) is the last code commits overall.
 - The 09-23 commits (`d0636b8`, `acf5e10`, `6c18b6b`, `beda4d9` and any later ones) carry the same trailer, so the grep below returns 183 at `beda4d9`, and one more for each later commit from this session.
-- 165 of them, everything up to `dc52d64`, were on `main` before 2026-09-23. The 14 from 09-22 and the 09-23 commits up to `cd8d6ef` reached `main` when this branch replaced it that day. Later commits, the schema-87 commit among them, reach `main` only by PR.
+- 165 of them, everything up to `dc52d64`, were on `main` before 2026-09-23. The 14 from 09-22 and the 09-23 commits up to `cd8d6ef` reached `main` when this branch replaced it that day. Later commits reach `main` only by PR: the schema-87 commits did in PR #18 (`ed0cab7`), and the rollover fix hasn't yet.
 
 To list them: `git log --oneline --grep=session_01Na7AwFNze8QYVWFfuUXBhY`.
 
@@ -204,6 +204,7 @@ To list them: `git log --oneline --grep=session_01Na7AwFNze8QYVWFfuUXBhY`.
 | 09-23 | This handoff (`acf5e10`, corrected in `6c18b6b`), removal of the tracked scratch file `walk-tmp.mjs` (`d0636b8`), and the owner's `CLAUDE.md` brought over from `main`, corrected for this branch (`beda4d9`) | Yes |
 | 09-23 | **This branch replaces `main`**, by the owner's decision: merge `4aab498` keeps this tree and records the old `main` as a parent, and a PR carries it in | Yes |
 | 09-23 | **Schema 83 → 87** (`20da24e`, and the fixes after review): both pins moved past the old line's 84–86; opening a slot runs `migrate()` whatever the number (`openSlot`); `reputationDriftedAt` joins `SHED`; every old creation draft is dropped. Review then found, and the next commit fixed: Restore Backup on an older backup lost the newer save; the migrated write-back never reached Base44; and the schema-11 pass rewrote titles players typed | Yes |
+| 09-23 | **The waking day charged as the clock moves** (`7a373c2`, schema 88, and the review fixes after it): the passage reactor `life.waking` (`Simulation.onPassage`) charges waking hours from `awakeSince` at the debt the person woke with (`wokeWithDebt`), wherever the clock stops; `life.sleep` stamps the wake at bedtime; the rollover keeps only the unattended night, meals and shower; `suggestedSleep` solves for the night that pays the day beside it | Yes |
 
 The owner's instructions that shaped the gut and what came after, verbatim from the conversation (no commit records them):
 - "Every single thing, even everything casting and audition. I want it all gone."
@@ -223,14 +224,14 @@ The owner's instructions that shaped the gut and what came after, verbatim from 
   - `SlateApp.tsx` is the phase router (startup → saves → creation → playing).
   - `game-context.tsx` bridges the simulation to React: the live tick every 1 s, autosave every 45 s and on `pagehide`, and the `h`/`c` keys.
 - **`engine/core/`**:
-  - `simulation.ts` is the kernel. `advanceTo`/`advanceBy` is the only way the clock moves.
+  - `simulation.ts` is the kernel. `advanceTo`/`advanceBy` is the only way the clock moves, and `onPassage` reactors run on each stretch it crosses.
   - Also here: `time.ts`, `ledger.ts` (double-entry), `money.ts` (integer cents), `rng.ts` (seeded), `ids.ts`, `scheduler.ts`, `events.ts`, `text.ts` (Title Case and `plural`), and `deciders.ts`.
   - `performer.ts` came back after the gut, rewritten.
 - **`engine/domain/`**:
   - `model.ts` holds every save type.
   - `citizenship.ts` was **rewritten**.
 - **`engine/systems/`**:
-  - `life.ts`: wellbeing, sleep and the day rollover.
+  - `life.ts`: wellbeing, the waking day charged as the clock moves (`life.waking`), sleep and the day rollover.
   - `personality.ts`: **new**.
   - `weather.ts`: the only RNG draw, registered as the decider `weather.day` in `src/engine/decided.ts`. Any new draw must be registered there too.
   - `finance.ts`: `netWorth`.
@@ -259,6 +260,7 @@ The owner's instructions that shaped the gut and what came after, verbatim from 
 - Place: `homeRegionId` (the birth city), `citizenshipId` (derived) and `currentLocationId`.
 - Character: `personality` (7 axes), `personalityTraits` (at most 4), `interests`, `genres` and `background`.
 - State: `wellbeing`, with energy, stress, sleepDebt, morale, condition, fitness, nourishment and hygiene.
+- Sleep record: `lastSleptAt` (the wake of the last night, stamped at bedtime), `awakeSince` (when the waking day began) and `wokeWithDebt` (the sleep debt they woke with); the last two since schema 88.
 
 ### Saving and migration
 
@@ -320,9 +322,9 @@ The owner's instructions that shaped the gut and what came after, verbatim from 
 
 - **Waking drain** is 3.0 energy an hour, more with sleep debt. It's charged as the clock moves, not at midnight:
   - `life.waking` is a passage reactor (`Simulation.onPassage`, `src/engine/core/simulation.ts`). It charges every person for each stretch the clock crosses, from their `awakeSince`, wherever `advanceTo` stops: before each due item, on an early stop for the player, and at the end. Live ticks, sleep and Skip to Event all go through it.
-  - The drain is set by the debt the person woke with: today's debt minus 0.34 for each hour they've been up. That's what the old lump charged, so a day on autopilot costs what it did.
+  - The drain is set by the debt the person woke with, `wokeWithDebt`, written at every wake. That's what the old lump charged, so a day on autopilot costs what it did, and a debt that reaches sixty while awake drains the same by the second as in one jump. Waking holds debt at sixty and never lowers it; a night under six hours can leave more. A save from before 88 works the waking debt out from the debt now until its first wake.
   - Running on empty, hunger and stress over 75 are each charged only for the hours actually spent there. So 16 h as 57,600 one-second ticks and as one jump end on the same dials, and a day saved and loaded halfway ends where one played straight through does. The one place ticks and a jump part is debt that reaches 60 while awake.
-  - A 16 h day from a rested wake costs 48 energy and 5.4 h of debt: energy reads 97 at 08:00, 85 at 12:00, 73 at 16:00, 61 at 20:00 and 52 at 23:00, and readiness falls from 97 to 58.
+  - A 16 h day from a rested wake costs 48 energy and 5.4 h of debt: energy reads 97 at 08:00, 85 at 12:00, 73 at 16:00, 61 at 20:00 and 52 at 23:00, and readiness falls from 97 to 57.
 - **Sleep** (`life.sleep`) reads the night's quality at the hour it starts, then sets `awakeSince` and `lastSleptAt` to the wake before it advances the clock. So nothing is charged during the night, and a midnight inside the night, or one the night ends on, sees a night already chosen and gives no unattended night on top. `lastSleptAt` is the wake, never the bedtime.
 - **A night's quality** = (0.82 − stress loss) × sleepQuality knob, minus 0.08 for a bedtime from 01:00 to 04:59, clamped to 0.28–1.
 - **`suggestedSleep`** solves for the night that pays the day beside it: with p = `A_NORMAL_NIGHT` (8 × 0.82) / 16, hours = (24 × p + owed × 0.1) / (quality × energyRecovery × `recoveryFactorAt(age)` + p):
@@ -330,7 +332,7 @@ The owner's instructions that shaped the gut and what came after, verbatim from 
   - A longer night means a shorter day to pay for. The old formula divided `A_NORMAL_NIGHT` by the night's rate against a fixed 24 h day; it told somebody born 1944 fourteen hours and "Not even fourteen hours makes up a whole day", and fourteen put back nearly three times the ten awake beside them. Solved, the suggested night puts back 1.83 to 1.91 times the day beside it at every age tested (25, 60, 70, 81).
   - Clamped to 6–14 h (`LONGEST_NIGHT`) and rounded to the half hour. When a commitment is sooner than that plus 1.5 h, it offers the time available minus 1.5 h (never under 3 h) and names the commitment.
   - With a commitment booked ahead, `sleepReason` names the biggest shortfall: debt, stress, depth, late, restores or age. Past 14 h it says so ("Not even fourteen hours …").
-  - With a commitment booked, stress 0 and no debt, a default character is told 8 hours and "A normal night.". The same at 23:30 after an ordinary day, with 5.3 h of that day's debt on the books.
+  - With a commitment booked, stress 0 and no debt, a default character is told 8 hours and "A normal night.". The same at 23:30 after an ordinary day, with 5.6 h of that day's debt on the books.
   - Told at 23:00 for a default character: 8 h at 25, 9 at 60, 10 at 70, 11.5 at 81 (at `ed0cab7`: 8, 9.5, 11.5 and 14). At 01:00: 8.5 h (10 at `ed0cab7`).
   - With nothing on the calendar, which is how a new save starts, the reason is always "Your calendar’s clear, so sleep as long as you need." unless the need passes 14 h.
 - **`unattendedNight`**, the night slept when the player doesn't choose one:
@@ -351,7 +353,7 @@ The owner's instructions that shaped the gut and what came after, verbatim from 
   - The four axes nothing reads are kept, named on screen, and counted by `tools/wired.mjs`.
   - Soft limits (`bend`) replaced hard clamps, so a slider still moves something when traits already sit at a limit.
 - **The sleep suggestion is counted in rest, not hours.** It accounts for quality, the energyRecovery knob and age. The old flat 7.5 h let the default character run down.
-- **Autopilot charges the waking day as a sound sleeper's (24 − sound), not 24 minus the hours actually slept.** When the lie-in also shortened the waking day, a poor sleeper came out better rested than a sound one (`3c704a8`).
+- **Autopilot starts the waking day at a sound sleeper's wake (midnight + sound), not at the end of the lie-in.** When the lie-in also shortened the waking day, a poor sleeper came out better rested than a sound one (`3c704a8`). Until schema 88 this was the rollover charging 24 − sound hours; now it is `awakeSince`.
 - **Two step names:** "Dispositions & Traits" is the owner's name. The owner left the next page's name to the session, which chose "Interests & Background". Tab labels keep "&" with the word before it through a non-breaking space. From 700 px each tab is as wide as its name. In the container the row is one line only from 708 px; between 700 and 707 px, Review wraps onto a line of its own. Measure again on Windows, where fonts and scrollbars differ.
 - **Screens must be true.** The Sleep dialog stopped promising bills, messages and other people, because none of those exist in this build.
 - **This handoff brings `SLATE_CURRENT_MASTER_HANDOFF.md` onto this branch, rewritten,** instead of adding a second `PROJECT_HANDOFF.md`, so only one handoff exists.
@@ -440,7 +442,7 @@ This is 41 files, +2293/−292. Four are added: `src/engine/core/performer.ts` a
 
 | Check | Result |
 |---|---|
-| `npm run gate` on the rollover fix (and on the schema-87 commits, and at `36d2cea`, `d0636b8`, `beda4d9`) | **exit 0**. 28 files; 500 tests after the rollover fix, 485 after the schema-87 review fixes, 480 at `20da24e`, 478 at the earlier three. title-case 0; labels 0; plurals 0; voice 3/40; tics within budget and 0 "Nothing" openers; doc-refs 70 paths in 6 docs, all present; wired 6, matching the baseline; deciders 1 (`weather.day`); spelling 0; typos 0; geo-check 252 countries, 170,911 cities; inventory 8 commands, 3 scheduled kinds, 1 passage reactor, 3 events, 1 route. |
+| `npm run gate` on the rollover fix (and on the schema-87 commits, and at `36d2cea`, `d0636b8`, `beda4d9`) | **exit 0**. 28 files; 504 tests after the rollover review fixes, 500 at `7a373c2`, 485 after the schema-87 review fixes, 480 at `20da24e`, 478 at the earlier three. title-case 0; labels 0; plurals 0; voice 3/40; tics within budget and 0 "Nothing" openers; doc-refs 70 paths in 6 docs, all present; wired 6, matching the baseline; deciders 1 (`weather.day`); spelling 0; typos 0; geo-check 252 countries, 170,911 cities; inventory 8 commands, 3 scheduled kinds, 1 passage reactor, 3 events, 1 route. |
 | `npm run build` | **exit 0** |
 | Browser walk (a scratch Playwright script not in the repo, `vite preview`, 1440 wide) | Start screen, save slots, all five creation steps, Home, Calendar. **0 page errors**. No `undefined`, `NaN` or `[object Object]` on the eight pages after the start screen; the start screen was only photographed. |
 | Secret scan of the handoff commit | No keys, tokens or `.env` values. `.env` is git-ignored. `.env.example` holds two empty placeholders (`SLATE_BASE44_URL`, `SLATE_BASE44_TOKEN`) and a commented-out optional `SLATE_SCHEMA_VERSION=42`. |
@@ -455,14 +457,14 @@ The handoff and `CLAUDE.md` live at the repository root, so the gate's text tool
 
 **Game model:**
 - **Fixed at schema 88: the midnight rollover charged a full 24 h awake after a night the player chose to sleep.**
-  - Measured at 87: waking at 09:00, the midnight rollover took energy from 94.9 to 22.9; staying up past midnight took it from 99.3 to 27.3 in one step; nothing on Home moved during a day; and a 23:00 sleeper woke to nourishment 15.2 and "Hungry, and it's starting to show." every morning.
-  - Now the clock charges the waking day as it moves, from `awakeSince` (§5). Up past midnight, energy reads 49.0 at 23:59:59 and 49.0 at 00:00:01. A 23:00 sleeper wakes at nourishment 63.2 to "Rested, steady and ready for a real day." and reads "Holding up …" from about 16:00.
+  - Measured at 87: waking at 09:00, the midnight rollover took energy from 94.9 to 22.9; staying up past midnight took a rested player from 100 to 28 in one step; nothing on Home moved during a day; and a 23:00 sleeper woke to nourishment 15.2 and "Hungry, and it's starting to show." every morning.
+  - Now the clock charges the waking day as it moves, from `awakeSince` (§5). Up past midnight, energy reads 49.0 at 23:59:59 and 49.0 at 00:00:01. A 23:00 sleeper wakes at nourishment 63.2 to "Rested, steady and ready for a real day." and reads "Holding up …" from 15:20, when energy passes 75.
   - `lastSleptAt` is still the wake, stamped at bedtime now, so a night that crosses midnight or ends on it gets no unattended night on top. At 87 a new save's first night was given one on top whenever it crossed midnight or ended on it.
-  - `A_NORMAL_NIGHT`, the 13.5 restore and the 3.0 drain were left alone. The autopilot is calibrated on 3.0 and 13.5: charged as the clock moves, a year of it ends each day within 0.2 of where it did at 87 on every dial, sampled at 23:59:59. `A_NORMAL_NIGHT` no longer pays for energy (a 16 h day costs 48, an 8 h night puts back 88.6) but for condition and mood: on 60 fixed nights at 23:00 a calm 25-year-old held on 6.5 h and at 6 h fell to condition 79.7 and morale 59.3, and at 60 six hours ran out of energy by bedtime. 8 h stays the normal night because the unattended night, about 5.9 of the same hours, has to stay short of it. What changed is the suggestion (§5).
+  - `A_NORMAL_NIGHT`, the 13.5 restore and the 3.0 drain were left alone. The autopilot is calibrated on 3.0 and 13.5: charged as the clock moves, a year of it ends each day from the second on within 0.2 of where it did at 87 on every dial but morale, sampled at 23:59:59. Morale starts up to 0.31 higher after the first night, because at 87 a save's first day was never charged, and stays so until it reaches 100. `A_NORMAL_NIGHT` no longer pays for energy (a 16 h day costs 48, an 8 h night puts back 88.6) but for condition and mood: on 60 fixed nights at 23:00 a calm 25-year-old held on 6.5 h and at 6 h fell to condition 79.7 and morale 59.3, and at 60 six hours ran out of energy by bedtime. 8 h stays the normal night because the unattended night, about 5.9 of the same hours, has to stay short of it. What changed is the suggestion (§5).
 - **Awake at midnight with no deliberate sleep in 20 h, somebody gets an unattended night while the player watches.** It happens on every save's first midnight if the player is still up, and to anybody who woke before 04:00 and is up at midnight. At 87 energy fell 57 at 00:00 on the first day; at 88 it rises instead, measured from 32.5 to 74.0, and then holds still until a sound sleeper's wake, about 07:40, though the player is up. Going to bed at 01:00 after that adds the chosen night on top; energy caps at 100, so what it costs is realism, not balance. Stamping a wake at creation would stop it on the first day but gives a save left alone from the start a 40 h first day. The engine can't tell a player who is up from one skipping; that is the fix to make.
-- **Skip a week starting the morning after a chosen night, and the first unattended night comes 41 h in**, because the 20 h guard is unchanged. Measured after a night ending 09:00: energy at 23:59 reads 55.1, 0.0, 3.4, 14.9 and 25.2 on the first five days, then settles at the autopilot's 25.2. At 87 the first day's hours were charged at a midnight inside the night before them, and that night's restore wiped them.
-- **Two things still step at midnight for somebody up:** nourishment is topped up to 76 and hygiene to 82 (meals and a shower before the day). Neither is energy, and both step up.
-- **A nap is still paid as a short night** by `applySleep`: an hour at 15:00 costs 5.6 h of debt, 3.7 condition and 6.7 morale (6.8, 3.8 and 6.7 at 87). At 87 the next midnight still charged a full day after it, and the night after woke at energy 84.1; now it wakes at 100.
+- **Skip a week starting the morning after a chosen night, and the first unattended night comes at the second midnight**, 39 h after a 09:00 wake (41 h after a 07:00 one), because the 20 h guard is unchanged. Measured after a night ending 09:00: energy at 23:59 reads 55.1, 0.0, 3.4, 14.9 and 25.2 on the first five days, then settles at the autopilot's 25.2. At 87 the first day's hours were charged at a midnight inside the night before them, and that night's restore wiped them.
+- **Four things still step at midnight for somebody up:** nourishment is topped up to 76 and hygiene to 82 (meals and a shower before the day), fitness falls 0.18 and condition moves 2% of the way to its target. None is energy.
+- **A nap is still paid as a short night** by `applySleep`: an hour at 15:00 costs 5.6 h of debt, 3.8 condition and 6.7 morale (6.8, 3.8 and 6.7 at 87). At 87 the next midnight still charged a full day after it, and the night after woke at energy 80.2; now it wakes at 100.
 - **Limits of the calibration** (`tests/personality.test.ts`). The years on autopilot are sampled at 23:59:59, once the day has been charged; at 07:30 somebody on autopilot is still in the unattended night, with stress at its floor of 14, which would hide what the day did:
   - What holds, at 25 and at 60, on a year of autopilot and on 60 nights of suggested sleep at 23:00 and at 01:00: every trait that moves the wellbeing model (31 of 35) and both extremes of the three sliders that move anything.
   - What holds at 60 on the suggested hours: the worst four-trait picks plus the worst sliders. That's tested at 23:00; a probe at 01:00 held too.
@@ -476,7 +478,7 @@ The handoff and `CLAUDE.md` live at the repository root, so the gate's text tool
   - Four axes move nothing, and the money traits are only said back.
   - Most trait costs aren't charged, for example Early Riser at night and anything about other people.
   - Citizenship is written and never read.
-  - Fitness only falls: it drops 0.18 a day and has no writer that raises it (`src/engine/systems/life.ts:291-297` says so). `docs/UNBITTEN.md` doesn't list it.
+  - Fitness only falls: it drops 0.18 a day and has no writer that raises it (`src/engine/systems/life.ts:381-388` says so). `docs/UNBITTEN.md` doesn't list it.
   - The tax engine only displays.
   - `recordOfficialResult` has no caller, so no `SlateOfficialResult` row is ever written.
   - `Costume`, `Order`, `Training`, `Mark` and `Running` are declared types with no table.
@@ -514,8 +516,8 @@ The handoff and `CLAUDE.md` live at the repository root, so the gate's text tool
 
 **Deployment:**
 - **If a Base44 deployment exists, it must be redeployed from this branch before it will store this branch's saves.**
-  - Any guard deployed before the schema-87 commit (83 from this line or the old `main`, 86 from the dropped line) refuses every save this branch now writes on schema, with a 409: "That save is in format 87 and this deployment understands 83" (or 86). Before that commit, a guard from the old `main` (83) or from the dropped line (86) accepted schema 83 but refused every save from this branch with "The save does not say what game it is", because those guards require `universe.premise`, which this branch no longer writes.
-  - Once redeployed (guard at 87, no premise check), the deployment accepts a save at any number up to 87, one from either old line included. Opening a save migrates it before it's written, so what it sends is at 87. Deploy the guard before or with the client, never after: a client at 87 is refused by a guard at 83.
+  - Any guard deployed before the schema-87 commit (83 from this line or the old `main`, 86 from the dropped line) refuses every save this branch now writes on schema, with a 409: "That save is in format 88 and this deployment understands 83" (or 86, or 87). Before the schema-87 commit, a guard from the old `main` (83) or from the dropped line (86) accepted schema 83 but refused every save from this branch with "The save does not say what game it is", because those guards require `universe.premise`, which this branch no longer writes.
+  - Once redeployed (guard at 88, no premise check), the deployment accepts a save at any number up to 88, one from either old line included. Opening a save migrates it before it's written, so what it sends is at 88. Deploy the guard before or with the client, never after: a client at 88 is refused by a guard at 83, 86 or 87.
   - Schema 88 moves both pins again. A guard at 87 refuses every save a client at 88 writes, with a 409: "That save is in format 88 and this deployment understands 87". Deploy the guard at 88 before or with the client.
   - **Restore Backup doesn't take on Base44, and never has.** With the backend functions and the `SlateSave` entity both present, as in a real deployment, `restoreBackup` (`src/engine/persistence/base44.ts`) sends the backup through `saveUniverse`. If the backup was written by this build, its idempotency key matches its own first write, so the server replays that answer and writes nothing. If it was written earlier, the server refuses it for a world clock behind the stored one. Either way the server keeps the newer save, and the next autosave is refused as "older than the one already stored". The adapter tests miss it because their fake client has no entity. The fix is a server-side `restoreSlot` that swaps `payload` and `backup_payload`, with a contract test that wires the adapter to the real handlers.
   - The idempotency key now includes the schema. Bringing a save forward moves neither its clock nor its playtime, and before the fix the write-back after a migration reused the last write's key, was taken for a retry, and never reached the server.
@@ -552,16 +554,16 @@ Keep all of them until the owner says otherwise.
 
 ## 12. Next steps, in order
 
-1. **On Windows, run §3.** Confirm `core.autocrlf=false`, move the clone over without losing the old line, then `npm ci`. Confirm that the gate exits 0 with 500 tests and that the build passes.
+1. **On Windows, run §3.** Confirm `core.autocrlf=false`, move the clone over without losing the old line, then `npm ci`. Confirm that the gate exits 0 with 504 tests and that the build passes.
 2. **Done on 2026-09-23: this branch replaced `main`** (§0.2). Future work still goes on the working branch and reaches `main` by PR, with the owner. Never reset or force-push `main`.
-3. **Done on 2026-09-23 (`20da24e` and `f10f1b0`): the schema collision is retired.** Both pins moved from 83 to 87, past the old line's numbers, and opening a slot runs `migrate()` whatever the number. Drafts are stamped `1.1.0/87`, so old creation drafts are dropped without bumping `APP_VERSION`. Both commits reached `main` by PR, with the owner's approval.
+3. **Done on 2026-09-23 (`20da24e` and `f10f1b0`): the schema collision is retired.** Both pins moved from 83 to 87, past the old line's numbers, and opening a slot runs `migrate()` whatever the number. Drafts were stamped `1.1.0/87`; since the rollover fix they are `1.1.0/88`, so old creation drafts are dropped without bumping `APP_VERSION`. Both commits reached `main` by PR, with the owner's approval.
 4. **Windows hygiene commit:**
    - Add `.gitattributes` (`* text=auto eol=lf`).
    - Make the five browser tools fall back to Playwright's own Chromium, and `drill.mjs` use `os.tmpdir()`.
    - Replace the `audit` script with a Node version.
    - Ignore `cohesion-walk/`.
    - Run the gate.
-5. **Done: the midnight rollover is fixed** (schema 88; §5, §10). The clock charges the hours awake from `awakeSince`; `lastSleptAt` is still the wake, stamped at bedtime. `A_NORMAL_NIGHT` stayed at 8 × 0.82 and the suggestion now solves for the night that pays the day beside it. The tests above 60 measure against `ceilingAt`. What's left is in §10: the unattended night given to somebody awake at midnight, and the 41 h gap on a skip after a chosen night.
+5. **Done: the midnight rollover is fixed** (schema 88; §5, §10). The clock charges the hours awake from `awakeSince`; `lastSleptAt` is still the wake, stamped at bedtime. `A_NORMAL_NIGHT` stayed at 8 × 0.82 and the suggestion now solves for the night that pays the day beside it. The tests above 60 measure against `ceilingAt`. What's left is in §10: the unattended night given to somebody awake at midnight, and the gap of two midnights (39 h after a 09:00 wake) on a skip after a chosen night.
 6. **Correct the stale words** in §10: DRILL-DOWN counts and row, README gate line, test table and calibration claim, the UNBITTEN audit entry, `place.tsx` "out of 100", the plural-check allowlist, the stale comments, `decided.ts`'s London id, and `base44/config.jsonc`.
 7. **Owner's direction for what comes next.** Something that reads the four idle axes, the money traits or citizenship would retire entries from `docs/UNWIRED.json` and `docs/UNBITTEN.md`. Take one `UNBITTEN` section at a time and prove each fix bites.
 8. **Deploy** to Base44 only after the gate passes; any existing deployment needs this redeploy before it will store this branch's saves (§10). Then run `tools/base44-smoke.mjs` against it. Fix Restore Backup on Base44 first (§10): today it never takes on the server.
@@ -578,6 +580,6 @@ npm run dev                                    # 5173
 npm run preview                                # 4173, second terminal
 node tools/wired.mjs                           # what nothing reads, report only
 node tools/voice-check.mjs; node tools/tics.mjs   # text habits, report only
-git log --oneline --grep=session_01Na7AwFNze8QYVWFfuUXBhY | Measure-Object -Line   # 183 at beda4d9 (179 to 36d2cea plus four from 09-23), one more for each later commit from this session (188 at 20da24e)
+git log --oneline --grep=session_01Na7AwFNze8QYVWFfuUXBhY | Measure-Object -Line   # 183 at beda4d9 (179 to 36d2cea plus four from 09-23), one more for each later commit from this session (188 at 20da24e, 191 at 7a373c2)
 git push -u origin claude/slate-cleanup-e4apmx
 ```

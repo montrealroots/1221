@@ -155,6 +155,64 @@ describe('the waking day', () => {
     return sim;
   }
 
+  it('charges the stretch up to something that stops the clock for the player', () => {
+    // Every clock move the player makes stops early like this, and the stretch
+    // up to the stop has to be charged there: nothing charges it later.
+    const sim = rested('early-stop');
+    sim.onSchedule('test.call', () => undefined);
+    sim.schedule({ at: sim.now + 4 * MS_HOUR, kind: 'test.call', label: 'A Call', category: 'personal', requiresPlayer: true });
+    const woke = sim.player.wellbeing.energy;
+    expect(sim.advanceTo(sim.now + 8 * MS_HOUR, { stopOnPlayerRequired: true }).interruptedBy?.kind).toBe('test.call');
+    expect(woke - sim.player.wellbeing.energy).toBeCloseTo(12, 9);
+    sim.advanceTo(sim.now + 4 * MS_HOUR);
+    expect(woke - sim.player.wellbeing.energy).toBeCloseTo(24, 9);
+  });
+
+  it('drains faster the more sleep debt somebody woke with', () => {
+    const sim = rested('waking-debt');
+    sim.player.wellbeing.sleepDebt = 24;
+    sim.player.wokeWithDebt = 24;
+    const woke = sim.player.wellbeing.energy;
+    sim.advanceTo(sim.now + 2 * MS_HOUR);
+    sim.advanceTo(sim.now + 2 * MS_HOUR);
+    // Three an hour, and half as much again for a day's debt.
+    expect(woke - sim.player.wellbeing.energy).toBeCloseTo(4 * 3 * 1.5, 9);
+  });
+
+  it('keeps the debt a short night left over sixty, and drains it the same by the minute as in one jump', () => {
+    const make = () => {
+      const sim = rested('over-sixty');
+      sim.player.wellbeing.sleepDebt = 59;
+      sim.player.wellbeing.energy = 80;
+      expect(sim.execute({ kind: 'life.sleep', payload: { hours: 1 } }).ok).toBe(true);
+      return sim;
+    };
+    const ticked = make();
+    const jumped = make();
+    const woke = ticked.player.wellbeing.sleepDebt;
+    expect(woke).toBeGreaterThan(60);
+    ticked.advanceTo(ticked.now + 1000);
+    expect(ticked.player.wellbeing.sleepDebt).toBe(woke);
+    for (let minute = 0; minute < 6 * 60; minute += 1) ticked.advanceTo(ticked.now + MS_MINUTE);
+    jumped.advanceTo(jumped.now + 1000 + 6 * MS_HOUR);
+    expect(ticked.player.wellbeing.energy).toBeCloseTo(jumped.player.wellbeing.energy, 6);
+  });
+
+  it('drains the same by the minute as in one jump when the debt reaches sixty while awake', () => {
+    const make = () => {
+      const sim = rested('reaching-sixty');
+      sim.player.wellbeing.sleepDebt = 58;
+      sim.player.wokeWithDebt = 58;
+      return sim;
+    };
+    const ticked = make();
+    const jumped = make();
+    for (let minute = 0; minute < 12 * 60; minute += 1) ticked.advanceTo(ticked.now + MS_MINUTE);
+    jumped.advanceTo(jumped.now + 12 * MS_HOUR);
+    expect(ticked.player.wellbeing.sleepDebt).toBeCloseTo(60, 9);
+    expect(ticked.player.wellbeing.energy).toBeCloseTo(jumped.player.wellbeing.energy, 6);
+  });
+
   it('is charged as the clock moves, so energy falls through a day of play', () => {
     const sim = rested('waking-day');
     const woke = sim.player.wellbeing.energy;
@@ -628,7 +686,8 @@ describe('migrations and validation', () => {
   });
 
   it('charges a save from before 88 from the next midnight, not twice for the rest of today', () => {
-    // Its last rollover charged the whole of today, so the afternoon is paid.
+    // At 87 this afternoon would never be charged: a save's first day is not,
+    // and a later day was charged by the midnight before it.
     const sim = quickSave({}, 'before-88');
     sim.advanceTo(sim.now + 6.5 * MS_HOUR);
     sim.universe.meta.schemaVersion = 87;

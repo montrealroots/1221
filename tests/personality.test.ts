@@ -106,21 +106,25 @@ function booked(sim: Simulation): Simulation {
  * the hours, and the furthest condition fell below what a body that age can
  * reach on any morning.
  */
-function sleepAsSuggested(sim: Simulation, nights: number, bedtime = 23): { hours: number[]; belowCeiling: number } {
+function sleepAsSuggested(
+  sim: Simulation, nights: number, bedtime = 23,
+): { hours: number[]; belowCeiling: number; lowestAtBed: number } {
   const hours: number[] = [];
   let belowCeiling = 0;
+  let lowestAtBed = 100;
   for (let night = 0; night < nights; night += 1) {
     const p = zonedParts(sim.now, sim.zone);
     let bed = instantFromZoned({ year: p.year, month: p.month, day: p.day, hour: bedtime }, sim.zone);
     while (bed <= sim.now) bed += MS_DAY;
     sim.advanceTo(bed);
+    lowestAtBed = Math.min(lowestAtBed, sim.player.wellbeing.energy);
     const tonight = suggestedSleep(sim).hours;
     hours.push(tonight);
     const result = sim.execute({ kind: 'life.sleep', payload: { hours: tonight } });
     expect(result.ok, result.error).toBe(true);
     belowCeiling = Math.max(belowCeiling, ceilingAt(ageOf(sim)).condition - sim.player.wellbeing.condition);
   }
-  return { hours, belowCeiling };
+  return { hours, belowCeiling, lowestAtBed };
 }
 
 /**
@@ -405,10 +409,13 @@ describe('the sleep the game suggests, and why', () => {
     expect(tonight({ traits: ['restless'] }).reason).toBe('A night puts back less for you than for most, so it takes longer.');
     expect(tonight({ hour: 2 }).reason).toBe('It’s late, and a night that starts now is a worse one, so it takes longer.');
     expect(tonight({ birthYear: 1955 }).reason).toBe('A night puts back less than it used to, so it takes longer.');
-    // Twelve hours owed from before today, on top of what today put on the
-    // books: the debt at bedtime holds today's own now the clock charges the
-    // day as it goes, where it used to arrive at midnight, inside the night.
-    expect(tonight({ debt: 12 + A_NORMAL_DAYS_DEBT }).reason).toBe('You’re carrying real sleep debt.');
+    // The debt at bedtime holds the day's own now the clock charges the day
+    // as it goes, 5.44 hours after sixteen up. Only what is owed past that
+    // stretches a night, and more than eight owed past it is real debt, so
+    // thirteen at bedtime is not yet and fourteen is.
+    expect(tonight({ debt: 13 }).reason).not.toBe('You’re carrying real sleep debt.');
+    expect(tonight({ debt: 14 }).reason).toBe('You’re carrying real sleep debt.');
+    expect(tonight({ debt: 17.5 }).reason).toBe('You’re carrying real sleep debt.');
     for (const one of [{ stress: 60 }, { traits: ['light_sleeper'] }, { hour: 2 }, { birthYear: 1955 }]) {
       expect(tonight(one).hours, JSON.stringify(one)).toBeGreaterThan(8);
     }
@@ -426,16 +433,17 @@ describe('the sleep the game suggests, and why', () => {
     // while the rollover charged twenty-four hours whatever the night, it asked
     // eighty-one for fourteen hours that put back 2.9 times the ten beside
     // them, where eight hours puts back 1.88 times a sixteen-hour day at
-    // twenty-five. Measured on the solved night: 1.83 to 1.91 for all twelve.
+    // twenty-five with nothing on the books. Measured at a real bedtime, with
+    // the debt an ordinary day leaves: 1.62 to 1.70 for all twelve.
     const measure = (birthYear: number, traits: string[]) => {
       const sim = quickSave({ birthYear, personalityTraits: traits }, 'p-measure');
       const p = zonedParts(sim.now, sim.zone);
       sim.advanceTo(instantFromZoned({ year: p.year, month: p.month, day: p.day, hour: 23 }, sim.zone));
       booked(sim);
       sim.player.wellbeing.stress = 0;
-      sim.player.wellbeing.sleepDebt = 0;
+      sim.player.wellbeing.sleepDebt = A_NORMAL_DAYS_DEBT;
       const { hours } = suggestedSleep(sim);
-      const body = { ...sim.player, wellbeing: { ...sim.player.wellbeing, energy: 0, sleepDebt: 0 } };
+      const body = { ...sim.player, wellbeing: { ...sim.player.wellbeing, energy: 0, sleepDebt: A_NORMAL_DAYS_DEBT } };
       applySleep(body, hours, sleepQuality(sim, sim.player), sim.now);
       return body.wellbeing.energy / ((24 - hours) * ENERGY_DRAIN_PER_HOUR);
     };
@@ -443,8 +451,8 @@ describe('the sleep the game suggests, and why', () => {
       for (const traits of [[], ['light_sleeper'], ['restless']]) {
         const who = `${traits.join('+') || 'nobody in particular'}, born ${birthYear}`;
         const paid = measure(birthYear, traits);
-        expect(paid, who).toBeGreaterThan(1.75);
-        expect(paid, who).toBeLessThan(2);
+        expect(paid, who).toBeGreaterThan(1.55);
+        expect(paid, who).toBeLessThan(1.8);
       }
     }
   });
@@ -512,10 +520,13 @@ describe('no single trait or disposition wears a life down', () => {
       for (const bedtime of [23, 1]) {
         for (const c of [...singles, ...worst]) {
           const sim = build(c, birthYear, 'p-old-nights');
-          const { hours, belowCeiling } = sleepAsSuggested(sim, 60, bedtime);
+          const { hours, belowCeiling, lowestAtBed } = sleepAsSuggested(sim, 60, bedtime);
           const w = sim.player.wellbeing;
           const who = `${c.name}, born ${birthYear}, to bed at ${bedtime}`;
           expect(belowCeiling, `${who} fell under what the age allows`).toBeLessThan(0.5);
+          // Condition sits on its ceiling either way, so what shows a night
+          // too short for the age is the tank at bedtime.
+          expect(lowestAtBed, `${who} went to bed running on empty`).toBeGreaterThan(15);
           expect(w.stress, `${who} is stretched on the suggested hours`).toBeLessThan(25);
           expect(w.morale, `${who} ended flat on the suggested hours`).toBeGreaterThan(80);
           expect(Math.max(...hours), `${who} was told to sleep past the dial`).toBeLessThanOrEqual(14);

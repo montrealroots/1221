@@ -32,7 +32,7 @@ export const ENERGY_DRAIN_PER_HOUR = 3.0;
  */
 export const NOURISHMENT_DRAIN_PER_HOUR = 2.0;
 
-/** The sleep debt a waking hour adds, and the most that waking runs it up to. */
+/** The sleep debt a waking hour adds, and the most that waking runs it up to. A short night can leave more, and waking holds that. */
 const DEBT_PER_WAKING_HOUR = 0.34;
 const DEBT_CEILING = 60;
 /** Energy under this is running on empty, and nourishment under this is hungry. */
@@ -87,9 +87,11 @@ export function freshWellbeing(): Wellbeing {
  *   the same reason. The lump charged every hour of a day that ended there.
  *
  * Measured: sixteen hours as 57,600 one-second ticks and as one jump ended on
- * the same dials to the first decimal. The one place they part is a debt that
- * reaches sixty while awake, where `chargeWakingHours` can no longer tell how
- * much of it was carried.
+ * the same dials to the first decimal.
+ *
+ * Waking holds sleep debt at sixty and never takes it down. A night under six
+ * hours can leave more than sixty, and pulling it back to sixty in the first
+ * waking second wiped four and a half hours of debt off the dial at once.
  */
 export function applyElapsedWellbeing(person: Person, hours: number, carried = person.wellbeing.sleepDebt): void {
   if (!(hours > 0)) return;
@@ -112,7 +114,7 @@ export function applyElapsedWellbeing(person: Person, hours: number, carried = p
 
   w.energy = clamp(w.energy - drain * hours, 0, 100);
   w.nourishment = clamp(w.nourishment - NOURISHMENT_DRAIN_PER_HOUR * hours, 0, 100);
-  w.sleepDebt = Math.min(DEBT_CEILING, w.sleepDebt + hours * DEBT_PER_WAKING_HOUR);
+  w.sleepDebt = Math.max(w.sleepDebt, Math.min(DEBT_CEILING, w.sleepDebt + hours * DEBT_PER_WAKING_HOUR));
   w.condition = clamp(w.condition - hungry * 0.5 - overwrought * 0.25, 0, 100);
   if (hungry > 0) w.morale = clamp(w.morale - hungry * 0.7 * personalityOf(person, 'moraleSwing'), 0, 100);
 
@@ -132,18 +134,28 @@ function hoursOver(from: number, rate: number, span: number, line: number): numb
  * Charges a person for the part of the stretch from `from` to `to` they were
  * awake for.
  *
- * Nothing before `awakeSince` is charged: a night they are asleep in pays for
- * itself when they wake. The debt they woke with is what the debt is now less
- * what the hours they have been up have added, so it comes out the same at
- * every second of the day. Somebody with no waking day on record starts one
- * here.
+ * The clock charges nothing before `awakeSince`: a night they are asleep in is
+ * paid for by `applySleep`, at the wake for a night they chose and at midnight
+ * for one nobody did. The drain is set by the debt they woke with,
+ * `wokeWithDebt`, so it comes out the same at every second of the day.
+ *
+ * It used to be worked out as the debt now less what the hours up had added.
+ * That stopped being true once the debt reached sixty, where waking holds it,
+ * and one-second ticks then drained more slowly than one jump: twelve hours
+ * from a debt of fifty-eight ended at 20.9 energy one way and 20.5 the other.
+ * It is still the answer for a save from before 88 until its first wake, and
+ * it is exact there unless that debt reaches sixty. Somebody with no waking
+ * day on record starts one here.
  */
 export function chargeWakingHours(person: Person, from: number, to: number): void {
-  if (person.awakeSince === undefined) person.awakeSince = from;
+  if (person.awakeSince === undefined) {
+    person.awakeSince = from;
+    person.wokeWithDebt = person.wellbeing.sleepDebt;
+  }
   const start = Math.max(from, person.awakeSince);
   if (to <= start) return;
   const up = (start - person.awakeSince) / MS_HOUR;
-  const carried = Math.max(0, person.wellbeing.sleepDebt - up * DEBT_PER_WAKING_HOUR);
+  const carried = person.wokeWithDebt ?? Math.max(0, person.wellbeing.sleepDebt - up * DEBT_PER_WAKING_HOUR);
   applyElapsedWellbeing(person, (to - start) / MS_HOUR, carried);
 }
 
@@ -236,6 +248,7 @@ export function registerLife(sim: Simulation): void {
       s.advanceTo(wakeAt);
 
       applySleep(person, hours, quality, s.now);
+      person.wokeWithDebt = person.wellbeing.sleepDebt;
       const recovered = person.wellbeing.energy - before.energy;
 
       s.emit('life.woke', { personId: person.id, hours, quality, recovered });
@@ -414,6 +427,7 @@ function liveTheUnattendedNight(sim: Simulation): void {
       const quality = sleepQuality(sim, person) * 0.95;
       const { sound, hours } = unattendedNight(person);
       applySleep(person, hours, quality, sim.now);
+      person.wokeWithDebt = person.wellbeing.sleepDebt;
       person.lastSleptAt = sim.now;
       // And they are asleep until a sound sleeper would wake, which is when the
       // clock starts charging them again. The day is still a sound sleeper's
@@ -483,9 +497,9 @@ const A_NORMAL_DAY = 16;
  * The sleep debt a normal day has put on the books by bedtime. A normal night
  * pays it back with room to spare, so only debt past it asks for a longer
  * one. While the day was charged at midnight, the debt at an eleven o'clock
- * bedtime was nought; charged as the clock moves, it is 5.3, and counting all
- * of it asked for eight and a half hours after every ordinary day and called
- * it "carrying some sleep debt".
+ * bedtime was zero; charged as the clock moves, it is 5.4 after a day up from
+ * seven, and counting all of it asked for eight and a half hours after every
+ * ordinary day and called it "carrying some sleep debt".
  */
 export const A_NORMAL_DAYS_DEBT = A_NORMAL_DAY * DEBT_PER_WAKING_HOUR;
 

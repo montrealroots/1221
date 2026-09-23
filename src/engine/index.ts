@@ -453,9 +453,11 @@ export function migrate(universe: SaveUniverse): MigrationResult {
   // 88 charges the waking day as the clock moves, from when each person's
   // waking day began. Before it the midnight rollover charged the whole day
   // ahead at once, so a save from before 88 has already paid for the rest of
-  // the day it was saved in. Its people's waking day is counted from the next
-  // midnight: counting from the moment it was saved would charge that stretch
-  // twice, thirty points of energy for a save made at two in the afternoon.
+  // the day it was saved in, or, saved before its first midnight, never pays
+  // for that day, as that build never would. Its people's waking day is
+  // counted from the next midnight: counting from the moment it was saved
+  // would charge that stretch twice, thirty points of energy for a save made
+  // at two in the afternoon.
   {
     const today = zonedParts(universe.now, universe.homeZone);
     const midnight = addDays(
