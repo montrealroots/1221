@@ -4,8 +4,8 @@
  * Home prints four money facts and every one of them is a dead end: the name
  * of the account you spend from, the balance in it, a net worth, and what is
  * owed. None of them is a made-up figure. A balance is the sum of its postings
- * (`core/ledger.ts`), net worth is recomputed from the ledger and the deeds
- * every time it is asked for (`systems/finance.ts`), and neither is stored
+ * (`core/ledger.ts`), net worth is recomputed from the ledger every time it
+ * is asked for (`systems/finance.ts`), and neither is stored
  * anywhere a screen could get them wrong.
  *
  * Three kinds live here. An `account` is a thing — a real account at a real
@@ -25,13 +25,10 @@ import { Ledger, isLiability, type Account, type AccountKind } from '@/engine/co
 import { MS_DAY } from '@/engine/core/time';
 import { titleCaseLabel } from '@/engine/core/text';
 import { netWorth, type Worth } from '@/engine/systems/finance';
-import type { Person, Property } from '@/engine/domain/model';
+import type { Person } from '@/engine/domain/model';
 import type { Simulation } from '@/engine';
 import { Stat } from '@/ui/components/primitives';
 import { defineLook, type Way } from './registry';
-import { useGame, useWorld } from '@/app/game-context';
-import { accountsOf, whyNotTransfer } from '@/engine/world/banking';
-import { DEPOSIT_A_YEAR } from '@/engine/content/banking';
 import { at } from './subject';
 import { isAre, spokenList } from './words';
 
@@ -43,8 +40,16 @@ const RECENT_WORDS = 'thirty days';
 const ACCOUNT_KIND: Readonly<Record<AccountKind, string>> = {
   checking: 'What You Spend From',
   savings: 'What You Put Aside',
+  cash: 'Money In Hand',
   credit_card: 'A Line Of Credit',
+  loan: 'Money You Borrowed',
+  mortgage: 'The Loan On The Roof',
+  auto_loan: 'The Loan On The Car',
+  brokerage: 'Money At Work',
   company_cash: 'The Company Account',
+  company_credit: 'The Company Card',
+  escrow: 'Money Held For Later',
+  production_account: 'A Production Account',
   // Nominal accounts never resolve, so these are here for completeness only.
   income: 'Where Money Comes From',
   expense: 'Where Money Goes',
@@ -96,12 +101,6 @@ function movement(sim: Simulation, accountId: string): { inward: number; outward
   return { inward, outward };
 }
 
-/** The properties somebody owns outright and has not sold. */
-function ownedBy(sim: Simulation, ownerId: string): Property[] {
-  return Object.values(sim.universe.properties)
-    .filter((p) => p.ownerId === ownerId && p.tenure === 'owned' && !p.soldAt);
-}
-
 /** The accounts with something standing against them, worst first. */
 function debtsOf(sim: Simulation, ownerId: string): Account[] {
   return sim.ledger.accountsOf(ownerId)
@@ -140,13 +139,9 @@ defineLook<Account>('account', {
       summary: accountSentence(account, sim),
       body: accountBody(account, sim),
       ways,
-      // This used to end "and nothing has charged it against you yet", which was
-      // true for the whole of this project’s life and is not any more. A comment
-      // or a provenance line a change falsifies is part of that change.
       provenance: account.apr === undefined
         ? 'The balance is the sum of the postings against it, not a figure anybody typed in.'
-        : 'The balance is the sum of the postings against it. The rate is the one written on the '
-          + 'account, and it’s charged on what is owed at the start of every month.',
+        : 'The balance is the sum of the postings against it. The rate is the one written on the account, and nothing has charged it against you yet.',
     };
   },
 });
@@ -164,7 +159,7 @@ function accountSentence(a: Account, sim: Simulation): string {
         ? `You owe nothing on it${where}, and the whole ${formatMoney(limit)} line is sitting there if you want it.`
         : `You owe nothing on it${where}, and it’s been clear for a while.`;
     }
-    const free = sim.ledger.availableFunds(a.id);
+    const free = Math.max(0, limit + a.balance);
     return limit > 0
       ? `You owe ${formatMoney(owed)} on it${where}, which leaves ${formatMoney(free)} of a ${formatMoney(limit)} line still free.`
       : `You owe ${formatMoney(owed)} on it${where}, and it comes down only as fast as you pay it down.`;
@@ -189,12 +184,15 @@ function movementSentence(inward: number, outward: number): string {
 
 /** What the money in this sort of account is for. */
 function tailFor(kind: AccountKind, spendsFromIt: boolean): string {
-  // Four kinds of account exist, so there are not many cases to answer. The
-  // three that were here for a brokerage, an escrow and money in hand went with
-  // the kinds themselves, which nothing had ever opened.
   switch (kind) {
     case 'savings':
-      return 'set aside, and earning while it sits there.';
+      return 'set aside, and not for spending.';
+    case 'brokerage':
+      return 'and what it’s worth moves with the market.';
+    case 'escrow':
+      return 'and it isn’t yours to touch until the thing it’s for happens.';
+    case 'cash':
+      return 'and it spends without asking anybody.';
     default:
       return spendsFromIt ? 'and that’s what today comes out of.' : 'and it sits there until you move it.';
   }
@@ -220,7 +218,7 @@ function accountBody(a: Account, sim: Simulation) {
       <Stat
         key="free"
         label="Still Free"
-        value={<span className="mono">{formatMoney(sim.ledger.availableFunds(a.id))}</span>}
+        value={<span className="mono">{formatMoney(Math.max(0, limit + a.balance))}</span>}
         note={`Of a ${formatMoney(limit)} line`}
       />,
     );
@@ -240,81 +238,11 @@ function accountBody(a: Account, sim: Simulation) {
         {a.institution ?? 'The bank'} opened it {heldFor(sim, a.openedAt)}
         {a.last4 ? `, and it ends ${a.last4}` : ''}.{' '}
         {a.apr !== undefined
-          ? `Anything left on it is charged at ${ratePercent(a.apr)} a year, against what’s still owing `
-            + 'and not against what it started at. A twelfth of that goes on every month it isn’t cleared.'
-          : a.kind === 'savings'
-            ? `It pays ${ratePercent(DEPOSIT_A_YEAR)} a year on whatever is sitting in it, a twelfth at a time, `
-              + 'which is the only thing in this game that pays you for doing nothing.'
-            : 'It charges you nothing for holding your money and pays you nothing for leaving it — '
-              + 'a current account is for money that’s moving.'}
+          ? `Anything left on it is written at ${ratePercent(a.apr)} a year, against what’s still owing, not against what it started at.`
+          : 'It charges you nothing for the privilege of holding your money.'}
       </p>
       <p className="small">{movementSentence(inward, outward)}</p>
       <div className="grid grid-3">{stats}</div>
-      <Move account={a} />
-    </>
-  );
-}
-
-/**
- * Moving money out of this account into another one you hold.
- *
- * The only way to get money from one pocket into another, and therefore the only
- * way to clear a card faster than the minimum. It sits on the account page rather
- * than on a screen of its own because the decision is always about *this*
- * account: what is in it, and whether it is doing anything where it sits.
- *
- * Three buttons rather than an amount field, and that is the design rather than a
- * shortcut. The decision worth offering is "put the spare somewhere it earns" or
- * "clear what is owed", not "type a number" — and every one of the three names
- * the sum it will move, so nothing is hidden behind a press. The refusal under
- * them is `whyNotTransfer`, which is the same function the command calls.
- */
-function Move({ account }: { account: Account }) {
-  const { run } = useGame();
-  const mine = useWorld((s) => accountsOf(s, account.ownerId).filter((one) => one.id !== account.id));
-  const owed = useWorld(() => mine.filter((one) => isLiability(one.kind) && owedOn(one) > 0));
-  const savings = mine.filter((one) => one.kind === 'savings');
-  const spending = mine.filter((one) => !isLiability(one.kind) && one.kind !== 'savings');
-
-  if (isLiability(account.kind) || mine.length === 0) return null;
-
-  const offers: { to: Account; cents: number; label: string }[] = [];
-  for (const card of owed) {
-    const clear = Math.min(account.balance, owedOn(card));
-    if (clear > 0) offers.push({ to: card, cents: clear, label: `Clear ${card.name}` });
-  }
-  for (const other of [...savings, ...spending]) {
-    // Half, rather than everything, because a current account with nothing in it
-    // is an account that cannot pay for anything this month.
-    const some = Math.floor(account.balance / 2);
-    if (some > 0) offers.push({ to: other, cents: some, label: `Half To ${other.name}` });
-  }
-
-  if (offers.length === 0) return null;
-  return (
-    <div className="row gap-2" style={{ marginTop: 'var(--s2)', flexWrap: 'wrap' }}>
-      {offers.map((offer) => (
-        <Offer key={`${offer.to.id}-${offer.cents}`} from={account} offer={offer} run={run} />
-      ))}
-    </div>
-  );
-}
-
-function Offer(
-  { from, offer, run }:
-  { from: Account; offer: { to: Account; cents: number; label: string }; run: (k: string, p: Record<string, unknown>) => void },
-) {
-  const whyNot = useWorld((s) => whyNotTransfer(s, from.id, offer.to.id, offer.cents));
-  return (
-    <>
-      <button
-        className="btn btn-sm"
-        disabled={whyNot !== undefined}
-        onClick={() => run('life.transfer', { from: from.id, to: offer.to.id, cents: offer.cents })}
-      >
-        {offer.label} Â· {formatMoney(offer.cents)}
-      </button>
-      {whyNot !== undefined && <span className="xs dim">{whyNot}</span>}
     </>
   );
 }
@@ -327,7 +255,6 @@ interface Holdings {
   person: Person;
   worth: Worth;
   accounts: Account[];
-  owned: Property[];
 }
 
 defineLook<Holdings>('networth', {
@@ -339,7 +266,6 @@ defineLook<Holdings>('networth', {
       person,
       worth: netWorth(sim, person.id),
       accounts: sim.ledger.accountsOf(person.id),
-      owned: ownedBy(sim, person.id),
     };
   },
   seeds: (sim) => [sim.universe.playerId],
@@ -375,26 +301,25 @@ defineLook<Holdings>('networth', {
         },
       ],
       ways,
-      provenance: 'Added up from the ledger and the deeds every time you ask, and stored nowhere. Every entry behind it has a matching entry somewhere else, and the books come to zero to the cent.',
+      provenance: 'Added up from the ledger every time you ask, and stored nowhere. Every entry behind it has a matching entry somewhere else, and the books come to zero to the cent.',
     };
   },
 });
 
-/** The three halves of it, spoken. */
+/** Both sides of it, spoken. */
 function worthSentence(w: Worth): string {
   const parts: string[] = [];
   if (w.cash > 0) parts.push(`${formatMoney(w.cash)} in the bank`);
   if (w.cash < 0) parts.push(`${formatMoney(-w.cash)} overdrawn`);
-  if (w.assets > 0) parts.push(`${formatMoney(w.assets)} in what you own`);
   if (w.liabilities > 0) parts.push(`${formatMoney(w.liabilities)} owed against it`);
   if (parts.length === 0) {
-    return 'You’re worth nothing at all today — no money anywhere, nothing owned and nothing owed.';
+    return 'You’re worth nothing at all today — no money anywhere and nothing owed.';
   }
   return `You’re worth ${formatMoney(w.total)}: ${spokenList(parts)}.`;
 }
 
 function worthBody(held: Holdings) {
-  const { worth, accounts, owned } = held;
+  const { worth, accounts } = held;
   const names = accounts.map((a) => a.name);
   const spending = accounts.find((a) => a.id === held.person.primaryAccountId);
 
@@ -406,14 +331,8 @@ function worthBody(held: Holdings) {
           : `${spokenList(names)} ${isAre(names.length)} open in your name`}
         {names.length > 0 && spending ? `, and ${spending.name} is the one the day comes out of.` : names.length > 0 ? '.' : ''}
       </p>
-      <p className="small">
-        {owned.length === 0
-          ? 'None of the deeds carry your name, so what you’re worth is money and not things.'
-          : `${spokenList(owned.map((p) => p.name))} ${isAre(owned.length)} counted at ${formatMoney(worth.assets)} between them.`}
-      </p>
-      <div className="grid grid-4">
+      <div className="grid grid-3">
         <Stat label="In The Bank" value={<span className="mono">{formatMoney(worth.cash)}</span>} note="Across every account" />
-        <Stat label="In What You Own" value={<span className="mono">{formatMoney(worth.assets)}</span>} note="What the deeds are worth" />
         <Stat
           label="Owed"
           value={<span className="mono">{formatMoney(worth.liabilities)}</span>}

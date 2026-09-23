@@ -5,10 +5,9 @@
  * character sheet because a person has them, not because the game reads them
  * to decide an outcome; nothing in the simulation branches on any of it.
  *
- * The crafts are the ones this industry is actually made of, from the ones
- * everybody can name to the ones only a crew knows. They are here because an
- * actor or an actress spends their life among these people and it says
- * something about somebody which of the trades they care about.
+ * The crafts are the ones film and television are actually made of, from the
+ * ones everybody can name to the ones only a crew knows. It says something
+ * about somebody which of the trades they care about.
  *
  * The genres are the genres. Sorted by name, and held that way by a test:
  * a list this long is only usable if a reader can guess where a word will be.

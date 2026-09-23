@@ -25,7 +25,6 @@ import type { Simulation } from '@/engine';
 import { MS_DAY, MS_HOUR } from '@/engine/core/time';
 import '@/ui/looks/all';
 import { lookKinds, resolveLook, seedsFor, trailTo, type Looked, type Way } from '@/ui/looks/registry';
-import { openTheBooks, openTheDoors } from './doors';
 import { openDecisions } from '@/engine/world/world';
 import { at, subjectKey, type Subject } from '@/ui/looks/subject';
 
@@ -36,92 +35,49 @@ const UI = new URL('../src/ui/', import.meta.url);
  *
  * A fresh save is empty in three ways that matter here: nothing is on the
  * calendar, nothing is waiting on a decision, and nothing has been announced.
- * Nothing in the engine puts anything there either — casting, The Industry and
- * the job system were the three things that used to, and all three are gone —
- * so crawling a `quickSave()` would leave `entry`, `decision` and
- * `notification` declared and never once resolved.
+ * Nothing in the engine puts anything there on its own any more, so crawling a
+ * `quickSave()` would leave `entry`, `decision` and `notification` declared
+ * and never once resolved.
  *
- * So the test plants one of each, the way the game will when the family
- * business starts producing them. These are the real constructors — `schedule`,
- * `decide` and `notify` — not fixtures, so the shapes stay honest, and the
- * two kinds are registered first because the engine refuses to schedule
- * anything nothing would handle.
+ * So the test plants one of each. These are the real constructors —
+ * `schedule`, `requireDecision` and `notify` — not fixtures, so the shapes
+ * stay honest, and the two kinds are registered first because the engine
+ * refuses to schedule anything nothing would handle.
  */
 function world(): Simulation {
-  // With a twin, because a twin is the one relation whose wording differs from
-  // every other and the crawl has to walk it.
-  const sim = quickSave({
-    family: {
-      mother: { firstName: 'Halla', ageAtBirth: 29, role: 'the company' },
-      father: { firstName: 'Jón', ageAtBirth: 31, role: 'the lot' },
-      twin: { firstName: 'Katla', gender: 'female', identical: true, role: 'the house' },
-    },
-  });
+  const sim = quickSave();
   const player = sim.universe.people[sim.universe.playerId]!;
 
-  // Something on the slate and rights behind it, so the business graph has
-  // material to crawl. A company with nothing is a real state and it is the
-  // state at boot, but it is not the one that exercises the most edges.
-  const took = sim.execute<{ ok: boolean; id?: string }>({
-    kind: 'company.option',
-    payload: { title: 'The Long Winter', provenance: 'novel' },
-  }).value;
-  sim.execute({
-    kind: 'company.develop',
-    payload: { title: 'The Long Winter', holdingId: took?.id },
-  });
-
-  // And greenlit, with the doors opened the way a player opens them. Half the
-  // project look only exists once a picture is being made — the schedule, the
-  // crew, the maturity vector, the two ledgers, what can come apart — and a
-  // fixture that stopped at developed never crawled any of it. Rule 6 passed
-  // for months on a page that broke it the moment anybody said yes to
-  // something: one grid of facts before the greenlight, three after it.
-  openTheDoors(sim, 'Something Else To Make');
-  const onTheSlate = Object.values(sim.universe.projects)
-    .find((one) => one.title === 'The Long Winter');
-  if (onTheSlate) {
-    sim.execute({
-      kind: 'company.greenlight',
-      payload: {
-        projectId: onTheSlate.id, planId: 'feature', budgetCents: 4_000_000_00, shootWeeks: 5,
-      },
-    });
-    // Far enough in that the ledgers have something in them and the cutting
-    // room has been asked a question, which is where most of the page is.
-    sim.advanceTo(sim.now + 200 * MS_DAY);
-  }
-
-  sim.onSchedule('production.table_read', () => {});
+  sim.onSchedule('life.appointment', () => {});
   sim.onSchedule('life.dinner', () => {});
 
   sim.schedule({
     at: sim.now + 2 * MS_DAY + 3 * MS_HOUR,
     durationMinutes: 180,
-    kind: 'production.table_read',
-    label: 'Table Read',
-    category: 'work',
+    kind: 'life.appointment',
+    label: 'Dentist',
+    category: 'personal',
     requiresPlayer: true,
     locationId: player.currentLocationId,
   });
   sim.schedule({
     at: sim.now + 5 * MS_DAY,
     kind: 'life.dinner',
-    label: 'Dinner At The House',
+    label: 'Dinner With Friends',
     category: 'personal',
     requiresPlayer: true,
   });
   sim.requireDecision({
-    category: 'work',
+    category: 'personal',
     urgency: 70,
-    title: 'A Part Has Been Offered',
-    detail: 'Somebody wants an answer on it, and the answer is yours to give.',
+    title: 'The Dentist Wants An Answer',
+    detail: 'They are holding the slot, and the answer is yours to give.',
     dueAt: sim.now + 3 * MS_DAY,
   });
   sim.notify({
-    category: 'work',
-    title: 'The Lot Is Finished',
-    body: 'The stages are up and the gate is open.',
+    category: 'personal',
+    title: 'The Clocks Go Back Soon',
+    body: 'An hour comes back to you at the end of the month.',
     importance: 60,
   });
 
@@ -239,14 +195,7 @@ describe('the shape of a look', () => {
       for (const [what, text] of [['name', look.name], ['kind', look.kind]] as const) {
         expect(text, `${key} ${what} reads as an identifier: ${text}`).not.toMatch(/_|\/|\d{4}/);
         expect(text, `${key} ${what} is a field name: ${text}`).not.toMatch(/\b[a-z]+[A-Z]/);
-        // Any uppercase letter, not A to Z. The rule is that a name starts
-        // capitalised; the first regex for it said ASCII, in a game set in
-        // Iceland whose own name table holds Ólafur, Árni, Ásta and Þóra. It
-        // went unnoticed because the only person this look seeded was the
-        // player, whose name a test supplies — the moment the sugar group's
-        // management became reachable, Ásta Einarsdóttir read as not starting
-        // like a name. `\p{Lu}` is the thing that was meant.
-        expect(text, `${key} ${what} does not start as a name does: ${text}`).toMatch(/^[\p{Lu}\p{N}]/u);
+        expect(text, `${key} ${what} does not start as a name does: ${text}`).toMatch(/^[A-Z0-9]/);
       }
     }
   });
@@ -430,38 +379,31 @@ describe('what the screens name', () => {
 });
 
 /**
- * The pointer that resolved nothing, resolving something.
+ * The pointer on a decision, resolving something.
  *
- * `refType` and `refId` are declared on a decision and on a notification, and
- * for the whole life of this build no decision anywhere carried either — the
- * comment on `subjectForRef` said as much, twice. The reimbursement row the
- * world tick raises is the first, so this is the way from a decision onto the
- * thing it is about being walked rather than assumed. The crawl above cannot
- * cover it: its decision is hand-made and carries no pointer at all.
+ * `refType` and `refId` are declared on a decision and on a notification. The
+ * crawl above cannot cover them — its decision is hand-made and carries no
+ * pointer at all — so this is the way from a decision onto the thing it is
+ * about being walked rather than assumed.
  */
 describe('a decision opens onto the thing it is about', () => {
-  it('walks from the reimbursement row to the picture it is about', () => {
+  it('walks from a row to the calendar entry it is about', () => {
     const sim = quickSave({}, 'decision-way');
-    openTheDoors(sim);
-    openTheBooks(sim);
-    sim.execute({ kind: 'company.develop', payload: { title: 'Hvítserkur', medium: 'film' } });
-    const project = Object.values(sim.universe.projects).find((one) => one.title === 'Hvítserkur')!;
-    sim.execute({
-      kind: 'company.greenlight',
-      payload: { projectId: project.id, planId: 'feature', budgetCents: 20_000_000_00, shootWeeks: 8 },
+    const made = sim.execute<{ ok: boolean; id?: string }>({
+      kind: 'calendar.schedule', payload: { title: 'Dentist', at: sim.now + 4 * MS_DAY },
+    }).value!;
+    sim.requireDecision({
+      urgency: 60, category: 'personal', title: 'Keep The Dentist?', detail: 'It is in four days.',
+      refType: 'entry', refId: made.id,
     });
-    sim.advanceTo(sim.now + 3 * MS_DAY);
 
     const row = openDecisions(sim)[0]!;
-    expect(row.refType).toBe('project');
-    expect(row.refId).toBe(project.id);
-
     const looked = resolveLook(sim, at('decision', row.id)) as Looked;
     expect(looked.name).toBeTruthy();
     expect(
       (looked.ways ?? []).map((way) => way.to),
       'the decision knows what it is about and paints no way onto it',
-    ).toContainEqual({ kind: 'project', id: project.id });
+    ).toContainEqual({ kind: 'entry', id: made.id });
   });
 });
 
@@ -498,19 +440,20 @@ describe('the sentence the player wrote', () => {
     expect(wordsIn(found.body).join(' ')).toContain('never went in');
   });
 
-  it('prints it for a relative too, whose sentence the world wrote', () => {
-    const sim = world();
-    const mother = Object.values(sim.universe.people).find((one) => one.firstName === 'Halla')!;
-    expect(mother.background.length).toBeGreaterThan(20);
-
-    const found = resolveLook(sim, at('person', mother.id)) as Looked;
-    expect(wordsIn(found.body).join(' ')).toContain(mother.background);
+  it('prints what they care about and the films they love beside it', () => {
+    const sim = quickSave({ interests: ['cinematography'], genres: ['western'] }, 'taste-reader');
+    const found = resolveLook(sim, at('person', sim.universe.playerId)) as Looked;
+    const words = wordsIn(found.body).join(' ');
+    expect(words).toContain('Cinematography');
+    expect(words).toContain('Western');
   });
 
-  it('says nothing at all rather than an empty line when there is no sentence', () => {
+  it('says nothing at all rather than an empty line when there is nothing to say', () => {
     const sim = quickSave({}, 'background-empty');
     const player = sim.universe.people[sim.universe.playerId]!;
     player.background = '   ';
+    player.interests = [];
+    player.genres = [];
 
     const found = resolveLook(sim, at('person', player.id)) as Looked;
     expect(found.body).toBeUndefined();

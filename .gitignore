@@ -37,16 +37,3 @@ shots-date/
 # whole copies of this repository, they are locked while their agent is alive,
 # and they are gone when it finishes — so they are infrastructure, not content.
 .claude/worktrees/
-
-# The session context export. `5204f7d` decided this one already and gave the
-# reason: once its nine section briefs were worked, what was left was a terminal
-# transcript with known mojibake that nothing reads, and a 205KB artifact with no
-# reader does not stop being one because it is prose rather than code. It keeps
-# coming back when a machine is handed over, and untracked-and-drifting is the
-# one state a file should not be in on a project that hands machines over. So it
-# is dropped deliberately rather than dropped by neglect. What is worth keeping
-# from a handover is in `SLATE_CURRENT_MASTER_HANDOFF.md`, which is carried.
-SLATE-CURRENT-CLEANUP-FULL-CONTEXT.txt
-out/
-out2/
-out25/

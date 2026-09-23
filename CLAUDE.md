@@ -5,6 +5,15 @@ established by the project owner. It applies to all work on SLATE, past and
 future, and to **both** of the Claude Code accounts that alternate on this
 project. It remains canonical unless the owner explicitly changes it.
 
+This copy was brought over from `main` onto `claude/slate-cleanup-e4apmx` on
+2026-09-23, at the owner's request, and corrected where it said things that are
+not true on this branch. The seventeen rules and the owner's standing constraints
+are unchanged. The one change to the operating model is also the owner's: on
+2026-09-23 they made PowerShell 7 the execution environment. Later that day they
+had this branch replace `main`. "The old line" below means the commits the gut
+replaced on 2026-09-22, up to `4a00db8`. `main` carried part of it until then, and
+still has that history, but none of its files.
+
 ---
 
 # SLATE Development Blueprint
@@ -14,8 +23,9 @@ project. It remains canonical unless the owner explicitly changes it.
 **Claude Code** is the primary reasoning, coding, architecture, debugging and
 orchestration layer.
 
-**PowerShell** is the primary local execution environment on Windows. Claude Code
-may use it to inspect and operate on the real project environment, including:
+**PowerShell 7** is the primary local execution environment on Windows: `pwsh`, not
+the Windows PowerShell 5.1 that ships with the system. Claude Code may use it to
+inspect and operate on the real project environment, including:
 
 - files and directories
 - Git
@@ -37,7 +47,7 @@ So, in one line each:
 | Layer | Owns |
 |---|---|
 | Claude Code | Reasoning and orchestration |
-| PowerShell | Execution and system access |
+| PowerShell 7 | Execution and system access |
 | Git | Versioning, recovery, audit trail and safety |
 
 ## The Rules
@@ -98,8 +108,11 @@ npm run gate
 ```
 
 It runs `npm run validate` (typecheck, lint, the full vitest suite) followed by
-fifteen checks. Read its exit status **from a file, never from a pipe**, because a
-piped exit code in PowerShell reports the pipeline and not the command:
+twelve checks: title-case, label-sweep, plural-check, voice-check, tics,
+doc-refs, wired, deciders, spelling, typos, geo-check and inventory. Read its exit
+status **from a file, never from a pipe**. A pipe that stops early, such as
+`| Select-Object -First 20`, ends the gate partway and leaves `$LASTEXITCODE`
+holding the previous command's code, which can read as a pass:
 
 ```powershell
 npm run gate *> "$env:TEMP\gate.txt"
@@ -133,8 +146,9 @@ Two Claude Code accounts alternate on SLATE, and
 `SLATE_CURRENT_MASTER_HANDOFF.md` is the only state that passes between them. It
 is updated when a phase completes and before a switch. A handoff that has drifted
 from the tree is worse than no handoff, because it sends the next session to
-rebuild something that already exists — which has happened, and is what
-`tools/claims.mjs` was built to catch in the code's own comments.
+rebuild something that already exists — which has happened. On the old line,
+`tools/claims.mjs` was built to catch the same drift in the code's own comments.
+This line doesn't have it.
 
 ## Rule 13 — Explain Before Acting
 
@@ -151,9 +165,18 @@ destroying or publishing is what gets announced first.
 
 Base44 deployment happens only after the applicable verification gate passes.
 
-`SAVE_SCHEMA_VERSION` is pinned in **two** places that cannot import from each
-other — `src/engine/domain/model.ts` and `base44/shared/guard.js`. Move both by
-hand together, or twenty-two tests go down.
+The save schema version is pinned in **two** places that cannot share a constant,
+because the guard runs on Deno and cannot import the engine:
+`SAVE_SCHEMA_VERSION` in `src/engine/domain/model.ts` and
+`SUPPORTED_SCHEMA_VERSION` in `base44/shared/guard.js`. Move both by hand
+together. Moving only the engine's fails 17 tests in
+`tests/base44-contract.test.ts` and stops `tests/server-guards.test.ts` from
+loading at all; moving only the guard's fails 2. Both were measured on
+2026-09-23.
+
+Before deploying, read §10 of `SLATE_CURRENT_MASTER_HANDOFF.md`: a deployment made
+from the old line, including `main` as it stood before 2026-09-23, refuses every
+new save this line makes.
 
 ## Rule 15 — The Auditable Trail
 
@@ -162,10 +185,11 @@ The trail lives in four places, and all four are load-bearing:
 - **Commit messages** say what was decided and why, not what changed. The diff
   already says what changed.
 - **`SLATE_CURRENT_MASTER_HANDOFF.md`** carries state across accounts.
-- **`docs/UNBITTEN.md`** and **`docs/ARREARS.md`** are the open-work ledgers: what
-  is declared, written, displayed or believed but changes no outcome.
+- **`docs/UNBITTEN.md`** is the open-work ledger: what is declared, written,
+  displayed or believed but changes no outcome. `docs/ARREARS.md` was the second
+  ledger until the gut (`abd4727`) deleted it.
 - **`docs/UNWIRED.json`** is the machine ratchet. Its counts **may fall and may
-  not rise.**
+  not rise.** `tools/wired.mjs --check` fails a rise.
 
 ---
 
@@ -184,8 +208,9 @@ sentence?
 does; they say what was measured, what was tried, what was deleted and why. Which
 means a comment your change falsifies **is part of your change**. Say what is no
 longer true in the past tense — the past tense is how this project keeps its
-history, and `tools/claims.mjs --check` fails the gate on a present-tense claim
-that the code contradicts.
+history. On the old line, `tools/claims.mjs --check` failed the gate on a
+present-tense claim that the code contradicted. This line doesn't have it, so here
+review holds the line.
 
 **A ledger balance is never a number somebody typed.** It is the sum of postings.
 

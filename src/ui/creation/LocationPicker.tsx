@@ -17,7 +17,7 @@
 
 import { useEffect, useId, useMemo, useState } from 'react';
 import {
-  CITIES, COUNTRIES, REGIONS, cityCount, isCountryLoaded, loadCountryCities,
+  CITIES, COUNTRIES, REGIONS, cityCount, countryOfPlace, isCountryLoaded, loadCountryCities,
 } from '@/engine/content/geography';
 import type { City } from '@/engine/content/geography';
 import { WorldMap } from './WorldMap';
@@ -37,8 +37,11 @@ export function LocationPicker({
 }) {
   const fallbackPrefix = useId();
   const prefix = idPrefix ?? fallbackPrefix;
+  // A town too small to be bundled is not in memory until its country is, but
+  // its id still names that country, so the picker opens on the right one and
+  // pulls the country in. The United States is only for an id that names none.
   const selected = CITIES.get(cityId);
-  const [countryId, setCountryId] = useState(selected?.countryId ?? 'us');
+  const [countryId, setCountryId] = useState(selected?.countryId ?? countryOfPlace(cityId) ?? 'us');
   const [regionId, setRegionId] = useState<string>('');
   const [query, setQuery] = useState('');
   const [loading, setLoading] = useState(false);
@@ -49,9 +52,9 @@ export function LocationPicker({
   // Somebody else changed the selection — the birthplace following the home
   // town, a draft loading — so follow it rather than sitting on a stale country.
   useEffect(() => {
-    const city = CITIES.get(cityId);
-    if (city && city.countryId !== countryId) {
-      setCountryId(city.countryId);
+    const country = CITIES.get(cityId)?.countryId ?? countryOfPlace(cityId);
+    if (country && country !== countryId) {
+      setCountryId(country);
       setRegionId('');
       setQuery('');
     }
@@ -93,10 +96,8 @@ export function LocationPicker({
       && (regionId === '' || c.parentId === regionId)
       && (needle === '' || c.name.toLowerCase().includes(needle))
     ));
-    // The places most people mean come first: where the industry is, then size.
-    pool.sort((a, b) => b.industryPresence - a.industryPresence
-      || b.population - a.population
-      || a.name.localeCompare(b.name));
+    // The places most people mean come first: the biggest.
+    pool.sort((a, b) => b.population - a.population || a.name.localeCompare(b.name));
     return pool;
   }, [countryId, regionId, query, loadedTick]);
 
@@ -195,7 +196,7 @@ export function LocationPicker({
       <div className="picker-results" role="listbox" aria-label="Matching Places">
         {matches.length === 0 && !loading && (
           <p className="hint" style={{ padding: 'var(--s3)' }}>
-            Nothing matches “{query}” there. Try a different spelling, or widen the region.
+            No town or city matches “{query}” there. Try a different spelling, or widen the region.
           </p>
         )}
         {matches.slice(0, VISIBLE_MATCHES).map((c) => (
@@ -214,12 +215,10 @@ export function LocationPicker({
               title={[
                 REGIONS.get(c.parentId)?.name ?? COUNTRIES.get(c.countryId)?.name,
                 c.population > 0 ? `${c.population.toLocaleString('en-US')} people` : '',
-                c.industryPresence > 0 ? `industry ${c.industryPresence}/100` : '',
               ].filter(Boolean).join(' · ')}
             >
               {REGIONS.get(c.parentId)?.name ?? COUNTRIES.get(c.countryId)?.name}
               {c.population > 0 && ` · ${c.population.toLocaleString('en-US')} people`}
-              {c.industryPresence > 0 && ` · industry ${c.industryPresence}/100`}
             </span>
           </button>
         ))}

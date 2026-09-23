@@ -86,12 +86,12 @@ describe('the routes the engine points at', () => {
 
 describe('what was taken out', () => {
   it('leaves no workspace file behind', () => {
-    // The cut-down took twenty five workspaces out. This names them rather
+    // The cut-downs took twenty seven workspaces out. This names them rather
     // than pinning the whole directory, so a workspace added on purpose is an
     // addition and a workspace that crept back is caught. Putting one of these
     // back is a decision, and editing this line is how the decision is made.
     const removed = [
-      'AwardsWorkspace', 'BankWorkspace', 'CastingWorkspace', 'CharacterWorkspace',
+      'AuditionsWorkspace', 'AwardsWorkspace', 'BankWorkspace', 'BusinessWorkspace', 'CastingWorkspace', 'CharacterWorkspace',
       'CityWorkspace', 'CompanyWorkspace', 'EducationWorkspace', 'FilmWorkspace',
       'GoingOutWorkspace', 'HealthWorkspace', 'HistoryWorkspace', 'IndustryWorkspace',
       'InsuranceWorkspace', 'PhoneWorkspace', 'ProjectsWorkspace', 'PropertyWorkspace',
@@ -117,9 +117,8 @@ describe('what was taken out', () => {
   it('keeps the founder premise out of character creation', () => {
     const creation = read('ui/creation/CharacterCreation.tsx');
     expect(creation, 'the strike is still in creation').not.toMatch(/STRIKE_IS_FICTION|OPENING_BRIEF/);
-    // Not the word "company": the family's company is the premise now, and
-    // Starting Point names it. What must not come back is a step that asks the
-    // player to found one — its input, its own step, its name field.
+    // What must not come back is a step that asks the player to found a
+    // company — its input, its own step, its name field.
     expect(creation, 'the company step is still in creation').not.toMatch(/Your Company|company-name|companyName/);
     expect(creation, 'creation still calls the player a founder').not.toMatch(/And Founder/);
   });

@@ -81,30 +81,6 @@ export function inspectPayload(payload, expectedSlot) {
     throw new GuardError('The save has no world clock.');
   }
 
-  // What the game is, checked on the way in. SLATE is an actor and actress
-  // simulator, every save says so in its own payload, and the server will not
-  // store one that says otherwise. A save written before the premise existed
-  // is migrated by the client on load, so anything arriving here without it
-  // has either been hand-edited or come from something that is not SLATE.
-  const premise = universe.premise;
-  if (!premise || typeof premise !== 'object') {
-    throw new GuardError('The save does not say what game it is. Refusing to store it.');
-  }
-  if (premise.kind !== 'actor-actress-life-simulator') {
-    throw new GuardError(
-      `The save says it is a '${premise.kind}'. This deployment stores SLATE saves, which are actor and actress life simulators.`,
-      409,
-    );
-  }
-  if (premise.equalStanding !== true) {
-    throw new GuardError('The save no longer holds actor and actress as equals. Refusing to store it.', 409);
-  }
-  if (premise.playerTitle !== 'actor' && premise.playerTitle !== 'actress') {
-    throw new GuardError(
-      `The save gives its player the title '${premise.playerTitle}', which is neither actor nor actress.`,
-    );
-  }
-
   // Money is conserved by construction: every posting in every transaction
   // sums to zero, so the whole ledger sums to zero. This is the one check
   // worth doing on every write, because a save that fails it is already wrong.
@@ -142,7 +118,6 @@ export function inspectPayload(payload, expectedSlot) {
   return {
     universe,
     meta,
-    premise,
     saveId: meta.id,
     worldNow: universe.now,
     playtimeSeconds: Number(meta.playtimeSeconds) || 0,

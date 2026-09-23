@@ -17,7 +17,7 @@
 import { describe, expect, it } from 'vitest';
 import { quickSave, validateUniverse } from '@/engine';
 import type { Simulation } from '@/engine/core/simulation';
-import type { Id, SaveUniverse } from '@/engine/domain/model';
+import type { SaveUniverse } from '@/engine/domain/model';
 
 const MS_DAY = 86_400_000;
 const YEAR = 365 * MS_DAY;
@@ -76,26 +76,11 @@ function checkInvariants(sim: Simulation, label: string): void {
   }
 
   // --- Ownership -----------------------------------------------------------
-  // Nothing is owned twice, and an owner always exists.
-  const residents = new Map<Id, Id>();
-  for (const property of Object.values(u.properties)) {
-    if (!property.ownerId) continue;
-    // A property belongs to a person or to a company, and ownerKind says
-    // which: the lot is the company's, not anybody's in it.
-    const owner = property.ownerKind === 'company'
-      ? u.companies[property.ownerId]
-      : u.people[property.ownerId];
-    expect(owner, `${label}: property ${property.id} has a missing owner`).toBeDefined();
-  }
-  for (const person of Object.values(u.people)) {
-    if (!person.residenceId) continue;
-    expect(u.properties[person.residenceId], `${label}: ${person.displayName} lives in a property that does not exist`).toBeDefined();
-    residents.set(person.id, person.residenceId);
-  }
-  for (const household of Object.values(u.households)) {
-    for (const memberId of household.memberIds) {
-      expect(u.people[memberId], `${label}: household ${household.id} lists somebody who is gone`).toBeDefined();
-    }
+  // Every account somebody holds names somebody who exists. The ledger's own
+  // nominal accounts, where money comes from and goes to, belong to nobody.
+  for (const account of Object.values(u.accounts)) {
+    if (account.nominal) continue;
+    expect(u.people[account.ownerId], `${label}: account ${account.id} has a missing owner`).toBeDefined();
   }
 
   // --- Wellbeing -----------------------------------------------------------
@@ -105,11 +90,13 @@ function checkInvariants(sim: Simulation, label: string): void {
       if (key === 'sleepDebt') continue;
       expect(value >= 0 && value <= 100, `${label}: ${person.displayName}.${key} is ${value}`).toBe(true);
     }
-    for (const [key, value] of Object.entries(person.reputation)) {
-      expect(value >= 0 && value <= 100, `${label}: ${person.displayName}.${key} is ${value}`).toBe(true);
-    }
   }
 
+  // --- History -------------------------------------------------------------
+  // Nothing in the record is dated after the moment we are standing in.
+  for (const entry of u.history) {
+    expect(entry.at <= u.now, `${label}: a history entry is dated in the future`).toBe(true);
+  }
   for (const txn of u.transactions) {
     expect(txn.at <= u.now, `${label}: transaction ${txn.id} is dated in the future`).toBe(true);
   }
@@ -186,8 +173,7 @@ describe('a universe left running', () => {
       people: Object.keys(u.people).length,
       transactions: u.transactions.length,
       balances: Object.entries(u.accounts).map(([id, a]) => [id, a.balance]).sort(),
-      properties: Object.values(u.properties).map((p) => [p.id, p.marketValue]).sort(),
-      notifications: u.notifications.map((n) => `${n.at}:${n.title}`),
+      history: u.history.map((h) => `${h.at}:${h.title}`),
     });
 
     const a = quickSave({}, 'determinism-seed');

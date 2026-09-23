@@ -1,126 +1,51 @@
 /**
  * SLATE — actor, or actress.
  *
- * They are two names for one craft, and the business has
- * always kept them apart: separate awards, separate categories, separate
- * columns in a trade paper. So the game keeps them apart too. A person is one
- * or the other, and every label about that person uses their word. Every list
- * that would otherwise pile them together is split, and both halves get a
- * heading of their own.
+ * They are two names for one craft, and the business has always kept them
+ * apart, so the game does too. The player is one or the other, and the places
+ * that name them use their word: Home, the rail and the save slot.
  *
- * How a person's title is decided, in order: the title they carry, if they
- * carry one, because it is theirs to state; then the record's own statement of
- * their gender, for the real people the game reads in; then their pronouns,
- * she/her being an actress and he/him an actor, with anything the pronouns
- * leave open falling back to actor. A fallback is not a default: the save
- * records, for the player, whether the title was stated or implied, so the
- * route is kept rather than either word standing in as the one the other
- * varies from. Nobody's title is ever guessed from their name.
+ * How the title is decided: pronouns settle it where they can, he/him being
+ * an actor and she/her an actress. They/them settles neither, so the player
+ * picks. The creation screen opens that choice empty, because preselecting
+ * one of two equals is what a default is, and neither of them is. Nobody's
+ * title is ever guessed from their name.
  *
- * It is a word, not a stat. Nothing about how well somebody acts, what they
- * are worth, or what they are offered branches on it — only what they are
- * called, which award categories are open to them, and which column they are
- * listed in.
+ * It is a word, not a stat. Nothing branches on it except what they are
+ * called.
  */
 
 export type PerformerTitle = 'actor' | 'actress';
 
 export const PERFORMER_TITLES: readonly PerformerTitle[] = ['actor', 'actress'];
 
-/** The word itself, singular and plural. */
+/** The word itself, as a label prints it. */
 export const PERFORMER_NOUN: Readonly<Record<PerformerTitle, string>> = { actor: 'Actor', actress: 'Actress' };
-export const PERFORMER_PLURAL: Readonly<Record<PerformerTitle, string>> = { actor: 'Actors', actress: 'Actresses' };
-
-/** The title pronouns imply, absent anything better. */
-export function impliedPerformerTitle(pronouns: string): PerformerTitle {
-  return /^\s*she\b/i.test(pronouns) ? 'actress' : 'actor';
-}
 
 /**
- * The title a record's stated gender implies.
- *
- * Only for the real people the game reads in from the public record, where
- * gender is a field somebody else filled in. Anything the record does not
- * state plainly comes back undefined rather than being decided here.
+ * The title a set of pronouns settles by itself, or undefined when it is the
+ * player's to make. Case and spacing do not change the answer.
  */
-export function titleFromGender(gender: string | undefined): PerformerTitle | undefined {
-  if (!gender) return undefined;
-  const lower = gender.toLowerCase();
-  if (lower === 'female' || lower === 'woman' || lower === 'trans woman' || lower === 'transgender female') return 'actress';
-  if (lower === 'male' || lower === 'man' || lower === 'trans man' || lower === 'transgender male') return 'actor';
+export function settledTitle(pronouns: string): PerformerTitle | undefined {
+  if (/^\s*he\b/i.test(pronouns)) return 'actor';
+  if (/^\s*she\b/i.test(pronouns)) return 'actress';
   return undefined;
 }
 
-/** The title a person is routed by. An explicit one wins; otherwise pronouns decide. */
-export function performerTitleOf(person: {
-  pronouns: string;
-  performerTitle?: PerformerTitle | undefined;
-}): PerformerTitle {
-  return person.performerTitle ?? impliedPerformerTitle(person.pronouns);
-}
-
-/** What to call this person: "Actor" or "Actress". */
-export function performerNoun(person: { pronouns: string; performerTitle?: PerformerTitle | undefined }): string {
-  return PERFORMER_NOUN[performerTitleOf(person)];
-}
-
 /**
- * Splits a list of people into the two columns, in the order the business
- * lists them, with everybody kept.
- */
-export function splitByTitle<T extends { pronouns: string; performerTitle?: PerformerTitle | undefined }>(
-  people: readonly T[],
-): { actors: T[]; actresses: T[] } {
-  const actors: T[] = [];
-  const actresses: T[] = [];
-  for (const person of people) (performerTitleOf(person) === 'actress' ? actresses : actors).push(person);
-  return { actors, actresses };
-}
-
-/**
- * The same, for the records read off the public record, which state a gender
- * rather than pronouns. Anybody the record does not state is kept in a third
- * list rather than being sorted into a column they did not choose.
- */
-export function splitRecordsByTitle<T extends { gender?: string }>(
-  people: readonly T[],
-): { actors: T[]; actresses: T[]; unstated: T[] } {
-  const actors: T[] = [];
-  const actresses: T[] = [];
-  const unstated: T[] = [];
-  for (const person of people) {
-    const title = titleFromGender(person.gender);
-    if (title === 'actress') actresses.push(person);
-    else if (title === 'actor') actors.push(person);
-    else unstated.push(person);
-  }
-  return { actors, actresses, unstated };
-}
-
-/**
- * Whether an award category is open to a performer of this title.
+ * The title pronouns imply when nobody stated one: what they settle, and
+ * actor where they settle nothing.
  *
- * A category that names one title is closed to the other; one that names
- * neither, or both, is open to everyone. "Best Actress" does not take an
- * actor, "Best Performance" takes anybody.
+ * Only for a save that reaches the engine without a title, which the creation
+ * screen never sends: one built straight from the engine, one written under
+ * schema 80, which shed the title, or one from before the title was kept. A
+ * fallback is not a default, and the screen does not use it.
  */
-export function categoryAdmits(category: string, title: PerformerTitle): boolean {
-  const lower = category.toLowerCase();
-  const namesActress = /\bactress\b/.test(lower);
-  const namesActor = /\bactor\b/.test(lower);
-  if (namesActress && !namesActor) return title === 'actress';
-  if (namesActor && !namesActress) return title === 'actor';
-  return true;
+export function impliedPerformerTitle(pronouns: string): PerformerTitle {
+  return settledTitle(pronouns) ?? 'actor';
 }
 
-/**
- * A name that carries the word, rendered for one person.
- *
- * Traits and career labels are written with both words in the data — "Method
- * Actor/Actress" — because the data does not know whose sheet it is on. This
- * picks the right half when it does.
- */
-export function forTitle(label: string, title: PerformerTitle): string {
-  return label.replace(/\bActor\/Actress\b/g, PERFORMER_NOUN[title])
-    .replace(/\bactor\/actress\b/g, title);
+/** Whether a stored value is one of the two words, for a save read back in. */
+export function isPerformerTitle(value: unknown): value is PerformerTitle {
+  return value === 'actor' || value === 'actress';
 }

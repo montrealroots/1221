@@ -323,6 +323,77 @@ describe('migrations and validation', () => {
     expect(validateUniverse(sim.universe).ok).toBe(true);
   });
 
+  it('keeps the title a save from before 80 was made with, and names the slot by it', () => {
+    const sim = quickSave({ pronouns: 'they/them', performerTitle: 'actress' }, 'title-79');
+    const universe = sim.universe;
+    universe.meta.schemaVersion = 79;
+    const row = universe.people[universe.playerId] as unknown as Record<string, unknown>;
+    row.careerTrack = 'actor';
+    // The film career named the slot, and the summary carried its own copy.
+    universe.meta.careerLabel = 'Writer';
+    (universe.meta as unknown as Record<string, unknown>).performerTitle = 'actress';
+
+    const result = migrate(universe);
+
+    expect(result.migrated).toBe(true);
+    expect(row.performerTitle).toBe('actress');
+    expect('careerTrack' in row).toBe(false);
+    expect(universe.meta.careerLabel).toBe('Actress');
+    expect('performerTitle' in universe.meta).toBe(false);
+    expect(result.steps.join(' ')).not.toMatch(/a title from their pronouns/);
+    expect(validateUniverse(universe).ok).toBe(true);
+  });
+
+  it('gives a save written under 80 a title from its pronouns', () => {
+    for (const [pronouns, title, word] of [
+      ['she/her', 'actress', 'Actress'], ['he/him', 'actor', 'Actor'], ['they/them', 'actor', 'Actor'],
+    ] as const) {
+      const sim = quickSave({ pronouns }, `title-80-${pronouns}`);
+      const universe = sim.universe;
+      universe.meta.schemaVersion = 80;
+      // 80 shed the title and left the career line empty.
+      delete (universe.people[universe.playerId] as unknown as Record<string, unknown>).performerTitle;
+      universe.meta.careerLabel = '';
+
+      const result = migrate(universe);
+
+      expect(result.migrated).toBe(true);
+      expect(universe.people[universe.playerId]!.performerTitle, pronouns).toBe(title);
+      expect(universe.meta.careerLabel, pronouns).toBe(word);
+      expect(result.steps.join(' ')).toMatch(/Gave 1 person a title from their pronouns/);
+      expect(validateUniverse(universe).ok).toBe(true);
+    }
+  });
+
+  it('takes the player’s pick back from the premise record an 80 save still carries', () => {
+    const sim = quickSave({ pronouns: 'they/them', performerTitle: 'actress' }, 'title-80-premise');
+    const universe = sim.universe;
+    universe.meta.schemaVersion = 80;
+    // A save made under 79 and brought up to 80: the title shed from the
+    // person, and the premise record left behind with the pick in it.
+    const row = universe.people[universe.playerId] as unknown as Record<string, unknown>;
+    delete row.performerTitle;
+    universe.meta.careerLabel = '';
+    (universe as unknown as Record<string, unknown>).premise = {
+      kind: 'actor-actress-life-simulator', playerTitle: 'actress', playerTitleSource: 'stated',
+    };
+
+    const result = migrate(universe);
+
+    expect(row.performerTitle).toBe('actress');
+    expect(universe.meta.careerLabel).toBe('Actress');
+    expect(result.steps.join(' ')).toMatch(/title the save recorded/);
+    expect(result.steps.join(' ')).not.toMatch(/from their pronouns/);
+
+    // A premise naming neither word is no help, and the pronouns decide.
+    const other = quickSave({ pronouns: 'they/them', performerTitle: 'actress' }, 'title-80-bad-premise');
+    other.universe.meta.schemaVersion = 80;
+    delete (other.universe.people[other.universe.playerId] as unknown as Record<string, unknown>).performerTitle;
+    (other.universe as unknown as Record<string, unknown>).premise = { playerTitle: 'star' };
+    migrate(other.universe);
+    expect(other.universe.people[other.universe.playerId]!.performerTitle).toBe('actor');
+  });
+
   it('re-stamps records that carry the wrong save id', () => {
     const sim = quickSave();
     sim.universe.meta.schemaVersion = 1;
@@ -336,13 +407,10 @@ describe('migrations and validation', () => {
 
   it('catches a corrupted universe', () => {
     const sim = quickSave();
-    const property = Object.values(sim.universe.properties)[0];
-    if (property) {
-      property.ownerId = 'person_does_not_exist';
-      const report = validateUniverse(sim.universe);
-      expect(report.ok).toBe(false);
-      expect(report.errors.some((e) => /does(n’t| not) exist/.test(e))).toBe(true);
-    }
+    sim.player.primaryAccountId = 'account_does_not_exist';
+    const report = validateUniverse(sim.universe);
+    expect(report.ok).toBe(false);
+    expect(report.errors.some((e) => /does(n’t| not) exist/.test(e))).toBe(true);
   });
 });
 
@@ -379,13 +447,14 @@ describe('an older save catches up with the build', () => {
 
     const onTheRecord = new Set<string>([
       ...Object.keys(universe.people), ...Object.keys(universe.accounts),
-      ...Object.keys(universe.companies), ...Object.keys(universe.stages),
       ...universe.transactions.map((one) => one.id),
       ...universe.scheduled.map((one) => one.id),
+      ...universe.notifications.map((one) => one.id),
+      ...universe.history.map((one) => one.id),
     ]);
     expect(onTheRecord.size, 'nothing on the record to collide with').toBeGreaterThan(20);
 
-    for (const ns of ['person', 'account', 'company', 'stage', 'txn', 'sched'] as const) {
+    for (const ns of ['person', 'account', 'txn', 'sched', 'notice', 'history'] as const) {
       for (let i = 0; i < 3; i += 1) {
         const id = sim.nextId(ns);
         expect(onTheRecord.has(id), `${id} is on the record already`).toBe(false);
@@ -422,18 +491,14 @@ describe('an older save catches up with the build', () => {
     const sim = quickSave({}, 'relabel-prose');
     const universe = sim.universe;
     universe.meta.schemaVersion = 9;
-    // On a notification rather than a history record, because the history log
-    // is gone — one writer, no screen, and `Historian.timeline` had no caller
-    // anywhere. `notifications` is relabelled on `title` by the same migration
-    // step, so this holds exactly what it always held.
-    universe.notifications.push({
-      id: 'notice_test', saveId: universe.meta.id, at: universe.now,
+    universe.history.push({
+      id: 'history_test', saveId: universe.meta.id, at: universe.now,
       category: 'life', title: 'You were too exhausted to work.',
-      body: 'A missed shift.', importance: 10, read: false,
-    } as (typeof universe.notifications)[number]);
+      detail: 'A missed shift.', refs: [], significance: 10, public: false,
+    } as (typeof universe.history)[number]);
 
     migrate(universe);
-    expect(universe.notifications.at(-1)?.title).toBe('You were too exhausted to work.');
+    expect(universe.history.at(-1)?.title).toBe('You were too exhausted to work.');
   });
 
   it('does not relabel a save that is already current', () => {
@@ -447,11 +512,10 @@ describe('an older save catches up with the build', () => {
 
 describe('ids are told apart by namespace', () => {
   // One counter for the whole save made an id in one namespace a function of
-  // how much work every other namespace had done — and several of the engine's
-  // seeded streams are keyed on an id, so posting a transaction anywhere in the
-  // save changed which performer walked into the audition room. It cost six
-  // tests across three files when the VAT return landed, and an hour each time
-  // before it turned out to be this.
+  // how much work every other namespace had done — and some of the engine's
+  // seeded streams were keyed on an id, so posting a transaction anywhere in
+  // the save changed what they drew. It cost six tests across three files
+  // once, and an hour each time before it turned out to be this.
 
   const host = (): { __idCounter: number; __idCounters?: Record<string, number> } =>
     ({ __idCounter: 0, __idCounters: {} });
@@ -469,7 +533,7 @@ describe('ids are told apart by namespace', () => {
 
   it('starts every namespace of a new world at one', () => {
     const next = createIdFactory(host() as never);
-    for (const ns of ['person', 'txn', 'stage', 'audition'] as const) {
+    for (const ns of ['person', 'txn', 'notice', 'decision'] as const) {
       expect(next(ns)).toBe(`${ns}_000001`);
     }
   });
@@ -477,7 +541,7 @@ describe('ids are told apart by namespace', () => {
   it('never hands the same id out twice, in any order', () => {
     const next = createIdFactory(host() as never);
     const seen = new Set<string>();
-    const order = ['person', 'txn', 'person', 'stage', 'txn', 'txn', 'stage', 'person'] as const;
+    const order = ['person', 'txn', 'person', 'notice', 'txn', 'txn', 'notice', 'person'] as const;
     for (let round = 0; round < 40; round += 1) {
       for (const ns of order) {
         const id = next(ns);
@@ -496,7 +560,7 @@ describe('ids are told apart by namespace', () => {
     const next = createIdFactory(old as never);
     expect(next('person')).toBe(`person_${(43).toString(36).padStart(6, '0')}`);
     expect(next('txn')).toBe(`txn_${(43).toString(36).padStart(6, '0')}`);
-    expect(next('stage')).toBe(`stage_${(43).toString(36).padStart(6, '0')}`);
+    expect(next('notice')).toBe(`notice_${(43).toString(36).padStart(6, '0')}`);
     expect(next('person')).toBe(`person_${(44).toString(36).padStart(6, '0')}`);
   });
 
@@ -537,7 +601,7 @@ describe('ids are told apart by namespace', () => {
     const account = busy.universe.people[busy.universe.playerId]!.primaryAccountId!;
     for (let i = 0; i < 100; i += 1) busy.income(account, 1_00, 'Something Else Entirely', 'other');
     expect(busy.nextId('person')).toBe(quiet.nextId('person'));
-    expect(busy.nextId('audition')).toBe(quiet.nextId('audition'));
+    expect(busy.nextId('decision')).toBe(quiet.nextId('decision'));
     expect(busy.nextId('txn')).not.toBe(quiet.nextId('txn'));
   });
 
@@ -546,108 +610,5 @@ describe('ids are told apart by namespace', () => {
     // `tools/wired.mjs` fails the gate on a namespace with no call site.
     expect(new Set(ID_NAMESPACES).size, 'the same noun is in the list twice')
       .toBe(ID_NAMESPACES.length);
-  });
-});
-
-describe('a handler that refuses is a refusal', () => {
-  /**
-   * `execute` wrapped whatever a handler returned in `{ ok: true }`, so a
-   * handler answering `{ ok: false, error }` — which is how nearly every world
-   * module in this build declines — came back inside a successful envelope.
-   * Both places a player can press a button read `CommandResult.ok`, so the
-   * refusal reached nobody.
-   *
-   * The Decision Center worked around it by throwing instead. This is the fix
-   * that workaround was standing in for, so the workaround is no longer the
-   * only way to be heard.
-   */
-
-  it('reports a returned refusal as a failure, with its sentence', () => {
-    const sim = quickSave({}, 'refusal');
-    sim.onCommand<Record<string, never>, { ok: boolean; error?: string }>(
-      'test.refuses', () => ({ ok: false, error: 'Not today.' }),
-    );
-    const out = sim.execute({ kind: 'test.refuses', payload: {} });
-    expect(out.ok, 'a refusal inside a success is a refusal nobody hears').toBe(false);
-    expect(out.error).toBe('Not today.');
-  });
-
-  it('still reports a handler that succeeded as a success', () => {
-    const sim = quickSave({}, 'refusal-ok');
-    sim.onCommand<Record<string, never>, { ok: boolean }>('test.agrees', () => ({ ok: true }));
-    expect(sim.execute({ kind: 'test.agrees', payload: {} }).ok).toBe(true);
-  });
-
-  it('leaves a handler that answers something else alone', () => {
-    // The check reads the shape the world modules already use. A handler
-    // returning a number, or an object with no `ok` on it, is untouched.
-    const sim = quickSave({}, 'refusal-other');
-    sim.onCommand<Record<string, never>, number>('test.counts', () => 41);
-    const out = sim.execute<number>({ kind: 'test.counts', payload: {} });
-    expect(out.ok).toBe(true);
-    expect(out.value).toBe(41);
-  });
-});
-
-describe('a scheduled handler that throws is recorded, not just announced', () => {
-  /**
-   * The command path has always written a throw into `engineFailures`. The
-   * schedule path only notified, and a notification is a thing a player
-   * dismisses. That gap produced this project's most expensive wrong answer: a
-   * mutation threw on its first line every single day, `dailyRollover` never
-   * ran, the wellbeing model stopped, and the frozen numbers were reported as a
-   * causal finding, because every total in the run still looked reasonable.
-   */
-
-  it('writes the failure into engineFailures with the kind that failed', () => {
-    const sim = quickSave({}, 'sched-throws');
-    sim.onSchedule('test.explodes', () => { throw new Error('the floor gave way'); });
-    sim.schedule({
-      at: sim.now + MS_DAY, kind: 'test.explodes',
-      label: 'A Thing That Breaks', category: 'system', priority: 5,
-    });
-
-    const before = sim.universe.engineFailures.length;
-    sim.advanceTo(sim.now + 2 * MS_DAY);
-
-    const logged = sim.universe.engineFailures.slice(before);
-    expect(logged, 'a handler that threw left no record').toHaveLength(1);
-    expect(logged[0]!.kind).toBe('test.explodes');
-    expect(logged[0]!.error).toContain('the floor gave way');
-  });
-
-  it('still announces it, because the player is owed the sentence too', () => {
-    const sim = quickSave({}, 'sched-announces');
-    sim.onSchedule('test.explodes2', () => { throw new Error('nope'); });
-    sim.schedule({
-      at: sim.now + MS_DAY, kind: 'test.explodes2',
-      label: 'Another Thing', category: 'system', priority: 5,
-    });
-    sim.advanceTo(sim.now + 2 * MS_DAY);
-    expect(sim.universe.notifications
-      .some((n) => n.title === 'A Scheduled Event Could Not Be Processed')).toBe(true);
-  });
-
-  it('leaves the log alone when a handler simply does not exist', () => {
-    // An item is also marked `missed` when its kind has no handler, and that is
-    // not a failure — it must not read as one, or the guard in `played.ts`
-    // would refuse to report any save written by a build with one more system
-    // in it than this one.
-    //
-    // Written straight onto `universe.scheduled` because that is the only way
-    // this state is reachable: `schedule()` refuses an unregistered kind
-    // outright, so the only producer of an unhandled item is a save loaded
-    // from elsewhere. Which is exactly the case being pinned.
-    const sim = quickSave({}, 'sched-nohandler');
-    sim.universe.scheduled.push({
-      id: 'sched_from_another_build', saveId: sim.universe.meta.id,
-      at: sim.now + MS_DAY, kind: 'test.a_system_this_build_lacks',
-      label: 'From Another Build', category: 'system', priority: 5,
-      status: 'pending',
-    } as (typeof sim.universe.scheduled)[number]);
-
-    const before = sim.universe.engineFailures.length;
-    sim.advanceTo(sim.now + 2 * MS_DAY);
-    expect(sim.universe.engineFailures.length, 'a missing handler is not a failure').toBe(before);
   });
 });

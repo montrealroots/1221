@@ -22,7 +22,7 @@ import { TimeControls } from './TimeControls';
 import { Home } from '@/ui/screens/Home';
 import { WorkspaceRouter } from '@/ui/workspaces/WorkspaceRouter';
 import { formatDate, formatTime, zoneAbbreviation } from '@/engine/core/time';
-import { performerNoun } from '@/engine/core/performer';
+import { PERFORMER_NOUN } from '@/engine/core/performer';
 
 
 export function GameShell() {
@@ -135,7 +135,7 @@ export function GameShell() {
             <div className="rail-you">
               <div className="small strong truncate">{sim.player.displayName}</div>
               <div className="xs dim truncate">
-                {performerNoun(sim.player)} · {unread > 0 ? `${unread} Unread` : 'Nothing Unread'}
+                {PERFORMER_NOUN[sim.player.performerTitle]} · {unread > 0 ? `${unread} Unread` : 'All Read'}
               </div>
             </div>
           </div>

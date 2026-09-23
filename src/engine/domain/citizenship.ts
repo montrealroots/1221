@@ -1,50 +1,60 @@
 /**
- * SLATE — where somebody is allowed to work.
+ * SLATE — citizenship.
  *
- * A person can hold two passports. Born in one country, naturalised in the one
- * they moved to and live in now, and they carry both for the rest of their
- * life — which is an ordinary biography in this business and was not something
- * the save could express.
+ * A person is a citizen of one country: the one they were born in. It is not
+ * asked. The place of birth decides it, creation says it back, and the save
+ * keeps it on the person.
  *
- * There was a work-permit rule here once, written because the creation step
- * used to say citizenship "affects where you can work without arrangement".
- * That sentence is gone — the field is read-only and pinned to Iceland, and a
- * test enforces that there is no picker — so the rule it justified had nothing
- * asking it and nothing able to make it matter. It is deleted rather than kept
- * against a day somebody might want it, and what it claimed was not true
- * anyway: holding the passport is not the whole test inside the EEA, where the
- * right to work follows the treaty and not the nationality.
+ * "The country" means the state whose citizenship a place gives, which is not
+ * always the entry the place is listed under. The gazetteer lists territories
+ * beside countries, the way a map does, and somebody born in San Juan is a
+ * citizen of the United States, not of Puerto Rico. `TERRITORY_CITIZENSHIP`
+ * says which is which.
  *
- * What is left is what a screen and the casting side actually read: who holds
- * which passports, and how that reads out loud.
+ * There used to be a second passport here, for somebody naturalized where
+ * they live now, and beside it a work-permit rule, which went first. Neither
+ * decided anything by the end, so both went.
  */
 
-import { COUNTRIES } from '../content/geography';
+import { countryOfPlace } from '../content/geography';
 
-/** Somebody with one or two passports. */
-export interface Citizen {
-  citizenshipId: string;
-  /** The second passport, if they hold one. Never the same as the first. */
-  secondCitizenshipId?: string;
-}
+/**
+ * Territories whose people hold another country's citizenship, by the country
+ * that gives it. Public reference: each territory's standing under the
+ * nationality law of the state it belongs to.
+ *
+ * Two are not quite citizenship, and are here because the country is still
+ * the right answer to which one somebody is under: American Samoa gives United
+ * States nationality without citizenship, and Hong Kong and Macao issue their
+ * own passports on Chinese nationality. The places with a nationality of their
+ * own, recognized or not, are left as themselves: Taiwan, Kosovo, Palestine
+ * and Western Sahara among them. So are the entries nobody can be born in,
+ * such as Antarctica and the countries that have dissolved.
+ */
+export const TERRITORY_CITIZENSHIP: Readonly<Record<string, string>> = {
+  // The United States.
+  pr: 'us', gu: 'us', vi: 'us', mp: 'us', as: 'us', um: 'us',
+  // France.
+  re: 'fr', gp: 'fr', mq: 'fr', gf: 'fr', yt: 'fr', pf: 'fr', nc: 'fr',
+  bl: 'fr', mf: 'fr', pm: 'fr', wf: 'fr', tf: 'fr',
+  // The United Kingdom, its overseas territories and the Crown dependencies.
+  ai: 'uk', bm: 'uk', io: 'uk', vg: 'uk', ky: 'uk', fk: 'uk', gi: 'uk',
+  ms: 'uk', pn: 'uk', sh: 'uk', gs: 'uk', tc: 'uk', gg: 'uk', je: 'uk', im: 'uk',
+  // The Netherlands.
+  aw: 'nl', cw: 'nl', sx: 'nl', bq: 'nl',
+  // Denmark, Finland and Norway.
+  gl: 'dk', fo: 'dk', ax: 'fi', sj: 'no', bv: 'no',
+  // Australia and New Zealand.
+  cx: 'au', cc: 'au', nf: 'au', hm: 'au', ck: 'nz', nu: 'nz', tk: 'nz',
+  // China.
+  hk: 'cn', mo: 'cn',
+};
 
-/** Every country they are a citizen of, in the order they are held. */
-export function citizenshipsOf(person: Citizen): string[] {
-  const held = [person.citizenshipId];
-  if (person.secondCitizenshipId && person.secondCitizenshipId !== person.citizenshipId) {
-    held.push(person.secondCitizenshipId);
-  }
-  return held;
-}
-
-/** Whether they hold that country's passport. */
-export function isCitizenOf(person: Citizen, countryId: string): boolean {
-  return citizenshipsOf(person).includes(countryId);
-}
-
-/** How the two passports read on a screen. */
-export function citizenshipLabel(person: Citizen): string {
-  return citizenshipsOf(person)
-    .map((id) => COUNTRIES.get(id)?.name ?? id)
-    .join(' And ');
+/**
+ * The country somebody born in this place is a citizen of, or undefined when
+ * the place names no real country.
+ */
+export function citizenshipFor(birthplaceId: string): string | undefined {
+  const listed = countryOfPlace(birthplaceId);
+  return listed ? TERRITORY_CITIZENSHIP[listed] ?? listed : undefined;
 }

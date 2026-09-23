@@ -209,14 +209,11 @@ describe('the generated outlines', () => {
 
 describe('the picker and the map it draws', () => {
   /**
-   * They are on disk and nothing imports them.
-   *
-   * The birthplace picker came off Identity when the place of birth became the
-   * family land, and it was the last thing using either component. That leaves
-   * two files a cleanup would read as dead: the picker with its country and
-   * region lists and its ranked town search, and the map it draws. Both are
-   * kept deliberately, whole, for whatever screen wants a place chosen next —
-   * so this fails if either is deleted or gutted rather than moved.
+   * The picker came off Identity when the place of birth became the family
+   * land, and was kept whole on disk for whatever screen wanted a place
+   * chosen next. The land is gone, and creation asks again: where you were
+   * born on Identity, and where you live on Starting Point. So this holds
+   * that both are whole and that creation uses them.
    */
   const read = (path: string) => readFileSync(new URL(`../src/ui/creation/${path}`, import.meta.url), 'utf8');
 
@@ -237,14 +234,11 @@ describe('the picker and the map it draws', () => {
     expect(source).toMatch(/loadWorldMap/);
   });
 
-  it('is off the identity page and nothing else pulls it back in', () => {
+  it('is on the creation screen twice, once for where you were born and once for where you live', () => {
     const creation = readFileSync(new URL('../src/ui/creation/CharacterCreation.tsx', import.meta.url), 'utf8');
-    // The import, not the word: the page carries a comment naming the file to
-    // say where the picker went, and that comment is the point of it.
-    expect(creation, 'the picker is back on Identity')
-      .not.toMatch(/import\s*\{[^}]*LocationPicker[^}]*\}\s*from/);
-    expect(creation, 'the picker is rendered again').not.toMatch(/<LocationPicker/);
-    expect(creation, 'Identity should state the birthplace, not ask for it')
-      .toMatch(/id="birthplace"[\s\S]{0,200}readOnly/);
+    expect(creation).toMatch(/import\s*\{[^}]*LocationPicker[^}]*\}\s*from/);
+    expect(creation.match(/<LocationPicker/g) ?? []).toHaveLength(2);
+    expect(creation).toContain('idPrefix="born"');
+    expect(creation).toContain('idPrefix="live"');
   });
 });

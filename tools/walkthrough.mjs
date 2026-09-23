@@ -154,7 +154,7 @@ await click(/^New Save$/);
 await page.waitForTimeout(1100);
 
 // The default pronouns are they/them, which settles neither title, so the step
-// will not advance until one is picked. Pick one here rather than changing the
+// will not advance until one is picked. Pick one here, not by changing the
 // pronouns, so the walk goes through the branch a player actually meets.
 const billed = page.getByRole('group', { name: 'Billed As' });
 if (await billed.count()) {
@@ -170,7 +170,7 @@ if (await race.count()) {
   await page.waitForTimeout(300);
 }
 
-await sections('creation-1-identity', 'step 1 of 5: name, portrait, where you are from');
+await sections('creation-1-identity', 'step 1 of 5: name, portrait, how you are billed, where you are from and the citizenship it gives');
 
 const dataUrl = await page.evaluate(() => {
   const canvas = document.createElement('canvas');
@@ -193,14 +193,13 @@ if (await upload.count()) {
   await shoot('creation-1-portrait', 'a photo dropped in, cropped to the headshot frame');
 }
 
-// The birthplace picker and its map are no longer on this page. Both are
-// intact in LocationPicker and WorldMap for whatever screen wants them next,
-// and there is nothing here to photograph.
+// The birthplace picker and its map are on this page again, and are
+// photographed with the rest of it above.
 
 const STEPS = [
-  ['creation-2-who-you-are', 'step 2 of 5: personality, traits, interests, genres and background'],
-  ['creation-3-my-skills', 'step 3 of 5: the craft, and how far along it already is'],
-  ['creation-4-starting-point', 'step 4 of 5: the city, the housing and the money'],
+  ['creation-2-dispositions-and-traits', 'step 2 of 5: seven dispositions and up to four traits'],
+  ['creation-3-interests-and-background', 'step 3 of 5: interests, genres and background'],
+  ['creation-4-starting-point', 'step 4 of 5: where you live and the money'],
   ['creation-5-review', 'step 5 of 5: all of it, before it becomes a save'],
 ];
 for (const [name, note] of STEPS) {
@@ -213,7 +212,7 @@ for (const [name, note] of STEPS) {
 // 4. Home
 // ---------------------------------------------------------------------------
 
-await click(/it.s time to be great/i);
+await click(/^Begin$/);
 await page.waitForTimeout(4500);
 await sections('home', 'the hub: the day, what needs you, how you are, where you are, the weather, money');
 
@@ -258,7 +257,7 @@ if (await click(/^Pause$/)) {
 
 if (await click(/^Sleep$/)) {
   await page.waitForTimeout(700);
-  // The confirm button reads "Sleep 7.5 hours"; the one in the bar is just
+  // The confirm button reads "Sleep N Hours"; the one in the bar is just
   // "Sleep", and it comes first in the document.
   await click(/^Sleep \d/);
   await page.waitForTimeout(3200);

@@ -51,24 +51,6 @@ export interface Decider<Input, Outcome> {
    */
   drawnIn: string;
   /**
-   * The named draw streams this decision takes, where they are not its own id.
-   *
-   * `tools/deciders.mjs` counts streams as well as files, and it used to insist a
-   * stream be owned by a decider whose id matched it exactly. That is a rule about
-   * naming rather than about accounting, and it left thirteen streams unowned
-   * while the decisions they feed were all registered and documented: `weather.day`
-   * takes `weather` for the day and `weather-hours` for the hours inside it, and
-   * both are the same decision about the same sky.
-   *
-   * The alternative was renaming the streams to match, which is the one thing that
-   * must not happen: a stream key is an input to the generator, so changing one
-   * changes every seeded outcome in the build and every measured number that rests
-   * on them.
-   *
-   * So a decision declares what it draws from. One decision, however many dice.
-   */
-  draws?: readonly string[];
-  /**
    * Every input the outcome is supposed to depend on. Declaring one is a
    * claim that it changes the answer, and the harness will try it.
    */
@@ -83,36 +65,6 @@ export interface Decider<Input, Outcome> {
    * timestamp or an id that moves on its own.
    */
   shape?: (outcome: Outcome) => string;
-  /**
-   * The outcomes this decision can reach, worst first, when they have an order.
-   *
-   * `sweepOne` proves an input changes the answer. It cannot prove the answer
-   * changed the right way, and that is a real hole rather than a theoretical one:
-   * invert the sign on any input in this file and every check in the build still
-   * passes. "More days cut out of the schedule means less overrun" would sweep
-   * live, read plausibly, and be exactly backwards.
-   *
-   * So a decision whose outcomes sit on a scale says what the scale is, lowest
-   * first, and then `rises` says which way each input pushes along it. An outcome
-   * is placed by exact match, and failing that by the first rung it contains, so
-   * a decider that formats its outcome with something else alongside the rung can
-   * still declare one.
-   *
-   * Not every decision has a scale. `casting.wants` answers with the shape of a
-   * part and there is no worse or better shape, so it declares none and is not
-   * asked. Declaring one is optional; declaring one that does not hold fails.
-   */
-  ladder?: readonly string[];
-  /**
-   * Which way along `ladder` each input is supposed to push.
-   *
-   * `'up'` means a higher input gives a higher outcome, `'down'` the reverse.
-   * Only inputs named here are checked, and the direction has to be the one the
-   * model actually claims rather than the one that sounds right — a bigger budget
-   * makes a bigger picture and a *smaller* multiple of its cost, so `budget` on
-   * `selling.take` rises down. Getting that backwards is the mistake this catches.
-   */
-  rises?: Readonly<Record<string, 'up' | 'down'>>;
 }
 
 // Deciders register at import time, so the registry is only as complete as
@@ -204,101 +156,4 @@ export function sweepAll<Input, Outcome>(
   opts?: { samples?: number; steps?: number },
 ): Sweep[] {
   return Object.keys(decider.reads).map((reads) => sweepOne(decider, reads, opts));
-}
-
-export interface Direction {
-  /** The input that was moved. */
-  reads: string;
-  /** Which way the decider says it should push. */
-  declared: 'up' | 'down';
-  /** Samples where the trend went the declared way. */
-  agreed: number;
-  /** Samples where it went the other way. */
-  against: number;
-  /** Samples where the rung never moved, which is neither evidence. */
-  flat: number;
-  /** True when more samples contradicted the declared direction than backed it. */
-  backwards: boolean;
-}
-
-/**
- * Where an outcome sits on a decider's own scale, or nothing if it is off it.
- *
- * Exact match first. Failing that the first rung the outcome contains, so a
- * decision that says `'somebody new, well thought of'` still places on a ladder
- * of standings. Longest rung first, so `'a week or two over'` is not matched by a
- * shorter rung that happens to be a substring of it.
- */
-function rungOf(ladder: readonly string[], outcome: string): number | undefined {
-  const exact = ladder.indexOf(outcome);
-  if (exact >= 0) return exact;
-  const byLength = ladder
-    .map((rung, at) => ({ rung, at }))
-    .sort((a, b) => b.rung.length - a.rung.length);
-  for (const { rung, at } of byLength) if (outcome.includes(rung)) return at;
-  return undefined;
-}
-
-/**
- * Moves one input and checks the outcome went the way the decider said it would.
- *
- * Per sample, with everything else held still, for the reason `sweepOne` gives:
- * pooling samples measures the seed rather than the input. Within a sample the
- * trend is the mean rung of the top half of the range against the mean rung of
- * the bottom half, which is deliberately coarser than comparing step to step — a
- * probabilistic decision is allowed to be non-monotone in the small and still owe
- * an honest direction across its range.
- *
- * A sample where the rung never moves is flat and counts as neither, because a
- * decider is allowed to be flat in a corner of its space. The verdict is only
- * against the decider when more samples went the wrong way than the right way.
- */
-export function sweepDirection<Input, Outcome>(
-  decider: Decider<Input, Outcome>,
-  reads: string,
-  opts: { samples?: number; steps?: number } = {},
-): Direction {
-  const samples = opts.samples ?? 12;
-  const steps = opts.steps ?? 9;
-  const declared = decider.rises?.[reads];
-  if (!declared) throw new Error(`'${decider.id}' doesn’t say which way '${reads}' pushes.`);
-  const ladder = decider.ladder;
-  if (!ladder) throw new Error(`'${decider.id}' says '${reads}' pushes ${declared} but declares no ladder to push along.`);
-  const across = decider.reads[reads];
-  if (!across) throw new Error(`'${decider.id}' doesn’t say it reads '${reads}'.`);
-  const shape = decider.shape ?? ((o: Outcome) => JSON.stringify(o));
-
-  let agreed = 0;
-  let against = 0;
-  let flat = 0;
-  for (let s = 0; s < samples; s += 1) {
-    const base = decider.sample(s);
-    const rungs: number[] = [];
-    for (let i = 0; i < steps; i += 1) {
-      const t = steps === 1 ? 0 : i / (steps - 1);
-      const rung = rungOf(ladder, shape(decider.decide(across(base, t))));
-      rungs.push(rung ?? Number.NaN);
-    }
-    const known = rungs.filter((one) => Number.isFinite(one));
-    if (known.length < 4) { flat += 1; continue; }
-    const half = Math.floor(rungs.length / 2);
-    const mean = (xs: number[]) => {
-      const live = xs.filter((one) => Number.isFinite(one));
-      return live.length === 0 ? Number.NaN : live.reduce((a, b) => a + b, 0) / live.length;
-    };
-    const low = mean(rungs.slice(0, half));
-    const high = mean(rungs.slice(rungs.length - half));
-    if (!Number.isFinite(low) || !Number.isFinite(high) || low === high) { flat += 1; continue; }
-    const went = high > low ? 'up' : 'down';
-    if (went === declared) agreed += 1; else against += 1;
-  }
-  return { reads, declared, agreed, against, flat, backwards: against > agreed };
-}
-
-/** Every input a decider has declared a direction for. */
-export function directionsOf<Input, Outcome>(
-  decider: Decider<Input, Outcome>,
-  opts?: { samples?: number; steps?: number },
-): Direction[] {
-  return Object.keys(decider.rises ?? {}).map((reads) => sweepDirection(decider, reads, opts));
 }

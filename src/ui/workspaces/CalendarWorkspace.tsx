@@ -5,11 +5,7 @@ import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Empty, Modal, Stat } from '@/ui/components/primitives';
 import { monthGrid, entriesBetween, keptCalendars, CALENDAR_LEGEND, LEGEND_BY_CATEGORY, type CalendarDay, type CalendarEntry } from '@/engine/world/calendar';
 import { formatDate, formatDuration, formatTime, startOfDay, zonedParts, MS_DAY, MS_MINUTE } from '@/engine/core/time';
-import {
-  LONGEST_TITLE, MOST_PEOPLE_ON_A_PLAN, PLANNABLE, PLAN_KIND, PLAN_LENGTHS,
-  couldPlanWith, namesOn, saidAsList, type PlanResult, type PlannableCategory,
-} from '@/engine/world/plans';
-import { MISSED_COOLS, TOGETHER_WARMS, standingWord } from '@/engine/world/standing';
+import { LONGEST_TITLE, PLAN_KIND, PLAN_LENGTHS, type PlanResult } from '@/engine/world/plans';
 import { CITIES } from '@/engine/content/geography';
 import { holidayLabel, isHolidaysLoaded, loadCountryHolidays } from '@/engine/content/holidays';
 import { dayLabel, hiddenIn, holidayChips, roomFor, standingIn, stillStands } from './cell';
@@ -20,9 +16,7 @@ export function CalendarWorkspace() {
   const { sim, refresh } = useGame();
   const today = zonedParts(sim.now, sim.homeZone);
 
-  // Every calendar this life keeps — where you are standing, and the
-  // industry's — fetched once per country. Both, because the year a person
-  // lives in is not always one country's.
+  // Every calendar this life keeps, fetched once per country.
   const wanted = keptCalendars(sim).map((c) => c.countryId).join(',');
   useEffect(() => {
     const ids = wanted.split(',').filter((id) => id && !isHolidaysLoaded(id));
@@ -58,12 +52,11 @@ export function CalendarWorkspace() {
     <>
       <div className="page-head">
         <div className="eyebrow">Calendar</div>
-        <h1>Every commitment you have.</h1>
+        <h1>Every Commitment You Have.</h1>
         <p className="muted">
-          Everything the world has put on your calendar, and the days both your
-          calendars keep — the country you’re standing in, and the one the
-          business runs on. If two things want you at once, they’re flagged
-          here first.
+          Everything on your calendar, and the holidays kept where you’re
+          standing. If two things want you at once, they’re flagged here
+          first.
         </p>
       </div>
 
@@ -163,7 +156,7 @@ export function CalendarWorkspace() {
         >
           {selectedDay.entries.length === 0 ? (
             <Empty
-              title="Nothing Scheduled"
+              title="No Plans"
               body={canPlan(selectedDay, sim.now)
                 ? 'That day is entirely yours. Put something on it if you want it spoken for.'
                 : 'That day was entirely yours.'}
@@ -197,7 +190,10 @@ export function CalendarWorkspace() {
 
       <Panel title="Next Thirty Days" flush>
         {next30.length === 0 ? (
-          <Empty title="Clear Ahead" body="Nothing is on the calendar for the next month." />
+          <Empty
+            title="No Plans Ahead"
+            body="No plans or commitments in the next thirty days. Holidays are marked on the month above, not listed here."
+          />
         ) : (
           <div className="list">
             {next30.slice(0, 20).map((entry) => (
@@ -242,15 +238,10 @@ function canPlan(day: CalendarDay, now: number): boolean {
  * Putting something on a day.
  *
  * A modal, because it asks a question and changes the world — which is the
- * one thing a look never does. Five questions and no more: what it is, when
- * it starts, how long it takes, which kind of day it is, and who it is with.
- *
- * The last of those is the only one that reaches anything outside the
- * calendar. A plan with somebody on it is the one thing in the game that
- * moves where you stand with them, and until this field existed the engine
- * took `withIds`, the standing model read it, five floors of drill-down
- * described what it did — and no screen could send one. Every bond in every
- * save drifted to its resting level and stayed there for good.
+ * one thing a look never does. Three questions and no more: what it is, when
+ * it starts, and how long it takes. It used to ask which kind of day it was
+ * and who it was with; the family was the only other kind and the only
+ * company, and both went with it.
  *
  * No "where" yet. Every plan is where you are standing, because nothing in
  * the game moves you anywhere else, and offering a city you cannot get to
@@ -262,28 +253,17 @@ function PlanForm({ day, onClose, onDone }: { day: CalendarDay; onClose: () => v
   const [title, setTitle] = useState('');
   const [minute, setMinute] = useState(() => firstFreeSlot(day, sim.now, zone));
   const [minutes, setMinutes] = useState(60);
-  const [category, setCategory] = useState<PlannableCategory>('personal');
-  const [withIds, setWithIds] = useState<string[]>([]);
   const [error, setError] = useState<string | undefined>();
 
   const at = startOfDay(day.date, zone) + minute * MS_MINUTE;
   const slots = openSlots(day, sim.now, zone);
-  const people = useWorld((s) => couldPlanWith(s));
-  const full = withIds.length >= MOST_PEOPLE_ON_A_PLAN;
-
-  const toggle = (id: string) => {
-    setError(undefined);
-    setWithIds((chosen) => (chosen.includes(id)
-      ? chosen.filter((one) => one !== id)
-      : chosen.length >= MOST_PEOPLE_ON_A_PLAN ? chosen : [...chosen, id]));
-  };
 
   const put = () => {
     // The command succeeds even when the calendar declines the plan: a
     // refusal is an answer, not a failure, and it belongs beside the field
     // rather than in a toast that slides away while you are still reading it.
     const result = run<PlanResult>('calendar.schedule', {
-      title, at, durationMinutes: minutes, category, withIds,
+      title, at, durationMinutes: minutes,
     });
     if (result.value?.ok) { onDone(); return; }
     setError(result.value?.error ?? result.error ?? 'The calendar wouldn’t take it.');
@@ -333,57 +313,6 @@ function PlanForm({ day, onClose, onDone }: { day: CalendarDay; onClose: () => v
           </select>
         </div>
       </div>
-      <div className="field">
-        <label id="plan-kind-label">What Kind Of Day It Is</label>
-        <div className="row gap-2" role="group" aria-labelledby="plan-kind-label">
-          {PLANNABLE.map((option) => (
-            <button
-              key={option}
-              type="button"
-              className="trait grow"
-              aria-pressed={category === option}
-              onClick={() => setCategory(option)}
-            >
-              <div className="trait-name">{LEGEND_BY_CATEGORY[option]?.label ?? titleCaseLabel(option)}</div>
-              <div className="xs muted">{LEGEND_BY_CATEGORY[option]?.description}</div>
-            </button>
-          ))}
-        </div>
-      </div>
-      {people.length > 0 && (
-        <div className="field">
-          <label id="plan-with-label">Who It’s With (Optional)</label>
-          <div className="trait-grid" role="group" aria-labelledby="plan-with-label">
-            {people.map(({ person, relation, closeness }) => {
-              const on = withIds.includes(person.id);
-              return (
-                <button
-                  key={person.id}
-                  type="button"
-                  className="trait"
-                  aria-pressed={on}
-                  disabled={!on && full}
-                  onClick={() => toggle(person.id)}
-                >
-                  <div className="trait-name">{person.displayName || person.firstName}</div>
-                  <div className="trait-desc">
-                    {relation ? `Your ${relation.toLowerCase()} · ` : ''}
-                    {standingWord(Math.round(closeness))}
-                  </div>
-                </button>
-              );
-            })}
-          </div>
-          <p className="xs dim" style={{ marginTop: 'var(--s2)', marginBottom: 0 }}>
-            {withIds.length === 0
-              ? 'Leave it empty and it’s an hour of your own. Put somebody on it and turning up is worth '
-                + `${TOGETHER_WARMS} points of where you stand with them — and not turning up costs ${MISSED_COOLS}.`
-              : `Turning up is worth ${TOGETHER_WARMS} points of where you stand with `
-                + `${withIds.length === 1 ? 'them' : 'each of them'}. Not turning up costs ${MISSED_COOLS}.`}
-            {full && ' That’s as many as one plan holds.'}
-          </p>
-        </div>
-      )}
       <p className="xs dim" style={{ margin: 0 }}>
         It will want you in {CITIES.get(sim.player.currentLocationId)?.name ?? 'where you are'}, and the clock
         stops when it comes round. Two things at once are allowed — the calendar flags them rather than
@@ -431,9 +360,6 @@ function EntryDetail({ entry, onClose }: { entry: CalendarEntry; onClose: () => 
   const city = entry.locationId ? CITIES.get(entry.locationId)?.name : undefined;
   const [error, setError] = useState<string | undefined>();
   const mine = sim.timeline.get(entry.id)?.kind === PLAN_KIND && entry.status === 'pending';
-  const item = sim.timeline.get(entry.id);
-  const names = item ? namesOn(sim, item) : [];
-  const them = names.length === 1 ? 'them' : 'each of them';
 
   const callOff = () => {
     const result = run<PlanResult>('calendar.cancel', { entryId: entry.id });
@@ -471,25 +397,6 @@ function EntryDetail({ entry, onClose }: { entry: CalendarEntry; onClose: () => 
             : 'The world handles this one on its own when the clock reaches it.'}
         {mine && ' You put it there, so you can take it off again.'}
       </p>
-      {/*
-        Who it is with. The same fact the entry look prints, said here too,
-        because this modal is what a person actually taps when they want to
-        know about a plan they made — and a plan that forgets who it was with
-        is a picker that writes to nowhere.
-      */}
-      {names.length > 0 && (
-        <p className="small">
-          {`It’s with ${saidAsList(names)}. `}
-          {status === 'missed'
-            ? `Being somewhere else cost you ${MISSED_COOLS} points of where you stand with ${them}.`
-            : status === 'cancelled'
-              ? 'You called it off, which costs nothing but doesn’t earn anything either.'
-              : entry.status === 'pending'
-                ? `Turning up is worth ${TOGETHER_WARMS} points of where you stand with ${them}, `
-                  + `and not turning up costs ${MISSED_COOLS}.`
-                : `You were there. That was worth ${TOGETHER_WARMS} points of where you stand with ${them}.`}
-        </p>
-      )}
       {error && <p className="small negative">{error}</p>}
     </Modal>
   );

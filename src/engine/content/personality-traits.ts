@@ -1,20 +1,23 @@
 /**
  * SLATE — personality: who they are, not what they do.
  *
- * The craft traits are automatic. The player is the best living performer,
- * director, producer and showrunner there is, so they hold every trait in every
- * one of those disciplines and there was never a choice to make about it.
+ * The one thing about this character that is genuinely chosen as a
+ * disposition: whether they sleep, how they take bad news, what they do with
+ * money and how they are with other people. Up to four, from pairs written
+ * against each other, so the two sides of a pair can't both be held.
  *
- * None of that says what kind of person they are. Being the best there has
- * ever been at making things does not tell you whether they sleep, whether
- * they hold a grudge, whether they can be alone in a house, or what they do
- * with money. That is a separate question with a real answer, and it is the
- * one thing about this character that is genuinely chosen.
+ * What a trait changes is declared in `systemMods`, and only against the knobs
+ * the life half of the game reads: how stress arrives and clears, how good a
+ * night is, how much a night puts back, how fast somebody stops being clean
+ * and how far their mood swings. `systems/life.ts` asks for them through
+ * `personalityOf` in `systems/personality.ts`. Traits also declared knobs once
+ * for systems that are gone: relationships, injury, training and spending.
+ * Those knobs went with the systems. The people traits kept their stress and
+ * mood knobs; the money traits had no other, so they declare none and are
+ * said back and nothing more until something in the game spends.
  *
- * So: pick four. Nothing here is about acting, the industry, fame or the
- * business — those live on the craft sheet. Everything here is read by the
- * life half of the game, which is the half that runs whether or not anything
- * is shooting.
+ * A trait's description and cost are written for a whole life. The game
+ * charges the part of them its knobs reach, and says the rest back.
  */
 
 export type PersonalityGroup =
@@ -23,6 +26,16 @@ export type PersonalityGroup =
 export const PERSONALITY_GROUPS: readonly PersonalityGroup[] = [
   'Temperament', 'Habits', 'Body', 'Money', 'People', 'Mind',
 ];
+
+/**
+ * The knobs a trait may move. Every one of them is asked for in
+ * `systems/life.ts` through `personalityOf`, which `tools/wired.mjs` counts. A
+ * trait that wants to move something else has to wait for the system it would
+ * move.
+ */
+export type PersonalityKnob =
+  | 'stressGain' | 'stressRecovery' | 'sleepQuality' | 'energyRecovery'
+  | 'hygieneDrift' | 'moraleSwing';
 
 export interface PersonalityTrait {
   id: string;
@@ -33,7 +46,7 @@ export interface PersonalityTrait {
   /** What it costs. Every one of these has one, and it is stated. */
   cost: string;
   /** Multipliers on knobs the life systems read. */
-  systemMods?: Record<string, number>;
+  systemMods?: Partial<Record<PersonalityKnob, number>>;
   /** Traits that cannot be held alongside it. Always mutual. */
   conflictsWith?: string[];
 }
@@ -44,7 +57,7 @@ export const PERSONALITY_TRAITS: readonly PersonalityTrait[] = [
     id: 'even_tempered', name: 'Even Tempered', group: 'Temperament',
     description: 'Very little gets through. Bad news lands on you the same way good news does.',
     cost: 'People read the calm as not caring, and drift away from it.',
-    systemMods: { stressGain: 0.78 },
+    systemMods: { stressGain: 0.78, moraleSwing: 0.8 },
     conflictsWith: ['quick_tempered', 'highly_strung'],
   },
   {
@@ -52,26 +65,27 @@ export const PERSONALITY_TRAITS: readonly PersonalityTrait[] = [
     description: 'It comes up fast and it’s gone just as fast, which isn’t much comfort to whoever was standing there.',
     cost: 'Stress arrives quicker and relationships wear.',
     systemMods: { stressGain: 1.25, stressRecovery: 1.15 },
-    conflictsWith: ['even_tempered', 'peacemaker'],
+    conflictsWith: ['even_tempered', 'unshakeable', 'peacemaker'],
   },
   {
     id: 'highly_strung', name: 'Highly Strung', group: 'Temperament',
     description: 'You feel everything at full volume. It’s exhausting, and it’s where the work comes from.',
     cost: 'Stress builds fast and sleep is the first thing to go.',
-    systemMods: { stressGain: 1.35, sleepQuality: 0.88 },
+    systemMods: { stressGain: 1.35, sleepQuality: 0.88, moraleSwing: 1.25 },
     conflictsWith: ['even_tempered', 'unshakeable'],
   },
   {
     id: 'unshakeable', name: 'Unshakeable', group: 'Temperament',
     description: 'Whatever happens, you’re the one still thinking clearly twenty minutes later.',
     cost: 'You’re slow to notice something is genuinely wrong, including with you.',
-    systemMods: { stressGain: 0.7, stressRecovery: 1.2 },
+    systemMods: { stressGain: 0.7, stressRecovery: 1.2, moraleSwing: 0.72 },
     conflictsWith: ['highly_strung', 'quick_tempered'],
   },
   {
     id: 'sentimental', name: 'Sentimental', group: 'Temperament',
     description: 'Birthdays, first drafts, the people who were there at the start. You keep all of it.',
     cost: 'Endings go badly, and you hold on well past the point of any use.',
+    systemMods: { moraleSwing: 1.15 },
     conflictsWith: ['detached'],
   },
   {
@@ -101,14 +115,14 @@ export const PERSONALITY_TRAITS: readonly PersonalityTrait[] = [
     id: 'orderly', name: 'Orderly', group: 'Habits',
     description: 'Everything has a place and you notice immediately when it isn’t in it.',
     cost: 'Disorder costs you more than it costs other people.',
-    systemMods: { stressGain: 1.08 },
+    systemMods: { hygieneDrift: 0.8, stressGain: 1.08 },
     conflictsWith: ['chaotic'],
   },
   {
     id: 'chaotic', name: 'Chaotic', group: 'Habits',
     description: 'The mess is genuinely invisible to you, and you know where everything is anyway.',
     cost: 'It shows, and it costs you when somebody comes round.',
-    systemMods: { stressGain: 0.92 },
+    systemMods: { hygieneDrift: 1.3, stressGain: 0.92 },
     conflictsWith: ['orderly'],
   },
   {
@@ -138,7 +152,7 @@ export const PERSONALITY_TRAITS: readonly PersonalityTrait[] = [
     id: 'indulgent', name: 'Indulgent', group: 'Body',
     description: 'Late food, late nights, and the firm belief you’ll deal with it later.',
     cost: 'You’ll deal with it later, and it will cost more then.',
-    systemMods: { sleepQuality: 0.92 },
+    systemMods: { sleepQuality: 0.92, moraleSwing: 1.1 },
     conflictsWith: ['disciplined_body'],
   },
   {
@@ -215,6 +229,7 @@ export const PERSONALITY_TRAITS: readonly PersonalityTrait[] = [
     id: 'needs_people', name: 'Needs People', group: 'People',
     description: 'You’re better with somebody in the room. You always have been.',
     cost: 'Alone, you come apart quietly and quickly.',
+    systemMods: { moraleSwing: 1.2 },
     conflictsWith: ['independent', 'guarded'],
   },
   {
@@ -228,6 +243,7 @@ export const PERSONALITY_TRAITS: readonly PersonalityTrait[] = [
     id: 'open_book', name: 'An Open Book', group: 'People',
     description: 'You say the thing. People know where they are with you within about a minute.',
     cost: 'Keeping a thing to yourself has never once happened.',
+    systemMods: { moraleSwing: 1.1 },
     conflictsWith: ['guarded'],
   },
   {
@@ -278,20 +294,28 @@ export const PERSONALITY_TRAITS: readonly PersonalityTrait[] = [
     id: 'self_critical', name: 'Self Critical', group: 'Mind',
     description: 'You’re the harshest reader you’ll ever have, and the work is better for it.',
     cost: 'It isn’t free. It comes out of you.',
-    systemMods: { stressGain: 1.22 },
+    systemMods: { stressGain: 1.22, moraleSwing: 1.2 },
     conflictsWith: ['self_assured'],
   },
   {
     id: 'self_assured', name: 'Self Assured', group: 'Mind',
     description: 'What you can do is settled, and nobody has ever needed to confirm it for you.',
     cost: 'You’re the last to hear that something isn’t working.',
-    systemMods: { stressGain: 0.82 },
+    systemMods: { stressGain: 0.82, moraleSwing: 0.78 },
     conflictsWith: ['self_critical'],
   },
 ];
 
 export const PERSONALITY_TRAIT_BY_ID: Readonly<Record<string, PersonalityTrait>> =
   Object.fromEntries(PERSONALITY_TRAITS.map((t) => [t.id, t]));
+
+/**
+ * Whether an id names a trait this build knows. Its own entries only: a save
+ * saying `constructor` is not holding a trait because every object has one.
+ */
+export function isPersonalityTrait(id: string): boolean {
+  return Object.prototype.hasOwnProperty.call(PERSONALITY_TRAIT_BY_ID, id);
+}
 
 export function personalityTraitsIn(group: PersonalityGroup): readonly PersonalityTrait[] {
   return PERSONALITY_TRAITS.filter((t) => t.group === group);
@@ -308,7 +332,7 @@ export function personalityTraitsIn(group: PersonalityGroup): readonly Personali
  *
  * So the order is the opposition. Each trait comes out followed by the first
  * trait in its own group that it cannot be held with, and one whose opposite
- * has already been placed comes out alone rather than being paired twice —
+ * has already been placed comes out alone, not paired twice —
  * which is what the few chains here need: Guarded answers Needs People, and
  * An Open Book, which only rules out Guarded, stands by itself.
  */
@@ -330,13 +354,13 @@ export function personalityTraitPairs(
   return rows;
 }
 
-/** How many a person may hold. Four, so the choice costs something. */
+/** How many a person may hold. Four, so picking is a choice. */
 export const MAX_PERSONALITY_TRAITS = 4;
 
 /** Which held traits a candidate cannot sit alongside. Always mutual. */
 export function conflictingPersonalityTraits(held: readonly string[], candidate: string): string[] {
-  const def = PERSONALITY_TRAIT_BY_ID[candidate];
-  if (!def) return [];
+  if (!isPersonalityTrait(candidate)) return [];
+  const def = PERSONALITY_TRAIT_BY_ID[candidate]!;
   const out = new Set<string>();
   for (const id of held) {
     if (def.conflictsWith?.includes(id)) out.add(id);
@@ -345,27 +369,12 @@ export function conflictingPersonalityTraits(held: readonly string[], candidate:
   return [...out];
 }
 
-/**
- * System knobs where a bigger number is the worse outcome.
- *
- * Unlike the craft sheet, nothing here is exempt: the prodigy is the best
- * there has ever been at making things and that has never made anybody a
- * better sleeper. Personality costs what it costs.
- *
- * One of the six, because the other five guarded knobs that have gone. A guard
- * exists to flip the sign on a key, and a guard on a key no trait declares is a
- * rule about a word kept after the word went — which is the reasoning
- * `SYSTEM_HIGHER_IS_WORSE` was already written to and is now held to twice.
- */
-export const PERSONALITY_HIGHER_IS_WORSE: ReadonlySet<string> = new Set([
-  'stressGain',
-]);
-
 /** The product of every held trait's multiplier for one knob. */
-export function personalityModifier(held: readonly string[], key: string): number {
+export function personalityModifier(held: readonly string[], key: PersonalityKnob): number {
   let value = 1;
   for (const id of held) {
-    const mod = PERSONALITY_TRAIT_BY_ID[id]?.systemMods?.[key];
+    if (!isPersonalityTrait(id)) continue;
+    const mod = PERSONALITY_TRAIT_BY_ID[id]!.systemMods?.[key];
     if (typeof mod === 'number') value *= mod;
   }
   return value;

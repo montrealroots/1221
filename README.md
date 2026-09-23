@@ -1,23 +1,17 @@
 # 🎬 SLATE
 
-**An actor and actress life simulator.** Actor and actress are two names for one
-craft, and SLATE treats them as equals: neither is the default, neither is the
-special case, and every label about a person uses their own word. The premise
-is not a line on a title screen — every save carries it, the client validates
-it on load, and the server refuses to store a save that says otherwise.
+**A life simulator, at the start of a revamp.**
 
-The build is currently cut back to six things: the startup screen, character
-creation, the geography map behind it, Home, the calendar and the weather.
-One save is one universe; there are three of them, and they never see each
-other.
+The build is cut back to six things: the startup screen, character creation,
+the geography map behind it, Home, the calendar and the weather. One save is
+one universe; there are three of them, and they never see each other.
 
-Everything else that used to be here — the shops, the studios, the schools,
-the phone, the people — has been removed on purpose. What is left
-is those six features and the engine underneath them, kept whole:
-`docs/COVERAGE-MATRIX.md` lists what is in the build and what was taken out,
-and `docs/DEPTH.md` is the bar the rest of it is held to: a simulation deeper
-than *Total Extreme Wrestling* and *The Movies* combined, sixteen axes, the
-build order, and the measured distance between that and where this is now.
+Everything else that used to be here — the acting career and the character
+sheet behind it, the family and the family business, the land they stood on,
+and before them the shops, the schools and the phone — has been removed on
+purpose. What is left is those six features and the engine underneath them,
+kept whole: `docs/COVERAGE-MATRIX.md` lists what is in the build and what was
+taken out, and `docs/DEPTH.md` is how whatever comes next is held to account.
 
 SLATE runs as a single-page app. The whole simulation is in the browser, and
 the server is the authority on what may be stored. It plays without a backend
@@ -73,18 +67,6 @@ exactly as it was. The restore writes the old values back into the objects that
 are already there rather than swapping in copies, so a reference taken before a
 command is still the right object afterwards.
 
-**The premise is stored, not asserted.** `SaveUniverse.premise` says what game
-this is, which two titles it is about, that they stand equal, which one the
-player carries, and whether they stated it or their pronouns implied it. The
-player's title is mirrored onto `meta.performerTitle` so a slot card or the
-database can read it without deserialising a universe, and onto the
-`performer_title` and `premise` columns of the `SlateSave` row. `validateUniverse`
-fails a save that has lost any of it, `migrate` writes it into an older save,
-and `base44/shared/guard.js` refuses a write without it. `tests/premise.test.ts`
-holds all of that, including the test that matters most: two saves built
-identically apart from the title come out the same in every number, and differ
-only in the words.
-
 **A long save stays loadable.** Records that grow every tick — answered
 decisions, the timeline, the audit trail — have retention rules behind them, so
 ten years of the clock does not become an unloadable save. The endurance suite
@@ -139,7 +121,7 @@ The browser never writes a save directly. It sends the universe to
 
 | Function | Enforces |
 | --- | --- |
-| `saveUniverse` | Signed in; slot is 1–3; payload parses, is within size, and is in a format this build reads; the save says it is an actor and actress life simulator, holds the two titles equal, and gives its player one of them; every transaction balances and the whole ledger sums to zero; no record belongs to another save; the world clock and playtime have not gone backwards; the previous payload is kept as a backup. Idempotent on a retry. |
+| `saveUniverse` | Signed in; slot is 1–3; payload parses, is within size, and is in a format this build reads; every transaction balances and the whole ledger sums to zero; no record belongs to another save; the world clock and playtime have not gone backwards; the previous payload is kept as a backup. Idempotent on a retry. |
 | `loadUniverse` | Reads scoped to the caller by row-level security. With no slot, returns what is in all three. |
 | `recordOfficialResult` | Writes a finalised result once. A second write returns what is already stored rather than changing it. |
 | `clearSlot` | Moves the payload aside as a backup and marks the slot cleared. Nothing is destroyed outright. |
@@ -213,7 +195,9 @@ npm test
 | `calendar`, `holidays` | The month grid, entries between two instants, collisions, and the observances of a country. |
 | `weather` | The climate model: normals by latitude and season, the week ahead, the units a country reads it in. |
 | `geography`, `world-map` | The gazetteer and the projection drawn from it. |
-| `portrait`, `citizenship` | The creation suite's own pieces: the headshot frame, and who holds which passport. |
+| `creation`, `portrait`, `citizenship` | The creation steps and what they put in the save, the headshot frame, and the citizenship a place of birth gives. |
+| `personality` | The seven dispositions and the traits: the pairs the page draws, what each one moves, what it says moves nothing, the sleep the game suggests and why, and that no single trait or disposition wears a life down on autopilot or on the suggested hours, at twenty-five or at sixty. |
+| `plans`, `looks` | Plans of your own on the calendar, and the drill-down graph crawled end to end. |
 | `endurance` | A day, a week, a month, a year, five years and ten: money drift, stranded schedules, corrupt history, duplicated ids, contradictory ownership, unbounded collections, and cost per simulated year. |
 | `integrity` | Retries and replays, save isolation, round trips, malformed and hostile input, what the player is allowed to know. |
 | `calibration` | Monte Carlo runs over the probabilistic models: uniformity, monotonicity, spread, reproducibility. |
@@ -246,7 +230,7 @@ Reported as unavailable rather than counted as passing:
 src/engine/core        the clock, ledger, scheduler, event bus, commands, audit, rng
 src/engine/domain      the model: every stateful thing in a universe
 src/engine/content     reference data, each record carrying its provenance
-src/engine/systems     wellbeing and sleep, the weather, what a life is worth
+src/engine/systems     wellbeing and sleep, the personality, the weather, what a life is worth
 src/engine/world       bootstrap, the calendar, the world tick, the Decision Center
 src/engine/persistence local, Base44, and the adapter contract between them
 src/ui                 startup, saves, character creation, the shell, Home, the calendar

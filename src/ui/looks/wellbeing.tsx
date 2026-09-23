@@ -18,14 +18,14 @@
  * because a dial is a thing and a multiplication is not.
  */
 
-import { postFacts, postsOf } from '@/engine/world/company';
 import { readiness, wellbeingSummary } from '@/engine/systems/life';
 import type { Person, Wellbeing } from '@/engine/domain/model';
 import type { Simulation } from '@/engine';
 import { defineLook, type Way } from './registry';
 import { at } from './subject';
-import { waysIntoSomebody, whatTheyAre } from './family';
 import { isAre, outOf, spokenList } from './words';
+import { GENRE_BY_ID, INTEREST_BY_ID } from '@/engine/content/interests';
+import { PERSONALITY_TRAIT_BY_ID } from '@/engine/content/personality-traits';
 
 /**
  * The eight, in the order a person would notice them.
@@ -60,32 +60,6 @@ function splitDialId(id: string): { personId: string; key: string } | undefined 
 const personIn = (sim: Simulation, id: string): Person | undefined =>
   sim.universe.people[id];
 
-/**
- * What somebody does, where no relation and no seat says it better.
- *
- * A category rather than a job title, because that is what `kind` is. The seat
- * they hold is tried before any of these and is always more specific. `none` and
- * `civilian` are real tracks that mean nothing to a player, so they fall through
- * to the plainest true thing instead of being dressed up.
- */
-const WHAT_THEY_DO: Partial<Record<Person['careerTrack'], string>> = {
-  actor: 'Another Actor',
-  crew: 'Crew',
-  executive: 'Somebody Who Runs Part Of It',
-  writer: 'A Writer',
-  director: 'A Director',
-  producer: 'A Producer',
-  showrunner: 'A Showrunner',
-  agent: 'An Agent',
-  creator: 'A Creator',
-};
-
-/** The seat they hold at either company, which is the best answer when it exists. */
-const seatOf = (sim: Simulation, person: Person): string | undefined => {
-  const post = postsOf(sim.universe).find((one) => one.personId === person.id);
-  return post ? postFacts(post.role)?.label : undefined;
-};
-
 // ---------------------------------------------------------------------------
 // You
 // ---------------------------------------------------------------------------
@@ -118,63 +92,58 @@ defineLook<Person>('person', {
         detail: 'Everything you have put on the calendar yourself',
       });
     }
-    // Anybody who is somebody to you opens onto what they are, where the two
-    // of you stand and what they run on the land, ahead of their dials.
-    const theirs = waysIntoSomebody(sim, person);
-    const relation = whatTheyAre(sim, person);
-    const seat = isYou ? undefined : seatOf(sim, person);
-    // The life before this one, said back. For the player it is the sentence
-    // they wrote at creation; for everybody else it is the one the family and
-    // crew generators wrote for them. It carries no number and decides nothing,
-    // and it is here so that a sentence somebody authored is not written into
-    // the save and then never shown to anybody again.
+    // The life before this one, said back: the sentence the player wrote at
+    // creation, or the one an older build wrote for somebody else. It carries
+    // no number and decides nothing, and it is here so that a sentence
+    // somebody authored is not written into the save and then never shown to
+    // anybody again.
     const before = (person.background ?? '').trim();
+    // What they care about and the films they love, said back for the same
+    // reason. Nothing in the simulation reads either, so this is the one place
+    // an answer given at creation is seen again.
+    const cares = person.interests.map((id) => INTEREST_BY_ID[id]?.label).filter((one): one is string => !!one);
+    const loves = (person.genres ?? []).map((id) => GENRE_BY_ID[id]?.label).filter((one): one is string => !!one);
+    // The traits they picked. Most of them, unlike the rest of this, move the
+    // dials below: the nights of a light sleeper and the stress of an even
+    // temper are theirs. The money traits are only said back.
+    const traits = (person.personalityTraits ?? [])
+      .map((id) => PERSONALITY_TRAIT_BY_ID[id]?.name).filter((one): one is string => !!one);
+    const said = [
+      traits.length > 0 && (
+        <p key="traits" className="small">
+          <span className="dim">{isYou ? 'Who you are. ' : 'Who they are. '}</span>
+          {spokenList(traits)}.
+        </p>
+      ),
+      before.length > 0 && (
+        <p key="before" className="small">
+          <span className="dim">{isYou ? 'Where you come from. ' : 'Where they come from. '}</span>
+          {before}
+        </p>
+      ),
+      cares.length > 0 && (
+        <p key="cares" className="small">
+          <span className="dim">{isYou ? 'What you care about. ' : 'What they care about. '}</span>
+          {spokenList(cares)}.
+        </p>
+      ),
+      loves.length > 0 && (
+        <p key="loves" className="small">
+          <span className="dim">{isYou ? 'The films you love. ' : 'The films they love. '}</span>
+          {spokenList(loves)}.
+        </p>
+      ),
+    ].filter(Boolean);
 
     return {
       name: isYou ? (person.displayName || person.firstName) : person.displayName,
-      // A mother is not billed as an actress, and neither is a facility
-      // manager or a head of production. Nobody on this land is billed at all.
-      //
-      // The relation case was fixed and the rest was not: anybody without a
-      // family tie to the player still fell through to the performer noun, so
-      // the person who runs the lot was labelled an actor on the one screen
-      // that says who somebody is. `performerTitle` is set on every person the
-      // generators write because the field is not optional, which made it read
-      // as a fact about them when it is only a default.
-      //
-      // What they actually are instead, in the order a person would say it:
-      // what they are to you, then the seat they hold, then what they do. The
-      // first attempt at this put their pronouns here, which was true and was
-      // the wrong slot — `kind` is a category and "she/her" is not one, so it
-      // told a player nothing about the head of milling and tripped the rule
-      // against an identifier reaching a screen. The pronouns are said below,
-      // in a sentence, which is where a pronoun belongs.
-      // both-titles: the word itself, which is what this comment is about.
-      kind: isYou ? 'Yourself' : relation ?? seat ?? WHAT_THEY_DO[person.careerTrack] ?? 'Somebody You Know',
-      // Two sentences rather than one joined by "and": the wellbeing line is
-      // already a whole sentence, and stitching them made a fragment.
-      //
-      // And their pronouns, for anybody who is not you and not family, said as a
-      // sentence rather than filed as a category. Nobody on this land is billed
-      // as an actor or an actress, and this is the screen where that used to
-      // happen.
-      summary: isYou
-        ? wellbeingSummary(person)
-        : relation
-          ? `${person.firstName} is your ${relation.toLowerCase()}. ${wellbeingSummary(person)}`
-          : `${person.firstName} goes by ${person.pronouns}. ${wellbeingSummary(person)}`,
-      body: before.length > 0
-        ? (
-          <p className="small">
-            <span className="dim">{isYou ? 'Where you come from. ' : 'Where they come from. '}</span>
-            {before}
-          </p>
-        )
-        : undefined,
-      ways: [...theirs, ...ways],
+      kind: isYou ? 'Yourself' : 'Somebody',
+      summary: wellbeingSummary(person),
+      body: said.length > 0 ? <>{said}</> : undefined,
+      ways,
       provenance: isYou
-        ? 'Eight dials, moved by the hours you keep. Six of them the game has never shown you.'
-        : 'The same eight dials you have, moved by the same days. Nobody here acts, and nothing bills them.',
+        ? 'Eight dials, moved by the hours you keep and the person you are. Six of them the game has never shown you.'
+        : 'The same eight dials you have, moved by the same days.',
     };
   },
 });
@@ -228,7 +197,7 @@ function sentenceFor(dial: Dial): string {
         : n > 40 ? `${n}. Level. Neither carrying you nor dragging.`
           : `${n}. Flat — the work is fine, the feeling isn’t.`;
     case 'condition':
-      return n > 70 ? `${n}. Nothing hurts, and nothing’s waiting to.`
+      return n > 70 ? `${n}. Sound, with no ache waiting to surface.`
         : `${n}. Something isn’t right, and long days will find it.`;
     case 'fitness':
       return n > 65 ? `${n}. You could do a physical day without paying for it after.`

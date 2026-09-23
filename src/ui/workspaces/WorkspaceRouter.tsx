@@ -1,11 +1,7 @@
 import { CalendarWorkspace } from './CalendarWorkspace';
-import { BusinessWorkspace } from './BusinessWorkspace';
-import { AuditionsWorkspace } from './AuditionsWorkspace';
 
 const WORKSPACES: Record<string, () => JSX.Element> = {
   '/workspace/calendar': CalendarWorkspace,
-  '/workspace/business': BusinessWorkspace,
-  '/workspace/auditions': AuditionsWorkspace,
 };
 
 export function WorkspaceRouter({ route }: { route: string }) {

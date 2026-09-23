@@ -103,17 +103,16 @@ for (const [label, value] of [[/first name/i, FIRST], [/last name/i, 'Castellano
   const f = page.getByLabel(label).first();
   if (await f.count()) await f.fill(value).catch(() => {});
 }
-await seen('02-creation-identity');
-// They/Them settles nothing, so Identity asks which word the business lists you
-// under and will not let Next through until it is answered. Without this the
-// walk never leaves the first step -- and then reports the five screens it
-// never reached as broken, which is how it spent a while crying wolf.
+// They/them is the default and settles no title, so Identity will not advance
+// until a word is picked. A walk that does not pick never leaves the first
+// step, and then reports the screens it never reached as broken.
 const billed = page.getByRole('button', { name: /^(actor|actress)$/i }).first();
 if (await billed.count()) { await billed.click({ timeout: 3000 }).catch(() => {}); await settle(300); }
 else note('02-creation-identity', 'flow', 'Identity does not offer a billing to answer');
+await seen('02-creation-identity');
 
 const stepName = () => page.locator('.creation-step[data-state="active"]').first().innerText().catch(() => '');
-for (const step of ['03-creation-who-you-are', '04-creation-my-skills', '05-creation-starting-point', '06-creation-your-people', '07-creation-review']) {
+for (const step of ['03-creation-dispositions-and-traits', '04-creation-interests-and-background', '05-creation-starting-point', '06-creation-review']) {
   const before = await stepName();
   const next = page.getByRole('button', { name: /^(next|continue)/i }).first();
   if (!(await next.count())) { note(step, 'flow', 'no Next button to reach this step'); break; }
@@ -126,37 +125,29 @@ for (const step of ['03-creation-who-you-are', '04-creation-my-skills', '05-crea
     note(step, 'flow', `the step would not open${why ? `: ${why}` : ', and Continue would not press'}`);
     break;
   }
-  if (step === '03-creation-who-you-are') {
-    for (const t of ['Night Owl', 'Holds Grudges', 'Disciplined', 'Generous']) {
-      const b = page.locator('button.trait').filter({ hasText: new RegExp(`^${t}`) }).first();
-      if (await b.count()) await b.click({ timeout: 3000 }).catch(() => {});
-    }
-  }
   const facts = await seen(step);
-  if (step === '07-creation-review' && !facts.body.includes(FIRST)) note(step, 'flow', 'the review does not show the name typed on the first step');
+  if (step === '06-creation-review' && !facts.body.includes(FIRST)) note(step, 'flow', 'the review does not show the name typed on the first step');
 }
-const begin = page.getByRole('button', { name: /it.s time to be great|begin|start save/i }).first();
-if (!(await begin.count())) note('07-creation-review', 'flow', 'no way to begin the life from the review');
+const begin = page.getByRole('button', { name: /^begin$|start save/i }).first();
+if (!(await begin.count())) note('06-creation-review', 'flow', 'no way to begin the life from the review');
 await begin.click({ timeout: 3000 }).catch(() => {});
 await settle(3800);
 await dismissCoachMark();
 const guidedOff = page.getByRole('button', { name: /turn guided mode off/i }).first();
 if (await guidedOff.count()) { await guidedOff.click({ timeout: 3000 }).catch(() => {}); await settle(400); }
-const home = await seen('08-home');
-if (!home.body.includes(FIRST)) note('08-home', 'flow', 'Home does not greet the character that was just made');
-if (!/^Home/.test(home.rail)) note('08-home', 'rail', `the rail marks "${home.rail}" rather than Home`);
+const home = await seen('07-home');
+if (!home.body.includes(FIRST)) note('07-home', 'flow', 'Home does not greet the character that was just made');
+if (!/^Home/.test(home.rail)) note('07-home', 'rail', `the rail marks "${home.rail}" rather than Home`);
 
 // --- Every destination in the rail, and every tab behind it -------------------
 const items = await page.evaluate(() => [...document.querySelectorAll('.rail .rail-item')].map((el) => ({
   label: (el.querySelector('.grow')?.textContent ?? el.textContent ?? '').trim(),
   locked: Boolean(el.querySelector('.rail-lock')),
 })));
-// The rail had eighteen destinations before the cleanup and has what it has
-// now. A hard number here was a standing false finding, so the walk asks only
-// that there is something besides Home and that every one of them opens.
-if (items.filter((i) => i.label && i.label !== 'Home').length === 0) {
-  note('rail', 'rail', 'the rail lists nothing but Home');
-}
+// The rail had eighteen destinations before the first cleanup, and after the
+// revamp it has Home alone: the calendar is a section of Home rather than a
+// place to go. A hard number here was a standing false finding, so the walk
+// asks only that every entry the rail does list opens.
 for (const item of items) {
   if (!item.label || item.label === 'Home') continue;
   const link = page.locator('.rail .rail-item', { hasText: new RegExp(`^${item.label.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}`) }).first();

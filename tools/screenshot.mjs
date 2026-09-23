@@ -31,19 +31,19 @@ await shoot('01-startup');
 
 const start = page.getByRole('button', { name: /new (save|game)|start|empty slot|create/i }).first();
 if (await start.count()) { await start.click().catch(() => {}); await page.waitForTimeout(1000); }
-await shoot('02-identity');
 
-// They/Them settles nothing, so Identity asks which word the business lists
-// you under and will not advance until it is answered. Without this the walk
-// never left the first step and quietly shot it five times over.
+// They/them is the default and settles no title: Identity asks which word to
+// bill you under and will not advance until it is answered. Without this the
+// walk never leaves the first step.
 const billed = page.getByRole('button', { name: /^(actor|actress)$/i }).first();
 if (await billed.count()) { await billed.click().catch(() => {}); await page.waitForTimeout(300); }
+await shoot('02-identity');
 
 // Walk the creation steps, and say so when one of them does not open. A walk
 // that shoots the same page under five names is worse than one that stops:
 // the shots look like a full set and the fault is in every one of them.
 const stepName = () => page.locator('.creation-step[data-state="active"]').first().innerText();
-for (const step of ['03-personal', '04-career', '05-starting-point', '06-your-people', '07-review']) {
+for (const step of ['03-dispositions-and-traits', '04-interests-and-background', '05-starting-point', '06-review']) {
   const before = await stepName().catch(() => '');
   const next = page.getByRole('button', { name: /^(next|continue)/i }).first();
   if (!(await next.count())) break;
@@ -59,7 +59,7 @@ for (const step of ['03-personal', '04-career', '05-starting-point', '06-your-pe
 }
 
 // Into the game itself.
-const begin = page.getByRole('button', { name: /it.s time to be great|begin|start save/i }).first();
+const begin = page.getByRole('button', { name: /^begin$|start save/i }).first();
 if (await begin.count()) {
   await begin.click().catch(() => {});
   await page.waitForTimeout(3000);

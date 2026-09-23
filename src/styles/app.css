@@ -433,13 +433,24 @@ input[readonly]:focus { border-color: var(--line-strong); }
 textarea { resize: vertical; min-height: 72px; }
 label, .label { display: block; font-size: var(--size-xs); font-weight: 600; color: var(--text-muted); margin-bottom: var(--s1); }
 
-/* A value the form worked out rather than asked for. It sits where the input
-   it replaces would, so a field that settles itself does not shift the row. */
+/* A value the form worked out, not one it asked for: the billing the pronouns
+   settle, and the citizenship the place of birth decides. Standing in for the
+   Billed As buttons it is shorter than they are, so the form below moves up
+   when the pronouns settle it. */
 .settled-title {
   display: block; padding: var(--s2) 0;
   font-size: var(--size-sm); font-weight: 650;
   color: var(--accent-strong);
 }
+
+/* A helper line under a control: what it takes, or how many there are to
+   choose from. The same size and color as every other hint on a form, which
+   the pickers write as a class rather than as `xs dim`. */
+.hint { font-size: var(--size-xs); color: var(--text-dim); line-height: 1.45; margin: var(--s1) 0 0; }
+/* The same line saying something went wrong is not a hint, and is not dimmed. */
+.hint[role="alert"] { color: var(--warning); }
+/* Alone inside the town list, a hint is centered by the list's own padding. */
+.picker-results .hint { margin: 0; }
 
 /* Chromium gives a range input a default side margin, which pushes it a few
    pixels past the field it sits in. */
@@ -570,29 +581,6 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-sp
 }
 .slot-name { font-size: var(--size-xl); font-weight: 600; }
 .slot-meta { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s3); }
-
-/* A long list the player can open and read, rather than take on trust. */
-.sheet > summary {
-  display: flex; align-items: center; justify-content: space-between; gap: var(--s3);
-  cursor: pointer; list-style: none;
-}
-.sheet > summary::-webkit-details-marker { display: none; }
-.sheet-title { font-size: var(--size-md); font-weight: 650; }
-/* The toggle reads last, after the name and the count, so the row says what
-   the list is before it says what the click does. */
-.sheet > summary::after {
-  content: 'Show'; font-size: var(--size-xs); font-weight: 600;
-  color: var(--accent-strong);
-}
-.sheet-title { margin-right: auto; }
-.sheet[open] > summary::after { content: 'Hide'; }
-.sheet-grid {
-  display: grid; gap: var(--s3);
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  max-height: 460px; overflow-y: auto;
-  padding-right: var(--s2);
-}
-.sheet-item { min-width: 0; }
 
 /* The production companies, one card each. */
 /* ---------- Looking at things ----------
@@ -842,6 +830,9 @@ button.link.is-open { color: var(--accent-strong); text-decoration-style: solid;
   padding: var(--s5);
 }
 .main-inner { max-width: 1180px; margin: 0 auto; }
+/* A card standing on its own in the page gets the same room below it as a row
+   of cards does, so two stacked panels never share a border. */
+.main-inner > .card { margin-bottom: var(--s5); }
 
 .breadcrumbs {
   display: flex; align-items: center; gap: var(--s2); flex-wrap: wrap;
@@ -955,40 +946,48 @@ kbd {
 
 .creation { max-width: 780px; margin: 0 auto; padding: var(--s6) var(--s4); }
 .creation-steps { display: flex; gap: var(--s1); margin-bottom: var(--s6); flex-wrap: wrap; }
+/* On a phone the five share the width and a long name takes two lines, so
+   every name is centered in its box and a one-line tab sits level with a
+   two-line one, and the side padding is kept small so "Dispositions &" fits
+   on its first line. With room for all five on one line, each is as wide as
+   its name and none of them wraps. */
 .creation-step {
-  flex: 1; min-width: 92px; padding: var(--s2) var(--s3);
+  flex: 1; min-width: 92px; padding: var(--s2) var(--s1);
   border-bottom: 2px solid var(--line); font-size: var(--size-xs);
   color: var(--text-dim); text-align: center; font-weight: 600;
+  display: flex; align-items: center; justify-content: center; line-height: 1.25;
+}
+@media (min-width: 700px) {
+  .creation-step { flex: 1 1 auto; white-space: nowrap; padding: var(--s2) var(--s3); }
 }
 .creation-step[data-state="active"] { border-bottom-color: var(--accent); color: var(--accent-strong); }
 .creation-step[data-state="done"] { border-bottom-color: var(--text-dim); color: var(--text-muted); }
 
-/* One thing on the land: what it is, then what it is. Boxed so three of them
-   read as three, not as a paragraph with bold in it. */
-.holding {
-  padding: var(--s3); border: 1px solid var(--line);
-  border-radius: var(--radius-sm); background: var(--surface-2);
-}
-
 .trait-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: var(--s2); }
 
 /* Two traits written against each other, kept on one row so the trade-off
-   between them is visible. Narrow enough and they stack, which still reads as
-   a pair because nothing else comes between them. */
+   between them is visible. Narrow enough and they stack, and the pair still
+   reads as one because the space after it is twice the space inside it. */
 .trait-pair {
   display: grid; gap: var(--s2);
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  margin-bottom: var(--s2);
+  margin-bottom: var(--s4);
 }
+
 .trait {
   padding: var(--s3); border: 1px solid var(--line); border-radius: var(--radius-sm);
   background: var(--surface-2); text-align: left; cursor: pointer; color: inherit; font: inherit;
 }
 .trait:hover:not(:disabled) { border-color: var(--line-strong); }
 .trait[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-dim); }
-.trait:disabled { opacity: .4; cursor: not-allowed; }
+.trait:disabled { cursor: not-allowed; }
+/* A trait that can't be picked fades, all but the line saying why. */
+.trait:disabled > :not(.trait-why) { opacity: .55; }
 .trait-name { font-weight: 650; font-size: var(--size-sm); margin-bottom: 2px; }
 .trait-desc { font-size: var(--size-xs); color: var(--text-muted); line-height: 1.4; }
+/* Why a trait can't be picked, said on the trait. Left out of the fading
+   above, because it is the part that has to be read. */
+.trait-why { font-size: var(--size-xs); color: var(--warning); font-weight: 600; margin-top: var(--s1); }
 
 /* ---------- God mode ----------
    Sandbox is a declared cheat, so it is meant to look like one. Everything it

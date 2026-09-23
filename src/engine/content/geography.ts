@@ -430,6 +430,16 @@ export function addCountryCities(countryId: string, text: string): number {
   return CITIES.add(parsed);
 }
 
+/**
+ * The country a place id belongs to, or undefined when it names no real
+ * country. A city id carries its country as its first segment, so this works
+ * for a town whose country has not been loaded yet.
+ */
+export function countryOfPlace(placeId: string): string | undefined {
+  const code = placeId.split('-')[0];
+  return code && COUNTRIES.get(code) ? code : undefined;
+}
+
 /** Whether a country's full list is already in memory. */
 export function isCountryLoaded(countryId: string): boolean {
   return loadedCountries.has(countryId);

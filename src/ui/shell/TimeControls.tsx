@@ -9,7 +9,6 @@ import { titleCaseLabel } from '@/engine/core/text';
 import { useEffect, useRef, useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { Modal } from '@/ui/components/primitives';
-import { LONGEST_SESSION_HOURS, TRAINING_AN_HOUR, ceilingAt } from '@/engine/content/lifespan';
 import { suggestedSleep, hoursUntilNextCommitment } from '@/engine/systems/life';
 import { missedBy, skipTargets } from '@/engine/world/calendar';
 import type { CalendarEntry } from '@/engine/world/calendar';
@@ -17,14 +16,12 @@ import {
   addDays, formatDate, formatDateTime, formatDuration, formatTime, instantFromZoned, zonedParts, MS_HOUR,
   type Instant,
 } from '@/engine/core/time';
-import { PLAN_KIND, namesOn, saidAsList } from '@/engine/world/plans';
-import { MISSED_COOLS, TOGETHER_WARMS } from '@/engine/world/standing';
+import { PLAN_KIND } from '@/engine/world/plans';
 import type { ScheduledItem } from '@/engine/core/scheduler';
 
 export function TimeControls() {
   const { sim, advanceTo, run, refresh, toast, standingAt, clearStandingAt } = useGame();
   const [sleepOpen, setSleepOpen] = useState(false);
-  const [trainOpen, setTrainOpen] = useState(false);
   const [skipOpen, setSkipOpen] = useState(false);
   const [confirm, setConfirm] = useState<{ at: Instant; label: string; missed: CalendarEntry[] } | null>(null);
   const speed = sim.universe.preferences.timeSpeed;
@@ -60,7 +57,6 @@ export function TimeControls() {
           {speed === 'paused' ? 'Play' : 'Pause'}
         </button>
         <button className="btn btn-sm" onClick={() => setSleepOpen(true)}>Sleep</button>
-        <button className="btn btn-sm" onClick={() => setTrainOpen(true)}>Train</button>
         <AdvanceMenu
           onAdvance={(at, label) => {
             const missed = missedBy(sim, at);
@@ -93,7 +89,6 @@ export function TimeControls() {
       )}
 
       {sleepOpen && <SleepDialog onClose={() => setSleepOpen(false)} />}
-      {trainOpen && <TrainDialog onClose={() => setTrainOpen(false)} />}
       {skipOpen && <SkipDialog onClose={() => setSkipOpen(false)} onSkip={(at) => { advanceTo(at); setSkipOpen(false); }} />}
       {confirm && (
         <Modal
@@ -193,8 +188,8 @@ function SleepDialog({ onClose }: { onClose: () => void }) {
       )}
 
       <p className="xs dim" style={{ marginTop: 'var(--s4)' }}>
-        The world keeps running while you sleep. Bills come due, messages arrive and other people
-        get on with their lives.
+        The world keeps running while you sleep. The clock moves on, and anything on your
+        calendar in those hours happens without you.
       </p>
     </Modal>
   );
@@ -205,7 +200,7 @@ function SleepDialog({ onClose }: { onClose: () => void }) {
  *
  * The one place in the game where turning up is a decision rather than a
  * consequence. Going costs the hours it takes, which is why not going is a
- * real option and not a way of throwing points away for nothing.
+ * real option.
  */
 function DueNow({ item, wanted, onGo, onStay, onClose }: {
   item: ScheduledItem;
@@ -217,7 +212,6 @@ function DueNow({ item, wanted, onGo, onStay, onClose }: {
   const { sim } = useGame();
   const zone = sim.zone;
   const mine = item.kind === PLAN_KIND;
-  const names = namesOn(sim, item);
   const runs = item.durationMinutes ?? 60;
   const ahead = Math.max(0, wanted - item.at);
 
@@ -230,7 +224,7 @@ function DueNow({ item, wanted, onGo, onStay, onClose }: {
           <button className="btn btn-ghost" onClick={onClose}>Stand Here</button>
           {mine && (
             <button className="btn" onClick={onStay}>
-              {names.length > 0 ? 'Don’t Go' : 'Skip It'}
+              Skip It
             </button>
           )}
           <button className="btn btn-primary" onClick={onGo}>Go</button>
@@ -242,13 +236,6 @@ function DueNow({ item, wanted, onGo, onStay, onClose }: {
         {' '}Going takes {formatDuration(runs * 60_000)} of the day
         {ahead > 0 ? `, and the clock carries on to ${formatDateTime(wanted, zone)} after.` : '.'}
       </p>
-      {names.length > 0 && (
-        <p className="small">
-          {`It’s with ${saidAsList(names)}. Going is worth ${TOGETHER_WARMS} points of where you stand with `
-            + `${names.length === 1 ? 'them' : 'each of them'}. Not going costs ${MISSED_COOLS}, and `
-            + `${names.length === 1 ? 'they’ll' : 'they’ll each'} know you weren’t there.`}
-        </p>
-      )}
       {!mine && (
         <p className="small muted">
           This one isn’t yours to walk away from — it’s the world’s. Go, or leave the clock where it is.
@@ -329,7 +316,7 @@ function SkipDialog({ onClose, onSkip }: { onClose: () => void; onSkip: (at: num
                   </ul>
                 </div>
               ) : (
-                <p className="small muted">Nothing you have to attend falls before it.</p>
+                <p className="small muted">You have no commitment before it.</p>
               )}
 
               <p className="xs dim">
@@ -395,7 +382,7 @@ function AdvanceMenu({
     { label: 'Tomorrow Morning', detail: `7:00 AM · ${formatDate(addDays(todayAt(7), 1, zone), zone)}`, at: addDays(todayAt(7), 1, zone) },
     {
       label: 'Next Event',
-      detail: nextEvent ? `${nextEvent.entry.title} · ${formatDateTime(nextEvent.item.at, zone)}` : 'Nothing is scheduled',
+      detail: nextEvent ? `${nextEvent.entry.title} · ${formatDateTime(nextEvent.item.at, zone)}` : 'No plans or commitments ahead',
       at: nextEvent?.item.at,
     },
     { label: 'Next Monday', detail: `9:00 AM · ${formatDate(addDays(todayAt(9), untilMonday, zone), zone)}`, at: addDays(todayAt(9), untilMonday, zone) },
@@ -436,82 +423,5 @@ function AdvanceMenu({
         </div>
       )}
     </div>
-  );
-}
-
-/**
- * An hour or two of keeping in shape, which is the only other thing a player can
- * do with the clock on purpose.
- *
- * It sits beside Sleep because it is the same kind of act: hours spent
- * deliberately, charged to the body the way any waking hours are, in exchange for
- * a dial moving. Fitness had no second direction at all until now — it fell 0.18
- * a day forever and reached nought inside the first year of every save — so this
- * is the control that makes the dial a dial.
- *
- * The ceiling is printed rather than merely enforced, because the ceiling is the
- * interesting part: `ceilingAt` is the most a body of this age can be brought to,
- * and it falls every year. A player who reads "the 71 a body your age can hold"
- * has been told something true about getting older that no other screen says.
- */
-function TrainDialog({ onClose }: { onClose: () => void }) {
-  const { sim, run } = useGame();
-  const [hours, setHours] = useState(1);
-  const me = useWorld((s) => s.player);
-  const years = Math.floor((sim.now - me.birthInstant) / (365.2425 * 24 * MS_HOUR));
-  const ceiling = ceilingAt(years).fitness;
-  const now = me.wellbeing.fitness;
-  const would = Math.min(ceiling, now + hours * TRAINING_AN_HOUR);
-
-  const train = () => {
-    const result = run('life.train', { hours });
-    if (result.ok) onClose();
-  };
-
-  return (
-    <Modal
-      title="Train"
-      onClose={onClose}
-      footer={
-        <>
-          <button className="btn" onClick={onClose}>Not Today</button>
-          <button className="btn btn-primary" onClick={train}>
-            Train {hours} {hours === 1 ? 'Hour' : 'Hours'}
-          </button>
-        </>
-      }
-    >
-      <p className="muted">
-        Fitness falls a little every day whatever you do. This is the only thing that puts it back,
-        and it costs the hours it costs — they come off the same day everything else does.
-      </p>
-
-      <div className="field">
-        <div className="row-between">
-          <label htmlFor="train-hours" style={{ marginBottom: 0 }}>Hours</label>
-          <span className="mono">{hours}</span>
-        </div>
-        <input
-          id="train-hours" type="range" min={0.5} max={LONGEST_SESSION_HOURS} step={0.5}
-          value={hours} onChange={(e) => setHours(Number(e.target.value))}
-        />
-      </div>
-
-      <div className="grid grid-2">
-        <div className="stat">
-          <span className="stat-label">Fitness now</span>
-          <span className="small">{Math.round(now)}</span>
-        </div>
-        <div className="stat">
-          <span className="stat-label">After this</span>
-          <span className="small">{Math.round(would)} of {Math.round(ceiling)}</span>
-        </div>
-      </div>
-
-      <div className="callout" style={{ marginTop: 'var(--s4)' }}>
-        {Math.round(ceiling)} is as fit as a body {years} years old gets. Age is the one thing
-        training doesn’t argue with, and the ceiling comes down every year.
-      </div>
-    </Modal>
   );
 }

@@ -13,12 +13,10 @@
  *
  * Both kinds here do the same job. Say the figure the bar hides, say what
  * raised it, say when it stops asking, and offer the thing it is about, which
- * is a pointer five record shapes declare and the engine now fills in
- * fifty-two times. `subjectForRef` resolves forty-two of those — every
- * `'project'`, including the reimbursement row this file’s own decision look
- * paints a way from. The ten it does not resolve are the nine `'audition'`
- * notifications and the one `'property'`, and the reason is the same for all
- * ten: no look has ever been declared for either kind.
+ * is a pointer five record shapes declare. Nothing in the engine fills it in
+ * any more — everything that did went with the film side — so the pointer is
+ * whatever an older save carries or a caller supplies, and `subjectForRef`
+ * resolves it only when a look has been declared for its kind.
  *
  * A decision’s actions are commands. They stay on Home, where pressing one
  * runs it through `game.run()`. This explains a decision; it never takes one,
@@ -135,11 +133,10 @@ function weightOf(urgency: number): string {
 /**
  * A way onto the thing a record points at, labeled with that thing’s own name.
  *
- * The `lookExists` guard is not belt and braces. Ten of the fifty-two pointers
- * the engine writes carry a kind the registry has never heard of — nine
- * `'audition'` and one `'property'` — so the guard fires on real records in an
- * ordinary save, and what it buys is a row with no way out rather than a link
- * onto a page that does not exist.
+ * The `lookExists` guard is not belt and braces. An older save carries pointers
+ * of kinds the registry has never heard of — `'project'`, `'audition'` and
+ * `'property'` — so the guard fires on real records, and what it buys is a row
+ * with no way out rather than a link onto a page that does not exist.
  */
 function wayTo(sim: Simulation, subject: Subject, detail: string): Way | undefined {
   if (!lookExists(sim, subject)) return undefined;
@@ -222,7 +219,7 @@ defineLook<DecisionItem>('decision', {
 
     const ending = stage === 'open'
       ? (decision.dueAt !== undefined
-        ? `It ends on its date and on nothing else: once ${formatDate(decision.dueAt, sim.zone)} passes it closes itself, answered or not. The ninety-day rule that quiets the undated things doesn’t touch it, because whatever raised it already said where it ends. The world only looks in every ${countWord(TICK_DAYS)} days, so the closing lands at the next look and not on the stroke. The save keeps the record until the date has passed and six months have gone by since it closed, whichever is later — so a row waved away early is dropped on the date itself.`
+        ? `It ends on its date and on nothing else: once ${formatDate(decision.dueAt, sim.zone)} passes it closes itself, answered or not. The ninety-day rule that quiets the undated things does not touch it, because whatever raised it already said where it ends. The world only looks in every ${countWord(TICK_DAYS)} days, so the closing lands at the next look and not on the stroke. The save keeps the record until the date has passed and six months have gone by since it closed, whichever is later — so a row waved away early is dropped on the date itself.`
         : `Left alone it goes quiet by itself, ninety days from the day it was raised, on ${formatDate(quietAt, sim.zone)}, the world takes it off the list unanswered. The world only looks in every ${countWord(TICK_DAYS)} days, so that lands at the next look rather than on the stroke, and six months after it closes there’s no record of it at all.`)
       : `The save forgets it entirely six months after it closed, on ${formatDate(forgottenAt, sim.zone)}.`;
 
@@ -284,7 +281,7 @@ defineLook<DecisionItem>('decision', {
             <Stat
               label="Ways Out"
               value={decision.actions.length > 0 ? decision.actions.length : 'Dismiss only'}
-              note={decision.actions.length > 0 ? 'Offered on Home, taken on Home' : 'Nothing to answer, only to wave away'}
+              note={decision.actions.length > 0 ? 'Offered on Home, taken on Home' : 'It can be waved away, not answered'}
             />
           </div>
         </>
