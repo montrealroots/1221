@@ -1,7 +1,7 @@
 # SLATE — Current Master Handoff
 
-**Written:** 2026-09-23, in the Linux cloud container at `/home/user/1221` (bash; PowerShell is not installed there). **Updated:** 2026-09-23, on the owner's Windows machine under PowerShell 7.6.6, by Claude Code Account 1 (session `session_016rs5iQsnQMfHXUzUnFERmU`), with the fifth review's fixes.
-**Written for:** the next Claude Code session, on either of the owner's two Claude Code accounts, running on the owner's Windows machine under PowerShell 7.
+**Written:** 2026-09-23, in the Linux cloud container at `/home/user/1221` (bash; PowerShell is not installed there). **Updated:** 2026-09-23, on the owner's Windows machine under PowerShell 7.6.6, by Claude Code Account 1 (session `session_016rs5iQsnQMfHXUzUnFERmU`), with the fifth review's fixes, and again for the transfer to Account 2.
+**Written for:** Claude Code Account 2, and any later session on either of the owner's two accounts, running on the owner's Windows machine under PowerShell 7. Start with "Start here", below.
 **Repository:** `github.com/yvcbcjhsy7-prog/1221`
 **Working branch:** `claude/slate-cleanup-e4apmx`
 **Verified at:** the fifth review's fixes (2026-09-23, on Windows), the last code commit (§5, §10): what the review of `1f75a13` confirmed. Before them, `1f75a13` (the fourth review's fixes) forfeited an unpaid night to a player who keeps them up in it, `0e80f13` fixed what the third review found, `fa24fe4` what the second found, `bd5b2ef` what three reviewers found before `main`, and before that the night-alone fix `4bfa0fa`: a night nobody chose is slept only when the clock carries them through it. Before that, the rollover fix: `7a373c2` charged the waking day as the clock moves (schema 88), and `14c1666` fixed what review found. Those seven reached `main` together by PR #19 on 2026-09-23, with the owner's approval, before the review of the last of them had reported (§0). Before them, the schema-87 commits: `20da24e` moved the save schema from 83 to 87 (§0.4), `f10f1b0` fixed what review found in it, `a5f1f53` corrected the documents and two comments, and `ed0cab7` (PR #18) merged them into `main`. Before those, `36d2cea` ("Fit the new step names, and match Review to them") was the last code commit, and every commit between it and `20da24e` leaves the build alone: `d0636b8` removes an unreferenced scratch file; `acf5e10`, `6c18b6b` and `63b757b` write and correct this file; `beda4d9` brings `CLAUDE.md` over; `ad44f5c` and `297dbfe` correct both files; `4aab498` merges the old `main` in without changing a file; and `cd8d6ef` (PR #17) carries this line into `main`.
@@ -12,9 +12,125 @@ When this file and the tree disagree, the tree wins. Correct this file in the sa
 
 ---
 
+## Start here: the transfer to Claude Account 2 (2026-09-23)
+
+On 2026-09-23 Claude Code Account 1 handed SLATE to Account 2, at the owner's request. This section is what Account 2 needs first, and everything it points to is further down. Beyond this file, `CLAUDE.md` and git, nothing from Account 1's conversation is needed.
+
+**What SLATE is.** SLATE is an actor-and-actress life simulator built with React 18, TypeScript and Vite, with Vitest for tests. On 2026-09-22 it was cut down to a person, a place, a calendar, the weather and money, and it's being rebuilt from there one wired system at a time (§2). The engine is deterministic:
+- The clock moves only through `Simulation.advanceTo`.
+- Every random draw comes from a seeded RNG owned by a decider.
+- Saves are at schema 88 (§5).
+
+**Where things are**
+
+| Item | State |
+|---|---|
+| Repository | `github.com/yvcbcjhsy7-prog/1221`, remote `origin` over HTTPS |
+| Canonical line | `main` on GitHub. The owner said on 2026-09-23 to treat the latest `origin/main` as the canonical source of truth. Development goes on `claude/slate-cleanup-e4apmx` and reaches `main` only by PR, which the owner opens or approves and merges. |
+| At the transfer | The branch carried two pushed commits past `main` (`0216597`): `d356640` (the fifth review's fixes) and the commit that carries this section. The owner chose to merge them into `main` by a PR on GitHub. Confirm that happened with `git fetch origin; git log --oneline -3 origin/main`. If `main` then has a merge commit the branch lacks, bring the branch level with `git merge --ff-only origin/main` and push it, as was done after PR #19. |
+| Only on this machine | The stash, `teleport-stash-backup`, two archive branches and four untracked leftovers. Keep all of them (§11). |
+
+**Environment** (nothing secret; more in §3 and §13):
+- Windows 11 Home (10.0.26200), with the clone at `C:\Users\sande\Downloads\1221-GIT`.
+- **PowerShell 7.6.6 (`pwsh`) is the execution environment**, by the owner's decision on 2026-09-23. It is not the Windows PowerShell 5.1 that ships with the system.
+- Claude Code 2.1.281 runs locally in the terminal (`C:\Users\sande\.local\bin\claude.exe`), and the owner follows along through Remote Control. Claude Code's Bash tool (Git Bash) also exists, but use PowerShell.
+- Git 2.55.0.windows.3, repo-local `core.autocrlf=false`, working tree LF. `git push` authenticates through the Git Credential Manager. Don't read, print or change credentials.
+- Node v24.20.0 and npm 11.19.0.
+- `gh` 2.101.0 is installed but **not logged in**, and Account 1 had no GitHub connector. So a PR is the owner's to open, from `https://github.com/yvcbcjhsy7-prog/1221/compare/main...claude/slate-cleanup-e4apmx?expand=1`, unless the owner logs `gh` in.
+- No `.env` exists on this machine, and `.env.example` holds empty placeholders. No Base44 deployment from this line is recorded, and which guard any existing deployment runs isn't recorded either (§10).
+
+**Before modifying code** (CLAUDE.md, rule 2):
+```powershell
+git fetch origin; git status -sb; git log --oneline -5; git stash list; git worktree list
+npm ci      # when node_modules is missing or package-lock.json changed; npm 11's allowScripts warning about esbuild is harmless (§3 step 5)
+npm run gate *> "$env:TEMP\gate.txt"; "exit=$LASTEXITCODE" | Out-File -Encoding utf8 "$env:TEMP\gate-exit.txt"; Get-Content "$env:TEMP\gate-exit.txt"
+```
+Expect exit 0 and 530 tests in 28 files (§1). Any other result is a difference to track down before building.
+
+**Read in this order:**
+1. `CLAUDE.md`
+2. This section
+3. §0
+4. §12 (next steps)
+5. §10 (known issues; the sleep entries in particular)
+6. §5, Sleep and energy
+7. §6 (decisions)
+8. §7 (rules)
+9. §13 (commands and Windows gotchas)
+
+**What Account 1's session did** (session `session_016rs5iQsnQMfHXUzUnFERmU`, 2026-09-23, all on Windows):
+1. Confirmed PowerShell 7 and the session's state.
+2. Moved the Windows clone onto this line (§3). 20 commits of the old line that were never on GitHub were kept on two archive branches.
+3. Re-ran the review of `1f75a13` and fixed what it confirmed (`d356640`; §4, §5, §10).
+4. Made lint skip the git-ignored `probe/` (§9).
+5. Wrote this handoff.
+
+**What the owner asked of Account 1, and how it was settled:**
+- *PowerShell 7 working with Claude Code.* It's the execution environment (CLAUDE.md, updated on this branch).
+- *Sync the clone to the canonical `origin/main`.* Unique local work goes on a clearly named safety branch first. No force-push, no history rewrite, no branch deletion. Done (§3).
+- *Resume the rollover work where it was paused:* review `1f75a13`, fix what it confirms, gate, handoff, PR with the owner, then the spring-forward rollover. Done up to the spring-forward rollover, which is the next task.
+- *Transfer-ready continuity.* The handoff is the memory, captured at milestones, with no secrets in it. This section is the result.
+
+**Settled. Don't redo these or reopen them without the owner:**
+- The gut and what it removed (§2, §4). Don't rebuild anything it deleted unless the owner asks.
+- This branch replacing `main` (§0.2), the schema move to 87 and then 88 (§0.4), and the clone move on Windows (§3).
+- The rollover (schema 88) and the sleep model after five rounds of review (§5, §6, §10). The review of `1f75a13` has run, so don't run it again. The rules it left:
+  - A clock sent more than an hour is a skip. An hour or less means the player is there.
+  - A night nobody chose is paid in full once the clock carries them an hour into it.
+  - Any stop has them up.
+  - A stop in the night's first hour leaves the night owed.
+  - If the player moves the clock themselves in an owed night, the night is forfeit, and the stretch already spent in bed is charged as awake.
+  - Go and Skip It carry on the skip that the stop broke off.
+  - `nightEndsAt` puts them back to bed until the night would have ended.
+- The owner's standing constraints:
+  - Never apply, pop or drop the stash.
+  - Never merge worktrees.
+  - Never force-push.
+  - Never merge to `main` without the owner.
+  - Read the gate's exit code from a file.
+- How the owner wants the work done:
+  - Decide ordinary design calls and report them.
+  - Explain a risky operation before doing it.
+  - Commit messages say what was decided and why.
+  - A comment that a change makes false is corrected in the past tense.
+  - Measure on a played career.
+  - Mutation-test whatever a test protects.
+  - Run a big review as three reviewers with two skeptics per finding (§12 step 2 has the method).
+
+**Open for the owner:** a fresh Next Event of an hour or less after a stop in the night's first hour forfeits the night, as One Hour does. On a nightly routine, 9 of 76 cases wear down (§10). It was kept by decision at the fifth review, and the owner hasn't ruled on it yet.
+
+**The next task: the spring-forward rollover** (§10, §12 step 1).
+- **What's wrong:** in a home zone whose clocks jump from 00:00 to 01:00, the rollover on the day after the jump runs at 01:00 instead of midnight. That day's night nobody chose starts at 01:00, with the hour before it charged as awake and the late-bedtime penalty applied. From the next day it's back at midnight.
+- **Why it's still open:** it was found during the rollover work and recorded, and the owner ordered it after the review of `1f75a13`. It predates this branch (`ed0cab7` does the same). Nothing has been changed for it yet; the code has only been read.
+- **Cause, read in the code but not yet measured:** `startOfLocalDay` correctly returns 01:00 on the gap day, because that's the day's first instant. The re-arm adds a day with `addDays`, which keeps the wall-clock hour, so the next rollover is armed at 01:00 too.
+- **Files:**
+  - `src/engine/systems/life.ts`: the rollover's re-arm at line 221, `addDays(startOfLocalDay(sim), 1, sim.homeZone)`, and `startOfLocalDay` itself at line 301.
+  - `src/engine/index.ts`: `armWorldClock` (the same expression at line 54) and the re-arm in `loadSave` (line 160).
+  - `src/engine/core/time.ts`: `addDays` (line 181), which keeps the wall-clock hour.
+  - To check for the same pattern: the recurrence in `Simulation.addUnit` (`src/engine/core/simulation.ts`) and the test helper `nextMidnight` in `tests/simulation.test.ts`.
+- **Blockers:** none.
+- **Next action:** write a failing test. It should make a save whose home zone is Havana, run it across 2026-03-08, and assert that the rollover on 03-09 fires at 00:00 local. Then, at the three sites, compute the next rollover as the first instant of the next calendar date.
+- **Acceptance criteria:**
+  1. Tests in Havana (2026-03-08), Beirut (03-29) and Santiago (09-06) show the rollover at 01:00 on the gap day and at local midnight on the day after.
+  2. A save loaded on the gap day re-arms at the next local midnight.
+  3. Every existing test passes unchanged, the calibration years included, so a zone with no transition plays exactly as before.
+  4. Mutating the fix fails a test.
+  5. `npm run gate` exits 0, read from a file.
+  6. The §10 entry moves to fixed, written in the past tense.
+  7. The commit reaches `main` by PR, with the owner.
+
+**The larger plan** (§12). The revamp after the gut goes one wired system at a time:
+- **Done:** the gut and the post-gut rebuilds (title, citizenship, personality), the schema moves, the rollover and the sleep model.
+- **Current:** the spring-forward rollover, the last item of the rollover work.
+- **After it, in any order:** the Windows hygiene commit (§12 step 5) and the stale words (§12 step 7). Neither depends on anything else.
+- **Then:** whatever the owner directs next (§12 step 8). The owner hasn't named the next system yet; a system that reads the idle axes, the money traits or citizenship would retire entries from the ledgers.
+- **Deploying to Base44 comes last** (§12 step 9). It needs the gate, a server-side fix for Restore Backup, and the guard deployed before or with the client (§10).
+
+---
+
 ## 0. Read this box first
 
-**Where this is, 2026-09-23, on Windows.** The review of `1f75a13` has run, and the fifth review's fixes fix what it confirmed (§4, §5, §10). They're on the working branch and reach `main` by PR, with the owner. Next is the spring-forward rollover (§10, §12 step 1).
+**Where this is, 2026-09-23, on Windows.** The review of `1f75a13` has run, and the fifth review's fixes fix what it confirmed (§4, §5, §10). Then Account 1 handed the project to Account 2 (Start here). Both commits are on the working branch and reach `main` by the owner's PR. Next is the spring-forward rollover (§10, §12 step 1).
 
 The owner had paused the rollover work at `0216597` and had it merged into `main` as it stood (PR #19), to pick it up in another session. `1f75a13` had been checked by the gate, three mutations of its rule, a fuzz of 450 careers and the previous reviewers' own probes, but its multi-agent review had been stopped before it reported. It was re-run on Windows as the review of `0e80f13` was: three reviewers, two skeptics per finding, 29 agents. Of 13 findings, 11 were upheld by both skeptics and 2 refuted by both (§10). Every other number the commit messages of `0e80f13` and `1f75a13` give reproduced, except 66.75, which is 66.65.
 
@@ -30,8 +146,8 @@ The owner had paused the rollover work at `0216597` and had it merged into `main
 
 | Item | State |
 |---|---|
-| Branch | `claude/slate-cleanup-e4apmx`, pushed with the fifth review's fixes, one commit ahead of `main` (`0216597`) until the owner merges its PR |
-| Machine | The owner's Windows 11 machine, `C:\Users\sande\Downloads\1221-GIT`: PowerShell 7.6.6, Node v24.20.0, npm 11.19.0, `gh` at `C:\Program Files\GitHub CLI\gh.exe`, repo-local `core.autocrlf=false` (§3, §13) |
+| Branch | `claude/slate-cleanup-e4apmx`, pushed. At the transfer it was two commits ahead of `main` (`0216597`): `d356640` and the commit that carries this file, for the owner to merge by PR (Start here). |
+| Machine | The owner's Windows 11 machine, `C:\Users\sande\Downloads\1221-GIT`: PowerShell 7.6.6, Claude Code 2.1.281, Git 2.55.0.windows.3, Node v24.20.0, npm 11.19.0, `gh` 2.101.0 at `C:\Program Files\GitHub CLI\gh.exe` (not logged in), repo-local `core.autocrlf=false` (§3, §13) |
 | Last verified code commit | The fifth review's fixes (2026-09-23, on Windows), after `1f75a13` (the fourth review's), `0e80f13`, `fa24fe4`, `bd5b2ef`, the night-alone fix `4bfa0fa` and the rollover fix: `7a373c2` and `14c1666`, which fixed what review found (schema 88). Before them, `f10f1b0` (2026-09-23), which fixed what review found in `20da24e` (schema 87), and `36d2cea` (2026-09-22). |
 | GitHub `main` | Replaced by this line on 2026-09-23: merge `4aab498`, carried in by a PR. The old tip `e139e06` (2026-09-18, "Merge pull request #16") is one of that merge's parents. PR #18 (`ed0cab7`) brought schema 87 into it. The rollover fix, the night-alone fix and the review fixes followed by PR on 2026-09-23, with the owner's approval (schema 88). |
 | Fork point with the old line | `dc52d64` (2026-09-16, schema 79) |
@@ -42,7 +158,7 @@ The owner had paused the rollover work at `0216597` and had it merged into `main
 | Build | `npm run build` exits **0** (102 modules, 674.40 kB of JS at the tip). |
 | Browser walk | A scratch Playwright script (not in the repo) walked all nine pages at 1440 wide against `vite preview`: **0 page errors**, and no `undefined`, `NaN` or `[object Object]` on the eight pages after the start screen. The start screen was only photographed. |
 | Working tree | Clean apart from four untracked leftovers of the old line (§11), which are left alone, and the git-ignored `probe/`. |
-| Tracked files | 624 at `36d2cea`, 625 at `beda4d9` and after |
+| Tracked files | 624 at `36d2cea`; 625 at `beda4d9` and after, `d356640` included |
 
 ---
 
@@ -227,6 +343,7 @@ The first session on the Windows machine (Claude Code Account 1, `session_016rs5
 | 09-23 | **What the fourth review found** (`1f75a13`): a night a stop in its first hour left unpaid stayed owed while the player kept them up, and the next jump paid it whole from midnight, so the hours kept up cost nothing; kept up to 07:30 after a stop at 00:30, nightly, 30 of 76 cases wore down. Moving the clock themselves in it now forfeits it, and the next jump starts a night where they are. Two comments and a test title were corrected | Yes |
 | 09-23 | **Paused and merged** (`8cc8d22`, and PR #19, `0216597`): the owner stopped the work here and had it merged into `main` as it stood, to pick up in another session. The review of `1f75a13` was stopped before it reported | Yes |
 | 09-23 | **What the fifth review found** (the review of `1f75a13`, re-run on Windows; still schema 88). Four fixes. (1) A Go or Skip It that carries on a skip after a stop in the night's first hour is that skip for the night: the engine is told where the jump it resumes was sent from (`advanceTo`'s `resumes`, `Simulation.advancing().sentFrom`, `AdvanceResult.sentFrom`), where the Go had counted as the player's own hour and forfeited the night, and a nightly skip to 01:30 past a plan at 00:30 wore 9 of 76 cases down. (2) The forfeit charges the time in bed before the stop as time awake, where it had been left neither charged nor paid. (3) Texts that said a sleep chosen in an unpaid night is paid on top were corrected. (4) 66.75 was corrected to 66.65. Tests were added for the owed night through a one-hour sleep and for the forfeit to live play | Yes |
+| 09-23 | **The transfer to Account 2** (the commit after `d356640`): `npm ci`, the gate and the build were run again, and this file gained "Start here", the file list since `36d2cea`, the dependency advisories and the `gh` facts. No code changed | Yes |
 
 The owner's instructions that shaped the gut and what came after, verbatim from the conversation (no commit records them):
 - "Every single thing, even everything casting and audition. I want it all gone."
@@ -444,7 +561,7 @@ The owner's instructions that shaped the gut and what came after, verbatim from 
 
 ---
 
-## 8. Files changed since the gut (`abd4727..36d2cea`)
+## 8. Files changed since the gut (`abd4727..36d2cea`, then since `36d2cea`)
 
 This is 41 files, +2293/−292. Four are added: `src/engine/core/performer.ts` and `src/engine/content/personality-traits.ts` (both deleted by the gut and brought back reworked), and `src/engine/systems/personality.ts` and `tests/personality.test.ts` (new).
 
@@ -465,6 +582,33 @@ This is 41 files, +2293/−292. Four are added: `src/engine/core/performer.ts` a
   - The browser walks follow the new creation flow (the Billed As pick and the renamed steps): `cohesion-walk.mjs`, `drill.mjs`, `screenshot.mjs`, `text-caps.mjs`, `ui-audit.mjs`, `walkthrough.mjs`.
 - **Docs:** `README.md`, `docs/COVERAGE-MATRIX.md`, `docs/DRILL-DOWN.md`, `docs/UNBITTEN.md`, `docs/UNWIRED.json`.
 
+**Since `36d2cea`**, up to the transfer: 24 files, +3219/−228 at `d356640` (`git diff --stat 36d2cea d356640`). What each is for:
+- **Engine:**
+  - `src/engine/systems/life.ts` (+548): the waking day charged as the clock moves (`life.waking`), and the night nobody chose (`life.night_alone`, `sleepAlone`, `creditNightAlone`, `unattendedNight`, `sleepStandsForTheNight`, `suggestedSleep`), with the rollover left holding only the unattended night, meals and shower.
+  - `src/engine/core/simulation.ts` (+122): `onPassage` reactors, `advancing` (with `sentFrom`), `advancingTo`, and `advanceTo`'s `resumes`.
+  - `src/engine/index.ts` (+120): `openSlot`, and `migrate()` for schemas 87 and 88. It also holds the first rollover's arming, which is the spring-forward bug.
+  - `src/engine/domain/model.ts` (+76): schema 88, `awakeSince`, `wokeWithDebt`, `nightEndsAt` and `nightOwedFrom`.
+  - `src/engine/world/bootstrap.ts`: a new save starts awake from its first moment (`awakeSince`), with a night on record ending then (`lastSleptAt`) and no debt (`wokeWithDebt` 0).
+  - `src/engine/persistence/base44.ts`: the idempotency key includes the schema.
+- **Server guard:** `base44/shared/guard.js`, `SUPPORTED_SCHEMA_VERSION = 88`.
+- **UI:**
+  - `src/ui/shell/TimeControls.tsx`: the Sleep dialog's "tonight's night" line, and Go and Skip It carrying the jump on.
+  - `src/app/game-context.tsx`: `standingAt` with `sentFrom`, and `advanceTo(instant, resumes)`.
+  - `src/ui/looks/wellbeing.tsx`: the Sleep Debt dial's words.
+  - `src/ui/saves/SaveSlots.tsx`: loading through `openSlot`.
+- **Tests:**
+  - `tests/simulation.test.ts` (+1066): the rollover, the night nobody chose, and every review's cases.
+  - `tests/personality.test.ts` (+288): the 76-case calibration years, with plans and Go.
+  - `tests/persistence.test.ts`, `tests/base44-adapter.test.ts` and `tests/looks.test.ts`.
+  - `tests/smoke.test.ts` now asks for a night in the last day of three years, where it had asked only for one at some point.
+- **Tools and docs:**
+  - `tools/inventory.mjs` counts passage reactors.
+  - `docs/COVERAGE-MATRIX.md` lists them.
+  - `.eslintrc.cjs` skips `probe/`.
+  - `README.md`'s test table describes the new `simulation` and `personality` coverage.
+  - `CLAUDE.md` and this file.
+  - `walk-tmp.mjs` was deleted.
+
 `d0636b8` then removed `walk-tmp.mjs`. That was a throwaway Playwright probe from `854b271` with a hardcoded Linux browser path. No file referenced it, and the old `main` had already deleted it in `c341aba`.
 
 ---
@@ -473,6 +617,7 @@ This is 41 files, +2293/−292. Four are added: `src/engine/core/performer.ts` a
 
 | Check | Result |
 |---|---|
+| At the account transfer, on `d356640` (Windows, PowerShell 7.6.6, Node 24.20.0, npm 11.19.0), in this order | `npm ci`: **exit 0** (npm 11's allowScripts warning about esbuild, harmless). `npm ls --depth=0`: **exit 0**, nothing missing or invalid. `npm run gate`, exit code read from a file: **exit 0**, 28 files, **530 tests**. The Base44 contract (22) and server-guard (23) suites are among the 28. Build `npm run build`, exit code read from a file: **exit 0**, 102 modules, 674.40 kB of JS and 35.24 kB of CSS. `npm audit` reports 7 advisories in the dependency tree, which predate this work (§10). Not run: `npm run base44:smoke`, because there's no deployment and no credentials here; `npm run audit`, because it's bash-only (§10); and a browser walk. |
 | `npm run gate` on the fifth review's fixes, on Windows (PowerShell 7.6.6, Node 24.20.0, npm 11.19.0) | **exit 0**, read from a file. 28 files, **530 tests**. The other tools' figures are the same as the row below. |
 | `npm run gate` on the fourth review's fixes (and on `0e80f13`, `fa24fe4`, `bd5b2ef`, the night-alone fix, the rollover fix, the schema-87 commits, and at `36d2cea`, `d0636b8`, `beda4d9`) | **exit 0**. 28 files; 526 tests after the fourth review's fixes and after `0e80f13`, 523 after `fa24fe4`, 521 after `bd5b2ef`, 515 after the night-alone fix, 504 after the rollover review fixes, 500 at `7a373c2`, 485 after the schema-87 review fixes, 480 at `20da24e`, 478 at the earlier three. title-case 0; labels 0; plurals 0; voice 3/40; tics within budget and 0 "Nothing" openers; doc-refs 70 paths in 6 docs, all present; wired 6, matching the baseline; deciders 1 (`weather.day`); spelling 0; typos 0; geo-check 252 countries, 170,911 cities; inventory 8 commands, 3 scheduled kinds, 2 passage reactors (1 before the night-alone fix), 3 events, 1 route. |
 | `npm run build` | **exit 0**; on Windows at the fifth review's fixes, 102 modules and 674.40 kB of JS |
@@ -562,7 +707,18 @@ The handoff and `CLAUDE.md` live at the repository root, so the gate's text tool
 - `tools/base44-smoke.mjs:84` falls back to schema 42 when `SLATE_SCHEMA_VERSION` is unset, and `.env.example` shows 42 too. The guard only refuses a schema above its own, so this still passes, but the number is stale.
 - `APP_VERSION` is 1.1.0 but `package.json` says 1.0.0.
 
+**Dependencies:**
+- `npm audit` reports 7 advisories, measured at the transfer. By package:
+  - critical: `vitest`
+  - high: `vite`
+  - moderate: `@vitest/mocker`, `esbuild`, `vite-node`, `react-router`, `react-router-dom`
+- `vitest`, `vite` and `react-router-dom` are direct dependencies; the other four are transitive.
+- Every fix npm offers is a semver-major upgrade: `vitest` 5, `vite` 8 and `react-router-dom` 7. `package-lock.json` last changed in `1f854d0`, long before this work, so none of the seven came in with it.
+- Everything but `react-router` and `react-router-dom` is build and test tooling that doesn't ship in the bundle.
+- Don't run `npm audit fix --force`. An upgrade is its own module: gate it, walk the UI, and bring it to `main` by PR.
+
 **Portability (Windows):**
+- `gh` is installed but not logged in, and `git push` works through the Git Credential Manager. So a session can push but can't open a PR. Either the owner opens it from the compare link (Start here), or the owner logs `gh` in with `! gh auth login`, which is interactive.
 - `npm run audit` uses bash-only `&`, `sleep` and `kill %1`, and hangs under cmd.exe. To replace it, run the steps by hand or add a small `tools/audit.mjs` that uses Vite's `preview()` API.
 - Five browser tools hardcode `/opt/pw-browsers/...`, and `tools/drill.mjs:96` and `:217` write to `/tmp`. Set `CHROMIUM_PATH` for now. The fix is to launch Playwright's own browser when the path doesn't exist, as `tools/text-caps.mjs:289-290` does with `existsSync`, and to use `os.tmpdir()` in `tools/drill.mjs`.
 - There is no `.gitattributes`. Adding `* text=auto eol=lf` would make every fresh checkout LF. The index is already all LF, so no renormalization is needed. Files in an existing working tree keep CRLF until they're checked out again.
@@ -598,7 +754,7 @@ The handoff and `CLAUDE.md` live at the repository root, so the gate's text tool
 - `stash@{0}` (`227fa5a`, "Teleport auto-stash", with the branch `teleport-stash-backup` at the same commit). Per the previous handoff, it holds 23 files: +67 lines in `tools/cohesion-walk.mjs`, a context export, and screenshots under `cohesion-walk/`.
 - The dropped line up to `4a00db8`, plus 20 commits past it from 09-21 that were never on GitHub (§3), on the local branches `archive/local-pre-cut-line-2026-09-21` and `archive/pre-gut-line`, both at `a8e1106`, both unpushed.
 - Untracked files at the repository root, from the old line: `SLATE-CURRENT-CLEANUP-FULL-CONTEXT.txt` (09-17), and `out/`, `out2/` and `out25/` (09-18). The old line's `.gitignore` hid them, so they show as `??` now. Never `git add -A` or `git add .` here.
-- `probe/` (git-ignored) holds the fifth review's probes (`probe\rev-*`, `probe\skeptic-*`, `probe\fix-1f75a13`), its mutation copies (`probe\mut-*`) and read-only copies of four revisions (`probe\ref\ed0cab7`, `fa24fe4`, `0e80f13`, `1f75a13`), each with a junction to `node_modules`. It's scratch; nothing in it is needed, and every figure from it is in this file or a commit message.
+- `probe/` (git-ignored) holds the fifth review's probes (`probe\rev-*`, `probe\skeptic-*`, `probe\fix-1f75a13`), its mutation copies (`probe\mut-*`) and read-only copies of four revisions (`probe\ref\ed0cab7`, `fa24fe4`, `0e80f13`, `1f75a13`), each with a junction to `node_modules`. It's scratch; nothing in it is needed, and every figure from it is in this file or a commit message. Its `HANDOFF-NOTES.md` holds Account 1's running notes, all of them folded into this file at the transfer.
 
 Keep the first three until the owner says otherwise.
 
@@ -641,7 +797,9 @@ node tools/voice-check.mjs; node tools/tics.mjs   # text habits, report only
 git log --oneline --grep=session_01Na7AwFNze8QYVWFfuUXBhY | Measure-Object -Line   # 183 at beda4d9 (179 to 36d2cea plus four from 09-23), one more for each later commit from this session (188 at 20da24e, 191 at 7a373c2)
 git log --oneline --grep=session_016rs5iQsnQMfHXUzUnFERmU                           # the first Windows session's commits (§4)
 git push -u origin claude/slate-cleanup-e4apmx
-gh pr create --base main --head claude/slate-cleanup-e4apmx                         # gh is installed on the owner's machine; merging stays with the owner
+gh auth status                                                                      # not logged in at the transfer; the owner opens PRs from the compare link unless they log gh in
+gh pr create --base main --head claude/slate-cleanup-e4apmx                         # only once gh is logged in; merging stays with the owner
+git ls-remote origin 'refs/pull/*/head'                                             # which PRs exist, without gh: GitHub publishes refs/pull/N/head
 ```
 
 **Gotchas met on Windows** (2026-09-23):
