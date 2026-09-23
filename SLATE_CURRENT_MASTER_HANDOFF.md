@@ -4,7 +4,7 @@
 **Written for:** the next Claude Code session, running on the owner's Windows machine under PowerShell 7.
 **Repository:** `github.com/yvcbcjhsy7-prog/1221`
 **Working branch:** `claude/slate-cleanup-e4apmx`
-**Verified at:** `36d2cea` ("Fit the new step names, and match Review to them"), the last code commit. Every commit after it on this branch is housekeeping for this handoff: `d0636b8` removes a scratch file, `acf5e10` adds this file, and later commits correct it.
+**Verified at:** `36d2cea` ("Fit the new step names, and match Review to them"), the last code commit. Every commit after it on this branch is documentation: `d0636b8` removes a scratch file, `acf5e10` adds this file, `6c18b6b` corrects it, and the next commit brings `CLAUDE.md` over.
 
 This is the one handoff. The owner's `CLAUDE.md` names `SLATE_CURRENT_MASTER_HANDOFF.md` as the only file that passes between sessions. `PROJECT_HANDOFF.md` was retired in `b6f4061`, and keeping a single file stops two handoffs drifting apart. Earlier versions of this file are on GitHub `main` (as of `46f48f3`, 09-18) and, newer, at `4a00db8` (09-21), which is on no GitHub branch. Both describe the line the owner replaced on 2026-09-22 (see §1), so read them only as history.
 
@@ -18,7 +18,7 @@ When this file and the tree disagree, the tree wins. Correct this file in the sa
 2. **`main` and this branch have diverged.** GitHub `main` (`e139e06`, 2026-09-18) carries 67 commits from the line the owner chose to drop, merged through PR #15 and PR #16. Counting the five merge commits for PRs #12 to #16, this branch lacks 72 commits that `main` has. It forked from that line at `dc52d64` (2026-09-16) and has 14 code commits of its own since, plus the handoff commits from 09-23. Merging either way is an owner decision; don't do it on your own (§12).
 3. **The Windows clone is probably still on the dropped line.** The previous handoff says the Windows branch matched the remote on 2026-09-21. The remote tip that day was `4a00db8`. **Don't `git pull` there**: it would try to merge about 157 commits of removed game into this branch. Follow §3, which moves the clone over without losing anything.
 4. **Schema 83 means two different things.** Here, 83 is "personality restored". On `main`, 83 is the old family-and-film build, and the dropped line went up to 86. This branch and `main` both stamp creation drafts `1.1.0/83`, so a `main` save or draft at 83 opens here as if it were this build's. The dropped line's tip stamps `1.1.0/86`, so this build discards its drafts and refuses its saves as newer. Before playing this build locally, copy out and clear the `slate.*` keys in the browser's localStorage (§3, step 7).
-5. **This branch has no `CLAUDE.md`.** The owner's blueprint lives on `main` and on the dropped line. Its standing rules still apply and are summarized in §7. Bringing it onto this branch is an open question for the owner (§12).
+5. **`CLAUDE.md` is on this branch now.** The owner asked on 2026-09-23 for their blueprint to come over from `main`, corrected where it named things this branch no longer has. It holds the rules, and this file holds the state. §7 summarizes the rules.
 
 ---
 
@@ -102,7 +102,7 @@ The previous handoff recorded these things on that machine: `stash@{0}` = `227fa
 **Step 2: Fetch.** This only updates remote-tracking refs.
 ```powershell
 git fetch origin    # the branch's line says "(forced update)": that's the 09-22 replacement, and it's expected
-git log --oneline 36d2cea..origin/claude/slate-cleanup-e4apmx   # expect only handoff commits: d0636b8, acf5e10 and later corrections to this file
+git log --oneline 36d2cea..origin/claude/slate-cleanup-e4apmx   # expect only documentation commits: d0636b8, acf5e10, 6c18b6b, the CLAUDE.md commit, and any later ones to these two files
 ```
 
 **Step 3: Line endings, before any switch.** The index is all LF, and there's no `.gitattributes`. The Git for Windows installer sets `core.autocrlf=true` system-wide. The previous session set a repo-local `false` after the old line's voice-check counted 41 against its budget of 40 under CRLF. This line's gate passed under CRLF in a test on 2026-09-23, so the setting is no longer what makes the gate pass. It keeps the working tree byte-identical to what's committed. Files written by a switch take the setting in force at that moment, so confirm it first:
@@ -135,7 +135,7 @@ This tests the local branch itself, not whatever HEAD happens to be.
 
 If `git merge --ff-only` refuses, stop and ask the owner. Don't follow git's hint to run `git merge --no-ff` or `git rebase`: either one would pull the dropped line into this branch.
 
-Git refuses a switch that would overwrite an untracked file. That refusal is safe; ask the owner before moving the file. Switching takes the old line's tracked files off the disk, including the old `CLAUDE.md` and handoff, and they stay on `archive/pre-gut-line`. The stash isn't touched, because it doesn't belong to a branch.
+Git refuses a switch that would overwrite an untracked file. That refusal is safe; ask the owner before moving the file. Switching takes the old line's tracked files off the disk and puts this branch's `CLAUDE.md` and handoff in place of the old ones. The old versions stay on `archive/pre-gut-line`. The stash isn't touched, because it doesn't belong to a branch.
 
 After the switch, `SLATE-CURRENT-CLEANUP-FULL-CONTEXT.txt` shows as `??`, because this line's `.gitignore` doesn't list it. Leave it, and never run `git add -A` or `git add .` in this clone. To hide it again without a commit: `Add-Content .git\info\exclude 'SLATE-CURRENT-CLEANUP-FULL-CONTEXT.txt'`.
 
@@ -180,7 +180,7 @@ node tools/walkthrough.mjs walkthrough
 
 These are the commits that carry `Claude-Session: https://claude.ai/code/session_01Na7AwFNze8QYVWFfuUXBhY`:
 - 179 of them lead up to `36d2cea`. The first is `62c30ca` ("Cut SLATE back to six things", 09-09) and the last code commit is `36d2cea` (09-22).
-- The 09-23 handoff commits carry the same trailer, so the grep below returns 181 or more.
+- The 09-23 documentation commits carry the same trailer, so the grep below returns 181 or more.
 - 165 of them, everything up to `dc52d64`, are also on `main`.
 - The 14 from 09-22, and the 09-23 commits, exist only on this branch.
 
@@ -200,7 +200,7 @@ To list them: `git log --oneline --grep=session_01Na7AwFNze8QYVWFfuUXBhY`.
 | 09-22 | **Personality and traits restored**, then review fixes and sleep calibration (`8aedbe5` schema 83, `3c704a8`) | Yes |
 | 09-22 | Sleep dialog stops promising bills, messages and other people (`406a5c6`) | Yes |
 | 09-22 | **Step renames** to "Dispositions & Traits" and "Interests & Background", the tab row reworked, Review matches (`a93841a`, `36d2cea`) | Yes |
-| 09-23 | This handoff (`acf5e10` and its corrections), plus removal of the tracked scratch file `walk-tmp.mjs` (`d0636b8`) | Yes |
+| 09-23 | This handoff (`acf5e10`, corrected in `6c18b6b`), removal of the tracked scratch file `walk-tmp.mjs` (`d0636b8`), and the owner's `CLAUDE.md` brought over from `main`, corrected for this branch | Yes |
 
 The owner's instructions that shaped the gut and what came after, verbatim from the conversation (no commit records them):
 - "Every single thing, even everything casting and audition. I want it all gone."
@@ -357,7 +357,7 @@ The owner's instructions that shaped the gut and what came after, verbatim from 
   - Avoid destructive operations (resets, force pushes, mass deletes, credential changes) without explicit approval.
   - Keep changes traceable in git.
   - End substantial work with what changed, what ran, the results, and what still needs attention.
-- **The owner's `CLAUDE.md` constraints** (on `main`, not on this branch):
+- **The owner's `CLAUDE.md` constraints** (at the repository root; `CLAUDE.md` is the authority, and this is a summary):
   - Never apply, pop or drop the stash.
   - Never merge worktrees.
   - Never force-push the working branch. `CLAUDE.md` gives no exception. The one force-push, `abd4727` over `4a00db8` on 09-22, was an exception the owner ordered in person.
@@ -532,7 +532,6 @@ Keep all of them until the owner says otherwise.
      - Open a PR from this branch and resolve every conflict in this branch's favor. That needs a merge commit, and the owner's approval.
      - Or leave `main` as the record of the old line.
      - Either way, don't merge, reset or force-push without the owner.
-   - **`CLAUDE.md`:** bring the owner's blueprint onto this branch, corrected where it names things that are gone (`tools/claims.mjs`, `docs/ARREARS.md`, "seventeen checks")?
    - **Container leftovers:** archive the §11 commits, or let them go.
 3. **Retire the schema collision.** At the next schema bump, jump past the old line's numbers (to 87, for example) and move `base44/shared/guard.js` with it. Every save from either line then runs through the shape-based `migrate()`. Consider bumping `APP_VERSION` too, so old creation drafts are dropped.
 4. **Windows hygiene commit:**
@@ -558,6 +557,6 @@ npm run dev                                    # 5173
 npm run preview                                # 4173, second terminal
 node tools/wired.mjs                           # what nothing reads, report only
 node tools/voice-check.mjs; node tools/tics.mjs   # text habits, report only
-git log --oneline --grep=session_01Na7AwFNze8QYVWFfuUXBhY | Measure-Object -Line   # 181 or more: 179 to 36d2cea plus the handoff commits
+git log --oneline --grep=session_01Na7AwFNze8QYVWFfuUXBhY | Measure-Object -Line   # 181 or more: 179 to 36d2cea plus the 09-23 documentation commits
 git push -u origin claude/slate-cleanup-e4apmx
 ```
