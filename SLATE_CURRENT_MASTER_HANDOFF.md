@@ -4,9 +4,9 @@
 **Written for:** the next Claude Code session, running on the owner's Windows machine under PowerShell 7.
 **Repository:** `github.com/yvcbcjhsy7-prog/1221`
 **Working branch:** `claude/slate-cleanup-e4apmx`
-**Verified at:** `36d2cea` ("Fit the new step names, and match Review to them"), the last code commit. Every commit after it on this branch is documentation: `d0636b8` removes a scratch file, `acf5e10` adds this file, `6c18b6b` corrects it, and the next commit brings `CLAUDE.md` over.
+**Verified at:** `36d2cea` ("Fit the new step names, and match Review to them"), the last code commit. Every commit after it on this branch leaves the build alone: `d0636b8` removes an unreferenced scratch file, `acf5e10` adds this file, `6c18b6b` corrects it, and `beda4d9` brings `CLAUDE.md` over. Later commits, if any, correct these two files.
 
-This is the one handoff. The owner's `CLAUDE.md` names `SLATE_CURRENT_MASTER_HANDOFF.md` as the only file that passes between sessions. `PROJECT_HANDOFF.md` was retired in `b6f4061`, and keeping a single file stops two handoffs drifting apart. Earlier versions of this file are on GitHub `main` (as of `46f48f3`, 09-18) and, newer, at `4a00db8` (09-21), which is on no GitHub branch. Both describe the line the owner replaced on 2026-09-22 (see §1), so read them only as history.
+This is the one handoff. The owner's `CLAUDE.md` names `SLATE_CURRENT_MASTER_HANDOFF.md` as the only state that passes between sessions; `CLAUDE.md` itself carries the owner's rules. `PROJECT_HANDOFF.md` was retired in `b6f4061`, and keeping a single file stops two handoffs drifting apart. Earlier versions of this file are on GitHub `main` (as of `46f48f3`, 09-18) and, newer, at `4a00db8` (09-21), which is on no GitHub branch. Both describe the line the owner replaced on 2026-09-22 (see §1), so read them only as history.
 
 When this file and the tree disagree, the tree wins. Correct this file in the same commit.
 
@@ -15,10 +15,10 @@ When this file and the tree disagree, the tree wins. Correct this file in the sa
 ## 0. Read this box first
 
 1. **Work on `claude/slate-cleanup-e4apmx`, not `main`.** Everything described here is on that branch, pushed, and level with GitHub.
-2. **`main` and this branch have diverged.** GitHub `main` (`e139e06`, 2026-09-18) carries 67 commits from the line the owner chose to drop, merged through PR #15 and PR #16. Counting the five merge commits for PRs #12 to #16, this branch lacks 72 commits that `main` has. It forked from that line at `dc52d64` (2026-09-16) and has 14 code commits of its own since, plus the handoff commits from 09-23. Merging either way is an owner decision; don't do it on your own (§12).
+2. **`main` and this branch have diverged.** GitHub `main` (`e139e06`, 2026-09-18) carries 67 commits from the line the owner chose to drop, merged through PR #15 and PR #16. Counting the five merge commits for PRs #12 to #16, this branch lacks 72 commits that `main` has. It forked from that line at `dc52d64` (2026-09-16) and has 14 code commits of its own since, plus the 09-23 commits that leave the build alone (§4). Merging either way is an owner decision; don't do it on your own (§12).
 3. **The Windows clone is probably still on the dropped line.** The previous handoff says the Windows branch matched the remote on 2026-09-21. The remote tip that day was `4a00db8`. **Don't `git pull` there**: it would try to merge about 157 commits of removed game into this branch. Follow §3, which moves the clone over without losing anything.
 4. **Schema 83 means two different things.** Here, 83 is "personality restored". On `main`, 83 is the old family-and-film build, and the dropped line went up to 86. This branch and `main` both stamp creation drafts `1.1.0/83`, so a `main` save or draft at 83 opens here as if it were this build's. The dropped line's tip stamps `1.1.0/86`, so this build discards its drafts and refuses its saves as newer. Before playing this build locally, copy out and clear the `slate.*` keys in the browser's localStorage (§3, step 7).
-5. **`CLAUDE.md` is on this branch now.** The owner asked on 2026-09-23 for their blueprint to come over from `main`, corrected where it named things this branch no longer has. It holds the rules, and this file holds the state. §7 summarizes the rules.
+5. **`CLAUDE.md` is on this branch now.** The owner asked on 2026-09-23 for their blueprint to come over from `main`, corrected for this branch. The seventeen rules and the standing constraints are unchanged; §7 summarizes them. A clone still on the old line has the old `CLAUDE.md` on disk, and a session started there has loaded it, until §3's switch.
 
 ---
 
@@ -33,11 +33,11 @@ When this file and the tree disagree, the tree wins. Correct this file in the sa
 | The replacement on 2026-09-22 | `abd4727` ("the gut") was pushed over `4a00db8` with the owner's explicit approval. That dropped 157 commits dated 09-17 to 09-21 from three other sessions. 67 of them reached `main` through PRs #15/#16. The other 90 (`46f48f3..4a00db8`) are on no GitHub branch. The owner's words: "destroy those 157 commits, the real work is what we're doing now." |
 | Save schema | `SAVE_SCHEMA_VERSION = 83` (`src/engine/domain/model.ts:375`) and `SUPPORTED_SCHEMA_VERSION = 83` (`base44/shared/guard.js:25`). Move both together. |
 | App version | `APP_VERSION = '1.1.0'` (`src/engine/world/bootstrap.ts`). `package.json` says `1.0.0`, and the two don't match. |
-| Gate | `npm run gate` exits **0**: 28 test files, **478 tests**, and every gate tool. Run on 2026-09-23 at `36d2cea` and again at `d0636b8`. |
+| Gate | `npm run gate` exits **0**: 28 test files, **478 tests**, and every gate tool. Run on 2026-09-23 at `36d2cea`, at `d0636b8` and at `beda4d9`. |
 | Build | `npm run build` exits **0** (102 modules, JS 670.69 kB / 240.16 kB gzip). |
 | Browser walk | A scratch Playwright script (not in the repo) walked all nine pages at 1440 wide against `vite preview`: **0 page errors**, and no `undefined`, `NaN` or `[object Object]` on the eight pages after the start screen. The start screen was only photographed. |
 | Working tree | Clean, with everything pushed. |
-| Tracked files | 624 at `36d2cea` |
+| Tracked files | 624 at `36d2cea`, 625 at `beda4d9` |
 
 ---
 
@@ -82,7 +82,7 @@ The engine registers 8 commands, 3 scheduled kinds and 1 route. `tools/inventory
 
 Each step below says what it does. Run them in order and read the output. Stop and ask the owner if anything differs from what is expected.
 
-**Before anything: this file isn't on that disk yet.** The Windows working tree holds the old line's `SLATE_CURRENT_MASTER_HANDOFF.md` and `CLAUDE.md`. Their git procedures, including `git pull` and `git reset --hard origin/claude/slate-cleanup-e4apmx`, **must not be followed**: after the 09-22 replacement they would merge the dropped line into this one or throw it away. After Step 2's fetch, read this version with `git show origin/claude/slate-cleanup-e4apmx:SLATE_CURRENT_MASTER_HANDOFF.md`.
+**Before anything: this file isn't on that disk yet.** The Windows working tree holds the old line's `SLATE_CURRENT_MASTER_HANDOFF.md` and `CLAUDE.md`, and a Claude Code session started in that clone loaded the old `CLAUDE.md` when it started. Its seventeen rules match this branch's, but its facts don't: it counts seventeen gate checks, names `tools/claims.mjs` and `docs/ARREARS.md`, and says twenty-two tests go down. Follow this branch's copy instead. The old handoff's git procedures, including `git pull` and `git reset --hard origin/claude/slate-cleanup-e4apmx`, **must not be followed**: after the 09-22 replacement they would merge the dropped line into this one or throw it away. After Step 2's fetch, read this branch's two files with `git show origin/claude/slate-cleanup-e4apmx:SLATE_CURRENT_MASTER_HANDOFF.md` and `git show origin/claude/slate-cleanup-e4apmx:CLAUDE.md`.
 
 Stop any `npm run dev` or `npm run preview`, and close editors on the clone, before switching branches or running `npm ci`. On Windows a locked file makes git ask "Unlink of file … failed. Should I try again?" and can leave stale files behind, and it makes `npm ci` fail with EPERM.
 
@@ -102,7 +102,7 @@ The previous handoff recorded these things on that machine: `stash@{0}` = `227fa
 **Step 2: Fetch.** This only updates remote-tracking refs.
 ```powershell
 git fetch origin    # the branch's line says "(forced update)": that's the 09-22 replacement, and it's expected
-git log --oneline 36d2cea..origin/claude/slate-cleanup-e4apmx   # expect only documentation commits: d0636b8, acf5e10, 6c18b6b, the CLAUDE.md commit, and any later ones to these two files
+git log --oneline 36d2cea..origin/claude/slate-cleanup-e4apmx   # expect beda4d9, 6c18b6b, acf5e10 and d0636b8, plus any later commits that touch only this file or CLAUDE.md
 ```
 
 **Step 3: Line endings, before any switch.** The index is all LF, and there's no `.gitattributes`. The Git for Windows installer sets `core.autocrlf=true` system-wide. The previous session set a repo-local `false` after the old line's voice-check counted 41 against its budget of 40 under CRLF. This line's gate passed under CRLF in a test on 2026-09-23, so the setting is no longer what makes the gate pass. It keeps the working tree byte-identical to what's committed. Files written by a switch take the setting in force at that moment, so confirm it first:
@@ -135,7 +135,7 @@ This tests the local branch itself, not whatever HEAD happens to be.
 
 If `git merge --ff-only` refuses, stop and ask the owner. Don't follow git's hint to run `git merge --no-ff` or `git rebase`: either one would pull the dropped line into this branch.
 
-Git refuses a switch that would overwrite an untracked file. That refusal is safe; ask the owner before moving the file. Switching takes the old line's tracked files off the disk and puts this branch's `CLAUDE.md` and handoff in place of the old ones. The old versions stay on `archive/pre-gut-line`. The stash isn't touched, because it doesn't belong to a branch.
+Git refuses a switch that would overwrite an untracked file. That refusal is safe; ask the owner before moving the file. Switching takes the old line's tracked files off the disk and puts this branch's `CLAUDE.md` and handoff in their place. The old versions stay on the branch you left (`archive/pre-gut-line` after the `1` case). The switch doesn't change what a running session has already loaded, so a session started before it still holds the old `CLAUDE.md`: read `CLAUDE.md` from disk now and follow it where the two differ, or start a new session in the clone. The stash isn't touched, because it doesn't belong to a branch.
 
 After the switch, `SLATE-CURRENT-CLEANUP-FULL-CONTEXT.txt` shows as `??`, because this line's `.gitignore` doesn't list it. Leave it, and never run `git add -A` or `git add .` in this clone. To hide it again without a commit: `Add-Content .git\info\exclude 'SLATE-CURRENT-CLEANUP-FULL-CONTEXT.txt'`.
 
@@ -143,8 +143,10 @@ After the switch, `SLATE-CURRENT-CLEANUP-FULL-CONTEXT.txt` shows as `??`, becaus
 ```powershell
 node -v; npm -v      # the previous handoff recorded Node v24.20.0 and npm 11.19.0 there, where the old line's gate passed. This line was verified on Node 22.22.2 and npm 10.9.7 only.
 npm ci
-npm run gate *> "$env:TEMP\slate-gate.txt"; "gate exit=$LASTEXITCODE"
-Select-String -Path "$env:TEMP\slate-gate.txt" -Pattern 'Test Files|Tests ' -CaseSensitive
+npm run gate *> "$env:TEMP\gate.txt"
+"exit=$LASTEXITCODE" | Out-File -Encoding utf8 "$env:TEMP\gate-exit.txt"
+Get-Content "$env:TEMP\gate-exit.txt"      # expect exit=0
+Select-String -Path "$env:TEMP\gate.txt" -Pattern 'Test Files|Tests ' -CaseSensitive
 npm run build; "build exit=$LASTEXITCODE"
 ```
 Expect gate exit 0 and **478 tests in 28 files**. A different number means something differs between the machines. Investigate it before building anything.
@@ -180,7 +182,7 @@ node tools/walkthrough.mjs walkthrough
 
 These are the commits that carry `Claude-Session: https://claude.ai/code/session_01Na7AwFNze8QYVWFfuUXBhY`:
 - 179 of them lead up to `36d2cea`. The first is `62c30ca` ("Cut SLATE back to six things", 09-09) and the last code commit is `36d2cea` (09-22).
-- The 09-23 documentation commits carry the same trailer, so the grep below returns 181 or more.
+- The 09-23 commits (`d0636b8`, `acf5e10`, `6c18b6b`, `beda4d9` and any later ones) carry the same trailer, so the grep below returns 183 at `beda4d9`, and one more for each later commit from this session.
 - 165 of them, everything up to `dc52d64`, are also on `main`.
 - The 14 from 09-22, and the 09-23 commits, exist only on this branch.
 
@@ -200,7 +202,7 @@ To list them: `git log --oneline --grep=session_01Na7AwFNze8QYVWFfuUXBhY`.
 | 09-22 | **Personality and traits restored**, then review fixes and sleep calibration (`8aedbe5` schema 83, `3c704a8`) | Yes |
 | 09-22 | Sleep dialog stops promising bills, messages and other people (`406a5c6`) | Yes |
 | 09-22 | **Step renames** to "Dispositions & Traits" and "Interests & Background", the tab row reworked, Review matches (`a93841a`, `36d2cea`) | Yes |
-| 09-23 | This handoff (`acf5e10`, corrected in `6c18b6b`), removal of the tracked scratch file `walk-tmp.mjs` (`d0636b8`), and the owner's `CLAUDE.md` brought over from `main`, corrected for this branch | Yes |
+| 09-23 | This handoff (`acf5e10`, corrected in `6c18b6b`), removal of the tracked scratch file `walk-tmp.mjs` (`d0636b8`), and the owner's `CLAUDE.md` brought over from `main`, corrected for this branch (`beda4d9`) | Yes |
 
 The owner's instructions that shaped the gut and what came after, verbatim from the conversation (no commit records them):
 - "Every single thing, even everything casting and audition. I want it all gone."
@@ -341,7 +343,8 @@ The owner's instructions that shaped the gut and what came after, verbatim from 
 - **Autopilot charges the waking day as a sound sleeper's (24 − sound), not 24 minus the hours actually slept.** When the lie-in also shortened the waking day, a poor sleeper came out better rested than a sound one (`3c704a8`).
 - **Two step names:** "Dispositions & Traits" is the owner's name. The owner left the next page's name to the session, which chose "Interests & Background". Tab labels keep "&" with the word before it through a non-breaking space. From 700 px each tab is as wide as its name. In the container the row is one line only from 708 px; between 700 and 707 px, Review wraps onto a line of its own. Measure again on Windows, where fonts and scrollbars differ.
 - **Screens must be true.** The Sleep dialog stopped promising bills, messages and other people, because none of those exist in this build.
-- **This handoff brings the canonical file onto this branch, rewritten,** instead of adding a second `PROJECT_HANDOFF.md`, so only one handoff exists.
+- **This handoff brings `SLATE_CURRENT_MASTER_HANDOFF.md` onto this branch, rewritten,** instead of adding a second `PROJECT_HANDOFF.md`, so only one handoff exists.
+- **`CLAUDE.md` came over from `main` at the owner's request (`beda4d9`).** The seventeen rules and the standing constraints are unchanged. What it said about the repository was corrected for this branch: twelve gate checks, no `tools/claims.mjs` or `docs/ARREARS.md` here, the schema tests measured here, the guard's constant name, why a pipe can hide the gate's exit code under PowerShell 7, and a pointer to §10 before deploying.
 
 ---
 
@@ -367,7 +370,7 @@ The owner's instructions that shaped the gut and what came after, verbatim from 
   - Make ordinary design calls yourself and report them, instead of opening with a menu.
   - Update this handoff when a phase completes and before a switch of account or machine.
   - Deploy to Base44 only after the gate passes.
-  - Read the gate's exit code from the command, never from a pipe.
+  - Read the gate's exit status from a file, never from a pipe.
   - When a change makes a comment false, say what's no longer true, in the past tense. `tools/claims.mjs`, which checked this on `main`, isn't on this branch, so review it by hand.
   - A ledger balance is the sum of its postings, never a typed number.
   - Mutation-test every claim a test protects.
@@ -387,7 +390,7 @@ The owner's instructions that shaped the gut and what came after, verbatim from 
 | Title Case on every label, small words included ("Skip To Event"). | `tools/title-case.mjs --check`, `tools/label-sweep.mjs` |
 | Contractions in prose, with the typographic apostrophe (’). Labels are not contracted. Straight apostrophes between letters are banned in `src/ui/looks/`. | `tools/voice-check.mjs --check` (budget 40, now 3), `tests/looks.test.ts` |
 | Tics budget. "rather than" is limited (5 of 12 used). **No sentence opens with "Nothing"** (0 of 0). | `tools/tics.mjs --check` |
-| American spelling, in strings, comments and docs. | `tools/spelling.mjs` catches only its word list (colour, favourite, …) under `src/`, `tools/`, `tests/` and `docs/`. It misses -ise forms and never reads `README.md` or this file, so review the rest. `tools/typos.mjs` catches misspellings and doubled words. |
+| American spelling, in strings, comments and docs. | `tools/spelling.mjs` catches only its word list (colour, favourite, …) under `src/`, `tools/`, `tests/` and `docs/`. It misses -ise forms and never reads `README.md`, `CLAUDE.md` or this file, so review the rest. `tools/typos.mjs` catches misspellings and doubled words. |
 | `plural(n, 'thing')`, never "1 things". A figure out of a hundred is written "82/100". | `tools/plural-check.mjs`, `tests/looks.test.ts` |
 | Identifiers are never renamed to improve a label. | Review |
 | Every command, scheduled kind and route is listed in `docs/COVERAGE-MATRIX.md`. | `tools/inventory.mjs --check` |
@@ -425,12 +428,12 @@ This is 41 files, +2293/−292. Four are added: `src/engine/core/performer.ts` a
 
 | Check | Result |
 |---|---|
-| `npm run gate` at `36d2cea`, and again at `d0636b8` | **exit 0**. 28 files, 478 tests passed. title-case 0; labels 0; plurals 0; voice 3/40; tics within budget and 0 "Nothing" openers; doc-refs 69 paths in 6 docs, all present; wired 6, matching the baseline; deciders 1 (`weather.day`); spelling 0; typos 0; geo-check 252 countries, 170,911 cities; inventory 8 commands, 3 scheduled kinds, 3 events, 1 route. |
+| `npm run gate` at `36d2cea`, `d0636b8` and `beda4d9` | **exit 0**. 28 files, 478 tests passed. title-case 0; labels 0; plurals 0; voice 3/40; tics within budget and 0 "Nothing" openers; doc-refs 69 paths in 6 docs, all present; wired 6, matching the baseline; deciders 1 (`weather.day`); spelling 0; typos 0; geo-check 252 countries, 170,911 cities; inventory 8 commands, 3 scheduled kinds, 3 events, 1 route. |
 | `npm run build` | **exit 0** |
 | Browser walk (a scratch Playwright script not in the repo, `vite preview`, 1440 wide) | Start screen, save slots, all five creation steps, Home, Calendar. **0 page errors**. No `undefined`, `NaN` or `[object Object]` on the eight pages after the start screen; the start screen was only photographed. |
 | Secret scan of the handoff commit | No keys, tokens or `.env` values. `.env` is git-ignored. `.env.example` holds two empty placeholders (`SLATE_BASE44_URL`, `SLATE_BASE44_TOKEN`) and a commented-out optional `SLATE_SCHEMA_VERSION=42`. |
 
-The handoff lives at the repository root, so the gate's text tools don't read it; its facts were checked by hand against git and the code.
+The handoff and `CLAUDE.md` live at the repository root, so the gate's text tools don't read them; their facts were checked by hand against git and the code.
 
 ---
 
@@ -453,6 +456,7 @@ The handoff lives at the repository root, so the gate's text tools don't read it
   - Four axes move nothing, and the money traits are only said back.
   - Most trait costs aren't charged, for example Early Riser at night and anything about other people.
   - Citizenship is written and never read.
+  - Fitness only falls: it drops 0.18 a day and has no writer that raises it (`src/engine/systems/life.ts:291-297` says so). `docs/UNBITTEN.md` doesn't list it.
   - The tax engine only displays.
   - `recordOfficialResult` has no caller, so no `SlateOfficialResult` row is ever written.
   - `Costume`, `Order`, `Training`, `Mark` and `Running` are declared types with no table.
@@ -518,7 +522,7 @@ The handoff lives at the repository root, so the gate's text tools don't read it
 Keep all of them until the owner says otherwise.
 
 **On GitHub but not on this branch:**
-- `main` (`e139e06`), with `CLAUDE.md` and the old handoff.
+- `main` (`e139e06`), with its uncorrected `CLAUDE.md` and the old handoff, both written for the dropped line.
 - 15 `base44/setup-*` branches and `claude/base44-app-code-zzeh07`.
 - Three tags: `parallel-production-rebuild-deleted`, `production-system-before-deletion-2` and `production-system-before-deletion-3`.
 
@@ -551,12 +555,12 @@ Keep all of them until the owner says otherwise.
 
 ```powershell
 git status -sb; git log --oneline -5; git stash list; git worktree list
-npm run gate *> "$env:TEMP\slate-gate.txt"; "gate exit=$LASTEXITCODE"
+npm run gate *> "$env:TEMP\gate.txt"; "exit=$LASTEXITCODE" | Out-File -Encoding utf8 "$env:TEMP\gate-exit.txt"; Get-Content "$env:TEMP\gate-exit.txt"
 npm run build; "build exit=$LASTEXITCODE"
 npm run dev                                    # 5173
 npm run preview                                # 4173, second terminal
 node tools/wired.mjs                           # what nothing reads, report only
 node tools/voice-check.mjs; node tools/tics.mjs   # text habits, report only
-git log --oneline --grep=session_01Na7AwFNze8QYVWFfuUXBhY | Measure-Object -Line   # 181 or more: 179 to 36d2cea plus the 09-23 documentation commits
+git log --oneline --grep=session_01Na7AwFNze8QYVWFfuUXBhY | Measure-Object -Line   # 183 at beda4d9 (179 to 36d2cea plus four from 09-23), one more for each later commit
 git push -u origin claude/slate-cleanup-e4apmx
 ```
