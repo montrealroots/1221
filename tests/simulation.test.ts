@@ -394,6 +394,62 @@ describe('migrations and validation', () => {
     expect(other.universe.people[other.universe.playerId]!.performerTitle).toBe('actor');
   });
 
+  it('brings a save from the line this one replaced forward, at any number that line used', () => {
+    // The older line split from this one at 79 and counted on to 86. At 87
+    // every one of its numbers is older than this build, so every one migrates.
+    expect(SAVE_SCHEMA_VERSION).toBeGreaterThan(86);
+    for (const from of [83, 84, 85, 86]) {
+      const sim = quickSave({ pronouns: 'she/her' }, `older-line-${from}`);
+      const universe = sim.universe;
+      universe.meta.schemaVersion = from;
+      const bag = universe as unknown as Record<string, unknown>;
+      const row = universe.people[universe.playerId] as unknown as Record<string, unknown>;
+      row.personality = { conscientiousness: 80, emotionalStability: 20, ambition: 95 };
+      row.personalityTraits = ['night_owl', 'light_sleeper', 'loyal', 'curious'];
+      Object.assign(row, {
+        attributes: {}, traits: ['range'], prodigy: true, reputation: { publicFame: 40 },
+        careerTrack: 'actor', reputationDriftedAt: universe.now, gender: 'female',
+        householdId: 'household_000001', residenceId: 'prop_000001',
+      });
+      (universe.meta as unknown as Record<string, unknown>).performerTitle = 'actress';
+      bag.households = { household_000001: { id: 'household_000001', saveId: universe.meta.id } };
+      bag.tutorial = { seen: {}, dismissed: false };
+      delete bag.history;
+
+      const result = migrate(universe);
+
+      expect(result.migrated, String(from)).toBe(true);
+      expect(result.problems, String(from)).toEqual([]);
+      expect(result.steps.at(-1), String(from)).toBe(`Schema ${from} to ${SAVE_SCHEMA_VERSION}.`);
+      for (const key of [
+        'attributes', 'traits', 'prodigy', 'reputation', 'careerTrack', 'reputationDriftedAt',
+        'gender', 'householdId', 'residenceId',
+      ]) expect(key in row, `${from} ${key}`).toBe(false);
+      expect(row.personality).toEqual({
+        openness: 55, conscientiousness: 80, extraversion: 55, agreeableness: 55,
+        emotionalStability: 20, ambition: 95, riskTolerance: 50,
+      });
+      expect(row.personalityTraits).toEqual(['night_owl', 'light_sleeper', 'loyal', 'curious']);
+      expect(row.performerTitle).toBe('actress');
+      expect('performerTitle' in universe.meta).toBe(false);
+      // The parts this build has no screen for stay, untouched.
+      expect(bag.households).toEqual({ household_000001: { id: 'household_000001', saveId: universe.meta.id } });
+      expect(bag.tutorial).toEqual({ seen: {}, dismissed: false });
+      expect(universe.history).toEqual([]);
+      expect(universe.meta.schemaVersion).toBe(SAVE_SCHEMA_VERSION);
+      expect(validateUniverse(universe).ok, String(from)).toBe(true);
+    }
+  });
+
+  it('gives a save from this line at 83 the new number and nothing else', () => {
+    const sim = quickSave({}, 'this-line-83');
+    sim.universe.meta.schemaVersion = 83;
+    const before = JSON.stringify({ ...sim.universe, meta: { ...sim.universe.meta, schemaVersion: SAVE_SCHEMA_VERSION } });
+    const result = migrate(sim.universe);
+    expect(result.steps).toEqual([`Schema 83 to ${SAVE_SCHEMA_VERSION}.`]);
+    expect(JSON.stringify(sim.universe)).toBe(before);
+  });
+
   it('re-stamps records that carry the wrong save id', () => {
     const sim = quickSave();
     sim.universe.meta.schemaVersion = 1;

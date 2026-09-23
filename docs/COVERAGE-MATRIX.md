@@ -66,7 +66,10 @@ premise record 80 left in place, or from their pronouns where there is none.
 From 82 an older save's second citizenship is dropped, and its citizenship
 becomes the country of the birthplace. From 83 a save from before 80 keeps the
 personality it was made with, and one written since is given the one creation
-starts everybody on, with no traits.
+starts everybody on, with no traits. 87 changed nothing in the save: the line
+this one replaced as main had used 83 for a different build and gone on to 86,
+so this line skipped to 87, and a save from that line is migrated like any
+other older one.
 
 ## The engine, as it now stands
 

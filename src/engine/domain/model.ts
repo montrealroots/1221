@@ -369,10 +369,23 @@ export interface Preferences {
  * family itself, the land and the house. 81 put the performer title back on
  * the player. 82 took out the second citizenship and made the first the
  * country of the place of birth. 83 put the personality and its traits back.
+ *
+ * 87 came next, and 84 to 86 were skipped on purpose. This line and the one it
+ * replaced as main split at 79, and both went on counting: the older line used
+ * 80 to 83 for changes of its own, and a branch of it reached 86. A save from
+ * that line at 83 claimed to be current here and opened without `migrate`, and
+ * one at 84 to 86 was refused as newer. At 87 every save from either line is
+ * older than the build, so every one goes through `migrate`, which reads what a
+ * save holds and not the number on it. A save from this line gains the number
+ * and nothing else. A save from the older line sheds what 80 shed here and the
+ * date its reputation last faded, and is given an empty history and the four
+ * personality axes it never had, at the values creation starts on. Its family,
+ * its business, its lot and its tutorial stay as inert JSON.
+ *
  * `migrate` in `engine/index.ts` says what an older save sheds on the way in,
  * what it keeps as inert JSON, and what it is given.
  */
-export const SAVE_SCHEMA_VERSION = 83;
+export const SAVE_SCHEMA_VERSION = 87;
 
 export interface SaveMeta {
   id: Id;

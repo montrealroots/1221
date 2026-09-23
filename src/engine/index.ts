@@ -333,11 +333,16 @@ export function migrate(universe: SaveUniverse): MigrationResult {
   // list: a save from before 80 keeps the title it was made with. 80 shed the
   // personality and its traits as well, and 83 put those back the same way.
   // 82 shed the second citizenship.
+  //
+  // 87 sheds `reputationDriftedAt`. The line this one replaced as main wrote it
+  // on its player from 79 on: the day its reputation last faded, so that a
+  // skip forward cost what living the days would have. The reputation it timed
+  // is already on this list, so the date goes with it.
   const SHED = [
     'attributes', 'prodigy', 'traits',
     'reputation', 'careerTrack', 'estateRole', 'quotes', 'relations', 'gender', 'residenceId',
     'householdId', 'stageName', 'skills', 'goals', 'lifestyle', 'creditScore', 'goatTraits',
-    'secondCitizenshipId',
+    'secondCitizenshipId', 'reputationDriftedAt',
   ] as const;
   let shed = 0;
   for (const person of Object.values(universe.people ?? {})) {
@@ -395,6 +400,13 @@ export function migrate(universe: SaveUniverse): MigrationResult {
   // with no traits. A save from before 80 kept its own, and is only tidied:
   // every axis a number on the slider, and only traits that can be held
   // together, four at most.
+  //
+  // A save from the line this one replaced as main kept three of the seven
+  // axes, conscientiousness, emotional stability and ambition, and its traits.
+  // They are tidied the same way and come through as they were, because that
+  // line's creation screen held them to the same slider, the same thirty-five
+  // traits and the same pairs. The other four axes start where creation starts
+  // them.
   let personalised = 0;
   for (const person of Object.values(universe.people ?? {})) {
     const p = person as unknown as Record<string, unknown>;
