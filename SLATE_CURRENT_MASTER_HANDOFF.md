@@ -4,7 +4,7 @@
 **Written for:** the next Claude Code session, running on the owner's Windows machine under PowerShell 7.
 **Repository:** `github.com/yvcbcjhsy7-prog/1221`
 **Working branch:** `claude/slate-cleanup-e4apmx`
-**Verified at:** `36d2cea` ("Fit the new step names, and match Review to them"), the last code commit. Every commit after it on this branch leaves the build alone: `d0636b8` removes an unreferenced scratch file, `acf5e10` adds this file, `6c18b6b` corrects it, and `beda4d9` brings `CLAUDE.md` over. Later commits, if any, correct these two files.
+**Verified at:** `36d2cea` ("Fit the new step names, and match Review to them"), the last code commit. Every commit after it leaves the build alone: `d0636b8` removes an unreferenced scratch file; `acf5e10`, `6c18b6b`, `ad44f5c` and `63b757b` write and correct this file; `beda4d9` brings `CLAUDE.md` over; and `4aab498` merges the old `main` in without changing a file. Later commits, if any, touch only these two files.
 
 This is the one handoff. The owner's `CLAUDE.md` names `SLATE_CURRENT_MASTER_HANDOFF.md` as the only state that passes between sessions; `CLAUDE.md` itself carries the owner's rules. `PROJECT_HANDOFF.md` was retired in `b6f4061`, and keeping a single file stops two handoffs drifting apart. Earlier versions of this file are on GitHub `main` (as of `46f48f3`, 09-18) and, newer, at `4a00db8` (09-21), which is on no GitHub branch. Both describe the line the owner replaced on 2026-09-22 (see §1), so read them only as history.
 
@@ -14,10 +14,10 @@ When this file and the tree disagree, the tree wins. Correct this file in the sa
 
 ## 0. Read this box first
 
-1. **Work on `claude/slate-cleanup-e4apmx`, not `main`.** Everything described here is on that branch, pushed, and level with GitHub.
-2. **`main` and this branch have diverged.** GitHub `main` (`e139e06`, 2026-09-18) carries 67 commits from the line the owner chose to drop, merged through PR #15 and PR #16. Counting the five merge commits for PRs #12 to #16, this branch lacks 72 commits that `main` has. It forked from that line at `dc52d64` (2026-09-16) and has 14 code commits of its own since, plus the 09-23 commits that leave the build alone (§4). Merging either way is an owner decision; don't do it on your own (§12).
+1. **Work on `claude/slate-cleanup-e4apmx`.** Everything described here is on that branch, pushed, and level with GitHub. Since 2026-09-23 `main` carries the same line (§0.2). Keep developing on the working branch, and bring it into `main` by PR, with the owner.
+2. **This branch replaced `main` on 2026-09-23, by the owner's decision.** The old `main` (`e139e06`, 2026-09-18) carried 67 commits from the line the owner chose to drop, merged through PR #15 and PR #16 (72 counting the merge commits for PRs #12 to #16). The owner chose a merge over a force-push. Merge `4aab498` records `e139e06` as a parent and keeps this branch's tree exactly (`git merge -s ours`), and a PR from this branch carried it into `main`. That history is still reachable from `main`, but none of its files are in the tree. This line forked from it at `dc52d64` (2026-09-16) and has 14 code commits of its own since, plus the 09-23 commits that leave the build alone (§4).
 3. **The Windows clone is probably still on the dropped line.** The previous handoff says the Windows branch matched the remote on 2026-09-21. The remote tip that day was `4a00db8`. **Don't `git pull` there**: it would try to merge about 157 commits of removed game into this branch. Follow §3, which moves the clone over without losing anything.
-4. **Schema 83 means two different things.** Here, 83 is "personality restored". On `main`, 83 is the old family-and-film build, and the dropped line went up to 86. This branch and `main` both stamp creation drafts `1.1.0/83`, so a `main` save or draft at 83 opens here as if it were this build's. The dropped line's tip stamps `1.1.0/86`, so this build discards its drafts and refuses its saves as newer. Before playing this build locally, copy out and clear the `slate.*` keys in the browser's localStorage (§3, step 7).
+4. **Schema 83 means two different things.** Here, 83 is "personality restored". On the old `main` (before 2026-09-23), 83 was the old family-and-film build, and the dropped line went up to 86. This build and the old `main` both stamp creation drafts `1.1.0/83`, so an old-`main` save or draft at 83 opens here as if it were this build's. The dropped line's tip stamps `1.1.0/86`, so this build discards its drafts and refuses its saves as newer. Before playing this build locally, copy out and clear the `slate.*` keys in the browser's localStorage (§3, step 7).
 5. **`CLAUDE.md` is on this branch now.** The owner asked on 2026-09-23 for their blueprint to come over from `main`, corrected for this branch. The seventeen rules and the standing constraints are unchanged; §7 summarizes them. A clone still on the old line has the old `CLAUDE.md` on disk, and a session started there has loaded it, until §3's switch.
 
 ---
@@ -28,8 +28,8 @@ When this file and the tree disagree, the tree wins. Correct this file in the sa
 |---|---|
 | Branch | `claude/slate-cleanup-e4apmx`, pushed, 0 ahead / 0 behind `origin` |
 | Last verified code commit | `36d2cea` (2026-09-22) |
-| GitHub `main` | `e139e06` (2026-09-18, "Merge pull request #16"). Diverged; see §0.2. |
-| Fork point with `main`'s line | `dc52d64` (2026-09-16, schema 79) |
+| GitHub `main` | Replaced by this line on 2026-09-23: merge `4aab498`, carried in by a PR. The old tip `e139e06` (2026-09-18, "Merge pull request #16") is one of that merge's parents. |
+| Fork point with the old line | `dc52d64` (2026-09-16, schema 79) |
 | The replacement on 2026-09-22 | `abd4727` ("the gut") was pushed over `4a00db8` with the owner's explicit approval. That dropped 157 commits dated 09-17 to 09-21 from three other sessions. 67 of them reached `main` through PRs #15/#16. The other 90 (`46f48f3..4a00db8`) are on no GitHub branch. The owner's words: "destroy those 157 commits, the real work is what we're doing now." |
 | Save schema | `SAVE_SCHEMA_VERSION = 83` (`src/engine/domain/model.ts:375`) and `SUPPORTED_SCHEMA_VERSION = 83` (`base44/shared/guard.js:25`). Move both together. |
 | App version | `APP_VERSION = '1.1.0'` (`src/engine/world/bootstrap.ts`). `package.json` says `1.0.0`, and the two don't match. |
@@ -102,7 +102,7 @@ The previous handoff recorded these things on that machine: `stash@{0}` = `227fa
 **Step 2: Fetch.** This only updates remote-tracking refs.
 ```powershell
 git fetch origin    # the branch's line says "(forced update)": that's the 09-22 replacement, and it's expected
-git log --oneline 36d2cea..origin/claude/slate-cleanup-e4apmx   # expect beda4d9, 6c18b6b, acf5e10 and d0636b8, plus any later commits that touch only this file or CLAUDE.md
+git diff --stat 36d2cea origin/claude/slate-cleanup-e4apmx   # expect only CLAUDE.md, SLATE_CURRENT_MASTER_HANDOFF.md and walk-tmp.mjs (deleted)
 ```
 
 **Step 3: Line endings, before any switch.** The index is all LF, and there's no `.gitattributes`. The Git for Windows installer sets `core.autocrlf=true` system-wide. The previous session set a repo-local `false` after the old line's voice-check counted 41 against its budget of 40 under CRLF. This line's gate passed under CRLF in a test on 2026-09-23, so the setting is no longer what makes the gate pass. It keeps the working tree byte-identical to what's committed. Files written by a switch take the setting in force at that moment, so confirm it first:
@@ -183,8 +183,7 @@ node tools/walkthrough.mjs walkthrough
 These are the commits that carry `Claude-Session: https://claude.ai/code/session_01Na7AwFNze8QYVWFfuUXBhY`:
 - 179 of them lead up to `36d2cea`. The first is `62c30ca` ("Cut SLATE back to six things", 09-09) and the last code commit is `36d2cea` (09-22).
 - The 09-23 commits (`d0636b8`, `acf5e10`, `6c18b6b`, `beda4d9` and any later ones) carry the same trailer, so the grep below returns 183 at `beda4d9`, and one more for each later commit from this session.
-- 165 of them, everything up to `dc52d64`, are also on `main`.
-- The 14 from 09-22, and the 09-23 commits, exist only on this branch.
+- 165 of them, everything up to `dc52d64`, were on `main` before 2026-09-23. The 14 from 09-22 and the 09-23 commits reached `main` when this branch replaced it that day, so all of them are on `main` now.
 
 To list them: `git log --oneline --grep=session_01Na7AwFNze8QYVWFfuUXBhY`.
 
@@ -203,6 +202,7 @@ To list them: `git log --oneline --grep=session_01Na7AwFNze8QYVWFfuUXBhY`.
 | 09-22 | Sleep dialog stops promising bills, messages and other people (`406a5c6`) | Yes |
 | 09-22 | **Step renames** to "Dispositions & Traits" and "Interests & Background", the tab row reworked, Review matches (`a93841a`, `36d2cea`) | Yes |
 | 09-23 | This handoff (`acf5e10`, corrected in `6c18b6b`), removal of the tracked scratch file `walk-tmp.mjs` (`d0636b8`), and the owner's `CLAUDE.md` brought over from `main`, corrected for this branch (`beda4d9`) | Yes |
+| 09-23 | **This branch replaces `main`**, by the owner's decision: merge `4aab498` keeps this tree and records the old `main` as a parent, and a PR carries it in | Yes |
 
 The owner's instructions that shaped the gut and what came after, verbatim from the conversation (no commit records them):
 - "Every single thing, even everything casting and audition. I want it all gone."
@@ -345,6 +345,7 @@ The owner's instructions that shaped the gut and what came after, verbatim from 
 - **Screens must be true.** The Sleep dialog stopped promising bills, messages and other people, because none of those exist in this build.
 - **This handoff brings `SLATE_CURRENT_MASTER_HANDOFF.md` onto this branch, rewritten,** instead of adding a second `PROJECT_HANDOFF.md`, so only one handoff exists.
 - **`CLAUDE.md` came over from `main` at the owner's request (`beda4d9`).** The seventeen rules and the standing constraints are unchanged. What it said about the repository was corrected for this branch: twelve gate checks, no `tools/claims.mjs` or `docs/ARREARS.md` here, the schema tests measured here, the guard's constant name, why a pipe can hide the gate's exit code under PowerShell 7, and a pointer to §10 before deploying.
+- **This branch replaced `main` (2026-09-23), by a merge, not a force-push.** The owner chose it so `main`'s history stays intact and the change can be reverted. `4aab498` keeps this branch's tree exactly (`-s ours`), so the PR into `main` had no conflicts.
 
 ---
 
@@ -371,7 +372,7 @@ The owner's instructions that shaped the gut and what came after, verbatim from 
   - Update this handoff when a phase completes and before a switch of account or machine.
   - Deploy to Base44 only after the gate passes.
   - Read the gate's exit status from a file, never from a pipe.
-  - When a change makes a comment false, say what's no longer true, in the past tense. `tools/claims.mjs`, which checked this on `main`, isn't on this branch, so review it by hand.
+  - When a change makes a comment false, say what's no longer true, in the past tense. `tools/claims.mjs`, which checked this on the old line, isn't on this line, so review it by hand.
   - A ledger balance is the sum of its postings, never a typed number.
   - Mutation-test every claim a test protects.
   - Measure on a save that has been played, never on an idle one.
@@ -420,7 +421,7 @@ This is 41 files, +2293/−292. Four are added: `src/engine/core/performer.ts` a
   - The browser walks follow the new creation flow (the Billed As pick and the renamed steps): `cohesion-walk.mjs`, `drill.mjs`, `screenshot.mjs`, `text-caps.mjs`, `ui-audit.mjs`, `walkthrough.mjs`.
 - **Docs:** `README.md`, `docs/COVERAGE-MATRIX.md`, `docs/DRILL-DOWN.md`, `docs/UNBITTEN.md`, `docs/UNWIRED.json`.
 
-`d0636b8` then removed `walk-tmp.mjs`. That was a throwaway Playwright probe from `854b271` with a hardcoded Linux browser path. No file referenced it, and `main` already deleted it in `c341aba`.
+`d0636b8` then removed `walk-tmp.mjs`. That was a throwaway Playwright probe from `854b271` with a hardcoded Linux browser path. No file referenced it, and the old `main` had already deleted it in `c341aba`.
 
 ---
 
@@ -493,7 +494,7 @@ The handoff and `CLAUDE.md` live at the repository root, so the gate's text tool
 
 **Deployment:**
 - **If a Base44 deployment exists, it must be redeployed from this branch before it will store this branch's saves.**
-  - A guard from `main` (83) or from the dropped line (86) accepts schema 83, but it refuses every new save from this branch with "The save does not say what game it is". Those guards require `universe.premise`, which this branch no longer writes.
+  - A guard from the old `main` (83, before 2026-09-23) or from the dropped line (86) accepts schema 83, but it refuses every new save from this branch with "The save does not say what game it is". Those guards require `universe.premise`, which this branch no longer writes.
   - A guard older than 83 refuses on schema.
   - Once redeployed (guard at 83, no premise check), the deployment refuses saves at 84–86 from the dropped line.
 - Deploy only after `npm run gate` passes. `npm run base44:deploy` only builds and deploys, doesn't run the gate itself, and needs Base44 credentials.
@@ -522,7 +523,6 @@ The handoff and `CLAUDE.md` live at the repository root, so the gate's text tool
 Keep all of them until the owner says otherwise.
 
 **On GitHub but not on this branch:**
-- `main` (`e139e06`), with its uncorrected `CLAUDE.md` and the old handoff, both written for the dropped line.
 - 15 `base44/setup-*` branches and `claude/base44-app-code-zzeh07`.
 - Three tags: `parallel-production-rebuild-deleted`, `production-system-before-deletion-2` and `production-system-before-deletion-3`.
 
@@ -531,10 +531,7 @@ Keep all of them until the owner says otherwise.
 ## 12. Next steps, in order
 
 1. **On Windows, run §3.** Confirm `core.autocrlf=false`, move the clone over without losing the old line, then `npm ci`. Confirm that the gate exits 0 with 478 tests and that the build passes.
-2. **Owner decision, before any merge or deploy:** should this branch become `main`? The options:
-   - Open a PR from this branch and resolve every conflict in this branch's favor. That needs a merge commit, and the owner's approval.
-   - Or leave `main` as the record of the old line.
-   - Either way, don't merge, reset or force-push without the owner.
+2. **Done on 2026-09-23: this branch replaced `main`** (§0.2). Future work still goes on the working branch and reaches `main` by PR, with the owner. Never reset or force-push `main`.
 3. **Retire the schema collision.** At the next schema bump, jump past the old line's numbers (to 87, for example) and move `base44/shared/guard.js` with it. Every save from either line then runs through the shape-based `migrate()`. Consider bumping `APP_VERSION` too, so old creation drafts are dropped.
 4. **Windows hygiene commit:**
    - Add `.gitattributes` (`* text=auto eol=lf`).
