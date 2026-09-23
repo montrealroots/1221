@@ -9,7 +9,7 @@ import { titleCaseLabel } from '@/engine/core/text';
 import { useEffect, useRef, useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { Modal } from '@/ui/components/primitives';
-import { suggestedSleep, hoursUntilNextCommitment } from '@/engine/systems/life';
+import { suggestedSleep, hoursUntilNextCommitment, sleepStandsForTheNight } from '@/engine/systems/life';
 import { missedBy, skipTargets } from '@/engine/world/calendar';
 import type { CalendarEntry } from '@/engine/world/calendar';
 import {
@@ -127,6 +127,10 @@ function SleepDialog({ onClose }: { onClose: () => void }) {
 
   const wakeAt = sim.now + hours * MS_HOUR;
   const crossed = sim.timeline.between(sim.now, wakeAt).filter((i) => i.requiresPlayer);
+  // Said, because the suggestion can be one: three hours before something at
+  // three in the morning is tonight’s night, and they are up from half past
+  // two to the next midnight.
+  const tonight = sleepStandsForTheNight(sim, hours);
 
   const sleep = () => {
     const result = run('life.sleep', { hours });
@@ -173,6 +177,13 @@ function SleepDialog({ onClose }: { onClose: () => void }) {
       {untilNext !== undefined && (
         <div className="callout" style={{ marginTop: 'var(--s4)' }}>
           Your next commitment is in {formatDuration(untilNext * MS_HOUR)}.
+        </div>
+      )}
+
+      {tonight && (
+        <div className="callout callout-warning" style={{ marginTop: 'var(--s4)' }}>
+          This would be tonight’s sleep. You’d be up from {formatTime(wakeAt, sim.zone)}, and the rest of the
+          night wouldn’t be slept.
         </div>
       )}
 

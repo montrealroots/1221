@@ -160,15 +160,22 @@ export interface Person {
    */
   wokeWithDebt?: number;
   /**
-   * Where a night nobody chose would have ended, kept when a stop for the
-   * player has them up in the middle of it: a plan in the small hours. The
-   * night was credited in full when it began, so whenever the clock carries
-   * them on more than an hour before then, they are only asleep again, until
-   * then or until it stops. Cleared once a skip reaches it. Before it, the
-   * stop's night was the night slept, and a plan at one past one on a skip to
-   * the morning kept them up until the next midnight.
+   * Where a night nobody chose would have ended, kept while the clock has
+   * stopped before then: a plan in the small hours, or the morning a skip was
+   * sent to. Whenever the clock is sent on more than an hour before then,
+   * they are asleep again, until then or until it stops, and the night is not
+   * paid twice. Cleared the first time the clock moves on from it or later.
+   * Before it, the stop's night was the night slept, and a plan at five past
+   * one on a skip to the morning kept them up until the next midnight. See
+   * `sleepAlone` in `systems/life.ts`.
    */
   nightEndsAt?: Instant;
+  /**
+   * The bedtime of that night while it is not yet paid: the clock stopped in
+   * its first hour, and it is paid, from this bedtime, when the clock goes on
+   * more than an hour into it. Kept only alongside `nightEndsAt`.
+   */
+  nightOwedFrom?: Instant;
 
   /**
    * Who this person is, in their own terms. Set at creation and only for the
@@ -426,12 +433,12 @@ export interface Preferences {
  * 88 charged the waking day as the clock moves instead of all at once at
  * midnight. It gave every person `awakeSince`, when their waking day began,
  * and from their next wake `wokeWithDebt`, the sleep debt they woke with, and
- * `nightEndsAt` while a stop for the player has them up in the middle of a
- * night nobody chose. A save from before 88, this line's 87 included, was charged at its last
- * midnight for the whole day ahead, or, saved before its first midnight, was
- * never charged for that day. Either way its people come in charged up to the
- * next midnight, as that build would have left them, and their waking day
- * starts there.
+ * `nightEndsAt` and `nightOwedFrom` while the clock has stopped in the middle
+ * of a night nobody chose. A save from before 88, this line's 87 included,
+ * was charged at its last midnight for the whole day ahead, or, saved before
+ * its first midnight, was never charged for that day. Either way its people
+ * come in charged up to the next midnight, as that build would have left
+ * them, and their waking day starts there.
  *
  * `migrate` in `engine/index.ts` says what an older save sheds on the way in,
  * what it keeps as inert JSON, and what it is given.

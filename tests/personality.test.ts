@@ -166,11 +166,11 @@ function aYearOfMornings(sim: Simulation): { lowest: number } {
 }
 
 /**
- * A year with a plan at five past one every night, reached on a skip to the
- * morning: to half past eleven, then Tomorrow Morning, which stops for the
- * plan, and on to seven.
+ * A year with a plan at one every night, reached on a skip to the morning: to
+ * half past eleven, then Tomorrow Morning, which stops for the plan, and on to
+ * seven. With no plan, the same year without the stop.
  */
-function aYearOfLatePlans(sim: Simulation): { lowest: number } {
+function aYearOfLatePlans(sim: Simulation, plan: boolean): { lowest: number } {
   let lowest = 100;
   const at = (days: number, hour: number, minute = 0) => {
     const p = zonedParts(sim.now, sim.zone);
@@ -178,9 +178,11 @@ function aYearOfLatePlans(sim: Simulation): { lowest: number } {
   };
   for (let day = 0; day < 365; day += 1) {
     sim.advanceTo(at(sim.now >= at(0, 23, 30) ? 1 : 0, 23, 30), { stopOnPlayerRequired: true });
-    expect(sim.execute({ kind: 'calendar.schedule', payload: { title: 'Late Call', at: at(1, 1, 5) } }).ok).toBe(true);
     const seven = at(1, 7);
-    expect(sim.advanceTo(seven, { stopOnPlayerRequired: true }).interruptedBy).toBeDefined();
+    if (plan) {
+      expect(sim.execute({ kind: 'calendar.schedule', payload: { title: 'Late Call', at: at(1, 1) } }).ok).toBe(true);
+      expect(sim.advanceTo(seven, { stopOnPlayerRequired: true }).interruptedBy).toBeDefined();
+    }
     sim.advanceTo(seven, { stopOnPlayerRequired: true });
     lowest = Math.min(lowest, sim.player.wellbeing.condition);
   }
@@ -549,17 +551,23 @@ describe('no single trait or disposition wears a life down', () => {
   });
 
   it('with a plan in the small hours every night, reached on a skip to the morning, for a year', () => {
-    // Up for the plan, then back to bed on the rest of the skip. While the
-    // plan's night was the night slept, they were up from one to the next
-    // midnight, and twenty-one of the seventy-six wore to nothing; light
-    // sleepers and the highly strung, who did at both ages, stand for them.
+    // Up for the plan, then back to bed on the rest of the skip, and the year
+    // ends where the same year with no plan does. While the plan's night was
+    // the night slept, they were up from the plan to the next midnight, and a
+    // plan at five past one wore twenty-one of the seventy-six to nothing.
+    // Then a plan on the stroke of one, which the Calendar books, put the
+    // night off to one, and twenty-seven wore down. Light sleepers and the
+    // highly strung, who did both times at both ages, stand for them.
     for (const birthYear of [2001, 1966]) {
       for (const c of singles.filter((one) => ['light_sleeper', 'highly_strung'].includes(one.name))) {
         const sim = build(c, birthYear, 'p-plans');
-        const { lowest } = aYearOfLatePlans(sim);
+        const { lowest } = aYearOfLatePlans(sim, true);
         expect(lowest, `${c.name}, born ${birthYear}, wore down with the plans`).toBeGreaterThan(65);
         expect(sim.player.wellbeing.morale, `${c.name}, born ${birthYear}, ended flat`).toBeGreaterThan(80);
         expect(sim.player.wellbeing.stress, `${c.name}, born ${birthYear}, ended stretched`).toBeLessThan(25);
+        const without = build(c, birthYear, 'p-plans');
+        expect(aYearOfLatePlans(without, false).lowest, `${c.name}, born ${birthYear}`).toBe(lowest);
+        expect(sim.player.wellbeing, `${c.name}, born ${birthYear}`).toEqual(without.player.wellbeing);
       }
     }
   });

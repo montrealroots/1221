@@ -154,9 +154,17 @@ export function chargeWakingHours(person: Person, from: number, to: number): voi
   }
   const start = Math.max(from, person.awakeSince);
   if (to <= start) return;
-  const up = (start - person.awakeSince) / MS_HOUR;
-  const carried = person.wokeWithDebt ?? Math.max(0, person.wellbeing.sleepDebt - up * DEBT_PER_WAKING_HOUR);
-  applyElapsedWellbeing(person, (to - start) / MS_HOUR, carried);
+  applyElapsedWellbeing(person, (to - start) / MS_HOUR, debtWokenWith(person, start));
+}
+
+/**
+ * The sleep debt somebody woke with, from a moment of their waking day with
+ * the debt charged up to it: the one on record, or, for a save from before 88
+ * until its first wake, the debt now less what the hours up have added.
+ */
+function debtWokenWith(person: Person, at: number): number {
+  const up = (at - (person.awakeSince ?? at)) / MS_HOUR;
+  return person.wokeWithDebt ?? Math.max(0, person.wellbeing.sleepDebt - up * DEBT_PER_WAKING_HOUR);
 }
 
 /**
@@ -194,8 +202,9 @@ export function wellbeingSummary(person: Person): string {
 export function registerLife(sim: Simulation): void {
   // Somebody the player stayed up with past midnight still sleeps when the
   // clock is then jumped through the rest of that night, and so does somebody
-  // a plan in the small hours got up. This runs before the waking charge, so
-  // the stretch the night covers is not charged as awake.
+  // any stop in the small hours got up; a night a stop in its first hour left
+  // unpaid is paid here. This runs before the waking charge, so the stretch
+  // the night covers is not charged as awake.
   sim.onPassage('life.night_alone', (s, from) => {
     for (const person of Object.values(s.universe.people)) sleepAlone(s, person, from);
   });
@@ -435,15 +444,21 @@ export function dailyRollover(sim: Simulation): void {
 function liveTheUnattendedNight(sim: Simulation): void {
   for (const person of Object.values(sim.universe.people)) {
     const w = person.wellbeing;
-    // The night first, so the meals below are the day's. The clock would put
-    // them to bed from midnight anyway, at its next stop (`life.night_alone`),
-    // but after the meals, and the night would eat 1.6 an hour of them.
+    // The night first, so the meals below are the day's. One from midnight
+    // paid later, at the clock's next stop (`life.night_alone`) or when the
+    // clock goes on from a stop in its first hour, comes ahead of them too
+    // (`creditNightAlone`): paid after them, it ate 1.6 an hour of them.
     sleepAlone(sim, person, sim.now);
 
     // Meals, and a shower, before the day rather than after it.
-    w.nourishment = clamp(Math.max(w.nourishment, COASTING_NOURISHMENT_TARGET), 0, 100);
+    eatBeforeTheDay(w);
     w.hygiene = clamp(Math.max(w.hygiene ?? 80, 82), 0, 100);
   }
+}
+
+/** The day's meals, which a coasted day eats up to before it runs. */
+function eatBeforeTheDay(w: Wellbeing): void {
+  w.nourishment = clamp(Math.max(w.nourishment, COASTING_NOURISHMENT_TARGET), 0, 100);
 }
 
 /**
@@ -456,7 +471,7 @@ const LONGEST_STEP_WITH_THE_PLAYER = MS_HOUR;
 
 /**
  * Puts somebody to bed at `bedtime` for a night nobody chose, when the clock
- * is about to carry them through it without the player.
+ * has been sent through it without the player.
  *
  * It used to be given at midnight to anybody with no chosen night in the last
  * twenty hours, whoever was watching, and both ways that went wrong were
@@ -471,31 +486,34 @@ const LONGEST_STEP_WITH_THE_PLAYER = MS_HOUR;
  *   past four in the afternoon of the second day.
  *
  * Twenty hours was a guess at whether the player meant to choose a night
- * later, and midnight cannot tell. Where the clock is going can
- * (`Simulation.advancingTo`). A player who is there moves it a second at a
+ * later, and midnight cannot tell. How far the player sent the clock can
+ * (`Simulation.advancing`). A player who is there moves it a second at a
  * time, or an hour from the Advance menu, keeps the character up with them,
- * and has the Sleep button; a clock that will carry them more than an hour
- * into the night is a night they live without the player, and they sleep it.
- * A live clock never moves more than half an hour at a step, even paying back
- * a night the laptop was shut, so one left running with nobody watching
- * counts as a player who is there.
+ * and has the Sleep button; a clock sent more than an hour is a night lived
+ * without the player, and they sleep it. A live clock never moves more than
+ * half an hour at a step, even paying back a night the laptop was shut, so
+ * one left running all night with nobody watching keeps them up all night,
+ * as a player who is there would.
  *
  * It asked at first for five hours and twenty-four minutes of night ahead of
  * the clock, the floor `unattendedNight` clamps to. A skip that stopped for a plan
  * in the small hours then came in two shorter pieces and neither was slept:
  * somebody on autopilot, sent on to the morning at ten with a plan at three,
- * was at energy 4.0 by seven. An hour tells a player who is there from one
- * who is not: when the clock will stop within the hour, they stay up with the
- * player.
+ * was at energy 4.0 by seven. Then it asked for more than an hour between the
+ * bedtime and where the clock would stop (`Simulation.advancingTo`), and a
+ * skip that stopped for something on the stroke of one left them up for the
+ * first hour of the night with a player who was not there: the night came
+ * at one, late and poorer, and a plan at one every night wore twenty-seven
+ * of the seventy-six people the calibration keeps down over a year.
  *
  * So a night is slept alone when somebody is awake at `bedtime`, has had no
  * night since that night's midnight, it is still before a sound sleeper would
- * have woken from it, and the clock is going on more than an hour. Both
- * checks on the record are needed. `lastSleptAt` says a night has been slept
- * since midnight, whether chosen, booked for later or slept alone, and
- * without it each of those is slept again. A night booked further ahead than
- * tonight holds off every night alone until it; nothing in the game books
- * one, since the Sleep dialog puts them to bed now.
+ * have woken from it, and the clock was sent more than an hour. Both checks
+ * on the record are needed. `lastSleptAt` says a night has been slept since
+ * midnight, whether chosen, booked for later or slept alone, and without it
+ * each of those is slept again. A night booked further ahead than tonight
+ * holds off every night alone until it; nothing in the game books one, since
+ * the Sleep dialog puts them to bed now.
  * `awakeSince` cannot say that, because a chosen night that ends on the
  * stroke of midnight and a waking day that starts there, which is what a
  * save from before 88 is given, read the same; tried, such a save left
@@ -506,57 +524,97 @@ const LONGEST_STEP_WITH_THE_PLAYER = MS_HOUR;
  * charged twice.
  *
  * The night starts at midnight, or later for somebody the player stayed up
- * with and then left, and it is slept in full: what it puts back is the whole
- * night's. They are up where the clock stops if that comes before a sound
- * sleeper would wake, so a player coming back never finds them in the middle
- * of one. It was cut there too at first, to the hours the clock had carried
- * them, and the morning the player chose to look in at cost them sleep:
- * skipped to seven every morning for a year, a light sleeper ended at
- * condition 35.8 and morale 0. Slept in full, the same year ends at 76.6 and
- * 100, where the rule at 87 left them at 76.4 and 100.
+ * with and then left, and from then they are in bed and the clock charges
+ * them nothing. It is paid, in full, once the clock has carried them more
+ * than an hour into it: at once on a skip to the morning, and on one that
+ * stops sooner, when the clock goes on (`nightOwedFrom`). A stop in the first
+ * hour does not pay it, or a jump that stopped a minute past midnight would
+ * pay a whole night for a minute of one, and a player who kept them up from
+ * there would have had it for nothing. Paid late, it is paid as it would
+ * have been on time: read at its bedtime, and ahead of the day's meals when
+ * it starts at midnight, as the rollover pays it.
  *
- * A stop for the player in the middle of the night, a plan in the small
- * hours, has them up for it, and where the night would have ended is kept
- * (`nightEndsAt`). When the clock then carries them on more than an hour,
- * they are asleep again until then, and the night is not credited twice.
- * Without that, the night was the one slept and they were up until the next
- * midnight: a plan at one past one every night wore twenty-one of the
- * seventy-six cases down over a year. The morning the player chose to stop at
- * is not a stop like that; they are up from there.
+ * They are up where the clock stops if that comes before the night would end,
+ * so a player coming back never finds them in the middle of one. The night
+ * was cut there too at first, to the hours the clock had carried them, and
+ * the morning the player chose to look in at cost them sleep: skipped to
+ * seven every morning for a year, a light sleeper ended at condition 35.8
+ * and morale 0. Slept in full, the same year ends at 76.4 and 100, where the
+ * rule at 87 left them.
+ *
+ * Where the night would have ended is kept at every stop (`nightEndsAt`), and
+ * whenever the clock is sent on more than an hour before then, they are back
+ * in bed until then, and the night is not paid twice. Without that, the night
+ * was the one slept and they were up from the stop to the next midnight: a
+ * plan at five past one every night wore twenty-one of the seventy-six to
+ * nothing over a year. The morning the player had stopped at was at first
+ * the one stop left out, a morning they were up from, and a plan at a minute
+ * to seven, which the player went on from, left them better off than no
+ * plan: at 25.4 energy by the end of the day where no plan left 23.0. Every
+ * stop keeps it now, so a stop changes nothing a skip would have done. What
+ * it does not undo is the player's own hour: a plan in the last hour before
+ * where the skip was going leaves an hour or less to go on, which is the
+ * player's, and they are up for it and charged for it, as for One Hour.
+ *
+ * It is kept through a sleep the player chooses in the middle of it, and the
+ * sleep is paid on top: an hour's nap after a plan at half past one left them
+ * at 83.7 energy by seven, over the 74 the night alone stops at. Dropped
+ * there, the nap left them up from its end to the next midnight.
  */
 function sleepAlone(sim: Simulation, person: Person, bedtime: number): void {
-  if (person.awakeSince !== undefined && person.awakeSince > bedtime) return;
-  // Asked first, because it is cheap and live play asks it every second.
-  const until = sim.advancingTo;
-  if (until === undefined || until - bedtime <= LONGEST_STEP_WITH_THE_PLAYER) return;
-  const ends = person.nightEndsAt;
-  if (ends !== undefined) {
-    if (bedtime < ends) {
-      person.awakeSince = Math.min(ends, until);
-      if (!(sim.advancingFor !== undefined && until < ends)) delete person.nightEndsAt;
-      return;
-    }
+  // A night the clock is past is gone, paid or not, whoever moved it, and
+  // whether or not they are asleep in one they chose.
+  if (person.nightEndsAt !== undefined && bedtime >= person.nightEndsAt) {
     delete person.nightEndsAt;
+    delete person.nightOwedFrom;
   }
-  const midnight = startOfLocalDay(sim, bedtime);
-  if (person.lastSleptAt !== undefined && person.lastSleptAt >= midnight) return;
-  const { sound, hours } = unattendedNight(person);
-  if (bedtime - midnight >= sound * MS_HOUR) return;
+  if (person.awakeSince !== undefined && person.awakeSince > bedtime) return;
+  // Asked before anything that costs, because live play asks it every second.
+  const advance = sim.advancing;
+  if (advance === undefined || advance.target - advance.from <= LONGEST_STEP_WITH_THE_PLAYER) return;
+  const until = sim.advancingTo ?? advance.target;
 
+  let ends = person.nightEndsAt;
+  if (ends === undefined) {
+    const midnight = startOfLocalDay(sim, bedtime);
+    if (person.lastSleptAt !== undefined && person.lastSleptAt >= midnight) return;
+    const { sound } = unattendedNight(person);
+    if (bedtime - midnight >= sound * MS_HOUR) return;
+    // Asleep until a sound sleeper would wake, which is when the clock starts
+    // charging them again. The day is still a sound sleeper's day: taking the
+    // lie-in out of the waking hours as well left a poor sleeper better rested
+    // than anybody.
+    ends = bedtime + Math.round(sound * MS_HOUR);
+    person.nightOwedFrom = bedtime;
+  }
+
+  const owed = person.nightOwedFrom;
+  if (owed !== undefined && until - owed > LONGEST_STEP_WITH_THE_PLAYER) {
+    creditNightAlone(sim, person, owed);
+    delete person.nightOwedFrom;
+  } else {
+    // In bed and not paid for it, a save from before 88 is not woken either:
+    // it keeps the debt it woke with, rather than counting its hours up from
+    // the stop and draining as if it had woken owing the whole day's.
+    person.wokeWithDebt = debtWokenWith(person, bedtime);
+  }
+  person.awakeSince = Math.min(ends, until);
+  if (until < ends) person.nightEndsAt = ends;
+  else delete person.nightEndsAt;
+}
+
+/** Pays a night nobody chose, once and in full, as it would have been at `bedtime`. */
+function creditNightAlone(sim: Simulation, person: Person, bedtime: number): void {
   const w = person.wellbeing;
   const energy = w.energy;
   // A night they did not plan. Shorter, poorer, and it does not clear debt
   // the way a deliberate one does.
-  applySleep(person, hours, sleepQuality(sim, person, bedtime) * 0.95, bedtime);
+  applySleep(person, unattendedNight(person).hours, sleepQuality(sim, person, bedtime) * 0.95, bedtime);
   person.wokeWithDebt = w.sleepDebt;
   person.lastSleptAt = bedtime;
-  // And they are asleep until a sound sleeper would wake, which is when the
-  // clock starts charging them again, or until the clock stops if that is
-  // sooner. The day is still a sound sleeper's day: taking the lie-in out of
-  // the waking hours as well left a poor sleeper better rested than anybody.
-  const wakes = bedtime + Math.round(sound * MS_HOUR);
-  person.awakeSince = Math.min(wakes, until);
-  if (sim.advancingFor !== undefined && until < wakes) person.nightEndsAt = wakes;
+  // A night from midnight is the one the day's meals come after, when it is
+  // paid late as well.
+  if (bedtime === startOfLocalDay(sim, bedtime)) eatBeforeTheDay(w);
 
   // Coasting keeps you going; it does not get you to your best. Choosing
   // when and how long to sleep is worth something, so autopilot stops
@@ -582,6 +640,32 @@ export function unattendedNight(person: Person): { sound: number; hours: number 
     Math.min(1, personalityOf(person, 'sleepQuality')) * Math.min(1, personalityOf(person, 'energyRecovery')),
   );
   return { sound, hours: clamp(sound / lieIn, 5.4, 10) };
+}
+
+/**
+ * Whether a sleep of `hours` from now would be taken for tonight's night
+ * though it is a short one, under the six hours `applySleep` counts short.
+ *
+ * A sleep the player chooses is on record as the night of the day it ends in
+ * (`lastSleptAt`), and no night nobody chose follows it that day. One that
+ * ends in the small hours, before a sound sleeper would be up, of a night not
+ * yet slept, is that night, and they are up from its end: the clock never puts
+ * them back to bed after it. One chosen inside a night nobody chose that is
+ * under way is paid on top of it, and is not. The Sleep dialog says so, because its own
+ * suggestion can be one. Three hours at half past eleven before a call at
+ * three, as it suggests, left them at energy 10.9 and a debt of 13.15 by
+ * eleven the next evening, where sending the clock on instead left 28.4 and
+ * 5.17. It asked at first for anything shorter than the night nobody chose,
+ * and the dialog said it of its own full night for a good sleeper: seven or
+ * seven and a half hours from eleven, against a night alone of 7.65.
+ */
+export function sleepStandsForTheNight(sim: Simulation, hours: number): boolean {
+  const person = sim.player;
+  const wakes = sim.now + Math.round(clamp(hours, 0.5, 16) * MS_HOUR);
+  const midnight = startOfLocalDay(sim, wakes);
+  if (person.lastSleptAt !== undefined && person.lastSleptAt >= midnight) return false;
+  if (person.nightEndsAt !== undefined && sim.now < person.nightEndsAt) return false;
+  return wakes - midnight < unattendedNight(person).sound * MS_HOUR && hours < 6;
 }
 
 /** How many hours until the player must be somewhere. */

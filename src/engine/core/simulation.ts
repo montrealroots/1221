@@ -96,9 +96,8 @@ export class Simulation {
   private passageReactors = new Map<string, PassageReactor>();
   private commandHandlers = new Map<string, CommandHandler<never, unknown>>();
   private pendingEvents: WorldEvent[] = [];
-  private advancing = false;
-  /** The advance in progress, for `advancingTo`. */
-  private advance: { from: Instant; target: Instant; stopsForPlayer: boolean } | undefined;
+  /** The advance in progress, for `advancing` and `advancingTo`. */
+  private advance: { readonly from: Instant; readonly target: Instant; readonly stopsForPlayer: boolean } | undefined;
   private depth = 0;
 
   constructor(public universe: SaveUniverse) {
@@ -179,36 +178,40 @@ export class Simulation {
   }
 
   /**
-   * Where the advance in progress will stop, or undefined outside one: its
-   * target, or the first thing before it that needs the player, when it was
-   * asked to stop for one.
+   * The advance in progress: where the clock was when it was asked to move,
+   * and where it was asked to go. Undefined outside one.
    *
    * It is how the world tells a player who is there from one who has jumped
    * the clock. Live play moves it a second at a time and never more than half
    * an hour, and One Hour on the Advance menu an hour, and either way the
    * player is back before long; a skip carries it through whole nights.
    * People sleep through a night nobody stays up with them (`life.ts`), and
-   * nobody can tell that at midnight from the midnight alone. Something
-   * scheduled during the advance that stops it for the player is not
-   * foreseen.
+   * nobody can tell that at midnight from the midnight alone.
+   */
+  get advancing(): { readonly from: Instant; readonly target: Instant } | undefined {
+    const advance = this.advance;
+    return advance && { from: advance.from, target: advance.target };
+  }
+
+  /**
+   * Where the advance in progress will stop, or undefined outside one: its
+   * target, or the first thing before it that needs the player, when it was
+   * asked to stop for one. An item due where the advance started is not one.
+   * Something scheduled during the advance that stops it for the player is
+   * not foreseen.
+   *
+   * It said at first what the advance would stop for as well
+   * (`advancingFor`), so a stop for the player could be told from the
+   * advance's own target. The night nobody chose treats the two alike now,
+   * and nothing else asked.
    */
   get advancingTo(): Instant | undefined {
     const advance = this.advance;
     if (!advance) return undefined;
-    return this.advancingFor?.at ?? advance.target;
-  }
-
-  /**
-   * The thing that needs the player the advance in progress will stop at, or
-   * undefined when it runs to its target or there is no advance. An item due
-   * where the advance started is not one, and neither is one past its target.
-   */
-  get advancingFor(): ScheduledItem | undefined {
-    const advance = this.advance;
-    if (!advance || !advance.stopsForPlayer) return undefined;
+    if (!advance.stopsForPlayer) return advance.target;
     const after = this.universe.now > advance.from ? this.universe.now - 1 : advance.from;
     const stop = this.timeline.next(after, (item) => item.requiresPlayer === true);
-    return stop !== undefined && stop.at <= advance.target ? stop : undefined;
+    return stop !== undefined && stop.at <= advance.target ? stop.at : advance.target;
   }
 
   onCommand<P, R>(kind: string, handler: CommandHandler<P, R>): this {
@@ -336,7 +339,6 @@ export class Simulation {
       );
     }
 
-    this.advancing = true;
     this.advance = { from, target, stopsForPlayer: opts.stopOnPlayerRequired === true };
     const result: AdvanceResult = { from, to: target, itemsProcessed: 0, missed: [], events: [] };
 
@@ -438,7 +440,6 @@ export class Simulation {
       result.events = this.pendingEvents.splice(0, this.pendingEvents.length);
       return result;
     } finally {
-      this.advancing = false;
       this.advance = undefined;
     }
   }

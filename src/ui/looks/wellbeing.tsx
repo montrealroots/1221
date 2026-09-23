@@ -171,7 +171,7 @@ defineLook<Dial>('dial', {
     parent: at('person', dial.person.id),
     summary: sentenceFor(dial),
     provenance: dial.unit === 'hours'
-      ? 'Counted in hours: a waking hour adds a third of one, and a night pays it back, a long one faster.'
+      ? 'Counted in hours: a waking hour adds a third of one, and a night pays it back, a long one faster. A night under six hours adds some too, and the shortest add more than they pay back.'
       : 'Nought to a hundred, moved every hour the clock runs.',
   }),
 });
