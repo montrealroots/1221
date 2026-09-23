@@ -163,9 +163,12 @@ export class Simulation {
    * Waking drain was the first. It used to be charged by the midnight
    * rollover, for the whole day ahead in one lump, so nothing on Home moved
    * while a day was played and energy fell seventy-two points at midnight.
-   * The second puts somebody to bed when the clock is carried more than an
-   * hour on through the rest of a night the player kept them up in, or got
-   * them up in the middle of for a plan. They run in the order they were
+   * The second puts somebody to bed when the clock is sent more than an hour
+   * on through the rest of a night the player kept them up in, or stopped in,
+   * for a plan or the morning a skip was sent to, and pays a night a stop in
+   * its first hour left unpaid. It said at first that the clock had to carry
+   * them more than an hour on, which was the rule until presence was judged
+   * by how far the clock was sent. They run in the order they were
    * registered, so the night comes before the drain that would otherwise
    * charge its hours as awake.
    */

@@ -548,6 +548,16 @@ describe('the waking day', () => {
     expect(skipped.player.awakeSince).toBe(ends);
     expect(skipped.player.nightEndsAt).toBeUndefined();
     expect(up - skipped.player.wellbeing.energy).toBeCloseTo(((six + 12 * MS_HOUR - ends) / MS_HOUR) * 3, 9);
+
+    // Kept up by the player for an hour and then sent on, they are back in bed
+    // for what is left of it: a night already paid is theirs, and the hour
+    // kept up is all keeping them up costs.
+    const anHour = skippedToSix('cut-short').sim;
+    anHour.advanceTo(six + MS_HOUR);
+    expect(anHour.player.nightEndsAt).toBe(ends);
+    anHour.advanceTo(six + 12 * MS_HOUR);
+    expect(anHour.player.awakeSince).toBe(ends);
+    expect(up - anHour.player.wellbeing.energy).toBeCloseTo((MS_HOUR + six + 12 * MS_HOUR - ends) / MS_HOUR * 3, 9);
   });
 
   it('tells a player who is there by how far they sent the clock, and pays a night once it has carried them an hour into it', () => {
@@ -599,8 +609,25 @@ describe('the waking day', () => {
     expect(jumped.sim.player.wellbeing).toEqual(straight.sim.player.wellbeing);
     expect(jumped.sim.player.awakeSince).toBe(straight.sim.player.awakeSince);
 
-    // Kept up by the player instead, it is never paid, and gone once they
-    // are past where it would have ended.
+    // Kept up by the player for any of it, it is forfeit, and the next jump
+    // puts them to bed from where the player left them. It was kept owed at
+    // first, and the next jump paid it whole from midnight, so hours kept up
+    // cost nothing: kept up to half past seven after a stop at half past
+    // midnight, nightly, thirty of the seventy-six wore down.
+    const ended: number[] = [];
+    for (const hours of [1, 3, 6]) {
+      const partway = from('sent-past-an-hour');
+      partway.sim.advanceTo(partway.midnight + 31 * MS_MINUTE);
+      for (let hour = 0; hour < hours; hour += 1) partway.sim.advanceTo(partway.sim.now + MS_HOUR);
+      expect(partway.sim.player.nightOwedFrom, `${hours}`).toBeUndefined();
+      const left = partway.sim.now;
+      partway.sim.advanceTo(partway.midnight + 18 * MS_HOUR);
+      expect(partway.sim.player.lastSleptAt, `${hours}`).toBe(left);
+      ended.push(partway.sim.player.wellbeing.energy);
+    }
+    expect(new Set(ended).size).toBe(3);
+
+    // And kept up to where it would have ended, it is never paid at all.
     const kept = from('sent-past-an-hour');
     kept.sim.advanceTo(kept.midnight + 31 * MS_MINUTE);
     const ends = kept.sim.player.nightEndsAt!;
@@ -817,7 +844,7 @@ describe('the waking day', () => {
     expect(sim.player.wellbeing.sleepDebt).toBeCloseTo(before - 5.9 * night.value!.quality * 1.4, 9);
   });
 
-  it('says when a sleep would be tonight’s night though shorter than the one nobody chose', () => {
+  it('says when a short sleep, under six hours, would be tonight’s night', () => {
     // A sleep the player chooses is the night of the day it ends in. The
     // Sleep dialog suggests three hours at half past eleven before a call at
     // three, and taken, they were up from half past two, at energy 10.9 and a
@@ -864,7 +891,8 @@ describe('the waking day', () => {
     expect(sleepStandsForTheNight(sim, 1)).toBe(false);
 
     // Nor while one is under way and not yet paid, woken by a call half an
-    // hour into it: the sleep is paid on top, and the rest of the night after.
+    // hour into it: sent on after the sleep, the whole night is paid on top
+    // of it, and they are in bed until it would have ended.
     const woken = rested('woken-in-the-first-hour');
     woken.onSchedule('test.call', () => undefined);
     woken.advanceTo(next(woken, 23) + 30 * MS_MINUTE);

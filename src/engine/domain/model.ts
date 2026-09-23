@@ -173,7 +173,8 @@ export interface Person {
   /**
    * The bedtime of that night while it is not yet paid: the clock stopped in
    * its first hour, and it is paid, from this bedtime, when the clock goes on
-   * more than an hour into it. Kept only alongside `nightEndsAt`.
+   * more than an hour into it. Kept only alongside `nightEndsAt`, and
+   * forfeit with it when the player moves the clock themselves in the night.
    */
   nightOwedFrom?: Instant;
 

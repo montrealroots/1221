@@ -532,7 +532,16 @@ const LONGEST_STEP_WITH_THE_PLAYER = MS_HOUR;
  * pay a whole night for a minute of one, and a player who kept them up from
  * there would have had it for nothing. Paid late, it is paid as it would
  * have been on time: read at its bedtime, and ahead of the day's meals when
- * it starts at midnight, as the rollover pays it.
+ * it starts at midnight, as the rollover pays it. A player who keeps them up
+ * in it, moving the clock themselves, forfeits it, and the next jump starts
+ * a night where they are, as for a player who stayed up with them from the
+ * start. A night already paid is not forfeit: sent on inside it after the
+ * player has kept them up, they are back in bed for what is left of it, and
+ * the hours kept up are all that keeping them up costs. A night not yet paid
+ * was kept owed through that at first, and the next jump paid it whole from
+ * midnight, so hours kept up after a stop at half past midnight cost
+ * nothing; kept up to half past seven like that every night for a year,
+ * thirty of the seventy-six wore down.
  *
  * They are up where the clock stops if that comes before the night would end,
  * so a player coming back never finds them in the middle of one. The night
@@ -540,7 +549,11 @@ const LONGEST_STEP_WITH_THE_PLAYER = MS_HOUR;
  * the morning the player chose to look in at cost them sleep: skipped to
  * seven every morning for a year, a light sleeper ended at condition 35.8
  * and morale 0. Slept in full, the same year ends at 76.4 and 100, where the
- * rule at 87 left them.
+ * rule at 87 left them. So a stop more than an hour in has paid it, and a
+ * player who keeps them up from there gets no other night until the next
+ * midnight: kept up from a stop at five past one to half past six, they read
+ * 27.15 at six in the evening, where the same hours after a stop at half past
+ * twelve, whose night is forfeit, read 62.90.
  *
  * Where the night would have ended is kept at every stop (`nightEndsAt`), and
  * whenever the clock is sent on more than an hour before then, they are back
@@ -571,7 +584,16 @@ function sleepAlone(sim: Simulation, person: Person, bedtime: number): void {
   if (person.awakeSince !== undefined && person.awakeSince > bedtime) return;
   // Asked before anything that costs, because live play asks it every second.
   const advance = sim.advancing;
-  if (advance === undefined || advance.target - advance.from <= LONGEST_STEP_WITH_THE_PLAYER) return;
+  if (advance === undefined || advance.target - advance.from <= LONGEST_STEP_WITH_THE_PLAYER) {
+    // Kept up by the player in a night not yet paid, they are up with the
+    // player: it is forfeit, and the next jump starts one where they are. A
+    // night already paid is theirs, and they go back to it.
+    if (person.nightOwedFrom !== undefined) {
+      delete person.nightOwedFrom;
+      delete person.nightEndsAt;
+    }
+    return;
+  }
   const until = sim.advancingTo ?? advance.target;
 
   let ends = person.nightEndsAt;
@@ -650,14 +672,19 @@ export function unattendedNight(person: Person): { sound: number; hours: number 
  * (`lastSleptAt`), and no night nobody chose follows it that day. One that
  * ends in the small hours, before a sound sleeper would be up, of a night not
  * yet slept, is that night, and they are up from its end: the clock never puts
- * them back to bed after it. One chosen inside a night nobody chose that is
- * under way is paid on top of it, and is not. The Sleep dialog says so, because its own
+ * them back to bed after it. The Sleep dialog says so, because its own
  * suggestion can be one. Three hours at half past eleven before a call at
  * three, as it suggests, left them at energy 10.9 and a debt of 13.15 by
  * eleven the next evening, where sending the clock on instead left 28.4 and
  * 5.17. It asked at first for anything shorter than the night nobody chose,
  * and the dialog said it of its own full night for a good sleeper: seven or
  * seven and a half hours from eleven, against a night alone of 7.65.
+ *
+ * A sleep chosen inside a night nobody chose that is under way is not said to
+ * be one. Sent on after it, that night is paid, or was already, and the sleep
+ * is paid on top. Kept up by the player after it instead, a night not yet
+ * paid is forfeit and the sleep was the night, and the dialog cannot know
+ * which the player will do.
  */
 export function sleepStandsForTheNight(sim: Simulation, hours: number): boolean {
   const person = sim.player;
