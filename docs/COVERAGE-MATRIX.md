@@ -94,8 +94,9 @@ The rest is the Decision Center answering, dismissing and marking read
 the preferences (`world.set_preferences`).
 
 Time also does two things on its own as it passes, rather than at an instant.
-`life.night_alone` puts somebody to bed when the clock is carried through the
-rest of a night the player kept them up in, and `life.waking` charges each
+`life.night_alone` puts somebody to bed when the clock is carried more than an
+hour on through the rest of a night the player kept them up in, or got them up
+in the middle of for a plan, and `life.waking` charges each
 person for the hours they are awake, wherever the clock stops, so Home's dials
 move during a day of play and midnight no longer charges the day ahead.
 

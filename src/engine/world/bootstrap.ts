@@ -254,6 +254,8 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveCon
     // midnight also used to owe it one, and a player still up then saw their
     // character put to bed while they watched.
     lastSleptAt: now,
+    // Woken owing nothing, as the world starts them.
+    wokeWithDebt: 0,
     createdAt: now,
   };
   universe.people[playerId] = player;

@@ -164,10 +164,11 @@ export class Simulation {
    * Waking drain was the first. It used to be charged by the midnight
    * rollover, for the whole day ahead in one lump, so nothing on Home moved
    * while a day was played and energy fell seventy-two points at midnight.
-   * The second puts somebody to bed when the clock is carried through the
-   * rest of a night the player kept them up in. They run in the order they
-   * were registered, so the night comes before the drain that would
-   * otherwise charge its hours as awake.
+   * The second puts somebody to bed when the clock is carried more than an
+   * hour on through the rest of a night the player kept them up in, or got
+   * them up in the middle of for a plan. They run in the order they were
+   * registered, so the night comes before the drain that would otherwise
+   * charge its hours as awake.
    */
   onPassage(name: string, reactor: PassageReactor): this {
     if (this.passageReactors.has(name)) {
@@ -194,10 +195,20 @@ export class Simulation {
   get advancingTo(): Instant | undefined {
     const advance = this.advance;
     if (!advance) return undefined;
-    if (!advance.stopsForPlayer) return advance.target;
+    return this.advancingFor?.at ?? advance.target;
+  }
+
+  /**
+   * The thing that needs the player the advance in progress will stop at, or
+   * undefined when it runs to its target or there is no advance. An item due
+   * where the advance started is not one, and neither is one past its target.
+   */
+  get advancingFor(): ScheduledItem | undefined {
+    const advance = this.advance;
+    if (!advance || !advance.stopsForPlayer) return undefined;
     const after = this.universe.now > advance.from ? this.universe.now - 1 : advance.from;
     const stop = this.timeline.next(after, (item) => item.requiresPlayer === true);
-    return stop !== undefined && stop.at <= advance.target ? stop.at : advance.target;
+    return stop !== undefined && stop.at <= advance.target ? stop : undefined;
   }
 
   onCommand<P, R>(kind: string, handler: CommandHandler<P, R>): this {

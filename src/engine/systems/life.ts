@@ -32,7 +32,7 @@ export const ENERGY_DRAIN_PER_HOUR = 3.0;
  */
 export const NOURISHMENT_DRAIN_PER_HOUR = 2.0;
 
-/** The sleep debt a waking hour adds, and the most that waking runs it up to. A short night can leave more, by at most what it fell short by, and waking holds that. */
+/** The sleep debt a waking hour adds, and the most that waking runs it up to. A short night can leave more, by at most its own shortfall's worth, and waking holds that. */
 const DEBT_PER_WAKING_HOUR = 0.34;
 const DEBT_CEILING = 60;
 /** Energy under this is running on empty, and nourishment under this is hungry. */
@@ -193,8 +193,9 @@ export function wellbeingSummary(person: Person): string {
 
 export function registerLife(sim: Simulation): void {
   // Somebody the player stayed up with past midnight still sleeps when the
-  // clock is then jumped through the rest of that night. This runs before the
-  // waking charge, so the stretch the night covers is not charged as awake.
+  // clock is then jumped through the rest of that night, and so does somebody
+  // a plan in the small hours got up. This runs before the waking charge, so
+  // the stretch the night covers is not charged as awake.
   sim.onPassage('life.night_alone', (s, from) => {
     for (const person of Object.values(s.universe.people)) sleepAlone(s, person, from);
   });
@@ -339,11 +340,13 @@ export function applySleep(person: Person, hours: number, quality: number, at?: 
   // Debt clears with the whole night, not only with the part of it above five
   // and a half hours.
   w.sleepDebt = Math.max(0, w.sleepDebt - Math.max(0, effective - 5.5) * 2.2 - effective * 1.4);
-  // A night under six hours adds what it fell short by. Past the ceiling
-  // waking runs the debt up to, it adds that once and no more: short night
-  // after short night used to add it on top every time, once the midnight
-  // that pulled the debt back to sixty had gone, and three-hour nights left
-  // 191.7 owed by the ninetieth.
+  // A night under six hours adds 1.35 hours of debt for every hour it falls
+  // short. Past the ceiling waking runs the debt up to, it adds that once and
+  // no more. Short night after short night added it on top every time once
+  // nothing pulled the debt back to sixty: the midnight lump had, then the
+  // first waking second did until waking was made to hold debt rather than
+  // lower it, and after that three-hour nights left 191.7 owed by the
+  // ninetieth.
   if (hours < 6) {
     const short = (6 - hours) * 1.35;
     w.sleepDebt = Math.min(w.sleepDebt + short, Math.max(w.sleepDebt, DEBT_CEILING + short));
@@ -477,8 +480,8 @@ const LONGEST_STEP_WITH_THE_PLAYER = MS_HOUR;
  * a night the laptop was shut, so one left running with nobody watching
  * counts as a player who is there.
  *
- * It asked at first for the shortest night anybody sleeps alone, five hours
- * and twenty-four minutes, ahead of the clock. A skip that stopped for a plan
+ * It asked at first for five hours and twenty-four minutes of night ahead of
+ * the clock, the floor `unattendedNight` clamps to. A skip that stopped for a plan
  * in the small hours then came in two shorter pieces and neither was slept:
  * somebody on autopilot, sent on to the morning at ten with a plan at three,
  * was at energy 4.0 by seven. An hour tells a player who is there from one
@@ -511,12 +514,30 @@ const LONGEST_STEP_WITH_THE_PLAYER = MS_HOUR;
  * skipped to seven every morning for a year, a light sleeper ended at
  * condition 35.8 and morale 0. Slept in full, the same year ends at 76.6 and
  * 100, where the rule at 87 left them at 76.4 and 100.
+ *
+ * A stop for the player in the middle of the night, a plan in the small
+ * hours, has them up for it, and where the night would have ended is kept
+ * (`nightEndsAt`). When the clock then carries them on more than an hour,
+ * they are asleep again until then, and the night is not credited twice.
+ * Without that, the night was the one slept and they were up until the next
+ * midnight: a plan at one past one every night wore twenty-one of the
+ * seventy-six cases down over a year. The morning the player chose to stop at
+ * is not a stop like that; they are up from there.
  */
 function sleepAlone(sim: Simulation, person: Person, bedtime: number): void {
   if (person.awakeSince !== undefined && person.awakeSince > bedtime) return;
   // Asked first, because it is cheap and live play asks it every second.
   const until = sim.advancingTo;
   if (until === undefined || until - bedtime <= LONGEST_STEP_WITH_THE_PLAYER) return;
+  const ends = person.nightEndsAt;
+  if (ends !== undefined) {
+    if (bedtime < ends) {
+      person.awakeSince = Math.min(ends, until);
+      if (!(sim.advancingFor !== undefined && until < ends)) delete person.nightEndsAt;
+      return;
+    }
+    delete person.nightEndsAt;
+  }
   const midnight = startOfLocalDay(sim, bedtime);
   if (person.lastSleptAt !== undefined && person.lastSleptAt >= midnight) return;
   const { sound, hours } = unattendedNight(person);
@@ -533,7 +554,9 @@ function sleepAlone(sim: Simulation, person: Person, bedtime: number): void {
   // clock starts charging them again, or until the clock stops if that is
   // sooner. The day is still a sound sleeper's day: taking the lie-in out of
   // the waking hours as well left a poor sleeper better rested than anybody.
-  person.awakeSince = bedtime + Math.min(Math.round(sound * MS_HOUR), until - bedtime);
+  const wakes = bedtime + Math.round(sound * MS_HOUR);
+  person.awakeSince = Math.min(wakes, until);
+  if (sim.advancingFor !== undefined && until < wakes) person.nightEndsAt = wakes;
 
   // Coasting keeps you going; it does not get you to your best. Choosing
   // when and how long to sleep is worth something, so autopilot stops

@@ -155,9 +155,20 @@ export interface Person {
    * The sleep debt they woke with, which sets how fast their waking day
    * drains. Written at every wake, chosen or not, and at the start of a
    * waking day with none on record; absent on a save from before 88 until
-   * its first wake, when it is worked out from the debt instead.
+   * its first wake, when it is worked out from the debt instead. A new save
+   * starts with it at nought, the debt the world starts them with.
    */
   wokeWithDebt?: number;
+  /**
+   * Where a night nobody chose would have ended, kept when a stop for the
+   * player has them up in the middle of it: a plan in the small hours. The
+   * night was credited in full when it began, so whenever the clock carries
+   * them on more than an hour before then, they are only asleep again, until
+   * then or until it stops. Cleared once a skip reaches it. Before it, the
+   * stop's night was the night slept, and a plan at one past one on a skip to
+   * the morning kept them up until the next midnight.
+   */
+  nightEndsAt?: Instant;
 
   /**
    * Who this person is, in their own terms. Set at creation and only for the
@@ -414,8 +425,9 @@ export interface Preferences {
  *
  * 88 charged the waking day as the clock moves instead of all at once at
  * midnight. It gave every person `awakeSince`, when their waking day began,
- * and from their next wake `wokeWithDebt`, the sleep debt they woke with. A
- * save from before 88, this line's 87 included, was charged at its last
+ * and from their next wake `wokeWithDebt`, the sleep debt they woke with, and
+ * `nightEndsAt` while a stop for the player has them up in the middle of a
+ * night nobody chose. A save from before 88, this line's 87 included, was charged at its last
  * midnight for the whole day ahead, or, saved before its first midnight, was
  * never charged for that day. Either way its people come in charged up to the
  * next midnight, as that build would have left them, and their waking day

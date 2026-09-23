@@ -461,21 +461,33 @@ describe('the sentence the player wrote', () => {
 });
 
 describe('the sleep debt dial', () => {
-  it('calls an ordinary day’s debt the day’s, the way the Sleep dialog does', () => {
+  it('calls an ordinary day’s debt the day’s, and what a short night leaves owed', () => {
     // The clock charges the day as it moves, so by eleven a day up from seven
-    // has put 5.4 hours on the books, and the Sleep dialog calls the night
-    // that pays it a normal one. The dial called it owed.
+    // has put 5.4 hours on the books, and the Sleep dialog offers the normal
+    // eight hours for it. The dial called it owed.
     const sim = quickSave({}, 'dial-ordinary-day');
     const dial = () => (resolveLook(sim, at('dial', `${sim.universe.playerId}/sleepDebt`)) as Looked).summary;
     // To bed at eleven for eight hours, then the whole next day up to eleven.
     const elevenAfter = (from: number) => from + 15.5 * MS_HOUR;
     sim.advanceTo(elevenAfter(sim.now));
+    // A new save's first evening too: the world starts them owing nothing.
+    expect(dial()).toBe('5 hours, about what a day awake puts on the books. A night pays it back.');
     expect(sim.execute({ kind: 'life.sleep', payload: { hours: 8 } }).ok).toBe(true);
     sim.advanceTo(sim.now + 16 * MS_HOUR);
     expect(sim.player.wellbeing.sleepDebt).toBeCloseTo(16 * 0.34, 9);
     expect(dial()).toBe('5 hours, about what a day awake puts on the books. A night pays it back.');
-    // Kept up through the night an hour at a time, it is owed.
-    for (let hour = 0; hour < 8; hour += 1) sim.advanceTo(sim.now + MS_HOUR);
-    expect(dial()).toBe('8 hours owed. One long night would clear it.');
+    const person = () => resolveLook(sim, at('person', sim.universe.playerId)) as Looked;
+    const row = () => person().ways?.find((way) => way.label === 'Sleep Debt')?.detail;
+    expect(row()).toBe('5 hours on the books, and what sleep pays back');
+    expect((resolveLook(sim, at('dial', `${sim.universe.playerId}/sleepDebt`)) as Looked).provenance)
+      .toBe('Counted in hours: a waking hour adds a third of one, and a night pays it back, a long one faster.');
+    // Four hours in bed leave three owed in the morning, which is what the
+    // night left, not what a day has put on.
+    expect(sim.execute({ kind: 'life.sleep', payload: { hours: 4 } }).ok).toBe(true);
+    expect(Math.round(sim.player.wellbeing.sleepDebt)).toBe(3);
+    expect(dial()).toBe('3 hours owed. One long night would clear it.');
+    // Kept up through the next night an hour at a time, it is owed.
+    for (let hour = 0; hour < 20; hour += 1) sim.advanceTo(sim.now + MS_HOUR);
+    expect(dial()).toMatch(/hours owed/);
   });
 });
