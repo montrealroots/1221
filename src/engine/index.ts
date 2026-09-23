@@ -450,6 +450,29 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     steps.push(`Made ${plural(rebased, 'person', 'people')} a citizen of the country they were born in.`);
   }
 
+  // 88 charges the waking day as the clock moves, from when each person's
+  // waking day began. Before it the midnight rollover charged the whole day
+  // ahead at once, so a save from before 88 has already paid for the rest of
+  // the day it was saved in. Its people's waking day is counted from the next
+  // midnight: counting from the moment it was saved would charge that stretch
+  // twice, thirty points of energy for a save made at two in the afternoon.
+  {
+    const today = zonedParts(universe.now, universe.homeZone);
+    const midnight = addDays(
+      instantFromZoned({ year: today.year, month: today.month, day: today.day }, universe.homeZone), 1, universe.homeZone,
+    );
+    let paid = 0;
+    for (const person of Object.values(universe.people ?? {})) {
+      const p = person as unknown as Record<string, unknown>;
+      if (typeof p.awakeSince === 'number') continue;
+      p.awakeSince = midnight;
+      paid += 1;
+    }
+    if (paid > 0) {
+      steps.push(`Kept ${plural(paid, 'person', 'people')} from being charged twice for the rest of today.`);
+    }
+  }
+
   // The slot's career line is the player's title. Before 80 it named the film
   // career, and under 80 it was left empty.
   const player = universe.people?.[universe.playerId];

@@ -244,6 +244,9 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveCon
     // decides nothing, and the character sheet says so.
     background: config.background,
     wellbeing: freshWellbeing(),
+    // Up this morning, and charged for being awake from the moment the world
+    // starts.
+    awakeSince: now,
     createdAt: now,
   };
   universe.people[playerId] = player;

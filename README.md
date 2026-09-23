@@ -191,12 +191,12 @@ npm test
 | `smoke` | A universe boots, runs three years, and stays consistent. |
 | `time` | Instants, zones, DST gaps and overlaps, leap years, formatting. |
 | `money` | Integer cents, rounding, splitting, the ledger, conservation over a simulated year. |
-| `simulation` | Advancement order, recurrences, sleep, skip-to-event, the calendar, command idempotency and rollback, migrations, validation. |
+| `simulation` | Advancement order, recurrences, sleep, the waking day charged as the clock moves, skip-to-event, the calendar, command idempotency and rollback, migrations, validation. |
 | `calendar`, `holidays` | The month grid, entries between two instants, collisions, and the observances of a country. |
 | `weather` | The climate model: normals by latitude and season, the week ahead, the units a country reads it in. |
 | `geography`, `world-map` | The gazetteer and the projection drawn from it. |
 | `creation`, `portrait`, `citizenship` | The creation steps and what they put in the save, the headshot frame, and the citizenship a place of birth gives. |
-| `personality` | The seven dispositions and the traits: the pairs the page draws, what each one moves, what it says moves nothing, the sleep the game suggests and why, and that no single trait or disposition wears a life down on autopilot or on the suggested hours, at twenty-five or at sixty. |
+| `personality` | The seven dispositions and the traits: the pairs the page draws, what each one moves, what it says moves nothing, the sleep the game suggests and why, and that it pays the day beside it in the same measure at any age; that no single trait or disposition wears a life down on autopilot or on the suggested hours, at twenty-five or at sixty; and that at seventy and eighty-one the suggested hours hold everybody at what the age allows. |
 | `plans`, `looks` | Plans of your own on the calendar, and the drill-down graph crawled end to end. |
 | `endurance` | A day, a week, a month, a year, five years and ten: money drift, stranded schedules, corrupt history, duplicated ids, contradictory ownership, unbounded collections, and cost per simulated year. |
 | `integrity` | Retries and replays, save isolation, round trips, malformed and hostile input, what the player is allowed to know. |

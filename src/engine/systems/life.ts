@@ -22,7 +22,7 @@ import { personalityOf } from './personality';
 // Wellbeing model
 // ---------------------------------------------------------------------------
 
-/** Hourly drain applied while awake. */
+/** Hourly drain applied while awake, before any sleep debt raises it. */
 export const ENERGY_DRAIN_PER_HOUR = 3.0;
 /**
  * How fast somebody gets hungry while awake, per hour.
@@ -31,6 +31,15 @@ export const ENERGY_DRAIN_PER_HOUR = 3.0;
  * day, which is what one person feeding themselves actually eats.
  */
 export const NOURISHMENT_DRAIN_PER_HOUR = 2.0;
+
+/** The sleep debt a waking hour adds, and the most that waking runs it up to. */
+const DEBT_PER_WAKING_HOUR = 0.34;
+const DEBT_CEILING = 60;
+/** Energy under this is running on empty, and nourishment under this is hungry. */
+const EMPTY = 15;
+const HUNGRY = 20;
+/** Stress over this costs condition for as long as it stays there. */
+const OVERWROUGHT = 75;
 
 /**
  * How much of a night's recovery a full sleep debt holds back.
@@ -51,36 +60,91 @@ export function freshWellbeing(): Wellbeing {
 }
 
 /**
- * Applies the passage of time to a person's condition. Called by the day
- * rollover rather than by individual actions, so it stays consistent whether
- * an hour passed by playing or by skipping.
+ * Applies a stretch of waking time to a person's condition.
+ *
+ * `chargeWakingHours` calls it as the clock moves, for the stretch the clock
+ * just crossed. Until schema 88 the midnight rollover was its only caller, and
+ * charged the whole day ahead in one lump, whether the player then slept or
+ * not: a player up at seven was charged twenty-four waking hours a day,
+ * nothing on Home moved while a day was played, and energy fell seventy-two
+ * points at midnight.
+ *
+ * A stretch is now anything from one second of live play to a week skipped,
+ * so the same afternoon has to cost the same however the clock crossed it.
+ * Three things make it:
+ *
+ * - The drain is set by `carried`, the debt somebody woke with, not by the
+ *   debt the hours they have been up since have added. That is what the lump
+ *   charged too, a day at the debt it began with. Letting each second's
+ *   drain read the debt the seconds before it had added made an autopilot
+ *   day 2.7 energy dearer, and took the lowest condition of the worst
+ *   moraleSwing pick at sixty, left alone for a year, from 80.6 to 63.6.
+ * - The hours spent running on empty are the ones after energy fell past
+ *   fifteen: charging all of a long stretch for ending below the line made
+ *   one short night cost a day and a half of stress.
+ * - The hours spent hungry are the ones after nourishment fell past twenty,
+ *   and the hours overwrought the ones stress spent over seventy-five, for
+ *   the same reason. The lump charged every hour of a day that ended there.
+ *
+ * Measured: sixteen hours as 57,600 one-second ticks and as one jump ended on
+ * the same dials to the first decimal. The one place they part is a debt that
+ * reaches sixty while awake, where `chargeWakingHours` can no longer tell how
+ * much of it was carried.
  */
-export function applyElapsedWellbeing(person: Person, hours: number, opts: { asleep?: boolean } = {}): void {
+export function applyElapsedWellbeing(person: Person, hours: number, carried = person.wellbeing.sleepDebt): void {
+  if (!(hours > 0)) return;
   const w = person.wellbeing;
-  if (opts.asleep) return;
 
-  const drain = ENERGY_DRAIN_PER_HOUR * (1 + (w.sleepDebt / 24) * 0.5);
-  // The hours of this stretch spent running on empty: all of them if it began
-  // there, none if it never got there, and otherwise the ones after it did. A
-  // whole day is often applied at once, and charging all of it for ending
-  // below the line made one short night cost a day and a half of stress.
-  const emptyHours = Math.max(0, hours - Math.max(0, (w.energy - 15) / drain));
+  const drain = ENERGY_DRAIN_PER_HOUR * (1 + (carried / 24) * 0.5);
+  const emptyAt = clamp((w.energy - EMPTY) / drain, 0, hours);
+  const fedFor = clamp((w.nourishment - HUNGRY) / NOURISHMENT_DRAIN_PER_HOUR, 0, hours);
+  const hungry = hours - fedFor;
+
+  // Stress clears while there is something left in the tank and climbs once
+  // there is not, and it climbs faster in a highly strung or driven person
+  // than an even-tempered one.
+  const recovery = 0.35 * personalityOf(person, 'stressRecovery');
+  const onEmpty = 1.6 * personalityOf(person, 'stressGain') - recovery;
+  const stressAtEmpty = clamp(w.stress - recovery * emptyAt, 0, 100);
+  const overwrought = hoursOver(w.stress, -recovery, emptyAt, OVERWROUGHT)
+    + hoursOver(stressAtEmpty, onEmpty, hours - emptyAt, OVERWROUGHT);
+  w.stress = clamp(stressAtEmpty + onEmpty * (hours - emptyAt), 0, 100);
+
   w.energy = clamp(w.energy - drain * hours, 0, 100);
   w.nourishment = clamp(w.nourishment - NOURISHMENT_DRAIN_PER_HOUR * hours, 0, 100);
-  w.sleepDebt = Math.min(60, w.sleepDebt + hours * 0.34);
-
-  // Running on empty costs you, and it costs a highly strung or driven person
-  // more than an even-tempered one.
-  if (emptyHours > 0) w.stress = clamp(w.stress + emptyHours * 1.6 * personalityOf(person, 'stressGain'), 0, 100);
-  if (w.nourishment < 20) {
-    w.condition = clamp(w.condition - hours * 0.5, 0, 100);
-    w.morale = clamp(w.morale - hours * 0.7 * personalityOf(person, 'moraleSwing'), 0, 100);
-  }
-  if (w.stress > 75) w.condition = clamp(w.condition - hours * 0.25, 0, 100);
-
-  w.stress = clamp(w.stress - hours * 0.35 * personalityOf(person, 'stressRecovery'), 0, 100);
+  w.sleepDebt = Math.min(DEBT_CEILING, w.sleepDebt + hours * DEBT_PER_WAKING_HOUR);
+  w.condition = clamp(w.condition - hungry * 0.5 - overwrought * 0.25, 0, 100);
+  if (hungry > 0) w.morale = clamp(w.morale - hungry * 0.7 * personalityOf(person, 'moraleSwing'), 0, 100);
 
   w.hygiene = clamp((w.hygiene ?? 80) - hours * 1.6 * personalityOf(person, 'hygieneDrift'), 0, 100);
+}
+
+/** How many of `span` hours a straight line from `from`, at `rate` an hour, spends over `line`. */
+function hoursOver(from: number, rate: number, span: number, line: number): number {
+  if (span <= 0) return 0;
+  if (rate === 0) return from > line ? span : 0;
+  const meets = (line - from) / rate;
+  if (rate > 0) return from > line ? span : clamp(span - meets, 0, span);
+  return from > line ? clamp(meets, 0, span) : 0;
+}
+
+/**
+ * Charges a person for the part of the stretch from `from` to `to` they were
+ * awake for.
+ *
+ * Nothing before `awakeSince` is charged: a night they are asleep in pays for
+ * itself when they wake. The debt they woke with is what the debt is now less
+ * what the hours they have been up have added, so it comes out the same at
+ * every second of the day. Somebody with no waking day on record starts one
+ * here.
+ */
+export function chargeWakingHours(person: Person, from: number, to: number): void {
+  if (person.awakeSince === undefined) person.awakeSince = from;
+  const start = Math.max(from, person.awakeSince);
+  if (to <= start) return;
+  const up = (start - person.awakeSince) / MS_HOUR;
+  const carried = Math.max(0, person.wellbeing.sleepDebt - up * DEBT_PER_WAKING_HOUR);
+  applyElapsedWellbeing(person, (to - start) / MS_HOUR, carried);
 }
 
 /**
@@ -116,6 +180,12 @@ export function wellbeingSummary(person: Person): string {
 // ---------------------------------------------------------------------------
 
 export function registerLife(sim: Simulation): void {
+  // Being awake costs something every second of it, so it is charged as the
+  // clock moves rather than at midnight.
+  sim.onPassage('life.waking', (s, from) => {
+    for (const person of Object.values(s.universe.people)) chargeWakingHours(person, from, s.now);
+  });
+
   sim.onSchedule('life.day_rollover', () => {
     dailyRollover(sim);
     sim.schedule({
@@ -142,15 +212,30 @@ export function registerLife(sim: Simulation): void {
       // pause because the player is unconscious.
       const crossed = s.timeline.between(s.now, wakeAt).filter((i) => i.requiresPlayer === true);
 
+      // The night is read at the hour it starts. It used to be read when it was
+      // booked, so a night booked at eight for one in the morning was slept at
+      // the stress and the hour of eight.
+      if (start > s.now) s.advanceTo(start);
       const quality = sleepQuality(s, person);
       const before = { ...person.wellbeing };
 
-      if (start > s.now) s.advanceTo(start);
+      // The clock has charged them for being awake up to now. From here they
+      // are asleep until the wake, so it charges nothing for the night itself:
+      // the night is paid for below, by `applySleep`.
+      person.awakeSince = Math.max(person.awakeSince ?? wakeAt, wakeAt);
+      // And the night is on record before it is slept, as the wake it ends
+      // at, so a midnight inside it, or one it ends on, sees a night already
+      // chosen and gives no unattended night on top. It used to be stamped at
+      // the wake, after the night, and the rollover gave a second night to a
+      // save's first night across midnight and to any night that ended on the
+      // stroke of midnight twenty hours or more after the last. It is the
+      // wake that is stamped, never the bedtime, so a one-in-the-morning
+      // bedtime is not twenty-three hours old at the next midnight.
+      person.lastSleptAt = wakeAt;
       s.emit('life.sleep_started', { personId: person.id, hours, quality });
       s.advanceTo(wakeAt);
 
       applySleep(person, hours, quality, s.now);
-      person.lastSleptAt = s.now;
       const recovered = person.wellbeing.energy - before.energy;
 
       s.emit('life.woke', { personId: person.id, hours, quality, recovered });
@@ -275,9 +360,6 @@ const COASTING_STRESS_FLOOR = 14;
  */
 const COASTING_NOURISHMENT_TARGET = 76;
 
-/** What the unattended day accounts for, sleep included. */
-const HOURS_IN_A_DAY = 24;
-
 /** Runs once per local day: bodies move toward their age. */
 export function dailyRollover(sim: Simulation): void {
   const player = sim.universe.people[sim.universe.playerId];
@@ -299,7 +381,7 @@ export function dailyRollover(sim: Simulation): void {
     w.condition = clamp(Math.min(w.condition + (target - w.condition) * 0.02, ceiling.condition), 0, 100);
   }
 
-  liveTheUnattendedDay(sim);
+  liveTheUnattendedNight(sim);
 
   sim.emit('world.day_rollover', { date: sim.now });
 }
@@ -312,27 +394,36 @@ export function dailyRollover(sim: Simulation): void {
  * carried forward by the clock — which is what Skip To Event and a long jump
  * both do — must not stay ruined forever. A default night is a mediocre night,
  * not a free one.
+ *
+ * This used to live the whole day as well, charging the waking hours ahead in
+ * one lump; the clock charges those as it moves now (`chargeWakingHours`), so
+ * midnight keeps only the night, the meals and the shower.
  */
-function liveTheUnattendedDay(sim: Simulation): void {
+function liveTheUnattendedNight(sim: Simulation): void {
   for (const person of Object.values(sim.universe.people)) {
     const w = person.wellbeing;
     // A night they did not plan. Shorter, poorer, and it does not clear debt
-    // the way a deliberate one does.
+    // the way a deliberate one does. Nobody gets one inside a night they
+    // chose: `life.sleep` puts that night's wake on record before it is slept.
+    // Asking `awakeSince` instead cannot tell a night that ends on this
+    // midnight from a waking day that starts on it, which is what a save from
+    // before 88 is given; tried, such a save left alone lost its first night
+    // and was at energy 0 by eleven.
     const sinceSlept = person.lastSleptAt === undefined ? Number.POSITIVE_INFINITY : sim.now - person.lastSleptAt;
-    let sleptHours = 0;
     if (sinceSlept >= 20 * MS_HOUR) {
       const quality = sleepQuality(sim, person) * 0.95;
       const { sound, hours } = unattendedNight(person);
-      // The day is still a sound sleeper's day. Taking the lie-in out of the
-      // waking hours as well left a poor sleeper better rested than anybody.
-      sleptHours = sound;
       applySleep(person, hours, quality, sim.now);
       person.lastSleptAt = sim.now;
+      // And they are asleep until a sound sleeper would wake, which is when the
+      // clock starts charging them again. The day is still a sound sleeper's
+      // day: taking the lie-in out of the waking hours as well left a poor
+      // sleeper better rested than anybody.
+      person.awakeSince = sim.now + Math.round(sound * MS_HOUR);
 
       // Coasting keeps you going; it does not get you to your best. Choosing
       // when and how long to sleep is worth something, so autopilot stops
       // short of what a deliberate night reaches.
-      //
       w.energy = Math.min(w.energy, COASTING_ENERGY_CEILING);
       w.stress = Math.max(w.stress, COASTING_STRESS_FLOOR);
     }
@@ -340,9 +431,6 @@ function liveTheUnattendedDay(sim: Simulation): void {
     // Meals, and a shower, before the day rather than after it.
     w.nourishment = clamp(Math.max(w.nourishment, COASTING_NOURISHMENT_TARGET), 0, 100);
     w.hygiene = clamp(Math.max(w.hygiene ?? 80, 82), 0, 100);
-
-    // And then the rest of the day happens.
-    applyElapsedWellbeing(person, Math.max(0, HOURS_IN_A_DAY - sleptHours));
   }
 }
 
@@ -374,10 +462,32 @@ export function hoursUntilNextCommitment(sim: Simulation): number | undefined {
 /**
  * The rest a normal night gives, counted in hours of sound sleep: eight hours
  * at the quality a calm person with nothing unusual about their sleep gets.
- * It is what a night has to put back for a day to be paid for, before any
- * debt is.
+ *
+ * It was set as what a night had to put back for a day to be paid for, when
+ * the midnight rollover charged every day twenty-four waking hours: 88.6
+ * energy against 72. A day is charged the hours actually awake now, and a
+ * sixteen-hour day costs a calm twenty-five-year-old 48 energy and 5.4 hours
+ * of debt, so energy no longer sets it; condition and mood do, which a night
+ * holds above five hours of this rest. It stayed at eight hours. Measured on
+ * that person to bed at eleven for sixty nights of a fixed length, six and a
+ * half hours still held and six did not: condition fell to 79.7 and morale to
+ * 59.3. The night nobody planned, about 5.9 of these for the same person, has
+ * to stay short of the one the game suggests.
  */
 const A_NORMAL_NIGHT = 8 * 0.82;
+
+/** The waking day a normal night pays for: the twenty-four hours less the eight. */
+const A_NORMAL_DAY = 16;
+
+/**
+ * The sleep debt a normal day has put on the books by bedtime. A normal night
+ * pays it back with room to spare, so only debt past it asks for a longer
+ * one. While the day was charged at midnight, the debt at an eleven o'clock
+ * bedtime was nought; charged as the clock moves, it is 5.3, and counting all
+ * of it asked for eight and a half hours after every ordinary day and called
+ * it "carrying some sleep debt".
+ */
+export const A_NORMAL_DAYS_DEBT = A_NORMAL_DAY * DEBT_PER_WAKING_HOUR;
 
 /** The longest night the Sleep dialog offers, and so the most a suggestion asks. */
 const LONGEST_NIGHT = 14;
@@ -397,14 +507,23 @@ const LONGEST_NIGHT = 14;
 export function suggestedSleep(sim: Simulation): { hours: number; reason: string } {
   const next = sim.timeline.next(sim.now, (i) => i.requiresPlayer === true);
   const person = sim.player;
-  const debt = person.wellbeing.sleepDebt;
+  const owed = Math.max(0, person.wellbeing.sleepDebt - A_NORMAL_DAYS_DEBT);
   const night = nightParts(sim, person);
   const restores = personalityOf(person, 'energyRecovery');
   const age = recoveryFactorAt(yearsSince(person.birthInstant, sim.now));
-  const needed = (A_NORMAL_NIGHT + debt * 0.1) / (night.quality * restores * age);
+  // A night pays for the waking day beside it, and the longer the night, the
+  // shorter that day: an hour asleep is an hour nobody is charged for being
+  // awake. So the night is solved for, with each waking hour owed the share of
+  // a normal night that a normal day's hour is. Counted against a fixed day,
+  // as it was while the rollover charged twenty-four hours whatever the night,
+  // it asked an eighty-one-year-old for fourteen hours, which put back nearly
+  // three times the ten hours awake beside them, and said fourteen were not
+  // enough.
+  const perWakingHour = A_NORMAL_NIGHT / A_NORMAL_DAY;
+  const needed = (24 * perWakingHour + owed * 0.1) / (night.quality * restores * age + perWakingHour);
   const ideal = clamp(needed, 6, LONGEST_NIGHT);
   const hours = Math.round(ideal * 2) / 2;
-  const why = sleepReason({ night, restores, age, debt, hours, needed });
+  const why = sleepReason({ night, restores, age, owed, hours, needed });
   if (!next) {
     return { hours, reason: needed > LONGEST_NIGHT ? why : 'Your calendar’s clear, so sleep as long as you need.' };
   }
@@ -425,21 +544,21 @@ export function suggestedSleep(sim: Simulation): { hours: number; reason: string
  */
 function sleepReason(tonight: {
   night: ReturnType<typeof nightParts>; restores: number; age: number;
-  debt: number; hours: number; needed: number;
+  owed: number; hours: number; needed: number;
 }): string {
-  const { night, restores, age, debt, hours, needed } = tonight;
+  const { night, restores, age, owed, hours, needed } = tonight;
   if (needed > LONGEST_NIGHT) {
     return night.late > 0
       ? 'Going to bed this late, not even fourteen hours makes up a whole day. An earlier night would.'
       : 'Not even fourteen hours makes up a whole day for you tonight.';
   }
-  if (debt > 8) return 'You’re carrying real sleep debt.';
+  if (owed > 8) return 'You’re carrying real sleep debt.';
   if (hours <= 8) return 'A normal night.';
   const calm = 0.82 - night.stressLoss;
   // How much of a night each thing takes away, as the share left: the smallest
   // is the one that stretched it.
   const costs: [number, string][] = [
-    [A_NORMAL_NIGHT / (A_NORMAL_NIGHT + debt * 0.1), 'You’re carrying some sleep debt, so a normal night takes longer.'],
+    [A_NORMAL_NIGHT / (A_NORMAL_NIGHT + owed * 0.1), 'You’re carrying some sleep debt, so a normal night takes longer.'],
     [calm / 0.82, 'Stress is costing you sleep, so a normal night takes longer.'],
     [night.depth, 'You don’t sleep deeply, so a normal night takes longer.'],
     [night.late > 0 ? 1 - night.late / (calm * night.depth) : 1, 'It’s late, and a night that starts now is a worse one, so it takes longer.'],

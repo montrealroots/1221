@@ -17,7 +17,7 @@ When this file and the tree disagree, the tree wins. Correct this file in the sa
 1. **Work on `claude/slate-cleanup-e4apmx`.** Everything described here is on that branch, pushed, and level with GitHub. Since 2026-09-23 `main` carries the same line (§0.2). Keep developing on the working branch, and bring it into `main` by PR, with the owner.
 2. **This branch replaced `main` on 2026-09-23, by the owner's decision.** The old `main` (`e139e06`, 2026-09-18) carried 67 commits from the line the owner chose to drop, merged through PR #15 and PR #16 (72 counting the merge commits for PRs #12 to #16). The owner chose a merge over a force-push. Merge `4aab498` records `e139e06` as a parent and keeps this branch's tree exactly (`git merge -s ours`), and a PR from this branch carried it into `main`. That history is still reachable from `main`, but none of its files are in the tree. This line forked from it at `dc52d64` (2026-09-16) and has 16 code commits of its own since (14 on 09-22, and the two schema-87 commits on 09-23), plus the 09-23 commits that leave the build alone (§4). Commits after `cd8d6ef` reach `main` only by PR, with the owner.
 3. **The Windows clone is probably still on the dropped line.** The previous handoff says the Windows branch matched the remote on 2026-09-21. The remote tip that day was `4a00db8`. **Don't `git pull` there**: it would try to merge about 157 commits of removed game into this branch. Follow §3, which moves the clone over without losing anything.
-4. **Schema numbers 83 to 86 were used twice, and this line has moved past them.** On the old `main` (before 2026-09-23), 83 was the old family-and-film build, and the dropped line went up to 86. This line used 83 for "personality restored" until the schema-87 commit moved both pins to 87 (`src/engine/domain/model.ts:391`, `base44/shared/guard.js:25`). Until then, an old-`main` save at 83 opened without `migrate()` and every player command on it threw, because it had no `history`; a save at 84 to 86 was refused as newer. Now a save from either line, 83 to 86, opens through `migrate()`, which works from the shape of the data: it drops the old person fields, keeps the old collections as inert records, and fills what is missing. Old creation drafts (`1.1.0/83`, `1.1.0/86`) are discarded, because drafts are now stamped `1.1.0/87`. Opening an old save rewrites it, so copy the `slate.*` keys out first if they matter (§3, step 7).
+4. **Schema numbers 83 to 86 were used twice, and this line has moved past them.** On the old `main` (before 2026-09-23), 83 was the old family-and-film build, and the dropped line went up to 86. This line used 83 for "personality restored" until the schema-87 commit moved both pins to 87; the rollover fix moved them to 88 (`src/engine/domain/model.ts:412`, `base44/shared/guard.js:25`). Until then, an old-`main` save at 83 opened without `migrate()` and every player command on it threw, because it had no `history`; a save at 84 to 86 was refused as newer. Now a save from either line, 83 to 86, opens through `migrate()`, which works from the shape of the data: it drops the old person fields, keeps the old collections as inert records, and fills what is missing. Old creation drafts (`1.1.0/83`, `1.1.0/86`, `1.1.0/87`) are discarded, because drafts are now stamped `1.1.0/88`. Opening an old save rewrites it, so copy the `slate.*` keys out first if they matter (§3, step 7).
 5. **`CLAUDE.md` is on this branch now.** The owner asked on 2026-09-23 for their blueprint to come over from `main`, corrected for this branch. The seventeen rules and the standing constraints are unchanged; §7 summarizes them. A clone still on the old line has the old `CLAUDE.md` on disk, and a session started there has loaded it, until §3's switch.
 
 ---
@@ -31,9 +31,9 @@ When this file and the tree disagree, the tree wins. Correct this file in the sa
 | GitHub `main` | Replaced by this line on 2026-09-23: merge `4aab498`, carried in by a PR. The old tip `e139e06` (2026-09-18, "Merge pull request #16") is one of that merge's parents. |
 | Fork point with the old line | `dc52d64` (2026-09-16, schema 79) |
 | The replacement on 2026-09-22 | `abd4727` ("the gut") was pushed over `4a00db8` with the owner's explicit approval. That dropped 157 commits dated 09-17 to 09-21 from three other sessions. 67 of them reached `main` through PRs #15/#16. The other 90 (`46f48f3..4a00db8`) are on no GitHub branch. The owner's words: "destroy those 157 commits, the real work is what we're doing now." |
-| Save schema | `SAVE_SCHEMA_VERSION = 87` (`src/engine/domain/model.ts:391`) and `SUPPORTED_SCHEMA_VERSION = 87` (`base44/shared/guard.js:25`). Move both together. 84 to 86 are skipped on purpose (§0.4). |
+| Save schema | `SAVE_SCHEMA_VERSION = 88` (`src/engine/domain/model.ts:412`) and `SUPPORTED_SCHEMA_VERSION = 88` (`base44/shared/guard.js:25`). Move both together. 84 to 86 are skipped on purpose (§0.4). 88 added `awakeSince` on every person (§5, Sleep and energy). |
 | App version | `APP_VERSION = '1.1.0'` (`src/engine/world/bootstrap.ts`). `package.json` says `1.0.0`, and the two don't match. |
-| Gate | `npm run gate` exits **0**: 28 test files, **485 tests** at the tip, and every gate tool. 480 at `20da24e`; 478 at `36d2cea`, `d0636b8` and `beda4d9`. |
+| Gate | `npm run gate` exits **0**: 28 test files, **500 tests** at the tip, and every gate tool. 485 at `ed0cab7`; 480 at `20da24e`; 478 at `36d2cea`, `d0636b8` and `beda4d9`. |
 | Build | `npm run build` exits **0** (102 modules). |
 | Browser walk | A scratch Playwright script (not in the repo) walked all nine pages at 1440 wide against `vite preview`: **0 page errors**, and no `undefined`, `NaN` or `[object Object]` on the eight pages after the start screen. The start screen was only photographed. |
 | Working tree | Clean, with everything pushed. |
@@ -47,7 +47,7 @@ SLATE is an actor-and-actress life simulator at the start of a revamp. On 2026-0
 
 From the player's side:
 
-1. **Startup.** Six loading stages, then the save slots. The footer reads "Version 1.1.0 · Schema 87".
+1. **Startup.** Six loading stages, then the save slots. The footer reads "Version 1.1.0 · Schema 88".
 2. **Save slots.** Three slots, each its own universe, with New Save, Continue, Restore Backup and Delete.
 3. **Character creation:** five steps, `['Identity', 'Dispositions & Traits', 'Interests & Background', 'Starting Point', 'Review']` (`src/ui/creation/CharacterCreation.tsx:58`), then **Begin**.
    - **Identity:**
@@ -149,7 +149,7 @@ Get-Content "$env:TEMP\gate-exit.txt"      # expect exit=0
 Select-String -Path "$env:TEMP\gate.txt" -Pattern 'Test Files|Tests ' -CaseSensitive
 npm run build; "build exit=$LASTEXITCODE"
 ```
-Expect gate exit 0 and **485 tests in 28 files**. A different number means something differs between the machines. Investigate it before building anything.
+Expect gate exit 0 and **500 tests in 28 files**. A different number means something differs between the machines. Investigate it before building anything.
 
 **Step 6: Run it.**
 ```powershell
@@ -264,7 +264,7 @@ The owner's instructions that shaped the gut and what came after, verbatim from 
 
 - **Local keys:** `slate.save.{n}`, `slate.backup.{n}` (the previous payload, kept on every write), `slate.draft.{n}` and `slate.favourites`.
 - **Loading** (`openSlot` in `src/engine/index.ts`, called by `src/ui/saves/SaveSlots.tsx`):
-  - A save newer than 87 is refused.
+  - A save newer than 88 is refused.
   - Every other save runs through `migrate()`, whatever its number. One that changed is checkpointed and written back, unless it came out of the backup: restoring has already swapped the two, and the first autosave writes it on this device. On Base44 the restore itself doesn't take (§10).
   - `SaveSlots` then runs `validateUniverse()`.
   - The schema-11 Title Case pass is the one step that goes by the number (`from < 11`), because it can't tell an old label from a title a player typed.
@@ -272,14 +272,15 @@ The owner's instructions that shaped the gut and what came after, verbatim from 
   - The passes work from the **shape** of the data, not the version number, except the schema-11 Title Case pass.
   - `SHED` lists 19 removed person keys, from `attributes` through `reputationDriftedAt`.
   - Then it fills a missing title. A save from 72 to 79 still has one and keeps it. A save brought up to 80 from those lost it from the person but kept the premise record, so the player's title, a they/them pick included, is read back from there. Otherwise, as for a save created at 80 or one from before 72, the pronouns decide, and they/them comes back an actor.
-  - Then it cleans or fills the personality, re-derives citizenship from the place of birth, and sets `careerLabel` to the title.
+  - Then it cleans or fills the personality, re-derives citizenship from the place of birth, gives anybody without `awakeSince` the next local midnight, and sets `careerLabel` to the title.
 - **Creation drafts** are stamped `DRAFT_BUILD = "${APP_VERSION}/${SAVE_SCHEMA_VERSION}"`. A draft from another build is discarded.
-- **Schema history.** The comment above `SAVE_SCHEMA_VERSION` (`model.ts:367-390`) covers 80 to 87:
+- **Schema history.** The comment above `SAVE_SCHEMA_VERSION` (`model.ts:382-411`) covers 80 to 88:
   - 80: the gut.
   - 81: the performer title comes back.
   - 82: one citizenship, from the place of birth.
   - 83: personality and traits come back.
   - 87: a save from this line gains only the new number. 84 to 86 are skipped because the line this one replaced used 83 to 86 (§0.4). A save from that line sheds its old person fields, `reputationDriftedAt` included, and is given an empty history and, where it lacks them, the four personality axes that line dropped on 09-17.
+  - 88: every person gains `awakeSince`, when their waking day began, because the waking day is charged as the clock moves now, not at midnight. A save from before 88 had its last midnight charge the whole day ahead, so `migrate()` sets `awakeSince` to the next local midnight and the rest of that day isn't charged twice. Measured on real 87 saves loaded at 15:00: the rest of the day ends on the same dials as at 87.
   - The earlier bumps come from git (`git log -G'SAVE_SCHEMA_VERSION = ' -- src/engine/domain/model.ts`): 72 premise, 73 heritage/height/weight dropped, 74 race, 75 interests, 76 family, 77 business, 78 attribute base, 79 six dead fields.
 - **Server guard:** `base44/shared/guard.js` runs on Deno and can't import the engine. `tests/server-guards.test.ts` and `tests/base44-contract.test.ts` fail if its version and the engine's differ.
 
@@ -317,19 +318,26 @@ The owner's instructions that shaped the gut and what came after, verbatim from 
 
 ### Sleep and energy (`src/engine/systems/life.ts`)
 
-- **Waking drain** is 3.0 energy an hour, more with sleep debt.
-- **Running on empty** charges stress only for the hours actually spent below energy 15.
+- **Waking drain** is 3.0 energy an hour, more with sleep debt. It's charged as the clock moves, not at midnight:
+  - `life.waking` is a passage reactor (`Simulation.onPassage`, `src/engine/core/simulation.ts`). It charges every person for each stretch the clock crosses, from their `awakeSince`, wherever `advanceTo` stops: before each due item, on an early stop for the player, and at the end. Live ticks, sleep and Skip to Event all go through it.
+  - The drain is set by the debt the person woke with: today's debt minus 0.34 for each hour they've been up. That's what the old lump charged, so a day on autopilot costs what it did.
+  - Running on empty, hunger and stress over 75 are each charged only for the hours actually spent there. So 16 h as 57,600 one-second ticks and as one jump end on the same dials, and a day saved and loaded halfway ends where one played straight through does. The one place ticks and a jump part is debt that reaches 60 while awake.
+  - A 16 h day from a rested wake costs 48 energy and 5.4 h of debt: energy reads 97 at 08:00, 85 at 12:00, 73 at 16:00, 61 at 20:00 and 52 at 23:00, and readiness falls from 97 to 58.
+- **Sleep** (`life.sleep`) reads the night's quality at the hour it starts, then sets `awakeSince` and `lastSleptAt` to the wake before it advances the clock. So nothing is charged during the night, and a midnight inside the night, or one the night ends on, sees a night already chosen and gives no unattended night on top. `lastSleptAt` is the wake, never the bedtime.
 - **A night's quality** = (0.82 − stress loss) × sleepQuality knob, minus 0.08 for a bedtime from 01:00 to 04:59, clamped to 0.28–1.
-- **`suggestedSleep`** = (`A_NORMAL_NIGHT` (8 × 0.82) + debt × 0.1) / (quality × energyRecovery × `recoveryFactorAt(age)`):
+- **`suggestedSleep`** solves for the night that pays the day beside it: with p = `A_NORMAL_NIGHT` (8 × 0.82) / 16, hours = (24 × p + owed × 0.1) / (quality × energyRecovery × `recoveryFactorAt(age)` + p):
+  - owed is the debt past a normal day's, `A_NORMAL_DAYS_DEBT` = 16 × 0.34 = 5.44 h. After an ordinary day the debt on the books at bedtime doesn't stretch the night, and "You're carrying real sleep debt" means owed over 8.
+  - A longer night means a shorter day to pay for. The old formula divided `A_NORMAL_NIGHT` by the night's rate against a fixed 24 h day; it told somebody born 1944 fourteen hours and "Not even fourteen hours makes up a whole day", and fourteen put back nearly three times the ten awake beside them. Solved, the suggested night puts back 1.83 to 1.91 times the day beside it at every age tested (25, 60, 70, 81).
   - Clamped to 6–14 h (`LONGEST_NIGHT`) and rounded to the half hour. When a commitment is sooner than that plus 1.5 h, it offers the time available minus 1.5 h (never under 3 h) and names the commitment.
   - With a commitment booked ahead, `sleepReason` names the biggest shortfall: debt, stress, depth, late, restores or age. Past 14 h it says so ("Not even fourteen hours …").
-  - With a commitment booked, stress 0 and no debt, a default character is told 8 hours and "A normal night.".
+  - With a commitment booked, stress 0 and no debt, a default character is told 8 hours and "A normal night.". The same at 23:30 after an ordinary day, with 5.3 h of that day's debt on the books.
+  - Told at 23:00 for a default character: 8 h at 25, 9 at 60, 10 at 70, 11.5 at 81 (at `ed0cab7`: 8, 9.5, 11.5 and 14). At 01:00: 8.5 h (10 at `ed0cab7`).
   - With nothing on the calendar, which is how a new save starts, the reason is always "Your calendar’s clear, so sleep as long as you need." unless the need passes 14 h.
 - **`unattendedNight`**, the night slept when the player doesn't choose one:
   - sound = clamp(7.8 − stress × 0.012, 5.4, 8.4).
   - hours = sound / √(min(1, sleepQuality) × min(1, energyRecovery)), clamped to 5.4–10.
-  - The night runs at quality `sleepQuality × 0.95`, and the waking day is charged at 24 − sound.
-  - That happens only when there's been no deliberate sleep in the last 20 h. After a night the player chose, the rollover charges the full 24 h (see §10).
+  - The night runs at quality `sleepQuality × 0.95`, and `awakeSince` is set to midnight + sound, so the waking day is charged from a sound sleeper's wake.
+  - It's given only when there's been no deliberate sleep in the last 20 h. The midnight rollover keeps that night, the meals and the shower; it charges no waking hours.
 
 ---
 
@@ -432,7 +440,7 @@ This is 41 files, +2293/−292. Four are added: `src/engine/core/performer.ts` a
 
 | Check | Result |
 |---|---|
-| `npm run gate` on the schema-87 commits (and at `36d2cea`, `d0636b8`, `beda4d9`) | **exit 0**. 28 files; 485 tests after the review fixes, 480 at `20da24e`, 478 at the earlier three. title-case 0; labels 0; plurals 0; voice 3/40; tics within budget and 0 "Nothing" openers; doc-refs 69 paths in 6 docs, all present; wired 6, matching the baseline; deciders 1 (`weather.day`); spelling 0; typos 0; geo-check 252 countries, 170,911 cities; inventory 8 commands, 3 scheduled kinds, 3 events, 1 route. |
+| `npm run gate` on the rollover fix (and on the schema-87 commits, and at `36d2cea`, `d0636b8`, `beda4d9`) | **exit 0**. 28 files; 500 tests after the rollover fix, 485 after the schema-87 review fixes, 480 at `20da24e`, 478 at the earlier three. title-case 0; labels 0; plurals 0; voice 3/40; tics within budget and 0 "Nothing" openers; doc-refs 70 paths in 6 docs, all present; wired 6, matching the baseline; deciders 1 (`weather.day`); spelling 0; typos 0; geo-check 252 countries, 170,911 cities; inventory 8 commands, 3 scheduled kinds, 1 passage reactor, 3 events, 1 route. |
 | `npm run build` | **exit 0** |
 | Browser walk (a scratch Playwright script not in the repo, `vite preview`, 1440 wide) | Start screen, save slots, all five creation steps, Home, Calendar. **0 page errors**. No `undefined`, `NaN` or `[object Object]` on the eight pages after the start screen; the start screen was only photographed. |
 | Secret scan of the handoff commit | No keys, tokens or `.env` values. `.env` is git-ignored. `.env.example` holds two empty placeholders (`SLATE_BASE44_URL`, `SLATE_BASE44_TOKEN`) and a commented-out optional `SLATE_SCHEMA_VERSION=42`. |
@@ -446,17 +454,23 @@ The handoff and `CLAUDE.md` live at the repository root, so the gate's text tool
 ## 10. Known issues and unfinished work
 
 **Game model:**
-- **The midnight rollover charges a full 24 h awake after a night the player chose to sleep.**
-  - The cause: `liveTheUnattendedDay` (`src/engine/systems/life.ts:321-345`) is the only caller of `applyElapsedWellbeing`. When its 20 h guard skips the unattended night because the player slept (`lastSleptAt` is stamped at wake, line 153), `sleptHours` stays 0 and the rollover charges all 24 h.
-  - Measured: waking at 09:00, the midnight rollover took energy from 94.9 to 22.9, a full day of drain after 15 h awake.
-  - The sleep that follows restores it, and a normal night is calibrated as 8 h at quality 0.82 to pay for it.
-  - The fix is to charge the hours actually awake since the last wake. **Don't fix it by moving the stamp to bedtime:** a 01:00 bedtime would then be 23 h old at the next midnight and get an unattended night on top of the real one. Recalibrate `tests/personality.test.ts` after.
-- **Limits of the calibration** (`tests/personality.test.ts`):
+- **Fixed at schema 88: the midnight rollover charged a full 24 h awake after a night the player chose to sleep.**
+  - Measured at 87: waking at 09:00, the midnight rollover took energy from 94.9 to 22.9; staying up past midnight took it from 99.3 to 27.3 in one step; nothing on Home moved during a day; and a 23:00 sleeper woke to nourishment 15.2 and "Hungry, and it's starting to show." every morning.
+  - Now the clock charges the waking day as it moves, from `awakeSince` (§5). Up past midnight, energy reads 49.0 at 23:59:59 and 49.0 at 00:00:01. A 23:00 sleeper wakes at nourishment 63.2 to "Rested, steady and ready for a real day." and reads "Holding up …" from about 16:00.
+  - `lastSleptAt` is still the wake, stamped at bedtime now, so a night that crosses midnight or ends on it gets no unattended night on top. At 87 a new save's first night was given one on top whenever it crossed midnight or ended on it.
+  - `A_NORMAL_NIGHT`, the 13.5 restore and the 3.0 drain were left alone. The autopilot is calibrated on 3.0 and 13.5: charged as the clock moves, a year of it ends each day within 0.2 of where it did at 87 on every dial, sampled at 23:59:59. `A_NORMAL_NIGHT` no longer pays for energy (a 16 h day costs 48, an 8 h night puts back 88.6) but for condition and mood: on 60 fixed nights at 23:00 a calm 25-year-old held on 6.5 h and at 6 h fell to condition 79.7 and morale 59.3, and at 60 six hours ran out of energy by bedtime. 8 h stays the normal night because the unattended night, about 5.9 of the same hours, has to stay short of it. What changed is the suggestion (§5).
+- **Awake at midnight with no deliberate sleep in 20 h, somebody gets an unattended night while the player watches.** It happens on every save's first midnight if the player is still up, and to anybody who woke before 04:00 and is up at midnight. At 87 energy fell 57 at 00:00 on the first day; at 88 it rises instead, measured from 32.5 to 74.0, and then holds still until a sound sleeper's wake, about 07:40, though the player is up. Going to bed at 01:00 after that adds the chosen night on top; energy caps at 100, so what it costs is realism, not balance. Stamping a wake at creation would stop it on the first day but gives a save left alone from the start a 40 h first day. The engine can't tell a player who is up from one skipping; that is the fix to make.
+- **Skip a week starting the morning after a chosen night, and the first unattended night comes 41 h in**, because the 20 h guard is unchanged. Measured after a night ending 09:00: energy at 23:59 reads 55.1, 0.0, 3.4, 14.9 and 25.2 on the first five days, then settles at the autopilot's 25.2. At 87 the first day's hours were charged at a midnight inside the night before them, and that night's restore wiped them.
+- **Two things still step at midnight for somebody up:** nourishment is topped up to 76 and hygiene to 82 (meals and a shower before the day). Neither is energy, and both step up.
+- **A nap is still paid as a short night** by `applySleep`: an hour at 15:00 costs 5.6 h of debt, 3.7 condition and 6.7 morale (6.8, 3.8 and 6.7 at 87). At 87 the next midnight still charged a full day after it, and the night after woke at energy 84.1; now it wakes at 100.
+- **Limits of the calibration** (`tests/personality.test.ts`). The years on autopilot are sampled at 23:59:59, once the day has been charged; at 07:30 somebody on autopilot is still in the unattended night, with stress at its floor of 14, which would hide what the day did:
   - What holds, at 25 and at 60, on a year of autopilot and on 60 nights of suggested sleep at 23:00 and at 01:00: every trait that moves the wellbeing model (31 of 35) and both extremes of the three sliders that move anything.
   - What holds at 60 on the suggested hours: the worst four-trait picks plus the worst sliders. That's tested at 23:00; a probe at 01:00 held too.
-  - At 60 on **autopilot**, two of the three worst picks (the worst for sleepQuality and for stressGain) end the year with energy 0 and stress about 30, over the stress bar of 25, and only just clear the condition bar of 65 (lowest 65.4 and 68.0). The worst moraleSwing pick passes (lowest 80.6, stress 9.8). Morale ends at 100 for all three. A probe copying the test setup measured this; no test holds it.
-  - **Age sets a ceiling on condition.** `ceilingAt(age).condition` (`src/engine/content/lifespan.ts`) is 79.1 at 70 and 64.3 at 81. From 81 (born 1945 or earlier, with the default June birthday) condition can't stay above 65 on any schedule: a year of the suggested hours bottoms out at 64.3, the same as autopilot. From 70 the ceiling is below the suggested-hours bar of 80. These are designed limits, not wear, so a test for older ages has to measure against `ceilingAt`, not a fixed 65 or 80.
-  - The year-long tests use birth years 2001 and 1966. Only the sleep-suggestion tests go older (1955 and 1945). The Year Of Birth field has `min={1940}`, but validation only rejects an age over 95 at the start date, so a typed year back to about 1930 is accepted.
+  - At 60 on **autopilot**, two of the three worst picks (the worst for sleepQuality and for stressGain) end the year with energy 0 and stress 30.0 and 30.5, over the stress bar of 25, and only just clear the condition bar of 65 (lowest 65.4 and 68.0). The worst moraleSwing pick passes (lowest 80.6, stress 9.8). Morale ends at 100 for all three. The same at 87 and 88; no test holds it.
+  - **Age sets a ceiling on condition.** `ceilingAt(age).condition` (`src/engine/content/lifespan.ts`) is 79.1 at 70 and 64.3 at 81. From 81 (born 1944, or 1945 once past the June birthday) condition can't stay above 65 on any schedule. These are designed limits, not wear.
+    - Tested at 70 and 81 (born 1955 and 1944), measured against `ceilingAt` every morning: every single trait and slider and the three worst picks, on 60 suggested nights at 23:00 and at 01:00, sit on the ceiling, with stress 0 and morale 100, told 9 to 14 h. A default character left alone for a year never ends a day below it.
+    - On autopilot past 60 nothing else is held. A light sleeper falls as far as 15.4 under the ceiling at 70 and 4.7 at 81, where its morale ends the year at 33.9. The three worst picks reach condition 0 within the year at 70 and at 81, with stress 100 (95.5 to 96.0 at 87).
+  - The year-long tests use birth years 2001, 1966, 1955 and 1944; the sleep-suggestion tests go to 1944. The Year Of Birth field has `min={1940}`, but validation only rejects an age over 95 at the start date, so a typed year back to about 1930 is accepted.
 - **What the game still doesn't read** (`docs/UNBITTEN.md` keeps the full list):
   - The wellbeing model is read only by itself. Readiness is only displayed, on Home and in its own drill-down, and no decision uses it.
   - Four axes move nothing, and the money traits are only said back.
@@ -479,7 +493,6 @@ The handoff and `CLAUDE.md` live at the repository root, so the gate's text tool
   - Its test table leaves out five files.
   - Its calibration line claims "monotonicity, spread", which `tests/calibration.test.ts` doesn't test.
 - `docs/UNBITTEN.md:97-99` says nothing calls `core/audit.ts`. The decision audit trail went in `5a5232e`. What's left is the `Historian` behind `Simulation.remember`, which every memory goes through. **Don't delete the file.**
-- `tests/personality.test.ts:438-440` says the worst picks at sixty on autopilot "end flat". Measured, their morale ends at 100; what they lose is energy (0) and stress (about 30).
 - `src/ui/looks/place.tsx:277-278` print "out of 100" (Industry and Jobs), against the "82/100" rule. The test only catches "out of a hundred".
 - `tools/plural-check.mjs` allowlists five deleted files (`scenes/flight.ts`, `systems/relationships.ts`, `workspaces/TravelWorkspace.tsx`, `systems/media.ts`, `systems/wardrobe.ts`) and one fragment, `${people} people` in `src/engine/index.ts`, that no longer matches anything.
 - Stale comments:
@@ -503,6 +516,7 @@ The handoff and `CLAUDE.md` live at the repository root, so the gate's text tool
 - **If a Base44 deployment exists, it must be redeployed from this branch before it will store this branch's saves.**
   - Any guard deployed before the schema-87 commit (83 from this line or the old `main`, 86 from the dropped line) refuses every save this branch now writes on schema, with a 409: "That save is in format 87 and this deployment understands 83" (or 86). Before that commit, a guard from the old `main` (83) or from the dropped line (86) accepted schema 83 but refused every save from this branch with "The save does not say what game it is", because those guards require `universe.premise`, which this branch no longer writes.
   - Once redeployed (guard at 87, no premise check), the deployment accepts a save at any number up to 87, one from either old line included. Opening a save migrates it before it's written, so what it sends is at 87. Deploy the guard before or with the client, never after: a client at 87 is refused by a guard at 83.
+  - Schema 88 moves both pins again. A guard at 87 refuses every save a client at 88 writes, with a 409: "That save is in format 88 and this deployment understands 87". Deploy the guard at 88 before or with the client.
   - **Restore Backup doesn't take on Base44, and never has.** With the backend functions and the `SlateSave` entity both present, as in a real deployment, `restoreBackup` (`src/engine/persistence/base44.ts`) sends the backup through `saveUniverse`. If the backup was written by this build, its idempotency key matches its own first write, so the server replays that answer and writes nothing. If it was written earlier, the server refuses it for a world clock behind the stored one. Either way the server keeps the newer save, and the next autosave is refused as "older than the one already stored". The adapter tests miss it because their fake client has no entity. The fix is a server-side `restoreSlot` that swaps `payload` and `backup_payload`, with a contract test that wires the adapter to the real handlers.
   - The idempotency key now includes the schema. Bringing a save forward moves neither its clock nor its playtime, and before the fix the write-back after a migration reused the last write's key, was taken for a retry, and never reached the server.
 - Deploy only after `npm run gate` passes. `npm run base44:deploy` only builds and deploys, doesn't run the gate itself, and needs Base44 credentials.
@@ -538,7 +552,7 @@ Keep all of them until the owner says otherwise.
 
 ## 12. Next steps, in order
 
-1. **On Windows, run §3.** Confirm `core.autocrlf=false`, move the clone over without losing the old line, then `npm ci`. Confirm that the gate exits 0 with 485 tests and that the build passes.
+1. **On Windows, run §3.** Confirm `core.autocrlf=false`, move the clone over without losing the old line, then `npm ci`. Confirm that the gate exits 0 with 500 tests and that the build passes.
 2. **Done on 2026-09-23: this branch replaced `main`** (§0.2). Future work still goes on the working branch and reaches `main` by PR, with the owner. Never reset or force-push `main`.
 3. **Done on 2026-09-23 (`20da24e` and `f10f1b0`): the schema collision is retired.** Both pins moved from 83 to 87, past the old line's numbers, and opening a slot runs `migrate()` whatever the number. Drafts are stamped `1.1.0/87`, so old creation drafts are dropped without bumping `APP_VERSION`. Both commits reached `main` by PR, with the owner's approval.
 4. **Windows hygiene commit:**
@@ -547,8 +561,8 @@ Keep all of them until the owner says otherwise.
    - Replace the `audit` script with a Node version.
    - Ignore `cohesion-walk/`.
    - Run the gate.
-5. **Fix the midnight rollover** to charge the hours actually awake since the last wake, not by moving the stamp (§10). Recalibrate `A_NORMAL_NIGHT` and the personality calibration tests, and add a test above 60 measured against `ceilingAt`.
-6. **Correct the stale words** in §10: DRILL-DOWN counts and row, README gate line, test table and calibration claim, the UNBITTEN audit entry, the "end flat" test comment, `place.tsx` "out of 100", the plural-check allowlist, the stale comments, `decided.ts`'s London id, and `base44/config.jsonc`.
+5. **Done: the midnight rollover is fixed** (schema 88; §5, §10). The clock charges the hours awake from `awakeSince`; `lastSleptAt` is still the wake, stamped at bedtime. `A_NORMAL_NIGHT` stayed at 8 × 0.82 and the suggestion now solves for the night that pays the day beside it. The tests above 60 measure against `ceilingAt`. What's left is in §10: the unattended night given to somebody awake at midnight, and the 41 h gap on a skip after a chosen night.
+6. **Correct the stale words** in §10: DRILL-DOWN counts and row, README gate line, test table and calibration claim, the UNBITTEN audit entry, `place.tsx` "out of 100", the plural-check allowlist, the stale comments, `decided.ts`'s London id, and `base44/config.jsonc`.
 7. **Owner's direction for what comes next.** Something that reads the four idle axes, the money traits or citizenship would retire entries from `docs/UNWIRED.json` and `docs/UNBITTEN.md`. Take one `UNBITTEN` section at a time and prove each fix bites.
 8. **Deploy** to Base44 only after the gate passes; any existing deployment needs this redeploy before it will store this branch's saves (§10). Then run `tools/base44-smoke.mjs` against it. Fix Restore Backup on Base44 first (§10): today it never takes on the server.
 

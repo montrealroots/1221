@@ -24,6 +24,13 @@ import type { Money } from './money';
 /** Handlers for scheduled items, keyed by `ScheduledItem.kind`. */
 export type ScheduleHandler = (item: ScheduledItem, sim: Simulation) => void;
 
+/**
+ * Something that happens as time passes rather than at an instant. It is
+ * handed the instant the clock has just moved from; the clock stands at
+ * `sim.now`.
+ */
+export type PassageReactor = (sim: Simulation, from: Instant) => void;
+
 /** A command mutates the universe. Commands are the only legal way to do so. */
 export interface Command<P = Record<string, unknown>, R = unknown> {
   kind: string;
@@ -86,6 +93,7 @@ export class Simulation {
   readonly nextId: (ns: IdNamespace) => Id;
 
   private scheduleHandlers = new Map<string, ScheduleHandler>();
+  private passageReactors = new Map<string, PassageReactor>();
   private commandHandlers = new Map<string, CommandHandler<never, unknown>>();
   private pendingEvents: WorldEvent[] = [];
   private advancing = false;
@@ -135,6 +143,31 @@ export class Simulation {
       throw new Error(`Duplicate schedule handler for '${kind}'.`);
     }
     this.scheduleHandlers.set(kind, handler);
+    return this;
+  }
+
+  /**
+   * Registers something that time does on its own, as it passes.
+   *
+   * It runs every time the clock moves: at each instant `advanceTo` stops on to
+   * run something due there, before that thing runs, and at the instant it
+   * ends on. So what it does is spread over the clock the way the clock was
+   * actually moved, one second at a time in live play and a stretch at a time
+   * in a jump, and whatever is due next finds it already done. It is handed
+   * the stretch just crossed, and every stretch exactly once: the stops of
+   * one advance meet end to end, each advance starts where the last one
+   * stopped, and a command that fails rolls the clock back with everything
+   * that was charged on the way.
+   *
+   * Waking drain is the first. It used to be charged by the midnight rollover,
+   * for the whole day ahead in one lump, so nothing on Home moved while a day
+   * was played and energy fell seventy-two points at midnight.
+   */
+  onPassage(name: string, reactor: PassageReactor): this {
+    if (this.passageReactors.has(name)) {
+      throw new Error(`Duplicate passage reactor '${name}'.`);
+    }
+    this.passageReactors.set(name, reactor);
     return this;
   }
 
@@ -249,6 +282,8 @@ export class Simulation {
    *
    * Real-time ticking, sleeping and Skip to Event all call this. There is no
    * other way to move the clock, which is why the world can never skip work.
+   * It is also why what time does on its own (`onPassage`) is run from here:
+   * every way of moving the clock pays it, and at the same rate.
    */
   advanceTo(target: Instant, opts: { onProgress?: AdvanceProgress; stopOnPlayerRequired?: boolean } = {}): AdvanceResult {
     if (this.advancing) {
@@ -263,6 +298,16 @@ export class Simulation {
 
     this.advancing = true;
     const result: AdvanceResult = { from, to: target, itemsProcessed: 0, missed: [], events: [] };
+
+    // Time acts on the world wherever the clock stops, before anything due
+    // there. Several items due at one instant are one stop, not several.
+    let passedAt = from;
+    const pass = () => {
+      if (this.universe.now <= passedAt) return;
+      const was = passedAt;
+      passedAt = this.universe.now;
+      for (const reactor of this.passageReactors.values()) reactor(this, was);
+    };
 
     try {
       this.timeline.resetScan();
@@ -284,12 +329,14 @@ export class Simulation {
         if (opts.stopOnPlayerRequired && due.requiresPlayer && due.at > from) {
           result.interruptedBy = due;
           this.universe.now = Math.max(this.universe.now, due.at);
+          pass();
           result.to = this.universe.now;
           return result;
         }
 
         // Move the clock to the moment the item is due, never past it.
         this.universe.now = Math.max(this.universe.now, Math.min(due.at, target));
+        pass();
 
         const handler = this.scheduleHandlers.get(due.kind);
         if (!handler) {
@@ -343,6 +390,7 @@ export class Simulation {
       }
 
       this.universe.now = target;
+      pass();
       result.to = target;
 
       // Drain any events that reactors queued but nobody consumed.

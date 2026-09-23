@@ -129,8 +129,23 @@ export interface Person {
   /** Primary spending account. */
   primaryAccountId?: Id;
 
-  /** When they last deliberately slept, so the world knows to fill the gap. */
+  /**
+   * When their last deliberate night ends, so the world knows to fill the gap.
+   * Stamped at bedtime with the wake, so it is ahead of the clock while they
+   * sleep; before schema 88 it was stamped at the wake. A night nobody chose
+   * stamps the midnight it is given at.
+   */
   lastSleptAt?: Instant;
+  /**
+   * When their waking day began: the moment they woke, or will wake if it is
+   * still ahead of the clock, which is a night they are asleep in. A night
+   * the player chose runs to its wake, and one nobody chose to a sound
+   * sleeper's waking. The clock charges waking time from here as it moves,
+   * at the drain set by the sleep debt they woke with. Absent means the count
+   * starts the first time the clock moves. See `chargeWakingHours` in
+   * `systems/life.ts`.
+   */
+  awakeSince?: Instant;
 
   /**
    * Who this person is, in their own terms. Set at creation and only for the
@@ -385,10 +400,16 @@ export interface Preferences {
  * premise, family, business, film career, property, lot and tutorial stay as
  * inert JSON.
  *
+ * 88 charged the waking day as the clock moves instead of all at once at
+ * midnight, and gave every person `awakeSince`, when their waking day began.
+ * A save from before 88, this line's 87 included, was charged at its last
+ * midnight for the whole day ahead, so its people come in charged up to the
+ * next midnight, and their waking day starts there.
+ *
  * `migrate` in `engine/index.ts` says what an older save sheds on the way in,
  * what it keeps as inert JSON, and what it is given.
  */
-export const SAVE_SCHEMA_VERSION = 87;
+export const SAVE_SCHEMA_VERSION = 88;
 
 export interface SaveMeta {
   id: Id;
