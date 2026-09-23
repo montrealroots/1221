@@ -3,7 +3,8 @@
  */
 
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
-import { quickSave } from '@/engine';
+import { openSlot, quickSave } from '@/engine';
+import { SAVE_SCHEMA_VERSION } from '@/engine/domain/model';
 import { LocalSaveAdapter } from '@/engine/persistence/local';
 import { deserialise, serialise } from '@/engine/persistence/adapter';
 
@@ -181,5 +182,74 @@ describe('deleting a slot', () => {
     expect(emptied.occupied).toBe(false);
     expect(emptied.hasBackup).toBe(false);
     expect(await adapter.restoreBackup(1)).toBeNull();
+  });
+});
+
+describe('opening a slot', () => {
+  let store: MemoryStorage;
+  beforeEach(() => {
+    store = new MemoryStorage();
+    Object.defineProperty(globalThis, 'localStorage', { value: store, configurable: true, writable: true });
+  });
+  afterEach(() => {
+    Reflect.deleteProperty(globalThis, 'localStorage');
+  });
+  const DAY = 86_400_000;
+
+  it('restores a backup from an older build without losing the newer save it set aside', async () => {
+    const adapter = new LocalSaveAdapter();
+    const sim = quickSave({}, 'restore-older');
+    const slot = sim.universe.meta.slot;
+    sim.universe.meta.schemaVersion = 83;
+    await adapter.save(sim.universe);
+    const older = sim.universe.now;
+    sim.advanceTo(sim.now + 10 * DAY);
+    await adapter.save(sim.universe);
+    const newer = sim.universe.now;
+
+    const opened = await openSlot(adapter, slot, { fromBackup: true, startedAt: 0 });
+    if ('error' in opened) throw new Error(opened.error);
+    expect(opened.universe.now).toBe(older);
+    expect(opened.universe.meta.schemaVersion).toBe(SAVE_SCHEMA_VERSION);
+    // The newer save is still in the slot's backup, where restoring put it.
+    expect((await adapter.restoreBackup(slot))!.now).toBe(newer);
+  });
+
+  it('brings forward a save that carries the build’s own number but not its shape', async () => {
+    const adapter = new LocalSaveAdapter();
+    const sim = quickSave({}, 'same-number');
+    const slot = sim.universe.meta.slot;
+    sim.universe.meta.schemaVersion = SAVE_SCHEMA_VERSION;
+    delete (sim.universe as unknown as Record<string, unknown>).history;
+    await adapter.save(sim.universe);
+
+    const opened = await openSlot(adapter, slot, { startedAt: 0 });
+    if ('error' in opened) throw new Error(opened.error);
+    expect(opened.migration.steps).toContain('Created the history.');
+    expect(opened.universe.history).toEqual([]);
+    expect((await adapter.load(slot))!.history).toEqual([]);
+  });
+
+  it('opens a current save without writing it again', async () => {
+    const adapter = new LocalSaveAdapter();
+    const sim = quickSave({}, 'current');
+    const slot = sim.universe.meta.slot;
+    await adapter.save(sim.universe);
+    const stored = store.getItem(`slate.save.${slot}`);
+
+    const opened = await openSlot(adapter, slot, { startedAt: 0 });
+    if ('error' in opened) throw new Error(opened.error);
+    expect(opened.migration.migrated).toBe(false);
+    expect(store.getItem(`slate.save.${slot}`)).toBe(stored);
+    expect(store.getItem(`slate.backup.${slot}`)).toBeNull();
+  });
+
+  it('refuses a save from a newer build', async () => {
+    const adapter = new LocalSaveAdapter();
+    const sim = quickSave({}, 'newer');
+    sim.universe.meta.schemaVersion = SAVE_SCHEMA_VERSION + 1;
+    await adapter.save(sim.universe);
+    const opened = await openSlot(adapter, sim.universe.meta.slot, { startedAt: 0 });
+    expect('error' in opened && opened.error).toMatch(/newer version of SLATE/);
   });
 });

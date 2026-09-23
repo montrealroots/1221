@@ -442,7 +442,13 @@ describe('migrations and validation', () => {
   });
 
   it('gives a save from this line at 83 the new number and nothing else', () => {
+    // Lived in a little first: a night slept and a plan typed in lower case,
+    // because a player's own words are what a pass that goes by shape could
+    // rewrite, and an untouched save has none.
     const sim = quickSave({}, 'this-line-83');
+    expect(sim.execute({ kind: 'life.sleep', payload: { hours: 8 } }).ok).toBe(true);
+    expect(sim.execute({ kind: 'calendar.schedule', payload: { title: 'lunch with mum at the café', at: sim.now + 2 * MS_DAY } }).ok).toBe(true);
+    expect(sim.universe.history.length).toBeGreaterThan(0);
     sim.universe.meta.schemaVersion = 83;
     const before = JSON.stringify({ ...sim.universe, meta: { ...sim.universe.meta, schemaVersion: SAVE_SCHEMA_VERSION } });
     const result = migrate(sim.universe);

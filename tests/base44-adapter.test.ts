@@ -101,6 +101,19 @@ describe('talking to the backend functions', () => {
     expect(keys[1], 'the same unchanged save sent a different key').toBe(keys[0]);
   });
 
+  it('writes a save brought forward, though its clock and playtime did not move', async () => {
+    const { client, calls } = fakeClient(() => ({ ok: true, backupAvailable: false }));
+    const adapter = new Base44SaveAdapter(client);
+
+    universe.meta.schemaVersion = 83;
+    await adapter.save(universe);
+    universe.meta.schemaVersion = 87;
+    await adapter.save(universe);
+
+    const keys = calls.map((c) => c.payload!['idempotencyKey']);
+    expect(keys[1], 'the migrated save reused the key of the write before it').not.toBe(keys[0]);
+  });
+
   it('reads the reply off .data rather than the response object', async () => {
     const payload = serialise(universe);
     const { client } = fakeClient((name) => {

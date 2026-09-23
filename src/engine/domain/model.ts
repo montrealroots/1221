@@ -375,12 +375,15 @@ export interface Preferences {
  * 80 to 83 for changes of its own, and a branch of it reached 86. A save from
  * that line at 83 claimed to be current here and opened without `migrate`, and
  * one at 84 to 86 was refused as newer. At 87 every save from either line is
- * older than the build, so every one goes through `migrate`, which reads what a
- * save holds and not the number on it. A save from this line gains the number
- * and nothing else. A save from the older line sheds what 80 shed here and the
- * date its reputation last faded, and is given an empty history and the four
- * personality axes it never had, at the values creation starts on. Its family,
- * its business, its lot and its tutorial stay as inert JSON.
+ * older than the build, and opening a slot now runs `migrate` whatever the
+ * number says (`openSlot` in `engine/index.ts`), so a number shared again
+ * cannot skip it. `migrate` reads what a save holds and not the number on it.
+ * A save from this line gains the number and nothing else. A save from the
+ * older line sheds what 80 shed here and the date its reputation last faded,
+ * and is given an empty history and, where it lacks them, the four personality
+ * axes that line dropped on 09-17, at the values creation starts on. Its
+ * premise, family, business, film career, property, lot and tutorial stay as
+ * inert JSON.
  *
  * `migrate` in `engine/index.ts` says what an older save sheds on the way in,
  * what it keeps as inert JSON, and what it is given.
