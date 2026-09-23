@@ -6,7 +6,7 @@ import { useCallback, useEffect, useState } from 'react';
 import type { SaveAdapter, SaveSlotInfo, Slot } from '@/engine/persistence/adapter';
 import type { SaveUniverse } from '@/engine/domain/model';
 import { SAVE_SCHEMA_VERSION } from '@/engine/domain/model';
-import { migrate, validateUniverse } from '@/engine';
+import { openSlot, validateUniverse } from '@/engine';
 import { APP_VERSION } from '@/engine/world/bootstrap';
 
 export function SaveSlots({
@@ -36,35 +36,12 @@ export function SaveSlots({
     setBusy(slot);
     setError(null);
     try {
-      const universe = fromBackup ? await adapter.restoreBackup(slot) : await adapter.load(slot);
-      if (!universe) {
-        setError(fromBackup ? 'There’s no backup for that slot.' : 'That slot is empty.');
+      const opened = await openSlot(adapter, slot, { fromBackup, startedAt: Date.now() });
+      if ('error' in opened) {
+        setError(opened.error);
         return;
       }
-
-      if ((universe.meta.schemaVersion ?? 1) > SAVE_SCHEMA_VERSION) {
-        setError(
-          `Slot ${slot} was written by a newer version of SLATE (schema ${universe.meta.schemaVersion}). Opening it here could damage it, so it hasn’t been loaded.`,
-        );
-        return;
-      }
-
-      // A migration takes a checkpoint before it touches anything.
-      if ((universe.meta.schemaVersion ?? 1) < SAVE_SCHEMA_VERSION) {
-        await adapter.backup(slot);
-        universe.meta.migrationInProgress = {
-          from: universe.meta.schemaVersion ?? 1,
-          to: SAVE_SCHEMA_VERSION,
-          startedAt: Date.now(),
-        };
-        const result = migrate(universe);
-        if (result.problems.length > 0) {
-          setError(result.problems.join(' '));
-          return;
-        }
-        universe.meta.migrationInProgress = undefined;
-        await adapter.save(universe);
-      }
+      const { universe } = opened;
 
       const validation = validateUniverse(universe);
       if (!validation.ok) {

@@ -230,7 +230,11 @@ export class Base44SaveAdapter implements SaveAdapter {
         const reply = await this.call('saveUniverse', {
           slot,
           payload,
-          idempotencyKey: `${universe.meta.id}:${universe.now}:${Math.round(universe.meta.playtimeSeconds)}`,
+          // The schema is in the key because bringing a save forward moves
+          // neither its clock nor its playtime, and without it the write-back
+          // after a migration was taken for a retry of the last write and
+          // dropped, so the server kept the old save.
+          idempotencyKey: `${universe.meta.id}:${universe.now}:${Math.round(universe.meta.playtimeSeconds)}:${universe.meta.schemaVersion}`,
         }, 'Saving');
         universe.meta.backupAvailable = Boolean(reply.backupAvailable);
         await this.fallback.save(universe).catch(() => undefined);

@@ -13,6 +13,7 @@
 import { Simulation, type Command, type CommandResult } from './core/simulation';
 import type { Personality, SaveUniverse } from './domain/model';
 import { SAVE_SCHEMA_VERSION } from './domain/model';
+import type { SaveAdapter, Slot } from './persistence/adapter';
 import { addDays, formatDate, instantFromZoned, zonedParts, MS_DAY } from './core/time';
 import { formatMoneyCompact } from './core/money';
 import { clamp } from './core/rng';
@@ -247,22 +248,29 @@ export function migrate(universe: SaveUniverse): MigrationResult {
   // Schema 11 put every label in Title Case. Labels are written into the save
   // when they are created, so an older save would go on reading 'New day'
   // forever while a fresh one read 'New Day'.
+  //
+  // This is the one pass that goes by the number, because the shape can't tell
+  // an old label from a title somebody typed: a plan named 'Lunch with Mom'
+  // looks like a label from before 11. It ran on every save from this line once
+  // 87 made all of them older than the build, and rewrote what players typed.
   let relabelled = 0;
-  const relabel = <T extends Record<string, unknown>>(rows: T[] | undefined, field: keyof T & string) => {
-    for (const row of rows ?? []) {
-      const value = row[field];
-      if (typeof value !== 'string') continue;
-      const next = titleCaseLabel(value);
-      if (next !== value) {
-        (row as Record<string, unknown>)[field] = next;
-        relabelled++;
+  if (from < 11) {
+    const relabel = <T extends Record<string, unknown>>(rows: T[] | undefined, field: keyof T & string) => {
+      for (const row of rows ?? []) {
+        const value = row[field];
+        if (typeof value !== 'string') continue;
+        const next = titleCaseLabel(value);
+        if (next !== value) {
+          (row as Record<string, unknown>)[field] = next;
+          relabelled++;
+        }
       }
-    }
-  };
-  relabel(universe.scheduled as unknown as Record<string, unknown>[], 'label');
-  relabel(universe.notifications as unknown as Record<string, unknown>[], 'title');
-  relabel(universe.history as unknown as Record<string, unknown>[], 'title');
-  relabel(Object.values(universe.decisions ?? {}) as unknown as Record<string, unknown>[], 'title');
+    };
+    relabel(universe.scheduled as unknown as Record<string, unknown>[], 'label');
+    relabel(universe.notifications as unknown as Record<string, unknown>[], 'title');
+    relabel(universe.history as unknown as Record<string, unknown>[], 'title');
+    relabel(Object.values(universe.decisions ?? {}) as unknown as Record<string, unknown>[], 'title');
+  }
   if (relabelled > 0) {
     steps.push(`Put ${relabelled} stored label${relabelled === 1 ? '' : 's'} into Title Case.`);
   }
@@ -333,11 +341,16 @@ export function migrate(universe: SaveUniverse): MigrationResult {
   // list: a save from before 80 keeps the title it was made with. 80 shed the
   // personality and its traits as well, and 83 put those back the same way.
   // 82 shed the second citizenship.
+  //
+  // 87 sheds `reputationDriftedAt`. The line this one replaced as main wrote it
+  // on its player from 79 on: the day its reputation last faded, so that a
+  // skip forward cost what living the days would have. The reputation it timed
+  // is already on this list, so the date goes with it.
   const SHED = [
     'attributes', 'prodigy', 'traits',
     'reputation', 'careerTrack', 'estateRole', 'quotes', 'relations', 'gender', 'residenceId',
     'householdId', 'stageName', 'skills', 'goals', 'lifestyle', 'creditScore', 'goatTraits',
-    'secondCitizenshipId',
+    'secondCitizenshipId', 'reputationDriftedAt',
   ] as const;
   let shed = 0;
   for (const person of Object.values(universe.people ?? {})) {
@@ -395,6 +408,13 @@ export function migrate(universe: SaveUniverse): MigrationResult {
   // with no traits. A save from before 80 kept its own, and is only tidied:
   // every axis a number on the slider, and only traits that can be held
   // together, four at most.
+  //
+  // A save from the line this one replaced as main kept three of the seven
+  // axes, conscientiousness, emotional stability and ambition, and its traits.
+  // They are tidied the same way and come through as they were, because that
+  // line's creation screen held them to the same slider, the same thirty-five
+  // traits and the same pairs. The other four axes start where creation starts
+  // them.
   let personalised = 0;
   for (const person of Object.values(universe.people ?? {})) {
     const p = person as unknown as Record<string, unknown>;
@@ -440,6 +460,51 @@ export function migrate(universe: SaveUniverse): MigrationResult {
   universe.meta.schemaVersion = SAVE_SCHEMA_VERSION;
 
   return { migrated, from, to: SAVE_SCHEMA_VERSION, steps, problems };
+}
+
+/**
+ * What opening a slot does before the game starts: refuse a save from a newer
+ * build, and bring everything else forward.
+ *
+ * Every save goes through `migrate`, whatever number it carries. The number
+ * used to decide, and when the line this one replaced as main also wrote 83, a
+ * save of theirs that needed every step skipped all of them and broke the
+ * first command run on it. `migrate` reads what a save holds, and on a save
+ * that is already current it changes nothing, so running it every time asks
+ * nothing of the number.
+ *
+ * A save that changed is written back, after a checkpoint of what was stored.
+ * One opened out of the backup is not: restoring has already swapped the two,
+ * and a checkpoint then copied the restored save over the newer one it had
+ * just set aside, so the slot lost it. The first autosave writes it instead,
+ * on this device. On Base44 the restore itself doesn't take yet; §10 of
+ * `SLATE_CURRENT_MASTER_HANDOFF.md` says why.
+ */
+export async function openSlot(
+  adapter: SaveAdapter,
+  slot: Slot,
+  opts: { fromBackup?: boolean; startedAt: number },
+): Promise<{ universe: SaveUniverse; migration: MigrationResult } | { error: string }> {
+  const fromBackup = opts.fromBackup ?? false;
+  const universe = fromBackup ? await adapter.restoreBackup(slot) : await adapter.load(slot);
+  if (!universe) return { error: fromBackup ? 'There’s no backup for that slot.' : 'That slot is empty.' };
+
+  const from = universe.meta.schemaVersion ?? 1;
+  if (from > SAVE_SCHEMA_VERSION) {
+    return {
+      error: `Slot ${slot} was written by a newer version of SLATE (schema ${from}). Opening it here could damage it, so it hasn’t been loaded.`,
+    };
+  }
+
+  universe.meta.migrationInProgress = { from, to: SAVE_SCHEMA_VERSION, startedAt: opts.startedAt };
+  const migration = migrate(universe);
+  if (migration.problems.length > 0) return { error: migration.problems.join(' ') };
+  universe.meta.migrationInProgress = undefined;
+  if (migration.migrated && !fromBackup) {
+    await adapter.backup(slot);
+    await adapter.save(universe);
+  }
+  return { universe, migration };
 }
 
 // ---------------------------------------------------------------------------
