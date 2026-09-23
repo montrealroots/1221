@@ -8,7 +8,9 @@ module.exports = {
   parser: '@typescript-eslint/parser',
   parserOptions: { ecmaVersion: 'latest', sourceType: 'module' },
   plugins: ['@typescript-eslint', 'react-hooks'],
-  ignorePatterns: ['dist', 'node_modules', '*.cjs', 'functions'],
+  // `probe` is the git-ignored scratch folder (.gitignore); linting it made the
+  // gate fail on throwaway measurement scripts.
+  ignorePatterns: ['dist', 'node_modules', '*.cjs', 'functions', 'probe'],
   rules: {
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'warn',

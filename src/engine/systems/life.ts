@@ -535,13 +535,34 @@ const LONGEST_STEP_WITH_THE_PLAYER = MS_HOUR;
  * it starts at midnight, as the rollover pays it. A player who keeps them up
  * in it, moving the clock themselves, forfeits it, and the next jump starts
  * a night where they are, as for a player who stayed up with them from the
- * start. A night already paid is not forfeit: sent on inside it after the
- * player has kept them up, they are back in bed for what is left of it, and
- * the hours kept up are all that keeping them up costs. A night not yet paid
- * was kept owed through that at first, and the next jump paid it whole from
- * midnight, so hours kept up after a stop at half past midnight cost
- * nothing; kept up to half past seven like that every night for a year,
- * thirty of the seventy-six wore down.
+ * start: the time in bed before the stop is charged as time awake. A night
+ * already paid is not forfeit: sent on inside it after the player has kept
+ * them up, they are back in bed for what is left of it, and the hours kept
+ * up are all that keeping them up costs. A night not yet paid was kept owed
+ * through that at first, and the next jump paid it whole from midnight, so
+ * hours kept up after a stop at half past midnight cost nothing; kept up to
+ * half past seven like that every night for a year, thirty of the
+ * seventy-six wore down. Then it was forfeit, but the time in bed before the
+ * stop was left uncharged as well as unpaid, and the two read the same only
+ * where the night that followed reached the 74 a night alone stops at: on a
+ * save played on autopilot, where it fell short, kept up to half past six
+ * after a stop at half past twelve read 62.53 by six in the evening, where
+ * kept up with no stop read 60.86. Charged, all seventy-six read as with no
+ * stop in every dial, on both saves, after a stop at half past twelve or a
+ * minute to one.
+ *
+ * Carrying on a jump that a stop in the night's first hour broke off (Go, or
+ * Skip It, on what stopped it) is not keeping them up: it is the rest of that
+ * jump (`Simulation.advancing`), and the night is what the jump would have
+ * made it, paid once the clock is carried an hour into it. The stretch
+ * carried on is still the player's, as after a stop later in the night. It
+ * was taken for the player's own hour at first, the night was forfeit and
+ * started again where the jump was going, late: a skip to half past one with
+ * a plan at half past twelve on the way, every night for a year, wore nine of
+ * the seventy-six down, where 0e80f13 and the rule at 87 wore none. Carried
+ * on as the skip, the plan costs the hour they are up for it, and none wear
+ * down. A move of an hour or less the player makes afresh, Play, One Hour or
+ * Next Event, is their own, and forfeits it.
  *
  * They are up where the clock stops if that comes before the night would end,
  * so a player coming back never finds them in the middle of one. The night
@@ -569,10 +590,15 @@ const LONGEST_STEP_WITH_THE_PLAYER = MS_HOUR;
  * where the skip was going leaves an hour or less to go on, which is the
  * player's, and they are up for it and charged for it, as for One Hour.
  *
- * It is kept through a sleep the player chooses in the middle of it, and the
- * sleep is paid on top: an hour's nap after a plan at half past one left them
- * at 83.7 energy by seven, over the 74 the night alone stops at. Dropped
- * there, the nap left them up from its end to the next midnight.
+ * It is kept through a sleep the player chooses in the middle of it. In a
+ * night already paid, the sleep is paid on top: an hour's nap after a plan at
+ * half past one left them at 83.7 energy by seven, over the 74 the night alone
+ * stops at. Dropped there, the nap left them up from its end to the next
+ * midnight. In a night not yet paid, the night is paid after the sleep, from
+ * its bedtime, and stops at that ceiling, so it keeps the more of what the
+ * two give, not both: an hour's nap after a stop at half past twelve left
+ * them at 74 by seven, as with no nap, with the debt, condition and morale a
+ * short sleep costs.
  */
 function sleepAlone(sim: Simulation, person: Person, bedtime: number): void {
   // A night the clock is past is gone, paid or not, whoever moved it, and
@@ -585,13 +611,30 @@ function sleepAlone(sim: Simulation, person: Person, bedtime: number): void {
   // Asked before anything that costs, because live play asks it every second.
   const advance = sim.advancing;
   if (advance === undefined || advance.target - advance.from <= LONGEST_STEP_WITH_THE_PLAYER) {
-    // Kept up by the player in a night not yet paid, they are up with the
-    // player: it is forfeit, and the next jump starts one where they are. A
-    // night already paid is theirs, and they go back to it.
-    if (person.nightOwedFrom !== undefined) {
-      delete person.nightOwedFrom;
-      delete person.nightEndsAt;
+    const owed = person.nightOwedFrom;
+    if (owed === undefined) return;
+    if (advance !== undefined && advance.target - advance.sentFrom > LONGEST_STEP_WITH_THE_PLAYER) {
+      // Carrying on a jump the player sent through the night, after something
+      // in its first hour stopped it: the night is what that jump would have
+      // made it, paid once the clock is carried an hour into it and owed until
+      // then. The stretch carried on is still the player's, and they are up
+      // for it, as after a stop later in the night.
+      const until = sim.advancingTo ?? advance.target;
+      if (until - owed > LONGEST_STEP_WITH_THE_PLAYER) {
+        creditNightAlone(sim, person, owed);
+        delete person.nightOwedFrom;
+      }
+      return;
     }
+    // Kept up by the player in a night not yet paid, they are up with the
+    // player: it is forfeit, and the next jump starts one where they are. The
+    // time in bed before the stop is charged now as time awake, so it reads
+    // as for a player who kept them up from the start. A night already paid
+    // is theirs, and they go back to it.
+    person.awakeSince = owed;
+    chargeWakingHours(person, owed, bedtime);
+    delete person.nightOwedFrom;
+    delete person.nightEndsAt;
     return;
   }
   const until = sim.advancingTo ?? advance.target;
@@ -681,8 +724,9 @@ export function unattendedNight(person: Person): { sound: number; hours: number 
  * seven and a half hours from eleven, against a night alone of 7.65.
  *
  * A sleep chosen inside a night nobody chose that is under way is not said to
- * be one. Sent on after it, that night is paid, or was already, and the sleep
- * is paid on top. Kept up by the player after it instead, a night not yet
+ * be one. Sent on after it, that night is paid: on top of the sleep when it
+ * was paid already, and after it, keeping the more of the two, when it was
+ * not (`sleepAlone`). Kept up by the player after it instead, a night not yet
  * paid is forfeit and the sleep was the night, and the dialog cannot know
  * which the player will do.
  */
