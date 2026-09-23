@@ -70,7 +70,7 @@ describe('a new universe boots and runs', () => {
     const w = sim.player.wellbeing;
     expect(w.energy).toBeGreaterThan(0);
     expect(w.condition).toBeGreaterThan(0);
-    expect(sim.player.lastSleptAt, 'nobody slept in three years').toBeDefined();
+    expect(sim.now - sim.player.lastSleptAt!, 'no night in the last day of three years').toBeLessThan(MS_DAY);
   });
 
   it('keeps money as the sum of postings', () => {

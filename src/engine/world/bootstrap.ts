@@ -244,6 +244,18 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveCon
     // decides nothing, and the character sheet says so.
     background: config.background,
     wellbeing: freshWellbeing(),
+    // Up this morning, and charged for being awake from the moment the world
+    // starts.
+    awakeSince: now,
+    // And last night is on record as ending then. Without it, the morning the
+    // world starts in reads as the end of a night nobody has slept yet: a save
+    // that starts before a sound sleeper would be up, and is skipped at once,
+    // goes back to bed until the afternoon. With no night on record, its first
+    // midnight also used to owe it one, and a player still up then saw their
+    // character put to bed while they watched.
+    lastSleptAt: now,
+    // Woken owing nothing, as the world starts them.
+    wokeWithDebt: 0,
     createdAt: now,
   };
   universe.people[playerId] = player;

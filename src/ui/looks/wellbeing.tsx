@@ -18,7 +18,7 @@
  * because a dial is a thing and a multiplication is not.
  */
 
-import { readiness, wellbeingSummary } from '@/engine/systems/life';
+import { A_NORMAL_DAYS_DEBT, readiness, wellbeingSummary } from '@/engine/systems/life';
 import type { Person, Wellbeing } from '@/engine/domain/model';
 import type { Simulation } from '@/engine';
 import { defineLook, type Way } from './registry';
@@ -37,7 +37,7 @@ import { PERSONALITY_TRAIT_BY_ID } from '@/engine/content/personality-traits';
 const DIALS = [
   { key: 'energy', name: 'Energy', unit: 'level', behind: 'what the day has left in you' },
   { key: 'stress', name: 'Stress', unit: 'level', behind: 'what it is doing to your sleep' },
-  { key: 'sleepDebt', name: 'Sleep Debt', unit: 'hours', behind: 'the nights you still owe' },
+  { key: 'sleepDebt', name: 'Sleep Debt', unit: 'hours', behind: 'what sleep pays back' },
   { key: 'morale', name: 'Morale', unit: 'level', behind: 'whether the work feels worth doing' },
   { key: 'condition', name: 'Condition', unit: 'level', behind: 'what a long day would find' },
   { key: 'fitness', name: 'Fitness', unit: 'level', behind: 'what a physical day would cost' },
@@ -77,7 +77,7 @@ defineLook<Person>('person', {
         to: at('dial', `${person.id}/${d.key}`),
         label: d.name,
         detail: d.unit === 'hours'
-          ? `${Math.round(valueOf(w, d.key))} hours owed, and ${d.behind}`
+          ? `${Math.round(valueOf(w, d.key))} hours on the books, and ${d.behind}`
           : `${outOf(valueOf(w, d.key))}, and ${d.behind}`,
       }));
     ways.push({
@@ -171,7 +171,7 @@ defineLook<Dial>('dial', {
     parent: at('person', dial.person.id),
     summary: sentenceFor(dial),
     provenance: dial.unit === 'hours'
-      ? 'Counted in hours, and paid back by sleeping longer than you need to.'
+      ? 'Counted in hours: a waking hour adds a third of one, and a night pays it back, a long one faster. A night under six hours adds some too, and the shortest add more than they pay back.'
       : 'Nought to a hundred, moved every hour the clock runs.',
   }),
 });
@@ -189,9 +189,17 @@ function sentenceFor(dial: Dial): string {
         : n < 60 ? `${n}. Present, manageable, and slower to clear than it was.`
           : `${n}. High enough that sleep is going badly and it feeds itself.`;
     case 'sleepDebt':
+      // A day awake puts debt on the books as it goes, 5.4 hours by eleven
+      // after a day up from seven, and a night pays it back. Counted as owed,
+      // this said "5 hours owed. One long night would clear it." while the
+      // Sleep dialog offered the same evening a normal eight hours. It is the
+      // day’s only when they woke owing next to nothing: in the morning after
+      // a short night, the same five hours are what the night left.
       return n < 2 ? 'None to speak of. You’re square with the nights you’ve had.'
-        : n < 12 ? `${n} hours owed. One long night would clear it.`
-          : `${n} hours owed. Everything is harder than it should be, and it will stay that way.`;
+        : (dial.person.wokeWithDebt ?? dial.value) < 2 && dial.value < A_NORMAL_DAYS_DEBT + 2
+          ? `${n} hours, about what a day awake puts on the books. A night pays it back.`
+          : n < 12 ? `${n} hours owed. One long night would clear it.`
+            : `${n} hours owed. Everything is harder than it should be, and it will stay that way.`;
     case 'morale':
       return n > 70 ? `${n}. The work feels worth doing.`
         : n > 40 ? `${n}. Level. Neither carrying you nor dragging.`

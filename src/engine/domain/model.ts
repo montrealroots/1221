@@ -129,8 +129,54 @@ export interface Person {
   /** Primary spending account. */
   primaryAccountId?: Id;
 
-  /** When they last deliberately slept, so the world knows to fill the gap. */
+  /**
+   * Their last night, as one instant, so the world knows whether a night has
+   * been slept since midnight (`sleepAlone` in `systems/life.ts`). A night
+   * they chose is its wake, put on record when it is booked, so it is ahead
+   * of the clock from the booking to the wake; before schema 88 it was
+   * stamped at the wake. A night nobody chose is its bedtime: the midnight,
+   * or later for somebody the player stayed up with. A new save starts with
+   * the moment the world does.
+   */
   lastSleptAt?: Instant;
+  /**
+   * When their waking day began: the moment they woke, or will wake if it is
+   * still ahead of the clock, which is a night they are asleep in. A night
+   * the player chose runs to its wake, and one nobody chose to a sound
+   * sleeper's waking, or to where the clock stopped if that came first. The
+   * clock charges waking time from here as it moves, at the drain set by the
+   * sleep debt they woke with. Absent means the count starts the first time
+   * the clock moves. A save from before 88 is given the next midnight, ahead
+   * of the clock while they are awake. See `chargeWakingHours` in
+   * `systems/life.ts`.
+   */
+  awakeSince?: Instant;
+  /**
+   * The sleep debt they woke with, which sets how fast their waking day
+   * drains. Written at every wake, chosen or not, and at the start of a
+   * waking day with none on record; absent on a save from before 88 until
+   * its first wake, when it is worked out from the debt instead. A new save
+   * starts with it at nought, the debt the world starts them with.
+   */
+  wokeWithDebt?: number;
+  /**
+   * Where a night nobody chose would have ended, kept while the clock has
+   * stopped before then: a plan in the small hours, or the morning a skip was
+   * sent to. Whenever the clock is sent on more than an hour before then,
+   * they are asleep again, until then or until it stops, and the night is not
+   * paid twice. Cleared the first time the clock moves on from it or later.
+   * Before it, the stop's night was the night slept, and a plan at five past
+   * one on a skip to the morning kept them up until the next midnight. See
+   * `sleepAlone` in `systems/life.ts`.
+   */
+  nightEndsAt?: Instant;
+  /**
+   * The bedtime of that night while it is not yet paid: the clock stopped in
+   * its first hour, and it is paid, from this bedtime, when the clock goes on
+   * more than an hour into it. Kept only alongside `nightEndsAt`, and
+   * forfeit with it when the player moves the clock themselves in the night.
+   */
+  nightOwedFrom?: Instant;
 
   /**
    * Who this person is, in their own terms. Set at creation and only for the
@@ -385,10 +431,20 @@ export interface Preferences {
  * premise, family, business, film career, property, lot and tutorial stay as
  * inert JSON.
  *
+ * 88 charged the waking day as the clock moves instead of all at once at
+ * midnight. It gave every person `awakeSince`, when their waking day began,
+ * and from their next wake `wokeWithDebt`, the sleep debt they woke with, and
+ * `nightEndsAt` and `nightOwedFrom` while the clock has stopped in the middle
+ * of a night nobody chose. A save from before 88, this line's 87 included,
+ * was charged at its last midnight for the whole day ahead, or, saved before
+ * its first midnight, was never charged for that day. Either way its people
+ * come in charged up to the next midnight, as that build would have left
+ * them, and their waking day starts there.
+ *
  * `migrate` in `engine/index.ts` says what an older save sheds on the way in,
  * what it keeps as inert JSON, and what it is given.
  */
-export const SAVE_SCHEMA_VERSION = 87;
+export const SAVE_SCHEMA_VERSION = 88;
 
 export interface SaveMeta {
   id: Id;
