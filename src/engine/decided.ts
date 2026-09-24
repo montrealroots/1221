@@ -32,11 +32,23 @@ import { MS_DAY } from './core/time';
  * Cities chosen for how differently they behave, not alphabetically: the
  * arctic, the subarctic, an oceanic capital, a desert, the tropics, and the
  * southern hemisphere so a sweep across the year runs both ways round.
+ *
+ * Every one has to be in the gazetteer the game boots with, and a name that
+ * isn't stops the sweep. The list was filtered instead, and five of its eight
+ * names dropped out without a word: `gb-eng-london`, `is-1-reykjavik`,
+ * `sg-01-singapore` and `ru-sa-yakutsk` were ids the gazetteer never had
+ * (Yakutsk is `ru-63-yakutsk`), and Anchorage is there only once the United
+ * States' towns are loaded, which the sweep never does. The sweep ran on Las
+ * Vegas, Sydney and Los Angeles, and the arctic, the subarctic and the tropics
+ * it claimed were not in it.
  */
 const SPREAD_OF_PLACES = [
-  'is-1-reykjavik', 'us-ak-anchorage', 'gb-eng-london', 'us-nv-lasvegas',
-  'sg-01-singapore', 'au-nsw-sydney', 'us-ca-losangeles', 'ru-sa-yakutsk',
-].filter((id) => CITIES.get(id) !== undefined);
+  'sj-21-longyearbyen', 'gl-07-nuuk', 'is-39-reykjavik', 'uk-eng-london',
+  'us-nv-lasvegas', 'sg-singapore', 'au-nsw-sydney', 'us-ca-losangeles',
+].map((id) => {
+  if (!CITIES.get(id)) throw new Error(`The sky's sweep names ${id}, which the gazetteer does not carry.`);
+  return id;
+});
 
 interface Sky { sim: Simulation; cityId: string; instant: number }
 
@@ -45,7 +57,7 @@ defineDecider<Sky, string>({
   decides: 'What the sky does in one city on one day.',
   drawnIn: 'src/engine/systems/weather.ts',
   reads: {
-    // Latitude and climate: Yakutsk and Singapore cannot have the same day.
+    // Latitude and climate: Longyearbyen and Singapore cannot have the same day.
     place: (sky, t) => ({
       ...sky,
       cityId: SPREAD_OF_PLACES[Math.min(SPREAD_OF_PLACES.length - 1, Math.floor(t * SPREAD_OF_PLACES.length))]!,
@@ -57,7 +69,7 @@ defineDecider<Sky, string>({
   },
   sample: (seed) => ({
     sim: skyFor(seed),
-    cityId: SPREAD_OF_PLACES[seed % SPREAD_OF_PLACES.length] ?? 'is-1-reykjavik',
+    cityId: SPREAD_OF_PLACES[seed % SPREAD_OF_PLACES.length]!,
     instant: skyFor(seed).now,
   }),
   decide: ({ sim, cityId, instant }) => {

@@ -26,10 +26,16 @@ deployed to Base44.
 npm install
 npm run dev          # http://localhost:5173
 npm run validate     # typecheck, lint, and the whole test suite
+npm run gate         # validate, then twelve checks on the words, the docs and the ledgers
 npm run build        # production bundle into dist/
+npm run audit        # build, serve it, and measure the layout in a real browser
 ```
 
-`npm run validate` is the gate. It must be clean before anything ships.
+`npm run gate` is the gate: `npm run validate`, then title case, the label
+sweep, plurals, the voice, the tics, the docs' file references, what nothing
+reads, the deciders, spelling, typos, the gazetteer and the inventory. It must
+exit 0 before anything ships. It said `npm run validate` was the gate, which
+left the twelve checks out.
 
 ---
 
@@ -200,7 +206,13 @@ npm test
 | `plans`, `looks` | Plans of your own on the calendar, and the drill-down graph crawled end to end. |
 | `endurance` | A day, a week, a month, a year, five years and ten: money drift, stranded schedules, corrupt history, duplicated ids, contradictory ownership, unbounded collections, and cost per simulated year. |
 | `integrity` | Retries and replays, save isolation, round trips, malformed and hostile input, what the player is allowed to know. |
-| `calibration` | Monte Carlo runs over the probabilistic models: uniformity, monotonicity, spread, reproducibility. |
+| `calibration` | The one random source: an even spread, a normal distribution centered where it says, the same stream for the same seed, and the same world from the same seed two years on. |
+| `deciders` | Every decider moves its outcome when one of its declared inputs moves across its range. |
+| `realclock` | Live time: an hour of world time for an hour of real time, to the millisecond, whatever the ticks, a night away or a backlog. |
+| `text` | Title Case as the game writes labels. |
+| `persistence` | Saves on this device: packed, a save from before packing still loads, a save that won't read, deleting a slot, and opening one. |
+| `day-bounds` | A day is a date on the calendar, not 24 hours: the night into a day whose clocks skip midnight, the Day look, the month grid, the plan form, the hours of the weather and the week ahead, on 23- and 25-hour days. |
+| `base44-contract` | The four server functions executed against an in-memory stand-in for the SDK: every guard, ordering rule and error path. |
 | `interface`, `navigation`, `cohesion` | The interface is text, every door opens onto something, and the screens agree with the engine. |
 | `server-guards` | The server-side checks that stand between a browser and storage. |
 | `base44-adapter` | The client speaks the platform's documented protocol: invoke by name, JSON on `.data`, non-2xx thrown, local mirroring, graceful fallback. |

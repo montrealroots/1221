@@ -344,7 +344,9 @@ describe('what the screens name', () => {
       for (const [index, line] of text.split('\n').entries()) {
         // Comments may say it in prose; a string a player reads may not.
         if (/^\s*(\*|\/\/)/.test(line)) continue;
-        if (/out of a hundred/.test(line)) offenders.push(`${path.split('/src/')[1]}:${index + 1}`);
+        // "out of 100" as well: it asked only for the words, and the place card
+        // printed Industry and Jobs "out of 100" past it.
+        if (/out of (a hundred|100)\b/.test(line)) offenders.push(`${path.split('/src/')[1]}:${index + 1}`);
       }
     }
     expect(offenders, 'a figure written out in words where /100 belongs').toEqual([]);

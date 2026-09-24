@@ -17,11 +17,13 @@ ui-audit/
 text-caps/
 cohesion-walk/
 
-# Throwaway measurement scripts. A probe has to sit inside the repository for
-# vite-node to resolve `@/engine` and for playwright to find its browser, so the
-# only place to write one is here — and none of them is worth carrying, because
-# every figure a probe produces is meant to end up in a doc, a comment or a test
-# rather than in the script that found it.
+# Throwaway measurement scripts. A probe here resolves `@/engine` through this
+# repository's Vite config; one anywhere else needs a config of its own that
+# sets the `@` alias. This said a probe had to sit inside the repository, and
+# for Playwright to find its browser too, and neither holds: the browser tools
+# find Playwright's own through tools/browser.mjs. None of them is worth
+# carrying, because every figure a probe produces is meant to end up in a doc,
+# a comment or a test rather than in the script that found it.
 probe/
 
 # Pull caches (rebuildable from Wikidata; large)

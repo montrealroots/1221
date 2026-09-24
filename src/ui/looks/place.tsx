@@ -274,8 +274,8 @@ defineLook<PlaceProfile>('place', {
               value={salesRule ? `${(place.salesTax * 100).toFixed(1)}%` : 'Not On File'}
               note={propertyRule ? `Property ${(place.propertyTax * 100).toFixed(2)}%` : 'Property tax not on file either'}
             />
-            <Stat label="Industry" value={`${place.industryPresence} out of 100`} note="Film and Television work here" />
-            <Stat label="Jobs" value={`${place.jobMarketDepth} out of 100`} note="Ordinary work, outside the industry" />
+            <Stat label="Industry" value={`${place.industryPresence}/100`} note="Film and Television work here" />
+            <Stat label="Jobs" value={`${place.jobMarketDepth}/100`} note="Ordinary work, outside the industry" />
             <Stat
               label="Languages"
               value={place.languages[0] ?? 'Not On File'}

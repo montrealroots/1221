@@ -94,9 +94,6 @@ part the tool cannot see.
 - **`search()` in `content/reference.ts`** is a ranked search over every city
   with no caller. The note on it says it stays only while a way in might be
   built, and this page carries it until one is or it goes.
-- **The audit trail is a persisted, empty table.** `core/audit.ts` can record
-  what went into a decision and redact what the player could not have known.
-  Nothing calls it.
 - **`SlateOfficialResult`** and the `recordOfficialResult` function that writes
   it: nothing in the build produces an official result.
 - **Five record shapes in `domain/model.ts` with no table** — `Costume`,

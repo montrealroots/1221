@@ -5,7 +5,7 @@
  * engine, not here.
  */
 
-import { useEffect, useState, type ReactNode } from 'react';
+import { useEffect, type ReactNode } from 'react';
 import { formatMoney, formatMoneyCompact, type Money } from '@/engine/core/money';
 import { clamp } from '@/engine/core/rng';
 import { LookRegion, Open } from '@/ui/looks/Look';
@@ -185,27 +185,4 @@ export function Modal({
 
 export function Term({ children, explain }: { children: ReactNode; explain: string }) {
   return <span className="tooltip-term" title={explain}>{children}</span>;
-}
-
-export function Logo({ id, name, large, small }: { id: string; name: string; large?: boolean; small?: boolean }) {
-  const [missing, setMissing] = useState(false);
-  const width = large ? 160 : small ? 44 : 72;
-  const height = large ? 80 : small ? 22 : 36;
-  if (missing) {
-    return (
-      <div className="chip" style={{ width, height, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontWeight: 600 }} aria-label={`${name}, no logo on record`}>
-        {name.split(/\s+/).slice(0, 2).map((w) => w[0]?.toUpperCase() ?? '').join('')}
-      </div>
-    );
-  }
-  return (
-    <img
-      src={`${import.meta.env.BASE_URL}industry/logos/${id}.png`}
-      alt={`${name} logo`}
-      width={width}
-      height={height}
-      style={{ width, height, objectFit: 'contain', flexShrink: 0, background: 'rgba(255,255,255,0.92)', borderRadius: 6, padding: 4, boxSizing: 'border-box' }}
-      onError={() => setMissing(true)}
-    />
-  );
 }
