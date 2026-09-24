@@ -80,13 +80,14 @@ describe('looking after yourself', () => {
     expect(grubby.wellbeing.stress).toBeCloseTo(44, 5);
   });
 
-  it('a workout builds fitness, and costs energy, food and a shower', () => {
+  it('a workout builds fitness by how ready you are, and costs energy by how fit you are, and food and a shower', () => {
     const body = person();
     const w = body.wellbeing;
     const was = { ...w };
+    const ready = readiness(body);
     applyLookingAfter(body, 'exercise');
-    expect(w.fitness).toBeCloseTo(was.fitness + 0.6, 5);
-    expect(w.energy).toBeCloseTo(was.energy - 10, 5);
+    expect(w.fitness).toBeCloseTo(was.fitness + 0.6 * (0.4 + 0.8 * ready / 100), 9);
+    expect(w.energy).toBeCloseTo(was.energy - 10, 9);
     expect(w.nourishment).toBeCloseTo(was.nourishment - 6, 5);
     expect(w.hygiene).toBeLessThan(was.hygiene);
     expect(w.stress).toBeLessThan(was.stress);
@@ -109,14 +110,14 @@ describe('looking after yourself', () => {
     expect(over.wellbeing.fitness).toBe(ceiling + 5);
   });
 
-  // Fitness reaches condition through its daily target, and a rested night
-  // pushes condition to its age's ceiling far faster than the target pulls.
-  // Measured over eight weeks: on eight- or six-hour nights both lives sat at
-  // 99.8 condition, trained or not; on five-hour nights, where the nights take
-  // condition down, the trained life ended 1.75 higher. So fitness shows only
-  // on a body that is being worn down, which is where it should.
-  for (const [night, shows] of [[8, false], [5, true]] as const) {
-    it(`eight weeks of workouts on ${night}-hour nights build fitness, and ${shows ? 'hold up' : 'leave alone'} condition`, () => {
+  // Fitness reached condition only through its daily target once, and a
+  // rested night pushed condition to its age's ceiling far faster than the
+  // target pulled: over eight weeks on eight- or six-hour nights both lives
+  // sat at 99.8, trained or not, and on five-hour nights the trained one
+  // ended 1.75 higher. Rest mends condition only as far as fitness lets it
+  // now (`mendsTo`), so it shows on every schedule.
+  for (const night of [8, 5]) {
+    it(`eight weeks of workouts on ${night}-hour nights build fitness, and with it condition and readiness`, () => {
       const trained = quickSave();
       const idle = quickSave();
       for (let day = 0; day < 56; day++) {
@@ -130,8 +131,8 @@ describe('looking after yourself', () => {
       const a = trained.player.wellbeing;
       const b = idle.player.wellbeing;
       expect(a.fitness - b.fitness).toBeGreaterThan(30);
-      if (shows) expect(a.condition - b.condition).toBeGreaterThan(1);
-      else expect(a.condition).toBeCloseTo(b.condition, 5);
+      expect(a.condition - b.condition).toBeGreaterThan(night === 8 ? 5 : 1);
+      expect(readiness(trained.player)).toBeGreaterThan(readiness(idle.player));
     });
   }
 

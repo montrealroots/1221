@@ -3,7 +3,7 @@ import { beforeAll, describe, expect, it } from 'vitest';
 import { quickSave, validateUniverse, migrate, loadSave } from '@/engine';
 import type { Simulation } from '@/engine';
 import { SAVE_SCHEMA_VERSION, type Person, type Wellbeing } from '@/engine/domain/model';
-import { applySleep, sleepQuality, sleepStandsForTheNight, startOfLocalDay, suggestedSleep, unattendedNight } from '@/engine/systems/life';
+import { applySleep, settleTheBody, sleepQuality, sleepStandsForTheNight, startOfLocalDay, suggestedSleep, unattendedNight } from '@/engine/systems/life';
 import { formatTime, instantFromZoned, MS_DAY, MS_HOUR, MS_MINUTE, startOfNextDay, zonedParts } from '@/engine/core/time';
 import { skipTargets, checkConflicts, entriesBetween, monthGrid } from '@/engine/world/calendar';
 import { openDecisions } from '@/engine/world/world';
@@ -531,7 +531,10 @@ describe('the waking day', () => {
     expect(ends).toBeGreaterThan(six);
     expect(sim.player.lastSleptAt).toBe(midnight);
     expect(sim.player.awakeSince).toBe(six);
-    // The whole night's worth, though they are up at six.
+    // The whole night's worth, though they are up at six. On the body the
+    // midnight settled first, since a night reads condition and the drift
+    // comes ahead of it.
+    settleTheBody(bed, midnight);
     applySleep(bed, unattendedNight(bed).hours, quality, midnight);
     expect(sim.player.wellbeing.morale).toBeCloseTo(bed.wellbeing.morale, 9);
 

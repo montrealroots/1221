@@ -42,6 +42,47 @@ const EMPTY = 15;
 const HUNGRY = 20;
 /** Stress over this costs condition for as long as it stays there. */
 const OVERWROUGHT = 75;
+/** Hygiene under this wears on the mood for as long as it stays there. */
+const GRIMY = 50;
+
+/** What an everyday life keeps fitness at without any training. */
+export const EVERYDAY_FITNESS = 35;
+/**
+ * Where morale settles, and how much of the way back a night brings it.
+ *
+ * Morale used to keep whatever the nights gave it, and any life with decent
+ * nights reached a hundred and stayed there, so a meal, a workout or an hour
+ * unwinding lifted a dial that could not go higher. Measured on a year of
+ * autopilot and on half a year of eight-hour nights, before: morale 100 both.
+ *
+ * Where it settles is the body's: forty, and forty-five hundredths of how
+ * near condition is to what the age allows on top. So 85 for a body at its
+ * age's ceiling, 81 at the 91 everyday fitness mends a young one to, and 40
+ * for a body worn to nothing. A flat eighty was tried first, and five-hour
+ * nights for ninety days ended at stress 100 and condition 0 with morale
+ * 70.5, held up by a pull no body in that state has. Then condition itself
+ * was tried, and put everybody of eighty-one, whose ceiling is 64.3, at 76
+ * on the best nights there are: old, not unhappy.
+ */
+export function moraleSettlesAt(person: Person, condition: number, at?: number): number {
+  const allowed = at === undefined ? 100 : ceilingAt(yearsSince(person.birthInstant, at)).condition;
+  return 40 + 45 * Math.min(1, condition / allowed);
+}
+const MORALE_RETURNS = 0.35;
+
+/**
+ * How far rest can mend condition: seventy, and six tenths of fitness on top,
+ * never past what the age allows.
+ *
+ * A night used to take condition to the age's ceiling whatever the body, so
+ * a year on autopilot and half a year of daily workouts both sat at 99.7. At
+ * `EVERYDAY_FITNESS` this is 91, and at fifty, where a new character starts,
+ * it's a hundred, so nobody starts below it.
+ */
+export function mendsTo(person: Person, at?: number, fitness = person.wellbeing.fitness): number {
+  const age = at === undefined ? 100 : ceilingAt(yearsSince(person.birthInstant, at)).condition;
+  return Math.min(age, 70 + 0.6 * fitness);
+}
 
 /**
  * How much of a night's recovery a full sleep debt holds back.
@@ -118,9 +159,15 @@ export function applyElapsedWellbeing(person: Person, hours: number, carried = p
   w.nourishment = clamp(w.nourishment - NOURISHMENT_DRAIN_PER_HOUR * hours, 0, 100);
   w.sleepDebt = Math.max(w.sleepDebt, Math.min(DEBT_CEILING, w.sleepDebt + hours * DEBT_PER_WAKING_HOUR));
   w.condition = clamp(w.condition - hungry * 0.5 - overwrought * 0.25, 0, 100);
-  if (hungry > 0) w.morale = clamp(w.morale - hungry * 0.7 * personalityOf(person, 'moraleSwing'), 0, 100);
 
-  w.hygiene = clamp((w.hygiene ?? 80) - hours * 1.6 * personalityOf(person, 'hygieneDrift'), 0, 100);
+  // Hours spent grimy are counted the way hungry ones are: the ones after
+  // hygiene fell past the line, so ticks and a jump agree.
+  const soils = 1.6 * personalityOf(person, 'hygieneDrift');
+  const grimy = hours - clamp(((w.hygiene ?? 80) - GRIMY) / soils, 0, hours);
+  const low = hungry * 0.7 + grimy * 0.4;
+  if (low > 0) w.morale = clamp(w.morale - low * personalityOf(person, 'moraleSwing'), 0, 100);
+
+  w.hygiene = clamp((w.hygiene ?? 80) - hours * soils, 0, 100);
 }
 
 /** How many of `span` hours a straight line from `from`, at `rate` an hour, spends over `line`. */
@@ -183,7 +230,11 @@ export function readiness(person: Person): number {
   // Turning up to a room having not showered in two days is not nothing, but
   // it is not much either: a few points, not a career.
   const cleanPart = remap(w.hygiene ?? 80, 0, 100, 0.92, 1.03);
-  return clamp(100 * energyPart * stressPart * debtPart * nourishPart * moralePart * cleanPart / 1.35, 5, 100);
+  // Condition was left out, so fitness reached nothing past its own dial. A
+  // body at ninety-one, where everyday fitness mends it to, is 2.7% short of
+  // one at a hundred.
+  const soundPart = remap(w.condition, 0, 100, 0.7, 1);
+  return clamp(100 * energyPart * stressPart * debtPart * nourishPart * moralePart * cleanPart * soundPart / 1.35, 5, 100);
 }
 
 export function wellbeingSummary(person: Person): string {
@@ -271,7 +322,7 @@ export function registerLife(sim: Simulation): void {
       s.emit('life.sleep_started', { personId: person.id, hours, quality });
       s.advanceTo(wakeAt);
 
-      applySleep(person, hours, quality, s.now);
+      applySleep(person, hours, quality, s.now, before);
       person.wokeWithDebt = person.wellbeing.sleepDebt;
       const recovered = person.wellbeing.energy - before.energy;
 
@@ -347,7 +398,7 @@ export type LookAfter = 'eat' | 'wash' | 'exercise' | 'unwind';
 export const LOOKING_AFTER: Record<LookAfter, { label: string; minutes: number; does: string }> = {
   eat: { label: 'Eat A Meal', minutes: 40, does: 'Feeds you, and lifts the mood by as much as you needed it' },
   wash: { label: 'Shower', minutes: 20, does: 'Clean again, and calmer by as much as you needed it' },
-  exercise: { label: 'Work Out', minutes: 60, does: 'Builds fitness and eases stress; costs energy, food and a shower' },
+  exercise: { label: 'Work Out', minutes: 60, does: 'Builds fitness, more the readier you are, and eases stress; costs energy, food and a shower' },
   unwind: { label: 'Unwind', minutes: 60, does: 'Takes the edge off stress and lifts the mood' },
 };
 
@@ -381,6 +432,20 @@ export function lookAfterRefusal(sim: Simulation, action: LookAfter): string | u
 }
 
 /**
+ * What a workout builds: 0.6 fitness at readiness 75, less for training
+ * tired, hungry or stretched, and up to 0.72 at a hundred. The one thing
+ * outside the dials' own display that reads readiness.
+ */
+export function workoutBuilds(person: Person): number {
+  return WORKOUT_FITNESS * remap(readiness(person), 0, 100, 0.4, 1.2);
+}
+
+/** What a workout costs in energy: 10 at fitness fifty, 15 at nought and 5 at a hundred. */
+export function workoutCosts(person: Person): number {
+  return WORKOUT_ENERGY * remap(person.wellbeing.fitness, 0, 100, 1.5, 0.5);
+}
+
+/**
  * What each one does to the dials, once its time has been lived.
  *
  * A meal and a shower help the mood by what they put back, so a meal you
@@ -401,8 +466,10 @@ export function applyLookingAfter(person: Person, action: LookAfter, at?: number
     w.stress = clamp(w.stress - washed * 0.1, 0, 100);
   } else if (action === 'exercise') {
     const ceiling = at === undefined ? 100 : ceilingAt(yearsSince(person.birthInstant, at)).fitness;
-    if (w.fitness < ceiling) w.fitness = Math.min(w.fitness + WORKOUT_FITNESS, ceiling);
-    w.energy = clamp(w.energy - WORKOUT_ENERGY, 0, 100);
+    const builds = workoutBuilds(person);
+    const costs = workoutCosts(person);
+    if (w.fitness < ceiling) w.fitness = Math.min(w.fitness + builds, ceiling);
+    w.energy = clamp(w.energy - costs, 0, 100);
     w.nourishment = clamp(w.nourishment - 6, 0, 100);
     w.hygiene = clamp((w.hygiene ?? 80) - 20 * personalityOf(person, 'hygieneDrift'), 0, 100);
     w.stress = clamp(w.stress - 8 * personalityOf(person, 'stressRecovery'), 0, 100);
@@ -459,8 +526,15 @@ function nightParts(sim: Simulation, person: Person, at = sim.now): {
   return { stressLoss, depth, late, quality: clamp((0.82 - stressLoss) * depth - late, 0.28, 1) };
 }
 
-export function applySleep(person: Person, hours: number, quality: number, at?: number): void {
+export function applySleep(
+  person: Person, hours: number, quality: number, at?: number,
+  bedtime: Pick<Wellbeing, 'condition' | 'morale' | 'fitness'> = person.wellbeing,
+): void {
   const w = person.wellbeing;
+  // Copied, because the default is the dials themselves and the night below
+  // moves them: read live, the mood's pull read a condition already mended.
+  const began = { condition: bedtime.condition, morale: bedtime.morale, fitness: bedtime.fitness };
+  const mends = mendsTo(person, at, began.fitness);
   // A night puts back less at sixty than it did at twenty. This is the first
   // thing about ageing anybody notices, so it is the first thing the game
   // does with it.
@@ -474,7 +548,19 @@ export function applySleep(person: Person, hours: number, quality: number, at?: 
   // barely reaches `readiness`. The drain side of this coupling was already
   // declared and measured dead; this is the half that makes both of them bite.
   const owing = 1 - Math.min(DEBT_HOLDS, (w.sleepDebt / 30) * DEBT_HOLDS);
-  w.energy = clamp(w.energy + effective * 13.5 * banked * personalityOf(person, 'energyRecovery') * owing, 0, 100);
+  // A worn body gets less back from the same night: a fifth less at condition
+  // nought, nothing less at what rest can mend it to (`mendsTo`). Worn is
+  // measured against that, not against a hundred: read against a hundred it
+  // charged age twice, since `banked` already has, and a light sleeper of
+  // sixty with a plan at half past midnight every night fell from 87.0 to
+  // 78.4 condition within the year, where without the plan they held. And a
+  // low mood clears less of the day's stress: a quarter less at nought, and
+  // a sixth more at a hundred. Both are read as the night began (`began`): a
+  // chosen night is paid at its wake, and a midnight inside it has moved
+  // condition by then.
+  const worn = remap(Math.min(1, began.condition / mends), 0, 1, 0.8, 1);
+  const settled = remap(began.morale, 0, 100, 0.75, 1.15);
+  w.energy = clamp(w.energy + effective * 13.5 * banked * personalityOf(person, 'energyRecovery') * owing * worn, 0, 100);
   // Debt clears with the whole night, not only with the part of it above five
   // and a half hours.
   w.sleepDebt = Math.max(0, w.sleepDebt - Math.max(0, effective - 5.5) * 2.2 - effective * 1.4);
@@ -489,17 +575,27 @@ export function applySleep(person: Person, hours: number, quality: number, at?: 
     const short = (6 - hours) * 1.35;
     w.sleepDebt = Math.min(w.sleepDebt + short, Math.max(w.sleepDebt, DEBT_CEILING + short));
   }
-  w.stress = clamp(w.stress - effective * 4.2, 0, 100);
+  w.stress = clamp(w.stress - effective * 4.2 * settled, 0, 100);
   // Proportional, not a step. Five hours of real rest is break-even; more
   // than that helps, less costs.
   const restful = effective - 5;
   // And a good night still cannot take a body above what a body that age can
-  // reach. The daily clamp is not enough on its own: sleep runs after it.
+  // reach. The daily clamp is not enough on its own: a chosen night runs after it.
+  // Nor past what the body's fitness lets rest mend it to (`mendsTo`), though
+  // a body already past that isn't pulled down to it by a good night.
   const ceiling = at === undefined ? 100 : ceilingAt(years).condition;
-  w.condition = clamp(Math.min(w.condition + restful * 0.9 * (restful > 0 ? banked : 1), ceiling), 0, 100);
+  const mended = restful <= 0 ? w.condition + restful * 0.9
+    : w.condition >= mends ? w.condition
+      : Math.min(w.condition + restful * 0.9 * banked, mends);
+  w.condition = clamp(Math.min(mended, ceiling), 0, 100);
   // How far a night moves the mood, either way, is the person's as much as
   // the night's: an even temper takes the edge off both.
   w.morale = clamp(w.morale + restful * 1.6 * (restful > 0 ? banked : 1) * personalityOf(person, 'moraleSwing'), 0, 100);
+  // And a night brings the mood back towards where the body has it settle
+  // (`moraleSettlesAt`), a third of the way for a full eight hours and less
+  // for less, so a nap can't be used to reset it.
+  const back = MORALE_RETURNS * Math.min(1, hours / 8);
+  w.morale = clamp(w.morale + (moraleSettlesAt(person, began.condition, at) - w.morale) * back, 0, 100);
   w.nourishment = clamp(w.nourishment - hours * 1.6, 0, 100);
 }
 
@@ -535,26 +631,37 @@ export function dailyRollover(sim: Simulation): void {
   const player = sim.universe.people[sim.universe.playerId];
   if (!player) return;
 
-  // Fitness decays without use; condition slowly recovers toward fitness. Both
-  // are held under what a body of that age can reach, so a seventy year old
-  // with perfect habits is a very fit seventy year old rather than
-  // indistinguishable from a very fit twenty five year old.
-  //
-  // Fitness had no writer that raised it until Work Out
-  // (`applyLookingAfter`), which raises it 0.6 an hour against the 0.18 a day
-  // it loses. It moves condition's target and so condition, and that is still
-  // a dial rather than an outcome: `readiness` does not read condition.
-  for (const person of Object.values(sim.universe.people)) {
-    const w = person.wellbeing;
-    const ceiling = ceilingAt(yearsSince(person.birthInstant, sim.now));
-    w.fitness = clamp(Math.min(w.fitness - 0.18, ceiling.fitness), 0, 100);
-    const target = Math.min(60 + w.fitness * 0.4, ceiling.condition);
-    w.condition = clamp(Math.min(w.condition + (target - w.condition) * 0.02, ceiling.condition), 0, 100);
-  }
+  for (const person of Object.values(sim.universe.people)) settleTheBody(person, sim.now);
 
+  // After the drift, so a night paid here and one paid at the clock's next
+  // stop (`life.night_alone`) read the same body. Moved ahead of it, they
+  // didn't, once nights read condition.
   liveTheUnattendedNight(sim);
 
   sim.emit('world.day_rollover', { date: sim.now });
+}
+
+/**
+ * A day's drift in the body, at its midnight.
+ *
+ * Fitness decays without use; condition slowly recovers toward fitness. Both
+ * are held under what a body of that age can reach, so a seventy year old
+ * with perfect habits is a very fit seventy year old rather than
+ * indistinguishable from a very fit twenty five year old.
+ *
+ * Fitness had no writer that raised it until Work Out (`applyLookingAfter`).
+ * It fell 0.18 a day all the way to nought, so a year on autopilot ended at
+ * fitness 0; it stops at what an everyday life of stairs and walking keeps,
+ * `EVERYDAY_FITNESS`, now. What it decides is how far a night can mend
+ * condition (`mendsTo`).
+ */
+export function settleTheBody(person: Person, at: number): void {
+  const w = person.wellbeing;
+  const ceiling = ceilingAt(yearsSince(person.birthInstant, at));
+  const fell = w.fitness > EVERYDAY_FITNESS ? Math.max(EVERYDAY_FITNESS, w.fitness - 0.18) : w.fitness;
+  w.fitness = clamp(Math.min(fell, ceiling.fitness), 0, 100);
+  const target = Math.min(60 + w.fitness * 0.4, ceiling.condition);
+  w.condition = clamp(Math.min(w.condition + (target - w.condition) * 0.02, ceiling.condition), 0, 100);
 }
 
 /**

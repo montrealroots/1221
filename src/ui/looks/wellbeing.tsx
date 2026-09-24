@@ -12,13 +12,16 @@
  * readiness was a fixed 1.0; a dial a player is invited to watch has to be able
  * to move.
  *
- * Readiness is the exception and is treated as one. It is a product of six of
- * the eight and it is not stored anywhere. It opens into a sentence about what
+ * Readiness is the exception and is treated as one. It is a product of seven
+ * of the eight, six until condition joined them, and it is not stored
+ * anywhere. It opens into a sentence about what
  * is holding it back and ways into the dials actually doing the holding,
  * because a dial is a thing and a multiplication is not.
  */
 
-import { A_NORMAL_DAYS_DEBT, readiness, wellbeingSummary } from '@/engine/systems/life';
+import {
+  A_NORMAL_DAYS_DEBT, EVERYDAY_FITNESS, mendsTo, moraleSettlesAt, readiness, wellbeingSummary, workoutCosts,
+} from '@/engine/systems/life';
 import type { Person, Wellbeing } from '@/engine/domain/model';
 import type { Simulation } from '@/engine';
 import { defineLook, type Way } from './registry';
@@ -32,17 +35,20 @@ import { PERSONALITY_TRAIT_BY_ID } from '@/engine/content/personality-traits';
  *
  * `behind` is what the way in says next to the figure. The figure alone —
  * "82/100" — names the dial twice and says nothing about what moves it, which
- * is the whole reason a person would open one.
+ * is the whole reason a person would open one. Each names what the dial
+ * decides, and the engine does what it names: morale said "whether the work
+ * feels worth doing", condition "what a long day would find" and fitness
+ * "what a physical day would cost" while nothing read any of the three.
  */
 const DIALS = [
   { key: 'energy', name: 'Energy', unit: 'level', behind: 'what the day has left in you' },
   { key: 'stress', name: 'Stress', unit: 'level', behind: 'what it is doing to your sleep' },
   { key: 'sleepDebt', name: 'Sleep Debt', unit: 'hours', behind: 'what sleep pays back' },
-  { key: 'morale', name: 'Morale', unit: 'level', behind: 'whether the work feels worth doing' },
-  { key: 'condition', name: 'Condition', unit: 'level', behind: 'what a long day would find' },
-  { key: 'fitness', name: 'Fitness', unit: 'level', behind: 'what a physical day would cost' },
+  { key: 'morale', name: 'Morale', unit: 'level', behind: 'how much of the day’s stress a night clears' },
+  { key: 'condition', name: 'Condition', unit: 'level', behind: 'how much a night puts back, and your mood' },
+  { key: 'fitness', name: 'Fitness', unit: 'level', behind: 'how far rest can mend you, and what a workout costs' },
   { key: 'nourishment', name: 'Nourishment', unit: 'level', behind: 'how long since you ate properly' },
-  { key: 'hygiene', name: 'Hygiene', unit: 'level', behind: 'what a room notices about you' },
+  { key: 'hygiene', name: 'Hygiene', unit: 'level', behind: 'what a room notices, and your mood once it’s low' },
 ] as const;
 
 type DialKey = typeof DIALS[number]['key'];
@@ -83,7 +89,7 @@ defineLook<Person>('person', {
     ways.push({
       to: at('readiness', person.id),
       label: 'Readiness',
-      detail: 'What six of the eight come to, for turning up today',
+      detail: 'What seven of the eight come to, and what a workout builds',
     });
     if (isYou) {
       ways.push({
@@ -165,20 +171,29 @@ defineLook<Dial>('dial', {
     return { person, key: dial.key, name: dial.name, value: valueOf(person.wellbeing, dial.key), unit: dial.unit };
   },
   seeds: (sim) => DIALS.map((d) => `${sim.universe.playerId}/${d.key}`),
-  look: (dial) => ({
+  look: (dial, { sim }) => ({
     name: dial.name,
     kind: 'One Of Eight',
     parent: at('person', dial.person.id),
-    summary: sentenceFor(dial),
+    summary: sentenceFor(dial, sim.now),
     provenance: dial.unit === 'hours'
       ? 'Counted in hours: a waking hour adds a third of one, and a night pays it back, a long one faster. A night under six hours adds some too, and the shortest add more than they pay back.'
       : 'Nought to a hundred, moved every hour the clock runs.',
   }),
 });
 
-/** What the number actually means, in the second person, right now. */
-function sentenceFor(dial: Dial): string {
+/**
+ * What the number actually means, in the second person, right now.
+ *
+ * Where a dial decides something, the sentence says what, with the engine’s
+ * own figure: condition, fitness, morale and hygiene read what the night, a
+ * workout and the mood are actually given. They said "long days will find
+ * it", "A stunt day would cost you a week" and "Rooms notice" when nothing
+ * did any of it.
+ */
+function sentenceFor(dial: Dial, now: number): string {
   const n = Math.round(dial.value);
+  const w = dial.person.wellbeing;
   switch (dial.key) {
     case 'energy':
       return n > 75 ? `${n}, and you’ve a full day in you.`
@@ -200,22 +215,33 @@ function sentenceFor(dial: Dial): string {
           ? `${n} hours, about what a day awake puts on the books. A night pays it back.`
           : n < 12 ? `${n} hours owed. One long night would clear it.`
             : `${n} hours owed. Everything is harder than it should be, and it will stay that way.`;
-    case 'morale':
-      return n > 70 ? `${n}. The work feels worth doing.`
-        : n > 40 ? `${n}. Level. Neither carrying you nor dragging.`
-          : `${n}. Flat — the work is fine, the feeling isn’t.`;
-    case 'condition':
-      return n > 70 ? `${n}. Sound, with no ache waiting to surface.`
-        : `${n}. Something isn’t right, and long days will find it.`;
-    case 'fitness':
-      return n > 65 ? `${n}. You could do a physical day without paying for it after.`
-        : `${n}. A stunt day would cost you a week.`;
+    case 'morale': {
+      // Even at 62.5, where a night clears its usual share of stress.
+      const settles = Math.round(moraleSettlesAt(dial.person, w.condition, now));
+      const mood = n > 70 ? 'The day feels worth it' : n > 40 ? 'Level' : 'Flat';
+      return `${n}. ${mood}, and the nights bring it back toward ${settles}. `
+        + (n >= 63 ? 'Up like this, a night clears more of the day’s stress than usual.'
+          : 'Down like this, a night clears less of the day’s stress than usual.');
+    }
+    case 'condition': {
+      const mends = Math.round(mendsTo(dial.person, now));
+      const share = Math.round(100 * (0.8 + 0.2 * Math.min(1, w.condition / mendsTo(dial.person, now))));
+      return n >= mends ? `${n}, as sound as your fitness lets rest make you. A night puts all of itself back.`
+        : `${n}, under the ${mends} your fitness lets rest mend you to. A night puts back ${share}% of what it would.`;
+    }
+    case 'fitness': {
+      const mends = Math.round(mendsTo(dial.person, now));
+      const costs = Math.round(workoutCosts(dial.person));
+      return `${n}. Rest can mend you to ${mends}, and a workout costs ${costs} energy.`
+        + (dial.value <= EVERYDAY_FITNESS ? ' This is what an everyday life keeps without training.' : '');
+    }
     case 'nourishment':
       return n > 70 ? `${n}. Fed, and not thinking about it.`
-        : `${n}. Hungry, and it’s starting to show.`;
+        : n >= 20 ? `${n}. Getting hungry. Under twenty it costs condition and mood by the hour.`
+          : `${n}. Hungry, and it’s costing condition and mood by the hour.`;
     case 'hygiene':
-      return n > 70 ? `${n}. Clean, rested-looking, ready to be seen.`
-        : `${n}. A shower would put it back. Rooms notice.`;
+      return n >= 50 ? `${n}. Clean enough that it isn’t wearing on you.`
+        : `${n}. Under fifty it wears on your mood by the hour. A shower puts it back.`;
     default:
       return `${n}.`;
   }
@@ -236,6 +262,7 @@ function dragsOn(w: Wellbeing): { key: DialKey; name: string; value: number }[] 
     { key: 'nourishment', name: 'Nourishment', value: w.nourishment, hurt: 100 - w.nourishment },
     { key: 'morale', name: 'Morale', value: w.morale, hurt: 100 - w.morale },
     { key: 'hygiene', name: 'Hygiene', value: w.hygiene ?? 80, hurt: 100 - (w.hygiene ?? 80) },
+    { key: 'condition', name: 'Condition', value: w.condition, hurt: 100 - w.condition },
   ];
   return cost.filter((c) => c.hurt > 12).sort((a, b) => b.hurt - a.hurt).slice(0, 3)
     .map(({ key, name, value }) => ({ key, name, value }));
@@ -261,6 +288,6 @@ defineLook<Ready>('readiness', {
       label: d.name,
       detail: `At ${Math.round(d.value)}, and pulling on the rest`,
     })),
-    provenance: 'Six of the eight, multiplied together. It isn’t stored anywhere — it’s what they come to.',
+    provenance: 'Seven of the eight, multiplied together, and fitness through condition. It isn’t stored anywhere — it’s what they come to, and it sets what a workout builds.',
   }),
 });

@@ -52,23 +52,27 @@ part the tool cannot see.
 
 ## Dead: declared, and nothing reads it
 
-- **The wellbeing model decides nothing outside itself.** Eight dials move
-  every hour and every night, stress sets how well the nights go and the nights
-  set the energy, and all of it comes out as readiness on Home. Readiness had
-  one reader, in the audition room, and the room is gone. So the dials feed each
-  other and a figure on a screen, and no outcome anywhere turns on them. The
-  personality now moves the dials too, which makes it bite on them and on the
-  sleep the game suggests, and on nothing past that. Eating, a shower, a
-  workout and an hour unwinding (`life.look_after`) joined sleep as things a
-  player does to the dials, and they reach readiness the same way and no
-  further.
-- **Fitness moves condition only on a body the nights are wearing down.**
-  Work Out gave fitness its first writer, and fitness sets where condition
-  drifts to. But a rested night pushes condition to its age's ceiling far
-  faster than that drift, so on six- or eight-hour nights eight weeks of
-  workouts left condition exactly where it was; on five-hour nights it ended
-  1.75 higher. And `readiness` does not read condition, so even there it is
-  a dial moving a dial.
+- **The wellbeing model decides nothing outside the body and the workout.**
+  Every dial now decides something (`tests/wellbeing-bites.test.ts`): fitness
+  sets how far rest mends condition and what a workout costs; condition sets
+  how much a night puts back, where morale settles, and readiness; morale sets
+  how much stress a night clears; hygiene under fifty and hunger under twenty
+  wear on the mood; and readiness sets what a workout builds. Eating, a
+  shower, a workout and an hour unwinding (`life.look_after`) are how a player
+  moves them. But all of that is the body deciding things about the body.
+  Readiness had one reader outside it, in the audition room, and the room is
+  gone: nothing a character does in the world yet goes better or worse for
+  how they are.
+- **Until those readers, fitness and morale couldn't be moved.** Fitness
+  moved condition only on a body the nights were wearing down: a rested
+  night pushed condition to the age's ceiling far faster than fitness's
+  drift, so on six- or eight-hour nights eight weeks of workouts left it at
+  99.8, trained or not. And morale reached a hundred on any life with decent
+  nights and stayed there. Rest mends only as far as fitness lets it now, and
+  the nights bring morale back toward where the body has it settle, so on a
+  half year of eight-hour nights a player who eats, showers, trains and
+  unwinds ends at condition 99.7 and morale 100 against 91 and 85.9 for one who
+  only sleeps.
 - **Four of the seven dispositions are kept and read by nothing.** Openness
   waits on travel, and extraversion, agreeableness and risk tolerance on other
   people. The Dispositions & Traits step says so beside the sliders, and

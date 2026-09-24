@@ -639,7 +639,8 @@ describe('no single trait or disposition wears a life down', () => {
     // So these are held to the ceiling itself, every morning. Measured: every
     // single trait and slider, and the worst four with the worst sliders, sat
     // on it every morning of the sixty, at eleven and at one, with stress 0
-    // and morale 100, told nine to fourteen hours.
+    // and morale 100, told nine to fourteen hours. Morale ends at 89.3 to 93.8
+    // since the nights bring it back toward where the body has it settle.
     for (const birthYear of [1955, 1944]) {
       for (const bedtime of [23, 1]) {
         for (const c of [...singles, ...worst]) {
@@ -683,7 +684,9 @@ describe('no single trait or disposition wears a life down', () => {
 
   it('keeps the worst four with the worst sliders on their feet on autopilot, at twenty-five', () => {
     // At sixty the same people left alone for a year are not held here. This
-    // used to say they ended flat; measured, their morale ends at a hundred.
+    // used to say they ended flat; measured, their morale ended at a hundred,
+    // and ends at 82.8 to 83.7 at twenty-five since the nights bring it back
+    // toward where the body has it settle.
     // What the worst four for sleep and for stress lose is energy, gone by
     // bedtime, and stress, which ends the year at 30.0 and 30.5, over the bar;
     // their lowest condition is 65.4 and 68.0. The worst four for mood hold,
