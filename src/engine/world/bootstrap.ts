@@ -16,6 +16,8 @@ import type { Money } from '../core/money';
 import { idAlreadyIssued } from '../core/ids';
 import { ETHNICITY_BY_ID } from '../content/ethnicity';
 import { GENRE_BY_ID, INTEREST_BY_ID } from '../content/interests';
+import { BEFORE_ACTING_BY_ID, DEFAULT_BEFORE_ACTING } from '../content/backgrounds';
+import { ceilingAt } from '../content/lifespan';
 
 /** The ids on a list this build recognises, deduplicated, in the order given. */
 function known(ids: readonly string[] | undefined, table: Readonly<Record<string, unknown>>): string[] {
@@ -80,6 +82,8 @@ export interface NewSaveConfig {
   genres: string[];
   /** The life before this one, in their own words. Flavor, and said back to them. */
   background: string;
+  /** What they did before acting, by id from `content/backgrounds.ts`: the body they start with. */
+  beforeActing: string;
 
   /** Starting point */
   startLocationId: string;
@@ -110,6 +114,7 @@ export function defaultConfig(): NewSaveConfig {
     personality: defaultPersonality(), personalityTraits: [],
     interests: ['film', 'television'], genres: [],
     background: '',
+    beforeActing: DEFAULT_BEFORE_ACTING,
     startLocationId: DEFAULT_CITY_ID,
     wealth: 'scraping',
     // Monday 5 January 2026, the first working Monday of the year.
@@ -212,6 +217,11 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveCon
     zone,
   );
 
+  // What they did before, and the fitness it left. An id the list lacks is
+  // the default, the same way an interest the list lacks is dropped.
+  const before = BEFORE_ACTING_BY_ID[config.beforeActing] ?? BEFORE_ACTING_BY_ID[DEFAULT_BEFORE_ACTING]!;
+  const yearsOld = Math.max(0, (now - birthInstant) / (365.2425 * MS_DAY));
+
   const player: Person = {
     id: playerId,
     saveId: meta.id,
@@ -241,9 +251,12 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveCon
     interests: known(config.interests, INTEREST_BY_ID),
     genres: known(config.genres, GENRE_BY_ID),
     // Kept as the player wrote it, and printed back on their own page. It
-    // decides nothing, and the character sheet says so.
+    // decides nothing, and the step says so; what they did before, beside it,
+    // is the part that does.
     background: config.background,
-    wellbeing: freshWellbeing(),
+    beforeActing: before.id,
+    // The body their work before left them, no fitter than the age allows.
+    wellbeing: { ...freshWellbeing(), fitness: Math.min(before.fitness, ceilingAt(yearsOld).fitness) },
     // Up this morning, and charged for being awake from the moment the world
     // starts.
     awakeSince: now,

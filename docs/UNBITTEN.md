@@ -97,7 +97,12 @@ part the tool cannot see.
 - **The crafts and the genres are said back and nothing more.** Creation asks
   for them and the person look prints them, which is what keeps them from being
   a question with no answer. Nothing in the simulation reads either, and
-  `tests/cohesion.test.ts` holds that nothing starts to without saying so.
+  `tests/cohesion.test.ts` holds that nothing starts to without saying so. The
+  general interests are read since 2026-09-24, by `systems/enjoyment.ts`
+  alone: Cooking, Fitness, Sport and the evening pastimes lift the mood and
+  ease the stress of the hour they go with, and never make anybody better at
+  anything. The rest of the general interests (Animals, Cars, Fashion, Nature,
+  Politics, Travel) go with nothing a player can do yet.
 - **The performer title is said back and nothing more.** Actor or actress,
   settled by the pronouns or picked under they/them, and printed on Home, the
   rail and the save slot. It is a word and not a stat, so that is all it

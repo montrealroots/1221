@@ -19,6 +19,9 @@ import {
   type Instant,
 } from '@/engine/core/time';
 import { PLAN_KIND } from '@/engine/world/plans';
+import { lovedIn } from '@/engine/systems/enjoyment';
+import { INTEREST_BY_ID } from '@/engine/content/interests';
+import { spokenList } from '@/ui/looks/words';
 import type { ScheduledItem } from '@/engine/core/scheduler';
 
 export function TimeControls() {
@@ -488,6 +491,9 @@ function LookAfterMenu() {
           {(Object.keys(LOOKING_AFTER) as LookAfter[]).map((action) => {
             const { label, minutes, does } = LOOKING_AFTER[action];
             const refused = refusals[action];
+            // Said, because it changes what the hour gives: more mood and more
+            // relief for somebody who loves it (`systems/enjoyment.ts`).
+            const loved = lovedIn(sim.player, action).map((id) => INTEREST_BY_ID[id]?.label ?? id);
             return (
               <button
                 key={action}
@@ -501,6 +507,9 @@ function LookAfterMenu() {
                 <span className="menu-item-detail">
                   {formatDuration(minutes * 60_000)} · {refused ?? does}
                 </span>
+                {!refused && loved.length > 0 && (
+                  <span className="menu-item-detail">You love {spokenList(loved)}, so it lifts you more.</span>
+                )}
               </button>
             );
           })}

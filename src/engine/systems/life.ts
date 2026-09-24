@@ -19,6 +19,7 @@ import { clamp, remap } from '../core/rng';
 import { formatTime, instantFromZoned, startOfDay, startOfNextDay, zonedParts, MS_HOUR, MS_DAY } from '../core/time';
 import { ceilingAt, recoveryFactorAt } from '../content/lifespan';
 import { personalityOf } from './personality';
+import { LOVED_MOOD, LOVED_RELIEF, lovedIn } from './enjoyment';
 
 // ---------------------------------------------------------------------------
 // Wellbeing model
@@ -455,7 +456,11 @@ export function workoutCosts(person: Person): number {
  */
 export function applyLookingAfter(person: Person, action: LookAfter, at?: number): void {
   const w = person.wellbeing;
-  const swing = personalityOf(person, 'moraleSwing');
+  // Somebody who loves what they're doing gets more of the mood and the
+  // relief out of it, and nothing else (`systems/enjoyment.ts`).
+  const loved = lovedIn(person, action).length > 0;
+  const swing = personalityOf(person, 'moraleSwing') * (loved ? LOVED_MOOD : 1);
+  const relief = loved ? LOVED_RELIEF : 1;
   if (action === 'eat') {
     const eaten = Math.min(MEAL, 100 - w.nourishment);
     w.nourishment = clamp(w.nourishment + eaten, 0, 100);
@@ -472,10 +477,10 @@ export function applyLookingAfter(person: Person, action: LookAfter, at?: number
     w.energy = clamp(w.energy - costs, 0, 100);
     w.nourishment = clamp(w.nourishment - 6, 0, 100);
     w.hygiene = clamp((w.hygiene ?? 80) - 20 * personalityOf(person, 'hygieneDrift'), 0, 100);
-    w.stress = clamp(w.stress - 8 * personalityOf(person, 'stressRecovery'), 0, 100);
+    w.stress = clamp(w.stress - 8 * personalityOf(person, 'stressRecovery') * relief, 0, 100);
     w.morale = clamp(w.morale + 3 * swing, 0, 100);
   } else {
-    w.stress = clamp(w.stress - 10 * personalityOf(person, 'stressRecovery'), 0, 100);
+    w.stress = clamp(w.stress - 10 * personalityOf(person, 'stressRecovery') * relief, 0, 100);
     w.morale = clamp(w.morale + 3 * swing, 0, 100);
   }
 }

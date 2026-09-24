@@ -108,8 +108,10 @@ export interface Person {
   personalityTraits: string[];
   /**
    * What they care about, and below it the genres they love. On the
-   * character sheet because a person has them; nothing in the simulation
-   * reads either to decide anything, and the person look says both back.
+   * character sheet because a person has them, and the person look says both
+   * back. The interests change how much an hour of looking after yourself
+   * gives the mood (`systems/enjoyment.ts`), never how good anybody is at
+   * anything; the genres decide nothing.
    */
   interests: string[];
   genres?: string[];
@@ -123,6 +125,12 @@ export interface Person {
    * would be worse than not asking.
    */
   background: string;
+  /**
+   * What they did for a living before acting, by id from
+   * `content/backgrounds.ts`. It set the fitness they started with, and the
+   * person look says it back. A save from before it was asked has none.
+   */
+  beforeActing?: string;
 
   wellbeing: Wellbeing;
 

@@ -38,6 +38,8 @@ import {
 } from '@/engine/content/personality-traits';
 import { AXIS_MAX, AXIS_MIN } from '@/engine/systems/personality';
 import { outOf, said } from '@/ui/looks/words';
+import { BEFORE_ACTING, BEFORE_ACTING_BY_ID, DEFAULT_BEFORE_ACTING } from '@/engine/content/backgrounds';
+import { ceilingAt } from '@/engine/content/lifespan';
 
 /**
  * How far back the last year a character can be born in sits from the year
@@ -622,6 +624,12 @@ function PersonalStep({
   set: Setter;
   setConfig: React.Dispatch<React.SetStateAction<NewSaveConfig>>;
 }) {
+  // The body the work before left them, held to what the age allows, as the
+  // engine starts it (`world/bootstrap.ts`).
+  const before = BEFORE_ACTING_BY_ID[config.beforeActing] ?? BEFORE_ACTING_BY_ID[DEFAULT_BEFORE_ACTING]!;
+  const ceiling = ceilingAt(ageAtStart(config));
+  const startsAt = Math.min(before.fitness, ceiling.fitness);
+
   const toggleInterest = (interest: string) => {
     setConfig((c) => ({
       ...c,
@@ -702,6 +710,12 @@ function PersonalStep({
             <p className="muted small">
               What you care about when nobody is paying you to. Take as many as are true.
             </p>
+            <p className="muted small">
+              Some change how much you get out of looking after yourself: Cooking for a meal,
+              Fitness and Sport for a workout, and what you’d spend an evening on for an hour
+              unwinding. They lift your mood more and ease more stress. None makes you better
+              at anything.
+            </p>
           </div>
           <span className="chip chip-accent">{config.interests.length} Chosen</span>
         </div>
@@ -736,27 +750,50 @@ function PersonalStep({
       </div>
 
       {/*
-        A sentence the player writes about their own character rather than an
-        option list promising a consequence. It is not dead: the person page
-        prints it under their name. It carries no number, and the copy here
-        says so rather than implying a stat is hiding behind it.
+        This was one box of free text, and the copy said it carried "no
+        attribute and no advantage", which was true. What somebody did before
+        is the part of a past the engine can honestly read, because it is
+        written on the body, so it is asked as a choice now and sets the
+        fitness they start with. The sentence of their own stays beside it,
+        said back on their page and deciding nothing, as before.
       */}
       <div className="card">
         <div className="panel-head">
           <div>
             <h2>Background</h2>
             <p className="muted small">
-              Where the life before this one happened. It carries no attribute and no
-              advantage — it is yours, and it is on your page from the first morning.
+              The life before this one. What you did for a living is written on your body:
+              it’s the fitness you start with, and it fades like anybody’s unless you keep it up.
             </p>
           </div>
         </div>
         <div className="field">
-          <label htmlFor="background">Where You Come From</label>
+          <label htmlFor="before-acting">Before Acting</label>
+          <select id="before-acting" value={config.beforeActing} onChange={(e) => set('beforeActing', e.target.value)}>
+            {BEFORE_ACTING.map((one) => <option key={one.id} value={one.id}>{one.label}</option>)}
+          </select>
+        </div>
+        <div className="callout">{before.note}</div>
+        <div className="grid grid-2" style={{ marginTop: 'var(--s4)' }}>
+          <div className="stat">
+            <span className="stat-label">Fitness On The First Morning</span>
+            <span className="stat-value mono">{Math.round(startsAt)}</span>
+            <span className="stat-note">
+              {startsAt < before.fitness ? `${before.fitness}, held to what your age allows` : 'An everyday life keeps 35'}
+            </span>
+          </div>
+          <div className="stat">
+            <span className="stat-label">Rest Can Mend You To</span>
+            <span className="stat-value mono">{Math.round(Math.min(ceiling.condition, 70 + 0.6 * startsAt))}</span>
+            <span className="stat-note">Condition, while the fitness lasts</span>
+          </div>
+        </div>
+        <div className="field" style={{ marginTop: 'var(--s4)' }}>
+          <label htmlFor="background">In Your Own Words</label>
           <textarea
             id="background" value={config.background}
             onChange={(e) => set('background', e.target.value)}
-            placeholder="A sentence about the life before this one."
+            placeholder="A sentence about the life before this one. It’s on your page from the first morning, and it decides nothing."
           />
         </div>
       </div>
@@ -953,15 +990,16 @@ function ReviewStep({ config }: { config: NewSaveConfig }) {
         <div className="eyebrow" style={{ marginBottom: 'var(--s3)' }}>Interests &amp; Background</div>
         <Line label="Interests" value={namesOf(ALL_INTERESTS, config.interests)} />
         <Line label="Genres" value={namesOf(FILM_GENRES, config.genres)} />
+        <Line label="Before Acting" value={BEFORE_ACTING_BY_ID[config.beforeActing]?.label ?? '—'} />
         {/* A sentence of the player's own, so it is set as one, not squeezed
             into the right-hand column a line gives a value. */}
         {config.background.trim() ? (
           <div style={{ padding: '3px 0' }}>
-            <span className="small muted">Background</span>
+            <span className="small muted">In Your Own Words</span>
             <p className="small" style={{ margin: '2px 0 0' }}>{config.background.trim()}</p>
           </div>
         ) : (
-          <Line label="Background" value="—" />
+          <Line label="In Your Own Words" value="—" />
         )}
       </div>
 

@@ -28,6 +28,7 @@ import { defineLook, type Way } from './registry';
 import { at } from './subject';
 import { isAre, outOf, spokenList } from './words';
 import { GENRE_BY_ID, INTEREST_BY_ID } from '@/engine/content/interests';
+import { BEFORE_ACTING_BY_ID } from '@/engine/content/backgrounds';
 import { PERSONALITY_TRAIT_BY_ID } from '@/engine/content/personality-traits';
 
 /**
@@ -104,9 +105,13 @@ defineLook<Person>('person', {
     // somebody authored is not written into the save and then never shown to
     // anybody again.
     const before = (person.background ?? '').trim();
+    // What they did before acting, which set the fitness they started with.
+    // A save from before the question was asked has none, and says nothing.
+    const work = BEFORE_ACTING_BY_ID[person.beforeActing ?? '']?.label;
     // What they care about and the films they love, said back for the same
-    // reason. Nothing in the simulation reads either, so this is the one place
-    // an answer given at creation is seen again.
+    // reason. Nothing in the simulation read either until the interests were
+    // let change how much an hour of looking after yourself gives the mood
+    // (`systems/enjoyment.ts`); the genres are still read by nothing.
     const cares = person.interests.map((id) => INTEREST_BY_ID[id]?.label).filter((one): one is string => !!one);
     const loves = (person.genres ?? []).map((id) => GENRE_BY_ID[id]?.label).filter((one): one is string => !!one);
     // The traits they picked. Most of them, unlike the rest of this, move the
@@ -125,6 +130,12 @@ defineLook<Person>('person', {
         <p key="before" className="small">
           <span className="dim">{isYou ? 'Where you come from. ' : 'Where they come from. '}</span>
           {before}
+        </p>
+      ),
+      work && (
+        <p key="work" className="small">
+          <span className="dim">Before acting. </span>
+          {work}.
         </p>
       ),
       cares.length > 0 && (

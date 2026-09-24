@@ -201,7 +201,7 @@ npm test
 | `calendar`, `holidays` | The month grid, entries between two instants, collisions, and the observances of a country. |
 | `weather` | The climate model: normals by latitude and season, the week ahead, the units a country reads it in. |
 | `geography`, `world-map` | The gazetteer and the projection drawn from it. |
-| `creation`, `portrait`, `citizenship` | The creation steps and what they put in the save, the headshot frame, and the citizenship a place of birth gives. |
+| `creation`, `portrait`, `citizenship` | The creation steps and what they put in the save, what somebody did before acting and the fitness it starts them with, the headshot frame, and the citizenship a place of birth gives. |
 | `personality` | The seven dispositions and the traits: the pairs the page draws, what each one moves, what it says moves nothing, the sleep the game suggests and why, and that it pays the day beside it in the same measure at any age; that no single trait or disposition wears a life down on autopilot or on the suggested hours, at twenty-five or at sixty; and that at seventy and eighty-one the suggested hours hold everybody at what the age allows. |
 | `plans`, `looks` | Plans of your own on the calendar, and the drill-down graph crawled end to end. |
 | `endurance` | A day, a week, a month, a year, five years and ten: money drift, stranded schedules, corrupt history, duplicated ids, contradictory ownership, unbounded collections, and cost per simulated year. |

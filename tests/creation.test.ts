@@ -19,6 +19,10 @@ import { createSave, defaultConfig, refreshMeta } from '@/engine';
 import { CITIES } from '@/engine/content/geography';
 import { blockedTraitReason, latestBirthYear } from '@/ui/creation/CharacterCreation';
 import { settledTitle } from '@/engine/core/performer';
+import { BEFORE_ACTING, DEFAULT_BEFORE_ACTING } from '@/engine/content/backgrounds';
+import { ceilingAt } from '@/engine/content/lifespan';
+import { EVERYDAY_FITNESS, mendsTo, readiness } from '@/engine/systems/life';
+import { MS_HOUR, startOfNextDay } from '@/engine/core/time';
 
 const SOURCE = readFileSync(new URL('../src/ui/creation/CharacterCreation.tsx', import.meta.url), 'utf8');
 
@@ -254,5 +258,60 @@ describe('Review', () => {
     expect(step, 'Review stopped listing the dispositions')
       .toContain('<Line key={axis.key} label={axis.label} value={outOf(config.personality[axis.key])} />');
     expect(step, 'Review stopped listing the traits').toContain('config.personalityTraits.map((id) =>');
+  });
+});
+
+describe('what you did before acting', () => {
+  const made = (beforeActing: string, birthYear = 2001) =>
+    createSave(1, `before-${beforeActing}-${birthYear}`, { ...defaultConfig(), beforeActing, birthYear });
+  const playerOf = (sim: ReturnType<typeof createSave>) => sim.universe.people[sim.universe.playerId]!;
+
+  it('starts every answer at its own fitness, keeps the answer, and a default save where it was', () => {
+    for (const one of BEFORE_ACTING) {
+      const player = playerOf(made(one.id));
+      expect(player.beforeActing).toBe(one.id);
+      expect(player.wellbeing.fitness, one.id).toBe(one.fitness);
+    }
+    // Fifty is what every character started at before the question was asked.
+    expect(defaultConfig().beforeActing).toBe(DEFAULT_BEFORE_ACTING);
+    expect(playerOf(createSave(1, 'before-default', defaultConfig())).wellbeing.fitness).toBe(50);
+  });
+
+  it('never starts somebody fitter than the age allows, and an answer the list lacks is the default', () => {
+    const old = playerOf(made('sport', 1944));
+    expect(old.wellbeing.fitness).toBeLessThan(80);
+    expect(old.wellbeing.fitness).toBeCloseTo(ceilingAt(81.5).fitness, 0);
+    const junk = playerOf(made('astronaut'));
+    expect(junk.beforeActing).toBe(DEFAULT_BEFORE_ACTING);
+    expect(junk.wellbeing.fitness).toBe(50);
+  });
+
+  it('an athlete left alone keeps the fitter body for months, and it fades to an everyday life’s', () => {
+    const athlete = made('sport');
+    const clerk = made('office');
+    const days = (sim: ReturnType<typeof createSave>, n: number) => {
+      for (let d = 0; d < n; d++) sim.advanceTo(startOfNextDay(sim.now, sim.zone) + 7 * MS_HOUR);
+    };
+    days(athlete, 120);
+    days(clerk, 120);
+    const a = playerOf(athlete);
+    const c = playerOf(clerk);
+    expect(a.wellbeing.fitness).toBeCloseTo(80 - 120 * 0.18, 5);
+    expect(c.wellbeing.fitness).toBe(EVERYDAY_FITNESS);
+    expect(mendsTo(a, athlete.now)).toBeGreaterThan(mendsTo(c, clerk.now) + 5);
+    expect(a.wellbeing.condition).toBeGreaterThan(c.wellbeing.condition + 5);
+    expect(readiness(a)).toBeGreaterThan(readiness(c));
+    // A year on, nothing kept it up, and both have what an everyday life keeps.
+    days(athlete, 245);
+    days(clerk, 245);
+    expect(a.wellbeing.fitness).toBe(EVERYDAY_FITNESS);
+    expect(c.wellbeing.fitness).toBe(EVERYDAY_FITNESS);
+  });
+
+  it('asks the question on the step, says what it does, and keeps the player’s own words beside it', () => {
+    expect(SOURCE, 'the step stopped asking').toContain('id="before-acting"');
+    expect(SOURCE, 'the step stopped saying what it does').toContain('Fitness On The First Morning');
+    expect(SOURCE, 'the step lost the player’s own words').toContain('id="background"');
+    expect(SOURCE, 'the step still says it carries nothing').not.toContain('It carries no attribute and no');
   });
 });
