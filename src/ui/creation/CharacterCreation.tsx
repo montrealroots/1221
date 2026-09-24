@@ -22,6 +22,7 @@ import type { City } from '@/engine/content/geography';
 import { RATES_NOTE } from '@/engine/content/currency';
 import { HOUSING, costsAt, type Housing } from '@/engine/systems/household';
 import { wageAt, withholdingAt } from '@/engine/systems/work';
+import { scoreIsANumberIn, scoreWord } from '@/engine/systems/credit';
 import { minimumWageAt } from '@/engine/content/wages';
 import { jobFor, payCycleFor, payCycleWords, weeklyHours, workDaysWords } from '@/engine/content/jobs';
 import { formatMoney } from '@/engine/core/money';
@@ -913,8 +914,8 @@ function StartingPointStep({ config, set, setConfig }: {
             <span className="stat-value mono">{formatMoney(wealth.savings, cur, { cents: false })}</span>
           </div>
           <div className="stat">
-            <span className="stat-label">Credit Score</span>
-            <span className="stat-value mono">{wealth.creditScore}</span>
+            <span className="stat-label">Credit Record</span>
+            <span className="stat-value mono">{scoreIsANumberIn(config.startLocationId) ? wealth.creditScore : scoreWord(wealth.creditScore)}</span>
           </div>
         </div>
       </div>
@@ -1061,7 +1062,7 @@ function ReviewStep({ config }: { config: NewSaveConfig }) {
           <Line label="Where You Live" value={city ? placeLine(city) : '—'} />
           <Line label="Checking" value={formatMoney(wealth.checking, cur, { cents: false })} />
           <Line label="Savings" value={formatMoney(wealth.savings, cur, { cents: false })} />
-          <Line label="Credit Score" value={String(wealth.creditScore)} />
+          <Line label="Credit Record" value={scoreIsANumberIn(config.startLocationId) ? String(wealth.creditScore) : scoreWord(wealth.creditScore)} />
         </div>
       </div>
 

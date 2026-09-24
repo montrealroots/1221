@@ -555,6 +555,7 @@ The owner asked for the five open items after the money system to be fixed.
 - **The record** now also sets the card's limit, raised a fifth at a six-monthly review for 700 with nothing late in a year and cut to 70% (never under what's owed) by a late payment, and the landlord's deposit.
 - **Tips** (`tipsPerHour` in `content/jobs.ts`) where the custom is to tip: bar and restaurant work $10 an hour in the US, 7 CAD, 30 MXN, and a little in Britain, Ireland, Australia and New Zealand; a café counter less; nothing in Iceland, Japan, Korea or most of Europe. Paid in cash at the end of the shift (`work.tips`). SLATE's estimates of the custom.
 - **Tokyo.** The money handoff said the gazetteer filed Tokyo under Fukuoka's region code. It didn't: the gazetteer numbers Japan's prefectures as GeoNames does, alphabetically, and 40 is Tokyo there. The mistake was the wage table's, which had keyed Tokyo's rate to JP-13, Tokyo's ISO number and the gazetteer's Hyōgo, so Hyōgo was paid Tokyo's rate. It keys JP-40 now, and a test holds Hyōgo at the national average.
+- **Two screens that disagreed with the game**, found in the full-page walk after it. Home's Where You Are card and the place page printed the atlas's raw rent, "Rent about 473K kr/mo" for Mosfellsbær, while the game charged from the published 205,000. They read `rentAt` now. And Starting Point and Review printed the credit score as a number in Iceland, where Home says a word; all three follow `scoreIsANumberIn` now, under the label Credit Record.
 
 ---
 

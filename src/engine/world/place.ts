@@ -18,6 +18,7 @@ import { computeAnnualTax, propertyTaxRate, salesTaxRate } from '../content/tax'
 import { currencyInfo, formatLocalCompact, type CurrencyInfo } from '../content/currency';
 import { languageNames } from '../content/languages';
 import { usesFahrenheit, usesMiles } from '../content/climate';
+import { rentAt } from '../content/rents';
 import { weatherAt, type WeatherNow } from '../systems/weather';
 
 /** "Capital", "State Capital", "Provincial Capital": what kind of place this is, if it is a kind at all. */
@@ -131,13 +132,17 @@ export function placeProfile(sim: Simulation, cityId: string): PlaceProfile | un
       : `${Math.round(km).toLocaleString('en-US')} km`)
     : undefined;
 
+  const oneBedUsd = city.medianRentCents > 0 ? rentAt(city.id, 'USD').oneBed : 0;
   return {
     city,
     regionName: region && region.name !== country?.name ? region.name : undefined,
     countryName: country?.name ?? city.countryId.toUpperCase(),
     countryId: city.countryId,
     currency: { ...currencyInfo(country?.currency ?? 'USD'), name: country?.currencyName || (country?.currency ?? 'USD') },
-    localRent: city.medianRentCents > 0 ? formatLocalCompact(city.medianRentCents, country?.currency ?? 'USD') : undefined,
+    // The rent the game charges (`content/rents.ts`), not the atlas's raw
+    // figure: Home said "Rent about 473K kr/mo" for Mosfellsbær while the
+    // household charged from Iceland's published 205,000.
+    localRent: oneBedUsd > 0 ? formatLocalCompact(oneBedUsd, country?.currency ?? 'USD') : undefined,
     languages: languageNames(country?.languages ?? ''),
     capital: country?.capital ?? '',
     continent: country?.continent ?? '',
@@ -157,7 +162,7 @@ export function placeProfile(sim: Simulation, cityId: string): PlaceProfile | un
     away,
     weather: weatherAt(sim, city.id),
     costOfLivingIndex: city.costOfLivingIndex,
-    medianRentCents: city.medianRentCents,
+    medianRentCents: oneBedUsd,
     industryPresence: city.industryPresence,
     jobMarketDepth: city.jobMarketDepth,
     effectiveIncomeTax: totalTax / TAX_REFERENCE_INCOME,

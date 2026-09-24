@@ -12,7 +12,10 @@
  */
 
 import { describe, expect, it } from 'vitest';
+import { readFileSync } from 'node:fs';
 import { createSave, defaultConfig, quickSave } from '@/engine';
+import { placeProfile } from '@/engine/world/place';
+import { rentAt } from '@/engine/content/rents';
 import type { Simulation } from '@/engine';
 import {
   arrearsOf, depositFor, moveCost, rentOf, spend,
@@ -208,5 +211,20 @@ describe('the job', () => {
     expect(promised.every((s) => s.durationMinutes === 7 * 60)).toBe(true);
     expect(withholdingRate(sim, sim.player)).toBeGreaterThan(rate);
     expect(sim.execute({ kind: 'work.set_hours', payload: { fullTime: true } }).ok).toBe(false);
+  });
+});
+
+describe('the screens and the game agree', () => {
+  it('on the rent a place card prints, and on how the record is said', () => {
+    // Home printed the atlas's 473K for Mosfellsbær while the game charged
+    // from Iceland's published 205,000.
+    const sim = quickSave({}, 'agree');
+    const place = placeProfile(sim, sim.player.currentLocationId)!;
+    expect(place.localRent).toBe('205K kr');
+    expect(place.medianRentCents).toBe(rentAt(sim.player.currentLocationId, 'USD').oneBed);
+    // Starting Point printed the score as a number in Iceland, where Home says a word.
+    const source = readFileSync('src/ui/creation/CharacterCreation.tsx', 'utf8');
+    expect(source).not.toContain('<span className="stat-label">Credit Score</span>');
+    expect(source.match(/scoreIsANumberIn\(config\.startLocationId\)/g)?.length).toBe(2);
   });
 });

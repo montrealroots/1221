@@ -250,7 +250,7 @@ describe('Review', () => {
     const step = stepSource('function ReviewStep');
     for (const line of [
       'Legal Name', 'Pronouns', 'Billed As', 'Born', 'Place Of Birth', 'Citizenship', 'Dispositions &amp; Traits',
-      'Where You Live', 'Checking', 'Savings', 'Credit Score', 'Interests', 'Genres', 'Background',
+      'Where You Live', 'Checking', 'Savings', 'Credit Record', 'Interests', 'Genres', 'Background',
     ]) {
       expect(step, `Review stopped showing ${line}`).toContain(line);
     }
