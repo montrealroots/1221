@@ -236,10 +236,19 @@ export function registerCredit(sim: Simulation): void {
   });
 }
 
+/**
+ * Somebody this comfortable with risk carries a card balance rather than clear
+ * it: their autopay starts on the minimum. Risk tolerance is, in the first
+ * place, willingness to carry financial risk; the slider was read by nothing
+ * until the card, and the player can change the autopay whenever they like.
+ */
+const CARRIES_A_BALANCE = 65;
+
 /** Opens their record at a score, with the first statement on the calendar. */
 export function openCredit(sim: Simulation, person: Person, score: number): void {
+  const autopay = (person.personality?.riskTolerance ?? 50) > CARRIES_A_BALANCE ? 'minimum' : 'full';
   person.credit = {
-    score, late: [], autopay: 'full', statementBalance: 0, paidSinceStatement: 0, reviewedAt: sim.now,
+    score, late: [], autopay, statementBalance: 0, paidSinceStatement: 0, reviewedAt: sim.now,
     // A balance brought in from before is one the last statement didn't clear.
     carrying: (cardOf(sim, person)?.balance ?? 0) < 0,
   };

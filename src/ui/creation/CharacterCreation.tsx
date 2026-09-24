@@ -29,7 +29,7 @@ import { formatMoney } from '@/engine/core/money';
 import { SAVE_SCHEMA_VERSION } from '@/engine/domain/model';
 import { formatPeople } from '@/engine/world/place';
 import { ageOnDate, zoneAbbreviation } from '@/engine/core/time';
-import { citizenshipFor } from '@/engine/domain/citizenship';
+import { citizenshipFor, mayWorkIn } from '@/engine/domain/citizenship';
 import {
   ETHNICITIES, ETHNICITY_NOTE, ETHNICITY_OTHER, describeEthnicity,
 } from '@/engine/content/ethnicity';
@@ -551,11 +551,12 @@ function PersonalityStep({ config, setConfig }: {
           <div>
             <h2>Dispositions</h2>
             <p className="muted small">
-              How you lean, not what you can do. Three of them do something today: Emotional Stability
+              How you lean, not what you can do. Four of them do something today: Emotional Stability
               sets how quickly stress arrives and how quickly it clears, Conscientiousness sets how well
-              the nights go, and Ambition sets what running yourself into the ground costs you in
-              stress. The other four are written into the save and read by nothing yet. Openness waits
-              on travel, and the last three wait on other people. Neither is built.
+              the nights go, Ambition sets what running yourself into the ground costs you in stress,
+              and Risk Tolerance over 65 means you carry a balance on your card rather than clear it.
+              The other three are written into the save and read by nothing yet. Openness waits on
+              travel, and Extraversion and Agreeableness wait on other people. Neither is built.
             </p>
           </div>
         </div>
@@ -949,7 +950,11 @@ function MonthByMonth({ config, set, cur }: { config: NewSaveConfig; set: Setter
   const floor = minimumWageAt(config.startLocationId, at, cur);
   const withheld = withholdingAt(config.startLocationId, job.id, cur, at);
   const monthly = (weekly: number) => Math.round(weekly * 52 / 12);
-  const pay = config.dayJob ? Math.round(monthly(wage * weeklyHours(job)) * (1 - withheld)) : 0;
+  // The right to work here, from the citizenship the place of birth gives.
+  const citizenOf = citizenshipFor(config.homeRegionId);
+  const right = citizenOf ? mayWorkIn(citizenOf, config.startLocationId) : { may: false };
+  const working = config.dayJob && right.may;
+  const pay = working ? Math.round(monthly(wage * weeklyHours(job)) * (1 - withheld)) : 0;
   const spending = personalityOf({ personality: config.personality, personalityTraits: config.personalityTraits }, 'spending');
   const food = Math.round(costs.day * spending * 365 / 12);
   const left = pay - costs.rent - costs.bills - food;
@@ -975,19 +980,25 @@ function MonthByMonth({ config, set, cur }: { config: NewSaveConfig; set: Setter
       <div className="callout">{HOUSING[config.housing].note}</div>
 
       <label className="check" htmlFor="day-job" style={{ marginTop: 'var(--s4)' }}>
-        <input id="day-job" type="checkbox" checked={config.dayJob} onChange={(e) => set('dayJob', e.target.checked)} />
+        <input id="day-job" type="checkbox" checked={working} disabled={!right.may} onChange={(e) => set('dayJob', e.target.checked)} />
         <span>
           Keep A Day Job
           <span className="dim"> — {job.title}, {workDaysWords(job)}, {job.hours} hours from {job.startHour}:00, paid {payCycleWords(payCycleFor(country))}</span>
         </span>
       </label>
 
+      {!right.may && (
+        <div className="callout callout-warning" style={{ marginTop: 'var(--s3)' }}>
+          As a citizen of {COUNTRIES.get(citizenOf ?? '')?.name ?? 'another country'}, you’d need a work visa to work in {COUNTRIES.get(right.countryId ?? '')?.name ?? 'this country'}, and café and bar work doesn’t get one. You’d live on what you start with.
+        </div>
+      )}
+
       <div className="grid grid-3" style={{ marginTop: 'var(--s4)' }}>
         <div className="stat">
           <span className="stat-label">Take-Home Pay</span>
           <span className="stat-value mono">{money(pay)}</span>
           <span className="stat-note">
-            {config.dayJob
+            {working
               ? `${formatMoney(wage, cur)} an hour for ${weeklyHours(job)} hours a week, less ${Math.round(withheld * 100)}% tax`
               : 'No day job: only what you start with'}
           </span>

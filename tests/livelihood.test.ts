@@ -15,6 +15,8 @@ import { describe, expect, it } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { createSave, defaultConfig, quickSave } from '@/engine';
 import { placeProfile } from '@/engine/world/place';
+import { mayWorkIn } from '@/engine/domain/citizenship';
+import { loadCountryCities } from '@/engine/content/geography';
 import { rentAt } from '@/engine/content/rents';
 import type { Simulation } from '@/engine';
 import {
@@ -226,5 +228,32 @@ describe('the screens and the game agree', () => {
     const source = readFileSync('src/ui/creation/CharacterCreation.tsx', 'utf8');
     expect(source).not.toContain('<span className="stat-label">Credit Score</span>');
     expect(source.match(/scoreIsANumberIn\(config\.startLocationId\)/g)?.length).toBe(2);
+  });
+});
+
+describe('what citizenship and risk decide', () => {
+  it('gives a day job only where the citizenship has the right to work', async () => {
+    await loadCountryCities('DE');
+    const berlin = 'de-be-berlin';
+    // Born in Mosfellsbær, working in Los Angeles: a visa café work doesn't get.
+    const abroad = createSave(1, 'visa', { ...defaultConfig(), startLocationId: 'us-ca-losangeles', livesWhereBorn: false });
+    expect(abroad.player.citizenshipId).toBe('is');
+    expect(abroad.player.job).toBeUndefined();
+    expect(mayWorkIn('is', 'us-ca-losangeles').may).toBe(false);
+    // Born in Berlin, working in Mosfellsbær: the European Economic Area.
+    const eea = createSave(1, 'eea', { ...defaultConfig(), homeRegionId: berlin, livesWhereBorn: false });
+    expect(eea.player.citizenshipId).toBe('de');
+    expect(eea.player.job?.jobId).toBe('school');
+    // Britain and Ireland, and Australia and New Zealand, move freely; Britain and Germany don't now.
+    expect(mayWorkIn('uk', 'ie-lei-dublin').may).toBe(true);
+    expect(mayWorkIn('nz', 'au-nsw-sydney').may).toBe(true);
+    expect(mayWorkIn('uk', berlin).may).toBe(false);
+  });
+
+  it('starts somebody who takes risks on the card’s minimum, and everybody else clearing it', () => {
+    const cautious = quickSave({ personality: { ...defaultConfig().personality, riskTolerance: 30 } }, 'risk-low');
+    const reckless = quickSave({ personality: { ...defaultConfig().personality, riskTolerance: 90 } }, 'risk-high');
+    expect(cautious.player.credit!.autopay).toBe('full');
+    expect(reckless.player.credit!.autopay).toBe('minimum');
   });
 });

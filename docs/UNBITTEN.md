@@ -73,9 +73,10 @@ part the tool cannot see.
   half year of eight-hour nights a player who eats, showers, trains and
   unwinds ends at condition 99.7 and morale 100 against 91 and 85.9 for one who
   only sleeps.
-- **Four of the seven dispositions are kept and read by nothing.** Openness
-  waits on travel, and extraversion, agreeableness and risk tolerance on other
-  people. The Dispositions & Traits step says so beside the sliders, and
+- **Three of the seven dispositions are kept and read by nothing.** Openness
+  waits on travel, and extraversion and agreeableness on other people. Risk
+  tolerance was a fourth until the card: over 65 it starts autopay on the
+  minimum. The Dispositions & Traits step says so beside the sliders, and
   `tools/wired.mjs` counts them.
 - **Keeps Accounts is said back and nothing more.** It is about what other
   people owe you, and there are no other people. The other three money traits
@@ -118,9 +119,6 @@ part the tool cannot see.
   settled by the pronouns or picked under they/them, and printed on Home, the
   rail and the save slot. It is a word and not a stat, so that is all it
   claims to do, but nothing in the simulation reads it either.
-- **Citizenship is kept and never read.** The save writes the country of the
-  birthplace onto the player, and nothing reads it back: creation says it from
-  the birthplace, not from the save, and no screen in the game shows it.
 - **`search()` in `content/reference.ts`** is a ranked search over every city
   with no caller. The note on it says it stays only while a way in might be
   built, and this page carries it until one is or it goes.

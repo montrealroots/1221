@@ -25,8 +25,10 @@ export type Id = string;
  * step. Three of them move the wellbeing model through
  * `systems/personality.ts`: emotional stability sets how fast stress arrives
  * and clears, ambition adds to what running on empty costs, and
- * conscientiousness sets how well the nights go. Openness, extraversion,
- * agreeableness and risk tolerance are kept and read by nothing yet;
+ * conscientiousness sets how well the nights go. Risk tolerance sets whether
+ * the card's autopay clears the statement or carries a balance
+ * (`systems/credit.ts`); it was read by nothing until the card. Openness,
+ * extraversion and agreeableness are kept and read by nothing yet;
  * `tools/wired.mjs` counts them.
  */
 export interface Personality {

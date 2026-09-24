@@ -13,7 +13,8 @@
  *
  * There used to be a second passport here, for somebody naturalized where
  * they live now, and beside it a work-permit rule, which went first. Neither
- * decided anything by the end, so both went.
+ * decided anything by the end, so both went. The right to work came back with
+ * the day job (`mayWorkIn`), because now it decides whether there is one.
  */
 
 import { countryOfPlace } from '../content/geography';
@@ -57,4 +58,37 @@ export const TERRITORY_CITIZENSHIP: Readonly<Record<string, string>> = {
 export function citizenshipFor(birthplaceId: string): string | undefined {
   const listed = countryOfPlace(birthplaceId);
   return listed ? TERRITORY_CITIZENSHIP[listed] ?? listed : undefined;
+}
+
+/**
+ * Where citizens of one country may work in another without a visa: the
+ * European Economic Area and Switzerland, which share free movement of
+ * workers; the United Kingdom and Ireland, the Common Travel Area; and
+ * Australia and New Zealand, under the Trans-Tasman arrangement.
+ */
+const FREE_MOVEMENT: readonly (readonly string[])[] = [
+  ['at', 'be', 'bg', 'hr', 'cy', 'cz', 'dk', 'ee', 'fi', 'fr', 'de', 'gr', 'hu', 'ie', 'it', 'lv', 'lt', 'lu',
+    'mt', 'nl', 'pl', 'pt', 'ro', 'sk', 'si', 'es', 'se', 'is', 'li', 'no', 'ch'],
+  ['uk', 'ie'],
+  ['au', 'nz'],
+];
+
+/**
+ * Whether a citizen of a country may take ordinary work in a town, and the
+ * country the town's work is under.
+ *
+ * Their own country, a territory of it, or a country their citizenship moves
+ * freely to. Anywhere else takes a work visa, and the jobs actors fall back
+ * on, a café counter or a bar, don't get one. The work-permit rule this file
+ * once had went because nothing read it; the day job reads this
+ * (`systems/work.ts`), so a character from Reykjavík starting out in Los
+ * Angeles keeps no day job there.
+ */
+export function mayWorkIn(citizenshipId: string, cityId: string): { may: boolean; countryId?: string } {
+  const listed = countryOfPlace(cityId);
+  const countryId = listed ? TERRITORY_CITIZENSHIP[listed] ?? listed : undefined;
+  if (!countryId) return { may: false };
+  if (countryId === citizenshipId) return { may: true, countryId };
+  const may = FREE_MOVEMENT.some((bloc) => bloc.includes(citizenshipId) && bloc.includes(countryId));
+  return { may, countryId };
 }

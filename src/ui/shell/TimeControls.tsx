@@ -21,6 +21,8 @@ import {
 import { PLAN_KIND } from '@/engine/world/plans';
 import { SHIFT_KIND } from '@/engine/systems/work';
 import { lovedIn } from '@/engine/systems/enjoyment';
+import { mealOf } from '@/engine/systems/household';
+import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { INTEREST_BY_ID } from '@/engine/content/interests';
 import { spokenList } from '@/ui/looks/words';
 import type { ScheduledItem } from '@/engine/core/scheduler';
@@ -514,7 +516,7 @@ function LookAfterMenu() {
               >
                 <span className="menu-item-label">{label}</span>
                 <span className="menu-item-detail">
-                  {formatDuration(minutes * 60_000)} · {refused ?? does}
+                  {formatDuration(minutes * 60_000)}{action === 'eat' ? ` · ${formatMoney(mealOf(sim, sim.player), saveCurrency(sim.universe))}` : ''} · {refused ?? does}
                 </span>
                 {!refused && loved.length > 0 && (
                   <span className="menu-item-detail">You love {spokenList(loved)}, so it lifts you more.</span>

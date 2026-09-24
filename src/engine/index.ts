@@ -30,6 +30,7 @@ import { netWorth } from './systems/finance';
 import { registerLife } from './systems/life';
 import { registerPlans } from './world/plans';
 import { armWork, registerWork, startWork } from './systems/work';
+import { mayWorkIn } from './domain/citizenship';
 import { armHousehold, moveIn, registerHousehold } from './systems/household';
 import { armCredit, openCredit, registerCredit } from './systems/credit';
 import { registerWorld } from './world/world';
@@ -128,7 +129,8 @@ function populateWorld(sim: Simulation, config: NewSaveConfig): void {
   }
 
   armWorldClock(sim);
-  if (config.dayJob) startWork(sim, player);
+  // Only where they have the right to work (`mayWorkIn`).
+  if (config.dayJob && mayWorkIn(player.citizenshipId, player.currentLocationId).may) startWork(sim, player);
   moveIn(sim, player, config.housing);
   openCredit(sim, player, wealth.creditScore);
 }
@@ -540,7 +542,7 @@ export function migrate(universe: SaveUniverse): MigrationResult {
   // Without it such a save would be the one life with nothing coming in.
   if (from < 89) {
     const worker = universe.people?.[universe.playerId];
-    if (worker && !worker.job) {
+    if (worker && !worker.job && mayWorkIn(worker.citizenshipId, worker.currentLocationId).may) {
       worker.job = {
         jobId: worker.beforeActing ?? 'school', cityId: worker.currentLocationId, since: universe.now,
         unpaid: [], missed: [], rotaThrough: universe.now,
