@@ -111,7 +111,7 @@ export const DEFAULT_LEDGER_CURRENCY = 'EUR';
 
 export function formatMoney(cents: Money, currency: string, opts: { cents?: boolean } = {}): string {
   const info = currencyInfo(currency);
-  const showCents = info.decimals > 0 && (opts.cents ?? Math.abs(cents) < 100_000_00);
+  const showCents = opts.cents ?? Math.abs(cents) < 100_000_00;
   const digits = showCents ? info.decimals : 0;
   const number = (Math.abs(cents) / 100).toLocaleString('en-US', { minimumFractionDigits: digits, maximumFractionDigits: digits });
   const sign = cents < 0 ? '-' : '';
