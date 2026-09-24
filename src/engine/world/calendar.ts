@@ -12,7 +12,7 @@ import type { ScheduledItem } from '../core/scheduler';
 import type { Id } from '../domain/model';
 import {
   addDays, dateKey, daysInMonth, instantFromZoned, seasonOf,
-  startOfDay, zonedParts, type Instant, type Season, MS_DAY, MS_MINUTE,
+  startOfDay, startOfNextDay, zonedParts, type Instant, type Season, MS_DAY, MS_MINUTE,
 } from '../core/time';
 import { CITIES } from '../content/geography';
 
@@ -146,8 +146,14 @@ export function monthGrid(sim: Simulation, year: number, month: number): Calenda
   const total = Math.ceil((leading + daysInMonth(year, month)) / 7) * 7;
 
   const windowStart = startOfDay(gridStart, zone);
-  const windowEnd = addDays(windowStart, total, zone);
-  const entries = entriesBetween(sim, windowStart, windowEnd);
+  const windowEnd = startOfNextDay(addDays(gridStart, total - 1, zone), zone);
+  // A day either side, as the Day look reads, so a clash across the grid's
+  // first or last midnight is flagged in the cell it falls in. The window
+  // ended at the grid's last midnight, and a plan at half past eleven on the
+  // last day that ran into one at a quarter past twelve was flagged in no
+  // month's grid but April's in Beirut and the Azores, whose window ran an hour
+  // over because the grid began on the day their clocks skipped midnight.
+  const entries = entriesBetween(sim, windowStart - MS_DAY, windowEnd + MS_DAY);
   const todayKey = dateKey(sim.now, zone);
 
   const days: CalendarDay[] = [];
@@ -156,7 +162,10 @@ export function monthGrid(sim: Simulation, year: number, month: number): Calenda
     const parts = zonedParts(date, zone);
     const key = dateKey(date, zone);
     const dayStart = startOfDay(date, zone);
-    const dayEnd = dayStart + MS_DAY;
+    // Where the next date begins. Twenty-four hours on, a plan in the first
+    // hour after a 23-hour day sat in two cells, and one in the last hour of a
+    // 25-hour day in none.
+    const dayEnd = startOfNextDay(dayStart, zone);
 
     days.push({
       key,

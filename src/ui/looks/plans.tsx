@@ -13,7 +13,7 @@
  */
 
 import { CITIES, type City } from '@/engine/content/geography';
-import { MS_MINUTE, dateKey, formatDate, formatRelative, formatTime, startOfDay } from '@/engine/core/time';
+import { MS_MINUTE, dateKey, formatDate, formatRelative, formatTime, startOfDay, startOfNextDay } from '@/engine/core/time';
 import { entriesBetween, upcoming, type CalendarEntry } from '@/engine/world/calendar';
 import { PLAN_KIND } from '@/engine/world/plans';
 import { hoursOn, shootDayWeather, type HourWeather } from '@/engine/systems/weather';
@@ -59,12 +59,21 @@ interface Stretch {
   minutes: number;
 }
 
-/** Every whole hour the window touches, from the hour it starts in. */
+/**
+ * Every whole hour the window touches, from the hour it starts in.
+ *
+ * An hour runs until the next one on the clock begins, or until the day ends.
+ * On the day the clocks go back the hour they repeat is listed once and runs
+ * twice as long; taken as sixty minutes, a plan in its second run touched no
+ * hour at all, and its stretch said the hours were free again.
+ */
 function hoursAcross(sim: Simulation, entry: CalendarEntry, city: City | undefined): HourWeather[] {
   if (!city) return [];
   const from = startOfDay(entry.at, city.timeZone);
   const finish = endOf(entry);
-  return hoursOn(sim, city.id, from).filter((hour) => hour.at < finish && hour.at + 3_600_000 > entry.at);
+  const hours = hoursOn(sim, city.id, from);
+  const endOfHour = (i: number) => hours[i + 1]?.at ?? startOfNextDay(from, city.timeZone);
+  return hours.filter((hour, i) => hour.at < finish && endOfHour(i) > entry.at);
 }
 
 defineLook<Stretch>('stretch', {

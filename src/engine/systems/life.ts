@@ -14,7 +14,7 @@ import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { Person, Wellbeing } from '../domain/model';
 import { clamp, remap } from '../core/rng';
-import { formatTime, instantFromZoned, startOfNextDay, zonedParts, MS_HOUR, MS_DAY } from '../core/time';
+import { formatTime, instantFromZoned, startOfDay, startOfNextDay, zonedParts, MS_HOUR, MS_DAY } from '../core/time';
 import { ceilingAt, recoveryFactorAt } from '../content/lifespan';
 import { personalityOf } from './personality';
 
@@ -330,7 +330,17 @@ function nightParts(sim: Simulation, person: Person, at = sim.now): {
   // anywhere gains it back.
   const depth = personalityOf(person, 'sleepQuality');
   const hour = zonedParts(at, sim.zone).hour;
-  const late = hour >= 1 && hour < 5 ? 0.08 : 0; // going to bed very late
+  // Going to bed very late: from one to five by the clock, and an hour or more
+  // after the day began. A day whose clocks skipped midnight begins at one, and
+  // its first hour is the first hour after midnight. On every other day the
+  // clock reads one only once an hour has gone, so the second half changes
+  // nothing there. In Havana, Santiago, the Azores, Beirut and Cairo the night
+  // nobody chose into the day of the jump starts at that day's first instant,
+  // and was read as a bedtime at one, 0.08 poorer. On autopilot, from a save
+  // begun three days before, that cost 0.52 condition and 0.93 morale, which
+  // took 21 and 24 days to come back; on a save already at its ceilings, 0.18
+  // to 0.44 condition for one to six mornings.
+  const late = hour >= 1 && hour < 5 && at - startOfDay(at, sim.zone) >= MS_HOUR ? 0.08 : 0;
   return { stressLoss, depth, late, quality: clamp((0.82 - stressLoss) * depth - late, 0.28, 1) };
 }
 

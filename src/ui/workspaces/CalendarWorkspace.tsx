@@ -8,7 +8,7 @@ import { formatDate, formatDuration, formatTime, startOfDay, zonedParts, MS_DAY,
 import { LONGEST_TITLE, PLAN_KIND, PLAN_LENGTHS, type PlanResult } from '@/engine/world/plans';
 import { CITIES } from '@/engine/content/geography';
 import { holidayLabel, isHolidaysLoaded, loadCountryHolidays } from '@/engine/content/holidays';
-import { dayLabel, hiddenIn, holidayChips, roomFor, standingIn, stillStands } from './cell';
+import { canPlan, dayLabel, firstFreeSlot, hiddenIn, holidayChips, openSlots, roomFor, standingIn, stillStands } from './cell';
 
 const WEEKDAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
@@ -145,7 +145,7 @@ export function CalendarWorkspace() {
           flush
           actions={(
             <>
-              {canPlan(selectedDay, sim.now) && (
+              {canPlan(selectedDay, sim.now, sim.homeZone) && (
                 <button className="btn btn-sm btn-primary" onClick={() => setPlanning(selectedDay.key)}>
                   Put Something On It
                 </button>
@@ -157,7 +157,7 @@ export function CalendarWorkspace() {
           {selectedDay.entries.length === 0 ? (
             <Empty
               title="No Plans"
-              body={canPlan(selectedDay, sim.now)
+              body={canPlan(selectedDay, sim.now, sim.homeZone)
                 ? 'That day is entirely yours. Put something on it if you want it spoken for.'
                 : 'That day was entirely yours.'}
             />
@@ -227,11 +227,6 @@ export function CalendarWorkspace() {
       )}
     </>
   );
-}
-
-/** Whether a day is still ahead enough to put something on. */
-function canPlan(day: CalendarDay, now: number): boolean {
-  return day.date + MS_DAY > now;
 }
 
 /**
@@ -321,23 +316,6 @@ function PlanForm({ day, onClose, onDone }: { day: CalendarDay; onClose: () => v
       {error && <p className="small negative" style={{ marginTop: 'var(--s3)' }}>{error}</p>}
     </Modal>
   );
-}
-
-/** Every half hour of a day that has not already gone by. */
-function openSlots(day: CalendarDay, now: number, zone: string): number[] {
-  const midnight = startOfDay(day.date, zone);
-  const out: number[] = [];
-  for (let minute = 0; minute < 24 * 60; minute += 30) {
-    if (midnight + minute * MS_MINUTE >= now) out.push(minute);
-  }
-  return out;
-}
-
-/** Where the picker opens: the next half hour still ahead, or nine in the morning. */
-function firstFreeSlot(day: CalendarDay, now: number, zone: string): number {
-  const slots = openSlots(day, now, zone);
-  const nine = slots.find((m) => m >= 9 * 60);
-  return nine ?? slots[0] ?? 0;
 }
 
 /** An entry's own state, in the word the screen shows. */

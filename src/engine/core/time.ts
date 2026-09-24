@@ -222,6 +222,24 @@ export function startOfNextDay(instant: Instant, zone: TimeZone): Instant {
   }
 }
 
+/**
+ * Noon on the calendar date `days` after the one `instant` falls on.
+ *
+ * For stepping by date where only the date matters. `addDays` keeps the time
+ * of day, and where that time falls in a gap at the end of a date it lands on
+ * the next date: Nuuk's 28 March 2026 has no hour from eleven, so a day on from
+ * half past eleven the evening before was the 29th. Noon is in every date a
+ * zone keeps.
+ */
+export function noonOf(instant: Instant, days: number, zone: TimeZone): Instant {
+  const p = zonedParts(instant, zone);
+  const date = new Date(Date.UTC(p.year, p.month - 1, p.day + days));
+  return instantFromZoned(
+    { year: date.getUTCFullYear(), month: date.getUTCMonth() + 1, day: date.getUTCDate(), hour: 12 },
+    zone,
+  );
+}
+
 /** The last representable millisecond of the local day containing `instant`. */
 export function endOfDay(instant: Instant, zone: TimeZone): Instant {
   return startOfNextDay(instant, zone) - 1;

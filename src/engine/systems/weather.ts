@@ -14,7 +14,10 @@
  */
 
 import type { Simulation } from '../core/simulation';
-import { MS_DAY, MS_HOUR, startOfDay, zonedParts, type Instant } from '../core/time';
+import {
+  instantFromZoned, noonOf, startOfDay, zoneOffsetMs, zonedParts, MS_DAY, MS_HOUR, MS_MINUTE, MS_SECOND,
+  type Instant,
+} from '../core/time';
 import { sunTimes } from '../core/sun';
 import { CITIES, type City } from '../content/geography';
 import { CLIMATE_NAMES, normalFor, toFahrenheit, usesFahrenheit, type ClimateType } from '../content/climate';
@@ -227,7 +230,15 @@ function wetSpell(sim: Simulation, cityId: string, day: number): { from: number;
  *
  * Asking at half past seven gives half past seven's hour first and runs to
  * the end of the local day, which is what "the rest of today" means. Asking
- * from the start of a day gives all twenty-four.
+ * from the start of a day gives every hour its clock reads, once: twenty-three
+ * on the day the clocks go forward, from one where they skip midnight, and
+ * twenty-four on the day they go back, where the hour they repeat is given
+ * once, at its first run, and runs until the next hour listed.
+ *
+ * Each hour is put at its own reading on the clock. They were counted from the
+ * start of the day, so on the day the clocks went forward every hour after the
+ * jump was an hour past its label (a plan from ten to eleven showed the sky at
+ * nine), and on the day they went back every hour after it an hour short.
  */
 export function hoursOn(sim: Simulation, cityId: string, from: Instant, limit = 24): HourWeather[] {
   const city = CITIES.get(cityId);
@@ -235,13 +246,30 @@ export function hoursOn(sim: Simulation, cityId: string, from: Instant, limit = 
   const zone = city.timeZone;
   const day = weatherOn(sim, city, from);
   const parts = zonedParts(from, zone);
-  const midnight = startOfDay(from, zone);
   const spell = wetSpell(sim, city.id, dayIndex(from, zone));
   const sun = sunTimes(from, city.latitude, city.longitude, zone);
+  // The start of the hour `from` is in, read off its own clock, so the hour
+  // that comes twice on the day the clocks go back is the run being asked
+  // about. Where the clocks change inside the hour, as Chatham's do at a
+  // quarter to, going back by the minutes on the clock crosses the change and
+  // reads another hour; the hour then starts where the clock first reads it
+  // again. Without that, the rest of the day asked at ten to four on the day
+  // Chatham's clocks went forward began at four.
+  let thisHour = from - parts.minute * MS_MINUTE - parts.second * MS_SECOND - (((from % MS_SECOND) + MS_SECOND) % MS_SECOND);
+  while (thisHour < from && zonedParts(thisHour, zone).hour !== parts.hour) thisHour += MS_MINUTE;
 
   const out: HourWeather[] = [];
+  let before = -Infinity;
   for (let hour = parts.hour; hour < 24 && out.length < limit; hour++) {
-    const at = midnight + hour * MS_HOUR;
+    let at = hour === parts.hour
+      ? thisHour
+      : instantFromZoned({ year: parts.year, month: parts.month, day: parts.day, hour }, zone);
+    // An hour the clocks skipped isn't in the day.
+    if (zonedParts(at, zone).hour !== hour) continue;
+    // Asked from the second run of a repeated hour, the next hour on the clock
+    // can come round twice as well, and the one wanted is the later.
+    if (at <= before) at += zoneOffsetMs(at, zone) - zoneOffsetMs(before, zone);
+    before = at;
     const wet = day.precipitation !== 'none' && hour >= spell.from && hour < spell.to;
     const lit = sun.polar === 'day' ? true
       : sun.polar === 'night' ? false
@@ -306,12 +334,19 @@ export function weatherAt(sim: Simulation, cityId: string, instant: Instant = si
   };
 }
 
-/** The days ahead, today first. */
+/**
+ * The days ahead, today first.
+ *
+ * A calendar date at a time, at noon. It stepped twenty-four hours at a time:
+ * asked at eleven or later any evening in the week before a 23-hour day, it
+ * stepped clean over that day, and asked before one in the morning in the
+ * week up to a 25-hour day, it gave that day twice and lost the week's last.
+ */
 export function forecastFor(sim: Simulation, cityId: string, days = 7, from: Instant = sim.now): DayWeather[] {
   const city = CITIES.get(cityId);
   if (!city) return [];
   const out: DayWeather[] = [];
-  for (let i = 0; i < days; i++) out.push(weatherOn(sim, city, from + i * MS_DAY));
+  for (let i = 0; i < days; i++) out.push(weatherOn(sim, city, noonOf(from, i, city.timeZone)));
   return out;
 }
 
