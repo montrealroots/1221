@@ -211,6 +211,7 @@ npm test
 | `realclock` | Live time: an hour of world time for an hour of real time, to the millisecond, whatever the ticks, a night away or a backlog. |
 | `text` | Title Case as the game writes labels. |
 | `persistence` | Saves on this device: packed, a save from before packing still loads, a save that won't read, deleting a slot, and opening one. |
+| `looking-after` | Eat, shower, work out and unwind: each spends its own time, moves its dials by what was needed, keeps fitness under its age, shows on condition only on a worn-down body, and refuses what it can't do, a clash with a plan included, without touching the save. |
 | `day-bounds` | A day is a date on the calendar, not 24 hours: the night into a day whose clocks skip midnight, the Day look, the month grid, the plan form, the hours of the weather and the week ahead, on 23- and 25-hour days. |
 | `base44-contract` | The four server functions executed against an in-memory stand-in for the SDK: every guard, ordering rule and error path. |
 | `interface`, `navigation`, `cohesion` | The interface is text, every door opens onto something, and the screens agree with the engine. |

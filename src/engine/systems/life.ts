@@ -3,11 +3,13 @@
  *
  * What is left of daily life. The activities, the meals, the kitchen and the
  * people you did them with are gone; the part Home still reads is here — how
- * a character is, how the passage of time changes it, and the one interaction
- * that still moves the clock on purpose.
+ * a character is, how the passage of time changes it, and what a player does
+ * about it. Sleep was for a while the one interaction left that moved the
+ * clock on purpose; eating, showering, working out and unwinding joined it.
  *
- * A day in SLATE is still a budget of hours. Sleeping is a real interaction
- * that advances the world, and time that passes unattended costs something.
+ * A day in SLATE is still a budget of hours. Each of these is a real
+ * interaction that advances the world, and time that passes unattended costs
+ * something.
  */
 
 import type { Simulation } from '../core/simulation';
@@ -296,6 +298,119 @@ export function registerLife(sim: Simulation): void {
       return { wokeAt: s.now, quality, recovered };
     },
   );
+
+  // --- Looking after yourself ---------------------------------------------
+
+  sim.onCommand<{ action: LookAfter }, { doneAt: number; changed: Partial<Wellbeing> }>(
+    'life.look_after',
+    (p, { sim: s }) => {
+      const action = LOOKING_AFTER[p.action] ? p.action : undefined;
+      if (!action) throw new CommandError('That isn’t something you can do for yourself here.');
+      const refused = lookAfterRefusal(s, action);
+      if (refused) throw new CommandError(refused);
+
+      // The hour is lived first, and charged as waking like any other, so
+      // what it does is on top of what the hour already cost.
+      s.advanceTo(s.now + LOOKING_AFTER[action].minutes * 60_000);
+      const person = s.player;
+      const before = { ...person.wellbeing };
+      applyLookingAfter(person, action, s.now);
+      const changed: Partial<Wellbeing> = {};
+      for (const key of Object.keys(before) as (keyof Wellbeing)[]) {
+        const moved = (person.wellbeing[key] ?? 0) - (before[key] ?? 0);
+        if (moved !== 0) changed[key] = moved;
+      }
+      return { doneAt: s.now, changed };
+    },
+  );
+}
+
+// ---------------------------------------------------------------------------
+// Looking after yourself
+// ---------------------------------------------------------------------------
+
+/**
+ * The four things a player can do for their own body and mind besides sleep.
+ *
+ * Until these, sleep was the only one. Meals and a shower came from the
+ * morning top-ups and nothing else, stress came down only with the hours, and
+ * fitness had no writer at all, so it fell 0.18 a day from the first morning
+ * to the last. The top-ups stay as the floor a coasted day gets; these are
+ * how a player does better than coasting, which is what the top-ups' own
+ * comment always said a player should be able to do.
+ *
+ * Each takes real time off the clock, and the clock charges that time as
+ * waking before the action pays out.
+ */
+export type LookAfter = 'eat' | 'wash' | 'exercise' | 'unwind';
+
+export const LOOKING_AFTER: Record<LookAfter, { label: string; minutes: number; does: string }> = {
+  eat: { label: 'Eat A Meal', minutes: 40, does: 'Feeds you, and lifts the mood by as much as you needed it' },
+  wash: { label: 'Shower', minutes: 20, does: 'Clean again, and calmer by as much as you needed it' },
+  exercise: { label: 'Work Out', minutes: 60, does: 'Builds fitness and eases stress; costs energy, food and a shower' },
+  unwind: { label: 'Unwind', minutes: 60, does: 'Takes the edge off stress and lifts the mood' },
+};
+
+/** What a meal puts back, and what a workout costs and builds. */
+const MEAL = 50;
+const WORKOUT_FITNESS = 0.6;
+const WORKOUT_ENERGY = 10;
+/** Too full to eat, too clean to shower, and too spent to train. */
+const FULL = 90;
+const CLEAN = 95;
+const SPENT = 25;
+
+/**
+ * Why the player can't do it now, in the world's words, or nothing if they can.
+ *
+ * The menu and the command both ask this, so the menu never offers what the
+ * command refuses. Something that needs the player inside the window refuses
+ * it outright: sleep may run over a commitment because a night is a choice
+ * worth warning about, but twenty minutes in the shower that makes you miss a
+ * call is only a mistake.
+ */
+export function lookAfterRefusal(sim: Simulation, action: LookAfter): string | undefined {
+  const w = sim.player.wellbeing;
+  if (action === 'eat' && w.nourishment >= FULL) return 'You aren’t hungry.';
+  if (action === 'wash' && (w.hygiene ?? 80) >= CLEAN) return 'You’re already clean.';
+  if (action === 'exercise' && w.energy < SPENT) return 'You’re too tired to train. Sleep first.';
+  const end = sim.now + LOOKING_AFTER[action].minutes * 60_000;
+  const clash = sim.timeline.between(sim.now, end).find((i) => i.requiresPlayer === true);
+  if (clash) return `${clash.label} is at ${formatTime(clash.at, sim.zone)}, and there isn’t time.`;
+  return undefined;
+}
+
+/**
+ * What each one does to the dials, once its time has been lived.
+ *
+ * A meal and a shower help the mood by what they put back, so a meal you
+ * needed lifts it and a snack on a full stomach barely does. A workout raises
+ * fitness no higher than a body that age can reach, and costs what an hour of
+ * training costs: energy, food and a shower's worth of sweat.
+ */
+export function applyLookingAfter(person: Person, action: LookAfter, at?: number): void {
+  const w = person.wellbeing;
+  const swing = personalityOf(person, 'moraleSwing');
+  if (action === 'eat') {
+    const eaten = Math.min(MEAL, 100 - w.nourishment);
+    w.nourishment = clamp(w.nourishment + eaten, 0, 100);
+    w.morale = clamp(w.morale + eaten * 0.04 * swing, 0, 100);
+  } else if (action === 'wash') {
+    const washed = 100 - (w.hygiene ?? 80);
+    w.hygiene = 100;
+    w.stress = clamp(w.stress - washed * 0.1, 0, 100);
+  } else if (action === 'exercise') {
+    const ceiling = at === undefined ? 100 : ceilingAt(yearsSince(person.birthInstant, at)).fitness;
+    if (w.fitness < ceiling) w.fitness = Math.min(w.fitness + WORKOUT_FITNESS, ceiling);
+    w.energy = clamp(w.energy - WORKOUT_ENERGY, 0, 100);
+    w.nourishment = clamp(w.nourishment - 6, 0, 100);
+    w.hygiene = clamp((w.hygiene ?? 80) - 20 * personalityOf(person, 'hygieneDrift'), 0, 100);
+    w.stress = clamp(w.stress - 8 * personalityOf(person, 'stressRecovery'), 0, 100);
+    w.morale = clamp(w.morale + 3 * swing, 0, 100);
+  } else {
+    w.stress = clamp(w.stress - 10 * personalityOf(person, 'stressRecovery'), 0, 100);
+    w.morale = clamp(w.morale + 3 * swing, 0, 100);
+  }
 }
 
 // ---------------------------------------------------------------------------
@@ -425,9 +540,10 @@ export function dailyRollover(sim: Simulation): void {
   // with perfect habits is a very fit seventy year old rather than
   // indistinguishable from a very fit twenty five year old.
   //
-  // Fitness has no writer that raises it, and a writer for it would change a
-  // dial rather than an outcome until something downstream of condition
-  // decides something: `readiness` does not read condition.
+  // Fitness had no writer that raised it until Work Out
+  // (`applyLookingAfter`), which raises it 0.6 an hour against the 0.18 a day
+  // it loses. It moves condition's target and so condition, and that is still
+  // a dial rather than an outcome: `readiness` does not read condition.
   for (const person of Object.values(sim.universe.people)) {
     const w = person.wellbeing;
     const ceiling = ceilingAt(yearsSince(person.birthInstant, sim.now));

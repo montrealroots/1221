@@ -58,7 +58,17 @@ part the tool cannot see.
   one reader, in the audition room, and the room is gone. So the dials feed each
   other and a figure on a screen, and no outcome anywhere turns on them. The
   personality now moves the dials too, which makes it bite on them and on the
-  sleep the game suggests, and on nothing past that.
+  sleep the game suggests, and on nothing past that. Eating, a shower, a
+  workout and an hour unwinding (`life.look_after`) joined sleep as things a
+  player does to the dials, and they reach readiness the same way and no
+  further.
+- **Fitness moves condition only on a body the nights are wearing down.**
+  Work Out gave fitness its first writer, and fitness sets where condition
+  drifts to. But a rested night pushes condition to its age's ceiling far
+  faster than that drift, so on six- or eight-hour nights eight weeks of
+  workouts left condition exactly where it was; on five-hour nights it ended
+  1.75 higher. And `readiness` does not read condition, so even there it is
+  a dial moving a dial.
 - **Four of the seven dispositions are kept and read by nothing.** Openness
   waits on travel, and extraversion, agreeableness and risk tolerance on other
   people. The Dispositions & Traits step says so beside the sliders, and

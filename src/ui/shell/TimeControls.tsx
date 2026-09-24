@@ -9,7 +9,9 @@ import { titleCaseLabel } from '@/engine/core/text';
 import { useEffect, useRef, useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { Modal } from '@/ui/components/primitives';
-import { suggestedSleep, hoursUntilNextCommitment, sleepStandsForTheNight } from '@/engine/systems/life';
+import {
+  suggestedSleep, hoursUntilNextCommitment, sleepStandsForTheNight, LOOKING_AFTER, lookAfterRefusal, type LookAfter,
+} from '@/engine/systems/life';
 import { missedBy, skipTargets } from '@/engine/world/calendar';
 import type { CalendarEntry } from '@/engine/world/calendar';
 import {
@@ -57,6 +59,7 @@ export function TimeControls() {
           {speed === 'paused' ? 'Play' : 'Pause'}
         </button>
         <button className="btn btn-sm" onClick={() => setSleepOpen(true)}>Sleep</button>
+        <LookAfterMenu />
         <AdvanceMenu
           onAdvance={(at, label) => {
             const missed = missedBy(sim, at);
@@ -360,22 +363,7 @@ function AdvanceMenu({
 }) {
   const { sim } = useGame();
   const nextEvent = useWorld((s) => skipTargets(s, 1)[0]);
-  const [open, setOpen] = useState(false);
-  const anchor = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    if (!open) return;
-    const away = (event: MouseEvent) => {
-      if (anchor.current && !anchor.current.contains(event.target as Node)) setOpen(false);
-    };
-    const escape = (event: KeyboardEvent) => { if (event.key === 'Escape') setOpen(false); };
-    document.addEventListener('mousedown', away);
-    document.addEventListener('keydown', escape);
-    return () => {
-      document.removeEventListener('mousedown', away);
-      document.removeEventListener('keydown', escape);
-    };
-  }, [open]);
+  const { open, setOpen, anchor } = useDropdown();
 
   const zone = sim.zone;
   const now = sim.now;
@@ -432,6 +420,90 @@ function AdvanceMenu({
               <span className="menu-item-detail">{item.detail}</span>
             </button>
           ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+/** A menu that closes on a click outside it or on Escape. */
+function useDropdown() {
+  const [open, setOpen] = useState(false);
+  const anchor = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (!open) return;
+    const away = (event: MouseEvent) => {
+      if (anchor.current && !anchor.current.contains(event.target as Node)) setOpen(false);
+    };
+    const escape = (event: KeyboardEvent) => { if (event.key === 'Escape') setOpen(false); };
+    document.addEventListener('mousedown', away);
+    document.addEventListener('keydown', escape);
+    return () => {
+      document.removeEventListener('mousedown', away);
+      document.removeEventListener('keydown', escape);
+    };
+  }, [open]);
+
+  return { open, setOpen, anchor };
+}
+
+/**
+ * Look after yourself: the things besides sleep a player does for their body.
+ *
+ * Each item says how long it takes and what it does, or, when the engine
+ * would refuse it, why, and is greyed out. The menu asks the same question
+ * the command does (`lookAfterRefusal`), so it never offers what the command
+ * turns down.
+ */
+function LookAfterMenu() {
+  const { sim, run, toast } = useGame();
+  const { open, setOpen, anchor } = useDropdown();
+  // Asked again whenever the world changes, so a meal eaten or a clock moved since counts.
+  const refusals = useWorld((s) => Object.fromEntries(
+    (Object.keys(LOOKING_AFTER) as LookAfter[]).map((action) => [action, lookAfterRefusal(s, action)]),
+  ) as Record<LookAfter, string | undefined>);
+
+  const act = (action: LookAfter) => {
+    setOpen(false);
+    const result = run<{ doneAt: number }>('life.look_after', { action });
+    if (result.ok && result.value) {
+      toast(`${LOOKING_AFTER[action].label}: done at ${formatTime(result.value.doneAt, sim.zone)}.`, 'positive');
+    }
+  };
+
+  return (
+    <div className="menu-anchor" ref={anchor}>
+      <button
+        type="button"
+        className="btn btn-sm"
+        aria-haspopup="menu"
+        aria-expanded={open}
+        onClick={() => setOpen((o) => !o)}
+      >
+        Look After Yourself ▾
+      </button>
+      {open && (
+        <div className="menu" role="menu" aria-label="Look After Yourself">
+          {(Object.keys(LOOKING_AFTER) as LookAfter[]).map((action) => {
+            const { label, minutes, does } = LOOKING_AFTER[action];
+            const refused = refusals[action];
+            return (
+              <button
+                key={action}
+                type="button"
+                role="menuitem"
+                className="menu-item"
+                disabled={refused !== undefined}
+                onClick={() => act(action)}
+              >
+                <span className="menu-item-label">{label}</span>
+                <span className="menu-item-detail">
+                  {formatDuration(minutes * 60_000)} · {refused ?? does}
+                </span>
+              </button>
+            );
+          })}
         </div>
       )}
     </div>
