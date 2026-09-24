@@ -81,9 +81,6 @@ part the tool cannot see.
   people owe you, and there are no other people. The other three money traits
   declared no knob while nothing spent; since the household they move what
   food costs (`spending`).
-- **Nobody is evicted.** Rent nobody can pay is owed to the landlord and paid
-  back out of the first money that comes in, and the owing weighs on the
-  character every day. What a landlord does next is not modeled.
 - **Rent is published in nineteen places, and estimated everywhere else.**
   The atlas put a one-bedroom in Mosfellsbær at $3,424 a month, about what it
   says for New York, because its formula stacks Iceland's price level on a
@@ -93,9 +90,6 @@ part the tool cannot see.
   none keeps the atlas's estimate, and the screen says which a town has.
   Food and bills are SLATE's estimates everywhere. The legal floors under
   wages are real and sourced (`content/wages.ts`).
-- **The gazetteer files the curated Tokyo under region jp-40**, which is
-  Fukuoka's code. Nothing read Tokyo's region until the minimum wage, which
-  keys Tokyo's rate to the town as well as to its prefecture.
 - **Most of what a trait's cost says is said back, not charged.** Each is
   written for a whole life, and the game charges only the part its knobs
   reach: stress, sleep, the energy a night puts back, hygiene and mood. Early

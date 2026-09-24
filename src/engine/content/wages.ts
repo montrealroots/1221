@@ -103,13 +103,13 @@ export const MINIMUM_WAGES: readonly MinimumWage[] = [
   w('CA-BC', 17.85, 'CAD', D(2025, 6, 1), 'https://news.gov.bc.ca/releases/2026LBR0021-000581', { to: D(2026, 6, 1) }),
   w('CA-BC', 18.25, 'CAD', D(2026, 6, 1), 'https://news.gov.bc.ca/releases/2026LBR0021-000581'),
 
-  // --- Tokyo, by the prefecture and by the town ---------------------------
-  // The gazetteer files the curated Tokyo under region jp-40, which is
-  // Fukuoka's code, so Tokyo's own rate is keyed to the town as well.
-  ...(['JP-13', 'jp-13-tokyo'] as const).flatMap((where) => [
-    w(where, 1226, 'JPY', D(2025, 10, 3), 'https://jsite.mhlw.go.jp/tokyo-hellowork/list/kiba/minimum-wage-information_2026.html', { to: D(2026, 10, 1) }),
-    w(where, 1280, 'JPY', D(2026, 10, 1), 'https://jsite.mhlw.go.jp/tokyo-hellowork/list/kiba/minimum-wage-information_2026.html'),
-  ]),
+  // --- Tokyo prefecture ----------------------------------------------------
+  // The gazetteer numbers Japan's prefectures as GeoNames does, in the order
+  // of their names, and Tokyo is 40 there. This was keyed to JP-13, Tokyo's
+  // ISO number, which in the gazetteer is Hyōgo: Hyōgo's towns were paid
+  // Tokyo's rate and Tokyo's got it only through a key on the one town.
+  w('JP-40', 1226, 'JPY', D(2025, 10, 3), 'https://jsite.mhlw.go.jp/tokyo-hellowork/list/kiba/minimum-wage-information_2026.html', { to: D(2026, 10, 1) }),
+  w('JP-40', 1280, 'JPY', D(2026, 10, 1), 'https://jsite.mhlw.go.jp/tokyo-hellowork/list/kiba/minimum-wage-information_2026.html'),
 ];
 
 export interface WageFloor {

@@ -24,6 +24,8 @@ import {
 } from '@/engine/core/time';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { scoreIsANumberIn, scoreWord } from '@/engine/systems/credit';
+import { HOUSING, SOFA, moveCost, rentOf } from '@/engine/systems/household';
+import { jobFor, patternHours, patternOf, workDaysWords } from '@/engine/content/jobs';
 import { LookRegion, Open, at } from '@/ui/looks';
 
 export function Home() {
@@ -441,8 +443,70 @@ export function Home() {
             <CardControls cur={cur} />
           </LookRegion>
         </Panel>
+        <Panel title="Work And Home" tight>
+          <WorkAndHome cur={cur} />
+        </Panel>
       </div>
     </>
+  );
+}
+
+/**
+ * The job and the home, run by hand: the week the job is worked and a switch
+ * between part-time and full-time (`work.set_hours`), an extra shift
+ * (`work.extra_shift`), and where they live, what it costs, any notice
+ * standing, and moving (`home.move`), with what moving takes from checking.
+ */
+function WorkAndHome({ cur }: { cur: string }) {
+  const { sim, run } = useGame();
+  const job = useWorld((s) => s.player.job);
+  const home = useWorld((s) => s.player.home);
+  const rent = useWorld((s) => rentOf(s, s.player));
+  const costs = useWorld((s) => ({ shared: moveCost(s, s.player, 'shared'), own: moveCost(s, s.player, 'own') }));
+  const money = (cents: number) => formatMoney(cents, cur, { cents: false });
+  const title = job ? jobFor(job.jobId).title : undefined;
+  const week = job ? patternOf(jobFor(job.jobId), job.fullTime) : undefined;
+  const homeLabel = home ? (home.kind === 'sofa' ? SOFA.label : HOUSING[home.kind].label) : 'Nowhere';
+  return (
+    <div className="col gap-3">
+      {job && title && week ? (
+        <>
+          <Stat
+            label={job.lookingUntil !== undefined ? 'Between Jobs' : title}
+            value={job.lookingUntil !== undefined ? `Until ${formatDate(job.lookingUntil, sim.zone)}` : `${patternHours(week)} Hours A Week`}
+            note={job.lookingUntil !== undefined ? 'Looking for the same kind of work' : `${job.fullTime ? 'Full-time' : 'Part-time'}: ${workDaysWords({ ...jobFor(job.jobId), days: week.days })}, from ${week.startHour}:00`}
+          />
+          {job.lookingUntil === undefined && (
+            <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
+              <button className="btn btn-sm" onClick={() => run('work.extra_shift', {})}>Ask For An Extra Shift</button>
+              <button className="btn btn-sm btn-ghost" onClick={() => run('work.set_hours', { fullTime: !job.fullTime })}>
+                {job.fullTime ? 'Go Part-Time' : 'Go Full-Time'}
+              </button>
+            </div>
+          )}
+        </>
+      ) : (
+        <Stat label="Work" value="No Day Job" note="Living on what you started with" />
+      )}
+      <Stat label="Where You Sleep" value={homeLabel} note={home?.kind === 'sofa' ? SOFA.note : `${money(rent)} a month, due on the first`} />
+      {home?.noticeUntil !== undefined && (
+        <div className="callout callout-warning small">
+          A notice to pay or quit runs until {formatDate(home.noticeUntil, sim.zone)}. Get what you owe under a month’s rent by then.
+        </div>
+      )}
+      <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
+        {home?.kind !== 'shared' && (
+          <button className="btn btn-sm btn-ghost" onClick={() => run('home.move', { kind: 'shared' })}>
+            Move Into A Room ({money(costs.shared)})
+          </button>
+        )}
+        {home?.kind !== 'own' && (
+          <button className="btn btn-sm btn-ghost" onClick={() => run('home.move', { kind: 'own' })}>
+            Get A Place Of Your Own ({money(costs.own)})
+          </button>
+        )}
+      </div>
+    </div>
   );
 }
 

@@ -15,12 +15,21 @@
  *
  * Money comes out of checking first, then the card while it has room. What
  * neither can cover: the rent and bills are owed to the landlord, and paid
- * off the first day there is money to pay them; the day's food is simply not
- * bought, and the meals it was for are not eaten, which the body feels.
+ * off the first day there is money to pay them; the day's food isn't bought,
+ * and the day is eaten thin (`eatWhatThereIs` in `systems/life.ts`).
  * Owing, or a card at its limit, weighs on somebody every day it lasts.
  *
- * Nobody is evicted. That is the next thing a landlord does, and it is not
- * modeled.
+ * Owing two months' rent brings a notice to pay or quit: thirty days to get
+ * it under a month's. Still over it then, and they're evicted: the deposit
+ * goes to the landlord against what's owed, the record takes it, and they
+ * sleep on a friend's sofa, which costs no rent and sleeps badly, until they
+ * can pay a deposit and a first month somewhere. Nobody was evicted until
+ * this; owing only weighed on them, however long it ran.
+ *
+ * Moving costs what it costs a real tenant: a deposit, a month's rent or two
+ * where the record is poor (the landlord's credit check), and the rest of
+ * this month's rent, all from checking, since a landlord doesn't take a card.
+ * The old deposit comes back, less anything still owed.
  */
 
 import type { Simulation } from '../core/simulation';
@@ -34,18 +43,26 @@ import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { instantFromZoned, zonedParts, type Instant } from '../core/time';
 import { clamp } from '../core/rng';
 import { personalityOf } from './personality';
+import { CommandError } from '../core/simulation';
 
 export const RENT_KIND = 'home.rent';
 
 export type Housing = 'shared' | 'own';
+/** Where somebody sleeps: a home they rent, or a friend's sofa after an eviction. */
+export type HomeKind = Housing | 'sofa';
 
 export interface HomeState {
-  kind: Housing;
+  kind: HomeKind;
   cityId: string;
   since: Instant;
   /** The start of the last day whose food was bought. */
   fedOn?: Instant;
+  /** The end of a notice to pay or quit, while one stands. */
+  noticeUntil?: Instant;
 }
+
+/** What a friend's sofa is, for the screens. */
+export const SOFA = { label: 'A Friend’s Sofa', note: 'No rent, and no bed of your own. Nights on it sleep badly.' };
 
 export const HOUSING: Readonly<Record<Housing, { label: string; billsUsd: number; note: string }>> = {
   shared: {
@@ -62,10 +79,17 @@ export const HOUSING: Readonly<Record<Housing, { label: string; billsUsd: number
 const DAY_OF_FOOD_USD = 8;
 const MEAL_USD = 4;
 
-/** The day's cost of owing, or of a card at its limit. */
+/** The day's cost of owing, or of a card at its limit, and of having no home. */
 const WORRY_STRESS = 4;
 const WORRY_MORALE = 2;
 const CARD_FULL = 0.9;
+const HOMELESS_STRESS = 2;
+/** Owing this many months' rent brings a notice, and the notice runs this long. */
+const NOTICE_AT_MONTHS = 2;
+const NOTICE_DAYS = 30;
+/** Where the landlord's credit check asks for two months' deposit rather than one. */
+const POOR_RECORD = 620;
+const EVICTION_ON_RECORD = 60;
 
 /** An amount the atlas prices in US dollars at a town's cost of living, in a currency, to the whole unit. */
 function atTown(cityId: string, usd: number, currency: string): Money {
@@ -87,16 +111,16 @@ export interface LivingCosts {
 }
 
 /** What a home of a kind costs in a town at a date, in a currency: the one sum the game and the screens both read. */
-export function costsAt(cityId: string, kind: Housing, currency: string, at: Instant): LivingCosts {
+export function costsAt(cityId: string, kind: HomeKind, currency: string, at: Instant): LivingCosts {
   const city = CITIES.get(cityId);
   const rentFigure = rentAt(cityId, currency);
   if (!city) return { rent: 0, rentFigure, bills: 0, day: 0, meal: 0 };
-  const rent = Math.round((kind === 'own' ? rentFigure.oneBed : rentFigure.room) / 100) * 100;
+  const rent = kind === 'sofa' ? 0 : Math.round((kind === 'own' ? rentFigure.oneBed : rentFigure.room) / 100) * 100;
   const tax = 1 + salesTaxRate(cityId, at, 'groceries');
   return {
     rent,
     rentFigure,
-    bills: atTown(cityId, HOUSING[kind].billsUsd, currency),
+    bills: kind === 'sofa' ? 0 : atTown(cityId, HOUSING[kind].billsUsd, currency),
     day: Math.round(atTown(cityId, DAY_OF_FOOD_USD, currency) * tax),
     meal: Math.round(atTown(cityId, MEAL_USD, currency) * tax),
   };
@@ -225,6 +249,131 @@ function settleArrears(sim: Simulation, person: Person): void {
   });
 }
 
+function depositAccount(sim: Simulation, person: Person): Account | undefined {
+  return accountsOf(sim, person).find((a) => a.kind === 'escrow' && a.category === 'deposit');
+}
+
+/**
+ * The deposit a landlord asks here: a month's rent, or two for a record under
+ * 620. Britain caps a deposit at five weeks' rent in law (the Tenant Fees Act
+ * 2019), so it is never more than that there.
+ */
+export function depositFor(sim: Simulation, person: Person, kind: Housing): Money {
+  const rent = costsAt(person.currentLocationId, kind, saveCurrency(sim.universe), sim.now).rent;
+  const months = (person.credit?.score ?? 650) < POOR_RECORD ? 2 : 1;
+  const country = CITIES.get(person.currentLocationId)?.countryId;
+  const cap = country === 'uk' || country === 'gb' ? Math.round(rent * 12 / 52 * 5) : Number.POSITIVE_INFINITY;
+  return Math.min(rent * months, cap);
+}
+
+/** The rest of this month's rent, from today, for somebody moving in. */
+function restOfMonth(sim: Simulation, person: Person, kind: Housing): Money {
+  const zone = CITIES.get(person.currentLocationId)?.timeZone ?? sim.homeZone;
+  const p = zonedParts(sim.now, zone);
+  const days = new Date(Date.UTC(p.year, p.month, 0)).getUTCDate();
+  const rent = costsAt(person.currentLocationId, kind, saveCurrency(sim.universe), sim.now).rent;
+  return Math.round(rent * (days - p.day + 1) / days);
+}
+
+/** What moving into a home of a kind costs today: the deposit and the rest of the month. */
+export function moveCost(sim: Simulation, person: Person, kind: Housing): Money {
+  return depositFor(sim, person, kind) + restOfMonth(sim, person, kind);
+}
+
+/**
+ * Moves them into a home of a kind here, paying the deposit and the rest of
+ * the month from checking, and taking back the old deposit less what's owed.
+ * Throws the reason when it can't be done.
+ */
+export function move(sim: Simulation, person: Person, kind: Housing): void {
+  const checking = checkingOf(sim, person);
+  if (!checking) throw new CommandError('You don’t have an account to pay from.');
+  if (person.home && person.home.kind === kind && person.home.cityId === person.currentLocationId) {
+    throw new CommandError('You live in one already.');
+  }
+  // The old deposit back first, less what's still owed on the old place.
+  const old = depositAccount(sim, person);
+  if (old && old.balance > 0) {
+    const owed = Math.min(old.balance, arrearsOf(sim, person));
+    const postings = [{ accountId: old.id, amount: -old.balance }, { accountId: checking.id, amount: old.balance - owed }];
+    if (owed > 0) postings.push({ accountId: arrearsAccount(sim, person).id, amount: owed });
+    sim.post({ memo: 'Deposit back', category: 'rent', postings });
+  }
+  const deposit = depositFor(sim, person, kind);
+  const rest = restOfMonth(sim, person, kind);
+  if (checking.balance < deposit + rest) {
+    const currency = saveCurrency(sim.universe);
+    throw new CommandError(`Moving in takes ${formatMoney(deposit + rest, currency)} from checking: a ${formatMoney(deposit, currency)} deposit and ${formatMoney(rest, currency)} for the rest of the month.`);
+  }
+  const held = depositAccount(sim, person) ?? sim.openAccount({
+    id: sim.nextId('account'), kind: 'escrow', name: 'Deposit Held', ownerId: person.id,
+    institution: 'Your Landlord', openedAt: sim.now, category: 'deposit',
+  });
+  sim.post({
+    memo: 'Deposit and the rest of the month', category: 'rent',
+    postings: [
+      { accountId: checking.id, amount: -(deposit + rest) },
+      { accountId: held.id, amount: deposit },
+      { accountId: sim.nominalAccount('expense', 'Rent').id, amount: rest },
+    ],
+  });
+  const hadRent = sim.universe.scheduled.some((one) => one.kind === RENT_KIND && one.status === 'pending' && one.payload.personId === person.id);
+  person.home = { kind, cityId: person.currentLocationId, since: sim.now, ...(person.home?.fedOn !== undefined ? { fedOn: person.home.fedOn } : {}) };
+  if (!hadRent) scheduleRent(sim, person, sim.now);
+}
+
+/** Evicted: the deposit goes against what's owed, the record takes it, and it's a friend's sofa. */
+function evict(sim: Simulation, person: Person): void {
+  const held = depositAccount(sim, person);
+  if (held && held.balance > 0) {
+    const against = Math.min(held.balance, arrearsOf(sim, person));
+    const postings = [{ accountId: held.id, amount: -held.balance }, { accountId: arrearsAccount(sim, person).id, amount: against }];
+    if (held.balance > against) postings.push({ accountId: checkingOf(sim, person)!.id, amount: held.balance - against });
+    sim.post({ memo: 'Deposit kept against rent owed', category: 'rent', postings });
+  }
+  if (person.credit) person.credit.score = Math.max(300, person.credit.score - EVICTION_ON_RECORD);
+  person.home = { kind: 'sofa', cityId: person.home?.cityId ?? person.currentLocationId, since: sim.now };
+  if (person.id === sim.universe.playerId) {
+    sim.notify({
+      category: 'money',
+      title: 'Evicted',
+      body: 'The notice ran out with the rent still owed. Your deposit went against it, it\'s on your record, and you\'re on a friend\'s sofa until you can pay a deposit and a first month somewhere.',
+      importance: 95,
+    });
+  }
+}
+
+/** A notice to pay or quit, when two months' rent is owed; withdrawn once it's under one; eviction when it runs out. */
+function landlord(sim: Simulation, person: Person): void {
+  const home = person.home;
+  if (!home || home.kind === 'sofa') return;
+  const rent = rentOf(sim, person);
+  const owed = arrearsOf(sim, person);
+  const currency = saveCurrency(sim.universe);
+  if (home.noticeUntil === undefined) {
+    if (rent > 0 && owed >= rent * NOTICE_AT_MONTHS) {
+      home.noticeUntil = sim.now + NOTICE_DAYS * 86_400_000;
+      if (person.id === sim.universe.playerId) {
+        sim.notify({
+          category: 'money',
+          title: 'A Notice To Pay Or Quit',
+          body: `You owe your landlord ${formatMoney(owed, currency)}, two months' rent. Get it under ${formatMoney(rent, currency)} within thirty days, or you're out.`,
+          importance: 95,
+        });
+      }
+    }
+    return;
+  }
+  if (owed < rent) {
+    delete home.noticeUntil;
+    if (person.id === sim.universe.playerId) {
+      sim.notify({ category: 'money', title: 'The Notice Is Withdrawn', body: 'You got what you owe under a month\'s rent. The home is yours.', importance: 60 });
+    }
+    return;
+  }
+  if (sim.now >= home.noticeUntil) evict(sim, person);
+}
+
 /** Whether money is weighing on somebody today: owing, overdrawn, or the card at its limit. */
 export function inTrouble(sim: Simulation, person: Person): boolean {
   if (arrearsOf(sim, person) > 0) return true;
@@ -270,11 +419,31 @@ export function registerHousehold(sim: Simulation): void {
     for (const person of Object.values(s.universe.people)) {
       if (!person.home) continue;
       settleArrears(s, person);
-      if (!inTrouble(s, person)) continue;
+      landlord(s, person);
       const w = person.wellbeing;
+      // On the sofa, the day weighs too, and somebody left to their own life
+      // takes a room as soon as the deposit and a month are there, with a
+      // month's food behind them.
+      if (person.home.kind === 'sofa') {
+        w.stress = clamp(w.stress + HOMELESS_STRESS * personalityOf(person, 'stressGain'), 0, 100);
+        const buffer = foodOf(s, person) * 30;
+        if ((checkingOf(s, person)?.balance ?? 0) >= moveCost(s, person, 'shared') + buffer) {
+          move(s, person, 'shared');
+          if (person.id === s.universe.playerId) {
+            s.notify({ category: 'money', title: 'You Found A Room', body: 'The deposit and the first month are paid. Off the sofa.', importance: 70 });
+          }
+        }
+      }
+      if (!inTrouble(s, person)) continue;
       w.stress = clamp(w.stress + WORRY_STRESS * personalityOf(person, 'stressGain'), 0, 100);
       w.morale = clamp(w.morale - WORRY_MORALE * personalityOf(person, 'moraleSwing'), 0, 100);
     }
+  });
+
+  sim.onCommand<{ kind: Housing }, { kind: Housing }>('home.move', (p, { sim: s }) => {
+    if (p.kind !== 'shared' && p.kind !== 'own') throw new CommandError('A room in a shared flat, or a place of your own.');
+    move(s, s.player, p.kind);
+    return { kind: p.kind };
   });
 }
 

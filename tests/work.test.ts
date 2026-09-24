@@ -79,6 +79,10 @@ describe('the pay', () => {
     const tokyo = CITIES.require('jp-13-tokyo');
     expect(minimumWageAt(tokyo.id, Date.UTC(2026, 8, 1), 'JPY').hourly).toBe(1226_00);
     expect(minimumWageAt(tokyo.id, Date.UTC(2026, 9, 2), 'JPY').hourly).toBe(1280_00);
+    // Hyōgo is the gazetteer's JP-13, and is paid the national average, not Tokyo's.
+    await loadCountryCities('JP');
+    const hyogo = CITIES.all().find((c) => c.countryId === 'jp' && c.parentId === 'jp-13')!;
+    expect(minimumWageAt(hyogo.id, Date.UTC(2026, 8, 1), 'JPY').hourly).toBe(1121_00);
     const rome = [...CITIES.all()].find((c) => c.name === 'Rome' && c.countryId === 'it');
     if (rome) expect(minimumWageAt(rome.id, Date.UTC(2026, 5, 1), 'EUR').kind).toBe('estimate');
     // Every figure says where it came from.

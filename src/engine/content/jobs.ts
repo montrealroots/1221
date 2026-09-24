@@ -107,3 +107,44 @@ export function workDaysWords(job: Job): string {
   const names = days.map((d) => WEEKDAY_NAMES[d]!);
   return names.length <= 1 ? names.join('') : `${names.slice(0, -1).join(', ')} and ${names[names.length - 1]}`;
 }
+
+/**
+ * Tips an hour, in hundredths of the country's money, where tipping is the
+ * custom: a lot for bar and restaurant work in the United States and Canada,
+ * a real share in Mexico, a little in Britain, Ireland, Australia and New
+ * Zealand, less for a café counter, and nothing where nobody tips, which is
+ * most of the world, Iceland, Japan and Korea among it. SLATE's estimates of
+ * the custom, not published figures. Where the US lets an employer pay a
+ * tipped worker under the minimum and count the tips toward it, that is not
+ * modeled: the floor is paid, and the tips go on top.
+ */
+const TIPS: Readonly<Record<string, Readonly<Record<string, number>>>> = {
+  hospitality: { US: 10_00, CA: 7_00, MX: 30_00, GB: 1_50, IE: 1_50, AU: 1_00, NZ: 1_00 },
+  school: { US: 3_00, CA: 2_00, MX: 10_00, GB: 50, IE: 50 },
+};
+
+export function tipsPerHour(jobId: string, countryCode: string): number {
+  return TIPS[jobId]?.[countryCode] ?? 0;
+}
+
+export interface Pattern {
+  days: readonly number[];
+  startHour: number;
+  hours: number;
+}
+
+/**
+ * The week a job is worked: its own part-time days and hours, or full-time,
+ * five eight-hour days starting with its own, done by eleven at night.
+ */
+export function patternOf(job: Job, fullTime = false): Pattern {
+  if (!fullTime) return { days: job.days, startHour: job.startHour, hours: job.hours };
+  const order = [1, 2, 3, 4, 5, 6, 0];
+  const days = [...job.days];
+  for (const day of order) if (days.length < 5 && !days.includes(day)) days.push(day);
+  return { days: days.slice(0, 5), startHour: Math.min(job.startHour, 15), hours: 8 };
+}
+
+export function patternHours(pattern: Pattern): number {
+  return pattern.days.length * pattern.hours;
+}

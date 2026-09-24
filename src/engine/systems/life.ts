@@ -518,7 +518,7 @@ export function sleepQuality(sim: Simulation, person: Person, at = sim.now): num
  * which piece is costing the hours.
  */
 function nightParts(sim: Simulation, person: Person, at = sim.now): {
-  stressLoss: number; depth: number; late: number; quality: number;
+  stressLoss: number; depth: number; late: number; sofa: number; quality: number;
 } {
   const stressLoss = remap(person.wellbeing.stress, 0, 100, 0, 0.24);
   // A light sleeper and a night owl both lose here; somebody who can sleep
@@ -536,7 +536,10 @@ function nightParts(sim: Simulation, person: Person, at = sim.now): {
   // took 21 and 24 days to come back; on a save already at its ceilings, 0.18
   // to 0.44 condition for one to six mornings.
   const late = hour >= 1 && hour < 5 && at - startOfDay(at, sim.zone) >= MS_HOUR ? 0.08 : 0;
-  return { stressLoss, depth, late, quality: clamp((0.82 - stressLoss) * depth - late, 0.28, 1) };
+  // And a friend's sofa after an eviction sleeps worse than a bed of your own
+  // (`systems/household.ts`), by what a late bedtime costs.
+  const sofa = person.home?.kind === 'sofa' ? 0.08 : 0;
+  return { stressLoss, depth, late, sofa, quality: clamp((0.82 - stressLoss) * depth - late - sofa, 0.28, 1) };
 }
 
 export function applySleep(
@@ -1121,6 +1124,7 @@ function sleepReason(tonight: {
     [calm / 0.82, 'Stress is costing you sleep, so a normal night takes longer.'],
     [night.depth, 'You don’t sleep deeply, so a normal night takes longer.'],
     [night.late > 0 ? 1 - night.late / (calm * night.depth) : 1, 'It’s late, and a night that starts now is a worse one, so it takes longer.'],
+    [night.sofa > 0 ? 1 - night.sofa / (calm * night.depth) : 1, 'A night on a sofa is a worse one, so it takes longer.'],
     [restores, 'A night puts back less for you than for most, so it takes longer.'],
     [age, 'A night puts back less than it used to, so it takes longer.'],
   ];

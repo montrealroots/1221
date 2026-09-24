@@ -24,7 +24,8 @@ import type { Simulation } from '../core/simulation';
 import type { Person } from '../domain/model';
 import type { ScheduledItem } from '../core/scheduler';
 import { CITIES, COUNTRIES } from '../content/geography';
-import { jobFor, payCycleFor, weeklyHours, type Job } from '../content/jobs';
+import { jobFor, patternHours, patternOf, payCycleFor, tipsPerHour, type Job } from '../content/jobs';
+import { CommandError } from '../core/simulation';
 import { minimumWageAt } from '../content/wages';
 import { computeAnnualTax } from '../content/tax';
 import { exchange } from '../content/currency';
@@ -37,7 +38,10 @@ import { personalityOf } from './personality';
 
 export const SHIFT_KIND = 'work.shift';
 export const PAYDAY_KIND = 'work.payday';
+export const TIPS_KIND = 'work.tips';
 
+/** How much notice a change of hours takes. */
+const NOTICE = 7 * MS_DAY;
 /** How far ahead the rota is on the calendar. */
 const ROTA_DAYS = 14;
 /** Missed shifts in this window that cost the job, and how long finding another takes. */
@@ -63,6 +67,8 @@ export interface JobState {
   rotaThrough: Instant;
   /** Let go, and looking for work until this. */
   lookingUntil?: Instant;
+  /** Five eight-hour days rather than the job's own part-time week (`patternOf`). */
+  fullTime?: boolean;
 }
 
 export function jobOf(person: Person): Job | undefined {
@@ -92,13 +98,28 @@ export function wageAt(cityId: string, jobId: string, currency: string, at: Inst
  */
 export function withholdingRate(sim: Simulation, person: Person): number {
   const state = person.job;
-  return state ? withholdingAt(state.cityId, state.jobId, saveCurrency(sim.universe), sim.now) : 0;
+  return state ? withholdingAt(state.cityId, state.jobId, saveCurrency(sim.universe), sim.now, state.fullTime) : 0;
 }
 
-export function withholdingAt(cityId: string, jobId: string, currency: string, at: Instant): number {
-  const yearly = wageAt(cityId, jobId, currency, at) * weeklyHours(jobFor(jobId)) * 52;
+export function withholdingAt(cityId: string, jobId: string, currency: string, at: Instant, fullTime = false): number {
+  const yearly = wageAt(cityId, jobId, currency, at) * patternHours(patternOf(jobFor(jobId), fullTime)) * 52;
   const usd = exchange(yearly, currency, 'USD') ?? yearly;
   return computeAnnualTax(usd, cityId, at).effectiveRate;
+}
+
+/**
+ * What a shift's tips come to, in the save's money: the country's custom for
+ * the job (`tipsPerHour`), for the hours worked.
+ */
+export function tipsFor(sim: Simulation, person: Person, hours: number): Money {
+  const state = person.job;
+  if (!state) return 0;
+  const city = CITIES.get(state.cityId);
+  const country = city ? COUNTRIES.get(city.countryId) : undefined;
+  const perHour = tipsPerHour(state.jobId, country?.jurisdictionCode ?? '');
+  if (perHour <= 0) return 0;
+  const inSave = exchange(perHour, country?.currency.toUpperCase() ?? 'USD', saveCurrency(sim.universe)) ?? perHour;
+  return Math.round(inSave * hours);
 }
 
 /** Takes the job their past leads to, in the town they are in, from now. */
@@ -119,17 +140,18 @@ export function fillRota(sim: Simulation, person: Person): void {
   const state = person.job;
   if (!state || state.lookingUntil !== undefined) return;
   const job = jobFor(state.jobId);
+  const week = patternOf(job, state.fullTime);
   const zone = CITIES.get(state.cityId)?.timeZone ?? sim.homeZone;
   const until = sim.now + ROTA_DAYS * MS_DAY;
   let day = zonedParts(Math.max(state.rotaThrough, sim.now), zone);
   for (let n = 0; n <= ROTA_DAYS + 1; n += 1) {
-    const at = instantFromZoned({ year: day.year, month: day.month, day: day.day, hour: job.startHour }, zone);
+    const at = instantFromZoned({ year: day.year, month: day.month, day: day.day, hour: week.startHour }, zone);
     const weekday = new Date(Date.UTC(day.year, day.month - 1, day.day)).getUTCDay();
-    if (at > state.rotaThrough && at > sim.now && at <= until && job.days.includes(weekday)) {
+    if (at > state.rotaThrough && at > sim.now && at <= until && week.days.includes(weekday)) {
       sim.schedule({
         at, kind: SHIFT_KIND, label: `${job.title} Shift`, category: 'work', priority: 30,
-        requiresPlayer: true, durationMinutes: job.hours * 60, locationId: state.cityId,
-        payload: { personId: person.id, hours: job.hours },
+        requiresPlayer: true, durationMinutes: week.hours * 60, locationId: state.cityId,
+        payload: { personId: person.id, hours: week.hours },
       });
     }
     day = zonedParts(startOfNextDay(instantFromZoned({ year: day.year, month: day.month, day: day.day }, zone), zone), zone);
@@ -288,9 +310,76 @@ export function registerWork(sim: Simulation): void {
     }
     item.payload = { ...item.payload, worked: true };
     state.unpaid.push({ at: item.at, hours });
+    // Tips are taken home at the end of the shift, where the custom is to tip.
+    const tips = tipsFor(s, person, hours);
+    if (tips > 0) {
+      s.schedule({
+        at: item.at + hours * MS_HOUR, kind: TIPS_KIND, label: 'Tips', category: 'work', priority: 41,
+        payload: { personId: person.id, amount: tips },
+      });
+    }
     const w = person.wellbeing;
     w.energy = clamp(w.energy - SHIFT_ENERGY_PER_HOUR * hours, 0, 100);
     w.stress = clamp(w.stress + SHIFT_STRESS_PER_HOUR * hours * personalityOf(person, 'stressGain'), 0, 100);
+  });
+
+  // Full-time or part-time, from a week on: the shifts already promised for
+  // the next seven days stand, and the new week starts after them.
+  sim.onCommand<{ fullTime: boolean }, { from: Instant }>('work.set_hours', (p, { sim: s }) => {
+    const person = s.player;
+    const state = person.job;
+    if (!state) throw new CommandError('You don’t have a day job.');
+    if (state.lookingUntil !== undefined) throw new CommandError('You’re between jobs right now.');
+    const fullTime = p.fullTime === true;
+    if (Boolean(state.fullTime) === fullTime) throw new CommandError(fullTime ? 'You’re already full-time.' : 'You’re already part-time.');
+    const from = s.now + NOTICE;
+    for (const item of s.timeline.pending()) {
+      if (item.kind === SHIFT_KIND && item.at > from && item.payload.personId === person.id && !item.payload.extra) s.timeline.cancel(item.id, s.now);
+    }
+    state.fullTime = fullTime;
+    state.rotaThrough = from;
+    fillRota(s, person);
+    return { from };
+  });
+
+  // One more shift, on the first day this week they aren't already working.
+  sim.onCommand<Record<string, never>, { at: Instant }>('work.extra_shift', (_p, { sim: s }) => {
+    const person = s.player;
+    const state = person.job;
+    if (!state) throw new CommandError('You don’t have a day job.');
+    if (state.lookingUntil !== undefined) throw new CommandError('You’re between jobs right now.');
+    const pending = s.timeline.pending().filter((item) => item.kind === SHIFT_KIND && item.payload.personId === person.id);
+    if (pending.some((item) => item.payload.extra === true)) throw new CommandError('You’ve already got an extra shift coming.');
+    const job = jobFor(state.jobId);
+    const week = patternOf(job, state.fullTime);
+    const zone = CITIES.get(state.cityId)?.timeZone ?? s.homeZone;
+    for (let n = 1; n <= 7; n += 1) {
+      const p = zonedParts(s.now + n * MS_DAY, zone);
+      const at = instantFromZoned({ year: p.year, month: p.month, day: p.day, hour: week.startHour }, zone);
+      const end = at + week.hours * MS_HOUR;
+      const busy = s.timeline.between(at - week.hours * MS_HOUR, end).some((item) => item.requiresPlayer === true);
+      if (busy) continue;
+      s.schedule({
+        at, kind: SHIFT_KIND, label: `${job.title} Extra Shift`, category: 'work', priority: 30,
+        requiresPlayer: true, durationMinutes: week.hours * 60, locationId: state.cityId,
+        payload: { personId: person.id, hours: week.hours, extra: true },
+      });
+      return { at };
+    }
+    throw new CommandError('There’s no day this week you aren’t already working.');
+  });
+
+  sim.onSchedule(TIPS_KIND, (item, s) => {
+    const person = s.universe.people[String(item.payload.personId ?? s.universe.playerId)];
+    const amount = Math.round(Number(item.payload.amount) || 0);
+    if (!person?.primaryAccountId || amount <= 0) return;
+    s.post({
+      memo: 'Tips', category: 'tips',
+      postings: [
+        { accountId: s.nominalAccount('income', 'Tips').id, amount: -amount },
+        { accountId: person.primaryAccountId, amount },
+      ],
+    });
   });
 
   sim.onSchedule(PAYDAY_KIND, (item, s) => {

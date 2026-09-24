@@ -19,8 +19,12 @@
  * of the world keeps no single number; the screen shows the score only in
  * those two countries and a plain word elsewhere. What moves it each month is
  * what moves a real one most: paying on time (it rises), how much of the card
- * is used (over thirty percent costs), a late payment, and rent owed. What it
- * decides is the card's rate, repriced on each statement.
+ * is used (over thirty percent costs), a late payment, rent owed, and an
+ * eviction. What it decides: the card's rate, repriced on each statement; the
+ * card's limit, raised a fifth at a six-monthly review for a record of 700
+ * with nothing late in a year and cut to 70% by a late payment; and the
+ * deposit a landlord asks (`depositFor` in `systems/household.ts`). It
+ * decided only the rate at first.
  *
  * The minimum, the fee and the rate bands are SLATE's estimates of typical
  * American card terms, and the score's monthly moves a simplification of a
@@ -51,6 +55,8 @@ export interface CreditState {
   paidSinceStatement: Money;
   /** Whether the last statement was left partly unpaid, so this month's balance draws interest. */
   carrying: boolean;
+  /** When the card's limit was last reviewed. */
+  reviewedAt?: Instant;
 }
 
 const SCORE_MIN = 300;
@@ -63,6 +69,9 @@ const RATE_BANDS: readonly { from: number; apr: number }[] = [
 const MINIMUM_USD = 25;
 const MINIMUM_SHARE = 0.02;
 const LATE_FEE_USD = 32;
+/** How often the limit is reviewed, and the record that earns a raise. */
+const REVIEW_EVERY = 182 * 86_400_000;
+const RAISE_FROM = 700;
 
 export function aprFor(score: number): number {
   return RATE_BANDS.find((band) => score >= band.from)!.apr;
@@ -148,6 +157,17 @@ export function registerCredit(sim: Simulation): void {
     }
     credit.statementBalance = Math.max(0, -card.balance);
     credit.paidSinceStatement = 0;
+    // Every six months, a good record raises the limit.
+    if (credit.reviewedAt === undefined || s.now - credit.reviewedAt >= REVIEW_EVERY) {
+      credit.reviewedAt = s.now;
+      const clean = !credit.late.some((when) => s.now - when < 365 * 86_400_000);
+      if (credit.score >= RAISE_FROM && clean && (card.creditLimit ?? 0) > 0) {
+        card.creditLimit = Math.round((card.creditLimit ?? 0) * 1.2 / 100) * 100;
+        if (person.id === s.universe.playerId) {
+          s.notify({ category: 'money', title: 'Your Card Limit Went Up', body: `It's ${formatMoney(card.creditLimit, saveCurrency(s.universe))} now, for a clean record.`, importance: 40 });
+        }
+      }
+    }
     if (credit.statementBalance > 0) scheduleDue(s, person, item.at);
     scheduleStatement(s, person, item.at);
   });
@@ -174,6 +194,9 @@ export function registerCredit(sim: Simulation): void {
       });
       credit.late = [...credit.late.filter((when) => s.now - when < 365 * 86_400_000), s.now];
       move -= 50;
+      // And the lender cuts the line, never under what's owed on it.
+      const cut = Math.max(Math.max(0, -card.balance), Math.round((card.creditLimit ?? 0) * 0.7 / 100) * 100);
+      if (cut < (card.creditLimit ?? 0)) card.creditLimit = cut;
       s.notify({
         category: 'money',
         title: 'A Late Card Payment',
@@ -216,7 +239,7 @@ export function registerCredit(sim: Simulation): void {
 /** Opens their record at a score, with the first statement on the calendar. */
 export function openCredit(sim: Simulation, person: Person, score: number): void {
   person.credit = {
-    score, late: [], autopay: 'full', statementBalance: 0, paidSinceStatement: 0,
+    score, late: [], autopay: 'full', statementBalance: 0, paidSinceStatement: 0, reviewedAt: sim.now,
     // A balance brought in from before is one the last statement didn't clear.
     carrying: (cardOf(sim, person)?.balance ?? 0) < 0,
   };
