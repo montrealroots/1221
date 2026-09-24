@@ -174,11 +174,16 @@ describe('the Day look and the entry look', () => {
 
   it('keep the whole of a 25-hour day, its last hour included', () => {
     const sim = saveIn(LA_BACK, -1);
+    // The first of November's rent falls due at eight that evening, inside
+    // the day, and it is the next thing after the meeting.
+    const rent = sim.timeline.pending().find((item) => item.kind === 'home.rent')!.id;
     const morning = plan(sim, 'Morning Meeting', wall(sim, LA_BACK, 0, 10));
     const late = plan(sim, 'Late Drink', wall(sim, LA_BACK, 0, 23, 30), 30);
-    expect(waysTo(looked(sim, 'day', keyOf(LA_BACK, 0)), 'entry')).toEqual([morning, late]);
+    expect(waysTo(looked(sim, 'day', keyOf(LA_BACK, 0)), 'entry')).toEqual([morning, rent, late]);
     const next = (looked(sim, 'entry', morning).ways ?? []).find((way) => way.detail.startsWith('Next thing that day'));
-    expect(next?.to.id).toBe(late);
+    expect(next?.to.id).toBe(rent);
+    const after = (looked(sim, 'entry', rent).ways ?? []).find((way) => way.detail.startsWith('Next thing that day'));
+    expect(after?.to.id).toBe(late);
   });
 });
 

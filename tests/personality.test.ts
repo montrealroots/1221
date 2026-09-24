@@ -32,7 +32,7 @@ import { ceilingAt } from '@/engine/content/lifespan';
 import type { Simulation } from '@/engine';
 
 const KNOBS: readonly PersonalityKnob[] = [
-  'stressGain', 'stressRecovery', 'sleepQuality', 'energyRecovery', 'hygieneDrift', 'moraleSwing',
+  'stressGain', 'stressRecovery', 'sleepQuality', 'energyRecovery', 'hygieneDrift', 'moraleSwing', 'spending',
 ];
 
 /** Somebody with no lean anywhere: every axis at the middle and no traits. */
@@ -86,17 +86,21 @@ function pickFor(knob: PersonalityKnob, way: 'down' | 'up'): string[] {
 
 /** A save for a case, born in a given year. */
 /**
- * A character to measure a personality on, without a day job.
+ * A character to measure a personality on: no day job, and money behind them.
  *
  * These years isolate what a disposition or a trait does, and they were set
- * before anybody worked. With the café job every new save gets, four of the
- * bars failed by a point or less (morale 78.8 at sixty against eighty), and
- * the worst four for sleep at seventy went to bed on empty. Working life has
- * its own year in `tests/work.test.ts`.
+ * before anybody worked or paid rent. With the café job every new save gets,
+ * four of the bars failed by a point or less (morale 78.8 at sixty against
+ * eighty), and the worst four for sleep at seventy went to bed on empty. With
+ * rent and food and no job, a save that started Scraping ran out, stopped
+ * eating, and fell apart for money rather than temperament. Inherited money
+ * pays every bill and never worries anybody, so nothing but the personality
+ * moves these. Working life has its own year in `tests/work.test.ts`.
  */
 function build(c: Case, birthYear: number, seed: string): Simulation {
   return quickSave({
-    personality: { ...defaultPersonality(), ...c.personality }, personalityTraits: c.traits, birthYear, dayJob: false,
+    personality: { ...defaultPersonality(), ...c.personality }, personalityTraits: c.traits, birthYear,
+    dayJob: false, wealth: 'inherited',
   }, seed);
 }
 
@@ -373,15 +377,25 @@ describe('what it does', () => {
       .toBeGreaterThan(personalityOf(person([], { conscientiousness: 5 }), 'sleepQuality'));
   });
 
-  it('lets the four it says do nothing do nothing, and the money traits too', () => {
+  it('lets the four it says do nothing do nothing, and Keeps Accounts too', () => {
     for (const axis of ['openness', 'extraversion', 'agreeableness', 'riskTolerance'] as const) {
       for (const knob of KNOBS) {
         expect(personalityOf(person([], { [axis]: 5 }), knob), `${axis} moves ${knob}`)
           .toBe(personalityOf(person([], { [axis]: 95 }), knob));
       }
     }
-    for (const id of ['frugal', 'spender', 'generous', 'keeps_accounts']) {
-      for (const knob of KNOBS) expect(personalityOf(person([id]), knob), `${id} moves ${knob}`).toBe(1);
+    for (const knob of KNOBS) expect(personalityOf(person(['keeps_accounts']), knob), `keeps_accounts moves ${knob}`).toBe(1);
+  });
+
+  it('makes a frugal person spend less on the same day’s food than a spender', () => {
+    const frugal = personalityOf(person(['frugal']), 'spending');
+    const spender = personalityOf(person(['spender']), 'spending');
+    expect(frugal).toBeLessThan(1);
+    expect(spender).toBeGreaterThan(1);
+    expect(personalityOf(person(['generous']), 'spending')).toBeGreaterThan(1);
+    // And the other three money traits move nothing else.
+    for (const id of ['frugal', 'spender', 'generous']) {
+      for (const knob of KNOBS.filter((k) => k !== 'spending')) expect(personalityOf(person([id]), knob), `${id} moves ${knob}`).toBe(1);
     }
   });
 

@@ -24,13 +24,13 @@ claims otherwise.
 | The geography map | Implemented — every country drawn from the projected world map, 170,911 cities behind it, loaded a country at a time, on the creation screen twice | `src/ui/creation/WorldMap.tsx`, `src/ui/creation/LocationPicker.tsx`, `src/engine/content/geography.ts` | `geography`, `world-map` |
 | Portrait | Implemented — a headshot cropped to a fixed frame and carried on the person | `src/ui/creation/PortraitPicker.tsx` | `portrait` |
 | Performer title | Implemented — actor or actress, settled by the pronouns and picked under they/them, stored on the player and said back on Home, the rail and the save slot. It is a word and decides nothing else | `src/engine/core/performer.ts` | `creation`, `simulation` |
-| Personality | Partial — seven dispositions and thirty-five traits, picked on their own step and stored on the player. Three dispositions and every trait's declared knobs move stress, sleep, the energy a night puts back, hygiene and mood, and the sleep the game suggests counts them. The other four dispositions and the four money traits are kept and read by nothing | `src/engine/content/personality-traits.ts`, `src/engine/systems/personality.ts` | `personality`, `creation` |
+| Personality | Partial — seven dispositions and thirty-five traits, picked on their own step and stored on the player. Three dispositions and every trait's declared knobs move stress, sleep, the energy a night puts back, hygiene, mood and what food costs, and the sleep the game suggests counts them. The other four dispositions and Keeps Accounts are kept and read by nothing | `src/engine/content/personality-traits.ts`, `src/engine/systems/personality.ts` | `personality`, `creation` |
 | Home | Implemented — the day, where you are, what needs you, what happens next, how you are, the weather and money | `src/ui/screens/Home.tsx` | `interface`, `navigation`, `smoke` |
 | Calendar | Implemented — the month, collisions, the observances of the country you are standing in, and plans of your own | `src/ui/workspaces/CalendarWorkspace.tsx`, `src/engine/world/calendar.ts`, `src/engine/world/plans.ts` | `calendar`, `holidays`, `plans` |
 | Weather | Implemented — a climate model per city from season, latitude and the kind of place it is, with a week ahead | `src/engine/systems/weather.ts` | `weather` |
 | Time controls | Implemented — live play, sleeping, and skipping to an event with what it would cross shown first | `src/ui/shell/TimeControls.tsx` | `simulation`, `realclock` |
 | Wellbeing and sleep | Partial — the model, the night, the waking hours charged as the clock moves (`life.waking`), and the night nobody chose, slept when the clock is sent through one rather than at every midnight (`life.night_alone` and the rollover). Sleep, eating, a shower, a workout and an hour unwinding are how a player spends a day on them (`life.sleep`, `life.look_after`). Every dial decides something in the body or the workout, and nothing outside them reads it | `src/engine/systems/life.ts` | `simulation`, `smoke`, `endurance`, `personality`, `looking-after`, `wellbeing-bites` |
-| Money | Partial — a ledger that conserves, the accounts a life starts with, and net worth derived from them. Nothing bills, earns or charges | `src/engine/core/ledger.ts`, `src/engine/systems/finance.ts` | `money`, `endurance` |
+| Money | Implemented — a ledger that conserves, kept in the currency of the country a save starts in; a day job paid at a real legal floor on the country's payday, with tax withheld; rent and bills on the first and food with each day's meals, paid from checking, then the card, then owed; a card with a statement, a due date, interest and late fees; and a credit record that prices it. Nobody is evicted, and the prices are estimates | `src/engine/core/ledger.ts`, `src/engine/systems/finance.ts`, `src/engine/systems/work.ts`, `src/engine/systems/household.ts`, `src/engine/systems/credit.ts`, `src/engine/content/wages.ts`, `src/engine/content/jobs.ts` | `money`, `work`, `household`, `endurance` |
 | The Decision Center | Partial — answering, dismissing, closing on a date and forgetting are all built and tested. Nothing in the engine raises a decision on its own | `src/engine/world/world.ts`, `src/ui/looks/attention.tsx` | `smoke`, `looks` |
 | Drill-down | Implemented — every noun on Home opens onto what it is, and the graph is crawled end to end | `src/ui/looks/` | `looks` |
 | Server-checked persistence | Implemented — the guards between a browser and storage, and the client that speaks the platform's protocol | `base44/`, `src/engine/persistence/` | `server-guards`, `base44-adapter`, `base44-contract` |
@@ -92,6 +92,8 @@ Sleeping is the other thing a player does that moves the world (`life.sleep`),
 with eating, showering, working out and unwinding (`life.look_after`), each of
 which takes its own time off the clock and is refused rather than run over
 anything that needs the player.
+
+Money moves on its own: shifts, paydays, rent and the card's statement and due date are timeline items like any other. What a player does to it by hand is on Home's money panel: paying the card now (`finance.pay_card`) and whether autopay clears the whole statement or the minimum (`finance.set_autopay`). Calling in sick for a shift is `calendar.skip`, as walking away from a plan is.
 The rest is the Decision Center answering, dismissing and marking read
 (`world.take_decision_action`, `world.dismiss_decision`, `world.mark_read`) and
 the preferences (`world.set_preferences`).
@@ -107,13 +109,14 @@ move during a day of play and midnight no longer charges the day ahead.
 The one route is `/workspace/calendar`; Home is served by the shell itself.
 
 <!-- inventory:begin -->
-Generated by `node tools/inventory.mjs --markdown`. 9 commands, 5 scheduled kinds, 2 passage reactors, 3 events emitted, 1 event listener, 0 scenes, 1 route.
+Generated by `node tools/inventory.mjs --markdown`. 11 commands, 8 scheduled kinds, 2 passage reactors, 3 events emitted, 1 event listener, 0 scenes, 1 route.
 
 ### Commands
 
 | System | Kinds | Owner |
 | --- | --- | --- |
 | calendar | `calendar.cancel` `calendar.schedule` `calendar.skip` | `src/engine/world/plans.ts` |
+| finance | `finance.pay_card` `finance.set_autopay` | `src/engine/systems/credit.ts` |
 | life | `life.look_after` `life.sleep` | `src/engine/systems/life.ts` |
 | world | `world.dismiss_decision` `world.mark_read` `world.set_preferences` `world.take_decision_action` | `src/engine/world/world.ts` |
 
@@ -121,6 +124,8 @@ Generated by `node tools/inventory.mjs --markdown`. 9 commands, 5 scheduled kind
 
 | System | Kinds | Owner |
 | --- | --- | --- |
+| card | `card.due` `card.statement` | `src/engine/systems/credit.ts` |
+| home | `home.rent` | `src/engine/systems/household.ts` |
 | life | `life.commitment` `life.day_rollover` | `src/engine/systems/life.ts`, `src/engine/world/plans.ts` |
 | work | `work.payday` `work.shift` | `src/engine/systems/work.ts` |
 | world | `world.tick` | `src/engine/world/world.ts` |
@@ -142,7 +147,7 @@ Generated by `node tools/inventory.mjs --markdown`. 9 commands, 5 scheduled kind
 
 | System | Kinds | Owner |
 | --- | --- | --- |
-| world | `world.day_rollover` | `src/engine/systems/work.ts` |
+| world | `world.day_rollover` | `src/engine/systems/household.ts` |
 
 ### Scenes
 

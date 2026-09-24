@@ -13,6 +13,8 @@ import type { Account, LedgerTransaction } from '../core/ledger';
 import type { ScheduledItem } from '../core/scheduler';
 import type { HistoryRecord } from '../core/audit';
 import type { JobState } from '../systems/work';
+import type { HomeState } from '../systems/household';
+import type { CreditState } from '../systems/credit';
 import type { IdNamespace } from '../core/ids';
 import type { PerformerTitle } from '../core/performer';
 
@@ -139,6 +141,18 @@ export interface Person {
    * schema 89.
    */
   job?: JobState;
+  /**
+   * Where they live and what kind of home it is (`systems/household.ts`):
+   * the rent and bills due on the first, and the town the food is bought in.
+   * Given to every character from schema 89.
+   */
+  home?: HomeState;
+  /**
+   * Their credit record and how the card is paid (`systems/credit.ts`). Not
+   * `creditScore`: `migrate` sheds a field by that name that builds before 80
+   * kept on the person.
+   */
+  credit?: CreditState;
 
   wellbeing: Wellbeing;
 

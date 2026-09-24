@@ -23,6 +23,7 @@ import {
   dateKey, formatDate, formatRelative, formatTime, formatWeekdayDate, seasonOf, zoneAbbreviation,
 } from '@/engine/core/time';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
+import { scoreIsANumberIn, scoreWord } from '@/engine/systems/credit';
 import { LookRegion, Open, at } from '@/ui/looks';
 
 export function Home() {
@@ -437,9 +438,42 @@ export function Home() {
                 look={at('debt', player.id)}
               />
             )}
+            <CardControls cur={cur} />
           </LookRegion>
         </Panel>
       </div>
+    </>
+  );
+}
+
+/**
+ * The card, run by hand: pay it off now, and whether autopay clears the
+ * whole statement or only the minimum (`systems/credit.ts`). And the record
+ * a lender reads, as a number where lenders use one and a word elsewhere.
+ */
+function CardControls({ cur }: { cur: string }) {
+  const { sim, run } = useGame();
+  const card = useWorld((s) => Object.values(s.universe.accounts).find((a) => a.ownerId === s.player.id && a.kind === 'credit_card' && !a.closedAt));
+  const credit = useWorld((s) => s.player.credit);
+  if (!credit) return null;
+  const owed = card ? Math.max(0, -card.balance) : 0;
+  const record = scoreIsANumberIn(sim.player.currentLocationId) ? String(credit.score) : scoreWord(credit.score);
+  return (
+    <>
+      <Stat label="Credit Record" value={record} note={card?.apr !== undefined ? `The card charges ${(card.apr * 100).toFixed(2)}% a year on what's carried` : undefined} />
+      {card && (
+        <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
+          <button className="btn btn-sm" disabled={owed === 0} onClick={() => run('finance.pay_card', { amount: 'full' })}>
+            Pay Card In Full ({formatMoney(owed, cur, { cents: false })})
+          </button>
+          <button
+            className="btn btn-sm btn-ghost"
+            onClick={() => run('finance.set_autopay', { mode: credit.autopay === 'full' ? 'minimum' : 'full' })}
+          >
+            Autopay: {credit.autopay === 'full' ? 'The Whole Statement' : 'The Minimum'}
+          </button>
+        </div>
+      )}
     </>
   );
 }

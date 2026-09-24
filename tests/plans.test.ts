@@ -104,7 +104,8 @@ describe('calling one off', () => {
     const sim = quickSave({ dayJob: false }, 'cancel-mine');
     const made = put(sim, { title: 'Dinner', at: sim.now + MS_DAY });
     expect(callOff(sim, made.id!).ok).toBe(true);
-    expect(upcoming(sim, 5)).toHaveLength(0);
+    // Rent and the card's statement are ahead too; the plan isn't.
+    expect(upcoming(sim, 5).filter((e) => e.id === made.id)).toHaveLength(0);
     expect(sim.timeline.get(made.id!)!.status).toBe('cancelled');
   });
 

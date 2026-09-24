@@ -20,6 +20,10 @@ import {
 } from '@/engine/content/geography';
 import type { City } from '@/engine/content/geography';
 import { RATES_NOTE } from '@/engine/content/currency';
+import { HOUSING, costsAt, type Housing } from '@/engine/systems/household';
+import { wageAt, withholdingAt } from '@/engine/systems/work';
+import { minimumWageAt } from '@/engine/content/wages';
+import { jobFor, payCycleFor, payCycleWords, weeklyHours, workDaysWords } from '@/engine/content/jobs';
 import { formatMoney } from '@/engine/core/money';
 import { SAVE_SCHEMA_VERSION } from '@/engine/domain/model';
 import { formatPeople } from '@/engine/world/place';
@@ -37,7 +41,7 @@ import {
   MAX_PERSONALITY_TRAITS, PERSONALITY_GROUPS, PERSONALITY_TRAIT_BY_ID,
   conflictingPersonalityTraits, personalityTraitPairs,
 } from '@/engine/content/personality-traits';
-import { AXIS_MAX, AXIS_MIN } from '@/engine/systems/personality';
+import { AXIS_MAX, AXIS_MIN, personalityOf } from '@/engine/systems/personality';
 import { outOf, said } from '@/ui/looks/words';
 import { BEFORE_ACTING, BEFORE_ACTING_BY_ID, DEFAULT_BEFORE_ACTING } from '@/engine/content/backgrounds';
 import { ceilingAt } from '@/engine/content/lifespan';
@@ -574,8 +578,9 @@ function PersonalityStep({ config, setConfig }: {
               sides can’t both be held. Today they change how stress arrives and clears, how well
               you sleep, how much a night puts back, how quickly you stop being clean and how far
               your mood swings. Each description and cost is written for a whole life, and the game
-              charges only the part of it that touches those. The money traits change nothing yet,
-              because nothing in the game spends.
+              charges only the part of it that touches those. Frugal, Spender and Generous change
+              what your food costs. Keeps Accounts is about what other people owe you, and waits for
+              other people.
             </p>
           </div>
           <span className="chip chip-accent">{held.length} / {MAX_PERSONALITY_TRAITS}</span>
@@ -877,6 +882,8 @@ function StartingPointStep({ config, set, setConfig }: {
         )}
       </div>
 
+      <MonthByMonth config={config} set={set} cur={cur} />
+
       <div className="card">
         <div className="panel-head">
           <div>
@@ -911,6 +918,96 @@ function StartingPointStep({ config, set, setConfig }: {
           </div>
         </div>
       </div>
+    </div>
+  );
+}
+
+/**
+ * What a month here costs and pays, before the save exists.
+ *
+ * Every figure is the engine's own sum (`costsAt`, `wageAt`,
+ * `withholdingAt`), read for the town, the job and the start date on this
+ * page, so the card and the first month of play can't disagree. What is
+ * real and what is SLATE's estimate is said under it.
+ */
+function MonthByMonth({ config, set, cur }: { config: NewSaveConfig; set: Setter; cur: string }) {
+  const at = Date.UTC(config.startYear, config.startMonth - 1, config.startDay, 12);
+  const job = jobFor(config.beforeActing);
+  const costs = costsAt(config.startLocationId, config.housing, cur, at);
+  const wage = wageAt(config.startLocationId, job.id, cur, at);
+  const floor = minimumWageAt(config.startLocationId, at, cur);
+  const withheld = withholdingAt(config.startLocationId, job.id, cur, at);
+  const monthly = (weekly: number) => Math.round(weekly * 52 / 12);
+  const pay = config.dayJob ? Math.round(monthly(wage * weeklyHours(job)) * (1 - withheld)) : 0;
+  const spending = personalityOf({ personality: config.personality, personalityTraits: config.personalityTraits }, 'spending');
+  const food = Math.round(costs.day * spending * 365 / 12);
+  const left = pay - costs.rent - costs.bills - food;
+  const city = CITIES.get(config.startLocationId);
+  const country = city ? COUNTRIES.get(city.countryId)?.jurisdictionCode ?? '' : '';
+  const money = (cents: number) => formatMoney(cents, cur, { cents: false });
+
+  return (
+    <div className="card">
+      <div className="panel-head">
+        <div>
+          <h2>Month By Month</h2>
+          <p className="muted small">What living here pays and costs. Rent and bills are due on the first.</p>
+        </div>
+      </div>
+
+      <div className="field">
+        <label htmlFor="housing">Where You Sleep</label>
+        <select id="housing" value={config.housing} onChange={(e) => set('housing', e.target.value as Housing)}>
+          {(Object.keys(HOUSING) as Housing[]).map((kind) => <option key={kind} value={kind}>{HOUSING[kind].label}</option>)}
+        </select>
+      </div>
+      <div className="callout">{HOUSING[config.housing].note}</div>
+
+      <label className="check" htmlFor="day-job" style={{ marginTop: 'var(--s4)' }}>
+        <input id="day-job" type="checkbox" checked={config.dayJob} onChange={(e) => set('dayJob', e.target.checked)} />
+        <span>
+          Keep A Day Job
+          <span className="dim"> — {job.title}, {workDaysWords(job)}, {job.hours} hours from {job.startHour}:00, paid {payCycleWords(payCycleFor(country))}</span>
+        </span>
+      </label>
+
+      <div className="grid grid-3" style={{ marginTop: 'var(--s4)' }}>
+        <div className="stat">
+          <span className="stat-label">Take-Home Pay</span>
+          <span className="stat-value mono">{money(pay)}</span>
+          <span className="stat-note">
+            {config.dayJob
+              ? `${formatMoney(wage, cur)} an hour for ${weeklyHours(job)} hours a week, less ${Math.round(withheld * 100)}% tax`
+              : 'No day job: only what you start with'}
+          </span>
+        </div>
+        <div className="stat">
+          <span className="stat-label">Rent And Bills</span>
+          <span className="stat-value mono">{money(costs.rent + costs.bills)}</span>
+          <span className="stat-note">{money(costs.rent)} rent, {money(costs.bills)} bills</span>
+        </div>
+        <div className="stat">
+          <span className="stat-label">Food</span>
+          <span className="stat-value mono">{money(food)}</span>
+          <span className="stat-note">{money(Math.round(costs.day * spending))} a day, {money(Math.round(costs.meal * spending))} a cooked meal</span>
+        </div>
+      </div>
+
+      <div className={`callout ${left < 0 ? 'callout-warning' : ''}`} style={{ marginTop: 'var(--s4)' }}>
+        {left >= 0
+          ? `About ${money(left)} left over a month.`
+          : `About ${money(-left)} short a month. What you start with covers it until it doesn't, and then it's the card, and then owing the landlord.`}
+      </div>
+
+      <p className="xs dim" style={{ marginTop: 'var(--s3)' }}>
+        {floor.kind === 'statutory' && `The legal minimum here is ${formatMoney(floor.currency === cur ? floor.hourly : wage / job.overMinimum, cur)} an hour, and ${job.title.toLowerCase()} pays ${job.overMinimum === 1 ? 'about that' : `about ${job.overMinimum} times it`}, SLATE's estimate. `}
+        {floor.kind === 'agreement' && `There's no statutory minimum here: pay starts from the lowest collectively agreed rate, and ${job.title.toLowerCase()} pays ${job.overMinimum === 1 ? 'about that' : `about ${job.overMinimum} times it`}, SLATE's estimate. `}
+        {floor.kind === 'estimate' && 'SLATE has no minimum wage on file for here, so the pay is its estimate from the cost of living. '}
+        {costs.rentFigure.kind === 'published' && `Rent is published here: ${costs.rentFigure.measure}, ${costs.rentFigure.period}${config.housing === 'shared' && !costs.rentFigure.measure?.includes('room') ? ', and a room is taken at 55% of it' : ''}. `}
+        {costs.rentFigure.kind === 'calibrated' && 'Rent is SLATE’s estimate for this town, scaled to what’s published elsewhere in the country. '}
+        {costs.rentFigure.kind === 'estimate' && 'Rent is SLATE’s estimate for this town; nothing is published for the country. '}
+        Bills and food are SLATE's estimates, not published figures.
+      </p>
     </div>
   );
 }

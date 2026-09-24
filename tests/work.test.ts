@@ -105,7 +105,10 @@ describe('the pay', () => {
     expect(rate).toBeGreaterThan(0.1);
     sim.advanceTo(payday + MS_HOUR);
     const gross = Math.round(hours * wage);
-    expect(checking(sim) - before).toBe(gross - Math.round(gross * rate));
+    // Read off the pay's own line: rent and food come out of the same account.
+    const paid = sim.universe.transactions.filter((t) => t.category === 'salary').at(-1)!;
+    expect(paid.postings.find((p) => p.accountId === sim.player.primaryAccountId)!.amount).toBe(gross - Math.round(gross * rate));
+    void before;
     expect(hoursOwed(sim.player)).toBe(7);
     expect(sim.ledger.audit()).toEqual([]);
   });

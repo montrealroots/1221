@@ -12,6 +12,7 @@ import { SAVE_SCHEMA_VERSION } from '../domain/model';
 import { CITIES, COUNTRIES } from '../content/geography';
 import { exchange, hasRate } from '../content/currency';
 import { DEFAULT_LEDGER_CURRENCY } from '../core/money';
+import type { Housing } from '../systems/household';
 import { costOfLiving } from '../content/tax';
 import { addDays, addMonths, instantFromZoned, MS_DAY } from '../core/time';
 import type { Money } from '../core/money';
@@ -91,6 +92,8 @@ export interface NewSaveConfig {
    * starts with enough money behind them needn't.
    */
   dayJob: boolean;
+  /** A room in a shared flat, or a place of their own (`systems/household.ts`). */
+  housing: Housing;
 
   /** Starting point */
   startLocationId: string;
@@ -123,6 +126,7 @@ export function defaultConfig(): NewSaveConfig {
     background: '',
     beforeActing: DEFAULT_BEFORE_ACTING,
     dayJob: true,
+    housing: 'shared',
     startLocationId: DEFAULT_CITY_ID,
     wealth: 'scraping',
     // Monday 5 January 2026, the first working Monday of the year.

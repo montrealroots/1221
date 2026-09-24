@@ -13,8 +13,11 @@
  * `personalityOf` in `systems/personality.ts`. Traits also declared knobs once
  * for systems that are gone: relationships, injury, training and spending.
  * Those knobs went with the systems. The people traits kept their stress and
- * mood knobs; the money traits had no other, so they declare none and are
- * said back and nothing more until something in the game spends.
+ * mood knobs. The money traits had no other, so they declared none and were
+ * said back and nothing more until something in the game spent: since the
+ * household, Frugal, Spender and Generous move what food costs somebody
+ * (`spending`). Keeps Accounts is about what other people owe, and waits for
+ * other people.
  *
  * A trait's description and cost are written for a whole life. The game
  * charges the part of them its knobs reach, and says the rest back.
@@ -35,7 +38,7 @@ export const PERSONALITY_GROUPS: readonly PersonalityGroup[] = [
  */
 export type PersonalityKnob =
   | 'stressGain' | 'stressRecovery' | 'sleepQuality' | 'energyRecovery'
-  | 'hygieneDrift' | 'moraleSwing';
+  | 'hygieneDrift' | 'moraleSwing' | 'spending';
 
 export interface PersonalityTrait {
   id: string;
@@ -190,18 +193,21 @@ export const PERSONALITY_TRAITS: readonly PersonalityTrait[] = [
     description: 'You know what everything costs and you have never once been surprised by a bill.',
     cost: 'The coach, the course, the help. None of it ever gets paid for.',
     conflictsWith: ['spender'],
+    systemMods: { spending: 0.85 },
   },
   {
     id: 'spender', name: 'Spender', group: 'Money',
     description: 'Money is for turning into things, and you’re good at it.',
     cost: 'It goes out faster than it comes in, and it always has.',
     conflictsWith: ['frugal'],
+    systemMods: { spending: 1.25 },
   },
   {
     id: 'generous', name: 'Generous', group: 'Money',
     description: 'You pick up the check, you lend it and you don’t chase it.',
     cost: 'People remember it fondly and you’re poorer for it.',
     conflictsWith: ['keeps_accounts'],
+    systemMods: { spending: 1.1 },
   },
   {
     id: 'keeps_accounts', name: 'Keeps Accounts', group: 'Money',

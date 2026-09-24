@@ -87,3 +87,23 @@ const PAY: Readonly<Record<string, PayCycle>> = {
 export function payCycleFor(countryCode: string): PayCycle {
   return PAY[countryCode] ?? { kind: 'monthly', day: 'last' };
 }
+
+const WEEKDAY_NAMES = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+/** When a cycle pays, said the way a person says it. */
+export function payCycleWords(cycle: PayCycle): string {
+  if (cycle.kind === 'biweekly') return `every other ${WEEKDAY_NAMES[cycle.weekday]}`;
+  if (cycle.kind === 'semimonthly') return 'on the 15th and the last day of the month';
+  const day = cycle.day === 'last' ? 'the last day of the month' : `the ${cycle.day}${cycle.day === 1 ? 'st' : cycle.day === 2 ? 'nd' : cycle.day === 3 ? 'rd' : 'th'}`;
+  return cycle.inArrears ? `on ${day}, for the month before` : `on ${day}`;
+}
+
+/** The days a job works, said as a list: "Thursday to Sunday", "Monday, Wednesday and Thursday". */
+export function workDaysWords(job: Job): string {
+  const order = [1, 2, 3, 4, 5, 6, 0];
+  const days = order.filter((d) => job.days.includes(d));
+  const run = days.every((d, i) => i === 0 || order.indexOf(d) === order.indexOf(days[i - 1]!) + 1);
+  if (run && days.length > 2) return `${WEEKDAY_NAMES[days[0]!]} to ${WEEKDAY_NAMES[days[days.length - 1]!]}`;
+  const names = days.map((d) => WEEKDAY_NAMES[d]!);
+  return names.length <= 1 ? names.join('') : `${names.slice(0, -1).join(', ')} and ${names[names.length - 1]}`;
+}

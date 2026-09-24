@@ -21,6 +21,7 @@ import { ceilingAt, recoveryFactorAt } from '../content/lifespan';
 import { personalityOf } from './personality';
 import { LOVED_MOOD, LOVED_RELIEF, lovedIn } from './enjoyment';
 import { onShift } from './work';
+import { buyTheDaysFood, canPay, fedOn, mealOf, spend } from './household';
 
 // ---------------------------------------------------------------------------
 // Wellbeing model
@@ -366,6 +367,8 @@ export function registerLife(sim: Simulation): void {
       // what it does is on top of what the hour already cost.
       s.advanceTo(s.now + LOOKING_AFTER[action].minutes * 60_000);
       const person = s.player;
+      // A meal is bought as it's cooked (`systems/household.ts`).
+      if (action === 'eat') spend(s, person, mealOf(s, person), 'A meal', 'food');
       const before = { ...person.wellbeing };
       applyLookingAfter(person, action, s.now);
       const changed: Partial<Wellbeing> = {};
@@ -428,6 +431,7 @@ export function lookAfterRefusal(sim: Simulation, action: LookAfter): string | u
   const shift = onShift(sim);
   if (shift) return `You’re at work until ${formatTime(shift.at + (shift.durationMinutes ?? 0) * 60_000, sim.zone)}.`;
   if (action === 'eat' && w.nourishment >= FULL) return 'You aren’t hungry.';
+  if (action === 'eat' && canPay(sim, sim.player) < mealOf(sim, sim.player)) return 'You can’t afford a meal.';
   if (action === 'wash' && (w.hygiene ?? 80) >= CLEAN) return 'You’re already clean.';
   if (action === 'exercise' && w.energy < SPENT) return 'You’re too tired to train. Sleep first.';
   const end = sim.now + LOOKING_AFTER[action].minutes * 60_000;
@@ -696,8 +700,11 @@ function liveTheUnattendedNight(sim: Simulation): void {
     // (`creditNightAlone`): paid after them, it ate 1.6 an hour of them.
     sleepAlone(sim, person, sim.now);
 
-    // Meals, and a shower, before the day rather than after it.
-    eatBeforeTheDay(w);
+    // Meals, and a shower, before the day rather than after it. The meals are
+    // bought first (`systems/household.ts`), and a day nobody can pay for is
+    // eaten thin (`eatWhatThereIs`).
+    if (buyTheDaysFood(sim, person)) eatBeforeTheDay(w);
+    else eatWhatThereIs(w);
     w.hygiene = clamp(Math.max(w.hygiene ?? 80, 82), 0, 100);
   }
 }
@@ -705,6 +712,21 @@ function liveTheUnattendedNight(sim: Simulation): void {
 /** The day's meals, which a coasted day eats up to before it runs. */
 function eatBeforeTheDay(w: Wellbeing): void {
   w.nourishment = clamp(Math.max(w.nourishment, COASTING_NOURISHMENT_TARGET), 0, 100);
+}
+
+/**
+ * What a day nobody can pay for eats: what's in the cupboard, a friend's
+ * dinner, the cheapest thing going. Enough to start the day, hungry by the
+ * late afternoon, and the hungry hours cost condition and mood.
+ *
+ * It was nothing at first. A café worker in Mosfellsbær left on autopilot ran
+ * out of money within months and then ate nothing at all, and condition fell
+ * to 2.1 within the year: nobody who runs out of money eats nothing for
+ * months.
+ */
+const BROKE_NOURISHMENT = 40;
+function eatWhatThereIs(w: Wellbeing): void {
+  w.nourishment = clamp(Math.max(w.nourishment, BROKE_NOURISHMENT), 0, 100);
 }
 
 /**
@@ -925,7 +947,11 @@ function creditNightAlone(sim: Simulation, person: Person, bedtime: number): voi
   person.lastSleptAt = bedtime;
   // A night from midnight is the one the day's meals come after, when it is
   // paid late as well.
-  if (bedtime === startOfLocalDay(sim, bedtime)) eatBeforeTheDay(w);
+  // Only a day whose food was bought, though (`systems/household.ts`).
+  if (bedtime === startOfLocalDay(sim, bedtime)) {
+    if (fedOn(person, bedtime)) eatBeforeTheDay(w);
+    else eatWhatThereIs(w);
+  }
 
   // Coasting keeps you going; it does not get you to your best. Choosing
   // when and how long to sleep is worth something, so autopilot stops

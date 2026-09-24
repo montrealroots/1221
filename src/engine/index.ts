@@ -30,6 +30,8 @@ import { netWorth } from './systems/finance';
 import { registerLife } from './systems/life';
 import { registerPlans } from './world/plans';
 import { armWork, registerWork, startWork } from './systems/work';
+import { armHousehold, moveIn, registerHousehold } from './systems/household';
+import { armCredit, openCredit, registerCredit } from './systems/credit';
 import { registerWorld } from './world/world';
 import {
   createUniverse, defaultConfig, wealthIn, type NewSaveConfig,
@@ -48,6 +50,8 @@ export function registerAllSystems(sim: Simulation): void {
   registerWorld(sim);
   registerPlans(sim);
   registerWork(sim);
+  registerHousehold(sim);
+  registerCredit(sim);
 }
 
 /** Recurring world processes every save needs running. */
@@ -125,6 +129,8 @@ function populateWorld(sim: Simulation, config: NewSaveConfig): void {
 
   armWorldClock(sim);
   if (config.dayJob) startWork(sim, player);
+  moveIn(sim, player, config.housing);
+  openCredit(sim, player, wealth.creditScore);
 }
 
 /** Keeps the save-slot summary in step with the world. */
@@ -212,8 +218,11 @@ export function loadSave(universe: SaveUniverse): Simulation {
       label: 'World Simulation', category: 'system', priority: 96,
     });
   }
-  // Anybody with a job has their rota two weeks out and a payday ahead.
+  // Anybody with a job has their rota two weeks out and a payday ahead, and
+  // anybody with a home a rent due.
   armWork(sim);
+  armHousehold(sim);
+  armCredit(sim);
   return sim;
 }
 
@@ -537,6 +546,15 @@ export function migrate(universe: SaveUniverse): MigrationResult {
         unpaid: [], missed: [], rotaThrough: universe.now,
       };
       steps.push('Gave the character a day job.');
+    }
+    if (worker && !worker.home) {
+      worker.home = { kind: 'shared', cityId: worker.currentLocationId, since: universe.now };
+      steps.push('Gave the character a room in a shared flat, and the rent that goes with it.');
+    }
+    if (worker && !worker.credit) {
+      const carried = Object.values(universe.accounts ?? {}).some((a) => a.ownerId === worker.id && a.kind === 'credit_card' && a.balance < 0);
+      worker.credit = { score: 650, late: [], autopay: 'full', statementBalance: 0, paidSinceStatement: 0, carrying: carried };
+      steps.push('Opened a credit record at 650, a fair middle, for a save that kept none.');
     }
   }
 

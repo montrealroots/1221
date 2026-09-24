@@ -140,7 +140,8 @@ describe('played careers', () => {
   const at = (sim: ReturnType<typeof quickSave>, hour: number) => startOfNextDay(sim.now, sim.zone) + hour * MS_HOUR;
 
   it('a year on autopilot keeps everyday fitness, and morale off the ceiling', () => {
-    const sim = quickSave();
+    // The body on its own: no shifts, and no money to worry about.
+    const sim = quickSave({ dayJob: false, wealth: 'inherited' });
     for (let d = 0; d < 365; d++) sim.advanceTo(at(sim, 7));
     sim.advanceTo(sim.now + 11 * MS_HOUR);
     const w = sim.player.wellbeing;
@@ -151,9 +152,10 @@ describe('played careers', () => {
   });
 
   it('half a year of looking after yourself ends fitter, sounder, happier and readier than one of only sleeping well', () => {
-    // No day job for either: this compares what the actions do, and a café
-    // shift from nine to four would refuse the two o'clock meal.
-    const lives = [quickSave({ dayJob: false }), quickSave({ dayJob: false })];
+    // No day job for either, and money behind them: this compares what the
+    // actions do, a café shift from nine to four would refuse the two o'clock
+    // meal, and running out of money would decide it instead.
+    const lives = [quickSave({ dayJob: false, wealth: 'inherited' }), quickSave({ dayJob: false, wealth: 'inherited' })];
     for (const sim of lives) sim.advanceTo(at(sim, -1));
     for (let d = 0; d < 180; d++) {
       for (const [i, sim] of lives.entries()) {

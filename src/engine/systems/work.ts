@@ -75,11 +75,14 @@ export function jobOf(person: Person): Job | undefined {
  */
 export function hourlyWage(sim: Simulation, person: Person): Money {
   const state = person.job;
-  if (!state) return 0;
-  const currency = saveCurrency(sim.universe);
-  const floor = minimumWageAt(state.cityId, sim.now, currency);
+  return state ? wageAt(state.cityId, state.jobId, saveCurrency(sim.universe), sim.now) : 0;
+}
+
+/** The same, for a job in a town at a date, in a currency: for a screen with no save yet. */
+export function wageAt(cityId: string, jobId: string, currency: string, at: Instant): Money {
+  const floor = minimumWageAt(cityId, at, currency);
   const inSave = floor.currency === currency ? floor.hourly : exchange(floor.hourly, floor.currency, currency) ?? floor.hourly;
-  return Math.round(inSave * jobFor(state.jobId).overMinimum);
+  return Math.round(inSave * jobFor(jobId).overMinimum);
 }
 
 /**
@@ -89,10 +92,13 @@ export function hourlyWage(sim: Simulation, person: Person): Money {
  */
 export function withholdingRate(sim: Simulation, person: Person): number {
   const state = person.job;
-  if (!state) return 0;
-  const yearly = hourlyWage(sim, person) * weeklyHours(jobFor(state.jobId)) * 52;
-  const usd = exchange(yearly, saveCurrency(sim.universe), 'USD') ?? yearly;
-  return computeAnnualTax(usd, state.cityId, sim.now).effectiveRate;
+  return state ? withholdingAt(state.cityId, state.jobId, saveCurrency(sim.universe), sim.now) : 0;
+}
+
+export function withholdingAt(cityId: string, jobId: string, currency: string, at: Instant): number {
+  const yearly = wageAt(cityId, jobId, currency, at) * weeklyHours(jobFor(jobId)) * 52;
+  const usd = exchange(yearly, currency, 'USD') ?? yearly;
+  return computeAnnualTax(usd, cityId, at).effectiveRate;
 }
 
 /** Takes the job their past leads to, in the town they are in, from now. */
