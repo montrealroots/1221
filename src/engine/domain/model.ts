@@ -449,10 +449,15 @@ export interface Preferences {
  * come in charged up to the next midnight, as that build would have left
  * them, and their waking day starts there.
  *
+ * 89 keeps a save's money in the currency of the country the character
+ * started in (`SaveMeta.currency`), where every save before it was kept in
+ * euros. A build at 88 would print a save's krónur as euros, which is why the
+ * number moved. A save from before 89 has no currency and keeps its euros.
+ *
  * `migrate` in `engine/index.ts` says what an older save sheds on the way in,
  * what it keeps as inert JSON, and what it is given.
  */
-export const SAVE_SCHEMA_VERSION = 88;
+export const SAVE_SCHEMA_VERSION = 89;
 
 export interface SaveMeta {
   id: Id;
@@ -478,6 +483,12 @@ export interface SaveMeta {
   migrationInProgress?: { from: number; to: number; startedAt: number };
   backupAvailable: boolean;
   appVersion: string;
+  /**
+   * The currency this save's money is kept in: the one where the character
+   * started, as a real account is. Absent on a save from before 89, which was
+   * kept in euros (`DEFAULT_LEDGER_CURRENCY`); `saveCurrency` reads it.
+   */
+  currency?: string;
 }
 
 /**

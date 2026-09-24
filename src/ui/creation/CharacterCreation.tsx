@@ -10,7 +10,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { Slot } from '@/engine/persistence/adapter';
 import {
-  APP_VERSION, WEALTH_PROFILES, defaultConfig, wealthNote,
+  APP_VERSION, currencyFor, defaultConfig, wealthIn, wealthNote,
   type NewSaveConfig, type StartingWealth,
 } from '@/engine/world/bootstrap';
 import { LocationPicker } from './LocationPicker';
@@ -19,6 +19,7 @@ import {
   CITIES, COUNTRIES, REGIONS, countryOfPlace, isCountryLoaded, loadCountryCities,
 } from '@/engine/content/geography';
 import type { City } from '@/engine/content/geography';
+import { RATES_NOTE } from '@/engine/content/currency';
 import { formatMoney } from '@/engine/core/money';
 import { SAVE_SCHEMA_VERSION } from '@/engine/domain/model';
 import { formatPeople } from '@/engine/world/place';
@@ -812,7 +813,11 @@ function StartingPointStep({ config, set, setConfig }: {
 }) {
   const city = CITIES.get(config.startLocationId);
   const birthplace = CITIES.get(config.homeRegionId);
-  const wealth = WEALTH_PROFILES[config.wealth];
+  const cur = currencyFor(config.startLocationId);
+  const wealth = wealthIn(config.wealth, cur);
+  const country = city ? COUNTRIES.get(city.countryId) : undefined;
+  const currencyOfCountry = country?.currency.toUpperCase() ?? cur;
+  const countryCurrencyName = country ? `the ${country.currencyName.toLowerCase()}` : "the local money";
 
   return (
     <div className="col gap-5">
@@ -877,6 +882,11 @@ function StartingPointStep({ config, set, setConfig }: {
           <div>
             <h2>What Is Yours</h2>
             <p className="muted small">The money in your own name on the first morning.</p>
+            <p className="muted small">
+              {cur === currencyOfCountry
+                ? `Kept in ${countryCurrencyName} (${cur}), the money where you start, and it stays in it wherever you go. ${RATES_NOTE}`
+                : `Kept in euros: SLATE has no rate for ${countryCurrencyName} (${currencyOfCountry}) to convert your money into.`}
+            </p>
           </div>
         </div>
         <div className="field">
@@ -889,11 +899,11 @@ function StartingPointStep({ config, set, setConfig }: {
         <div className="grid grid-3" style={{ marginTop: 'var(--s4)' }}>
           <div className="stat">
             <span className="stat-label">Checking</span>
-            <span className="stat-value mono">{formatMoney(wealth.checking, { cents: false })}</span>
+            <span className="stat-value mono">{formatMoney(wealth.checking, cur, { cents: false })}</span>
           </div>
           <div className="stat">
             <span className="stat-label">Savings</span>
-            <span className="stat-value mono">{formatMoney(wealth.savings, { cents: false })}</span>
+            <span className="stat-value mono">{formatMoney(wealth.savings, cur, { cents: false })}</span>
           </div>
           <div className="stat">
             <span className="stat-label">Credit Score</span>
@@ -909,7 +919,8 @@ function ReviewStep({ config }: { config: NewSaveConfig }) {
   const city = CITIES.get(config.startLocationId);
   const birthplace = CITIES.get(config.homeRegionId);
   const age = ageAtStart(config);
-  const wealth = WEALTH_PROFILES[config.wealth];
+  const cur = currencyFor(config.startLocationId);
+  const wealth = wealthIn(config.wealth, cur);
 
   return (
     <div className="col gap-5">
@@ -951,8 +962,8 @@ function ReviewStep({ config }: { config: NewSaveConfig }) {
         <div className="card">
           <div className="eyebrow" style={{ marginBottom: 'var(--s3)' }}>Starting Point</div>
           <Line label="Where You Live" value={city ? placeLine(city) : '—'} />
-          <Line label="Checking" value={formatMoney(wealth.checking, { cents: false })} />
-          <Line label="Savings" value={formatMoney(wealth.savings, { cents: false })} />
+          <Line label="Checking" value={formatMoney(wealth.checking, cur, { cents: false })} />
+          <Line label="Savings" value={formatMoney(wealth.savings, cur, { cents: false })} />
           <Line label="Credit Score" value={String(wealth.creditScore)} />
         </div>
       </div>

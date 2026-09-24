@@ -123,8 +123,8 @@ export function Meter({
   );
 }
 
-export function MoneyText({ amount, compact, signed }: { amount: Money; compact?: boolean; signed?: boolean }) {
-  const text = compact ? formatMoneyCompact(amount) : formatMoney(amount);
+export function MoneyText({ amount, currency, compact, signed }: { amount: Money; currency: string; compact?: boolean; signed?: boolean }) {
+  const text = compact ? formatMoneyCompact(amount, currency) : formatMoney(amount, currency);
   const cls = amount > 0 ? 'positive' : amount < 0 ? 'negative' : 'muted';
   return (
     <span className={`mono ${signed ? cls : ''}`}>

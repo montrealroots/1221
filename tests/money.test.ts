@@ -1,7 +1,9 @@
 import { describe, expect, it } from 'vitest';
 import {
-  CURRENCY_SYMBOL, applyRate, formatMoney, formatMoneyCompact, splitByWeights, splitEvenly, units,
+  applyRate, currencySymbol, formatMoney, formatMoneyCompact, saveCurrency, splitByWeights, splitEvenly, units,
 } from '@/engine/core/money';
+import { createSave, defaultConfig } from '@/engine';
+import { currencyFor, wealthIn } from '@/engine/world/bootstrap';
 import { Ledger, type Account, type LedgerHost, type LedgerTransaction } from '@/engine/core/ledger';
 import { quickSave } from '@/engine';
 import { MS_DAY } from '@/engine/core/time';
@@ -46,21 +48,40 @@ describe('money', () => {
   });
 
   it('formats compactly at scale', () => {
-    expect(formatMoney(199_99)).toBe('€199.99');
-    expect(formatMoneyCompact(1_500_000_00)).toBe('€1.5M');
-    expect(formatMoneyCompact(2_400_000_000_00)).toBe('€2.4B');
+    expect(formatMoney(199_99, 'EUR')).toBe('€199.99');
+    expect(formatMoneyCompact(1_500_000_00, 'EUR')).toBe('€1.5M');
+    expect(formatMoneyCompact(2_400_000_000_00, 'EUR')).toBe('€2.4B');
+    expect(formatMoneyCompact(2_400_000_000_00, 'ISK')).toBe('2.4B kr');
   });
 
-  it('is kept in one currency, decided in one place', () => {
+  it('writes each currency the way it is written, from the one table', () => {
     // This formatter printed dollars while every notification the engine wrote
     // printed euros, for the same cents, on the same screen. The symbol is not
-    // typed anywhere any more: it is read back out of the formatter, so the
-    // long form, the compact form and the engine's own sentences cannot again
-    // be three opinions about what a cent is.
-    expect(CURRENCY_SYMBOL).toBe('€');
-    expect(formatMoney(1_000_00)).toContain(CURRENCY_SYMBOL);
-    expect(formatMoneyCompact(1_500_000_00)).toContain(CURRENCY_SYMBOL);
-    expect(formatMoney(199_99)).not.toContain('$');
+    // typed anywhere: it comes out of `content/currency.ts`, so the long form,
+    // the compact form and the engine's own sentences can't be three opinions.
+    expect(currencySymbol('EUR')).toBe('€');
+    expect(formatMoney(1_000_00, 'EUR')).toContain(currencySymbol('EUR'));
+    expect(formatMoney(199_99, 'EUR')).not.toContain('$');
+    // Krónur have no decimals and the symbol goes after.
+    expect(formatMoney(186_000_00, 'ISK')).toBe('186,000 kr');
+    expect(formatMoney(-5_00, 'ISK')).toBe('-5 kr');
+    expect(formatMoney(12_50, 'GBP')).toBe('£12.50');
+  });
+
+  it('keeps a save’s money in the currency of the country it starts in, and one from before 89 in euros', () => {
+    const iceland = createSave(1, 'currency-is', defaultConfig());
+    expect(currencyFor(defaultConfig().startLocationId)).toBe('ISK');
+    expect(saveCurrency(iceland.universe)).toBe('ISK');
+    // Scraping is 1,240 euros in checking, converted at SLATE's rates: 138
+    // krónur and 0.92 euros to the dollar.
+    const checking = iceland.universe.accounts[iceland.player.primaryAccountId!]!;
+    expect(checking.balance).toBe(186_000_00);
+    expect(wealthIn('scraping', 'ISK').checking).toBe(186_000_00);
+    expect(wealthIn('scraping', 'EUR').checking).toBe(1_240_00);
+    // Money is conserved in whatever it is kept in.
+    expect(iceland.ledger.audit()).toEqual([]);
+    const older = { meta: {} };
+    expect(saveCurrency(older)).toBe('EUR');
   });
 });
 

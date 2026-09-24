@@ -22,7 +22,7 @@ import { CITIES } from '@/engine/content/geography';
 import {
   dateKey, formatDate, formatRelative, formatTime, formatWeekdayDate, seasonOf, zoneAbbreviation,
 } from '@/engine/core/time';
-import { formatMoney } from '@/engine/core/money';
+import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { LookRegion, Open, at } from '@/ui/looks';
 
 export function Home() {
@@ -32,6 +32,7 @@ export function Home() {
   const next = useWorld(nextCommitment);
   const soon = useWorld((s) => upcoming(s, 6));
   const worth = useWorld((s) => netWorth(s, s.player.id));
+  const cur = saveCurrency(sim.universe);
   const unread = useWorld(unreadNotifications);
 
   const player = snapshot.player;
@@ -420,19 +421,19 @@ export function Home() {
           <LookRegion className="col gap-3">
             <Stat
               label={primary?.name ?? 'No account'}
-              value={<MoneyText amount={primary?.balance ?? 0} />}
+              value={<MoneyText amount={primary?.balance ?? 0} currency={cur} />}
               look={primary ? at('account', primary.id) : undefined}
             />
             <Stat
               label="Net Worth"
-              value={<MoneyText amount={worth.total} compact />}
-              note={`${formatMoney(worth.cash, { cents: false })} in the bank`}
+              value={<MoneyText amount={worth.total} currency={cur} compact />}
+              note={`${formatMoney(worth.cash, cur, { cents: false })} in the bank`}
               look={at('networth', player.id)}
             />
             {worth.liabilities > 0 && (
               <Stat
                 label="Owed"
-                value={<span className="mono negative">{formatMoney(worth.liabilities, { cents: false })}</span>}
+                value={<span className="mono negative">{formatMoney(worth.liabilities, cur, { cents: false })}</span>}
                 look={at('debt', player.id)}
               />
             )}

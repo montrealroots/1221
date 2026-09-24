@@ -9,7 +9,9 @@
 
 import type { Person, Personality, SaveMeta, SaveUniverse } from '../domain/model';
 import { SAVE_SCHEMA_VERSION } from '../domain/model';
-import { CITIES } from '../content/geography';
+import { CITIES, COUNTRIES } from '../content/geography';
+import { exchange, hasRate } from '../content/currency';
+import { DEFAULT_LEDGER_CURRENCY } from '../core/money';
 import { costOfLiving } from '../content/tax';
 import { addDays, addMonths, instantFromZoned, MS_DAY } from '../core/time';
 import type { Money } from '../core/money';
@@ -123,7 +125,7 @@ export function defaultConfig(): NewSaveConfig {
 }
 
 const WEALTH_PROFILE: Record<StartingWealth, { checking: Money; savings: Money; cardLimit: Money; cardBalance: Money; creditScore: number; note: string }> = {
-  nothing: { checking: 40_00, savings: 0, cardLimit: 0, cardBalance: 0, creditScore: 520, note: 'Forty euros to your name, and no savings behind it.' },
+  nothing: { checking: 40_00, savings: 0, cardLimit: 0, cardBalance: 0, creditScore: 520, note: 'Next to nothing to your name, and no savings behind it.' },
   scraping: { checking: 1_240_00, savings: 300_00, cardLimit: 1_500_00, cardBalance: -840_00, creditScore: 610, note: 'Getting by, with a card you’re carrying a balance on.' },
   modest: { checking: 4_800_00, savings: 6_500_00, cardLimit: 6_000_00, cardBalance: -420_00, creditScore: 690, note: 'A small cushion and clean credit.' },
   comfortable: { checking: 18_000_00, savings: 42_000_00, cardLimit: 20_000_00, cardBalance: 0, creditScore: 748, note: 'Genuinely comfortable, with room to take a risk.' },
@@ -133,6 +135,37 @@ const WEALTH_PROFILE: Record<StartingWealth, { checking: Money; savings: Money; 
 
 export function wealthNote(wealth: StartingWealth): string {
   return WEALTH_PROFILE[wealth].note;
+}
+
+/**
+ * The currency a save that starts in this town keeps its money in: its
+ * country's, as a real account would be, or euros where SLATE has no rate for
+ * that currency and so could not convert the starting money into it.
+ */
+export function currencyFor(cityId: string): string {
+  const city = CITIES.get(cityId);
+  const code = city ? COUNTRIES.get(city.countryId)?.currency : undefined;
+  return code && hasRate(code) ? code.toUpperCase() : DEFAULT_LEDGER_CURRENCY;
+}
+
+/**
+ * A starting-money profile in a save's currency, to the whole unit.
+ *
+ * The profiles are written in euros, the one currency every save used until
+ * schema 89, and are converted at SLATE's rates: "Scraping" in Mosfellsbær is
+ * 186,000 krónur in checking rather than 1,240 of a currency nobody there is
+ * paid in.
+ */
+export function wealthIn(wealth: StartingWealth, currency: string): typeof WEALTH_PROFILE[StartingWealth] {
+  const p = WEALTH_PROFILE[wealth];
+  const convert = (cents: Money): Money => Math.round((exchange(cents, DEFAULT_LEDGER_CURRENCY, currency) ?? cents) / 100) * 100;
+  return {
+    ...p,
+    checking: convert(p.checking),
+    savings: convert(p.savings),
+    cardLimit: convert(p.cardLimit),
+    cardBalance: convert(p.cardBalance),
+  };
 }
 
 // ---------------------------------------------------------------------------
@@ -208,6 +241,7 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveCon
     netWorthLabel: '',
     backupAvailable: false,
     appVersion: APP_VERSION,
+    currency: currencyFor(config.startLocationId),
   };
 
   const universe = emptyUniverse(meta, now, zone, playerId);

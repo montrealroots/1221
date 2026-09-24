@@ -17,7 +17,7 @@ import type { SaveAdapter, Slot } from './persistence/adapter';
 import {
   addDays, formatDate, instantFromZoned, startOfDay, startOfNextDay, zonedParts, MS_DAY, MS_HOUR, MS_MINUTE,
 } from './core/time';
-import { formatMoneyCompact } from './core/money';
+import { formatMoneyCompact, saveCurrency } from './core/money';
 import { clamp } from './core/rng';
 import { plural, titleCaseLabel } from './core/text';
 import { PERFORMER_NOUN, impliedPerformerTitle, isPerformerTitle } from './core/performer';
@@ -31,7 +31,7 @@ import { registerLife } from './systems/life';
 import { registerPlans } from './world/plans';
 import { registerWorld } from './world/world';
 import {
-  createUniverse, defaultConfig, WEALTH_PROFILES, type NewSaveConfig,
+  createUniverse, defaultConfig, wealthIn, type NewSaveConfig,
 } from './world/bootstrap';
 
 export * from './world/bootstrap';
@@ -68,7 +68,7 @@ function armWorldClock(sim: Simulation): void {
 /** Builds the player's starting situation. */
 function populateWorld(sim: Simulation, config: NewSaveConfig): void {
   const player = sim.player;
-  const wealth = WEALTH_PROFILES[config.wealth];
+  const wealth = wealthIn(config.wealth, saveCurrency(sim.universe));
 
   // --- Accounts -----------------------------------------------------------
   const checking = sim.openAccount({
@@ -134,7 +134,7 @@ export function refreshMeta(sim: Simulation): void {
   sim.universe.meta.careerLabel = PERFORMER_NOUN[player.performerTitle];
   sim.universe.meta.locationLabel = CITIES.get(player.currentLocationId)?.name ?? 'Unknown';
   sim.universe.meta.worldDateLabel = formatDate(sim.now, sim.homeZone);
-  sim.universe.meta.netWorthLabel = formatMoneyCompact(worth.total);
+  sim.universe.meta.netWorthLabel = formatMoneyCompact(worth.total, saveCurrency(sim.universe));
   sim.universe.meta.lastPlayedAt = sim.now;
 }
 

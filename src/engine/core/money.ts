@@ -6,6 +6,8 @@
  * the point a rate is applied, so ledgers reconcile to the cent forever.
  */
 
+import { currencyInfo } from '../content/currency';
+
 /** Integer cents. Positive is a credit to the holder, negative a debit. */
 export type Money = number;
 
@@ -79,56 +81,65 @@ export function splitByWeights(amount: Money, weights: readonly number[]): Money
 }
 
 /**
- * The unit the ledger is kept in, and the one place it is decided.
+ * The unit a save's ledger is kept in, and how it is written.
  *
- * The euro, and it took a screenshot to notice. This formatter was written
- * against USD and stayed that way, while every piece of the game that reasons
- * about money came out the other side in euros: `ISK_A_EURO` converts an
- * Icelandic budget to euros so it can be set against a rate card quoted in
- * euros per square meter, `BUILD_COST_CENTS` is what the family put into the
- * lot in euros, and all three of the engine's own notification helpers printed
- * a euro sign. On one boot, fourteen of fourteen money-bearing notifications
- * said € and the panel beside them said $ for the same number.
+ * Each save keeps its money in the currency of the country the character
+ * started in, the way a real bank account is held in one currency whoever
+ * holds it and wherever they later go: somebody starting out in Mosfellsbær is
+ * paid and billed in krónur. `SaveMeta.currency` records it, and every
+ * figure is written with the currency passed in by the caller, never a
+ * module-wide one: a save's currency is the save's, and there is no shared
+ * mutable state between saves (`SaveUniverse`).
  *
- * The dollar was never a decision. It is what `dollars()` and `toDollars()`
- * below are left over from, and they are the last of a codebase this one was
- * cut out of.
+ * It was the euro for every save until schema 89, and before that the dollar
+ * by accident: this formatter was written against USD while everything that
+ * reasoned about money came out in euros, and on one boot fourteen of
+ * fourteen money-bearing notifications said € while the panel beside them
+ * said $ for the same number. A save from before 89 keeps the euros it was
+ * written in (`DEFAULT_LEDGER_CURRENCY`).
+ *
+ * Minor units are always hundredths of the unit, even for currencies written
+ * without decimals, so the ledger's arithmetic never changes with the money;
+ * only the writing does. How each currency is written is `content/currency.ts`.
  *
  * NOT to be confused with the gazetteer's own unit. `content/currency.ts`
- * carries `unitsPerUsd` for 252 countries so a player standing in Tokyo sees
- * yen, and its rents and cost-of-living figures are quoted in US dollars.
- * That atlas is internally consistent, it is a reference rather than a
- * balance, and nothing in it is ever debited from an account — checked, and
- * the check is the only reason the two can be different units safely.
+ * carries `unitsPerUsd` for the currencies it has rates for, and the atlas's
+ * rents and cost-of-living figures are quoted in US dollars. They become a
+ * save's currency only through `exchange` there.
  */
-export const LEDGER_CURRENCY = 'EUR';
+export const DEFAULT_LEDGER_CURRENCY = 'EUR';
 
-const withCents = new Intl.NumberFormat('en-US', {
-  style: 'currency', currency: LEDGER_CURRENCY, minimumFractionDigits: 2, maximumFractionDigits: 2,
-});
-const whole = new Intl.NumberFormat('en-US', {
-  style: 'currency', currency: LEDGER_CURRENCY, minimumFractionDigits: 0, maximumFractionDigits: 0,
-});
-
-/** The ledger's symbol on its own, for the places that build a string by hand. */
-export const CURRENCY_SYMBOL = whole.format(0).replace(/[\d.,\s]/g, '');
-
-export function formatMoney(cents: Money, opts: { cents?: boolean } = {}): string {
-  const showCents = opts.cents ?? Math.abs(cents) < 100_000_00;
-  return (showCents ? withCents : whole).format(cents / 100);
+export function formatMoney(cents: Money, currency: string, opts: { cents?: boolean } = {}): string {
+  const info = currencyInfo(currency);
+  const showCents = info.decimals > 0 && (opts.cents ?? Math.abs(cents) < 100_000_00);
+  const digits = showCents ? info.decimals : 0;
+  const number = (Math.abs(cents) / 100).toLocaleString('en-US', { minimumFractionDigits: digits, maximumFractionDigits: digits });
+  const sign = cents < 0 ? '-' : '';
+  return info.symbolAfter ? `${sign}${number} ${info.symbol}` : `${sign}${info.symbol}${number}`;
 }
 
-/** Compact display for large sums: €1.2M, €340K, €4.8B. */
-export function formatMoneyCompact(cents: Money): string {
+/** Compact display for large sums: €1.2M, €340K, 4.8B kr. */
+export function formatMoneyCompact(cents: Money, currency: string): string {
+  const info = currencyInfo(currency);
   const v = Math.abs(cents) / 100;
   const sign = cents < 0 ? '-' : '';
-  const s = CURRENCY_SYMBOL;
-  if (v >= 1_000_000_000) return `${sign}${s}${(v / 1_000_000_000).toFixed(v >= 10_000_000_000 ? 0 : 1)}B`;
-  if (v >= 1_000_000) return `${sign}${s}${(v / 1_000_000).toFixed(v >= 10_000_000 ? 0 : 1)}M`;
-  if (v >= 10_000) return `${sign}${s}${Math.round(v / 1000)}K`;
-  return formatMoney(cents, { cents: v < 100 });
+  const put = (n: string) => (info.symbolAfter ? `${sign}${n} ${info.symbol}` : `${sign}${info.symbol}${n}`);
+  if (v >= 1_000_000_000) return put(`${(v / 1_000_000_000).toFixed(v >= 10_000_000_000 ? 0 : 1)}B`);
+  if (v >= 1_000_000) return put(`${(v / 1_000_000).toFixed(v >= 10_000_000 ? 0 : 1)}M`);
+  if (v >= 10_000) return put(`${Math.round(v / 1000)}K`);
+  return formatMoney(cents, currency, { cents: v < 100 });
 }
 
-export function formatSignedMoney(cents: Money): string {
-  return `${cents > 0 ? '+' : ''}${formatMoney(cents)}`;
+/** The symbol a currency is written with, on its own. */
+export function currencySymbol(currency: string): string {
+  return currencyInfo(currency).symbol;
+}
+
+export function formatSignedMoney(cents: Money, currency: string): string {
+  return `${cents > 0 ? '+' : ''}${formatMoney(cents, currency)}`;
+}
+
+/** The currency a save's money is kept in, euros for one from before 89. */
+export function saveCurrency(universe: { meta: { currency?: string } }): string {
+  return universe.meta.currency ?? DEFAULT_LEDGER_CURRENCY;
 }
