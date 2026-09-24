@@ -15,9 +15,11 @@
 
 import { chromium } from 'playwright';
 import { writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { launchOptions } from './browser.mjs';
 
 const BASE = process.env.SLATE_URL ?? 'http://localhost:4180';
-const CHROME = process.env.CHROMIUM_PATH ?? '/opt/pw-browsers/chromium-1194/chrome-linux/chrome';
 const MAX_DEPTH = Number(process.argv.slice(2).find((a) => /^\d+$/.test(a)) ?? 4);
 const CHECK = process.argv.includes('--check');
 
@@ -31,7 +33,7 @@ const CHECK = process.argv.includes('--check');
  */
 const DEAD_ALLOWED = 9;
 
-const browser = await chromium.launch({ executablePath: CHROME });
+const browser = await chromium.launch(launchOptions());
 const page = await browser.newPage({ viewport: { width: 1440, height: 950 } });
 
 const problems = [];
@@ -93,7 +95,7 @@ const onHome = await page.getByRole('heading', { level: 1 }).first().textContent
 console.log(`Arrived at: ${onHome?.trim() ?? '(nowhere)'}\n`);
 if (!/^Good (Morning|Afternoon|Evening|Night),/.test(onHome?.trim() ?? '')) {
   console.log('Never reached Home — nothing below this line means anything.');
-  await page.screenshot({ path: '/tmp/drill-stuck.png' });
+  await page.screenshot({ path: join(tmpdir(), 'drill-stuck.png') });
 }
 
 // --- how much of Home is live --------------------------------------------
@@ -214,7 +216,7 @@ for (let index = 0; index < nounCount; index++) {
 }
 
 console.log(lines.join('\n'));
-writeFileSync('/tmp/drill-report.txt', lines.join('\n'), 'utf8');
+writeFileSync(join(tmpdir(), 'drill-report.txt'), lines.join('\n'), 'utf8');
 console.log(`\n${seen.size} distinct looks reached by pressing.`);
 console.log(problems.length === 0 ? '\nNo problems.' : `\n${problems.length} problems:\n${problems.map((p) => `  ${p}`).join('\n')}`);
 await browser.close();

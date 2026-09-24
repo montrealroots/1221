@@ -7,6 +7,7 @@
 
 import { chromium } from 'playwright';
 import { mkdirSync } from 'node:fs';
+import { launchOptions } from './browser.mjs';
 
 const BASE = process.env.SLATE_URL ?? 'http://localhost:4173';
 const OUT = process.argv[2] ?? 'screenshots';
@@ -14,9 +15,7 @@ const WIDTH = Number(process.env.WIDTH ?? 1280);
 const HEIGHT = Number(process.env.HEIGHT ?? 900);
 mkdirSync(OUT, { recursive: true });
 
-const browser = await chromium.launch({
-  executablePath: process.env.CHROMIUM_PATH ?? '/opt/pw-browsers/chromium-1194/chrome-linux/chrome',
-});
+const browser = await chromium.launch(launchOptions());
 const page = await browser.newPage({ viewport: { width: WIDTH, height: HEIGHT } });
 page.on('pageerror', (e) => console.log('PAGE ERROR:', String(e).slice(0, 300)));
 

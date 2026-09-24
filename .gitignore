@@ -9,12 +9,13 @@ coverage
 .vite
 
 # Screenshots produced by tools/screenshot.mjs, tools/ui-audit.mjs,
-# tools/text-caps.mjs and tools/walkthrough.mjs. Regenerable from the tools, so they are not carried
-# in the repository.
+# tools/text-caps.mjs, tools/walkthrough.mjs and tools/cohesion-walk.mjs.
+# Regenerable from the tools, so they are not carried in the repository.
 walkthrough/
 screenshots/
 ui-audit/
 text-caps/
+cohesion-walk/
 
 # Throwaway measurement scripts. A probe has to sit inside the repository for
 # vite-node to resolve `@/engine` and for playwright to find its browser, so the

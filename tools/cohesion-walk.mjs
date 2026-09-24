@@ -23,6 +23,7 @@
  */
 import { chromium } from 'playwright';
 import { mkdirSync } from 'node:fs';
+import { launchOptions } from './browser.mjs';
 
 const BASE = process.env.SLATE_URL ?? 'http://localhost:4173';
 const OUT = process.env.SLATE_WALK_OUT ?? 'cohesion-walk';
@@ -44,7 +45,7 @@ const note = (screen, kind, detail) => {
   findings.push({ screen, kind, detail });
 };
 
-const browser = await chromium.launch({ executablePath: process.env.CHROMIUM_PATH ?? '/opt/pw-browsers/chromium-1194/chrome-linux/chrome' });
+const browser = await chromium.launch(launchOptions());
 const page = await browser.newPage({ viewport: { width: 1280, height: 800 } });
 let current = 'startup';
 page.on('pageerror', (e) => note(current, 'page error', String(e).slice(0, 300)));

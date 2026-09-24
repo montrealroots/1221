@@ -19,7 +19,8 @@
  */
 
 import { chromium } from 'playwright';
-import { mkdirSync, writeFileSync, existsSync } from 'node:fs';
+import { mkdirSync, writeFileSync } from 'node:fs';
+import { launchOptions } from './browser.mjs';
 
 const BASE = process.env.SLATE_URL ?? 'http://localhost:4173';
 const OUT = 'text-caps';
@@ -283,11 +284,10 @@ const PROBE = () => {
   };
 };
 
-// The container this was written in keeps its browser at a fixed path. Fall
-// back to whatever Playwright installed when that path is not there, so the
-// sweep runs on a developer's own machine as well as in CI.
-const AT = process.env.CHROMIUM_PATH ?? '/opt/pw-browsers/chromium-1194/chrome-linux/chrome';
-const browser = await chromium.launch(existsSync(AT) ? { executablePath: AT } : {});
+// The container this was written in keeps its browser at a fixed path, and
+// this sweep fell back to whatever Playwright installed when that path was not
+// there. The other browser tools do the same now, through tools/browser.mjs.
+const browser = await chromium.launch(launchOptions());
 
 let totalFaults = 0;
 const summary = [];
