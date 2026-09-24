@@ -496,6 +496,16 @@ function placeLine(city: City): string {
 }
 
 /**
+ * A place as Review's summary writes it: the town and the country. The full
+ * line, region included, is on the steps that chose it; on Review it ran too
+ * long for the Starting Point card and broke over two lines.
+ */
+function shortPlace(city: City): string {
+  const country = COUNTRIES.get(city.countryId)?.name;
+  return [city.name, country === city.name ? undefined : country].filter(Boolean).join(', ');
+}
+
+/**
  * Why a trait can't be picked right now, or undefined when it can, or is
  * already held and can be put down. A trait it clashes with comes first,
  * because putting one of those down is the way to it; being full comes second.
@@ -1046,20 +1056,20 @@ function ReviewStep({ config }: { config: NewSaveConfig }) {
         <div className="card">
           <div className="eyebrow" style={{ marginBottom: 'var(--s3)' }}>Identity</div>
           <Line label="Legal Name" value={[config.firstName, config.middleName, config.lastName].filter(Boolean).join(' ')} />
-          <Line label="Pronouns" value={config.pronouns} />
+          <Line label="Pronouns" value={pronounsLabel(config.pronouns)} />
           <Line label="Billed As" value={billedAs(config)} />
           <Line
             label="Race Or Ethnicity"
             value={describeEthnicity(config.raceEthnicity, config.raceEthnicityOwn)}
           />
           <Line label="Born" value={`${MONTHS[config.birthMonth - 1]} ${config.birthDay}, ${config.birthYear}`} />
-          <Line label="Place Of Birth" value={birthplace ? placeLine(birthplace) : '—'} />
+          <Line label="Place Of Birth" value={birthplace ? shortPlace(birthplace) : '—'} />
           <Line label="Citizenship" value={citizenshipName(config) ?? '—'} />
         </div>
 
         <div className="card">
           <div className="eyebrow" style={{ marginBottom: 'var(--s3)' }}>Starting Point</div>
-          <Line label="Where You Live" value={city ? placeLine(city) : '—'} />
+          <Line label="Where You Live" value={city ? shortPlace(city) : '—'} />
           <Line label="Checking" value={formatMoney(wealth.checking, cur, { cents: false })} />
           <Line label="Savings" value={formatMoney(wealth.savings, cur, { cents: false })} />
           <Line label="Credit Record" value={scoreIsANumberIn(config.startLocationId) ? String(wealth.creditScore) : scoreWord(wealth.creditScore)} />
@@ -1126,13 +1136,24 @@ function namesOf(all: readonly Interest[], chosen: readonly string[]): string {
   return named.length > 0 ? named.join(', ') : '—';
 }
 
+/**
+ * One line of Review: the label on the left, kept on one line, and the value
+ * against the right edge, wrapping there if it must. The label used to shrink
+ * with the value, so a long place broke "Where You Live" over two lines and
+ * sat its own two lines in the middle of the card.
+ */
 function Line({ label, value }: { label: string; value: string }) {
   return (
-    <div className="row-between" style={{ padding: '3px 0' }}>
-      <span className="small muted">{label}</span>
-      <span className="small strong">{value}</span>
+    <div className="row-between" style={{ padding: '3px 0', gap: 'var(--s3)', alignItems: 'baseline' }}>
+      <span className="small muted" style={{ whiteSpace: 'nowrap', flexShrink: 0 }}>{label}</span>
+      <span className="small strong" style={{ textAlign: 'right' }}>{value}</span>
     </div>
   );
+}
+
+/** Pronouns as a label writes them: "They/Them", "She/Her". */
+function pronounsLabel(pronouns: string): string {
+  return pronouns.split('/').map((one) => one.charAt(0).toUpperCase() + one.slice(1)).join('/');
 }
 
 // ---------------------------------------------------------------------------

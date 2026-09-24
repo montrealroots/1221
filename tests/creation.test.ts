@@ -259,6 +259,16 @@ describe('Review', () => {
       .toContain('<Line key={axis.key} label={axis.label} value={outOf(config.personality[axis.key])} />');
     expect(step, 'Review stopped listing the traits').toContain('config.personalityTraits.map((id) =>');
   });
+
+  it('writes the pronouns as a label, and keeps each label on one line with its value on the right', () => {
+    // It printed they/them, and a long place broke Where You Live over two
+    // lines and sat its own two lines in the middle of the card.
+    expect(stepSource('function ReviewStep')).toContain('value={pronounsLabel(config.pronouns)}');
+    expect(stepSource('function ReviewStep')).toContain("value={city ? shortPlace(city) : '—'}");
+    const line = stepSource('function Line(');
+    expect(line).toContain("whiteSpace: 'nowrap'");
+    expect(line).toContain("textAlign: 'right'");
+  });
 });
 
 describe('what you did before acting', () => {
