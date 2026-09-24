@@ -12,6 +12,7 @@ import type { Money } from '../core/money';
 import type { Account, LedgerTransaction } from '../core/ledger';
 import type { ScheduledItem } from '../core/scheduler';
 import type { HistoryRecord } from '../core/audit';
+import type { JobState } from '../systems/work';
 import type { IdNamespace } from '../core/ids';
 import type { PerformerTitle } from '../core/performer';
 
@@ -131,6 +132,13 @@ export interface Person {
    * person look says it back. A save from before it was asked has none.
    */
   beforeActing?: string;
+  /**
+   * The job that pays the rent between roles (`systems/work.ts`): which one,
+   * where, the hours worked since payday, the shifts missed lately, and how
+   * far ahead the rota is on the calendar. Given to every character from
+   * schema 89.
+   */
+  job?: JobState;
 
   wellbeing: Wellbeing;
 

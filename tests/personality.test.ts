@@ -85,9 +85,18 @@ function pickFor(knob: PersonalityKnob, way: 'down' | 'up'): string[] {
 }
 
 /** A save for a case, born in a given year. */
+/**
+ * A character to measure a personality on, without a day job.
+ *
+ * These years isolate what a disposition or a trait does, and they were set
+ * before anybody worked. With the café job every new save gets, four of the
+ * bars failed by a point or less (morale 78.8 at sixty against eighty), and
+ * the worst four for sleep at seventy went to bed on empty. Working life has
+ * its own year in `tests/work.test.ts`.
+ */
 function build(c: Case, birthYear: number, seed: string): Simulation {
   return quickSave({
-    personality: { ...defaultPersonality(), ...c.personality }, personalityTraits: c.traits, birthYear,
+    personality: { ...defaultPersonality(), ...c.personality }, personalityTraits: c.traits, birthYear, dayJob: false,
   }, seed);
 }
 

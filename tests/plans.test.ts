@@ -100,7 +100,8 @@ describe('making a plan', () => {
 
 describe('calling one off', () => {
   it('takes a plan of your own off the calendar', () => {
-    const sim = quickSave({}, 'cancel-mine');
+    // No day job, so the plan is the only thing ahead.
+    const sim = quickSave({ dayJob: false }, 'cancel-mine');
     const made = put(sim, { title: 'Dinner', at: sim.now + MS_DAY });
     expect(callOff(sim, made.id!).ok).toBe(true);
     expect(upcoming(sim, 5)).toHaveLength(0);

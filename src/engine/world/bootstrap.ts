@@ -86,6 +86,11 @@ export interface NewSaveConfig {
   background: string;
   /** What they did before acting, by id from `content/backgrounds.ts`: the body they start with. */
   beforeActing: string;
+  /**
+   * Whether they keep a day job (`systems/work.ts`). Most actors do; one who
+   * starts with enough money behind them needn't.
+   */
+  dayJob: boolean;
 
   /** Starting point */
   startLocationId: string;
@@ -117,6 +122,7 @@ export function defaultConfig(): NewSaveConfig {
     interests: ['film', 'television'], genres: [],
     background: '',
     beforeActing: DEFAULT_BEFORE_ACTING,
+    dayJob: true,
     startLocationId: DEFAULT_CITY_ID,
     wealth: 'scraping',
     // Monday 5 January 2026, the first working Monday of the year.

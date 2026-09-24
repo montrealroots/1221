@@ -20,6 +20,7 @@ import { formatTime, instantFromZoned, startOfDay, startOfNextDay, zonedParts, M
 import { ceilingAt, recoveryFactorAt } from '../content/lifespan';
 import { personalityOf } from './personality';
 import { LOVED_MOOD, LOVED_RELIEF, lovedIn } from './enjoyment';
+import { onShift } from './work';
 
 // ---------------------------------------------------------------------------
 // Wellbeing model
@@ -423,6 +424,9 @@ const SPENT = 25;
  */
 export function lookAfterRefusal(sim: Simulation, action: LookAfter): string | undefined {
   const w = sim.player.wellbeing;
+  // On a shift the hour is the job's (`systems/work.ts`).
+  const shift = onShift(sim);
+  if (shift) return `You’re at work until ${formatTime(shift.at + (shift.durationMinutes ?? 0) * 60_000, sim.zone)}.`;
   if (action === 'eat' && w.nourishment >= FULL) return 'You aren’t hungry.';
   if (action === 'wash' && (w.hygiene ?? 80) >= CLEAN) return 'You’re already clean.';
   if (action === 'exercise' && w.energy < SPENT) return 'You’re too tired to train. Sleep first.';

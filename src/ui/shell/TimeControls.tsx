@@ -19,6 +19,7 @@ import {
   type Instant,
 } from '@/engine/core/time';
 import { PLAN_KIND } from '@/engine/world/plans';
+import { SHIFT_KIND } from '@/engine/systems/work';
 import { lovedIn } from '@/engine/systems/enjoyment';
 import { INTEREST_BY_ID } from '@/engine/content/interests';
 import { spokenList } from '@/ui/looks/words';
@@ -230,6 +231,9 @@ function DueNow({ item, wanted, onGo, onStay, onClose }: {
   const { sim } = useGame();
   const zone = sim.zone;
   const mine = item.kind === PLAN_KIND;
+  // A shift can be walked away from too, and it costs more than a plan: no
+  // pay, and a mark against the job (`systems/work.ts`).
+  const shift = item.kind === SHIFT_KIND;
   const runs = item.durationMinutes ?? 60;
   const ahead = Math.max(0, wanted - item.at);
 
@@ -240,9 +244,9 @@ function DueNow({ item, wanted, onGo, onStay, onClose }: {
       footer={(
         <>
           <button className="btn btn-ghost" onClick={onClose}>Stand Here</button>
-          {mine && (
+          {(mine || shift) && (
             <button className="btn" onClick={onStay}>
-              Skip It
+              {shift ? 'Call In Sick' : 'Skip It'}
             </button>
           )}
           <button className="btn btn-primary" onClick={onGo}>Go</button>
@@ -254,7 +258,12 @@ function DueNow({ item, wanted, onGo, onStay, onClose }: {
         {' '}Going takes {formatDuration(runs * 60_000)} of the day
         {ahead > 0 ? `, and the clock carries on to ${formatDateTime(wanted, zone)} after.` : '.'}
       </p>
-      {!mine && (
+      {shift && (
+        <p className="small muted">
+          Calling in sick costs the shift’s pay, and three missed in four weeks costs the job.
+        </p>
+      )}
+      {!mine && !shift && (
         <p className="small muted">
           This one isn’t yours to walk away from — it’s the world’s. Go, or leave the clock where it is.
         </p>

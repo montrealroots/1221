@@ -337,7 +337,9 @@ describe('the waking day', () => {
     // no sleep on record and give a night nobody chose on top.
     const dials = ['energy', 'sleepDebt', 'stress', 'morale'] as const;
     for (const bedtime of [23, 1, 16]) {
-      const sim = quickSave({}, `waking-once-${bedtime}`);
+      // No day job: a shift at the wake would put a morning's work on the
+      // night being compared.
+      const sim = quickSave({ dayJob: false }, `waking-once-${bedtime}`);
       for (let night = 1; night <= 3; night += 1) {
         sim.advanceTo(next(sim, bedtime));
         Object.assign(sim.player.wellbeing, { energy: 10, sleepDebt: 20, stress: 50, morale: 50 });
@@ -1122,7 +1124,8 @@ describe('the calendar', () => {
   });
 
   it('does not treat back-to-back commitments as a collision', () => {
-    const sim = quickSave();
+    // No day job, so the only commitments are the test's own.
+    const sim = quickSave({ dayJob: false });
     sim.onSchedule('test.back_to_back', () => undefined);
     const at = sim.now + 5 * MS_DAY;
     sim.schedule({

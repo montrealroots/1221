@@ -29,6 +29,7 @@ import { CITIES } from './content/geography';
 import { netWorth } from './systems/finance';
 import { registerLife } from './systems/life';
 import { registerPlans } from './world/plans';
+import { armWork, registerWork, startWork } from './systems/work';
 import { registerWorld } from './world/world';
 import {
   createUniverse, defaultConfig, wealthIn, type NewSaveConfig,
@@ -46,6 +47,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerLife(sim);
   registerWorld(sim);
   registerPlans(sim);
+  registerWork(sim);
 }
 
 /** Recurring world processes every save needs running. */
@@ -122,6 +124,7 @@ function populateWorld(sim: Simulation, config: NewSaveConfig): void {
   }
 
   armWorldClock(sim);
+  if (config.dayJob) startWork(sim, player);
 }
 
 /** Keeps the save-slot summary in step with the world. */
@@ -209,6 +212,8 @@ export function loadSave(universe: SaveUniverse): Simulation {
       label: 'World Simulation', category: 'system', priority: 96,
     });
   }
+  // Anybody with a job has their rota two weeks out and a payday ahead.
+  armWork(sim);
   return sim;
 }
 
@@ -517,6 +522,21 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     }
     if (paid > 0) {
       steps.push(`Kept ${plural(paid, 'person', 'people')} from being charged twice for the rest of today.`);
+    }
+  }
+
+  // 89 gave every new character a day job. A save from before it is given the
+  // one a character with no answer to Before Acting has, in the town they
+  // are in, starting now; `loadSave` puts its rota and payday on the calendar.
+  // Without it such a save would be the one life with nothing coming in.
+  if (from < 89) {
+    const worker = universe.people?.[universe.playerId];
+    if (worker && !worker.job) {
+      worker.job = {
+        jobId: worker.beforeActing ?? 'school', cityId: worker.currentLocationId, since: universe.now,
+        unpaid: [], missed: [], rotaThrough: universe.now,
+      };
+      steps.push('Gave the character a day job.');
     }
   }
 

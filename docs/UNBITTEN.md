@@ -86,9 +86,10 @@ part the tool cannot see.
   Riser's "No use at all after nine at night", every cost about other people,
   and Resilient's illness and injury are not charged, and Early Riser and a
   few others help and cost nothing in play. The Traits card says so.
-- **The tax engine is a screen.** Real, correct, and read by one thing: the
-  place card, which works out what a reference wage would be taxed at and prints
-  it. Nothing taxes a wage.
+- **The tax engine taxes wages and nothing else.** It was a screen, read only
+  by the place card, until the day job: payday withholds income and payroll
+  tax through it (`systems/work.ts`). Its sales, property and vehicle rules are
+  still read by nothing, because nothing is bought, owned or driven.
 - **The gazetteer still carries the film calibration.** Every hand-calibrated
   city has an `industryPresence` figure, and the place card and Home print it
   as Film and Television work. Nothing else reads it. It is reference data, so

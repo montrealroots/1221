@@ -16,7 +16,7 @@ import {
 } from '../core/time';
 import { CITIES } from '../content/geography';
 
-export type CalendarCategory = 'personal' | 'holiday' | 'system';
+export type CalendarCategory = 'personal' | 'work' | 'holiday' | 'system';
 
 export interface CalendarLegendEntry {
   category: CalendarCategory;
@@ -34,6 +34,7 @@ export interface CalendarLegendEntry {
  */
 export const CALENDAR_LEGEND: readonly CalendarLegendEntry[] = [
   { category: 'personal', label: 'Personal', colour: '#a86b8c', description: 'Time that’s yours.' },
+  { category: 'work', label: 'Work', colour: '#6b8ca8', description: 'Shifts at the job that pays the rent, and payday.' },
   { category: 'holiday', label: 'Holiday', colour: '#8c8c8c', description: 'Public holidays and observances.' },
   { category: 'system', label: 'World', colour: '#6a6a6a', description: 'Background world processing.' },
 ];

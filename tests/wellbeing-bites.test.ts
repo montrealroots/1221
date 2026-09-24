@@ -151,7 +151,9 @@ describe('played careers', () => {
   });
 
   it('half a year of looking after yourself ends fitter, sounder, happier and readier than one of only sleeping well', () => {
-    const lives = [quickSave(), quickSave()];
+    // No day job for either: this compares what the actions do, and a café
+    // shift from nine to four would refuse the two o'clock meal.
+    const lives = [quickSave({ dayJob: false }), quickSave({ dayJob: false })];
     for (const sim of lives) sim.advanceTo(at(sim, -1));
     for (let d = 0; d < 180; d++) {
       for (const [i, sim] of lives.entries()) {
