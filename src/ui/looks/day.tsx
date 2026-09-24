@@ -33,7 +33,7 @@ import { plural, titleCaseLabel } from '@/engine/core/text';
 import {
   MONTH_NAMES, MS_DAY, MS_HOUR, MS_MINUTE, WEEKDAY_NAMES,
   addDays, dateKey, daysBetween, formatDate, formatDuration, formatTime,
-  instantFromZoned, parseDateKey, seasonOf, startOfDay, zoneAbbreviation, zonedParts,
+  instantFromZoned, parseDateKey, seasonOf, startOfDay, startOfNextDay, zoneAbbreviation, zonedParts,
   type Instant, type Season, type TimeZone, type ZonedParts,
 } from '@/engine/core/time';
 import { forecastFor } from '@/engine/systems/weather';
@@ -219,7 +219,10 @@ function dayAt(sim: Simulation, key: string): TheDay | undefined {
   const start = startOfDay(parseDateKey(key, zone), zone);
   if (!Number.isFinite(start) || dateKey(start, zone) !== key) return undefined;
 
-  const end = addDays(start, 1, zone);
+  // The day ends where the next date begins. It was a day added to its start,
+  // which on a day whose clocks skipped midnight was one the next morning, so
+  // the day of the jump listed the next day’s first hour as its own too.
+  const end = startOfNextDay(start, zone);
   // A day either side, so a collision that starts before midnight is seen.
   const around = entriesBetween(sim, start - MS_DAY, end + MS_DAY);
 
@@ -504,7 +507,8 @@ defineLook<TheEntry>('entry', {
 
     const zone = sim.homeZone;
     const start = startOfDay(item.at, zone);
-    const around = entriesBetween(sim, start - MS_DAY, addDays(start, 1, zone) + MS_DAY);
+    const dayEnd = startOfNextDay(start, zone);
+    const around = entriesBetween(sim, start - MS_DAY, dayEnd + MS_DAY);
     const entry = around.find((e) => e.id === id);
     if (!entry) return undefined;
 
@@ -515,7 +519,9 @@ defineLook<TheEntry>('entry', {
         && other.at < end && endOf(other) > entry.at)
       : [];
 
-    const dayEnd = addDays(start, 1, zone);
+    // Where the next date begins, as for the Day look: a day added to the
+    // start of the day of a jump reached into the next day’s first hour, and
+    // "next thing that day" offered something from the day after.
     const next = around.find((other) => other.id !== entry.id
       && other.at >= entry.at && other.at < dayEnd
       && !clashes.some((c) => c.id === other.id));

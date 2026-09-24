@@ -20,7 +20,7 @@
 
 import { normalFor, toFahrenheit, type ClimateType } from '@/engine/content/climate';
 import { CITIES, type City } from '@/engine/content/geography';
-import { MONTH_NAMES, MS_DAY, WEEKDAY_NAMES, instantFromZoned, startOfDay, zonedParts } from '@/engine/core/time';
+import { MONTH_NAMES, MS_DAY, WEEKDAY_NAMES, instantFromZoned, noonOf, startOfDay, zonedParts } from '@/engine/core/time';
 import {
   WEATHER_EMOJI, forecastFor, hoursOn, shootDayWeather, weatherAt, weatherShort,
   type DayWeather, type HourWeather, type WeatherCondition, type WeatherNow,
@@ -117,7 +117,7 @@ function cityFor(sim: Simulation, id: string): City | undefined {
 
 /** The local weekday for a day this far ahead of now. */
 function weekdayAt(sim: Simulation, city: City, offset: number): string {
-  const parts = zonedParts(sim.now + offset * MS_DAY, city.timeZone);
+  const parts = zonedParts(noonOf(sim.now, offset, city.timeZone), city.timeZone);
   return WEEKDAY_NAMES[parts.weekday] ?? 'Today';
 }
 
@@ -305,14 +305,15 @@ defineLook<Ahead>('forecastday', {
     const { city, day, offset } = ahead;
     const unit = unitOf(day);
     const when = offset === 0 ? 'today' : offset === 1 ? 'tomorrow' : `on ${weekdayAt(sim, city, offset)}`;
-    const instant = sim.now + offset * MS_DAY;
+    const instant = noonOf(sim.now, offset, city.timeZone);
 
     const ways: Way[] = [{
       to: at('hours', `${city.id}/${day.dateKey}`),
       label: offset === 0 ? 'The Rest Of Today' : 'Hour By Hour',
       detail: offset === 0
         ? 'The hours you have left of it, one at a time'
-        : `What it does through the day, ${clockSaid(0)} to ${clockSaid(23)}`,
+        // From the day’s first hour, which is one where the clocks skip midnight.
+        : `What it does through the day, ${clockSaid(zonedParts(startOfDay(instant, city.timeZone), city.timeZone).hour)} to ${clockSaid(23)}`,
     }];
     // Either side of it, but only inside the week. Any day resolves — a
     // commitment three weeks out opens into the sky over it — and offering
@@ -321,7 +322,7 @@ defineLook<Ahead>('forecastday', {
     // present, stepping through the days is what a person does; far from it,
     // you got here from the thing that happens on it.
     const nearby = Math.abs(offset) < WEEK;
-    const neighbour = (step: -1 | 1) => forecastFor(sim, city.id, 1, sim.now + (offset + step) * MS_DAY)[0];
+    const neighbour = (step: -1 | 1) => forecastFor(sim, city.id, 1, noonOf(sim.now, offset + step, city.timeZone))[0];
     for (const step of nearby ? ([-1, 1] as const) : []) {
       const beside = neighbour(step);
       if (!beside) continue;
@@ -371,7 +372,7 @@ defineLook<Ahead>('forecastday', {
  * `cityId/dateKey`, the same shape a forecast day uses.
  *
  * Asked for today it gives the hours you have left; asked for any other day it
- * gives all twenty-four. That is not two kinds — it is the same thing, read
+ * gives every hour its clock reads, once. That is not two kinds — it is the same thing, read
  * from where you are standing in it, which is exactly what "the rest of today"
  * means to a person.
  */
@@ -455,16 +456,16 @@ function offsetOfDay(sim: Simulation, city: City, key: string): number | undefin
 function dayOfKey(sim: Simulation, city: City, key: string): { day: DayWeather; offset: number } | undefined {
   const offset = offsetOfDay(sim, city, key);
   if (offset === undefined) return undefined;
-  const day = forecastFor(sim, city.id, 1, sim.now + offset * MS_DAY)[0];
+  const day = forecastFor(sim, city.id, 1, noonOf(sim.now, offset, city.timeZone))[0];
   return day && day.dateKey === key ? { day, offset } : undefined;
 }
 
-/** Where a day’s hours start from: now if it is today, midnight otherwise. */
+/** Where a day’s hours start from: now if it is today, the start of the day otherwise (one in the morning where the clocks skip midnight). */
 function hoursFor(sim: Simulation, city: City, key: string): { hours: HourWeather[]; today: boolean; offset: number } {
   const offset = offsetOfDay(sim, city, key);
   if (offset === undefined) return { hours: [], today: false, offset: -1 };
   const today = offset === 0;
-  const from = today ? sim.now : startOfDay(sim.now + offset * MS_DAY, city.timeZone);
+  const from = today ? sim.now : startOfDay(noonOf(sim.now, offset, city.timeZone), city.timeZone);
   return { hours: hoursOn(sim, city.id, from), today, offset };
 }
 

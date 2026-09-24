@@ -4,7 +4,7 @@ import {
   addDays, addMonths, addYears, ageOn, ageOnDate, dateKey, daysBetween, daysInMonth,
   endOfDay, formatDate, formatDuration, formatTime, instantFromZoned, isLeapYear,
   nextAnniversary, nthWeekdayOfMonth, parseDateKey, sameLocalDay, seasonOf,
-  startOfDay, zoneOffsetMs, zonedParts, MS_DAY, MS_HOUR, MS_MINUTE,
+  startOfDay, startOfNextDay, zoneOffsetMs, zonedParts, MS_DAY, MS_HOUR, MS_MINUTE,
 } from '@/engine/core/time';
 
 const LA = 'America/Los_Angeles';
@@ -44,6 +44,30 @@ describe('the world clock', () => {
       expect(parts.day).toBe(8);
     });
 
+    it('resolves a time in a gap to the end of the gap exactly, whichever side the first guess lands', () => {
+      // The passes that find the offset swing between an instant before the
+      // gap and one after it, and stop on either. Where they stopped after it,
+      // which they do at or east of Greenwich, the walk forward began a minute past
+      // it and returned the reading plus the gap plus a minute: Beirut and
+      // Cairo's day of the jump began at 01:01, and London's 01:30 came out
+      // 02:31. Havana, Santiago, the Azores and Los Angeles, where they stopped
+      // before it, were already exact.
+      const gaps: [string, number, number, number, number][] = [
+        ['America/Havana', 3, 8, 0, 1], ['Asia/Beirut', 3, 29, 0, 1],
+        ['America/Santiago', 9, 6, 0, 1], ['Africa/Cairo', 4, 24, 0, 1],
+        [LA, 3, 8, 2, 3], [LONDON, 3, 29, 1, 2], ['Atlantic/Azores', 3, 29, 0, 1],
+      ];
+      for (const [zone, month, day, from, to] of gaps) {
+        for (const minute of [0, 1, 30, 59]) {
+          const at = instantFromZoned({ year: 2026, month, day, hour: from, minute }, zone);
+          const p = zonedParts(at, zone);
+          expect([p.day, p.hour, p.minute], `${zone} ${from}:${minute}`).toEqual([day, to, 0]);
+          // The first instant after the gap: a minute before it is before the gap.
+          expect(zonedParts(at - MS_MINUTE, zone).hour, `${zone} ${from}:${minute}`).not.toBe(to);
+        }
+      }
+    });
+
     it('resolves a fall-back overlap to the first occurrence', () => {
       // 1 November 2026, 1:30 AM happens twice in Los Angeles.
       const ambiguous = instantFromZoned({ year: 2026, month: 11, day: 1, hour: 1, minute: 30 }, LA);
@@ -74,6 +98,80 @@ describe('the world clock', () => {
       for (const zone of [PHOENIX, TOKYO]) {
         const before = instantFromZoned({ year: 2026, month: 3, day: 7, hour: 9 }, zone);
         expect(addDays(before, 1, zone) - before).toBe(24 * MS_HOUR);
+      }
+    });
+
+    it('finds the start of the next day on a day that began at one', () => {
+      // Havana goes from 23:59:59 on 7 March 2026 straight to 01:00 on the 8th,
+      // so the 8th began at one and the 9th begins at midnight. Adding a day to
+      // the start of the 8th kept the one o'clock.
+      const HAVANA = 'America/Havana';
+      const eighth = instantFromZoned({ year: 2026, month: 3, day: 8, hour: 15 }, HAVANA);
+      expect(zonedParts(startOfDay(eighth, HAVANA), HAVANA).hour).toBe(1);
+      const ninth = startOfNextDay(eighth, HAVANA);
+      expect([zonedParts(ninth, HAVANA).day, zonedParts(ninth, HAVANA).hour]).toEqual([9, 0]);
+      // The day before the jump runs into the eighth at its first instant, one.
+      const seventh = instantFromZoned({ year: 2026, month: 3, day: 7, hour: 15 }, HAVANA);
+      expect(startOfNextDay(seventh, HAVANA)).toBe(startOfDay(eighth, HAVANA));
+      // And the eighth ends where the ninth begins.
+      expect(endOfDay(eighth, HAVANA)).toBe(ninth - 1);
+    });
+
+    it('finds the start of the next day as a day added to today’s start did, wherever today began at midnight', () => {
+      // Every day of 2026 in zones that skip midnight, go back over it, or
+      // change their clocks at another hour, and three that never change them.
+      const zones = [
+        'America/Havana', 'Asia/Beirut', 'America/Santiago', 'Africa/Cairo', 'Atlantic/Azores',
+        LA, LONDON, SYDNEY, 'Australia/Lord_Howe', PHOENIX, TOKYO, 'Atlantic/Reykjavik',
+      ];
+      let differ = 0;
+      for (const zone of zones) {
+        for (let d = 0; d < 365; d++) {
+          const date = new Date(Date.UTC(2026, 0, 1 + d));
+          const noon = instantFromZoned(
+            { year: 2026, month: date.getUTCMonth() + 1, day: date.getUTCDate(), hour: 12 }, zone,
+          );
+          const start = startOfDay(noon, zone);
+          const next = startOfNextDay(noon, zone);
+          expect(zonedParts(next, zone).day, `${zone} ${dateKey(noon, zone)}`).toBe(zonedParts(addDays(noon, 1, zone), zone).day);
+          expect(next, `${zone} ${dateKey(noon, zone)}`).toBe(startOfDay(next, zone));
+          // The rollover asks at the first instant of its day, which on a day
+          // the clocks go back is twenty-five hours from the next.
+          expect(startOfNextDay(start, zone), `${zone} ${dateKey(noon, zone)}`).toBe(next);
+          if (zonedParts(start, zone).hour === 0) {
+            expect(next, `${zone} ${dateKey(noon, zone)}`).toBe(addDays(start, 1, zone));
+          } else {
+            differ += 1;
+          }
+        }
+      }
+      // Havana on 8 March, Beirut and the Azores on 29 March, Santiago on 6
+      // September and Cairo on 24 April, and on no other day here.
+      expect(differ).toBe(5);
+    });
+
+    it('still resolves a date past the end of its month a minute late, as it did', () => {
+      // A reading that overflows its month (31 February) fails the check above
+      // the gap walk and comes back through it a minute late. The spring-forward
+      // fix left that as it was; the handoff records it as open, and this holds
+      // it there until it is fixed on purpose.
+      for (const zone of [TOKYO, LA, 'Atlantic/Reykjavik']) {
+        const overflow = instantFromZoned({ year: 2026, month: 2, day: 31 }, zone);
+        expect(overflow, zone).toBe(instantFromZoned({ year: 2026, month: 3, day: 3 }, zone) + MS_MINUTE);
+      }
+    });
+
+    it('finds the start of the next day after a date a zone skipped outright', () => {
+      // Apia went from 23:59:59 on 29 December 2011 to midnight on the 31st.
+      // The 30th resolves into the 29th, and a next day that was not later
+      // re-armed the rollover at the instant it ran.
+      const APIA = 'Pacific/Apia';
+      for (const hour of [0, 12, 23]) {
+        const at = instantFromZoned({ year: 2011, month: 12, day: 29, hour }, APIA);
+        const next = startOfNextDay(at, APIA);
+        expect(next, String(hour)).toBeGreaterThan(at);
+        const p = zonedParts(next, APIA);
+        expect([p.year, p.month, p.day, p.hour], String(hour)).toEqual([2011, 12, 31, 0]);
       }
     });
 

@@ -1,5 +1,6 @@
 /**
- * SLATE — what fits in one day of the month grid, and what it says.
+ * SLATE — what fits in one day of the month grid, what it says, and which of
+ * its half hours the plan form offers.
  *
  * A cell is small and a day can carry more than it holds. Deciding what to
  * print is a rule, not markup, so it lives here where it can be argued with
@@ -11,7 +12,7 @@
  * of them you care about. Both show.
  */
 
-import { formatDate } from '@/engine/core/time';
+import { formatDate, startOfDay, startOfNextDay, zonedParts, MS_MINUTE } from '@/engine/core/time';
 import { holidayLabel } from '@/engine/content/holidays';
 import type { CalendarDay, CalendarEntry } from '@/engine/world/calendar';
 
@@ -71,4 +72,43 @@ export function dayLabel(day: CalendarDay, zone: string): string {
     kept.length > 0 ? `${kept.join('. ')}.` : '',
     booked || (kept.length > 0 ? '' : 'No plans on it.'),
   ].filter(Boolean).join(' ');
+}
+
+/*
+ * The plan form's clock. A slot is minutes from the start of the day, and the
+ * day runs until the next date begins: twenty-three hours on the day the
+ * clocks go forward and twenty-five on the day they go back. The form used to
+ * count twenty-four from the start whatever the day, and to open at nine hours
+ * in. On a 23-hour day that opened it at ten, offered 12:00 AM and 12:30 AM of
+ * the next date under this one, and kept the day open until one the next
+ * morning. On a 25-hour day it closed the day to plans at eleven that night
+ * and ran out an hour early: where the clocks repeat an hour in the small
+ * hours it opened at eight and left out 11:00 PM and 11:30 PM, and where they
+ * repeat eleven at night (Beirut, Santiago, Cairo) it left out the second run
+ * of 11:00 PM and 11:30 PM. The repeated hour's two runs read the same on the
+ * clock, and the form offers both.
+ */
+
+/** Whether a day is still ahead enough to put something on. */
+export function canPlan(day: CalendarDay, now: number, zone: string): boolean {
+  return startOfNextDay(day.date, zone) > now;
+}
+
+/** Every half hour of a day that has not already gone by. */
+export function openSlots(day: CalendarDay, now: number, zone: string): number[] {
+  const start = startOfDay(day.date, zone);
+  const end = startOfNextDay(start, zone);
+  const out: number[] = [];
+  for (let minute = 0; start + minute * MS_MINUTE < end; minute += 30) {
+    if (start + minute * MS_MINUTE >= now) out.push(minute);
+  }
+  return out;
+}
+
+/** Where the picker opens: nine in the morning by the clock, or the next half hour still ahead. */
+export function firstFreeSlot(day: CalendarDay, now: number, zone: string): number {
+  const start = startOfDay(day.date, zone);
+  const slots = openSlots(day, now, zone);
+  const nine = slots.find((m) => zonedParts(start + m * MS_MINUTE, zone).hour >= 9);
+  return nine ?? slots[0] ?? 0;
 }
