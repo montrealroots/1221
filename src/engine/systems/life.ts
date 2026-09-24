@@ -14,7 +14,7 @@ import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { Person, Wellbeing } from '../domain/model';
 import { clamp, remap } from '../core/rng';
-import { addDays, formatTime, instantFromZoned, zonedParts, MS_HOUR, MS_DAY } from '../core/time';
+import { formatTime, instantFromZoned, startOfNextDay, zonedParts, MS_HOUR, MS_DAY } from '../core/time';
 import { ceilingAt, recoveryFactorAt } from '../content/lifespan';
 import { personalityOf } from './personality';
 
@@ -215,10 +215,14 @@ export function registerLife(sim: Simulation): void {
     for (const person of Object.values(s.universe.people)) chargeWakingHours(person, from, s.now);
   });
 
+  // Re-armed for the first instant of the next calendar date. It was armed a
+  // day on from the start of today, which kept the hour that today began at,
+  // so where the clocks skipped midnight the day after rolled over at one too
+  // (at 01:01 in Beirut and Cairo).
   sim.onSchedule('life.day_rollover', () => {
     dailyRollover(sim);
     sim.schedule({
-      at: addDays(startOfLocalDay(sim), 1, sim.homeZone),
+      at: startOfNextDay(sim.now, sim.homeZone),
       kind: 'life.day_rollover',
       label: 'New Day',
       category: 'system',

@@ -14,7 +14,9 @@ import { Simulation, type Command, type CommandResult } from './core/simulation'
 import type { Personality, SaveUniverse } from './domain/model';
 import { SAVE_SCHEMA_VERSION } from './domain/model';
 import type { SaveAdapter, Slot } from './persistence/adapter';
-import { addDays, formatDate, instantFromZoned, zonedParts, MS_DAY } from './core/time';
+import {
+  addDays, formatDate, instantFromZoned, startOfDay, startOfNextDay, zonedParts, MS_DAY, MS_HOUR, MS_MINUTE,
+} from './core/time';
 import { formatMoneyCompact } from './core/money';
 import { clamp } from './core/rng';
 import { plural, titleCaseLabel } from './core/text';
@@ -25,7 +27,7 @@ import { cleanPersonality, cleanPersonalityTraits } from './systems/personality'
 import { CITIES } from './content/geography';
 
 import { netWorth } from './systems/finance';
-import { registerLife, startOfLocalDay } from './systems/life';
+import { registerLife } from './systems/life';
 import { registerPlans } from './world/plans';
 import { registerWorld } from './world/world';
 import {
@@ -51,7 +53,7 @@ function armWorldClock(sim: Simulation): void {
   const z = sim.homeZone;
 
   sim.schedule({
-    at: addDays(startOfLocalDay(sim), 1, z),
+    at: startOfNextDay(sim.now, z),
     kind: 'life.day_rollover',
     label: 'New Day', category: 'system', priority: 5,
   });
@@ -149,6 +151,44 @@ export function createSave(slot: 1 | 2 | 3, seed: string, config: NewSaveConfig)
 export function loadSave(universe: SaveUniverse): Simulation {
   const sim = new Simulation(universe);
   registerAllSystems(sim);
+  const zone = sim.homeZone;
+
+  // Every build has armed the rollover for the start of a day, and until the
+  // spring-forward fix the day after one whose clocks skipped midnight was
+  // taken to start at the hour that day began: 01:00, or 01:01 in Beirut and
+  // Cairo, whose days of the jump were taken to start at 01:01 too. A save
+  // written on the day of the jump carries its next rollover that late, and a
+  // Beirut or Cairo save from the day before carries the jump day's at 01:01.
+  // It is put back to the start of its day, or to now when the save is already
+  // past that. Only that much is moved: a rollover further off the start of
+  // its day, as a change in a zone's rules between the browser that armed it
+  // and the one that opens it can leave one, runs where it was armed, as it
+  // always has.
+  for (const one of sim.timeline.pending()) {
+    if (one.kind !== 'life.day_rollover') continue;
+    const start = startOfDay(one.at, zone);
+    const late = one.at - start;
+    if (late > 0 && late <= MS_HOUR + MS_MINUTE) sim.timeline.reschedule(one.id, Math.max(start, sim.now));
+  }
+  // A Beirut or Cairo save from then, stopped in the first hour of the night
+  // that began its day of the jump, holds that night as owed from 01:01, where
+  // that build ran the day's rollover. Paid from there by this build, it would
+  // not be taken for a night from the start of the day, and the day's meals
+  // would not be eaten after it: nourishment read 63.75 at seven, where the
+  // same night owed from 01:00 reads 76.00. It is owed from the start of the
+  // day. The rollover that ran at 01:01 is what marks such a save: this build
+  // runs it at 01:00, and a night it owes from 01:01 itself, from a stop there,
+  // is left where it is. Tested on the minute past the start alone, a save and
+  // a reload fed that night's meals twice.
+  const rolledAt = new Set(
+    sim.universe.scheduled.filter((one) => one.kind === 'life.day_rollover' && one.status === 'done').map((one) => one.at),
+  );
+  for (const person of Object.values(sim.universe.people)) {
+    const owed = person.nightOwedFrom;
+    if (owed === undefined || !rolledAt.has(owed)) continue;
+    const start = startOfDay(owed, zone);
+    if (owed - start === MS_MINUTE) person.nightOwedFrom = start;
+  }
 
   // A save whose clock has fallen off — because it was written by a build that
   // scheduled something this one no longer handles — gets it put back. Both
@@ -157,7 +197,7 @@ export function loadSave(universe: SaveUniverse): Simulation {
     sim.universe.scheduled.some((one) => one.kind === kind && one.status === 'pending');
   if (!armed('life.day_rollover')) {
     sim.schedule({
-      at: addDays(startOfLocalDay(sim), 1, sim.homeZone),
+      at: startOfNextDay(sim.now, zone),
       kind: 'life.day_rollover',
       label: 'New Day', category: 'system', priority: 5,
     });
@@ -458,11 +498,16 @@ export function migrate(universe: SaveUniverse): MigrationResult {
   // counted from the next midnight: counting from the moment it was saved
   // would charge that stretch twice, thirty points of energy for a save made
   // at two in the afternoon.
+  //
+  // The next midnight is the first instant of the next calendar date, where
+  // the rollover runs. It was a day added to the start of today, which on a
+  // day whose clocks skipped midnight was one the next morning (01:01 in
+  // Beirut and Cairo). That build's rollover ran then too, and the night came
+  // with it, late. Against a rollover at midnight, a waking day counted from
+  // one takes the person to be asleep at that midnight, and the night waits
+  // for the next stop before a sound sleeper would wake, or never comes.
   {
-    const today = zonedParts(universe.now, universe.homeZone);
-    const midnight = addDays(
-      instantFromZoned({ year: today.year, month: today.month, day: today.day }, universe.homeZone), 1, universe.homeZone,
-    );
+    const midnight = startOfNextDay(universe.now, universe.homeZone);
     let paid = 0;
     for (const person of Object.values(universe.people ?? {})) {
       const p = person as unknown as Record<string, unknown>;

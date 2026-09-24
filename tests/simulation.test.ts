@@ -1,12 +1,14 @@
-import { describe, expect, it } from 'vitest';
+import { readFileSync } from 'node:fs';
+import { beforeAll, describe, expect, it } from 'vitest';
 import { quickSave, validateUniverse, migrate, loadSave } from '@/engine';
 import type { Simulation } from '@/engine';
 import { SAVE_SCHEMA_VERSION, type Person, type Wellbeing } from '@/engine/domain/model';
 import { applySleep, sleepQuality, sleepStandsForTheNight, startOfLocalDay, suggestedSleep, unattendedNight } from '@/engine/systems/life';
-import { addDays, formatTime, instantFromZoned, MS_DAY, MS_HOUR, MS_MINUTE, zonedParts } from '@/engine/core/time';
+import { formatTime, instantFromZoned, MS_DAY, MS_HOUR, MS_MINUTE, startOfNextDay, zonedParts } from '@/engine/core/time';
 import { skipTargets, checkConflicts, entriesBetween, monthGrid } from '@/engine/world/calendar';
 import { openDecisions } from '@/engine/world/world';
 import { createIdFactory, idAlreadyIssued, ID_NAMESPACES } from '@/engine/core/ids';
+import { addCountryCities } from '@/engine/content/geography';
 
 describe('time advancement', () => {
   it('refuses to run the clock backwards', () => {
@@ -1659,6 +1661,285 @@ describe('ids are told apart by namespace', () => {
   });
 });
 
+/**
+ * Five home zones go from 23:59:59 straight to one in the morning on the day
+ * their clocks go forward, so that day's first instant is one o'clock and its
+ * rollover rightly runs then. The next one was armed a day on from it with
+ * `addDays`, which keeps the wall-clock hour, so the day after rolled over at
+ * one as well, and at 01:01 in Beirut and Cairo, whose days of the jump were
+ * taken to start at 01:01: its night nobody chose started then, the hour
+ * before it was charged as awake, and the night was read with the late-bedtime
+ * penalty. From the day after that it was back at midnight. Measured on
+ * autopilot at six the next evening, it cost 0.52 condition and 0.92 morale,
+ * which lasted until both reached their ceilings, and left energy 3.01 higher,
+ * because the waking day began an hour later.
+ */
+describe('the rollover where the clocks go forward at midnight', () => {
+  /** Where a build before the fix armed the day after's rollover: this many minutes past one. */
+  interface Jump { place: string; year: number; month: number; day: number; late?: number }
+  const JUMPS: Jump[] = [
+    { place: 'cu-02-havana', year: 2026, month: 3, day: 8, late: 0 },
+    { place: 'lb-04-beirut', year: 2026, month: 3, day: 29, late: 1 },
+    { place: 'cl-12-santiago', year: 2026, month: 9, day: 6, late: 0 },
+    { place: 'eg-11-cairo', year: 2026, month: 4, day: 24, late: 1 },
+    { place: 'pt-23-pontadelgada', year: 2026, month: 3, day: 29, late: 0 },
+  ];
+
+  // The Azores are Portuguese, and a country's towns are loaded when the
+  // player picks it.
+  beforeAll(() => { addCountryCities('pt', readFileSync('public/geo/pt.tsv', 'utf8')); });
+
+  /** The instant the save's home clock reads `hour` on the day `offset` days from the jump. */
+  function wall(sim: Simulation, jump: Jump, offset: number, hour: number, minute = 0): number {
+    const d = new Date(Date.UTC(jump.year, jump.month - 1, jump.day + offset));
+    return instantFromZoned(
+      { year: d.getUTCFullYear(), month: d.getUTCMonth() + 1, day: d.getUTCDate(), hour, minute },
+      sim.homeZone,
+    );
+  }
+
+  /** A save at home in `jump.place`, starting at half past seven `offset` days from the jump. */
+  function saveIn(jump: Jump, offset: number): Simulation {
+    const d = new Date(Date.UTC(jump.year, jump.month - 1, jump.day + offset));
+    const sim = quickSave({
+      startYear: d.getUTCFullYear(), startMonth: d.getUTCMonth() + 1, startDay: d.getUTCDate(),
+      startLocationId: jump.place,
+    }, `spring-${jump.place}`);
+    // The zone has to skip that midnight, or none of this tests anything.
+    const first = zonedParts(wall(sim, jump, 0, 0), sim.homeZone);
+    expect([first.day, first.hour, first.minute], `${jump.place} skips midnight on the ${jump.day}th`).toEqual([jump.day, 1, 0]);
+    return sim;
+  }
+
+  /** The rollovers run so far and the one armed, as the home clock read them. */
+  function rollovers(sim: Simulation): { ran: string[]; armed: string[] } {
+    const read = (at: number) => {
+      const p = zonedParts(at, sim.homeZone);
+      return `${p.month}-${p.day} ${String(p.hour).padStart(2, '0')}:${String(p.minute).padStart(2, '0')}`;
+    };
+    const mine = sim.universe.scheduled.filter((one) => one.kind === 'life.day_rollover');
+    return {
+      ran: mine.filter((one) => one.status === 'done').map((one) => read(one.resolvedAt ?? one.at)),
+      armed: mine.filter((one) => one.status === 'pending').map((one) => read(one.at)),
+    };
+  }
+
+  /** Moves the armed rollover to `at`, as a build before the fix would have armed it. */
+  function armAt(sim: Simulation, at: number): void {
+    const armed = sim.universe.scheduled.find((one) => one.kind === 'life.day_rollover' && one.status === 'pending')!;
+    expect(sim.timeline.reschedule(armed.id, at)).toBe(true);
+  }
+
+  const day = (jump: Jump, offset: number) =>
+    new Date(Date.UTC(jump.year, jump.month - 1, jump.day + offset)).getUTCDate();
+  const month = (jump: Jump, offset: number) =>
+    new Date(Date.UTC(jump.year, jump.month - 1, jump.day + offset)).getUTCMonth() + 1;
+  const on = (jump: Jump, offset: number, time: string) => `${month(jump, offset)}-${day(jump, offset)} ${time}`;
+
+  for (const jump of JUMPS) {
+    const late = jump.late ?? 0;
+
+    it(`rolls over at one on the day ${jump.place} skips midnight, and at midnight from the next day`, () => {
+      const sim = saveIn(jump, -1);
+      sim.advanceTo(wall(sim, jump, 1, 12));
+      expect(rollovers(sim)).toEqual({
+        ran: [on(jump, 0, '01:00'), on(jump, 1, '00:00')],
+        armed: [on(jump, 2, '00:00')],
+      });
+      // The day after's night nobody chose starts at its midnight, not at one.
+      expect(sim.player.lastSleptAt).toBe(wall(sim, jump, 1, 0));
+
+      sim.advanceTo(wall(sim, jump, 2, 12));
+      expect(rollovers(sim).ran.at(-1)).toBe(on(jump, 2, '00:00'));
+      expect(rollovers(sim).armed).toEqual([on(jump, 3, '00:00')]);
+    });
+
+    it(`arms a save begun in ${jump.place} on the day of the jump for the next midnight`, () => {
+      const sim = saveIn(jump, 0);
+      expect(rollovers(sim)).toEqual({ ran: [], armed: [on(jump, 1, '00:00')] });
+    });
+
+    it(`arms a save loaded in ${jump.place} on the day of the jump for the next midnight`, () => {
+      // A save whose rollover had fallen off, which loadSave puts back.
+      const sim = saveIn(jump, -1);
+      sim.advanceTo(wall(sim, jump, 0, 12));
+      const universe = JSON.parse(JSON.stringify(sim.universe)) as typeof sim.universe;
+      universe.scheduled = universe.scheduled.filter((one) => !(one.kind === 'life.day_rollover' && one.status === 'pending'));
+      const loaded = loadSave(universe);
+      expect(rollovers(loaded).armed).toEqual([on(jump, 1, '00:00')]);
+    });
+
+    it(`moves the rollover an earlier build armed late in ${jump.place} back to midnight`, () => {
+      // Saved on the day of the jump by a build before the fix, the save
+      // carries the next day's rollover at one, or at 01:01.
+      const sim = saveIn(jump, -1);
+      sim.advanceTo(wall(sim, jump, 0, 12));
+      armAt(sim, wall(sim, jump, 1, 1, late));
+      const loaded = loadSave(JSON.parse(JSON.stringify(sim.universe)));
+      expect(rollovers(loaded).armed).toEqual([on(jump, 1, '00:00')]);
+      loaded.advanceTo(wall(loaded, jump, 1, 12));
+      expect(rollovers(loaded).ran.at(-1)).toBe(on(jump, 1, '00:00'));
+      expect(loaded.player.lastSleptAt).toBe(wall(loaded, jump, 1, 0));
+    });
+
+    it(`moves the rollover a save from the day before ${jump.place}’s jump carries to the start of that day`, () => {
+      // Beirut and Cairo's day of the jump was taken to start at 01:01, and a
+      // save from the day before carries its rollover then.
+      const sim = saveIn(jump, -1);
+      sim.advanceTo(wall(sim, jump, -1, 12));
+      armAt(sim, wall(sim, jump, 0, 1, late));
+      const loaded = loadSave(JSON.parse(JSON.stringify(sim.universe)));
+      expect(rollovers(loaded).armed).toEqual([on(jump, 0, '01:00')]);
+      loaded.advanceTo(wall(loaded, jump, 1, 12));
+      expect(rollovers(loaded).ran.slice(-2)).toEqual([on(jump, 0, '01:00'), on(jump, 1, '00:00')]);
+    });
+
+    it(`runs that rollover at once when ${jump.place}’s save was left between the midnight and one`, () => {
+      const sim = saveIn(jump, -1);
+      sim.advanceTo(wall(sim, jump, 0, 12));
+      armAt(sim, wall(sim, jump, 1, 1, late));
+      sim.advanceTo(wall(sim, jump, 1, 0, 30));
+      const loaded = loadSave(JSON.parse(JSON.stringify(sim.universe)));
+      expect(rollovers(loaded).armed).toEqual([on(jump, 1, '00:30')]);
+      // A call at one stops the skip in the first hour of the night that
+      // rollover starts, which is owed from half past twelve, and it stays so
+      // through a save: it is not a minute past the start of the day.
+      expect(loaded.execute({ kind: 'calendar.schedule', payload: { title: 'A Late Call', at: wall(loaded, jump, 1, 1) } }).ok).toBe(true);
+      loaded.advanceTo(wall(loaded, jump, 1, 12), { stopOnPlayerRequired: true });
+      expect(loaded.player.nightOwedFrom).toBe(wall(loaded, jump, 1, 0, 30));
+      expect(loadSave(JSON.parse(JSON.stringify(loaded.universe))).player.nightOwedFrom).toBe(wall(loaded, jump, 1, 0, 30));
+      loaded.advanceTo(wall(loaded, jump, 1, 12));
+      expect(rollovers(loaded).ran.at(-1)).toBe(on(jump, 1, '00:30'));
+      expect(rollovers(loaded).armed).toEqual([on(jump, 2, '00:00')]);
+    });
+
+    it(`keeps a night this build owes from 01:01 in ${jump.place} where it is, through a save`, () => {
+      // One Hour from 23:01 lands on 01:01 on the day of the jump, a minute
+      // past its start, and a skip from there stopped by a call in the first
+      // hour of the night owes it from 01:01. This build ran the day's
+      // rollover at 01:00, so nothing marks the night as an earlier build's.
+      const sim = saveIn(jump, -1);
+      sim.advanceTo(wall(sim, jump, -1, 23, 1));
+      sim.advanceTo(sim.now + MS_HOUR);
+      expect(sim.now).toBe(wall(sim, jump, 0, 1, 1));
+      expect(sim.execute({ kind: 'calendar.schedule', payload: { title: 'A Late Call', at: wall(sim, jump, 0, 1, 30) } }).ok).toBe(true);
+      sim.advanceTo(wall(sim, jump, 0, 7), { stopOnPlayerRequired: true });
+      expect(sim.player.nightOwedFrom).toBe(wall(sim, jump, 0, 1, 1));
+      const loaded = loadSave(JSON.parse(JSON.stringify(sim.universe)));
+      expect(loaded.player.nightOwedFrom).toBe(wall(loaded, jump, 0, 1, 1));
+      // Saved and loaded, the day ends where it does played straight through.
+      sim.advanceTo(wall(sim, jump, 0, 18));
+      loaded.advanceTo(wall(loaded, jump, 0, 18));
+      expect(loaded.player.wellbeing).toEqual(sim.player.wellbeing);
+    });
+
+    it(`starts the waking day of a save from before 88 loaded in ${jump.place} on the day of the jump at the next midnight`, () => {
+      // The rollover and the night nobody chose come at that midnight, so the
+      // waking day has to be counted from it too. Counted from one, as it was
+      // before the fix, against a rollover at midnight, the person is taken to
+      // be asleep at that midnight, and the night waits for a later stop, if
+      // one comes before a sound sleeper would wake.
+      const sim = saveIn(jump, -1);
+      sim.advanceTo(wall(sim, jump, 0, 15));
+      sim.universe.meta.schemaVersion = 87;
+      delete sim.player.awakeSince;
+      const universe = JSON.parse(JSON.stringify(sim.universe));
+      migrate(universe);
+      const loaded = loadSave(universe);
+      expect(loaded.player.awakeSince).toBe(wall(loaded, jump, 1, 0));
+      loaded.advanceTo(wall(loaded, jump, 1, 23));
+      expect(loaded.player.lastSleptAt).toBe(wall(loaded, jump, 1, 0));
+    });
+
+    if (late > 0) {
+      it(`owes ${jump.place}’s night of the jump from one where an earlier build left it owed from 01:01`, () => {
+        // A skip from the evening before, stopped by a call in the first hour
+        // of the night, leaves that night owed from the start of the day.
+        const sim = saveIn(jump, -1);
+        sim.advanceTo(wall(sim, jump, -1, 22));
+        expect(sim.execute({ kind: 'calendar.schedule', payload: { title: 'A Late Call', at: wall(sim, jump, 0, 1, 30) } }).ok).toBe(true);
+        sim.advanceTo(wall(sim, jump, 0, 7), { stopOnPlayerRequired: true });
+        expect(sim.now).toBe(wall(sim, jump, 0, 1, 30));
+        expect(sim.player.nightOwedFrom).toBe(wall(sim, jump, 0, 1));
+        const now = loadSave(JSON.parse(JSON.stringify(sim.universe)));
+        // As the build before the fix left it: the day's rollover run at 01:01,
+        // and the night owed from then and ending a minute later.
+        const ran = sim.universe.scheduled.find((one) => one.kind === 'life.day_rollover' && one.at === wall(sim, jump, 0, 1))!;
+        ran.at = wall(sim, jump, 0, 1, 1);
+        ran.resolvedAt = ran.at;
+        sim.player.nightOwedFrom = wall(sim, jump, 0, 1, 1);
+        sim.player.nightEndsAt = sim.player.nightEndsAt! + MS_MINUTE;
+        const before = loadSave(JSON.parse(JSON.stringify(sim.universe)));
+        expect(before.player.nightOwedFrom).toBe(wall(before, jump, 0, 1));
+        // Paid from there, with the day's meals after it, as if never saved.
+        now.advanceTo(wall(now, jump, 0, 7));
+        before.advanceTo(wall(before, jump, 0, 7));
+        expect(before.player.wellbeing).toEqual(now.player.wellbeing);
+      });
+    }
+  }
+
+  it('leaves a rollover further off the start of its day where it was armed', () => {
+    // A change in a zone's rules between the browser that armed a rollover and
+    // the one that opens the save can leave it off the start of its day, and
+    // it runs where it was armed, as it always did. Only as late as a build
+    // before the fix armed one is it moved.
+    const sim = quickSave({}, 'spring-off');
+    sim.advanceTo(next(sim, 12));
+    const tomorrow = startOfNextDay(sim.now, sim.homeZone);
+    const read = (s: Simulation) => s.universe.scheduled.find((one) => one.kind === 'life.day_rollover' && one.status === 'pending')!.at;
+    for (const [at, kept] of [
+      [tomorrow - MS_HOUR, true], [tomorrow + MS_HOUR + 2 * MS_MINUTE, true],
+      [tomorrow + MS_HOUR + MS_MINUTE, false], [tomorrow + MS_MINUTE, false],
+    ] as const) {
+      const armed = sim.universe.scheduled.find((one) => one.kind === 'life.day_rollover' && one.status === 'pending')!;
+      sim.timeline.reschedule(armed.id, at);
+      expect(read(loadSave(JSON.parse(JSON.stringify(sim.universe)))), String(at - tomorrow)).toBe(kept ? at : tomorrow);
+    }
+  });
+
+  it('leaves a night owed from a minute past an ordinary midnight where it was', () => {
+    // One Hour from 23:01 stops at 00:01, and a skip from there that stops in
+    // the first hour of the night owes it from 00:01. Only a night owed from a
+    // minute past the start of its day, where an earlier build ran that day's
+    // rollover, is Beirut and Cairo's old start of the day of the jump.
+    const sim = quickSave({}, 'spring-owed');
+    sim.advanceTo(next(sim, 12));
+    const owed = startOfNextDay(sim.now, sim.homeZone) + MS_MINUTE;
+    sim.player.nightOwedFrom = owed;
+    expect(loadSave(JSON.parse(JSON.stringify(sim.universe))).player.nightOwedFrom).toBe(owed);
+  });
+
+  it('rolls over once a day where the clocks go back, a midnight that comes twice included', () => {
+    // Havana goes from 00:59:59 back to midnight on 1 November 2026, so that
+    // midnight comes twice; Los Angeles and Santiago have a twenty-five-hour
+    // day with midnight once.
+    for (const back of [
+      { place: 'cu-02-havana', year: 2026, month: 11, day: 1 },
+      { place: 'us-ca-losangeles', year: 2026, month: 11, day: 1 },
+      { place: 'cl-12-santiago', year: 2026, month: 4, day: 4 },
+    ]) {
+      const sim = quickSave({ startYear: back.year, startMonth: back.month, startDay: back.day - 1, startLocationId: back.place }, `fall-${back.place}`);
+      sim.advanceTo(wall(sim, back, 2, 12));
+      expect(rollovers(sim), back.place).toEqual({
+        ran: [on(back, 0, '00:00'), on(back, 1, '00:00'), on(back, 2, '00:00')],
+        armed: [on(back, 3, '00:00')],
+      });
+      // At the first of Havana's two midnights, an hour after the evening before's eleven.
+      const midnight = wall(sim, back, 0, 0);
+      expect(zonedParts(midnight - MS_HOUR, sim.homeZone).hour, back.place).toBe(23);
+      expect(sim.universe.scheduled.some((one) => one.kind === 'life.day_rollover' && one.at === midnight), back.place).toBe(true);
+    }
+  });
+
+  it('leaves a zone whose clocks go forward at two rolling over at midnight, as it always did', () => {
+    const la: Jump = { place: 'us-ca-losangeles', year: 2026, month: 3, day: 8 };
+    const sim = quickSave({ startYear: 2026, startMonth: 3, startDay: 7, startLocationId: la.place }, 'spring-la');
+    sim.advanceTo(wall(sim, la, 2, 12));
+    expect(rollovers(sim)).toEqual({ ran: ['3-8 00:00', '3-9 00:00', '3-10 00:00'], armed: ['3-11 00:00'] });
+  });
+});
+
 /** The next time the save's clock reads this hour, strictly after now. */
 function next(sim: Simulation, hour: number): number {
   const p = zonedParts(sim.now, sim.zone);
@@ -1667,8 +1948,12 @@ function next(sim: Simulation, hour: number): number {
   return at;
 }
 
-/** The first instant of tomorrow on the save's home clock. */
+/**
+ * The first instant of tomorrow on the save's home clock. It added a day to
+ * the start of today, which was one in the morning after a day whose clocks
+ * skipped midnight; every save that asks keeps Reykjavík’s clock, which has no
+ * daylight saving, so the answers are the same.
+ */
 function nextMidnight(sim: Simulation): number {
-  const p = zonedParts(sim.now, sim.homeZone);
-  return addDays(instantFromZoned({ year: p.year, month: p.month, day: p.day }, sim.homeZone), 1, sim.homeZone);
+  return startOfNextDay(sim.now, sim.homeZone);
 }

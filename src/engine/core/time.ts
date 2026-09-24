@@ -157,8 +157,26 @@ export function instantFromZoned(wall: WallClock, zone: TimeZone): Instant {
 
   // Gap case: the requested wall time does not exist. Walk forward minute by
   // minute (bounded) to the first instant at or after the requested reading.
+  //
+  // In a gap the passes above swing between an instant reading the request
+  // less the gap and one reading it plus the gap, and stop on either: before
+  // the gap in zones west of Greenwich, after it in zones at or east of it.
+  // The walk used to step on from wherever they stopped, so where they stopped
+  // after the gap it returned the reading plus the gap plus a minute, not the
+  // end of the gap. At Beirut and Cairo's midnight that was 01:01, so their
+  // days of the jump in 2026 began at 01:01 where Havana's began at 01:00, and
+  // London's 01:30 on 29 March 2026 came out 02:31. It steps on from the
+  // instant before the gap now, whichever the passes stopped on, and lands on
+  // the end of the gap. That instant reads earlier than the request, so the
+  // walk still starts a minute past it, as it did. A reading that overflows
+  // its day or month (30 February) comes here too, with the passes agreeing,
+  // and still comes back a minute late, which was not changed. A reading with
+  // seconds keeps them: it lands that many seconds past the end of the gap,
+  // where at or east of Greenwich it had landed that many past the reading
+  // plus the gap plus a minute.
+  const start = Math.min(guess, target - zoneOffsetMs(guess, zone));
   for (let m = 1; m <= 180; m++) {
-    const candidate = guess + m * MS_MINUTE;
+    const candidate = start + m * MS_MINUTE;
     const cp = zonedParts(candidate, zone);
     const candidateWall = Date.UTC(cp.year, cp.month - 1, cp.day, cp.hour, cp.minute, 0);
     if (candidateWall >= target) return candidate;
@@ -166,15 +184,47 @@ export function instantFromZoned(wall: WallClock, zone: TimeZone): Instant {
   return guess;
 }
 
-/** Midnight at the start of the local day containing `instant`. */
+/**
+ * The first instant of the local day containing `instant`: midnight, or the
+ * end of the gap on a day whose clocks skip midnight.
+ */
 export function startOfDay(instant: Instant, zone: TimeZone): Instant {
   const p = zonedParts(instant, zone);
   return instantFromZoned({ year: p.year, month: p.month, day: p.day, hour: 0, minute: 0, second: 0 }, zone);
 }
 
+/**
+ * The first instant of the local day after the one containing `instant`:
+ * midnight, or the end of the gap on a day whose clocks skip midnight.
+ *
+ * Worked out from the calendar date, not by adding a day to the start of
+ * today. `addDays` keeps the wall-clock hour, and a day that skipped midnight
+ * started at one, so the day after it was taken to start at one as well. The
+ * midnight rollover was armed that way, and in the five home zones whose
+ * clocks go forward at midnight it ran an hour late on the day after: at one
+ * in Havana, Santiago and the Azores, and at 01:01 in Beirut and Cairo, whose
+ * days of the jump began at 01:01 (see the gap walk in `instantFromZoned`).
+ *
+ * Always later than `instant`. A date a zone skipped outright, as Apia and
+ * Fakaofo skipped 30 December 2011, resolves to a time before it, so the date
+ * after that is taken: the rollover re-arms from here, and an answer that was
+ * not later ran it at the same instant until the clock gave up.
+ */
+export function startOfNextDay(instant: Instant, zone: TimeZone): Instant {
+  const p = zonedParts(instant, zone);
+  for (let days = 1; ; days += 1) {
+    const next = new Date(Date.UTC(p.year, p.month - 1, p.day + days));
+    const at = instantFromZoned(
+      { year: next.getUTCFullYear(), month: next.getUTCMonth() + 1, day: next.getUTCDate() },
+      zone,
+    );
+    if (at > instant) return at;
+  }
+}
+
 /** The last representable millisecond of the local day containing `instant`. */
 export function endOfDay(instant: Instant, zone: TimeZone): Instant {
-  return addDays(startOfDay(instant, zone), 1, zone) - 1;
+  return startOfNextDay(instant, zone) - 1;
 }
 
 /** Calendar-correct day arithmetic: adding 1 day across a DST change keeps the wall time. */
