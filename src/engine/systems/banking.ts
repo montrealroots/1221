@@ -139,6 +139,15 @@ export function rateOf(sim: Simulation, account: Account): number {
   return step ?? rateOn(product, sim.now, sim.homeZone);
 }
 
+/** The rate a tiered account pays on a balance, where the balance reaches a tier. */
+export function tierRate(product: Product | undefined, account: Account, balance: Money): number | undefined {
+  const bank = account.bankId ? bankById(account.bankId) : undefined;
+  if (!product?.tiers || !bank) return undefined;
+  let rate: number | undefined;
+  for (const tier of product.tiers) if (balance >= tier.from) rate = tier.rate;
+  return rate;
+}
+
 /** The introductory rate running at a moment, for an account opened at another. */
 export function introStep(sim: Simulation, product: Product | undefined, openedAt: Instant, at: Instant): number | undefined {
   if (!product?.intro) return undefined;
@@ -332,7 +341,7 @@ export function registerBanking(sim: Simulation): void {
       if (!account.bankId || account.closedAt || !isEveryday(account)) continue;
       const product = productOf(account);
       const earning = earningBalance(product, account.balance);
-      const rate = rateOf(s, account);
+      const rate = tierRate(product, account, earning) ?? rateOf(s, account);
       if (rate > 0 && earning > 0) account.accrued = (account.accrued ?? 0) + (earning * rate) / 365;
       // The bonus builds too, and is kept only if the month earns it.
       if (product?.bonus && earning > 0) account.bonusAccrued = (account.bonusAccrued ?? 0) + (earning * product.bonus.rate) / 365;

@@ -69,7 +69,7 @@ export function BankWorkspace() {
             ? ` Up to ${formatMoney(country.guarantee.limit, country.guarantee.currency, { cents: false })} of it is guaranteed by the ${country.guarantee.scheme} if the bank fails.`
             : ` It is guaranteed by the ${country.guarantee.scheme} if the bank fails: ${country.guarantee.note ?? 'the limit wasn’t found'}.`)}
           {!country?.guarantee && ' No deposit guarantee stands behind it that SLATE found.'}
-          {country?.policy && ` The central bank’s ${country.policy.called} is ${(country.policy.rate * 100).toFixed(2)}%, since ${formatDate(Date.parse(`${country.policy.since}T12:00:00Z`), sim.zone)}.`}
+          {country?.policy && ` The central bank’s ${country.policy.called} is ${(country.policy.rate * 100).toFixed(2)}%${country.policy.since ? `, since ${formatDate(Date.parse(`${country.policy.since}T12:00:00Z`), sim.zone)}` : ''}.`}
         </p>
       </div>
 
@@ -89,7 +89,7 @@ export function BankWorkspace() {
                 <p className="small" style={{ margin: 0 }}>{interestWords(sim, product, tax, money, bank.currency, account.openedAt)}</p>
                 {product?.monthlyFee ? (
                   <p className="small" style={{ margin: 0 }}>
-                    {money(inSaveMoney(sim, product.monthlyFee, bank.currency))} a month
+                    {formatMoney(inSaveMoney(sim, product.monthlyFee, bank.currency), cur)} a month
                     {product.waiver?.depositsAtLeast !== undefined && `, waived with ${money(inSaveMoney(sim, product.waiver.depositsAtLeast, bank.currency))} of wages paid in`}
                     {product.waiver?.balanceAtLeast !== undefined && `${product.waiver.depositsAtLeast !== undefined ? ' or' : ', waived'} by keeping ${money(inSaveMoney(sim, product.waiver.balanceAtLeast, bank.currency))} in it all month`}
                     {'. '}
@@ -187,6 +187,7 @@ function interestWords(sim: Simulation, product: Product | undefined, tax: numbe
   }
   const next = (product.changes ?? []).find((c) => c.from > new Date(sim.now).toISOString().slice(0, 10));
   if (next) said.push(`, ${pct(next.rate)} from ${formatDate(Date.parse(`${next.from}T12:00:00Z`), sim.zone)}`);
+  for (const tier of product.tiers ?? []) said.push(`, ${pct(tier.rate)} on the whole balance from ${money(inSaveMoney(sim, tier.from, currency))}`);
   if (product.rateFrom !== undefined) said.push(`, on a balance of ${money(inSaveMoney(sim, product.rateFrom, currency))} or more`);
   if (product.rateUpTo !== undefined) said.push(`, on up to ${money(inSaveMoney(sim, product.rateUpTo, currency))}`);
   said.push('.');

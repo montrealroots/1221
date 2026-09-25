@@ -18,6 +18,8 @@ import type { Account } from '@/engine/core/ledger';
 import { MS_DAY, instantFromZoned } from '@/engine/core/time';
 import { spend } from '@/engine/systems/household';
 import { bankAccountsOf, rateOf } from '@/engine/systems/banking';
+import { bankingIn, banksIn } from '@/engine/content/banks';
+import { SHEETS } from '@/engine/content/banks-world-sheets';
 
 const lifeIn = (cityId: string, extra: Record<string, unknown> = {}, seed = 'fees') =>
   quickSave({ startLocationId: cityId, homeRegionId: cityId, livesWhereBorn: true, dayJob: false, ...extra }, seed);
@@ -168,5 +170,59 @@ describe('Iceland’s assessment', () => {
       .flatMap((t) => t.postings).filter((p) => p.accountId === account.id).map((p) => p.amount);
     // Over 300,000 kr of interest, so the refund is 22% of 300,000 kr exactly.
     expect(refunds).toEqual([66_000_00]);
+  });
+});
+
+describe('what the second research pass filled in', () => {
+  it('pays CIBC’s eAdvantage 0.30%, and 0.60% on the whole of a balance from $100,000', () => {
+    const sim = lifeIn('ca-on-toronto', { bankId: 'ca-cibc', wealth: 'modest' });
+    const saver = savings(sim)!;
+    set(sim, saver, 50_000_00);
+    saver.accrued = 0;
+    sim.advanceBy(MS_DAY);
+    expect(saver.accrued).toBeCloseTo((50_000_00 * 0.003) / 365, 6);
+    set(sim, saver, 150_000_00);
+    saver.accrued = 0;
+    sim.advanceBy(MS_DAY);
+    expect(saver.accrued).toBeCloseTo((150_000_00 * 0.006) / 365, 6);
+  });
+
+  it('moves Santander UK’s Easy Access Saver to 0.90% after its first year', () => {
+    const sim = lifeIn('uk-eng-london', { bankId: 'gb-santander', wealth: 'modest' });
+    expect(rateOf(sim, savings(sim)!)).toBe(0.02);
+    sim.advanceBy(370 * MS_DAY);
+    expect(rateOf(sim, savings(sim)!)).toBe(0.009);
+  });
+
+  it('numbers an Icelandic savings account in its bank’s own ledger: 05 at Landsbankinn, 13 at Arion', () => {
+    const ledger = (bankId: string) => {
+      const sim = lifeIn('is-39-mosfellsbr', { bankId, wealth: 'modest' });
+      const iban = savings(sim)!.number!.replace(/^IBAN |\s/g, '');
+      return [iban.slice(8, 10), current(sim).number!.replace(/^IBAN |\s/g, '').slice(8, 10)];
+    };
+    expect(ledger('is-landsbankinn')).toEqual(['05', '26']);
+    expect(ledger('is-arion')).toEqual(['13', '26']);
+    expect(ledger('is-islandsbanki')).toEqual(['26', '26']);
+  });
+});
+
+describe('the rest of the world’s banks', () => {
+  it('carry the researched product names, rates and fees, and never charge a fee whose waiver is only words', () => {
+    let named = 0;
+    for (const [iso, sheet] of Object.entries(SHEETS)) {
+      for (const [name, found] of Object.entries(sheet.products ?? {})) {
+        const bank = banksIn(iso).find((b) => b.name === name);
+        expect(bank, `${iso} ${name}`).toBeDefined();
+        if (found.current) {
+          named += 1;
+          expect(bank!.current.name).toBe(found.current.name);
+          expect(bank!.current.monthlyFee).toBe(found.current.monthlyFee || undefined);
+          if (found.current.note && /isn't modeled, so it isn't charged/.test(found.current.note)) expect(bank!.current.monthlyFee).toBeUndefined();
+        }
+        if (found.savings?.rate !== undefined) expect(bank!.savings.rate).toBe(found.savings.rate);
+      }
+      if (sheet.policy) expect(bankingIn(iso)?.policy?.rate).toBe(sheet.policy.rate);
+    }
+    expect(named).toBeGreaterThan(150);
   });
 });

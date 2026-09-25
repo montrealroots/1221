@@ -59,7 +59,9 @@ export function accountNumber(sim: Simulation, person: Person, bank: Bank, kind:
       const born = zonedParts(person.birthInstant, sim.homeZone);
       let kt: string | undefined;
       while (!kt) kt = kennitala(born.day, born.month, born.year, n(2));
-      const ledger = kind === 'savings' ? bank.savingsLedger ?? '15' : bank.currentLedger ?? '26';
+      // 26 is the current account's ledger; a savings ledger is the bank's
+      // own (05 at Landsbankinn, 13 at Arion), and where none was found, 26.
+      const ledger = kind === 'savings' ? bank.savingsLedger ?? bank.currentLedger ?? '26' : bank.currentLedger ?? '26';
       // The bank's two digits, then the branch's.
       return `IBAN ${groupIban(iban('IS', `${code}${n(4 - code.length)}${ledger}${n(6)}${kt}`))}`;
     }

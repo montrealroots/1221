@@ -98,20 +98,27 @@ part the tool cannot see.
   Riser's "No use at all after nine at night", every cost about other people,
   and Resilient's illness and injury are not charged, and Early Riser and a
   few others help and cost nothing in play. The Traits card says so.
-- **A few of a bank's conditions are simplified, and a few figures weren't
-  found.** Everything the research found is charged or paid since
-  2026-09-25: overdrafts, France's €8 an operation, Spain's commission,
-  Canada's $10 returned-payment fee, Arion's card fees, dormant and
-  quiet-month fees, introductory rates and Iceland's refund at assessment.
-  What is simplified, and said in the source lines: a waiver that also asks
-  for linked accounts, bills or card use (Chase, Wells Fargo, Santander,
-  CaixaBank) waives on its wages or balance alone, and Citi's average
-  balance is kept as a balance all month. What wasn't found, and so isn't
-  in the game: Santander UK's rate after its first year (it keeps 2.00%),
-  how long SMBC waits before its dormant fee, Iceland's savings ledger code,
-  savings rates for Mexico's banks, BMO, CIBC and Spain's banks, and any
-  product sheet for the 226 other countries. This session's web searches
-  ran out (200 of 200); a next pass needs the limit raised.
+- **A few of a bank's conditions are simplified, and some figures weren't
+  found.** Everything the research found is charged or paid: overdrafts,
+  France's €8 an operation, Spain's commission, Canada's returned-payment
+  fee, card, dormant and quiet-month fees, introductory rates, CIBC's tiers
+  and Iceland's refund at assessment. What is simplified, and said in the
+  source lines: a waiver that also asks for linked accounts, bills or card
+  use (Chase, Wells Fargo, Santander, CaixaBank) waives on wages or balance
+  alone, and Citi's average balance is kept as a balance all month. In the
+  other 226 countries (`content/banks-world-sheets.ts`), a fee the research
+  gave with a waiver in words is shown and not charged (19 of them), a rate
+  given for its top tier or with a condition is paid as given, and a bank
+  or figure the research couldn't find keeps a plain account with no fee
+  and no rate: 214 countries have a sheet, 178 banks an account name, 103 a
+  savings rate. Iceland's savings ledger code is from weak sources (05 at
+  Landsbankinn, 13 at Arion) and none was found for Íslandsbanki.
+- **An IBAN in the 226 other countries has the right length and check digits
+  and not the bank's own code.** A Dutch IBAN starts with the bank's four
+  letters (INGB for ING), a British-style one with its BIC and sort code; the
+  research gave no bank codes for those countries, so the rest of the number
+  is drawn as digits. It passes the mod-97 check a bank's form runs, and a
+  person who knows the country would see the bank code is wrong.
 - **The tax engine taxes wages and nothing else.** It was a screen, read only
   by the place card, until the day job: payday withholds income and payroll
   tax through it (`systems/work.ts`). Its sales, property and vehicle rules are

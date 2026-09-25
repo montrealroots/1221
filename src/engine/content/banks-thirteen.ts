@@ -95,13 +95,13 @@ export const THIRTEEN: readonly CountryBanking[] = [
       {
         id: 'ca-bmo', returned: { fee: 10_00, gapDays: 2, ifShortAtLeast: 10_00, source: 'canada.ca: since 12 March 2026 at most $10 for a payment returned unpaid, one fee every two business days, none under $10' }, name: 'BMO', iso: 'CA', currency: 'CAD', format: 'ca', code: '001',
         current: p('Performance Chequing Plan', 'finder.com/ca: $17.95 a month, waived with a $4,000 minimum balance', { monthlyFee: 17_95, waiver: { balanceAtLeast: 4_000_00 } }),
-        savings: p('Savings Account', `${NOT_FOUND}; the product's name wasn't found either`),
+        savings: p('Savings Amplifier Account', 'bmo.com promotional offer terms, 26 August 2026: the posted rate 0.450%, paid monthly (the 4.550% promotion for 120 days, for accounts opened in September 2026 with a chequing plan, not modeled)', { rate: 0.0045 }),
         overdraft: 'BMO overdraft protection is $5 a use or $5 a month, at 21% a year.',
       },
       {
         id: 'ca-cibc', returned: { fee: 10_00, gapDays: 2, ifShortAtLeast: 10_00, source: 'canada.ca: since 12 March 2026 at most $10 for a payment returned unpaid, one fee every two business days, none under $10' }, name: 'CIBC', iso: 'CA', currency: 'CAD', format: 'ca', code: '010',
         current: p('CIBC Smart Account', 'cibc.com: $16.95 a month, rebated with a $4,000 daily balance; free under 25', { monthlyFee: 16_95, waiver: { balanceAtLeast: 4_000_00, ageBelow: 25 } }),
-        savings: p('CIBC eAdvantage Savings', NOT_FOUND),
+        savings: p('CIBC eAdvantage Savings', 'CIBC’s own rate feed, 2 July 2026: 0.30% up to $99,999.99 and 0.60% from $100,000, applied here to the whole balance at its tier; the 4.60% three-month bonus and the Smart Interest top-up not modeled', { rate: 0.003, tiers: [{ from: 100_000_00, rate: 0.006 }] }),
       },
     ],
   },
@@ -116,22 +116,22 @@ export const THIRTEEN: readonly CountryBanking[] = [
       {
         id: 'mx-bbva', name: 'BBVA México', iso: 'MX', currency: 'MXN', format: 'mx', code: '012',
         current: p('Libretón Básico Cuenta Digital', 'bbva.mx: no fees on the digital account'),
-        savings: p('Libretón', NOT_FOUND),
+        savings: p('Libretón', 'bbva.mx Libretón contract cover sheet: “sin intereses”, no interest'),
       },
       {
         id: 'mx-banorte', name: 'Banorte', iso: 'MX', currency: 'MXN', format: 'mx', code: '072',
         current: p('Cuenta Enlace Personal', 'banorte.com: a MXN 5,000 minimum average, waived with payroll; the fee itself was not found'),
-        savings: p('Cuenta Enlace Personal', NOT_FOUND),
+        savings: p('Inversión Enlace', 'banorte.com Enlace Personal brochure, 3 July 2026: GAT nominal 0.31% (GAT real −3.50%) before tax', { rate: 0.0031 }),
       },
       {
         id: 'mx-santander', quietMonth: { fee: 11_48, minTransactions: 2, unlessWages: true, source: 'santander.com.mx: MXN 9.90 plus 16% VAT in a month with fewer than two transactions and no payroll' }, name: 'Santander México', iso: 'MX', currency: 'MXN', format: 'mx', code: '014',
         current: p('Débito LikeU', 'santander.com.mx: no monthly fee but the quiet-month fee'),
-        savings: p('Débito LikeU', NOT_FOUND),
+        savings: p('Débito LikeU', 'financera.mx, 5 September 2026: the account pays no interest (santander.com.mx could not be read)'),
       },
       {
         id: 'mx-banamex', name: 'Banamex', iso: 'MX', currency: 'MXN', format: 'mx', code: '002',
         current: p('Cuenta de Nómina Banamex', 'banamex.com: no fee while a salary is paid into it'),
-        savings: p('Ahorro Fácil', NOT_FOUND),
+        savings: p('Ahorro Fácil', 'banamex.com, 5 August 2026: a variable 0.00%, GAT nominal 0.00%'),
       },
     ],
   },
@@ -170,7 +170,7 @@ export const THIRTEEN: readonly CountryBanking[] = [
       {
         id: 'gb-santander', name: 'Santander UK', iso: 'GB', currency: 'GBP', format: 'gb', code: '09',
         current: p('Everyday Current Account', 'santander.co.uk: no monthly fee'),
-        savings: p('Easy Access Saver', 'santander.co.uk: 2.00% AER for 12 months, from 17 July 2026', { rate: 0.02 }),
+        savings: p('Easy Access Saver', 'santander.co.uk Issue 31 key facts, 17 July 2026: 2.00% AER for 12 months, then moved to the Everyday Saver at 0.90% (rates at 4 August 2026)', { rate: 0.009, intro: [{ months: 12, rate: 0.02 }] }),
         overdraft: 'A Santander UK arranged overdraft is 39.94% EAR representative.',
       },
       {
@@ -222,19 +222,19 @@ export const THIRTEEN: readonly CountryBanking[] = [
     howMoneyMoves: 'Pay arrives in the current account; bills arrive as claims (kröfur) in the online bank and are paid from there.',
     banks: [
       {
-        id: 'is-landsbankinn', name: 'Landsbankinn', iso: 'IS', currency: 'ISK', format: 'is', code: '01',
+        id: 'is-landsbankinn', name: 'Landsbankinn', iso: 'IS', currency: 'ISK', format: 'is', code: '01', currentLedger: '26', savingsLedger: '05',
         current: p('Einkareikningur', 'landsbankinn.is rate decision, 1 September 2026: the current account pays 0.50%; fees not found', { rate: 0.005 }),
         savings: p('Vaxtareikningur', 'landsbankinn.is rate decision, 1 September 2026: 5.79% on the lowest tier, up to 6.25%', { rate: 0.0579 }),
         overdraft: 'A Landsbankinn overdraft (yfirdráttur) is 15.75% a year, as of 1 September 2026.',
       },
       {
-        id: 'is-arion', card: { yearly: 950_00, perPurchase: 19_00, freeUnder: 24, source: 'Arion price list, 23 September 2026: a debit card at 950 kr a year and 19 kr a purchase, free for 23 and under' }, name: 'Arion banki', iso: 'IS', currency: 'ISK', format: 'is', code: '03',
+        id: 'is-arion', card: { yearly: 950_00, perPurchase: 19_00, freeUnder: 24, source: 'Arion price list, 23 September 2026: a debit card at 950 kr a year and 19 kr a purchase, free for 23 and under' }, name: 'Arion banki', iso: 'IS', currency: 'ISK', format: 'is', code: '03', currentLedger: '26', savingsLedger: '13',
         current: p('Veltureikningur', 'arionbanki.is rate table, 24 September 2026: 0.05%; no monthly fee', { rate: 0.0005 }),
         savings: p('Vöxtur', 'arionbanki.is rate table, 24 September 2026: 5.55% on the lowest tier, up to 5.85%', { rate: 0.0555 }),
         overdraft: 'An Arion overdraft (yfirdráttur) is 15.75% a year.',
       },
       {
-        id: 'is-islandsbanki', name: 'Íslandsbanki', iso: 'IS', currency: 'ISK', format: 'is', code: '05',
+        id: 'is-islandsbanki', name: 'Íslandsbanki', iso: 'IS', currency: 'ISK', format: 'is', code: '05', currentLedger: '26',
         current: p('Almennur reikningur', 'islandsbanki.is rate table, 3 September 2026: 0.25%; fees not found', { rate: 0.0025 }),
         savings: p('Vaxtaþrep', 'islandsbanki.is rate table, 3 September 2026: 6.13% on the lowest tier, up to 6.50%', { rate: 0.0613 }),
         overdraft: 'An Íslandsbanki overdraft (yfirdráttur) is 15.75% a year.',
@@ -331,22 +331,22 @@ export const THIRTEEN: readonly CountryBanking[] = [
       {
         id: 'es-santander', name: 'Banco Santander', iso: 'ES', currency: 'EUR', format: 'es', code: '0049',
         current: p('Cuenta Santander', 'bancosantander.es: €20 a month, free with a nómina of €600 (and bills or card use, not modeled) or under 29', { monthlyFee: 20_00, waiver: { depositsAtLeast: 600_00, ageBelow: 29 } }),
-        savings: p('Cuenta Santander', NOT_FOUND),
+        savings: p('Cuenta Hucha', 'Finantres, 16 September 2026, and bancosantander.es: Santander’s accounts pay 0% TIN, 0% TAE'),
       },
       {
         id: 'es-bbva', name: 'BBVA', iso: 'ES', currency: 'EUR', format: 'es', code: '0182',
         current: p('Cuenta Online Sin Comisiones', 'bbva.es via comparison sites: no fee, no conditions'),
-        savings: p('Cuenta Online Sin Comisiones', NOT_FOUND),
+        savings: p('Cuenta Metas', 'bbva.es and Kelisto, 21 September 2026: 0% TIN, 0% TAE'),
       },
       {
         id: 'es-caixabank', name: 'CaixaBank', iso: 'ES', currency: 'EUR', format: 'es', code: '2100',
         current: p('Programa Día a Día', 'caixabank.es: €60 a quarter (€20 a month here) unless a nómina over €600, €20,000 held, or under 29', { monthlyFee: 20_00, waiver: { depositsAtLeast: 600_01, balanceAtLeast: 20_000_00, ageBelow: 29 } }),
-        savings: p('Programa Día a Día', 'caixabank.es: 0%'),
+        savings: p('Cuenta Online sin Comisiones', 'caixabank.es, September 2026: “cuenta no retribuida (0% TAE, 0% TIN)”'),
       },
       {
         id: 'es-sabadell', name: 'Banco Sabadell', iso: 'ES', currency: 'EUR', format: 'es', code: '0081',
         current: p('Cuenta Online Sabadell', 'comparison sites: no fee on the digital account'),
-        savings: p('Cuenta Online Sabadell', NOT_FOUND),
+        savings: p('Cuenta Ahorro Sabadell', 'bancsabadell.com conditions, August 2026: 1% TIN (1.005% TAE) on up to €20,000, paid monthly', { rate: 0.01, rateUpTo: 20_000_00 }),
       },
       {
         id: 'es-bankinter', name: 'Bankinter', iso: 'ES', currency: 'EUR', format: 'es', code: '0128',
@@ -371,7 +371,7 @@ export const THIRTEEN: readonly CountryBanking[] = [
       },
       {
         id: 'jp-smbc', name: 'SMBC', iso: 'JP', currency: 'JPY', format: 'jp', code: '0009',
-        current: p('普通預金 (Ordinary Deposit)', 'smbc.co.jp: 0.40%, 0.50% from 2 November 2026', { rate: 0.004, changes: [{ from: '2026-11-02', rate: 0.005 }], pays: [2, 8] }),
+        current: p('普通預金 (Ordinary Deposit)', 'smbc.co.jp: 0.40%, 0.50% from 2 November 2026; SMBC’s ¥1,100 yearly fee on an account unused for two years holding under ¥10,000 spares one with the Web passbook, which SLATE’s accounts use (smbc.co.jp digitalmiriyou, 8 April 2024)', { rate: 0.004, changes: [{ from: '2026-11-02', rate: 0.005 }], pays: [2, 8] }),
         savings: p('普通預金 (Ordinary Deposit)', 'smbc.co.jp: as the everyday account', { rate: 0.004, changes: [{ from: '2026-11-02', rate: 0.005 }], pays: [2, 8] }),
       },
       {

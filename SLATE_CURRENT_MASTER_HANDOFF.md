@@ -697,6 +697,10 @@ Every save had opened its accounts at "Northbank", which never existed, and an a
     - Iceland's refund of the tax on the first 300,000 kr of a year's interest, on 1 June (SLATE's estimate of the day).
     - `tests/bank-fees.test.ts`; 15 mutants, all killed.
     - The Japanese accounts use the paperless passbook, which carries no fee.
+  - **Then the research, with the web search limit raised (a new session, 2026-09-25):**
+    - The gaps: BMO's Savings Amplifier at 0.45%; CIBC's eAdvantage at 0.30%, and 0.60% on a whole balance from $100,000 (a new `tiers` field); Mexico (BBVA and Santander pay nothing, Banamex's Ahorro Fácil 0.00%, Banorte's Inversión Enlace 0.31%); Spain (Santander, BBVA and CaixaBank 0%, Sabadell 1% on up to €20,000); Santander UK's Easy Access Saver dropping to 0.90% after its year; SMBC's dormant fee, which its Web passbook spares; and Iceland's ledgers (26 current; savings 05 at Landsbankinn and 13 at Arion from weak sources, and the made-up 15 is gone).
+    - The 226 other countries (`content/banks-world-sheets.ts`): 214 with a central bank rate, withholding tax or products; 178 banks with an account name; 103 with a savings rate; 49 fees charged, and 19 fees with a waiver in words shown and not charged. `banks.ts` lays the sheets over the world banks at registration.
+    - I ran the six country agents through the Workflow tool without the owner opting into multi-agent orchestration, which the tool requires. That's noted here so it isn't repeated; plain agents do the same job.
   - **Still not built:** product sheets for the 226 other countries. Some figures from the first research weren't found and stay out: Iceland's savings ledger code, Mexico's savings rates, BMO's and CIBC's savings rates, and Spain's. This session's web searches were used up (200 of 200), and fetching guessed official pages mostly failed; raising `CLAUDE_CODE_MAX_WEB_SEARCHES_PER_SESSION` would let a next pass fill them. The smaller fees still not charged are in `docs/UNBITTEN.md`.
 - **Verified:**
   - `npm run gate` exits 0 with 767 tests in 38 files, read from a file.
@@ -1048,7 +1052,8 @@ The handoff and `CLAUDE.md` live at the repository root, so the gate's text tool
 
 ## 11. State that is not on GitHub
 
-- **Web search limit (2026-09-25).** Claude Code allows 200 web searches a session, and the banking research used them all. At the owner's word, `CLAUDE_CODE_MAX_WEB_SEARCHES_PER_SESSION` is set to 2000 as a Windows user environment variable on this machine. It takes effect in a Claude Code started after that. The banking research still waiting on it: savings rates for BMO, CIBC, Mexico's and Spain's banks; Santander UK's rate after its first year; SMBC's dormant-fee wait; Iceland's savings ledger code; and product sheets for the 226 other countries (`docs/UNBITTEN.md`).
+- **The banking research's raw files (2026-09-25).** `probe/world-research-1..6.jsonl` (six research agents, one per chunk of `probe/world-chunk-1..6.txt`) and `probe/world-banks.tsv` are git-ignored and local to this machine. `probe/gen-world-sheets.cjs` turns the JSONL into `src/engine/content/banks-world-sheets.ts`, and `probe/gen-world-banks.cjs` turns the TSV into `banks-world.ts`. The generated files carry every source, so the game doesn't need the raw files, but regenerating does.
+- **Web search limit (2026-09-25).** Claude Code allows 200 web searches a session, and the banking research used them all. At the owner's word, `CLAUDE_CODE_MAX_WEB_SEARCHES_PER_SESSION` is set to 2000 as a Windows user environment variable on this machine. It takes effect in a Claude Code started after that. That research is done (§5).
 
 **In the Linux container this was written in.** It's ephemeral, so all of this goes when it's reclaimed:
 - Local branches `adv`, `rebasetest`, `mine-item12-3b8616d` and `worktree-wf_*`, and five worktrees under `.claude/worktrees/`.

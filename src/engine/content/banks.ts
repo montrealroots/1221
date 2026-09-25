@@ -18,6 +18,7 @@ import type { Money } from '../core/money';
 import { COUNTRIES } from './geography';
 import { worldBanking } from './banks-world';
 import { THIRTEEN } from './banks-thirteen';
+import { SHEETS, type SheetProduct } from './banks-world-sheets';
 
 export type NumberFormat =
   | 'us' | 'ca' | 'mx' | 'gb' | 'ie' | 'is' | 'de' | 'fr' | 'es' | 'jp' | 'kr' | 'au' | 'nz' | 'iban' | 'plain';
@@ -37,6 +38,8 @@ export interface Product {
   rate?: number;
   /** The rate is paid only on a balance of at least this. */
   rateFrom?: Money;
+  /** A higher rate for a larger balance, paid on the whole of it, from each tier's floor up. */
+  tiers?: readonly { from: Money; rate: number }[];
   /** The rate is paid on the balance up to this, and nothing above it. */
   rateUpTo?: Money;
   /**
@@ -110,7 +113,7 @@ export interface CountryBanking {
   banks: readonly Bank[];
   guarantee?: Guarantee;
   /** The central bank's rate, called what the bank calls it, since a date. */
-  policy?: { called: string; rate: number; since: string; source: string };
+  policy?: { called: string; rate: number; since?: string; source: string };
   /**
    * Tax a bank takes off interest before paying it: a flat rate, above a
    * yearly allowance where there is one, or a rate by the saver's income.
@@ -139,8 +142,42 @@ export function addBanking(list: readonly CountryBanking[]): void {
   }
 }
 addBanking(BANKING);
-// Every other country, its banks by name, in its own money.
-addBanking(worldBanking((iso) => COUNTRIES.all().find((c) => c.iso2?.toUpperCase() === iso)?.currency ?? 'USD'));
+// Every other country, its banks by name, in its own money, with the
+// product sheets the research found (`banks-world-sheets.ts`).
+addBanking(withSheets(worldBanking((iso) => COUNTRIES.all().find((c) => c.iso2?.toUpperCase() === iso)?.currency ?? 'USD')));
+
+/** A country's researched rate, tax and products, laid over its banks. */
+function withSheets(list: readonly CountryBanking[]): CountryBanking[] {
+  return list.map((country) => {
+    const sheet = SHEETS[country.iso];
+    if (!sheet) return country;
+    return {
+      ...country,
+      policy: sheet.policy ?? country.policy,
+      interestTax: sheet.interestTax ?? country.interestTax,
+      banks: country.banks.map((bank) => {
+        const found = sheet.products?.[bank.name];
+        if (!found) return bank;
+        return {
+          ...bank,
+          current: found.current ? fromSheet(found.current) : bank.current,
+          savings: found.savings ? fromSheet(found.savings) : bank.savings,
+          confidence: found.confidence,
+        };
+      }),
+    };
+  });
+}
+
+function fromSheet(sheet: SheetProduct): Product {
+  return {
+    name: sheet.name,
+    source: sheet.note ? `${sheet.source}; ${sheet.note}` : sheet.source,
+    asOf: '2026-09-25',
+    ...(sheet.monthlyFee ? { monthlyFee: sheet.monthlyFee } : {}),
+    ...(sheet.rate !== undefined ? { rate: sheet.rate } : {}),
+  };
+}
 
 export function bankingIn(iso: string): CountryBanking | undefined {
   return BY_ISO.get(iso.toUpperCase());

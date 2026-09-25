@@ -121,6 +121,9 @@ const REAL_NAMES = [
   'Lip Colour', 'Nail Colour', 'Eye Colour',
   // The Loro Piana jacket carries this name on its own label.
   'Traveller Jacket',
+  // Banking names and pages spelled by their own banks and governments.
+  'Cuenta de Cheques', 'cuentas-cheques', 'cheque-accounts', 'Special Defence Contribution',
+  'special-defence-contribution', 'Youth Programme',
 ];
 
 const EXTENSIONS = /\.(ts|tsx|mjs|md)$/;
