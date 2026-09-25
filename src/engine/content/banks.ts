@@ -19,6 +19,7 @@ import { COUNTRIES } from './geography';
 import { worldBanking } from './banks-world';
 import { THIRTEEN } from './banks-thirteen';
 import { SHEETS, type SheetProduct } from './banks-world-sheets';
+import { IBAN_CODES, IBAN_FORMATS } from './banks-world-iban';
 
 export type NumberFormat =
   | 'us' | 'ca' | 'mx' | 'gb' | 'ie' | 'is' | 'de' | 'fr' | 'es' | 'jp' | 'kr' | 'au' | 'nz' | 'iban' | 'plain';
@@ -33,7 +34,22 @@ export interface Product {
    * month, or an age under a line, in the bank's currency's hundredths. With
    * `reducedTo`, meeting it lowers the fee to that rather than waiving it.
    */
-  waiver?: { depositsAtLeast?: Money; balanceAtLeast?: Money; ageBelow?: number; reducedTo?: Money };
+  waiver?: {
+    depositsAtLeast?: Money;
+    /**
+     * What wages paid in also need, over the last so many months: so many
+     * bills paid from the account, so many card purchases, or so many of
+     * either together.
+     */
+    depositsAlso?: { bills?: number; purchases?: number; either?: number; months: number };
+    balanceAtLeast?: Money;
+    /** The month's average daily balance. */
+    averageAtLeast?: Money;
+    /** The month's average across every current and savings account the person keeps at the bank. */
+    linkedAverageAtLeast?: Money;
+    ageBelow?: number;
+    reducedTo?: Money;
+  };
   /** What it pays a year, as a fraction. Absent: nothing. */
   rate?: number;
   /** The rate is paid only on a balance of at least this. */
@@ -82,6 +98,9 @@ export interface Bank {
   ibanCountry?: string;
   /** A generic IBAN country's IBAN length. */
   ibanLength?: number;
+  /** Its BBAN's structure in the IBAN Registry's notation, and where the bank's code sits in it. */
+  bban?: string;
+  codeOffset?: number;
   /** How sure the research was of the bank, where it said: high, medium or low. */
   confidence?: 'H' | 'M' | 'L';
   current: Product;
@@ -150,13 +169,16 @@ addBanking(withSheets(worldBanking((iso) => COUNTRIES.all().find((c) => c.iso2?.
 function withSheets(list: readonly CountryBanking[]): CountryBanking[] {
   return list.map((country) => {
     const sheet = SHEETS[country.iso];
-    if (!sheet) return country;
     return {
       ...country,
-      policy: sheet.policy ?? country.policy,
-      interestTax: sheet.interestTax ?? country.interestTax,
-      banks: country.banks.map((bank) => {
-        const found = sheet.products?.[bank.name];
+      policy: sheet?.policy ?? country.policy,
+      interestTax: sheet?.interestTax ?? country.interestTax,
+      banks: country.banks.map((one) => {
+        // The IBAN's structure and the bank's code in it, where researched.
+        const format = one.format === 'iban' ? IBAN_FORMATS[one.ibanCountry ?? one.iso] : undefined;
+        const code = IBAN_CODES[`${country.iso}|${one.name}`];
+        const bank = format ? { ...one, bban: format.bban, codeOffset: format.offset, code: code?.code ?? '' } : one;
+        const found = sheet?.products?.[bank.name];
         if (!found) return bank;
         return {
           ...bank,

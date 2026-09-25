@@ -61,8 +61,9 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "note": "Price list shows EUR 5.00/month for Primekonto and other personal accounts"
         },
         "savings": {
-          "name": "Östersjökonto",
-          "source": "https://www.alandsbanken.fi/sv/banktjanster/konton"
+          "name": "Itämeritili / Östersjökonto (Baltic Sea Account)",
+          "source": "https://www.alandsbanken.fi/pankkipalvelut/tilit/itameritili",
+          "rate": 0.006
         }
       }
     }
@@ -206,6 +207,22 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
       "called": "ECCB discount rate",
       "rate": 0.03,
       "source": "https://www.eccb-centralbank.org/interest-rates"
+    },
+    "products": {
+      "Antigua Commercial Bank": {
+        "confidence": "L",
+        "current": {
+          "name": "Personal Chequing Account (EC$)",
+          "source": "https://ag.acbonline.com/personal/acb-caribbean-fees/",
+          "monthlyFee": 2000,
+          "note": "Fee schedule PDF (June 2024) could not be read"
+        },
+        "savings": {
+          "name": "Savings Account (EC$; EC$1 monthly charge if balance under EC$100)",
+          "source": "https://ag.acbonline.com/personal/acb-caribbean-fees/",
+          "rate": 0.02
+        }
+      }
     }
   },
   "AR": {
@@ -223,8 +240,9 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "note": "No maintenance charge on peso savings accounts (incl. salary accounts); USD account costs USD 10/month unless salary is paid there"
         },
         "savings": {
-          "name": "Caja de Ahorros en Pesos",
-          "source": "https://bna.com.ar/Personas/CajaDeAhorrosEnPesosYDolares"
+          "name": "Caja de Ahorros en pesos (TNA, rates in force 16 Jan 2026)",
+          "source": "https://www.bna.com.ar/BackOffice/dataBase/tasas_ope_3732.pdf",
+          "rate": 0.0005
         }
       }
     }
@@ -250,8 +268,9 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "note": "Management free; AMD 1,000 per half-year only if turnover < AMD 150k and balance < AMD 50k, and not charged until 30 June 2027"
         },
         "savings": {
-          "name": "Savings account",
-          "source": "https://ameriabank.am/en/personal/accounts/accounts/saving-account"
+          "name": "Savings Account (AMD; 4.0% requires AMD 200,000 minimum balance, otherwise 0.1%; effective 15 Sep 2025)",
+          "source": "https://ameriabank.am/Portals/0/files/Personal/Deposit_saving_terms_for_pp_eng.pdf",
+          "rate": 0.04
         }
       }
     }
@@ -260,6 +279,12 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     "products": {
       "Aruba Bank": {
         "confidence": "M",
+        "current": {
+          "name": "Salary Account (resident personal current account)",
+          "source": "https://www.arubabank.com/About-Us/About-Us/Aruba-Bank-Fees",
+          "monthlyFee": 1000,
+          "note": "Current-account fee is in a fee schedule not read"
+        },
         "savings": {
           "name": "Statement Savings",
           "source": "https://www.arubabank.com/en/Personal/Accounts/savings-accounts/compare-personal-savings-accounts",
@@ -288,6 +313,19 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "source": "https://www.sparkasse.at/erstebank/privatkunden/konto-karten/onlinekonto",
           "monthlyFee": 389,
           "note": "Online account; fees vary by regional Sparkasse"
+        },
+        "savings": {
+          "name": "Smart Sparen (rate as published by Sparkasse Oberösterreich, a group savings bank, Sept 2026; Erste Bank Wien rate not published)",
+          "source": "https://www.capitalo.at/anbieter/sparkasse-oberoesterreich/produkte/tagesgeld",
+          "rate": 0.015
+        }
+      },
+      "BAWAG": {
+        "confidence": "H",
+        "savings": {
+          "name": "SparBox Flex",
+          "source": "https://www.bawag.at/bawag/privatkunden/sparen/sparbox-flex",
+          "rate": 0.0001
         }
       }
     }
@@ -302,6 +340,16 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
       "rate": 0.1,
       "note": "10% withheld on deposit interest; monthly interest on AZN deposits up to AZN 200 and long (18+ month) AZN deposits are exempt.",
       "source": "https://economy.gov.az/en/post/1792/amendments-made-in-interest-income-tax-on-bank-deposits"
+    },
+    "products": {
+      "Kapital Bank": {
+        "confidence": "L",
+        "savings": {
+          "name": "Yığım hesabı (Birbank savings account, AZN; interest over 200 AZN/yr taxed 10%)",
+          "source": "https://birbank.az/yigim-hesabi",
+          "rate": 0.07
+        }
+      }
     }
   },
   "BS": {
@@ -367,6 +415,19 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "source": "https://www.sonalibank.com.bd/savings.php",
           "rate": 0.05
         }
+      },
+      "BRAC Bank": {
+        "confidence": "M",
+        "current": {
+          "name": "Current Plus",
+          "source": "https://brackweb.s3.ap-southeast-1.amazonaws.com/uploads/all/BRAC_Bank_Deposit_Interest_Rate_w.e.f._March_05,_202669a0a6e891870.pdf",
+          "note": "No interest. Account maintenance fee is charged half-yearly by average-balance band (up to Tk 200-300 per half-year per schedule of charges); exact figure for this product not confirmed."
+        },
+        "savings": {
+          "name": "Regular Savings (TBS) — tiered; rate shown is the Tk 1 lac–<25 lac tier (0.50%) up to 2.50% at Tk 5 crore+; effective 5 Mar 2026",
+          "source": "https://brackweb.s3.ap-southeast-1.amazonaws.com/uploads/all/BRAC_Bank_Deposit_Interest_Rate_w.e.f._March_05,_202669a0a6e891870.pdf",
+          "rate": 0.005
+        }
       }
     }
   },
@@ -402,6 +463,21 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
       "rate": 0.13,
       "note": "13% income tax on deposit interest (short-term deposits); longer-term deposits are exempt.",
       "source": "https://taxratesbycountry.com/tax-rates-in-belarus/"
+    },
+    "products": {
+      "Belarusbank": {
+        "confidence": "L",
+        "current": {
+          "name": "Текущий счёт (current account)",
+          "source": "https://belarusbank.by/fizicheskim_licam/vklady/tekushchiy_schet/",
+          "note": "No charge for opening or maintenance; the current account itself pays 0.1% p.a. on BYN balances (0.0001% USD/EUR)."
+        },
+        "savings": {
+          "name": "Текущий счёт в BYN (interest on current-account balance; Belarusbank's revocable BYN deposits are fixed-term, 0.5%–0.75% for 6 months)",
+          "source": "https://belarusbank.by/fizicheskim_licam/vklady/tekushchiy_schet/",
+          "rate": 0.001
+        }
+      }
     }
   },
   "BE": {
@@ -465,8 +541,9 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "source": "https://ecobank.com/currentaccounts.aspx?hl=fr"
         },
         "savings": {
-          "name": "Compte Épargne",
-          "source": "https://ecobank.com/savingsaccounts.aspx?hl=fr"
+          "name": "Compte épargne (regulated 3.5% rate; BCEAO bank-conditions survey H2 2024)",
+          "source": "https://www.bceao.int/sites/default/files/2025-03/Conditions_de_banque_deuxieme_semestre_2024.pdf",
+          "rate": 0.035
         }
       }
     }
@@ -483,6 +560,28 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "savings": {
           "name": "Strata",
           "source": "https://www.butterfieldgroup.com/sites/butterfield-corp/files/2025-12/bermuda-retail-schedule-of-charges-jan-2026.pdf"
+        }
+      },
+      "HSBC Bermuda": {
+        "confidence": "H",
+        "current": {
+          "name": "Personal current account",
+          "source": "https://www.hsbc.bm/bank-fees/",
+          "monthlyFee": 1200,
+          "note": "$12/month; no charge for Premier and Seniors."
+        },
+        "savings": {
+          "name": "Everyday Savings (BMD, balances under $50,000; tiered to 0.15% over $1M; rates 24 Sep 2026)",
+          "source": "https://www.hsbc.bm/savings/products/fixed-term/saving-rates/",
+          "rate": 0.0001
+        }
+      },
+      "Clarien Bank": {
+        "confidence": "M",
+        "current": {
+          "name": "Personal chequing account",
+          "source": "https://clarienbank.com/fees/",
+          "note": "$12 monthly maintenance plus $3 monthly compliance fee; seniors exempt. (a fee of 15 a month where not waived; the waiver isn't modeled, so it isn't charged)"
         }
       }
     }
@@ -509,8 +608,9 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "note": "No maintenance charge for the account or debit card"
         },
         "savings": {
-          "name": "Caja de Ahorro Uniplus",
-          "source": "https://bancounion.com.bo/Personas/CajaDeAhorrUniplus"
+          "name": "Caja de Ahorro (Bs; 2% up to Bs 70,000 under D.S. 2055, 0.15% above; no maintenance fee)",
+          "source": "https://bancounion.com.bo/Personas/CajaDeAhorro",
+          "rate": 0.02
         }
       }
     }
@@ -519,6 +619,11 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     "products": {
       "Maduro & Curiel's Bank (MCB) Bonaire": {
         "confidence": "M",
+        "current": {
+          "name": "Personal current account (USD)",
+          "source": "https://www.mcbbonaire.com/personal/support-services/branch-services",
+          "note": "US$1.50 monthly administration fee; Resident Pension (65+) and Student accounts exempt. (a fee of 1.5 a month where not waived; the waiver isn't modeled, so it isn't charged)"
+        },
         "savings": {
           "name": "Personal savings account (USD)",
           "source": "https://www.mcbbonaire.com/personal/products/banking/personal-savings-account-interest-rate",
@@ -535,6 +640,14 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "Standard Paket račun",
           "source": "https://www.unicredit.ba/ba/stanovnistvo/proizvodi_i_usluge/paketi.html",
           "note": "BAM 5.99/month; waived for students (a fee of 5.99 a month where not waived; the waiver isn't modeled, so it isn't charged)"
+        }
+      },
+      "Raiffeisen Bank BiH": {
+        "confidence": "M",
+        "savings": {
+          "name": "Račun po viđenju – Avista (bank pays no interest)",
+          "source": "https://www.raiffeisenbank.ba/bs/stanovnistvo/proizvodi/stednja-i-ulaganje/racun-po-vidjenju-avista.html",
+          "rate": 0
         }
       }
     }
@@ -559,8 +672,9 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "note": "Monthly fee not found on page"
         },
         "savings": {
-          "name": "Future Save Account",
-          "source": "https://www.fnbbotswana.co.bw/transactional-savings-account/future-save-account.html"
+          "name": "Poloko Savings (tiered; 0.10% for P500–P19,999 per product page; Sept 2026 rate sheet shows 0.00%–3.40% range)",
+          "source": "https://www.fnbbotswana.co.bw/transactional-savings-account/poloko.html",
+          "rate": 0.001
         }
       }
     }
@@ -607,6 +721,12 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     "products": {
       "Bank Islam Brunei Darussalam (BIBD)": {
         "confidence": "M",
+        "current": {
+          "name": "General Current Account",
+          "source": "https://bibd.com.bn/wp-content/uploads/2022/06/PDS-General-Current-Account-2022Final.pdf",
+          "monthlyFee": 1500,
+          "note": "BND 15.00 per month only if average monthly balance falls below BND 1,000."
+        },
         "savings": {
           "name": "General Saver",
           "source": "https://bibd.com.bn/rates/deposits/",
@@ -629,6 +749,14 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "План „Плюс“",
           "source": "https://www.unicreditbulbank.bg/bg/individualni-klienti/bankirane/bankovi-smetki/plan-plus-za-tvoiata-zaplata/",
           "note": "EUR 2.84/month, free with regular income into the account (a fee of 2.84 a month where not waived; the waiver isn't modeled, so it isn't charged)"
+        }
+      },
+      "DSK Bank": {
+        "confidence": "H",
+        "savings": {
+          "name": "Безсрочен влог (demand savings deposit, EUR; interest bulletin 25.08.2026)",
+          "source": "https://dskbank.bg/docs/default-source/%D0%BB%D0%B8%D1%85%D0%B2%D0%B5%D0%BD-%D0%B1%D1%8E%D0%BB%D0%B5%D1%82%D0%B8%D0%BD/%D0%BB%D0%B8%D1%85%D0%B2%D0%B5%D0%BD-%D0%B1%D1%8E%D0%BB%D0%B5%D1%82%D0%B8%D0%BD-%D0%B7%D0%B0-%D1%84%D0%B8%D0%B7%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8-%D0%BB%D0%B8%D1%86%D0%B0.pdf",
+          "rate": 0
         }
       }
     }
@@ -683,6 +811,11 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     "products": {
       "ACLEDA Bank": {
         "confidence": "H",
+        "current": {
+          "name": "Current Account",
+          "source": "https://www.acledabank.com.kh/kh/eng/ps_decurrentacc",
+          "note": "No monthly maintenance fee stated; no interest; initial deposit KHR 400,000 or USD 100. Extra statements charged."
+        },
         "savings": {
           "name": "Savings Account",
           "source": "https://www.acledabank.com.kh/kh/eng/ps_desavingacc",
@@ -710,8 +843,9 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "source": "https://www.afrilandfirstbank.com/wp-content/uploads/2023/08/Tarification_AFB_Particulier_juin_2023.pdf"
         },
         "savings": {
-          "name": "Compte d'épargne",
-          "source": "https://www.afrilandfirstbank.com/index.php/sp_faq/comment-fonctionne-le-compte-depargne-taux-dinteret-comptabilisation-des-interets-frais-dentretien/"
+          "name": "Compte d'épargne (min. opening 25,000 FCFA; ~2,000 FCFA per semester maintenance)",
+          "source": "https://fr-fr.facebook.com/afrilandfirstbankgroup/photos/le-compte-d%C3%A9pargne-est-votre-alli%C3%A9-versez-y-vos-avoirs-%C3%A0-votre-rythme-et-dispose/1339116952784560/",
+          "rate": 0.0245
         }
       }
     }
@@ -849,6 +983,16 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
       "rate": 0.03,
       "since": "2023-07-04",
       "source": "https://banque-comores.km/page/show/taux-dinteret-de-la-bcc"
+    },
+    "products": {
+      "Exim Bank Comores": {
+        "confidence": "L",
+        "current": {
+          "name": "Compte courant avec chéquier",
+          "source": "https://www.eximbank-km.com/fr/personal/accounts",
+          "note": "Minimum balance 10,000 KMF; remunerated up to 0.50% p.a. (non-chequebook current account: min 3,000 KMF, up to 0.75%). Monthly fee not published."
+        }
+      }
     }
   },
   "CG": {
@@ -929,6 +1073,14 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "Cuenta de ahorro en colones",
           "source": "https://www.elfinancierocr.com/finanzas/cuentas-bancarias-de-ahorro-vea-cuales-le/U2KUK647VBA2VM2LU5FLRLZNWI/story/"
         }
+      },
+      "Banco de Costa Rica": {
+        "confidence": "H",
+        "savings": {
+          "name": "Cuenta de ahorro en colones (tiered 0.25% for ₡0–25,000 up to 1.75% over ₡25M; effective 5 Mar 2026)",
+          "source": "https://www.bancobcr.com/wps/portal/bcr/bancobcr/personas/cuentas/ahorro/tasas",
+          "rate": 0.0025
+        }
       }
     }
   },
@@ -950,7 +1102,8 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         },
         "savings": {
           "name": "Compte Épargne",
-          "source": "https://particuliers.societegenerale.ci/fr/epargner/epargne/compte-epargne/"
+          "source": "https://particuliers.societegenerale.ci/fr/epargner/epargne/compte-epargne/",
+          "rate": 0.035
         }
       }
     }
@@ -975,6 +1128,14 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "source": "https://www.zaba.hr/home/start",
           "monthlyFee": 590,
           "note": "EUR 5.90 per month package; a free basic payment account (Paket besplatnih usluga) exists for the account receiving regular income."
+        }
+      },
+      "Privredna banka Zagreb": {
+        "confidence": "M",
+        "savings": {
+          "name": "e-štedni ulog po viđenju (EUR, rates valid from 21 Apr 2026)",
+          "source": "https://www.pbz.hr/document/documents/PBZ/stednja/PBZ_Kamatne-stope_21042026.pdf",
+          "rate": 0.0001
         }
       }
     }
@@ -1020,6 +1181,11 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "Current Account",
           "source": "https://dom.com.cy/en/live/digest/cypriot-banks-intend-to-increase-fees-for-account-servicing-and-services-provided-by-them/",
           "note": "Quarterly maintenance fee reported as rising from EUR 6 to EUR 12 per quarter; not confirmed against the 2026 tariff."
+        },
+        "savings": {
+          "name": "Savings Account (instant access, adults; minors 0.20%; table dated 17/04/2025)",
+          "source": "https://www.bankofcyprus.com/globalassets/cyprus/personal/loans/rates/katathetika-en/table-of-deposit-interest-rates-17042025.pdf",
+          "rate": 0
         }
       }
     }
@@ -1079,6 +1245,22 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "source": "https://danskebank.dk/privat/find-hjaelp/konti/renter-gebyrer-og-kontovilkaar",
           "monthlyFee": 3500,
           "note": "DKK 105 per quarter, shown as monthly."
+        }
+      },
+      "Nordea": {
+        "confidence": "H",
+        "savings": {
+          "name": "Opsparingskonto (0.25% up to DKK 100,000, 0% above; from 9 Jun 2026)",
+          "source": "https://www.nordea.dk/privat/renteaendringer-privat-erhverv.html",
+          "rate": 0.0025
+        }
+      },
+      "Jyske Bank": {
+        "confidence": "H",
+        "savings": {
+          "name": "Opsparingskonto – uden opsigelse (0.15% up to DKK 500,000, 0.35% above; price list 24 Sep 2026)",
+          "source": "https://www.jyskebank.dk/privat/priser/konti/opsparing",
+          "rate": 0.0015
         }
       }
     }
@@ -1184,6 +1366,23 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "savings": {
           "name": "Saving Account",
           "source": "https://www.nbe.com.eg/NBE/E/#/EN/ProductDetails?inParams=%7B%22CategoryID%22:%22SavingLocalAccountsID%22,%22ProductID%22:%226204%22%7D"
+        }
+      },
+      "Commercial International Bank (CIB)": {
+        "confidence": "M",
+        "current": {
+          "name": "Classic Current Account",
+          "source": "https://www.cibeg.com/en/personal/accounts-and-deposits/current-accounts/classic",
+          "monthlyFee": 4000,
+          "note": "Converted from EGP 120 per quarter statement/administrative fee (as of 1 Sep 2026); minimum balance EGP 20,000, EGP 100 fee if below."
+        }
+      },
+      "Banque Misr": {
+        "confidence": "H",
+        "savings": {
+          "name": "Saving Account in EGP (annual payout, >EGP 10,000–50,000 tier; 9.00% if paid monthly; min opening EGP 3,000; 20 Sep 2026)",
+          "source": "https://www.banquemisr.com/-/media/Interest-rates/interest-rates-EN.ashx",
+          "rate": 0.095
         }
       }
     }
@@ -1291,6 +1490,16 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
       "rate": 0.1,
       "note": "10% final withholding on deposit interest since July 2025 (was 5%).",
       "source": "https://www.hst-et.com/insights/insight-detail/income-tax-update"
+    },
+    "products": {
+      "Commercial Bank of Ethiopia": {
+        "confidence": "L",
+        "savings": {
+          "name": "Ordinary Savings (reported 7.0%–7.5% after deregulation; secondary source)",
+          "source": "https://agoratubeofficial.com/articles/best-saving-interest-rates-ethiopia-2026/",
+          "rate": 0.07
+        }
+      }
     }
   },
   "FO": {
@@ -1333,6 +1542,14 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "EasySaver Account",
           "source": "https://www.bsp.com.fj/personal-banking/savings-accounts-term-deposits/easysaver-account/"
         }
+      },
+      "ANZ Fiji": {
+        "confidence": "H",
+        "savings": {
+          "name": "Pacific Savings Account",
+          "source": "https://www.anz.com/fiji/en/interest-rates/",
+          "rate": 0.0005
+        }
       }
     }
   },
@@ -1367,7 +1584,16 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         },
         "savings": {
           "name": "EtuTili",
-          "source": "https://www.nordea.fi/henkiloasiakkaat/palvelumme/saastaminen-sijoittaminen/saastamisen-tilit/etutili.html"
+          "source": "https://www.nordea.fi/henkiloasiakkaat/palvelumme/saastaminen-sijoittaminen/saastamisen-tilit/etutili.html",
+          "rate": 0.004
+        }
+      },
+      "S-Pankki": {
+        "confidence": "M",
+        "savings": {
+          "name": "S-Tuottotili",
+          "source": "https://www.s-pankki.fi/fi/tilit/s-tuottotili/",
+          "rate": 0.0001
         }
       }
     }
@@ -1405,6 +1631,12 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     "products": {
       "Banque Socredo": {
         "confidence": "M",
+        "current": {
+          "name": "Compte à vue",
+          "source": "https://www.socredo.pf/uploads/documents/cards/tarifflyerpart-avril2025-6808484ca2f2f359037817.pdf",
+          "monthlyFee": 38300,
+          "note": "Tenue de compte: 383 XPF per month (4,596 XPF per year), tariff from 1 April 2025. A newer tariff from 1 May 2026 exists but was not read. A free basic-banking account (services bancaires de base) also exists."
+        },
         "savings": {
           "name": "Compte sur livret",
           "source": "https://www.socredo.pf/particuliers/produit/compte-sur-livret",
@@ -1452,6 +1684,15 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
       "rate": 0.15,
       "note": "15% withholding on interest paid to individuals; secondary source.",
       "source": "https://www.icaew.com/technical/by-country/africa/gambia/tax-in-gambia"
+    },
+    "products": {
+      "Guaranty Trust Bank Gambia": {
+        "confidence": "L",
+        "savings": {
+          "name": "GTSave",
+          "source": "https://www.gtbankgambia.com/personal-banking/accounts/savings-investment-accounts/savings-account"
+        }
+      }
     }
   },
   "GE": {
@@ -1464,9 +1705,22 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     "products": {
       "TBC Bank": {
         "confidence": "L",
+        "current": {
+          "name": "Current account with TBC Card",
+          "source": "https://tbcbank.ge/en/articles/tbc-card-terms-details",
+          "note": "No service fee for residents. Expat customers pay GEL 10 per month or GEL 100 per year, waived for expats under 24."
+        },
         "savings": {
           "name": "Savings Deposit",
           "source": "https://tbcbank.ge/en/deposits/savings-deposit"
+        }
+      },
+      "Liberty Bank": {
+        "confidence": "H",
+        "savings": {
+          "name": "Savings Deposit",
+          "source": "https://www.libertybank.ge/en/produqtebi/chemtvis/anabrebi-da-sertipikatebi/shemnakhveli",
+          "rate": 0.04
         }
       }
     }
@@ -1497,6 +1751,11 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     "products": {
       "Gibraltar International Bank": {
         "confidence": "M",
+        "current": {
+          "name": "Personal Account",
+          "source": "https://www.gibintbank.gi/wp-content/uploads/2025/09/Fees-Charges-Guide-18.09.2025.pdf",
+          "note": "The Fees & Charges Guide (18 Sep 2025) lists a monthly maintenance fee only for business accounts (GBP 15); none found for personal accounts."
+        },
         "savings": {
           "name": "Personal Savings Account",
           "source": "https://www.gibintbank.gi/personal/savings/savings-account/",
@@ -1553,6 +1812,14 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "Alm. Opsparing",
           "source": "https://www.banken.gl/media/nzdpfofb/prisbog-01-09-2026-dk.pdf"
         }
+      },
+      "BankNordik": {
+        "confidence": "M",
+        "savings": {
+          "name": "Opsparing",
+          "source": "https://www.bankivik.gl/-/media/banknordik/files/priser-og-vilkaar/gl/priser/renteoversigt_gl.pdf",
+          "rate": 0.001
+        }
       }
     }
   },
@@ -1574,6 +1841,14 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "savings": {
           "name": "Regular Savings Account",
           "source": "https://www.grenadaco-opbank.com/personal/savings/regular-savings-account/"
+        }
+      },
+      "Republic Bank (Grenada)": {
+        "confidence": "H",
+        "savings": {
+          "name": "Savings Plus",
+          "source": "https://republicgrenada.com/personal/savings-plus",
+          "rate": 0.02
         }
       }
     }
@@ -1707,6 +1982,14 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "savings": {
           "name": "Conta Poupança",
           "source": "https://www.odemocratagb.com/?p=35708"
+        }
+      },
+      "Orabank Guiné-Bissau": {
+        "confidence": "L",
+        "savings": {
+          "name": "Compte Épargne Bonus",
+          "source": "https://www.bceao.int/fr/reglementations/decision-ndeg-cmumoa0160914-fixant-les-conditions-de-remuneration-des-produits",
+          "rate": 0.035
         }
       }
     }
@@ -1869,7 +2152,20 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         },
         "savings": {
           "name": "BritAma",
-          "source": "https://www.cnbcindonesia.com/market/20260105090548-17-699592/berlaku-2026-aturan-terbaru-biaya-admin-bank-mandiri-bri-bni-btn"
+          "source": "https://www.cermati.com/tabungan/tabungan-britama-bri",
+          "rate": 0.007
+        }
+      }
+    }
+  },
+  "IR": {
+    "products": {
+      "Bank Melli Iran": {
+        "confidence": "L",
+        "savings": {
+          "name": "Short-term ordinary investment deposit (سپرده سرمایه‌گذاری کوتاه‌مدت عادی)",
+          "source": "https://nabzgheymat.ir/%D9%86%D8%B1%D8%AE-%D8%B3%D9%88%D8%AF-%D8%B3%D9%BE%D8%B1%D8%AF%D9%87-%D8%A8%D8%A7%D9%86%DA%A9%DB%8C-%D8%AF%D8%B1-%D8%B4%D9%87%D8%B1%DB%8C%D9%88%D8%B1-%DB%B1%DB%B4%DB%B0%DB%B5%D8%9B-%D8%B9%D8%AF%D8%AF/",
+          "rate": 0.05
         }
       }
     }
@@ -1974,6 +2270,14 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "Quick Save",
           "source": "https://www.jamaicaobserver.com/2025/10/17/jncb-announces-interest-rate-fee-adjustments-starting-december-1/"
         }
+      },
+      "Scotiabank Jamaica": {
+        "confidence": "M",
+        "savings": {
+          "name": "Primary Savings",
+          "source": "https://jm.scotiabank.com/personal/rates-and-fees/everyday-banking-rates.html",
+          "rate": 0.010276
+        }
       }
     }
   },
@@ -2036,6 +2340,20 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "Универсальный (Universal) deposit",
           "source": "https://halykbank.kz/en/deposits"
         }
+      },
+      "Kaspi Bank": {
+        "confidence": "M",
+        "current": {
+          "name": "Kaspi Gold",
+          "source": "https://guide.kaspi.kz/client/ru/gold/conditions/q1635",
+          "monthlyFee": 16625,
+          "note": "Annual service fee of KZT 1,995, shown here as 1,995/12. First year free; charged only if the card was used during the year. In Feb 2026 Kaspi denied reports of a rise to KZT 10,000."
+        },
+        "savings": {
+          "name": "Kaspi Депозит",
+          "source": "https://guide.kaspi.kz/client/ru/deposit/conditions/q1618",
+          "rate": 0.141
+        }
       }
     }
   },
@@ -2062,6 +2380,14 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "savings": {
           "name": "Goal Savings Account",
           "source": "https://ke.kcbgroup.com/for-you/open-account/savings/goal-savings-account"
+        }
+      },
+      "NCBA": {
+        "confidence": "L",
+        "savings": {
+          "name": "NCBA Savings",
+          "source": "https://serrarigroup.com/ke/savings",
+          "rate": 0.035
         }
       }
     }
@@ -2092,9 +2418,15 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     "products": {
       "National Bank of Kuwait": {
         "confidence": "L",
+        "current": {
+          "name": "Current Account",
+          "source": "https://www.nbk.com/kuwait/personal/accounts/everyday-banking/current-account.html",
+          "note": "No minimum balance fees; KD 50 to open. Dormant and unclaimed accounts pay KD 2 per month."
+        },
         "savings": {
-          "name": "Savings Account",
-          "source": "https://www.nbk.com/kuwait/personal/accounts/saving-accounts.html"
+          "name": "Super Account",
+          "source": "https://www.nbk.com/kuwait/personal/accounts/saving-accounts/super-account.html",
+          "rate": 0.00125
         }
       }
     }
@@ -2116,9 +2448,16 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     "products": {
       "BCEL (Banque pour le Commerce Extérieur Lao)": {
         "confidence": "L",
+        "current": {
+          "name": "Current Account",
+          "source": "https://www.bcel.com.la/bcel/bcelweb-datas/file-path/other-fee/en/bcel_web_file_131_1bd13997c5c2eba1816b55616724c554.pdf",
+          "monthlyFee": 350000,
+          "note": "Current account maintenance: LAK 3,500 per account per month."
+        },
         "savings": {
           "name": "Saving Account",
-          "source": "https://www.bcel.com.la/bcel/product-review.html?prd=deposits&id=ac-saving&lang=en"
+          "source": "https://www.bcel.com.la/bcel/bcelweb-datas/file-path/deposit-interest/en/bcel_web_file_18_8bbb2c9d86a53da9608485456a4821a8.pdf",
+          "rate": 0.016
         }
       }
     }
@@ -2156,6 +2495,16 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
       "rate": 0.1,
       "note": "10% withholding on interest from Lebanese bank accounts.",
       "source": "https://taxsummaries.pwc.com/lebanon/individual/income-determination"
+    },
+    "products": {
+      "BLOM Bank": {
+        "confidence": "M",
+        "current": {
+          "name": "Current Plus Account (fresh money)",
+          "source": "https://www.blomretail.com/retail/bank-accounts-lebanon/fresh-money-accounts",
+          "note": "USD 2 per month. This is a fresh-dollar account, so the fee is in US dollars, not Lebanese pounds."
+        }
+      }
     }
   },
   "LS": {
@@ -2223,8 +2572,9 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "note": "Pays 0.000% in CHF; opening and closing free."
         },
         "savings": {
-          "name": "Sparkonto",
-          "source": "https://llb.li/de/private/zahlen-und-sparen/weitere-angebote/sparkonten/sparkonto"
+          "name": "LLB Sparkonto",
+          "source": "https://www.bonus.ch/Finanz/Bank/Sparkonto-LLB-Sparkonto_ID_544.aspx",
+          "rate": 0.002
         }
       }
     }
@@ -2252,6 +2602,14 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "savings": {
           "name": "Easy Saver",
           "source": "https://www.swedbank.lt/private/investor/deposits/easySaver?language=ENG"
+        }
+      },
+      "SEB": {
+        "confidence": "H",
+        "savings": {
+          "name": "Kaupiamasis indėlis",
+          "source": "https://www.seb.lt/en/private/savings-and-investments/savings/interest-rates-0",
+          "rate": 0.015
         }
       }
     }
@@ -2342,6 +2700,11 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "source": "https://www.bni.mg/particulier/produits/nos-packs",
           "monthlyFee": 1320000,
           "note": "Pack price; MGA 7,300 for civil servants. Mitsinjo pack is free"
+        },
+        "savings": {
+          "name": "Epargne Plus",
+          "source": "https://www.bni.mg/particulier/produits/epargnes-et-placements",
+          "rate": 0.0375
         }
       }
     }
@@ -2473,6 +2836,14 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "savings": {
           "name": "Savings Account",
           "source": "source not given"
+        }
+      },
+      "HSBC Bank Malta": {
+        "confidence": "H",
+        "savings": {
+          "name": "Savings Account",
+          "source": "https://www.hsbc.com.mt/content/dam/hsbc/hbmt/docs/interest-rates.pdf",
+          "rate": 0.001
         }
       }
     }
@@ -2660,6 +3031,22 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
       "rate": 0.1,
       "note": "Resident individuals pay 10% on interest income; withholding by the bank is implied but not confirmed.",
       "source": "https://taxsummaries.pwc.com/mongolia/individual/taxes-on-personal-income"
+    },
+    "products": {
+      "Golomt Bank": {
+        "confidence": "H",
+        "current": {
+          "name": "Иргэдийн харилцах данс",
+          "source": "https://www.golomtbank.com/retail/account/412",
+          "monthlyFee": 50000,
+          "note": "MNT 500 per month account maintenance."
+        },
+        "savings": {
+          "name": "Хугацаагүй хадгаламж",
+          "source": "https://www.golomtbank.com/retail/savings/3764/",
+          "rate": 0.045
+        }
+      }
     }
   },
   "ME": {
@@ -2694,6 +3081,11 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "source": "https://bankofmontserrat.ms/chequing-accounts/",
           "monthlyFee": 2500,
           "note": "XCD 25/month stated as a minimum service fee; XCD 200 to open"
+        },
+        "savings": {
+          "name": "Saving Account",
+          "source": "https://bankofmontserrat.ms/saving-accounts/saving-account/",
+          "rate": 0.02
         }
       }
     }
@@ -2762,8 +3154,9 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
       "KBZ Bank": {
         "confidence": "L",
         "savings": {
-          "name": "Savings Deposit Account",
-          "source": "https://www.kbzbank.com/en/accounts/saving-deposit-account/"
+          "name": "CASH Account – Savings",
+          "source": "https://www.kbzbank.com/en/blog/announcements-en/special-interest-rate-for-cash-account_savings-as-a-return-of-gratitude/",
+          "rate": 0.08
         }
       }
     }
@@ -2885,7 +3278,8 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         },
         "savings": {
           "name": "Cuenta Ahorro Fácil",
-          "source": "https://www.banprogrupopromerica.com.ni/banca-de-personas/cuentas/cuentas-de-ahorro/cuenta-ahorro-facil/"
+          "source": "https://www.banprogrupopromerica.com.ni/banca-de-personas/cuentas/cuentas-de-ahorro/cuenta-ahorro-facil/",
+          "rate": 0.01
         }
       }
     }
@@ -3008,6 +3402,14 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "Savings Account (Sparekonto)",
           "source": "https://www.dnb.no/en/saving/saving-in-an-account/savings-account"
         }
+      },
+      "Nordea": {
+        "confidence": "M",
+        "savings": {
+          "name": "BufferSpar",
+          "source": "https://www.nordea.no/privat/vare-produkter/sparing-og-investering/sparing-pa-konto/",
+          "rate": 0.0315
+        }
       }
     }
   },
@@ -3048,6 +3450,11 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
     "products": {
       "HBL": {
         "confidence": "M",
+        "current": {
+          "name": "HBL Conventional Current Account",
+          "source": "https://www.hbl.com/assets/documents/SOBC_January_to_June_2026_-_English_Web.pdf",
+          "note": "Exempt from the Rs 50/month low-balance service charge (SOBC Jan-Jun 2026); other accounts such as HBL Freedom pay Rs 50/month if monthly average balance < Rs 40,000"
+        },
         "savings": {
           "name": "HBL PLS Savings Account",
           "source": "https://www.hbl.com/assets/documents/Declaration_of_Profit_Rates_for_March_2026.pdf",
@@ -3101,6 +3508,14 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "Cuenta de Ahorros",
           "source": "https://www.bgeneral.com/cuentas/cuenta-de-ahorros/"
         }
+      },
+      "Banco Nacional de Panamá": {
+        "confidence": "M",
+        "savings": {
+          "name": "Panamá Ahorra",
+          "source": "https://www.asesoriafinancieralee.com/mejores-cuentas-de-ahorro-en-panama/",
+          "rate": 0.01
+        }
       }
     }
   },
@@ -3148,6 +3563,14 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "savings": {
           "name": "Caja de Ahorro",
           "source": "https://www.itau.com.py/paginas/paravos_cajadeahorro"
+        }
+      },
+      "ueno bank": {
+        "confidence": "M",
+        "savings": {
+          "name": "Ahorro a la vista (guaraníes)",
+          "source": "https://www.ueno.com.py/wp-content/uploads/2026/05/tarifario_Mayo_2026.pdf",
+          "rate": 0.0025
         }
       }
     }
@@ -3198,7 +3621,24 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         },
         "savings": {
           "name": "Passbook Savings",
-          "source": "https://www.bdo.com.ph/personal/accounts/savings/peso-savings/passbook-savings"
+          "source": "https://pesohub.ph/rates/savings-rates/best-savings-interest-rates-philippines/",
+          "rate": 0.000625
+        }
+      },
+      "Metrobank": {
+        "confidence": "M",
+        "savings": {
+          "name": "Regular Savings with Passbook",
+          "source": "https://pesohub.ph/rates/savings-rates/best-savings-interest-rates-philippines/",
+          "rate": 0.000625
+        }
+      },
+      "BPI": {
+        "confidence": "M",
+        "savings": {
+          "name": "Regular Savings",
+          "source": "https://pesohub.ph/rates/savings-rates/best-savings-interest-rates-philippines/",
+          "rate": 0.0006
         }
       }
     }
@@ -3250,6 +3690,11 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "source": "https://www.cgd.pt/Particulares/Contas/Pages/Conta-Caixa.aspx",
           "monthlyFee": 546,
           "note": "Monthly maintenance including 4% stamp duty; tiers M €6.55 and Azul €7.59, reduced when at least €50 a month is spent by card."
+        },
+        "savings": {
+          "name": "CaixaPoupança",
+          "source": "https://www.ativos.pt/contas-poupanca/caixa-geral-de-depositos-caixapoupanca",
+          "rate": 0.001
         }
       }
     }
@@ -3289,6 +3734,14 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "savings": {
           "name": "Savings Plus Account",
           "source": "https://www.qnb.com/sites/qnb/qnbqatar/page/en/ensavingaccountpage.html"
+        }
+      },
+      "Commercial Bank": {
+        "confidence": "M",
+        "savings": {
+          "name": "eSavings Account",
+          "source": "https://www.cbq.com.qa/en/personal/accounts/savings-account",
+          "rate": 0.01
         }
       }
     }
@@ -3341,6 +3794,27 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "Nelimitat",
           "source": "https://www.bancatransilvania.ro/news/comunicate-de-presa/nelimitat-cea-mai-utilizata-optiune-de-servicii-de-cont-curent-din-romania-este-disponibila-si-online-",
           "note": "BT's most-used current-account option; the September 2026 fee schedule could not be read."
+        },
+        "savings": {
+          "name": "Cont de economii BT în lei",
+          "source": "https://financer.ro/banii-tai/cont-de-economii/",
+          "rate": 0.03
+        }
+      },
+      "BRD": {
+        "confidence": "M",
+        "savings": {
+          "name": "YOU Save",
+          "source": "https://financer.ro/banii-tai/cont-de-economii/",
+          "rate": 0.025
+        }
+      },
+      "Raiffeisen Bank România": {
+        "confidence": "M",
+        "savings": {
+          "name": "Super Acces Plus",
+          "source": "https://financer.ro/banii-tai/cont-de-economii/",
+          "rate": 0.02
         }
       }
     }
@@ -3360,8 +3834,9 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "note": "Servicing free without conditions since 1 July 2025."
         },
         "savings": {
-          "name": "Накопительный счёт (Savings account)",
-          "source": "https://www.sberbank.ru/ru/person/contributions/deposits/nakopi"
+          "name": "Накопительный счёт",
+          "source": "https://finuslugi.ru/navigator/nakopit-i-sohranit/stat_sber-nakopitelnyj-schet-2026",
+          "rate": 0.065
         }
       }
     }
@@ -3421,7 +3896,8 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         },
         "savings": {
           "name": "Easy Saver",
-          "source": "https://www.sainthelenabank.com/products-and-services/interest-rates/"
+          "source": "https://www.sainthelenabank.com/accounts/savings-accounts/",
+          "rate": 0.01
         }
       }
     }
@@ -3497,6 +3973,16 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
       "rate": 0.025,
       "since": "2026-09-16",
       "source": "https://www.ecb.europa.eu"
+    },
+    "products": {
+      "Banque de Saint-Pierre-et-Miquelon": {
+        "confidence": "L",
+        "savings": {
+          "name": "Livret A",
+          "source": "https://presse.economie.gouv.fr/?p=181486",
+          "rate": 0.017
+        }
+      }
     }
   },
   "VC": {
@@ -3512,6 +3998,11 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "Personal Chequing",
           "source": "https://www.bosvg.com/chequing/",
           "note": "Fee schedule is published as images; the Senior Chequing Account for 55+ has no BOSVG fees."
+        },
+        "savings": {
+          "name": "Basic Savings Account",
+          "source": "https://www.eccb-centralbank.org/interest-rates",
+          "rate": 0.02
         }
       }
     }
@@ -3582,6 +4073,14 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "Hassad Account",
           "source": "https://www.alrajhibank.com.sa/en/Personal/Accounts/Hassad-Account"
         }
+      },
+      "Saudi Awwal Bank (SAB)": {
+        "confidence": "M",
+        "savings": {
+          "name": "Islamic Mudarabah Account",
+          "source": "https://www.sab.com/en/personal/prices-of-financing-and-savings-products/",
+          "rate": 0.001
+        }
       }
     }
   },
@@ -3619,6 +4118,17 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
       "rate": 0.15,
       "note": "15% capital-income tax is withheld on foreign-currency savings interest; interest on dinar savings is exempt.",
       "source": "https://taxsummaries.pwc.com/serbia/individual/income-determination"
+    },
+    "products": {
+      "Banca Intesa": {
+        "confidence": "L",
+        "current": {
+          "name": "Intesa Hit",
+          "source": "https://www.bancaintesa.rs/en/stanovnistvo/paketi-platnih-racuna/intesa-hit-racun.html",
+          "monthlyFee": 35000,
+          "note": "Sells packaged payment accounts (paketi platnih računa); fees not read."
+        }
+      }
     }
   },
   "SC": {
@@ -3638,6 +4148,14 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "savings": {
           "name": "Personal Savings Account",
           "source": "https://www.scb.sc/personal/personal-savings-account"
+        }
+      },
+      "Absa Bank Seychelles": {
+        "confidence": "M",
+        "savings": {
+          "name": "Personal Instant Savings Account",
+          "source": "https://www.absa.sc/applicable-interest-rates/",
+          "rate": 0.015
         }
       }
     }
@@ -3724,6 +4242,22 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "savings": {
           "name": "Sporiaci účet",
           "source": "https://finfin.sk/sporiaci-ucet-slsp/"
+        }
+      },
+      "Tatra banka": {
+        "confidence": "M",
+        "savings": {
+          "name": "Sporiaci účet",
+          "source": "https://finfin.sk/sporiaci-ucet-tatra-banka/",
+          "rate": 0
+        }
+      },
+      "VÚB": {
+        "confidence": "L",
+        "savings": {
+          "name": "Sporiaci účet",
+          "source": "https://finfin.sk/sporiaci-ucet-tatra-banka/",
+          "rate": 0.001
         }
       }
     }
@@ -3848,8 +4382,33 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "source": "https://www.boc.lk/"
         },
         "savings": {
-          "name": "BOC Savings",
-          "source": "https://www.boc.lk/personal-banking/savings-accounts"
+          "name": "Ordinary Savings",
+          "source": "https://lankarates.com/savings-accounts",
+          "rate": 0.02
+        }
+      },
+      "People's Bank": {
+        "confidence": "M",
+        "savings": {
+          "name": "Normal Savings",
+          "source": "https://lankarates.com/savings-accounts",
+          "rate": 0.025
+        }
+      },
+      "Commercial Bank of Ceylon": {
+        "confidence": "M",
+        "savings": {
+          "name": "Regular Savings Account",
+          "source": "https://lankarates.com/savings-accounts",
+          "rate": 0.02
+        }
+      },
+      "Hatton National Bank": {
+        "confidence": "M",
+        "savings": {
+          "name": "Ordinary Savings Account",
+          "source": "https://lankarates.com/savings-accounts",
+          "rate": 0.02
         }
       }
     }
@@ -4080,12 +4639,39 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
       }
     }
   },
+  "TL": {
+    "products": {
+      "BNCTL (Banco Nacional de Comércio de Timor-Leste)": {
+        "confidence": "L",
+        "savings": {
+          "name": "Savings Account",
+          "source": "https://bnctl.tl/pt/saving-deposit",
+          "rate": 0.005
+        }
+      }
+    }
+  },
   "TG": {
     "policy": {
       "called": "BCEAO main policy rate (principal taux directeur)",
       "rate": 0.03,
       "since": "2026-03-16",
       "source": "https://www.financialafrik.com/2026/09/09/uemoa-la-bceao-maintient-ses-taux-directeurs-linflation-attendue-a-1-en-2026/"
+    },
+    "products": {
+      "Orabank Togo": {
+        "confidence": "H",
+        "current": {
+          "name": "Compte chèques (particulier)",
+          "source": "https://www.orabank.net/sites/default/files/2026-02/Conditions%20Banque%20Orabank%20Togo%202026.pdf",
+          "note": "XOF 1,000 per month plus 10% TAF (XOF 1,100 including tax); Conditions générales de banque 2026 (a fee of 1000 a month where not waived; the waiver isn't modeled, so it isn't charged)"
+        },
+        "savings": {
+          "name": "Compte d'épargne ordinaire",
+          "source": "https://www.orabank.net/sites/default/files/2026-02/Conditions%20Banque%20Orabank%20Togo%202026.pdf",
+          "rate": 0.035
+        }
+      }
     }
   },
   "TO": {
@@ -4105,6 +4691,14 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "savings": {
           "name": "Plus Saver Account",
           "source": "https://www.bsp.to/personal-banking/savings-accounts-aand-term-deposits/plus-saver-account/"
+        }
+      },
+      "Tonga Development Bank": {
+        "confidence": "M",
+        "savings": {
+          "name": "Basic Passbook Saving Account S1",
+          "source": "https://tdb.to/accounts-a-products-savings-basic-passbook-saving-account-s1-html/",
+          "rate": 0.01
         }
       }
     }
@@ -4228,6 +4822,14 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "PureSave Account",
           "source": "https://www.stanbicbank.co.ug/uganda/personal/products-and-services/bank-with-us/grow-your-money/PureSave-Account"
         }
+      },
+      "Centenary Bank": {
+        "confidence": "L",
+        "savings": {
+          "name": "CenteSave",
+          "source": "https://senteguide.com/blog/best-savings-accounts-uganda-2026",
+          "rate": 0.0075
+        }
       }
     }
   },
@@ -4322,6 +4924,14 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "name": "Demand Deposit",
           "source": "https://nbu.uz/en/for-individuals-deposits"
         }
+      },
+      "TBC Bank Uzbekistan": {
+        "confidence": "M",
+        "savings": {
+          "name": "Odat",
+          "source": "https://tbcbank.uz/product/depozity/",
+          "rate": 0.13
+        }
       }
     }
   },
@@ -4396,7 +5006,8 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         },
         "savings": {
           "name": "Popular Savings",
-          "source": "https://www.popular.vi/accounts/savings/popular-savings/"
+          "source": "https://www.popular.vi/assets/pdf/vi/characteristics-popular-savings-en.pdf",
+          "rate": 0.0015
         }
       }
     }
@@ -4407,6 +5018,17 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
       "rate": 0.0225,
       "since": "2026-06-25",
       "source": "https://www.ieom.fr/Decision-de-politique-monetaire-du-conseil-de-surveillance-de-l-IEOM-7088?lang=fr"
+    },
+    "products": {
+      "Banque de Wallis-et-Futuna (BNP Paribas)": {
+        "confidence": "L",
+        "current": {
+          "name": "Compte de dépôt",
+          "source": "https://www.ieom.fr/IMG/pdf/ra_ieom_observatoire_tarifs_bancaires_2025-2026.pdf",
+          "monthlyFee": 52500,
+          "note": "XPF 6,300/year account-keeping fee (April 2026, IEOM; sole bank in the territory, unchanged three years running), converted to XPF 525/month"
+        }
+      }
     }
   },
   "EH": {
@@ -4466,8 +5088,33 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
           "source": "https://www.zanaco.co.zm/personal-banking/transactional-accounts/"
         },
         "savings": {
-          "name": "Suresave Account",
-          "source": "https://www.zanaco.co.zm/personal-banking/saving-investment-accounts/"
+          "name": "Savings Account",
+          "source": "https://www.boz.zm/sites/default/files/2026-06/Interest%20Rates%20and%20Bank%20Charges%20Publication%20March%202026.pdf",
+          "rate": 0.015
+        }
+      },
+      "Stanbic Bank Zambia": {
+        "confidence": "H",
+        "savings": {
+          "name": "Savings Account",
+          "source": "https://www.boz.zm/sites/default/files/2026-06/Interest%20Rates%20and%20Bank%20Charges%20Publication%20March%202026.pdf",
+          "rate": 0.02
+        }
+      },
+      "Absa Bank Zambia": {
+        "confidence": "H",
+        "savings": {
+          "name": "Savings Account",
+          "source": "https://www.boz.zm/sites/default/files/2026-06/Interest%20Rates%20and%20Bank%20Charges%20Publication%20March%202026.pdf",
+          "rate": 0.004
+        }
+      },
+      "FNB Zambia": {
+        "confidence": "H",
+        "savings": {
+          "name": "Savings Account",
+          "source": "https://www.boz.zm/sites/default/files/2026-06/Interest%20Rates%20and%20Bank%20Charges%20Publication%20March%202026.pdf",
+          "rate": 0.0583
         }
       }
     }
@@ -4502,6 +5149,16 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
       "rate": 0.1,
       "note": "10% withheld by the bank on interest paid to individuals.",
       "source": "https://taxsummaries.pwc.com/kosovo/individual/income-determination"
+    },
+    "products": {
+      "ProCredit Bank Kosovo": {
+        "confidence": "L",
+        "current": {
+          "name": "ZERO Package",
+          "source": "https://www.procreditbank-kos.com/eng/news/procredit-banks-zero-package-lifetime-free-ma-1869/",
+          "note": "Free lifetime maintenance for new clients who moved their salary to ProCredit by 30 June 2026 (offer now closed). The standard package fee was not found; new fees took effect 1 Oct 2026."
+        }
+      }
     }
   }
 };

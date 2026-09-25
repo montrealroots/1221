@@ -224,13 +224,17 @@ describe('the monthly fee', () => {
     });
     // After February's rent, which is due on the first.
     sim.advanceTo(instantFromZoned({ year: 2026, month: 2, day: 2, hour: 6 }, zone));
-    // Enough that New York rent and food never take it under the line on their own.
-    holding(sim, account, 20_000_00);
+    // No home, so no rent or food to move it; $3,000 keeps the average across
+    // the linked accounts under Chase's $5,000, so only the daily balance counts.
+    sim.player.home = undefined;
+    const saver = bankAccountsOf(sim, sim.player).find((a) => a.kind === 'savings');
+    if (saver) holding(sim, saver, 0);
+    holding(sim, account, 3_000_00);
     // Under $1,500 over one night in the middle of February, then back.
     sim.advanceTo(instantFromZoned({ year: 2026, month: 2, day: 10, hour: 20 }, zone));
     move(1_000_00 - account.balance);
     sim.advanceTo(instantFromZoned({ year: 2026, month: 2, day: 11, hour: 9 }, zone));
-    move(20_000_00 - account.balance);
+    move(3_000_00 - account.balance);
     // January's is charged too: the life started under the line. Only February on counts here.
     const since = instantFromZoned({ year: 2026, month: 2, day: 2, hour: 7 }, zone);
     const fees = () => sim.universe.transactions.filter((t) => t.category === 'bank_fee' && t.at > since)

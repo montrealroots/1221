@@ -11,7 +11,7 @@
 import type { Simulation } from '../core/simulation';
 import type { Person } from '../domain/model';
 import { zonedParts } from '../core/time';
-import { clabeCheck, digits, groupIban, iban, kennitala, ribKey, spanishControl } from '../core/banknumbers';
+import { bbanFrom, belgianCheck, mod9710, clabeCheck, digits, groupIban, iban, kennitala, ribKey, spanishControl } from '../core/banknumbers';
 import type { Bank } from '../content/banks';
 import { CITIES } from '../content/geography';
 
@@ -24,6 +24,10 @@ import { CITIES } from '../content/geography';
 const STATE_DIGIT: Readonly<Record<string, string>> = {
   'au-01': '2', 'au-02': '2', 'au-03': '5', 'au-04': '4', 'au-05': '5', 'au-06': '7', 'au-07': '3', 'au-08': '6',
 };
+
+/** Countries whose BBAN ends in France's RIB key, and in an ISO 7064 MOD 97-10 check. */
+const RIB_COUNTRIES = new Set(['FR', 'MC', 'MR']);
+const MOD_97_10 = new Set(['ME', 'RS', 'MK', 'SI', 'PT', 'TL']);
 
 export function accountNumber(sim: Simulation, person: Person, bank: Bank, kind: 'checking' | 'savings'): string {
   const rng = sim.rng('bank.number', person.id, bank.id, kind, String(sim.now));
@@ -79,8 +83,18 @@ export function accountNumber(sim: Simulation, person: Person, bank: Bank, kind:
       // The BIC's four letters and the sort code's first digits are the bank's.
       return `IBAN ${groupIban(iban('IE', `${code}${n(18 - code.length)}`))}`;
     case 'iban': {
-      // Another IBAN country: its length from the registry, the bank's code
-      // where the table has one, and the rest drawn.
+      // Built to the registry's structure, with the bank's code in its place.
+      if (bank.bban) {
+        const letter = () => String.fromCharCode(65 + Math.floor(rng.next() * 26));
+        let bban = bbanFrom(bank.bban, { code: code, offset: bank.codeOffset ?? 0 }, { digit: d, letter });
+        const country = bank.ibanCountry ?? bank.iso;
+        // The national check inside the BBAN, where SLATE has its rule.
+        if (bban && country === 'BE') bban = bban.slice(0, 10) + belgianCheck(bban.slice(0, 10));
+        if (bban && RIB_COUNTRIES.has(country)) bban = bban.slice(0, 21) + ribKey(bban.slice(0, 5), bban.slice(5, 10), bban.slice(10, 21));
+        if (bban && MOD_97_10.has(country)) bban = bban.slice(0, -2) + mod9710(bban.slice(0, -2));
+        if (bban) return `IBAN ${groupIban(iban(country, bban))}`;
+      }
+      // Otherwise its length from the registry, and the rest drawn.
       const length = (bank.ibanLength ?? 22) - 4 - code.length;
       return `IBAN ${groupIban(iban(bank.ibanCountry ?? bank.iso, `${code}${n(Math.max(4, length))}`))}`;
     }

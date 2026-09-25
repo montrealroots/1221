@@ -36,7 +36,7 @@ export const THIRTEEN: readonly CountryBanking[] = [
     banks: [
       {
         id: 'us-chase', name: 'Chase', iso: 'US', currency: 'USD', format: 'us', code: '021000021',
-        current: p('Chase Total Checking', 'chase.com Total Checking: $15 a month, waived with $500 of electronic deposits or a $1,500 daily balance', { monthlyFee: 15_00, waiver: { depositsAtLeast: 500_00, balanceAtLeast: 1_500_00 } }),
+        current: p('Chase Total Checking', 'chase.com Total Checking: $15 a month, waived with $500 of electronic deposits, a $1,500 daily balance, or a $5,000 average across it and linked Chase accounts', { monthlyFee: 15_00, waiver: { depositsAtLeast: 500_00, balanceAtLeast: 1_500_00, linkedAverageAtLeast: 5_000_00 } }),
         savings: p('Chase Savings', 'chase.com: $5 a month, waived with a $300 balance; 0.01% APY', { rate: 0.0001, monthlyFee: 5_00, waiver: { balanceAtLeast: 300_00 } }),
         overdraft: 'Chase charges $34 an item, at most three a day, and nothing when the account is overdrawn by $50 or less.',
       },
@@ -48,14 +48,14 @@ export const THIRTEEN: readonly CountryBanking[] = [
       },
       {
         id: 'us-wells-fargo', name: 'Wells Fargo', iso: 'US', currency: 'USD', format: 'us', code: '121000248',
-        current: p('Everyday Checking', 'wellsfargo.com: $15 a month, waived with $500 of electronic deposits, a $1,500 daily balance, or ages 17 to 24', { monthlyFee: 15_00, waiver: { depositsAtLeast: 500_00, balanceAtLeast: 1_500_00, ageBelow: 25 } }),
+        current: p('Everyday Checking', 'wellsfargo.com: $15 a month, waived with $500 of electronic deposits, a $1,500 daily balance, $5,000 in linked Wells Fargo accounts (kept here as an average), or ages 17 to 24; the military direct-deposit waiver has no one to apply to', { monthlyFee: 15_00, waiver: { depositsAtLeast: 500_00, balanceAtLeast: 1_500_00, linkedAverageAtLeast: 5_000_00, ageBelow: 25 } }),
         savings: p('Way2Save Savings', 'wellsfargo.com: 0.01% APY', { rate: 0.0001 }),
         overdraft: 'Wells Fargo charges $35 an item, at most three a day, and none for $10 or less; there are no returned-item fees.',
       },
       {
         id: 'us-citi', name: 'Citi', iso: 'US', currency: 'USD', format: 'us', code: '021000089',
         current: p('Citi Access Checking', 'citi.com: $5 a month, waived with $250 of direct deposits, or for owners 23 and under', { monthlyFee: 5_00, waiver: { depositsAtLeast: 250_00, ageBelow: 24 } }),
-        savings: p('Citi Savings', `citi.com: $4.50 a month, waived with a $500 average balance (kept here as $500 all month); ${NOT_FOUND}`, { monthlyFee: 4_50, waiver: { balanceAtLeast: 500_00 } }),
+        savings: p('Citi Savings', `citi.com: $4.50 a month, waived with a $500 average balance; ${NOT_FOUND}`, { monthlyFee: 4_50, waiver: { averageAtLeast: 500_00 } }),
         overdraft: 'Citi charges no overdraft or returned-item fees.',
       },
       {
@@ -330,7 +330,7 @@ export const THIRTEEN: readonly CountryBanking[] = [
     banks: [
       {
         id: 'es-santander', name: 'Banco Santander', iso: 'ES', currency: 'EUR', format: 'es', code: '0049',
-        current: p('Cuenta Santander', 'bancosantander.es: €20 a month, free with a nómina of €600 (and bills or card use, not modeled) or under 29', { monthlyFee: 20_00, waiver: { depositsAtLeast: 600_00, ageBelow: 29 } }),
+        current: p('Cuenta Santander', 'bancosantander.es: €20 a month, free with a nómina of €600 and three bills or six card payments in the quarter, more than €25,000 at the bank, or under 29', { monthlyFee: 20_00, waiver: { depositsAtLeast: 600_00, depositsAlso: { bills: 3, purchases: 6, months: 3 }, linkedAverageAtLeast: 25_000_01, ageBelow: 29 } }),
         savings: p('Cuenta Hucha', 'Finantres, 16 September 2026, and bancosantander.es: Santander’s accounts pay 0% TIN, 0% TAE'),
       },
       {
@@ -340,7 +340,7 @@ export const THIRTEEN: readonly CountryBanking[] = [
       },
       {
         id: 'es-caixabank', name: 'CaixaBank', iso: 'ES', currency: 'EUR', format: 'es', code: '2100',
-        current: p('Programa Día a Día', 'caixabank.es: €60 a quarter (€20 a month here) unless a nómina over €600, €20,000 held, or under 29', { monthlyFee: 20_00, waiver: { depositsAtLeast: 600_01, balanceAtLeast: 20_000_00, ageBelow: 29 } }),
+        current: p('Programa Día a Día', 'caixabank.es: €60 a quarter (€20 a month here) unless a nómina over €600 with three bills or card payments in the quarter, €20,000 at the bank, or under 29', { monthlyFee: 20_00, waiver: { depositsAtLeast: 600_01, depositsAlso: { either: 3, months: 3 }, linkedAverageAtLeast: 20_000_00, ageBelow: 29 } }),
         savings: p('Cuenta Online sin Comisiones', 'caixabank.es, September 2026: “cuenta no retribuida (0% TAE, 0% TIN)”'),
       },
       {

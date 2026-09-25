@@ -123,7 +123,7 @@ const REAL_NAMES = [
   'Traveller Jacket',
   // Banking names and pages spelled by their own banks and governments.
   'Cuenta de Cheques', 'cuentas-cheques', 'cheque-accounts', 'Special Defence Contribution',
-  'special-defence-contribution', 'Youth Programme',
+  'special-defence-contribution', 'Youth Programme', 'bankers-association/organisation',
 ];
 
 const EXTENSIONS = /\.(ts|tsx|mjs|md)$/;

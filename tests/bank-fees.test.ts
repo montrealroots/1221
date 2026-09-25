@@ -17,9 +17,12 @@ import type { Simulation } from '@/engine/core/simulation';
 import type { Account } from '@/engine/core/ledger';
 import { MS_DAY, instantFromZoned } from '@/engine/core/time';
 import { spend } from '@/engine/systems/household';
-import { bankAccountsOf, rateOf } from '@/engine/systems/banking';
+import { bankAccountsOf, feeFor, monthStartOf, rateOf } from '@/engine/systems/banking';
 import { bankingIn, banksIn } from '@/engine/content/banks';
 import { SHEETS } from '@/engine/content/banks-world-sheets';
+import { IBAN_CODES } from '@/engine/content/banks-world-iban';
+import { accountNumber } from '@/engine/systems/banknumber';
+import { belgianCheck, ibanValid, mod9710, ribKey } from '@/engine/core/banknumbers';
 
 const lifeIn = (cityId: string, extra: Record<string, unknown> = {}, seed = 'fees') =>
   quickSave({ startLocationId: cityId, homeRegionId: cityId, livesWhereBorn: true, dayJob: false, ...extra }, seed);
@@ -224,5 +227,100 @@ describe('the rest of the world’s banks', () => {
       if (sheet.policy) expect(bankingIn(iso)?.policy?.rate).toBe(sheet.policy.rate);
     }
     expect(named).toBeGreaterThan(150);
+  });
+});
+
+describe('the waivers as the banks write them', () => {
+  const wagesInto = (sim: Simulation, amount: number) => sim.post({
+    memo: 'Wages', category: 'salary',
+    postings: [{ accountId: current(sim).id, amount }, { accountId: sim.nominalAccount('income', 'Wages').id, amount: -amount }],
+  });
+  const days = (account: Account, perDay: number, count: number) => { account.monthSum = perDay * count; account.monthDays = count; };
+  const feeNow = (sim: Simulation, account: Account) => feeFor(sim, account, monthStartOf(sim, sim.now));
+
+  it('waives Citi’s savings fee on a $500 average, not the lowest day', () => {
+    const sim = lifeIn('us-ny-newyork', { bankId: 'us-citi', wealth: 'modest' });
+    const saver = savings(sim)!;
+    saver.lowest = 0;
+    days(saver, 600_00, 10);
+    expect(feeNow(sim, saver)).toEqual({ fee: 0, waivedBy: 'balance' });
+    days(saver, 400_00, 10);
+    expect(feeNow(sim, saver).fee).toBe(4_50);
+  });
+
+  it('starts the average again each month', () => {
+    const sim = lifeIn('us-ny-newyork', { bankId: 'us-citi', wealth: 'modest' });
+    sim.player.home = undefined;
+    const saver = savings(sim)!;
+    set(sim, saver, 2_000_00);
+    sim.advanceTo(instantFromZoned({ year: 2026, month: 2, day: 1, hour: 6 }, sim.homeZone));
+    set(sim, saver, 100_00);
+    sim.advanceTo(instantFromZoned({ year: 2026, month: 2, day: 20, hour: 6 }, sim.homeZone));
+    // January's $2,000 days don't carry into February's average.
+    expect(feeNow(sim, saver).fee).toBe(4_50);
+  });
+
+  it('waives Chase’s on a $5,000 average across its accounts', () => {
+    const sim = lifeIn('us-ny-newyork', { bankId: 'us-chase', wealth: 'modest', birthYear: 1990 });
+    const account = current(sim);
+    set(sim, account, 100_00);
+    account.lowest = 100_00;
+    days(account, 1_000_00, 10);
+    days(savings(sim)!, 3_900_00, 10);
+    expect(feeNow(sim, account).fee).toBe(15_00);
+    days(savings(sim)!, 4_100_00, 10);
+    expect(feeNow(sim, account)).toEqual({ fee: 0, waivedBy: 'balance' });
+  });
+
+  it('asks Santander Spain for three bills or six card payments beside the nómina', () => {
+    const sim = lifeIn('es-md-madrid', { bankId: 'es-santander', birthYear: 1985 });
+    sim.player.home = undefined;
+    set(sim, current(sim), 5_000_00);
+    set(sim, savings(sim), 0);
+    wagesInto(sim, 1_000_00);
+    expect(feeNow(sim, current(sim)).fee).toBe(20_00);
+    for (let i = 0; i < 5; i += 1) spend(sim, sim.player, 10_00, 'Groceries', 'food');
+    expect(feeNow(sim, current(sim)).fee).toBe(20_00);
+    spend(sim, sim.player, 10_00, 'Groceries', 'food');
+    expect(feeNow(sim, current(sim))).toEqual({ fee: 0, waivedBy: 'deposits' });
+  });
+
+  it('asks CaixaBank for three bills or card payments together', () => {
+    const sim = lifeIn('es-md-madrid', { bankId: 'es-caixabank', birthYear: 1985 });
+    sim.player.home = undefined;
+    set(sim, current(sim), 5_000_00);
+    set(sim, savings(sim), 0);
+    wagesInto(sim, 1_000_00);
+    spend(sim, sim.player, 10_00, 'Bills', 'bills');
+    spend(sim, sim.player, 10_00, 'Groceries', 'food');
+    expect(feeNow(sim, current(sim)).fee).toBe(20_00);
+    spend(sim, sim.player, 10_00, 'Groceries', 'food');
+    expect(feeNow(sim, current(sim))).toEqual({ fee: 0, waivedBy: 'deposits' });
+  });
+});
+
+describe('an IBAN in the rest of the world', () => {
+  it('carries the bank’s own code where the registry puts it, and every check holds', () => {
+    const sim = quickSave({}, 'world-iban');
+    let checked = 0;
+    for (const [key, { code }] of Object.entries(IBAN_CODES)) {
+      const [iso, name] = key.split('|') as [string, string];
+      const bank = banksIn(iso).find((b) => b.name === name);
+      if (!bank?.bban) continue;
+      const number = accountNumber(sim, sim.player, bank, 'checking').replace(/^IBAN |\s/g, '');
+      const country = bank.ibanCountry ?? bank.iso;
+      expect(ibanValid(number), `${key} ${number}`).toBe(true);
+      expect(number.slice(0, 2)).toBe(country);
+      const bban = number.slice(4);
+      expect(bban.slice(bank.codeOffset ?? 0, (bank.codeOffset ?? 0) + code.length), key).toBe(code);
+      if (country === 'BE') expect(bban.slice(10)).toBe(belgianCheck(bban.slice(0, 10)));
+      if (['FR', 'MC', 'MR'].includes(country)) expect(bban.slice(21)).toBe(ribKey(bban.slice(0, 5), bban.slice(5, 10), bban.slice(10, 21)));
+      if (['ME', 'RS', 'MK', 'SI', 'PT', 'TL'].includes(country)) expect(bban.slice(-2)).toBe(mod9710(bban.slice(0, -2)));
+      checked += 1;
+    }
+    expect(checked).toBeGreaterThan(250);
+    // ING in the Netherlands, as the Dutch write it.
+    const ing = banksIn('NL').find((b) => b.name === 'ING')!;
+    expect(accountNumber(sim, sim.player, ing, 'checking')).toMatch(/^IBAN NL\d{2} INGB/);
   });
 });

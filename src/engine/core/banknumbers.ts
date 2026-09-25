@@ -130,3 +130,41 @@ export function abaValid(routing: string): boolean {
   const w = [3, 7, 1, 3, 7, 1, 3, 7, 1];
   return [...routing].reduce((acc, ch, i) => acc + Number(ch) * w[i]!, 0) % 10 === 0;
 }
+
+/**
+ * A BBAN built to its country's structure in the IBAN Registry's notation
+ * ("4!a10!n": four letters, then ten digits): the bank's own code at its
+ * place, and every other position drawn as the kind of character the
+ * registry says goes there. `letter` and `digit` draw one each.
+ */
+export function bbanFrom(
+  structure: string,
+  bank: { code: string; offset: number },
+  draw: { digit: () => number; letter: () => string },
+): string | undefined {
+  const parts = [...structure.matchAll(/(\d+)!?([nac])/g)];
+  if (parts.length === 0) return undefined;
+  let out = '';
+  for (const [, count, kind] of parts) {
+    for (let i = 0; i < Number(count); i += 1) out += kind === 'a' ? draw.letter() : String(draw.digit());
+  }
+  if (bank.code && bank.offset + bank.code.length <= out.length) {
+    out = out.slice(0, bank.offset) + bank.code.toUpperCase() + out.slice(bank.offset + bank.code.length);
+  }
+  return out;
+}
+
+/** Belgium's national check: the BBAN's last two digits are its first ten mod 97, and 97 for 0. */
+export function belgianCheck(first10: string): string {
+  const rest = Number(BigInt(first10) % 97n);
+  return String(rest === 0 ? 97 : rest).padStart(2, '0');
+}
+
+/**
+ * ISO 7064 MOD 97-10 as a national check inside a BBAN (Portugal's NIB,
+ * Serbia, Montenegro, North Macedonia, Slovenia, Timor-Leste): the last two
+ * digits are 98 less the rest, followed by 00, mod 97.
+ */
+export function mod9710(base: string): string {
+  return String(98 - mod97(`${base}00`)).padStart(2, '0');
+}

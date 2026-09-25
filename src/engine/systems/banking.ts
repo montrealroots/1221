@@ -220,14 +220,50 @@ export function feeFor(sim: Simulation, account: Account, monthStart: Instant): 
   const owner = sim.universe.people[account.ownerId];
   if (waiver?.ageBelow !== undefined && owner && ageOn(sim, owner, sim.now) < waiver.ageBelow) return met('age');
   if (waiver?.depositsAtLeast !== undefined
-    && directDeposits(sim, account, monthStart) >= inSaveMoney(sim, waiver.depositsAtLeast, bank.currency)) {
+    && directDeposits(sim, account, monthStart) >= inSaveMoney(sim, waiver.depositsAtLeast, bank.currency)
+    && (!waiver.depositsAlso || alsoMet(sim, account, waiver.depositsAlso))) {
     return met('deposits');
   }
   if (waiver?.balanceAtLeast !== undefined
     && Math.min(account.lowest ?? account.balance, account.balance) >= inSaveMoney(sim, waiver.balanceAtLeast, bank.currency)) {
     return met('balance');
   }
+  if (waiver?.averageAtLeast !== undefined && averageBalance(account) >= inSaveMoney(sim, waiver.averageAtLeast, bank.currency)) {
+    return met('balance');
+  }
+  if (waiver?.linkedAverageAtLeast !== undefined) {
+    const linked = Object.values(sim.universe.accounts)
+      .filter((a) => a.ownerId === account.ownerId && !a.closedAt && a.bankId === bank.id && isEveryday(a))
+      .reduce((sum, a) => sum + averageBalance(a), 0);
+    if (linked >= inSaveMoney(sim, waiver.linkedAverageAtLeast, bank.currency)) return met('balance');
+  }
   return { fee: inSaveMoney(sim, product.monthlyFee, bank.currency) };
+}
+
+/** The month's average daily balance so far: today's, before a day has been counted. */
+export function averageBalance(account: Account): Money {
+  return account.monthDays ? Math.round((account.monthSum ?? 0) / account.monthDays) : account.balance;
+}
+
+/**
+ * Whether the last so many months had the bills paid from an account, or the
+ * card purchases on it, that a waiver asks for alongside wages.
+ */
+export function alsoMet(sim: Simulation, account: Account, rule: { bills?: number; purchases?: number; either?: number; months: number }): boolean {
+  const since = sim.now - rule.months * 30 * 86_400_000;
+  let bills = 0;
+  let purchases = 0;
+  const list = sim.universe.transactions;
+  for (let i = list.length - 1; i >= 0; i -= 1) {
+    const t = list[i]!;
+    if (t.at < since) break;
+    if (!t.postings.some((p) => p.accountId === account.id && p.amount < 0)) continue;
+    if (t.category === 'rent' || t.category === 'bills') bills += 1;
+    else if (t.category === 'food') purchases += 1;
+  }
+  if (rule.either !== undefined && bills + purchases >= rule.either) return true;
+  if (rule.bills !== undefined && bills >= rule.bills) return true;
+  return rule.purchases !== undefined && purchases >= rule.purchases;
 }
 
 /** Whether money left an account since a moment, other than the bank's own fee. */
@@ -346,6 +382,8 @@ export function registerBanking(sim: Simulation): void {
       // The bonus builds too, and is kept only if the month earns it.
       if (product?.bonus && earning > 0) account.bonusAccrued = (account.bonusAccrued ?? 0) + (earning * product.bonus.rate) / 365;
       account.lowest = Math.min(account.lowest ?? account.balance, account.balance);
+      account.monthSum = (account.monthSum ?? 0) + account.balance;
+      account.monthDays = (account.monthDays ?? 0) + 1;
     }
   });
 
@@ -372,6 +410,8 @@ export function registerBanking(sim: Simulation): void {
       }
       account.lowest = account.balance;
       account.monthOpen = account.balance;
+      account.monthSum = 0;
+      account.monthDays = 0;
     }
     scheduleMonthEnd(s, item.at);
   });

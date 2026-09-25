@@ -98,27 +98,28 @@ part the tool cannot see.
   Riser's "No use at all after nine at night", every cost about other people,
   and Resilient's illness and injury are not charged, and Early Riser and a
   few others help and cost nothing in play. The Traits card says so.
-- **A few of a bank's conditions are simplified, and some figures weren't
-  found.** Everything the research found is charged or paid: overdrafts,
-  France's €8 an operation, Spain's commission, Canada's returned-payment
-  fee, card, dormant and quiet-month fees, introductory rates, CIBC's tiers
-  and Iceland's refund at assessment. What is simplified, and said in the
-  source lines: a waiver that also asks for linked accounts, bills or card
-  use (Chase, Wells Fargo, Santander, CaixaBank) waives on wages or balance
-  alone, and Citi's average balance is kept as a balance all month. In the
-  other 226 countries (`content/banks-world-sheets.ts`), a fee the research
-  gave with a waiver in words is shown and not charged (19 of them), a rate
-  given for its top tier or with a condition is paid as given, and a bank
+- **Some banks' figures weren't found, and a few are given as words.** The
+  thirteen countries' waivers are modeled as the banks write them since
+  2026-09-25: an average balance, an average across one's accounts at the
+  bank, and wages with bills or card payments beside them. In the other 226
+  countries (`content/banks-world-sheets.ts`, two research passes), 216
+  countries have a sheet, 202 banks an account name and 182 a savings rate.
+  A fee the research gave with a waiver in words is shown and not charged
+  (22 of them). A rate given for one tier is paid on every balance. A bank
   or figure the research couldn't find keeps a plain account with no fee
-  and no rate: 214 countries have a sheet, 178 banks an account name, 103 a
-  savings rate. Iceland's savings ledger code is from weak sources (05 at
-  Landsbankinn, 13 at Arion) and none was found for Íslandsbanki.
-- **An IBAN in the 226 other countries has the right length and check digits
-  and not the bank's own code.** A Dutch IBAN starts with the bank's four
-  letters (INGB for ING), a British-style one with its BIC and sort code; the
-  research gave no bank codes for those countries, so the rest of the number
-  is drawn as digits. It passes the mod-97 check a bank's form runs, and a
-  person who knows the country would see the bank code is wrong.
+  and no rate. Iceland's savings ledger codes are from weak sources (05 at
+  Landsbankinn, 13 at Arion), and none was found for Íslandsbanki.
+- **Some IBANs outside the thirteen are missing a bank code or a national
+  check.** Each is built to its country's registry structure
+  (`content/banks-world-iban.ts`): 82 structures, and 321 of 348 banks with
+  their own code in place. Where a code wasn't found (Burundi, Djibouti,
+  Egypt, Yemen, São Tomé, and a few banks elsewhere) that field is drawn.
+  The national check inside the BBAN is built for Belgium, the French RIB
+  countries and the MOD 97-10 ones (Portugal, Serbia, Montenegro, North
+  Macedonia, Slovenia, Timor-Leste); for the rest (Italy's CIN, Norway,
+  Slovakia, Poland, Croatia, the Czech Republic, Estonia, Hungary, Albania,
+  Kosovo, Finland, Sweden, Denmark) the rule is recorded and the digits
+  drawn. The IBAN's own check always holds.
 - **The tax engine taxes wages and nothing else.** It was a screen, read only
   by the place card, until the day job: payday withholds income and payroll
   tax through it (`systems/work.ts`). Its sales, property and vehicle rules are

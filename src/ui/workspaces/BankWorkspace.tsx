@@ -90,8 +90,7 @@ export function BankWorkspace() {
                 {product?.monthlyFee ? (
                   <p className="small" style={{ margin: 0 }}>
                     {formatMoney(inSaveMoney(sim, product.monthlyFee, bank.currency), cur)} a month
-                    {product.waiver?.depositsAtLeast !== undefined && `, waived with ${money(inSaveMoney(sim, product.waiver.depositsAtLeast, bank.currency))} of wages paid in`}
-                    {product.waiver?.balanceAtLeast !== undefined && `${product.waiver.depositsAtLeast !== undefined ? ' or' : ', waived'} by keeping ${money(inSaveMoney(sim, product.waiver.balanceAtLeast, bank.currency))} in it all month`}
+                    {waiverWords(product.waiver, (c) => money(inSaveMoney(sim, c, bank.currency)))}
                     {'. '}
                     {fee.fee === 0
                       ? `This month is waived so far${fee.waivedBy === 'deposits' ? `: ${money(paidIn)} paid in` : ''}.`
@@ -227,4 +226,23 @@ function OtherCharges({ bank }: { bank: import('@/engine/content/banks').Bank })
       </div>
     </Panel>
   );
+}
+
+/** How a fee is waived, the way the bank puts its conditions, each one an "or". */
+function waiverWords(waiver: Product['waiver'], money: (cents: number) => string): string {
+  if (!waiver) return '';
+  const ways: string[] = [];
+  if (waiver.depositsAtLeast !== undefined) {
+    const also = waiver.depositsAlso;
+    const extra = !also ? '' : also.either !== undefined
+      ? ` and ${also.either} bills or card payments in ${also.months} months`
+      : ` and ${[also.bills !== undefined ? `${also.bills} bills` : '', also.purchases !== undefined ? `${also.purchases} card payments` : ''].filter(Boolean).join(' or ')} in ${also.months} months`;
+    ways.push(`${money(waiver.depositsAtLeast)} of wages paid in${extra}`);
+  }
+  if (waiver.balanceAtLeast !== undefined) ways.push(`keeping ${money(waiver.balanceAtLeast)} in it all month`);
+  if (waiver.averageAtLeast !== undefined) ways.push(`an average of ${money(waiver.averageAtLeast)} over the month`);
+  if (waiver.linkedAverageAtLeast !== undefined) ways.push(`an average of ${money(waiver.linkedAverageAtLeast)} across your accounts at the bank`);
+  if (waiver.ageBelow !== undefined) ways.push(`being under ${waiver.ageBelow}`);
+  if (ways.length === 0) return '';
+  return `, ${waiver.reducedTo !== undefined ? `${money(waiver.reducedTo)} with` : 'waived with'} ${ways.join(', or ')}`;
 }

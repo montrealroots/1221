@@ -10,7 +10,7 @@
 
 import { describe, expect, it } from 'vitest';
 import {
-  abaValid, clabeCheck, groupIban, iban, ibanValid, kennitala, kennitalaValid, ribKey, spanishControl,
+  abaValid, bbanFrom, belgianCheck, clabeCheck, mod9710, groupIban, iban, ibanValid, kennitala, kennitalaValid, ribKey, spanishControl,
 } from '@/engine/core/banknumbers';
 
 describe('the IBAN', () => {
@@ -67,5 +67,31 @@ describe('the national check digits', () => {
   it('checks a US routing number', () => {
     expect(abaValid('021000021')).toBe(true);
     expect(abaValid('021000022')).toBe(false);
+  });
+});
+
+describe('a BBAN built to its country’s structure', () => {
+  const draws = () => { let i = 0; return { digit: () => (i++ * 7) % 10, letter: () => 'X' }; };
+
+  it('puts the bank’s code where the registry says, and the kinds of character everywhere else', () => {
+    const nl = bbanFrom('4!a10!n', { code: 'INGB', offset: 0 }, draws())!;
+    expect(nl).toMatch(/^INGB\d{10}$/);
+    expect(ibanValid(iban('NL', nl))).toBe(true);
+    const it = bbanFrom('1!a5!n5!n12!c', { code: '03069', offset: 1 }, draws())!;
+    expect(it).toMatch(/^X03069\d{17}$/);
+  });
+
+  it('works out Belgium’s own check, as the registry’s example has it', () => {
+    // BE68 5390 0754 7034: 5390075470 mod 97 is 34.
+    expect(belgianCheck('5390075470')).toBe('34');
+    expect(iban('BE', '539007547034')).toBe('BE68539007547034');
+  });
+});
+
+describe('the national checks inside a BBAN', () => {
+  it('works out ISO 7064 MOD 97-10 as the registry’s examples have it', () => {
+    // PT50 0002 0123 1234 5678 9015 4 and RS35 2600 0560 1001 6113 79.
+    expect(mod9710('0002012312345678901')).toBe('54');
+    expect(mod9710('2600056010016113')).toBe('79');
   });
 });

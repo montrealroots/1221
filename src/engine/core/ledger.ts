@@ -60,6 +60,9 @@ export interface Account {
   accrued?: number;
   /** The lowest it has stood at this month, for a fee's waiver. */
   lowest?: Money;
+  /** The month's daily balances added up, and the days counted, for an average balance. */
+  monthSum?: number;
+  monthDays?: number;
   /** A bonus rate's interest this month, kept only if the month earns it. */
   bonusAccrued?: number;
   /** What it held when the month began, for a bonus paid on growth. */
