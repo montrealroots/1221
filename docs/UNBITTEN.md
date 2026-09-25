@@ -178,14 +178,21 @@ part the tool cannot see.
   SLATE has retired.
 - **Some of what employment law gives isn't modeled.** The law where a
   job is (`content/labor.ts`) pays its premiums, overtime, leave, sick
-  pay, extra payments, Korea's rest day and severance, and asks its notice.
-  Not yet: a public holiday not worked isn't
-  paid where the law pays it (Germany, Ireland, New Zealand); unemployment
-  benefit, which the research found for all thirteen, has nothing to pay
-  it, since nobody is laid off and a dismissal for missed shifts or a
-  resignation mostly bars it; Mexico's PTU profit share needs a company's
-  profit; youth minimum rates are applied only in Britain and Ireland, where they go by age alone (New Zealand's starting-out rate and France's go by months in work, and Australia's by award); an employer's notice isn't,
-  since the only dismissal is for cause. Premiums are the agreement's where
+  pay, extra payments, Korea's rest day and severance, and asks its notice;
+  since 2026-09-25 a job is also cut, as often as the BLS counts in the US
+  and the ONS in Britain (Britain's rate stands in everywhere else, SLATE's
+  estimate), with the employer's notice and the redundancy pay the law
+  gives. Not yet: a public holiday not worked isn't paid where the law pays
+  it (Germany, Ireland, New Zealand); Mexico's PTU profit share needs a
+  company's profit; youth minimum rates are applied only in Britain and
+  Ireland, where they go by age alone (New Zealand's starting-out rate and
+  France's go by months in work, and Australia's by award). The US rate is
+  layoffs and discharges together, as JOLTS doesn't part them, so it runs
+  above layoffs alone. Iceland's longer notice for older workers, Mexico's
+  cap on the seniority premium at twice the minimum wage, Germany's
+  optional half a month a year under §1a KSchG, and the tax-free share of
+  redundancy pay outside Britain and Ireland aren't modeled; France's
+  notice before six months is the common agreement's week. Premiums are the agreement's where
   the research found one: Iceland's Efling–SA tables only for café, bar and
   security work, and Australia's awards told apart by line only on a Sunday.
   Japan's leave is built with the hours, not granted at six months. Untaken
@@ -193,6 +200,28 @@ part the tool cannot see.
   Korea; elsewhere it piles up (Germany's turns on whether the employer
   reminded the worker, and France's and Spain's rules weren't found at a
   source SLATE could reach).
+- **Unemployment benefit is the thirteen's, from the record SLATE keeps.**
+  Out of work, a claim (`work.claim`, `systems/unemployment.ts`) pays
+  the country's benefit by its own formula (`content/unemployment.ts`),
+  from each payday's hours and pay since the save began; a character's work
+  before it isn't known, so in a save's first year or two many don't
+  qualify, as a new entrant wouldn't: Ireland's pay-related benefit and
+  Britain's New Style JSA need two years' contributions, and Britain's
+  claim falls to Universal Credit. Not modeled: Ireland's means-tested
+  Jobseeker's Allowance; Australia's waiting periods, assets test and what
+  quitting costs (Services Australia's pages couldn't be reached), and its
+  Youth Allowance under 22; Korea's days past the first year's 120 (the
+  table couldn't be reached); Japan's days for somebody quitting after
+  April 2025 are the month the research found, unconfirmed; New York's
+  high-quarter test is at the state's $16 minimum, not New York City's $17;
+  Britain's National Insurance test is at 2024/25's lower earnings limit;
+  the regional rate Canada's EI is worked at is September 2026's for all
+  three provinces; family supplements and a partner's income; and no
+  benefit is taxed, as nothing is settled after the year. Being let go for
+  missed shifts is held to be misconduct in the US states whose pages are
+  silent on absence. Only the US states the research covered have a
+  benefit: New York, California, Texas, Florida, Washington, Illinois and
+  Georgia.
 - **Work outside the thirteen is simpler, and some of it is missing.** The
   world research (`content/work-world.ts`, 226 countries and territories,
   written when the session's web searches had run out, so from pages fetched

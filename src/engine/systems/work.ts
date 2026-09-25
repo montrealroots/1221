@@ -17,7 +17,10 @@
  * skip do, it is worked if they are awake and in town, because that is what
  * somebody left to their own life does. Asleep when it starts, or somewhere
  * else, it is missed. Three missed in four weeks and they are let go, and it
- * takes three weeks to find the same kind of work again.
+ * takes three weeks to find the same kind of work again. An employer can
+ * also cut the job for no fault of theirs (`layOff`), with the notice and the
+ * redundancy pay the law there gives, and out of work they can claim what
+ * the country pays (`systems/unemployment.ts`).
  *
  * A worked shift costs the body more than an hour going by: an hour's more
  * energy and half an hour's stress for every hour on, charged as it starts.
@@ -29,7 +32,7 @@ import type { ScheduledItem } from '../core/scheduler';
 import { CITIES, COUNTRIES, jurisdictionPath } from '../content/geography';
 import { EMPLOYERS, type Employer } from '../content/employers';
 import { payrollYear, type PayslipLine } from '../content/payroll';
-import { laborAt, quitNoticeDays, type LaborLaw, type Premium } from '../content/labor';
+import { employerNoticeDays, laborAt, layoffChanceADay, quitNoticeDays, redundancyWeeks, type LaborLaw, type Premium, type Redundancy } from '../content/labor';
 import { holidaysOn } from '../content/holidays';
 import { jobFor, patternHours, patternOf, payCycleFor, tipsPerHour, type Job } from '../content/jobs';
 import { CommandError } from '../core/simulation';
@@ -43,6 +46,7 @@ import {
 } from '../core/time';
 import { clamp } from '../core/rng';
 import { personalityOf } from './personality';
+import { recordEarnings, recordLeaving } from './unemployment';
 
 export const SHIFT_KIND = 'work.shift';
 export const PAYDAY_KIND = 'work.payday';
@@ -86,12 +90,14 @@ export interface JobState {
   sickSpell?: { day: string; count: number };
   /** The week's hours and overtime so far, for overtime, and whether its rest day was paid. */
   week?: { key: string; hours: number; overtime: number; restPaid?: boolean };
-  /** What the next payday pays besides hours: the law's extra payments, leave paid out. */
-  pendingPay?: { name: string; amount: Money }[];
+  /** What the next payday pays besides hours: the law's extra payments, leave paid out, redundancy pay. */
+  pendingPay?: { name: string; amount: Money; taxFree?: boolean }[];
   /** The extra payments already paid, by name and year, so none is paid twice. */
   extrasPaid?: string[];
   /** Notice given: the job ends here. */
   leavingAt?: Instant;
+  /** The notice was the employer's: the job is going, for no fault of theirs. */
+  laidOff?: boolean;
   /** A new employer hired them, starting when the notice here runs out. */
   switchTo?: { employerId: string; jobId: string; at: Instant };
   /** The employer that let them go, so the next work isn't there. */
@@ -238,6 +244,9 @@ function finalPay(sim: Simulation, person: Person): void {
     const daily = (weekly * rate) / 7;
     pending.push({ name: 'Severance', amount: Math.round(daily * law.severance.daysAYear * (months / 12)) });
   }
+  const r = law.redundancy;
+  const owed = state.laidOff && r ? redundancyPay(r, months, ageOf(person, sim.now), averageWeek(sim, person), (units) => exchange(units * 100, countryAt(state.cityId).currency, saveCurrency(sim.universe)) ?? units * 100) : 0;
+  if (r && owed > 0) pending.push({ name: 'Redundancy Pay', amount: owed, ...(r.taxFree ? { taxFree: true } : {}) });
   state.pendingPay = pending;
 }
 
@@ -382,8 +391,37 @@ function ageOf(person: Person, at: Instant): number {
 
 /** The wages paid over a calendar year, gross, for a tax levied on last year's pay. */
 function wagesInYear(sim: Simulation, person: Person, year: number): Money {
-  const from = Date.UTC(year, 0, 1);
-  const to = Date.UTC(year + 1, 0, 1);
+  return wagesBetween(sim, person, Date.UTC(year, 0, 1), Date.UTC(year + 1, 0, 1));
+}
+
+/**
+ * Redundancy pay, in the save's money: the weeks the law gives for the time
+ * with the employer and the age, at a week's pay held to the law's cap,
+ * which `toSave` brings from the country's money.
+ */
+export function redundancyPay(r: Redundancy, months: number, age: number, week: Money, toSave: (units: number) => Money): Money {
+  const weeks = redundancyWeeks(r, months, age);
+  const cap = r.weekCap !== undefined ? toSave(r.weekCap) : Number.POSITIVE_INFINITY;
+  return Math.round(Math.min(week, cap) * weeks);
+}
+
+/**
+ * A week's pay, for redundancy pay: the wages paid in the last year with the
+ * employer, or since joining, a week at a time, premiums and all; the hours
+ * the job's week has at its rate, before any payday.
+ */
+export function averageWeek(sim: Simulation, person: Person): Money {
+  const state = person.job;
+  if (!state) return 0;
+  const from = Math.max(state.since, sim.now - 52 * 7 * MS_DAY);
+  const paid = wagesBetween(sim, person, from, sim.now + 1);
+  const weeks = (sim.now - from) / (7 * MS_DAY);
+  if (paid > 0 && weeks >= 1) return Math.round(paid / weeks);
+  return Math.round(patternHours(patternOf(jobFor(state.jobId), state.fullTime)) * hourlyWage(sim, person));
+}
+
+/** Gross wages paid to a person between two instants. */
+function wagesBetween(sim: Simulation, person: Person, from: Instant, to: Instant): Money {
   const wages = sim.nominalAccount('income', 'Wages').id;
   let total = 0;
   for (const t of sim.universe.transactions) {
@@ -477,19 +515,78 @@ function strike(sim: Simulation, person: Person, at: Instant): void {
   if (!state) return;
   state.missed = [...state.missed.filter((when) => at - when < STRIKE_WINDOW), at];
   if (state.missed.length < STRIKES) return;
-  for (const item of sim.timeline.pending()) {
-    if (item.kind === SHIFT_KIND && item.at > sim.now) sim.timeline.cancel(item.id, sim.now);
-  }
-  finalPay(sim, person);
-  state.lookingUntil = sim.now + LOOKING_FOR;
-  state.missed = [];
-  if (state.employerId) state.letGoBy = state.employerId;
+  // Let go for it during a layoff's notice, it's the missed shifts that end
+  // the job, and no redundancy pay is owed.
+  delete state.laidOff;
+  recordLeaving(sim, person, 'cause', state.cityId);
+  outOfWork(sim, person);
   sim.notify({
     category: 'work',
     title: `Let Go From ${jobFor(state.jobId).title}`,
     body: `Three missed shifts in four weeks. Finding the same kind of work again will take about three weeks, and until then nothing comes in.`,
     importance: 80,
   });
+}
+
+/**
+ * Out of work, let go or laid off: the shifts off the calendar, what's owed
+ * on the next payday, and three weeks' looking before the same kind of work
+ * somewhere else, or the new job if one is starting.
+ */
+function outOfWork(sim: Simulation, person: Person): void {
+  const state = person.job;
+  if (!state) return;
+  for (const item of sim.timeline.pending()) {
+    if (item.kind === SHIFT_KIND && item.payload.personId === person.id && item.at > sim.now) sim.timeline.cancel(item.id, sim.now);
+  }
+  if (state.laidOff) recordLeaving(sim, person, 'laidOff', state.cityId);
+  finalPay(sim, person);
+  state.lookingUntil = Math.max(sim.now + LOOKING_FOR, state.switchTo?.at ?? 0);
+  state.missed = [];
+  delete state.leavingAt;
+  delete state.laidOff;
+  if (state.employerId) state.letGoBy = state.employerId;
+}
+
+/** Whether a job in a line, in a country, is cut on the day an instant falls in: one draw a day, at the rate there. */
+export function cutOn(sim: Simulation, personId: string, iso: string, jobId: string, at: Instant): boolean {
+  return sim.rng('work.layoff', personId, dateKey(at, sim.homeZone)).chance(layoffChanceADay(iso, jobId));
+}
+
+/**
+ * The employer letting a worker go for no fault of theirs: the notice the law
+ * where they work gives, worked out on the rota, and redundancy pay on the
+ * way out where the law gives it. Until 2026-09-25 a job ended only when the
+ * worker quit or missed three shifts.
+ */
+export function layOff(sim: Simulation, person: Person): Instant | undefined {
+  const state = person.job;
+  if (!state || state.leavingAt !== undefined || state.lookingUntil !== undefined || state.quitAt !== undefined) return undefined;
+  const law = lawOf(state);
+  const months = monthsWith(state, sim.now);
+  const days = employerNoticeDays(law, months, ageOf(person, sim.now));
+  const weeks = redundancyWeeks(law?.redundancy, months, ageOf(person, sim.now));
+  const employer = employerById(state.cityId, state.employerId)?.name ?? 'Your employer';
+  const lastDay = sim.now + days * MS_DAY;
+  const owed = weeks > 0 ? ` The law gives you ${weeks.toFixed(1)} weeks’ pay in redundancy pay, on your last payday.` : '';
+  sim.notify({
+    category: 'work',
+    title: 'Laid Off',
+    body: days > 0
+      ? `${employer} is cutting your job. The law gives you ${days} days’ notice, so your shifts run until ${new Date(lastDay).toISOString().slice(0, 10)}.${owed}`
+      : `${employer} is cutting your job, from today; the law where you work asks no notice.${owed}`,
+    importance: 80,
+  });
+  state.laidOff = true;
+  if (days <= 0) {
+    outOfWork(sim, person);
+    return sim.now;
+  }
+  state.leavingAt = lastDay;
+  for (const item of sim.timeline.pending()) {
+    if (item.kind === SHIFT_KIND && item.payload.personId === person.id && item.at >= lastDay) sim.timeline.cancel(item.id, sim.now);
+  }
+  return lastDay;
 }
 
 /**
@@ -663,7 +760,8 @@ function pay(sim: Simulation, person: Person, payday: Instant): void {
   for (const one of state.pendingPay ?? []) add(one.name, one.amount);
   const gross = grossLines.reduce((sum, one) => sum + one.amount, 0);
   if (gross <= 0) return;
-  const slip = payslipAt(state.cityId, gross, currency, sim.now, {
+  const taxFree = (state.pendingPay ?? []).filter((one) => one.taxFree).reduce((sum, one) => sum + Math.max(0, Math.round(one.amount)), 0);
+  const slip = payslipAt(state.cityId, gross - taxFree, currency, sim.now, {
     age: ageOf(person, sim.now),
     lastYear: wagesInYear(sim, person, new Date(sim.now).getUTCFullYear() - 1),
     weeklyHours: patternHours(patternOf(jobFor(state.jobId), state.fullTime)),
@@ -691,6 +789,11 @@ function pay(sim: Simulation, person: Person, payday: Instant): void {
     }
   }
   sim.post({ memo: `${employer ? `${employer.name}, ` : ''}${title}: ${hours} hours`, category: 'salary', postings });
+  // The days of work this pay covered: from the last payday, or the start,
+  // to the day after the last shift or day paid in it.
+  const coveredFrom = Math.max(state.since, state.lastSlip?.at ?? state.since);
+  const coveredTo = Math.min(sim.now, Math.max(coveredFrom, ...due.map((one) => one.at + MS_DAY)));
+  recordEarnings(person, sim.now, (coveredTo - coveredFrom) / MS_DAY, due.filter((one) => one.kind !== 'rest').reduce((sum, one) => sum + one.hours, 0), gross - taxFree);
   state.lastSlip = { at: sim.now, hours, gross, grossLines, lines: slip.lines, employerPension: slip.employerPension, ...(slip.employerPensionName ? { employerPensionName: slip.employerPensionName } : {}), ...(slip.estimate ? { estimate: true } : {}) };
   sim.notify({
     category: 'work',
@@ -817,7 +920,9 @@ export function registerWork(sim: Simulation): void {
     const person = s.player;
     const state = person.job;
     if (!state) throw new CommandError('You don’t have a day job.');
-    if (state.leavingAt !== undefined) throw new CommandError('You’ve already given notice.');
+    if (state.leavingAt !== undefined) {
+      throw new CommandError(state.laidOff ? `Your job already ends on ${new Date(state.leavingAt).toISOString().slice(0, 10)}.` : 'You’ve already given notice.');
+    }
     const days = state.lookingUntil !== undefined ? 0 : quitNoticeDays(lawOf(state), monthsWith(state, s.now));
     if (days <= 0) {
       leave(s, person);
@@ -850,7 +955,7 @@ export function registerWork(sim: Simulation): void {
     const startsAt = s.now + Math.max(notice, LOOKING_FOR);
     if (working) {
       state.switchTo = { employerId: p.employerId, jobId: line[0], at: startsAt };
-      state.leavingAt = startsAt;
+      state.leavingAt = state.laidOff && state.leavingAt !== undefined ? Math.min(state.leavingAt, startsAt) : startsAt;
       for (const item of s.timeline.pending()) {
         if (item.kind === SHIFT_KIND && item.payload.personId === person.id && item.at >= startsAt) s.timeline.cancel(item.id, s.now);
       }
@@ -969,6 +1074,11 @@ export function registerWork(sim: Simulation): void {
         continue;
       }
       lawDay(s, person);
+      // A job cut, as often as jobs are cut where it is (`layoffChanceADay`).
+      if (state.lookingUntil === undefined && state.quitAt === undefined && state.leavingAt === undefined
+        && cutOn(s, person.id, countryAt(state.cityId).iso, state.jobId, s.now)) {
+        layOff(s, person);
+      }
       if (state.lookingUntil !== undefined && s.now >= state.lookingUntil) {
         delete state.lookingUntil;
         if (state.letGoBy !== undefined) {
@@ -1020,6 +1130,12 @@ function switchEmployer(sim: Simulation, person: Person): void {
 function leave(sim: Simulation, person: Person): void {
   const state = person.job;
   if (!state) return;
+  if (state.laidOff) {
+    outOfWork(sim, person);
+    return;
+  }
+  // Giving up the search after losing a job isn't quitting one.
+  if (state.lookingUntil === undefined) recordLeaving(sim, person, 'quit', state.cityId);
   for (const item of sim.timeline.pending()) {
     if (item.kind === SHIFT_KIND && item.payload.personId === person.id) sim.timeline.cancel(item.id, sim.now);
   }

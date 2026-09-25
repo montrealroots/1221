@@ -15,6 +15,7 @@ import type { HistoryRecord } from '../core/audit';
 import type { JobState } from '../systems/work';
 import type { HomeState } from '../systems/household';
 import type { CreditState } from '../systems/credit';
+import type { EarningsState } from '../systems/unemployment';
 import type { IdNamespace } from '../core/ids';
 import type { PerformerTitle } from '../core/performer';
 
@@ -143,6 +144,12 @@ export interface Person {
    * schema 89.
    */
   job?: JobState;
+  /**
+   * Hours and pay by month, how the last job ended, and a claim for
+   * unemployment benefit (`systems/unemployment.ts`). From 2026-09-25; a
+   * save from before it has no record until its next payday.
+   */
+  earnings?: EarningsState;
   /**
    * Where they live and what kind of home it is (`systems/household.ts`):
    * the rent and bills due on the first, and the town the food is bought in.

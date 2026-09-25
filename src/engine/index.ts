@@ -35,6 +35,7 @@ import { armHousehold, moveIn, registerHousehold } from './systems/household';
 import { armCredit, openCredit, registerCredit } from './systems/credit';
 import { armBirthdays, registerBirthdays } from './systems/birthdays';
 import { registerMortality } from './systems/mortality';
+import { registerUnemployment } from './systems/unemployment';
 import { registerTutorial } from './world/tutorial';
 import { armBanking, openAt, registerBanking, rebank, startingBank } from './systems/banking';
 import { registerLending } from './systems/lending';
@@ -56,6 +57,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerWorld(sim);
   registerPlans(sim);
   registerWork(sim);
+  registerUnemployment(sim);
   registerHousehold(sim);
   registerCredit(sim);
   registerBirthdays(sim);

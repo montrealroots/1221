@@ -5,9 +5,10 @@
  * hour, and where that figure comes from; the last payslip line by line,
  * gross to net, with what went into the pension; the leave and sick time the
  * hours have built; what the law where they work adds to a shift and a job;
- * and the other employers there, each with its pay, to apply to
- * (`systems/work.ts`, `content/employers.ts`, `content/payroll.ts`,
- * `content/labor.ts`).
+ * and the other employers there, each with its pay, to apply to; and, out of
+ * work, the unemployment benefit the country pays and a claim for it
+ * (`systems/work.ts`, `systems/unemployment.ts`, `content/employers.ts`,
+ * `content/payroll.ts`, `content/labor.ts`).
  */
 
 import { useState } from 'react';
@@ -18,10 +19,11 @@ import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { formatDate } from '@/engine/core/time';
 import { EMPLOYERS } from '@/engine/content/employers';
 import { JOBS, jobFor, payCycleFor, payCycleWords } from '@/engine/content/jobs';
-import type { LaborLaw } from '@/engine/content/labor';
+import { LAYOFFS, type LaborLaw } from '@/engine/content/labor';
 import { minimumWageAt } from '@/engine/content/wages';
 import { inSaveMoney } from '@/engine/systems/banking';
 import { countryAt, employerById, lawOf, monthsWith, rateAt, type JobState } from '@/engine/systems/work';
+import { claimFor } from '@/engine/systems/unemployment';
 
 const pct = (share: number) => `${Math.round(share * 1000) / 10}%`;
 const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -49,6 +51,13 @@ export function WorkWorkspace() {
     if (answer.ok && answer.value) toast(`${answer.value.hours} hours of paid leave on ${formatDate(answer.value.at, sim.zone)}.`, 'positive');
   };
   const localPay = (hundredths: number) => money(inSaveMoney(sim, hundredths, local));
+  const claim = useWorld((s) => s.player.earnings?.claim);
+  const outOfWork = !job || job.lookingUntil !== undefined || job.quitAt !== undefined;
+  const offer = outOfWork && !claim ? claimFor(sim, sim.player) : undefined;
+  const makeClaim = () => {
+    const answer = run<{ name: string; paysFrom: number; weekly: number }>('work.claim', {});
+    if (answer.ok && answer.value) toast(`${answer.value.name}: ${money(answer.value.weekly)} a week, paid from ${formatDate(answer.value.paysFrom, sim.zone)}.`, 'positive');
+  };
 
   return (
     <>
@@ -61,7 +70,8 @@ export function WorkWorkspace() {
           {!job ? 'You’re not working. The employers where you live are below.' : ''}
           {job?.lookingUntil !== undefined ? ` You start on ${formatDate(job.lookingUntil, sim.zone)}.` : ''}
           {job?.switchTo ? ` You move to ${employerById(job.cityId, job.switchTo.employerId)?.name ?? 'a new employer'} on ${formatDate(job.switchTo.at, sim.zone)}, when your notice here runs out.` : ''}
-          {job?.leavingAt !== undefined && !job.switchTo ? ` You’ve given notice; your last day is ${formatDate(job.leavingAt, sim.zone)}.` : ''}
+          {job?.leavingAt !== undefined && !job.switchTo && !job.laidOff ? ` You’ve given notice; your last day is ${formatDate(job.leavingAt, sim.zone)}.` : ''}
+          {job?.leavingAt !== undefined && job.laidOff ? ` Your job is being cut; your last day is ${formatDate(job.leavingAt, sim.zone)}.` : ''}
           {` Paid ${payCycleWords(payCycleFor(iso))}.`}
         </p>
       </div>
@@ -119,10 +129,35 @@ export function WorkWorkspace() {
             {!law ? <p className="small">SLATE has no employment law for this country, so a shift pays its hours and nothing more.</p> : (
               <div className="col gap-2">
                 {lawWords(law, job.jobId).map((one) => <p key={one.text} className="small" style={{ margin: 0 }}>{one.text} <span className="xs dim">({one.source})</span></p>)}
+                {(() => { const cut = LAYOFFS[iso] ?? LAYOFFS.GB!; const month = cut.byLine?.[job.jobId] ?? cut.month; return <p className="small" style={{ margin: 0 }}>About {pct(month)} of jobs like this are cut in a month{LAYOFFS[iso] ? '' : ', Britain’s rate, SLATE’s estimate for here'}. <span className="xs dim">({cut.source})</span></p>; })()}
               </div>
             )}
           </Panel>
         </div>
+      )}
+
+      {(outOfWork || claim) && (
+        <Panel title="Out Of Work" subtitle={claim ? claim.name : offer && !('refused' in offer) ? offer.benefit.name : 'Unemployment Benefit'}>
+          {claim ? (
+            <p className="small" style={{ margin: 0 }}>
+              {`You’re claiming it, paid from ${formatDate(claim.paysFrom, sim.zone)}`}
+              {claim.until !== undefined ? ` until ${formatDate(claim.until, sim.zone)}` : ' for as long as you’re out of work'}
+              {`. ${money(claim.paid)} paid so far. It stops when you’re back in work.`}
+            </p>
+          ) : offer && 'refused' in offer ? (
+            <p className="small" style={{ margin: 0 }}>{offer.refused}</p>
+          ) : offer ? (
+            <div className="col gap-2">
+              <p className="small" style={{ margin: 0 }}>
+                {`You can claim ${localPay(Math.round(offer.weekly * 100))} a week`}
+                {offer.weeks !== undefined ? ` for ${Math.round(offer.weeks)} weeks` : ''}
+                {`, after ${offer.benefit.waitingDays + offer.barWeeks * 7} days${offer.barWeeks > 0 ? ', longer for quitting' : ''}. It pays while you’re looking for work.`}
+              </p>
+              <p className="xs dim" style={{ margin: 0 }}>Source: {offer.benefit.source}</p>
+              <div><Gated feature="work.claim" className="btn btn-sm" onClick={makeClaim}>Claim {offer.benefit.name}</Gated></div>
+            </div>
+          ) : null}
+        </Panel>
       )}
 
       {Object.keys(lines).length === 0 ? (
@@ -186,7 +221,7 @@ function sickWords(law: LaborLaw | undefined, job: JobState, at: number): string
   const not = sick.afterMonths !== undefined && monthsWith(job, at) < sick.afterMonths ? ` Not until you’ve been with the employer ${sick.afterMonths} months.` : '';
   const pot = sick.accrual !== undefined ? ` You’ve built up ${(job.sickHours ?? 0).toFixed(1)} hours${sick.maxHoursAYear !== undefined ? `, and can use ${sick.maxHoursAYear} a year` : ''}.`
     : sick.daysAYear !== undefined ? ` ${sick.daysAYear} days a year; ${job.sickDays?.year === new Date(at).getUTCFullYear() ? job.sickDays.days : 0} used this year.` : '';
-  return `${who} pays ${pct(sick.rate)} of a day called in sick, ${from}.${pot}${not} A day called in still counts against you at work.`;
+  return `${who} pays ${pct(sick.rate)} of a day called in sick, ${from}.${pot}${not} A day it pays in full isn’t held against you at work; one it doesn’t is.`;
 }
 
 /** Every rule the law where they work adds, in a line each, with its source. */
@@ -209,6 +244,11 @@ function lawWords(law: LaborLaw, jobId: string): { text: string; source: string 
   }
   if (law.weeklyRestDay) out.push({ text: `A week of ${law.weeklyRestDay.minHours} hours or more, with every shift worked, pays a rest day too.`, source: law.weeklyRestDay.source });
   if (law.severance) out.push({ text: `Leaving after ${law.severance.afterMonths} months pays ${law.severance.daysAYear} days’ pay for each year worked.`, source: law.severance.source });
+  if (law.employerNotice) {
+    const days = law.employerNotice.steps[law.employerNotice.steps.length - 1]?.[1] ?? 0;
+    out.push({ text: days > 0 ? `A layoff comes with notice: up to ${days} days, by how long you’ve worked there.` : 'A layoff can come without notice.', source: law.employerNotice.source });
+  }
+  if (law.redundancy) out.push({ text: `A layoff${law.redundancy.afterMonths > 0 ? ` after ${law.redundancy.afterMonths} months` : ''} pays redundancy pay, by the years worked.`, source: law.redundancy.source });
   if (law.quitNotice) {
     const days = law.quitNotice.steps[law.quitNotice.steps.length - 1]?.[1] ?? 0;
     out.push({ text: days > 0 ? `Quitting takes notice: up to ${days} days, by how long you’ve worked there.` : 'You can quit without notice.', source: law.quitNotice.source });

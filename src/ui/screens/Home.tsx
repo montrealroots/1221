@@ -561,6 +561,11 @@ function WorkAndHome({ cur }: { cur: string }) {
               <Gated feature="work.quit" className="btn btn-sm btn-ghost" onClick={() => run('work.quit', {})}>Quit</Gated>
             </div>
           )}
+          {job.lookingUntil !== undefined && (
+            <div className="row gap-2">
+              <Gated feature="ui.job" className="btn btn-sm" onClick={() => navigate('/workspace/work', 'Your Work')}>Your Work</Gated>
+            </div>
+          )}
         </>
       ) : (
         <>
