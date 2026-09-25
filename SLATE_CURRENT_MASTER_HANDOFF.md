@@ -1048,6 +1048,8 @@ The handoff and `CLAUDE.md` live at the repository root, so the gate's text tool
 
 ## 11. State that is not on GitHub
 
+- **Web search limit (2026-09-25).** Claude Code allows 200 web searches a session, and the banking research used them all. At the owner's word, `CLAUDE_CODE_MAX_WEB_SEARCHES_PER_SESSION` is set to 2000 as a Windows user environment variable on this machine. It takes effect in a Claude Code started after that. The banking research still waiting on it: savings rates for BMO, CIBC, Mexico's and Spain's banks; Santander UK's rate after its first year; SMBC's dormant-fee wait; Iceland's savings ledger code; and product sheets for the 226 other countries (`docs/UNBITTEN.md`).
+
 **In the Linux container this was written in.** It's ephemeral, so all of this goes when it's reclaimed:
 - Local branches `adv`, `rebasetest`, `mine-item12-3b8616d` and `worktree-wf_*`, and five worktrees under `.claude/worktrees/`.
 - Six commits exist only there:
