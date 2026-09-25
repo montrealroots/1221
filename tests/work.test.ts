@@ -14,7 +14,7 @@
 import { describe, expect, it } from 'vitest';
 import { createSave, defaultConfig, loadSave, migrate, quickSave } from '@/engine';
 import type { Simulation } from '@/engine';
-import { CITIES, loadCountryCities } from '@/engine/content/geography';
+import { CITIES, REGIONS, loadCountryCities } from '@/engine/content/geography';
 import { MINIMUM_WAGES, minimumWageAt } from '@/engine/content/wages';
 import { JOBS, jobFor, weeklyHours } from '@/engine/content/jobs';
 import { PERSONALITY_TRAITS } from '@/engine/content/personality-traits';
@@ -87,6 +87,21 @@ describe('the pay', () => {
     if (rome) expect(minimumWageAt(rome.id, Date.UTC(2026, 5, 1), 'EUR').kind).toBe('estimate');
     // Every figure says where it came from.
     for (const one of MINIMUM_WAGES) expect(one.source, one.where).toMatch(/^https:\/\//);
+  });
+
+  it('pays each Canadian province its own floor, keyed as the gazetteer numbers them', () => {
+    // The provinces were keyed CA-ON, CA-QC and CA-BC, which no town in the
+    // gazetteer carries (Ontario is CA-08 there), so all three were paid the
+    // federal rate until 2026-09-25.
+    const at = Date.UTC(2026, 8, 25);
+    expect(minimumWageAt('ca-on-toronto', at, 'CAD').hourly).toBe(17_60);
+    expect(minimumWageAt('ca-qc-montreal', at, 'CAD').hourly).toBe(16_60);
+    expect(minimumWageAt('ca-bc-vancouver', at, 'CAD').hourly).toBe(18_25);
+    // And every regional key is a region the gazetteer really has.
+    const keys = new Set(REGIONS.all().map((r) => r.jurisdictionCode));
+    for (const one of MINIMUM_WAGES) {
+      if (one.where.split('-').length === 2) expect(keys.has(one.where), one.where).toBe(true);
+    }
   });
 
   it('comes on the country’s payday, less the tax the engine withholds, and the ledger balances', () => {

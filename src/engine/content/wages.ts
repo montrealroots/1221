@@ -96,12 +96,16 @@ export const MINIMUM_WAGES: readonly MinimumWage[] = [
   w('US-MI', 13.73, 'USD', D(2026, 2, 21), DOL_STATES),
 
   // --- Canadian provinces --------------------------------------------------
-  w('CA-QC', 16.10, 'CAD', D(2025, 5, 1), 'https://www.quebec.ca/nouvelles/actualites/details/le-taux-general-du-salaire-minimum-passera-a-1660-lheure-le-1er-mai-2026-68123', { to: D(2026, 5, 1) }),
-  w('CA-QC', 16.60, 'CAD', D(2026, 5, 1), 'https://www.quebec.ca/nouvelles/actualites/details/le-taux-general-du-salaire-minimum-passera-a-1660-lheure-le-1er-mai-2026-68123'),
-  w('CA-ON', 17.60, 'CAD', D(2025, 10, 1), 'https://hicksmorley.com/2026/04/01/ontario-minimum-wage-to-increase-october-1-2026/', { to: D(2026, 10, 1) }),
-  w('CA-ON', 17.95, 'CAD', D(2026, 10, 1), 'https://hicksmorley.com/2026/04/01/ontario-minimum-wage-to-increase-october-1-2026/'),
-  w('CA-BC', 17.85, 'CAD', D(2025, 6, 1), 'https://news.gov.bc.ca/releases/2026LBR0021-000581', { to: D(2026, 6, 1) }),
-  w('CA-BC', 18.25, 'CAD', D(2026, 6, 1), 'https://news.gov.bc.ca/releases/2026LBR0021-000581'),
+  // Keyed as the gazetteer numbers them: Quebec is CA-10, Ontario CA-08 and
+  // British Columbia CA-02. They were keyed CA-QC, CA-ON and CA-BC, which no
+  // town carries, so every Canadian town was paid the federal rate, and taxed
+  // without its province, until 2026-09-25.
+  w('CA-10', 16.10, 'CAD', D(2025, 5, 1), 'https://www.quebec.ca/nouvelles/actualites/details/le-taux-general-du-salaire-minimum-passera-a-1660-lheure-le-1er-mai-2026-68123', { to: D(2026, 5, 1) }),
+  w('CA-10', 16.60, 'CAD', D(2026, 5, 1), 'https://www.quebec.ca/nouvelles/actualites/details/le-taux-general-du-salaire-minimum-passera-a-1660-lheure-le-1er-mai-2026-68123'),
+  w('CA-08', 17.60, 'CAD', D(2025, 10, 1), 'https://hicksmorley.com/2026/04/01/ontario-minimum-wage-to-increase-october-1-2026/', { to: D(2026, 10, 1) }),
+  w('CA-08', 17.95, 'CAD', D(2026, 10, 1), 'https://hicksmorley.com/2026/04/01/ontario-minimum-wage-to-increase-october-1-2026/'),
+  w('CA-02', 17.85, 'CAD', D(2025, 6, 1), 'https://news.gov.bc.ca/releases/2026LBR0021-000581', { to: D(2026, 6, 1) }),
+  w('CA-02', 18.25, 'CAD', D(2026, 6, 1), 'https://news.gov.bc.ca/releases/2026LBR0021-000581'),
 
   // --- Tokyo prefecture ----------------------------------------------------
   // The gazetteer numbers Japan's prefectures as GeoNames does, in the order
