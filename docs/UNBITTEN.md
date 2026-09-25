@@ -104,11 +104,28 @@ part the tool cannot see.
   bank, and wages with bills or card payments beside them. In the other 226
   countries (`content/banks-world-sheets.ts`, two research passes), 216
   countries have a sheet, 202 banks an account name and 182 a savings rate.
-  A fee the research gave with a waiver in words is shown and not charged
-  (22 of them). A rate given for one tier is paid on every balance. A bank
+  The 22 fees the research gave with a waiver in words were shown and not
+  charged until 2026-09-25; each is charged now, with its waiver as a rule
+  (`content/banks-world-fees.ts`). Three waivers are for someone SLATE
+  doesn't have (students, state employees), so those fees are charged in
+  full; Swedbank Latvia's exemptions weren't confirmed, so it is charged;
+  Clarien's age for a senior isn't published, and 65 is SLATE's estimate.
+  A rate given for one tier is paid on every balance (Arion's and
+  Íslandsbanki's savings name a range whose tiers weren't found). A bank
   or figure the research couldn't find keeps a plain account with no fee
   and no rate. Iceland's savings ledger codes are from weak sources (05 at
   Landsbankinn, 13 at Arion), and none was found for Íslandsbanki.
+- **Two overdraft terms are missing a figure.** BNZ charges its unarranged
+  overdraft fee, but its interest is a Personal Overdraft Base Rate plus
+  10% and BNZ doesn't publish the base, so none is charged. The Canadian
+  banks sell overdraft protection by the month or by the use; SLATE
+  arranges the monthly plan only.
+- **The deposit guarantee and the central bank's rate are shown and change
+  nothing.** No bank fails in SLATE, so the guarantee is never called on,
+  and no bank's rate is set from the central bank's, which SLATE holds at
+  the day the research read it. Both are real, sourced facts on the bank
+  screen; neither has anything to bite on until banks can fail or rates
+  can move.
 - **Some IBANs outside the thirteen are missing a bank code or a national
   check.** Each is built to its country's registry structure
   (`content/banks-world-iban.ts`): 82 structures, and 321 of 348 banks with

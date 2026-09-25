@@ -17,8 +17,9 @@ import type { Simulation } from '@/engine/core/simulation';
 import type { Account } from '@/engine/core/ledger';
 import { MS_DAY, instantFromZoned } from '@/engine/core/time';
 import { spend } from '@/engine/systems/household';
-import { bankAccountsOf, feeFor, monthStartOf, rateOf } from '@/engine/systems/banking';
-import { bankingIn, banksIn } from '@/engine/content/banks';
+import { bankAccountsOf, feeFor, inSaveMoney, monthStartOf, rateOf } from '@/engine/systems/banking';
+import { bankById, bankingIn, banksIn } from '@/engine/content/banks';
+import { WORLD_FEES } from '@/engine/content/banks-world-fees';
 import { SHEETS } from '@/engine/content/banks-world-sheets';
 import { IBAN_CODES } from '@/engine/content/banks-world-iban';
 import { accountNumber } from '@/engine/systems/banknumber';
@@ -60,7 +61,13 @@ describe('France', () => {
 });
 
 describe('Spain’s descubierto', () => {
-  it('takes interest and, on the first, 5% of the month’s deepest point, at least €15', () => {
+  // What the law lets the month cost: 8.125% a year on the overdrawn
+  // balances, day by day, the first's midnight included.
+  const lawAllows = (daySum: number) => Math.floor((daySum * 0.08125) / 365);
+  const monthCost = (sim: Simulation, account: Account) => -[...charged(sim, account, 'Overdraft interest'), ...charged(sim, account, 'Overdraft commission')]
+    .reduce((a, b) => a + b, 0);
+
+  it('takes interest and a commission on the month’s deepest point, no more together than the law allows', () => {
     const sim = lifeIn('es-md-madrid', { bankId: 'es-santander' });
     noHome(sim);
     set(sim, savings(sim), 0);
@@ -69,13 +76,34 @@ describe('Spain’s descubierto', () => {
     sim.advanceTo(instantFromZoned({ year: 2026, month: 1, day: 20, hour: 12 }, sim.homeZone));
     spend(sim, sim.player, 400_00, 'Test', 'bills');
     set(sim, account, -100_00);
+    sim.advanceTo(instantFromZoned({ year: 2026, month: 1, day: 31, hour: 23 }, sim.homeZone));
+    const allowed = lawAllows((account.odDaySum ?? 0) + 100_00);
     sim.advanceTo(instantFromZoned({ year: 2026, month: 2, day: 1, hour: 6 }, sim.homeZone));
-    expect(charged(sim, account, 'Overdraft commission')).toEqual([-20_00]);
+    // 5% of €400 is €20, far past what twelve days of €100 may cost; the
+    // commission is what the cap leaves after the interest.
     expect(charged(sim, account, 'Overdraft interest').length).toBe(1);
-    // A shallow month is charged the €15 floor.
-    set(sim, account, -50_00);
-    sim.advanceTo(instantFromZoned({ year: 2026, month: 3, day: 1, hour: 6 }, sim.homeZone));
-    expect(charged(sim, account, 'Overdraft commission')).toEqual([-20_00, -15_00]);
+    expect(charged(sim, account, 'Overdraft commission').length).toBe(1);
+    expect(-charged(sim, account, 'Overdraft commission')[0]!).toBeLessThan(20_00);
+    expect(monthCost(sim, account)).toBe(allowed);
+    expect(account.odDaySum).toBe(0);
+  });
+
+  it('cuts the commission to what the cap leaves, even under its €15 floor', () => {
+    const sim = lifeIn('es-md-madrid', { bankId: 'es-santander' });
+    noHome(sim);
+    set(sim, savings(sim), 0);
+    const account = current(sim);
+    set(sim, account, 0);
+    sim.advanceTo(instantFromZoned({ year: 2026, month: 1, day: 6, hour: 12 }, sim.homeZone));
+    spend(sim, sim.player, 300_00, 'Test', 'bills');
+    // Most of a month overdrawn by €40,000 lets it cost about €230, and the
+    // interest (7.83%) leaves about €8 of that: under the floor, and all it charges.
+    set(sim, account, -40_000_00);
+    sim.advanceTo(instantFromZoned({ year: 2026, month: 1, day: 31, hour: 23 }, sim.homeZone));
+    const allowed = lawAllows((account.odDaySum ?? 0) + 40_000_00);
+    sim.advanceTo(instantFromZoned({ year: 2026, month: 2, day: 1, hour: 6 }, sim.homeZone));
+    expect(monthCost(sim, account)).toBe(allowed);
+    expect(-charged(sim, account, 'Overdraft commission')[0]!).toBeLessThan(15_00);
   });
 });
 
@@ -210,8 +238,9 @@ describe('what the second research pass filled in', () => {
 });
 
 describe('the rest of the world’s banks', () => {
-  it('carry the researched product names, rates and fees, and never charge a fee whose waiver is only words', () => {
+  it('carry the researched product names, rates and fees, and charge every fee whose waiver was words by a rule', () => {
     let named = 0;
+    let stated = 0;
     for (const [iso, sheet] of Object.entries(SHEETS)) {
       for (const [name, found] of Object.entries(sheet.products ?? {})) {
         const bank = banksIn(iso).find((b) => b.name === name);
@@ -219,14 +248,152 @@ describe('the rest of the world’s banks', () => {
         if (found.current) {
           named += 1;
           expect(bank!.current.name).toBe(found.current.name);
-          expect(bank!.current.monthlyFee).toBe(found.current.monthlyFee || undefined);
-          if (found.current.note && /isn't modeled, so it isn't charged/.test(found.current.note)) expect(bank!.current.monthlyFee).toBeUndefined();
+          const rule = WORLD_FEES[`${iso}|${name}`];
+          if (found.current.statedFee !== undefined) {
+            // A fee the research gave with its waiver in words has a rule, and is charged.
+            stated += 1;
+            expect(rule, `${iso} ${name}`).toBeDefined();
+            expect(bank!.current.monthlyFee).toBe(rule!.monthlyFee);
+          } else {
+            expect(rule, `${iso} ${name} has a rule for a fee it doesn't state`).toBeUndefined();
+            expect(bank!.current.monthlyFee).toBe(found.current.monthlyFee || undefined);
+          }
         }
         if (found.savings?.rate !== undefined) expect(bank!.savings.rate).toBe(found.savings.rate);
       }
       if (sheet.policy) expect(bankingIn(iso)?.policy?.rate).toBe(sheet.policy.rate);
     }
     expect(named).toBeGreaterThan(150);
+    expect(stated).toBe(22);
+    expect(Object.keys(WORLD_FEES).length).toBe(22);
+  });
+});
+
+describe('the waivers outside the thirteen', () => {
+  // A Dublin life with its current account moved to a world bank: the fee
+  // is the bank's, in the save's euros.
+  const at = (bankId: string, birthYear: number) => {
+    const sim = lifeIn('ie-lei-dublin', { bankId: 'ie-aib', birthYear, wealth: 'modest' });
+    sim.player.home = undefined;
+    const account = current(sim);
+    account.bankId = bankId;
+    return { sim, account, fee: () => feeFor(sim, account, monthStartOf(sim, sim.now)), bank: bankById(bankId)! };
+  };
+  const inEuros = (sim: Simulation, amount: number, currency: string) => inSaveMoney(sim, amount, currency);
+
+  it('waives Butterfield Bermuda’s at 60 and over, and not at 59', () => {
+    const old = at('bm-butterfield', 1965);
+    expect(old.fee()).toEqual({ fee: 0, waivedBy: 'age' });
+    const younger = at('bm-butterfield', 1967);
+    expect(younger.fee().fee).toBe(inEuros(younger.sim, 13_00, younger.bank.currency));
+  });
+
+  it('waives Česká spořitelna’s with four card payments in the month, not three', () => {
+    const { sim, fee, bank } = at('cz-ceska-sporitelna', 1990);
+    set(sim, current(sim), 1_000_00);
+    for (let i = 0; i < 3; i += 1) spend(sim, sim.player, 5_00, 'Groceries', 'food');
+    expect(fee().fee).toBe(inEuros(sim, 100_00, bank.currency));
+    spend(sim, sim.player, 5_00, 'Groceries', 'food');
+    expect(fee()).toEqual({ fee: 0, waivedBy: 'purchases' });
+  });
+
+  it('leaves Attijariwafa’s free for six months from opening, then charges it', () => {
+    const { sim, account, fee, bank } = at('ma-attijariwafa-bank', 1990);
+    expect(fee()).toEqual({ fee: 0, waivedBy: 'new' });
+    account.openedAt = sim.now - 200 * MS_DAY;
+    expect(fee().fee).toBe(inEuros(sim, 5_00, bank.currency));
+  });
+
+  it('lowers Butterfield Cayman’s to its compliance fee on a CI$5,000 average', () => {
+    const { sim, account, fee, bank } = at('ky-butterfield', 1990);
+    account.monthSum = 1_000_00 * 10;
+    account.monthDays = 10;
+    expect(fee().fee).toBe(inEuros(sim, 8_00, bank.currency));
+    account.monthSum = inEuros(sim, 5_000_00, bank.currency) * 10;
+    expect(fee()).toEqual({ fee: inEuros(sim, 2_00, bank.currency), waivedBy: 'balance' });
+  });
+
+  it('frees Swedbank Lithuania’s under 26, and lowers it for a salary', () => {
+    expect(at('lt-swedbank', 2004).fee()).toEqual({ fee: 0, waivedBy: 'age' });
+    const { sim, fee } = at('lt-swedbank', 1990);
+    expect(fee().fee).toBe(1_70);
+    sim.post({ memo: 'Wages', category: 'salary', postings: [{ accountId: current(sim).id, amount: 900_00 }, { accountId: sim.nominalAccount('income', 'Wages').id, amount: -900_00 }] });
+    expect(fee()).toEqual({ fee: 1_10, waivedBy: 'deposits' });
+  });
+
+  it('halves NLB’s under 30', () => {
+    expect(at('si-nlb', 2000).fee()).toEqual({ fee: 3_50, waivedBy: 'age' });
+    expect(at('si-nlb', 1990).fee().fee).toBe(6_99);
+  });
+});
+
+describe('an overdraft past its limit, or with none', () => {
+  const wages = (sim: Simulation, amount: number) => sim.post({
+    memo: 'Wages', category: 'salary',
+    postings: [{ accountId: current(sim).id, amount }, { accountId: sim.nominalAccount('income', 'Wages').id, amount: -amount }],
+  });
+
+  it('charges Deutsche Bank’s higher rate on the part beyond the Dispo, and lets the account go there', () => {
+    const run = (limit: number) => {
+      const sim = lifeIn('de-be-berlin', { bankId: 'de-deutsche-bank', birthYear: 1985 });
+      noHome(sim);
+      wages(sim, 3_000_00);
+      if (limit > 0) sim.must({ kind: 'bank.arrange_overdraft', payload: { limit } });
+      set(sim, savings(sim), 0);
+      set(sim, current(sim), 0);
+      set(sim, current(sim), -1_000_00);
+      sim.advanceTo(instantFromZoned({ year: 2026, month: 2, day: 1, hour: 6 }, sim.homeZone));
+      return -charged(sim, current(sim), 'Overdraft interest').reduce((a, b) => a + b, 0);
+    };
+    // €1,000 overdrawn all month: at 11.60% inside a €1,000 Dispo, at 13.05% with none.
+    const inside = run(1_000_00);
+    const beyond = run(0);
+    expect(beyond).toBeGreaterThan(inside);
+    expect(beyond / inside).toBeCloseTo(0.1305 / 0.116, 1);
+  });
+
+  it('charges BNZ’s unarranged fee for a month more than $20 overdrawn, and not at $20 or under 19', () => {
+    const month = (overdrawn: number, birthYear = 1985) => {
+      const sim = lifeIn('nz-akl-auckland', { bankId: 'nz-bnz', birthYear });
+      noHome(sim);
+      set(sim, savings(sim), 0);
+      set(sim, current(sim), 0);
+      sim.advanceTo(instantFromZoned({ year: 2026, month: 1, day: 10, hour: 12 }, sim.homeZone));
+      spend(sim, sim.player, overdrawn, 'Test', 'bills');
+      expect(current(sim).balance).toBe(-overdrawn);
+      set(sim, current(sim), -overdrawn);
+      sim.advanceTo(instantFromZoned({ year: 2026, month: 2, day: 1, hour: 6 }, sim.homeZone));
+      return charged(sim, current(sim), 'Unarranged overdraft fee');
+    };
+    expect(month(21_00)).toEqual([-2_00]);
+    expect(month(20_00)).toEqual([]);
+    expect(month(21_00, 2008)).toEqual([]);
+  });
+
+  it('charges ANZ’s past the limit only after more than a day', () => {
+    const sim = lifeIn('nz-akl-auckland', { bankId: 'nz-anz', birthYear: 1985 });
+    noHome(sim);
+    set(sim, savings(sim), 0);
+    set(sim, current(sim), 0);
+    sim.advanceTo(instantFromZoned({ year: 2026, month: 1, day: 10, hour: 12 }, sim.homeZone));
+    spend(sim, sim.player, 50_00, 'Test', 'bills');
+    set(sim, current(sim), -50_00);
+    sim.advanceTo(instantFromZoned({ year: 2026, month: 1, day: 11, hour: 6 }, sim.homeZone));
+    set(sim, current(sim), 0);
+    sim.advanceTo(instantFromZoned({ year: 2026, month: 2, day: 1, hour: 6 }, sim.homeZone));
+    // One midnight past it: no fee.
+    expect(charged(sim, current(sim), 'Unarranged overdraft fee')).toEqual([]);
+    set(sim, current(sim), -50_00);
+    sim.advanceTo(instantFromZoned({ year: 2026, month: 3, day: 1, hour: 6 }, sim.homeZone));
+    expect(charged(sim, current(sim), 'Unarranged overdraft fee')).toEqual([-3_00]);
+  });
+
+  it('charges PTSB’s set-up fee when the overdraft is arranged, and its yearly fee a year on', () => {
+    const sim = lifeIn('ie-lei-dublin', { bankId: 'ie-ptsb', birthYear: 1985 });
+    wages(sim, 3_000_00);
+    sim.must({ kind: 'bank.arrange_overdraft', payload: { limit: 500_00 } });
+    expect(charged(sim, current(sim), 'Overdraft set-up fee')).toEqual([-25_00]);
+    expect(charged(sim, current(sim), 'Overdraft facility fee')).toEqual([]);
   });
 });
 

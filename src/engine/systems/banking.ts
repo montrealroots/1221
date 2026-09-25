@@ -32,7 +32,7 @@ import { formatMoney, saveCurrency, type Money } from '../core/money';
 import type { Person } from '../domain/model';
 import { CITIES, COUNTRIES } from '../content/geography';
 import { exchange } from '../content/currency';
-import { dateKey, daysInMonth, instantFromZoned, zonedParts, type Instant } from '../core/time';
+import { addMonths, dateKey, daysInMonth, instantFromZoned, zonedParts, type Instant } from '../core/time';
 import { bankById, bankingIn, banksIn, type Bank, type Product } from '../content/banks';
 import { ageOn } from './mortality';
 import { hourlyWage, jobOf } from './work';
@@ -208,17 +208,20 @@ export function directDeposits(sim: Simulation, account: Account, since: Instant
  * The month's fee on an account, in the save's money: none when the account
  * has none or the month met its waiver, and what met it.
  */
-export function feeFor(sim: Simulation, account: Account, monthStart: Instant): { fee: Money; waivedBy?: 'deposits' | 'balance' | 'age' } {
+export type WaivedBy = 'deposits' | 'balance' | 'age' | 'purchases' | 'new';
+
+export function feeFor(sim: Simulation, account: Account, monthStart: Instant): { fee: Money; waivedBy?: WaivedBy } {
   const product = productOf(account);
   const bank = account.bankId ? bankById(account.bankId) : undefined;
   if (!product?.monthlyFee || !bank) return { fee: 0 };
   const waiver = product.waiver;
-  // Met, the waiver clears the fee, or lowers it where the bank only lowers it.
-  const met = (by: 'deposits' | 'balance' | 'age') => (
-    waiver?.reducedTo !== undefined ? { fee: inSaveMoney(sim, waiver.reducedTo, bank.currency), waivedBy: by } : { fee: 0, waivedBy: by }
-  );
+  const met = (by: WaivedBy) => ({ fee: 0, waivedBy: by });
   const owner = sim.universe.people[account.ownerId];
-  if (waiver?.ageBelow !== undefined && owner && ageOn(sim, owner, sim.now) < waiver.ageBelow) return met('age');
+  const age = owner ? ageOn(sim, owner, sim.now) : undefined;
+  if (waiver?.ageBelow !== undefined && age !== undefined && age < waiver.ageBelow) return met('age');
+  if (waiver?.ageAtLeast !== undefined && age !== undefined && age >= waiver.ageAtLeast) return met('age');
+  if (waiver?.firstMonths !== undefined && monthStart < addMonths(account.openedAt, waiver.firstMonths, sim.homeZone)) return met('new');
+  if (waiver?.purchasesAtLeast !== undefined && purchasesSince(sim, account, monthStart) >= waiver.purchasesAtLeast) return met('purchases');
   if (waiver?.depositsAtLeast !== undefined
     && directDeposits(sim, account, monthStart) >= inSaveMoney(sim, waiver.depositsAtLeast, bank.currency)
     && (!waiver.depositsAlso || alsoMet(sim, account, waiver.depositsAlso))) {
@@ -237,7 +240,27 @@ export function feeFor(sim: Simulation, account: Account, monthStart: Instant): 
       .reduce((sum, a) => sum + averageBalance(a), 0);
     if (linked >= inSaveMoney(sim, waiver.linkedAverageAtLeast, bank.currency)) return met('balance');
   }
+  // Short of a waiver, a lesser condition may lower the fee.
+  const cut = product.reduced;
+  if (cut) {
+    const lower = (by: WaivedBy) => ({ fee: inSaveMoney(sim, cut.to, bank.currency), waivedBy: by });
+    if (cut.ageBelow !== undefined && age !== undefined && age < cut.ageBelow) return lower('age');
+    if (cut.depositsAtLeast !== undefined && directDeposits(sim, account, monthStart) >= inSaveMoney(sim, cut.depositsAtLeast, bank.currency)) return lower('deposits');
+    if (cut.averageAtLeast !== undefined && averageBalance(account) >= inSaveMoney(sim, cut.averageAtLeast, bank.currency)) return lower('balance');
+  }
   return { fee: inSaveMoney(sim, product.monthlyFee, bank.currency) };
+}
+
+/** Debit card purchases from an account since a moment. */
+export function purchasesSince(sim: Simulation, account: Account, since: Instant): number {
+  let count = 0;
+  const list = sim.universe.transactions;
+  for (let i = list.length - 1; i >= 0; i -= 1) {
+    const t = list[i]!;
+    if (t.at < since) break;
+    if (t.category === 'food' && t.postings.some((p) => p.accountId === account.id && p.amount < 0)) count += 1;
+  }
+  return count;
 }
 
 /** The month's average daily balance so far: today's, before a day has been counted. */

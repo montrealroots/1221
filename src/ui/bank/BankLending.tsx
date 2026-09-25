@@ -64,6 +64,21 @@ export function BankLending({ bank }: { bank: Bank }) {
             {' '}It covers up to about {money(room)}, SLATE’s estimate: the bank publishes no limit.
           </p>
         )}
+        {od?.kind === 'tacit' && (
+          <p className="small">
+            {bank.name} pays what the account can’t without an arrangement (a descubierto), at {pct(od.rate)} a year on what’s overdrawn, and a commission of {pct(od.commission.share)} of the month’s deepest point, at least {formatMoney(inSaveMoney(sim, od.commission.min, bank.currency), cur)}.
+            {od.cap ? ` The two together may not cost more than ${pct(od.cap.rate)} a year on what was overdrawn day by day; the law’s cap (${od.cap.source}).` : ''}
+            {' '}It covers up to about {money(room)}, SLATE’s estimate: the bank publishes no limit.
+          </p>
+        )}
+        {od?.kind === 'unarranged' && (
+          <p className="small">
+            {bank.name} arranges no overdraft on this account, but pays what it can’t{od.rate !== undefined ? `, at ${pct(od.rate)} a year` : ''}
+            {od.monthlyFee !== undefined ? `, and charges ${formatMoney(inSaveMoney(sim, od.monthlyFee, bank.currency), cur)} for a month it’s more than ${formatMoney(inSaveMoney(sim, od.graceUpTo ?? 0, bank.currency), cur, { cents: false })} overdrawn${od.freeUnder !== undefined ? `, none under ${od.freeUnder}` : ''}` : ''}.
+            {od.rate === undefined ? ' The bank charges interest too, at a rate it doesn’t publish, so none is charged here.' : ''}
+            {' '}It covers up to about {money(room)}, SLATE’s estimate.
+          </p>
+        )}
         {od?.kind === 'secured' && (
           <p className="small">
             Your general account lends against your time deposits: {pct(od.share)} of them up to {formatMoney(inSaveMoney(sim, od.max, bank.currency), cur, { cents: false })}, at their rate plus {pct(od.over)}. Just now that’s {money(room)}.
@@ -78,7 +93,9 @@ export function BankLending({ bank }: { bank: Bank }) {
               {od.rateTo !== undefined ? ` The bank prices it by your record, ${pct(od.rate)} to ${pct(od.rateTo)}.` : (current?.overdraftLimit ?? 0) > 0 ? '' : ` ${pct(od.rate)} a year on what’s used.`}
               {od.buffer !== undefined ? ` The first ${formatMoney(inSaveMoney(sim, od.buffer, bank.currency), cur, { cents: false })} is free.` : ''}
               {od.monthlyFee !== undefined ? ` ${formatMoney(inSaveMoney(sim, od.monthlyFee, bank.currency), cur)} a month while it’s arranged.` : ''}
+              {od.setupFee !== undefined ? ` ${formatMoney(inSaveMoney(sim, od.setupFee, bank.currency), cur)} to set one up.` : ''}
               {od.yearlyFee !== undefined ? ` ${formatMoney(inSaveMoney(sim, od.yearlyFee, bank.currency), cur)} a year to have one.` : ''}
+              {od.beyond ? ` Past the limit the bank still pays${od.beyond.rate !== undefined ? `, at ${pct(od.beyond.rate)} a year on the part beyond it` : ''}${od.beyond.fee !== undefined ? `, for ${formatMoney(inSaveMoney(sim, od.beyond.fee, bank.currency), cur)} an operation${od.beyond.maxPerMonth !== undefined ? `, at most ${od.beyond.maxPerMonth} a month` : ''}` : ''}${od.beyond.monthlyFee !== undefined ? `, and ${formatMoney(inSaveMoney(sim, od.beyond.monthlyFee, bank.currency), cur)} for a month it’s more than ${formatMoney(inSaveMoney(sim, od.beyond.graceUpTo ?? 0, bank.currency), cur, { cents: false })} past it` : ''}.` : ''}
             </p>
             {'refused' in offer
               ? <p className="small muted" style={{ margin: 0 }}>{offer.refused}</p>

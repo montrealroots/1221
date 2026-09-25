@@ -9,12 +9,13 @@
  * its source; a bank or a figure the research couldn't find isn't here, and
  * `banks-world.ts` keeps that bank's plain account with no fee and no rate.
  *
- * Fees are in the currency's hundredths a month, and a condition that waives
- * a fee is kept in its note and not modeled, since the research gave it as
- * words rather than a rule.
+ * Fees are in the currency's hundredths a month. A fee the research gave with
+ * a condition that waives it is `statedFee`, and is charged with its waiver
+ * as a rule from `banks-world-fees.ts`; until 2026-09-25 it was kept in its
+ * note and not charged.
  */
 
-export interface SheetProduct { name: string; source: string; monthlyFee?: number; rate?: number; note?: string }
+export interface SheetProduct { name: string; source: string; monthlyFee?: number; statedFee?: number; rate?: number; note?: string }
 export interface Sheet {
   policy?: { called: string; rate: number; since?: string; source: string };
   interestTax?: { rate: number; note: string; source: string };
@@ -555,7 +556,8 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Chequing",
           "source": "https://www.butterfieldgroup.com/sites/butterfield-corp/files/2025-12/bermuda-retail-schedule-of-charges-jan-2026.pdf",
-          "note": "BMD 10 monthly maintenance + BMD 3 monthly compliance, waived for seniors (a fee of 13 a month where not waived; the waiver isn't modeled, so it isn't charged)"
+          "statedFee": 1300,
+          "note": "BMD 10 monthly maintenance + BMD 3 monthly compliance, waived for seniors"
         },
         "savings": {
           "name": "Strata",
@@ -581,7 +583,8 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Personal chequing account",
           "source": "https://clarienbank.com/fees/",
-          "note": "$12 monthly maintenance plus $3 monthly compliance fee; seniors exempt. (a fee of 15 a month where not waived; the waiver isn't modeled, so it isn't charged)"
+          "statedFee": 1500,
+          "note": "$12 monthly maintenance plus $3 monthly compliance fee; seniors exempt."
         }
       }
     }
@@ -622,7 +625,8 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Personal current account (USD)",
           "source": "https://www.mcbbonaire.com/personal/support-services/branch-services",
-          "note": "US$1.50 monthly administration fee; Resident Pension (65+) and Student accounts exempt. (a fee of 1.5 a month where not waived; the waiver isn't modeled, so it isn't charged)"
+          "statedFee": 150,
+          "note": "US$1.50 monthly administration fee; Resident Pension (65+) and Student accounts exempt."
         },
         "savings": {
           "name": "Personal savings account (USD)",
@@ -639,7 +643,8 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Standard Paket račun",
           "source": "https://www.unicredit.ba/ba/stanovnistvo/proizvodi_i_usluge/paketi.html",
-          "note": "BAM 5.99/month; waived for students (a fee of 5.99 a month where not waived; the waiver isn't modeled, so it isn't charged)"
+          "statedFee": 599,
+          "note": "BAM 5.99/month; waived for students"
         }
       },
       "Raiffeisen Bank BiH": {
@@ -748,7 +753,8 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "План „Плюс“",
           "source": "https://www.unicreditbulbank.bg/bg/individualni-klienti/bankirane/bankovi-smetki/plan-plus-za-tvoiata-zaplata/",
-          "note": "EUR 2.84/month, free with regular income into the account (a fee of 2.84 a month where not waived; the waiver isn't modeled, so it isn't charged)"
+          "statedFee": 284,
+          "note": "EUR 2.84/month, free with regular income into the account"
         }
       },
       "DSK Bank": {
@@ -778,7 +784,8 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Compte courant simple",
           "source": "https://burkina.coris.bank/wp-content/uploads/2022/09/Conditions-de-banque.pdf",
-          "note": "XOF 1,500/month; XOF 500 for state employees (2022 conditions) (a fee of 1500 a month where not waived; the waiver isn't modeled, so it isn't charged)"
+          "statedFee": 150000,
+          "note": "XOF 1,500/month; XOF 500 for state employees (2022 conditions)"
         },
         "savings": {
           "name": "Epargne Coris",
@@ -857,7 +864,8 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Chequing",
           "source": "https://www.butterfieldgroup.com/sites/butterfield-corp/files/footer/Cayman/cayman-retail-schedule-of-charges-jan-2026.pdf",
-          "note": "CI$6 monthly maintenance, waived if average daily balance maintained; a monthly compliance fee also applies (a fee of 6 a month where not waived; the waiver isn't modeled, so it isn't charged)"
+          "statedFee": 600,
+          "note": "CI$6 monthly maintenance, waived if average daily balance maintained; a monthly compliance fee also applies"
         },
         "savings": {
           "name": "Regular Savings",
@@ -1153,7 +1161,8 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Current Account",
           "source": "https://www.mcb-bank.com/personal/support-services/personal-and-non-personal-account-administration-fees",
-          "note": "XCG 5.30 monthly administration fee; 65+ pension and student accounts exempt. (a fee of 5.3 a month where not waived; the waiver isn't modeled, so it isn't charged)"
+          "statedFee": 530,
+          "note": "XCG 5.30 monthly administration fee; 65+ pension and student accounts exempt."
         },
         "savings": {
           "name": "Savings Account",
@@ -1207,7 +1216,8 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Plus účet",
           "source": "https://www.usetreno.cz/sporici-ucty/",
-          "note": "CZK 100 per month, waived with at least 4 card payments a month. (a fee of 100 a month where not waived; the waiver isn't modeled, so it isn't charged)"
+          "statedFee": 10000,
+          "note": "CZK 100 per month, waived with at least 4 card payments a month."
         },
         "savings": {
           "name": "Spořicí účet",
@@ -1889,7 +1899,8 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Pacific Express",
           "source": "https://bankofguam.com/personal/spend/personal-checking",
-          "note": "US$5 maintenance fee waived with e-Statements and an electronic monthly deposit; waived for customers 55+. (a fee of 5 a month where not waived; the waiver isn't modeled, so it isn't charged)"
+          "statedFee": 500,
+          "note": "US$5 maintenance fee waived with e-Statements and an electronic monthly deposit; waived for customers 55+."
         },
         "savings": {
           "name": "True Savings Plus",
@@ -2097,7 +2108,8 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "OTP Smart számlacsomag",
           "source": "https://www.otpbank.hu/static/portal/sw/file/OTP_Smart_H_20251118_v2.pdf",
-          "note": "Normal fee with e-statement (HUF 1,359 with paper); free when at least the net minimum wage (HUF 214,662 in 2026) arrives monthly from another bank. Terms effective 2025-11-18. (a fee of 1082 a month where not waived; the waiver isn't modeled, so it isn't charged)"
+          "statedFee": 108200,
+          "note": "Normal fee with e-statement (HUF 1,359 with paper); free when at least the net minimum wage (HUF 214,662 in 2026) arrives monthly from another bank. Terms effective 2025-11-18."
         },
         "savings": {
           "name": "Smart Takarékszámla",
@@ -2480,7 +2492,8 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Current account",
           "source": "https://www.swedbank.lv/private/home/pricelist/accounts",
-          "note": "EUR 2.00/month maintenance from 1 June 2026 for many customers; free for some (exemption conditions not verified). (a fee of 2 a month where not waived; the waiver isn't modeled, so it isn't charged)"
+          "statedFee": 200,
+          "note": "EUR 2.00/month maintenance from 1 June 2026 for many customers; free for some (exemption conditions not verified)."
         },
         "savings": {
           "name": "Krājrīks",
@@ -2597,7 +2610,8 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Basic service plan",
           "source": "https://www.swedbank.lt/private/d2d/accounts/pricingAgreement?language=ENG",
-          "note": "EUR 1.10 for salary receivers; Standard plan EUR 2.00, Active EUR 4.00; free for Youth Programme (a fee of 1.7 a month where not waived; the waiver isn't modeled, so it isn't charged)"
+          "statedFee": 170,
+          "note": "EUR 1.10 for salary receivers; Standard plan EUR 2.00, Active EUR 4.00; free for Youth Programme"
         },
         "savings": {
           "name": "Easy Saver",
@@ -2869,7 +2883,8 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Pacific Express",
           "source": "https://bankofguam.com/personal/spend/personal-checking",
-          "note": "Waived with e-Statements and a monthly electronic deposit (a fee of 5 a month where not waived; the waiver isn't modeled, so it isn't charged)"
+          "statedFee": 500,
+          "note": "Waived with e-Statements and a monthly electronic deposit"
         },
         "savings": {
           "name": "True Savings Plus",
@@ -2980,7 +2995,8 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Pacific Express",
           "source": "https://bankofguam.com/personal/spend/personal-checking",
-          "note": "Waived with e-Statements and a monthly electronic deposit; opened in branch outside Guam/CNMI (a fee of 5 a month where not waived; the waiver isn't modeled, so it isn't charged)"
+          "statedFee": 500,
+          "note": "Waived with e-Statements and a monthly electronic deposit; opened in branch outside Guam/CNMI"
         },
         "savings": {
           "name": "True Savings Plus",
@@ -3108,7 +3124,8 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "e-pack",
           "source": "https://www.attijariwafabank.com/fr/profil/particulier/ouvrir-un-compte-bancaire-en-ligne",
-          "note": "MAD 5 TTC/month promotional rate, first 6 months free for new online customers (a fee of 5 a month where not waived; the waiver isn't modeled, so it isn't charged)"
+          "statedFee": 500,
+          "note": "MAD 5 TTC/month promotional rate, first 6 months free for new online customers"
         },
         "savings": {
           "name": "Compte sur carnet",
@@ -3336,7 +3353,8 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Everyday Account Smart Access",
           "source": "https://www.commbank.com.au/banking/everyday-account-smart-access/rates-fees.html",
-          "note": "Waived if under 30 or with AUD 2,000+ deposited a month (a fee of 4 a month where not waived; the waiver isn't modeled, so it isn't charged)"
+          "statedFee": 400,
+          "note": "Waived if under 30 or with AUD 2,000+ deposited a month"
         },
         "savings": {
           "name": "NetBank Saver",
@@ -3374,7 +3392,8 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Pacific Express",
           "source": "https://bankofguam.com/personal/spend/personal-checking",
-          "note": "Waived with e-Statements and a monthly electronic deposit (a fee of 5 a month where not waived; the waiver isn't modeled, so it isn't charged)"
+          "statedFee": 500,
+          "note": "Waived with e-Statements and a monthly electronic deposit"
         },
         "savings": {
           "name": "True Savings Plus",
@@ -3470,7 +3489,8 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Pacific Express",
           "source": "https://bankofguam.com/personal/spend/personal-checking",
-          "note": "Waived with e-Statements and a monthly electronic deposit; opened in branch outside Guam/CNMI (a fee of 5 a month where not waived; the waiver isn't modeled, so it isn't charged)"
+          "statedFee": 500,
+          "note": "Waived with e-Statements and a monthly electronic deposit; opened in branch outside Guam/CNMI"
         },
         "savings": {
           "name": "True Savings Plus",
@@ -3706,7 +3726,8 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Mi Cuenta",
           "source": "https://www.popular.com/assets/pdf/caracteristicas-acceso-popular-es.pdf",
-          "note": "US$2.50 monthly service charge waived with direct deposit, a US$500 combined average balance, or a holder aged 25 or under. (a fee of 2.5 a month where not waived; the waiver isn't modeled, so it isn't charged)"
+          "statedFee": 250,
+          "note": "US$2.50 monthly service charge waived with direct deposit, a US$500 combined average balance, or a holder aged 25 or under."
         },
         "savings": {
           "name": "Acceso Popular savings section",
@@ -4275,7 +4296,8 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Paket Osnovni",
           "source": "https://www.nlb.si/content/dam/nlb/pdf-files/osebne-finance/racuni-paketi/Izvlecek-iz-tarife-osebni-racun-STP.pdf.coredownload.pdf",
-          "note": "Tariff extract valid from 1 Aug 2026; Paket Digitalni is €0.99 and free for adults up to 27; under-30s get 50% off Paket Osnovni. (a fee of 6.99 a month where not waived; the waiver isn't modeled, so it isn't charged)"
+          "statedFee": 699,
+          "note": "Tariff extract valid from 1 Aug 2026; Paket Digitalni is €0.99 and free for adults up to 27; under-30s get 50% off Paket Osnovni."
         },
         "savings": {
           "name": "NLB Varčevalni račun",
@@ -4664,7 +4686,8 @@ export const SHEETS: Readonly<Record<string, Sheet>> = {
         "current": {
           "name": "Compte chèques (particulier)",
           "source": "https://www.orabank.net/sites/default/files/2026-02/Conditions%20Banque%20Orabank%20Togo%202026.pdf",
-          "note": "XOF 1,000 per month plus 10% TAF (XOF 1,100 including tax); Conditions générales de banque 2026 (a fee of 1000 a month where not waived; the waiver isn't modeled, so it isn't charged)"
+          "statedFee": 100000,
+          "note": "XOF 1,000 per month plus 10% TAF (XOF 1,100 including tax); Conditions générales de banque 2026"
         },
         "savings": {
           "name": "Compte d'épargne ordinaire",

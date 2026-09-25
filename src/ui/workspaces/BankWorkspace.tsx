@@ -90,16 +90,18 @@ export function BankWorkspace() {
                 {product?.monthlyFee ? (
                   <p className="small" style={{ margin: 0 }}>
                     {formatMoney(inSaveMoney(sim, product.monthlyFee, bank.currency), cur)} a month
-                    {waiverWords(product.waiver, (c) => money(inSaveMoney(sim, c, bank.currency)))}
+                    {waiverWords(product, (c) => money(inSaveMoney(sim, c, bank.currency)))}
                     {'. '}
                     {fee.fee === 0
                       ? `This month is waived so far${fee.waivedBy === 'deposits' ? `: ${money(paidIn)} paid in` : ''}.`
-                      : `This month’s is due ${formatDate(monthEnd, sim.zone)} unless that changes.`}
+                      : fee.waivedBy
+                        ? `This month’s is lowered to ${formatMoney(fee.fee, cur)} so far, due ${formatDate(monthEnd, sim.zone)}.`
+                        : `This month’s is due ${formatDate(monthEnd, sim.zone)} unless that changes.`}
                   </p>
                 ) : (
                   <p className="small" style={{ margin: 0 }}>No monthly fee.</p>
                 )}
-                {product && <p className="xs dim" style={{ margin: 0 }}>{product.estimate ? 'Estimate' : 'Source'}: {product.source}, {product.asOf}.</p>}
+                {product && <p className="xs dim" style={{ margin: 0 }}>{product.estimate ? 'Estimate' : 'Source'}: {product.source}, {product.asOf}.{CONFIDENCE[bank.confidence ?? 'H']}</p>}
                 {account.kind === 'savings' && (
                   <div>
                     <Gated feature="bank.close_savings" className="btn btn-sm btn-ghost" onClick={() => run('bank.close_savings', { accountId: account.id })}>
@@ -160,6 +162,13 @@ export function BankWorkspace() {
   );
 }
 
+/** How sure the research was of a bank outside the thirteen, where it wasn't sure. */
+const CONFIDENCE: Record<'H' | 'M' | 'L', string> = {
+  H: '',
+  M: ' The research was only partly sure of this bank’s figures.',
+  L: ' The research wasn’t sure of this bank’s figures.',
+};
+
 /** Percent, to as many places as the figure has. */
 const pct = (rate: number) => `${Number((rate * 100).toFixed(3))}%`;
 const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -217,7 +226,10 @@ function OtherCharges({ bank }: { bank: import('@/engine/content/banks').Bank })
   if (bank.returned) lines.push(`A payment the bank returns unpaid costs ${money(bank.returned.fee)}. Source: ${bank.returned.source}.`);
   if (bank.dormant) lines.push(`An account unused for ${bank.dormant.afterYears} years costs ${money(bank.dormant.yearly)} a year${bank.dormant.belowBalance !== undefined ? ` while it holds under ${money(bank.dormant.belowBalance)}` : ''}. Source: ${bank.dormant.source}.`);
   if (bank.quietMonth) lines.push(`A month with fewer than ${bank.quietMonth.minTransactions} transactions costs ${money(bank.quietMonth.fee)}${bank.quietMonth.unlessWages ? ', unless wages are paid in' : ''}. Source: ${bank.quietMonth.source}.`);
-  if (refund?.refund) lines.push(refund.note);
+  if (refund?.refund) {
+    const day = `${refund.refund.day} ${MONTH_NAMES[refund.refund.month - 1]}`;
+    lines.push(`${refund.note} It is paid here on ${day}${refund.refund.estimateDate ? ', which is SLATE’s estimate of the day' : ''}.`);
+  }
   if (lines.length === 0) return null;
   return (
     <Panel title="Other Charges">
@@ -228,9 +240,16 @@ function OtherCharges({ bank }: { bank: import('@/engine/content/banks').Bank })
   );
 }
 
-/** How a fee is waived, the way the bank puts its conditions, each one an "or". */
-function waiverWords(waiver: Product['waiver'], money: (cents: number) => string): string {
-  if (!waiver) return '';
+/** How a fee is waived, the way the bank puts its conditions, each one an "or", and what lowers it. */
+function waiverWords(product: Product, money: (cents: number) => string): string {
+  const waiver = product.waiver;
+  const cut = product.reduced;
+  const lower = !cut ? '' : `; ${money(cut.to)} with ${[
+    cut.depositsAtLeast !== undefined ? `${money(cut.depositsAtLeast)} of wages paid in` : '',
+    cut.averageAtLeast !== undefined ? `an average of ${money(cut.averageAtLeast)} over the month` : '',
+    cut.ageBelow !== undefined ? `being under ${cut.ageBelow}` : '',
+  ].filter(Boolean).join(', or ')}`;
+  if (!waiver) return lower;
   const ways: string[] = [];
   if (waiver.depositsAtLeast !== undefined) {
     const also = waiver.depositsAlso;
@@ -243,6 +262,9 @@ function waiverWords(waiver: Product['waiver'], money: (cents: number) => string
   if (waiver.averageAtLeast !== undefined) ways.push(`an average of ${money(waiver.averageAtLeast)} over the month`);
   if (waiver.linkedAverageAtLeast !== undefined) ways.push(`an average of ${money(waiver.linkedAverageAtLeast)} across your accounts at the bank`);
   if (waiver.ageBelow !== undefined) ways.push(`being under ${waiver.ageBelow}`);
-  if (ways.length === 0) return '';
-  return `, ${waiver.reducedTo !== undefined ? `${money(waiver.reducedTo)} with` : 'waived with'} ${ways.join(', or ')}`;
+  if (waiver.ageAtLeast !== undefined) ways.push(`being ${waiver.ageAtLeast} or over`);
+  if (waiver.purchasesAtLeast !== undefined) ways.push(`${waiver.purchasesAtLeast} card payments in the month`);
+  if (waiver.firstMonths !== undefined) ways.push(`the first ${waiver.firstMonths} months after opening`);
+  if (ways.length === 0) return lower;
+  return `, waived with ${ways.join(', or ')}${lower}`;
 }

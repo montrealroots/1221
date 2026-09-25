@@ -14,6 +14,24 @@
 
 import type { Money } from '../core/money';
 
+/**
+ * What a bank does when an account goes below zero without an arrangement,
+ * or past the one it has: it pays, and charges for it. A fee an item that
+ * took it there (capped by the month), a higher rate on what's past the
+ * limit (Germany's geduldete Überziehung), or a fee for a month in which the
+ * account sat past it by more than a margin at so many midnights (New
+ * Zealand's unarranged overdraft fee), not charged under an age.
+ */
+export interface Unarranged {
+  fee?: Money;
+  maxPerMonth?: number;
+  rate?: number;
+  monthlyFee?: Money;
+  graceUpTo?: Money;
+  afterDays?: number;
+  freeUnder?: number;
+}
+
 export type Overdraft =
   /**
    * An overdraft arranged in advance, up to a limit: interest on what's
@@ -21,9 +39,9 @@ export type Overdraft =
    * the bank charges for having one. A buffer is used without interest.
    */
   | {
-    kind: 'arranged'; rate: number; rateTo?: number; monthlyFee?: Money; yearlyFee?: Money; buffer?: Money; minLimit?: Money; maxLimit?: Money;
-    /** A payment past the limit, which the bank still pays, for a fee each, capped by the month (France's commission d'intervention). */
-    beyond?: { fee: Money; maxPerMonth?: number };
+    kind: 'arranged'; rate: number; rateTo?: number; monthlyFee?: Money; yearlyFee?: Money; setupFee?: Money; buffer?: Money; minLimit?: Money; maxLimit?: Money;
+    /** Past the limit, which the bank still pays (France's commission d'intervention, Germany's higher rate). */
+    beyond?: Unarranged;
     source: string;
   }
   /**
@@ -38,7 +56,14 @@ export type Overdraft =
    * commission on the most the account was overdrawn in the month, a share
    * of it with a floor.
    */
-  | { kind: 'tacit'; rate: number; commission: { share: number; min: Money }; source: string }
+  | {
+    kind: 'tacit'; rate: number; commission: { share: number; min: Money };
+    /** The most a month's interest and commission together may cost, as a yearly rate on what was overdrawn day by day. */
+    cap?: { rate: number; source: string };
+    source: string;
+  }
+  /** No arrangement offered on the account SLATE opens, but the bank pays and charges (BNZ). */
+  | ({ kind: 'unarranged'; source: string } & Unarranged)
   /** Japan's general account: a loan against time deposits, a share of them up to a cap, at their rate plus a margin. */
   | { kind: 'secured'; share: number; max: Money; over: number; source: string };
 
@@ -153,7 +178,7 @@ export const LENDING: Readonly<Record<string, Lending>> = {
     term: { rate: 0.0215, months: 12, called: 'Fixed Term Deposit', source: 'Bank of Ireland 12-month fixed: 2.15% AER' },
   },
   'ie-ptsb': {
-    overdraft: { kind: 'arranged', rate: 0.15, yearlyFee: 25_00, source: 'ptsb.ie: 15% variable, €25 to set up and €25 a year' },
+    overdraft: { kind: 'arranged', rate: 0.15, setupFee: 25_00, yearlyFee: 25_00, source: 'ptsb.ie: 15% variable, €25 to set up and €25 a year' },
     loan: { from: 0.062, to: 0.088, source: 'PTSB: 6.20% to 8.80% APR' },
     term: { rate: 0.02, months: 12, called: 'Fixed Term Deposit', source: 'PTSB 12-month fixed: 2.00%' },
   },
@@ -191,17 +216,17 @@ export const LENDING: Readonly<Record<string, Lending>> = {
     loan: FR_LOAN, term: FR_TERM,
   },
   'fr-la-banque-postale': {
-    overdraft: { kind: 'arranged', rate: 0.16, beyond: { fee: 8_00, maxPerMonth: 10 }, source: 'moneyvox.fr: an authorized overdraft at 16.00% TAEG, and €8 an operation past it, €80 a month at most' },
+    overdraft: { kind: 'arranged', rate: 0.16, beyond: { fee: 8_00, maxPerMonth: 10, rate: 0.17 }, source: 'moneyvox.fr: an authorized overdraft at 16.00% TAEG, an unauthorized one at 17%, and €8 an operation past it, €80 a month at most' },
     loan: FR_LOAN, term: FR_TERM,
   },
   // --- Germany
   'de-deutsche-bank': {
-    overdraft: { kind: 'arranged', rate: 0.116, source: 'deutsche-bank.de: the Dispo at 11.60%' },
+    overdraft: { kind: 'arranged', rate: 0.116, beyond: { rate: 0.1305 }, source: 'deutsche-bank.de: the Dispo at 11.60%, and 13.05% on an overdraft beyond it' },
     loan: DE_LOAN,
     term: { rate: 0.023, months: 12, called: 'FestzinsSparen', source: 'Deutsche Bank FestzinsSparen: 2.30%' },
   },
-  'de-commerzbank': { overdraft: { kind: 'arranged', rate: 0.119, source: 'commerzbank.de: the Dispo at 11.90%' }, loan: DE_LOAN, term: DE_TERM },
-  'de-postbank': { overdraft: { kind: 'arranged', rate: 0.1104, source: 'postbank.de: the Dispo at 11.04%' }, loan: DE_LOAN, term: DE_TERM },
+  'de-commerzbank': { overdraft: { kind: 'arranged', rate: 0.119, beyond: { rate: 0.144 }, source: 'commerzbank.de: the Dispo at 11.90%, and 14.40% beyond it' }, loan: DE_LOAN, term: DE_TERM },
+  'de-postbank': { overdraft: { kind: 'arranged', rate: 0.1104, beyond: { rate: 0.1285 }, source: 'postbank.de: the Dispo at 11.04%, and 12.85% beyond it' }, loan: DE_LOAN, term: DE_TERM },
   'de-ing': {
     overdraft: { kind: 'arranged', rate: 0.0914, source: 'ing.de: the Dispo at 9.14%' },
     loan: { from: 0.0369, to: 0.1099, source: 'ing.de Ratenkredit: 3.69% to 10.99% effective' },
@@ -210,11 +235,11 @@ export const LENDING: Readonly<Record<string, Lending>> = {
   'de-berliner-sparkasse': { overdraft: { kind: 'arranged', rate: 0.1311, source: 'berliner-sparkasse.de: the Dispo at 13.11%' }, loan: DE_LOAN, term: DE_TERM },
   // --- Spain
   'es-santander': {
-    overdraft: { kind: 'tacit', rate: 0.0783, commission: { share: 0.05, min: 15_00 }, source: 'bancosantander.es: a descubierto at 7.83% TIN, and a 5% commission on the most overdrawn, at least €15' },
+    overdraft: { kind: 'tacit', rate: 0.0783, commission: { share: 0.05, min: 15_00 }, cap: { rate: 0.08125, source: 'Ley 16/2011 de contratos de crédito al consumo, art. 20.4: a tacit overdraft may not cost more than two and a half times the legal rate of interest (3.25% in 2026), counting its commission' }, source: 'bancosantander.es: a descubierto at 7.83% TIN, and a 5% commission on the most overdrawn, at least €15' },
     loan: ES_LOAN, term: ES_TERM,
   },
   'es-bbva': {
-    overdraft: { kind: 'tacit', rate: 0.0725, commission: { share: 0.045, min: 15_00 }, source: 'bbva.es via comparison sites: a descubierto at 7.25% TIN, and a 4.5% commission, at least €15' },
+    overdraft: { kind: 'tacit', rate: 0.0725, commission: { share: 0.045, min: 15_00 }, cap: { rate: 0.08125, source: 'Ley 16/2011 de contratos de crédito al consumo, art. 20.4: a tacit overdraft may not cost more than two and a half times the legal rate of interest (3.25% in 2026), counting its commission' }, source: 'bbva.es via comparison sites: a descubierto at 7.25% TIN, and a 4.5% commission, at least €15' },
     loan: ES_LOAN, term: ES_TERM,
   },
   'es-caixabank': { loan: ES_LOAN, term: ES_TERM },
@@ -278,11 +303,14 @@ export const LENDING: Readonly<Record<string, Lending>> = {
   },
   // --- New Zealand
   'nz-anz': {
-    overdraft: { kind: 'arranged', rate: 0.189, monthlyFee: 3_00, source: 'anz.co.nz fees, 1 September 2026: 18.90%, $3 a month' },
+    overdraft: { kind: 'arranged', rate: 0.189, monthlyFee: 3_00, beyond: { rate: 0.199, monthlyFee: 3_00, graceUpTo: 10_00, afterDays: 2 }, source: 'anz.co.nz fees, 1 September 2026: 18.90%, $3 a month; past the limit or unarranged, 19.90% (the Consumer Overdraft Base Rate of 12.90% plus 7%), and a $3 unarranged overdraft fee for a month it is more than $10 over for more than a day (help.anz.co.nz)' },
     term: { rate: 0.04, months: 12, called: 'Term Deposit', source: 'interest.co.nz, 25 September 2026: 4.00%' },
   },
   'nz-asb': { term: { rate: 0.04, months: 12, called: 'Term Deposit', source: 'interest.co.nz, 25 September 2026: 4.00%' } },
-  'nz-bnz': { term: { rate: 0.0405, months: 12, called: 'Term Deposit', source: 'interest.co.nz, 25 September 2026: 4.05%' } },
+  'nz-bnz': {
+    overdraft: { kind: 'unarranged', monthlyFee: 2_00, graceUpTo: 20_00, afterDays: 1, freeUnder: 19, source: 'BNZ Personal account, service, and facility fees, 31 March 2026: on YouMoney an unarranged overdraft fee of $2 a Bank Month when more than $20 in debit, none under 19; interest at the Personal Overdraft Base Rate plus 10%, a base rate BNZ doesn’t publish' },
+    term: { rate: 0.0405, months: 12, called: 'Term Deposit', source: 'interest.co.nz, 25 September 2026: 4.05%' },
+  },
   'nz-westpac': { term: { rate: 0.04, months: 12, called: 'Term Deposit', source: 'interest.co.nz, 25 September 2026: 4.00%' } },
   'nz-kiwibank': { term: { rate: 0.0405, months: 12, called: 'Term Deposit', source: 'interest.co.nz, 25 September 2026: 4.05%' } },
 };

@@ -83,6 +83,10 @@ export interface Account {
   itemsMonthCount?: number;
   /** The most the account was overdrawn this month, for Spain's commission. */
   odPeak?: Money;
+  /** The month's overdrawn balances, summed day by day, for Spain's legal cap on what an overdraft may cost. */
+  odDaySum?: Money;
+  /** Midnights this month the account sat past its limit by more than the bank's margin, for New Zealand's unarranged overdraft fee. */
+  odBeyondDays?: number;
   /** When a returned payment's fee, the debit card's yearly fee and a dormant account's fee were last charged. */
   returnedAt?: Instant;
   cardFeeAt?: Instant;

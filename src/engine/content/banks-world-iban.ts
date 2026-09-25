@@ -9,446 +9,341 @@
  * a number to the structure with the bank's code in place. A national check
  * inside a BBAN was built only for Belgium at first; since 2026-09-25
  * `core/banknumbers.ts` `withNationalCheck` builds it for every country here
- * whose rule is published, and the others are described here
- * and drawn, so the IBAN's own check always holds and the national one may
- * not.
+ * whose rule is published, and draws the rest, so the IBAN's own check
+ * always holds and the national one may not. The research's description of
+ * each national check, and the code field's length, were written here and
+ * read by nothing; they stay in `probe/iban-research-*.jsonl` and left this
+ * file on 2026-09-25.
  */
 
-export const IBAN_FORMATS: Readonly<Record<string, { bban: string; offset: number; length: number; nationalCheck?: string }>> = {
+export const IBAN_FORMATS: Readonly<Record<string, { bban: string; offset: number }>> = {
   "FI": {
     "bban": "3!n11!n",
-    "offset": 0,
-    "length": 3,
-    "nationalCheck": "Luhn (mod 10) check digit at BBAN position 14 computed over BBAN digits 1-13 (weights 2,1,2,1... from the left, digit sums of products, check = (10 - sum mod 10) mod 10)"
+    "offset": 0
   },
   "AL": {
     "bban": "8!n16!c",
-    "offset": 0,
-    "length": 3,
-    "nationalCheck": "BBAN position 8 is a check digit over positions 1-7 (bank 3 + branch 4): weights 9,7,3,1,9,7,3, check = (10 - sum mod 10) mod 10 (verified on the Bank of Albania example 2121100-9)"
+    "offset": 0
   },
   "AD": {
     "bban": "4!n4!n12!c",
-    "offset": 0,
-    "length": 4
+    "offset": 0
   },
   "AT": {
     "bban": "5!n11!n",
-    "offset": 0,
-    "length": 5
+    "offset": 0
   },
   "AZ": {
     "bban": "4!a20!c",
-    "offset": 0,
-    "length": 4
+    "offset": 0
   },
   "BH": {
     "bban": "4!a14!c",
-    "offset": 0,
-    "length": 4
+    "offset": 0
   },
   "BY": {
     "bban": "4!c4!n16!c",
-    "offset": 0,
-    "length": 4
+    "offset": 0
   },
   "BE": {
     "bban": "3!n7!n2!n",
-    "offset": 0,
-    "length": 3,
-    "nationalCheck": "last 2 digits = first 10 digits mod 97 (97 if the remainder is 0)"
+    "offset": 0
   },
   "BA": {
     "bban": "3!n3!n8!n2!n",
-    "offset": 0,
-    "length": 3,
-    "nationalCheck": "last 2 digits make the whole 16-digit BBAN ≡ 1 mod 97 (check = 98 - (first 14 digits × 100 mod 97)), so every BA IBAN has check digits 39"
+    "offset": 0
   },
   "VG": {
     "bban": "4!a16!n",
-    "offset": 0,
-    "length": 4
+    "offset": 0
   },
   "BG": {
     "bban": "4!a4!n2!n8!c",
-    "offset": 0,
-    "length": 4
+    "offset": 0
   },
   "BI": {
     "bban": "5!n5!n11!n2!n",
-    "offset": 0,
-    "length": 5
+    "offset": 0
   },
   "CR": {
     "bban": "4!n14!n",
-    "offset": 0,
-    "length": 4
+    "offset": 0
   },
   "HR": {
     "bban": "7!n10!n",
-    "offset": 0,
-    "length": 7,
-    "nationalCheck": "ISO 7064 MOD 11,10 twice: BBAN digit 7 checks digits 1-6 of the bank code, and BBAN digit 17 checks account digits 8-16"
+    "offset": 0
   },
   "CY": {
     "bban": "3!n5!n16!c",
-    "offset": 0,
-    "length": 3
+    "offset": 0
   },
   "CZ": {
     "bban": "4!n6!n10!n",
-    "offset": 0,
-    "length": 4,
-    "nationalCheck": "two mod-11 checks: the 6-digit prefix (BBAN 5-10) with weights 10,5,8,4,2,1 and the 10-digit account number (BBAN 11-20) with weights 6,3,7,9,10,5,8,4,2,1 must each give a weighted sum ≡ 0 mod 11"
+    "offset": 0
   },
   "DK": {
     "bban": "4!n9!n1!n",
-    "offset": 0,
-    "length": 4
+    "offset": 0
   },
   "DJ": {
     "bban": "5!n5!n11!n2!n",
-    "offset": 0,
-    "length": 5
+    "offset": 0
   },
   "DO": {
     "bban": "4!c20!n",
-    "offset": 0,
-    "length": 4
+    "offset": 0
   },
   "EG": {
     "bban": "4!n4!n17!n",
-    "offset": 0,
-    "length": 4
+    "offset": 0
   },
   "SV": {
     "bban": "4!a20!n",
-    "offset": 0,
-    "length": 4
+    "offset": 0
   },
   "EE": {
     "bban": "2!n2!n11!n1!n",
-    "offset": 0,
-    "length": 2,
-    "nationalCheck": "last BBAN digit checks BBAN digits 3-15 with weights 7,3,1 repeating from the right; check = (10 - sum mod 10) mod 10"
+    "offset": 0
   },
   "FK": {
     "bban": "2!a12!n",
-    "offset": 0,
-    "length": 2
+    "offset": 0
   },
   "FO": {
     "bban": "4!n9!n1!n",
-    "offset": 0,
-    "length": 4
+    "offset": 0
   },
   "FR": {
     "bban": "5!n5!n11!c2!n",
-    "offset": 0,
-    "length": 5,
-    "nationalCheck": "last 2 digits are the RIB key: 97 - ((89×bank + 15×branch + 3×account) mod 97), letters in the account converted A/J=1, B/K/S=2, C/L/T=3, D/M/U=4, E/N/V=5, F/O/W=6, G/P/X=7, H/Q/Y=8, I/R/Z=9"
+    "offset": 0
   },
   "GE": {
     "bban": "2!a16!n",
-    "offset": 0,
-    "length": 2
+    "offset": 0
   },
   "GI": {
     "bban": "4!a15!c",
-    "offset": 0,
-    "length": 4
+    "offset": 0
   },
   "GR": {
     "bban": "3!n4!n16!c",
-    "offset": 0,
-    "length": 3
+    "offset": 0
   },
   "GL": {
     "bban": "4!n9!n1!n",
-    "offset": 0,
-    "length": 4
+    "offset": 0
   },
   "GT": {
     "bban": "4!c20!c",
-    "offset": 0,
-    "length": 4
+    "offset": 0
   },
   "GB": {
     "bban": "4!a6!n8!n",
-    "offset": 0,
-    "length": 4
+    "offset": 0
   },
   "HN": {
     "bban": "4!a20!n",
-    "offset": 0,
-    "length": 4
+    "offset": 0
   },
   "HU": {
     "bban": "3!n4!n1!n15!n1!n",
-    "offset": 0,
-    "length": 3,
-    "nationalCheck": "two checks with weights 9,7,3,1 repeating, check = (10 - sum mod 10) mod 10: BBAN digit 8 checks digits 1-7 (bank+branch); BBAN digit 24 checks digits 9-23 (or digit 16 checks 9-15 when the account is 16 digits padded with eight trailing zeros)"
+    "offset": 0
   },
   "IQ": {
     "bban": "4!a3!n12!n",
-    "offset": 0,
-    "length": 4
+    "offset": 0
   },
   "IL": {
     "bban": "3!n3!n13!n",
-    "offset": 0,
-    "length": 3
+    "offset": 0
   },
   "IT": {
     "bban": "1!a5!n5!n12!c",
-    "offset": 1,
-    "length": 5,
-    "nationalCheck": "BBAN position 1 is the CIN letter over the 22 characters that follow (ABI+CAB+account): characters in odd positions (1st,3rd,...) are mapped through the odd table (0/A=1,1/B=0,2/C=5,3/D=7,4/E=9,5/F=13,6/G=15,7/H=17,8/I=19,9/J=21,K=2,L=4,M=18,N=20,O=11,P=3,Q=6,R=8,S=12,T=14,U=16,V=10,W=22,X=25,Y=24,Z=23), even positions take their value (digit 0-9 or A=0..Z=25); CIN = letter (sum mod 26), A=0"
+    "offset": 1
   },
   "JO": {
     "bban": "4!a4!n18!c",
-    "offset": 0,
-    "length": 4
+    "offset": 0
   },
   "KZ": {
     "bban": "3!n13!c",
-    "offset": 0,
-    "length": 3
+    "offset": 0
   },
   "XK": {
     "bban": "4!n10!n2!n",
-    "offset": 0,
-    "length": 2,
-    "nationalCheck": "last 2 digits make the whole 16-digit BBAN ≡ 1 mod 97 (check = 98 - (first 14 digits × 100 mod 97)), so every XK IBAN has check digits 05"
+    "offset": 0
   },
   "KW": {
     "bban": "4!a22!c",
-    "offset": 0,
-    "length": 4
+    "offset": 0
   },
   "LV": {
     "bban": "4!a13!c",
-    "offset": 0,
-    "length": 4
+    "offset": 0
   },
   "LB": {
     "bban": "4!n20!c",
-    "offset": 0,
-    "length": 4
+    "offset": 0
   },
   "LY": {
     "bban": "3!n3!n15!n",
-    "offset": 0,
-    "length": 3
+    "offset": 0
   },
   "LI": {
     "bban": "5!n12!c",
-    "offset": 0,
-    "length": 5
+    "offset": 0
   },
   "LT": {
     "bban": "5!n11!n",
-    "offset": 0,
-    "length": 5
+    "offset": 0
   },
   "LU": {
     "bban": "3!n13!c",
-    "offset": 0,
-    "length": 3
+    "offset": 0
   },
   "MT": {
     "bban": "4!a5!n18!c",
-    "offset": 0,
-    "length": 4
+    "offset": 0
   },
   "MR": {
     "bban": "5!n5!n11!n2!n",
-    "offset": 0,
-    "length": 5,
-    "nationalCheck": "RIB key, same formula as France: last 2 digits = 97 - ((89*bank + 15*branch + 3*account) mod 97) (verified on the SWIFT registry example and a Société Générale Mauritanie example)"
+    "offset": 0
   },
   "MU": {
     "bban": "4!a2!n2!n12!n3!n3!a",
-    "offset": 0,
-    "length": 6
+    "offset": 0
   },
   "MD": {
     "bban": "2!c18!c",
-    "offset": 0,
-    "length": 2
+    "offset": 0
   },
   "MC": {
     "bban": "5!n5!n11!c2!n",
-    "offset": 0,
-    "length": 5,
-    "nationalCheck": "RIB key (clé RIB): last 2 digits = 97 - ((89*bank + 15*branch + 3*account) mod 97), letters in the account first converted A/J=1,B/K/S=2,C/L/T=3,D/M/U=4,E/N/V=5,F/O/W=6,G/P/X=7,H/Q/Y=8,I/R/Z=9"
+    "offset": 0
   },
   "MN": {
     "bban": "4!n12!n",
-    "offset": 0,
-    "length": 4
+    "offset": 0
   },
   "ME": {
     "bban": "3!n13!n2!n",
-    "offset": 0,
-    "length": 3,
-    "nationalCheck": "last 2 digits = 98 - ((the first 16 BBAN digits (bank + account), followed by 00) mod 97), i.e. ISO 7064 MOD 97-10; IBAN check digits are therefore always 25"
+    "offset": 0
   },
   "NI": {
     "bban": "4!a20!n",
-    "offset": 0,
-    "length": 4
+    "offset": 0
   },
   "MK": {
     "bban": "3!n10!c2!n",
-    "offset": 0,
-    "length": 3,
-    "nationalCheck": "last 2 digits = 98 - ((the first 13 BBAN digits (bank + account), followed by 00) mod 97), i.e. ISO 7064 MOD 97-10; IBAN check digits are therefore always 07"
+    "offset": 0
   },
   "NO": {
     "bban": "4!n6!n1!n",
-    "offset": 0,
-    "length": 4,
-    "nationalCheck": "last digit = MOD 11 over the 10 preceding digits (registration number + account), weights 5,4,3,2,7,6,5,4,3,2 from the left; check = 11 - (sum mod 11), 11 becomes 0, 10 means the number is not issued"
+    "offset": 0
   },
   "OM": {
     "bban": "3!n16!c",
-    "offset": 0,
-    "length": 3
+    "offset": 0
   },
   "PK": {
     "bban": "4!a16!c",
-    "offset": 0,
-    "length": 4
+    "offset": 0
   },
   "PS": {
     "bban": "4!a21!c",
-    "offset": 0,
-    "length": 4
+    "offset": 0
   },
   "PL": {
     "bban": "8!n16!n",
-    "offset": 0,
-    "length": 4,
-    "nationalCheck": "SWIFT's bank identifier is the 8-digit sort code at positions 0-7: 4-digit bank number (the code given) + 3-digit branch + 1 check digit; digit 8 = (10 - (digits 1-7 weighted 3,9,7,1,3,9,7, summed) mod 10) mod 10, e.g. PKO BP 1020102 -> 6"
+    "offset": 0
   },
   "PT": {
     "bban": "4!n4!n11!n2!n",
-    "offset": 0,
-    "length": 4,
-    "nationalCheck": "last 2 digits = 98 - ((the first 19 BBAN digits (bank + branch + account), followed by 00) mod 97), i.e. ISO 7064 MOD 97-10 (NIB check digits); IBAN check digits are therefore always 50"
+    "offset": 0
   },
   "QA": {
     "bban": "4!a21!c",
-    "offset": 0,
-    "length": 4
+    "offset": 0
   },
   "RO": {
     "bban": "4!a16!c",
-    "offset": 0,
-    "length": 4
+    "offset": 0
   },
   "LC": {
     "bban": "4!a24!c",
-    "offset": 0,
-    "length": 4
+    "offset": 0
   },
   "SM": {
     "bban": "1!a5!n5!n12!c",
-    "offset": 1,
-    "length": 5,
-    "nationalCheck": "CIN letter at position 0 (Italian scheme) over ABI+CAB+account (22 chars): characters at odd positions (1st, 3rd, ...) map digit d / letter A+d through 1,0,5,7,9,13,15,17,19,21,2,4,18,20,11,3,6,8,12,14,16,10,22,25,24,23; even positions take their value (0-9, A=0..Z=25); CIN = letter A + (sum mod 26)"
+    "offset": 1
   },
   "ST": {
     "bban": "4!n4!n11!n2!n",
-    "offset": 0,
-    "length": 4,
-    "nationalCheck": "Last 2 BBAN digits are national check digits whose algorithm is not published; the SWIFT registry example satisfies ISO 7064 MOD 97-10 over the first 19 digits but a live central-bank IBAN (ST68000100010051845310112) does not, so treat it as unverified"
+    "offset": 0
   },
   "SA": {
     "bban": "2!n18!c",
-    "offset": 0,
-    "length": 2
+    "offset": 0
   },
   "RS": {
     "bban": "3!n13!n2!n",
-    "offset": 0,
-    "length": 3,
-    "nationalCheck": "last 2 digits = 98 - ((the first 16 BBAN digits (bank + account), followed by 00) mod 97), i.e. ISO 7064 MOD 97-10; IBAN check digits are therefore always 35"
+    "offset": 0
   },
   "SC": {
     "bban": "4!a2!n2!n16!n3!a",
-    "offset": 0,
-    "length": 6
+    "offset": 0
   },
   "SK": {
     "bban": "4!n6!n10!n",
-    "offset": 0,
-    "length": 4,
-    "nationalCheck": "Account prefix (BBAN positions 4-9) and account number (positions 10-19) each pass MOD 11: prefix weights 10,5,8,4,2,1, account weights 6,3,7,9,10,5,8,4,2,1; each weighted sum mod 11 = 0"
+    "offset": 0
   },
   "SI": {
     "bban": "5!n8!n2!n",
-    "offset": 0,
-    "length": 5,
-    "nationalCheck": "last 2 digits = 98 - ((the first 13 BBAN digits (bank + account), followed by 00) mod 97), i.e. ISO 7064 MOD 97-10; IBAN check digits are therefore always 56"
+    "offset": 0
   },
   "SO": {
     "bban": "4!n3!n12!n",
-    "offset": 0,
-    "length": 4
+    "offset": 0
   },
   "SD": {
     "bban": "2!n12!n",
-    "offset": 0,
-    "length": 2
+    "offset": 0
   },
   "SE": {
     "bban": "3!n16!n1!n",
-    "offset": 0,
-    "length": 3,
-    "nationalCheck": "Last digit is the domestic account's check digit; the rule depends on the bank's account type (Bankgirot, 'Bank account numbers in Swedish banks'): type-1 accounts (Nordea, SEB) use MOD 11 over the last 3 clearing digits + 7-digit account; Swedbank (clearing 8xxxx) and Handelsbanken use MOD 10 or MOD 11 over the account number only"
+    "offset": 0
   },
   "CH": {
     "bban": "5!n12!c",
-    "offset": 0,
-    "length": 5
+    "offset": 0
   },
   "NL": {
     "bban": "4!a10!n",
-    "offset": 0,
-    "length": 4
+    "offset": 0
   },
   "TL": {
     "bban": "3!n14!n2!n",
-    "offset": 0,
-    "length": 3,
-    "nationalCheck": "last 2 digits = 98 - ((the first 17 BBAN digits (bank + account), followed by 00) mod 97), i.e. ISO 7064 MOD 97-10, per BCTL Circular Letter 7/2014 (matches both published examples); IBAN check digits are therefore always 38"
+    "offset": 0
   },
   "TR": {
     "bban": "5!n1!n16!c",
-    "offset": 0,
-    "length": 5
+    "offset": 0
   },
   "UA": {
     "bban": "6!n19!c",
-    "offset": 0,
-    "length": 6
+    "offset": 0
   },
   "AE": {
     "bban": "3!n16!n",
-    "offset": 0,
-    "length": 3
+    "offset": 0
   },
   "VA": {
     "bban": "3!n15!n",
-    "offset": 0,
-    "length": 3
+    "offset": 0
   },
   "YE": {
     "bban": "4!a4!n18!c",
-    "offset": 0,
-    "length": 4
+    "offset": 0
   }
 };
 

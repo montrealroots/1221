@@ -18,6 +18,23 @@
  *   and interest on it.
  * - **MUFG's general account** lends against time deposits: nine tenths of
  *   them up to ¥2 million, at their rate and half a point more.
+ * - **Past the limit, or with none** (`Unarranged`), some banks still pay:
+ *   France's for its commission on each operation, Germany's at a higher
+ *   rate on the part beyond the Dispo (the geduldete Überziehung), and New
+ *   Zealand's for a fee in a month the account sat more than a margin past
+ *   its limit. ANZ runs one past its arranged overdraft; BNZ's is the only
+ *   one it runs on the account SLATE opens.
+ * - **Spain's descubierto** costs its interest and a commission on the
+ *   month's deepest point, and the two together may not cost more than the
+ *   law's cap (two and a half times the legal rate of interest) on what was
+ *   overdrawn day by day. What's over the cap isn't charged.
+ *
+ * The banks' sentences about their overdrafts were only shown, and some of
+ * what they said was charged by nothing: the rate past a German Dispo,
+ * La Banque Postale's unauthorized rate, ANZ's and BNZ's unarranged fees,
+ * PTSB's set-up fee and Spain's cap. Each was made a term here on
+ * 2026-09-25 and the sentences were deleted; Citi's and Capital One's,
+ * which say they run no overdraft, stay, and the screen shows them.
  *
  * Money leaves in the household's order, with the overdraft after savings
  * and before the card (`systems/household.ts`).
@@ -47,7 +64,7 @@ import { addDays, addMonths, dateKey, instantFromZoned, zonedParts, MS_DAY, type
 import { clamp } from '../core/rng';
 import { bankById, bankingIn, type Bank } from '../content/banks';
 import { ageOn } from './mortality';
-import { LENDING, SWITCHING, type Lending, type Loan } from '../content/banks-lending';
+import { LENDING, SWITCHING, type Lending, type Loan, type Overdraft, type Unarranged } from '../content/banks-lending';
 import { accountNumber } from './banknumber';
 import { bankOf, banksFor, inSaveMoney, interestTaxFor, isoOf, monthStartOf, settleInterest } from './banking';
 
@@ -83,6 +100,12 @@ export function lendingOf(bank: Bank | undefined): Lending {
   return (bank && LENDING[bank.id]) ?? {};
 }
 
+/** What the bank does past the arranged limit, or with none arranged. */
+export function unarrangedOf(terms: Overdraft | undefined): Unarranged | undefined {
+  if (terms?.kind === 'arranged') return terms.beyond;
+  return terms?.kind === 'unarranged' ? terms : undefined;
+}
+
 function currentOf(sim: Simulation, person: Person): Account | undefined {
   const account = person.primaryAccountId ? sim.universe.accounts[person.primaryAccountId] : undefined;
   return account && !account.closedAt ? account : undefined;
@@ -105,9 +128,9 @@ export function overdraftRoom(sim: Simulation, person: Person): Money {
   const terms = lendingOf(bank).overdraft;
   if (!current || !bank || !terms) return 0;
   const cover = inSaveMoney(sim, ESTIMATE.perItemCover, bank.currency);
-  // Past an arranged limit, a French bank still pays, for its commission.
+  // Past an arranged limit, a French, German or New Zealand bank still pays.
   if (terms.kind === 'arranged') return (current.overdraftLimit ?? 0) + (terms.beyond ? cover : 0);
-  if (terms.kind === 'per_item' || terms.kind === 'tacit') return cover;
+  if (terms.kind === 'per_item' || terms.kind === 'tacit' || terms.kind === 'unarranged') return cover;
   const held = termsOf(sim, person).filter((a) => a.bankId === bank.id).reduce((sum, a) => sum + Math.max(0, a.balance), 0);
   return Math.min(inSaveMoney(sim, terms.max, bank.currency), Math.floor(held * terms.share));
 }
@@ -224,9 +247,10 @@ export function chargeForItem(sim: Simulation, person: Person): void {
   if (terms.kind === 'per_item' && terms.rate === undefined) {
     if (current.balance >= -(terms.graceUpTo !== undefined ? inSaveMoney(sim, terms.graceUpTo, bank.currency) : 0)) return;
     fee = terms;
-  } else if (terms.kind === 'arranged' && terms.beyond) {
+  } else if (unarrangedOf(terms)?.fee !== undefined) {
+    const past = unarrangedOf(terms)!;
     if (current.balance >= -(current.overdraftLimit ?? 0)) return;
-    fee = terms.beyond;
+    fee = { fee: past.fee!, maxPerMonth: past.maxPerMonth };
   }
   if (!fee) return;
   const today = dateKey(sim.now, sim.homeZone);
@@ -423,17 +447,29 @@ export function registerLending(sim: Simulation): void {
       const bank = current?.bankId ? bankById(current.bankId) : undefined;
       const terms = lendingOf(bank).overdraft;
       if (current && bank && terms) {
+        const beyondTerms = unarrangedOf(terms);
         if (current.balance < 0) {
           const used = -current.balance;
+          const limit = current.overdraftLimit ?? 0;
+          current.odPeak = Math.max(current.odPeak ?? 0, used);
+          current.odDaySum = (current.odDaySum ?? 0) + used;
+          if (beyondTerms && used - limit > (beyondTerms.graceUpTo !== undefined ? inSaveMoney(s, beyondTerms.graceUpTo, bank.currency) : 0)) {
+            current.odBeyondDays = (current.odBeyondDays ?? 0) + 1;
+          }
           if (terms.kind === 'arranged') {
-            const past = Math.max(0, used - (terms.buffer !== undefined ? inSaveMoney(s, terms.buffer, bank.currency) : 0));
-            current.odAccrued = (current.odAccrued ?? 0) + (past * (current.overdraftRate ?? terms.rate)) / 365;
+            // Past the buffer at the arranged rate; past the limit at the rate beyond it, where the bank has one.
+            const buffer = terms.buffer !== undefined ? inSaveMoney(s, terms.buffer, bank.currency) : 0;
+            const rate = current.overdraftRate ?? terms.rate;
+            const beyond = Math.max(0, used - Math.max(limit, buffer));
+            const within = Math.max(0, used - buffer) - beyond;
+            current.odAccrued = (current.odAccrued ?? 0) + (within * rate + beyond * (terms.beyond?.rate ?? rate)) / 365;
+          } else if (terms.kind === 'unarranged') {
+            if (terms.rate !== undefined) current.odAccrued = (current.odAccrued ?? 0) + (used * terms.rate) / 365;
           } else if (terms.kind === 'per_item' && terms.rate !== undefined) {
             current.odAccrued = (current.odAccrued ?? 0) + (used * terms.rate) / 365;
             charge(s, current, inSaveMoney(s, terms.fee, bank.currency), 'Overdrawn at midnight', 'bank_fee', 'Bank Fees');
           } else if (terms.kind === 'tacit') {
             current.odAccrued = (current.odAccrued ?? 0) + (used * terms.rate) / 365;
-            current.odPeak = Math.max(current.odPeak ?? 0, used);
           } else if (terms.kind === 'secured') {
             const held = termsOf(s, person).find((a) => a.bankId === bank.id);
             current.odAccrued = (current.odAccrued ?? 0) + (used * ((held?.fixedRate ?? 0) + terms.over)) / 365;
@@ -441,16 +477,30 @@ export function registerLending(sim: Simulation): void {
         }
         if (firstOfMonth) {
           const interest = Math.floor(current.odAccrued ?? 0);
-          charge(s, current, interest, 'Overdraft interest', 'bank_fee', 'Overdraft Interest');
           current.odAccrued = (current.odAccrued ?? 0) - interest;
+          let commission = terms.kind === 'tacit' && (current.odPeak ?? 0) > 0
+            ? Math.max(Math.round((current.odPeak ?? 0) * terms.commission.share), inSaveMoney(s, terms.commission.min, bank.currency))
+            : 0;
+          if (terms.kind === 'tacit' && terms.cap) {
+            // The law's cap on the month's cost, on what was overdrawn day by
+            // day. Both banks' rates (7.83%, 7.25%) are under it, so the
+            // interest alone never reaches it and the commission takes the cut;
+            // a cap on the interest as well changed nothing and was taken out.
+            const most = Math.floor(((current.odDaySum ?? 0) * terms.cap.rate) / 365);
+            commission = Math.min(commission, most - interest);
+          }
+          charge(s, current, interest, 'Overdraft interest', 'bank_fee', 'Overdraft Interest');
           if (terms.kind === 'arranged' && (current.overdraftLimit ?? 0) > 0 && terms.monthlyFee !== undefined) {
             charge(s, current, inSaveMoney(s, terms.monthlyFee, bank.currency), 'Overdraft fee', 'bank_fee', 'Bank Fees');
           }
-          if (terms.kind === 'tacit' && (current.odPeak ?? 0) > 0) {
-            const commission = Math.max(Math.round((current.odPeak ?? 0) * terms.commission.share), inSaveMoney(s, terms.commission.min, bank.currency));
-            charge(s, current, commission, 'Overdraft commission', 'bank_fee', 'Bank Fees');
+          charge(s, current, commission, 'Overdraft commission', 'bank_fee', 'Bank Fees');
+          if (beyondTerms?.monthlyFee !== undefined && (current.odBeyondDays ?? 0) >= (beyondTerms.afterDays ?? 1)
+            && (beyondTerms.freeUnder === undefined || ageOn(s, person, s.now) >= beyondTerms.freeUnder)) {
+            charge(s, current, inSaveMoney(s, beyondTerms.monthlyFee, bank.currency), 'Unarranged overdraft fee', 'bank_fee', 'Bank Fees');
           }
           current.odPeak = current.balance < 0 ? -current.balance : 0;
+          current.odDaySum = 0;
+          current.odBeyondDays = 0;
         }
         if (terms.kind === 'arranged' && (current.overdraftLimit ?? 0) > 0 && terms.yearlyFee !== undefined
           && current.overdraftSince !== undefined && s.now - current.overdraftSince >= 365 * MS_DAY) {
@@ -556,7 +606,10 @@ export function registerLending(sim: Simulation): void {
       current.overdraftSince = s.now;
       const bank = bankById(current.bankId!)!;
       const terms = lendingOf(bank).overdraft;
-      if (terms?.kind === 'arranged' && terms.yearlyFee !== undefined) {
+      // A set-up fee where the bank charges one, and the year's facility fee after a year; otherwise the facility fee now.
+      if (terms?.kind === 'arranged' && terms.setupFee !== undefined) {
+        charge(s, current, inSaveMoney(s, terms.setupFee, bank.currency), 'Overdraft set-up fee', 'bank_fee', 'Bank Fees');
+      } else if (terms?.kind === 'arranged' && terms.yearlyFee !== undefined) {
         charge(s, current, inSaveMoney(s, terms.yearlyFee, bank.currency), 'Overdraft facility fee', 'bank_fee', 'Bank Fees');
       }
     }

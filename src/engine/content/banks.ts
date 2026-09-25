@@ -20,6 +20,7 @@ import { worldBanking } from './banks-world';
 import { THIRTEEN } from './banks-thirteen';
 import { SHEETS, type SheetProduct } from './banks-world-sheets';
 import { IBAN_CODES, IBAN_FORMATS } from './banks-world-iban';
+import { WORLD_FEES } from './banks-world-fees';
 
 export type NumberFormat =
   | 'us' | 'ca' | 'mx' | 'gb' | 'ie' | 'is' | 'de' | 'fr' | 'es' | 'jp' | 'kr' | 'au' | 'nz' | 'iban' | 'plain';
@@ -30,9 +31,10 @@ export interface Product {
   /** A month's fee, in the bank's currency's hundredths. Absent: none. */
   monthlyFee?: Money;
   /**
-   * What waives the fee: wages paid in during the month, a balance kept all
-   * month, or an age under a line, in the bank's currency's hundredths. With
-   * `reducedTo`, meeting it lowers the fee to that rather than waiving it.
+   * What waives the fee, any one of them: wages paid in during the month, a
+   * balance kept all month, an age under or over a line, so many card
+   * purchases in the month, or the first months after opening, in the
+   * bank's currency's hundredths.
    */
   waiver?: {
     depositsAtLeast?: Money;
@@ -48,8 +50,20 @@ export interface Product {
     /** The month's average across every current and savings account the person keeps at the bank. */
     linkedAverageAtLeast?: Money;
     ageBelow?: number;
-    reducedTo?: Money;
+    /** Seniors: an age at or over a line. */
+    ageAtLeast?: number;
+    /** So many debit card purchases in the month. */
+    purchasesAtLeast?: number;
+    /** Free for the first so many months after the account opens. */
+    firstMonths?: number;
   };
+  /**
+   * A lower fee, not none, for a condition that isn't a full waiver: wages
+   * paid in, an age under a line, or an average balance. Until 2026-09-25 a
+   * `reducedTo` on the waiver lowered the fee for every way of meeting it,
+   * which couldn't say "free under 26, cheaper with wages".
+   */
+  reduced?: { to: Money; depositsAtLeast?: Money; ageBelow?: number; averageAtLeast?: Money };
   /** What it pays a year, as a fraction. Absent: nothing. */
   rate?: number;
   /** The rate is paid only on a balance of at least this. */
@@ -141,7 +155,7 @@ export interface CountryBanking {
     rate?: number;
     allowance?: Money;
     brackets?: readonly { upTo?: Money; rate: number }[];
-    /** Tax on the first so much of a year's interest, paid back at the assessment: the month and day it lands. */
+    /** Tax on the first so much of a year's interest, paid back at the assessment: the month and day it lands, and whether the day is SLATE's estimate, which the screen says. */
     refund?: { allowance: Money; month: number; day: number; estimateDate: boolean };
     note: string;
     source: string;
@@ -182,7 +196,7 @@ function withSheets(list: readonly CountryBanking[]): CountryBanking[] {
         if (!found) return bank;
         return {
           ...bank,
-          current: found.current ? fromSheet(found.current) : bank.current,
+          current: found.current ? fromSheet(found.current, WORLD_FEES[`${country.iso}|${bank.name}`]) : bank.current,
           savings: found.savings ? fromSheet(found.savings) : bank.savings,
           confidence: found.confidence,
         };
@@ -191,12 +205,21 @@ function withSheets(list: readonly CountryBanking[]): CountryBanking[] {
   });
 }
 
-function fromSheet(sheet: SheetProduct): Product {
+/**
+ * A sheet's product. A fee the research gave with its waiver in words
+ * (`statedFee`) is charged with the waiver as a rule from `WORLD_FEES`;
+ * `tests/bank-fees.test.ts` fails one that has no rule there.
+ */
+function fromSheet(sheet: SheetProduct, rule?: (typeof WORLD_FEES)[string]): Product {
+  const source = sheet.note ? `${sheet.source}; ${sheet.note}` : sheet.source;
   return {
     name: sheet.name,
-    source: sheet.note ? `${sheet.source}; ${sheet.note}` : sheet.source,
+    source: rule ? `${source}; ${rule.source}` : source,
     asOf: '2026-09-25',
     ...(sheet.monthlyFee ? { monthlyFee: sheet.monthlyFee } : {}),
+    ...(rule ? { monthlyFee: rule.monthlyFee } : {}),
+    ...(rule?.waiver ? { waiver: rule.waiver } : {}),
+    ...(rule?.reduced ? { reduced: rule.reduced } : {}),
     ...(sheet.rate !== undefined ? { rate: sheet.rate } : {}),
   };
 }
