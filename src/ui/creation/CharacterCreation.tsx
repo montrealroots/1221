@@ -791,7 +791,11 @@ function PersonalStep({
         <div className="field">
           <label htmlFor="before-acting">Before Acting</label>
           <select id="before-acting" value={config.beforeActing} onChange={(e) => set('beforeActing', e.target.value)}>
-            {BEFORE_ACTING.map((one) => <option key={one.id} value={one.id}>{one.label}</option>)}
+            {/* By what the day job it leads to pays where they start, the best paid last. */}
+            {BEFORE_ACTING
+              .map((one) => ({ one, pays: wageAt(config.startLocationId, jobFor(one.id).id, currencyFor(config.startLocationId), Date.UTC(config.startYear, config.startMonth - 1, config.startDay, 12)) }))
+              .sort((a, b) => a.pays - b.pays)
+              .map(({ one }) => <option key={one.id} value={one.id}>{one.label}</option>)}
           </select>
         </div>
         <div className="callout">
@@ -958,7 +962,8 @@ function BankChoice({ config, set }: { config: NewSaveConfig; set: <K extends ke
     <div className="field" style={{ marginTop: 'var(--s4)' }}>
       <label htmlFor="bank">Your Bank</label>
       <select id="bank" value={bank.id} onChange={(e) => set('bankId', e.target.value)}>
-        {banks.map((b) => <option key={b.id} value={b.id}>{b.name}</option>)}
+        {/* The dearest current account first, the cheapest last. */}
+        {[...banks].sort((a, b) => (b.current.monthlyFee ?? 0) - (a.current.monthlyFee ?? 0)).map((b) => <option key={b.id} value={b.id}>{b.name}</option>)}
       </select>
       <p className="small muted" style={{ margin: 'var(--s2) 0 0' }}>
         {bank.current.name}{fee ? `, ${bankMoney(fee)} a month${bank.current.waiver ? ' unless waived' : ''}` : ', no monthly fee'}.

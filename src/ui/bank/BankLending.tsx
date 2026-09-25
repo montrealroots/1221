@@ -247,7 +247,8 @@ export function BankLending({ bank }: { bank: Bank }) {
             </p>
             <div className="row gap-2">
               <select className="grow" aria-label="Bank To Switch To" value={target} onChange={(e) => setTarget(e.target.value)}>
-                {others.map((b) => <option key={b.id} value={b.id}>{b.name}</option>)}
+                {/* The dearest current account first, the cheapest last. */}
+                {[...others].sort((a, b) => (b.current.monthlyFee ?? 0) - (a.current.monthlyFee ?? 0)).map((b) => <option key={b.id} value={b.id}>{b.name}</option>)}
               </select>
               <Gated feature="bank.switch" className="btn btn-sm" disabled={!!switching || !target}
                 onClick={() => { if (run('bank.switch', { bankId: target }).ok) toast('Switch started.', 'positive'); }}>

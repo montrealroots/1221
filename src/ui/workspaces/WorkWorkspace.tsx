@@ -169,7 +169,11 @@ export function WorkWorkspace() {
           <div className="field" style={{ marginBottom: 'var(--s3)' }}>
             <label htmlFor="work-line">Line Of Work</label>
             <select id="work-line" value={line} onChange={(e) => setLine(e.target.value)}>
-              {Object.keys(lines).map((id) => <option key={id} value={id}>{JOBS[id]?.title ?? id}</option>)}
+              {/* By what the line pays here, the best paid last. */}
+              {Object.keys(lines)
+                .map((id) => ({ id, pays: rateAt(cityId, id, cur, sim.now).hourly }))
+                .sort((a, b) => a.pays - b.pays)
+                .map(({ id }) => <option key={id} value={id}>{JOBS[id]?.title ?? id}</option>)}
             </select>
           </div>
           <div className="col gap-3">

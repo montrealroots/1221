@@ -131,13 +131,14 @@ export function BankWorkspace() {
             <div className="field">
               <label htmlFor="move-from">From</label>
               <select id="move-from" value={fromId} onChange={(e) => setFrom(e.target.value)}>
-                {accounts.map((a) => <option key={a.id} value={a.id}>{a.name} ···{a.last4} ({money(a.balance)})</option>)}
+                {/* By balance, the most in it last. */}
+                {[...accounts].sort((a, b) => a.balance - b.balance).map((a) => <option key={a.id} value={a.id}>{a.name} ···{a.last4} ({money(a.balance)})</option>)}
               </select>
             </div>
             <div className="field">
               <label htmlFor="move-to">To</label>
               <select id="move-to" value={toId} onChange={(e) => setTo(e.target.value)}>
-                {accounts.filter((a) => a.id !== fromId).map((a) => <option key={a.id} value={a.id}>{a.name} ···{a.last4}</option>)}
+                {accounts.filter((a) => a.id !== fromId).sort((a, b) => a.balance - b.balance).map((a) => <option key={a.id} value={a.id}>{a.name} ···{a.last4}</option>)}
               </select>
             </div>
             <div className="field">
