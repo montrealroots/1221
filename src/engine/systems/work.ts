@@ -4,10 +4,13 @@
  * Nothing earned money until this. The film career went in the gut, and with
  * it every wage, so the balances a save started with were the balances it
  * kept. Now every character has the survival job their past leads to
- * (`content/jobs.ts`): shifts on the calendar, paid at a real legal floor
- * where they live times what that kind of work pays over it
- * (`content/wages.ts`), with tax withheld by the tax engine, on the payday
- * that country's employers use.
+ * (`content/jobs.ts`): shifts on the calendar at a real employer where they
+ * live (`content/employers.ts`), paid its published rate or the
+ * occupation's typical pay and never under the legal floor
+ * (`content/wages.ts`), on the payday that country's employers use, with a
+ * payslip worked by the country's own rules (`content/payroll.ts`). At
+ * first it paid the floor times a premium SLATE estimated, less one rate
+ * from the tax engine.
  *
  * A shift is a commitment like a plan. The clock stops at it; Go works it and
  * Call In Sick doesn't. Run over without a stop, as autopilot and a long
@@ -23,13 +26,14 @@
 import type { Simulation } from '../core/simulation';
 import type { Person } from '../domain/model';
 import type { ScheduledItem } from '../core/scheduler';
-import { CITIES, COUNTRIES } from '../content/geography';
+import { CITIES, COUNTRIES, jurisdictionPath } from '../content/geography';
+import { EMPLOYERS, type Employer } from '../content/employers';
+import { payrollYear, type PayslipLine } from '../content/payroll';
 import { jobFor, patternHours, patternOf, payCycleFor, tipsPerHour, type Job } from '../content/jobs';
 import { CommandError } from '../core/simulation';
 import { mayWorkIn } from '../domain/citizenship';
 import { outdoorWeather } from './weather';
 import { minimumWageAt } from '../content/wages';
-import { computeAnnualTax } from '../content/tax';
 import { exchange } from '../content/currency';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import {
@@ -58,6 +62,8 @@ const SHIFT_STRESS_PER_HOUR = 0.5;
 export interface JobState {
   /** The job, by its Before Acting id (`content/jobs.ts`). */
   jobId: string;
+  /** The real employer it's for (`content/employers.ts`), where the country has them on record. */
+  employerId?: string;
   /** The town the work is in. */
   cityId: string;
   since: Instant;
@@ -75,42 +81,165 @@ export interface JobState {
   hoursFrom?: Instant;
   /** Quit, and kept only until the last pay clears. */
   quitAt?: Instant;
+  /** The last payday's payslip, line by line, for the work screen. */
+  lastSlip?: { at: Instant; hours: number; gross: Money; lines: PayslipLine[]; employerPension: Money; employerPensionName?: string; estimate?: boolean };
 }
 
 export function jobOf(person: Person): Job | undefined {
   return person.job ? jobFor(person.job.jobId) : undefined;
 }
 
+/** The country a town is in: its ISO code and its money. */
+export function countryAt(cityId: string): { iso: string; currency: string } {
+  const city = CITIES.get(cityId);
+  const country = city ? COUNTRIES.get(city.countryId) : undefined;
+  return { iso: country?.jurisdictionCode ?? '', currency: country?.currency.toUpperCase() ?? 'USD' };
+}
+
+/** The employers on record for a line of work in a country, and the line's typical pay. */
+export function employersFor(cityId: string, jobId: string): readonly Employer[] {
+  return EMPLOYERS[countryAt(cityId).iso]?.[jobId]?.employers ?? [];
+}
+
+export function employerById(cityId: string, employerId: string | undefined): Employer | undefined {
+  if (!employerId) return undefined;
+  for (const line of Object.values(EMPLOYERS[countryAt(cityId).iso] ?? {})) {
+    const found = line.employers.find((one) => one.id === employerId);
+    if (found) return found;
+  }
+  return undefined;
+}
+
 /**
- * What an hour of their work pays, in the save's money: the floor where the
- * work is, now, times the job's premium.
+ * The employer a person starts with in their line: the first on record that
+ * hires where they are, or the first on record at all. The player can apply
+ * to any other (`work.apply`).
  */
+export function firstEmployer(cityId: string, jobId: string): Employer | undefined {
+  const all = employersFor(cityId, jobId);
+  const city = CITIES.get(cityId);
+  const here = all.find((one) => city && one.where.toLowerCase().includes(city.name.toLowerCase()));
+  return here ?? all.find((one) => /national/i.test(one.where)) ?? all[0];
+}
+
+/**
+ * What an hour pays, and why: the employer's own published starting rate;
+ * where it publishes none, the occupation's typical pay from the country's
+ * statistics office; where the country has neither, the legal floor times
+ * the job's premium, which is SLATE's estimate. Never under the legal floor.
+ * Until 2026-09-25 every job was paid the floor times the premium.
+ */
+export interface Rate {
+  hourly: Money;
+  basis: 'employer' | 'typical' | 'estimate';
+  source?: string;
+  note?: string;
+}
+
+export function rateAt(cityId: string, jobId: string, currency: string, at: Instant, employerId?: string): Rate {
+  const floor = minimumWageAt(cityId, at, currency);
+  const toSave = (amount: number, from: string) => (from === currency ? amount : exchange(amount, from, currency) ?? amount);
+  const floorInSave = toSave(floor.hourly, floor.currency);
+  const local = countryAt(cityId).currency;
+  const employer = employerById(cityId, employerId);
+  if (employer?.hourlyFrom !== undefined) {
+    return { hourly: Math.max(floorInSave, toSave(employer.hourlyFrom, local)), basis: 'employer', source: employer.source, ...(employer.payNote ? { note: employer.payNote } : {}) };
+  }
+  const typical = EMPLOYERS[countryAt(cityId).iso]?.[jobId]?.typical;
+  if (typical) return { hourly: Math.max(floorInSave, toSave(typical.hourly, local)), basis: 'typical', source: typical.source, note: typical.period };
+  return { hourly: Math.round(floorInSave * jobFor(jobId).overMinimum), basis: 'estimate', ...(floor.source ? { source: floor.source } : {}) };
+}
+
+/** What an hour of their work pays, in the save's money (`rateAt`). */
 export function hourlyWage(sim: Simulation, person: Person): Money {
   const state = person.job;
-  return state ? wageAt(state.cityId, state.jobId, saveCurrency(sim.universe), sim.now) : 0;
+  return state ? rateAt(state.cityId, state.jobId, saveCurrency(sim.universe), sim.now, state.employerId).hourly : 0;
 }
 
 /** The same, for a job in a town at a date, in a currency: for a screen with no save yet. */
-export function wageAt(cityId: string, jobId: string, currency: string, at: Instant): Money {
-  const floor = minimumWageAt(cityId, at, currency);
-  const inSave = floor.currency === currency ? floor.hourly : exchange(floor.hourly, floor.currency, currency) ?? floor.hourly;
-  return Math.round(inSave * jobFor(jobId).overMinimum);
+export function wageAt(cityId: string, jobId: string, currency: string, at: Instant, employerId = firstEmployer(cityId, jobId)?.id): Money {
+  return rateAt(cityId, jobId, currency, at, employerId).hourly;
+}
+
+/** How many paydays a year the country's cycle has. */
+export function paydaysAYear(cityId: string): number {
+  const cycle = payCycleFor(countryAt(cityId).iso);
+  return cycle.kind === 'biweekly' ? 26 : cycle.kind === 'semimonthly' ? 24 : 12;
 }
 
 /**
- * The share of a wage the tax engine withholds, at what the job pays in a
- * year. The engine's brackets are written in US dollars, so the year's pay is
- * taken there to read the rate, and the rate is what comes back.
+ * A payslip for a period's gross pay, in the save's money: each line the
+ * country takes, worked on the year (`content/payroll.ts`), and what the
+ * employer puts into the worker's pension. Worked in the country's own
+ * money, and brought back.
+ */
+export function payslipAt(cityId: string, gross: Money, currency: string, at: Instant, extra: { age: number; lastYear?: Money; weeklyHours?: number }): { lines: PayslipLine[]; employerPension: number; employerPensionName?: string; estimate?: boolean } {
+  const { iso, currency: local } = countryAt(cityId);
+  const periods = paydaysAYear(cityId);
+  const toLocal = (amount: number) => (local === currency ? amount : exchange(amount, currency, local) ?? amount);
+  const fromLocal = (amount: number) => (local === currency ? amount : exchange(amount, local, currency) ?? amount);
+  const yearly = toLocal(gross) * periods;
+  const year = payrollYear(iso, yearly, {
+    path: jurisdictionPath(cityId), cityId, at, age: extra.age, weeklyHours: extra.weeklyHours,
+    ...(extra.lastYear !== undefined ? { lastYear: toLocal(extra.lastYear) / 100 } : {}),
+    usdPerUnit: (exchange(100_00, local, 'USD') ?? 100_00) / 100_00,
+  });
+  return {
+    lines: year.lines.map((line) => ({ ...line, amount: Math.round(fromLocal(line.amount) / periods) })),
+    employerPension: Math.round(fromLocal(year.employerPension) / periods),
+    ...(year.employerPensionName ? { employerPensionName: year.employerPensionName } : {}),
+    ...(year.estimate ? { estimate: true } : {}),
+  };
+}
+
+/**
+ * The share of a wage that doesn't reach the bank, at what the job pays in a
+ * year: every line of the payslip, the pension among them.
  */
 export function withholdingRate(sim: Simulation, person: Person): number {
   const state = person.job;
-  return state ? withholdingAt(state.cityId, state.jobId, saveCurrency(sim.universe), sim.now, state.fullTime) : 0;
+  return state ? withholdingAt(state.cityId, state.jobId, saveCurrency(sim.universe), sim.now, state.fullTime, ageOf(person, sim.now)) : 0;
 }
 
-export function withholdingAt(cityId: string, jobId: string, currency: string, at: Instant, fullTime = false): number {
-  const yearly = wageAt(cityId, jobId, currency, at) * patternHours(patternOf(jobFor(jobId), fullTime)) * 52;
-  const usd = exchange(yearly, currency, 'USD') ?? yearly;
-  return computeAnnualTax(usd, cityId, at).effectiveRate;
+export function withholdingAt(cityId: string, jobId: string, currency: string, at: Instant, fullTime = false, age = 30): number {
+  const pattern = patternOf(jobFor(jobId), fullTime);
+  const gross = Math.round((wageAt(cityId, jobId, currency, at) * patternHours(pattern) * 52) / paydaysAYear(cityId));
+  if (gross <= 0) return 0;
+  const slip = payslipAt(cityId, gross, currency, at, { age, weeklyHours: patternHours(pattern) });
+  return slip.lines.reduce((sum, line) => sum + line.amount, 0) / gross;
+}
+
+/** Age in whole years at an instant. */
+function ageOf(person: Person, at: Instant): number {
+  return Math.floor((at - person.birthInstant) / (365.2425 * MS_DAY));
+}
+
+/** The wages paid over a calendar year, gross, for a tax levied on last year's pay. */
+function wagesInYear(sim: Simulation, person: Person, year: number): Money {
+  const from = Date.UTC(year, 0, 1);
+  const to = Date.UTC(year + 1, 0, 1);
+  const wages = sim.nominalAccount('income', 'Wages').id;
+  let total = 0;
+  for (const t of sim.universe.transactions) {
+    if (t.at < from || t.at >= to || t.category !== 'salary') continue;
+    if (!t.postings.some((p) => p.accountId === person.primaryAccountId || sim.universe.accounts[p.accountId]?.ownerId === person.id)) continue;
+    for (const p of t.postings) if (p.accountId === wages && p.amount < 0) total += -p.amount;
+  }
+  return total;
+}
+
+/** The fund a country's pension contributions go into, by its own name. */
+const FUNDS: Readonly<Record<string, string>> = {
+  IS: 'Lífeyrissjóður', NZ: 'KiwiSaver', AU: 'Superannuation', GB: 'Workplace Pension', IE: 'My Future Fund', MX: 'Afore',
+};
+
+/** The person's pension fund, opened the first time anything is paid into it. */
+function pensionFund(sim: Simulation, person: Person, iso: string): string {
+  const found = Object.values(sim.universe.accounts).find((a) => a.ownerId === person.id && !a.closedAt && a.category === 'pension');
+  if (found) return found.id;
+  return sim.openAccount({
+    id: sim.nextId('account'), kind: 'brokerage', category: 'pension', name: FUNDS[iso] ?? 'Pension', ownerId: person.id, openedAt: sim.now,
+  }).id;
 }
 
 /**
@@ -130,8 +259,11 @@ export function tipsFor(sim: Simulation, person: Person, hours: number): Money {
 
 /** Takes the job their past leads to, in the town they are in, from now. */
 export function hire(sim: Simulation, person: Person): void {
+  const jobId = person.beforeActing ?? 'school';
+  const employer = firstEmployer(person.currentLocationId, jobId);
   person.job = {
-    jobId: person.beforeActing ?? 'school',
+    jobId,
+    ...(employer ? { employerId: employer.id } : {}),
     cityId: person.currentLocationId,
     since: sim.now,
     unpaid: person.job?.unpaid ?? [],
@@ -273,21 +405,39 @@ function pay(sim: Simulation, person: Person, payday: Instant): void {
   if (hours <= 0) return;
   const currency = saveCurrency(sim.universe);
   const gross = Math.round(hours * hourlyWage(sim, person));
-  const withheld = Math.round(gross * withholdingRate(sim, person));
-  const title = jobFor(state.jobId).title;
-  sim.post({
-    memo: `${title}: ${hours} hours`,
-    category: 'salary',
-    postings: [
-      { accountId: sim.nominalAccount('income', 'Wages').id, amount: -gross },
-      { accountId: sim.nominalAccount('expense', 'Tax Withheld').id, amount: withheld },
-      { accountId: person.primaryAccountId, amount: gross - withheld },
-    ],
+  const slip = payslipAt(state.cityId, gross, currency, sim.now, {
+    age: ageOf(person, sim.now),
+    lastYear: wagesInYear(sim, person, new Date(sim.now).getUTCFullYear() - 1),
+    weeklyHours: patternHours(patternOf(jobFor(state.jobId), state.fullTime)),
   });
+  const title = jobFor(state.jobId).title;
+  const employer = employerById(state.cityId, state.employerId);
+  const by = (kind: PayslipLine['kind']) => slip.lines.filter((line) => line.kind === kind).reduce((sum, line) => sum + line.amount, 0);
+  const tax = by('tax');
+  const social = by('social');
+  const toPension = by('pension');
+  const net = gross - tax - social - toPension;
+  const postings = [
+    { accountId: sim.nominalAccount('income', 'Wages').id, amount: -gross },
+    { accountId: person.primaryAccountId, amount: net },
+  ];
+  if (tax > 0) postings.push({ accountId: sim.nominalAccount('expense', 'Tax Withheld').id, amount: tax });
+  if (social > 0) postings.push({ accountId: sim.nominalAccount('expense', 'Social Contributions').id, amount: social });
+  const iso = countryAt(state.cityId).iso;
+  if (toPension > 0 || slip.employerPension > 0) {
+    const fund = pensionFund(sim, person, iso);
+    if (toPension > 0) postings.push({ accountId: fund, amount: toPension });
+    if (slip.employerPension > 0) {
+      postings.push({ accountId: fund, amount: slip.employerPension });
+      postings.push({ accountId: sim.nominalAccount('income', 'Employer Pension').id, amount: -slip.employerPension });
+    }
+  }
+  sim.post({ memo: `${employer ? `${employer.name}, ` : ''}${title}: ${hours} hours`, category: 'salary', postings });
+  state.lastSlip = { at: sim.now, hours, gross, lines: slip.lines, employerPension: slip.employerPension, ...(slip.employerPensionName ? { employerPensionName: slip.employerPensionName } : {}), ...(slip.estimate ? { estimate: true } : {}) };
   sim.notify({
     category: 'work',
     title: 'Payday',
-    body: `${formatMoney(gross - withheld, currency)} for ${hours} hours of ${title.toLowerCase()}, after ${formatMoney(withheld, currency)} withheld in tax.`,
+    body: `${formatMoney(net, currency)} for ${hours} hours at ${employer?.name ?? title.toLowerCase()}, from ${formatMoney(gross, currency)} before ${formatMoney(tax, currency)} of tax${social > 0 ? `, ${formatMoney(social, currency)} of contributions` : ''}${toPension > 0 ? ` and ${formatMoney(toPension, currency)} to your pension` : ''}.`,
     importance: 40,
   });
   state.unpaid = state.unpaid.filter((one) => one.at >= cutoff);

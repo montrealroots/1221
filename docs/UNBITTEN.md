@@ -156,10 +156,33 @@ part the tool cannot see.
   and Greenland, whose check is set bank by bank; and São Tomé, whose rule
   isn't published and whose registry example and a live central-bank IBAN
   disagree. The IBAN's own check always holds.
-- **The tax engine taxes wages and nothing else.** It was a screen, read only
-  by the place card, until the day job: payday withholds income and payroll
-  tax through it (`systems/work.ts`). Its sales, property and vehicle rules are
-  still read by nothing, because nothing is bought, owned or driven.
+- **The tax engine taxes wages only outside the thirteen.** It was a screen,
+  read only by the place card, until the day job withheld through it. Since
+  2026-09-25 the thirteen countries' payslips are their own
+  (`content/payroll.ts`), and the engine's approximation is the payslip
+  everywhere else, and for US states and Canadian provinces the research
+  didn't cover. Its sales, property and vehicle rules are still read by
+  nothing, because nothing is bought, owned or driven.
+- **A payslip is the year's withholding, and nothing is settled after it.**
+  Each payday takes its share of the year's tax and contributions, as
+  employers do. What a country settles on the annual return isn't: Spain's
+  deduction that refunds a minimum-wage worker's withholding, the US
+  earned income tax credit, Ontario's and British Columbia's low-income
+  reductions, Canada's workers benefit. Church tax in Germany isn't taken,
+  since SLATE doesn't know a character's church; Japan's contributions are
+  on the pay, not the grade of standard remuneration it falls in.
+- **A pension fund fills and does nothing else.** What a payslip puts into
+  a fund the worker owns (Iceland, New Zealand, Australia, Britain,
+  Ireland, Mexico) is theirs and counts in their worth, and nothing grows
+  it or pays it out, because no fund's returns are modeled and nobody in
+  SLATE has retired.
+- **An employer's pay is as published in September 2026.** Each rate is
+  the one the research found on 2026-09-25, paid from the save's first day,
+  so a save that starts in January is paid an April raise early. Where an
+  employer publishes none, the occupation's typical pay is used, which is a
+  median and runs above what a new hire is paid. Korea's construction,
+  New Zealand's office and construction, and some other lines have no
+  employer on record, and those pay the typical rate or the estimate.
 - **The gazetteer still carries the film calibration.** Every hand-calibrated
   city has an `industryPresence` figure, and the place card and Home print it
   as Film and Television work. Nothing else reads it. It is reference data, so

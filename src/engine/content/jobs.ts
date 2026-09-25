@@ -4,10 +4,14 @@
  * Nearly every working actor has one. What somebody did before acting
  * (`content/backgrounds.ts`) is the work they fall back on, so each answer
  * carries on as a survival job: its hours, its week, and how far over the
- * legal floor where they live (`content/wages.ts`) it pays.
+ * legal floor where they live (`content/wages.ts`) it pays where nothing
+ * better is on record.
  *
  * The premiums are SLATE's estimates of how far each kind of work usually
- * pays over the minimum, not published figures; the floor under them is real.
+ * pays over the minimum, not published figures. Until 2026-09-25 every job
+ * was paid by them; since then a job is paid its real employer's published
+ * rate or the occupation's typical pay (`content/employers.ts`), and a
+ * premium is used only in a country with neither.
  * Tips are the custom's where it tips (`tipsPerHour` below).
  *
  * Every week starts no earlier than nine. A night nobody chose that starts at

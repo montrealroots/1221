@@ -480,7 +480,7 @@ export function Home() {
             <Stat
               label="Net Worth"
               value={<MoneyText amount={worth.total} currency={cur} compact />}
-              note={`${formatMoney(worth.cash, cur, { cents: false })} in the bank${worth.held > 0 ? `, ${formatMoney(worth.held, cur, { cents: false })} held as a deposit` : ''}`}
+              note={`${formatMoney(worth.cash, cur, { cents: false })} in the bank${worth.held > 0 ? `, ${formatMoney(worth.held, cur, { cents: false })} held as a deposit` : ''}${worth.pension > 0 ? `, ${formatMoney(worth.pension, cur, { cents: false })} in a pension` : ''}`}
               look={at('networth', player.id)}
             />
             {worth.liabilities > 0 && (

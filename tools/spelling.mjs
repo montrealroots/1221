@@ -124,6 +124,10 @@ const REAL_NAMES = [
   // Banking names and pages spelled by their own banks and governments.
   'Cuenta de Cheques', 'cuentas-cheques', 'cheque-accounts', 'Special Defence Contribution',
   'special-defence-contribution', 'Youth Programme', 'bankers-association/organisation',
+  // Employers, agencies, surveys and pages spelled by their own countries (content/employers.ts).
+  'Hunter Labour Hire', 'Yakka Labour', 'yakkalabour', 'labour-hire', 'statistics/labour', 'Labour Force Survey', 'Endeavour Group',
+  'top-modelling-agencies', 'modelling-advice', 'Manoeuvre', 'manoeuvre', 'manoeuvre specialise', 'Centre de danse du Marais', 'centre-de-danse',
+  'media-centre', 'analyse-2026', 'stagecoach-theatre-arts',
 ];
 
 const EXTENSIONS = /\.(ts|tsx|mjs|md)$/;

@@ -19,10 +19,8 @@ import { MINIMUM_WAGES, minimumWageAt } from '@/engine/content/wages';
 import { JOBS, jobFor, weeklyHours } from '@/engine/content/jobs';
 import { PERSONALITY_TRAITS } from '@/engine/content/personality-traits';
 import { defaultPersonality } from '@/engine/systems/personality';
-import { SHIFT_KIND, hourlyWage, hoursOwed, nextPayday, withholdingRate } from '@/engine/systems/work';
+import { SHIFT_KIND, employerById, hourlyWage, hoursOwed, nextPayday, payslipAt, rateAt } from '@/engine/systems/work';
 import { lookAfterRefusal } from '@/engine/systems/life';
-import { computeAnnualTax } from '@/engine/content/tax';
-import { exchange } from '@/engine/content/currency';
 import { MS_DAY, MS_HOUR, instantFromZoned, startOfNextDay, zonedParts } from '@/engine/core/time';
 
 const shiftsOf = (sim: Simulation) => sim.timeline.pending().filter((i) => i.kind === SHIFT_KIND);
@@ -61,15 +59,25 @@ describe('the job', () => {
 });
 
 describe('the pay', () => {
-  it('is the real floor where they work, times what the work pays over it', () => {
+  it('is what their real employer pays, and never under the legal floor', () => {
     const sim = quickSave();
-    // Iceland's lowest agreement band from January 2026, in krónur.
-    expect(hourlyWage(sim, sim.player)).toBe(2746_73);
+    const state = sim.player.job!;
+    const employer = employerById(state.cityId, state.employerId)!;
+    // Café work in Iceland, at an employer bound by the Efling–SA agreement's
+    // café band, 2,801.87 kr from 1 April 2026.
+    expect(employer).toBeDefined();
+    expect(hourlyWage(sim, sim.player)).toBe(employer.hourlyFrom);
+    expect(rateAt(state.cityId, state.jobId, 'ISK', sim.now, state.employerId)).toMatchObject({ basis: 'employer', source: employer.source });
+    expect(hourlyWage(sim, sim.player)).toBeGreaterThanOrEqual(minimumWageAt(state.cityId, sim.now, 'ISK').hourly);
+    // Another employer pays its own rate; a construction job its own.
     const trades = quickSave({ beforeActing: 'trades' }, 'trades-pay');
-    expect(hourlyWage(trades, trades.player)).toBe(Math.round(2746_73 * JOBS.trades!.overMinimum));
-    // From April the agreement's new band.
-    sim.advanceTo(at(sim, 2026, 4, 2));
-    expect(hourlyWage(sim, sim.player)).toBe(2748_39);
+    expect(employerById(trades.player.job!.cityId, trades.player.job!.employerId)?.name).toBeDefined();
+    expect(hourlyWage(trades, trades.player)).toBe(rateAt(trades.player.job!.cityId, 'trades', 'ISK', trades.now, trades.player.job!.employerId).hourly);
+    // Where a country has no employer and no statistic on record, the floor
+    // times the job's premium, and it says so.
+    const rome = CITIES.all().find((c) => c.countryId === 'it');
+    if (rome) expect(rateAt(rome.id, 'trades', 'EUR', sim.now).basis).toBe('estimate');
+    void JOBS;
   });
 
   it('reads the deepest place that has a figure, on its dates, and says where it has none', async () => {
@@ -118,15 +126,23 @@ describe('the pay', () => {
     expect(hours).toBe(105);
     expect(hoursOwed(sim.player)).toBe(112);
     const wage = hourlyWage(sim, sim.player);
-    const rate = withholdingRate(sim, sim.player);
-    const yearly = exchange(wage * weeklyHours(jobFor('school')) * 52, 'ISK', 'USD')!;
-    expect(rate).toBeCloseTo(computeAnnualTax(yearly, sim.player.job!.cityId, sim.now).effectiveRate, 12);
-    expect(rate).toBeGreaterThan(0.1);
     sim.advanceTo(payday + MS_HOUR);
     const gross = Math.round(hours * wage);
+    // The payslip is Iceland's: 4% to the pension fund before tax, the
+    // withholding less the personal credit, and the union's 0.7%.
+    const slip = payslipAt(sim.player.job!.cityId, gross, 'ISK', payday, { age: 24, weeklyHours: weeklyHours(jobFor('school')) });
+    expect(slip.lines.map((l) => l.name)).toEqual(['Lífeyrissjóður', 'Staðgreiðsla', 'Félagsgjald']);
+    expect(slip.lines[0]!.amount).toBe(Math.round(gross * 0.04));
+    expect(slip.employerPension).toBe(Math.round(gross * 0.115));
     // Read off the pay's own line: rent and food come out of the same account.
     const paid = sim.universe.transactions.filter((t) => t.category === 'salary').at(-1)!;
-    expect(paid.postings.find((p) => p.accountId === sim.player.primaryAccountId)!.amount).toBe(gross - Math.round(gross * rate));
+    const taken = slip.lines.reduce((sum, l) => sum + l.amount, 0);
+    expect(paid.postings.find((p) => p.accountId === sim.player.primaryAccountId)!.amount).toBe(gross - taken);
+    // The pension, the worker's 4% and the employer's 11.5%, is theirs.
+    const fund = Object.values(sim.universe.accounts).find((a) => a.ownerId === sim.player.id && a.category === 'pension')!;
+    expect(fund.name).toBe('Lífeyrissjóður');
+    expect(fund.balance).toBe(slip.lines[0]!.amount + slip.employerPension);
+    expect(sim.player.job!.lastSlip?.gross).toBe(gross);
     void before;
     expect(hoursOwed(sim.player)).toBe(7);
     expect(sim.ledger.audit()).toEqual([]);
