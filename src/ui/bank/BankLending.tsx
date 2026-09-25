@@ -19,7 +19,7 @@ import type { Bank } from '@/engine/content/banks';
 import { SWITCHING } from '@/engine/content/banks-lending';
 import { banksFor, inSaveMoney, isoOf } from '@/engine/systems/banking';
 import {
-  ESTIMATE, LOAN_DUE_KIND, SWITCH_KIND, lendingOf, loanOf, loanOffer, overdraftOffer, overdraftRoom, termsOf,
+  ESTIMATE, LOAN_DUE_KIND, SWITCH_KIND, collectionsOf, lendingOf, loanOf, loanOffer, overdraftOffer, overdraftRoom, termsOf,
 } from '@/engine/systems/lending';
 
 /** Whole units typed, as a banking app takes them, in hundredths. */
@@ -36,9 +36,13 @@ export function BankLending({ bank }: { bank: Bank }) {
   const offer = useWorld((s) => overdraftOffer(s, s.player));
   const terms = useWorld((s) => termsOf(s, s.player));
   const loan = useWorld((s) => loanOf(s, s.player));
+  const debt = useWorld((s) => collectionsOf(s, s.player));
+  const [toCollections, setToCollections] = useState('');
   const loanDue = useWorld((s) => s.universe.scheduled.find((one) => one.kind === LOAN_DUE_KIND && one.status === 'pending'));
   const switching = useWorld((s) => s.universe.scheduled.find((one) => one.kind === SWITCH_KIND && one.status === 'pending'));
-  const others = banksFor(sim.player.currentLocationId).filter((b) => b.id !== bank.id);
+  // A bank owed a charged-off debt won't open an account.
+  const owedTo = useWorld((s) => collectionsOf(s, s.player)?.institution);
+  const others = banksFor(sim.player.currentLocationId).filter((b) => b.id !== bank.id && b.name !== owedTo);
   const rule = SWITCHING[isoOf(sim.player.currentLocationId) ?? ''];
 
   const [limit, setLimit] = useState('');
@@ -57,12 +61,31 @@ export function BankLending({ bank }: { bank: Bank }) {
         {od?.kind === 'per_item' && (
           <p className="small">
             {bank.name} pays what the account can’t without an arrangement, and charges {formatMoney(inSaveMoney(sim, od.fee, bank.currency), cur)}
-            {od.rate !== undefined ? ' for an account still overdrawn at midnight' : ' for each item that overdraws it'}
-            {od.maxPerDay !== undefined && od.rate === undefined ? `, at most ${od.maxPerDay} a day` : ''}
+            {od.atMidnight ? ' for an account still overdrawn at midnight' : ' for each item that overdraws it'}
+            {od.maxPerDay !== undefined && !od.atMidnight ? `, at most ${od.maxPerDay} a day` : ''}
+            {od.maxPerMonth !== undefined ? `, at most ${od.maxPerMonth} a month` : ''}
+            {od.nextDay ? ', unless the account is back by the end of the next business day' : ''}
             {od.graceUpTo !== undefined ? `, and nothing while it’s overdrawn by ${formatMoney(inSaveMoney(sim, od.graceUpTo, bank.currency), cur, { cents: false })} or less` : ''}
             {od.rate !== undefined ? `, with ${pct(od.rate)} a year on what’s overdrawn` : ''}.
             {' '}It covers up to about {money(room)}, SLATE’s estimate: the bank publishes no limit.
           </p>
+        )}
+        {od?.kind === 'per_item' && od.debitCard === 'never' && (
+          <p className="small">{bank.name} never pays an everyday debit card purchase into an overdraft: one it can’t pay goes on the card, or is declined.</p>
+        )}
+        {od?.kind === 'per_item' && od.debitCard === 'opt_in' && (
+          <div className="col gap-2">
+            <p className="small" style={{ margin: 0 }}>
+              {current?.debitOverdraft
+                ? 'You’ve opted in: an everyday debit card purchase the account can’t cover is paid into the overdraft, with its fee.'
+                : 'You haven’t opted in, so an everyday debit card purchase the account can’t cover goes on the card, or is declined, and costs no fee. Bills and checks go into the overdraft either way. The law has a US bank ask first.'}
+            </p>
+            <div>
+              <Gated feature="bank.debit_overdraft" className="btn btn-sm btn-ghost" onClick={() => run('bank.debit_overdraft', { on: !current?.debitOverdraft })}>
+                {current?.debitOverdraft ? 'Opt Out Of Debit Card Overdrafts' : 'Opt In To Debit Card Overdrafts'}
+              </Gated>
+            </div>
+          </div>
         )}
         {od?.kind === 'tacit' && (
           <p className="small">
@@ -150,6 +173,23 @@ export function BankLending({ bank }: { bank: Bank }) {
           </div>
         )}
       </Panel>
+
+      {debt && (
+        <Panel title="In Collections" subtitle={`${money(-debt.balance)} owed`}>
+          <div className="col gap-3">
+            <p className="small" style={{ margin: 0 }}>
+              {debt.institution} closed your account after it was overdrawn for {ESTIMATE.closeAfterDays} days, SLATE’s estimate of how long a bank lets one run, and charged off what it couldn’t recover. It’s on your record until it’s paid.
+            </p>
+            <div className="row gap-2">
+              <input className="grow" type="text" inputMode="decimal" aria-label={`Pay Toward It (${cur})`} value={toCollections} onChange={(e) => setToCollections(e.target.value)} />
+              <Gated feature="bank.pay_collections" className="btn btn-sm" disabled={!toCollections}
+                onClick={() => { if (run('bank.pay_collections', { amount: cents(toCollections) }).ok) { toast('Paid.', 'positive'); setToCollections(''); } }}>
+                Pay It
+              </Gated>
+            </div>
+          </div>
+        </Panel>
+      )}
 
       <Panel title="Personal Loan" subtitle={loan ? `${money(-loan.balance)} owed` : lending.loan ? undefined : 'None on record'}>
         {!lending.loan && !loan && <p className="small">{bank.name} publishes no personal loan rate SLATE found.</p>}

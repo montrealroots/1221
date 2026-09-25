@@ -130,6 +130,8 @@ describe('Arion’s debit card', () => {
     const sim = lifeIn('is-39-mosfellsbr', { bankId: 'is-arion', birthYear: 1990 });
     spend(sim, sim.player, 1_000_00, 'Groceries', 'food');
     expect(charged(sim, current(sim), 'Debit card purchase fee')).toEqual([-19_00]);
+    // A year of living on no wages: enough in the account that the bank never closes it.
+    set(sim, current(sim), 20_000_000_00);
     sim.advanceBy(366 * MS_DAY);
     expect(charged(sim, current(sim), 'Debit card yearly fee')).toEqual([-950_00]);
     const young = lifeIn('is-39-mosfellsbr', { bankId: 'is-arion', birthYear: 2004 });

@@ -13,9 +13,14 @@
  * - **An overdraft by the item** (Chase, Wells Fargo, Bank of America) needs
  *   no arrangement: the bank pays what the account can't and charges a fee
  *   for each item that does it, at most so many a day and none while the
- *   account is overdrawn by less than the bank's grace amount. CommBank and
- *   Westpac charge theirs once, for an account still overdrawn at midnight,
- *   and interest on it.
+ *   account is overdrawn by less than the bank's grace amount. Chase and
+ *   Wells Fargo hold the fees to the end of the next business day and let
+ *   them go for an account put right by then. A US bank pays an everyday
+ *   debit card purchase into an overdraft only for someone who opted in
+ *   (Regulation E; Bank of America never does), and a purchase the card
+ *   took is charged nothing. CommBank and Westpac charge theirs once, for a
+ *   day a payment overdrew the account and that ended overdrawn, and
+ *   interest on it. BNP Paribas charges interest as well as its commission.
  * - **MUFG's general account** lends against time deposits: nine tenths of
  *   them up to ¥2 million, at their rate and half a point more.
  * - **Past the limit, or with none** (`Unarranged`), some banks still pay:
@@ -28,6 +33,15 @@
  *   month's deepest point, and the two together may not cost more than the
  *   law's cap (two and a half times the legal rate of interest) on what was
  *   overdrawn day by day. What's over the cap isn't charged.
+ *
+ * - **An account left overdrawn** past any arranged limit for sixty days is
+ *   closed by the bank. What's in the person's other accounts there goes
+ *   against it, the rest is charged off to collections (a debt, paid with
+ *   `bank.pay_collections`), the record takes it, and the money moves to
+ *   another bank in the country. Two years of play found an account at
+ *   Wells Fargo overdrawn for 348 days and $12,250 in fees; no real bank
+ *   lets one run that long. Sixty days is SLATE's estimate: the figure Chase
+ *   is reported to allow, which no bank publishes.
  *
  * The banks' sentences about their overdrafts were only shown, and some of
  * what they said was charged by nothing: the rate past a German Dispo,
@@ -85,6 +99,11 @@ export const SWITCH_KIND = 'bank.switch_complete';
  *   and up, at the bottom of its range at 780, and, where it publishes only
  *   its lowest rate, only to a record of 670 and up.
  * - `loanMonths`: 12 to 60 months, where the bank doesn't say.
+ * - `closeAfterDays`: how long an account may stay below zero past any
+ *   arranged limit before the bank closes it and charges it off, sixty days
+ *   as Chase is reported to allow; no bank publishes one.
+ * - `chargeOffHit`: what a charge-off costs the record, 100 points, about
+ *   what the credit bureaus' examples show for an account sent to collections.
  */
 export const ESTIMATE = {
   perItemCover: 500_00,
@@ -94,10 +113,34 @@ export const ESTIMATE = {
   scoreBest: 780,
   scoreGood: 670,
   loanMonths: [12, 60] as const,
+  closeAfterDays: 60,
+  chargeOffHit: 100,
 };
+
+export const COLLECTIONS = 'collections';
+
+/** A person's debt in collections, where a bank charged one off. */
+export function collectionsOf(sim: Simulation, person: Person): Account | undefined {
+  return Object.values(sim.universe.accounts).find((a) => a.ownerId === person.id && !a.closedAt && a.kind === 'loan' && a.category === COLLECTIONS);
+}
 
 export function lendingOf(bank: Bank | undefined): Lending {
   return (bank && LENDING[bank.id]) ?? {};
+}
+
+/**
+ * Whether the bank may pay an everyday debit card purchase into an overdraft:
+ * everywhere it pays items at all, except a US bank the person hasn't opted
+ * in with (Regulation E). Until 2026-09-25 every purchase could, and two
+ * years of play at Wells Fargo ran up $9,975 in fees, most of them on
+ * groceries a real bank would have declined.
+ */
+export function purchaseMayOverdraw(sim: Simulation, person: Person): boolean {
+  const current = currentOf(sim, person);
+  const bank = current?.bankId ? bankById(current.bankId) : undefined;
+  const terms = lendingOf(bank).overdraft;
+  if (terms?.kind !== 'per_item' || !terms.debitCard) return true;
+  return terms.debitCard === 'opt_in' && current?.debitOverdraft === true;
 }
 
 /** What the bank does past the arranged limit, or with none arranged. */
@@ -244,8 +287,24 @@ export function chargeForItem(sim: Simulation, person: Person): void {
   // The month's deepest point, for a commission charged on it.
   if (current.balance < 0) current.odPeak = Math.max(current.odPeak ?? 0, -current.balance);
   let fee: { fee: Money; maxPerDay?: number; maxPerMonth?: number } | undefined;
-  if (terms.kind === 'per_item' && terms.rate === undefined) {
+  if (terms.kind === 'per_item' && terms.atMidnight) {
+    // Charged at midnight, if the day still ends overdrawn. The household
+    // asks only for an item that took the account below zero.
+    current.overdrewDay = dateKey(sim.now, sim.homeZone);
+    return;
+  }
+  if (terms.kind === 'per_item') {
     if (current.balance >= -(terms.graceUpTo !== undefined ? inSaveMoney(sim, terms.graceUpTo, bank.currency) : 0)) return;
+    if (terms.nextDay) {
+      // Held until the end of the next business day, at most the day's cap.
+      const day = dateKey(sim.now, sim.homeZone);
+      const list = current.pendingItems ?? [];
+      const today = list.find((one) => one.day === day);
+      if (today) today.count = Math.min(today.count + 1, terms.maxPerDay ?? Number.POSITIVE_INFINITY);
+      else list.push({ day, count: 1 });
+      current.pendingItems = list;
+      return;
+    }
     fee = terms;
   } else if (unarrangedOf(terms)?.fee !== undefined) {
     const past = unarrangedOf(terms)!;
@@ -355,7 +414,7 @@ function payFromBank(sim: Simulation, person: Person, amount: Money): { postings
 }
 
 /** Moves one person's bank to another of their country's, now. */
-function completeSwitch(sim: Simulation, person: Person, to: Bank): void {
+function completeSwitch(sim: Simulation, person: Person, to: Bank, quietly = false): void {
   const old = currentOf(sim, person);
   if (!old) return;
   const oldSavings = Object.values(sim.universe.accounts).find((a) => a.ownerId === person.id && !a.closedAt && a.kind === 'savings' && a.category !== 'term' && a.bankId === old.bankId);
@@ -377,7 +436,7 @@ function completeSwitch(sim: Simulation, person: Person, to: Bank): void {
   const current = open('checking', old);
   person.primaryAccountId = current.id;
   if (oldSavings) open('savings', oldSavings);
-  if (person.id === sim.universe.playerId) {
+  if (person.id === sim.universe.playerId && !quietly) {
     sim.notify({ category: 'money', title: `Switched To ${to.name}`, body: `Your money is at ${to.name} now, in a ${to.current.name}. Wages and bills go through it from today.`, importance: 60 });
   }
 }
@@ -437,6 +496,117 @@ function refundInterestTax(sim: Simulation, person: Person, current: Account, ba
   }
 }
 
+/**
+ * Fees held for the next business day: charged for each day whose next
+ * business day has ended with the account still past the grace, and let go
+ * for one brought back.
+ */
+function settlePendingItems(sim: Simulation, current: Account, bank: Bank, terms: Extract<Overdraft, { kind: 'per_item' }>): void {
+  const list = current.pendingItems;
+  if (!list?.length) return;
+  const today = dateKey(sim.now, sim.homeZone);
+  const grace = terms.graceUpTo !== undefined ? inSaveMoney(sim, terms.graceUpTo, bank.currency) : 0;
+  const keep: { day: string; count: number }[] = [];
+  for (const one of list) {
+    if (!nextBusinessDayOver(one.day, today)) { keep.push(one); continue; }
+    if (current.balance >= -grace) continue;
+    const month = today.slice(0, 7);
+    if (current.itemsMonth !== month) { current.itemsMonth = month; current.itemsMonthCount = 0; }
+    for (let i = 0; i < one.count; i += 1) {
+      if (terms.maxPerMonth !== undefined && (current.itemsMonthCount ?? 0) >= terms.maxPerMonth) break;
+      current.itemsMonthCount = (current.itemsMonthCount ?? 0) + 1;
+      charge(sim, current, inSaveMoney(sim, terms.fee, bank.currency), 'Overdraft fee', 'bank_fee', 'Bank Fees');
+    }
+  }
+  current.pendingItems = keep.length ? keep : undefined;
+}
+
+/** Whether a business day has begun and ended between a day and today. */
+function nextBusinessDayOver(day: string, today: string): boolean {
+  const [y, m, d] = day.split('-').map(Number) as [number, number, number];
+  for (let i = 1; i < 10; i += 1) {
+    const next = new Date(Date.UTC(y, m - 1, d + i));
+    const key = next.toISOString().slice(0, 10);
+    if (key >= today) return false;
+    const weekday = next.getUTCDay();
+    if (weekday !== 0 && weekday !== 6) return true;
+  }
+  return true;
+}
+
+/**
+ * Whether any of a person's everyday accounts at the bank has been below zero
+ * past its arranged limit for longer than a bank lets one run. Keeps each
+ * account's `negativeSince` as it goes.
+ */
+function leftOverdrawn(sim: Simulation, person: Person, bank: Bank): boolean {
+  let over = false;
+  for (const account of Object.values(sim.universe.accounts)) {
+    if (account.ownerId !== person.id || account.closedAt || account.bankId !== bank.id) continue;
+    if (account.kind !== 'checking' && account.kind !== 'savings') continue;
+    if (account.balance >= -(account.overdraftLimit ?? 0)) { account.negativeSince = undefined; continue; }
+    account.negativeSince ??= sim.now;
+    if (sim.now - account.negativeSince >= ESTIMATE.closeAfterDays * MS_DAY) over = true;
+  }
+  return over;
+}
+
+/**
+ * The bank closes the relationship: what the person's other accounts there
+ * hold goes against what's owed, the rest is charged off to collections, the
+ * record takes it, and their money moves to another bank in the country.
+ */
+export function closeForOverdraft(sim: Simulation, person: Person, bank: Bank): void {
+  const mine = Object.values(sim.universe.accounts).filter((a) => a.ownerId === person.id && !a.closedAt && a.bankId === bank.id
+    && (a.kind === 'checking' || a.kind === 'savings') && a.category !== 'term');
+  const current = currentOf(sim, person);
+  if (!current) return;
+  for (const account of mine) settleInterest(sim, account, `Interest: ${account.name}, on closing`);
+  // Set-off: what's owed on any account there is gathered on the current
+  // account, and what's held there goes against it, as much as it takes.
+  const setOff = (from: Account, amount: Money) => {
+    if (amount !== 0) post(sim, 'Set off against the overdraft', 'transfer', [{ accountId: from.id, amount: -amount }, { accountId: current.id, amount }]);
+  };
+  for (const account of mine) if (account.id !== current.id && account.balance < 0) setOff(account, account.balance);
+  for (const account of mine) {
+    if (account.id !== current.id && account.balance > 0 && current.balance < 0) setOff(account, Math.min(account.balance, -current.balance));
+  }
+  const owed = Math.max(0, -current.balance);
+  const cur = saveCurrency(sim.universe);
+  if (owed === 0) {
+    // What the person holds there covered it: the bank takes it, closes
+    // the account that ran below zero, and nothing is charged off.
+    for (const account of mine) {
+      if (account.id !== current.id && account.negativeSince !== undefined) account.closedAt = sim.now;
+      account.negativeSince = undefined;
+    }
+    if (person.id === sim.universe.playerId) {
+      sim.notify({ category: 'money', title: `${bank.name} Closed An Account`, body: `It had been below zero for ${ESTIMATE.closeAfterDays} days, so the bank took what it was owed from your other money there and closed it.`, importance: 60 });
+    }
+    return;
+  }
+  const debt = collectionsOf(sim, person) ?? sim.openAccount({
+    id: sim.nextId('account'), kind: 'loan', category: COLLECTIONS, name: `Owed To ${bank.name}, In Collections`, ownerId: person.id,
+    institution: bank.name, openedAt: sim.now,
+  });
+  post(sim, `Charged off by ${bank.name}`, 'transfer', [{ accountId: current.id, amount: owed }, { accountId: debt.id, amount: -owed }]);
+  for (const account of mine) { account.negativeSince = undefined; account.pendingItems = undefined; }
+  if (person.credit) {
+    person.credit.score = Math.max(300, person.credit.score - ESTIMATE.chargeOffHit);
+    person.credit.late = [...person.credit.late, sim.now];
+  }
+  const owedTo = collectionsOf(sim, person)?.institution;
+  const to = banksFor(person.currentLocationId).find((b) => b.id !== bank.id && b.name !== owedTo) ?? bank;
+  completeSwitch(sim, person, to, true);
+  if (person.id === sim.universe.playerId) {
+    sim.notify({
+      category: 'money', title: `${bank.name} Closed Your Account`,
+      body: `It was overdrawn for ${ESTIMATE.closeAfterDays} days. ${formatMoney(owed, cur)} it couldn’t recover went to collections and onto your record; pay it from Your Bank. Your money is at ${to.name} now.`,
+      importance: 90,
+    });
+  }
+}
+
 export function registerLending(sim: Simulation): void {
   // Every day: overdraft interest builds, a midnight fee where the bank
   // charges one, and a term deposit that has reached its end pays out.
@@ -465,9 +635,15 @@ export function registerLending(sim: Simulation): void {
             current.odAccrued = (current.odAccrued ?? 0) + (within * rate + beyond * (terms.beyond?.rate ?? rate)) / 365;
           } else if (terms.kind === 'unarranged') {
             if (terms.rate !== undefined) current.odAccrued = (current.odAccrued ?? 0) + (used * terms.rate) / 365;
-          } else if (terms.kind === 'per_item' && terms.rate !== undefined) {
-            current.odAccrued = (current.odAccrued ?? 0) + (used * terms.rate) / 365;
-            charge(s, current, inSaveMoney(s, terms.fee, bank.currency), 'Overdrawn at midnight', 'bank_fee', 'Bank Fees');
+          } else if (terms.kind === 'per_item') {
+            if (terms.rate !== undefined) current.odAccrued = (current.odAccrued ?? 0) + (used * terms.rate) / 365;
+            // One fee for a day a payment overdrew it and that ended overdrawn;
+            // a day it only stayed overdrawn builds interest. Until 2026-09-25
+            // every overdrawn midnight was charged, and a life overdrawn for
+            // 250 days paid CommBank $4,020.
+            if (terms.atMidnight && current.overdrewDay === dateKey(s.now - 1, s.homeZone)) {
+              charge(s, current, inSaveMoney(s, terms.fee, bank.currency), 'Overdrawn at midnight', 'bank_fee', 'Bank Fees');
+            }
           } else if (terms.kind === 'tacit') {
             current.odAccrued = (current.odAccrued ?? 0) + (used * terms.rate) / 365;
           } else if (terms.kind === 'secured') {
@@ -508,7 +684,12 @@ export function registerLending(sim: Simulation): void {
           current.overdraftSince = s.now;
         }
       }
+      if (current && bank && terms?.kind === 'per_item' && terms.nextDay) settlePendingItems(s, current, bank, terms);
       if (current && bank && firstOfMonth) monthlyCharges(s, person, current, bank);
+      if (current && bank && leftOverdrawn(s, person, bank)) {
+        closeForOverdraft(s, person, bank);
+        continue;
+      }
       if (current && bank?.card?.yearly !== undefined && s.now - (current.cardFeeAt ?? current.openedAt) >= 365 * MS_DAY) {
         current.cardFeeAt = s.now;
         if (bank.card.freeUnder === undefined || ageOn(s, person, s.now) >= bank.card.freeUnder) {
@@ -580,6 +761,31 @@ export function registerLending(sim: Simulation): void {
     const person = s.universe.people[String(item.payload.personId)];
     const to = bankById(String(item.payload.bankId));
     if (person && to) completeSwitch(s, person, to);
+  });
+
+  sim.onCommand<{ on: boolean }, { on: boolean }>('bank.debit_overdraft', (p, { sim: s }) => {
+    const person = s.player;
+    const current = currentOf(s, person);
+    const bank = current?.bankId ? bankById(current.bankId) : undefined;
+    const terms = lendingOf(bank).overdraft;
+    if (!current || !bank || terms?.kind !== 'per_item' || !terms.debitCard) throw new CommandError('Your bank doesn’t ask you this.');
+    if (terms.debitCard === 'never') throw new CommandError(`${bank.name} never pays a debit card purchase into an overdraft.`);
+    current.debitOverdraft = p.on === true;
+    return { on: current.debitOverdraft };
+  });
+
+  sim.onCommand<{ amount: Money }, { paid: Money; left: Money }>('bank.pay_collections', (p, { sim: s }) => {
+    const person = s.player;
+    const debt = collectionsOf(s, person);
+    if (!debt) throw new CommandError('You don’t owe anything in collections.');
+    const current = currentOf(s, person);
+    if (!current) throw new CommandError('You have no account to pay from.');
+    const owed = -debt.balance;
+    const paid = Math.min(Math.round(Number(p.amount)), owed, Math.max(0, current.balance));
+    if (!(paid > 0)) throw new CommandError('There’s nothing in the account to pay it with.');
+    post(s, `Paid to collections: ${debt.institution}`, 'transfer', [{ accountId: current.id, amount: -paid }, { accountId: debt.id, amount: paid }]);
+    if (debt.balance === 0) debt.closedAt = s.now;
+    return { paid, left: -debt.balance };
   });
 
   sim.onCommand<{ limit: Money }, { limit: Money; rate?: number }>('bank.arrange_overdraft', (p, { sim: s }) => {
@@ -684,6 +890,7 @@ export function registerLending(sim: Simulation): void {
     const to = banksFor(person.currentLocationId).find((b) => b.id === p.bankId);
     if (!to) throw new CommandError('That isn’t a bank where you live.');
     if (from?.id === to.id) throw new CommandError(`You already bank with ${to.name}.`);
+    if (collectionsOf(s, person)?.institution === to.name) throw new CommandError(`${to.name} won’t open an account for somebody who owes it a charged-off debt.`);
     if (s.universe.scheduled.some((one) => one.kind === SWITCH_KIND && one.status === 'pending')) throw new CommandError('A switch is already under way.');
     const current = currentOf(s, person);
     if (current && current.balance < 0) throw new CommandError('Clear the overdraft before switching; the new bank won’t take it on.');

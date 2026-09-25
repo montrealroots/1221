@@ -115,11 +115,25 @@ part the tool cannot see.
   or figure the research couldn't find keeps a plain account with no fee
   and no rate. Iceland's savings ledger codes are from weak sources (05 at
   Landsbankinn, 13 at Arion), and none was found for Íslandsbanki.
-- **Two overdraft terms are missing a figure.** BNZ charges its unarranged
+- **Some overdraft terms are missing a figure.** BNZ charges its unarranged
   overdraft fee, but its interest is a Personal Overdraft Base Rate plus
-  10% and BNZ doesn't publish the base, so none is charged. The Canadian
-  banks sell overdraft protection by the month or by the use; SLATE
-  arranges the monthly plan only.
+  10% and BNZ doesn't publish the base, so none is charged. LCL and Crédit
+  Agricole don't publish the rate on an unauthorized overdraft, so they
+  charge only their €8 commission. An Icelandic account taken below zero
+  by a bank fee, with no overdraft arranged, is charged the arranged rate;
+  the rate for an unarranged one wasn't found. The Canadian banks sell
+  overdraft protection by the month or by the use; SLATE arranges the
+  monthly plan only.
+- **What follows a charge-off is only partly there.** A bank closes an
+  account left overdrawn for sixty days in a row (SLATE's estimate), and
+  the debt goes to collections and costs the record. A real American bank
+  also reports it to ChexSystems, and most banks then won't open an account
+  for years; SLATE opens one at the next bank, though not the bank that is
+  owed, which won't take them back until it is paid. An account that goes back
+  above zero on each payday is never sixty days overdrawn, as at a real
+  bank, so a life that spends more than it earns can run an overdraft for
+  years. France's rule that a bank must offer a loan after three months of
+  it isn't modeled.
 - **The deposit guarantee and the central bank's rate are shown and change
   nothing.** No bank fails in SLATE, so the guarantee is never called on,
   and no bank's rate is set from the central bank's, which SLATE holds at

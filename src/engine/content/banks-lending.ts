@@ -48,9 +48,21 @@ export type Overdraft =
    * No arrangement: the bank pays what the account can't and charges a fee
    * for each item that takes it below zero, at most so many a day, and none
    * while it is overdrawn by less than a grace amount. Some charge interest
-   * on the overdrawn balance as well.
+   * on the overdrawn balance as well. `atMidnight`: one fee for a day on which
+   * a payment overdrew it and that ends overdrawn, not one an item, and none
+   * for a day it only stays overdrawn (CommBank, Westpac). `nextDay`: the fees
+   * wait until the end of the next business day, and aren't charged if the
+   * account is back within the grace by then (Chase, Wells Fargo). Until
+   * 2026-09-25 a rate on the terms was what made the fee a midnight one, so
+   * a bank couldn't charge interest and a fee an item both. `debitCard`: a
+   * US bank may not pay an everyday debit card purchase into an overdraft
+   * unless the customer has opted in (Regulation E, 12 CFR 1005.17);
+   * `'opt_in'` where the bank offers it, `'never'` where it doesn't.
    */
-  | { kind: 'per_item'; fee: Money; maxPerDay?: number; maxPerMonth?: number; graceUpTo?: Money; rate?: number; source: string }
+  | {
+    kind: 'per_item'; fee: Money; maxPerDay?: number; maxPerMonth?: number; graceUpTo?: Money; rate?: number;
+    atMidnight?: boolean; nextDay?: boolean; debitCard?: 'opt_in' | 'never'; source: string;
+  }
   /**
    * Spain's descubierto: no arrangement, interest on what's overdrawn, and a
    * commission on the most the account was overdrawn in the month, a share
@@ -103,15 +115,15 @@ const ES_TERM: Term = { rate: 0.0202, months: 12, called: 'Depósito a plazo fij
 export const LENDING: Readonly<Record<string, Lending>> = {
   // --- United States
   'us-chase': {
-    overdraft: { kind: 'per_item', fee: 34_00, maxPerDay: 3, graceUpTo: 50_00, source: 'chase.com standard overdraft practice' },
+    overdraft: { kind: 'per_item', fee: 34_00, maxPerDay: 3, graceUpTo: 50_00, nextDay: true, debitCard: 'opt_in', source: 'chase.com standard overdraft practice; Chase Debit Card Coverage, opted into or not; Chase Overdraft Assist, chase.com overdraft FAQs: no fee overdrawn by $50 or less at the end of the business day, or brought back to that by 11 PM ET the next business day' },
     term: { rate: 0.035, months: 7, called: 'CD', source: 'Chase 7-month CD, via fortune.com, 24 September 2026' },
   },
   'us-bank-of-america': {
-    overdraft: { kind: 'per_item', fee: 10_00, source: 'NerdWallet review of Bank of America' },
+    overdraft: { kind: 'per_item', fee: 10_00, debitCard: 'never', source: 'NerdWallet review of Bank of America; bankofamerica.com: everyday debit card purchases and ATM withdrawals aren’t authorized into an overdraft' },
     term: { rate: 0.0375, months: 7, called: 'CD', source: 'Bank of America 7-month CD, via fortune.com, 24 September 2026' },
   },
   'us-wells-fargo': {
-    overdraft: { kind: 'per_item', fee: 35_00, maxPerDay: 3, graceUpTo: 10_00, source: 'wellsfargo.com overdraft services' },
+    overdraft: { kind: 'per_item', fee: 35_00, maxPerDay: 3, graceUpTo: 10_00, nextDay: true, debitCard: 'opt_in', source: 'wellsfargo.com overdraft services; Debit Card Overdraft Service, opted into or not; Extra Day Grace Period: no fees if the balance is back by 11:59 PM ET the next business day' },
     loan: { from: 0.0674, minAmount: 3_000_00, maxAmount: 100_000_00, minMonths: 12, maxMonths: 84, source: 'wellsfargo.com personal loans: from 6.74% APR, $3,000 to $100,000, 12 to 84 months' },
     term: { rate: 0.0389, months: 11, called: 'CD', source: 'Wells Fargo 11-month CD, via fortune.com, 24 September 2026' },
   },
@@ -200,7 +212,7 @@ export const LENDING: Readonly<Record<string, Lending>> = {
   },
   // --- France
   'fr-bnp-paribas': {
-    overdraft: { kind: 'per_item', fee: 8_00, maxPerMonth: 10, source: 'an €8 commission d’intervention an operation, €80 a month at most (the legal cap), via moneyvox.fr' },
+    overdraft: { kind: 'per_item', fee: 8_00, maxPerMonth: 10, rate: 0.184, source: 'an €8 commission d’intervention an operation, €80 a month at most (the legal cap), via moneyvox.fr; 18.40% past an arranged overdraft, or with none (15.90% and 2.50 more), via changer-la-banque.com' },
     loan: FR_LOAN, term: FR_TERM,
   },
   'fr-societe-generale': {
@@ -285,12 +297,12 @@ export const LENDING: Readonly<Record<string, Lending>> = {
   },
   // --- Australia
   'au-commbank': {
-    overdraft: { kind: 'per_item', fee: 15_00, maxPerDay: 1, rate: 0.149, source: 'commbank.com.au: a $15 fee when still overdrawn at midnight, and 14.90% a year' },
+    overdraft: { kind: 'per_item', fee: 15_00, maxPerDay: 1, rate: 0.149, atMidnight: true, source: 'commbank.com.au: a $15 fee when still overdrawn at midnight, and 14.90% a year' },
     loan: { from: 0.0699, to: 0.2199, source: 'commbank.com.au: 6.99% to 21.99% variable' },
     term: { rate: 0.049, months: 12, called: 'Term Deposit', source: 'commbank.com.au: 4.90% standard' },
   },
   'au-westpac': {
-    overdraft: { kind: 'per_item', fee: 15_00, maxPerDay: 1, rate: 0.1501, source: 'westpac.com.au: a $15 overdrawn fee, 15.01% a year' },
+    overdraft: { kind: 'per_item', fee: 15_00, maxPerDay: 1, rate: 0.1501, atMidnight: true, source: 'westpac.com.au: a $15 overdrawn fee, 15.01% a year' },
     loan: { from: 0.0729, source: 'westpac.com.au: from 7.29%' },
     term: { rate: 0.053, months: 12, called: 'Term Deposit', source: 'Westpac 12-month: 5.30%, via savings.com.au, 21 September 2026' },
   },

@@ -87,6 +87,14 @@ export interface Account {
   odDaySum?: Money;
   /** Midnights this month the account sat past its limit by more than the bank's margin, for New Zealand's unarranged overdraft fee. */
   odBeyondDays?: number;
+  /** Items that overdrew it on a day, whose fees wait for the end of the next business day (Chase, Wells Fargo). */
+  pendingItems?: { day: string; count: number }[];
+  /** Since when it has been below zero past any arranged limit, for the bank closing it. */
+  negativeSince?: number;
+  /** The last day a payment took it below zero, for a bank that charges one fee for a day that ends overdrawn. */
+  overdrewDay?: string;
+  /** Opted into the bank paying everyday debit card purchases into an overdraft (a US bank's Regulation E choice). */
+  debitOverdraft?: boolean;
   /** When a returned payment's fee, the debit card's yearly fee and a dormant account's fee were last charged. */
   returnedAt?: Instant;
   cardFeeAt?: Instant;

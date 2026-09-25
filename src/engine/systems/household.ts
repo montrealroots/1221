@@ -49,7 +49,7 @@ import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { instantFromZoned, zonedParts, type Instant } from '../core/time';
 import { clamp } from '../core/rng';
 import { personalityOf } from './personality';
-import { chargeForItem, chargeForPurchase, chargeReturned, overdraftHeadroom } from './lending';
+import { chargeForItem, chargeForPurchase, chargeReturned, overdraftHeadroom, purchaseMayOverdraw } from './lending';
 import { CommandError } from '../core/simulation';
 
 export const RENT_KIND = 'home.rent';
@@ -222,11 +222,11 @@ export function drawFromBank(sim: Simulation, person: Person, amount: Money, wit
   return { postings, short: left };
 }
 
-/** What the bank, its overdraft and the card can pay between them, now. */
-export function canPay(sim: Simulation, person: Person): Money {
+/** What the bank, its overdraft where it may be used, and the card can pay between them, now. */
+export function canPay(sim: Simulation, person: Person, overdraft = true): Money {
   const card = cardOf(sim, person);
   const free = card ? Math.max(0, (card.creditLimit ?? 0) + card.balance) : 0;
-  return inTheBank(sim, person) + overdraftHeadroom(sim, person) + free;
+  return inTheBank(sim, person) + (overdraft ? overdraftHeadroom(sim, person) : 0) + free;
 }
 
 /**
@@ -237,8 +237,12 @@ export function canPay(sim: Simulation, person: Person): Money {
 export function spend(sim: Simulation, person: Person, amount: Money, memo: string, category: string, owe = false): boolean {
   if (amount <= 0) return true;
   const card = cardOf(sim, person);
-  if (!owe && canPay(sim, person) < amount) return false;
-  const bank = drawFromBank(sim, person, amount, true);
+  // A debit card purchase goes into an overdraft only where the bank may pay it there.
+  const overdraft = category !== 'food' || purchaseMayOverdraw(sim, person);
+  if (!owe && canPay(sim, person, overdraft) < amount) return false;
+  const current = checkingOf(sim, person);
+  const before = current?.balance ?? 0;
+  const bank = drawFromBank(sim, person, amount, overdraft);
   const cardFree = card ? Math.max(0, (card.creditLimit ?? 0) + card.balance) : 0;
   const fromCard = Math.min(bank.short, cardFree);
   const owed = bank.short - fromCard;
@@ -246,7 +250,10 @@ export function spend(sim: Simulation, person: Person, amount: Money, memo: stri
   if (fromCard > 0 && card) postings.push({ accountId: card.id, amount: -fromCard });
   if (owed > 0) postings.push({ accountId: arrearsAccount(sim, person).id, amount: -owed });
   sim.post({ memo, category, postings });
-  chargeForItem(sim, person);
+  // An item's fee is for one the bank paid below zero, not one the card took.
+  // Until 2026-09-25 a purchase the card paid was charged one if the account
+  // happened to be overdrawn already.
+  if (current && current.balance < 0 && current.balance < before) chargeForItem(sim, person);
   // A debit the bank couldn't pay went back unpaid first, where it charges
   // for that; a card purchase it can't pay is only declined.
   if (bank.short > 0 && category !== 'food') chargeReturned(sim, person, bank.short);
