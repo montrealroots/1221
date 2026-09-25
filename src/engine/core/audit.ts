@@ -23,9 +23,14 @@
 
 import type { Instant } from './time';
 
-export type HistoryCategory =
-  | 'life' | 'career' | 'finance' | 'property' | 'vehicle' | 'relationship'
-  | 'family' | 'travel' | 'social' | 'project' | 'company' | 'award' | 'education' | 'health';
+/**
+ * What a milestone is about. It named fourteen, for the career, property,
+ * vehicles, relationships, family, travel, the social life, projects, the
+ * company, awards, education and health, systems the gut took out, and a
+ * save from before it may still carry them; only a life's own milestones
+ * are written now.
+ */
+export type HistoryCategory = 'life';
 
 export interface HistoryRecord {
   id: string;

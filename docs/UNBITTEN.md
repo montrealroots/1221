@@ -179,19 +179,20 @@ part the tool cannot see.
 - **Some of what employment law gives isn't modeled.** The law where a
   job is (`content/labor.ts`) pays its premiums, overtime, leave, sick
   pay, extra payments, Korea's rest day and severance, and asks its notice.
-  Not yet: a day called in sick still counts as a missed shift toward being
-  let go, as it did before any was paid; a public holiday not worked isn't
+  Not yet: a public holiday not worked isn't
   paid where the law pays it (Germany, Ireland, New Zealand); unemployment
   benefit, which the research found for all thirteen, has nothing to pay
   it, since nobody is laid off and a dismissal for missed shifts or a
   resignation mostly bars it; Mexico's PTU profit share needs a company's
-  profit; youth minimum rates aren't applied; an employer's notice isn't,
+  profit; youth minimum rates are applied only in Britain and Ireland, where they go by age alone (New Zealand's starting-out rate and France's go by months in work, and Australia's by award); an employer's notice isn't,
   since the only dismissal is for cause. Premiums are the agreement's where
   the research found one: Iceland's Efling–SA tables only for café, bar and
   security work, and Australia's awards told apart by line only on a Sunday.
   Japan's leave is built with the hours, not granted at six months. Untaken
-  leave piles up: no country's year-end rule (Britain's lost leave, Korea's
-  payout, Japan's two-year expiry) is modeled.
+  leave lapses by the law in Britain, Ireland and Japan, and is paid out in
+  Korea; elsewhere it piles up (Germany's turns on whether the employer
+  reminded the worker, and France's and Spain's rules weren't found at a
+  source SLATE could reach).
 - **Work outside the thirteen is simpler, and some of it is missing.** The
   world research (`content/work-world.ts`, 226 countries and territories,
   written when the session's web searches had run out, so from pages fetched
@@ -235,17 +236,11 @@ part the tool cannot see.
   settled by the pronouns or picked under they/them, and printed on Home, the
   rail and the save slot. It is a word and not a stat, so that is all it
   claims to do, but nothing in the simulation reads it either.
-- **`search()` in `content/reference.ts`** is a ranked search over every city
-  with no caller. The note on it says it stays only while a way in might be
-  built, and this page carries it until one is or it goes.
 - **`SlateOfficialResult`** and the `recordOfficialResult` function that writes
-  it: nothing in the build produces an official result.
-- **Five record shapes in `domain/model.ts` with no table** — `Costume`,
-  `Order`, `Training`, `Mark` and `Running` — left by earlier cut-downs, with no
-  importer and no writer.
-- **`HistoryCategory`** still names categories for systems long gone: career,
-  property, vehicle, relationship, family, travel, social, project, company,
-  award, education and health.
+  it: nothing in the build produces an official result. It's a Base44 entity
+  and a deployed function, so taking it out is a deployment and waits for the
+  owner. (`search()`, the five record shapes with no table and the history
+  categories for systems long gone were taken out on 2026-09-25.)
 
 ## Unreachable: correct, and nothing can get there
 

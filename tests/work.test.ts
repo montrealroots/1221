@@ -265,3 +265,16 @@ describe('a save from before the job', () => {
     expect(chose.steps).not.toContain('Gave the character a day job.');
   });
 });
+
+describe('youth minimum wages', () => {
+  it('pays Britain’s 18 to 20 rate from April 2026, Ireland’s by age, and the adult rate with no age given', () => {
+    const april = Date.UTC(2026, 4, 1);
+    expect(minimumWageAt('uk-eng-london', april, 'GBP', 19).hourly).toBe(10_85);
+    expect(minimumWageAt('uk-eng-london', april, 'GBP', 17).hourly).toBe(8_00);
+    expect(minimumWageAt('uk-eng-london', april, 'GBP', 21).hourly).toBe(12_71);
+    expect(minimumWageAt('uk-eng-london', april, 'GBP').hourly).toBe(12_71);
+    expect(minimumWageAt('ie-lei-dublin', april, 'EUR', 18).hourly).toBe(11_32);
+    expect(minimumWageAt('ie-lei-dublin', april, 'EUR', 19).hourly).toBe(12_74);
+    expect(minimumWageAt('ie-lei-dublin', april, 'EUR', 25).hourly).toBe(14_15);
+  });
+});

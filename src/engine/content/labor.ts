@@ -66,6 +66,12 @@ export interface LaborLaw {
     paidOut: boolean;
     /** Paid with each paycheck as a share of gross, not as time off (Canada's vacation pay). */
     asPay?: number;
+    /**
+     * What happens to leave not taken: a leave year starting on the hiring's
+     * anniversary or a date ('MM-DD'), so many months' grace after it, and
+     * then lost, or paid out. Absent, it carries over until the job ends.
+     */
+    expiry?: { yearStart: 'hire' | string; graceMonths: number; action: 'lose' | 'payout'; source: string };
     source: string;
   };
   sick?: {
@@ -151,13 +157,19 @@ export const LABOR: Readonly<Record<string, LaborLaw>> = {
     quitNotice: { steps: [[0, 0]], source: 'LFT: a worker may leave at any time' },
   },
   GB: {
-    leave: { accrual: 0.1207, paidOut: true, source: 'Working Time Regulations: 5.6 weeks, 12.07% of hours worked' },
+    leave: {
+      accrual: 0.1207, paidOut: true, source: 'Working Time Regulations: 5.6 weeks, 12.07% of hours worked',
+      expiry: { yearStart: 'hire', graceMonths: 0, action: 'lose', source: 'ACAS: the 5.6 weeks must be taken in the leave year, which starts on the job’s anniversary where nothing else is agreed; the employer must warn of it first' },
+    },
     sick: { fromDay: 1, rate: 0.8, capDay: 123.25 / 5, paidBy: 'employer', source: 'Statutory Sick Pay from 6 April 2026: 80% of pay or £123.25 a week, from the first day' },
     quitNotice: { steps: [[0, 0], [1, 7]], source: 'Employment Rights Act 1996 s.86: a week, after a month' },
   },
   IE: {
     holiday: { extra: 1, source: 'Organisation of Working Time Act 1997: an extra day’s pay for a public holiday worked' },
-    leave: { accrual: 0.08, paidOut: true, source: 'Organisation of Working Time Act 1997 s.19: 8% of hours worked' },
+    leave: {
+      accrual: 0.08, paidOut: true, source: 'Organisation of Working Time Act 1997 s.19: 8% of hours worked',
+      expiry: { yearStart: '04-01', graceMonths: 6, action: 'lose', source: 'Citizens Information: the leave year runs 1 April to 31 March, and leave is taken in it or, by agreement, within six months after' },
+    },
     sick: { fromDay: 1, rate: 0.7, capDay: 110, daysAYear: 5, afterMonths: 3, paidBy: 'employer', source: 'Sick Leave Act 2022: 5 days in 2026 at 70%, at most €110 a day, after 13 weeks' },
     quitNotice: { steps: [[0, 0], [3, 7]], source: 'Minimum Notice and Terms of Employment Act 1973: a week, after 13 weeks' },
   },
@@ -199,7 +211,10 @@ export const LABOR: Readonly<Record<string, LaborLaw>> = {
   JP: {
     night: { extra: 0.25, from: 22, to: 29, source: 'Labor Standards Act art. 37: 25% from 22:00 to 05:00' },
     overtime: { week: 40, day: 8, extra: 0.25, source: 'Labor Standards Act art. 37: 25% past 8 hours a day or 40 a week' },
-    leave: { accrual: 2 / 50, usableAfterMonths: 6, paidOut: false, source: 'Labor Standards Act art. 39: 10 days after six months, pro rata for part-time' },
+    leave: {
+      accrual: 2 / 50, usableAfterMonths: 6, paidOut: false, source: 'Labor Standards Act art. 39: 10 days after six months, pro rata for part-time',
+      expiry: { yearStart: 'hire', graceMonths: 12, action: 'lose', source: 'MHLW: unused days carry over for one year' },
+    },
     sick: { fromDay: 4, rate: 2 / 3, paidBy: 'state', source: '傷病手当金: two-thirds from the fourth day, for the insured' },
     quitNotice: { steps: [[0, 14]], source: 'Civil Code art. 627: two weeks' },
   },
@@ -207,7 +222,10 @@ export const LABOR: Readonly<Record<string, LaborLaw>> = {
     night: { extra: 0.5, from: 22, to: 30, source: 'Labor Standards Act art. 56: 50% from 22:00 to 06:00' },
     holiday: { extra: 0.5, source: 'Labor Standards Act art. 56: 50% for a holiday worked' },
     overtime: { week: 40, day: 8, extra: 0.5, source: 'Labor Standards Act art. 56: 50% past 8 hours a day or 40 a week' },
-    leave: { accrual: 12 / 250, paidOut: true, source: 'Labor Standards Act art. 60: a day a month in the first year, 15 after' },
+    leave: {
+      accrual: 12 / 250, paidOut: true, source: 'Labor Standards Act art. 60: a day a month in the first year, 15 after',
+      expiry: { yearStart: 'hire', graceMonths: 12, action: 'payout', source: 'Labor Standards Act art. 60: unused days are paid out as annual-leave allowance (연차수당)' },
+    },
     weeklyRestDay: { minHours: 15, source: 'Labor Standards Act art. 55: a paid day off a week at 15 hours or more' },
     severance: { daysAYear: 30, afterMonths: 12, minHours: 15, source: 'Employee Retirement Benefit Security Act: 30 days’ pay a year, after a year' },
     quitNotice: { steps: [[0, 30]], source: 'Civil Code art. 660: a month' },

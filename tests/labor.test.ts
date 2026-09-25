@@ -249,3 +249,58 @@ describe('leaving', () => {
     expect(hourlyWage(sim, sim.player)).toBeGreaterThan(0);
   });
 });
+
+describe('leave that lapses, and sick days that can’t be held against you', () => {
+  it('loses Britain’s untaken leave at the end of the leave year, with a warning a month before', () => {
+    const sim = life('uk-eng-london', { dayJob: true, wealth: 'modest' });
+    sim.advanceBy(300 * MS_DAY);
+    const built = sim.player.job!.leaveHours ?? 0;
+    expect(built).toBeGreaterThan(0);
+    // The year starts on the job's anniversary: the warning comes in its last month.
+    sim.advanceBy(40 * MS_DAY);
+    expect(sim.universe.notifications.some((n) => n.title === 'Use Your Leave')).toBe(true);
+    sim.advanceBy(30 * MS_DAY);
+    expect(sim.universe.notifications.some((n) => n.title === 'Leave Lost')).toBe(true);
+    // What's left is only what the new year has built.
+    expect(sim.player.job!.leaveHours ?? 0).toBeLessThan(built);
+  });
+
+  it('loses Ireland’s leave six months after its leave year, which starts on 1 April', () => {
+    const sim = life('ie-lei-dublin', { dayJob: true, wealth: 'modest' });
+    // Hired in January 2026: that leave belongs to the year from 1 April 2025.
+    sim.advanceTo(local(sim, 2026, 3, 30, 9));
+    expect(sim.player.job!.leaveYears!.map((one) => one.year)).toEqual(['2025-04-01']);
+    sim.advanceTo(local(sim, 2026, 9, 29, 9));
+    expect(sim.player.job!.leaveYears!.some((one) => one.year === '2025-04-01')).toBe(true);
+    sim.advanceTo(local(sim, 2026, 10, 2, 9));
+    expect(sim.player.job!.leaveYears!.some((one) => one.year === '2025-04-01')).toBe(false);
+    expect(sim.universe.notifications.some((n) => n.title === 'Leave Lost')).toBe(true);
+  });
+
+  it('pays Korea’s unused leave out a year after the year it was earned in', () => {
+    const sim = life('kr-11-seoul', { dayJob: true, wealth: 'modest' });
+    const hired = sim.player.job!.since;
+    // The first leave year's leave, earned from the hiring, lapses two years on.
+    sim.advanceTo(local(sim, 2027, 12, 20, 9));
+    const firstYear = sim.player.job!.leaveYears!.find((one) => one.year === new Date(hired).toISOString().slice(0, 10))!;
+    expect(firstYear.hours).toBeGreaterThan(0);
+    const owed = Math.round(firstYear.hours * hourlyWage(sim, sim.player));
+    sim.advanceTo(local(sim, 2028, 1, 6, 9));
+    const allowance = sim.player.job!.pendingPay?.find((one) => one.name === 'Annual Leave Allowance');
+    expect(allowance?.amount).toBeCloseTo(owed, -2);
+    expect(sim.player.job!.leaveYears!.some((one) => one.year === new Date(hired).toISOString().slice(0, 10))).toBe(false);
+  });
+
+  it('doesn’t count a sick day the law pays toward being let go, and does count one it doesn’t', () => {
+    const london = life('uk-eng-london', { dayJob: true, wealth: 'modest' });
+    const shift = london.timeline.pending().filter((i) => i.kind === SHIFT_KIND).sort((a, b) => a.at - b.at)[0]!;
+    london.advanceTo(shift.at);
+    callIn(london, shift);
+    expect(london.player.job!.missed).toEqual([]);
+    const houston = life('us-tx-houston', { dayJob: true, wealth: 'modest' });
+    const other = houston.timeline.pending().filter((i) => i.kind === SHIFT_KIND).sort((a, b) => a.at - b.at)[0]!;
+    houston.advanceTo(other.at);
+    callIn(houston, other);
+    expect(houston.player.job!.missed.length).toBe(1);
+  });
+});

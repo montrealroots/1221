@@ -36,6 +36,9 @@ export interface MinimumWage {
   kind: 'statutory' | 'agreement';
   source: string;
   note?: string;
+  /** A youth rate: for ages from `ageFrom` and under `ageBelow`. The adult rate has neither. */
+  ageFrom?: number;
+  ageBelow?: number;
 }
 
 const D = (y: number, m: number, d: number) => Date.UTC(y, m - 1, d);
@@ -44,12 +47,14 @@ const DOL_STATES = 'https://www.dol.gov/agencies/whd/minimum-wage/state';
 
 const w = (
   where: string, hourly: number, currency: string, from: number, source: string,
-  extra: { to?: number; kind?: MinimumWage['kind']; note?: string } = {},
+  extra: { to?: number; kind?: MinimumWage['kind']; note?: string; ageFrom?: number; ageBelow?: number } = {},
 ): MinimumWage => ({
   where, hourly: Math.round(hourly * 100), currency, effectiveFrom: from,
   ...(extra.to !== undefined ? { effectiveTo: extra.to } : {}),
   kind: extra.kind ?? 'statutory', source,
   ...(extra.note ? { note: extra.note } : {}),
+  ...(extra.ageFrom !== undefined ? { ageFrom: extra.ageFrom } : {}),
+  ...(extra.ageBelow !== undefined ? { ageBelow: extra.ageBelow } : {}),
 });
 
 export const MINIMUM_WAGES: readonly MinimumWage[] = [
@@ -57,6 +62,10 @@ export const MINIMUM_WAGES: readonly MinimumWage[] = [
   w('US', 7.25, 'USD', D(2009, 7, 24), 'https://www.dol.gov/general/topic/wages/minimumwage'),
   w('GB', 12.21, 'GBP', D(2025, 4, 1), 'https://www.gov.uk/national-minimum-wage-rates', { to: D(2026, 4, 1), note: 'National Living Wage, 21 and over.' }),
   w('GB', 12.71, 'GBP', D(2026, 4, 1), 'https://www.gov.uk/national-minimum-wage-rates', { note: 'National Living Wage, 21 and over.' }),
+  // The youth rates from April 2026; the research found none for 2025/26, so
+  // a worker under 21 is paid the adult rate before then.
+  w('GB', 10.85, 'GBP', D(2026, 4, 1), 'https://www.gov.uk/national-minimum-wage-rates', { ageFrom: 18, ageBelow: 21, note: '18 to 20.' }),
+  w('GB', 8.00, 'GBP', D(2026, 4, 1), 'https://www.gov.uk/national-minimum-wage-rates', { ageBelow: 18, note: 'Under 18.' }),
   w('CA', 17.75, 'CAD', D(2025, 4, 1), 'https://www.canada.ca/en/employment-social-development/news/2026/03/government-of-canada-raises-the-federal-minimum-wage.html', { to: D(2026, 4, 1), note: 'Federal; applies to federally regulated work. Provinces set their own.' }),
   w('CA', 18.15, 'CAD', D(2026, 4, 1), 'https://www.canada.ca/en/employment-social-development/news/2026/03/government-of-canada-raises-the-federal-minimum-wage.html', { note: 'Federal; applies to federally regulated work. Provinces set their own.' }),
   w('AU', 24.95, 'AUD', D(2025, 7, 1), 'https://www.fairwork.gov.au/about-us/workplace-laws/annual-wage-review/annual-wage-review-2026', { to: D(2026, 7, 1) }),
@@ -71,7 +80,10 @@ export const MINIMUM_WAGES: readonly MinimumWage[] = [
   w('KR', 10320, 'KRW', D(2026, 1, 1), 'https://www.moel.go.kr/news/enews/report/enewsView.do?news_seq=18144'),
   w('JP', 1121, 'JPY', D(2025, 10, 1), 'https://www.mhlw.go.jp/stf/newpage_74920.html', { to: D(2026, 10, 1), note: 'National weighted average of the prefectural minimums.' }),
   w('JP', 1177, 'JPY', D(2026, 10, 1), 'https://www.mhlw.go.jp/stf/newpage_74920.html', { note: 'National weighted average of the prefectural minimums; prefectures move between October and December.' }),
-  w('IE', 14.15, 'EUR', D(2026, 1, 1), 'https://www.citizensinformation.ie/en/employment/employment-rights-and-conditions/pay-and-employment/minimum-wage/'),
+  w('IE', 14.15, 'EUR', D(2026, 1, 1), 'https://www.citizensinformation.ie/en/employment/employment-rights-and-conditions/pay-and-employment/minimum-wage/', { note: '20 and over.' }),
+  w('IE', 12.74, 'EUR', D(2026, 1, 1), 'https://www.citizensinformation.ie/en/employment/employment-rights-and-conditions/pay-and-employment/minimum-wage/', { ageFrom: 19, ageBelow: 20, note: '19, 90% of the adult rate.' }),
+  w('IE', 11.32, 'EUR', D(2026, 1, 1), 'https://www.citizensinformation.ie/en/employment/employment-rights-and-conditions/pay-and-employment/minimum-wage/', { ageFrom: 18, ageBelow: 19, note: '18, 80%.' }),
+  w('IE', 9.91, 'EUR', D(2026, 1, 1), 'https://www.citizensinformation.ie/en/employment/employment-rights-and-conditions/pay-and-employment/minimum-wage/', { ageBelow: 18, note: 'Under 18, 70%.' }),
   w('FR', 12.02, 'EUR', D(2026, 1, 1), 'https://www.info.gouv.fr/actualite/le-smic-revalorise-au-1er-janvier-2026', { to: D(2026, 6, 1), note: 'SMIC, gross.' }),
   w('FR', 12.31, 'EUR', D(2026, 6, 1), 'https://www.info.gouv.fr/actualite/le-smic-revalorise-le-1er-juin-2026', { note: 'SMIC, gross.' }),
   // 1,221 a month in fourteen payments is 17,094 a year, over 2,080 hours.
@@ -137,12 +149,16 @@ export interface WageFloor {
  * hourly job pays, converted into the town's money where SLATE has a rate for
  * it, and into dollars where it hasn't.
  */
-export function minimumWageAt(cityId: string, at: number, localCurrency: string): WageFloor {
+export function minimumWageAt(cityId: string, at: number, localCurrency: string, age?: number): WageFloor {
   const city = CITIES.require(cityId);
   const keys = [...jurisdictionPath(cityId), cityId];
+  // A youth rate for the worker's age where the place has one, else the adult rate.
+  const young = (one: MinimumWage) => one.ageFrom !== undefined || one.ageBelow !== undefined;
+  const fits = (one: MinimumWage) => age !== undefined && (one.ageFrom ?? 0) <= age && age < (one.ageBelow ?? Number.POSITIVE_INFINITY);
   for (let i = keys.length - 1; i >= 0; i--) {
-    const found = MINIMUM_WAGES.find((one) => one.where === keys[i]
+    const here = MINIMUM_WAGES.filter((one) => one.where === keys[i]
       && one.effectiveFrom <= at && (one.effectiveTo === undefined || at < one.effectiveTo));
+    const found = here.find((one) => young(one) && fits(one)) ?? here.find((one) => !young(one));
     if (found) {
       return {
         hourly: found.hourly, currency: found.currency, kind: found.kind, source: found.source,

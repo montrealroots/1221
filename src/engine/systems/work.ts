@@ -77,6 +77,8 @@ export interface JobState {
   unpaid: UnpaidEntry[];
   /** Paid annual leave built up, and sick time where it builds, in hours. */
   leaveHours?: number;
+  /** The same leave by the leave year it was earned in, oldest first, where the law makes it lapse. */
+  leaveYears?: { year: string; hours: number; warned?: boolean }[];
   sickHours?: number;
   /** Paid sick days used this year, where the law gives a number of days. */
   sickDays?: { year: number; days: number };
@@ -125,6 +127,24 @@ export interface UnpaidEntry {
 /** The law where a job is (`content/labor.ts`). */
 export function lawOf(state: JobState): LaborLaw | undefined {
   return CITIES.get(state.cityId) ? laborAt(jurisdictionPath(state.cityId)) : undefined;
+}
+
+/** The first day of the leave year an instant falls in, as YYYY-MM-DD: the hiring's anniversary, or a fixed date. */
+export function leaveYearOf(state: JobState, yearStart: string, at: Instant, zone: string): string {
+  const p = zonedParts(at, CITIES.get(state.cityId)?.timeZone ?? zone);
+  const [m, d] = yearStart === 'hire'
+    ? (() => { const h = new Date(state.since); return [h.getUTCMonth() + 1, h.getUTCDate()]; })()
+    : yearStart.split('-').map(Number) as [number, number];
+  const startThisYear = Date.UTC(p.year, m - 1, d);
+  const today = Date.UTC(p.year, p.month - 1, p.day);
+  const year = today >= startThisYear ? p.year : p.year - 1;
+  return new Date(Date.UTC(year, m - 1, d)).toISOString().slice(0, 10);
+}
+
+/** So many months after a UTC instant, at the same day of the month. */
+function addMonthsLocal(at: Instant, months: number): Instant {
+  const d = new Date(at);
+  return Date.UTC(d.getUTCFullYear(), d.getUTCMonth() + months, d.getUTCDate());
 }
 
 /** Months with the employer so far. */
@@ -211,6 +231,7 @@ function finalPay(sim: Simulation, person: Person): void {
     pending.push({ name: 'Leave Not Taken', amount: Math.round((state.leaveHours ?? 0) * rate * (1 + (law.leave.loading ?? 0))) });
   }
   state.leaveHours = 0;
+  state.leaveYears = [];
   const weekly = patternHours(patternOf(jobFor(state.jobId), state.fullTime));
   const months = monthsWith(state, sim.now);
   if (law.severance && months >= law.severance.afterMonths && weekly >= law.severance.minHours) {
@@ -271,8 +292,8 @@ export interface Rate {
   note?: string;
 }
 
-export function rateAt(cityId: string, jobId: string, currency: string, at: Instant, employerId?: string): Rate {
-  const floor = minimumWageAt(cityId, at, currency);
+export function rateAt(cityId: string, jobId: string, currency: string, at: Instant, employerId?: string, age?: number): Rate {
+  const floor = minimumWageAt(cityId, at, currency, age);
   const toSave = (amount: number, from: string) => (from === currency ? amount : exchange(amount, from, currency) ?? amount);
   const floorInSave = toSave(floor.hourly, floor.currency);
   const local = countryAt(cityId).currency;
@@ -298,7 +319,7 @@ export function rateAt(cityId: string, jobId: string, currency: string, at: Inst
 /** What an hour of their work pays, in the save's money (`rateAt`). */
 export function hourlyWage(sim: Simulation, person: Person): Money {
   const state = person.job;
-  return state ? rateAt(state.cityId, state.jobId, saveCurrency(sim.universe), sim.now, state.employerId).hourly : 0;
+  return state ? rateAt(state.cityId, state.jobId, saveCurrency(sim.universe), sim.now, state.employerId, ageOf(person, sim.now)).hourly : 0;
 }
 
 /** The same, for a job in a town at a date, in a currency: for a screen with no save yet. */
@@ -484,15 +505,22 @@ export function callIn(sim: Simulation, item: ScheduledItem): void {
   if (!person) return;
   const hours = Number(item.payload.hours) || 0;
   const paid = person.job ? sickPay(sim, person, item.at, hours) : 0;
+  // A sick day the law pays for can't be held against a worker: New York,
+  // California, Washington and Illinois forbid it outright, and it's the
+  // point of a paid sick day everywhere. Until 2026-09-25 every day called
+  // in counted toward being let go, paid or not.
+  const protectedDay = paid >= hours && hours > 0;
   sim.notify({
     category: 'work',
     title: 'You Called In Sick',
-    body: paid > 0
-      ? `${paid} of the ${hours} hours are paid as sick pay, and a missed shift counted against you at work.`
-      : `No pay for the ${hours} hours, and a missed shift counted against you at work.`,
+    body: protectedDay
+      ? `The ${hours} hours are paid as sick pay, and a paid sick day isn’t held against you.`
+      : paid > 0
+        ? `${paid} of the ${hours} hours are paid as sick pay, and a missed shift counted against you at work.`
+        : `No pay for the ${hours} hours, and a missed shift counted against you at work.`,
     importance: 45,
   });
-  strike(sim, person, sim.now);
+  if (!protectedDay) strike(sim, person, sim.now);
 }
 
 /** Books a day's sick pay, where the law pays it, and says how many hours it covers. */
@@ -712,7 +740,18 @@ export function registerWork(sim: Simulation): void {
     const extras = premiumsFor(s, state, item.at, hours);
     state.unpaid.push({ at: item.at, hours, ...(extras.length ? { extras } : {}) });
     const law = lawOf(state);
-    if (law?.leave?.accrual) state.leaveHours = (state.leaveHours ?? 0) + hours * law.leave.accrual;
+    if (law?.leave?.accrual) {
+      const earned = hours * law.leave.accrual;
+      state.leaveHours = (state.leaveHours ?? 0) + earned;
+      if (law.leave.expiry) {
+        const year = leaveYearOf(state, law.leave.expiry.yearStart, item.at, s.homeZone);
+        const years = state.leaveYears ?? [];
+        const last = years[years.length - 1];
+        if (last?.year === year) last.hours += earned;
+        else years.push({ year, hours: earned });
+        state.leaveYears = years;
+      }
+    }
     if (law?.sick?.accrual) state.sickHours = (state.sickHours ?? 0) + hours * law.sick.accrual;
     // Tips are taken home at the end of the shift, where the custom is to tip.
     const tips = tipsFor(s, person, hours);
@@ -851,6 +890,14 @@ export function registerWork(sim: Simulation): void {
     }
     s.timeline.cancel(next.id, s.now);
     state.leaveHours = (state.leaveHours ?? 0) - hours;
+    // Taken from the oldest year first, the one that lapses soonest.
+    let left = hours;
+    for (const year of state.leaveYears ?? []) {
+      const used = Math.min(year.hours, left);
+      year.hours -= used;
+      left -= used;
+    }
+    if (state.leaveYears) state.leaveYears = state.leaveYears.filter((year) => year.hours > 1e-9);
     state.unpaid.push({ at: next.at, hours, kind: 'leave' });
     return { at: next.at, hours };
   });
@@ -1022,6 +1069,32 @@ function lawDay(sim: Simulation, person: Person): void {
     } else if (extra.kind === 'month' && extra.months.includes(p.month) && p.day === 15) {
       due(`${extra.name}-${p.year}-${p.month}`, extra.name, weekly * rate * (52 / 12) * Math.min(1, months / 6));
     }
+  }
+  // Leave that lapses: a warning a month before, as the employer owes one
+  // where the law makes it lost, and then lost or paid out.
+  const expiry = law.leave?.expiry;
+  if (expiry && state.leaveYears?.length) {
+    const keep: { year: string; hours: number; warned?: boolean }[] = [];
+    for (const one of state.leaveYears) {
+      const lapses = addMonthsLocal(Date.parse(`${one.year}T00:00:00Z`), 12 + expiry.graceMonths);
+      if (sim.now >= lapses) {
+        state.leaveHours = Math.max(0, (state.leaveHours ?? 0) - one.hours);
+        if (expiry.action === 'payout') {
+          state.pendingPay = [...(state.pendingPay ?? []), { name: 'Annual Leave Allowance', amount: Math.round(one.hours * rate) }];
+        } else if (person.id === sim.universe.playerId && one.hours >= 0.05) {
+          sim.notify({ category: 'work', title: 'Leave Lost', body: `${one.hours.toFixed(1)} hours of paid leave you didn’t take have lapsed, as the law where you work says.`, importance: 50 });
+        }
+        continue;
+      }
+      if (expiry.action === 'lose' && !one.warned && lapses - sim.now <= 30 * MS_DAY && one.hours >= 0.05) {
+        one.warned = true;
+        if (person.id === sim.universe.playerId) {
+          sim.notify({ category: 'work', title: 'Use Your Leave', body: `${one.hours.toFixed(1)} hours of paid leave lapse on ${new Date(lapses).toISOString().slice(0, 10)} if you don’t take them. Your Work books a shift as leave.`, importance: 60 });
+        }
+      }
+      keep.push(one);
+    }
+    state.leaveYears = keep;
   }
   // Korea: a week of 15 hours or more, with every shift worked, pays its rest day.
   const rest = law.weeklyRestDay;
