@@ -287,6 +287,8 @@ export function GameProvider({
       const now = performance.now();
       const elapsed = Math.max(0, now - lastAt);
       lastAt = now;
+      // A finished life has no more time in it, and none is counted as played.
+      if (sim.universe.meta.endedAt !== undefined) return;
 
       const step = stepper.feed(elapsed);
       if (step < 1) return;

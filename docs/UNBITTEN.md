@@ -78,12 +78,6 @@ part the tool cannot see.
   tolerance was a fourth until the card: over 65 it starts autopay on the
   minimum. The Dispositions & Traits step says so beside the sliders, and
   `tools/wired.mjs` counts them.
-- **The weather model under-produces thunderstorms in some cities.** Weather
-  decides one thing, whether an outdoor shift is called off, and it calls one
-  off only in a thunderstorm. Over two years the model gave Sydney 33 storm
-  days, Tokyo 37, Seoul 30 and New York 14, and London, Paris, Los Angeles and
-  Mexico City none, where London averages about fifteen thunder days a year
-  and Mexico City has a summer of storms. A builder there is never rained off.
 - **Keeps Accounts is said back and nothing more.** It is about what other
   people owe you, and there are no other people. The other three money traits
   declared no knob while nothing spent; since the household they move what

@@ -16,6 +16,7 @@
 
 import { useEffect, useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
+import { LifeEnded } from './LifeEnded';
 import { RAIL_DESTINATIONS } from './destinations';
 import { openDecisions, unreadNotifications } from '@/engine/world/world';
 import { TimeControls } from './TimeControls';
@@ -42,11 +43,16 @@ export function GameShell() {
     return () => window.removeEventListener('keydown', onKey);
   }, [railOpen]);
 
+  // A life that has ended opens onto how it ended, and nothing else.
+  const ended = useWorld((s) => s.universe.meta.endedAt !== undefined);
+
   const go = (to: string, label: string, locked?: boolean) => {
     if (locked) { game.toast(`${label} Is Under Construction.`, 'neutral'); return; }
     navigate(to, label);
     setRailOpen(false);
   };
+
+  if (ended) return <LifeEnded />;
 
   return (
     <div className="shell">

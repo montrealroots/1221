@@ -33,6 +33,8 @@ import { armWork, registerWork, startWork } from './systems/work';
 import { mayWorkIn } from './domain/citizenship';
 import { armHousehold, moveIn, registerHousehold } from './systems/household';
 import { armCredit, openCredit, registerCredit } from './systems/credit';
+import { armBirthdays, registerBirthdays } from './systems/birthdays';
+import { registerMortality } from './systems/mortality';
 import { registerWorld } from './world/world';
 import {
   createUniverse, defaultConfig, wealthIn, type NewSaveConfig,
@@ -53,6 +55,8 @@ export function registerAllSystems(sim: Simulation): void {
   registerWork(sim);
   registerHousehold(sim);
   registerCredit(sim);
+  registerBirthdays(sim);
+  registerMortality(sim);
 }
 
 /** Recurring world processes every save needs running. */
@@ -133,6 +137,7 @@ function populateWorld(sim: Simulation, config: NewSaveConfig): void {
   if (config.dayJob && mayWorkIn(player.citizenshipId, player.currentLocationId).may) startWork(sim, player);
   moveIn(sim, player, config.housing);
   openCredit(sim, player, wealth.creditScore);
+  armBirthdays(sim);
 }
 
 /** Keeps the save-slot summary in step with the world. */
@@ -142,7 +147,10 @@ export function refreshMeta(sim: Simulation): void {
   const worth = netWorth(sim, player.id);
   sim.universe.meta.characterName = player.displayName;
   sim.universe.meta.portrait = player.portrait;
-  sim.universe.meta.careerLabel = PERFORMER_NOUN[player.performerTitle];
+  // A finished life says so on its slot, on every adapter, since the slot
+  // list the server sends carries the labels and not the rest of the meta.
+  const ended = sim.universe.meta.endedAge;
+  sim.universe.meta.careerLabel = PERFORMER_NOUN[player.performerTitle] + (ended !== undefined ? `, Died At ${ended}` : '');
   sim.universe.meta.locationLabel = CITIES.get(player.currentLocationId)?.name ?? 'Unknown';
   sim.universe.meta.worldDateLabel = formatDate(sim.now, sim.homeZone);
   sim.universe.meta.netWorthLabel = formatMoneyCompact(worth.total, saveCurrency(sim.universe));
@@ -225,6 +233,7 @@ export function loadSave(universe: SaveUniverse): Simulation {
   armWork(sim);
   armHousehold(sim);
   armCredit(sim);
+  armBirthdays(sim);
   return sim;
 }
 

@@ -513,6 +513,14 @@ export interface SaveMeta {
    * kept in euros (`DEFAULT_LEDGER_CURRENCY`); `saveCurrency` reads it.
    */
   currency?: string;
+  /**
+   * When the player's life ended, and at what age, once it has
+   * (`systems/mortality.ts`).
+   * A save with these set is a finished life: the clock no longer runs, and
+   * the slot opens onto how it ended.
+   */
+  endedAt?: number;
+  endedAge?: number;
 }
 
 /**

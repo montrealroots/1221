@@ -120,6 +120,8 @@ export function SaveSlots({
             }
 
             const meta = info.meta;
+            // A finished life opens onto how it ended; the clock in it doesn’t run.
+            const finished = meta?.endedAt !== undefined || /, Died At \d+$/.test(meta?.careerLabel ?? '');
             return (
               <div key={slot} className="slot">
                 <div className="slot-number">Slot {slot}</div>
@@ -186,7 +188,7 @@ export function SaveSlots({
 
                     <div className="col gap-2" style={{ marginTop: 'auto' }}>
                       <button className="btn btn-primary btn-block" onClick={() => void load(slot)} disabled={working}>
-                        {working ? 'Opening…' : 'Continue'}
+                        {working ? 'Opening…' : finished ? 'See How It Ended' : 'Continue'}
                       </button>
                       <div className="row gap-2">
                         {info.hasBackup && (

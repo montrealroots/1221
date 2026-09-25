@@ -22,6 +22,7 @@ import { quickSave } from './index';
 import type { Simulation } from './core/simulation';
 import { CITIES } from './content/geography';
 import { weatherOn } from './systems/weather';
+import { endBetween } from './systems/mortality';
 import { MS_DAY } from './core/time';
 
 // ---------------------------------------------------------------------------
@@ -90,3 +91,51 @@ function skyFor(seed: number): Simulation {
   SKIES.set(seed, made);
   return made;
 }
+
+// ---------------------------------------------------------------------------
+// The end of a life
+// ---------------------------------------------------------------------------
+
+interface Year { sim: Simulation; age: number; countryId: string; condition: number }
+
+/** A place in each country the table has, for the country a life is lived in. */
+const COUNTRY_PLACES: Readonly<Record<string, string>> = {
+  jp: 'jp-13-tokyo', is: 'is-39-reykjavik', uk: 'uk-eng-london', us: 'us-ca-losangeles', mx: 'mx-cmx-mexicocity',
+};
+
+defineDecider<Year, string>({
+  id: 'life.end',
+  decides: 'Whether the year up to the next birthday ends the life, and the day it does.',
+  drawnIn: 'src/engine/systems/mortality.ts',
+  reads: {
+    // The life table: a year at twenty and a year at a hundred are not alike.
+    age: (year, t) => ({ ...year, age: 20 + Math.round(t * 90) }),
+    // Where they live: Japan's table sits years below Mexico's, and a year at
+    // ninety-six, in good shape, ends about one life in eight in Tokyo and one
+    // in four in Mexico City.
+    country: (year, t) => {
+      const ids = Object.keys(COUNTRY_PLACES);
+      return { ...year, countryId: ids[Math.min(ids.length - 1, Math.floor(t * ids.length))]! };
+    },
+    // The shape they are in, against what the age allows.
+    condition: (year, t) => ({ ...year, condition: Math.round(t * 100) }),
+    // Two saves are two lives.
+    world: (year, t) => ({ ...year, sim: skyFor(Math.round(t * 20)) }),
+  },
+  // Old, and a different age in each world, so each world's draw meets a
+  // different chance and the country's share of it has somewhere to show.
+  sample: (seed) => ({ sim: skyFor(seed), age: 88 + (seed % 6) * 3, countryId: 'us', condition: 60 }),
+  decide: ({ sim, age, countryId, condition }) => {
+    const player = sim.player;
+    const from = sim.now;
+    const person = {
+      ...player,
+      birthInstant: from - age * 365.2425 * MS_DAY,
+      currentLocationId: COUNTRY_PLACES[countryId]!,
+      wellbeing: { ...player.wellbeing, condition },
+    };
+    const at = endBetween(sim, person, from, from + 365 * MS_DAY);
+    // Which day of the year, or none: the day is part of the decision.
+    return at === undefined ? 'lives' : `day ${Math.floor((at - from) / MS_DAY)}`;
+  },
+});

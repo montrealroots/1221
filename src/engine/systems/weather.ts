@@ -23,6 +23,7 @@ import { sunTimes } from '../core/sun';
 import { CITIES, type City } from '../content/geography';
 import { CLIMATE_NAMES, normalFor, toFahrenheit, usesFahrenheit, type ClimateType } from '../content/climate';
 import { clamp } from '../core/rng';
+import { thunderDaysFor } from '../content/thunder';
 
 export type WeatherCondition =
   | 'Clear' | 'Partly Cloudy' | 'Overcast' | 'Drizzle' | 'Rain' | 'Thunderstorm'
@@ -123,11 +124,59 @@ function dayIndex(instant: Instant, zone: string): number {
   return Math.floor(startOfDay(instant, zone) / MS_DAY);
 }
 
-/** Three draws for a day, from the save's own stream. */
-function noise(sim: Simulation, cityId: string, day: number): { temp: number; wet: number; wind: number } {
+/**
+ * Four draws for a day, from the save's own stream. The fourth, for thunder,
+ * came after the other three, so adding it moved no day's temperature, rain
+ * or wind.
+ */
+function noise(sim: Simulation, cityId: string, day: number): { temp: number; wet: number; wind: number; thunder: number } {
   const rng = sim.rng('weather', cityId, String(day));
-  return { temp: rng.normal(0, 1), wet: rng.next(), wind: rng.next() };
+  return { temp: rng.normal(0, 1), wet: rng.next(), wind: rng.next(), thunder: rng.next() };
 }
+
+/**
+ * How much a day leans toward thunder: a little on a cold day, because winter
+ * thunder does happen on the coasts, and far more on a hot one.
+ *
+ * Thunder is not confined to the wet days. When it was, Madrid and Rome, whose
+ * rain falls in winter, had their thunder in winter too, where AEMET has
+ * Madrid's in May and June. A summer storm there is the day's only rain. A
+ * wet day leaning four times harder was tried as well, and no count, season
+ * or run of days came out differently, since a storm is the day's weather
+ * whatever the rain was going to be; it went.
+ */
+function thunderWeight(highC: number): number {
+  return 0.02 + clamp((highC - 12) / 16, 0, 1) ** 2.5;
+}
+
+/**
+ * How many thunder days a place has a year, divided over its above-freezing
+ * days as they lean: the chance of thunder on a day is this times that day's
+ * weight. Worked out once per city from its normals, since it is the same
+ * every year.
+ */
+const THUNDER_SCALE = new Map<string, number>();
+function thunderScale(city: City, type: ClimateType): number {
+  const held = THUNDER_SCALE.get(city.id);
+  if (held !== undefined) return held;
+  let expected = 0;
+  for (let month = 1; month <= 12; month += 1) {
+    for (let day = 1; day <= DAYS_IN_MONTH[month - 1]!; day += 1) {
+      const normal = normalFor(city, month, day);
+      if (normal.mean - 1.5 <= 0.5) continue;
+      // A wet day runs cooler, and leans a little less. The wet chance is
+      // not quite the share of days that come out wet, since the draw blends
+      // two days. The exact share was worked out first, and every count the
+      // tests hold stayed inside its bounds without it.
+      expected += normal.wetChance * thunderWeight(normal.high - 1.5 - normal.diurnal * 0.2)
+        + (1 - normal.wetChance) * thunderWeight(normal.high);
+    }
+  }
+  const scale = expected > 0 ? thunderDaysFor(city.id, type) / expected : 0;
+  THUNDER_SCALE.set(city.id, scale);
+  return scale;
+}
+const DAYS_IN_MONTH = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
 /**
  * The weather on one day.
@@ -167,11 +216,11 @@ export function weatherOn(sim: Simulation, city: City, instant: Instant): DayWea
 
   let condition: WeatherCondition;
   let precipitation: DayWeather['precipitation'] = 'none';
-  if (wet) {
+  if (meanC > 0.5 && today.thunder < Math.min(0.95, thunderScale(city, normal.type) * thunderWeight(highC))) {
+    condition = 'Thunderstorm'; precipitation = 'storm';
+  } else if (wet) {
     if (meanC <= 0.5) { condition = 'Snow'; precipitation = 'snow'; }
-    else if (highC >= 24 && (normal.type === 'humid_subtropical' || normal.type === 'savanna' || normal.type === 'monsoon' || normal.type === 'equatorial' || normal.type === 'continental') && today.wind > 0.55) {
-      condition = 'Thunderstorm'; precipitation = 'storm';
-    } else if (normal.type === 'oceanic' && today.wind < 0.5) { condition = 'Drizzle'; precipitation = 'rain'; }
+    else if (normal.type === 'oceanic' && today.wind < 0.5) { condition = 'Drizzle'; precipitation = 'rain'; }
     else { condition = 'Rain'; precipitation = 'rain'; }
   } else {
     const cloud = normal.cloud + (yesterday.wet < normal.wetChance ? 0.2 : 0) + (today.wet - 0.5) * 0.3;

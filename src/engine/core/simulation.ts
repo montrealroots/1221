@@ -358,6 +358,11 @@ export class Simulation {
       );
     }
 
+    // A life that has ended keeps its clock where it stopped (`systems/mortality.ts`).
+    if (this.universe.meta.endedAt !== undefined) {
+      return { from, to: from, sentFrom: from, itemsProcessed: 0, missed: [], events: [] };
+    }
+
     // A jump can only be resumed from where it stopped or later.
     const sentFrom = opts.resumes !== undefined && opts.resumes <= from ? opts.resumes : from;
     this.advance = { from, target, sentFrom, stopsForPlayer: opts.stopOnPlayerRequired === true };
@@ -450,6 +455,13 @@ export class Simulation {
         result.itemsProcessed++;
         if (opts.onProgress && result.itemsProcessed % 25 === 0) {
           opts.onProgress(result.itemsProcessed, Math.max(totalDue, result.itemsProcessed), this.universe.now);
+        }
+        // The life ended in that handler: the clock stops at the moment it
+        // did, and nothing after it is worked, paid or charged.
+        if (this.universe.meta.endedAt !== undefined) {
+          result.to = this.universe.now;
+          result.events = this.pendingEvents.splice(0, this.pendingEvents.length);
+          return result;
         }
       }
 
