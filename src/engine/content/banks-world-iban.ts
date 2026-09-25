@@ -7,7 +7,9 @@
  * bank's identifier sits in it, and the identifier of each bank as it
  * appears in its own IBANs, with the source. `systems/banknumber.ts` builds
  * a number to the structure with the bank's code in place. A national check
- * inside a BBAN is built only for Belgium; the others are described here
+ * inside a BBAN was built only for Belgium at first; since 2026-09-25
+ * `core/banknumbers.ts` `withNationalCheck` builds it for every country here
+ * whose rule is published, and the others are described here
  * and drawn, so the IBAN's own check always holds and the national one may
  * not.
  */

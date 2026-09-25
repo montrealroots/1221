@@ -114,12 +114,17 @@ part the tool cannot see.
   (`content/banks-world-iban.ts`): 82 structures, and 321 of 348 banks with
   their own code in place. Where a code wasn't found (Burundi, Djibouti,
   Egypt, Yemen, São Tomé, and a few banks elsewhere) that field is drawn.
-  The national check inside the BBAN is built for Belgium, the French RIB
-  countries and the MOD 97-10 ones (Portugal, Serbia, Montenegro, North
-  Macedonia, Slovenia, Timor-Leste); for the rest (Italy's CIN, Norway,
-  Slovakia, Poland, Croatia, the Czech Republic, Estonia, Hungary, Albania,
-  Kosovo, Finland, Sweden, Denmark) the rule is recorded and the digits
-  drawn. The IBAN's own check always holds.
+  The national check inside the BBAN is built wherever its rule is
+  published: Belgium, the French RIB countries, the MOD 97-10 ones
+  (Portugal, Serbia, Montenegro, North Macedonia, Slovenia, Timor-Leste,
+  Bosnia and Herzegovina, Kosovo) and, since 2026-09-25, Italy and San
+  Marino's CIN, Norway, the Czech Republic, Slovakia, Poland, Croatia,
+  Estonia, Hungary, Albania and Finland with Åland, each checked against the
+  IBAN Registry's example. Three are left with the digits drawn: Sweden,
+  whose check depends on each bank's account type; Denmark with the Faroes
+  and Greenland, whose check is set bank by bank; and São Tomé, whose rule
+  isn't published and whose registry example and a live central-bank IBAN
+  disagree. The IBAN's own check always holds.
 - **The tax engine taxes wages and nothing else.** It was a screen, read only
   by the place card, until the day job: payday withholds income and payroll
   tax through it (`systems/work.ts`). Its sales, property and vehicle rules are

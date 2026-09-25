@@ -168,3 +168,94 @@ export function belgianCheck(first10: string): string {
 export function mod9710(base: string): string {
   return String(98 - mod97(`${base}00`)).padStart(2, '0');
 }
+
+// ---------------------------------------------------------------------------
+// The national checks inside a BBAN, country by country. Each is checked in
+// `tests/banknumbers.test.ts` against the IBAN Registry's example for its
+// country. `withNationalCheck` rewrites the check characters of a drawn BBAN, or says
+// the draw can't carry a valid number (Norway's and the mod-11 countries'
+// check can come out as 10, which is never issued), and the caller draws again.
+// ---------------------------------------------------------------------------
+
+const digitsOf = (text: string) => [...text].map(Number);
+const weighted = (text: string, weights: readonly number[]) =>
+  digitsOf(text).reduce((sum, d, i) => sum + d * weights[i % weights.length]!, 0);
+
+/** Luhn, for Finland: weights 2, 1 from the left over the first 13 digits. */
+export function luhnFi(first13: string): string {
+  const sum = digitsOf(first13).reduce((acc, d, i) => {
+    const p = d * (i % 2 === 0 ? 2 : 1);
+    return acc + Math.floor(p / 10) + (p % 10);
+  }, 0);
+  return String((10 - (sum % 10)) % 10);
+}
+
+/** ISO 7064 MOD 11,10, for Croatia. */
+export function mod1110(digits: string): string {
+  let p = 10;
+  for (const d of digitsOf(digits)) {
+    let s = (p + d) % 10;
+    if (s === 0) s = 10;
+    p = (2 * s) % 11;
+  }
+  return String((11 - p) % 10);
+}
+
+/** A weighted mod-10 check digit: (10 − sum mod 10) mod 10. */
+export function weightedMod10(digits: string, weights: readonly number[]): string {
+  return String((10 - (weighted(digits, weights) % 10)) % 10);
+}
+
+/** Italy's and San Marino's CIN: the letter over the 22 characters after it. */
+export function italianCin(rest: string): string {
+  const ODD = [1, 0, 5, 7, 9, 13, 15, 17, 19, 21, 2, 4, 18, 20, 11, 3, 6, 8, 12, 14, 16, 10, 22, 25, 24, 23];
+  const value = (ch: string) => (/\d/.test(ch) ? Number(ch) : ch.charCodeAt(0) - 65);
+  const sum = [...rest.toUpperCase()].reduce((acc, ch, i) => acc + (i % 2 === 0 ? ODD[value(ch)]! : value(ch)), 0);
+  return String.fromCharCode(65 + (sum % 26));
+}
+
+/** A mod-11 check digit that makes a weighted sum ≡ 0 (weight 1 last), or undefined where it would be 10. */
+function mod11Zero(body: string, weights: readonly number[]): string | undefined {
+  const d = (11 - (weighted(body, weights) % 11)) % 11;
+  return d === 10 ? undefined : String(d);
+}
+
+/**
+ * The BBAN with its national check characters worked out, for a country
+ * SLATE has the rule for; the BBAN unchanged for one it doesn't; undefined
+ * when the draw can't carry a valid number.
+ */
+export function withNationalCheck(country: string, bban: string): string | undefined {
+  switch (country) {
+    case 'BE': return bban.slice(0, 10) + belgianCheck(bban.slice(0, 10));
+    case 'FR': case 'MC': case 'MR': return bban.slice(0, 21) + ribKey(bban.slice(0, 5), bban.slice(5, 10), bban.slice(10, 21));
+    case 'ME': case 'RS': case 'MK': case 'SI': case 'PT': case 'TL': case 'BA': case 'XK':
+      return bban.slice(0, -2) + mod9710(bban.slice(0, -2));
+    case 'FI': return bban.slice(0, 13) + luhnFi(bban.slice(0, 13));
+    case 'AL': return bban.slice(0, 7) + weightedMod10(bban.slice(0, 7), [9, 7, 3, 1]) + bban.slice(8);
+    case 'PL': return bban.slice(0, 7) + weightedMod10(bban.slice(0, 7), [3, 9, 7, 1]) + bban.slice(8);
+    case 'HR': return bban.slice(0, 6) + mod1110(bban.slice(0, 6)) + bban.slice(7, 16) + mod1110(bban.slice(7, 16));
+    case 'EE': {
+      // Weights 7, 3, 1 from the right over digits 3 to 15.
+      const body = bban.slice(2, 15);
+      const w = [...body].map((_, i) => [7, 3, 1][(body.length - 1 - i) % 3]!);
+      const sum = digitsOf(body).reduce((acc, d, i) => acc + d * w[i]!, 0);
+      return bban.slice(0, 15) + String((10 - (sum % 10)) % 10);
+    }
+    case 'HU':
+      return bban.slice(0, 7) + weightedMod10(bban.slice(0, 7), [9, 7, 3, 1])
+        + bban.slice(8, 23) + weightedMod10(bban.slice(8, 23), [9, 7, 3, 1]);
+    case 'IT': case 'SM': return italianCin(bban.slice(1)) + bban.slice(1);
+    case 'NO': {
+      const d = mod11Zero(bban.slice(0, 10), [5, 4, 3, 2, 7, 6, 5, 4, 3, 2]);
+      return d === undefined ? undefined : bban.slice(0, 10) + d;
+    }
+    case 'CZ': case 'SK': {
+      // The prefix is zeros, as most accounts' is; the account number carries the check.
+      const account = bban.slice(10, 19);
+      const d = mod11Zero(account, [6, 3, 7, 9, 10, 5, 8, 4, 2]);
+      return d === undefined ? undefined : `${bban.slice(0, 4)}000000${account}${d}`;
+    }
+    default: return bban;
+  }
+}

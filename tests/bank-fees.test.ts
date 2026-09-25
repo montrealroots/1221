@@ -22,7 +22,7 @@ import { bankingIn, banksIn } from '@/engine/content/banks';
 import { SHEETS } from '@/engine/content/banks-world-sheets';
 import { IBAN_CODES } from '@/engine/content/banks-world-iban';
 import { accountNumber } from '@/engine/systems/banknumber';
-import { belgianCheck, ibanValid, mod9710, ribKey } from '@/engine/core/banknumbers';
+import { ibanValid, withNationalCheck } from '@/engine/core/banknumbers';
 
 const lifeIn = (cityId: string, extra: Record<string, unknown> = {}, seed = 'fees') =>
   quickSave({ startLocationId: cityId, homeRegionId: cityId, livesWhereBorn: true, dayJob: false, ...extra }, seed);
@@ -313,9 +313,8 @@ describe('an IBAN in the rest of the world', () => {
       expect(number.slice(0, 2)).toBe(country);
       const bban = number.slice(4);
       expect(bban.slice(bank.codeOffset ?? 0, (bank.codeOffset ?? 0) + code.length), key).toBe(code);
-      if (country === 'BE') expect(bban.slice(10)).toBe(belgianCheck(bban.slice(0, 10)));
-      if (['FR', 'MC', 'MR'].includes(country)) expect(bban.slice(21)).toBe(ribKey(bban.slice(0, 5), bban.slice(5, 10), bban.slice(10, 21)));
-      if (['ME', 'RS', 'MK', 'SI', 'PT', 'TL'].includes(country)) expect(bban.slice(-2)).toBe(mod9710(bban.slice(0, -2)));
+      // Its national check holds, where SLATE has the country's rule.
+      expect(withNationalCheck(country, bban), key).toBe(bban);
       checked += 1;
     }
     expect(checked).toBeGreaterThan(250);

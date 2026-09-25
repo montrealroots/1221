@@ -10,7 +10,7 @@
 
 import { describe, expect, it } from 'vitest';
 import {
-  abaValid, bbanFrom, belgianCheck, clabeCheck, mod9710, groupIban, iban, ibanValid, kennitala, kennitalaValid, ribKey, spanishControl,
+  abaValid, bbanFrom, belgianCheck, clabeCheck, mod9710, withNationalCheck, groupIban, iban, ibanValid, kennitala, kennitalaValid, ribKey, spanishControl,
 } from '@/engine/core/banknumbers';
 
 describe('the IBAN', () => {
@@ -93,5 +93,67 @@ describe('the national checks inside a BBAN', () => {
     // PT50 0002 0123 1234 5678 9015 4 and RS35 2600 0560 1001 6113 79.
     expect(mod9710('0002012312345678901')).toBe('54');
     expect(mod9710('2600056010016113')).toBe('79');
+  });
+});
+
+describe('each national check against the IBAN Registry’s own example', () => {
+  // Every example IBAN below is the registry's, and valid; withNationalCheck
+  // must leave each unchanged, since its check characters are already right.
+  const EXAMPLES: Record<string, string> = {
+    FI: 'FI2112345600000785',
+    AL: 'AL47212110090000000235698741',
+    BA: 'BA391290079401028494',
+    XK: 'XK051212012345678906',
+    HR: 'HR1210010051863000160',
+    CZ: 'CZ6508000000192000145399',
+    SK: 'SK3112000000198742637541',
+    EE: 'EE382200221020145685',
+    HU: 'HU42117730161111101800000000',
+    IT: 'IT60X0542811101000000123456',
+    SM: 'SM86U0322509800000000270100',
+    NO: 'NO9386011117947',
+    PL: 'PL61109010140000071219812874',
+    BE: 'BE68539007547034',
+    PT: 'PT50000201231234567890154',
+    RS: 'RS35260005601001611379',
+    FR: 'FR1420041010050500013M02606',
+  };
+  for (const [country, example] of Object.entries(EXAMPLES)) {
+    it(`keeps ${country}’s example as it is`, () => {
+      expect(ibanValid(example)).toBe(true);
+      const bban = example.slice(4);
+      if (country === 'CZ' || country === 'SK') {
+        // A prefix of zeros is what SLATE draws; the example has one, so
+        // only the account's check is compared.
+        expect(withNationalCheck(country, bban)!.slice(-10)).toBe(bban.slice(-10));
+      } else {
+        expect(withNationalCheck(country, bban)).toBe(bban);
+      }
+    });
+  }
+
+  // Where each country's check characters sit in its BBAN.
+  const CHECKS: Record<string, number[]> = {
+    FI: [13], AL: [7], BA: [14, 15], XK: [14, 15], HR: [6, 16], EE: [15], HU: [7, 23], IT: [0], SM: [0],
+    NO: [10], PL: [7], BE: [10, 11], PT: [19, 20], RS: [16, 17], FR: [21, 22], CZ: [19], SK: [19],
+  };
+  for (const [country, positions] of Object.entries(CHECKS)) {
+    it(`puts back ${country}’s check characters when they’re wrong`, () => {
+      const bban = EXAMPLES[country]!.slice(4);
+      for (const at of positions) {
+        const was = bban[at]!;
+        const wrong = /\d/.test(was) ? String((Number(was) + 1) % 10) : String.fromCharCode(65 + ((was.charCodeAt(0) - 64) % 26));
+        const damaged = bban.slice(0, at) + wrong + bban.slice(at + 1);
+        expect(withNationalCheck(country, damaged)![at], `${country} at ${at}`).toBe(was);
+      }
+    });
+  }
+
+  it('turns down a draw whose check would be ten, where the country never issues one', () => {
+    // Norway: 8601111796 weighs to a sum where the check comes out as 10.
+    const results = new Set<string | undefined>();
+    for (let n = 0; n < 200; n += 1) results.add(withNationalCheck('NO', String(8601111000 + n).padEnd(10, '0') + '0') === undefined ? 'refused' : 'ok');
+    expect(results.has('refused')).toBe(true);
+    expect(results.has('ok')).toBe(true);
   });
 });
