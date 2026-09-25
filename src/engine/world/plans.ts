@@ -112,14 +112,24 @@ export function checkPlan(sim: Simulation, spec: Partial<PlanSpec>): PlanResult 
  * The handler is what happens when the moment arrives. A plan you were in the
  * right place for is simply done — no notification, because the clock stopped
  * at it and you were looking straight at it. A plan somewhere you are not is
- * missed, and that is worth being told.
+ * missed, and that is worth being told. So is one they were asleep for: the
+ * Sleep dialog warned it would be slept through, and it was marked kept.
  */
 export function registerPlans(sim: Simulation): void {
   sim.onSchedule(PLAN_KIND, (item, s) => {
     const player = s.universe.people[s.universe.playerId];
     const wanted = item.locationId;
-    const kept = Boolean(player) && (!wanted || wanted === player!.currentLocationId);
-    if (kept || !player || !wanted) return;
+    const inPlace = Boolean(player) && (!wanted || wanted === player!.currentLocationId);
+    // Where they are is asked first, so the missed notice below still comes.
+    // Asleep and here, it's missed quietly: a chosen night says for itself
+    // what it slept through (`life.sleep`). The screen always stops at a plan,
+    // and a stop wakes them, so this is the clock run over it on autopilot.
+    const asleep = Boolean(player) && player!.awakeSince !== undefined && player!.awakeSince > item.at;
+    if (player && inPlace && asleep) {
+      item.status = 'missed';
+      return;
+    }
+    if (inPlace || !player || !wanted) return;
 
     item.status = 'missed';
     const there = CITIES.get(wanted)?.name ?? 'somewhere else';

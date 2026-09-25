@@ -24,7 +24,8 @@ import { HOUSING, costsAt, type Housing } from '@/engine/systems/household';
 import { wageAt, withholdingAt } from '@/engine/systems/work';
 import { scoreIsANumberIn, scoreWord } from '@/engine/systems/credit';
 import { minimumWageAt } from '@/engine/content/wages';
-import { jobFor, payCycleFor, payCycleWords, weeklyHours, workDaysWords } from '@/engine/content/jobs';
+import { clockWords, jobFor, payCycleFor, payCycleWords, tipsPerHour, weeklyHours, workDaysWords } from '@/engine/content/jobs';
+import { exchange } from '@/engine/content/currency';
 import { formatMoney } from '@/engine/core/money';
 import { SAVE_SCHEMA_VERSION } from '@/engine/domain/model';
 import { formatPeople } from '@/engine/world/place';
@@ -554,7 +555,7 @@ function PersonalityStep({ config, setConfig }: {
               How you lean, not what you can do. Four of them do something today: Emotional Stability
               sets how quickly stress arrives and how quickly it clears, Conscientiousness sets how well
               the nights go, Ambition sets what running yourself into the ground costs you in stress,
-              and Risk Tolerance over 65 means you carry a balance on your card rather than clear it.
+              and Risk Tolerance over 65 starts your card's autopay on the minimum, so a balance is carried.
               The other three are written into the save and read by nothing yet. Openness waits on
               travel, and Extraversion and Agreeableness wait on other people. Neither is built.
             </p>
@@ -780,8 +781,9 @@ function PersonalStep({
           <div>
             <h2>Background</h2>
             <p className="muted small">
-              The life before this one. What you did for a living is written on your body:
-              it’s the fitness you start with, and it fades like anybody’s unless you keep it up.
+              The life before this one. What you did for a living is written on your body: it’s the
+              fitness you start with, and it fades like anybody’s unless you keep it up. And it’s the
+              day job you fall back on between roles.
             </p>
           </div>
         </div>
@@ -791,7 +793,9 @@ function PersonalStep({
             {BEFORE_ACTING.map((one) => <option key={one.id} value={one.id}>{one.label}</option>)}
           </select>
         </div>
-        <div className="callout">{before.note}</div>
+        <div className="callout">
+          {before.note} It’s also the work you fall back on: {jobFor(before.id).title.toLowerCase()}, {workDaysWords(jobFor(before.id))}, about {jobFor(before.id).overMinimum === 1 ? 'the legal minimum' : `${jobFor(before.id).overMinimum} times the legal minimum`}.
+        </div>
         <div className="grid grid-2" style={{ marginTop: 'var(--s4)' }}>
           <div className="stat">
             <span className="stat-label">Fitness On The First Morning</span>
@@ -882,7 +886,7 @@ function StartingPointStep({ config, set, setConfig }: {
             </div>
             <div className="stat">
               <span className="stat-label">Time Zone</span>
-              <span className="stat-value" style={{ fontSize: 'var(--size-md)' }}>{zoneAbbreviation(Date.now(), city.timeZone)}</span>
+              <span className="stat-value" style={{ fontSize: 'var(--size-md)' }}>{zoneAbbreviation(Date.UTC(config.startYear, config.startMonth - 1, config.startDay, 12), city.timeZone)}</span>
               <span className="stat-note">{city.timeZone}</span>
             </div>
             <div className="stat">
@@ -942,7 +946,7 @@ function StartingPointStep({ config, set, setConfig }: {
  * page, so the card and the first month of play can't disagree. What is
  * real and what is SLATE's estimate is said under it.
  */
-function MonthByMonth({ config, set, cur }: { config: NewSaveConfig; set: Setter; cur: string }) {
+function monthOf(config: NewSaveConfig, cur: string) {
   const at = Date.UTC(config.startYear, config.startMonth - 1, config.startDay, 12);
   const job = jobFor(config.beforeActing);
   const costs = costsAt(config.startLocationId, config.housing, cur, at);
@@ -954,12 +958,23 @@ function MonthByMonth({ config, set, cur }: { config: NewSaveConfig; set: Setter
   const citizenOf = citizenshipFor(config.homeRegionId);
   const right = citizenOf ? mayWorkIn(citizenOf, config.startLocationId) : { may: false };
   const working = config.dayJob && right.may;
-  const pay = working ? Math.round(monthly(wage * weeklyHours(job)) * (1 - withheld)) : 0;
+  const city = CITIES.get(config.startLocationId);
+  const countryInfo = city ? COUNTRIES.get(city.countryId) : undefined;
+  const country = countryInfo?.jurisdictionCode ?? '';
+  // Tips where the custom is to tip, untaxed, on top: they were paid in play
+  // and left out of this line.
+  const tipHour = tipsPerHour(job.id, country);
+  const tipsInCur = tipHour > 0 ? exchange(tipHour, countryInfo?.currency.toUpperCase() ?? 'USD', cur) ?? tipHour : 0;
+  const tips = working ? monthly(tipsInCur * weeklyHours(job)) : 0;
+  const pay = working ? Math.round(monthly(wage * weeklyHours(job)) * (1 - withheld)) + tips : 0;
   const spending = personalityOf({ personality: config.personality, personalityTraits: config.personalityTraits }, 'spending');
   const food = Math.round(costs.day * spending * 365 / 12);
   const left = pay - costs.rent - costs.bills - food;
-  const city = CITIES.get(config.startLocationId);
-  const country = city ? COUNTRIES.get(city.countryId)?.jurisdictionCode ?? '' : '';
+  return { at, job, costs, wage, floor, withheld, citizenOf, right, working, country, tips, pay, spending, food, left };
+}
+
+function MonthByMonth({ config, set, cur }: { config: NewSaveConfig; set: Setter; cur: string }) {
+  const { job, costs, wage, floor, withheld, citizenOf, right, working, country, tips, pay, spending, food, left } = monthOf(config, cur);
   const money = (cents: number) => formatMoney(cents, cur, { cents: false });
 
   return (
@@ -983,13 +998,13 @@ function MonthByMonth({ config, set, cur }: { config: NewSaveConfig; set: Setter
         <input id="day-job" type="checkbox" checked={working} disabled={!right.may} onChange={(e) => set('dayJob', e.target.checked)} />
         <span>
           Keep A Day Job
-          <span className="dim"> — {job.title}, {workDaysWords(job)}, {job.hours} hours from {job.startHour}:00, paid {payCycleWords(payCycleFor(country))}</span>
+          <span className="dim"> — {job.title}, {workDaysWords(job)}, {job.hours} hours from {clockWords(job.startHour)}, paid {payCycleWords(payCycleFor(country))}. You can quit, or look for work later.</span>
         </span>
       </label>
 
       {!right.may && (
         <div className="callout callout-warning" style={{ marginTop: 'var(--s3)' }}>
-          As a citizen of {COUNTRIES.get(citizenOf ?? '')?.name ?? 'another country'}, you’d need a work visa to work in {COUNTRIES.get(right.countryId ?? '')?.name ?? 'this country'}, and café and bar work doesn’t get one. You’d live on what you start with.
+          As a citizen of {COUNTRIES.get(citizenOf ?? '')?.name ?? 'another country'}, you’d need a work visa to work in {COUNTRIES.get(right.countryId ?? '')?.name ?? 'this country'}, and {job.title.toLowerCase()} doesn’t get one. You’d live on what you start with.
         </div>
       )}
 
@@ -999,7 +1014,7 @@ function MonthByMonth({ config, set, cur }: { config: NewSaveConfig; set: Setter
           <span className="stat-value mono">{money(pay)}</span>
           <span className="stat-note">
             {working
-              ? `${formatMoney(wage, cur)} an hour for ${weeklyHours(job)} hours a week, less ${Math.round(withheld * 100)}% tax`
+              ? `${formatMoney(wage, cur)} an hour for ${weeklyHours(job)} hours a week, less ${Math.round(withheld * 100)}% tax${tips > 0 ? `, and about ${formatMoney(tips, cur, { cents: false })} in tips` : ''}`
               : 'No day job: only what you start with'}
           </span>
         </div>
@@ -1040,6 +1055,7 @@ function ReviewStep({ config }: { config: NewSaveConfig }) {
   const age = ageAtStart(config);
   const cur = currencyFor(config.startLocationId);
   const wealth = wealthIn(config.wealth, cur);
+  const month = monthOf(config, cur);
 
   return (
     <div className="col gap-5">
@@ -1084,6 +1100,12 @@ function ReviewStep({ config }: { config: NewSaveConfig }) {
           <Line label="Checking" value={formatMoney(wealth.checking, cur, { cents: false })} />
           <Line label="Savings" value={formatMoney(wealth.savings, cur, { cents: false })} />
           <Line label="Credit Record" value={scoreIsANumberIn(config.startLocationId) ? String(wealth.creditScore) : scoreWord(wealth.creditScore)} />
+          {wealth.cardLimit > 0 && (
+            <Line label="Card" value={`${formatMoney(-wealth.cardBalance, cur, { cents: false })} owed of ${formatMoney(wealth.cardLimit, cur, { cents: false })}`} />
+          )}
+          <Line label="Where You Sleep" value={HOUSING[config.housing].label} />
+          <Line label="Day Job" value={month.working ? month.job.title : month.right.may ? 'None' : 'No Right To Work Here'} />
+          <Line label={month.left >= 0 ? 'Left Over A Month' : 'Short A Month'} value={formatMoney(Math.abs(month.left), cur, { cents: false })} />
         </div>
       </div>
 
@@ -1095,8 +1117,8 @@ function ReviewStep({ config }: { config: NewSaveConfig }) {
         <div style={{ marginTop: 'var(--s3)' }}>
           {config.personalityTraits.length === 0 ? (
             <p className="muted small">
-              You haven’t picked any traits, so only the sliders above lean your sleep and your
-              temper. That’s allowed.
+              You haven’t picked any traits, so only the sliders above lean your sleep, your temper and
+              your card. That’s allowed.
             </p>
           ) : (
             <div className="col gap-3">
@@ -1194,7 +1216,8 @@ function validate(config: NewSaveConfig, step: StepIndex): string[] {
   }
   if (step === STEP['Starting Point']) {
     if (!CITIES.get(config.startLocationId)) issues.push('Choose the town or city you live in.');
-    if (config.startDay < 1 || config.startDay > 28) issues.push('Pick a start day between 1 and 28.');
+    // Nothing on the page sets the start date; this guards a draft that came in wrong.
+    if (config.startDay < 1 || config.startDay > 28) issues.push('This draft’s start date isn’t one SLATE can start on. Start the character again.');
   }
   return issues;
 }

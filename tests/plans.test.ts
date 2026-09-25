@@ -138,7 +138,13 @@ describe('when the moment comes', () => {
     const sim = quickSave({}, 'plan-kept');
     const made = put(sim, { title: 'Table Read', at: sim.now + 2 * MS_DAY });
     const before = unreadNotifications(sim).length;
-    sim.advanceTo(sim.now + 3 * MS_DAY);
+    // As the screen does: the clock stops at it, which wakes them for it, and
+    // goes on. Run straight over at half past seven, a sound sleeper is still
+    // asleep, and it's missed.
+    const target = sim.now + 3 * MS_DAY;
+    const moved = sim.advanceTo(target, { stopOnPlayerRequired: true });
+    expect(moved.interruptedBy?.id).toBe(made.id);
+    sim.advanceTo(target, { resumes: moved.sentFrom });
     expect(sim.timeline.get(made.id!)!.status).toBe('done');
     // No notification: the clock stopped at it and you were looking at it.
     expect(unreadNotifications(sim).length).toBe(before);

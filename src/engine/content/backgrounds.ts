@@ -6,12 +6,14 @@
  * was true: nothing read it. What somebody did for a living before is the one
  * part of a past this build can honestly read, because it is written on the
  * body: years on a building site or a stage floor leave somebody fitter than
- * years at a desk. So each answer is the fitness they start with, and nothing
- * more. It fades like any fitness, to an everyday life's thirty-five, unless
- * they keep it up.
+ * years at a desk. So each answer is the fitness they start with. It fades
+ * like any fitness, to an everyday life's thirty-five, unless they keep it up.
+ * And it is the work they fall back on: the day job it leads to, its hours
+ * and what it pays over the floor (`content/jobs.ts`). This said "nothing
+ * more" once, when fitness was all it was.
  *
  * It is not a skill. A dancer doesn't start better at anything; they start
- * with a dancer's body, and that is all the engine reads.
+ * with a dancer's body and the work a dancer finds between roles.
  */
 
 export interface BeforeActing {

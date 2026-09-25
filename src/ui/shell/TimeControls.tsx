@@ -81,7 +81,14 @@ export function TimeControls() {
           item={due.item}
           wanted={due.wanted}
           // Carrying on is the same jump the stop broke off, not a new one.
-          onGo={() => { clearStandingAt(); advanceTo(due.wanted, due.sentFrom); }}
+          // Going takes the thing's own hours: the clock goes through them, on
+          // to where it was headed if that is later. It went only to where it
+          // was headed, and a stop at a bar shift with the evening asked for
+          // left the clock at six, halfway through the shift.
+          onGo={() => {
+            clearStandingAt();
+            advanceTo(Math.max(due.wanted, due.item.at + (due.item.durationMinutes ?? 60) * 60_000), due.sentFrom);
+          }}
           onStay={() => {
             // Not silent: if the world refuses to let you walk away from
             // something, the reason is the answer and it belongs on screen.
@@ -102,21 +109,21 @@ export function TimeControls() {
       {skipOpen && <SkipDialog onClose={() => setSkipOpen(false)} onSkip={(at) => { advanceTo(at); setSkipOpen(false); }} />}
       {confirm && (
         <Modal
-          title="You Would Miss Something"
+          title="On The Way"
           onClose={() => setConfirm(null)}
           footer={
             <>
               <button className="btn" onClick={() => setConfirm(null)}>Cancel</button>
               <button className="btn btn-primary" onClick={() => { advanceTo(confirm.at); setConfirm(null); }}>
-                Advance Anyway
+                Advance
               </button>
             </>
           }
         >
           <p className="small muted">
-            Advancing to <strong>{confirm.label}</strong> ({formatDateTime(confirm.at, sim.zone)}) passes{' '}
-            {confirm.missed.length} commitment{confirm.missed.length === 1 ? '' : 's'} you are expected at.
-            Time only moves forwards; anything missed stays missed.
+            Advancing to <strong>{confirm.label}</strong> ({formatDateTime(confirm.at, sim.zone)}) comes to{' '}
+            {confirm.missed.length} commitment{confirm.missed.length === 1 ? '' : 's'} on the way. The clock stops at
+            each, and you choose whether you go.
           </p>
           <ul className="small" style={{ margin: 'var(--s2) 0 0', paddingLeft: 'var(--s4)' }}>
             {confirm.missed.slice(0, 8).map((entry) => (
@@ -237,7 +244,6 @@ function DueNow({ item, wanted, onGo, onStay, onClose }: {
   // pay, and a mark against the job (`systems/work.ts`).
   const shift = item.kind === SHIFT_KIND;
   const runs = item.durationMinutes ?? 60;
-  const ahead = Math.max(0, wanted - item.at);
 
   return (
     <Modal
@@ -258,7 +264,7 @@ function DueNow({ item, wanted, onGo, onStay, onClose }: {
       <p className="small">
         It’s {formatTime(item.at, zone)} on {formatDate(item.at, zone)}, and this is what wanted you.
         {' '}Going takes {formatDuration(runs * 60_000)} of the day
-        {ahead > 0 ? `, and the clock carries on to ${formatDateTime(wanted, zone)} after.` : '.'}
+        {`, and the clock goes on to ${formatDateTime(Math.max(wanted, item.at + runs * 60_000), zone)}.`}
       </p>
       {shift && (
         <p className="small muted">
@@ -318,7 +324,7 @@ function SkipDialog({ onClose, onSkip }: { onClose: () => void; onSkip: (at: num
                   </div>
                 </div>
                 {entry.missed.length > 0 && (
-                  <span className="chip chip-warning">{entry.missed.length} missed</span>
+                  <span className="chip chip-warning">{entry.missed.length} on the way</span>
                 )}
                 {entry.needsTravel && <span className="chip chip-negative">Travel</span>}
               </button>
@@ -337,7 +343,7 @@ function SkipDialog({ onClose, onSkip }: { onClose: () => void; onSkip: (at: num
 
               {target.missed.length > 0 ? (
                 <div className="callout callout-warning" style={{ marginBottom: 'var(--s3)' }}>
-                  <strong>You would miss {target.missed.length} commitment{target.missed.length === 1 ? '' : 's'}:</strong>
+                  <strong>The clock stops at {target.missed.length} commitment{target.missed.length === 1 ? '' : 's'} on the way, and asks:</strong>
                   <ul className="small" style={{ margin: 'var(--s2) 0 0', paddingLeft: 'var(--s4)' }}>
                     {target.missed.slice(0, 6).map((entry) => (
                       <li key={entry.id}>{entry.title} — {formatDate(entry.at, sim.zone)}</li>

@@ -10,12 +10,12 @@ import { RATES_NOTE, formatAtlasCompact} from '@/engine/content/currency';
 import { titleCaseLabel } from '@/engine/core/text';
 import { placeProfile, placeKindLabel, formatPeople, type PlaceProfile } from '@/engine/world/place';
 import { WEATHER_EMOJI, forecastFor, weatherAt, weatherShort } from '@/engine/systems/weather';
-import { WEEKDAY_NAMES } from '@/engine/core/time';
+import { MS_DAY, WEEKDAY_NAMES } from '@/engine/core/time';
 import { PERFORMER_NOUN } from '@/engine/core/performer';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Meter, MoneyText, Empty } from '@/ui/components/primitives';
 import { openDecisions, lifeSnapshot, unreadNotifications } from '@/engine/world/world';
-import { nextCommitment, upcoming } from '@/engine/world/calendar';
+import { entriesBetween, nextCommitment, upcoming } from '@/engine/world/calendar';
 import { netWorth } from '@/engine/systems/finance';
 import { readiness, wellbeingSummary } from '@/engine/systems/life';
 import { CITIES } from '@/engine/content/geography';
@@ -24,8 +24,9 @@ import {
 } from '@/engine/core/time';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { scoreIsANumberIn, scoreWord } from '@/engine/systems/credit';
-import { HOUSING, SOFA, moveCost, rentOf } from '@/engine/systems/household';
-import { jobFor, patternHours, patternOf, workDaysWords } from '@/engine/content/jobs';
+import { HOUSING, SOFA, arrearsOf, billsOf, inTheBank, moveCost, rentOf } from '@/engine/systems/household';
+import { clockWords, jobFor, patternHours, patternOf, workDaysWords } from '@/engine/content/jobs';
+import { mayWorkIn } from '@/engine/domain/citizenship';
 import { LookRegion, Open, at } from '@/ui/looks';
 
 export function Home() {
@@ -37,6 +38,19 @@ export function Home() {
   const worth = useWorld((s) => netWorth(s, s.player.id));
   const cur = saveCurrency(sim.universe);
   const unread = useWorld(unreadNotifications);
+  // What still weighs with nothing to decide: rent owed, a notice, a clash in
+  // the next month. "All Clear" was said over all three.
+  const weighing = useWorld((s) => {
+    const owed = arrearsOf(s, s.player);
+    const notice = s.player.home?.noticeUntil;
+    const clash = entriesBetween(s, s.now, s.now + 30 * MS_DAY).some((e) => e.conflicted);
+    const cur = saveCurrency(s.universe);
+    const said: string[] = [];
+    if (notice !== undefined) said.push(`A notice to pay or quit runs until ${formatDate(notice, s.zone)}.`);
+    if (owed > 0) said.push(`You owe your landlord ${formatMoney(owed, cur, { cents: false })}.`);
+    if (clash) said.push('Two things on your calendar in the next month want you at once.');
+    return said;
+  });
 
   const player = snapshot.player;
   const city = snapshot.city ?? CITIES.get(player.currentLocationId);
@@ -65,7 +79,7 @@ export function Home() {
         </div>
         <h1>
           Good {partOfDay(sim.now, sim.zone)},{' '}
-          <Open subject={at('person', player.id)}>{player.firstName}</Open>.
+          <Open subject={at('person', player.id)}>{calledBy(player)}</Open>.
         </h1>
         <p className="muted">
           <Open subject={at('day', today)}>{formatTime(sim.now, sim.zone)}</Open> in{' '}
@@ -133,11 +147,11 @@ export function Home() {
             </p>
           )}
 
-          {soon.length > 1 && (
+          {soon.some((entry) => entry.id !== next?.id) && (
             <>
               <hr className="divider" />
               <div className="col gap-2">
-                {soon.slice(1, 6).map((entry) => (
+                {soon.filter((entry) => entry.id !== next?.id).slice(0, 5).map((entry) => (
                   <div key={entry.id} className="row-between">
                     <span className="small truncate">
                       <Open subject={at('entry', entry.id)}>{titleCaseLabel(entry.title)}</Open>
@@ -165,10 +179,14 @@ export function Home() {
           ) : undefined}
         >
           {decisions.length === 0 && unread.length === 0 ? (
-            <Empty
-              title="All Clear"
-              body="You’re not late for anything and the calendar doesn’t clash. Go and do something you want to do."
-            />
+            weighing.length === 0 ? (
+              <Empty
+                title="All Clear"
+                body="You’re not late for anything, you owe nobody rent, and the calendar doesn’t clash. Go and do something you want to do."
+              />
+            ) : (
+              <Empty title="No Decisions Waiting" body={weighing.join(' ')} />
+            )
           ) : (
             <LookRegion className="list">
               {decisions.slice(0, 6).map((decision) => (
@@ -316,7 +334,7 @@ export function Home() {
                 <Stat
                   label="Cost Of Living"
                   value={place.costOfLivingIndex}
-                  note={`Rent about ${place.localRent ?? formatAtlasCompact(place.medianRentCents)}/mo`}
+                  note={`A one-bedroom about ${place.localRent ?? formatAtlasCompact(place.medianRentCents)}/mo`}
                   look={at('place', place.city.id)}
                 />
                 <Stat
@@ -425,6 +443,7 @@ export function Home() {
             <Stat
               label={primary?.name ?? 'No account'}
               value={<MoneyText amount={primary?.balance ?? 0} currency={cur} />}
+              note={`Your money is kept in ${cur}`}
               look={primary ? at('account', primary.id) : undefined}
             />
             <Stat
@@ -454,41 +473,81 @@ export function Home() {
 /**
  * The job and the home, run by hand: the week the job is worked and a switch
  * between part-time and full-time (`work.set_hours`), an extra shift
- * (`work.extra_shift`), and where they live, what it costs, any notice
- * standing, and moving (`home.move`), with what moving takes from checking.
+ * (`work.extra_shift`), looking for work and quitting (`work.find_job`,
+ * `work.quit`), and where they live, what it costs, any notice standing, and
+ * moving (`home.move`), with what moving takes from the bank.
+ *
+ * Each says when it takes effect: a change of hours from a week on, an extra
+ * shift on its day. They went through silently at first, and the panel showed
+ * the new week at once while the old one still stood.
  */
 function WorkAndHome({ cur }: { cur: string }) {
-  const { sim, run } = useGame();
+  const { sim, run, toast } = useGame();
   const job = useWorld((s) => s.player.job);
   const home = useWorld((s) => s.player.home);
   const rent = useWorld((s) => rentOf(s, s.player));
+  const bills = useWorld((s) => billsOf(s, s.player));
   const costs = useWorld((s) => ({ shared: moveCost(s, s.player, 'shared'), own: moveCost(s, s.player, 'own') }));
+  const right = useWorld((s) => mayWorkIn(s.player.citizenshipId, s.player.currentLocationId));
   const money = (cents: number) => formatMoney(cents, cur, { cents: false });
   const title = job ? jobFor(job.jobId).title : undefined;
   const week = job ? patternOf(jobFor(job.jobId), job.fullTime) : undefined;
   const homeLabel = home ? (home.kind === 'sofa' ? SOFA.label : HOUSING[home.kind].label) : 'Nowhere';
+  const changing = job?.hoursFrom !== undefined && job.hoursFrom > sim.now;
+  const extra = () => {
+    const answer = run<{ at: number }>('work.extra_shift', {});
+    if (answer.ok && answer.value) toast(`Extra shift on ${formatDate(answer.value.at, sim.zone)} at ${formatTime(answer.value.at, sim.zone)}.`, 'positive');
+  };
+  const hours = (fullTime: boolean) => {
+    const answer = run<{ from: number }>('work.set_hours', { fullTime });
+    if (answer.ok && answer.value) toast(`${fullTime ? 'Full-time' : 'Part-time'} from ${formatDate(answer.value.from, sim.zone)}. The week already on the rota stands.`, 'positive');
+  };
+  const look = () => {
+    const answer = run<{ until: number }>('work.find_job', {});
+    if (answer.ok && answer.value) toast(`Looking for work. It takes about three weeks, to around ${formatDate(answer.value.until, sim.zone)}.`, 'positive');
+  };
   return (
     <div className="col gap-3">
-      {job && title && week ? (
+      {job && title && week && job.quitAt === undefined ? (
         <>
           <Stat
-            label={job.lookingUntil !== undefined ? 'Between Jobs' : title}
+            label={job.lookingUntil !== undefined ? 'Looking For Work' : title}
             value={job.lookingUntil !== undefined ? `Until ${formatDate(job.lookingUntil, sim.zone)}` : `${patternHours(week)} Hours A Week`}
-            note={job.lookingUntil !== undefined ? 'Looking for the same kind of work' : `${job.fullTime ? 'Full-time' : 'Part-time'}: ${workDaysWords({ ...jobFor(job.jobId), days: week.days })}, from ${week.startHour}:00`}
+            note={job.lookingUntil !== undefined
+              ? `${title}, the work you know`
+              : `${job.fullTime ? 'Full-time' : 'Part-time'}${changing ? ` from ${formatDate(job.hoursFrom!, sim.zone)}` : ''}: ${workDaysWords({ ...jobFor(job.jobId), days: week.days })}, from ${clockWords(week.startHour)}`}
           />
           {job.lookingUntil === undefined && (
             <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
-              <button className="btn btn-sm" onClick={() => run('work.extra_shift', {})}>Ask For An Extra Shift</button>
-              <button className="btn btn-sm btn-ghost" onClick={() => run('work.set_hours', { fullTime: !job.fullTime })}>
+              <button className="btn btn-sm" onClick={extra}>Ask For An Extra Shift</button>
+              <button className="btn btn-sm btn-ghost" onClick={() => hours(!job.fullTime)}>
                 {job.fullTime ? 'Go Part-Time' : 'Go Full-Time'}
               </button>
+              <button className="btn btn-sm btn-ghost" onClick={() => run('work.quit', {})}>Quit</button>
             </div>
           )}
         </>
       ) : (
-        <Stat label="Work" value="No Day Job" note="Living on what you started with" />
+        <>
+          <Stat
+            label="Work"
+            value="No Day Job"
+            note={job?.quitAt !== undefined
+              ? 'You quit. What you worked is paid on the next payday.'
+              : right.may ? 'Living on what you have' : 'You’d need a work visa to work here, and the work you know doesn’t get one'}
+          />
+          {right.may && (!job || job.quitAt !== undefined) && (
+            <div className="row gap-2">
+              <button className="btn btn-sm" onClick={look}>Look For A Day Job</button>
+            </div>
+          )}
+        </>
       )}
-      <Stat label="Where You Sleep" value={homeLabel} note={home?.kind === 'sofa' ? SOFA.note : `${money(rent)} a month, due on the first`} />
+      <Stat
+        label="Where You Sleep"
+        value={homeLabel}
+        note={home?.kind === 'sofa' ? SOFA.note : `${money(rent + bills)} a month on the first: ${money(rent)} rent and ${money(bills)} bills`}
+      />
       {home?.noticeUntil !== undefined && (
         <div className="callout callout-warning small">
           A notice to pay or quit runs until {formatDate(home.noticeUntil, sim.zone)}. Get what you owe under a month’s rent by then.
@@ -519,16 +578,18 @@ function CardControls({ cur }: { cur: string }) {
   const { sim, run } = useGame();
   const card = useWorld((s) => Object.values(s.universe.accounts).find((a) => a.ownerId === s.player.id && a.kind === 'credit_card' && !a.closedAt));
   const credit = useWorld((s) => s.player.credit);
-  if (!credit) return null;
   const owed = card ? Math.max(0, -card.balance) : 0;
+  // What pressing it pays: all of it, or as much as the bank holds.
+  const payable = useWorld((s) => Math.min(owed, inTheBank(s, s.player)));
+  if (!credit) return null;
   const record = scoreIsANumberIn(sim.player.currentLocationId) ? String(credit.score) : scoreWord(credit.score);
   return (
     <>
       <Stat label="Credit Record" value={record} note={card?.apr !== undefined ? `The card charges ${(card.apr * 100).toFixed(2)}% a year on what's carried` : undefined} />
       {card && (
         <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
-          <button className="btn btn-sm" disabled={owed === 0} onClick={() => run('finance.pay_card', { amount: 'full' })}>
-            Pay Card In Full ({formatMoney(owed, cur, { cents: false })})
+          <button className="btn btn-sm" disabled={payable === 0} onClick={() => run('finance.pay_card', { amount: 'full' })}>
+            {payable < owed ? 'Pay What You Can' : 'Pay Card In Full'} ({formatMoney(payable, cur, { cents: false })})
           </button>
           <button
             className="btn btn-sm btn-ghost"
@@ -558,4 +619,15 @@ function placeLine(place: PlaceProfile): string {
   if (place.tags.length > 0) return place.tags.map(titleCaseLabel).join(' · ');
   const parts = [placeKindLabel(place.city), place.cityPopulation > 0 ? `${formatPeople(place.cityPopulation)} people` : undefined];
   return parts.filter((p): p is string => !!p).join(' · ');
+}
+
+/**
+ * What they're called day to day: the preferred name Identity asks for, and
+ * their first name when they gave none. The greeting used the first name
+ * whatever they'd said.
+ */
+function calledBy(person: { firstName: string; lastName: string; middleName?: string; displayName: string }): string {
+  const full = [person.firstName, person.middleName, person.lastName].filter(Boolean).join(' ');
+  const plain = `${person.firstName} ${person.lastName}`;
+  return person.displayName && person.displayName !== full && person.displayName !== plain ? person.displayName : person.firstName;
 }

@@ -6,11 +6,12 @@
  * The life system asks for these where the knob bites, and nothing else does.
  *
  * The axes lean a knob from the middle of the slider, so 50 is no lean at all
- * and the ends are the most a disposition can do. Three of the seven lean
- * anything, and each leans only what it would in a person: emotional
- * stability how stress arrives and clears, ambition how much running on empty
- * costs, conscientiousness how orderly the nights are. The other four have no
- * knob to lean yet.
+ * and the ends are the most a disposition can do. Three of the seven lean a
+ * knob, and each leans only what it would in a person: emotional stability
+ * how stress arrives and clears, ambition how much running on empty costs,
+ * conscientiousness how orderly the nights are. Risk tolerance leans no knob;
+ * the card reads it directly (`systems/credit.ts`). The other three are read
+ * by nothing yet.
  */
 
 import type { Person, Personality } from '../domain/model';

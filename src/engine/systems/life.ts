@@ -1,8 +1,9 @@
 /**
  * SLATE — Wellbeing and sleep.
  *
- * What is left of daily life. The activities, the meals, the kitchen and the
- * people you did them with are gone; the part Home still reads is here — how
+ * What is left of daily life. The activities, the kitchen and the people you
+ * did them with went; meals came back as a day's groceries and Eat A Meal,
+ * paid for (`systems/household.ts`). The part Home reads is here — how
  * a character is, how the passage of time changes it, and what a player does
  * about it. Sleep was for a while the one interaction left that moved the
  * clock on purpose; eating, showering, working out and unwinding joined it.
@@ -20,7 +21,7 @@ import { formatTime, instantFromZoned, startOfDay, startOfNextDay, zonedParts, M
 import { ceilingAt, recoveryFactorAt } from '../content/lifespan';
 import { personalityOf } from './personality';
 import { LOVED_MOOD, LOVED_RELIEF, lovedIn } from './enjoyment';
-import { onShift } from './work';
+import { SHIFT_KIND, onShift } from './work';
 import { buyTheDaysFood, canPay, fedOn, mealOf, spend } from './household';
 
 // ---------------------------------------------------------------------------
@@ -295,11 +296,19 @@ export function registerLife(sim: Simulation): void {
       const hours = clamp(p.hours, 0.5, 16);
       const start = p.startAt ?? s.now;
       if (start < s.now) throw new CommandError('You can’t go to sleep in the past.');
+      // Not on a shift: its hours are already the job's. A shower was refused
+      // there and a night wasn't, so eight hours could be slept at work and paid.
+      const shift = onShift(s);
+      if (shift && start < shift.at + (shift.durationMinutes ?? 0) * 60_000) {
+        throw new CommandError(`You’re at work until ${formatTime(shift.at + (shift.durationMinutes ?? 0) * 60_000, s.zone)}.`);
+      }
       const wakeAt = start + Math.round(hours * MS_HOUR);
 
       // Anything scheduled during the night still happens; the world does not
       // pause because the player is unconscious.
-      const crossed = s.timeline.between(s.now, wakeAt).filter((i) => i.requiresPlayer === true);
+      // Shifts say for themselves that they were slept through (`systems/work.ts`),
+      // so they aren't counted here too.
+      const crossed = s.timeline.between(s.now, wakeAt).filter((i) => i.requiresPlayer === true && i.kind !== SHIFT_KIND);
 
       // The night is on record from the moment it is booked, as the wake it
       // ends at. So a midnight inside it, one it ends on, and one between the
@@ -633,8 +642,9 @@ const COASTING_STRESS_FLOOR = 14;
 /**
  * What an unattended day eats up to.
  *
- * Meals are not modeled any more — there is no pantry, no shop and no money
- * leaving an account for a plate of food — so a coasted day feeds itself. It
+ * There is no pantry and no shop: a coasted day feeds itself, and since the
+ * household it pays for it, a day's groceries at midnight (`buyTheDaysFood`),
+ * or eats thin when it can't. It
  * feeds itself before the day runs rather than after it, because a day that
  * drains hunger from a full plate is a day somebody ate; one that tops the
  * number up at midnight is a day they starved and then were handed a meal,

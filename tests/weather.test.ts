@@ -13,7 +13,7 @@ import { quickSave } from '@/engine';
 import { CITIES, type City } from '@/engine/content/geography';
 import { MS_DAY, instantFromZoned, startOfDay, zonedParts } from '@/engine/core/time';
 import { climateTypeFor, normalFor, climateByLatitude, baselineTemperature } from '@/engine/content/climate';
-import { forecastFor, hoursOn, shootDayWeather, weatherAt, weatherOn } from '@/engine/systems/weather';
+import { forecastFor, hoursOn, outdoorWeather, weatherAt, weatherOn } from '@/engine/systems/weather';
 
 const sim = quickSave({}, 'weather-seed');
 const city = (id: string) => {
@@ -221,11 +221,11 @@ describe('the sky has a memory and a seed', () => {
   });
 });
 
-describe('a shoot day in the weather', () => {
-  it('is unaffected on a stage, and only ever slowed outdoors', () => {
-    expect(shootDayWeather(sim, 'us-ca-losangeles', sim.now, true).factor).toBe(1);
+describe('outdoor work in the weather', () => {
+  it('is only ever slowed, and called off only in a thunderstorm', () => {
     for (let i = 0; i < 60; i++) {
-      const outdoors = shootDayWeather(sim, 'uk-eng-london', sim.now + i * MS_DAY, false);
+      const outdoors = outdoorWeather(sim, 'uk-eng-london', sim.now + i * MS_DAY);
+      expect(outdoors.calledOff).toBe(outdoors.weather?.condition === 'Thunderstorm');
       expect(outdoors.factor).toBeGreaterThan(0);
       expect(outdoors.factor).toBeLessThanOrEqual(1);
       if (outdoors.factor < 1) expect(outdoors.note).toMatch(/London/);
@@ -239,7 +239,7 @@ describe('a shoot day in the weather', () => {
     for (let i = 0; i < 60; i++) {
       const at = sim.now + i * MS_DAY;
       const day = weatherOn(sim, c, at);
-      const { factor } = shootDayWeather(sim, c.id, at, false);
+      const { factor } = outdoorWeather(sim, c.id, at);
       if (day.precipitation !== 'none') { expect(factor).toBeLessThan(1); wetSeen = true; }
     }
     expect(wetSeen).toBe(true);

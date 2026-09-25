@@ -154,7 +154,7 @@ The owner had paused the rollover work at `0216597` and had it merged into `main
 
 | Item | State |
 |---|---|
-| Branch | `claude/slate-cleanup-e4apmx`, pushed. At the transfer it was two commits ahead of `main` (`0216597`), which the owner merged by PR #20 (`8cec213`). The spring-forward fix (`7aa9a99`) and the day's bounds fix (`96ca032`) went in by PR #21 (`023cd28`). Now eleven commits ahead of `main`: the Windows hygiene commit (`6d73116`), the stale-words commit (`68d7011`), the screenshot fix (`b1320f8`), the looking-after commit (`f23ba99`), the dials commit (`448d68c`), the background commit (`d731521`), the three money commits (`5e60ce7`, `9a12c11`, `1180a04`), the money handoff commit, and the five-fixes commit, which carries this file, for the owner to merge by PR (Start here). |
+| Branch | `claude/slate-cleanup-e4apmx`, pushed. At the transfer it was two commits ahead of `main` (`0216597`), which the owner merged by PR #20 (`8cec213`). The spring-forward fix (`7aa9a99`) and the day's bounds fix (`96ca032`) went in by PR #21 (`023cd28`). Now fifteen commits ahead of `main`: the Windows hygiene commit (`6d73116`), the stale-words commit (`68d7011`), the screenshot fix (`b1320f8`), the looking-after commit (`f23ba99`), the dials commit (`448d68c`), the background commit (`d731521`), the three money commits (`5e60ce7`, `9a12c11`, `1180a04`), the money handoff commit, the five-fixes commit (`f73c10a`), the place-rent and record fix (`240200f`), the Review fix (`bc54eea`), citizenship and risk (`1d24cb7`), and the cohesion pass, which carries this file, for the owner to merge by PR (Start here). |
 | Machine | The owner's Windows 11 machine, `C:\Users\sande\Downloads\1221-GIT`: PowerShell 7.6.6, Claude Code 2.1.281, Git 2.55.0.windows.3, Node v24.20.0, npm 11.19.0, `gh` 2.101.0 at `C:\Program Files\GitHub CLI\gh.exe` (not logged in), repo-local `core.autocrlf=false` (§3, §13) |
 | Last verified code commit | The day's bounds fix (2026-09-24, on Windows), after the spring-forward fix (`7aa9a99`, 2026-09-24), after the fifth review's fixes (`d356640`, 2026-09-23), and those after `1f75a13` (the fourth review's), `0e80f13`, `fa24fe4`, `bd5b2ef`, the night-alone fix `4bfa0fa` and the rollover fix: `7a373c2` and `14c1666`, which fixed what review found (schema 88). Before them, `f10f1b0` (2026-09-23), which fixed what review found in `20da24e` (schema 87), and `36d2cea` (2026-09-22). |
 | GitHub `main` | Replaced by this line on 2026-09-23: merge `4aab498`, carried in by a PR. The old tip `e139e06` (2026-09-18, "Merge pull request #16") is one of that merge's parents. PR #18 (`ed0cab7`) brought schema 87 into it. The rollover fix, the night-alone fix and the review fixes followed by PR on 2026-09-23, with the owner's approval (schema 88), and the fifth review's fixes and the transfer by PR #20 (`8cec213`). |
@@ -556,6 +556,44 @@ The owner asked for the five open items after the money system to be fixed.
 - **Tips** (`tipsPerHour` in `content/jobs.ts`) where the custom is to tip: bar and restaurant work $10 an hour in the US, 7 CAD, 30 MXN, and a little in Britain, Ireland, Australia and New Zealand; a café counter less; nothing in Iceland, Japan, Korea or most of Europe. Paid in cash at the end of the shift (`work.tips`). SLATE's estimates of the custom.
 - **Tokyo.** The money handoff said the gazetteer filed Tokyo under Fukuoka's region code. It didn't: the gazetteer numbers Japan's prefectures as GeoNames does, alphabetically, and 40 is Tokyo there. The mistake was the wage table's, which had keyed Tokyo's rate to JP-13, Tokyo's ISO number and the gazetteer's Hyōgo, so Hyōgo was paid Tokyo's rate. It keys JP-40 now, and a test holds Hyōgo at the national average.
 - **Two screens that disagreed with the game**, found in the full-page walk after it. Home's Where You Are card and the place page printed the atlas's raw rent, "Rent about 473K kr/mo" for Mosfellsbær, while the game charged from the published 205,000. They read `rentAt` now. And Starting Point and Review printed the credit score as a number in Iceland, where Home says a word; all three follow `scoreIsANumberIn` now, under the label Credit Record.
+
+### The cohesion pass (the owner: "make sure everything from starting screen to what's on the main game reads, bites, and … makes cohesively and logical sense")
+
+Two additions, then an audit of every screen against the engine, by a background agent reading the code, and every finding fixed.
+
+- **Citizenship decides the right to work** (`mayWorkIn` in `domain/citizenship.ts`): one's own country or its territories, the EEA and Switzerland, the UK and Ireland, Australia and New Zealand. Anywhere else, no day job: Starting Point says so and disables it, and Look For A Day Job refuses with the reason. It was read by nothing.
+- **Risk tolerance over 65 starts the card's autopay on the minimum** (`openCredit`). The ratchet fell from four idle axes to three.
+- **Weather decides one thing**: a thunderstorm calls off an outdoor shift (Construction and Coaching), unpaid and not held against anybody. `shootDayWeather` became `outdoorWeather`; the screens that said an exterior day "gets through" a share of itself for a production system that no longer exists say what's true now. The model gives London, Paris, Los Angeles and Mexico City no thunderstorms in two years (`docs/UNBITTEN.md`).
+- **Money:**
+  - Savings are drawn on after checking and before the card, as a bank sweeps, for every payment. A character could be evicted with savings in the bank.
+  - A character starts with a month's deposit held on the home they live in, so an eviction keeps something real and a move refunds it.
+  - Pay Card In Full says what it will pay: all of it, or "Pay What You Can".
+- **Work:**
+  - Look For A Day Job (three weeks) and Quit (paid what's owed on the next payday).
+  - A change of hours shows the date it takes effect, and an extra shift says its day.
+  - Go at a shift or a plan carries the clock through its hours.
+  - Sleep is refused on a shift.
+  - A plan slept through on autopilot is missed. The screen always stops at a plan, and a stop wakes them.
+  - Shifts no longer appear twice in the slept-through notices.
+- **Screens:**
+  - Removed the "You Would Miss Something" warning. The clock stops at each commitment and asks, so the screen says that.
+  - Stress and Hygiene name what moves them.
+  - The money pages say interest is charged.
+  - The currency pages name the save's currency, not dollars.
+  - Home's All Clear checks rent owed, a notice and clashes, and otherwise says No Decisions Waiting and why.
+  - Home's rent line includes bills.
+  - The one-bedroom tile is labeled.
+  - The list under the next commitment no longer drops or repeats an item.
+  - The greeting uses the preferred name.
+  - Month By Month counts tips.
+  - Interests & Background names the job Before Acting leads to.
+  - Review shows where you sleep, the day job, the month and the card.
+  - Times are 12-hour everywhere.
+  - The American Canceled is used throughout.
+  - The creation time zone reads the start date.
+  - The visa warning names the job.
+  - Engine comments the money had falsified are corrected.
+- **Verified:** `npm run gate` exits 0 with 704 tests in 34 files, read from a file. 11 mutants on the new engine logic, all killed.
 
 ---
 

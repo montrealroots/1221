@@ -174,12 +174,12 @@ export function CalendarWorkspace() {
                     <div className="small strong">{titleCaseLabel(entry.title)}</div>
                     <div className="xs dim">
                       {formatTime(entry.at, sim.homeZone)}
-                      {entry.durationMinutes ? ` · ${entry.durationMinutes} min` : ''}
+                      {entry.durationMinutes ? ` · ${formatDuration(entry.durationMinutes * MS_MINUTE)}` : ''}
                       {entry.locationId ? ` · ${CITIES.get(entry.locationId)?.name ?? ''}` : ''}
                     </div>
                   </div>
                   {entry.conflicted && <span className="chip chip-negative">Clash</span>}
-                  {statusOf(entry) !== 'pending' && <span className="chip">{titleCaseLabel(statusOf(entry))}</span>}
+                  {statusOf(entry) !== 'pending' && <span className="chip">{statusWords(statusOf(entry))}</span>}
                 </button>
               ))}
             </div>
@@ -362,7 +362,7 @@ function EntryDetail({ entry, onClose }: { entry: CalendarEntry; onClose: () => 
         <Stat label="Kind" value={legend?.label ?? titleCaseLabel(entry.category)} note={city} />
         <Stat
           label="Status"
-          value={titleCaseLabel(status)}
+          value={statusWords(status)}
           tone={status === 'missed' || status === 'cancelled' ? 'negative' : status === 'completed' ? 'positive' : undefined}
         />
       </div>
@@ -384,3 +384,12 @@ const MONTHS = [
   'January', 'February', 'March', 'April', 'May', 'June',
   'July', 'August', 'September', 'October', 'November', 'December',
 ];
+
+/**
+ * A status as the screen says it, in American spelling. The save keeps the
+ * status with a doubled l; the Day look already wrote Canceled while this
+ * wrote the doubled spelling beside it.
+ */
+function statusWords(status: string): string {
+  return status === 'cancelled' ? 'Canceled' : titleCaseLabel(status);
+}

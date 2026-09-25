@@ -8,9 +8,10 @@
  * correlated — a cold snap lasts, a wet spell lingers — because the noise
  * that drives a day is blended from the days around it.
  *
- * Everything the weather does to the world goes through here too: a storm on
- * an exterior shoot day is not a coin flip in the production system any more,
- * it is the weather that day at that location.
+ * Everything the weather does to the world goes through here too: a
+ * thunderstorm that calls off an outdoor shift (`outdoorWeather`) is not a
+ * coin flip, it is the weather that day at that location. It was an exterior
+ * shoot day in the production system once, and the production system is gone.
  */
 
 import type { Simulation } from '../core/simulation';
@@ -355,17 +356,25 @@ export function weatherShort(condition: WeatherCondition): string {
 }
 
 /**
- * How much an exterior shoot day gets done in this weather.
+ * What a day's weather does to work done outdoors.
  *
- * One is a full day. A stage does not care. Everything else is the weather
- * that day at that location, not a roll of the dice: a storm halves the day,
- * snow and rain cost a lot, drizzle and fog a little, and heat past the
- * high thirties or a deep freeze slows a crew whatever the sky is doing.
+ * One is a full day. Everything else is the weather that day at that place,
+ * not a roll of the dice: a storm halves the day, snow and rain cost a lot,
+ * drizzle and fog a little, and heat past the high thirties or a deep freeze
+ * slows anybody whatever the sky is doing. A thunderstorm calls it off
+ * (`calledOff`), as lightning shuts a building site or a pitch: an outdoor
+ * shift doesn't happen and isn't paid (`systems/work.ts`).
+ *
+ * It was named for an exterior shoot day and said the production system used
+ * it. The production system went in the gut, and until the outdoor shift
+ * nothing read it but screens that said it did.
  */
-export function shootDayWeather(sim: Simulation, locationId: string, instant: Instant, onStage: boolean): { factor: number; weather?: DayWeather; note?: string } {
-  if (onStage) return { factor: 1 };
+/** A day that gets through this little outdoors, a thunderstorm's, is called off. */
+const CALLED_OFF = 0.5;
+
+export function outdoorWeather(sim: Simulation, locationId: string, instant: Instant): { factor: number; calledOff: boolean; weather?: DayWeather; note?: string } {
   const city = CITIES.get(locationId);
-  if (!city) return { factor: 1 };
+  if (!city) return { factor: 1, calledOff: false };
   const weather = weatherOn(sim, city, instant);
 
   let factor = 1;
@@ -383,7 +392,7 @@ export function shootDayWeather(sim: Simulation, locationId: string, instant: In
 
   const unit = weather.fahrenheit ? '°F' : '°C';
   const note = factor < 1
-    ? `${weather.condition} in ${city.name}, ${weather.low}${unit} to ${weather.high}${unit}. Exterior work slowed.`
+    ? `${weather.condition} in ${city.name}, ${weather.low}${unit} to ${weather.high}${unit}. Outdoor work slowed.`
     : undefined;
-  return { factor, weather, note };
+  return { factor, calledOff: factor <= CALLED_OFF, weather, note };
 }

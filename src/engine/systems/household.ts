@@ -13,7 +13,10 @@
  * payday that falls that day: due at nine, they went on the card eight hours
  * before an Icelandic wage arrived.
  *
- * Money comes out of checking first, then the card while it has room. What
+ * Money comes out of checking first, then savings, as a bank sweeps an
+ * account that runs dry, then the card while it has room. Savings were shown
+ * as a cushion and nothing ever drew on them: a character could be evicted
+ * with money in the bank. What
  * neither can cover: the rent and bills are owed to the landlord, and paid
  * off the first day there is money to pay them; the day's food isn't bought,
  * and the day is eaten thin (`eatWhatThereIs` in `systems/life.ts`).
@@ -28,8 +31,11 @@
  *
  * Moving costs what it costs a real tenant: a deposit, a month's rent or two
  * where the record is poor (the landlord's credit check), and the rest of
- * this month's rent, all from checking, since a landlord doesn't take a card.
- * The old deposit comes back, less anything still owed.
+ * this month's rent, all from the bank, since a landlord doesn't take a card.
+ * The old deposit comes back, less anything still owed. Somebody who already
+ * lives somewhere when the story starts paid a month's deposit on it once, and
+ * the landlord holds it (`moveIn`): the eviction notice spoke of a deposit
+ * nobody had paid.
  */
 
 import type { Simulation } from '../core/simulation';
@@ -178,12 +184,38 @@ function arrearsAccount(sim: Simulation, person: Person): Account {
   });
 }
 
-/** What checking and the card can pay between them, now. */
+function savingsOf(sim: Simulation, person: Person): Account | undefined {
+  return accountsOf(sim, person).find((a) => a.kind === 'savings');
+}
+
+/** What checking and savings hold between them, now. */
+export function inTheBank(sim: Simulation, person: Person): Money {
+  return Math.max(0, checkingOf(sim, person)?.balance ?? 0) + Math.max(0, savingsOf(sim, person)?.balance ?? 0);
+}
+
+/**
+ * The postings that take an amount out of checking, then savings, as far as
+ * they go, and what's left.
+ */
+export function drawFromBank(sim: Simulation, person: Person, amount: Money): { postings: { accountId: string; amount: Money }[]; short: Money } {
+  const postings: { accountId: string; amount: Money }[] = [];
+  let left = amount;
+  for (const account of [checkingOf(sim, person), savingsOf(sim, person)]) {
+    if (!account || left <= 0) continue;
+    const take = Math.min(left, Math.max(0, account.balance));
+    if (take > 0) {
+      postings.push({ accountId: account.id, amount: -take });
+      left -= take;
+    }
+  }
+  return { postings, short: left };
+}
+
+/** What the bank and the card can pay between them, now. */
 export function canPay(sim: Simulation, person: Person): Money {
-  const checking = checkingOf(sim, person);
   const card = cardOf(sim, person);
   const free = card ? Math.max(0, (card.creditLimit ?? 0) + card.balance) : 0;
-  return Math.max(0, checking?.balance ?? 0) + free;
+  return inTheBank(sim, person) + free;
 }
 
 /**
@@ -193,15 +225,13 @@ export function canPay(sim: Simulation, person: Person): Money {
  */
 export function spend(sim: Simulation, person: Person, amount: Money, memo: string, category: string, owe = false): boolean {
   if (amount <= 0) return true;
-  const checking = checkingOf(sim, person);
   const card = cardOf(sim, person);
   if (!owe && canPay(sim, person) < amount) return false;
-  const fromChecking = Math.min(amount, Math.max(0, checking?.balance ?? 0));
+  const bank = drawFromBank(sim, person, amount);
   const cardFree = card ? Math.max(0, (card.creditLimit ?? 0) + card.balance) : 0;
-  const fromCard = Math.min(amount - fromChecking, cardFree);
-  const owed = amount - fromChecking - fromCard;
-  const postings = [{ accountId: sim.nominalAccount('expense', category === 'rent' ? 'Rent' : category === 'bills' ? 'Bills' : 'Food').id, amount }];
-  if (fromChecking > 0 && checking) postings.push({ accountId: checking.id, amount: -fromChecking });
+  const fromCard = Math.min(bank.short, cardFree);
+  const owed = bank.short - fromCard;
+  const postings = [{ accountId: sim.nominalAccount('expense', category === 'rent' ? 'Rent' : category === 'bills' ? 'Bills' : 'Food').id, amount }, ...bank.postings];
   if (fromCard > 0 && card) postings.push({ accountId: card.id, amount: -fromCard });
   if (owed > 0) postings.push({ accountId: arrearsAccount(sim, person).id, amount: -owed });
   sim.post({ memo, category, postings });
@@ -237,15 +267,16 @@ export function fedOn(person: Person, dayStart: Instant): boolean {
   return !person.home || person.home.fedOn === dayStart;
 }
 
-/** Pays the landlord back out of checking, as far as it goes. */
+/** Pays the landlord back out of the bank, as far as it goes. */
 function settleArrears(sim: Simulation, person: Person): void {
   const owed = arrearsOf(sim, person);
-  const checking = checkingOf(sim, person);
-  if (owed <= 0 || !checking || checking.balance <= 0) return;
-  const paid = Math.min(owed, checking.balance);
+  if (owed <= 0) return;
+  const bank = drawFromBank(sim, person, owed);
+  const paid = owed - bank.short;
+  if (paid <= 0) return;
   sim.post({
     memo: 'Paid the landlord back', category: 'rent',
-    postings: [{ accountId: arrearsAccount(sim, person).id, amount: paid }, { accountId: checking.id, amount: -paid }],
+    postings: [{ accountId: arrearsAccount(sim, person).id, amount: paid }, ...bank.postings],
   });
 }
 
@@ -301,9 +332,9 @@ export function move(sim: Simulation, person: Person, kind: Housing): void {
   }
   const deposit = depositFor(sim, person, kind);
   const rest = restOfMonth(sim, person, kind);
-  if (checking.balance < deposit + rest) {
+  if (inTheBank(sim, person) < deposit + rest) {
     const currency = saveCurrency(sim.universe);
-    throw new CommandError(`Moving in takes ${formatMoney(deposit + rest, currency)} from checking: a ${formatMoney(deposit, currency)} deposit and ${formatMoney(rest, currency)} for the rest of the month.`);
+    throw new CommandError(`Moving in takes ${formatMoney(deposit + rest, currency)} from the bank: a ${formatMoney(deposit, currency)} deposit and ${formatMoney(rest, currency)} for the rest of the month.`);
   }
   const held = depositAccount(sim, person) ?? sim.openAccount({
     id: sim.nextId('account'), kind: 'escrow', name: 'Deposit Held', ownerId: person.id,
@@ -312,7 +343,7 @@ export function move(sim: Simulation, person: Person, kind: Housing): void {
   sim.post({
     memo: 'Deposit and the rest of the month', category: 'rent',
     postings: [
-      { accountId: checking.id, amount: -(deposit + rest) },
+      ...drawFromBank(sim, person, deposit + rest).postings,
       { accountId: held.id, amount: deposit },
       { accountId: sim.nominalAccount('expense', 'Rent').id, amount: rest },
     ],
@@ -427,10 +458,10 @@ export function registerHousehold(sim: Simulation): void {
       if (person.home.kind === 'sofa') {
         w.stress = clamp(w.stress + HOMELESS_STRESS * personalityOf(person, 'stressGain'), 0, 100);
         const buffer = foodOf(s, person) * 30;
-        if ((checkingOf(s, person)?.balance ?? 0) >= moveCost(s, person, 'shared') + buffer) {
+        if (inTheBank(s, person) >= moveCost(s, person, 'shared') + buffer) {
           move(s, person, 'shared');
           if (person.id === s.universe.playerId) {
-            s.notify({ category: 'money', title: 'You Found A Room', body: 'The deposit and the first month are paid. Off the sofa.', importance: 70 });
+            s.notify({ category: 'money', title: 'You Found A Room', body: 'You took a room as soon as you could pay for it: the deposit and the rest of the month are paid. Off the sofa.', importance: 70 });
           }
         }
       }
@@ -447,9 +478,20 @@ export function registerHousehold(sim: Simulation): void {
   });
 }
 
-/** Moves them into a home in the town they are in, with the first of the month's rent due. */
+/**
+ * Moves them into a home in the town they are in, with the first of the
+ * month's rent due, and the month's deposit they paid on it once held by the
+ * landlord, theirs, out of the opening balances.
+ */
 export function moveIn(sim: Simulation, person: Person, kind: Housing): void {
   person.home = { kind, cityId: person.currentLocationId, since: sim.now };
+  const rent = rentOf(sim, person);
+  if (rent > 0) {
+    sim.openAccount({
+      id: sim.nextId('account'), kind: 'escrow', name: 'Deposit Held', ownerId: person.id,
+      institution: 'Your Landlord', openedAt: sim.now, category: 'deposit', balance: rent,
+    });
+  }
   scheduleRent(sim, person, sim.now);
 }
 

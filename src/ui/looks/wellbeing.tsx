@@ -1,10 +1,10 @@
 /**
  * SLATE — you, and the eight dials the day moves.
  *
- * Home shows two of them under a readiness figure. The other six are simulated
- * every hour and appear on no screen in the game: sleep debt, morale,
- * condition, fitness, nourishment and hygiene are all real state that has never
- * been rendered. This is exposure, not invention — every sentence below is
+ * Home shows two of them under a readiness figure. The other six, sleep debt,
+ * morale, condition, fitness, nourishment and hygiene, appeared on no screen
+ * until this page, which said so to the player long after it was showing them.
+ * This is exposure, not invention — every sentence below is
  * `person.wellbeing`, read out.
  *
  * Travel fatigue was a ninth until the sweep that took it out. Nothing in this
@@ -49,7 +49,7 @@ const DIALS = [
   { key: 'condition', name: 'Condition', unit: 'level', behind: 'how much a night puts back, and your mood' },
   { key: 'fitness', name: 'Fitness', unit: 'level', behind: 'how far rest can mend you, and what a workout costs' },
   { key: 'nourishment', name: 'Nourishment', unit: 'level', behind: 'how long since you ate properly' },
-  { key: 'hygiene', name: 'Hygiene', unit: 'level', behind: 'what a room notices, and your mood once it’s low' },
+  { key: 'hygiene', name: 'Hygiene', unit: 'level', behind: 'your mood once it’s low, and readiness a little' },
 ] as const;
 
 type DialKey = typeof DIALS[number]['key'];
@@ -160,7 +160,7 @@ defineLook<Person>('person', {
       body: said.length > 0 ? <>{said}</> : undefined,
       ways,
       provenance: isYou
-        ? 'Eight dials, moved by the hours you keep and the person you are. Six of them the game has never shown you.'
+        ? 'Eight dials, moved by the hours you keep, the work you do, what you can afford and the person you are. Home shows two of them; all eight are here.'
         : 'The same eight dials you have, moved by the same days.',
     };
   },
@@ -212,7 +212,7 @@ function sentenceFor(dial: Dial, now: number): string {
         : n > 40 ? `${n}. Enough for what today asks, not much more.`
           : `${n}. You’re running down, and it shows in everything else.`;
     case 'stress':
-      return n < 25 ? `${n}, and nothing is adding to it. That only starts when you’re running on empty.`
+      return n < 25 ? `${n}, and not much is adding to it. A shift adds some, and so do running on empty, money trouble and a night on a sofa.`
         : n < 60 ? `${n}. Present, manageable, and slower to clear than it was.`
           : `${n}. High enough that sleep is going badly and it feeds itself.`;
     case 'sleepDebt':

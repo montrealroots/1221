@@ -39,7 +39,7 @@ import { exchange } from '../content/currency';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { instantFromZoned, zonedParts, type Instant } from '../core/time';
 import { CommandError } from '../core/simulation';
-import { arrearsOf } from './household';
+import { arrearsOf, drawFromBank, inTheBank } from './household';
 
 export const STATEMENT_KIND = 'card.statement';
 export const DUE_KIND = 'card.due';
@@ -102,16 +102,16 @@ export function minimumDue(sim: Simulation, statement: Money): Money {
   return Math.min(statement, Math.max(usdIn(sim, MINIMUM_USD), Math.round(statement * MINIMUM_SHARE)));
 }
 
-/** Pays the card from checking, as much of an amount as checking holds. Returns what was paid. */
+/** Pays the card from the bank, as much of an amount as checking and savings hold. Returns what was paid. */
 function payCard(sim: Simulation, person: Person, amount: Money): Money {
   const card = cardOf(sim, person);
-  const checking = person.primaryAccountId ? sim.universe.accounts[person.primaryAccountId] : undefined;
-  if (!card || !checking) return 0;
-  const paid = Math.max(0, Math.min(amount, checking.balance, -card.balance));
+  if (!card) return 0;
+  // From the bank, checking then savings, as a sweep would.
+  const paid = Math.max(0, Math.min(amount, inTheBank(sim, person), -card.balance));
   if (paid <= 0) return 0;
   sim.post({
     memo: `Paid ${card.name}`, category: 'card-payment',
-    postings: [{ accountId: card.id, amount: paid }, { accountId: checking.id, amount: -paid }],
+    postings: [{ accountId: card.id, amount: paid }, ...drawFromBank(sim, person, paid).postings],
   });
   if (person.credit) person.credit.paidSinceStatement += paid;
   return paid;
@@ -224,7 +224,7 @@ export function registerCredit(sim: Simulation): void {
         : Math.round(Number(p.amount));
     if (!(want > 0)) throw new CommandError('Pay something, or nothing.');
     const paid = payCard(s, person, want);
-    if (paid === 0) throw new CommandError('There’s nothing in checking to pay it with.');
+    if (paid === 0) throw new CommandError('There’s nothing in the bank to pay it with.');
     return { paid };
   });
 

@@ -34,8 +34,8 @@ export interface CalendarLegendEntry {
  */
 export const CALENDAR_LEGEND: readonly CalendarLegendEntry[] = [
   { category: 'personal', label: 'Personal', colour: '#a86b8c', description: 'Time that’s yours.' },
-  { category: 'work', label: 'Work', colour: '#6b8ca8', description: 'Shifts at the job that pays the rent, and payday.' },
-  { category: 'home', label: 'Home', colour: '#8ca86b', description: 'Rent and bills, due on the first.' },
+  { category: 'work', label: 'Work', colour: '#6b8ca8', description: 'Shifts at the job that pays the rent, the tips at their end, and payday.' },
+  { category: 'home', label: 'Home', colour: '#8ca86b', description: 'Rent and bills on the first, and the card’s statement and payment.' },
   { category: 'holiday', label: 'Holiday', colour: '#8c8c8c', description: 'Public holidays and observances.' },
   { category: 'system', label: 'World', colour: '#6a6a6a', description: 'Background world processing.' },
 ];
@@ -184,7 +184,7 @@ export function monthGrid(sim: Simulation, year: number, month: number): Calenda
   return days;
 }
 
-/** The next N commitments the player actually has to be at. */
+/** The next N things on the calendar the world doesn't keep to itself: commitments, and the shifts, paydays, rent and card dates beside them. */
 export function upcoming(sim: Simulation, limit = 8): CalendarEntry[] {
   return sim.timeline
     .between(sim.now, sim.now + 365 * MS_DAY, (i) => i.category !== 'system')

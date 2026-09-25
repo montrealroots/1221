@@ -15,6 +15,7 @@ import { describe, expect, it } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { createSave, defaultConfig, quickSave } from '@/engine';
 import { placeProfile } from '@/engine/world/place';
+import { outdoorWeather } from '@/engine/systems/weather';
 import { mayWorkIn } from '@/engine/domain/citizenship';
 import { loadCountryCities } from '@/engine/content/geography';
 import { rentAt } from '@/engine/content/rents';
@@ -31,7 +32,12 @@ const accounts = (sim: Simulation) => Object.values(sim.universe.accounts).filte
 const checking = (sim: Simulation) => sim.universe.accounts[sim.player.primaryAccountId!]!;
 const card = (sim: Simulation) => accounts(sim).find((a) => a.kind === 'credit_card');
 const deposit = (sim: Simulation) => accounts(sim).find((a) => a.kind === 'escrow' && a.category === 'deposit');
+/** Checking set to an amount, and savings emptied: payments draw on both. */
 const setChecking = (sim: Simulation, to: number) => {
+  const savings = Object.values(sim.universe.accounts).find((a) => a.ownerId === sim.player.id && a.kind === 'savings');
+  if (savings && savings.balance !== 0) {
+    sim.post({ memo: 'test', category: 'test', postings: [{ accountId: savings.id, amount: -savings.balance }, { accountId: sim.nominalAccount('income', 'Test').id, amount: savings.balance }] });
+  }
   const move = to - checking(sim).balance;
   if (move !== 0) sim.post({ memo: 'test', category: 'test', postings: [{ accountId: checking(sim).id, amount: move }, { accountId: sim.nominalAccount('income', 'Test').id, amount: -move }] });
 };
@@ -117,8 +123,11 @@ describe('moving', () => {
     const sim = quickSave({ dayJob: false, wealth: 'comfortable' }, 'move');
     const before = checking(sim).balance;
     const cost = moveCost(sim, sim.player, 'own');
+    // The month's deposit held on the room they started in comes back first.
+    const startingDeposit = deposit(sim)!.balance;
+    expect(startingDeposit).toBe(rentOf(sim, sim.player));
     expect(sim.execute({ kind: 'home.move', payload: { kind: 'own' } }).ok).toBe(true);
-    expect(before - checking(sim).balance).toBe(cost);
+    expect(before - checking(sim).balance).toBe(cost - startingDeposit);
     expect(sim.player.home!.kind).toBe('own');
     const held = deposit(sim)!.balance;
     const back = checking(sim).balance;
@@ -255,5 +264,73 @@ describe('what citizenship and risk decide', () => {
     const reckless = quickSave({ personality: { ...defaultConfig().personality, riskTolerance: 90 } }, 'risk-high');
     expect(cautious.player.credit!.autopay).toBe('full');
     expect(reckless.player.credit!.autopay).toBe('minimum');
+  });
+});
+
+describe('what the audit found', () => {
+  it('draws on savings once checking is empty, before the card', () => {
+    const sim = quickSave({ dayJob: false, wealth: 'modest' }, 'sweep');
+    const savings = accounts(sim).find((a) => a.kind === 'savings')!;
+    const move = -checking(sim).balance;
+    sim.post({ memo: 'test', category: 'test', postings: [{ accountId: checking(sim).id, amount: move }, { accountId: sim.nominalAccount('income', 'Test').id, amount: -move }] });
+    const before = savings.balance;
+    const cardBefore = card(sim)!.balance;
+    spend(sim, sim.player, 10_000_00, 'Rent', 'rent', true);
+    expect(before - savings.balance).toBe(10_000_00);
+    expect(card(sim)!.balance).toBe(cardBefore);
+  });
+
+  it('starts with the month’s deposit held on the home they live in', () => {
+    const sim = quickSave({ dayJob: false }, 'held');
+    expect(deposit(sim)!.balance).toBe(rentOf(sim, sim.player));
+    expect(sim.ledger.audit()).toEqual([]);
+  });
+
+  it('misses a plan slept through on autopilot, and keeps one the clock stopped at', () => {
+    const sim = quickSave({ dayJob: false }, 'asleep-plan');
+    const at = instantFromZoned({ year: 2026, month: 1, day: 7, hour: 7, minute: 30 }, sim.zone);
+    const made = sim.execute<{ id: string }>({ kind: 'calendar.schedule', payload: { title: 'Early Call', at } });
+    sim.advanceTo(at + MS_HOUR);
+    expect(sim.timeline.get(made.value!.id)!.status).toBe('missed');
+  });
+
+  it('won’t let anybody sleep on a shift', () => {
+    const sim = quickSave({}, 'sleep-at-work');
+    const first = shifts(sim)[0]!;
+    sim.advanceTo(first.at + MS_HOUR);
+    const answer = sim.execute({ kind: 'life.sleep', payload: { hours: 8 } });
+    expect(answer.ok).toBe(false);
+    expect(answer.error).toMatch(/at work until/);
+  });
+
+  it('looks for work in three weeks where there’s a right to it, and quits', () => {
+    const sim = quickSave({ dayJob: false }, 'find');
+    const looking = sim.execute<{ until: number }>({ kind: 'work.find_job', payload: {} });
+    expect(looking.ok, looking.error).toBe(true);
+    expect(looking.value!.until - sim.now).toBe(21 * MS_DAY);
+    days(sim, 23);
+    expect(sim.player.job!.lookingUntil).toBeUndefined();
+    expect(shifts(sim).length).toBeGreaterThan(0);
+    expect(sim.execute({ kind: 'work.quit', payload: {} }).ok).toBe(true);
+    expect(shifts(sim)).toHaveLength(0);
+    const abroad = createSave(1, 'find-abroad', { ...defaultConfig(), startLocationId: 'us-ca-losangeles', livesWhereBorn: false });
+    const refused = abroad.execute({ kind: 'work.find_job', payload: {} });
+    expect(refused.ok).toBe(false);
+    expect(refused.error).toMatch(/visa/);
+  });
+
+  it('calls off an outdoor shift in a thunderstorm, unpaid and not held against anybody', () => {
+    // A builder in Sydney, where the model gives thunderstorms their season, meets one.
+    const sim = createSave(1, 'storm', { ...defaultConfig(), beforeActing: 'trades', homeRegionId: 'au-nsw-sydney', startLocationId: 'au-nsw-sydney', livesWhereBorn: true, wealth: 'inherited' });
+    let calledOff = 0;
+    for (let d = 0; d < 730 && calledOff === 0; d += 1) {
+      days(sim, 1);
+      calledOff = sim.universe.scheduled.filter((i) => i.kind === SHIFT_KIND && i.payload.calledOff === true).length;
+    }
+    expect(calledOff).toBeGreaterThan(0);
+    const off = sim.universe.scheduled.find((i) => i.kind === SHIFT_KIND && i.payload.calledOff === true)!;
+    expect(outdoorWeather(sim, 'au-nsw-sydney', off.at).calledOff).toBe(true);
+    expect(sim.player.job!.unpaid.some((one) => one.at === off.at)).toBe(false);
+    expect(sim.player.job!.missed).not.toContain(off.at);
   });
 });

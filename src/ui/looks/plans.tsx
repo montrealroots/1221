@@ -16,7 +16,7 @@ import { CITIES, type City } from '@/engine/content/geography';
 import { MS_MINUTE, dateKey, formatDate, formatRelative, formatTime, startOfDay, startOfNextDay } from '@/engine/core/time';
 import { entriesBetween, upcoming, type CalendarEntry } from '@/engine/world/calendar';
 import { PLAN_KIND } from '@/engine/world/plans';
-import { hoursOn, shootDayWeather, type HourWeather } from '@/engine/systems/weather';
+import { hoursOn, type HourWeather } from '@/engine/systems/weather';
 import type { Simulation } from '@/engine';
 import { Stat } from '@/ui/components/primitives';
 import { clockWord } from './weather';
@@ -99,7 +99,6 @@ defineLook<Stretch>('stretch', {
     const unit = first.fahrenheit ? '°F' : '°C';
     const cold = hours.reduce((a, b) => (b.temperature < a.temperature ? b : a));
     const warm = hours.reduce((a, b) => (b.temperature > a.temperature ? b : a));
-    const outside = city ? shootDayWeather(sim, city.id, entry.at, false) : undefined;
 
     return {
       name: `${formatTime(entry.at, zone)} To ${formatTime(endOf(entry), zone)}`,
@@ -124,12 +123,6 @@ defineLook<Stretch>('stretch', {
               : `It is ${spokenList([...new Set(wet.map((h) => h.condition.toLowerCase()))])} for `
                 + `${said(wet.length, 'hour')} of it.`}
           </p>
-          {outside && outside.factor < 1 && (
-            <p className="small muted">
-              Anything of it that happens outdoors gets through about {Math.round(outside.factor * 100)}% of
-              what it set out to do. Under a roof the sky makes no difference.
-            </p>
-          )}
           <div className="grid grid-3">
             <Stat label="Starts" value={formatTime(entry.at, zone)} note={formatDate(entry.at, zone)} />
             <Stat label="Ends" value={formatTime(endOf(entry), zone)} note={said(hours.length, 'hour')} />

@@ -22,7 +22,7 @@ import { normalFor, toFahrenheit, type ClimateType } from '@/engine/content/clim
 import { CITIES, type City } from '@/engine/content/geography';
 import { MONTH_NAMES, MS_DAY, WEEKDAY_NAMES, instantFromZoned, noonOf, startOfDay, zonedParts } from '@/engine/core/time';
 import {
-  WEATHER_EMOJI, forecastFor, hoursOn, shootDayWeather, weatherAt, weatherShort,
+  WEATHER_EMOJI, forecastFor, hoursOn, outdoorWeather, weatherAt, weatherShort,
   type DayWeather, type HourWeather, type WeatherCondition, type WeatherNow,
 } from '@/engine/systems/weather';
 import type { Simulation } from '@/engine';
@@ -146,11 +146,16 @@ function normalHigh(sim: Simulation, city: City, day: DayWeather): number {
   return day.fahrenheit ? toFahrenheit(normal.high) : Math.round(normal.high);
 }
 
-/** What an exterior day costs here, from the same figure the production system uses. */
+/**
+ * What the day’s weather does to outdoor work: the one thing it decides, a
+ * building site’s or a coach’s shift called off in a thunderstorm. This said
+ * an exterior day "gets through about" a share of itself, "from the same
+ * figure the production system uses", when there was no production system.
+ */
 function outdoorSentence(sim: Simulation, city: City, instant: number): string {
-  const { factor } = shootDayWeather(sim, city.id, instant, false);
-  if (factor >= 1) return 'A day outdoors would go the way it was planned, and a stage wouldn’t notice either way.';
-  return `An exterior day here gets through about ${Math.round(factor * 100)}% of what it set out to do. A stage doesn’t care what the sky is doing.`;
+  return outdoorWeather(sim, city.id, instant).calledOff
+    ? 'A thunderstorm: outdoor work is called off, and a building site’s or a coach’s shift doesn’t go ahead or get paid.'
+    : 'Outdoor work goes ahead in this. Only a thunderstorm calls it off.';
 }
 
 // ---------------------------------------------------------------------------

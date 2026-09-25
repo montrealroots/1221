@@ -8,7 +8,7 @@
  *
  * The premiums are SLATE's estimates of how far each kind of work usually
  * pays over the minimum, not published figures; the floor under them is real.
- * Tips are not modeled.
+ * Tips are the custom's where it tips (`tipsPerHour` below).
  *
  * Every week starts no earlier than nine. A night nobody chose that starts at
  * midnight ends by 08:24 at the latest (`unattendedNight`), so somebody left
@@ -25,10 +25,12 @@ export interface Job {
   days: readonly number[];
   startHour: number;
   hours: number;
+  /** Worked outdoors, and so called off in a thunderstorm (`outdoorWeather`). */
+  outdoors?: boolean;
 }
 
-const job = (id: string, title: string, overMinimum: number, days: number[], startHour: number, hours: number): Job =>
-  ({ id, title, overMinimum, days, startHour, hours });
+const job = (id: string, title: string, overMinimum: number, days: number[], startHour: number, hours: number, outdoors = false): Job =>
+  ({ id, title, overMinimum, days, startHour, hours, ...(outdoors ? { outdoors } : {}) });
 
 const MON = 1, TUE = 2, WED = 3, THU = 4, FRI = 5, SAT = 6, SUN = 0;
 
@@ -42,10 +44,10 @@ export const JOBS: Readonly<Record<string, Job>> = {
   hospitality: job('hospitality', 'Bar And Restaurant Work', 1.05, [WED, THU, FRI, SAT], 16, 7),
   care: job('care', 'Care Work', 1.2, [MON, TUE, FRI, SAT], 9, 8),
   modeling: job('modeling', 'Modeling And Fit Work', 2.2, [TUE, THU], 10, 6),
-  trades: job('trades', 'Construction', 1.5, [MON, TUE, WED, THU], 9, 8),
+  trades: job('trades', 'Construction', 1.5, [MON, TUE, WED, THU], 9, 8, true),
   armed_forces: job('armed_forces', 'Security Work', 1.2, [FRI, SAT, SUN], 12, 10),
   dance: job('dance', 'Teaching Dance', 1.7, [MON, WED, THU], 16, 5),
-  sport: job('sport', 'Coaching', 1.5, [TUE, THU, SAT], 9, 6),
+  sport: job('sport', 'Coaching', 1.5, [TUE, THU, SAT], 9, 6, true),
 };
 
 export function jobFor(beforeActing: string | undefined): Job {
@@ -147,4 +149,9 @@ export function patternOf(job: Job, fullTime = false): Pattern {
 
 export function patternHours(pattern: Pattern): number {
   return pattern.days.length * pattern.hours;
+}
+
+/** An hour of the day as a clock says it: "9:00 AM", "4:00 PM". */
+export function clockWords(hour: number): string {
+  return `${((hour + 11) % 12) + 1}:00 ${hour < 12 ? 'AM' : 'PM'}`;
 }

@@ -1,10 +1,11 @@
 /**
  * SLATE — What the money adds up to.
  *
- * The bills, the credit, the tax years and the standing orders are gone with
- * the systems that raised them. What is left is the one read model Home and
- * the save-slot summary still ask for: what a person is worth right now,
- * derived from the ledger, never stored.
+ * The bills, the credit, the tax years and the standing orders went with the
+ * systems that raised them; rent, bills, food, wages and the card came back
+ * in their own systems (`work.ts`, `household.ts`, `credit.ts`). What is
+ * here is the one read model Home and the save-slot summary ask for: what a
+ * person is worth right now, derived from the ledger, never stored.
  */
 
 import type { Simulation } from '../core/simulation';

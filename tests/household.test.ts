@@ -12,7 +12,7 @@ import { describe, expect, it } from 'vitest';
 import { createSave, defaultConfig, loadSave, migrate, quickSave } from '@/engine';
 import type { Simulation } from '@/engine';
 import {
-  arrearsOf, billsOf, costsAt, foodOf, inTrouble, mealOf, rentOf, spend,
+  arrearsOf, billsOf, canPay, costsAt, foodOf, inTrouble, mealOf, rentOf, spend,
 } from '@/engine/systems/household';
 import { aprFor, minimumDue, scoreIsANumberIn, scoreWord } from '@/engine/systems/credit';
 import { PUBLISHED_RENTS, rentAt } from '@/engine/content/rents';
@@ -24,7 +24,12 @@ const accounts = (sim: Simulation) => Object.values(sim.universe.accounts).filte
 const checking = (sim: Simulation) => sim.universe.accounts[sim.player.primaryAccountId!]!;
 const card = (sim: Simulation) => accounts(sim).find((a) => a.kind === 'credit_card')!;
 const on = (sim: Simulation, y: number, m: number, d: number, h: number) => instantFromZoned({ year: y, month: m, day: d, hour: h }, sim.zone);
+/** Checking set to an amount, and savings emptied: payments draw on both. */
 const setChecking = (sim: Simulation, to: number) => {
+  const savings = Object.values(sim.universe.accounts).find((a) => a.ownerId === sim.player.id && a.kind === 'savings');
+  if (savings && savings.balance !== 0) {
+    sim.post({ memo: 'test', category: 'test', postings: [{ accountId: savings.id, amount: -savings.balance }, { accountId: sim.nominalAccount('income', 'Test').id, amount: savings.balance }] });
+  }
   const c = checking(sim);
   const move = to - c.balance;
   if (move === 0) return;
@@ -97,7 +102,8 @@ describe('the cost of living', () => {
   it('weighs on somebody every day they owe', () => {
     const owing = quickSave({ dayJob: false, wealth: 'comfortable' }, 'worry');
     const clear = quickSave({ dayJob: false, wealth: 'comfortable' }, 'worry');
-    spend(owing, owing.player, checking(owing).balance + (card(owing).creditLimit ?? 0) + card(owing).balance + 1_000_00, 'Rent', 'rent', true);
+    // More than the bank and the card together, so some of it is owed.
+    spend(owing, owing.player, canPay(owing, owing.player) + 1_000_00, 'Rent', 'rent', true);
     for (let d = 0; d < 5; d += 1) {
       const next = startOfNextDay(owing.now, owing.zone) + 7 * MS_HOUR;
       owing.advanceTo(next);

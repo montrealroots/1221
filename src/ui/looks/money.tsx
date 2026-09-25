@@ -141,7 +141,7 @@ defineLook<Account>('account', {
       ways,
       provenance: account.apr === undefined
         ? 'The balance is the sum of the postings against it, not a figure anybody typed in.'
-        : 'The balance is the sum of the postings against it. The rate is the one written on the account, and nothing has charged it against you yet.',
+        : 'The balance is the sum of the postings against it. The rate is the one written on the account, and it is charged at each statement on a balance the last statement didn’t clear.',
     };
   },
 });
@@ -413,7 +413,7 @@ defineLook<Owing>('debt', {
         ? `${formatMoney(owedOn(a), cur)} on it at ${ratePercent(a.apr)}`
         : `${formatMoney(owedOn(a), cur)} on it, at no stated rate`,
     })),
-    provenance: 'The rates come off the accounts themselves, and none has charged one yet. None of it is run forward — it’s what the balances are at this minute.',
+    provenance: 'The rates come off the accounts themselves, and a card’s is charged at each statement on a balance carried. None of it is run forward — it’s what the balances are at this minute.',
   }); },
 });
 

@@ -80,9 +80,10 @@ const FREE_MOVEMENT: readonly (readonly string[])[] = [
  * Their own country, a territory of it, or a country their citizenship moves
  * freely to. Anywhere else takes a work visa, and the jobs actors fall back
  * on, a café counter or a bar, don't get one. The work-permit rule this file
- * once had went because nothing read it; the day job reads this
- * (`systems/work.ts`), so a character from Reykjavík starting out in Los
- * Angeles keeps no day job there.
+ * once had went because nothing read it; whether a character gets a day job
+ * reads this (`populateWorld` and `migrate` in `engine/index.ts`, and the
+ * search for work in `systems/work.ts`), so a character from Reykjavík
+ * starting out in Los Angeles keeps no day job there.
  */
 export function mayWorkIn(citizenshipId: string, cityId: string): { may: boolean; countryId?: string } {
   const listed = countryOfPlace(cityId);

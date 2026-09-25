@@ -37,6 +37,7 @@ import { Stat } from '@/ui/components/primitives';
 import { Open } from './Look';
 import { defineLook, type Way } from './registry';
 import { at } from './subject';
+import { rentAt } from '@/engine/content/rents';
 import { isAre, outOf, said, spokenList, toStart } from './words';
 
 // ---------------------------------------------------------------------------
@@ -138,8 +139,8 @@ function lightLine(sun: SunTimes, zone: string): string {
 
 /** What SLATE thinks a unit of this money is worth, said honestly. */
 function rateLine(info: CurrencyInfo): string {
-  if (info.code === 'USD') return 'What the ledger is kept in';
-  if (info.unitsPerUsd === undefined) return 'No rate on file, so the ledger stays in dollars';
+  if (info.code === 'USD') return 'The unit SLATE’s rates are quoted against';
+  if (info.unitsPerUsd === undefined) return 'No rate on file, so nothing is converted into it';
   return `About ${info.unitsPerUsd.toLocaleString('en-US')} to the dollar, by SLATE’s reckoning`;
 }
 
@@ -286,7 +287,11 @@ defineLook<PlaceProfile>('place', {
       ),
       ways,
       provenance: 'Where it sits, what the clock says and which country it answers to are public record. '
-        + 'The rent, the cost index, the industry rating and the tax rates are SLATE’s own calibration.',
+        + (rentAt(place.city.id, 'USD').kind === 'published'
+          ? 'The rent is published. The cost index, industry rating and tax rates are SLATE’s calibration.'
+          : rentAt(place.city.id, 'USD').kind === 'calibrated'
+            ? 'The rent is SLATE’s estimate, scaled to published rents. The cost index, industry rating and tax rates are SLATE’s calibration.'
+            : 'The rent, the cost index, the industry rating and the tax rates are SLATE’s own calibration.'),
     };
   },
 });
@@ -563,10 +568,10 @@ defineLook<TheMoney>('currency', {
         <>
           <p className="small muted">
             {money.info.code === 'USD'
-              ? 'This is the unit the ledger itself is kept in, so nothing is converted into it or out of it.'
+              ? 'SLATE’s exchange rates are quoted against the dollar, so it is where every conversion starts.'
               : hundred
                 ? `A hundred dollars is ${hundred} on the ground ${money.home ? 'here' : 'there'}.`
-                : 'SLATE has no rate on file for it, so nothing is converted and the ledger stays in dollars.'}
+                : 'SLATE has no rate on file for it, so nothing is converted into it, and a save started here keeps its money in euros.'}
             {money.info.decimals === 0
               ? ` There are no cents in it — the smallest thing you can hand over is one whole ${money.name.toLowerCase()}.`
               : ` It divides into hundredths, and prices are written to two of them.`}

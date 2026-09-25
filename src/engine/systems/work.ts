@@ -26,6 +26,8 @@ import type { ScheduledItem } from '../core/scheduler';
 import { CITIES, COUNTRIES } from '../content/geography';
 import { jobFor, patternHours, patternOf, payCycleFor, tipsPerHour, type Job } from '../content/jobs';
 import { CommandError } from '../core/simulation';
+import { mayWorkIn } from '../domain/citizenship';
+import { outdoorWeather } from './weather';
 import { minimumWageAt } from '../content/wages';
 import { computeAnnualTax } from '../content/tax';
 import { exchange } from '../content/currency';
@@ -69,6 +71,10 @@ export interface JobState {
   lookingUntil?: Instant;
   /** Five eight-hour days rather than the job's own part-time week (`patternOf`). */
   fullTime?: boolean;
+  /** When a change of hours takes effect, while it's still ahead. */
+  hoursFrom?: Instant;
+  /** Quit, and kept only until the last pay clears. */
+  quitAt?: Instant;
 }
 
 export function jobOf(person: Person): Job | undefined {
@@ -138,7 +144,7 @@ export function hire(sim: Simulation, person: Person): void {
 /** Puts every shift of the next two weeks on the calendar that isn't on it. */
 export function fillRota(sim: Simulation, person: Person): void {
   const state = person.job;
-  if (!state || state.lookingUntil !== undefined) return;
+  if (!state || state.lookingUntil !== undefined || state.quitAt !== undefined) return;
   const job = jobFor(state.jobId);
   const week = patternOf(job, state.fullTime);
   const zone = CITIES.get(state.cityId)?.timeZone ?? sim.homeZone;
@@ -194,7 +200,7 @@ export function callIn(sim: Simulation, item: ScheduledItem): void {
   sim.notify({
     category: 'work',
     title: 'You Called In Sick',
-    body: `No pay for the ${item.payload.hours} hours, and a missed shift on your record.`,
+    body: `No pay for the ${item.payload.hours} hours, and a missed shift counted against you at work.`,
     importance: 45,
   });
   strike(sim, person, sim.now);
@@ -295,6 +301,19 @@ export function registerWork(sim: Simulation): void {
     const hours = Number(item.payload.hours) || 0;
     const asleep = person.awakeSince !== undefined && person.awakeSince > item.at;
     const away = person.currentLocationId !== state.cityId;
+    // Outdoor work in a thunderstorm is called off: no pay, no strain, and
+    // not held against anybody.
+    if (!asleep && !away && jobFor(state.jobId).outdoors && outdoorWeather(s, state.cityId, item.at).calledOff) {
+      item.status = 'cancelled';
+      item.payload = { ...item.payload, calledOff: true };
+      s.notify({
+        category: 'work',
+        title: 'Called Off For The Weather',
+        body: `A thunderstorm over ${CITIES.get(state.cityId)?.name ?? 'town'}, and outdoor work doesn't go ahead in one. No shift today, and no pay for it.`,
+        importance: 50,
+      });
+      return;
+    }
     if (asleep || away) {
       item.status = 'missed';
       s.notify({
@@ -337,9 +356,52 @@ export function registerWork(sim: Simulation): void {
       if (item.kind === SHIFT_KIND && item.at > from && item.payload.personId === person.id && !item.payload.extra) s.timeline.cancel(item.id, s.now);
     }
     state.fullTime = fullTime;
+    state.hoursFrom = from;
     state.rotaThrough = from;
     fillRota(s, person);
     return { from };
+  });
+
+  // Looking for a day job, for somebody without one: it takes the three weeks
+  // being let go does, and only where they have the right to work. Somebody
+  // who turned the job down at creation, or had no right to it, had no way to
+  // take one later.
+  sim.onCommand<Record<string, never>, { until: Instant }>('work.find_job', (_p, { sim: s }) => {
+    const person = s.player;
+    if (person.job && person.job.lookingUntil === undefined) throw new CommandError('You’ve already got a day job.');
+    if (person.job?.lookingUntil !== undefined) throw new CommandError('You’re already looking.');
+    const right = mayWorkIn(person.citizenshipId, person.currentLocationId);
+    if (!right.may) throw new CommandError(`You’d need a work visa to work here, and ${jobFor(person.beforeActing).title.toLowerCase()} doesn’t get one.`);
+    const until = s.now + LOOKING_FOR;
+    person.job = {
+      jobId: person.beforeActing ?? 'school', cityId: person.currentLocationId, since: s.now,
+      unpaid: [], missed: [], rotaThrough: s.now, lookingUntil: until,
+    };
+    if (!s.universe.scheduled.some((one) => one.kind === PAYDAY_KIND && one.status === 'pending' && one.payload.personId === person.id)) {
+      schedulePayday(s, person, until);
+    }
+    return { until };
+  });
+
+  // Quitting: the shifts come off the calendar, and what's owed for the hours
+  // already worked is paid on the next payday as it would have been.
+  sim.onCommand<Record<string, never>, { ok: true }>('work.quit', (_p, { sim: s }) => {
+    const person = s.player;
+    if (!person.job) throw new CommandError('You don’t have a day job.');
+    for (const item of s.timeline.pending()) {
+      if (item.kind === SHIFT_KIND && item.payload.personId === person.id) s.timeline.cancel(item.id, s.now);
+    }
+    const owed = person.job.unpaid;
+    if (owed.length === 0) {
+      delete person.job;
+      for (const item of s.timeline.pending()) {
+        if (item.kind === PAYDAY_KIND && item.payload.personId === person.id) s.timeline.cancel(item.id, s.now);
+      }
+    } else {
+      // Kept, with nothing ahead, until its last payday clears what's owed.
+      person.job.quitAt = s.now;
+    }
+    return { ok: true };
   });
 
   // One more shift, on the first day this week they aren't already working.
@@ -386,11 +448,13 @@ export function registerWork(sim: Simulation): void {
     const person = s.universe.people[String(item.payload.personId ?? s.universe.playerId)];
     if (!person) return;
     pay(s, person, item.at);
+    if (person.job?.quitAt !== undefined && person.job.unpaid.length === 0) delete person.job;
     if (person.job) schedulePayday(s, person, item.at);
   });
 
   // Once a day, inside the rollover: the rota two weeks out, and, three weeks
-  // after being let go, the same kind of work somewhere new. It was its own
+  // after being let go or starting to look, the same kind of work again in the
+  // same town. It was its own
   // item first, five minutes after midnight and then at it, and either way it
   // was a stop of its own: it moved where a night nobody chose was counted
   // from, by the five minutes, and by half an hour in a save whose rollover
