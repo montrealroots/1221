@@ -43,6 +43,9 @@ const REAL_NAMES_AS_WRITTEN = new Set([
   'Pick n Pay',         // South African grocer; the n is lowercase on the sign.
   'iRobot Roomba j9+',  // Product name as the manufacturer writes it.
   'Arion banki',        // Icelandic bank; banki is lowercase in its own name and signage.
+  // Unemployment benefits and tax settlements under their countries' own names
+  // (content/unemployment.ts, content/taxreturn.ts).
+  'Prestación por desempleo', 'Allocation d’aide au retour à l’emploi', '基本手当', '구직급여', '年末調整', 'Declaración de la Renta',
   // Payslip lines under their countries' own names (content/payroll.ts), with
   // the English after them in capitals where it's given.
   'Prélèvement à la source', 'Retraite (vieillesse, AGIRC-ARRCO, CEG)', 'Paga extraordinaria',

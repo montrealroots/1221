@@ -163,14 +163,30 @@ part the tool cannot see.
   everywhere else, and for US states and Canadian provinces the research
   didn't cover. Its sales, property and vehicle rules are still read by
   nothing, because nothing is bought, owned or driven.
-- **A payslip is the year's withholding, and nothing is settled after it.**
-  Each payday takes its share of the year's tax and contributions, as
-  employers do. What a country settles on the annual return isn't: Spain's
-  deduction that refunds a minimum-wage worker's withholding, the US
-  earned income tax credit, Ontario's and British Columbia's low-income
-  reductions, Canada's workers benefit. Church tax in Germany isn't taken,
-  since SLATE doesn't know a character's church; Japan's contributions are
-  on the pay, not the grade of standard remuneration it falls in.
+- **The year is settled in nine of the thirteen, and not in France, Korea,
+  Mexico or Australia.** Since 2026-09-25 each payday's withholding is
+  settled after the tax year (`systems/taxreturn.ts`) on the country's
+  own date: the year's real tax on its real pay, the benefit taxed where the
+  law taxes it, and the US earned income tax credit (Illinois's 20% of it
+  too), the Canada Workers Benefit, Ontario's LIFT credit, British
+  Columbia's tax reduction, Spain's minimum-wage deduction and New
+  Zealand's independent earner credit. Not modeled: France's regularization
+  and prime d'activité (its housing deduction wasn't reached), Korea's
+  연말정산 and 근로장려금 (its bands weren't), Mexico's annual declaration
+  and Australia's return (neither office's pages could be reached), so what
+  they withhold stands; New York's and California's earned income credits
+  (New York's household credit and California's table weren't reached),
+  Washington's Working Families Tax Credit, a separate application; Quebec's
+  work premium, whose rates Revenu Québec doesn't publish; British
+  Columbia's renter's and sales tax credits; Ireland's rent credit, whose
+  share of rent wasn't found; the Canada Workers Benefit's advance payments;
+  and the unemployment benefit's tax outside the US federal return, Canada,
+  Britain's JSA, Ireland, Spain and New Zealand, with Germany's raising the
+  rate. Canada's, Ireland's, New Zealand's, Germany's, Spain's and Japan's
+  final-return dates are SLATE's estimates where the office names none.
+  Church tax in Germany isn't taken, since SLATE doesn't know a character's
+  church; Japan's contributions are on the pay, not the grade of standard
+  remuneration it falls in.
 - **A pension fund fills and does nothing else.** What a payslip puts into
   a fund the worker owns (Iceland, New Zealand, Australia, Britain,
   Ireland, Mexico) is theirs and counts in their worth, and nothing grows
@@ -216,8 +232,8 @@ part the tool cannot see.
   high-quarter test is at the state's $16 minimum, not New York City's $17;
   Britain's National Insurance test is at 2024/25's lower earnings limit;
   the regional rate Canada's EI is worked at is September 2026's for all
-  three provinces; family supplements and a partner's income; and no
-  benefit is taxed, as nothing is settled after the year. Being let go for
+  three provinces; family supplements and a partner's income; and a
+  benefit is taxed only when the year is settled, not as it's paid. Being let go for
   missed shifts is held to be misconduct in the US states whose pages are
   silent on absence. Only the US states the research covered have a
   benefit: New York, California, Texas, Florida, Washington, Illinois and

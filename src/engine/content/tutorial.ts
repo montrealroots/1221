@@ -152,6 +152,7 @@ export const CHAPTERS: readonly Chapter[] = [
       'Ask For An Extra Shift puts one more on a free day this week. Go Part-Time or Go Full-Time changes the hours from a week on. Quit gives the notice the law asks, and your last pay, with any leave the law pays out, comes on the next payday. Look For A Day Job starts the three-week search.',
       'An employer can also cut a job. It gives the notice the law where you work asks, you work it out, and redundancy pay comes on the last payday where the law gives it.',
       'Out of work, Claim the unemployment benefit your country pays, worked from the pay on your record. It pays after its waiting days, for as long as it runs or you’re looking, and stops when you’re back in work. Quitting, or losing the job for missed shifts, can bar it or delay it, as the law there says.',
+      'After the tax year, your country settles it on its own date: the year’s real tax on what you really earned, with the credits a low wage gets only then. A year you didn’t work all of usually had too much taken, and it comes back. Your Tax Year on Your Work shows where this year stands.',
       'You can only work where your citizenship lets you. Somewhere it doesn’t, there’s no day job to look for.',
     ],
     names: ['Work And Home', 'Your Work', 'Ask For An Extra Shift', 'Go Part-Time or Full-Time', 'Take The Next Shift As Paid Leave', 'Apply', 'Quit', 'Look For A Day Job', 'Claim'],

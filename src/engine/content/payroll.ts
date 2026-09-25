@@ -54,6 +54,23 @@ export interface PayrollContext {
   cityId?: string;
 }
 
+/**
+ * Spain's IRPF on a year's pay, before the withholding's own limits: the pay
+ * less Seguridad Social, €2,000 of expenses and the reduction for work
+ * (art. 20), on the scale, less the scale on the personal minimum of €5,550.
+ * The return charges this, less the minimum-wage deduction
+ * (`content/taxreturn.ts`); the withholding holds it to nothing up to
+ * €15,876 and to 43% of the pay over it.
+ */
+export function spainCuota(g: number): number {
+  const ss = Math.min(g, 5_101.20 * 12) * (0.047 + 0.0155 + 0.001 + 0.0015);
+  const net = g - ss;
+  const reduction = net <= 14_852 ? 7_302 : net <= 17_673.52 ? 7_302 - 1.75 * (net - 14_852) : net <= 19_747.5 ? 2_364.34 - 1.14 * (net - 17_673.52) : 0;
+  const base = Math.max(0, net - 2_000 - reduction);
+  const scale: readonly (readonly [number, number])[] = [[0, 0.19], [12_450, 0.24], [20_200, 0.30], [35_200, 0.37], [60_000, 0.45], [300_000, 0.47]];
+  return Math.max(0, bands(base, scale) - bands(5_550, scale));
+}
+
 /** Tax on an income by marginal bands: [from, rate] in whole units. */
 function bands(income: number, table: readonly (readonly [number, number])[]): number {
   let tax = 0;
@@ -298,11 +315,7 @@ const RULES: Record<string, Rules> = {
     // what the pay is over it. The algorithm comes to nothing below the
     // limit anyway: a separate check that none was withheld there changed no
     // payslip, and was taken out.
-    const net = g - ss;
-    const reduction = net <= 14_852 ? 7_302 : net <= 17_673.52 ? 7_302 - 1.75 * (net - 14_852) : net <= 19_747.5 ? 2_364.34 - 1.14 * (net - 17_673.52) : 0;
-    const base = Math.max(0, net - 2_000 - reduction);
-    const scale: readonly (readonly [number, number])[] = [[0, 0.19], [12_450, 0.24], [20_200, 0.30], [35_200, 0.37], [60_000, 0.45], [300_000, 0.47]];
-    const irpf = Math.max(0, Math.min(bands(base, scale) - bands(5_550, scale), (g - 15_876) * 0.43));
+    const irpf = Math.max(0, Math.min(spainCuota(g), (g - 15_876) * 0.43));
     lines.push({ name: 'IRPF', kind: 'tax', source: 'AEAT withholding algorithm 2026; none up to €15,876', amount: irpf });
     return { lines };
   },

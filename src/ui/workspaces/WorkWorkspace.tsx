@@ -24,6 +24,7 @@ import { minimumWageAt } from '@/engine/content/wages';
 import { inSaveMoney } from '@/engine/systems/banking';
 import { countryAt, employerById, lawOf, monthsWith, rateAt, type JobState } from '@/engine/systems/work';
 import { claimFor } from '@/engine/systems/unemployment';
+import { settlementFor, taxYearStart, workYear } from '@/engine/systems/taxreturn';
 
 const pct = (share: number) => `${Math.round(share * 1000) / 10}%`;
 const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -136,6 +137,7 @@ export function WorkWorkspace() {
         </div>
       )}
 
+      <TaxYear />
       {(outOfWork || claim) && (
         <Panel title="Out Of Work" subtitle={claim ? claim.name : offer && !('refused' in offer) ? offer.benefit.name : 'Unemployment Benefit'}>
           {claim ? (
@@ -254,4 +256,40 @@ function lawWords(law: LaborLaw, jobId: string): { text: string; source: string 
     out.push({ text: days > 0 ? `Quitting takes notice: up to ${days} days, by how long you’ve worked there.` : 'You can quit without notice.', source: law.quitNotice.source });
   }
   return out;
+}
+
+/**
+ * The tax year: what the year so far has earned and had withheld, what
+ * settling it would come to if it ended today, and the last one settled
+ * (`systems/taxreturn.ts`).
+ */
+function TaxYear() {
+  const { sim } = useGame();
+  const cur = saveCurrency(sim.universe);
+  const money = (cents: number) => formatMoney(cents, cur);
+  const last = useWorld((s) => s.player.earnings?.lastReturn);
+  const now = useWorld((s) => s.now);
+  const settlement = settlementFor(sim.player);
+  if (!settlement) return null;
+  const from = taxYearStart(settlement, now);
+  const sofar = workYear(sim, sim.player, from, now + 1);
+  if (!sofar || (sofar.wages <= 0 && !last)) return null;
+  const { refund } = sofar;
+  // A tax year runs from a date, not a moment where the player is, so its
+  // days are shown as they're kept.
+  return (
+    <Panel title="Your Tax Year" subtitle={`From ${formatDate(from, 'UTC')}, settled by ${sofar.settlement.name}`}>
+      <div className="col gap-2">
+        <p className="small" style={{ margin: 0 }}>
+          {`So far ${money(sofar.wages)} earned and ${money(sofar.withheld)} withheld. Settled today, the year would come to ${refund >= 0 ? `about ${money(refund)} back` : `about ${money(-refund)} to pay`}${sofar.result.credits.length ? `, with ${sofar.result.credits.map((one) => one.name).join(' and ')}` : ''}.`}
+        </p>
+        {last && (
+          <p className="small" style={{ margin: 0 }}>
+            {`Last settled ${formatDate(last.at, sim.zone)}, for the year from ${formatDate(Date.parse(last.year), 'UTC')}: ${money(last.withheld)} withheld, ${money(last.owed)} owed${last.credits.length ? `, ${last.credits.map((one) => `${one.name} ${money(one.amount)}`).join(', ')}` : ''}, and ${last.refund >= 0 ? `${money(last.refund)} back` : `${money(-last.refund)} paid`}.`}
+          </p>
+        )}
+        <p className="xs dim" style={{ margin: 0 }}>Source: {sofar.settlement.source}</p>
+      </div>
+    </Panel>
+  );
 }

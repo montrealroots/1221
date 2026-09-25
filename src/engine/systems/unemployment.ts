@@ -24,6 +24,7 @@ import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { MS_DAY, type Instant } from '../core/time';
 import { netWorth } from './finance';
 import { countryAt } from './work';
+import type { YearSettled } from './taxreturn';
 
 export const BENEFIT_KIND = 'work.benefit';
 
@@ -33,6 +34,9 @@ export interface EarningsState {
   /** How the last job ended, for what a claim can be paid. */
   lastLeft?: { at: Instant; why: 'laidOff' | 'cause' | 'quit'; cityId: string };
   claim?: Claim;
+  /** The tax years settled (`systems/taxreturn.ts`), by the settlement's name and the year's first day, and the last one. */
+  settled?: string[];
+  lastReturn?: YearSettled;
 }
 
 export interface Claim {
