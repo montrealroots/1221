@@ -15,6 +15,8 @@
  * Every other country has none of this, and the work screen says so.
  */
 
+import { WORLD_WORK } from './work-world';
+
 /** Which lines of work a premium covers; absent, every line. */
 type Lines = readonly string[];
 
@@ -24,6 +26,8 @@ export interface Premium {
   lines?: Lines;
   /** For a holiday premium, only these days: 'MM-DD' dates, or the holiday's English name. */
   only?: readonly string[];
+  /** A different extra for some lines of work, where each has its own award. */
+  byLine?: Readonly<Record<string, number>>;
   source: string;
 }
 
@@ -75,6 +79,8 @@ export interface LaborLaw {
     accrual?: number;
     /** Only after so many months with the employer. */
     afterMonths?: number;
+    /** The most sick hours used in a year, where the law caps them. */
+    maxHoursAYear?: number;
     /** Who pays it: the employer, or the state's sickness insurance. */
     paidBy: 'employer' | 'state';
     source: string;
@@ -107,13 +113,13 @@ export const LABOR: Readonly<Record<string, LaborLaw>> = {
     // Sick leave where a state's law builds it; Texas, Florida and Georgia
     // have none.
     regions: {
-      'US-NY': { sick: { fromDay: 1, rate: 1, accrual: 1 / 30, paidBy: 'employer', source: 'NY Labor Law §196-b and NYC ESSTA: an hour for every 30 worked' } },
+      'US-NY': { sick: { fromDay: 1, rate: 1, accrual: 1 / 30, maxHoursAYear: 56, paidBy: 'employer', source: 'NY Labor Law §196-b and NYC ESSTA: an hour for every 30 worked, 56 hours a year at 100 employees or more' } },
       'US-CA': {
-        sick: { fromDay: 1, rate: 1, accrual: 1 / 30, paidBy: 'employer', source: 'CA Labor Code §246: an hour for every 30 worked' },
+        sick: { fromDay: 1, rate: 1, accrual: 1 / 30, maxHoursAYear: 40, paidBy: 'employer', source: 'CA Labor Code §246: an hour for every 30 worked, 40 hours a year' },
         overtime: { week: 40, day: 8, extra: 0.5, source: 'CA Labor Code §510: time and a half past 8 hours a day or 40 a week' },
       },
       'US-WA': { sick: { fromDay: 1, rate: 1, accrual: 1 / 40, paidBy: 'employer', source: 'RCW 49.46.210: an hour for every 40 worked' } },
-      'US-IL': { sick: { fromDay: 1, rate: 1, accrual: 1 / 40, paidBy: 'employer', source: 'Paid Leave for All Workers Act: an hour for every 40 worked' } },
+      'US-IL': { sick: { fromDay: 1, rate: 1, accrual: 1 / 40, maxHoursAYear: 40, paidBy: 'employer', source: 'Paid Leave for All Workers Act: an hour for every 40 worked, 40 hours a year' } },
     },
   },
   CA: {
@@ -207,7 +213,10 @@ export const LABOR: Readonly<Record<string, LaborLaw>> = {
     quitNotice: { steps: [[0, 30]], source: 'Civil Code art. 660: a month' },
   },
   AU: {
-    sunday: { extra: 0.5, source: 'Retail, Hospitality and Restaurant awards: Sunday at 150%' },
+    sunday: {
+      extra: 0.5, byLine: { school: 0.25, office: 1, armed_forces: 1, trades: 1 },
+      source: 'The awards: Sunday at 150% in retail, hospitality and restaurants, 125% under the Fast Food award, 200% for clerks, security and construction',
+    },
     holiday: { extra: 1.25, source: 'The awards: public holidays at 225%' },
     night: { extra: 0.1, from: 22, to: 30, lines: PART_LINES, source: 'Fast Food award: 110% from 10 pm' },
     overtime: { week: 38, extra: 0.5, source: 'The awards: 150% past 38 hours' },
@@ -223,10 +232,20 @@ export const LABOR: Readonly<Record<string, LaborLaw>> = {
   },
 };
 
-/** The law where a job is: the country's, with its state's or province's own over it. */
+/**
+ * The law where a job is: the country's, with its state's or province's own
+ * over it. Outside the thirteen, the statutory annual leave the world research
+ * found (`content/work-world.ts`), built with the hours and paid out on
+ * leaving; nothing else of the law is modeled there.
+ */
 export function laborAt(path: readonly string[]): LaborLaw | undefined {
   const country = LABOR[path[0] ?? ''];
-  if (!country) return undefined;
+  if (!country) {
+    const leave = WORLD_WORK[path[0] ?? '']?.leaveDays;
+    if (!leave) return undefined;
+    const weeks = leave.days / 5;
+    return { leave: { accrual: weeks / (52 - weeks), paidOut: true, source: `${leave.days} days a year; ${leave.source}` } };
+  }
   const region = country.regions?.[path[1] ?? ''];
   return region ? { ...country, ...region } : country;
 }

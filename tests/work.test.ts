@@ -19,6 +19,7 @@ import { MINIMUM_WAGES, minimumWageAt } from '@/engine/content/wages';
 import { JOBS, jobFor, weeklyHours } from '@/engine/content/jobs';
 import { PERSONALITY_TRAITS } from '@/engine/content/personality-traits';
 import { defaultPersonality } from '@/engine/systems/personality';
+import { EMPLOYERS } from '@/engine/content/employers';
 import { SHIFT_KIND, employerById, hourlyWage, hoursOwed, nextPayday, payslipAt, rateAt } from '@/engine/systems/work';
 import { lookAfterRefusal } from '@/engine/systems/life';
 import { MS_DAY, MS_HOUR, instantFromZoned, startOfNextDay, zonedParts } from '@/engine/core/time';
@@ -73,6 +74,10 @@ describe('the pay', () => {
     const trades = quickSave({ beforeActing: 'trades' }, 'trades-pay');
     expect(employerById(trades.player.job!.cityId, trades.player.job!.employerId)?.name).toBeDefined();
     expect(hourlyWage(trades, trades.player)).toBe(rateAt(trades.player.job!.cityId, 'trades', 'ISK', trades.now, trades.player.job!.employerId).hourly);
+    // An employer that publishes no rate: the median of what the line's
+    // others publish, never under the floor, before the statistics office.
+    const quiet = [...Object.values(EMPLOYERS.IE!.school!.employers)].find((one) => one.hourlyFrom === undefined);
+    if (quiet) expect(rateAt('ie-lei-dublin', 'school', 'EUR', sim.now, quiet.id).basis).toBe('line');
     // Where a country has no employer and no statistic on record, the floor
     // times the job's premium, and it says so.
     const rome = CITIES.all().find((c) => c.countryId === 'it');

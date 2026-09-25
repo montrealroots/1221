@@ -123,8 +123,14 @@ describe('each country’s payslip', () => {
     expect(line(kr, '지방소득세 (Local Income Tax)')).toBeCloseTo(line(kr, '근로소득세 (Income Tax)') * 0.1, 0);
   });
 
-  it('marks a country without its own rules as SLATE’s approximation', () => {
-    const slip = payrollYear('IT', 20_000_00, { path: ['IT'], age: 30, at });
-    expect(slip.estimate).toBe(true);
+  it('works a country outside the thirteen from the world research, and marks one with none', () => {
+    // Italy: the employee's contributions and IRPEF from its own scale.
+    const italy = payrollYear('IT', 20_000_00, { path: ['IT'], age: 30, at });
+    expect(italy.estimate).toBeUndefined();
+    expect(italy.lines.some((l) => l.name === 'Income Tax' && l.amount > 0)).toBe(true);
+    expect(italy.lines.every((l) => l.source.length > 0)).toBe(true);
+    // North Korea: nothing found, so SLATE's approximation, and it says so.
+    const none = payrollYear('KP', 20_000_00, { path: ['KP'], age: 30, at });
+    expect(none.estimate).toBe(true);
   });
 });

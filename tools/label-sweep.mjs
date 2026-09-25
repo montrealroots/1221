@@ -45,7 +45,7 @@ const REAL_NAMES_AS_WRITTEN = new Set([
   'Arion banki',        // Icelandic bank; banki is lowercase in its own name and signage.
   // Payslip lines under their countries' own names (content/payroll.ts), with
   // the English after them in capitals where it's given.
-  'Prélèvement à la source', 'Retraite (vieillesse, AGIRC-ARRCO, CEG)',
+  'Prélèvement à la source', 'Retraite (vieillesse, AGIRC-ARRCO, CEG)', 'Paga extraordinaria',
   '住民税 (Resident Tax)', '健康保険 (Health Insurance, Tokyo)', '厚生年金 (Employees’ Pension)', '所得税 (Income Tax)', '雇用保険 (Employment Insurance)',
   '건강보험 (Health Insurance)', '고용보험 (Employment Insurance)', '국민연금 (National Pension)', '근로소득세 (Income Tax)', '장기요양보험 (Long-Term Care)', '지방소득세 (Local Income Tax)',
   // Public examinations, written the way the country that sets them writes

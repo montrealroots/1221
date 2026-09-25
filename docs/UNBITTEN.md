@@ -188,8 +188,28 @@ part the tool cannot see.
   profit; youth minimum rates aren't applied; an employer's notice isn't,
   since the only dismissal is for cause. Premiums are the agreement's where
   the research found one: Iceland's Efling–SA tables only for café, bar and
-  security work, and one set of Australian award rates for every line.
-  Japan's leave is built with the hours, not granted at six months.
+  security work, and Australia's awards told apart by line only on a Sunday.
+  Japan's leave is built with the hours, not granted at six months. Untaken
+  leave piles up: no country's year-end rule (Britain's lost leave, Korea's
+  payout, Japan's two-year expiry) is modeled.
+- **Work outside the thirteen is simpler, and some of it is missing.** The
+  world research (`content/work-world.ts`, 226 countries and territories,
+  written when the session's web searches had run out, so from pages fetched
+  directly) found 182 minimum wages, 214 paydays, 169 payslips and 181
+  statutory leave allowances, and 1,068 employers, almost none of which
+  publish a rate: those pay the floor times the job's premium, SLATE's
+  estimate. A payslip there is the employee's contributions and one income
+  tax scale, without the credits and exemptions the thirteen's have. Every
+  figure the research said it recalled, didn't check, or took from general
+  knowledge was left out (70 of them), as were tax tables brackets can't
+  state (Angola's, El Salvador's), scales missing the credits that make a
+  low wage's tax (Sweden, Slovenia, the Netherlands, Turkey's minimum-wage
+  exemption), and nominal minimums (Georgia's, Uganda's). Those countries
+  have no payslip: their pay is shown before tax, and the work screen says
+  so. Brazil's table may predate its 2026 exemption up to R$5,000 a month,
+  which a minimum wage is under either way. About 70 of these currencies
+  have no exchange rate in SLATE, which matters only to a life that moves
+  between currencies. Only annual leave is modeled of these countries' law.
 - **An employer's pay is as published in September 2026.** Each rate is
   the one the research found on 2026-09-25, paid from the save's first day,
   so a save that starts in January is paid an April raise early. Where an

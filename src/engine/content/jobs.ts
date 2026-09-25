@@ -20,6 +20,8 @@
  * slept through by choice, can cost them it.
  */
 
+import { WORLD_WORK } from './work-world';
+
 export interface Job {
   id: string;
   title: string;
@@ -75,6 +77,7 @@ export function weeklyHours(job: Job): number {
  * for the next payday.
  */
 export type PayCycle =
+  | { kind: 'weekly'; weekday: number }
   | { kind: 'biweekly'; weekday: number }
   | { kind: 'monthly'; day: number | 'last'; inArrears?: boolean }
   | { kind: 'semimonthly' };
@@ -90,14 +93,27 @@ const PAY: Readonly<Record<string, PayCycle>> = {
   IS: { kind: 'monthly', day: 1, inArrears: true },
 };
 
+/**
+ * A country's payday: the thirteen's above, the world research's elsewhere
+ * (`content/work-world.ts`, a weekly or fortnightly one on a Friday), and the
+ * end of the month where neither says.
+ */
 export function payCycleFor(countryCode: string): PayCycle {
-  return PAY[countryCode] ?? { kind: 'monthly', day: 'last' };
+  const own = PAY[countryCode];
+  if (own) return own;
+  const world = WORLD_WORK[countryCode]?.pay;
+  if (world?.cycle === 'weekly') return { kind: 'weekly', weekday: FRI };
+  if (world?.cycle === 'biweekly') return { kind: 'biweekly', weekday: FRI };
+  if (world?.cycle === 'semimonthly') return { kind: 'semimonthly' };
+  if (world?.cycle === 'monthly') return { kind: 'monthly', day: world.day ?? 'last' };
+  return { kind: 'monthly', day: 'last' };
 }
 
 const WEEKDAY_NAMES = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
 /** When a cycle pays, said the way a person says it. */
 export function payCycleWords(cycle: PayCycle): string {
+  if (cycle.kind === 'weekly') return `every ${WEEKDAY_NAMES[cycle.weekday]}`;
   if (cycle.kind === 'biweekly') return `every other ${WEEKDAY_NAMES[cycle.weekday]}`;
   if (cycle.kind === 'semimonthly') return 'on the 15th and the last day of the month';
   const day = cycle.day === 'last' ? 'the last day of the month' : `the ${cycle.day}${cycle.day === 1 ? 'st' : cycle.day === 2 ? 'nd' : cycle.day === 3 ? 'rd' : 'th'}`;

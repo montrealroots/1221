@@ -20,6 +20,7 @@
  */
 
 import { computeAnnualTax } from './tax';
+import { WORLD_WORK, type WorldWork } from './work-world';
 
 export type PayslipKind = 'tax' | 'social' | 'pension';
 
@@ -367,9 +368,36 @@ function japanInsurance(g: number, ctx: PayrollContext): { kosei: number; health
   return { kosei, health, insured };
 }
 
+/**
+ * A country outside the thirteen, from the world research: the employee's own
+ * contributions, each with its cap, the pension ones into the worker's fund,
+ * and income tax on the year's pay less the allowance and any pension
+ * contribution, less any credit. Simpler than the thirteen's, and the
+ * payslip names its source.
+ */
+function worldRules(payroll: NonNullable<WorldWork['payroll']>): Rules {
+  return (g) => {
+    const lines: Line[] = [];
+    let pretax = 0;
+    for (const one of payroll.employee) {
+      const base = Math.min(g, one.capYearly ?? Number.POSITIVE_INFINITY);
+      const amount = one.bands ? bands(base, one.bands) : base * one.rate;
+      if (one.pension) pretax += amount;
+      lines.push({ name: one.name, kind: one.pension ? 'pension' : 'social', source: payroll.source, amount });
+    }
+    const tax = payroll.tax;
+    if (tax) {
+      const owed = bands(Math.max(0, g - pretax - (tax.allowance ?? 0)), tax.brackets) - (tax.credit ?? 0);
+      lines.push({ name: 'Income Tax', kind: 'tax', source: tax.source, amount: Math.max(0, owed) });
+    }
+    const employer = payroll.employerPension;
+    return { lines, ...(employer ? { employerPension: g * employer.rate, employerPensionName: `Your employer (${employer.name})` } : {}) };
+  };
+}
+
 /** Whether SLATE works the country's payslip out from its own rules. */
 export function hasPayroll(iso: string): boolean {
-  return iso in RULES;
+  return iso in RULES || WORLD_WORK[iso]?.payroll !== undefined;
 }
 
 /**
@@ -378,12 +406,15 @@ export function hasPayroll(iso: string): boolean {
  * line, from gross in `usd` (its brackets are in US dollars), marked.
  */
 export function payrollYear(iso: string, gross: number, ctx: PayrollContext & { usdPerUnit?: number }): PayrollYear {
-  const rules = RULES[iso];
+  const world = WORLD_WORK[iso]?.payroll;
+  const rules = RULES[iso] ?? (world ? worldRules(world) : undefined);
   if (!rules) {
     const usd = ctx.usdPerUnit !== undefined ? Math.round(gross * ctx.usdPerUnit) : gross;
     const rate = ctx.cityId ? computeAnnualTax(usd, ctx.cityId, ctx.at).effectiveRate : 0;
+    // Where the tax engine has no rule for the country either, nothing is
+    // taken, and the payslip says that rather than calling nothing a figure.
     return {
-      lines: [{ name: 'Tax And Contributions (SLATE’s Approximation)', amount: Math.round(gross * rate), kind: 'tax', source: 'content/tax.ts' }],
+      lines: rate > 0 ? [{ name: 'Tax And Contributions (SLATE’s Approximation)', amount: Math.round(gross * rate), kind: 'tax', source: 'content/tax.ts' }] : [],
       employerPension: 0,
       estimate: true,
     };

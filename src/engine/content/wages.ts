@@ -9,7 +9,9 @@
  * collective agreement rather than statute, the lowest general rate is used
  * and marked as such.
  *
- * Everywhere else SLATE has no figure, and says so: `minimumWageAt` falls back
+ * Outside the table, a country's own minimum from the world research
+ * (`content/work-world.ts`, 2026-09-25) where it found one. Everywhere else
+ * SLATE has no figure, and says so: `minimumWageAt` falls back
  * to an estimate from the town's cost of living (`kind: 'estimate'`), and the
  * screen calls it an estimate. That covers Italy, which has no statutory
  * minimum and whose sector agreements run from about €7 to €14 an hour, and
@@ -19,7 +21,8 @@
  * has a figure wins, and each figure has a date range.
  */
 
-import { CITIES, jurisdictionPath } from './geography';
+import { CITIES, COUNTRIES, jurisdictionPath } from './geography';
+import { WORLD_WORK } from './work-world';
 import { exchange } from './currency';
 
 export interface MinimumWage {
@@ -146,6 +149,12 @@ export function minimumWageAt(cityId: string, at: number, localCurrency: string)
         ...(found.note ? { note: found.note } : {}),
       };
     }
+  }
+  // Outside the table, the country's own minimum from the world research
+  // (`content/work-world.ts`), where it found one.
+  const world = WORLD_WORK[COUNTRIES.get(city.countryId)?.jurisdictionCode ?? '']?.minimum;
+  if (world) {
+    return { hourly: world.hourly, currency: world.currency, kind: world.kind, source: world.source, ...(world.note ? { note: world.note } : {}) };
   }
   const usd = Math.round(13_00 * city.costOfLivingIndex / 100);
   const local = exchange(usd, 'USD', localCurrency);

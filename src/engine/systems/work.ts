@@ -160,12 +160,13 @@ export function premiumsFor(sim: Simulation, state: JobState, at: Instant, hours
   const weekday = new Date(Date.UTC(p.year, p.month - 1, p.day)).getUTCDay();
   const covers = (premium: Premium | undefined): premium is Premium => premium !== undefined && (!premium.lines || premium.lines.includes(state.jobId));
   const out: { name: string; hours: number }[] = [];
+  const extraOf = (premium: Premium) => premium.byLine?.[state.jobId] ?? premium.extra;
   const mmdd = `${String(p.month).padStart(2, '0')}-${String(p.day).padStart(2, '0')}`;
   const holiday = city ? holidaysOn(at, zone, city.countryId, city.parentId).some((one) => one.type === 'public'
     && (!law.holiday?.only || law.holiday.only.some((key) => key === mmdd || one.englishName.includes(key)))) : false;
-  if (holiday && covers(law.holiday)) out.push({ name: 'Holiday Premium', hours: hours * law.holiday.extra });
-  else if (weekday === 0 && covers(law.sunday)) out.push({ name: 'Sunday Premium', hours: hours * law.sunday.extra });
-  else if (weekday === 6 && covers(law.saturday)) out.push({ name: 'Saturday Premium', hours: hours * law.saturday.extra });
+  if (holiday && covers(law.holiday)) out.push({ name: 'Holiday Premium', hours: hours * extraOf(law.holiday) });
+  else if (weekday === 0 && covers(law.sunday)) out.push({ name: 'Sunday Premium', hours: hours * extraOf(law.sunday) });
+  else if (weekday === 6 && covers(law.saturday)) out.push({ name: 'Saturday Premium', hours: hours * extraOf(law.saturday) });
   const start = p.hour + p.minute / 60;
   const overlap = (from: number, to: number) => [0, -24].reduce((sum, shift) => sum + Math.max(0, Math.min(start + hours, to + shift) - Math.max(start, from + shift)), 0);
   if (covers(law.evening)) {
@@ -265,7 +266,7 @@ export function firstEmployer(cityId: string, jobId: string): Employer | undefin
  */
 export interface Rate {
   hourly: Money;
-  basis: 'employer' | 'typical' | 'estimate';
+  basis: 'employer' | 'line' | 'typical' | 'estimate';
   source?: string;
   note?: string;
 }
@@ -278,6 +279,16 @@ export function rateAt(cityId: string, jobId: string, currency: string, at: Inst
   const employer = employerById(cityId, employerId);
   if (employer?.hourlyFrom !== undefined) {
     return { hourly: Math.max(floorInSave, toSave(employer.hourlyFrom, local)), basis: 'employer', source: employer.source, ...(employer.payNote ? { note: employer.payNote } : {}) };
+  }
+  // An employer that publishes no rate: what the others in the line publish
+  // for a start, their median, before the statistics office's figure, which
+  // is a median of everybody in the work and runs above a new hire's pay.
+  // Dublin's café work was paid the CSO's €18.08 sector mean, managers and
+  // all, until 2026-09-25.
+  const published = employersFor(cityId, jobId).map((one) => one.hourlyFrom).filter((one): one is number => one !== undefined).sort((a, b) => a - b);
+  if (published.length > 0) {
+    const mid = published.length % 2 === 1 ? published[(published.length - 1) / 2]! : Math.round((published[published.length / 2 - 1]! + published[published.length / 2]!) / 2);
+    return { hourly: Math.max(floorInSave, toSave(mid, local)), basis: 'line', note: `the median of what ${published.length} employers in the line publish` };
   }
   const typical = EMPLOYERS[countryAt(cityId).iso]?.[jobId]?.typical;
   if (typical) return { hourly: Math.max(floorInSave, toSave(typical.hourly, local)), basis: 'typical', source: typical.source, note: typical.period };
@@ -298,7 +309,7 @@ export function wageAt(cityId: string, jobId: string, currency: string, at: Inst
 /** How many paydays a year the country's cycle has. */
 export function paydaysAYear(cityId: string): number {
   const cycle = payCycleFor(countryAt(cityId).iso);
-  return cycle.kind === 'biweekly' ? 26 : cycle.kind === 'semimonthly' ? 24 : 12;
+  return cycle.kind === 'weekly' ? 52 : cycle.kind === 'biweekly' ? 26 : cycle.kind === 'semimonthly' ? 24 : 12;
 }
 
 /**
@@ -502,8 +513,13 @@ function sickPay(sim: Simulation, person: Person, at: Instant, hours: number): n
   if (spell.count < sick.fromDay) return 0;
   let covered = hours;
   if (sick.accrual !== undefined) {
-    covered = Math.min(hours, state.sickHours ?? 0);
+    const year = new Date(at).getUTCFullYear();
+    const usedHours = state.sickDays?.year === year ? state.sickDays.days : 0;
+    const room = sick.maxHoursAYear !== undefined ? Math.max(0, sick.maxHoursAYear - usedHours) : Number.POSITIVE_INFINITY;
+    covered = Math.min(hours, state.sickHours ?? 0, room);
     state.sickHours = (state.sickHours ?? 0) - covered;
+    // Where the law caps a year's sick hours, this counts them (in hours).
+    if (sick.maxHoursAYear !== undefined) state.sickDays = { year, days: usedHours + covered };
   } else if (sick.daysAYear !== undefined) {
     const year = new Date(at).getUTCFullYear();
     const used = state.sickDays?.year === year ? state.sickDays.days : 0;
@@ -528,6 +544,15 @@ export function nextPayday(sim: Simulation, person: Person, after: Instant): Ins
   const at17 = (y: number, m: number, d: number) => instantFromZoned({ year: y, month: m, day: d, hour: 17 }, zone);
   const lastOf = (y: number, m: number) => new Date(Date.UTC(y, m, 0)).getUTCDate();
   const p = zonedParts(after, zone);
+  if (cycle.kind === 'weekly') {
+    let at = at17(p.year, p.month, p.day);
+    for (let n = 0; n < 9; n += 1) {
+      const q = zonedParts(at, zone);
+      if (at > after && new Date(Date.UTC(q.year, q.month - 1, q.day)).getUTCDay() === cycle.weekday) return at;
+      at = addDays(at, 1, zone);
+    }
+    return addDays(at17(p.year, p.month, p.day), 7, zone);
+  }
   if (cycle.kind === 'biweekly') {
     // Every other one of that weekday, counted from the job's first week.
     const since = person.job?.since ?? after;

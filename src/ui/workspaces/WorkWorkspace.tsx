@@ -71,6 +71,7 @@ export function WorkWorkspace() {
           <Panel title="Your Rate" subtitle={`${money(rate.hourly)} an hour`}>
             <p className="small" style={{ margin: 0 }}>
               {rate.basis === 'employer' && `${employer?.name} publishes it.`}
+              {rate.basis === 'line' && `${employer?.name ?? 'The employer'} publishes no rate, so it’s ${rate.note}.`}
               {rate.basis === 'typical' && `${employer?.name ?? 'The employer'} publishes no rate, so it’s what the work typically pays here, from the statistics office${rate.note ? ` (${rate.note})` : ''}.`}
               {rate.basis === 'estimate' && 'SLATE has no employer’s rate or statistic for this work here, so it’s the legal floor times what the work usually pays over it: SLATE’s estimate.'}
               {` The legal floor here is ${money(floor.hourly)}${floor.kind === 'estimate' ? ', SLATE’s estimate' : ''}.`}
@@ -97,7 +98,7 @@ export function WorkWorkspace() {
                   <strong className="small mono">{money(slip.gross - slip.lines.reduce((sum, one) => sum + one.amount, 0))}</strong>
                 </div>
                 {slip.employerPension > 0 && <p className="xs dim" style={{ margin: 0 }}>{slip.employerPensionName ?? 'Your employer'} added {money(slip.employerPension)} to it.</p>}
-                {slip.estimate && <p className="xs dim" style={{ margin: 0 }}>SLATE doesn’t have this country’s payroll rules, so the deductions are its approximation.</p>}
+                {slip.estimate && <p className="xs dim" style={{ margin: 0 }}>{slip.lines.length > 0 ? 'SLATE doesn’t have this country’s payroll rules, so the deductions are its approximation.' : 'SLATE doesn’t have this country’s payroll rules, so nothing is taken off: this is the pay before tax.'}</p>}
               </div>
             )}
           </Panel>
@@ -183,7 +184,7 @@ function sickWords(law: LaborLaw | undefined, job: JobState, at: number): string
   const from = sick.fromDay > 1 ? `from day ${sick.fromDay} of a spell` : 'from the first day';
   const who = sick.paidBy === 'state' ? 'The state’s sickness insurance' : 'Your employer';
   const not = sick.afterMonths !== undefined && monthsWith(job, at) < sick.afterMonths ? ` Not until you’ve been with the employer ${sick.afterMonths} months.` : '';
-  const pot = sick.accrual !== undefined ? ` You’ve built up ${(job.sickHours ?? 0).toFixed(1)} hours.`
+  const pot = sick.accrual !== undefined ? ` You’ve built up ${(job.sickHours ?? 0).toFixed(1)} hours${sick.maxHoursAYear !== undefined ? `, and can use ${sick.maxHoursAYear} a year` : ''}.`
     : sick.daysAYear !== undefined ? ` ${sick.daysAYear} days a year; ${job.sickDays?.year === new Date(at).getUTCFullYear() ? job.sickDays.days : 0} used this year.` : '';
   return `${who} pays ${pct(sick.rate)} of a day called in sick, ${from}.${pot}${not} A day called in still counts against you at work.`;
 }

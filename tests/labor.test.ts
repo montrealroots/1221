@@ -43,6 +43,14 @@ describe('premiums for when a shift falls', () => {
     expect(named(premiumsFor(sim, state, local(sim, 2026, 7, 14, 10), 7), 'Holiday Premium')).toBe(0);
   });
 
+  it('Australia’s Sunday rate by the award each line is under', () => {
+    const sim = life('au-nsw-sydney');
+    const sunday = local(sim, 2026, 1, 11, 10);
+    expect(named(premiumsFor(sim, job('au-nsw-sydney', 'school'), sunday, 7), 'Sunday Premium')).toBeCloseTo(7 * 0.25, 6);
+    expect(named(premiumsFor(sim, job('au-nsw-sydney', 'retail'), sunday, 7), 'Sunday Premium')).toBeCloseTo(7 * 0.5, 6);
+    expect(named(premiumsFor(sim, job('au-nsw-sydney', 'armed_forces'), sunday, 7), 'Sunday Premium')).toBeCloseTo(7, 6);
+  });
+
   it('Japan’s night premium from ten, only for the hours in it', () => {
     const sim = life('jp-13-tokyo');
     // Bar work from 16:00 for seven hours runs an hour past ten.
@@ -155,6 +163,22 @@ describe('a day called in sick', () => {
     expect(entry.hours).toBeCloseTo(Math.min(built, Number(shift.payload.hours)), 6);
     expect(sim.player.job!.sickHours).toBeCloseTo(built - entry.hours, 6);
   });
+});
+
+it('caps California’s sick pay at 40 hours a year, however much is built', () => {
+  const sim = life('us-ca-losangeles', { dayJob: true, wealth: 'modest' });
+  sim.player.job!.sickHours = 200;
+  let paid = 0;
+  for (let n = 0; n < 8; n += 1) {
+    const shift = sim.timeline.pending().filter((i) => i.kind === SHIFT_KIND).sort((a, b) => a.at - b.at)[0]!;
+    sim.advanceTo(shift.at);
+    callIn(sim, shift);
+    sim.player.job!.missed = [];
+  }
+  // Counted as the year's sick hours used; a payday between pays them out.
+  paid = sim.player.job!.sickDays!.days;
+  expect(paid).toBeCloseTo(40, 6);
+  expect(sim.player.job!.sickHours).toBeGreaterThanOrEqual(160);
 });
 
 describe('the law’s extra payments, on their dates', () => {

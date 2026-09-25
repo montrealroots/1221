@@ -125,7 +125,7 @@ const REAL_NAMES = [
   'Cuenta de Cheques', 'cuentas-cheques', 'cheque-accounts', 'Special Defence Contribution',
   'special-defence-contribution', 'Youth Programme', 'bankers-association/organisation',
   // Employers, agencies, surveys and pages spelled by their own countries (content/employers.ts).
-  'Hunter Labour Hire', 'Yakka Labour', 'yakkalabour', 'labour-hire', 'statistics/labour', 'Labour Force Survey', 'Endeavour Group',
+  'Expanded Public Works Programme', 'Hunter Labour Hire', 'Yakka Labour', 'yakkalabour', 'labour-hire', 'statistics/labour', 'Labour Force Survey', 'Endeavour Group',
   'top-modelling-agencies', 'modelling-advice', 'Manoeuvre', 'manoeuvre', 'manoeuvre specialise', 'Centre de danse du Marais', 'centre-de-danse',
   'media-centre', 'analyse-2026', 'stagecoach-theatre-arts',
   // Statutes under their own titles (content/labor.ts).
@@ -297,8 +297,32 @@ function insideString(line, at) {
     || ((before.match(/`/g) ?? []).length % 2 === 1);
 }
 
+/**
+ * A web address and the title of a law or a public body are names too, and
+ * spelled by their owners. The job research cites a hundred laws and
+ * ministries by their English titles, and the pages they sit on;
+ * respelling an address breaks it, and respelling a statute's title is
+ * inventing one.
+ */
+const ADDRESS = /https?:\/\/\S+|\bwww\.\S+|\b[\w-]+(?:\.[\w-]+)*\.(?:gov|org|com|net|edu|int|gouv|go|co|ac)(?:\.[a-z]{2})?\/\S*/gi;
+const TITLES = /\b(?:[A-Z][\w'’]*\s+){0,4}Labour\s+(?:Code|Act|Law|Laws|Relations|Council|Department|Force Survey|Standards|Protection|Restructuring Fund|and\s+[A-Z]\w+(?:\s+[A-Z]\w+)*)\b|\bSupreme Labour Council\b|\b(?:Social (?:Security|Insurance)|Security) Organisation\b|\bOrganisation of Working Time\b|\bLabour (?:and|&) \w+|\bMinist(?:ry|er) of [\w, ]*Labour\b|\bDepartment of Labour\b|\bLaw on Labour\b|\bLabour \(/g;
+function partOfAddressOrTitle(line, start, end) {
+  // A generated table's "name" field is an employer's, a bank's or a scheme's own name.
+  const named = /^\s*"name": "/.exec(line);
+  if (named && start >= named[0].length) return true;
+  for (const re of [ADDRESS, TITLES]) {
+    re.lastIndex = 0;
+    let m;
+    while ((m = re.exec(line)) !== null) {
+      if (start >= m.index && end <= m.index + m[0].length) return true;
+    }
+  }
+  return false;
+}
+
 /** Whether this match sits inside a real name that must be left alone. */
 function partOfRealName(line, start, end) {
+  if (partOfAddressOrTitle(line, start, end)) return true;
   return REAL_NAMES.some((name) => {
     let at = -1;
     while ((at = line.indexOf(name, at + 1)) !== -1) {

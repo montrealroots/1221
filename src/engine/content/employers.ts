@@ -6933,5 +6933,11574 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
         "source": "BLS OEWS May 2025, national median hourly wage, via BLS Public Data API series OEUN000000000000039903108 (https://www.bls.gov/oes/current/oes399031.htm). Note: Coaches and Scouts (SOC 27-2022) publish no hourly median (annual only)."
       }
     }
+  },
+  "AD": {
+    "sport": {
+      "employers": [
+        {
+          "id": "ad-sport-grandvalira-andorra-ski-company",
+          "name": "Grandvalira (Andorra Ski Company)",
+          "role": "Lift operator, ski instructor (seasonal)",
+          "where": "national",
+          "source": "https://andorrawork.com/en/blog/seasonal-work-in-andorra-winter-summer",
+          "confidence": "M"
+        },
+        {
+          "id": "ad-sport-vallnord-estacions-de-muntanya-d-andorra",
+          "name": "Vallnord (Estacions de Muntanya d'Andorra)",
+          "role": "Ski monitor, services staff (seasonal)",
+          "where": "national",
+          "source": "https://andorrawork.com/en/blog/seasonal-work-in-andorra-winter-summer",
+          "confidence": "M"
+        },
+        {
+          "id": "ad-sport-naturlandia",
+          "name": "Naturlandia",
+          "role": "Activity monitor, security",
+          "where": "national",
+          "source": "https://andorrawork.com/en/blog/seasonal-work-in-andorra-winter-summer",
+          "confidence": "L"
+        }
+      ]
+    },
+    "retail": {
+      "employers": [
+        {
+          "id": "ad-retail-grup-pyrenees-pyrenees-andorra",
+          "name": "Grup Pyrénées (Pyrénées Andorra)",
+          "role": "Department store and supermarket sales assistant",
+          "where": "national",
+          "source": "https://andorrawork.com/en/parroquies/andorra-la-vella",
+          "confidence": "M"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "ad-hospitality-caldea",
+          "name": "Caldea",
+          "role": "Spa and leisure attendant, food and beverage staff",
+          "where": "national",
+          "source": "https://andorrawork.com/en/parroquies/escaldes-engordany",
+          "confidence": "M"
+        },
+        {
+          "id": "ad-hospitality-andorra-park-hotel",
+          "name": "Andorra Park Hotel",
+          "role": "Waiter, receptionist, kitchen staff (seasonal)",
+          "where": "national",
+          "source": "https://andorrawork.com/en/blog/seasonal-work-in-andorra-winter-summer",
+          "confidence": "L"
+        }
+      ]
+    }
+  },
+  "AE": {
+    "between": {
+      "employers": [
+        {
+          "id": "ae-between-talabat",
+          "name": "Talabat",
+          "role": "Delivery rider",
+          "where": "national",
+          "source": "https://careers.talabat.com",
+          "confidence": "M"
+        },
+        {
+          "id": "ae-between-deliveroo",
+          "name": "Deliveroo",
+          "role": "Delivery rider",
+          "where": "national",
+          "source": "https://riders.deliveroo.ae",
+          "confidence": "M"
+        }
+      ]
+    },
+    "retail": {
+      "employers": [
+        {
+          "id": "ae-retail-carrefour-uae-majid-al-futtaim-retail",
+          "name": "Carrefour UAE (Majid Al Futtaim Retail)",
+          "role": "Cashier, store assistant",
+          "where": "national",
+          "source": "https://www.majidalfuttaim.com/en/careers",
+          "confidence": "M"
+        },
+        {
+          "id": "ae-retail-lulu-hypermarket",
+          "name": "LuLu Hypermarket",
+          "role": "Sales assistant, cashier",
+          "where": "national",
+          "source": "https://www.luluhypermarket.com",
+          "confidence": "M"
+        }
+      ]
+    },
+    "school": {
+      "employers": [
+        {
+          "id": "ae-school-starbucks-alshaya-group-franchise",
+          "name": "Starbucks (Alshaya Group franchise)",
+          "role": "Barista",
+          "where": "national",
+          "source": "https://www.alshaya.com",
+          "confidence": "M"
+        }
+      ]
+    },
+    "armed_forces": {
+      "employers": [
+        {
+          "id": "ae-armed_forces-transguard-group",
+          "name": "Transguard Group",
+          "role": "Security guard",
+          "where": "national",
+          "source": "https://www.transguardgroup.com",
+          "confidence": "M"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "ae-hospitality-jumeirah-group",
+          "name": "Jumeirah Group",
+          "role": "Hotel and restaurant staff",
+          "where": "national",
+          "source": "https://www.jumeirah.com/en/careers",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "AF": {
+    "between": {
+      "employers": [
+        {
+          "id": "af-between-zootzoot",
+          "name": "Zootzoot",
+          "role": "Food and grocery delivery rider (Kabul)",
+          "where": "national",
+          "source": "https://www.facebook.com/zootzootapp/",
+          "confidence": "L"
+        },
+        {
+          "id": "af-between-afghan-online-food",
+          "name": "Afghan Online Food",
+          "role": "Delivery rider",
+          "where": "national",
+          "source": "https://apps.apple.com/pk/app/afghan-online-food/id1591747229",
+          "confidence": "L"
+        }
+      ]
+    }
+  },
+  "AG": {
+    "hospitality": {
+      "employers": [
+        {
+          "id": "ag-hospitality-sandals-grande-antigua",
+          "name": "Sandals Grande Antigua",
+          "role": "Hotel, bar and restaurant staff",
+          "where": "national",
+          "source": "https://www.sandals.com/grande-antigua/",
+          "confidence": "M"
+        },
+        {
+          "id": "ag-hospitality-jumby-bay-island-oetker-collection",
+          "name": "Jumby Bay Island (Oetker Collection)",
+          "role": "Resort staff",
+          "where": "national",
+          "source": "https://www.oetkercollection.com/hotels/jumby-bay-island/",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "AI": {
+    "hospitality": {
+      "employers": [
+        {
+          "id": "ai-hospitality-four-seasons-resort-and-residences-angui",
+          "name": "Four Seasons Resort and Residences Anguilla",
+          "role": "Resort staff",
+          "where": "national",
+          "source": "https://www.fourseasons.com/anguilla/",
+          "confidence": "M"
+        },
+        {
+          "id": "ai-hospitality-cap-juluca-a-belmond-hotel",
+          "name": "Cap Juluca, A Belmond Hotel",
+          "role": "Resort staff",
+          "where": "national",
+          "source": "https://www.belmond.com/hotels/north-america/caribbean/anguilla/belmond-cap-juluca/",
+          "confidence": "M"
+        },
+        {
+          "id": "ai-hospitality-malliouhana-auberge-resorts",
+          "name": "Malliouhana (Auberge Resorts)",
+          "role": "Resort staff",
+          "where": "national",
+          "source": "https://aubergeresorts.com/malliouhana/",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "AL": {
+    "between": {
+      "employers": [
+        {
+          "id": "al-between-wolt",
+          "name": "Wolt",
+          "role": "Courier partner",
+          "where": "national",
+          "source": "https://wolt.com/en/alb",
+          "confidence": "H"
+        }
+      ]
+    },
+    "retail": {
+      "employers": [
+        {
+          "id": "al-retail-spar-albania-balfin-group",
+          "name": "SPAR Albania (Balfin Group)",
+          "role": "Cashier, store assistant",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/Balfin_Group",
+          "confidence": "M"
+        },
+        {
+          "id": "al-retail-neptun-balfin-group",
+          "name": "Neptun (Balfin Group)",
+          "role": "Electronics sales assistant",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/Balfin_Group",
+          "confidence": "M"
+        },
+        {
+          "id": "al-retail-jumbo-albania-balfin-group",
+          "name": "Jumbo Albania (Balfin Group)",
+          "role": "Store assistant",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/Balfin_Group",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "AO": {
+    "between": {
+      "employers": [
+        {
+          "id": "ao-between-yango",
+          "name": "Yango",
+          "role": "Ride-hailing driver (delivery not confirmed in Angola)",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/Yango_(company)",
+          "confidence": "L"
+        }
+      ]
+    }
+  },
+  "AR": {
+    "retail": {
+      "employers": [
+        {
+          "id": "ar-retail-carrefour-argentina",
+          "name": "Carrefour Argentina",
+          "role": "Supermarket cashier or shelf stocker (Empleados de Comercio agreement CCT 130/75)",
+          "where": "national",
+          "source": "https://www.carrefour.com.ar/institucional/",
+          "confidence": "M"
+        },
+        {
+          "id": "ar-retail-coto",
+          "name": "Coto",
+          "role": "Supermarket cashier or stocker (CCT 130/75)",
+          "where": "national",
+          "source": "https://www.coto.com.ar",
+          "confidence": "M"
+        },
+        {
+          "id": "ar-retail-la-anonima",
+          "name": "La Anónima",
+          "role": "Supermarket staff, mainly in Patagonia and the interior (CCT 130/75)",
+          "where": "national",
+          "source": "https://www.laanonima.com.ar/",
+          "confidence": "M"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "ar-hospitality-arcos-dorados-mcdonald-s-argentina",
+          "name": "Arcos Dorados (McDonald's Argentina)",
+          "role": "Crew member",
+          "where": "national",
+          "source": "https://www.arcosdorados.com",
+          "confidence": "M"
+        }
+      ]
+    },
+    "school": {
+      "employers": [
+        {
+          "id": "ar-school-starbucks-argentina",
+          "name": "Starbucks Argentina",
+          "role": "Barista",
+          "where": "national",
+          "source": "https://www.starbucks.com.ar",
+          "confidence": "M"
+        },
+        {
+          "id": "ar-school-cafe-martinez",
+          "name": "Café Martínez",
+          "role": "Barista or counter staff",
+          "where": "national",
+          "source": "https://www.cafemartinez.com",
+          "confidence": "M"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "ar-between-pedidosya",
+          "name": "PedidosYa",
+          "role": "App delivery courier (self-employed, monotributo)",
+          "where": "national",
+          "source": "https://www.pedidosya.com.ar/",
+          "confidence": "M"
+        },
+        {
+          "id": "ar-between-rappi",
+          "name": "Rappi",
+          "role": "App delivery courier (self-employed, monotributo)",
+          "where": "national",
+          "source": "https://www.rappi.com.ar",
+          "confidence": "M"
+        }
+      ]
+    },
+    "armed_forces": {
+      "employers": [
+        {
+          "id": "ar-armed_forces-prosegur-argentina",
+          "name": "Prosegur Argentina",
+          "role": "Security guard (vigilador)",
+          "where": "national",
+          "source": "https://www.prosegur.com.ar",
+          "confidence": "M"
+        }
+      ]
+    },
+    "office": {
+      "employers": [
+        {
+          "id": "ar-office-adecco-argentina",
+          "name": "Adecco Argentina",
+          "role": "Temporary office worker placed by the agency",
+          "where": "national",
+          "source": "https://www.adecco.com.ar",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "AS": {
+    "hospitality": {
+      "employers": [
+        {
+          "id": "as-hospitality-sadie-s-hotels-sadie-s-by-the-sea-sadie-",
+          "name": "Sadie's Hotels (Sadie's by the Sea, Sadie Thompson Inn)",
+          "role": "Hotel and restaurant staff; industry minimum USD 6.10/hr (hotel)",
+          "where": "national",
+          "source": "https://www.sadieshotels.com",
+          "confidence": "M"
+        }
+      ]
+    },
+    "care": {
+      "employers": [
+        {
+          "id": "as-care-lbj-tropical-medical-center",
+          "name": "LBJ Tropical Medical Center",
+          "role": "Nursing aide / care assistant",
+          "where": "national",
+          "source": "https://www.asg-gov.com",
+          "confidence": "L"
+        }
+      ]
+    }
+  },
+  "AT": {
+    "retail": {
+      "employers": [
+        {
+          "id": "at-retail-spar-osterreich",
+          "name": "SPAR Österreich",
+          "role": "Supermarket sales assistant (KV Handel)",
+          "where": "national",
+          "source": "https://www.spar.at",
+          "confidence": "M"
+        },
+        {
+          "id": "at-retail-billa-rewe-international",
+          "name": "BILLA (REWE International)",
+          "role": "Supermarket sales assistant (KV Handel)",
+          "where": "national",
+          "source": "https://www.billa.at",
+          "confidence": "M"
+        },
+        {
+          "id": "at-retail-hofer",
+          "name": "HOFER",
+          "role": "Store employee (KV Handel)",
+          "where": "national",
+          "source": "https://www.hofer.at",
+          "confidence": "M"
+        },
+        {
+          "id": "at-retail-lidl-osterreich",
+          "name": "Lidl Österreich",
+          "role": "Store employee (KV Handel)",
+          "where": "national",
+          "source": "https://www.lidl.at",
+          "confidence": "M"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "at-hospitality-mcdonald-s-osterreich",
+          "name": "McDonald's Österreich",
+          "role": "Crew member",
+          "where": "national",
+          "source": "https://www.mcdonalds.at",
+          "confidence": "M"
+        }
+      ]
+    },
+    "school": {
+      "employers": [
+        {
+          "id": "at-school-starbucks-austria",
+          "name": "Starbucks Austria",
+          "role": "Barista",
+          "where": "national",
+          "source": "https://www.starbucks.at",
+          "confidence": "M"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "at-between-foodora-austria",
+          "name": "foodora Austria",
+          "role": "Food delivery rider",
+          "where": "national",
+          "source": "https://www.foodora.at",
+          "confidence": "M"
+        },
+        {
+          "id": "at-between-lieferando-austria",
+          "name": "Lieferando Austria",
+          "role": "Food delivery rider",
+          "where": "national",
+          "source": "https://www.lieferando.at",
+          "confidence": "M"
+        }
+      ]
+    },
+    "armed_forces": {
+      "employers": [
+        {
+          "id": "at-armed_forces-securitas-austria",
+          "name": "Securitas Austria",
+          "role": "Security guard (KV Bewachungsgewerbe)",
+          "where": "national",
+          "source": "https://www.securitas.at",
+          "confidence": "M"
+        }
+      ]
+    },
+    "office": {
+      "employers": [
+        {
+          "id": "at-office-trenkwalder",
+          "name": "Trenkwalder",
+          "role": "Temporary worker (KV Arbeitskräfteüberlassung)",
+          "where": "national",
+          "source": "https://www.trenkwalder.com",
+          "confidence": "M"
+        }
+      ]
+    },
+    "care": {
+      "employers": [
+        {
+          "id": "at-care-volkshilfe-osterreich",
+          "name": "Volkshilfe Österreich",
+          "role": "Home care assistant (Heimhilfe)",
+          "where": "national",
+          "source": "https://www.volkshilfe.at",
+          "confidence": "M"
+        }
+      ]
+    },
+    "trades": {
+      "employers": [
+        {
+          "id": "at-trades-porr",
+          "name": "PORR",
+          "role": "Construction laborer (KV Bauindustrie und Baugewerbe)",
+          "where": "national",
+          "source": "https://www.porr.at",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "AW": {
+    "retail": {
+      "employers": [
+        {
+          "id": "aw-retail-super-food-plaza",
+          "name": "Super Food Plaza",
+          "role": "Supermarket cashier or stocker",
+          "where": "national",
+          "source": "https://www.superfoodaruba.com",
+          "confidence": "M"
+        },
+        {
+          "id": "aw-retail-ling-sons",
+          "name": "Ling & Sons",
+          "role": "Supermarket cashier or stocker",
+          "where": "national",
+          "source": "https://www.lingandsons.com",
+          "confidence": "M"
+        },
+        {
+          "id": "aw-retail-pricesmart-aruba",
+          "name": "PriceSmart Aruba",
+          "role": "Warehouse club associate",
+          "where": "national",
+          "source": "https://www.pricesmart.com/en-aw/",
+          "confidence": "M"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "aw-hospitality-hilton-aruba-caribbean-resort",
+          "name": "Hilton Aruba Caribbean Resort",
+          "role": "Hotel housekeeping, food and beverage staff",
+          "where": "national",
+          "source": "https://www.hiltonaruba.com",
+          "confidence": "M"
+        },
+        {
+          "id": "aw-hospitality-aruba-marriott-resort-stellaris-casino",
+          "name": "Aruba Marriott Resort & Stellaris Casino",
+          "role": "Hotel staff",
+          "where": "national",
+          "source": "https://www.marriott.com/en-us/hotels/auaar-aruba-marriott-resort-and-stellaris-casino/overview/",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "AX": {
+    "retail": {
+      "employers": [
+        {
+          "id": "ax-retail-mattssons-i-godby",
+          "name": "Mattssons i Godby",
+          "role": "Grocery store assistant",
+          "where": "national",
+          "source": "https://www.mattssons.ax",
+          "confidence": "M"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "ax-hospitality-viking-line",
+          "name": "Viking Line",
+          "role": "Onboard restaurant, shop and cabin staff (Mariehamn-based ferry company)",
+          "where": "national",
+          "source": "https://www.vikingline.com",
+          "confidence": "M"
+        },
+        {
+          "id": "ax-hospitality-eckero-linjen",
+          "name": "Eckerö Linjen",
+          "role": "Onboard restaurant and shop staff",
+          "where": "national",
+          "source": "https://www.eckerolinjen.ax",
+          "confidence": "M"
+        },
+        {
+          "id": "ax-hospitality-hotell-arkipelag",
+          "name": "Hotell Arkipelag",
+          "role": "Hotel and restaurant staff, Mariehamn",
+          "where": "national",
+          "source": "https://www.hotellarkipelag.ax",
+          "confidence": "M"
+        }
+      ]
+    },
+    "care": {
+      "employers": [
+        {
+          "id": "ax-care-alands-halso-och-sjukvard-ahs",
+          "name": "Ålands hälso- och sjukvård (ÅHS)",
+          "role": "Care assistant / practical nurse",
+          "where": "national",
+          "source": "https://www.ahs.ax",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "AZ": {
+    "retail": {
+      "employers": [
+        {
+          "id": "az-retail-bravo-supermarket",
+          "name": "Bravo Supermarket",
+          "role": "Cashier or sales assistant",
+          "where": "national",
+          "source": "https://bravosupermarket.az",
+          "confidence": "M"
+        },
+        {
+          "id": "az-retail-bazarstore",
+          "name": "Bazarstore",
+          "role": "Cashier or sales assistant",
+          "where": "national",
+          "source": "https://bazarstore.az",
+          "confidence": "M"
+        },
+        {
+          "id": "az-retail-oba-market",
+          "name": "OBA Market",
+          "role": "Cashier or sales assistant (discount chain)",
+          "where": "national",
+          "source": "https://oba.az",
+          "confidence": "M"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "az-hospitality-kfc-azerbaijan",
+          "name": "KFC Azerbaijan",
+          "role": "Crew member",
+          "where": "national",
+          "source": "https://kfc.az",
+          "confidence": "M"
+        },
+        {
+          "id": "az-hospitality-mcdonald-s-azerbaijan",
+          "name": "McDonald's Azerbaijan",
+          "role": "Crew member",
+          "where": "national",
+          "source": "https://www.mcdonalds.az",
+          "confidence": "M"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "az-between-wolt",
+          "name": "Wolt",
+          "role": "Food delivery courier",
+          "where": "national",
+          "source": "https://wolt.com/en/aze",
+          "confidence": "M"
+        },
+        {
+          "id": "az-between-bolt-food",
+          "name": "Bolt Food",
+          "role": "Food delivery courier",
+          "where": "national",
+          "source": "https://bolt.eu/en-az/food/",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "BA": {
+    "retail": {
+      "employers": [
+        {
+          "id": "ba-retail-bingo",
+          "name": "Bingo",
+          "role": "Cashier or sales assistant (largest retail chain in BiH)",
+          "where": "national",
+          "source": "https://www.bingotuzla.ba",
+          "confidence": "M"
+        },
+        {
+          "id": "ba-retail-robot-general-trading",
+          "name": "Robot General Trading",
+          "role": "Store staff",
+          "where": "national",
+          "source": "https://www.robot.ba",
+          "confidence": "M"
+        },
+        {
+          "id": "ba-retail-lidl-bosna-i-hercegovina",
+          "name": "Lidl Bosna i Hercegovina",
+          "role": "Store staff",
+          "where": "national",
+          "source": "https://www.lidl.ba",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "BB": {
+    "retail": {
+      "employers": [
+        {
+          "id": "bb-retail-massy-stores-barbados",
+          "name": "Massy Stores Barbados",
+          "role": "Supermarket cashier or stocker",
+          "where": "national",
+          "source": "https://www.massystoresbb.com",
+          "confidence": "M"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "bb-hospitality-chefette-restaurants",
+          "name": "Chefette Restaurants",
+          "role": "Fast-food crew (national chain)",
+          "where": "national",
+          "source": "https://www.chefette.com",
+          "confidence": "M"
+        },
+        {
+          "id": "bb-hospitality-sandals-royal-barbados",
+          "name": "Sandals Royal Barbados",
+          "role": "Resort staff",
+          "where": "national",
+          "source": "https://www.sandals.com/royal-barbados/",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "BD": {
+    "retail": {
+      "employers": [
+        {
+          "id": "bd-retail-shwapno-aci-logistics",
+          "name": "Shwapno (ACI Logistics)",
+          "role": "store associate / cashier",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/List_of_supermarket_chains_in_Asia",
+          "confidence": "M"
+        },
+        {
+          "id": "bd-retail-agora-super-stores",
+          "name": "Agora Super Stores",
+          "role": "store associate",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/List_of_supermarket_chains_in_Asia",
+          "confidence": "M"
+        },
+        {
+          "id": "bd-retail-meena-bazar",
+          "name": "Meena Bazar",
+          "role": "store associate",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/List_of_supermarket_chains_in_Asia",
+          "confidence": "M"
+        },
+        {
+          "id": "bd-retail-unimart",
+          "name": "Unimart",
+          "role": "store associate",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/List_of_supermarket_chains_in_Asia",
+          "confidence": "M"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "bd-between-foodpanda-bangladesh",
+          "name": "Foodpanda Bangladesh",
+          "role": "delivery rider",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/Foodpanda",
+          "confidence": "M"
+        },
+        {
+          "id": "bd-between-pathao-pathao-food-pathao-parcel",
+          "name": "Pathao (Pathao Food, Pathao Parcel)",
+          "role": "delivery rider",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/Pathao",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "BE": {
+    "retail": {
+      "employers": [
+        {
+          "id": "be-retail-colruyt",
+          "name": "Colruyt",
+          "role": "store employee",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/List_of_supermarket_chains_in_Belgium",
+          "confidence": "H"
+        },
+        {
+          "id": "be-retail-delhaize",
+          "name": "Delhaize",
+          "role": "store employee",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/List_of_supermarket_chains_in_Belgium",
+          "confidence": "H"
+        },
+        {
+          "id": "be-retail-carrefour-belgium",
+          "name": "Carrefour Belgium",
+          "role": "store employee",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/List_of_supermarket_chains_in_Belgium",
+          "confidence": "H"
+        },
+        {
+          "id": "be-retail-aldi",
+          "name": "Aldi",
+          "role": "store employee",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/List_of_supermarket_chains_in_Belgium",
+          "confidence": "H"
+        },
+        {
+          "id": "be-retail-lidl",
+          "name": "Lidl",
+          "role": "store employee",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/List_of_supermarket_chains_in_Belgium",
+          "confidence": "H"
+        }
+      ]
+    },
+    "office": {
+      "employers": [
+        {
+          "id": "be-office-randstad-belgium",
+          "name": "Randstad Belgium",
+          "role": "temp worker (interim)",
+          "where": "national",
+          "source": "https://www.randstad.be/",
+          "confidence": "H"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "be-between-deliveroo",
+          "name": "Deliveroo",
+          "role": "delivery rider",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/Deliveroo",
+          "confidence": "H"
+        },
+        {
+          "id": "be-between-uber-eats",
+          "name": "Uber Eats",
+          "role": "delivery courier",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/Uber_Eats",
+          "confidence": "H"
+        },
+        {
+          "id": "be-between-takeaway-com-just-eat-takeaway",
+          "name": "Takeaway.com (Just Eat Takeaway)",
+          "role": "delivery courier",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/Takeaway.com",
+          "confidence": "H"
+        }
+      ]
+    },
+    "armed_forces": {
+      "employers": [
+        {
+          "id": "be-armed_forces-securitas-belgium",
+          "name": "Securitas Belgium",
+          "role": "security agent",
+          "where": "national",
+          "source": "https://www.securitas.be/",
+          "confidence": "H"
+        }
+      ]
+    }
+  },
+  "BF": {
+    "retail": {
+      "employers": [
+        {
+          "id": "bf-retail-marina-market",
+          "name": "Marina Market",
+          "role": "store employee",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/List_of_supermarket_chains_in_Africa",
+          "confidence": "M"
+        },
+        {
+          "id": "bf-retail-le-bon-samaritain",
+          "name": "Le Bon Samaritain",
+          "role": "store employee",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/List_of_supermarket_chains_in_Africa",
+          "confidence": "M"
+        },
+        {
+          "id": "bf-retail-super-u",
+          "name": "Super U",
+          "role": "store employee",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/List_of_supermarket_chains_in_Africa",
+          "confidence": "L"
+        }
+      ]
+    }
+  },
+  "BG": {
+    "retail": {
+      "employers": [
+        {
+          "id": "bg-retail-lidl-bulgaria",
+          "name": "Lidl Bulgaria",
+          "role": "cashier / store associate",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/List_of_supermarket_chains_in_Bulgaria ; https://jobs.lidl.bg/ (says pay is 10% above sector average; no figure)",
+          "confidence": "H"
+        },
+        {
+          "id": "bg-retail-kaufland-bulgaria",
+          "name": "Kaufland Bulgaria",
+          "role": "cashier / store associate",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/List_of_supermarket_chains_in_Bulgaria ; https://kariera.kaufland.bg/",
+          "confidence": "H"
+        },
+        {
+          "id": "bg-retail-billa-bulgaria",
+          "name": "BILLA Bulgaria",
+          "role": "store associate",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/List_of_supermarket_chains_in_Bulgaria",
+          "confidence": "H"
+        },
+        {
+          "id": "bg-retail-t-market",
+          "name": "T Market",
+          "role": "store associate",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/List_of_supermarket_chains_in_Bulgaria",
+          "confidence": "H"
+        },
+        {
+          "id": "bg-retail-fantastico",
+          "name": "Fantastico",
+          "role": "store associate",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/List_of_supermarket_chains_in_Bulgaria",
+          "confidence": "H"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "bg-between-glovo",
+          "name": "Glovo",
+          "role": "delivery courier",
+          "where": "national",
+          "source": "https://glovoapp.com/bg/en/",
+          "confidence": "H"
+        },
+        {
+          "id": "bg-between-wolt",
+          "name": "Wolt",
+          "role": "delivery courier",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/Wolt (launched in Bulgaria 2025)",
+          "confidence": "H"
+        }
+      ]
+    }
+  },
+  "BH": {
+    "retail": {
+      "employers": [
+        {
+          "id": "bh-retail-lulu-hypermarket",
+          "name": "LuLu Hypermarket",
+          "role": "store staff",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/List_of_supermarket_chains_in_Bahrain",
+          "confidence": "H"
+        },
+        {
+          "id": "bh-retail-al-jazira-supermarket",
+          "name": "Al Jazira Supermarket",
+          "role": "store staff",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/List_of_supermarket_chains_in_Bahrain",
+          "confidence": "H"
+        },
+        {
+          "id": "bh-retail-midway-supermarket",
+          "name": "Midway Supermarket",
+          "role": "store staff",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/List_of_supermarket_chains_in_Bahrain",
+          "confidence": "H"
+        },
+        {
+          "id": "bh-retail-al-awafi-supermarkets",
+          "name": "Al Awafi Supermarkets",
+          "role": "store staff",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/List_of_supermarket_chains_in_Bahrain",
+          "confidence": "H"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "bh-between-talabat",
+          "name": "Talabat",
+          "role": "delivery rider",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/Talabat",
+          "confidence": "H"
+        }
+      ]
+    }
+  },
+  "BI": {
+    "retail": {
+      "employers": [
+        {
+          "id": "bi-retail-au-bon-prix",
+          "name": "Au Bon Prix",
+          "role": "store employee",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/List_of_supermarket_chains_in_Africa",
+          "confidence": "L"
+        },
+        {
+          "id": "bi-retail-bmc-grocery",
+          "name": "BMC Grocery",
+          "role": "store employee",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/List_of_supermarket_chains_in_Africa",
+          "confidence": "L"
+        },
+        {
+          "id": "bi-retail-t-2000",
+          "name": "T-2000",
+          "role": "store employee",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/List_of_supermarket_chains_in_Africa",
+          "confidence": "L"
+        }
+      ]
+    }
+  },
+  "BJ": {
+    "retail": {
+      "employers": [
+        {
+          "id": "bj-retail-erevan-u-franchise",
+          "name": "Erevan (U franchise)",
+          "role": "store employee",
+          "where": "national",
+          "source": "https://fr.wikipedia.org/wiki/Erevan_(centre_commercial)",
+          "confidence": "M"
+        },
+        {
+          "id": "bj-retail-super-u",
+          "name": "Super U",
+          "role": "store employee",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/List_of_supermarket_chains_in_Africa",
+          "confidence": "M"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "bj-between-gozem",
+          "name": "Gozem",
+          "role": "delivery driver / rider",
+          "where": "national",
+          "source": "https://gozem.co/bj/en/",
+          "confidence": "H"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "bj-hospitality-novotel-cotonou-orisha-accor",
+          "name": "Novotel Cotonou Orisha (Accor)",
+          "role": "hotel and restaurant staff",
+          "where": "national",
+          "source": "https://all.accor.com/hotel/1826/index.en.shtml",
+          "confidence": "H"
+        },
+        {
+          "id": "bj-hospitality-sofitel-cotonou-marina-hotel-spa-accor",
+          "name": "Sofitel Cotonou Marina Hotel & Spa (Accor)",
+          "role": "hotel and restaurant staff",
+          "where": "national",
+          "source": "https://all.accor.com/a/en/destination/city/hotels-cotonou-v7367.html",
+          "confidence": "H"
+        }
+      ]
+    },
+    "armed_forces": {
+      "employers": [
+        {
+          "id": "bj-armed_forces-emsp-benin",
+          "name": "EMSP Benin",
+          "role": "security guard",
+          "where": "national",
+          "source": "https://www.emsp-benin.com/securite-privee.html",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "BL": {
+    "hospitality": {
+      "employers": [
+        {
+          "id": "bl-hospitality-eden-rock-st-barths-oetker-collection",
+          "name": "Eden Rock - St Barths (Oetker Collection)",
+          "role": "hotel and restaurant staff",
+          "where": "national",
+          "source": "https://www.oetkercollection.com/hotels/eden-rock-st-barths/",
+          "confidence": "M"
+        },
+        {
+          "id": "bl-hospitality-cheval-blanc-st-barth-isle-de-france-lvm",
+          "name": "Cheval Blanc St-Barth Isle de France (LVMH)",
+          "role": "hotel and restaurant staff",
+          "where": "national",
+          "source": "https://www.chevalblanc.com/en/maison/st-barth-isle-de-france/",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "BM": {
+    "retail": {
+      "employers": [
+        {
+          "id": "bm-retail-the-marketplace",
+          "name": "The MarketPlace",
+          "role": "supermarket clerk / cashier",
+          "where": "national",
+          "source": "https://www.marketplace.bm",
+          "confidence": "M"
+        },
+        {
+          "id": "bm-retail-lindo-s-group-of-companies",
+          "name": "Lindo's Group of Companies",
+          "role": "supermarket clerk / cashier",
+          "where": "national",
+          "source": "https://www.lindos.bm",
+          "confidence": "M"
+        },
+        {
+          "id": "bm-retail-miles-market",
+          "name": "Miles Market",
+          "role": "grocery clerk",
+          "where": "national",
+          "source": "https://www.miles.bm",
+          "confidence": "M"
+        },
+        {
+          "id": "bm-retail-gorham-s",
+          "name": "Gorham's",
+          "role": "hardware and home store associate",
+          "where": "national",
+          "source": "https://www.gorhams.bm",
+          "confidence": "L"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "bm-hospitality-the-hamilton-princess-beach-club",
+          "name": "The Hamilton Princess & Beach Club",
+          "role": "hotel room attendant / server",
+          "where": "national",
+          "source": "https://www.thehamiltonprincess.com",
+          "confidence": "M"
+        },
+        {
+          "id": "bm-hospitality-rosewood-bermuda",
+          "name": "Rosewood Bermuda",
+          "role": "hotel and restaurant staff",
+          "where": "national",
+          "source": "https://www.rosewoodhotels.com/en/bermuda",
+          "confidence": "M"
+        },
+        {
+          "id": "bm-hospitality-grotto-bay-beach-resort",
+          "name": "Grotto Bay Beach Resort",
+          "role": "hotel and restaurant staff",
+          "where": "national",
+          "source": "https://www.grottobay.com",
+          "confidence": "M"
+        }
+      ]
+    },
+    "armed_forces": {
+      "employers": [
+        {
+          "id": "bm-armed_forces-bermuda-security-group",
+          "name": "Bermuda Security Group",
+          "role": "security officer",
+          "where": "national",
+          "source": "https://www.bsg.bm",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "BN": {
+    "retail": {
+      "employers": [
+        {
+          "id": "bn-retail-supa-save",
+          "name": "Supa Save",
+          "role": "supermarket assistant / cashier",
+          "where": "national",
+          "source": "https://www.supasave.com.bn",
+          "confidence": "M"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "bn-hospitality-the-empire-brunei",
+          "name": "The Empire Brunei",
+          "role": "hotel staff",
+          "where": "national",
+          "source": "https://www.theempirebrunei.com; listed as covered in the Minimum Wage handbook 2025",
+          "confidence": "H"
+        },
+        {
+          "id": "bn-hospitality-radisson-hotel-brunei",
+          "name": "Radisson Hotel Brunei",
+          "role": "hotel staff",
+          "where": "national",
+          "source": "Listed as covered in https://www.labour.gov.bn/SiteAssets/Handbook_Minimum%20Wage_2025.pdf",
+          "confidence": "H"
+        },
+        {
+          "id": "bn-hospitality-the-rizqun-international-hotel",
+          "name": "The Rizqun International Hotel",
+          "role": "hotel staff",
+          "where": "national",
+          "source": "Listed as covered in the Minimum Wage handbook 2025",
+          "confidence": "H"
+        }
+      ]
+    },
+    "armed_forces": {
+      "employers": [
+        {
+          "id": "bn-armed_forces-setia-protective-security-services-spss-",
+          "name": "Setia Protective Security Services (SPSS) Sdn Bhd",
+          "role": "security guard",
+          "where": "national",
+          "source": "Listed as covered in the Minimum Wage handbook 2025",
+          "confidence": "H"
+        },
+        {
+          "id": "bn-armed_forces-koperasi-rimbun-berhad-kopri-commercial-",
+          "name": "Koperasi Rimbun Berhad (KOPRI) commercial security",
+          "role": "security guard",
+          "where": "national",
+          "source": "Listed as covered in the Minimum Wage handbook 2025",
+          "confidence": "H"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "bn-between-gomamam",
+          "name": "Gomamam",
+          "role": "delivery rider",
+          "where": "national",
+          "source": "https://www.gomamam.com",
+          "confidence": "M"
+        },
+        {
+          "id": "bn-between-dart",
+          "name": "Dart",
+          "role": "ride-hailing and delivery driver",
+          "where": "national",
+          "source": "https://www.dartbrunei.com",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "BO": {
+    "retail": {
+      "employers": [
+        {
+          "id": "bo-retail-hipermaxi",
+          "name": "Hipermaxi",
+          "role": "supermarket cashier / stocker",
+          "where": "national",
+          "source": "https://www.hipermaxi.com",
+          "confidence": "M"
+        },
+        {
+          "id": "bo-retail-fidalga",
+          "name": "Fidalga",
+          "role": "supermarket cashier / stocker",
+          "where": "national",
+          "source": "https://www.fidalga.com",
+          "confidence": "M"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "bo-hospitality-pollos-copacabana",
+          "name": "Pollos Copacabana",
+          "role": "fast-food counter staff",
+          "where": "national",
+          "source": "https://www.polloscopacabana.com",
+          "confidence": "M"
+        },
+        {
+          "id": "bo-hospitality-burger-king-bolivia",
+          "name": "Burger King Bolivia",
+          "role": "fast-food crew",
+          "where": "national",
+          "source": "https://www.burgerking.com.bo",
+          "confidence": "M"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "bo-between-pedidosya",
+          "name": "PedidosYa",
+          "role": "delivery rider",
+          "where": "national",
+          "source": "https://www.pedidosya.com.bo",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "BQ": {
+    "retail": {
+      "employers": [
+        {
+          "id": "bq-retail-van-den-tweel-groep-warehouse-bonaire",
+          "name": "Van den Tweel Groep (Warehouse Bonaire)",
+          "role": "supermarket clerk / cashier",
+          "where": "national",
+          "source": "https://www.warehousebonaire.com",
+          "confidence": "M"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "bq-hospitality-harbour-village-bonaire",
+          "name": "Harbour Village Bonaire",
+          "role": "hotel and restaurant staff",
+          "where": "national",
+          "source": "https://www.harbourvillage.com",
+          "confidence": "M"
+        },
+        {
+          "id": "bq-hospitality-buddy-dive-resort",
+          "name": "Buddy Dive Resort",
+          "role": "hotel staff",
+          "where": "national",
+          "source": "https://www.buddydive.com",
+          "confidence": "M"
+        },
+        {
+          "id": "bq-hospitality-delfins-beach-resort",
+          "name": "Delfins Beach Resort",
+          "role": "hotel and restaurant staff",
+          "where": "national",
+          "source": "https://www.delfinsbeachresort.com",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "BR": {
+    "retail": {
+      "employers": [
+        {
+          "id": "br-retail-grupo-pao-de-acucar-gpa",
+          "name": "Grupo Pão de Açúcar (GPA)",
+          "role": "operador de caixa / repositor",
+          "where": "national",
+          "source": "https://www.gpabr.com",
+          "confidence": "M"
+        },
+        {
+          "id": "br-retail-carrefour-brasil-atacadao",
+          "name": "Carrefour Brasil (Atacadão)",
+          "role": "operador de caixa / repositor",
+          "where": "national",
+          "source": "https://www.carrefour.com.br",
+          "confidence": "M"
+        },
+        {
+          "id": "br-retail-assai-atacadista",
+          "name": "Assaí Atacadista",
+          "role": "operador de caixa / repositor",
+          "where": "national",
+          "source": "https://www.assai.com.br",
+          "confidence": "M"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "br-hospitality-mcdonald-s-arcos-dorados",
+          "name": "McDonald's (Arcos Dorados)",
+          "role": "atendente",
+          "where": "national",
+          "source": "https://www.mcdonalds.com.br",
+          "confidence": "M"
+        }
+      ]
+    },
+    "school": {
+      "employers": [
+        {
+          "id": "br-school-starbucks-brasil",
+          "name": "Starbucks Brasil",
+          "role": "barista",
+          "where": "national",
+          "source": "https://www.starbucks.com.br",
+          "confidence": "L"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "br-between-ifood",
+          "name": "iFood",
+          "role": "entregador (delivery rider)",
+          "where": "national",
+          "source": "https://entregador.ifood.com.br",
+          "confidence": "H"
+        }
+      ]
+    },
+    "office": {
+      "employers": [
+        {
+          "id": "br-office-randstad-brasil",
+          "name": "Randstad Brasil",
+          "role": "temporary office worker",
+          "where": "national",
+          "source": "https://www.randstad.com.br",
+          "confidence": "M"
+        }
+      ]
+    },
+    "armed_forces": {
+      "employers": [
+        {
+          "id": "br-armed_forces-grupo-gps",
+          "name": "Grupo GPS",
+          "role": "vigilante / porteiro",
+          "where": "national",
+          "source": "https://www.gpssa.com.br",
+          "confidence": "M"
+        }
+      ]
+    },
+    "trades": {
+      "employers": [
+        {
+          "id": "br-trades-mrv-engenharia",
+          "name": "MRV Engenharia",
+          "role": "servente de obra",
+          "where": "national",
+          "source": "https://www.mrv.com.br",
+          "confidence": "M"
+        }
+      ]
+    },
+    "sport": {
+      "employers": [
+        {
+          "id": "br-sport-smart-fit",
+          "name": "Smart Fit",
+          "role": "recepcionista / professor de academia",
+          "where": "national",
+          "source": "https://www.smartfit.com.br",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "BS": {
+    "retail": {
+      "employers": [
+        {
+          "id": "bs-retail-aml-foods-solomon-s-cost-right-fresh-mar",
+          "name": "AML Foods (Solomon's, Cost Right, Fresh Market)",
+          "role": "grocery clerk / cashier",
+          "where": "national",
+          "source": "https://www.amlfoods.com",
+          "confidence": "M"
+        },
+        {
+          "id": "bs-retail-island-luck",
+          "name": "Island Luck",
+          "role": "web shop clerk",
+          "where": "national",
+          "source": "https://www.workzoom.com/blog/hr-payroll-guide-bahamas/",
+          "confidence": "L"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "bs-hospitality-domino-s-pizza-bahamas-aml-foods",
+          "name": "Domino's Pizza Bahamas (AML Foods)",
+          "role": "counter staff / delivery",
+          "where": "national",
+          "source": "https://www.amlfoods.com",
+          "confidence": "M"
+        },
+        {
+          "id": "bs-hospitality-atlantis-paradise-island",
+          "name": "Atlantis Paradise Island",
+          "role": "hotel and casino staff",
+          "where": "national",
+          "source": "https://www.atlantisbahamas.com",
+          "confidence": "M"
+        },
+        {
+          "id": "bs-hospitality-baha-mar",
+          "name": "Baha Mar",
+          "role": "hotel and casino staff",
+          "where": "national",
+          "source": "https://www.bahamar.com",
+          "confidence": "M"
+        },
+        {
+          "id": "bs-hospitality-sandals-royal-bahamian",
+          "name": "Sandals Royal Bahamian",
+          "role": "hotel staff",
+          "where": "national",
+          "source": "https://www.sandals.com/royal-bahamian/",
+          "confidence": "M"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "bs-between-kraven",
+          "name": "Kraven",
+          "role": "delivery driver",
+          "where": "national",
+          "source": "https://www.kravenbahamas.com",
+          "confidence": "M"
+        },
+        {
+          "id": "bs-between-gofadis",
+          "name": "Gofadis",
+          "role": "delivery driver",
+          "where": "national",
+          "source": "https://www.gofadis.com",
+          "confidence": "M"
+        },
+        {
+          "id": "bs-between-bahama-eats",
+          "name": "Bahama Eats",
+          "role": "delivery driver",
+          "where": "national",
+          "source": "https://apps.apple.com/us/app/bahama-eats-food-delivery/id1470039780",
+          "confidence": "L"
+        }
+      ]
+    }
+  },
+  "BT": {
+    "hospitality": {
+      "employers": [
+        {
+          "id": "bt-hospitality-taj-tashi-thimphu",
+          "name": "Taj Tashi Thimphu",
+          "role": "hotel staff",
+          "where": "national",
+          "source": "https://www.tajhotels.com/en-in/hotels/taj-tashi-thimphu",
+          "confidence": "L"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "bt-between-druk-ride",
+          "name": "Druk Ride",
+          "role": "driver",
+          "where": "national",
+          "source": "https://www.drukride.com",
+          "confidence": "L"
+        }
+      ]
+    }
+  },
+  "BW": {
+    "retail": {
+      "employers": [
+        {
+          "id": "bw-retail-choppies",
+          "name": "Choppies",
+          "role": "shop assistant / cashier",
+          "where": "national",
+          "source": "https://www.choppies.co.bw",
+          "confidence": "M"
+        },
+        {
+          "id": "bw-retail-sefalana",
+          "name": "Sefalana",
+          "role": "shop assistant / cashier",
+          "where": "national",
+          "source": "https://www.sefalana.com",
+          "confidence": "M"
+        },
+        {
+          "id": "bw-retail-shoprite-botswana",
+          "name": "Shoprite Botswana",
+          "role": "shop assistant / cashier",
+          "where": "national",
+          "source": "https://www.shoprite.co.bw",
+          "confidence": "L"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "bw-hospitality-nando-s-botswana",
+          "name": "Nando's Botswana",
+          "role": "restaurant crew",
+          "where": "national",
+          "source": "https://www.nandos.co.bw",
+          "confidence": "M"
+        }
+      ]
+    },
+    "armed_forces": {
+      "employers": [
+        {
+          "id": "bw-armed_forces-g4s-botswana",
+          "name": "G4S Botswana",
+          "role": "security guard",
+          "where": "national",
+          "source": "https://www.g4s.com/en-bw",
+          "confidence": "L"
+        }
+      ]
+    }
+  },
+  "BY": {
+    "retail": {
+      "employers": [
+        {
+          "id": "by-retail-euroopt-eurotorg",
+          "name": "Euroopt (Eurotorg)",
+          "role": "cashier / shop assistant",
+          "where": "national",
+          "source": "https://ru.wikipedia.org/wiki/Евроторг ; https://rabota.by/ (823 open vacancies listed, 2026-09)",
+          "confidence": "H"
+        },
+        {
+          "id": "by-retail-hit-and-groshyk-eurotorg",
+          "name": "Hit! and Groshyk (Eurotorg)",
+          "role": "cashier / shop assistant",
+          "where": "national",
+          "source": "https://ru.wikipedia.org/wiki/Евроторг",
+          "confidence": "M"
+        },
+        {
+          "id": "by-retail-belorusneft-filling-stations",
+          "name": "Belorusneft filling stations",
+          "role": "station attendant / cashier",
+          "where": "national",
+          "source": "https://ru.wikipedia.org/wiki/Белоруснефть",
+          "confidence": "L"
+        }
+      ]
+    },
+    "school": {
+      "employers": [
+        {
+          "id": "by-school-mak-by-former-mcdonald-s-belarus",
+          "name": "Mak.by (former McDonald's Belarus)",
+          "role": "crew member",
+          "where": "national",
+          "source": "https://ru.wikipedia.org/wiki/Mak.by",
+          "confidence": "H"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "by-between-yandex-eda",
+          "name": "Yandex Eda",
+          "role": "courier",
+          "where": "national",
+          "source": "https://ru.wikipedia.org/wiki/Яндекс_Еда (in Belarus since June 2021, 6 cities)",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "BZ": {
+    "retail": {
+      "employers": [
+        {
+          "id": "bz-retail-brodies-james-brodie-co",
+          "name": "Brodies (James Brodie & Co.)",
+          "role": "cashier / stock clerk",
+          "where": "national",
+          "source": "https://www.facebook.com/brodies.bz/ ; https://www.tripadvisor.com/ShowUserReviews-g291968-d8117739-r681074398-Brodies-Belize_City_Belize_District.html",
+          "confidence": "M"
+        },
+        {
+          "id": "bz-retail-publics-supermarket",
+          "name": "Publics Supermarket",
+          "role": "cashier",
+          "where": "national",
+          "source": "https://www.facebook.com/publicssupermarket/posts/-walk-in-interviews-at-publics-supermarketwere-hiring-join-our-team-at-publics-n/1460056095905681/",
+          "confidence": "M"
+        },
+        {
+          "id": "bz-retail-save-u-supermarket",
+          "name": "Save-U Supermarket",
+          "role": "cashier",
+          "where": "national",
+          "source": "https://ambergriscaye.com/help/article/185/what-s-the-best-supermarket-in-belize-city-in-terms-of-biggest-variety-of-all-things-food-and-drink-592.html",
+          "confidence": "L"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "bz-between-run-man-belize",
+          "name": "Run Man Belize",
+          "role": "delivery rider",
+          "where": "national",
+          "source": "https://runman.co/",
+          "confidence": "M"
+        },
+        {
+          "id": "bz-between-belizeon-d-way",
+          "name": "BelizeON D'Way",
+          "role": "delivery driver",
+          "where": "national",
+          "source": "https://www.breakingbelizenews.com/2022/03/05/belizeon-creates-first-takeout-and-food-delivery-app-belizeon-dway/",
+          "confidence": "M"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "bz-hospitality-ramada-by-wyndham-princess-belize-city",
+          "name": "Ramada by Wyndham Princess Belize City",
+          "role": "housekeeper / server",
+          "where": "national",
+          "source": "https://www.wyndhamhotels.com/ramada/belize-city-belize/ramada-belize-city-princess/overview",
+          "confidence": "M"
+        },
+        {
+          "id": "bz-hospitality-fort-george-hotel-and-spa-former-radisso",
+          "name": "Fort George Hotel and Spa (former Radisson Fort George)",
+          "role": "housekeeper / server",
+          "where": "national",
+          "source": "https://www.tripadvisor.com/Hotel_Review-g291968-d293315-Reviews-Fort_George_Hotel_And_Spa-Belize_City_Belize_District.html",
+          "confidence": "M"
+        }
+      ]
+    },
+    "armed_forces": {
+      "employers": [
+        {
+          "id": "bz-armed_forces-fort-point-security-services-ltd",
+          "name": "Fort Point Security Services Ltd",
+          "role": "security guard",
+          "where": "national",
+          "source": "https://fortpointsecurity.com/services/professional-security-guards/",
+          "confidence": "M"
+        },
+        {
+          "id": "bz-armed_forces-aaa-security-service-ltd",
+          "name": "AAA Security Service Ltd",
+          "role": "security guard",
+          "where": "national",
+          "source": "https://www.facebook.com/p/AAA-Security-Service-Ltd-100066681891263/",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "CC": {
+    "trades": {
+      "employers": [
+        {
+          "id": "cc-trades-cocos-islands-co-operative-society-ltd",
+          "name": "Cocos Islands Co-operative Society Ltd",
+          "role": "construction / stevedoring labourer",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/Cocos_(Keeling)_Islands",
+          "confidence": "M"
+        },
+        {
+          "id": "cc-trades-shire-of-cocos-keeling-islands",
+          "name": "Shire of Cocos (Keeling) Islands",
+          "role": "works crew",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/Cocos_(Keeling)_Islands",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "CD": {
+    "retail": {
+      "employers": [
+        {
+          "id": "cd-retail-swiss-mart",
+          "name": "Swiss Mart",
+          "role": "cashier / shop assistant",
+          "where": "national",
+          "source": "https://fr.wikipedia.org/wiki/Kinshasa",
+          "confidence": "M"
+        },
+        {
+          "id": "cd-retail-gg-mart",
+          "name": "GG Mart",
+          "role": "cashier / shop assistant",
+          "where": "national",
+          "source": "https://fr.wikipedia.org/wiki/Kinshasa",
+          "confidence": "M"
+        },
+        {
+          "id": "cd-retail-kin-mart",
+          "name": "Kin Mart",
+          "role": "cashier / shop assistant",
+          "where": "national",
+          "source": "https://fr.wikipedia.org/wiki/Kinshasa",
+          "confidence": "L"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "cd-hospitality-pullman-kinshasa-grand-hotel",
+          "name": "Pullman Kinshasa Grand Hôtel",
+          "role": "housekeeper / waiter",
+          "where": "national",
+          "source": "https://fr.wikipedia.org/wiki/Kinshasa",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "CF": {
+    "hospitality": {
+      "employers": [
+        {
+          "id": "cf-hospitality-hotel-oubangui",
+          "name": "Hôtel Oubangui",
+          "role": "housekeeper / waiter",
+          "where": "national",
+          "source": "https://fr.wikipedia.org/wiki/Bangui",
+          "confidence": "L"
+        }
+      ]
+    }
+  },
+  "CH": {
+    "retail": {
+      "employers": [
+        {
+          "id": "ch-retail-migros",
+          "name": "Migros",
+          "role": "Sales associate (Verkaufsmitarbeiter)",
+          "where": "national",
+          "source": "https://www.migros.ch",
+          "confidence": "H"
+        },
+        {
+          "id": "ch-retail-coop",
+          "name": "Coop",
+          "role": "Sales associate",
+          "where": "national",
+          "source": "https://www.coop.ch",
+          "confidence": "H"
+        },
+        {
+          "id": "ch-retail-denner",
+          "name": "Denner",
+          "role": "Sales associate",
+          "where": "national",
+          "source": "https://www.denner.ch",
+          "confidence": "H"
+        }
+      ]
+    },
+    "school": {
+      "employers": [
+        {
+          "id": "ch-school-mcdonald-s-suisse",
+          "name": "McDonald's Suisse",
+          "role": "Crew member",
+          "where": "national",
+          "source": "https://www.mcdonalds.ch",
+          "confidence": "H"
+        },
+        {
+          "id": "ch-school-starbucks-switzerland",
+          "name": "Starbucks Switzerland",
+          "role": "Barista",
+          "where": "national",
+          "source": "https://www.starbucks.ch",
+          "confidence": "M"
+        }
+      ]
+    },
+    "armed_forces": {
+      "employers": [
+        {
+          "id": "ch-armed_forces-securitas-ag",
+          "name": "Securitas AG",
+          "role": "Security guard",
+          "where": "national",
+          "source": "https://www.securitas.ch",
+          "confidence": "H"
+        }
+      ]
+    },
+    "office": {
+      "employers": [
+        {
+          "id": "ch-office-adecco-switzerland",
+          "name": "Adecco Switzerland",
+          "role": "Temporary office worker",
+          "where": "national",
+          "source": "https://www.adecco.ch",
+          "confidence": "H"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "ch-between-smood",
+          "name": "Smood",
+          "role": "Delivery courier (also Uber Eats and Just Eat operate in Swiss cities)",
+          "where": "national",
+          "source": "https://www.smood.ch",
+          "confidence": "M"
+        }
+      ]
+    },
+    "trades": {
+      "employers": [
+        {
+          "id": "ch-trades-implenia",
+          "name": "Implenia",
+          "role": "Construction worker",
+          "where": "national",
+          "source": "https://www.implenia.com",
+          "confidence": "H"
+        }
+      ]
+    },
+    "care": {
+      "employers": [
+        {
+          "id": "ch-care-spitex",
+          "name": "Spitex",
+          "role": "Home care assistant (non-profit Spitex organizations by canton)",
+          "where": "national",
+          "source": "https://www.spitex.ch",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "CI": {
+    "retail": {
+      "employers": [
+        {
+          "id": "ci-retail-prosuma-cash-ivoire-sococe-hyper-u",
+          "name": "Prosuma (Cash Ivoire, Sococe, Hyper U)",
+          "role": "Cashier / shelf stocker",
+          "where": "national",
+          "source": "https://fr.wikipedia.org/wiki/Prosuma",
+          "confidence": "M"
+        },
+        {
+          "id": "ci-retail-cfao-retail-carrefour-playce",
+          "name": "CFAO Retail (Carrefour, Playce)",
+          "role": "Store associate",
+          "where": "national",
+          "source": "https://www.cfaogroup.com",
+          "confidence": "M"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "ci-between-glovo",
+          "name": "Glovo",
+          "role": "Delivery courier (Yango Delivery also operates in Abidjan)",
+          "where": "national",
+          "source": "https://glovoapp.com/ci/fr/",
+          "confidence": "M"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "ci-hospitality-sofitel-abidjan-hotel-ivoire",
+          "name": "Sofitel Abidjan Hotel Ivoire",
+          "role": "Hotel staff",
+          "where": "national",
+          "source": "https://all.accor.com",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "CK": {
+    "retail": {
+      "employers": [
+        {
+          "id": "ck-retail-citc-cook-islands-trading-corporation",
+          "name": "CITC (Cook Islands Trading Corporation)",
+          "role": "Shop assistant",
+          "where": "national",
+          "source": "https://www.citc.co.ck",
+          "confidence": "M"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "ck-hospitality-edgewater-resort-and-spa",
+          "name": "Edgewater Resort and Spa",
+          "role": "Hotel staff",
+          "where": "national",
+          "source": "https://www.edgewater.co.ck",
+          "confidence": "M"
+        },
+        {
+          "id": "ck-hospitality-rarotongan-beach-resort",
+          "name": "Rarotongan Beach Resort",
+          "role": "Hotel staff",
+          "where": "national",
+          "source": "http://www.rarotongan.com",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "CL": {
+    "retail": {
+      "employers": [
+        {
+          "id": "cl-retail-walmart-chile-lider",
+          "name": "Walmart Chile (Lider)",
+          "role": "Cashier / store associate",
+          "where": "national",
+          "source": "https://www.walmartchile.cl",
+          "confidence": "H"
+        },
+        {
+          "id": "cl-retail-cencosud-jumbo-santa-isabel",
+          "name": "Cencosud (Jumbo, Santa Isabel)",
+          "role": "Store associate",
+          "where": "national",
+          "source": "https://www.cencosud.com",
+          "confidence": "H"
+        },
+        {
+          "id": "cl-retail-smu-unimarc",
+          "name": "SMU (Unimarc)",
+          "role": "Store associate",
+          "where": "national",
+          "source": "https://www.smu.cl",
+          "confidence": "H"
+        }
+      ]
+    },
+    "school": {
+      "employers": [
+        {
+          "id": "cl-school-starbucks-chile",
+          "name": "Starbucks Chile",
+          "role": "Barista",
+          "where": "national",
+          "source": "https://www.starbucks.cl",
+          "confidence": "M"
+        },
+        {
+          "id": "cl-school-juan-maestro",
+          "name": "Juan Maestro",
+          "role": "Crew member",
+          "where": "national",
+          "source": "https://www.juanmaestro.cl",
+          "confidence": "M"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "cl-between-pedidosya",
+          "name": "PedidosYa",
+          "role": "Delivery courier (Uber Eats and Rappi also operate)",
+          "where": "national",
+          "source": "https://www.pedidosya.cl",
+          "confidence": "H"
+        }
+      ]
+    },
+    "armed_forces": {
+      "employers": [
+        {
+          "id": "cl-armed_forces-prosegur-chile",
+          "name": "Prosegur Chile",
+          "role": "Security guard",
+          "where": "national",
+          "source": "https://www.prosegur.cl",
+          "confidence": "M"
+        }
+      ]
+    },
+    "office": {
+      "employers": [
+        {
+          "id": "cl-office-adecco-chile",
+          "name": "Adecco Chile",
+          "role": "Temporary office worker",
+          "where": "national",
+          "source": "https://www.adecco.cl",
+          "confidence": "M"
+        }
+      ]
+    },
+    "trades": {
+      "employers": [
+        {
+          "id": "cl-trades-socovesa",
+          "name": "Socovesa",
+          "role": "Construction labourer",
+          "where": "national",
+          "source": "https://www.socovesa.cl",
+          "confidence": "L"
+        }
+      ]
+    }
+  },
+  "CM": {
+    "retail": {
+      "employers": [
+        {
+          "id": "cm-retail-carrefour-market-cameroun-cfao-retail",
+          "name": "Carrefour Market Cameroun (CFAO Retail)",
+          "role": "Store associate",
+          "where": "national",
+          "source": "https://www.cfaogroup.com",
+          "confidence": "M"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "cm-hospitality-hilton-yaounde",
+          "name": "Hilton Yaounde",
+          "role": "Hotel staff",
+          "where": "national",
+          "source": "https://www.hilton.com",
+          "confidence": "M"
+        },
+        {
+          "id": "cm-hospitality-akwa-palace-hotel-douala",
+          "name": "Akwa Palace Hotel (Douala)",
+          "role": "Hotel staff",
+          "where": "national",
+          "source": "https://www.hotel-akwa-palace.com",
+          "confidence": "L"
+        }
+      ]
+    }
+  },
+  "CN": {
+    "between": {
+      "employers": [
+        {
+          "id": "cn-between-meituan",
+          "name": "Meituan",
+          "role": "Delivery rider",
+          "where": "national",
+          "source": "https://www.meituan.com",
+          "confidence": "H"
+        },
+        {
+          "id": "cn-between-ele-me-alibaba",
+          "name": "Ele.me (Alibaba)",
+          "role": "Delivery rider",
+          "where": "national",
+          "source": "https://www.ele.me",
+          "confidence": "H"
+        }
+      ]
+    },
+    "school": {
+      "employers": [
+        {
+          "id": "cn-school-luckin-coffee",
+          "name": "Luckin Coffee",
+          "role": "Barista",
+          "where": "national",
+          "source": "https://www.luckincoffee.com",
+          "confidence": "H"
+        },
+        {
+          "id": "cn-school-kfc-china-yum-china",
+          "name": "KFC China (Yum China)",
+          "role": "Crew member",
+          "where": "national",
+          "source": "https://www.yumchina.com",
+          "confidence": "H"
+        }
+      ]
+    },
+    "retail": {
+      "employers": [
+        {
+          "id": "cn-retail-freshippo-hema",
+          "name": "Freshippo (Hema)",
+          "role": "Store associate",
+          "where": "national",
+          "source": "https://www.freshhema.com",
+          "confidence": "M"
+        },
+        {
+          "id": "cn-retail-yonghui-superstores",
+          "name": "Yonghui Superstores",
+          "role": "Store associate",
+          "where": "national",
+          "source": "https://www.yonghui.com.cn",
+          "confidence": "M"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "cn-hospitality-haidilao",
+          "name": "Haidilao",
+          "role": "Restaurant server",
+          "where": "national",
+          "source": "https://www.haidilao.com",
+          "confidence": "H"
+        }
+      ]
+    },
+    "armed_forces": {
+      "employers": [
+        {
+          "id": "cn-armed_forces-china-security-protection-group",
+          "name": "China Security & Protection Group",
+          "role": "Security guard",
+          "where": "national",
+          "source": "http://www.csspgroup.com",
+          "confidence": "L"
+        }
+      ]
+    }
+  },
+  "CO": {
+    "retail": {
+      "employers": [
+        {
+          "id": "co-retail-grupo-exito-exito-carulla-surtimax",
+          "name": "Grupo Exito (Exito, Carulla, Surtimax)",
+          "role": "Cashier / store associate",
+          "where": "national",
+          "source": "https://www.grupoexito.com.co",
+          "confidence": "H"
+        },
+        {
+          "id": "co-retail-d1-koba-colombia",
+          "name": "D1 (Koba Colombia)",
+          "role": "Store associate",
+          "where": "national",
+          "source": "https://www.d1.com.co",
+          "confidence": "H"
+        },
+        {
+          "id": "co-retail-ara-jeronimo-martins",
+          "name": "Ara (Jeronimo Martins)",
+          "role": "Store associate",
+          "where": "national",
+          "source": "https://www.aratiendas.com",
+          "confidence": "H"
+        }
+      ]
+    },
+    "school": {
+      "employers": [
+        {
+          "id": "co-school-juan-valdez-cafe",
+          "name": "Juan Valdez Cafe",
+          "role": "Barista",
+          "where": "national",
+          "source": "https://www.juanvaldez.com",
+          "confidence": "H"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "co-between-rappi",
+          "name": "Rappi",
+          "role": "Delivery courier (DiDi Food also operates)",
+          "where": "national",
+          "source": "https://www.rappi.com.co",
+          "confidence": "H"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "co-hospitality-crepes-waffles",
+          "name": "Crepes & Waffles",
+          "role": "Server",
+          "where": "national",
+          "source": "https://www.crepesywaffles.com",
+          "confidence": "M"
+        }
+      ]
+    },
+    "armed_forces": {
+      "employers": [
+        {
+          "id": "co-armed_forces-seguridad-atlas",
+          "name": "Seguridad Atlas",
+          "role": "Security guard",
+          "where": "national",
+          "source": "https://www.seguridadatlas.com",
+          "confidence": "M"
+        }
+      ]
+    },
+    "office": {
+      "employers": [
+        {
+          "id": "co-office-adecco-colombia",
+          "name": "Adecco Colombia",
+          "role": "Temporary office worker",
+          "where": "national",
+          "source": "https://www.adecco.com.co",
+          "confidence": "M"
+        }
+      ]
+    },
+    "trades": {
+      "employers": [
+        {
+          "id": "co-trades-constructora-bolivar",
+          "name": "Constructora Bolivar",
+          "role": "Construction labourer",
+          "where": "national",
+          "source": "https://www.constructorabolivar.com",
+          "confidence": "L"
+        }
+      ]
+    }
+  },
+  "CR": {
+    "retail": {
+      "employers": [
+        {
+          "id": "cr-retail-walmart-mexico-y-centroamerica-walmart-m",
+          "name": "Walmart Mexico y Centroamerica (Walmart, Mas x Menos, Pali)",
+          "role": "Store associate",
+          "where": "national",
+          "source": "https://www.walmartcentroamerica.com",
+          "confidence": "H"
+        },
+        {
+          "id": "cr-retail-automercado",
+          "name": "Automercado",
+          "role": "Cashier",
+          "where": "national",
+          "source": "https://www.automercado.cr",
+          "confidence": "M"
+        },
+        {
+          "id": "cr-retail-grupo-gessa-perimercados-super-compro",
+          "name": "Grupo Gessa (Perimercados, Super Compro)",
+          "role": "Store associate",
+          "where": "national",
+          "source": "http://www.grupogessa.com",
+          "confidence": "L"
+        }
+      ]
+    },
+    "school": {
+      "employers": [
+        {
+          "id": "cr-school-starbucks-costa-rica",
+          "name": "Starbucks Costa Rica",
+          "role": "Barista",
+          "where": "national",
+          "source": "https://www.starbucks.co.cr",
+          "confidence": "M"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "cr-between-uber-eats",
+          "name": "Uber Eats",
+          "role": "Delivery courier (DiDi Food also operates)",
+          "where": "national",
+          "source": "https://www.ubereats.com/cr",
+          "confidence": "M"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "cr-hospitality-marriott-hotels-in-costa-rica",
+          "name": "Marriott hotels in Costa Rica",
+          "role": "Hotel staff",
+          "where": "national",
+          "source": "https://careers.marriott.com",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "CU": {
+    "retail": {
+      "employers": [
+        {
+          "id": "cu-retail-cimex-trd-caribe-and-cimex-stores",
+          "name": "CIMEX (TRD Caribe and CIMEX stores)",
+          "role": "Store worker",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/Cimex",
+          "confidence": "M"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "cu-hospitality-gaviota-hotels-and-stores",
+          "name": "Gaviota (hotels and stores)",
+          "role": "Hotel or store worker",
+          "where": "national",
+          "source": "https://www.gaviota-grupo.com",
+          "confidence": "M"
+        },
+        {
+          "id": "cu-hospitality-cubanacan",
+          "name": "Cubanacan",
+          "role": "Hotel worker",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/Cubanacan",
+          "confidence": "L"
+        }
+      ]
+    }
+  },
+  "CV": {
+    "hospitality": {
+      "employers": [
+        {
+          "id": "cv-hospitality-riu-hotels-sal-and-boa-vista",
+          "name": "Riu Hotels (Sal and Boa Vista)",
+          "role": "Hotel staff",
+          "where": "national",
+          "source": "https://www.riu.com",
+          "confidence": "H"
+        },
+        {
+          "id": "cv-hospitality-melia-hotels-in-cabo-verde",
+          "name": "Melia Hotels in Cabo Verde",
+          "role": "Hotel staff",
+          "where": "national",
+          "source": "https://www.melia.com",
+          "confidence": "M"
+        },
+        {
+          "id": "cv-hospitality-hilton-cabo-verde-sal-resort",
+          "name": "Hilton Cabo Verde Sal Resort",
+          "role": "Hotel staff",
+          "where": "national",
+          "source": "https://www.hilton.com",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "CW": {
+    "retail": {
+      "employers": [
+        {
+          "id": "cw-retail-van-den-tweel-supermarket",
+          "name": "Van den Tweel Supermarket",
+          "role": "Cashier",
+          "where": "national",
+          "source": "http://www.vandentweel.com",
+          "confidence": "L"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "cw-hospitality-sandals-royal-curacao",
+          "name": "Sandals Royal Curacao",
+          "role": "Hotel staff",
+          "where": "national",
+          "source": "https://www.sandals.com",
+          "confidence": "M"
+        },
+        {
+          "id": "cw-hospitality-renaissance-wind-creek-curacao-resort",
+          "name": "Renaissance Wind Creek Curacao Resort",
+          "role": "Hotel staff",
+          "where": "national",
+          "source": "https://www.marriott.com",
+          "confidence": "M"
+        },
+        {
+          "id": "cw-hospitality-curacao-marriott-beach-resort",
+          "name": "Curacao Marriott Beach Resort",
+          "role": "Hotel staff",
+          "where": "national",
+          "source": "https://www.marriott.com",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "CX": {
+    "trades": {
+      "employers": [
+        {
+          "id": "cx-trades-christmas-island-phosphates-phosphate-re",
+          "name": "Christmas Island Phosphates (Phosphate Resources Ltd)",
+          "role": "Mine and plant labourer",
+          "where": "national",
+          "source": "https://www.phosphateresources.com.au",
+          "confidence": "M"
+        }
+      ]
+    },
+    "office": {
+      "employers": [
+        {
+          "id": "cx-office-shire-of-christmas-island",
+          "name": "Shire of Christmas Island",
+          "role": "Council worker",
+          "where": "national",
+          "source": "https://www.shire.gov.cx",
+          "confidence": "M"
+        }
+      ]
+    },
+    "armed_forces": {
+      "employers": [
+        {
+          "id": "cx-armed_forces-serco-christmas-island-immigration-deten",
+          "name": "Serco (Christmas Island Immigration Detention Centre)",
+          "role": "Detention and security officer",
+          "where": "national",
+          "source": "https://www.serco.com/aspac",
+          "confidence": "L"
+        }
+      ]
+    }
+  },
+  "CY": {
+    "retail": {
+      "employers": [
+        {
+          "id": "cy-retail-alphamega-hypermarkets",
+          "name": "Alphamega Hypermarkets",
+          "role": "Cashier / store associate",
+          "where": "national",
+          "source": "https://www.alphamega.com.cy",
+          "confidence": "H"
+        },
+        {
+          "id": "cy-retail-sklavenitis-cyprus",
+          "name": "Sklavenitis Cyprus",
+          "role": "Store associate",
+          "where": "national",
+          "source": "https://www.sklavenitis.com.cy",
+          "confidence": "M"
+        },
+        {
+          "id": "cy-retail-lidl-cyprus",
+          "name": "Lidl Cyprus",
+          "role": "Store associate",
+          "where": "national",
+          "source": "https://www.lidl.com.cy",
+          "confidence": "H"
+        }
+      ]
+    },
+    "school": {
+      "employers": [
+        {
+          "id": "cy-school-costa-coffee-cyprus",
+          "name": "Costa Coffee Cyprus",
+          "role": "Barista",
+          "where": "national",
+          "source": "https://www.costacoffee.com.cy",
+          "confidence": "M"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "cy-between-foody",
+          "name": "Foody",
+          "role": "Delivery courier (Wolt and Bolt Food also operate)",
+          "where": "national",
+          "source": "https://www.foody.com.cy",
+          "confidence": "H"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "cy-hospitality-louis-hotels",
+          "name": "Louis Hotels",
+          "role": "Hotel staff",
+          "where": "national",
+          "source": "https://www.louishotels.com",
+          "confidence": "H"
+        }
+      ]
+    },
+    "armed_forces": {
+      "employers": [
+        {
+          "id": "cy-armed_forces-g4s-cyprus",
+          "name": "G4S Cyprus",
+          "role": "Security guard",
+          "where": "national",
+          "source": "https://www.g4s.com/en-cy",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "CZ": {
+    "retail": {
+      "employers": [
+        {
+          "id": "cz-retail-kaufland-ceska-republika",
+          "name": "Kaufland Ceska republika",
+          "role": "Store associate",
+          "where": "national",
+          "source": "https://www.kaufland.cz",
+          "confidence": "H"
+        },
+        {
+          "id": "cz-retail-albert-ahold-delhaize",
+          "name": "Albert (Ahold Delhaize)",
+          "role": "Store associate",
+          "where": "national",
+          "source": "https://www.albert.cz",
+          "confidence": "H"
+        },
+        {
+          "id": "cz-retail-lidl-ceska-republika",
+          "name": "Lidl Ceska republika",
+          "role": "Store associate",
+          "where": "national",
+          "source": "https://www.lidl.cz",
+          "confidence": "H"
+        }
+      ]
+    },
+    "school": {
+      "employers": [
+        {
+          "id": "cz-school-costa-coffee-czech-republic",
+          "name": "Costa Coffee Czech Republic",
+          "role": "Barista",
+          "where": "national",
+          "source": "https://www.costa-coffee.cz",
+          "confidence": "M"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "cz-between-wolt",
+          "name": "Wolt",
+          "role": "Delivery courier (Foodora and Bolt Food also operate)",
+          "where": "national",
+          "source": "https://wolt.com/cs/cze",
+          "confidence": "H"
+        }
+      ]
+    },
+    "office": {
+      "employers": [
+        {
+          "id": "cz-office-grafton-recruitment",
+          "name": "Grafton Recruitment",
+          "role": "Temporary office worker",
+          "where": "national",
+          "source": "https://www.grafton.cz",
+          "confidence": "M"
+        }
+      ]
+    },
+    "trades": {
+      "employers": [
+        {
+          "id": "cz-trades-metrostav",
+          "name": "Metrostav",
+          "role": "Construction worker",
+          "where": "national",
+          "source": "https://www.metrostav.cz",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "DJ": {
+    "trades": {
+      "employers": [
+        {
+          "id": "dj-trades-djibouti-ports-free-zones-authority-dora",
+          "name": "Djibouti Ports & Free Zones Authority / Doraleh terminals",
+          "role": "Port labourer",
+          "where": "national",
+          "source": "https://dpfza.gov.dj",
+          "confidence": "L"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "dj-hospitality-djibouti-palace-kempinski",
+          "name": "Djibouti Palace Kempinski",
+          "role": "Hotel staff",
+          "where": "national",
+          "source": "https://www.kempinski.com",
+          "confidence": "M"
+        },
+        {
+          "id": "dj-hospitality-sheraton-djibouti",
+          "name": "Sheraton Djibouti",
+          "role": "Hotel staff",
+          "where": "national",
+          "source": "https://www.marriott.com",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "DK": {
+    "retail": {
+      "employers": [
+        {
+          "id": "dk-retail-salling-group-netto-fotex-bilka",
+          "name": "Salling Group (Netto, Fotex, Bilka)",
+          "role": "Store associate",
+          "where": "national",
+          "source": "https://sallinggroup.com",
+          "confidence": "H"
+        },
+        {
+          "id": "dk-retail-coop-danmark-coop-365-kvickly-superbrugs",
+          "name": "Coop Danmark (Coop 365, Kvickly, SuperBrugsen)",
+          "role": "Store associate",
+          "where": "national",
+          "source": "https://om.coop.dk",
+          "confidence": "H"
+        },
+        {
+          "id": "dk-retail-lidl-danmark",
+          "name": "Lidl Danmark",
+          "role": "Store associate",
+          "where": "national",
+          "source": "https://www.lidl.dk",
+          "confidence": "H"
+        }
+      ]
+    },
+    "school": {
+      "employers": [
+        {
+          "id": "dk-school-joe-the-juice",
+          "name": "Joe & The Juice",
+          "role": "Juicer / barista",
+          "where": "national",
+          "source": "https://www.joejuice.com",
+          "confidence": "H"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "dk-between-wolt",
+          "name": "Wolt",
+          "role": "Delivery courier (Just Eat also operates)",
+          "where": "national",
+          "source": "https://wolt.com/da/dnk",
+          "confidence": "H"
+        }
+      ]
+    },
+    "armed_forces": {
+      "employers": [
+        {
+          "id": "dk-armed_forces-g4s-danmark",
+          "name": "G4S Danmark",
+          "role": "Security guard",
+          "where": "national",
+          "source": "https://www.g4s.com/da-dk",
+          "confidence": "M"
+        }
+      ]
+    },
+    "office": {
+      "employers": [
+        {
+          "id": "dk-office-temp-team",
+          "name": "Temp-Team",
+          "role": "Temporary office worker",
+          "where": "national",
+          "source": "https://www.temp-team.dk",
+          "confidence": "L"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "dk-hospitality-scandic-hotels-denmark",
+          "name": "Scandic Hotels Denmark",
+          "role": "Hotel staff",
+          "where": "national",
+          "source": "https://www.scandichotels.com",
+          "confidence": "M"
+        }
+      ]
+    },
+    "care": {
+      "employers": [
+        {
+          "id": "dk-care-danish-municipalities-hjemmepleje",
+          "name": "Danish municipalities (hjemmepleje)",
+          "role": "Home care assistant (social- og sundhedshjaelper)",
+          "where": "national",
+          "source": "https://www.kl.dk",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "DM": {
+    "retail": {
+      "employers": [
+        {
+          "id": "dm-retail-whitchurch-iga-supermarkets",
+          "name": "Whitchurch (IGA supermarkets)",
+          "role": "Cashier",
+          "where": "national",
+          "source": "https://www.whitchurch.com",
+          "confidence": "L"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "dm-hospitality-cabrits-resort-and-spa-kempinski-dominic",
+          "name": "Cabrits Resort and Spa Kempinski Dominica",
+          "role": "Hotel staff",
+          "where": "national",
+          "source": "https://www.kempinski.com",
+          "confidence": "M"
+        },
+        {
+          "id": "dm-hospitality-secret-bay",
+          "name": "Secret Bay",
+          "role": "Hotel staff",
+          "where": "national",
+          "source": "https://www.secretbay.dm",
+          "confidence": "M"
+        },
+        {
+          "id": "dm-hospitality-fort-young-hotel",
+          "name": "Fort Young Hotel",
+          "role": "Hotel staff",
+          "where": "national",
+          "source": "https://www.fortyounghotel.com",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "DO": {
+    "retail": {
+      "employers": [
+        {
+          "id": "do-retail-grupo-ramos-la-sirena-super-pola",
+          "name": "Grupo Ramos (La Sirena, Super Pola)",
+          "role": "Cashier / store associate",
+          "where": "national",
+          "source": "https://www.gruporamos.com",
+          "confidence": "H"
+        },
+        {
+          "id": "do-retail-grupo-bravo-supermercados-bravo",
+          "name": "Grupo Bravo (Supermercados Bravo)",
+          "role": "Cashier",
+          "where": "national",
+          "source": "https://www.superbravo.com.do",
+          "confidence": "M"
+        },
+        {
+          "id": "do-retail-jumbo-and-nacional-centro-cuesta-naciona",
+          "name": "Jumbo and Nacional (Centro Cuesta Nacional)",
+          "role": "Store associate",
+          "where": "national",
+          "source": "https://www.jumbo.com.do",
+          "confidence": "M"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "do-between-pedidos-ya",
+          "name": "Pedidos Ya",
+          "role": "Delivery courier (Uber Eats also operates)",
+          "where": "national",
+          "source": "https://www.pedidosya.com.do",
+          "confidence": "M"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "do-hospitality-barcelo-hotels-punta-cana",
+          "name": "Barcelo Hotels (Punta Cana)",
+          "role": "Hotel staff",
+          "where": "national",
+          "source": "https://www.barcelo.com",
+          "confidence": "H"
+        },
+        {
+          "id": "do-hospitality-grupo-punta-cana-iberostar",
+          "name": "Grupo Punta Cana / Iberostar",
+          "role": "Hotel staff",
+          "where": "national",
+          "source": "https://www.iberostar.com",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "DZ": {
+    "retail": {
+      "employers": [
+        {
+          "id": "dz-retail-uno-cevital",
+          "name": "Uno (Cevital)",
+          "role": "Cashier / store associate",
+          "where": "national",
+          "source": "https://www.cevital.com",
+          "confidence": "M"
+        },
+        {
+          "id": "dz-retail-carrefour-algerie-hyper-carrefour",
+          "name": "Carrefour Algerie (Hyper Carrefour)",
+          "role": "Store associate",
+          "where": "national",
+          "source": "https://www.carrefour.dz",
+          "confidence": "L"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "dz-between-yassir",
+          "name": "Yassir",
+          "role": "Delivery courier",
+          "where": "national",
+          "source": "https://yassir.com",
+          "confidence": "H"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "dz-hospitality-sheraton-marriott-hotels-in-algiers",
+          "name": "Sheraton / Marriott hotels in Algiers",
+          "role": "Hotel staff",
+          "where": "national",
+          "source": "https://www.marriott.com",
+          "confidence": "M"
+        }
+      ]
+    },
+    "trades": {
+      "employers": [
+        {
+          "id": "dz-trades-cosider",
+          "name": "Cosider",
+          "role": "Construction worker",
+          "where": "national",
+          "source": "https://www.cosider-groupe.dz",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "EC": {
+    "retail": {
+      "employers": [
+        {
+          "id": "ec-retail-corporacion-favorita-supermaxi-megamaxi-",
+          "name": "Corporacion Favorita (Supermaxi, Megamaxi, Akí)",
+          "role": "Cashier / store associate",
+          "where": "national",
+          "source": "https://www.corporacionfavorita.com",
+          "confidence": "H"
+        },
+        {
+          "id": "ec-retail-corporacion-el-rosado-mi-comisariato",
+          "name": "Corporacion El Rosado (Mi Comisariato)",
+          "role": "Store associate",
+          "where": "national",
+          "source": "https://www.elrosado.com",
+          "confidence": "H"
+        },
+        {
+          "id": "ec-retail-tiendas-tuti",
+          "name": "Tiendas Tuti",
+          "role": "Store associate",
+          "where": "national",
+          "source": "https://www.tuti.com.ec",
+          "confidence": "M"
+        }
+      ]
+    },
+    "school": {
+      "employers": [
+        {
+          "id": "ec-school-kfc-ecuador-grupo-kfc",
+          "name": "KFC Ecuador (Grupo KFC)",
+          "role": "Crew member",
+          "where": "national",
+          "source": "https://www.kfc.com.ec",
+          "confidence": "M"
+        },
+        {
+          "id": "ec-school-sweet-coffee",
+          "name": "Sweet & Coffee",
+          "role": "Barista",
+          "where": "national",
+          "source": "https://www.sweetandcoffee.com.ec",
+          "confidence": "M"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "ec-between-pedidosya",
+          "name": "PedidosYa",
+          "role": "Delivery courier (Rappi and Uber Eats also operate)",
+          "where": "national",
+          "source": "https://www.pedidosya.com.ec",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "EE": {
+    "retail": {
+      "employers": [
+        {
+          "id": "ee-retail-rimi-eesti",
+          "name": "Rimi Eesti",
+          "role": "Store associate",
+          "where": "national",
+          "source": "https://www.rimi.ee",
+          "confidence": "H"
+        },
+        {
+          "id": "ee-retail-maxima-eesti",
+          "name": "Maxima Eesti",
+          "role": "Store associate",
+          "where": "national",
+          "source": "https://www.maxima.ee",
+          "confidence": "H"
+        },
+        {
+          "id": "ee-retail-selver",
+          "name": "Selver",
+          "role": "Store associate",
+          "where": "national",
+          "source": "https://www.selver.ee",
+          "confidence": "H"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "ee-between-bolt-food",
+          "name": "Bolt Food",
+          "role": "Delivery courier (Wolt also operates)",
+          "where": "national",
+          "source": "https://bolt.eu",
+          "confidence": "H"
+        }
+      ]
+    },
+    "school": {
+      "employers": [
+        {
+          "id": "ee-school-reval-cafe",
+          "name": "Reval Cafe",
+          "role": "Barista",
+          "where": "national",
+          "source": "https://revalcafe.ee",
+          "confidence": "M"
+        }
+      ]
+    },
+    "armed_forces": {
+      "employers": [
+        {
+          "id": "ee-armed_forces-g4s-eesti",
+          "name": "G4S Eesti",
+          "role": "Security guard",
+          "where": "national",
+          "source": "https://www.g4s.ee",
+          "confidence": "H"
+        }
+      ]
+    },
+    "trades": {
+      "employers": [
+        {
+          "id": "ee-trades-merko-ehitus",
+          "name": "Merko Ehitus",
+          "role": "Construction worker",
+          "where": "national",
+          "source": "https://www.merko.ee",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "EG": {
+    "retail": {
+      "employers": [
+        {
+          "id": "eg-retail-carrefour-egypt-majid-al-futtaim",
+          "name": "Carrefour Egypt (Majid Al Futtaim)",
+          "role": "Store associate",
+          "where": "national",
+          "source": "https://www.carrefouregypt.com",
+          "confidence": "H"
+        },
+        {
+          "id": "eg-retail-seoudi-supermarket",
+          "name": "Seoudi Supermarket",
+          "role": "Cashier",
+          "where": "national",
+          "source": "https://www.seoudisupermarket.com",
+          "confidence": "M"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "eg-between-talabat-egypt",
+          "name": "Talabat Egypt",
+          "role": "Delivery rider (Breadfast, Rabbit and Mrsool also operate)",
+          "where": "national",
+          "source": "https://www.talabat.com/egypt",
+          "confidence": "H"
+        }
+      ]
+    },
+    "school": {
+      "employers": [
+        {
+          "id": "eg-school-cilantro-cafe",
+          "name": "Cilantro Cafe",
+          "role": "Barista",
+          "where": "national",
+          "source": "https://www.cilantrocafe.net",
+          "confidence": "M"
+        },
+        {
+          "id": "eg-school-americana-kfc-hardee-s",
+          "name": "Americana (KFC, Hardee's)",
+          "role": "Crew member",
+          "where": "national",
+          "source": "https://www.americana-restaurants.com",
+          "confidence": "H"
+        }
+      ]
+    },
+    "armed_forces": {
+      "employers": [
+        {
+          "id": "eg-armed_forces-falcon-group",
+          "name": "Falcon Group",
+          "role": "Security guard",
+          "where": "national",
+          "source": "https://www.falcongroup-eg.com",
+          "confidence": "M"
+        }
+      ]
+    },
+    "trades": {
+      "employers": [
+        {
+          "id": "eg-trades-orascom-construction",
+          "name": "Orascom Construction",
+          "role": "Construction worker",
+          "where": "national",
+          "source": "https://www.orascom.com",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "EH": {
+    "retail": {
+      "employers": [
+        {
+          "id": "eh-retail-marjane",
+          "name": "Marjane",
+          "role": "Store associate",
+          "where": "national",
+          "source": "https://www.marjane.ma",
+          "confidence": "M"
+        },
+        {
+          "id": "eh-retail-label-vie-carrefour-market",
+          "name": "Label'Vie (Carrefour Market)",
+          "role": "Store associate",
+          "where": "national",
+          "source": "https://www.labelvie.ma",
+          "confidence": "M"
+        }
+      ]
+    },
+    "trades": {
+      "employers": [
+        {
+          "id": "eh-trades-ocp-phosboucraa",
+          "name": "OCP Phosboucraa",
+          "role": "Mine and plant worker",
+          "where": "national",
+          "source": "https://www.ocpgroup.ma",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "ET": {
+    "retail": {
+      "employers": [
+        {
+          "id": "et-retail-shoa-supermarket",
+          "name": "Shoa Supermarket",
+          "role": "Cashier",
+          "where": "national",
+          "source": "http://shoasupermarket.com",
+          "confidence": "L"
+        }
+      ]
+    },
+    "school": {
+      "employers": [
+        {
+          "id": "et-school-kaldi-s-coffee",
+          "name": "Kaldi's Coffee",
+          "role": "Barista",
+          "where": "national",
+          "source": "https://kaldiscoffee.com",
+          "confidence": "M"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "et-between-deliver-addis",
+          "name": "Deliver Addis",
+          "role": "Delivery rider (BeU Delivery also operates)",
+          "where": "national",
+          "source": "https://deliveraddis.com",
+          "confidence": "M"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "et-hospitality-ethiopian-skylight-hotel",
+          "name": "Ethiopian Skylight Hotel",
+          "role": "Hotel staff",
+          "where": "national",
+          "source": "https://www.ethiopianskylighthotel.com",
+          "confidence": "M"
+        },
+        {
+          "id": "et-hospitality-sheraton-addis",
+          "name": "Sheraton Addis",
+          "role": "Hotel staff",
+          "where": "national",
+          "source": "https://www.marriott.com",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "FI": {
+    "retail": {
+      "employers": [
+        {
+          "id": "fi-retail-s-group-prisma-s-market-alepa",
+          "name": "S Group (Prisma, S-market, Alepa)",
+          "role": "Store associate",
+          "where": "national",
+          "source": "https://s-ryhma.fi",
+          "confidence": "H"
+        },
+        {
+          "id": "fi-retail-kesko-k-citymarket-k-supermarket",
+          "name": "Kesko (K-Citymarket, K-Supermarket)",
+          "role": "Store associate",
+          "where": "national",
+          "source": "https://www.kesko.fi",
+          "confidence": "H"
+        },
+        {
+          "id": "fi-retail-lidl-suomi",
+          "name": "Lidl Suomi",
+          "role": "Store associate",
+          "where": "national",
+          "source": "https://www.lidl.fi",
+          "confidence": "H"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "fi-between-wolt",
+          "name": "Wolt",
+          "role": "Delivery courier (Foodora also operates)",
+          "where": "national",
+          "source": "https://wolt.com/fi/fin",
+          "confidence": "H"
+        }
+      ]
+    },
+    "school": {
+      "employers": [
+        {
+          "id": "fi-school-espresso-house-finland",
+          "name": "Espresso House Finland",
+          "role": "Barista",
+          "where": "national",
+          "source": "https://espressohouse.com",
+          "confidence": "M"
+        },
+        {
+          "id": "fi-school-hesburger",
+          "name": "Hesburger",
+          "role": "Crew member",
+          "where": "national",
+          "source": "https://www.hesburger.fi",
+          "confidence": "H"
+        }
+      ]
+    },
+    "armed_forces": {
+      "employers": [
+        {
+          "id": "fi-armed_forces-securitas-oy",
+          "name": "Securitas Oy",
+          "role": "Security guard",
+          "where": "national",
+          "source": "https://www.securitas.fi",
+          "confidence": "H"
+        }
+      ]
+    },
+    "office": {
+      "employers": [
+        {
+          "id": "fi-office-barona",
+          "name": "Barona",
+          "role": "Temporary worker",
+          "where": "national",
+          "source": "https://www.barona.fi",
+          "confidence": "M"
+        }
+      ]
+    },
+    "care": {
+      "employers": [
+        {
+          "id": "fi-care-attendo",
+          "name": "Attendo",
+          "role": "Care assistant",
+          "where": "national",
+          "source": "https://www.attendo.fi",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "FJ": {
+    "retail": {
+      "employers": [
+        {
+          "id": "fj-retail-mh-morris-hedstrom-supermarkets",
+          "name": "MH (Morris Hedstrom) supermarkets",
+          "role": "Shop assistant",
+          "where": "national",
+          "source": "https://www.mh.com.fj",
+          "confidence": "M",
+          "hourlyFrom": 544
+        },
+        {
+          "id": "fj-retail-new-world-iga",
+          "name": "New World IGA",
+          "role": "Shop assistant",
+          "where": "national",
+          "source": "https://www.newworld.com.fj",
+          "confidence": "M",
+          "hourlyFrom": 544
+        },
+        {
+          "id": "fj-retail-rb-patel-group",
+          "name": "RB Patel Group",
+          "role": "Shop assistant",
+          "where": "national",
+          "source": "https://www.rbpatel.com.fj",
+          "confidence": "M",
+          "hourlyFrom": 544
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "fj-hospitality-denarau-hotels-sheraton-westin-hilton-fi",
+          "name": "Denarau hotels (Sheraton, Westin, Hilton Fiji)",
+          "role": "Hotel staff",
+          "where": "national",
+          "source": "https://www.marriott.com",
+          "confidence": "M"
+        },
+        {
+          "id": "fj-hospitality-shangri-la-yanuca-island",
+          "name": "Shangri-La Yanuca Island",
+          "role": "Hotel staff",
+          "where": "national",
+          "source": "https://www.shangri-la.com",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "FK": {
+    "office": {
+      "employers": [
+        {
+          "id": "fk-office-falkland-islands-government",
+          "name": "Falkland Islands Government",
+          "role": "Public service worker",
+          "where": "national",
+          "source": "https://www.falklands.gov.fk",
+          "confidence": "H"
+        }
+      ]
+    },
+    "retail": {
+      "employers": [
+        {
+          "id": "fk-retail-falkland-islands-company-west-store",
+          "name": "Falkland Islands Company (West Store)",
+          "role": "Shop assistant",
+          "where": "national",
+          "source": "https://www.the-falkland-islands-co.com",
+          "confidence": "M"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "fk-hospitality-malvina-house-hotel",
+          "name": "Malvina House Hotel",
+          "role": "Hotel staff",
+          "where": "national",
+          "source": "https://www.malvinahousehotel.com",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "FO": {
+    "retail": {
+      "employers": [
+        {
+          "id": "fo-retail-sms-torshavn-shopping-centre-bonus-mikla",
+          "name": "SMS (Tórshavn shopping centre, Bonus, Miklagarður)",
+          "role": "Shop assistant",
+          "where": "national",
+          "source": "https://www.sms.fo",
+          "confidence": "L"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "fo-hospitality-hotel-f-royar",
+          "name": "Hotel Føroyar",
+          "role": "Hotel staff",
+          "where": "national",
+          "source": "https://www.hotelforoyar.com",
+          "confidence": "L"
+        }
+      ]
+    },
+    "trades": {
+      "employers": [
+        {
+          "id": "fo-trades-bakkafrost",
+          "name": "Bakkafrost",
+          "role": "Fish farm and processing worker",
+          "where": "national",
+          "source": "https://www.bakkafrost.com",
+          "confidence": "H"
+        }
+      ]
+    }
+  },
+  "GA": {
+    "retail": {
+      "employers": [
+        {
+          "id": "ga-retail-ceca-gadis-geant-casino-score",
+          "name": "CECA-GADIS (Geant Casino, Score)",
+          "role": "Store associate",
+          "where": "national",
+          "source": "https://www.cecagadis.com",
+          "confidence": "L"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "ga-hospitality-radisson-blu-okoume-palace",
+          "name": "Radisson Blu Okoume Palace",
+          "role": "Hotel staff",
+          "where": "national",
+          "source": "https://www.radissonhotels.com",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "GD": {
+    "retail": {
+      "employers": [
+        {
+          "id": "gd-retail-foodland-grenada",
+          "name": "Foodland Grenada",
+          "role": "Cashier",
+          "where": "national",
+          "source": "https://www.foodland.gd",
+          "confidence": "L"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "gd-hospitality-sandals-grenada",
+          "name": "Sandals Grenada",
+          "role": "Hotel staff",
+          "where": "national",
+          "source": "https://www.sandals.com",
+          "confidence": "H"
+        },
+        {
+          "id": "gd-hospitality-spice-island-beach-resort",
+          "name": "Spice Island Beach Resort",
+          "role": "Hotel staff",
+          "where": "national",
+          "source": "https://www.spiceislandbeachresort.com",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "GE": {
+    "retail": {
+      "employers": [
+        {
+          "id": "ge-retail-nikora",
+          "name": "Nikora",
+          "role": "Store associate",
+          "where": "national",
+          "source": "https://nikorasupermarket.ge",
+          "confidence": "M"
+        },
+        {
+          "id": "ge-retail-carrefour-georgia-majid-al-futtaim",
+          "name": "Carrefour Georgia (Majid Al Futtaim)",
+          "role": "Store associate",
+          "where": "national",
+          "source": "https://www.carrefour.ge",
+          "confidence": "M"
+        },
+        {
+          "id": "ge-retail-spar-georgia",
+          "name": "Spar Georgia",
+          "role": "Cashier",
+          "where": "national",
+          "source": "https://www.spar.ge",
+          "confidence": "M"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "ge-between-wolt",
+          "name": "Wolt",
+          "role": "Delivery courier (Glovo and Bolt Food also operate)",
+          "where": "national",
+          "source": "https://wolt.com/ka/geo",
+          "confidence": "H"
+        }
+      ]
+    },
+    "school": {
+      "employers": [
+        {
+          "id": "ge-school-entree",
+          "name": "Entree",
+          "role": "Barista / counter staff",
+          "where": "national",
+          "source": "https://entree.ge",
+          "confidence": "M"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "ge-hospitality-radisson-blu-iveria",
+          "name": "Radisson Blu Iveria",
+          "role": "Hotel staff",
+          "where": "national",
+          "source": "https://www.radissonhotels.com",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "GF": {
+    "retail": {
+      "employers": [
+        {
+          "id": "gf-retail-carrefour-guyane-gbh",
+          "name": "Carrefour Guyane (GBH)",
+          "role": "Store associate",
+          "where": "national",
+          "source": "https://www.gbh.fr",
+          "confidence": "M"
+        },
+        {
+          "id": "gf-retail-super-u-hyper-u-guyane",
+          "name": "Super U / Hyper U Guyane",
+          "role": "Cashier",
+          "where": "national",
+          "source": "https://www.magasins-u.com",
+          "confidence": "M"
+        },
+        {
+          "id": "gf-retail-leader-price-guyane",
+          "name": "Leader Price Guyane",
+          "role": "Store associate",
+          "where": "national",
+          "source": "https://www.leaderprice.fr",
+          "confidence": "L"
+        }
+      ]
+    },
+    "school": {
+      "employers": [
+        {
+          "id": "gf-school-mcdonald-s-guyane",
+          "name": "McDonald's Guyane",
+          "role": "Crew member",
+          "where": "national",
+          "source": "https://www.mcdonalds.fr",
+          "confidence": "M"
+        }
+      ]
+    },
+    "office": {
+      "employers": [
+        {
+          "id": "gf-office-randstad-guyane",
+          "name": "Randstad Guyane",
+          "role": "Temporary worker",
+          "where": "national",
+          "source": "https://www.randstad.fr",
+          "confidence": "M"
+        }
+      ]
+    },
+    "armed_forces": {
+      "employers": [
+        {
+          "id": "gf-armed_forces-securitas-local-security-firms-kourou-sp",
+          "name": "Securitas / local security firms (Kourou space centre)",
+          "role": "Security guard",
+          "where": "national",
+          "source": "https://www.securitas.fr",
+          "confidence": "L"
+        }
+      ]
+    }
+  },
+  "GG": {
+    "retail": {
+      "employers": [
+        {
+          "id": "gg-retail-co-op-channel-islands",
+          "name": "Co-op Channel Islands",
+          "role": "Store associate",
+          "where": "national",
+          "source": "https://www.channelislands.coop",
+          "confidence": "H"
+        },
+        {
+          "id": "gg-retail-waitrose-guernsey-sandpiper-ci",
+          "name": "Waitrose Guernsey (Sandpiper CI)",
+          "role": "Store associate",
+          "where": "national",
+          "source": "https://www.sandpiperci.com",
+          "confidence": "M"
+        }
+      ]
+    },
+    "school": {
+      "employers": [
+        {
+          "id": "gg-school-costa-coffee-guernsey-sandpiper-ci",
+          "name": "Costa Coffee Guernsey (Sandpiper CI)",
+          "role": "Barista",
+          "where": "national",
+          "source": "https://www.sandpiperci.com",
+          "confidence": "M"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "gg-hospitality-guernsey-hotels-old-government-house-duk",
+          "name": "Guernsey hotels (Old Government House, Duke of Richmond)",
+          "role": "Hotel staff",
+          "where": "national",
+          "source": "https://www.theoghhotel.com",
+          "confidence": "M"
+        }
+      ]
+    },
+    "office": {
+      "employers": [
+        {
+          "id": "gg-office-guernsey-recruitment-agencies-itec-situa",
+          "name": "Guernsey Recruitment agencies (Itec, Situations)",
+          "role": "Temporary office worker",
+          "where": "national",
+          "source": "https://www.situations.gg",
+          "confidence": "L"
+        }
+      ]
+    }
+  },
+  "GH": {
+    "retail": {
+      "employers": [
+        {
+          "id": "gh-retail-melcom",
+          "name": "Melcom",
+          "role": "Sales assistant",
+          "where": "national",
+          "source": "https://www.melcom.com",
+          "confidence": "H"
+        },
+        {
+          "id": "gh-retail-shoprite-ghana",
+          "name": "Shoprite Ghana",
+          "role": "Cashier",
+          "where": "national",
+          "source": "https://www.shoprite.com.gh",
+          "confidence": "M"
+        }
+      ]
+    },
+    "school": {
+      "employers": [
+        {
+          "id": "gh-school-kfc-ghana",
+          "name": "KFC Ghana",
+          "role": "Crew member",
+          "where": "national",
+          "source": "https://www.kfc.com.gh",
+          "confidence": "M"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "gh-hospitality-kempinski-hotel-gold-coast-city",
+          "name": "Kempinski Hotel Gold Coast City",
+          "role": "Hotel staff",
+          "where": "national",
+          "source": "https://www.kempinski.com",
+          "confidence": "M"
+        }
+      ]
+    },
+    "armed_forces": {
+      "employers": [
+        {
+          "id": "gh-armed_forces-g4s-ghana",
+          "name": "G4S Ghana",
+          "role": "Security guard",
+          "where": "national",
+          "source": "https://www.g4s.com/en-gh",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "GI": {
+    "retail": {
+      "employers": [
+        {
+          "id": "gi-retail-morrisons-gibraltar",
+          "name": "Morrisons Gibraltar",
+          "role": "Store associate",
+          "where": "national",
+          "source": "https://www.morrisons.com",
+          "confidence": "M"
+        },
+        {
+          "id": "gi-retail-eroski-gibraltar",
+          "name": "Eroski Gibraltar",
+          "role": "Store associate",
+          "where": "national",
+          "source": "https://www.eroski.es",
+          "confidence": "L"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "gi-hospitality-the-rock-hotel",
+          "name": "The Rock Hotel",
+          "role": "Hotel staff",
+          "where": "national",
+          "source": "https://www.rockhotelgibraltar.com",
+          "confidence": "M"
+        },
+        {
+          "id": "gi-hospitality-sunborn-gibraltar",
+          "name": "Sunborn Gibraltar",
+          "role": "Hotel staff",
+          "where": "national",
+          "source": "https://www.sunborngibraltar.com",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "GL": {
+    "retail": {
+      "employers": [
+        {
+          "id": "gl-retail-pisiffik",
+          "name": "Pisiffik",
+          "role": "Shop assistant",
+          "where": "national",
+          "source": "https://www.pisiffik.gl",
+          "confidence": "M"
+        },
+        {
+          "id": "gl-retail-kni-pilersuisoq",
+          "name": "KNI (Pilersuisoq)",
+          "role": "Shop assistant",
+          "where": "national",
+          "source": "https://www.kni.gl",
+          "confidence": "M"
+        },
+        {
+          "id": "gl-retail-brugseni",
+          "name": "Brugseni",
+          "role": "Shop assistant",
+          "where": "national",
+          "source": "https://www.brugseni.gl",
+          "confidence": "M"
+        }
+      ]
+    },
+    "trades": {
+      "employers": [
+        {
+          "id": "gl-trades-royal-greenland",
+          "name": "Royal Greenland",
+          "role": "Fish processing worker",
+          "where": "national",
+          "source": "https://www.royalgreenland.com",
+          "confidence": "H"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "gl-hospitality-hotel-hans-egede",
+          "name": "Hotel Hans Egede",
+          "role": "Hotel staff",
+          "where": "national",
+          "source": "https://www.hhe.gl",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "GM": {
+    "hospitality": {
+      "employers": [
+        {
+          "id": "gm-hospitality-senegambia-beach-hotel-kololi",
+          "name": "Senegambia Beach Hotel (Kololi)",
+          "role": "hotel and restaurant staff",
+          "where": "national",
+          "source": "https://www.senegambiahotel.com/",
+          "confidence": "H"
+        },
+        {
+          "id": "gm-hospitality-coco-ocean-resort-spa-bijilo",
+          "name": "Coco Ocean Resort & Spa (Bijilo)",
+          "role": "hotel and restaurant staff",
+          "where": "national",
+          "source": "https://www.cocoocean.com/",
+          "confidence": "H"
+        }
+      ]
+    }
+  },
+  "GN": {
+    "hospitality": {
+      "employers": [
+        {
+          "id": "gn-hospitality-noom-hotel-conakry",
+          "name": "Noom Hotel Conakry",
+          "role": "hotel staff",
+          "where": "national",
+          "source": "https://www.mangalis.com/brands/noom-hotels/",
+          "confidence": "H"
+        }
+      ]
+    }
+  },
+  "GP": {
+    "retail": {
+      "employers": [
+        {
+          "id": "gp-retail-carrefour-destreland-contact-gbh-group",
+          "name": "Carrefour Destreland & Contact (GBH group)",
+          "role": "hôte de caisse / employé libre service",
+          "where": "national",
+          "source": "https://www.destreland.com/offre-emploi/employe-libre-service-h-f-carrefour",
+          "confidence": "H"
+        }
+      ]
+    },
+    "office": {
+      "employers": [
+        {
+          "id": "gp-office-fiderim",
+          "name": "FIDERIM",
+          "role": "temp worker (intérim)",
+          "where": "national",
+          "source": "https://www.fiderim.fr/ (described as the Antilles-Guyane temp-work leader since 1988 in a web search result)",
+          "confidence": "M"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "gp-between-uber-eats",
+          "name": "Uber Eats",
+          "role": "delivery courier (self-employed)",
+          "where": "national",
+          "source": "https://la1ere.franceinfo.fr/guadeloupe/uber-eats-s-implante-en-guadeloupe-une-nouvelle-opportunite-qui-s-ouvre-aux-restaurateurs-1116301.html",
+          "confidence": "H"
+        },
+        {
+          "id": "gp-between-please-local-delivery-app",
+          "name": "Please (local delivery app)",
+          "role": "delivery courier",
+          "where": "national",
+          "source": "https://la1ere.franceinfo.fr/guadeloupe/uber-eats-s-implante-en-guadeloupe-une-nouvelle-opportunite-qui-s-ouvre-aux-restaurateurs-1116301.html",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "GQ": {
+    "retail": {
+      "employers": [
+        {
+          "id": "gq-retail-martinez-hermanos",
+          "name": "Martínez Hermanos",
+          "role": "supermarket and store staff",
+          "where": "national",
+          "source": "https://www.martinezhermanos.com/",
+          "confidence": "H"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "gq-hospitality-martinez-hermanos-hotel-and-food-service",
+          "name": "Martínez Hermanos (hotel and food service division)",
+          "role": "hotel and restaurant staff",
+          "where": "national",
+          "source": "https://www.martinezhermanos.com/",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "GR": {
+    "retail": {
+      "employers": [
+        {
+          "id": "gr-retail-sklavenitis",
+          "name": "Sklavenitis",
+          "role": "supermarket cashier and stocker",
+          "where": "national",
+          "source": "https://www.sklavenitis.gr/",
+          "confidence": "H"
+        },
+        {
+          "id": "gr-retail-ab-vassilopoulos",
+          "name": "AB Vassilopoulos",
+          "role": "supermarket cashier and stocker",
+          "where": "national",
+          "source": "https://www.ab.gr/",
+          "confidence": "H"
+        },
+        {
+          "id": "gr-retail-lidl-hellas",
+          "name": "Lidl Hellas",
+          "role": "store associate",
+          "where": "national",
+          "source": "https://www.lidl-hellas.gr/",
+          "confidence": "H"
+        }
+      ]
+    },
+    "school": {
+      "employers": [
+        {
+          "id": "gr-school-coffee-island",
+          "name": "Coffee Island",
+          "role": "barista",
+          "where": "national",
+          "source": "https://www.coffeeisland.gr/",
+          "confidence": "H"
+        },
+        {
+          "id": "gr-school-goody-s-burger-house",
+          "name": "Goody's Burger House",
+          "role": "fast-food counter crew",
+          "where": "national",
+          "source": "https://www.goodys.com/",
+          "confidence": "H"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "gr-between-efood",
+          "name": "efood",
+          "role": "delivery rider",
+          "where": "national",
+          "source": "https://www.e-food.gr/",
+          "confidence": "H"
+        },
+        {
+          "id": "gr-between-wolt",
+          "name": "Wolt",
+          "role": "delivery courier",
+          "where": "national",
+          "source": "https://wolt.com/en/grc",
+          "confidence": "H"
+        }
+      ]
+    },
+    "office": {
+      "employers": [
+        {
+          "id": "gr-office-adecco-greece",
+          "name": "Adecco Greece",
+          "role": "temp office worker",
+          "where": "national",
+          "source": "https://www.adecco.gr/",
+          "confidence": "M"
+        }
+      ]
+    },
+    "armed_forces": {
+      "employers": [
+        {
+          "id": "gr-armed_forces-g4s-greece-allied-universal",
+          "name": "G4S Greece (Allied Universal)",
+          "role": "security guard",
+          "where": "national",
+          "source": "https://www.g4s.com/el-gr",
+          "confidence": "M"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "gr-hospitality-mitsis-hotels",
+          "name": "Mitsis Hotels",
+          "role": "seasonal hotel and restaurant staff",
+          "where": "national",
+          "source": "https://www.mitsishotels.com/",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "GT": {
+    "retail": {
+      "employers": [
+        {
+          "id": "gt-retail-walmart-mexico-y-centroamerica-paiz-desp",
+          "name": "Walmart México y Centroamérica (Paiz, Despensa Familiar, Maxi Despensa, Walmart)",
+          "role": "cashier and stocker",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/Walmart_de_M%C3%A9xico_y_Centroam%C3%A9rica",
+          "confidence": "H"
+        },
+        {
+          "id": "gt-retail-supermercados-la-torre-grupo-unisuper",
+          "name": "Supermercados La Torre (Grupo Unisuper)",
+          "role": "cashier and stocker",
+          "where": "national",
+          "source": "https://www.unisuper.com.gt/",
+          "confidence": "M"
+        }
+      ]
+    },
+    "school": {
+      "employers": [
+        {
+          "id": "gt-school-pollo-campero",
+          "name": "Pollo Campero",
+          "role": "fast-food counter crew",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/Pollo_Campero",
+          "confidence": "H"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "gt-between-uber-eats",
+          "name": "Uber Eats",
+          "role": "delivery courier",
+          "where": "national",
+          "source": "https://www.ubereats.com/gt/city/guatemala-city-gua",
+          "confidence": "M"
+        },
+        {
+          "id": "gt-between-hugo",
+          "name": "Hugo",
+          "role": "delivery courier (hugoer)",
+          "where": "national",
+          "source": "https://hugoapp.com/",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "GU": {
+    "retail": {
+      "employers": [
+        {
+          "id": "gu-retail-pay-less-markets",
+          "name": "Pay-Less Markets",
+          "role": "Store clerk / cashier",
+          "where": "national",
+          "source": "https://www.paylessmarkets.com (Guam Pay-Less Markets)",
+          "confidence": "M"
+        },
+        {
+          "id": "gu-retail-kmart-guam",
+          "name": "Kmart (Guam)",
+          "role": "Store associate",
+          "where": "national",
+          "source": "Wikipedia, List of department stores of the United States (Transformco Kmart: Miami, Guam, US Virgin Islands)",
+          "confidence": "M"
+        },
+        {
+          "id": "gu-retail-don-don-donki-guam",
+          "name": "Don Don Donki Guam",
+          "role": "Store associate",
+          "where": "national",
+          "source": "Wikipedia, Don Quijote (store): one store in Guam branded Don Don Donki",
+          "confidence": "M"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "gu-hospitality-jamaican-grill",
+          "name": "Jamaican Grill",
+          "role": "Restaurant crew",
+          "where": "national",
+          "source": "https://www.jamaicangrill.com (Guam restaurant chain)",
+          "confidence": "M"
+        },
+        {
+          "id": "gu-hospitality-hotel-nikko-guam",
+          "name": "Hotel Nikko Guam",
+          "role": "Housekeeping / food and beverage",
+          "where": "national",
+          "source": "Wikipedia, Hotel Nikko Guam (Tumon); https://www.nikkoguam.com",
+          "confidence": "M"
+        },
+        {
+          "id": "gu-hospitality-dusit-thani-guam-resort",
+          "name": "Dusit Thani Guam Resort",
+          "role": "Housekeeping / food and beverage",
+          "where": "national",
+          "source": "https://www.dusit.com/dusitthani-guamresort",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "GY": {
+    "retail": {
+      "employers": [
+        {
+          "id": "gy-retail-massy-stores-guyana",
+          "name": "Massy Stores Guyana",
+          "role": "Cashier / store clerk",
+          "where": "national",
+          "source": "Wikipedia, MovieTowne (Massy Stores in MovieTowne Guyana)",
+          "confidence": "M"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "gy-hospitality-kfc-guyana-didco",
+          "name": "KFC Guyana (DIDCO)",
+          "role": "Fast-food crew",
+          "where": "national",
+          "source": "Wikipedia, List of countries with KFC franchises (Guyana, 2016-present)",
+          "confidence": "M"
+        },
+        {
+          "id": "gy-hospitality-georgetown-marriott",
+          "name": "Georgetown Marriott",
+          "role": "Housekeeping / food and beverage",
+          "where": "national",
+          "source": "Wikipedia, Tourism in Guyana (Marriott hotels in Georgetown)",
+          "confidence": "L"
+        }
+      ]
+    }
+  },
+  "HK": {
+    "retail": {
+      "employers": [
+        {
+          "id": "hk-retail-wellcome-dfi-retail-group",
+          "name": "Wellcome (DFI Retail Group)",
+          "role": "Store assistant",
+          "where": "national",
+          "source": "https://www.wellcome.com.hk",
+          "confidence": "M"
+        },
+        {
+          "id": "hk-retail-parknshop-a-s-watson",
+          "name": "PARKnSHOP (A.S. Watson)",
+          "role": "Store assistant",
+          "where": "national",
+          "source": "https://www.parknshop.com",
+          "confidence": "M"
+        },
+        {
+          "id": "hk-retail-7-eleven-hong-kong-dfi-retail-group",
+          "name": "7-Eleven Hong Kong (DFI Retail Group)",
+          "role": "Convenience store assistant",
+          "where": "national",
+          "source": "https://www.7-eleven.com.hk",
+          "confidence": "M"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "hk-hospitality-mcdonald-s-hong-kong",
+          "name": "McDonald's Hong Kong",
+          "role": "Crew member",
+          "where": "national",
+          "source": "https://www.mcdonalds.com.hk/en/careers/ (no hourly rate published)",
+          "confidence": "M"
+        },
+        {
+          "id": "hk-hospitality-cafe-de-coral",
+          "name": "Café de Coral",
+          "role": "Fast-food crew",
+          "where": "national",
+          "source": "https://www.cafedecoral.com",
+          "confidence": "M"
+        }
+      ]
+    },
+    "school": {
+      "employers": [
+        {
+          "id": "hk-school-pacific-coffee",
+          "name": "Pacific Coffee",
+          "role": "Barista",
+          "where": "national",
+          "source": "https://www.pacificcoffee.com",
+          "confidence": "M"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "hk-between-keeta-meituan",
+          "name": "Keeta (Meituan)",
+          "role": "Delivery rider",
+          "where": "national",
+          "source": "https://www.keeta.com",
+          "confidence": "M"
+        },
+        {
+          "id": "hk-between-foodpanda-hong-kong",
+          "name": "foodpanda Hong Kong",
+          "role": "Delivery rider",
+          "where": "national",
+          "source": "https://www.foodpanda.hk",
+          "confidence": "M"
+        }
+      ]
+    },
+    "armed_forces": {
+      "employers": [
+        {
+          "id": "hk-armed_forces-guardforce",
+          "name": "Guardforce",
+          "role": "Security guard",
+          "where": "national",
+          "source": "https://www.guardforce.com.hk",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "HN": {
+    "retail": {
+      "employers": [
+        {
+          "id": "hn-retail-walmart-honduras-despensa-familiar-paiz-",
+          "name": "Walmart Honduras (Despensa Familiar, Paiz, Maxi Despensa, Walmart)",
+          "role": "Cashier / stocker",
+          "where": "national",
+          "source": "https://www.walmart.com.hn",
+          "confidence": "M"
+        },
+        {
+          "id": "hn-retail-supermercados-la-colonia",
+          "name": "Supermercados La Colonia",
+          "role": "Cashier / stocker",
+          "where": "national",
+          "source": "https://www.lacolonia.com",
+          "confidence": "M"
+        },
+        {
+          "id": "hn-retail-diunsa",
+          "name": "Diunsa",
+          "role": "Sales associate",
+          "where": "national",
+          "source": "https://www.diunsa.hn (the largest department store in Honduras)",
+          "confidence": "M"
+        }
+      ]
+    },
+    "school": {
+      "employers": [
+        {
+          "id": "hn-school-espresso-americano",
+          "name": "Espresso Americano",
+          "role": "Barista",
+          "where": "national",
+          "source": "https://www.espressoamericano.com",
+          "confidence": "M"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "hn-between-pedidosya",
+          "name": "PedidosYa",
+          "role": "Delivery rider",
+          "where": "national",
+          "source": "https://www.pedidosya.com.hn",
+          "confidence": "L"
+        }
+      ]
+    }
+  },
+  "HR": {
+    "retail": {
+      "employers": [
+        {
+          "id": "hr-retail-konzum",
+          "name": "Konzum",
+          "role": "Prodavač (store assistant)",
+          "where": "national",
+          "source": "Wikipedia, Konzum (700+ stores, 10,000+ employees); https://www.konzum.hr",
+          "confidence": "M"
+        },
+        {
+          "id": "hr-retail-lidl-hrvatska",
+          "name": "Lidl Hrvatska",
+          "role": "Store assistant",
+          "where": "national",
+          "source": "https://karijera.lidl.hr (no salary published)",
+          "confidence": "M"
+        },
+        {
+          "id": "hr-retail-kaufland-hrvatska",
+          "name": "Kaufland Hrvatska",
+          "role": "Store assistant",
+          "where": "national",
+          "source": "https://www.kaufland.hr",
+          "confidence": "M"
+        },
+        {
+          "id": "hr-retail-studenac",
+          "name": "Studenac",
+          "role": "Store assistant",
+          "where": "national",
+          "source": "https://www.studenac.hr",
+          "confidence": "M"
+        },
+        {
+          "id": "hr-retail-plodine",
+          "name": "Plodine",
+          "role": "Store assistant",
+          "where": "national",
+          "source": "https://www.plodine.hr",
+          "confidence": "M"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "hr-between-wolt",
+          "name": "Wolt",
+          "role": "Delivery partner",
+          "where": "national",
+          "source": "https://wolt.com/hr",
+          "confidence": "M"
+        },
+        {
+          "id": "hr-between-glovo",
+          "name": "Glovo",
+          "role": "Delivery partner",
+          "where": "national",
+          "source": "https://glovoapp.com/hr",
+          "confidence": "M"
+        },
+        {
+          "id": "hr-between-bolt-food",
+          "name": "Bolt Food",
+          "role": "Delivery partner",
+          "where": "national",
+          "source": "https://www.bolt.eu/hr-hr/",
+          "confidence": "M"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "hr-hospitality-valamar-riviera",
+          "name": "Valamar Riviera",
+          "role": "Seasonal hotel staff",
+          "where": "national",
+          "source": "https://www.valamar.com",
+          "confidence": "M"
+        },
+        {
+          "id": "hr-hospitality-mcdonald-s-hrvatska",
+          "name": "McDonald's Hrvatska",
+          "role": "Crew member",
+          "where": "national",
+          "source": "https://www.mcdonalds.hr",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "HT": {
+    "retail": {
+      "employers": [
+        {
+          "id": "ht-retail-delimart",
+          "name": "Delimart",
+          "role": "Supermarket cashier or stock clerk",
+          "where": "national",
+          "source": "https://flashhaiti.com/business/detail/Delimart ; hourlyFrom is the Segment A (supermarkets) legal floor, 1,000 HTG/8h, not a published company rate ; the company publishes no rate, so hourlyFrom is null; the sector legal floor is 125 HTG an hour",
+          "confidence": "M"
+        },
+        {
+          "id": "ht-retail-giant-supermarket",
+          "name": "Giant Supermarket",
+          "role": "Supermarket cashier or stock clerk",
+          "where": "national",
+          "source": "https://flashhaiti.com/flash/businessdetail/id/125 ; hourlyFrom is the Segment A legal floor, not a company rate ; the company publishes no rate, so hourlyFrom is null; the sector legal floor is 125 HTG an hour",
+          "confidence": "M"
+        },
+        {
+          "id": "ht-retail-economax-depot",
+          "name": "EconoMax Depot",
+          "role": "Store associate",
+          "where": "national",
+          "source": "https://flashhaiti.com/business/detail/economax-depot-haiti-supermarket-port-au-prince",
+          "confidence": "L"
+        }
+      ]
+    },
+    "school": {
+      "employers": [
+        {
+          "id": "ht-school-epi-d-or",
+          "name": "Epi d'Or",
+          "role": "Bakery and fast-casual counter staff",
+          "where": "national",
+          "source": "https://flashhaiti.com/business/detail/Epi-d-Or-Restaurant-Petionville-Paris-Haiti ; hourlyFrom is the Segment C (restaurants) legal floor, 760 HTG/8h ; the company publishes no rate, so hourlyFrom is null; the sector legal floor is 95 HTG an hour",
+          "confidence": "M"
+        }
+      ]
+    },
+    "armed_forces": {
+      "employers": [
+        {
+          "id": "ht-armed_forces-professional-security-services-pss",
+          "name": "Professional Security Services (PSS)",
+          "role": "Security guard",
+          "where": "national",
+          "source": "https://www.pss.ht/ ; hourlyFrom is the Segment G (private security) legal floor, 925 HTG/8h ; the company publishes no rate, so hourlyFrom is null; the sector legal floor is 115.63 HTG an hour",
+          "confidence": "M"
+        },
+        {
+          "id": "ht-armed_forces-thomas-securite-s-a",
+          "name": "Thomas Sécurité S.A.",
+          "role": "Security guard",
+          "where": "national",
+          "source": "https://www.thomassecurite.com/ ; hourlyFrom is the Segment G legal floor ; the company publishes no rate, so hourlyFrom is null; the sector legal floor is 115.63 HTG an hour",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "HU": {
+    "retail": {
+      "employers": [
+        {
+          "id": "hu-retail-lidl",
+          "name": "Lidl",
+          "role": "Store associate (áruházi munkatárs)",
+          "where": "national",
+          "source": "https://www.penzcentrum.hu/karrier/20260420/vaskos-beremelest-jelentett-be-a-lidl-ennyivel-fognak-tobbet-keresni-a-dolgozok-2026-tol-1197265 (599,000 HUF/month gross full-time, incl. allowances, from 2026; hourly = monthly over 174)",
+          "confidence": "H",
+          "hourlyFrom": 344253
+        },
+        {
+          "id": "hu-retail-aldi",
+          "name": "ALDI",
+          "role": "Store associate",
+          "where": "national",
+          "source": "https://www.vg.hu/vilaggazdasag-magyar-gazdasag/2026/01/aldi-beremeles-fizetes-diszkontlanc (541,900 HUF/month starting, 2026; hourly = monthly over 174)",
+          "confidence": "H",
+          "hourlyFrom": 311437
+        },
+        {
+          "id": "hu-retail-tesco",
+          "name": "Tesco",
+          "role": "Store worker, 8-hour base",
+          "where": "national",
+          "source": "https://www.kisalfold.hu/helyi-gazdasag/2026/01/fizetesemeles-bolti-dolgozo-aldi-penny-tesco (418,000-562,000 HUF/month, 2026; hourly = monthly over 174)",
+          "confidence": "M",
+          "hourlyFrom": 240230,
+          "hourlyTo": 322989
+        },
+        {
+          "id": "hu-retail-spar",
+          "name": "SPAR",
+          "role": "Sales assistant",
+          "where": "national",
+          "source": "https://www.sonline.hu/helyi-eletstilus/2026/01/fizetesemeles-ber-auchan-tesco-aldi-penny-penz (only a 2025 starting figure of 395,000/month was found)",
+          "confidence": "M"
+        },
+        {
+          "id": "hu-retail-penny",
+          "name": "PENNY",
+          "role": "Store associate",
+          "where": "national",
+          "source": "https://www.szeretlekmagyarorszag.hu/hirek/beremelesek-aruhazaknal-aldi-auchan-tesco-penny/ (8% average raise 2026; no starting figure)",
+          "confidence": "M"
+        }
+      ]
+    },
+    "school": {
+      "employers": [
+        {
+          "id": "hu-school-mcdonald-s",
+          "name": "McDonald's",
+          "role": "Crew member",
+          "where": "national",
+          "source": "https://www.mcdonalds.hu/",
+          "confidence": "M"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "hu-between-wolt",
+          "name": "Wolt",
+          "role": "Courier (self-employed partner)",
+          "where": "national",
+          "source": "https://wolt.com/hu/hun",
+          "confidence": "M"
+        },
+        {
+          "id": "hu-between-foodora",
+          "name": "foodora",
+          "role": "Courier",
+          "where": "national",
+          "source": "https://www.foodora.hu/",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "ID": {
+    "retail": {
+      "employers": [
+        {
+          "id": "id-retail-alfamart-pt-sumber-alfaria-trijaya",
+          "name": "Alfamart (PT Sumber Alfaria Trijaya)",
+          "role": "Store crew / cashier",
+          "where": "national",
+          "source": "https://alfamart.co.id/",
+          "confidence": "M"
+        },
+        {
+          "id": "id-retail-indomaret",
+          "name": "Indomaret",
+          "role": "Store crew / cashier",
+          "where": "national",
+          "source": "https://www.indomaret.co.id/",
+          "confidence": "M"
+        }
+      ]
+    },
+    "school": {
+      "employers": [
+        {
+          "id": "id-school-kopi-kenangan",
+          "name": "Kopi Kenangan",
+          "role": "Barista",
+          "where": "national",
+          "source": "https://kopikenangan.com/",
+          "confidence": "M"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "id-between-gojek-gofood-goride",
+          "name": "Gojek (GoFood, GoRide)",
+          "role": "Driver-partner",
+          "where": "national",
+          "source": "https://www.gojek.com/",
+          "confidence": "M"
+        },
+        {
+          "id": "id-between-grab-grabfood-grabbike",
+          "name": "Grab (GrabFood, GrabBike)",
+          "role": "Driver-partner",
+          "where": "national",
+          "source": "https://www.grab.com/id/",
+          "confidence": "M"
+        },
+        {
+          "id": "id-between-shopeefood",
+          "name": "ShopeeFood",
+          "role": "Driver-partner",
+          "where": "national",
+          "source": "https://shopee.co.id/",
+          "confidence": "L"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "id-hospitality-archipelago-international",
+          "name": "Archipelago International",
+          "role": "Hotel staff",
+          "where": "national",
+          "source": "https://www.archipelagointernational.net/",
+          "confidence": "L"
+        }
+      ]
+    },
+    "trades": {
+      "employers": [
+        {
+          "id": "id-trades-waskita-karya",
+          "name": "Waskita Karya",
+          "role": "Construction laborer (usually via subcontractors)",
+          "where": "national",
+          "source": "https://www.waskita.co.id/",
+          "confidence": "L"
+        }
+      ]
+    }
+  },
+  "IL": {
+    "retail": {
+      "employers": [
+        {
+          "id": "il-retail-shufersal",
+          "name": "Shufersal",
+          "role": "Supermarket worker",
+          "where": "national",
+          "source": "https://www.shufersal.co.il/",
+          "confidence": "M"
+        },
+        {
+          "id": "il-retail-rami-levy",
+          "name": "Rami Levy",
+          "role": "Supermarket worker",
+          "where": "national",
+          "source": "https://www.rami-levy.co.il/",
+          "confidence": "M"
+        },
+        {
+          "id": "il-retail-super-pharm",
+          "name": "Super-Pharm",
+          "role": "Store associate",
+          "where": "national",
+          "source": "https://shop.super-pharm.co.il/",
+          "confidence": "M"
+        }
+      ]
+    },
+    "school": {
+      "employers": [
+        {
+          "id": "il-school-aroma-espresso-bar",
+          "name": "Aroma Espresso Bar",
+          "role": "Counter and barista",
+          "where": "national",
+          "source": "https://www.aroma.co.il/",
+          "confidence": "M"
+        },
+        {
+          "id": "il-school-mcdonald-s-israel",
+          "name": "McDonald's Israel",
+          "role": "Crew member",
+          "where": "national",
+          "source": "https://www.mcdonalds.co.il/",
+          "confidence": "M"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "il-between-wolt",
+          "name": "Wolt",
+          "role": "Courier",
+          "where": "national",
+          "source": "https://wolt.com/he/isr",
+          "confidence": "M"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "il-hospitality-fattal-hotels",
+          "name": "Fattal Hotels",
+          "role": "Hotel staff",
+          "where": "national",
+          "source": "https://www.fattal.co.il/",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "IM": {
+    "retail": {
+      "employers": [
+        {
+          "id": "im-retail-tesco-isle-of-man-stores",
+          "name": "Tesco (Isle of Man stores)",
+          "role": "Customer assistant",
+          "where": "national",
+          "source": "https://www.tesco-careers.com/",
+          "confidence": "M"
+        },
+        {
+          "id": "im-retail-co-op-isle-of-man-stores",
+          "name": "Co-op (Isle of Man stores)",
+          "role": "Customer team member",
+          "where": "national",
+          "source": "https://jobs.coop.co.uk/",
+          "confidence": "M"
+        }
+      ]
+    },
+    "care": {
+      "employers": [
+        {
+          "id": "im-care-manx-care",
+          "name": "Manx Care",
+          "role": "Healthcare / care assistant",
+          "where": "national",
+          "source": "https://www.manxcare.im/",
+          "confidence": "M"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "im-hospitality-heron-brearley-okell-s-pubs",
+          "name": "Heron & Brearley (Okell's pubs)",
+          "role": "Bar staff",
+          "where": "national",
+          "source": "https://www.heronandbrearley.com/",
+          "confidence": "L"
+        }
+      ]
+    }
+  },
+  "IN": {
+    "retail": {
+      "employers": [
+        {
+          "id": "in-retail-dmart-avenue-supermarts",
+          "name": "DMart (Avenue Supermarts)",
+          "role": "Store associate",
+          "where": "national",
+          "source": "https://www.dmartindia.com/",
+          "confidence": "M"
+        },
+        {
+          "id": "in-retail-reliance-retail-smart-bazaar-reliance-tr",
+          "name": "Reliance Retail (Smart Bazaar, Reliance Trends)",
+          "role": "Store associate",
+          "where": "national",
+          "source": "https://www.relianceretail.com/",
+          "confidence": "M"
+        }
+      ]
+    },
+    "school": {
+      "employers": [
+        {
+          "id": "in-school-tata-starbucks",
+          "name": "Tata Starbucks",
+          "role": "Barista",
+          "where": "national",
+          "source": "https://www.starbucks.in/",
+          "confidence": "M"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "in-between-zomato-blinkit",
+          "name": "Zomato / Blinkit",
+          "role": "Delivery partner",
+          "where": "national",
+          "source": "https://www.zomato.com/",
+          "confidence": "M"
+        },
+        {
+          "id": "in-between-swiggy-incl-instamart",
+          "name": "Swiggy (incl. Instamart)",
+          "role": "Delivery partner",
+          "where": "national",
+          "source": "https://www.swiggy.com/",
+          "confidence": "M"
+        }
+      ]
+    },
+    "armed_forces": {
+      "employers": [
+        {
+          "id": "in-armed_forces-sis-security-and-intelligence-services",
+          "name": "SIS (Security and Intelligence Services)",
+          "role": "Security guard",
+          "where": "national",
+          "source": "https://www.sisindia.com/",
+          "confidence": "M"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "in-hospitality-indian-hotels-company-taj-ginger",
+          "name": "Indian Hotels Company (Taj, Ginger)",
+          "role": "Hotel staff",
+          "where": "national",
+          "source": "https://www.ihcltata.com/",
+          "confidence": "M"
+        }
+      ]
+    },
+    "office": {
+      "employers": [
+        {
+          "id": "in-office-teamlease-services",
+          "name": "TeamLease Services",
+          "role": "Temporary staff",
+          "where": "national",
+          "source": "https://www.teamlease.com/",
+          "confidence": "M"
+        }
+      ]
+    },
+    "trades": {
+      "employers": [
+        {
+          "id": "in-trades-larsen-toubro",
+          "name": "Larsen & Toubro",
+          "role": "Construction laborer (mostly via contractors)",
+          "where": "national",
+          "source": "https://www.larsentoubro.com/",
+          "confidence": "L"
+        }
+      ]
+    }
+  },
+  "IQ": {
+    "between": {
+      "employers": [
+        {
+          "id": "iq-between-talabat-iraq",
+          "name": "Talabat Iraq",
+          "role": "delivery rider (Erbil, Baghdad, Sulaymaniyah, Duhok, Basra, Najaf)",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/Talabat",
+          "confidence": "M"
+        }
+      ]
+    },
+    "retail": {
+      "employers": [
+        {
+          "id": "iq-retail-carrefour-majid-al-futtaim",
+          "name": "Carrefour (Majid Al Futtaim)",
+          "role": "hypermarket cashier / shelf stacker (Erbil, Sulaymaniyah, Baghdad)",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/Carrefour",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "IR": {
+    "between": {
+      "employers": [
+        {
+          "id": "ir-between-snappfood-snapp-group",
+          "name": "Snappfood (Snapp Group)",
+          "role": "food delivery courier",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/Snapp!",
+          "confidence": "M"
+        }
+      ]
+    },
+    "retail": {
+      "employers": [
+        {
+          "id": "ir-retail-digikala",
+          "name": "Digikala",
+          "role": "warehouse and fulfilment worker; Digikala Jet grocery delivery",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/Digikala",
+          "confidence": "M"
+        },
+        {
+          "id": "ir-retail-hyperstar-majid-al-futtaim-carrefour-fra",
+          "name": "Hyperstar (Majid Al Futtaim, Carrefour franchise)",
+          "role": "hypermarket cashier / shelf stacker",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/Carrefour",
+          "confidence": "L"
+        }
+      ]
+    }
+  },
+  "IT": {
+    "retail": {
+      "employers": [
+        {
+          "id": "it-retail-esselunga",
+          "name": "Esselunga",
+          "role": "supermarket sales assistant / cashier (CCNL Terziario, level IV-VI)",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/Esselunga; pay from CCNL Terziario tables https://www.lexplain.it/tabelle-retributive-ccnl-commercio-2024-2027/ ; the company publishes no rate, so hourly is null; the CCNL Terziario scale it applies runs 9.16 to 10.61 EUR an hour",
+          "confidence": "M"
+        },
+        {
+          "id": "it-retail-carrefour-italia-rebranding-to-gs-newpri",
+          "name": "Carrefour Italia (rebranding to GS, NewPrinces)",
+          "role": "store assistant (CCNL Terziario scale)",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/Carrefour; CCNL Terziario tables https://www.lexplain.it/tabelle-retributive-ccnl-commercio-2024-2027/ ; the company publishes no rate, so hourly is null; the CCNL Terziario scale it applies runs 9.16 to 10.61 EUR an hour",
+          "confidence": "L"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "it-between-just-eat-italy",
+          "name": "Just Eat Italy",
+          "role": "employed delivery rider",
+          "where": "national",
+          "source": "https://www.justeat.it/rider/the-inside-track/consegnare-con-noi/stipendio-mance-bonus (via search summary); https://arenadigitale.it/2026/02/27/just-eat-cambia-modello-assunzioni-dirette-e-salario-fisso-per-i-rider/",
+          "confidence": "M",
+          "hourlyFrom": 775,
+          "hourlyTo": 875
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "it-hospitality-autogrill-avolta",
+          "name": "Autogrill (Avolta)",
+          "role": "motorway and airport food-service crew",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/Autogrill",
+          "confidence": "M"
+        },
+        {
+          "id": "it-hospitality-bars-and-restaurants-under-ccnl-pubblici",
+          "name": "Bars and restaurants under CCNL Pubblici Esercizi (FIPE)",
+          "role": "waiter / bar staff, levels 7 to 6S: EUR 1,390.20 to 1,514.83 a month from 2026-06-01",
+          "where": "national",
+          "source": "https://www.confcommerciomilano.it/it/contratti_lavoro/contrattazione_collettiva/ccnl_Pubblici_Esercizi_Rist_Coll_minimi_2026.html",
+          "confidence": "M"
+        }
+      ]
+    },
+    "armed_forces": {
+      "employers": [
+        {
+          "id": "it-armed_forces-private-security-firms-under-ccnl-vigila",
+          "name": "Private security firms under CCNL Vigilanza Privata e Servizi Fiduciari",
+          "role": "unarmed porter/steward (servizi fiduciari level D) to armed guard (GPG level 5)",
+          "where": "national",
+          "source": "https://www.bustaia.it/guida-ccnl/vigilanza-privata (from 2026-04-01, divisor 173)",
+          "confidence": "M",
+          "hourlyFrom": 741,
+          "hourlyTo": 806
+        }
+      ]
+    }
+  },
+  "JE": {
+    "retail": {
+      "employers": [
+        {
+          "id": "je-retail-sandpiperci",
+          "name": "SandpiperCI",
+          "role": "store assistant (Morrisons Daily, M&S franchise, Matalan)",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/SandpiperCI; advertised rate per https://www.retailhumanresources.com/job-seekers/employers-we-work-with/sandpiper",
+          "confidence": "L",
+          "hourlyFrom": 1359
+        },
+        {
+          "id": "je-retail-channel-islands-co-operative-society",
+          "name": "Channel Islands Co-operative Society",
+          "role": "store assistant (Grand Marché, Locale, En Route)",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/Channel_Islands_Co-operative_Society",
+          "confidence": "H"
+        },
+        {
+          "id": "je-retail-waitrose",
+          "name": "Waitrose",
+          "role": "supermarket partner",
+          "where": "national",
+          "source": "https://www.cityam.com/waitrose-acquire-five-stores-channel-islands/",
+          "confidence": "M"
+        }
+      ]
+    },
+    "school": {
+      "employers": [
+        {
+          "id": "je-school-costa-coffee-sandpiperci-franchise",
+          "name": "Costa Coffee (SandpiperCI franchise)",
+          "role": "barista",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/SandpiperCI",
+          "confidence": "M"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "je-hospitality-seymour-hotels-of-jersey",
+          "name": "Seymour Hotels of Jersey",
+          "role": "hotel, bar and restaurant staff (Pomme d'Or, Merton, Watersplash)",
+          "where": "national",
+          "source": "https://www.seymourhotels.com/careers/",
+          "confidence": "H"
+        }
+      ]
+    },
+    "care": {
+      "employers": [
+        {
+          "id": "je-care-family-nursing-home-care",
+          "name": "Family Nursing & Home Care",
+          "role": "home care assistant",
+          "where": "national",
+          "source": "https://www.fnhc.org.je/careers/",
+          "confidence": "H"
+        },
+        {
+          "id": "je-care-island-home-care",
+          "name": "Island Home Care",
+          "role": "carer",
+          "where": "national",
+          "source": "https://www.islandhomecare.co.uk/careers",
+          "confidence": "M"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "je-between-food-je",
+          "name": "Food.je",
+          "role": "takeaway ordering platform (deliveries mostly by the restaurants' own drivers)",
+          "where": "national",
+          "source": "https://www.food.je/",
+          "confidence": "L"
+        }
+      ]
+    }
+  },
+  "JM": {
+    "hospitality": {
+      "employers": [
+        {
+          "id": "jm-hospitality-sandals-resorts-international",
+          "name": "Sandals Resorts International",
+          "role": "resort hotel, bar and restaurant staff (7 Jamaican resorts)",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/Sandals_Resorts",
+          "confidence": "H"
+        }
+      ]
+    },
+    "retail": {
+      "employers": [
+        {
+          "id": "jm-retail-pricesmart",
+          "name": "PriceSmart",
+          "role": "warehouse club associate",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/PriceSmart",
+          "confidence": "H"
+        }
+      ]
+    }
+  },
+  "JO": {
+    "between": {
+      "employers": [
+        {
+          "id": "jo-between-talabat-jordan",
+          "name": "Talabat Jordan",
+          "role": "delivery rider",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/Talabat",
+          "confidence": "H"
+        },
+        {
+          "id": "jo-between-careem",
+          "name": "Careem",
+          "role": "food and grocery delivery captain (Amman)",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/Careem",
+          "confidence": "M"
+        }
+      ]
+    },
+    "retail": {
+      "employers": [
+        {
+          "id": "jo-retail-hypermax-former-carrefour-stores",
+          "name": "HyperMax (former Carrefour stores)",
+          "role": "hypermarket cashier / shelf stacker",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/Carrefour",
+          "confidence": "L"
+        }
+      ]
+    }
+  },
+  "KE": {
+    "retail": {
+      "employers": [
+        {
+          "id": "ke-retail-naivas",
+          "name": "Naivas",
+          "role": "shop assistant / cashier",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/Naivas_Limited",
+          "confidence": "H"
+        },
+        {
+          "id": "ke-retail-quickmart",
+          "name": "Quickmart",
+          "role": "shop assistant / cashier",
+          "where": "national",
+          "source": "https://www.quickmartopportunities.com/salary (no official pay figure published)",
+          "confidence": "M"
+        }
+      ]
+    },
+    "school": {
+      "employers": [
+        {
+          "id": "ke-school-java-house",
+          "name": "Java House",
+          "role": "barista / waiter",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/Java_House",
+          "confidence": "H"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "ke-between-glovo",
+          "name": "Glovo",
+          "role": "delivery courier (self-employed)",
+          "where": "national",
+          "source": "https://www.businessdailyafrica.com/bd/corporate/companies/glovo-dominates-food-and-grocery-delivery-platforms--4602524 ; https://hapakenya.com/2026/07/23/what-the-uber-acquisition-of-glovo-means-for-kenyan-customers/",
+          "confidence": "H"
+        },
+        {
+          "id": "ke-between-uber-eats",
+          "name": "Uber Eats",
+          "role": "delivery courier (self-employed)",
+          "where": "national",
+          "source": "https://techweez.com/2026/07/17/uber-acquires-glovo-kenya-delivery-hero/",
+          "confidence": "M"
+        },
+        {
+          "id": "ke-between-bolt-food",
+          "name": "Bolt Food",
+          "role": "delivery courier (self-employed)",
+          "where": "national",
+          "source": "https://weetracker.com/2026/07/07/kenya-delivery-apps-licensing-fees-uber-bolt-glovo/",
+          "confidence": "M"
+        }
+      ]
+    },
+    "armed_forces": {
+      "employers": [
+        {
+          "id": "ke-armed_forces-g4s-kenya",
+          "name": "G4S Kenya",
+          "role": "security guard",
+          "where": "national",
+          "source": "https://www.g4s.com/en-ke (company site; no pay published)",
+          "confidence": "M"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "ke-hospitality-kfc-kenya",
+          "name": "KFC Kenya",
+          "role": "crew member",
+          "where": "national",
+          "source": "https://kfc.co.ke (company site; no pay published)",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "KG": {
+    "retail": {
+      "employers": [
+        {
+          "id": "kg-retail-globus-umai-group",
+          "name": "Globus (Umai Group)",
+          "role": "cashier / sales floor",
+          "where": "national",
+          "source": "https://globus.kg/en/about ; https://www.umaigroup.kg/en/post/24-years-together-with-kyrgyzstan-a-story-that-continues",
+          "confidence": "H"
+        },
+        {
+          "id": "kg-retail-narodny-umai-group",
+          "name": "Narodny (Umai Group)",
+          "role": "cashier / sales floor",
+          "where": "national",
+          "source": "https://www.eurasianstar.com/ifc-invests-in-kyrgyzstans-largest-grocery-retailer/ (Umai runs Globus, Narodny and Dostor; 170+ stores, 7,500+ staff)",
+          "confidence": "H"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "kg-between-glovo",
+          "name": "Glovo",
+          "role": "delivery courier",
+          "where": "national",
+          "source": "https://glovoapp.com/kg/en/delivery_glovo/groceries/",
+          "confidence": "H"
+        },
+        {
+          "id": "kg-between-yandex-go-yandex-eats-delivery",
+          "name": "Yandex Go (Yandex Eats / Delivery)",
+          "role": "delivery courier",
+          "where": "national",
+          "source": "https://go.yandex/en_kg/ ; https://delivery.yandex.kg/en/bishkek/",
+          "confidence": "H"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "kg-hospitality-hyatt-regency-bishkek",
+          "name": "Hyatt Regency Bishkek",
+          "role": "hotel attendant / waiter",
+          "where": "national",
+          "source": "https://www.hyatt.com (Hyatt Regency Bishkek property page; no pay published)",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "KH": {
+    "retail": {
+      "employers": [
+        {
+          "id": "kh-retail-lucky-supermarket",
+          "name": "Lucky Supermarket",
+          "role": "cashier / shop assistant",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/Lucky_Supermarket",
+          "confidence": "H"
+        },
+        {
+          "id": "kh-retail-aeon-cambodia-aeon-mall-supermarkets",
+          "name": "AEON Cambodia (AEON Mall / supermarkets)",
+          "role": "store staff",
+          "where": "national",
+          "source": "https://www.aeon.com.kh/",
+          "confidence": "M"
+        }
+      ]
+    },
+    "school": {
+      "employers": [
+        {
+          "id": "kh-school-brown-coffee",
+          "name": "Brown Coffee",
+          "role": "barista",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/Brown_Coffee ; https://www.browncoffee.com.kh/",
+          "confidence": "H"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "kh-between-foodpanda",
+          "name": "foodpanda",
+          "role": "delivery rider",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/Foodpanda (Cambodia among current markets)",
+          "confidence": "H"
+        },
+        {
+          "id": "kh-between-grab-grabfood",
+          "name": "Grab (GrabFood)",
+          "role": "delivery rider",
+          "where": "national",
+          "source": "https://www.grab.com/kh/ (company site)",
+          "confidence": "M"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "kh-hospitality-nagaworld",
+          "name": "NagaWorld",
+          "role": "hotel / casino service staff",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/NagaWorld (country's largest hotel and gambling resort)",
+          "confidence": "H"
+        }
+      ]
+    }
+  },
+  "KN": {
+    "hospitality": {
+      "employers": [
+        {
+          "id": "kn-hospitality-park-hyatt-st-kitts-christophe-harbour",
+          "name": "Park Hyatt St. Kitts Christophe Harbour",
+          "role": "hotel / restaurant staff",
+          "where": "national",
+          "source": "https://www.hyatt.com (property page; no pay published)",
+          "confidence": "M"
+        },
+        {
+          "id": "kn-hospitality-st-kitts-marriott-resort",
+          "name": "St. Kitts Marriott Resort",
+          "role": "hotel / restaurant staff",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/Marriott_Vacation_Club (St. Kitts resort); marriott.com property page",
+          "confidence": "M"
+        },
+        {
+          "id": "kn-hospitality-four-seasons-resort-nevis",
+          "name": "Four Seasons Resort Nevis",
+          "role": "hotel / restaurant staff",
+          "where": "national",
+          "source": "https://www.fourseasons.com/nevis/ (property page; no pay published)",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "KW": {
+    "retail": {
+      "employers": [
+        {
+          "id": "kw-retail-the-sultan-center",
+          "name": "The Sultan Center",
+          "role": "supermarket cashier / shelf stocker",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/The_Sultan_Center",
+          "confidence": "M"
+        },
+        {
+          "id": "kw-retail-lulu-hypermarket",
+          "name": "LuLu Hypermarket",
+          "role": "hypermarket sales assistant",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/LuLu_Group_International",
+          "confidence": "M"
+        },
+        {
+          "id": "kw-retail-alshaya-group-h-m-american-eagle-and-oth",
+          "name": "Alshaya Group (H&M, American Eagle and other franchises)",
+          "role": "store sales associate",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/Alshaya_Group",
+          "confidence": "M"
+        }
+      ]
+    },
+    "school": {
+      "employers": [
+        {
+          "id": "kw-school-alshaya-group-starbucks-kuwait",
+          "name": "Alshaya Group (Starbucks Kuwait)",
+          "role": "barista",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/Alshaya_Group",
+          "confidence": "M"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "kw-hospitality-americana-restaurants-kfc-pizza-hut-hard",
+          "name": "Americana Restaurants (KFC, Pizza Hut, Hardee's)",
+          "role": "restaurant crew member",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/Americana_Group",
+          "confidence": "M"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "kw-between-talabat",
+          "name": "Talabat",
+          "role": "delivery rider",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/Talabat",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "KY": {
+    "retail": {
+      "employers": [
+        {
+          "id": "ky-retail-foster-s-food-fair",
+          "name": "Foster's Food Fair",
+          "role": "supermarket cashier / clerk",
+          "where": "national",
+          "source": "https://www.fosters.ky/careers (over 750 staff)",
+          "confidence": "H"
+        },
+        {
+          "id": "ky-retail-kirk-market",
+          "name": "Kirk Market",
+          "role": "supermarket clerk",
+          "where": "national",
+          "source": "https://www.kirkmarket.ky/",
+          "confidence": "H"
+        },
+        {
+          "id": "ky-retail-hurley-s",
+          "name": "Hurley's",
+          "role": "supermarket clerk / deli counter",
+          "where": "national",
+          "source": "https://www.hurleys.ky/",
+          "confidence": "H"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "ky-hospitality-grand-cayman-marriott-seven-mile-beach",
+          "name": "Grand Cayman Marriott (Seven Mile Beach)",
+          "role": "hotel housekeeper / server",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/Seven_Mile_Beach_(Grand_Cayman)",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "KZ": {
+    "retail": {
+      "employers": [
+        {
+          "id": "kz-retail-magnum-cash-carry",
+          "name": "Magnum Cash & Carry",
+          "role": "supermarket cashier / stocker",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/Magnum_Cash_%26_Carry (over 180 stores, over 13,000 staff)",
+          "confidence": "H"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "kz-between-glovo",
+          "name": "Glovo",
+          "role": "delivery courier",
+          "where": "national",
+          "source": "https://glovoapp.com/kz/en/almaty/",
+          "confidence": "H"
+        },
+        {
+          "id": "kz-between-wolt",
+          "name": "Wolt",
+          "role": "delivery courier",
+          "where": "national",
+          "source": "https://wolt.com/en/kaz",
+          "confidence": "H"
+        }
+      ]
+    }
+  },
+  "LA": {
+    "between": {
+      "employers": [
+        {
+          "id": "la-between-foodpanda",
+          "name": "foodpanda",
+          "role": "delivery rider",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/Foodpanda (Laos listed as a current market)",
+          "confidence": "M"
+        }
+      ]
+    },
+    "school": {
+      "employers": [
+        {
+          "id": "la-school-dao-coffee-dao-heuang-group",
+          "name": "Dao Coffee (Dao-Heuang Group)",
+          "role": "café counter staff",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/Economy_of_Laos",
+          "confidence": "L"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "la-hospitality-settha-palace-hotel",
+          "name": "Settha Palace Hotel",
+          "role": "hotel housekeeper / server",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/Vientiane",
+          "confidence": "L"
+        }
+      ]
+    },
+    "retail": {
+      "employers": [
+        {
+          "id": "la-retail-lao-brewery-company-beerlao",
+          "name": "Lao Brewery Company (Beerlao)",
+          "role": "sales / distribution worker",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/Beerlao",
+          "confidence": "L"
+        }
+      ]
+    }
+  },
+  "LB": {
+    "retail": {
+      "employers": [
+        {
+          "id": "lb-retail-spinneys-lebanon",
+          "name": "Spinneys Lebanon",
+          "role": "supermarket cashier / stocker",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/Spinneys",
+          "confidence": "M"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "lb-between-toters",
+          "name": "Toters",
+          "role": "delivery driver / shopper",
+          "where": "national",
+          "source": "https://www.totersapp.com/",
+          "confidence": "M"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "lb-hospitality-americana-restaurants-kfc-pizza-hut",
+          "name": "Americana Restaurants (KFC, Pizza Hut)",
+          "role": "restaurant crew member",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/Americana_Group (Lebanon among its 13 countries)",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "LC": {
+    "retail": {
+      "employers": [
+        {
+          "id": "lc-retail-massy-stores",
+          "name": "Massy Stores",
+          "role": "supermarket cashier / clerk",
+          "where": "national",
+          "source": "https://www.massystores.com/",
+          "confidence": "H"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "lc-hospitality-sandals-resorts-grande-st-lucian-halcyon",
+          "name": "Sandals Resorts (Grande St. Lucian, Halcyon Beach, Regency La Toc)",
+          "role": "resort housekeeper / server / bartender",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/Sandals_Resorts",
+          "confidence": "H"
+        }
+      ]
+    }
+  },
+  "LI": {
+    "retail": {
+      "employers": [
+        {
+          "id": "li-retail-coop",
+          "name": "Coop",
+          "role": "supermarket sales assistant",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/Coop_(Switzerland) (taking over four Ospelt supermarkets in Liechtenstein, September 2026)",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "LK": {
+    "retail": {
+      "employers": [
+        {
+          "id": "lk-retail-keells-john-keells-holdings",
+          "name": "Keells (John Keells Holdings)",
+          "role": "Supermarket cashier / store associate",
+          "where": "national",
+          "source": "https://www.keellssuper.com/",
+          "confidence": "M"
+        },
+        {
+          "id": "lk-retail-cargills-food-city-cargills-ceylon-plc",
+          "name": "Cargills Food City (Cargills (Ceylon) PLC)",
+          "role": "Supermarket store assistant",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/Cargills_(Ceylon)",
+          "confidence": "H"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "lk-hospitality-kfc-sri-lanka-cargills-ceylon-plc",
+          "name": "KFC Sri Lanka (Cargills (Ceylon) PLC)",
+          "role": "Fast-food crew member",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/Cargills_(Ceylon)",
+          "confidence": "M"
+        },
+        {
+          "id": "lk-hospitality-cinnamon-hotels-resorts-john-keells-hold",
+          "name": "Cinnamon Hotels & Resorts (John Keells Holdings)",
+          "role": "Hotel steward / room attendant",
+          "where": "national",
+          "source": "https://www.cinnamonhotels.com/",
+          "confidence": "M"
+        },
+        {
+          "id": "lk-hospitality-jetwing-hotels",
+          "name": "Jetwing Hotels",
+          "role": "Hotel trainee / steward",
+          "where": "national",
+          "source": "https://www.jetwinghotels.com/",
+          "confidence": "M"
+        }
+      ]
+    },
+    "school": {
+      "employers": [
+        {
+          "id": "lk-school-barista-coffee-barista-lanka",
+          "name": "Barista Coffee (Barista Lanka)",
+          "role": "Barista",
+          "where": "national",
+          "source": "https://www.barista.lk/",
+          "confidence": "M"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "lk-between-pickme-food",
+          "name": "PickMe Food",
+          "role": "Delivery rider (app platform)",
+          "where": "national",
+          "source": "https://pickme.lk/",
+          "confidence": "M"
+        }
+      ]
+    },
+    "armed_forces": {
+      "employers": [
+        {
+          "id": "lk-armed_forces-g4s-sri-lanka",
+          "name": "G4S Sri Lanka",
+          "role": "Security officer",
+          "where": "national",
+          "source": "https://www.g4s.com/en-lk",
+          "confidence": "L"
+        }
+      ]
+    },
+    "trades": {
+      "employers": [
+        {
+          "id": "lk-trades-access-engineering-plc",
+          "name": "Access Engineering PLC",
+          "role": "Construction laborer",
+          "where": "national",
+          "source": "https://www.accessengsl.com/",
+          "confidence": "L"
+        }
+      ]
+    }
+  },
+  "LR": {
+    "armed_forces": {
+      "employers": [
+        {
+          "id": "lr-armed_forces-g4s-liberia",
+          "name": "G4S Liberia",
+          "role": "Security guard",
+          "where": "national",
+          "source": "https://www.g4s.com/",
+          "confidence": "L"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "lr-hospitality-mamba-point-hotel",
+          "name": "Mamba Point Hotel",
+          "role": "Hotel and restaurant staff",
+          "where": "national",
+          "source": "https://www.mambapointhotel.com/",
+          "confidence": "M"
+        },
+        {
+          "id": "lr-hospitality-royal-grand-hotel-monrovia",
+          "name": "Royal Grand Hotel, Monrovia",
+          "role": "Hotel and restaurant staff",
+          "where": "national",
+          "source": "https://www.royalgrandhotel.com/",
+          "confidence": "L"
+        }
+      ]
+    },
+    "retail": {
+      "employers": [
+        {
+          "id": "lr-retail-abi-jaoudi-azar-trading-corporation",
+          "name": "Abi Jaoudi & Azar Trading Corporation",
+          "role": "Store clerk / cashier",
+          "where": "national",
+          "source": "https://www.abijaoudi.com/",
+          "confidence": "L"
+        }
+      ]
+    }
+  },
+  "LS": {
+    "retail": {
+      "employers": [
+        {
+          "id": "ls-retail-shoprite-lesotho",
+          "name": "Shoprite Lesotho",
+          "role": "Cashier / general assistant",
+          "where": "national",
+          "source": "https://www.shopriteholdings.co.za/",
+          "confidence": "M"
+        },
+        {
+          "id": "ls-retail-pick-n-pay-lesotho-franchise-stores",
+          "name": "Pick n Pay (Lesotho franchise stores)",
+          "role": "Cashier / packer",
+          "where": "national",
+          "source": "https://www.pnp.co.za/",
+          "confidence": "L"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "ls-hospitality-avani-maseru-hotel-avani-lesotho-hotel",
+          "name": "Avani Maseru Hotel / Avani Lesotho Hotel",
+          "role": "Hotel and restaurant staff",
+          "where": "national",
+          "source": "https://www.avanihotels.com/en/maseru",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "LT": {
+    "retail": {
+      "employers": [
+        {
+          "id": "lt-retail-maxima-lt",
+          "name": "Maxima LT",
+          "role": "Cashier-seller (kasininkas-pardavėjas)",
+          "where": "national",
+          "source": "https://karjera.maxima.lt/",
+          "confidence": "H"
+        },
+        {
+          "id": "lt-retail-lidl-lietuva",
+          "name": "Lidl Lietuva",
+          "role": "Store worker",
+          "where": "national",
+          "source": "https://karjera.lidl.lt/",
+          "confidence": "H"
+        },
+        {
+          "id": "lt-retail-rimi-lietuva",
+          "name": "Rimi Lietuva",
+          "role": "Store worker",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/Rimi_Baltic",
+          "confidence": "M"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "lt-hospitality-hesburger",
+          "name": "Hesburger",
+          "role": "Restaurant crew",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/Hesburger",
+          "confidence": "M"
+        }
+      ]
+    },
+    "school": {
+      "employers": [
+        {
+          "id": "lt-school-caffeine",
+          "name": "Caffeine",
+          "role": "Barista",
+          "where": "national",
+          "source": "https://www.caffeine.lt/",
+          "confidence": "M"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "lt-between-wolt",
+          "name": "Wolt",
+          "role": "Courier partner",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/Wolt",
+          "confidence": "H"
+        },
+        {
+          "id": "lt-between-bolt-food",
+          "name": "Bolt Food",
+          "role": "Courier partner",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/Bolt_(company)",
+          "confidence": "H"
+        }
+      ]
+    },
+    "armed_forces": {
+      "employers": [
+        {
+          "id": "lt-armed_forces-g4s-lietuva",
+          "name": "G4S Lietuva",
+          "role": "Security guard",
+          "where": "national",
+          "source": "https://www.g4s.com/lt-lt",
+          "confidence": "L"
+        }
+      ]
+    },
+    "office": {
+      "employers": [
+        {
+          "id": "lt-office-manpowergroup-lietuva",
+          "name": "ManpowerGroup Lietuva",
+          "role": "Temporary agency worker",
+          "where": "national",
+          "source": "https://www.manpowergroup.lt/",
+          "confidence": "L"
+        }
+      ]
+    },
+    "sport": {
+      "employers": [
+        {
+          "id": "lt-sport-lemon-gym",
+          "name": "Lemon Gym",
+          "role": "Gym staff / trainer",
+          "where": "national",
+          "source": "https://www.lemongym.lt/",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "LU": {
+    "retail": {
+      "employers": [
+        {
+          "id": "lu-retail-cactus",
+          "name": "Cactus",
+          "role": "Store employee / cashier",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/Cactus_(supermarket)",
+          "confidence": "H"
+        },
+        {
+          "id": "lu-retail-delhaize-luxembourg",
+          "name": "Delhaize Luxembourg",
+          "role": "Store employee",
+          "where": "national",
+          "source": "https://www.delhaize.lu/",
+          "confidence": "M"
+        },
+        {
+          "id": "lu-retail-auchan-luxembourg",
+          "name": "Auchan Luxembourg",
+          "role": "Hypermarket employee",
+          "where": "national",
+          "source": "https://www.auchan.lu/",
+          "confidence": "M"
+        },
+        {
+          "id": "lu-retail-lidl-luxembourg",
+          "name": "Lidl Luxembourg",
+          "role": "Store worker",
+          "where": "national",
+          "source": "https://www.lidl.lu/",
+          "confidence": "M"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "lu-hospitality-mcdonald-s-luxembourg",
+          "name": "McDonald's Luxembourg",
+          "role": "Crew member",
+          "where": "national",
+          "source": "https://www.mcdonalds.lu/",
+          "confidence": "M"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "lu-between-wedely",
+          "name": "Wedely",
+          "role": "Delivery courier",
+          "where": "national",
+          "source": "https://www.wedely.lu/",
+          "confidence": "L"
+        }
+      ]
+    },
+    "office": {
+      "employers": [
+        {
+          "id": "lu-office-randstad-luxembourg",
+          "name": "Randstad Luxembourg",
+          "role": "Temporary agency worker",
+          "where": "national",
+          "source": "https://www.randstad.lu/",
+          "confidence": "M"
+        }
+      ]
+    },
+    "armed_forces": {
+      "employers": [
+        {
+          "id": "lu-armed_forces-g4s-security-services-luxembourg",
+          "name": "G4S Security Services Luxembourg",
+          "role": "Security agent",
+          "where": "national",
+          "source": "https://www.g4s.com/fr-lu",
+          "confidence": "L"
+        }
+      ]
+    },
+    "care": {
+      "employers": [
+        {
+          "id": "lu-care-steftung-hellef-doheem",
+          "name": "Stëftung Hëllef Doheem",
+          "role": "Home care assistant (aide-soignant)",
+          "where": "national",
+          "source": "https://www.shd.lu/",
+          "confidence": "H"
+        }
+      ]
+    },
+    "sport": {
+      "employers": [
+        {
+          "id": "lu-sport-basic-fit-luxembourg",
+          "name": "Basic-Fit Luxembourg",
+          "role": "Club staff / trainer",
+          "where": "national",
+          "source": "https://www.basic-fit.com/en-lu/",
+          "confidence": "H"
+        }
+      ]
+    }
+  },
+  "LV": {
+    "retail": {
+      "employers": [
+        {
+          "id": "lv-retail-maxima-latvija",
+          "name": "Maxima Latvija",
+          "role": "Cashier / store worker",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/Maxima_Group",
+          "confidence": "H"
+        },
+        {
+          "id": "lv-retail-rimi-latvia",
+          "name": "Rimi Latvia",
+          "role": "Store worker",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/Rimi_Baltic",
+          "confidence": "H"
+        },
+        {
+          "id": "lv-retail-lidl-latvija",
+          "name": "Lidl Latvija",
+          "role": "Store worker",
+          "where": "national",
+          "source": "https://karjera.lidl.lv/",
+          "confidence": "H"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "lv-hospitality-lido",
+          "name": "Lido",
+          "role": "Restaurant staff",
+          "where": "national",
+          "source": "https://www.lido.lv/",
+          "confidence": "M"
+        },
+        {
+          "id": "lv-hospitality-hesburger",
+          "name": "Hesburger",
+          "role": "Restaurant crew",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/Hesburger",
+          "confidence": "M"
+        }
+      ]
+    },
+    "school": {
+      "employers": [
+        {
+          "id": "lv-school-caffeine",
+          "name": "Caffeine",
+          "role": "Barista",
+          "where": "national",
+          "source": "https://www.caffeine.lv/",
+          "confidence": "M"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "lv-between-wolt",
+          "name": "Wolt",
+          "role": "Courier partner",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/Wolt",
+          "confidence": "H"
+        },
+        {
+          "id": "lv-between-bolt-food",
+          "name": "Bolt Food",
+          "role": "Courier partner",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/Bolt_(company)",
+          "confidence": "H"
+        }
+      ]
+    },
+    "armed_forces": {
+      "employers": [
+        {
+          "id": "lv-armed_forces-g4s-latvia",
+          "name": "G4S Latvia",
+          "role": "Security guard",
+          "where": "national",
+          "source": "https://www.g4s.lv/",
+          "confidence": "L"
+        }
+      ]
+    },
+    "sport": {
+      "employers": [
+        {
+          "id": "lv-sport-myfitness",
+          "name": "MyFitness",
+          "role": "Club administrator / trainer",
+          "where": "national",
+          "source": "https://www.myfitness.lv/",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "LY": {
+    "between": {
+      "employers": [
+        {
+          "id": "ly-between-presto",
+          "name": "Presto",
+          "role": "delivery driver (app courier)",
+          "where": "national",
+          "source": "https://restofworld.org/2024/presto-libya-delivery-app/",
+          "confidence": "H"
+        }
+      ]
+    },
+    "retail": {
+      "employers": [
+        {
+          "id": "ly-retail-geant-senwan-holding",
+          "name": "Géant (Senwan Holding)",
+          "role": "hypermarket cashier or shelf stocker (Benghazi)",
+          "where": "national",
+          "source": "https://libyaherald.com/2025/01/frances-geant-hypermarket-opens-second-branch-in-airport-road-benghazi/",
+          "confidence": "M"
+        }
+      ]
+    },
+    "school": {
+      "employers": [
+        {
+          "id": "ly-school-caffe-latte",
+          "name": "Caffe Latte",
+          "role": "coffee shop barista or counter staff (Tripoli)",
+          "where": "national",
+          "source": "https://libyaherald.com/tag/coffee-culture/",
+          "confidence": "M"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "ly-hospitality-corinthia-hotel-tripoli",
+          "name": "Corinthia Hotel Tripoli",
+          "role": "hotel housekeeping or food and beverage staff",
+          "where": "national",
+          "source": "https://www.corinthia.com/en-gb/tripoli/",
+          "confidence": "M"
+        },
+        {
+          "id": "ly-hospitality-radisson-blu-al-mahary-hotel-tripoli",
+          "name": "Radisson Blu Al Mahary Hotel Tripoli",
+          "role": "hotel housekeeping or restaurant staff",
+          "where": "national",
+          "source": "https://harri.com/Radisson-Blu-Al-Mahary-Hotel---Tripoli",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "MA": {
+    "retail": {
+      "employers": [
+        {
+          "id": "ma-retail-marjane",
+          "name": "Marjane",
+          "role": "hypermarket cashier or stocker",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/Marjane",
+          "confidence": "H"
+        },
+        {
+          "id": "ma-retail-label-vie-carrefour-carrefour-market-ata",
+          "name": "Label'Vie (Carrefour, Carrefour Market, Atacadao, Supeco)",
+          "role": "supermarket cashier or shelf stocker",
+          "where": "national",
+          "source": "https://www.labelvie.ma/",
+          "confidence": "H"
+        },
+        {
+          "id": "ma-retail-bim-maroc",
+          "name": "BIM Maroc",
+          "role": "discount store clerk",
+          "where": "national",
+          "source": "https://www.bim.ma/",
+          "confidence": "H"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "ma-between-glovo",
+          "name": "Glovo",
+          "role": "app delivery courier",
+          "where": "national",
+          "source": "https://glovoapp.com/ma/en/",
+          "confidence": "H"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "ma-hospitality-mcdonald-s-maroc",
+          "name": "McDonald's Maroc",
+          "role": "fast-food crew member",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/List_of_countries_with_McDonald%27s_restaurants",
+          "confidence": "H"
+        },
+        {
+          "id": "ma-hospitality-risma",
+          "name": "Risma",
+          "role": "hotel housekeeping or reception staff",
+          "where": "national",
+          "source": "https://www.risma.com/",
+          "confidence": "M"
+        }
+      ]
+    },
+    "school": {
+      "employers": [
+        {
+          "id": "ma-school-starbucks-morocco",
+          "name": "Starbucks Morocco",
+          "role": "barista",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/Starbucks",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "MC": {
+    "hospitality": {
+      "employers": [
+        {
+          "id": "mc-hospitality-societe-des-bains-de-mer-monte-carlo-sbm",
+          "name": "Société des Bains de Mer (Monte-Carlo SBM)",
+          "role": "hotel, casino, restaurant and beach club staff",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/Soci%C3%A9t%C3%A9_des_bains_de_mer_de_Monaco",
+          "confidence": "H"
+        },
+        {
+          "id": "mc-hospitality-fairmont-monte-carlo",
+          "name": "Fairmont Monte Carlo",
+          "role": "hotel housekeeping or food and beverage staff",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/Fairmont_Monte_Carlo",
+          "confidence": "H"
+        },
+        {
+          "id": "mc-hospitality-mcdonald-s-monaco",
+          "name": "McDonald's Monaco",
+          "role": "fast-food crew member",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/List_of_countries_with_McDonald%27s_restaurants",
+          "confidence": "H"
+        }
+      ]
+    },
+    "office": {
+      "employers": [
+        {
+          "id": "mc-office-manpower-monaco",
+          "name": "Manpower Monaco",
+          "role": "temp worker through a staffing agency",
+          "where": "national",
+          "source": "https://www.manpower.mc/",
+          "confidence": "H"
+        }
+      ]
+    }
+  },
+  "MD": {
+    "retail": {
+      "employers": [
+        {
+          "id": "md-retail-linella",
+          "name": "Linella",
+          "role": "supermarket cashier or stocker",
+          "where": "national",
+          "source": "https://www.linella.md/",
+          "confidence": "H"
+        },
+        {
+          "id": "md-retail-kaufland-moldova",
+          "name": "Kaufland Moldova",
+          "role": "hypermarket sales associate",
+          "where": "national",
+          "source": "https://www.kaufland.md/",
+          "confidence": "H"
+        },
+        {
+          "id": "md-retail-nr-1",
+          "name": "Nr.1",
+          "role": "supermarket cashier",
+          "where": "national",
+          "source": "https://www.nr1.md/",
+          "confidence": "H"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "md-between-glovo",
+          "name": "Glovo",
+          "role": "app delivery courier (Chișinău)",
+          "where": "national",
+          "source": "https://glovoapp.com/md/en/",
+          "confidence": "M"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "md-hospitality-mcdonald-s-moldova",
+          "name": "McDonald's Moldova",
+          "role": "fast-food crew member",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/List_of_countries_with_McDonald%27s_restaurants",
+          "confidence": "H"
+        }
+      ]
+    },
+    "school": {
+      "employers": [
+        {
+          "id": "md-school-tucano-coffee",
+          "name": "Tucano Coffee",
+          "role": "barista",
+          "where": "national",
+          "source": "https://tucanofranchise.com/",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "ME": {
+    "retail": {
+      "employers": [
+        {
+          "id": "me-retail-idea",
+          "name": "IDEA",
+          "role": "supermarket cashier or stocker",
+          "where": "national",
+          "source": "https://www.idea.co.me/",
+          "confidence": "H"
+        },
+        {
+          "id": "me-retail-voli",
+          "name": "Voli",
+          "role": "supermarket cashier or warehouse worker",
+          "where": "national",
+          "source": "https://kompanija.voli.me/",
+          "confidence": "H"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "me-between-glovo",
+          "name": "Glovo",
+          "role": "app delivery courier (Podgorica)",
+          "where": "national",
+          "source": "https://glovoapp.com/me/en/",
+          "confidence": "M"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "me-hospitality-hg-budvanska-rivijera",
+          "name": "HG Budvanska rivijera",
+          "role": "seasonal hotel staff (Budva, Petrovac)",
+          "where": "national",
+          "source": "https://www.hgbudvanskarivijera.com/",
+          "confidence": "H"
+        }
+      ]
+    }
+  },
+  "MF": {
+    "hospitality": {
+      "employers": [
+        {
+          "id": "mf-hospitality-mcdonald-s-marigot",
+          "name": "McDonald's Marigot",
+          "role": "fast-food crew member",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/List_of_countries_with_McDonald%27s_restaurants",
+          "confidence": "H"
+        },
+        {
+          "id": "mf-hospitality-belmond-la-samanna",
+          "name": "Belmond La Samanna",
+          "role": "resort housekeeping or food and beverage staff (Baie Longue)",
+          "where": "national",
+          "source": "https://www.belmond.com/hotels/north-america/caribbean/st-martin/belmond-la-samanna/",
+          "confidence": "H"
+        }
+      ]
+    }
+  },
+  "MG": {
+    "retail": {
+      "employers": [
+        {
+          "id": "mg-retail-leader-price-madagascar",
+          "name": "Leader Price Madagascar",
+          "role": "Supermarket cashier / shelf stocker",
+          "where": "national",
+          "source": "https://www.leaderprice.mg",
+          "confidence": "M"
+        },
+        {
+          "id": "mg-retail-carrefour-madagascar-ankorondrano",
+          "name": "Carrefour Madagascar (Ankorondrano)",
+          "role": "Hypermarket cashier / store assistant",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/Carrefour (first Madagascar hypermarket 2021) ; https://www.carrefour-madagascar.com",
+          "confidence": "M"
+        },
+        {
+          "id": "mg-retail-jovena",
+          "name": "Jovena",
+          "role": "Service-station attendant / shop assistant",
+          "where": "national",
+          "source": "https://www.jovena.mg",
+          "confidence": "M"
+        }
+      ]
+    },
+    "school": {
+      "employers": [
+        {
+          "id": "mg-school-kfc-madagascar-pick-n-eat-ltd",
+          "name": "KFC Madagascar (Pick n Eat Ltd)",
+          "role": "Crew member",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/List_of_countries_with_KFC_franchises (Madagascar since 2019, franchisee Pick n Eat Ltd)",
+          "confidence": "M"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "mg-hospitality-carlton-hotel-madagascar-antananarivo",
+          "name": "Carlton Hotel Madagascar (Antananarivo)",
+          "role": "Hotel, restaurant and bar staff",
+          "where": "national",
+          "source": "https://carlton-madagascar.com",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "MH": {
+    "hospitality": {
+      "employers": [
+        {
+          "id": "mh-hospitality-hotel-robert-reimers-rre-majuro",
+          "name": "Hotel Robert Reimers (RRE, Majuro)",
+          "role": "Hotel, restaurant and lounge staff",
+          "where": "national",
+          "source": "https://rreinc.com/rre.htm",
+          "confidence": "H"
+        }
+      ]
+    },
+    "retail": {
+      "employers": [
+        {
+          "id": "mh-retail-robert-reimers-enterprises-mobil-gas-sta",
+          "name": "Robert Reimers Enterprises: Mobil gas stations and Parts Plus Auto Parts",
+          "role": "Service-station attendant / store clerk",
+          "where": "national",
+          "source": "https://rreinc.com/rre.htm",
+          "confidence": "H"
+        }
+      ]
+    }
+  },
+  "MK": {
+    "retail": {
+      "employers": [
+        {
+          "id": "mk-retail-vero-vero-marketi",
+          "name": "Vero (Vero marketi)",
+          "role": "Supermarket cashier / shelf stocker",
+          "where": "national",
+          "source": "https://www.vero.com.mk",
+          "confidence": "H"
+        },
+        {
+          "id": "mk-retail-tinex",
+          "name": "Tinex",
+          "role": "Supermarket cashier",
+          "where": "national",
+          "source": "https://www.tinex.mk",
+          "confidence": "H"
+        },
+        {
+          "id": "mk-retail-ramstore",
+          "name": "Ramstore",
+          "role": "Supermarket assistant",
+          "where": "national",
+          "source": "https://www.ramstore.com.mk",
+          "confidence": "H"
+        },
+        {
+          "id": "mk-retail-kam-market",
+          "name": "KAM market",
+          "role": "Store cashier",
+          "where": "national",
+          "source": "https://www.kam.com.mk",
+          "confidence": "H"
+        },
+        {
+          "id": "mk-retail-stokomak",
+          "name": "Stokomak",
+          "role": "Store cashier",
+          "where": "national",
+          "source": "https://www.stokomak.com.mk",
+          "confidence": "M"
+        }
+      ]
+    },
+    "school": {
+      "employers": [
+        {
+          "id": "mk-school-burger-king-north-macedonia-tab-g-da",
+          "name": "Burger King North Macedonia (TAB Gıda)",
+          "role": "Crew member",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/List_of_countries_with_Burger_King_franchises (since 2011, Skopje)",
+          "confidence": "M"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "mk-between-wolt",
+          "name": "Wolt",
+          "role": "Courier partner",
+          "where": "national",
+          "source": "https://wolt.com/en/mkd ; https://en.wikipedia.org/wiki/Wolt",
+          "confidence": "H"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "mk-hospitality-skopje-marriott-hotel",
+          "name": "Skopje Marriott Hotel",
+          "role": "Hotel and restaurant staff",
+          "where": "national",
+          "source": "https://www.marriott.com/en-us/hotels/skpmc-skopje-marriott-hotel/overview/",
+          "confidence": "M"
+        }
+      ]
+    },
+    "trades": {
+      "employers": [
+        {
+          "id": "mk-trades-granit-ad-skopje",
+          "name": "Granit AD Skopje",
+          "role": "Construction laborer",
+          "where": "national",
+          "source": "https://www.granit.com.mk",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "ML": {
+    "retail": {
+      "employers": [
+        {
+          "id": "ml-retail-orange-mali",
+          "name": "Orange Mali",
+          "role": "Shop (boutique) sales agent",
+          "where": "national",
+          "source": "https://fr.wikipedia.org/wiki/Orange_Mali",
+          "confidence": "M"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "ml-hospitality-azalai-hotels-azalai-hotel-salam-bamako",
+          "name": "Azalaï Hôtels (Azalaï Hôtel Salam, Bamako)",
+          "role": "Hotel and restaurant staff",
+          "where": "national",
+          "source": "https://www.azalaihotels.com",
+          "confidence": "M"
+        },
+        {
+          "id": "ml-hospitality-radisson-blu-hotel-bamako",
+          "name": "Radisson Blu Hotel, Bamako",
+          "role": "Hotel and restaurant staff",
+          "where": "national",
+          "source": "https://www.radissonhotels.com/fr-fr/hotels/radisson-blu-bamako",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "MM": {
+    "retail": {
+      "employers": [
+        {
+          "id": "mm-retail-city-mart-city-mart-holding",
+          "name": "City Mart (City Mart Holding)",
+          "role": "Supermarket cashier / shelf stocker",
+          "where": "national",
+          "source": "https://www.citymart.com.mm",
+          "confidence": "H"
+        },
+        {
+          "id": "mm-retail-ocean-supercenter",
+          "name": "Ocean Supercenter",
+          "role": "Supermarket assistant",
+          "where": "national",
+          "source": "https://www.oceansupercenter.com.mm",
+          "confidence": "H"
+        }
+      ]
+    },
+    "school": {
+      "employers": [
+        {
+          "id": "mm-school-kfc-myanmar-yoma-strategic-holdings",
+          "name": "KFC Myanmar (Yoma Strategic Holdings)",
+          "role": "Crew member",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/List_of_countries_with_KFC_franchises (Myanmar since 2015)",
+          "confidence": "M"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "mm-hospitality-sule-shangri-la-yangon",
+          "name": "Sule Shangri-La, Yangon",
+          "role": "Hotel and restaurant staff",
+          "where": "national",
+          "source": "http://www.shangri-la.com/yangon/sule/",
+          "confidence": "M"
+        }
+      ]
+    },
+    "trades": {
+      "employers": [
+        {
+          "id": "mm-trades-shwe-taung-group",
+          "name": "Shwe Taung Group",
+          "role": "Construction laborer",
+          "where": "national",
+          "source": "https://www.shwetaunggroup.com",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "MN": {
+    "retail": {
+      "employers": [
+        {
+          "id": "mn-retail-nomin-nomin-holding-supermarkets",
+          "name": "Nomin (Nomin Holding supermarkets)",
+          "role": "Supermarket cashier / shelf stocker",
+          "where": "national",
+          "source": "https://www.nomin.mn",
+          "confidence": "H"
+        },
+        {
+          "id": "mn-retail-carrefour-mongolia-altan-joloo",
+          "name": "Carrefour Mongolia (Altan Joloo)",
+          "role": "Store assistant",
+          "where": "national",
+          "source": "https://www.carrefour.mn ; https://en.wikipedia.org/wiki/Carrefour (opened in Ulaanbaatar 2023)",
+          "confidence": "H"
+        },
+        {
+          "id": "mn-retail-gs25-mongolia",
+          "name": "GS25 Mongolia",
+          "role": "Convenience-store clerk",
+          "where": "national",
+          "source": "https://www.gs25.mn",
+          "confidence": "M"
+        }
+      ]
+    },
+    "school": {
+      "employers": [
+        {
+          "id": "mn-school-kfc-mongolia-tavan-bogd-group",
+          "name": "KFC Mongolia (Tavan Bogd Group)",
+          "role": "Crew member",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/List_of_countries_with_KFC_franchises (since 2013)",
+          "confidence": "M"
+        },
+        {
+          "id": "mn-school-burger-king-mongolia-max-group",
+          "name": "Burger King Mongolia (Max Group)",
+          "role": "Crew member",
+          "where": "national",
+          "source": "https://en.wikipedia.org/wiki/List_of_countries_with_Burger_King_franchises (since 2015)",
+          "confidence": "M"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "mn-hospitality-pizza-hut-mongolia",
+          "name": "Pizza Hut Mongolia",
+          "role": "Restaurant server / cook",
+          "where": "national",
+          "source": "https://www.pizzahut.mn",
+          "confidence": "M"
+        },
+        {
+          "id": "mn-hospitality-shangri-la-ulaanbaatar",
+          "name": "Shangri-La Ulaanbaatar",
+          "role": "Hotel and restaurant staff",
+          "where": "national",
+          "source": "https://www.shangri-la.com/ulaanbaatar",
+          "confidence": "H"
+        }
+      ]
+    }
+  },
+  "MO": {
+    "hospitality": {
+      "employers": [
+        {
+          "id": "mo-hospitality-galaxy-entertainment-group",
+          "name": "Galaxy Entertainment Group",
+          "role": "Hotel or F&B attendant",
+          "where": "national",
+          "source": "https://www.galaxyentertainment.com/en/careers",
+          "confidence": "H"
+        },
+        {
+          "id": "mo-hospitality-sands-china-the-venetian-macao",
+          "name": "Sands China (The Venetian Macao)",
+          "role": "Hotel or F&B team member",
+          "where": "national",
+          "source": "https://www.sandschina.com/careers",
+          "confidence": "H"
+        },
+        {
+          "id": "mo-hospitality-sjm-resorts",
+          "name": "SJM Resorts",
+          "role": "Hotel or F&B attendant",
+          "where": "national",
+          "source": "https://www.sjmresorts.com/en/careers",
+          "confidence": "H"
+        },
+        {
+          "id": "mo-hospitality-mcdonald-s-macau",
+          "name": "McDonald's Macau",
+          "role": "Crew member",
+          "where": "national",
+          "source": "McDonald's operates in Macao",
+          "confidence": "M"
+        }
+      ]
+    },
+    "retail": {
+      "employers": [
+        {
+          "id": "mo-retail-san-miu-supermarket",
+          "name": "San Miu Supermarket",
+          "role": "Supermarket assistant",
+          "where": "national",
+          "source": "San Miu (新苗超級市場) is Macao's largest local supermarket chain",
+          "confidence": "M"
+        },
+        {
+          "id": "mo-retail-circle-k-macau",
+          "name": "Circle K Macau",
+          "role": "Convenience store assistant",
+          "where": "national",
+          "source": "Circle K operates convenience stores in Macao",
+          "confidence": "M"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "mo-between-aomi",
+          "name": "Aomi",
+          "role": "Delivery rider",
+          "where": "national",
+          "source": "Aomi (澳覓) and mFood are Macao's food-delivery platforms",
+          "confidence": "M"
+        }
+      ]
+    },
+    "school": {
+      "employers": [
+        {
+          "id": "mo-school-starbucks-macau-maxim-s-caterers",
+          "name": "Starbucks Macau (Maxim's Caterers)",
+          "role": "Barista",
+          "where": "national",
+          "source": "Starbucks in Macao is operated by Maxim's Caterers",
+          "confidence": "M"
+        }
+      ]
+    },
+    "armed_forces": {
+      "employers": [
+        {
+          "id": "mo-armed_forces-guardforce-macau",
+          "name": "Guardforce Macau",
+          "role": "Security guard",
+          "where": "national",
+          "source": "Guardforce operates security services in Macao",
+          "confidence": "L"
+        }
+      ]
+    }
+  },
+  "MP": {
+    "retail": {
+      "employers": [
+        {
+          "id": "mp-retail-joeten-enterprises-joeten-superstore",
+          "name": "Joeten Enterprises (Joeten Superstore)",
+          "role": "Store clerk / cashier",
+          "where": "national",
+          "source": "joeten.com - Joeten's retail stores in Saipan",
+          "confidence": "M"
+        },
+        {
+          "id": "mp-retail-payless-supermarkets",
+          "name": "Payless Supermarkets",
+          "role": "Cashier / stocker",
+          "where": "national",
+          "source": "Payless Supermarkets operates in Saipan (paylesssupermarkets.com)",
+          "confidence": "M"
+        },
+        {
+          "id": "mp-retail-triple-j-saipan",
+          "name": "Triple J Saipan",
+          "role": "Store or warehouse associate",
+          "where": "national",
+          "source": "Triple J Enterprises operates in Saipan (triplejsaipan.com)",
+          "confidence": "L"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "mp-hospitality-crowne-plaza-resort-saipan",
+          "name": "Crowne Plaza Resort Saipan",
+          "role": "Housekeeping / F&B attendant",
+          "where": "national",
+          "source": "IHG hotel in Garapan, Saipan",
+          "confidence": "M"
+        },
+        {
+          "id": "mp-hospitality-kensington-hotel-saipan",
+          "name": "Kensington Hotel Saipan",
+          "role": "Hotel attendant",
+          "where": "national",
+          "source": "Kensington Hotel Saipan, San Roque",
+          "confidence": "M"
+        },
+        {
+          "id": "mp-hospitality-mcdonald-s-saipan",
+          "name": "McDonald's Saipan",
+          "role": "Crew member",
+          "where": "national",
+          "source": "McDonald's restaurants operate in Saipan",
+          "confidence": "L"
+        }
+      ]
+    }
+  },
+  "MQ": {
+    "retail": {
+      "employers": [
+        {
+          "id": "mq-retail-carrefour-martinique-groupe-bernard-hayo",
+          "name": "Carrefour Martinique (Groupe Bernard Hayot)",
+          "role": "Employé libre-service / hôte de caisse",
+          "where": "national",
+          "source": "GBH runs Carrefour hypermarkets in Martinique (gbh.fr)",
+          "confidence": "M"
+        },
+        {
+          "id": "mq-retail-e-leclerc-martinique",
+          "name": "E.Leclerc Martinique",
+          "role": "Employé de rayon / caissier",
+          "where": "national",
+          "source": "E.Leclerc stores operate in Martinique (e.leclerc)",
+          "confidence": "M"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "mq-hospitality-mcdonald-s-martinique",
+          "name": "McDonald's Martinique",
+          "role": "Équipier polyvalent",
+          "where": "national",
+          "source": "McDonald's restaurants operate in Martinique",
+          "confidence": "M"
+        },
+        {
+          "id": "mq-hospitality-club-med-les-boucaniers",
+          "name": "Club Med Les Boucaniers",
+          "role": "Hotel and restaurant staff",
+          "where": "national",
+          "source": "Club Med resort at Sainte-Anne, Martinique",
+          "confidence": "M"
+        }
+      ]
+    },
+    "office": {
+      "employers": [
+        {
+          "id": "mq-office-adecco-martinique",
+          "name": "Adecco Martinique",
+          "role": "Intérimaire (temp worker)",
+          "where": "national",
+          "source": "Adecco has a branch in Fort-de-France",
+          "confidence": "L"
+        }
+      ]
+    },
+    "armed_forces": {
+      "employers": [
+        {
+          "id": "mq-armed_forces-securitas-local-security-firms",
+          "name": "Securitas / local security firms",
+          "role": "Agent de sécurité",
+          "where": "national",
+          "source": "No specific Martinique security employer verified; the national private-security grid (IDCC 1351) applies",
+          "confidence": "L"
+        }
+      ]
+    }
+  },
+  "MR": {
+    "trades": {
+      "employers": [
+        {
+          "id": "mr-trades-snim-societe-nationale-industrielle-et-m",
+          "name": "SNIM (Société Nationale Industrielle et Minière)",
+          "role": "Laborer",
+          "where": "national",
+          "source": "snim.com - Mauritania's state iron-ore company and largest industrial employer",
+          "confidence": "M"
+        },
+        {
+          "id": "mr-trades-attm",
+          "name": "ATTM",
+          "role": "Construction laborer",
+          "where": "national",
+          "source": "ATTM, SNIM's public-works subsidiary (attm.mr)",
+          "confidence": "L"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "mr-hospitality-azalai-hotel-marhaba-nouakchott",
+          "name": "Azalaï Hôtel Marhaba Nouakchott",
+          "role": "Hotel staff",
+          "where": "national",
+          "source": "Azalaï Hotels group property in Nouakchott",
+          "confidence": "L"
+        }
+      ]
+    },
+    "retail": {
+      "employers": [
+        {
+          "id": "mr-retail-mauritel",
+          "name": "Mauritel",
+          "role": "Shop sales agent",
+          "where": "national",
+          "source": "mauritel.mr - national telecom operator with retail agencies",
+          "confidence": "L"
+        }
+      ]
+    }
+  },
+  "MS": {
+    "trades": {
+      "employers": [
+        {
+          "id": "ms-trades-government-of-montserrat-public-works-de",
+          "name": "Government of Montserrat Public Works Department",
+          "role": "Laborer",
+          "where": "national",
+          "source": "https://www.gov.ms/ (the government is Montserrat's largest employer)",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "MT": {
+    "retail": {
+      "employers": [
+        {
+          "id": "mt-retail-lidl-malta",
+          "name": "Lidl Malta",
+          "role": "Store assistant",
+          "where": "national",
+          "source": "https://maltapathway.com/moving-to-malta/supermarkets (Lidl, 11 stores)",
+          "confidence": "M"
+        },
+        {
+          "id": "mt-retail-welbee-s",
+          "name": "Welbee's",
+          "role": "Supermarket assistant",
+          "where": "national",
+          "source": "https://maltapathway.com/moving-to-malta/supermarkets (Welbee's, 9 stores)",
+          "confidence": "M"
+        },
+        {
+          "id": "mt-retail-pavi-pama-supermarkets",
+          "name": "PAVI / PAMA Supermarkets",
+          "role": "Supermarket assistant",
+          "where": "national",
+          "source": "https://maltapathway.com/moving-to-malta/supermarkets",
+          "confidence": "M"
+        },
+        {
+          "id": "mt-retail-greens-supermarket",
+          "name": "Greens Supermarket",
+          "role": "Supermarket assistant",
+          "where": "national",
+          "source": "https://maltapathway.com/moving-to-malta/supermarkets",
+          "confidence": "M"
+        }
+      ]
+    },
+    "armed_forces": {
+      "employers": [
+        {
+          "id": "mt-armed_forces-g4s-security-services-malta-ltd",
+          "name": "G4S Security Services (Malta) Ltd",
+          "role": "Security officer",
+          "where": "national",
+          "source": "https://www.g4s.com/en-mt ; https://cap.mt/2025/04/24/how-maltas-government-spent-over-e290-million-on-hired-hands/",
+          "confidence": "H"
+        },
+        {
+          "id": "mt-armed_forces-signal-8-security-services-malta",
+          "name": "Signal 8 Security Services Malta",
+          "role": "Security officer",
+          "where": "national",
+          "source": "https://cap.mt/2025/04/24/how-maltas-government-spent-over-e290-million-on-hired-hands/",
+          "confidence": "H"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "mt-between-wolt",
+          "name": "Wolt",
+          "role": "Courier partner",
+          "where": "national",
+          "source": "Wolt operates in Malta (wolt.com/en/mlt); also Bolt Food",
+          "confidence": "M"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "mt-hospitality-mcdonald-s-malta-premier-capital",
+          "name": "McDonald's Malta (Premier Capital)",
+          "role": "Crew member",
+          "where": "national",
+          "source": "McDonald's Malta is run by Premier Capital plc (premiercapital.com.mt)",
+          "confidence": "M"
+        },
+        {
+          "id": "mt-hospitality-corinthia-hotels",
+          "name": "Corinthia Hotels",
+          "role": "Hotel porter / housekeeping",
+          "where": "national",
+          "source": "Corinthia Group is headquartered in Malta (corinthia.com)",
+          "confidence": "M"
+        }
+      ]
+    },
+    "school": {
+      "employers": [
+        {
+          "id": "mt-school-costa-coffee-malta",
+          "name": "Costa Coffee Malta",
+          "role": "Barista",
+          "where": "national",
+          "source": "Costa Coffee has franchised outlets across Malta",
+          "confidence": "L"
+        }
+      ]
+    }
+  },
+  "OM": {
+    "retail": {
+      "employers": [
+        {
+          "id": "om-retail-lulu-hypermarket",
+          "name": "Lulu Hypermarket",
+          "role": "Sales assistant / cashier",
+          "where": "national",
+          "source": "https://www.luluhypermarket.com",
+          "confidence": "M"
+        },
+        {
+          "id": "om-retail-carrefour-majid-al-futtaim",
+          "name": "Carrefour (Majid Al Futtaim)",
+          "role": "Cashier / store associate",
+          "where": "national",
+          "source": "https://www.carrefouroman.com",
+          "confidence": "M"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "om-between-talabat",
+          "name": "talabat",
+          "role": "Delivery rider (app)",
+          "where": "national",
+          "source": "https://www.talabat.com",
+          "confidence": "M"
+        }
+      ]
+    },
+    "school": {
+      "employers": [
+        {
+          "id": "om-school-starbucks-oman-alshaya-group",
+          "name": "Starbucks Oman (Alshaya Group)",
+          "role": "Barista",
+          "where": "national",
+          "source": "https://www.alshaya.com",
+          "confidence": "M"
+        },
+        {
+          "id": "om-school-mcdonald-s-oman",
+          "name": "McDonald's Oman",
+          "role": "Crew member",
+          "where": "national",
+          "source": "https://www.mcdonalds.com",
+          "confidence": "L"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "om-hospitality-shangri-la-barr-al-jissah",
+          "name": "Shangri-La Barr Al Jissah",
+          "role": "Hotel and restaurant staff",
+          "where": "national",
+          "source": "https://www.shangri-la.com",
+          "confidence": "M"
+        }
+      ]
+    },
+    "trades": {
+      "employers": [
+        {
+          "id": "om-trades-galfar-engineering-contracting",
+          "name": "Galfar Engineering & Contracting",
+          "role": "Construction laborer",
+          "where": "national",
+          "source": "https://www.galfar.com",
+          "confidence": "M"
+        }
+      ]
+    },
+    "armed_forces": {
+      "employers": [
+        {
+          "id": "om-armed_forces-g4s-oman",
+          "name": "G4S Oman",
+          "role": "Security guard",
+          "where": "national",
+          "source": "https://www.g4s.com",
+          "confidence": "L"
+        }
+      ]
+    }
+  },
+  "PA": {
+    "retail": {
+      "employers": [
+        {
+          "id": "pa-retail-super-99",
+          "name": "Super 99",
+          "role": "Cashier / stocker",
+          "where": "national",
+          "source": "https://www.super99.com",
+          "confidence": "M"
+        },
+        {
+          "id": "pa-retail-supermercados-rey",
+          "name": "Supermercados Rey",
+          "role": "Cashier / stocker",
+          "where": "national",
+          "source": "https://www.smrey.com",
+          "confidence": "L"
+        },
+        {
+          "id": "pa-retail-riba-smith",
+          "name": "Riba Smith",
+          "role": "Store associate",
+          "where": "national",
+          "source": "https://www.ribasmith.com",
+          "confidence": "L"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "pa-between-pedidosya",
+          "name": "PedidosYa",
+          "role": "Delivery rider (app)",
+          "where": "national",
+          "source": "https://www.pedidosya.com.pa",
+          "confidence": "M"
+        }
+      ]
+    },
+    "school": {
+      "employers": [
+        {
+          "id": "pa-school-arcos-dorados-mcdonald-s-panama",
+          "name": "Arcos Dorados (McDonald's Panama)",
+          "role": "Crew member",
+          "where": "national",
+          "source": "https://www.arcosdorados.com",
+          "confidence": "M"
+        },
+        {
+          "id": "pa-school-cafe-unido",
+          "name": "Cafe Unido",
+          "role": "Barista",
+          "where": "national",
+          "source": "https://cafeunido.com",
+          "confidence": "L"
+        }
+      ]
+    }
+  },
+  "PE": {
+    "retail": {
+      "employers": [
+        {
+          "id": "pe-retail-plaza-vea-supermercados-peruanos-inretai",
+          "name": "Plaza Vea (Supermercados Peruanos, InRetail)",
+          "role": "Cashier / stocker",
+          "where": "national",
+          "source": "https://www.plazavea.com.pe",
+          "confidence": "M"
+        },
+        {
+          "id": "pe-retail-tottus-falabella",
+          "name": "Tottus (Falabella)",
+          "role": "Cashier / stocker",
+          "where": "national",
+          "source": "https://www.tottus.com.pe",
+          "confidence": "M"
+        },
+        {
+          "id": "pe-retail-wong-and-metro-cencosud-peru",
+          "name": "Wong and Metro (Cencosud Peru)",
+          "role": "Cashier / stocker",
+          "where": "national",
+          "source": "https://www.cencosud.com",
+          "confidence": "M"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "pe-between-rappi",
+          "name": "Rappi",
+          "role": "Delivery rider (app)",
+          "where": "national",
+          "source": "https://www.rappi.com.pe",
+          "confidence": "M"
+        },
+        {
+          "id": "pe-between-pedidosya",
+          "name": "PedidosYa",
+          "role": "Delivery rider (app)",
+          "where": "national",
+          "source": "https://www.pedidosya.com.pe",
+          "confidence": "M"
+        }
+      ]
+    },
+    "school": {
+      "employers": [
+        {
+          "id": "pe-school-delosi-starbucks-kfc-pizza-hut-in-peru",
+          "name": "Delosi (Starbucks, KFC, Pizza Hut in Peru)",
+          "role": "Barista / crew member",
+          "where": "national",
+          "source": "https://www.delosi.pe",
+          "confidence": "L"
+        }
+      ]
+    },
+    "armed_forces": {
+      "employers": [
+        {
+          "id": "pe-armed_forces-liderman",
+          "name": "Liderman",
+          "role": "Security guard",
+          "where": "national",
+          "source": "https://www.liderman.com.pe",
+          "confidence": "M"
+        },
+        {
+          "id": "pe-armed_forces-prosegur-peru",
+          "name": "Prosegur Peru",
+          "role": "Security guard",
+          "where": "national",
+          "source": "https://www.prosegur.com.pe",
+          "confidence": "M"
+        }
+      ]
+    },
+    "office": {
+      "employers": [
+        {
+          "id": "pe-office-adecco-peru",
+          "name": "Adecco Peru",
+          "role": "Temporary office worker",
+          "where": "national",
+          "source": "https://www.adecco.com.pe",
+          "confidence": "L"
+        }
+      ]
+    }
+  },
+  "PF": {
+    "retail": {
+      "employers": [
+        {
+          "id": "pf-retail-carrefour-polynesie",
+          "name": "Carrefour Polynesie",
+          "role": "Cashier / store associate",
+          "where": "national",
+          "source": "https://www.carrefour.pf",
+          "confidence": "L"
+        }
+      ]
+    },
+    "school": {
+      "employers": [
+        {
+          "id": "pf-school-mcdonald-s-tahiti",
+          "name": "McDonald's Tahiti",
+          "role": "Crew member",
+          "where": "national",
+          "source": "https://www.mcdonalds.pf",
+          "confidence": "L"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "pf-hospitality-intercontinental-tahiti-resort-spa",
+          "name": "InterContinental Tahiti Resort & Spa",
+          "role": "Hotel and restaurant staff",
+          "where": "national",
+          "source": "https://www.ihg.com",
+          "confidence": "M"
+        },
+        {
+          "id": "pf-hospitality-hilton-hotel-tahiti",
+          "name": "Hilton Hotel Tahiti",
+          "role": "Hotel and restaurant staff",
+          "where": "national",
+          "source": "https://www.hilton.com",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "PG": {
+    "retail": {
+      "employers": [
+        {
+          "id": "pg-retail-brian-bell-group",
+          "name": "Brian Bell Group",
+          "role": "Store associate",
+          "where": "national",
+          "source": "https://www.brianbell.com.pg",
+          "confidence": "L"
+        },
+        {
+          "id": "pg-retail-cpl-group-stop-shop-city-pharmacy",
+          "name": "CPL Group (Stop & Shop, City Pharmacy)",
+          "role": "Cashier / store associate",
+          "where": "national",
+          "source": "https://www.cpl.com.pg",
+          "confidence": "L"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "pg-hospitality-coral-sea-hotels",
+          "name": "Coral Sea Hotels",
+          "role": "Hotel and restaurant staff",
+          "where": "national",
+          "source": "https://www.coralseahotels.com.pg",
+          "confidence": "L"
+        }
+      ]
+    },
+    "armed_forces": {
+      "employers": [
+        {
+          "id": "pg-armed_forces-g4s-papua-new-guinea",
+          "name": "G4S Papua New Guinea",
+          "role": "Security guard",
+          "where": "national",
+          "source": "https://www.g4s.com",
+          "confidence": "L"
+        }
+      ]
+    }
+  },
+  "PH": {
+    "school": {
+      "employers": [
+        {
+          "id": "ph-school-jollibee",
+          "name": "Jollibee",
+          "role": "Service crew",
+          "where": "national",
+          "source": "https://www.jollibee.com.ph",
+          "confidence": "M"
+        },
+        {
+          "id": "ph-school-starbucks-philippines-rustan-coffee-corp",
+          "name": "Starbucks Philippines (Rustan Coffee Corporation)",
+          "role": "Barista",
+          "where": "national",
+          "source": "https://www.starbucks.ph",
+          "confidence": "L"
+        }
+      ]
+    },
+    "retail": {
+      "employers": [
+        {
+          "id": "ph-retail-sm-supermarket-sm-markets",
+          "name": "SM Supermarket / SM Markets",
+          "role": "Cashier / bagger",
+          "where": "national",
+          "source": "https://www.smmarkets.ph",
+          "confidence": "M"
+        },
+        {
+          "id": "ph-retail-puregold",
+          "name": "Puregold",
+          "role": "Cashier / stocker",
+          "where": "national",
+          "source": "https://www.puregold.com.ph",
+          "confidence": "M"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "ph-between-grabfood",
+          "name": "GrabFood",
+          "role": "Delivery rider (app)",
+          "where": "national",
+          "source": "https://www.grab.com/ph/",
+          "confidence": "M"
+        },
+        {
+          "id": "ph-between-foodpanda",
+          "name": "foodpanda",
+          "role": "Delivery rider (app)",
+          "where": "national",
+          "source": "https://www.foodpanda.ph",
+          "confidence": "M"
+        }
+      ]
+    },
+    "trades": {
+      "employers": [
+        {
+          "id": "ph-trades-megawide-construction",
+          "name": "Megawide Construction",
+          "role": "Construction worker",
+          "where": "national",
+          "source": "https://www.megawide.com.ph",
+          "confidence": "L"
+        }
+      ]
+    }
+  },
+  "PK": {
+    "retail": {
+      "employers": [
+        {
+          "id": "pk-retail-imtiaz-super-market",
+          "name": "Imtiaz Super Market",
+          "role": "Cashier / sales staff",
+          "where": "national",
+          "source": "https://www.imtiaz.com.pk",
+          "confidence": "M"
+        },
+        {
+          "id": "pk-retail-carrefour-pakistan-majid-al-futtaim",
+          "name": "Carrefour Pakistan (Majid Al Futtaim)",
+          "role": "Cashier / store associate",
+          "where": "national",
+          "source": "https://www.carrefour.pk",
+          "confidence": "M"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "pk-between-foodpanda-pakistan",
+          "name": "foodpanda Pakistan",
+          "role": "Delivery rider (app)",
+          "where": "national",
+          "source": "https://www.foodpanda.pk",
+          "confidence": "M"
+        },
+        {
+          "id": "pk-between-bykea",
+          "name": "Bykea",
+          "role": "Delivery and ride rider (app)",
+          "where": "national",
+          "source": "https://www.bykea.com",
+          "confidence": "M"
+        }
+      ]
+    },
+    "school": {
+      "employers": [
+        {
+          "id": "pk-school-kfc-pakistan",
+          "name": "KFC Pakistan",
+          "role": "Crew member",
+          "where": "national",
+          "source": "https://www.kfcpakistan.com",
+          "confidence": "L"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "pk-hospitality-pearl-continental-hotels",
+          "name": "Pearl-Continental Hotels",
+          "role": "Hotel and restaurant staff",
+          "where": "national",
+          "source": "https://www.pchotels.com",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "PL": {
+    "retail": {
+      "employers": [
+        {
+          "id": "pl-retail-biedronka-jeronimo-martins-polska",
+          "name": "Biedronka (Jeronimo Martins Polska)",
+          "role": "Cashier-sales assistant",
+          "where": "national",
+          "source": "https://media.biedronka.pl/440618-pracownicy-biedronki-w-nowym-roku-z-rekordowymi-zarobkami-od-5800-zlotych-brutto",
+          "confidence": "H",
+          "hourlyFrom": 3155,
+          "hourlyTo": 3363
+        },
+        {
+          "id": "pl-retail-lidl-polska",
+          "name": "Lidl Polska",
+          "role": "Store employee",
+          "where": "national",
+          "source": "https://inwestycje.pl/biznes/lidl-polska-od-stycznia-2026-podnosi-wynagrodzenia/",
+          "confidence": "H",
+          "hourlyFrom": 3333,
+          "hourlyTo": 4018
+        },
+        {
+          "id": "pl-retail-zabka-polska",
+          "name": "Zabka Polska",
+          "role": "Store associate",
+          "where": "national",
+          "source": "https://www.zabka.pl",
+          "confidence": "M"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "pl-between-glovo",
+          "name": "Glovo",
+          "role": "Courier (app)",
+          "where": "national",
+          "source": "https://glovoapp.com",
+          "confidence": "M"
+        },
+        {
+          "id": "pl-between-wolt",
+          "name": "Wolt",
+          "role": "Courier (app)",
+          "where": "national",
+          "source": "https://wolt.com",
+          "confidence": "M"
+        },
+        {
+          "id": "pl-between-pyszne-pl",
+          "name": "Pyszne.pl",
+          "role": "Courier (app)",
+          "where": "national",
+          "source": "https://www.pyszne.pl",
+          "confidence": "M"
+        }
+      ]
+    },
+    "school": {
+      "employers": [
+        {
+          "id": "pl-school-amrest-starbucks-kfc-in-poland",
+          "name": "AmRest (Starbucks, KFC in Poland)",
+          "role": "Barista / crew member",
+          "where": "national",
+          "source": "https://www.amrest.eu",
+          "confidence": "M"
+        }
+      ]
+    },
+    "office": {
+      "employers": [
+        {
+          "id": "pl-office-randstad-polska",
+          "name": "Randstad Polska",
+          "role": "Temporary office worker",
+          "where": "national",
+          "source": "https://www.randstad.pl",
+          "confidence": "M"
+        }
+      ]
+    },
+    "armed_forces": {
+      "employers": [
+        {
+          "id": "pl-armed_forces-impel",
+          "name": "Impel",
+          "role": "Security guard",
+          "where": "national",
+          "source": "https://www.impel.pl",
+          "confidence": "M"
+        }
+      ]
+    },
+    "trades": {
+      "employers": [
+        {
+          "id": "pl-trades-budimex",
+          "name": "Budimex",
+          "role": "Construction worker",
+          "where": "national",
+          "source": "https://www.budimex.pl",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "PM": {
+    "hospitality": {
+      "employers": [
+        {
+          "id": "pm-hospitality-hotel-robert",
+          "name": "Hôtel Robert",
+          "role": "Hotel and restaurant staff",
+          "where": "national",
+          "source": "Hotel in Saint-Pierre; no published pay",
+          "confidence": "L"
+        }
+      ]
+    }
+  },
+  "PR": {
+    "retail": {
+      "employers": [
+        {
+          "id": "pr-retail-walmart-puerto-rico",
+          "name": "Walmart Puerto Rico",
+          "role": "Store associate",
+          "where": "national",
+          "source": "https://corporate.walmart.com (Walmart operates stores in Puerto Rico)",
+          "confidence": "M"
+        },
+        {
+          "id": "pr-retail-supermercados-econo",
+          "name": "Supermercados Econo",
+          "role": "Cashier, stocker",
+          "where": "national",
+          "source": "https://www.supermercadosecono.com",
+          "confidence": "M"
+        },
+        {
+          "id": "pr-retail-pueblo",
+          "name": "Pueblo",
+          "role": "Cashier, stocker",
+          "where": "national",
+          "source": "https://www.puebloinc.com",
+          "confidence": "M"
+        },
+        {
+          "id": "pr-retail-supermercados-selectos",
+          "name": "Supermercados Selectos",
+          "role": "Cashier, stocker",
+          "where": "national",
+          "source": "https://www.selectospr.com",
+          "confidence": "M"
+        }
+      ]
+    },
+    "school": {
+      "employers": [
+        {
+          "id": "pr-school-burger-king-caribbean-restaurants-llc",
+          "name": "Burger King (Caribbean Restaurants LLC)",
+          "role": "Crew member",
+          "where": "national",
+          "source": "https://www.burgerkingpr.com",
+          "confidence": "M"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "pr-between-uber-eats",
+          "name": "Uber Eats",
+          "role": "Delivery courier (independent contractor)",
+          "where": "national",
+          "source": "https://www.ubereats.com (operates in the San Juan area)",
+          "confidence": "M"
+        },
+        {
+          "id": "pr-between-doordash",
+          "name": "DoorDash",
+          "role": "Dasher (independent contractor)",
+          "where": "national",
+          "source": "https://www.doordash.com",
+          "confidence": "L"
+        }
+      ]
+    },
+    "armed_forces": {
+      "employers": [
+        {
+          "id": "pr-armed_forces-ranger-american",
+          "name": "Ranger American",
+          "role": "Security officer",
+          "where": "national",
+          "source": "https://www.rangeramerican.com",
+          "confidence": "M"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "pr-hospitality-caribe-hilton",
+          "name": "Caribe Hilton",
+          "role": "Hotel staff",
+          "where": "national",
+          "source": "https://www.caribehilton.com",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "PS": {
+    "retail": {
+      "employers": [
+        {
+          "id": "ps-retail-bravo-arab-palestinian-shopping-centers",
+          "name": "Bravo (Arab Palestinian Shopping Centers)",
+          "role": "Supermarket staff",
+          "where": "national",
+          "source": "Supermarket chain in the West Bank run by Arab Palestinian Shopping Centers (a PEX-listed company); no published pay",
+          "confidence": "L"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "ps-hospitality-movenpick-hotel-ramallah",
+          "name": "Mövenpick Hotel Ramallah",
+          "role": "Hotel staff",
+          "where": "national",
+          "source": "https://movenpick.accor.com",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "PT": {
+    "retail": {
+      "employers": [
+        {
+          "id": "pt-retail-continente-sonae-mc",
+          "name": "Continente (Sonae MC)",
+          "role": "Operador de loja",
+          "where": "national",
+          "source": "https://www.continente.pt",
+          "confidence": "H"
+        },
+        {
+          "id": "pt-retail-pingo-doce-jeronimo-martins",
+          "name": "Pingo Doce (Jerónimo Martins)",
+          "role": "Operador de loja",
+          "where": "national",
+          "source": "https://www.pingodoce.pt",
+          "confidence": "H"
+        },
+        {
+          "id": "pt-retail-lidl-portugal",
+          "name": "Lidl Portugal",
+          "role": "Operador de loja",
+          "where": "national",
+          "source": "https://www.lidl.pt",
+          "confidence": "H"
+        }
+      ]
+    },
+    "school": {
+      "employers": [
+        {
+          "id": "pt-school-mcdonald-s-portugal",
+          "name": "McDonald’s Portugal",
+          "role": "Crew member",
+          "where": "national",
+          "source": "https://www.mcdonalds.pt",
+          "confidence": "H"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "pt-between-glovo",
+          "name": "Glovo",
+          "role": "Courier",
+          "where": "national",
+          "source": "https://glovoapp.com/pt",
+          "confidence": "H"
+        },
+        {
+          "id": "pt-between-uber-eats",
+          "name": "Uber Eats",
+          "role": "Courier",
+          "where": "national",
+          "source": "https://www.ubereats.com/pt",
+          "confidence": "H"
+        },
+        {
+          "id": "pt-between-bolt-food",
+          "name": "Bolt Food",
+          "role": "Courier",
+          "where": "national",
+          "source": "https://bolt.eu/pt-pt/food/",
+          "confidence": "M"
+        }
+      ]
+    },
+    "office": {
+      "employers": [
+        {
+          "id": "pt-office-randstad-portugal",
+          "name": "Randstad Portugal",
+          "role": "Temporary worker",
+          "where": "national",
+          "source": "https://www.randstad.pt",
+          "confidence": "H"
+        }
+      ]
+    },
+    "armed_forces": {
+      "employers": [
+        {
+          "id": "pt-armed_forces-prosegur-portugal",
+          "name": "Prosegur Portugal",
+          "role": "Vigilante (security guard)",
+          "where": "national",
+          "source": "https://www.prosegur.pt",
+          "confidence": "H"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "pt-hospitality-pestana-hotel-group",
+          "name": "Pestana Hotel Group",
+          "role": "Hotel staff",
+          "where": "national",
+          "source": "https://www.pestana.com",
+          "confidence": "H"
+        }
+      ]
+    },
+    "trades": {
+      "employers": [
+        {
+          "id": "pt-trades-mota-engil",
+          "name": "Mota-Engil",
+          "role": "Construction laborer",
+          "where": "national",
+          "source": "https://www.mota-engil.com",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "PW": {
+    "retail": {
+      "employers": [
+        {
+          "id": "pw-retail-surangel-sons-company",
+          "name": "Surangel & Sons Company",
+          "role": "Store staff",
+          "where": "national",
+          "source": "Palau retail and supermarket group; no published pay",
+          "confidence": "M"
+        },
+        {
+          "id": "pw-retail-wctc-shopping-center",
+          "name": "WCTC Shopping Center",
+          "role": "Store staff",
+          "where": "national",
+          "source": "Koror department store and supermarket; no published pay",
+          "confidence": "L"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "pw-hospitality-palau-pacific-resort",
+          "name": "Palau Pacific Resort",
+          "role": "Hotel staff",
+          "where": "national",
+          "source": "https://www.palauppr.com",
+          "confidence": "M"
+        },
+        {
+          "id": "pw-hospitality-palau-royal-resort",
+          "name": "Palau Royal Resort",
+          "role": "Hotel staff",
+          "where": "national",
+          "source": "Resort in Koror; no published pay",
+          "confidence": "L"
+        }
+      ]
+    }
+  },
+  "PY": {
+    "retail": {
+      "employers": [
+        {
+          "id": "py-retail-superseis",
+          "name": "Superseis",
+          "role": "Cajero, repositor",
+          "where": "national",
+          "source": "https://www.superseis.com.py",
+          "confidence": "H"
+        },
+        {
+          "id": "py-retail-stock-supermercados",
+          "name": "Stock Supermercados",
+          "role": "Cajero, repositor",
+          "where": "national",
+          "source": "https://www.stock.com.py",
+          "confidence": "H"
+        },
+        {
+          "id": "py-retail-biggie",
+          "name": "Biggie",
+          "role": "Store attendant",
+          "where": "national",
+          "source": "https://www.biggie.com.py",
+          "confidence": "M"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "py-between-pedidosya",
+          "name": "PedidosYa",
+          "role": "Delivery rider",
+          "where": "national",
+          "source": "https://www.pedidosya.com.py",
+          "confidence": "H"
+        },
+        {
+          "id": "py-between-monchis",
+          "name": "Monchis",
+          "role": "Delivery rider",
+          "where": "national",
+          "source": "https://www.monchis.com.py",
+          "confidence": "M"
+        }
+      ]
+    },
+    "school": {
+      "employers": [
+        {
+          "id": "py-school-burger-king-paraguay",
+          "name": "Burger King Paraguay",
+          "role": "Crew member",
+          "where": "national",
+          "source": "https://www.burgerking.com.py",
+          "confidence": "M"
+        }
+      ]
+    },
+    "armed_forces": {
+      "employers": [
+        {
+          "id": "py-armed_forces-prosegur-paraguay",
+          "name": "Prosegur Paraguay",
+          "role": "Guardia de seguridad",
+          "where": "national",
+          "source": "https://www.prosegur.com.py",
+          "confidence": "M"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "py-hospitality-sheraton-asuncion",
+          "name": "Sheraton Asunción",
+          "role": "Hotel staff",
+          "where": "national",
+          "source": "https://www.marriott.com",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "QA": {
+    "retail": {
+      "employers": [
+        {
+          "id": "qa-retail-al-meera",
+          "name": "Al Meera",
+          "role": "Store staff",
+          "where": "national",
+          "source": "https://www.almeera.com.qa",
+          "confidence": "H"
+        },
+        {
+          "id": "qa-retail-lulu-hypermarket-qatar",
+          "name": "LuLu Hypermarket Qatar",
+          "role": "Store staff",
+          "where": "national",
+          "source": "https://www.luluhypermarket.com",
+          "confidence": "H"
+        },
+        {
+          "id": "qa-retail-carrefour-qatar-majid-al-futtaim",
+          "name": "Carrefour Qatar (Majid Al Futtaim)",
+          "role": "Store staff",
+          "where": "national",
+          "source": "https://www.carrefourqatar.com",
+          "confidence": "H"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "qa-between-talabat",
+          "name": "Talabat",
+          "role": "Rider",
+          "where": "national",
+          "source": "https://www.talabat.com/qatar",
+          "confidence": "H"
+        },
+        {
+          "id": "qa-between-snoonu",
+          "name": "Snoonu",
+          "role": "Rider",
+          "where": "national",
+          "source": "https://snoonu.com",
+          "confidence": "H"
+        }
+      ]
+    },
+    "school": {
+      "employers": [
+        {
+          "id": "qa-school-starbucks-qatar-alshaya",
+          "name": "Starbucks Qatar (Alshaya)",
+          "role": "Barista",
+          "where": "national",
+          "source": "https://www.alshaya.com",
+          "confidence": "M"
+        }
+      ]
+    },
+    "armed_forces": {
+      "employers": [
+        {
+          "id": "qa-armed_forces-g4s-qatar",
+          "name": "G4S Qatar",
+          "role": "Security guard",
+          "where": "national",
+          "source": "https://www.g4s.com",
+          "confidence": "M"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "qa-hospitality-katara-hospitality",
+          "name": "Katara Hospitality",
+          "role": "Hotel staff",
+          "where": "national",
+          "source": "https://www.katarahospitality.com",
+          "confidence": "H"
+        }
+      ]
+    },
+    "trades": {
+      "employers": [
+        {
+          "id": "qa-trades-urbacon-trading-contracting",
+          "name": "UrbaCon Trading & Contracting",
+          "role": "Construction laborer",
+          "where": "national",
+          "source": "https://www.urbacon.net",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "RE": {
+    "retail": {
+      "employers": [
+        {
+          "id": "re-retail-e-leclerc-reunion",
+          "name": "E.Leclerc Réunion",
+          "role": "Employé libre-service, caissier",
+          "where": "national",
+          "source": "https://www.e.leclerc",
+          "confidence": "M"
+        },
+        {
+          "id": "re-retail-carrefour-reunion-gbh",
+          "name": "Carrefour Réunion (GBH)",
+          "role": "Employé libre-service, caissier",
+          "where": "national",
+          "source": "https://www.carrefour.re",
+          "confidence": "M"
+        },
+        {
+          "id": "re-retail-super-u-hyper-u-reunion",
+          "name": "Super U / Hyper U Réunion",
+          "role": "Employé libre-service",
+          "where": "national",
+          "source": "https://www.magasins-u.com",
+          "confidence": "M"
+        }
+      ]
+    },
+    "school": {
+      "employers": [
+        {
+          "id": "re-school-mcdonald-s-reunion",
+          "name": "McDonald’s Réunion",
+          "role": "Équipier",
+          "where": "national",
+          "source": "https://www.mcdonalds.fr",
+          "confidence": "M"
+        }
+      ]
+    },
+    "office": {
+      "employers": [
+        {
+          "id": "re-office-manpower-reunion",
+          "name": "Manpower Réunion",
+          "role": "Intérimaire",
+          "where": "national",
+          "source": "https://www.manpower.fr",
+          "confidence": "M"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "re-between-uber-eats",
+          "name": "Uber Eats",
+          "role": "Coursier (auto-entrepreneur)",
+          "where": "national",
+          "source": "https://www.ubereats.com/fr",
+          "confidence": "L"
+        }
+      ]
+    },
+    "armed_forces": {
+      "employers": [
+        {
+          "id": "re-armed_forces-securitas-france",
+          "name": "Securitas France",
+          "role": "Agent de sécurité",
+          "where": "national",
+          "source": "https://www.securitas.fr",
+          "confidence": "L"
+        }
+      ]
+    },
+    "care": {
+      "employers": [
+        {
+          "id": "re-care-admr",
+          "name": "ADMR",
+          "role": "Aide à domicile",
+          "where": "national",
+          "source": "https://www.admr.org",
+          "confidence": "L"
+        }
+      ]
+    }
+  },
+  "RO": {
+    "retail": {
+      "employers": [
+        {
+          "id": "ro-retail-kaufland-romania",
+          "name": "Kaufland Romania",
+          "role": "store associate",
+          "where": "national",
+          "source": "https://cariere.kaufland.ro/",
+          "confidence": "H"
+        },
+        {
+          "id": "ro-retail-lidl-romania",
+          "name": "Lidl Romania",
+          "role": "cashier / store associate",
+          "where": "national",
+          "source": "https://cariere.lidl.ro/",
+          "confidence": "H"
+        },
+        {
+          "id": "ro-retail-profi",
+          "name": "Profi",
+          "role": "store associate",
+          "where": "national",
+          "source": "https://www.profi.ro/cariere/",
+          "confidence": "H"
+        },
+        {
+          "id": "ro-retail-mega-image",
+          "name": "Mega Image",
+          "role": "store associate",
+          "where": "national",
+          "source": "https://www.mega-image.ro/cariere",
+          "confidence": "H"
+        },
+        {
+          "id": "ro-retail-dedeman",
+          "name": "Dedeman",
+          "role": "sales floor associate",
+          "where": "national",
+          "source": "https://www.dedeman.ro/ro/cariere",
+          "confidence": "M"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "ro-hospitality-mcdonald-s-romania-premier-restaurants-r",
+          "name": "McDonald's Romania (Premier Restaurants Romania)",
+          "role": "crew member",
+          "where": "national",
+          "source": "https://www.mcdonalds.ro/cariere",
+          "confidence": "H"
+        },
+        {
+          "id": "ro-hospitality-kfc-romania-sphera-franchise-group",
+          "name": "KFC Romania (Sphera Franchise Group)",
+          "role": "restaurant team member",
+          "where": "national",
+          "source": "https://www.spheragroup.com/",
+          "confidence": "M"
+        }
+      ]
+    },
+    "school": {
+      "employers": [
+        {
+          "id": "ro-school-5-to-go",
+          "name": "5 to go",
+          "role": "barista",
+          "where": "national",
+          "source": "https://5togo.ro/",
+          "confidence": "M"
+        },
+        {
+          "id": "ro-school-starbucks-romania",
+          "name": "Starbucks Romania",
+          "role": "barista",
+          "where": "national",
+          "source": "https://www.starbucks.ro/",
+          "confidence": "M"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "ro-between-glovo-bolt-food-wolt",
+          "name": "Glovo / Bolt Food / Wolt",
+          "role": "courier (app delivery)",
+          "where": "national",
+          "source": "https://glovoapp.com/ro/ ; https://bolt.eu/ro-ro/food/ ; https://wolt.com/ro/rou",
+          "confidence": "M"
+        }
+      ]
+    },
+    "office": {
+      "employers": [
+        {
+          "id": "ro-office-adecco-romania-randstad-romania",
+          "name": "Adecco Romania / Randstad Romania",
+          "role": "temporary office worker",
+          "where": "national",
+          "source": "https://www.adecco.ro/ ; https://www.randstad.ro/",
+          "confidence": "M"
+        }
+      ]
+    },
+    "sport": {
+      "employers": [
+        {
+          "id": "ro-sport-world-class-romania",
+          "name": "World Class Romania",
+          "role": "gym front desk / trainer",
+          "where": "national",
+          "source": "https://www.worldclass.ro/",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "RS": {
+    "retail": {
+      "employers": [
+        {
+          "id": "rs-retail-maxi-delhaize-serbia",
+          "name": "Maxi (Delhaize Serbia)",
+          "role": "cashier / store associate",
+          "where": "national",
+          "source": "https://www.maxi.rs/",
+          "confidence": "H"
+        },
+        {
+          "id": "rs-retail-lidl-srbija",
+          "name": "Lidl Srbija",
+          "role": "store associate",
+          "where": "national",
+          "source": "https://karijera.lidl.rs/",
+          "confidence": "H"
+        },
+        {
+          "id": "rs-retail-univerexport",
+          "name": "Univerexport",
+          "role": "store associate",
+          "where": "national",
+          "source": "https://www.univerexport.rs/",
+          "confidence": "M"
+        },
+        {
+          "id": "rs-retail-idea-mercator-s",
+          "name": "Idea (Mercator-S)",
+          "role": "store associate",
+          "where": "national",
+          "source": "https://www.idea.rs/",
+          "confidence": "M"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "rs-hospitality-mcdonald-s-srbija",
+          "name": "McDonald's Srbija",
+          "role": "crew member",
+          "where": "national",
+          "source": "https://www.mcdonalds.rs/",
+          "confidence": "M"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "rs-between-glovo-wolt",
+          "name": "Glovo / Wolt",
+          "role": "courier (app delivery)",
+          "where": "national",
+          "source": "https://glovoapp.com/rs/ ; https://wolt.com/sr/srb",
+          "confidence": "M"
+        }
+      ]
+    },
+    "armed_forces": {
+      "employers": [
+        {
+          "id": "rs-armed_forces-securitas-srbija",
+          "name": "Securitas Srbija",
+          "role": "security guard",
+          "where": "national",
+          "source": "https://www.securitas.rs/",
+          "confidence": "M"
+        }
+      ]
+    },
+    "office": {
+      "employers": [
+        {
+          "id": "rs-office-trenkwalder-srbija",
+          "name": "Trenkwalder Srbija",
+          "role": "temporary / leased worker",
+          "where": "national",
+          "source": "https://www.trenkwalder.com/rs",
+          "confidence": "M"
+        }
+      ]
+    },
+    "trades": {
+      "employers": [
+        {
+          "id": "rs-trades-energoprojekt",
+          "name": "Energoprojekt",
+          "role": "construction worker",
+          "where": "national",
+          "source": "https://www.energoprojekt.rs/",
+          "confidence": "L"
+        }
+      ]
+    }
+  },
+  "RU": {
+    "retail": {
+      "employers": [
+        {
+          "id": "ru-retail-pyaterochka-x5-group",
+          "name": "Pyaterochka (X5 Group)",
+          "role": "cashier / store associate",
+          "where": "national",
+          "source": "https://rabota.x5.ru/",
+          "confidence": "H"
+        },
+        {
+          "id": "ru-retail-perekrestok-x5-group",
+          "name": "Perekrestok (X5 Group)",
+          "role": "store associate",
+          "where": "national",
+          "source": "https://rabota.x5.ru/",
+          "confidence": "H"
+        },
+        {
+          "id": "ru-retail-magnit",
+          "name": "Magnit",
+          "role": "store associate",
+          "where": "national",
+          "source": "https://rabota.magnit.ru/",
+          "confidence": "H"
+        },
+        {
+          "id": "ru-retail-lenta",
+          "name": "Lenta",
+          "role": "store associate",
+          "where": "national",
+          "source": "https://lenta.com/",
+          "confidence": "M"
+        },
+        {
+          "id": "ru-retail-wildberries-ozon",
+          "name": "Wildberries / Ozon",
+          "role": "warehouse and pickup-point worker",
+          "where": "national",
+          "source": "https://www.wildberries.ru/ ; https://www.ozon.ru/",
+          "confidence": "M"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "ru-hospitality-vkusno-i-tochka",
+          "name": "Vkusno i tochka",
+          "role": "crew member",
+          "where": "national",
+          "source": "https://vkusnoitochka.ru/",
+          "confidence": "H"
+        },
+        {
+          "id": "ru-hospitality-rostic-s",
+          "name": "Rostic's",
+          "role": "crew member",
+          "where": "national",
+          "source": "https://rostics.ru/",
+          "confidence": "M"
+        }
+      ]
+    },
+    "school": {
+      "employers": [
+        {
+          "id": "ru-school-cofix",
+          "name": "Cofix",
+          "role": "barista",
+          "where": "national",
+          "source": "https://cofix.global/",
+          "confidence": "M"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "ru-between-yandex-eda-samokat",
+          "name": "Yandex Eda / Samokat",
+          "role": "courier (app delivery)",
+          "where": "national",
+          "source": "https://eda.yandex.ru/ ; https://samokat.ru/",
+          "confidence": "M"
+        }
+      ]
+    },
+    "trades": {
+      "employers": [
+        {
+          "id": "ru-trades-pik-group",
+          "name": "PIK Group",
+          "role": "construction worker",
+          "where": "national",
+          "source": "https://www.pik.ru/",
+          "confidence": "L"
+        }
+      ]
+    },
+    "sport": {
+      "employers": [
+        {
+          "id": "ru-sport-ddx-fitness-world-class",
+          "name": "DDX Fitness / World Class",
+          "role": "gym staff / trainer",
+          "where": "national",
+          "source": "https://www.ddxfitness.ru/ ; https://www.worldclass.ru/",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "RW": {
+    "retail": {
+      "employers": [
+        {
+          "id": "rw-retail-simba-supermarket",
+          "name": "Simba Supermarket",
+          "role": "cashier / store associate",
+          "where": "national",
+          "source": "https://simbasupermarket.rw/",
+          "confidence": "M"
+        }
+      ]
+    },
+    "school": {
+      "employers": [
+        {
+          "id": "rw-school-bourbon-coffee",
+          "name": "Bourbon Coffee",
+          "role": "barista",
+          "where": "national",
+          "source": "https://bourboncoffee.rw/",
+          "confidence": "M"
+        },
+        {
+          "id": "rw-school-java-house-rwanda",
+          "name": "Java House Rwanda",
+          "role": "barista / waiter",
+          "where": "national",
+          "source": "https://javahouseafrica.com/",
+          "confidence": "M"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "rw-hospitality-kigali-marriott-hotel",
+          "name": "Kigali Marriott Hotel",
+          "role": "hotel staff",
+          "where": "national",
+          "source": "https://www.marriott.com/",
+          "confidence": "M"
+        },
+        {
+          "id": "rw-hospitality-radisson-blu-hotel-convention-centre-kig",
+          "name": "Radisson Blu Hotel & Convention Centre Kigali",
+          "role": "hotel staff",
+          "where": "national",
+          "source": "https://www.radissonhotels.com/",
+          "confidence": "M"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "rw-between-vuba-vuba",
+          "name": "Vuba Vuba",
+          "role": "courier (app delivery)",
+          "where": "national",
+          "source": "https://vubavuba.rw/",
+          "confidence": "L"
+        }
+      ]
+    },
+    "armed_forces": {
+      "employers": [
+        {
+          "id": "rw-armed_forces-intersec-security",
+          "name": "Intersec Security",
+          "role": "security guard",
+          "where": "national",
+          "source": "https://intersec.rw/",
+          "confidence": "L"
+        }
+      ]
+    },
+    "trades": {
+      "employers": [
+        {
+          "id": "rw-trades-npd-ltd",
+          "name": "NPD Ltd",
+          "role": "construction labourer",
+          "where": "national",
+          "source": "https://npd.rw/",
+          "confidence": "L"
+        }
+      ]
+    }
+  },
+  "SA": {
+    "retail": {
+      "employers": [
+        {
+          "id": "sa-retail-panda-retail-company",
+          "name": "Panda Retail Company",
+          "role": "cashier / store associate",
+          "where": "national",
+          "source": "https://www.panda.com.sa/",
+          "confidence": "H"
+        },
+        {
+          "id": "sa-retail-abdullah-al-othaim-markets",
+          "name": "Abdullah Al-Othaim Markets",
+          "role": "store associate",
+          "where": "national",
+          "source": "https://www.othaimmarkets.com/",
+          "confidence": "H"
+        },
+        {
+          "id": "sa-retail-bindawood-holding-bindawood-danube",
+          "name": "BinDawood Holding (BinDawood, Danube)",
+          "role": "store associate",
+          "where": "national",
+          "source": "https://www.bindawoodholding.com/",
+          "confidence": "M"
+        },
+        {
+          "id": "sa-retail-jarir-bookstore",
+          "name": "Jarir Bookstore",
+          "role": "sales associate",
+          "where": "national",
+          "source": "https://www.jarir.com/",
+          "confidence": "M"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "sa-hospitality-al-baik",
+          "name": "Al Baik",
+          "role": "restaurant crew",
+          "where": "national",
+          "source": "https://www.albaik.com/",
+          "confidence": "M"
+        },
+        {
+          "id": "sa-hospitality-herfy-food-services",
+          "name": "Herfy Food Services",
+          "role": "restaurant crew",
+          "where": "national",
+          "source": "https://www.herfy.com/",
+          "confidence": "M"
+        }
+      ]
+    },
+    "school": {
+      "employers": [
+        {
+          "id": "sa-school-barn-s",
+          "name": "Barn's",
+          "role": "barista",
+          "where": "national",
+          "source": "https://barns.com.sa/",
+          "confidence": "L"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "sa-between-hungerstation-jahez-keeta",
+          "name": "HungerStation / Jahez / Keeta",
+          "role": "courier (app delivery)",
+          "where": "national",
+          "source": "https://hungerstation.com/ ; https://www.jahez.net/",
+          "confidence": "M"
+        }
+      ]
+    },
+    "office": {
+      "employers": [
+        {
+          "id": "sa-office-saudi-manpower-solutions-smasco",
+          "name": "Saudi Manpower Solutions (SMASCO)",
+          "role": "outsourced / temporary worker",
+          "where": "national",
+          "source": "https://www.smasco.com/",
+          "confidence": "M"
+        }
+      ]
+    },
+    "sport": {
+      "employers": [
+        {
+          "id": "sa-sport-leejam-sports-fitness-time",
+          "name": "Leejam Sports (Fitness Time)",
+          "role": "gym staff / trainer",
+          "where": "national",
+          "source": "https://www.leejam.com.sa/",
+          "confidence": "M"
+        }
+      ]
+    },
+    "trades": {
+      "employers": [
+        {
+          "id": "sa-trades-nesma-partners",
+          "name": "Nesma & Partners",
+          "role": "construction worker",
+          "where": "national",
+          "source": "https://www.nesma.com/",
+          "confidence": "L"
+        }
+      ]
+    }
+  },
+  "SB": {
+    "trades": {
+      "employers": [
+        {
+          "id": "sb-trades-soltuna",
+          "name": "SolTuna",
+          "role": "cannery / processing worker",
+          "where": "national",
+          "source": "https://www.soltuna.com.sb/",
+          "confidence": "M"
+        }
+      ]
+    },
+    "retail": {
+      "employers": [
+        {
+          "id": "sb-retail-bulk-shop",
+          "name": "Bulk Shop",
+          "role": "store associate",
+          "where": "national",
+          "source": "https://www.bulkshop.com.sb/",
+          "confidence": "L"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "sb-hospitality-heritage-park-hotel",
+          "name": "Heritage Park Hotel",
+          "role": "hotel staff",
+          "where": "national",
+          "source": "https://www.heritageparkhotel.com.sb/",
+          "confidence": "M"
+        },
+        {
+          "id": "sb-hospitality-coral-sea-resort-casino",
+          "name": "Coral Sea Resort & Casino",
+          "role": "hotel / bar staff",
+          "where": "national",
+          "source": "https://www.coralsearesort.com/",
+          "confidence": "M"
+        },
+        {
+          "id": "sb-hospitality-honiara-hotel",
+          "name": "Honiara Hotel",
+          "role": "hotel staff",
+          "where": "national",
+          "source": "https://www.honiarahotel.com.sb/",
+          "confidence": "L"
+        }
+      ]
+    }
+  },
+  "SC": {
+    "retail": {
+      "employers": [
+        {
+          "id": "sc-retail-seychelles-trading-company-stc",
+          "name": "Seychelles Trading Company (STC)",
+          "role": "store associate",
+          "where": "national",
+          "source": "https://www.stcseychelles.com/",
+          "confidence": "M"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "sc-hospitality-kempinski-seychelles-resort",
+          "name": "Kempinski Seychelles Resort",
+          "role": "hotel staff",
+          "where": "national",
+          "source": "https://www.kempinski.com/",
+          "confidence": "M"
+        },
+        {
+          "id": "sc-hospitality-constance-ephelia",
+          "name": "Constance Ephelia",
+          "role": "hotel staff",
+          "where": "national",
+          "source": "https://www.constancehotels.com/",
+          "confidence": "M"
+        },
+        {
+          "id": "sc-hospitality-hilton-seychelles-labriz-northolme-allam",
+          "name": "Hilton Seychelles (Labriz, Northolme, Allamanda)",
+          "role": "hotel staff",
+          "where": "national",
+          "source": "https://www.hilton.com/",
+          "confidence": "M"
+        },
+        {
+          "id": "sc-hospitality-four-seasons-resort-seychelles",
+          "name": "Four Seasons Resort Seychelles",
+          "role": "hotel staff",
+          "where": "national",
+          "source": "https://www.fourseasons.com/seychelles/",
+          "confidence": "M"
+        },
+        {
+          "id": "sc-hospitality-berjaya-beau-vallon-bay-resort",
+          "name": "Berjaya Beau Vallon Bay Resort",
+          "role": "hotel / bar staff",
+          "where": "national",
+          "source": "https://www.berjayahotel.com/",
+          "confidence": "L"
+        }
+      ]
+    }
+  },
+  "SD": {
+    "trades": {
+      "employers": [
+        {
+          "id": "sd-trades-dal-group",
+          "name": "DAL Group",
+          "role": "factory / food processing worker",
+          "where": "national",
+          "source": "https://www.dalgroup.com/",
+          "confidence": "L"
+        }
+      ]
+    },
+    "retail": {
+      "employers": [
+        {
+          "id": "sd-retail-zain-sudan",
+          "name": "Zain Sudan",
+          "role": "sales / shop staff",
+          "where": "national",
+          "source": "https://www.sd.zain.com/",
+          "confidence": "L"
+        }
+      ]
+    }
+  },
+  "SE": {
+    "retail": {
+      "employers": [
+        {
+          "id": "se-retail-ica-ica-handlarna-stores",
+          "name": "ICA (ICA-handlarna stores)",
+          "role": "Store assistant (butiksmedarbetare)",
+          "where": "national",
+          "source": "https://www.ica.se/",
+          "confidence": "H"
+        },
+        {
+          "id": "se-retail-coop-sverige",
+          "name": "Coop Sverige",
+          "role": "Store assistant",
+          "where": "national",
+          "source": "https://www.coop.se/",
+          "confidence": "H"
+        },
+        {
+          "id": "se-retail-axfood-willys-hemkop",
+          "name": "Axfood (Willys, Hemköp)",
+          "role": "Store assistant",
+          "where": "national",
+          "source": "https://www.axfood.se/",
+          "confidence": "H"
+        }
+      ]
+    },
+    "school": {
+      "employers": [
+        {
+          "id": "se-school-espresso-house",
+          "name": "Espresso House",
+          "role": "Barista",
+          "where": "national",
+          "source": "https://espressohouse.com/",
+          "confidence": "H"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "se-hospitality-max-burgers-max-hamburgerrestauranger",
+          "name": "Max Burgers (Max Hamburgerrestauranger)",
+          "role": "Restaurant crew",
+          "where": "national",
+          "source": "https://www.max.se/",
+          "confidence": "H"
+        },
+        {
+          "id": "se-hospitality-scandic-hotels",
+          "name": "Scandic Hotels",
+          "role": "Hotel and restaurant staff",
+          "where": "national",
+          "source": "https://www.scandichotels.se/ ; rate: https://www.hrf.net/din-lon/ (Gröna riksavtalet wage group 2 from 2026-04-01; Scandic is a Visita member bound by it)",
+          "confidence": "M",
+          "hourlyFrom": 15364
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "se-between-foodora",
+          "name": "Foodora",
+          "role": "Courier",
+          "where": "national",
+          "source": "https://www.foodora.se/",
+          "confidence": "H"
+        },
+        {
+          "id": "se-between-wolt",
+          "name": "Wolt",
+          "role": "Courier partner",
+          "where": "national",
+          "source": "https://wolt.com/sv/swe",
+          "confidence": "H"
+        }
+      ]
+    },
+    "armed_forces": {
+      "employers": [
+        {
+          "id": "se-armed_forces-securitas-sverige",
+          "name": "Securitas Sverige",
+          "role": "Security officer (väktare)",
+          "where": "national",
+          "source": "https://www.securitas.se/",
+          "confidence": "H"
+        }
+      ]
+    },
+    "office": {
+      "employers": [
+        {
+          "id": "se-office-academic-work",
+          "name": "Academic Work",
+          "role": "Temporary office consultant",
+          "where": "national",
+          "source": "https://www.academicwork.se/",
+          "confidence": "H"
+        }
+      ]
+    },
+    "trades": {
+      "employers": [
+        {
+          "id": "se-trades-peab",
+          "name": "Peab",
+          "role": "Construction worker",
+          "where": "national",
+          "source": "https://www.peab.se/",
+          "confidence": "H"
+        }
+      ]
+    },
+    "care": {
+      "employers": [
+        {
+          "id": "se-care-attendo",
+          "name": "Attendo",
+          "role": "Care assistant (undersköterska/vårdbiträde)",
+          "where": "national",
+          "source": "https://www.attendo.se/",
+          "confidence": "H"
+        }
+      ]
+    },
+    "sport": {
+      "employers": [
+        {
+          "id": "se-sport-sats",
+          "name": "SATS",
+          "role": "Gym staff and instructors",
+          "where": "national",
+          "source": "https://www.sats.se/",
+          "confidence": "H"
+        }
+      ]
+    }
+  },
+  "SG": {
+    "retail": {
+      "employers": [
+        {
+          "id": "sg-retail-ntuc-fairprice",
+          "name": "NTUC FairPrice",
+          "role": "Retail assistant / cashier",
+          "where": "national",
+          "source": "https://www.fairprice.com.sg/",
+          "confidence": "H"
+        },
+        {
+          "id": "sg-retail-sheng-siong",
+          "name": "Sheng Siong",
+          "role": "Retail assistant",
+          "where": "national",
+          "source": "https://shengsiong.com.sg/",
+          "confidence": "H"
+        }
+      ]
+    },
+    "school": {
+      "employers": [
+        {
+          "id": "sg-school-ya-kun-kaya-toast",
+          "name": "Ya Kun Kaya Toast",
+          "role": "Counter crew",
+          "where": "national",
+          "source": "https://yakun.com/",
+          "confidence": "H"
+        },
+        {
+          "id": "sg-school-toast-box-breadtalk-group",
+          "name": "Toast Box (BreadTalk Group)",
+          "role": "Counter crew",
+          "where": "national",
+          "source": "https://www.toastbox.com.sg/",
+          "confidence": "H"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "sg-hospitality-mcdonald-s-singapore",
+          "name": "McDonald's Singapore",
+          "role": "Restaurant crew",
+          "where": "national",
+          "source": "https://www.mcdonalds.com.sg/",
+          "confidence": "H"
+        },
+        {
+          "id": "sg-hospitality-marina-bay-sands",
+          "name": "Marina Bay Sands",
+          "role": "Hotel and F&B staff",
+          "where": "national",
+          "source": "https://www.marinabaysands.com/",
+          "confidence": "H"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "sg-between-grabfood",
+          "name": "GrabFood",
+          "role": "Delivery partner",
+          "where": "national",
+          "source": "https://www.grab.com/sg/",
+          "confidence": "H"
+        },
+        {
+          "id": "sg-between-foodpanda",
+          "name": "foodpanda",
+          "role": "Delivery rider",
+          "where": "national",
+          "source": "https://www.foodpanda.sg/",
+          "confidence": "H"
+        }
+      ]
+    },
+    "armed_forces": {
+      "employers": [
+        {
+          "id": "sg-armed_forces-certis",
+          "name": "Certis",
+          "role": "Security officer",
+          "where": "national",
+          "source": "https://www.certisgroup.com/",
+          "confidence": "H"
+        }
+      ]
+    },
+    "office": {
+      "employers": [
+        {
+          "id": "sg-office-recruit-express",
+          "name": "Recruit Express",
+          "role": "Temporary office staff",
+          "where": "national",
+          "source": "https://www.recruitexpress.com.sg/",
+          "confidence": "M"
+        }
+      ]
+    },
+    "care": {
+      "employers": [
+        {
+          "id": "sg-care-ntuc-health",
+          "name": "NTUC Health",
+          "role": "Care associate / home care",
+          "where": "national",
+          "source": "https://ntuchealth.sg/",
+          "confidence": "H"
+        }
+      ]
+    },
+    "sport": {
+      "employers": [
+        {
+          "id": "sg-sport-anytime-fitness-singapore",
+          "name": "Anytime Fitness Singapore",
+          "role": "Gym staff / trainer",
+          "where": "national",
+          "source": "https://www.anytimefitness.sg/",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "SH": {
+    "retail": {
+      "employers": [
+        {
+          "id": "sh-retail-solomon-company-st-helena-plc",
+          "name": "Solomon & Company (St Helena) plc",
+          "role": "Shop assistant",
+          "where": "national",
+          "source": "https://www.solomons.co.sh/",
+          "confidence": "M"
+        },
+        {
+          "id": "sh-retail-thorpe-s-w-a-thorpe-sons",
+          "name": "Thorpe's (W.A. Thorpe & Sons)",
+          "role": "Shop assistant",
+          "where": "national",
+          "source": "Thorpe's stores, Jamestown",
+          "confidence": "L"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "sh-hospitality-mantis-st-helena",
+          "name": "Mantis St Helena",
+          "role": "Hotel staff",
+          "where": "national",
+          "source": "https://www.mantiscollection.com/hotels/mantis-st-helena/",
+          "confidence": "M"
+        }
+      ]
+    },
+    "care": {
+      "employers": [
+        {
+          "id": "sh-care-st-helena-government-health-and-social-c",
+          "name": "St Helena Government (Health and Social Care)",
+          "role": "Care assistant",
+          "where": "national",
+          "source": "https://www.sainthelena.gov.sh/st-helena/government/government-vacancies/",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "SI": {
+    "retail": {
+      "employers": [
+        {
+          "id": "si-retail-mercator",
+          "name": "Mercator",
+          "role": "Store assistant (prodajalec)",
+          "where": "national",
+          "source": "https://www.mercator.si/",
+          "confidence": "H"
+        },
+        {
+          "id": "si-retail-spar-slovenija",
+          "name": "SPAR Slovenija",
+          "role": "Store assistant",
+          "where": "national",
+          "source": "https://www.spar.si/",
+          "confidence": "H"
+        },
+        {
+          "id": "si-retail-lidl-slovenija",
+          "name": "Lidl Slovenija",
+          "role": "Store assistant",
+          "where": "national",
+          "source": "https://www.lidl.si/",
+          "confidence": "H"
+        },
+        {
+          "id": "si-retail-hofer",
+          "name": "Hofer",
+          "role": "Store assistant",
+          "where": "national",
+          "source": "https://www.hofer.si/",
+          "confidence": "H"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "si-hospitality-mcdonald-s-slovenija",
+          "name": "McDonald's Slovenija",
+          "role": "Restaurant crew",
+          "where": "national",
+          "source": "https://www.mcdonalds.si/",
+          "confidence": "H"
+        },
+        {
+          "id": "si-hospitality-sava-hotels-resorts",
+          "name": "Sava Hotels & Resorts",
+          "role": "Hotel staff",
+          "where": "national",
+          "source": "https://www.sava-hotels-resorts.com/",
+          "confidence": "M"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "si-between-wolt",
+          "name": "Wolt",
+          "role": "Courier partner",
+          "where": "national",
+          "source": "https://wolt.com/sl/svn",
+          "confidence": "H"
+        },
+        {
+          "id": "si-between-glovo",
+          "name": "Glovo",
+          "role": "Courier",
+          "where": "national",
+          "source": "https://glovoapp.com/si/",
+          "confidence": "M"
+        }
+      ]
+    },
+    "office": {
+      "employers": [
+        {
+          "id": "si-office-adecco-slovenija",
+          "name": "Adecco Slovenija",
+          "role": "Temporary office worker",
+          "where": "national",
+          "source": "https://www.adecco.si/",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "SJ": {
+    "retail": {
+      "employers": [
+        {
+          "id": "sj-retail-coop-svalbard-svalbardbutikken",
+          "name": "Coop Svalbard (Svalbardbutikken)",
+          "role": "Store assistant",
+          "where": "national",
+          "source": "https://coop.no/",
+          "confidence": "M"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "sj-hospitality-radisson-blu-polar-hotel-spitsbergen",
+          "name": "Radisson Blu Polar Hotel Spitsbergen",
+          "role": "Hotel staff",
+          "where": "national",
+          "source": "https://www.radissonhotels.com/",
+          "confidence": "M"
+        },
+        {
+          "id": "sj-hospitality-hurtigruten-svalbard-funken-lodge-radiss",
+          "name": "Hurtigruten Svalbard (Funken Lodge, Radisson and others)",
+          "role": "Hotel and guide staff",
+          "where": "national",
+          "source": "https://www.hurtigrutensvalbard.com/",
+          "confidence": "L"
+        }
+      ]
+    },
+    "care": {
+      "employers": [
+        {
+          "id": "sj-care-longyearbyen-lokalstyre",
+          "name": "Longyearbyen lokalstyre",
+          "role": "Municipal care and service staff",
+          "where": "national",
+          "source": "https://www.lokalstyre.no/",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "SK": {
+    "retail": {
+      "employers": [
+        {
+          "id": "sk-retail-tesco-stores-sr",
+          "name": "Tesco Stores SR",
+          "role": "Store assistant",
+          "where": "national",
+          "source": "https://www.tesco.sk/",
+          "confidence": "H"
+        },
+        {
+          "id": "sk-retail-kaufland-slovenska-republika",
+          "name": "Kaufland Slovenská republika",
+          "role": "Store assistant",
+          "where": "national",
+          "source": "https://www.kaufland.sk/",
+          "confidence": "H"
+        },
+        {
+          "id": "sk-retail-lidl-slovenska-republika",
+          "name": "Lidl Slovenská republika",
+          "role": "Store assistant",
+          "where": "national",
+          "source": "https://www.lidl.sk/",
+          "confidence": "H"
+        },
+        {
+          "id": "sk-retail-billa",
+          "name": "Billa",
+          "role": "Store assistant",
+          "where": "national",
+          "source": "https://www.billa.sk/",
+          "confidence": "H"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "sk-hospitality-mcdonald-s-slovakia",
+          "name": "McDonald's Slovakia",
+          "role": "Restaurant crew",
+          "where": "national",
+          "source": "https://www.mcdonalds.sk/",
+          "confidence": "H"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "sk-between-wolt",
+          "name": "Wolt",
+          "role": "Courier partner",
+          "where": "national",
+          "source": "https://wolt.com/sk/svk",
+          "confidence": "H"
+        },
+        {
+          "id": "sk-between-bolt-food",
+          "name": "Bolt Food",
+          "role": "Courier",
+          "where": "national",
+          "source": "https://bolt.eu/sk-sk/food/",
+          "confidence": "M"
+        }
+      ]
+    },
+    "office": {
+      "employers": [
+        {
+          "id": "sk-office-adecco-slovakia",
+          "name": "Adecco Slovakia",
+          "role": "Temporary office worker",
+          "where": "national",
+          "source": "https://www.adecco.sk/",
+          "confidence": "M"
+        }
+      ]
+    },
+    "trades": {
+      "employers": [
+        {
+          "id": "sk-trades-strabag-slovakia",
+          "name": "Strabag (Slovakia)",
+          "role": "Construction worker",
+          "where": "national",
+          "source": "https://www.strabag.sk/",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "SL": {
+    "hospitality": {
+      "employers": [
+        {
+          "id": "sl-hospitality-radisson-blu-mammy-yoko-hotel-freetown",
+          "name": "Radisson Blu Mammy Yoko Hotel, Freetown",
+          "role": "Hotel staff",
+          "where": "national",
+          "source": "https://www.radissonhotels.com/",
+          "confidence": "M"
+        }
+      ]
+    },
+    "retail": {
+      "employers": [
+        {
+          "id": "sl-retail-orange-sierra-leone",
+          "name": "Orange Sierra Leone",
+          "role": "Shop and sales agent",
+          "where": "national",
+          "source": "https://www.orange.sl/",
+          "confidence": "L"
+        }
+      ]
+    }
+  },
+  "SM": {
+    "retail": {
+      "employers": [
+        {
+          "id": "sm-retail-titancoop",
+          "name": "Titancoop",
+          "role": "Supermarket assistant",
+          "where": "national",
+          "source": "https://www.titancoop.sm/",
+          "confidence": "M"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "sm-hospitality-grand-hotel-san-marino",
+          "name": "Grand Hotel San Marino",
+          "role": "Hotel staff",
+          "where": "national",
+          "source": "https://www.grandhotel.sm/",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "SN": {
+    "retail": {
+      "employers": [
+        {
+          "id": "sn-retail-auchan-senegal",
+          "name": "Auchan Senegal",
+          "role": "Cashier / store associate",
+          "where": "national",
+          "source": "https://www.auchan.sn",
+          "confidence": "M"
+        },
+        {
+          "id": "sn-retail-carrefour-senegal-cfao-supeco",
+          "name": "Carrefour Senegal (CFAO / Supeco)",
+          "role": "Cashier / store associate",
+          "where": "national",
+          "source": "https://www.cfaogroup.com",
+          "confidence": "L"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "sn-hospitality-radisson-blu-hotel-dakar-sea-plaza",
+          "name": "Radisson Blu Hotel Dakar Sea Plaza",
+          "role": "Hotel and restaurant staff",
+          "where": "national",
+          "source": "https://www.radissonhotels.com",
+          "confidence": "M"
+        }
+      ]
+    },
+    "trades": {
+      "employers": [
+        {
+          "id": "sn-trades-eiffage-senegal",
+          "name": "Eiffage Senegal",
+          "role": "Construction laborer",
+          "where": "national",
+          "source": "https://www.eiffage.sn",
+          "confidence": "L"
+        }
+      ]
+    }
+  },
+  "SV": {
+    "retail": {
+      "employers": [
+        {
+          "id": "sv-retail-super-selectos-grupo-calleja",
+          "name": "Super Selectos (Grupo Calleja)",
+          "role": "Cashier / stocker",
+          "where": "national",
+          "source": "https://www.superselectos.com",
+          "confidence": "M"
+        },
+        {
+          "id": "sv-retail-walmart-el-salvador-walmart-despensa-de-",
+          "name": "Walmart El Salvador (Walmart, Despensa de Don Juan, Maxi Despensa)",
+          "role": "Cashier / store associate",
+          "where": "national",
+          "source": "https://www.walmartcentroamerica.com",
+          "confidence": "M"
+        }
+      ]
+    },
+    "school": {
+      "employers": [
+        {
+          "id": "sv-school-pollo-campero",
+          "name": "Pollo Campero",
+          "role": "Crew member",
+          "where": "national",
+          "source": "https://www.campero.com",
+          "confidence": "M"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "sv-between-hugo",
+          "name": "Hugo",
+          "role": "Delivery rider (app)",
+          "where": "national",
+          "source": "https://www.hugoapp.com",
+          "confidence": "M"
+        },
+        {
+          "id": "sv-between-pedidosya",
+          "name": "PedidosYa",
+          "role": "Delivery rider (app)",
+          "where": "national",
+          "source": "https://www.pedidosya.com.sv",
+          "confidence": "L"
+        }
+      ]
+    }
+  },
+  "SX": {
+    "hospitality": {
+      "employers": [
+        {
+          "id": "sx-hospitality-sonesta-maho-beach-resort",
+          "name": "Sonesta Maho Beach Resort",
+          "role": "resort staff",
+          "where": "national",
+          "source": "https://www.sonesta.com",
+          "confidence": "H"
+        },
+        {
+          "id": "sx-hospitality-the-westin-st-maarten-dawn-beach",
+          "name": "The Westin St. Maarten Dawn Beach",
+          "role": "resort staff",
+          "where": "national",
+          "source": "https://www.marriott.com",
+          "confidence": "M"
+        }
+      ]
+    },
+    "retail": {
+      "employers": [
+        {
+          "id": "sx-retail-cost-u-less-st-maarten",
+          "name": "Cost-U-Less St. Maarten",
+          "role": "store staff",
+          "where": "national",
+          "source": "https://www.costuless.com",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "SZ": {
+    "retail": {
+      "employers": [
+        {
+          "id": "sz-retail-shoprite-eswatini",
+          "name": "Shoprite Eswatini",
+          "role": "cashier / merchandiser",
+          "where": "national",
+          "source": "https://www.shopriteholdings.co.za",
+          "confidence": "M"
+        },
+        {
+          "id": "sz-retail-pick-n-pay-eswatini",
+          "name": "Pick n Pay Eswatini",
+          "role": "store assistant",
+          "where": "national",
+          "source": "https://www.pnp.co.za",
+          "confidence": "M"
+        },
+        {
+          "id": "sz-retail-spar-eswatini",
+          "name": "Spar Eswatini",
+          "role": "store assistant",
+          "where": "national",
+          "source": "https://www.spar.co.za",
+          "confidence": "L"
+        }
+      ]
+    }
+  },
+  "TC": {
+    "hospitality": {
+      "employers": [
+        {
+          "id": "tc-hospitality-beaches-turks-caicos-sandals-resorts",
+          "name": "Beaches Turks & Caicos (Sandals Resorts)",
+          "role": "resort staff",
+          "where": "national",
+          "source": "https://www.beaches.com",
+          "confidence": "H"
+        },
+        {
+          "id": "tc-hospitality-grace-bay-club",
+          "name": "Grace Bay Club",
+          "role": "resort staff",
+          "where": "national",
+          "source": "https://www.gracebayresorts.com",
+          "confidence": "M"
+        }
+      ]
+    },
+    "retail": {
+      "employers": [
+        {
+          "id": "tc-retail-graceway-iga",
+          "name": "Graceway IGA",
+          "role": "supermarket staff",
+          "where": "national",
+          "source": "https://www.gracewayiga.com",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "TD": {
+    "hospitality": {
+      "employers": [
+        {
+          "id": "td-hospitality-radisson-blu-hotel-n-djamena",
+          "name": "Radisson Blu Hotel N'Djamena",
+          "role": "hotel staff",
+          "where": "national",
+          "source": "https://www.radissonhotels.com",
+          "confidence": "M"
+        },
+        {
+          "id": "td-hospitality-kempinski-hotel-n-djamena",
+          "name": "Kempinski Hotel N'Djamena",
+          "role": "hotel staff",
+          "where": "national",
+          "source": "https://www.kempinski.com",
+          "confidence": "L"
+        }
+      ]
+    }
+  },
+  "TG": {
+    "hospitality": {
+      "employers": [
+        {
+          "id": "tg-hospitality-hotel-2-fevrier-lome",
+          "name": "Hôtel 2 Février (Lomé)",
+          "role": "hotel staff",
+          "where": "national",
+          "source": "none reached this session",
+          "confidence": "L"
+        }
+      ]
+    },
+    "retail": {
+      "employers": [
+        {
+          "id": "tg-retail-champion-supermarket-lome",
+          "name": "Champion (supermarket, Lomé)",
+          "role": "supermarket staff",
+          "where": "national",
+          "source": "none reached this session",
+          "confidence": "L"
+        }
+      ]
+    }
+  },
+  "TH": {
+    "retail": {
+      "employers": [
+        {
+          "id": "th-retail-cp-all-7-eleven-thailand",
+          "name": "CP All (7-Eleven Thailand)",
+          "role": "store staff / cashier",
+          "where": "national",
+          "source": "https://www.cpall.co.th ; https://en.wikipedia.org/wiki/CP_All",
+          "confidence": "H"
+        },
+        {
+          "id": "th-retail-lotus-s",
+          "name": "Lotus's",
+          "role": "supermarket staff",
+          "where": "national",
+          "source": "https://www.lotuss.com",
+          "confidence": "H"
+        },
+        {
+          "id": "th-retail-big-c-supercenter",
+          "name": "Big C Supercenter",
+          "role": "store staff",
+          "where": "national",
+          "source": "https://www.bigc.co.th",
+          "confidence": "H"
+        }
+      ]
+    },
+    "school": {
+      "employers": [
+        {
+          "id": "th-school-cafe-amazon-ptt-oil-and-retail",
+          "name": "Café Amazon (PTT Oil and Retail)",
+          "role": "barista",
+          "where": "national",
+          "source": "https://www.cafe-amazon.com",
+          "confidence": "H"
+        },
+        {
+          "id": "th-school-starbucks-thailand-coffee-concepts-thail",
+          "name": "Starbucks Thailand (Coffee Concepts Thailand)",
+          "role": "barista",
+          "where": "national",
+          "source": "https://www.starbucks.co.th",
+          "confidence": "H"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "th-hospitality-minor-food-the-pizza-company-swensen-s",
+          "name": "Minor Food (The Pizza Company, Swensen's)",
+          "role": "restaurant crew",
+          "where": "national",
+          "source": "https://www.minorfood.com",
+          "confidence": "H"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "th-between-grab",
+          "name": "Grab",
+          "role": "food delivery rider (independent contractor)",
+          "where": "national",
+          "source": "https://www.grab.com/th/",
+          "confidence": "H"
+        },
+        {
+          "id": "th-between-line-man-wongnai",
+          "name": "LINE MAN Wongnai",
+          "role": "food delivery rider (independent contractor)",
+          "where": "national",
+          "source": "https://lineman.line.me",
+          "confidence": "H"
+        }
+      ]
+    },
+    "armed_forces": {
+      "employers": [
+        {
+          "id": "th-armed_forces-guardforce-thailand",
+          "name": "Guardforce Thailand",
+          "role": "security guard",
+          "where": "national",
+          "source": "https://www.guardforce.co.th",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "TJ": {
+    "retail": {
+      "employers": [
+        {
+          "id": "tj-retail-ashan-hypermarket-dushanbe",
+          "name": "Ashan (hypermarket, Dushanbe)",
+          "role": "store staff",
+          "where": "national",
+          "source": "none reached this session",
+          "confidence": "L"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "tj-between-yandex-go-tajikistan",
+          "name": "Yandex Go Tajikistan",
+          "role": "ride-hailing / delivery driver (independent partner)",
+          "where": "national",
+          "source": "https://go.yandex",
+          "confidence": "L"
+        }
+      ]
+    }
+  },
+  "TL": {
+    "retail": {
+      "employers": [
+        {
+          "id": "tl-retail-kmanek-supermarket",
+          "name": "Kmanek Supermarket",
+          "role": "store staff",
+          "where": "national",
+          "source": "none reached this session",
+          "confidence": "L"
+        },
+        {
+          "id": "tl-retail-lita-store",
+          "name": "Lita Store",
+          "role": "store staff",
+          "where": "national",
+          "source": "none reached this session",
+          "confidence": "L"
+        }
+      ]
+    }
+  },
+  "TN": {
+    "retail": {
+      "employers": [
+        {
+          "id": "tn-retail-monoprix-tunisie",
+          "name": "Monoprix Tunisie",
+          "role": "supermarket staff",
+          "where": "national",
+          "source": "https://www.monoprix.tn",
+          "confidence": "M"
+        },
+        {
+          "id": "tn-retail-magasin-general",
+          "name": "Magasin Général",
+          "role": "supermarket staff",
+          "where": "national",
+          "source": "https://www.magasingeneral.tn",
+          "confidence": "M"
+        },
+        {
+          "id": "tn-retail-carrefour-tunisie-ulysse-trading",
+          "name": "Carrefour Tunisie (Ulysse Trading)",
+          "role": "hypermarket staff",
+          "where": "national",
+          "source": "https://www.carrefour.tn",
+          "confidence": "M"
+        },
+        {
+          "id": "tn-retail-aziza",
+          "name": "Aziza",
+          "role": "discount store staff",
+          "where": "national",
+          "source": "https://www.aziza.tn",
+          "confidence": "M"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "tn-hospitality-kfc-tunisia",
+          "name": "KFC Tunisia",
+          "role": "crew",
+          "where": "national",
+          "source": "https://www.kfc.tn",
+          "confidence": "L"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "tn-between-glovo-tunisia",
+          "name": "Glovo Tunisia",
+          "role": "courier (independent contractor)",
+          "where": "national",
+          "source": "https://glovoapp.com/tn",
+          "confidence": "L"
+        }
+      ]
+    }
+  },
+  "TR": {
+    "retail": {
+      "employers": [
+        {
+          "id": "tr-retail-bim",
+          "name": "BİM",
+          "role": "store staff",
+          "where": "national",
+          "source": "https://www.bim.com.tr",
+          "confidence": "H"
+        },
+        {
+          "id": "tr-retail-a101",
+          "name": "A101",
+          "role": "store staff",
+          "where": "national",
+          "source": "https://www.a101.com.tr",
+          "confidence": "H"
+        },
+        {
+          "id": "tr-retail-sok-marketler",
+          "name": "ŞOK Marketler",
+          "role": "store staff",
+          "where": "national",
+          "source": "https://www.sokmarket.com.tr",
+          "confidence": "H"
+        },
+        {
+          "id": "tr-retail-migros",
+          "name": "Migros",
+          "role": "supermarket staff",
+          "where": "national",
+          "source": "https://www.migroskurumsal.com",
+          "confidence": "H"
+        }
+      ]
+    },
+    "school": {
+      "employers": [
+        {
+          "id": "tr-school-starbucks-turkiye",
+          "name": "Starbucks Türkiye",
+          "role": "barista",
+          "where": "national",
+          "source": "https://www.starbucks.com.tr",
+          "confidence": "H"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "tr-hospitality-tab-g-da-burger-king-turkiye",
+          "name": "TAB Gıda (Burger King Türkiye)",
+          "role": "restaurant crew",
+          "where": "national",
+          "source": "https://www.tabgida.com.tr",
+          "confidence": "H"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "tr-between-yemeksepeti",
+          "name": "Yemeksepeti",
+          "role": "delivery courier",
+          "where": "national",
+          "source": "https://www.yemeksepeti.com",
+          "confidence": "H"
+        },
+        {
+          "id": "tr-between-trendyol-go",
+          "name": "Trendyol Go",
+          "role": "delivery courier",
+          "where": "national",
+          "source": "https://www.trendyol.com",
+          "confidence": "M"
+        },
+        {
+          "id": "tr-between-getir",
+          "name": "Getir",
+          "role": "delivery courier",
+          "where": "national",
+          "source": "https://getir.com",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "TT": {
+    "retail": {
+      "employers": [
+        {
+          "id": "tt-retail-massy-stores",
+          "name": "Massy Stores",
+          "role": "supermarket staff",
+          "where": "national",
+          "source": "https://www.massystorestt.com",
+          "confidence": "H"
+        },
+        {
+          "id": "tt-retail-pricesmart-trinidad",
+          "name": "PriceSmart Trinidad",
+          "role": "warehouse club staff",
+          "where": "national",
+          "source": "https://www.pricesmart.com",
+          "confidence": "M"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "tt-hospitality-prestige-holdings-kfc-pizza-hut-tgi-frid",
+          "name": "Prestige Holdings (KFC, Pizza Hut, TGI Fridays)",
+          "role": "restaurant crew",
+          "where": "national",
+          "source": "https://www.prestigeholdingstt.com",
+          "confidence": "H"
+        }
+      ]
+    },
+    "school": {
+      "employers": [
+        {
+          "id": "tt-school-rituals-coffee-house",
+          "name": "Rituals Coffee House",
+          "role": "barista",
+          "where": "national",
+          "source": "https://www.ritualscoffee.com",
+          "confidence": "M"
+        }
+      ]
+    },
+    "armed_forces": {
+      "employers": [
+        {
+          "id": "tt-armed_forces-amalgamated-security-services",
+          "name": "Amalgamated Security Services",
+          "role": "security officer",
+          "where": "national",
+          "source": "https://www.assl.com",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "TW": {
+    "retail": {
+      "employers": [
+        {
+          "id": "tw-retail-president-chain-store-7-eleven-taiwan",
+          "name": "President Chain Store (7-Eleven Taiwan)",
+          "role": "store clerk",
+          "where": "national",
+          "source": "https://www.7-11.com.tw",
+          "confidence": "H"
+        },
+        {
+          "id": "tw-retail-familymart-taiwan",
+          "name": "FamilyMart Taiwan",
+          "role": "store clerk",
+          "where": "national",
+          "source": "https://www.family.com.tw",
+          "confidence": "H"
+        },
+        {
+          "id": "tw-retail-px-mart",
+          "name": "PX Mart",
+          "role": "supermarket staff",
+          "where": "national",
+          "source": "https://www.pxmart.com.tw",
+          "confidence": "H"
+        },
+        {
+          "id": "tw-retail-carrefour-taiwan",
+          "name": "Carrefour Taiwan",
+          "role": "hypermarket staff",
+          "where": "national",
+          "source": "https://www.carrefour.com.tw",
+          "confidence": "M"
+        }
+      ]
+    },
+    "school": {
+      "employers": [
+        {
+          "id": "tw-school-louisa-coffee",
+          "name": "Louisa Coffee",
+          "role": "barista",
+          "where": "national",
+          "source": "https://www.louisacoffee.co",
+          "confidence": "M"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "tw-hospitality-mcdonald-s-taiwan",
+          "name": "McDonald's Taiwan",
+          "role": "crew",
+          "where": "national",
+          "source": "https://www.mcdonalds.com.tw",
+          "confidence": "H"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "tw-between-uber-eats",
+          "name": "Uber Eats",
+          "role": "delivery partner (independent contractor)",
+          "where": "national",
+          "source": "https://www.ubereats.com/tw",
+          "confidence": "H"
+        },
+        {
+          "id": "tw-between-foodpanda-taiwan",
+          "name": "foodpanda Taiwan",
+          "role": "delivery partner (independent contractor)",
+          "where": "national",
+          "source": "https://www.foodpanda.com.tw",
+          "confidence": "H"
+        }
+      ]
+    },
+    "armed_forces": {
+      "employers": [
+        {
+          "id": "tw-armed_forces-shin-kong-security",
+          "name": "Shin Kong Security",
+          "role": "security guard",
+          "where": "national",
+          "source": "https://www.sks.com.tw",
+          "confidence": "L"
+        }
+      ]
+    }
+  },
+  "TZ": {
+    "hospitality": {
+      "employers": [
+        {
+          "id": "tz-hospitality-serena-hotels-dar-es-salaam-serena",
+          "name": "Serena Hotels (Dar es Salaam Serena)",
+          "role": "hotel staff",
+          "where": "national",
+          "source": "https://www.serenahotels.com",
+          "confidence": "M"
+        }
+      ]
+    },
+    "armed_forces": {
+      "employers": [
+        {
+          "id": "tz-armed_forces-sga-security-tanzania",
+          "name": "SGA Security Tanzania",
+          "role": "security guard",
+          "where": "national",
+          "source": "https://www.sgasecurity.com",
+          "confidence": "M"
+        }
+      ]
+    },
+    "retail": {
+      "employers": [
+        {
+          "id": "tz-retail-shoppers-supermarket",
+          "name": "Shoppers Supermarket",
+          "role": "supermarket staff",
+          "where": "national",
+          "source": "https://shoppers.co.tz",
+          "confidence": "L"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "tz-between-bolt",
+          "name": "Bolt",
+          "role": "ride-hailing / delivery driver (independent contractor)",
+          "where": "national",
+          "source": "https://bolt.eu/en-tz/",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "UA": {
+    "retail": {
+      "employers": [
+        {
+          "id": "ua-retail-atb-market",
+          "name": "ATB-Market",
+          "role": "store staff / cashier",
+          "where": "national",
+          "source": "https://www.atbmarket.com",
+          "confidence": "H"
+        },
+        {
+          "id": "ua-retail-silpo-fozzy-group",
+          "name": "Silpo (Fozzy Group)",
+          "role": "supermarket staff",
+          "where": "national",
+          "source": "https://silpo.ua",
+          "confidence": "H"
+        },
+        {
+          "id": "ua-retail-novus",
+          "name": "Novus",
+          "role": "supermarket staff",
+          "where": "national",
+          "source": "https://novus.ua",
+          "confidence": "M"
+        },
+        {
+          "id": "ua-retail-nova-poshta",
+          "name": "Nova Poshta",
+          "role": "branch operator / courier",
+          "where": "national",
+          "source": "https://novaposhta.ua",
+          "confidence": "H"
+        }
+      ]
+    },
+    "school": {
+      "employers": [
+        {
+          "id": "ua-school-aroma-kava",
+          "name": "Aroma Kava",
+          "role": "barista",
+          "where": "national",
+          "source": "https://aromakava.com.ua",
+          "confidence": "M"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "ua-hospitality-mcdonald-s-ukraine",
+          "name": "McDonald's Ukraine",
+          "role": "crew",
+          "where": "national",
+          "source": "https://www.mcdonalds.com/ua/uk-ua.html",
+          "confidence": "H"
+        },
+        {
+          "id": "ua-hospitality-puzata-hata",
+          "name": "Puzata Hata",
+          "role": "restaurant staff",
+          "where": "national",
+          "source": "https://puzatahata.ua",
+          "confidence": "M"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "ua-between-glovo-ukraine",
+          "name": "Glovo Ukraine",
+          "role": "courier (independent contractor)",
+          "where": "national",
+          "source": "https://glovoapp.com/ua",
+          "confidence": "H"
+        },
+        {
+          "id": "ua-between-bolt-food",
+          "name": "Bolt Food",
+          "role": "courier (independent contractor)",
+          "where": "national",
+          "source": "https://bolt.eu/uk-ua/food/",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "UG": {
+    "retail": {
+      "employers": [
+        {
+          "id": "ug-retail-carrefour-uganda-majid-al-futtaim",
+          "name": "Carrefour Uganda (Majid Al Futtaim)",
+          "role": "hypermarket staff",
+          "where": "national",
+          "source": "https://www.carrefouruganda.com",
+          "confidence": "M"
+        },
+        {
+          "id": "ug-retail-quality-supermarket",
+          "name": "Quality Supermarket",
+          "role": "supermarket staff",
+          "where": "national",
+          "source": "https://qualitysupermarket.co.ug",
+          "confidence": "L"
+        }
+      ]
+    },
+    "school": {
+      "employers": [
+        {
+          "id": "ug-school-cafe-javas-cj-s",
+          "name": "Café Javas (CJ's)",
+          "role": "barista / waiter",
+          "where": "national",
+          "source": "https://www.cafejavas.co.ug",
+          "confidence": "M"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "ug-hospitality-kampala-serena-hotel",
+          "name": "Kampala Serena Hotel",
+          "role": "hotel staff",
+          "where": "national",
+          "source": "https://www.serenahotels.com",
+          "confidence": "M"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "ug-between-safeboda",
+          "name": "SafeBoda",
+          "role": "motorcycle delivery rider (independent contractor)",
+          "where": "national",
+          "source": "https://safeboda.com",
+          "confidence": "M"
+        }
+      ]
+    },
+    "armed_forces": {
+      "employers": [
+        {
+          "id": "ug-armed_forces-saracen-uganda",
+          "name": "Saracen Uganda",
+          "role": "security guard",
+          "where": "national",
+          "source": "https://www.saracenuganda.com",
+          "confidence": "L"
+        }
+      ]
+    }
+  },
+  "UY": {
+    "retail": {
+      "employers": [
+        {
+          "id": "uy-retail-ta-ta",
+          "name": "Ta-Ta",
+          "role": "store staff",
+          "where": "national",
+          "source": "https://www.tata.com.uy",
+          "confidence": "H"
+        },
+        {
+          "id": "uy-retail-grupo-disco-del-uruguay-disco-devoto-gea",
+          "name": "Grupo Disco del Uruguay (Disco, Devoto, Géant)",
+          "role": "supermarket staff",
+          "where": "national",
+          "source": "https://www.disco.com.uy",
+          "confidence": "H"
+        },
+        {
+          "id": "uy-retail-tienda-inglesa",
+          "name": "Tienda Inglesa",
+          "role": "supermarket staff",
+          "where": "national",
+          "source": "https://www.tiendainglesa.com.uy",
+          "confidence": "H"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "uy-hospitality-mcdonald-s-uruguay-arcos-dorados",
+          "name": "McDonald's Uruguay (Arcos Dorados)",
+          "role": "crew",
+          "where": "national",
+          "source": "https://www.mcdonalds.com.uy",
+          "confidence": "H"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "uy-between-pedidosya",
+          "name": "PedidosYa",
+          "role": "delivery rider (independent contractor)",
+          "where": "national",
+          "source": "https://www.pedidosya.com.uy",
+          "confidence": "H"
+        },
+        {
+          "id": "uy-between-rappi-uruguay",
+          "name": "Rappi Uruguay",
+          "role": "delivery rider (independent contractor)",
+          "where": "national",
+          "source": "https://www.rappi.com.uy",
+          "confidence": "M"
+        }
+      ]
+    },
+    "armed_forces": {
+      "employers": [
+        {
+          "id": "uy-armed_forces-prosegur-uruguay",
+          "name": "Prosegur Uruguay",
+          "role": "security guard",
+          "where": "national",
+          "source": "https://www.prosegur.com.uy",
+          "confidence": "M"
+        }
+      ]
+    },
+    "office": {
+      "employers": [
+        {
+          "id": "uy-office-adecco-uruguay",
+          "name": "Adecco Uruguay",
+          "role": "temporary staffing",
+          "where": "national",
+          "source": "https://www.adecco.com.uy",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "UZ": {
+    "retail": {
+      "employers": [
+        {
+          "id": "uz-retail-korzinka",
+          "name": "Korzinka",
+          "role": "supermarket staff",
+          "where": "national",
+          "source": "https://korzinka.uz",
+          "confidence": "H"
+        },
+        {
+          "id": "uz-retail-makro-uzbekistan",
+          "name": "Makro Uzbekistan",
+          "role": "supermarket staff",
+          "where": "national",
+          "source": "https://makromarket.uz",
+          "confidence": "M"
+        },
+        {
+          "id": "uz-retail-havas",
+          "name": "Havas",
+          "role": "discount store staff",
+          "where": "national",
+          "source": "https://havasfood.uz",
+          "confidence": "L"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "uz-hospitality-evos",
+          "name": "EVOS",
+          "role": "fast-food crew",
+          "where": "national",
+          "source": "https://evos.uz",
+          "confidence": "H"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "uz-between-uzum-tezkor",
+          "name": "Uzum Tezkor",
+          "role": "delivery courier",
+          "where": "national",
+          "source": "https://uzum.uz",
+          "confidence": "M"
+        },
+        {
+          "id": "uz-between-yandex-eats-yandex-go-uzbekistan",
+          "name": "Yandex Eats (Yandex Go Uzbekistan)",
+          "role": "delivery courier (independent partner)",
+          "where": "national",
+          "source": "https://eda.yandex.uz",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "VA": {
+    "retail": {
+      "employers": [
+        {
+          "id": "va-retail-governorate-of-vatican-city-state-vatica",
+          "name": "Governorate of Vatican City State (Vatican Museums)",
+          "role": "museum attendant / shop staff",
+          "where": "national",
+          "source": "https://www.vaticanstate.va",
+          "confidence": "H"
+        }
+      ]
+    },
+    "armed_forces": {
+      "employers": [
+        {
+          "id": "va-armed_forces-pontifical-swiss-guard",
+          "name": "Pontifical Swiss Guard",
+          "role": "guard (Swiss Catholic men only)",
+          "where": "national",
+          "source": "https://www.guardiasvizzera.va",
+          "confidence": "H"
+        },
+        {
+          "id": "va-armed_forces-gendarmerie-corps-of-vatican-city-state",
+          "name": "Gendarmerie Corps of Vatican City State",
+          "role": "gendarme / security",
+          "where": "national",
+          "source": "https://www.vaticanstate.va",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "VC": {
+    "retail": {
+      "employers": [
+        {
+          "id": "vc-retail-massy-stores-st-vincent",
+          "name": "Massy Stores (St. Vincent)",
+          "role": "supermarket staff",
+          "where": "national",
+          "source": "https://www.massystores.com",
+          "confidence": "M"
+        },
+        {
+          "id": "vc-retail-c-k-greaves-co",
+          "name": "C.K. Greaves & Co.",
+          "role": "supermarket staff",
+          "where": "national",
+          "source": "none reached this session",
+          "confidence": "L"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "vc-hospitality-sandals-saint-vincent-and-the-grenadines",
+          "name": "Sandals Saint Vincent and the Grenadines",
+          "role": "resort staff",
+          "where": "national",
+          "source": "https://www.sandals.com",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "VE": {
+    "retail": {
+      "employers": [
+        {
+          "id": "ve-retail-farmatodo",
+          "name": "Farmatodo",
+          "role": "pharmacy-store staff",
+          "where": "national",
+          "source": "https://www.farmatodo.com.ve",
+          "confidence": "H"
+        },
+        {
+          "id": "ve-retail-excelsior-gama",
+          "name": "Excelsior Gama",
+          "role": "supermarket staff",
+          "where": "national",
+          "source": "https://www.excelsiorgama.com",
+          "confidence": "M"
+        },
+        {
+          "id": "ve-retail-central-madeirense",
+          "name": "Central Madeirense",
+          "role": "supermarket staff",
+          "where": "national",
+          "source": "https://www.centralmadeirense.com.ve",
+          "confidence": "M"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "ve-hospitality-mcdonald-s-venezuela-arcos-dorados",
+          "name": "McDonald's Venezuela (Arcos Dorados)",
+          "role": "crew",
+          "where": "national",
+          "source": "https://www.arcosdorados.com",
+          "confidence": "M"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "ve-between-yummy",
+          "name": "Yummy",
+          "role": "delivery rider (independent contractor)",
+          "where": "national",
+          "source": "https://www.yummyapp.com",
+          "confidence": "M"
+        },
+        {
+          "id": "ve-between-pedidosya-venezuela",
+          "name": "PedidosYa Venezuela",
+          "role": "delivery rider (independent contractor)",
+          "where": "national",
+          "source": "https://www.pedidosya.com.ve",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "VG": {
+    "retail": {
+      "employers": [
+        {
+          "id": "vg-retail-riteway-food-markets",
+          "name": "RiteWay Food Markets",
+          "role": "supermarket staff",
+          "where": "national",
+          "source": "https://www.rtwbvi.com",
+          "confidence": "M"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "vg-hospitality-rosewood-little-dix-bay",
+          "name": "Rosewood Little Dix Bay",
+          "role": "resort staff",
+          "where": "national",
+          "source": "https://www.rosewoodhotels.com",
+          "confidence": "H"
+        },
+        {
+          "id": "vg-hospitality-scrub-island-resort",
+          "name": "Scrub Island Resort",
+          "role": "resort staff",
+          "where": "national",
+          "source": "https://www.scrubisland.com",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "VI": {
+    "retail": {
+      "employers": [
+        {
+          "id": "vi-retail-plaza-extra-supermarkets",
+          "name": "Plaza Extra Supermarkets",
+          "role": "supermarket staff",
+          "where": "national",
+          "source": "https://www.plazaextra.com",
+          "confidence": "M"
+        },
+        {
+          "id": "vi-retail-cost-u-less",
+          "name": "Cost-U-Less",
+          "role": "warehouse store staff",
+          "where": "national",
+          "source": "https://www.costuless.com",
+          "confidence": "M"
+        },
+        {
+          "id": "vi-retail-the-home-depot-st-thomas-st-croix",
+          "name": "The Home Depot (St. Thomas, St. Croix)",
+          "role": "sales associate",
+          "where": "national",
+          "source": "https://careers.homedepot.com",
+          "confidence": "M"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "vi-hospitality-the-ritz-carlton-st-thomas",
+          "name": "The Ritz-Carlton, St. Thomas",
+          "role": "hotel staff",
+          "where": "national",
+          "source": "https://www.ritzcarlton.com",
+          "confidence": "H"
+        },
+        {
+          "id": "vi-hospitality-frenchman-s-reef-westin-marriott-st-thom",
+          "name": "Frenchman's Reef (Westin / Marriott), St. Thomas",
+          "role": "resort staff",
+          "where": "national",
+          "source": "https://www.marriott.com",
+          "confidence": "M"
+        },
+        {
+          "id": "vi-hospitality-mcdonald-s-usvi-franchise",
+          "name": "McDonald's (USVI franchise)",
+          "role": "crew",
+          "where": "national",
+          "source": "https://www.mcdonalds.com",
+          "confidence": "L"
+        }
+      ]
+    }
+  },
+  "VN": {
+    "retail": {
+      "employers": [
+        {
+          "id": "vn-retail-winmart-winmart-masan-wincommerce",
+          "name": "WinMart / WinMart+ (Masan WinCommerce)",
+          "role": "store staff",
+          "where": "national",
+          "source": "https://winmart.vn",
+          "confidence": "H"
+        },
+        {
+          "id": "vn-retail-bach-hoa-xanh-mobile-world-investment",
+          "name": "Bách Hóa Xanh (Mobile World Investment)",
+          "role": "grocery store staff",
+          "where": "national",
+          "source": "https://www.bachhoaxanh.com",
+          "confidence": "H"
+        },
+        {
+          "id": "vn-retail-saigon-co-op-co-opmart",
+          "name": "Saigon Co.op (Co.opmart)",
+          "role": "supermarket staff",
+          "where": "national",
+          "source": "https://www.saigonco-op.com.vn",
+          "confidence": "M"
+        }
+      ]
+    },
+    "school": {
+      "employers": [
+        {
+          "id": "vn-school-highlands-coffee",
+          "name": "Highlands Coffee",
+          "role": "barista",
+          "where": "national",
+          "source": "https://www.highlandscoffee.com.vn",
+          "confidence": "H"
+        },
+        {
+          "id": "vn-school-phuc-long-heritage",
+          "name": "Phúc Long Heritage",
+          "role": "barista",
+          "where": "national",
+          "source": "https://phuclong.com.vn",
+          "confidence": "M"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "vn-hospitality-golden-gate-group-gogi-kichi-kichi",
+          "name": "Golden Gate Group (Gogi, Kichi-Kichi)",
+          "role": "restaurant server",
+          "where": "national",
+          "source": "https://ggg.com.vn",
+          "confidence": "M"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "vn-between-grab-vietnam",
+          "name": "Grab Vietnam",
+          "role": "GrabFood driver (independent partner)",
+          "where": "national",
+          "source": "https://www.grab.com/vn/",
+          "confidence": "H"
+        },
+        {
+          "id": "vn-between-shopeefood",
+          "name": "ShopeeFood",
+          "role": "delivery driver (independent partner)",
+          "where": "national",
+          "source": "https://shopeefood.vn",
+          "confidence": "H"
+        },
+        {
+          "id": "vn-between-be-group-befood",
+          "name": "Be Group (beFood)",
+          "role": "delivery driver (independent partner)",
+          "where": "national",
+          "source": "https://be.com.vn",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "VU": {
+    "retail": {
+      "employers": [
+        {
+          "id": "vu-retail-au-bon-marche",
+          "name": "Au Bon Marché",
+          "role": "supermarket staff",
+          "where": "national",
+          "source": "https://www.aubonmarche.vu",
+          "confidence": "M"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "vu-hospitality-holiday-inn-resort-vanuatu",
+          "name": "Holiday Inn Resort Vanuatu",
+          "role": "resort staff",
+          "where": "national",
+          "source": "https://www.ihg.com",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "WS": {
+    "retail": {
+      "employers": [
+        {
+          "id": "ws-retail-farmer-joe-supermarket",
+          "name": "Farmer Joe Supermarket",
+          "role": "supermarket staff",
+          "where": "national",
+          "source": "none reached this session",
+          "confidence": "L"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "ws-hospitality-sheraton-samoa-aggie-grey-s-hotel",
+          "name": "Sheraton Samoa Aggie Grey's Hotel",
+          "role": "hotel staff",
+          "where": "national",
+          "source": "https://www.marriott.com",
+          "confidence": "M"
+        },
+        {
+          "id": "ws-hospitality-taumeasina-island-resort",
+          "name": "Taumeasina Island Resort",
+          "role": "resort staff",
+          "where": "national",
+          "source": "none reached this session",
+          "confidence": "L"
+        }
+      ]
+    }
+  },
+  "XK": {
+    "retail": {
+      "employers": [
+        {
+          "id": "xk-retail-viva-fresh-store",
+          "name": "Viva Fresh Store",
+          "role": "supermarket staff",
+          "where": "national",
+          "source": "https://www.vivafresh.store",
+          "confidence": "M"
+        },
+        {
+          "id": "xk-retail-interex",
+          "name": "Interex",
+          "role": "supermarket staff",
+          "where": "national",
+          "source": "https://interex.store",
+          "confidence": "L"
+        },
+        {
+          "id": "xk-retail-etc-emona",
+          "name": "ETC (Emona)",
+          "role": "hypermarket staff",
+          "where": "national",
+          "source": "https://etc-ks.com",
+          "confidence": "L"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "xk-between-wolt-kosovo",
+          "name": "Wolt Kosovo",
+          "role": "courier partner",
+          "where": "national",
+          "source": "https://wolt.com/en/xkx",
+          "confidence": "L"
+        }
+      ]
+    }
+  },
+  "YT": {
+    "retail": {
+      "employers": [
+        {
+          "id": "yt-retail-groupe-bourbon-distribution-mayotte-jumb",
+          "name": "Groupe Bourbon Distribution Mayotte (Jumbo Score, Score, Douka Bé)",
+          "role": "supermarket staff",
+          "where": "national",
+          "source": "none reached this session",
+          "confidence": "L"
+        },
+        {
+          "id": "yt-retail-sodifram-sodifram-supermarkets",
+          "name": "SODIFRAM (Sodifram supermarkets)",
+          "role": "supermarket staff",
+          "where": "national",
+          "source": "none reached this session",
+          "confidence": "L"
+        }
+      ]
+    }
+  },
+  "ZA": {
+    "retail": {
+      "employers": [
+        {
+          "id": "za-retail-shoprite-holdings-shoprite-checkers-usav",
+          "name": "Shoprite Holdings (Shoprite, Checkers, Usave)",
+          "role": "cashier / merchandiser",
+          "where": "national",
+          "source": "https://www.shopriteholdings.co.za",
+          "confidence": "H"
+        },
+        {
+          "id": "za-retail-pick-n-pay",
+          "name": "Pick n Pay",
+          "role": "store assistant",
+          "where": "national",
+          "source": "https://www.pnp.co.za",
+          "confidence": "H"
+        },
+        {
+          "id": "za-retail-woolworths-south-africa",
+          "name": "Woolworths South Africa",
+          "role": "store assistant",
+          "where": "national",
+          "source": "https://www.woolworths.co.za",
+          "confidence": "H"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "za-hospitality-famous-brands-wimpy-steers-debonairs",
+          "name": "Famous Brands (Wimpy, Steers, Debonairs)",
+          "role": "restaurant crew",
+          "where": "national",
+          "source": "https://www.famousbrands.co.za",
+          "confidence": "H"
+        }
+      ]
+    },
+    "school": {
+      "employers": [
+        {
+          "id": "za-school-vida-e-caffe",
+          "name": "Vida e Caffè",
+          "role": "barista",
+          "where": "national",
+          "source": "https://www.vidaecaffe.com",
+          "confidence": "M"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "za-between-mr-d",
+          "name": "Mr D",
+          "role": "delivery driver (independent contractor)",
+          "where": "national",
+          "source": "https://www.mrd.com",
+          "confidence": "M"
+        },
+        {
+          "id": "za-between-uber-eats",
+          "name": "Uber Eats",
+          "role": "delivery courier (independent contractor)",
+          "where": "national",
+          "source": "https://www.ubereats.com/za",
+          "confidence": "H"
+        }
+      ]
+    },
+    "armed_forces": {
+      "employers": [
+        {
+          "id": "za-armed_forces-fidelity-services-group",
+          "name": "Fidelity Services Group",
+          "role": "security officer",
+          "where": "national",
+          "source": "https://www.fidelity-services.com",
+          "confidence": "M"
+        }
+      ]
+    },
+    "office": {
+      "employers": [
+        {
+          "id": "za-office-adcorp",
+          "name": "Adcorp",
+          "role": "temporary staffing",
+          "where": "national",
+          "source": "https://www.adcorpgroup.com",
+          "confidence": "M"
+        }
+      ]
+    },
+    "sport": {
+      "employers": [
+        {
+          "id": "za-sport-virgin-active-south-africa",
+          "name": "Virgin Active South Africa",
+          "role": "gym floor staff / instructor",
+          "where": "national",
+          "source": "https://www.virginactive.co.za",
+          "confidence": "M"
+        }
+      ]
+    }
+  },
+  "ZM": {
+    "retail": {
+      "employers": [
+        {
+          "id": "zm-retail-shoprite-zambia",
+          "name": "Shoprite Zambia",
+          "role": "cashier / merchandiser",
+          "where": "national",
+          "source": "https://www.shopriteholdings.co.za",
+          "confidence": "H"
+        },
+        {
+          "id": "zm-retail-pick-n-pay-zambia",
+          "name": "Pick n Pay Zambia",
+          "role": "store assistant",
+          "where": "national",
+          "source": "https://www.pnp.co.za",
+          "confidence": "M"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "zm-hospitality-hungry-lion",
+          "name": "Hungry Lion",
+          "role": "fast-food crew",
+          "where": "national",
+          "source": "https://www.hungrylion.co.za",
+          "confidence": "M"
+        },
+        {
+          "id": "zm-hospitality-protea-hotels-by-marriott-zambia",
+          "name": "Protea Hotels by Marriott (Zambia)",
+          "role": "hotel staff",
+          "where": "national",
+          "source": "https://www.marriott.com",
+          "confidence": "M"
+        }
+      ]
+    },
+    "between": {
+      "employers": [
+        {
+          "id": "zm-between-yango",
+          "name": "Yango",
+          "role": "ride-hailing / delivery driver (independent contractor)",
+          "where": "national",
+          "source": "https://yango.com",
+          "confidence": "L"
+        }
+      ]
+    }
+  },
+  "ZW": {
+    "retail": {
+      "employers": [
+        {
+          "id": "zw-retail-ok-zimbabwe-ok-mart-bon-marche",
+          "name": "OK Zimbabwe (OK Mart, Bon Marché)",
+          "role": "supermarket staff",
+          "where": "national",
+          "source": "https://www.okziminvestor.com",
+          "confidence": "M"
+        },
+        {
+          "id": "zw-retail-tm-pick-n-pay",
+          "name": "TM Pick n Pay",
+          "role": "supermarket staff",
+          "where": "national",
+          "source": "https://www.tmpnp.co.zw",
+          "confidence": "M"
+        }
+      ]
+    },
+    "hospitality": {
+      "employers": [
+        {
+          "id": "zw-hospitality-simbisa-brands-chicken-inn-pizza-inn-bak",
+          "name": "Simbisa Brands (Chicken Inn, Pizza Inn, Bakers Inn)",
+          "role": "fast-food crew",
+          "where": "national",
+          "source": "https://www.simbisabrands.com",
+          "confidence": "H"
+        },
+        {
+          "id": "zw-hospitality-african-sun-limited",
+          "name": "African Sun Limited",
+          "role": "hotel staff",
+          "where": "national",
+          "source": "https://www.africansunhotels.com",
+          "confidence": "M"
+        }
+      ]
+    },
+    "armed_forces": {
+      "employers": [
+        {
+          "id": "zw-armed_forces-fawcett-security",
+          "name": "Fawcett Security",
+          "role": "security guard",
+          "where": "national",
+          "source": "https://www.fawcett.co.zw",
+          "confidence": "L"
+        }
+      ]
+    }
   }
 };
