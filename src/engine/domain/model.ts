@@ -559,6 +559,13 @@ export interface SaveUniverse {
 
   preferences: Preferences;
 
+  /**
+   * The guide (`world/tutorial.ts`): the chapters read, in the order they
+   * were. Absent on a save begun before the guide, or made without it, and
+   * such a save has everything open.
+   */
+  tutorial?: { read: string[] };
+
   /** Idempotency keys already applied, mapped to their recorded result. */
   idempotency: Record<string, { at: Instant; result: unknown }>;
 

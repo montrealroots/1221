@@ -154,7 +154,7 @@ The owner had paused the rollover work at `0216597` and had it merged into `main
 
 | Item | State |
 |---|---|
-| Branch | `claude/slate-cleanup-e4apmx`, pushed. At the transfer it was two commits ahead of `main` (`0216597`), which the owner merged by PR #20 (`8cec213`). The spring-forward fix (`7aa9a99`) and the day's bounds fix (`96ca032`) went in by PR #21 (`023cd28`). Now seventeen commits ahead of `main`: the Windows hygiene commit (`6d73116`), the stale-words commit (`68d7011`), the screenshot fix (`b1320f8`), the looking-after commit (`f23ba99`), the dials commit (`448d68c`), the background commit (`d731521`), the three money commits (`5e60ce7`, `9a12c11`, `1180a04`), the money handoff commit, the five-fixes commit (`f73c10a`), the place-rent and record fix (`240200f`), the Review fix (`bc54eea`), citizenship and risk (`1d24cb7`), the cohesion pass (`4c2bbb5`), the deposit wording (`b778a78`), and the full loop, which carries this file, for the owner to merge by PR (Start here). |
+| Branch | `claude/slate-cleanup-e4apmx`, pushed. At the transfer it was two commits ahead of `main` (`0216597`), which the owner merged by PR #20 (`8cec213`). The spring-forward fix (`7aa9a99`) and the day's bounds fix (`96ca032`) went in by PR #21 (`023cd28`). Now eighteen commits ahead of `main`: the Windows hygiene commit (`6d73116`), the stale-words commit (`68d7011`), the screenshot fix (`b1320f8`), the looking-after commit (`f23ba99`), the dials commit (`448d68c`), the background commit (`d731521`), the three money commits (`5e60ce7`, `9a12c11`, `1180a04`), the money handoff commit, the five-fixes commit (`f73c10a`), the place-rent and record fix (`240200f`), the Review fix (`bc54eea`), citizenship and risk (`1d24cb7`), the cohesion pass (`4c2bbb5`), the deposit wording (`b778a78`), the full loop (`21a4b9a`), and the guide, which carries this file, for the owner to merge by PR (Start here). |
 | Machine | The owner's Windows 11 machine, `C:\Users\sande\Downloads\1221-GIT`: PowerShell 7.6.6, Claude Code 2.1.281, Git 2.55.0.windows.3, Node v24.20.0, npm 11.19.0, `gh` 2.101.0 at `C:\Program Files\GitHub CLI\gh.exe` (not logged in), repo-local `core.autocrlf=false` (§3, §13) |
 | Last verified code commit | The day's bounds fix (2026-09-24, on Windows), after the spring-forward fix (`7aa9a99`, 2026-09-24), after the fifth review's fixes (`d356640`, 2026-09-23), and those after `1f75a13` (the fourth review's), `0e80f13`, `fa24fe4`, `bd5b2ef`, the night-alone fix `4bfa0fa` and the rollover fix: `7a373c2` and `14c1666`, which fixed what review found (schema 88). Before them, `f10f1b0` (2026-09-23), which fixed what review found in `20da24e` (schema 87), and `36d2cea` (2026-09-22). |
 | GitHub `main` | Replaced by this line on 2026-09-23: merge `4aab498`, carried in by a PR. The old tip `e139e06` (2026-09-18, "Merge pull request #16") is one of that merge's parents. PR #18 (`ed0cab7`) brought schema 87 into it. The rollover fix, the night-alone fix and the review fixes followed by PR on 2026-09-23, with the owner's approval (schema 88), and the fifth review's fixes and the transfer by PR #20 (`8cec213`). |
@@ -611,6 +611,32 @@ A Playwright run through the game's own screens (`probe/playtest.mjs`, not in th
   - **The screens.** The shell shows `ui/shell/LifeEnded.tsx`: the dates, the age, time played, earned from the ledger, and what was left behind. The slot reads "Actor, Died At 85" on both adapters and opens with "See How It Ended".
 - **Verified:** `npm run gate` exits 0 with 720 tests in 35 files, read from a file (`tests/mortality.test.ts` is new, and `tests/weather.test.ts` has three thunder tests). 19 mutants on the new logic, in `probe/mut-end`. Six survived at first. Three were tests that didn't reach their claim, and each was sharpened: the interpolation, the frailty curve, and the day before a birthday. The other three were code that nothing could tell was there, and each was removed: the wet multiplier, the exact wet share, and a guard in the death handler that the halt already settles. Madrid and Los Angeles were added to the count test on the way. Every mutant left is killed. In the browser, a finished save shows on its slot and on the ending screen, stays ended, and goes back to the slots, with no page errors, and the full loop replays as before.
 
+### The guide (the owner: "create me a full coverage matrix tutorial engine that covers every aspect of the game in order and you can't use said feature until reading what said feature does in the tutorial. I want it to flow smoothly and seamlessly")
+
+- **The chapters** (`content/tutorial.ts`). Fourteen, in the order a life meets the game: Your Life, Hour By Hour; What's Coming; The Clock; Moving Time On; What Needs You; How You Are; Sleep; Looking After Yourself; Your Own Plans; The Day Job; Weather; Rent And A Roof; Money And The Card; A Whole Life. Each is written from the engine's mechanics, and its `opens` list is the coverage matrix: command kinds, `look.<kind>` for the underlined words, and `ui.<name>` for controls and panels. `docs/COVERAGE-MATRIX.md` prints the table.
+- **The engine** (`world/tutorial.ts`).
+  - `universe.tutorial = { read }` is optional, so there is no schema bump. A save without it has everything open: saves from before the guide, and `quickSave` unless it is given `tutorial: true`.
+  - `tutorial.read` reads only the next chapter.
+  - `Simulation.guardCommands` refuses any player command at the top level whose chapter is unread, naming the chapter. Commands the world raises while the clock moves are never asked. Pausing is never refused, because the halt pauses the clock itself.
+  - The game's own new saves (`SlateApp`) begin guided and paused.
+- **The screens** (`ui/guide/Guide.tsx`).
+  - The guide opens by itself on a new life.
+  - Each chapter shows what reading it opens. "I've Read It" opens those parts, then says what opened, with "Try It" or "Next: …".
+  - A strip under the top bar carries the next chapter until all are read. The top bar keeps a Guide button for re-reading.
+  - Locked controls still show, dashed and marked Locked. Pressing one opens the guide at its chapter, or at the next one with a note when that chapter has to wait.
+  - Home's panels show as locked cards until read. Underlined words are plain text until their chapter is read (`Open` in `looks/Look.tsx`).
+- **The owner's small fix:** the slot screen now reads "Three slots, Three separate lives."
+- **Verified:**
+  - `npm run gate` exits 0 with 736 tests in 36 files, read from a file.
+  - `tests/tutorial.test.ts` holds the matrix: every command, look kind and gated control belongs to exactly one chapter, every `ui.*` id is asked for by a screen, every command has a gated button, and the doc's table matches the code row for row. It also holds the lock: order, refusals, pausing, save and load, unguided saves, and the world running its own shifts.
+  - 9 mutants, all killed. The one that first survived was the "already read" check. It turned out to matter once every chapter is read, when nothing is next, and a test now holds that case.
+  - A browser playthrough (`probe/guide-play.mjs`, not in the repository):
+    - The guide opened on arrival and the clock stayed paused.
+    - Pressing locked Sleep sent the player to the first chapter with a note.
+    - All fourteen chapters were read in order, after which no lock remained and the strip was gone.
+    - The player then went to a shift and slept, with no page errors.
+  - `probe/playtest.mjs` predates the guide and needs a read-through step before it will play a new life.
+
 ---
 
 ## 6. Decisions and why
@@ -772,6 +798,7 @@ This is 41 files, +2293/−292. Four are added: `src/engine/core/performer.ts` a
 
 | Check | Result |
 |---|---|
+| The guide (2026-09-24, same machine) | `npm run gate`: **exit 0**, read from a file, 36 files, **736 tests**. Mutation: 9 mutants on the guide's rules, all killed. Browser: a new life read through all fourteen chapters and then played, with no page errors. |
 | The full loop (2026-09-24, same machine) | `npm run gate`: **exit 0**, read from a file, 35 files, **720 tests**. Mutation: 19 mutants on thunder, mortality, birthdays and the halt. All are killed, after three tests were sharpened and three redundant pieces were removed (§5). Browser: the playtest loop and an ended save, no page errors. |
 | Account 2's start, on `8cec213` (2026-09-24, Windows, PowerShell 7.6.6, Node 24.20.0, npm 11.19.0) | `npm run gate`, exit code read from a file: **exit 0**, 28 files, **530 tests**, as the transfer said. |
 | The five-fixes commit (2026-09-24, same machine) | `npm run gate`: **exit 0**, read from a file, 34 files, **694 tests** (10 new in `tests/livelihood.test.ts`). Mutation: 18 mutants on eviction, deposits, moving, the sofa, the limit, tips, hours and Tokyo. The first run was stopped by Claude Code for low memory with the sofa mutant still in `life.ts`, which was restored from its backup under `probe/mut-five` and checked. Three survived the first pass, each a test that didn't reach what it named (the sofa compared across a change in stress, the extra shift asked on a day that was already free, the promised week checked on an empty list); each test was sharpened, and all 18 are killed. `npm run build`: **exit 0**, 110 modules, 727.86 kB of JS. |
@@ -983,8 +1010,9 @@ Keep the first three until the owner says otherwise.
 8. **Done on 2026-09-24: looking after yourself** (§5), at the owner's request that the wellbeing dials besides sleep get actions of their own, with the design left to Claude. The screenshot fix went in just before it. Then, at the owner's "Make it all count, read, and bite": the dials commit, which gives every dial a reader that changes an outcome (§5). Then the Interests & Background page (§5): the owner narrowed the rule on interests and chose structured choices for the background.
 9. **Done on 2026-09-24: the money system** (§5, Money), at the owner's "create the most perfect setup for me", with the real world as the bar. Three commits, and this handoff.
 10. **Done on 2026-09-24: the full loop** (§5): thunderstorms calibrated to published thunder days, birthdays, and the end of a life on real life tables.
-11. **Owner's direction for what comes next.** Something that reads the four idle axes, the money traits or citizenship would retire entries from `docs/UNWIRED.json` and `docs/UNBITTEN.md`. Take one `UNBITTEN` section at a time and prove each fix bites.
-12. **Deploy** to Base44 only after the gate passes; any existing deployment needs this redeploy before it will store this branch's saves (§10). Then run `tools/base44-smoke.mjs` against it. Fix Restore Backup on Base44 first (§10): today it never takes on the server.
+11. **Done on 2026-09-24: the guide** (§5): fourteen chapters that open the game as they are read.
+12. **Owner's direction for what comes next.** Something that reads the four idle axes, the money traits or citizenship would retire entries from `docs/UNWIRED.json` and `docs/UNBITTEN.md`. Take one `UNBITTEN` section at a time and prove each fix bites.
+13. **Deploy** to Base44 only after the gate passes; any existing deployment needs this redeploy before it will store this branch's saves (§10). Then run `tools/base44-smoke.mjs` against it. Fix Restore Backup on Base44 first (§10): today it never takes on the server.
 
 ---
 

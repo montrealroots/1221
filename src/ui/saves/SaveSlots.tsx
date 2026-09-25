@@ -79,7 +79,7 @@ export function SaveSlots({
         <div className="center" style={{ marginBottom: 'var(--s7)', paddingTop: 'var(--s6)' }}>
           <div style={{ fontSize: 44, marginBottom: 'var(--s3)' }} aria-hidden="true">🎬</div>
           <div className="wordmark" style={{ fontSize: 32 }}>SLATE</div>
-          <p className="muted">Three slots, three separate lives. Neither of the others knows this one exists.</p>
+          <p className="muted">Three slots, Three separate lives. Neither of the others knows this one exists.</p>
         </div>
 
         {error && (

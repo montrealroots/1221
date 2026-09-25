@@ -103,6 +103,12 @@ export interface NewSaveConfig {
   startMonth: number;
   startDay: number;
 
+  /**
+   * Whether the life begins with the guide (`world/tutorial.ts`): everything
+   * shut but the first chapter, and the clock paused. The game's own new
+   * saves do; a save made for a test or a tool doesn't unless it asks.
+   */
+  tutorial?: boolean;
 }
 
 /**
@@ -255,6 +261,10 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveCon
   };
 
   const universe = emptyUniverse(meta, now, zone, playerId);
+  if (config.tutorial) {
+    universe.tutorial = { read: [] };
+    universe.preferences.timeSpeed = 'paused';
+  }
 
   const birthInstant = instantFromZoned(
     { year: config.birthYear, month: config.birthMonth, day: config.birthDay, hour: 3 },

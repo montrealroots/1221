@@ -20,6 +20,7 @@
 
 import { createContext, useContext, useMemo, useState, type ReactNode } from 'react';
 import { useWorld } from '@/app/game-context';
+import { isOpen as guideAllows } from '@/engine/world/tutorial';
 import { resolveLook, lookExists, type Facet, type Looked, type Way } from './registry';
 import { sameSubject, subjectKey, type Subject } from './subject';
 
@@ -82,8 +83,10 @@ export function Open({
 }) {
   const region = useContext(RegionContext);
   const exists = useWorld((sim) => lookExists(sim, subject), [subject.kind, subject.id]);
+  // Plain text until the chapter in the guide for it is read (`world/tutorial.ts`).
+  const guideOpen = useWorld((sim) => guideAllows(sim, `look.${subject.kind}`), [subject.kind]);
 
-  if (plain || !region || !exists) return <>{children}</>;
+  if (plain || !region || !exists || !guideOpen) return <>{children}</>;
 
   const isOpen = sameSubject(region.open, subject);
   return (

@@ -30,7 +30,9 @@ claims otherwise.
 | Weather | Implemented — a climate model per city from season, latitude and the kind of place it is, with a week ahead | `src/engine/systems/weather.ts` | `weather` |
 | Time controls | Implemented — live play, sleeping, and skipping to an event with what it would cross shown first | `src/ui/shell/TimeControls.tsx` | `simulation`, `realclock` |
 | Wellbeing and sleep | Partial — the model, the night, the waking hours charged as the clock moves (`life.waking`), and the night nobody chose, slept when the clock is sent through one rather than at every midnight (`life.night_alone` and the rollover). Sleep, eating, a shower, a workout and an hour unwinding are how a player spends a day on them (`life.sleep`, `life.look_after`). Every dial decides something in the body or the workout, and nothing outside them reads it | `src/engine/systems/life.ts` | `simulation`, `smoke`, `endurance`, `personality`, `looking-after`, `wellbeing-bites` |
-| Money | Implemented — a ledger that conserves, kept in the currency of the country a save starts in; a day job paid at a real legal floor on the country's payday, with tax withheld; rent and bills on the first and food with each day's meals, paid from checking, then the card, then owed; a card with a statement, a due date, interest and late fees; and a credit record that prices it. Nobody is evicted, and the prices are estimates | `src/engine/core/ledger.ts`, `src/engine/systems/finance.ts`, `src/engine/systems/work.ts`, `src/engine/systems/household.ts`, `src/engine/systems/credit.ts`, `src/engine/content/wages.ts`, `src/engine/content/jobs.ts` | `money`, `work`, `household`, `endurance` |
+| Money | Implemented — a ledger that conserves, kept in the currency of the country a save starts in; a day job paid at a real legal floor on the country's payday, with tax withheld; rent and bills on the first and food with each day's meals, paid from checking, then savings, then the card, then owed; a notice to pay or quit at two months owed and an eviction to a friend's sofa after it; a card with a statement, a due date, interest and late fees; and a credit record that prices it. Rents are published in nineteen places and estimated elsewhere, and food and bills are estimates | `src/engine/core/ledger.ts`, `src/engine/systems/finance.ts`, `src/engine/systems/work.ts`, `src/engine/systems/household.ts`, `src/engine/systems/credit.ts`, `src/engine/content/wages.ts`, `src/engine/content/jobs.ts` | `money`, `work`, `household`, `endurance` |
+| Birthdays and the end of a life | Implemented — a birthday each year at nine in the morning, and each year's chance of the life ending from the US 2024 life table, moved by the country's life expectancy and the body's condition; an ended life stops the clock and opens onto what it came to | `src/engine/systems/birthdays.ts`, `src/engine/systems/mortality.ts`, `src/ui/shell/LifeEnded.tsx` | `mortality` |
+| The guide | Implemented — fourteen chapters, read in order, each opening the part of the game it describes: its commands in the engine and its controls, panels and underlined words on screen. A new life starts paused with everything shut but the guide | `src/engine/content/tutorial.ts`, `src/engine/world/tutorial.ts`, `src/ui/guide/Guide.tsx` | `tutorial` |
 | The Decision Center | Partial — answering, dismissing, closing on a date and forgetting are all built and tested. Nothing in the engine raises a decision on its own | `src/engine/world/world.ts`, `src/ui/looks/attention.tsx` | `smoke`, `looks` |
 | Drill-down | Implemented — every noun on Home opens onto what it is, and the graph is crawled end to end | `src/ui/looks/` | `looks` |
 | Server-checked persistence | Implemented — the guards between a browser and storage, and the client that speaks the platform's protocol | `base44/`, `src/engine/persistence/` | `server-guards`, `base44-adapter`, `base44-contract` |
@@ -78,8 +80,8 @@ rollover had already paid for.
 
 ## The engine, as it now stands
 
-Eight commands and one route, which is the honest size of what is left. The
-appendix below is generated from the code, so it is the count to trust.
+Seventeen commands and one route. The appendix below is generated from the
+code, so it is the count to trust.
 
 Three are a person deciding something rather than answering something.
 `calendar.schedule` puts a thing on the calendar, `calendar.cancel` takes one
@@ -96,7 +98,9 @@ anything that needs the player.
 Money moves on its own: shifts, paydays, rent and the card's statement and due date are timeline items like any other. What a player does to it by hand is on Home: paying the card now (`finance.pay_card`) and whether autopay clears the whole statement or the minimum (`finance.set_autopay`); asking for an extra shift (`work.extra_shift`), going full-time or part-time (`work.set_hours`), looking for work where there is a right to it (`work.find_job`) and quitting (`work.quit`); and moving into a room or a place of their own, which costs a deposit and the rest of the month (`home.move`). Calling in sick for a shift is `calendar.skip`, as walking away from a plan is. Owing two months' rent brings a notice, and a notice that runs out brings an eviction to a friend's sofa.
 The rest is the Decision Center answering, dismissing and marking read
 (`world.take_decision_action`, `world.dismiss_decision`, `world.mark_read`) and
-the preferences (`world.set_preferences`).
+the preferences (`world.set_preferences`). Reading a chapter of the guide is
+`tutorial.read`, and until a chapter is read the guide refuses every other
+command it opens (`world/tutorial.ts`), whatever screen sends it.
 
 Time also does two things on its own as it passes, rather than at an instant.
 `life.night_alone` puts somebody to bed when the clock is sent more than an
@@ -108,8 +112,31 @@ move during a day of play and midnight no longer charges the day ahead.
 
 The one route is `/workspace/calendar`; Home is served by the shell itself.
 
+## The guide, chapter by chapter
+
+The order a guided life reads them in, and what each opens. `tests/tutorial.test.ts`
+fails the build if a command, a kind of look or a gated control belongs to no
+chapter or to two, or if a chapter opens nothing.
+
+| # | Chapter | Opens |
+| --- | --- | --- |
+| 1 | Your Life, Hour By Hour | `ui.where` `look.day` `look.place` `look.region` `look.country` `look.currency` `look.season` `look.daylight` |
+| 2 | What’s Coming | `ui.calendar` `ui.go` `calendar.skip` `look.entry` |
+| 3 | The Clock | `ui.play` `world.set_preferences` |
+| 4 | Moving Time On | `ui.advance` `ui.skip` |
+| 5 | What Needs You | `ui.needs` `world.mark_read` `world.take_decision_action` `world.dismiss_decision` `look.notification` `look.decision` |
+| 6 | How You Are | `ui.how` `look.dial` `look.readiness` |
+| 7 | Sleep | `ui.sleep` `life.sleep` |
+| 8 | Looking After Yourself | `ui.look-after` `life.look_after` |
+| 9 | Your Own Plans | `ui.open-calendar` `calendar.schedule` `calendar.cancel` `look.plans` `look.stretch` |
+| 10 | The Day Job | `ui.work` `work.extra_shift` `work.set_hours` `work.quit` `work.find_job` |
+| 11 | Weather | `ui.weather` `look.weather` `look.forecastday` `look.hours` `look.skyhour` `look.skyweek` |
+| 12 | Rent And A Roof | `home.move` |
+| 13 | Money And The Card | `ui.money` `finance.pay_card` `finance.set_autopay` `look.account` `look.networth` `look.debt` |
+| 14 | A Whole Life | `look.person` |
+
 <!-- inventory:begin -->
-Generated by `node tools/inventory.mjs --markdown`. 16 commands, 11 scheduled kinds, 2 passage reactors, 3 events emitted, 1 event listener, 0 scenes, 1 route.
+Generated by `node tools/inventory.mjs --markdown`. 17 commands, 11 scheduled kinds, 2 passage reactors, 3 events emitted, 1 event listener, 0 scenes, 1 route.
 
 ### Commands
 
@@ -119,6 +146,7 @@ Generated by `node tools/inventory.mjs --markdown`. 16 commands, 11 scheduled ki
 | finance | `finance.pay_card` `finance.set_autopay` | `src/engine/systems/credit.ts` |
 | home | `home.move` | `src/engine/systems/household.ts` |
 | life | `life.look_after` `life.sleep` | `src/engine/systems/life.ts` |
+| tutorial | `tutorial.read` | `src/engine/world/tutorial.ts` |
 | work | `work.extra_shift` `work.find_job` `work.quit` `work.set_hours` | `src/engine/systems/work.ts` |
 | world | `world.dismiss_decision` `world.mark_read` `world.set_preferences` `world.take_decision_action` | `src/engine/world/world.ts` |
 

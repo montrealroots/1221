@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { titleCaseLabel } from '@/engine/core/text';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Empty, Modal, Stat } from '@/ui/components/primitives';
+import { Gated } from '@/ui/guide/Guide';
 import { monthGrid, entriesBetween, keptCalendars, CALENDAR_LEGEND, LEGEND_BY_CATEGORY, type CalendarDay, type CalendarEntry } from '@/engine/world/calendar';
 import { formatDate, formatDuration, formatTime, startOfDay, zonedParts, MS_DAY, MS_MINUTE } from '@/engine/core/time';
 import { LONGEST_TITLE, PLAN_KIND, PLAN_LENGTHS, type PlanResult } from '@/engine/world/plans';
@@ -146,9 +147,9 @@ export function CalendarWorkspace() {
           actions={(
             <>
               {canPlan(selectedDay, sim.now, sim.homeZone) && (
-                <button className="btn btn-sm btn-primary" onClick={() => setPlanning(selectedDay.key)}>
+                <Gated feature="calendar.schedule" className="btn btn-sm btn-primary" onClick={() => setPlanning(selectedDay.key)}>
                   Put Something On It
-                </button>
+                </Gated>
               )}
               <button className="btn btn-ghost btn-sm" onClick={() => setSelected(null)}>Close</button>
             </>
@@ -352,7 +353,7 @@ function EntryDetail({ entry, onClose }: { entry: CalendarEntry; onClose: () => 
       footer={mine ? (
         <>
           <button className="btn btn-ghost" onClick={onClose}>Leave It</button>
-          <button className="btn" onClick={callOff}>Call It Off</button>
+          <Gated feature="calendar.cancel" className="btn" onClick={callOff}>Call It Off</Gated>
         </>
       ) : undefined}
     >

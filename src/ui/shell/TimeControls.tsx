@@ -26,6 +26,7 @@ import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { INTEREST_BY_ID } from '@/engine/content/interests';
 import { spokenList } from '@/ui/looks/words';
 import type { ScheduledItem } from '@/engine/core/scheduler';
+import { Gated, useFeature } from '@/ui/guide/Guide';
 
 export function TimeControls() {
   const { sim, advanceTo, run, refresh, toast, standingAt, clearStandingAt } = useGame();
@@ -56,15 +57,16 @@ export function TimeControls() {
   return (
     <>
       <div className="row gap-1" role="group" aria-label="Time Controls">
-        <button
+        <Gated
+          feature="ui.play"
           className="btn btn-ghost btn-sm"
           onClick={() => setSpeed(speed === 'paused' ? 'live' : 'paused')}
           aria-pressed={speed === 'paused'}
           title={speed === 'paused' ? 'Resume Time' : 'Pause Time'}
         >
           {speed === 'paused' ? 'Play' : 'Pause'}
-        </button>
-        <button className="btn btn-sm" onClick={() => setSleepOpen(true)}>Sleep</button>
+        </Gated>
+        <Gated feature="ui.sleep" className="btn btn-sm" onClick={() => setSleepOpen(true)}>Sleep</Gated>
         <LookAfterMenu />
         <AdvanceMenu
           onAdvance={(at, label) => {
@@ -161,9 +163,9 @@ function SleepDialog({ onClose }: { onClose: () => void }) {
       footer={
         <>
           <button className="btn" onClick={onClose}>Not Yet</button>
-          <button className="btn btn-primary" onClick={sleep}>
+          <Gated feature="life.sleep" className="btn btn-primary" onClick={sleep}>
             Sleep {hours} Hours
-          </button>
+          </Gated>
         </>
       }
     >
@@ -253,11 +255,11 @@ function DueNow({ item, wanted, onGo, onStay, onClose }: {
         <>
           <button className="btn btn-ghost" onClick={onClose}>Stand Here</button>
           {(mine || shift) && (
-            <button className="btn" onClick={onStay}>
+            <Gated feature="calendar.skip" className="btn" onClick={onStay}>
               {shift ? 'Call In Sick' : 'Skip It'}
-            </button>
+            </Gated>
           )}
-          <button className="btn btn-primary" onClick={onGo}>Go</button>
+          <Gated feature="ui.go" className="btn btn-primary" onClick={onGo}>Go</Gated>
         </>
       )}
     >
@@ -384,6 +386,8 @@ function AdvanceMenu({
   const { sim } = useGame();
   const nextEvent = useWorld((s) => skipTargets(s, 1)[0]);
   const { open, setOpen, anchor } = useDropdown();
+  const gate = useFeature('ui.advance');
+  const choosing = useFeature('ui.skip');
 
   const zone = sim.zone;
   const now = sim.now;
@@ -414,12 +418,13 @@ function AdvanceMenu({
     <div className="menu-anchor" ref={anchor}>
       <button
         type="button"
-        className="btn btn-sm"
+        className={`btn btn-sm${gate.open ? '' : ' is-locked'}`}
         aria-haspopup="menu"
         aria-expanded={open}
-        onClick={() => setOpen((o) => !o)}
+        title={gate.reason}
+        onClick={() => (gate.open ? setOpen((o) => !o) : gate.ask())}
       >
-        Advance ▾
+        Advance ▾{!gate.open && <span className="lock-word">Locked</span>}
       </button>
       {open && (
         <div className="menu" role="menu" aria-label="Advance Time">
@@ -432,7 +437,8 @@ function AdvanceMenu({
               disabled={!item.choose && item.at === undefined}
               onClick={() => {
                 setOpen(false);
-                if (item.choose) onChooseEvent();
+                if (item.choose && !choosing.open) choosing.ask();
+                else if (item.choose) onChooseEvent();
                 else if (item.at !== undefined) onAdvance(item.at, item.label);
               }}
             >
@@ -479,6 +485,8 @@ function useDropdown() {
 function LookAfterMenu() {
   const { sim, run, toast } = useGame();
   const { open, setOpen, anchor } = useDropdown();
+  const gate = useFeature('ui.look-after');
+  const doing = useFeature('life.look_after');
   // Asked again whenever the world changes, so a meal eaten or a clock moved since counts.
   const refusals = useWorld((s) => Object.fromEntries(
     (Object.keys(LOOKING_AFTER) as LookAfter[]).map((action) => [action, lookAfterRefusal(s, action)]),
@@ -496,12 +504,13 @@ function LookAfterMenu() {
     <div className="menu-anchor" ref={anchor}>
       <button
         type="button"
-        className="btn btn-sm"
+        className={`btn btn-sm${gate.open ? '' : ' is-locked'}`}
         aria-haspopup="menu"
         aria-expanded={open}
-        onClick={() => setOpen((o) => !o)}
+        title={gate.reason}
+        onClick={() => (gate.open ? setOpen((o) => !o) : gate.ask())}
       >
-        Look After Yourself ▾
+        Look After Yourself ▾{!gate.open && <span className="lock-word">Locked</span>}
       </button>
       {open && (
         <div className="menu" role="menu" aria-label="Look After Yourself">
@@ -518,7 +527,7 @@ function LookAfterMenu() {
                 role="menuitem"
                 className="menu-item"
                 disabled={refused !== undefined}
-                onClick={() => act(action)}
+                onClick={() => (doing.open ? act(action) : doing.ask())}
               >
                 <span className="menu-item-label">{label}</span>
                 <span className="menu-item-detail">

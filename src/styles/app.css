@@ -1279,3 +1279,36 @@ kbd {
 }
 .weather-day { text-align: center; min-width: 0; }
 .weather-cond { line-height: 1.6; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* --- The guide (ui/guide/Guide.tsx) ------------------------------------- */
+.lock-word {
+  font-size: var(--size-xs, 11px); letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--text-dim); margin-left: var(--s2);
+}
+.btn.is-locked { opacity: 0.55; border-style: dashed; }
+.btn.is-locked:hover { opacity: 0.8; }
+.panel-locked { border-style: dashed; opacity: 0.8; }
+.guide-strip {
+  display: flex; align-items: center; justify-content: space-between; gap: var(--s3);
+  padding: var(--s2) var(--s3); margin-bottom: var(--s4);
+  border: 1px solid var(--line); border-radius: var(--radius, 8px); background: var(--surface-2);
+}
+.guide { display: grid; grid-template-columns: minmax(180px, 240px) 1fr; gap: var(--s5); }
+.guide-toc { display: flex; flex-direction: column; gap: 2px; max-height: 60vh; overflow-y: auto; }
+.guide-toc-item {
+  display: flex; align-items: center; gap: var(--s2); text-align: left;
+  padding: var(--s2); border-radius: 6px; background: transparent; border: 0; color: inherit; cursor: pointer;
+}
+.guide-toc-item:hover:not(:disabled) { background: var(--surface-2); }
+.guide-toc-item[aria-current='step'] { background: var(--surface-2); font-weight: 600; }
+.guide-toc-item:disabled { opacity: 0.45; cursor: default; }
+.guide-toc-num { width: 1.6em; color: var(--text-dim); }
+.guide-page { min-width: 0; max-height: 60vh; overflow-y: auto; }
+.guide-opens { margin: var(--s2) 0 0; padding-left: var(--s4); }
+.guide-opens-box { margin-top: var(--s4); padding-top: var(--s3); border-top: 1px solid var(--line); }
+@media (max-width: 720px) {
+  .guide { grid-template-columns: 1fr; }
+  .guide-toc { max-height: none; flex-direction: row; overflow-x: auto; }
+  .guide-toc-item .grow { display: none; }
+}
+.guide-opens + p { margin-top: var(--s3); }

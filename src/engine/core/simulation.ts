@@ -97,6 +97,7 @@ export class Simulation {
   private scheduleHandlers = new Map<string, ScheduleHandler>();
   private passageReactors = new Map<string, PassageReactor>();
   private commandHandlers = new Map<string, CommandHandler<never, unknown>>();
+  private commandGuards: ((command: Command<Record<string, unknown>, unknown>) => string | undefined)[] = [];
   private pendingEvents: WorldEvent[] = [];
   /** The advance in progress, for `advancing` and `advancingTo`. */
   private advance: {
@@ -240,6 +241,18 @@ export class Simulation {
 
   onEvent(kind: string, name: string, reactor: (event: WorldEvent, ctx: CommandContext & { emit: (e: WorldEvent) => void }) => void, priority = 100): this {
     this.bus.on(kind, name, reactor, priority);
+    return this;
+  }
+
+  /**
+   * A check every player command passes before it runs: a reason it may not,
+   * or undefined. Only a command a player gives is asked, at the top level;
+   * one another command runs, or one the world raises while the clock moves,
+   * is the world's own. The guide (`world/tutorial.ts`) is the one that
+   * uses it.
+   */
+  guardCommands(guard: (command: Command<Record<string, unknown>, unknown>) => string | undefined): this {
+    this.commandGuards.push(guard);
     return this;
   }
 
@@ -564,6 +577,11 @@ export class Simulation {
       } finally {
         this.depth--;
       }
+    }
+
+    for (const guard of this.commandGuards) {
+      const refused = guard(command as Command<Record<string, unknown>, unknown>);
+      if (refused !== undefined) return { ok: false, error: refused };
     }
 
     const snapshot: UniverseSnapshot = snapshotUniverse(this.universe);

@@ -28,6 +28,7 @@ import { HOUSING, SOFA, arrearsOf, billsOf, inTheBank, moveCost, rentOf } from '
 import { clockWords, jobFor, patternHours, patternOf, workDaysWords } from '@/engine/content/jobs';
 import { mayWorkIn } from '@/engine/domain/citizenship';
 import { LookRegion, Open, at } from '@/ui/looks';
+import { Gated, LockedPanel, useFeature } from '@/ui/guide/Guide';
 
 export function Home() {
   const { sim, navigate, run } = useGame();
@@ -63,6 +64,16 @@ export function Home() {
   const weather = city ? weatherAt(sim, city.id) : undefined;
   const week = city ? forecastFor(sim, city.id, 6) : [];
   const unit = weather?.fahrenheit ? '°F' : '°C';
+  // Each panel opens with its chapter in the guide (`content/tutorial.ts`).
+  const shows = {
+    calendar: useFeature('ui.calendar').open,
+    needs: useFeature('ui.needs').open,
+    how: useFeature('ui.how').open,
+    where: useFeature('ui.where').open,
+    weather: useFeature('ui.weather').open,
+    money: useFeature('ui.money').open,
+    work: useFeature('ui.work').open,
+  };
 
   return (
     <>
@@ -110,14 +121,15 @@ export function Home() {
         month, in the header: there used to be three, all going to the same
         screen.
       */}
+      {!shows.calendar ? <LockedPanel feature="ui.calendar" title="Calendar" /> : (
       <Panel
         look={at('day', today)}
         title="Calendar"
         subtitle={next ? 'What is coming, and when.' : undefined}
         actions={(
-          <button className="btn btn-sm btn-primary" onClick={() => navigate('/workspace/calendar', 'Calendar')}>
+          <Gated feature="ui.open-calendar" className="btn btn-sm btn-primary" onClick={() => navigate('/workspace/calendar', 'Calendar')}>
             Open Calendar
-          </button>
+          </Gated>
         )}
       >
         <LookRegion>
@@ -166,16 +178,18 @@ export function Home() {
           )}
         </LookRegion>
       </Panel>
+      )}
 
       <div className="grid grid-2" style={{ marginBottom: 'var(--s5)' }}>
+        {!shows.needs ? <LockedPanel feature="ui.needs" title="What Needs You" /> : (
         <Panel
           title="What Needs You"
           subtitle={decisions.length === 0 ? 'No decision is waiting on you.' : `${decisions.length} open`}
           flush
           actions={unread.length > 0 ? (
-            <button className="btn btn-ghost btn-sm" onClick={() => run('world.mark_read')}>
+            <Gated feature="world.mark_read" className="btn btn-ghost btn-sm" onClick={() => run('world.mark_read')}>
               Mark {unread.length} Read
-            </button>
+            </Gated>
           ) : undefined}
         >
           {decisions.length === 0 && unread.length === 0 ? (
@@ -212,25 +226,27 @@ export function Home() {
                     <p className="xs muted" style={{ margin: '2px 0 0' }}>{decision.detail}</p>
                     <div className="row gap-2 wrap" style={{ marginTop: 'var(--s2)' }}>
                       {decision.actions.map((action, index) => (
-                        <button
+                        <Gated
                           key={action.label}
+                          feature="world.take_decision_action"
                           className="btn btn-sm btn-primary"
                           onClick={() => run('world.take_decision_action', { decisionId: decision.id, actionIndex: index })}
                         >
                           {action.label}
-                        </button>
+                        </Gated>
                       ))}
                       {decision.route && (
                         <button className="btn btn-sm" onClick={() => navigate(decision.route!)}>
                           Go There
                         </button>
                       )}
-                      <button
+                      <Gated
+                        feature="world.dismiss_decision"
                         className="btn btn-ghost btn-sm"
                         onClick={() => run('world.dismiss_decision', { decisionId: decision.id })}
                       >
                         Dismiss
-                      </button>
+                      </Gated>
                     </div>
                   </div>
                 </div>
@@ -268,8 +284,10 @@ export function Home() {
             </LookRegion>
           )}
         </Panel>
+        )}
 
         <div className="col gap-4">
+          {!shows.how ? <LockedPanel feature="ui.how" title="How You Are" /> : (
           <Panel title="How You Are" tight look={at('person', player.id)}>
             {/*
               The summary names you, and the three bars name their dials, so
@@ -288,8 +306,10 @@ export function Home() {
               </div>
             </LookRegion>
           </Panel>
+          )}
 
-          {place && (
+          {!shows.where && <LockedPanel feature="ui.where" title="Where You Are" />}
+          {place && shows.where && (
             <Panel title="Where You Are" tight look={at('place', place.city.id)}>
               <LookRegion>
                 <div className="strong">
@@ -383,7 +403,8 @@ export function Home() {
             </Panel>
           )}
 
-          {weather && city && (
+          {!shows.weather && <LockedPanel feature="ui.weather" title="Weather" />}
+          {weather && city && shows.weather && (
             <Panel title="Weather" tight look={at('weather', city.id)}>
               {/*
                 Every day in the strip is its own moment and opens as one. The
@@ -438,6 +459,7 @@ export function Home() {
       </div>
 
       <div className="grid grid-3" style={{ marginBottom: 'var(--s5)' }}>
+        {!shows.money ? <LockedPanel feature="ui.money" title="Money" /> : (
         <Panel title="Money" tight look={at('networth', player.id)}>
           <LookRegion className="col gap-3">
             <Stat
@@ -462,9 +484,12 @@ export function Home() {
             <CardControls cur={cur} />
           </LookRegion>
         </Panel>
+        )}
+        {!shows.work ? <LockedPanel feature="ui.work" title="Work And Home" /> : (
         <Panel title="Work And Home" tight>
           <WorkAndHome cur={cur} />
         </Panel>
+        )}
       </div>
     </>
   );
@@ -519,11 +544,11 @@ function WorkAndHome({ cur }: { cur: string }) {
           />
           {job.lookingUntil === undefined && (
             <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
-              <button className="btn btn-sm" onClick={extra}>Ask For An Extra Shift</button>
-              <button className="btn btn-sm btn-ghost" onClick={() => hours(!job.fullTime)}>
+              <Gated feature="work.extra_shift" className="btn btn-sm" onClick={extra}>Ask For An Extra Shift</Gated>
+              <Gated feature="work.set_hours" className="btn btn-sm btn-ghost" onClick={() => hours(!job.fullTime)}>
                 {job.fullTime ? 'Go Part-Time' : 'Go Full-Time'}
-              </button>
-              <button className="btn btn-sm btn-ghost" onClick={() => run('work.quit', {})}>Quit</button>
+              </Gated>
+              <Gated feature="work.quit" className="btn btn-sm btn-ghost" onClick={() => run('work.quit', {})}>Quit</Gated>
             </div>
           )}
         </>
@@ -538,7 +563,7 @@ function WorkAndHome({ cur }: { cur: string }) {
           />
           {right.may && (!job || job.quitAt !== undefined) && (
             <div className="row gap-2">
-              <button className="btn btn-sm" onClick={look}>Look For A Day Job</button>
+              <Gated feature="work.find_job" className="btn btn-sm" onClick={look}>Look For A Day Job</Gated>
             </div>
           )}
         </>
@@ -555,14 +580,14 @@ function WorkAndHome({ cur }: { cur: string }) {
       )}
       <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
         {home?.kind !== 'shared' && (
-          <button className="btn btn-sm btn-ghost" onClick={() => run('home.move', { kind: 'shared' })}>
+          <Gated feature="home.move" className="btn btn-sm btn-ghost" onClick={() => run('home.move', { kind: 'shared' })}>
             Move Into A Room ({money(costs.shared)})
-          </button>
+          </Gated>
         )}
         {home?.kind !== 'own' && (
-          <button className="btn btn-sm btn-ghost" onClick={() => run('home.move', { kind: 'own' })}>
+          <Gated feature="home.move" className="btn btn-sm btn-ghost" onClick={() => run('home.move', { kind: 'own' })}>
             Get A Place Of Your Own ({money(costs.own)})
-          </button>
+          </Gated>
         )}
       </div>
     </div>
@@ -588,15 +613,16 @@ function CardControls({ cur }: { cur: string }) {
       <Stat label="Credit Record" value={record} note={card?.apr !== undefined ? `The card charges ${(card.apr * 100).toFixed(2)}% a year on what's carried` : undefined} />
       {card && (
         <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
-          <button className="btn btn-sm" disabled={payable === 0} onClick={() => run('finance.pay_card', { amount: 'full' })}>
+          <Gated feature="finance.pay_card" className="btn btn-sm" disabled={payable === 0} onClick={() => run('finance.pay_card', { amount: 'full' })}>
             {payable < owed ? 'Pay What You Can' : 'Pay Card In Full'} ({formatMoney(payable, cur, { cents: false })})
-          </button>
-          <button
+          </Gated>
+          <Gated
+            feature="finance.set_autopay"
             className="btn btn-sm btn-ghost"
             onClick={() => run('finance.set_autopay', { mode: credit.autopay === 'full' ? 'minimum' : 'full' })}
           >
             Autopay: {credit.autopay === 'full' ? 'The Whole Statement' : 'The Minimum'}
-          </button>
+          </Gated>
         </div>
       )}
     </>
