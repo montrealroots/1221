@@ -36,6 +36,7 @@ import { armCredit, openCredit, registerCredit } from './systems/credit';
 import { armBirthdays, registerBirthdays } from './systems/birthdays';
 import { registerMortality } from './systems/mortality';
 import { registerTutorial } from './world/tutorial';
+import { armBanking, openAt, registerBanking, rebank, startingBank } from './systems/banking';
 import { registerWorld } from './world/world';
 import {
   createUniverse, defaultConfig, wealthIn, type NewSaveConfig,
@@ -59,6 +60,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerBirthdays(sim);
   registerMortality(sim);
   registerTutorial(sim);
+  registerBanking(sim);
 }
 
 /** Recurring world processes every save needs running. */
@@ -84,38 +86,32 @@ function populateWorld(sim: Simulation, config: NewSaveConfig): void {
   const wealth = wealthIn(config.wealth, saveCurrency(sim.universe));
 
   // --- Accounts -----------------------------------------------------------
-  const checking = sim.openAccount({
-    id: sim.nextId('account'),
-    kind: 'checking',
-    name: 'Everyday Checking',
-    ownerId: player.id,
-    institution: 'Northbank',
-    openedAt: sim.now,
-    last4: '4417',
-    balance: wealth.checking,
-  });
-  player.primaryAccountId = checking.id;
-
-  if (wealth.savings > 0) {
-    sim.openAccount({
-      id: sim.nextId('account'),
-      kind: 'savings',
-      name: 'Savings',
-      ownerId: player.id,
-      institution: 'Northbank',
-      openedAt: sim.now,
-      last4: '8802',
-      balance: wealth.savings,
+  // At a real bank where they live (`systems/banking.ts`). A country the
+  // tables have no bank for keeps a plain current account and savings.
+  const bank = startingBank(config.startLocationId, config.bankId);
+  if (bank) {
+    openAt(sim, player, bank, { checking: wealth.checking, savings: wealth.savings });
+  } else {
+    const checking = sim.openAccount({
+      id: sim.nextId('account'), kind: 'checking', name: 'Current Account', ownerId: player.id,
+      openedAt: sim.now, balance: wealth.checking,
     });
+    player.primaryAccountId = checking.id;
+    if (wealth.savings > 0) {
+      sim.openAccount({
+        id: sim.nextId('account'), kind: 'savings', name: 'Savings Account', ownerId: player.id,
+        openedAt: sim.now, balance: wealth.savings,
+      });
+    }
   }
 
   if (wealth.cardLimit > 0) {
     const card = sim.openAccount({
       id: sim.nextId('account'),
       kind: 'credit_card',
-      name: 'Northbank Everyday Card',
+      name: bank ? bank.name + ' Credit Card' : 'Credit Card',
       ownerId: player.id,
-      institution: 'Northbank',
+      institution: bank?.name,
       openedAt: sim.now - 400 * MS_DAY,
       creditLimit: wealth.cardLimit,
       apr: 0.2249,
@@ -140,6 +136,7 @@ function populateWorld(sim: Simulation, config: NewSaveConfig): void {
   moveIn(sim, player, config.housing);
   openCredit(sim, player, wealth.creditScore);
   armBirthdays(sim);
+  armBanking(sim);
 }
 
 /** Keeps the save-slot summary in step with the world. */
@@ -236,6 +233,9 @@ export function loadSave(universe: SaveUniverse): Simulation {
   armHousehold(sim);
   armCredit(sim);
   armBirthdays(sim);
+  // A save from before the banks banked at "Northbank", which never existed.
+  rebank(sim);
+  armBanking(sim);
   return sim;
 }
 

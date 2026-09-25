@@ -192,6 +192,19 @@ export const CHAPTERS: readonly Chapter[] = [
     opens: ['ui.money', 'finance.pay_card', 'finance.set_autopay', 'look.account', 'look.networth', 'look.debt'],
   },
   {
+    id: 'bank',
+    title: 'Your Bank',
+    lead: 'A real bank where you live, and what it does with your money.',
+    body: [
+      'Your money is kept at a real bank in the country you live in, under the names that bank gives its accounts, and each account has a number written the way the country writes one. The button on the Money panel, named for your bank, opens it.',
+      'A savings account pays the bank’s rate, built up each day on what it holds and paid on the last day of the month. Where the country has the bank take tax off interest first, it does. Where a bank publishes no rate, the one shown is SLATE’s estimate and says so.',
+      'A current account that charges a monthly fee takes it on the last day of the month, unless the month met the bank’s own waiver: enough of your wages paid in, or enough kept in it all month. The bank screen says how this month stands.',
+      'Move Money moves it between your own accounts at once. A savings account can be opened, or closed with its money moved back. Up to the country’s guarantee, money in a failed bank is paid back, and the bank screen says how much that is.',
+    ],
+    names: ['Your bank, from the Money panel', 'Move Money', 'Open and close a savings account'],
+    opens: ['ui.bank', 'bank.transfer', 'bank.open_savings', 'bank.close_savings'],
+  },
+  {
     id: 'life',
     title: 'A Whole Life',
     lead: 'Birthdays, age, and the end.',

@@ -23,6 +23,8 @@ import type { Simulation } from './core/simulation';
 import { CITIES } from './content/geography';
 import { weatherOn } from './systems/weather';
 import { endBetween } from './systems/mortality';
+import { accountNumber } from './systems/banknumber';
+import { bankById } from './content/banks';
 import { MS_DAY } from './core/time';
 
 // ---------------------------------------------------------------------------
@@ -138,4 +140,36 @@ defineDecider<Year, string>({
     // Which day of the year, or none: the day is part of the decision.
     return at === undefined ? 'lives' : `day ${Math.floor((at - from) / MS_DAY)}`;
   },
+});
+
+// ---------------------------------------------------------------------------
+// The number an account opens under
+// ---------------------------------------------------------------------------
+
+interface Opening { sim: Simulation; bankId: string; kind: 'checking' | 'savings' }
+
+/**
+ * Banks of every numbering kind the tables carry, so a sweep across them
+ * meets each: an IBAN country, a plain national number, and the thirteen's
+ * own formats as they are filled in.
+ */
+const SPREAD_OF_BANKS = ['nl-ing', 'br-itau-unibanco', 'ch-ubs', 'ng-access-bank'].map((id) => {
+  if (!bankById(id)) throw new Error(`The account-number sweep names ${id}, which the bank tables do not carry.`);
+  return id;
+});
+
+defineDecider<Opening, string>({
+  id: 'bank.number',
+  decides: 'The number a bank account is opened under.',
+  drawnIn: 'src/engine/systems/banknumber.ts',
+  reads: {
+    // The bank: its country's format and its own code.
+    bank: (o, t) => ({ ...o, bankId: SPREAD_OF_BANKS[Math.min(SPREAD_OF_BANKS.length - 1, Math.floor(t * SPREAD_OF_BANKS.length))]! }),
+    // A current account and a savings account are two numbers.
+    kind: (o, t) => ({ ...o, kind: t < 0.5 ? 'checking' : 'savings' }),
+    // Two saves are two sets of accounts.
+    world: (o, t) => ({ ...o, sim: skyFor(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: skyFor(seed), bankId: SPREAD_OF_BANKS[seed % SPREAD_OF_BANKS.length]!, kind: 'checking' }),
+  decide: ({ sim, bankId, kind }) => accountNumber(sim, sim.player, bankById(bankId)!, kind),
 });

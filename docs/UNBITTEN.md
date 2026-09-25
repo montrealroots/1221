@@ -33,16 +33,17 @@ may not rise.
 |---|---|---|
 | Id namespaces | 1 | 7 |
 | Save tables nothing fills | 1 | 9 |
-| Personality knobs nothing reads | 0 | 6 |
-| Personality axes nothing consults | 4 | 7 |
+| Personality knobs nothing reads | 0 | 7 |
+| Personality axes nothing consults | 3 | 7 |
 
 The first two are the player. The family was the only thing that made a person after
 boot, so `person` has no `nextId` call and `people` is filled only by
 bootstrap, which writes the player by hand. They are counted honestly and they
-are not dead words; the tool says so beside the check. The four axes are
-openness, extraversion, agreeableness and risk tolerance, set on the
-Dispositions & Traits step and read by nothing; the step says so, and they
-are below.
+are not dead words; the tool says so beside the check. The three axes are
+openness, extraversion and agreeableness, set on the Dispositions & Traits
+step and read by nothing; the step says so, and they are below. Risk
+tolerance was a fourth until the card read it, and this table said four
+until 2026-09-25.
 
 The tool counts writers. The One Rule asks for readers, which is stricter, so
 the true arrears are larger than this table and the rest of this page is the
@@ -97,6 +98,14 @@ part the tool cannot see.
   Riser's "No use at all after nine at night", every cost about other people,
   and Resilient's illness and injury are not charged, and Early Riser and a
   few others help and cost nothing in play. The Traits card says so.
+- **A bank's overdraft terms are said, not charged.** The bank screen gives
+  each bank's real overdraft rate and fees (`content/banks-thirteen.ts`), and
+  no current account ever goes below zero: money comes out of the current
+  account, then savings, then the card, and what none covers is owed to the
+  landlord (`systems/household.ts`). Likewise a bank's per-transaction and
+  passbook fees, the second year of an introductory rate and Iceland's
+  300,000 kr of interest refunded at assessment are named in the source
+  lines and not charged or paid.
 - **The tax engine taxes wages and nothing else.** It was a screen, read only
   by the place card, until the day job: payday withholds income and payroll
   tax through it (`systems/work.ts`). Its sales, property and vehicle rules are

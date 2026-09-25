@@ -460,7 +460,16 @@ export function Home() {
 
       <div className="grid grid-3" style={{ marginBottom: 'var(--s5)' }}>
         {!shows.money ? <LockedPanel feature="ui.money" title="Money" /> : (
-        <Panel title="Money" tight look={at('networth', player.id)}>
+        <Panel
+          title="Money"
+          tight
+          look={at('networth', player.id)}
+          actions={(
+            <Gated feature="ui.bank" className="btn btn-sm" onClick={() => navigate('/workspace/bank', 'Your Bank')}>
+              {primary?.institution ?? 'Your Bank'}
+            </Gated>
+          )}
+        >
           <LookRegion className="col gap-3">
             <Stat
               label={primary?.name ?? 'No account'}

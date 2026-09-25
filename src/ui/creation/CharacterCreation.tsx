@@ -27,6 +27,7 @@ import { minimumWageAt } from '@/engine/content/wages';
 import { clockWords, jobFor, payCycleFor, payCycleWords, tipsPerHour, weeklyHours, workDaysWords } from '@/engine/content/jobs';
 import { exchange } from '@/engine/content/currency';
 import { formatMoney } from '@/engine/core/money';
+import { banksFor, startingBank } from '@/engine/systems/banking';
 import { SAVE_SCHEMA_VERSION } from '@/engine/domain/model';
 import { formatPeople } from '@/engine/world/place';
 import { ageOnDate, zoneAbbreviation } from '@/engine/core/time';
@@ -919,6 +920,7 @@ function StartingPointStep({ config, set, setConfig }: {
           </select>
         </div>
         <div className="callout">{wealthNote(config.wealth)}</div>
+        <BankChoice config={config} set={set} />
         <div className="grid grid-3" style={{ marginTop: 'var(--s4)' }}>
           <div className="stat">
             <span className="stat-label">Checking</span>
@@ -934,6 +936,34 @@ function StartingPointStep({ config, set, setConfig }: {
           </div>
         </div>
       </div>
+    </div>
+  );
+}
+
+/**
+ * The bank the money is kept at: the real banks of the country they live in
+ * (`content/banks.ts`), the first of them unless another is picked. What
+ * each account is called there, what savings pays and what the current
+ * account costs, as the bank publishes them.
+ */
+function BankChoice({ config, set }: { config: NewSaveConfig; set: <K extends keyof NewSaveConfig>(key: K, value: NewSaveConfig[K]) => void }) {
+  const banks = banksFor(config.startLocationId);
+  const bank = startingBank(config.startLocationId, config.bankId);
+  if (!bank) {
+    return <p className="small muted" style={{ marginTop: 'var(--s3)' }}>SLATE has no bank on record where you live, so your money is kept in a plain current account.</p>;
+  }
+  const fee = bank.current.monthlyFee;
+  const bankMoney = (cents: number) => formatMoney(cents, bank.currency, { cents: false });
+  return (
+    <div className="field" style={{ marginTop: 'var(--s4)' }}>
+      <label htmlFor="bank">Your Bank</label>
+      <select id="bank" value={bank.id} onChange={(e) => set('bankId', e.target.value)}>
+        {banks.map((b) => <option key={b.id} value={b.id}>{b.name}</option>)}
+      </select>
+      <p className="small muted" style={{ margin: 'var(--s2) 0 0' }}>
+        {bank.current.name}{fee ? `, ${bankMoney(fee)} a month${bank.current.waiver ? ' unless waived' : ''}` : ', no monthly fee'}.
+        {' '}{bank.savings.name}{bank.savings.rate ? `, ${(bank.savings.rate * 100).toFixed(2)}% a year${bank.savings.estimate ? " (SLATE's estimate)" : ''}` : ', no published rate'}.
+      </p>
     </div>
   );
 }
@@ -1097,6 +1127,7 @@ function ReviewStep({ config }: { config: NewSaveConfig }) {
         <div className="card">
           <div className="eyebrow" style={{ marginBottom: 'var(--s3)' }}>Starting Point</div>
           <Line label="Where You Live" value={city ? shortPlace(city) : '—'} />
+          <Line label="Bank" value={startingBank(config.startLocationId, config.bankId)?.name ?? 'None On Record'} />
           <Line label="Checking" value={formatMoney(wealth.checking, cur, { cents: false })} />
           <Line label="Savings" value={formatMoney(wealth.savings, cur, { cents: false })} />
           <Line label="Credit Record" value={scoreIsANumberIn(config.startLocationId) ? String(wealth.creditScore) : scoreWord(wealth.creditScore)} />

@@ -98,6 +98,8 @@ export interface NewSaveConfig {
   /** Starting point */
   startLocationId: string;
   wealth: StartingWealth;
+  /** The bank they keep their money with, by id (`content/banks.ts`). Absent: the country's first. */
+  bankId?: string;
   /** World start date, local to the starting city. */
   startYear: number;
   startMonth: number;

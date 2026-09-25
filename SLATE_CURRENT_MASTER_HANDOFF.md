@@ -154,7 +154,7 @@ The owner had paused the rollover work at `0216597` and had it merged into `main
 
 | Item | State |
 |---|---|
-| Branch | `claude/slate-cleanup-e4apmx`, pushed. At the transfer it was two commits ahead of `main` (`0216597`), which the owner merged by PR #20 (`8cec213`). The spring-forward fix (`7aa9a99`) and the day's bounds fix (`96ca032`) went in by PR #21 (`023cd28`). Now eighteen commits ahead of `main`: the Windows hygiene commit (`6d73116`), the stale-words commit (`68d7011`), the screenshot fix (`b1320f8`), the looking-after commit (`f23ba99`), the dials commit (`448d68c`), the background commit (`d731521`), the three money commits (`5e60ce7`, `9a12c11`, `1180a04`), the money handoff commit, the five-fixes commit (`f73c10a`), the place-rent and record fix (`240200f`), the Review fix (`bc54eea`), citizenship and risk (`1d24cb7`), the cohesion pass (`4c2bbb5`), the deposit wording (`b778a78`), the full loop (`21a4b9a`), and the guide, which carries this file, for the owner to merge by PR (Start here). |
+| Branch | `claude/slate-cleanup-e4apmx`, pushed. At the transfer it was two commits ahead of `main` (`0216597`), which the owner merged by PR #20 (`8cec213`). The spring-forward fix (`7aa9a99`) and the day's bounds fix (`96ca032`) went in by PR #21 (`023cd28`). The owner merged all eighteen commits, through the guide (`644066e`), by PR #22 (`cd372be`) on 2026-09-25, so the branch and `main` held the same tree. Since then: the bank, which carries this file, for the owner to merge by PR. |
 | Machine | The owner's Windows 11 machine, `C:\Users\sande\Downloads\1221-GIT`: PowerShell 7.6.6, Claude Code 2.1.281, Git 2.55.0.windows.3, Node v24.20.0, npm 11.19.0, `gh` 2.101.0 at `C:\Program Files\GitHub CLI\gh.exe` (not logged in), repo-local `core.autocrlf=false` (§3, §13) |
 | Last verified code commit | The day's bounds fix (2026-09-24, on Windows), after the spring-forward fix (`7aa9a99`, 2026-09-24), after the fifth review's fixes (`d356640`, 2026-09-23), and those after `1f75a13` (the fourth review's), `0e80f13`, `fa24fe4`, `bd5b2ef`, the night-alone fix `4bfa0fa` and the rollover fix: `7a373c2` and `14c1666`, which fixed what review found (schema 88). Before them, `f10f1b0` (2026-09-23), which fixed what review found in `20da24e` (schema 87), and `36d2cea` (2026-09-22). |
 | GitHub `main` | Replaced by this line on 2026-09-23: merge `4aab498`, carried in by a PR. The old tip `e139e06` (2026-09-18, "Merge pull request #16") is one of that merge's parents. PR #18 (`ed0cab7`) brought schema 87 into it. The rollover fix, the night-alone fix and the review fixes followed by PR on 2026-09-23, with the owner's approval (schema 88), and the fifth review's fixes and the transfer by PR #20 (`8cec213`). |
@@ -637,6 +637,52 @@ A Playwright run through the game's own screens (`probe/playtest.mjs`, not in th
     - The player then went to a shift and slept, with no page errors.
   - `probe/playtest.mjs` predates the guide and needs a read-through step before it will play a new life.
 
+### The bank (the owner, 2026-09-25: "bring back the complete banking engine but catered to wherever i'm at in the world … give me real names anything banking")
+
+Every save had opened its accounts at "Northbank", which never existed, and an account did nothing but hold a number.
+
+- **The banks** (`content/banks.ts`, `banks-thirteen.ts`, `banks-world.ts`). Two research passes, with sources and dates kept in the tables:
+  - **The thirteen countries SLATE pays and taxes a life in.** For each, 3 to 6 real banks, carrying:
+    - their own current and savings account names;
+    - monthly fees, and each waiver (wages paid in, a balance kept all month, age, or a fee lowered rather than waived);
+    - published savings rates, with their floors, caps, announced changes (Japan to 0.50% on 2 November 2026), bonus conditions (Australia, New Zealand) and paying months (Japan in February and August, a Livret A once a year);
+    - the real overdraft terms, as text;
+    - the central bank's rate, the deposit guarantee, and the tax a bank takes off interest: Iceland 22%, Ireland 33%, Japan 20.315%, Korea 15.4%, Spain 19%, France 31.4% (none on a Livret A), Germany 26.375% above the €1,000 allowance, and New Zealand's RWT by income.
+  - **226 other countries and territories.** Their biggest banks by name, the deposit guarantee, and whether accounts use an IBAN. No product sheets were researched for these, so an account there has no fee and pays no rate, and the screen says so.
+  - **Unsourced figures are left out.** A figure the research couldn't find is left out, not guessed. Two names I first wrote without a source (BMO's savings account, English glosses on Korean products) were taken back out.
+- **Account numbers** (`core/banknumbers.ts`, `systems/banknumber.ts`). Each is written in its country's format with the real check digits, and `tests/banknumbers.test.ts` holds each rule against published examples:
+  - IBAN mod-97;
+  - Spain's control digits and France's RIB key;
+  - Mexico's CLABE digit;
+  - Iceland's kennitala, from the birth date, inside the IBAN;
+  - US routing numbers that pass the ABA checksum;
+  - Australia's BSB state digit (the gazetteer's GeoNames codes, au-02 is New South Wales);
+  - New Zealand's 00 and 30 suffixes;
+  - Korea's per-bank digit groups.
+  - The draw is the decider `bank.number`.
+- **The engine** (`systems/banking.ts`).
+  - Interest builds daily on the balance it's paid on and is paid at the month's end in the bank's months, less the country's tax.
+  - Fees fall at the month's end unless waived.
+  - New commands: `bank.transfer`, `bank.open_savings` and `bank.close_savings`. Closing pays out what the account has built up.
+  - Old saves are moved off Northbank on load (`rebank`), with every balance as it was. New optional account fields mean no schema bump.
+  - Money still leaves in the household's order.
+- **The screens.**
+  - Creation offers the country's banks on Starting Point, and Review names the bank.
+  - Home's Money panel has a button named for the bank, which opens `/workspace/bank`. That screen shows each account's number, balance, interest words, fee standing and source, plus Move Money and opening or closing savings.
+  - A new Guide chapter 14, "Your Bank", opens them; there are 15 chapters now.
+  - `tests/navigation.test.ts` listed BankWorkspace as removed. That line was edited, as its comment says a decision is made.
+- **Not built:** personal loans, term deposits, overdraft lending, switching banks, and product sheets for the 226 other countries. The overdraft terms are said, not charged (`docs/UNBITTEN.md`).
+- **Verified:**
+  - `npm run gate` exits 0 with 767 tests in 38 files, read from a file.
+  - 19 mutants on the engine. All are killed, after one test was added for the month's lowest balance, where both survivors had pointed.
+  - In the browser (`probe/bank-ui.mjs`), with no page errors:
+    - the bank choice on Starting Point, and the Review line;
+    - the Guide's bank chapter;
+    - Arion banki with 10,000 kr moved;
+    - Chase in New York, with the fee waived by $811 of wages;
+    - MUFG in Tokyo.
+- **Found on the way:** `npx tsc --noEmit -p .` checks nothing in this repository, because the root tsconfig only has references. The typecheck is `npm run typecheck` (`tsc -b`), which the gate runs.
+
 ---
 
 ## 6. Decisions and why
@@ -798,6 +844,7 @@ This is 41 files, +2293/−292. Four are added: `src/engine/core/performer.ts` a
 
 | Check | Result |
 |---|---|
+| The bank (2026-09-25, same machine) | `npm run gate`: **exit 0**, read from a file, 38 files, **767 tests**. Mutation: 19 mutants on the bank, all killed. Browser: creation, the guide, and the bank in Iceland, New York and Tokyo, with no page errors. |
 | The guide (2026-09-24, same machine) | `npm run gate`: **exit 0**, read from a file, 36 files, **736 tests**. Mutation: 9 mutants on the guide's rules, all killed. Browser: a new life read through all fourteen chapters and then played, with no page errors. |
 | The full loop (2026-09-24, same machine) | `npm run gate`: **exit 0**, read from a file, 35 files, **720 tests**. Mutation: 19 mutants on thunder, mortality, birthdays and the halt. All are killed, after three tests were sharpened and three redundant pieces were removed (§5). Browser: the playtest loop and an ended save, no page errors. |
 | Account 2's start, on `8cec213` (2026-09-24, Windows, PowerShell 7.6.6, Node 24.20.0, npm 11.19.0) | `npm run gate`, exit code read from a file: **exit 0**, 28 files, **530 tests**, as the transfer said. |
@@ -1011,8 +1058,9 @@ Keep the first three until the owner says otherwise.
 9. **Done on 2026-09-24: the money system** (§5, Money), at the owner's "create the most perfect setup for me", with the real world as the bar. Three commits, and this handoff.
 10. **Done on 2026-09-24: the full loop** (§5): thunderstorms calibrated to published thunder days, birthdays, and the end of a life on real life tables.
 11. **Done on 2026-09-24: the guide** (§5): fourteen chapters that open the game as they are read.
-12. **Owner's direction for what comes next.** Something that reads the four idle axes, the money traits or citizenship would retire entries from `docs/UNWIRED.json` and `docs/UNBITTEN.md`. Take one `UNBITTEN` section at a time and prove each fix bites.
-13. **Deploy** to Base44 only after the gate passes; any existing deployment needs this redeploy before it will store this branch's saves (§10). Then run `tools/base44-smoke.mjs` against it. Fix Restore Backup on Base44 first (§10): today it never takes on the server.
+12. **Done on 2026-09-25: the bank** (§5): real banks wherever the character lives, real numbers, interest, fees and tax.
+13. **Owner's direction for what comes next.** Something that reads the four idle axes, the money traits or citizenship would retire entries from `docs/UNWIRED.json` and `docs/UNBITTEN.md`. Take one `UNBITTEN` section at a time and prove each fix bites.
+14. **Deploy** to Base44 only after the gate passes; any existing deployment needs this redeploy before it will store this branch's saves (§10). Then run `tools/base44-smoke.mjs` against it. Fix Restore Backup on Base44 first (§10): today it never takes on the server.
 
 ---
 

@@ -52,6 +52,18 @@ export interface Account {
   /** Grouping for statements: 'housing', 'transport', 'career', ... */
   category?: string;
   last4?: string;
+  /** The real bank it is held at (`content/banks.ts`), for a bank account. */
+  bankId?: string;
+  /** The account's number as its country writes it (`systems/banknumber.ts`). */
+  number?: string;
+  /** Interest built up since it was last paid, in fractional hundredths. */
+  accrued?: number;
+  /** The lowest it has stood at this month, for a fee's waiver. */
+  lowest?: Money;
+  /** A bonus rate's interest this month, kept only if the month earns it. */
+  bonusAccrued?: number;
+  /** What it held when the month began, for a bonus paid on growth. */
+  monthOpen?: Money;
 }
 
 export interface Posting {

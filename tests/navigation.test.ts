@@ -90,8 +90,10 @@ describe('what was taken out', () => {
     // than pinning the whole directory, so a workspace added on purpose is an
     // addition and a workspace that crept back is caught. Putting one of these
     // back is a decision, and editing this line is how the decision is made.
+    // The bank came back on 2026-09-25, at the owner's word, as a real bank
+    // where the character lives (`systems/banking.ts`).
     const removed = [
-      'AuditionsWorkspace', 'AwardsWorkspace', 'BankWorkspace', 'BusinessWorkspace', 'CastingWorkspace', 'CharacterWorkspace',
+      'AuditionsWorkspace', 'AwardsWorkspace', 'BusinessWorkspace', 'CastingWorkspace', 'CharacterWorkspace',
       'CityWorkspace', 'CompanyWorkspace', 'EducationWorkspace', 'FilmWorkspace',
       'GoingOutWorkspace', 'HealthWorkspace', 'HistoryWorkspace', 'IndustryWorkspace',
       'InsuranceWorkspace', 'PhoneWorkspace', 'ProjectsWorkspace', 'PropertyWorkspace',
