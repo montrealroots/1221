@@ -14,7 +14,10 @@ import type { Money } from '../core/money';
 import type { Id } from '../domain/model';
 
 export interface Worth {
+  /** In the bank: every account of theirs but a deposit a landlord holds. */
   cash: Money;
+  /** Theirs, held by somebody else: a rent deposit (`systems/household.ts`). */
+  held: Money;
   liabilities: Money;
   total: Money;
 }
@@ -26,11 +29,15 @@ export interface Worth {
  */
 export function netWorth(sim: Simulation, ownerId: Id): Worth {
   let cash = 0;
+  let held = 0;
   let liabilities = 0;
+  // A deposit counted as money in the bank, and Home said 343,750 kr was in
+  // the bank when 112,750 of it was with the landlord.
   for (const account of sim.ledger.accountsOf(ownerId)) {
     if (isLiability(account.kind)) liabilities += Math.max(0, -account.balance);
+    else if (account.kind === 'escrow') held += account.balance;
     else cash += account.balance;
   }
 
-  return { cash, liabilities, total: cash - liabilities };
+  return { cash, held, liabilities, total: cash + held - liabilities };
 }

@@ -314,6 +314,7 @@ function worthSentence(w: Worth, cur: string): string {
   const parts: string[] = [];
   if (w.cash > 0) parts.push(`${formatMoney(w.cash, cur)} in the bank`);
   if (w.cash < 0) parts.push(`${formatMoney(-w.cash, cur)} overdrawn`);
+  if (w.held > 0) parts.push(`${formatMoney(w.held, cur)} held as a deposit`);
   if (w.liabilities > 0) parts.push(`${formatMoney(w.liabilities, cur)} owed against it`);
   if (parts.length === 0) {
     return 'You’re worth nothing at all today — no money anywhere and nothing owed.';

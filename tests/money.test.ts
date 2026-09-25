@@ -191,6 +191,8 @@ describe('money conservation in a live universe', () => {
     const worth = netWorth(sim, sim.player.id);
     expect(Number.isFinite(worth.total)).toBe(true);
     expect(Number.isInteger(worth.cash)).toBe(true);
-    expect(worth.total).toBe(worth.cash - worth.liabilities);
+    // A deposit the landlord holds is theirs, and not money in the bank.
+    expect(worth.total).toBe(worth.cash + worth.held - worth.liabilities);
+    expect(worth.held).toBeGreaterThanOrEqual(0);
   });
 });
