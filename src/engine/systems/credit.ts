@@ -20,7 +20,11 @@
  * those two countries and a plain word elsewhere. What moves it each month is
  * what moves a real one most: paying on time (it rises), how much of the card
  * is used (over thirty percent costs), a late payment, rent owed, and an
- * eviction. What it decides: the card's rate, repriced on each statement; the
+ * eviction. A month is reported whether the card owes anything or not: a
+ * card kept at zero is an account paid as agreed. Until 2026-09-25 the
+ * record moved only on a statement that owed something, and two years of
+ * played careers that cleared the card ended at 693, where they began,
+ * with rent owed in those months never counted either. What it decides: the card's rate, repriced on each statement; the
  * card's limit, raised a fifth at a six-monthly review for a record of 700
  * with nothing late in a year and cut to 70% by a late payment; and the
  * deposit a landlord asks (`depositFor` in `systems/household.ts`). It
@@ -169,6 +173,8 @@ export function registerCredit(sim: Simulation): void {
       }
     }
     if (credit.statementBalance > 0) scheduleDue(s, person, item.at);
+    // Nothing owed: the month is reported now, paid as agreed.
+    else reportMonth(s, person, card, credit, ON_TIME);
     scheduleStatement(s, person, item.at);
   });
 
@@ -204,13 +210,9 @@ export function registerCredit(sim: Simulation): void {
         importance: 80,
       });
     } else {
-      move += 3;
+      move += ON_TIME;
     }
-    const limit = card.creditLimit ?? 0;
-    const used = limit > 0 ? Math.max(0, -card.balance) / limit : 0;
-    if (used > 0.3) move -= Math.round((used - 0.3) * 20);
-    if (arrearsOf(s, person) > 0) move -= 10;
-    credit.score = Math.max(SCORE_MIN, Math.min(SCORE_MAX, credit.score + move));
+    reportMonth(s, person, card, credit, move);
   });
 
   sim.onCommand<{ amount: 'full' | 'minimum' | number }, { paid: Money }>('finance.pay_card', (p, { sim: s }) => {
@@ -234,6 +236,19 @@ export function registerCredit(sim: Simulation): void {
     s.player.credit.autopay = p.mode;
     return { mode: p.mode };
   });
+}
+
+/** A month paid as agreed. */
+const ON_TIME = 3;
+
+/** A month on the record: how it was paid, how much of the card is used, and any rent owed. */
+function reportMonth(sim: Simulation, person: Person, card: Account, credit: CreditState, paid: number): void {
+  let move = paid;
+  const limit = card.creditLimit ?? 0;
+  const used = limit > 0 ? Math.max(0, -card.balance) / limit : 0;
+  if (used > 0.3) move -= Math.round((used - 0.3) * 20);
+  if (arrearsOf(sim, person) > 0) move -= 10;
+  credit.score = Math.max(SCORE_MIN, Math.min(SCORE_MAX, credit.score + move));
 }
 
 /**

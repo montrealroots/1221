@@ -151,6 +151,32 @@ describe('moving', () => {
 });
 
 describe('the record', () => {
+  it('rises each month for a card kept at zero, paid as agreed', () => {
+    const sim = quickSave({ dayJob: false, wealth: 'comfortable' }, 'zero');
+    expect(card(sim)!.balance).toBe(0);
+    const score = sim.player.credit!.score;
+    // The 20th of each month is a statement: January to June is six.
+    sim.advanceTo(instantFromZoned({ year: 2026, month: 6, day: 25, hour: 7 }, sim.zone));
+    expect(card(sim)!.balance).toBe(0);
+    expect(sim.player.credit!.score).toBe(score + 6 * 3);
+  });
+
+  it('counts rent owed in a month the card owes nothing', () => {
+    const sim = quickSave({ dayJob: false, wealth: 'comfortable' }, 'zero-owed');
+    const score = sim.player.credit!.score;
+    // No room on the card, nothing in the bank: the rent is owed to the landlord.
+    card(sim)!.creditLimit = 0;
+    setChecking(sim, 0);
+    spend(sim, sim.player, rentOf(sim, sim.player), 'Rent', 'rent', true);
+    expect(arrearsOf(sim, sim.player)).toBeGreaterThan(0);
+    for (let d = 0; d < 20; d += 1) {
+      setChecking(sim, 0);
+      sim.advanceTo(startOfNextDay(sim.now, sim.zone) + 7 * MS_HOUR);
+    }
+    // January's statement, on the 20th, owed nothing: paid as agreed, less the rent owed.
+    expect(sim.player.credit!.score).toBe(score + 3 - 10);
+  });
+
   it('raises the card’s limit for a clean record at six months, and a late payment cuts it', () => {
     const sim = quickSave({ dayJob: false, wealth: 'comfortable' }, 'limit');
     const limit = card(sim)!.creditLimit!;
