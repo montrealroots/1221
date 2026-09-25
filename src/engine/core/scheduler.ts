@@ -1,8 +1,10 @@
 /**
  * SLATE — The world timeline.
  *
- * Every future commitment in the universe lives here: bills, shifts, flights,
- * shoot days, inspections, birthdays, contract deadlines, scheduled posts.
+ * Every future commitment in the universe lives here: the midnight rollover,
+ * the world's own tick and the plans the player makes. It was written for
+ * bills, shifts, flights, shoot days, inspections, birthdays, contract
+ * deadlines and scheduled posts, which went with the systems that booked them.
  *
  * LAW: there is exactly one time-advancement code path. Real-time ticking,
  * sleeping and Skip to Event all call `advanceTo`. Nothing anywhere is

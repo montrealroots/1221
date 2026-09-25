@@ -97,6 +97,7 @@ export class Simulation {
   private scheduleHandlers = new Map<string, ScheduleHandler>();
   private passageReactors = new Map<string, PassageReactor>();
   private commandHandlers = new Map<string, CommandHandler<never, unknown>>();
+  private commandGuards: ((command: Command<Record<string, unknown>, unknown>) => string | undefined)[] = [];
   private pendingEvents: WorldEvent[] = [];
   /** The advance in progress, for `advancing` and `advancingTo`. */
   private advance: {
@@ -243,6 +244,18 @@ export class Simulation {
     return this;
   }
 
+  /**
+   * A check every player command passes before it runs: a reason it may not,
+   * or undefined. Only a command a player gives is asked, at the top level;
+   * one another command runs, or one the world raises while the clock moves,
+   * is the world's own. The guide (`world/tutorial.ts`) is the one that
+   * uses it.
+   */
+  guardCommands(guard: (command: Command<Record<string, unknown>, unknown>) => string | undefined): this {
+    this.commandGuards.push(guard);
+    return this;
+  }
+
   hasCommand(kind: string): boolean {
     return this.commandHandlers.has(kind);
   }
@@ -358,6 +371,11 @@ export class Simulation {
       );
     }
 
+    // A life that has ended keeps its clock where it stopped (`systems/mortality.ts`).
+    if (this.universe.meta.endedAt !== undefined) {
+      return { from, to: from, sentFrom: from, itemsProcessed: 0, missed: [], events: [] };
+    }
+
     // A jump can only be resumed from where it stopped or later.
     const sentFrom = opts.resumes !== undefined && opts.resumes <= from ? opts.resumes : from;
     this.advance = { from, target, sentFrom, stopsForPlayer: opts.stopOnPlayerRequired === true };
@@ -450,6 +468,13 @@ export class Simulation {
         result.itemsProcessed++;
         if (opts.onProgress && result.itemsProcessed % 25 === 0) {
           opts.onProgress(result.itemsProcessed, Math.max(totalDue, result.itemsProcessed), this.universe.now);
+        }
+        // The life ended in that handler: the clock stops at the moment it
+        // did, and nothing after it is worked, paid or charged.
+        if (this.universe.meta.endedAt !== undefined) {
+          result.to = this.universe.now;
+          result.events = this.pendingEvents.splice(0, this.pendingEvents.length);
+          return result;
         }
       }
 
@@ -552,6 +577,11 @@ export class Simulation {
       } finally {
         this.depth--;
       }
+    }
+
+    for (const guard of this.commandGuards) {
+      const refused = guard(command as Command<Record<string, unknown>, unknown>);
+      if (refused !== undefined) return { ok: false, error: refused };
     }
 
     const snapshot: UniverseSnapshot = snapshotUniverse(this.universe);

@@ -10,7 +10,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { Slot } from '@/engine/persistence/adapter';
 import {
-  APP_VERSION, WEALTH_PROFILES, defaultConfig, wealthNote,
+  APP_VERSION, currencyFor, defaultConfig, wealthIn, wealthNote,
   type NewSaveConfig, type StartingWealth,
 } from '@/engine/world/bootstrap';
 import { LocationPicker } from './LocationPicker';
@@ -19,11 +19,18 @@ import {
   CITIES, COUNTRIES, REGIONS, countryOfPlace, isCountryLoaded, loadCountryCities,
 } from '@/engine/content/geography';
 import type { City } from '@/engine/content/geography';
+import { RATES_NOTE } from '@/engine/content/currency';
+import { HOUSING, costsAt, type Housing } from '@/engine/systems/household';
+import { wageAt, withholdingAt } from '@/engine/systems/work';
+import { scoreIsANumberIn, scoreWord } from '@/engine/systems/credit';
+import { minimumWageAt } from '@/engine/content/wages';
+import { clockWords, jobFor, payCycleFor, payCycleWords, tipsPerHour, weeklyHours, workDaysWords } from '@/engine/content/jobs';
+import { exchange } from '@/engine/content/currency';
 import { formatMoney } from '@/engine/core/money';
 import { SAVE_SCHEMA_VERSION } from '@/engine/domain/model';
 import { formatPeople } from '@/engine/world/place';
 import { ageOnDate, zoneAbbreviation } from '@/engine/core/time';
-import { citizenshipFor } from '@/engine/domain/citizenship';
+import { citizenshipFor, mayWorkIn } from '@/engine/domain/citizenship';
 import {
   ETHNICITIES, ETHNICITY_NOTE, ETHNICITY_OTHER, describeEthnicity,
 } from '@/engine/content/ethnicity';
@@ -36,8 +43,10 @@ import {
   MAX_PERSONALITY_TRAITS, PERSONALITY_GROUPS, PERSONALITY_TRAIT_BY_ID,
   conflictingPersonalityTraits, personalityTraitPairs,
 } from '@/engine/content/personality-traits';
-import { AXIS_MAX, AXIS_MIN } from '@/engine/systems/personality';
+import { AXIS_MAX, AXIS_MIN, personalityOf } from '@/engine/systems/personality';
 import { outOf, said } from '@/ui/looks/words';
+import { BEFORE_ACTING, BEFORE_ACTING_BY_ID, DEFAULT_BEFORE_ACTING } from '@/engine/content/backgrounds';
+import { ceilingAt } from '@/engine/content/lifespan';
 
 /**
  * How far back the last year a character can be born in sits from the year
@@ -488,6 +497,16 @@ function placeLine(city: City): string {
 }
 
 /**
+ * A place as Review's summary writes it: the town and the country. The full
+ * line, region included, is on the steps that chose it; on Review it ran too
+ * long for the Starting Point card and broke over two lines.
+ */
+function shortPlace(city: City): string {
+  const country = COUNTRIES.get(city.countryId)?.name;
+  return [city.name, country === city.name ? undefined : country].filter(Boolean).join(', ');
+}
+
+/**
  * Why a trait can't be picked right now, or undefined when it can, or is
  * already held and can be put down. A trait it clashes with comes first,
  * because putting one of those down is the way to it; being full comes second.
@@ -533,11 +552,12 @@ function PersonalityStep({ config, setConfig }: {
           <div>
             <h2>Dispositions</h2>
             <p className="muted small">
-              How you lean, not what you can do. Three of them do something today: Emotional Stability
+              How you lean, not what you can do. Four of them do something today: Emotional Stability
               sets how quickly stress arrives and how quickly it clears, Conscientiousness sets how well
-              the nights go, and Ambition sets what running yourself into the ground costs you in
-              stress. The other four are written into the save and read by nothing yet. Openness waits
-              on travel, and the last three wait on other people. Neither is built.
+              the nights go, Ambition sets what running yourself into the ground costs you in stress,
+              and Risk Tolerance over 65 starts your card's autopay on the minimum, so a balance is carried.
+              The other three are written into the save and read by nothing yet. Openness waits on
+              travel, and Extraversion and Agreeableness wait on other people. Neither is built.
             </p>
           </div>
         </div>
@@ -571,8 +591,9 @@ function PersonalityStep({ config, setConfig }: {
               sides can’t both be held. Today they change how stress arrives and clears, how well
               you sleep, how much a night puts back, how quickly you stop being clean and how far
               your mood swings. Each description and cost is written for a whole life, and the game
-              charges only the part of it that touches those. The money traits change nothing yet,
-              because nothing in the game spends.
+              charges only the part of it that touches those. Frugal, Spender and Generous change
+              what your food costs. Keeps Accounts is about what other people owe you, and waits for
+              other people.
             </p>
           </div>
           <span className="chip chip-accent">{held.length} / {MAX_PERSONALITY_TRAITS}</span>
@@ -622,6 +643,12 @@ function PersonalStep({
   set: Setter;
   setConfig: React.Dispatch<React.SetStateAction<NewSaveConfig>>;
 }) {
+  // The body the work before left them, held to what the age allows, as the
+  // engine starts it (`world/bootstrap.ts`).
+  const before = BEFORE_ACTING_BY_ID[config.beforeActing] ?? BEFORE_ACTING_BY_ID[DEFAULT_BEFORE_ACTING]!;
+  const ceiling = ceilingAt(ageAtStart(config));
+  const startsAt = Math.min(before.fitness, ceiling.fitness);
+
   const toggleInterest = (interest: string) => {
     setConfig((c) => ({
       ...c,
@@ -702,6 +729,12 @@ function PersonalStep({
             <p className="muted small">
               What you care about when nobody is paying you to. Take as many as are true.
             </p>
+            <p className="muted small">
+              Some change how much you get out of looking after yourself: Cooking for a meal,
+              Fitness and Sport for a workout, and what you’d spend an evening on for an hour
+              unwinding. They lift your mood more and ease more stress. None makes you better
+              at anything.
+            </p>
           </div>
           <span className="chip chip-accent">{config.interests.length} Chosen</span>
         </div>
@@ -736,27 +769,53 @@ function PersonalStep({
       </div>
 
       {/*
-        A sentence the player writes about their own character rather than an
-        option list promising a consequence. It is not dead: the person page
-        prints it under their name. It carries no number, and the copy here
-        says so rather than implying a stat is hiding behind it.
+        This was one box of free text, and the copy said it carried "no
+        attribute and no advantage", which was true. What somebody did before
+        is the part of a past the engine can honestly read, because it is
+        written on the body, so it is asked as a choice now and sets the
+        fitness they start with. The sentence of their own stays beside it,
+        said back on their page and deciding nothing, as before.
       */}
       <div className="card">
         <div className="panel-head">
           <div>
             <h2>Background</h2>
             <p className="muted small">
-              Where the life before this one happened. It carries no attribute and no
-              advantage — it is yours, and it is on your page from the first morning.
+              The life before this one. What you did for a living is written on your body: it’s the
+              fitness you start with, and it fades like anybody’s unless you keep it up. And it’s the
+              day job you fall back on between roles.
             </p>
           </div>
         </div>
         <div className="field">
-          <label htmlFor="background">Where You Come From</label>
+          <label htmlFor="before-acting">Before Acting</label>
+          <select id="before-acting" value={config.beforeActing} onChange={(e) => set('beforeActing', e.target.value)}>
+            {BEFORE_ACTING.map((one) => <option key={one.id} value={one.id}>{one.label}</option>)}
+          </select>
+        </div>
+        <div className="callout">
+          {before.note} It’s also the work you fall back on: {jobFor(before.id).title.toLowerCase()}, {workDaysWords(jobFor(before.id))}, about {jobFor(before.id).overMinimum === 1 ? 'the legal minimum' : `${jobFor(before.id).overMinimum} times the legal minimum`}.
+        </div>
+        <div className="grid grid-2" style={{ marginTop: 'var(--s4)' }}>
+          <div className="stat">
+            <span className="stat-label">Fitness On The First Morning</span>
+            <span className="stat-value mono">{Math.round(startsAt)}</span>
+            <span className="stat-note">
+              {startsAt < before.fitness ? `${before.fitness}, held to what your age allows` : 'An everyday life keeps 35'}
+            </span>
+          </div>
+          <div className="stat">
+            <span className="stat-label">Rest Can Mend You To</span>
+            <span className="stat-value mono">{Math.round(Math.min(ceiling.condition, 70 + 0.6 * startsAt))}</span>
+            <span className="stat-note">Condition, while the fitness lasts</span>
+          </div>
+        </div>
+        <div className="field" style={{ marginTop: 'var(--s4)' }}>
+          <label htmlFor="background">In Your Own Words</label>
           <textarea
             id="background" value={config.background}
             onChange={(e) => set('background', e.target.value)}
-            placeholder="A sentence about the life before this one."
+            placeholder="A sentence about the life before this one. It’s on your page from the first morning, and it decides nothing."
           />
         </div>
       </div>
@@ -775,7 +834,11 @@ function StartingPointStep({ config, set, setConfig }: {
 }) {
   const city = CITIES.get(config.startLocationId);
   const birthplace = CITIES.get(config.homeRegionId);
-  const wealth = WEALTH_PROFILES[config.wealth];
+  const cur = currencyFor(config.startLocationId);
+  const wealth = wealthIn(config.wealth, cur);
+  const country = city ? COUNTRIES.get(city.countryId) : undefined;
+  const currencyOfCountry = country?.currency.toUpperCase() ?? cur;
+  const countryCurrencyName = country ? `the ${country.currencyName.toLowerCase()}` : "the local money";
 
   return (
     <div className="col gap-5">
@@ -823,7 +886,7 @@ function StartingPointStep({ config, set, setConfig }: {
             </div>
             <div className="stat">
               <span className="stat-label">Time Zone</span>
-              <span className="stat-value" style={{ fontSize: 'var(--size-md)' }}>{zoneAbbreviation(Date.now(), city.timeZone)}</span>
+              <span className="stat-value" style={{ fontSize: 'var(--size-md)' }}>{zoneAbbreviation(Date.UTC(config.startYear, config.startMonth - 1, config.startDay, 12), city.timeZone)}</span>
               <span className="stat-note">{city.timeZone}</span>
             </div>
             <div className="stat">
@@ -835,11 +898,18 @@ function StartingPointStep({ config, set, setConfig }: {
         )}
       </div>
 
+      <MonthByMonth config={config} set={set} cur={cur} />
+
       <div className="card">
         <div className="panel-head">
           <div>
             <h2>What Is Yours</h2>
             <p className="muted small">The money in your own name on the first morning.</p>
+            <p className="muted small">
+              {cur === currencyOfCountry
+                ? `Kept in ${countryCurrencyName} (${cur}), the money where you start, and it stays in it wherever you go. ${RATES_NOTE}`
+                : `Kept in euros: SLATE has no rate for ${countryCurrencyName} (${currencyOfCountry}) to convert your money into.`}
+            </p>
           </div>
         </div>
         <div className="field">
@@ -852,18 +922,129 @@ function StartingPointStep({ config, set, setConfig }: {
         <div className="grid grid-3" style={{ marginTop: 'var(--s4)' }}>
           <div className="stat">
             <span className="stat-label">Checking</span>
-            <span className="stat-value mono">{formatMoney(wealth.checking, { cents: false })}</span>
+            <span className="stat-value mono">{formatMoney(wealth.checking, cur, { cents: false })}</span>
           </div>
           <div className="stat">
             <span className="stat-label">Savings</span>
-            <span className="stat-value mono">{formatMoney(wealth.savings, { cents: false })}</span>
+            <span className="stat-value mono">{formatMoney(wealth.savings, cur, { cents: false })}</span>
           </div>
           <div className="stat">
-            <span className="stat-label">Credit Score</span>
-            <span className="stat-value mono">{wealth.creditScore}</span>
+            <span className="stat-label">Credit Record</span>
+            <span className="stat-value mono">{scoreIsANumberIn(config.startLocationId) ? wealth.creditScore : scoreWord(wealth.creditScore)}</span>
           </div>
         </div>
       </div>
+    </div>
+  );
+}
+
+/**
+ * What a month here costs and pays, before the save exists.
+ *
+ * Every figure is the engine's own sum (`costsAt`, `wageAt`,
+ * `withholdingAt`), read for the town, the job and the start date on this
+ * page, so the card and the first month of play can't disagree. What is
+ * real and what is SLATE's estimate is said under it.
+ */
+function monthOf(config: NewSaveConfig, cur: string) {
+  const at = Date.UTC(config.startYear, config.startMonth - 1, config.startDay, 12);
+  const job = jobFor(config.beforeActing);
+  const costs = costsAt(config.startLocationId, config.housing, cur, at);
+  const wage = wageAt(config.startLocationId, job.id, cur, at);
+  const floor = minimumWageAt(config.startLocationId, at, cur);
+  const withheld = withholdingAt(config.startLocationId, job.id, cur, at);
+  const monthly = (weekly: number) => Math.round(weekly * 52 / 12);
+  // The right to work here, from the citizenship the place of birth gives.
+  const citizenOf = citizenshipFor(config.homeRegionId);
+  const right = citizenOf ? mayWorkIn(citizenOf, config.startLocationId) : { may: false };
+  const working = config.dayJob && right.may;
+  const city = CITIES.get(config.startLocationId);
+  const countryInfo = city ? COUNTRIES.get(city.countryId) : undefined;
+  const country = countryInfo?.jurisdictionCode ?? '';
+  // Tips where the custom is to tip, untaxed, on top: they were paid in play
+  // and left out of this line.
+  const tipHour = tipsPerHour(job.id, country);
+  const tipsInCur = tipHour > 0 ? exchange(tipHour, countryInfo?.currency.toUpperCase() ?? 'USD', cur) ?? tipHour : 0;
+  const tips = working ? monthly(tipsInCur * weeklyHours(job)) : 0;
+  const pay = working ? Math.round(monthly(wage * weeklyHours(job)) * (1 - withheld)) + tips : 0;
+  const spending = personalityOf({ personality: config.personality, personalityTraits: config.personalityTraits }, 'spending');
+  const food = Math.round(costs.day * spending * 365 / 12);
+  const left = pay - costs.rent - costs.bills - food;
+  return { at, job, costs, wage, floor, withheld, citizenOf, right, working, country, tips, pay, spending, food, left };
+}
+
+function MonthByMonth({ config, set, cur }: { config: NewSaveConfig; set: Setter; cur: string }) {
+  const { job, costs, wage, floor, withheld, citizenOf, right, working, country, tips, pay, spending, food, left } = monthOf(config, cur);
+  const money = (cents: number) => formatMoney(cents, cur, { cents: false });
+
+  return (
+    <div className="card">
+      <div className="panel-head">
+        <div>
+          <h2>Month By Month</h2>
+          <p className="muted small">What living here pays and costs. Rent and bills are due on the first.</p>
+        </div>
+      </div>
+
+      <div className="field">
+        <label htmlFor="housing">Where You Sleep</label>
+        <select id="housing" value={config.housing} onChange={(e) => set('housing', e.target.value as Housing)}>
+          {(Object.keys(HOUSING) as Housing[]).map((kind) => <option key={kind} value={kind}>{HOUSING[kind].label}</option>)}
+        </select>
+      </div>
+      <div className="callout">{HOUSING[config.housing].note}</div>
+
+      <label className="check" htmlFor="day-job" style={{ marginTop: 'var(--s4)' }}>
+        <input id="day-job" type="checkbox" checked={working} disabled={!right.may} onChange={(e) => set('dayJob', e.target.checked)} />
+        <span>
+          Keep A Day Job
+          <span className="dim"> — {job.title}, {workDaysWords(job)}, {job.hours} hours from {clockWords(job.startHour)}, paid {payCycleWords(payCycleFor(country))}. You can quit, or look for work later.</span>
+        </span>
+      </label>
+
+      {!right.may && (
+        <div className="callout callout-warning" style={{ marginTop: 'var(--s3)' }}>
+          As a citizen of {COUNTRIES.get(citizenOf ?? '')?.name ?? 'another country'}, you’d need a work visa to work in {COUNTRIES.get(right.countryId ?? '')?.name ?? 'this country'}, and {job.title.toLowerCase()} doesn’t get one. You’d live on what you start with.
+        </div>
+      )}
+
+      <div className="grid grid-3" style={{ marginTop: 'var(--s4)' }}>
+        <div className="stat">
+          <span className="stat-label">Take-Home Pay</span>
+          <span className="stat-value mono">{money(pay)}</span>
+          <span className="stat-note">
+            {working
+              ? `${formatMoney(wage, cur)} an hour for ${weeklyHours(job)} hours a week, less ${Math.round(withheld * 100)}% tax${tips > 0 ? `, and about ${formatMoney(tips, cur, { cents: false })} in tips` : ''}`
+              : 'No day job: only what you start with'}
+          </span>
+        </div>
+        <div className="stat">
+          <span className="stat-label">Rent And Bills</span>
+          <span className="stat-value mono">{money(costs.rent + costs.bills)}</span>
+          <span className="stat-note">{money(costs.rent)} rent, {money(costs.bills)} bills</span>
+        </div>
+        <div className="stat">
+          <span className="stat-label">Food</span>
+          <span className="stat-value mono">{money(food)}</span>
+          <span className="stat-note">{money(Math.round(costs.day * spending))} a day, {money(Math.round(costs.meal * spending))} a cooked meal</span>
+        </div>
+      </div>
+
+      <div className={`callout ${left < 0 ? 'callout-warning' : ''}`} style={{ marginTop: 'var(--s4)' }}>
+        {left >= 0
+          ? `About ${money(left)} left over a month.`
+          : `About ${money(-left)} short a month. What you start with covers it until it doesn't, and then it's the card, and then owing the landlord.`}
+      </div>
+
+      <p className="xs dim" style={{ marginTop: 'var(--s3)' }}>
+        {floor.kind === 'statutory' && `The legal minimum here is ${formatMoney(floor.currency === cur ? floor.hourly : wage / job.overMinimum, cur)} an hour, and ${job.title.toLowerCase()} pays ${job.overMinimum === 1 ? 'about that' : `about ${job.overMinimum} times it`}, SLATE's estimate. `}
+        {floor.kind === 'agreement' && `There's no statutory minimum here: pay starts from the lowest collectively agreed rate, and ${job.title.toLowerCase()} pays ${job.overMinimum === 1 ? 'about that' : `about ${job.overMinimum} times it`}, SLATE's estimate. `}
+        {floor.kind === 'estimate' && 'SLATE has no minimum wage on file for here, so the pay is its estimate from the cost of living. '}
+        {costs.rentFigure.kind === 'published' && `Rent is published here: ${costs.rentFigure.measure}, ${costs.rentFigure.period}${config.housing === 'shared' && !costs.rentFigure.measure?.includes('room') ? ', and a room is taken at 55% of it' : ''}. `}
+        {costs.rentFigure.kind === 'calibrated' && 'Rent is SLATE’s estimate for this town, scaled to what’s published elsewhere in the country. '}
+        {costs.rentFigure.kind === 'estimate' && 'Rent is SLATE’s estimate for this town; nothing is published for the country. '}
+        Bills and food are SLATE's estimates, not published figures.
+      </p>
     </div>
   );
 }
@@ -872,7 +1053,9 @@ function ReviewStep({ config }: { config: NewSaveConfig }) {
   const city = CITIES.get(config.startLocationId);
   const birthplace = CITIES.get(config.homeRegionId);
   const age = ageAtStart(config);
-  const wealth = WEALTH_PROFILES[config.wealth];
+  const cur = currencyFor(config.startLocationId);
+  const wealth = wealthIn(config.wealth, cur);
+  const month = monthOf(config, cur);
 
   return (
     <div className="col gap-5">
@@ -900,23 +1083,29 @@ function ReviewStep({ config }: { config: NewSaveConfig }) {
         <div className="card">
           <div className="eyebrow" style={{ marginBottom: 'var(--s3)' }}>Identity</div>
           <Line label="Legal Name" value={[config.firstName, config.middleName, config.lastName].filter(Boolean).join(' ')} />
-          <Line label="Pronouns" value={config.pronouns} />
+          <Line label="Pronouns" value={pronounsLabel(config.pronouns)} />
           <Line label="Billed As" value={billedAs(config)} />
           <Line
             label="Race Or Ethnicity"
             value={describeEthnicity(config.raceEthnicity, config.raceEthnicityOwn)}
           />
           <Line label="Born" value={`${MONTHS[config.birthMonth - 1]} ${config.birthDay}, ${config.birthYear}`} />
-          <Line label="Place Of Birth" value={birthplace ? placeLine(birthplace) : '—'} />
+          <Line label="Place Of Birth" value={birthplace ? shortPlace(birthplace) : '—'} />
           <Line label="Citizenship" value={citizenshipName(config) ?? '—'} />
         </div>
 
         <div className="card">
           <div className="eyebrow" style={{ marginBottom: 'var(--s3)' }}>Starting Point</div>
-          <Line label="Where You Live" value={city ? placeLine(city) : '—'} />
-          <Line label="Checking" value={formatMoney(wealth.checking, { cents: false })} />
-          <Line label="Savings" value={formatMoney(wealth.savings, { cents: false })} />
-          <Line label="Credit Score" value={String(wealth.creditScore)} />
+          <Line label="Where You Live" value={city ? shortPlace(city) : '—'} />
+          <Line label="Checking" value={formatMoney(wealth.checking, cur, { cents: false })} />
+          <Line label="Savings" value={formatMoney(wealth.savings, cur, { cents: false })} />
+          <Line label="Credit Record" value={scoreIsANumberIn(config.startLocationId) ? String(wealth.creditScore) : scoreWord(wealth.creditScore)} />
+          {wealth.cardLimit > 0 && (
+            <Line label="Card" value={`${formatMoney(-wealth.cardBalance, cur, { cents: false })} owed of ${formatMoney(wealth.cardLimit, cur, { cents: false })}`} />
+          )}
+          <Line label="Where You Sleep" value={HOUSING[config.housing].label} />
+          <Line label="Day Job" value={month.working ? month.job.title : month.right.may ? 'None' : 'No Right To Work Here'} />
+          <Line label={month.left >= 0 ? 'Left Over A Month' : 'Short A Month'} value={formatMoney(Math.abs(month.left), cur, { cents: false })} />
         </div>
       </div>
 
@@ -928,8 +1117,8 @@ function ReviewStep({ config }: { config: NewSaveConfig }) {
         <div style={{ marginTop: 'var(--s3)' }}>
           {config.personalityTraits.length === 0 ? (
             <p className="muted small">
-              You haven’t picked any traits, so only the sliders above lean your sleep and your
-              temper. That’s allowed.
+              You haven’t picked any traits, so only the sliders above lean your sleep, your temper and
+              your card. That’s allowed.
             </p>
           ) : (
             <div className="col gap-3">
@@ -953,15 +1142,16 @@ function ReviewStep({ config }: { config: NewSaveConfig }) {
         <div className="eyebrow" style={{ marginBottom: 'var(--s3)' }}>Interests &amp; Background</div>
         <Line label="Interests" value={namesOf(ALL_INTERESTS, config.interests)} />
         <Line label="Genres" value={namesOf(FILM_GENRES, config.genres)} />
+        <Line label="Before Acting" value={BEFORE_ACTING_BY_ID[config.beforeActing]?.label ?? '—'} />
         {/* A sentence of the player's own, so it is set as one, not squeezed
             into the right-hand column a line gives a value. */}
         {config.background.trim() ? (
           <div style={{ padding: '3px 0' }}>
-            <span className="small muted">Background</span>
+            <span className="small muted">In Your Own Words</span>
             <p className="small" style={{ margin: '2px 0 0' }}>{config.background.trim()}</p>
           </div>
         ) : (
-          <Line label="Background" value="—" />
+          <Line label="In Your Own Words" value="—" />
         )}
       </div>
 
@@ -979,13 +1169,24 @@ function namesOf(all: readonly Interest[], chosen: readonly string[]): string {
   return named.length > 0 ? named.join(', ') : '—';
 }
 
+/**
+ * One line of Review: the label on the left, kept on one line, and the value
+ * against the right edge, wrapping there if it must. The label used to shrink
+ * with the value, so a long place broke "Where You Live" over two lines and
+ * sat its own two lines in the middle of the card.
+ */
 function Line({ label, value }: { label: string; value: string }) {
   return (
-    <div className="row-between" style={{ padding: '3px 0' }}>
-      <span className="small muted">{label}</span>
-      <span className="small strong">{value}</span>
+    <div className="row-between" style={{ padding: '3px 0', gap: 'var(--s3)', alignItems: 'baseline' }}>
+      <span className="small muted" style={{ whiteSpace: 'nowrap', flexShrink: 0 }}>{label}</span>
+      <span className="small strong" style={{ textAlign: 'right' }}>{value}</span>
     </div>
   );
+}
+
+/** Pronouns as a label writes them: "They/Them", "She/Her". */
+function pronounsLabel(pronouns: string): string {
+  return pronouns.split('/').map((one) => one.charAt(0).toUpperCase() + one.slice(1)).join('/');
 }
 
 // ---------------------------------------------------------------------------
@@ -1015,7 +1216,8 @@ function validate(config: NewSaveConfig, step: StepIndex): string[] {
   }
   if (step === STEP['Starting Point']) {
     if (!CITIES.get(config.startLocationId)) issues.push('Choose the town or city you live in.');
-    if (config.startDay < 1 || config.startDay > 28) issues.push('Pick a start day between 1 and 28.');
+    // Nothing on the page sets the start date; this guards a draft that came in wrong.
+    if (config.startDay < 1 || config.startDay > 28) issues.push('This draft’s start date isn’t one SLATE can start on. Start the character again.');
   }
   return issues;
 }

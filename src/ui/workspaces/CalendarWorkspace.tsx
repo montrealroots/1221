@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { titleCaseLabel } from '@/engine/core/text';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Empty, Modal, Stat } from '@/ui/components/primitives';
+import { Gated } from '@/ui/guide/Guide';
 import { monthGrid, entriesBetween, keptCalendars, CALENDAR_LEGEND, LEGEND_BY_CATEGORY, type CalendarDay, type CalendarEntry } from '@/engine/world/calendar';
 import { formatDate, formatDuration, formatTime, startOfDay, zonedParts, MS_DAY, MS_MINUTE } from '@/engine/core/time';
 import { LONGEST_TITLE, PLAN_KIND, PLAN_LENGTHS, type PlanResult } from '@/engine/world/plans';
@@ -146,9 +147,9 @@ export function CalendarWorkspace() {
           actions={(
             <>
               {canPlan(selectedDay, sim.now, sim.homeZone) && (
-                <button className="btn btn-sm btn-primary" onClick={() => setPlanning(selectedDay.key)}>
+                <Gated feature="calendar.schedule" className="btn btn-sm btn-primary" onClick={() => setPlanning(selectedDay.key)}>
                   Put Something On It
-                </button>
+                </Gated>
               )}
               <button className="btn btn-ghost btn-sm" onClick={() => setSelected(null)}>Close</button>
             </>
@@ -174,12 +175,12 @@ export function CalendarWorkspace() {
                     <div className="small strong">{titleCaseLabel(entry.title)}</div>
                     <div className="xs dim">
                       {formatTime(entry.at, sim.homeZone)}
-                      {entry.durationMinutes ? ` · ${entry.durationMinutes} min` : ''}
+                      {entry.durationMinutes ? ` · ${formatDuration(entry.durationMinutes * MS_MINUTE)}` : ''}
                       {entry.locationId ? ` · ${CITIES.get(entry.locationId)?.name ?? ''}` : ''}
                     </div>
                   </div>
                   {entry.conflicted && <span className="chip chip-negative">Clash</span>}
-                  {statusOf(entry) !== 'pending' && <span className="chip">{titleCaseLabel(statusOf(entry))}</span>}
+                  {statusOf(entry) !== 'pending' && <span className="chip">{statusWords(statusOf(entry))}</span>}
                 </button>
               ))}
             </div>
@@ -352,7 +353,7 @@ function EntryDetail({ entry, onClose }: { entry: CalendarEntry; onClose: () => 
       footer={mine ? (
         <>
           <button className="btn btn-ghost" onClick={onClose}>Leave It</button>
-          <button className="btn" onClick={callOff}>Call It Off</button>
+          <Gated feature="calendar.cancel" className="btn" onClick={callOff}>Call It Off</Gated>
         </>
       ) : undefined}
     >
@@ -362,7 +363,7 @@ function EntryDetail({ entry, onClose }: { entry: CalendarEntry; onClose: () => 
         <Stat label="Kind" value={legend?.label ?? titleCaseLabel(entry.category)} note={city} />
         <Stat
           label="Status"
-          value={titleCaseLabel(status)}
+          value={statusWords(status)}
           tone={status === 'missed' || status === 'cancelled' ? 'negative' : status === 'completed' ? 'positive' : undefined}
         />
       </div>
@@ -384,3 +385,12 @@ const MONTHS = [
   'January', 'February', 'March', 'April', 'May', 'June',
   'July', 'August', 'September', 'October', 'November', 'December',
 ];
+
+/**
+ * A status as the screen says it, in American spelling. The save keeps the
+ * status with a doubled l; the Day look already wrote Canceled while this
+ * wrote the doubled spelling beside it.
+ */
+function statusWords(status: string): string {
+  return status === 'cancelled' ? 'Canceled' : titleCaseLabel(status);
+}

@@ -32,7 +32,7 @@ import { ceilingAt } from '@/engine/content/lifespan';
 import type { Simulation } from '@/engine';
 
 const KNOBS: readonly PersonalityKnob[] = [
-  'stressGain', 'stressRecovery', 'sleepQuality', 'energyRecovery', 'hygieneDrift', 'moraleSwing',
+  'stressGain', 'stressRecovery', 'sleepQuality', 'energyRecovery', 'hygieneDrift', 'moraleSwing', 'spending',
 ];
 
 /** Somebody with no lean anywhere: every axis at the middle and no traits. */
@@ -85,9 +85,22 @@ function pickFor(knob: PersonalityKnob, way: 'down' | 'up'): string[] {
 }
 
 /** A save for a case, born in a given year. */
+/**
+ * A character to measure a personality on: no day job, and money behind them.
+ *
+ * These years isolate what a disposition or a trait does, and they were set
+ * before anybody worked or paid rent. With the café job every new save gets,
+ * four of the bars failed by a point or less (morale 78.8 at sixty against
+ * eighty), and the worst four for sleep at seventy went to bed on empty. With
+ * rent and food and no job, a save that started Scraping ran out, stopped
+ * eating, and fell apart for money rather than temperament. Inherited money
+ * pays every bill and never worries anybody, so nothing but the personality
+ * moves these. Working life has its own year in `tests/work.test.ts`.
+ */
 function build(c: Case, birthYear: number, seed: string): Simulation {
   return quickSave({
     personality: { ...defaultPersonality(), ...c.personality }, personalityTraits: c.traits, birthYear,
+    dayJob: false, wealth: 'inherited',
   }, seed);
 }
 
@@ -364,15 +377,25 @@ describe('what it does', () => {
       .toBeGreaterThan(personalityOf(person([], { conscientiousness: 5 }), 'sleepQuality'));
   });
 
-  it('lets the four it says do nothing do nothing, and the money traits too', () => {
+  it('lets the four it says do nothing do nothing, and Keeps Accounts too', () => {
     for (const axis of ['openness', 'extraversion', 'agreeableness', 'riskTolerance'] as const) {
       for (const knob of KNOBS) {
         expect(personalityOf(person([], { [axis]: 5 }), knob), `${axis} moves ${knob}`)
           .toBe(personalityOf(person([], { [axis]: 95 }), knob));
       }
     }
-    for (const id of ['frugal', 'spender', 'generous', 'keeps_accounts']) {
-      for (const knob of KNOBS) expect(personalityOf(person([id]), knob), `${id} moves ${knob}`).toBe(1);
+    for (const knob of KNOBS) expect(personalityOf(person(['keeps_accounts']), knob), `keeps_accounts moves ${knob}`).toBe(1);
+  });
+
+  it('makes a frugal person spend less on the same day’s food than a spender', () => {
+    const frugal = personalityOf(person(['frugal']), 'spending');
+    const spender = personalityOf(person(['spender']), 'spending');
+    expect(frugal).toBeLessThan(1);
+    expect(spender).toBeGreaterThan(1);
+    expect(personalityOf(person(['generous']), 'spending')).toBeGreaterThan(1);
+    // And the other three money traits move nothing else.
+    for (const id of ['frugal', 'spender', 'generous']) {
+      for (const knob of KNOBS.filter((k) => k !== 'spending')) expect(personalityOf(person([id]), knob), `${id} moves ${knob}`).toBe(1);
     }
   });
 
@@ -639,7 +662,8 @@ describe('no single trait or disposition wears a life down', () => {
     // So these are held to the ceiling itself, every morning. Measured: every
     // single trait and slider, and the worst four with the worst sliders, sat
     // on it every morning of the sixty, at eleven and at one, with stress 0
-    // and morale 100, told nine to fourteen hours.
+    // and morale 100, told nine to fourteen hours. Morale ends at 89.3 to 93.8
+    // since the nights bring it back toward where the body has it settle.
     for (const birthYear of [1955, 1944]) {
       for (const bedtime of [23, 1]) {
         for (const c of [...singles, ...worst]) {
@@ -683,7 +707,9 @@ describe('no single trait or disposition wears a life down', () => {
 
   it('keeps the worst four with the worst sliders on their feet on autopilot, at twenty-five', () => {
     // At sixty the same people left alone for a year are not held here. This
-    // used to say they ended flat; measured, their morale ends at a hundred.
+    // used to say they ended flat; measured, their morale ended at a hundred,
+    // and ends at 82.8 to 83.7 at twenty-five since the nights bring it back
+    // toward where the body has it settle.
     // What the worst four for sleep and for stress lose is energy, gone by
     // bedtime, and stress, which ends the year at 30.0 and 30.5, over the bar;
     // their lowest condition is 65.4 and 68.0. The worst four for mood hold,

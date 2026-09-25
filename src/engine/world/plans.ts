@@ -19,6 +19,7 @@
 import type { Simulation } from '../core/simulation';
 import type { Id } from '../domain/model';
 import { CITIES } from '../content/geography';
+import { SHIFT_KIND, callIn } from '../systems/work';
 import { formatTime, MS_DAY, MS_MINUTE, type Instant } from '../core/time';
 
 /** The one scheduled kind a person can make for themselves. */
@@ -111,14 +112,24 @@ export function checkPlan(sim: Simulation, spec: Partial<PlanSpec>): PlanResult 
  * The handler is what happens when the moment arrives. A plan you were in the
  * right place for is simply done — no notification, because the clock stopped
  * at it and you were looking straight at it. A plan somewhere you are not is
- * missed, and that is worth being told.
+ * missed, and that is worth being told. So is one they were asleep for: the
+ * Sleep dialog warned it would be slept through, and it was marked kept.
  */
 export function registerPlans(sim: Simulation): void {
   sim.onSchedule(PLAN_KIND, (item, s) => {
     const player = s.universe.people[s.universe.playerId];
     const wanted = item.locationId;
-    const kept = Boolean(player) && (!wanted || wanted === player!.currentLocationId);
-    if (kept || !player || !wanted) return;
+    const inPlace = Boolean(player) && (!wanted || wanted === player!.currentLocationId);
+    // Where they are is asked first, so the missed notice below still comes.
+    // Asleep and here, it's missed quietly: a chosen night says for itself
+    // what it slept through (`life.sleep`). The screen always stops at a plan,
+    // and a stop wakes them, so this is the clock run over it on autopilot.
+    const asleep = Boolean(player) && player!.awakeSince !== undefined && player!.awakeSince > item.at;
+    if (player && inPlace && asleep) {
+      item.status = 'missed';
+      return;
+    }
+    if (inPlace || !player || !wanted) return;
 
     item.status = 'missed';
     const there = CITIES.get(wanted)?.name ?? 'somewhere else';
@@ -158,10 +169,16 @@ export function registerPlans(sim: Simulation): void {
   sim.onCommand<{ entryId: Id }, PlanResult>('calendar.skip', (payload, { sim: s }) => {
     const item = s.timeline.get(payload.entryId);
     if (!item) return { ok: false, error: 'There’s nothing by that name on the calendar.' };
-    if (item.kind !== PLAN_KIND) return { ok: false, error: 'That one isn’t yours to walk away from.' };
+    if (item.kind !== PLAN_KIND && item.kind !== SHIFT_KIND) return { ok: false, error: 'That one isn’t yours to walk away from.' };
     if (item.status !== 'pending') return { ok: false, error: 'That’s already settled one way or the other.' };
     if (item.at > s.now) {
       return { ok: false, error: 'It hasn’t come round yet. Call it off instead.' };
+    }
+    // Not going to a shift is calling in sick: no pay, and it counts
+    // against the job (`systems/work.ts`).
+    if (item.kind === SHIFT_KIND) {
+      callIn(s, item);
+      return { ok: true, id: item.id };
     }
 
     item.status = 'missed';

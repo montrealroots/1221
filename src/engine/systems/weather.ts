@@ -8,9 +8,10 @@
  * correlated — a cold snap lasts, a wet spell lingers — because the noise
  * that drives a day is blended from the days around it.
  *
- * Everything the weather does to the world goes through here too: a storm on
- * an exterior shoot day is not a coin flip in the production system any more,
- * it is the weather that day at that location.
+ * Everything the weather does to the world goes through here too: a
+ * thunderstorm that calls off an outdoor shift (`outdoorWeather`) is not a
+ * coin flip, it is the weather that day at that location. It was an exterior
+ * shoot day in the production system once, and the production system is gone.
  */
 
 import type { Simulation } from '../core/simulation';
@@ -22,6 +23,7 @@ import { sunTimes } from '../core/sun';
 import { CITIES, type City } from '../content/geography';
 import { CLIMATE_NAMES, normalFor, toFahrenheit, usesFahrenheit, type ClimateType } from '../content/climate';
 import { clamp } from '../core/rng';
+import { thunderDaysFor } from '../content/thunder';
 
 export type WeatherCondition =
   | 'Clear' | 'Partly Cloudy' | 'Overcast' | 'Drizzle' | 'Rain' | 'Thunderstorm'
@@ -122,11 +124,59 @@ function dayIndex(instant: Instant, zone: string): number {
   return Math.floor(startOfDay(instant, zone) / MS_DAY);
 }
 
-/** Three draws for a day, from the save's own stream. */
-function noise(sim: Simulation, cityId: string, day: number): { temp: number; wet: number; wind: number } {
+/**
+ * Four draws for a day, from the save's own stream. The fourth, for thunder,
+ * came after the other three, so adding it moved no day's temperature, rain
+ * or wind.
+ */
+function noise(sim: Simulation, cityId: string, day: number): { temp: number; wet: number; wind: number; thunder: number } {
   const rng = sim.rng('weather', cityId, String(day));
-  return { temp: rng.normal(0, 1), wet: rng.next(), wind: rng.next() };
+  return { temp: rng.normal(0, 1), wet: rng.next(), wind: rng.next(), thunder: rng.next() };
 }
+
+/**
+ * How much a day leans toward thunder: a little on a cold day, because winter
+ * thunder does happen on the coasts, and far more on a hot one.
+ *
+ * Thunder is not confined to the wet days. When it was, Madrid and Rome, whose
+ * rain falls in winter, had their thunder in winter too, where AEMET has
+ * Madrid's in May and June. A summer storm there is the day's only rain. A
+ * wet day leaning four times harder was tried as well, and no count, season
+ * or run of days came out differently, since a storm is the day's weather
+ * whatever the rain was going to be; it went.
+ */
+function thunderWeight(highC: number): number {
+  return 0.02 + clamp((highC - 12) / 16, 0, 1) ** 2.5;
+}
+
+/**
+ * How many thunder days a place has a year, divided over its above-freezing
+ * days as they lean: the chance of thunder on a day is this times that day's
+ * weight. Worked out once per city from its normals, since it is the same
+ * every year.
+ */
+const THUNDER_SCALE = new Map<string, number>();
+function thunderScale(city: City, type: ClimateType): number {
+  const held = THUNDER_SCALE.get(city.id);
+  if (held !== undefined) return held;
+  let expected = 0;
+  for (let month = 1; month <= 12; month += 1) {
+    for (let day = 1; day <= DAYS_IN_MONTH[month - 1]!; day += 1) {
+      const normal = normalFor(city, month, day);
+      if (normal.mean - 1.5 <= 0.5) continue;
+      // A wet day runs cooler, and leans a little less. The wet chance is
+      // not quite the share of days that come out wet, since the draw blends
+      // two days. The exact share was worked out first, and every count the
+      // tests hold stayed inside its bounds without it.
+      expected += normal.wetChance * thunderWeight(normal.high - 1.5 - normal.diurnal * 0.2)
+        + (1 - normal.wetChance) * thunderWeight(normal.high);
+    }
+  }
+  const scale = expected > 0 ? thunderDaysFor(city.id, type) / expected : 0;
+  THUNDER_SCALE.set(city.id, scale);
+  return scale;
+}
+const DAYS_IN_MONTH = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
 /**
  * The weather on one day.
@@ -166,11 +216,11 @@ export function weatherOn(sim: Simulation, city: City, instant: Instant): DayWea
 
   let condition: WeatherCondition;
   let precipitation: DayWeather['precipitation'] = 'none';
-  if (wet) {
+  if (meanC > 0.5 && today.thunder < Math.min(0.95, thunderScale(city, normal.type) * thunderWeight(highC))) {
+    condition = 'Thunderstorm'; precipitation = 'storm';
+  } else if (wet) {
     if (meanC <= 0.5) { condition = 'Snow'; precipitation = 'snow'; }
-    else if (highC >= 24 && (normal.type === 'humid_subtropical' || normal.type === 'savanna' || normal.type === 'monsoon' || normal.type === 'equatorial' || normal.type === 'continental') && today.wind > 0.55) {
-      condition = 'Thunderstorm'; precipitation = 'storm';
-    } else if (normal.type === 'oceanic' && today.wind < 0.5) { condition = 'Drizzle'; precipitation = 'rain'; }
+    else if (normal.type === 'oceanic' && today.wind < 0.5) { condition = 'Drizzle'; precipitation = 'rain'; }
     else { condition = 'Rain'; precipitation = 'rain'; }
   } else {
     const cloud = normal.cloud + (yesterday.wet < normal.wetChance ? 0.2 : 0) + (today.wet - 0.5) * 0.3;
@@ -355,17 +405,25 @@ export function weatherShort(condition: WeatherCondition): string {
 }
 
 /**
- * How much an exterior shoot day gets done in this weather.
+ * What a day's weather does to work done outdoors.
  *
- * One is a full day. A stage does not care. Everything else is the weather
- * that day at that location, not a roll of the dice: a storm halves the day,
- * snow and rain cost a lot, drizzle and fog a little, and heat past the
- * high thirties or a deep freeze slows a crew whatever the sky is doing.
+ * One is a full day. Everything else is the weather that day at that place,
+ * not a roll of the dice: a storm halves the day, snow and rain cost a lot,
+ * drizzle and fog a little, and heat past the high thirties or a deep freeze
+ * slows anybody whatever the sky is doing. A thunderstorm calls it off
+ * (`calledOff`), as lightning shuts a building site or a pitch: an outdoor
+ * shift doesn't happen and isn't paid (`systems/work.ts`).
+ *
+ * It was named for an exterior shoot day and said the production system used
+ * it. The production system went in the gut, and until the outdoor shift
+ * nothing read it but screens that said it did.
  */
-export function shootDayWeather(sim: Simulation, locationId: string, instant: Instant, onStage: boolean): { factor: number; weather?: DayWeather; note?: string } {
-  if (onStage) return { factor: 1 };
+/** A day that gets through this little outdoors, a thunderstorm's, is called off. */
+const CALLED_OFF = 0.5;
+
+export function outdoorWeather(sim: Simulation, locationId: string, instant: Instant): { factor: number; calledOff: boolean; weather?: DayWeather; note?: string } {
   const city = CITIES.get(locationId);
-  if (!city) return { factor: 1 };
+  if (!city) return { factor: 1, calledOff: false };
   const weather = weatherOn(sim, city, instant);
 
   let factor = 1;
@@ -383,7 +441,7 @@ export function shootDayWeather(sim: Simulation, locationId: string, instant: In
 
   const unit = weather.fahrenheit ? '°F' : '°C';
   const note = factor < 1
-    ? `${weather.condition} in ${city.name}, ${weather.low}${unit} to ${weather.high}${unit}. Exterior work slowed.`
+    ? `${weather.condition} in ${city.name}, ${weather.low}${unit} to ${weather.high}${unit}. Outdoor work slowed.`
     : undefined;
-  return { factor, weather, note };
+  return { factor, calledOff: factor <= CALLED_OFF, weather, note };
 }

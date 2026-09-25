@@ -30,13 +30,14 @@ const COUNTABLE = [
  * number, so ordinary edits above it do not re-open a question somebody has
  * already answered — while moving or rewriting the phrase itself does.
  */
+// The allowances for files the revamp deleted (the flight, relationships,
+// travel, media and wardrobe code) and one in src/engine/index.ts that no line
+// matched any more were dropped: an allowance with nothing to allow is a word
+// nothing reads.
 const ALLOWED = {
   // Figures printed to a decimal place read correctly at one: "1.0 hours".
-  'src/engine/scenes/flight.ts': ['Math.round(hours * 10) / 10'],
   'src/engine/systems/life.ts': ['hours.toFixed(1)', 'available.toFixed(1)'],
-  'src/engine/systems/relationships.ts': ['monthsTogether.toFixed(1)'],
-  // Populations and impression counts, printed with thousands separators.
-  'src/ui/workspaces/TravelWorkspace.tsx': ['formatPeople(d.city.population)'],
+  // Populations, printed with thousands separators.
   'src/ui/creation/LocationPicker.tsx': ['c.population.toLocaleString'],
   'src/ui/screens/Home.tsx': ['place.countryPopulation.toLocaleString', 'formatPeople(place.cityPopulation)'],
   // Populations again, in the looks. Measured rather than assumed: of 1,379
@@ -44,10 +45,6 @@ const ALLOWED = {
   // row in the gazetteer can print "1 people". Two cities and four countries
   // sit at 0, which agrees with a plural anyway.
   'src/ui/looks/place.tsx': ['${people} people', 'formatPeople('],
-  'src/engine/index.ts': ['${people} people'],
-  'src/engine/systems/media.ts': ['impressions.toLocaleString'],
-  // "A cocktail thing", "a summer thing" — a noun, not a count of things.
-  'src/engine/systems/wardrobe.ts': ['at a ${code.name.toLowerCase()} thing', 'isn’t a ${season.toLowerCase()} thing'],
 };
 
 /** Whether this exact line has already been decided about. */

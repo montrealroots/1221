@@ -16,9 +16,11 @@
 
 import { useEffect, useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
+import { LifeEnded } from './LifeEnded';
 import { RAIL_DESTINATIONS } from './destinations';
 import { openDecisions, unreadNotifications } from '@/engine/world/world';
 import { TimeControls } from './TimeControls';
+import { GuideButton, GuideProvider, GuideStrip } from '@/ui/guide/Guide';
 import { Home } from '@/ui/screens/Home';
 import { WorkspaceRouter } from '@/ui/workspaces/WorkspaceRouter';
 import { formatDate, formatTime, zoneAbbreviation } from '@/engine/core/time';
@@ -42,13 +44,19 @@ export function GameShell() {
     return () => window.removeEventListener('keydown', onKey);
   }, [railOpen]);
 
+  // A life that has ended opens onto how it ended, and nothing else.
+  const ended = useWorld((s) => s.universe.meta.endedAt !== undefined);
+
   const go = (to: string, label: string, locked?: boolean) => {
     if (locked) { game.toast(`${label} Is Under Construction.`, 'neutral'); return; }
     navigate(to, label);
     setRailOpen(false);
   };
 
+  if (ended) return <LifeEnded />;
+
   return (
+    <GuideProvider>
     <div className="shell">
       <a className="skip-link" href="#main">Skip To Content</a>
 
@@ -86,6 +94,7 @@ export function GameShell() {
         <span className="topbar-divider" aria-hidden="true" />
 
         <div className="topbar-group" role="group" aria-label="Your Save">
+          <GuideButton />
           <SaveIndicator />
 
           <button className="btn btn-ghost btn-sm hide-sm" onClick={game.exitToMenu}>
@@ -152,6 +161,7 @@ export function GameShell() {
 
         <main className="main" id="main" tabIndex={-1}>
           <div className="main-inner">
+            <GuideStrip />
             {breadcrumbs.length > 1 && (
               <nav className="breadcrumbs" aria-label="Breadcrumb">
                 {breadcrumbs.map((crumb, index) => (
@@ -178,6 +188,7 @@ export function GameShell() {
         ))}
       </div>
     </div>
+    </GuideProvider>
   );
 }
 

@@ -114,7 +114,10 @@ npm run base44:smoke -- --slot 3
 `SLATE_BASE44_URL` is the deployed app's address. `SLATE_BASE44_TOKEN` is the
 bearer token your signed-in browser session sends — a *user* token, not an admin
 key, because the smoke test should prove what a player can do and no more.
-`.env.example` says where to find both.
+`.env.example` says where to find both. `npm run base44:smoke` reads `.env`
+when there is one (`node --env-file-if-exists`); it did not, and the two values
+had to be set in the shell for the test to find them. On Windows `cp` is
+`Copy-Item` under PowerShell.
 
 It writes only to the slot you name, and it puts back whatever was there when it
 finishes. It prints a pass or a fail per check:

@@ -12,14 +12,14 @@
  * It writes only to the slot you name, restores whatever was there when it
  * finishes, and prints a pass or a fail for every guard it exercised.
  *
- *   SLATE_BASE44_URL=https://your-app.base44.app \
- *   SLATE_BASE44_TOKEN=... \
- *   node tools/base44-smoke.mjs --slot 3
+ *   npm run base44:smoke -- --slot 3      (reads .env when there is one)
  *
+ * or with the two variables set in the shell and `node tools/base44-smoke.mjs`.
  * Exit code 0 means every check passed. Anything else means read the output.
  */
 
 import { readFileSync } from 'node:fs';
+import { SUPPORTED_SCHEMA_VERSION } from '../base44/shared/guard.js';
 
 const BASE = process.env.SLATE_BASE44_URL?.replace(/\/+$/, '');
 const TOKEN = process.env.SLATE_BASE44_TOKEN;
@@ -81,7 +81,10 @@ function payloadFor(slot) {
     now: Date.UTC(2026, 0, 1),
     meta: {
       id, slot,
-      schemaVersion: Number(process.env.SLATE_SCHEMA_VERSION ?? 42),
+      // The version this build's guard understands, unless told otherwise. It
+      // was 42, a number from long before the guard's 88, which the guard let
+      // through only because it refuses a schema above its own and not below.
+      schemaVersion: Number(process.env.SLATE_SCHEMA_VERSION ?? SUPPORTED_SCHEMA_VERSION),
       playtimeSeconds: 10,
       characterName: 'Smoke Test',
       appVersion: 'smoke',

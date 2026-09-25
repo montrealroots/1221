@@ -7,6 +7,7 @@
 
 import { chromium } from 'playwright';
 import { mkdirSync } from 'node:fs';
+import { launchOptions } from './browser.mjs';
 
 const BASE = process.env.SLATE_URL ?? 'http://localhost:4173';
 const OUT = process.argv[2] ?? 'screenshots';
@@ -14,14 +15,26 @@ const WIDTH = Number(process.env.WIDTH ?? 1280);
 const HEIGHT = Number(process.env.HEIGHT ?? 900);
 mkdirSync(OUT, { recursive: true });
 
-const browser = await chromium.launch({
-  executablePath: process.env.CHROMIUM_PATH ?? '/opt/pw-browsers/chromium-1194/chrome-linux/chrome',
-});
+const browser = await chromium.launch(launchOptions());
 const page = await browser.newPage({ viewport: { width: WIDTH, height: HEIGHT } });
 page.on('pageerror', (e) => console.log('PAGE ERROR:', String(e).slice(0, 300)));
 
+/**
+ * The whole page, top to bottom. `fullPage` alone sized the image to the page
+ * and painted only the first viewport of it: on a creation step everything
+ * below the first 900 pixels came out blank. So the viewport is grown to the
+ * tallest thing that scrolls, page or panel, the shot is taken at that size,
+ * and the viewport is put back.
+ */
 const shoot = async (name) => {
+  const tallest = await page.evaluate(() => Math.max(
+    document.documentElement.scrollHeight,
+    ...[...document.querySelectorAll('*')].map((el) => el.scrollHeight),
+  ));
+  await page.setViewportSize({ width: WIDTH, height: Math.max(HEIGHT, tallest) });
+  await page.waitForTimeout(500);
   await page.screenshot({ path: `${OUT}/${name}.png`, fullPage: true });
+  await page.setViewportSize({ width: WIDTH, height: HEIGHT });
   console.log('  shot', name);
 };
 

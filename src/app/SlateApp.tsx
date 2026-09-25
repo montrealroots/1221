@@ -68,7 +68,8 @@ export function SlateApp() {
       // of the world clock. Everything after this point goes through the clock.
       // eslint-disable-next-line no-restricted-syntax
       const seed = `${slot}-${config.firstName}${config.lastName}-${Date.now().toString(36)}`;
-      const sim = createSave(slot, seed, config);
+      // A life begun here begins with the guide.
+      const sim = createSave(slot, seed, { ...config, tutorial: true });
       refreshMeta(sim);
       await startup.adapter.save(sim.universe);
       setPhase({ kind: 'playing', adapter: startup.adapter, sim });

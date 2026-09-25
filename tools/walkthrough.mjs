@@ -17,16 +17,16 @@
 import { chromium } from 'playwright';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { launchOptions } from './browser.mjs';
 
 const BASE = process.env.SLATE_URL ?? 'http://localhost:4173';
 const OUT = process.argv[2] ?? 'walkthrough';
-const CHROME = process.env.CHROMIUM_PATH ?? '/opt/pw-browsers/chromium-1194/chrome-linux/chrome';
 mkdirSync(OUT, { recursive: true });
 
 const WIDE = { width: 1440, height: 950 };
 const NARROW = { width: 430, height: 900 };
 
-const browser = await chromium.launch({ executablePath: CHROME });
+const browser = await chromium.launch(launchOptions());
 const page = await browser.newPage({ viewport: WIDE });
 
 const problems = [];

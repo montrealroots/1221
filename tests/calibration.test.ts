@@ -1,16 +1,17 @@
 /**
- * Monte Carlo calibration.
+ * Calibration of the one random source.
  *
- * The systems that decide things — who gets hired, who gets the part, what
- * gets greenlit, what a film earns — are probabilistic. That makes them easy
- * to get wrong in ways no single playthrough reveals: a model that always says
- * yes, or always says no, or ignores the input that is supposed to drive it,
- * looks perfectly reasonable once and is broken over a thousand trials.
+ * Every draw in the game comes from a seeded generator, owned by a decider;
+ * the weather is the one left. These hold the generator itself: that it
+ * spreads evenly, that its normal distribution centers where it says, that a
+ * seed always gives the same stream, and that two identical seeds give the
+ * same world two years on.
  *
- * These run each decision many times across many seeds and check three things:
- * that the outcome is not a foregone conclusion in either direction, that it
- * moves in the right direction when the inputs improve, and that the same seed
- * always lands in the same place.
+ * It was written for the systems that decided things, who got hired, who got
+ * the part, what got greenlit and what a film earned, and said it checked
+ * that each moved the right way when its inputs improved. Those systems went
+ * with the gut. `tests/deciders.test.ts` is where a decider is held to its
+ * inputs now.
  */
 
 import { describe, expect, it } from 'vitest';

@@ -1,0 +1,6 @@
+# Text is stored and checked out with LF endings, whatever the machine's
+# core.autocrlf says. Git for Windows' installer sets core.autocrlf=true for
+# the whole system, and a fresh clone there came out CRLF; the clone the owner
+# works in had a repo-local core.autocrlf=false to keep it LF. Every file in
+# the index was already LF, so this changed no stored file.
+* text=auto eol=lf

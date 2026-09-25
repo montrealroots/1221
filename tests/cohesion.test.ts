@@ -13,6 +13,9 @@ import { describe, expect, it } from 'vitest';
 import { COUNTRIES } from '@/engine/content/geography';
 import { ageOnDate } from '@/engine/core/time';
 import { createSave, defaultConfig, quickSave } from '@/engine';
+import type { Person } from '@/engine/domain/model';
+import { applyLookingAfter, freshWellbeing } from '@/engine/systems/life';
+import { defaultPersonality } from '@/engine/systems/personality';
 import { describeEthnicity } from '@/engine/content/ethnicity';
 import {
   CRAFT_INTERESTS, FILM_GENRES, GENERAL_INTERESTS, isAlphabetical,
@@ -234,7 +237,7 @@ describe('the interests and the genres', () => {
     ]) expect(labels).toContain(label);
   });
 
-  it('puts both on the player, and nothing in the simulation reads them', () => {
+  it('puts both on the player, and only enjoyment reads the interests, and nothing the genres', () => {
     const sim = createSave(1, 'interests', {
       ...defaultConfig(), interests: ['cinematography', 'film'], genres: ['film_noir', 'western'],
     });
@@ -242,17 +245,48 @@ describe('the interests and the genres', () => {
     expect(player.interests).toEqual(['cinematography', 'film']);
     expect(player.genres).toEqual(['film_noir', 'western']);
 
-    // `core/taste.ts` was the one reader, and it went with the attributes. So
-    // the rule now is the one race and ethnicity keep: the moment something
+    // `core/taste.ts` was the one reader, and it went with the attributes.
+    // Then the rule was the one race and ethnicity keep: the moment something
     // in the engine branches on them they stop being who somebody is and
-    // start being a stat. The person look says them back, and that is all.
-    const readers = readdirSync('src/engine', { recursive: true, encoding: 'utf8' })
+    // start being a stat. On 2026-09-24 the owner narrowed it for the
+    // interests: they may change how much somebody gets out of doing a thing,
+    // never how good they are at it. That lives in one file, and the test
+    // below holds what it may move. The genres wait for the film career.
+    const engine = readdirSync('src/engine', { recursive: true, encoding: 'utf8' })
       .filter((f) => f.endsWith('.ts'))
       .map((f) => `src/engine/${f.replace(/\\/g, '/')}`)
       .filter((f) => statSync(f).isFile())
-      .filter((f) => !/world\/bootstrap\.ts|domain\/model\.ts/.test(f))
-      .filter((f) => /\.(genres|interests)\b/.test(readFileSync(f, 'utf8')));
-    expect(readers, 'these read somebody’s taste out of a save').toEqual([]);
+      .filter((f) => !/world\/bootstrap\.ts|domain\/model\.ts/.test(f));
+    const reading = (field: string) => engine.filter((f) => new RegExp(`\\.${field}\\b`).test(readFileSync(f, 'utf8')));
+    expect(reading('interests'), 'these read somebody’s interests out of a save').toEqual(['src/engine/systems/enjoyment.ts']);
+    expect(reading('genres'), 'these read somebody’s genres out of a save').toEqual([]);
+  });
+
+  it('lets an interest change how much an action gives the mood and the relief, and nothing else', () => {
+    // Everything each of the four does, loved and not, from the same start.
+    // Only morale and stress may differ: fitness, energy, food and hygiene
+    // are how good the hour was for the body, and loving it doesn't change that.
+    for (const [action, interest] of [['eat', 'cooking'], ['exercise', 'fitness'], ['exercise', 'sport'], ['unwind', 'music']] as const) {
+      const make = (interests: string[]) => ({
+        personality: defaultPersonality(), personalityTraits: [], interests, birthInstant: 0,
+        wellbeing: { ...freshWellbeing(), nourishment: 30, stress: 60, morale: 50 },
+      } as unknown as Person);
+      const plain = make([]);
+      const loves = make([interest]);
+      applyLookingAfter(plain, action);
+      applyLookingAfter(loves, action);
+      expect(loves.wellbeing.morale, `${interest} on ${action}`).toBeGreaterThan(plain.wellbeing.morale);
+      if (action !== 'eat') expect(loves.wellbeing.stress, `${interest} on ${action}`).toBeLessThan(plain.wellbeing.stress);
+      for (const dial of ['energy', 'sleepDebt', 'condition', 'fitness', 'nourishment', 'hygiene'] as const) {
+        expect(loves.wellbeing[dial], `${interest} changed ${dial} on ${action}`).toBe(plain.wellbeing[dial]);
+      }
+    }
+    // And an interest that isn't the thing being done changes nothing.
+    const cook = { personality: defaultPersonality(), personalityTraits: [], interests: ['cooking'], birthInstant: 0, wellbeing: freshWellbeing() } as unknown as Person;
+    const none = { personality: defaultPersonality(), personalityTraits: [], interests: [], birthInstant: 0, wellbeing: freshWellbeing() } as unknown as Person;
+    applyLookingAfter(cook, 'exercise');
+    applyLookingAfter(none, 'exercise');
+    expect(cook.wellbeing).toEqual(none.wellbeing);
   });
 
   it('drops an id that is not on any list', () => {

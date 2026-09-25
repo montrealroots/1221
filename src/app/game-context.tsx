@@ -90,13 +90,14 @@ export function useWorld<T>(read: (sim: Simulation) => T, deps: readonly unknown
 }
 
 const AUTOSAVE_INTERVAL_MS = 45_000;
-/** One real second is one world minute at standard speed. */
 /**
  * How much world time passes for a given amount of real time.
  *
  * Live is one to one — a minute of your evening is a minute of theirs, which
  * is the whole point of a life you live alongside rather than fast-forward
- * through. The faster settings exist for waiting out a shoot or a pregnancy.
+ * through. The faster settings were for waiting out a shoot or a pregnancy,
+ * which went with the systems that had them; the time controls offer only
+ * Play and Pause now, so nothing reaches them.
  */
 const SPEED_MULTIPLIER: Record<string, number> = {
   paused: 0,
@@ -268,8 +269,8 @@ export function GameProvider({
   }, [sim, adapter, toast]);
 
   // --- Real time ----------------------------------------------------------
-  // The world moves while the player is in it. Standard speed is one world
-  // minute per real second; pausing genuinely stops the clock.
+  // The world moves while the player is in it. Live is a world second per
+  // real second; pausing genuinely stops the clock.
   useEffect(() => {
     const multiplier = SPEED_MULTIPLIER[timeSpeed] ?? 1;
     if (multiplier === 0) return;
@@ -286,6 +287,8 @@ export function GameProvider({
       const now = performance.now();
       const elapsed = Math.max(0, now - lastAt);
       lastAt = now;
+      // A finished life has no more time in it, and none is counted as played.
+      if (sim.universe.meta.endedAt !== undefined) return;
 
       const step = stepper.feed(elapsed);
       if (step < 1) return;

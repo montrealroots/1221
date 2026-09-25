@@ -12,6 +12,9 @@ import type { Money } from '../core/money';
 import type { Account, LedgerTransaction } from '../core/ledger';
 import type { ScheduledItem } from '../core/scheduler';
 import type { HistoryRecord } from '../core/audit';
+import type { JobState } from '../systems/work';
+import type { HomeState } from '../systems/household';
+import type { CreditState } from '../systems/credit';
 import type { IdNamespace } from '../core/ids';
 import type { PerformerTitle } from '../core/performer';
 
@@ -22,8 +25,10 @@ export type Id = string;
  * step. Three of them move the wellbeing model through
  * `systems/personality.ts`: emotional stability sets how fast stress arrives
  * and clears, ambition adds to what running on empty costs, and
- * conscientiousness sets how well the nights go. Openness, extraversion,
- * agreeableness and risk tolerance are kept and read by nothing yet;
+ * conscientiousness sets how well the nights go. Risk tolerance sets whether
+ * the card's autopay clears the statement or carries a balance
+ * (`systems/credit.ts`); it was read by nothing until the card. Openness,
+ * extraversion and agreeableness are kept and read by nothing yet;
  * `tools/wired.mjs` counts them.
  */
 export interface Personality {
@@ -108,8 +113,10 @@ export interface Person {
   personalityTraits: string[];
   /**
    * What they care about, and below it the genres they love. On the
-   * character sheet because a person has them; nothing in the simulation
-   * reads either to decide anything, and the person look says both back.
+   * character sheet because a person has them, and the person look says both
+   * back. The interests change how much an hour of looking after yourself
+   * gives the mood (`systems/enjoyment.ts`), never how good anybody is at
+   * anything; the genres decide nothing.
    */
   interests: string[];
   genres?: string[];
@@ -123,6 +130,31 @@ export interface Person {
    * would be worse than not asking.
    */
   background: string;
+  /**
+   * What they did for a living before acting, by id from
+   * `content/backgrounds.ts`. It set the fitness they started with, and the
+   * person look says it back. A save from before it was asked has none.
+   */
+  beforeActing?: string;
+  /**
+   * The job that pays the rent between roles (`systems/work.ts`): which one,
+   * where, the hours worked since payday, the shifts missed lately, and how
+   * far ahead the rota is on the calendar. Given to every character from
+   * schema 89.
+   */
+  job?: JobState;
+  /**
+   * Where they live and what kind of home it is (`systems/household.ts`):
+   * the rent and bills due on the first, and the town the food is bought in.
+   * Given to every character from schema 89.
+   */
+  home?: HomeState;
+  /**
+   * Their credit record and how the card is paid (`systems/credit.ts`). Not
+   * `creditScore`: `migrate` sheds a field by that name that builds before 80
+   * kept on the person.
+   */
+  credit?: CreditState;
 
   wellbeing: Wellbeing;
 
@@ -441,10 +473,15 @@ export interface Preferences {
  * come in charged up to the next midnight, as that build would have left
  * them, and their waking day starts there.
  *
+ * 89 keeps a save's money in the currency of the country the character
+ * started in (`SaveMeta.currency`), where every save before it was kept in
+ * euros. A build at 88 would print a save's krónur as euros, which is why the
+ * number moved. A save from before 89 has no currency and keeps its euros.
+ *
  * `migrate` in `engine/index.ts` says what an older save sheds on the way in,
  * what it keeps as inert JSON, and what it is given.
  */
-export const SAVE_SCHEMA_VERSION = 88;
+export const SAVE_SCHEMA_VERSION = 89;
 
 export interface SaveMeta {
   id: Id;
@@ -470,6 +507,20 @@ export interface SaveMeta {
   migrationInProgress?: { from: number; to: number; startedAt: number };
   backupAvailable: boolean;
   appVersion: string;
+  /**
+   * The currency this save's money is kept in: the one where the character
+   * started, as a real account is. Absent on a save from before 89, which was
+   * kept in euros (`DEFAULT_LEDGER_CURRENCY`); `saveCurrency` reads it.
+   */
+  currency?: string;
+  /**
+   * When the player's life ended, and at what age, once it has
+   * (`systems/mortality.ts`).
+   * A save with these set is a finished life: the clock no longer runs, and
+   * the slot opens onto how it ended.
+   */
+  endedAt?: number;
+  endedAge?: number;
 }
 
 /**
@@ -507,6 +558,13 @@ export interface SaveUniverse {
   notifications: Notification[];
 
   preferences: Preferences;
+
+  /**
+   * The guide (`world/tutorial.ts`): the chapters read, in the order they
+   * were. Absent on a save begun before the guide, or made without it, and
+   * such a save has everything open.
+   */
+  tutorial?: { read: string[] };
 
   /** Idempotency keys already applied, mapped to their recorded result. */
   idempotency: Record<string, { at: Instant; result: unknown }>;

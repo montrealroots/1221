@@ -9,13 +9,18 @@
 
 import type { Person, Personality, SaveMeta, SaveUniverse } from '../domain/model';
 import { SAVE_SCHEMA_VERSION } from '../domain/model';
-import { CITIES } from '../content/geography';
+import { CITIES, COUNTRIES } from '../content/geography';
+import { exchange, hasRate } from '../content/currency';
+import { DEFAULT_LEDGER_CURRENCY } from '../core/money';
+import type { Housing } from '../systems/household';
 import { costOfLiving } from '../content/tax';
 import { addDays, addMonths, instantFromZoned, MS_DAY } from '../core/time';
 import type { Money } from '../core/money';
 import { idAlreadyIssued } from '../core/ids';
 import { ETHNICITY_BY_ID } from '../content/ethnicity';
 import { GENRE_BY_ID, INTEREST_BY_ID } from '../content/interests';
+import { BEFORE_ACTING_BY_ID, DEFAULT_BEFORE_ACTING } from '../content/backgrounds';
+import { ceilingAt } from '../content/lifespan';
 
 /** The ids on a list this build recognises, deduplicated, in the order given. */
 function known(ids: readonly string[] | undefined, table: Readonly<Record<string, unknown>>): string[] {
@@ -80,6 +85,15 @@ export interface NewSaveConfig {
   genres: string[];
   /** The life before this one, in their own words. Flavor, and said back to them. */
   background: string;
+  /** What they did before acting, by id from `content/backgrounds.ts`: the body they start with. */
+  beforeActing: string;
+  /**
+   * Whether they keep a day job (`systems/work.ts`). Most actors do; one who
+   * starts with enough money behind them needn't.
+   */
+  dayJob: boolean;
+  /** A room in a shared flat, or a place of their own (`systems/household.ts`). */
+  housing: Housing;
 
   /** Starting point */
   startLocationId: string;
@@ -89,6 +103,12 @@ export interface NewSaveConfig {
   startMonth: number;
   startDay: number;
 
+  /**
+   * Whether the life begins with the guide (`world/tutorial.ts`): everything
+   * shut but the first chapter, and the clock paused. The game's own new
+   * saves do; a save made for a test or a tool doesn't unless it asks.
+   */
+  tutorial?: boolean;
 }
 
 /**
@@ -110,6 +130,9 @@ export function defaultConfig(): NewSaveConfig {
     personality: defaultPersonality(), personalityTraits: [],
     interests: ['film', 'television'], genres: [],
     background: '',
+    beforeActing: DEFAULT_BEFORE_ACTING,
+    dayJob: true,
+    housing: 'shared',
     startLocationId: DEFAULT_CITY_ID,
     wealth: 'scraping',
     // Monday 5 January 2026, the first working Monday of the year.
@@ -118,7 +141,7 @@ export function defaultConfig(): NewSaveConfig {
 }
 
 const WEALTH_PROFILE: Record<StartingWealth, { checking: Money; savings: Money; cardLimit: Money; cardBalance: Money; creditScore: number; note: string }> = {
-  nothing: { checking: 40_00, savings: 0, cardLimit: 0, cardBalance: 0, creditScore: 520, note: 'Forty euros to your name, and no savings behind it.' },
+  nothing: { checking: 40_00, savings: 0, cardLimit: 0, cardBalance: 0, creditScore: 520, note: 'Next to nothing to your name, and no savings behind it.' },
   scraping: { checking: 1_240_00, savings: 300_00, cardLimit: 1_500_00, cardBalance: -840_00, creditScore: 610, note: 'Getting by, with a card you’re carrying a balance on.' },
   modest: { checking: 4_800_00, savings: 6_500_00, cardLimit: 6_000_00, cardBalance: -420_00, creditScore: 690, note: 'A small cushion and clean credit.' },
   comfortable: { checking: 18_000_00, savings: 42_000_00, cardLimit: 20_000_00, cardBalance: 0, creditScore: 748, note: 'Genuinely comfortable, with room to take a risk.' },
@@ -128,6 +151,37 @@ const WEALTH_PROFILE: Record<StartingWealth, { checking: Money; savings: Money; 
 
 export function wealthNote(wealth: StartingWealth): string {
   return WEALTH_PROFILE[wealth].note;
+}
+
+/**
+ * The currency a save that starts in this town keeps its money in: its
+ * country's, as a real account would be, or euros where SLATE has no rate for
+ * that currency and so could not convert the starting money into it.
+ */
+export function currencyFor(cityId: string): string {
+  const city = CITIES.get(cityId);
+  const code = city ? COUNTRIES.get(city.countryId)?.currency : undefined;
+  return code && hasRate(code) ? code.toUpperCase() : DEFAULT_LEDGER_CURRENCY;
+}
+
+/**
+ * A starting-money profile in a save's currency, to the whole unit.
+ *
+ * The profiles are written in euros, the one currency every save used until
+ * schema 89, and are converted at SLATE's rates: "Scraping" in Mosfellsbær is
+ * 186,000 krónur in checking rather than 1,240 of a currency nobody there is
+ * paid in.
+ */
+export function wealthIn(wealth: StartingWealth, currency: string): typeof WEALTH_PROFILE[StartingWealth] {
+  const p = WEALTH_PROFILE[wealth];
+  const convert = (cents: Money): Money => Math.round((exchange(cents, DEFAULT_LEDGER_CURRENCY, currency) ?? cents) / 100) * 100;
+  return {
+    ...p,
+    checking: convert(p.checking),
+    savings: convert(p.savings),
+    cardLimit: convert(p.cardLimit),
+    cardBalance: convert(p.cardBalance),
+  };
 }
 
 // ---------------------------------------------------------------------------
@@ -203,14 +257,24 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveCon
     netWorthLabel: '',
     backupAvailable: false,
     appVersion: APP_VERSION,
+    currency: currencyFor(config.startLocationId),
   };
 
   const universe = emptyUniverse(meta, now, zone, playerId);
+  if (config.tutorial) {
+    universe.tutorial = { read: [] };
+    universe.preferences.timeSpeed = 'paused';
+  }
 
   const birthInstant = instantFromZoned(
     { year: config.birthYear, month: config.birthMonth, day: config.birthDay, hour: 3 },
     zone,
   );
+
+  // What they did before, and the fitness it left. An id the list lacks is
+  // the default, the same way an interest the list lacks is dropped.
+  const before = BEFORE_ACTING_BY_ID[config.beforeActing] ?? BEFORE_ACTING_BY_ID[DEFAULT_BEFORE_ACTING]!;
+  const yearsOld = Math.max(0, (now - birthInstant) / (365.2425 * MS_DAY));
 
   const player: Person = {
     id: playerId,
@@ -241,9 +305,12 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveCon
     interests: known(config.interests, INTEREST_BY_ID),
     genres: known(config.genres, GENRE_BY_ID),
     // Kept as the player wrote it, and printed back on their own page. It
-    // decides nothing, and the character sheet says so.
+    // decides nothing, and the step says so; what they did before, beside it,
+    // is the part that does.
     background: config.background,
-    wellbeing: freshWellbeing(),
+    beforeActing: before.id,
+    // The body their work before left them, no fitter than the age allows.
+    wellbeing: { ...freshWellbeing(), fitness: Math.min(before.fitness, ceilingAt(yearsOld).fitness) },
     // Up this morning, and charged for being awake from the moment the world
     // starts.
     awakeSince: now,

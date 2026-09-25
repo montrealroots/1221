@@ -9,7 +9,9 @@ import { titleCaseLabel } from '@/engine/core/text';
 import { useEffect, useRef, useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { Modal } from '@/ui/components/primitives';
-import { suggestedSleep, hoursUntilNextCommitment, sleepStandsForTheNight } from '@/engine/systems/life';
+import {
+  suggestedSleep, hoursUntilNextCommitment, sleepStandsForTheNight, LOOKING_AFTER, lookAfterRefusal, type LookAfter,
+} from '@/engine/systems/life';
 import { missedBy, skipTargets } from '@/engine/world/calendar';
 import type { CalendarEntry } from '@/engine/world/calendar';
 import {
@@ -17,7 +19,14 @@ import {
   type Instant,
 } from '@/engine/core/time';
 import { PLAN_KIND } from '@/engine/world/plans';
+import { SHIFT_KIND } from '@/engine/systems/work';
+import { lovedIn } from '@/engine/systems/enjoyment';
+import { mealOf } from '@/engine/systems/household';
+import { formatMoney, saveCurrency } from '@/engine/core/money';
+import { INTEREST_BY_ID } from '@/engine/content/interests';
+import { spokenList } from '@/ui/looks/words';
 import type { ScheduledItem } from '@/engine/core/scheduler';
+import { Gated, useFeature } from '@/ui/guide/Guide';
 
 export function TimeControls() {
   const { sim, advanceTo, run, refresh, toast, standingAt, clearStandingAt } = useGame();
@@ -48,15 +57,17 @@ export function TimeControls() {
   return (
     <>
       <div className="row gap-1" role="group" aria-label="Time Controls">
-        <button
+        <Gated
+          feature="ui.play"
           className="btn btn-ghost btn-sm"
           onClick={() => setSpeed(speed === 'paused' ? 'live' : 'paused')}
           aria-pressed={speed === 'paused'}
           title={speed === 'paused' ? 'Resume Time' : 'Pause Time'}
         >
           {speed === 'paused' ? 'Play' : 'Pause'}
-        </button>
-        <button className="btn btn-sm" onClick={() => setSleepOpen(true)}>Sleep</button>
+        </Gated>
+        <Gated feature="ui.sleep" className="btn btn-sm" onClick={() => setSleepOpen(true)}>Sleep</Gated>
+        <LookAfterMenu />
         <AdvanceMenu
           onAdvance={(at, label) => {
             const missed = missedBy(sim, at);
@@ -72,7 +83,14 @@ export function TimeControls() {
           item={due.item}
           wanted={due.wanted}
           // Carrying on is the same jump the stop broke off, not a new one.
-          onGo={() => { clearStandingAt(); advanceTo(due.wanted, due.sentFrom); }}
+          // Going takes the thing's own hours: the clock goes through them, on
+          // to where it was headed if that is later. It went only to where it
+          // was headed, and a stop at a bar shift with the evening asked for
+          // left the clock at six, halfway through the shift.
+          onGo={() => {
+            clearStandingAt();
+            advanceTo(Math.max(due.wanted, due.item.at + (due.item.durationMinutes ?? 60) * 60_000), due.sentFrom);
+          }}
           onStay={() => {
             // Not silent: if the world refuses to let you walk away from
             // something, the reason is the answer and it belongs on screen.
@@ -93,21 +111,21 @@ export function TimeControls() {
       {skipOpen && <SkipDialog onClose={() => setSkipOpen(false)} onSkip={(at) => { advanceTo(at); setSkipOpen(false); }} />}
       {confirm && (
         <Modal
-          title="You Would Miss Something"
+          title="On The Way"
           onClose={() => setConfirm(null)}
           footer={
             <>
               <button className="btn" onClick={() => setConfirm(null)}>Cancel</button>
               <button className="btn btn-primary" onClick={() => { advanceTo(confirm.at); setConfirm(null); }}>
-                Advance Anyway
+                Advance
               </button>
             </>
           }
         >
           <p className="small muted">
-            Advancing to <strong>{confirm.label}</strong> ({formatDateTime(confirm.at, sim.zone)}) passes{' '}
-            {confirm.missed.length} commitment{confirm.missed.length === 1 ? '' : 's'} you are expected at.
-            Time only moves forwards; anything missed stays missed.
+            Advancing to <strong>{confirm.label}</strong> ({formatDateTime(confirm.at, sim.zone)}) comes to{' '}
+            {confirm.missed.length} commitment{confirm.missed.length === 1 ? '' : 's'} on the way. The clock stops at
+            each, and you choose whether you go.
           </p>
           <ul className="small" style={{ margin: 'var(--s2) 0 0', paddingLeft: 'var(--s4)' }}>
             {confirm.missed.slice(0, 8).map((entry) => (
@@ -145,9 +163,9 @@ function SleepDialog({ onClose }: { onClose: () => void }) {
       footer={
         <>
           <button className="btn" onClick={onClose}>Not Yet</button>
-          <button className="btn btn-primary" onClick={sleep}>
+          <Gated feature="life.sleep" className="btn btn-primary" onClick={sleep}>
             Sleep {hours} Hours
-          </button>
+          </Gated>
         </>
       }
     >
@@ -224,8 +242,10 @@ function DueNow({ item, wanted, onGo, onStay, onClose }: {
   const { sim } = useGame();
   const zone = sim.zone;
   const mine = item.kind === PLAN_KIND;
+  // A shift can be walked away from too, and it costs more than a plan: no
+  // pay, and a mark against the job (`systems/work.ts`).
+  const shift = item.kind === SHIFT_KIND;
   const runs = item.durationMinutes ?? 60;
-  const ahead = Math.max(0, wanted - item.at);
 
   return (
     <Modal
@@ -234,21 +254,26 @@ function DueNow({ item, wanted, onGo, onStay, onClose }: {
       footer={(
         <>
           <button className="btn btn-ghost" onClick={onClose}>Stand Here</button>
-          {mine && (
-            <button className="btn" onClick={onStay}>
-              Skip It
-            </button>
+          {(mine || shift) && (
+            <Gated feature="calendar.skip" className="btn" onClick={onStay}>
+              {shift ? 'Call In Sick' : 'Skip It'}
+            </Gated>
           )}
-          <button className="btn btn-primary" onClick={onGo}>Go</button>
+          <Gated feature="ui.go" className="btn btn-primary" onClick={onGo}>Go</Gated>
         </>
       )}
     >
       <p className="small">
         It’s {formatTime(item.at, zone)} on {formatDate(item.at, zone)}, and this is what wanted you.
         {' '}Going takes {formatDuration(runs * 60_000)} of the day
-        {ahead > 0 ? `, and the clock carries on to ${formatDateTime(wanted, zone)} after.` : '.'}
+        {`, and the clock goes on to ${formatDateTime(Math.max(wanted, item.at + runs * 60_000), zone)}.`}
       </p>
-      {!mine && (
+      {shift && (
+        <p className="small muted">
+          Calling in sick costs the shift’s pay, and three missed in four weeks costs the job.
+        </p>
+      )}
+      {!mine && !shift && (
         <p className="small muted">
           This one isn’t yours to walk away from — it’s the world’s. Go, or leave the clock where it is.
         </p>
@@ -301,7 +326,7 @@ function SkipDialog({ onClose, onSkip }: { onClose: () => void; onSkip: (at: num
                   </div>
                 </div>
                 {entry.missed.length > 0 && (
-                  <span className="chip chip-warning">{entry.missed.length} missed</span>
+                  <span className="chip chip-warning">{entry.missed.length} on the way</span>
                 )}
                 {entry.needsTravel && <span className="chip chip-negative">Travel</span>}
               </button>
@@ -320,7 +345,7 @@ function SkipDialog({ onClose, onSkip }: { onClose: () => void; onSkip: (at: num
 
               {target.missed.length > 0 ? (
                 <div className="callout callout-warning" style={{ marginBottom: 'var(--s3)' }}>
-                  <strong>You would miss {target.missed.length} commitment{target.missed.length === 1 ? '' : 's'}:</strong>
+                  <strong>The clock stops at {target.missed.length} commitment{target.missed.length === 1 ? '' : 's'} on the way, and asks:</strong>
                   <ul className="small" style={{ margin: 'var(--s2) 0 0', paddingLeft: 'var(--s4)' }}>
                     {target.missed.slice(0, 6).map((entry) => (
                       <li key={entry.id}>{entry.title} — {formatDate(entry.at, sim.zone)}</li>
@@ -360,22 +385,9 @@ function AdvanceMenu({
 }) {
   const { sim } = useGame();
   const nextEvent = useWorld((s) => skipTargets(s, 1)[0]);
-  const [open, setOpen] = useState(false);
-  const anchor = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    if (!open) return;
-    const away = (event: MouseEvent) => {
-      if (anchor.current && !anchor.current.contains(event.target as Node)) setOpen(false);
-    };
-    const escape = (event: KeyboardEvent) => { if (event.key === 'Escape') setOpen(false); };
-    document.addEventListener('mousedown', away);
-    document.addEventListener('keydown', escape);
-    return () => {
-      document.removeEventListener('mousedown', away);
-      document.removeEventListener('keydown', escape);
-    };
-  }, [open]);
+  const { open, setOpen, anchor } = useDropdown();
+  const gate = useFeature('ui.advance');
+  const choosing = useFeature('ui.skip');
 
   const zone = sim.zone;
   const now = sim.now;
@@ -406,12 +418,13 @@ function AdvanceMenu({
     <div className="menu-anchor" ref={anchor}>
       <button
         type="button"
-        className="btn btn-sm"
+        className={`btn btn-sm${gate.open ? '' : ' is-locked'}`}
         aria-haspopup="menu"
         aria-expanded={open}
-        onClick={() => setOpen((o) => !o)}
+        title={gate.reason}
+        onClick={() => (gate.open ? setOpen((o) => !o) : gate.ask())}
       >
-        Advance ▾
+        Advance ▾{!gate.open && <span className="lock-word">Locked</span>}
       </button>
       {open && (
         <div className="menu" role="menu" aria-label="Advance Time">
@@ -424,7 +437,8 @@ function AdvanceMenu({
               disabled={!item.choose && item.at === undefined}
               onClick={() => {
                 setOpen(false);
-                if (item.choose) onChooseEvent();
+                if (item.choose && !choosing.open) choosing.ask();
+                else if (item.choose) onChooseEvent();
                 else if (item.at !== undefined) onAdvance(item.at, item.label);
               }}
             >
@@ -432,6 +446,99 @@ function AdvanceMenu({
               <span className="menu-item-detail">{item.detail}</span>
             </button>
           ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+/** A menu that closes on a click outside it or on Escape. */
+function useDropdown() {
+  const [open, setOpen] = useState(false);
+  const anchor = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (!open) return;
+    const away = (event: MouseEvent) => {
+      if (anchor.current && !anchor.current.contains(event.target as Node)) setOpen(false);
+    };
+    const escape = (event: KeyboardEvent) => { if (event.key === 'Escape') setOpen(false); };
+    document.addEventListener('mousedown', away);
+    document.addEventListener('keydown', escape);
+    return () => {
+      document.removeEventListener('mousedown', away);
+      document.removeEventListener('keydown', escape);
+    };
+  }, [open]);
+
+  return { open, setOpen, anchor };
+}
+
+/**
+ * Look after yourself: the things besides sleep a player does for their body.
+ *
+ * Each item says how long it takes and what it does, or, when the engine
+ * would refuse it, why, and is greyed out. The menu asks the same question
+ * the command does (`lookAfterRefusal`), so it never offers what the command
+ * turns down.
+ */
+function LookAfterMenu() {
+  const { sim, run, toast } = useGame();
+  const { open, setOpen, anchor } = useDropdown();
+  const gate = useFeature('ui.look-after');
+  const doing = useFeature('life.look_after');
+  // Asked again whenever the world changes, so a meal eaten or a clock moved since counts.
+  const refusals = useWorld((s) => Object.fromEntries(
+    (Object.keys(LOOKING_AFTER) as LookAfter[]).map((action) => [action, lookAfterRefusal(s, action)]),
+  ) as Record<LookAfter, string | undefined>);
+
+  const act = (action: LookAfter) => {
+    setOpen(false);
+    const result = run<{ doneAt: number }>('life.look_after', { action });
+    if (result.ok && result.value) {
+      toast(`${LOOKING_AFTER[action].label}: done at ${formatTime(result.value.doneAt, sim.zone)}.`, 'positive');
+    }
+  };
+
+  return (
+    <div className="menu-anchor" ref={anchor}>
+      <button
+        type="button"
+        className={`btn btn-sm${gate.open ? '' : ' is-locked'}`}
+        aria-haspopup="menu"
+        aria-expanded={open}
+        title={gate.reason}
+        onClick={() => (gate.open ? setOpen((o) => !o) : gate.ask())}
+      >
+        Look After Yourself ▾{!gate.open && <span className="lock-word">Locked</span>}
+      </button>
+      {open && (
+        <div className="menu" role="menu" aria-label="Look After Yourself">
+          {(Object.keys(LOOKING_AFTER) as LookAfter[]).map((action) => {
+            const { label, minutes, does } = LOOKING_AFTER[action];
+            const refused = refusals[action];
+            // Said, because it changes what the hour gives: more mood and more
+            // relief for somebody who loves it (`systems/enjoyment.ts`).
+            const loved = lovedIn(sim.player, action).map((id) => INTEREST_BY_ID[id]?.label ?? id);
+            return (
+              <button
+                key={action}
+                type="button"
+                role="menuitem"
+                className="menu-item"
+                disabled={refused !== undefined}
+                onClick={() => (doing.open ? act(action) : doing.ask())}
+              >
+                <span className="menu-item-label">{label}</span>
+                <span className="menu-item-detail">
+                  {formatDuration(minutes * 60_000)}{action === 'eat' ? ` · ${formatMoney(mealOf(sim, sim.player), saveCurrency(sim.universe))}` : ''} · {refused ?? does}
+                </span>
+                {!refused && loved.length > 0 && (
+                  <span className="menu-item-detail">You love {spokenList(loved)}, so it lifts you more.</span>
+                )}
+              </button>
+            );
+          })}
         </div>
       )}
     </div>

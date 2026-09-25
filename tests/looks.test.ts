@@ -344,7 +344,9 @@ describe('what the screens name', () => {
       for (const [index, line] of text.split('\n').entries()) {
         // Comments may say it in prose; a string a player reads may not.
         if (/^\s*(\*|\/\/)/.test(line)) continue;
-        if (/out of a hundred/.test(line)) offenders.push(`${path.split('/src/')[1]}:${index + 1}`);
+        // "out of 100" as well: it asked only for the words, and the place card
+        // printed Industry and Jobs "out of 100" past it.
+        if (/out of (a hundred|100)\b/.test(line)) offenders.push(`${path.split('/src/')[1]}:${index + 1}`);
       }
     }
     expect(offenders, 'a figure written out in words where /100 belongs').toEqual([]);
@@ -454,9 +456,17 @@ describe('the sentence the player wrote', () => {
     player.background = '   ';
     player.interests = [];
     player.genres = [];
+    // As a save from before Before Acting was asked.
+    delete player.beforeActing;
 
     const found = resolveLook(sim, at('person', player.id)) as Looked;
     expect(found.body).toBeUndefined();
+  });
+
+  it('says what they did before acting', () => {
+    const sim = quickSave({ beforeActing: 'dance' }, 'before-acting-said');
+    const found = resolveLook(sim, at('person', sim.universe.playerId)) as Looked;
+    expect(wordsIn(found.body).join(' ')).toContain('Dance');
   });
 });
 

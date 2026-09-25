@@ -1,9 +1,13 @@
 /**
  * SLATE — what a person is into.
  *
- * Three lists, and none of them does anything. Interests and genres are on the
- * character sheet because a person has them, not because the game reads them
- * to decide an outcome; nothing in the simulation branches on any of it.
+ * Three lists. Interests and genres are on the character sheet because a
+ * person has them, not because the game reads them to decide how good anybody
+ * is at anything. None of them did anything until 2026-09-24, when the owner
+ * let an interest change how much somebody gets out of doing a thing:
+ * Cooking, Fitness, Sport and the evening pastimes lift the mood and ease the
+ * stress of the hour they go with (`systems/enjoyment.ts`). The crafts and
+ * the genres are still read by nothing, and wait for the film career.
  *
  * The crafts are the ones film and television are actually made of, from the
  * ones everybody can name to the ones only a crew knows. It says something

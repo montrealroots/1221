@@ -3,7 +3,7 @@
 // Paths are relative to this file.
 {
   "name": "slate",
-  "description": "SLATE — a life and film-industry simulator. One save is one universe.",
+  "description": "SLATE — an actor-and-actress life simulator. One save is one universe.",
 
   "entitiesDir": "./entities",
   "functionsDir": "./functions",

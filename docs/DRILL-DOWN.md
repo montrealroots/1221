@@ -1,7 +1,7 @@
 # Depth — every noun opens where it stands
 
 One of the main engines of the system. The machinery is in `src/ui/looks/`,
-twenty-five kinds are declared against it and Home is wired to every one of
+twenty-three kinds are declared against it and Home is wired to every one of
 them. What follows is the rule the whole game obeys, the machinery that makes
 obeying it cheap, what stood in the way, and the checks that hold it in place.
 Where a screen departs from this, the screen is wrong.
@@ -105,7 +105,7 @@ Measured in the running app, every screen, at 1440×950:
 |---|---|
 | Save slots | 23% |
 | Creation — Identity | 30% |
-| Creation — Who You Are | 84% |
+| Creation — Who You Are (the step called Interests & Background now) | 84% |
 | Creation — Starting Point | 7% |
 | Creation — Review | 6% |
 | **Home** | **1%** — one live element in ninety-four |
@@ -114,8 +114,8 @@ Measured in the running app, every screen, at 1440×950:
 Measured again on the same screen at the same width once the engine was built
 and Home was wired to every noun on it: **27%**, seventy-two live elements in
 two hundred and sixty-seven, seventy-one of them nouns rather than controls.
-Twenty-five kinds are declared and sixty-six subjects resolve out of a booted
-save.
+Twenty-five kinds were declared then, and sixty-six subjects resolved out of a
+booted save. Twenty-three are declared now.
 
 A share of elements is the wrong measure and it flatters as often as it
 damns: most of a page is wrappers, and a wrapper is not a dead end. The

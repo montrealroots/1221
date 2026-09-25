@@ -72,6 +72,19 @@ export function currencyInfo(code: string): CurrencyInfo {
   return info;
 }
 
+/**
+ * An amount in one currency, in another, at SLATE's rates (see RATES_NOTE).
+ *
+ * Minor units in, minor units out, rounded once. Nothing when either side has
+ * no rate: a conversion nobody can stand behind is not made at all.
+ */
+export function exchange(cents: number, from: string, to: string): number | undefined {
+  const a = RATES[from.toUpperCase()];
+  const b = RATES[to.toUpperCase()];
+  if (a === undefined || b === undefined) return undefined;
+  return Math.round((cents / a) * b);
+}
+
 /** Whether SLATE can convert into this currency at all. */
 export function hasRate(code: string): boolean {
   return RATES[code.toUpperCase()] !== undefined;

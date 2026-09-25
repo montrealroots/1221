@@ -20,7 +20,7 @@
  * foot of net worth. It is not worth a lecture, and it is never a level.
  */
 
-import { formatMoney } from '@/engine/core/money';
+import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { Ledger, isLiability, type Account, type AccountKind } from '@/engine/core/ledger';
 import { MS_DAY } from '@/engine/core/time';
 import { titleCaseLabel } from '@/engine/core/text';
@@ -141,13 +141,14 @@ defineLook<Account>('account', {
       ways,
       provenance: account.apr === undefined
         ? 'The balance is the sum of the postings against it, not a figure anybody typed in.'
-        : 'The balance is the sum of the postings against it. The rate is the one written on the account, and nothing has charged it against you yet.',
+        : 'The balance is the sum of the postings against it. The rate is the one written on the account, and it is charged at each statement on a balance the last statement didn’t clear.',
     };
   },
 });
 
 /** What the account is doing right now, in one sentence. */
 function accountSentence(a: Account, sim: Simulation): string {
+  const cur = saveCurrency(sim.universe);
   const where = a.institution ? ` at ${a.institution}` : '';
   const spendsFromIt = sim.universe.people[a.ownerId]?.primaryAccountId === a.id;
 
@@ -156,30 +157,30 @@ function accountSentence(a: Account, sim: Simulation): string {
     const limit = a.creditLimit ?? 0;
     if (owed === 0) {
       return limit > 0
-        ? `You owe nothing on it${where}, and the whole ${formatMoney(limit)} line is sitting there if you want it.`
+        ? `You owe nothing on it${where}, and the whole ${formatMoney(limit, cur)} line is sitting there if you want it.`
         : `You owe nothing on it${where}, and it’s been clear for a while.`;
     }
     const free = Math.max(0, limit + a.balance);
     return limit > 0
-      ? `You owe ${formatMoney(owed)} on it${where}, which leaves ${formatMoney(free)} of a ${formatMoney(limit)} line still free.`
-      : `You owe ${formatMoney(owed)} on it${where}, and it comes down only as fast as you pay it down.`;
+      ? `You owe ${formatMoney(owed, cur)} on it${where}, which leaves ${formatMoney(free, cur)} of a ${formatMoney(limit, cur)} line still free.`
+      : `You owe ${formatMoney(owed, cur)} on it${where}, and it comes down only as fast as you pay it down.`;
   }
 
   if (a.balance < 0) {
-    return `You’re ${formatMoney(-a.balance)} under${where}, and every day it stays under costs you.`;
+    return `You’re ${formatMoney(-a.balance, cur)} under${where}, and every day it stays under costs you.`;
   }
   if (a.balance === 0) {
     return `There’s nothing in it${where}, ${tailFor(a.kind, spendsFromIt)}`;
   }
-  return `You have ${formatMoney(a.balance)} in it${where}, ${tailFor(a.kind, spendsFromIt)}`;
+  return `You have ${formatMoney(a.balance, cur)} in it${where}, ${tailFor(a.kind, spendsFromIt)}`;
 }
 
 /** What has crossed it lately, without saying "and nothing" twice. */
-function movementSentence(inward: number, outward: number): string {
+function movementSentence(inward: number, outward: number, cur: string): string {
   if (inward === 0 && outward === 0) return `Not a cent has moved through it in the last ${RECENT_WORDS}.`;
-  if (outward === 0) return `${formatMoney(inward)} has come in over the last ${RECENT_WORDS}, and nothing has gone the other way.`;
-  if (inward === 0) return `${formatMoney(outward)} has gone out over the last ${RECENT_WORDS}, and nothing has come in.`;
-  return `Over the last ${RECENT_WORDS} ${formatMoney(inward)} came in and ${formatMoney(outward)} went out.`;
+  if (outward === 0) return `${formatMoney(inward, cur)} has come in over the last ${RECENT_WORDS}, and nothing has gone the other way.`;
+  if (inward === 0) return `${formatMoney(outward, cur)} has gone out over the last ${RECENT_WORDS}, and nothing has come in.`;
+  return `Over the last ${RECENT_WORDS} ${formatMoney(inward, cur)} came in and ${formatMoney(outward, cur)} went out.`;
 }
 
 /** What the money in this sort of account is for. */
@@ -199,6 +200,7 @@ function tailFor(kind: AccountKind, spendsFromIt: boolean): string {
 }
 
 function accountBody(a: Account, sim: Simulation) {
+  const cur = saveCurrency(sim.universe);
   const { inward, outward } = movement(sim, a.id);
   const owed = owedOn(a);
   const limit = a.creditLimit ?? 0;
@@ -208,7 +210,7 @@ function accountBody(a: Account, sim: Simulation) {
     <Stat
       key="balance"
       label={liability ? 'Owed' : 'Balance'}
-      value={<span className="mono">{formatMoney(liability ? owed : a.balance)}</span>}
+      value={<span className="mono">{formatMoney(liability ? owed : a.balance, cur)}</span>}
       tone={liability ? (owed > 0 ? 'negative' : undefined) : (a.balance < 0 ? 'negative' : undefined)}
       note={liability ? 'What is standing against it' : 'What is in it right now'}
     />,
@@ -218,8 +220,8 @@ function accountBody(a: Account, sim: Simulation) {
       <Stat
         key="free"
         label="Still Free"
-        value={<span className="mono">{formatMoney(Math.max(0, limit + a.balance))}</span>}
-        note={`Of a ${formatMoney(limit)} line`}
+        value={<span className="mono">{formatMoney(Math.max(0, limit + a.balance), cur)}</span>}
+        note={`Of a ${formatMoney(limit, cur)} line`}
       />,
     );
   }
@@ -241,7 +243,7 @@ function accountBody(a: Account, sim: Simulation) {
           ? `Anything left on it is written at ${ratePercent(a.apr)} a year, against what’s still owing, not against what it started at.`
           : 'It charges you nothing for the privilege of holding your money.'}
       </p>
-      <p className="small">{movementSentence(inward, outward)}</p>
+      <p className="small">{movementSentence(inward, outward, cur)}</p>
       <div className="grid grid-3">{stats}</div>
     </>
   );
@@ -270,20 +272,21 @@ defineLook<Holdings>('networth', {
   },
   seeds: (sim) => [sim.universe.playerId],
   look: (held, { sim }) => {
+    const cur = saveCurrency(sim.universe);
     const { person, worth, accounts } = held;
 
     const ways: Way[] = accounts.map((a) => ({
       to: at('account', a.id),
       label: a.name,
       detail: isLiability(a.kind)
-        ? `${a.institution ?? 'A lender'}, and ${formatMoney(owedOn(a))} owed on it`
-        : `${a.institution ?? 'A bank'}, and ${formatMoney(a.balance)} in it`,
+        ? `${a.institution ?? 'A lender'}, and ${formatMoney(owedOn(a), cur)} owed on it`
+        : `${a.institution ?? 'A bank'}, and ${formatMoney(a.balance, cur)} in it`,
     }));
     if (worth.liabilities > 0) {
       ways.push({
         to: at('debt', person.id),
         label: 'Owed',
-        detail: `${formatMoney(worth.liabilities)} against your name, and what the rates written on it would come to in a year`,
+        detail: `${formatMoney(worth.liabilities, cur)} against your name, and what the rates written on it would come to in a year`,
       });
     }
 
@@ -291,8 +294,8 @@ defineLook<Holdings>('networth', {
       name: 'Net Worth',
       kind: 'What It All Comes To',
       parent: at('person', person.id),
-      summary: worthSentence(worth),
-      body: worthBody(held),
+      summary: worthSentence(worth, cur),
+      body: worthBody(held, cur),
       facets: [
         {
           id: 'went',
@@ -307,18 +310,19 @@ defineLook<Holdings>('networth', {
 });
 
 /** Both sides of it, spoken. */
-function worthSentence(w: Worth): string {
+function worthSentence(w: Worth, cur: string): string {
   const parts: string[] = [];
-  if (w.cash > 0) parts.push(`${formatMoney(w.cash)} in the bank`);
-  if (w.cash < 0) parts.push(`${formatMoney(-w.cash)} overdrawn`);
-  if (w.liabilities > 0) parts.push(`${formatMoney(w.liabilities)} owed against it`);
+  if (w.cash > 0) parts.push(`${formatMoney(w.cash, cur)} in the bank`);
+  if (w.cash < 0) parts.push(`${formatMoney(-w.cash, cur)} overdrawn`);
+  if (w.held > 0) parts.push(`${formatMoney(w.held, cur)} held as a deposit`);
+  if (w.liabilities > 0) parts.push(`${formatMoney(w.liabilities, cur)} owed against it`);
   if (parts.length === 0) {
     return 'You’re worth nothing at all today — no money anywhere and nothing owed.';
   }
-  return `You’re worth ${formatMoney(w.total)}: ${spokenList(parts)}.`;
+  return `You’re worth ${formatMoney(w.total, cur)}: ${spokenList(parts)}.`;
 }
 
-function worthBody(held: Holdings) {
+function worthBody(held: Holdings, cur: string) {
   const { worth, accounts } = held;
   const names = accounts.map((a) => a.name);
   const spending = accounts.find((a) => a.id === held.person.primaryAccountId);
@@ -332,16 +336,16 @@ function worthBody(held: Holdings) {
         {names.length > 0 && spending ? `, and ${spending.name} is the one the day comes out of.` : names.length > 0 ? '.' : ''}
       </p>
       <div className="grid grid-3">
-        <Stat label="In The Bank" value={<span className="mono">{formatMoney(worth.cash)}</span>} note="Across every account" />
+        <Stat label="In The Bank" value={<span className="mono">{formatMoney(worth.cash, cur)}</span>} note="Across every account" />
         <Stat
           label="Owed"
-          value={<span className="mono">{formatMoney(worth.liabilities)}</span>}
+          value={<span className="mono">{formatMoney(worth.liabilities, cur)}</span>}
           tone={worth.liabilities > 0 ? 'negative' : undefined}
           note="Set against all of it"
         />
         <Stat
           label="Net"
-          value={<span className="mono">{formatMoney(worth.total)}</span>}
+          value={<span className="mono">{formatMoney(worth.total, cur)}</span>}
           tone={worth.total < 0 ? 'negative' : 'positive'}
           note="What is left when it settles"
         />
@@ -352,6 +356,7 @@ function worthBody(held: Holdings) {
 
 /** The other face of the same figure: what has been leaving it. */
 function spendBody(sim: Simulation, ownerId: string) {
+  const cur = saveCurrency(sim.universe);
   const spend = sim.ledger.spendByCategory(ownerId, sim.now - RECENT_DAYS * MS_DAY, sim.now);
   const rows = Object.entries(spend).sort((a, b) => b[1] - a[1]);
   if (rows.length === 0) {
@@ -363,14 +368,14 @@ function spendBody(sim: Simulation, ownerId: string) {
   return (
     <>
       <p className="small">
-        {formatMoney(total)} has gone out in the last {RECENT_WORDS}, and {spokenList(top)}{' '}
+        {formatMoney(total, cur)} has gone out in the last {RECENT_WORDS}, and {spokenList(top)}{' '}
         {isAre(top.length)} where most of it went.
       </p>
       <div className="col gap-2">
         {rows.slice(0, 6).map(([key, amount]) => (
           <div key={key} className="row-between small">
             <span>{categoryWords(key)}</span>
-            <span className="mono dim">{formatMoney(amount)}</span>
+            <span className="mono dim">{formatMoney(amount, cur)}</span>
           </div>
         ))}
       </div>
@@ -394,26 +399,26 @@ defineLook<Owing>('debt', {
     return { person, debts, total: debts.reduce((s, a) => s + owedOn(a), 0) };
   },
   seeds: (sim) => (debtsOf(sim, sim.universe.playerId).length > 0 ? [sim.universe.playerId] : []),
-  look: (owing) => ({
+  look: (owing, { sim }) => { const cur = saveCurrency(sim.universe); return ({
     name: 'Owed',
     kind: 'Money Against You',
     parent: at('networth', owing.person.id),
     summary: owing.debts.length === 1 && owing.debts[0]
-      ? `You owe ${formatMoney(owing.total)}, all of it on the ${owing.debts[0].name}.`
-      : `You owe ${formatMoney(owing.total)}, spread across ${spokenList(owing.debts.map((a) => a.name))}.`,
-    body: debtBody(owing),
+      ? `You owe ${formatMoney(owing.total, cur)}, all of it on the ${owing.debts[0].name}.`
+      : `You owe ${formatMoney(owing.total, cur)}, spread across ${spokenList(owing.debts.map((a) => a.name))}.`,
+    body: debtBody(owing, cur),
     ways: owing.debts.map((a) => ({
       to: at('account', a.id),
       label: a.name,
       detail: a.apr !== undefined
-        ? `${formatMoney(owedOn(a))} on it at ${ratePercent(a.apr)}`
-        : `${formatMoney(owedOn(a))} on it, at no stated rate`,
+        ? `${formatMoney(owedOn(a), cur)} on it at ${ratePercent(a.apr)}`
+        : `${formatMoney(owedOn(a), cur)} on it, at no stated rate`,
     })),
-    provenance: 'The rates come off the accounts themselves, and none has charged one yet. None of it is run forward — it’s what the balances are at this minute.',
-  }),
+    provenance: 'The rates come off the accounts themselves, and a card’s is charged at each statement on a balance carried. None of it is run forward — it’s what the balances are at this minute.',
+  }); },
 });
 
-function debtBody(owing: Owing) {
+function debtBody(owing: Owing, cur: string) {
   const yearly = owing.debts.reduce((s, a) => s + Math.round(owedOn(a) * (a.apr ?? 0)), 0);
   const limits = owing.debts.reduce((s, a) => s + (a.creditLimit ?? 0), 0);
   const revolving = owing.debts.filter((a) => (a.creditLimit ?? 0) > 0);
@@ -428,27 +433,27 @@ function debtBody(owing: Owing) {
     <>
       <p className="small">
         {yearly > 0
-          ? `At the rates written on them that would come to about ${formatMoney(yearly)} a year, or ${formatMoney(Math.round(yearly / 12))} a month for standing still.`
+          ? `At the rates written on them that would come to about ${formatMoney(yearly, cur)} a year, or ${formatMoney(Math.round(yearly / 12), cur)} a month for standing still.`
           : 'None of them carries a rate, so the balance sits where it is until you pay it.'}
         {dearest ? ` The ${dearest.name} is the expensive one, at ${ratePercent(dearest.apr ?? 0)}.` : ''}
       </p>
       <p className="small">
         {limits > 0
-          ? `You’re using ${used}% of the ${formatMoney(limits)} of credit open to you, and a lender reads that number before it reads anything else about you.`
+          ? `You’re using ${used}% of the ${formatMoney(limits, cur)} of credit open to you, and a lender reads that number before it reads anything else about you.`
           : 'None of it is revolving credit, so there’s no line to be using up.'}
       </p>
       <div className="grid grid-3">
-        <Stat label="Owed" value={<span className="mono">{formatMoney(owing.total)}</span>} tone="negative" note="Across everything" />
+        <Stat label="Owed" value={<span className="mono">{formatMoney(owing.total, cur)}</span>} tone="negative" note="Across everything" />
         <Stat
           label="A Year Of Interest"
-          value={<span className="mono">{formatMoney(yearly)}</span>}
+          value={<span className="mono">{formatMoney(yearly, cur)}</span>}
           note="What carrying it costs"
         />
         <Stat
           label="Credit Used"
           value={limits > 0 ? `${used}%` : 'None open'}
           tone={used > 60 ? 'warning' : undefined}
-          note={limits > 0 ? `Of ${formatMoney(limits)}` : 'No revolving line'}
+          note={limits > 0 ? `Of ${formatMoney(limits, cur)}` : 'No revolving line'}
         />
       </div>
     </>

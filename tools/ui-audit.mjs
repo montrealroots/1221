@@ -19,6 +19,7 @@
 
 import { chromium } from 'playwright';
 import { mkdirSync } from 'node:fs';
+import { launchOptions } from './browser.mjs';
 
 const BASE = process.env.SLATE_URL ?? 'http://localhost:4173';
 const OUT = process.argv[2] ?? 'ui-audit';
@@ -251,8 +252,7 @@ const ALIGNMENT_PROBE = `(() => {
 
 // The environment ships a Chromium that may not match this Playwright build,
 // so point at it rather than downloading another one.
-const EXECUTABLE = process.env.CHROMIUM_PATH ?? '/opt/pw-browsers/chromium-1194/chrome-linux/chrome';
-const browser = await chromium.launch({ executablePath: EXECUTABLE });
+const browser = await chromium.launch(launchOptions());
 let totalProblems = 0;
 
 for (const size of WIDTHS) {

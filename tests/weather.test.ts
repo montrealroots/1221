@@ -4,8 +4,9 @@
  * Los Angeles is warmer in July than January and Sydney is the other way
  * round. Phoenix is dry and London is not. Moscow snows in January and
  * Singapore never does. The same seed, city and day always give the same
- * weather, and two saves do not share a sky. And a storm on an exterior
- * shoot day costs the day what a storm costs, not what a coin says.
+ * weather, and two saves do not share a sky. It thunders about as often as
+ * the met services count, in the right season. And a storm on an outdoor
+ * shift costs the day what a storm costs, not what a coin says.
  */
 
 import { describe, expect, it } from 'vitest';
@@ -13,7 +14,8 @@ import { quickSave } from '@/engine';
 import { CITIES, type City } from '@/engine/content/geography';
 import { MS_DAY, instantFromZoned, startOfDay, zonedParts } from '@/engine/core/time';
 import { climateTypeFor, normalFor, climateByLatitude, baselineTemperature } from '@/engine/content/climate';
-import { forecastFor, hoursOn, shootDayWeather, weatherAt, weatherOn } from '@/engine/systems/weather';
+import { forecastFor, hoursOn, outdoorWeather, weatherAt, weatherOn } from '@/engine/systems/weather';
+import { THUNDER_DAYS } from '@/engine/content/thunder';
 
 const sim = quickSave({}, 'weather-seed');
 const city = (id: string) => {
@@ -221,11 +223,60 @@ describe('the sky has a memory and a seed', () => {
   });
 });
 
-describe('a shoot day in the weather', () => {
-  it('is unaffected on a stage, and only ever slowed outdoors', () => {
-    expect(shootDayWeather(sim, 'us-ca-losangeles', sim.now, true).factor).toBe(1);
+describe('thunder', () => {
+  // Three worlds, two years each: six years of days per city, enough that a
+  // published count shows through the noise.
+  const worlds = [0, 1, 2].map((n) => quickSave({ dayJob: false }, `thunder-${n}`));
+  const storms = (id: string) => {
+    const c = city(id);
+    const months = new Array<number>(12).fill(0);
+    for (const world of worlds) {
+      for (let d = 0; d < 730; d++) {
+        const day = weatherOn(world, c, world.now + d * MS_DAY + 12 * 3_600_000);
+        if (day.condition === 'Thunderstorm') months[Number(day.dateKey.slice(5, 7)) - 1]! += 1;
+      }
+    }
+    return { perYear: months.reduce((a, b) => a + b, 0) / 6, months };
+  };
+
+  it('comes about as often a year as the published count says', () => {
+    // London 16, Dublin 5, New York 19.4, Tokyo 14.5, Sydney 22, and the dry
+    // summers, Madrid 14.3 and Los Angeles 4.6. Six years
+    // of a count is noisy, and a small count most of all: within three
+    // standard deviations of it as a Poisson count, and a tenth for the
+    // model. The old rule gave London and Dublin none.
+    for (const id of ['uk-eng-london', 'ie-lei-dublin', 'us-ny-newyork', 'jp-13-tokyo', 'au-nsw-sydney', 'es-md-madrid', 'us-ca-losangeles']) {
+      const want = THUNDER_DAYS[id]!.days;
+      const got = storms(id).perYear;
+      const room = 3 * Math.sqrt(want / 6) + want * 0.1;
+      expect(got, id).toBeGreaterThan(want - room);
+      expect(got, id).toBeLessThan(want + room);
+    }
+  });
+
+  it('keeps the order of the places: Singapore, then Chicago, then Dublin', () => {
+    const singapore = storms('sg-singapore').perYear;
+    expect(singapore).toBeGreaterThan(120);
+    expect(storms('uk-eng-london').perYear).toBeGreaterThan(storms('ie-lei-dublin').perYear * 2);
+  });
+
+  it('falls in the warm half of the year, north and south', () => {
+    const summer = (m: number[], months: number[]) => months.reduce((a, i) => a + m[i - 1]!, 0);
+    const london = storms('uk-eng-london').months;
+    expect(summer(london, [5, 6, 7, 8, 9])).toBeGreaterThan(summer(london, [11, 12, 1, 2, 3]) * 3);
+    // Madrid's rain falls in winter and its thunder in May and June (AEMET).
+    const madrid = storms('es-md-madrid').months;
+    expect(summer(madrid, [5, 6, 7, 8])).toBeGreaterThan(summer(madrid, [11, 12, 1, 2]) * 3);
+    const sydney = storms('au-nsw-sydney').months;
+    expect(summer(sydney, [11, 12, 1, 2, 3])).toBeGreaterThan(summer(sydney, [5, 6, 7, 8, 9]) * 3);
+  });
+});
+
+describe('outdoor work in the weather', () => {
+  it('is only ever slowed, and called off only in a thunderstorm', () => {
     for (let i = 0; i < 60; i++) {
-      const outdoors = shootDayWeather(sim, 'uk-eng-london', sim.now + i * MS_DAY, false);
+      const outdoors = outdoorWeather(sim, 'uk-eng-london', sim.now + i * MS_DAY);
+      expect(outdoors.calledOff).toBe(outdoors.weather?.condition === 'Thunderstorm');
       expect(outdoors.factor).toBeGreaterThan(0);
       expect(outdoors.factor).toBeLessThanOrEqual(1);
       if (outdoors.factor < 1) expect(outdoors.note).toMatch(/London/);
@@ -239,7 +290,7 @@ describe('a shoot day in the weather', () => {
     for (let i = 0; i < 60; i++) {
       const at = sim.now + i * MS_DAY;
       const day = weatherOn(sim, c, at);
-      const { factor } = shootDayWeather(sim, c.id, at, false);
+      const { factor } = outdoorWeather(sim, c.id, at);
       if (day.precipitation !== 'none') { expect(factor).toBeLessThan(1); wetSeen = true; }
     }
     expect(wetSeen).toBe(true);

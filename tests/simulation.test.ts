@@ -3,7 +3,7 @@ import { beforeAll, describe, expect, it } from 'vitest';
 import { quickSave, validateUniverse, migrate, loadSave } from '@/engine';
 import type { Simulation } from '@/engine';
 import { SAVE_SCHEMA_VERSION, type Person, type Wellbeing } from '@/engine/domain/model';
-import { applySleep, sleepQuality, sleepStandsForTheNight, startOfLocalDay, suggestedSleep, unattendedNight } from '@/engine/systems/life';
+import { applySleep, settleTheBody, sleepQuality, sleepStandsForTheNight, startOfLocalDay, suggestedSleep, unattendedNight } from '@/engine/systems/life';
 import { formatTime, instantFromZoned, MS_DAY, MS_HOUR, MS_MINUTE, startOfNextDay, zonedParts } from '@/engine/core/time';
 import { skipTargets, checkConflicts, entriesBetween, monthGrid } from '@/engine/world/calendar';
 import { openDecisions } from '@/engine/world/world';
@@ -337,7 +337,9 @@ describe('the waking day', () => {
     // no sleep on record and give a night nobody chose on top.
     const dials = ['energy', 'sleepDebt', 'stress', 'morale'] as const;
     for (const bedtime of [23, 1, 16]) {
-      const sim = quickSave({}, `waking-once-${bedtime}`);
+      // No day job: a shift at the wake would put a morning's work on the
+      // night being compared.
+      const sim = quickSave({ dayJob: false }, `waking-once-${bedtime}`);
       for (let night = 1; night <= 3; night += 1) {
         sim.advanceTo(next(sim, bedtime));
         Object.assign(sim.player.wellbeing, { energy: 10, sleepDebt: 20, stress: 50, morale: 50 });
@@ -531,7 +533,10 @@ describe('the waking day', () => {
     expect(ends).toBeGreaterThan(six);
     expect(sim.player.lastSleptAt).toBe(midnight);
     expect(sim.player.awakeSince).toBe(six);
-    // The whole night's worth, though they are up at six.
+    // The whole night's worth, though they are up at six. On the body the
+    // midnight settled first, since a night reads condition and the drift
+    // comes ahead of it.
+    settleTheBody(bed, midnight);
     applySleep(bed, unattendedNight(bed).hours, quality, midnight);
     expect(sim.player.wellbeing.morale).toBeCloseTo(bed.wellbeing.morale, 9);
 
@@ -1119,7 +1124,8 @@ describe('the calendar', () => {
   });
 
   it('does not treat back-to-back commitments as a collision', () => {
-    const sim = quickSave();
+    // No day job, so the only commitments are the test's own.
+    const sim = quickSave({ dayJob: false });
     sim.onSchedule('test.back_to_back', () => undefined);
     const at = sim.now + 5 * MS_DAY;
     sim.schedule({

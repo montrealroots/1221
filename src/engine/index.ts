@@ -17,7 +17,7 @@ import type { SaveAdapter, Slot } from './persistence/adapter';
 import {
   addDays, formatDate, instantFromZoned, startOfDay, startOfNextDay, zonedParts, MS_DAY, MS_HOUR, MS_MINUTE,
 } from './core/time';
-import { formatMoneyCompact } from './core/money';
+import { formatMoneyCompact, saveCurrency } from './core/money';
 import { clamp } from './core/rng';
 import { plural, titleCaseLabel } from './core/text';
 import { PERFORMER_NOUN, impliedPerformerTitle, isPerformerTitle } from './core/performer';
@@ -29,9 +29,16 @@ import { CITIES } from './content/geography';
 import { netWorth } from './systems/finance';
 import { registerLife } from './systems/life';
 import { registerPlans } from './world/plans';
+import { armWork, registerWork, startWork } from './systems/work';
+import { mayWorkIn } from './domain/citizenship';
+import { armHousehold, moveIn, registerHousehold } from './systems/household';
+import { armCredit, openCredit, registerCredit } from './systems/credit';
+import { armBirthdays, registerBirthdays } from './systems/birthdays';
+import { registerMortality } from './systems/mortality';
+import { registerTutorial } from './world/tutorial';
 import { registerWorld } from './world/world';
 import {
-  createUniverse, defaultConfig, WEALTH_PROFILES, type NewSaveConfig,
+  createUniverse, defaultConfig, wealthIn, type NewSaveConfig,
 } from './world/bootstrap';
 
 export * from './world/bootstrap';
@@ -46,6 +53,12 @@ export function registerAllSystems(sim: Simulation): void {
   registerLife(sim);
   registerWorld(sim);
   registerPlans(sim);
+  registerWork(sim);
+  registerHousehold(sim);
+  registerCredit(sim);
+  registerBirthdays(sim);
+  registerMortality(sim);
+  registerTutorial(sim);
 }
 
 /** Recurring world processes every save needs running. */
@@ -68,7 +81,7 @@ function armWorldClock(sim: Simulation): void {
 /** Builds the player's starting situation. */
 function populateWorld(sim: Simulation, config: NewSaveConfig): void {
   const player = sim.player;
-  const wealth = WEALTH_PROFILES[config.wealth];
+  const wealth = wealthIn(config.wealth, saveCurrency(sim.universe));
 
   // --- Accounts -----------------------------------------------------------
   const checking = sim.openAccount({
@@ -122,6 +135,11 @@ function populateWorld(sim: Simulation, config: NewSaveConfig): void {
   }
 
   armWorldClock(sim);
+  // Only where they have the right to work (`mayWorkIn`).
+  if (config.dayJob && mayWorkIn(player.citizenshipId, player.currentLocationId).may) startWork(sim, player);
+  moveIn(sim, player, config.housing);
+  openCredit(sim, player, wealth.creditScore);
+  armBirthdays(sim);
 }
 
 /** Keeps the save-slot summary in step with the world. */
@@ -131,10 +149,13 @@ export function refreshMeta(sim: Simulation): void {
   const worth = netWorth(sim, player.id);
   sim.universe.meta.characterName = player.displayName;
   sim.universe.meta.portrait = player.portrait;
-  sim.universe.meta.careerLabel = PERFORMER_NOUN[player.performerTitle];
+  // A finished life says so on its slot, on every adapter, since the slot
+  // list the server sends carries the labels and not the rest of the meta.
+  const ended = sim.universe.meta.endedAge;
+  sim.universe.meta.careerLabel = PERFORMER_NOUN[player.performerTitle] + (ended !== undefined ? `, Died At ${ended}` : '');
   sim.universe.meta.locationLabel = CITIES.get(player.currentLocationId)?.name ?? 'Unknown';
   sim.universe.meta.worldDateLabel = formatDate(sim.now, sim.homeZone);
-  sim.universe.meta.netWorthLabel = formatMoneyCompact(worth.total);
+  sim.universe.meta.netWorthLabel = formatMoneyCompact(worth.total, saveCurrency(sim.universe));
   sim.universe.meta.lastPlayedAt = sim.now;
 }
 
@@ -209,6 +230,12 @@ export function loadSave(universe: SaveUniverse): Simulation {
       label: 'World Simulation', category: 'system', priority: 96,
     });
   }
+  // Anybody with a job has their rota two weeks out and a payday ahead, and
+  // anybody with a home a rent due.
+  armWork(sim);
+  armHousehold(sim);
+  armCredit(sim);
+  armBirthdays(sim);
   return sim;
 }
 
@@ -517,6 +544,30 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     }
     if (paid > 0) {
       steps.push(`Kept ${plural(paid, 'person', 'people')} from being charged twice for the rest of today.`);
+    }
+  }
+
+  // 89 gave every new character a day job. A save from before it is given the
+  // one a character with no answer to Before Acting has, in the town they
+  // are in, starting now; `loadSave` puts its rota and payday on the calendar.
+  // Without it such a save would be the one life with nothing coming in.
+  if (from < 89) {
+    const worker = universe.people?.[universe.playerId];
+    if (worker && !worker.job && mayWorkIn(worker.citizenshipId, worker.currentLocationId).may) {
+      worker.job = {
+        jobId: worker.beforeActing ?? 'school', cityId: worker.currentLocationId, since: universe.now,
+        unpaid: [], missed: [], rotaThrough: universe.now,
+      };
+      steps.push('Gave the character a day job.');
+    }
+    if (worker && !worker.home) {
+      worker.home = { kind: 'shared', cityId: worker.currentLocationId, since: universe.now };
+      steps.push('Gave the character a room in a shared flat, and the rent that goes with it.');
+    }
+    if (worker && !worker.credit) {
+      const carried = Object.values(universe.accounts ?? {}).some((a) => a.ownerId === worker.id && a.kind === 'credit_card' && a.balance < 0);
+      worker.credit = { score: 650, late: [], autopay: 'full', statementBalance: 0, paidSinceStatement: 0, carrying: carried };
+      steps.push('Opened a credit record at 650, a fair middle, for a save that kept none.');
     }
   }
 
