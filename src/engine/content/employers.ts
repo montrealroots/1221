@@ -2751,7 +2751,7 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "payNote": "Not found."
         }
       ],
-      "occupation": "PCS-ESE 424A (INSEE dataset label: 'Sportifs professionnels'; the PCS definition includes moniteurs et éducateurs sportifs)",
+      "occupation": "PCS-ESE 424A (INSEE dataset label “Sportifs professionnels”; the PCS definition includes moniteurs et éducateurs sportifs)",
       "typical": {
         "hourly": 1317,
         "period": "Hour. The CCN du sport (IDCC 2511) SMC for groupe 3 from 1 January 2026 (avenant no. 210 of 3 April 2025, +1%) is 1997.87 EUR gross/month for 151.67h, or 13.17/hour. Groupe 1 is 1848.42, now below the SMIC; groupe 2 is 1885.14. INSEE 2024 median net per FTE for 424A is 1805.51 EUR/month, but it covers only 667 FTEs and is unreliable.",

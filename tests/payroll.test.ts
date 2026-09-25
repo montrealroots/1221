@@ -28,24 +28,24 @@ describe('each country’s payslip', () => {
   it('Britain: the personal allowance, National Insurance over £12,570, the pension before tax', () => {
     const slip = year('GB', 25_000, ['GB', 'GB-ENG']);
     const pension = (25_000 - 6_240) * 0.05;
-    expect(line(slip, 'Workplace pension')).toBeCloseTo(pension, 2);
-    expect(line(slip, 'Income tax')).toBeCloseTo((25_000 - pension - 12_570) * 0.20, 2);
+    expect(line(slip, 'Workplace Pension')).toBeCloseTo(pension, 2);
+    expect(line(slip, 'Income Tax')).toBeCloseTo((25_000 - pension - 12_570) * 0.20, 2);
     expect(line(slip, 'National Insurance')).toBeCloseTo((25_000 - 12_570) * 0.08, 2);
     // Nothing into a pension under 22, or under the £10,000 trigger.
-    expect(line(year('GB', 25_000, ['GB', 'GB-ENG'], { age: 21 }), 'Workplace pension')).toBe(0);
-    expect(line(year('GB', 9_900, ['GB', 'GB-ENG']), 'Workplace pension')).toBe(0);
+    expect(line(year('GB', 25_000, ['GB', 'GB-ENG'], { age: 21 }), 'Workplace Pension')).toBe(0);
+    expect(line(year('GB', 9_900, ['GB', 'GB-ENG']), 'Workplace Pension')).toBe(0);
     // Scotland's starter rate is lower.
-    expect(line(year('GB', 25_000, ['GB', 'GB-SCT']), 'Income tax')).toBeLessThan(line(slip, 'Income tax'));
+    expect(line(year('GB', 25_000, ['GB', 'GB-SCT']), 'Income Tax')).toBeLessThan(line(slip, 'Income Tax'));
   });
 
-  it('Australia: $18,200 tax-free, the low income tax offset, the Medicare levy, and super on top', () => {
+  it('Australia: $18,200 tax-free, the low income tax offset, the Medicare Levy, and super on top', () => {
     const slip = year('AU', 50_000, ['AU', 'AU-02']);
     // 15% of 26,800 and 30% of 5,000 is 5,520, less an offset of 250.
-    expect(line(slip, 'PAYG withholding')).toBeCloseTo(5_270, 2);
-    expect(line(slip, 'Medicare levy')).toBeCloseTo(1_000, 2);
+    expect(line(slip, 'PAYG Withholding')).toBeCloseTo(5_270, 2);
+    expect(line(slip, 'Medicare Levy')).toBeCloseTo(1_000, 2);
     expect(slip.employerPension / 100).toBeCloseTo(6_000, 2);
     // Under $37,500 the whole $700 offset: 15% of 11,800 is 1,770.
-    expect(line(year('AU', 30_000, ['AU', 'AU-02']), 'PAYG withholding')).toBeCloseTo(1_070, 2);
+    expect(line(year('AU', 30_000, ['AU', 'AU-02']), 'PAYG Withholding')).toBeCloseTo(1_070, 2);
   });
 
   it('France: about a fifth off at the SMIC, and nothing withheld under the grid’s first band', () => {
@@ -80,7 +80,7 @@ describe('each country’s payslip', () => {
 
   it('Germany: a minijob pays only the pension top-up; a full wage the four insurances and Lohnsteuer', () => {
     const mini = year('DE', 600 * 12, ['DE', 'DE-16']);
-    expect(mini.lines.map((l) => l.name)).toEqual(['Rentenversicherung (minijob top-up)']);
+    expect(mini.lines.map((l) => l.name)).toEqual(['Rentenversicherung (Minijob Top-Up)']);
     const full = year('DE', 30_000, ['DE', 'DE-16']);
     expect(line(full, 'Rentenversicherung')).toBeCloseTo(30_000 * 0.093, 2);
     expect(line(full, 'Lohnsteuer')).toBeGreaterThan(2_000);
@@ -91,9 +91,9 @@ describe('each country’s payslip', () => {
     const nyc = year('US', 35_360, ['US', 'US-NY', 'US-NY-newyork']);
     const houston = year('US', 35_360, ['US', 'US-TX', 'US-TX-houston']);
     expect(line(houston, 'Social Security')).toBeCloseTo(35_360 * 0.062, 2);
-    expect(line(houston, 'Federal income tax')).toBeCloseTo(12_400 * 0.10 + (35_360 - 16_100 - 12_400) * 0.12, 2);
+    expect(line(houston, 'Federal Income Tax')).toBeCloseTo(12_400 * 0.10 + (35_360 - 16_100 - 12_400) * 0.12, 2);
     expect(houston.lines.some((l) => /State|City/.test(l.name))).toBe(false);
-    expect(line(nyc, 'New York City income tax')).toBeGreaterThan(0);
+    expect(line(nyc, 'New York City Income Tax')).toBeGreaterThan(0);
     expect(line(nyc, 'New York Disability Benefits')).toBeCloseTo(31.2, 2);
   });
 
@@ -118,7 +118,7 @@ describe('each country’s payslip', () => {
   it('New Zealand and Korea: every line, and a pension on top in New Zealand', () => {
     const nz = year('NZ', 49_816, ['NZ', 'NZ-E7']);
     expect(line(nz, 'KiwiSaver')).toBeCloseTo(49_816 * 0.035, 2);
-    expect(line(nz, 'ACC earners’ levy')).toBeCloseTo(49_816 * 0.0175, 2);
+    expect(line(nz, 'ACC Earners’ Levy')).toBeCloseTo(49_816 * 0.0175, 2);
     const kr = year('KR', 25_882_560, ['KR', 'KR-11']);
     expect(line(kr, '지방소득세 (Local Income Tax)')).toBeCloseTo(line(kr, '근로소득세 (Income Tax)') * 0.1, 0);
   });

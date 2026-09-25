@@ -75,24 +75,24 @@ const RULES: Record<string, Rules> = {
   US: (g, ctx) => {
     const lines: Line[] = [];
     const IRS = 'IRS Rev. Proc. 2025-32 and Publication 15-T, 2026';
-    lines.push({ name: 'Federal income tax', kind: 'tax', source: IRS, amount: bands(Math.max(0, g - 16_100), [[0, 0.10], [12_400, 0.12], [50_400, 0.22], [105_700, 0.24], [201_775, 0.32], [256_225, 0.35], [640_600, 0.37]]) });
+    lines.push({ name: 'Federal Income Tax', kind: 'tax', source: IRS, amount: bands(Math.max(0, g - 16_100), [[0, 0.10], [12_400, 0.12], [50_400, 0.22], [105_700, 0.24], [201_775, 0.32], [256_225, 0.35], [640_600, 0.37]]) });
     lines.push({ name: 'Social Security', kind: 'social', source: 'SSA 2026: 6.2% up to $184,500', amount: Math.min(g, 184_500) * 0.062 });
     lines.push({ name: 'Medicare', kind: 'social', source: 'IRS Topic 751: 1.45%, and 0.9% more over $200,000', amount: g * 0.0145 + inBand(g, 200_000) * 0.009 });
     const state = ctx.path[1];
     const nyc = ['US-NY-newyork', 'US-NY-brooklyn', 'US-NY-queens', 'US-NY-manhattan', 'US-NY-thebronx', 'US-NY-statenisland'].includes(ctx.path[2] ?? '');
     if (state === 'US-NY') {
       const taxable = Math.max(0, g - 8_000);
-      lines.push({ name: 'New York State income tax', kind: 'tax', source: 'NYS 2026 single rates, $8,000 standard deduction', amount: bands(taxable, [[0, 0.039], [8_500, 0.044], [11_700, 0.0515], [13_900, 0.054], [80_650, 0.059], [215_400, 0.0685], [1_077_550, 0.0965], [5_000_000, 0.103], [25_000_000, 0.109]]) });
-      if (nyc) lines.push({ name: 'New York City income tax', kind: 'tax', source: 'NYC resident rates, 2026', amount: bands(taxable, [[0, 0.03078], [12_000, 0.03762], [25_000, 0.03819], [50_000, 0.03876]]) });
+      lines.push({ name: 'New York State Income Tax', kind: 'tax', source: 'NYS 2026 single rates, $8,000 standard deduction', amount: bands(taxable, [[0, 0.039], [8_500, 0.044], [11_700, 0.0515], [13_900, 0.054], [80_650, 0.059], [215_400, 0.0685], [1_077_550, 0.0965], [5_000_000, 0.103], [25_000_000, 0.109]]) });
+      if (nyc) lines.push({ name: 'New York City Income Tax', kind: 'tax', source: 'NYC resident rates, 2026', amount: bands(taxable, [[0, 0.03078], [12_000, 0.03762], [25_000, 0.03819], [50_000, 0.03876]]) });
       lines.push({ name: 'New York Paid Family Leave', kind: 'social', source: 'NYS 2026: 0.432%, at most $411.91 a year', amount: Math.min(g * 0.00432, 411.91) });
       lines.push({ name: 'New York Disability Benefits', kind: 'social', source: 'NY WCB: 0.5%, at most $0.60 a week', amount: Math.min(g * 0.005, 0.60 * 52) });
     } else if (state === 'US-CA') {
-      lines.push({ name: 'California income tax', kind: 'tax', source: 'EDD 2026 withholding schedule: $5,706 standard deduction, a $168.30 credit', amount: Math.max(0, bands(Math.max(0, g - 5_706), [[0, 0.01], [11_079, 0.02], [26_264, 0.04], [41_452, 0.06], [57_542, 0.08], [72_724, 0.093], [371_479, 0.103], [445_771, 0.113], [742_953, 0.123], [1_000_000, 0.133]]) - 168.30) });
+      lines.push({ name: 'California Income Tax', kind: 'tax', source: 'EDD 2026 withholding schedule: $5,706 standard deduction, a $168.30 credit', amount: Math.max(0, bands(Math.max(0, g - 5_706), [[0, 0.01], [11_079, 0.02], [26_264, 0.04], [41_452, 0.06], [57_542, 0.08], [72_724, 0.093], [371_479, 0.103], [445_771, 0.113], [742_953, 0.123], [1_000_000, 0.133]]) - 168.30) });
       lines.push({ name: 'California SDI', kind: 'social', source: 'EDD 2026: 1.3%, no wage ceiling', amount: g * 0.013 });
     } else if (state === 'US-IL') {
-      lines.push({ name: 'Illinois income tax', kind: 'tax', source: 'IL 2026: 4.95% after a $2,925 exemption', amount: Math.max(0, g - 2_925) * 0.0495 });
+      lines.push({ name: 'Illinois Income Tax', kind: 'tax', source: 'IL 2026: 4.95% after a $2,925 exemption', amount: Math.max(0, g - 2_925) * 0.0495 });
     } else if (state === 'US-GA') {
-      lines.push({ name: 'Georgia income tax', kind: 'tax', source: 'GA DOR 2026: 4.99% after a $15,000 standard deduction', amount: Math.max(0, g - 15_000) * 0.0499 });
+      lines.push({ name: 'Georgia Income Tax', kind: 'tax', source: 'GA DOR 2026: 4.99% after a $15,000 standard deduction', amount: Math.max(0, g - 15_000) * 0.0499 });
     } else if (state === 'US-WA') {
       lines.push({ name: 'Washington Paid Family and Medical Leave', kind: 'social', source: 'ESD 2026: the employee’s 71.43% of 1.13%, up to $184,500', amount: Math.min(g, 184_500) * 0.00807 });
       lines.push({ name: 'WA Cares Fund', kind: 'social', source: 'WA Cares 2026: 0.58%', amount: g * 0.0058 });
@@ -100,7 +100,7 @@ const RULES: Record<string, Rules> = {
       // A state the research didn't cover: the tax engine's approximation of it.
       const approx = ctx.cityId ? computeAnnualTax(Math.round(g * 100), ctx.cityId, ctx.at) : undefined;
       const regional = approx ? (approx.regional + approx.local) / 100 : 0;
-      if (regional > 0) lines.push({ name: 'State income tax (SLATE’s approximation)', kind: 'tax', source: 'content/tax.ts', amount: regional });
+      if (regional > 0) lines.push({ name: 'State Income Tax (SLATE’s Approximation)', kind: 'tax', source: 'content/tax.ts', amount: regional });
     }
     return { lines };
   },
@@ -123,16 +123,16 @@ const RULES: Record<string, Rules> = {
     // abated 16.5%.
     let federal = Math.max(0, bands(g, [[0, 0.14], [58_523, 0.205], [117_045, 0.26], [181_440, 0.29], [258_482, 0.33]]) - (16_452 + 1_501 + cpp + ei + qpip) * 0.14);
     if (quebec) federal *= 1 - 0.165;
-    lines.push({ name: 'Federal income tax', kind: 'tax', source: 'CRA 2026 brackets; basic personal amount $16,452, employment amount $1,501', amount: federal });
+    lines.push({ name: 'Federal Income Tax', kind: 'tax', source: 'CRA 2026 brackets; basic personal amount $16,452, employment amount $1,501', amount: federal });
     if (ctx.path[1] === 'CA-08') {
-      lines.push({ name: 'Ontario income tax', kind: 'tax', source: 'Ontario 2026 brackets; basic personal amount $12,989', amount: Math.max(0, bands(g, [[0, 0.0505], [53_891, 0.0915], [107_785, 0.1116], [150_000, 0.1216], [220_000, 0.1316]]) - (12_989 + cpp + ei) * 0.0505) });
+      lines.push({ name: 'Ontario Income Tax', kind: 'tax', source: 'Ontario 2026 brackets; basic personal amount $12,989', amount: Math.max(0, bands(g, [[0, 0.0505], [53_891, 0.0915], [107_785, 0.1116], [150_000, 0.1216], [220_000, 0.1316]]) - (12_989 + cpp + ei) * 0.0505) });
       const ohp = g <= 20_000 ? 0 : g <= 36_000 ? Math.min(300, (g - 20_000) * 0.06) : g <= 48_000 ? Math.min(450, 300 + (g - 36_000) * 0.25)
         : g <= 72_000 ? Math.min(600, 450 + (g - 48_000) * 0.25) : g <= 200_000 ? Math.min(750, 600 + (g - 72_000) * 0.25) : Math.min(900, 750 + (g - 200_000) * 0.25);
       lines.push({ name: 'Ontario Health Premium', kind: 'tax', source: 'ontario.ca; the steps from TaxTips.ca', amount: ohp });
     } else if (ctx.path[1] === 'CA-02') {
-      lines.push({ name: 'British Columbia income tax', kind: 'tax', source: 'BC 2026 brackets; basic personal amount $13,216', amount: Math.max(0, bands(g, [[0, 0.056], [50_363, 0.077], [100_728, 0.105], [115_648, 0.1229], [140_430, 0.147], [190_405, 0.168], [265_545, 0.205]]) - (13_216 + cpp + ei) * 0.056) });
+      lines.push({ name: 'British Columbia Income Tax', kind: 'tax', source: 'BC 2026 brackets; basic personal amount $13,216', amount: Math.max(0, bands(g, [[0, 0.056], [50_363, 0.077], [100_728, 0.105], [115_648, 0.1229], [140_430, 0.147], [190_405, 0.168], [265_545, 0.205]]) - (13_216 + cpp + ei) * 0.056) });
     } else if (quebec) {
-      lines.push({ name: 'Quebec income tax', kind: 'tax', source: 'Revenu Québec 2026 brackets; basic personal amount $18,952', amount: Math.max(0, bands(g, [[0, 0.14], [54_345, 0.19], [108_680, 0.24], [132_245, 0.2575]]) - 18_952 * 0.14) });
+      lines.push({ name: 'Quebec Income Tax', kind: 'tax', source: 'Revenu Québec 2026 brackets; basic personal amount $18,952', amount: Math.max(0, bands(g, [[0, 0.14], [54_345, 0.19], [108_680, 0.24], [132_245, 0.2575]]) - 18_952 * 0.14) });
     }
     return { lines };
   },
@@ -148,8 +148,8 @@ const RULES: Record<string, Rules> = {
     const sbcDay = Math.min((g / 365) * 1.0493, 25 * UMA);
     const year = (rate: number, perDay: number) => perDay * rate * 365;
     const imss = year(0.0025 + 0.00375 + 0.00625, sbcDay) + year(0.004, Math.max(0, sbcDay - 3 * UMA));
-    lines.push({ name: 'IMSS (sickness, disability and life)', kind: 'social', source: 'Ley del Seguro Social, 2026 worker quotas', amount: imss });
-    lines.push({ name: 'IMSS old age (to your Afore)', kind: 'pension', source: 'Ley del Seguro Social: 1.125%', amount: year(0.01125, sbcDay) });
+    lines.push({ name: 'IMSS (Sickness, Disability And Life)', kind: 'social', source: 'Ley del Seguro Social, 2026 worker quotas', amount: imss });
+    lines.push({ name: 'IMSS Old Age (To Your Afore)', kind: 'pension', source: 'Ley del Seguro Social: 1.125%', amount: year(0.01125, sbcDay) });
     // ISR: the tariff, less the employment subsidy; nothing withheld from a
     // wage at the general minimum (art. 96).
     let isr = 0;
@@ -162,7 +162,7 @@ const RULES: Record<string, Rules> = {
     // minimum, more by the wage in UMA) go to the Afore too.
     const inUma = sbcDay / UMA;
     const cesantia = sbcDay <= MINIMUM_DAY * 1.0493 ? 0.0315 : inUma <= 1.5 ? 0.03676 : inUma <= 2 ? 0.04851 : inUma <= 2.5 ? 0.05556 : inUma <= 3 ? 0.06026 : inUma <= 3.5 ? 0.06361 : inUma <= 4 ? 0.06613 : 0.07513;
-    return { lines, employerPension: year(0.02 + cesantia, sbcDay), employerPensionName: 'Retiro and cesantía, to your Afore' };
+    return { lines, employerPension: year(0.02 + cesantia, sbcDay), employerPensionName: 'Your employer’s retiro and cesantía' };
   },
 
   // --- United Kingdom: HMRC 2026/27 --------------------------------------
@@ -173,17 +173,17 @@ const RULES: Record<string, Rules> = {
     const enrolled = g >= 10_000 && ctx.age >= 22 && ctx.age < 66;
     const qualifying = enrolled ? inBand(g, 6_240, 50_270) : 0;
     const pension = qualifying * 0.05;
-    if (pension > 0) lines.push({ name: 'Workplace pension', kind: 'pension', source: 'DWP, auto-enrolment 2026/27: 5% of earnings from £6,240 to £50,270', amount: pension });
+    if (pension > 0) lines.push({ name: 'Workplace Pension', kind: 'pension', source: 'DWP, auto-enrolment 2026/27: 5% of earnings from £6,240 to £50,270', amount: pension });
     const taxable = Math.max(0, g - pension - 12_570);
     const scotland = ctx.path[1] === 'GB-SCT';
     lines.push({
-      name: 'Income tax', kind: 'tax', amount: scotland
+      name: 'Income Tax', kind: 'tax', amount: scotland
         ? bands(taxable, [[0, 0.19], [3_967, 0.20], [16_956, 0.21], [31_092, 0.42], [62_430, 0.45], [125_140, 0.48]])
         : bands(taxable, [[0, 0.20], [37_700, 0.40], [125_140, 0.45]]),
       source: scotland ? 'Scottish rates 2026/27, £12,570 personal allowance' : 'HMRC 2026/27: £12,570 personal allowance, 20/40/45%',
     });
     lines.push({ name: 'National Insurance', kind: 'social', source: 'HMRC 2026/27, Class 1: 8% from £12,570 to £50,270, 2% above', amount: inBand(g, 12_570, 50_270) * 0.08 + inBand(g, 50_270) * 0.02 });
-    return { lines, employerPension: qualifying * 0.03, employerPensionName: 'Employer pension contribution' };
+    return { lines, employerPension: qualifying * 0.03, employerPensionName: 'Your employer' };
   },
 
   // --- Ireland: Revenue and the Department of Social Protection, 2026 ------
@@ -202,7 +202,7 @@ const RULES: Record<string, Rules> = {
     const enrolled = ctx.age >= 23 && ctx.age <= 60 && g >= 20_000;
     const base = enrolled ? Math.min(g, 80_000) : 0;
     if (base > 0) lines.push({ name: 'My Future Fund', kind: 'pension', source: 'NAERSA, auto-enrolment from 1 January 2026: 1.5%', amount: base * 0.015 });
-    return { lines, employerPension: base * 0.02, employerPensionName: 'Employer and State contributions to My Future Fund' };
+    return { lines, employerPension: base * 0.02, employerPensionName: 'Your employer and the State' };
   },
 
   // --- Iceland: Skatturinn 2026, the agreements ----------------------------
@@ -213,7 +213,7 @@ const RULES: Record<string, Rules> = {
       { name: 'Staðgreiðsla', kind: 'tax', source: 'Skatturinn 2026: 31.49%, 37.99%, 46.29%, less persónuafsláttur of 869,898 kr', amount: Math.max(0, bands(g - pension, [[0, 0.3149], [5_977_464, 0.3799], [16_781_400, 0.4629]]) - 869_898) },
       { name: 'Félagsgjald', kind: 'social', source: 'Efling and VR: union dues, 0.7%', amount: g * 0.007 },
     ];
-    return { lines, employerPension: g * 0.115, employerPensionName: 'Mótframlag í lífeyrissjóð' };
+    return { lines, employerPension: g * 0.115, employerPensionName: 'Your employer (mótframlag)' };
   },
 
   // --- New Zealand: IRD 2026-27 ------------------------------------------
@@ -221,21 +221,21 @@ const RULES: Record<string, Rules> = {
     const lines: Line[] = [];
     const ietc = g < 24_000 ? 0 : g <= 66_000 ? 520 : Math.max(0, 520 - (g - 66_000) * 0.13);
     lines.push({ name: 'PAYE', kind: 'tax', source: 'IRD 2026-27 rates, less the independent earner tax credit', amount: Math.max(0, bands(g, [[0, 0.105], [15_600, 0.175], [53_500, 0.30], [78_100, 0.33], [180_000, 0.39]]) - ietc) });
-    lines.push({ name: 'ACC earners’ levy', kind: 'social', source: 'ACC from 1 April 2026: 1.75% up to $156,641', amount: Math.min(g, 156_641) * 0.0175 });
+    lines.push({ name: 'ACC Earners’ Levy', kind: 'social', source: 'ACC from 1 April 2026: 1.75% up to $156,641', amount: Math.min(g, 156_641) * 0.0175 });
     lines.push({ name: 'KiwiSaver', kind: 'pension', source: 'IRD: 3.5% from 1 April 2026', amount: g * 0.035 });
     // The employer's 3.5% is taxed first (ESCT, by the worker's pay).
     const employer = g * 0.035;
     const esct = g + employer <= 18_720 ? 0.105 : g + employer <= 64_200 ? 0.175 : g + employer <= 93_720 ? 0.30 : g + employer <= 216_000 ? 0.33 : 0.39;
-    return { lines, employerPension: employer * (1 - esct), employerPensionName: 'Employer KiwiSaver, after ESCT' };
+    return { lines, employerPension: employer * (1 - esct), employerPensionName: 'Your employer, after the tax on it (ESCT),' };
   },
 
   // --- Australia: ATO 2026-27 ---------------------------------------------
   AU: (g) => {
     const lines: Line[] = [];
     const lito = g <= 37_500 ? 700 : g <= 45_000 ? 700 - (g - 37_500) * 0.05 : Math.max(0, 325 - (g - 45_000) * 0.015);
-    lines.push({ name: 'PAYG withholding', kind: 'tax', source: 'ATO 2026-27: $18,200 tax-free, then 15/30/37/45%, less the low income tax offset', amount: Math.max(0, bands(g, [[0, 0], [18_200, 0.15], [45_000, 0.30], [135_000, 0.37], [190_000, 0.45]]) - lito) });
-    lines.push({ name: 'Medicare levy', kind: 'tax', source: 'ATO: 2%, none to $28,011, phased in above it', amount: Math.max(0, Math.min(g * 0.02, (g - 28_011) * 0.1)) });
-    return { lines, employerPension: Math.min(g, 270_830) * 0.12, employerPensionName: 'Superannuation guarantee' };
+    lines.push({ name: 'PAYG Withholding', kind: 'tax', source: 'ATO 2026-27: $18,200 tax-free, then 15/30/37/45%, less the low income tax offset', amount: Math.max(0, bands(g, [[0, 0], [18_200, 0.15], [45_000, 0.30], [135_000, 0.37], [190_000, 0.45]]) - lito) });
+    lines.push({ name: 'Medicare Levy', kind: 'tax', source: 'ATO: 2%, none to $28,011, phased in above it', amount: Math.max(0, Math.min(g * 0.02, (g - 28_011) * 0.1)) });
+    return { lines, employerPension: Math.min(g, 270_830) * 0.12, employerPensionName: 'Your employer’s superannuation guarantee' };
   },
 
   // --- France: 2026 contributions and the default withholding grid ---------
@@ -263,7 +263,7 @@ const RULES: Record<string, Rules> = {
     // A minijob: no tax or contributions of the worker's own but the
     // pension top-up.
     if (month <= 603) {
-      lines.push({ name: 'Rentenversicherung (minijob top-up)', kind: 'social', source: 'Minijob-Zentrale 2026: 3.6% to €603 a month', amount: g * 0.036 });
+      lines.push({ name: 'Rentenversicherung (Minijob Top-Up)', kind: 'social', source: 'Minijob-Zentrale 2026: 3.6% to €603 a month', amount: g * 0.036 });
       return { lines };
     }
     // The transition zone (Midijob): the worker's contributions are charged
@@ -383,7 +383,7 @@ export function payrollYear(iso: string, gross: number, ctx: PayrollContext & { 
     const usd = ctx.usdPerUnit !== undefined ? Math.round(gross * ctx.usdPerUnit) : gross;
     const rate = ctx.cityId ? computeAnnualTax(usd, ctx.cityId, ctx.at).effectiveRate : 0;
     return {
-      lines: [{ name: 'Tax and contributions (SLATE’s approximation)', amount: Math.round(gross * rate), kind: 'tax', source: 'content/tax.ts' }],
+      lines: [{ name: 'Tax And Contributions (SLATE’s Approximation)', amount: Math.round(gross * rate), kind: 'tax', source: 'content/tax.ts' }],
       employerPension: 0,
       estimate: true,
     };

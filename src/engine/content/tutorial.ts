@@ -146,13 +146,14 @@ export const CHAPTERS: readonly Chapter[] = [
     title: 'The Day Job',
     lead: 'Shifts, pay and the rota.',
     body: [
-      'Most actors keep a day job, and yours is the one your past leads to. It pays at least the legal minimum where you live, with tax taken before it reaches you, on the payday employers there use. Some work is tipped, and the tips come on top.',
+      'Most actors keep a day job, and yours is the work your past leads to, at a real employer where you live. It pays that employer’s published rate, or what the work typically pays there, and never under the legal minimum, on the payday employers there use. Some work is tipped, and the tips come on top.',
+      'Your Work shows the payslip the way your country works it: income tax, social contributions, and the pension your pay and your employer put into a fund that’s yours. It shows what the law where you work adds: premiums for Sundays, nights and holidays, overtime, paid leave built with the hours, sick pay for a day called in, and the extra payments some countries owe on their dates. Take The Next Shift As Paid Leave spends leave you’ve built. Apply moves you to another employer, in about three weeks or when your notice runs out.',
       'The rota is on the calendar two weeks ahead. A shift is a commitment: the clock stops at it, and Go works it. A worked shift tires you more than the hours alone. Missed three times in four weeks, the job is gone, and finding the same work again takes about three weeks.',
-      'Ask For An Extra Shift puts one more on a free day this week. Go Part-Time or Go Full-Time changes the hours from a week on. Quit ends it, and what you worked is paid on the next payday. Look For A Day Job starts the three-week search.',
+      'Ask For An Extra Shift puts one more on a free day this week. Go Part-Time or Go Full-Time changes the hours from a week on. Quit gives the notice the law asks, and your last pay, with any leave the law pays out, comes on the next payday. Look For A Day Job starts the three-week search.',
       'You can only work where your citizenship lets you. Somewhere it doesn’t, there’s no day job to look for.',
     ],
-    names: ['Work And Home', 'Ask For An Extra Shift', 'Go Part-Time or Full-Time', 'Quit', 'Look For A Day Job'],
-    opens: ['ui.work', 'work.extra_shift', 'work.set_hours', 'work.quit', 'work.find_job'],
+    names: ['Work And Home', 'Your Work', 'Ask For An Extra Shift', 'Go Part-Time or Full-Time', 'Take The Next Shift As Paid Leave', 'Apply', 'Quit', 'Look For A Day Job'],
+    opens: ['ui.work', 'ui.job', 'work.extra_shift', 'work.set_hours', 'work.take_leave', 'work.apply', 'work.quit', 'work.find_job'],
   },
   {
     id: 'weather',

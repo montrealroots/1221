@@ -516,7 +516,7 @@ export function Home() {
  * the new week at once while the old one still stood.
  */
 function WorkAndHome({ cur }: { cur: string }) {
-  const { sim, run, toast } = useGame();
+  const { sim, run, toast, navigate } = useGame();
   const job = useWorld((s) => s.player.job);
   const home = useWorld((s) => s.player.home);
   const rent = useWorld((s) => rentOf(s, s.player));
@@ -553,6 +553,7 @@ function WorkAndHome({ cur }: { cur: string }) {
           />
           {job.lookingUntil === undefined && (
             <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
+              <Gated feature="ui.job" className="btn btn-sm" onClick={() => navigate('/workspace/work', 'Your Work')}>Your Work</Gated>
               <Gated feature="work.extra_shift" className="btn btn-sm" onClick={extra}>Ask For An Extra Shift</Gated>
               <Gated feature="work.set_hours" className="btn btn-sm btn-ghost" onClick={() => hours(!job.fullTime)}>
                 {job.fullTime ? 'Go Part-Time' : 'Go Full-Time'}
@@ -573,6 +574,7 @@ function WorkAndHome({ cur }: { cur: string }) {
           {right.may && (!job || job.quitAt !== undefined) && (
             <div className="row gap-2">
               <Gated feature="work.find_job" className="btn btn-sm" onClick={look}>Look For A Day Job</Gated>
+              <Gated feature="ui.job" className="btn btn-sm btn-ghost" onClick={() => navigate('/workspace/work', 'Your Work')}>Employers Here</Gated>
             </div>
           )}
         </>

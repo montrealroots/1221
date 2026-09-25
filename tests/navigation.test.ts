@@ -91,7 +91,8 @@ describe('what was taken out', () => {
     // addition and a workspace that crept back is caught. Putting one of these
     // back is a decision, and editing this line is how the decision is made.
     // The bank came back on 2026-09-25, at the owner's word, as a real bank
-    // where the character lives (`systems/banking.ts`).
+    // where the character lives (`systems/banking.ts`), and the work screen
+    // the same day, as a real employer there (`systems/work.ts`).
     const removed = [
       'AuditionsWorkspace', 'AwardsWorkspace', 'BusinessWorkspace', 'CastingWorkspace', 'CharacterWorkspace',
       'CityWorkspace', 'CompanyWorkspace', 'EducationWorkspace', 'FilmWorkspace',
@@ -99,7 +100,6 @@ describe('what was taken out', () => {
       'InsuranceWorkspace', 'PhoneWorkspace', 'ProjectsWorkspace', 'PropertyWorkspace',
       'RelationshipsWorkspace', 'SettingsWorkspace', 'ShoppingWorkspace', 'SocialWorkspace',
       'TrackWorkspace', 'TravelWorkspace', 'VehiclesWorkspace', 'WellbeingWorkspace',
-      'WorkWorkspace',
     ];
     const files = readdirSync(new URL('ui/workspaces/', ROOT));
     for (const gone of removed) {

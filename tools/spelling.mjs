@@ -128,6 +128,8 @@ const REAL_NAMES = [
   'Hunter Labour Hire', 'Yakka Labour', 'yakkalabour', 'labour-hire', 'statistics/labour', 'Labour Force Survey', 'Endeavour Group',
   'top-modelling-agencies', 'modelling-advice', 'Manoeuvre', 'manoeuvre', 'manoeuvre specialise', 'Centre de danse du Marais', 'centre-de-danse',
   'media-centre', 'analyse-2026', 'stagecoach-theatre-arts',
+  // Statutes under their own titles (content/labor.ts).
+  'Act respecting labour standards', 'Organisation of Working Time Act',
 ];
 
 const EXTENSIONS = /\.(ts|tsx|mjs|md)$/;

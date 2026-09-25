@@ -30,7 +30,7 @@ claims otherwise.
 | Weather | Implemented — a climate model per city from season, latitude and the kind of place it is, with a week ahead | `src/engine/systems/weather.ts` | `weather` |
 | Time controls | Implemented — live play, sleeping, and skipping to an event with what it would cross shown first | `src/ui/shell/TimeControls.tsx` | `simulation`, `realclock` |
 | Wellbeing and sleep | Partial — the model, the night, the waking hours charged as the clock moves (`life.waking`), and the night nobody chose, slept when the clock is sent through one rather than at every midnight (`life.night_alone` and the rollover). Sleep, eating, a shower, a workout and an hour unwinding are how a player spends a day on them (`life.sleep`, `life.look_after`). Every dial decides something in the body or the workout, and nothing outside them reads it | `src/engine/systems/life.ts` | `simulation`, `smoke`, `endurance`, `personality`, `looking-after`, `wellbeing-bites` |
-| Money | Implemented — a ledger that conserves, kept in the currency of the country a save starts in; a day job at a real employer (554 across the thirteen countries, 393 with their own published pay; `content/employers.ts`), paid its rate or the occupation's typical pay and never under the legal floor, on the country's payday, with a payslip worked by the country's own 2026 rules (income tax, social contributions, and pensions into a fund the worker owns; `content/payroll.ts`); rent and bills on the first and food with each day's meals, paid from checking, then savings, then the card, then owed; a notice to pay or quit at two months owed and an eviction to a friend's sofa after it; a card with a statement, a due date, interest and late fees; and a credit record that prices it. Rents are published in nineteen places and estimated elsewhere, and food and bills are estimates | `src/engine/core/ledger.ts`, `src/engine/systems/finance.ts`, `src/engine/systems/work.ts`, `src/engine/systems/household.ts`, `src/engine/systems/credit.ts`, `src/engine/content/wages.ts`, `src/engine/content/jobs.ts`, `src/engine/content/employers.ts`, `src/engine/content/payroll.ts` | `money`, `work`, `household`, `endurance` |
+| Money | Implemented — a ledger that conserves, kept in the currency of the country a save starts in; a day job at a real employer (554 across the thirteen countries, 393 with their own published pay; `content/employers.ts`), paid its rate or the occupation's typical pay and never under the legal floor, on the country's payday, with a payslip worked by the country's own 2026 rules (income tax, social contributions, and pensions into a fund the worker owns; `content/payroll.ts`), what the law where they work adds (Sunday, night and holiday premiums, overtime, paid leave built with the hours and booked a shift at a time, sick pay, the extra payments on their dates, Korea's rest day and severance, notice on quitting; `content/labor.ts`), and applying to another employer; the work screen shows all of it; rent and bills on the first and food with each day's meals, paid from checking, then savings, then the card, then owed; a notice to pay or quit at two months owed and an eviction to a friend's sofa after it; a card with a statement, a due date, interest and late fees; and a credit record that prices it. Rents are published in nineteen places and estimated elsewhere, and food and bills are estimates | `src/engine/core/ledger.ts`, `src/engine/systems/finance.ts`, `src/engine/systems/work.ts`, `src/engine/systems/household.ts`, `src/engine/systems/credit.ts`, `src/engine/content/wages.ts`, `src/engine/content/jobs.ts`, `src/engine/content/employers.ts`, `src/engine/content/payroll.ts`, `src/engine/content/labor.ts`, `src/ui/workspaces/WorkWorkspace.tsx` | `money`, `work`, `payroll`, `labor`, `household`, `endurance` |
 | Banking | Implemented — a real bank where the character lives: the thirteen countries SLATE pays and taxes a life in with each bank's own account names, fees and fee waivers (wages paid in, a balance kept, age), published savings rates with their floors, caps, announced changes, bonuses and paying months, the tax a country has banks take off interest, the central bank's rate and the deposit guarantee; every other country's biggest banks by name with its guarantee. Account numbers in each country's format with real check digits. Overdrafts the way each bank runs them (arranged, by the item, or against time deposits), personal loans priced by the record and repaid monthly, term deposits locked for their term, and a switch to another bank, through Britain's seven working days or the same day elsewhere; France's €8 an operation, Spain's overdraft commission within the law's cap, the higher rate past a German Dispo, New Zealand's unarranged overdraft fees, Canada's returned-payment fee, card, dormant and quiet-month fees, introductory rates and Iceland's interest-tax refund. The 226 other countries carry researched sheets where found (216 countries, 202 banks with an account name, 182 with a savings rate, and 22 fees charged with the waivers their banks write) and IBANs built to each registry structure with the bank's own code (321 of 348 banks) | `src/engine/systems/banking.ts`, `src/engine/systems/banknumber.ts`, `src/engine/core/banknumbers.ts`, `src/engine/content/banks.ts`, `src/engine/content/banks-thirteen.ts`, `src/engine/content/banks-world.ts`, `src/engine/content/banks-world-sheets.ts`, `src/engine/content/banks-world-iban.ts`, `src/engine/content/banks-world-fees.ts`, `src/engine/systems/lending.ts`, `src/engine/content/banks-lending.ts`, `src/ui/workspaces/BankWorkspace.tsx`, `src/ui/bank/BankLending.tsx` | `banking`, `banknumbers`, `lending`, `bank-fees` |
 | Birthdays and the end of a life | Implemented — a birthday each year at nine in the morning, and each year's chance of the life ending from the US 2024 life table, moved by the country's life expectancy and the body's condition; an ended life stops the clock and opens onto what it came to | `src/engine/systems/birthdays.ts`, `src/engine/systems/mortality.ts`, `src/ui/shell/LifeEnded.tsx` | `mortality` |
 | The guide | Implemented — fifteen chapters, read in order, each opening the part of the game it describes: its commands in the engine and its controls, panels and underlined words on screen. A new life starts paused with everything shut but the guide | `src/engine/content/tutorial.ts`, `src/engine/world/tutorial.ts`, `src/ui/guide/Guide.tsx` | `tutorial` |
@@ -118,7 +118,7 @@ night that a stop in its first hour left unpaid. `life.waking` charges each
 person for the hours they are awake, wherever the clock stops, so Home's dials
 move during a day of play and midnight no longer charges the day ahead.
 
-The routes are `/workspace/calendar` and `/workspace/bank`; Home is served by the shell itself.
+The routes are `/workspace/calendar`, `/workspace/bank` and `/workspace/work`; Home is served by the shell itself.
 
 ## The guide, chapter by chapter
 
@@ -137,7 +137,7 @@ chapter or to two, or if a chapter opens nothing.
 | 7 | Sleep | `ui.sleep` `life.sleep` |
 | 8 | Looking After Yourself | `ui.look-after` `life.look_after` |
 | 9 | Your Own Plans | `ui.open-calendar` `calendar.schedule` `calendar.cancel` `look.plans` `look.stretch` |
-| 10 | The Day Job | `ui.work` `work.extra_shift` `work.set_hours` `work.quit` `work.find_job` |
+| 10 | The Day Job | `ui.work` `ui.job` `work.extra_shift` `work.set_hours` `work.take_leave` `work.apply` `work.quit` `work.find_job` |
 | 11 | Weather | `ui.weather` `look.weather` `look.forecastday` `look.hours` `look.skyhour` `look.skyweek` |
 | 12 | Rent And A Roof | `home.move` |
 | 13 | Money And The Card | `ui.money` `finance.pay_card` `finance.set_autopay` `look.account` `look.networth` `look.debt` |
@@ -145,7 +145,7 @@ chapter or to two, or if a chapter opens nothing.
 | 15 | A Whole Life | `look.person` |
 
 <!-- inventory:begin -->
-Generated by `node tools/inventory.mjs --markdown`. 27 commands, 14 scheduled kinds, 2 passage reactors, 3 events emitted, 1 event listener, 0 scenes, 2 routes.
+Generated by `node tools/inventory.mjs --markdown`. 29 commands, 14 scheduled kinds, 2 passage reactors, 3 events emitted, 1 event listener, 0 scenes, 3 routes.
 
 ### Commands
 
@@ -157,7 +157,7 @@ Generated by `node tools/inventory.mjs --markdown`. 27 commands, 14 scheduled ki
 | home | `home.move` | `src/engine/systems/household.ts` |
 | life | `life.look_after` `life.sleep` | `src/engine/systems/life.ts` |
 | tutorial | `tutorial.read` | `src/engine/world/tutorial.ts` |
-| work | `work.extra_shift` `work.find_job` `work.quit` `work.set_hours` | `src/engine/systems/work.ts` |
+| work | `work.apply` `work.extra_shift` `work.find_job` `work.quit` `work.set_hours` `work.take_leave` | `src/engine/systems/work.ts` |
 | world | `world.dismiss_decision` `world.mark_read` `world.set_preferences` `world.take_decision_action` | `src/engine/world/world.ts` |
 
 ### Scheduled kinds
@@ -197,5 +197,5 @@ Generated by `node tools/inventory.mjs --markdown`. 27 commands, 14 scheduled ki
 
 ### Routes
 
-`/workspace/bank` · `/workspace/calendar`
+`/workspace/bank` · `/workspace/calendar` · `/workspace/work`
 <!-- inventory:end -->

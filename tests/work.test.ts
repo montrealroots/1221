@@ -127,7 +127,15 @@ describe('the pay', () => {
     expect(hoursOwed(sim.player)).toBe(112);
     const wage = hourlyWage(sim, sim.player);
     sim.advanceTo(payday + MS_HOUR);
-    const gross = Math.round(hours * wage);
+    // The hours, and the Efling–SA weekend premium of 45% on the four
+    // Saturdays and three Sundays of them (café work is under its table).
+    const lines = sim.player.job!.lastSlip!.grossLines!;
+    expect(lines).toEqual([
+      { name: 'Hours Worked', amount: Math.round(hours * wage) },
+      { name: 'Saturday Premium', amount: Math.round(4 * 7 * 0.45 * wage) },
+      { name: 'Sunday Premium', amount: Math.round(3 * 7 * 0.45 * wage) },
+    ]);
+    const gross = lines.reduce((sum, one) => sum + one.amount, 0);
     // The payslip is Iceland's: 4% to the pension fund before tax, the
     // withholding less the personal credit, and the union's 0.7%.
     const slip = payslipAt(sim.player.job!.cityId, gross, 'ISK', payday, { age: 24, weeklyHours: weeklyHours(jobFor('school')) });

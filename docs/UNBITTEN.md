@@ -176,6 +176,20 @@ part the tool cannot see.
   Ireland, Mexico) is theirs and counts in their worth, and nothing grows
   it or pays it out, because no fund's returns are modeled and nobody in
   SLATE has retired.
+- **Some of what employment law gives isn't modeled.** The law where a
+  job is (`content/labor.ts`) pays its premiums, overtime, leave, sick
+  pay, extra payments, Korea's rest day and severance, and asks its notice.
+  Not yet: a day called in sick still counts as a missed shift toward being
+  let go, as it did before any was paid; a public holiday not worked isn't
+  paid where the law pays it (Germany, Ireland, New Zealand); unemployment
+  benefit, which the research found for all thirteen, has nothing to pay
+  it, since nobody is laid off and a dismissal for missed shifts or a
+  resignation mostly bars it; Mexico's PTU profit share needs a company's
+  profit; youth minimum rates aren't applied; an employer's notice isn't,
+  since the only dismissal is for cause. Premiums are the agreement's where
+  the research found one: Iceland's Efling–SA tables only for café, bar and
+  security work, and one set of Australian award rates for every line.
+  Japan's leave is built with the hours, not granted at six months.
 - **An employer's pay is as published in September 2026.** Each rate is
   the one the research found on 2026-09-25, paid from the save's first day,
   so a save that starts in January is paid an April raise early. Where an
