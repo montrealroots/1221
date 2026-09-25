@@ -128,9 +128,29 @@ export function rateOn(product: Product | undefined, at: Instant, zone = 'UTC'):
   return rate;
 }
 
-/** What an account pays a year now, as a fraction. */
+/**
+ * What an account pays a year now: its introductory step while one runs,
+ * counted in whole months from the day it opened, and the product's own
+ * rate, with any change announced, after.
+ */
 export function rateOf(sim: Simulation, account: Account): number {
-  return rateOn(productOf(account), sim.now, sim.homeZone);
+  const product = productOf(account);
+  const step = introStep(sim, product, account.openedAt, sim.now);
+  return step ?? rateOn(product, sim.now, sim.homeZone);
+}
+
+/** The introductory rate running at a moment, for an account opened at another. */
+export function introStep(sim: Simulation, product: Product | undefined, openedAt: Instant, at: Instant): number | undefined {
+  if (!product?.intro) return undefined;
+  const a = zonedParts(openedAt, sim.homeZone);
+  const b = zonedParts(at, sim.homeZone);
+  const months = (b.year - a.year) * 12 + (b.month - a.month) - (b.day < a.day ? 1 : 0);
+  let through = 0;
+  for (const step of product.intro) {
+    through += step.months;
+    if (months < through) return step.rate;
+  }
+  return undefined;
 }
 
 /**
@@ -312,7 +332,7 @@ export function registerBanking(sim: Simulation): void {
       if (!account.bankId || account.closedAt || !isEveryday(account)) continue;
       const product = productOf(account);
       const earning = earningBalance(product, account.balance);
-      const rate = rateOn(product, s.now, s.homeZone);
+      const rate = rateOf(s, account);
       if (rate > 0 && earning > 0) account.accrued = (account.accrued ?? 0) + (earning * rate) / 365;
       // The bonus builds too, and is kept only if the month earns it.
       if (product?.bonus && earning > 0) account.bonusAccrued = (account.bonusAccrued ?? 0) + (earning * product.bonus.rate) / 365;

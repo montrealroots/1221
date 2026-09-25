@@ -39,6 +39,11 @@ export interface Product {
   rateFrom?: Money;
   /** The rate is paid on the balance up to this, and nothing above it. */
   rateUpTo?: Money;
+  /**
+   * An introductory rate, in steps counted from the day the account opens:
+   * each step's rate for its months, then the product's own rate.
+   */
+  intro?: readonly { months: number; rate: number }[];
   /** Changes to the rate the bank has announced, from a date (YYYY-MM-DD) on. */
   changes?: readonly { from: string; rate: number }[];
   /** The months interest is paid in, where not every month: [2, 8] for February and August. */
@@ -80,6 +85,14 @@ export interface Bank {
   savings: Product;
   /** How an overdraft works there, in a sentence, where it was found. */
   overdraft?: string;
+  /** A fee for a payment the bank returns unpaid, no more often than every so many business days, and none on a small one. */
+  returned?: { fee: Money; gapDays: number; ifShortAtLeast?: Money; source: string };
+  /** The debit card's fees: a year's, and one a purchase; free under an age. */
+  card?: { yearly?: Money; perPurchase?: Money; freeUnder?: number; source: string };
+  /** A fee on an account nobody has used in years, below a balance where the bank says so. */
+  dormant?: { yearly: Money; afterYears: number; belowBalance?: Money; source: string };
+  /** A fee for a month with too few transactions, spared where wages are paid in. */
+  quietMonth?: { fee: Money; minTransactions: number; unlessWages?: boolean; source: string };
 }
 
 export interface Guarantee {
@@ -106,6 +119,8 @@ export interface CountryBanking {
     rate?: number;
     allowance?: Money;
     brackets?: readonly { upTo?: Money; rate: number }[];
+    /** Tax on the first so much of a year's interest, paid back at the assessment: the month and day it lands. */
+    refund?: { allowance: Money; month: number; day: number; estimateDate: boolean };
     note: string;
     source: string;
   };

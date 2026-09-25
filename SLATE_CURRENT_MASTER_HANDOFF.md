@@ -686,6 +686,17 @@ Every save had opened its accounts at "Northbank", which never existed, and an a
     - an arranged overdraft up to a month of wages;
     - a loan payment up to 35% of a month's wages;
     - lending to a record of 580 and up, at the range's bottom at 780, and at a bank's lowest published rate only from 670.
+  - **Then the rest of what the research found (the owner: "Fix everything in the open"):**
+    - France's €8 commission d'intervention, capped at €80 a month, past zero or past an arranged limit;
+    - Spain's descubierto: Santander and BBVA, interest plus a commission on the month's deepest point, at least €15;
+    - Canada's $10 fee for a debit returned unpaid: not on a card purchase, not under $10, at most once every two business days;
+    - Arion's debit card at 950 kr a year and 19 kr a purchase, free at 23 and under;
+    - MUFG's and Resona's ¥1,320 a year on an account unused for two years;
+    - Santander México's quiet-month fee;
+    - introductory rates in steps from the opening day: CommBank 5.20% for five months, ING 3.20% for four, Bankinter 5% then 2%;
+    - Iceland's refund of the tax on the first 300,000 kr of a year's interest, on 1 June (SLATE's estimate of the day).
+    - `tests/bank-fees.test.ts`; 15 mutants, all killed.
+    - The Japanese accounts use the paperless passbook, which carries no fee.
   - **Still not built:** product sheets for the 226 other countries. Some figures from the first research weren't found and stay out: Iceland's savings ledger code, Mexico's savings rates, BMO's and CIBC's savings rates, and Spain's. This session's web searches were used up (200 of 200), and fetching guessed official pages mostly failed; raising `CLAUDE_CODE_MAX_WEB_SEARCHES_PER_SESSION` would let a next pass fill them. The smaller fees still not charged are in `docs/UNBITTEN.md`.
 - **Verified:**
   - `npm run gate` exits 0 with 767 tests in 38 files, read from a file.

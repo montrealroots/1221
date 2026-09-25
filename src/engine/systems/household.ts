@@ -49,7 +49,7 @@ import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { instantFromZoned, zonedParts, type Instant } from '../core/time';
 import { clamp } from '../core/rng';
 import { personalityOf } from './personality';
-import { chargeForItem, overdraftHeadroom } from './lending';
+import { chargeForItem, chargeForPurchase, chargeReturned, overdraftHeadroom } from './lending';
 import { CommandError } from '../core/simulation';
 
 export const RENT_KIND = 'home.rent';
@@ -247,6 +247,10 @@ export function spend(sim: Simulation, person: Person, amount: Money, memo: stri
   if (owed > 0) postings.push({ accountId: arrearsAccount(sim, person).id, amount: -owed });
   sim.post({ memo, category, postings });
   chargeForItem(sim, person);
+  // A debit the bank couldn't pay went back unpaid first, where it charges
+  // for that; a card purchase it can't pay is only declined.
+  if (bank.short > 0 && category !== 'food') chargeReturned(sim, person, bank.short);
+  if (category === 'food' && bank.postings.length > 0) chargeForPurchase(sim, person);
   return true;
 }
 

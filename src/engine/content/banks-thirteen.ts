@@ -75,31 +75,31 @@ export const THIRTEEN: readonly CountryBanking[] = [
     howMoneyMoves: 'Pay arrives by direct deposit; bills go by online bill payment or pre-authorized debit, and people send each other Interac e-Transfers. Since 12 March 2026 a bank may charge at most $10 for a payment it returns unpaid.',
     banks: [
       {
-        id: 'ca-rbc', name: 'RBC Royal Bank', iso: 'CA', currency: 'CAD', format: 'ca', code: '003',
+        id: 'ca-rbc', returned: { fee: 10_00, gapDays: 2, ifShortAtLeast: 10_00, source: 'canada.ca: since 12 March 2026 at most $10 for a payment returned unpaid, one fee every two business days, none under $10' }, name: 'RBC Royal Bank', iso: 'CA', currency: 'CAD', format: 'ca', code: '003',
         current: p('RBC Signature No Limit Banking', 'rbcroyalbank.com: $16.95 a month; the $4,000 minimum-balance waiver is from secondary sources', { monthlyFee: 16_95, waiver: { balanceAtLeast: 4_000_00 } }),
         savings: p('RBC High Interest eSavings', 'rbcroyalbank.com: 0.550% regular rate', { rate: 0.0055 }),
         overdraft: 'RBC overdraft protection costs $5 a month on most accounts and about 22% a year.',
       },
       {
-        id: 'ca-td', name: 'TD Canada Trust', iso: 'CA', currency: 'CAD', format: 'ca', code: '004',
+        id: 'ca-td', returned: { fee: 10_00, gapDays: 2, ifShortAtLeast: 10_00, source: 'canada.ca: since 12 March 2026 at most $10 for a payment returned unpaid, one fee every two business days, none under $10' }, name: 'TD Canada Trust', iso: 'CA', currency: 'CAD', format: 'ca', code: '004',
         current: p('TD Unlimited Chequing', 'td.com: $17.95 a month, waived with a $4,000 minimum daily balance', { monthlyFee: 17_95, waiver: { balanceAtLeast: 4_000_00 } }),
         savings: p('TD ePremium Savings', 'td.com: 0.45%, only on balances of $10,000 or more', { rate: 0.0045, rateFrom: 10_000_00 }),
         overdraft: 'TD overdraft protection is $5 a use or $5 a month, at 21% a year.',
       },
       {
-        id: 'ca-scotiabank', name: 'Scotiabank', iso: 'CA', currency: 'CAD', format: 'ca', code: '002',
+        id: 'ca-scotiabank', returned: { fee: 10_00, gapDays: 2, ifShortAtLeast: 10_00, source: 'canada.ca: since 12 March 2026 at most $10 for a payment returned unpaid, one fee every two business days, none under $10' }, name: 'Scotiabank', iso: 'CA', currency: 'CAD', format: 'ca', code: '002',
         current: p('Preferred Package', 'scotiabank.com: $16.95 a month, waived with a $4,000 daily balance', { monthlyFee: 16_95, waiver: { balanceAtLeast: 4_000_00 } }),
         savings: p('MomentumPLUS Savings', 'scotiabank.com: 0.40% base rate, with premiums for money held 90 to 360 days not modeled', { rate: 0.004 }),
         overdraft: 'Scotiabank overdraft protection is $5 a month or $5 a use, at 21% a year.',
       },
       {
-        id: 'ca-bmo', name: 'BMO', iso: 'CA', currency: 'CAD', format: 'ca', code: '001',
+        id: 'ca-bmo', returned: { fee: 10_00, gapDays: 2, ifShortAtLeast: 10_00, source: 'canada.ca: since 12 March 2026 at most $10 for a payment returned unpaid, one fee every two business days, none under $10' }, name: 'BMO', iso: 'CA', currency: 'CAD', format: 'ca', code: '001',
         current: p('Performance Chequing Plan', 'finder.com/ca: $17.95 a month, waived with a $4,000 minimum balance', { monthlyFee: 17_95, waiver: { balanceAtLeast: 4_000_00 } }),
         savings: p('Savings Account', `${NOT_FOUND}; the product's name wasn't found either`),
         overdraft: 'BMO overdraft protection is $5 a use or $5 a month, at 21% a year.',
       },
       {
-        id: 'ca-cibc', name: 'CIBC', iso: 'CA', currency: 'CAD', format: 'ca', code: '010',
+        id: 'ca-cibc', returned: { fee: 10_00, gapDays: 2, ifShortAtLeast: 10_00, source: 'canada.ca: since 12 March 2026 at most $10 for a payment returned unpaid, one fee every two business days, none under $10' }, name: 'CIBC', iso: 'CA', currency: 'CAD', format: 'ca', code: '010',
         current: p('CIBC Smart Account', 'cibc.com: $16.95 a month, rebated with a $4,000 daily balance; free under 25', { monthlyFee: 16_95, waiver: { balanceAtLeast: 4_000_00, ageBelow: 25 } }),
         savings: p('CIBC eAdvantage Savings', NOT_FOUND),
       },
@@ -124,8 +124,8 @@ export const THIRTEEN: readonly CountryBanking[] = [
         savings: p('Cuenta Enlace Personal', NOT_FOUND),
       },
       {
-        id: 'mx-santander', name: 'Santander México', iso: 'MX', currency: 'MXN', format: 'mx', code: '014',
-        current: p('Débito LikeU', 'santander.com.mx: MXN 9.90 plus VAT only in a month with fewer than two transactions, not modeled'),
+        id: 'mx-santander', quietMonth: { fee: 11_48, minTransactions: 2, unlessWages: true, source: 'santander.com.mx: MXN 9.90 plus 16% VAT in a month with fewer than two transactions and no payroll' }, name: 'Santander México', iso: 'MX', currency: 'MXN', format: 'mx', code: '014',
+        current: p('Débito LikeU', 'santander.com.mx: no monthly fee but the quiet-month fee'),
         savings: p('Débito LikeU', NOT_FOUND),
       },
       {
@@ -214,7 +214,11 @@ export const THIRTEEN: readonly CountryBanking[] = [
     iso: 'IS',
     guarantee: { scheme: 'Depositors’ and Investors’ Guarantee Fund (Tryggingarsjóður)', note: 'the equivalent of €100,000 in krónur, about 13.8 million kr', source: 'Act 98/1999, art. 9, althingi.is' },
     policy: { called: 'key interest rate (meginvextir)', rate: 0.08, since: '2026-08-19', source: 'sedlabanki.is' },
-    interestTax: { rate: 0.22, note: 'Capital income tax (fjármagnstekjuskattur) at 22%, taken by the bank; the first 300,000 kr of interest a year is refunded at the tax assessment, which isn’t modeled.', source: 'skatturinn.is' },
+    interestTax: {
+      rate: 0.22, refund: { allowance: 300_000_00, month: 6, day: 1, estimateDate: true },
+      note: 'Capital income tax (fjármagnstekjuskattur) at 22%, taken by the bank; the tax on the first 300,000 kr of a year’s interest comes back at the next year’s assessment, paid here on 1 June (SLATE’s estimate of the day).',
+      source: 'skatturinn.is',
+    },
     howMoneyMoves: 'Pay arrives in the current account; bills arrive as claims (kröfur) in the online bank and are paid from there.',
     banks: [
       {
@@ -224,8 +228,8 @@ export const THIRTEEN: readonly CountryBanking[] = [
         overdraft: 'A Landsbankinn overdraft (yfirdráttur) is 15.75% a year, as of 1 September 2026.',
       },
       {
-        id: 'is-arion', name: 'Arion banki', iso: 'IS', currency: 'ISK', format: 'is', code: '03',
-        current: p('Veltureikningur', 'arionbanki.is rate table, 24 September 2026: 0.05%; no monthly fee, with a debit card at 950 kr a year and 19 kr a purchase not modeled', { rate: 0.0005 }),
+        id: 'is-arion', card: { yearly: 950_00, perPurchase: 19_00, freeUnder: 24, source: 'Arion price list, 23 September 2026: a debit card at 950 kr a year and 19 kr a purchase, free for 23 and under' }, name: 'Arion banki', iso: 'IS', currency: 'ISK', format: 'is', code: '03',
+        current: p('Veltureikningur', 'arionbanki.is rate table, 24 September 2026: 0.05%; no monthly fee', { rate: 0.0005 }),
         savings: p('Vöxtur', 'arionbanki.is rate table, 24 September 2026: 5.55% on the lowest tier, up to 5.85%', { rate: 0.0555 }),
         overdraft: 'An Arion overdraft (yfirdráttur) is 15.75% a year.',
       },
@@ -305,7 +309,7 @@ export const THIRTEEN: readonly CountryBanking[] = [
       {
         id: 'de-ing', name: 'ING Deutschland', iso: 'DE', currency: 'EUR', format: 'de', code: '50010517',
         current: p('Girokonto', 'ing.de conditions, 25 September 2026: free with €1,000 paid in a month or under 28, else €4.90', { monthlyFee: 4_90, waiver: { depositsAtLeast: 1_000_00, ageBelow: 28 } }),
-        savings: p('Extra-Konto', 'ing.de: 0.75% (the 3.20% new-customer rate for four months not modeled)', { rate: 0.0075 }),
+        savings: p('Extra-Konto', 'ing.de: 3.20% for a new customer’s first four months, then 0.75%', { rate: 0.0075, intro: [{ months: 4, rate: 0.032 }] }),
         overdraft: 'The Dispo is 9.14% a year.',
       },
       {
@@ -346,7 +350,7 @@ export const THIRTEEN: readonly CountryBanking[] = [
       },
       {
         id: 'es-bankinter', name: 'Bankinter', iso: 'ES', currency: 'EUR', format: 'es', code: '0128',
-        current: p('Cuenta Nómina', 'bankinter.com: 5% TAE in the first year on up to €10,000 (2% in the second, not modeled); €22.50 a half-year (€3.75 a month here) without a nómina of €800', { rate: 0.05, rateUpTo: 10_000_00, monthlyFee: 3_75, waiver: { depositsAtLeast: 800_00 } }),
+        current: p('Cuenta Nómina', 'bankinter.com: 5% TAE in the first year and 2% in the second, on up to €10,000 (no rate after that was found); €22.50 a half-year (€3.75 a month here) without a nómina of €800', { intro: [{ months: 12, rate: 0.05 }, { months: 12, rate: 0.02 }], rateUpTo: 10_000_00, monthlyFee: 3_75, waiver: { depositsAtLeast: 800_00 } }),
         savings: p('Cuenta Nómina', NOT_FOUND),
       },
     ],
@@ -360,8 +364,8 @@ export const THIRTEEN: readonly CountryBanking[] = [
     howMoneyMoves: 'Pay arrives by salary transfer (kyūyo furikomi) into an ordinary deposit account; bills go by account transfer (kōza furikae) or with a slip at a convenience store.',
     banks: [
       {
-        id: 'jp-mufg', name: 'MUFG Bank', iso: 'JP', currency: 'JPY', format: 'jp', code: '0005',
-        current: p('普通預金 (Ordinary Deposit)', 'bk.mufg.jp: 0.40% since 3 August 2026, 0.50% from 2 November 2026, paid in February and August; the ¥550 yearly paper-passbook fee not modeled', { rate: 0.004, changes: [{ from: '2026-11-02', rate: 0.005 }], pays: [2, 8] }),
+        id: 'jp-mufg', dormant: { yearly: 1_320_00, afterYears: 2, source: 'bk.mufg.jp: ¥1,320 a year on an account unused for two years' }, name: 'MUFG Bank', iso: 'JP', currency: 'JPY', format: 'jp', code: '0005',
+        current: p('普通預金 (Ordinary Deposit)', 'bk.mufg.jp: 0.40% since 3 August 2026, 0.50% from 2 November 2026, paid in February and August; SLATE’s accounts use the paperless passbook, which carries no fee', { rate: 0.004, changes: [{ from: '2026-11-02', rate: 0.005 }], pays: [2, 8] }),
         savings: p('普通預金 (Ordinary Deposit)', 'bk.mufg.jp: as the everyday account', { rate: 0.004, changes: [{ from: '2026-11-02', rate: 0.005 }], pays: [2, 8] }),
         overdraft: 'The general account (sōgō kōza) lends against time deposits at their rate plus 0.50%.',
       },
@@ -376,7 +380,7 @@ export const THIRTEEN: readonly CountryBanking[] = [
         savings: p('普通預金 (Ordinary Deposit)', 'mizuhobank.co.jp: as the everyday account', { rate: 0.004, changes: [{ from: '2026-11-02', rate: 0.005 }], pays: [2, 8] }),
       },
       {
-        id: 'jp-resona', name: 'Resona Bank', iso: 'JP', currency: 'JPY', format: 'jp', code: '0010',
+        id: 'jp-resona', dormant: { yearly: 1_320_00, afterYears: 2, belowBalance: 10_000_00, source: 'resona-gr.co.jp: ¥1,320 a year on an account unused for two years holding under ¥10,000' }, name: 'Resona Bank', iso: 'JP', currency: 'JPY', format: 'jp', code: '0010',
         current: p('普通預金 (Ordinary Deposit)', 'resona-gr.co.jp: 0.40% from 3 August 2026', { rate: 0.004, pays: [2, 8] }),
         savings: p('普通預金 (Ordinary Deposit)', 'resona-gr.co.jp: as the everyday account', { rate: 0.004, pays: [2, 8] }),
       },
@@ -433,7 +437,7 @@ export const THIRTEEN: readonly CountryBanking[] = [
       {
         id: 'au-commbank', name: 'Commonwealth Bank', iso: 'AU', currency: 'AUD', format: 'au', code: '06',
         current: p('Everyday Account Smart Access', 'commbank.com.au: $4 a month, waived with $2,000 deposited in the month or under 30', { monthlyFee: 4_00, waiver: { depositsAtLeast: 2_000_00, ageBelow: 30 } }),
-        savings: p('NetBank Saver', 'commbank.com.au, 24 September 2026: 2.10% standard (the introductory 5.20% not modeled)', { rate: 0.021 }),
+        savings: p('NetBank Saver', 'commbank.com.au, 24 September 2026: 5.20% for the first five months, then 2.10% standard', { rate: 0.021, intro: [{ months: 5, rate: 0.052 }] }),
         overdraft: 'CommBank charges a $15 overdrawn fee if the account is still negative at midnight, and 14.90% a year.',
       },
       {

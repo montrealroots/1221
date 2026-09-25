@@ -108,7 +108,7 @@ export function BankLending({ bank }: { bank: Bank }) {
         <p className="xs dim" style={{ marginTop: 'var(--s3)' }}>{od ? `Source: ${od.source}.` : bank.overdraft ?? ''}</p>
       </Panel>
 
-      <Panel title={lending.term?.name ?? 'Term Deposit'} subtitle={lending.term ? `${lending.term.months} months at ${pct(lending.term.rate)}` : 'None on record'}>
+      <Panel title={lending.term?.called ?? 'Term Deposit'} subtitle={lending.term ? `${lending.term.months} months at ${pct(lending.term.rate)}` : 'None on record'}>
         {!lending.term && <p className="small">{bank.name} publishes no term deposit rate SLATE found.</p>}
         {lending.term && (
           <div className="col gap-3">
@@ -159,7 +159,7 @@ export function BankLending({ bank }: { bank: Bank }) {
             </p>
             <div className="row gap-2">
               <input className="grow" type="text" inputMode="decimal" aria-label={`Loan Amount (${cur})`} value={borrow} onChange={(e) => setBorrow(e.target.value)} />
-              <select aria-label="Months" value={months} onChange={(e) => setMonths(e.target.value)}>
+              <select aria-label="Months" style={{ width: 'auto', flex: '0 0 auto' }} value={months} onChange={(e) => setMonths(e.target.value)}>
                 {[12, 24, 36, 48, 60, 72, 84]
                   .filter((m) => m >= (lending.loan!.minMonths ?? ESTIMATE.loanMonths[0]) && m <= (lending.loan!.maxMonths ?? ESTIMATE.loanMonths[1]))
                   .map((m) => <option key={m} value={m}>{m} Months</option>)}

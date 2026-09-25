@@ -23,7 +23,7 @@ import { bankingIn } from '@/engine/content/banks';
 import type { Simulation } from '@/engine/core/simulation';
 import type { Product } from '@/engine/content/banks';
 import {
-  bankAccountsOf, rateOn, bankOf, directDeposits, feeFor, inSaveMoney, interestTaxOn, monthEndAfter, monthStartOf, productOf,
+  bankAccountsOf, introStep, rateOn, bankOf, directDeposits, feeFor, inSaveMoney, interestTaxOn, monthEndAfter, monthStartOf, productOf,
 } from '@/engine/systems/banking';
 
 export function BankWorkspace() {
@@ -86,7 +86,7 @@ export function BankWorkspace() {
                   <span className="stat-label">Balance</span>
                   <span className="stat-value mono">{money(account.balance)}</span>
                 </div>
-                <p className="small" style={{ margin: 0 }}>{interestWords(sim, product, tax, money, bank.currency)}</p>
+                <p className="small" style={{ margin: 0 }}>{interestWords(sim, product, tax, money, bank.currency, account.openedAt)}</p>
                 {product?.monthlyFee ? (
                   <p className="small" style={{ margin: 0 }}>
                     {money(inSaveMoney(sim, product.monthlyFee, bank.currency))} a month
@@ -152,6 +152,8 @@ export function BankWorkspace() {
 
       <BankLending bank={bank} />
 
+      <OtherCharges bank={bank} />
+
       {country?.howMoneyMoves && (
         <p className="small muted" style={{ marginTop: 'var(--s5)' }}>{country.howMoneyMoves}</p>
       )}
@@ -168,10 +170,21 @@ const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'Ju
  * change announced, a floor or a cap, a bonus and what earns it, when it is
  * paid, and what the bank takes off it for tax.
  */
-function interestWords(sim: Simulation, product: Product | undefined, tax: number, money: (cents: number) => string, currency: string): string {
-  const rate = rateOn(product, sim.now, sim.homeZone);
-  if (!product || (rate <= 0 && !product.bonus)) return 'Pays no interest.';
+function interestWords(sim: Simulation, product: Product | undefined, tax: number, money: (cents: number) => string, currency: string, openedAt: number): string {
+  const step = introStep(sim, product, openedAt, sim.now);
+  const rate = step ?? rateOn(product, sim.now, sim.homeZone);
+  if (!product || (rate <= 0 && !product.bonus && !product.intro)) return 'Pays no interest.';
   const said: string[] = [`Pays ${pct(rate)} a year`];
+  if (step !== undefined) {
+    // The steps still to come, and what it pays after them.
+    let through = 0;
+    const ahead: string[] = [];
+    for (const one of product.intro ?? []) {
+      through += one.months;
+      ahead.push(`${pct(one.rate)} to month ${through}`);
+    }
+    said.push(` for now: ${ahead.join(', ')}, and ${pct(rateOn(product, sim.now, sim.homeZone))} after, counted from when it opened`);
+  }
   const next = (product.changes ?? []).find((c) => c.from > new Date(sim.now).toISOString().slice(0, 10));
   if (next) said.push(`, ${pct(next.rate)} from ${formatDate(Date.parse(`${next.from}T12:00:00Z`), sim.zone)}`);
   if (product.rateFrom !== undefined) said.push(`, on a balance of ${money(inSaveMoney(sim, product.rateFrom, currency))} or more`);
@@ -189,4 +202,28 @@ function interestWords(sim: Simulation, product: Product | undefined, tax: numbe
   if (product.taxFree) said.push(' Tax-free.');
   else if (tax > 0) said.push(` The bank takes ${pct(tax)} of it for tax.`);
   return said.join('');
+}
+
+/** The bank's charges that aren't an account's monthly fee, and the tax the country gives back. */
+function OtherCharges({ bank }: { bank: import('@/engine/content/banks').Bank }) {
+  const { sim } = useGame();
+  const cur = saveCurrency(sim.universe);
+  const money = (c: number) => formatMoney(inSaveMoney(sim, c, bank.currency), cur);
+  const refund = bankingIn(bank.iso)?.interestTax;
+  const lines: string[] = [];
+  if (bank.card) {
+    lines.push(`The debit card costs ${bank.card.yearly !== undefined ? `${money(bank.card.yearly)} a year` : 'nothing a year'}${bank.card.perPurchase !== undefined ? ` and ${money(bank.card.perPurchase)} a purchase` : ''}${bank.card.freeUnder !== undefined ? `, free under ${bank.card.freeUnder}` : ''}. Source: ${bank.card.source}.`);
+  }
+  if (bank.returned) lines.push(`A payment the bank returns unpaid costs ${money(bank.returned.fee)}. Source: ${bank.returned.source}.`);
+  if (bank.dormant) lines.push(`An account unused for ${bank.dormant.afterYears} years costs ${money(bank.dormant.yearly)} a year${bank.dormant.belowBalance !== undefined ? ` while it holds under ${money(bank.dormant.belowBalance)}` : ''}. Source: ${bank.dormant.source}.`);
+  if (bank.quietMonth) lines.push(`A month with fewer than ${bank.quietMonth.minTransactions} transactions costs ${money(bank.quietMonth.fee)}${bank.quietMonth.unlessWages ? ', unless wages are paid in' : ''}. Source: ${bank.quietMonth.source}.`);
+  if (refund?.refund) lines.push(refund.note);
+  if (lines.length === 0) return null;
+  return (
+    <Panel title="Other Charges">
+      <div className="col gap-2">
+        {lines.map((line) => <p key={line} className="small" style={{ margin: 0 }}>{line}</p>)}
+      </div>
+    </Panel>
+  );
 }

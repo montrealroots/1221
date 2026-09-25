@@ -75,6 +75,15 @@ export interface Account {
   /** A term deposit's fixed rate and the day it ends. */
   fixedRate?: number;
   maturesAt?: Instant;
+  /** Items charged this month, where a bank caps them by the month. */
+  itemsMonth?: string;
+  itemsMonthCount?: number;
+  /** The most the account was overdrawn this month, for Spain's commission. */
+  odPeak?: Money;
+  /** When a returned payment's fee, the debit card's yearly fee and a dormant account's fee were last charged. */
+  returnedAt?: Instant;
+  cardFeeAt?: Instant;
+  dormantFeeAt?: Instant;
   /** A loan's monthly payment and its term. */
   loanPayment?: Money;
   loanMonths?: number;

@@ -45,10 +45,11 @@ import { formatMoney, saveCurrency, type Money } from '../core/money';
 import type { Person } from '../domain/model';
 import { addDays, addMonths, dateKey, instantFromZoned, zonedParts, MS_DAY, type Instant } from '../core/time';
 import { clamp } from '../core/rng';
-import { bankById, type Bank } from '../content/banks';
+import { bankById, bankingIn, type Bank } from '../content/banks';
+import { ageOn } from './mortality';
 import { LENDING, SWITCHING, type Lending, type Loan } from '../content/banks-lending';
 import { accountNumber } from './banknumber';
-import { bankOf, banksFor, inSaveMoney, interestTaxFor, isoOf, settleInterest } from './banking';
+import { bankOf, banksFor, inSaveMoney, interestTaxFor, isoOf, monthStartOf, settleInterest } from './banking';
 
 export const LOAN_DUE_KIND = 'bank.loan_due';
 export const SWITCH_KIND = 'bank.switch_complete';
@@ -103,8 +104,10 @@ export function overdraftRoom(sim: Simulation, person: Person): Money {
   const bank = current?.bankId ? bankById(current.bankId) : undefined;
   const terms = lendingOf(bank).overdraft;
   if (!current || !bank || !terms) return 0;
-  if (terms.kind === 'arranged') return current.overdraftLimit ?? 0;
-  if (terms.kind === 'per_item') return inSaveMoney(sim, ESTIMATE.perItemCover, bank.currency);
+  const cover = inSaveMoney(sim, ESTIMATE.perItemCover, bank.currency);
+  // Past an arranged limit, a French bank still pays, for its commission.
+  if (terms.kind === 'arranged') return (current.overdraftLimit ?? 0) + (terms.beyond ? cover : 0);
+  if (terms.kind === 'per_item' || terms.kind === 'tacit') return cover;
   const held = termsOf(sim, person).filter((a) => a.bankId === bank.id).reduce((sum, a) => sum + Math.max(0, a.balance), 0);
   return Math.min(inSaveMoney(sim, terms.max, bank.currency), Math.floor(held * terms.share));
 }
@@ -214,13 +217,92 @@ export function chargeForItem(sim: Simulation, person: Person): void {
   const current = currentOf(sim, person);
   const bank = current?.bankId ? bankById(current.bankId) : undefined;
   const terms = lendingOf(bank).overdraft;
-  if (!current || !bank || terms?.kind !== 'per_item' || terms.rate !== undefined) return;
-  if (current.balance >= -(terms.graceUpTo !== undefined ? inSaveMoney(sim, terms.graceUpTo, bank.currency) : 0)) return;
+  if (!current || !bank || !terms) return;
+  // The month's deepest point, for a commission charged on it.
+  if (current.balance < 0) current.odPeak = Math.max(current.odPeak ?? 0, -current.balance);
+  let fee: { fee: Money; maxPerDay?: number; maxPerMonth?: number } | undefined;
+  if (terms.kind === 'per_item' && terms.rate === undefined) {
+    if (current.balance >= -(terms.graceUpTo !== undefined ? inSaveMoney(sim, terms.graceUpTo, bank.currency) : 0)) return;
+    fee = terms;
+  } else if (terms.kind === 'arranged' && terms.beyond) {
+    if (current.balance >= -(current.overdraftLimit ?? 0)) return;
+    fee = terms.beyond;
+  }
+  if (!fee) return;
   const today = dateKey(sim.now, sim.homeZone);
+  const month = today.slice(0, 7);
   if (current.itemsDay !== today) { current.itemsDay = today; current.itemsCount = 0; }
-  if (terms.maxPerDay !== undefined && (current.itemsCount ?? 0) >= terms.maxPerDay) return;
+  if (current.itemsMonth !== month) { current.itemsMonth = month; current.itemsMonthCount = 0; }
+  if (fee.maxPerDay !== undefined && (current.itemsCount ?? 0) >= fee.maxPerDay) return;
+  if (fee.maxPerMonth !== undefined && (current.itemsMonthCount ?? 0) >= fee.maxPerMonth) return;
   current.itemsCount = (current.itemsCount ?? 0) + 1;
-  charge(sim, current, inSaveMoney(sim, terms.fee, bank.currency), 'Overdraft fee', 'bank_fee', 'Bank Fees');
+  current.itemsMonthCount = (current.itemsMonthCount ?? 0) + 1;
+  charge(sim, current, inSaveMoney(sim, fee.fee, bank.currency), 'Overdraft fee', 'bank_fee', 'Bank Fees');
+}
+
+/**
+ * The fee for a payment the bank returned unpaid, where it charges one:
+ * no more than once every so many business days, and none on a small one.
+ */
+export function chargeReturned(sim: Simulation, person: Person, short: Money): void {
+  const current = currentOf(sim, person);
+  const bank = current?.bankId ? bankById(current.bankId) : undefined;
+  const rule = bank?.returned;
+  if (!current || !bank || !rule || short <= 0) return;
+  if (rule.ifShortAtLeast !== undefined && short < inSaveMoney(sim, rule.ifShortAtLeast, bank.currency)) return;
+  if (current.returnedAt !== undefined && businessDaysBetween(sim, current.returnedAt, sim.now) < rule.gapDays) return;
+  current.returnedAt = sim.now;
+  charge(sim, current, inSaveMoney(sim, rule.fee, bank.currency), 'Returned payment fee', 'bank_fee', 'Bank Fees');
+}
+
+/** Monday-to-Friday days from one moment to another. */
+function businessDaysBetween(sim: Simulation, from: Instant, to: Instant): number {
+  let days = 0;
+  for (let at = addDays(from, 1, sim.homeZone); at <= to; at = addDays(at, 1, sim.homeZone)) {
+    const p = zonedParts(at, sim.homeZone);
+    const weekday = new Date(Date.UTC(p.year, p.month - 1, p.day)).getUTCDay();
+    if (weekday !== 0 && weekday !== 6) days += 1;
+    if (days > 30) break;
+  }
+  return days;
+}
+
+/** A debit card purchase's fee, where the bank charges one and the age isn't spared. */
+export function chargeForPurchase(sim: Simulation, person: Person): void {
+  const current = currentOf(sim, person);
+  const bank = current?.bankId ? bankById(current.bankId) : undefined;
+  const card = bank?.card;
+  if (!current || !bank || !card?.perPurchase) return;
+  if (card.freeUnder !== undefined && ageOn(sim, person, sim.now) < card.freeUnder) return;
+  charge(sim, current, inSaveMoney(sim, card.perPurchase, bank.currency), 'Debit card purchase fee', 'bank_fee', 'Bank Fees');
+}
+
+/** When an account last had money moved in or out by its owner or their employer, not the bank. */
+function lastUsed(sim: Simulation, account: Account): Instant {
+  const list = sim.universe.transactions;
+  for (let i = list.length - 1; i >= 0; i -= 1) {
+    const t = list[i]!;
+    if (t.at < account.openedAt) break;
+    if (t.category === 'interest' || t.category === 'bank_fee' || t.category === 'tax_refund') continue;
+    if (t.postings.some((p) => p.accountId === account.id)) return t.at;
+  }
+  return account.openedAt;
+}
+
+/** Transactions on an account between two moments, other than the bank's own. */
+function transactionsBetween(sim: Simulation, account: Account, from: Instant, to: Instant): { count: number; wages: boolean } {
+  let count = 0;
+  let wages = false;
+  const list = sim.universe.transactions;
+  for (let i = list.length - 1; i >= 0; i -= 1) {
+    const t = list[i]!;
+    if (t.at < from) break;
+    if (t.at >= to || t.category === 'interest' || t.category === 'bank_fee') continue;
+    if (!t.postings.some((p) => p.accountId === account.id)) continue;
+    count += 1;
+    if (t.category === 'salary') wages = true;
+  }
+  return { count, wages };
 }
 
 function scheduleLoan(sim: Simulation, loan: Account, after: Instant): void {
@@ -276,6 +358,61 @@ function completeSwitch(sim: Simulation, person: Person, to: Bank): void {
   }
 }
 
+/**
+ * On the first of the month: a dormant account's yearly fee, and the fee for
+ * a month with too few transactions, where the bank charges them.
+ */
+function monthlyCharges(sim: Simulation, person: Person, current: Account, bank: Bank): void {
+  const monthStart = monthStartOf(sim, sim.now - MS_DAY);
+  for (const account of Object.values(sim.universe.accounts)) {
+    if (account.ownerId !== person.id || account.closedAt || account.bankId !== bank.id) continue;
+    if (account.kind !== 'checking' && account.kind !== 'savings') continue;
+    const dormant = bank.dormant;
+    if (dormant && sim.now - lastUsed(sim, account) >= dormant.afterYears * 365 * MS_DAY
+      && (dormant.belowBalance === undefined || account.balance < inSaveMoney(sim, dormant.belowBalance, bank.currency))
+      && (account.dormantFeeAt === undefined || sim.now - account.dormantFeeAt >= 365 * MS_DAY)) {
+      account.dormantFeeAt = sim.now;
+      charge(sim, account, inSaveMoney(sim, dormant.yearly, bank.currency), 'Dormant account fee', 'bank_fee', 'Bank Fees');
+    }
+  }
+  const quiet = bank.quietMonth;
+  if (quiet && current.openedAt < monthStart) {
+    const month = transactionsBetween(sim, current, monthStart, sim.now);
+    if (month.count < quiet.minTransactions && !(quiet.unlessWages && month.wages)) {
+      charge(sim, current, inSaveMoney(sim, quiet.fee, bank.currency), 'Quiet month fee', 'bank_fee', 'Bank Fees');
+    }
+  }
+}
+
+/**
+ * Iceland: on the assessment's day, the tax taken on the first 300,000 kr of
+ * last year's interest comes back into the current account.
+ */
+function refundInterestTax(sim: Simulation, person: Person, current: Account, bank: Bank): void {
+  const rule = bankingIn(bank.iso)?.interestTax;
+  const refund = rule?.refund;
+  if (!rule || !refund || !rule.rate) return;
+  const today = zonedParts(sim.now, sim.homeZone);
+  if (today.month !== refund.month || today.day !== refund.day) return;
+  const from = instantFromZoned({ year: today.year - 1, month: 1, day: 1, hour: 0 }, sim.homeZone);
+  const to = instantFromZoned({ year: today.year, month: 1, day: 1, hour: 0 }, sim.homeZone);
+  const mine = new Set(Object.values(sim.universe.accounts).filter((a) => a.ownerId === person.id && a.bankId !== undefined && bankById(a.bankId)?.iso === bank.iso).map((a) => a.id));
+  let gross = 0;
+  for (const t of sim.universe.transactions) {
+    if (t.at < from || t.at >= to || t.category !== 'interest' || !t.postings.some((p) => mine.has(p.accountId))) continue;
+    for (const p of t.postings) if (p.amount < 0 && sim.universe.accounts[p.accountId]?.kind === 'income') gross += -p.amount;
+  }
+  const back = Math.round(Math.min(gross, inSaveMoney(sim, refund.allowance, bank.currency)) * rule.rate);
+  if (back <= 0) return;
+  post(sim, 'Tax on interest refunded at assessment', 'tax_refund', [
+    { accountId: current.id, amount: back },
+    { accountId: sim.nominalAccount('expense', 'Tax On Interest').id, amount: -back },
+  ]);
+  if (person.id === sim.universe.playerId) {
+    sim.notify({ category: 'money', title: 'Tax On Interest Refunded', body: `The assessment gave back ${formatMoney(back, saveCurrency(sim.universe), { cents: false })} of the tax taken on last year's interest.`, importance: 50 });
+  }
+}
+
 export function registerLending(sim: Simulation): void {
   // Every day: overdraft interest builds, a midnight fee where the bank
   // charges one, and a term deposit that has reached its end pays out.
@@ -294,6 +431,9 @@ export function registerLending(sim: Simulation): void {
           } else if (terms.kind === 'per_item' && terms.rate !== undefined) {
             current.odAccrued = (current.odAccrued ?? 0) + (used * terms.rate) / 365;
             charge(s, current, inSaveMoney(s, terms.fee, bank.currency), 'Overdrawn at midnight', 'bank_fee', 'Bank Fees');
+          } else if (terms.kind === 'tacit') {
+            current.odAccrued = (current.odAccrued ?? 0) + (used * terms.rate) / 365;
+            current.odPeak = Math.max(current.odPeak ?? 0, used);
           } else if (terms.kind === 'secured') {
             const held = termsOf(s, person).find((a) => a.bankId === bank.id);
             current.odAccrued = (current.odAccrued ?? 0) + (used * ((held?.fixedRate ?? 0) + terms.over)) / 365;
@@ -306,6 +446,11 @@ export function registerLending(sim: Simulation): void {
           if (terms.kind === 'arranged' && (current.overdraftLimit ?? 0) > 0 && terms.monthlyFee !== undefined) {
             charge(s, current, inSaveMoney(s, terms.monthlyFee, bank.currency), 'Overdraft fee', 'bank_fee', 'Bank Fees');
           }
+          if (terms.kind === 'tacit' && (current.odPeak ?? 0) > 0) {
+            const commission = Math.max(Math.round((current.odPeak ?? 0) * terms.commission.share), inSaveMoney(s, terms.commission.min, bank.currency));
+            charge(s, current, commission, 'Overdraft commission', 'bank_fee', 'Bank Fees');
+          }
+          current.odPeak = current.balance < 0 ? -current.balance : 0;
         }
         if (terms.kind === 'arranged' && (current.overdraftLimit ?? 0) > 0 && terms.yearlyFee !== undefined
           && current.overdraftSince !== undefined && s.now - current.overdraftSince >= 365 * MS_DAY) {
@@ -313,6 +458,14 @@ export function registerLending(sim: Simulation): void {
           current.overdraftSince = s.now;
         }
       }
+      if (current && bank && firstOfMonth) monthlyCharges(s, person, current, bank);
+      if (current && bank?.card?.yearly !== undefined && s.now - (current.cardFeeAt ?? current.openedAt) >= 365 * MS_DAY) {
+        current.cardFeeAt = s.now;
+        if (bank.card.freeUnder === undefined || ageOn(s, person, s.now) >= bank.card.freeUnder) {
+          charge(s, current, inSaveMoney(s, bank.card.yearly, bank.currency), 'Debit card yearly fee', 'bank_fee', 'Bank Fees');
+        }
+      }
+      if (current && bank) refundInterestTax(s, person, current, bank);
       for (const term of termsOf(s, person)) {
         term.accrued = (term.accrued ?? 0) + (Math.max(0, term.balance) * (term.fixedRate ?? 0)) / 365;
         if (term.maturesAt === undefined || s.now < term.maturesAt) continue;
@@ -356,6 +509,7 @@ export function registerLending(sim: Simulation): void {
     const bank = payFromBank(s, person, due);
     const paid = due - bank.short;
     if (paid > 0) post(s, `Payment: ${loan.name}`, 'loan_payment', [{ accountId: loan.id, amount: paid }, ...bank.postings]);
+    if (bank.short > 0) chargeReturned(s, person, bank.short);
     if (bank.short > 0 && person.credit) {
       // A missed payment goes on the record, as a late card payment does.
       person.credit.late = [...person.credit.late.filter((when) => s.now - when < 365 * MS_DAY), s.now];
@@ -464,10 +618,10 @@ export function registerLending(sim: Simulation): void {
     const number = accountNumber(s, person, bank, 'savings');
     const maturesAt = addMonths(s.now, term.months, s.homeZone);
     const account = s.openAccount({
-      id: s.nextId('account'), kind: 'savings', category: 'term', name: term.name, ownerId: person.id, institution: bank.name,
+      id: s.nextId('account'), kind: 'savings', category: 'term', name: term.called, ownerId: person.id, institution: bank.name,
       bankId: bank.id, number, last4: number.replace(/\D/g, '').slice(-4), openedAt: s.now, fixedRate: term.rate, maturesAt,
     });
-    post(s, `Into ${term.name}`, 'transfer', [{ accountId: current.id, amount: -amount }, { accountId: account.id, amount }]);
+    post(s, `Into ${term.called}`, 'transfer', [{ accountId: current.id, amount: -amount }, { accountId: account.id, amount }]);
     return { accountId: account.id, maturesAt };
   });
 
