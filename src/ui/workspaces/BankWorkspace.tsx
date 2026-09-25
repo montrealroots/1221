@@ -16,6 +16,7 @@ import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Empty } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
+import { BankLending } from '@/ui/bank/BankLending';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { formatDate } from '@/engine/core/time';
 import { bankingIn } from '@/engine/content/banks';
@@ -68,7 +69,7 @@ export function BankWorkspace() {
             ? ` Up to ${formatMoney(country.guarantee.limit, country.guarantee.currency, { cents: false })} of it is guaranteed by the ${country.guarantee.scheme} if the bank fails.`
             : ` It is guaranteed by the ${country.guarantee.scheme} if the bank fails: ${country.guarantee.note ?? 'the limit wasn’t found'}.`)}
           {!country?.guarantee && ' No deposit guarantee stands behind it that SLATE found.'}
-          {country?.policy && ` The central bank’s ${country.policy.name} is ${(country.policy.rate * 100).toFixed(2)}%, since ${formatDate(Date.parse(`${country.policy.since}T12:00:00Z`), sim.zone)}.`}
+          {country?.policy && ` The central bank’s ${country.policy.called} is ${(country.policy.rate * 100).toFixed(2)}%, since ${formatDate(Date.parse(`${country.policy.since}T12:00:00Z`), sim.zone)}.`}
         </p>
       </div>
 
@@ -149,10 +150,11 @@ export function BankWorkspace() {
         </Panel>
       )}
 
+      <BankLending bank={bank} />
+
       {country?.howMoneyMoves && (
         <p className="small muted" style={{ marginTop: 'var(--s5)' }}>{country.howMoneyMoves}</p>
       )}
-      {bank.overdraft && <p className="small muted">{bank.overdraft}</p>}
     </>
   );
 }

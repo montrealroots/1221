@@ -31,7 +31,7 @@ claims otherwise.
 | Time controls | Implemented — live play, sleeping, and skipping to an event with what it would cross shown first | `src/ui/shell/TimeControls.tsx` | `simulation`, `realclock` |
 | Wellbeing and sleep | Partial — the model, the night, the waking hours charged as the clock moves (`life.waking`), and the night nobody chose, slept when the clock is sent through one rather than at every midnight (`life.night_alone` and the rollover). Sleep, eating, a shower, a workout and an hour unwinding are how a player spends a day on them (`life.sleep`, `life.look_after`). Every dial decides something in the body or the workout, and nothing outside them reads it | `src/engine/systems/life.ts` | `simulation`, `smoke`, `endurance`, `personality`, `looking-after`, `wellbeing-bites` |
 | Money | Implemented — a ledger that conserves, kept in the currency of the country a save starts in; a day job paid at a real legal floor on the country's payday, with tax withheld; rent and bills on the first and food with each day's meals, paid from checking, then savings, then the card, then owed; a notice to pay or quit at two months owed and an eviction to a friend's sofa after it; a card with a statement, a due date, interest and late fees; and a credit record that prices it. Rents are published in nineteen places and estimated elsewhere, and food and bills are estimates | `src/engine/core/ledger.ts`, `src/engine/systems/finance.ts`, `src/engine/systems/work.ts`, `src/engine/systems/household.ts`, `src/engine/systems/credit.ts`, `src/engine/content/wages.ts`, `src/engine/content/jobs.ts` | `money`, `work`, `household`, `endurance` |
-| Banking | Implemented — a real bank where the character lives: the thirteen countries SLATE pays and taxes a life in with each bank's own account names, fees and fee waivers (wages paid in, a balance kept, age), published savings rates with their floors, caps, announced changes, bonuses and paying months, the tax a country has banks take off interest, the central bank's rate and the deposit guarantee; every other country's biggest banks by name with its guarantee. Account numbers in each country's format with real check digits. Personal loans, term deposits and overdraft lending are not built | `src/engine/systems/banking.ts`, `src/engine/systems/banknumber.ts`, `src/engine/core/banknumbers.ts`, `src/engine/content/banks.ts`, `src/engine/content/banks-thirteen.ts`, `src/engine/content/banks-world.ts`, `src/ui/workspaces/BankWorkspace.tsx` | `banking`, `banknumbers` |
+| Banking | Implemented — a real bank where the character lives: the thirteen countries SLATE pays and taxes a life in with each bank's own account names, fees and fee waivers (wages paid in, a balance kept, age), published savings rates with their floors, caps, announced changes, bonuses and paying months, the tax a country has banks take off interest, the central bank's rate and the deposit guarantee; every other country's biggest banks by name with its guarantee. Account numbers in each country's format with real check digits. Overdrafts the way each bank runs them (arranged, by the item, or against time deposits), personal loans priced by the record and repaid monthly, term deposits locked for their term, and a switch to another bank, through Britain's seven working days or the same day elsewhere. Product sheets for the 226 other countries are not built | `src/engine/systems/banking.ts`, `src/engine/systems/banknumber.ts`, `src/engine/core/banknumbers.ts`, `src/engine/content/banks.ts`, `src/engine/content/banks-thirteen.ts`, `src/engine/content/banks-world.ts`, `src/engine/systems/lending.ts`, `src/engine/content/banks-lending.ts`, `src/ui/workspaces/BankWorkspace.tsx`, `src/ui/bank/BankLending.tsx` | `banking`, `banknumbers`, `lending` |
 | Birthdays and the end of a life | Implemented — a birthday each year at nine in the morning, and each year's chance of the life ending from the US 2024 life table, moved by the country's life expectancy and the body's condition; an ended life stops the clock and opens onto what it came to | `src/engine/systems/birthdays.ts`, `src/engine/systems/mortality.ts`, `src/ui/shell/LifeEnded.tsx` | `mortality` |
 | The guide | Implemented — fifteen chapters, read in order, each opening the part of the game it describes: its commands in the engine and its controls, panels and underlined words on screen. A new life starts paused with everything shut but the guide | `src/engine/content/tutorial.ts`, `src/engine/world/tutorial.ts`, `src/ui/guide/Guide.tsx` | `tutorial` |
 | The Decision Center | Partial — answering, dismissing, closing on a date and forgetting are all built and tested. Nothing in the engine raises a decision on its own | `src/engine/world/world.ts`, `src/ui/looks/attention.tsx` | `smoke`, `looks` |
@@ -81,7 +81,7 @@ rollover had already paid for.
 
 ## The engine, as it now stands
 
-Twenty commands and two routes. The appendix below is generated from the
+Twenty-five commands and two routes. The appendix below is generated from the
 code, so it is the count to trust.
 
 Three are a person deciding something rather than answering something.
@@ -102,6 +102,10 @@ The rest is the Decision Center answering, dismissing and marking read
 the preferences (`world.set_preferences`). The bank moves money between a person's own accounts (`bank.transfer`), and
 opens and closes a savings account (`bank.open_savings`, `bank.close_savings`);
 its interest and fees fall on the last day of the month (`bank.month_end`).
+It arranges or closes an overdraft (`bank.arrange_overdraft`), puts money in a
+term deposit (`bank.open_term`), lends and is paid off (`bank.borrow`,
+`bank.repay_loan`, with each payment `bank.loan_due`), and moves a person to
+another bank (`bank.switch`, completing as `bank.switch_complete`).
 Reading a chapter of the guide is
 `tutorial.read`, and until a chapter is read the guide refuses every other
 command it opens (`world/tutorial.ts`), whatever screen sends it.
@@ -137,17 +141,17 @@ chapter or to two, or if a chapter opens nothing.
 | 11 | Weather | `ui.weather` `look.weather` `look.forecastday` `look.hours` `look.skyhour` `look.skyweek` |
 | 12 | Rent And A Roof | `home.move` |
 | 13 | Money And The Card | `ui.money` `finance.pay_card` `finance.set_autopay` `look.account` `look.networth` `look.debt` |
-| 14 | Your Bank | `ui.bank` `bank.transfer` `bank.open_savings` `bank.close_savings` |
+| 14 | Your Bank | `ui.bank` `bank.transfer` `bank.open_savings` `bank.close_savings` `bank.arrange_overdraft` `bank.open_term` `bank.borrow` `bank.repay_loan` `bank.switch` |
 | 15 | A Whole Life | `look.person` |
 
 <!-- inventory:begin -->
-Generated by `node tools/inventory.mjs --markdown`. 20 commands, 12 scheduled kinds, 2 passage reactors, 3 events emitted, 1 event listener, 0 scenes, 2 routes.
+Generated by `node tools/inventory.mjs --markdown`. 25 commands, 14 scheduled kinds, 2 passage reactors, 3 events emitted, 1 event listener, 0 scenes, 2 routes.
 
 ### Commands
 
 | System | Kinds | Owner |
 | --- | --- | --- |
-| bank | `bank.close_savings` `bank.open_savings` `bank.transfer` | `src/engine/systems/banking.ts` |
+| bank | `bank.arrange_overdraft` `bank.borrow` `bank.close_savings` `bank.open_savings` `bank.open_term` `bank.repay_loan` `bank.switch` `bank.transfer` | `src/engine/systems/banking.ts`, `src/engine/systems/lending.ts` |
 | calendar | `calendar.cancel` `calendar.schedule` `calendar.skip` | `src/engine/world/plans.ts` |
 | finance | `finance.pay_card` `finance.set_autopay` | `src/engine/systems/credit.ts` |
 | home | `home.move` | `src/engine/systems/household.ts` |
@@ -160,7 +164,7 @@ Generated by `node tools/inventory.mjs --markdown`. 20 commands, 12 scheduled ki
 
 | System | Kinds | Owner |
 | --- | --- | --- |
-| bank | `bank.month_end` | `src/engine/systems/banking.ts` |
+| bank | `bank.loan_due` `bank.month_end` `bank.switch_complete` | `src/engine/systems/banking.ts`, `src/engine/systems/lending.ts` |
 | card | `card.due` `card.statement` | `src/engine/systems/credit.ts` |
 | home | `home.rent` | `src/engine/systems/household.ts` |
 | life | `life.birthday` `life.commitment` `life.day_rollover` `life.end` | `src/engine/systems/birthdays.ts`, `src/engine/systems/life.ts`, `src/engine/systems/mortality.ts`, `src/engine/world/plans.ts` |

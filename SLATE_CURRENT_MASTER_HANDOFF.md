@@ -671,7 +671,22 @@ Every save had opened its accounts at "Northbank", which never existed, and an a
   - Home's Money panel has a button named for the bank, which opens `/workspace/bank`. That screen shows each account's number, balance, interest words, fee standing and source, plus Move Money and opening or closing savings.
   - A new Guide chapter 14, "Your Bank", opens them; there are 15 chapters now.
   - `tests/navigation.test.ts` listed BankWorkspace as removed. That line was edited, as its comment says a decision is made.
-- **Not built:** personal loans, term deposits, overdraft lending, switching banks, and product sheets for the 226 other countries. The overdraft terms are said, not charged (`docs/UNBITTEN.md`).
+- **Not built at first, then built the same day (the owner: "Finish those that are in open")** in `systems/lending.ts` and `content/banks-lending.ts`:
+  - **Overdrafts**, charged the way each bank runs them:
+    - arranged to a limit, with interest past any free buffer charged on the 1st, a monthly or yearly fee, and a rate by the record where the bank prices by risk (Lloyds 19.9%–49.9%, SG, KakaoBank);
+    - by the item: Chase $34, at most three a day and none within $50; Wells Fargo; Bank of America;
+    - overdrawn at midnight: CommBank and Westpac $15, with interest;
+    - against time deposits: MUFG, 90% up to ¥2 million.
+    - The household pays from the overdraft after savings and before the card.
+  - **Personal loans**, at the bank's rate or where in its range the record puts it, or the country's market average where the central bank publishes it (France, Germany, Spain). They're repaid in equal monthly payments, a missed one goes on the record as a late card payment does, and a loan can be paid off early.
+  - **Term deposits** at each bank's 12-month rate (a CD, GIC, Festgeld, 定期預金 and so on), locked until they end and paid out less the tax. ING's €100,000 floor is kept.
+  - **Switching:** Britain's Current Account Switch Service takes 7 working days (read from currentaccountswitch.co.uk this session); everywhere else the switch happens the same day. An overdraft must be cleared first.
+  - **SLATE's estimates, named in `ESTIMATE` and on the screen:**
+    - how far a bank pays items without an arrangement ($500);
+    - an arranged overdraft up to a month of wages;
+    - a loan payment up to 35% of a month's wages;
+    - lending to a record of 580 and up, at the range's bottom at 780, and at a bank's lowest published rate only from 670.
+  - **Still not built:** product sheets for the 226 other countries. Some figures from the first research weren't found and stay out: Iceland's savings ledger code, Mexico's savings rates, BMO's and CIBC's savings rates, and Spain's. This session's web searches were used up (200 of 200), and fetching guessed official pages mostly failed; raising `CLAUDE_CODE_MAX_WEB_SEARCHES_PER_SESSION` would let a next pass fill them. The smaller fees still not charged are in `docs/UNBITTEN.md`.
 - **Verified:**
   - `npm run gate` exits 0 with 767 tests in 38 files, read from a file.
   - 19 mutants on the engine. All are killed, after one test was added for the month's lowest balance, where both survivors had pointed.
@@ -844,6 +859,7 @@ This is 41 files, +2293/−292. Four are added: `src/engine/core/performer.ts` a
 
 | Check | Result |
 |---|---|
+| Lending, term deposits and switching (2026-09-25, same machine) | `npm run gate`: **exit 0**, read from a file, 39 files, **784 tests**. Mutation: 19 mutants on lending, all killed after four tests were sharpened (the free buffer, a term deposit kept from spending, the tax on its payout, and the interest a loan carries). Browser: a London save arranged an overdraft, borrowed and started a switch through the Current Account Switch Service, with no page errors. |
 | The bank (2026-09-25, same machine) | `npm run gate`: **exit 0**, read from a file, 38 files, **767 tests**. Mutation: 19 mutants on the bank, all killed. Browser: creation, the guide, and the bank in Iceland, New York and Tokyo, with no page errors. |
 | The guide (2026-09-24, same machine) | `npm run gate`: **exit 0**, read from a file, 36 files, **736 tests**. Mutation: 9 mutants on the guide's rules, all killed. Browser: a new life read through all fourteen chapters and then played, with no page errors. |
 | The full loop (2026-09-24, same machine) | `npm run gate`: **exit 0**, read from a file, 35 files, **720 tests**. Mutation: 19 mutants on thunder, mortality, birthdays and the halt. All are killed, after three tests were sharpened and three redundant pieces were removed (§5). Browser: the playtest loop and an ended save, no page errors. |
@@ -1059,8 +1075,9 @@ Keep the first three until the owner says otherwise.
 10. **Done on 2026-09-24: the full loop** (§5): thunderstorms calibrated to published thunder days, birthdays, and the end of a life on real life tables.
 11. **Done on 2026-09-24: the guide** (§5): fourteen chapters that open the game as they are read.
 12. **Done on 2026-09-25: the bank** (§5): real banks wherever the character lives, real numbers, interest, fees and tax.
-13. **Owner's direction for what comes next.** Something that reads the four idle axes, the money traits or citizenship would retire entries from `docs/UNWIRED.json` and `docs/UNBITTEN.md`. Take one `UNBITTEN` section at a time and prove each fix bites.
-14. **Deploy** to Base44 only after the gate passes; any existing deployment needs this redeploy before it will store this branch's saves (§10). Then run `tools/base44-smoke.mjs` against it. Fix Restore Backup on Base44 first (§10): today it never takes on the server.
+13. **Done on 2026-09-25: lending** (§5): overdrafts charged the banks' ways, personal loans, term deposits and switching.
+14. **Owner's direction for what comes next.** Something that reads the four idle axes, the money traits or citizenship would retire entries from `docs/UNWIRED.json` and `docs/UNBITTEN.md`. Take one `UNBITTEN` section at a time and prove each fix bites.
+15. **Deploy** to Base44 only after the gate passes; any existing deployment needs this redeploy before it will store this branch's saves (§10). Then run `tools/base44-smoke.mjs` against it. Fix Restore Backup on Base44 first (§10): today it never takes on the server.
 
 ---
 

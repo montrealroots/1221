@@ -64,6 +64,20 @@ export interface Account {
   bonusAccrued?: number;
   /** What it held when the month began, for a bonus paid on growth. */
   monthOpen?: Money;
+  /** An arranged overdraft: its limit, its rate, when it was arranged, and interest built on it (`systems/lending.ts`). */
+  overdraftLimit?: Money;
+  overdraftRate?: number;
+  overdraftSince?: Instant;
+  odAccrued?: number;
+  /** Overdraft items charged today, where a bank charges by the item and caps the day. */
+  itemsDay?: string;
+  itemsCount?: number;
+  /** A term deposit's fixed rate and the day it ends. */
+  fixedRate?: number;
+  maturesAt?: Instant;
+  /** A loan's monthly payment and its term. */
+  loanPayment?: Money;
+  loanMonths?: number;
 }
 
 export interface Posting {

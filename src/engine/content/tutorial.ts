@@ -200,9 +200,10 @@ export const CHAPTERS: readonly Chapter[] = [
       'A savings account pays the bank’s rate, built up each day on what it holds and paid on the last day of the month. Where the country has the bank take tax off interest first, it does. Where a bank publishes no rate, the one shown is SLATE’s estimate and says so.',
       'A current account that charges a monthly fee takes it on the last day of the month, unless the month met the bank’s own waiver: enough of your wages paid in, or enough kept in it all month. The bank screen says how this month stands.',
       'Move Money moves it between your own accounts at once. A savings account can be opened, or closed with its money moved back. Up to the country’s guarantee, money in a failed bank is paid back, and the bank screen says how much that is.',
+      'Where the bank runs an overdraft, the account can go below zero its way: arranged to a limit, with interest and any fee, or paid item by item with a fee for each. A term deposit locks money away at a fixed rate and pays it back with its interest at the end. A personal loan is repaid in equal monthly payments, and a payment missed goes on your record. And you can move to another bank where you live.',
     ],
-    names: ['Your bank, from the Money panel', 'Move Money', 'Open and close a savings account'],
-    opens: ['ui.bank', 'bank.transfer', 'bank.open_savings', 'bank.close_savings'],
+    names: ['Your bank, from the Money panel', 'Move Money', 'Open and close a savings account', 'Arrange an overdraft', 'Put money in a term deposit', 'Borrow, and pay a loan off', 'Switch bank'],
+    opens: ['ui.bank', 'bank.transfer', 'bank.open_savings', 'bank.close_savings', 'bank.arrange_overdraft', 'bank.open_term', 'bank.borrow', 'bank.repay_loan', 'bank.switch'],
   },
   {
     id: 'life',

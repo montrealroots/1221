@@ -96,7 +96,8 @@ export interface CountryBanking {
   iso: string;
   banks: readonly Bank[];
   guarantee?: Guarantee;
-  policy?: { name: string; rate: number; since: string; source: string };
+  /** The central bank's rate, called what the bank calls it, since a date. */
+  policy?: { called: string; rate: number; since: string; source: string };
   /**
    * Tax a bank takes off interest before paying it: a flat rate, above a
    * yearly allowance where there is one, or a rate by the saver's income.

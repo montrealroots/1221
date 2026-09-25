@@ -41,10 +41,15 @@ import { accountNumber } from './banknumber';
 
 export const MONTH_END_KIND = 'bank.month_end';
 
+/** A current account or an easy-access savings account: not a term deposit, not a loan. */
+export function isEveryday(account: Account): boolean {
+  return (account.kind === 'checking' || account.kind === 'savings') && account.category !== 'term';
+}
+
 /** A person's open current and savings accounts. */
 export function bankAccountsOf(sim: Simulation, person: Person): Account[] {
   return Object.values(sim.universe.accounts).filter(
-    (a) => a.ownerId === person.id && !a.nominal && !a.closedAt && (a.kind === 'checking' || a.kind === 'savings'),
+    (a) => a.ownerId === person.id && !a.nominal && !a.closedAt && isEveryday(a),
   );
 }
 
@@ -275,6 +280,11 @@ export function interestTaxFor(sim: Simulation, account: Account, earned: Money)
   return Math.round(Math.max(0, earned - free) * rate);
 }
 
+/** Pays what an account has built up, now, as a bank does when it closes one. */
+export function settleInterest(sim: Simulation, account: Account, memo: string): void {
+  payInterest(sim, account, memo);
+}
+
 function payInterest(sim: Simulation, account: Account, memo: string): void {
   const earned = Math.floor(account.accrued ?? 0);
   if (earned <= 0) return;
@@ -299,7 +309,7 @@ export function registerBanking(sim: Simulation): void {
   // and the lowest it stood at this month is kept for the fee's waiver.
   sim.onEvent('world.day_rollover', 'bank.day', (_event, { sim: s }) => {
     for (const account of Object.values(s.universe.accounts)) {
-      if (!account.bankId || account.closedAt) continue;
+      if (!account.bankId || account.closedAt || !isEveryday(account)) continue;
       const product = productOf(account);
       const earning = earningBalance(product, account.balance);
       const rate = rateOn(product, s.now, s.homeZone);
@@ -314,7 +324,7 @@ export function registerBanking(sim: Simulation): void {
     const monthStart = monthStartOf(s, item.at);
     const month = zonedParts(item.at, s.homeZone).month;
     for (const account of Object.values(s.universe.accounts)) {
-      if (!account.bankId || account.closedAt) continue;
+      if (!account.bankId || account.closedAt || !isEveryday(account)) continue;
       const product = productOf(account);
       // A month that earned the bonus adds it to what's owed; one that didn't loses it.
       if (product?.bonus && bonusEarned(s, account, monthStart)) account.accrued = (account.accrued ?? 0) + (account.bonusAccrued ?? 0);

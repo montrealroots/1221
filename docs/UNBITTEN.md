@@ -98,14 +98,14 @@ part the tool cannot see.
   Riser's "No use at all after nine at night", every cost about other people,
   and Resilient's illness and injury are not charged, and Early Riser and a
   few others help and cost nothing in play. The Traits card says so.
-- **A bank's overdraft terms are said, not charged.** The bank screen gives
-  each bank's real overdraft rate and fees (`content/banks-thirteen.ts`), and
-  no current account ever goes below zero: money comes out of the current
-  account, then savings, then the card, and what none covers is owed to the
-  landlord (`systems/household.ts`). Likewise a bank's per-transaction and
-  passbook fees, the second year of an introductory rate and Iceland's
-  300,000 kr of interest refunded at assessment are named in the source
-  lines and not charged or paid.
+- **Some of a bank's terms are named and not charged.** Overdrafts are
+  charged since 2026-09-25 (`systems/lending.ts`), by the item, arranged or
+  against time deposits. What the source lines still name and nothing
+  charges or pays: a bank's per-transaction and passbook fees, the
+  commission Spanish banks take on an overdraft and the €8 intervention
+  charge French banks take, a Canadian bank's $10 fee for a payment it
+  returns unpaid, the second year of an introductory rate, and Iceland's
+  300,000 kr of interest refunded at assessment.
 - **The tax engine taxes wages and nothing else.** It was a screen, read only
   by the place card, until the day job: payday withholds income and payroll
   tax through it (`systems/work.ts`). Its sales, property and vehicle rules are

@@ -37,6 +37,7 @@ import { armBirthdays, registerBirthdays } from './systems/birthdays';
 import { registerMortality } from './systems/mortality';
 import { registerTutorial } from './world/tutorial';
 import { armBanking, openAt, registerBanking, rebank, startingBank } from './systems/banking';
+import { registerLending } from './systems/lending';
 import { registerWorld } from './world/world';
 import {
   createUniverse, defaultConfig, wealthIn, type NewSaveConfig,
@@ -61,6 +62,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerMortality(sim);
   registerTutorial(sim);
   registerBanking(sim);
+  registerLending(sim);
 }
 
 /** Recurring world processes every save needs running. */

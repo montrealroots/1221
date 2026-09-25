@@ -198,7 +198,8 @@ describe('the monthly fee', () => {
     expect(feeFor(sim, account, monthStartOf(sim, sim.now)).fee).toBe(15_00);
     const before = account.balance;
     sim.advanceBy(28 * MS_DAY);
-    const fees = sim.universe.transactions.filter((t) => t.category === 'bank_fee').flatMap((t) => t.postings).filter((p) => p.accountId === account.id);
+    // The monthly fee only: a life with no wages in New York soon overdraws, and Chase charges for that too.
+    const fees = sim.universe.transactions.filter((t) => t.category === 'bank_fee' && t.memo.startsWith('Monthly fee')).flatMap((t) => t.postings).filter((p) => p.accountId === account.id);
     expect(fees.map((p) => p.amount)).toEqual([-15_00]);
     expect(account.balance).toBeLessThan(before);
   });
@@ -221,16 +222,17 @@ describe('the monthly fee', () => {
       memo: 'Test', category: 'test',
       postings: [{ accountId: account.id, amount }, { accountId: sim.nominalAccount('equity', 'Test').id, amount: -amount }],
     });
-    sim.advanceTo(instantFromZoned({ year: 2026, month: 2, day: 1, hour: 6 }, zone));
+    // After February's rent, which is due on the first.
+    sim.advanceTo(instantFromZoned({ year: 2026, month: 2, day: 2, hour: 6 }, zone));
     // Enough that New York rent and food never take it under the line on their own.
     holding(sim, account, 20_000_00);
     // Under $1,500 over one night in the middle of February, then back.
     sim.advanceTo(instantFromZoned({ year: 2026, month: 2, day: 10, hour: 20 }, zone));
-    move(-19_000_00);
+    move(1_000_00 - account.balance);
     sim.advanceTo(instantFromZoned({ year: 2026, month: 2, day: 11, hour: 9 }, zone));
-    move(19_000_00);
+    move(20_000_00 - account.balance);
     // January's is charged too: the life started under the line. Only February on counts here.
-    const since = instantFromZoned({ year: 2026, month: 2, day: 1, hour: 7 }, zone);
+    const since = instantFromZoned({ year: 2026, month: 2, day: 2, hour: 7 }, zone);
     const fees = () => sim.universe.transactions.filter((t) => t.category === 'bank_fee' && t.at > since)
       .flatMap((t) => t.postings).filter((p) => p.accountId === account.id).map((p) => p.amount);
     sim.advanceTo(instantFromZoned({ year: 2026, month: 3, day: 1, hour: 6 }, zone));

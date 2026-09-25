@@ -49,6 +49,7 @@ import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { instantFromZoned, zonedParts, type Instant } from '../core/time';
 import { clamp } from '../core/rng';
 import { personalityOf } from './personality';
+import { chargeForItem, overdraftHeadroom } from './lending';
 import { CommandError } from '../core/simulation';
 
 export const RENT_KIND = 'home.rent';
@@ -184,8 +185,9 @@ function arrearsAccount(sim: Simulation, person: Person): Account {
   });
 }
 
+/** Easy-access savings: a term deposit is locked until its end. */
 function savingsOf(sim: Simulation, person: Person): Account | undefined {
-  return accountsOf(sim, person).find((a) => a.kind === 'savings');
+  return accountsOf(sim, person).find((a) => a.kind === 'savings' && a.category !== 'term');
 }
 
 /** What checking and savings hold between them, now. */
@@ -195,9 +197,10 @@ export function inTheBank(sim: Simulation, person: Person): Money {
 
 /**
  * The postings that take an amount out of checking, then savings, as far as
- * they go, and what's left.
+ * they go, then, where asked, the current account's overdraft
+ * (`systems/lending.ts`), and what's left.
  */
-export function drawFromBank(sim: Simulation, person: Person, amount: Money): { postings: { accountId: string; amount: Money }[]; short: Money } {
+export function drawFromBank(sim: Simulation, person: Person, amount: Money, withOverdraft = false): { postings: { accountId: string; amount: Money }[]; short: Money } {
   const postings: { accountId: string; amount: Money }[] = [];
   let left = amount;
   for (const account of [checkingOf(sim, person), savingsOf(sim, person)]) {
@@ -208,14 +211,22 @@ export function drawFromBank(sim: Simulation, person: Person, amount: Money): { 
       left -= take;
     }
   }
+  const current = checkingOf(sim, person);
+  if (withOverdraft && current && left > 0) {
+    const take = Math.min(left, overdraftHeadroom(sim, person));
+    if (take > 0) {
+      postings.push({ accountId: current.id, amount: -take });
+      left -= take;
+    }
+  }
   return { postings, short: left };
 }
 
-/** What the bank and the card can pay between them, now. */
+/** What the bank, its overdraft and the card can pay between them, now. */
 export function canPay(sim: Simulation, person: Person): Money {
   const card = cardOf(sim, person);
   const free = card ? Math.max(0, (card.creditLimit ?? 0) + card.balance) : 0;
-  return inTheBank(sim, person) + free;
+  return inTheBank(sim, person) + overdraftHeadroom(sim, person) + free;
 }
 
 /**
@@ -227,7 +238,7 @@ export function spend(sim: Simulation, person: Person, amount: Money, memo: stri
   if (amount <= 0) return true;
   const card = cardOf(sim, person);
   if (!owe && canPay(sim, person) < amount) return false;
-  const bank = drawFromBank(sim, person, amount);
+  const bank = drawFromBank(sim, person, amount, true);
   const cardFree = card ? Math.max(0, (card.creditLimit ?? 0) + card.balance) : 0;
   const fromCard = Math.min(bank.short, cardFree);
   const owed = bank.short - fromCard;
@@ -235,6 +246,7 @@ export function spend(sim: Simulation, person: Person, amount: Money, memo: stri
   if (fromCard > 0 && card) postings.push({ accountId: card.id, amount: -fromCard });
   if (owed > 0) postings.push({ accountId: arrearsAccount(sim, person).id, amount: -owed });
   sim.post({ memo, category, postings });
+  chargeForItem(sim, person);
   return true;
 }
 
