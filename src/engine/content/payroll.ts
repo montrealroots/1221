@@ -128,10 +128,19 @@ const band = (table: readonly (readonly [number, number | null, number])[], g: n
  * after its phase-out, then less the share of the tax a low income is
  * forgiven or credited. Until 2026-09-26 nothing phased out.
  */
+const phasedItem = (t: NonNullable<StateLaw['tax']>, g: number, item: 'standardDeduction' | 'personalExemption' | 'personalCredit') =>
+  (t.phaseOuts ?? []).filter((p) => p.item === item).reduce((amount, p) => phased(amount, g, p), t[item]);
+
+/** A state's taxable income on a year's wages: after its deduction and exemption, each after its phase-out. */
+export function stateTaxable(t: NonNullable<StateLaw['tax']>, g: number): number {
+  return Math.max(0, g - phasedItem(t, g, 'standardDeduction') - phasedItem(t, g, 'personalExemption'));
+}
+
 export function stateIncomeTax(t: NonNullable<StateLaw['tax']>, g: number): number {
-  const of = (item: 'standardDeduction' | 'personalExemption' | 'personalCredit') =>
-    (t.phaseOuts ?? []).filter((p) => p.item === item).reduce((amount, p) => phased(amount, g, p), t[item]);
-  let tax = Math.max(0, bands(Math.max(0, g - of('standardDeduction') - of('personalExemption')), t.brackets) - of('personalCredit'));
+  const of = (item: 'standardDeduction' | 'personalExemption' | 'personalCredit') => phasedItem(t, g, item);
+  const taxable = stateTaxable(t, g);
+  const notch = (t.notches ?? []).reduce((sum, [from, amount]) => sum + (taxable > from ? amount : 0), 0);
+  let tax = Math.max(0, bands(taxable, t.brackets) + notch - of('personalCredit'));
   for (const p of t.phaseOuts ?? []) {
     if (p.item === 'creditShare') tax -= tax * band(p.table, g);
     if (p.item === 'forgiven') tax -= tax * ('table' in p ? (g <= (p.table[0]?.[0] ?? 0) ? 1 : band(p.table, g)) : phased(1, g, p));
@@ -140,8 +149,10 @@ export function stateIncomeTax(t: NonNullable<StateLaw['tax']>, g: number): numb
 }
 
 /** A local tax on a year's wages: a rate to its cap, a fixed sum past its threshold, or a share of the state's tax. */
-export function localTax(t: LocalTax, g: number, stateTax: number): number {
+export function localTax(t: LocalTax, g: number, stateTax: number, stateTaxable = g): number {
   if (t.exemptUnder !== undefined && g < t.exemptUnder) return 0;
+  if (t.ofStateTaxable) g = stateTaxable;
+  if (t.brackets) return bands(g, t.brackets);
   if (t.over !== undefined || t.deduct !== undefined) g = Math.max(0, g - (t.over ?? 0) - (t.deduct ?? 0));
   if (t.ofStateTax !== undefined) return stateTax * t.ofStateTax;
   if (t.flat !== undefined) {
@@ -212,7 +223,8 @@ const RULES: Record<string, Rules> = {
     // One paid on the return is only in the year's settlement.
     const stateTax = lines.find((l) => l.kind === 'tax' && / Income Tax$/.test(l.name) && l.name !== 'Federal Income Tax')?.amount ?? 0;
     const local = (LOCAL_BY_CITY[ctx.cityId ?? ''] ?? []).map((i) => [i, LOCAL_TAXES[i]!] as const);
-    const before = new Map(local.map(([i, t]) => [i, localTax(t, g, stateTax)]));
+    const stTax = STATES[state ?? '']?.tax;
+    const before = new Map(local.map(([i, t]) => [i, localTax(t, g, stateTax, stTax ? stateTaxable(stTax, g) : g)]));
     for (const [i, t] of local) {
       if (t.atReturn && !ctx.settling) continue;
       const credit = (t.lessTaxes ?? []).reduce((sum, j) => sum + (before.get(j) ?? 0), 0);

@@ -92,6 +92,10 @@ export interface LaborLaw {
     usableAfterMonths?: number;
     /** Paid on top of the leave's pay: Australia's loading, Mexico's prima vacacional. */
     loading?: number;
+    /** A loading for some lines only, over `loading` (Belgium's blue-collar holiday pay, from its fund). */
+    loadingByLine?: Readonly<Record<string, number>>;
+    /** The loading's part free of income tax, a year, in the country's money (Mexico's 15 UMA). */
+    loadingTaxFreeUpTo?: number;
     /** What isn't taken is paid out when the job ends. */
     paidOut: boolean;
     /** Paid with each paycheck as a share of gross, not as time off (Canada's vacation pay). */
@@ -168,9 +172,9 @@ export interface LaborLaw {
  */
 export type Extra =
   /** A fixed sum on a date, prorated by the job's share of full time (Iceland's bonuses). */
-  | { kind: 'fixed'; name: string; month: number; day: number; amount: number; fullTimeHours: number; minWeeks?: number; periodMonths?: number; source: string }
+  | { kind: 'fixed'; name: string; month: number; day: number; amount: number; fullTimeHours: number; minWeeks?: number; periodMonths?: number; taxFree?: boolean; taxFreeUpTo?: number; source: string }
   /** So many days' pay on a date, prorated by the year worked (Mexico's aguinaldo). */
-  | { kind: 'days'; name: string; month: number; day: number; days: number; periodMonths?: number; source: string }
+  | { kind: 'days'; name: string; month: number; day: number; days: number; periodMonths?: number; taxFree?: boolean; taxFreeUpTo?: number; source: string }
   /**
    * A month's pay in each of these months, on the 15th or the day given (Spain's pagas extraordinarias):
    * the share of a month each pays, where it's split (Brazil's 13º in halves), and earned over the half
@@ -185,6 +189,8 @@ export type Extra =
      * or on the dates the government lists where the calendar has none (Bangladesh's Eids).
      */
     beforeHoliday?: { name: string; days: number; dates?: readonly string[] };
+    /** Free of income tax, all of it or to a sum in the country's money (the Philippines' thirteenth month to PHP 90,000). */
+    taxFree?: boolean; taxFreeUpTo?: number;
     source: string;
   }
   /**
@@ -193,7 +199,19 @@ export type Extra =
    * half year), to a cap in the country's money, after so many months or
    * hours where the law asks (Puerto Rico's 1,350).
    */
-  | { kind: 'shareOfYear'; name: string; month: number; day: number; months?: readonly number[]; share: number; windowMonths?: number; cap?: number; minMonths?: number; minHours?: number; source: string };
+  | { kind: 'shareOfYear'; name: string; month: number; day: number; months?: readonly number[]; share: number; windowMonths?: number; cap?: number; minMonths?: number; minHours?: number; taxFree?: boolean; taxFreeUpTo?: number; source: string };
+
+/**
+ * What an employer pays on top of the law, where it publishes it: Serbia's
+ * law makes a leave allowance due and leaves its amount to each employer,
+ * and of SLATE's Serbian employers only Lidl says what it pays.
+ */
+export const EMPLOYER_EXTRAS: Readonly<Record<string, readonly Extra[]>> = {
+  'rs-retail-lidl-srbija': [{
+    kind: 'fixed', name: 'Annual Leave Supplement', month: 6, day: 15, amount: 30_000, fullTimeHours: 40, periodMonths: 12,
+    source: 'Lidl Srbija, 9 January 2025: a leave supplement of RSD 30,000 a year, paid in June, on top of the regres the law requires (whose amount it doesn’t publish)',
+  }],
+};
 
 /**
  * Redundancy pay, in weeks of pay: so many for each year with the employer,
@@ -275,9 +293,9 @@ export const LABOR: Readonly<Record<string, LaborLaw>> = {
     sunday: { extra: 0.25, source: 'LFT art. 71: prima dominical, 25%' },
     holiday: { extra: 2, source: 'LFT art. 75: a rest day worked is paid double on top, three times in all' },
     overtime: { week: 48, extra: 1, tierAfter: 9, tierExtra: 2, source: 'LFT arts. 67–68: double for the first nine hours a week, triple after' },
-    leave: { accrual: 12 / 300, usableAfterMonths: 12, loading: 0.25, paidOut: true, source: 'LFT art. 76 since 2023: 12 days after the first year; prima vacacional 25% (art. 80)' },
+    leave: { accrual: 12 / 300, usableAfterMonths: 12, loading: 0.25, loadingTaxFreeUpTo: 15 * 117.31, paidOut: true, source: 'LFT art. 76 since 2023: 12 days after the first year; prima vacacional 25% (art. 80), free of income tax to 15 UMA a year (LISR art. 93 XIV)' },
     sick: { fromDay: 4, rate: 0.6, paidBy: 'state', source: 'IMSS: 60% of the daily wage from the fourth day' },
-    extras: [{ kind: 'days', name: 'Aguinaldo', month: 12, day: 20, days: 15, source: 'LFT art. 87: 15 days’ pay by 20 December, pro rata' }],
+    extras: [{ kind: 'days', name: 'Aguinaldo', month: 12, day: 20, days: 15, taxFreeUpTo: 30 * 117.31, source: 'LFT art. 87: 15 days’ pay by 20 December, pro rata; LISR art. 93 XIV: free of income tax to 30 UMA (MXN 117.31 a day from 1 February 2026)' }],
     quitNotice: { steps: [[0, 0]], source: 'LFT: a worker may leave at any time' },
     employerNotice: { steps: [[0, 0]], source: 'LFT arts. 46–50: no notice; a dismissal without cause is paid for instead' },
     redundancy: { afterMonths: 0, plus: 90 / 7, weeksAYear: 12 / 7, taxFreePerYear: 90 * 117.31, source: 'LFT arts. 48, 50 and 162: three months’ pay for a dismissal without cause, and the seniority premium of 12 days a year; LISR art. 93: free of ISR to 90 UMA a year of service, 2026’s UMA being 117.31 pesos' },
@@ -437,8 +455,23 @@ export function laborAt(path: readonly string[]): LaborLaw | undefined {
     if (!followed && !world?.law && !leave && !world?.leaveLoading) return undefined;
     const { regions: _regions, ...base } = followed ?? {};
     const law: LaborLaw = { ...leave, ...base, ...world?.law };
-    // A loading on the leave, whichever research gave the leave.
-    return world?.leaveLoading && law.leave ? { ...law, leave: { ...law.leave, loading: world.leaveLoading.share, source: `${law.leave.source}; ${world.leaveLoading.source}` } } : law;
+    if (!law.leave) return law;
+    // A loading on the leave, whichever research gave the leave. Holiday pay
+    // that the law works out as a share of the year's pay, in place of the
+    // leave's wage (Denmark's 12.5%, Sweden's 12%, Norway's 10.2%, Belgium's
+    // blue-collar 16.61%), comes to the same money as a loading of that share
+    // over the leave the year earns, less the wage. Until 2026-09-26 it wasn't paid.
+    let out = law.leave;
+    if (world?.leaveLoading) out = { ...out, loading: world.leaveLoading.share, source: `${out.source}; ${world.leaveLoading.source}` };
+    const h = world?.holidayPay;
+    if (h) {
+      // Under the leave's wage where the share is less (Norway's 10.2% against 25 days).
+      const loading = h.share / out.accrual - 1;
+      out = h.lines
+        ? { ...out, loadingByLine: Object.fromEntries(h.lines.map((line) => [line, loading])), source: `${out.source}; ${h.source}` }
+        : { ...out, loading, source: `${out.source}; ${h.source}` };
+    }
+    return { ...law, leave: out };
   }
   // A province or state the thirteen's research didn't write out comes from
   // the labor-law pass (`content/jurisdictions.ts`).

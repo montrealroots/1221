@@ -506,6 +506,16 @@ function worldBenefit(iso: string, b: NonNullable<WorldLaw['benefit']>): Benefit
       const short = [{ months: b.qualifyMonths, withinMonths: b.withinMonths }, ...(b.also ?? [])]
         .find((t) => t.months > 0 && monthsWorked(record, ctx.at, t.withinMonths) < t.months);
       if (short) return `${b.name} needs ${t(short.months)} of work in the last ${t(short.withinMonths)}; SLATE has ${Math.floor(monthsWorked(record, ctx.at, short.withinMonths))} on record.`;
+      if (b.quarterTest) {
+        // The Virgin Islands': the best quarter to a floor, and the base period half again it, or so many weekly benefits.
+        const t = b.quarterTest;
+        const q = baseQuarters(record, ctx.at);
+        const all = q.reduce((x, y) => x + y, 0);
+        const weekly = clampTo(q[0]! * (b.quarters?.factor ?? 0), b.min ?? 0, b.max);
+        if (q[0]! < t.highQuarterMin || (all < t.baseMultipleOfHQ * q[0]! && all < t.orWeeklyTimes * weekly)) {
+          return `${b.name} needs ${t.highQuarterMin.toLocaleString('en-US')} in the best quarter of the base period, and the base period half again it or ${t.orWeeklyTimes} times the weekly benefit.`;
+        }
+      }
       if (b.quartersTable) {
         const q = baseQuarters(record, ctx.at);
         const [from, , needs] = b.quartersTable[0]!;

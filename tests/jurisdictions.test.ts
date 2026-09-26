@@ -8,7 +8,7 @@ import { describe, expect, it } from 'vitest';
 import { quickSave } from '../src/engine';
 import { CITIES, addCountryCities } from '../src/engine/content/geography';
 import { MS_DAY } from '../src/engine/core/time';
-import { hourlyWage, layOff, movableDue, shareOfYearDue } from '../src/engine/systems/work';
+import { hourlyWage, layOff, leaveLoadingFor, movableDue, shareOfYearDue } from '../src/engine/systems/work';
 import { jobFor, patternHours, patternOf } from '../src/engine/content/jobs';
 import type { Extra } from '../src/engine/content/labor';
 import { addCountryHolidays, hasHolidayFile } from '../src/engine/content/holidays';
@@ -531,5 +531,129 @@ describe('the fixes: what the finishing pass left', () => {
     expect(ky('us-ky-henderson', 30_000).find((l) => l.name === 'Henderson Occupational License Tax')!.amount / 100).toBeCloseTo(30_000 * 0.0165, 6);
     expect(ky('us-ky-brandenburg', 18_000).some((l) => /Brandenburg/.test(l.name))).toBe(false);
     expect(ky('us-ky-brandenburg', 30_000).find((l) => /Brandenburg/.test(l.name))!.amount / 100).toBeCloseTo(30_000 * 0.00333, 6);
+  });
+});
+
+
+describe('the open items, closed', () => {
+  it('pays Sweden’s and Denmark’s holiday pay as the share of the year’s pay the law gives, and Norway’s a little under the wage', () => {
+    const se = laborAt(['SE'])!.leave!;
+    expect(se.loading).toBeCloseTo(0.12 / se.accrual - 1, 9);
+    const dk = laborAt(['DK'])!.leave!;
+    expect(dk.loading).toBeCloseTo(0.125 / dk.accrual - 1, 9);
+    const no = laborAt(['NO'])!.leave!;
+    expect(no.loading).toBeLessThan(0);
+    expect(no.loading).toBeCloseTo(0.102 / no.accrual - 1, 9);
+  });
+
+  it('pays Belgium’s blue-collar lines their fund’s holiday pay, and the rest the white-collar double pécule', () => {
+    const be = laborAt(['BE'])!;
+    expect(leaveLoadingFor(be, 'hospitality')).toBeCloseTo(0.1661 / be.leave!.accrual - 1, 3);
+    expect(leaveLoadingFor(be, 'retail')).toBeCloseTo(0.92, 9);
+  });
+
+  it('charges Ohio’s $332 once taxable income passes $26,050, then 2.75% of the excess', () => {
+    const oh = (g: number) => payrollYear('US', g * 100, { path: ['US', 'US-OH'], at, age: 30 }).lines.find((l) => l.name === 'Ohio Income Tax')?.amount ?? 0;
+    // The exemption is $2,400 up to $40,000 of income.
+    expect(oh(28_000) / 100).toBe(0);
+    expect(oh(30_000) / 100).toBeCloseTo(332 + (30_000 - 2_400 - 26_050) * 0.0275, 2);
+  });
+
+  it('forgives Kentucky’s tax by its 2026 poverty line, $15,960, ten points less at each band', () => {
+    const ky = (g: number) => payrollYear('US', g * 100, { path: ['US', 'US-KY'], at, age: 30 }).lines.find((l) => l.name === 'Kentucky Income Tax')?.amount ?? 0;
+    expect(ky(15_900)).toBe(0);
+    expect(ky(16_400) / 100).toBeCloseTo((16_400 - 3_360) * 0.035 * 0.1, 2);
+  });
+
+  it('frees Mexico’s aguinaldo from income tax to 30 UMA', () => {
+    const sim = quickSave({ startLocationId: 'mx-cmx-mexicocity', homeRegionId: 'mx-cmx-mexicocity', livesWhereBorn: true, dayJob: true, wealth: 'modest', birthYear: 1994 }, 'mx-a');
+    sim.advanceTo(Date.UTC(2026, 11, 20, 23));
+    const aguinaldo = (sim.player.job!.pendingPay ?? []).filter((one) => one.name === 'Aguinaldo');
+    expect(aguinaldo.some((one) => one.taxFree)).toBe(true);
+  });
+
+  it('frees Mexico’s prima vacacional from income tax, paid apart from the leave', () => {
+    const sim = quickSave({ startLocationId: 'mx-cmx-mexicocity', homeRegionId: 'mx-cmx-mexicocity', livesWhereBorn: true, dayJob: true, wealth: 'modest', birthYear: 1994 }, 'mx-b');
+    sim.advanceTo(Date.UTC(2027, 1, 15));
+    sim.must({ kind: 'work.take_leave', payload: {} });
+    sim.advanceBy(20 * MS_DAY);
+    expect(sim.player.job!.loadingFree?.amount ?? 0).toBeGreaterThan(0);
+  });
+
+  it('pays the Philippines’ thirteenth month free of tax, to PHP 90,000', () => {
+    addCountryCities('ph', readFileSync('public/geo/ph.tsv', 'utf8'));
+    const manila = CITIES.all().find((c) => c.countryId === 'ph' && c.name === 'Manila')!;
+    const sim = quickSave({ startLocationId: manila.id, homeRegionId: manila.id, livesWhereBorn: true, dayJob: true, wealth: 'modest', birthYear: 1994 }, 'ph-x');
+    sim.advanceTo(Date.UTC(2026, 11, 24, 23));
+    const thirteenth = (sim.player.job!.pendingPay ?? []).filter((one) => one.name === '13th-month pay');
+    expect(thirteenth.length).toBeGreaterThan(0);
+    expect(thirteenth.every((one) => one.taxFree)).toBe(true);
+  });
+});
+
+
+describe('the open items, closed: benefits and an employer’s own', () => {
+  const monthly = (gross: number, months = 12): WorkRecord =>
+    Array.from({ length: months }, (_, i) => ({ at: claimAt - (i + 0.5) * 30.4375 * MS_DAY, days: 30.4375, hours: 160, gross }));
+
+  it('asks the Virgin Islands’ $858 in the best quarter, and half again it in the base period or 39 weekly benefits', () => {
+    expect(BENEFITS.VI!.qualifies(record([800, 800, 800, 800]), ctx)).toMatch(/858/);
+    expect(BENEFITS.VI!.qualifies(record([1_000, 500, 0, 0]), ctx)).toBeUndefined();
+    // $3,000 in one quarter alone: short of 1.5 times it, and of 39 weeks of $187.50.
+    expect(BENEFITS.VI!.qualifies(record([3_000, 100, 0, 0]), ctx)).toMatch(/858/);
+    // At the $648 cap the alternative counts: $26,000 is short of 1.5 times $20,000 but past 39 times $648.
+    expect(BENEFITS.VI!.qualifies(record([20_000, 6_000, 0, 0]), ctx)).toBeUndefined();
+  });
+
+  it('pays Bosnia 40% of the average net wage, for longer the longer the record', () => {
+    expect(BENEFITS.BA!.basis(monthly(1_500, 12), ctx)).toBeCloseTo((689.2 * 12) / 52, 6);
+    expect(BENEFITS.BA!.weeks!(monthly(1_500, 12), ctx, 0)).toBeCloseTo(3 * 52 / 12, 6);
+  });
+
+  it('dates Bangladesh’s bonus after 2026 by the expected Eid, and says it’s expected', () => {
+    const extra = WORLD_LAW.BD!.law!.extras!.find((one) => one.name === 'Eid-ul-Fitr Bonus')! as Extract<Extra, { kind: 'month' }>;
+    expect(extra.beforeHoliday!.dates).toContain('2027-03-10');
+    expect(extra.source).toMatch(/expected, subject to moon sighting/);
+  });
+
+  it('pays Lidl Serbia’s leave supplement in June, where it’s the employer', () => {
+    addCountryCities('rs', readFileSync('public/geo/rs.tsv', 'utf8'));
+    const belgrade = CITIES.all().find((c) => c.countryId === 'rs' && c.name === 'Belgrade')!;
+    const sim = quickSave({ startLocationId: belgrade.id, homeRegionId: belgrade.id, livesWhereBorn: true, dayJob: true, wealth: 'modest', birthYear: 1994, beforeActing: 'retail' }, 'rs-lidl');
+    if (sim.player.job!.employerId !== 'rs-retail-lidl-srbija') {
+      sim.must({ kind: 'work.apply', payload: { employerId: 'rs-retail-lidl-srbija' } });
+    }
+    sim.advanceTo(Date.UTC(2027, 5, 15, 23));
+    expect(sim.player.job!.employerId).toBe('rs-retail-lidl-srbija');
+    expect(sim.player.job!.extrasPaid).toContain('Annual Leave Supplement-2027-6');
+  });
+});
+
+
+describe('the open items, closed: local taxes', () => {
+  const town = (state: string, cityId: string, gross: number) => payrollYear('US', gross * 100, { path: ['US', state], cityId, at, age: 30 }).lines;
+  const amount = (list: { name: string; amount: number }[], name: RegExp) => (list.find((l) => name.test(l.name))?.amount ?? 0) / 100;
+
+  it('charges Maryland’s county tax on Maryland taxable income, by Anne Arundel’s brackets', () => {
+    const md = STATES['US-MD']!.tax!;
+    const taxable = 60_000 - md.standardDeduction - md.personalExemption;
+    expect(amount(town('US-MD', 'us-md-annapolis', 60_000), /Anne Arundel/)).toBeCloseTo(50_000 * 0.027 + (taxable - 50_000) * 0.0294, 2);
+    expect(amount(town('US-MD', 'us-md-baltimore', 30_000), /Baltimore City/)).toBeCloseTo((30_000 - md.standardDeduction - md.personalExemption) * 0.032, 2);
+  });
+
+  it('charges Indiana’s county tax after the exemption', () => {
+    const t = STATES['US-IN']!.tax!;
+    expect(amount(town('US-IN', 'us-in-indianapolis', 30_000), /Marion County/)).toBeCloseTo((30_000 - t.standardDeduction - t.personalExemption) * 0.0202, 2);
+  });
+
+  it('takes Middletown’s 1% beside Louisville Metro’s, and exempts Irvington’s under $25,000', () => {
+    expect(amount(town('US-KY', 'us-ky-middletown', 30_000), /Middletown/)).toBeCloseTo(300, 6);
+    expect(amount(town('US-KY', 'us-ky-irvington', 20_000), /Irvington/)).toBe(0);
+    expect(amount(town('US-KY', 'us-ky-irvington', 30_000), /Irvington/)).toBeCloseTo(75, 6);
+  });
+
+  it('stops Portland Metro’s tax at Metro’s own boundary', () => {
+    expect(town('US-OR', 'us-or-canby', 200_000).some((l) => /Supportive Housing/.test(l.name))).toBe(false);
+    expect(town('US-OR', 'us-or-gresham', 200_000).some((l) => /Supportive Housing/.test(l.name))).toBe(true);
   });
 });

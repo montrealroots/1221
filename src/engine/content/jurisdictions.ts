@@ -962,7 +962,12 @@ export type PhaseOut =
 
 export interface StateLaw {
   name: string;
-  tax?: { brackets: readonly (readonly [number, number])[]; standardDeduction: number; personalExemption: number; personalCredit: number; eitc?: { share: number; refundable: boolean }; phaseOuts?: readonly PhaseOut[]; source: string };
+  tax?: {
+    brackets: readonly (readonly [number, number])[]; standardDeduction: number; personalExemption: number; personalCredit: number;
+    /** A fixed sum charged once taxable income passes a line (Ohio's $332 over $26,050). */
+    notches?: readonly (readonly [number, number])[];
+    eitc?: { share: number; refundable: boolean }; phaseOuts?: readonly PhaseOut[]; source: string;
+  };
   ui?: {
     name: string;
     /** The top quarters of the base period the weekly amount is worked on (4, all of them), and the share of their sum. */
@@ -1539,7 +1544,7 @@ export const STATES: Readonly<Record<string, StateLaw>> = {
           0.0715
         ]
       ],
-      "standardDeduction": 8350,
+      "standardDeduction": 15300,
       "personalExemption": 5300,
       "personalCredit": 0,
       "eitc": {
@@ -1550,10 +1555,10 @@ export const STATES: Readonly<Record<string, StateLaw>> = {
       "phaseOuts": [
         {
           "item": "standardDeduction",
-          "from": 100000,
+          "from": 102250,
           "per": 1,
           "reduce": 0.204,
-          "source": "https://www.maine.gov/revenue/sites/maine.gov.revenue/files/inline-files/25_item_stand_%20ded_phaseout_wksht.pdf"
+          "source": "Maine Revenue Services, 2026 standard deduction phase-out worksheet"
         }
       ]
     },
@@ -1999,61 +2004,61 @@ export const STATES: Readonly<Record<string, StateLaw>> = {
           "table": [
             [
               0,
-              15650,
+              15960,
               1
             ],
             [
-              15650,
-              16276,
+              15960,
+              16598,
               0.9
             ],
             [
-              16276,
-              16902,
+              16598,
+              17237,
               0.8
             ],
             [
-              16902,
-              17528,
+              17237,
+              17875,
               0.7
             ],
             [
-              17528,
-              18154,
+              17875,
+              18514,
               0.6
             ],
             [
-              18154,
-              18780,
+              18514,
+              19152,
               0.5
             ],
             [
-              18780,
-              19406,
+              19152,
+              19790,
               0.4
             ],
             [
-              19406,
-              19876,
+              19790,
+              20269,
               0.3
             ],
             [
-              19876,
-              20345,
+              20269,
+              20748,
               0.2
             ],
             [
-              20345,
-              20815,
+              20748,
+              21227,
               0.1
             ],
             [
-              20815,
+              21227,
               null,
               0
             ]
           ],
-          "source": "https://revenue.ky.gov/Forms/Schedule%20ITC%20(2025).pdf"
+          "source": "KRS 141.066 at the 2026 HHS poverty guideline for one ($15,960); SLATE worked the dollar edges from the statute’s percentages, as the Department’s 2026 table isn’t out"
         }
       ]
     },
@@ -2306,7 +2311,7 @@ export const STATES: Readonly<Record<string, StateLaw>> = {
         "share": 0.3,
         "refundable": false
       },
-      "source": "Tax Foundation 2026 State Income Tax Rates (0% to $26,050, 2.75% above",
+      "source": "ORC 5747.02 (2026): $332 plus 2.75% of taxable income over $26,050, https://codes.ohio.gov/ohio-revised-code/section-5747.02",
       "phaseOuts": [
         {
           "item": "personalExemption",
@@ -2329,6 +2334,12 @@ export const STATES: Readonly<Record<string, StateLaw>> = {
           ],
           "source": "https://codes.ohio.gov/ohio-revised-code/section-5747.025"
         }
+      ],
+      "notches": [
+        [
+          26050,
+          332
+        ]
       ]
     },
     "ui": {
@@ -2403,10 +2414,10 @@ export const STATES: Readonly<Record<string, StateLaw>> = {
       "phaseOuts": [
         {
           "item": "standardDeduction",
-          "from": 19550,
+          "from": 20120,
           "per": 1,
           "reduce": 0.12,
-          "source": "https://www.revenue.wi.gov/TaxForms2025/2025-Form1-Inst.pdf"
+          "source": "Wisconsin DOR, 2026 Form 1-ES instructions"
         }
       ]
     },
@@ -3635,6 +3646,8 @@ export interface WorldLaw {
   unsized?: { name: string; source: string };
   /** Paid on top of leave's pay (Brazil's third, Portugal's holiday allowance), whoever's leave it is. */
   leaveLoading?: { share: number; source: string };
+  /** Holiday pay the law works out as a share of the year's pay, in place of the leave's wage; for some lines only where it says (Belgium's blue-collar). */
+  holidayPay?: { share: number; lines?: readonly string[]; source: string };
   law?: Omit<LaborLaw, 'regions'>;
   benefit?: {
     name: string;
@@ -3643,6 +3656,8 @@ export interface WorldLaw {
     rateByMonths?: readonly (readonly [number, number])[]; withMinimum?: number;
     /** The best quarters times a factor (the Virgin Islands'). */
     quarters?: { top: number; factor: number };
+    /** A US-style test of the base period: the best quarter's floor, and half again it or so many weekly benefits. */
+    quarterTest?: { highQuarterMin: number; baseMultipleOfHQ: number; orWeeklyTimes: number };
     /** A regulation's table: from this much in the best quarter, this much a week, where the base period reaches this much. */
     quartersTable?: readonly (readonly [number, number, number])[];
     /** A flat week, or flat weeks from the week given; capped at the past average week where the law says. */
@@ -7473,6 +7488,7 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         {
           "kind": "shareOfYear",
           "name": "Décima tercera remuneración",
+          "taxFree": true,
           "month": 12,
           "day": 24,
           "share": 0.0833,
@@ -7746,6 +7762,7 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         {
           "kind": "shareOfYear",
           "name": "Aguinaldo",
+          "taxFree": true,
           "month": 12,
           "day": 20,
           "share": 0.0833,
@@ -7897,6 +7914,7 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         {
           "kind": "shareOfYear",
           "name": "Salario de Navidad",
+          "taxFree": true,
           "month": 12,
           "day": 20,
           "share": 0.0833,
@@ -7960,6 +7978,7 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
       "extras": [
         {
           "name": "Aguinaldo",
+          "taxFree": true,
           "kind": "month",
           "months": [
             12,
@@ -8156,6 +8175,7 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         {
           "kind": "days",
           "name": "Aguinaldo",
+          "taxFreeUpTo": 1500,
           "month": 12,
           "day": 20,
           "days": 15,
@@ -8217,6 +8237,7 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
           "months": [
             12
           ],
+          "taxFree": true,
           "shares": [
             1
           ],
@@ -8377,6 +8398,7 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
           "months": [
             12
           ],
+          "taxFree": true,
           "shares": [
             1
           ],
@@ -9841,6 +9863,7 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         {
           "kind": "shareOfYear",
           "name": "13th-month pay",
+          "taxFreeUpTo": 90000,
           "month": 12,
           "day": 24,
           "share": 0.0833,
@@ -10208,12 +10231,16 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
             "name": "Eid al-Fitr",
             "days": 7,
             "dates": [
-              "2026-03-21"
+              "2026-03-21",
+              "2027-03-10",
+              "2028-02-27",
+              "2029-02-15",
+              "2030-02-05"
             ]
           },
           "periodMonths": 12,
           "minMonths": 12,
-          "source": "https://www.thedailystar.net/news/bangladesh/news/govt-announces-official-list-public-holidays-2026-4031596"
+          "source": "https://www.thedailystar.net/news/bangladesh/news/govt-announces-official-list-public-holidays-2026-4031596; 2027 to 2030 expected, subject to moon sighting (https://www.bangladatetoday.com/holidays/eid-ul-fitr)"
         },
         {
           "kind": "month",
@@ -10226,12 +10253,16 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
             "name": "Eid al-Adha",
             "days": 7,
             "dates": [
-              "2026-05-28"
+              "2026-05-28",
+              "2027-05-17",
+              "2028-05-06",
+              "2029-04-25",
+              "2030-04-14"
             ]
           },
           "periodMonths": 12,
           "minMonths": 12,
-          "source": "https://www.thedailystar.net/news/bangladesh/news/govt-announces-official-list-public-holidays-2026-4031596"
+          "source": "https://www.thedailystar.net/news/bangladesh/news/govt-announces-official-list-public-holidays-2026-4031596; 2027 to 2030 expected, subject to moon sighting (https://www.bangladatetoday.com/holidays/eid-ul-fitr)"
         }
       ]
     }
@@ -10305,6 +10336,7 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
       "extras": [
         {
           "name": "Seniority indemnity",
+          "taxFreeUpTo": 4000000,
           "kind": "days",
           "month": 6,
           "day": 30,
@@ -10314,6 +10346,7 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         },
         {
           "name": "Seniority indemnity",
+          "taxFreeUpTo": 4000000,
           "kind": "days",
           "month": 12,
           "day": 31,
@@ -12625,6 +12658,15 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
     "leaveLoading": {
       "share": 0.92,
       "source": "https://calculateur-de-salaire.be/guide/pecule-vacances-belgique"
+    },
+    "holidayPay": {
+      "share": 0.1661,
+      "lines": [
+        "hospitality",
+        "trades",
+        "armed_forces"
+      ],
+      "source": "https://www.onva.fgov.be/fr/pecule-de-vacances/calcul-du-pecule-de-vacances"
     }
   },
   "CH": {
@@ -12888,21 +12930,7 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
           ]
         ],
         "source": "Funktionaerloven §2 stk. 2 (danskelove.dk)"
-      },
-      "extras": [
-        {
-          "name": "Ferietillæg, salaried employees",
-          "kind": "shareOfYear",
-          "months": [
-            5,
-            8
-          ],
-          "day": 31,
-          "share": 0.005,
-          "month": 5,
-          "source": "https://star.dk/til-virksomheder/ferieloven/spoergsmaal-og-svar-om-ferietillaeg"
-        }
-      ]
+      }
     },
     "benefit": {
       "name": "Dagpenge",
@@ -12920,6 +12948,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         "weeks": 3
       },
       "source": "MISSOC comparative tables, Denmark, 1 Jan 2026, Unemployment"
+    },
+    "holidayPay": {
+      "share": 0.125,
+      "source": "https://star.dk/til-virksomheder/ferieloven/spoergsmaal-og-svar-om-ferietillaeg"
     }
   },
   "EE": {
@@ -13742,7 +13774,7 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
       "cause": {
         "weeks": 4
       },
-      "source": "https://logir.fo/Logtingslog/113-fra-13-06-1997-um-arbeidsloysistrygging-og-arbeidsavising-sum-seinast-broytt-vid-logtingslog-nr-79 (as last amended by Løgtingslóg nr. 81 of 2 May 2025, §§ 14-18)",
+      "source": "https://logir.fo/Logtingslog/113-fra-13-06-1997-um-arbeidsloysistrygging-og-arbeidsavising-sum-seinast-broytt-vid-logtingslog-nr-79 (§ 14(1), § 15)",
       "rate": 0.8,
       "basisMonths": 12,
       "max": 5310.634615384615,
@@ -13787,7 +13819,7 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         "rate": 0.5,
         "forWeeks": 4
       },
-      "source": "https://nalunaarutit.gl/groenlandsk-lovgivning/2022/l-07-2022?sc_lang=da (§§ 17, 19, 20, 22)",
+      "source": "https://nalunaarutit.gl/groenlandsk-lovgivning/2022/l-07-2022?sc_lang=da (Inatsisartutlov nr. 7 of 2022 on jobsøgningsydelse, §§ 5, 19, 22)",
       "flats": [
         [
           1,
@@ -14385,6 +14417,7 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         {
           "kind": "fixed",
           "name": "Zimski regres / božičnica",
+          "taxFreeUpTo": 2536.03,
           "month": 12,
           "day": 18,
           "amount": 740.94,
@@ -14891,6 +14924,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
           "withinMonths": 36
         }
       ]
+    },
+    "holidayPay": {
+      "share": 0.102,
+      "source": "https://www.arbeidstilsynet.no/en/working-conditions/holiday/holiday-pay/"
     }
   },
   "SE": {
@@ -14963,6 +15000,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         "weeks": 6.428571428571429
       },
       "source": "European Commission, Your social security rights in Sweden (July 2025), https://employment-social-affairs.ec.europa.eu/document/download/1801fedc-6583-47f2-be14-8650bc6b71c8_en (Unemployment benefits chapter)"
+    },
+    "holidayPay": {
+      "share": 0.12,
+      "source": "https://www.foretagarna.se/juridisk-faq/semester-ledighet/hur-raknar-jag-ut-semesterlon-till-mina-anstallda/"
     }
   },
   "LI": {
@@ -16401,9 +16442,38 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
       "waitingDays": 0,
       "quit": "none",
       "cause": "none",
-      "source": "https://szks.ba/materijalna-i-socijalna-sigurnost/ (Employment Service of Sarajevo Canton)",
-      "flat": 140.77,
-      "weeks": 13
+      "source": "https://fzs.ba/ (home page indicators: average net wage V-VII 2026 KM 1,723",
+      "flat": 159.04615384615389,
+      "weeksByMonths": [
+        [
+          8,
+          13
+        ],
+        [
+          60,
+          26
+        ],
+        [
+          120,
+          39
+        ],
+        [
+          180,
+          52
+        ],
+        [
+          300,
+          65
+        ],
+        [
+          360,
+          78
+        ],
+        [
+          420,
+          104
+        ]
+      ]
     }
   },
   "TJ": {
@@ -16526,7 +16596,7 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
     },
     "unsized": {
       "name": "Turkmenistan",
-      "source": "Law of Turkmenistan 'On employment of the population' (as amended to 22.11.2025 No. 185-VII), arts. 1, 26-34, Ministry of Justice text https://minjust.gov.tm/assets/files/law_documents/hukuknama_721_ru.pdf"
+      "source": "https://bp.gov.tm/laws/211/show (Turkmen text of the 2016 law, art. 34)"
     }
   },
   "AE": {
@@ -19001,14 +19071,19 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
       "waitingDays": 7,
       "quit": "none",
       "cause": "none",
-      "source": "US DOL ETA, Significant Provisions of State UI Laws, effective January 2026 (Wayback copy of https://oui.doleta.gov/unemploy/content/sigpros/2020-2029/January2026.pdf)",
+      "source": "US DOL ETA, Significant Provisions of State UI Laws, January 2026 (Wayback: https://web.archive.org/web/2026id_/https://oui.doleta.gov/unemploy/content/sigpros/2020-2029/January2026.pdf)",
       "quarters": {
         "top": 1,
         "factor": 0.0625
       },
       "min": 33,
       "max": 648,
-      "weeks": 16
+      "weeks": 16,
+      "quarterTest": {
+        "highQuarterMin": 858,
+        "baseMultipleOfHQ": 1.5,
+        "orWeeklyTimes": 39
+      }
     }
   },
   "GU": {

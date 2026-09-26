@@ -179,15 +179,21 @@ part the tool cannot see.
   city's tax never arises. A second search found the Kentucky cities the
   first missed (Henderson's, Pikeville's, Brandenburg's with its exemption
   under $20,000), 35 of them at an undated third-party table's rate, which
-  its source says. Not taken: Ohio's joint economic development districts,
-  which tax work done on the parcels inside them, where SLATE's employers
-  are placed in a town and not on a parcel; the 21 Kentucky cities with a
-  tax and no rate found, nine of them county seats (Harlan, Lawrenceburg,
-  Monticello and others); Iowa's 2026 surtax list (2025's is used), Kentucky
-  counties' 2025 rates, and Anne Arundel's and Frederick's upper brackets
-  (their lowest is used); and Portland Metro's boundary, which is taken as
-  its three counties. Its sales, property and vehicle rules are still read
-  by nothing, because nothing is bought, owned or driven.
+  its source says. A third settled the rest of Kentucky's cities from the
+  League of Cities' own table and the cities' ordinances (Middletown's 1%
+  beside Louisville Metro's, Irvington's under $25,000 exempt; the nine
+  county seats in doubt have none), and the counties that changed for 2026
+  (Grant, Simpson, Powell; Kenton and Daviess settled). Maryland's and
+  Indiana's county taxes are charged on the state's taxable income, as they
+  are, where until 2026-09-26 they were charged on the gross, and Anne
+  Arundel's and Frederick's by their brackets; Portland Metro's tax stops at
+  Metro's own boundary, which its map puts around 42 of the three counties'
+  51 towns. Not taken: Ohio's joint economic development districts, which
+  tax work done on the parcels inside them, where SLATE's employers are
+  placed in a town and not on a parcel. Iowa's surtax is 2025's list, as
+  2026's isn't published yet, and Kentucky's counties were checked by the
+  news of a change, not one by one. Its sales, property and vehicle rules
+  are still read by nothing, because nothing is bought, owned or driven.
 - **The year is settled in all thirteen.** Since 2026-09-25 each payday's withholding is
   settled after the tax year (`systems/taxreturn.ts`) on the country's
   own date: the year's real tax on its real pay, the benefit taxed where the
@@ -199,9 +205,13 @@ part the tool cannot see.
   state's payslip and return: Connecticut's personal credit and exemption,
   Pennsylvania's and Kentucky's forgiveness, Alabama's, Wisconsin's and
   South Carolina's deductions (South Carolina's by its 2026 law), Utah's and
-  Oregon's credits and Ohio's, New Mexico's and Maryland's exemptions, where
-  Utah's, Wisconsin's, Ohio's and Kentucky's are 2025's figures, 2026's not
-  found; the Canada Workers
+  Oregon's credits and Ohio's, New Mexico's and Maryland's exemptions, and
+  Ohio's $332 charged once taxable income passes $26,050 (ORC 5747.02).
+  Wisconsin's, Kentucky's and Maine's are 2026's figures, Kentucky's dollar
+  edges SLATE's arithmetic on the statute's percentages of the 2026 poverty
+  line, as the Department's table isn't out; Utah's phase-out base is
+  2025's, 2026's not yet published, and Ohio's exemption steps are read off
+  its 2026 estimate worksheet; the Canada Workers
   Benefit, Ontario's LIFT credit, British Columbia's tax reduction and
   Quebec's work premium; Ireland's rent credit; Spain's minimum-wage
   deduction; New Zealand's independent earner credit; and Korea's year-end
@@ -333,10 +343,13 @@ part the tool cannot see.
   for a longer record, read through the Ministry of Justice's own data
   service. Switzerland's penalties are bands in SECO's directive (quitting
   without another job 31 to 60 days); SLATE takes 31, the band's start, and
-  the source says so. Not modeled: Turkmenistan's, whose share of its 520
-  manat base is in a ministry order that isn't published (a claim says
-  so); the months of work the Faroes, Greenland and the Virgin Islands ask;
-  Bosnia's share of the average wage; and a dependant's supplement. The
+  the source says so. Bosnia's is 40% of the Federation's average net wage
+  (KM 689.20 a month), for 3 to 24 months by the years worked; the Virgin
+  Islands' asks $858 in the best quarter and half again it, or 39 weekly
+  benefits; the Faroes' and Greenland's ask no months of work, their laws
+  say. Not modeled: Turkmenistan's, whose share of its 520 manat base is in
+  a Labor Ministry order three searches couldn't find published anywhere (a
+  claim says so); and a dependant's supplement, as nobody in SLATE has one. The
   benefits for citizens only (Kuwait's, Oman's, Saudi Arabia's and others)
   need no test: SLATE lets nobody but a citizen work there.
 - **Work outside the thirteen is simpler, and some of it is missing.** The
@@ -386,17 +399,22 @@ part the tool cannot see.
   leave allowance, 40% of the average net wage (19,116 denars in 2026);
   and Bangladesh's two festival bonuses, a month's basic wage a week before
   each Eid, on the dates the government lists, since the calendar has none
-  there. Its list comes a year at a time and 2027's isn't out, and the
-  bonus needs a year's service, so none has fallen due yet. Not paid:
-  Serbia's leave allowance, which the law makes due and leaves the amount
-  to each employer's own rules, with no general agreement in force;
-  Bolivia's second aguinaldo, not decreed for 2024 or 2025 as growth fell
-  short (2026's is decided in October),
-  Belgium's blue-collar holiday pay from its fund (the white-collar loading
-  is paid instead), and the Nordic holiday pay the law works out in place of
-  leave pay, since SLATE pays leave at the wage; nor any tax exemption on a
-  bonus. Chile's gratificación is owed only with a profit, and is paid as
-  most employers pay it, a quarter with each month's pay.
+  there: 2026's confirmed, 2027 to 2030 the expected dates, which a moon
+  sighting may move a day, and say so. The holiday pay the law works out as
+  a share of the year's pay, in place of the leave's wage (Denmark's 12.5%,
+  Sweden's 12%, Norway's 10.2%, Belgium's blue-collar lines' from their
+  fund), is paid as the loading that comes to that share, under the wage
+  where the share is less (Norway's). A bonus the law frees from tax is
+  paid untaxed, the whole (Ecuador's, the Dominican Republic's, Costa
+  Rica's, Nicaragua's) or to its limit (the Philippines' PHP 90,000, El
+  Salvador's USD 1,500, Mexico's aguinaldo to 30 UMA and prima vacacional to
+  15 a year). Serbia's law makes a leave allowance due and leaves the amount
+  to each employer, with no general agreement in force: Lidl publishes a
+  RSD 30,000 supplement in June, which it pays (`EMPLOYER_EXTRAS`); the
+  other seven publish nothing, so theirs isn't paid. Bolivia's second
+  aguinaldo wasn't decreed for 2024 or 2025, as growth fell short (2026's is
+  decided in October). Chile's gratificación is owed only with a profit, and
+  is paid as most employers pay it, a quarter with each month's pay.
 - **An employer's pay is as published in September 2026.** Each rate is
   the one the research found on 2026-09-25, paid from the save's first day,
   so a save that starts in January is paid an April raise early. Where an
