@@ -17,6 +17,7 @@
  */
 
 import { WORLD_WORK } from './work-world';
+import { PROVINCES, STATES, WORLD_LAW } from './jurisdictions';
 
 /** Which lines of work a premium covers; absent, every line. */
 type Lines = readonly string[];
@@ -391,12 +392,21 @@ export const LABOR: Readonly<Record<string, LaborLaw>> = {
 export function laborAt(path: readonly string[]): LaborLaw | undefined {
   const country = LABOR[path[0] ?? ''];
   if (!country) {
-    const leave = WORLD_WORK[path[0] ?? '']?.leaveDays;
-    if (!leave) return undefined;
-    const weeks = leave.days / 5;
-    return { leave: { accrual: weeks / (52 - weeks), paidOut: true, source: `${leave.days} days a year; ${leave.source}` } };
+    // Beyond the thirteen: the law of the country a territory applies, then
+    // the labor-law pass's own (`content/jurisdictions.ts`), over the leave
+    // the world research found. Until 2026-09-26 the leave was all there was.
+    const world = WORLD_LAW[path[0] ?? ''];
+    const followed = world?.follows ? LABOR[world.follows] : undefined;
+    const leaveDays = WORLD_WORK[path[0] ?? '']?.leaveDays;
+    const weeks = leaveDays ? leaveDays.days / 5 : 0;
+    const leave: LaborLaw | undefined = leaveDays ? { leave: { accrual: weeks / (52 - weeks), paidOut: true, source: `${leaveDays.days} days a year; ${leaveDays.source}` } } : undefined;
+    if (!followed && !world?.law && !leave) return undefined;
+    const { regions: _regions, ...base } = followed ?? {};
+    return { ...leave, ...base, ...world?.law };
   }
-  const region = country.regions?.[path[1] ?? ''];
+  // A province or state the thirteen's research didn't write out comes from
+  // the labor-law pass (`content/jurisdictions.ts`).
+  const region = country.regions?.[path[1] ?? ''] ?? (path[0] === 'CA' ? PROVINCES[path[1] ?? '']?.law : path[0] === 'US' ? STATES[path[1] ?? '']?.law : undefined);
   return region ? { ...country, ...region } : country;
 }
 

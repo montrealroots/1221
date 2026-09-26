@@ -21,6 +21,7 @@
 
 import { computeAnnualTax } from './tax';
 import { WORLD_WORK, type WorldWork } from './work-world';
+import { PROVINCES, STATES } from './jurisdictions';
 
 export type PayslipKind = 'tax' | 'social' | 'pension';
 
@@ -133,6 +134,20 @@ const RULES: Record<string, Rules> = {
     } else if (state === 'US-WA') {
       lines.push({ name: 'Washington Paid Family and Medical Leave', kind: 'social', source: 'ESD 2026: the employee’s 71.43% of 1.13%, up to $184,500', amount: Math.min(g, 184_500) * 0.00807 });
       lines.push({ name: 'WA Cares Fund', kind: 'social', source: 'WA Cares 2026: 0.58%', amount: g * 0.0058 });
+    } else if (STATES[state ?? '']) {
+      // The other states and DC, from the labor-law pass
+      // (`content/jurisdictions.ts`): a single filer's brackets after the
+      // standard deduction and the personal exemption, less the personal
+      // credit, and the paid-leave or unemployment contribution the worker
+      // pays where there is one. Until 2026-09-26 these states had the tax
+      // engine's approximation, and no contribution.
+      const st = STATES[state!]!;
+      if (st.tax) {
+        const amount = Math.max(0, bands(Math.max(0, g - st.tax.standardDeduction - st.tax.personalExemption), st.tax.brackets) - st.tax.personalCredit);
+        lines.push({ name: `${st.name} Income Tax`, kind: 'tax', source: st.tax.source, amount });
+      }
+      const c = st.leaveContribution;
+      if (c) lines.push({ name: c.name, kind: 'social', source: c.source, amount: Math.min(g, c.cap ?? Number.POSITIVE_INFINITY) * c.rate });
     } else if (state !== 'US-TX' && state !== 'US-FL' && state !== undefined) {
       // A state the research didn't cover: the tax engine's approximation of it.
       const approx = ctx.cityId ? computeAnnualTax(Math.round(g * 100), ctx.cityId, ctx.at) : undefined;
@@ -170,6 +185,16 @@ const RULES: Record<string, Rules> = {
       lines.push({ name: 'British Columbia Income Tax', kind: 'tax', source: 'BC 2026 brackets; basic personal amount $13,216', amount: Math.max(0, bands(g, [[0, 0.056], [50_363, 0.077], [100_728, 0.105], [115_648, 0.1229], [140_430, 0.147], [190_405, 0.168], [265_545, 0.205]]) - (13_216 + cpp + ei) * 0.056) });
     } else if (quebec) {
       lines.push({ name: 'Quebec Income Tax', kind: 'tax', source: 'Revenu Québec 2026 brackets; basic personal amount $18,952', amount: Math.max(0, bands(g, [[0, 0.14], [54_345, 0.19], [108_680, 0.24], [132_245, 0.2575]]) - 18_952 * 0.14) });
+    } else if (PROVINCES[ctx.path[1] ?? '']) {
+      // The other provinces and territories (`content/jurisdictions.ts`): the
+      // brackets, the basic personal amount and the contributions credited at
+      // the lowest rate, less the low-income reduction where there is one;
+      // and the Northwest Territories' and Nunavut's 2% payroll tax.
+      const p = PROVINCES[ctx.path[1]!]!;
+      const before = Math.max(0, bands(g, p.tax.brackets) - (p.tax.basicPersonalAmount + cpp + ei) * p.tax.lowestRate);
+      const reduction = p.tax.reduction ? Math.max(0, p.tax.reduction.max - p.tax.reduction.rate * Math.max(0, g - p.tax.reduction.from)) : 0;
+      lines.push({ name: `${p.name} Income Tax`, kind: 'tax', source: p.tax.source, amount: Math.max(0, before - reduction) });
+      if (p.tax.payrollTax) lines.push({ name: `${p.name} Payroll Tax`, kind: 'tax', source: p.tax.source, amount: g * p.tax.payrollTax });
     }
     return { lines };
   },

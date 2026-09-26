@@ -160,15 +160,24 @@ part the tool cannot see.
   read only by the place card, until the day job withheld through it. Since
   2026-09-25 the thirteen countries' payslips are their own
   (`content/payroll.ts`), and the engine's approximation is the payslip
-  everywhere else, and for US states and Canadian provinces the research
-  didn't cover. Its sales, property and vehicle rules are still read by
+  everywhere else. Until 2026-09-26 it was also the payslip for the US
+  states and Canadian provinces the research hadn't covered; the labor-law
+  pass (`content/jurisdictions.ts`) wrote out every state, DC and the other
+  ten provinces and territories, a single filer's brackets, deductions and
+  credits, and the worker's paid-leave contributions. What the approximation
+  had and the states' lines don't is a city's own wage tax: Birmingham's,
+  Kansas City's and St. Louis's 1%, Denver's $5.75 a month, and the rest
+  aren't taken. Its sales, property and vehicle rules are still read by
   nothing, because nothing is bought, owned or driven.
 - **The year is settled in all thirteen.** Since 2026-09-25 each payday's withholding is
   settled after the tax year (`systems/taxreturn.ts`) on the country's
   own date: the year's real tax on its real pay, the benefit taxed where the
   law taxes it, and the credits a low wage gets only there: the US earned
   income tax credit, with New York's 30% of it less its household credit,
-  California's own off its table and Illinois's 20%; the Canada Workers
+  California's own off its table and Illinois's 20%, and since 2026-09-26
+  the other states' as a share of the federal, refunded or held to the
+  state's own tax as each has it (a state's credit that phases out by
+  income, such as Connecticut's personal credit, isn't); the Canada Workers
   Benefit, Ontario's LIFT credit, British Columbia's tax reduction and
   Quebec's work premium; Ireland's rent credit; Spain's minimum-wage
   deduction; New Zealand's independent earner credit; and Korea's year-end
@@ -187,8 +196,8 @@ part the tool cannot see.
   weren't found, so a Quebec worker gets the work premium alone; British
   Columbia's renter's and sales tax credits; the Canada Workers Benefit's
   advance payments; New York City's own earned income credit; and the
-  unemployment benefit's tax outside the US federal return and New York's
-  and Illinois's, Canada, Britain's JSA, Ireland, Spain and New Zealand,
+  unemployment benefit's tax outside the US federal return, the states
+  that tax it, Canada, Britain's JSA, Ireland, Spain and New Zealand,
   with Germany's raising the rate. Canada's, Ireland's, New Zealand's, Germany's, Spain's and Japan's
   final-return dates are SLATE's estimates where the office names none.
   Church tax in Germany isn't taken, since SLATE doesn't know a character's
@@ -243,7 +252,11 @@ part the tool cannot see.
   leave lapses by the law in Britain, Ireland and Japan, and is paid out in
   Korea; elsewhere it piles up (Germany's turns on whether the employer
   reminded the worker, and France's and Spain's rules weren't found at a
-  source SLATE could reach).
+  source SLATE could reach). The other US states add only what's over the
+  federal law: daily overtime in Alaska, Nevada and Colorado, and sick leave
+  where a state gives it; Kentucky's seventh day and Minnesota's 48-hour
+  week, which is under the federal 40, aren't taken. Canada's other
+  provinces and territories have their own standards from the same pass.
 - **Unemployment benefit is the thirteen's, from the record SLATE keeps.**
   Out of work, a claim (`work.claim`, `systems/unemployment.ts`) pays
   the country's benefit by its own formula (`content/unemployment.ts`),
@@ -264,9 +277,26 @@ part the tool cannot see.
   three provinces; family supplements and a partner's income; and a
   benefit is taxed only when the year is settled, not as it's paid. Being let go for
   missed shifts is held to be misconduct in the US states whose pages are
-  silent on absence. Only the US states the research covered have a
-  benefit: New York, California, Texas, Florida, Washington, Illinois and
-  Georgia.
+  silent on absence. Until 2026-09-26 only the US states the research
+  covered had a benefit (New York, California, Texas, Florida, Washington,
+  Illinois and Georgia); since then every state and DC pays its own
+  (`content/jurisdictions.ts`), on the top one, two or four quarters of
+  its base period, Alaska's, Utah's and Virginia's dollar offsets, Montana's
+  and Minnesota's share of the whole base period where it's more, North
+  Dakota's half of the third quarter, and Ohio's and New Jersey's share of
+  the average week worked, with each state's tests of the base period. Every
+  province pays EI at its largest city's regional rate. Beyond the thirteen,
+  68 countries and territories pay their own, a share of the past average
+  week (of the net where the law says net) within its bounds, or a flat
+  week, after the months of work the law asks; France's overseas
+  departments and Monaco pay France's. Not modeled: Colorado's ten-week
+  deferral and Thailand's lower rate for quitting; penalties the law sets
+  by severity (Switzerland's), taken as none; Puerto Rico's, the US Virgin
+  Islands', Italy's NASpI and eleven others the research couldn't size;
+  Tunisia's and Algeria's; and the months of work asked where the research
+  found none (South Africa, Mauritius, Bermuda, Slovakia, Morocco, Oman,
+  Norway), which pay anyone laid off. Kuwait's, Oman's and Saudi Arabia's
+  are for citizens, and SLATE pays them as to one.
 - **Work outside the thirteen is simpler, and some of it is missing.** The
   world research (`content/work-world.ts`, 226 countries and territories,
   written when the session's web searches had run out, so from pages fetched
@@ -295,7 +325,14 @@ part the tool cannot see.
   so. Brazil's table may predate its 2026 exemption up to R$5,000 a month,
   which a minimum wage is under either way. About 70 of these currencies
   have no exchange rate in SLATE, which matters only to a life that moves
-  between currencies. Only annual leave is modeled of these countries' law.
+  between currencies. Until 2026-09-26 only annual leave was modeled of
+  these countries' law; the labor-law pass (eleven agents, `probe/law-pass/`)
+  wrote out 219 places' overtime, night, Sunday and holiday premiums,
+  leave, sick pay, notice and severance where it found them, and a
+  territory that applies another country's law takes that law under its
+  own. The thirteenth-month and other statutory bonuses (Latin America's
+  aguinaldos, Puerto Rico's Christmas bonus) and premiums set as a share
+  of the minimum wage (Poland's, Slovakia's) have no shape and aren't paid.
 - **An employer's pay is as published in September 2026.** Each rate is
   the one the research found on 2026-09-25, paid from the save's first day,
   so a save that starts in January is paid an April raise early. Where an

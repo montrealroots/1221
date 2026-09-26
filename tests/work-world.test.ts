@@ -11,6 +11,7 @@ import { CITIES, addCountryCities } from '@/engine/content/geography';
 import { minimumWageAt } from '@/engine/content/wages';
 import { payCycleFor } from '@/engine/content/jobs';
 import { laborAt } from '@/engine/content/labor';
+import { WORLD_LAW } from '@/engine/content/jurisdictions';
 import { WORLD_WORK } from '@/engine/content/work-world';
 import { EMPLOYERS } from '@/engine/content/employers';
 import { MS_DAY } from '@/engine/core/time';
@@ -40,8 +41,10 @@ describe('the rest of the world', () => {
     expect(payCycleFor('JM')).toEqual({ kind: 'weekly', weekday: 5 });
     const law = laborAt(['PL'])!;
     const weeks = WORLD_WORK.PL!.leaveDays!.days / 5;
-    expect(law.leave!.accrual).toBeCloseTo(weeks / (52 - weeks), 9);
-    expect(law.sick).toBeUndefined();
+    // The labor-law pass's leave, where it found one, over the world research's.
+    expect(law.leave!.accrual).toBeCloseTo(WORLD_LAW.PL?.law?.leave?.accrual ?? weeks / (52 - weeks), 9);
+    // Until 2026-09-26 there was no sick pay beyond the thirteen; Poland's is 80%.
+    expect(law.sick?.rate).toBe(0.8);
   });
 
   it('takes Brazil’s INSS as the scale it is, not every band on the whole wage', () => {

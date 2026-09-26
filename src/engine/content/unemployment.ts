@@ -17,6 +17,7 @@
 
 import { MS_DAY, type Instant } from '../core/time';
 import { payrollYear } from './payroll';
+import { PROVINCES, STATES, WORLD_LAW, type StateLaw, type WorldLaw } from './jurisdictions';
 
 /** Each payday's hours and gross, and the days of work it covered, in the country's money, whole units. */
 export type WorkRecord = readonly { at: Instant; days: number; hours: number; gross: number }[];
@@ -93,6 +94,11 @@ const weeksIn = (record: WorkRecord) => total(record, 'days') / 7;
  * quarters before the job ended: each quarter's gross, highest first.
  */
 export function baseQuarters(record: WorkRecord, at: Instant): number[] {
+  return baseInOrder(record, at).sort((a, b) => b - a);
+}
+
+/** The base period's quarters, the latest first. */
+function baseInOrder(record: WorkRecord, at: Instant): number[] {
   const d = new Date(at);
   const current = d.getUTCFullYear() * 4 + Math.floor(d.getUTCMonth() / 3);
   const totals = [0, 0, 0, 0];
@@ -101,7 +107,7 @@ export function baseQuarters(record: WorkRecord, at: Instant): number[] {
     const back = current - (q.getUTCFullYear() * 4 + Math.floor(q.getUTCMonth() / 3));
     if (back >= 2 && back <= 5) totals[back - 2]! += one.gross;
   }
-  return totals.sort((a, b) => b - a);
+  return totals;
 }
 
 /** The hours worked in the same base period. */
@@ -125,9 +131,12 @@ const same = (basis: number) => basis;
 
 interface StateRules {
   name: string;
-  /** The highest quarter, or the two highest, times this is the week's amount. */
-  top: 1 | 2;
+  /** The highest quarter, the two highest, or all four, times this is the week's amount. */
+  top: 1 | 2 | 4;
   factor: number;
+  /** Where a state's formula is more than that (`stateWeekly`). */
+  weekly?: (record: WorkRecord, at: Instant) => number;
+  waitingDays?: number;
   min?: number;
   max: number;
   weeks: number;
@@ -140,11 +149,11 @@ interface StateRules {
 
 function usState(o: StateRules): Benefit {
   return {
-    name: o.name, waitingDays: 7, every: 7, quit: QUIT.US, cause: CAUSE.US,
+    name: o.name, waitingDays: o.waitingDays ?? 7, every: 7, quit: QUIT.US, cause: CAUSE.US,
     qualifies: (record, ctx) => o.qualify(baseQuarters(record, ctx.at), baseHours(record, ctx.at)),
     basis: (record, ctx) => {
       const q = baseQuarters(record, ctx.at);
-      return Math.floor(clampTo((q[0]! + (o.top === 2 ? q[1]! : 0)) * o.factor, o.min ?? 0, o.max));
+      return Math.floor(clampTo(o.weekly ? o.weekly(record, ctx.at) : q.slice(0, o.top).reduce((a, b) => a + b, 0) * o.factor, o.min ?? 0, o.max));
     },
     amount: same,
     weeks: (record, ctx, basis) => {
@@ -153,6 +162,67 @@ function usState(o: StateRules): Benefit {
       return Math.min(o.weeks, (base * o.share) / basis);
     },
     source: o.source,
+  };
+}
+
+/**
+ * A state from the labor-law pass (`content/jurisdictions.ts`): the top
+ * quarters times the factor, with the formulas that are more than that. Alaska,
+ * Utah and Virginia add or take a dollar sum; Montana and Minnesota pay the
+ * better of that and a share of the whole base period; North Dakota adds half
+ * the third-best quarter; Ohio and New Jersey pay a share of the average week
+ * worked in the base period.
+ */
+function stateWeekly(ui: NonNullable<StateLaw['ui']>): (record: WorkRecord, at: Instant) => number {
+  return (record, at) => {
+    const q = baseQuarters(record, at);
+    const base = q.reduce((a, b) => a + b, 0);
+    if (ui.averageWeek !== undefined) {
+      const days = baseDays(record, at);
+      return days > 0 ? (base / (days / 7)) * ui.averageWeek : 0;
+    }
+    const top = q.slice(0, ui.top).reduce((a, b) => a + b, 0) + (ui.thirdHalf ? q[2]! / 2 : 0);
+    const weekly = top * ui.factor + (ui.offset ?? 0);
+    return ui.orBase !== undefined ? Math.max(weekly, base * ui.orBase) : weekly;
+  };
+}
+
+/** The days worked in the base period. */
+function baseDays(record: WorkRecord, at: Instant): number {
+  const d = new Date(at);
+  const current = d.getUTCFullYear() * 4 + Math.floor(d.getUTCMonth() / 3);
+  return record.filter((one) => {
+    const q = new Date(one.at);
+    const back = current - (q.getUTCFullYear() * 4 + Math.floor(q.getUTCMonth() / 3));
+    return back >= 2 && back <= 5;
+  }).reduce((sum, one) => sum + one.days, 0);
+}
+
+/**
+ * A state's tests of the base period, as the pass wrote them: an alternative
+ * base period's total, where there is one, stands in for the rest.
+ */
+function stateQualify(name: string, ui: NonNullable<StateLaw['ui']>, weekly: (record: WorkRecord, at: Instant) => number) {
+  const t = ui.qualify;
+  return (record: WorkRecord, at: Instant): string | undefined => {
+    const inOrder = baseInOrder(record, at);
+    const q = [...inOrder].sort((a, b) => b - a);
+    const { high, total: all, with: n } = quarterly(q);
+    const week = Math.floor(clampTo(weekly(record, at), ui.min, ui.max));
+    const hours = baseHours(record, at);
+    const fails: string[] = [];
+    if (t.quartersWithWages !== undefined && n < t.quartersWithWages) fails.push(`wages in ${t.quartersWithWages} quarters of the base period`);
+    if (t.highQuarterMin !== undefined && high < t.highQuarterMin) fails.push(`$${t.highQuarterMin.toLocaleString('en-US')} in the best quarter`);
+    if (t.baseMin !== undefined && all < t.baseMin) fails.push(`$${t.baseMin.toLocaleString('en-US')} in the base period`);
+    if (t.baseMultipleOfHQ !== undefined && all < t.baseMultipleOfHQ * high) fails.push(`the base period at ${t.baseMultipleOfHQ} times the best quarter`);
+    if (t.baseMultipleOfWBA !== undefined && all < t.baseMultipleOfWBA * week) fails.push(`the base period at ${t.baseMultipleOfWBA} times the weekly benefit`);
+    if (t.otherQuarterMin !== undefined && q[1]! < t.otherQuarterMin) fails.push(`$${t.otherQuarterMin.toLocaleString('en-US')} in a second quarter`);
+    if (t.outsideHQMin !== undefined && all - high < t.outsideHQMin) fails.push(`$${t.outsideHQMin.toLocaleString('en-US')} outside the best quarter`);
+    if (t.outsideHQMultipleOfWBA !== undefined && all - high < t.outsideHQMultipleOfWBA * week) fails.push(`${t.outsideHQMultipleOfWBA} times the weekly benefit outside the best quarter`);
+    if (t.lastTwoQuartersMin !== undefined && inOrder[0]! + inOrder[1]! < t.lastTwoQuartersMin) fails.push(`$${t.lastTwoQuartersMin.toLocaleString('en-US')} in the base period’s last two quarters`);
+    if (t.hoursMin !== undefined && hours < t.hoursMin) fails.push(`${t.hoursMin} hours worked in the base period`);
+    if (fails.length === 0 || (t.alternativeBaseMin !== undefined && all >= t.alternativeBaseMin)) return undefined;
+    return `${name} needs ${fails.join(', and ')}.`;
   };
 }
 
@@ -396,7 +466,46 @@ function ei(rate: number): Benefit {
   };
 }
 
+/**
+ * A country's benefit from the labor-law pass (`content/jurisdictions.ts`):
+ * a share of the average week over the months before the job ended, of the
+ * net where the law says net (the payslip's deductions at that pay taken
+ * off), within its bounds; or a flat week. It needs the months of work the
+ * law asks for in its window, and it's paid monthly.
+ */
+function worldBenefit(iso: string, b: NonNullable<WorldLaw['benefit']>): Benefit {
+  return {
+    name: b.name, waitingDays: b.waitingDays, every: 30, quit: b.quit, cause: b.cause,
+    qualifies: (record, ctx) => {
+      if (b.qualifyMonths <= 0) return undefined;
+      const months = monthsIn(within(record, ctx.at, b.withinMonths * 30.4375));
+      return months < b.qualifyMonths ? `${b.name} needs ${b.qualifyMonths} months of work in the last ${b.withinMonths}; SLATE has ${Math.floor(months)} on record.` : undefined;
+    },
+    basis: (record, ctx) => {
+      if (b.flat !== undefined) return b.flat;
+      const week = averageWeek(within(record, ctx.at, (b.basisMonths ?? 12) * 30.4375));
+      let net = week;
+      if (b.ofNet && week > 0) {
+        const year = payrollYear(iso, Math.round(week * 52 * 100), { path: [iso], at: ctx.at, age: ctx.age });
+        net = week * (1 - year.lines.reduce((sum, one) => sum + one.amount, 0) / (week * 52 * 100));
+      }
+      return clampTo(net * b.rate!, b.min ?? 0, b.max);
+    },
+    amount: same,
+    weeks: () => b.weeks,
+    source: b.source,
+  };
+}
+
+const WORLD_BENEFITS: Readonly<Record<string, Benefit>> = Object.fromEntries(
+  Object.entries(WORLD_LAW).flatMap(([iso, w]) => (w.benefit ? [[iso, worldBenefit(iso, w.benefit)]] : [])),
+);
+
 export const BENEFITS: Readonly<Record<string, Benefit>> = {
+  // --- The rest of the world, from the labor-law pass; the thirteen's own
+  // below replace any of theirs, and a territory that applies another's law
+  // and has no benefit of its own takes that country's.
+  ...WORLD_BENEFITS,
   // --- The US: the states the research covered --------------------------------
   'US-NY': usState({
     name: 'Unemployment Insurance', top: 1, factor: 1 / 26, max: 869, weeks: 26, qualify: US_QUALIFY['US-NY']!,
@@ -427,10 +536,28 @@ export const BENEFITS: Readonly<Record<string, Benefit>> = {
     source: 'Georgia DOL: the two highest quarters over 42, $55 to $365, for 14 weeks at the current unemployment rate',
   }),
 
+  // --- The US: the other states, from the labor-law pass -----------------------
+  ...Object.fromEntries(Object.entries(STATES).filter(([code]) => !['US-NY', 'US-CA', 'US-TX', 'US-FL', 'US-WA', 'US-IL', 'US-GA'].includes(code)).flatMap(([code, st]) => {
+    const ui = st.ui;
+    if (!ui) return [];
+    const weekly = stateWeekly(ui);
+    const qualify = stateQualify(st.name, ui, weekly);
+    return [[code, {
+      ...usState({
+        name: ui.name, top: ui.top === 4 ? 4 : ui.top === 2 ? 2 : 1, factor: ui.factor, weekly, waitingDays: ui.waitingDays,
+        min: ui.min, max: ui.max, weeks: ui.weeks, ...(ui.share !== undefined ? { share: ui.share } : {}),
+        qualify: () => undefined, source: ui.source,
+      }),
+      qualifies: (record: WorkRecord, ctx: ClaimContext) => qualify(record, ctx.at),
+    }]];
+  })),
+
   // --- Canada: Employment Insurance, by the region's unemployment -----------
   'CA-08': ei(EI_REGION['CA-08']!),
   'CA-02': ei(EI_REGION['CA-02']!),
   'CA-10': ei(EI_REGION['CA-10']!),
+  // The other provinces and territories, at their largest city's regional rate.
+  ...Object.fromEntries(Object.entries(PROVINCES).filter(([, p]) => p.eiRate !== undefined).map(([code, p]) => [code, ei(p.eiRate!)])),
 
   // --- Mexico: Mexico City's own insurance ----------------------------------
   'MX-09': {
@@ -615,7 +742,9 @@ export const BENEFITS: Readonly<Record<string, Benefit>> = {
   },
 };
 
-/** The benefit where a job was: a state's or region's own, then the country's. */
+/** The benefit where a job was: a state's or region's own, then the country's, then the one whose law a territory applies. */
 export function benefitAt(path: readonly string[]): Benefit | undefined {
-  return BENEFITS[path[1] ?? ''] ?? BENEFITS[path[0] ?? ''];
+  const iso = path[0] ?? '';
+  const follows = WORLD_LAW[iso]?.benefitOf ?? WORLD_LAW[iso]?.follows;
+  return BENEFITS[path[1] ?? ''] ?? BENEFITS[iso] ?? (follows ? BENEFITS[follows] : undefined);
 }

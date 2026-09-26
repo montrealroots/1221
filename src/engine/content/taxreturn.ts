@@ -21,6 +21,7 @@
 
 import { franceIncomeTax, franceTaxable, payrollYear, spainCuota } from './payroll';
 import type { Instant } from '../core/time';
+import { STATES } from './jurisdictions';
 
 /** A tax year's figures, as the settlement reads them. */
 export interface YearFigures {
@@ -217,8 +218,33 @@ const CANADA: Settlement = {
   source: 'CRA: the year’s tax on a T1, with the Canada Workers Benefit, 2026; EI is taxable. The CRA states no refund month; mid-May, after the April deadline, is SLATE’s estimate',
 };
 
+/**
+ * A state from the labor-law pass: the federal return, the state's tax on
+ * unemployment benefit where it taxes it, and its earned income credit as a
+ * share of the federal, which a state that doesn't refund it only takes off
+ * its own tax.
+ */
+function stateReturn(code: string): Settlement {
+  const st = STATES[code]!;
+  const line = `${st.name} Income Tax`;
+  const eitc = st.tax?.eitc;
+  return {
+    ...US,
+    benefitLines: st.ui?.taxed ? new RegExp(`^(Federal|${st.name}) Income Tax$`) : US.benefitLines!,
+    credits: (y, byLine) => {
+      const federal = usEitc(y, allBenefits(y));
+      return [
+        { name: 'Earned Income Tax Credit', amount: federal, refundable: true },
+        ...(eitc ? [{ name: `${st.name} Earned Income Tax Credit`, amount: eitc.refundable ? federal * eitc.share : Math.min(federal * eitc.share, byLine[line] ?? 0), refundable: eitc.refundable }] : []),
+      ];
+    },
+    source: `${US.source}; ${st.name}${eitc ? ` adds ${Math.round(eitc.share * 100)}% of the federal credit${eitc.refundable ? '' : ', against its own tax'},` : ''} ${st.ui?.taxed ? 'taxes' : 'doesn’t tax'} unemployment benefit (${st.tax?.source ?? st.ui?.source ?? ''})`,
+  };
+}
+
 export const SETTLEMENTS: Readonly<Record<string, Settlement>> = {
   US,
+  ...Object.fromEntries(Object.keys(STATES).map((code) => [code, stateReturn(code)])),
   'US-NY': {
     ...US,
     benefitLines: /^(Federal|New York State) Income Tax$/,
