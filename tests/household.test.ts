@@ -14,7 +14,7 @@ import type { Simulation } from '@/engine';
 import {
   arrearsOf, billsOf, canPay, costsAt, foodOf, inTrouble, mealOf, rentOf, spend,
 } from '@/engine/systems/household';
-import { aprFor, minimumDue, scoreIsANumberIn, scoreWord } from '@/engine/systems/credit';
+import { aprFor, cardTerms, minimumDue, scoreIsANumberIn, scoreWord } from '@/engine/systems/credit';
 import { PUBLISHED_RENTS, rentAt } from '@/engine/content/rents';
 import { lookAfterRefusal } from '@/engine/systems/life';
 import { saveCurrency } from '@/engine/core/money';
@@ -54,7 +54,7 @@ describe('the cost of living', () => {
   });
 
   it('takes the rent and bills at eight on the first, after that day’s pay, and the ledger balances', () => {
-    const sim = quickSave({ dayJob: false, wealth: 'comfortable' }, 'rent');
+    const sim = quickSave({ wealth: 'comfortable' }, 'rent');
     const first = on(sim, 2026, 2, 1, 20);
     sim.advanceTo(first - MS_HOUR);
     const before = checking(sim).balance;
@@ -64,8 +64,8 @@ describe('the cost of living', () => {
   });
 
   it('buys the day’s food with its meals, and a day it can’t buy isn’t eaten', () => {
-    const fed = quickSave({ dayJob: false, wealth: 'comfortable' }, 'food');
-    const broke = quickSave({ dayJob: false, wealth: 'nothing' }, 'food');
+    const fed = quickSave({ wealth: 'comfortable' }, 'food');
+    const broke = quickSave({ wealth: 'nothing' }, 'food');
     setChecking(broke, 0);
     const before = checking(fed).balance;
     const seven = startOfNextDay(fed.now, fed.zone) + 7 * MS_HOUR;
@@ -80,7 +80,7 @@ describe('the cost of living', () => {
   });
 
   it('pays from checking, then the card, then owes the landlord, and pays the landlord back when money comes', () => {
-    const sim = quickSave({ dayJob: false }, 'order');
+    const sim = quickSave({}, 'order');
     setChecking(sim, 100_00);
     const free = (card(sim).creditLimit ?? 0) + card(sim).balance;
     const big = 100_00 + free + 5_000_00;
@@ -100,8 +100,8 @@ describe('the cost of living', () => {
   });
 
   it('weighs on somebody every day they owe', () => {
-    const owing = quickSave({ dayJob: false, wealth: 'comfortable' }, 'worry');
-    const clear = quickSave({ dayJob: false, wealth: 'comfortable' }, 'worry');
+    const owing = quickSave({ wealth: 'comfortable' }, 'worry');
+    const clear = quickSave({ wealth: 'comfortable' }, 'worry');
     // More than the bank and the card together, so some of it is owed.
     spend(owing, owing.player, canPay(owing, owing.player) + 1_000_00, 'Rent', 'rent', true);
     for (let d = 0; d < 5; d += 1) {
@@ -114,12 +114,12 @@ describe('the cost of living', () => {
   });
 
   it('charges a meal, and refuses one nobody can pay for', () => {
-    const sim = quickSave({ dayJob: false, wealth: 'comfortable' }, 'meal');
+    const sim = quickSave({ wealth: 'comfortable' }, 'meal');
     sim.player.wellbeing.nourishment = 40;
     const before = checking(sim).balance;
     expect(sim.execute({ kind: 'life.look_after', payload: { action: 'eat' } }).ok).toBe(true);
     expect(before - checking(sim).balance).toBe(mealOf(sim, sim.player));
-    const broke = quickSave({ dayJob: false, wealth: 'nothing' }, 'meal-broke');
+    const broke = quickSave({ wealth: 'nothing' }, 'meal-broke');
     setChecking(broke, 0);
     broke.player.wellbeing.nourishment = 40;
     expect(lookAfterRefusal(broke, 'eat')).toMatch(/afford/);
@@ -128,8 +128,11 @@ describe('the cost of living', () => {
 
 describe('the card', () => {
   it('states on the 20th and takes the minimum on the 15th, and a carried balance draws the month’s interest', () => {
-    const sim = quickSave({ dayJob: false, wealth: 'comfortable' }, 'card');
+    const sim = quickSave({ wealth: 'comfortable' }, 'card');
     expect(sim.player.credit!.autopay).toBe('full');
+    // Autopay on the minimum: autopay asks for the whole of what it's set to,
+    // and a current account short of it sends the payment back (`systems/credit.ts`).
+    expect(sim.execute({ kind: 'finance.set_autopay', payload: { mode: 'minimum' } }).ok).toBe(true);
     // Spend on the card, then leave checking with enough for the minimum only.
     spend(sim, sim.player, checking(sim).balance + 10_000_00, 'Rent', 'rent', true);
     setChecking(sim, 0);
@@ -147,7 +150,8 @@ describe('the card', () => {
     expect(sim.player.credit!.score).toBeGreaterThan(score - 20);
     // Carried, so the next statement charges a month at the card's rate.
     const owed = -card(sim).balance;
-    const apr = aprFor(sim.player.credit!.score);
+    // The bank's own card's rate (`cardTerms`); it was the American estimate for every card until 2026-09-26.
+    const apr = cardTerms(sim, card(sim), sim.player.credit!.score).apr;
     // Groceries go on the card too once checking is empty, so the interest is
     // read off its own line, on the balance the statement found.
     const beforeStatement = () => -card(sim).balance;
@@ -155,13 +159,17 @@ describe('the card', () => {
     const carried = beforeStatement();
     sim.advanceTo(on(sim, 2026, 2, 20, 10));
     const interest = sim.universe.transactions.filter((t) => t.memo === 'Interest').at(-1)!;
-    expect(interest.postings.find((p) => p.accountId === card(sim).id)!.amount).toBe(-Math.round(carried * apr / 12));
+    // Built day by day and compounded (`card.interest`). The first statement wasn't paid in full, so the grace
+    // period is lost back to the day the spending went on: from early January to the February statement.
+    const charged = -interest.postings.find((p) => p.accountId === card(sim).id)!.amount;
+    expect(charged).toBeGreaterThan(Math.round(carried * apr * 25 / 365));
+    expect(charged).toBeLessThan(Math.round(carried * apr * 50 / 365) * 1.1);
     expect(carried).toBeGreaterThanOrEqual(owed);
     expect(sim.ledger.audit()).toEqual([]);
   });
 
   it('keeps its grace period paid in full, and costs a fee and the record when a payment is late', () => {
-    const full = quickSave({ dayJob: false, wealth: 'comfortable' }, 'card-full');
+    const full = quickSave({ wealth: 'comfortable' }, 'card-full');
     // Switched to the minimum and back: the command does both.
     expect(full.execute({ kind: 'finance.set_autopay', payload: { mode: 'minimum' } }).ok).toBe(true);
     expect(full.player.credit!.autopay).toBe('minimum');
@@ -171,7 +179,7 @@ describe('the card', () => {
     expect(card(full).balance).toBeGreaterThan(-1_000_00 - 1);
     expect(full.player.credit!.carrying).toBe(false);
 
-    const late = quickSave({ dayJob: false, wealth: 'modest' }, 'card-late');
+    const late = quickSave({ wealth: 'modest' }, 'card-late');
     late.advanceTo(on(late, 2026, 1, 20, 10));
     setChecking(late, 0);
     const score = late.player.credit!.score;
@@ -186,7 +194,7 @@ describe('the card', () => {
   it('is priced by the record, and paid by hand when the player wants', () => {
     expect(aprFor(812)).toBeLessThan(aprFor(700));
     expect(aprFor(700)).toBeLessThan(aprFor(520));
-    const sim = quickSave({ dayJob: false }, 'pay-by-hand');
+    const sim = quickSave({}, 'pay-by-hand');
     const owed = -card(sim).balance;
     expect(owed).toBeGreaterThan(0);
     const paid = sim.execute<{ paid: number }>({ kind: 'finance.pay_card', payload: { amount: 'full' } });
@@ -206,7 +214,7 @@ describe('the card', () => {
 
 describe('a save from before any of it', () => {
   it('is given a home and a credit record on the way in, with its rent and statement on the calendar', () => {
-    const made = createSave(1, 'before-home', { ...defaultConfig(), dayJob: false });
+    const made = createSave(1, 'before-home', { ...defaultConfig() });
     const old = JSON.parse(JSON.stringify(made.universe));
     old.meta.schemaVersion = 88;
     for (const person of Object.values(old.people) as Record<string, unknown>[]) { delete person.home; delete person.credit; }

@@ -70,7 +70,7 @@ describe('the chance of the end', () => {
   it('ends lives about as often as the table says, drawn one by one', () => {
     // Two thousand people of seventy in the US, at their best: the table's
     // 0.018 a year, times 0.8.
-    const sim = quickSave({ dayJob: false }, 'end-count');
+    const sim = quickSave({}, 'end-count');
     const from = sim.now;
     let ended = 0;
     for (let i = 0; i < 2000; i += 1) {
@@ -86,7 +86,7 @@ describe('the chance of the end', () => {
   });
 
   it('draws the same for the same person and day, and a part of a year gets part of the chance', () => {
-    const sim = quickSave({ dayJob: false }, 'end-same');
+    const sim = quickSave({}, 'end-same');
     const old = { ...sim.player, birthInstant: sim.now - 104 * MS_YEAR };
     expect(endBetween(sim, old, sim.now, sim.now + MS_YEAR)).toBe(endBetween(sim, old, sim.now, sim.now + MS_YEAR));
     let whole = 0;
@@ -103,7 +103,7 @@ describe('the chance of the end', () => {
 describe('a life in the game', () => {
   it('says a birthday on the day, with the age turned', () => {
     // Born 14 June 2001, started 5 January 2026: twenty-five in June.
-    const sim = quickSave({ dayJob: false }, 'birthday');
+    const sim = quickSave({}, 'birthday');
     expect(sim.universe.scheduled.some((one) => one.kind === BIRTHDAY_KIND && one.status === 'pending')).toBe(true);
     sim.advanceBy(170 * MS_DAY);
     const said = sim.universe.notifications.find((n) => n.title.startsWith('Happy Birthday'));
@@ -117,9 +117,9 @@ describe('a life in the game', () => {
   it('ends, stops the clock for good, and keeps the ending through a save', () => {
     // A hundred and nine: the months to the first birthday end about one
     // life in five, so one of these worlds is one where it happens.
-    let sim = quickSave({ dayJob: false, birthYear: 1916 }, 'end-0');
+    let sim = quickSave({ birthYear: 1916 }, 'end-0');
     for (let n = 1; n < 60 && !sim.universe.scheduled.some((one) => one.kind === END_KIND); n += 1) {
-      sim = quickSave({ dayJob: false, birthYear: 1916 }, `end-${n}`);
+      sim = quickSave({ birthYear: 1916 }, `end-${n}`);
     }
     const end = sim.universe.scheduled.find((one) => one.kind === END_KIND);
     expect(end).toBeDefined();
@@ -142,9 +142,9 @@ describe('a life in the game', () => {
   });
 
   it('never puts the end where a screen can see it', () => {
-    let sim = quickSave({ dayJob: false, birthYear: 1916 }, 'end-0');
+    let sim = quickSave({ birthYear: 1916 }, 'end-0');
     for (let n = 1; n < 60 && !sim.universe.scheduled.some((one) => one.kind === END_KIND); n += 1) {
-      sim = quickSave({ dayJob: false, birthYear: 1916 }, `end-${n}`);
+      sim = quickSave({ birthYear: 1916 }, `end-${n}`);
     }
     const end = sim.universe.scheduled.find((one) => one.kind === END_KIND)!;
     // The calendar, the upcoming list, Advance's targets and what a day

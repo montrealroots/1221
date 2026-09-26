@@ -24,18 +24,26 @@ import { PERFORMER_NOUN, impliedPerformerTitle, isPerformerTitle } from './core/
 import { citizenshipFor } from './domain/citizenship';
 import { cleanPersonality, cleanPersonalityTraits } from './systems/personality';
 
-import { CITIES } from './content/geography';
+import { CITIES, isCountryLoaded, loadCountryCities } from './content/geography';
 
 import { netWorth } from './systems/finance';
 import { registerLife } from './systems/life';
 import { registerPlans } from './world/plans';
-import { armWork, registerWork, startWork } from './systems/work';
-import { mayWorkIn } from './domain/citizenship';
 import { armHousehold, moveIn, registerHousehold } from './systems/household';
 import { armCredit, openCredit, registerCredit } from './systems/credit';
 import { armBirthdays, registerBirthdays } from './systems/birthdays';
 import { registerMortality } from './systems/mortality';
 import { registerTutorial } from './world/tutorial';
+import { armBanking, openAt, registerBanking, rebank, startingBank } from './systems/banking';
+import { registerLending } from './systems/lending';
+import { registerStatements } from './systems/statements';
+import { armPayments, freshPayments, registerPayments } from './systems/payments';
+import { armCardLife, registerCardLife } from './systems/cardlife';
+import { registerCash } from './systems/cash';
+import { registerAccountLife } from './systems/accountlife';
+import { registerCardOffers } from './systems/cardoffers';
+import { registerSecurity } from './systems/security';
+import { CARDS } from './content/cards';
 import { registerWorld } from './world/world';
 import {
   createUniverse, defaultConfig, wealthIn, type NewSaveConfig,
@@ -53,12 +61,20 @@ export function registerAllSystems(sim: Simulation): void {
   registerLife(sim);
   registerWorld(sim);
   registerPlans(sim);
-  registerWork(sim);
   registerHousehold(sim);
   registerCredit(sim);
   registerBirthdays(sim);
   registerMortality(sim);
   registerTutorial(sim);
+  registerBanking(sim);
+  registerStatements(sim);
+  registerPayments(sim);
+  registerCardLife(sim);
+  registerCash(sim);
+  registerAccountLife(sim);
+  registerCardOffers(sim);
+  registerSecurity(sim);
+  registerLending(sim);
 }
 
 /** Recurring world processes every save needs running. */
@@ -84,38 +100,37 @@ function populateWorld(sim: Simulation, config: NewSaveConfig): void {
   const wealth = wealthIn(config.wealth, saveCurrency(sim.universe));
 
   // --- Accounts -----------------------------------------------------------
-  const checking = sim.openAccount({
-    id: sim.nextId('account'),
-    kind: 'checking',
-    name: 'Everyday Checking',
-    ownerId: player.id,
-    institution: 'Northbank',
-    openedAt: sim.now,
-    last4: '4417',
-    balance: wealth.checking,
-  });
-  player.primaryAccountId = checking.id;
-
-  if (wealth.savings > 0) {
-    sim.openAccount({
-      id: sim.nextId('account'),
-      kind: 'savings',
-      name: 'Savings',
-      ownerId: player.id,
-      institution: 'Northbank',
-      openedAt: sim.now,
-      last4: '8802',
-      balance: wealth.savings,
+  // At a real bank where they live (`systems/banking.ts`). A country the
+  // tables have no bank for keeps a plain current account and savings.
+  const bank = startingBank(config.startLocationId, config.bankId);
+  if (bank) {
+    openAt(sim, player, bank, { checking: wealth.checking, savings: wealth.savings });
+  } else {
+    const checking = sim.openAccount({
+      id: sim.nextId('account'), kind: 'checking', name: 'Current Account', ownerId: player.id,
+      openedAt: sim.now, balance: wealth.checking,
     });
+    player.primaryAccountId = checking.id;
+    if (wealth.savings > 0) {
+      sim.openAccount({
+        id: sim.nextId('account'), kind: 'savings', name: 'Savings Account', ownerId: player.id,
+        openedAt: sim.now, balance: wealth.savings,
+      });
+    }
   }
 
   if (wealth.cardLimit > 0) {
+    // The bank's own card, under its own name (`content/cards.ts`). Until
+    // 2026-09-26 it was "<bank> Credit Card" on American terms, and not the
+    // bank's at all.
+    const product = bank ? CARDS[bank.id] : undefined;
     const card = sim.openAccount({
       id: sim.nextId('account'),
       kind: 'credit_card',
-      name: 'Northbank Everyday Card',
+      name: product && !('none' in product) ? product.name : bank ? bank.name + ' Credit Card' : 'Credit Card',
       ownerId: player.id,
-      institution: 'Northbank',
+      institution: bank?.name,
+      ...(bank ? { bankId: bank.id } : {}),
       openedAt: sim.now - 400 * MS_DAY,
       creditLimit: wealth.cardLimit,
       apr: 0.2249,
@@ -135,11 +150,11 @@ function populateWorld(sim: Simulation, config: NewSaveConfig): void {
   }
 
   armWorldClock(sim);
-  // Only where they have the right to work (`mayWorkIn`).
-  if (config.dayJob && mayWorkIn(player.citizenshipId, player.currentLocationId).may) startWork(sim, player);
   moveIn(sim, player, config.housing);
+  player.payments = freshPayments(player.currentLocationId);
   openCredit(sim, player, wealth.creditScore);
   armBirthdays(sim);
+  armBanking(sim);
 }
 
 /** Keeps the save-slot summary in step with the world. */
@@ -230,12 +245,16 @@ export function loadSave(universe: SaveUniverse): Simulation {
       label: 'World Simulation', category: 'system', priority: 96,
     });
   }
-  // Anybody with a job has their rota two weeks out and a payday ahead, and
-  // anybody with a home a rent due.
-  armWork(sim);
+  // Anybody with a home has a rent due. Until 2026-09-26 anybody with a job
+  // had their rota two weeks out and a payday ahead too.
   armHousehold(sim);
+  armPayments(sim);
+  armCardLife(sim);
   armCredit(sim);
   armBirthdays(sim);
+  // A save from before the banks banked at "Northbank", which never existed.
+  rebank(sim);
+  armBanking(sim);
   return sim;
 }
 
@@ -547,19 +566,31 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     }
   }
 
-  // 89 gave every new character a day job. A save from before it is given the
-  // one a character with no answer to Before Acting has, in the town they
-  // are in, starting now; `loadSave` puts its rota and payday on the calendar.
-  // Without it such a save would be the one life with nothing coming in.
+  // 89 gave every new character a day job, and a save from before it was
+  // given one here. The job engine went on 2026-09-26, when the owner kept
+  // SLATE to acting. A save from before that loses what it held: the past
+  // before acting, the job, the pay record, and the shifts, paydays, tips and
+  // benefit payments still on its calendar. The money they already paid
+  // stays in the ledger, as money that came in.
+  {
+    let cleared = 0;
+    for (const person of Object.values(universe.people ?? {})) {
+      const p = person as unknown as Record<string, unknown>;
+      if (!('job' in p) && !('earnings' in p) && !('beforeActing' in p)) continue;
+      delete p.job;
+      delete p.earnings;
+      delete p.beforeActing;
+      cleared += 1;
+    }
+    const before = universe.scheduled?.length ?? 0;
+    if (universe.scheduled) universe.scheduled = universe.scheduled.filter((item) => item.status !== 'pending' || !item.kind.startsWith('work.'));
+    const dropped = before - (universe.scheduled?.length ?? 0);
+    if (cleared > 0 || dropped > 0) {
+      steps.push(`Took the day job off ${plural(cleared, 'person', 'people')}, and ${plural(dropped, 'shift or payday', 'shifts and paydays')} off the calendar.`);
+    }
+  }
   if (from < 89) {
     const worker = universe.people?.[universe.playerId];
-    if (worker && !worker.job && mayWorkIn(worker.citizenshipId, worker.currentLocationId).may) {
-      worker.job = {
-        jobId: worker.beforeActing ?? 'school', cityId: worker.currentLocationId, since: universe.now,
-        unpaid: [], missed: [], rotaThrough: universe.now,
-      };
-      steps.push('Gave the character a day job.');
-    }
     if (worker && !worker.home) {
       worker.home = { kind: 'shared', cityId: worker.currentLocationId, since: universe.now };
       steps.push('Gave the character a room in a shared flat, and the rent that goes with it.');
@@ -569,6 +600,25 @@ export function migrate(universe: SaveUniverse): MigrationResult {
       worker.credit = { score: 650, late: [], autopay: 'full', statementBalance: 0, paidSinceStatement: 0, carrying: carried };
       steps.push('Opened a credit record at 650, a fair middle, for a save that kept none.');
     }
+  }
+
+  // A card from before 2026-09-26 carried its bank's name and nothing else:
+  // it is the bank's card now, the bank the current account is at when it
+  // was opened, and it takes that bank's own name for it.
+  {
+    let tied = 0;
+    const accounts = universe.accounts ?? {};
+    for (const account of Object.values(accounts)) {
+      if (account.kind !== 'credit_card' || account.bankId || account.closedAt) continue;
+      const owner = universe.people?.[account.ownerId ?? ''];
+      const current = owner?.primaryAccountId ? accounts[owner.primaryAccountId] : undefined;
+      if (!current?.bankId) continue;
+      account.bankId = current.bankId;
+      const product = CARDS[current.bankId];
+      if (product && !('none' in product) && account.name === current.institution + ' Credit Card') account.name = product.name;
+      tied += 1;
+    }
+    if (tied > 0) steps.push(`Made ${plural(tied, 'card', 'cards')} the bank’s own.`);
   }
 
   // The slot's career line is the player's title. Before 80 it named the film
@@ -643,6 +693,28 @@ export interface ValidationReport {
  * Structural validation of a universe. Run on load, before release, and by the
  * test suite. Anything here failing means the world is internally inconsistent.
  */
+/**
+ * Pulls in the full city list of every country a save needs before it can
+ * be checked or opened: anywhere a person in it stands or calls home. The
+ * gazetteer ships the larger places eagerly and the rest a country at a
+ * time, and a city id carries its country as its first segment, so this
+ * reads it off the ids. Until 2026-09-26 only resuming did this, after the
+ * save screen had already checked the save, so a life begun in a town
+ * outside the bundled set (Pittsburgh, Annapolis) was refused as being in
+ * an unknown location.
+ */
+export async function loadPlacesFor(universe: SaveUniverse, load: (countryId: string) => Promise<number> = loadCountryCities): Promise<void> {
+  const ids = new Set<string>();
+  for (const person of Object.values(universe.people ?? {})) {
+    for (const cityId of [person.currentLocationId, person.homeRegionId]) {
+      if (!cityId || CITIES.get(cityId)) continue;
+      const countryId = cityId.split('-')[0];
+      if (countryId && !isCountryLoaded(countryId)) ids.add(countryId);
+    }
+  }
+  await Promise.all([...ids].map((id) => load(id).catch(() => 0)));
+}
+
 export function validateUniverse(universe: SaveUniverse): ValidationReport {
   const errors: string[] = [];
   const warnings: string[] = [];

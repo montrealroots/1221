@@ -19,7 +19,6 @@ import type { Money } from '../core/money';
 import { idAlreadyIssued } from '../core/ids';
 import { ETHNICITY_BY_ID } from '../content/ethnicity';
 import { GENRE_BY_ID, INTEREST_BY_ID } from '../content/interests';
-import { BEFORE_ACTING_BY_ID, DEFAULT_BEFORE_ACTING } from '../content/backgrounds';
 import { ceilingAt } from '../content/lifespan';
 
 /** The ids on a list this build recognises, deduplicated, in the order given. */
@@ -85,19 +84,16 @@ export interface NewSaveConfig {
   genres: string[];
   /** The life before this one, in their own words. Flavor, and said back to them. */
   background: string;
-  /** What they did before acting, by id from `content/backgrounds.ts`: the body they start with. */
-  beforeActing: string;
-  /**
-   * Whether they keep a day job (`systems/work.ts`). Most actors do; one who
-   * starts with enough money behind them needn't.
-   */
-  dayJob: boolean;
+  // `beforeActing` (the body they started with, and the day job it led to)
+  // and `dayJob` were asked here until 2026-09-26, when the job engine went.
   /** A room in a shared flat, or a place of their own (`systems/household.ts`). */
   housing: Housing;
 
   /** Starting point */
   startLocationId: string;
   wealth: StartingWealth;
+  /** The bank they keep their money with, by id (`content/banks.ts`). Absent: the country's first. */
+  bankId?: string;
   /** World start date, local to the starting city. */
   startYear: number;
   startMonth: number;
@@ -130,8 +126,6 @@ export function defaultConfig(): NewSaveConfig {
     personality: defaultPersonality(), personalityTraits: [],
     interests: ['film', 'television'], genres: [],
     background: '',
-    beforeActing: DEFAULT_BEFORE_ACTING,
-    dayJob: true,
     housing: 'shared',
     startLocationId: DEFAULT_CITY_ID,
     wealth: 'scraping',
@@ -271,9 +265,6 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveCon
     zone,
   );
 
-  // What they did before, and the fitness it left. An id the list lacks is
-  // the default, the same way an interest the list lacks is dropped.
-  const before = BEFORE_ACTING_BY_ID[config.beforeActing] ?? BEFORE_ACTING_BY_ID[DEFAULT_BEFORE_ACTING]!;
   const yearsOld = Math.max(0, (now - birthInstant) / (365.2425 * MS_DAY));
 
   const player: Person = {
@@ -308,9 +299,10 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveCon
     // decides nothing, and the step says so; what they did before, beside it,
     // is the part that does.
     background: config.background,
-    beforeActing: before.id,
-    // The body their work before left them, no fitter than the age allows.
-    wellbeing: { ...freshWellbeing(), fitness: Math.min(before.fitness, ceilingAt(yearsOld).fitness) },
+    // An everyday body, no fitter than the age allows. Until 2026-09-26 what
+    // they did before acting set it, from 40 at a desk to 80 for an athlete;
+    // fifty was the default's, and every character's now.
+    wellbeing: { ...freshWellbeing(), fitness: Math.min(freshWellbeing().fitness, ceilingAt(yearsOld).fitness) },
     // Up this morning, and charged for being awake from the moment the world
     // starts.
     awakeSince: now,

@@ -1,0 +1,354 @@
+/**
+ * SLATE — your bank.
+ *
+ * The bank a person keeps their money with, as that bank has it: its name,
+ * the accounts by the names it sells them under, each account's number the
+ * way the country writes it, what savings pays and what the current account
+ * costs and how the fee is waived, and the guarantee that stands behind the
+ * money if the bank fails, in five tabs: accounts, cards, payments and
+ * cash, borrowing, and statements. Money moves between the accounts here, and a
+ * savings account is opened or closed (`systems/banking.ts`). The credit
+ * card is the bank's too, and is run here (`ui/bank/BankCard.tsx`); until
+ * 2026-09-26 it was run from the Money panel and this screen left it out.
+ *
+ * Every figure the bank publishes says where it came from; a figure that is
+ * SLATE's estimate says that instead.
+ */
+
+import { useState } from 'react';
+import { useGame, useWorld } from '@/app/game-context';
+import { Panel, Empty } from '@/ui/components/primitives';
+import { Gated } from '@/ui/guide/Guide';
+import { BankLending } from '@/ui/bank/BankLending';
+import { BankCard } from '@/ui/bank/BankCard';
+import { BankCardOffers } from '@/ui/bank/BankCardOffers';
+import { BankSecurity } from '@/ui/bank/BankSecurity';
+import { BankStatements } from '@/ui/bank/BankStatements';
+import { BankPayments } from '@/ui/bank/BankPayments';
+import { BankCash } from '@/ui/bank/BankCash';
+import { BankAccountLife } from '@/ui/bank/BankAccountLife';
+import { apyOf } from '@/engine/systems/statements';
+import { formatMoney, saveCurrency } from '@/engine/core/money';
+import { formatDate } from '@/engine/core/time';
+import { bankingIn } from '@/engine/content/banks';
+import type { Simulation } from '@/engine/core/simulation';
+import type { Product } from '@/engine/content/banks';
+import {
+  bankAccountsOf, introStep, rateOn, bankOf, directDeposits, feeFor, inSaveMoney, interestTaxOn, monthEndAfter, monthStartOf, productOf,
+} from '@/engine/systems/banking';
+
+export function BankWorkspace() {
+  const { sim, run, toast } = useGame();
+  const cur = saveCurrency(sim.universe);
+  const money = (cents: number) => formatMoney(cents, cur, { cents: false });
+  const bank = useWorld((s) => bankOf(s, s.player));
+  const accounts = useWorld((s) => bankAccountsOf(s, s.player));
+  const [from, setFrom] = useState<string>('');
+  const [to, setTo] = useState<string>('');
+  const [amount, setAmount] = useState('');
+  const [tab, setTab] = useState<BankTab>('accounts');
+
+  if (!bank) {
+    return <Empty title="No Bank" body="Your money isn’t held at a bank SLATE knows, so there’s nothing to show here." />;
+  }
+
+  const current = accounts.find((a) => a.kind === 'checking');
+  const savings = accounts.find((a) => a.kind === 'savings');
+  const fromId = from || current?.id || '';
+  const toId = to || accounts.find((a) => a.id !== fromId)?.id || '';
+  const monthStart = monthStartOf(sim, sim.now);
+  const monthEnd = monthEndAfter(sim, sim.now);
+
+  const move = () => {
+    // Typed in whole units of the money, as a banking app takes it.
+    const cents = Math.round(Number(amount.replace(/[^\d.]/g, '')) * 100);
+    const answer = run<{ moved: number }>('bank.transfer', { fromId, toId, amount: cents });
+    if (answer.ok && answer.value) {
+      toast(`Moved ${money(answer.value.moved)}.`, 'positive');
+      setAmount('');
+    }
+  };
+
+  const panes: Record<BankTab, JSX.Element> = {
+    accounts: (
+      <>
+      <div className="grid grid-2" style={{ marginBottom: 'var(--s5)' }}>
+        {accounts.map((account) => {
+          const product = productOf(account);
+          const fee = feeFor(sim, account, monthStart);
+          const tax = interestTaxOn(sim, account);
+          const paidIn = directDeposits(sim, account, monthStart);
+          return (
+            <Panel key={account.id} title={account.name} subtitle={account.number}>
+              <div className="col gap-3">
+                <div className="stat">
+                  <span className="stat-label">Balance</span>
+                  <span className="stat-value mono">{money(account.balance)}</span>
+                </div>
+                <p className="small" style={{ margin: 0 }}>{interestWords(sim, product, tax, money, bank.currency, account.openedAt)}</p>
+                {product?.monthlyFee ? (
+                  <p className="small" style={{ margin: 0 }}>
+                    {formatMoney(inSaveMoney(sim, product.monthlyFee, bank.currency), cur)} a month
+                    {waiverWords(product, (c) => money(inSaveMoney(sim, c, bank.currency)))}
+                    {'. '}
+                    {fee.fee === 0
+                      ? `This month is waived so far${fee.waivedBy === 'deposits' ? `: ${money(paidIn)} paid in` : ''}.`
+                      : fee.waivedBy
+                        ? `This month’s is lowered to ${formatMoney(fee.fee, cur)} so far, due ${formatDate(monthEnd, sim.zone)}.`
+                        : `This month’s is due ${formatDate(monthEnd, sim.zone)} unless that changes.`}
+                  </p>
+                ) : (
+                  <p className="small" style={{ margin: 0 }}>No monthly fee.</p>
+                )}
+                {product && <p className="xs dim" style={{ margin: 0 }}>{product.estimate ? 'Estimate' : 'Source'}: {product.source}, {product.asOf}.{CONFIDENCE[bank.confidence ?? 'H']}</p>}
+                {account.kind === 'savings' && (
+                  <div className="row gap-2" style={{ flexWrap: 'wrap', alignItems: 'center' }}>
+                    <Gated feature="bank.close_savings" className="btn btn-sm btn-ghost" onClick={() => run('bank.close_savings', { accountId: account.id })}>
+                      Close It
+                    </Gated>
+                    <span className="xs dim">Its {money(account.balance)} moves to {current?.name ?? 'your current account'}.</span>
+                  </div>
+                )}
+              </div>
+            </Panel>
+          );
+        })}
+        {!savings && (
+          <Panel title={bank.savings.name} subtitle="Not opened">
+            <p className="small">
+              {bank.savings.rate ? `Pays ${(bank.savings.rate * 100).toFixed(2)}% a year.` : 'Pays no published rate.'} Opening one costs nothing.
+            </p>
+            <Gated feature="bank.open_savings" className="btn btn-sm" onClick={() => run('bank.open_savings', {})}>
+              Open A {bank.savings.name}
+            </Gated>
+          </Panel>
+        )}
+      </div>
+
+      {accounts.length > 1 && (
+        <Panel title="Move Money" subtitle="Between your own accounts, at once.">
+          <div className="field-row">
+            <div className="field">
+              <label htmlFor="move-from">From</label>
+              <select id="move-from" value={fromId} onChange={(e) => setFrom(e.target.value)}>
+                {/* By balance, the most in it last. */}
+                {[...accounts].sort((a, b) => a.balance - b.balance).map((a) => <option key={a.id} value={a.id}>{a.name} ···{a.last4} ({money(a.balance)})</option>)}
+              </select>
+            </div>
+            <div className="field">
+              <label htmlFor="move-to">To</label>
+              <select id="move-to" value={toId} onChange={(e) => setTo(e.target.value)}>
+                {accounts.filter((a) => a.id !== fromId).sort((a, b) => a.balance - b.balance).map((a) => <option key={a.id} value={a.id}>{a.name} ···{a.last4}</option>)}
+              </select>
+            </div>
+            <div className="field">
+              <label htmlFor="move-amount">Amount ({cur})</label>
+              <input id="move-amount" type="text" inputMode="decimal" value={amount} onChange={(e) => setAmount(e.target.value)} />
+            </div>
+          </div>
+          <Gated feature="bank.transfer" className="btn btn-primary btn-sm" onClick={move} disabled={!amount}>
+            Move It
+          </Gated>
+        </Panel>
+      )}
+
+
+        <BankLending bank={bank} show={['term', 'switch']} />
+        <div style={{ marginBottom: 'var(--s5)' }}>
+          <BankAccountLife bankId={bank.id} />
+        </div>
+        <OtherCharges bank={bank} />
+      </>
+    ),
+    cards: (
+      <div className="col gap-5">
+        <BankCard bankId={bank.id} />
+        <BankCardOffers bankId={bank.id} />
+        <BankSecurity bankId={bank.id} />
+      </div>
+    ),
+    payments: (
+      <div className="col gap-5">
+        <BankPayments />
+        <BankCash bankId={bank.id} />
+      </div>
+    ),
+    borrowing: <BankLending bank={bank} show={['borrowing']} />,
+    statements: <BankStatements />,
+  };
+
+  return (
+    <>
+      <div className="page-head">
+        <div className="eyebrow">Your Bank</div>
+        <h1>{bank.name}</h1>
+        {/* What's held here, now. Until 2026-09-26 this said what the deposit
+            guarantee covers and the central bank's rate, which nothing in play
+            reads: no bank fails, and no rate follows it. */}
+        <p className="muted">
+          {money(accounts.reduce((sum, a) => sum + a.balance, 0))} held here, in {accounts.length === 1 ? 'one account' : `${accounts.length} accounts`}.
+        </p>
+      </div>
+
+      <BankTabs tab={tab} onTab={setTab} />
+      <div role="tabpanel" id={`bank-pane-${tab}`} aria-labelledby={`bank-tab-${tab}`} tabIndex={0} className="bank-pane">
+        {panes[tab]}
+      </div>
+    </>
+  );
+}
+
+type BankTab = 'accounts' | 'cards' | 'payments' | 'borrowing' | 'statements';
+
+/** The screen's parts, each under its own tab. Until 2026-09-26 they ran down one page, fourteen to sixteen panels long. */
+const BANK_TABS: readonly { id: BankTab; label: string }[] = [
+  { id: 'accounts', label: 'Accounts' },
+  { id: 'cards', label: 'Cards' },
+  { id: 'payments', label: 'Payments And Cash' },
+  { id: 'borrowing', label: 'Borrowing' },
+  { id: 'statements', label: 'Statements' },
+];
+
+/** The tabs, as a tab list: arrows move between them, Home and End go to the ends. */
+function BankTabs({ tab, onTab }: { tab: BankTab; onTab: (tab: BankTab) => void }) {
+  const go = (index: number) => {
+    const next = BANK_TABS[(index + BANK_TABS.length) % BANK_TABS.length]!;
+    onTab(next.id);
+    document.getElementById(`bank-tab-${next.id}`)?.focus();
+  };
+  return (
+    <div className="tabs" role="tablist" aria-label="Your Bank">
+      {BANK_TABS.map((one, i) => (
+        <button
+          key={one.id}
+          id={`bank-tab-${one.id}`}
+          type="button"
+          role="tab"
+          className="tab"
+          aria-selected={one.id === tab}
+          aria-controls={`bank-pane-${one.id}`}
+          tabIndex={one.id === tab ? 0 : -1}
+          onClick={() => onTab(one.id)}
+          onKeyDown={(e) => {
+            if (e.key === 'ArrowRight') { e.preventDefault(); go(i + 1); }
+            else if (e.key === 'ArrowLeft') { e.preventDefault(); go(i - 1); }
+            else if (e.key === 'Home') { e.preventDefault(); go(0); }
+            else if (e.key === 'End') { e.preventDefault(); go(BANK_TABS.length - 1); }
+          }}
+        >
+          {one.label}
+        </button>
+      ))}
+    </div>
+  );
+}
+
+/** How sure the research was of a bank outside the thirteen, where it wasn't sure. */
+const CONFIDENCE: Record<'H' | 'M' | 'L', string> = {
+  H: '',
+  M: ' The research was only partly sure of this bank’s figures.',
+  L: ' The research wasn’t sure of this bank’s figures.',
+};
+
+/** Percent, to as many places as the figure has. */
+const pct = (rate: number) => `${Number((rate * 100).toFixed(3))}%`;
+const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+/**
+ * What an account pays, said the way the bank's terms put it: the rate, any
+ * change announced, a floor or a cap, a bonus and what earns it, when it is
+ * paid, and what the bank takes off it for tax.
+ */
+function interestWords(sim: Simulation, product: Product | undefined, tax: number, money: (cents: number) => string, currency: string, openedAt: number): string {
+  const step = introStep(sim, product, openedAt, sim.now);
+  const rate = step ?? rateOn(product, sim.now, sim.homeZone);
+  // A rate the research didn't find isn't a rate of none: until 2026-09-26 Citi's savings said it paid no interest.
+  if (product && product.rate === undefined && /no published rate/i.test(product.source) && !product.changes?.length && !product.tiers?.length && !product.bonus && !product.intro) return 'Its rate wasn’t found, so SLATE pays none on it.';
+  if (!product || (rate <= 0 && !product.bonus && !product.intro)) return 'Pays no interest.';
+  // The yield with the interest left in, credited monthly or in the bank's months (B31).
+  const said: string[] = [`Pays ${pct(rate)} a year (${pct(Number(apyOf(rate, product.pays?.length ?? 12).toFixed(5)))} APY)`];
+  if (step !== undefined) {
+    // The steps still to come, and what it pays after them.
+    let through = 0;
+    const ahead: string[] = [];
+    for (const one of product.intro ?? []) {
+      through += one.months;
+      ahead.push(`${pct(one.rate)} to month ${through}`);
+    }
+    said.push(` for now: ${ahead.join(', ')}, and ${pct(rateOn(product, sim.now, sim.homeZone))} after, counted from when it opened`);
+  }
+  const next = (product.changes ?? []).find((c) => c.from > new Date(sim.now).toISOString().slice(0, 10));
+  if (next) said.push(`, ${pct(next.rate)} from ${formatDate(Date.parse(`${next.from}T12:00:00Z`), sim.zone)}`);
+  for (const tier of product.tiers ?? []) said.push(`, ${pct(tier.rate)} on the whole balance from ${money(inSaveMoney(sim, tier.from, currency))}`);
+  if (product.rateFrom !== undefined) said.push(`, on a balance of ${money(inSaveMoney(sim, product.rateFrom, currency))} or more`);
+  if (product.rateUpTo !== undefined) said.push(`, on up to ${money(inSaveMoney(sim, product.rateUpTo, currency))}`);
+  said.push('.');
+  if (product.bonus) {
+    const earn = product.bonus.when === 'no_withdrawals'
+      ? 'a month with nothing taken out'
+      : product.bonus.growBy !== undefined ? `a month the balance grows by ${money(inSaveMoney(sim, product.bonus.growBy, currency))}` : 'a month the balance grows';
+    said.push(` Another ${pct(product.bonus.rate)} for ${earn}.`);
+  }
+  said.push(product.pays
+    ? ` It builds each day and is paid in ${product.pays.map((m) => MONTH_NAMES[m - 1]).join(' and ')}.`
+    : ' It builds each day and is paid on the last day of the month.');
+  if (product.taxFree) said.push(' Tax-free.');
+  else if (tax > 0) said.push(` The bank takes ${pct(tax)} of it for tax.`);
+  return said.join('');
+}
+
+/** The bank's charges that aren't an account's monthly fee, and the tax the country gives back. */
+function OtherCharges({ bank }: { bank: import('@/engine/content/banks').Bank }) {
+  const { sim } = useGame();
+  const cur = saveCurrency(sim.universe);
+  const money = (c: number) => formatMoney(inSaveMoney(sim, c, bank.currency), cur);
+  const refund = bankingIn(bank.iso)?.interestTax;
+  const lines: string[] = [];
+  if (bank.card) {
+    lines.push(`The debit card costs ${bank.card.yearly !== undefined ? `${money(bank.card.yearly)} a year` : 'nothing a year'}${bank.card.perPurchase !== undefined ? ` and ${money(bank.card.perPurchase)} a purchase` : ''}${bank.card.freeUnder !== undefined ? `, free under ${bank.card.freeUnder}` : ''}. Source: ${bank.card.source}.`);
+  }
+  if (bank.returned) lines.push(`A payment the bank returns unpaid costs ${money(bank.returned.fee)}. Source: ${bank.returned.source}.`);
+  if (bank.dormant) lines.push(`An account unused for ${bank.dormant.afterYears} years costs ${money(bank.dormant.yearly)} a year${bank.dormant.belowBalance !== undefined ? ` while it holds under ${money(bank.dormant.belowBalance)}` : ''}. Source: ${bank.dormant.source}.`);
+  if (bank.quietMonth) lines.push(`A month with fewer than ${bank.quietMonth.minTransactions} transactions costs ${money(bank.quietMonth.fee)}${bank.quietMonth.unlessWages ? ', unless wages are paid in' : ''}. Source: ${bank.quietMonth.source}.`);
+  if (refund?.refund) {
+    const day = `${refund.refund.day} ${MONTH_NAMES[refund.refund.month - 1]}`;
+    lines.push(`${refund.note} It is paid here on ${day}${refund.refund.estimateDate ? ', which is SLATE’s estimate of the day' : ''}.`);
+  }
+  if (lines.length === 0) return null;
+  return (
+    <Panel title="Other Charges">
+      <div className="col gap-2">
+        {lines.map((line) => <p key={line} className="small" style={{ margin: 0 }}>{line}</p>)}
+      </div>
+    </Panel>
+  );
+}
+
+/** How a fee is waived, the way the bank puts its conditions, each one an "or", and what lowers it. */
+function waiverWords(product: Product, money: (cents: number) => string): string {
+  const waiver = product.waiver;
+  const cut = product.reduced;
+  const lower = !cut ? '' : `; ${money(cut.to)} with ${[
+    cut.depositsAtLeast !== undefined ? `${money(cut.depositsAtLeast)} of wages paid in` : '',
+    cut.averageAtLeast !== undefined ? `an average of ${money(cut.averageAtLeast)} over the month` : '',
+    cut.ageBelow !== undefined ? `being under ${cut.ageBelow}` : '',
+  ].filter(Boolean).join(', or ')}`;
+  if (!waiver) return lower;
+  const ways: string[] = [];
+  if (waiver.depositsAtLeast !== undefined) {
+    const also = waiver.depositsAlso;
+    const extra = !also ? '' : also.either !== undefined
+      ? ` and ${also.either} bills or card payments in ${also.months} months`
+      : ` and ${[also.bills !== undefined ? `${also.bills} bills` : '', also.purchases !== undefined ? `${also.purchases} card payments` : ''].filter(Boolean).join(' or ')} in ${also.months} months`;
+    ways.push(`${money(waiver.depositsAtLeast)} of wages paid in${extra}`);
+  }
+  if (waiver.balanceAtLeast !== undefined) ways.push(`keeping ${money(waiver.balanceAtLeast)} in it all month`);
+  if (waiver.averageAtLeast !== undefined) ways.push(`an average of ${money(waiver.averageAtLeast)} over the month`);
+  if (waiver.linkedAverageAtLeast !== undefined) ways.push(`an average of ${money(waiver.linkedAverageAtLeast)} across your accounts at the bank`);
+  if (waiver.ageBelow !== undefined) ways.push(`being under ${waiver.ageBelow}`);
+  if (waiver.ageAtLeast !== undefined) ways.push(`being ${waiver.ageAtLeast} or over`);
+  if (waiver.purchasesAtLeast !== undefined) ways.push(`${waiver.purchasesAtLeast} card payments in the month`);
+  if (waiver.firstMonths !== undefined) ways.push(`the first ${waiver.firstMonths} months after opening`);
+  if (ways.length === 0) return lower;
+  return `, waived with ${ways.join(', or ')}${lower}`;
+}

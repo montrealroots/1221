@@ -5,8 +5,7 @@
  * round. Phoenix is dry and London is not. Moscow snows in January and
  * Singapore never does. The same seed, city and day always give the same
  * weather, and two saves do not share a sky. It thunders about as often as
- * the met services count, in the right season. And a storm on an outdoor
- * shift costs the day what a storm costs, not what a coin says.
+ * the met services count, in the right season.
  */
 
 import { describe, expect, it } from 'vitest';
@@ -14,7 +13,7 @@ import { quickSave } from '@/engine';
 import { CITIES, type City } from '@/engine/content/geography';
 import { MS_DAY, instantFromZoned, startOfDay, zonedParts } from '@/engine/core/time';
 import { climateTypeFor, normalFor, climateByLatitude, baselineTemperature } from '@/engine/content/climate';
-import { forecastFor, hoursOn, outdoorWeather, weatherAt, weatherOn } from '@/engine/systems/weather';
+import { forecastFor, hoursOn, weatherAt, weatherOn } from '@/engine/systems/weather';
 import { THUNDER_DAYS } from '@/engine/content/thunder';
 
 const sim = quickSave({}, 'weather-seed');
@@ -226,7 +225,7 @@ describe('the sky has a memory and a seed', () => {
 describe('thunder', () => {
   // Three worlds, two years each: six years of days per city, enough that a
   // published count shows through the noise.
-  const worlds = [0, 1, 2].map((n) => quickSave({ dayJob: false }, `thunder-${n}`));
+  const worlds = [0, 1, 2].map((n) => quickSave({}, `thunder-${n}`));
   const storms = (id: string) => {
     const c = city(id);
     const months = new Array<number>(12).fill(0);
@@ -269,31 +268,6 @@ describe('thunder', () => {
     expect(summer(madrid, [5, 6, 7, 8])).toBeGreaterThan(summer(madrid, [11, 12, 1, 2]) * 3);
     const sydney = storms('au-nsw-sydney').months;
     expect(summer(sydney, [11, 12, 1, 2, 3])).toBeGreaterThan(summer(sydney, [5, 6, 7, 8, 9]) * 3);
-  });
-});
-
-describe('outdoor work in the weather', () => {
-  it('is only ever slowed, and called off only in a thunderstorm', () => {
-    for (let i = 0; i < 60; i++) {
-      const outdoors = outdoorWeather(sim, 'uk-eng-london', sim.now + i * MS_DAY);
-      expect(outdoors.calledOff).toBe(outdoors.weather?.condition === 'Thunderstorm');
-      expect(outdoors.factor).toBeGreaterThan(0);
-      expect(outdoors.factor).toBeLessThanOrEqual(1);
-      if (outdoors.factor < 1) expect(outdoors.note).toMatch(/London/);
-      else expect(outdoors.note).toBeUndefined();
-    }
-  });
-
-  it('costs a wet day and spares a dry one', () => {
-    const c = city('uk-eng-london');
-    let wetSeen = false;
-    for (let i = 0; i < 60; i++) {
-      const at = sim.now + i * MS_DAY;
-      const day = weatherOn(sim, c, at);
-      const { factor } = outdoorWeather(sim, c.id, at);
-      if (day.precipitation !== 'none') { expect(factor).toBeLessThan(1); wetSeen = true; }
-    }
-    expect(wetSeen).toBe(true);
   });
 });
 

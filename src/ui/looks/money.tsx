@@ -62,7 +62,6 @@ const ACCOUNT_KIND: Readonly<Record<AccountKind, string>> = {
 const CATEGORY_WORDS: Readonly<Record<string, string>> = {
   opening: 'Carried From Before',
   groceries: 'Food',
-  production: 'Work',
 };
 
 const categoryWords = (key: string): string =>
@@ -141,7 +140,7 @@ defineLook<Account>('account', {
       ways,
       provenance: account.apr === undefined
         ? 'The balance is the sum of the postings against it, not a figure anybody typed in.'
-        : 'The balance is the sum of the postings against it. The rate is the one written on the account, and it is charged at each statement on a balance the last statement didn’t clear.',
+        : 'The balance is the sum of the postings against it. The rate is the one written on the account, and it’s charged at each statement on a balance the last statement didn’t clear.',
     };
   },
 });
@@ -315,6 +314,7 @@ function worthSentence(w: Worth, cur: string): string {
   if (w.cash > 0) parts.push(`${formatMoney(w.cash, cur)} in the bank`);
   if (w.cash < 0) parts.push(`${formatMoney(-w.cash, cur)} overdrawn`);
   if (w.held > 0) parts.push(`${formatMoney(w.held, cur)} held as a deposit`);
+  if (w.pension > 0) parts.push(`${formatMoney(w.pension, cur)} in a pension, locked until you retire`);
   if (w.liabilities > 0) parts.push(`${formatMoney(w.liabilities, cur)} owed against it`);
   if (parts.length === 0) {
     return 'You’re worth nothing at all today — no money anywhere and nothing owed.';

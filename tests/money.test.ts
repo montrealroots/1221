@@ -191,8 +191,12 @@ describe('money conservation in a live universe', () => {
     const worth = netWorth(sim, sim.player.id);
     expect(Number.isFinite(worth.total)).toBe(true);
     expect(Number.isInteger(worth.cash)).toBe(true);
-    // A deposit the landlord holds is theirs, and not money in the bank.
-    expect(worth.total).toBe(worth.cash + worth.held - worth.liabilities);
+    // A deposit the landlord holds is theirs, and not money in the bank; nor
+    // is what their pay put in a pension.
+    expect(worth.total).toBe(worth.cash + worth.held + worth.pension - worth.liabilities);
     expect(worth.held).toBeGreaterThanOrEqual(0);
+    // Nothing pays into a pension since the job engine went on 2026-09-26. A
+    // save from before keeps the fund its pay built, and net worth counts it.
+    expect(worth.pension).toBe(0);
   });
 });

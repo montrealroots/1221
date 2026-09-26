@@ -12,7 +12,7 @@
 import { describe, expect, it } from 'vitest';
 import { readFileSync, readdirSync } from 'node:fs';
 import {
-  CITIES, COUNTRIES, REGIONS, CITIES_IN_THE_WORLD, cityCount,
+  CITIES, jurisdictionPath, COUNTRIES, REGIONS, CITIES_IN_THE_WORLD, cityCount,
   cityTimeZone, distanceKm,
 } from '@/engine/content/geography';
 
@@ -179,5 +179,13 @@ describe('the city files on disk', () => {
       }
     }
     expect(missing, `city ids in the content that are nowhere in the world:\n${missing.join('\n')}`).toEqual([]);
+  });
+});
+
+describe('where a city sits in the law', () => {
+  it('gives every bundled city a jurisdiction path, a city-state straight under its country', () => {
+    const failed = CITIES.all().filter((c) => { try { jurisdictionPath(c.id); return false; } catch { return true; } });
+    expect(failed.map((c) => c.id)).toEqual([]);
+    expect(jurisdictionPath('sg-singapore')[0]).toBe('SG');
   });
 });

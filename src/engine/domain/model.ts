@@ -12,9 +12,10 @@ import type { Money } from '../core/money';
 import type { Account, LedgerTransaction } from '../core/ledger';
 import type { ScheduledItem } from '../core/scheduler';
 import type { HistoryRecord } from '../core/audit';
-import type { JobState } from '../systems/work';
 import type { HomeState } from '../systems/household';
 import type { CreditState } from '../systems/credit';
+import type { AlertSettings } from '../systems/statements';
+import type { PaymentSettings } from '../systems/payments';
 import type { IdNamespace } from '../core/ids';
 import type { PerformerTitle } from '../core/performer';
 
@@ -130,19 +131,10 @@ export interface Person {
    * would be worse than not asking.
    */
   background: string;
-  /**
-   * What they did for a living before acting, by id from
-   * `content/backgrounds.ts`. It set the fitness they started with, and the
-   * person look says it back. A save from before it was asked has none.
-   */
-  beforeActing?: string;
-  /**
-   * The job that pays the rent between roles (`systems/work.ts`): which one,
-   * where, the hours worked since payday, the shifts missed lately, and how
-   * far ahead the rota is on the calendar. Given to every character from
-   * schema 89.
-   */
-  job?: JobState;
+  // `beforeActing`, the day job (`job`) and the pay record behind benefits
+  // and tax returns (`earnings`) were here until 2026-09-26, when the owner
+  // kept SLATE to acting and the job engine was taken out. `migrate` in
+  // `engine/index.ts` takes them off a save from before.
   /**
    * Where they live and what kind of home it is (`systems/household.ts`):
    * the rent and bills due on the first, and the town the food is bought in.
@@ -155,6 +147,25 @@ export interface Person {
    * kept on the person.
    */
   credit?: CreditState;
+  /**
+   * The bank's alerts they've set (`systems/statements.ts`): the current
+   * account under a line, a payment over one, and a statement ready. From
+   * 2026-09-26; a save from before has the bank's defaults.
+   */
+  alerts?: AlertSettings;
+  /**
+   * How rent, bills and everyday spending are paid, whether savings backs
+   * the current account, their standing orders and the checks in the post
+   * (`systems/payments.ts`). From 2026-09-26; a save from before keeps the
+   * way it ran, everything from the bank with savings swept.
+   */
+  payments?: PaymentSettings;
+  /** Round-ups into savings, where the bank offers them, and the day's change so far. */
+  roundUps?: { on: boolean; pending: Money };
+  /** Money gone to the state or its scheme after years untouched, which can be claimed back. */
+  unclaimed?: { amount: Money; to: string; at: Instant }[];
+  /** Payments somebody else made on their cards: when, which, when they learned of it and when the statement showed it, whether they reported it, what the law left them and what came back. */
+  fraud?: { transactionId?: string; accountId: string; which: 'debit' | 'credit'; amount: Money; at: Instant; learnedAt: Instant; statedAt: Instant; reportedAt?: Instant; carried?: Money; refunded?: Money }[];
 
   wellbeing: Wellbeing;
 
@@ -224,167 +235,6 @@ export interface Person {
   raceEthnicityOwn?: string;
 
   createdAt: Instant;
-}
-
-// ---------------------------------------------------------------------------
-// What somebody wears
-// ---------------------------------------------------------------------------
-
-export interface Costume {
-  id: Id;
-  saveId: Id;
-  /** The workroom. Absent when you are making it at home. */
-  placeId?: Id;
-  /** The cutter, so the same person is there at every fitting. */
-  makerId?: Id;
-  /** For whom. A costume can be made for somebody else. */
-  forPersonId: Id;
-  /** 'house', 'tailor' or 'self'. */
-  maker: string;
-  kind: string;
-  cloth: string;
-  finish: string;
-  /** What is embroidered or printed inside it, in the player's own words. */
-  label?: string;
-  /** Yards the pattern needs, so a self-made one can check the stash. */
-  yards: number;
-  quotedPrice: Money;
-  deposit: Money;
-  depositPaidAt?: Instant;
-  balancePaidAt?: Instant;
-  status: 'quoted' | 'ordered' | 'fitting' | 'ready' | 'collected' | 'cancelled';
-  /** Fittings the workroom wants, and how many have happened. */
-  fittingsWanted: number;
-  fittingsDone: number;
-  /** Every fitting leaves a note. Skipping them costs the fit. */
-  fittingNotes: string[];
-  quotedAt: Instant;
-  orderedAt?: Instant;
-  readyAt?: Instant;
-  collectedAt?: Instant;
-  /** How well it came out, 0-100, once it is finished. */
-  quality?: number;
-  /** The finished garment, once it exists. */
-  assetId?: Id;
-  /** Why it was canceled, when it was. */
-  cancelledReason?: string;
-}
-
-export interface Order {
-  id: Id;
-  saveId: Id;
-  buyerId: Id;
-  buyerKind: 'person' | 'company';
-  retailerId: string;
-  channel: 'in_store' | 'online' | 'delivery' | 'pickup';
-  items: { catalogId: string; name: string; unitPrice: Money; quantity: number; category: string }[];
-  subtotal: Money;
-  tax: Money;
-  shipping: Money;
-  total: Money;
-  status: 'cart' | 'placed' | 'shipped' | 'delivered' | 'cancelled' | 'returned';
-  placedAt: Instant;
-  deliverAt?: Instant;
-  deliveredAt?: Instant;
-  paidFromAccountId: Id;
-  /** Assets created on delivery. */
-  createdAssetIds: Id[];
-  returnWindowEndsAt?: Instant;
-  refundedAmount?: Money;
-  giftFor?: Id;
-  /** The colorway chosen at the counter for each line that comes in colors. */
-  colours?: Record<string, string>;
-}
-
-/** Somebody's place in the education system where they live. */
-export interface Training {
-  id: Id;
-  saveId: Id;
-  personId: Id;
-  /** Which art, by its id in the week content. */
-  artId: string;
-  /** The gym, which is SLATE's own invention. */
-  gymName: string;
-  /** The grade held now. Empty for an art that grades nobody. */
-  gradeId: string;
-  /** When that grade was awarded, for the federations that publish a minimum time. */
-  gradedAt: Instant;
-  sessions: number;
-  /** Hours on the mat, which is what a grading panel is really weighing. */
-  hours: number;
-  /** Every grading sat, passed or not. */
-  gradings: { gradeId: string; at: Instant; passed: boolean }[];
-  /** Which week the session counter belongs to, so a week's limit is a week's. */
-  weekOf?: number;
-  thisWeek?: number;
-  startedAt: Instant;
-  endedAt?: Instant;
-}
-
-// ---------------------------------------------------------------------------
-// Track
-// ---------------------------------------------------------------------------
-
-/** A time somebody has actually run, and where they ran it. */
-export interface Mark {
-  eventId: string;
-  /** 'indoor' or 'outdoor'. */
-  surface: string;
-  seconds: number;
-  /** Meters a second, where the event reads it. Above the limit and it does not stand. */
-  wind?: number;
-  /** Whether the mark stands for a record or a ranking. */
-  legal: boolean;
-  at: Instant;
-  /** The meet it was run at. SLATE's own unless it is a real named meet. */
-  where: string;
-}
-
-/** Everything about somebody as a runner, which outlasts any one season. */
-export interface Running {
-  id: Id;
-  saveId: Id;
-  personId: Id;
-  /** The category they compete in: 'mens' or 'womens'. Their own choice. */
-  category: string;
-  /** The events they run. */
-  eventIds: string[];
-  /** Where they run: a school team, a university team, a club, or professionally. */
-  stage: string;
-  /** Who they run for. */
-  teamName?: string;
-  /**
-   * Condition, out of a hundred, built by training and lost by not.
-   *
-   * Read through the system rather than straight off the record: form falls
-   * away from the day it was last worked on, so the stored number is only the
-   * number it was then.
-   */
-  form: number;
-  /** The day the form was last put in. */
-  formAt: Instant;
-  /** Sessions put in, ever. */
-  sessions: number;
-  /** Every personal best, one per event and surface. */
-  bests: Mark[];
-  /** The best of this season, cleared when a new season starts. */
-  seasonBests: Mark[];
-  /** Set while hurt, and nothing can be run until it passes. */
-  injuredUntil?: Instant;
-  /** What the injury was, so it can be said out loud. */
-  injury?: string;
-  /** Whether they have turned professional. */
-  professional?: boolean;
-  /** A shoe contract, where there is one. */
-  contract?: {
-    brand: string;
-    aYear: Money;
-    from: Instant;
-    to: Instant;
-    /** What a global medal is worth on top. */
-    medalBonus: Money;
-  };
-  startedAt: Instant;
 }
 
 export interface DecisionItem {

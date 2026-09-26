@@ -564,7 +564,11 @@ export function cityDistanceKm(fromCityId: string, toCityId: string): number {
 /** Full jurisdiction path for a city, outermost first. Drives tax resolution. */
 export function jurisdictionPath(cityId: string): string[] {
   const c = CITIES.require(cityId);
-  const r = REGIONS.require(c.parentId);
+  // A city-state or a territory with no subdivisions (Singapore, Hong Kong,
+  // Macau, Aruba) has the country as its parent. Until 2026-09-26 the path
+  // required a region, and every wage, law and tax lookup there threw.
+  const r = REGIONS.get(c.parentId);
+  if (!r) return [COUNTRIES.require(c.countryId).jurisdictionCode, c.jurisdictionCode];
   const n = COUNTRIES.require(r.parentId);
   return [n.jurisdictionCode, r.jurisdictionCode, c.jurisdictionCode];
 }

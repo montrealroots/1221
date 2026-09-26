@@ -42,6 +42,7 @@ const REAL_NAMES_AS_WRITTEN = new Set([
   'dm',                 // German drugstore chain; lowercase in its own logo.
   'Pick n Pay',         // South African grocer; the n is lowercase on the sign.
   'iRobot Roomba j9+',  // Product name as the manufacturer writes it.
+  'Arion banki',        // Icelandic bank; banki is lowercase in its own name and signage.
   // Public examinations, written the way the country that sets them writes
   // them. A Chinese, Korean, Japanese, Hebrew or Arabic name has no capital
   // letters to check, and the Spanish, Portuguese and Indian ones carry

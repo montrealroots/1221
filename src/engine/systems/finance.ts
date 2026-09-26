@@ -18,6 +18,12 @@ export interface Worth {
   cash: Money;
   /** Theirs, held by somebody else: a rent deposit (`systems/household.ts`). */
   held: Money;
+  /**
+   * In a pension fund, theirs but locked until they retire. The day job's pay
+   * went into one until the job engine went on 2026-09-26; a save from before
+   * keeps it, and nothing adds to it now.
+   */
+  pension: Money;
   liabilities: Money;
   total: Money;
 }
@@ -30,14 +36,16 @@ export interface Worth {
 export function netWorth(sim: Simulation, ownerId: Id): Worth {
   let cash = 0;
   let held = 0;
+  let pension = 0;
   let liabilities = 0;
   // A deposit counted as money in the bank, and Home said 343,750 kr was in
   // the bank when 112,750 of it was with the landlord.
   for (const account of sim.ledger.accountsOf(ownerId)) {
     if (isLiability(account.kind)) liabilities += Math.max(0, -account.balance);
     else if (account.kind === 'escrow') held += account.balance;
+    else if (account.category === 'pension') pension += account.balance;
     else cash += account.balance;
   }
 
-  return { cash, held, liabilities, total: cash + held - liabilities };
+  return { cash, held, pension, liabilities, total: cash + held + pension - liabilities };
 }

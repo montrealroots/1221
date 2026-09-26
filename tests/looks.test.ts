@@ -456,17 +456,9 @@ describe('the sentence the player wrote', () => {
     player.background = '   ';
     player.interests = [];
     player.genres = [];
-    // As a save from before Before Acting was asked.
-    delete player.beforeActing;
 
     const found = resolveLook(sim, at('person', player.id)) as Looked;
     expect(found.body).toBeUndefined();
-  });
-
-  it('says what they did before acting', () => {
-    const sim = quickSave({ beforeActing: 'dance' }, 'before-acting-said');
-    const found = resolveLook(sim, at('person', sim.universe.playerId)) as Looked;
-    expect(wordsIn(found.body).join(' ')).toContain('Dance');
   });
 });
 

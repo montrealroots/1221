@@ -118,9 +118,9 @@ describe('looking after yourself', () => {
   // now (`mendsTo`), so it shows on every schedule.
   for (const night of [8, 5]) {
     it(`eight weeks of workouts on ${night}-hour nights build fitness, and with it condition and readiness`, () => {
-      // The body alone: no shifts, and money that never runs out.
-      const trained = quickSave({ dayJob: false, wealth: 'inherited' });
-      const idle = quickSave({ dayJob: false, wealth: 'inherited' });
+      // The body alone, and money that never runs out.
+      const trained = quickSave({ wealth: 'inherited' });
+      const idle = quickSave({ wealth: 'inherited' });
       for (let day = 0; day < 56; day++) {
         for (const sim of [trained, idle]) expect(sim.execute({ kind: 'life.sleep', payload: { hours: night } }).ok).toBe(true);
         const result = doIt(trained, 'exercise');

@@ -31,6 +31,17 @@ export function isLiability(kind: AccountKind): boolean {
   return LIABILITY_KINDS.includes(kind);
 }
 
+/** A card in the hand: its number's last four, its expiry, whether it's locked or stopped and why, a replacement on its way, and whether the bills on it still have its number. */
+export interface Plastic {
+  last4: string;
+  expiresAt: Instant;
+  issued?: number;
+  locked?: boolean;
+  stopped?: 'lost' | 'stolen' | 'damaged' | 'fraud';
+  replacementAt?: Instant;
+  billersStale?: boolean;
+}
+
 export interface Account {
   id: string;
   saveId: string;
@@ -52,6 +63,72 @@ export interface Account {
   /** Grouping for statements: 'housing', 'transport', 'career', ... */
   category?: string;
   last4?: string;
+  /** The card on it: the debit card on a current account, the credit card on a card's own (`systems/security.ts`). */
+  plastic?: Plastic;
+  /** The real bank it is held at (`content/banks.ts`), for a bank account. */
+  bankId?: string;
+  /** The account's number as its country writes it (`systems/banknumber.ts`). */
+  number?: string;
+  /** Interest built up since it was last paid, in fractional hundredths. */
+  accrued?: number;
+  /** The lowest it has stood at this month, for a fee's waiver. */
+  lowest?: Money;
+  /** The month's daily balances added up, and the days counted, for an average balance. */
+  monthSum?: number;
+  monthDays?: number;
+  /** A bonus rate's interest this month, kept only if the month earns it. */
+  bonusAccrued?: number;
+  /** What it held when the month began, for a bonus paid on growth. */
+  monthOpen?: Money;
+  /** An arranged overdraft: its limit, its rate, when it was arranged, and interest built on it (`systems/lending.ts`). */
+  overdraftLimit?: Money;
+  overdraftRate?: number;
+  overdraftSince?: Instant;
+  odAccrued?: number;
+  /** Overdraft items charged today, where a bank charges by the item and caps the day. */
+  itemsDay?: string;
+  itemsCount?: number;
+  /** A term deposit's fixed rate and the day it ends. */
+  fixedRate?: number;
+  maturesAt?: Instant;
+  /** Items charged this month, where a bank caps them by the month. */
+  itemsMonth?: string;
+  itemsMonthCount?: number;
+  /** The most the account was overdrawn this month, for Spain's commission. */
+  odPeak?: Money;
+  /** The month's overdrawn balances, summed day by day, for Spain's legal cap on what an overdraft may cost. */
+  odDaySum?: Money;
+  /** Midnights this month the account sat past its limit by more than the bank's margin, for New Zealand's unarranged overdraft fee. */
+  odBeyondDays?: number;
+  /** Items that overdrew it on a day, whose fees wait for the end of the next business day (Chase, Wells Fargo). */
+  pendingItems?: { day: string; count: number }[];
+  /** Since when it has been below zero past any arranged limit, for the bank closing it. */
+  negativeSince?: number;
+  /** The last day a payment took it below zero, for a bank that charges one fee for a day that ends overdrawn. */
+  overdrewDay?: string;
+  /** Opted into the bank paying everyday debit card purchases into an overdraft (a US bank's Regulation E choice). */
+  debitOverdraft?: boolean;
+  /** When a returned payment's fee, the debit card's yearly fee and a dormant account's fee were last charged. */
+  returnedAt?: Instant;
+  cardFeeAt?: Instant;
+  dormantFeeAt?: Instant;
+  /** Germany: the quarter's fees so far, charged at the quarterly closing. */
+  feesDue?: Money;
+  /** Untouched past the bank's months: inactive, then dormant and blocked until used again. */
+  inactive?: boolean;
+  dormant?: boolean;
+  /** When its holder last had a dormant account reactivated, which counts as using it. */
+  reactivatedAt?: Instant;
+  /** A term deposit renewed: until when it can be taken without penalty, and whether the bank has written about its end. */
+  graceUntil?: Instant;
+  maturityNoticed?: boolean;
+  /** When a term deposit last renewed: its current term runs from here. */
+  renewedAt?: Instant;
+  /** What its holder has told the bank to do with a term deposit at its end, where it differs from the bank's default. */
+  atEnd?: 'renews' | 'savings' | 'paid_out';
+  /** A loan's monthly payment and its term. */
+  loanPayment?: Money;
+  loanMonths?: number;
 }
 
 export interface Posting {
@@ -74,6 +151,8 @@ export interface LedgerTransaction {
   /** Set when a transaction has been reversed; points at the reversing txn. */
   reversedBy?: string;
   reverses?: string;
+  /** A card payment authorized and held against the available balance, posting then (`systems/pending.ts`). */
+  postsAt?: Instant;
 }
 
 export interface LedgerHost {

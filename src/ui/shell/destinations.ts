@@ -40,6 +40,13 @@ export const DESTINATIONS: readonly DestinationGroup[] = [
       { route: '/workspace/calendar', label: 'Calendar', detail: 'Every commitment you have', homeOnly: true },
     ],
   },
+  {
+    label: 'Your Money',
+    items: [
+      // Opened from the Money panel, which names the bank it goes to.
+      { route: '/workspace/bank', label: 'Your Bank', detail: 'Your accounts, and moving money between them', homeOnly: true },
+    ],
+  },
 ];
 
 /**

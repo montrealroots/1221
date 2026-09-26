@@ -8,10 +8,9 @@
  * correlated — a cold snap lasts, a wet spell lingers — because the noise
  * that drives a day is blended from the days around it.
  *
- * Everything the weather does to the world goes through here too: a
- * thunderstorm that calls off an outdoor shift (`outdoorWeather`) is not a
- * coin flip, it is the weather that day at that location. It was an exterior
- * shoot day in the production system once, and the production system is gone.
+ * A thunderstorm called off an outdoor shift here until 2026-09-26, and an
+ * exterior shoot day before that. Both systems went; the sky decides nothing
+ * now but what it shows.
  */
 
 import type { Simulation } from '../core/simulation';
@@ -404,44 +403,7 @@ export function weatherShort(condition: WeatherCondition): string {
   return SHORT[condition];
 }
 
-/**
- * What a day's weather does to work done outdoors.
- *
- * One is a full day. Everything else is the weather that day at that place,
- * not a roll of the dice: a storm halves the day, snow and rain cost a lot,
- * drizzle and fog a little, and heat past the high thirties or a deep freeze
- * slows anybody whatever the sky is doing. A thunderstorm calls it off
- * (`calledOff`), as lightning shuts a building site or a pitch: an outdoor
- * shift doesn't happen and isn't paid (`systems/work.ts`).
- *
- * It was named for an exterior shoot day and said the production system used
- * it. The production system went in the gut, and until the outdoor shift
- * nothing read it but screens that said it did.
- */
-/** A day that gets through this little outdoors, a thunderstorm's, is called off. */
-const CALLED_OFF = 0.5;
-
-export function outdoorWeather(sim: Simulation, locationId: string, instant: Instant): { factor: number; calledOff: boolean; weather?: DayWeather; note?: string } {
-  const city = CITIES.get(locationId);
-  if (!city) return { factor: 1, calledOff: false };
-  const weather = weatherOn(sim, city, instant);
-
-  let factor = 1;
-  switch (weather.condition) {
-    case 'Thunderstorm': factor = 0.45; break;
-    case 'Snow': factor = 0.6; break;
-    case 'Rain': factor = 0.7; break;
-    case 'Drizzle': factor = 0.85; break;
-    case 'Fog': factor = 0.85; break;
-    case 'Windy': factor = 0.9; break;
-    default: factor = 1;
-  }
-  if (weather.highC >= 38) factor = Math.min(factor, 0.85);
-  if (weather.lowC <= -15) factor = Math.min(factor, 0.8);
-
-  const unit = weather.fahrenheit ? '°F' : '°C';
-  const note = factor < 1
-    ? `${weather.condition} in ${city.name}, ${weather.low}${unit} to ${weather.high}${unit}. Outdoor work slowed.`
-    : undefined;
-  return { factor, calledOff: factor <= CALLED_OFF, weather, note };
-}
+// `outdoorWeather`, what a day's weather did to work done outdoors, was here
+// until 2026-09-26. It was named for an exterior shoot day, lost its reader
+// when the production system went, found one in the outdoor shift, and went
+// with the job engine.

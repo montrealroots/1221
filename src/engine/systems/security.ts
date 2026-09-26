@@ -1,0 +1,314 @@
+/**
+ * SLATE — the card in the hand: locked, lost, stolen, expiring, and used by
+ * somebody else (module 6 of `docs/BANKING-FUNCTIONS.md`), from each bank's
+ * own terms and each country's law (`content/security.ts`).
+ *
+ * - **Lock and unlock** (A142, C84): nothing new goes on a locked card; the
+ *   bills already on it still go through, as Chase, Citi, Wells Fargo and
+ *   Scotiabank say theirs do.
+ * - **Report it lost, stolen or damaged** (A143, C85, A115, C66): stopped at
+ *   once, and a new card with a new number follows in the bank's days, for
+ *   its fee where it lists one, faster for its rush fee where it has one. A
+ *   bank that lists no fee is taken to charge none, and the screen says so.
+ * - **The bills on a replaced card** (A85): where the bank passes the new
+ *   number on, they go on; where it doesn't, or doesn't say, they're
+ *   declined until the holder gives it to them.
+ * - **Expiry** (A144, C88): a new card with the same number a month before,
+ *   at the bank's years where it says, SLATE's estimate of four where not.
+ * - **A new account number** (A25), where the bank moves a compromised
+ *   account itself (Bank of America, Citi, Capital One, ANZ).
+ * - **Somebody else's use** (A120, A121, A122, A148, C69, C72, C96): on a
+ *   day chosen by the country's official yearly rate (`bank.fraud`), the
+ *   size of the country's average case; the bank stops the share its
+ *   country's banks stop, blocks the card and asks, and a new one follows
+ *   free. The rest goes through, and is found by an alert or on the
+ *   statement. Reported, the law sets what the holder carries (the US's
+ *   $50, $500 or everything by how fast; Europe's €50; Britain's £35;
+ *   Australia's $150) and how fast the rest comes back. Unreported past the
+ *   law's days, it's the holder's. Japan and Korea have no official rate,
+ *   so nobody there meets it.
+ *
+ * The draw is in this file and is `bank.fraud`'s (`src/engine/decided.ts`).
+ */
+
+import type { Simulation } from '../core/simulation';
+import { CommandError } from '../core/simulation';
+import type { Person } from '../domain/model';
+import type { Account, Plastic } from '../core/ledger';
+import { formatMoney, saveCurrency, type Money } from '../core/money';
+import { dateKey, formatDate, MS_DAY, type Instant } from '../core/time';
+import { exchange } from '../content/currency';
+import { bankById } from '../content/banks';
+import { FRAUD_LAW, SECURITY } from '../content/security';
+import { cardOf } from './credit';
+import { accountNumber } from './banknumber';
+import { alertsOf } from './statements';
+
+export type Which = 'debit' | 'credit';
+
+/** Years a card is valid where the bank doesn't say: SLATE's estimate, the middle of the three to five Visa's and Mastercard's issuers use. */
+export const ESTIMATE_YEARS = 4;
+/** Business days a replacement takes where the bank doesn't say, and a rush one: SLATE's estimate. */
+export const ESTIMATE_DAYS = 7;
+export const ESTIMATE_RUSH_DAYS = 3;
+/** Business days a refund takes where the law names none: SLATE's estimate, the US's ten. */
+export const ESTIMATE_REFUND_DAYS = 10;
+export const REPLACED_KIND = 'card.replaced';
+export const REFUND_KIND = 'bank.fraud_refund';
+
+/** Business days as calendar days, a week's five in seven. */
+const calendarDays = (business: number) => Math.ceil(business * 7 / 5);
+
+function currentOf(sim: Simulation, person: Person): Account | undefined {
+  const account = person.primaryAccountId ? sim.universe.accounts[person.primaryAccountId] : undefined;
+  return account && !account.closedAt ? account : undefined;
+}
+
+/** The account a card draws on: the current account for the debit card, the card's own for the credit card. */
+export function cardAccount(sim: Simulation, person: Person, which: Which): Account | undefined {
+  return which === 'debit' ? currentOf(sim, person) : cardOf(sim, person);
+}
+
+function yearsFor(account: Account, which: Which): number {
+  const rules = account.bankId ? SECURITY[account.bankId] : undefined;
+  return (which === 'credit' ? rules?.cardYearsCredit ?? rules?.cardYears : rules?.cardYears) ?? ESTIMATE_YEARS;
+}
+
+/** The card itself, made the first time it's asked for: its last four, and an expiry its years from opening, the next still to come. */
+export function plasticOf(sim: Simulation, account: Account, which: Which): Plastic {
+  account.plastic ??= plasticView(sim, account, which);
+  return account.plastic;
+}
+
+/** The card as it stands, or as it would be made, without making it: for the screen. */
+export function plasticView(sim: Simulation, account: Account, which: Which): Plastic {
+  if (account.plastic) return account.plastic;
+  const years = yearsFor(account, which) * 365.25 * MS_DAY;
+  let expiresAt = account.openedAt + years;
+  while (expiresAt <= sim.now) expiresAt += years;
+  return { last4: account.last4 ?? last4For(account.id), expiresAt, issued: 1 };
+}
+
+/** Whether a card can be used: a new purchase needs it unlocked and not stopped; a bill already on it needs it not stopped, and its number given to the biller. */
+export function cardWorks(account: Account | undefined, recurring = false): boolean {
+  const p = account?.plastic;
+  if (!account || p?.stopped) return false;
+  if (recurring) return !p?.billersStale;
+  return !p?.locked;
+}
+
+/**
+ * The last four a card is printed with, spread from its account's id, not
+ * drawn. Until 2026-09-26 they were the id's own digits, and an id with too
+ * few printed a new card as ···0000.
+ */
+export function last4For(id: string): string {
+  let h = 7;
+  for (const c of id) h = (h * 31 + c.charCodeAt(0)) % 1_000_003;
+  return String(h % 10_000).padStart(4, '0');
+}
+
+/** A new number for a replacement card: the next along from the last, not drawn. */
+function nextLast4(p: Plastic): string {
+  return String((Number(p.last4) + 3571 * (p.issued ?? 1)) % 10_000).padStart(4, '0');
+}
+
+function inSave(sim: Simulation, amount: Money, currency: string): Money {
+  const into = saveCurrency(sim.universe);
+  return into === currency ? amount : exchange(amount, currency, into) ?? amount;
+}
+
+/** Stops a card and sends a replacement: in the bank's days, or its rush days. */
+function replace(sim: Simulation, account: Account, which: Which, why: NonNullable<Plastic['stopped']>, rush: boolean): Instant {
+  const p = plasticOf(sim, account, which);
+  const rules = account.bankId ? SECURITY[account.bankId] : undefined;
+  p.stopped = why;
+  const days = rush ? rules?.rushDays ?? ESTIMATE_RUSH_DAYS : rules?.standardDays ?? ESTIMATE_DAYS;
+  p.replacementAt = sim.now + Math.max(1, calendarDays(days)) * MS_DAY;
+  sim.schedule({ at: p.replacementAt, kind: REPLACED_KIND, label: 'Your New Card Arrives', category: 'home', priority: 38, payload: { accountId: account.id, which } });
+  return p.replacementAt;
+}
+
+/** What the law leaves the holder to carry of an amount used without them, reported so many days after they learned of it. */
+export function liabilityFor(sim: Simulation, account: Account, which: Which, amount: Money, daysLate: number): Money {
+  const bank = account.bankId ? bankById(account.bankId) : undefined;
+  const law = bank ? FRAUD_LAW[bank.iso] : undefined;
+  if (!bank || !law) return amount;
+  const money = law.inEuros ? 'EUR' : bank.currency;
+  if (which === 'credit' && law.creditMax !== undefined) return Math.min(amount, inSave(sim, law.creditMax, money));
+  const tier = law.debitTiers.find((t) => t.withinDays === undefined || daysLate <= t.withinDays);
+  if (!tier || tier.max === undefined) return amount;
+  return Math.min(amount, inSave(sim, tier.max, money));
+}
+
+/** The next statement after a moment, by which the holder is taken to have seen a charge: the card's next, or the account's month's end. */
+function statementAfter(sim: Simulation, which: Which, at: Instant): Instant {
+  if (which === 'credit') {
+    const next = sim.universe.scheduled.find((one) => one.kind === 'card.statement' && one.status === 'pending');
+    if (next && next.at > at) return next.at;
+  }
+  const d = new Date(at);
+  return Date.UTC(d.getUTCFullYear(), d.getUTCMonth() + 1, 1);
+}
+
+export function registerSecurity(sim: Simulation): void {
+  sim.onSchedule(REPLACED_KIND, (item, s) => {
+    const account = s.universe.accounts[String(item.payload.accountId)];
+    const which = item.payload.which as Which;
+    if (!account || account.closedAt || !account.plastic) return;
+    const p = account.plastic;
+    const rules = account.bankId ? SECURITY[account.bankId] : undefined;
+    p.last4 = nextLast4(p);
+    p.issued = (p.issued ?? 1) + 1;
+    delete p.stopped;
+    delete p.replacementAt;
+    delete p.locked;
+    p.expiresAt = s.now + yearsFor(account, which) * 365.25 * MS_DAY;
+    // A new number reaches the bills on the card only where the bank passes it on.
+    if (which === 'credit' && rules?.updaterToBills !== true) p.billersStale = true;
+    if (account.ownerId === s.universe.playerId) {
+      s.notify({ category: 'money', title: 'Your New Card Arrived', body: `Ending ${p.last4}.${p.billersStale ? ' The bills on the old number will be declined until you give them the new one.' : ''}`, importance: 50, route: '/workspace/bank' });
+    }
+  });
+
+  sim.onSchedule(REFUND_KIND, (item, s) => {
+    const person = s.universe.people[String(item.payload.personId)];
+    const one = person?.fraud?.[Number(item.payload.index)];
+    const account = one ? s.universe.accounts[one.accountId] : undefined;
+    if (!person || !one || !account || one.refunded !== undefined) return;
+    const back = one.amount - (one.carried ?? 0);
+    one.refunded = back;
+    if (back > 0) s.post({ memo: 'Refund: a payment you didn’t make', category: 'refund', postings: [{ accountId: account.id, amount: back }, { accountId: s.nominalAccount('expense', 'Unauthorized Use').id, amount: -back }] });
+    if (person.id === s.universe.playerId) s.notify({ category: 'money', title: 'Refunded', body: `${formatMoney(back, saveCurrency(s.universe))} back for the payment you didn’t make.${one.carried ? ` The law leaves you ${formatMoney(one.carried, saveCurrency(s.universe))} of it.` : ''}`, importance: 50, route: '/workspace/bank' });
+  });
+
+  sim.onEvent('world.day_rollover', 'bank.security', (_event, { sim: s }) => {
+    const person = s.player;
+    for (const which of ['debit', 'credit'] as const) {
+      const account = cardAccount(s, person, which);
+      if (!account) continue;
+      const p = plasticOf(s, account, which);
+      // A month before it expires, a new card with the same number (A144, C88).
+      if (!p.stopped && p.expiresAt - s.now <= 30 * MS_DAY) {
+        p.expiresAt += yearsFor(account, which) * 365.25 * MS_DAY;
+        s.notify({ category: 'money', title: 'A New Card Is On Its Way', body: `Your ${which} card ending ${p.last4} expires soon. The new one has the same number and expires ${formatDate(p.expiresAt, s.zone)}.`, importance: 35 });
+      }
+    }
+    somebodyElse(s, person);
+  });
+
+  sim.onCommand<{ which: Which; locked: boolean }, { locked: boolean }>('card.lock', (p, { sim: s }) => {
+    const account = cardAccount(s, s.player, p.which);
+    if (!account) throw new CommandError(p.which === 'debit' ? 'You have no current account.' : 'You don’t have a card.');
+    if (account.bankId && SECURITY[account.bankId]?.lockInApp === false) throw new CommandError(`${account.institution ?? 'The bank'} locks a card only by phone.`);
+    const plastic = plasticOf(s, account, p.which);
+    if (plastic.stopped) throw new CommandError('That card is stopped; a new one is on its way.');
+    plastic.locked = Boolean(p.locked);
+    return { locked: plastic.locked };
+  });
+
+  sim.onCommand<{ which: Which; why: 'lost' | 'stolen' | 'damaged'; rush?: boolean }, { arrivesAt: Instant; fee: Money }>('card.report', (p, { sim: s }) => {
+    const person = s.player;
+    const account = cardAccount(s, person, p.which);
+    if (!account) throw new CommandError(p.which === 'debit' ? 'You have no current account.' : 'You don’t have a card.');
+    if (!['lost', 'stolen', 'damaged'].includes(p.why)) throw new CommandError('Lost, stolen or damaged.');
+    const plastic = plasticOf(s, account, p.which);
+    if (plastic.stopped) throw new CommandError('That card is stopped already; a new one is on its way.');
+    const rules = account.bankId ? SECURITY[account.bankId] : undefined;
+    const bank = account.bankId ? bankById(account.bankId) : undefined;
+    if (p.rush && rules?.rushFee === undefined) throw new CommandError(`${account.institution ?? 'The bank'} has no rush replacement SLATE knows of.`);
+    // The bank's fee, where it lists one, unless it replaces a card free for this reason.
+    const listed = p.which === 'debit' ? rules?.replaceFeeDebit : rules?.replaceFeeCredit;
+    const free = rules?.freeFor?.includes(p.why) ?? false;
+    const fee = inSave(s, (free ? 0 : listed ?? 0) + (p.rush ? rules?.rushFee ?? 0 : 0), bank?.currency ?? saveCurrency(s.universe));
+    const arrivesAt = replace(s, account, p.which, p.why, Boolean(p.rush));
+    if (fee > 0) {
+      const label = p.rush ? 'Rush replacement card fee' : 'Replacement card fee';
+      s.post({ memo: label, category: p.which === 'debit' ? 'bank_fee' : 'fees', postings: [{ accountId: account.id, amount: -fee }, { accountId: s.nominalAccount('expense', p.which === 'debit' ? 'Bank Fees' : 'Card Fees').id, amount: fee }] });
+    }
+    return { arrivesAt, fee };
+  });
+
+  sim.onCommand<Record<string, never>, { updated: boolean }>('card.update_billers', (_p, { sim: s }) => {
+    const card = cardOf(s, s.player);
+    if (!card?.plastic?.billersStale) throw new CommandError('Your bills already have your card’s number.');
+    delete card.plastic.billersStale;
+    return { updated: true };
+  });
+
+  sim.onCommand<Record<string, never>, { number: string }>('bank.new_number', (_p, { sim: s }) => {
+    const person = s.player;
+    const current = currentOf(s, person);
+    const bank = current?.bankId ? bankById(current.bankId) : undefined;
+    if (!current || !bank) throw new CommandError('You have no current account.');
+    if (!SECURITY[bank.id]?.newNumberOnFraud) throw new CommandError(`${bank.name} doesn’t say it moves an account to a new number; closing it and opening another does.`);
+    current.number = accountNumber(s, person, bank, 'checking', (current.plastic?.issued ?? 1) + 1);
+    current.last4 = current.number.replace(/\D/g, '').slice(-4);
+    replace(s, current, 'debit', 'fraud', false);
+    return { number: current.number };
+  });
+
+  sim.onCommand<{ index: number }, { carried: Money; refundAt: Instant }>('card.dispute', (p, { sim: s }) => {
+    const person = s.player;
+    const one = person.fraud?.[Number(p.index)];
+    const account = one ? s.universe.accounts[one.accountId] : undefined;
+    if (!one || !account) throw new CommandError('That isn’t a payment on your accounts.');
+    if (one.reportedAt !== undefined) throw new CommandError('You’ve reported it already.');
+    const bank = account.bankId ? bankById(account.bankId) : undefined;
+    const law = bank ? FRAUD_LAW[bank.iso] : undefined;
+    const claimDays = law?.claimDays;
+    if (claimDays !== undefined && s.now - one.statedAt > claimDays * MS_DAY) throw new CommandError(`The law gives ${claimDays} days from the statement to report it, and they’ve passed.`);
+    one.reportedAt = s.now;
+    one.carried = liabilityFor(s, account, one.which, one.amount, Math.floor((s.now - one.learnedAt) / MS_DAY));
+    const refundAt = s.now + calendarDays(law?.refundDays ?? ESTIMATE_REFUND_DAYS) * MS_DAY;
+    s.schedule({ at: refundAt, kind: REFUND_KIND, label: 'A Refund From The Bank', category: 'home', priority: 38, payload: { personId: person.id, index: Number(p.index) } });
+    // The card it was used on is stopped and replaced, free.
+    if (!account.plastic?.stopped) replace(s, account, one.which, 'fraud', false);
+    return { carried: one.carried, refundAt };
+  });
+}
+
+/**
+ * The day's chance of somebody else using the card, at the country's
+ * official yearly rate spread over its days; the size of the country's
+ * average case, from a quarter of it to seven quarters (SLATE's estimate of
+ * the spread); stopped by the bank at its country's share.
+ */
+export function fraudOn(sim: Simulation, person: Person, at: Instant): { which: Which; account: Account; amount: Money; stopped: boolean } | undefined {
+  const rng = sim.rng('bank.fraud', person.id, dateKey(at, sim.zone));
+  const credit = cardOf(sim, person);
+  const which: Which | undefined = credit && cardWorks(credit) && rng.next() < 0.5 ? 'credit' : cardWorks(currentOf(sim, person)) ? 'debit' : undefined;
+  if (!which) return undefined;
+  const account = cardAccount(sim, person, which)!;
+  const bank = account.bankId ? bankById(account.bankId) : undefined;
+  const law = bank ? FRAUD_LAW[bank.iso] : undefined;
+  if (!bank || !law?.fraudRate || !law.avgLoss) return undefined;
+  const daily = 1 - (1 - law.fraudRate) ** (1 / 365);
+  if (rng.next() >= daily) return undefined;
+  const amount = Math.max(100, Math.round(inSave(sim, law.avgLoss, law.avgLossCurrency ?? bank.currency) * (0.25 + 1.5 * rng.next())));
+  return { which, account, amount, stopped: rng.next() < (law.preventedShare ?? 0) };
+}
+
+function somebodyElse(sim: Simulation, person: Person): void {
+  const hit = fraudOn(sim, person, sim.now);
+  if (!hit) return;
+  const { which, account, amount } = hit;
+  const bank = bankById(account.bankId!)!;
+  const cur = saveCurrency(sim.universe);
+  plasticOf(sim, account, which);
+  if (hit.stopped) {
+    // Stopped: the bank declines it, asks, and on the answer that it wasn't them, blocks the card and sends another free (A148, C96).
+    replace(sim, account, which, 'fraud', false);
+    if (person.id === sim.universe.playerId) sim.notify({ category: 'money', title: 'Your Bank Stopped A Payment', body: `Somebody tried to spend ${formatMoney(amount, cur)} on your ${which} card ending ${account.plastic!.last4}. ${bank.name} declined it and asked; it wasn’t you, so the card is blocked and a new one is on its way, free.`, importance: 70, route: '/workspace/bank' });
+    return;
+  }
+  const tx = sim.post({ memo: 'Card purchase', category: 'card-fraud', postings: [{ accountId: account.id, amount: -amount }, { accountId: sim.nominalAccount('expense', 'Unauthorized Use').id, amount }] });
+  // Learned of at once where an alert catches it, otherwise at the statement.
+  const alert = alertsOf(person).largePayment;
+  const statedAt = statementAfter(sim, which, sim.now);
+  const learnedAt = alert !== undefined && amount >= alert ? sim.now : statedAt;
+  person.fraud = [...(person.fraud ?? []), { transactionId: tx?.id, accountId: account.id, which, amount, at: sim.now, learnedAt, statedAt }];
+  if (alert !== undefined && amount >= alert && person.id === sim.universe.playerId) {
+    sim.notify({ category: 'money', title: 'A Large Payment', body: `${formatMoney(amount, cur)} on your ${which} card ending ${account.plastic!.last4}. If it wasn’t you, report it.`, importance: 70, route: '/workspace/bank' });
+  }
+}

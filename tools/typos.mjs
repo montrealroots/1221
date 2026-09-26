@@ -160,7 +160,7 @@ function isClassNameOrHyphenated(line, match, index) {
  * being wrong, so the handful that are genuinely doubled are listed rather
  * than flagged.
  */
-const REAL_DOUBLED = new Set(['Sa Sa', 'Kai Kai', 'Duran Duran', 'Boutros Boutros', 'La La Land']);
+const REAL_DOUBLED = new Set(['Sa Sa', 'Kai Kai', 'Duran Duran', 'Boutros Boutros', 'La La Land', 'Don Don Donki', 'Vuba Vuba', 'Kichi Kichi']);
 
 function isRealDoubledName(line, index) {
   return [...REAL_DOUBLED].some((name) => line.slice(index, index + name.length) === name);

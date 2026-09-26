@@ -9,17 +9,21 @@
  * and bills are SLATE's estimates of what a person spends, at the town's cost
  * of living, with the town's sales tax on food.
  *
- * Rent and bills fall due at eight in the evening on the first, after a
- * payday that falls that day: due at nine, they went on the card eight hours
- * before an Icelandic wage arrived.
+ * Rent and bills fall due at eight in the evening on the first. It was set
+ * after the day job's payday that fell that day: due at nine, they went on
+ * the card eight hours before an Icelandic wage arrived. The payday went with
+ * the job engine on 2026-09-26, and the hour stayed.
  *
- * Money comes out of checking first, then savings, as a bank sweeps an
- * account that runs dry, then the card while it has room. Savings were shown
- * as a cushion and nothing ever drew on them: a character could be evicted
- * with money in the bank. What
- * neither can cover: the rent and bills are owed to the landlord, and paid
- * off the first day there is money to pay them; the day's food isn't bought,
- * and the day is eaten thin (`eatWhatThereIs` in `systems/life.ts`).
+ * Each is paid the way the character pays it (`systems/payments.ts`): rent
+ * and bills from the current account on the day, with its overdraft and any
+ * savings linked to it, or by check, or on the card for the bills, or by hand;
+ * the day's food on the debit card or the credit card. Until 2026-09-26 every
+ * payment fell through checking, then savings, then the card, and a landlord
+ * was paid by credit card whenever the bank ran short. A payment the account
+ * can't make goes back unpaid, with the bank's fee, and the rent and bills are
+ * owed to the landlord, paid off the first day there is money to pay them; the
+ * day's food isn't bought, and the day is eaten thin (`eatWhatThereIs` in
+ * `systems/life.ts`).
  * Owing, or a card at its limit, weighs on somebody every day it lasts.
  *
  * Owing two months' rent brings a notice to pay or quit: thirty days to get
@@ -49,6 +53,11 @@ import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { instantFromZoned, zonedParts, type Instant } from '../core/time';
 import { clamp } from '../core/rng';
 import { personalityOf } from './personality';
+import { chargeForItem, chargeForPurchase, chargeReturned, overdraftHeadroom, purchaseMayOverdraw } from './lending';
+import { paymentsOf, setPaymentHooks, writeCheck } from './payments';
+import { cardRoom } from './credit';
+import { roundUpOf, roundUpsOn } from './accountlife';
+import { hold } from './pending';
 import { CommandError } from '../core/simulation';
 
 export const RENT_KIND = 'home.rent';
@@ -184,8 +193,9 @@ function arrearsAccount(sim: Simulation, person: Person): Account {
   });
 }
 
+/** Easy-access savings: a term deposit is locked until its end. */
 function savingsOf(sim: Simulation, person: Person): Account | undefined {
-  return accountsOf(sim, person).find((a) => a.kind === 'savings');
+  return accountsOf(sim, person).find((a) => a.kind === 'savings' && a.category !== 'term');
 }
 
 /** What checking and savings hold between them, now. */
@@ -193,14 +203,20 @@ export function inTheBank(sim: Simulation, person: Person): Money {
   return Math.max(0, checkingOf(sim, person)?.balance ?? 0) + Math.max(0, savingsOf(sim, person)?.balance ?? 0);
 }
 
+/** What a payment from the current account can reach: the account, and savings where it's linked to it. */
+function reachable(sim: Simulation, person: Person): Money {
+  return Math.max(0, checkingOf(sim, person)?.balance ?? 0) + (paymentsOf(person).linkSavings ? Math.max(0, savingsOf(sim, person)?.balance ?? 0) : 0);
+}
+
 /**
  * The postings that take an amount out of checking, then savings, as far as
- * they go, and what's left.
+ * they go, then, where asked, the current account's overdraft
+ * (`systems/lending.ts`), and what's left.
  */
-export function drawFromBank(sim: Simulation, person: Person, amount: Money): { postings: { accountId: string; amount: Money }[]; short: Money } {
+export function drawFromBank(sim: Simulation, person: Person, amount: Money, withOverdraft = false, fromSavings = paymentsOf(person).linkSavings): { postings: { accountId: string; amount: Money }[]; short: Money } {
   const postings: { accountId: string; amount: Money }[] = [];
   let left = amount;
-  for (const account of [checkingOf(sim, person), savingsOf(sim, person)]) {
+  for (const account of [checkingOf(sim, person), fromSavings ? savingsOf(sim, person) : undefined]) {
     if (!account || left <= 0) continue;
     const take = Math.min(left, Math.max(0, account.balance));
     if (take > 0) {
@@ -208,14 +224,85 @@ export function drawFromBank(sim: Simulation, person: Person, amount: Money): { 
       left -= take;
     }
   }
+  const current = checkingOf(sim, person);
+  if (withOverdraft && current && left > 0) {
+    const take = Math.min(left, overdraftHeadroom(sim, person));
+    if (take > 0) {
+      postings.push({ accountId: current.id, amount: -take });
+      left -= take;
+    }
+  }
   return { postings, short: left };
 }
 
-/** What the bank and the card can pay between them, now. */
-export function canPay(sim: Simulation, person: Person): Money {
+/** What the current account (with linked savings), its overdraft where it may be used, and the card can pay between them, now. */
+export function canPay(sim: Simulation, person: Person, overdraft = true): Money {
+  const free = cardRoom(person, cardOf(sim, person));
+  return reachable(sim, person) + (overdraft ? overdraftHeadroom(sim, person) : 0) + free;
+}
+
+/**
+ * Pays from the current account, its overdraft and any savings linked to it,
+ * all of it or none, as a direct debit, standing order or cashed check is
+ * paid. True if it went.
+ */
+export function payFromCurrent(sim: Simulation, person: Person, amount: Money, memo: string, category: string): boolean {
+  if (amount <= 0) return true;
+  if (reachable(sim, person) + overdraftHeadroom(sim, person) < amount) return false;
+  const current = checkingOf(sim, person);
+  const before = current?.balance ?? 0;
+  const bank = drawFromBank(sim, person, amount, true);
+  sim.post({ memo, category, postings: [{ accountId: sim.nominalAccount('expense', expenseFor(category)).id, amount }, ...bank.postings] });
+  if (current && current.balance < 0 && current.balance < before) chargeForItem(sim, person);
+  return true;
+}
+
+/** Owes an amount to the landlord, for what went unpaid. */
+function owe(sim: Simulation, person: Person, amount: Money, memo: string, category: string): void {
+  if (amount <= 0) return;
+  sim.post({ memo: `${memo}, unpaid`, category, postings: [{ accountId: sim.nominalAccount('expense', expenseFor(category)).id, amount }, { accountId: arrearsAccount(sim, person).id, amount: -amount }] });
+}
+
+const expenseFor = (category: string) => (category === 'rent' ? 'Rent' : category === 'bills' ? 'Bills' : 'Food');
+
+setPaymentHooks({ fromCurrent: payFromCurrent, owe, returned: (sim, person, amount) => chargeReturned(sim, person, amount) });
+
+/** On the card, if it has room, as a recurring card payment. True if it went. */
+function onCard(sim: Simulation, person: Person, amount: Money, memo: string, category: string): boolean {
   const card = cardOf(sim, person);
-  const free = card ? Math.max(0, (card.creditLimit ?? 0) + card.balance) : 0;
-  return inTheBank(sim, person) + free;
+  if (!card || cardRoom(person, card, true) < amount) return false;
+  hold(sim, sim.post({ memo, category, postings: [{ accountId: sim.nominalAccount('expense', expenseFor(category)).id, amount }, { accountId: card.id, amount: -amount }] }), card);
+  return true;
+}
+
+/** The month's rent, the way it's paid. */
+function payRent(sim: Simulation, person: Person, rent: Money): void {
+  const pay = paymentsOf(person);
+  if (pay.rent === 'check') { writeCheck(sim, person, rent, 'Rent', 'rent'); return; }
+  if (pay.rent === 'manual') {
+    // What they paid ahead goes against it, and the rest is owed.
+    const ahead = Math.min(pay.rentCredit ?? 0, rent);
+    if (ahead > 0 && person.payments) person.payments.rentCredit = (pay.rentCredit ?? 0) - ahead;
+    if (ahead > 0) sim.post({ memo: 'Rent, paid ahead', category: 'rent', postings: [{ accountId: sim.nominalAccount('expense', 'Rent').id, amount: ahead }, { accountId: sim.nominalAccount('liability_other', 'Rent Paid Ahead').id, amount: -ahead }] });
+    owe(sim, person, rent - ahead, 'Rent', 'rent');
+    return;
+  }
+  if (payFromCurrent(sim, person, rent, 'Rent', 'rent')) return;
+  chargeReturned(sim, person, rent);
+  owe(sim, person, rent, 'Rent', 'rent');
+}
+
+/** The month's bills, the way they're paid. */
+function payBills(sim: Simulation, person: Person, bills: Money): void {
+  const pay = paymentsOf(person);
+  if (pay.bills === 'manual') { owe(sim, person, bills, 'Bills', 'bills'); return; }
+  if (pay.bills === 'card') {
+    if (!onCard(sim, person, bills, 'Bills', 'bills')) owe(sim, person, bills, 'Bills', 'bills');
+    return;
+  }
+  if (payFromCurrent(sim, person, bills, 'Bills', 'bills')) return;
+  chargeReturned(sim, person, bills);
+  owe(sim, person, bills, 'Bills', 'bills');
 }
 
 /**
@@ -226,15 +313,59 @@ export function canPay(sim: Simulation, person: Person): Money {
 export function spend(sim: Simulation, person: Person, amount: Money, memo: string, category: string, owe = false): boolean {
   if (amount <= 0) return true;
   const card = cardOf(sim, person);
-  if (!owe && canPay(sim, person) < amount) return false;
-  const bank = drawFromBank(sim, person, amount);
-  const cardFree = card ? Math.max(0, (card.creditLimit ?? 0) + card.balance) : 0;
-  const fromCard = Math.min(bank.short, cardFree);
+  // A debit card purchase goes into an overdraft only where the bank may pay it there.
+  const overdraft = category !== 'food' || purchaseMayOverdraw(sim, person);
+  if (!owe && canPay(sim, person, overdraft) < amount) return false;
+  // In cash first, where that's how they pay for the day.
+  if (category === 'food' && paymentsOf(person).everyday === 'cash') {
+    const wallet = accountsOf(sim, person).find((a) => a.kind === 'cash');
+    const inHand = Math.min(amount, Math.max(0, wallet?.balance ?? 0));
+    if (wallet && inHand > 0) {
+      sim.post({ memo, category, postings: [{ accountId: sim.nominalAccount('expense', 'Food').id, amount: inHand }, { accountId: wallet.id, amount: -inHand }] });
+      if (inHand === amount) return true;
+      return spend(sim, person, amount - inHand, memo, category, owe);
+    }
+  }
+  const current = checkingOf(sim, person);
+  const before = current?.balance ?? 0;
+  const cardFree = cardRoom(person, card);
+  // A debit card locked, lost or stolen buys nothing: the day's shopping goes
+  // on the credit card or in cash, or isn't bought (`systems/security.ts`).
+  if (category === 'food' && current?.plastic && (current.plastic.locked || current.plastic.stopped)) {
+    const wallet = accountsOf(sim, person).find((a) => a.kind === 'cash');
+    const inHand = Math.max(0, wallet?.balance ?? 0);
+    if (cardFree + inHand < amount) return false;
+    const onCredit = Math.min(amount, cardFree);
+    const postings = [{ accountId: sim.nominalAccount('expense', 'Food').id, amount }];
+    if (onCredit > 0 && card) postings.push({ accountId: card.id, amount: -onCredit });
+    if (amount > onCredit && wallet) postings.push({ accountId: wallet.id, amount: -(amount - onCredit) });
+    const txn = sim.post({ memo, category, postings });
+    if (onCredit > 0 && card) hold(sim, txn, card);
+    return true;
+  }
+  // On the credit card first where that's how they pay for the day, then the debit card.
+  const creditFirst = category === 'food' && paymentsOf(person).everyday === 'credit' ? Math.min(amount, cardFree) : 0;
+  const bank = drawFromBank(sim, person, amount - creditFirst, overdraft);
+  const fromCard = creditFirst + Math.min(bank.short, cardFree - creditFirst);
   const owed = bank.short - fromCard;
   const postings = [{ accountId: sim.nominalAccount('expense', category === 'rent' ? 'Rent' : category === 'bills' ? 'Bills' : 'Food').id, amount }, ...bank.postings];
   if (fromCard > 0 && card) postings.push({ accountId: card.id, amount: -fromCard });
   if (owed > 0) postings.push({ accountId: arrearsAccount(sim, person).id, amount: -owed });
-  sim.post({ memo, category, postings });
+  const txn = sim.post({ memo, category, postings });
+  // A card purchase is authorized now and posts in the bank's days (A95).
+  if (category === 'food') hold(sim, txn, bank.postings.length > 0 && current ? current : card ?? current!);
+  // An item's fee is for one the bank paid below zero, not one the card took.
+  // Until 2026-09-25 a purchase the card paid was charged one if the account
+  // happened to be overdrawn already.
+  if (current && current.balance < 0 && current.balance < before) chargeForItem(sim, person);
+  // A debit the bank couldn't pay went back unpaid first, where it charges
+  // for that; a card purchase it can't pay is only declined.
+  if (bank.short > 0 && category !== 'food') chargeReturned(sim, person, bank.short);
+  if (category === 'food' && bank.postings.length > 0 && creditFirst < amount) {
+    chargeForPurchase(sim, person);
+    // The change to the next whole unit, into savings tonight, where the bank rounds up (B9).
+    if (roundUpsOn(sim, person)) person.roundUps!.pending += roundUpOf(amount - creditFirst);
+  }
   return true;
 }
 
@@ -271,7 +402,9 @@ export function fedOn(person: Person, dayStart: Instant): boolean {
 function settleArrears(sim: Simulation, person: Person): void {
   const owed = arrearsOf(sim, person);
   if (owed <= 0) return;
-  const bank = drawFromBank(sim, person, owed);
+  // Paid by hand where rent is: they pay the landlord themselves.
+  if (paymentsOf(person).rent === 'manual') return;
+  const bank = drawFromBank(sim, person, owed, false, true);
   const paid = owed - bank.short;
   if (paid <= 0) return;
   sim.post({
@@ -343,7 +476,7 @@ export function move(sim: Simulation, person: Person, kind: Housing): void {
   sim.post({
     memo: 'Deposit and the rest of the month', category: 'rent',
     postings: [
-      ...drawFromBank(sim, person, deposit + rest).postings,
+      ...drawFromBank(sim, person, deposit + rest, false, true).postings,
       { accountId: held.id, amount: deposit },
       { accountId: sim.nominalAccount('expense', 'Rent').id, amount: rest },
     ],
@@ -430,8 +563,8 @@ export function registerHousehold(sim: Simulation): void {
     const rent = rentOf(s, person);
     const bills = billsOf(s, person);
     const before = arrearsOf(s, person);
-    spend(s, person, rent, 'Rent', 'rent', true);
-    spend(s, person, bills, 'Bills', 'bills', true);
+    payRent(s, person, rent);
+    payBills(s, person, bills);
     const owed = arrearsOf(s, person) - before;
     if (owed > 0) {
       s.notify({
@@ -469,6 +602,26 @@ export function registerHousehold(sim: Simulation): void {
       w.stress = clamp(w.stress + WORRY_STRESS * personalityOf(person, 'stressGain'), 0, 100);
       w.morale = clamp(w.morale - WORRY_MORALE * personalityOf(person, 'moraleSwing'), 0, 100);
     }
+  });
+
+  // Paying the landlord by hand (A62, A69): what's owed first, then rent ahead.
+  sim.onCommand<{ amount: Money }, { paid: Money }>('home.pay_landlord', (p, { sim: s }) => {
+    const person = s.player;
+    if (!person.home || person.home.kind === 'sofa') throw new CommandError('You have no landlord to pay.');
+    const amount = Math.round(Number(p.amount));
+    if (!(amount > 0)) throw new CommandError('Say how much.');
+    const current = checkingOf(s, person);
+    if (!current || current.balance < amount) throw new CommandError(`${current?.name ?? 'Your current account'} holds ${formatMoney(Math.max(0, current?.balance ?? 0), saveCurrency(s.universe))}.`);
+    const toArrears = Math.min(amount, arrearsOf(s, person));
+    const ahead = amount - toArrears;
+    const postings = [{ accountId: current.id, amount: -amount }];
+    if (toArrears > 0) postings.push({ accountId: arrearsAccount(s, person).id, amount: toArrears });
+    if (ahead > 0) postings.push({ accountId: s.nominalAccount('liability_other', 'Rent Paid Ahead').id, amount: ahead });
+    s.post({ memo: 'Paid the landlord', category: 'rent', postings });
+    if (ahead > 0) {
+      person.payments = { ...paymentsOf(person), rentCredit: (paymentsOf(person).rentCredit ?? 0) + ahead };
+    }
+    return { paid: amount };
   });
 
   sim.onCommand<{ kind: Housing }, { kind: Housing }>('home.move', (p, { sim: s }) => {

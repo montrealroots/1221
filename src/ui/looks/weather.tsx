@@ -22,7 +22,7 @@ import { normalFor, toFahrenheit, type ClimateType } from '@/engine/content/clim
 import { CITIES, type City } from '@/engine/content/geography';
 import { MONTH_NAMES, MS_DAY, WEEKDAY_NAMES, instantFromZoned, noonOf, startOfDay, zonedParts } from '@/engine/core/time';
 import {
-  WEATHER_EMOJI, forecastFor, hoursOn, outdoorWeather, weatherAt, weatherShort,
+  WEATHER_EMOJI, forecastFor, hoursOn, weatherAt, weatherShort,
   type DayWeather, type HourWeather, type WeatherCondition, type WeatherNow,
 } from '@/engine/systems/weather';
 import type { Simulation } from '@/engine';
@@ -146,17 +146,6 @@ function normalHigh(sim: Simulation, city: City, day: DayWeather): number {
   return day.fahrenheit ? toFahrenheit(normal.high) : Math.round(normal.high);
 }
 
-/**
- * What the day’s weather does to outdoor work: the one thing it decides, a
- * building site’s or a coach’s shift called off in a thunderstorm. This said
- * an exterior day "gets through about" a share of itself, "from the same
- * figure the production system uses", when there was no production system.
- */
-function outdoorSentence(sim: Simulation, city: City, instant: number): string {
-  return outdoorWeather(sim, city.id, instant).calledOff
-    ? 'A thunderstorm: outdoor work is called off, and a building site’s or a coach’s shift doesn’t go ahead or get paid.'
-    : 'Outdoor work goes ahead in this. Only a thunderstorm calls it off.';
-}
 
 // ---------------------------------------------------------------------------
 // The sky over one city, at this hour
@@ -266,11 +255,6 @@ defineLook<Sky>('weather', {
             </>
           ),
         },
-        {
-          id: 'outside',
-          label: 'Working Outside',
-          body: <p className="small">{outdoorSentence(sim, city, sim.now)}</p>,
-        },
       ],
       ways,
       provenance: `SLATE’s climate model for ${spokenName(city.name)} — the season, the latitude and the kind of place this is. It isn’t a forecast service, and it never was one.`,
@@ -355,7 +339,6 @@ defineLook<Ahead>('forecastday', {
             {dateWords(day.dateKey)}: the wind at {windOf(day)}, humidity {day.humidity}%, and the day{' '}
             {againstNormal(day)}.
           </p>
-          <p className="small">{outdoorSentence(sim, city, instant)}</p>
           <div className="grid grid-3">
             <Stat label="High" value={`${day.high}${unit}`} note="Mid-afternoon" />
             <Stat label="Low" value={`${day.low}${unit}`} note="A little before dawn" />
@@ -574,7 +557,7 @@ defineLook<OneHour>('skyhour', {
     if (!day) return [];
     return hoursOn(sim, city.id, sim.now).slice(0, 4).map((h) => `${city.id}/${day.dateKey}/${h.hour}`);
   },
-  look: (found, { sim }) => {
+  look: (found) => {
     const { city, day, hour, hours, index } = found;
     const unit = unitOf(day);
     const before = hours[index - 1];
@@ -615,7 +598,6 @@ defineLook<OneHour>('skyhour', {
               : swing > 0 ? `The next hour is ${countWord(Math.abs(swing))} degrees warmer.`
                 : `The next hour is ${countWord(Math.abs(swing))} degrees colder.`}
           </p>
-          <p className="small">{outdoorSentence(sim, city, hour.at)}</p>
         </>
       ),
       ways,

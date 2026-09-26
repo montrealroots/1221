@@ -19,7 +19,8 @@
   /* Text. */
   --text: #eceef2;
   --text-muted: #a3aab6;
-  --text-dim: #6f7783;
+  /* Dim text at 4.9:1 or better on every surface, WCAG AA; it was #6f7783 until 2026-09-26, 3.4:1 to 4.3:1. */
+  --text-dim: #8a929e;
   --text-inverse: #0c0d10;
 
   /* Lines. */
@@ -90,7 +91,8 @@
   --overlay: rgba(30, 28, 24, 0.55);
   --text: #1a1c20;
   --text-muted: #565d68;
-  --text-dim: #858c97;
+  /* 4.6:1 or better on every surface; #858c97 until 2026-09-26, 2.7:1 to 3.4:1. */
+  --text-dim: #5f6671;
   --text-inverse: #ffffff;
   --line: #dedad3;
   --line-strong: #c4bfb6;
@@ -259,8 +261,10 @@ a:hover { text-decoration: underline; }
   /* A button's label is a label. The containment layer lets text break
      inside a word so nothing escapes its box, which for a button in a tight
      flex slot meant "Unlo / ck". A button keeps its words whole and its
-     width, and the slot wraps around it instead. */
-  white-space: nowrap; overflow-wrap: normal; flex: none;
+     width, and the slot wraps around it instead; one wider than its panel
+     wraps between words rather than running out of it, as a Close It button
+     naming its whole balance did at 1024 pixels until 2026-09-26. */
+  white-space: normal; overflow-wrap: normal; flex: none; max-width: 100%;
   font: inherit; font-size: var(--size-sm); font-weight: 550;
   color: var(--text); background: var(--surface-3);
   border: 1px solid var(--line-strong); border-radius: var(--radius-sm);
@@ -415,7 +419,9 @@ button.link:hover { color: var(--accent-strong); }
 
 .divider { height: 1px; background: var(--line); border: 0; margin: var(--s4) 0; }
 
-input[type="text"], input[type="number"], input[type="date"], input[type="search"], select, textarea {
+/* An input with no type is a text box; until 2026-09-26 one without it was
+   left in the browser's white, and sat short beside the dark selects. */
+input:not([type]), input[type="text"], input[type="number"], input[type="date"], input[type="search"], select, textarea {
   width: 100%; padding: var(--s2) var(--s3);
   font: inherit; font-size: var(--size-sm);
   color: var(--text); background: var(--surface-2);
@@ -461,6 +467,14 @@ input[type="range"] {
 
 .field { margin-bottom: var(--s4); }
 .field-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: var(--s4); }
+/* A button among the fields sits level with their boxes, not their labels. */
+.field-row > .btn { align-self: end; justify-self: start; margin-bottom: var(--s4); }
+/* A field and the button that acts on it, side by side, level at the bottom. */
+.field-act { display: flex; gap: var(--s2); align-items: flex-end; }
+.field-act > .field { flex: 1; min-width: 0; margin-bottom: 0; }
+/* And as tall as the box beside it: a field and a full-size button share their
+   padding, type and line, so a small one takes the full size here. */
+.field-act > .btn, .field-row > .btn { padding: var(--s2) var(--s4); font-size: var(--size-sm); }
 
 .list { display: flex; flex-direction: column; }
 .list-item {
