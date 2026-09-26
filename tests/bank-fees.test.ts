@@ -492,3 +492,32 @@ describe('an IBAN in the rest of the world', () => {
     expect(accountNumber(sim, sim.player, ing, 'checking')).toMatch(/^IBAN NL\d{2} INGB/);
   });
 });
+
+describe('what counts as a deposit', () => {
+  // A deposit posted into the current account, as the payer would.
+  const pay = (sim: Simulation, account: Account, amount: number, category: string, memo: string) => sim.post({
+    memo, category,
+    postings: [
+      { accountId: sim.nominalAccount('income', memo).id, amount: -amount },
+      { accountId: account.id, amount },
+    ],
+  });
+
+  it('counts unemployment benefit and a tax refund where the bank asks for electronic deposits, and only wages where it asks for a salary', () => {
+    const chase = lifeIn('us-tx-houston', { bankId: 'us-chase', wealth: 'nothing' });
+    const account = current(chase);
+    const fee = () => feeFor(chase, account, monthStartOf(chase, chase.now));
+    expect(fee().waivedBy).not.toBe('deposits');
+    pay(chase, account, 300_00, 'benefit', 'Unemployment Benefits');
+    pay(chase, account, 250_00, 'tax', 'Tax Refund');
+    expect(fee()).toEqual({ fee: 0, waivedBy: 'deposits' });
+
+    const lcl = lifeIn('fr-idf-paris', { bankId: 'fr-lcl', wealth: 'nothing' });
+    const salaried = current(lcl);
+    const lclFee = () => feeFor(lcl, salaried, monthStartOf(lcl, lcl.now));
+    pay(lcl, salaried, 500_00, 'benefit', 'Allocation d’aide au retour à l’emploi');
+    expect(lclFee().waivedBy).not.toBe('deposits');
+    pay(lcl, salaried, 500_00, 'salary', 'Wages');
+    expect(lclFee()).toEqual({ fee: 0, waivedBy: 'deposits' });
+  });
+});

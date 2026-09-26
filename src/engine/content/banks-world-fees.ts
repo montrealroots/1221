@@ -18,7 +18,7 @@
 import type { Money } from '../core/money';
 import type { Product } from './banks';
 
-export const WORLD_FEES: Readonly<Record<string, { monthlyFee: Money; waiver?: Product['waiver']; reduced?: Product['reduced']; source: string }>> = {
+export const WORLD_FEES: Readonly<Record<string, { monthlyFee: Money; waiver?: Product['waiver']; reduced?: Product['reduced']; deposits?: Product['deposits']; source: string }>> = {
   'BM|Butterfield': {
     monthlyFee: 13_00, waiver: { ageAtLeast: 60 },
     source: 'Butterfield Bermuda Retail Schedule of Charges, January 2026: $10 monthly maintenance and $3 monthly compliance, both waived for seniors, 60 and over',
@@ -56,27 +56,27 @@ export const WORLD_FEES: Readonly<Record<string, { monthlyFee: Money; waiver?: P
     source: 'waived with at least four card payments in the month',
   },
   'GU|Bank of Guam': {
-    monthlyFee: 5_00, waiver: { depositsAtLeast: 1, ageAtLeast: 55 },
+    deposits: 'electronic', monthlyFee: 5_00, waiver: { depositsAtLeast: 1, ageAtLeast: 55 },
     source: 'waived with e-Statements and an electronic deposit in the month, or at 55 and over; SLATE’s bank is online, so e-Statements are taken as chosen',
   },
   'MH|Bank of Guam': {
-    monthlyFee: 5_00, waiver: { depositsAtLeast: 1 },
+    deposits: 'electronic', monthlyFee: 5_00, waiver: { depositsAtLeast: 1 },
     source: 'waived with e-Statements and an electronic deposit in the month; e-Statements are taken as chosen',
   },
   'FM|Bank of Guam': {
-    monthlyFee: 5_00, waiver: { depositsAtLeast: 1 },
+    deposits: 'electronic', monthlyFee: 5_00, waiver: { depositsAtLeast: 1 },
     source: 'waived with e-Statements and an electronic deposit in the month; e-Statements are taken as chosen',
   },
   'MP|Bank of Guam': {
-    monthlyFee: 5_00, waiver: { depositsAtLeast: 1 },
+    deposits: 'electronic', monthlyFee: 5_00, waiver: { depositsAtLeast: 1 },
     source: 'waived with e-Statements and an electronic deposit in the month; e-Statements are taken as chosen',
   },
   'PW|Bank of Guam': {
-    monthlyFee: 5_00, waiver: { depositsAtLeast: 1 },
+    deposits: 'electronic', monthlyFee: 5_00, waiver: { depositsAtLeast: 1 },
     source: 'waived with e-Statements and an electronic deposit in the month; e-Statements are taken as chosen',
   },
   'HU|OTP Bank': {
-    monthlyFee: 1_082_00, waiver: { depositsAtLeast: 214_662_00 },
+    deposits: 'electronic', monthlyFee: 1_082_00, waiver: { depositsAtLeast: 214_662_00 },
     source: 'free in a month when at least the net minimum wage, HUF 214,662 in 2026, is paid in',
   },
   'LV|Swedbank': {
@@ -92,11 +92,11 @@ export const WORLD_FEES: Readonly<Record<string, { monthlyFee: Money; waiver?: P
     source: 'the first six months free for a new customer',
   },
   'NF|Commonwealth Bank': {
-    monthlyFee: 4_00, waiver: { depositsAtLeast: 2_000_00, ageBelow: 30 },
+    deposits: 'electronic', monthlyFee: 4_00, waiver: { depositsAtLeast: 2_000_00, ageBelow: 30 },
     source: 'waived with AUD 2,000 deposited in the month, or under 30',
   },
   'PR|Banco Popular': {
-    monthlyFee: 2_50, waiver: { depositsAtLeast: 1, linkedAverageAtLeast: 500_00, ageBelow: 26 },
+    deposits: 'electronic', monthlyFee: 2_50, waiver: { depositsAtLeast: 1, linkedAverageAtLeast: 500_00, ageBelow: 26 },
     source: 'waived with a direct deposit, a US$500 combined average balance, or at 25 and under',
   },
   'SI|NLB': {

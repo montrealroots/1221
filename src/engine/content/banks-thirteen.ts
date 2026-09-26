@@ -36,22 +36,22 @@ export const THIRTEEN: readonly CountryBanking[] = [
     banks: [
       {
         id: 'us-chase', name: 'Chase', iso: 'US', currency: 'USD', format: 'us', code: '021000021',
-        current: p('Chase Total Checking', 'chase.com Total Checking: $15 a month, waived with $500 of electronic deposits, a $1,500 daily balance, or a $5,000 average across it and linked Chase accounts', { monthlyFee: 15_00, waiver: { depositsAtLeast: 500_00, balanceAtLeast: 1_500_00, linkedAverageAtLeast: 5_000_00 } }),
+        current: p('Chase Total Checking', 'chase.com Total Checking: $15 a month, waived with $500 of electronic deposits, a $1,500 daily balance, or a $5,000 average across it and linked Chase accounts', { deposits: 'electronic', monthlyFee: 15_00, waiver: { depositsAtLeast: 500_00, balanceAtLeast: 1_500_00, linkedAverageAtLeast: 5_000_00 } }),
         savings: p('Chase Savings', 'chase.com: $5 a month, waived with a $300 balance; 0.01% APY', { rate: 0.0001, monthlyFee: 5_00, waiver: { balanceAtLeast: 300_00 } }),
       },
       {
         id: 'us-bank-of-america', name: 'Bank of America', iso: 'US', currency: 'USD', format: 'us', code: '026009593',
-        current: p('Advantage Plus Banking', 'NerdWallet review of Bank of America: $12 a month, waived with a $250 direct deposit or a $1,500 daily balance', { monthlyFee: 12_00, waiver: { depositsAtLeast: 250_00, balanceAtLeast: 1_500_00 } }),
+        current: p('Advantage Plus Banking', 'NerdWallet review of Bank of America: $12 a month, waived with a $250 direct deposit or a $1,500 daily balance', { deposits: 'electronic', monthlyFee: 12_00, waiver: { depositsAtLeast: 250_00, balanceAtLeast: 1_500_00 } }),
         savings: p('Advantage Savings', 'NerdWallet review of Bank of America: 0.01%', { rate: 0.0001 }),
       },
       {
         id: 'us-wells-fargo', name: 'Wells Fargo', iso: 'US', currency: 'USD', format: 'us', code: '121000248',
-        current: p('Everyday Checking', 'wellsfargo.com: $15 a month, waived with $500 of electronic deposits, a $1,500 daily balance, $5,000 in linked Wells Fargo accounts (kept here as an average), or ages 17 to 24; the military direct-deposit waiver has no one to apply to', { monthlyFee: 15_00, waiver: { depositsAtLeast: 500_00, balanceAtLeast: 1_500_00, linkedAverageAtLeast: 5_000_00, ageBelow: 25 } }),
+        current: p('Everyday Checking', 'wellsfargo.com: $15 a month, waived with $500 of electronic deposits, a $1,500 daily balance, $5,000 in linked Wells Fargo accounts (kept here as an average), or ages 17 to 24; the military direct-deposit waiver has no one to apply to', { deposits: 'electronic', monthlyFee: 15_00, waiver: { depositsAtLeast: 500_00, balanceAtLeast: 1_500_00, linkedAverageAtLeast: 5_000_00, ageBelow: 25 } }),
         savings: p('Way2Save Savings', 'wellsfargo.com: 0.01% APY', { rate: 0.0001 }),
       },
       {
         id: 'us-citi', name: 'Citi', iso: 'US', currency: 'USD', format: 'us', code: '021000089',
-        current: p('Citi Access Checking', 'citi.com: $5 a month, waived with $250 of direct deposits, or for owners 23 and under', { monthlyFee: 5_00, waiver: { depositsAtLeast: 250_00, ageBelow: 24 } }),
+        current: p('Citi Access Checking', 'citi.com: $5 a month, waived with $250 of direct deposits, or for owners 23 and under', { deposits: 'electronic', monthlyFee: 5_00, waiver: { depositsAtLeast: 250_00, ageBelow: 24 } }),
         savings: p('Citi Savings', `citi.com: $4.50 a month, waived with a $500 average balance; ${NOT_FOUND}`, { monthlyFee: 4_50, waiver: { averageAtLeast: 500_00 } }),
         overdraft: 'Citi charges no overdraft or returned-item fees.',
       },
@@ -277,12 +277,12 @@ export const THIRTEEN: readonly CountryBanking[] = [
       },
       {
         id: 'de-postbank', name: 'Postbank', iso: 'DE', currency: 'EUR', format: 'de', code: '10010010',
-        current: p('Giro plus', 'postbank.de, 15 July 2026: €6.90 a month, €5.90 in a month with €1,000 paid in', { monthlyFee: 6_90, reduced: { to: 5_90, depositsAtLeast: 1_000_00 } }),
+        current: p('Giro plus', 'postbank.de, 15 July 2026: €6.90 a month, €5.90 in a month with €1,000 paid in', { deposits: 'electronic', monthlyFee: 6_90, reduced: { to: 5_90, depositsAtLeast: 1_000_00 } }),
         savings: p('Tagesgeld', NOT_FOUND),
       },
       {
         id: 'de-ing', name: 'ING Deutschland', iso: 'DE', currency: 'EUR', format: 'de', code: '50010517',
-        current: p('Girokonto', 'ing.de conditions, 25 September 2026: free with €1,000 paid in a month or under 28, else €4.90', { monthlyFee: 4_90, waiver: { depositsAtLeast: 1_000_00, ageBelow: 28 } }),
+        current: p('Girokonto', 'ing.de conditions, 25 September 2026: free with €1,000 paid in a month or under 28, else €4.90', { deposits: 'electronic', monthlyFee: 4_90, waiver: { depositsAtLeast: 1_000_00, ageBelow: 28 } }),
         savings: p('Extra-Konto', 'ing.de: 3.20% for a new customer’s first four months, then 0.75%', { rate: 0.0075, intro: [{ months: 4, rate: 0.032 }] }),
       },
       {
@@ -407,12 +407,12 @@ export const THIRTEEN: readonly CountryBanking[] = [
     banks: [
       {
         id: 'au-commbank', name: 'Commonwealth Bank', iso: 'AU', currency: 'AUD', format: 'au', code: '06',
-        current: p('Everyday Account Smart Access', 'commbank.com.au: $4 a month, waived with $2,000 deposited in the month or under 30', { monthlyFee: 4_00, waiver: { depositsAtLeast: 2_000_00, ageBelow: 30 } }),
+        current: p('Everyday Account Smart Access', 'commbank.com.au: $4 a month, waived with $2,000 deposited in the month or under 30', { deposits: 'electronic', monthlyFee: 4_00, waiver: { depositsAtLeast: 2_000_00, ageBelow: 30 } }),
         savings: p('NetBank Saver', 'commbank.com.au, 24 September 2026: 5.20% for the first five months, then 2.10% standard', { rate: 0.021, intro: [{ months: 5, rate: 0.052 }] }),
       },
       {
         id: 'au-westpac', name: 'Westpac', iso: 'AU', currency: 'AUD', format: 'au', code: '03',
-        current: p('Westpac Choice', 'westpac.com.au: $5 a month, waived with $2,000 deposited in the month', { monthlyFee: 5_00, waiver: { depositsAtLeast: 2_000_00 } }),
+        current: p('Westpac Choice', 'westpac.com.au: $5 a month, waived with $2,000 deposited in the month', { deposits: 'electronic', monthlyFee: 5_00, waiver: { depositsAtLeast: 2_000_00 } }),
         savings: p('Westpac Life', 'westpac.com.au: 0.10% base, and a 4.90% bonus in a month the balance grows', { rate: 0.001, bonus: { rate: 0.049, when: 'grows' } }),
       },
       {

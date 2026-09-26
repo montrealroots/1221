@@ -64,6 +64,15 @@ export interface Product {
    * which couldn't say "free under 26, cheaper with wages".
    */
   reduced?: { to: Money; depositsAtLeast?: Money; ageBelow?: number; averageAtLeast?: Money };
+  /**
+   * What the deposits a waiver or a lower fee asks for can be: wages alone,
+   * where the bank asks for a salary or a nómina, or any electronic deposit
+   * from outside, where it asks for electronic or direct deposits or money
+   * paid in: wages, unemployment benefit, a tax refund. Absent, wages. Until
+   * 2026-09-25 only wages counted anywhere, and a laid-off worker claiming
+   * paid Chase's fee on benefit Chase itself counts.
+   */
+  deposits?: 'wages' | 'electronic';
   /** What it pays a year, as a fraction. Absent: nothing. */
   rate?: number;
   /** The rate is paid only on a balance of at least this. */
@@ -220,6 +229,7 @@ function fromSheet(sheet: SheetProduct, rule?: (typeof WORLD_FEES)[string]): Pro
     ...(rule ? { monthlyFee: rule.monthlyFee } : {}),
     ...(rule?.waiver ? { waiver: rule.waiver } : {}),
     ...(rule?.reduced ? { reduced: rule.reduced } : {}),
+    ...(rule?.deposits ? { deposits: rule.deposits } : {}),
     ...(sheet.rate !== undefined ? { rate: sheet.rate } : {}),
   };
 }

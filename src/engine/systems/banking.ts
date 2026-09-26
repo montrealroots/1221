@@ -191,14 +191,17 @@ export function monthEndAfter(sim: Simulation, after: Instant): Instant {
   }
 }
 
-/** Wages paid into an account since a moment: what a bank counts as direct deposit. */
-export function directDeposits(sim: Simulation, account: Account, since: Instant): Money {
+/** What a bank counts as a deposit, by what the product asks (`Product.deposits`). */
+const ELECTRONIC = new Set(['salary', 'benefit', 'tax']);
+
+/** Deposits into an account since a moment that a bank counts: wages, or any electronic deposit from outside. */
+export function directDeposits(sim: Simulation, account: Account, since: Instant, counts: 'wages' | 'electronic' = 'wages'): Money {
   let total = 0;
   const list = sim.universe.transactions;
   for (let i = list.length - 1; i >= 0; i -= 1) {
     const t = list[i]!;
     if (t.at < since) break;
-    if (t.category !== 'salary') continue;
+    if (counts === 'electronic' ? !ELECTRONIC.has(t.category) : t.category !== 'salary') continue;
     for (const p of t.postings) if (p.accountId === account.id && p.amount > 0) total += p.amount;
   }
   return total;
@@ -223,7 +226,7 @@ export function feeFor(sim: Simulation, account: Account, monthStart: Instant): 
   if (waiver?.firstMonths !== undefined && monthStart < addMonths(account.openedAt, waiver.firstMonths, sim.homeZone)) return met('new');
   if (waiver?.purchasesAtLeast !== undefined && purchasesSince(sim, account, monthStart) >= waiver.purchasesAtLeast) return met('purchases');
   if (waiver?.depositsAtLeast !== undefined
-    && directDeposits(sim, account, monthStart) >= inSaveMoney(sim, waiver.depositsAtLeast, bank.currency)
+    && directDeposits(sim, account, monthStart, product.deposits) >= inSaveMoney(sim, waiver.depositsAtLeast, bank.currency)
     && (!waiver.depositsAlso || alsoMet(sim, account, waiver.depositsAlso))) {
     return met('deposits');
   }
@@ -245,7 +248,7 @@ export function feeFor(sim: Simulation, account: Account, monthStart: Instant): 
   if (cut) {
     const lower = (by: WaivedBy) => ({ fee: inSaveMoney(sim, cut.to, bank.currency), waivedBy: by });
     if (cut.ageBelow !== undefined && age !== undefined && age < cut.ageBelow) return lower('age');
-    if (cut.depositsAtLeast !== undefined && directDeposits(sim, account, monthStart) >= inSaveMoney(sim, cut.depositsAtLeast, bank.currency)) return lower('deposits');
+    if (cut.depositsAtLeast !== undefined && directDeposits(sim, account, monthStart, product.deposits) >= inSaveMoney(sim, cut.depositsAtLeast, bank.currency)) return lower('deposits');
     if (cut.averageAtLeast !== undefined && averageBalance(account) >= inSaveMoney(sim, cut.averageAtLeast, bank.currency)) return lower('balance');
   }
   return { fee: inSaveMoney(sim, product.monthlyFee, bank.currency) };
