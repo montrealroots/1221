@@ -29,11 +29,11 @@
 import type { Simulation } from '../core/simulation';
 import type { Person } from '../domain/model';
 import type { ScheduledItem } from '../core/scheduler';
-import { CITIES, COUNTRIES, jurisdictionPath } from '../content/geography';
+import { CITIES, COUNTRIES, countryOfPlace, jurisdictionPath } from '../content/geography';
 import { EMPLOYERS, type Employer } from '../content/employers';
 import { payrollYear, type PayslipLine } from '../content/payroll';
-import { employerNoticeDays, laborAt, layoffChanceADay, quitNoticeDays, redundancyWeeks, type LaborLaw, type Premium, type Redundancy } from '../content/labor';
-import { holidaysOn } from '../content/holidays';
+import { employerNoticeDays, laborAt, layoffChanceADay, quitNoticeDays, redundancyWeeks, type Extra, type LaborLaw, type Premium, type Redundancy } from '../content/labor';
+import { holidaysInYear, holidaysOn } from '../content/holidays';
 import { jobFor, patternHours, patternOf, payCycleFor, tipsPerHour, type Job, type Pattern } from '../content/jobs';
 import { CommandError } from '../core/simulation';
 import { mayWorkIn } from '../domain/citizenship';
@@ -402,7 +402,19 @@ function adultRateAt(cityId: string, jobId: string, currency: string, at: Instan
 /** What an hour of their work pays, in the save's money (`rateAt`). */
 export function hourlyWage(sim: Simulation, person: Person): Money {
   const state = person.job;
-  return state ? rateAt(state.cityId, state.jobId, saveCurrency(sim.universe), sim.now, state.employerId, ageOf(person, sim.now), monthsWith(state, sim.now)).hourly : 0;
+  if (!state) return 0;
+  const months = monthsWith(state, sim.now);
+  const rate = rateAt(state.cityId, state.jobId, saveCurrency(sim.universe), sim.now, state.employerId, ageOf(person, sim.now), months).hourly;
+  // A raise the law gives for each full year with the employer (Egypt's).
+  const law = lawOf(state);
+  const raised = law?.annualRaise ? Math.round(rate * (1 + law.annualRaise.share) ** Math.floor(months / 12)) : rate;
+  // A seniority premium on the minimum wage (Senegal's, Mauritania's), an hour.
+  const s = law?.seniority;
+  const years = Math.floor(months / 12);
+  if (!s || years < s.afterYears) return raised;
+  const hourly = (s.monthlyMinimum / 173.33) * (s.share + s.perYear * (years - s.afterYears));
+  const { currency } = countryAt(state.cityId);
+  return raised + (exchange(Math.round(hourly * 100), currency, saveCurrency(sim.universe)) ?? Math.round(hourly * 100));
 }
 
 /** The same, for a job in a town at a date, in a currency: for a screen with no save yet. */
@@ -1292,6 +1304,29 @@ function leave(sim: Simulation, person: Person): void {
 }
 
 /**
+ * A share of the pay of the months before it: nothing short of the hours
+ * the law asks in them (Puerto Rico's 1,350), and no more than its cap, in
+ * the save's money.
+ */
+export function shareOfYearDue(extra: Extract<Extra, { kind: 'shareOfYear' }>, paydays: readonly { at: Instant; hours: number; gross: Money }[], now: Instant, cap?: Money): Money {
+  const window = (extra.windowMonths ?? 12) * 30.4375 * MS_DAY;
+  const paid = paydays.filter((one) => now - one.at <= window);
+  if (extra.minHours !== undefined && paid.reduce((sum, one) => sum + one.hours, 0) < extra.minHours) return 0;
+  const amount = paid.reduce((sum, one) => sum + one.gross, 0) * extra.share;
+  return cap !== undefined ? Math.min(amount, cap) : amount;
+}
+
+/** Whether today is so many days before a moving holiday this year, where the town's calendar has it. */
+function movableDue(before: { name: string; days: number }, cityId: string, p: { year: number; month: number; day: number }): boolean {
+  const country = countryOfPlace(cityId);
+  if (!country) return false;
+  const day = holidaysInYear(country, p.year).find((one) => one.holiday.englishName.includes(before.name))?.date;
+  if (!day) return false;
+  const due = new Date(Date.parse(`${day}T00:00:00Z`) - before.days * MS_DAY);
+  return due.getUTCMonth() + 1 === p.month && due.getUTCDate() === p.day;
+}
+
+/**
  * The law's own days, at the rollover: an extra payment falling due, put on
  * the next payday, and on a Monday, Korea's paid rest day for last week.
  */
@@ -1310,25 +1345,41 @@ function lawDay(sim: Simulation, person: Person): void {
   if (week.days.includes(today) && holidayOff(state, instantFromZoned({ year: p.year, month: p.month, day: p.day, hour: week.startHour }, zone), zone)) {
     state.unpaid.push({ at: sim.now, hours: week.hours, kind: 'holiday' });
   }
-  const paidAlready = state.extrasPaid ?? [];
+  // Read and written live: two extras due the same day (Peru's gratificación
+  // and its 9%) each keep their record. Until 2026-09-26 the second
+  // overwrote the first's.
   const due = (key: string, name: string, amount: number) => {
-    if (paidAlready.includes(key) || amount <= 0) return;
+    if ((state.extrasPaid ?? []).includes(key) || amount <= 0) return;
     state.pendingPay = [...(state.pendingPay ?? []), { name, amount: Math.round(amount) }];
-    state.extrasPaid = [...paidAlready.filter((one) => !one.endsWith(String(p.year - 2))), key];
+    state.extrasPaid = [...(state.extrasPaid ?? []).filter((one) => !one.includes(`-${p.year - 2}`)), key];
   };
   const { currency: local } = countryAt(state.cityId);
   const save = saveCurrency(sim.universe);
+  // The share of a period before today the job was held.
+  const earnedOver = (periodMonths: number) => {
+    const period = periodMonths * 30.4375 * MS_DAY;
+    return Math.min(1, (sim.now - Math.max(sim.now - period, state.since)) / period);
+  };
+  const toSave = (amount: number) => exchange(Math.round(amount * 100), local, save) ?? Math.round(amount * 100);
   for (const extra of law.extras ?? []) {
     if (extra.kind === 'fixed' && p.month === extra.month && p.day === extra.day) {
       if (extra.minWeeks !== undefined && months * 30.4375 < extra.minWeeks * 7) continue;
-      const amount = (exchange(extra.amount * 100, local, save) ?? extra.amount * 100) * Math.min(1, weekly / extra.fullTimeHours) * Math.min(1, months / 12);
-      due(`${extra.name}-${p.year}`, extra.name, amount);
+      const earned = extra.periodMonths !== undefined ? earnedOver(extra.periodMonths) : Math.min(1, months / 12);
+      due(`${extra.name}-${p.year}-${p.month}`, extra.name, toSave(extra.amount) * Math.min(1, weekly / extra.fullTimeHours) * earned);
     } else if (extra.kind === 'days' && p.month === extra.month && p.day === extra.day) {
       const yearStart = Date.UTC(p.year, 0, 1);
-      const share = Math.min(1, (sim.now - Math.max(yearStart, state.since)) / (365 * MS_DAY));
-      due(`${extra.name}-${p.year}`, extra.name, ((weekly * rate) / 7) * extra.days * share);
-    } else if (extra.kind === 'month' && extra.months.includes(p.month) && p.day === 15) {
-      due(`${extra.name}-${p.year}-${p.month}`, extra.name, weekly * rate * (52 / 12) * Math.min(1, months / 6));
+      const share = extra.periodMonths !== undefined ? earnedOver(extra.periodMonths) : Math.min(1, (sim.now - Math.max(yearStart, state.since)) / (365 * MS_DAY));
+      due(`${extra.name}-${p.year}-${p.month}`, extra.name, ((weekly * rate) / 7) * extra.days * share);
+    } else if (extra.kind === 'month' && (extra.beforeHoliday ? movableDue(extra.beforeHoliday, state.cityId, p) : extra.months.includes(p.month) && p.day === (extra.day ?? 15))) {
+      if (extra.minMonths !== undefined && months < extra.minMonths) continue;
+      const portion = extra.shares?.[extra.months.indexOf(p.month)] ?? extra.shares?.[0] ?? 1;
+      const yearStart = Date.UTC(p.year, 0, 1);
+      const earned = extra.periodMonths !== undefined ? earnedOver(extra.periodMonths)
+        : extra.over === 'year' ? Math.min(1, (sim.now - Math.max(yearStart, state.since)) / (365 * MS_DAY)) : Math.min(1, months / 6);
+      due(`${extra.name}-${p.year}-${p.month}`, extra.name, weekly * rate * (52 / 12) * portion * earned);
+    } else if (extra.kind === 'shareOfYear' && (extra.months ?? [extra.month]).includes(p.month) && p.day === extra.day) {
+      if (extra.minMonths !== undefined && months < extra.minMonths) continue;
+      due(`${extra.name}-${p.year}-${p.month}`, extra.name, shareOfYearDue(extra, person.earnings?.paydays ?? [], sim.now, extra.cap !== undefined ? toSave(extra.cap) : undefined));
     }
   }
   // Leave that lapses: a warning a month before, as the employer owes one

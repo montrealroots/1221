@@ -270,7 +270,9 @@ function lawWords(law: LaborLaw, jobId: string): { text: string; source: string 
   }
   for (const extra of law.extras ?? []) {
     const when = extra.kind === 'month' ? extra.months.map((m) => MONTHS[m - 1]).join(' and ') : `${extra.day} ${MONTHS[extra.month - 1]}`;
-    const what = extra.kind === 'fixed' ? `${extra.amount.toLocaleString('en-US')} for full time, by your share of it` : extra.kind === 'days' ? `${extra.days} days’ pay, for the part of the year worked` : 'a month’s pay';
+    const what = extra.kind === 'fixed' ? `${extra.amount.toLocaleString('en-US')} for full time, by your share of it` : extra.kind === 'days' ? `${extra.days} days’ pay, for the part of the year worked`
+      : extra.kind === 'shareOfYear' ? `${+(extra.share * 100).toFixed(2)}% of the year’s pay`
+        : extra.shares ? `a month’s pay in ${extra.shares.length} parts` : 'a month’s pay';
     out.push({ text: `${extra.name}: ${what}, in ${when}.`, source: extra.source });
   }
   if (law.weeklyRestDay) out.push({ text: `A week of ${law.weeklyRestDay.minHours} hours or more, with every shift worked, pays a rest day too.`, source: law.weeklyRestDay.source });

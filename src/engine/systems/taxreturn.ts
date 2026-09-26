@@ -107,7 +107,7 @@ export function workYear(sim: Simulation, person: Person, from: Instant, to: Ins
     wages: toLocal(wages),
     benefits: [...byName].map(([name, amount]) => ({ name, amount })),
     age: Math.floor((to - person.birthInstant) / (365.2425 * MS_DAY)),
-    path, at: from + MS_DAY, benefitMonths: months,
+    path, cityId, at: from + MS_DAY, benefitMonths: months,
     rent: toLocal(rentBetween(sim, person, from, to)),
     savings: toLocal(netWorth(sim, person.id).cash),
     ...(days > 0 ? { weeklyHours: hours / (days / 7) } : {}),

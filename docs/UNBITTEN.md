@@ -164,11 +164,25 @@ part the tool cannot see.
   states and Canadian provinces the research hadn't covered; the labor-law
   pass (`content/jurisdictions.ts`) wrote out every state, DC and the other
   ten provinces and territories, a single filer's brackets, deductions and
-  credits, and the worker's paid-leave contributions. What the approximation
-  had and the states' lines don't is a city's own wage tax: Birmingham's,
-  Kansas City's and St. Louis's 1%, Denver's $5.75 a month, and the rest
-  aren't taken. Its sales, property and vehicle rules are still read by
-  nothing, because nothing is bought, owned or driven.
+  credits, and the worker's paid-leave contributions. For a day the states'
+  lines left out the city's own wage tax, which the approximation had
+  carried; since the finishing pass (`content/local-tax.ts`) 3,119 towns
+  take theirs, each placed in its municipality, county and school district
+  by the Census geocoder: Pennsylvania's earned income and services taxes
+  from the DCED register, Ohio's city and school district taxes, Michigan's
+  cities, Kentucky's cities and counties (a city's credited against a county
+  of 30,000 or more), Alabama's, Kansas City's and St. Louis's, Indiana's
+  and Maryland's counties, Yonkers, Wilmington, Denver's and the other
+  Colorado head taxes, West Virginia's city fees, Portland's, and Iowa's
+  school surtaxes, paid on the return. A worker is taken to live in the town
+  they work in, so a resident's rate is charged and a credit for another
+  city's tax never arises. Not taken: Ohio's joint economic development
+  districts, which the geocoder doesn't place; about 60 Kentucky cities the
+  research couldn't find; Iowa's 2026 surtax list (2025's is used), Kentucky
+  counties' 2025 rates, and Anne Arundel's and Frederick's upper brackets
+  (their lowest is used); and Portland Metro's boundary, which is taken as
+  its three counties. Its sales, property and vehicle rules are still read
+  by nothing, because nothing is bought, owned or driven.
 - **The year is settled in all thirteen.** Since 2026-09-25 each payday's withholding is
   settled after the tax year (`systems/taxreturn.ts`) on the country's
   own date: the year's real tax on its real pay, the benefit taxed where the
@@ -176,8 +190,13 @@ part the tool cannot see.
   income tax credit, with New York's 30% of it less its household credit,
   California's own off its table and Illinois's 20%, and since 2026-09-26
   the other states' as a share of the federal, refunded or held to the
-  state's own tax as each has it (a state's credit that phases out by
-  income, such as Connecticut's personal credit, isn't); the Canada Workers
+  state's own tax as each has it; and what falls away with income on a
+  state's payslip and return: Connecticut's personal credit and exemption,
+  Pennsylvania's and Kentucky's forgiveness, Alabama's, Wisconsin's and
+  South Carolina's deductions (South Carolina's by its 2026 law), Utah's and
+  Oregon's credits and Ohio's, New Mexico's and Maryland's exemptions, where
+  Utah's, Wisconsin's, Ohio's and Kentucky's are 2025's figures, 2026's not
+  found; the Canada Workers
   Benefit, Ontario's LIFT credit, British Columbia's tax reduction and
   Quebec's work premium; Ireland's rent credit; Spain's minimum-wage
   deduction; New Zealand's independent earner credit; and Korea's year-end
@@ -289,14 +308,27 @@ part the tool cannot see.
   68 countries and territories pay their own, a share of the past average
   week (of the net where the law says net) within its bounds, or a flat
   week, after the months of work the law asks; France's overseas
-  departments and Monaco pay France's. Not modeled: Colorado's ten-week
-  deferral and Thailand's lower rate for quitting; penalties the law sets
-  by severity (Switzerland's), taken as none; Puerto Rico's, the US Virgin
-  Islands', Italy's NASpI and eleven others the research couldn't size;
-  Tunisia's and Algeria's; and the months of work asked where the research
-  found none (South Africa, Mauritius, Bermuda, Slovakia, Morocco, Oman,
-  Norway), which pay anyone laid off. Kuwait's, Oman's and Saudi Arabia's
-  are for citizens, and SLATE pays them as to one.
+  departments and Monaco pay France's. The finishing pass sized the rest it
+  could reach: 94 places now pay, with Italy's NASpI (a lower share above
+  its reference, 3% less a month from the sixth, half the weeks worked),
+  the Virgin Islands' quarter, Colombia's and Singapore's monthly steps,
+  Kazakhstan's and Iran's by the months insured, Algeria's with the minimum
+  wage averaged in, Norway's income test, Morocco's two windows, Hong Kong's
+  CSSA and Jersey's Income Support to an adult out of work (with no end,
+  and nothing over Hong Kong's asset limit), and Australia's, Norway's and
+  Morocco's own paid in the territories that apply them. Each state's own
+  bar for quitting and misconduct replaced the common one (Colorado's ten
+  weeks, Alaska's six), and Thailand pays somebody who resigned 30% for 90
+  days. The other 116 places have none, and a claim says so and whose word
+  it is. Puerto Rico's table is in an unpublished regulation: its benefit
+  is SLATE's estimate, the fraction on a straight line between the Labor
+  Department's two published points, and says so. Not modeled: Kyrgyzstan's
+  and Turkmenistan's, which the research found and couldn't size (a claim
+  says that); the months of work the Faroes, Greenland and the Virgin
+  Islands ask; Bosnia's share of the average wage; Switzerland's penalty
+  by severity, taken as none; and a dependant's supplement anywhere. The
+  benefits for citizens only (Kuwait's, Oman's, Saudi Arabia's and others)
+  need no test: SLATE lets nobody but a citizen work there.
 - **Work outside the thirteen is simpler, and some of it is missing.** The
   world research (`content/work-world.ts`, 226 countries and territories,
   written when the session's web searches had run out, so from pages fetched
@@ -330,9 +362,25 @@ part the tool cannot see.
   wrote out 219 places' overtime, night, Sunday and holiday premiums,
   leave, sick pay, notice and severance where it found them, and a
   territory that applies another country's law takes that law under its
-  own. The thirteenth-month and other statutory bonuses (Latin America's
-  aguinaldos, Puerto Rico's Christmas bonus) and premiums set as a share
-  of the minimum wage (Poland's, Slovakia's) have no shape and aren't paid.
+  own. Since the finishing pass the statutory extras are paid in 39 of
+  these places, each earned over its own period: Latin America's aguinaldos
+  and thirteenth months, Brazil's in two halves, Colombia's prima, Peru's
+  gratificaciones and 9%, Puerto Rico's Christmas bonus after 1,350 hours
+  and to $600, the Philippines' thirteenth month, Indonesia's THR seven days
+  before Eid al-Fitr and Greece's Easter bonus four days before Easter (by
+  the calendar's own dates), Portugal's, Italy's and San Marino's, Malta's
+  four fixed sums, Slovenia's allowances and the Netherlands' 8%; leave
+  loadings (Brazil's third, Portugal's and Greece's allowances); Egypt's 3%
+  a year; Senegal's and Mauritania's seniority premiums; and Poland's,
+  Slovakia's and Bulgaria's premiums on the minimum wage. Not paid:
+  Bangladesh's festival bonuses (the calendar has no Eid dates there),
+  Serbia's and North Macedonia's leave allowances (no amount in law),
+  Bolivia's second aguinaldo (it turns on growth that wasn't checked),
+  Belgium's blue-collar holiday pay from its fund (the white-collar loading
+  is paid instead), and the Nordic holiday pay the law works out in place of
+  leave pay, since SLATE pays leave at the wage; nor any tax exemption on a
+  bonus. Chile's gratificación is owed only with a profit, and is paid as
+  most employers pay it, a quarter with each month's pay.
 - **An employer's pay is as published in September 2026.** Each rate is
   the one the research found on 2026-09-25, paid from the save's first day,
   so a save that starts in January is paid an April raise early. Where an

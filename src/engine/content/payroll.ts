@@ -21,7 +21,8 @@
 
 import { computeAnnualTax } from './tax';
 import { WORLD_WORK, type WorldWork } from './work-world';
-import { PROVINCES, STATES } from './jurisdictions';
+import { PROVINCES, STATES, type PhaseOut, type StateLaw } from './jurisdictions';
+import { LOCAL_BY_CITY, LOCAL_TAXES, type LocalTax } from './local-tax';
 
 export type PayslipKind = 'tax' | 'social' | 'pension';
 
@@ -51,8 +52,10 @@ export interface PayrollContext {
   lastYear?: number;
   /** Hours a week, where contributions turn on them. */
   weeklyHours?: number;
-  /** The town, for the tax engine's approximation where SLATE has no rules. */
+  /** The town, for its own taxes, and for the tax engine's approximation where SLATE has no rules. */
   cityId?: string;
+  /** Worked for the year's return: a tax paid only there is taken. */
+  settling?: boolean;
 }
 
 /** France's taxable pay (net imposable) on a year's gross: less the pension contributions and the deductible 6.8 points of CSG. */
@@ -106,6 +109,48 @@ const clampTo = (value: number, low: number, high: number) => Math.max(low, Math
 const inBand = (income: number, above: number, upTo = Number.POSITIVE_INFINITY) => clampTo(income, above, upTo) - above;
 
 type Line = { name: string; amount: number; kind: PayslipKind; source: string };
+
+/** An amount after a phase-out, at a year's income. */
+function phased(amount: number, g: number, p: PhaseOut): number {
+  if ('cliff' in p) return g > p.cliff ? 0 : amount;
+  if ('steps' in p) return p.steps.find(([from, to]) => g > from && (to === null || g <= to))?.[2] ?? (g <= (p.steps[0]?.[0] ?? 0) ? p.steps[0]![2] : 0);
+  if ('from' in p && g > p.from) {
+    const steps = p.per > 1 ? Math.ceil((g - p.from) / p.per) : g - p.from;
+    return Math.max(p.item !== 'forgiven' && 'floor' in p ? p.floor ?? 0 : 0, amount - steps * p.reduce);
+  }
+  return amount;
+}
+const band = (table: readonly (readonly [number, number | null, number])[], g: number) => table.find(([from, to]) => g > from && (to === null || g <= to))?.[2] ?? 0;
+
+/**
+ * A state's income tax on a single filer's year: its brackets after the
+ * standard deduction and personal exemption, less its personal credit, each
+ * after its phase-out, then less the share of the tax a low income is
+ * forgiven or credited. Until 2026-09-26 nothing phased out.
+ */
+export function stateIncomeTax(t: NonNullable<StateLaw['tax']>, g: number): number {
+  const of = (item: 'standardDeduction' | 'personalExemption' | 'personalCredit') =>
+    (t.phaseOuts ?? []).filter((p) => p.item === item).reduce((amount, p) => phased(amount, g, p), t[item]);
+  let tax = Math.max(0, bands(Math.max(0, g - of('standardDeduction') - of('personalExemption')), t.brackets) - of('personalCredit'));
+  for (const p of t.phaseOuts ?? []) {
+    if (p.item === 'creditShare') tax -= tax * band(p.table, g);
+    if (p.item === 'forgiven') tax -= tax * ('table' in p ? (g <= (p.table[0]?.[0] ?? 0) ? 1 : band(p.table, g)) : phased(1, g, p));
+  }
+  return Math.max(0, tax);
+}
+
+/** A local tax on a year's wages: a rate to its cap, a fixed sum past its threshold, or a share of the state's tax. */
+export function localTax(t: LocalTax, g: number, stateTax: number): number {
+  if (t.exemptUnder !== undefined && g < t.exemptUnder) return 0;
+  if (t.over !== undefined || t.deduct !== undefined) g = Math.max(0, g - (t.over ?? 0) - (t.deduct ?? 0));
+  if (t.ofStateTax !== undefined) return stateTax * t.ofStateTax;
+  if (t.flat !== undefined) {
+    const monthly = t.thresholdPer === 'year' ? g : g / 12;
+    if (t.threshold !== undefined && monthly < t.threshold) return 0;
+    return t.flat * (t.per === 'week' ? 52 : t.per === 'month' ? 12 : 1);
+  }
+  return Math.min(g, t.cap ?? Number.POSITIVE_INFINITY) * (t.rate ?? 0);
+}
 type Rules = (gross: number, ctx: PayrollContext) => { lines: Line[]; employerPension?: number; employerPensionName?: string };
 
 const RULES: Record<string, Rules> = {
@@ -142,17 +187,36 @@ const RULES: Record<string, Rules> = {
       // pays where there is one. Until 2026-09-26 these states had the tax
       // engine's approximation, and no contribution.
       const st = STATES[state!]!;
+      let stateTax = 0;
       if (st.tax) {
-        const amount = Math.max(0, bands(Math.max(0, g - st.tax.standardDeduction - st.tax.personalExemption), st.tax.brackets) - st.tax.personalCredit);
-        lines.push({ name: `${st.name} Income Tax`, kind: 'tax', source: st.tax.source, amount });
+        stateTax = stateIncomeTax(st.tax, g);
+        lines.push({ name: `${st.name} Income Tax`, kind: 'tax', source: st.tax.source, amount: stateTax });
       }
       const c = st.leaveContribution;
       if (c) lines.push({ name: c.name, kind: 'social', source: c.source, amount: Math.min(g, c.cap ?? Number.POSITIVE_INFINITY) * c.rate });
-    } else if (state !== 'US-TX' && state !== 'US-FL' && state !== undefined) {
+      for (const d of st.contributions ?? []) {
+        let amount = Math.min(g, d.cap ?? Number.POSITIVE_INFINITY) * (d.rate ?? 0) + (d.perHour ?? 0) * (ctx.weeklyHours ?? 40) * 52 + (d.perQuarter ?? 0) * 4;
+        if (d.weeklyMax !== undefined) amount = Math.min(amount, d.weeklyMax * 52);
+        if (d.maxAnnual !== undefined) amount = Math.min(amount, d.maxAnnual);
+        lines.push({ name: d.name, kind: 'social', source: d.source, amount });
+      }
+    } else if (state !== 'US-TX' && state !== 'US-FL' && state !== undefined && !LOCAL_BY_CITY[ctx.cityId ?? '']) {
       // A state the research didn't cover: the tax engine's approximation of it.
       const approx = ctx.cityId ? computeAnnualTax(Math.round(g * 100), ctx.cityId, ctx.at) : undefined;
       const regional = approx ? (approx.regional + approx.local) / 100 : 0;
       if (regional > 0) lines.push({ name: 'State Income Tax (SLATE’s Approximation)', kind: 'tax', source: 'content/tax.ts', amount: regional });
+    }
+    // The town's own wage taxes (`content/local-tax.ts`), on the state's
+    // tax where one is a share of it (Yonkers's); until 2026-09-26 the
+    // approximation carried them for the states it covered, and none after.
+    // One paid on the return is only in the year's settlement.
+    const stateTax = lines.find((l) => l.kind === 'tax' && / Income Tax$/.test(l.name) && l.name !== 'Federal Income Tax')?.amount ?? 0;
+    const local = (LOCAL_BY_CITY[ctx.cityId ?? ''] ?? []).map((i) => [i, LOCAL_TAXES[i]!] as const);
+    const before = new Map(local.map(([i, t]) => [i, localTax(t, g, stateTax)]));
+    for (const [i, t] of local) {
+      if (t.atReturn && !ctx.settling) continue;
+      const credit = (t.lessTaxes ?? []).reduce((sum, j) => sum + (before.get(j) ?? 0), 0);
+      lines.push({ name: t.name, kind: 'tax', source: t.source, amount: Math.max(0, before.get(i)! - credit) });
     }
     return { lines };
   },

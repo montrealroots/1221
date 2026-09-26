@@ -946,9 +946,23 @@ export const PROVINCES: Readonly<Record<string, Province>> = {
  * filer's wages, its unemployment insurance by the base period's quarters,
  * its paid-leave contribution, and what its law adds to the federal.
  */
+/**
+ * How a state's deduction, exemption or credit falls with income: so much for
+ * each step of income over a start (to a floor), stepped amounts by band, lost
+ * over a cliff; or a share of the tax forgiven (Pennsylvania's, Kentucky's) or
+ * credited (Connecticut's personal credit) by band.
+ */
+export type PhaseOut =
+  | { item: 'standardDeduction' | 'personalExemption' | 'personalCredit'; from: number; per: number; reduce: number; floor?: number; source: string }
+  | { item: 'standardDeduction' | 'personalExemption' | 'personalCredit'; steps: readonly (readonly [number, number | null, number])[]; source: string }
+  | { item: 'standardDeduction' | 'personalExemption' | 'personalCredit'; cliff: number; source: string }
+  | { item: 'forgiven'; table: readonly (readonly [number, number | null, number])[]; source: string }
+  | { item: 'forgiven'; from: number; per: number; reduce: number; source: string }
+  | { item: 'creditShare'; table: readonly (readonly [number, number | null, number])[]; source: string };
+
 export interface StateLaw {
   name: string;
-  tax?: { brackets: readonly (readonly [number, number])[]; standardDeduction: number; personalExemption: number; personalCredit: number; eitc?: { share: number; refundable: boolean }; source: string };
+  tax?: { brackets: readonly (readonly [number, number])[]; standardDeduction: number; personalExemption: number; personalCredit: number; eitc?: { share: number; refundable: boolean }; phaseOuts?: readonly PhaseOut[]; source: string };
   ui?: {
     name: string;
     /** The top quarters of the base period the weekly amount is worked on (4, all of them), and the share of their sum. */
@@ -957,9 +971,13 @@ export interface StateLaw {
     min: number; max: number; weeks: number; share?: number; waitingDays: number;
     qualify: Readonly<Record<string, number>>;
     taxed: boolean;
+    /** Quitting without good cause, and misconduct: nothing paid until requalified, or weeks of delay. */
+    quit: WorldBar; cause: WorldBar;
     source: string;
   };
   leaveContribution?: { name: string; rate: number; cap?: number; source: string };
+  /** Every state-level deduction from an employee's pay beyond the income tax: a rate to a cap, cents an hour, or dollars a quarter, with any cap on the deduction itself. */
+  contributions?: readonly { name: string; rate?: number; perHour?: number; perQuarter?: number; cap?: number; maxAnnual?: number; weeklyMax?: number; source: string }[];
   law?: Omit<LaborLaw, 'regions'>;
 }
 
@@ -1004,7 +1022,157 @@ export const STATES: Readonly<Record<string, StateLaw>> = {
         "share": 0.4,
         "refundable": true
       },
-      "source": "Tax Foundation, 2026 State Income Tax Rates and Brackets"
+      "source": "Tax Foundation, 2026 State Income Tax Rates and Brackets",
+      "phaseOuts": [
+        {
+          "item": "creditShare",
+          "table": [
+            [
+              15000,
+              18800,
+              0.75
+            ],
+            [
+              18800,
+              19300,
+              0.7
+            ],
+            [
+              19300,
+              19800,
+              0.65
+            ],
+            [
+              19800,
+              20300,
+              0.6
+            ],
+            [
+              20300,
+              20800,
+              0.55
+            ],
+            [
+              20800,
+              21300,
+              0.5
+            ],
+            [
+              21300,
+              21800,
+              0.45
+            ],
+            [
+              21800,
+              22300,
+              0.4
+            ],
+            [
+              22300,
+              25000,
+              0.35
+            ],
+            [
+              25000,
+              25500,
+              0.3
+            ],
+            [
+              25500,
+              26000,
+              0.25
+            ],
+            [
+              26000,
+              26500,
+              0.2
+            ],
+            [
+              26500,
+              31300,
+              0.15
+            ],
+            [
+              31300,
+              31800,
+              0.14
+            ],
+            [
+              31800,
+              32300,
+              0.13
+            ],
+            [
+              32300,
+              32800,
+              0.12
+            ],
+            [
+              32800,
+              33300,
+              0.11
+            ],
+            [
+              33300,
+              60000,
+              0.1
+            ],
+            [
+              60000,
+              60500,
+              0.09
+            ],
+            [
+              60500,
+              61000,
+              0.08
+            ],
+            [
+              61000,
+              61500,
+              0.07
+            ],
+            [
+              61500,
+              62000,
+              0.06
+            ],
+            [
+              62000,
+              62500,
+              0.05
+            ],
+            [
+              62500,
+              63000,
+              0.04
+            ],
+            [
+              63000,
+              63500,
+              0.03
+            ],
+            [
+              63500,
+              64000,
+              0.02
+            ],
+            [
+              64000,
+              64500,
+              0.01
+            ]
+          ],
+          "source": "https://www.cga.ct.gov/current/pub/chap_229.htm"
+        },
+        {
+          "item": "personalExemption",
+          "from": 30000,
+          "per": 1000,
+          "reduce": 1000,
+          "source": "https://www.cga.ct.gov/current/pub/chap_229.htm"
+        }
+      ]
     },
     "ui": {
       "name": "Connecticut Unemployment Insurance",
@@ -1019,13 +1187,19 @@ export const STATES: Readonly<Record<string, StateLaw>> = {
         "baseMultipleOfWBA": 40
       },
       "taxed": true,
+      "quit": "none",
+      "cause": "none",
       "source": "portal.ct.gov/dolui/benefits-booklet (Guide to Collecting Benefits in CT)"
     },
-    "leaveContribution": {
-      "name": "CT Paid Leave",
-      "rate": 0.005,
-      "source": "ctpaidleave.org/how-ct-paid-leave-works/contributions"
-    },
+    "contributions": [
+      {
+        "name": "Connecticut Paid Leave",
+        "rate": 0.005,
+        "cap": 184500,
+        "maxAnnual": 922.5,
+        "source": "https://www.ctpaidleave.org/how-ct-paid-leave-works/contributions"
+      }
+    ],
     "law": {
       "sick": {
         "fromDay": 1,
@@ -1094,6 +1268,8 @@ export const STATES: Readonly<Record<string, StateLaw>> = {
         "quartersWithWages": 2
       },
       "taxed": false,
+      "quit": "none",
+      "cause": "none",
       "source": "D.C. Code 51-107 (code.dccouncil.gov)"
     },
     "law": {
@@ -1162,14 +1338,18 @@ export const STATES: Readonly<Record<string, StateLaw>> = {
         "baseMultipleOfWBA": 36
       },
       "taxed": true,
+      "quit": "none",
+      "cause": "none",
       "source": "Delaware Code Title 19 ch. 33 subch. II (delcode.delaware.gov/title19/c033/sc02)"
     },
-    "leaveContribution": {
-      "name": "Delaware Paid Leave",
-      "rate": 0.004,
-      "cap": 184500,
-      "source": "Delaware Code Title 19 ch. 33 subch. II (delcode.delaware.gov/title19/c033/sc02)"
-    }
+    "contributions": [
+      {
+        "name": "Delaware Paid Leave",
+        "rate": 0.004,
+        "cap": 184500,
+        "source": "https://laborfiles.delaware.gov/main/pfl/DDOL40327_Program_Overview_FAQs_v5.pdf"
+      }
+    ]
   },
   "US-MA": {
     "name": "Massachusetts",
@@ -1207,13 +1387,18 @@ export const STATES: Readonly<Record<string, StateLaw>> = {
         "baseMultipleOfWBA": 30
       },
       "taxed": true,
+      "quit": "none",
+      "cause": "none",
       "source": "Mass Legal Services 2023 UI Advocacy Guide ch.4 'How are UI benefits calculated' (masslegalservices.org)"
     },
-    "leaveContribution": {
-      "name": "Massachusetts PFML",
-      "rate": 0.0046,
-      "source": "NFP / Seyfarth / USI 2026 PFML summaries (search summary)"
-    },
+    "contributions": [
+      {
+        "name": "Massachusetts Paid Family and Medical Leave",
+        "rate": 0.0046,
+        "cap": 184500,
+        "source": "https://www.seyfarth.com/news-insights/2026-massachusetts-paid-family-and-medical-leave-updates-benefit-amount-contribution-rates-and-taxability-of-benefit-payments.html"
+      }
+    ],
     "law": {
       "sick": {
         "fromDay": 1,
@@ -1277,7 +1462,35 @@ export const STATES: Readonly<Record<string, StateLaw>> = {
         "share": 0.5,
         "refundable": true
       },
-      "source": "Comptroller of Maryland Central Payroll Bureau memo '2026 Maryland State and Local Income Tax Withholding Information' (brackets match Tax Foundation 2026)"
+      "source": "Comptroller of Maryland Central Payroll Bureau memo '2026 Maryland State and Local Income Tax Withholding Information' (brackets match Tax Foundation 2026)",
+      "phaseOuts": [
+        {
+          "item": "personalExemption",
+          "steps": [
+            [
+              0,
+              100000,
+              3200
+            ],
+            [
+              100000,
+              125000,
+              1600
+            ],
+            [
+              125000,
+              150000,
+              800
+            ],
+            [
+              150000,
+              null,
+              0
+            ]
+          ],
+          "source": "https://www.marylandcomptroller.gov/content/dam/mdcomp/tax/forms/worksheets/Exemptions_Worksheet.pdf"
+        }
+      ]
     },
     "ui": {
       "name": "Maryland Unemployment Insurance",
@@ -1294,6 +1507,8 @@ export const STATES: Readonly<Record<string, StateLaw>> = {
         "quartersWithWages": 2
       },
       "taxed": true,
+      "quit": "none",
+      "cause": "none",
       "source": "Md. Code Labor & Employment 8-803 (mgaleg.maryland.gov)"
     },
     "law": {
@@ -1331,7 +1546,16 @@ export const STATES: Readonly<Record<string, StateLaw>> = {
         "share": 0.25,
         "refundable": true
       },
-      "source": "Tax Foundation, 2026 State Income Tax Rates and Brackets"
+      "source": "Tax Foundation, 2026 State Income Tax Rates and Brackets",
+      "phaseOuts": [
+        {
+          "item": "standardDeduction",
+          "from": 100000,
+          "per": 1,
+          "reduce": 0.204,
+          "source": "https://www.maine.gov/revenue/sites/maine.gov.revenue/files/inline-files/25_item_stand_%20ded_phaseout_wksht.pdf"
+        }
+      ]
     },
     "ui": {
       "name": "Maine Unemployment Insurance",
@@ -1346,14 +1570,18 @@ export const STATES: Readonly<Record<string, StateLaw>> = {
         "quartersWithWages": 2
       },
       "taxed": true,
+      "quit": "none",
+      "cause": "none",
       "source": "26 M.R.S. 1191 (legislature.maine.gov)"
     },
-    "leaveContribution": {
-      "name": "Maine Paid Family and Medical Leave",
-      "rate": 0.005,
-      "cap": 184500,
-      "source": "26 M.R.S. 1191 (legislature.maine.gov)"
-    },
+    "contributions": [
+      {
+        "name": "Maine Paid Family and Medical Leave",
+        "rate": 0.005,
+        "cap": 184500,
+        "source": "https://www.maine.gov/paidleave/docs/2024/EmployersGuidetoMainePFMLContributions.docx"
+      }
+    ],
     "law": {
       "sick": {
         "fromDay": 1,
@@ -1388,6 +1616,8 @@ export const STATES: Readonly<Record<string, StateLaw>> = {
         "quartersWithWages": 2
       },
       "taxed": false,
+      "quit": "none",
+      "cause": "none",
       "source": "RSA 282-A:25 (gc.nh.gov/rsa/html/XXIII/282-A/282-A-25.htm)"
     }
   },
@@ -1446,13 +1676,38 @@ export const STATES: Readonly<Record<string, StateLaw>> = {
         "baseMin": 15500
       },
       "taxed": false,
+      "quit": "none",
+      "cause": "none",
       "source": "nj.gov/labor/myunemployment/before/about/calculator"
     },
-    "leaveContribution": {
-      "name": "NJ Temporary Disability (TDI) and Family Leave Insurance (FLI), plus worker UI",
-      "rate": 0.0042,
-      "source": "nj.gov/labor/ea/employer-services/rate-info; business.nj.gov 2026 rates notice"
-    },
+    "contributions": [
+      {
+        "name": "New Jersey Unemployment Insurance",
+        "rate": 0.003825,
+        "cap": 44800,
+        "source": "https://www.nj.gov/labor/ea/employer-services/rate-info"
+      },
+      {
+        "name": "New Jersey Workforce Development / Supplemental Workforce Funds",
+        "rate": 0.000425,
+        "cap": 44800,
+        "source": "https://www.nj.gov/labor/ea/employer-services/rate-info"
+      },
+      {
+        "name": "New Jersey Temporary Disability Insurance",
+        "rate": 0.0019,
+        "cap": 171100,
+        "maxAnnual": 325.09,
+        "source": "https://www.nj.gov/labor/ea/employer-services/rate-info"
+      },
+      {
+        "name": "New Jersey Family Leave Insurance",
+        "rate": 0.0023,
+        "cap": 171100,
+        "maxAnnual": 393.53,
+        "source": "https://www.nj.gov/labor/ea/employer-services/rate-info"
+      }
+    ],
     "law": {
       "sick": {
         "fromDay": 1,
@@ -1480,7 +1735,16 @@ export const STATES: Readonly<Record<string, StateLaw>> = {
         "share": 0.1,
         "refundable": true
       },
-      "source": "Tax Foundation 2026"
+      "source": "Tax Foundation 2026",
+      "phaseOuts": [
+        {
+          "item": "forgiven",
+          "from": 6500,
+          "per": 250,
+          "reduce": 0.1,
+          "source": "https://www.pa.gov/content/dam/copapwp-pagov/en/revenue/documents/formsandpublications/formsforindividuals/pit/documents/2024/2024_pa-40sp.pdf"
+        }
+      ]
     },
     "ui": {
       "name": "Pennsylvania Unemployment Compensation",
@@ -1497,13 +1761,17 @@ export const STATES: Readonly<Record<string, StateLaw>> = {
         "quartersWithWages": 2
       },
       "taxed": false,
+      "quit": "none",
+      "cause": "none",
       "source": "Pennsylvania Bulletin vol.56 no.3 notice on 2026 maximum weekly benefit rate (pacodeandbulletin.gov)"
     },
-    "leaveContribution": {
-      "name": "PA employee UC contribution (no paid family leave program)",
-      "rate": 0.0007,
-      "source": "Pennsylvania Bulletin vol.56 no.3 notice on 2026 maximum weekly benefit rate (pacodeandbulletin.gov)"
-    }
+    "contributions": [
+      {
+        "name": "Pennsylvania Unemployment Compensation",
+        "rate": 0.0007,
+        "source": "https://www.pa.gov/agencies/dli/resources/for-employers-and-educators/how-to-file/uc-tax/employee-withholding"
+      }
+    ]
   },
   "US-RI": {
     "name": "Rhode Island",
@@ -1546,14 +1814,19 @@ export const STATES: Readonly<Record<string, StateLaw>> = {
         "alternativeBaseMin": 19200
       },
       "taxed": true,
+      "quit": "none",
+      "cause": "none",
       "source": "RI DLT '2026 UI and TDI Quick Reference (Effective July 1, 2026)' (dlt.ri.gov/media/13506/download)"
     },
-    "leaveContribution": {
-      "name": "RI Temporary Disability / Temporary Caregiver Insurance (TDI/TCI)",
-      "rate": 0.011,
-      "cap": 100000,
-      "source": "RI DLT 2026 UI and TDI Quick Reference"
-    },
+    "contributions": [
+      {
+        "name": "Rhode Island Temporary Disability / Caregiver Insurance",
+        "rate": 0.011,
+        "cap": 100000,
+        "maxAnnual": 1100,
+        "source": "https://dlt.ri.gov/press-releases/2026-tax-rates-unemployment-insurance-and-temporary-disability-insurance"
+      }
+    ],
     "law": {
       "sick": {
         "fromDay": 1,
@@ -1609,13 +1882,17 @@ export const STATES: Readonly<Record<string, StateLaw>> = {
         "baseMultipleOfHQ": 1.4
       },
       "taxed": true,
+      "quit": "none",
+      "cause": "none",
       "source": "labor.vermont.gov 'Calculating Your UI Benefits'"
     },
-    "leaveContribution": {
-      "name": "Vermont Child Care Contribution (Vermont has no mandatory paid family leave payroll deduction)",
-      "rate": 0.0011,
-      "source": "tax.vermont.gov Child Care Contribution (search summary)"
-    },
+    "contributions": [
+      {
+        "name": "Vermont Child Care Contribution",
+        "rate": 0.0011,
+        "source": "https://tax.vermont.gov/business/child-care-contribution"
+      }
+    ],
     "law": {
       "sick": {
         "fromDay": 1,
@@ -1660,6 +1937,8 @@ export const STATES: Readonly<Record<string, StateLaw>> = {
         "quartersWithWages": 2
       },
       "taxed": true,
+      "quit": "none",
+      "cause": "none",
       "source": "https://workforce.iowa.gov/unemployment/resources/unemployment-insurance-claimant-handbook/monetary-eligibility"
     }
   },
@@ -1696,6 +1975,8 @@ export const STATES: Readonly<Record<string, StateLaw>> = {
         "lastTwoQuartersMin": 2500
       },
       "taxed": true,
+      "quit": "none",
+      "cause": "none",
       "source": "Indiana DWD Claimant Handbook, early July 2026 (in.gov/dwd/files/Claimant_Handbook early July 2026.pdf)"
     }
   },
@@ -1711,7 +1992,70 @@ export const STATES: Readonly<Record<string, StateLaw>> = {
       "standardDeduction": 3360,
       "personalExemption": 0,
       "personalCredit": 0,
-      "source": "Tax Foundation 2026 State Income Tax Rates (3.50% flat, $3,360 standard deduction)"
+      "source": "Tax Foundation 2026 State Income Tax Rates (3.50% flat, $3,360 standard deduction)",
+      "phaseOuts": [
+        {
+          "item": "forgiven",
+          "table": [
+            [
+              0,
+              15650,
+              1
+            ],
+            [
+              15650,
+              16276,
+              0.9
+            ],
+            [
+              16276,
+              16902,
+              0.8
+            ],
+            [
+              16902,
+              17528,
+              0.7
+            ],
+            [
+              17528,
+              18154,
+              0.6
+            ],
+            [
+              18154,
+              18780,
+              0.5
+            ],
+            [
+              18780,
+              19406,
+              0.4
+            ],
+            [
+              19406,
+              19876,
+              0.3
+            ],
+            [
+              19876,
+              20345,
+              0.2
+            ],
+            [
+              20345,
+              20815,
+              0.1
+            ],
+            [
+              20815,
+              null,
+              0
+            ]
+          ],
+          "source": "https://revenue.ky.gov/Forms/Schedule%20ITC%20(2025).pdf"
+        }
+      ]
     },
     "ui": {
       "name": "Kentucky Unemployment Insurance",
@@ -1727,6 +2071,8 @@ export const STATES: Readonly<Record<string, StateLaw>> = {
         "outsideHQMin": 1500
       },
       "taxed": true,
+      "quit": "none",
+      "cause": "none",
       "source": "Kentucky Career Center UI FAQ Guide (kcc.ky.gov/career/resources/Pages/UI-FAQ-Guide.aspx)"
     }
   },
@@ -1764,6 +2110,8 @@ export const STATES: Readonly<Record<string, StateLaw>> = {
         "alternativeBaseMin": 26678
       },
       "taxed": true,
+      "quit": "none",
+      "cause": "none",
       "source": "Michigan LEO UIA Eligibility Requirements (michigan.gov/leo/bureaus-agencies/uia/tools/publications/eligibility-requirements)"
     },
     "law": {
@@ -1815,8 +2163,18 @@ export const STATES: Readonly<Record<string, StateLaw>> = {
       "waitingDays": 7,
       "qualify": {},
       "taxed": true,
+      "quit": "none",
+      "cause": "none",
       "source": "Minn. Stat. 268.07 subd. 2 and 2a, 268.085 subd. 1(6), 268.095 subd. 10 (revisor.mn.gov, 2025 Statutes)"
     },
+    "contributions": [
+      {
+        "name": "Minnesota Paid Leave",
+        "rate": 0.0044,
+        "cap": 184500,
+        "source": "https://pl.mn.gov/resources/calculators/premium-rate-and-contributions"
+      }
+    ],
     "law": {
       "sick": {
         "fromDay": 1,
@@ -1864,6 +2222,8 @@ export const STATES: Readonly<Record<string, StateLaw>> = {
         "quartersWithWages": 2
       },
       "taxed": true,
+      "quit": "none",
+      "cause": "none",
       "source": "Job Service North Dakota UI Benefits Estimator (jobsnd.com) and 2026 WBA Benefit Chart (jobsnd.com/.../2026 WBA Benefit Chart.pdf, schedule 7/5/2026-7/3/2027)"
     }
   },
@@ -1909,6 +2269,10 @@ export const STATES: Readonly<Record<string, StateLaw>> = {
         "otherQuarterMin": 800
       },
       "taxed": true,
+      "quit": "none",
+      "cause": {
+        "weeks": 15
+      },
       "source": "Nebraska DOL Unemployment Insurance Handbook for Unemployed Workers, updated March 2026 (dol.nebraska.gov/webdocs/.../Updated English Handbook for Unemployed Workers.pdf)"
     },
     "law": {
@@ -1942,7 +2306,30 @@ export const STATES: Readonly<Record<string, StateLaw>> = {
         "share": 0.3,
         "refundable": false
       },
-      "source": "Tax Foundation 2026 State Income Tax Rates (0% to $26,050, 2.75% above"
+      "source": "Tax Foundation 2026 State Income Tax Rates (0% to $26,050, 2.75% above",
+      "phaseOuts": [
+        {
+          "item": "personalExemption",
+          "steps": [
+            [
+              0,
+              40000,
+              2400
+            ],
+            [
+              40000,
+              80000,
+              2150
+            ],
+            [
+              80000,
+              500000,
+              1900
+            ]
+          ],
+          "source": "https://codes.ohio.gov/ohio-revised-code/section-5747.025"
+        }
+      ]
     },
     "ui": {
       "name": "Ohio Unemployment Compensation",
@@ -1955,6 +2342,8 @@ export const STATES: Readonly<Record<string, StateLaw>> = {
       "waitingDays": 7,
       "qualify": {},
       "taxed": true,
+      "quit": "none",
+      "cause": "none",
       "source": "ODJFS Unemployment Program Policy 'Qualifying Week, Average Weekly Wage, and Weekly Benefit Amount' (eff. 16 June 2025, dam.assets.ohio.gov)"
     }
   },
@@ -1981,6 +2370,8 @@ export const STATES: Readonly<Record<string, StateLaw>> = {
         "outsideHQMultipleOfWBA": 20
       },
       "taxed": false,
+      "quit": "none",
+      "cause": "none",
       "source": "SD DLR 'RA Benefits - Wage Requirements/Benefit Amounts' (dlr.sd.gov/ra/individuals/wage_requirements.aspx)"
     }
   },
@@ -2008,7 +2399,16 @@ export const STATES: Readonly<Record<string, StateLaw>> = {
       "standardDeduction": 13960,
       "personalExemption": 700,
       "personalCredit": 0,
-      "source": "Tax Foundation 2026 State Income Tax Rates (2026 brackets"
+      "source": "Tax Foundation 2026 State Income Tax Rates (2026 brackets",
+      "phaseOuts": [
+        {
+          "item": "standardDeduction",
+          "from": 19550,
+          "per": 1,
+          "reduce": 0.12,
+          "source": "https://www.revenue.wi.gov/TaxForms2025/2025-Form1-Inst.pdf"
+        }
+      ]
     },
     "ui": {
       "name": "Wisconsin Unemployment Insurance",
@@ -2025,6 +2425,10 @@ export const STATES: Readonly<Record<string, StateLaw>> = {
         "outsideHQMultipleOfWBA": 4
       },
       "taxed": true,
+      "quit": "none",
+      "cause": {
+        "weeks": 7
+      },
       "source": "Wisconsin DWD UI Employer Handbook, Section 1 Part 3 (dwd.wisconsin.gov/ui201/b3201.htm)"
     }
   },
@@ -2071,6 +2475,10 @@ export const STATES: Readonly<Record<string, StateLaw>> = {
         "quartersWithWages": 2
       },
       "taxed": true,
+      "quit": "none",
+      "cause": {
+        "weeks": 7
+      },
       "source": "W. Va. Code 21A-6-10 (benefit table, code.wvlegislature.gov, current Sept 2026)"
     }
   },
@@ -2094,7 +2502,17 @@ export const STATES: Readonly<Record<string, StateLaw>> = {
       "standardDeduction": 3000,
       "personalExemption": 1500,
       "personalCredit": 0,
-      "source": "Tax Foundation, State Individual Income Tax Rates and Brackets 2026 (https://taxfoundation.org/data/all/state/state-income-tax-rates-2026/), footnotes b, c, uu"
+      "source": "Tax Foundation, State Individual Income Tax Rates and Brackets 2026 (https://taxfoundation.org/data/all/state/state-income-tax-rates-2026/), footnotes b, c, uu",
+      "phaseOuts": [
+        {
+          "item": "standardDeduction",
+          "from": 26000,
+          "per": 500,
+          "reduce": 25,
+          "floor": 2500,
+          "source": "https://www.revenue.alabama.gov/wp-content/uploads/2026/01/25stddeduction40.pdf"
+        }
+      ]
     },
     "ui": {
       "name": "Alabama Unemployment Compensation",
@@ -2110,6 +2528,10 @@ export const STATES: Readonly<Record<string, StateLaw>> = {
         "quartersWithWages": 2
       },
       "taxed": false,
+      "quit": "none",
+      "cause": {
+        "weeks": 5
+      },
       "source": "DOL Significant Provisions of State UI Laws, July 2026 (https://oui.doleta.gov/unemploy/content/sigpros/2020-2029/July2026.pdf)"
     }
   },
@@ -2157,6 +2579,8 @@ export const STATES: Readonly<Record<string, StateLaw>> = {
         "baseMultipleOfWBA": 35
       },
       "taxed": true,
+      "quit": "none",
+      "cause": "none",
       "source": "DOL Significant Provisions of State UI Laws, July 2026 (https://oui.doleta.gov/unemploy/content/sigpros/2020-2029/July2026.pdf)"
     }
   },
@@ -2188,6 +2612,8 @@ export const STATES: Readonly<Record<string, StateLaw>> = {
         "baseMultipleOfHQ": 1.5
       },
       "taxed": true,
+      "quit": "none",
+      "cause": "none",
       "source": "A.R.S. 23-771, 23-775, 23-779, 23-780 (https://www.azleg.gov/ars/23/...)"
     },
     "law": {
@@ -2233,8 +2659,22 @@ export const STATES: Readonly<Record<string, StateLaw>> = {
         "baseMultipleOfWBA": 40
       },
       "taxed": true,
+      "quit": {
+        "weeks": 10
+      },
+      "cause": {
+        "weeks": 10
+      },
       "source": "DOL Significant Provisions of State UI Laws, July 2026 (https://oui.doleta.gov/unemploy/content/sigpros/2020-2029/July2026.pdf)"
     },
+    "contributions": [
+      {
+        "name": "Colorado FAMLI",
+        "rate": 0.0044,
+        "cap": 184500,
+        "source": "https://famli.colorado.gov/individuals-and-families/how-famli-works/premium-and-benefits-calculator"
+      }
+    ],
     "law": {
       "overtime": {
         "week": 40,
@@ -2288,6 +2728,8 @@ export const STATES: Readonly<Record<string, StateLaw>> = {
         "baseMultipleOfWBA": 30
       },
       "taxed": true,
+      "quit": "none",
+      "cause": "none",
       "source": "K.S.A. 44-704, 44-705, 44-706 (https://www.ksrevisor.gov/statutes/chapters/ch44/044_007_0004.html etc.)"
     }
   },
@@ -2323,6 +2765,8 @@ export const STATES: Readonly<Record<string, StateLaw>> = {
         "quartersWithWages": 2
       },
       "taxed": true,
+      "quit": "none",
+      "cause": "none",
       "source": "La. R.S. 23:1592 and 23:1595 (https://legis.la.gov/Legis/Law.aspx?d=83605, d=83608)"
     }
   },
@@ -2387,6 +2831,8 @@ export const STATES: Readonly<Record<string, StateLaw>> = {
         "quartersWithWages": 2
       },
       "taxed": true,
+      "quit": "none",
+      "cause": "none",
       "source": "RSMo 288.038, 288.040, 288.050, 288.060 (https://revisor.mo.gov/main/OneSection.aspx?section=288.0xx)"
     }
   },
@@ -2423,6 +2869,8 @@ export const STATES: Readonly<Record<string, StateLaw>> = {
         "baseMultipleOfWBA": 40
       },
       "taxed": true,
+      "quit": "none",
+      "cause": "none",
       "source": "MDES Unemployment FAQs (https://mdes.ms.gov/unemployment-faqs/)"
     }
   },
@@ -2462,7 +2910,16 @@ export const STATES: Readonly<Record<string, StateLaw>> = {
         "share": 0.25,
         "refundable": true
       },
-      "source": "Tax Foundation 2026 (https://taxfoundation.org/data/all/state/state-income-tax-rates-2026/), footnotes m, o, u, jj"
+      "source": "Tax Foundation 2026 (https://taxfoundation.org/data/all/state/state-income-tax-rates-2026/), footnotes m, o, u, jj",
+      "phaseOuts": [
+        {
+          "item": "personalExemption",
+          "from": 20000,
+          "per": 1,
+          "reduce": 0.15,
+          "source": "https://realfile.tax.newmexico.gov/2025pit-1-ins.pdf"
+        }
+      ]
     },
     "ui": {
       "name": "New Mexico Unemployment Insurance",
@@ -2478,8 +2935,18 @@ export const STATES: Readonly<Record<string, StateLaw>> = {
         "quartersWithWages": 2
       },
       "taxed": true,
+      "quit": "none",
+      "cause": "none",
       "source": "NMSA 51-1-4, 51-1-5, 51-1-7 (https://codes.findlaw.com/nm/chapter-51-unemployment-compensation/nm-st-sect-51-1-4/ etc.)"
     },
+    "contributions": [
+      {
+        "name": "New Mexico Workers' Compensation Fee",
+        "perQuarter": 2.25,
+        "maxAnnual": 9,
+        "source": "https://law.justia.com/codes/new-mexico/chapter-52/article-5/section-52-5-19-d-1/"
+      }
+    ],
     "law": {
       "sick": {
         "fromDay": 1,
@@ -2534,6 +3001,8 @@ export const STATES: Readonly<Record<string, StateLaw>> = {
         "baseMultipleOfHQ": 1.5
       },
       "taxed": true,
+      "quit": "none",
+      "cause": "none",
       "source": "OESC Claimant Handbook OES-339 rev. 06-3-2026 (https://oklahoma.gov/content/dam/ok/en/oesc/documents/forms/OES-339.pdf)"
     }
   },
@@ -2559,6 +3028,8 @@ export const STATES: Readonly<Record<string, StateLaw>> = {
         "baseMultipleOfWBA": 40
       },
       "taxed": false,
+      "quit": "none",
+      "cause": "none",
       "source": "DOL Significant Provisions of State UI Laws July 2026 (https://oui.doleta.gov/unemploy/content/sigpros/2020-2029/July2026.pdf)"
     }
   },
@@ -2585,8 +3056,23 @@ export const STATES: Readonly<Record<string, StateLaw>> = {
         "quartersWithWages": 2
       },
       "taxed": false,
+      "quit": {
+        "weeks": 6
+      },
+      "cause": {
+        "weeks": 6
+      },
       "source": "https://labor.alaska.gov/unemployment/documents/Calculating_Benefits.pdf"
     },
+    "contributions": [
+      {
+        "name": "Alaska Unemployment Insurance",
+        "rate": 0.005,
+        "cap": 54200,
+        "maxAnnual": 271,
+        "source": "https://labor.alaska.gov/estax/2026-experience-rates.html"
+      }
+    ],
     "law": {
       "overtime": {
         "day": 8,
@@ -2679,8 +3165,23 @@ export const STATES: Readonly<Record<string, StateLaw>> = {
         "baseMultipleOfWBA": 26
       },
       "taxed": true,
+      "quit": "none",
+      "cause": "none",
       "source": "https://oui.doleta.gov/unemploy/content/sigpros/2020-2029/January2026.pdf"
     },
+    "contributions": [
+      {
+        "name": "Hawaii Temporary Disability Insurance",
+        "rate": 0.005,
+        "weeklyMax": 7.5,
+        "source": "https://labor.hawaii.gov/dcd/files/2025/12/2026-Maximum-Weekly-Wage-Base.pdf"
+      },
+      {
+        "name": "Hawaii Prepaid Health Care",
+        "rate": 0.015,
+        "source": "https://labor.hawaii.gov/dcd/files/2025/12/2026-Maximum-Weekly-Wage-Base.pdf"
+      }
+    ],
     "law": {
       "sick": {
         "fromDay": 8,
@@ -2722,6 +3223,8 @@ export const STATES: Readonly<Record<string, StateLaw>> = {
         "quartersWithWages": 2
       },
       "taxed": true,
+      "quit": "none",
+      "cause": "none",
       "source": "https://www.labor.idaho.gov/unemployment-benefits/monetary-eligibility/"
     }
   },
@@ -2761,6 +3264,8 @@ export const STATES: Readonly<Record<string, StateLaw>> = {
         "baseMultipleOfHQ": 1.5
       },
       "taxed": true,
+      "quit": "none",
+      "cause": "none",
       "source": "https://uid.dli.mt.gov/_files/js/benefits-estimator-calculator.js (2026 constants and formula)"
     }
   },
@@ -2787,6 +3292,8 @@ export const STATES: Readonly<Record<string, StateLaw>> = {
         "baseMultipleOfHQ": 1.5
       },
       "taxed": false,
+      "quit": "none",
+      "cause": "none",
       "source": "https://nvlmi.mt.gov/_docs/EDS_Wage-Benefit/MWB-Statewide-2026.pdf (max $657 from 2026-07-01)"
     },
     "law": {
@@ -2834,7 +3341,14 @@ export const STATES: Readonly<Record<string, StateLaw>> = {
         "share": 0.09,
         "refundable": true
       },
-      "source": "https://taxfoundation.org/data/all/state/state-income-tax-rates-2026/ (2026 single"
+      "source": "https://taxfoundation.org/data/all/state/state-income-tax-rates-2026/ (2026 single",
+      "phaseOuts": [
+        {
+          "item": "personalCredit",
+          "cliff": 100000,
+          "source": "https://www.oregon.gov/dor/programs/individuals/pages/credits.aspx"
+        }
+      ]
     },
     "ui": {
       "name": "Oregon Unemployment Insurance",
@@ -2851,8 +3365,28 @@ export const STATES: Readonly<Record<string, StateLaw>> = {
         "hoursMin": 500
       },
       "taxed": true,
+      "quit": "none",
+      "cause": "none",
       "source": "https://www.oregon.gov/employ/NewsAndMedia/Documents/2026-05-29-Minimum-Maximum-Weekly-Benefit-Amounts.pdf"
     },
+    "contributions": [
+      {
+        "name": "Paid Leave Oregon",
+        "rate": 0.006,
+        "cap": 184500,
+        "source": "https://paidleave.oregon.gov/employees/overview.html"
+      },
+      {
+        "name": "Oregon Statewide Transit Tax",
+        "rate": 0.001,
+        "source": "https://www.oregon.gov/dor/programs/businesses/pages/statewide-transit-tax.aspx"
+      },
+      {
+        "name": "Oregon Workers' Benefit Fund assessment",
+        "perHour": 0.009,
+        "source": "https://flashalert.net/id/ODCBS/183550"
+      }
+    ],
     "law": {
       "sick": {
         "fromDay": 1,
@@ -2880,7 +3414,16 @@ export const STATES: Readonly<Record<string, StateLaw>> = {
         "share": 0.2,
         "refundable": false
       },
-      "source": "https://taxnews.ey.com/news/2026-0913-utah-law-lowers-state-income-tax-rate-retroactive-to-january-1-2026 (S.B. 60: 4.45% retroactive to 2026-01-01)"
+      "source": "https://taxnews.ey.com/news/2026-0913-utah-law-lowers-state-income-tax-rate-retroactive-to-january-1-2026 (S.B. 60: 4.45% retroactive to 2026-01-01)",
+      "phaseOuts": [
+        {
+          "item": "personalCredit",
+          "from": 18213,
+          "per": 1,
+          "reduce": 0.013,
+          "source": "https://incometax.utah.gov/credits/taxpayer-tax-credit"
+        }
+      ]
     },
     "ui": {
       "name": "Utah Unemployment Insurance",
@@ -2897,6 +3440,8 @@ export const STATES: Readonly<Record<string, StateLaw>> = {
         "baseMultipleOfHQ": 1.5
       },
       "taxed": true,
+      "quit": "none",
+      "cause": "none",
       "source": "https://jobs.utah.gov/ui/UIShared/PDFs/BenefitCalculation.pdf (Benefit Schedule January 2026)"
     }
   },
@@ -2922,6 +3467,8 @@ export const STATES: Readonly<Record<string, StateLaw>> = {
         "baseMultipleOfHQ": 1.4
       },
       "taxed": false,
+      "quit": "none",
+      "cause": "none",
       "source": "https://dws.wyo.gov/dws-division/unemployment-insurance/claimants/faq2/ (min/max from 2026-07-05)"
     }
   },
@@ -2951,6 +3498,8 @@ export const STATES: Readonly<Record<string, StateLaw>> = {
         "quartersWithWages": 2
       },
       "taxed": true,
+      "quit": "none",
+      "cause": "none",
       "source": "https://www.des.nc.gov/need-help/faqs/ui"
     }
   },
@@ -2974,7 +3523,16 @@ export const STATES: Readonly<Record<string, StateLaw>> = {
         "share": 1.25,
         "refundable": false
       },
-      "source": "https://dor.sc.gov/news/information-about-h-4216 (H.4216, signed 2026-03-30, from tax year 2026)"
+      "source": "SC H.4216 (2026), https://www.scstatehouse.gov/sess126_2025-2026/bills/4216.htm",
+      "phaseOuts": [
+        {
+          "item": "standardDeduction",
+          "from": 40000,
+          "per": 1000,
+          "reduce": 272.73,
+          "source": "https://www.scstatehouse.gov/sess126_2025-2026/bills/4216.htm"
+        }
+      ]
     },
     "ui": {
       "name": "South Carolina Unemployment Insurance",
@@ -2991,6 +3549,10 @@ export const STATES: Readonly<Record<string, StateLaw>> = {
         "baseMultipleOfHQ": 1.5
       },
       "taxed": true,
+      "quit": "none",
+      "cause": {
+        "weeks": 21
+      },
       "source": "https://oui.doleta.gov/unemploy/content/sigpros/2020-2029/January2026.pdf"
     }
   },
@@ -3038,6 +3600,8 @@ export const STATES: Readonly<Record<string, StateLaw>> = {
         "quartersWithWages": 2
       },
       "taxed": false,
+      "quit": "none",
+      "cause": "none",
       "source": "https://www.vec.virginia.gov/sites/default/files/bentable.pdf (benefit table)"
     },
     "law": {
@@ -3052,8 +3616,8 @@ export const STATES: Readonly<Record<string, StateLaw>> = {
   }
 };
 
-/** What quitting, or being let go for cause, does to a claim: nothing paid, or weeks of delay. */
-export type WorldBar = 'none' | { weeks: number };
+/** What quitting, or being let go for cause, does to a claim: nothing paid, or weeks of delay, or a lower rate for fewer weeks. */
+export type WorldBar = 'none' | { weeks: number; rate?: number; forWeeks?: number };
 
 /**
  * A country or territory beyond the thirteen: whose law it applies where it
@@ -3065,13 +3629,34 @@ export interface WorldLaw {
   follows?: string;
   /** A country whose benefit is paid here, where it isn't the one whose law applies (Monaco's is France's). */
   benefitOf?: string;
+  /** Where the law has no unemployment benefit: the place's name, and the source that says so. */
+  noBenefit?: { name: string; source: string };
+  /** Where it has one the research couldn't size. */
+  unsized?: { name: string; source: string };
+  /** Paid on top of leave's pay (Brazil's third, Portugal's holiday allowance), whoever's leave it is. */
+  leaveLoading?: { share: number; source: string };
   law?: Omit<LaborLaw, 'regions'>;
   benefit?: {
     name: string;
-    rate?: number; ofNet?: boolean; basisMonths?: number; flat?: number;
+    /** A share of the average week over basisMonths, of the net where ofNet; rateAbove over threshold; by months insured; with the minimum wage averaged in. */
+    rate?: number; ofNet?: boolean; basisMonths?: number; rateAbove?: number; threshold?: number;
+    rateByMonths?: readonly (readonly [number, number])[]; withMinimum?: number;
+    /** The best quarters times a factor (the Virgin Islands'), or a factor sliding between two anchors (Puerto Rico's, SLATE's estimate of its unpublished table). */
+    quarters?: { top: number; factor: number };
+    quartersSlide?: { top: number; low: readonly [number, number]; high: readonly [number, number] };
+    /** A flat week, or flat weeks from the week given; capped at the past average week where the law says. */
+    flat?: number; flats?: readonly (readonly [number, number])[]; capAtPastWeek?: boolean;
+    /** From the week given, the rate that applies (the first entry the starting one), and Italy's cut of so much a month. */
+    rates?: readonly (readonly [number, number])[]; decline?: { fromWeek: number; perMonth: number };
     min?: number; max?: number;
-    weeks: number;
+    /** Nothing paid over this much in savings (Hong Kong's CSSA). */
+    assetLimit?: number;
+    weeks?: number;
+    weeksShare?: { share: number; withinMonths: number; max: number };
+    weeksByMonths?: readonly (readonly [number, number])[];
     qualifyMonths: number; withinMonths: number;
+    also?: readonly { months: number; withinMonths: number }[];
+    qualifyIncome?: readonly { amount: number; withinMonths: number }[];
     waitingDays: number;
     quit: WorldBar; cause: WorldBar;
     source: string;
@@ -3149,19 +3734,27 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
     },
     "benefit": {
       "name": "Unemployment Insurance Fund unemployment benefit",
-      "rate": 0.6,
-      "basisMonths": 6,
-      "max": 1549,
-      "weeks": 52,
       "qualifyMonths": 0,
-      "withinMonths": 12,
+      "withinMonths": 48,
       "waitingDays": 0,
       "quit": "none",
       "cause": "none",
-      "source": "Dept of Employment and Labor UIF 'EASY AID Guide' PDF, https://www.labour.gov.za/DocumentCenter/Publications/Unemployment%20Insurance%20Fund/EASY%20AID%20Guide%20Spreadsheet%20Application%202.pdf"
+      "source": "https://www.parliament.gov.za/storage/app/media/Docs/acts/616497_1.pdf (Unemployment Insurance Amendment Act 2016, ss. 4-5 amending ss. 12(3) and 13(3) of Act 63 of 2001)",
+      "rate": 0.6,
+      "basisMonths": 6,
+      "max": 1549,
+      "weeksShare": {
+        "share": 0.2,
+        "withinMonths": 48,
+        "max": 52
+      }
     }
   },
   "KE": {
+    "noBenefit": {
+      "name": "Kenya",
+      "source": "SSA SSPTW Africa 2019 Kenya (Wayback) https://web.archive.org/web/2025/https://www.ssa.gov/policy/docs/progdesc/ssptw/2018-2019/africa/kenya.html"
+    },
     "law": {
       "overtime": {
         "week": 52,
@@ -3216,6 +3809,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
     }
   },
   "BW": {
+    "noBenefit": {
+      "name": "Botswana",
+      "source": "None opened confirms absence"
+    },
     "law": {
       "overtime": {
         "week": 48,
@@ -3364,6 +3961,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
     }
   },
   "UG": {
+    "noBenefit": {
+      "name": "Uganda",
+      "source": "None opened confirms absence"
+    },
     "law": {
       "overtime": {
         "week": 48,
@@ -3442,6 +4043,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
     }
   },
   "ZM": {
+    "noBenefit": {
+      "name": "Zambia",
+      "source": "None opened confirms absence"
+    },
     "law": {
       "overtime": {
         "week": 48,
@@ -3511,6 +4116,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
     }
   },
   "NA": {
+    "noBenefit": {
+      "name": "Namibia",
+      "source": "None opened confirms absence"
+    },
     "law": {
       "overtime": {
         "week": 45,
@@ -3586,6 +4195,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
     }
   },
   "LS": {
+    "noBenefit": {
+      "name": "Lesotho",
+      "source": "None opened confirms absence"
+    },
     "law": {
       "overtime": {
         "week": 45,
@@ -3657,6 +4270,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
     }
   },
   "ZW": {
+    "noBenefit": {
+      "name": "Zimbabwe",
+      "source": "None opened confirms absence"
+    },
     "law": {
       "leave": {
         "accrual": 0.08982035928143713,
@@ -3697,6 +4314,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
     }
   },
   "MW": {
+    "noBenefit": {
+      "name": "Malawi",
+      "source": "None opened confirms absence"
+    },
     "law": {
       "overtime": {
         "week": 48,
@@ -3750,6 +4371,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
     }
   },
   "MZ": {
+    "noBenefit": {
+      "name": "Mozambique",
+      "source": "None opened confirms absence"
+    },
     "law": {
       "overtime": {
         "week": 48,
@@ -3804,6 +4429,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
     }
   },
   "AO": {
+    "noBenefit": {
+      "name": "Angola",
+      "source": "None opened confirms absence"
+    },
     "law": {
       "overtime": {
         "week": 44,
@@ -3861,7 +4490,26 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         "afterMonths": 0,
         "weeksAYear": 4.285714285714286,
         "source": "Lei Geral do Trabalho, Lei n.º 12/23 de 27 de Dezembro (Diário da República I série n.º 245"
-      }
+      },
+      "extras": [
+        {
+          "kind": "month",
+          "name": "Subsídio de Natal",
+          "months": [
+            12
+          ],
+          "shares": [
+            0.5
+          ],
+          "day": 31,
+          "periodMonths": 12,
+          "source": "https://www.maptss.gov.ao/2025/12/09/empresas-devem-a-pagar-o-subsidio-de-natal-ate-final-de-dezembro/"
+        }
+      ]
+    },
+    "leaveLoading": {
+      "share": 0.5,
+      "source": "https://www.maptss.gov.ao/2025/12/09/empresas-devem-a-pagar-o-subsidio-de-natal-ate-final-de-dezembro/"
     }
   },
   "MU": {
@@ -3912,22 +4560,51 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         "afterMonths": 12,
         "weeksAYear": 12.857142857142858,
         "source": "Workers' Rights Act 2019, consolidated as at 9 August 2025 (Ministry of Labor), https://labour.govmu.org/Documents/Legislations/THE%20WORKERS%20RIGHTS%20Act%202019/A%20Consolidated%20Version%20of%20the%20Workers'%20Rights%20Act%202019%20as%20at%209%20August%202025.pdf s70"
-      }
+      },
+      "extras": [
+        {
+          "name": "End of year bonus",
+          "kind": "shareOfYear",
+          "month": 12,
+          "day": 20,
+          "share": 0.08333333333333333,
+          "source": "https://labour.govmu.org/Documents/Legislations/THE%20WORKERS%20RIGHTS%20Act%202019/A%20Consolidated%20Version%20of%20the%20Workers'%20Rights%20Act%202019%20as%20at%209%20August%202025.pdf"
+        }
+      ]
     },
     "benefit": {
       "name": "Transition Unemployment Benefit",
-      "rate": 0.9,
-      "basisMonths": 1,
-      "weeks": 52,
-      "qualifyMonths": 0,
+      "qualifyMonths": 6,
       "withinMonths": 12,
       "waitingDays": 0,
       "quit": "none",
       "cause": "none",
-      "source": "Workers' Rights Act 2019, consolidated as at 9 August 2025 (Ministry of Labor), https://labour.govmu.org/Documents/Legislations/THE%20WORKERS%20RIGHTS%20Act%202019/A%20Consolidated%20Version%20of%20the%20Workers'%20Rights%20Act%202019%20as%20at%209%20August%202025.pdf s84 and Sixth Schedule Part II"
+      "source": "https://socialsecurity.govmu.org/socialsecurity/?page_id=1037 (Ministry of Social Integration, Social Security and National Solidarity)",
+      "rate": 0.9,
+      "basisMonths": 12,
+      "rates": [
+        [
+          1,
+          0.9
+        ],
+        [
+          14,
+          0.6
+        ],
+        [
+          27,
+          0.3
+        ]
+      ],
+      "min": 692.3076923076923,
+      "weeks": 52
     }
   },
   "ET": {
+    "noBenefit": {
+      "name": "Ethiopia",
+      "source": "None opened confirms absence"
+    },
     "law": {
       "overtime": {
         "week": 48,
@@ -3991,6 +4668,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
     }
   },
   "RW": {
+    "noBenefit": {
+      "name": "Rwanda",
+      "source": "None opened confirms absence"
+    },
     "law": {
       "leave": {
         "accrual": 0.0743801652892562,
@@ -4034,6 +4715,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
     }
   },
   "MG": {
+    "noBenefit": {
+      "name": "Madagascar",
+      "source": "None opened confirms absence"
+    },
     "law": {
       "leave": {
         "accrual": 0.08982035928143713,
@@ -4142,10 +4827,38 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         "afterMonths": 1,
         "weeksAYear": 1.4285714285714286,
         "source": "Employment Act Cap 69 and Employment (Conditions of Employment) Regulations 1991, consolidated to 1 June 2020, https://www.africa-laws.org/Seychelles/Employment%20law/Employment%20Act%20Cap%2069.pdf, Act s47"
-      }
+      },
+      "extras": [
+        {
+          "name": "Thirteenth month pay",
+          "kind": "month",
+          "months": [
+            1
+          ],
+          "day": 31,
+          "periodMonths": 12,
+          "minMonths": 12,
+          "source": "https://www.africa-laws.org/Seychelles/Employment%20law/Employment%20Act%20Cap%2069.pdf"
+        }
+      ]
+    },
+    "benefit": {
+      "name": "Welfare assistance; Unemployment Relief Scheme work placements re-introduced January 2026",
+      "qualifyMonths": 0,
+      "withinMonths": 12,
+      "waitingDays": 0,
+      "quit": "none",
+      "cause": "none",
+      "source": "ISSA Country profile: Seychelles (policies as of 1 July 2022), Wayback copy https://web.archive.org/web/2025id_/https://www.issa.int/sites/default/files/documents/2024-07/Seychelles.pdf",
+      "flat": 1474.1999999999998,
+      "weeks": 13
     }
   },
   "SZ": {
+    "noBenefit": {
+      "name": "Eswatini",
+      "source": "None opened confirms absence"
+    },
     "law": {
       "leave": {
         "accrual": 0.04,
@@ -4207,6 +4920,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
     }
   },
   "SD": {
+    "noBenefit": {
+      "name": "Sudan",
+      "source": "None opened confirms absence"
+    },
     "law": {
       "overtime": {
         "week": 48,
@@ -4259,6 +4976,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
     }
   },
   "SS": {
+    "noBenefit": {
+      "name": "South Sudan",
+      "source": "None opened confirms absence"
+    },
     "law": {
       "overtime": {
         "week": 40,
@@ -4329,6 +5050,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
     }
   },
   "BI": {
+    "noBenefit": {
+      "name": "Burundi",
+      "source": "None opened confirms absence"
+    },
     "law": {
       "leave": {
         "accrual": 0.08333333333333333,
@@ -4380,6 +5105,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
     }
   },
   "DJ": {
+    "noBenefit": {
+      "name": "Djibouti",
+      "source": "None opened confirms absence"
+    },
     "law": {
       "leave": {
         "accrual": 0.13043478260869565,
@@ -4413,6 +5142,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
     }
   },
   "KM": {
+    "noBenefit": {
+      "name": "Comoros",
+      "source": "None opened confirms absence"
+    },
     "law": {
       "leave": {
         "accrual": 0.13043478260869565,
@@ -4422,6 +5155,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
     }
   },
   "ER": {
+    "noBenefit": {
+      "name": "Eritrea",
+      "source": "None opened confirms absence"
+    },
     "law": {
       "overtime": {
         "week": 48,
@@ -4500,6 +5237,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
     }
   },
   "SO": {
+    "noBenefit": {
+      "name": "Somalia",
+      "source": "None opened confirms absence"
+    },
     "law": {
       "overtime": {
         "week": 48,
@@ -4534,6 +5275,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
     }
   },
   "SH": {
+    "noBenefit": {
+      "name": "St. Helena",
+      "source": "St Helena Government, 'Employment Law: Establishing Working Time Regulations, and other Employment Law Provisions on St Helena' (consultation paper, 2024), https://www.sainthelena.gov.sh/documents/Employment-Law-Establishing-Working-Time-Regulations-and-other-Employment-Law-Provisions-on-St-Helena.pdf (mentions IRB)"
+    },
     "law": {
       "leave": {
         "accrual": 0.0196078431372549,
@@ -4550,6 +5295,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
     }
   },
   "BF": {
+    "noBenefit": {
+      "name": "Burkina Faso",
+      "source": "https://wageindicator.org/fr-bf/travail-au-burkina-faso/droit-du-travail/securite-sociale/indemnite-chomage"
+    },
     "law": {
       "overtime": {
         "week": 40,
@@ -4611,6 +5360,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
     }
   },
   "BJ": {
+    "noBenefit": {
+      "name": "Benin",
+      "source": "https://wageindicator.org/fr-bj/travail-au-benin/droit-du-travail/securite-sociale/indemnite-chomage"
+    },
     "law": {
       "overtime": {
         "week": 40,
@@ -4659,6 +5412,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
     }
   },
   "CI": {
+    "noBenefit": {
+      "name": "Côte d’Ivoire",
+      "source": "https://wageindicator.org/fr-ci/travail-en-cote-d-ivoire/droit-du-travail/securite-sociale/indemnite-chomage"
+    },
     "law": {
       "overtime": {
         "week": 40,
@@ -4735,10 +5492,26 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         "afterMonths": 12,
         "weeksAYear": 1.2857142857142858,
         "source": "https://eplex.ilo.org/country-detail/?code=CIV&yr=2019 (2025 data)"
-      }
+      },
+      "extras": [
+        {
+          "kind": "fixed",
+          "name": "Gratification / prime de fin d’année",
+          "month": 12,
+          "day": 31,
+          "amount": 56249.917499999996,
+          "fullTimeHours": 40,
+          "periodMonths": 12,
+          "source": "https://www.yeclo.com/gratification-annuelle-ou-prime-13e-mois-en-cote-divoire-un-droit-ou-une-faveur-pour-les-salaries-tout-savoir"
+        }
+      ]
     }
   },
   "CM": {
+    "noBenefit": {
+      "name": "Cameroon",
+      "source": "https://wageindicator.org/fr-cm/travail-au-cameroun/droit-du-travail/securite-sociale/indemnite-chomage (Wayback)"
+    },
     "law": {
       "overtime": {
         "week": 40,
@@ -4801,6 +5574,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
     }
   },
   "GA": {
+    "noBenefit": {
+      "name": "Gabon",
+      "source": "https://wageindicator.org/fr-ga/travail-au-gabon/droit-du-travail/securite-sociale/indemnite-chomage (Wayback)"
+    },
     "law": {
       "holiday": {
         "extra": 1,
@@ -4893,6 +5670,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
     }
   },
   "GN": {
+    "noBenefit": {
+      "name": "Guinea",
+      "source": "https://wageindicator.org/fr-gn/travail-en-guinee/droit-du-travail/securite-sociale/indemnite-chomage (Wayback)"
+    },
     "law": {
       "overtime": {
         "week": 40,
@@ -4952,6 +5733,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
     }
   },
   "SN": {
+    "noBenefit": {
+      "name": "Senegal",
+      "source": "https://wageindicator.org/fr-sn/travail-au-senegal/droit-du-travail/securite-sociale/indemnite-chomage (Wayback)"
+    },
     "law": {
       "overtime": {
         "week": 40,
@@ -5009,10 +5794,21 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         "afterMonths": 12,
         "weeksAYear": 1.0714285714285714,
         "source": "https://wageindicator.org/fr-sn/travail-au-senegal/droit-du-travail/contrats-et-licenciements/preavis-et-indemnite-de-depart/"
+      },
+      "seniority": {
+        "afterYears": 2,
+        "share": 0.02,
+        "perYear": 0.01,
+        "monthlyMinimum": 64305.43,
+        "source": "https://droitsocialenpratique.com/wp-content/uploads/2024/05/Convention-collective-interprofessionnelle-au-Senegal.pdf"
       }
     }
   },
   "TG": {
+    "noBenefit": {
+      "name": "Togo",
+      "source": "https://wageindicator.org/fr-tg/travail-au-togo/droit-du-travail/securite-sociale/indemnite-chomage (Wayback)"
+    },
     "law": {
       "overtime": {
         "week": 40,
@@ -5068,6 +5864,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
     }
   },
   "CG": {
+    "noBenefit": {
+      "name": "Congo - Brazzaville",
+      "source": "https://wageindicator.org/fr-cg/travail-au-congo-brazzaville/droit-du-travail/securite-sociale/indemnite-chomage (Wayback)"
+    },
     "law": {
       "overtime": {
         "week": 40,
@@ -5123,6 +5923,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
     }
   },
   "CD": {
+    "noBenefit": {
+      "name": "Congo - Kinshasa",
+      "source": "https://wageindicator.org/fr-cd/travail-au-congo/droit-du-travail/securite-sociale/indemnite-chomage (Wayback)"
+    },
     "law": {
       "overtime": {
         "week": 45,
@@ -5223,6 +6027,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
     }
   },
   "GH": {
+    "noBenefit": {
+      "name": "Ghana",
+      "source": "SSA SSPTW Africa 2019 Ghana (Wayback) https://web.archive.org/web/2025/https://www.ssa.gov/policy/docs/progdesc/ssptw/2018-2019/africa/ghana.html"
+    },
     "law": {
       "leave": {
         "accrual": 0.061224489795918366,
@@ -5259,6 +6067,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
     }
   },
   "LR": {
+    "noBenefit": {
+      "name": "Liberia",
+      "source": "https://wageindicator.org/en-lr/work-in-liberia/labour-law/social-security/unemployment-benefits/ (Wayback)"
+    },
     "law": {
       "overtime": {
         "week": 48,
@@ -5321,6 +6133,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
     }
   },
   "NG": {
+    "noBenefit": {
+      "name": "Nigeria",
+      "source": "SSA SSPTW Africa 2019 Nigeria (Wayback) https://web.archive.org/web/2025/https://www.ssa.gov/policy/docs/progdesc/ssptw/2018-2019/africa/nigeria.html"
+    },
     "law": {
       "leave": {
         "accrual": 0.023622047244094488,
@@ -5380,6 +6196,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
     }
   },
   "ML": {
+    "noBenefit": {
+      "name": "Mali",
+      "source": "https://wageindicator.org/fr-ml/droit-du-travail/securite-sociale/indemnite-chomage (Wayback)"
+    },
     "law": {
       "overtime": {
         "week": 40,
@@ -5435,6 +6255,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
     }
   },
   "NE": {
+    "noBenefit": {
+      "name": "Niger",
+      "source": "https://wageindicator.org/fr-ne/droit-du-travail/securite-sociale/indemnite-chomage (Wayback)"
+    },
     "law": {
       "overtime": {
         "week": 40,
@@ -5490,6 +6314,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
     }
   },
   "TD": {
+    "noBenefit": {
+      "name": "Chad",
+      "source": "https://wageindicator.org/fr-td/droit-du-travail/securite-sociale/indemnite-chomage (Wayback)"
+    },
     "law": {
       "overtime": {
         "week": 39,
@@ -5558,6 +6386,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
     }
   },
   "CF": {
+    "noBenefit": {
+      "name": "Central African Republic",
+      "source": "https://wageindicator.org/fr-cf/droit-du-travail/securite-sociale/indemnite-chomage (Wayback)"
+    },
     "law": {
       "overtime": {
         "week": 40,
@@ -5694,6 +6526,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
     }
   },
   "GM": {
+    "noBenefit": {
+      "name": "Gambia",
+      "source": "https://www.ssa.gov/policy/docs/progdesc/ssptw/2018-2019/africa/gambia.html (Wayback)"
+    },
     "law": {
       "overtime": {
         "week": 42,
@@ -5724,6 +6560,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
     }
   },
   "SL": {
+    "noBenefit": {
+      "name": "Sierra Leone",
+      "source": "SSPTW Africa 2019 Sierra Leone (Wayback)"
+    },
     "law": {
       "overtime": {
         "week": 40,
@@ -5765,9 +6605,17 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         ],
         "source": "https://sierralii.gov.sl/akn/sl/act/2023/15/eng@2023-05-11/source.pdf"
       }
+    },
+    "leaveLoading": {
+      "share": 1,
+      "source": "https://sierralii.gov.sl/akn/sl/act/2023/15/eng@2023-05-11/source.pdf"
     }
   },
   "MR": {
+    "noBenefit": {
+      "name": "Mauritania",
+      "source": "https://www.ssa.gov/policy/docs/progdesc/ssptw/2018-2019/africa/mauritania.html (Wayback)"
+    },
     "law": {
       "overtime": {
         "week": 40,
@@ -5820,10 +6668,21 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         "afterMonths": 12,
         "weeksAYear": 1.0714285714285714,
         "source": "https://fonctionpublique.gov.mr/sites/default/files/2023-11/Convention%20Collective%20G%C3%A9n%C3%A9rale%20du%20Travail.pdf"
+      },
+      "seniority": {
+        "afterYears": 2,
+        "share": 0.02,
+        "perYear": 0.02,
+        "monthlyMinimum": 5000.57,
+        "source": "https://fonctionpublique.gov.mr/sites/default/files/2023-11/Convention%20Collective%20G%C3%A9n%C3%A9rale%20du%20Travail.pdf"
       }
     }
   },
   "ST": {
+    "noBenefit": {
+      "name": "São Tomé & Príncipe",
+      "source": "https://www.ssa.gov/policy/docs/progdesc/ssptw/2018-2019/africa/sao-tome-and-principe.html (Wayback)"
+    },
     "law": {
       "overtime": {
         "week": 40,
@@ -5880,9 +6739,17 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         "weeksAYear": 4.285714285714286,
         "source": "https://bwcimplementation.org/sites/default/files/resource/ST_Labour%20Code_PT.pdf"
       }
+    },
+    "leaveLoading": {
+      "share": 1,
+      "source": "https://bwcimplementation.org/sites/default/files/resource/ST_Labour%20Code_PT.pdf"
     }
   },
   "GQ": {
+    "noBenefit": {
+      "name": "Equatorial Guinea",
+      "source": "https://www.ssa.gov/policy/docs/progdesc/ssptw/2018-2019/africa/equatorial-guinea.html (Wayback)"
+    },
     "law": {
       "overtime": {
         "week": 48,
@@ -5947,6 +6814,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
     }
   },
   "GW": {
+    "noBenefit": {
+      "name": "Guinea-Bissau",
+      "source": "https://www.ssa.gov/policy/docs/progdesc/ssptw/2018-2019/africa/guinea-bissau.html (Wayback)"
+    },
     "law": {
       "overtime": {
         "week": 45,
@@ -6056,7 +6927,22 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         "afterMonths": 6,
         "weeksAYear": 4.285714285714286,
         "source": "LCT arts. 245 (text of Ley 27.802 art. 51, B.O. 6/3/2026), 247, InfoLEG"
-      }
+      },
+      "extras": [
+        {
+          "name": "Sueldo anual complementario",
+          "kind": "shareOfYear",
+          "months": [
+            6,
+            12
+          ],
+          "day": 18,
+          "share": 0.08333333333333333,
+          "windowMonths": 6,
+          "month": 6,
+          "source": "https://servicios.infoleg.gob.ar/infolegInternet/anexos/25000-29999/25552/texact.htm (LCT arts. 121-123, art. 122 as replaced by Ley 27.073)"
+        }
+      ]
     },
     "benefit": {
       "name": "Prestación por Desempleo",
@@ -6209,7 +7095,21 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         "afterMonths": 0,
         "weeksAYear": 1.7857142857142858,
         "source": "Lei 8.036/1990 arts. 15 and 18 §1, https://www.planalto.gov.br/ccivil_03/leis/l8036consol.htm"
-      }
+      },
+      "extras": [
+        {
+          "name": "13º salário",
+          "kind": "shareOfYear",
+          "months": [
+            11,
+            12
+          ],
+          "day": 20,
+          "share": 0.041666666666666664,
+          "month": 11,
+          "source": "https://www.planalto.gov.br/ccivil_03/leis/l4090.htm"
+        }
+      ]
     },
     "benefit": {
       "name": "Seguro-Desemprego",
@@ -6224,6 +7124,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
       "quit": "none",
       "cause": "none",
       "source": "Lei 7.998/1990 arts. 3-4 (per Lei 13.134/2015), https://www.planalto.gov.br/ccivil_03/leis/l7998.htm"
+    },
+    "leaveLoading": {
+      "share": 0.3333,
+      "source": "https://www.planalto.gov.br/ccivil_03/constituicao/constituicao.htm (art. 7 XVII)"
     }
   },
   "CL": {
@@ -6263,7 +7167,33 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         "weeksAYear": 4.285714285714286,
         "maxWeeks": 47.666666666666664,
         "source": "CT arts. 163, 172, Código del Trabajo (DFL 1/2002), LeyChile XML version 2026-07-23: https://www.bcn.cl/leychile/Consulta/obtxml?opt=7&idNorma=207436"
-      }
+      },
+      "extras": [
+        {
+          "name": "Gratificación legal",
+          "kind": "shareOfYear",
+          "months": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "day": 28,
+          "share": 0.25,
+          "windowMonths": 1,
+          "cap": 213354.16666666666,
+          "month": 1,
+          "source": "https://www.dt.gob.cl/portal/1626/w3-article-99034.html"
+        }
+      ]
     },
     "benefit": {
       "name": "Seguro de Cesantía - Cuenta Individual de Cesantía and Fondo de Cesantía Solidario",
@@ -6328,10 +7258,74 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         "afterMonths": 0,
         "weeksAYear": 2.857142857142857,
         "source": "CST art. 64 (per Ley 789/2002 art. 28), Código Sustantivo del Trabajo, Secretaría del Senado consolidated text http://www.secretariasenado.gov.co/senado/basedoc/codigo_sustantivo_trabajo.html"
-      }
+      },
+      "extras": [
+        {
+          "name": "Prima de servicios",
+          "kind": "days",
+          "month": 6,
+          "day": 30,
+          "days": 15,
+          "periodMonths": 6,
+          "source": "http://www.secretariasenado.gov.co/senado/basedoc/codigo_sustantivo_trabajo_pr010.html (CST arts. 306-308, art. 306 as amended by Ley 1788/2016)"
+        },
+        {
+          "name": "Prima de servicios",
+          "kind": "days",
+          "month": 12,
+          "day": 20,
+          "days": 15,
+          "periodMonths": 6,
+          "source": "http://www.secretariasenado.gov.co/senado/basedoc/codigo_sustantivo_trabajo_pr010.html (CST arts. 306-308, art. 306 as amended by Ley 1788/2016)"
+        },
+        {
+          "kind": "shareOfYear",
+          "name": "Intereses sobre cesantías",
+          "month": 1,
+          "day": 31,
+          "share": 0.01,
+          "source": "https://www.medellin.gov.co/normograma/docs/astrea/docs/ley_0052_1975.htm (Ley 52 de 1975 art. 1)"
+        }
+      ]
+    },
+    "benefit": {
+      "name": "Mecanismo de Protección al Cesante",
+      "qualifyMonths": 12,
+      "withinMonths": 36,
+      "waitingDays": 0,
+      "quit": {
+        "weeks": 0
+      },
+      "cause": {
+        "weeks": 0
+      },
+      "source": "https://www.comfamiliar.com.co/personas/subsidios/subsidio-desempleo/ (Caja de Compensación Comfamiliar Atlántico, citing Ley 1636 de 2013 and Ley 2225 de 2022)",
+      "flats": [
+        [
+          1,
+          242432.9169230769
+        ],
+        [
+          5,
+          181824.6876923077
+        ],
+        [
+          10,
+          121216.45846153845
+        ],
+        [
+          14,
+          60608.229230769226
+        ]
+      ],
+      "weeks": 17.333333333333332
     }
   },
   "PE": {
+    "noBenefit": {
+      "name": "Peru",
+      "source": "Compendio Laboral Peruano (Lex Soluciones, updated 6 Apr 2021), quoting the statutes: https://lexsoluciones.com/wp-content/uploads/2021/11/COMPENDIO-LABORAL-PERUANO-6.04.2021.pdf"
+    },
     "law": {
       "overtime": {
         "week": 48,
@@ -6385,7 +7379,44 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         "weeksAYear": 6.428571428571429,
         "maxWeeks": 52,
         "source": "D.S. 003-97-TR art. 38, as quoted in Compendio Laboral Peruano (Lex Soluciones, updated 6 Apr 2021), quoting the statutes: https://lexsoluciones.com/wp-content/uploads/2021/11/COMPENDIO-LABORAL-PERUANO-6.04.2021.pdf"
-      }
+      },
+      "extras": [
+        {
+          "name": "Gratificación por Fiestas Patrias",
+          "kind": "month",
+          "months": [
+            7
+          ],
+          "day": 15,
+          "periodMonths": 6,
+          "source": "https://cdn.www.gob.pe/uploads/document/file/2069169/Todo%20lo%20que%20debes%20saber%20sobre%20las%20gratificaciones%20por%20Fiestas%20Patrias%20y%20la%20bonificaci%C3%B3n%20extraordinaria.pdf"
+        },
+        {
+          "name": "Gratificación por Navidad",
+          "kind": "month",
+          "months": [
+            12
+          ],
+          "day": 15,
+          "periodMonths": 6,
+          "source": "https://www2.congreso.gob.pe/sicr/cendocbib/con4_uibd.nsf/2AD0D0DFA71EA38705257E26005C8083/$FILE/2_DECRETO_SUPREMO_005_04_07_2002.pdf (art. 4)"
+        },
+        {
+          "name": "Bonificación extraordinaria",
+          "kind": "month",
+          "months": [
+            7,
+            12
+          ],
+          "shares": [
+            0.09,
+            0.09
+          ],
+          "day": 15,
+          "periodMonths": 6,
+          "source": "https://cdn.www.gob.pe/uploads/document/file/2069169/Todo%20lo%20que%20debes%20saber%20sobre%20las%20gratificaciones%20por%20Fiestas%20Patrias%20y%20la%20bonificaci%C3%B3n%20extraordinaria.pdf"
+        }
+      ]
     }
   },
   "EC": {
@@ -6435,7 +7466,51 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         "weeksAYear": 5.357142857142857,
         "maxWeeks": 108.33333333333333,
         "source": "CT arts. 185, 188, Código del Trabajo, Codificación 17 (Lexis text, last modification 22 Jun 2020): https://www.ces.gob.ec/lotaip/2020/Junio/Literal_a2/C%C3%B3digo%20del%20Trabajo.pdf"
-      }
+      },
+      "extras": [
+        {
+          "kind": "shareOfYear",
+          "name": "Décima tercera remuneración",
+          "month": 12,
+          "day": 24,
+          "share": 0.0833,
+          "source": "https://www.ces.gob.ec/lotaip/2020/Junio/Literal_a2/C%C3%B3digo%20del%20Trabajo.pdf (arts. 111-112)"
+        },
+        {
+          "kind": "fixed",
+          "name": "Décima cuarta remuneración",
+          "month": 3,
+          "day": 15,
+          "amount": 482,
+          "fullTimeHours": 40,
+          "periodMonths": 12,
+          "source": "https://www.ces.gob.ec/lotaip/2020/Junio/Literal_a2/C%C3%B3digo%20del%20Trabajo.pdf (art. 113, art. 95)"
+        },
+        {
+          "name": "Fondo de reserva",
+          "kind": "shareOfYear",
+          "months": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "day": 28,
+          "share": 0.08333333333333333,
+          "windowMonths": 1,
+          "minMonths": 12,
+          "month": 1,
+          "source": "https://www.ces.gob.ec/lotaip/2020/Junio/Literal_a2/C%C3%B3digo%20del%20Trabajo.pdf (art. 196)"
+        }
+      ]
     },
     "benefit": {
       "name": "Seguro de Desempleo",
@@ -6477,7 +7552,22 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         "weeksAYear": 4.285714285714286,
         "maxWeeks": 26,
         "source": "Ley 10.570 art. 1 https://www.impo.com.uy/bases/leyes/10570-1944/1"
-      }
+      },
+      "extras": [
+        {
+          "name": "Aguinaldo",
+          "kind": "shareOfYear",
+          "months": [
+            6,
+            12
+          ],
+          "day": 20,
+          "share": 0.08333333333333333,
+          "windowMonths": 6,
+          "month": 6,
+          "source": "https://www.impo.com.uy/bases/leyes/12840-1960"
+        }
+      ]
     },
     "benefit": {
       "name": "Subsidio por desempleo",
@@ -6491,6 +7581,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
       "quit": "none",
       "cause": "none",
       "source": "Estudio Vázquez y Asociados, Guía 2025 https://estudiovazquezyasociados.uy/subsidio-desempleo-despido-bps/ (BPS page body did not load)"
+    },
+    "leaveLoading": {
+      "share": 1,
+      "source": "https://www.gub.uy/ministerio-trabajo-seguridad-social/institucional/derecho-laboral-uruguayo/salario-vacacional"
     }
   },
   "VE": {
@@ -6542,7 +7636,34 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         "afterMonths": 0,
         "weeksAYear": 4.285714285714286,
         "source": "LOTTT arts. 92, 142"
-      }
+      },
+      "extras": [
+        {
+          "name": "Utilidades / bonificación de fin de año",
+          "kind": "days",
+          "month": 12,
+          "day": 15,
+          "days": 30,
+          "periodMonths": 12,
+          "source": "https://oig.cepal.org/sites/default/files/2012_leyorgtrabajo_ven.pdf (LOTTT arts. 131-132)"
+        }
+      ]
+    },
+    "benefit": {
+      "name": "Prestación Dineraria por Pérdida Involuntaria del Empleo",
+      "qualifyMonths": 12,
+      "withinMonths": 24,
+      "waitingDays": 0,
+      "quit": "none",
+      "cause": "none",
+      "source": "Ley del Régimen Prestacional de Empleo (Gaceta Oficial 38.281, 27 Sep 2005) arts. 31-34, https://docs.venezuela.justia.com/federales/leyes/ley-del-regimen-prestacional-de-empleo.pdf",
+      "rate": 0.6,
+      "basisMonths": 12,
+      "weeks": 22
+    },
+    "leaveLoading": {
+      "share": 1,
+      "source": "https://oig.cepal.org/sites/default/files/2012_leyorgtrabajo_ven.pdf (LOTTT art. 192)"
     }
   },
   "CR": {
@@ -6612,7 +7733,27 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         "afterMonths": 3,
         "weeksAYear": 2.857142857142857,
         "source": "CT art. 29 (per Ley 7983 of 2000)"
-      }
+      },
+      "severance": {
+        "daysAYear": 5.475,
+        "afterMonths": 0,
+        "minHours": 0,
+        "source": "Ley de Protección al Trabajador No. 7983, arts. 3, 4(b), 6 (art. 3 as amended by Ley 9906, 5 Oct 2020), SUPEN copy https://www.supen.fi.cr/documents/20121/45036/Ley+de+Protecci%C3%B3n+al+Trabajador+No.+7983.pdf/7d75e88d-6cbb-d2bb-28bf-7a360d9148ee?version=1.0&t=1633639189566&download=true"
+      },
+      "extras": [
+        {
+          "kind": "shareOfYear",
+          "name": "Aguinaldo",
+          "month": 12,
+          "day": 20,
+          "share": 0.0833,
+          "source": "https://bufetedecostarica.com/wp-content/uploads/2026/05/ley-2412-pago-de-aguinaldo-empresa-privada.pdf (Ley 2412 arts. 1-4, 7, 9, as reformed by Ley 3929/1967)"
+        }
+      ]
+    },
+    "noBenefit": {
+      "name": "Costa Rica",
+      "source": "Ley de Protección al Trabajador No. 7983, arts. 3, 4(b), 6 (art. 3 as amended by Ley 9906, 5 Oct 2020), SUPEN copy https://www.supen.fi.cr/documents/20121/45036/Ley+de+Protecci%C3%B3n+al+Trabajador+No.+7983.pdf/7d75e88d-6cbb-d2bb-28bf-7a360d9148ee?version=1.0&t=1633639189566&download=true"
     }
   },
   "PA": {
@@ -6658,7 +7799,27 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         "afterMonths": 0,
         "weeksAYear": 3.4,
         "source": "CT arts. 224, 225 (C), Código de Trabajo (consolidated to Ley 44 of 12 Aug 1995), Justia copy https://docs.panama.justia.com/federales/codigos/codigo-de-trabajo.pdf"
-      }
+      },
+      "extras": [
+        {
+          "name": "Décimo tercer mes",
+          "kind": "shareOfYear",
+          "months": [
+            4,
+            8,
+            12
+          ],
+          "day": 15,
+          "share": 0.08333333333333333,
+          "windowMonths": 4,
+          "month": 4,
+          "source": "https://www.pkf-central-america.com/panama/noticias-y-eventos/decimo-tercer-mes/"
+        }
+      ]
+    },
+    "noBenefit": {
+      "name": "Panama",
+      "source": "Código de Trabajo arts. 224, 229-A to 229-D (Ley 44 of 12 Aug 1995), Laboremia text https://blog.laboremia.com/leyes-detalle/codigo-del-trabajo-titulo-vi-terminacion-de-las-relaciones-de-trabajo"
     }
   },
   "DO": {
@@ -6729,7 +7890,21 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         "afterMonths": 3,
         "weeksAYear": 3,
         "source": "CT art. 80"
-      }
+      },
+      "extras": [
+        {
+          "kind": "shareOfYear",
+          "name": "Salario de Navidad",
+          "month": 12,
+          "day": 20,
+          "share": 0.0833,
+          "source": "https://mt.gob.do/wp-content/uploads/2024/07/codigo_de_trabajo.pdf (CT arts. 219-222)"
+        }
+      ]
+    },
+    "noBenefit": {
+      "name": "Dominican Republic",
+      "source": "SSA SSPTW Americas 2019 Dominican Republic (Wayback) https://web.archive.org/web/2025/https://www.ssa.gov/policy/docs/progdesc/ssptw/2018-2019/americas/dominican-republic.html"
     }
   },
   "GT": {
@@ -6779,7 +7954,41 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         "afterMonths": 0,
         "weeksAYear": 4.285714285714286,
         "source": "CT art. 82"
-      }
+      },
+      "extras": [
+        {
+          "name": "Aguinaldo",
+          "kind": "month",
+          "months": [
+            12,
+            1
+          ],
+          "shares": [
+            0.5,
+            0.5
+          ],
+          "day": 15,
+          "periodMonths": 12,
+          "source": "https://bvssan.incap.int/local/legislacion/LDT019.pdf (Decreto 76-78 arts. 1-2, 5, 10, 15)"
+        },
+        {
+          "kind": "month",
+          "name": "Bono 14",
+          "months": [
+            7
+          ],
+          "shares": [
+            1
+          ],
+          "day": 15,
+          "periodMonths": 12,
+          "source": "https://mcd.gob.gt/wp-content/uploads/2013/07/bono-14-decreto-42-92.pdf (arts. 1-3, 6)"
+        }
+      ]
+    },
+    "noBenefit": {
+      "name": "Guatemala",
+      "source": "SSA SSPTW Americas 2019 Guatemala (Wayback) https://web.archive.org/web/2025/https://www.ssa.gov/policy/docs/progdesc/ssptw/2018-2019/americas/guatemala.html"
     }
   },
   "HN": {
@@ -6859,7 +8068,45 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         "weeksAYear": 4.285714285714286,
         "maxWeeks": 108.33333333333333,
         "source": "CT art. 120 (per Decreto 150-2008)"
-      }
+      },
+      "severance": {
+        "daysAYear": 14.6,
+        "afterMonths": 0,
+        "minHours": 0,
+        "source": "Decreto 47-2024, Ley del Fondo de Reserva Laboral de Capitalización Individual administrado por el RAP, arts. 1-6, 14 (La Gaceta 36,545, 28 May 2024), https://www.tsc.gob.hn/web/leyes/Decreto-47-2024.pdf"
+      },
+      "extras": [
+        {
+          "kind": "month",
+          "name": "Décimo tercer mes",
+          "months": [
+            12
+          ],
+          "shares": [
+            1
+          ],
+          "day": 31,
+          "periodMonths": 12,
+          "source": "https://www.trabajo.gob.hn/wp-content/uploads/2016/07/Decreto-112-Ley-del-S%C3%83%C2%A9ptimo-d%C3%83%C2%ADa-y-D%C3%83%C2%A9cimo-Tercer-Mes-en-concepto-de-Aguinaldo.pdf (Decreto 112/1982 arts. 9-13)"
+        },
+        {
+          "kind": "month",
+          "name": "Décimo cuarto mes",
+          "months": [
+            6
+          ],
+          "shares": [
+            1
+          ],
+          "day": 30,
+          "periodMonths": 12,
+          "source": "https://www.trabajo.gob.hn/wp-content/uploads/2016/07/Acuerdo-02-95-Reglamento-del-Decimo-Cuarto-Mes-de-Salario-en-Concepto-de-Compensacion-Social.pdf (Decreto 135-94 art. 34"
+        }
+      ]
+    },
+    "noBenefit": {
+      "name": "Honduras",
+      "source": "Decreto 47-2024, Ley del Fondo de Reserva Laboral de Capitalización Individual administrado por el RAP, arts. 1-6, 14 (La Gaceta 36,545, 28 May 2024), https://www.tsc.gob.hn/web/leyes/Decreto-47-2024.pdf"
     }
   },
   "SV": {
@@ -6902,7 +8149,26 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         "afterMonths": 0,
         "weeksAYear": 4.285714285714286,
         "source": "CT art. 58"
-      }
+      },
+      "extras": [
+        {
+          "kind": "days",
+          "name": "Aguinaldo",
+          "month": 12,
+          "day": 20,
+          "days": 15,
+          "periodMonths": 12,
+          "source": "https://www.csj.gob.sv/wp-content/uploads/2021/06/12-Co%CC%81digo-de-Trabajo-de-El-Salvador-Aguinaldo.pdf (CT arts. 196-202)"
+        }
+      ]
+    },
+    "noBenefit": {
+      "name": "El Salvador",
+      "source": "SSA SSPTW Americas 2019 El Salvador (Wayback) https://web.archive.org/web/2025/https://www.ssa.gov/policy/docs/progdesc/ssptw/2018-2019/americas/el-salvador.html"
+    },
+    "leaveLoading": {
+      "share": 0.3,
+      "source": "https://www.csj.gob.sv/wp-content/uploads/2021/06/10-Co%CC%81digo-de-Trabajo-de-El-Salvador-Vacacio%CC%81n-anual-remunerada.pdf (CT art. 177)"
     }
   },
   "NI": {
@@ -6941,7 +8207,26 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         "afterMonths": 0,
         "minHours": 0,
         "source": "CT arts. 43, 45"
-      }
+      },
+      "extras": [
+        {
+          "kind": "month",
+          "name": "Décimo tercer mes",
+          "months": [
+            12
+          ],
+          "shares": [
+            1
+          ],
+          "day": 10,
+          "periodMonths": 12,
+          "source": "https://www.serviciocontablenicaragua.com/codigo-del-trabajo-ley-185/ (Código del Trabajo, Ley 185, arts. 93-97)"
+        }
+      ]
+    },
+    "noBenefit": {
+      "name": "Nicaragua",
+      "source": "SSA SSPTW Americas 2019 Nicaragua (Wayback) https://web.archive.org/web/2025/https://www.ssa.gov/policy/docs/progdesc/ssptw/2018-2019/americas/nicaragua.html"
     }
   },
   "PY": {
@@ -7014,7 +8299,21 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         "afterMonths": 6,
         "weeksAYear": 2.142857142857143,
         "source": "CT arts. 91, 94"
-      }
+      },
+      "extras": [
+        {
+          "kind": "shareOfYear",
+          "name": "Aguinaldo",
+          "month": 12,
+          "day": 31,
+          "share": 0.0833,
+          "source": "https://www.ilo.org/sites/default/files/wcmsp5/groups/public/@americas/@ro-lima/@sro-santiago/documents/publication/wcms_709389.pdf (Código del Trabajo, Ley 213/93, arts. 243-245)"
+        }
+      ]
+    },
+    "noBenefit": {
+      "name": "Paraguay",
+      "source": "SSA SSPTW Americas 2019 Paraguay (Wayback) https://web.archive.org/web/2025/https://www.ssa.gov/policy/docs/progdesc/ssptw/2018-2019/americas/paraguay.html"
     }
   },
   "BO": {
@@ -7068,10 +8367,33 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         "afterMonths": 3,
         "minHours": 0,
         "source": "LGT arts. 13, 14"
-      }
+      },
+      "extras": [
+        {
+          "kind": "month",
+          "name": "Aguinaldo de Navidad",
+          "months": [
+            12
+          ],
+          "shares": [
+            1
+          ],
+          "day": 20,
+          "periodMonths": 12,
+          "source": "https://mintrabajo.gob.bo/wp-content/uploads/2025/12/INSTRUCTIVO-DGTHSO-No0119-2025.pdf (Instructivo DGTHSO 0119/2025, under the Law of 18 Dec 1944 and DS 229/1944)"
+        }
+      ]
+    },
+    "noBenefit": {
+      "name": "Bolivia",
+      "source": "SSA SSPTW Americas 2019 Bolivia (Wayback) https://web.archive.org/web/2025/https://www.ssa.gov/policy/docs/progdesc/ssptw/2018-2019/americas/bolivia.html"
     }
   },
   "CU": {
+    "noBenefit": {
+      "name": "Cuba",
+      "source": "Ley 116 Código de Trabajo (2013, in force 2014), MINJUS publication https://www.minjus.gob.cu/sites/default/files/archivos/publicacion/2019-11/ley_116_codigo_de_trabajo.pdf"
+    },
     "law": {
       "overtime": {
         "week": 44,
@@ -7160,6 +8482,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         "maxWeeks": 52,
         "source": "TESPA s. 21, Termination of Employment and Severance Pay Act, Cap. 99:08 (Act 19 of 1997, as amended 1999), GCCI copy https://gcci.gy/wp-content/uploads/2013/07/Termination-of-Employment-and-Severance-Pay-cap9908.pdf"
       }
+    },
+    "noBenefit": {
+      "name": "Guyana",
+      "source": "SSA SSPTW Americas 2019 Guyana (Wayback) https://web.archive.org/web/2025/https://www.ssa.gov/policy/docs/progdesc/ssptw/2018-2019/americas/guyana.html"
     }
   },
   "SR": {
@@ -7179,6 +8505,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         "paidOut": true,
         "source": "12 working days a year; search summary only (vacatures.sr page 404)"
       }
+    },
+    "noBenefit": {
+      "name": "Suriname",
+      "source": "SSA SSPTW Americas 2019 Suriname (Wayback) https://web.archive.org/web/2025/https://www.ssa.gov/policy/docs/progdesc/ssptw/2018-2019/americas/suriname.html"
     }
   },
   "HT": {
@@ -7258,7 +8588,21 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
           ]
         ],
         "source": "Code arts. 44-46"
-      }
+      },
+      "extras": [
+        {
+          "kind": "shareOfYear",
+          "name": "Salaire complémentaire",
+          "month": 12,
+          "day": 31,
+          "share": 0.0833,
+          "source": "https://oig.cepal.org/sites/default/files/2003_codtravail_hti.pdf (Code du travail arts. 154-158)"
+        }
+      ]
+    },
+    "noBenefit": {
+      "name": "Haiti",
+      "source": "SSA SSPTW Americas 2019 Haiti (Wayback) https://web.archive.org/web/2025/https://www.ssa.gov/policy/docs/progdesc/ssptw/2018-2019/americas/haiti.html"
     }
   },
   "CN": {
@@ -7362,6 +8706,17 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         "weeksAYear": 2.857142857142857,
         "source": "Hong Kong SAR China’s Labor Department Concise Guide, Ch. 11 Severance Payment and Long Service Payment"
       }
+    },
+    "benefit": {
+      "name": "Comprehensive Social Security Assistance",
+      "qualifyMonths": 0,
+      "withinMonths": 12,
+      "waitingDays": 0,
+      "quit": "none",
+      "cause": "none",
+      "source": "https://www.swd.gov.hk/en/pubsvc/socsecu/cssa_limit_amt/cssa_standrate/index.html (rates from 1.2.2026)",
+      "flat": 705,
+      "assetLimit": 37000
     }
   },
   "MO": {
@@ -7426,8 +8781,6 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
     },
     "benefit": {
       "name": "Unemployment allowance",
-      "flat": 1470,
-      "weeks": 13,
       "qualifyMonths": 9,
       "withinMonths": 12,
       "waitingDays": 0,
@@ -7435,7 +8788,9 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
       "cause": {
         "weeks": 0
       },
-      "source": "Law No. 4/2010 Social Security System arts. 39-41 (fss.gov.mo English PDF)"
+      "source": "https://www.cdqq.gov.mo/en/home-coming/work-employment/social-security/ (Talent Development Committee, Macao SAR Government)",
+      "flat": 1470,
+      "weeks": 13
     }
   },
   "TW": {
@@ -7550,6 +8905,36 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         ],
         "source": "ILO EPLex Mongolia (2023), Labor Law 2021"
       }
+    },
+    "benefit": {
+      "name": "Unemployment benefit from the Social Insurance Fund",
+      "qualifyMonths": 24,
+      "withinMonths": 24,
+      "waitingDays": 1,
+      "quit": "none",
+      "cause": "none",
+      "source": "https://documents1.worldbank.org/curated/en/099061424103524410/pdf/P174453150aba60211a92a10e239fc50be6.pdf (World Bank, Reforming Labor Law for the Changing Nature of Work: Evidence from Mongolia, 2024, pp. 53-55 and note 47 on the 2023 revision)",
+      "rateByMonths": [
+        [
+          24,
+          0.5
+        ],
+        [
+          60,
+          0.55
+        ],
+        [
+          120,
+          0.6
+        ],
+        [
+          180,
+          0.7
+        ]
+      ],
+      "basisMonths": 3,
+      "min": 137068.61538461538,
+      "weeks": 15.2
     }
   },
   "FJ": {
@@ -7605,6 +8990,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         "weeksAYear": 1,
         "source": "Employment Relations Promulgation 2007 s.108 (NATLEX)"
       }
+    },
+    "noBenefit": {
+      "name": "Fiji",
+      "source": "ISSA Country profile: Fiji (policies as of 1 Jan 2022), Wayback copy https://web.archive.org/web/2025id_/https://www.issa.int/sites/default/files/documents/2024-01/Fiji%202022%20-%20ISSA%20country%20profile.pdf"
     }
   },
   "PG": {
@@ -7678,6 +9067,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         ],
         "source": "ILO EPLex Papua New Guinea (2023), Employment Act s.34"
       }
+    },
+    "noBenefit": {
+      "name": "Papua New Guinea",
+      "source": "SSA SSPTW Asia 2019 Papua New Guinea (Wayback) https://web.archive.org/web/2025/https://www.ssa.gov/policy/docs/progdesc/ssptw/2018-2019/asia/papua-new-guinea.html"
     }
   },
   "VU": {
@@ -7750,6 +9143,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         "minHours": 0,
         "source": "Employment Act [Cap 160] ss. 54-56"
       }
+    },
+    "noBenefit": {
+      "name": "Vanuatu",
+      "source": "ISSA Country profile: Vanuatu (policies as of 1 Jan 2022), Wayback copy https://web.archive.org/web/2025id_/https://www.issa.int/sites/default/files/documents/2024-01/Vanuatu%202022%20-%20ISSA%20country%20profile.pdf"
     }
   },
   "WS": {
@@ -7856,6 +9253,16 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         ],
         "source": "Samoa’s Labor and Employment Relations Act 2013 ss. 54-55 and Schedule 2"
       }
+    },
+    "noBenefit": {
+      "name": "Samoa",
+      "source": "SSA SSPTW Asia 2019 Samoa (Wayback) https://web.archive.org/web/2025/https://www.ssa.gov/policy/docs/progdesc/ssptw/2018-2019/asia/samoa.html"
+    }
+  },
+  "TO": {
+    "noBenefit": {
+      "name": "Tonga",
+      "source": "ILO, 'Tonga: Country Factsheet' (working draft, 2024) https://www.ilo.org/media/533466/download"
     }
   },
   "SB": {
@@ -7898,6 +9305,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         "maxWeeks": 65,
         "source": "Employment Act [Cap 72] ss. 2-3, 7 (labor.gov.sb)"
       }
+    },
+    "noBenefit": {
+      "name": "Solomon Islands",
+      "source": "ISSA Country profile: Solomon Islands (policies as of 1 Jan 2022), Wayback copy https://web.archive.org/web/2025id_/https://www.issa.int/sites/default/files/documents/2024-01/Solomon%20Islands%202022%20-%20ISSA%20country%20profile.pdf"
     }
   },
   "KI": {
@@ -7962,6 +9373,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         ],
         "source": "Employment and Industrial Relations Code 2015 s.102"
       }
+    },
+    "noBenefit": {
+      "name": "Kiribati",
+      "source": "ISSA Country profile: Kiribati (policies as of 1 Jan 2022), Wayback copy https://web.archive.org/web/2025id_/https://www.issa.int/sites/default/files/documents/2024-01/Kiribati%202022%20-%20ISSA%20country%20profile.pdf"
     }
   },
   "TV": {
@@ -7998,6 +9413,28 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         ],
         "source": "Tuvalu’s Labor and Employment Relations Act 2017 ss. 37-38"
       }
+    },
+    "noBenefit": {
+      "name": "Tuvalu",
+      "source": "ILO, 'Tuvalu: Country Factsheet' (working draft) https://www.ilo.org/media/533461/download"
+    }
+  },
+  "MH": {
+    "noBenefit": {
+      "name": "Marshall Islands",
+      "source": "SSA SSPTW Asia 2019 Marshall Islands (Wayback) https://web.archive.org/web/2025/https://www.ssa.gov/policy/docs/progdesc/ssptw/2018-2019/asia/marshall-islands.html"
+    }
+  },
+  "FM": {
+    "noBenefit": {
+      "name": "Micronesia",
+      "source": "SSA SSPTW Asia 2019 Micronesia (Wayback) https://web.archive.org/web/2025/https://www.ssa.gov/policy/docs/progdesc/ssptw/2018-2019/asia/micronesia.html"
+    }
+  },
+  "PW": {
+    "noBenefit": {
+      "name": "Palau",
+      "source": "SSA SSPTW Asia 2019 Palau (Wayback) https://web.archive.org/web/2025/https://www.ssa.gov/policy/docs/progdesc/ssptw/2018-2019/asia/palau.html"
     }
   },
   "NC": {
@@ -8080,6 +9517,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         "weeksAYear": 0.42857142857142855,
         "source": "Code du travail PF arts. Lp. 1224-7, A. 1224-1, Lp. 1225-4 via Direction du travail fiche 'La procédure de licenciement' (service-public.pf)"
       }
+    },
+    "noBenefit": {
+      "name": "French Polynesia",
+      "source": "CLEISS, 'La sécurité sociale des salariés en Polynésie française' https://www.cleiss.fr/docs/regimes/regime_pf_salaries.html"
     }
   },
   "WF": {
@@ -8091,6 +9532,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         "paidOut": true,
         "source": "30 working days a year; Loi n° 52-1322 arts. 121, 124 (Légifrance)"
       }
+    },
+    "noBenefit": {
+      "name": "Wallis & Futuna",
+      "source": "CPSWF portal (benefit list) https://www.cpswf.wf/portail/"
     }
   },
   "CK": {
@@ -8136,16 +9581,23 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         ],
         "source": "Employment Relations Act 2012 ss. 44-48"
       }
+    },
+    "noBenefit": {
+      "name": "Cook Islands",
+      "source": "Development Pathways / P4SP, 'Social Protection in the Cook Islands: A Case Study' (Sep 2024) https://www.developmentpathways.co.uk/wp-content/uploads/2024/09/Social_Protection_in_the_Cook_Islands_A_Case_Study.pdf"
     }
   },
   "NF": {
-    "follows": "AU"
+    "follows": "AU",
+    "benefitOf": "AU"
   },
   "CX": {
-    "follows": "AU"
+    "follows": "AU",
+    "benefitOf": "AU"
   },
   "CC": {
-    "follows": "AU"
+    "follows": "AU",
+    "benefitOf": "AU"
   },
   "SG": {
     "law": {
@@ -8219,6 +9671,43 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         ],
         "source": "https://eplex.ilo.org/country-detail/?code=SGP"
       }
+    },
+    "benefit": {
+      "name": "SkillsFuture Jobseeker Support",
+      "qualifyMonths": 6,
+      "withinMonths": 12,
+      "waitingDays": 0,
+      "quit": "none",
+      "cause": "none",
+      "source": "https://static.mycareersfuture.gov.sg/jss/docs/information-brochure.english.pdf (WSG information brochure)",
+      "flats": [
+        [
+          1,
+          346.15384615384613
+        ],
+        [
+          5,
+          288.46153846153845
+        ],
+        [
+          10,
+          230.76923076923077
+        ],
+        [
+          14,
+          173.07692307692307
+        ],
+        [
+          18,
+          173.07692307692307
+        ],
+        [
+          23,
+          173.07692307692307
+        ]
+      ],
+      "capAtPastWeek": true,
+      "weeks": 26
     }
   },
   "MY": {
@@ -8345,7 +9834,17 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         "afterMonths": 0,
         "weeksAYear": 2.142857142857143,
         "source": "https://library.laborlaw.ph/wp-content/uploads/2023/10/2023-Handbook-on-Workers-Statutory-Benefits.pdf"
-      }
+      },
+      "extras": [
+        {
+          "kind": "shareOfYear",
+          "name": "13th-month pay",
+          "month": 12,
+          "day": 24,
+          "share": 0.0833,
+          "source": "https://lawphil.net/statutes/presdecs/pd1975/pd_851_1975.html"
+        }
+      ]
     },
     "benefit": {
       "name": "SSS Unemployment Insurance",
@@ -8418,7 +9917,11 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
       "qualifyMonths": 6,
       "withinMonths": 15,
       "waitingDays": 0,
-      "quit": "none",
+      "quit": {
+        "weeks": 0,
+        "rate": 0.3,
+        "forWeeks": 13
+      },
       "cause": "none",
       "source": "https://www.thailawonline.com/social-security-in-thailand/"
     }
@@ -8536,7 +10039,21 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         "weeksAYear": 4.285714285714286,
         "maxWeeks": 39,
         "source": "https://leglobal.law/countries/indonesia/employment-law/employment-law-overview-indonesia/termination-of-employment-contracts-in-indonesia/"
-      }
+      },
+      "extras": [
+        {
+          "name": "Tunjangan Hari Raya Keagamaan",
+          "kind": "month",
+          "months": [],
+          "beforeHoliday": {
+            "name": "Eid al-Fitr",
+            "days": 7
+          },
+          "periodMonths": 12,
+          "minMonths": 1,
+          "source": "https://llg-bwi.org/file_publish/Permenaker%20Nomor%206%20Tahun%202016.pdf (Permenaker 6/2016 arts. 2-7)"
+        }
+      ]
     },
     "benefit": {
       "name": "Jaminan Kehilangan Pekerjaan",
@@ -8599,7 +10116,17 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         "afterMonths": 12,
         "weeksAYear": 2.142857142857143,
         "source": "https://www.cyrilshroff.com/wp-content/uploads/2025/12/Guide-to-the-Labour-Codes.pdf"
-      }
+      },
+      "extras": [
+        {
+          "name": "Statutory bonus",
+          "kind": "shareOfYear",
+          "month": 11,
+          "day": 30,
+          "share": 0.0833,
+          "source": "https://www.labour.gov.in/static/uploads/2025/06/c328da14bbb15fc4ad571dc33e7a4ab3.pdf (Code on Wages 2019 ss. 26, 39)"
+        }
+      ]
     },
     "benefit": {
       "name": "ESI Atal Beemit Vyakti Kalyan Yojana",
@@ -8615,6 +10142,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
     }
   },
   "BD": {
+    "noBenefit": {
+      "name": "Bangladesh",
+      "source": "ISSA Country profile: Bangladesh (policies as of 1 Jan 2022), Wayback copy https://web.archive.org/web/2025id_/https://www.issa.int/sites/default/files/documents/2024-01/Bangladesh%202022%20-%20ISSA%20country%20profile.pdf"
+    },
     "law": {
       "overtime": {
         "week": 48,
@@ -8666,6 +10197,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
     }
   },
   "KH": {
+    "noBenefit": {
+      "name": "Cambodia",
+      "source": "SSA SSPTW Asia 2019 Cambodia (Wayback) https://web.archive.org/web/2025/https://www.ssa.gov/policy/docs/progdesc/ssptw/2018-2019/asia/cambodia.html"
+    },
     "law": {
       "overtime": {
         "week": 48,
@@ -8726,10 +10261,34 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         "afterMonths": 1,
         "minHours": 0,
         "source": "https://www.tilleke.com/insights/2019-brings-major-updates-cambodias-labor-law/"
-      }
+      },
+      "extras": [
+        {
+          "name": "Seniority indemnity",
+          "kind": "days",
+          "month": 6,
+          "day": 30,
+          "days": 7.5,
+          "periodMonths": 6,
+          "source": "https://bnglegal.com/index.php/seniority-indemnity-under-cambodian-labour-law/"
+        },
+        {
+          "name": "Seniority indemnity",
+          "kind": "days",
+          "month": 12,
+          "day": 31,
+          "days": 7.5,
+          "periodMonths": 6,
+          "source": "https://bnglegal.com/index.php/seniority-indemnity-under-cambodian-labour-law/"
+        }
+      ]
     }
   },
   "PK": {
+    "noBenefit": {
+      "name": "Pakistan",
+      "source": "ISSA Country profile: Pakistan (policies as of 1 Jan 2022), Wayback copy https://web.archive.org/web/2025id_/https://www.issa.int/sites/default/files/documents/2024-01/Pakistan%202022%20-%20ISSA%20country%20profile.pdf"
+    },
     "law": {
       "overtime": {
         "week": 48,
@@ -8777,6 +10336,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
     }
   },
   "LK": {
+    "noBenefit": {
+      "name": "Sri Lanka",
+      "source": "ISSA Country profile: Sri Lanka (policies as of 1 Jan 2022), Wayback copy https://web.archive.org/web/2025id_/https://www.issa.int/sites/default/files/documents/2024-01/Sri%20Lanka%202022%20-%20ISSA%20country%20profile.pdf"
+    },
     "law": {
       "overtime": {
         "week": 45,
@@ -8810,6 +10373,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
     }
   },
   "NP": {
+    "noBenefit": {
+      "name": "Nepal",
+      "source": "SSA SSPTW Asia 2019 Nepal (Wayback) https://web.archive.org/web/2025/https://www.ssa.gov/policy/docs/progdesc/ssptw/2018-2019/asia/nepal.html"
+    },
     "law": {
       "overtime": {
         "week": 48,
@@ -8875,7 +10442,19 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         "afterMonths": 0,
         "weeksAYear": 4.285714285714286,
         "source": "https://antislaverylaw.ac.uk/wp-content/uploads/2019/08/The-Labour-Act-2017.pdf"
-      }
+      },
+      "extras": [
+        {
+          "name": "Festival expense",
+          "kind": "month",
+          "months": [
+            10
+          ],
+          "day": 1,
+          "periodMonths": 12,
+          "source": "https://sushilparajuli.com/festival-allowance-in-nepal-under-labor-law/ (quoting Labor Act 2074 s. 37 and the Labor Rules)"
+        }
+      ]
     }
   },
   "LA": {
@@ -8951,6 +10530,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
     }
   },
   "MM": {
+    "noBenefit": {
+      "name": "Myanmar (Burma)",
+      "source": "https://www.ilo.org/media/375006/download"
+    },
     "law": {
       "overtime": {
         "week": 48,
@@ -8985,6 +10568,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
     }
   },
   "AF": {
+    "noBenefit": {
+      "name": "Afghanistan",
+      "source": "no scheme was found by the research of 2026-09-26"
+    },
     "law": {
       "leave": {
         "accrual": 0.08333333333333333,
@@ -9012,6 +10599,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
     }
   },
   "BN": {
+    "noBenefit": {
+      "name": "Brunei",
+      "source": "no scheme was found by the research of 2026-09-26"
+    },
     "law": {
       "overtime": {
         "week": 44,
@@ -9062,6 +10653,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
     }
   },
   "BT": {
+    "noBenefit": {
+      "name": "Bhutan",
+      "source": "https://www.globalexpansion.com/hubfs/Countrypedia%20PDFs/In%20use/Bhutan%20-%20Global%20Employer%20Guide.pdf"
+    },
     "law": {
       "overtime": {
         "week": 44,
@@ -9114,6 +10709,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
     }
   },
   "MV": {
+    "noBenefit": {
+      "name": "Maldives",
+      "source": "no scheme was found by the research of 2026-09-26"
+    },
     "law": {
       "overtime": {
         "week": 48,
@@ -9161,6 +10760,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
     }
   },
   "TL": {
+    "noBenefit": {
+      "name": "Timor-Leste",
+      "source": "no scheme was found by the research of 2026-09-26"
+    },
     "law": {
       "overtime": {
         "week": 44,
@@ -9221,7 +10824,22 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         "afterMonths": 60,
         "minHours": 0,
         "source": "http://web01.anpm.tl/webs/anptlweb.nsf/vwAll/Resource-Labor%20Code%20Law%20No.4-2012/$File/TL%20LABOUR%20LAW.pdf"
-      }
+      },
+      "extras": [
+        {
+          "kind": "month",
+          "name": "Annual allowance",
+          "months": [
+            12
+          ],
+          "shares": [
+            1
+          ],
+          "day": 20,
+          "periodMonths": 12,
+          "source": "http://web01.anpm.tl/webs/anptlweb.nsf/vwAll/Resource-Labor%20Code%20Law%20No.4-2012/$File/TL%20LABOUR%20LAW.pdf?openelement= (Labor Code, Law 4/2012, art. 44, English translation)"
+        }
+      ]
     }
   },
   "BB": {
@@ -9389,6 +11007,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
     }
   },
   "JM": {
+    "noBenefit": {
+      "name": "Jamaica",
+      "source": "Jamaica Gleaner, 4 Jun 2026, https://jamaica-gleaner.com/article/news/20260604/legal-and-administrative-frameworks-being-developed-unemployment-insurance"
+    },
     "law": {
       "overtime": {
         "week": 40,
@@ -9463,6 +11085,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
     }
   },
   "TT": {
+    "noBenefit": {
+      "name": "Trinidad & Tobago",
+      "source": "NIBTT benefits list https://www.nibtt.net/benefits_09/benefits_09.html"
+    },
     "law": {
       "overtime": {
         "week": 40,
@@ -9502,6 +11128,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
     }
   },
   "BZ": {
+    "noBenefit": {
+      "name": "Belize",
+      "source": "https://www.ilo.org/resource/news/unemployment-insurance-caribbean-urgent-call-protect-workers-and-their"
+    },
     "law": {
       "overtime": {
         "week": 45,
@@ -9590,6 +11220,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
     }
   },
   "AG": {
+    "noBenefit": {
+      "name": "Antigua & Barbuda",
+      "source": "https://www.ilo.org/resource/news/unemployment-insurance-caribbean-urgent-call-protect-workers-and-their"
+    },
     "law": {
       "overtime": {
         "week": 48,
@@ -9647,6 +11281,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
     }
   },
   "LC": {
+    "noBenefit": {
+      "name": "St. Lucia",
+      "source": "https://www.ilo.org/resource/news/unemployment-insurance-caribbean-urgent-call-protect-workers-and-their"
+    },
     "law": {
       "overtime": {
         "week": 40,
@@ -9724,6 +11362,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
     }
   },
   "GD": {
+    "noBenefit": {
+      "name": "Grenada",
+      "source": "https://www.ilo.org/resource/news/unemployment-insurance-caribbean-urgent-call-protect-workers-and-their"
+    },
     "law": {
       "overtime": {
         "week": 44,
@@ -9802,6 +11444,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
     }
   },
   "VC": {
+    "noBenefit": {
+      "name": "St. Vincent & Grenadines",
+      "source": "https://www.ilo.org/resource/news/unemployment-insurance-caribbean-urgent-call-protect-workers-and-their"
+    },
     "law": {
       "overtime": {
         "week": 44,
@@ -9839,6 +11485,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
     }
   },
   "KN": {
+    "noBenefit": {
+      "name": "St. Kitts & Nevis",
+      "source": "https://www.ilo.org/resource/news/unemployment-insurance-caribbean-urgent-call-protect-workers-and-their"
+    },
     "law": {
       "sick": {
         "fromDay": 1,
@@ -9913,6 +11563,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
     }
   },
   "DM": {
+    "noBenefit": {
+      "name": "Dominica",
+      "source": "https://www.ilo.org/resource/news/unemployment-insurance-caribbean-urgent-call-protect-workers-and-their"
+    },
     "law": {
       "overtime": {
         "week": 40,
@@ -9961,6 +11615,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
     }
   },
   "KY": {
+    "noBenefit": {
+      "name": "Cayman Islands",
+      "source": "https://gov.ky/web/dlp/frequently-asked-questions"
+    },
     "law": {
       "overtime": {
         "week": 45,
@@ -10068,19 +11726,16 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         "source": "https://www.bermudalaws.bm/Laws/Consolidated%20Law/2000/Employment%20Act%202000"
       }
     },
-    "benefit": {
-      "name": "Short-Term Relief Benefit",
-      "flat": 346,
-      "weeks": 13,
-      "qualifyMonths": 0,
-      "withinMonths": 12,
-      "waitingDays": 0,
-      "quit": "none",
-      "cause": "none",
+    "noBenefit": {
+      "name": "Bermuda",
       "source": "https://www.gov.bm/articles/short-term-relief-benefit"
     }
   },
   "VG": {
+    "noBenefit": {
+      "name": "British Virgin Islands",
+      "source": "no scheme was found by the research of 2026-09-26"
+    },
     "law": {
       "overtime": {
         "week": 40,
@@ -10147,6 +11802,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
     }
   },
   "AI": {
+    "noBenefit": {
+      "name": "Anguilla",
+      "source": "https://gov.ai/document/labour/Labour%20(Relations)%20Act%202022.pdf"
+    },
     "law": {
       "overtime": {
         "week": 44,
@@ -10219,6 +11878,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
     }
   },
   "TC": {
+    "noBenefit": {
+      "name": "Turks & Caicos Islands",
+      "source": "https://www.pressoffice.gov.tc/latest/urgent-public-notice-lay-off-and-short-time-severance-pay"
+    },
     "law": {
       "overtime": {
         "week": 44,
@@ -10303,6 +11966,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
     }
   },
   "MS": {
+    "noBenefit": {
+      "name": "Montserrat",
+      "source": "no scheme was found by the research of 2026-09-26"
+    },
     "law": {
       "overtime": {
         "week": 40,
@@ -10398,6 +12065,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
     }
   },
   "AW": {
+    "noBenefit": {
+      "name": "Aruba",
+      "source": "no scheme was found by the research of 2026-09-26"
+    },
     "law": {
       "overtime": {
         "day": 8,
@@ -10461,6 +12132,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
     }
   },
   "CW": {
+    "noBenefit": {
+      "name": "Curaçao",
+      "source": "no scheme was found by the research of 2026-09-26"
+    },
     "law": {
       "overtime": {
         "week": 40,
@@ -10526,6 +12201,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
     }
   },
   "BQ": {
+    "noBenefit": {
+      "name": "Caribbean Netherlands",
+      "source": "Rijksdienst Caribisch Nederland, 'Start internetconsultatie: Tijdelijke regeling werkloosheidsvoorziening BES' (17 Feb 2026) https://www.rijksdienstcn.com/actueel/nieuws/2026/februari/17/start-internetconsultatie-tijdelijke-regeling-werkloosheidsvoorziening-bes"
+    },
     "law": {
       "overtime": {
         "week": 40,
@@ -10591,6 +12270,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
     }
   },
   "SX": {
+    "noBenefit": {
+      "name": "Sint Maarten",
+      "source": "no scheme was found by the research of 2026-09-26"
+    },
     "law": {
       "overtime": {
         "week": 40,
@@ -10898,6 +12581,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         "weeks": 4
       },
       "source": "ONEM 'A combien s'eleve votre allocation de chomage apres une occupation - situation a partir du 01.03.2026'"
+    },
+    "leaveLoading": {
+      "share": 0.92,
+      "source": "https://calculateur-de-salaire.be/guide/pecule-vacances-belgique"
     }
   },
   "CH": {
@@ -10972,8 +12659,12 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
       "qualifyMonths": 12,
       "withinMonths": 24,
       "waitingDays": 5,
-      "quit": "none",
-      "cause": "none",
+      "quit": {
+        "weeks": 9.2
+      },
+      "cause": {
+        "weeks": 9.2
+      },
       "source": "MISSOC comparative tables, Switzerland, 1 Jan 2026, Unemployment"
     }
   },
@@ -11157,7 +12848,21 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
           ]
         ],
         "source": "Funktionaerloven §2 stk. 2 (danskelove.dk)"
-      }
+      },
+      "extras": [
+        {
+          "name": "Ferietillæg, salaried employees",
+          "kind": "shareOfYear",
+          "months": [
+            5,
+            8
+          ],
+          "day": 31,
+          "share": 0.005,
+          "month": 5,
+          "source": "https://star.dk/til-virksomheder/ferieloven/spoergsmaal-og-svar-om-ferietillaeg"
+        }
+      ]
     },
     "benefit": {
       "name": "Dagpenge",
@@ -11171,7 +12876,9 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
       "quit": {
         "weeks": 3
       },
-      "cause": "none",
+      "cause": {
+        "weeks": 3
+      },
       "source": "MISSOC comparative tables, Denmark, 1 Jan 2026, Unemployment"
     }
   },
@@ -11325,14 +13032,27 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
       "withinMonths": 28,
       "waitingDays": 7,
       "quit": {
-        "weeks": 4
+        "weeks": 6.428571428571429
       },
-      "cause": "none",
+      "cause": {
+        "weeks": 6.428571428571429
+      },
       "source": "MISSOC comparative tables, Finland, 1 Jan 2026, Unemployment"
     }
   },
   "AX": {
-    "follows": "FI"
+    "follows": "FI",
+    "benefit": {
+      "name": "Grunddagpenning",
+      "qualifyMonths": 12,
+      "withinMonths": 28,
+      "waitingDays": 7,
+      "quit": "none",
+      "cause": "none",
+      "source": "https://www.ams.ax/arbetssokande/arbetsloshetsformaner",
+      "flat": 186.05,
+      "weeks": 60
+    }
   },
   "GR": {
     "law": {
@@ -11393,7 +13113,33 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
           ]
         ],
         "source": "Eurofound ERM legislation database, 'Notice period to employees - Greece' (Law 4808/2021 art. 64-66"
-      }
+      },
+      "extras": [
+        {
+          "name": "Christmas bonus",
+          "kind": "month",
+          "months": [
+            12
+          ],
+          "day": 21,
+          "periodMonths": 8,
+          "source": "https://ypergasias.gov.gr/en/labour-relations/collective-employment-relations/holiday-allowances/"
+        },
+        {
+          "name": "Easter bonus",
+          "kind": "month",
+          "months": [],
+          "shares": [
+            0.5
+          ],
+          "beforeHoliday": {
+            "name": "Easter Sunday",
+            "days": 4
+          },
+          "periodMonths": 4,
+          "source": "https://ypergasias.gov.gr/en/labour-relations/collective-employment-relations/holiday-allowances/"
+        }
+      ]
     },
     "benefit": {
       "name": "Epidoma anergias",
@@ -11405,6 +13151,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
       "quit": "none",
       "cause": "none",
       "source": "MISSOC comparative tables, Greece, 1 Jan 2026, Unemployment"
+    },
+    "leaveLoading": {
+      "share": 0.5,
+      "source": "https://www.taxlaw.gr/en/practice-areas/labor-employment/basic-legal-framework-for-employment-in-greece/"
     }
   },
   "HR": {
@@ -11621,6 +13371,43 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         "afterMonths": 0,
         "minHours": 0,
         "source": "Codice civile art. 2120 (brocardi.it)"
+      },
+      "extras": [
+        {
+          "kind": "month",
+          "name": "Tredicesima mensilità",
+          "months": [
+            12
+          ],
+          "day": 15,
+          "periodMonths": 12,
+          "source": "https://www.wikilabour.it/dizionario/retribuzione/tredicesima-mensilita-mensilita-aggiuntive/"
+        }
+      ]
+    },
+    "benefit": {
+      "name": "NASpI",
+      "qualifyMonths": 3,
+      "withinMonths": 48,
+      "waitingDays": 7,
+      "quit": "none",
+      "cause": {
+        "weeks": 4
+      },
+      "source": "https://www.lavoroediritti.com/leggi-e-prassi/inps-naspi-disoccupazione (guide citing INPS Circolare n. 4 del 28 gennaio 2026 and D.Lgs. 22/2015)",
+      "rate": 0.75,
+      "rateAbove": 0.25,
+      "threshold": 336.16615384615386,
+      "basisMonths": 48,
+      "max": 365.70000000000005,
+      "decline": {
+        "fromWeek": 23,
+        "perMonth": 0.03
+      },
+      "weeksShare": {
+        "share": 0.5,
+        "withinMonths": 48,
+        "max": 104
       }
     }
   },
@@ -11692,6 +13479,17 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         "maxWeeks": 26,
         "source": "Llei 31/2018 arts. 84(1), 85(1), 92(1)"
       }
+    },
+    "benefit": {
+      "name": "Ajut per desocupació involuntària",
+      "qualifyMonths": 36,
+      "withinMonths": 60,
+      "waitingDays": 45,
+      "quit": "none",
+      "cause": "none",
+      "source": "https://portaljuridicandorra.ad/R20201007D (consolidated text, art. 26)",
+      "flat": 361.99384615384616,
+      "weeks": 26
     }
   },
   "GI": {
@@ -11826,6 +13624,17 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         "weeksAYear": 1,
         "source": "Corlett Bolton & Co, 'Redundancy - a summary of rights and obligations' (Redundancy Payments Act 1990)"
       }
+    },
+    "benefit": {
+      "name": "Jobseeker’s Allowance",
+      "qualifyMonths": 12,
+      "withinMonths": 24,
+      "waitingDays": 3,
+      "quit": "none",
+      "cause": "none",
+      "source": "Isle of Man Government, Jobseeker's Allowance https://www.gov.im/categories/benefits-and-financial-support/employment-work-related/jobseekers-allowance/",
+      "flat": 95.55,
+      "weeks": 26
     }
   },
   "GG": {
@@ -11881,6 +13690,25 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
       "source": "States of Guernsey leaflet 50 'Benefit Payment & Contribution Rates for 2026'"
     }
   },
+  "FO": {
+    "benefit": {
+      "name": "Arbeiðsloysisstuðul",
+      "qualifyMonths": 0,
+      "withinMonths": 12,
+      "waitingDays": 0,
+      "quit": {
+        "weeks": 4
+      },
+      "cause": {
+        "weeks": 4
+      },
+      "source": "https://logir.fo/Logtingslog/113-fra-13-06-1997-um-arbeidsloysistrygging-og-arbeidsavising-sum-seinast-broytt-vid-logtingslog-nr-79 (as last amended by Løgtingslóg nr. 81 of 2 May 2025, §§ 14-18)",
+      "rate": 0.8,
+      "basisMonths": 12,
+      "max": 5310.634615384615,
+      "weeks": 129.6
+    }
+  },
   "GL": {
     "law": {
       "leave": {
@@ -11903,6 +13731,33 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         ],
         "source": "DP 'Ansaettelse i Groenland' (dp.dk)"
       }
+    },
+    "benefit": {
+      "name": "Jobsøgningsydelse",
+      "qualifyMonths": 0,
+      "withinMonths": 12,
+      "waitingDays": 0,
+      "quit": {
+        "weeks": 4,
+        "rate": 0.5,
+        "forWeeks": 4
+      },
+      "cause": {
+        "weeks": 4,
+        "rate": 0.5,
+        "forWeeks": 4
+      },
+      "source": "https://nalunaarutit.gl/groenlandsk-lovgivning/2022/l-07-2022?sc_lang=da (§§ 17, 19, 20, 22)",
+      "flats": [
+        [
+          1,
+          3832.7999999999997
+        ],
+        [
+          27,
+          3407.0400000000004
+        ]
+      ]
     }
   },
   "LT": {
@@ -12084,7 +13939,16 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
           ]
         ],
         "source": "SKM (Bulgarian accounting firm) English excerpt of the Labor Code, https://www.skmbg.com/bulgarian-tax-laws/labour-code/ Art 326(2)"
-      }
+      },
+      "windows": [
+        {
+          "name": "Night Premium",
+          "from": 22,
+          "to": 30,
+          "flat": 0.93,
+          "source": "https://www.gli.government.bg/sites/default/files/upload/documents/2026-01/%D0%9D%D0%90%D0%A0%D0%95%D0%94%D0%91%D0%90%20%D0%97%D0%90%20%D0%A1%D0%A2%D0%A0%D0%A3%D0%9A%D0%A2%D0%A3%D0%A0%D0%90%D0%A2%D0%90%20%D0%98%20%D0%9E%D0%A0%D0%93%D0%90%D0%9D%D0%98%D0%97%D0%90%D0%A6%D0%98%D0%AF%D0%A2%D0%90%20%D0%9D%D0%90%20%D0%A0%D0%90%D0%91%D0%9E%D0%A2%D0%9D%D0%90%D0%A2%D0%90%20%D0%97%D0%90%D0%9F%D0%9B%D0%90%D0%A2%D0%90.pdf"
+        }
+      ]
     },
     "benefit": {
       "name": "Unemployment cash benefit",
@@ -12154,7 +14018,16 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
           ]
         ],
         "source": "Kodeks pracy (Labor Code), consolidated text Dz.U. 2025 poz. 277 (Polish original), https://api.sejm.gov.pl/eli/acts/DU/2025/277/text.pdf Art 36(1)"
-      }
+      },
+      "windows": [
+        {
+          "name": "Night Premium",
+          "from": 21,
+          "to": 31,
+          "flat": 5.55,
+          "source": "https://www.pit.pl/dodatki-za-prace-w-godzinach-nocnych/"
+        }
+      ]
     },
     "benefit": {
       "name": "Zasilek dla bezrobotnych",
@@ -12282,19 +14155,71 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
           ]
         ],
         "source": "Slovak Labor Code (Act 311/2001 Coll.), English rendering of the Slov-Lex version effective from 17 Apr 2025, via ILO NATLEX https://natlex.ilo.org/dyn/natlex2/natlex2/files/download/61871/SVK-61871.pdf Section 62"
-      }
+      },
+      "windows": [
+        {
+          "name": "Night Premium",
+          "from": 22,
+          "to": 30,
+          "flat": 2.1,
+          "source": "https://natlex.ilo.org/dyn/natlex2/natlex2/files/download/61871/SVK-61871.pdf"
+        },
+        {
+          "name": "Saturday Premium",
+          "from": 0,
+          "to": 24,
+          "flat": 2.63,
+          "weekdays": [
+            6
+          ],
+          "source": "https://natlex.ilo.org/dyn/natlex2/natlex2/files/download/61871/SVK-61871.pdf"
+        },
+        {
+          "name": "Sunday Premium",
+          "from": 0,
+          "to": 24,
+          "flat": 5.26,
+          "weekdays": [
+            0
+          ],
+          "source": "https://natlex.ilo.org/dyn/natlex2/natlex2/files/download/61871/SVK-61871.pdf"
+        }
+      ]
     },
     "benefit": {
-      "name": "Davka v nezamestnanosti",
-      "rate": 0.5,
-      "basisMonths": 12,
-      "weeks": 26,
-      "qualifyMonths": 0,
+      "name": "Dávka v nezamestnanosti",
+      "qualifyMonths": 24,
       "withinMonths": 48,
       "waitingDays": 0,
-      "quit": "none",
-      "cause": "none",
-      "source": "European Commission, Your social security rights in Slovakia (July 2025), https://employment-social-affairs.ec.europa.eu/document/download/fa90d105-d7fc-417e-a79c-603796821761_en (Unemployment benefits chapter)"
+      "quit": {
+        "weeks": 0
+      },
+      "cause": {
+        "weeks": 0
+      },
+      "source": "https://www.podnikajte.sk/socialne-a-zdravotne-odvody/davka-v-nezamestnanosti-od-1-7-2026",
+      "rate": 0.5,
+      "basisMonths": 24,
+      "rates": [
+        [
+          1,
+          0.5
+        ],
+        [
+          14,
+          0.4
+        ],
+        [
+          18,
+          0.3
+        ],
+        [
+          23,
+          0.2
+        ]
+      ],
+      "max": 381.02307692307687,
+      "weeks": 26
     }
   },
   "SI": {
@@ -12405,7 +14330,29 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         "weeksAYear": 0.8571428571428571,
         "maxWeeks": 43.333333333333336,
         "source": "CMS Expert Guide to Labor Law in Central and Eastern Europe: Slovenia (19 Oct 2023), https://cms.law/en/int/expert-guides/cms-expert-guide-to-labour-law-in-central-eastern-europe/slovenia (Art 108 ZDR-1)"
-      }
+      },
+      "extras": [
+        {
+          "kind": "fixed",
+          "name": "Regres za letni dopust",
+          "month": 7,
+          "day": 1,
+          "amount": 1481.88,
+          "fullTimeHours": 40,
+          "periodMonths": 12,
+          "source": "https://www.racunovodja.com/clanki.asp?clanek=14183"
+        },
+        {
+          "kind": "fixed",
+          "name": "Zimski regres / božičnica",
+          "month": 12,
+          "day": 18,
+          "amount": 740.94,
+          "fullTimeHours": 40,
+          "periodMonths": 12,
+          "source": "https://e-fascikel.si/blog/bozicnica-2026"
+        }
+      ]
     },
     "benefit": {
       "name": "Denarno nadomestilo za cas brezposelnosti",
@@ -12491,7 +14438,19 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         "weeksAYear": 2,
         "maxWeeks": 52,
         "source": "Codigo do Trabalho (Lei 7/2009, as amended incl. Lei 13/2023 'Agenda do Trabalho Digno'), consolidated text at Procuradoria-Geral Distrital de Lisboa, https://www.pgdlisboa.pt/leis/lei_mostra_articulado.php?nid=1047&tabela=leis Art 366"
-      }
+      },
+      "extras": [
+        {
+          "kind": "month",
+          "name": "Subsídio de Natal",
+          "months": [
+            12
+          ],
+          "day": 15,
+          "periodMonths": 12,
+          "source": "https://informador.pt/legislacao/lexit/codigos/direito-laboral/codigo-do-trabalho/livro-i-parte-geral-2/titulo-ii-contrato-de-trabalho/capitulo-iii-retribuicao-e-outras-prestacoes-patrimoniais/seccao-i-disposicoes-gerais-sobre-retribuicao/artigo-263-o-subsidio-de-natal/"
+        }
+      ]
     },
     "benefit": {
       "name": "Subsidio de desemprego",
@@ -12507,6 +14466,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
       "quit": "none",
       "cause": "none",
       "source": "European Commission, Your social security rights in Portugal (July 2025), https://employment-social-affairs.ec.europa.eu/document/download/7bb82c27-9a98-4ab5-948c-e875d1d18f02_en (Unemployment benefits chapter)"
+    },
+    "leaveLoading": {
+      "share": 1,
+      "source": "https://www.reduniq.pt/blog/subsidio-ferias-e-natal-obrigacoes-legais-empresa/"
     }
   },
   "MT": {
@@ -12602,7 +14565,49 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
           ]
         ],
         "source": "Employment and Industrial Relations Act, Cap. 452, legislation.mt, https://legislation.mt/eli/cap/452/eng/pdf art 36(5)"
-      }
+      },
+      "extras": [
+        {
+          "kind": "fixed",
+          "name": "Statutory bonus",
+          "month": 6,
+          "day": 30,
+          "amount": 135.1,
+          "fullTimeHours": 40,
+          "periodMonths": 6,
+          "source": "https://web.archive.org/web/20260712031603/https://dier.gov.mt/en/services/employment-conditions/wages/bonus-and-weekly-allowances/"
+        },
+        {
+          "kind": "fixed",
+          "name": "Statutory bonus",
+          "month": 12,
+          "day": 23,
+          "amount": 135.1,
+          "fullTimeHours": 40,
+          "periodMonths": 6,
+          "source": "https://web.archive.org/web/20260712031603/https://dier.gov.mt/en/services/employment-conditions/wages/bonus-and-weekly-allowances/"
+        },
+        {
+          "kind": "fixed",
+          "name": "Weekly allowance",
+          "month": 3,
+          "day": 31,
+          "amount": 121.16,
+          "fullTimeHours": 40,
+          "periodMonths": 6,
+          "source": "https://web.archive.org/web/20260712031603/https://dier.gov.mt/en/services/employment-conditions/wages/bonus-and-weekly-allowances/"
+        },
+        {
+          "kind": "fixed",
+          "name": "Weekly allowance",
+          "month": 9,
+          "day": 30,
+          "amount": 121.16,
+          "fullTimeHours": 40,
+          "periodMonths": 6,
+          "source": "https://web.archive.org/web/20260712031603/https://dier.gov.mt/en/services/employment-conditions/wages/bonus-and-weekly-allowances/"
+        }
+      ]
     },
     "benefit": {
       "name": "Unemployment Benefit",
@@ -12669,7 +14674,17 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         "weeksAYear": 1.4285714285714286,
         "maxWeeks": 52,
         "source": "Burgerlijk Wetboek Boek 7 (Dutch Civil Code, Book 7), version in force 1 Jan 2026, wetten.overheid.nl, https://wetten.overheid.nl/BWBR0005290/2026-01-01 art 7:673(1)-(2)"
-      }
+      },
+      "extras": [
+        {
+          "name": "Vakantiegeld",
+          "kind": "shareOfYear",
+          "month": 5,
+          "day": 25,
+          "share": 0.08,
+          "source": "https://business.gov.nl/staff/terms-of-employment/paying-holiday-allowance-to-your-staff/"
+        }
+      ]
     },
     "benefit": {
       "name": "WW-uitkering",
@@ -12811,21 +14826,31 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
       }
     },
     "benefit": {
-      "name": "Dagpenger under arbeidsloshet",
-      "rate": 0.624,
-      "basisMonths": 12,
-      "max": 9372,
-      "weeks": 52,
+      "name": "Dagpenger",
       "qualifyMonths": 0,
       "withinMonths": 12,
       "waitingDays": 3,
       "quit": {
-        "weeks": 12
+        "weeks": 18
       },
       "cause": {
-        "weeks": 12
+        "weeks": 18
       },
-      "source": "European Commission, Ihre Rechte der sozialen Sicherheit in Norwegen (Your social security rights in Norway, German edition, July 2026), https://employment-social-affairs.ec.europa.eu/document/download/991624eb-9ea9-492a-a732-3542b48bfe00_en (Arbeitslosengeld chapter)"
+      "source": "https://www.nav.no/grunnbelopet",
+      "rate": 0.624,
+      "basisMonths": 12,
+      "max": 15755.653846153846,
+      "weeks": 104,
+      "qualifyIncome": [
+        {
+          "amount": 204824,
+          "withinMonths": 12
+        },
+        {
+          "amount": 409647,
+          "withinMonths": 36
+        }
+      ]
     }
   },
   "SE": {
@@ -12891,8 +14916,12 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
       "qualifyMonths": 6,
       "withinMonths": 12,
       "waitingDays": 2,
-      "quit": "none",
-      "cause": "none",
+      "quit": {
+        "weeks": 6.428571428571429
+      },
+      "cause": {
+        "weeks": 6.428571428571429
+      },
       "source": "European Commission, Your social security rights in Sweden (July 2025), https://employment-social-affairs.ec.europa.eu/document/download/1801fedc-6583-47f2-be14-8650bc6b71c8_en (Unemployment benefits chapter)"
     }
   },
@@ -12974,7 +15003,8 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
     }
   },
   "SJ": {
-    "follows": "NO"
+    "follows": "NO",
+    "benefitOf": "NO"
   },
   "MC": {
     "benefitOf": "FR",
@@ -13108,6 +15138,16 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         "weeksAYear": 1,
         "source": "Employment (Jersey) Law 2003, revised edition showing the law from 17 April 2026, Jersey Legal Information Board, https://www.jerseylaw.je/laws/current/l_42_2003 (arts 60A-60C)"
       }
+    },
+    "benefit": {
+      "name": "Income Support",
+      "qualifyMonths": 0,
+      "withinMonths": 12,
+      "waitingDays": 0,
+      "quit": "none",
+      "cause": "none",
+      "source": "https://www.gov.je/Benefits/IncomeSupport/pages/components.aspx (rates from 1 Jan 2026)",
+      "flat": 203.84000000000003
     }
   },
   "SM": {
@@ -13131,7 +15171,41 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
       "holiday": {
         "extra": 1,
         "source": "ILO, Panoramica della legislazione del lavoro nella Repubblica di San Marino (2025), summarising Law 7/1961, Law 23/1977 and later acts, https://www.ilo.org/sites/default/files/2025-07/panoramica_legislazione_del_lavoro_san_marino.pdf ss 6.1, 6.2"
-      }
+      },
+      "extras": [
+        {
+          "kind": "month",
+          "name": "Gratifica natalizia",
+          "months": [
+            12
+          ],
+          "day": 15,
+          "periodMonths": 12,
+          "source": "https://www.ilo.org/sites/default/files/2025-07/panoramica_legislazione_del_lavoro_san_marino.pdf"
+        }
+      ]
+    },
+    "benefit": {
+      "name": "Indennità di disoccupazione",
+      "qualifyMonths": 6,
+      "withinMonths": 24,
+      "waitingDays": 0,
+      "quit": "none",
+      "cause": "none",
+      "source": "https://www.gov.sm/pub1/GovSM/dam/jcr:d30b77cd-2dc2-4e51-bbd3-0559b59ae001/Modulo%20domanda%20di%20indennit%C3%A0%20di%20disoccupazione.pdf (ISS application form MODUL-ISS-IND.EC. 1, rev. 2 of 11/10/2019, which prints the benefit schedule)",
+      "rate": 0.6,
+      "rates": [
+        [
+          1,
+          0.6
+        ],
+        [
+          27,
+          0.5
+        ]
+      ],
+      "basisMonths": 4,
+      "weeks": 34.666666666666664
     }
   },
   "VA": {
@@ -13147,6 +15221,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         "paidBy": "employer",
         "source": "Regolamento Generale per il personale del Governatorato dello Stato della Citta del Vaticano (21 Nov 2010), published by the Labor Office of the Apostolic See (ULSA), https://www.vatican.va/roman_curia/labour_office/docs/documents/ulsa_b18_7_it.html arts 36, 39, 40"
       }
+    },
+    "noBenefit": {
+      "name": "Vatican City",
+      "source": "Regolamento Generale per il personale del Governatorato dello Stato della Città del Vaticano, arts. 58, 70 and contract-staff provisions, https://www.vatican.va/roman_curia/labour_office/docs/documents/ulsa_b18_7_it.html"
     }
   },
   "AL": {
@@ -13292,6 +15370,78 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         ],
         "source": "Kazakhstan’s Labor Code of Kazakhstan Arts. 53 and 56 (zakon.uchet.kz full text)"
       }
+    },
+    "benefit": {
+      "name": "Social payment for job loss",
+      "qualifyMonths": 6,
+      "withinMonths": 24,
+      "waitingDays": 0,
+      "quit": {
+        "weeks": 0
+      },
+      "cause": {
+        "weeks": 0
+      },
+      "source": "https://gfss.kz/en/socpayments/on-loss-of-employment/",
+      "rate": 0.45,
+      "basisMonths": 24,
+      "max": 61788.46153846154,
+      "rateByMonths": [
+        [
+          0,
+          0
+        ],
+        [
+          6,
+          0.315
+        ],
+        [
+          12,
+          0.3375
+        ],
+        [
+          24,
+          0.3825
+        ],
+        [
+          36,
+          0.405
+        ],
+        [
+          48,
+          0.4275
+        ],
+        [
+          60,
+          0.45
+        ]
+      ],
+      "weeksByMonths": [
+        [
+          6,
+          4.333333333333333
+        ],
+        [
+          12,
+          8.666666666666666
+        ],
+        [
+          24,
+          13
+        ],
+        [
+          36,
+          17.333333333333332
+        ],
+        [
+          48,
+          21.666666666666668
+        ],
+        [
+          60,
+          26
+        ]
+      ]
     }
   },
   "RU": {
@@ -13549,6 +15699,23 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         ],
         "source": "Uzbekistan’s Labor Code of Uzbekistan Arts. 160 and 165 (lex.uz)"
       }
+    },
+    "benefit": {
+      "name": "Posobie po bezrabotitse",
+      "qualifyMonths": 0,
+      "withinMonths": 12,
+      "waitingDays": 90,
+      "quit": {
+        "weeks": 0
+      },
+      "cause": {
+        "weeks": 0
+      },
+      "source": "https://lex.uz/ru/docs/5055696 (Law ZRU-642, arts. 51-53, 55 and scope article, current LexUz consolidation)",
+      "rate": 0.5,
+      "basisMonths": 12,
+      "min": 293319,
+      "weeks": 26
     }
   },
   "TR": {
@@ -13768,6 +15935,16 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         ],
         "source": "Georgia’s Labor Code of Georgia Art. 48 (Matsne)"
       }
+    },
+    "benefit": {
+      "name": "Targeted Social Assistance",
+      "qualifyMonths": 0,
+      "withinMonths": 12,
+      "waitingDays": 0,
+      "quit": "none",
+      "cause": "none",
+      "source": "ISSA Country profile: Georgia (policies as of 1 Jan 2022), Wayback copy https://web.archive.org/web/2025id_/https://www.issa.int/sites/default/files/documents/2024-01/Georgia%202022%20-%20ISSA%20country%20profile.pdf",
+      "flat": 13.85
     }
   },
   "AM": {
@@ -13797,6 +15974,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         ],
         "source": "Armenia’s Labor Code Art. 115 as quoted in ILO EPLex Armenia"
       }
+    },
+    "noBenefit": {
+      "name": "Armenia",
+      "source": "SSA SSPTW Asia 2019 Armenia (Wayback) https://web.archive.org/web/2025/https://www.ssa.gov/policy/docs/progdesc/ssptw/2018-2019/asia/armenia.html"
     }
   },
   "AZ": {
@@ -13837,6 +16018,33 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         ],
         "source": "Azerbaijan’s Labor Code of Azerbaijan Arts. 69 and 77 (migration.gov.az text)"
       }
+    },
+    "benefit": {
+      "name": "İşsizlikdən sığorta ödənişi",
+      "qualifyMonths": 12,
+      "withinMonths": 24,
+      "waitingDays": 0,
+      "quit": "none",
+      "cause": "none",
+      "source": "https://frameworks.e-qanun.az/36/c_f_36310.html (Law 765-VQ, consolidated, arts. 13-18)",
+      "rate": 0.5,
+      "basisMonths": 12,
+      "rates": [
+        [
+          1,
+          1
+        ],
+        [
+          10,
+          0.8
+        ],
+        [
+          18,
+          0.7
+        ]
+      ],
+      "min": 92.39769230769231,
+      "weeks": 26
     }
   },
   "KG": {
@@ -13885,6 +16093,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         ],
         "source": "Kyrgyzstan’s Labor Code of Kyrgyzstan 2025 Arts. 43 and 46"
       }
+    },
+    "unsized": {
+      "name": "Kyrgyzstan",
+      "source": "https://base.spinform.ru/show_doc.fwx?rgn=78373 (table of contents and art. 2 definition"
     }
   },
   "ME": {
@@ -13917,6 +16129,17 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         "weeksAYear": 1.4285714285714286,
         "source": "Montenegro’s Labor Law of Montenegro, redundancy severance article (paragraf.me)"
       }
+    },
+    "benefit": {
+      "name": "Novčana naknada za vrijeme nezaposlenosti",
+      "qualifyMonths": 9,
+      "withinMonths": 18,
+      "waitingDays": 0,
+      "quit": "none",
+      "cause": "none",
+      "source": "https://www.asistent.me/novcananaknada.html (40% of minimum wage, grounds for denial)",
+      "flat": 55.35876923076924,
+      "weeks": 13
     }
   },
   "MK": {
@@ -13986,6 +16209,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
     }
   },
   "XK": {
+    "noBenefit": {
+      "name": "Kosovo",
+      "source": "Decent Work Balkans, Kosovo Fact Sheet 2025"
+    },
     "law": {
       "overtime": {
         "week": 40,
@@ -14085,6 +16312,17 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         "weeksAYear": 1.4285714285714286,
         "source": "Decent Work Balkans, BIH Federation Fact Sheet 2025"
       }
+    },
+    "benefit": {
+      "name": "Novčana naknada",
+      "qualifyMonths": 8,
+      "withinMonths": 18,
+      "waitingDays": 0,
+      "quit": "none",
+      "cause": "none",
+      "source": "https://szks.ba/materijalna-i-socijalna-sigurnost/ (Employment Service of Sarajevo Canton)",
+      "flat": 140.77,
+      "weeks": 13
     }
   },
   "TJ": {
@@ -14131,6 +16369,33 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         ],
         "source": "Tajikistan’s Labor Code of Tajikistan Arts. 41 and 45 (andoz.tj text)"
       }
+    },
+    "benefit": {
+      "name": "Unemployment benefit",
+      "qualifyMonths": 18,
+      "withinMonths": 36,
+      "waitingDays": 0,
+      "quit": "none",
+      "cause": "none",
+      "source": "ISSA Country profile: Tajikistan (policies as of 1 Jan 2022), Wayback copy https://web.archive.org/web/2025id_/https://www.issa.int/sites/default/files/documents/2024-01/Tajikistan%202022%20-%20ISSA%20country%20profile.pdf",
+      "rate": 0.5,
+      "basisMonths": 12,
+      "rates": [
+        [
+          1,
+          0.5
+        ],
+        [
+          5,
+          0.4
+        ],
+        [
+          10,
+          0.3
+        ]
+      ],
+      "min": 300,
+      "weeks": 13
     }
   },
   "TM": {
@@ -14177,6 +16442,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         ],
         "source": "Turkmenistan’s Labor Code of Turkmenistan Arts. 41 and 44 (mejlis.gov.tm)"
       }
+    },
+    "unsized": {
+      "name": "Turkmenistan",
+      "source": "Law of Turkmenistan 'On Employment of the Population' of 18 Jun 2016 (amended 1 Dec 2018), arts. 26-34, Ministry of Justice text https://minjust.gov.tm/assets/files/law_documents/hukuknama_280_ru.pdf"
     }
   },
   "AE": {
@@ -14374,13 +16643,14 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         "afterMonths": 0,
         "weeksAYear": 4.285714285714286,
         "source": "https://eg.andersen.com/wp-content/uploads/2025/05/Translation-of-Labor-law-No.-14-of-2025.pdf"
+      },
+      "annualRaise": {
+        "share": 0.03,
+        "source": "https://eg.andersen.com/wp-content/uploads/2025/05/Translation-of-Labor-law-No.-14-of-2025.pdf"
       }
     },
     "benefit": {
       "name": "Unemployment insurance",
-      "rate": 0.75,
-      "basisMonths": 12,
-      "weeks": 12,
       "qualifyMonths": 12,
       "withinMonths": 12,
       "waitingDays": 7,
@@ -14388,7 +16658,28 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
       "cause": {
         "weeks": 0
       },
-      "source": "https://eg.andersen.com/wp-content/uploads/2025/06/Law-No.-148-of-the-Year-2019-and-its-executive-regulation.pdf"
+      "source": "https://www.mondaq.com/insurance-laws-and-products/846748/law-no-148-of-2019-new-social-insurance-and-pensions-law-unprecedented-support-for-unemployed-citizens-legal-alert-117",
+      "rate": 0.75,
+      "basisMonths": 1,
+      "rates": [
+        [
+          1,
+          0.75
+        ],
+        [
+          5,
+          0.65
+        ],
+        [
+          9,
+          0.55
+        ],
+        [
+          13,
+          0.45
+        ]
+      ],
+      "weeks": 13
     }
   },
   "IL": {
@@ -14526,7 +16817,20 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         "afterMonths": 12,
         "weeksAYear": 4.285714285714286,
         "source": "https://www.legal500.com/guides/chapter/israel-employment-and-labour-law/"
-      }
+      },
+      "extras": [
+        {
+          "name": "Recreation pay",
+          "kind": "fixed",
+          "month": 7,
+          "day": 1,
+          "amount": 2090,
+          "periodMonths": 12,
+          "minWeeks": 52,
+          "fullTimeHours": 40,
+          "source": "https://israellaw.info/articles/dmei-havraa-recreation-pay-israel"
+        }
+      ]
     },
     "benefit": {
       "name": "Unemployment benefit",
@@ -14588,6 +16892,36 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         "weeksAYear": 2,
         "source": "https://www.mondaq.com/employment-and-hr/883122/labour-and-employment-comparative-guide"
       }
+    },
+    "benefit": {
+      "name": "Taʿwīḍ al-taʿṭīl ʿan al-ʿamal",
+      "qualifyMonths": 24,
+      "withinMonths": 24,
+      "waitingDays": 0,
+      "quit": "none",
+      "cause": "none",
+      "source": "https://ailawyeriq.cloud/ar-IQ/laws/details?id=3799 (full text of Law 18/2023, arts. 61-68)",
+      "rate": 0.75,
+      "basisMonths": 6,
+      "rates": [
+        [
+          1,
+          0.75
+        ],
+        [
+          5,
+          0.65
+        ],
+        [
+          10,
+          0.55
+        ],
+        [
+          14,
+          0.5
+        ]
+      ],
+      "weeks": 13
     }
   },
   "IR": {
@@ -14627,7 +16961,52 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         "afterMonths": 12,
         "minHours": 0,
         "source": "https://www.vertic.org/media/National%20Legislation/Iran/IR_Labor_Code.pdf"
-      }
+      },
+      "extras": [
+        {
+          "name": "Eidi",
+          "kind": "days",
+          "month": 3,
+          "day": 20,
+          "days": 60,
+          "periodMonths": 12,
+          "source": "https://kartaban.com/blog/salary/eidi/ (on the Single-Article Law on Workers' Eidi and Annual Reward)"
+        }
+      ]
+    },
+    "benefit": {
+      "name": "Moqarrari-ye bime-ye bikari",
+      "qualifyMonths": 6,
+      "withinMonths": 12,
+      "waitingDays": 0,
+      "quit": "none",
+      "cause": "none",
+      "source": "https://vakilik.com/laws/view/MTAwMjE (Article 7, Unemployment Insurance Law)",
+      "rate": 0.55,
+      "basisMonths": 3,
+      "min": 38367306.74538461,
+      "weeksByMonths": [
+        [
+          6,
+          26
+        ],
+        [
+          25,
+          52
+        ],
+        [
+          121,
+          78
+        ],
+        [
+          181,
+          112.66666666666667
+        ],
+        [
+          241,
+          156
+        ]
+      ]
     }
   },
   "JO": {
@@ -14685,15 +17064,29 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
     },
     "benefit": {
       "name": "Unemployment insurance",
-      "rate": 0.75,
-      "basisMonths": 12,
-      "weeks": 13,
       "qualifyMonths": 36,
       "withinMonths": 36,
       "waitingDays": 0,
       "quit": "none",
       "cause": "none",
-      "source": "https://www.jordannews.jo/Section-33/Trade-Industry/Jordan-s-Social-Security-Corporation-Clarifies-Unemployment-Benefit-Eligibility-and-Mechanism-41992"
+      "source": "https://www.jordannews.jo/Section-33/Trade-Industry/Jordan-s-Social-Security-Corporation-Clarifies-Unemployment-Benefit-Eligibility-and-Mechanism-41992",
+      "rate": 0.75,
+      "basisMonths": 1,
+      "rates": [
+        [
+          1,
+          0.75
+        ],
+        [
+          5,
+          0.65
+        ],
+        [
+          10,
+          0.55
+        ]
+      ],
+      "weeks": 13
     }
   },
   "KW": {
@@ -14764,6 +17157,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
     }
   },
   "LB": {
+    "noBenefit": {
+      "name": "Lebanon",
+      "source": "https://www.nrc.no/globalassets/pdf/guidelines/guide-to-employment-rights/lebanon-employment-rights-guide---english.pdf"
+    },
     "law": {
       "overtime": {
         "week": 48,
@@ -14883,6 +17280,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         "minHours": 0,
         "source": "https://learningpartnership.org/sites/default/files/resources/pdfs/Libya-Labor-Law-2010-English.pdf"
       }
+    },
+    "noBenefit": {
+      "name": "Libya",
+      "source": "ISSA Country profile: Libya (policies as of 1 July 2022), Wayback copy https://web.archive.org/web/2025id_/https://www.issa.int/sites/default/files/documents/2024-07/Libya.pdf"
     }
   },
   "MA": {
@@ -14955,17 +17356,23 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
       }
     },
     "benefit": {
-      "name": "Indemnité pour perte d'emploi",
-      "rate": 0.7,
-      "basisMonths": 36,
-      "max": 692,
-      "weeks": 26,
-      "qualifyMonths": 0,
+      "name": "Indemnité pour perte d’emploi",
+      "qualifyMonths": 30,
       "withinMonths": 36,
       "waitingDays": 0,
       "quit": "none",
       "cause": "none",
-      "source": "https://www.ifacadvice.net/2025/05/21/indemnite-pour-perte-demploi-ipe-au-maroc/"
+      "source": "https://www.demarchesmaroc.com/indemnite-perte-emploi/",
+      "rate": 0.7,
+      "basisMonths": 36,
+      "max": 789.8584615384615,
+      "weeks": 26,
+      "also": [
+        {
+          "months": 10,
+          "withinMonths": 12
+        }
+      ]
     }
   },
   "OM": {
@@ -15029,20 +17436,24 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
       }
     },
     "benefit": {
-      "name": "Employment security insurance branch",
-      "rate": 0.6,
-      "basisMonths": 24,
-      "min": 27,
-      "weeks": 26,
-      "qualifyMonths": 0,
-      "withinMonths": 12,
+      "name": "Employment Security Scheme",
+      "qualifyMonths": 12,
+      "withinMonths": 36,
       "waitingDays": 0,
       "quit": "none",
       "cause": "none",
-      "source": "https://decree.om/2023/rd20230052/"
+      "source": "https://www.ilo.org/resource/article/far-reaching-reforms-oman-set-new-benchmark-social-protection-region (Omani workers only, 60%, 6 months)",
+      "rate": 0.6,
+      "basisMonths": 24,
+      "min": 26.53846153846154,
+      "weeks": 26
     }
   },
   "PS": {
+    "noBenefit": {
+      "name": "Palestinian Territories",
+      "source": "https://mas.ps/cached_uploads/download/2023/05/04/evaluation-of-social-protection-study-eng-1683200470.pdf"
+    },
     "law": {
       "overtime": {
         "week": 45,
@@ -15088,6 +17499,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
     }
   },
   "QA": {
+    "noBenefit": {
+      "name": "Qatar",
+      "source": "no scheme was found by the research of 2026-09-26"
+    },
     "law": {
       "overtime": {
         "week": 48,
@@ -15276,6 +17691,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         ],
         "source": "https://watchlist.org/wp-content/uploads/labour-law-no.-17-of-2010.pdf"
       }
+    },
+    "noBenefit": {
+      "name": "Syria",
+      "source": "SSA SSPTW Asia 2019 Syria (Wayback) https://web.archive.org/web/2025/https://www.ssa.gov/policy/docs/progdesc/ssptw/2018-2019/asia/syria.html"
     }
   },
   "TN": {
@@ -15322,6 +17741,19 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         "maxWeeks": 13,
         "source": "http://www.vertic.org/media/National%20Legislation/Tunisia/TN_Code_du_Travail.pdf"
       }
+    },
+    "benefit": {
+      "name": "Aide aux travailleurs licenciés pour raisons économiques ou technologiques",
+      "qualifyMonths": 36,
+      "withinMonths": 36,
+      "waitingDays": 30,
+      "quit": "none",
+      "cause": "none",
+      "source": "https://www.cleiss.fr/docs/regimes/regime_tunisie_salaries.html (scheme rules, per the earlier pass)",
+      "rate": 1,
+      "basisMonths": 1,
+      "max": 128.01600000000002,
+      "weeks": 52
     }
   },
   "YE": {
@@ -15382,6 +17814,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         "minHours": 0,
         "source": "http://menarights.org/sites/default/files/2016-12/YMN_LabourLaw_EN_0.pdf"
       }
+    },
+    "noBenefit": {
+      "name": "Yemen",
+      "source": "SSA SSPTW Asia 2019 Yemen (Wayback) https://web.archive.org/web/2025/https://www.ssa.gov/policy/docs/progdesc/ssptw/2018-2019/asia/yemen.html"
     }
   },
   "DZ": {
@@ -15410,10 +17846,44 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         "paidBy": "state",
         "source": "https://www.cleiss.fr/docs/regimes/regime_algerie_salaries.html"
       }
+    },
+    "benefit": {
+      "name": "Assurance chômage",
+      "qualifyMonths": 36,
+      "withinMonths": 36,
+      "waitingDays": 60,
+      "quit": "none",
+      "cause": "none",
+      "source": "https://www.cleiss.fr/docs/regimes/regime_algerie_salaries.html",
+      "rate": 1,
+      "basisMonths": 12,
+      "withMinimum": 5538.461538461538,
+      "rates": [
+        [
+          1,
+          1
+        ],
+        [
+          14,
+          0.8
+        ],
+        [
+          27,
+          0.6
+        ],
+        [
+          40,
+          0.5
+        ]
+      ],
+      "min": 4153.846153846154,
+      "max": 16615.384615384617,
+      "weeks": 52
     }
   },
   "EH": {
-    "follows": "MA"
+    "follows": "MA",
+    "benefitOf": "MA"
   },
   "GP": {
     "follows": "FR",
@@ -15501,7 +17971,42 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         "weeksAYear": 2,
         "maxWeeks": 39,
         "source": "https://www.littler.com/news-analysis/asap/puerto-rico-approves-major-reform-its-employment-laws"
-      }
+      },
+      "extras": [
+        {
+          "name": "Bono de Navidad, private sector",
+          "kind": "shareOfYear",
+          "month": 12,
+          "day": 15,
+          "share": 0.02,
+          "cap": 600,
+          "minHours": 1350,
+          "source": "https://ayudalegalpr.org/resource/gua-rpida-sobre-el-bono-de-navidad"
+        }
+      ]
+    },
+    "benefit": {
+      "name": "Seguro por Desempleo",
+      "qualifyMonths": 6,
+      "withinMonths": 15,
+      "waitingDays": 7,
+      "quit": "none",
+      "cause": "none",
+      "source": "US DOL ETA, Significant Provisions of State UI Laws, effective January 2026 (Wayback copy of https://oui.doleta.gov/unemploy/content/sigpros/2020-2029/January2026.pdf); the Secretary’s table (Reglamento 1223) isn’t published: SLATE’s estimate takes the fraction on a straight line between the DOL’s two anchors, $60 at $660 of high-quarter wages and $240 at $6,240",
+      "quartersSlide": {
+        "top": 1,
+        "low": [
+          660,
+          0.09090909090909091
+        ],
+        "high": [
+          6240,
+          0.038461538461538464
+        ]
+      },
+      "min": 60,
+      "max": 240,
+      "weeks": 26
     }
   },
   "VI": {
@@ -15513,10 +18018,30 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         "extra": 0.5,
         "source": "https://www.vidol.gov/employee-rights/"
       }
+    },
+    "benefit": {
+      "name": "Virgin Islands Unemployment Insurance",
+      "qualifyMonths": 0,
+      "withinMonths": 15,
+      "waitingDays": 7,
+      "quit": "none",
+      "cause": "none",
+      "source": "US DOL ETA, Significant Provisions of State UI Laws, effective January 2026 (Wayback copy of https://oui.doleta.gov/unemploy/content/sigpros/2020-2029/January2026.pdf)",
+      "quarters": {
+        "top": 1,
+        "factor": 0.0625
+      },
+      "min": 33,
+      "max": 648,
+      "weeks": 16
     }
   },
   "GU": {
     "follows": "US",
+    "noBenefit": {
+      "name": "Guam",
+      "source": "https://dol.guam.gov/unemployment/"
+    },
     "law": {
       "overtime": {
         "week": 40,
@@ -15527,6 +18052,10 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
   },
   "AS": {
     "follows": "US",
+    "noBenefit": {
+      "name": "American Samoa",
+      "source": "https://oui.doleta.gov/unemploy/content/sigpros/2020-2029/January2026.pdf"
+    },
     "law": {
       "overtime": {
         "week": 40,
@@ -15537,12 +18066,22 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
   },
   "MP": {
     "follows": "US",
+    "noBenefit": {
+      "name": "Northern Mariana Islands",
+      "source": "https://www.islapublic.org/news/2026-08-30/cnmi-awarded-10-1m-for-disaster-unemployment-assistance"
+    },
     "law": {
       "overtime": {
         "week": 40,
         "extra": 0.5,
         "source": "https://www.dol.gov/sites/dolgov/files/WHD/legacy/files/cnmi.pdf"
       }
+    }
+  },
+  "FK": {
+    "noBenefit": {
+      "name": "Falkland Islands",
+      "source": "https://falklands.gov.fk/finance/financial-assistance/sources-of-financial-assistance"
     }
   }
 };

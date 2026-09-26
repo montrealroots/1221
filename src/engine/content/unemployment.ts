@@ -26,7 +26,12 @@ export type WorkRecord = readonly { at: Instant; days: number; hours: number; gr
  * What quitting, or being let go for cause, does to a claim: none paid, or
  * paid after so many weeks, and for a share fewer weeks (Germany's Sperrzeit).
  */
-export type Bar = 'none' | { weeks: number; cut?: number };
+/**
+ * What quitting or cause does to a claim: nothing paid, or weeks of delay,
+ * with a share of the weeks cut (Germany's quarter), or paid at a lower rate
+ * for fewer weeks (Thailand's 30% for 90 days to somebody who resigned).
+ */
+export type Bar = 'none' | { weeks: number; cut?: number; rate?: number; forWeeks?: number };
 
 /** Who's claiming: their age, when the job ended, and why. */
 export interface ClaimContext {
@@ -137,6 +142,9 @@ interface StateRules {
   /** Where a state's formula is more than that (`stateWeekly`). */
   weekly?: (record: WorkRecord, at: Instant) => number;
   waitingDays?: number;
+  /** A state's own penalties (Colorado's ten weeks), where not the common one. */
+  quit?: Bar;
+  cause?: Bar;
   min?: number;
   max: number;
   weeks: number;
@@ -149,7 +157,7 @@ interface StateRules {
 
 function usState(o: StateRules): Benefit {
   return {
-    name: o.name, waitingDays: o.waitingDays ?? 7, every: 7, quit: QUIT.US, cause: CAUSE.US,
+    name: o.name, waitingDays: o.waitingDays ?? 7, every: 7, quit: o.quit ?? QUIT.US, cause: o.cause ?? CAUSE.US,
     qualifies: (record, ctx) => o.qualify(baseQuarters(record, ctx.at), baseHours(record, ctx.at)),
     basis: (record, ctx) => {
       const q = baseQuarters(record, ctx.at);
@@ -467,35 +475,78 @@ function ei(rate: number): Benefit {
 }
 
 /**
- * A country's benefit from the labor-law pass (`content/jurisdictions.ts`):
- * a share of the average week over the months before the job ended, of the
- * net where the law says net (the payslip's deductions at that pay taken
- * off), within its bounds; or a flat week. It needs the months of work the
- * law asks for in its window, and it's paid monthly.
+ * A country's benefit from the labor-law pass and the finishing pass
+ * (`content/jurisdictions.ts`). The amount is one of: a share of the
+ * average week over the months before the job ended (of the net where the
+ * law says net; a lower share above a threshold, as Italy's; the rate by the
+ * months insured, as Mongolia's; with the minimum wage averaged in, as
+ * Algeria's); the US-style best quarters (the Virgin Islands'); or a flat
+ * week, by the month where it steps (Singapore's, capped at the past pay).
+ * It then steps down by the week (a new rate from a week on, or Italy's 3%
+ * a month), within its bounds. It runs a number of weeks, a share of the
+ * weeks worked (Italy's half, South Africa's fifth), or by the months
+ * insured (Iran's table); and needs the months of work the law asks, every
+ * other window it names, or the income it names (Norway's). It's paid monthly.
  */
 function worldBenefit(iso: string, b: NonNullable<WorldLaw['benefit']>): Benefit {
+  const monthsWorked = (record: WorkRecord, at: Instant, months = 36) => monthsIn(within(record, at, months * 30.4375));
+  const lookup = (table: readonly (readonly [number, number])[], x: number) => table.reduce((v, [from, value]) => (x >= from ? value : v), table[0]?.[1] ?? 0);
+  const factor = (week: number) => {
+    const first = b.rates?.[0]?.[1] ?? 1;
+    let out = b.rates ? lookup(b.rates, week) / first : 1;
+    if (b.decline && week >= b.decline.fromWeek) out *= (1 - b.decline.perMonth) ** (Math.floor((week - b.decline.fromWeek) / (52 / 12)) + 1);
+    return out;
+  };
   return {
     name: b.name, waitingDays: b.waitingDays, every: 30, quit: b.quit, cause: b.cause,
     qualifies: (record, ctx) => {
-      if (b.qualifyMonths <= 0) return undefined;
-      const months = monthsIn(within(record, ctx.at, b.withinMonths * 30.4375));
-      return months < b.qualifyMonths ? `${b.name} needs ${b.qualifyMonths} months of work in the last ${b.withinMonths}; SLATE has ${Math.floor(months)} on record.` : undefined;
+      const short = [{ months: b.qualifyMonths, withinMonths: b.withinMonths }, ...(b.also ?? [])]
+        .find((t) => t.months > 0 && monthsWorked(record, ctx.at, t.withinMonths) < t.months);
+      if (short) return `${b.name} needs ${t(short.months)} of work in the last ${t(short.withinMonths)}; SLATE has ${Math.floor(monthsWorked(record, ctx.at, short.withinMonths))} on record.`;
+      if (b.qualifyIncome && !b.qualifyIncome.some((q) => total(within(record, ctx.at, q.withinMonths * 30.4375), 'gross') >= q.amount)) {
+        return `${b.name} needs earnings of ${b.qualifyIncome.map((q) => `${q.amount.toLocaleString('en-US')} in the last ${t(q.withinMonths)}`).join(', or ')}.`;
+      }
+      return undefined;
     },
     basis: (record, ctx) => {
-      if (b.flat !== undefined) return b.flat;
       const week = averageWeek(within(record, ctx.at, (b.basisMonths ?? 12) * 30.4375));
-      let net = week;
+      if (b.flats) return b.capAtPastWeek ? week : Number.POSITIVE_INFINITY;
+      if (b.flat !== undefined) return clampTo(b.capAtPastWeek ? Math.min(b.flat, week) : b.flat, b.min ?? 0, b.max);
+      if (b.quarters) return clampTo(baseQuarters(record, ctx.at).slice(0, b.quarters.top).reduce((x, y) => x + y, 0) * b.quarters.factor, b.min ?? 0, b.max);
+      if (b.quartersSlide) {
+        const { top, low, high } = b.quartersSlide;
+        const hq = baseQuarters(record, ctx.at).slice(0, top).reduce((x, y) => x + y, 0);
+        const along = clampTo((hq - low[0]) / (high[0] - low[0]), 0, 1);
+        return clampTo(hq * (low[1] + along * (high[1] - low[1])), b.min ?? 0, b.max);
+      }
+      let pay = week;
       if (b.ofNet && week > 0) {
         const year = payrollYear(iso, Math.round(week * 52 * 100), { path: [iso], at: ctx.at, age: ctx.age });
-        net = week * (1 - year.lines.reduce((sum, one) => sum + one.amount, 0) / (week * 52 * 100));
+        pay = week * (1 - year.lines.reduce((sum, one) => sum + one.amount, 0) / (week * 52 * 100));
       }
-      return clampTo(net * b.rate!, b.min ?? 0, b.max);
+      if (b.withMinimum !== undefined) pay = (pay + b.withMinimum) / 2;
+      const rate = b.rateByMonths ? lookup(b.rateByMonths, monthsWorked(record, ctx.at)) : b.rate ?? 0;
+      const amount = b.threshold !== undefined ? Math.min(pay, b.threshold) * rate + Math.max(0, pay - b.threshold) * (b.rateAbove ?? rate) : pay * rate;
+      return clampTo(amount, b.min ?? 0, b.max);
     },
-    amount: same,
-    weeks: () => b.weeks,
+    amount: (basis, week, ctx) => {
+      if (b.assetLimit !== undefined && ctx.savings > b.assetLimit) return 0;
+      if (b.flats) return Math.min(lookup(b.flats, week), basis);
+      return clampTo(basis * factor(week), b.min ?? 0, b.max);
+    },
+    // With no end in law (Hong Kong's CSSA, Greenland's), it runs as long as they're out of work.
+    ...(b.weeks !== undefined || b.weeksShare || b.weeksByMonths ? {
+      weeks: (record: WorkRecord, ctx: ClaimContext) => {
+        if (b.weeksShare) return Math.min(b.weeksShare.max, weeksIn(within(record, ctx.at, b.weeksShare.withinMonths * 30.4375)) * b.weeksShare.share);
+        if (b.weeksByMonths) return lookup(b.weeksByMonths, monthsWorked(record, ctx.at));
+        return b.weeks!;
+      },
+    } : {}),
     source: b.source,
   };
 }
+/** Months as the law says them: "12 months", or years where they're whole. */
+const t = (months: number) => (months % 12 === 0 && months >= 24 ? `${months / 12} years` : `${Math.round(months * 10) / 10} months`);
 
 const WORLD_BENEFITS: Readonly<Record<string, Benefit>> = Object.fromEntries(
   Object.entries(WORLD_LAW).flatMap(([iso, w]) => (w.benefit ? [[iso, worldBenefit(iso, w.benefit)]] : [])),
@@ -544,7 +595,7 @@ export const BENEFITS: Readonly<Record<string, Benefit>> = {
     const qualify = stateQualify(st.name, ui, weekly);
     return [[code, {
       ...usState({
-        name: ui.name, top: ui.top === 4 ? 4 : ui.top === 2 ? 2 : 1, factor: ui.factor, weekly, waitingDays: ui.waitingDays,
+        name: ui.name, top: ui.top === 4 ? 4 : ui.top === 2 ? 2 : 1, factor: ui.factor, weekly, waitingDays: ui.waitingDays, quit: ui.quit, cause: ui.cause,
         min: ui.min, max: ui.max, weeks: ui.weeks, ...(ui.share !== undefined ? { share: ui.share } : {}),
         qualify: () => undefined, source: ui.source,
       }),
@@ -741,6 +792,13 @@ export const BENEFITS: Readonly<Record<string, Benefit>> = {
     source: 'DSS Social Security Guide, 21 September 2026: JobSeeker $824.90 a fortnight single, Youth Allowance $677.20 at 18 to 21 away from home; a week for each $500 of savings over $5,000 from $5,500, to 13, then an ordinary week; nothing over $600,000 of assets without a home; no time limit',
   },
 };
+
+/** Where the law has no unemployment benefit, or one SLATE couldn't size: the place's name and what says so. */
+export function noBenefitAt(path: readonly string[]): { name: string; source: string; unsized?: true } | undefined {
+  const w = WORLD_LAW[path[0] ?? ''];
+  if (benefitAt(path)) return undefined;
+  return w?.noBenefit ?? (w?.unsized ? { ...w.unsized, unsized: true } : undefined);
+}
 
 /** The benefit where a job was: a state's or region's own, then the country's, then the one whose law a territory applies. */
 export function benefitAt(path: readonly string[]): Benefit | undefined {

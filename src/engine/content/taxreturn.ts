@@ -31,6 +31,8 @@ export interface YearFigures {
   age: number;
   /** Every jurisdiction the work was in, country first. */
   path: readonly string[];
+  /** The town, for its own taxes (a US town's wage tax). */
+  cityId?: string;
   /** A moment in the tax year, for its rates. */
   at: Instant;
   weeklyHours?: number;
@@ -102,7 +104,7 @@ const allBenefits = (y: YearFigures) => y.benefits.reduce((sum, one) => sum + on
 /** The year's tax by payslip line, on a year's income. */
 function taxLines(iso: string, income: number, y: YearFigures): Record<string, number> {
   const out: Record<string, number> = {};
-  const year = payrollYear(iso, Math.round(income * 100), { path: y.path, at: y.at, age: y.age, ...(y.weeklyHours !== undefined ? { weeklyHours: y.weeklyHours } : {}) });
+  const year = payrollYear(iso, Math.round(income * 100), { path: y.path, ...(y.cityId ? { cityId: y.cityId } : {}), settling: true, at: y.at, age: y.age, ...(y.weeklyHours !== undefined ? { weeklyHours: y.weeklyHours } : {}) });
   for (const line of year.lines) if (line.kind === 'tax') out[line.name] = (out[line.name] ?? 0) + line.amount / 100;
   return out;
 }

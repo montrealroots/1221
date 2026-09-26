@@ -135,6 +135,14 @@ export interface LaborLaw {
     source: string;
   };
   extras?: readonly Extra[];
+  /** A raise the law gives every year with the employer (Egypt's 3% periodic increment). */
+  annualRaise?: { share: number; source: string };
+  /**
+   * A premium an hour for years with the employer, as a share of the monthly
+   * minimum wage (Senegal's and Mauritania's): so much after so many years,
+   * and so much more for each year after.
+   */
+  seniority?: { afterYears: number; share: number; perYear: number; monthlyMinimum: number; source: string };
   /** Korea's weekly paid rest day, for 15 hours a week or more. */
   weeklyRestDay?: { minHours: number; source: string };
   /** Korea's severance: so many days' pay a year worked, after a year. */
@@ -153,13 +161,36 @@ export interface LaborLaw {
   regions?: Readonly<Record<string, Omit<LaborLaw, 'regions'>>>;
 }
 
+/**
+ * An extra payment the law owes. Each is earned over a period before it's
+ * paid, the months of `periodMonths` where the law sets one (Colombia's
+ * prima by the half year), and paid in part for part of it.
+ */
 export type Extra =
   /** A fixed sum on a date, prorated by the job's share of full time (Iceland's bonuses). */
-  | { kind: 'fixed'; name: string; month: number; day: number; amount: number; fullTimeHours: number; minWeeks?: number; source: string }
+  | { kind: 'fixed'; name: string; month: number; day: number; amount: number; fullTimeHours: number; minWeeks?: number; periodMonths?: number; source: string }
   /** So many days' pay on a date, prorated by the year worked (Mexico's aguinaldo). */
-  | { kind: 'days'; name: string; month: number; day: number; days: number; source: string }
-  /** A month's pay, the average of the months before, in each of these months (Spain's pagas extraordinarias). */
-  | { kind: 'month'; name: string; months: readonly number[]; source: string };
+  | { kind: 'days'; name: string; month: number; day: number; days: number; periodMonths?: number; source: string }
+  /**
+   * A month's pay in each of these months, on the 15th or the day given (Spain's pagas extraordinarias):
+   * the share of a month each pays, where it's split (Brazil's 13º in halves), and earned over the half
+   * year before it, as Spain's, or over the calendar year, as a thirteenth month is.
+   */
+  | {
+    kind: 'month'; name: string; months: readonly number[]; shares?: readonly number[]; day?: number; over?: 'half' | 'year'; periodMonths?: number;
+    /** Only after so many months with the employer (the Seychelles' year). */
+    minMonths?: number;
+    /** Paid so many days before a holiday that moves (Indonesia's THR before Eid al-Fitr, Greece's Easter bonus), by its English name. */
+    beforeHoliday?: { name: string; days: number };
+    source: string;
+  }
+  /**
+   * A share of the pay of the months before it, on a date or on each of
+   * several (the Netherlands' 8% vakantiegeld; Argentina's twelfth of each
+   * half year), to a cap in the country's money, after so many months or
+   * hours where the law asks (Puerto Rico's 1,350).
+   */
+  | { kind: 'shareOfYear'; name: string; month: number; day: number; months?: readonly number[]; share: number; windowMonths?: number; cap?: number; minMonths?: number; minHours?: number; source: string };
 
 /**
  * Redundancy pay, in weeks of pay: so many for each year with the employer,
@@ -400,9 +431,11 @@ export function laborAt(path: readonly string[]): LaborLaw | undefined {
     const leaveDays = WORLD_WORK[path[0] ?? '']?.leaveDays;
     const weeks = leaveDays ? leaveDays.days / 5 : 0;
     const leave: LaborLaw | undefined = leaveDays ? { leave: { accrual: weeks / (52 - weeks), paidOut: true, source: `${leaveDays.days} days a year; ${leaveDays.source}` } } : undefined;
-    if (!followed && !world?.law && !leave) return undefined;
+    if (!followed && !world?.law && !leave && !world?.leaveLoading) return undefined;
     const { regions: _regions, ...base } = followed ?? {};
-    return { ...leave, ...base, ...world?.law };
+    const law: LaborLaw = { ...leave, ...base, ...world?.law };
+    // A loading on the leave, whichever research gave the leave.
+    return world?.leaveLoading && law.leave ? { ...law, leave: { ...law.leave, loading: world.leaveLoading.share, source: `${law.leave.source}; ${world.leaveLoading.source}` } } : law;
   }
   // A province or state the thirteen's research didn't write out comes from
   // the labor-law pass (`content/jurisdictions.ts`).

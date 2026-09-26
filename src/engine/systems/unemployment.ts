@@ -18,7 +18,7 @@ import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
 import { CITIES, jurisdictionPath } from '../content/geography';
-import { benefitAt, type Benefit, type ClaimContext, type WorkRecord } from '../content/unemployment';
+import { benefitAt, noBenefitAt, type Benefit, type ClaimContext, type WorkRecord } from '../content/unemployment';
 import { exchange } from '../content/currency';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { MS_DAY, type Instant } from '../core/time';
@@ -117,6 +117,8 @@ export function claimFor(sim: Simulation, person: Person): Offer | { refused: st
   const where = left?.cityId ?? person.job?.cityId ?? person.currentLocationId;
   if (!CITIES.get(where)) return { refused: 'SLATE doesn’t know the law there.' };
   const first = benefitAt(jurisdictionPath(where));
+  const none = noBenefitAt(jurisdictionPath(where));
+  if (none) return { refused: none.unsized ? `${none.name} pays an unemployment benefit whose amount SLATE couldn’t find (${none.source}).` : `${none.name} has no unemployment benefit (${none.source}).` };
   if (!first) return { refused: 'SLATE has no unemployment benefit on record where you last worked.' };
   const { currency } = countryAt(where);
   const record = recordIn(sim, person, currency);
@@ -139,10 +141,12 @@ export function claimFor(sim: Simulation, person: Person): Offer | { refused: st
       refused ||= ctx.why === 'quit' ? `${benefit.name} isn’t paid to somebody who quit without good cause.` : `${benefit.name} isn’t paid to somebody let go for missing shifts.`;
       continue;
     }
-    const basis = benefit.basis(record, ctx);
+    // A lower rate for quitting pays on a lower basis.
+    const basis = benefit.basis(record, ctx) * (bar.rate ?? 1);
     const share = benefit.share?.(record, ctx) ?? 1;
     const full = benefit.weeks?.(record, ctx, basis);
-    const weeks = full !== undefined && 'cut' in bar && bar.cut ? full * (1 - bar.cut) : full;
+    const cut = full !== undefined && bar.cut ? full * (1 - bar.cut) : full;
+    const weeks = bar.forWeeks !== undefined ? Math.min(cut ?? bar.forWeeks, bar.forWeeks) : cut;
     if (weeks !== undefined && weeks <= 0) {
       refused ||= `Your record doesn’t reach a week of ${benefit.name}.`;
       continue;

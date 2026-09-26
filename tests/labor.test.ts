@@ -194,7 +194,7 @@ describe('the law’s extra payments, on their dates', () => {
     sim.advanceTo(local(sim, 2026, 12, 21, 9));
     const paid = sim.universe.transactions.some((t) => t.category === 'salary' && t.postings.length > 0);
     expect(paid).toBe(true);
-    expect(sim.player.job!.extrasPaid).toContain('Aguinaldo-2026');
+    expect(sim.player.job!.extrasPaid).toContain('Aguinaldo-2026-12');
   });
 
   it('pays Iceland’s desemberuppbót on 15 December, by the job’s share of full time', () => {

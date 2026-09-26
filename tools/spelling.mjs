@@ -81,6 +81,8 @@ const SPELLINGS = {
  * owner's own signage, not guessing.
  */
 const REAL_NAMES = [
+  // A Pennsylvania borough, in the local tax register.
+  'Centre Hall',
   // Jewelers who spell themselves that way.
   'Kalyan Jewellers', 'Chow Tai Fook Jewellery', 'PC Jeweller', 'Joyalukkas',
   'Silverbend Jewellers', 'Halliwell Goldsmiths',
