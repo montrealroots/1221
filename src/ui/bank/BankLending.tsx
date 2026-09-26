@@ -2,7 +2,9 @@
  * SLATE — the bank's lending and the ways out of it, on the bank screen.
  *
  * The overdraft the bank runs and, where it arranges one, the limit and the
- * rate the record earns; a term deposit, locked for its term; a personal
+ * rate the record earns; a term deposit, locked for its term and ended the
+ * bank's way (until 2026-09-26 this said one was always paid out and never
+ * broken early, which Module 7 had made untrue); a personal
  * loan, offered at the rate and payment the bank would set before it is
  * taken, and paid off whenever there's the money; and a move to another
  * bank where you live (`systems/lending.ts`). What is SLATE's estimate
@@ -17,6 +19,8 @@ import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { formatDate } from '@/engine/core/time';
 import type { Bank } from '@/engine/content/banks';
 import { SWITCHING } from '@/engine/content/banks-lending';
+import { ACCOUNT_LIFE } from '@/engine/content/accountlife';
+import { END_WORDS } from '@/engine/systems/accountlife';
 import { banksFor, inSaveMoney, isoOf } from '@/engine/systems/banking';
 import {
   ESTIMATE, LOAN_DUE_KIND, SWITCH_KIND, collectionsOf, lendingOf, loanOf, loanOffer, overdraftOffer, overdraftRoom, termsOf,
@@ -26,7 +30,10 @@ import {
 const cents = (typed: string) => Math.round(Number(typed.replace(/[^\d.]/g, '')) * 100);
 const pct = (rate: number) => `${Number((rate * 100).toFixed(2))}%`;
 
-export function BankLending({ bank }: { bank: Bank }) {
+/** The bank screen's parts this shows: what's borrowed, what's put away for a term, and moving banks. */
+export type LendingPart = 'borrowing' | 'term' | 'switch';
+
+export function BankLending({ bank, show }: { bank: Bank; show: readonly LendingPart[] }) {
   const { sim, run, toast } = useGame();
   const cur = saveCurrency(sim.universe);
   const money = (c: number) => formatMoney(c, cur, { cents: false });
@@ -56,8 +63,9 @@ export function BankLending({ bank }: { bank: Bank }) {
 
   return (
     <div className="grid grid-2" style={{ margin: 'var(--s5) 0' }}>
+      {show.includes('borrowing') && (
       <Panel title="Overdraft" subtitle={od ? undefined : 'None on record'}>
-        {!od && <p className="small">{bank.name} has no overdraft terms SLATE found, so the account never goes below zero here: what it can’t pay comes off savings, then the card.</p>}
+        {!od && <p className="small">{bank.name} has no overdraft terms SLATE found, so the account never goes below zero here: a payment it can’t cover comes from savings if you’ve linked it, then goes on the card, and otherwise is declined or returned unpaid.</p>}
         {od?.kind === 'per_item' && (
           <p className="small">
             {bank.name} pays what the account can’t without an arrangement, and charges {formatMoney(inSaveMoney(sim, od.fee, bank.currency), cur)}
@@ -127,8 +135,8 @@ export function BankLending({ bank }: { bank: Bank }) {
                   <p className="xs dim" style={{ margin: 0 }}>
                     It would arrange {od.minLimit !== undefined ? `${money(offer.min)} to ` : 'up to '}{money(offer.max)} at {pct(offer.rate)}: a month of your wages is SLATE’s estimate of what a bank allows.
                   </p>
-                  <div className="row gap-2">
-                    <input className="grow" type="text" inputMode="decimal" aria-label={`Overdraft Limit (${cur})`} value={limit} onChange={(e) => setLimit(e.target.value)} />
+                  <div className="field-act">
+                    <div className="field"><label htmlFor="od-limit">{`Overdraft Limit (${cur})`}</label><input id="od-limit" type="text" inputMode="decimal" value={limit} onChange={(e) => setLimit(e.target.value)} /></div>
                     <Gated feature="bank.arrange_overdraft" className="btn btn-sm" disabled={!limit}
                       onClick={() => { if (run('bank.arrange_overdraft', { limit: cents(limit) }).ok) { toast('Overdraft arranged.', 'positive'); setLimit(''); } }}>
                       Arrange It
@@ -147,13 +155,15 @@ export function BankLending({ bank }: { bank: Bank }) {
         )}
         <p className="xs dim" style={{ marginTop: 'var(--s3)' }}>{od ? `Source: ${od.source}.` : bank.overdraft ?? ''}</p>
       </Panel>
+      )}
 
+      {show.includes('term') && (
       <Panel title={lending.term?.called ?? 'Term Deposit'} subtitle={lending.term ? `${lending.term.months} months at ${pct(lending.term.rate)}` : 'None on record'}>
         {!lending.term && <p className="small">{bank.name} publishes no term deposit rate SLATE found.</p>}
         {lending.term && (
           <div className="col gap-3">
             <p className="small" style={{ margin: 0 }}>
-              Locked for {lending.term.months} months at a fixed {pct(lending.term.rate)}, and paid out with its interest, less any tax, into {current?.name ?? 'your current account'} at the end. SLATE doesn’t break one early.
+              Locked for {lending.term.months} months at a fixed {pct(lending.term.rate)}. At its end it {END_WORDS[ACCOUNT_LIFE[bank.id]?.atEnd ?? 'paid_out']}, unless you choose another way the bank allows. Breaking one early, where the bank lets you, is under Your Accounts Over Time.
               {lending.term.minAmount !== undefined ? ` It takes ${formatMoney(inSaveMoney(sim, lending.term.minAmount, bank.currency), cur, { cents: false })} or more.` : ''}
               {lending.term.market ? ' The rate is the market’s average: the bank publishes none of its own.' : ''}
             </p>
@@ -162,8 +172,8 @@ export function BankLending({ bank }: { bank: Bank }) {
                 {money(t.balance)} at {pct(t.fixedRate ?? 0)}, ends {formatDate(t.maturesAt ?? sim.now, sim.zone)}.
               </p>
             ))}
-            <div className="row gap-2">
-              <input className="grow" type="text" inputMode="decimal" aria-label={`Term Deposit Amount (${cur})`} value={deposit} onChange={(e) => setDeposit(e.target.value)} />
+            <div className="field-act">
+              <div className="field"><label htmlFor="term-amount">{`Term Deposit Amount (${cur})`}</label><input id="term-amount" type="text" inputMode="decimal" value={deposit} onChange={(e) => setDeposit(e.target.value)} /></div>
               <Gated feature="bank.open_term" className="btn btn-sm" disabled={!deposit}
                 onClick={() => { if (run('bank.open_term', { amount: cents(deposit) }).ok) { toast('Put away.', 'positive'); setDeposit(''); } }}>
                 Put It Away
@@ -173,15 +183,16 @@ export function BankLending({ bank }: { bank: Bank }) {
           </div>
         )}
       </Panel>
+      )}
 
-      {debt && (
+      {show.includes('borrowing') && debt && (
         <Panel title="In Collections" subtitle={`${money(-debt.balance)} owed`}>
           <div className="col gap-3">
             <p className="small" style={{ margin: 0 }}>
               {debt.institution} closed your account after it was overdrawn for {ESTIMATE.closeAfterDays} days, SLATE’s estimate of how long a bank lets one run, and charged off what it couldn’t recover. It’s on your record until it’s paid.
             </p>
-            <div className="row gap-2">
-              <input className="grow" type="text" inputMode="decimal" aria-label={`Pay Toward It (${cur})`} value={toCollections} onChange={(e) => setToCollections(e.target.value)} />
+            <div className="field-act">
+              <div className="field"><label htmlFor="collections-pay">{`Pay Toward It (${cur})`}</label><input id="collections-pay" type="text" inputMode="decimal" value={toCollections} onChange={(e) => setToCollections(e.target.value)} /></div>
               <Gated feature="bank.pay_collections" className="btn btn-sm" disabled={!toCollections}
                 onClick={() => { if (run('bank.pay_collections', { amount: cents(toCollections) }).ok) { toast('Paid.', 'positive'); setToCollections(''); } }}>
                 Pay It
@@ -191,6 +202,7 @@ export function BankLending({ bank }: { bank: Bank }) {
         </Panel>
       )}
 
+      {show.includes('borrowing') && (
       <Panel title="Personal Loan" subtitle={loan ? `${money(-loan.balance)} owed` : lending.loan ? undefined : 'None on record'}>
         {!lending.loan && !loan && <p className="small">{bank.name} publishes no personal loan rate SLATE found.</p>}
         {loan && (
@@ -214,13 +226,13 @@ export function BankLending({ bank }: { bank: Bank }) {
                 : lending.loan.to !== undefined ? `${pct(lending.loan.from)} to ${pct(lending.loan.to)} a year, by your record.` : `From ${pct(lending.loan.from)} a year.`}
               {' '}Repaid in equal monthly payments. A bank lends against wages paid in, and a payment may take up to {Math.round(ESTIMATE.loanShareOfPay * 100)}% of a month’s: SLATE’s estimate.
             </p>
-            <div className="row gap-2">
-              <input className="grow" type="text" inputMode="decimal" aria-label={`Loan Amount (${cur})`} value={borrow} onChange={(e) => setBorrow(e.target.value)} />
-              <select aria-label="Months" style={{ width: 'auto', flex: '0 0 auto' }} value={months} onChange={(e) => setMonths(e.target.value)}>
+            <div className="field-act">
+              <div className="field"><label htmlFor="loan-amount">{`Loan Amount (${cur})`}</label><input id="loan-amount" type="text" inputMode="decimal" value={borrow} onChange={(e) => setBorrow(e.target.value)} /></div>
+              <div className="field" style={{ flex: '0 0 auto' }}><label htmlFor="loan-months">Over</label><select id="loan-months" style={{ width: 'auto' }} value={months} onChange={(e) => setMonths(e.target.value)}>
                 {[12, 24, 36, 48, 60, 72, 84]
                   .filter((m) => m >= (lending.loan!.minMonths ?? ESTIMATE.loanMonths[0]) && m <= (lending.loan!.maxMonths ?? ESTIMATE.loanMonths[1]))
                   .map((m) => <option key={m} value={m}>{m} Months</option>)}
-              </select>
+              </select></div>
             </div>
             {quote && ('refused' in quote
               ? <p className="small muted" style={{ margin: 0 }}>{quote.refused}</p>
@@ -235,7 +247,9 @@ export function BankLending({ bank }: { bank: Bank }) {
           </div>
         )}
       </Panel>
+      )}
 
+      {show.includes('switch') && (
       <Panel title="Switch Bank" subtitle={switching ? `Under way, done ${formatDate(switching.at, sim.zone)}` : undefined}>
         {others.length === 0 ? <p className="small">No other bank where you live is on record.</p> : (
           <div className="col gap-3">
@@ -245,11 +259,11 @@ export function BankLending({ bank }: { bank: Bank }) {
                 : 'You open the new accounts and move the money yourself, the same day.'}
               {' '}An overdraft has to be cleared first. Term deposits and loans stay where they are.
             </p>
-            <div className="row gap-2">
-              <select className="grow" aria-label="Bank To Switch To" value={target} onChange={(e) => setTarget(e.target.value)}>
+            <div className="field-act">
+              <div className="field"><label htmlFor="switch-to">Switch To</label><select id="switch-to" value={target} onChange={(e) => setTarget(e.target.value)}>
                 {/* The dearest current account first, the cheapest last. */}
                 {[...others].sort((a, b) => (b.current.monthlyFee ?? 0) - (a.current.monthlyFee ?? 0)).map((b) => <option key={b.id} value={b.id}>{b.name}</option>)}
-              </select>
+              </select></div>
               <Gated feature="bank.switch" className="btn btn-sm" disabled={!!switching || !target}
                 onClick={() => { if (run('bank.switch', { bankId: target }).ok) toast('Switch started.', 'positive'); }}>
                 Switch
@@ -258,6 +272,7 @@ export function BankLending({ bank }: { bank: Bank }) {
           </div>
         )}
       </Panel>
+      )}
     </div>
   );
 }

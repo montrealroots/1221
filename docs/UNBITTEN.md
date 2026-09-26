@@ -181,6 +181,13 @@ part the tool cannot see.
   on debit card purchases is published by few of the 60 banks and isn't
   enforced; the daily ATM limit is. A card whose cash advance terms weren't
   found charges SLATE's estimate, 5% or $10 at the purchase rate, and says so.
+- **Some of the banks' research is kept and read by nothing.** Each
+  country's deposit guarantee, its central bank's rate, a sentence on how
+  money moves there, and the local names for its ways of paying came off
+  the bank's screen on 2026-09-26: no bank fails, no rate follows the
+  central bank's, and the sentences named ways of paying SLATE doesn't
+  have (Zelle, Interac, SPEI, money orders). They wait for what would read
+  them.
 - **Some of pending and holds isn't modeled.** The banks publish the most
   a hold lasts before it's released (CommBank's, NAB's and Westpac NZ's
   ten), not how soon a payment usually posts; SLATE posts one in two

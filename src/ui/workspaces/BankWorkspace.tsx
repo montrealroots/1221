@@ -5,7 +5,8 @@
  * the accounts by the names it sells them under, each account's number the
  * way the country writes it, what savings pays and what the current account
  * costs and how the fee is waived, and the guarantee that stands behind the
- * money if the bank fails. Money moves between the accounts here, and a
+ * money if the bank fails, in five tabs: accounts, cards, payments and
+ * cash, borrowing, and statements. Money moves between the accounts here, and a
  * savings account is opened or closed (`systems/banking.ts`). The credit
  * card is the bank's too, and is run here (`ui/bank/BankCard.tsx`); until
  * 2026-09-26 it was run from the Money panel and this screen left it out.
@@ -42,10 +43,10 @@ export function BankWorkspace() {
   const money = (cents: number) => formatMoney(cents, cur, { cents: false });
   const bank = useWorld((s) => bankOf(s, s.player));
   const accounts = useWorld((s) => bankAccountsOf(s, s.player));
-  const country = bank ? bankingIn(bank.iso) : undefined;
   const [from, setFrom] = useState<string>('');
   const [to, setTo] = useState<string>('');
   const [amount, setAmount] = useState('');
+  const [tab, setTab] = useState<BankTab>('accounts');
 
   if (!bank) {
     return <Empty title="No Bank" body="Your money isn’t held at a bank SLATE knows, so there’s nothing to show here." />;
@@ -68,21 +69,9 @@ export function BankWorkspace() {
     }
   };
 
-  return (
-    <>
-      <div className="page-head">
-        <div className="eyebrow">Your Bank</div>
-        <h1>{bank.name}</h1>
-        <p className="muted">
-          Where your money is kept.
-          {country?.guarantee && (country.guarantee.limit !== undefined && country.guarantee.currency && !country.guarantee.note
-            ? ` Up to ${formatMoney(country.guarantee.limit, country.guarantee.currency, { cents: false })} of it is guaranteed by the ${country.guarantee.scheme} if the bank fails.`
-            : ` It is guaranteed by the ${country.guarantee.scheme} if the bank fails: ${country.guarantee.note ?? 'the limit wasn’t found'}.`)}
-          {!country?.guarantee && ' No deposit guarantee stands behind it that SLATE found.'}
-          {country?.policy && ` The central bank’s ${country.policy.called} is ${(country.policy.rate * 100).toFixed(2)}%${country.policy.since ? `, since ${formatDate(Date.parse(`${country.policy.since}T12:00:00Z`), sim.zone)}` : ''}.`}
-        </p>
-      </div>
-
+  const panes: Record<BankTab, JSX.Element> = {
+    accounts: (
+      <>
       <div className="grid grid-2" style={{ marginBottom: 'var(--s5)' }}>
         {accounts.map((account) => {
           const product = productOf(account);
@@ -113,10 +102,11 @@ export function BankWorkspace() {
                 )}
                 {product && <p className="xs dim" style={{ margin: 0 }}>{product.estimate ? 'Estimate' : 'Source'}: {product.source}, {product.asOf}.{CONFIDENCE[bank.confidence ?? 'H']}</p>}
                 {account.kind === 'savings' && (
-                  <div>
+                  <div className="row gap-2" style={{ flexWrap: 'wrap', alignItems: 'center' }}>
                     <Gated feature="bank.close_savings" className="btn btn-sm btn-ghost" onClick={() => run('bank.close_savings', { accountId: account.id })}>
-                      Close It, Moving {money(account.balance)} To {current?.name ?? 'Your Current Account'}
+                      Close It
                     </Gated>
+                    <span className="xs dim">Its {money(account.balance)} moves to {current?.name ?? 'your current account'}.</span>
                   </div>
                 )}
               </div>
@@ -133,16 +123,6 @@ export function BankWorkspace() {
             </Gated>
           </Panel>
         )}
-      </div>
-
-      <div style={{ marginBottom: 'var(--s5)' }}>
-        <BankCard bankId={bank.id} />
-      </div>
-      <div style={{ marginBottom: 'var(--s5)' }}>
-        <BankCardOffers bankId={bank.id} />
-      </div>
-      <div style={{ marginBottom: 'var(--s5)' }}>
-        <BankSecurity bankId={bank.id} />
       </div>
 
       {accounts.length > 1 && (
@@ -172,26 +152,94 @@ export function BankWorkspace() {
         </Panel>
       )}
 
-      <BankPayments />
 
-      <div style={{ margin: 'var(--s5) 0' }}>
+        <BankLending bank={bank} show={['term', 'switch']} />
+        <div style={{ marginBottom: 'var(--s5)' }}>
+          <BankAccountLife bankId={bank.id} />
+        </div>
+        <OtherCharges bank={bank} />
+      </>
+    ),
+    cards: (
+      <div className="col gap-5">
+        <BankCard bankId={bank.id} />
+        <BankCardOffers bankId={bank.id} />
+        <BankSecurity bankId={bank.id} />
+      </div>
+    ),
+    payments: (
+      <div className="col gap-5">
+        <BankPayments />
         <BankCash bankId={bank.id} />
       </div>
+    ),
+    borrowing: <BankLending bank={bank} show={['borrowing']} />,
+    statements: <BankStatements />,
+  };
 
-      <BankLending bank={bank} />
-
-      <div style={{ margin: 'var(--s5) 0' }}>
-        <BankAccountLife bankId={bank.id} />
+  return (
+    <>
+      <div className="page-head">
+        <div className="eyebrow">Your Bank</div>
+        <h1>{bank.name}</h1>
+        {/* What's held here, now. Until 2026-09-26 this said what the deposit
+            guarantee covers and the central bank's rate, which nothing in play
+            reads: no bank fails, and no rate follows it. */}
+        <p className="muted">
+          {money(accounts.reduce((sum, a) => sum + a.balance, 0))} held here, in {accounts.length === 1 ? 'one account' : `${accounts.length} accounts`}.
+        </p>
       </div>
 
-      <BankStatements />
-
-      <OtherCharges bank={bank} />
-
-      {country?.howMoneyMoves && (
-        <p className="small muted" style={{ marginTop: 'var(--s5)' }}>{country.howMoneyMoves}</p>
-      )}
+      <BankTabs tab={tab} onTab={setTab} />
+      <div role="tabpanel" id={`bank-pane-${tab}`} aria-labelledby={`bank-tab-${tab}`} tabIndex={0} className="bank-pane">
+        {panes[tab]}
+      </div>
     </>
+  );
+}
+
+type BankTab = 'accounts' | 'cards' | 'payments' | 'borrowing' | 'statements';
+
+/** The screen's parts, each under its own tab. Until 2026-09-26 they ran down one page, fourteen to sixteen panels long. */
+const BANK_TABS: readonly { id: BankTab; label: string }[] = [
+  { id: 'accounts', label: 'Accounts' },
+  { id: 'cards', label: 'Cards' },
+  { id: 'payments', label: 'Payments And Cash' },
+  { id: 'borrowing', label: 'Borrowing' },
+  { id: 'statements', label: 'Statements' },
+];
+
+/** The tabs, as a tab list: arrows move between them, Home and End go to the ends. */
+function BankTabs({ tab, onTab }: { tab: BankTab; onTab: (tab: BankTab) => void }) {
+  const go = (index: number) => {
+    const next = BANK_TABS[(index + BANK_TABS.length) % BANK_TABS.length]!;
+    onTab(next.id);
+    document.getElementById(`bank-tab-${next.id}`)?.focus();
+  };
+  return (
+    <div className="tabs" role="tablist" aria-label="Your Bank">
+      {BANK_TABS.map((one, i) => (
+        <button
+          key={one.id}
+          id={`bank-tab-${one.id}`}
+          type="button"
+          role="tab"
+          className="tab"
+          aria-selected={one.id === tab}
+          aria-controls={`bank-pane-${one.id}`}
+          tabIndex={one.id === tab ? 0 : -1}
+          onClick={() => onTab(one.id)}
+          onKeyDown={(e) => {
+            if (e.key === 'ArrowRight') { e.preventDefault(); go(i + 1); }
+            else if (e.key === 'ArrowLeft') { e.preventDefault(); go(i - 1); }
+            else if (e.key === 'Home') { e.preventDefault(); go(0); }
+            else if (e.key === 'End') { e.preventDefault(); go(BANK_TABS.length - 1); }
+          }}
+        >
+          {one.label}
+        </button>
+      ))}
+    </div>
   );
 }
 
@@ -214,6 +262,8 @@ const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'Ju
 function interestWords(sim: Simulation, product: Product | undefined, tax: number, money: (cents: number) => string, currency: string, openedAt: number): string {
   const step = introStep(sim, product, openedAt, sim.now);
   const rate = step ?? rateOn(product, sim.now, sim.homeZone);
+  // A rate the research didn't find isn't a rate of none: until 2026-09-26 Citi's savings said it paid no interest.
+  if (product && product.rate === undefined && /no published rate/i.test(product.source) && !product.changes?.length && !product.tiers?.length && !product.bonus && !product.intro) return 'Its rate wasn’t found, so SLATE pays none on it.';
   if (!product || (rate <= 0 && !product.bonus && !product.intro)) return 'Pays no interest.';
   // The yield with the interest left in, credited monthly or in the bank's months (B31).
   const said: string[] = [`Pays ${pct(rate)} a year (${pct(Number(apyOf(rate, product.pays?.length ?? 12).toFixed(5)))} APY)`];

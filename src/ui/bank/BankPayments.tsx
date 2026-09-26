@@ -61,7 +61,6 @@ export function BankPayments() {
 
   return (
     <Panel title="How You Pay" subtitle={words?.usual ?? 'Rent, bills and the day’s spending, and where each is paid from.'}>
-      {words && <p className="xs dim" style={{ margin: '0 0 var(--s3)' }}>What they’re called here: {words.terms}.</p>}
       <div className="field-row">
         <div className="field">
           <label htmlFor="pay-rent">Rent</label>

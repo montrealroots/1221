@@ -104,7 +104,7 @@ export function BankCardOffers({ bankId }: { bankId: string }) {
             </div>
           </>
         )}
-        {terms.planWords && <p className="xs dim" style={{ margin: 0 }}>The bank’s plans, in its words: {terms.planWords}</p>}
+        {terms.planWords && terms.planFeeShare && <p className="xs dim" style={{ margin: 0 }}>The bank’s plans, in its words: {terms.planWords}</p>}
       </div>
     </Panel>
   );

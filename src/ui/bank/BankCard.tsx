@@ -71,10 +71,11 @@ export function BankCard({ bankId }: { bankId: string }) {
   } else {
     lines.push(`${pct(terms.apr)} a year on a balance carried.`);
   }
-  lines.push('Interest builds each day on what’s owed, the day’s interest included, once a statement isn’t paid in full; pay a statement in full and new spending draws none until the next is due.');
+  if (!charge) lines.push('Interest builds each day on what’s owed, the day’s interest included, once a statement isn’t paid in full; pay a statement in full and new spending draws none until the next is due.');
   if (terms.penaltyApr) lines.push(terms.penaltyInForce ? `The penalty rate, ${pct(terms.penaltyApr)}, is in force: six payments on time in a row takes it off.` : `Sixty days late, and after 45 days’ notice the rate becomes ${pct(terms.penaltyApr)}.`);
   if (card.balance > 0) lines.push(`The card holds ${money(card.balance)} of your money${bankIso === 'US' ? ', and sends it back after six months if it’s still there' : ''}.`);
-  lines.push(terms.annualFee > 0 ? `${money(terms.annualFee)} a year, on the statement in ${opened}.` : 'No yearly fee.');
+  // A fee the research didn't find isn't a fee of none; until 2026-09-26 the Barclaycard said it had none.
+  lines.push(terms.annualFee > 0 ? `${money(terms.annualFee)} a year, on the statement in ${opened}.` : terms.estimated.includes('annualFee') ? 'Its yearly fee wasn’t found, so SLATE charges none.' : 'No yearly fee.');
   lines.push(`A statement on the ${statementDayOf(person)}${ordinal(statementDayOf(person))}, and the payment due ${terms.graceDays !== undefined ? `${terms.graceDays} days after it` : 'on the 15th of the next month'}${due ? `: next on ${formatDate(due.at, sim.zone)}` : ''}.`);
   if (!charge) {
     lines.push(`The least a statement asks is ${pct(terms.minimumShare)} of it${terms.minimumPlusInterest ? ' plus the month’s interest' : ''}${terms.minimumFloor > 0 ? `, or ${money(terms.minimumFloor)} if that’s more` : ''}${credit.statementBalance > 0 ? `: ${money(minimumDue(sim, credit.statementBalance, terms, credit.statementInterest ?? 0))} on this one` : ''}.`);
@@ -138,26 +139,30 @@ export function BankCard({ bankId }: { bankId: string }) {
           )}
         </div>
         <div className="field-row">
-          <div className="field">
-            <label htmlFor="card-statement-day">Statement Day</label>
-            <select id="card-statement-day" value={dayWanted || statementDayOf(person)} onChange={(e) => setDayWanted(Number(e.target.value))}>
-              {Array.from({ length: 28 }, (_, i) => i + 1).map((d) => <option key={d} value={d}>{d}{ordinal(d)}</option>)}
-            </select>
+          <div className="field-act">
+            <div className="field">
+              <label htmlFor="card-statement-day">Statement Day</label>
+              <select id="card-statement-day" value={dayWanted || statementDayOf(person)} onChange={(e) => setDayWanted(Number(e.target.value))}>
+                {Array.from({ length: 28 }, (_, i) => i + 1).map((d) => <option key={d} value={d}>{d}{ordinal(d)}</option>)}
+              </select>
+            </div>
+            <Gated feature="card.set_statement_day" className="btn btn-sm btn-ghost" disabled={!dayWanted || dayWanted === statementDayOf(person)} onClick={() => {
+              const answer = run('card.set_statement_day', { day: dayWanted });
+              if (answer.ok) { toast(`Statements come on the ${dayWanted}${ordinal(dayWanted)} now, and the due date moves with them.`, 'positive'); setDayWanted(0); }
+            }}>Move It</Gated>
           </div>
-          <div className="field">
-            <label htmlFor="card-limit">A Different Limit</label>
-            <input id="card-limit" inputMode="decimal" value={limitWanted} placeholder={String(Math.round(limit / 100))} onChange={(e) => setLimitWanted(e.target.value)} />
+          <div className="field-act">
+            <div className="field">
+              <label htmlFor="card-limit">A Different Limit ({cur}), Now {money(limit)}</label>
+              <input id="card-limit" type="text" inputMode="decimal" value={limitWanted} onChange={(e) => setLimitWanted(e.target.value)} />
+            </div>
+            <Gated feature="card.request_limit" className="btn btn-sm" disabled={!limitWanted} onClick={() => {
+              const answer = run<{ limit: number; granted: boolean }>('card.request_limit', { limit: Math.round(Number(limitWanted.replace(/[^\d.]/g, '')) * 100) });
+              if (answer.ok && answer.value?.granted) { toast(`The limit is ${money(answer.value.limit)} now.`, 'positive'); setLimitWanted(''); }
+            }}>Ask For It</Gated>
           </div>
         </div>
         <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
-          <Gated feature="card.set_statement_day" className="btn btn-sm btn-ghost" disabled={!dayWanted || dayWanted === statementDayOf(person)} onClick={() => {
-            const answer = run('card.set_statement_day', { day: dayWanted });
-            if (answer.ok) { toast(`Statements come on the ${dayWanted}${ordinal(dayWanted)} now, and the due date moves with them.`, 'positive'); setDayWanted(0); }
-          }}>Move The Statement Day</Gated>
-          <Gated feature="card.request_limit" className="btn btn-sm" disabled={!limitWanted} onClick={() => {
-            const answer = run<{ limit: number; granted: boolean }>('card.request_limit', { limit: Math.round(Number(limitWanted.replace(/[^\d.]/g, '')) * 100) });
-            if (answer.ok && answer.value?.granted) { toast(`The limit is ${money(answer.value.limit)} now.`, 'positive'); setLimitWanted(''); }
-          }}>Ask For It</Gated>
           <Gated feature="card.set_auto_raise" className="btn btn-sm btn-ghost" onClick={() => run('card.set_auto_raise', { on: Boolean(credit.noAutoRaise) })}>
             Raise My Limit Unasked: {credit.noAutoRaise ? 'Never' : 'When My Record Earns It'}
           </Gated>
