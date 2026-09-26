@@ -6,7 +6,10 @@
  * survival work (`content/jobs.ts`), the real employers a person there
  * would work for, with the starting pay each publishes where it publishes
  * one, and the occupation's typical pay from the country's statistics
- * office. Every figure carries its source. Pay is hourly, in hundredths of
+ * office. The employer-pay pass of 2026-09-26 (`probe/employer-pay/`)
+ * looked again for every employer with no rate, in the employer's own pages,
+ * its vacancies and the agreements that cover it, never a salary site's
+ * average. Every figure carries its source. Pay is hourly, in hundredths of
  * the country's money.
  */
 
@@ -272,9 +275,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Black Diamond Agency",
           "role": "Event and promo staff",
           "where": "national",
-          "source": "https://blackdiamondagency.com/event-and-promo-staffing/",
-          "confidence": "L",
-          "payNote": "Publishes no worker pay rate. Looked on its event and promo staffing pages."
+          "source": "https://blackdiamondagency.com/job-seekers/",
+          "confidence": "H",
+          "payNote": "Gross base hourly rate for event and promo staff on Black Diamond Agency's own job-seekers page. Loadings and penalty rates apply for early starts, late finishes, weekends and public holidays, and super is paid on top. The figure is already hourly.",
+          "hourlyFrom": 3385
         }
       ],
       "occupation": "Extras and promotional staff: no ABS series isolates them (ANZSCO 211 Arts professionals, $42.70, is dominated by actors, musicians and designers and isn’t used)."
@@ -782,9 +786,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Walmart Canada",
           "role": "Store associate",
           "where": "national",
-          "source": "https://www.walmartcanada.ca/news/2025/05/22/walmart-canada-announces-additional--32-7-million-pay-investment",
+          "source": "https://careers.walmart.ca/job/oshawa/cashier/4853/99988690320",
           "confidence": "H",
-          "payNote": "Walmart Canada's 2024 ($53 million) and 2025 ($32.7 million) pay announcements give no hourly rate."
+          "payNote": "Gross minimum hourly rate stated on Walmart Canada's own cashier vacancies in Ontario (Oshawa and Kanata stores, identical wording).",
+          "hourlyFrom": 1775
         },
         {
           "id": "ca-retail-dollarama",
@@ -1268,7 +1273,7 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "where": "national, including Berlin",
           "source": "https://www.zdfheute.de/wirtschaft/unternehmen/lieferando-stellenabbau-fahrer-100.html",
           "confidence": "M",
-          "payNote": "Lieferando announced in July 2025 that it would cut up to 2,000 employed rider jobs and move part of its deliveries to subcontractor fleets, starting in Berlin. Riders at subcontractors are reported to be paid per delivery rather than hourly. No current published hourly rate found; the union NGG is demanding EUR 15."
+          "payNote": "Lieferando announced in July 2025 that it would cut up to 2,000 employed rider jobs and move part of its deliveries to subcontractor fleets, starting in Berlin. Riders at subcontractors are reported to be paid per delivery instead of hourly. No current published hourly rate found; the union NGG is demanding EUR 15."
         },
         {
           "id": "de-between-flink",
@@ -1320,9 +1325,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "ALDI Nord",
           "role": "Verkäufer (sales associate)",
           "where": "north and east Germany, including Berlin",
-          "source": "https://www.aldi-nord.de/karriere/jobs-im-verkauf/verkaeufer.html",
-          "confidence": "L",
-          "payNote": "Job ads promise a 'Top-Branchengehalt' with an ALDI supplement and collective-agreement benefits but state no hourly figure."
+          "source": "https://de.jooble.org/stellenangebote-stundenlohn-bei-aldi",
+          "confidence": "M",
+          "payNote": "Minimum gross hourly wage in a live ALDI Nord (ALDI Werl regional company) minijob Verkäufer posting in Olsberg, NRW, seen via the Jooble listing page; ALDI Nord's own Verkäufer page only says 'Top-Branchengehalt mit attraktiver ALDI Zulage'. Not a Berlin posting.",
+          "hourlyFrom": 1400
         },
         {
           "id": "de-retail-rewe",
@@ -1330,8 +1336,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "role": "Store associate / cashier",
           "where": "national",
           "source": "https://www.berlin.de/sen/arbeit/beschaeftigung/tarifregister/tarifinformationen/kurzuebersichten_berlin_stand_februar_2026.pdf",
-          "confidence": "L",
-          "payNote": "No published rate found. In Berlin-Brandenburg the retail agreement (Handelsverband Berlin-Brandenburg / ver.di, valid from 1 September 2025) pays K 1 unskilled staff EUR 2,224-2,729 a month and trained K 2 sales staff EUR 2,548-3,172 a month (37 hours a week in former West Berlin, 38 in the former East). The 2026 round was in dispute as of June 2026."
+          "confidence": "M",
+          "payNote": "Berlin retail collective agreement (HBB/ver.di), which covers tariff-bound grocers such as REWE: entry of K1 (untrained sales help) 2,224 to entry of K2 (trained Verkäufer) 2,548 EUR gross a month, over 37 h/week x 52/12 = 160.33 h. K1's entry works out just under the 13.90 EUR statutory minimum from January 2026, which would bind. The summary doesn’t name REWE.",
+          "hourlyFrom": 1387,
+          "hourlyTo": 1589
         }
       ],
       "occupation": "Berufe im Verkauf (ohne Produktspezialisierung) (KldB 2010 group 621)"
@@ -1497,8 +1505,9 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "role": "Promo model / hostess",
           "where": "Berlin",
           "source": "https://en.instaff.jobs/model-agency/berlin",
-          "confidence": "L",
-          "payNote": "Clients pay from EUR 22.17/hour, which includes InStaff's 43% service fee on top of gross pay. What the model earns isn’t stated, so no hourly figure is given."
+          "confidence": "M",
+          "payNote": "InStaff's Berlin page quotes clients a booking price from 22.17 EUR/h, which it says is the model's gross wage plus a 43% service fee; the model's gross wage is therefore 22.17 / 1.43 = 15.50 EUR/h. Derived, not stated directly.",
+          "hourlyFrom": 1550
         }
       ],
       "occupation": "Fotomodelle / Models (freelance, day-rate work); no official statistic"
@@ -1770,9 +1779,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Just Eat (Takeaway Express Spain)",
           "role": "salaried rider",
           "where": "national",
-          "source": "https://www.rutadeltransporte.com/supply-chain/just-eat-compromete-sindicatos-ampliar_0_2000008685.html ; https://newsroom.justeattakeaway.com/es-ES/246106-just-eat-espana-firma-un-nuevo-acuerdo-de-convenio-con-sindicatos-y-lidera-el-dialogo-social-en-el-sector-de-las-plataformas-de-delive/",
+          "source": "https://www.rutadeltransporte.com/supply-chain/just-eat-compromete-sindicatos-ampliar_0_2000008685.html",
           "confidence": "M",
-          "payNote": "Company agreement with CCOO, UGT and FETICO (January 2025): full-time riders earn 16,343 a year (1,362 a month) plus a one-off 335 in January. Weekly hours behind that figure weren’t stated, so no hourly rate."
+          "payNote": "Gross pay for a full-time salaried Just Eat (Takeaway Express Spain) rider in 2025 under the company agreement with CCOO, UGT and Fetico; converted on Spain's 40 h/week x 52 = 2,080 h/year (no hours stated). Excludes the one-off EUR 335 and the EUR 170 half-yearly bonuses.",
+          "hourlyFrom": 786
         },
         {
           "id": "es-between-uber-eats",
@@ -1831,8 +1841,9 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "role": "cashier / stocker (Grupo III)",
           "where": "national",
           "source": "https://www.que.es/2026/07/19/sueldo-lidl-empleados-subida-2030/",
-          "confidence": "L",
-          "payNote": "Press puts entry pay at 16,927 a year gross in 14 payments. That’s below the 2026 SMI (so the real floor is 17,094); another outlet says 21,254. Annual hours not found, so no hourly rate."
+          "confidence": "M",
+          "payNote": "Gross annual base pay for a full-time Lidl Spain cashier/stocker under the fourth company collective agreement (to 2030), as reported by Que.es; excludes supplements and seniority. No hours stated, so 40 h/week x 52 = 2,080 h/year used.",
+          "hourlyFrom": 814
         }
       ],
       "occupation": "5 Trabajadores de los servicios de restauración, personales, protección y vendedores",
@@ -2074,9 +2085,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Escuela Municipal de Música y Danza (Madrid)",
           "role": "teacher",
           "where": "Madrid",
-          "source": "Searched: Escuela municipal danza Madrid salario profesor.",
+          "source": "https://www.servimedia.es/noticias/544921",
           "confidence": "L",
-          "payNote": "Not found."
+          "payNote": "Gross annual salary for a full-time teacher under the first collective agreement for Madrid's indirectly managed municipal music and dance schools, as reported in 2016; 33 h/week x 52 = 1,716 h/year.",
+          "hourlyFrom": 1189
         }
       ],
       "occupation": "2 Técnicos y profesionales científicos e intelectuales (includes non-regulated teachers)",
@@ -2145,18 +2157,20 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Columbus Café & Co",
           "role": "Barista",
           "where": "national",
-          "source": "https://www.columbuscafe.com/listing-offres/ ; https://fr.indeed.com/cmp/Columbus-Caf%C3%A9-&-Co/salaries/Barista",
+          "source": "https://fr.jooble.org/emploi-columbus-cafe",
           "confidence": "L",
-          "payNote": "No pay appears on its own careers page. Indeed's self-reported average is about 1870 EUR/month, but it is unclear whether that’s gross or net. The entry floor is the SMIC of 12.31 gross/hour."
+          "payNote": "A seasonal full-time vacancy at the ESSO Columbus Café franchise (Alpes-Maritimes) listed at 1,800 € a month, not stated gross or net; converted on France's 35 h week (151.67 h/month). It’s a franchise outlet, not Paris or head office.",
+          "hourlyFrom": 1187
         },
         {
           "id": "fr-school-paul-boulangeries",
           "name": "PAUL (boulangeries)",
           "role": "Vendeur / employé polyvalent",
           "where": "Paris",
-          "source": "https://careers.werecruit.io/fr/paul",
-          "confidence": "L",
-          "payNote": "No pay appears on the careers portal. The SMIC of 12.31 gross/hour is the floor."
+          "source": "https://www.jobijoba.com/fr/annonce/54/3cc88832f3eb8d7d89f8ca746ded9823",
+          "confidence": "M",
+          "payNote": "A CDI 'Vendeur en boulangerie' vacancy at Boulangeries Paul, Paris 12e (rue de Bercy), listed at €1,891.05 a month; gross/net not stated but the figure sits just above the 2026 monthly SMIC, so almost certainly gross. Converted on the 35 h week (151.67 h/month).",
+          "hourlyFrom": 1247
         }
       ],
       "occupation": "PCS-ESE 561D Aides de cuisine, apprentis de cuisine et employés polyvalents de la restauration (INSEE)"
@@ -2188,27 +2202,31 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Manpower",
           "role": "Assistant(e) administratif(ve) (temp)",
           "where": "Paris",
-          "source": "https://www.manpower.fr/offre-emploi/assistante+administrative/ile-de-france/paris/r12d75 ; https://www.manpower.fr/mon-manpower/espace-interimaires/mes-infos-et-avantages/mes-infos-pratiques/remuneration",
-          "confidence": "L",
-          "payNote": "The listings page blocked automated reading (403). Same temp rules apply (10% IFM and 10% ICCP)."
+          "source": "https://www.manpower.fr/offre-emploi/assistante+administrative/ile-de-france/paris/r12d75",
+          "confidence": "M",
+          "payNote": "A Manpower temp mission 'Assistant administratif (H/F)', Paris 1er, 2 weeks renewable, listed at €2,100 a month (French listings state gross). Converted on the 35 h week (151.67 h/month). The same search showed a CDI Assistant administratif placement at €30,500 a year.",
+          "hourlyFrom": 1385
         },
         {
           "id": "fr-office-synergie",
           "name": "Synergie",
           "role": "Administrative temp",
           "where": "national",
-          "source": "https://www.synergie.fr/",
-          "confidence": "L",
-          "payNote": "No rate found. Synergie states the IFM is 10% of total gross pay."
+          "source": "https://www.synergie.fr/trouver-un-emploi/assistant-administratif-f-h-strasbourg-67000/offre-636-054",
+          "confidence": "M",
+          "payNote": "A Synergie temp mission 'Assistant administratif F/H' in Palaiseau (91), 3 months, published 27/04/2026 with pay stated as SMIC; the gross SMIC then was €12.02 an hour (€12.31 from 1 June 2026, per service-public.gouv.fr). Synergie's other admin listings show bands only (e.g. Strasbourg 20-25 K€ a year).",
+          "hourlyFrom": 1202
         },
         {
           "id": "fr-office-proman",
           "name": "Proman",
           "role": "Administrative temp",
           "where": "national",
-          "source": "https://www.proman-emploi.fr/",
-          "confidence": "L",
-          "payNote": "No rate found."
+          "source": "https://www.hellowork.com/fr-fr/entreprises/proman-10713/metier_assistant-administratif.html",
+          "confidence": "H",
+          "payNote": "Current Proman temp vacancies for 'Assistant Administratif H/F' listed on Proman's Hellowork employer page at €12.50-13.20 gross an hour (Genas, Loyettes, Auch, Vitrolles, Montoir-de-Bretagne); the page gives the range across its 27 admin offers as €12.31-14/h.",
+          "hourlyFrom": 1250,
+          "hourlyTo": 1320
         }
       ],
       "occupation": "PCS-ESE 541B Agents d'accueil qualifiés, hôtesses d'accueil et d'information (INSEE); also 543H Employés administratifs non qualifiés"
@@ -2383,9 +2401,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Groupe Bertrand",
           "role": "Serveur / plongeur",
           "where": "Paris",
-          "source": "https://www.groupe-bertrand.com/en/recruitment/ ; https://fr.indeed.com/cmp/Groupe-Bertrand/salaries",
-          "confidence": "L",
-          "payNote": "No rate appears on its recruitment page. Indeed's self-reported plongeur average is about 1794 EUR/month. The HCR grid and SMIC floor apply."
+          "source": "https://www.lhotellerie-restauration.fr/sos-experts/grille-de-salaires-2026-166e",
+          "confidence": "M",
+          "payNote": "Groupe Bertrand's Paris brasseries (e.g. La Lorraine) are covered by the HCR collective agreement; its 2026 grid puts entry level (Niveau I, serveur/plongeur) at €12.31 gross an hour from 1 June 2026 because the avenant 33 rates fell below the SMIC. The company's own current plongeur vacancy (La Lorraine, Paris, 18 Sep 2026) states no pay; Hellowork's €22,405/yr is its own estimate.",
+          "hourlyFrom": 1231
         },
         {
           "id": "fr-hospitality-accor-france-hotels",
@@ -2403,8 +2422,9 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "role": "Serveur / commis",
           "where": "Paris",
           "source": "https://www.lhotellerie-restauration.fr/sos-experts/grille-de-salaires-2026-166e",
-          "confidence": "L",
-          "payNote": "Not researched in depth. Bound by the HCR grid, where the SMIC of 12.31 is the floor."
+          "confidence": "M",
+          "payNote": "Groupe Flo's brasseries are covered by the HCR collective agreement; its 2026 grid puts entry level (Niveau I, serveur/commis) at €12.31 gross an hour from 1 June 2026 (€12.02-12.18 from January to May 2026). No Groupe Flo vacancy stating pay was opened.",
+          "hourlyFrom": 1231
         }
       ],
       "occupation": "PCS-ESE 561C Serveurs, commis de restaurant, garçons non qualifiés; 561B (qualifiés); 636D cuisiniers (INSEE)"
@@ -2449,18 +2469,22 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Shiva",
           "role": "Aide ménagère / auxiliaire",
           "where": "national",
-          "source": "https://www.juritravail.com/Actualite/convention-collective-ccn-des-entreprises-de-services-a-la-personne-idcc-3127-quelles-sont-les-nouvelles-grilles-de-salaires-applicables/Id/377370",
-          "confidence": "L",
-          "payNote": "Not found."
+          "source": "https://www.shiva.fr/shiva-recrutement/faq/salaire-et-remuneration",
+          "confidence": "M",
+          "payNote": "Shiva's own recruitment FAQ says its cleaners/aides ménagères earn €11-17 NET an hour. For comparison, the IDCC 3127 services-à-la-personne grid (avenant 11) sets Level I at €11.68 gross, overridden by the SMIC (€12.02 gross from Jan 2026, €12.31 from June 2026).",
+          "hourlyFrom": 1100,
+          "hourlyTo": 1700
         },
         {
           "id": "fr-care-clariane-korian",
           "name": "Clariane (Korian)",
           "role": "Aide-soignant(e) in an EHPAD (care home)",
           "where": "national",
-          "source": "https://fr.indeed.com/cmp/Korian/salaries/Aide-Soignant",
-          "confidence": "L",
-          "payNote": "No starting rate was published. Indeed's self-reported average is about 2179 EUR/month (not a starting figure). INSEE's 2024 median net per FTE for aides-soignants is 2116.95."
+          "source": "https://www.hellowork.com/fr-fr/emplois/83658867.html",
+          "confidence": "H",
+          "payNote": "Korian CDI vacancy for an Aide-Soignant H/F (night) at the EHPAD Le Clos du Mûrier, Fondettes (37), €2,080-2,175 gross a month; converted on the 35 h week (151.67 h/month). Other current Korian aide-soignant vacancies: Lamorlaye €2,000-2,200, Hyères €2,200-2,600 a month.",
+          "hourlyFrom": 1371,
+          "hourlyTo": 1434
         }
       ],
       "occupation": "PCS-ESE 563B Aides à domicile, aides ménagères, travailleuses familiales; 526A Aides-soignants (INSEE)"
@@ -2473,8 +2497,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "role": "Model",
           "where": "Paris",
           "source": "https://www.legifrance.gouv.fr/conv_coll/id/KALITEXT000051447565?idConteneur=KALICONT000051346072&origin=list",
-          "confidence": "L",
-          "payNote": "Rates aren’t published. The convention minima (from 39.80/hour editorial, 81.05/hour fittings) bind all agencies."
+          "confidence": "M",
+          "payNote": "Minimum gross rates for adult models (16+) under the CCN des entreprises au service de la création et de l'événement (27 June 2024), avenant 2 of 22 Jan 2025, in force from 1 June 2025; this agreement covers model agencies such as Elite Model Management Paris. The lowest adult rate is editorial press cat. A at €39.80/h; technical fittings €81.05/h; advertising cat. 1 €111.75/h.",
+          "hourlyFrom": 3980,
+          "hourlyTo": 8105
         },
         {
           "id": "fr-modeling-img-models-paris",
@@ -2482,8 +2508,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "role": "Model",
           "where": "Paris",
           "source": "https://www.legifrance.gouv.fr/conv_coll/id/KALITEXT000051447565?idConteneur=KALICONT000051346072&origin=list",
-          "confidence": "L",
-          "payNote": "Not published. Convention minima apply."
+          "confidence": "M",
+          "payNote": "Minimum gross rates for adult models (16+) under the CCN des entreprises au service de la création et de l'événement (27 June 2024), avenant 2 of 22 Jan 2025, in force from 1 June 2025; this agreement covers model agencies such as IMG Models Paris. The lowest adult rate is editorial press cat. A at €39.80/h; technical fittings €81.05/h; advertising cat. 1 €111.75/h.",
+          "hourlyFrom": 3980,
+          "hourlyTo": 8105
         },
         {
           "id": "fr-modeling-women-management-paris",
@@ -2491,8 +2519,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "role": "Model",
           "where": "Paris",
           "source": "https://www.legifrance.gouv.fr/conv_coll/id/KALITEXT000051447565?idConteneur=KALICONT000051346072&origin=list",
-          "confidence": "L",
-          "payNote": "Not published. Convention minima apply."
+          "confidence": "M",
+          "payNote": "Minimum gross rates for adult models (16+) under the CCN des entreprises au service de la création et de l'événement (27 June 2024), avenant 2 of 22 Jan 2025, in force from 1 June 2025; this agreement covers model agencies such as Women Management Paris. The lowest adult rate is editorial press cat. A at €39.80/h; technical fittings €81.05/h; advertising cat. 1 €111.75/h.",
+          "hourlyFrom": 3980,
+          "hourlyTo": 8105
         },
         {
           "id": "fr-modeling-viva-model-management-paris",
@@ -2500,8 +2530,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "role": "Model",
           "where": "Paris",
           "source": "https://www.legifrance.gouv.fr/conv_coll/id/KALITEXT000051447565?idConteneur=KALICONT000051346072&origin=list",
-          "confidence": "L",
-          "payNote": "Not published. Convention minima apply."
+          "confidence": "M",
+          "payNote": "Minimum gross rates for adult models (16+) under the CCN des entreprises au service de la création et de l'événement (27 June 2024), avenant 2 of 22 Jan 2025, in force from 1 June 2025; this agreement covers model agencies such as Viva Model Management Paris. The lowest adult rate is editorial press cat. A at €39.80/h; technical fittings €81.05/h; advertising cat. 1 €111.75/h.",
+          "hourlyFrom": 3980,
+          "hourlyTo": 8105
         },
         {
           "id": "fr-modeling-any-paris-agency-fit-model-booking",
@@ -2569,9 +2601,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Proman (Paris BTP agencies)",
           "role": "Manœuvre (temp)",
           "where": "Paris",
-          "source": "https://www.proman-emploi.fr/agences/paris-magenta",
-          "confidence": "L",
-          "payNote": "Agencies exist (Paris BTP 1/2/4), but no rate was read."
+          "source": "https://www.hellowork.com/fr-fr/emploi/recherche.html?k=man%C5%93uvre+proman&l=%C3%8Ele-de-France",
+          "confidence": "H",
+          "payNote": "Current Proman temp vacancies for Manoeuvre / Manoeuvre BTP in Île-de-France listed at €12.31 gross an hour (the SMIC) up to €13 an hour in Noisy-le-Sec (93).",
+          "hourlyFrom": 1231,
+          "hourlyTo": 1300
         }
       ],
       "occupation": "PCS-ESE 681A Ouvriers non qualifiés du gros œuvre du bâtiment (INSEE)"
@@ -2688,8 +2722,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "role": "Dance teacher",
           "where": "Paris",
           "source": "https://www.snam-cgt.org/enseignement/quel-employeur-quels-droits/ecoles-de-musique-associatives/",
-          "confidence": "L",
-          "payNote": "Not published. If employed by an association, the ECLAT minimum of about 18.39 per teaching hour applies."
+          "confidence": "M",
+          "payNote": "Micadanses is an association, so its teachers fall under the ÉCLAT agreement (IDCC 1518) as summarized by SNAM-CGT. 2026 monthly minimum: animateur-technicien 247×7.23+10×6.81 = €1,853.91 for a 26 h week (112.67 h/month) = €16.45/h; professeur 247×7.23+18×6.81 = €1,908.39 for a 24 h week (104 h/month) = €18.35/h. Gross; my arithmetic from the stated points.",
+          "hourlyFrom": 1645,
+          "hourlyTo": 1835
         }
       ],
       "occupation": "PCS-ESE 354G Professeurs d'art (hors établissements scolaires) (INSEE)",
@@ -2728,27 +2764,32 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Fitness Park",
           "role": "Coach sportif",
           "where": "national",
-          "source": "https://recrutement.fitnesspark.fr/search",
-          "confidence": "L",
-          "payNote": "The only coach ad (22 September 2026, 7h a week) states no pay. The IDCC 2511 groupe 3 floor is 13.17."
+          "source": "https://www.hellowork.com/fr-fr/emplois/83099409.html",
+          "confidence": "M",
+          "payNote": "Fitness Park Paris-Diderot CDI vacancy for a 'Coach Sportif - Salle de Sport' teaching Burning Park group classes, 3 hours a week, at €38.46 gross per hour taught. It’s a per-class rate for a tiny part-time post (BPJEPS/DEUST required), not a full-time floor coach wage.",
+          "hourlyFrom": 3846
         },
         {
           "id": "fr-sport-l-orange-bleue",
           "name": "L'Orange Bleue",
           "role": "Coach sportif",
           "where": "national",
-          "source": "https://fiind.sport/blog/reflexion-projet/salaire-coach-sportif-france-2026/",
-          "confidence": "L",
-          "payNote": "A secondary source reports an average of about 1900 EUR gross/month full time. That’s below the groupe 3 SMC, so it’s doubtful, and no hourly rate is given."
+          "source": "https://www.jobijoba.com/fr/annonce/54/b256d64f3d7c368c0c938aa09eebbaea",
+          "confidence": "H",
+          "payNote": "L'Orange Bleue CDI vacancies for 'Educateur sportif / coach sportif' across its clubs list €1,886 a month gross, which on the 35 h week (151.67 h/month) is €12.43/h, matching the clubs that quote €12.43 an hour; one club offers €13/h.",
+          "hourlyFrom": 1243,
+          "hourlyTo": 1300
         },
         {
           "id": "fr-sport-keep-cool-on-air",
           "name": "Keep Cool / On Air",
           "role": "Coach sportif",
           "where": "national",
-          "source": "https://www.juristique.org/conventionnel/salaires-sport-2026",
-          "confidence": "L",
-          "payNote": "Not found."
+          "source": "https://www.jobijoba.com/fr/annonce/54/68dcbca5bb7058477cc5783db53afecc",
+          "confidence": "H",
+          "payNote": "Keepcool CDI full-time 'Coach sportif' vacancy in Aix-en-Provence at €1,885.14-2,100 gross a month plus monthly performance bonuses; converted on the 35 h week (151.67 h/month). Other Keepcool clubs (Montauban, Cahors) list €2,154-2,600. No On Air listing found.",
+          "hourlyFrom": 1243,
+          "hourlyTo": 1385
         }
       ],
       "occupation": "PCS-ESE 424A (INSEE dataset label “Sportifs professionnels”; the PCS definition includes moniteurs et éducateurs sportifs)",
@@ -2792,7 +2833,7 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "source": "https://www.breakroom.cc/en-gb/employers/starbucks/pay",
           "confidence": "L",
           "hourlyFrom": 1295,
-          "payNote": "One ad paid £12.95 at 21+, and others showed £12.80. These may be franchise partners rather than company stores. No official 2026 company rate was found."
+          "payNote": "One ad paid £12.95 at 21+, and others showed £12.80. These may be franchise partners instead of company stores. No official 2026 company rate was found."
         },
         {
           "id": "gb-school-gail-s-bakery",
@@ -3051,9 +3092,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Mad Dog 2020 Casting",
           "role": "Supporting artist (commercials)",
           "where": "national",
-          "source": "https://maddog2020casting.com/en/becomeartist/pay-rates/",
+          "source": "http://web.archive.org/web/20260411024629/https://maddog2020casting.com/en/becomeartist/pay-rates/",
           "confidence": "M",
-          "payNote": "£120 a day for crowd work, or £250 plus a buyout for noticeable roles, with 15% commission. The hours in a day aren't stated, so there’s no hourly figure."
+          "payNote": "Mad Dog 2020's own commercial rate for a non-recognisable crowd supporting artist: £120 gross for a 10-hour day, before the agency's 15% commission; £120/10 h = £12/h. Page read via Wayback snapshot of 11 Apr 2026 (live site refused connection).",
+          "hourlyFrom": 1200
         },
         {
           "id": "gb-always_performing-event-promo-staffing-agencies-push-arthu",
@@ -3451,9 +3493,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "David Lloyd Clubs",
           "role": "Personal Trainer",
           "where": "national",
-          "source": "David Lloyd PT listings (search snippet, 2026)",
-          "confidence": "L",
-          "payNote": "Listings describe self-set session prices with a £16-an-hour minimum and at least 25 hours a week in the club. That’s a price to clients, not a wage, so no hourly pay is given."
+          "source": "https://www.leisurejobs.com/job/4299140/personal-trainer-nationwide/",
+          "confidence": "M",
+          "payNote": "David Lloyd Clubs nationwide Personal Trainer posting: gross £15 per 45-min PT session (=£20 per session-hour), rising to £20 per session (=£26.67/h) after 15 sessions a week; pay is per session delivered, not per hour on shift.",
+          "hourlyFrom": 2000,
+          "hourlyTo": 2667
         }
       ],
       "occupation": "Fitness and wellbeing instructors (SOC 2020 3433)",
@@ -3500,9 +3544,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Butlers Chocolate Cafe",
           "role": "Barista",
           "where": "Dublin",
-          "source": "https://www.glassdoor.ie/Hourly-Pay/Butlers-Chocolates-Barista-Hourly-Pay-E513262_D_KO19,26.htm",
+          "source": "https://www.jobalert.ie/job/barista-and-cafe-manager-butlers-chocolate-cafe",
           "confidence": "L",
-          "payNote": "No current published rate. Glassdoor's €10 to €13 is out of date for the same reason."
+          "payNote": "Gross hourly rate in a Butlers Chocolate Cafe vacancy for baristas at Dublin Airport (listing now closed). €12.70 equals Ireland's 2024 minimum wage, so the posting is most likely from December 2023.",
+          "hourlyFrom": 1270
         }
       ],
       "occupation": "Accommodation and Food Service Activities (CSO NACE sector I; the CSO publishes no hourly figure for baristas as an occupation)",
@@ -3877,8 +3922,9 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "role": "General Operative",
           "where": "Dublin",
           "source": "https://www.workplacerelations.ie/en/what_you_should_know/hours-and-wages/sectoral%20employment%20orders/construction-sector/",
-          "confidence": "L",
-          "payNote": "None publishes operative rates. All are bound by the Sectoral Employment Order's legal minimums above (€17.28 for new entrants, €21.37 for Category B, from 1 Aug 2026)."
+          "confidence": "H",
+          "payNote": "Statutory minimum under the Construction Sector Sectoral Employment Order, binding on Sisk, BAM, Collen and all contractors; gross, for a new-entrant general operative; normal week 39 hours. Category B operative rate is €21.37.",
+          "hourlyFrom": 1728
         }
       ],
       "occupation": "Construction (CSO NACE sector F); statutory floor from the Sectoral Employment Order (Construction Sector)",
@@ -3928,9 +3974,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Bidvest Noonan",
           "role": "Security Officer",
           "where": "Dublin",
-          "source": "https://ie.indeed.com/q-bidvest-noonan-security-l-dublin,-county-dublin-jobs.html (search snippet)",
-          "confidence": "L",
-          "payNote": "Only an undated ad was found, and its pay was below today's regulated rate, so it’s out of date. The legal floor is €15.41."
+          "source": "https://www.workplacerelations.ie/en/what_you_should_know/hours-and-wages/employment%20regulation%20orders/security-industry/",
+          "confidence": "H",
+          "payNote": "Gross legal minimum for adult workers under the Security Industry Employment Regulation Order, which binds Bidvest Noonan and all contract security firms. A gov.ie release announced a further rise to €16.15 that the WRC page didn’t yet show.",
+          "hourlyFrom": 1541
         }
       ],
       "occupation": "Security operative, as defined by the Employment Regulation Order (Security Industry) 2025",
@@ -4307,7 +4354,7 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "where": "Reykjavík",
           "source": "https://www.eskimo.is/models/info/",
           "confidence": "M",
-          "payNote": "Iceland's first model agency (1997) and by its own account the largest. It publishes no day or hourly rates. No other sizable Icelandic model agency was confirmed, so only one is listed rather than inventing more."
+          "payNote": "Iceland's first model agency (1997) and by its own account the largest. It publishes no day or hourly rates. No other sizable Icelandic model agency was confirmed, so only one is listed instead of inventing more."
         }
       ],
       "occupation": "Fashion / commercial model (no Hagstofa occupation series)"
@@ -4526,9 +4573,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Adecco Japan",
           "role": "General clerical temp (派遣)",
           "where": "Tokyo",
-          "source": "https://www.adecco.com/ja-jp/about/featured-job-category/kanto/tokyo",
-          "confidence": "L",
-          "payNote": "Adecco advertises many Tokyo clerical assignments, but we found no published rate we could cite. The market figures under Recruit Staffing below apply."
+          "source": "https://www.hatarako.net/company/90451/jobs/",
+          "confidence": "H",
+          "payNote": "Gross hourly pay in Adecco temp vacancies for general clerical / OA office work in Tokyo, with start dates from October to November 2026, listed on the Hatarako Net job board. The figures are already hourly.",
+          "hourlyFrom": 175000,
+          "hourlyTo": 190000
         },
         {
           "id": "jp-office-dispatch-market-average-all-agencies-on-",
@@ -4835,7 +4884,9 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "where": "Tokyo (Machida)",
           "source": "https://jp.stanby.com/r_426f28164915b8ba82b52cc89d564b54",
           "confidence": "M",
-          "payNote": "Paid 10,000 to 14,000 yen a day. The listing gives no hours, so we didn’t convert it to an hourly rate."
+          "payNote": "Gross day rate for a civil-works laborer (土木工事関連作業員) at Serve Co., Morino, Machida, Tokyo, in a Stanby job listing; 08:00-17:00 shift taken as 8 working hours after a 1-hour break.",
+          "hourlyFrom": 125000,
+          "hourlyTo": 175000
         },
         {
           "id": "jp-trades-sunakawa-kogyo",
@@ -4844,7 +4895,8 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "where": "Tokyo (Ota Ward)",
           "source": "https://jp.stanby.com/r_426f28164915b8ba82b52cc89d564b54",
           "confidence": "M",
-          "payNote": "Paid 15,000 yen a day; hours not stated."
+          "payNote": "Gross day rate for a civil-works laborer at Sunakawa Kogyo, Kamiikedai, Ota Ward, Tokyo, in a Stanby listing; no hours stated, so a standard 8-hour Japanese working day is assumed.",
+          "hourlyFrom": 187500
         },
         {
           "id": "jp-trades-taiko-kensetsu",
@@ -4853,7 +4905,9 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "where": "Tokyo (Nakano Ward)",
           "source": "https://jp.stanby.com/r_426f28164915b8ba82b52cc89d564b54",
           "confidence": "M",
-          "payNote": "Paid 9,000 to 11,000 yen a day, with dormitory housing and meals available; hours not stated."
+          "payNote": "Gross day rate for a civil-works laborer (土木作業員) at Taiko Kensetsu, Nogata, Nakano Ward, Tokyo, in a Stanby listing; no hours stated, so a standard 8-hour day is assumed.",
+          "hourlyFrom": 112500,
+          "hourlyTo": 137500
         }
       ],
       "occupation": "土木従事者，鉄道線路工事従事者 (civil-engineering and railway-track laborers), short-time workers",
@@ -4881,18 +4935,22 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "SECOM (Secom Jastics)",
           "role": "Facility security officer (full-time)",
           "where": "Tokyo (Itabashi)",
-          "source": "https://jp.stanby.com/r_a1fba24cd35ad78bb58c0dee4ac230d0 (fetched 2026-09-25)",
-          "confidence": "M",
-          "payNote": "This is a full-time job at 230,000 to 250,000 yen a month; no hourly part-time SECOM listing was found in Tokyo."
+          "source": "https://www.keibi-baito.com/detail/18529",
+          "confidence": "H",
+          "payNote": "Gross base monthly pay, plus allowances and twice-yearly bonus, for a full-time resident facility security officer at Secom Jastic's Tokyo head office (Itabashi), on 24-hour shifts (18 hours worked). Monthly hours aren’t stated, so a 40 h/week × 52/12 = 173.33 h/month standard is used.",
+          "hourlyFrom": 135700,
+          "hourlyTo": 145500
         },
         {
           "id": "jp-armed_forces-traffic-control-guard-firms-government-c",
           "name": "Traffic-control guard firms (交通誘導警備, government costing rate)",
           "role": "Traffic-control guard A / B",
           "where": "Tokyo",
-          "source": "https://www.zaimu.metro.tokyo.lg.jp/documents/d/zaimu/8_roumur8 (Tokyo Metropolitan Government, 公共工事設計労務単価 March 2026)",
-          "confidence": "H",
-          "payNote": "This isn’t an employer. The 2026 public-works costing rate for Tokyo is 20,500 yen for an 8-hour day for grade A traffic-control guards and 18,700 yen for grade B. Guards themselves are usually paid less than the costing rate."
+          "source": "https://www.zaimu.metro.tokyo.lg.jp/documents/d/zaimu/8_roumur8",
+          "confidence": "M",
+          "payNote": "Tokyo Metropolitan Government's public-works design labor rate from March 2026, per 8-hour day: 18,700 yen for a Class B traffic guard and 20,500 yen for Class A. The rate is set from surveys of the wages actually paid. It’s a public costing rate, not one firm's own pay offer.",
+          "hourlyFrom": 233750,
+          "hourlyTo": 256250
         }
       ],
       "occupation": "警備員 (security guards), short-time workers, all industries, firms of 10+ employees",
@@ -4981,9 +5039,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Central Sports",
           "role": "Kids' coach / personal trainer (part-time)",
           "where": "national",
-          "source": "https://company.central.co.jp/recruit/staff/",
+          "source": "https://www.central.co.jp/club/part_time_job/part_time_detail.php?pj_no=1138",
           "confidence": "M",
-          "payNote": "The recruiting page lists the roles but no pay; applicants are told to ask each club."
+          "payNote": "Gross hourly pay for a part-time kids' school coach (swimming, gymnastics, dance) at Central Sports Club Sano, Tochigi, on the company's own vacancy page. It pays 1,150 yen during the roughly 100-hour training period and 1,200 yen after that. This is a regional club, not a Tokyo one.",
+          "hourlyFrom": 115000,
+          "hourlyTo": 120000
         }
       ],
       "occupation": "個人教師 (private teachers, including sport instructors), short-time workers; the survey has no separate gym-instructor category",
@@ -5023,9 +5083,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Compose Coffee (franchise)",
           "role": "Barista / counter staff",
           "where": "national franchise",
-          "source": "https://m11.alba.co.kr/job/JobDetailView.asp?adid=142606517",
-          "confidence": "L",
-          "payNote": "No store-level pay figure could be confirmed; franchise stores generally post at or near the minimum wage (10,320 won in 2026)."
+          "source": "https://www.jobkorea.co.kr/Recruit/GI_Read/47999522",
+          "confidence": "H",
+          "payNote": "Gross hourly wage in a JobKorea vacancy for a part-time counter/barista at the Compose Coffee Dangni branch (Busan); it equals the 2025 statutory minimum wage.",
+          "hourlyFrom": 1003000
         }
       ],
       "occupation": "Baristas / coffee shop staff (KSCO 'barista', within food and beverage service workers)"
@@ -5038,8 +5099,9 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "role": "Office assistant, placed at Korea Seven head office (Gangdong Station, Seoul)",
           "where": "Seoul",
           "source": "https://www.jobkorea.co.kr/Recruit/GI_Read/48207624",
-          "confidence": "M",
-          "payNote": "Posted as 2.28 million won a month or more; not posted as an hourly rate."
+          "confidence": "H",
+          "payNote": "Gross monthly pay of at least KRW 2.28m for an office assistant dispatched by ManpowerGroup Korea to Korea Seven's head office (Gangdong), Mon-Fri 09:00-18:00. Converted with Korea's standard 209 paid hours a month (40 h/week plus paid weekly rest day).",
+          "hourlyFrom": 1090900
         },
         {
           "id": "kr-office-unicorn-manpower",
@@ -5124,9 +5186,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "CU (BGF Retail franchise convenience stores)",
           "role": "Store clerk",
           "where": "national franchise",
-          "source": "https://www.albamon.com/jobs/brand/normal/2030004",
-          "confidence": "L",
-          "payNote": "Pay set by each store owner; typically the minimum wage. No specific posting captured."
+          "source": "https://bgfretail.alba.co.kr/job/brand/main.asp?areacd=02&pagesize=30",
+          "confidence": "H",
+          "payNote": "Gross hourly wages in live CU store-staff vacancies on Alba (Albacheon-guk) CU brand listing for Seoul; day shifts pay the 2026 minimum KRW 10,320, some night shifts KRW 11,000-12,000.",
+          "hourlyFrom": 1032000,
+          "hourlyTo": 1200000
         }
       ],
       "occupation": "Sales clerks and cashiers (convenience stores, supermarkets, drugstores)"
@@ -5138,9 +5202,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Topstar Entertainment (extras agency)",
           "role": "Background actor",
           "where": "Seoul and filming locations",
-          "source": "https://www.albamon.com/jobs/part?parts=C010 (read 2026-09-25)",
+          "source": "https://www.dongnealba.com/job-ad/6725e5da1d2efaccee76e8dd",
           "confidence": "M",
-          "payNote": "Day rates of 100,000 to 130,000 won posted on Albamon in September 2026; not hourly."
+          "payNote": "Gross day rate for background actors in a Topstar Entertainment posting on Dongnealba (Seocho, Seoul), 09:00-18:00. Converted at 8 paid hours a day (the 9-hour span less a 1-hour break; 78,880 = 8 x the 2024 minimum wage).",
+          "hourlyFrom": 986000,
+          "hourlyTo": 1500000
         },
         {
           "id": "kr-always_performing-media-planet-extras-for-netflix-disney-w",
@@ -5211,7 +5277,7 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "confidence": "L",
           "hourlyFrom": 1032000,
           "hourlyTo": 1350000,
-          "payNote": "Many small licensed agencies rather than national chains. June 2026 Seoul postings were mostly 10,320 won; recruiting ads run to 13,000-13,500 won."
+          "payNote": "Many small licensed agencies instead of national chains. June 2026 Seoul postings were mostly 10,320 won; recruiting ads run to 13,000-13,500 won."
         },
         {
           "id": "kr-care-seoul-forest-nursing-home",
@@ -5228,8 +5294,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "role": "Care worker",
           "where": "Seoul",
           "source": "https://m.work24.go.kr/wk/a/b/1200/retriveDtlEmpSrchList.do?srcKeyword=%EC%9A%94%EC%96%91%EB%B3%B4%ED%98%B8%EC%82%AC",
-          "confidence": "L",
-          "payNote": "Korea has no dominant national home-care chain; most care jobs are at small licensed centers listed on the public Work24 board."
+          "confidence": "H",
+          "payNote": "Gross hourly wages in live Work24 (Goyong24) care-worker vacancies; a home-care post in Myeong-dong, Seoul pays the 2026 minimum KRW 10,320, others KRW 13,000. Residential posts on the same page show KRW 2.4m a month for 39 h/week.",
+          "hourlyFrom": 1032000,
+          "hourlyTo": 1300000
         }
       ],
       "occupation": "Care workers (요양보호사), home and residential long-term care"
@@ -5251,9 +5319,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Modelnara (fitting-model job board)",
           "role": "Fitting model",
           "where": "Seoul",
-          "source": "https://modelnara.com/",
-          "confidence": "L",
-          "payNote": "Job board, not an agency; rates vary by posting."
+          "source": "https://www.jobkorea.co.kr/Recruit/GI_Read/49706324",
+          "confidence": "M",
+          "payNote": "Gross hourly rates in August 2026 JobKorea vacancies for fitting models at Seoul online clothing shops (the kind of client that posts on Modelnara); Modelnara's own pages couldn’t be opened (403). Staff posts start at the minimum wage, freelance shoots pay KRW 50,000-70,000 an hour.",
+          "hourlyFrom": 1032000,
+          "hourlyTo": 7000000
         }
       ],
       "occupation": "Fitting models / online-shop models"
@@ -5283,18 +5353,21 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "SK Shieldus (formerly ADT Caps)",
           "role": "Security staff",
           "where": "national",
-          "source": "https://www.skshieldusapply.com/ko/apply",
-          "confidence": "L",
-          "payNote": "Salaried; no hourly posting found."
+          "source": "https://www.jobkorea.co.kr/Recruit/GI_Read/49995809",
+          "confidence": "M",
+          "payNote": "Gross monthly pay of at least KRW 3.19m in SK Shieldus's own JobKorea vacancy for facility security staff at Kyung Hee University, Seoul, on 3-crew 2-shift rotation. Monthly hours aren’t stated; converted at Korea's standard 209 h, which likely overstates the hourly rate for a rota of 11-13 h shifts.",
+          "hourlyFrom": 1526300
         },
         {
           "id": "kr-armed_forces-contract-guard-posts-listed-on-albamon-e",
           "name": "Contract guard posts listed on Albamon (e.g. Woori Bank branch, Seoul)",
           "role": "Building guard",
           "where": "Seoul",
-          "source": "https://www.albamon.com/jobs/part?parts=4095 (read 2026-09-25)",
+          "source": "https://www.albamon.com/jobs/part?parts=4095",
           "confidence": "M",
-          "payNote": "Seoul examples in September 2026: 2.51 million won a month (bank branch, weekdays 08:30-17:30), 2.8-3.3 million won a month for other posts; one Gyeonggi posting at 10,320 won an hour."
+          "payNote": "Gross monthly pay in live Albamon security-guard listings in Seoul by contractor Proescom: KRW 2.6m for fixed day shifts at POSCO Center, KRW 3.1m for an IBK bank data-center guard. Converted at Korea's standard 209 paid hours a month.",
+          "hourlyFrom": 1244000,
+          "hourlyTo": 1483300
         }
       ],
       "occupation": "Security guards (경비원 / 보안요원)"
@@ -6072,9 +6145,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Burger King NZ",
           "role": "Crew",
           "where": "national",
-          "source": "https://www.unite.org.nz/fast-food",
-          "confidence": "L",
-          "payNote": "Unite Union says Burger King members recently accepted a 50 cents an hour increase plus two $200 payments for union members. The start rate isn’t published. Floor: adult minimum wage of 23.95."
+          "source": "https://www.unite.org.nz/post/bk-members-win-200-union-only-payments-increased-rates",
+          "confidence": "M",
+          "payNote": "Gross hourly starting rate for Burger King NZ team members under the Unite collective agreement from 1 April 2024: 15c over the adult minimum wage. That was $23.15 from 1 April 2024, giving $23.30. The dollar figure is computed; the page states only the margin over minimum.",
+          "hourlyFrom": 2330
         }
       ],
       "occupation": "Community and Personal Service Workers (ANZSCO 2006 major group 4: waiters and bar staff; kitchenhands fall under Labourers). Stats NZ HLFS median hourly by sex, June 2026 quarter: men 32.00, women 29.00."
@@ -6153,9 +6227,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Allied Security",
           "role": "Security officer",
           "where": "Auckland and national",
-          "source": "https://www.mbie.govt.nz/dmsdocument/6918-the-case-for-adding-security-guards-to-schedule-1a-of-the-employment-relations-act",
-          "confidence": "L",
-          "payNote": "An MBIE paper (undated in this pass) says E tū's roughly five collectives with the big security firms start at the minimum wage or up to 30 cents above it, and that NZQA Level 3 adds at most $2.00 an hour. No current dollar figure was confirmed. The self-reported PayScale averages (17–19) are below the legal minimum and aren’t used."
+          "source": "https://www.trademe.co.nz/a/jobs/advertiser/allied-security",
+          "confidence": "M",
+          "payNote": "Gross hourly rate in a live Allied Security Trade Me listing for a Mobile Noise Control Officer in Auckland, the only officer-level Allied vacancy on the page that stated pay; its casual security officer vacancies stated none.",
+          "hourlyFrom": 2980
         }
       ],
       "occupation": "Community and Personal Service Workers (ANZSCO 2006 major group 4, which holds security officers). Stats NZ HLFS median hourly by sex, June 2026 quarter: men 32.00, women 29.00."
@@ -7212,24 +7287,33 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Carrefour Argentina",
           "role": "Supermarket cashier or shelf stocker (Empleados de Comercio agreement CCT 130/75)",
           "where": "national",
-          "source": "https://www.carrefour.com.ar/institucional/",
-          "confidence": "M"
+          "source": "https://www.infobae.com/economia/2026/09/10/cuanto-ganan-los-empleados-de-comercio-en-septiembre-de-2026/",
+          "confidence": "M",
+          "hourlyFrom": 626875,
+          "hourlyTo": 635036,
+          "payNote": "September 2026 gross monthly minimum under the Empleados de Comercio agreement CCT 130/75, which covers Carrefour Argentina store staff: Maestranza A (stocker) to Cajeros A (cashier), including the ARS 120,000 non-remunerative sum. No hours stated; the 48 h legal week × 52/12 = 208 h was used."
         },
         {
           "id": "ar-retail-coto",
           "name": "Coto",
           "role": "Supermarket cashier or stocker (CCT 130/75)",
           "where": "national",
-          "source": "https://www.coto.com.ar",
-          "confidence": "M"
+          "source": "https://www.infobae.com/economia/2026/09/10/cuanto-ganan-los-empleados-de-comercio-en-septiembre-de-2026/",
+          "confidence": "M",
+          "hourlyFrom": 626875,
+          "hourlyTo": 635036,
+          "payNote": "September 2026 gross monthly minimum under the Empleados de Comercio agreement CCT 130/75, which covers Coto store staff: Maestranza A (stocker) to Cajeros A (cashier), including the ARS 120,000 non-remunerative sum. No hours stated; the 48 h legal week × 52/12 = 208 h was used."
         },
         {
           "id": "ar-retail-la-anonima",
           "name": "La Anónima",
           "role": "Supermarket staff, mainly in Patagonia and the interior (CCT 130/75)",
           "where": "national",
-          "source": "https://www.laanonima.com.ar/",
-          "confidence": "M"
+          "source": "https://www.infobae.com/economia/2026/09/10/cuanto-ganan-los-empleados-de-comercio-en-septiembre-de-2026/",
+          "confidence": "M",
+          "hourlyFrom": 626875,
+          "hourlyTo": 635036,
+          "payNote": "September 2026 gross monthly minimum under the Empleados de Comercio agreement CCT 130/75, which covers La Anónima store staff: Maestranza A (stocker) to Cajeros A (cashier), including the ARS 120,000 non-remunerative sum. No hours stated; the 48 h legal week × 52/12 = 208 h was used. Patagonian stores add a zona desfavorable supplement not included here."
         }
       ]
     },
@@ -7240,8 +7324,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Arcos Dorados (McDonald's Argentina)",
           "role": "Crew member",
           "where": "national",
-          "source": "https://www.arcosdorados.com",
-          "confidence": "M"
+          "source": "https://www.iprofesional.com/management/464021-cuanto-gana-un-empleado-de-starbucks-en-septiembre-2026",
+          "confidence": "M",
+          "hourlyFrom": 583628,
+          "hourlyTo": 655941,
+          "payNote": "Gross hourly wage under fast-food agreement CCT 329/00 (the scale for McDonald's, Burger King, Starbucks, Café Martínez), paid September 2026: Empleado Principiante (entry crew) to Dependiente de Mostrador (counter crew), excluding the small non-remunerative add-on."
         }
       ]
     },
@@ -7252,16 +7339,21 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Starbucks Argentina",
           "role": "Barista",
           "where": "national",
-          "source": "https://www.starbucks.com.ar",
-          "confidence": "M"
+          "source": "https://www.iprofesional.com/management/464021-cuanto-gana-un-empleado-de-starbucks-en-septiembre-2026",
+          "confidence": "M",
+          "hourlyFrom": 629279,
+          "payNote": "Gross hourly wage of the Cafetero (barista) category under CCT 329/00, which the article names as the scale for Starbucks workers, paid September 2026; excludes the 247.94 ARS/h non-remunerative add-on."
         },
         {
           "id": "ar-school-cafe-martinez",
           "name": "Café Martínez",
           "role": "Barista or counter staff",
           "where": "national",
-          "source": "https://www.cafemartinez.com",
-          "confidence": "M"
+          "source": "https://www.iprofesional.com/management/464021-cuanto-gana-un-empleado-de-starbucks-en-septiembre-2026",
+          "confidence": "M",
+          "hourlyFrom": 583628,
+          "hourlyTo": 629279,
+          "payNote": "Gross hourly wage under CCT 329/00, which the article says covers Café Martínez along with Starbucks and McDonald's, September 2026: Empleado Principiante (entry) to Cafetero (barista)."
         }
       ]
     },
@@ -7292,8 +7384,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Prosegur Argentina",
           "role": "Security guard (vigilador)",
           "where": "national",
-          "source": "https://www.prosegur.com.ar",
-          "confidence": "M"
+          "source": "https://mundogremial.com/cuanto-gana-un-vigilador-de-seguridad-privada-en-septiembre-de-2026-asi-queda-la-escala-de-upsra/",
+          "confidence": "M",
+          "hourlyFrom": 498846,
+          "hourlyTo": 861346,
+          "payNote": "September 2026 monthly pay for a Vigilador General under private-security agreement CCT 507/07 (UPSRA–CAESI), which covers Prosegur's guards: basic 1,037,600 up to 1,791,600 with attendance bonus, travel allowance and non-remunerative add-on. No hours on the page; 48 h × 52/12 = 208 h used."
         }
       ]
     },
@@ -7344,32 +7439,41 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "SPAR Österreich",
           "role": "Supermarket sales assistant (KV Handel)",
           "where": "national",
-          "source": "https://www.spar.at",
-          "confidence": "M"
+          "source": "https://jobs.salzburg24.at/job/mitarbeiterin-verkauf-vollzeit-115388",
+          "confidence": "H",
+          "hourlyFrom": 1349,
+          "payNote": "Gross monthly KV minimum for a full-time (38.5 h/week) SPAR Verkäufer Allrounder in Salzburg; 2,251 / (38.5 × 52/12 = 166.83 h) = 13.49 EUR/h."
         },
         {
           "id": "at-retail-billa-rewe-international",
           "name": "BILLA (REWE International)",
           "role": "Supermarket sales assistant (KV Handel)",
           "where": "national",
-          "source": "https://www.billa.at",
-          "confidence": "M"
+          "source": "https://www.karriere.at/jobs/vollzeit-billa",
+          "confidence": "H",
+          "hourlyFrom": 1349,
+          "payNote": "Gross monthly starting pay on current BILLA Verkäufer:in vacancies (Reichersberg, Mayrhofen, Bad Hofgastein) on karriere.at, the KV Handel group C minimum; the listing gives no hours, so the KV full-time 38.5 h/week × 52/12 = 166.83 h was used: 13.49 EUR/h."
         },
         {
           "id": "at-retail-hofer",
           "name": "HOFER",
           "role": "Store employee (KV Handel)",
           "where": "national",
-          "source": "https://www.hofer.at",
-          "confidence": "M"
+          "source": "https://karriere.hofer.at/job/698015601",
+          "confidence": "H",
+          "hourlyFrom": 1479,
+          "hourlyTo": 1719,
+          "payNote": "Gross monthly starting pay for a full-time HOFER Verkaufsmitarbeiter in Graz, rising to 2,867 at the top step; 38.5 h/week × 52/12 = 166.83 h gives 14.79–17.19 EUR/h."
         },
         {
           "id": "at-retail-lidl-osterreich",
           "name": "Lidl Österreich",
           "role": "Store employee (KV Handel)",
           "where": "national",
-          "source": "https://www.lidl.at",
-          "confidence": "M"
+          "source": "https://karriere.lidl.at/lidl-als-arbeitgeber/mindestgehalt",
+          "confidence": "M",
+          "hourlyFrom": 1467,
+          "payNote": "Lidl Österreich's own careers page states a gross minimum hourly wage of 14.67 EUR for store staff (Filialmitarbeiter), equal to at least 34,300 EUR a year full-time; no conversion needed."
         }
       ]
     },
@@ -7380,8 +7484,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "McDonald's Österreich",
           "role": "Crew member",
           "where": "national",
-          "source": "https://www.mcdonalds.at",
-          "confidence": "M"
+          "source": "https://www.mcdonalds.at/gehalt-bei-mcdonalds",
+          "confidence": "M",
+          "hourlyFrom": 1201,
+          "payNote": "McDonald's Österreich's own pay page gives a gross monthly base wage of 2,082 EUR for 40 h/week, pro-rated for fewer hours; 40 × 52/12 = 173.33 h gives 12.01 EUR/h."
         }
       ]
     },
@@ -7392,8 +7498,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Starbucks Austria",
           "role": "Barista",
           "where": "national",
-          "source": "https://www.starbucks.at",
-          "confidence": "M"
+          "source": "https://starbucks-jobs.at/Barista-mwd-de-j1491.html",
+          "confidence": "M",
+          "hourlyFrom": 1169,
+          "payNote": "Gross monthly wage from 2,026 EUR on a Starbucks Coffee Austria barista vacancy at Rotenturmstrasse, Vienna. The fetched text didn’t tie the figure to hours; a search snippet of a sibling posting said it was the 40 h full-time basis (the Gastgewerbe week), so 40 × 52/12 = 173.33 h was used: 11.69 EUR/h."
         }
       ]
     },
@@ -7424,8 +7532,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Securitas Austria",
           "role": "Security guard (KV Bewachungsgewerbe)",
           "where": "national",
-          "source": "https://www.securitas.at",
-          "confidence": "M"
+          "source": "https://www.karriere.at/jobs/securitas",
+          "confidence": "M",
+          "hourlyFrom": 1545,
+          "hourlyTo": 1585,
+          "payNote": "Gross monthly starting pay on two current Securitas Sicherheitsdienstleistungen GmbH guard vacancies listed on karriere.at; hours not given, so the Bewachungsgewerbe 40 h week × 52/12 = 173.33 h was used, giving 15.45–15.85 EUR/h."
         }
       ]
     },
@@ -7436,8 +7547,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Trenkwalder",
           "role": "Temporary worker (KV Arbeitskräfteüberlassung)",
           "where": "national",
-          "source": "https://www.trenkwalder.com",
-          "confidence": "M"
+          "source": "https://at.trenkwalder.com/jobs/a0tbI0000067XTrQAM",
+          "confidence": "H",
+          "hourlyFrom": 1500,
+          "payNote": "Gross monthly starting pay for a Trenkwalder Büroassistenz (temporary office) vacancy in Vienna, 40 h/week; 40 × 52/12 = 173.33 h gives 15.00 EUR/h. A Trenkwalder production-worker posting in Lannach (2026-05-26) stated 2,902.74 EUR/month for 38.5 h (17.40 EUR/h)."
         }
       ]
     },
@@ -7448,8 +7561,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Volkshilfe Österreich",
           "role": "Home care assistant (Heimhilfe)",
           "where": "national",
-          "source": "https://www.volkshilfe.at",
-          "confidence": "M"
+          "source": "https://www.volkshilfe-ooe.at/job/heimhelferin-m-w-d/",
+          "confidence": "H",
+          "hourlyFrom": 1625,
+          "payNote": "Gross monthly minimum for a Volkshilfe Oberösterreich Heimhelfer*in (Wohnverbund Steyr-Ennsleite), 37 h/week; 37 × 52/12 = 160.33 h gives 16.25 EUR/h. Volkshilfe Burgenland advertises a lower entry of 2,279.87 EUR (VG 4 step 1, 37 h, plus care bonus)."
         }
       ]
     },
@@ -7460,8 +7575,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "PORR",
           "role": "Construction laborer (KV Bauindustrie und Baugewerbe)",
           "where": "national",
-          "source": "https://www.porr.at",
-          "confidence": "M"
+          "source": "https://karriere.porr.at/jobboerse/job/6764",
+          "confidence": "M",
+          "hourlyFrom": 1703,
+          "payNote": "Gross minimum hourly wage for a Bauhelfer (construction helper) on a PORR Tiefbau vacancy in Sulz, Vorarlberg, excluding allowances and bonuses."
         }
       ]
     }
@@ -7524,8 +7641,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Mattssons i Godby",
           "role": "Grocery store assistant",
           "where": "national",
-          "source": "https://www.mattssons.ax",
-          "confidence": "M"
+          "source": "https://www.pam.fi/wp-content/uploads/2025/03/Kaupan-alan-taulukkopalkat-1.8.2026-30.4.2027.pdf",
+          "confidence": "M",
+          "hourlyFrom": 1237,
+          "hourlyTo": 1313,
+          "payNote": "Gross table pay from 1 Aug 2026 in Finland's generally binding commerce collective agreement (Kaupan alan TES), outside the Helsinki region: pay group A 12.37 EUR/h (1,979 a month) to group B 13.13 (2,101), the groups a grocery store assistant falls in. Applied to Mattssons in Godby as a Finnish retail employer on Åland."
         }
       ]
     },
@@ -7536,24 +7656,33 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Viking Line",
           "role": "Onboard restaurant, shop and cabin staff (Mariehamn-based ferry company)",
           "where": "national",
-          "source": "https://www.vikingline.com",
-          "confidence": "M"
+          "source": "https://www.smu.fi/wp-content/uploads/2026/04/Ulkomaanliikenteen-matkustaja-alusten-palkat-ja-lisat-1.3.2026.pdf",
+          "confidence": "M",
+          "hourlyFrom": 1406,
+          "hourlyTo": 1505,
+          "payNote": "Guaranteed gross monthly pay from 1 March 2026 under the Finnish Seafarers' Union foreign-trade passenger-ship agreement, which sets onboard pay for Viking Line's Finnish/Åland-flagged ferries: galley/shop/cleaning assistants (group 1) to waiters, shop sellers, cashiers and cabin cleaners (group 2). The agreement prices an hour of cargo-handling at 1/164 of the monthly pay, so 164 h was used: 14.06–15.05 EUR/h. Crews work about 10.5 h days on a 1:1 week-on/week-off rotation."
         },
         {
           "id": "ax-hospitality-eckero-linjen",
           "name": "Eckerö Linjen",
           "role": "Onboard restaurant and shop staff",
           "where": "national",
-          "source": "https://www.eckerolinjen.ax",
-          "confidence": "M"
+          "source": "https://www.smu.fi/wp-content/uploads/2026/04/Ulkomaanliikenteen-matkustaja-alusten-palkat-ja-lisat-1.3.2026.pdf",
+          "confidence": "M",
+          "hourlyFrom": 1406,
+          "hourlyTo": 1505,
+          "payNote": "Guaranteed gross monthly pay from 1 March 2026 under the Finnish Seafarers' Union foreign-trade passenger-ship agreement, which sets onboard pay for Eckerö Linjen's Finnish/Åland-flagged ferries: galley/shop/cleaning assistants (group 1) to waiters, shop sellers, cashiers and cabin cleaners (group 2). The agreement prices an hour of cargo-handling at 1/164 of the monthly pay, so 164 h was used: 14.06–15.05 EUR/h. Crews work about 10.5 h days on a 1:1 week-on/week-off rotation."
         },
         {
           "id": "ax-hospitality-hotell-arkipelag",
           "name": "Hotell Arkipelag",
           "role": "Hotel and restaurant staff, Mariehamn",
           "where": "national",
-          "source": "https://www.hotellarkipelag.ax",
-          "confidence": "M"
+          "source": "https://www.pam.fi/wp-content/uploads/2025/04/marava_palkat_tyontekijat_01062026.pdf",
+          "confidence": "M",
+          "hourlyFrom": 1197,
+          "hourlyTo": 1221,
+          "payNote": "Gross minimum pay from 1 June 2026 in Finland's generally binding hotel, restaurant and leisure collective agreement (MaRaVa TES) for workers with 0–2 years' experience: pay groups 1–2, 11.97–12.21 EUR/h (1,903–1,942 a month). Applied to Hotell Arkipelag in Mariehamn as a Finnish hotel employer on Åland."
         }
       ]
     },
@@ -7564,8 +7693,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Ålands hälso- och sjukvård (ÅHS)",
           "role": "Care assistant / practical nurse",
           "where": "national",
-          "source": "https://www.ahs.ax",
-          "confidence": "M"
+          "source": "https://www.regeringen.ax/sites/default/files/attachments/page/AHS-anstallningsvillkor-030223-v1.pdf",
+          "confidence": "L",
+          "hourlyFrom": 1511,
+          "payNote": "Minimum gross basic monthly salary for a practical nurse (närvårdare, requirement group B2) in ÅHS's own collective agreement on employment terms, pay-setting of 1 June 2022; the task group runs 2,344.78–2,948.23. No weekly hours in the excerpt; Finnish care-sector 38.25 h/week × 52/12 = 165.75 h gives 15.11 EUR/h."
         }
       ]
     }
@@ -7578,8 +7709,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Bravo Supermarket",
           "role": "Cashier or sales assistant",
           "where": "national",
-          "source": "https://bravosupermarket.az",
-          "confidence": "M"
+          "source": "https://www.hellojob.az/sirket/bravosupermarket-mmc",
+          "confidence": "M",
+          "hourlyFrom": 300,
+          "hourlyTo": 323,
+          "payNote": "Bravo Supermarket MMC's own sales-cashier vacancies on hellojob.az, monthly pay (whether net or gross not stated; Azerbaijani postings usually quote net); converted on Azerbaijan's 40 h/week x 52/12 = 173.33 h/month. A Bravo warehouse-assistant ad (fed.az, April 2026) stated 630 AZN net + 40 AZN food card for 08:00-17:00 six days a week."
         },
         {
           "id": "az-retail-bazarstore",
@@ -7594,8 +7728,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "OBA Market",
           "role": "Cashier or sales assistant (discount chain)",
           "where": "national",
-          "source": "https://oba.az",
-          "confidence": "M"
+          "source": "https://iseqebul.az/job/satis/satici-kassir-bey-xanim-oba-market-mmc/",
+          "confidence": "M",
+          "hourlyFrom": 288,
+          "payNote": "OBA Market MMC's own sales-cashier vacancy in Baku (Əcəmi, Biləcəri, Qobupark) on iseqebul.az, minimum monthly pay (net/gross not stated); days per week not given, so Azerbaijan's 40 h/week x 52/12 = 173.33 h/month used. Shifts are 9 hours."
         }
       ]
     },
@@ -7770,16 +7906,21 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Colruyt",
           "role": "store employee",
           "where": "national",
-          "source": "https://en.wikipedia.org/wiki/List_of_supermarket_chains_in_Belgium",
-          "confidence": "H"
+          "source": "https://www.aureussocial.be/baremes/cp-202",
+          "confidence": "M",
+          "hourlyFrom": 1384,
+          "payNote": "The sector minimum gross monthly wage at hiring for a beginner sales employee under joint committee CP 202 (employees of food retail), which covers Colruyt, Aldi, Lidl and integrated Delhaize. It’s converted at CP 202's 35 h/week (SPF Emploi study, May 2026) × 52/12 = 151.67 h/month. Colruyt may pay above this minimum."
         },
         {
           "id": "be-retail-delhaize",
           "name": "Delhaize",
           "role": "store employee",
           "where": "national",
-          "source": "https://en.wikipedia.org/wiki/List_of_supermarket_chains_in_Belgium",
-          "confidence": "H"
+          "source": "https://www.aureussocial.be/baremes/cp-202-01",
+          "confidence": "M",
+          "hourlyFrom": 1297,
+          "hourlyTo": 1384,
+          "payNote": "Delhaize's supermarkets are now run by franchisees, which fall under CP 202.01 (medium-sized food retailers): entry employee cat. 1 is €2,050.85 gross/month at 36.5 h/week × 52/12 = 158.17 h, or €12.97/h. The former integrated stores' CP 202 minimum is €2,099.26 at 35 h/week (151.67 h), or €13.84/h. That’s the upper end of the range."
         },
         {
           "id": "be-retail-carrefour-belgium",
@@ -7794,16 +7935,21 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Aldi",
           "role": "store employee",
           "where": "national",
-          "source": "https://en.wikipedia.org/wiki/List_of_supermarket_chains_in_Belgium",
-          "confidence": "H"
+          "source": "https://www.aureussocial.be/baremes/cp-202",
+          "confidence": "M",
+          "hourlyFrom": 1384,
+          "payNote": "The sector minimum gross monthly wage at hiring for a beginner sales employee under CP 202 (food retail employees), which covers Aldi. It’s converted at CP 202's 35 h/week × 52/12 = 151.67 h/month. Aldi's own ads say only that pay follows its salary scales and give no figure."
         },
         {
           "id": "be-retail-lidl",
           "name": "Lidl",
           "role": "store employee",
           "where": "national",
-          "source": "https://en.wikipedia.org/wiki/List_of_supermarket_chains_in_Belgium",
-          "confidence": "H"
+          "source": "https://travaillerchezlidl.be/fiches-de-paie/kim",
+          "confidence": "M",
+          "hourlyFrom": 1563,
+          "hourlyTo": 1612,
+          "payNote": "Actual gross monthly salaries of two Lidl Belgium store employees, published on Lidl's own careers site (a 'salaire brut' payslip series). Both work 32 h/week, so 32 × 52/12 = 138.67 h/month. Kim, with about 2 years' service, is the closer to a starting rate, at €15.63/h."
         }
       ]
     },
@@ -7814,8 +7960,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Randstad Belgium",
           "role": "temp worker (interim)",
           "where": "national",
-          "source": "https://www.randstad.be/",
-          "confidence": "H"
+          "source": "https://www.randstad.be/fr/candidats/jobs/customer-service_mons_35271e2c-4ead-4b2c-a089-c9a775781b35/",
+          "confidence": "H",
+          "hourlyFrom": 1474,
+          "hourlyTo": 1795,
+          "payNote": "A Randstad Belgium temp-to-perm customer service/administrative vacancy in Mons: €2,300–2,800 gross a month, depending on experience, plus €10 meal vouchers a day. It’s converted at the stated 36 h/week × 52/12 = 156 h/month."
         }
       ]
     },
@@ -7854,8 +8003,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Securitas Belgium",
           "role": "security agent",
           "where": "national",
-          "source": "https://www.securitas.be/",
-          "confidence": "H"
+          "source": "https://banetteone.com/blog/salaire-agent-de-gardiennage-belgique-cp317",
+          "confidence": "M",
+          "hourlyFrom": 1811,
+          "hourlyTo": 1906,
+          "payNote": "The minimum gross hourly wage for a basic static guard (SB) under Belgian joint committee CP 317 (guarding services), which binds Securitas Belgium. €19.06/h is the normal rate after 3 months, as of the August 2026 indexation, on a 37 h week. The hiring rate for the first 3 months is 95% of that, €18.11/h (the ACCG-FGTB scale sets the 95% hiring rule; its Dec 2023 table had SB at €17.61 normal and €16.73 hiring)."
         }
       ]
     }
@@ -7898,8 +8050,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Lidl Bulgaria",
           "role": "cashier / store associate",
           "where": "national",
-          "source": "https://en.wikipedia.org/wiki/List_of_supermarket_chains_in_Bulgaria ; https://jobs.lidl.bg/ (says pay is 10% above sector average; no figure)",
-          "confidence": "H"
+          "source": "https://news.bg/sadarzhanie-ot-partnyori/noviyat-lidl-v-kostinbrod-tarsi-hora-zaplata-do-1500eur-i-seriozni-pridobivki.html",
+          "confidence": "H",
+          "hourlyFrom": 750,
+          "hourlyTo": 865,
+          "payNote": "Gross monthly pay for a full-time Lidl cashier-sales assistant at the new Kostinbrod store: 1,300 EUR to start, rising to 1,500 EUR after the second year. It comes from Lidl's partner content on news.bg dated 2026-02-05. Bulgaria has paid in euros since 2026-01-01. No hours are stated, so a 40 h/week × 52/12 = 173.33 h/month standard is used."
         },
         {
           "id": "bg-retail-kaufland-bulgaria",
@@ -7914,8 +8069,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "BILLA Bulgaria",
           "role": "store associate",
           "where": "national",
-          "source": "https://en.wikipedia.org/wiki/List_of_supermarket_chains_in_Bulgaria",
-          "confidence": "H"
+          "source": "https://billajobs.bg/job-offer/463",
+          "confidence": "M",
+          "hourlyFrom": 479,
+          "payNote": "Gross monthly pay for a full-time (8 h/day) cashier or arranger at a BILLA store in Ruse, from BILLA's own job site. The figure is stated as 'up to' 830 EUR, so actual starting pay may be lower; the national minimum is 620.20 EUR. The 173.33 h/month standard (40 h/week) is used."
         },
         {
           "id": "bg-retail-t-market",
@@ -8110,8 +8267,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Eden Rock - St Barths (Oetker Collection)",
           "role": "hotel and restaurant staff",
           "where": "national",
-          "source": "https://www.oetkercollection.com/hotels/eden-rock-st-barths/",
-          "confidence": "M"
+          "source": "https://www.journaldespalaces.com/carriere/offre-317739-Commis-de-salle-Eden-Rock-St-Barths-Saint-Barthelemy.html",
+          "confidence": "H",
+          "hourlyFrom": 1243,
+          "payNote": "Eden Rock-St Barths seasonal CDD (10 months from 8 Oct 2026) for a Commis de salle at €2,101 gross a month for 39 h a week (39 × 52/12 = 169 h/month), plus shared staff housing and one meal per shift."
         },
         {
           "id": "bl-hospitality-cheval-blanc-st-barth-isle-de-france-lvm",
@@ -8388,24 +8547,33 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Grupo Pão de Açúcar (GPA)",
           "role": "operador de caixa / repositor",
           "where": "national",
-          "source": "https://www.gpabr.com",
-          "confidence": "M"
+          "source": "https://comerciarios.com.br/wp-content/uploads/2025/11/Convencao-Coletiva-de-Trabalho-SINCOVAGA-SECBaixada-Santista-2025-2026.pdf",
+          "confidence": "M",
+          "hourlyFrom": 788,
+          "hourlyTo": 1014,
+          "payNote": "Gross monthly floors in the 2025-2026 SINCOVAGA–SEC Baixada Santista collective agreement for food retail and supermarkets in the Santos region of São Paulo state, which binds Pão de Açúcar (GPA) stores there: R$ 1.733,29 entry floor for the first 90 days, then R$ 2.231,20; cashiers get a further 10% quebra de caixa. Converted with the CLT 44 h/week divisor of 220 h/month."
         },
         {
           "id": "br-retail-carrefour-brasil-atacadao",
           "name": "Carrefour Brasil (Atacadão)",
           "role": "operador de caixa / repositor",
           "where": "national",
-          "source": "https://www.carrefour.com.br",
-          "confidence": "M"
+          "source": "https://comerciarios.com.br/wp-content/uploads/2025/11/Convencao-Coletiva-de-Trabalho-SINCOVAGA-SECBaixada-Santista-2025-2026.pdf",
+          "confidence": "M",
+          "hourlyFrom": 788,
+          "hourlyTo": 1014,
+          "payNote": "Gross monthly floors in the 2025-2026 SINCOVAGA–SEC Baixada Santista collective agreement for food retail and supermarkets in the Santos region of São Paulo state, which binds Carrefour/Atacadão stores there: R$ 1.733,29 entry floor for the first 90 days, then R$ 2.231,20; cashiers get a further 10% quebra de caixa. Converted with the CLT 44 h/week divisor of 220 h/month."
         },
         {
           "id": "br-retail-assai-atacadista",
           "name": "Assaí Atacadista",
           "role": "operador de caixa / repositor",
           "where": "national",
-          "source": "https://www.assai.com.br",
-          "confidence": "M"
+          "source": "https://comerciarios.com.br/wp-content/uploads/2025/11/Convencao-Coletiva-de-Trabalho-SINCOVAGA-SECBaixada-Santista-2025-2026.pdf",
+          "confidence": "M",
+          "hourlyFrom": 788,
+          "hourlyTo": 1014,
+          "payNote": "Gross monthly floors in the 2025-2026 SINCOVAGA–SEC Baixada Santista collective agreement for food retail and supermarkets in the Santos region of São Paulo state, which binds Assaí stores there: R$ 1.733,29 entry floor for the first 90 days, then R$ 2.231,20; cashiers get a further 10% quebra de caixa. Converted with the CLT 44 h/week divisor of 220 h/month."
         }
       ]
     },
@@ -8452,8 +8620,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Randstad Brasil",
           "role": "temporary office worker",
           "where": "national",
-          "source": "https://www.randstad.com.br",
-          "confidence": "M"
+          "source": "https://www.randstad.com.br/vagas/s-administrativo-secretariado/",
+          "confidence": "L",
+          "hourlyFrom": 1137,
+          "hourlyTo": 1591,
+          "payNote": "Pay band Randstad Brasil shows on its own vacancy listing for a temporary administrative assistant (Manaus), gross per month. Converted at the 44 h/week CLT divisor of 220 h/month since the listing gives no hours."
         }
       ]
     },
@@ -8464,8 +8635,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Grupo GPS",
           "role": "vigilante / porteiro",
           "where": "national",
-          "source": "https://www.gpssa.com.br",
-          "confidence": "M"
+          "source": "https://seevissp.org.br/wp-content/uploads/2026/01/Tabela-.-CCT-2026_of.pdf",
+          "confidence": "M",
+          "hourlyFrom": 1033,
+          "hourlyTo": 1342,
+          "payNote": "Gross monthly floor for a security guard (vigilante) in the 2026 private-security collective agreement for São Paulo state (SEEVISSP), which binds security firms such as Grupo GPS there. The base floor is R$ 2.271,74 (10.33/h at the 220 h/month CLT divisor); with the mandatory 30% hazard pay it’s R$ 2.953,26, which the table itself gives as R$ 13,42 per normal hour."
         }
       ]
     },
@@ -8476,8 +8650,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "MRV Engenharia",
           "role": "servente de obra",
           "where": "national",
-          "source": "https://www.mrv.com.br",
-          "confidence": "M"
+          "source": "https://sindusconsp.com.br/sinduscon-sp-e-sintracon-sp-assinam-convencao-coletiva/",
+          "confidence": "M",
+          "hourlyFrom": 1047,
+          "payNote": "Gross floor for unskilled construction workers (serventes) in the SindusCon-SP–Sintracon-SP collective agreement for the city of São Paulo and neighbouring municipalities, from 1 May 2026; it binds builders such as MRV on sites there. The agreement states both the monthly and the hourly figure."
         }
       ]
     },
@@ -8668,24 +8844,33 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Euroopt (Eurotorg)",
           "role": "cashier / shop assistant",
           "where": "national",
-          "source": "https://ru.wikipedia.org/wiki/Евроторг ; https://rabota.by/ (823 open vacancies listed, 2026-09)",
-          "confidence": "H"
+          "source": "https://rabota.by/search/vacancy?text=%D0%BA%D0%B0%D1%81%D1%81%D0%B8%D1%80+%D0%95%D0%B2%D1%80%D0%BE%D1%82%D0%BE%D1%80%D0%B3",
+          "confidence": "H",
+          "hourlyFrom": 715,
+          "hourlyTo": 1235,
+          "payNote": "Gross monthly pay in current Eurotorg (ООО Евроторг) cashier-controller vacancies on rabota.by, no experience required, across Belarus (Sept 2026); Minsk cashier listings reach 2,170-2,370 Br. Hours not stated, so 40 h/week x 52/12 = 173.33 h: 1,240/173.33 = 7.15 to 2,140/173.33 = 12.35 BYN/h."
         },
         {
           "id": "by-retail-hit-and-groshyk-eurotorg",
           "name": "Hit! and Groshyk (Eurotorg)",
           "role": "cashier / shop assistant",
           "where": "national",
-          "source": "https://ru.wikipedia.org/wiki/Евроторг",
-          "confidence": "M"
+          "source": "https://rabota.by/search/vacancy?text=%D0%93%D1%80%D0%BE%D1%88%D1%8B%D0%BA+%D0%BA%D0%B0%D1%81%D1%81%D0%B8%D1%80",
+          "confidence": "M",
+          "hourlyFrom": 715,
+          "hourlyTo": 1235,
+          "payNote": "Hit! and Groshyk are Eurotorg formats and hire through the same ООО Евроторг cashier-controller vacancies (search 'Грошык кассир' returns them); gross monthly, no experience; 40 h/week x 52/12 = 173.33 h. Listings don’t say which store format."
         },
         {
           "id": "by-retail-belorusneft-filling-stations",
           "name": "Belorusneft filling stations",
           "role": "station attendant / cashier",
           "where": "national",
-          "source": "https://ru.wikipedia.org/wiki/Белоруснефть",
-          "confidence": "L"
+          "source": "https://rabota.by/search/vacancy?text=%D0%91%D0%B5%D0%BB%D0%BE%D1%80%D1%83%D1%81%D0%BD%D0%B5%D1%84%D1%82%D1%8C+%D0%BE%D0%BF%D0%B5%D1%80%D0%B0%D1%82%D0%BE%D1%80+%D0%90%D0%97%D0%A1",
+          "confidence": "M",
+          "hourlyFrom": 1154,
+          "hourlyTo": 2019,
+          "payNote": "NET (take-home) monthly pay in current Belorusneft filling-station operator vacancies on rabota.by, no experience required. Hours not stated; 40 h/week x 52/12 = 173.33 h: 2,000/173.33 = 11.54 to 3,500/173.33 = 20.19 BYN/h net."
         }
       ]
     },
@@ -8708,8 +8893,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Yandex Eda",
           "role": "courier",
           "where": "national",
-          "source": "https://ru.wikipedia.org/wiki/Яндекс_Еда (in Belarus since June 2021, 6 cities)",
-          "confidence": "M"
+          "source": "https://rabota.by/search/vacancy?text=%D0%AF%D0%BD%D0%B4%D0%B5%D0%BA%D1%81+%D0%95%D0%B4%D0%B0+%D0%BA%D1%83%D1%80%D1%8C%D0%B5%D1%80&area=16",
+          "confidence": "M",
+          "hourlyFrom": 865,
+          "payNote": "Minimum monthly pay stated in current Yandex Eda courier vacancies posted by its Belarus fleet partner LanchDrive on rabota.by (gross in some cities, net in others); hours not stated, 40 h/week x 52/12 = 173.33 h: 1,500/173.33 = 8.65 BYN/h. Couriers are engaged via the partner, not Yandex."
         }
       ]
     }
@@ -8820,8 +9007,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Shire of Cocos (Keeling) Islands",
           "role": "works crew",
           "where": "national",
-          "source": "https://en.wikipedia.org/wiki/Cocos_(Keeling)_Islands",
-          "confidence": "M"
+          "source": "https://shire.cc/images/files/EmploymentOpportunities/2026/Job_Advertisement_-_Infrastructure_Maintenance_Labourer_-_Casual_Pool.pdf ; https://calculate.fairwork.gov.au/Download/AwardSummary?awardCode=ma000112&fileType=pdf",
+          "confidence": "M",
+          "hourlyFrom": 2711,
+          "hourlyTo": 3389,
+          "payNote": "The Shire's April 2026 Infrastructure Maintenance Labourer (casual pool) ad pays under the Local Government Industry Award 2020. The Fair Work pay guide effective 1 July 2026 sets Level 1 at AUD 27.11/h gross ($1,030.10 for 38 h); with the ad's 25% casual loading that’s AUD 33.89/h, before the district allowance."
         }
       ]
     }
@@ -8890,24 +9080,30 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Migros",
           "role": "Sales associate (Verkaufsmitarbeiter)",
           "where": "national",
-          "source": "https://www.migros.ch",
-          "confidence": "H"
+          "source": "https://www.20min.ch/story/migros-tochter-wollen-1000-standorte-denner-waechst-und-erhoeht-mindestlohn-103489005",
+          "confidence": "M",
+          "hourlyFrom": 2363,
+          "payNote": "Migros minimum gross monthly wage for unskilled staff in 2026 as reported by 20 Minuten (up from CHF 4,200 set 1 Jan 2024 per Migros Ostschweiz jobs page, paid 13 times a year per Unia). No hours stated, so the Swiss 42 h/week x 52/12 = 182 h/month used; the 13th salary isn’t in the hourly figure."
         },
         {
           "id": "ch-retail-coop",
           "name": "Coop",
           "role": "Sales associate",
           "where": "national",
-          "source": "https://www.coop.ch",
-          "confidence": "H"
+          "source": "https://www.20min.ch/story/neuer-gav-coop-erhoeht-mindestloehne-auf-4300-franken-103437069",
+          "confidence": "H",
+          "hourlyFrom": 2363,
+          "payNote": "Coop's minimum gross monthly wage for staff without an apprenticeship under the new GAV from 1 Jan 2026, reported by 20 Minuten; no hours stated, so Swiss 42 h/week x 52/12 = 182 h/month used. Any 13th salary isn’t included."
         },
         {
           "id": "ch-retail-denner",
           "name": "Denner",
           "role": "Sales associate",
           "where": "national",
-          "source": "https://www.denner.ch",
-          "confidence": "H"
+          "source": "https://www.foodaktuell.ch/2025/11/07/denner-erhoeht-mindestlohn-fuer-ungelernte",
+          "confidence": "H",
+          "hourlyFrom": 2473,
+          "payNote": "Denner minimum gross monthly wage for unskilled (sales) staff from 2026; no hours stated, so Swiss 42 h/week x 52/12 = 182 h/month used."
         }
       ]
     },
@@ -8918,16 +9114,22 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "McDonald's Suisse",
           "role": "Crew member",
           "where": "national",
-          "source": "https://www.mcdonalds.ch",
-          "confidence": "H"
+          "source": "https://gastrosuisse.ch/assets/de/recht/l-gav/gastgewerbliche-loehne/gastrosuisse-tabelle-mindestloehne-l-gav-2026.pdf",
+          "confidence": "H",
+          "hourlyFrom": 1877,
+          "hourlyTo": 2040,
+          "payNote": "McDonald's Switzerland states its crew fall under the hotel-restaurant collective agreement L-GAV and are paid by it or cantonal minimum wages, with a 13th salary. The 2026 L-GAV minimum for staff without an apprenticeship is CHF 3,713 gross a month, and the table gives CHF 20.40/h at 42 h/week, or CHF 18.77/h during the introductory period of up to 12 months (-8%); hourly figures exclude holiday, public-holiday and 13th-month supplements."
         },
         {
           "id": "ch-school-starbucks-switzerland",
           "name": "Starbucks Switzerland",
           "role": "Barista",
           "where": "national",
-          "source": "https://www.starbucks.ch",
-          "confidence": "M"
+          "source": "https://gastrosuisse.ch/assets/de/recht/l-gav/gastgewerbliche-loehne/gastrosuisse-tabelle-mindestloehne-l-gav-2026.pdf",
+          "confidence": "M",
+          "hourlyFrom": 1877,
+          "hourlyTo": 2040,
+          "payNote": "The Swiss hotel-restaurant collective agreement (L-GAV). That’s generally binding on cafés including Starbucks outlets, sets CHF 3,713 gross a month for staff without an apprenticeship in 2026; the table gives CHF 20.40/h at 42 h/week, CHF 18.77/h in the up-to-12-month introductory period. Starbucks' own posted barista pay wasn’t found."
         }
       ]
     },
@@ -8938,8 +9140,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Securitas AG",
           "role": "Security guard",
           "where": "national",
-          "source": "https://www.securitas.ch",
-          "confidence": "H"
+          "source": "https://vssu.org/wp-content/uploads/2026/01/GAV_d-Version-ab-1.1.2026-.pdf",
+          "confidence": "H",
+          "hourlyFrom": 2415,
+          "hourlyTo": 2714,
+          "payNote": "Generally binding (AVE) private-security collective agreement, in force 1 Jan 2026, covering all security firms in Switzerland including Securitas AG; gross. Full-time monthly-paid first-year guard: 54,270 / 2,000 h = CHF 27.14/h; hourly-paid (category C) first-year minimum CHF 24.15-25.20/h depending on canton, before holiday pay. Under-25s may be paid up to CHF 150/month less in category A."
         }
       ]
     },
@@ -8950,8 +9155,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Adecco Switzerland",
           "role": "Temporary office worker",
           "where": "national",
-          "source": "https://www.adecco.ch",
-          "confidence": "H"
+          "source": "https://www.fachkraft.ch/temporaerlohn-schweiz/",
+          "confidence": "M",
+          "hourlyFrom": 2122,
+          "hourlyTo": 2239,
+          "payNote": "Minimum gross hourly base wage for unskilled temporary workers under the generally binding staffing collective agreement (GAV Personalverleih) in 2026, which binds Adecco as a staffing agency; normal vs high-wage areas, before holiday/13th-month supplements (with them CHF 25.70-27.12). The GAV sets no separate office-work rate, so this is the floor for an untrained temp office worker."
         }
       ]
     },
@@ -8962,8 +9170,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Smood",
           "role": "Delivery courier (also Uber Eats and Just Eat operate in Swiss cities)",
           "where": "national",
-          "source": "https://www.smood.ch",
-          "confidence": "M"
+          "source": "https://www.workzeitung.ch/2025/04/fuer-food-kuriere-gilt-der-gastro-vertrag/",
+          "confidence": "M",
+          "hourlyFrom": 2300,
+          "hourlyTo": 2491,
+          "payNote": "Smood's company collective agreement (with syndicom) sets a gross minimum of CHF 23 an hour for employed couriers, unchanged since about 2022, before tips and bonuses; a Geneva labor court ruled Smood falls under the hotel-restaurant L-GAV, whose unskilled minimum the paper puts at CHF 24.91/h (incl. supplements)."
         }
       ]
     },
@@ -8974,8 +9185,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Implenia",
           "role": "Construction worker",
           "where": "national",
-          "source": "https://www.implenia.com",
-          "confidence": "H"
+          "source": "https://shop.baumeister.swiss/shop/document_download.php?document=Anhang+I+-+Lohntabelle+2026.pdf",
+          "confidence": "H",
+          "hourlyFrom": 2695,
+          "hourlyTo": 2775,
+          "payNote": "Generally binding national construction agreement (LMV) minimum for a construction worker without specialist skills (class C) from 1 Jan 2026, gross, by wage zone (red = Zurich/Geneva/Vaud/Basel; green = Ticino, Appenzell); binds Implenia's construction sites. Hourly rates as stated in the table; monthly CHF 4,747-4,885."
         }
       ]
     },
@@ -9140,8 +9354,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Prosegur Chile",
           "role": "Security guard",
           "where": "national",
-          "source": "https://www.prosegur.cl",
-          "confidence": "M"
+          "source": "https://www.prosegur.cl/trabajo/guardia-seguridad",
+          "confidence": "M",
+          "hourlyFrom": 325200,
+          "payNote": "Prosegur Chile's own careers page for Guardia de Seguridad states pay from $620,000 a month NET (líquido), updated for 2025; no hours stated, so converted on Chile's 2025 44 h legal week (44 × 52/12 = 190.67 h/month). On the 42 h week in force from April 2026 it would be about $3,407/h."
         }
       ]
     },
@@ -9152,8 +9368,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Adecco Chile",
           "role": "Temporary office worker",
           "where": "national",
-          "source": "https://www.adecco.cl",
-          "confidence": "M"
+          "source": "https://cl.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-administrativo-de-facturacion-modalidad-hibrida-850000-liquidos-en-santiago-las-condes-029DC57971BFE81761373E686DCF3405",
+          "confidence": "M",
+          "hourlyFrom": 467000,
+          "payNote": "Adecco Chile temp project (3-6 months) for an Asistente Administrativo de Facturación at a client in Las Condes, $850,000 a month NET (líquido), 42 h/week; 42 × 52/12 = 182 h/month. Other Adecco Chile postings: warehouse operario $600,000/month, admin in Puerto Montt $1,000,000."
         }
       ]
     },
@@ -9212,8 +9430,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Meituan",
           "role": "Delivery rider",
           "where": "national",
-          "source": "https://www.meituan.com",
-          "confidence": "H"
+          "source": "https://www.meituan.com/news/NN241225047010288",
+          "confidence": "M",
+          "hourlyFrom": 2000,
+          "hourlyTo": 3000,
+          "payNote": "Meituan's own disclosure of delivery-rider earnings: an hourly income of 20–30 yuan, and Q3 2024 monthly averages for high-frequency riders (22+ days and 6+ h a day) of 5,720–10,865 yuan depending on city tier. These are gross platform payouts before the rider's own costs. The Q1 2025 update gave 7,230–10,100 yuan a month."
         },
         {
           "id": "cn-between-ele-me-alibaba",
@@ -9232,16 +9453,22 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Luckin Coffee",
           "role": "Barista",
           "where": "national",
-          "source": "https://www.luckincoffee.com",
-          "confidence": "H"
+          "source": "https://www.zhaopin.com/jobdetail/CCL1475860600J41011394204.htm",
+          "confidence": "M",
+          "hourlyFrom": 2000,
+          "hourlyTo": 2900,
+          "payNote": "A Luckin Coffee (Shenzhen) Bao'an store posting on Zhaopin for a student part-time barista: 20 yuan/h during training and 26 yuan/h once certified, rising to 29 yuan/h at full scheduled hours. Other Luckin ads in lower-cost cities start at 16 yuan/h during the 80 h training period."
         },
         {
           "id": "cn-school-kfc-china-yum-china",
           "name": "KFC China (Yum China)",
           "role": "Crew member",
           "where": "national",
-          "source": "https://www.yumchina.com",
-          "confidence": "H"
+          "source": "https://m.597.com/job/882c105644791.html",
+          "confidence": "M",
+          "hourlyFrom": 1875,
+          "hourlyTo": 2500,
+          "payNote": "A Xiamen KFC (Yum China) crew vacancy on 597.com paying 150–200 yuan a day. No hours are given, so the standard 8 h day is assumed, giving 18.75–25 yuan/h."
         }
       ]
     },
@@ -9260,8 +9487,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Yonghui Superstores",
           "role": "Store associate",
           "where": "national",
-          "source": "https://www.yonghui.com.cn",
-          "confidence": "M"
+          "source": "https://www.liepin.com/city-hz/zpyonghuichaoshishouhuoyuan/",
+          "confidence": "M",
+          "hourlyFrom": 1731,
+          "hourlyTo": 2885,
+          "payNote": "Yonghui (Zhejiang, Yuhang branch) stock-clerk vacancies on Liepin in Hangzhou paying 3,000–5,000 yuan a month. No hours are stated. It’s converted at 40 h/week × 52/12 = 173.33 h/month. A Jilin Yonghui ad gives 4 days off a month, which implies longer actual hours."
         }
       ]
     },
@@ -9272,8 +9502,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Haidilao",
           "role": "Restaurant server",
           "where": "national",
-          "source": "https://www.haidilao.com",
-          "confidence": "H"
+          "source": "http://www.fhhrss.net/Company_detail.aspx?id=1A5D9E4368DFAA52",
+          "confidence": "M",
+          "hourlyFrom": 1800,
+          "hourlyTo": 2000,
+          "payNote": "A Haidilao Fenghua (Ningbo) recruitment notice on the Fenghua HR site: part-time servers are paid 18–20 yuan/h, and full-time servers 4,500–9,000 yuan a month all-in (piece-rate)."
         }
       ]
     },
@@ -9298,24 +9531,30 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Grupo Exito (Exito, Carulla, Surtimax)",
           "role": "Cashier / store associate",
           "where": "national",
-          "source": "https://www.grupoexito.com.co",
-          "confidence": "H"
+          "source": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-auxiliar-cajas-fontanar-chia-en-chia-0CB7ACC0B029950A61373E686DCF3405",
+          "confidence": "H",
+          "hourlyFrom": 961500,
+          "payNote": "Gross monthly base in a Grupo Éxito Computrabajo vacancy for a multi-skilled cashier/packer/stocker in Chía (the ad says legal minimum wage plus statutory benefits). Converted at Colombia's 42 h/week legal maximum from July 2026 x 52/12 = 182 h/month."
         },
         {
           "id": "co-retail-d1-koba-colombia",
           "name": "D1 (Koba Colombia)",
           "role": "Store associate",
           "where": "national",
-          "source": "https://www.d1.com.co",
-          "confidence": "H"
+          "source": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-asistente-de-ventas-tiendas-d1-en-bogota-dc-65B7301CE031C48361373E686DCF3405",
+          "confidence": "H",
+          "hourlyFrom": 1020300,
+          "payNote": "Gross monthly salary in a D1 S.A.S. (formerly Koba Colombia) Computrabajo vacancy for a store sales assistant in Bogotá, open to applicants without experience, full time, open-ended contract. Converted at 42 h/week x 52/12 = 182 h/month."
         },
         {
           "id": "co-retail-ara-jeronimo-martins",
           "name": "Ara (Jeronimo Martins)",
           "role": "Store associate",
           "where": "national",
-          "source": "https://www.aratiendas.com",
-          "confidence": "H"
+          "source": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-operador-de-tienda-ara-nechi-antioquia-en-nechi-93E8FD74E742B7EC61373E686DCF3405",
+          "confidence": "H",
+          "hourlyFrom": 962000,
+          "payNote": "Gross monthly salary in a Jerónimo Martins Colombia Computrabajo vacancy for an Ara store operator in Nechí, Antioquia, equal to the 2026 legal minimum wage. Converted at 42 h/week x 52/12 = 182 h/month."
         }
       ]
     },
@@ -9326,8 +9565,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Juan Valdez Cafe",
           "role": "Barista",
           "where": "national",
-          "source": "https://www.juanvaldez.com",
-          "confidence": "H"
+          "source": "https://www.noticiascaracol.com/economia/juan-valdez-tiene-vacantes-en-temporada-navidena-con-salarios-de-mas-de-2-millones-como-aplicar-so35",
+          "confidence": "M",
+          "hourlyFrom": 674300,
+          "payNote": "Gross monthly base plus commissions for Juan Valdez coffee-store auxiliaries and operatives (barista roles) in Bogotá, Cúcuta and Bucaramanga, as reported in December 2024. Converted at the then 46 h/week legal maximum x 52/12 = 199.33 h/month; now below the 2026 minimum wage, so stale."
         }
       ]
     },
@@ -9350,8 +9591,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Crepes & Waffles",
           "role": "Server",
           "where": "national",
-          "source": "https://www.crepesywaffles.com",
-          "confidence": "M"
+          "source": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-auxiliares-de-cocina-y-meseras-manizales-en-manizales-7882EDC0A3A074A861373E686DCF3405",
+          "confidence": "M",
+          "hourlyFrom": 813200,
+          "payNote": "Monthly salary in a Crepes & Waffles (Maquite S.A.) Computrabajo vacancy for kitchen assistants and waitresses in Manizales. Converted at 42 h/week x 52/12 = 182 h/month. The figure is below the 2026 legal minimum of COP 1,750,905, so it may be a stale or net figure."
         }
       ]
     },
@@ -9362,8 +9605,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Seguridad Atlas",
           "role": "Security guard",
           "where": "national",
-          "source": "https://www.seguridadatlas.com",
-          "confidence": "M"
+          "source": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-guarda-de-seguridad-sector-residencial-en-itagui-7259F17FF6DE80A661373E686DCF3405",
+          "confidence": "H",
+          "hourlyFrom": 962000,
+          "payNote": "Gross monthly base in a Seguridad Atlas Computrabajo vacancy for a residential security guard in Itagüí, Antioquia (1 year's experience required), equal to the 2026 minimum wage. Converted at 42 h/week x 52/12 = 182 h/month; guards commonly work longer shifts paid as overtime."
         }
       ]
     },
@@ -9374,8 +9619,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Adecco Colombia",
           "role": "Temporary office worker",
           "where": "national",
-          "source": "https://www.adecco.com.co",
-          "confidence": "M"
+          "source": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-auxiliar-administrativo-sector-financiero-en-medellin-7CE7821B34E01CE561373E686DCF3405",
+          "confidence": "H",
+          "hourlyFrom": 962000,
+          "payNote": "Gross monthly salary in an Adecco Colombia Computrabajo vacancy for a temporary (obra o labor) administrative assistant in the financial sector, Medellín, equal to the 2026 minimum wage. Converted at 42 h/week x 52/12 = 182 h/month."
         }
       ]
     },
@@ -9400,24 +9647,31 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Walmart Mexico y Centroamerica (Walmart, Mas x Menos, Pali)",
           "role": "Store associate",
           "where": "national",
-          "source": "https://www.walmartcentroamerica.com",
-          "confidence": "H"
+          "source": "https://cr.computrabajo.com/empresas/ofertas-de-trabajo-de-walmart-498E5C4EE1CEB3B5",
+          "confidence": "M",
+          "hourlyFrom": 201442,
+          "hourlyTo": 201923,
+          "payNote": "Gross monthly pay on current Walmart (Costa Rica) store vacancies on Computrabajo: cashier/store assistant in San José and store operator at Palí/Maxi Palí Alajuela. No hours given; Costa Rica's 48 h daytime week × 52/12 = 208 h gives about 2,014–2,019 CRC/h."
         },
         {
           "id": "cr-retail-automercado",
           "name": "Automercado",
           "role": "Cashier",
           "where": "national",
-          "source": "https://www.automercado.cr",
-          "confidence": "M"
+          "source": "https://www.mtss.go.cr/temas-laborales/salarios/lista_salarios_minimos_2026.pdf",
+          "confidence": "M",
+          "hourlyFrom": 201806,
+          "payNote": "2026 statutory minimum monthly wage for a cashier (Cajero, TOCG) under Costa Rica's Decreto 45303-MTSS, which binds Automercado; 48 h daytime week × 52/12 = 208 h gives 2,018.06 CRC/h."
         },
         {
           "id": "cr-retail-grupo-gessa-perimercados-super-compro",
           "name": "Grupo Gessa (Perimercados, Super Compro)",
           "role": "Store associate",
           "where": "national",
-          "source": "http://www.grupogessa.com",
-          "confidence": "L"
+          "source": "https://www.mtss.go.cr/temas-laborales/salarios/lista_salarios_minimos_2026.pdf",
+          "confidence": "M",
+          "hourlyFrom": 169046,
+          "payNote": "2026 statutory minimum daily wage (8 h ordinary day) for a shop assistant (Dependiente, TOSC) under Decreto 45303-MTSS, binding on Grupo Gessa; ÷ 8 h = 1,690.46 CRC/h. Cashiers are TOCG at 419,755.80 a month."
         }
       ]
     },
@@ -9428,8 +9682,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Starbucks Costa Rica",
           "role": "Barista",
           "where": "national",
-          "source": "https://www.starbucks.co.cr",
-          "confidence": "M"
+          "source": "https://www.mtss.go.cr/temas-laborales/salarios/lista_salarios_minimos_2026.pdf",
+          "confidence": "M",
+          "hourlyFrom": 174898,
+          "payNote": "2026 statutory minimum daily wage (8 h ordinary day) for a barista (TOC) under Decreto 45303-MTSS, binding on Starbucks Costa Rica; ÷ 8 h = 1,748.98 CRC/h."
         }
       ]
     },
@@ -9452,8 +9708,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Marriott hotels in Costa Rica",
           "role": "Hotel staff",
           "where": "national",
-          "source": "https://careers.marriott.com",
-          "confidence": "M"
+          "source": "https://www.mtss.go.cr/temas-laborales/salarios/lista_salarios_minimos_2026.pdf",
+          "confidence": "M",
+          "hourlyFrom": 155455,
+          "payNote": "2026 statutory minimum daily wage (8 h ordinary day) for hotel waiters, room attendants and servers (TONC) under Decreto 45303-MTSS, binding on Marriott hotels in Costa Rica; ÷ 8 h = 1,554.55 CRC/h."
         }
       ]
     }
@@ -9610,8 +9868,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Alphamega Hypermarkets",
           "role": "Cashier / store associate",
           "where": "national",
-          "source": "https://www.alphamega.com.cy",
-          "confidence": "H"
+          "source": "https://www.alpha.jobs/jobs?employer_id=5521455",
+          "confidence": "M",
+          "hourlyFrom": 660,
+          "hourlyTo": 715,
+          "payNote": "Alphamega's own current ads on Alpha.jobs for delicatessen-counter helpers (the closest entry store role listed; no cashier ad was live), gross a month. Converted at 40 h/week x 52/12 = 173.33 h."
         },
         {
           "id": "cy-retail-sklavenitis-cyprus",
@@ -9626,8 +9887,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Lidl Cyprus",
           "role": "Store associate",
           "where": "national",
-          "source": "https://www.lidl.com.cy",
-          "confidence": "H"
+          "source": "https://corporate.lidl.com.cy/en/media-center/pressreleases/2026/lidl-cyprus-14-salaries",
+          "confidence": "H",
+          "hourlyFrom": 741,
+          "payNote": "Lidl Cyprus press release: store associates start at EUR 1,220 gross a month full-time (EUR 7.41/h as stated), rising to EUR 8.10 after two years; 14 salaries a year."
         }
       ]
     },
@@ -9638,8 +9901,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Costa Coffee Cyprus",
           "role": "Barista",
           "where": "national",
-          "source": "https://www.costacoffee.com.cy",
-          "confidence": "M"
+          "source": "https://www.carierista.com/en/jobs/7304/costa-coffee-barista-famagusta",
+          "confidence": "M",
+          "hourlyFrom": 637,
+          "payNote": "Costa Coffee (Symeonides Coffee Cyprus Ltd) barista ad for Famagusta, gross a month plus 13th salary. No hours given; converted at 40 h/week x 52/12 = 173.33 h."
         }
       ]
     },
@@ -9688,8 +9953,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Kaufland Ceska republika",
           "role": "Store associate",
           "where": "national",
-          "source": "https://www.kaufland.cz",
-          "confidence": "H"
+          "source": "https://www.jobs.cz/rpd/2001389704/",
+          "confidence": "H",
+          "hourlyFrom": 19039,
+          "hourlyTo": 20193,
+          "payNote": "Kaufland Česká republika's own jobs.cz vacancy for a Prodavač/ka (sales assistant) in Hradec Králové at 33,000-35,000 CZK gross a month; a Praha-Palmovka sales assistant (mostly online order picking) is 34,000-36,000. Converted on the Czech 40 h week (173.33 h/month); hours not stated in the listing card."
         },
         {
           "id": "cz-retail-albert-ahold-delhaize",
@@ -9704,8 +9972,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Lidl Ceska republika",
           "role": "Store associate",
           "where": "national",
-          "source": "https://www.lidl.cz",
-          "confidence": "H"
+          "source": "https://www.jobs.cz/rpd/2001447045/",
+          "confidence": "H",
+          "hourlyFrom": 21058,
+          "hourlyTo": 23308,
+          "payNote": "Lidl Česká republika vacancy for a Prodavač/ka in Zdiby, 40 h/week, 36,500 CZK gross a month at start rising to 40,400 after 2 years; 40 × 52/12 = 173.33 h/month."
         }
       ]
     },
@@ -9716,8 +9987,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Costa Coffee Czech Republic",
           "role": "Barista",
           "where": "national",
-          "source": "https://www.costa-coffee.cz",
-          "confidence": "M"
+          "source": "https://www.jobs.cz/rpd/2001418012/",
+          "confidence": "M",
+          "hourlyFrom": 20193,
+          "hourlyTo": 22212,
+          "payNote": "Night barista at the Costa Coffee café at Prague airport, operated by Lagardère Travel Retail (the Costa franchisee there), 35,000-38,500 CZK gross a month, likely including night premiums; converted on the 40 h week (173.33 h/month). A part-time (zkrácený úvazek) Costa airport post is 25,000-27,000; Lagardère's city-barista ad states no pay."
         }
       ]
     },
@@ -9740,8 +10014,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Grafton Recruitment",
           "role": "Temporary office worker",
           "where": "national",
-          "source": "https://www.grafton.cz",
-          "confidence": "M"
+          "source": "https://www.jobs.cz/rpd/2001444960/",
+          "confidence": "M",
+          "hourlyFrom": 18462,
+          "hourlyTo": 20193,
+          "payNote": "Grafton Recruitment's temporary-project office coordinator (English required) at 32,000-35,000 CZK gross a month; converted on the 40 h week (173.33 h/month)."
         }
       ]
     },
@@ -9800,24 +10077,33 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Salling Group (Netto, Fotex, Bilka)",
           "role": "Store associate",
           "where": "national",
-          "source": "https://sallinggroup.com",
-          "confidence": "H"
+          "source": "https://www.hk.dk/omhk/sektor/handel/ok25/resultat/butik/minimalloen",
+          "confidence": "M",
+          "hourlyFrom": 14217,
+          "hourlyTo": 15152,
+          "payNote": "Gross minimum rates for adult shop staff under the HK Handel / Dansk Erhverv shop agreement 2025-2028 from 1 March 2026 (unskilled to skilled). HK runs a Salling Group national club under this agreement; Salling's own posted rates weren’t found."
         },
         {
           "id": "dk-retail-coop-danmark-coop-365-kvickly-superbrugs",
           "name": "Coop Danmark (Coop 365, Kvickly, SuperBrugsen)",
           "role": "Store associate",
           "where": "national",
-          "source": "https://om.coop.dk",
-          "confidence": "H"
+          "source": "https://www.hk.dk/omhk/sektor/handel/ok25/resultat/butik/minimalloen ; https://coop.dk/job/coop-som-arbejdsplads/overenskomster/",
+          "confidence": "M",
+          "hourlyFrom": 14217,
+          "hourlyTo": 15152,
+          "payNote": "Coop states its store staff are covered by 'Butiksoverenskomsten 2025-2028'; the figures are HK's published 2025-2028 shop-agreement minimums from 1 March 2026 (gross, adult unskilled to skilled). Coop's own agreement PDF couldn’t be downloaded to confirm the tables are identical."
         },
         {
           "id": "dk-retail-lidl-danmark",
           "name": "Lidl Danmark",
           "role": "Store associate",
           "where": "national",
-          "source": "https://www.lidl.dk",
-          "confidence": "H"
+          "source": "https://karriere.lidl.dk/butik/butiksassistent",
+          "confidence": "H",
+          "hourlyFrom": 14217,
+          "hourlyTo": 15152,
+          "payNote": "Lidl Danmark's own store-assistant (butiksassistent) careers page, gross hourly, wages per the HK agreement; unskilled start 142.17, skilled 151.52 (the March 2026 rates)."
         }
       ]
     },
@@ -9828,8 +10114,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Joe & The Juice",
           "role": "Juicer / barista",
           "where": "national",
-          "source": "https://www.joejuice.com",
-          "confidence": "H"
+          "source": "https://www.3f.dk/-/media/files/artikler/overenskomst/privat-service/overenskomster/joe-and-the-juice-2025-2028.pdf",
+          "confidence": "H",
+          "hourlyFrom": 14849,
+          "payNote": "Gross minimum wage (minimalløn) for adult staff in the Joe & the Juice / 3F Privat Service company agreement 2025-2028; full-time month = 160.33 h (37 h/week). Rises to 151.99 from 1 March 2027."
         }
       ]
     },
@@ -9852,8 +10140,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "G4S Danmark",
           "role": "Security guard",
           "where": "national",
-          "source": "https://www.g4s.com/da-dk",
-          "confidence": "M"
+          "source": "https://vsl.dk/loen-og-overenskomster/fagene/vagt-i-et-vagtselskab",
+          "confidence": "M",
+          "hourlyFrom": 17881,
+          "payNote": "Gross base pay for a newly hired full-time guard in a security company under the DI / Serviceforbundet (VSL) guard-company agreement, which covers the large firms incl. G4S; 27,691.50 / 154.87 h = 178.81 kr/h."
         }
       ]
     },
@@ -9876,8 +10166,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Scandic Hotels Denmark",
           "role": "Hotel staff",
           "where": "national",
-          "source": "https://www.scandichotels.com",
-          "confidence": "M"
+          "source": "https://www.3f.dk/-/media/files/artikler/overenskomst/privat-service/overenskomster/hovedoverenskomst-fastloen-horesta-2025-2028.pdf",
+          "confidence": "M",
+          "hourlyFrom": 14849,
+          "hourlyTo": 15052,
+          "payNote": "Gross minimum rates for adult unskilled hotel staff (assistants, unskilled kitchen, reception) under the HORESTA/3F Hotel Agreement 2025-2028 from 1 March 2026. Scandic Denmark is assumed covered as a HORESTA hotel; no Scandic posting with pay found."
         }
       ]
     },
@@ -10126,24 +10419,32 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Rimi Eesti",
           "role": "Store associate",
           "where": "national",
-          "source": "https://www.rimi.ee",
-          "confidence": "H"
+          "source": "https://cv.ee/et/vacancy/1660728",
+          "confidence": "H",
+          "hourlyFrom": 594,
+          "payNote": "Gross monthly starting salary in Rimi Eesti Food's cv.ee vacancy for a full-time shift sales assistant at Alliku Rimi Supermarket; dozens of other Rimi assistant ads in September 2026 show the same EUR 1,030 (shelf stockers EUR 946). Converted at 40 h/week x 52/12 = 173.33 h/month."
         },
         {
           "id": "ee-retail-maxima-eesti",
           "name": "Maxima Eesti",
           "role": "Store associate",
           "where": "national",
-          "source": "https://www.maxima.ee",
-          "confidence": "H"
+          "source": "https://cv.ee/et/vacancy/1659392",
+          "confidence": "H",
+          "hourlyFrom": 568,
+          "hourlyTo": 650,
+          "payNote": "Gross hourly pay range in MAXIMA Eesti's cv.ee vacancy for a store worker at Lasnamäe Maxima, Tallinn; the same 5.68-6.50 range appears in its store-worker ads nationwide (Tartu, Võru, Valga, Räpina) in September 2026."
         },
         {
           "id": "ee-retail-selver",
           "name": "Selver",
           "role": "Store associate",
           "where": "national",
-          "source": "https://www.selver.ee",
-          "confidence": "H"
+          "source": "https://cv.ee/et/vacancy/1656793",
+          "confidence": "H",
+          "hourlyFrom": 580,
+          "hourlyTo": 650,
+          "payNote": "Gross hourly pay in Selver AS cv.ee vacancies for store service assistants (teenindaja), September 2026: EUR 5.80-6.20 in North Tallinn stores, up to EUR 6.50 at Kurna and Pirita."
         }
       ]
     },
@@ -10178,8 +10479,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "G4S Eesti",
           "role": "Security guard",
           "where": "national",
-          "source": "https://www.g4s.ee",
-          "confidence": "H"
+          "source": "https://cv.ee/et/vacancy/1653272",
+          "confidence": "H",
+          "hourlyFrom": 709,
+          "hourlyTo": 900,
+          "payNote": "Gross hourly pay in G4S Eesti cv.ee vacancies for security officers, September 2026: EUR 7.09 at an industrial site, EUR 9.00 at retail sites in Harju county."
         }
       ]
     },
@@ -10256,8 +10560,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Falcon Group",
           "role": "Security guard",
           "where": "national",
-          "source": "https://www.falcongroup-eg.com",
-          "confidence": "M"
+          "source": "https://almamarnews.com/6054/",
+          "confidence": "L",
+          "hourlyFrom": 962,
+          "hourlyTo": 1923,
+          "payNote": "News report of a Falcon security-guard hiring round: 3,000-4,000 EGP a month for 8-12 hour shifts. Assuming 6 shifts a week: 3,000 / (12 h x 6 x 52/12 = 312 h) = 9.62 to 4,000 / (8 h x 6 x 52/12 = 208 h) = 19.23 EGP/h. 2023 figure."
         }
       ]
     },
@@ -10374,24 +10681,33 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "S Group (Prisma, S-market, Alepa)",
           "role": "Store associate",
           "where": "national",
-          "source": "https://s-ryhma.fi",
-          "confidence": "H"
+          "source": "https://www.pam.fi/wp-content/uploads/2025/03/Kaupan-alan-taulukkopalkat-1.8.2026-30.4.2027.pdf",
+          "confidence": "H",
+          "hourlyFrom": 1237,
+          "hourlyTo": 1366,
+          "payNote": "Gross hourly table pay in the retail collective agreement (Kaupan TES, PAM/Palta) that binds S Group stores, first step, from 1 Aug 2026: pay group A EUR 12.37 (rest of Finland) to 12.88 (Helsinki area), group B up to EUR 13.66 in Helsinki. Store associates sit in group A or B depending on the job."
         },
         {
           "id": "fi-retail-kesko-k-citymarket-k-supermarket",
           "name": "Kesko (K-Citymarket, K-Supermarket)",
           "role": "Store associate",
           "where": "national",
-          "source": "https://www.kesko.fi",
-          "confidence": "H"
+          "source": "https://www.pam.fi/wp-content/uploads/2025/03/Kaupan-alan-taulukkopalkat-1.8.2026-30.4.2027.pdf",
+          "confidence": "H",
+          "hourlyFrom": 1237,
+          "hourlyTo": 1366,
+          "payNote": "Gross hourly table pay in the retail collective agreement (Kaupan TES) that covers K-stores, first step, from 1 Aug 2026: group A EUR 12.37 (rest of Finland) to 12.88 (Helsinki area), group B up to EUR 13.66 in Helsinki."
         },
         {
           "id": "fi-retail-lidl-suomi",
           "name": "Lidl Suomi",
           "role": "Store associate",
           "where": "national",
-          "source": "https://www.lidl.fi",
-          "confidence": "H"
+          "source": "https://duunitori.fi/tyoelama/lidl-kesatyot-haku-on-auki",
+          "confidence": "M",
+          "hourlyFrom": 1161,
+          "hourlyTo": 1564,
+          "payNote": "Gross hourly pay range for a Lidl Finland store associate as published in Duunitori's article on Lidl's 2026 summer hiring, depending on experience and region, plus a Lidl supplement of 1.5% rising with tenure."
         }
       ]
     },
@@ -10414,16 +10730,22 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Espresso House Finland",
           "role": "Barista",
           "where": "national",
-          "source": "https://espressohouse.com",
-          "confidence": "M"
+          "source": "https://duunitori.fi/tyopaikat/tyo/barista-oulu-sessp-20589037",
+          "confidence": "H",
+          "hourlyFrom": 1221,
+          "hourlyTo": 1321,
+          "payNote": "Gross starting hourly pay in Espresso House Finland's own barista vacancy in Oulu (collective-agreement rate for 0-2 years' experience), rising EUR 0.50 after 6 and 12 months, plus supplements."
         },
         {
           "id": "fi-school-hesburger",
           "name": "Hesburger",
           "role": "Crew member",
           "where": "national",
-          "source": "https://www.hesburger.fi",
-          "confidence": "H"
+          "source": "https://duunitori.fi/tyopaikat/tyo/hampurilaistyontekija-hesburger-kasarmitori-helsinki-shses-20601735",
+          "confidence": "H",
+          "hourlyFrom": 977,
+          "hourlyTo": 1433,
+          "payNote": "Gross hourly pay range in Hesburger's own crew vacancy in Helsinki; the rate depends on prior experience (the bottom of the range corresponds to an entry/trainee rate)."
         }
       ]
     },
@@ -10434,8 +10756,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Securitas Oy",
           "role": "Security guard",
           "where": "national",
-          "source": "https://www.securitas.fi",
-          "confidence": "H"
+          "source": "https://www.palta.fi/wp-content/uploads/2025/06/TES_Vartiointiala-tes-2025-2028_Final.pdf",
+          "confidence": "H",
+          "hourlyFrom": 1233,
+          "hourlyTo": 1343,
+          "payNote": "Gross starting table pay in the security-sector collective agreement (Vartiointialan TES 2025-2028, Palta/PAM) that covers Securitas Oy guards, from 1 Sep 2026: level II (minimum for a licensed guard) EUR 12.33 outside and 12.74 in the Helsinki area; level III (e.g. shopping-center guarding) EUR 13.43 in Helsinki. Hourly = monthly / 162 per the agreement."
         }
       ]
     },
@@ -10446,8 +10771,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Barona",
           "role": "Temporary worker",
           "where": "national",
-          "source": "https://www.barona.fi",
-          "confidence": "M"
+          "source": "https://duunitori.fi/tyopaikat/yritys/barona",
+          "confidence": "M",
+          "hourlyFrom": 1260,
+          "hourlyTo": 1507,
+          "payNote": "Gross hourly pay in Barona's own temp vacancies on Duunitori: construction helper pool in Tampere from EUR 12.60, warehouse worker in Kerava EUR 14.03-15.07. Temp pay follows the client sector's collective agreement."
         }
       ]
     },
@@ -10458,8 +10786,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Attendo",
           "role": "Care assistant",
           "where": "national",
-          "source": "https://www.attendo.fi",
-          "confidence": "M"
+          "source": "https://duunitori.fi/tyopaikat/tyo/hoiva-avustajasiistija-attendo-vilja-liperi-sastt-20594761",
+          "confidence": "H",
+          "hourlyFrom": 1375,
+          "hourlyTo": 1515,
+          "payNote": "Gross monthly pay in Attendo's own full-time vacancy for a care assistant/cleaner at Attendo Vilja, Liperi, depending on experience. Hours not stated; converted at the social-services collective agreement's 38.25 h/week x 52/12 = 165.75 h."
         }
       ]
     }
@@ -10525,8 +10856,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Falkland Islands Government",
           "role": "Public service worker",
           "where": "national",
-          "source": "https://www.falklands.gov.fk",
-          "confidence": "H"
+          "source": "https://www.falklands.gov.fk/humanresources/fig-job-opportunities",
+          "confidence": "M",
+          "hourlyFrom": 1305,
+          "hourlyTo": 1497,
+          "payNote": "Gross hourly pay for the lowest-graded current Falkland Islands Government vacancy (casual residential adult support worker, Health and Social Services, Stanley); other open posts are professional grades B–F (e.g. Grade D £36,274–£41,668 a year). Stated in pounds; FKP is at par with GBP."
         }
       ]
     },
@@ -10563,8 +10897,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "SMS (Tórshavn shopping centre, Bonus, Miklagarður)",
           "role": "Shop assistant",
           "where": "national",
-          "source": "https://www.sms.fo",
-          "confidence": "L"
+          "source": "https://www.samverk.fo/lon-og-lonarsattmalin/lonartalvur/2026/",
+          "confidence": "M",
+          "hourlyFrom": 13991,
+          "hourlyTo": 14533,
+          "payNote": "The collective-agreement wage table between Samverk (the union for shop and office staff) and FAG (the Faroese employers' association) for unskilled shop staff aged 18 and over in their first year: 145.33 kr/h from 1 May 2026 (139.91 from May 2025), gross. The agreement sets hourly pay as monthly pay ÷ 173.33. A 15% pension contribution is paid on top."
         }
       ]
     },
@@ -10575,8 +10912,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Hotel Føroyar",
           "role": "Hotel staff",
           "where": "national",
-          "source": "https://www.hotelforoyar.com",
-          "confidence": "L"
+          "source": "https://fafelag.cdn.fo/savn/b0fjhucr/loenartalva-2026-gistingarhus-og-matstova.pdf?s=U8RRQJKz6xavTvczLEpJN5Yq-pg",
+          "confidence": "M",
+          "hourlyFrom": 16596,
+          "payNote": "The Føroya Arbeiðarafelag wage table for hotels and restaurants, effective 1 May 2026: an ordinary gross hourly wage of 165.96 kr for adult staff (28,765.85 kr a month for a 40 h week). Evening, night and weekend supplements are extra."
         }
       ]
     },
@@ -10587,8 +10926,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Bakkafrost",
           "role": "Fish farm and processing worker",
           "where": "national",
-          "source": "https://www.bakkafrost.com",
-          "confidence": "H"
+          "source": "https://fafelag.cdn.fo/savn/21gmg22j/loenartalva-fyri-alarar-1-mai-2026.pdf?s=pOGcu_UZCGf3x0Zq3FfY4q_QRRg",
+          "confidence": "M",
+          "hourlyFrom": 16596,
+          "hourlyTo": 19085,
+          "payNote": "The Føroya Arbeiðarafelag wage table for fish-farm workers (alarar), effective 1 May 2026: a base of 165.96 kr/h plus a 15% fish-farming supplement, giving 190.85 kr/h gross with no seniority. Processing workers on the general FA scale start from the same 165.96 kr/h base."
         }
       ]
     }
@@ -10661,8 +11003,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Nikora",
           "role": "Store associate",
           "where": "national",
-          "source": "https://nikorasupermarket.ge",
-          "confidence": "M"
+          "source": "https://nikorasupermarket.ge/ge/%E1%83%95%E1%83%90%E1%83%99%E1%83%90%E1%83%9C%E1%83%A1%E1%83%98%E1%83%94%E1%83%91%E1%83%98/%E1%83%95%E1%83%90%E1%83%99%E1%83%90%E1%83%9C%E1%83%A1%E1%83%98%E1%83%90-%E1%83%A1%E1%83%A3%E1%83%9E%E1%83%94%E1%83%A0%E1%83%9B%E1%83%90%E1%83%A0%E1%83%99%E1%83%94%E1%83%A2%E1%83%98/%E1%83%9B%E1%83%9D%E1%83%9A%E1%83%90%E1%83%A0%E1%83%94-%E1%83%99%E1%83%9D%E1%83%9C%E1%83%A1%E1%83%A3%E1%83%9A%E1%83%A2%E1%83%90%E1%83%9C%E1%83%A2%E1%83%98",
+          "confidence": "M",
+          "hourlyFrom": 548,
+          "hourlyTo": 808,
+          "payNote": "Monthly pay including bonus in Nikora's own cashier-consultant vacancy for Tbilisi (flexible schedule; gross/net not stated, Georgian ads usually quote take-home). Converted over a 40 h/week x 52/12 = 173.33 h month."
         },
         {
           "id": "ge-retail-carrefour-georgia-majid-al-futtaim",
@@ -10727,24 +11072,30 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Carrefour Guyane (GBH)",
           "role": "Store associate",
           "where": "national",
-          "source": "https://www.gbh.fr",
-          "confidence": "M"
+          "source": "https://www.service-public.gouv.fr/particuliers/vosdroits/F2300",
+          "confidence": "M",
+          "hourlyFrom": 1231,
+          "payNote": "Gross starting hourly pay for a store associate at Carrefour Guyane (GBH). The retail agreement covering these stores (IDCC 2216) sets level 1 to 2 at 12.02 to 12.13 EUR/h from August 2026. That’s below the minimum wage, so the minimum wage of 12.31 EUR/h, in force from June 2026, is the starting pay. French Guiana uses the mainland minimum wage."
         },
         {
           "id": "gf-retail-super-u-hyper-u-guyane",
           "name": "Super U / Hyper U Guyane",
           "role": "Cashier",
           "where": "national",
-          "source": "https://www.magasins-u.com",
-          "confidence": "M"
+          "source": "https://www.juristique.org/conventionnel/salaires-commerce-detail-gros-predominance-alimentaire-2026",
+          "confidence": "M",
+          "hourlyFrom": 1231,
+          "payNote": "Gross starting hourly pay for a cashier at Super U or Hyper U in French Guiana. The retail agreement (IDCC 2216) puts cashier level 2 at 12.04 to 12.13 EUR/h, below the minimum wage, so the June 2026 minimum wage of 12.31 EUR/h applies. No Guiana store vacancy with pay was found on France Travail."
         },
         {
           "id": "gf-retail-leader-price-guyane",
           "name": "Leader Price Guyane",
           "role": "Store associate",
           "where": "national",
-          "source": "https://www.leaderprice.fr",
-          "confidence": "L"
+          "source": "https://www.service-public.gouv.fr/particuliers/vosdroits/F2300",
+          "confidence": "M",
+          "hourlyFrom": 1231,
+          "payNote": "Gross starting hourly pay for a Leader Price store associate in French Guiana. The retail agreement's (IDCC 2216) entry levels, 12.02 to 12.13 EUR/h, are below the June 2026 minimum wage, so the minimum wage applies. No Leader Price Guyane vacancy was listed on France Travail (search 2026-09-26)."
         }
       ]
     },
@@ -10755,8 +11106,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "McDonald's Guyane",
           "role": "Crew member",
           "where": "national",
-          "source": "https://www.mcdonalds.fr",
-          "confidence": "M"
+          "source": "https://www.service-public.gouv.fr/particuliers/vosdroits/F2300",
+          "confidence": "M",
+          "hourlyFrom": 1231,
+          "payNote": "Gross starting hourly pay for a McDonald's crew member (équipier) in French Guiana. The fast-food agreement's (IDCC 1501) level I minimum is below the minimum wage, so the June 2026 minimum wage of 12.31 EUR/h is the starting rate. No Guiana McDonald's vacancy was listed on France Travail."
         }
       ]
     },
@@ -10779,8 +11132,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Securitas / local security firms (Kourou space centre)",
           "role": "Security guard",
           "where": "national",
-          "source": "https://www.securitas.fr",
-          "confidence": "L"
+          "source": "https://www.83-629.fr/grille-des-salaires-en-securite-privee-au-1er-janvier-2026/",
+          "confidence": "M",
+          "hourlyFrom": 1242,
+          "hourlyTo": 1296,
+          "payNote": "Gross minimum hourly pay under the private-security collective agreement (IDCC 1351), which binds Securitas and local guard firms: coefficient 120 for a qualified security guard and coefficient 140 for SSIAP 1 or post chief, on a 151.67 h/month basis. Both are above the June 2026 minimum wage of 12.31."
         }
       ]
     }
@@ -11113,24 +11469,32 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Sklavenitis",
           "role": "supermarket cashier and stocker",
           "where": "national",
-          "source": "https://www.sklavenitis.gr/",
-          "confidence": "H"
+          "source": "https://www.businessdaily.gr/epiheiriseis/198554_sklabenitis-sta-1000-eyro-o-eisagogikos-misthos-87-pano-apo-katotato",
+          "confidence": "H",
+          "hourlyFrom": 577,
+          "hourlyTo": 612,
+          "payNote": "Sklavenitis' company-wide gross starting monthly salary from April 2026, EUR 1,000 unmarried / 1,060 married, 8.7% and 15.2% above the statutory minimum. Converted at 40 h/week x 52/12 = 173.33 h/month; Greek salaries are paid 14 times a year, which this hourly figure leaves out."
         },
         {
           "id": "gr-retail-ab-vassilopoulos",
           "name": "AB Vassilopoulos",
           "role": "supermarket cashier and stocker",
           "where": "national",
-          "source": "https://www.ab.gr/",
-          "confidence": "H"
+          "source": "https://www.naftemporiki.gr/business/1418579/av-vasilopoylos-ayxisi-vasikoy-misthoy-75-gia-oloys-toys-ergazomenoys-apo-to-2023/",
+          "confidence": "L",
+          "hourlyFrom": 465,
+          "payNote": "AB Vassilopoulos basic gross monthly salary of EUR 806 from 2023 (plus a EUR 50/month extra allowance for 2023), converted at 40 h/week x 52/12 = 173.33 h/month. It’s now below the statutory minimum, so the current start rate is at least the minimum and this figure is stale."
         },
         {
           "id": "gr-retail-lidl-hellas",
           "name": "Lidl Hellas",
           "role": "store associate",
           "where": "national",
-          "source": "https://www.lidl-hellas.gr/",
-          "confidence": "H"
+          "source": "https://team.lidl.gr/katastimata/ypallilos-katastimatos",
+          "confidence": "H",
+          "hourlyFrom": 663,
+          "hourlyTo": 900,
+          "payNote": "Lidl Hellas careers page for store employee: gross monthly EUR 1,150 rising to 1,560 depending on experience and marital status, for 8 h x 5 days. Converted at 40 h/week x 52/12 = 173.33 h/month."
         }
       ]
     },
@@ -11141,16 +11505,21 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Coffee Island",
           "role": "barista",
           "where": "national",
-          "source": "https://www.coffeeisland.gr/",
-          "confidence": "H"
+          "source": "https://www.xe.gr/%CE%B5%CF%81%CE%B3%CE%B1%CF%83%CE%AF%CE%B1/%CE%B8%CE%AD%CF%83%CE%B7-%CE%B5%CF%81%CE%B3%CE%B1%CF%83%CE%AF%CE%B1%CF%82/baristas/barista-%CE%B1%CE%B8%CE%AE%CE%BD%CE%B1-%CE%BA%CE%AC%CF%84%CF%89-%CF%80%CE%B5%CF%84%CF%81%CE%AC%CE%BB%CF%89%CE%BD%CE%B1-2f904ff3-c9eb-4910-85d2-360b0ece40d9",
+          "confidence": "M",
+          "hourlyFrom": 462,
+          "hourlyTo": 519,
+          "payNote": "xe.gr vacancy by the Coffee Island store in Kato Petralona, Athens, for a barista at EUR 800-900 a month; the listing doesn’t say gross or net, and 800 is below the gross minimum wage, so it’s probably net. Converted at 40 h/week x 52/12 = 173.33 h/month."
         },
         {
           "id": "gr-school-goody-s-burger-house",
           "name": "Goody's Burger House",
           "role": "fast-food counter crew",
           "where": "national",
-          "source": "https://www.goodys.com/",
-          "confidence": "H"
+          "source": "https://www.xe.gr/%CE%B5%CF%81%CE%B3%CE%B1%CF%83%CE%AF%CE%B1/%CE%B8%CE%AD%CF%83%CE%B7-%CE%B5%CF%81%CE%B3%CE%B1%CF%83%CE%AF%CE%B1%CF%82/%CF%84%CE%B1%CE%BC%CE%AF%CE%B5%CF%82/%CF%84%CE%B1%CE%BC%CE%AF%CE%B1%CF%82--goodys-%CE%BD%CE%AD%CE%B1-%CE%BA%CE%B7%CF%86%CE%B9%CF%83%CE%B9%CE%AC--%CE%BA%CE%B7%CF%86%CE%B9%CF%83%CE%B9%CE%AC-%CE%BD%CE%AD%CE%B1-%CE%BA%CE%B7%CF%86%CE%B9%CF%83%CE%B9%CE%AC-7f87f87c-3ade-4c24-943e-561c52f627fb",
+          "confidence": "M",
+          "hourlyFrom": 577,
+          "payNote": "xe.gr vacancy by the Goody's store in Nea Kifisia for a cashier/service crew member, 5 days x 8 hours, EUR 1,000 NET a month. Converted at 40 h/week x 52/12 = 173.33 h/month; the figure is net of employee contributions."
         }
       ]
     },
@@ -11169,8 +11538,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Wolt",
           "role": "delivery courier",
           "where": "national",
-          "source": "https://wolt.com/en/grc",
-          "confidence": "H"
+          "source": "https://www.mononews.gr/business/wolt-kai-sadth-ypografoun-tin-proti-syllogiki-symfonia-gia-aftoapascholoumenous-dianomeis-stin-ellada",
+          "confidence": "M",
+          "hourlyFrom": 930,
+          "payNote": "Guaranteed minimum of EUR 9.30 per hour of estimated active time for self-employed Wolt couriers under the Wolt-SADTh collective agreement, valid 1 July 2025 to 31 December 2027 in the Thessaloniki urban area only. Gross of the courier's own costs and contributions; waiting time isn’t counted."
         }
       ]
     },
@@ -11205,8 +11576,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Mitsis Hotels",
           "role": "seasonal hotel and restaurant staff",
           "where": "national",
-          "source": "https://www.mitsishotels.com/",
-          "confidence": "M"
+          "source": "https://www.poeeyte.gr/rapt/files/%CE%9C%CE%99%CE%A3%CE%98%CE%9F%CE%9B%CE%9F%CE%93%CE%99%CE%91_%CE%9E%CE%B5%CE%BD%CE%BF%CE%B4%CE%BF%CF%87%CE%BF%CF%8B%CF%80%CE%B1%CE%BB%CE%BB%CE%AE%CE%BB%CF%89%CE%BD_2026.pdf",
+          "confidence": "M",
+          "hourlyFrom": 560,
+          "hourlyTo": 594,
+          "payNote": "Gross monthly basic wages for 2026 at zero years' service under the generally binding national hotel-employees collective agreement (19.2.2025), which covers Mitsis Hotels: EUR 970 (cat. D: dishwashers, cleaners) to 1,030 (cat. A); chambermaids and assistant waiters are cat. C at EUR 990. Converted at 40 h/week x 52/12 = 173.33 h/month."
         }
       ]
     }
@@ -11365,24 +11739,33 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Wellcome (DFI Retail Group)",
           "role": "Store assistant",
           "where": "national",
-          "source": "https://www.wellcome.com.hk",
-          "confidence": "M"
+          "source": "https://moovup.com/hk/en/company/%E6%83%A0%E5%BA%B7%20Wellcome/e79e41d6-db06-4622-a2d5-f5df92349617/",
+          "confidence": "H",
+          "hourlyFrom": 6100,
+          "hourlyTo": 6500,
+          "payNote": "Hourly pay in a live Wellcome part-time store-assistant vacancy (Island West) on Moovup, gross. Wellcome's full-time store assistant was advertised from HK$13.2K a month elsewhere."
         },
         {
           "id": "hk-retail-parknshop-a-s-watson",
           "name": "PARKnSHOP (A.S. Watson)",
           "role": "Store assistant",
           "where": "national",
-          "source": "https://www.parknshop.com",
-          "confidence": "M"
+          "source": "https://moovup.com/hk/en/company/PARKNSHOP/cb23505e-8d5d-46c9-9704-aade9ad5fcd8/",
+          "confidence": "M",
+          "hourlyFrom": 6538,
+          "hourlyTo": 8269,
+          "payNote": "Monthly pay in PARKnSHOP's live full-time customer-service-assistant vacancies across 30+ districts. Hong Kong has no statutory standard week; the usual retail 6 days x 8 h = 48 h/week x 52/12 = 208 h/month is used."
         },
         {
           "id": "hk-retail-7-eleven-hong-kong-dfi-retail-group",
           "name": "7-Eleven Hong Kong (DFI Retail Group)",
           "role": "Convenience store assistant",
           "where": "national",
-          "source": "https://www.7-eleven.com.hk",
-          "confidence": "M"
+          "source": "https://pt.ctgoodjobs.hk/company-jobs/7-eleven/00022965",
+          "confidence": "H",
+          "hourlyFrom": 5200,
+          "hourlyTo": 8450,
+          "payNote": "Hourly pay in 7-Eleven Hong Kong's current part-time store-assistant vacancy (multiple areas); the top of the range likely covers overnight shifts. Full-time store assistants are offered HK$13,250-18,300 a month."
         }
       ]
     },
@@ -11393,8 +11776,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "McDonald's Hong Kong",
           "role": "Crew member",
           "where": "national",
-          "source": "https://www.mcdonalds.com.hk/en/careers/ (no hourly rate published)",
-          "confidence": "M"
+          "source": "https://www.edigest.hk/%E8%81%B7%E5%A0%B4%E8%B3%87%E8%A8%8A/%E9%BA%A5%E7%95%B6%E5%8B%9E%E6%8B%9B%E8%81%98-cplt2-1198310/",
+          "confidence": "M",
+          "hourlyFrom": 5000,
+          "hourlyTo": 5200,
+          "payNote": "Gross part-time hourly pay for McDonald's Hong Kong customer-service crew as reported by eDigest from McDonald's vacancies; restaurant crew 52-60, overnight 83-95. 2024 figure."
         },
         {
           "id": "hk-hospitality-cafe-de-coral",
@@ -11413,8 +11799,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Pacific Coffee",
           "role": "Barista",
           "where": "national",
-          "source": "https://www.pacificcoffee.com",
-          "confidence": "M"
+          "source": "https://moovup.com/hk/en/job/part-time-%E5%B1%95%E8%A6%BD%E6%9C%9F%E5%92%96%E5%95%A1%E5%B8%AB-(pacific-coffee)-in-tung-chung-airport/d6232745-54f9-4576-a437-2fe61949157d/",
+          "confidence": "M",
+          "hourlyFrom": 7000,
+          "hourlyTo": 8500,
+          "payNote": "Gross hourly pay in a live Pacific Coffee part-time barista vacancy for an exhibition stand at AsiaWorld-Expo; a temporary event role requiring experience, so likely above a regular shop start."
         }
       ]
     },
@@ -11513,32 +11902,42 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Konzum",
           "role": "Prodavač (store assistant)",
           "where": "national",
-          "source": "Wikipedia, Konzum (700+ stores, 10,000+ employees); https://www.konzum.hr",
-          "confidence": "M"
+          "source": "https://023.hr/2026/01/trgovacki-lanci-traze-stotine-radnika-evo-kakve-place-nude/",
+          "confidence": "M",
+          "hourlyFrom": 620,
+          "hourlyTo": 681,
+          "payNote": "Gross monthly pay offered in Konzum's January 2026 vacancies (reported from the ads by local news): EUR 1,075 for retail workers and EUR 1,180 for sales staff in Zagreb. Converted at 40 h/week x 52/12 = 173.33 h."
         },
         {
           "id": "hr-retail-lidl-hrvatska",
           "name": "Lidl Hrvatska",
           "role": "Store assistant",
           "where": "national",
-          "source": "https://karijera.lidl.hr (no salary published)",
-          "confidence": "M"
+          "source": "https://grademoj.hr/lidl-zagreb-laniste-prodavac-posao/",
+          "confidence": "M",
+          "hourlyFrom": 825,
+          "hourlyTo": 981,
+          "payNote": "Gross starting monthly pay of EUR 1,430 for a full-time Lidl sales assistant (Zagreb Lanište), rising to EUR 1,700 after two years, per a job ad repost. Converted at 40 h/week x 52/12 = 173.33 h."
         },
         {
           "id": "hr-retail-kaufland-hrvatska",
           "name": "Kaufland Hrvatska",
           "role": "Store assistant",
           "where": "national",
-          "source": "https://www.kaufland.hr",
-          "confidence": "M"
+          "source": "https://023.hr/2026/01/trgovacki-lanci-traze-stotine-radnika-evo-kakve-place-nude/",
+          "confidence": "M",
+          "hourlyFrom": 733,
+          "payNote": "Gross monthly pay offered in Kaufland's January 2026 vacancies on Krk for sales and retail workers, as reported from the ads by local news. Converted at 40 h/week x 52/12 = 173.33 h."
         },
         {
           "id": "hr-retail-studenac",
           "name": "Studenac",
           "role": "Store assistant",
           "where": "national",
-          "source": "https://www.studenac.hr",
-          "confidence": "M"
+          "source": "https://023.hr/2026/01/trgovacki-lanci-traze-stotine-radnika-evo-kakve-place-nude/",
+          "confidence": "M",
+          "hourlyFrom": 612,
+          "payNote": "Gross monthly pay offered in Studenac's January 2026 vacancies for shop assistants in Zagreb, as reported from the ads by local news; just above the 2026 minimum wage of EUR 1,050. Converted at 40 h/week x 52/12 = 173.33 h."
         },
         {
           "id": "hr-retail-plodine",
@@ -11565,8 +11964,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Glovo",
           "role": "Delivery partner",
           "where": "national",
-          "source": "https://glovoapp.com/hr",
-          "confidence": "M"
+          "source": "https://hr.jooble.org/posao-glovo-dostavlja%C4%8D/Zagreb",
+          "confidence": "M",
+          "hourlyFrom": 800,
+          "hourlyTo": 1200,
+          "payNote": "Hourly pay advertised by Ben.com d.o.o., a fleet partner hiring couriers for Glovo and Wolt in Zagreb, in a live vacancy on Jooble; not stated whether gross or net, and paid through the partner instead of Glovo."
         },
         {
           "id": "hr-between-bolt-food",
@@ -11585,16 +11987,21 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Valamar Riviera",
           "role": "Seasonal hotel staff",
           "where": "national",
-          "source": "https://www.valamar.com",
-          "confidence": "M"
+          "source": "https://www.istra24.hr/biznis/valamar-dize-place-za-vise-od-5.000-djelatnika-strucnim-pozicijama-i-do-2.000-eura-neto",
+          "confidence": "M",
+          "hourlyFrom": 577,
+          "hourlyTo": 750,
+          "payNote": "Valamar's announced peak-season pay for entry hotel roles (housekeepers, kitchen helpers, assistant waiters), NET a month, as reported by Istra24 (2024 pay round). Converted at 40 h/week x 52/12 = 173.33 h; hourly figures are net."
         },
         {
           "id": "hr-hospitality-mcdonald-s-hrvatska",
           "name": "McDonald's Hrvatska",
           "role": "Crew member",
           "where": "national",
-          "source": "https://www.mcdonalds.hr",
-          "confidence": "M"
+          "source": "https://danica.hr/mcdonalds-trazi-50-novih-radnika-objavili-placu-i-satnice/",
+          "confidence": "M",
+          "hourlyFrom": 606,
+          "payNote": "McDonald's Croatia's published pay for entry crew: EUR 1,050 NET a month plus EUR 560 net in annual bonuses; students EUR 5.45-8.48 an hour. Converted at 40 h/week x 52/12 = 173.33 h; figure is net."
         }
       ]
     }
@@ -11697,8 +12104,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "SPAR",
           "role": "Sales assistant",
           "where": "national",
-          "source": "https://www.sonline.hu/helyi-eletstilus/2026/01/fizetesemeles-ber-auchan-tesco-aldi-penny-penz (only a 2025 starting figure of 395,000/month was found)",
-          "confidence": "M"
+          "source": "https://hvg.hu/kkv/20250102_spar-magyarorszag-2025-os-beremeles-eladok-uzletvezetok-alapbere",
+          "confidence": "M",
+          "hourlyFrom": 227889,
+          "hourlyTo": 268274,
+          "payNote": "Gross monthly base pay for SPAR Hungary cashiers and sales assistants from 1 January 2025, reported by HVG (and in SPAR's own 2025 press release): at least 395,000 HUF, and 465,000 HUF in economically significant regions and high-performing stores. This is a 2025 figure; no 2026 figure was published. The 40 h/week × 52/12 = 173.33 h/month standard is used."
         },
         {
           "id": "hu-retail-penny",
@@ -11717,8 +12127,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "McDonald's",
           "role": "Crew member",
           "where": "national",
-          "source": "https://www.mcdonalds.hu/",
-          "confidence": "M"
+          "source": "https://www.profession.hu/en/advertisements/mcdonald-s/1,0,0,0,0,0,0,0,0,0,7117",
+          "confidence": "H",
+          "hourlyFrom": 232700,
+          "payNote": "Gross hourly pay for a McDonald's crew member (éttermi munkatárs) in Budapest-area restaurant adverts on profession.hu, posted September 2026. Some other McDonald's adverts on the same board show 2,642 HUF/h. The figure is already hourly."
         }
       ]
     },
@@ -11885,8 +12297,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Wolt",
           "role": "Courier",
           "where": "national",
-          "source": "https://wolt.com/he/isr",
-          "confidence": "M"
+          "source": "https://www.globes.co.il/news/article.aspx?did=1001391415",
+          "confidence": "L",
+          "hourlyFrom": 4000,
+          "hourlyTo": 8000,
+          "payNote": "Globes report of Wolt Israel's courier terms: a guaranteed minimum of ILS 40 an hour while online even with no deliveries, ILS 20-26 per delivery, with busy couriers reaching about ILS 80 an hour; gross, before vehicle costs (couriers are self-employed). 2021 figures."
         }
       ]
     },
@@ -11911,8 +12326,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Tesco (Isle of Man stores)",
           "role": "Customer assistant",
           "where": "national",
-          "source": "https://www.tesco-careers.com/",
-          "confidence": "M"
+          "source": "https://apply.tesco-careers.com/members/modules/job/detail.php?record=844496",
+          "confidence": "L",
+          "hourlyFrom": 1102,
+          "payNote": "Gross starting hourly rate stated on Tesco's own vacancy for a festive (seasonal) colleague at its Douglas, Isle of Man store; the higher London rates in the same text don't apply there."
         },
         {
           "id": "im-retail-co-op-isle-of-man-stores",
@@ -11957,8 +12374,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "DMart (Avenue Supermarts)",
           "role": "Store associate",
           "where": "national",
-          "source": "https://www.dmartindia.com/",
-          "confidence": "M"
+          "source": "https://apna.co/jobs/dmart-jobs",
+          "confidence": "M",
+          "hourlyFrom": 4808,
+          "hourlyTo": 6346,
+          "payNote": "Store-staff vacancy posted under the company name Dmart on the apna.co job board (Sept 2026 listing), monthly pay, probably in-hand; converted on India's 48 h/week x 52/12 = 208 h/month. Other Dmart store postings the same month ran ₹12,500-16,000 (pickers in Mumbai/Panchkula) and ₹15,500-17,000 (billing executive, Nelamangala)."
         },
         {
           "id": "in-retail-reliance-retail-smart-bazaar-reliance-tr",
@@ -12009,8 +12429,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "SIS (Security and Intelligence Services)",
           "role": "Security guard",
           "where": "national",
-          "source": "https://www.sisindia.com/",
-          "confidence": "M"
+          "source": "https://careerjii.com/sis-security-guard-and-supervisor-recruitment-2026/",
+          "confidence": "L",
+          "hourlyFrom": 8654,
+          "hourlyTo": 12500,
+          "payNote": "Monthly pay for SIS security guards in the June 2026 recruitment drive run by the District Employment Office, Nainital with SIS India Ltd, Dehradun (Uttarakhand), as restated by a job-news site; gross vs in-hand not stated. Converted on India's 48 h/week x 52/12 = 208 h/month (duty hours not given)."
         }
       ]
     },
@@ -12033,8 +12456,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "TeamLease Services",
           "role": "Temporary staff",
           "where": "national",
-          "source": "https://www.teamlease.com/",
-          "confidence": "M"
+          "source": "https://www.teamlease.com/data-entry-back-office-jobs",
+          "confidence": "M",
+          "hourlyFrom": 5769,
+          "hourlyTo": 7212,
+          "payNote": "Temp data-entry vacancy listed on TeamLease's own job portal for placement at client Iron Mountain in Gujarat (posted about three months before Sept 2026), monthly pay; converted on India's 48 h/week x 52/12 = 208 h/month. Gross vs in-hand not stated."
         }
       ]
     },
@@ -12097,8 +12523,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Digikala",
           "role": "warehouse and fulfilment worker; Digikala Jet grocery delivery",
           "where": "national",
-          "source": "https://en.wikipedia.org/wiki/Digikala",
-          "confidence": "M"
+          "source": "https://iranestekhdam.ir/97nlvx-%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D9%86%DB%8C%D8%B1%D9%88%DB%8C-%D8%A7%D9%86%D8%A8%D8%A7%D8%B1-%D9%BE%D8%B1%D8%AF%D8%A7%D8%B2%D8%B4-%D8%A8%D8%A7-%D8%A8%DB%8C%D9%85%D9%87-%D8%AF%D8%B1-%D8%AF%DB%8C%D8%AC%DB%8C-%DA%A9%D8%A7%D9%84%D8%A7",
+          "confidence": "M",
+          "hourlyFrom": 131116589,
+          "hourlyTo": 157339907,
+          "payNote": "Monthly pay for Digikala processing-warehouse staff in Tehran and Karaj, from Digikala's advert reposted on iranestekhdam.ir, updated 1405-06-04 with a deadline of 1405-07-12: 25 to 30 million toman, or 250 to 300 million rial, on the Labor Ministry 1405 scale. It’s gross before the worker's insurance share. The legal 44 h/week × 52/12 = 190.67 h/month is used."
         },
         {
           "id": "ir-retail-hyperstar-majid-al-futtaim-carrefour-fra",
@@ -12119,16 +12548,22 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Esselunga",
           "role": "supermarket sales assistant / cashier (CCNL Terziario, level IV-VI)",
           "where": "national",
-          "source": "https://en.wikipedia.org/wiki/Esselunga; pay from CCNL Terziario tables https://www.lexplain.it/tabelle-retributive-ccnl-commercio-2024-2027/ ; the company publishes no rate, so hourly is null; the CCNL Terziario scale it applies runs 9.16 to 10.61 EUR an hour",
-          "confidence": "M"
+          "source": "https://www.lexplain.it/tabelle-retributive-ccnl-commercio-2024-2027/",
+          "confidence": "M",
+          "hourlyFrom": 916,
+          "hourlyTo": 1061,
+          "payNote": "Gross monthly pay (minimum plus contingency and fixed elements) under the national commerce agreement (CCNL Terziario) that this chain applies to a supermarket sales assistant/cashier, for Nov 2025-Oct 2026; hourly figures use the contract's own divisor of 168 h/month. Entry cashiers/shelf staff are usually level IV-V; 13th and 14th month payments come on top. From Nov 2026 the rates rise (level IV total per lexplain's next tranche)."
         },
         {
           "id": "it-retail-carrefour-italia-rebranding-to-gs-newpri",
           "name": "Carrefour Italia (rebranding to GS, NewPrinces)",
           "role": "store assistant (CCNL Terziario scale)",
           "where": "national",
-          "source": "https://en.wikipedia.org/wiki/Carrefour; CCNL Terziario tables https://www.lexplain.it/tabelle-retributive-ccnl-commercio-2024-2027/ ; the company publishes no rate, so hourly is null; the CCNL Terziario scale it applies runs 9.16 to 10.61 EUR an hour",
-          "confidence": "L"
+          "source": "https://www.lexplain.it/tabelle-retributive-ccnl-commercio-2024-2027/",
+          "confidence": "M",
+          "hourlyFrom": 916,
+          "hourlyTo": 1061,
+          "payNote": "Gross monthly pay (minimum plus contingency and fixed elements) under the national commerce agreement (CCNL Terziario) that this chain applies to a store assistant, for Nov 2025-Oct 2026; hourly figures use the contract's own divisor of 168 h/month. Entry cashiers/shelf staff are usually level IV-V; 13th and 14th month payments come on top. From Nov 2026 the rates rise (level IV total per lexplain's next tranche)."
         }
       ]
     },
@@ -12153,8 +12588,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Autogrill (Avolta)",
           "role": "motorway and airport food-service crew",
           "where": "national",
-          "source": "https://en.wikipedia.org/wiki/Autogrill",
-          "confidence": "M"
+          "source": "https://www.confcommerciomilano.it/it/contratti_lavoro/contrattazione_collettiva/ccnl_Pubblici_Esercizi_Rist_Coll_minimi_2026.html",
+          "confidence": "M",
+          "hourlyFrom": 802,
+          "hourlyTo": 874,
+          "payNote": "Autogrill Italia applies the FIPE public-establishments agreement (per the ADAPT report on its 2025-2027 company agreement); gross monthly minimum from 1 June 2026 for entry food-service levels 7 to 6S, converted on 40 h/week x 52/12 = 173.33 h/month (no divisor stated). The company agreement adds a performance bonus on top; 13th/14th months extra."
         },
         {
           "id": "it-hospitality-bars-and-restaurants-under-ccnl-pubblici",
@@ -12162,7 +12600,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "role": "waiter / bar staff, levels 7 to 6S: EUR 1,390.20 to 1,514.83 a month from 2026-06-01",
           "where": "national",
           "source": "https://www.confcommerciomilano.it/it/contratti_lavoro/contrattazione_collettiva/ccnl_Pubblici_Esercizi_Rist_Coll_minimi_2026.html",
-          "confidence": "M"
+          "confidence": "H",
+          "hourlyFrom": 802,
+          "hourlyTo": 874,
+          "payNote": "Gross monthly minimum pay from 1 June 2026 under the FIPE public-establishments agreement for waiter/bar staff at levels 7 to 6S, as published by Confcommercio Milano; converted on 40 h/week x 52/12 = 173.33 h/month (no divisor on the page). 13th/14th months extra."
         }
       ]
     },
@@ -12250,8 +12691,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Island Home Care",
           "role": "carer",
           "where": "national",
-          "source": "https://www.islandhomecare.co.uk/careers",
-          "confidence": "M"
+          "source": "https://www.gov.je/Working/JobCareerAdvice/pages/jobssearchresults.aspx",
+          "confidence": "H",
+          "hourlyFrom": 2100,
+          "payNote": "Gross hourly pay in Island Home Care's current full-time community-care support worker vacancy on the Government of Jersey jobs board (same rate for its additional-needs support worker)."
         }
       ]
     },
@@ -12336,8 +12779,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Naivas",
           "role": "shop assistant / cashier",
           "where": "national",
-          "source": "https://en.wikipedia.org/wiki/Naivas_Limited",
-          "confidence": "H"
+          "source": "https://www.kenyans.co.ke/news/105267-govt-announces-6-minimum-wage-increase-across-various-sectors-list",
+          "confidence": "M",
+          "hourlyFrom": 9652,
+          "hourlyTo": 16137,
+          "payNote": "Statutory minimum for cities (Nairobi, Mombasa, Kisumu etc.) under the Regulation of Wages (General) (Amendment) Order 2024, effective 1 Nov 2024, which covers supermarket staff such as Naivas's: shop assistant KSh21,748.87 and cashier KSh36,360.92 a month gross. Converted on the Order's 52 h normal week (52 × 52/12 = 225.33 h/month; hours not stated on the page)."
         },
         {
           "id": "ke-retail-quickmart",
@@ -12646,8 +13092,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Kirk Market",
           "role": "supermarket clerk",
           "where": "national",
-          "source": "https://www.kirkmarket.ky/",
-          "confidence": "H"
+          "source": "https://kirkmarket.bamboohr.com/careers/420",
+          "confidence": "H",
+          "hourlyFrom": 900,
+          "hourlyTo": 1300,
+          "payNote": "Gross hourly pay for a full-time (40 h/week) Kirk Market grocery clerk (cashier) in George Town, from Kirk Market's own BambooHR vacancy posted 2026-02-11. A non-cashier clerk gets CI$9–14. The figure is already hourly."
         },
         {
           "id": "ky-retail-hurley-s",
@@ -12680,8 +13129,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Magnum Cash & Carry",
           "role": "supermarket cashier / stocker",
           "where": "national",
-          "source": "https://en.wikipedia.org/wiki/Magnum_Cash_%26_Carry (over 180 stores, over 13,000 staff)",
-          "confidence": "H"
+          "source": "https://jumys.kaspi.kz/rabota/vakansii/k--%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%B0-%D0%B2-%D0%BC%D0%B0%D0%B3%D0%BD%D1%83%D0%BC/",
+          "confidence": "M",
+          "hourlyFrom": 105000,
+          "payNote": "Monthly pay from 182,000 KZT in a Magnum cashier-seller vacancy in Astana on Kaspi Jobs (posted 23 September 2026); gross/net not stated. Converted over Kazakhstan's 40 h/week x 52/12 = 173.33 h. The listing page names the employer as Magnum, but it may be a Magnum-located tenant; Magnum's own HR portal ads give no pay."
         }
       ]
     },
@@ -12828,8 +13279,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Coop",
           "role": "supermarket sales assistant",
           "where": "national",
-          "source": "https://en.wikipedia.org/wiki/Coop_(Switzerland) (taking over four Ospelt supermarkets in Liechtenstein, September 2026)",
-          "confidence": "M"
+          "source": "https://www.20min.ch/story/neuer-gav-coop-erhoeht-mindestloehne-auf-4300-franken-103437069",
+          "confidence": "L",
+          "hourlyFrom": 2363,
+          "payNote": "Coop's minimum monthly wage under its 2026 collective agreement (Switzerland), gross, as reported by 20 Minuten; the report doesn’t say whether it covers the Liechtenstein stores Coop is taking over. No weekly hours stated; 42 h/week x 52/12 = 182 h assumed. If paid 13 times a year the hourly figure is about 8% higher."
         }
       ]
     }
@@ -12850,8 +13303,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Cargills Food City (Cargills (Ceylon) PLC)",
           "role": "Supermarket store assistant",
           "where": "national",
-          "source": "https://en.wikipedia.org/wiki/Cargills_(Ceylon)",
-          "confidence": "H"
+          "source": "https://nearjobs.lk/company-job/cargills-food-city-cashier-job-vacancies-2026/",
+          "confidence": "M",
+          "hourlyFrom": 15385,
+          "hourlyTo": 28205,
+          "payNote": "Gross monthly pay for Cargills Food City cashiers and service assistants hired at walk-in interviews in Puttalam and Kurunegala districts in May 2026. The advert, republished from xpress.jobs, gives a basic of Rs 30,000 and Rs 55,000 with incentives, overtime and attendance allowance. No hours are stated, so the Shop and Office Act's 45 h/week × 52/12 = 195 h/month is used."
         }
       ]
     },
@@ -12862,8 +13318,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "KFC Sri Lanka (Cargills (Ceylon) PLC)",
           "role": "Fast-food crew member",
           "where": "national",
-          "source": "https://en.wikipedia.org/wiki/Cargills_(Ceylon)",
-          "confidence": "M"
+          "source": "https://maruads.lk/crew-member-kfc-matara-109234",
+          "confidence": "L",
+          "hourlyFrom": 12821,
+          "payNote": "Monthly pay for a full-time KFC crew member in Matara, from a Lankadeepa newspaper ad dated 2020-02-09 and reposted on maruads.lk. This is a 2020 figure. No hours are stated, so 45 h/week × 52/12 = 195 h/month is used. Job-board summaries mention 'more than Rs. 55,000' for 2026, but I found no dated ad to open that states it."
         },
         {
           "id": "lk-hospitality-cinnamon-hotels-resorts-john-keells-hold",
@@ -13020,24 +13478,32 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Maxima LT",
           "role": "Cashier-seller (kasininkas-pardavėjas)",
           "where": "national",
-          "source": "https://karjera.maxima.lt/",
-          "confidence": "H"
+          "source": "https://www.cvmarket.lt/kasininkas-pardavejas-a-vilniuje-nemokamas-transportas-anyksciai-maxima-lt-uab-2292585",
+          "confidence": "H",
+          "hourlyFrom": 710,
+          "hourlyTo": 785,
+          "payNote": "Gross monthly pay in a Maxima LT full-time cashier-seller vacancy (store in Molėtai area, free transport), converted over Lithuania's 40 h/week x 52/12 = 173.33 h/month."
         },
         {
           "id": "lt-retail-lidl-lietuva",
           "name": "Lidl Lietuva",
           "role": "Store worker",
           "where": "national",
-          "source": "https://karjera.lidl.lt/",
-          "confidence": "H"
+          "source": "https://www.cvbankas.lt/lidl-lietuva-siulo-darba/4-41627",
+          "confidence": "H",
+          "hourlyFrom": 710,
+          "hourlyTo": 883,
+          "payNote": "Bottom of the gross monthly ranges in current Lidl Lietuva sales-assistant vacancies: 1,230 in smaller towns to 1,530 in Vilnius, over 40 h/week x 52/12 = 173.33 h/month. Ranges top out at 2,035-2,220."
         },
         {
           "id": "lt-retail-rimi-lietuva",
           "name": "Rimi Lietuva",
           "role": "Store worker",
           "where": "national",
-          "source": "https://en.wikipedia.org/wiki/Rimi_Baltic",
-          "confidence": "M"
+          "source": "https://randu.lt/darbo-skelbimai/rimi-lietuva-uab/vyr-kasininkas-e-191",
+          "confidence": "L",
+          "hourlyFrom": 756,
+          "payNote": "Bottom of the gross monthly range in a Rimi Lietuva senior-cashier (vyr. kasininkas) vacancy at Zarasų g. 5A, Vilnius, plus up to 20% monthly bonus; 1,310 / 173.33 h (40 h/week). This is a senior cashier, so it’s above a plain cashier's start; no plain-cashier posting with pay was found. Listing inactive; year not shown."
         }
       ]
     },
@@ -13048,8 +13514,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Hesburger",
           "role": "Restaurant crew",
           "where": "national",
-          "source": "https://en.wikipedia.org/wiki/Hesburger",
-          "confidence": "M"
+          "source": "https://www.isic.lt/darbo-skelbimai/hesburger/",
+          "confidence": "M",
+          "hourlyFrom": 690,
+          "payNote": "Gross starting hourly wage in a Hesburger restaurant-worker posting for Vilnius and Kaunas (2-month trial). 2024 figure; current Hesburger portal postings couldn’t be opened."
         }
       ]
     },
@@ -13060,8 +13528,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Caffeine",
           "role": "Barista",
           "where": "national",
-          "source": "https://www.caffeine.lt/",
-          "confidence": "M"
+          "source": "https://www.cvbankas.lt/didesnis-valandinis-tarifas-barista-caffeine-1et-vilniuje/1-14091823",
+          "confidence": "H",
+          "hourlyFrom": 850,
+          "payNote": "Gross hourly base for a full-time Caffeine barista at Vilnius bus/railway station (employer Reitan Convenience Lithuania), plus up to 700 EUR monthly sales bonus."
         }
       ]
     },
@@ -13104,8 +13574,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "ManpowerGroup Lietuva",
           "role": "Temporary agency worker",
           "where": "national",
-          "source": "https://www.manpowergroup.lt/",
-          "confidence": "L"
+          "source": "https://www.cvbankas.lt/manpower-lit-siulo-darba/4-7035",
+          "confidence": "M",
+          "hourlyFrom": 808,
+          "payNote": "Bottom of the gross monthly range in a current Manpower Lit vacancy for a gardener in Radviliškis, the only entry-level Manpower ad with pay listed; 1,400 / 173.33 h (40 h/week x 52/12). Not a warehouse or temp-assignment rate as such."
         }
       ]
     },
@@ -13202,8 +13674,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "G4S Security Services Luxembourg",
           "role": "Security agent",
           "where": "national",
-          "source": "https://www.g4s.com/fr-lu",
-          "confidence": "L"
+          "source": "https://lcgb.lu/files/2025/05/2026-06-01-Gardiennage-Salaires-a-partir-du-01-06-2026.pdf",
+          "confidence": "H",
+          "hourlyFrom": 1865,
+          "payNote": "Gross starting monthly wage for a security agent under Luxembourg's security and guarding collective agreement (declared generally binding, so it covers G4S staff), index 992.24 from 1 June 2026; €3,225.79 / 173 h (40 h week, Luxembourg's standard monthly divisor) = €18.65/h."
         }
       ]
     },
@@ -13214,8 +13688,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Stëftung Hëllef Doheem",
           "role": "Home care assistant (aide-soignant)",
           "where": "national",
-          "source": "https://www.shd.lu/",
-          "confidence": "H"
+          "source": "https://www.pixie.lu/corpus/rh/73-0007/quelle-est-la-grille-des-salaires-de-la-convention-cct-sas-au-luxembourg/",
+          "confidence": "M",
+          "hourlyFrom": 2246,
+          "payNote": "Entry gross monthly wage for an aide-soignant (career C3, 162 points) under the CCT SAS, the health and social-care agreement that covers Stëftung Hëllef Doheem; €3,886 / 173 h (40 h week) = €22.46/h. Read from a pixie.lu guide to the grid instead of the agreement text."
         }
       ]
     },
@@ -13248,16 +13724,21 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Rimi Latvia",
           "role": "Store worker",
           "where": "national",
-          "source": "https://en.wikipedia.org/wiki/Rimi_Baltic",
-          "confidence": "H"
+          "source": "https://darbs.rimi.lv/jobs/8448510-zales-darbinieks-ce-riga-vecmilgravis",
+          "confidence": "H",
+          "hourlyFrom": 540,
+          "hourlyTo": 590,
+          "payNote": "Gross hourly pay for a Rimi shop-floor worker at Rimi Super Vecmīlgrāvis, Rīga, with double rates on holidays and a monthly bonus of up to 80 EUR; Rimi's Liepāja posting offers 5.20–5.70."
         },
         {
           "id": "lv-retail-lidl-latvija",
           "name": "Lidl Latvija",
           "role": "Store worker",
           "where": "national",
-          "source": "https://karjera.lidl.lv/",
-          "confidence": "H"
+          "source": "https://corporate.lidl.lv/lv/preses-relizes/2026/lidl-mekle-darbiniekus-veikalam-rigas-centra",
+          "confidence": "H",
+          "hourlyFrom": 675,
+          "payNote": "Gross starting hourly rate for store workers at Lidl Latvija's new Rīga city-center store, per Lidl's own press release; monthly gross 1,080–1,430 EUR plus bonuses up to 190 EUR."
         }
       ]
     },
@@ -13268,16 +13749,22 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Lido",
           "role": "Restaurant staff",
           "where": "national",
-          "source": "https://www.lido.lv/",
-          "confidence": "M"
+          "source": "https://www.cvmarket.lv/lido-as-uznemuma-darba-piedavajumi-559",
+          "confidence": "H",
+          "hourlyFrom": 600,
+          "hourlyTo": 720,
+          "payNote": "Gross hourly pay on current LIDO restaurant vacancies in Rīga: junior serving-line kitchen worker 6.0–6.6, cashier 6.6–7.2 EUR/h (dishwashers 6.5, kitchen workers 7.1–7.7)."
         },
         {
           "id": "lv-hospitality-hesburger",
           "name": "Hesburger",
           "role": "Restaurant crew",
           "where": "national",
-          "source": "https://en.wikipedia.org/wiki/Hesburger",
-          "confidence": "M"
+          "source": "https://www.hesburger.lv/darbs",
+          "confidence": "H",
+          "hourlyFrom": 700,
+          "hourlyTo": 730,
+          "payNote": "Gross hourly pay for Hesburger Latvija restaurant staff from Hesburger's own jobs page: 7.00 EUR for the first two months, 7.30 from the third; nights 10.50, weekends 7.40/7.70, public holidays 14.00."
         }
       ]
     },
@@ -13288,8 +13775,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Caffeine",
           "role": "Barista",
           "where": "national",
-          "source": "https://www.caffeine.lv/",
-          "confidence": "M"
+          "source": "https://caffeine.lv/darbs-barista-riga/",
+          "confidence": "M",
+          "hourlyFrom": 470,
+          "hourlyTo": 560,
+          "payNote": "Gross hourly pay for a Caffeine barista in Rīga from Caffeine's own vacancy page; an archived Caffeine (Reitan Convenience Latvia) Rīga barista listing from around December 2024 stated 5.5–7.2 EUR/h gross."
         }
       ]
     },
@@ -13320,8 +13810,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "G4S Latvia",
           "role": "Security guard",
           "where": "national",
-          "source": "https://www.g4s.lv/",
-          "confidence": "L"
+          "source": "https://www.visidarbi.lv/darba-sludinajumi/kas:as-g4s-latvia",
+          "confidence": "M",
+          "hourlyFrom": 550,
+          "hourlyTo": 700,
+          "payNote": "Gross hourly pay on current AS G4S Latvia security-guard vacancies registered with the state employment agency (NVA) and listed on VisiDarbi, Rīga and Ropaži; one older Rīga listing states 8 EUR."
         }
       ]
     },
@@ -13332,8 +13825,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "MyFitness",
           "role": "Club administrator / trainer",
           "where": "national",
-          "source": "https://www.myfitness.lv/",
-          "confidence": "M"
+          "source": "https://visasiespejas.lv/job/administrators-5",
+          "confidence": "L",
+          "hourlyFrom": 480,
+          "payNote": "Hourly rate for a MyFitness club administrator (Alfa, Matīss, Aleja, Galleria Rīga clubs) plus bonus system; gross not stated explicitly but Latvian ads quote gross by convention."
         }
       ]
     }
@@ -13347,7 +13842,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "role": "delivery driver (app courier)",
           "where": "national",
           "source": "https://restofworld.org/2024/presto-libya-delivery-app/",
-          "confidence": "H"
+          "confidence": "L",
+          "hourlyFrom": 1077,
+          "hourlyTo": 1442,
+          "payNote": "Rest of World profile of Presto drivers in Tripoli: two drivers' reported monthly gig earnings (2,240 and 3,000+ LYD), not a set wage. Hours not stated; Libya's 48 h/week x 52/12 = 208 h gives 10.77-14.42 LYD/h. Before vehicle costs."
         }
       ]
     },
@@ -13420,8 +13918,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "BIM Maroc",
           "role": "discount store clerk",
           "where": "national",
-          "source": "https://www.bim.ma/",
-          "confidence": "H"
+          "source": "https://ijob.ma/emploi/bim-maroc-offres-demploi-pour-postulez-pour-des-postes-de-caissier-ere/",
+          "confidence": "L",
+          "hourlyFrom": 1571,
+          "hourlyTo": 2094,
+          "payNote": "A BIM Maroc cashier recruitment notice reposted on the iJob.ma job board: 3,000–4,000 MAD a month depending on experience, in Casablanca, Rabat, Tangier, Fès and other cities. Net or gross isn’t stated. It’s converted at Morocco's legal 44 h week (191 h/month)."
         }
       ]
     },
@@ -13520,16 +14021,21 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Linella",
           "role": "supermarket cashier or stocker",
           "where": "national",
-          "source": "https://www.linella.md/",
-          "confidence": "H"
+          "source": "https://www.delucru.md/job/116395",
+          "confidence": "M",
+          "hourlyFrom": 5769,
+          "hourlyTo": 6058,
+          "payNote": "Monthly pay on current Linella cashier vacancies on delucru.md (Nimoreni village and Chișinău); gross/net not stated, but Moldovan ads usually quote net and another Linella sales ad says '11.000 lei NET'. 40 h/week × 52/12 = 173.33 h gives 57.69–60.58 MDL/h."
         },
         {
           "id": "md-retail-kaufland-moldova",
           "name": "Kaufland Moldova",
           "role": "hypermarket sales associate",
           "where": "national",
-          "source": "https://www.kaufland.md/",
-          "confidence": "H"
+          "source": "https://despre.kaufland.md/ro/presa/comunicate-de-presa/presse-detail.y=2019.m=01.n=10-raspunsuri-job-kaufland.html",
+          "confidence": "L",
+          "hourlyFrom": 4327,
+          "payNote": "Gross monthly starting pay for Kaufland Moldova's universal store workers (cashiers, shelf staff), from Kaufland's own press release before its 2019 opening; 40 h/week × 52/12 = 173.33 h gives 43.27 MDL/h."
         },
         {
           "id": "md-retail-nr-1",
@@ -13560,8 +14066,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "McDonald's Moldova",
           "role": "fast-food crew member",
           "where": "national",
-          "source": "https://en.wikipedia.org/wiki/List_of_countries_with_McDonald%27s_restaurants",
-          "confidence": "H"
+          "source": "https://www.delucru.md/job/113716",
+          "confidence": "M",
+          "hourlyFrom": 6923,
+          "hourlyTo": 8654,
+          "payNote": "Monthly pay for a McDonald's Moldova restaurant worker (crew) in Chișinău on delucru.md; the same range appears on its MallDova, Zity Mall, Centru and Botanica ads. Gross/net not stated (Moldovan ads usually quote net); 40 h/week × 52/12 = 173.33 h gives 69.23–86.54 MDL/h."
         }
       ]
     },
@@ -13758,8 +14267,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "KAM market",
           "role": "Store cashier",
           "where": "national",
-          "source": "https://www.kam.com.mk",
-          "confidence": "H"
+          "source": "https://denar.mk/289077/biznis/kam-tretpat-godinava-gi-zgolemuva-platite-na-vrabotenite-osnovnata-pochetna-plata-za-kasieri-iznesuva",
+          "confidence": "L",
+          "hourlyFrom": 16154,
+          "hourlyTo": 21058,
+          "payNote": "KAM's starting base pay for cashiers was 28,000 denars a month in July 2023 (likely net, as Macedonian pay is usually quoted), and its Nov 2024 cashier ads offered 'up to' 36,500. Divided by 40 h/week x 52/12 = 173.33 h."
         },
         {
           "id": "mk-retail-stokomak",
@@ -14084,8 +14596,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Joeten Enterprises (Joeten Superstore)",
           "role": "Store clerk / cashier",
           "where": "national",
-          "source": "joeten.com - Joeten's retail stores in Saipan",
-          "confidence": "M"
+          "source": "https://jobs.labor.cnmi.gov/jobs/717824569-26-09-23646941054-|-counter-and-rental-clerk",
+          "confidence": "M",
+          "hourlyFrom": 1144,
+          "hourlyTo": 1300,
+          "payNote": "A job vacancy announcement on the CNMI Department of Labor JVA Board from Joeten Motor Company, a Joeten group affiliate, for a full-time counter/rental clerk at $11.44–13.00/h. The same employer lists a Commercial Cleaner at $8.44–11.00/h. No current Joeten Superstore cashier JVA was listed."
         },
         {
           "id": "mp-retail-payless-supermarkets",
@@ -14112,8 +14627,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Crowne Plaza Resort Saipan",
           "role": "Housekeeping / F&B attendant",
           "where": "national",
-          "source": "IHG hotel in Garapan, Saipan",
-          "confidence": "M"
+          "source": "https://jobs.labor.cnmi.gov/jobs",
+          "confidence": "L",
+          "hourlyFrom": 1173,
+          "payNote": "A current CNMI DOL job vacancy announcement from Asia Pacific Hotels Inc. (the operator of Crowne Plaza Resort Saipan) for a general maintenance worker at $11.73/h. No housekeeping or F&B attendant JVA was open. A 2021 Crowne Plaza JVA paid a Demi Chef $8.68–9.10/h."
         },
         {
           "id": "mp-hospitality-kensington-hotel-saipan",
@@ -14162,8 +14679,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "McDonald's Martinique",
           "role": "Équipier polyvalent",
           "where": "national",
-          "source": "McDonald's restaurants operate in Martinique",
-          "confidence": "M"
+          "source": "https://candidat.francetravail.fr/offres/recherche/detail/214JVFX",
+          "confidence": "H",
+          "hourlyFrom": 1231,
+          "payNote": "McDonald's own France Travail vacancy for an équipier(e) polyvalent(e) in Martinique states pay at the SMIC, on a 22 h/week part-time contract. The SMIC is 12,31 € gross an hour per service-public.gouv.fr (verified June 2026), which applies in Martinique (only Mayotte has a separate rate)."
         },
         {
           "id": "mq-hospitality-club-med-les-boucaniers",
@@ -14182,8 +14701,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Adecco Martinique",
           "role": "Intérimaire (temp worker)",
           "where": "national",
-          "source": "Adecco has a branch in Fort-de-France",
-          "confidence": "L"
+          "source": "https://candidat.francetravail.fr/offres/recherche/detail/214GCNJ",
+          "confidence": "H",
+          "hourlyFrom": 1231,
+          "payNote": "Gross hourly pay on Adecco Martinique's own France Travail temp vacancy for cashiers placed with a client in Le Lamentin (6-month minimum commitment, 30 h/week); same rate on its Vauclin (25 h) and libre-service (30 h) ads. French temps also receive a 10% end-of-mission allowance and 10% holiday pay on top."
         }
       ]
     },
@@ -14194,8 +14715,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Securitas / local security firms",
           "role": "Agent de sécurité",
           "where": "national",
-          "source": "No specific Martinique security employer verified; the national private-security grid (IDCC 1351) applies",
-          "confidence": "L"
+          "source": "https://candidat.francetravail.fr/offres/recherche/detail/214FFJC",
+          "confidence": "M",
+          "hourlyFrom": 1231,
+          "payNote": "Gross monthly pay on a France Travail offer from an unnamed Martinique security firm recruiting several agents de prévention et de sécurité for supermarket sites; 35 h/week = 151.67 h/month gives 12.31 €/h. Two other Fort-de-France security firms (GPSI, Prévention Sécurité Incendie) stated only 'Selon convention collective'."
         }
       ]
     }
@@ -14268,8 +14791,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Lidl Malta",
           "role": "Store assistant",
           "where": "national",
-          "source": "https://maltapathway.com/moving-to-malta/supermarkets (Lidl, 11 stores)",
-          "confidence": "M"
+          "source": "https://keepmeposted.com.mt/jobs/lidl-malta-supply-chain-assistant-87432",
+          "confidence": "L",
+          "hourlyFrom": 1056,
+          "payNote": "The gross starting hourly rate in a Lidl Malta vacancy on Keepmeposted. It was for a part-time Supply Chain Assistant (head office), not a store assistant, and applications closed on 19 Jan 2024. Lidl Malta's own store Sales Assistant ads (40 h full time / 25 h part time) state no pay. A search snippet showed a Lidl store-side Price Checker starting at €8.77/h, but that page returned 410 and couldn’t be verified."
         },
         {
           "id": "mt-retail-welbee-s",
@@ -14522,24 +15047,31 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Plaza Vea (Supermercados Peruanos, InRetail)",
           "role": "Cashier / stocker",
           "where": "national",
-          "source": "https://www.plazavea.com.pe",
-          "confidence": "M"
+          "source": "https://pe.computrabajo.com/trabajo-de-cajera-plaza-vea",
+          "confidence": "M",
+          "hourlyFrom": 543,
+          "payNote": "Gross monthly pay on current Plaza Vea vacancies on Computrabajo: full-time stocker in Lince S/ 1,130 (the national minimum wage); part-time afternoon cashiers S/ 570. Peru's 48 h legal week × 52/12 = 208 h gives S/ 5.43/h for the full-time job."
         },
         {
           "id": "pe-retail-tottus-falabella",
           "name": "Tottus (Falabella)",
           "role": "Cashier / stocker",
           "where": "national",
-          "source": "https://www.tottus.com.pe",
-          "confidence": "M"
+          "source": "https://pe.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-tottus-pacasmayo-cajeros-full-time-rotativo-en-pacasmayo-9621FE42A3AF022861373E686DCF3405",
+          "confidence": "M",
+          "hourlyFrom": 543,
+          "payNote": "Gross monthly pay for a full-time rotating cashier at Tottus Pacasmayo on a current Computrabajo vacancy, equal to Peru's minimum wage; 48 h legal week × 52/12 = 208 h gives S/ 5.43/h."
         },
         {
           "id": "pe-retail-wong-and-metro-cencosud-peru",
           "name": "Wong and Metro (Cencosud Peru)",
           "role": "Cashier / stocker",
           "where": "national",
-          "source": "https://www.cencosud.com",
-          "confidence": "M"
+          "source": "https://pe.computrabajo.com/trabajo-de-cajero-wong",
+          "confidence": "M",
+          "hourlyFrom": 543,
+          "hourlyTo": 577,
+          "payNote": "Gross monthly pay on current Wong/Metro (Cencosud Perú) cashier and stocker vacancies on Computrabajo: S/ 1,130–1,200 full-time; 48 h × 52/12 = 208 h gives S/ 5.43–5.77/h. Part-time three-day cashier roles show S/ 500–540."
         }
       ]
     },
@@ -14582,16 +15114,20 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Liderman",
           "role": "Security guard",
           "where": "national",
-          "source": "https://www.liderman.com.pe",
-          "confidence": "M"
+          "source": "https://pe.computrabajo.com/trabajo-de-liderman",
+          "confidence": "M",
+          "hourlyFrom": 865,
+          "payNote": "Gross monthly pay for an entry security agent (with or without experience) on a current Liderman vacancy in south Lima; other Liderman guard ads show S/ 1,900 (Arequipa, 14x7 camp) and S/ 2,083 (Tacna). No hours given; 48 h × 52/12 = 208 h gives S/ 8.65/h."
         },
         {
           "id": "pe-armed_forces-prosegur-peru",
           "name": "Prosegur Peru",
           "role": "Security guard",
           "where": "national",
-          "source": "https://www.prosegur.com.pe",
-          "confidence": "M"
+          "source": "https://pe.computrabajo.com/trabajo-de-agente-de-seguridad-prosegur",
+          "confidence": "M",
+          "hourlyFrom": 865,
+          "payNote": "Gross monthly base of S/ 1,800 on a current Prosegur security-agent vacancy for Lima and Callao (the title advertises S/ 2,000, presumably with bonuses); armed guards in Chepén S/ 1,670. No hours given; 48 h × 52/12 = 208 h gives S/ 8.65/h."
         }
       ]
     },
@@ -14602,8 +15138,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Adecco Peru",
           "role": "Temporary office worker",
           "where": "national",
-          "source": "https://www.adecco.com.pe",
-          "confidence": "L"
+          "source": "https://pe.computrabajo.com/trabajo-de-adecco",
+          "confidence": "M",
+          "hourlyFrom": 1057,
+          "payNote": "Gross monthly pay for an HR administration assistant on Adecco Perú's payroll (Surco, hybrid), the closest office role among its current vacancies; its placed blue-collar temps are offered S/ 1,130–1,300. No hours given; 48 h × 52/12 = 208 h gives S/ 10.57/h."
         }
       ]
     }
@@ -14868,8 +15406,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Zabka Polska",
           "role": "Store associate",
           "where": "national",
-          "source": "https://www.zabka.pl",
-          "confidence": "M"
+          "source": "https://www.olx.pl/praca/q-sprzedawca-%C5%BCabka/",
+          "confidence": "M",
+          "hourlyFrom": 3140,
+          "hourlyTo": 3500,
+          "payNote": "Gross hourly pay in current Żabka shop-assistant (sprzedawca) vacancies on OLX, Sept 2026; stores are run by franchisees, who are the actual employers. The floor 31.40 zł is Poland's 2026 minimum hourly rate."
         }
       ]
     },
@@ -14908,8 +15449,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "AmRest (Starbucks, KFC in Poland)",
           "role": "Barista / crew member",
           "where": "national",
-          "source": "https://www.amrest.eu",
-          "confidence": "M"
+          "source": "https://rocketjobs.pl/oferta-pracy/amrest-pracownik-pracowniczka-restauracji-kfc-marki-marki-gastronomia",
+          "confidence": "M",
+          "hourlyFrom": 3100,
+          "hourlyTo": 3200,
+          "payNote": "Gross hourly pay for an AmRest KFC restaurant worker (Pracownik/Pracowniczka Restauracji) in Marki near Warsaw; contract of mandate, employment contract after 3 months. Other 2026 AmRest KFC postings reportedly state 31.40 zł/h."
         }
       ]
     },
@@ -14920,8 +15464,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Randstad Polska",
           "role": "Temporary office worker",
           "where": "national",
-          "source": "https://www.randstad.pl",
-          "confidence": "M"
+          "source": "https://www.randstad.pl/znajdz-prace/s-administracja/",
+          "confidence": "M",
+          "hourlyFrom": 3200,
+          "hourlyTo": 3600,
+          "payNote": "Gross hourly pay in a Randstad Polska HR/Payroll intern (office) assignment in Poznań listed on Randstad's own site; most other Randstad office listings show no pay."
         }
       ]
     },
@@ -14932,8 +15479,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Impel",
           "role": "Security guard",
           "where": "national",
-          "source": "https://www.impel.pl",
-          "confidence": "M"
+          "source": "https://pl.jooble.org/praca-impel-ochrona",
+          "confidence": "M",
+          "hourlyFrom": 3140,
+          "hourlyTo": 3600,
+          "payNote": "Gross hourly pay in current Impel Business Solutions security-guard vacancies across Poland (listings on Jooble, Sept 2026); most start at the 2026 minimum hourly rate of 31.40 zł, a few 36 zł or more for bank/market posts."
         }
       ]
     },
@@ -15108,8 +15658,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Lidl Portugal",
           "role": "Operador de loja",
           "where": "national",
-          "source": "https://www.lidl.pt",
-          "confidence": "H"
+          "source": "https://eco.sapo.pt/2025/12/18/lidl-aumenta-salario-de-entrada-para-mil-euros-brutos-a-partir-de-janeiro/",
+          "confidence": "H",
+          "hourlyFrom": 577,
+          "payNote": "Lidl Portugal's entry base wage for store operators from January 2026, gross, plus EUR 9.60/day meal allowance not counted. 1,000 / (40 h x 52/12 = 173.33 h) = 5.77/h."
         }
       ]
     },
@@ -15120,8 +15672,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "McDonald’s Portugal",
           "role": "Crew member",
           "where": "national",
-          "source": "https://www.mcdonalds.pt",
-          "confidence": "H"
+          "source": "https://eco.sapo.pt/2025/03/27/mcdonalds-aumenta-salario-de-entrada-em-59-para-900-euros-brutos/",
+          "confidence": "M",
+          "hourlyFrom": 519,
+          "payNote": "McDonald's Portugal and franchisees' entry wage for restaurant crew from 2025, gross, paid 14 times a year. 900 / 173.33 h (40 h/week x 52/12) = 5.19/h; excludes the 13th/14th month."
         }
       ]
     },
@@ -15526,8 +16080,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Kaufland Romania",
           "role": "store associate",
           "where": "national",
-          "source": "https://cariere.kaufland.ro/",
-          "confidence": "H"
+          "source": "https://www.wall-street.ro/articol/retail/salarii-in-retail-lidl-kaufland-mega-image.html",
+          "confidence": "M",
+          "hourlyFrom": 2942,
+          "payNote": "Gross base salary on Kaufland Romania's own career-site vacancies for store workers, as reported by Wall-Street.ro. 2,550 lei for 4 h/day; hours taken as 4 h × 5 days × 52/12 = 86.67 h/month (the 6 h/day ad gives the same rate). Rates in Bucharest were earlier reported higher (4,800 lei gross full time)."
         },
         {
           "id": "ro-retail-lidl-romania",
@@ -15550,16 +16106,20 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Mega Image",
           "role": "store associate",
           "where": "national",
-          "source": "https://www.mega-image.ro/cariere",
-          "confidence": "H"
+          "source": "https://playtech.ro/2025/cati-bani-castiga-un-lucrator-comercial-la-mega-image-ce-intra-in-fisa-postului-pentru-salariul-promis/",
+          "confidence": "M",
+          "hourlyFrom": 1788,
+          "payNote": "Starting net monthly pay in a Mega Image job ad on Facebook for commercial workers and cashiers at the Amurgului store, as reported by Playtech. The figure is NET. It’s converted at 40 h/week × 52/12 = 173.33 h/month, which gives about 17.88 lei/h net (roughly 5,300 lei gross)."
         },
         {
           "id": "ro-retail-dedeman",
           "name": "Dedeman",
           "role": "sales floor associate",
           "where": "national",
-          "source": "https://www.dedeman.ro/ro/cariere",
-          "confidence": "M"
+          "source": "https://www.gandul.ro/actualitate/salarii-bricolaj-2026-cat-castiga-angajatii-de-la-dedeman-leroy-merlin-si-hornbach-cine-plateste-mai-bine-20816893",
+          "confidence": "L",
+          "hourlyFrom": 2019,
+          "payNote": "The starting net monthly pay for an entry-level Dedeman store worker, as reported by Gândul (a news article, with no job ad cited). The figure is NET. It’s converted at 40 h/week × 52/12 = 173.33 h/month, giving about 20.19 lei/h net."
         }
       ]
     },
@@ -15570,16 +16130,21 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "McDonald's Romania (Premier Restaurants Romania)",
           "role": "crew member",
           "where": "national",
-          "source": "https://www.mcdonalds.ro/cariere",
-          "confidence": "H"
+          "source": "https://oficiuldestiri.ro/mcdonalds-angajari-romania-salarii-joburi-2026",
+          "confidence": "M",
+          "hourlyFrom": 1904,
+          "hourlyTo": 2135,
+          "payNote": "The net monthly package McDonald's Romania announced in its 2026 recruitment campaign for a full-time crew member on 8-hour shifts. The package includes meal vouchers, allowances and bonuses. It’s NET and converted at 173.33 h/month (40 h/week × 52/12)."
         },
         {
           "id": "ro-hospitality-kfc-romania-sphera-franchise-group",
           "name": "KFC Romania (Sphera Franchise Group)",
           "role": "restaurant team member",
           "where": "national",
-          "source": "https://www.spheragroup.com/",
-          "confidence": "M"
+          "source": "https://www.ziarulprofit.ro/kfc-romania-are-50-de-locuri-de-munca-disponibile-ce-salariu-primesti-ca-sa-dai-puiul-prin-pesmet-in-2026/",
+          "confidence": "M",
+          "hourlyFrom": 2077,
+          "payNote": "KFC Romania's own recruitment announcement: 3,600 lei NET a month for a full-time crew member from the third month on. The figure includes base pay, meal vouchers and performance bonuses, so starting base pay is lower. Converted at 173.33 h/month (40 h/week × 52/12)."
         }
       ]
     },
@@ -15590,8 +16155,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "5 to go",
           "role": "barista",
           "where": "national",
-          "source": "https://5togo.ro/",
-          "confidence": "M"
+          "source": "https://www.cancan.ro/cati-lei-primeste-salariu-un-barista-in-cafenelele-5togo-din-bucuresti-acum-in-martie-2024-20969600",
+          "confidence": "L",
+          "hourlyFrom": 1442,
+          "hourlyTo": 1731,
+          "payNote": "A 5 to go barista vacancy posted on OLX and reported by CanCan: 2,500–3,000 lei a month plus tips, full time. It isn’t stated whether the figure is net or gross (probably net, since it’s below the gross minimum wage). Converted at 173.33 h/month (40 h/week × 52/12)."
         },
         {
           "id": "ro-school-starbucks-romania",
@@ -15634,8 +16202,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "World Class Romania",
           "role": "gym front desk / trainer",
           "where": "national",
-          "source": "https://www.worldclass.ro/",
-          "confidence": "M"
+          "source": "https://www.bugetul.ro/salariul-urias-pe-care-world-class-il-ofera-pentru-o-receptionista-primesti-reduceri-la-parteneri-si-alte-beneficii-daca-lucrezi-la-sala-bogatilor/",
+          "confidence": "M",
+          "hourlyFrom": 2930,
+          "hourlyTo": 3095,
+          "payNote": "A World Class receptionist vacancy on Bestjobs, as reported by Bugetul.ro: €970–1,025 a month, which the article converts to 5,079–5,365 lei. It isn’t stated whether the figure is net or gross. Converted at 173.33 h/month (40 h/week × 52/12)."
         }
       ]
     }
@@ -15664,8 +16235,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Univerexport",
           "role": "store associate",
           "where": "national",
-          "source": "https://www.univerexport.rs/",
-          "confidence": "M"
+          "source": "https://poslovi.infostud.com/posao/radnik-na-kasi-u-marketu-univerexport/omladinska-zadruga-nefertiti/757081",
+          "confidence": "M",
+          "hourlyFrom": 42000,
+          "payNote": "A 'Radnik na kasi u marketu Univerexport' (cashier/shelf-filler in a Univerexport market, Belgrade) placed through the youth cooperative Omladinska zadruga Nefertiti at 420 RSD NET an hour; a warehouse youth job at the same chain pays 400 RSD net. Univerexport's own Kasir-prodavac ad (26.09.2026, full time, 14 cities) states no pay."
         },
         {
           "id": "rs-retail-idea-mercator-s",
@@ -15684,8 +16257,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "McDonald's Srbija",
           "role": "crew member",
           "where": "national",
-          "source": "https://www.mcdonalds.rs/",
-          "confidence": "M"
+          "source": "https://poslovi.infostud.com/posao/radnik-u-mcdonald-s-restoranu/omladinska-zadruga-grof/756791",
+          "confidence": "M",
+          "hourlyFrom": 42000,
+          "hourlyTo": 44000,
+          "payNote": "'Radnik u McDonald's restoranu' in Belgrade, placed through the youth cooperative Omladinska zadruga Grof, at 420-440 RSD NET an hour."
         }
       ]
     },
@@ -15696,8 +16272,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Glovo / Wolt",
           "role": "courier (app delivery)",
           "where": "national",
-          "source": "https://glovoapp.com/rs/ ; https://wolt.com/sr/srb",
-          "confidence": "M"
+          "source": "https://poslovi.infostud.com/posao/vozac-dostavljac-renta-skutera/paket-aranzman-doo/752498",
+          "confidence": "L",
+          "hourlyFrom": 40400,
+          "hourlyTo": 138500,
+          "payNote": "A Wolt/Glovo fleet partner, Paket Aranžman d.o.o., advertises 'Vozač - dostavljač (renta skutera)' in Belgrade and other cities at 70,000-240,000 RSD NET a month; converted on a 40 h week (173.33 h/month), though courier earnings depend on deliveries made."
         }
       ]
     },
@@ -15708,8 +16287,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Securitas Srbija",
           "role": "security guard",
           "where": "national",
-          "source": "https://www.securitas.rs/",
-          "confidence": "M"
+          "source": "https://poslovi.infostud.com/posao/sluzbenik-obezbedjenja/securitas-se-doo/756377",
+          "confidence": "M",
+          "hourlyFrom": 43270,
+          "hourlyTo": 49040,
+          "payNote": "Securitas SE d.o.o. ad for 100 'Službenik obezbeđenja' (security officers), full time, Belgrade and Novi Sad, 75,000-85,000 RSD NET a month; converted on Serbia's 40 h week (173.33 h/month)."
         }
       ]
     },
@@ -15746,40 +16328,55 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Pyaterochka (X5 Group)",
           "role": "cashier / store associate",
           "where": "national",
-          "source": "https://rabota.x5.ru/",
-          "confidence": "H"
+          "source": "https://hh.ru/search/vacancy?text=%D0%BF%D1%80%D0%BE%D0%B4%D0%B0%D0%B2%D0%B5%D1%86-%D0%BA%D0%B0%D1%81%D1%81%D0%B8%D1%80&employer_id=1942330&area=1",
+          "confidence": "H",
+          "hourlyFrom": 46200,
+          "hourlyTo": 57700,
+          "payNote": "Gross monthly pay for a Pyaterochka cashier-seller (no experience required) in a Moscow vacancy on hh.ru. Moscow pays more than the regions. No hours are stated, so a 40 h/week × 52/12 = 173.33 h/month standard is used."
         },
         {
           "id": "ru-retail-perekrestok-x5-group",
           "name": "Perekrestok (X5 Group)",
           "role": "store associate",
           "where": "national",
-          "source": "https://rabota.x5.ru/",
-          "confidence": "H"
+          "source": "https://hh.ru/search/vacancy?text=%D0%9F%D0%B5%D1%80%D0%B5%D0%BA%D1%80%D1%91%D1%81%D1%82%D0%BE%D0%BA+%D0%BF%D1%80%D0%BE%D0%B4%D0%B0%D0%B2%D0%B5%D1%86&area=113&only_with_salary=true",
+          "confidence": "H",
+          "hourlyFrom": 34600,
+          "hourlyTo": 38700,
+          "payNote": "Gross monthly pay for a Perekrestok supermarket cashier-seller (no experience required) in hh.ru vacancies in Apatity and in St Petersburg or Koltushi. No hours are stated, so the 173.33 h/month standard (40 h/week) is used."
         },
         {
           "id": "ru-retail-magnit",
           "name": "Magnit",
           "role": "store associate",
           "where": "national",
-          "source": "https://rabota.magnit.ru/",
-          "confidence": "H"
+          "source": "https://hh.ru/search/vacancy?text=%D0%9C%D0%B0%D0%B3%D0%BD%D0%B8%D1%82+%D0%BF%D1%80%D0%BE%D0%B4%D0%B0%D0%B2%D0%B5%D1%86&area=113&only_with_salary=true",
+          "confidence": "H",
+          "hourlyFrom": 23100,
+          "hourlyTo": 39400,
+          "payNote": "Gross monthly pay for a Magnit grocery-store sales assistant in hh.ru vacancies in Pskov and in Mirny, Yakutia, where pay is higher for the north. No hours are stated, so the 173.33 h/month standard is used."
         },
         {
           "id": "ru-retail-lenta",
           "name": "Lenta",
           "role": "store associate",
           "where": "national",
-          "source": "https://lenta.com/",
-          "confidence": "M"
+          "source": "https://hh.ru/search/vacancy?text=%D0%BA%D0%B0%D1%81%D1%81%D0%B8%D1%80+%D0%9B%D0%B5%D0%BD%D1%82%D0%B0+%D0%B3%D0%B8%D0%BF%D0%B5%D1%80%D0%BC%D0%B0%D1%80%D0%BA%D0%B5%D1%82&area=113&only_with_salary=true",
+          "confidence": "H",
+          "hourlyFrom": 36900,
+          "hourlyTo": 41500,
+          "payNote": "Gross monthly pay for a cashier at a Lenta hypermarket in hh.ru vacancies in Kudrovo (Leningrad oblast) and Yekaterinburg. No hours are stated, so the 173.33 h/month standard is used."
         },
         {
           "id": "ru-retail-wildberries-ozon",
           "name": "Wildberries / Ozon",
           "role": "warehouse and pickup-point worker",
           "where": "national",
-          "source": "https://www.wildberries.ru/ ; https://www.ozon.ru/",
-          "confidence": "M"
+          "source": "https://hh.ru/search/vacancy?text=Wildberries&area=113&only_with_salary=true&search_field=company_name",
+          "confidence": "M",
+          "hourlyFrom": 46200,
+          "hourlyTo": 57700,
+          "payNote": "NET (take-home) monthly starting pay for Wildberries (RWB) warehouse and sorting-center workers in the Moscow region, from hh.ru vacancies. No hours are stated, so the 173.33 h/month standard is used. Gross pay would be about 13% higher."
         }
       ]
     },
@@ -15798,8 +16395,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Rostic's",
           "role": "crew member",
           "where": "national",
-          "source": "https://rostics.ru/",
-          "confidence": "M"
+          "source": "https://hh.ru/search/vacancy?text=Rostic%27s&area=113&only_with_salary=true",
+          "confidence": "M",
+          "hourlyFrom": 20200,
+          "hourlyTo": 57700,
+          "payNote": "Gross monthly pay for a Rostic's restaurant crew member in hh.ru vacancies in Veliky Novgorod and Vsevolozhsk. The wide range probably reflects shifts from part-time to full-time, but the 173.33 h/month standard is used because no hours are stated, so the bottom of the range is uncertain."
         }
       ]
     },
@@ -15810,8 +16410,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Cofix",
           "role": "barista",
           "where": "national",
-          "source": "https://cofix.global/",
-          "confidence": "M"
+          "source": "https://hh.ru/search/vacancy?text=COFIX&area=113&only_with_salary=true&search_field=company_name",
+          "confidence": "M",
+          "hourlyFrom": 37500,
+          "hourlyTo": 46200,
+          "payNote": "NET monthly pay for baristas at Moscow Cofix coffee shops. The hh.ru vacancies are posted by franchisee operators under the Cofix name. No hours are stated, so the 173.33 h/month standard is used."
         }
       ]
     },
@@ -15834,8 +16437,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "PIK Group",
           "role": "construction worker",
           "where": "national",
-          "source": "https://www.pik.ru/",
-          "confidence": "L"
+          "source": "https://hh.ru/search/vacancy?text=%D0%9F%D0%98%D0%9A-%D1%81%D0%BF%D0%B5%D1%86%D0%B8%D0%B0%D0%BB%D0%B8%D0%B7%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D1%8B%D0%B9+%D0%B7%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D1%89%D0%B8%D0%BA&area=113&only_with_salary=true&search_field=company_name",
+          "confidence": "M",
+          "hourlyFrom": 75000,
+          "payNote": "Gross monthly starting pay for a window-installation worker at Prefab Tekhnologii. That’s listed under PIK on hh.ru, in Moscow. No hours are stated, so the 173.33 h/month standard is used."
         }
       ]
     },
@@ -15846,8 +16451,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "DDX Fitness / World Class",
           "role": "gym staff / trainer",
           "where": "national",
-          "source": "https://www.ddxfitness.ru/ ; https://www.worldclass.ru/",
-          "confidence": "M"
+          "source": "https://hh.ru/search/vacancy?text=DDX+Fitness&area=113&only_with_salary=true",
+          "confidence": "M",
+          "hourlyFrom": 26000,
+          "hourlyTo": 28800,
+          "payNote": "NET monthly pay for an entry-level front-desk service consultant at a DDX Fitness club in Voronezh (hh.ru). This isn’t a trainer role. No hours are stated, so the 173.33 h/month standard is used."
         }
       ]
     }
@@ -16206,24 +16814,33 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "ICA (ICA-handlarna stores)",
           "role": "Store assistant (butiksmedarbetare)",
           "where": "national",
-          "source": "https://www.ica.se/",
-          "confidence": "H"
+          "source": "https://www.in.se/globalassets/dokument/arbetsgivarguiden/publik/kollektivavtal/detaljhandelsavtalet-2025-2027-in.pdf",
+          "confidence": "M",
+          "hourlyFrom": 16040,
+          "hourlyTo": 16233,
+          "payNote": "Gross minimum wages for store staff under the Handels/Svensk Handel retail agreement (Detaljhandelsavtalet 2025-2027), which covers ICA stores; lowest adult levels, before any branschvana (industry experience) steps. The agreement states the hourly rate directly."
         },
         {
           "id": "se-retail-coop-sverige",
           "name": "Coop Sverige",
           "role": "Store assistant",
           "where": "national",
-          "source": "https://www.coop.se/",
-          "confidence": "H"
+          "source": "https://www.in.se/globalassets/dokument/arbetsgivarguiden/publik/kollektivavtal/detaljhandelsavtalet-2025-2027-in.pdf",
+          "confidence": "M",
+          "hourlyFrom": 16040,
+          "hourlyTo": 16233,
+          "payNote": "Gross minimum wages for store staff under the Handels retail agreement (Detaljhandelsavtalet 2025-2027) that covers Swedish grocery retail including Coop; lowest adult levels without industry experience."
         },
         {
           "id": "se-retail-axfood-willys-hemkop",
           "name": "Axfood (Willys, Hemköp)",
           "role": "Store assistant",
           "where": "national",
-          "source": "https://www.axfood.se/",
-          "confidence": "H"
+          "source": "https://www.in.se/globalassets/dokument/arbetsgivarguiden/publik/kollektivavtal/detaljhandelsavtalet-2025-2027-in.pdf",
+          "confidence": "M",
+          "hourlyFrom": 16040,
+          "hourlyTo": 16233,
+          "payNote": "Gross minimum wages for store staff under the Handels retail agreement (Detaljhandelsavtalet 2025-2027) that covers Swedish grocery retail including Willys and Hemköp; lowest adult levels without industry experience."
         }
       ]
     },
@@ -16246,8 +16863,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Max Burgers (Max Hamburgerrestauranger)",
           "role": "Restaurant crew",
           "where": "national",
-          "source": "https://www.max.se/",
-          "confidence": "H"
+          "source": "https://www.hrf.net/app/uploads/2025/05/Grona-riksen-2025-2027-1.pdf",
+          "confidence": "M",
+          "hourlyFrom": 15364,
+          "payNote": "Gross adult minimum for non-qualified restaurant work (lönegrupp 2, yrkesarbete) under the HRF–Visita Gröna Riksavtalet 2025-2027, the sector agreement for Swedish restaurants including fast food; hourly rate stated by the agreement. Under-20 youth rates are lower (124:92 kr/h at 19)."
         },
         {
           "id": "se-hospitality-scandic-hotels",
@@ -16267,8 +16886,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Foodora",
           "role": "Courier",
           "where": "national",
-          "source": "https://www.foodora.se/",
-          "confidence": "H"
+          "source": "https://www.transportarbetaren.se/hojda-garantier-i-nytt-foodora-avtal/",
+          "confidence": "H",
+          "hourlyFrom": 13090,
+          "hourlyTo": 15590,
+          "payNote": "Gross guaranteed hourly wage for Foodora's employed bike and moped couriers under the Transport–Foodora collective agreement (2025-2027); the range depends on time of day, and a per-delivery/distance component is paid on top. From 1 May 2025 it was 125,45–150 kr/h."
         },
         {
           "id": "se-between-wolt",
@@ -16287,8 +16909,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Securitas Sverige",
           "role": "Security officer (väktare)",
           "where": "national",
-          "source": "https://www.securitas.se/",
-          "confidence": "H"
+          "source": "https://www.transportarbetaren.se/lonerna-klara-for-vaktare-och-ordningsvakter/",
+          "confidence": "L",
+          "hourlyFrom": 13585,
+          "payNote": "Gross entry tariff wage for a security guard (väktare) under the Transport–Almega Säkerhetsföretagen security agreement, which covers Securitas; the hourly rate is the one stated for part-time and on-call staff. This is the 2021 level; the 2025-2027 agreement added 800–1 102 kr/month from June 2025 and 656–982 kr/month from June 2026, but its current table is members-only."
         }
       ]
     },
@@ -16311,8 +16935,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Peab",
           "role": "Construction worker",
           "where": "national",
-          "source": "https://www.peab.se/",
-          "confidence": "H"
+          "source": "https://www.byggnadsarbetaren.se/byggavtalet-klart-sa-mycket-ska-din-lon-upp/",
+          "confidence": "M",
+          "hourlyFrom": 20300,
+          "payNote": "Gross base wage (grundlön) for a qualified construction worker (yrkesarbetare) under the Byggnads–Byggföretagen Byggavtalet 2025-2027, which covers Peab's site workers; year-2 level from May 2026 (year 1 was 196 kr/h). Apprentices and untrained starters are paid a percentage of this under the agreement's apprentice rules."
         }
       ]
     },
@@ -16323,8 +16949,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Attendo",
           "role": "Care assistant (undersköterska/vårdbiträde)",
           "where": "national",
-          "source": "https://www.attendo.se/",
-          "confidence": "H"
+          "source": "https://arbetet.se/2025/06/16/allt-om-det-nya-privata-vardavtalet/",
+          "confidence": "M",
+          "hourlyFrom": 13681,
+          "hourlyTo": 15519,
+          "payNote": "Gross full-time monthly minimums in the Kommunal–Almega Vårdföretagarna agreement for private elderly care (bransch F), which covers providers such as Attendo: 23 713 kr for untrained care staff (vårdbiträde) and 26 899 kr for trained staff (undersköterska) from 2026. Converted at a 40 h/week standard (40 × 52/12 = 173.33 h/month); care rotas are often slightly shorter, which would raise the hourly figure."
         }
       ]
     },
@@ -16349,16 +16978,20 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "NTUC FairPrice",
           "role": "Retail assistant / cashier",
           "where": "national",
-          "source": "https://www.fairprice.com.sg/",
-          "confidence": "H"
+          "source": "https://www.mom.gov.sg/newsroom/press-releases/2025/0811-tcr-recommendations-for-retail-pwm",
+          "confidence": "M",
+          "hourlyFrom": 1277,
+          "payNote": "Retail Progressive Wage Model floor (official, mandatory for retail firms employing foreign workers, which FairPrice does) for a retail assistant/cashier from 1 Sep 2026, gross. MOM states the part-time hourly equivalent $12.77, which matches $2,435 over 44 h/week x 52/12 = 190.67 h/month. FairPrice's own vacancies with pay couldn’t be opened (Jobstreet blocked)."
         },
         {
           "id": "sg-retail-sheng-siong",
           "name": "Sheng Siong",
           "role": "Retail assistant",
           "where": "national",
-          "source": "https://shengsiong.com.sg/",
-          "confidence": "H"
+          "source": "https://www.mom.gov.sg/newsroom/press-releases/2025/0811-tcr-recommendations-for-retail-pwm",
+          "confidence": "M",
+          "hourlyFrom": 1277,
+          "payNote": "Retail Progressive Wage Model floor (mandatory for retail firms employing foreign workers) for a retail assistant/cashier from 1 Sep 2026, gross; $2,435 over 44 h/week x 52/12 = 190.67 h = the $12.77 hourly MOM states. Sheng Siong's own last public cashier posting found (MyCareersFuture, May 2022) stated $1,450-$1,785 a month for 6 days a week, now below the floor."
         }
       ]
     },
@@ -16369,16 +17002,21 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Ya Kun Kaya Toast",
           "role": "Counter crew",
           "where": "national",
-          "source": "https://yakun.com/",
-          "confidence": "H"
+          "source": "https://www.mycareersfuture.gov.sg/job/customer-service/service-crew-%E2%80%94-part-ya-kun-team-ya-kun-cafe-f045f1e26e217c56f0bac36d57d9ccf5",
+          "confidence": "H",
+          "hourlyFrom": 1170,
+          "hourlyTo": 1300,
+          "payNote": "Ya Kun Cafe's own vacancy for service crew (cashiering, toasting, coffee) islandwide on the government MyCareersFuture portal; part-time hourly rate as stated, gross. Full-time pay starts at $2,265 a month."
         },
         {
           "id": "sg-school-toast-box-breadtalk-group",
           "name": "Toast Box (BreadTalk Group)",
           "role": "Counter crew",
           "where": "national",
-          "source": "https://www.toastbox.com.sg/",
-          "confidence": "H"
+          "source": "https://mom.gov.sg/employment-practices/progressive-wage-model/food-services-sector",
+          "confidence": "M",
+          "hourlyFrom": 1204,
+          "payNote": "Food Services Progressive Wage Model floor (MOM), gross, for a food service counter attendant, which binds food-licensed outlets that hire foreign workers such as Toast Box; part-time hourly as stated, full-time $2,295 a month for 35-44 h/week. Toast Box's own postings (reported up to $13/hr part-time) sit on Jobstreet, which couldn’t be opened."
         }
       ]
     },
@@ -16389,16 +17027,21 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "McDonald's Singapore",
           "role": "Restaurant crew",
           "where": "national",
-          "source": "https://www.mcdonalds.com.sg/",
-          "confidence": "H"
+          "source": "https://www.mycareersfuture.gov.sg/job/food-and-beverage/service-crew-hanbaobao-371034d519bf3435bfbd3c0917a38133",
+          "confidence": "H",
+          "hourlyFrom": 1288,
+          "payNote": "McDonald's Singapore (Hanbaobao Pte Ltd) own full-time service crew vacancy on MyCareersFuture, gross; converted on Singapore's 44 h/week x 52/12 = 190.67 h/month since no hours were stated."
         },
         {
           "id": "sg-hospitality-marina-bay-sands",
           "name": "Marina Bay Sands",
           "role": "Hotel and F&B staff",
           "where": "national",
-          "source": "https://www.marinabaysands.com/",
-          "confidence": "H"
+          "source": "https://www.mycareersfuture.gov.sg/job/food-and-beverage/fb-service-attendant-marina-bay-sands-30876c2ee55dca936eb0c43febfc4087",
+          "confidence": "H",
+          "hourlyFrom": 1311,
+          "hourlyTo": 1731,
+          "payNote": "Marina Bay Sands' own vacancy for a full-time F&B service attendant on MyCareersFuture, gross monthly range; converted on Singapore's 44 h/week full-time standard x 52/12 = 190.67 h/month (no hours stated). A same-date F&B cocktail server posting stated $2,320-$2,880."
         }
       ]
     },
@@ -16429,8 +17072,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Certis",
           "role": "Security officer",
           "where": "national",
-          "source": "https://www.certisgroup.com/",
-          "confidence": "H"
+          "source": "https://www.mycareersfuture.gov.sg/job/security/security-officer-woodlands-north-exp-required-certis-cisco-security-582a41c1fbb84b83bb68ae9c1426b8da",
+          "confidence": "M",
+          "hourlyFrom": 1083,
+          "hourlyTo": 1127,
+          "payNote": "Certis Cisco's own vacancy for an untrained night-shift security officer at Woodlands North on MyCareersFuture, gross monthly (the package likely includes the overtime built into 12.5 h shifts). Hours from the stated roster: 3 on/1 off = 0.75 x 30.42 days x 12.5 h = 285.16 h/month; per 44 h/week standard it would be 16.21-16.86."
         }
       ]
     },
@@ -16441,8 +17087,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Recruit Express",
           "role": "Temporary office staff",
           "where": "national",
-          "source": "https://www.recruitexpress.com.sg/",
-          "confidence": "M"
+          "source": "https://www.mycareersfuture.gov.sg/job/admin/entry-level-3-months-simple-admin-hsn-recruit-express-535284c2c7c8f9f1867c4c37c3d1baef",
+          "confidence": "H",
+          "hourlyFrom": 923,
+          "hourlyTo": 1154,
+          "payNote": "Recruit Express's own temp vacancy (on its headcount, deployed to a client in Bukit Merah) for entry-level invoice/admin work, gross monthly; 'office hours' taken as 40 h/week x 52/12 = 173.33 h/month. Other same-day Recruit Express temps: call center assistant $2,200-$2,300, front office assistant $2,500-$2,600."
         }
       ]
     },
@@ -16453,8 +17102,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "NTUC Health",
           "role": "Care associate / home care",
           "where": "national",
-          "source": "https://ntuchealth.sg/",
-          "confidence": "H"
+          "source": "https://www.mycareersfuture.gov.sg/job/healthcare/community-care-associate-ntuc-health-co-operative-73d9f286f2ac2606d3c521afc4c4b60b",
+          "confidence": "H",
+          "hourlyFrom": 1101,
+          "hourlyTo": 1311,
+          "payNote": "NTUC Health's own full-time care associate vacancy (senior day care) on MyCareersFuture, gross; no hours stated, so Singapore's 44 h/week x 52/12 = 190.67 h/month used (at 40 h it would be 12.12-14.42). A part-time care associate posting the same month stated $1,000-$1,400 a month."
         }
       ]
     },
@@ -16511,8 +17163,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "St Helena Government (Health and Social Care)",
           "role": "Care assistant",
           "where": "national",
-          "source": "https://www.sainthelena.gov.sh/st-helena/government/government-vacancies/",
-          "confidence": "M"
+          "source": "https://www.sainthelena.gov.sh/vacancy/care-assistant/",
+          "confidence": "M",
+          "hourlyFrom": 524,
+          "payNote": "Gross annual salary in St Helena Government's Care Assistant vacancy (Ebony View, Community Care Centre, sheltered accommodation), plus 15% employer pension. Hours aren’t stated; a 37.5 h week x 52 = 1,950 h is assumed (a 40 h week would give 4.91)."
         }
       ]
     }
@@ -16541,8 +17195,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Lidl Slovenija",
           "role": "Store assistant",
           "where": "national",
-          "source": "https://www.lidl.si/",
-          "confidence": "H"
+          "source": "https://podjetje.lidl.si/pressreleases/2024/povisanje-plac-2024",
+          "confidence": "M",
+          "hourlyFrom": 929,
+          "hourlyTo": 981,
+          "payNote": "Lidl Slovenija's gross monthly starting pay for store sales assistants from 1 March 2024, EUR 1,450 or 1,530 including allowances depending on location, for Lidl's 36-hour full-time week. Converted at 36 h/week x 52/12 = 156 h/month."
         },
         {
           "id": "si-retail-hofer",
@@ -16561,8 +17218,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "McDonald's Slovenija",
           "role": "Restaurant crew",
           "where": "national",
-          "source": "https://www.mcdonalds.si/",
-          "confidence": "H"
+          "source": "https://siol.net/posel-danes/novice/najvecje-gostinsko-podjetje-pri-nas-zaposluje-471546",
+          "confidence": "L",
+          "hourlyFrom": 548,
+          "payNote": "McDonald's Slovenija's lowest gross monthly salary for regular crew, EUR 950 in 2018 (students EUR 5.60/h daytime). Converted at 40 h/week x 52/12 = 173.33 h/month. Well below today's statutory minimum; the mcdonalds.si careers pages refused access (403)."
         },
         {
           "id": "si-hospitality-sava-hotels-resorts",
@@ -16615,8 +17274,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Coop Svalbard (Svalbardbutikken)",
           "role": "Store assistant",
           "where": "national",
-          "source": "https://coop.no/",
-          "confidence": "M"
+          "source": "https://hk.no/2026/06/nye-minstelonnssatser-etter-arets-tariffoppgjor-med-virke/",
+          "confidence": "M",
+          "hourlyFrom": 19504,
+          "payNote": "Gross adult entry minimum (lønnstrinn 1) in the HK Norge–Virke Landsoverenskomsten for retail and office, from 1 April 2026; the agreement states the hourly rate. Coop's store companies are Virke members. That’s taken to cover Svalbardbutikken (Coop Nord). Under-18s get 139,40 kr/h."
         }
       ]
     },
@@ -16627,16 +17288,22 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Radisson Blu Polar Hotel Spitsbergen",
           "role": "Hotel staff",
           "where": "national",
-          "source": "https://www.radissonhotels.com/",
-          "confidence": "M"
+          "source": "https://www.fellesforbundet.no/lonn-og-tariff/lonnsoppgjorene/hovedoppgjoret-2026/uravstemming/riksavtalen/",
+          "confidence": "M",
+          "hourlyFrom": 21529,
+          "hourlyTo": 22717,
+          "payNote": "Gross starting minimum for hotel and restaurant staff without a trade certificate (over 20, or over 18 after 4 months) under the 2026 Riksavtalen between NHO Reiseliv and Fellesforbundet; the agreement gives the hourly rate for both the 37.5 h and the 35.5 h (shift) week. Applies where the hotel is bound by the Riksavtale, as NHO Reiseliv member hotels are."
         },
         {
           "id": "sj-hospitality-hurtigruten-svalbard-funken-lodge-radiss",
           "name": "Hurtigruten Svalbard (Funken Lodge, Radisson and others)",
           "role": "Hotel and guide staff",
           "where": "national",
-          "source": "https://www.hurtigrutensvalbard.com/",
-          "confidence": "L"
+          "source": "https://www.fellesforbundet.no/lonn-og-tariff/lonnsoppgjorene/hovedoppgjoret-2026/uravstemming/riksavtalen/",
+          "confidence": "L",
+          "hourlyFrom": 21529,
+          "hourlyTo": 22717,
+          "payNote": "Gross starting minimum for hotel and restaurant staff without a trade certificate under the 2026 NHO Reiseliv–Fellesforbundet Riksavtalen, taken as the floor for Hurtigruten Svalbard's hotel staff (Funken Lodge etc.); the hourly figures are stated by the agreement. Guides may fall under a different agreement."
         }
       ]
     },
@@ -16647,8 +17314,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Longyearbyen lokalstyre",
           "role": "Municipal care and service staff",
           "where": "national",
-          "source": "https://www.lokalstyre.no/",
-          "confidence": "M"
+          "source": "https://www.ks.no/globalassets/fagomrader/lonn-og-tariff/tariff-2024/hovedtariffavtalen-2026-2028---til-ks.no.pdf",
+          "confidence": "M",
+          "hourlyFrom": 21467,
+          "hourlyTo": 24374,
+          "payNote": "Gross annual guaranteed minimum under the KS Hovedtariffavtalen 2026-2028 (chapter 4), which sets municipal pay: 418 600 kr for care/service staff without required qualifications and 475 300 kr for skilled workers such as helsefagarbeidere, at 0 years' seniority. Converted at the municipal 37.5 h/week (37.5 × 52 = 1 950 h/year)."
         }
       ]
     }
@@ -16661,32 +17331,41 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Tesco Stores SR",
           "role": "Store assistant",
           "where": "national",
-          "source": "https://www.tesco.sk/",
-          "confidence": "H"
+          "source": "https://www.profesia.sk/praca/?search_anywhere=tesco+predava%C4%8D",
+          "confidence": "M",
+          "hourlyFrom": 620,
+          "hourlyTo": 700,
+          "payNote": "Gross hourly pay in current Tesco Stores SR store vacancies on Profesia.sk (student temp work, several towns at €6.20-€6.40, Bratislava €7). No full-time store-assistant rate was published; Tesco's March 2026 wage-rise release gives no figures."
         },
         {
           "id": "sk-retail-kaufland-slovenska-republika",
           "name": "Kaufland Slovenská republika",
           "role": "Store assistant",
           "where": "national",
-          "source": "https://www.kaufland.sk/",
-          "confidence": "H"
+          "source": "https://spolocnost.kaufland.sk/tlacove-spravy/novinky/2024/februar/zamestnancov-kauflandu-caka-dalsie-zvysovanie-platov-nastupna-mzda-na-pozicii-predavac-za-5-rokov-stupla-o-takmer-30",
+          "confidence": "L",
+          "hourlyFrom": 625,
+          "payNote": "Kaufland's own press release: gross internal minimum wage for cashier/sales assistant from 1 March 2024 at 38.75 h/week; 1,050 / (38.75 x 52/12 = 167.92 h) = €6.25/h. Current Profesia listings (Sept 2026) show part-time store workers at 1,200 EUR/month and student temps from €6.50/h; a March 2026 release announces a further rise without figures."
         },
         {
           "id": "sk-retail-lidl-slovenska-republika",
           "name": "Lidl Slovenská republika",
           "role": "Store assistant",
           "where": "national",
-          "source": "https://www.lidl.sk/",
-          "confidence": "H"
+          "source": "https://kariera.lidl.sk/jobs/otvor-s-nami-novu-predajnu-predavac-pokladnik-m-z-zarnovica-zarnovica-700501",
+          "confidence": "H",
+          "hourlyFrom": 768,
+          "payNote": "Starting monthly pay in a current Lidl Slovakia cashier/sales assistant (predavač-pokladník) vacancy in Žarnovica on Lidl's careers site; presumably gross (Slovak postings state gross base pay). 1,290 / (38.75 x 52/12 = 167.92 h) = €7.68/h. A Bratislava OC VIVO posting reportedly starts at €1,470."
         },
         {
           "id": "sk-retail-billa",
           "name": "Billa",
           "role": "Store assistant",
           "where": "national",
-          "source": "https://www.billa.sk/",
-          "confidence": "H"
+          "source": "https://kariera.zoznam.sk/pracovna-ponuka/1428425/obchodny-pracovnik-m-z-partizanske-male-uherce",
+          "confidence": "M",
+          "hourlyFrom": 606,
+          "payNote": "Gross monthly pay in a BILLA s.r.o. 'Obchodný pracovník' (store worker) vacancy in Partizánske; hours not stated, so Slovakia's 40 h/week x 52/12 = 173.33 h used: €6.06/h (base alone €5.54/h). Other BILLA postings reportedly offer 1,190 € (1,000 base + 190 variable)."
         }
       ]
     },
@@ -16697,8 +17376,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "McDonald's Slovakia",
           "role": "Restaurant crew",
           "where": "national",
-          "source": "https://www.mcdonalds.sk/",
-          "confidence": "H"
+          "source": "https://kariera.zoznam.sk/pracovna-ponuka/1363255/mcdonalds-prievozska-vecerne-a-nocne-zmeny-od-8-92-h",
+          "confidence": "L",
+          "hourlyFrom": 535,
+          "hourlyTo": 892,
+          "payNote": "Gross hourly pay in a McDonald's Bratislava (Prievozská) crew vacancy for evening/night shifts: base €5.35/h, €7.20 with the uniform allowance, €8.92 with night supplement."
         }
       ]
     },
@@ -16781,8 +17463,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Titancoop",
           "role": "Supermarket assistant",
           "where": "national",
-          "source": "https://www.titancoop.sm/",
-          "confidence": "M"
+          "source": "https://www.osla.sm/sites/default/files/field_files/Testo%20Unico%20Commercio%202025-2027.pdf",
+          "confidence": "M",
+          "hourlyFrom": 1060,
+          "hourlyTo": 1116,
+          "payNote": "Gross monthly minima of San Marino's 2025-2027 commerce collective agreement (signed 26 May 2026, erga omnes under Law 59/2016), which covers supermarket staff such as Titancoop's: level 1 for a first hire in the sector €1,844.25, level 2 (sales/cashier after 24 months) €1,942.67 from 1 Jan 2026; the agreement's own divisor is 174 h, giving €10.60-11.16/h."
         }
       ]
     },
@@ -16941,24 +17626,33 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Shoprite Eswatini",
           "role": "cashier / merchandiser",
           "where": "national",
-          "source": "https://www.shopriteholdings.co.za",
-          "confidence": "M"
+          "source": "https://business-eswatini.co.sz/wp-content/uploads/2023/07/DRAFT-RETAIL-23-T.pdf",
+          "confidence": "L",
+          "hourlyFrom": 945,
+          "hourlyTo": 1187,
+          "payNote": "Urban-area basic monthly minimum in the draft Regulation of Wages (Retail, Hairdressing, Wholesale and Distributive Trades Industry) Order, 2023, which covers Shoprite Eswatini: junior merchandiser E1,964.74 to cashier E2,467.94. The order itself converts at 208 h a month (48 h × 4.33), giving the hourly figures. Rural rates are lower (E1,714.68–1,948.96); the 2025/26 orders added 6% across the board for this industry."
         },
         {
           "id": "sz-retail-pick-n-pay-eswatini",
           "name": "Pick n Pay Eswatini",
           "role": "store assistant",
           "where": "national",
-          "source": "https://www.pnp.co.za",
-          "confidence": "M"
+          "source": "https://business-eswatini.co.sz/wp-content/uploads/2023/07/DRAFT-RETAIL-23-T.pdf",
+          "confidence": "L",
+          "hourlyFrom": 945,
+          "hourlyTo": 1041,
+          "payNote": "Urban-area basic monthly minimum in the draft Regulation of Wages (Retail, Hairdressing, Wholesale and Distributive Trades Industry) Order, 2023, which covers Pick n Pay Eswatini: junior shop assistant E1,964.74 to shop assistant E2,164.96. The order itself converts at 208 h a month (48 h × 4.33), giving the hourly figures. Rural rates are lower (E1,714.68–1,948.96); the 2025/26 orders added 6% across the board for this industry."
         },
         {
           "id": "sz-retail-spar-eswatini",
           "name": "Spar Eswatini",
           "role": "store assistant",
           "where": "national",
-          "source": "https://www.spar.co.za",
-          "confidence": "L"
+          "source": "https://business-eswatini.co.sz/wp-content/uploads/2023/07/DRAFT-RETAIL-23-T.pdf",
+          "confidence": "L",
+          "hourlyFrom": 945,
+          "hourlyTo": 1041,
+          "payNote": "Urban-area basic monthly minimum in the draft Regulation of Wages (Retail, Hairdressing, Wholesale and Distributive Trades Industry) Order, 2023, which covers SPAR Eswatini: junior shop assistant E1,964.74 to shop assistant E2,164.96. The order itself converts at 208 h a month (48 h × 4.33), giving the hourly figures. Rural rates are lower (E1,714.68–1,948.96); the 2025/26 orders added 6% across the board for this industry."
         }
       ]
     }
@@ -17053,8 +17747,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "CP All (7-Eleven Thailand)",
           "role": "store staff / cashier",
           "where": "national",
-          "source": "https://www.cpall.co.th ; https://en.wikipedia.org/wiki/CP_All",
-          "confidence": "H"
+          "source": "https://www.jobth.com/%E0%B8%87%E0%B8%B2%E0%B8%99/0000544894LAHAW.html",
+          "confidence": "L",
+          "hourlyFrom": 3413,
+          "hourlyTo": 4808,
+          "payNote": "Monthly pay in a (now closed) recruitment-agency vacancy for 7-Eleven store staff in central Bangkok; base 6,900 (lower secondary) to 9,400 (degree) plus allowances. Hours not stated; converted at Thailand's 48 h/week retail norm (8 h x 6 days, ~208 h/month) using 7,100 (6,900 + 200 allowance) and 10,000. The ad is undated and predates the 2025 minimum-wage rises, so it’s likely stale."
         },
         {
           "id": "th-retail-lotus-s",
@@ -17081,16 +17778,22 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Café Amazon (PTT Oil and Retail)",
           "role": "barista",
           "where": "national",
-          "source": "https://www.cafe-amazon.com",
-          "confidence": "H"
+          "source": "https://www.jobth.com/%E0%B8%87%E0%B8%B2%E0%B8%99/0000933601HPCFI.html",
+          "confidence": "L",
+          "hourlyFrom": 4712,
+          "hourlyTo": 7212,
+          "payNote": "Monthly pay in a (now closed) franchisee vacancy for a Café Amazon barista at Mahathun Plaza, Don Mueang, Bangkok, 6 days a week. Daily hours not stated; converted at 8 h x 6 days (~208 h/month). Posted by the franchise operator, not PTTOR."
         },
         {
           "id": "th-school-starbucks-thailand-coffee-concepts-thail",
           "name": "Starbucks Thailand (Coffee Concepts Thailand)",
           "role": "barista",
           "where": "national",
-          "source": "https://www.starbucks.co.th",
-          "confidence": "H"
+          "source": "https://www.jobth.com/%E0%B8%87%E0%B8%B2%E0%B8%99/0000989038QZRCM.html",
+          "confidence": "H",
+          "hourlyFrom": 6000,
+          "hourlyTo": 7343,
+          "payNote": "Coffee Concepts Retail's own Starbucks barista vacancy in east Bangkok: hourly staff THB 60 an hour; monthly staff THB 14,000 for 5.5 days x 8 h = 44 h/week, converted at 44 x 52/12 = 190.67 h (THB 73.43/h)."
         }
       ]
     },
@@ -17101,8 +17804,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Minor Food (The Pizza Company, Swensen's)",
           "role": "restaurant crew",
           "where": "national",
-          "source": "https://www.minorfood.com",
-          "confidence": "H"
+          "source": "https://www.jobbkk.com/jobs/detail/31552/935131",
+          "confidence": "L",
+          "hourlyFrom": 4300,
+          "hourlyTo": 5500,
+          "payNote": "Minor Food Group's own vacancy for a The Pizza Company cashier in Pathum Thani: part-time THB 43-55 an hour, full-time THB 9,000-14,500 a month. Undated and closed; the THB 43 floor suggests it predates the 2024-25 minimum-wage rises."
         }
       ]
     },
@@ -17405,24 +18111,32 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "President Chain Store (7-Eleven Taiwan)",
           "role": "store clerk",
           "where": "national",
-          "source": "https://www.7-11.com.tw",
-          "confidence": "H"
+          "source": "https://www.yes123.com.tw/wk_index/joblist.asp?sdo=search&skeyword=7-11",
+          "confidence": "H",
+          "hourlyFrom": 19600,
+          "hourlyTo": 21500,
+          "payNote": "Gross hourly pay in 7-Eleven franchise store postings on the yes123 job board (Sept 2026): NT$196 for a part-time day clerk in Zhongli (the 2026 legal minimum), NT$215 for night shift in Taichung; full-time clerks posted NT$29,500-35,000 a month. A Taoyuan 7-Eleven store on chickpt also posted 時薪$196 for 8-hour shifts."
         },
         {
           "id": "tw-retail-familymart-taiwan",
           "name": "FamilyMart Taiwan",
           "role": "store clerk",
           "where": "national",
-          "source": "https://www.family.com.tw",
-          "confidence": "H"
+          "source": "https://www.yes123.com.tw/wk_index/joblist.asp?sdo=search&skeyword=全家便利商店",
+          "confidence": "H",
+          "hourlyFrom": 17308,
+          "hourlyTo": 20193,
+          "payNote": "FamilyMart Taiwan's own (company-run) store clerk vacancies on yes123, Sept 2026, gross monthly; no hours given, so Taiwan's 40 h/week x 52/12 = 173.33 h/month used. A franchise store in Taipei posted part-time night shifts at NT$200+/h."
         },
         {
           "id": "tw-retail-px-mart",
           "name": "PX Mart",
           "role": "supermarket staff",
           "where": "national",
-          "source": "https://www.pxmart.com.tw",
-          "confidence": "H"
+          "source": "https://www.chickpt.com.tw/job-LkK5Y4z9B1VW",
+          "confidence": "H",
+          "hourlyFrom": 20100,
+          "payNote": "PX Mart's own store (Jingcheng, Taichung West District) part-time evening store-staff vacancy on the chickpt job board, gross hourly; posted about three months before Sept 2026."
         },
         {
           "id": "tw-retail-carrefour-taiwan",
@@ -17441,8 +18155,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Louisa Coffee",
           "role": "barista",
           "where": "national",
-          "source": "https://www.louisacoffee.co",
-          "confidence": "M"
+          "source": "https://www.yes123.com.tw/wk_index/joblist.asp?sdo=search&skeyword=路易莎",
+          "confidence": "H",
+          "hourlyFrom": 19600,
+          "payNote": "Louisa Coffee franchise store (Zhonghe, New Taipei) postings on yes123, Sept 2026: part-time staff NT$196/h gross (the legal minimum); full-time NT$32,000-37,000 a month. A Beigang (Yunlin) franchise posted baristas at NT$31,000-35,000 a month and part-timers at NT$196+."
         }
       ]
     },
@@ -17453,8 +18169,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "McDonald's Taiwan",
           "role": "crew",
           "where": "national",
-          "source": "https://www.mcdonalds.com.tw",
-          "confidence": "H"
+          "source": "https://www.chickpt.com.tw/?keyword=%E9%BA%A5%E7%95%B6%E5%8B%9E",
+          "confidence": "H",
+          "hourlyFrom": 19600,
+          "hourlyTo": 25100,
+          "payNote": "McDonald's Taiwan restaurant crew vacancies on the chickpt job board (Sept 2026), gross hourly: NT$196 for part-time crew in Taipei/New Taipei/Miaoli (the 2026 minimum), NT$251 for overnight crew."
         }
       ]
     },
@@ -17549,32 +18268,44 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "ATB-Market",
           "role": "store staff / cashier",
           "where": "national",
-          "source": "https://www.atbmarket.com",
-          "confidence": "H"
+          "source": "https://dengi.ua/ua/career/9760814-atb-i-silpo-yaki-zarplati-proponuyut-kasiram-u-2026-rotsi",
+          "confidence": "M",
+          "hourlyFrom": 11539,
+          "hourlyTo": 16154,
+          "payNote": "Gross monthly pay (before mandatory taxes) that ATB offers cashier and sales consultants in its current vacancies, as reported by dengi.ua on 5 June 2026 for regional cities. No hours are stated, so a 40 h/week × 52/12 = 173.33 h/month standard is used."
         },
         {
           "id": "ua-retail-silpo-fozzy-group",
           "name": "Silpo (Fozzy Group)",
           "role": "supermarket staff",
           "where": "national",
-          "source": "https://silpo.ua",
-          "confidence": "H"
+          "source": "https://dengi.ua/ua/career/9760814-atb-i-silpo-yaki-zarplati-proponuyut-kasiram-u-2026-rotsi",
+          "confidence": "M",
+          "hourlyFrom": 9519,
+          "hourlyTo": 24347,
+          "payNote": "Gross monthly pay, including taxes, that Silpo offers cashiers in its vacancies, as reported by dengi.ua in June 2026. It runs from 16,500 in Chernihiv to 42,200 at the top of Lviv's range, and Kyiv's range is 28,380 to 40,315. No hours are stated, so 173.33 h/month (40 h/week) is used."
         },
         {
           "id": "ua-retail-novus",
           "name": "Novus",
           "role": "supermarket staff",
           "where": "national",
-          "source": "https://novus.ua",
-          "confidence": "M"
+          "source": "https://pidbir.ua/vacancies/17838-prodavec",
+          "confidence": "M",
+          "hourlyFrom": 13327,
+          "hourlyTo": 14654,
+          "payNote": "Monthly pay for a full-time Novus supermarket sales assistant in Kyiv, from the pidbir.ua vacancy's embedded data, published 2026-09-08. The advert doesn’t say whether it’s gross, but Ukrainian adverts are normally gross. No hours are stated, so 173.33 h/month is used."
         },
         {
           "id": "ua-retail-nova-poshta",
           "name": "Nova Poshta",
           "role": "branch operator / courier",
           "where": "national",
-          "source": "https://novaposhta.ua",
-          "confidence": "H"
+          "source": "https://www.work.ua/jobs/7574764/",
+          "confidence": "L",
+          "hourlyFrom": 13846,
+          "hourlyTo": 17308,
+          "payNote": "Monthly pay for a Nova Poshta branch operator in Kyiv, as given in the work.ua vacancy title. The page itself returned HTTP 403 when opened, so the figure comes from its indexed title only. No hours are stated, so 173.33 h/month is used."
         }
       ]
     },
@@ -17585,8 +18316,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Aroma Kava",
           "role": "barista",
           "where": "national",
-          "source": "https://aromakava.com.ua",
-          "confidence": "M"
+          "source": "https://www.work.ua/en/jobs/5673262/",
+          "confidence": "L",
+          "hourlyFrom": 12693,
+          "hourlyTo": 23077,
+          "payNote": "Monthly pay for an Aroma Kava barista in Kyiv, as given in the work.ua vacancy title. The page returned HTTP 403, so the figure comes from its indexed title only. Aroma Kava's own careers page mentions paid training but no figure. The vacancy works 10–12-hour shifts, but monthly hours aren’t stated, so 173.33 h/month is used."
         }
       ]
     },
@@ -17597,16 +18331,22 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "McDonald's Ukraine",
           "role": "crew",
           "where": "national",
-          "source": "https://www.mcdonalds.com/ua/uk-ua.html",
-          "confidence": "H"
+          "source": "https://www.work.ua/jobs/8213019/",
+          "confidence": "L",
+          "hourlyFrom": 14452,
+          "hourlyTo": 17431,
+          "payNote": "Monthly pay for a McDonald's Ukraine restaurant worker, as given in work.ua vacancy titles: 25,050 in Uman and 30,213 in Boyarka or Kyiv. A Kyiv night shift pays 39,278. The pages returned HTTP 403 and McDonald's careers site gives no figure, so the figures come from indexed titles. No hours are stated, so 173.33 h/month is used."
         },
         {
           "id": "ua-hospitality-puzata-hata",
           "name": "Puzata Hata",
           "role": "restaurant staff",
           "where": "national",
-          "source": "https://puzatahata.ua",
-          "confidence": "M"
+          "source": "https://pidbir.ua/vacancies/18928-kasir",
+          "confidence": "M",
+          "hourlyFrom": 15577,
+          "hourlyTo": 17308,
+          "payNote": "Monthly pay for a full-time cashier at a Puzata Hata restaurant in Kyiv, from the pidbir.ua vacancy's embedded data, published 2026-08-29. The advert doesn’t say whether it’s gross. No hours are stated, so 173.33 h/month is used."
         }
       ]
     },
@@ -17769,8 +18509,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Prosegur Uruguay",
           "role": "security guard",
           "where": "national",
-          "source": "https://www.prosegur.com.uy",
-          "confidence": "M"
+          "source": "http://www.impo.com.uy/bases/otras-normas-originales/SN20250325001-2025",
+          "confidence": "M",
+          "hourlyFrom": 21320,
+          "hourlyTo": 22606,
+          "payNote": "Minimum monthly wage for the entry guard category (Vigilante Auxiliar) in the Consejo de Salarios agreement for Group 19 Subgroup 08 security firms (Seguridad Física), which covers Prosegur Uruguay's guards; 44 h/week × 52/12 = 190.67 h gives 213.20 UYU/h, and applying the agreement's own Jan and Jul 2026 increases gives about 43,102 UYU (226.06/h) now."
         }
       ]
     },
@@ -17795,8 +18538,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Korzinka",
           "role": "supermarket staff",
           "where": "national",
-          "source": "https://korzinka.uz",
-          "confidence": "H"
+          "source": "https://tashkent.hh.uz/vacancy/84865453",
+          "confidence": "L",
+          "hourlyFrom": 1269200,
+          "payNote": "Korzinka (Anglesey Food) cashier-seller vacancy in Tashkent on hh.uz: from 2.2 million som a month take-home (net), 5 days x 8 h. Converted at 40 h/week x 52/12 = 173.33 h."
         },
         {
           "id": "uz-retail-makro-uzbekistan",
@@ -17857,8 +18602,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Governorate of Vatican City State (Vatican Museums)",
           "role": "museum attendant / shop staff",
           "where": "national",
-          "source": "https://www.vaticanstate.va",
-          "confidence": "H"
+          "source": "https://www.money.it/stipendio-dipendenti-vaticano-e-come-lavorare",
+          "confidence": "L",
+          "hourlyFrom": 912,
+          "payNote": "Gross annual base pay at level I, the lowest of the ten levels in the Vatican lay-staff pay table in force from January 2024 (regulation consolidating the indexation allowance), as reported by money.it; excludes seniority steps and allowances. Converted at 40 h/week × 52 = 2 080 h/year because no hours are stated."
         }
       ]
     },
@@ -17869,8 +18616,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Pontifical Swiss Guard",
           "role": "guard (Swiss Catholic men only)",
           "where": "national",
-          "source": "https://www.guardiasvizzera.va",
-          "confidence": "H"
+          "source": "https://www.iamexpat.ch/expat-info/swiss-news/swiss-guard-what-you-need-know",
+          "confidence": "L",
+          "hourlyFrom": 865,
+          "payNote": "Tax-free (effectively net) monthly pay of a regular halberdier as given by Commander Christoph Graf in 2015, quoted by iamexpat.ch (updated 2026); guards also get free housing in Rome. Converted at 40 h/week (173.33 h/month); actual duty hours not stated."
         },
         {
           "id": "va-armed_forces-gendarmerie-corps-of-vatican-city-state",
@@ -18079,16 +18828,22 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "WinMart / WinMart+ (Masan WinCommerce)",
           "role": "store staff",
           "where": "national",
-          "source": "https://winmart.vn",
-          "confidence": "H"
+          "source": "https://tuyendung.winmart.vn/job/winmart-nhan-vien-ban-hang-toan-quoc-16413",
+          "confidence": "H",
+          "hourlyFrom": 2400000,
+          "hourlyTo": 3500000,
+          "payNote": "WinCommerce's own careers site, WinMart+ sales staff nationwide, 2026: part-time rate stated per hour; full-time 6-9 million VND a month for 8-hour shifts (about 28,800-43,300/h at 26 days x 8 h = 208 h). Gross."
         },
         {
           "id": "vn-retail-bach-hoa-xanh-mobile-world-investment",
           "name": "Bách Hóa Xanh (Mobile World Investment)",
           "role": "grocery store staff",
           "where": "national",
-          "source": "https://www.bachhoaxanh.com",
-          "confidence": "H"
+          "source": "https://vn.joboko.com/viec-lam-bach-hoa-xanh-tuyen-dung-nhan-vien-sieu-thi-quay-hang-tuoi-xvi4103009",
+          "confidence": "M",
+          "hourlyFrom": 4326900,
+          "hourlyTo": 5769200,
+          "payNote": "Bách Hóa Xanh's own vacancy for fresh-counter store staff: 9-12 million VND a month, shifts of about 8-9 h. Converted at Vietnam's 48 h/week standard (26 days x 8 h = 208 h/month)."
         },
         {
           "id": "vn-retail-saigon-co-op-co-opmart",
@@ -18115,8 +18870,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Phúc Long Heritage",
           "role": "barista",
           "where": "national",
-          "source": "https://phuclong.com.vn",
-          "confidence": "M"
+          "source": "https://aeonmall-binhduongcanary.com.vn/tuyen-dung/841/phuc-long-tuyen-dung-nhan-vien-pha-che-va-phuc-vu",
+          "confidence": "M",
+          "hourlyFrom": 2300000,
+          "payNote": "Phúc Long's store ad at AEON Mall Bình Dương Canary for part-time baristas and service staff, gross hourly rate, rotating shifts."
         }
       ]
     },
@@ -18127,8 +18884,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Golden Gate Group (Gogi, Kichi-Kichi)",
           "role": "restaurant server",
           "where": "national",
-          "source": "https://ggg.com.vn",
-          "confidence": "M"
+          "source": "https://ybox.vn/tuyen-dung/hn-hcm-tap-doan-golden-gate-group-tuyen-dung-nhan-vien-phuc-vu-nha-hang-kichi-kichi-manwah-gogi-house-cloud-pot-hutong-sumo-part-time-full-time-2025-69391916e9e5e312c72e5629",
+          "confidence": "H",
+          "hourlyFrom": 2800000,
+          "hourlyTo": 3200000,
+          "payNote": "Golden Gate Group's 2025 ad for restaurant service staff at Kichi Kichi, Manwah, Gogi House etc. (Hanoi/HCMC): part-time hourly rate as stated; full-time 6-8 million VND a month."
         }
       ]
     },
@@ -18293,8 +19053,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Shoprite Holdings (Shoprite, Checkers, Usave)",
           "role": "cashier / merchandiser",
           "where": "national",
-          "source": "https://www.shopriteholdings.co.za",
-          "confidence": "H"
+          "source": "https://www.citizen.co.za/business/nearly-r6-000-a-month-shoprites-minimum-wage-sinks-to-the-lowest-in-retail/",
+          "confidence": "M",
+          "hourlyFrom": 3446,
+          "payNote": "Gross minimum annual wage at Shoprite Holdings as compiled by Just Share from the company's own disclosures and reported by The Citizen (the lowest among JSE Top 40 retailers). Converted at 40 h/week × 52 = 2 080 h/year; at the 45 h/week legal maximum it would be R30.63/h."
         },
         {
           "id": "za-retail-pick-n-pay",
@@ -18309,8 +19071,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Woolworths South Africa",
           "role": "store assistant",
           "where": "national",
-          "source": "https://www.woolworths.co.za",
-          "confidence": "H"
+          "source": "https://www.woolworthsholdings.co.za/wp-content/uploads/2025/09/Remuneration_Report_2025.pdf",
+          "confidence": "H",
+          "hourlyFrom": 4500,
+          "payNote": "Gross minimum hourly rate Woolworths Holdings reports paying its South African store staff under its 'Just Wage' initiative, as at 30 June 2025, stated in its own remuneration report."
         }
       ]
     },
@@ -18365,8 +19129,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Fidelity Services Group",
           "role": "security officer",
           "where": "national",
-          "source": "https://www.fidelity-services.com",
-          "confidence": "M"
+          "source": "https://nbcpss.org.za/wp-content/uploads/2026/03/Illustrative-Pricing-Guide-2023-2027.pdf",
+          "confidence": "H",
+          "hourlyFrom": 3367,
+          "payNote": "Gross promulgated minimum monthly wage for an entry-grade (C/D/E) security officer in urban areas under the NBCPSS Main Agreement. That’s extended to the whole private-security sector including Fidelity; the council's guide gives the hourly equivalent itself (R7 003 / 208 h ≈ R33.67)."
         }
       ]
     },

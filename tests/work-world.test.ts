@@ -15,7 +15,7 @@ import { WORLD_WORK } from '@/engine/content/work-world';
 import { EMPLOYERS } from '@/engine/content/employers';
 import { MS_DAY } from '@/engine/core/time';
 import { payrollYear } from '@/engine/content/payroll';
-import { employerById } from '@/engine/systems/work';
+import { employerById, rateAt } from '@/engine/systems/work';
 
 const town = (country: string, name: string) => {
   addCountryCities(country, readFileSync(`public/geo/${country}.tsv`, 'utf8'));
@@ -64,5 +64,16 @@ describe('the rest of the world', () => {
     expect(slip.estimate).toBeUndefined();
     expect(slip.lines.some((l) => l.name === 'Income Tax')).toBe(true);
     expect(sim.ledger.audit()).toEqual([]);
+  });
+});
+
+describe('a published rate where the law sets no floor', () => {
+  it('pays Helsinki’s S Group its agreement rate, not SLATE’s cost-of-living estimate', () => {
+    const helsinki = town('fi', 'Helsinki');
+    const at = Date.UTC(2026, 8, 26);
+    expect(minimumWageAt(helsinki.id, at, 'EUR').kind).toBe('estimate');
+    const rate = rateAt(helsinki.id, 'retail', 'EUR', at, 'fi-retail-s-group-prisma-s-market-alepa', 30, 12);
+    expect(rate.basis).toBe('employer');
+    expect(rate.hourly).toBe(EMPLOYERS.FI!.retail!.employers.find((e) => e.id === 'fi-retail-s-group-prisma-s-market-alepa')!.hourlyFrom);
   });
 });

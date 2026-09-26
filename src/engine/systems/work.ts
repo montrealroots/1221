@@ -375,10 +375,14 @@ function adultRateAt(cityId: string, jobId: string, currency: string, at: Instan
   const floor = minimumWageAt(cityId, at, currency, age, months);
   const toSave = (amount: number, from: string) => (from === currency ? amount : exchange(amount, from, currency) ?? amount);
   const floorInSave = toSave(floor.hourly, floor.currency);
+  // Only a legal floor lifts a published rate. Where a country has none,
+  // SLATE's cost-of-living estimate stands in for it, and until 2026-09-26 it
+  // lifted Helsinki's S Group rate of €12.37 to €18.30 as though it were law.
+  const legal = floor.kind === 'estimate' ? 0 : floorInSave;
   const local = countryAt(cityId).currency;
   const employer = employerById(cityId, employerId);
   if (employer?.hourlyFrom !== undefined) {
-    return { hourly: Math.max(floorInSave, toSave(employer.hourlyFrom, local)), basis: 'employer', source: employer.source, ...(employer.payNote ? { note: employer.payNote } : {}) };
+    return { hourly: Math.max(legal, toSave(employer.hourlyFrom, local)), basis: 'employer', source: employer.source, ...(employer.payNote ? { note: employer.payNote } : {}) };
   }
   // An employer that publishes no rate: what the others in the line publish
   // for a start, their median, before the statistics office's figure, which
@@ -388,10 +392,10 @@ function adultRateAt(cityId: string, jobId: string, currency: string, at: Instan
   const published = employersFor(cityId, jobId).map((one) => one.hourlyFrom).filter((one): one is number => one !== undefined).sort((a, b) => a - b);
   if (published.length > 0) {
     const mid = published.length % 2 === 1 ? published[(published.length - 1) / 2]! : Math.round((published[published.length / 2 - 1]! + published[published.length / 2]!) / 2);
-    return { hourly: Math.max(floorInSave, toSave(mid, local)), basis: 'line', note: `the median of what ${published.length} employers in the line publish` };
+    return { hourly: Math.max(legal, toSave(mid, local)), basis: 'line', note: `the median of what ${published.length} employers in the line publish` };
   }
   const typical = EMPLOYERS[countryAt(cityId).iso]?.[jobId]?.typical;
-  if (typical) return { hourly: Math.max(floorInSave, toSave(typical.hourly, local)), basis: 'typical', source: typical.source, note: typical.period };
+  if (typical) return { hourly: Math.max(legal, toSave(typical.hourly, local)), basis: 'typical', source: typical.source, note: typical.period };
   return { hourly: Math.round(floorInSave * jobFor(jobId).overMinimum), basis: 'estimate', ...(floor.source ? { source: floor.source } : {}) };
 }
 

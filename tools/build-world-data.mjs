@@ -33,6 +33,13 @@ const rows = (file, skipComments = false) => readFileSync(join(source, file), 'u
  * are the exceptions, kept so nobody's universe loses its city.
  */
 const COUNTRY_ID_OVERRIDE = { GB: 'uk' };
+/**
+ * Currencies GeoNames hasn't caught up with: Bulgaria has used the euro since
+ * 1 January 2026, at a fixed 1.95583 leva (the European Commission). Until
+ * 2026-09-26 SLATE kept it on the lev, and charged Bulbank's €2.84 fee as
+ * 2.84 leva.
+ */
+const CURRENCY_OVERRIDE = { BG: ['EUR', 'Euro'] };
 
 /**
  * The same exceptions for subdivisions and cities. GeoNames keys many
@@ -92,8 +99,8 @@ for (const r of rows('countryInfo.txt', true)) {
     name,
     capital: capital || '',
     continent: continent || '',
-    currency: currency || 'USD',
-    areaKm2: Number(area) || 0, currencyName: currencyName || '', phone: phone || '', languages: languages || '',
+    currency: CURRENCY_OVERRIDE[iso2]?.[0] ?? (currency || 'USD'),
+    areaKm2: Number(area) || 0, currencyName: CURRENCY_OVERRIDE[iso2]?.[1] ?? (currencyName || ''), phone: phone || '', languages: languages || '',
     population: Number(population) || 0,
   });
 }

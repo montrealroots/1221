@@ -271,9 +271,20 @@ part the tool cannot see.
   world research (`content/work-world.ts`, 226 countries and territories,
   written when the session's web searches had run out, so from pages fetched
   directly) found 182 minimum wages, 214 paydays, 169 payslips and 181
-  statutory leave allowances, and 1,068 employers, almost none of which
-  publish a rate: those pay the floor times the job's premium, SLATE's
-  estimate. A payslip there is the employee's contributions and one income
+  statutory leave allowances, and 1,068 employers. The employer-pay pass of
+  2026-09-26 (`probe/employer-pay/`, twelve agents) found a published
+  starting rate for 313 of the 1,217 employers here and in the thirteen
+  that had none, from the employer's own pages and vacancies or the
+  agreement that binds it; 718 of the 1,622 now have one. The rest publish
+  none (delivery platforms pay by the order), or only a salary site's
+  average, or the legal minimum alone, none of which counted; those pay
+  their line's typical rate where the thirteen's statistics have one, and
+  the floor times the job's premium, SLATE's estimate, elsewhere. Some
+  rates found are net, or a year or two old, and say so; any under today's
+  legal minimum is paid the minimum. Where a country has no legal minimum
+  (Finland, Sweden, Denmark, Austria, Italy, Switzerland, Singapore), a
+  published rate stands as published: SLATE's cost-of-living estimate no
+  longer lifts it. A payslip there is the employee's contributions and one income
   tax scale, without the credits and exemptions the thirteen's have. Every
   figure the research said it recalled, didn't check, or took from general
   knowledge was left out (70 of them), as were tax tables brackets can't

@@ -94,7 +94,7 @@ const REAL_NAMES = [
   'Southbank Centre', 'Sydney Theatre', 'Abbey Theatre', 'Lyric Theatre', 'Apollo Theatre',
   'Dolby Theatre', 'Pantages Theatre', 'Chinese Theatre', 'Egyptian Theatre',
   // Retail chains that spell themselves that way.
-  'Text Book Centre', 'Home Centre', 'Centrepoint',
+  'Text Book Centre', 'Home Centre', 'Centrepoint', 'Community Care Centre',
   // Cinema chains and classification bodies that spell themselves that way.
   'AMC Theatres', 'Marcus Theatres', 'Landmark Theatres', 'Alamo Drafthouse',
   'Harkins Theatres', 'Shaw Theatres',
