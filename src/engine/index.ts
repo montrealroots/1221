@@ -41,6 +41,7 @@ import { armPayments, freshPayments, registerPayments } from './systems/payments
 import { armCardLife, registerCardLife } from './systems/cardlife';
 import { registerCash } from './systems/cash';
 import { registerAccountLife } from './systems/accountlife';
+import { registerCardOffers } from './systems/cardoffers';
 import { CARDS } from './content/cards';
 import { registerWorld } from './world/world';
 import {
@@ -70,6 +71,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerCardLife(sim);
   registerCash(sim);
   registerAccountLife(sim);
+  registerCardOffers(sim);
   registerLending(sim);
 }
 

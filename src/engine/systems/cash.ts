@@ -35,6 +35,7 @@ import { exchange } from '../content/currency';
 import { bankById } from '../content/banks';
 import { CASH } from '../content/cash';
 import { cardOf, cardRoom, cardTerms } from './credit';
+import { planLeftOf, transferRate } from './cardoffers';
 
 export type CashFrom = 'atm' | 'other_atm' | 'counter' | 'post_office' | 'card';
 export type CashTo = 'counter' | 'atm' | 'post_office';
@@ -106,20 +107,49 @@ export function cashOwedOn(person: Person, card: Account): Money {
 }
 
 /**
- * A payment to the card, split between its balances (C21): a US card's
- * minimum to the purchase balance first and the rest to the cash balance,
- * the dearer; everywhere else all of it to the cash balance first.
+ * A payment to the card, split between its balances (C21): cash advances,
+ * each transfer, purchases, and plans. A US card's minimum goes to the
+ * cheapest first and the rest to the dearest (Reg Z §1026.53); everywhere
+ * else all of it to the dearest first. A plan's balance, which asks its
+ * months on their own, is paid last. Until 2026-09-26 there were only cash
+ * and purchases to split between.
  */
-export function allocatePayment(person: Person, card: Account, paid: Money, minimum: Money): void {
+export function allocatePayment(sim: Simulation, person: Person, card: Account, paid: Money, minimum: Money, rates: { cash: number; purchases: number }): void {
   const credit = person.credit;
-  if (!credit || !credit.cashOwed) return;
+  if (!credit || (!credit.cashOwed && !credit.transfers?.length && !credit.plans?.length)) return;
   const us = bankById(card.bankId ?? '')?.iso === 'US';
   const owedBefore = -card.balance + paid;
-  const purchases = Math.max(0, owedBefore - credit.cashOwed);
-  // The US minimum goes to the cheaper purchase balance first.
-  const toPurchasesFirst = us ? Math.min(paid, minimum, purchases) : 0;
-  const toCash = Math.min(credit.cashOwed, paid - toPurchasesFirst);
-  credit.cashOwed = Math.max(0, credit.cashOwed - toCash);
+  const transfers = credit.transfers ?? [];
+  const cash = credit.cashOwed ?? 0;
+  const planLeft = planLeftOf(credit);
+  const buckets: { apr: number; owed: Money; take: (amount: Money) => void }[] = [
+    { apr: rates.cash, owed: cash, take: (amount) => { credit.cashOwed = Math.max(0, (credit.cashOwed ?? 0) - amount); } },
+    ...transfers.map((one) => ({ apr: transferRate(sim, credit, one), owed: one.owed, take: (amount: Money) => { one.owed = Math.max(0, one.owed - amount); } })),
+    { apr: rates.purchases, owed: Math.max(0, owedBefore - cash - transfers.reduce((sum, one) => sum + one.owed, 0) - planLeft), take: () => {} },
+  ];
+  let left = paid;
+  const pay = (order: typeof buckets, most: Money) => {
+    let room = most;
+    for (const bucket of order) {
+      const amount = Math.min(bucket.owed, room);
+      if (amount <= 0) continue;
+      bucket.take(amount);
+      bucket.owed -= amount;
+      room -= amount;
+      left -= amount;
+    }
+  };
+  // The US minimum to the cheapest balance first.
+  if (us) pay([...buckets].sort((a, b) => a.apr - b.apr), Math.min(paid, minimum));
+  pay([...buckets].sort((a, b) => b.apr - a.apr), left);
+  // Then the plans, newest first.
+  for (const plan of [...(credit.plans ?? [])].reverse()) {
+    const amount = Math.min(plan.left, left);
+    plan.left -= amount;
+    left -= amount;
+  }
+  credit.plans = (credit.plans ?? []).filter((plan) => plan.left > 0);
+  credit.transfers = transfers.filter((one) => one.owed > 0);
 }
 
 export function registerCash(sim: Simulation): void {

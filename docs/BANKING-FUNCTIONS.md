@@ -15,8 +15,8 @@ When a module lands, its rows change to **Has it** in the same commit.
 
 | | Functions |
 |---|---|
-| Has it | 144 |
-| To build | 31 |
+| Has it | 151 |
+| To build | 24 |
 | Waits | 101 |
 | Outside the game | 30 |
 | **All** | **306** |
@@ -32,7 +32,7 @@ When a module lands, its rows change to **Has it** in the same commit.
 | 5 | How a card charges interest | Done, 2026-09-26 |
 | 6 | Security: locking, loss, theft and fraud | 17 to build |
 | 7 | Savings and an account’s life | Done, 2026-09-26 |
-| 8 | Each card’s own offers (research first) | 7 to build |
+| 8 | Each card’s own offers (research first) | Done, 2026-09-26 |
 | 9 | Pending payments and holds | 7 to build |
 
 ## A. Personal current / checking account
@@ -372,15 +372,15 @@ When a module lands, its rows change to **Has it** in the same commit.
 | C28 | Recurring and scheduled charges | Has it | Bills on the card. |
 | C29 | Cash advance | Has it | Cash advance: its fee, its rate and no grace period. |
 | C30 | Cash-like transactions | Waits | Waits on gambling and crypto. |
-| C31 | Balance transfer | Module 8 | Balance transfer, from a card at another bank. |
-| C32 | Money transfer / cash to bank account | Module 8 | Money transfer from the card to your account (UK), where the card offers it. |
+| C31 | Balance transfer | Has it | A balance transfer from a card at another bank, onto the new bank’s card after switching. |
+| C32 | Money transfer / cash to bank account | Has it | A money transfer into the current account, where the card offers one. |
 | C33 | Convenience checks | Waits | Waits on checks. |
-| C34 | Instalment / pay-over-time plan | Module 8 | Pay a balance off in instalments, where the card offers it. |
+| C34 | Instalment / pay-over-time plan | Has it | A plan paying a purchase off in equal months for a fee, where the card charges one. |
 | C35 | Foreign-currency transactions | Waits | Waits on travel. |
 | C36 | Authorization and hold | Module 9 | Authorization and holds. |
 | C37 | Transaction declines | Has it | Declined past the limit. |
 | C38 | Over-limit transactions | Has it | Over the limit only for someone who opted in (US). |
-| C39 | Rewards and extra features | Module 8 | Rewards: each card’s cash back or points, as it pays them. |
+| C39 | Rewards and extra features | Has it | Rewards at the card’s base rate, redeemed onto the card. |
 
 ### C.4 Statements and records
 
@@ -402,18 +402,18 @@ When a module lands, its rows change to **Has it** in the same commit.
 | C48 | Grace (interest-free) period | Has it | The grace period, lost and regained, with trailing interest. |
 | C49 | No grace on cash and balance transfers | Has it | No grace on cash. |
 | C50 | Daily compounding interest | Has it | Interest compounded daily. |
-| C51 | Intro / promotional APR | Module 8 | Introductory rates, where the card has one. |
+| C51 | Intro / promotional APR | Has it | The card’s introductory rates, ended by a US payment sixty days late. |
 | C52 | Penalty APR | Has it | The penalty rate after a payment 60 days late (US), lifted after six on time. |
 | C53 | Limits on rate increases | Has it | The limits on raising a card’s rate. |
 | C54 | Annual fee | Has it | The yearly fee. |
-| C55 | Balance transfer fee | Module 8 | The balance transfer fee. |
+| C55 | Balance transfer fee | Has it | The balance transfer fee. |
 | C56 | Cash advance fee | Has it | The cash advance fee. |
 | C57 | Foreign transaction fee | Waits | Waits on travel. |
 | C58 | Late payment fee | Has it | The late fee never more than the minimum (US), at most four a year (UK). |
 | C59 | Returned payment fee | Has it | A card payment that bounces: the returned payment fee. |
 | C60 | Over-limit fee only with opt-in | Has it | Over-limit opt-in (US). |
 | C61 | Returned convenience-check fee | Waits | Waits on checks. |
-| C62 | Plan fees | Module 8 | Plan fees. |
+| C62 | Plan fees | Has it | A plan’s monthly fee. |
 | C63 | US fee caps | Has it | The US fee caps. |
 | C64 | No interest on default fees for 28 days | Has it | UK default fees free of interest for 28 days. |
 | C65 | Military cost cap | Waits | Waits on military service. |

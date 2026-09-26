@@ -148,7 +148,10 @@ describe('the card’s statement', () => {
 
   it('works out paying only the minimum by the card’s own terms, and says never where the minimum doesn’t cover the interest', () => {
     const sim = lifeIn('us-ny-newyork', { bankId: 'us-chase' }, 'st-min');
-    const terms = cardTerms(sim, cardOf(sim, sim.player)!, 700);
+    const card = cardOf(sim, sim.player)!;
+    // Past its introductory rate.
+    card.openedAt -= 2 * 365 * MS_DAY;
+    const terms = cardTerms(sim, card, 700);
     const paid = payingTheMinimum(sim, 5_000_00, terms);
     expect(paid).not.toBe('never');
     if (paid === 'never') return;

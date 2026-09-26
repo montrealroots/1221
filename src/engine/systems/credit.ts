@@ -49,12 +49,13 @@ import { exchange } from '../content/currency';
 import { bankById } from '../content/banks';
 import { CARDS, CARD_LAW, type CardProduct } from '../content/cards';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
-import { formatDate, instantFromZoned, zonedParts, type Instant } from '../core/time';
+import { addMonths, formatDate, instantFromZoned, zonedParts, type Instant } from '../core/time';
 import { CommandError } from '../core/simulation';
 import { arrearsOf, drawFromBank, inTheBank } from './household';
 import { statementReady } from './statements';
 import { paymentsOf } from './payments';
 import { allocatePayment, cashOwedOn } from './cash';
+import { planLeftOf, statementOffers, transferRate, transfersOwedOn } from './cardoffers';
 
 export const STATEMENT_KIND = 'card.statement';
 export const DUE_KIND = 'card.due';
@@ -92,7 +93,7 @@ export interface CreditState {
   /** When Britain's persistent-debt notice went (C75). */
   persistentNoticeAt?: Instant;
   /** A card applied for and on its way (C1, C5). */
-  applied?: { bankId: string; arrivesAt: Instant; limit: Money };
+  applied?: { bankId: string; arrivesAt: Instant; limit: Money; transfer?: boolean };
   /** Interest built up day by day, compounded daily (C43, C50): charged at the statement once the grace period is lost, dropped at the due date where it holds. */
   accrued?: number;
   /** Interest from a carried balance up to the day it was paid in full, charged on the next statement (C48). */
@@ -106,6 +107,34 @@ export interface CreditState {
   /** The part of what's owed that's cash advances, and the interest built on it, which has no grace period (C29, C49). */
   cashOwed?: Money;
   cashAccrued?: number;
+  /** Balances moved onto the card, a balance transfer or a money transfer, each at its own rate (C31, C32). */
+  transfers?: CardTransfer[];
+  /** Purchases being paid off in equal months for a fixed fee, not interest (C34, C62), and what the last statement asked of them. */
+  plans?: CardPlan[];
+  statementPlanDue?: Money;
+  /** Rewards earned and not yet redeemed, and since when purchases count toward the next (C39). */
+  rewards?: Money;
+  rewardsFrom?: Instant;
+  /** A US card's introductory rates, lost for a payment sixty days late (Reg Z §1026.55(b)(4)). */
+  introLost?: boolean;
+}
+
+export interface CardTransfer {
+  kind: 'balance' | 'money';
+  owed: Money;
+  accrued: number;
+  /** The rate once any introductory rate ends, and that rate and its end. */
+  apr: number;
+  introApr?: number;
+  introUntil?: Instant;
+}
+
+export interface CardPlan {
+  /** What's left of the purchase to pay, the part due each month, the month's fee, and months to go. */
+  left: Money;
+  monthly: Money;
+  fee: Money;
+  monthsLeft: number;
 }
 
 const SCORE_MIN = 300;
@@ -180,6 +209,23 @@ export interface CardTerms {
   cashLimit?: Money;
   /** Days from the statement to the due date; absent, the 15th of the next month. */
   graceDays?: number;
+  /** An introductory purchase rate, and when it ends; in force while the rate is below the card's own. */
+  introApr?: number;
+  introUntil?: Instant;
+  /** While an introductory rate is in force, the card's own rate after it. */
+  standardApr?: number;
+  /** A balance transfer's terms, where the card's were found: its fee, its rate, and its introductory rate for so many months from opening. */
+  transfer?: { feeShare: number; feeMin: Money; apr: number; introApr?: number; introMonths?: number };
+  /** A money transfer's fee as a share, where the card offers one. */
+  moneyTransferFee?: number;
+  /** A plan's monthly fee as a share, the most the bank says it charges, and the bank's words. */
+  planFeeShare?: number;
+  planWords?: string;
+  /** Rewards at the card's base rate, and the bank's words for them. */
+  rewardsRate?: number;
+  rewardsWords?: string;
+  /** The country's cap on a card's rate, where it has one. */
+  aprCap?: number;
   /** The country's law, where it capped a term. */
   capped?: { apr?: number; lateFee?: Money; law: string; source: string };
   /** The terms that are SLATE's estimate, not the bank's. */
@@ -210,6 +256,11 @@ export function cardTerms(sim: Simulation, card: Account, score: number): CardTe
   const penaltyInForce = Boolean(product?.penaltyApr && owner?.credit?.penalty && sim.now >= owner.credit.penalty.from);
   let apr = card.apr ?? priced;
   if (penaltyInForce) apr = Math.max(apr, product!.penaltyApr!);
+  // An introductory rate from opening, lost for a US payment sixty days late,
+  // which a penalty rate needs first.
+  const introUntil = product?.introMonths ? addMonths(card.openedAt, product.introMonths, sim.homeZone) : undefined;
+  const standardApr = apr;
+  if (introUntil !== undefined && sim.now < introUntil && !owner?.credit?.introLost) apr = Math.min(apr, product!.introApr!);
   const minimumKnown = product?.minimumShare !== undefined || product?.minimumFloor !== undefined;
   if (!minimumKnown && product?.kind !== 'charge') estimated.push('minimum');
   let lateFee = product?.lateFee !== undefined ? inSave(sim, product.lateFee, money) : undefined;
@@ -250,6 +301,22 @@ export function cardTerms(sim: Simulation, card: Account, score: number): CardTe
     ...(cashLimit !== undefined ? { cashLimit } : {}),
     ...(product?.overLimitFee ? { overLimitFee: inSave(sim, product.overLimitFee, money) } : {}),
     ...(product?.graceDays !== undefined ? { graceDays: product.graceDays } : {}),
+    ...(introUntil !== undefined ? { introApr: product!.introApr, introUntil } : {}),
+    ...(apr < standardApr ? { standardApr: Math.min(standardApr, law?.aprCap ?? Number.POSITIVE_INFINITY) } : {}),
+    ...(product?.transfer ? {
+      transfer: {
+        feeShare: product.transfer.feeShare ?? 0,
+        feeMin: product.transfer.feeMin !== undefined ? inSave(sim, product.transfer.feeMin, money) : 0,
+        apr: Math.min(product.transfer.apr ?? card.apr ?? priced, law?.aprCap ?? Number.POSITIVE_INFINITY),
+        ...(product.transfer.introMonths !== undefined ? { introApr: product.transfer.introApr, introMonths: product.transfer.introMonths } : {}),
+      },
+    } : {}),
+    ...(product?.moneyTransferFee ? { moneyTransferFee: product.moneyTransferFee } : {}),
+    ...(product?.planFeeShare ? { planFeeShare: product.planFeeShare } : {}),
+    ...(product?.planWords ? { planWords: product.planWords } : {}),
+    ...(product?.rewardsRate ? { rewardsRate: product.rewardsRate } : {}),
+    ...(product?.rewardsWords ? { rewardsWords: product.rewardsWords } : {}),
+    ...(law?.aprCap !== undefined ? { aprCap: law.aprCap } : {}),
     ...(capped ? { capped } : {}),
     estimated,
     ...(product ? { source: product.source, asOf: product.asOf } : {}),
@@ -300,11 +367,12 @@ function usdIn(sim: Simulation, usd: number): Money {
  * the month's interest where the bank adds it, never under its floor, and
  * never more than the statement. A charge card asks for all of it.
  */
-export function minimumDue(sim: Simulation, statement: Money, terms = playerCardTerms(sim), interest = sim.player.credit?.statementInterest ?? 0): Money {
+export function minimumDue(sim: Simulation, statement: Money, terms = playerCardTerms(sim), interest = sim.player.credit?.statementInterest ?? 0, planDue = sim.player.credit?.statementPlanDue ?? 0): Money {
   if (!terms) return Math.min(statement, Math.max(usdIn(sim, MINIMUM_USD), Math.round(statement * MINIMUM_SHARE)));
   if (terms.kind === 'charge') return statement;
-  const share = Math.round(statement * terms.minimumShare) + (terms.minimumPlusInterest ? interest : 0);
-  return Math.min(statement, Math.max(terms.minimumFloor, share));
+  // A plan's month is asked in full, on top of the rest's share (C34).
+  const share = Math.round((statement - planDue) * terms.minimumShare) + (terms.minimumPlusInterest ? interest : 0);
+  return Math.min(statement, Math.max(terms.minimumFloor, share) + planDue);
 }
 
 /** Pays the card from the bank, as much of an amount as checking and savings hold. Returns what was paid. */
@@ -324,7 +392,8 @@ function payCard(sim: Simulation, person: Person, amount: Money, byHand = false)
   });
   if (person.credit) {
     person.credit.paidSinceStatement += paid;
-    allocatePayment(person, card, paid, minimumDue(sim, person.credit.statementBalance, undefined, person.credit.statementInterest ?? 0));
+    const terms = cardTerms(sim, card, person.credit.score);
+    allocatePayment(sim, person, card, paid, minimumDue(sim, person.credit.statementBalance, terms, person.credit.statementInterest ?? 0, person.credit.statementPlanDue ?? 0), { cash: terms.cashApr, purchases: terms.apr });
   }
   return paid;
 }
@@ -382,6 +451,8 @@ export function registerCredit(sim: Simulation): void {
       s.post({ memo: 'Cash advance interest', category: 'interest', postings: [{ accountId: s.nominalAccount('expense', 'Card Interest').id, amount: cashInterest }, { accountId: card.id, amount: -cashInterest }] });
       credit.cashOwed = (credit.cashOwed ?? 0) + cashInterest;
     }
+    // Each transfer's interest, a plan's month and fee, and the cycle's rewards (module 8).
+    statementOffers(s, card, credit, terms);
     const interest = Math.round((credit.carrying ? credit.accrued ?? 0 : 0) + (credit.trailing ?? 0));
     if (credit.carrying) credit.accrued = 0;
     credit.trailing = 0;
@@ -438,7 +509,7 @@ export function registerCredit(sim: Simulation): void {
       return;
     }
     statementReady(s, person, card, credit.statementBalance > 0
-      ? `${formatMoney(credit.statementBalance, saveCurrency(s.universe))} to pay, at least ${formatMoney(minimumDue(s, credit.statementBalance, terms, credit.statementInterest ?? 0), saveCurrency(s.universe))}.`
+      ? `${formatMoney(credit.statementBalance, saveCurrency(s.universe))} to pay, at least ${formatMoney(minimumDue(s, credit.statementBalance, terms, credit.statementInterest ?? 0, credit.statementPlanDue ?? 0), saveCurrency(s.universe))}.`
       : 'The card owes nothing this month.');
     scheduleStatement(s, person, item.at);
   });
@@ -451,7 +522,7 @@ export function registerCredit(sim: Simulation): void {
     const currency = saveCurrency(s.universe);
     const terms = cardTerms(s, card, credit.score);
     const statement = credit.statementBalance;
-    const minimum = minimumDue(s, statement, terms, credit.statementInterest ?? 0);
+    const minimum = minimumDue(s, statement, terms, credit.statementInterest ?? 0, credit.statementPlanDue ?? 0);
     // A charge card's minimum is the whole statement, so it takes all of it
     // whatever the autopay says.
     const plan = credit.hardship ? Math.min(statement, credit.hardship.payment) : undefined;
@@ -503,6 +574,8 @@ export function registerCredit(sim: Simulation): void {
       if (credit.penalty) credit.penalty.onTime = 0;
       if (bankById(card.bankId ?? '')?.iso === 'GB') credit.recentFees = [...(credit.recentFees ?? []).filter((one) => s.now - one.at < 28 * 86_400_000), { at: s.now, amount: fee }];
       afterMissed(s, person, card, credit, due - paid);
+      // Sixty days late on a US card: its introductory rates end (Reg Z §1026.55(b)(4)).
+      if ((credit.missed ?? 0) >= 2 && bankById(card.bankId ?? '')?.iso === 'US') credit.introLost = true;
       // Sixty days late on a US card with a penalty rate: 45 days' notice, then the penalty rate (Reg Z §1026.9(g), §1026.55(b)(4)).
       if ((credit.missed ?? 0) >= 2 && !credit.penalty && terms.penaltyApr && bankById(card.bankId ?? '')?.iso === 'US' && !card.closedAt) {
         credit.penalty = { noticeAt: s.now, from: s.now + 45 * 86_400_000, onTime: 0 };
@@ -552,7 +625,11 @@ export function registerCredit(sim: Simulation): void {
       // Cash advances draw their own rate from the day they're taken, grace period or none (C49).
       const cash = cashOwedOn(person, card);
       if (cash > 0) credit.cashAccrued = (credit.cashAccrued ?? 0) + (cash + (credit.cashAccrued ?? 0)) * terms.cashApr / 365;
-      const bearing = Math.max(0, -card.balance - cash - freeFees) + (credit.accrued ?? 0);
+      // Transfers draw their own rates from the day they're made; a plan draws a fee, not interest.
+      for (const one of credit.transfers ?? []) {
+        if (one.owed > 0) one.accrued += (one.owed + one.accrued) * transferRate(s, credit, one) / 365;
+      }
+      const bearing = Math.max(0, -card.balance - cash - transfersOwedOn(person, card) - planLeftOf(credit) - freeFees) + (credit.accrued ?? 0);
       credit.accrued = (credit.accrued ?? 0) + bearing * terms.apr / 365;
     }
   });
@@ -659,6 +736,8 @@ function chargeOff(sim: Simulation, person: Person, card: Account, credit: Credi
   card.closedAt = sim.now;
   credit.cashOwed = 0;
   credit.cashAccrued = 0;
+  credit.transfers = [];
+  credit.plans = [];
   credit.score = Math.max(SCORE_MIN, credit.score - CHARGED_OFF);
   delete credit.suspended;
   delete credit.hardship;

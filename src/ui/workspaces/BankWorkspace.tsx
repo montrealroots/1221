@@ -20,6 +20,7 @@ import { Panel, Empty } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
 import { BankLending } from '@/ui/bank/BankLending';
 import { BankCard } from '@/ui/bank/BankCard';
+import { BankCardOffers } from '@/ui/bank/BankCardOffers';
 import { BankStatements } from '@/ui/bank/BankStatements';
 import { BankPayments } from '@/ui/bank/BankPayments';
 import { BankCash } from '@/ui/bank/BankCash';
@@ -135,6 +136,9 @@ export function BankWorkspace() {
 
       <div style={{ marginBottom: 'var(--s5)' }}>
         <BankCard bankId={bank.id} />
+      </div>
+      <div style={{ marginBottom: 'var(--s5)' }}>
+        <BankCardOffers bankId={bank.id} />
       </div>
 
       {accounts.length > 1 && (

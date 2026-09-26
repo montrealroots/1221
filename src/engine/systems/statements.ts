@@ -230,26 +230,47 @@ export function cardStatement(sim: Simulation, card: Account, period: Period): C
  * The warning a statement carries (Reg Z §1026.7(b)(12) in the US; the UK and
  * others say the same in words): pay only the minimum each month, spending
  * nothing more, and how long it takes and what it costs in all; and the
- * monthly payment that clears it in three years, and its total.
+ * monthly payment that clears it in three years, and its total. An
+ * introductory rate is taken for the months it has left and the card's own
+ * rate after, as Reg Z §1026.7(b)(12)(i)(D) has it; until 2026-09-26 SLATE
+ * had no introductory rates.
  */
 export function payingTheMinimum(sim: Simulation, balance: Money, terms: CardTerms): { months: number; total: Money; threeYears: Money; threeYearsTotal: Money } | 'never' {
   if (terms.kind === 'charge') return { months: 1, total: balance, threeYears: balance, threeYearsTotal: balance };
-  const r = terms.apr / 12;
+  const introMonths = terms.standardApr !== undefined && terms.introUntil !== undefined ? Math.max(0, Math.round((terms.introUntil - sim.now) / (30.44 * 86_400_000))) : 0;
+  const rateIn = (month: number) => (month < introMonths ? terms.apr : terms.standardApr ?? terms.apr) / 12;
+  const r = rateIn(introMonths);
   let left = balance;
   let total = 0;
   let months = 0;
   // A hundred years without clearing it is never.
   while (left > 0 && months < 1200) {
-    const interest = Math.round(left * r);
+    const interest = Math.round(left * rateIn(months));
     left += interest;
-    const pay = Math.min(left, minimumDue(sim, left, terms, interest));
+    const pay = Math.min(left, minimumDue(sim, left, terms, interest, 0));
     left -= pay;
     total += pay;
     months += 1;
   }
   if (left > 0) return 'never';
-  const threeYears = r > 0 ? Math.ceil(balance * r / (1 - (1 + r) ** -36)) : Math.ceil(balance / 36);
+  const threeYears = introMonths > 0 ? clearsIn36(balance, rateIn) : r > 0 ? Math.ceil(balance * r / (1 - (1 + r) ** -36)) : Math.ceil(balance / 36);
   return { months, total, threeYears, threeYearsTotal: threeYears * 36 };
+}
+
+/** The least equal monthly payment that clears a balance in 36 months, month by month at each month's rate. */
+function clearsIn36(balance: Money, rateIn: (month: number) => number): Money {
+  const clears = (payment: Money) => {
+    let left = balance;
+    for (let month = 0; month < 36; month += 1) left = left + left * rateIn(month) - payment;
+    return left <= 0;
+  };
+  let low = Math.ceil(balance / 36);
+  let high = balance;
+  while (low < high) {
+    const mid = Math.floor((low + high) / 2);
+    if (clears(mid)) high = mid; else low = mid + 1;
+  }
+  return low;
 }
 
 export interface YearSummary {

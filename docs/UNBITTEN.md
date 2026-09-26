@@ -181,6 +181,19 @@ part the tool cannot see.
   on debit card purchases is published by few of the 60 banks and isn't
   enforced; the daily ATM limit is. A card whose cash advance terms weren't
   found charges SLATE's estimate, 5% or $10 at the purchase rate, and says so.
+- **Some of a card's offers aren't modeled.** A card's bonus reward
+  categories are shown in the bank's words and not paid; SLATE pays the
+  base rate on everything. A plan's fee is the most the bank says it
+  charges, not the offer it would make on the day, and plans charged as
+  interest (Scotiabank's, Bank of Ireland's, the Spanish banks') aren't
+  offered. A money transfer is charged the card's balance transfer rate,
+  or its purchase rate where that wasn't found. Introductory rates end
+  early only by the US rule; a British or Irish card that withdraws its
+  offer for a missed payment keeps it. SLATE holds one card at a time, so
+  a balance transfer is made only from the card being replaced, and not
+  where the new limit won't take it with its fee.
+- **NatWest's fixed-term savings asks 35 days' notice to close early.**
+  SLATE breaks it at once for its penalty.
 - **Some of an account's life is SLATE's estimate or missing.** Where a
   bank words its early-withdrawal penalty other than in days of interest
   (a reduced rate in Japan, a rate cut in France, a share in Spain), SLATE

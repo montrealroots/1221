@@ -110,14 +110,14 @@ describe('a payment to the card', () => {
     sim.player.credit!.cashOwed = 400_00;
     // $300 paid against a $100 minimum: $100 to purchases, $200 to cash.
     give(sim, card.id, 300_00);
-    allocatePayment(sim.player, card, 300_00, 100_00);
+    allocatePayment(sim, sim.player, card, 300_00, 100_00, { cash: 0.2849, purchases: 0.2 });
     expect(sim.player.credit!.cashOwed).toBe(200_00);
     const gb = lifeIn('uk-eng-london', { wealth: 'scraping' }, 'cash-allocate-gb');
     const gcard = cardOf(gb, gb.player)!;
     give(gb, gcard.id, -gcard.balance - 1_000_00);
     gb.player.credit!.cashOwed = 400_00;
     give(gb, gcard.id, 300_00);
-    allocatePayment(gb.player, gcard, 300_00, 100_00);
+    allocatePayment(gb, gb.player, gcard, 300_00, 100_00, { cash: 0.3, purchases: 0.25 });
     expect(gb.player.credit!.cashOwed).toBe(100_00);
   });
 });

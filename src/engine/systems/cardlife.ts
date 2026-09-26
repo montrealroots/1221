@@ -7,6 +7,9 @@
  *   arrives in a week. A US applicant under 21 needs means of their own,
  *   which money in the bank is. The score a bank approves at and the limits
  *   it sets are SLATE's estimates; no bank publishes them.
+ * - **Apply with a balance transfer** (C31) from a card at another bank, the
+ *   old card taking nothing new until the new one arrives and the balance
+ *   moves (`systems/cardoffers.ts`).
  * - **Close** it (C10): nothing new goes on it, and what's owed is paid down
  *   and then it's closed.
  * - **Move the statement day** (C25), which moves the due date with it.
@@ -31,6 +34,7 @@ import { CARDS } from '../content/cards';
 import { ageOn } from './mortality';
 import { inTheBank } from './household';
 import { cardOf, cardTerms, scheduleStatement, STATEMENT_KIND } from './credit';
+import { transferOnArrival, transferRefusal } from './cardoffers';
 import { bankOf } from './banking';
 
 export const ARRIVES_KIND = 'card.arrives';
@@ -46,6 +50,12 @@ const ARRIVES_IN = 7 * MS_DAY;
 /** A requested raise the bank grants at most, as a share of the limit: the six-monthly review's fifth. */
 const RAISE_SHARE = 1.2;
 
+/** The limit a record opens a card with. */
+function limitFor(sim: Simulation, score: number): Money {
+  const band = OPENING_LIMITS.find((one) => score >= one.from)!;
+  return Math.round(usd(sim, band.usd) / 100) * 100;
+}
+
 function usd(sim: Simulation, dollars: number): Money {
   return exchange(dollars * 100, 'USD', saveCurrency(sim.universe)) ?? dollars * 100;
 }
@@ -58,6 +68,7 @@ export function registerCardLife(sim: Simulation): void {
     const bank = bankById(applied.bankId);
     const product = bank ? CARDS[bank.id] : undefined;
     const name = product && !('none' in product) ? product.name : (bank?.name ?? 'Bank') + ' Credit Card';
+    const old = applied.transfer ? cardOf(s, person) : undefined;
     const card = s.openAccount({ id: s.nextId('account'), kind: 'credit_card', name, ownerId: person.id, institution: bank?.name, bankId: bank?.id, openedAt: s.now, creditLimit: applied.limit });
     // The last four the bank prints on it, from the account's own number in the books.
     card.last4 = card.id.replace(/\D/g, '').padStart(4, '0').slice(-4);
@@ -73,6 +84,12 @@ export function registerCardLife(sim: Simulation): void {
     fresh.trailing = 0;
     fresh.cashOwed = 0;
     fresh.cashAccrued = 0;
+    fresh.transfers = [];
+    fresh.plans = [];
+    fresh.statementPlanDue = 0;
+    fresh.rewards = 0;
+    delete fresh.rewardsFrom;
+    delete fresh.introLost;
     const terms = cardTerms(s, card, person.credit!.score);
     // The rate the record buys today, held from here on.
     card.apr = terms.priced;
@@ -80,21 +97,28 @@ export function registerCardLife(sim: Simulation): void {
     person.credit!.paidSinceStatement = 0;
     person.credit!.carrying = false;
     if (terms.kind === 'charge') person.credit!.autopay = 'full';
+    if (old) transferOnArrival(s, person, card, old);
     const armed = s.universe.scheduled.some((one) => one.kind === STATEMENT_KIND && one.status === 'pending' && one.payload.personId === person.id);
     if (!armed) scheduleStatement(s, person, s.now);
     if (person.id === s.universe.playerId) s.notify({ category: 'money', title: 'Your New Card Arrived', body: `The ${name}, with a ${formatMoney(applied.limit, saveCurrency(s.universe))} limit.`, importance: 50, route: '/workspace/bank' });
   });
 
-  sim.onCommand<Record<string, never>, { approved: boolean; limit?: Money }>('card.apply', (_p, { sim: s }) => {
+  sim.onCommand<{ transfer?: boolean }, { approved: boolean; limit?: Money }>('card.apply', (p, { sim: s }) => {
     const person = s.player;
     const credit = person.credit;
     if (!credit) throw new CommandError('You have no credit record to apply with.');
-    if (cardOf(s, person)) throw new CommandError('You have a card already; close it first.');
     if (credit.applied) throw new CommandError('A card is already on its way.');
     const bank = bankOf(s, person);
     if (!bank) throw new CommandError('You need a bank to apply to.');
     const product = CARDS[bank.id];
     if (product && 'none' in product) throw new CommandError(`${bank.name} doesn’t issue a credit card.`);
+    // A card held already stays the only one, unless its balance moves onto the new one (C31).
+    const transfer = Boolean(p?.transfer);
+    if (cardOf(s, person) && !transfer) throw new CommandError('You have a card already; close it first, or move its balance onto the new one.');
+    if (transfer) {
+      const refused = transferRefusal(s, person, bank.id, limitFor(s, Math.max(300, credit.score - INQUIRY)));
+      if (refused) throw new CommandError(refused);
+    }
     // A hard inquiry, approved or not.
     credit.score = Math.max(300, credit.score - INQUIRY);
     const cur = saveCurrency(s.universe);
@@ -109,9 +133,10 @@ export function registerCardLife(sim: Simulation): void {
       s.notify({ category: 'money', title: 'Card Application Declined', body: `${bank.name} said no: ${reason}.`, importance: 50 });
       return { approved: false };
     }
-    const band = OPENING_LIMITS.find((one) => credit.score >= one.from)!;
-    const limit = Math.round(usd(s, band.usd) / 100) * 100;
-    credit.applied = { bankId: bank.id, arrivesAt: s.now + ARRIVES_IN, limit };
+    const limit = limitFor(s, credit.score);
+    credit.applied = { bankId: bank.id, arrivesAt: s.now + ARRIVES_IN, limit, ...(transfer ? { transfer: true } : {}) };
+    // The old card takes nothing new while the balance waits to move.
+    if (transfer) credit.closing = s.now;
     s.schedule({ at: credit.applied.arrivesAt, kind: ARRIVES_KIND, label: 'Your New Card Arrives', category: 'home', priority: 38, payload: { personId: person.id } });
     s.notify({ category: 'money', title: 'Card Approved', body: `${bank.name} approved a card with a ${formatMoney(limit, cur)} limit. It arrives in a week.`, importance: 50 });
     return { approved: true, limit };
