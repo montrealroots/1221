@@ -58,6 +58,7 @@ export function BankCardOffers({ bankId }: { bankId: string }) {
   for (const one of transfers) {
     lines.push(`${one.kind === 'balance' ? 'A balance transfer' : 'A money transfer'}: ${money(one.owed)} at ${pct(transferRate(sim, credit, one))}${one.introUntil !== undefined && sim.now < one.introUntil && !credit.introLost ? ` until ${formatDate(one.introUntil, sim.zone)}, then ${pct(one.apr)}` : ''}, interest from the day it was made.`);
   }
+  if (terms.transfer && transfers.length === 0) lines.push(`It takes a balance from a card at another bank for ${terms.transfer.feeShare ? `${pct(terms.transfer.feeShare)} of it` : 'no fee'}, at ${terms.transfer.introMonths !== undefined ? `${pct(terms.transfer.introApr ?? 0)} for ${terms.transfer.introMonths + ' months'}, then ` : ''}${pct(terms.transfer.apr)}: after switching banks, apply for the new bank’s card and move it.`);
   for (const plan of plans) lines.push(`A plan: ${money(plan.left)} left, ${money(plan.monthly)} a month for ${plan.monthsLeft === 1 ? 'one more month' : plan.monthsLeft + ' more months'}, and ${money(plan.fee)} a month in place of interest.`);
   if (terms.rewardsRate) lines.push(`Rewards: ${pct(terms.rewardsRate)} back on every purchase, counted at each statement. ${money(credit.rewards ?? 0)} to redeem.${terms.rewardsWords ? ` The bank’s words: ${terms.rewardsWords}. SLATE pays the base rate, not the categories.` : ''}`);
 

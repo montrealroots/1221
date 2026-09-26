@@ -6,8 +6,9 @@
  * Until 2026-09-26 a card purchase was on the account the moment it was
  * made and there was one balance. Now a debit or credit card payment is
  * authorized at once and held against the available balance, which is what
- * pays and declines things (A95, A96, A140, C36), and posts the bank's
- * business days later, SLATE's estimate of two where the bank doesn't say.
+ * pays and declines things (A95, A96, A140, C36), and posts SLATE's
+ * estimated two business days later, never past the most the bank says a
+ * hold lasts, and at once where the card takes the money at the purchase.
  * The posted balance, completed items only, is shown beside the available
  * one, and a statement marks what's still pending. Where a European bank
  * dates an entry's value apart from its booking, the statement shows both
@@ -20,17 +21,24 @@ import type { Money } from '../core/money';
 import { MS_DAY, type Instant } from '../core/time';
 import { PENDING } from '../content/pending';
 
-/** Business days a card payment stays pending where the bank doesn't say: SLATE's estimate. */
+/**
+ * Business days a card payment stays pending before it posts: SLATE's
+ * estimate, as a shop's payment settles in a day or two. What the banks
+ * publish is the most a hold can last before it's released (Barclays' seven,
+ * CommBank's ten), which is when a payment the shop never completes comes
+ * back, not when an ordinary one posts. Until 2026-09-26 every payment waited
+ * the bank's most, and a London life's groceries sat pending ten days each.
+ */
 export const ESTIMATE_PENDING_DAYS = 2;
 
 /** Business days as calendar days, a week's five in seven. */
 const calendarDays = (business: number) => Math.ceil(business * 7 / 5);
 
-/** The business days a card payment on an account stays pending: the bank's for its debit or credit card, or SLATE's estimate. */
-export function pendingDaysOf(account: Account): { days: number; estimate: boolean } {
+/** The business days a card payment on an account stays pending: SLATE's estimate, never past the most the bank says a hold lasts; and that most. */
+export function pendingDaysOf(account: Account): { days: number; most?: number } {
   const rules = account.bankId ? PENDING[account.bankId] : undefined;
-  const days = account.kind === 'credit_card' ? rules?.creditPendingDays ?? rules?.pendingDays : rules?.pendingDays;
-  return days === undefined ? { days: ESTIMATE_PENDING_DAYS, estimate: true } : { days, estimate: false };
+  const most = account.kind === 'credit_card' ? rules?.creditPendingDays ?? rules?.pendingDays : rules?.pendingDays;
+  return { days: Math.min(ESTIMATE_PENDING_DAYS, most ?? ESTIMATE_PENDING_DAYS), ...(most !== undefined ? { most } : {}) };
 }
 
 /** A card payment just made: held against the available balance until it posts. */

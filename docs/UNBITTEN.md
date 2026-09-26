@@ -181,10 +181,12 @@ part the tool cannot see.
   on debit card purchases is published by few of the 60 banks and isn't
   enforced; the daily ATM limit is. A card whose cash advance terms weren't
   found charges SLATE's estimate, 5% or $10 at the purchase rate, and says so.
-- **Some of pending and holds isn't modeled.** Several banks' pending days
-  are the most a hold lasts before it's released, not how soon a payment
-  usually posts (CommBank's, NAB's and Westpac NZ's ten); SLATE posts every
-  payment at that figure. France's card holds use the card's spending
+- **Some of pending and holds isn't modeled.** The banks publish the most
+  a hold lasts before it's released (CommBank's, NAB's and Westpac NZ's
+  ten), not how soon a payment usually posts; SLATE posts one in two
+  business days, its estimate, never past the bank's most. Until a played
+  career showed London's groceries pending ten days each, it posted every
+  payment at the bank's most. France's card holds use the card's spending
   limit rather than the account's balance, and SLATE holds the balance. A
   statement's value date is the day of the payment, which Sabadell's three
   days after it isn't. The US banks' nightly posting orders are on record

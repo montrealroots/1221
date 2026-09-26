@@ -35,6 +35,7 @@ import { ageOn } from './mortality';
 import { inTheBank } from './household';
 import { cardOf, cardTerms, scheduleStatement, STATEMENT_KIND } from './credit';
 import { transferOnArrival, transferRefusal } from './cardoffers';
+import { last4For } from './security';
 import { bankOf } from './banking';
 
 export const ARRIVES_KIND = 'card.arrives';
@@ -71,7 +72,7 @@ export function registerCardLife(sim: Simulation): void {
     const old = applied.transfer ? cardOf(s, person) : undefined;
     const card = s.openAccount({ id: s.nextId('account'), kind: 'credit_card', name, ownerId: person.id, institution: bank?.name, bankId: bank?.id, openedAt: s.now, creditLimit: applied.limit });
     // The last four the bank prints on it, from the account's own number in the books.
-    card.last4 = card.id.replace(/\D/g, '').padStart(4, '0').slice(-4);
+    card.last4 = last4For(card.id);
     // A new card starts clean: the old one's closing, suspension, plan, missed payments and penalty were its own.
     const fresh = person.credit!;
     delete fresh.applied;

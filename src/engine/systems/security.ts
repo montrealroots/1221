@@ -86,7 +86,7 @@ export function plasticView(sim: Simulation, account: Account, which: Which): Pl
   const years = yearsFor(account, which) * 365.25 * MS_DAY;
   let expiresAt = account.openedAt + years;
   while (expiresAt <= sim.now) expiresAt += years;
-  return { last4: account.last4 ?? account.id.replace(/\D/g, '').padStart(4, '0').slice(-4), expiresAt, issued: 1 };
+  return { last4: account.last4 ?? last4For(account.id), expiresAt, issued: 1 };
 }
 
 /** Whether a card can be used: a new purchase needs it unlocked and not stopped; a bill already on it needs it not stopped, and its number given to the biller. */
@@ -95,6 +95,17 @@ export function cardWorks(account: Account | undefined, recurring = false): bool
   if (!account || p?.stopped) return false;
   if (recurring) return !p?.billersStale;
   return !p?.locked;
+}
+
+/**
+ * The last four a card is printed with, spread from its account's id, not
+ * drawn. Until 2026-09-26 they were the id's own digits, and an id with too
+ * few printed a new card as ···0000.
+ */
+export function last4For(id: string): string {
+  let h = 7;
+  for (const c of id) h = (h * 31 + c.charCodeAt(0)) % 1_000_003;
+  return String(h % 10_000).padStart(4, '0');
 }
 
 /** A new number for a replacement card: the next along from the last, not drawn. */

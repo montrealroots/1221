@@ -106,6 +106,10 @@ describe('a balance transfer', () => {
     sim.advanceBy(8 * MS_DAY);
     const moved = card(sim);
     expect(moved.bankId).toBe('us-citi');
+    // Printed with its own last four, not ···0000.
+    expect(moved.last4).toMatch(/^\d{4}$/);
+    expect(moved.last4).not.toBe('0000');
+    expect(moved.last4).not.toBe(old.last4);
     expect(old.closedAt).toBeDefined();
     expect(old.balance).toBe(0);
     const fee = Math.max(5_00, Math.round(owed * 0.05));

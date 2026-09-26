@@ -51,7 +51,7 @@ export function BankSecurity({ bankId }: { bankId: string }) {
                 )}
                 {!p.stopped && (
                   <>
-                    <select aria-label="Why" value={why} onChange={(e) => setWhy(e.target.value as typeof why)}>
+                    <select aria-label="Why" style={{ width: 'auto' }} value={why} onChange={(e) => setWhy(e.target.value as typeof why)}>
                       <option value="damaged">Damaged</option>
                       <option value="lost">Lost</option>
                       <option value="stolen">Stolen</option>

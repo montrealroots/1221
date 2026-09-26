@@ -57,19 +57,20 @@ describe('a card payment', () => {
     expect(sim.universe.transactions.at(-1)!.postsAt).toBeUndefined();
   });
 
-  it('waits Chase’s three business days on the debit card and five on the credit card, and nothing in Japan', () => {
+  it('posts in two business days within Chase’s three and five, and at once in Japan', () => {
     const sim = lifeIn('us-ny-newyork', 'us-chase', 'pend-chase');
-    expect(pendingDaysOf(current(sim))).toEqual({ days: 3, estimate: false });
-    expect(pendingDaysOf(cardOf(sim, sim.player)!)).toEqual({ days: 5, estimate: false });
+    expect(pendingDaysOf(current(sim))).toEqual({ days: 2, most: 3 });
+    expect(pendingDaysOf(cardOf(sim, sim.player)!)).toEqual({ days: 2, most: 5 });
+    expect(pendingDaysOf({ ...current(sim), bankId: 'jp-mufg' })).toEqual({ days: 0, most: 0 });
     const jp = lifeIn('jp-13-tokyo', 'jp-mufg', 'pend-jp');
     jp.must({ kind: 'bank.set_payments', payload: { everyday: 'debit' } });
     expect(spend(jp, jp.player, 1_000_00, 'Groceries', 'food')).toBe(true);
     expect(pendingOn(jp, current(jp))).toBe(0);
   });
 
-  it('waits SLATE’s estimated two business days where the bank doesn’t say', () => {
+  it('posts in SLATE’s estimated two business days where the bank doesn’t say', () => {
     const sim = lifeIn('us-ny-newyork', 'us-chase', 'pend-est');
     const account = { ...current(sim), bankId: 'nowhere' };
-    expect(pendingDaysOf(account)).toEqual({ days: ESTIMATE_PENDING_DAYS, estimate: true });
+    expect(pendingDaysOf(account)).toEqual({ days: ESTIMATE_PENDING_DAYS });
   });
 });
