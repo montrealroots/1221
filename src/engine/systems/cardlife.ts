@@ -61,9 +61,19 @@ export function registerCardLife(sim: Simulation): void {
     const card = s.openAccount({ id: s.nextId('account'), kind: 'credit_card', name, ownerId: person.id, institution: bank?.name, bankId: bank?.id, openedAt: s.now, creditLimit: applied.limit });
     // The last four the bank prints on it, from the account's own number in the books.
     card.last4 = card.id.replace(/\D/g, '').padStart(4, '0').slice(-4);
-    delete person.credit!.applied;
+    // A new card starts clean: the old one's closing, suspension, plan, missed payments and penalty were its own.
+    const fresh = person.credit!;
+    delete fresh.applied;
+    delete fresh.closing;
+    delete fresh.suspended;
+    delete fresh.hardship;
+    delete fresh.penalty;
+    fresh.missed = 0;
+    fresh.accrued = 0;
+    fresh.trailing = 0;
     const terms = cardTerms(s, card, person.credit!.score);
-    card.apr = terms.apr;
+    // The rate the record buys today, held from here on.
+    card.apr = terms.priced;
     person.credit!.statementBalance = 0;
     person.credit!.paidSinceStatement = 0;
     person.credit!.carrying = false;

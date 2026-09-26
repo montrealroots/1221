@@ -167,8 +167,8 @@ part the tool cannot see.
   typical American card's, and the bank's screen names which terms are the
   estimate. A charge card that can be spread (Iceland's, Japan's, Korea's,
   Spain's) is a revolving card with autopay on the whole statement. Not
-  modeled: a penalty rate for missed payments in place of a fee (Canada's
-  banks), a late fee set as a share of the payment, Mexico's minimum on
+  modeled: Canada's penalty rate after two missed payments in a year (BMO's
+  and CIBC's, researched; only the US penalty rate runs, by Reg Z's rules), a late fee set as a share of the payment, Mexico's minimum on
   the limit, and Japan's and Korea's fixed-sum revolving courses. Caps
   left out: Japan's Interest Rate Restriction Act binds cash advances, not
   purchases; Monaco's and Ukraine's figures weren't the law's own; the

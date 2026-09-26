@@ -178,6 +178,8 @@ export interface CardStatement {
   fees: Money;
   interest: Money;
   newBalance: Money;
+  /** The average of what the card owed each day of the period: the balance interest is worked on (C43). */
+  averageDaily: Money;
   lines: StatementLine[];
   /** For the latest closed statement: the least to pay, and when. */
   minimum?: Money;
@@ -202,7 +204,19 @@ export function cardStatement(sim: Simulation, card: Account, period: Period): C
   }
   const score = sim.player.credit?.score ?? 650;
   const terms = cardTerms(sim, card, score);
-  const out: CardStatement = { period, previous: opening, payments, spending, fees, interest, newBalance: Math.max(0, closing), lines, terms };
+  // What it owed over the period, weighted by how long it owed it.
+  const end = Math.min(period.to, sim.now);
+  let owedNow = Math.max(0, opening);
+  let since = period.from;
+  let weighted = 0;
+  for (const line of lines) {
+    weighted += owedNow * Math.max(0, line.at - since);
+    owedNow = Math.max(0, line.balance);
+    since = line.at;
+  }
+  weighted += owedNow * Math.max(0, end - since);
+  const averageDaily = end > period.from ? Math.round(weighted / (end - period.from)) : 0;
+  const out: CardStatement = { period, previous: opening, payments, spending, fees, interest, newBalance: Math.max(0, closing), averageDaily, lines, terms };
   if (period.to <= sim.now && out.newBalance > 0) {
     out.minimum = minimumDue(sim, out.newBalance, terms, interest);
     out.minimumOnly = payingTheMinimum(sim, out.newBalance, terms);

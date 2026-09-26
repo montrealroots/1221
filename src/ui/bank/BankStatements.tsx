@@ -99,6 +99,7 @@ function CardStatementView({ account, period }: { account: Account; period: Retu
         <Figure label="Fees" value={money(st.fees)} />
         <Figure label="Interest" value={money(st.interest)} />
         <Figure label={closed ? 'New Balance' : 'Balance Now'} value={money(st.newBalance)} />
+        <Figure label="Average Daily Balance" value={money(st.averageDaily)} note="What interest is worked on" />
       </div>
       {closed && st.newBalance > 0 && st.minimum !== undefined && (
         <p className="small" style={{ margin: 0 }}>

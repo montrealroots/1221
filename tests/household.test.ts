@@ -159,7 +159,11 @@ describe('the card', () => {
     const carried = beforeStatement();
     sim.advanceTo(on(sim, 2026, 2, 20, 10));
     const interest = sim.universe.transactions.filter((t) => t.memo === 'Interest').at(-1)!;
-    expect(interest.postings.find((p) => p.accountId === card(sim).id)!.amount).toBe(-Math.round(carried * apr / 12));
+    // Built day by day and compounded (`card.interest`). The first statement wasn't paid in full, so the grace
+    // period is lost back to the day the spending went on: from early January to the February statement.
+    const charged = -interest.postings.find((p) => p.accountId === card(sim).id)!.amount;
+    expect(charged).toBeGreaterThan(Math.round(carried * apr * 25 / 365));
+    expect(charged).toBeLessThan(Math.round(carried * apr * 50 / 365) * 1.1);
     expect(carried).toBeGreaterThanOrEqual(owed);
     expect(sim.ledger.audit()).toEqual([]);
   });

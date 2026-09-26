@@ -15,8 +15,8 @@ When a module lands, its rows change to **Has it** in the same commit.
 
 | | Functions |
 |---|---|
-| Has it | 108 |
-| To build | 71 |
+| Has it | 116 |
+| To build | 63 |
 | Waits | 97 |
 | Outside the game | 30 |
 | **All** | **306** |
@@ -27,9 +27,9 @@ When a module lands, its rows change to **Has it** in the same commit.
 |---|---|---|
 | 1 | Statements and records | Done, 2026-09-26 |
 | 2 | Payments: direct debits, standing orders, checks and how each thing is paid | Done, 2026-09-26 |
-| 3 | Cash | 17 to build |
+| 3 | Cash | 18 to build |
 | 4 | The card’s life: applying, limits, closing, default | Done, 2026-09-26 |
-| 5 | How a card charges interest | 9 to build |
+| 5 | How a card charges interest | Done, 2026-09-26 |
 | 6 | Security: locking, loss, theft and fraud | 17 to build |
 | 7 | Savings and an account’s life | 14 to build |
 | 8 | Each card’s own offers (research first) | 7 to build |
@@ -357,9 +357,9 @@ When a module lands, its rows change to **Has it** in the same commit.
 | C18 | Same-day crediting and cutoff | Has it | Payments credited the same day. |
 | C19 | Autopay from a current account | Has it | Autopay. |
 | C20 | Available-credit restoration | Module 9 | Freed credit available after the payment clears. |
-| C21 | Payment allocation | Module 5 | Payments go to the dearest balance first (US, UK). |
+| C21 | Payment allocation | Module 3 | Payments go to the dearest balance first (US, UK): with the cash balance a cash advance makes. |
 | C22 | "Paid in full" conditional payments | Outside the game | Outside the game: paper checks marked paid in full. |
-| C23 | Credit balance refund | Module 5 | Overpay, and have the credit balance refunded. |
+| C23 | Credit balance refund | Has it | Overpay, and have the credit balance refunded. |
 | C24 | Merchant refunds and credits | Waits | Waits on merchants. |
 | C25 | Change the payment due date | Has it | Change the payment due date. |
 | C26 | Take payment from other accounts | Has it | A UK bank takes a missed card payment from your other accounts with it. |
@@ -389,7 +389,7 @@ When a module lands, its rows change to **Has it** in the same commit.
 | C40 | Monthly billing statement | Has it | The card’s monthly statement. |
 | C41 | Statement lead time | Has it | The days from statement to due date. |
 | C42 | Minimum payment | Has it | The minimum payment. |
-| C43 | Balance subject to interest | Module 5 | Interest on the average daily balance. |
+| C43 | Balance subject to interest | Has it | Interest on the average daily balance. |
 | C44 | Next-month interest estimate | Has it | Next month’s interest, estimated on the statement (UK). |
 | C45 | Annual rate summary | Waits | Waits on rates that move. |
 | C46 | Copy of terms on request | Has it | The terms are on the bank’s screen. |
@@ -399,12 +399,12 @@ When a module lands, its rows change to **Has it** in the same commit.
 | # | Function | SLATE | How, or what it waits on |
 |---|---|---|---|
 | C47 | Variable purchase APR | Waits | Waits on rates that move with Prime or Bank Rate. |
-| C48 | Grace (interest-free) period | Module 5 | The grace period, lost and regained, with trailing interest. |
+| C48 | Grace (interest-free) period | Has it | The grace period, lost and regained, with trailing interest. |
 | C49 | No grace on cash and balance transfers | Module 3 | No grace on cash. |
-| C50 | Daily compounding interest | Module 5 | Interest compounded daily. |
+| C50 | Daily compounding interest | Has it | Interest compounded daily. |
 | C51 | Intro / promotional APR | Module 8 | Introductory rates, where the card has one. |
-| C52 | Penalty APR | Module 5 | The penalty rate after a payment 60 days late (US), lifted after six on time. |
-| C53 | Limits on rate increases | Module 5 | The limits on raising a card’s rate. |
+| C52 | Penalty APR | Has it | The penalty rate after a payment 60 days late (US), lifted after six on time. |
+| C53 | Limits on rate increases | Has it | The limits on raising a card’s rate. |
 | C54 | Annual fee | Has it | The yearly fee. |
 | C55 | Balance transfer fee | Module 8 | The balance transfer fee. |
 | C56 | Cash advance fee | Module 3 | The cash advance fee. |
@@ -415,7 +415,7 @@ When a module lands, its rows change to **Has it** in the same commit.
 | C61 | Returned convenience-check fee | Waits | Waits on checks. |
 | C62 | Plan fees | Module 8 | Plan fees. |
 | C63 | US fee caps | Has it | The US fee caps. |
-| C64 | No interest on default fees for 28 days | Module 5 | UK default fees free of interest for 28 days. |
+| C64 | No interest on default fees for 28 days | Has it | UK default fees free of interest for 28 days. |
 | C65 | Military cost cap | Waits | Waits on military service. |
 | C66 | Card replacement fee | Module 6 | A replacement card’s fee (Germany). |
 
@@ -456,7 +456,7 @@ When a module lands, its rows change to **Has it** in the same commit.
 
 | # | Function | SLATE | How, or what it waits on |
 |---|---|---|---|
-| C90 | Change-in-terms notice | Module 5 | Notice before a penalty rate. |
+| C90 | Change-in-terms notice | Has it | Notice before a penalty rate. |
 | C91 | Right to reject a rate increase | Waits | Waits on rates that move. |
 | C92 | Credit limit notices | Has it | Limit changes are told. |
 | C93 | Minimum-payment warning | Has it | The minimum payment warning: how long paying the minimum takes, and what it costs. |

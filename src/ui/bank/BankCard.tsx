@@ -67,10 +67,13 @@ export function BankCard({ bankId }: { bankId: string }) {
   if (charge) {
     lines.push(`${terms.issuer ?? 'The bank'} takes the whole statement from your current account each month. It can’t carry a balance, and it charges ${pct(terms.apr)} a year on anything the account couldn’t cover.`);
   } else if (terms.aprFrom !== undefined && terms.aprTo !== undefined) {
-    lines.push(`${pct(terms.apr)} a year on a balance carried. ${terms.issuer} prices a card between ${pct(terms.aprFrom)} and ${pct(terms.aprTo)} by the record, and yours buys this; it’s repriced on each statement.`);
+    lines.push(`${pct(terms.apr)} a year on a balance carried. ${terms.issuer} prices a card between ${pct(terms.aprFrom)} and ${pct(terms.aprTo)} by the record when it opens; yours opened at this, and it’s held there. A record today would get ${pct(terms.priced)}.`);
   } else {
-    lines.push(`${pct(terms.apr)} a year on a balance carried, repriced on each statement. A statement paid in full costs nothing.`);
+    lines.push(`${pct(terms.apr)} a year on a balance carried.`);
   }
+  lines.push('Interest builds each day on what’s owed, the day’s interest included, once a statement isn’t paid in full; pay a statement in full and new spending draws none until the next is due.');
+  if (terms.penaltyApr) lines.push(terms.penaltyInForce ? `The penalty rate, ${pct(terms.penaltyApr)}, is in force: six payments on time in a row takes it off.` : `Sixty days late, and after 45 days’ notice the rate becomes ${pct(terms.penaltyApr)}.`);
+  if (card.balance > 0) lines.push(`The card holds ${money(card.balance)} of your money${bankIso === 'US' ? ', and sends it back after six months if it’s still there' : ''}.`);
   lines.push(terms.annualFee > 0 ? `${money(terms.annualFee)} a year, on the statement in ${opened}.` : 'No yearly fee.');
   lines.push(`A statement on the ${statementDayOf(person)}${ordinal(statementDayOf(person))}, and the payment due ${terms.graceDays !== undefined ? `${terms.graceDays} days after it` : 'on the 15th of the next month'}${due ? `: next on ${formatDate(due.at, sim.zone)}` : ''}.`);
   if (!charge) {
@@ -115,6 +118,9 @@ export function BankCard({ bankId }: { bankId: string }) {
           <Gated feature="finance.pay_card" className="btn btn-sm" disabled={payable === 0} onClick={() => run('finance.pay_card', { amount: 'full' })}>
             {payable < owed ? 'Pay What You Can' : 'Pay Card In Full'} ({money(payable)})
           </Gated>
+          {card.balance > 0 && (
+            <Gated feature="card.refund_credit" className="btn btn-sm btn-ghost" onClick={() => run('card.refund_credit', {})}>Send The Credit To My Account</Gated>
+          )}
           {credit.closing === undefined && (
             <Gated feature="card.close" className="btn btn-sm btn-ghost" onClick={() => run('card.close', {})}>Close The Card</Gated>
           )}

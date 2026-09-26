@@ -60,26 +60,31 @@ describe('the rate', () => {
     const sim = life('card-flat');
     withCard(cardIn(sim).bankId!, base);
     const terms = cardTerms(sim, cardIn(sim), 500);
-    expect(terms.apr).toBe(0.18);
+    expect(terms.priced).toBe(0.18);
     expect(terms.estimated).toEqual([]);
   });
 
-  it('is priced within the bank’s range by the record, best at the bottom, and repriced on the statement', () => {
+  it('is priced within the bank’s range by the record when the card opens, and held there after', () => {
     expect(priceWithin(0.1, 0.3, 800)).toBe(0.1);
     expect(priceWithin(0.1, 0.3, 850)).toBe(0.1);
     expect(priceWithin(0.1, 0.3, 580)).toBe(0.3);
     expect(priceWithin(0.1, 0.3, 690)).toBe(0.2);
     const sim = life('card-range');
-    withCard(cardIn(sim).bankId!, { ...base, apr: undefined, aprFrom: 0.1, aprTo: 0.3 });
-    sim.player.credit!.score = 690;
+    const bankId = cardIn(sim).bankId!;
+    withCard(bankId, { ...base, apr: undefined, aprFrom: 0.1, aprTo: 0.3 });
+    // A new card, opened on a record of 690: the middle of the range.
+    const old = cardIn(sim);
+    if (old.balance < 0) sim.post({ memo: 'test', category: 'test', postings: [{ accountId: old.id, amount: -old.balance }, { accountId: sim.nominalAccount('income', 'Test').id, amount: old.balance }] });
+    expect(sim.execute({ kind: 'card.close', payload: {} }).ok).toBe(true);
+    sim.player.credit!.score = 695;
+    expect(sim.execute({ kind: 'card.apply', payload: {} }).ok).toBe(true);
+    sim.advanceBy(8 * MS_DAY);
+    expect(cardIn(sim).apr).toBe(0.2);
+    // A better record later doesn't reprice it (Reg Z §1026.55 holds a US rate; SLATE holds every card's).
+    sim.player.credit!.score = 820;
     toStatement(sim);
     expect(cardIn(sim).apr).toBe(0.2);
-    // The record moves over a month of play, so it is set just before the next statement.
-    const next = sim.timeline.pending().find((i) => i.kind === STATEMENT_KIND)!.at;
-    sim.advanceTo(next - 60_000);
-    sim.player.credit!.score = 800;
-    sim.advanceTo(next + 1000);
-    expect(cardIn(sim).apr).toBe(0.1);
+    expect(cardTerms(sim, cardIn(sim), 820).priced).toBe(0.1);
   });
 
   it('is held to the country’s cap', () => {
@@ -87,8 +92,10 @@ describe('the rate', () => {
     const bank = bankById(cardIn(sim).bankId!)!;
     withCard(bank.id, { ...base, apr: 0.4 });
     withLaw(bank.iso, { aprCap: 0.25, law: 'A Test Act', source: 'test' });
+    cardIn(sim).apr = 0.4;
     const terms = cardTerms(sim, cardIn(sim), 650);
     expect(terms.apr).toBe(0.25);
+    expect(terms.priced).toBe(0.25);
     expect(terms.capped?.law).toBe('A Test Act');
   });
 
@@ -99,7 +106,7 @@ describe('the rate', () => {
     delete cards[bankId];
     try {
       const terms = cardTerms(sim, cardIn(sim), 600);
-      expect(terms.apr).toBe(aprFor(600));
+      expect(terms.priced).toBe(aprFor(600));
       expect(terms.estimated).toEqual(expect.arrayContaining(['card', 'rate', 'minimum', 'lateFee']));
     } finally { if (was) cards[bankId] = was; }
   });

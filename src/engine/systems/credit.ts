@@ -24,7 +24,7 @@
  * card kept at zero is an account paid as agreed. Until 2026-09-25 the
  * record moved only on a statement that owed something, and two years of
  * played careers that cleared the card ended at 693, where they began,
- * with rent owed in those months never counted either. What it decides: the card's rate, repriced on each statement; the
+ * with rent owed in those months never counted either. What it decides: the card's rate, set by the record when the card opens and held there (it was repriced on each statement until 2026-09-26, which a US card may not be, Reg Z §1026.55); the
  * card's limit, raised a fifth at a six-monthly review for a record of 700
  * with nothing late in a year and cut to 70% by a late payment; and the
  * deposit a landlord asks (`depositFor` in `systems/household.ts`). It
@@ -49,7 +49,7 @@ import { exchange } from '../content/currency';
 import { bankById } from '../content/banks';
 import { CARDS, CARD_LAW, type CardProduct } from '../content/cards';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
-import { instantFromZoned, zonedParts, type Instant } from '../core/time';
+import { formatDate, instantFromZoned, zonedParts, type Instant } from '../core/time';
 import { CommandError } from '../core/simulation';
 import { arrearsOf, drawFromBank, inTheBank } from './household';
 import { statementReady } from './statements';
@@ -92,6 +92,16 @@ export interface CreditState {
   persistentNoticeAt?: Instant;
   /** A card applied for and on its way (C1, C5). */
   applied?: { bankId: string; arrivesAt: Instant; limit: Money };
+  /** Interest built up day by day, compounded daily (C43, C50): charged at the statement once the grace period is lost, dropped at the due date where it holds. */
+  accrued?: number;
+  /** Interest from a carried balance up to the day it was paid in full, charged on the next statement (C48). */
+  trailing?: number;
+  /** The US penalty rate: noticed, and in force from 45 days on (C52, C53, C90); payments on time since it began. */
+  penalty?: { noticeAt: Instant; from: Instant; onTime: number };
+  /** Britain: default fees charged in the last 28 days, which bear no interest yet (C64). */
+  recentFees?: { at: Instant; amount: Money }[];
+  /** Since when the card has held a credit balance, for the US six-month refund (C23). */
+  creditSince?: Instant;
 }
 
 const SCORE_MIN = 300;
@@ -138,7 +148,13 @@ export interface CardTerms {
   bankId?: string;
   issuer?: string;
   kind: 'revolving' | 'charge';
+  /** The rate on the account now: set by the record when it opened, the penalty rate where one is in force. */
   apr: number;
+  /** What the bank would price a card at for this record, today. */
+  priced: number;
+  /** The US penalty rate, where the card has one, and whether it's in force. */
+  penaltyApr?: number;
+  penaltyInForce?: boolean;
   aprFrom?: number;
   aprTo?: number;
   annualFee: Money;
@@ -175,8 +191,13 @@ export function cardTerms(sim: Simulation, card: Account, score: number): CardTe
   const estimated: CardTerm[] = [];
   if (!product) estimated.push('card');
   const range = product?.aprFrom !== undefined && product.aprTo !== undefined;
-  let apr = range ? priceWithin(product!.aprFrom!, product!.aprTo!, score) : product?.apr;
-  if (apr === undefined) { apr = aprFor(score); estimated.push('rate'); }
+  let priced = range ? priceWithin(product!.aprFrom!, product!.aprTo!, score) : product?.apr;
+  if (priced === undefined) { priced = aprFor(score); estimated.push('rate'); }
+  // The account's own rate, set when it opened; the penalty rate over it once in force.
+  const owner = sim.universe.people[card.ownerId];
+  const penaltyInForce = Boolean(product?.penaltyApr && owner?.credit?.penalty && sim.now >= owner.credit.penalty.from);
+  let apr = card.apr ?? priced;
+  if (penaltyInForce) apr = Math.max(apr, product!.penaltyApr!);
   const minimumKnown = product?.minimumShare !== undefined || product?.minimumFloor !== undefined;
   if (!minimumKnown && product?.kind !== 'charge') estimated.push('minimum');
   let lateFee = product?.lateFee !== undefined ? inSave(sim, product.lateFee, money) : undefined;
@@ -186,6 +207,7 @@ export function cardTerms(sim: Simulation, card: Account, score: number): CardTe
   if (returnedPaymentFee === undefined) { returnedPaymentFee = usdIn(sim, RETURNED_PAYMENT_USD); estimated.push('returnedPaymentFee'); }
   let capped: CardTerms['capped'];
   if (law?.aprCap !== undefined && apr > law.aprCap) { apr = law.aprCap; capped = { apr: law.aprCap, law: law.law, source: law.source }; }
+  if (law?.aprCap !== undefined && priced > law.aprCap) priced = law.aprCap;
   if (law?.lateFeeCap !== undefined) {
     const cap = inSave(sim, law.lateFeeCap, bank!.currency);
     if (lateFee > cap) { lateFee = cap; capped = { ...(capped ?? { law: law.law, source: law.source }), lateFee: cap }; }
@@ -195,6 +217,8 @@ export function cardTerms(sim: Simulation, card: Account, score: number): CardTe
     ...(bank ? { bankId: bank.id, issuer: bank.name } : {}),
     kind: product?.kind ?? 'revolving',
     apr,
+    priced,
+    ...(product?.penaltyApr ? { penaltyApr: product.penaltyApr, penaltyInForce } : {}),
     ...(range ? { aprFrom: product!.aprFrom, aprTo: product!.aprTo } : {}),
     annualFee: product?.annualFee ? inSave(sim, product.annualFee, money) : 0,
     minimumShare: minimumKnown ? product!.minimumShare ?? 0 : MINIMUM_SHARE,
@@ -269,7 +293,8 @@ function payCard(sim: Simulation, person: Person, amount: Money, byHand = false)
   const inCurrent = Math.max(0, sim.universe.accounts[person.primaryAccountId ?? '']?.balance ?? 0);
   const linked = byHand || paymentsOf(person).linkSavings;
   const reach = linked ? inTheBank(sim, person) : inCurrent;
-  const paid = Math.max(0, Math.min(amount, reach, -card.balance));
+  // By hand the holder may pay more than is owed, and the card holds the credit (C23).
+  const paid = Math.max(0, Math.min(amount, reach, byHand ? amount : -card.balance));
   if (paid <= 0) return 0;
   sim.post({
     memo: `Paid ${card.name}`, category: 'card-payment',
@@ -323,17 +348,22 @@ export function registerCredit(sim: Simulation): void {
     // Repriced from the record by the bank's own terms, then the month's
     // interest if last month's statement was carried.
     const terms = cardTerms(s, card, credit.score);
-    card.apr = terms.apr;
-    const owed = Math.max(0, -card.balance);
+    // The interest built up day by day: charged where the grace period is lost
+    // (the last statement wasn't paid in full), with any trailing interest
+    // from a carried balance paid off; where it holds, it waits for the due date.
+    const interest = Math.round((credit.carrying ? credit.accrued ?? 0 : 0) + (credit.trailing ?? 0));
+    if (credit.carrying) credit.accrued = 0;
+    credit.trailing = 0;
     credit.statementInterest = 0;
-    if (credit.carrying && owed > 0 && !credit.hardship) {
-      const interest = Math.round(owed * card.apr / 12);
+    if (interest > 0) {
       credit.statementInterest = interest;
       s.post({
         memo: 'Interest', category: 'interest',
         postings: [{ accountId: s.nominalAccount('expense', 'Card Interest').id, amount: interest }, { accountId: card.id, amount: -interest }],
       });
     }
+    // A credit balance left six months is sent back to a US holder (Reg Z §1026.11).
+    if (card.balance > 0 && credit.creditSince !== undefined && s.now - credit.creditSince >= 182 * 86_400_000 && bankById(card.bankId ?? '')?.iso === 'US') refundCredit(s, person, card);
     // The yearly fee, on the statement in the month the card was opened.
     // One statement a month, so the month alone makes it once a year.
     // In its first year a US card's fees, penalties aside, may not pass a
@@ -408,7 +438,16 @@ export function registerCredit(sim: Simulation): void {
       }
     }
     const paid = credit.paidSinceStatement;
+    // Paid in full: a card that wasn't carrying keeps its grace period and the
+    // cycle's interest is dropped; one that was carrying regains it, and what
+    // built up to today is charged on the next statement, as trailing interest.
+    // Not paid in full: the grace period is lost, and it all stands (C48).
+    const wasCarrying = credit.carrying;
     credit.carrying = paid < statement;
+    if (!credit.carrying) {
+      if (wasCarrying) credit.trailing = (credit.trailing ?? 0) + (credit.accrued ?? 0);
+      credit.accrued = 0;
+    }
 
     let move = 0;
     if (paid < due) {
@@ -430,10 +469,25 @@ export function registerCredit(sim: Simulation): void {
         importance: 80,
       });
       credit.missed = (credit.missed ?? 0) + 1;
+      if (credit.penalty) credit.penalty.onTime = 0;
+      if (bankById(card.bankId ?? '')?.iso === 'GB') credit.recentFees = [...(credit.recentFees ?? []).filter((one) => s.now - one.at < 28 * 86_400_000), { at: s.now, amount: fee }];
       afterMissed(s, person, card, credit, due - paid);
+      // Sixty days late on a US card with a penalty rate: 45 days' notice, then the penalty rate (Reg Z §1026.9(g), §1026.55(b)(4)).
+      if ((credit.missed ?? 0) >= 2 && !credit.penalty && terms.penaltyApr && bankById(card.bankId ?? '')?.iso === 'US' && !card.closedAt) {
+        credit.penalty = { noticeAt: s.now, from: s.now + 45 * 86_400_000, onTime: 0 };
+        if (person.id === s.universe.playerId) s.notify({ category: 'money', title: 'A Penalty Rate Is Coming', body: `Sixty days late. From ${formatDate(credit.penalty.from, zoneOf(s, person))} the ${card.name} charges ${(terms.penaltyApr * 100).toFixed(2)}% on what's owed. Six payments on time in a row takes it off.`, importance: 85 });
+      }
     } else {
       move += ON_TIME;
       credit.missed = 0;
+      // Six on time in a row after the penalty began, and it comes off (Reg Z §1026.55(b)(4)(ii)).
+      if (credit.penalty && s.now >= credit.penalty.from) {
+        credit.penalty.onTime += 1;
+        if (credit.penalty.onTime >= 6) {
+          delete credit.penalty;
+          if (person.id === s.universe.playerId) s.notify({ category: 'money', title: 'The Penalty Rate Is Off', body: `Six payments on time. The ${card.name} is back to ${((card.apr ?? terms.priced) * 100).toFixed(2)}%.`, importance: 50 });
+        }
+      }
       if (credit.suspended === 'late') {
         delete credit.suspended;
         if (person.id === s.universe.playerId) s.notify({ category: 'money', title: 'Your Card Works Again', body: `Payments are back on time, and ${terms.issuer ?? 'the bank'} has lifted the suspension.`, importance: 50 });
@@ -446,12 +500,42 @@ export function registerCredit(sim: Simulation): void {
     reportMonth(s, person, card, credit, move);
   });
 
+  // Each day: interest builds on what the card owes that day, the interest
+  // before it included (daily compounding, C50), apart from a British card's
+  // default fees in their first 28 days (C64). Whether it's charged is
+  // settled at the statement and the due date (C48). Until 2026-09-26 a
+  // month's interest was charged in one sum at the statement, on that day's
+  // balance, and only after a statement had gone unpaid.
+  sim.onEvent('world.day_rollover', 'card.interest', (_event, { sim: s }) => {
+    for (const person of Object.values(s.universe.people)) {
+      const credit = person.credit;
+      const card = cardOf(s, person);
+      if (!credit || !card) continue;
+      // The credit balance's age, for the US refund.
+      if (card.balance > 0) credit.creditSince ??= s.now; else delete credit.creditSince;
+      if (credit.hardship || card.balance >= 0) continue;
+      const terms = cardTerms(s, card, credit.score);
+      const freeFees = bankById(card.bankId ?? '')?.iso === 'GB'
+        ? (credit.recentFees ?? []).filter((one) => s.now - one.at < 28 * 86_400_000).reduce((a, one) => a + one.amount, 0)
+        : 0;
+      const bearing = Math.max(0, -card.balance - freeFees) + (credit.accrued ?? 0);
+      credit.accrued = (credit.accrued ?? 0) + bearing * terms.apr / 365;
+    }
+  });
+
+  sim.onCommand<Record<string, never>, { refunded: Money }>('card.refund_credit', (_p, { sim: s }) => {
+    const person = s.player;
+    const card = cardOf(s, person);
+    if (!card || card.balance <= 0) throw new CommandError('The card holds no credit to send back.');
+    return { refunded: refundCredit(s, person, card) };
+  });
+
   sim.onCommand<{ amount: 'full' | 'minimum' | number }, { paid: Money }>('finance.pay_card', (p, { sim: s }) => {
     const person = s.player;
     const card = cardOf(s, person);
     if (!card) throw new CommandError('You don’t have a card.');
     const owed = Math.max(0, -card.balance);
-    if (owed === 0) throw new CommandError('You don’t owe anything on it.');
+    if (owed === 0 && typeof p.amount !== 'number') throw new CommandError('You don’t owe anything on it.');
     const want = p.amount === 'full' ? owed
       : p.amount === 'minimum' ? minimumDue(s, person.credit?.statementBalance ?? owed)
         : Math.round(Number(p.amount));
@@ -475,6 +559,16 @@ export function registerCredit(sim: Simulation): void {
 
 /** A month paid as agreed. */
 const ON_TIME = 3;
+
+/** A card's credit balance sent back to the current account (C23). */
+function refundCredit(sim: Simulation, person: Person, card: Account): Money {
+  const credit = Math.max(0, card.balance);
+  const current = person.primaryAccountId ? sim.universe.accounts[person.primaryAccountId] : undefined;
+  if (credit <= 0 || !current) return 0;
+  sim.post({ memo: `Credit refunded from ${card.name}`, category: 'transfer', postings: [{ accountId: card.id, amount: -credit }, { accountId: current.id, amount: credit }] });
+  if (person.credit) delete person.credit.creditSince;
+  return credit;
+}
 
 /** What autopay can take: the current account, and savings where it's linked to it. */
 function autopayReach(sim: Simulation, person: Person): Money {
@@ -603,8 +697,9 @@ export function openCredit(sim: Simulation, person: Person, score: number): void
   };
   const card = cardOf(sim, person);
   if (card) {
-    const terms = cardTerms(sim, card, score);
-    card.apr = terms.apr;
+    const terms = cardTerms(sim, { ...card, apr: undefined }, score);
+    // The rate the record bought, held from here on.
+    card.apr = terms.priced;
     // A charge card is paid in full; nobody's autopay can say otherwise.
     if (terms.kind === 'charge') person.credit.autopay = 'full';
   }
