@@ -119,13 +119,14 @@ export interface Offer {
  * benefit, or the one tried where it fails, whether the record qualifies,
  * the bar for how the job ended, the first week's amount and how long it runs.
  */
-export function claimFor(sim: Simulation, person: Person): Offer | { refused: string } {
+export function claimFor(sim: Simulation, person: Person): Offer | { refused: string; source?: string } {
   const left = person.earnings?.lastLeft;
   const where = left?.cityId ?? person.job?.cityId ?? person.currentLocationId;
   if (!CITIES.get(where)) return { refused: 'SLATE doesn’t know the law there.' };
   const first = benefitAt(jurisdictionPath(where), where);
   const none = noBenefitAt(jurisdictionPath(where));
-  if (none) return { refused: none.unsized ? `${none.name} pays an unemployment benefit whose amount SLATE couldn’t find (${none.source}).` : `${none.name} has no unemployment benefit (${none.source}).` };
+  // The source apart from the sentence, as the screen shows every other.
+  if (none) return { refused: none.unsized ? `${none.name} pays an unemployment benefit whose amount SLATE couldn’t find.` : `${none.name} has no unemployment benefit.`, source: none.source };
   if (!first) return { refused: 'SLATE has no unemployment benefit on record where you last worked.' };
   const { currency } = countryAt(where);
   const record = recordIn(sim, person, currency);

@@ -11,8 +11,7 @@ import { SaveSlots } from '@/ui/saves/SaveSlots';
 import { CharacterCreation } from '@/ui/creation/CharacterCreation';
 import { GameShell } from '@/ui/shell/GameShell';
 import { GameProvider } from './game-context';
-import { createSave, loadSave, refreshMeta, type Simulation } from '@/engine';
-import { CITIES, isCountryLoaded, loadCountryCities } from '@/engine/content/geography';
+import { createSave, loadPlacesFor, loadSave, refreshMeta, type Simulation } from '@/engine';
 import type { NewSaveConfig } from '@/engine/world/bootstrap';
 import type { SaveAdapter, Slot } from '@/engine/persistence/adapter';
 import type { SaveUniverse } from '@/engine/domain/model';
@@ -22,29 +21,6 @@ type Phase =
   | { kind: 'saves'; startup: StartupResult }
   | { kind: 'creation'; startup: StartupResult; slot: Slot }
   | { kind: 'playing'; adapter: SaveAdapter; sim: Simulation };
-
-/**
- * Which countries a save needs the full city list for before it opens.
- *
- * Anywhere a person in the save is standing, anywhere they call home, and
- * anywhere they own something: a city id carries its country as its first
- * segment, so this reads it off the ids rather than needing the cities to be
- * loaded in order to work out which cities to load.
- */
-function citiesToLoad(universe: SaveUniverse): string[] {
-  const ids = new Set<string>();
-  const want = (cityId: string | undefined) => {
-    if (!cityId) return;
-    if (CITIES.get(cityId)) return;
-    const countryId = cityId.split('-')[0];
-    if (countryId && !isCountryLoaded(countryId)) ids.add(countryId);
-  };
-  for (const person of Object.values(universe.people ?? {})) {
-    want(person.currentLocationId);
-    want(person.homeRegionId);
-  }
-  return [...ids];
-}
 
 export function SlateApp() {
   const [phase, setPhase] = useState<Phase>({ kind: 'startup' });
@@ -86,9 +62,7 @@ export function SlateApp() {
       // or the school, the wage floor, the state assessment and the cost of
       // living all quietly fall back to the country. Creation and the pickers
       // already do this; resuming did not.
-      await Promise.all(
-        [...new Set(citiesToLoad(universe))].map((id) => loadCountryCities(id).catch(() => 0)),
-      );
+      await loadPlacesFor(universe);
       const sim = loadSave(universe);
       setPhase({ kind: 'playing', adapter: startup.adapter, sim });
     } catch (e) {

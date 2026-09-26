@@ -340,7 +340,8 @@ describe('the finishing pass', () => {
     const last = layOff(sim, sim.player)!;
     sim.advanceTo(last + MS_DAY);
     const offer = claimFor(sim, sim.player);
-    expect('refused' in offer && offer.refused).toMatch(/^Kenya has no unemployment benefit \(.+\)\.$/);
+    expect('refused' in offer && offer.refused).toBe('Kenya has no unemployment benefit.');
+    expect('refused' in offer && offer.source).toMatch(/ssptw/);
     expect(noBenefitAt(['GP'])).toBeUndefined();
   });
 });

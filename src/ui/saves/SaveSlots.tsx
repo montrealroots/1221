@@ -6,7 +6,7 @@ import { useCallback, useEffect, useState } from 'react';
 import type { SaveAdapter, SaveSlotInfo, Slot } from '@/engine/persistence/adapter';
 import type { SaveUniverse } from '@/engine/domain/model';
 import { SAVE_SCHEMA_VERSION } from '@/engine/domain/model';
-import { openSlot, validateUniverse } from '@/engine';
+import { loadPlacesFor, openSlot, validateUniverse } from '@/engine';
 import { APP_VERSION } from '@/engine/world/bootstrap';
 
 export function SaveSlots({
@@ -43,6 +43,8 @@ export function SaveSlots({
       }
       const { universe } = opened;
 
+      // The save's towns are known only once their countries are loaded.
+      await loadPlacesFor(universe);
       const validation = validateUniverse(universe);
       if (!validation.ok) {
         setError(

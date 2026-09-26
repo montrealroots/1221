@@ -305,7 +305,10 @@ part the tool cannot see.
   SLATE's employers aren't taken to do. The other US states add only
   what's over the federal law: daily overtime in Alaska, Nevada and
   Colorado, and sick leave where a state gives it; Minnesota's 48-hour
-  week, which is under the federal 40, isn't taken. Canada's other
+  week, which is under the federal 40, isn't taken, and nor is a city's own
+  sick-leave ordinance where the state has none (Pittsburgh's and
+  Philadelphia's), so a Pittsburgh job's screen says the law pays nothing
+  for a day called in sick. Canada's other
   provinces and territories have their own standards from the same pass.
 - **Unemployment benefit is the thirteen's, from the record SLATE keeps.**
   Out of work, a claim (`work.claim`, `systems/unemployment.ts`) pays
@@ -434,6 +437,13 @@ part the tool cannot see.
   aguinaldo wasn't decreed for 2024 or 2025, as growth fell short (2026's is
   decided in October). Chile's gratificación is owed only with a profit, and
   is paid as most employers pay it, a quarter with each month's pay.
+- **Some of the thirteen's employer rates rest on salary sites.** The
+  browser walk of 2026-09-26 found Toronto's Starbucks said to publish its
+  rate where its note says the figure is an average of pay reported on
+  Indeed, and Tim Hortons' and Second Cup's resting on Glassdoor's and
+  Indeed's. The employer-pay pass filtered such sources out of what it
+  added; the thirteen's first research, before it, wasn't put through the
+  same filter.
 - **An employer's pay is as published in September 2026.** Each rate is
   the one the research found on 2026-09-25, paid from the save's first day,
   so a save that starts in January is paid an April raise early. Where an

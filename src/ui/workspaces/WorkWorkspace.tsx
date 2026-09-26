@@ -162,7 +162,10 @@ export function WorkWorkspace() {
               {`. ${money(claim.paid)} paid so far. It stops when you’re back in work.`}
             </p>
           ) : offer && 'refused' in offer ? (
-            <p className="small" style={{ margin: 0 }}>{offer.refused}</p>
+            <div className="col gap-2">
+              <p className="small" style={{ margin: 0 }}>{offer.refused}</p>
+              {offer.source && <p className="xs dim" style={{ margin: 0 }}>Source: {offer.source}</p>}
+            </div>
           ) : offer ? (
             <div className="col gap-2">
               <p className="small" style={{ margin: 0 }}>

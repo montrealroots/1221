@@ -24,7 +24,7 @@ import { PERFORMER_NOUN, impliedPerformerTitle, isPerformerTitle } from './core/
 import { citizenshipFor } from './domain/citizenship';
 import { cleanPersonality, cleanPersonalityTraits } from './systems/personality';
 
-import { CITIES } from './content/geography';
+import { CITIES, isCountryLoaded, loadCountryCities } from './content/geography';
 
 import { netWorth } from './systems/finance';
 import { registerLife } from './systems/life';
@@ -651,6 +651,28 @@ export interface ValidationReport {
  * Structural validation of a universe. Run on load, before release, and by the
  * test suite. Anything here failing means the world is internally inconsistent.
  */
+/**
+ * Pulls in the full city list of every country a save needs before it can
+ * be checked or opened: anywhere a person in it stands or calls home. The
+ * gazetteer ships the larger places eagerly and the rest a country at a
+ * time, and a city id carries its country as its first segment, so this
+ * reads it off the ids. Until 2026-09-26 only resuming did this, after the
+ * save screen had already checked the save, so a life begun in a town
+ * outside the bundled set (Pittsburgh, Annapolis) was refused as being in
+ * an unknown location.
+ */
+export async function loadPlacesFor(universe: SaveUniverse, load: (countryId: string) => Promise<number> = loadCountryCities): Promise<void> {
+  const ids = new Set<string>();
+  for (const person of Object.values(universe.people ?? {})) {
+    for (const cityId of [person.currentLocationId, person.homeRegionId]) {
+      if (!cityId || CITIES.get(cityId)) continue;
+      const countryId = cityId.split('-')[0];
+      if (countryId && !isCountryLoaded(countryId)) ids.add(countryId);
+    }
+  }
+  await Promise.all([...ids].map((id) => load(id).catch(() => 0)));
+}
+
 export function validateUniverse(universe: SaveUniverse): ValidationReport {
   const errors: string[] = [];
   const warnings: string[] = [];
