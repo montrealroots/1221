@@ -25,7 +25,6 @@ import { weatherOn } from './systems/weather';
 import { endBetween } from './systems/mortality';
 import { accountNumber } from './systems/banknumber';
 import { bankById } from './content/banks';
-import { cutOn } from './systems/work';
 import { MS_DAY } from './core/time';
 
 // ---------------------------------------------------------------------------
@@ -175,34 +174,3 @@ defineDecider<Opening, string>({
   decide: ({ sim, bankId, kind }) => accountNumber(sim, sim.player, bankById(bankId)!, kind),
 });
 
-// ---------------------------------------------------------------------------
-// A job cut
-// ---------------------------------------------------------------------------
-
-interface Tenure { sim: Simulation; iso: string; jobId: string; personId: string }
-
-/** Countries at both ends of what's on record: the US by the BLS, Britain by the ONS. */
-const LAYOFF_COUNTRIES = ['US', 'GB'];
-/** Lines in each of the BLS's industries: accommodation and food, retail, and the rest. */
-const LAYOFF_LINES = ['hospitality', 'retail', 'office'];
-
-defineDecider<Tenure, string>({
-  id: 'work.layoff',
-  decides: 'The first day in five years a job is cut, if one is.',
-  drawnIn: 'src/engine/systems/work.ts',
-  reads: {
-    // Where: the US cuts about eight times as many jobs a month as Britain.
-    country: (o, t) => ({ ...o, iso: LAYOFF_COUNTRIES[Math.min(LAYOFF_COUNTRIES.length - 1, Math.floor(t * LAYOFF_COUNTRIES.length))]! }),
-    // The line's industry: a bar job is cut more often than a shop's.
-    line: (o, t) => ({ ...o, jobId: LAYOFF_LINES[Math.min(LAYOFF_LINES.length - 1, Math.floor(t * LAYOFF_LINES.length))]! }),
-    // Two workers are two draws.
-    person: (o, t) => ({ ...o, personId: `worker-${Math.round(t * 20)}` }),
-    // Two saves are two worlds.
-    world: (o, t) => ({ ...o, sim: skyFor(Math.round(t * 20)) }),
-  },
-  sample: (seed) => ({ sim: skyFor(seed), iso: 'US', jobId: LAYOFF_LINES[seed % LAYOFF_LINES.length]!, personId: `worker-${seed}` }),
-  decide: ({ sim, iso, jobId, personId }) => {
-    for (let day = 0; day < 5 * 365; day += 1) if (cutOn(sim, personId, iso, jobId, sim.now + day * MS_DAY)) return `day ${day}`;
-    return 'kept';
-  },
-});

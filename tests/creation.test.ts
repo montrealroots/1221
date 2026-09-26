@@ -15,14 +15,11 @@
 
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
-import { createSave, defaultConfig, refreshMeta } from '@/engine';
+import { createSave, defaultConfig, migrate, refreshMeta } from '@/engine';
 import { CITIES } from '@/engine/content/geography';
 import { blockedTraitReason, latestBirthYear } from '@/ui/creation/CharacterCreation';
 import { settledTitle } from '@/engine/core/performer';
-import { BEFORE_ACTING, DEFAULT_BEFORE_ACTING } from '@/engine/content/backgrounds';
 import { ceilingAt } from '@/engine/content/lifespan';
-import { EVERYDAY_FITNESS, mendsTo, readiness } from '@/engine/systems/life';
-import { MS_HOUR, startOfNextDay } from '@/engine/core/time';
 
 const SOURCE = readFileSync(new URL('../src/ui/creation/CharacterCreation.tsx', import.meta.url), 'utf8');
 
@@ -271,57 +268,47 @@ describe('Review', () => {
   });
 });
 
-describe('what you did before acting', () => {
-  const made = (beforeActing: string, birthYear = 2001) =>
-    createSave(1, `before-${beforeActing}-${birthYear}`, { ...defaultConfig(), beforeActing, birthYear });
+describe('the body a life starts with', () => {
   const playerOf = (sim: ReturnType<typeof createSave>) => sim.universe.people[sim.universe.playerId]!;
 
-  it('starts every answer at its own fitness, keeps the answer, and a default save where it was', () => {
-    for (const one of BEFORE_ACTING) {
-      const player = playerOf(made(one.id));
-      expect(player.beforeActing).toBe(one.id);
-      expect(player.wellbeing.fitness, one.id).toBe(one.fitness);
-    }
-    // Fifty is what every character started at before the question was asked.
-    expect(defaultConfig().beforeActing).toBe(DEFAULT_BEFORE_ACTING);
-    expect(playerOf(createSave(1, 'before-default', defaultConfig())).wellbeing.fitness).toBe(50);
+  it('starts everybody at fifty, no fitter than the age allows', () => {
+    expect(playerOf(createSave(1, 'body-young', { ...defaultConfig(), birthYear: 2001 })).wellbeing.fitness).toBe(50);
+    const old = playerOf(createSave(1, 'body-old', { ...defaultConfig(), birthYear: 1944 }));
+    expect(old.wellbeing.fitness).toBeCloseTo(Math.min(50, ceilingAt(81.5).fitness), 0);
   });
 
-  it('never starts somebody fitter than the age allows, and an answer the list lacks is the default', () => {
-    const old = playerOf(made('sport', 1944));
-    expect(old.wellbeing.fitness).toBeLessThan(80);
-    expect(old.wellbeing.fitness).toBeCloseTo(ceilingAt(81.5).fitness, 0);
-    const junk = playerOf(made('astronaut'));
-    expect(junk.beforeActing).toBe(DEFAULT_BEFORE_ACTING);
-    expect(junk.wellbeing.fitness).toBe(50);
-  });
-
-  it('an athlete left alone keeps the fitter body for months, and it fades to an everyday life’s', () => {
-    const athlete = made('sport');
-    const clerk = made('office');
-    const days = (sim: ReturnType<typeof createSave>, n: number) => {
-      for (let d = 0; d < n; d++) sim.advanceTo(startOfNextDay(sim.now, sim.zone) + 7 * MS_HOUR);
-    };
-    days(athlete, 120);
-    days(clerk, 120);
-    const a = playerOf(athlete);
-    const c = playerOf(clerk);
-    expect(a.wellbeing.fitness).toBeCloseTo(80 - 120 * 0.18, 5);
-    expect(c.wellbeing.fitness).toBe(EVERYDAY_FITNESS);
-    expect(mendsTo(a, athlete.now)).toBeGreaterThan(mendsTo(c, clerk.now) + 5);
-    expect(a.wellbeing.condition).toBeGreaterThan(c.wellbeing.condition + 5);
-    expect(readiness(a)).toBeGreaterThan(readiness(c));
-    // A year on, nothing kept it up, and both have what an everyday life keeps.
-    days(athlete, 245);
-    days(clerk, 245);
-    expect(a.wellbeing.fitness).toBe(EVERYDAY_FITNESS);
-    expect(c.wellbeing.fitness).toBe(EVERYDAY_FITNESS);
-  });
-
-  it('asks the question on the step, says what it does, and keeps the player’s own words beside it', () => {
-    expect(SOURCE, 'the step stopped asking').toContain('id="before-acting"');
-    expect(SOURCE, 'the step stopped saying what it does').toContain('Fitness On The First Morning');
+  it('no longer asks what they did before acting, and keeps the player’s own words', () => {
+    expect(SOURCE, 'Before Acting is back on the step').not.toContain('id="before-acting"');
+    expect(SOURCE, 'the day job is back on the step').not.toContain('id="day-job"');
     expect(SOURCE, 'the step lost the player’s own words').toContain('id="background"');
-    expect(SOURCE, 'the step still says it carries nothing').not.toContain('It carries no attribute and no');
+  });
+});
+
+describe('a save from before the job engine went', () => {
+  it('loses the day job, the pay record, the past before acting, and the shifts still to come', () => {
+    const sim = createSave(1, 'before-the-gut', defaultConfig());
+    const universe = sim.universe;
+    const player = universe.people[universe.playerId]! as unknown as Record<string, unknown>;
+    player.job = { jobId: 'retail', cityId: 'us-ca-losangeles', since: 0, unpaid: [], missed: [], rotaThrough: 0 };
+    player.earnings = { paydays: [] };
+    player.beforeActing = 'retail';
+    const item = (id: string, kind: string, status: string) => ({
+      id, saveId: universe.meta.id, at: universe.now + 3_600_000, kind, payload: {}, status, priority: 50,
+      label: kind, category: 'work', createdAt: universe.now,
+    });
+    const kept = universe.scheduled.length;
+    universe.scheduled.push(item('shift-1', 'work.shift', 'pending') as never, item('payday-0', 'work.payday', 'done') as never);
+
+    const result = migrate(universe);
+    expect(player.job).toBeUndefined();
+    expect(player.earnings).toBeUndefined();
+    expect(player.beforeActing).toBeUndefined();
+    // The shift to come goes; the payday already settled stays in the record.
+    expect(universe.scheduled.map((one) => one.id)).not.toContain('shift-1');
+    expect(universe.scheduled.map((one) => one.id)).toContain('payday-0');
+    expect(universe.scheduled).toHaveLength(kept + 1);
+    expect(result.steps.join(' ')).toContain('Took the day job off 1 person, and 1 shift or payday off the calendar.');
+    // Run again, it finds nothing to take.
+    expect(migrate(universe).steps.join(' ')).not.toContain('Took the day job');
   });
 });

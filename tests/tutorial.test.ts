@@ -181,8 +181,8 @@ describe('a guided life', () => {
   });
 
   it('lets the world run its own commands while the clock moves, guide or none', () => {
-    // A shift the clock runs over while nobody's there is worked by the
-    // world, not refused for a chapter the player hasn't read.
+    // Rent the clock runs over while nobody's there is charged by the world,
+    // not refused for a chapter the player hasn't read.
     const sim = quickSave({ tutorial: true }, 'guide-world');
     const before = sim.universe.transactions.length;
     sim.advanceBy(40 * 24 * 3_600_000);

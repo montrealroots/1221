@@ -1,6 +1,6 @@
 # SLATE — Current Master Handoff
 
-**Written:** 2026-09-23, in the Linux cloud container at `/home/user/1221` (bash; PowerShell is not installed there). **Updated:** 2026-09-23, on the owner's Windows machine under PowerShell 7.6.6, by Claude Code Account 1 (session `session_016rs5iQsnQMfHXUzUnFERmU`), with the fifth review's fixes, and again for the transfer to Account 2. **Updated:** 2026-09-24, on the same machine, by Claude Code Account 2 (session `session_01W9QMrtdH8X3KoyXXWF8Hbf`), with the spring-forward rollover fix (Start here, §10), again with the day's bounds fix, again with the Windows hygiene commit, and again with the stale-words commit.
+**Written:** 2026-09-23, in the Linux cloud container at `/home/user/1221` (bash; PowerShell is not installed there). **Updated:** 2026-09-23, on the owner's Windows machine under PowerShell 7.6.6, by Claude Code Account 1 (session `session_016rs5iQsnQMfHXUzUnFERmU`), with the fifth review's fixes, and again for the transfer to Account 2. **Updated:** 2026-09-24, on the same machine, by Claude Code Account 2 (session `session_01W9QMrtdH8X3KoyXXWF8Hbf`), with the spring-forward rollover fix (Start here, §10), again with the day's bounds fix, again with the Windows hygiene commit, and again with the stale-words commit. **Updated:** 2026-09-26, by Claude Code Account 2 (session `session_01AmQ8DKKk8371N6NckRHRbY`), with the gut of the job engine (Start here, the first box).
 **Written for:** Claude Code Account 2, and any later session on either of the owner's two accounts, running on the owner's Windows machine under PowerShell 7. Start with "Start here", below.
 **Repository:** `github.com/yvcbcjhsy7-prog/1221`
 **Working branch:** `claude/slate-cleanup-e4apmx`
@@ -13,6 +13,39 @@ When this file and the tree disagree, the tree wins. Correct this file in the sa
 ---
 
 ## Start here: the transfer to Claude Account 2 (2026-09-23), and its first session (2026-09-24)
+
+> **Newest, 2026-09-26: the job engine is gone, at the owner's word.** Mid-way through splitting the creation screen's Before Acting from the day job, the owner said: "we're going to keep it completely acting so I want you to remove that 'Before Acting' part and to completely gut/remove the job engine. I want to go another route and i'll let you know that when you're done with this." What went, from the tip `6b8b9e0`:
+>
+> - **Content:** `backgrounds`, `jobs`, `employers` (1,622 employers), `wages`, `work-world`, `labor`, `city-law`, `jurisdictions`, `local-tax`, `payroll`, `unemployment` and `taxreturn`.
+> - **Systems:** `work`, `unemployment`, `taxreturn` and `topup`.
+> - **Screens:** `WorkWorkspace` and its route `/workspace/work`, and the guide's Day Job chapter (fourteen chapters now).
+> - **Tests:** `jurisdictions`, `labor`, `out-of-work`, `payroll`, `taxreturn`, `work` and `work-world`, and the job tests in `livelihood`, `creation`, `looks` and `weather`.
+> - **Functions:** `mayWorkIn` (the right to work decided only the day job) and `outdoorWeather` (it lost its second reader, the outdoor shift; the first was the production system).
+> - **The layoff decider:** `work.layoff`.
+> - **Save shape:** `beforeActing`, `dayJob`, `Person.job` and `Person.earnings`.
+> - **The calendar's Work category.**
+>
+> What changed in place:
+>
+> - **Creation:** Background asks only for the player's own words. Month By Month shows what living costs, with nothing coming in, and every character starts at fitness 50 (the old default's), no fitter than the age allows.
+> - **Home:** Work And Home is Home, behind `ui.home`, which Rent And A Roof opens.
+> - **Interest tax:** New Zealand's rate is set by the wages the ledger holds over the last year, where it was set by the job's projected pay.
+> - **`migrate`:** it takes `job`, `earnings` and `beforeActing` off every person of a save from before, and every pending `work.*` item off its calendar. Settled ones stay as the record, and the money already paid stays in the ledger.
+>
+> The save schema stays at 89, because `migrate` reads what a save holds and the guard never checked the job fields.
+>
+> **Kept on purpose:**
+> - The bank rules that read wages (fee waivers, lenders' salary checks). They are real and read the ledger; they are unreachable until something pays wages (`docs/UNBITTEN.md`).
+> - `content/tax.ts` (the place card), and the holidays (the calendar).
+>
+> **Saved before the gut:**
+> - The unfinished creation day-job change, which was never committed: `probe/pre-gut/creation-day-job.patch`, with its test beside it.
+> - The eight second-pass employer-pay agents were stopped. What they wrote is in `probe/employer-pay/pay-14..21.jsonl`.
+> - Everything else is in git at `6b8b9e0`.
+>
+> **Verified:** `npm run gate` exit 0, 40 test files, 849 tests, every gate tool. Mutations of the migration (the pending-only filter, each field deleted, the guard) and of the ledger-read pay (the category, the year's window) were all killed; the last two only after the New Zealand test was rewritten to post wages by hand.
+>
+> **Next:** the owner's other route. Wait for it. Nothing comes in for a new life until then.
 
 On 2026-09-23 Claude Code Account 1 handed SLATE to Account 2, at the owner's request. This section is what Account 2 needs first, and everything it points to is further down. Beyond this file, `CLAUDE.md` and git, nothing from Account 1's conversation is needed.
 
@@ -138,7 +171,7 @@ Expect exit 0 and 617 tests in 29 files (§1). Any other result is a difference 
 
 ## 0. Read this box first
 
-**Where this is, 2026-09-24, on Windows.** The review of `1f75a13` has run, and the fifth review's fixes fix what it confirmed (§4, §5, §10). Account 1 then handed the project to Account 2 (Start here), and the owner merged both commits into `main` by PR #20. Account 2 fixed the spring-forward rollover, then the day's bounds on screen and the jump day's own night (§10), and the owner merged both into `main` by PR #21. Then the Windows hygiene commit and the stale-words commit, on the working branch, pushed, and for the owner's PR. Next: whatever the owner directs (§12 step 8).
+**2026-09-26: the job engine went** (Start here, the first box). Everything below about the day job, its pay, law, taxes and benefits is history. **Where this was, 2026-09-24, on Windows.** The review of `1f75a13` has run, and the fifth review's fixes fix what it confirmed (§4, §5, §10). Account 1 then handed the project to Account 2 (Start here), and the owner merged both commits into `main` by PR #20. Account 2 fixed the spring-forward rollover, then the day's bounds on screen and the jump day's own night (§10), and the owner merged both into `main` by PR #21. Then the Windows hygiene commit and the stale-words commit, on the working branch, pushed, and for the owner's PR. Next: whatever the owner directs (§12 step 8).
 
 The owner had paused the rollover work at `0216597` and had it merged into `main` as it stood (PR #19), to pick it up in another session. `1f75a13` had been checked by the gate, three mutations of its rule, a fuzz of 450 careers and the previous reviewers' own probes, but its multi-agent review had been stopped before it reported. It was re-run on Windows as the review of `0e80f13` was: three reviewers, two skeptics per finding, 29 agents. Of 13 findings, 11 were upheld by both skeptics and 2 refuted by both (§10). Every other number the commit messages of `0e80f13` and `1f75a13` give reproduced, except 66.75, which is 66.65.
 
@@ -162,7 +195,7 @@ The owner had paused the rollover work at `0216597` and had it merged into `main
 | The replacement on 2026-09-22 | `abd4727` ("the gut") was pushed over `4a00db8` with the owner's explicit approval. That dropped 157 commits dated 09-17 to 09-21 from three other sessions. 67 of them reached `main` through PRs #15/#16. The other 90 (`46f48f3..4a00db8`) are on no GitHub branch. The owner's words: "destroy those 157 commits, the real work is what we're doing now." |
 | Save schema | `SAVE_SCHEMA_VERSION = 89` (`src/engine/domain/model.ts:482`) and `SUPPORTED_SCHEMA_VERSION = 89` (`base44/shared/guard.js:25`). Move both together. 84 to 86 are skipped on purpose (§0.4). 88 added `awakeSince` on every person (§5, Sleep and energy). 89 keeps a save's money in its country's currency (`SaveMeta.currency`) and gives every character `job`, `home` and `credit` (§5, Money). A deployment at 88 refuses every 89 save, and would print krónur as euros if it didn't. |
 | App version | `APP_VERSION = '1.1.0'` (`src/engine/world/bootstrap.ts`). `package.json` and the lockfile's root say `1.1.0` too; they said `1.0.0` until the stale-words commit. |
-| Gate | `npm run gate` exits **0**: 29 test files, **617 tests** at the tip (the day's bounds fix, on Windows), and every gate tool. 581 in 28 files at `7aa9a99`; 530 at `d356640` and `8cec213`; 526 at `1f75a13` and at `0e80f13`; 523 at `fa24fe4`; 521 at `bd5b2ef`; 515 at `4bfa0fa`; 504 at `14c1666`; 500 at `7a373c2`; 485 at `ed0cab7`; 480 at `20da24e`; 478 at `36d2cea`, `d0636b8` and `beda4d9`. |
+| Gate | `npm run gate` exits **0**: 40 test files, **849 tests** after the gut of the job engine (2026-09-26). 29 test files, **617 tests** at (the day's bounds fix, on Windows), and every gate tool. 581 in 28 files at `7aa9a99`; 530 at `d356640` and `8cec213`; 526 at `1f75a13` and at `0e80f13`; 523 at `fa24fe4`; 521 at `bd5b2ef`; 515 at `4bfa0fa`; 504 at `14c1666`; 500 at `7a373c2`; 485 at `ed0cab7`; 480 at `20da24e`; 478 at `36d2cea`, `d0636b8` and `beda4d9`. |
 | Build | `npm run build` exits **0** (110 modules, 727.86 kB of JS at the tip; 718.78 kB at the money handoff; 102 modules and 683.88 kB at `d731521`; 680.26 kB at `448d68c`; 678.57 kB at `f23ba99`; 675.59 kB at `68d7011`; 675.60 kB at `96ca032`; 674.99 kB at `7aa9a99`; 674.40 kB at `d356640`). |
 | Browser walk | A scratch Playwright script (not in the repo) walked all nine pages at 1440 wide against `vite preview`: **0 page errors**, and no `undefined`, `NaN` or `[object Object]` on the eight pages after the start screen. The start screen was only photographed. |
 | Working tree | Clean apart from four untracked leftovers of the old line (§11), which are left alone, and the git-ignored `probe/`. |
@@ -529,6 +562,8 @@ The owner's instructions that shaped the gut and what came after, verbatim from 
 - **Before Acting.** The owner chose structured choices over the free text. What somebody did before acting (`src/engine/content/backgrounds.ts`, twelve answers, Office Work 40 to Competitive Sport 80) is the fitness they start with, held to the age's ceiling. It is not a skill. It fades 0.18 a day to the everyday 35 like any fitness: an athlete left alone keeps 58.4 after 120 days against an office worker's 35, with condition over 5 higher, and both are at 35 a year on. The default, Straight From School, is 50, what every character started at before, so a default save is unchanged. The free text stays beside it as In Your Own Words, said back and deciding nothing. `beforeActing` is an optional field on the person: no schema change, since neither validation nor the Base44 guard checks person fields, and a save from before it has none and says nothing.
 
 ### Money (schema 89; `5e60ce7`, `9a12c11`, `1180a04`)
+
+**Since 2026-09-26, mostly history.** The day job, its employers and pay, the law where it was worked, the payslip, local taxes, benefits, tax returns and top-ups described below went with the job engine (Start here, the first box). The currency, rent, bills, food, the card, the credit record and the bank remain.
 
 The owner asked for cost of living, the credit score and money to count, left the design to Claude, and said mid-way that SLATE should reflect the real world wherever the character is (a pinned memory on Account 2). Until these, nothing earned or spent: the balances a save started with were the balances it kept.
 
@@ -1140,7 +1175,9 @@ Keep the first three until the owner says otherwise.
 14. **Owner's direction for what comes next.** Something that reads the four idle axes, the money traits or citizenship would retire entries from `docs/UNWIRED.json` and `docs/UNBITTEN.md`. Take one `UNBITTEN` section at a time and prove each fix bites.
 15. **Done on 2026-09-26: the law pass** (§5, Money): every province, state and DC, and 219 places beyond the thirteen, paid, taxed, protected and insured by their own law where the research found it.
 16. **Done on 2026-09-26: the finishing pass** (§5, Money): local wage taxes in 3,119 US towns, every state's deductions and phase-outs, 94 world benefits and the truth where there's none, and the statutory extras of 39 more places.
-17. **Deploy** to Base44 only after the gate passes; any existing deployment needs this redeploy before it will store this branch's saves (§10). Then run `tools/base44-smoke.mjs` against it. Fix Restore Backup on Base44 first (§10): today it never takes on the server.
+17. **Done on 2026-09-26: the gut of the job engine** (Start here, the first box), at the owner's word, to keep SLATE to acting.
+18. **Next: the owner's other route.** They said they'll say what it is. Until then nothing comes in for a new life.
+19. **Deploy** to Base44 only after the gate passes; any existing deployment needs this redeploy before it will store this branch's saves (§10). Then run `tools/base44-smoke.mjs` against it. Fix Restore Backup on Base44 first (§10): today it never takes on the server.
 
 ---
 

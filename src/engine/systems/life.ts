@@ -21,7 +21,6 @@ import { formatTime, instantFromZoned, startOfDay, startOfNextDay, zonedParts, M
 import { ceilingAt, recoveryFactorAt } from '../content/lifespan';
 import { personalityOf } from './personality';
 import { LOVED_MOOD, LOVED_RELIEF, lovedIn } from './enjoyment';
-import { SHIFT_KIND, onShift } from './work';
 import { buyTheDaysFood, canPay, fedOn, mealOf, spend } from './household';
 
 // ---------------------------------------------------------------------------
@@ -296,19 +295,13 @@ export function registerLife(sim: Simulation): void {
       const hours = clamp(p.hours, 0.5, 16);
       const start = p.startAt ?? s.now;
       if (start < s.now) throw new CommandError('You can’t go to sleep in the past.');
-      // Not on a shift: its hours are already the job's. A shower was refused
-      // there and a night wasn't, so eight hours could be slept at work and paid.
-      const shift = onShift(s);
-      if (shift && start < shift.at + (shift.durationMinutes ?? 0) * 60_000) {
-        throw new CommandError(`You’re at work until ${formatTime(shift.at + (shift.durationMinutes ?? 0) * 60_000, s.zone)}.`);
-      }
       const wakeAt = start + Math.round(hours * MS_HOUR);
 
       // Anything scheduled during the night still happens; the world does not
       // pause because the player is unconscious.
-      // Shifts say for themselves that they were slept through (`systems/work.ts`),
-      // so they aren't counted here too.
-      const crossed = s.timeline.between(s.now, wakeAt).filter((i) => i.requiresPlayer === true && i.kind !== SHIFT_KIND);
+      // Until 2026-09-26 a shift said for itself that it was slept through,
+      // and wasn't counted here; the job engine went, and shifts with it.
+      const crossed = s.timeline.between(s.now, wakeAt).filter((i) => i.requiresPlayer === true);
 
       // The night is on record from the moment it is booked, as the wake it
       // ends at. So a midnight inside it, one it ends on, and one between the
@@ -436,9 +429,6 @@ const SPENT = 25;
  */
 export function lookAfterRefusal(sim: Simulation, action: LookAfter): string | undefined {
   const w = sim.player.wellbeing;
-  // On a shift the hour is the job's (`systems/work.ts`).
-  const shift = onShift(sim);
-  if (shift) return `You’re at work until ${formatTime(shift.at + (shift.durationMinutes ?? 0) * 60_000, sim.zone)}.`;
   if (action === 'eat' && w.nourishment >= FULL) return 'You aren’t hungry.';
   if (action === 'eat' && canPay(sim, sim.player) < mealOf(sim, sim.player)) return 'You can’t afford a meal.';
   if (action === 'wash' && (w.hygiene ?? 80) >= CLEAN) return 'You’re already clean.';

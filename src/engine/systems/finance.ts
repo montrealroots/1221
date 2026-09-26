@@ -18,7 +18,11 @@ export interface Worth {
   cash: Money;
   /** Theirs, held by somebody else: a rent deposit (`systems/household.ts`). */
   held: Money;
-  /** In a pension fund their pay goes into, theirs but locked until they retire (`systems/work.ts`). */
+  /**
+   * In a pension fund, theirs but locked until they retire. The day job's pay
+   * went into one until the job engine went on 2026-09-26; a save from before
+   * keeps it, and nothing adds to it now.
+   */
   pension: Money;
   liabilities: Money;
   total: Money;

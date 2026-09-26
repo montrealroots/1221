@@ -81,8 +81,6 @@ const SPELLINGS = {
  * owner's own signage, not guessing.
  */
 const REAL_NAMES = [
-  // A Pennsylvania borough, in the local tax register; a dance franchise's own name.
-  'Centre Hall', 'Arthur Murray Dance Centres',
   // Jewelers who spell themselves that way.
   'Kalyan Jewellers', 'Chow Tai Fook Jewellery', 'PC Jeweller', 'Joyalukkas',
   'Silverbend Jewellers', 'Halliwell Goldsmiths',
@@ -126,12 +124,6 @@ const REAL_NAMES = [
   // Banking names and pages spelled by their own banks and governments.
   'Cuenta de Cheques', 'cuentas-cheques', 'cheque-accounts', 'Special Defence Contribution',
   'special-defence-contribution', 'Youth Programme', 'bankers-association/organisation',
-  // Employers, agencies, surveys and pages spelled by their own countries (content/employers.ts).
-  'Expanded Public Works Programme', 'Hunter Labour Hire', 'Yakka Labour', 'yakkalabour', 'labour-hire', 'statistics/labour', 'Labour Force Survey', 'Endeavour Group',
-  'top-modelling-agencies', 'modelling-advice', 'Manoeuvre', 'manoeuvre', 'manoeuvre specialise', 'Centre de danse du Marais', 'centre-de-danse',
-  'media-centre', 'analyse-2026', 'stagecoach-theatre-arts',
-  // Statutes under their own titles (content/labor.ts).
-  'Act respecting labour standards', 'Organisation of Working Time Act',
 ];
 
 const EXTENSIONS = /\.(ts|tsx|mjs|md)$/;

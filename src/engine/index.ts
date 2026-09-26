@@ -29,15 +29,10 @@ import { CITIES, isCountryLoaded, loadCountryCities } from './content/geography'
 import { netWorth } from './systems/finance';
 import { registerLife } from './systems/life';
 import { registerPlans } from './world/plans';
-import { armWork, registerWork, startWork } from './systems/work';
-import { mayWorkIn } from './domain/citizenship';
 import { armHousehold, moveIn, registerHousehold } from './systems/household';
 import { armCredit, openCredit, registerCredit } from './systems/credit';
 import { armBirthdays, registerBirthdays } from './systems/birthdays';
 import { registerMortality } from './systems/mortality';
-import { registerUnemployment } from './systems/unemployment';
-import { registerTaxReturn } from './systems/taxreturn';
-import { registerTopUps } from './systems/topup';
 import { registerTutorial } from './world/tutorial';
 import { armBanking, openAt, registerBanking, rebank, startingBank } from './systems/banking';
 import { registerLending } from './systems/lending';
@@ -58,10 +53,6 @@ export function registerAllSystems(sim: Simulation): void {
   registerLife(sim);
   registerWorld(sim);
   registerPlans(sim);
-  registerWork(sim);
-  registerUnemployment(sim);
-  registerTaxReturn(sim);
-  registerTopUps(sim);
   registerHousehold(sim);
   registerCredit(sim);
   registerBirthdays(sim);
@@ -139,8 +130,6 @@ function populateWorld(sim: Simulation, config: NewSaveConfig): void {
   }
 
   armWorldClock(sim);
-  // Only where they have the right to work (`mayWorkIn`).
-  if (config.dayJob && mayWorkIn(player.citizenshipId, player.currentLocationId).may) startWork(sim, player);
   moveIn(sim, player, config.housing);
   openCredit(sim, player, wealth.creditScore);
   armBirthdays(sim);
@@ -235,9 +224,8 @@ export function loadSave(universe: SaveUniverse): Simulation {
       label: 'World Simulation', category: 'system', priority: 96,
     });
   }
-  // Anybody with a job has their rota two weeks out and a payday ahead, and
-  // anybody with a home a rent due.
-  armWork(sim);
+  // Anybody with a home has a rent due. Until 2026-09-26 anybody with a job
+  // had their rota two weeks out and a payday ahead too.
   armHousehold(sim);
   armCredit(sim);
   armBirthdays(sim);
@@ -555,19 +543,31 @@ export function migrate(universe: SaveUniverse): MigrationResult {
     }
   }
 
-  // 89 gave every new character a day job. A save from before it is given the
-  // one a character with no answer to Before Acting has, in the town they
-  // are in, starting now; `loadSave` puts its rota and payday on the calendar.
-  // Without it such a save would be the one life with nothing coming in.
+  // 89 gave every new character a day job, and a save from before it was
+  // given one here. The job engine went on 2026-09-26, when the owner kept
+  // SLATE to acting. A save from before that loses what it held: the past
+  // before acting, the job, the pay record, and the shifts, paydays, tips and
+  // benefit payments still on its calendar. The money they already paid
+  // stays in the ledger, as money that came in.
+  {
+    let cleared = 0;
+    for (const person of Object.values(universe.people ?? {})) {
+      const p = person as unknown as Record<string, unknown>;
+      if (!('job' in p) && !('earnings' in p) && !('beforeActing' in p)) continue;
+      delete p.job;
+      delete p.earnings;
+      delete p.beforeActing;
+      cleared += 1;
+    }
+    const before = universe.scheduled?.length ?? 0;
+    if (universe.scheduled) universe.scheduled = universe.scheduled.filter((item) => item.status !== 'pending' || !item.kind.startsWith('work.'));
+    const dropped = before - (universe.scheduled?.length ?? 0);
+    if (cleared > 0 || dropped > 0) {
+      steps.push(`Took the day job off ${plural(cleared, 'person', 'people')}, and ${plural(dropped, 'shift or payday', 'shifts and paydays')} off the calendar.`);
+    }
+  }
   if (from < 89) {
     const worker = universe.people?.[universe.playerId];
-    if (worker && !worker.job && mayWorkIn(worker.citizenshipId, worker.currentLocationId).may) {
-      worker.job = {
-        jobId: worker.beforeActing ?? 'school', cityId: worker.currentLocationId, since: universe.now,
-        unpaid: [], missed: [], rotaThrough: universe.now,
-      };
-      steps.push('Gave the character a day job.');
-    }
     if (worker && !worker.home) {
       worker.home = { kind: 'shared', cityId: worker.currentLocationId, since: universe.now };
       steps.push('Gave the character a room in a shared flat, and the rent that goes with it.');

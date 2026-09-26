@@ -43,14 +43,6 @@ const REAL_NAMES_AS_WRITTEN = new Set([
   'Pick n Pay',         // South African grocer; the n is lowercase on the sign.
   'iRobot Roomba j9+',  // Product name as the manufacturer writes it.
   'Arion banki',        // Icelandic bank; banki is lowercase in its own name and signage.
-  // Unemployment benefits and tax settlements under their countries' own names
-  // (content/unemployment.ts, content/taxreturn.ts).
-  'Prestación por desempleo', 'Allocation d’aide au retour à l’emploi', '基本手当', '구직급여', '年末調整', 'Declaración de la Renta', '연말정산', '근로장려금', 'Prime d’activité',
-  // Payslip lines under their countries' own names (content/payroll.ts), with
-  // the English after them in capitals where it's given.
-  'Prélèvement à la source', 'Retraite (vieillesse, AGIRC-ARRCO, CEG)', 'Paga extraordinaria',
-  '住民税 (Resident Tax)', '健康保険 (Health Insurance, Tokyo)', '厚生年金 (Employees’ Pension)', '所得税 (Income Tax)', '雇用保険 (Employment Insurance)',
-  '건강보험 (Health Insurance)', '고용보험 (Employment Insurance)', '국민연금 (National Pension)', '근로소득세 (Income Tax)', '장기요양보험 (Long-Term Care)', '지방소득세 (Local Income Tax)',
   // Public examinations, written the way the country that sets them writes
   // them. A Chinese, Korean, Japanese, Hebrew or Arabic name has no capital
   // letters to check, and the Spanish, Portuguese and Indian ones carry

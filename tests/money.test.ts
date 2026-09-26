@@ -195,6 +195,8 @@ describe('money conservation in a live universe', () => {
     // is what their pay put in a pension.
     expect(worth.total).toBe(worth.cash + worth.held + worth.pension - worth.liabilities);
     expect(worth.held).toBeGreaterThanOrEqual(0);
-    expect(worth.pension).toBeGreaterThan(0);
+    // Nothing pays into a pension since the job engine went on 2026-09-26. A
+    // save from before keeps the fund its pay built, and net worth counts it.
+    expect(worth.pension).toBe(0);
   });
 });

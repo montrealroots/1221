@@ -12,10 +12,8 @@ import type { Money } from '../core/money';
 import type { Account, LedgerTransaction } from '../core/ledger';
 import type { ScheduledItem } from '../core/scheduler';
 import type { HistoryRecord } from '../core/audit';
-import type { JobState } from '../systems/work';
 import type { HomeState } from '../systems/household';
 import type { CreditState } from '../systems/credit';
-import type { EarningsState } from '../systems/unemployment';
 import type { IdNamespace } from '../core/ids';
 import type { PerformerTitle } from '../core/performer';
 
@@ -131,25 +129,10 @@ export interface Person {
    * would be worse than not asking.
    */
   background: string;
-  /**
-   * What they did for a living before acting, by id from
-   * `content/backgrounds.ts`. It set the fitness they started with, and the
-   * person look says it back. A save from before it was asked has none.
-   */
-  beforeActing?: string;
-  /**
-   * The job that pays the rent between roles (`systems/work.ts`): which one,
-   * where, the hours worked since payday, the shifts missed lately, and how
-   * far ahead the rota is on the calendar. Given to every character from
-   * schema 89.
-   */
-  job?: JobState;
-  /**
-   * Hours and pay by month, how the last job ended, and a claim for
-   * unemployment benefit (`systems/unemployment.ts`). From 2026-09-25; a
-   * save from before it has no record until its next payday.
-   */
-  earnings?: EarningsState;
+  // `beforeActing`, the day job (`job`) and the pay record behind benefits
+  // and tax returns (`earnings`) were here until 2026-09-26, when the owner
+  // kept SLATE to acting and the job engine was taken out. `migrate` in
+  // `engine/index.ts` takes them off a save from before.
   /**
    * Where they live and what kind of home it is (`systems/household.ts`):
    * the rent and bills due on the first, and the town the food is bought in.

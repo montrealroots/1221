@@ -19,7 +19,6 @@
 import type { Simulation } from '../core/simulation';
 import type { Id } from '../domain/model';
 import { CITIES } from '../content/geography';
-import { SHIFT_KIND, callIn } from '../systems/work';
 import { formatTime, MS_DAY, MS_MINUTE, type Instant } from '../core/time';
 
 /** The one scheduled kind a person can make for themselves. */
@@ -169,18 +168,11 @@ export function registerPlans(sim: Simulation): void {
   sim.onCommand<{ entryId: Id }, PlanResult>('calendar.skip', (payload, { sim: s }) => {
     const item = s.timeline.get(payload.entryId);
     if (!item) return { ok: false, error: 'There’s nothing by that name on the calendar.' };
-    if (item.kind !== PLAN_KIND && item.kind !== SHIFT_KIND) return { ok: false, error: 'That one isn’t yours to walk away from.' };
+    if (item.kind !== PLAN_KIND) return { ok: false, error: 'That one isn’t yours to walk away from.' };
     if (item.status !== 'pending') return { ok: false, error: 'That’s already settled one way or the other.' };
     if (item.at > s.now) {
       return { ok: false, error: 'It hasn’t come round yet. Call it off instead.' };
     }
-    // Not going to a shift is calling in sick: no pay, and it counts
-    // against the job (`systems/work.ts`).
-    if (item.kind === SHIFT_KIND) {
-      callIn(s, item);
-      return { ok: true, id: item.id };
-    }
-
     item.status = 'missed';
     item.resolvedAt = s.now;
     s.notify({

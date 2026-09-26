@@ -92,14 +92,15 @@ describe('what was taken out', () => {
     // back is a decision, and editing this line is how the decision is made.
     // The bank came back on 2026-09-25, at the owner's word, as a real bank
     // where the character lives (`systems/banking.ts`), and the work screen
-    // the same day, as a real employer there (`systems/work.ts`).
+    // the same day, as a real employer there. The work screen went again on
+    // 2026-09-26 with the job engine, when the owner kept SLATE to acting.
     const removed = [
       'AuditionsWorkspace', 'AwardsWorkspace', 'BusinessWorkspace', 'CastingWorkspace', 'CharacterWorkspace',
       'CityWorkspace', 'CompanyWorkspace', 'EducationWorkspace', 'FilmWorkspace',
       'GoingOutWorkspace', 'HealthWorkspace', 'HistoryWorkspace', 'IndustryWorkspace',
       'InsuranceWorkspace', 'PhoneWorkspace', 'ProjectsWorkspace', 'PropertyWorkspace',
       'RelationshipsWorkspace', 'SettingsWorkspace', 'ShoppingWorkspace', 'SocialWorkspace',
-      'TrackWorkspace', 'TravelWorkspace', 'VehiclesWorkspace', 'WellbeingWorkspace',
+      'TrackWorkspace', 'TravelWorkspace', 'VehiclesWorkspace', 'WellbeingWorkspace', 'WorkWorkspace',
     ];
     const files = readdirSync(new URL('ui/workspaces/', ROOT));
     for (const gone of removed) {

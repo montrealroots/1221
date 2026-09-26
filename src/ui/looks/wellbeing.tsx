@@ -28,7 +28,6 @@ import { defineLook, type Way } from './registry';
 import { at } from './subject';
 import { isAre, outOf, spokenList } from './words';
 import { GENRE_BY_ID, INTEREST_BY_ID } from '@/engine/content/interests';
-import { BEFORE_ACTING_BY_ID } from '@/engine/content/backgrounds';
 import { PERSONALITY_TRAIT_BY_ID } from '@/engine/content/personality-traits';
 
 /**
@@ -105,9 +104,8 @@ defineLook<Person>('person', {
     // somebody authored is not written into the save and then never shown to
     // anybody again.
     const before = (person.background ?? '').trim();
-    // What they did before acting, which set the fitness they started with.
-    // A save from before the question was asked has none, and says nothing.
-    const work = BEFORE_ACTING_BY_ID[person.beforeActing ?? '']?.label;
+    // What they did before acting was said here until 2026-09-26, when the
+    // question went with the job engine.
     // What they care about and the films they love, said back for the same
     // reason. Nothing in the simulation read either until the interests were
     // let change how much an hour of looking after yourself gives the mood
@@ -131,12 +129,6 @@ defineLook<Person>('person', {
         <p key="before" className="small">
           <span className="dim">{isYou ? 'Where you come from. ' : 'Where they come from. '}</span>
           {before}
-        </p>
-      ),
-      work && (
-        <p key="work" className="small">
-          <span className="dim">Before acting. </span>
-          {work}.
         </p>
       ),
       cares.length > 0 && (
@@ -212,7 +204,7 @@ function sentenceFor(dial: Dial, now: number): string {
         : n > 40 ? `${n}. Enough for what today asks, not much more.`
           : `${n}. You’re running down, and it shows in everything else.`;
     case 'stress':
-      return n < 25 ? `${n}, and not much is adding to it. A shift adds some, and so do running on empty, money trouble and a night on a sofa.`
+      return n < 25 ? `${n}, and not much is adding to it. Running on empty adds to it, and so do money trouble and a night on a sofa.`
         : n < 60 ? `${n}. Present, manageable, and slower to clear than it was.`
           : `${n}. High enough that sleep is going badly and it feeds itself.`;
     case 'sleepDebt':

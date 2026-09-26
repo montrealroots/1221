@@ -25,8 +25,6 @@ import {
 import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { scoreIsANumberIn, scoreWord } from '@/engine/systems/credit';
 import { HOUSING, SOFA, arrearsOf, billsOf, inTheBank, moveCost, rentOf } from '@/engine/systems/household';
-import { clockWords, jobFor, patternHours, patternOf, workDaysWords } from '@/engine/content/jobs';
-import { mayWorkIn } from '@/engine/domain/citizenship';
 import { LookRegion, Open, at } from '@/ui/looks';
 import { Gated, LockedPanel, useFeature } from '@/ui/guide/Guide';
 
@@ -72,7 +70,7 @@ export function Home() {
     where: useFeature('ui.where').open,
     weather: useFeature('ui.weather').open,
     money: useFeature('ui.money').open,
-    work: useFeature('ui.work').open,
+    home: useFeature('ui.home').open,
   };
 
   return (
@@ -494,9 +492,9 @@ export function Home() {
           </LookRegion>
         </Panel>
         )}
-        {!shows.work ? <LockedPanel feature="ui.work" title="Work And Home" /> : (
-        <Panel title="Work And Home" tight>
-          <WorkAndHome cur={cur} />
+        {!shows.home ? <LockedPanel feature="ui.home" title="Home" /> : (
+        <Panel title="Home" tight>
+          <YourHome cur={cur} />
         </Panel>
         )}
       </div>
@@ -505,85 +503,21 @@ export function Home() {
 }
 
 /**
- * The job and the home, run by hand: the week the job is worked and a switch
- * between part-time and full-time (`work.set_hours`), an extra shift
- * (`work.extra_shift`), looking for work and quitting (`work.find_job`,
- * `work.quit`), and where they live, what it costs, any notice standing, and
- * moving (`home.move`), with what moving takes from the bank.
- *
- * Each says when it takes effect: a change of hours from a week on, an extra
- * shift on its day. They went through silently at first, and the panel showed
- * the new week at once while the old one still stood.
+ * The home, run by hand: where they live, what it costs, any notice standing,
+ * and moving (`home.move`), with what moving takes from the bank. It was
+ * Work And Home until 2026-09-26, with the day job's week, extra shifts,
+ * hours, quitting and looking for work above it; the job engine went.
  */
-function WorkAndHome({ cur }: { cur: string }) {
-  const { sim, run, toast, navigate } = useGame();
-  const job = useWorld((s) => s.player.job);
+function YourHome({ cur }: { cur: string }) {
+  const { sim, run } = useGame();
   const home = useWorld((s) => s.player.home);
   const rent = useWorld((s) => rentOf(s, s.player));
   const bills = useWorld((s) => billsOf(s, s.player));
   const costs = useWorld((s) => ({ shared: moveCost(s, s.player, 'shared'), own: moveCost(s, s.player, 'own') }));
-  const right = useWorld((s) => mayWorkIn(s.player.citizenshipId, s.player.currentLocationId));
   const money = (cents: number) => formatMoney(cents, cur, { cents: false });
-  const title = job ? jobFor(job.jobId).title : undefined;
-  const week = job ? patternOf(jobFor(job.jobId), job.fullTime) : undefined;
   const homeLabel = home ? (home.kind === 'sofa' ? SOFA.label : HOUSING[home.kind].label) : 'Nowhere';
-  const changing = job?.hoursFrom !== undefined && job.hoursFrom > sim.now;
-  const extra = () => {
-    const answer = run<{ at: number }>('work.extra_shift', {});
-    if (answer.ok && answer.value) toast(`Extra shift on ${formatDate(answer.value.at, sim.zone)} at ${formatTime(answer.value.at, sim.zone)}.`, 'positive');
-  };
-  const hours = (fullTime: boolean) => {
-    const answer = run<{ from: number }>('work.set_hours', { fullTime });
-    if (answer.ok && answer.value) toast(`${fullTime ? 'Full-time' : 'Part-time'} from ${formatDate(answer.value.from, sim.zone)}. The week already on the rota stands.`, 'positive');
-  };
-  const look = () => {
-    const answer = run<{ until: number }>('work.find_job', {});
-    if (answer.ok && answer.value) toast(`Looking for work. It takes about three weeks, to around ${formatDate(answer.value.until, sim.zone)}.`, 'positive');
-  };
   return (
     <div className="col gap-3">
-      {job && title && week && job.quitAt === undefined ? (
-        <>
-          <Stat
-            label={job.lookingUntil !== undefined ? 'Looking For Work' : title}
-            value={job.lookingUntil !== undefined ? `Until ${formatDate(job.lookingUntil, sim.zone)}` : `${patternHours(week)} Hours A Week`}
-            note={job.lookingUntil !== undefined
-              ? `${title}, the work you know`
-              : `${job.fullTime ? 'Full-time' : 'Part-time'}${changing ? ` from ${formatDate(job.hoursFrom!, sim.zone)}` : ''}: ${workDaysWords({ ...jobFor(job.jobId), days: week.days })}, from ${clockWords(week.startHour)}`}
-          />
-          {job.lookingUntil === undefined && (
-            <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
-              <Gated feature="ui.job" className="btn btn-sm" onClick={() => navigate('/workspace/work', 'Your Work')}>Your Work</Gated>
-              <Gated feature="work.extra_shift" className="btn btn-sm" onClick={extra}>Ask For An Extra Shift</Gated>
-              <Gated feature="work.set_hours" className="btn btn-sm btn-ghost" onClick={() => hours(!job.fullTime)}>
-                {job.fullTime ? 'Go Part-Time' : 'Go Full-Time'}
-              </Gated>
-              <Gated feature="work.quit" className="btn btn-sm btn-ghost" onClick={() => run('work.quit', {})}>Quit</Gated>
-            </div>
-          )}
-          {job.lookingUntil !== undefined && (
-            <div className="row gap-2">
-              <Gated feature="ui.job" className="btn btn-sm" onClick={() => navigate('/workspace/work', 'Your Work')}>Your Work</Gated>
-            </div>
-          )}
-        </>
-      ) : (
-        <>
-          <Stat
-            label="Work"
-            value="No Day Job"
-            note={job?.quitAt !== undefined
-              ? 'You quit. What you worked is paid on the next payday.'
-              : right.may ? 'Living on what you have' : 'You’d need a work visa to work here, and the work you know doesn’t get one'}
-          />
-          {right.may && (!job || job.quitAt !== undefined) && (
-            <div className="row gap-2">
-              <Gated feature="work.find_job" className="btn btn-sm" onClick={look}>Look For A Day Job</Gated>
-              <Gated feature="ui.job" className="btn btn-sm btn-ghost" onClick={() => navigate('/workspace/work', 'Your Work')}>Employers Here</Gated>
-            </div>
-          )}
-        </>
-      )}
       <Stat
         label="Where You Sleep"
         value={homeLabel}

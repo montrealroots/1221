@@ -21,17 +21,13 @@ import {
 import type { City } from '@/engine/content/geography';
 import { RATES_NOTE } from '@/engine/content/currency';
 import { HOUSING, costsAt, type Housing } from '@/engine/systems/household';
-import { wageAt, withholdingAt } from '@/engine/systems/work';
 import { scoreIsANumberIn, scoreWord } from '@/engine/systems/credit';
-import { minimumWageAt } from '@/engine/content/wages';
-import { clockWords, jobFor, payCycleFor, payCycleWords, tipsPerHour, weeklyHours, workDaysWords } from '@/engine/content/jobs';
-import { exchange } from '@/engine/content/currency';
 import { formatMoney } from '@/engine/core/money';
 import { banksFor, startingBank } from '@/engine/systems/banking';
 import { SAVE_SCHEMA_VERSION } from '@/engine/domain/model';
 import { formatPeople } from '@/engine/world/place';
 import { ageOnDate, zoneAbbreviation } from '@/engine/core/time';
-import { citizenshipFor, mayWorkIn } from '@/engine/domain/citizenship';
+import { citizenshipFor } from '@/engine/domain/citizenship';
 import {
   ETHNICITIES, ETHNICITY_NOTE, ETHNICITY_OTHER, describeEthnicity,
 } from '@/engine/content/ethnicity';
@@ -46,8 +42,6 @@ import {
 } from '@/engine/content/personality-traits';
 import { AXIS_MAX, AXIS_MIN, personalityOf } from '@/engine/systems/personality';
 import { outOf, said } from '@/ui/looks/words';
-import { BEFORE_ACTING, BEFORE_ACTING_BY_ID, DEFAULT_BEFORE_ACTING } from '@/engine/content/backgrounds';
-import { ceilingAt } from '@/engine/content/lifespan';
 
 /**
  * How far back the last year a character can be born in sits from the year
@@ -644,12 +638,6 @@ function PersonalStep({
   set: Setter;
   setConfig: React.Dispatch<React.SetStateAction<NewSaveConfig>>;
 }) {
-  // The body the work before left them, held to what the age allows, as the
-  // engine starts it (`world/bootstrap.ts`).
-  const before = BEFORE_ACTING_BY_ID[config.beforeActing] ?? BEFORE_ACTING_BY_ID[DEFAULT_BEFORE_ACTING]!;
-  const ceiling = ceilingAt(ageAtStart(config));
-  const startsAt = Math.min(before.fitness, ceiling.fitness);
-
   const toggleInterest = (interest: string) => {
     setConfig((c) => ({
       ...c,
@@ -770,52 +758,19 @@ function PersonalStep({
       </div>
 
       {/*
-        This was one box of free text, and the copy said it carried "no
-        attribute and no advantage", which was true. What somebody did before
-        is the part of a past the engine can honestly read, because it is
-        written on the body, so it is asked as a choice now and sets the
-        fitness they start with. The sentence of their own stays beside it,
-        said back on their page and deciding nothing, as before.
+        One box of free text, said back on their page and deciding nothing.
+        Beside it until 2026-09-26 was Before Acting, a choice that set the
+        fitness they started with and the day job they fell back on; it went
+        with the job engine, when the owner kept SLATE to acting.
       */}
       <div className="card">
         <div className="panel-head">
           <div>
             <h2>Background</h2>
-            <p className="muted small">
-              The life before this one. What you did for a living is written on your body: it’s the
-              fitness you start with, and it fades like anybody’s unless you keep it up. And it’s the
-              day job you fall back on between roles.
-            </p>
+            <p className="muted small">The life before this one.</p>
           </div>
         </div>
         <div className="field">
-          <label htmlFor="before-acting">Before Acting</label>
-          <select id="before-acting" value={config.beforeActing} onChange={(e) => set('beforeActing', e.target.value)}>
-            {/* By what the day job it leads to pays where they start, the best paid last. */}
-            {BEFORE_ACTING
-              .map((one) => ({ one, pays: wageAt(config.startLocationId, jobFor(one.id).id, currencyFor(config.startLocationId), Date.UTC(config.startYear, config.startMonth - 1, config.startDay, 12)) }))
-              .sort((a, b) => a.pays - b.pays)
-              .map(({ one }) => <option key={one.id} value={one.id}>{one.label}</option>)}
-          </select>
-        </div>
-        <div className="callout">
-          {before.note} It’s also the work you fall back on: {jobFor(before.id).title.toLowerCase()}, {workDaysWords(jobFor(before.id))}, about {jobFor(before.id).overMinimum === 1 ? 'the legal minimum' : `${jobFor(before.id).overMinimum} times the legal minimum`}.
-        </div>
-        <div className="grid grid-2" style={{ marginTop: 'var(--s4)' }}>
-          <div className="stat">
-            <span className="stat-label">Fitness On The First Morning</span>
-            <span className="stat-value mono">{Math.round(startsAt)}</span>
-            <span className="stat-note">
-              {startsAt < before.fitness ? `${before.fitness}, held to what your age allows` : 'An everyday life keeps 35'}
-            </span>
-          </div>
-          <div className="stat">
-            <span className="stat-label">Rest Can Mend You To</span>
-            <span className="stat-value mono">{Math.round(Math.min(ceiling.condition, 70 + 0.6 * startsAt))}</span>
-            <span className="stat-note">Condition, while the fitness lasts</span>
-          </div>
-        </div>
-        <div className="field" style={{ marginTop: 'var(--s4)' }}>
           <label htmlFor="background">In Your Own Words</label>
           <textarea
             id="background" value={config.background}
@@ -974,42 +929,27 @@ function BankChoice({ config, set }: { config: NewSaveConfig; set: <K extends ke
 }
 
 /**
- * What a month here costs and pays, before the save exists.
+ * What a month here costs, before the save exists.
  *
- * Every figure is the engine's own sum (`costsAt`, `wageAt`,
- * `withholdingAt`), read for the town, the job and the start date on this
- * page, so the card and the first month of play can't disagree. What is
- * real and what is SLATE's estimate is said under it.
+ * Every figure is the engine's own sum (`costsAt`), read for the town and
+ * the start date on this page, so the card and the first month of play can't
+ * disagree. What is real and what is SLATE's estimate is said under it.
+ *
+ * It was what a month paid too, until 2026-09-26: the day job, its employer's
+ * rate, the tax withheld and the tips. The job engine went, and nothing comes
+ * in now.
  */
 function monthOf(config: NewSaveConfig, cur: string) {
   const at = Date.UTC(config.startYear, config.startMonth - 1, config.startDay, 12);
-  const job = jobFor(config.beforeActing);
   const costs = costsAt(config.startLocationId, config.housing, cur, at);
-  const wage = wageAt(config.startLocationId, job.id, cur, at);
-  const floor = minimumWageAt(config.startLocationId, at, cur);
-  const withheld = withholdingAt(config.startLocationId, job.id, cur, at);
-  const monthly = (weekly: number) => Math.round(weekly * 52 / 12);
-  // The right to work here, from the citizenship the place of birth gives.
-  const citizenOf = citizenshipFor(config.homeRegionId);
-  const right = citizenOf ? mayWorkIn(citizenOf, config.startLocationId) : { may: false };
-  const working = config.dayJob && right.may;
-  const city = CITIES.get(config.startLocationId);
-  const countryInfo = city ? COUNTRIES.get(city.countryId) : undefined;
-  const country = countryInfo?.jurisdictionCode ?? '';
-  // Tips where the custom is to tip, untaxed, on top: they were paid in play
-  // and left out of this line.
-  const tipHour = tipsPerHour(job.id, country);
-  const tipsInCur = tipHour > 0 ? exchange(tipHour, countryInfo?.currency.toUpperCase() ?? 'USD', cur) ?? tipHour : 0;
-  const tips = working ? monthly(tipsInCur * weeklyHours(job)) : 0;
-  const pay = working ? Math.round(monthly(wage * weeklyHours(job)) * (1 - withheld)) + tips : 0;
   const spending = personalityOf({ personality: config.personality, personalityTraits: config.personalityTraits }, 'spending');
   const food = Math.round(costs.day * spending * 365 / 12);
-  const left = pay - costs.rent - costs.bills - food;
-  return { at, job, costs, wage, floor, withheld, citizenOf, right, working, country, tips, pay, spending, food, left };
+  const out = costs.rent + costs.bills + food;
+  return { at, costs, spending, food, out };
 }
 
 function MonthByMonth({ config, set, cur }: { config: NewSaveConfig; set: Setter; cur: string }) {
-  const { job, costs, wage, floor, withheld, citizenOf, right, working, country, tips, pay, spending, food, left } = monthOf(config, cur);
+  const { costs, spending, food, out } = monthOf(config, cur);
   const money = (cents: number) => formatMoney(cents, cur, { cents: false });
 
   return (
@@ -1017,7 +957,7 @@ function MonthByMonth({ config, set, cur }: { config: NewSaveConfig; set: Setter
       <div className="panel-head">
         <div>
           <h2>Month By Month</h2>
-          <p className="muted small">What living here pays and costs. Rent and bills are due on the first.</p>
+          <p className="muted small">What living here costs. Rent and bills are due on the first.</p>
         </div>
       </div>
 
@@ -1029,30 +969,7 @@ function MonthByMonth({ config, set, cur }: { config: NewSaveConfig; set: Setter
       </div>
       <div className="callout">{HOUSING[config.housing].note}</div>
 
-      <label className="check" htmlFor="day-job" style={{ marginTop: 'var(--s4)' }}>
-        <input id="day-job" type="checkbox" checked={working} disabled={!right.may} onChange={(e) => set('dayJob', e.target.checked)} />
-        <span>
-          Keep A Day Job
-          <span className="dim"> — {job.title}, {workDaysWords(job)}, {job.hours} hours from {clockWords(job.startHour)}, paid {payCycleWords(payCycleFor(country))}. You can quit, or look for work later.</span>
-        </span>
-      </label>
-
-      {!right.may && (
-        <div className="callout callout-warning" style={{ marginTop: 'var(--s3)' }}>
-          As a citizen of {COUNTRIES.get(citizenOf ?? '')?.name ?? 'another country'}, you’d need a work visa to work in {COUNTRIES.get(right.countryId ?? '')?.name ?? 'this country'}, and {job.title.toLowerCase()} doesn’t get one. You’d live on what you start with.
-        </div>
-      )}
-
-      <div className="grid grid-3" style={{ marginTop: 'var(--s4)' }}>
-        <div className="stat">
-          <span className="stat-label">Take-Home Pay</span>
-          <span className="stat-value mono">{money(pay)}</span>
-          <span className="stat-note">
-            {working
-              ? `${formatMoney(wage, cur)} an hour for ${weeklyHours(job)} hours a week, less ${Math.round(withheld * 100)}% tax${tips > 0 ? `, and about ${formatMoney(tips, cur, { cents: false })} in tips` : ''}`
-              : 'No day job: only what you start with'}
-          </span>
-        </div>
+      <div className="grid grid-2" style={{ marginTop: 'var(--s4)' }}>
         <div className="stat">
           <span className="stat-label">Rent And Bills</span>
           <span className="stat-value mono">{money(costs.rent + costs.bills)}</span>
@@ -1065,16 +982,11 @@ function MonthByMonth({ config, set, cur }: { config: NewSaveConfig; set: Setter
         </div>
       </div>
 
-      <div className={`callout ${left < 0 ? 'callout-warning' : ''}`} style={{ marginTop: 'var(--s4)' }}>
-        {left >= 0
-          ? `About ${money(left)} left over a month.`
-          : `About ${money(-left)} short a month. What you start with covers it until it doesn't, and then it's the card, and then owing the landlord.`}
+      <div className="callout" style={{ marginTop: 'var(--s4)' }}>
+        About {money(out)} going out a month. What you start with covers it until it doesn’t, and then it’s the card, and then owing the landlord.
       </div>
 
       <p className="xs dim" style={{ marginTop: 'var(--s3)' }}>
-        {floor.kind === 'statutory' && `The legal minimum here is ${formatMoney(floor.currency === cur ? floor.hourly : wage / job.overMinimum, cur)} an hour, and ${job.title.toLowerCase()} pays ${job.overMinimum === 1 ? 'about that' : `about ${job.overMinimum} times it`}, SLATE's estimate. `}
-        {floor.kind === 'agreement' && `There's no statutory minimum here: pay starts from the lowest collectively agreed rate, and ${job.title.toLowerCase()} pays ${job.overMinimum === 1 ? 'about that' : `about ${job.overMinimum} times it`}, SLATE's estimate. `}
-        {floor.kind === 'estimate' && 'SLATE has no minimum wage on file for here, so the pay is its estimate from the cost of living. '}
         {costs.rentFigure.kind === 'published' && `Rent is published here: ${costs.rentFigure.measure}, ${costs.rentFigure.period}${config.housing === 'shared' && !costs.rentFigure.measure?.includes('room') ? ', and a room is taken at 55% of it' : ''}. `}
         {costs.rentFigure.kind === 'calibrated' && 'Rent is SLATE’s estimate for this town, scaled to what’s published elsewhere in the country. '}
         {costs.rentFigure.kind === 'estimate' && 'Rent is SLATE’s estimate for this town; nothing is published for the country. '}
@@ -1140,8 +1052,7 @@ function ReviewStep({ config }: { config: NewSaveConfig }) {
             <Line label="Card" value={`${formatMoney(-wealth.cardBalance, cur, { cents: false })} owed of ${formatMoney(wealth.cardLimit, cur, { cents: false })}`} />
           )}
           <Line label="Where You Sleep" value={HOUSING[config.housing].label} />
-          <Line label="Day Job" value={month.working ? month.job.title : month.right.may ? 'None' : 'No Right To Work Here'} />
-          <Line label={month.left >= 0 ? 'Left Over A Month' : 'Short A Month'} value={formatMoney(Math.abs(month.left), cur, { cents: false })} />
+          <Line label="Going Out A Month" value={formatMoney(month.out, cur, { cents: false })} />
         </div>
       </div>
 
@@ -1178,7 +1089,6 @@ function ReviewStep({ config }: { config: NewSaveConfig }) {
         <div className="eyebrow" style={{ marginBottom: 'var(--s3)' }}>Interests &amp; Background</div>
         <Line label="Interests" value={namesOf(ALL_INTERESTS, config.interests)} />
         <Line label="Genres" value={namesOf(FILM_GENRES, config.genres)} />
-        <Line label="Before Acting" value={BEFORE_ACTING_BY_ID[config.beforeActing]?.label ?? '—'} />
         {/* A sentence of the player's own, so it is set as one, not squeezed
             into the right-hand column a line gives a value. */}
         {config.background.trim() ? (

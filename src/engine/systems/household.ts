@@ -9,9 +9,10 @@
  * and bills are SLATE's estimates of what a person spends, at the town's cost
  * of living, with the town's sales tax on food.
  *
- * Rent and bills fall due at eight in the evening on the first, after a
- * payday that falls that day: due at nine, they went on the card eight hours
- * before an Icelandic wage arrived.
+ * Rent and bills fall due at eight in the evening on the first. It was set
+ * after the day job's payday that fell that day: due at nine, they went on
+ * the card eight hours before an Icelandic wage arrived. The payday went with
+ * the job engine on 2026-09-26, and the hour stayed.
  *
  * Money comes out of checking first, then savings, as a bank sweeps an
  * account that runs dry, then the card while it has room. Savings were shown

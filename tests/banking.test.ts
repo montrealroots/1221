@@ -106,7 +106,7 @@ describe('interest', () => {
   it('builds by the day on what the account holds and is paid at the month’s end, less the tax', () => {
     // Vaxtareikningur at 5.79%, 1,000,000 kr all of February 2026, and
     // Iceland's 22% taken by the bank.
-    const sim = lifeIn('is-39-mosfellsbr', { wealth: 'modest', dayJob: false });
+    const sim = lifeIn('is-39-mosfellsbr', { wealth: 'modest' });
     const saver = savings(sim)!;
     const zone = sim.homeZone;
     sim.advanceTo(instantFromZoned({ year: 2026, month: 2, day: 1, hour: 0 }, zone) - 1);
@@ -120,7 +120,7 @@ describe('interest', () => {
   });
 
   it('is paid only in the bank’s months: February and August in Japan', () => {
-    const sim = lifeIn('jp-13-tokyo', { wealth: 'modest', dayJob: false });
+    const sim = lifeIn('jp-13-tokyo', { wealth: 'modest' });
     const account = current(sim);
     holding(sim, account, 5_000_000_00);
     sim.advanceBy(50 * MS_DAY);
@@ -148,7 +148,7 @@ describe('interest', () => {
   });
 
   it('takes Germany’s tax only past the year’s €1,000 allowance', () => {
-    const sim = lifeIn('de-be-berlin', { wealth: 'modest', dayJob: false });
+    const sim = lifeIn('de-be-berlin', { wealth: 'modest' });
     const account = current(sim);
     expect(bankOf(sim, sim.player)?.iso).toBe('DE');
     expect(interestTaxFor(sim, account, 900_00)).toBe(0);
@@ -156,11 +156,18 @@ describe('interest', () => {
   });
 
   it('takes New Zealand’s by the saver’s income, and France’s not at all on a Livret A', () => {
+    // The income is the wages paid in over the last year. It was the day
+    // job's rate times its week until the job engine went on 2026-09-26.
     const nz = lifeIn('nz-akl-auckland', { wealth: 'modest' });
-    const rate = interestTaxOn(nz, current(nz));
-    expect([0.105, 0.175, 0.30, 0.33, 0.39]).toContain(rate);
-    const idle = lifeIn('nz-akl-auckland', { wealth: 'modest', dayJob: false }, 'bank-idle');
-    expect(interestTaxOn(idle, current(idle))).toBe(0.105);
+    expect(interestTaxOn(nz, current(nz))).toBe(0.105);
+    nz.post({
+      memo: 'Wages', category: 'salary',
+      postings: [{ accountId: current(nz).id, amount: 60_000_00 }, { accountId: nz.nominalAccount('income', 'Wages').id, amount: -60_000_00 }],
+    });
+    expect(interestTaxOn(nz, current(nz))).toBe(0.30);
+    // A year on, those wages are last year's.
+    nz.advanceBy(366 * MS_DAY);
+    expect(interestTaxOn(nz, current(nz))).toBe(0.105);
     const fr = lifeIn('fr-idf-paris', { wealth: 'modest' });
     expect(savings(fr)?.name).toBe('Livret A');
     expect(interestTaxOn(fr, savings(fr)!)).toBe(0);
@@ -169,8 +176,8 @@ describe('interest', () => {
 
   it('adds a bonus only in a month that earns it', () => {
     // Westpac Life: 0.10%, and 4.90% more in a month the balance grows.
-    const grew = lifeIn('au-nsw-sydney', { wealth: 'modest', dayJob: false, bankId: 'au-westpac' }, 'grew');
-    const held = lifeIn('au-nsw-sydney', { wealth: 'modest', dayJob: false, bankId: 'au-westpac' }, 'held');
+    const grew = lifeIn('au-nsw-sydney', { wealth: 'modest', bankId: 'au-westpac' }, 'grew');
+    const held = lifeIn('au-nsw-sydney', { wealth: 'modest', bankId: 'au-westpac' }, 'held');
     for (const sim of [grew, held]) {
       const saver = savings(sim)!;
       holding(sim, saver, 20_000_00);
@@ -191,7 +198,7 @@ describe('interest', () => {
 
 describe('the monthly fee', () => {
   it('is Chase’s $15 on a month with no deposits and too little in it', () => {
-    const sim = lifeIn('us-ny-newyork', { wealth: 'scraping', dayJob: false, bankId: 'us-chase', birthYear: 1990 });
+    const sim = lifeIn('us-ny-newyork', { wealth: 'scraping', bankId: 'us-chase', birthYear: 1990 });
     const account = current(sim);
     expect(account.name).toBe('Chase Total Checking');
     holding(sim, account, 1_000_00);
@@ -205,7 +212,7 @@ describe('the monthly fee', () => {
   });
 
   it('is waived by a balance kept above the line all month', () => {
-    const sim = lifeIn('us-ny-newyork', { wealth: 'scraping', dayJob: false, bankId: 'us-chase', birthYear: 1990 });
+    const sim = lifeIn('us-ny-newyork', { wealth: 'scraping', bankId: 'us-chase', birthYear: 1990 });
     const account = current(sim);
     holding(sim, account, 2_000_00);
     expect(feeFor(sim, account, monthStartOf(sim, sim.now))).toEqual({ fee: 0, waivedBy: 'balance' });
@@ -215,7 +222,7 @@ describe('the monthly fee', () => {
   });
 
   it('is charged for a month the balance dipped under the line for a day, and not for the next', () => {
-    const sim = lifeIn('us-ny-newyork', { wealth: 'scraping', dayJob: false, bankId: 'us-chase', birthYear: 1990 });
+    const sim = lifeIn('us-ny-newyork', { wealth: 'scraping', bankId: 'us-chase', birthYear: 1990 });
     const account = current(sim);
     const zone = sim.homeZone;
     const move = (amount: number) => sim.post({
@@ -247,7 +254,7 @@ describe('the monthly fee', () => {
   });
 
   it('is waived by wages paid in, and by age where the bank waives it for the young', () => {
-    const sim = lifeIn('us-ny-newyork', { wealth: 'scraping', dayJob: false, bankId: 'us-chase', birthYear: 1990 });
+    const sim = lifeIn('us-ny-newyork', { wealth: 'scraping', bankId: 'us-chase', birthYear: 1990 });
     const account = current(sim);
     holding(sim, account, 100_00);
     const start = monthStartOf(sim, sim.now);
@@ -260,13 +267,13 @@ describe('the monthly fee', () => {
     expect(feeFor(sim, account, start).fee).toBe(15_00);
     wages(1_00);
     expect(feeFor(sim, account, start)).toEqual({ fee: 0, waivedBy: 'deposits' });
-    const young = lifeIn('us-ny-newyork', { wealth: 'scraping', dayJob: false, bankId: 'us-wells-fargo', birthYear: 2004 });
+    const young = lifeIn('us-ny-newyork', { wealth: 'scraping', bankId: 'us-wells-fargo', birthYear: 2004 });
     holding(young, current(young), 10_00);
     expect(feeFor(young, current(young), monthStartOf(young, young.now))).toEqual({ fee: 0, waivedBy: 'age' });
   });
 
   it('is lowered, not waived, where the bank only lowers it', () => {
-    const sim = lifeIn('de-be-berlin', { wealth: 'scraping', dayJob: false, bankId: 'de-postbank' });
+    const sim = lifeIn('de-be-berlin', { wealth: 'scraping', bankId: 'de-postbank' });
     const account = current(sim);
     expect(feeFor(sim, account, monthStartOf(sim, sim.now)).fee).toBe(6_90);
     sim.post({

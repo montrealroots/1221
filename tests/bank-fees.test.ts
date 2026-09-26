@@ -26,7 +26,7 @@ import { accountNumber } from '@/engine/systems/banknumber';
 import { ibanValid, withNationalCheck } from '@/engine/core/banknumbers';
 
 const lifeIn = (cityId: string, extra: Record<string, unknown> = {}, seed = 'fees') =>
-  quickSave({ startLocationId: cityId, homeRegionId: cityId, livesWhereBorn: true, dayJob: false, ...extra }, seed);
+  quickSave({ startLocationId: cityId, homeRegionId: cityId, livesWhereBorn: true, ...extra }, seed);
 const current = (sim: Simulation) => sim.universe.accounts[sim.player.primaryAccountId!]!;
 const savings = (sim: Simulation) => bankAccountsOf(sim, sim.player).find((a) => a.kind === 'savings');
 function set(sim: Simulation, account: Account | undefined, amount: number): void {

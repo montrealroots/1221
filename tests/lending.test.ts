@@ -23,7 +23,7 @@ import {
 } from '@/engine/systems/lending';
 
 const lifeIn = (cityId: string, extra: Record<string, unknown> = {}, seed = 'lend') =>
-  quickSave({ startLocationId: cityId, homeRegionId: cityId, livesWhereBorn: true, dayJob: false, ...extra }, seed);
+  quickSave({ startLocationId: cityId, homeRegionId: cityId, livesWhereBorn: true, ...extra }, seed);
 const current = (sim: Simulation) => sim.universe.accounts[sim.player.primaryAccountId!]!;
 const savings = (sim: Simulation) => bankAccountsOf(sim, sim.player).find((a) => a.kind === 'savings');
 

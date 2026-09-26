@@ -32,11 +32,9 @@ import { formatMoney, saveCurrency, type Money } from '../core/money';
 import type { Person } from '../domain/model';
 import { CITIES, COUNTRIES } from '../content/geography';
 import { exchange } from '../content/currency';
-import { addMonths, dateKey, daysInMonth, instantFromZoned, zonedParts, type Instant } from '../core/time';
+import { addMonths, dateKey, daysInMonth, instantFromZoned, zonedParts, MS_DAY, type Instant } from '../core/time';
 import { bankById, bankingIn, banksIn, type Bank, type Product } from '../content/banks';
 import { ageOn } from './mortality';
-import { hourlyWage, jobOf } from './work';
-import { patternHours, patternOf } from '../content/jobs';
 import { accountNumber } from './banknumber';
 
 export const MONTH_END_KIND = 'bank.month_end';
@@ -328,12 +326,23 @@ function interestThisYear(sim: Simulation, owner: string, yearStart: Instant): M
   return total;
 }
 
-/** A person's pay for a year, as their job has it now, for a tax set by income. */
+/**
+ * A person's wages over the last year, as paid into their accounts, for a
+ * tax set by income. Until 2026-09-26 it was the day job's rate times its
+ * week, a year ahead; the job engine went, and with it any pay to project.
+ */
 function yearlyPay(sim: Simulation, owner: string): Money {
-  const person = sim.universe.people[owner];
-  const job = person ? jobOf(person) : undefined;
-  if (!person?.job || !job) return 0;
-  return hourlyWage(sim, person) * patternHours(patternOf(job, person.job.fullTime)) * 52;
+  const mine = new Set(Object.values(sim.universe.accounts).filter((a) => a.ownerId === owner).map((a) => a.id));
+  const since = sim.now - 365 * MS_DAY;
+  let total = 0;
+  const list = sim.universe.transactions;
+  for (let i = list.length - 1; i >= 0; i -= 1) {
+    const t = list[i]!;
+    if (t.at < since) break;
+    if (t.category !== 'salary') continue;
+    for (const p of t.postings) if (p.amount > 0 && mine.has(p.accountId)) total += p.amount;
+  }
+  return total;
 }
 
 /**

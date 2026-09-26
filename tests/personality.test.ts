@@ -86,7 +86,7 @@ function pickFor(knob: PersonalityKnob, way: 'down' | 'up'): string[] {
 
 /** A save for a case, born in a given year. */
 /**
- * A character to measure a personality on: no day job, and money behind them.
+ * A character to measure a personality on, with money behind them.
  *
  * These years isolate what a disposition or a trait does, and they were set
  * before anybody worked or paid rent. With the café job every new save gets,
@@ -100,7 +100,7 @@ function pickFor(knob: PersonalityKnob, way: 'down' | 'up'): string[] {
 function build(c: Case, birthYear: number, seed: string): Simulation {
   return quickSave({
     personality: { ...defaultPersonality(), ...c.personality }, personalityTraits: c.traits, birthYear,
-    dayJob: false, wealth: 'inherited',
+    wealth: 'inherited',
   }, seed);
 }
 
