@@ -519,6 +519,7 @@ export function rebank(sim: Simulation): void {
       account.last4 = account.number.replace(/\D/g, '').slice(-4);
     } else if (account.kind === 'credit_card') {
       account.name = bank.name + ' Credit Card';
+      account.bankId = bank.id;
     }
   }
 }

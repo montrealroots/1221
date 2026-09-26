@@ -14,7 +14,7 @@ import type { Simulation } from '@/engine';
 import {
   arrearsOf, billsOf, canPay, costsAt, foodOf, inTrouble, mealOf, rentOf, spend,
 } from '@/engine/systems/household';
-import { aprFor, minimumDue, scoreIsANumberIn, scoreWord } from '@/engine/systems/credit';
+import { aprFor, cardTerms, minimumDue, scoreIsANumberIn, scoreWord } from '@/engine/systems/credit';
 import { PUBLISHED_RENTS, rentAt } from '@/engine/content/rents';
 import { lookAfterRefusal } from '@/engine/systems/life';
 import { saveCurrency } from '@/engine/core/money';
@@ -147,7 +147,8 @@ describe('the card', () => {
     expect(sim.player.credit!.score).toBeGreaterThan(score - 20);
     // Carried, so the next statement charges a month at the card's rate.
     const owed = -card(sim).balance;
-    const apr = aprFor(sim.player.credit!.score);
+    // The bank's own card's rate (`cardTerms`); it was the American estimate for every card until 2026-09-26.
+    const apr = cardTerms(sim, card(sim), sim.player.credit!.score).apr;
     // Groceries go on the card too once checking is empty, so the interest is
     // read off its own line, on the balance the statement found.
     const beforeStatement = () => -card(sim).balance;

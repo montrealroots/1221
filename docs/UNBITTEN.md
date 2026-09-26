@@ -158,6 +158,22 @@ part the tool cannot see.
   and Greenland, whose check is set bank by bank; and São Tomé, whose rule
   isn't published and whose registry example and a live central-bank IBAN
   disagree. The IBAN's own check always holds.
+- **Some cards' terms are SLATE's estimate.** Each bank's card is its own
+  (`content/cards.ts`), and the research read 522 of them from the banks'
+  terms, a comparison site where the bank's own page was blocked. A bank
+  whose card wasn't found (Banorte, ING in Germany, and 326 of the 818
+  outside the thirteen), and each term a found card was missing (the
+  minimum and the late fee most often), runs on SLATE's estimate of a
+  typical American card's, and the bank's screen names which terms are the
+  estimate. A charge card that can be spread (Iceland's, Japan's, Korea's,
+  Spain's) is a revolving card with autopay on the whole statement. Not
+  modeled: a penalty rate for missed payments in place of a fee (Canada's
+  banks), a late fee set as a share of the payment, Mexico's minimum on
+  the limit, and Japan's and Korea's fixed-sum revolving courses. Caps
+  left out: Japan's Interest Rate Restriction Act binds cash advances, not
+  purchases; Monaco's and Ukraine's figures weren't the law's own; the
+  British £12 late fee is regulator guidance, and the United States' after
+  2025's ruling wasn't found.
 - **The tax engine is a screen again.** `content/tax.ts` works out income
   and payroll tax on a wage for the place card and Home's Tax On A Wage, and
   nothing is paid through it. The day job withheld through it outside the

@@ -6,7 +6,9 @@
  * way the country writes it, what savings pays and what the current account
  * costs and how the fee is waived, and the guarantee that stands behind the
  * money if the bank fails. Money moves between the accounts here, and a
- * savings account is opened or closed (`systems/banking.ts`).
+ * savings account is opened or closed (`systems/banking.ts`). The credit
+ * card is the bank's too, and is run here (`ui/bank/BankCard.tsx`); until
+ * 2026-09-26 it was run from the Money panel and this screen left it out.
  *
  * Every figure the bank publishes says where it came from; a figure that is
  * SLATE's estimate says that instead.
@@ -17,6 +19,7 @@ import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Empty } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
 import { BankLending } from '@/ui/bank/BankLending';
+import { BankCard } from '@/ui/bank/BankCard';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { formatDate } from '@/engine/core/time';
 import { bankingIn } from '@/engine/content/banks';
@@ -123,6 +126,10 @@ export function BankWorkspace() {
             </Gated>
           </Panel>
         )}
+      </div>
+
+      <div style={{ marginBottom: 'var(--s5)' }}>
+        <BankCard bankId={bank.id} />
       </div>
 
       {accounts.length > 1 && (

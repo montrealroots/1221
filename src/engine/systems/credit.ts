@@ -30,9 +30,15 @@
  * deposit a landlord asks (`depositFor` in `systems/household.ts`). It
  * decided only the rate at first.
  *
- * The minimum, the fee and the rate bands are SLATE's estimates of typical
- * American card terms, and the score's monthly moves a simplification of a
- * model no lender publishes.
+ * The card is the bank's (`content/cards.ts`): its name, whether a balance
+ * can be carried or the whole statement is taken each month, its rate or the
+ * range it prices a record within, its yearly fee, minimum payment, late fee
+ * and the days to the due date, held to the country's caps. Until 2026-09-26
+ * every card in the world ran on one set of American terms under the bank's
+ * name, and the bank's own screen didn't show it. Where a bank's card isn't
+ * on record, each term missing is SLATE's estimate of typical American card
+ * terms (`cardTerms` says which), and the score's monthly moves are a
+ * simplification of a model no lender publishes.
  */
 
 import type { Simulation } from '../core/simulation';
@@ -40,6 +46,8 @@ import type { Person } from '../domain/model';
 import type { Account } from '../core/ledger';
 import { CITIES, COUNTRIES } from '../content/geography';
 import { exchange } from '../content/currency';
+import { bankById } from '../content/banks';
+import { CARDS, CARD_LAW, type CardProduct } from '../content/cards';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { instantFromZoned, zonedParts, type Instant } from '../core/time';
 import { CommandError } from '../core/simulation';
@@ -61,11 +69,13 @@ export interface CreditState {
   carrying: boolean;
   /** When the card's limit was last reviewed. */
   reviewedAt?: Instant;
+  /** The interest the last statement charged, which a minimum can add. */
+  statementInterest?: Money;
 }
 
 const SCORE_MIN = 300;
 const SCORE_MAX = 850;
-/** The rate a score buys. SLATE's estimate of typical US card pricing. */
+/** The rate a score buys where the bank's card isn't on record. SLATE's estimate of typical US card pricing. */
 const RATE_BANDS: readonly { from: number; apr: number }[] = [
   { from: 800, apr: 0.1999 }, { from: 740, apr: 0.2199 }, { from: 670, apr: 0.2499 },
   { from: 580, apr: 0.2799 }, { from: 0, apr: 0.2999 },
@@ -81,6 +91,94 @@ export function aprFor(score: number): number {
   return RATE_BANDS.find((band) => score >= band.from)!.apr;
 }
 
+/** Where a bank prices a record within a range: the best record at the bottom, the worst at the top. */
+const BEST = 800;
+const WORST = 580;
+export function priceWithin(from: number, to: number, score: number): number {
+  const t = Math.min(1, Math.max(0, (BEST - score) / (BEST - WORST)));
+  return Math.round((from + (to - from) * t) * 10_000) / 10_000;
+}
+
+/** A term of the card: the bank's, or SLATE's estimate. */
+export type CardTerm = 'card' | 'rate' | 'minimum' | 'lateFee' | 'annualFee';
+
+/** What a card charges and asks, for a record, in the save's money. */
+export interface CardTerms {
+  name: string;
+  /** The bank that issued it, which switching banks doesn't change. */
+  bankId?: string;
+  issuer?: string;
+  kind: 'revolving' | 'charge';
+  apr: number;
+  aprFrom?: number;
+  aprTo?: number;
+  annualFee: Money;
+  minimumShare: number;
+  minimumFloor: Money;
+  minimumPlusInterest: boolean;
+  lateFee: Money;
+  /** Days from the statement to the due date; absent, the 15th of the next month. */
+  graceDays?: number;
+  /** The country's law, where it capped a term. */
+  capped?: { apr?: number; lateFee?: Money; law: string; source: string };
+  /** The terms that are SLATE's estimate, not the bank's. */
+  estimated: CardTerm[];
+  source?: string;
+  asOf?: string;
+}
+
+function inSave(sim: Simulation, amount: Money, currency: string): Money {
+  const into = saveCurrency(sim.universe);
+  return into === currency ? amount : exchange(amount, currency, into) ?? amount;
+}
+
+/** The card's terms: the bank's where on record, each one missing SLATE's estimate, held to the country's caps. */
+export function cardTerms(sim: Simulation, card: Account, score: number): CardTerms {
+  const bank = card.bankId ? bankById(card.bankId) : undefined;
+  const found = bank ? CARDS[bank.id] : undefined;
+  const product: CardProduct | undefined = found && !('none' in found) ? found : undefined;
+  const law = bank ? CARD_LAW[bank.iso] : undefined;
+  const money = product?.currency ?? bank?.currency ?? saveCurrency(sim.universe);
+  const estimated: CardTerm[] = [];
+  if (!product) estimated.push('card');
+  const range = product?.aprFrom !== undefined && product.aprTo !== undefined;
+  let apr = range ? priceWithin(product!.aprFrom!, product!.aprTo!, score) : product?.apr;
+  if (apr === undefined) { apr = aprFor(score); estimated.push('rate'); }
+  const minimumKnown = product?.minimumShare !== undefined || product?.minimumFloor !== undefined;
+  if (!minimumKnown && product?.kind !== 'charge') estimated.push('minimum');
+  let lateFee = product?.lateFee !== undefined ? inSave(sim, product.lateFee, money) : undefined;
+  if (lateFee === undefined) { lateFee = usdIn(sim, LATE_FEE_USD); estimated.push('lateFee'); }
+  if (product && product.annualFee === undefined) estimated.push('annualFee');
+  let capped: CardTerms['capped'];
+  if (law?.aprCap !== undefined && apr > law.aprCap) { apr = law.aprCap; capped = { apr: law.aprCap, law: law.law, source: law.source }; }
+  if (law?.lateFeeCap !== undefined) {
+    const cap = inSave(sim, law.lateFeeCap, bank!.currency);
+    if (lateFee > cap) { lateFee = cap; capped = { ...(capped ?? { law: law.law, source: law.source }), lateFee: cap }; }
+  }
+  return {
+    name: product?.name ?? card.name,
+    ...(bank ? { bankId: bank.id, issuer: bank.name } : {}),
+    kind: product?.kind ?? 'revolving',
+    apr,
+    ...(range ? { aprFrom: product!.aprFrom, aprTo: product!.aprTo } : {}),
+    annualFee: product?.annualFee ? inSave(sim, product.annualFee, money) : 0,
+    minimumShare: minimumKnown ? product!.minimumShare ?? 0 : MINIMUM_SHARE,
+    minimumFloor: minimumKnown ? (product!.minimumFloor !== undefined ? inSave(sim, product!.minimumFloor, money) : 0) : usdIn(sim, MINIMUM_USD),
+    minimumPlusInterest: product?.minimumPlusInterest ?? false,
+    lateFee,
+    ...(product?.graceDays !== undefined ? { graceDays: product.graceDays } : {}),
+    ...(capped ? { capped } : {}),
+    estimated,
+    ...(product ? { source: product.source, asOf: product.asOf } : {}),
+  };
+}
+
+/** The player's card's terms, where they have one. */
+export function playerCardTerms(sim: Simulation): CardTerms | undefined {
+  const card = cardOf(sim, sim.player);
+  return card ? cardTerms(sim, card, sim.player.credit?.score ?? 650) : undefined;
+}
+
 /** Where the score is shown as a number: the United States and Canada. */
 export function scoreIsANumberIn(cityId: string): boolean {
   const code = COUNTRIES.get(CITIES.get(cityId)?.countryId ?? '')?.jurisdictionCode;
@@ -92,7 +190,7 @@ export function scoreWord(score: number): string {
   return score >= 800 ? 'Exceptional' : score >= 740 ? 'Very Good' : score >= 670 ? 'Good' : score >= 580 ? 'Fair' : 'Poor';
 }
 
-function cardOf(sim: Simulation, person: Person): Account | undefined {
+export function cardOf(sim: Simulation, person: Person): Account | undefined {
   return Object.values(sim.universe.accounts).find((a) => a.ownerId === person.id && a.kind === 'credit_card' && !a.closedAt);
 }
 
@@ -101,9 +199,16 @@ function usdIn(sim: Simulation, usd: number): Money {
   return Math.round(cents / 100) * 100;
 }
 
-/** The least that must be paid on a statement. */
-export function minimumDue(sim: Simulation, statement: Money): Money {
-  return Math.min(statement, Math.max(usdIn(sim, MINIMUM_USD), Math.round(statement * MINIMUM_SHARE)));
+/**
+ * The least that must be paid on a statement: the card's share of it, plus
+ * the month's interest where the bank adds it, never under its floor, and
+ * never more than the statement. A charge card asks for all of it.
+ */
+export function minimumDue(sim: Simulation, statement: Money, terms = playerCardTerms(sim), interest = sim.player.credit?.statementInterest ?? 0): Money {
+  if (!terms) return Math.min(statement, Math.max(usdIn(sim, MINIMUM_USD), Math.round(statement * MINIMUM_SHARE)));
+  if (terms.kind === 'charge') return statement;
+  const share = Math.round(statement * terms.minimumShare) + (terms.minimumPlusInterest ? interest : 0);
+  return Math.min(statement, Math.max(terms.minimumFloor, share));
 }
 
 /** Pays the card from the bank, as much of an amount as checking and savings hold. Returns what was paid. */
@@ -134,11 +239,16 @@ function scheduleStatement(sim: Simulation, person: Person, after: Instant): voi
   sim.schedule({ at, kind: STATEMENT_KIND, label: 'Card Statement', category: 'home', priority: 36, payload: { personId: person.id } });
 }
 
-/** The payment due: the 15th of the month after a statement, at noon. */
-function scheduleDue(sim: Simulation, person: Person, statementAt: Instant): void {
+/**
+ * The payment due, at noon: so many days after the statement where the bank
+ * says, else the 15th of the month after it.
+ */
+function scheduleDue(sim: Simulation, person: Person, statementAt: Instant, graceDays?: number): void {
   const zone = zoneOf(sim, person);
   const p = zonedParts(statementAt, zone);
-  const at = instantFromZoned({ year: p.month === 12 ? p.year + 1 : p.year, month: p.month === 12 ? 1 : p.month + 1, day: 15, hour: 12 }, zone);
+  const at = graceDays !== undefined
+    ? instantFromZoned({ year: p.year, month: p.month, day: p.day + graceDays, hour: 12 }, zone)
+    : instantFromZoned({ year: p.month === 12 ? p.year + 1 : p.year, month: p.month === 12 ? 1 : p.month + 1, day: 15, hour: 12 }, zone);
   sim.schedule({ at, kind: DUE_KIND, label: 'Card Payment Due', category: 'home', priority: 36, payload: { personId: person.id } });
 }
 
@@ -148,15 +258,26 @@ export function registerCredit(sim: Simulation): void {
     const credit = person?.credit;
     const card = person ? cardOf(s, person) : undefined;
     if (!person || !credit || !card) return;
-    // Repriced from the record, then the month's interest if last month's
-    // statement was carried.
-    card.apr = aprFor(credit.score);
+    // Repriced from the record by the bank's own terms, then the month's
+    // interest if last month's statement was carried.
+    const terms = cardTerms(s, card, credit.score);
+    card.apr = terms.apr;
     const owed = Math.max(0, -card.balance);
+    credit.statementInterest = 0;
     if (credit.carrying && owed > 0) {
       const interest = Math.round(owed * card.apr / 12);
+      credit.statementInterest = interest;
       s.post({
         memo: 'Interest', category: 'interest',
         postings: [{ accountId: s.nominalAccount('expense', 'Card Interest').id, amount: interest }, { accountId: card.id, amount: -interest }],
+      });
+    }
+    // The yearly fee, on the statement in the month the card was opened.
+    // One statement a month, so the month alone makes it once a year.
+    if (terms.annualFee > 0 && zonedParts(s.now, zoneOf(s, person)).month === zonedParts(card.openedAt, zoneOf(s, person)).month) {
+      s.post({
+        memo: `Yearly fee: ${card.name}`, category: 'fees',
+        postings: [{ accountId: s.nominalAccount('expense', 'Card Fees').id, amount: terms.annualFee }, { accountId: card.id, amount: -terms.annualFee }],
       });
     }
     credit.statementBalance = Math.max(0, -card.balance);
@@ -172,7 +293,7 @@ export function registerCredit(sim: Simulation): void {
         }
       }
     }
-    if (credit.statementBalance > 0) scheduleDue(s, person, item.at);
+    if (credit.statementBalance > 0) scheduleDue(s, person, item.at, terms.graceDays);
     // Nothing owed: the month is reported now, paid as agreed.
     else reportMonth(s, person, card, credit, ON_TIME);
     scheduleStatement(s, person, item.at);
@@ -184,8 +305,11 @@ export function registerCredit(sim: Simulation): void {
     const card = person ? cardOf(s, person) : undefined;
     if (!person || !credit || !card) return;
     const currency = saveCurrency(s.universe);
+    const terms = cardTerms(s, card, credit.score);
     const statement = credit.statementBalance;
-    const minimum = minimumDue(s, statement);
+    const minimum = minimumDue(s, statement, terms, credit.statementInterest ?? 0);
+    // A charge card's minimum is the whole statement, so it takes all of it
+    // whatever the autopay says.
     const want = credit.autopay === 'full' ? statement : minimum;
     payCard(s, person, Math.max(0, want - credit.paidSinceStatement));
     const paid = credit.paidSinceStatement;
@@ -193,7 +317,7 @@ export function registerCredit(sim: Simulation): void {
 
     let move = 0;
     if (paid < minimum) {
-      const fee = usdIn(s, LATE_FEE_USD);
+      const fee = terms.lateFee;
       s.post({
         memo: 'Late fee', category: 'fees',
         postings: [{ accountId: s.nominalAccount('expense', 'Card Fees').id, amount: fee }, { accountId: card.id, amount: -fee }],
@@ -233,6 +357,10 @@ export function registerCredit(sim: Simulation): void {
   sim.onCommand<{ mode: 'minimum' | 'full' }, { mode: string }>('finance.set_autopay', (p, { sim: s }) => {
     if (p.mode !== 'minimum' && p.mode !== 'full') throw new CommandError('Autopay pays the minimum or the whole statement.');
     if (!s.player.credit) throw new CommandError('You don’t have a card.');
+    const terms = playerCardTerms(s);
+    if (terms?.kind === 'charge' && p.mode === 'minimum') {
+      throw new CommandError(`${terms.issuer ?? 'The bank'} takes the whole statement from your account each month; the ${terms.name} can’t carry a balance.`);
+    }
     s.player.credit.autopay = p.mode;
     return { mode: p.mode };
   });
@@ -268,7 +396,12 @@ export function openCredit(sim: Simulation, person: Person, score: number): void
     carrying: (cardOf(sim, person)?.balance ?? 0) < 0,
   };
   const card = cardOf(sim, person);
-  if (card) card.apr = aprFor(score);
+  if (card) {
+    const terms = cardTerms(sim, card, score);
+    card.apr = terms.apr;
+    // A charge card is paid in full; nobody's autopay can say otherwise.
+    if (terms.kind === 'charge') person.credit.autopay = 'full';
+  }
   scheduleStatement(sim, person, sim.now);
 }
 

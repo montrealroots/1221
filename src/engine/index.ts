@@ -36,6 +36,7 @@ import { registerMortality } from './systems/mortality';
 import { registerTutorial } from './world/tutorial';
 import { armBanking, openAt, registerBanking, rebank, startingBank } from './systems/banking';
 import { registerLending } from './systems/lending';
+import { CARDS } from './content/cards';
 import { registerWorld } from './world/world';
 import {
   createUniverse, defaultConfig, wealthIn, type NewSaveConfig,
@@ -105,12 +106,17 @@ function populateWorld(sim: Simulation, config: NewSaveConfig): void {
   }
 
   if (wealth.cardLimit > 0) {
+    // The bank's own card, under its own name (`content/cards.ts`). Until
+    // 2026-09-26 it was "<bank> Credit Card" on American terms, and not the
+    // bank's at all.
+    const product = bank ? CARDS[bank.id] : undefined;
     const card = sim.openAccount({
       id: sim.nextId('account'),
       kind: 'credit_card',
-      name: bank ? bank.name + ' Credit Card' : 'Credit Card',
+      name: product && !('none' in product) ? product.name : bank ? bank.name + ' Credit Card' : 'Credit Card',
       ownerId: player.id,
       institution: bank?.name,
+      ...(bank ? { bankId: bank.id } : {}),
       openedAt: sim.now - 400 * MS_DAY,
       creditLimit: wealth.cardLimit,
       apr: 0.2249,
@@ -577,6 +583,25 @@ export function migrate(universe: SaveUniverse): MigrationResult {
       worker.credit = { score: 650, late: [], autopay: 'full', statementBalance: 0, paidSinceStatement: 0, carrying: carried };
       steps.push('Opened a credit record at 650, a fair middle, for a save that kept none.');
     }
+  }
+
+  // A card from before 2026-09-26 carried its bank's name and nothing else:
+  // it is the bank's card now, the bank the current account is at when it
+  // was opened, and it takes that bank's own name for it.
+  {
+    let tied = 0;
+    const accounts = universe.accounts ?? {};
+    for (const account of Object.values(accounts)) {
+      if (account.kind !== 'credit_card' || account.bankId || account.closedAt) continue;
+      const owner = universe.people?.[account.ownerId ?? ''];
+      const current = owner?.primaryAccountId ? accounts[owner.primaryAccountId] : undefined;
+      if (!current?.bankId) continue;
+      account.bankId = current.bankId;
+      const product = CARDS[current.bankId];
+      if (product && !('none' in product) && account.name === current.institution + ' Credit Card') account.name = product.name;
+      tied += 1;
+    }
+    if (tied > 0) steps.push(`Made ${plural(tied, 'card', 'cards')} the bank’s own.`);
   }
 
   // The slot's career line is the player's title. Before 80 it named the film

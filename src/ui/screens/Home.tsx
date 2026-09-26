@@ -23,8 +23,8 @@ import {
   dateKey, formatDate, formatRelative, formatTime, formatWeekdayDate, seasonOf, zoneAbbreviation,
 } from '@/engine/core/time';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
-import { scoreIsANumberIn, scoreWord } from '@/engine/systems/credit';
-import { HOUSING, SOFA, arrearsOf, billsOf, inTheBank, moveCost, rentOf } from '@/engine/systems/household';
+import { cardOf, cardTerms, scoreIsANumberIn, scoreWord } from '@/engine/systems/credit';
+import { HOUSING, SOFA, arrearsOf, billsOf, moveCost, rentOf } from '@/engine/systems/household';
 import { LookRegion, Open, at } from '@/ui/looks';
 import { Gated, LockedPanel, useFeature } from '@/ui/guide/Guide';
 
@@ -488,7 +488,7 @@ export function Home() {
                 look={at('debt', player.id)}
               />
             )}
-            <CardControls cur={cur} />
+            <CardSummary cur={cur} />
           </LookRegion>
         </Panel>
         )}
@@ -545,36 +545,28 @@ function YourHome({ cur }: { cur: string }) {
 }
 
 /**
- * The card, run by hand: pay it off now, and whether autopay clears the
- * whole statement or only the minimum (`systems/credit.ts`). And the record
- * a lender reads, as a number where lenders use one and a word elsewhere.
+ * The card and the record, at a glance: what the card owes of its limit, and
+ * the record a lender reads, as a number where lenders use one and a word
+ * elsewhere. The card is the bank's, and paying it and its autopay are on the
+ * bank's screen (`ui/bank/BankCard.tsx`); they were here until 2026-09-26.
  */
-function CardControls({ cur }: { cur: string }) {
-  const { sim, run } = useGame();
-  const card = useWorld((s) => Object.values(s.universe.accounts).find((a) => a.ownerId === s.player.id && a.kind === 'credit_card' && !a.closedAt));
+function CardSummary({ cur }: { cur: string }) {
+  const { sim } = useGame();
+  const card = useWorld((s) => cardOf(s, s.player));
   const credit = useWorld((s) => s.player.credit);
-  const owed = card ? Math.max(0, -card.balance) : 0;
-  // What pressing it pays: all of it, or as much as the bank holds.
-  const payable = useWorld((s) => Math.min(owed, inTheBank(s, s.player)));
   if (!credit) return null;
   const record = scoreIsANumberIn(sim.player.currentLocationId) ? String(credit.score) : scoreWord(credit.score);
+  const terms = card ? cardTerms(sim, card, credit.score) : undefined;
   return (
     <>
-      <Stat label="Credit Record" value={record} note={card?.apr !== undefined ? `The card charges ${(card.apr * 100).toFixed(2)}% a year on what's carried` : undefined} />
-      {card && (
-        <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
-          <Gated feature="finance.pay_card" className="btn btn-sm" disabled={payable === 0} onClick={() => run('finance.pay_card', { amount: 'full' })}>
-            {payable < owed ? 'Pay What You Can' : 'Pay Card In Full'} ({formatMoney(payable, cur, { cents: false })})
-          </Gated>
-          <Gated
-            feature="finance.set_autopay"
-            className="btn btn-sm btn-ghost"
-            onClick={() => run('finance.set_autopay', { mode: credit.autopay === 'full' ? 'minimum' : 'full' })}
-          >
-            Autopay: {credit.autopay === 'full' ? 'The Whole Statement' : 'The Minimum'}
-          </Gated>
-        </div>
+      {card && terms && (
+        <Stat
+          label={terms.name}
+          value={<span className="mono">{formatMoney(Math.max(0, -card.balance), cur, { cents: false })}</span>}
+          note={`Owed of a ${formatMoney(card.creditLimit ?? 0, cur, { cents: false })} limit${terms.kind === 'charge' ? ', taken in full each month' : `, at ${Number((terms.apr * 100).toFixed(2))}% a year on what's carried`}`}
+        />
       )}
+      <Stat label="Credit Record" value={record} />
     </>
   );
 }
