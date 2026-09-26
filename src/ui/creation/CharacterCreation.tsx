@@ -10,7 +10,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { Slot } from '@/engine/persistence/adapter';
 import {
-  APP_VERSION, atSchool, currencyFor, newLifeConfig, wealthIn, wealthNote,
+  APP_VERSION, choosesWealth, currencyFor, findsNeed, newLifeConfig, newLifeFrom, wealthIn, wealthNote,
   type NewSaveConfig, type StartingWealth,
 } from '@/engine/world/bootstrap';
 import { LocationPicker } from './LocationPicker';
@@ -818,7 +818,7 @@ function StartingPointStep({ config, set, setConfig }: {
             </p>
             {config.school && (
               <p className="muted small">
-                You arrive in {city?.name ?? 'New Haven'} on {formatDate(instantFromZoned({ year: config.startYear, month: config.startMonth, day: config.startDay, hour: 12 }, city?.timeZone ?? 'America/New_York'), city?.timeZone ?? 'America/New_York')}, the first day of the fall term. The school’s award covers your whole cost of attendance, with nothing to borrow.
+                You arrive in {city?.name ?? 'New Haven'} on {formatDate(instantFromZoned({ year: config.startYear, month: config.startMonth, day: config.startDay, hour: 12 }, city?.timeZone ?? 'America/New_York'), city?.timeZone ?? 'America/New_York')}, the first day of the fall term. Tuition is covered, as it is for every student.
               </p>
             )}
           </div>
@@ -886,13 +886,17 @@ function StartingPointStep({ config, set, setConfig }: {
             </p>
           </div>
         </div>
-        <div className="field">
-          <label htmlFor="wealth">What You Are Starting With</label>
-          <select id="wealth" value={config.wealth} onChange={(e) => set('wealth', e.target.value as StartingWealth)}>
-            {WEALTH.map((w) => <option key={w} value={w}>{w.charAt(0).toUpperCase() + w.slice(1)}</option>)}
-          </select>
-        </div>
-        <div className="callout">{wealthNote(config.wealth)}</div>
+        {choosesWealth(config) && (
+          <>
+            <div className="field">
+              <label htmlFor="wealth">What You Are Starting With</label>
+              <select id="wealth" value={config.wealth} onChange={(e) => set('wealth', e.target.value as StartingWealth)}>
+                {WEALTH.map((w) => <option key={w} value={w}>{w.charAt(0).toUpperCase() + w.slice(1)}</option>)}
+              </select>
+            </div>
+            <div className="callout">{wealthNote(config.wealth)}</div>
+          </>
+        )}
         <BankChoice config={config} set={set} />
         <div className="grid grid-3" style={{ marginTop: 'var(--s4)' }}>
           <div className="stat">
@@ -998,7 +1002,9 @@ function MonthByMonth({ config, set, cur }: { config: NewSaveConfig; set: Setter
 
       <div className="callout" style={{ marginTop: 'var(--s4)' }}>
         {config.school
-          ? `About ${money(out)} going out a month. The school pays ${formatMoney(termAccount(cur).refund, cur)} into your bank at the start of each term, fall and spring, after your Yale Health plan.`
+          ? (!findsNeed(config)
+            ? `About ${money(out)} going out a month, from your bank, and ${formatMoney(termAccount(cur, false).healthPlan, cur)} each term for your Yale Health plan. Tuition is covered; Yale’s aid for living costs goes by need.`
+            : `About ${money(out)} going out a month. The school pays ${formatMoney(termAccount(cur).refund, cur)} into your bank at the start of each term, fall and spring, after your Yale Health plan.`)
           : `About ${money(out)} going out a month. What you start with covers it until it doesn’t, and then it’s the card, and then owing the landlord.`}
       </div>
 
@@ -1215,15 +1221,15 @@ function loadDraft(slot: Slot): NewSaveConfig | null {
       return null;
     }
 
-    const merged = atSchool({ ...newLifeConfig(), ...stored.config });
+    const merged = newLifeFrom(stored.config);
 
     // A town small enough not to be bundled is not resolvable until its
     // country has been fetched, which has not happened yet on a cold start.
     // Losing the whole draft over that threw away a filled-in form because
     // somebody was from a village, so the id is kept whenever the country it
     // names is real, and CharacterCreation pulls that country in. An id whose
-    // country does not exist is a lost cause and falls back.
-    if (!countryOfPlace(merged.homeRegionId)) merged.homeRegionId = merged.startLocationId;
+    // country does not exist is a lost cause, and the birthplace is asked again.
+    if (!countryOfPlace(merged.homeRegionId)) merged.homeRegionId = '';
 
     return merged;
   } catch {

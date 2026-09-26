@@ -1326,3 +1326,7 @@ kbd {
   .guide-toc-item .grow { display: none; }
 }
 .guide-opens + p { margin-top: var(--s3); }
+
+/* A chosen place's line under its name, on the accent's tint, where the dim
+   text failed contrast (axe, 2026-09-26, the birthplace every new life picks). */
+.picker-option[data-selected] .picker-option-meta { color: var(--text-muted); }

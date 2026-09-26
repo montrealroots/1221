@@ -10,7 +10,7 @@ import { RATES_NOTE, formatAtlasCompact} from '@/engine/content/currency';
 import { titleCaseLabel } from '@/engine/core/text';
 import { placeProfile, placeKindLabel, formatPeople, type PlaceProfile } from '@/engine/world/place';
 import { WEATHER_EMOJI, forecastFor, weatherAt, weatherShort } from '@/engine/systems/weather';
-import { MS_DAY, WEEKDAY_NAMES, instantFromZoned } from '@/engine/core/time';
+import { MS_DAY, WEEKDAY_NAMES, formatDateTime } from '@/engine/core/time';
 import { PERFORMER_NOUN } from '@/engine/core/performer';
 import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
@@ -28,7 +28,7 @@ import { cardOf, cardTerms, scoreIsANumberIn, scoreWord } from '@/engine/systems
 import { HOUSING, SOFA, arrearsOf, billsOf, moveCost, rentOf } from '@/engine/systems/household';
 import { LookRegion, Open, at } from '@/ui/looks';
 import { YALE_DRAMA } from '@/engine/content/school';
-import { termAccount, termStart, yearOfStudy } from '@/engine/systems/school';
+import { STANDING_LABEL, nextClasses, rankIn, yearOfStudy } from '@/engine/systems/school';
 import { Gated, LockedPanel, useFeature } from '@/ui/guide/Guide';
 
 export function Home() {
@@ -511,7 +511,7 @@ export function Home() {
             </Gated>
           )}
         >
-          <YourSchool cur={cur} />
+          <YourSchool />
         </Panel>
         ))}
       </div>
@@ -519,23 +519,34 @@ export function Home() {
   );
 }
 
-/** Where the life began: the program, the year, and the next term's scholarship (`systems/school.ts`). */
-function YourSchool({ cur }: { cur: string }) {
+/**
+ * Where the life began: the year and standing, the place in the class, and
+ * the next thing the school has on the calendar (`systems/school.ts`). Until
+ * 2026-09-26 it said what scholarship the next term paid in, which a family
+ * with means isn't paid.
+ */
+function YourSchool() {
+  const { sim } = useGame();
   const person = useWorld((s) => s.player);
   const school = person.school;
   if (!school) return null;
-  const next = school.termsBegun < YALE_DRAMA.terms ? termStart(school.termsBegun) : undefined;
   const zone = CITIES.require(YALE_DRAMA.cityId).timeZone;
+  const booked = sim.universe.scheduled
+    .filter((item) => item.status === 'pending' && item.category === 'school' && item.requiresPlayer && item.payload.personId === person.id)
+    .sort((x, y) => x.at - y.at)[0];
+  // What the calendar holds, or past this week, the next classes.
+  const classes = nextClasses(sim.now);
+  const next = booked ?? (classes !== undefined ? { label: 'Classes', at: classes } : undefined);
   return (
     <div className="col gap-3">
-      <Stat label={`${YALE_DRAMA.degree} In ${YALE_DRAMA.program}`} value={school.termsBegun === 0 ? 'Arriving' : `Year ${yearOfStudy(person)}`} note={`Class of ${school.classOf}, one of ${YALE_DRAMA.classSize}`} />
-      {next && (
-        <Stat
-          label="Next Term"
-          value={formatDate(instantFromZoned({ ...next.date, hour: 12 }, zone), zone)}
-          note={`${formatMoney(termAccount(cur).refund, cur, { cents: false })} of scholarship paid in${next.estimate ? ', the date SLATE’s estimate' : ''}`}
-        />
-      )}
+      <Stat
+        label={`${YALE_DRAMA.degree} In ${YALE_DRAMA.program}`}
+        value={school.standing === 'graduated' ? 'Graduated' : school.termsBegun === 0 ? 'Arriving' : `Year ${yearOfStudy(person)}`}
+        note={`Class of ${school.classOf}, ${STANDING_LABEL[school.standing].toLowerCase()}`}
+        tone={school.standing === 'concern' || school.standing === 'warning' || school.standing === 'dismissed' ? 'warning' : undefined}
+      />
+      <Stat label="Your Place In The Class" value={`${rankIn(person)} of ${YALE_DRAMA.classSize}`} note="By craft, across every area" />
+      {next && <Stat label="Next" value={next.label} note={formatDateTime(next.at, zone)} />}
     </div>
   );
 }

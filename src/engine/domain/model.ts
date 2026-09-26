@@ -16,6 +16,7 @@ import type { HomeState } from '../systems/household';
 import type { CreditState } from '../systems/credit';
 import type { AlertSettings } from '../systems/statements';
 import type { PaymentSettings } from '../systems/payments';
+import type { Craft, SchoolRecord } from '../systems/school';
 import type { IdNamespace } from '../core/ids';
 import type { PerformerTitle } from '../core/performer';
 
@@ -164,8 +165,12 @@ export interface Person {
   roundUps?: { on: boolean; pending: Money };
   /** Money gone to the state or its scheme after years untouched, which can be claimed back. */
   unclaimed?: { amount: Money; to: string; at: Instant }[];
-  /** Drama school: which, the class they graduate with, and how many terms have begun (`systems/school.ts`). */
-  school?: { schoolId: string; classOf: number; termsBegun: number };
+  /** Drama school, while they're at one and after (`systems/school.ts`). */
+  school?: SchoolRecord;
+  /** Their craft as an actor, 0 to 100 in each area (`content/school.ts`). */
+  craft?: Craft;
+  /** Where they come from, for what a school's need assessment reads. Shown nowhere. */
+  family?: 'wealthy';
   /** Payments somebody else made on their cards: when, which, when they learned of it and when the statement showed it, whether they reported it, what the law left them and what came back. */
   fraud?: { transactionId?: string; accountId: string; which: 'debit' | 'credit'; amount: Money; at: Instant; learnedAt: Instant; statedAt: Instant; reportedAt?: Instant; carried?: Money; refunded?: Money }[];
 

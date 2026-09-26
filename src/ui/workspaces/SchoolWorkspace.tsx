@@ -1,104 +1,437 @@
 /**
- * SLATE — drama school: where the life began, and what the school pays
- * (`systems/school.ts`, `content/school.ts`).
+ * SLATE — drama school: the student's standing, classes, casting, work-study
+ * and terms (`systems/school.ts`, `content/school.ts`), in five tabs.
  *
- * The student's place (the program, the class, the year, who leads it), the
- * six terms and when each begins, and the award, term by term, as it stands
- * on the student's Yale account: what's billed, what the scholarships meet,
- * and what's paid out to the bank.
+ * Every figure here is one the school system reads or writes: the craft the
+ * classes grow and the chair casts by, the attendance and growth the term's
+ * evaluation weighs, the calls a casting puts on the calendar, the hours
+ * Friday's pay is counted from, and what each term bills and credits. Until
+ * 2026-09-26 it was one page saying where the student was and what the award
+ * paid, and said the award covered the whole cost of attendance, which Yale
+ * doesn't do for a family with means.
  */
 
+import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
-import { Panel, Empty } from '@/ui/components/primitives';
+import { Panel, Empty, Stat } from '@/ui/components/primitives';
+import { Gated } from '@/ui/guide/Guide';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
-import { formatDate, instantFromZoned } from '@/engine/core/time';
+import { formatDate, formatDateTime, instantFromZoned, zonedParts } from '@/engine/core/time';
 import { CITIES } from '@/engine/content/geography';
-import { COST_2026_27, ORIENTATION_2026, YALE_DRAMA } from '@/engine/content/school';
-import { termAccount, termName, termStart, yearOfStudy } from '@/engine/systems/school';
+import { COST_2026_27, COURSES, SEAGULL_2027, SKILLS, WORK_STUDY, YALE_DRAMA, type Skill } from '@/engine/content/school';
+import {
+  CALL_KIND, ESTIMATE, EVALUATION_KIND, SHIFT_KIND, STANDING_LABEL,
+  classPeriod, coursesOn, daysOffIn, hasNeed, nextClasses, hourlyIn, meanCraft, rankIn, termAccount, termLabel, termOf, termStart, timetable, yearOfStudy, yearOfTerm,
+} from '@/engine/systems/school';
+import type { Simulation } from '@/engine/core/simulation';
+import type { Person } from '@/engine/domain/model';
+
+type SchoolTab = 'standing' | 'classes' | 'casting' | 'work' | 'terms';
+
+const SCHOOL_TABS: readonly { id: SchoolTab; label: string }[] = [
+  { id: 'standing', label: 'Standing And Craft' },
+  { id: 'classes', label: 'Classes' },
+  { id: 'casting', label: 'Casting' },
+  { id: 'work', label: 'Shifts And Pay' },
+  { id: 'terms', label: 'Terms And Award' },
+];
+
+const zone = () => CITIES.require(YALE_DRAMA.cityId).timeZone;
+const dayOf = (d: { year: number; month: number; day: number }) => formatDate(instantFromZoned({ ...d, hour: 12 }, zone()), zone());
+const pct = (x: number) => `${Math.round(x * 100)}%`;
+const median = (xs: number[]) => { const s = [...xs].sort((a, b) => a - b); return s[Math.floor(s.length / 2)] ?? 0; };
+
+/** The student's school items still ahead, of some kinds, soonest first. */
+function ahead(sim: Simulation, person: Person, kinds: readonly string[]) {
+  return sim.universe.scheduled
+    .filter((item) => item.status === 'pending' && kinds.includes(item.kind) && item.payload.personId === person.id)
+    .sort((a, b) => a.at - b.at);
+}
 
 export function SchoolWorkspace() {
-  const { sim } = useGame();
   const person = useWorld((s) => s.player);
+  const [tab, setTab] = useState<SchoolTab>('standing');
   const school = person.school;
-  if (!school) return <Empty title="No School" body="This life didn’t begin at drama school." />;
-  const cur = saveCurrency(sim.universe);
-  const money = (c: number) => formatMoney(c, cur);
-  const zone = CITIES.require(YALE_DRAMA.cityId).timeZone;
-  const day = (d: { year: number; month: number; day: number }) => formatDate(instantFromZoned({ ...d, hour: 12 }, zone), zone);
-  const account = termAccount(cur);
-  const dean = YALE_DRAMA.dean;
-  const terms = Array.from({ length: YALE_DRAMA.terms }, (_, i) => ({ i, ...termStart(i) }));
-  const orientationAhead = sim.now < instantFromZoned({ ...ORIENTATION_2026.classesBegin, hour: 9 }, zone);
+  if (!school || !person.craft) return <Empty title="No School" body="This life didn’t begin at drama school." />;
+  const where = school.standing === 'graduated' ? 'Graduated.' : school.termsBegun === 0 ? 'Arriving for the fall term.' : `Year ${yearOfStudy(person)} of three, ${STANDING_LABEL[school.standing].toLowerCase()}.`;
+
+  const panes: Record<SchoolTab, JSX.Element> = {
+    standing: <StandingPane />,
+    classes: <ClassesPane />,
+    casting: <CastingPane />,
+    work: <WorkPane />,
+    terms: <TermsPane />,
+  };
 
   return (
     <>
       <div className="page-head">
         <div className="eyebrow">Your School</div>
         <h1>{YALE_DRAMA.name}</h1>
-        <p className="muted">
-          {YALE_DRAMA.degree} in {YALE_DRAMA.program}, class of {school.classOf}. {school.termsBegun === 0 ? 'Arriving for the fall term.' : `Year ${yearOfStudy(person)} of three.`}
-        </p>
+        <p className="muted">{YALE_DRAMA.degree} in {YALE_DRAMA.program}, class of {school.classOf}. {where}</p>
       </div>
+      <SchoolTabs tab={tab} onTab={setTab} />
+      <div role="tabpanel" id={`school-pane-${tab}`} aria-labelledby={`school-tab-${tab}`} tabIndex={0}>
+        {panes[tab]}
+      </div>
+    </>
+  );
+}
 
-      <div className="grid grid-2" style={{ marginBottom: 'var(--s5)' }}>
-        <Panel title="Your Place" subtitle={`One of ${YALE_DRAMA.classSize} actors admitted this year`}>
+/** The tabs, as a tab list: arrows move between them, Home and End go to the ends. */
+function SchoolTabs({ tab, onTab }: { tab: SchoolTab; onTab: (tab: SchoolTab) => void }) {
+  const go = (index: number) => {
+    const next = SCHOOL_TABS[(index + SCHOOL_TABS.length) % SCHOOL_TABS.length]!;
+    onTab(next.id);
+    document.getElementById(`school-tab-${next.id}`)?.focus();
+  };
+  return (
+    <div className="tabs" role="tablist" aria-label="Your School">
+      {SCHOOL_TABS.map((one, i) => (
+        <button
+          key={one.id}
+          id={`school-tab-${one.id}`}
+          type="button"
+          role="tab"
+          className="tab"
+          aria-selected={one.id === tab}
+          aria-controls={`school-pane-${one.id}`}
+          tabIndex={one.id === tab ? 0 : -1}
+          onClick={() => onTab(one.id)}
+          onKeyDown={(e) => {
+            if (e.key === 'ArrowRight') { e.preventDefault(); go(i + 1); }
+            else if (e.key === 'ArrowLeft') { e.preventDefault(); go(i - 1); }
+            else if (e.key === 'Home') { e.preventDefault(); go(0); }
+            else if (e.key === 'End') { e.preventDefault(); go(SCHOOL_TABS.length - 1); }
+          }}
+        >
+          {one.label}
+        </button>
+      ))}
+    </div>
+  );
+}
+
+/** Standing, this term's tally against the floors, the craft against the class, and the evaluations. */
+function StandingPane() {
+  const { sim } = useGame();
+  const person = useWorld((s) => s.player);
+  const school = person.school!;
+  const craft = person.craft!;
+  const t = school.tally;
+  const expected = (t.classDays - t.excused) + t.calls + t.shifts;
+  const attendance = expected > 0 ? (t.attended + t.answered + t.worked) / expected : undefined;
+  const growth = meanCraft(craft) - meanCraft(t.craftAtStart);
+  const classGrowth = median(school.classmates.map((m, i) => meanCraft(m.craft) - (t.classAtStart[i] ?? meanCraft(m.craft))));
+  const evaluation = ahead(sim, person, [EVALUATION_KIND])[0];
+  const skills: { id?: Skill; label: string; mine: number; theirs: number[] }[] = [
+    ...SKILLS.map((s) => ({ id: s.id, label: s.label, mine: craft[s.id], theirs: school.classmates.map((m) => m.craft[s.id]) })),
+    { label: 'Overall', mine: meanCraft(craft), theirs: school.classmates.map((m) => meanCraft(m.craft)) },
+  ];
+
+  return (
+    <div className="col gap-5">
+        <Panel title="Your Standing" subtitle={evaluation ? `Evaluated ${formatDate(evaluation.at, zone())}` : undefined}>
           <div className="col gap-3">
+            <div className="grid grid-3">
+              <Stat label="Standing" value={STANDING_LABEL[school.standing]} tone={school.standing === 'good' || school.standing === 'graduated' ? undefined : 'warning'} />
+              <Stat label="Attendance This Term" value={attendance === undefined ? 'None Yet' : pct(attendance)} note={`${pct(ESTIMATE.attendanceFloor)} is the floor`} tone={attendance !== undefined && attendance < ESTIMATE.attendanceFloor ? 'warning' : undefined} />
+              <Stat label="Growth This Term" value={growth.toFixed(1)} note={`The class’s ${classGrowth.toFixed(1)}; half of it is the floor`} tone={classGrowth > 0 && growth < ESTIMATE.growthFloor * classGrowth ? 'warning' : undefined} />
+            </div>
             <p className="small" style={{ margin: 0 }}>
-              The faculty saw you at the auditions and wanted you more than anyone else that year. The school won you with an award that covers your whole cost of attendance, with nothing to borrow.
+              Attendance counts {t.attended} of {t.classDays - t.excused} class days{t.excused ? ` (${t.excused} excused)` : ''}, {t.answered} of {t.calls} calls and {t.worked} of {t.shifts} assigned shifts. Short of either floor at the evaluation, standing falls a step, from good to concern, to warning, to dismissal; meeting both restores it. A missed performance or understudy call goes straight to warning.
             </p>
-            <p className="small" style={{ margin: 0 }}>
-              {dean.name}: {dean.title}, since {formatDate(Date.parse(`${dean.since}T12:00:00Z`), zone)}. {YALE_DRAMA.actingChair.name}: {YALE_DRAMA.actingChair.title}.
-            </p>
-            {orientationAhead && (
-              <p className="small" style={{ margin: 0 }}>
-                Orientation runs from {day(ORIENTATION_2026.begins)} to {day(ORIENTATION_2026.ends)}, and classes begin {day(ORIENTATION_2026.classesBegin)} at 9 a.m.
-              </p>
-            )}
+            <p className="small" style={{ margin: 0 }}>{school.castable ? 'In the casting pool.' : 'Out of the casting pool after missed rehearsal calls, until a good evaluation.'}</p>
+            <p className="xs dim" style={{ margin: 0 }}>The stages are the Yale Bulletin’s. The floors are SLATE’s reading of its “appropriate standards”.</p>
+          </div>
+        </Panel>
+
+        <Panel title="Your Faculty">
+          <div className="col gap-2 small">
+            <div>{YALE_DRAMA.dean.name}: {YALE_DRAMA.dean.title}, since {formatDate(Date.parse(`${YALE_DRAMA.dean.since}T12:00:00Z`), zone())}.</div>
+            <div>{YALE_DRAMA.actingChair.name}: {YALE_DRAMA.actingChair.title}, who casts every student and meets any whose standing falls.</div>
             <p className="xs dim" style={{ margin: 0 }}>Source: {YALE_DRAMA.source}.</p>
           </div>
         </Panel>
 
-        <Panel title="Your Terms" subtitle={`${school.termsBegun} of ${YALE_DRAMA.terms} begun`}>
-          <div className="col gap-2">
-            {terms.map((t) => (
-              <div key={t.i} className="row-between small">
-                <span>{termName(t.i)}</span>
-                <span className={t.i < school.termsBegun ? 'dim' : ''}>
-                  {t.i < school.termsBegun ? 'Begun ' : 'Begins '}{day(t.date)}{t.estimate ? ', SLATE’s estimate' : ''}
-                </span>
-              </div>
-            ))}
-            <p className="xs dim" style={{ margin: 'var(--s2) 0 0' }}>
-              The 2026–2027 dates are the Yale Bulletin’s. Later years aren’t published yet, so they’re SLATE’s estimate by the same pattern.
-            </p>
-          </div>
-        </Panel>
-      </div>
-
-      <Panel title="Your Award" subtitle="Each term, on your Yale student account">
+      <Panel title="Your Craft Against The Class" subtitle={`You and ${school.classmates.length} classmates, 0 to 100`}>
         <div className="col gap-3">
           <div className="table-scroll">
-            <table className="award">
+            <table>
               <thead>
-                <tr><th scope="col">Each term</th><th scope="col" className="num">Billed</th><th scope="col" className="num">Credited</th></tr>
+                <tr><th scope="col">Area</th><th scope="col" className="num">You</th><th scope="col" className="num">Class Best</th><th scope="col" className="num">Class Median</th><th scope="col" className="num">Your Place</th></tr>
               </thead>
               <tbody>
-                <tr><td>Tuition</td><td className="num mono">{money(account.tuition)}</td><td /></tr>
-                <tr><td>Tuition scholarship, from the David Geffen gift</td><td /><td className="num mono">{money(account.tuition)}</td></tr>
-                <tr><td>Yale Health hospitalization and specialty plan</td><td className="num mono">{money(account.healthPlan)}</td><td /></tr>
-                <tr><td>Living-expense scholarship, for living expenses and books</td><td /><td className="num mono">{money(account.livingScholarship)}</td></tr>
-                <tr className="strong"><td>Paid to your bank at the start of the term</td><td /><td className="num mono">{money(account.refund)}</td></tr>
+                {skills.map((row) => (
+                  <tr key={row.label} className={row.id ? undefined : 'strong'}>
+                    <td>{row.label}</td>
+                    <td className="num mono">{row.mine.toFixed(1)}</td>
+                    <td className="num mono">{Math.max(...row.theirs).toFixed(1)}</td>
+                    <td className="num mono">{median(row.theirs).toFixed(1)}</td>
+                    <td className="num mono">{rankIn(person, row.id)} of {YALE_DRAMA.classSize}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p className="xs dim" style={{ margin: 0 }}>
+            The faculty wanted you most from this year’s auditions, and you began ahead of every classmate in every area. Classes, rehearsals and performances grow craft, more when you come rested and less the better you already are; your classmates grow too. The scale and the rates are SLATE’s.
+          </p>
+        </div>
+      </Panel>
+
+      <Panel title="Evaluations">
+        {school.history.length ? (
+          <div className="table-scroll">
+            <table>
+              <thead>
+                <tr><th scope="col">Term</th><th scope="col">Standing</th><th scope="col" className="num">Attendance</th><th scope="col" className="num">Growth</th><th scope="col" className="num">Class Growth</th></tr>
+              </thead>
+              <tbody>
+                {school.history.map((r) => (
+                  <tr key={r.term}>
+                    <td>{termLabel(r.term)}</td>
+                    <td>{STANDING_LABEL[r.standing]}</td>
+                    <td className="num mono">{pct(r.attendance)}</td>
+                    <td className="num mono">{r.growth.toFixed(1)}</td>
+                    <td className="num mono">{r.classGrowth.toFixed(1)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          <p className="small muted" style={{ margin: 0 }}>None yet. The faculty evaluate every student at the end of each term’s classes.</p>
+        )}
+      </Panel>
+    </div>
+  );
+}
+
+const SLOTS = ['9 a.m.', '11 a.m.', '1 p.m.'];
+const WEEKDAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+
+/** The term's week, the courses, the class days, and calling in sick. */
+function ClassesPane() {
+  const { sim, run, toast } = useGame();
+  const p = zonedParts(sim.now, zone());
+  const today = { year: p.year, month: p.month, day: p.day };
+  const term = Math.min(termOf(today), YALE_DRAMA.terms - 1);
+  const year = yearOfTerm(term);
+  const fall = termStart(term).fall;
+  const week = timetable(year, fall ? 'fall' : 'spring');
+  const period = classPeriod(term);
+  const next = nextClasses(sim.now);
+  const off = daysOffIn(term);
+  const classToday = coursesOn(today).length > 0;
+  const courses = COURSES.filter((c) => c.year === year);
+  const skillLabel = (id: Skill) => SKILLS.find((s) => s.id === id)!.label;
+
+  return (
+    <div className="col gap-5">
+      <Panel
+        title={`Your Week, ${termLabel(term)}`}
+        subtitle={`Year ${year}: nine to three on class days`}
+        actions={classToday ? (
+          <Gated feature="school.call_in_sick" onClick={() => { if (run('school.call_in_sick').ok) toast('You called in sick: today’s absence is excused.', 'positive'); }}>Call In Sick</Gated>
+        ) : undefined}
+      >
+        <div className="col gap-3">
+          <div className="table-scroll">
+            <table>
+              <thead><tr><th scope="col">Day</th>{SLOTS.map((s) => <th key={s} scope="col">{s}</th>)}</tr></thead>
+              <tbody>
+                {week.map((day, i) => (
+                  <tr key={WEEKDAYS[i]}>
+                    <td>{WEEKDAYS[i]}</td>
+                    {SLOTS.map((s, j) => <td key={s}>{day[j]?.name ?? ''}</td>)}
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
           <p className="small" style={{ margin: 0 }}>
-            A year costs {money(COST_2026_27.tuition + COST_2026_27.livingExpenses + COST_2026_27.books)} to attend, and the award meets all of it: tuition, {money(COST_2026_27.livingExpenses)} of living expenses with the health plan, and {money(COST_2026_27.books)} of books and supplies. There’s nothing to borrow and nothing to repay.
+            {next ? `Next classes: ${formatDateTime(next, zone())}.` : 'No classes ahead.'} This term’s classes run {dayOf(period.from)} to {dayOf(period.to)}, less {off} breaks for holidays, Community Days, work periods and recesses. Asleep or away from New Haven at nine is an absence; calling in sick excuses it when you’re unwell ({ESTIMATE.sickBelow} condition or lower), and not otherwise.
           </p>
           <p className="xs dim" style={{ margin: 0 }}>
-            The {COST_2026_27.year} figures are the school’s; later years will cost more, and until they’re published the award holds at these. Books and supplies run $913 to $2,373 by program, and the school doesn’t say an actor’s, so the award takes the most. Yale’s usual top award includes a $9,500 first-year loan; this one doesn’t. Source: {COST_2026_27.source}.
+            {period.estimate ? 'This term’s dates are SLATE’s estimate by the 2026–2027 pattern. ' : 'The class days are the Yale Bulletin’s. '}The courses are the Bulletin’s; how often each meets isn’t published, and the week is SLATE’s estimate.
           </p>
         </div>
       </Panel>
-    </>
+
+      <Panel title={`Year ${year} Courses`} subtitle="Required, every term they run">
+        <div className="table-scroll">
+          <table>
+            <thead><tr><th scope="col">Code</th><th scope="col">Course</th><th scope="col">Taught By</th><th scope="col">Trains</th><th scope="col" className="num">A Week</th><th scope="col">Terms</th></tr></thead>
+            <tbody>
+              {courses.map((c) => (
+                <tr key={c.code}>
+                  <td className="mono">{c.code}</td>
+                  <td>{c.name}</td>
+                  <td>{c.teachers}</td>
+                  <td>{skillLabel(c.skill)}</td>
+                  <td className="num mono">{c.perWeek}</td>
+                  <td>{c.terms.length === 2 ? 'Fall And Spring' : c.terms[0] === 'fall' ? 'Fall' : 'Spring'}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </Panel>
+    </div>
+  );
+}
+
+/** What the chair cast the student in, and the calls it puts on the calendar. */
+function CastingPane() {
+  const { sim } = useGame();
+  const person = useWorld((s) => s.player);
+  const school = person.school!;
+  const casting = school.casting;
+  const calls = ahead(sim, person, [CALL_KIND]).filter((c) => c.payload.call !== 'oncall').slice(0, 8);
+  const onCall = ahead(sim, person, [CALL_KIND]).filter((c) => c.payload.call === 'oncall');
+
+  return (
+    <div className="col gap-5">
+      <Panel title={casting ? casting.production : 'Not Cast Yet'} subtitle={casting ? (casting.kind === 'understudy' ? `Understudying ${casting.role} at Yale Rep` : 'A School project') : undefined}>
+        <div className="col gap-3">
+          {casting ? (
+            <>
+              <div className="grid grid-3">
+                <Stat label="Role" value={casting.kind === 'understudy' ? `${casting.role} (Understudy)` : casting.role} />
+                <Stat label={casting.kind === 'understudy' ? 'Went On' : 'Performed'} value={String(casting.performed)} />
+                <Stat label="Calls Ahead" value={String(calls.length + onCall.length)} />
+              </div>
+              {casting.kind === 'understudy' && (
+                <p className="small" style={{ margin: 0 }}>
+                  {SEAGULL_2027.name}, {SEAGULL_2027.by}, directed by {SEAGULL_2027.director}: rehearsals from {dayOf(parseDay(SEAGULL_2027.rehearsals.from))}, performances {dayOf(parseDay(SEAGULL_2027.run.from))} to {dayOf(parseDay(SEAGULL_2027.run.to))}. You’re on call at all {onCall.length} performances still ahead: in New Haven and awake, or it’s a grave breach if you’re needed.
+                </p>
+              )}
+            </>
+          ) : (
+            <p className="small" style={{ margin: 0 }}>
+              {school.castable
+                ? 'The chair casts every student each term from the spring. In the first spring, the first-year with the most acting craft, in good standing, understudies at Yale Rep; everyone else is in a School project.'
+                : 'Out of the casting pool after missed rehearsal calls. A good evaluation puts you back.'}
+            </p>
+          )}
+          <p className="xs dim" style={{ margin: 0 }}>
+            Casting is the Bulletin’s: the chair casts, a student cast fulfils it, missed calls take an actor out of the pool, and a missed performance is a grave breach. {SEAGULL_2027.name}’s dates are Yale Rep’s; the School projects’ dates and every call’s hours are SLATE’s estimate.
+          </p>
+        </div>
+      </Panel>
+
+      {calls.length > 0 && (
+        <Panel title="Calls Ahead">
+          <div className="col gap-2">
+            {calls.map((c) => (
+              <div key={c.id} className="row-between small">
+                <span>{c.label}</span>
+                <span className="mono">{formatDateTime(c.at, zone())}</span>
+              </div>
+            ))}
+          </div>
+        </Panel>
+      )}
+    </div>
+  );
+}
+
+const parseDay = (key: string) => { const [year, month, day] = key.split('-').map(Number); return { year: year!, month: month!, day: day! }; };
+
+/** The year's hours, the shifts ahead, Friday's pay, and asking for an elective evening. */
+function WorkPane() {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const work = person.school!.workStudy;
+  const cur = saveCurrency(sim.universe);
+  const shifts = ahead(sim, person, [SHIFT_KIND]).slice(0, 6);
+  const rate = hourlyIn(cur);
+
+  return (
+    <Panel
+      title="Work-Study"
+      subtitle={`${WORK_STUDY.assignedHours} assigned hours and up to ${WORK_STUDY.electiveHours} elective a year`}
+      actions={<Gated feature="school.take_shift" onClick={() => { const a = run<{ at: number }>('school.take_shift'); if (a.ok && a.value) toast(`Front of house, ${formatDateTime(a.value.at, zone())}.`, 'positive'); }}>Take An Elective Shift</Gated>}
+    >
+      <div className="col gap-3">
+        <div className="grid grid-3">
+          <Stat label="Hours This Year" value={String(work.yearHours)} note={`Of ${WORK_STUDY.assignedHours + WORK_STUDY.electiveHours} at most`} />
+          <Stat label="Elective Hours Asked For" value={`${work.electiveHours} of ${WORK_STUDY.electiveHours}`} />
+          <Stat label="Owed On Friday" value={formatMoney(Math.round(work.owedHours * rate), cur)} note={`${work.owedHours} hours at ${formatMoney(rate, cur)} an hour`} />
+        </div>
+        {shifts.length > 0 && (
+          <div className="col gap-2">
+            {shifts.map((s) => (
+              <div key={s.id} className="row-between small">
+                <span>{s.label}</span>
+                <span className="mono">{formatDateTime(s.at, zone())}</span>
+              </div>
+            ))}
+          </div>
+        )}
+        <p className="small" style={{ margin: 0 }}>
+          Every student works: six hours each Saturday of the class weeks, assigned, and elective evenings of four hours front of house at Yale Rep when you ask for them. Hours are paid on Friday for the week, by direct deposit, so your bank counts them as wages. A shift you’re not there for isn’t paid, and a missed assigned one counts against your attendance.
+        </p>
+        <p className="xs dim" style={{ margin: 0 }}>The hours and the rate are the school’s. Which Saturdays and evenings are SLATE’s estimate. Source: {WORK_STUDY.source}.</p>
+      </div>
+    </Panel>
+  );
+}
+
+/** The six terms, and what each bills and credits on the Yale account. */
+function TermsPane() {
+  const { sim } = useGame();
+  const person = useWorld((s) => s.player);
+  const school = person.school!;
+  const cur = saveCurrency(sim.universe);
+  const money = (c: number) => formatMoney(c, cur);
+  const need = hasNeed(person);
+  const account = termAccount(cur, need);
+  const terms = Array.from({ length: YALE_DRAMA.terms }, (_, i) => ({ i, ...termStart(i) }));
+
+  return (
+    <div className="grid grid-2">
+      <Panel title="Your Terms" subtitle={`${school.termsBegun} of ${YALE_DRAMA.terms} begun`}>
+        <div className="col gap-2">
+          {terms.map((t) => (
+            <div key={t.i} className="row-between small">
+              <span>{termLabel(t.i)}</span>
+              <span className={t.i < school.termsBegun ? 'dim' : ''}>
+                {t.i < school.termsBegun ? 'Began ' : 'Begins '}{dayOf(t.date)}{t.estimate ? ', SLATE’s estimate' : ''}
+              </span>
+            </div>
+          ))}
+          <p className="xs dim" style={{ margin: 'var(--s2) 0 0' }}>
+            The 2026–2027 dates are the Yale Bulletin’s. Later years aren’t published yet, so they’re SLATE’s estimate by the same pattern.
+          </p>
+        </div>
+      </Panel>
+
+      <Panel title="Your Yale Account" subtitle="Each term">
+        <div className="col gap-3">
+          <div className="table-scroll">
+            <table>
+              <thead><tr><th scope="col">Each Term</th><th scope="col" className="num">Billed</th><th scope="col" className="num">Credited</th></tr></thead>
+              <tbody>
+                <tr><td>Tuition</td><td className="num mono">{money(account.tuition)}</td><td /></tr>
+                <tr><td>Tuition Scholarship</td><td /><td className="num mono">{money(account.tuition)}</td></tr>
+                <tr><td>Yale Health Plan</td><td className="num mono">{money(account.healthPlan)}</td><td /></tr>
+                {need && <tr><td>Living-Expense Scholarship</td><td /><td className="num mono">{money(account.livingScholarship)}</td></tr>}
+                <tr className="strong">
+                  <td>{need ? 'Paid To Your Bank' : 'Paid From Your Bank'}</td>
+                  <td className="num mono">{need ? '' : money(account.healthPlan)}</td>
+                  <td className="num mono">{need ? money(account.refund) : ''}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p className="small" style={{ margin: 0 }}>
+            Tuition is met in full for every student, from the David Geffen gift. Aid for living costs, {money(COST_2026_27.livingExpenses)} a year with the health plan and up to {money(COST_2026_27.books)} of books, goes by need, and the need assessment reads the family’s means. {need ? 'Yours found need, and the scholarship meets it.' : 'Yours found none, so the health plan and living costs come from your bank.'}
+          </p>
+          <p className="xs dim" style={{ margin: 0 }}>The {COST_2026_27.year} figures are the school’s, and later years hold at them until they’re published. Source: {COST_2026_27.source}.</p>
+        </div>
+      </Panel>
+    </div>
   );
 }

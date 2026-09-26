@@ -181,18 +181,24 @@ part the tool cannot see.
   on debit card purchases is published by few of the 60 banks and isn't
   enforced; the daily ATM limit is. A card whose cash advance terms weren't
   found charges SLATE's estimate, 5% or $10 at the purchase rate, and says so.
-- **Drama school is its first portion.** A new life begins as a first-year
-  actor at the David Geffen School of Drama at Yale, the one the faculty
-  wanted most, on an award covering the whole cost of attendance, paid
-  term by term. What isn't there yet:
-  - Being the faculty's first choice is said, and pays the full award,
-    but no measure of an actor's ability exists for it to raise: nothing
-    evaluates, casts or grades anybody yet.
-  - Classes, rehearsals and their hours, the school's evaluations, casting,
-    Yale Rep understudying and work-study, which the school counts toward
-    every award; the scholarship stands in for work-study's wages.
-  - The living-expense scholarship is taxable income in the US, and the
-    tax engine collects nothing.
+- **Drama school runs its three years, and nothing follows them.** A new
+  life begins as a first-year actor at the David Geffen School of Drama at
+  Yale, ahead of every classmate in craft; classes, work-study, casting,
+  Yale Rep understudying and each term's evaluation all read and move it
+  (`systems/school.ts`). Until 2026-09-26 being the faculty's first choice
+  was said and paid a full award, with no measure of ability for it to
+  raise, and the award covered living costs whatever the family; Yale's
+  aid for them goes by need. What's still open:
+  - After Commencement the MFA is conferred and nothing reads it: no
+    auditions, agents or work yet use the craft or the degree.
+  - Yale Rep's 2026–2027 season is the only one published, so only the
+    first spring can cast an understudy there; every later term casts a
+    School project, whose dates are SLATE's estimate.
+  - The fifteen classmates are a name and a craft each: they grow, set the
+    evaluation's median and the player's place, and do nothing else.
+  - A student in need is paid a living-expense scholarship that's taxable
+    income in the US, and the tax engine collects nothing. The player's
+    family rules need out, so their life isn't touched by it.
   - Later years' dates and costs aren't published; the terms after
     2026–2027 are SLATE's estimate, at that year's figures.
   - The bachelor's degree the MFA asks for is taken as read, and only the

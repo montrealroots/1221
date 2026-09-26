@@ -27,6 +27,8 @@ import { accountNumber } from './systems/banknumber';
 import { fraudOn } from './systems/security';
 import { bankById } from './content/banks';
 import { MS_DAY } from './core/time';
+import { admittedClass, classmatesIn, goesOn, meanCraft } from './systems/school';
+import { newLifeConfig } from './world/bootstrap';
 
 // ---------------------------------------------------------------------------
 // The sky
@@ -209,3 +211,57 @@ defineDecider<Theft, string>({
 function livingIn(cityId: string, seed: number): Simulation {
   return quickSave({ startLocationId: cityId, homeRegionId: cityId, livesWhereBorn: true }, `fraud-${seed}`);
 }
+
+// ---------------------------------------------------------------------------
+// Drama school
+// ---------------------------------------------------------------------------
+
+/** A life begun at drama school, born in New York, under a seed. */
+function atYale(seed: number): Simulation {
+  return quickSave({ ...newLifeConfig(), homeRegionId: 'us-ny-newyork' }, `yale-${seed}`);
+}
+
+defineDecider<{ sim: Simulation }, string>({
+  id: 'school.class',
+  decides: 'Who the fifteen classmates are, and the craft each brings from the auditions, which sets the player’s above them.',
+  drawnIn: 'src/engine/systems/school.ts',
+  reads: {
+    // Two saves are two admitted classes.
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed) }),
+  decide: ({ sim }) => {
+    const { classmates, player } = admittedClass(sim, sim.player);
+    return classmates.map((m) => `${m.name} ${meanCraft(m.craft).toFixed(1)}`).join(', ') + ` / ${meanCraft(player).toFixed(1)}`;
+  },
+});
+
+defineDecider<{ sim: Simulation; day: number }, string>({
+  id: 'school.attendance',
+  decides: 'Which classmates are in class on a day, and so grow from it.',
+  drawnIn: 'src/engine/systems/school.ts',
+  reads: {
+    // The day: each is drawn on its own.
+    day: (o, t) => ({ ...o, day: Math.round(t * 60) }),
+    // Two saves are two classes.
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), day: seed % 60 }),
+  // A fortnight of class days from the one read, so an absence shows.
+  decide: ({ sim, day }) => Array.from({ length: 14 }, (_, n) => classmatesIn(sim, sim.player, `day-${day + n}`).map((x) => (x ? '1' : '0')).join('')).join(' '),
+});
+
+defineDecider<{ sim: Simulation; night: number }, string>({
+  id: 'school.understudy',
+  decides: 'On which performances an understudy on call is sent on.',
+  drawnIn: 'src/engine/systems/school.ts',
+  reads: {
+    // Which run of nights.
+    night: (o, t) => ({ ...o, night: Math.round(t * 400) }),
+    // Two saves are two runs of luck.
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), night: seed * 7 }),
+  // Two hundred nights, so the rare night on shows.
+  decide: ({ sim, night }) => Array.from({ length: 200 }, (_, n) => (goesOn(sim, sim.player, sim.now + (night + n) * MS_DAY) ? String(night + n) : '')).filter(Boolean).join(',') || 'none',
+});

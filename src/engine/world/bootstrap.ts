@@ -95,6 +95,12 @@ export interface NewSaveConfig {
    * the town and the day. Absent, the town and day chosen below.
    */
   school?: 'yale-drama';
+  /**
+   * The family they come from, which the engine reads and no screen shows:
+   * a wealthy family's means rule out need, so Yale's aid for living costs
+   * doesn't come (`systems/school.ts`, `hasNeed`).
+   */
+  family?: 'wealthy';
 
   /** Starting point */
   startLocationId: string;
@@ -158,13 +164,31 @@ export function atSchool(config: NewSaveConfig): NewSaveConfig {
 }
 
 /**
- * A new life in the game: born in New York, and beginning at drama school.
- * The engine's `defaultConfig` stays where it was for saves made by tests
- * and tools, which choose their own town and day.
+ * A new life in the game: beginning at drama school, from a wealthy
+ * family, with the family's money behind them in the bank. The birthplace is
+ * the player's to choose, and none is chosen for them (until 2026-09-26 it
+ * was New York). The engine's `defaultConfig` stays where it was for saves
+ * made by tests and tools, which choose their own town and day.
  */
 export function newLifeConfig(): NewSaveConfig {
-  return atSchool({ ...defaultConfig(), homeRegionId: 'us-ny-newyork', livesWhereBorn: false, birthYear: 2002 });
+  return atSchool({ ...defaultConfig(), homeRegionId: '', livesWhereBorn: false, birthYear: 2002, wealth: 'wealthy', family: 'wealthy' });
 }
+
+/**
+ * A draft carried back into a new life: what the player chose, at the
+ * school, with the family and money the life comes with rather than any the
+ * draft had.
+ */
+export function newLifeFrom(draft: Partial<NewSaveConfig>): NewSaveConfig {
+  const life = newLifeConfig();
+  return atSchool({ ...life, ...draft, wealth: life.wealth, family: life.family });
+}
+
+/** Whether the player picks what they start with: not in a life whose family sets it. */
+export const choosesWealth = (config: NewSaveConfig) => config.family === undefined;
+
+/** Whether the school's need assessment would find need, as `hasNeed` reads a person (`systems/school.ts`). */
+export const findsNeed = (config: NewSaveConfig) => config.family !== 'wealthy';
 
 const WEALTH_PROFILE: Record<StartingWealth, { checking: Money; savings: Money; cardLimit: Money; cardBalance: Money; creditScore: number; note: string }> = {
   nothing: { checking: 40_00, savings: 0, cardLimit: 0, cardBalance: 0, creditScore: 520, note: 'Next to nothing to your name, and no savings behind it.' },
@@ -317,6 +341,7 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveCon
     ...(config.raceEthnicityOwn?.trim() ? { raceEthnicityOwn: config.raceEthnicityOwn.trim() } : {}),
     homeRegionId: config.homeRegionId,
     citizenshipId,
+    ...(config.family ? { family: config.family } : {}),
     currentLocationId: config.startLocationId,
     // Inside the slider's range, and only traits that can be held together:
     // the screen enforces both, and a save built straight from the engine
