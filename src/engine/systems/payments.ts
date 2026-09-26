@@ -49,7 +49,7 @@ export interface CheckInFlight { id: string; amount: Money; memo: string; catego
 export interface PaymentSettings {
   rent: RentWay;
   bills: BillsWay;
-  everyday: 'debit' | 'credit';
+  everyday: 'debit' | 'credit' | 'cash';
   /** Savings backs the current account (overdraft protection). */
   linkSavings: boolean;
   standingOrders: StandingOrder[];
@@ -225,7 +225,7 @@ export function registerPayments(sim: Simulation): void {
     }
   });
 
-  sim.onCommand<{ rent?: RentWay; bills?: BillsWay; everyday?: 'debit' | 'credit'; linkSavings?: boolean }, { payments: PaymentSettings }>('bank.set_payments', (p, { sim: s }) => {
+  sim.onCommand<{ rent?: RentWay; bills?: BillsWay; everyday?: 'debit' | 'credit' | 'cash'; linkSavings?: boolean }, { payments: PaymentSettings }>('bank.set_payments', (p, { sim: s }) => {
     const person = s.player;
     const pay = settle(person);
     const cityId = person.home?.cityId ?? person.currentLocationId;
@@ -246,7 +246,7 @@ export function registerPayments(sim: Simulation): void {
       pay.bills = p.bills;
     }
     if (p.everyday !== undefined) {
-      if (p.everyday !== 'debit' && p.everyday !== 'credit') throw new CommandError('Everyday spending goes on the debit card or the credit card.');
+      if (p.everyday !== 'debit' && p.everyday !== 'credit' && p.everyday !== 'cash') throw new CommandError('Everyday spending goes in cash, on the debit card or on the credit card.');
       pay.everyday = p.everyday;
     }
     if (p.linkSavings !== undefined) pay.linkSavings = Boolean(p.linkSavings);

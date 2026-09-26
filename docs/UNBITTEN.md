@@ -174,6 +174,13 @@ part the tool cannot see.
   purchases; Monaco's and Ukraine's figures weren't the law's own; the
   British £12 late fee is regulator guidance, and the United States' after
   2025's ruling wasn't found.
+- **Some of what cash costs isn't known.** Another bank's machine's owner
+  may add a fee of its own in the US, Canada, Mexico, Britain, Ireland,
+  Iceland, France, Germany and Australia; SLATE charges the card's bank's
+  fee and says the owner's may come on top, not what it is. A daily limit
+  on debit card purchases is published by few of the 60 banks and isn't
+  enforced; the daily ATM limit is. A card whose cash advance terms weren't
+  found charges SLATE's estimate, 5% or $10 at the purchase rate, and says so.
 - **The tax engine is a screen again.** `content/tax.ts` works out income
   and payroll tax on a wage for the place card and Home's Tax On A Wage, and
   nothing is paid through it. The day job withheld through it outside the

@@ -22,6 +22,7 @@ import { BankLending } from '@/ui/bank/BankLending';
 import { BankCard } from '@/ui/bank/BankCard';
 import { BankStatements } from '@/ui/bank/BankStatements';
 import { BankPayments } from '@/ui/bank/BankPayments';
+import { BankCash } from '@/ui/bank/BankCash';
 import { apyOf } from '@/engine/systems/statements';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { formatDate } from '@/engine/core/time';
@@ -163,6 +164,10 @@ export function BankWorkspace() {
       )}
 
       <BankPayments />
+
+      <div style={{ margin: 'var(--s5) 0' }}>
+        <BankCash bankId={bank.id} />
+      </div>
 
       <BankLending bank={bank} />
 

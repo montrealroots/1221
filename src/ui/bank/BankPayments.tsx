@@ -82,6 +82,7 @@ export function BankPayments() {
         <div className="field">
           <label htmlFor="pay-everyday">The Day’s Spending</label>
           <select id="pay-everyday" value={pay.everyday} onChange={(e) => run('bank.set_payments', { everyday: e.target.value })}>
+            <option value="cash">In Cash, Then The Debit Card</option>
             <option value="credit">On The Credit Card</option>
             <option value="debit">On The Debit Card</option>
           </select>

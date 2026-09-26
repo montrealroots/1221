@@ -71,6 +71,8 @@ export function registerCardLife(sim: Simulation): void {
     fresh.missed = 0;
     fresh.accrued = 0;
     fresh.trailing = 0;
+    fresh.cashOwed = 0;
+    fresh.cashAccrued = 0;
     const terms = cardTerms(s, card, person.credit!.score);
     // The rate the record buys today, held from here on.
     card.apr = terms.priced;

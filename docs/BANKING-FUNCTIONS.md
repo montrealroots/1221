@@ -15,9 +15,9 @@ When a module lands, its rows change to **Has it** in the same commit.
 
 | | Functions |
 |---|---|
-| Has it | 116 |
-| To build | 63 |
-| Waits | 97 |
+| Has it | 131 |
+| To build | 45 |
+| Waits | 100 |
 | Outside the game | 30 |
 | **All** | **306** |
 
@@ -27,7 +27,7 @@ When a module lands, its rows change to **Has it** in the same commit.
 |---|---|---|
 | 1 | Statements and records | Done, 2026-09-26 |
 | 2 | Payments: direct debits, standing orders, checks and how each thing is paid | Done, 2026-09-26 |
-| 3 | Cash | 18 to build |
+| 3 | Cash | Done, 2026-09-26 |
 | 4 | The card’s life: applying, limits, closing, default | Done, 2026-09-26 |
 | 5 | How a card charges interest | Done, 2026-09-26 |
 | 6 | Security: locking, loss, theft and fraud | 17 to build |
@@ -73,12 +73,12 @@ When a module lands, its rows change to **Has it** in the same commit.
 
 | # | Function | SLATE | How, or what it waits on |
 |---|---|---|---|
-| A28 | Cash deposit at a teller | Module 3 | Pay cash in at the bank. |
-| A29 | Cash or check deposit at an ATM | Module 3 | Pay cash in at an ATM. |
+| A28 | Cash deposit at a teller | Has it | Pay cash in at the bank. |
+| A29 | Cash or check deposit at an ATM | Has it | Pay cash in at an ATM. |
 | A30 | Check deposit at a branch | Waits | Waits on someone paying the character by check. |
 | A31 | Mobile check deposit | Waits | Waits on someone paying the character by check. |
 | A32 | Night depository and mail deposits | Waits | Waits on someone paying the character by check. |
-| A33 | Deposit at the Post Office | Module 3 | Pay cash in at the Post Office (UK). |
+| A33 | Deposit at the Post Office | Has it | Pay cash in at the Post Office (UK). |
 | A34 | Endorse a check | Waits | Waits on checks paid to the character. |
 | A35 | Direct deposit | Waits | Waits on income: the owner’s next route. |
 | A36 | Early direct deposit | Waits | Waits on income. |
@@ -93,7 +93,7 @@ When a module lands, its rows change to **Has it** in the same commit.
 | A45 | Bank refuses or reverses a deposit | Waits | Waits on deposits from outside. |
 | A46 | Charge-back of a returned deposited item | Waits | Waits on deposits from outside. |
 | A47 | Reversal of a mistaken credit | Waits | Waits on deposits from outside. |
-| A48 | Deposit adjustment | Module 3 | A cash deposit is counted and credited as counted. |
+| A48 | Deposit adjustment | Has it | A cash deposit is counted and credited as counted. |
 | A49 | Maximum balance | Waits | Waits on research on which accounts cap the balance. |
 
 ### A.3 Money out and payments
@@ -101,11 +101,11 @@ When a module lands, its rows change to **Has it** in the same commit.
 | # | Function | SLATE | How, or what it waits on |
 |---|---|---|---|
 | A50 | Debit card purchase | Has it | The day’s food is paid by debit card. |
-| A51 | Cash back at checkout | Module 3 | Cash back with a debit card purchase. |
-| A52 | ATM withdrawal | Module 3 | Take cash out at an ATM, with the bank’s own and other banks’ ATM fees. |
+| A51 | Cash back at checkout | Waits | Waits on shops: cash back is the shop’s to give. |
+| A52 | ATM withdrawal | Has it | Take cash out at an ATM, with the bank’s own and other banks’ ATM fees. |
 | A53 | Other ATM services | Has it | Balance and transfers, in the bank’s screen. |
-| A54 | Teller withdrawal | Module 3 | Take cash out at the counter. |
-| A55 | Cash at another bank's teller | Module 3 | Cash from another bank’s counter, for its fee. |
+| A54 | Teller withdrawal | Has it | Take cash out at the counter. |
+| A55 | Cash at another bank's teller | Waits | Waits on research: only Chase’s 3% or $5 was found. |
 | A56 | Write a check | Has it | Pay the rent by check where rent is paid that way (the United States). |
 | A57 | Bank's check-paying rules | Has it | The bank’s rules for paying a check. |
 | A58 | Order checks / counter checks | Has it | Order checks. |
@@ -174,7 +174,7 @@ When a module lands, its rows change to **Has it** in the same commit.
 | A111 | Order deposits repay overdraft | Has it | Money in clears what’s overdrawn first. |
 | A112 | Overdraft collection and charge-off | Has it | Charge-off and collections. |
 | A113 | Overdraft opt-in for ATM and one-time debit | Has it | Debit card overdraft opt-in. |
-| A114 | ATM fees | Module 3 | ATM fees, the bank’s and the ATM owner’s. |
+| A114 | ATM fees | Has it | ATM fees, the bank’s and the ATM owner’s. |
 | A115 | Rush card replacement fee | Module 6 | A rush replacement card’s fee. |
 | A116 | Legal processing fee | Waits | Waits on garnishment. |
 | A117 | Custody fee on large balances | Waits | Waits on research: no bank on record charges one in 2026. |
@@ -208,7 +208,7 @@ When a module lands, its rows change to **Has it** in the same commit.
 
 | # | Function | SLATE | How, or what it waits on |
 |---|---|---|---|
-| A138 | Daily card limits | Module 3 | Daily ATM and purchase limits. |
+| A138 | Daily card limits | Has it | Daily ATM and purchase limits. |
 | A139 | Contactless and payment limits | Outside the game | Outside the game: contactless taps. |
 | A140 | Authorization hold | Module 9 | Authorization holds. |
 | A141 | Hold on existing funds when cashing a check | Waits | Waits on checks. |
@@ -262,7 +262,7 @@ When a module lands, its rows change to **Has it** in the same commit.
 |---|---|---|---|
 | B8 | Scheduled transfers from checking | Has it | A standing order into savings. |
 | B9 | Round-up saving | Module 7 | Round-ups where the bank offers them (Bank of America’s Keep the Change). |
-| B10 | Self-service deposit to savings | Module 3 | Cash into savings. |
+| B10 | Self-service deposit to savings | Has it | Cash into savings. |
 | B11 | No top-ups on a CD mid-term | Has it | A term deposit takes nothing more. |
 
 ### B.3 Money out and payments
@@ -278,7 +278,7 @@ When a module lands, its rows change to **Has it** in the same commit.
 | B18 | Withdraw CD interest penalty-free | Module 7 | Take a term deposit’s paid interest. |
 | B19 | Savings as overdraft backup | Has it | Savings as the current account’s backup, by choice. |
 | B20 | Outgoing wire from savings | Waits | Waits on payees who take wires. |
-| B21 | Self-service withdrawal cap | Module 3 | Germany’s €2,000 a month from savings by card. |
+| B21 | Self-service withdrawal cap | Has it | Germany’s €2,000 a month from savings by card. |
 
 ### B.4 Statements and records
 
@@ -316,7 +316,7 @@ When a module lands, its rows change to **Has it** in the same commit.
 |---|---|---|---|
 | B37 | Password and blocking note on savings | Outside the game | Outside the game: passwords. |
 | B38 | Lost passbook | Outside the game | Outside the game: a paper passbook. |
-| B39 | Savings ATM card limits | Module 3 | A savings card’s cash limits. |
+| B39 | Savings ATM card limits | Waits | Waits on research: no bank’s savings card limits were found. |
 
 ### B.8 Notices and communications
 
@@ -357,7 +357,7 @@ When a module lands, its rows change to **Has it** in the same commit.
 | C18 | Same-day crediting and cutoff | Has it | Payments credited the same day. |
 | C19 | Autopay from a current account | Has it | Autopay. |
 | C20 | Available-credit restoration | Module 9 | Freed credit available after the payment clears. |
-| C21 | Payment allocation | Module 3 | Payments go to the dearest balance first (US, UK): with the cash balance a cash advance makes. |
+| C21 | Payment allocation | Has it | Payments go to the dearest balance first (US, UK): with the cash balance a cash advance makes. |
 | C22 | "Paid in full" conditional payments | Outside the game | Outside the game: paper checks marked paid in full. |
 | C23 | Credit balance refund | Has it | Overpay, and have the credit balance refunded. |
 | C24 | Merchant refunds and credits | Waits | Waits on merchants. |
@@ -370,7 +370,7 @@ When a module lands, its rows change to **Has it** in the same commit.
 |---|---|---|---|
 | C27 | Purchases | Has it | Pay the day’s spending by card, by choice. |
 | C28 | Recurring and scheduled charges | Has it | Bills on the card. |
-| C29 | Cash advance | Module 3 | Cash advance: its fee, its rate and no grace period. |
+| C29 | Cash advance | Has it | Cash advance: its fee, its rate and no grace period. |
 | C30 | Cash-like transactions | Waits | Waits on gambling and crypto. |
 | C31 | Balance transfer | Module 8 | Balance transfer, from a card at another bank. |
 | C32 | Money transfer / cash to bank account | Module 8 | Money transfer from the card to your account (UK), where the card offers it. |
@@ -400,14 +400,14 @@ When a module lands, its rows change to **Has it** in the same commit.
 |---|---|---|---|
 | C47 | Variable purchase APR | Waits | Waits on rates that move with Prime or Bank Rate. |
 | C48 | Grace (interest-free) period | Has it | The grace period, lost and regained, with trailing interest. |
-| C49 | No grace on cash and balance transfers | Module 3 | No grace on cash. |
+| C49 | No grace on cash and balance transfers | Has it | No grace on cash. |
 | C50 | Daily compounding interest | Has it | Interest compounded daily. |
 | C51 | Intro / promotional APR | Module 8 | Introductory rates, where the card has one. |
 | C52 | Penalty APR | Has it | The penalty rate after a payment 60 days late (US), lifted after six on time. |
 | C53 | Limits on rate increases | Has it | The limits on raising a card’s rate. |
 | C54 | Annual fee | Has it | The yearly fee. |
 | C55 | Balance transfer fee | Module 8 | The balance transfer fee. |
-| C56 | Cash advance fee | Module 3 | The cash advance fee. |
+| C56 | Cash advance fee | Has it | The cash advance fee. |
 | C57 | Foreign transaction fee | Waits | Waits on travel. |
 | C58 | Late payment fee | Has it | The late fee never more than the minimum (US), at most four a year (UK). |
 | C59 | Returned payment fee | Has it | A card payment that bounces: the returned payment fee. |
@@ -443,7 +443,7 @@ When a module lands, its rows change to **Has it** in the same commit.
 | C79 | Credit limit increase | Has it | Ask for a higher limit; opt out of unasked raises (UK). |
 | C80 | Credit limit decrease | Has it | Ask for a lower limit. |
 | C81 | Temporary limit increase | Waits | Waits on research: a temporary limit is a bank’s own offer, and none was found. |
-| C82 | Cash limit and daily cash caps | Module 3 | The cash limit. |
+| C82 | Cash limit and daily cash caps | Has it | The cash limit. |
 | C83 | Contactless limit | Outside the game | Outside the game: contactless taps. |
 | C84 | Card controls / freeze | Module 6 | Freeze the card. |
 | C85 | Report lost or stolen | Module 6 | Report the card lost or stolen. |

@@ -37,6 +37,7 @@ import { bankById, bankingIn, banksIn, type Bank, type Product } from '../conten
 import { ageOn } from './mortality';
 import { accountNumber } from './banknumber';
 import { statementReady } from './statements';
+import { savingsLeftThisMonth } from './cash';
 
 export const MONTH_END_KIND = 'bank.month_end';
 
@@ -493,6 +494,10 @@ export function registerBanking(sim: Simulation): void {
     if (!(amount > 0)) throw new CommandError('Say how much to move.');
     if (amount > from.balance) {
       throw new CommandError(`${from.name} holds ${formatMoney(Math.max(0, from.balance), saveCurrency(s.universe), { cents: false })}.`);
+    }
+    const left = savingsLeftThisMonth(s, from);
+    if (left !== undefined && amount > left) {
+      throw new CommandError(`${from.name} lets ${formatMoney(left, saveCurrency(s.universe), { cents: false })} more out this month without notice; more takes three months’ notice.`);
     }
     s.post({
       memo: `Moved to ${to.name}`, category: 'transfer',

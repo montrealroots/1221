@@ -314,6 +314,16 @@ export function spend(sim: Simulation, person: Person, amount: Money, memo: stri
   // A debit card purchase goes into an overdraft only where the bank may pay it there.
   const overdraft = category !== 'food' || purchaseMayOverdraw(sim, person);
   if (!owe && canPay(sim, person, overdraft) < amount) return false;
+  // In cash first, where that's how they pay for the day.
+  if (category === 'food' && paymentsOf(person).everyday === 'cash') {
+    const wallet = accountsOf(sim, person).find((a) => a.kind === 'cash');
+    const inHand = Math.min(amount, Math.max(0, wallet?.balance ?? 0));
+    if (wallet && inHand > 0) {
+      sim.post({ memo, category, postings: [{ accountId: sim.nominalAccount('expense', 'Food').id, amount: inHand }, { accountId: wallet.id, amount: -inHand }] });
+      if (inHand === amount) return true;
+      return spend(sim, person, amount - inHand, memo, category, owe);
+    }
+  }
   const current = checkingOf(sim, person);
   const before = current?.balance ?? 0;
   // On the credit card first where that's how they pay for the day, then the debit card.

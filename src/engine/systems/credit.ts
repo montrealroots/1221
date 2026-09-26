@@ -54,6 +54,7 @@ import { CommandError } from '../core/simulation';
 import { arrearsOf, drawFromBank, inTheBank } from './household';
 import { statementReady } from './statements';
 import { paymentsOf } from './payments';
+import { allocatePayment, cashOwedOn } from './cash';
 
 export const STATEMENT_KIND = 'card.statement';
 export const DUE_KIND = 'card.due';
@@ -102,6 +103,9 @@ export interface CreditState {
   recentFees?: { at: Instant; amount: Money }[];
   /** Since when the card has held a credit balance, for the US six-month refund (C23). */
   creditSince?: Instant;
+  /** The part of what's owed that's cash advances, and the interest built on it, which has no grace period (C29, C49). */
+  cashOwed?: Money;
+  cashAccrued?: number;
 }
 
 const SCORE_MIN = 300;
@@ -116,6 +120,9 @@ const MINIMUM_SHARE = 0.02;
 const LATE_FEE_USD = 32;
 /** What a card charges for a payment that bounces, where its own fee wasn't found: SLATE's estimate, Chase's $40. */
 const RETURNED_PAYMENT_USD = 40;
+/** A cash advance's fee where the card's own wasn't found: SLATE's estimate, Chase's 5% or $10. */
+const CASH_FEE_SHARE = 0.05;
+const CASH_FEE_USD = 10;
 /** Where a card may go over its limit for someone who opted in: SLATE's estimate, a tenth over. */
 const OVER_LIMIT_SHARE = 0.1;
 /** Due dates missed in a row before the bank suspends the card: SLATE's estimate, sixty days late. */
@@ -139,7 +146,7 @@ export function priceWithin(from: number, to: number, score: number): number {
 }
 
 /** A term of the card: the bank's, or SLATE's estimate. */
-export type CardTerm = 'card' | 'rate' | 'minimum' | 'lateFee' | 'annualFee' | 'returnedPaymentFee';
+export type CardTerm = 'card' | 'rate' | 'minimum' | 'lateFee' | 'annualFee' | 'returnedPaymentFee' | 'cashAdvance';
 
 /** What a card charges and asks, for a record, in the save's money. */
 export interface CardTerms {
@@ -166,6 +173,11 @@ export interface CardTerms {
   returnedPaymentFee: Money;
   /** A US card's over-limit fee, for someone who opted in, where it charges one. */
   overLimitFee?: Money;
+  /** A cash advance's fee (a share, never under a minimum), its rate, and the most of the limit it may use. */
+  cashFeeShare: number;
+  cashFeeMin: Money;
+  cashApr: number;
+  cashLimit?: Money;
   /** Days from the statement to the due date; absent, the 15th of the next month. */
   graceDays?: number;
   /** The country's law, where it capped a term. */
@@ -203,6 +215,12 @@ export function cardTerms(sim: Simulation, card: Account, score: number): CardTe
   let lateFee = product?.lateFee !== undefined ? inSave(sim, product.lateFee, money) : undefined;
   if (lateFee === undefined) { lateFee = usdIn(sim, LATE_FEE_USD); estimated.push('lateFee'); }
   if (product && product.annualFee === undefined) estimated.push('annualFee');
+  // A cash advance: the card's own terms, or SLATE's estimate of a US card's, 5% or $10 at the purchase rate.
+  const cashKnown = product?.cashFeeShare !== undefined || product?.cashApr !== undefined;
+  if (!cashKnown) estimated.push('cashAdvance');
+  const cashFeeShare = product?.cashFeeShare ?? CASH_FEE_SHARE;
+  const cashFeeMin = product?.cashFeeMin !== undefined ? inSave(sim, product.cashFeeMin, money) : product?.cashFeeShare !== undefined ? 0 : usdIn(sim, CASH_FEE_USD);
+  const cashLimit = product?.cashLimit !== undefined ? inSave(sim, product.cashLimit, money) : product?.cashLimitShare !== undefined ? Math.round((card.creditLimit ?? 0) * product.cashLimitShare) : undefined;
   let returnedPaymentFee = product?.returnedPaymentFee !== undefined ? inSave(sim, product.returnedPaymentFee, money) : undefined;
   if (returnedPaymentFee === undefined) { returnedPaymentFee = usdIn(sim, RETURNED_PAYMENT_USD); estimated.push('returnedPaymentFee'); }
   let capped: CardTerms['capped'];
@@ -226,6 +244,10 @@ export function cardTerms(sim: Simulation, card: Account, score: number): CardTe
     minimumPlusInterest: product?.minimumPlusInterest ?? false,
     lateFee,
     returnedPaymentFee,
+    cashFeeShare,
+    cashFeeMin,
+    cashApr: Math.min(product?.cashApr ?? apr, law?.aprCap ?? Number.POSITIVE_INFINITY),
+    ...(cashLimit !== undefined ? { cashLimit } : {}),
     ...(product?.overLimitFee ? { overLimitFee: inSave(sim, product.overLimitFee, money) } : {}),
     ...(product?.graceDays !== undefined ? { graceDays: product.graceDays } : {}),
     ...(capped ? { capped } : {}),
@@ -300,7 +322,10 @@ function payCard(sim: Simulation, person: Person, amount: Money, byHand = false)
     memo: `Paid ${card.name}`, category: 'card-payment',
     postings: [{ accountId: card.id, amount: paid }, ...drawFromBank(sim, person, paid, false, linked).postings],
   });
-  if (person.credit) person.credit.paidSinceStatement += paid;
+  if (person.credit) {
+    person.credit.paidSinceStatement += paid;
+    allocatePayment(person, card, paid, minimumDue(sim, person.credit.statementBalance, undefined, person.credit.statementInterest ?? 0));
+  }
   return paid;
 }
 
@@ -351,6 +376,12 @@ export function registerCredit(sim: Simulation): void {
     // The interest built up day by day: charged where the grace period is lost
     // (the last statement wasn't paid in full), with any trailing interest
     // from a carried balance paid off; where it holds, it waits for the due date.
+    const cashInterest = Math.round(credit.cashAccrued ?? 0);
+    credit.cashAccrued = 0;
+    if (cashInterest > 0) {
+      s.post({ memo: 'Cash advance interest', category: 'interest', postings: [{ accountId: s.nominalAccount('expense', 'Card Interest').id, amount: cashInterest }, { accountId: card.id, amount: -cashInterest }] });
+      credit.cashOwed = (credit.cashOwed ?? 0) + cashInterest;
+    }
     const interest = Math.round((credit.carrying ? credit.accrued ?? 0 : 0) + (credit.trailing ?? 0));
     if (credit.carrying) credit.accrued = 0;
     credit.trailing = 0;
@@ -518,7 +549,10 @@ export function registerCredit(sim: Simulation): void {
       const freeFees = bankById(card.bankId ?? '')?.iso === 'GB'
         ? (credit.recentFees ?? []).filter((one) => s.now - one.at < 28 * 86_400_000).reduce((a, one) => a + one.amount, 0)
         : 0;
-      const bearing = Math.max(0, -card.balance - freeFees) + (credit.accrued ?? 0);
+      // Cash advances draw their own rate from the day they're taken, grace period or none (C49).
+      const cash = cashOwedOn(person, card);
+      if (cash > 0) credit.cashAccrued = (credit.cashAccrued ?? 0) + (cash + (credit.cashAccrued ?? 0)) * terms.cashApr / 365;
+      const bearing = Math.max(0, -card.balance - cash - freeFees) + (credit.accrued ?? 0);
       credit.accrued = (credit.accrued ?? 0) + bearing * terms.apr / 365;
     }
   });
@@ -623,6 +657,8 @@ function chargeOff(sim: Simulation, person: Person, card: Account, credit: Credi
     ?? sim.openAccount({ id: sim.nextId('account'), kind: 'loan', category: 'collections', name, ownerId: person.id, institution: bank?.name ?? card.institution, openedAt: sim.now });
   if (owed > 0) sim.post({ memo: `Charged off: ${card.name}`, category: 'transfer', postings: [{ accountId: card.id, amount: owed }, { accountId: debt.id, amount: -owed }] });
   card.closedAt = sim.now;
+  credit.cashOwed = 0;
+  credit.cashAccrued = 0;
   credit.score = Math.max(SCORE_MIN, credit.score - CHARGED_OFF);
   delete credit.suspended;
   delete credit.hardship;

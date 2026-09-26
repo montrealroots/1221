@@ -35,7 +35,7 @@ afterEach(() => {
 
 const life = (seed: string, extra: Record<string, unknown> = {}) => quickSave({ wealth: 'scraping', ...extra }, seed);
 const cardIn = (sim: Simulation) => cardOf(sim, sim.player)!;
-const base: CardProduct = { name: 'Test Card', kind: 'revolving', apr: 0.18, annualFee: 0, minimumShare: 0.03, minimumFloor: 5_000_00, lateFee: 3_000_00, returnedPaymentFee: 3_000_00, source: 'test', asOf: '2026-09-26' };
+const base: CardProduct = { name: 'Test Card', kind: 'revolving', apr: 0.18, annualFee: 0, minimumShare: 0.03, minimumFloor: 5_000_00, lateFee: 3_000_00, returnedPaymentFee: 3_000_00, cashFeeShare: 0.05, cashApr: 0.25, source: 'test', asOf: '2026-09-26' };
 /** The next statement, and the clock moved just past it. */
 function toStatement(sim: Simulation): number {
   const at = sim.timeline.pending().find((i) => i.kind === STATEMENT_KIND)!.at;

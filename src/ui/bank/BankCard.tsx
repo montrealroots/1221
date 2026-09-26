@@ -25,7 +25,7 @@ import { inTheBank } from '@/engine/systems/household';
 const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 const pct = (rate: number) => `${Number((rate * 100).toFixed(2))}%`;
 const TERM_WORDS: Record<CardTerm, string> = {
-  card: 'the card', rate: 'the rate', minimum: 'the minimum payment', lateFee: 'the late fee', annualFee: 'the yearly fee', returnedPaymentFee: 'the returned payment fee',
+  card: 'the card', rate: 'the rate', minimum: 'the minimum payment', lateFee: 'the late fee', annualFee: 'the yearly fee', returnedPaymentFee: 'the returned payment fee', cashAdvance: 'the cash advance’s terms',
 };
 
 export function BankCard({ bankId }: { bankId: string }) {
