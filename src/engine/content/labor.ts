@@ -18,6 +18,7 @@
 
 import { WORLD_WORK } from './work-world';
 import { PROVINCES, STATES, WORLD_LAW } from './jurisdictions';
+import { CITY_LAW } from './city-law';
 
 /** Which lines of work a premium covers; absent, every line. */
 type Lines = readonly string[];
@@ -502,7 +503,9 @@ export function laborAt(path: readonly string[]): LaborLaw | undefined {
   // A province or state the thirteen's research didn't write out comes from
   // the labor-law pass (`content/jurisdictions.ts`).
   const region = country.regions?.[path[1] ?? ''] ?? (path[0] === 'CA' ? PROVINCES[path[1] ?? '']?.law : path[0] === 'US' ? STATES[path[1] ?? '']?.law : undefined);
-  return region ? { ...country, ...region } : country;
+  // A city's or county's own ordinance over the state's (`content/city-law.ts`).
+  const city = CITY_LAW[path[2] ?? ''];
+  return { ...country, ...region, ...city };
 }
 
 /**

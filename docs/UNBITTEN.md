@@ -305,10 +305,16 @@ part the tool cannot see.
   SLATE's employers aren't taken to do. The other US states add only
   what's over the federal law: daily overtime in Alaska, Nevada and
   Colorado, and sick leave where a state gives it; Minnesota's 48-hour
-  week, which is under the federal 40, isn't taken, and nor is a city's own
-  sick-leave ordinance where the state has none (Pittsburgh's and
-  Philadelphia's), so a Pittsburgh job's screen says the law pays nothing
-  for a day called in sick. Canada's other
+  week, which is under the federal 40, isn't taken. A city's or county's
+  own paid sick leave ordinance is taken where it gives more than its
+  state's (`content/city-law.ts`): Pittsburgh's, Philadelphia's,
+  Chicago's (with its separate paid leave for any reason), Seattle's, San
+  Francisco's, Los Angeles's, Oakland's, Berkeley's, Emeryville's and Santa
+  Monica's, and Allegheny County's and Montgomery County's (Maryland) in
+  their towns, at a large employer's figures; until 2026-09-26 a Pittsburgh
+  job's screen said the law paid nothing for a day called in sick. The
+  ordinances New Jersey's law preempted, Texas's courts struck down and
+  Duluth repealed aren't, nor SeaTac's for hotel and airport work alone. Canada's other
   provinces and territories have their own standards from the same pass.
 - **Unemployment benefit is the thirteen's, from the record SLATE keeps.**
   Out of work, a claim (`work.claim`, `systems/unemployment.ts`) pays
@@ -437,13 +443,17 @@ part the tool cannot see.
   aguinaldo wasn't decreed for 2024 or 2025, as growth fell short (2026's is
   decided in October). Chile's gratificación is owed only with a profit, and
   is paid as most employers pay it, a quarter with each month's pay.
-- **Some of the thirteen's employer rates rest on salary sites.** The
-  browser walk of 2026-09-26 found Toronto's Starbucks said to publish its
-  rate where its note says the figure is an average of pay reported on
-  Indeed, and Tim Hortons' and Second Cup's resting on Glassdoor's and
-  Indeed's. The employer-pay pass filtered such sources out of what it
-  added; the thirteen's first research, before it, wasn't put through the
-  same filter.
+- **Some employers publish no rate but an average.** The browser walk of
+  2026-09-26 found Toronto's Starbucks said to publish a rate that was an
+  average of pay reported on Indeed, and 50 such rates in all in the first
+  research, which the employer-pay pass's test for averages hadn't been put
+  to. `probe/gen-employers.cjs` now puts every row to it (28 read by hand
+  and kept, their figure an agreement's, a guarantee, a fact sheet or a
+  single vacancy's), and a second look found a published rate for 26 of
+  the 50: a vacancy on Canada's Job Bank for Starbucks, Tim Hortons and
+  Second Cup, the employers' own careers pages in the US and Mexico. The
+  rest publish none (gig platforms paying per delivery, pages loading their
+  rate by script), and pay their line's typical rate or SLATE's estimate.
 - **An employer's pay is as published in September 2026.** Each rate is
   the one the research found on 2026-09-25, paid from the save's first day,
   so a save that starts in January is paid an April raise early. Where an

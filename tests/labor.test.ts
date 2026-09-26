@@ -172,8 +172,8 @@ describe('a day called in sick', () => {
   });
 });
 
-it('caps California’s sick pay at 40 hours a year, however much is built', () => {
-  const sim = life('us-ca-losangeles', { dayJob: true, wealth: 'modest' });
+it('caps California’s sick pay at 40 hours a year, however much is built (in Burbank; Los Angeles’s own ordinance gives 48 from day 90)', () => {
+  const sim = life('us-ca-burbank', { dayJob: true, wealth: 'modest' });
   sim.player.job!.sickHours = 200;
   let paid = 0;
   for (let n = 0; n < 8; n += 1) {

@@ -642,32 +642,31 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Starbucks Canada",
           "role": "Barista",
           "where": "national",
-          "source": "https://ca.indeed.com/cmp/Starbucks/salaries/Barista ; https://www.businesswire.com/news/home/20210629005453/en/Victoria-Starbucks-Workers-Brew-Up-First-Contract",
-          "confidence": "L",
-          "hourlyFrom": 1822,
-          "payNote": "Average of self-reported pay on Indeed, not a published rate; tips on top. Starbucks Canada publishes no starting rate. The first unionized Canadian store's contract (Victoria, BC, USW, 2021) set starting pay at $0.25 above the provincial minimum."
+          "source": "https://www.jobbank.gc.ca/jobsearch/jobposting/49943356",
+          "confidence": "M",
+          "hourlyFrom": 1825,
+          "payNote": "A single Starbucks barista vacancy posted directly by the employer on the federal Job Bank, Invermere, British Columbia, July 2026. Tips on top. It may be a licensed or franchised store instead of a corporate one; other Starbucks-branded barista ads on Job Bank in 2026 stated $18.00 (Yellowknife, June 2026; Weber's Starbucks, Orillia ON, September 2026) and $16.60 (Chicoutimi QC, June 2026)."
         },
         {
           "id": "ca-school-tim-hortons-franchisees",
           "name": "Tim Hortons (franchisees)",
           "role": "Team member",
           "where": "national",
-          "source": "https://www.glassdoor.ca/Hourly-Pay/Tim-Hortons-Team-Member-Toronto-Hourly-Pay-EJI_IE15227.0,11_KO12,23_IL.24,31_IM976.htm",
-          "confidence": "L",
-          "hourlyFrom": 1500,
-          "hourlyTo": 1749,
-          "payNote": "Glassdoor self-reports (about $15 to $17 in Toronto; about $17.49 Canada-wide average). Franchisees set pay and in practice pay the provincial minimum ($17.60 Ontario, $18.25 BC, $16.60 Quebec in 2026); the $15 end is below today's minimums and is stale data."
+          "source": "https://www.jobbank.gc.ca/jobsearch/jobposting/50368975",
+          "confidence": "H",
+          "hourlyFrom": 1835,
+          "payNote": "A single Tim Hortons franchise vacancy for a food counter attendant (team member), posted directly by the employer on Job Bank, Sioux Lookout, Ontario, 2026-09-25. No tips stated. Same-day Tim Hortons counter ads on Job Bank stated $16.60 (Shawinigan QC), $18.00 (Labrador City NL) and $18.25 to $19.00 (Smithers BC)."
         },
         {
           "id": "ca-school-second-cup",
           "name": "Second Cup",
           "role": "Barista",
           "where": "national",
-          "source": "https://ca.indeed.com/cmp/Second-Cup/salaries/Barista",
-          "confidence": "L",
-          "hourlyFrom": 1628,
-          "hourlyTo": 1787,
-          "payNote": "Indeed self-reported averages: about $16.28 Canada-wide, $17.87 in Ottawa. Not a published rate."
+          "source": "https://www.jobbank.gc.ca/jobsearch/jobposting/50200498",
+          "confidence": "M",
+          "hourlyFrom": 1760,
+          "hourlyTo": 2000,
+          "payNote": "A single Second Cup (franchise) barista vacancy in Toronto, September 2026, carried on Job Bank from Indeed. Tips on top. Other 2026 Second Cup barista ads on Job Bank: $18.00 (Ottawa, July), $17.60 to $20.60 (Orleans ON), $16.60 (Quebec City), $15.50 to $17.00 (St. Albert AB)."
         }
       ],
       "occupation": "Food counter attendants, kitchen helpers and related support occupations (NOC 65201)",
@@ -738,10 +737,7 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "role": "Driver or courier",
           "where": "Toronto",
           "source": "https://www.theglobeandmail.com/business/article-uber-drivers-pay-toronto/",
-          "confidence": "M",
-          "hourlyFrom": 2000,
-          "hourlyTo": 3398,
-          "payNote": "These are rideshare figures, not Uber Eats. Uber said Toronto drivers had a median of $33.98 per engaged hour in December 2022, before costs and tips. The RideFair report (Tom Slee, January 2023) found about $20 an hour gross across all logged time, about $7.90 after costs, with only about 48% of logged time engaged. Earnings per hour before costs. Uber Eats couriers are covered by the same Ontario and BC floors as DoorDash."
+          "confidence": "M"
         }
       ],
       "occupation": "Delivery service drivers and door-to-door distributors (NOC 75201), the nearest statistics category; it counts employees, not app couriers",
@@ -886,11 +882,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "The Keg Steakhouse + Bar",
           "role": "Line cook",
           "where": "national",
-          "source": "https://ca.indeed.com/cmp/The-Keg-Steakhouse-Bar-1/salaries/Line-Cook",
-          "confidence": "L",
-          "hourlyFrom": 1720,
-          "hourlyTo": 1950,
-          "payNote": "About $19.50 average across 17 Indeed postings (2026-07-29); one posting at $17.20 in Sudbury. Aggregate, not a published rate."
+          "source": "https://www.jobbank.gc.ca/jobsearch/jobposting/49943525",
+          "confidence": "H",
+          "hourlyFrom": 2140,
+          "payNote": "A single Keg Steakhouse + Bar line cook vacancy, Victoria BC, posted on Job Bank July 2026, permanent full time. Cooks may share a tip-out; the ad states none. Other 2026 Keg cook ads on Job Bank: $18.60 (Sudbury ON, September), $18.00 (Niagara Falls ON, July), $17.50 (Fort McMurray AB, July)."
         },
         {
           "id": "ca-hospitality-cactus-club-cafe",
@@ -898,19 +893,17 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "role": "Server",
           "where": "Vancouver",
           "source": "https://ca.indeed.com/cmp/Cactus-Club-Cafe/salaries/Server",
-          "confidence": "L",
-          "hourlyFrom": 1825,
-          "payNote": "Base pay is the BC minimum wage ($18.25 from 2026-06-01) plus tips; Indeed's older self-reported average ($15.88) is below today's minimum."
+          "confidence": "L"
         },
         {
           "id": "ca-hospitality-earls-kitchen-bar",
           "name": "Earls Kitchen + Bar",
           "role": "Server",
           "where": "Calgary",
-          "source": "Indeed Canada company salary page for Earls (search-result snippet, 2026; page refused automated access)",
-          "confidence": "L",
-          "hourlyFrom": 1604,
-          "payNote": "Indeed self-reported average in Calgary, plus tips. Not one of the three assigned provinces; no Toronto or Vancouver figure found."
+          "source": "https://www.jobbank.gc.ca/jobsearch/jobposting/50316262",
+          "confidence": "M",
+          "hourlyFrom": 1785,
+          "payNote": "A single Earls server vacancy at Earls Brentwood, Burnaby BC, September 2026, carried on Job Bank from 86network. Base wage only; tips come on top (the ad doesn't state them). The stated figure may lag a later BC minimum-wage rise."
         }
       ],
       "occupation": "Food and beverage servers (NOC 65200); Bartenders (NOC 64301) median 20.00 Canada, Quebec 22.44; Cooks (NOC 63200) median 18.00 Canada, BC 20.00, Montreal 20.00",
@@ -959,10 +952,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "VHA Home HealthCare",
           "role": "Personal support worker",
           "where": "Toronto / Ontario",
-          "source": "Indeed Canada company salary page for VHA Home HealthCare (search-result snippet, May 2026)",
-          "confidence": "L",
-          "hourlyFrom": 2228,
-          "payNote": "Indeed self-reported Ontario average, May 2026."
+          "source": "https://simplify.jobs/p/5f5bf384-a0be-46e4-922e-a292cda87f73/Personal-Support-Worker",
+          "confidence": "M",
+          "hourlyFrom": 2242,
+          "hourlyTo": 2517,
+          "payNote": "The pay range on a live VHA Home HealthCare personal support worker vacancy in Toronto, full time with weekend rotation, as carried by the Simplify job board (confirmed live 2026-09-26). No tips."
         }
       ],
       "occupation": "Home support workers, caregivers and related occupations (NOC 44101); Nurse aides, orderlies and patient service associates (NOC 33102) median 24.00 Canada, Ontario 24.00, Quebec 25.10, BC 27.89",
@@ -1023,9 +1017,7 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "role": "General laborer",
           "where": "national",
           "source": "Indeed Canada company salary page for PeopleReady (search-result snippet, 2026)",
-          "confidence": "L",
-          "hourlyFrom": 1743,
-          "payNote": "Indeed average across about 50 postings; non-union day labor."
+          "confidence": "L"
         }
       ],
       "occupation": "Construction trades helpers and labourers (NOC 75110)",
@@ -1064,11 +1056,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "GardaWorld",
           "role": "Security guard",
           "where": "Toronto (GTA)",
-          "source": "ZipRecruiter aggregate (search-result snippet, 2026)",
-          "confidence": "L",
-          "hourlyFrom": 1835,
-          "hourlyTo": 2300,
-          "payNote": "Range of GTA postings from a ZipRecruiter aggregate."
+          "source": "https://jobs.garda.com/job/Toronto-Casual-Security-Guard-Onta/1434021700/",
+          "confidence": "H",
+          "hourlyFrom": 2080,
+          "payNote": "A single GardaWorld casual security guard vacancy in Toronto on GardaWorld's own careers site, posted 2026-09-25. No tips. Other GardaWorld Ontario guard ads on the same site the same week stated $21 (surveillance guard, Toronto) and $23.18 (casual guard, Markham/Toronto)."
         },
         {
           "id": "ca-armed_forces-commissionaires",
@@ -1085,10 +1076,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Paladin Security",
           "role": "Security guard",
           "where": "Vancouver",
-          "source": "ZipRecruiter aggregate (search-result snippet, 2026)",
-          "confidence": "L",
-          "hourlyFrom": 2613,
-          "payNote": "ZipRecruiter average, September 2026; not a published rate. BC has no security wage decree."
+          "source": "https://www.jobbank.gc.ca/jobsearch/jobposting/50358740",
+          "confidence": "H",
+          "hourlyFrom": 2300,
+          "payNote": "A single Paladin Security security-officer vacancy posted on Job Bank, Madeira Park BC, September 2026. No tips. Another Paladin ad of September 2026 stated $25.28 an hour for a security guard in Powell River BC (job 3670509)."
         }
       ],
       "occupation": "Security guards and related security service occupations (NOC 64410)",
@@ -1115,10 +1106,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Arthur Murray Dance Studios (Canada)",
           "role": "Dance instructor",
           "where": "national",
-          "source": "Indeed Canada postings for Arthur Murray (search-result snippet, 2026)",
-          "confidence": "L",
-          "hourlyFrom": 2911,
-          "payNote": "Average of 9 Indeed postings."
+          "source": "https://www.jobbank.gc.ca/jobsearch/jobposting/50224549",
+          "confidence": "M",
+          "hourlyFrom": 1658,
+          "payNote": "A single Arthur Murray Dance Centres (Halifax) ballroom dance instructor vacancy, September 2026, listed for Halifax NS and Toronto ON. Converted from the annual figure on the ad's full-time 40 hours a week (2,080 hours a year). No tips."
         }
       ],
       "occupation": "Dancers (NOC 53120), the group that holds dance teachers at studios",
@@ -1158,10 +1149,7 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "role": "Personal trainer",
           "where": "national",
           "source": "Indeed Canada and PayScale company salary pages for GoodLife Fitness (search-result snippets, 2026)",
-          "confidence": "L",
-          "hourlyFrom": 2207,
-          "hourlyTo": 2698,
-          "payNote": "Aggregates: PayScale about $22.07, Indeed about $26.98 (a Glassdoor $36 is an outlier). Trainers are usually paid per session plus commission."
+          "confidence": "L"
         }
       ],
       "occupation": "Program leaders and instructors in recreation, sport and fitness (NOC 54100)",
@@ -2239,9 +2227,7 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "role": "Independent delivery rider",
           "where": "national",
           "source": "https://www.franceinfo.fr/economie/emploi/les-revenus-horaires-des-livreurs-de-repas-ont-baisse-pour-la-plupart-des-plateformes-en-2025_7964060.html ; https://www.arpe.gouv.fr/actualites/plateformes-de-livraison-larpe-publie-son-analyse-2026-des-indicateurs-dactivite/ ; https://www.uber.com/fr/blog/mise-en-place-du-revenu-minimum-garanti/ ; https://www.arpe.gouv.fr/wp-content/uploads/2026/08/Avenant-Revenus-10-juillet-2026_-avec-signataires.pdf ; https://hr-infos.fr/accord-majeur-de-revalorisation-des-revenus-minima-garantis-aux-livreurs/",
-          "confidence": "H",
-          "hourlyFrom": 2150,
-          "payNote": "ARPE's 2025 average gross earnings per hour on a delivery ('revenu horaire brut en course'). It’s before costs, social contributions and tax, and it excludes waiting time between orders, so it overstates real hourly income. It rose 4.7% on 2024. Negotiated minimum: 11.75 EUR per estimated hour of delivery (acceptance to handover) under the ARPE sector accord of 20 April 2023, checked monthly. The avenant of 10 July 2026 raised it to 19.00 EUR gross per hour from 1 September 2026, now checked weekly and with tips excluded. Signed by API (Uber Eats, Deliveroo), Union-Indépendants and FNAE."
+          "confidence": "H"
         },
         {
           "id": "fr-between-deliveroo",
@@ -2965,9 +2951,7 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "role": "Courier",
           "where": "national",
           "source": "https://www.glassdoor.co.uk/Hourly-Pay/Stuart-Courier-Hourly-Pay-E1174198_D_KO7,14.htm",
-          "confidence": "L",
-          "hourlyFrom": 1200,
-          "payNote": "Glassdoor self-reported average base pay, not an official figure."
+          "confidence": "L"
         }
       ],
       "occupation": "Delivery drivers and couriers (SOC 2020 8214)",
@@ -3416,9 +3400,7 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "role": "Dance Instructor",
           "where": "national",
           "source": "https://uk.indeed.com/cmp/Pauline-Quirke-Academy-1/salaries",
-          "confidence": "L",
-          "hourlyFrom": 2236,
-          "payNote": "Indeed average from 34 ads."
+          "confidence": "L"
         },
         {
           "id": "gb-dance-pineapple-dance-studios",
@@ -3755,10 +3737,7 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "role": "Crew Member",
           "where": "Dublin / national",
           "source": "https://ie.indeed.com/cmp/McDonald's/salaries/Crew-Member (search snippet)",
-          "confidence": "M",
-          "hourlyFrom": 1414,
-          "hourlyTo": 1442,
-          "payNote": "Indeed averages updated April 2026 (seen in a search snippet). Pay is set by each franchisee and isn't published. The low end is an average just under the €14.15 minimum wage, which any single rate can't be."
+          "confidence": "M"
         },
         {
           "id": "ie-hospitality-supermac-s",
@@ -3835,10 +3814,7 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "role": "Care Assistant (CAREGiver)",
           "where": "national",
           "source": "https://ie.indeed.com/cmp/Home-Instead/salaries?job_category=care (search snippet)",
-          "confidence": "L",
-          "hourlyFrom": 1492,
-          "hourlyTo": 1610,
-          "payNote": "Indeed averages by role (seen in a snippet). Home Instead publishes no rate."
+          "confidence": "L"
         },
         {
           "id": "ie-care-comfort-keepers",
@@ -4585,10 +4561,7 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "role": "Temp worker, all job types / office work",
           "where": "Three metro areas (office work, 1,640) / Kanto (all job types, 1,760)",
           "source": "https://www.dip-net.co.jp/news/2186 (dip Corp., July 2026 dispatch wage survey)",
-          "confidence": "H",
-          "hourlyFrom": 164000,
-          "hourlyTo": 176000,
-          "payNote": "This is the average advertised hourly rate for July 2026, not one employer. en Japan's March 2026 average for office work in the three metro areas was 1,672 yen (https://corp.en-japan.com/newsrelease/2026/45109.html)."
+          "confidence": "H"
         }
       ],
       "occupation": "総合事務員 (general clerical workers), short-time workers, all industries, firms of 10+ employees",
@@ -4606,9 +4579,7 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "role": "Delivery partner (independent contractor)",
           "where": "Tokyo (national average 1,351)",
           "source": "https://prtimes.jp/main/html/rd/p/000000003.000074091.html",
-          "confidence": "L",
-          "hourlyFrom": 140500,
-          "payNote": "This is self-reported earnings per hour before costs (bike, phone, fuel), with no minimum-wage floor. Uber ended its automatic 'adjustment amount' top-up on 2025-12-16 and its guaranteed per-minute 'flat rate' in April 2026, according to secondary reports, so current earnings may be lower than the survey shows."
+          "confidence": "L"
         },
         {
           "id": "jp-between-demae-can",
@@ -4616,9 +4587,7 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "role": "Delivery partner (independent contractor)",
           "where": "national",
           "source": "https://prtimes.jp/main/html/rd/p/000000003.000074091.html",
-          "confidence": "L",
-          "hourlyFrom": 143800,
-          "payNote": "Self-reported earnings per hour before costs, national. Couriers are paid per delivery, with a stated base of 400 yen a delivery plus boosts."
+          "confidence": "L"
         },
         {
           "id": "jp-between-wolt",
@@ -4626,9 +4595,7 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "role": "Courier partner (independent contractor)",
           "where": "national",
           "source": "https://prtimes.jp/main/html/rd/p/000000003.000074091.html",
-          "confidence": "L",
-          "hourlyFrom": 133400,
-          "payNote": "Self-reported earnings per hour before costs, national."
+          "confidence": "L"
         },
         {
           "id": "jp-between-menu",
@@ -4636,9 +4603,7 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "role": "Delivery crew (independent contractor)",
           "where": "national",
           "source": "https://prtimes.jp/main/html/rd/p/000000003.000074091.html",
-          "confidence": "L",
-          "hourlyFrom": 132400,
-          "payNote": "Self-reported earnings per hour before costs, national."
+          "confidence": "L"
         }
       ],
       "occupation": "Food-delivery couriers (independent contractors). The wage survey has no gig category; this figure is couriers' self-reported earnings per hour before costs.",
@@ -4677,10 +4642,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Seven-Eleven Japan (franchise stores)",
           "role": "Convenience-store staff (part-time)",
           "where": "Tokyo",
-          "source": "https://jp.indeed.com/cmp/%E3%82%BB%E3%83%96%E3%83%B3--%E3%82%A4%E3%83%AC%E3%83%96%E3%83%B3/salaries/%E3%82%B3%E3%83%B3%E3%83%93%E3%83%8B%E3%82%B9%E3%82%BF%E3%83%83%E3%83%95/%E6%9D%B1%E4%BA%AC%E9%83%BD (as summarized by search; the page refused a direct fetch)",
-          "confidence": "L",
-          "hourlyFrom": 130800,
-          "payNote": "This is Indeed's average of reported pay for Tokyo store staff (updated 2026-04-13), not a starting rate. Franchise owners set pay store by store, and many start at the minimum wage (1,226 yen, rising to 1,280 on 2026-10-01). Late-night hours (22:00 to 05:00) add at least 25%."
+          "source": "https://baito.mynavi.jp/cl-002366108147/job-136237597/",
+          "confidence": "H",
+          "hourlyFrom": 122600,
+          "payNote": "A single Seven-Eleven franchise store's part-time staff vacancy in Koganei, Tokyo, on Mynavi Baito, posted 2026-08-31 (listed to 2026-09-27). Day starting rate; 22:00-05:00 shifts pay more (18 and over only). No tips. Other Tokyo Seven-Eleven ads on the same list in September 2026 started at 1,230 to 1,400 yen, most at 1,280."
         }
       ],
       "occupation": "販売店員 (shop sales clerks), short-time workers, all industries, firms of 10+ employees",
@@ -5420,21 +5385,20 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Starbucks Mexico (operated by Alsea)",
           "role": "Barista",
           "where": "national; Mexico City",
-          "source": "https://www.informador.mx/mexico/Starbucks-Este-es-el-salario-de-un-trabajador-Mexico-20250512-0128.html ; https://mx.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-barista-starbucks-av-coyoacan-col-del-valle-en-benito-juarez-6CF0210C733209F861373E686DCF3405",
-          "confidence": "M",
-          "hourlyFrom": 3164,
-          "hourlyTo": 4747,
-          "payNote": "About 6,600 pesos a month (Indeed average of 241 reports, updated 2025-04-27, as reported by El Informador), plus tips. Converted: 31.64 on 48 hours, 47.47 on the 32-hour weeks in current Mexico City postings."
+          "source": "https://mx.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-barista-5-dias-laborables-starbucks-zona-fashion-drive-en-san-pedro-garza-garcia-A05ACE728BEE58B661373E686DCF3405",
+          "confidence": "H",
+          "hourlyFrom": 5252,
+          "payNote": "A single Alsea-operated Starbucks barista vacancy, Zona Fashion Drive, San Pedro Garza Garcia, Nuevo Leon, posted 2026-09-21. The body gives 9,104 pesos a month gross for a 5-day, 8-hour week (40 hours; 40 x 52 / 12 = 173.33 hours a month, so 52.52 an hour) and 7,280 for a 4-day week (32 hours, 138.67 hours, also 52.50). Plus a monthly sales bonus, food vouchers and savings fund; tips on top. Mexico City Starbucks ads (Parque Duraznos, 5 de Mayo) said only 'A convenir'."
         },
         {
           "id": "mx-school-cielito-querido-cafe",
           "name": "Cielito Querido Cafe",
           "role": "Barista",
           "where": "Mexico City, national",
-          "source": "https://mx.indeed.com/cmp/Cielito-Querido-Caf%C3%A9-3/salaries/Barista",
-          "confidence": "L",
-          "hourlyFrom": 3574,
-          "payNote": "Indeed barista average 7,456 pesos a month; converted on 48 hours. Company range 5,396 (bar helper) to 13,844 (area supervisor)."
+          "source": "https://www.simplyhired.mx/job/n6u9wYmNKAGCVw5Ne1bgj_kNpuDuyjWC4Uabp8dgQO5MrUnsGEv_NA",
+          "confidence": "M",
+          "hourlyFrom": 4712,
+          "payNote": "A single Cielito Querido Cafe (Grupo Herdez) barista vacancy in Mexico City, full time, 8-hour rotating shifts including weekends. Converted on a 6-day, 48-hour week (208 hours a month), since the ad gives 8-hour shifts but not days a week; on 5 days (173.33 hours) it would be 56.54. Plus a monthly productivity incentive and 30 days' aguinaldo; tips on top."
         },
         {
           "id": "mx-school-tim-hortons-mexico",
@@ -5503,11 +5467,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Adecco Mexico",
           "role": "Various (company range)",
           "where": "Mexico City",
-          "source": "https://mx.indeed.com/cmp/Adecco/salaries?location=MX%2FDIF",
-          "confidence": "L",
-          "hourlyFrom": 2364,
-          "hourlyTo": 10632,
-          "payNote": "Indeed averages from 4,932 a month (general maintenance helper) to 22,179 (accounts payable analyst). Converted on 48 hours."
+          "source": "https://mx.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-auxiliar-de-almacen-turnos-fijos-en-zumpango-C71F9176C7D1DE8461373E686DCF3405",
+          "confidence": "M",
+          "hourlyFrom": 5077,
+          "payNote": "A single Adecco Mexico warehouse-assistant vacancy (entry level, no experience needed) at a distribution center in Tepotzotlan, Estado de Mexico, posted 2026-09-25. Converted on shift 1, 06:00-15:30 five days a week (47.5 hours; x 52 / 12 = 205.83 hours a month). Plus bonus, vouchers and subsidised canteen. No tips."
         }
       ],
       "occupation": "Recepcionistas y trabajadores que brindan informacion (de forma personal) (SINCO 3211)",
@@ -5536,9 +5499,7 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "role": "Delivery courier",
           "where": "national",
           "source": "https://expansion.mx/tecnologia/2026/01/23/ser-repartidor-rappi-uber-eats-didi-tiene-precios-ocultos",
-          "confidence": "M",
-          "hourlyFrom": 4812,
-          "payNote": "10,037 pesos a month average, before costs, converted on 48 hours. Expansion also reports fuel about 200 a day and gear about 8,050; the Uber Eats bag costs 825."
+          "confidence": "M"
         },
         {
           "id": "mx-between-uber-eats",
@@ -5577,11 +5538,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Walmart de Mexico (Walmart, Bodega Aurrera)",
           "role": "Cashier",
           "where": "national",
-          "source": "https://mx.indeed.com/cmp/Walmart/salaries/Cajero-a ; https://mx.indeed.com/cmp/Bodega-Aurrera/salaries/Cajero-a",
-          "confidence": "L",
-          "hourlyFrom": 4144,
-          "hourlyTo": 4360,
-          "payNote": "Indeed averages 8,644 a month (Walmart) and 9,094 (Bodega Aurrera), data to July 2026; converted on 48 hours."
+          "source": "https://mx.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-cajero-multifuncional-turno-rotativo-apertura-intermedio-y-cierre-en-zapopan-683B68C697E75FA861373E686DCF3405",
+          "confidence": "M",
+          "hourlyFrom": 5478,
+          "payNote": "A single Walmart de Mexico multifunction cashier vacancy for a new Walmart store in Zapopan, Jalisco, posted 2026-08-26, full time, rotating opening/mid/closing shifts. The ad gives no weekly hours; converted on Mexico's 48-hour legal full-time week (208 hours a month). No tips. The same 11,395 rate appeared in a Merida ad; a Walmart de Mexico cashier ad in Zacualtipan, Hidalgo stated 11,000."
         },
         {
           "id": "mx-retail-chedraui",
@@ -5729,9 +5689,7 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "role": "Waiter",
           "where": "Mexico City",
           "source": "https://mx.indeed.com/cmp/Chili's-Grill-&-Bar-cab8ddf0/salaries/Mesero-a",
-          "confidence": "L",
-          "hourlyFrom": 3851,
-          "payNote": "Indeed average 8,033 a month, before tips; converted on 48 hours."
+          "confidence": "L"
         },
         {
           "id": "mx-hospitality-toks-grupo-gigante",
@@ -5759,11 +5717,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Visiting Angels Mexico",
           "role": "Elder caregiver",
           "where": "Mexico City and national",
-          "source": "https://mx.indeed.com/cmp/Visiting-Angels/salaries/Cuidador-a-de-persona-mayor",
+          "source": "https://mx.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-enfermero-cuidador-turno-rotativo-en-san-andres-cholula-B1DE941CD408C54161373E686DCF3405",
           "confidence": "L",
-          "hourlyFrom": 4093,
-          "hourlyTo": 5020,
-          "payNote": "Indeed averages 8,537 a month (Mexico City) and 10,471 (national); converted on 48 hours."
+          "hourlyFrom": 4607,
+          "payNote": "A single Visiting Angels elder-caregiver vacancy in San Andres Cholula, Puebla, posted 2026-08-04, rotating shifts in clients' homes. The ad states a monthly figure but no hours; converted on a 48-hour week (208 hours a month). The figure matches the national monthly minimum wage. No tips."
         },
         {
           "id": "mx-care-t-angeles-home-care-agency",
@@ -5782,10 +5739,7 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "role": "Elder caregiver",
           "where": "Mexico City",
           "source": "https://www.atend.mx/blog/cuanto-cobra-cuidadora-adulto-mayor-cdmx.html",
-          "confidence": "L",
-          "hourlyFrom": 3279,
-          "hourlyTo": 8129,
-          "payNote": "Average 10,581 a month, range 6,840 to 16,957 (updated 2026-04-26); converted on 48 hours. Agencies charge clients 50 to 300 pesos an hour. That’s the client price, not the wage."
+          "confidence": "L"
         }
       ],
       "occupation": "Cuidadores de ninos, personas con discapacidad y ancianos en casas particulares (SINCO 5222)",
@@ -5895,10 +5849,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Grupo Securitas Mexico",
           "role": "Security guard",
           "where": "national",
-          "source": "https://mx.indeed.com/cmp/Securitas/salaries",
+          "source": "https://www.occ.com.mx/empleos/de-grupo-securitas-de-mexico/",
           "confidence": "L",
-          "hourlyFrom": 4495,
-          "payNote": "Indeed average 9,376 a month; converted on 48 hours."
+          "hourlyFrom": 6731,
+          "hourlyTo": 7212,
+          "payNote": "A single Grupo Securitas Mexico private security guard vacancy in Jalisco, listed on OCC Mundial about two weeks before 2026-09-26. Converted on a 48-hour week (208 hours a month); guard posts often run 12-hour shifts, which would lower the hourly figure. No tips."
         },
         {
           "id": "mx-armed_forces-allied-universal-mexico-formerly-g4s",
@@ -6103,10 +6058,7 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "role": "Background extra",
           "where": "Auckland",
           "source": "https://www.icarustalent.com/talent-faqs.html",
-          "confidence": "M",
-          "hourlyFrom": 1650,
-          "hourlyTo": 2500,
-          "payNote": "The agency says background extras average $165–250 gross for a 10-hour day, with overtime after 10 hours. The hourly figures divide that by 10 and aren’t published by the agency. Commission is 15% of gross. Extras are contractors taxed at a flat 20% withholding rate and must file a return. Per diems of up to $80 a day are paid for shoots away from home. TV commercials pay $1,000–30,000 gross a job."
+          "confidence": "M"
         },
         {
           "id": "nz-always_performing-bgt-actors-models-and-talent",
@@ -6333,10 +6285,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Dunkin'",
           "role": "Crew member",
           "where": "national",
-          "source": "https://www.indeed.com/cmp/Dunkin'-2cfce9bf/salaries/Crew-Member",
-          "confidence": "L",
-          "hourlyFrom": 1438,
-          "payNote": "Indeed self-reported average (2026): about 14.38 nationally, 15.00 in Florida, 16.24 in New York State. Stores are franchised, so franchisees set pay, mostly at or near the state minimum wage. No corporate figure exists."
+          "source": "https://careers.dunkindonuts.com/crew-member/job/006EECF5F9188676386CEC72DF748374",
+          "confidence": "H",
+          "hourlyFrom": 1500,
+          "hourlyTo": 1800,
+          "payNote": "A single Dunkin' franchise crew member vacancy in Boston, Massachusetts on Dunkin's own careers site, posted 2026-09-07. No tips stated (Dunkin' crew may share a tip jar; not counted). Another Dunkin' crew ad on the same site (Denver-area, 2026-09-15) said 'Up to $17/hour'; a Wilton Manors FL ad (May 2026) stated $13.00 - $15.00."
         }
       ],
       "occupation": "Baristas (SOC 35-3023)",
@@ -6448,9 +6401,7 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "role": "App delivery driver",
           "where": "national",
           "source": "https://foodondemand.com/03182026/2026-gig-mobility-report-shows-trends-shaping-the-gig-economy/",
-          "confidence": "M",
-          "hourlyFrom": 1466,
-          "payNote": "Average hourly delivery earnings, Q4 2025, before costs, from the Gridwise 2026 Annual Gig Mobility Report (drivers who use its tracking app). Whether tips are included and how an hour is counted weren’t stated. No Chicago-specific delivery pay floor was found."
+          "confidence": "M"
         }
       ],
       "occupation": "Couriers and Messengers (SOC 43-5021)",
@@ -6530,10 +6481,7 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "role": "Background actor (mostly non-union)",
           "where": "national; Los Angeles about 20",
           "source": "https://www.glassdoor.com/Hourly-Pay/Central-Casting-Background-Actor-Hourly-Pay-E330715_D_KO16,32.htm",
-          "confidence": "M",
-          "hourlyFrom": 1600,
-          "hourlyTo": 2600,
-          "payNote": "Central Casting publishes no rate table; its pay page says pay depends on where the production films, guaranteed hours, union status, overtime, bumps and meals. Non-union rates follow the local minimum wage. Figures are Glassdoor employee reports (2026): about 21 average nationally, typical 16 to 26, about 20 in Los Angeles. Self-reported."
+          "confidence": "M"
         },
         {
           "id": "us-always_performing-grant-wilfley-casting",
@@ -6562,11 +6510,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Club Demonstration Services (Advantage Solutions, Costco demos)",
           "role": "Product demonstrator",
           "where": "national",
-          "source": "https://www.glassdoor.com/Hourly-Pay/CDS-Club-Demonstration-Services-Product-Demonstrator-Hourly-Pay-E330035_D_KO32,52.htm",
-          "confidence": "M",
-          "hourlyFrom": 1800,
-          "hourlyTo": 2600,
-          "payNote": "Glassdoor employee reports (2026): average about 22, range 18 to 26. CDS publishes no rate. Self-reported."
+          "source": "https://www.snagajob.com/jobs/1248489921",
+          "confidence": "H",
+          "hourlyFrom": 1675,
+          "payNote": "A single CDS (Advantage Solutions) part-time Costco product demonstrator vacancy in Chicago, posted 2026-09-25, pay verified by the employer on Snagajob. No tips. A CDS demonstrator ad on another board (location not shown) stated $15.75 an hour."
         },
         {
           "id": "us-always_performing-elevate-staffing",
@@ -6574,9 +6521,7 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "role": "Brand ambassador / event staff",
           "where": "national",
           "source": "https://www.indeed.com/cmp/Elevate-Staffing/salaries/Brand-Ambassador",
-          "confidence": "M",
-          "hourlyFrom": 2257,
-          "payNote": "Indeed average for Elevate Staffing brand ambassadors, updated October 11, 2025. Self-reported. No posted rate was found for BDS or Kinetic."
+          "confidence": "M"
         }
       ],
       "occupation": "Demonstrators and Product Promoters (SOC 41-9011)",
@@ -6613,11 +6558,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Chipotle Mexican Grill",
           "role": "Crew member",
           "where": "national",
-          "source": "https://www.indeed.com/cmp/Chipotle-Mexican-Grill/salaries/Crew-Member",
-          "confidence": "M",
-          "hourlyFrom": 1580,
-          "hourlyTo": 1800,
-          "payNote": "Indeed national average about 15.80 and Glassdoor about 18 (2026), self-reported. California crews are under the 20 AB 1228 floor. No 2025-26 company pay figure was found."
+          "source": "https://jobs.chipotle.com/job/chicago/crew/282/91358832592",
+          "confidence": "H",
+          "hourlyFrom": 1675,
+          "hourlyTo": 1775,
+          "payNote": "The base-pay range on a Chipotle crew vacancy in Chicago on Chipotle's own careers site (posted 2026-02-04, still live in September 2026). No tips. A Seattle crew member ad on the same site, posted 2026-08-29, stated $21.50–22.50."
         },
         {
           "id": "us-hospitality-the-cheesecake-factory",
@@ -6625,21 +6570,17 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "role": "Server",
           "where": "national",
           "source": "https://www.glassdoor.com/Salary/The-Cheesecake-Factory-Server-Salaries-E2229_D_KO23,29.htm",
-          "confidence": "M",
-          "hourlyFrom": 2100,
-          "hourlyTo": 3300,
-          "payNote": "Glassdoor (2026) total pay including tips averages about 26, range 21 to 33. ZipRecruiter (August 2026) reports 14.21, which probably leaves out part of the tips. Self-reported."
+          "confidence": "M"
         },
         {
           "id": "us-hospitality-union-square-hospitality-group",
           "name": "Union Square Hospitality Group",
           "role": "Server / bartender",
           "where": "New York City",
-          "source": "https://www.glassdoor.com/Hourly-Pay/Union-Square-Hospitality-Group-Bartender-New-York-City-Hourly-Pay-EJI_IE230091.0,30_KO31,40_IL.41,54_IM615.htm",
+          "source": "https://jobtoday.com/us/job/server-p3gr4Y",
           "confidence": "M",
-          "hourlyFrom": 1800,
-          "hourlyTo": 4600,
-          "payNote": "Glassdoor (2025): servers about 18 base plus about 4 other pay; NYC bartenders average 33 total (22 base plus 11), range 26 to 46. The low end is server base pay, the high end the bartender total-pay ceiling. Self-reported. Texas Roadhouse and Applebee's weren’t researched."
+          "hourlyFrom": 1135,
+          "payNote": "A single USHG server vacancy at Porchlight, New York City, on JobToday, shown as posted 3 days before it was read. Base pay is the New York City tipped cash wage; tips come on top and make up most of a server's pay."
         }
       ],
       "occupation": "Waiters and Waitresses (SOC 35-3031)",
@@ -6676,43 +6617,44 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "Home Instead",
           "role": "Caregiver",
           "where": "national",
-          "source": "https://www.ziprecruiter.com/Salaries/Home-Instead-Caregiver-Salary",
+          "source": "https://www.homeinstead.com/home-care/usa/ma/pittsfield/369/home-care-jobs/benefits/",
           "confidence": "M",
-          "hourlyFrom": 1370,
-          "hourlyTo": 1731,
-          "payNote": "ZipRecruiter (August 2026): national average 15.54, typical 13.70 to 17.31. Franchise-owned, so pay varies by office. Aggregator estimate."
+          "hourlyFrom": 2100,
+          "hourlyTo": 2400,
+          "payNote": "The starting caregiver pay a Home Instead franchise office (Pittsfield, Massachusetts, serving Berkshire County) publishes on its own careers-benefits page. No tips. Franchise offices set their own rates."
         },
         {
           "id": "us-care-visiting-angels",
           "name": "Visiting Angels",
           "role": "Caregiver",
           "where": "national",
-          "source": "https://www.indeed.com/cmp/Visiting-Angels/salaries/Caregiver",
+          "source": "https://www.visitingangels.com/neohio/employment",
           "confidence": "M",
-          "hourlyFrom": 1680,
-          "payNote": "Indeed US average about 16.80 (2026); other aggregators range 13 to 19.90. Franchise-owned. Self-reported."
+          "hourlyFrom": 1500,
+          "hourlyTo": 1600,
+          "payNote": "The starting caregiver pay a Visiting Angels franchise office (Northeast Ohio) publishes on its own employment page. No tips. Franchise offices set their own rates."
         },
         {
           "id": "us-care-bayada-home-health-care",
           "name": "BAYADA Home Health Care",
           "role": "Home health aide",
           "where": "national",
-          "source": "https://www.indeed.com/cmp/Bayada-Home-Health-Care/salaries/Home-Health-Aide",
-          "confidence": "M",
-          "hourlyFrom": 1600,
-          "hourlyTo": 2200,
-          "payNote": "Indeed (2026): average about 20.77, range 16 to 22. Self-reported."
+          "source": "https://jobs.bayada.com/en/jobs/8782249002/hhacertified-home-health-aide/",
+          "confidence": "H",
+          "hourlyFrom": 2200,
+          "hourlyTo": 2600,
+          "payNote": "A single BAYADA certified home health aide vacancy in Newton, Massachusetts on BAYADA's own careers site, posted 2026-09-25, day and evening shifts. No tips. A same-day Marlborough MA ad stated the same $22-$26."
         },
         {
           "id": "us-care-brightstar-care",
           "name": "BrightStar Care",
           "role": "Caregiver / in-home caregiver",
           "where": "national",
-          "source": "https://www.indeed.com/cmp/Brightstar-Care/salaries/Caregiver",
-          "confidence": "M",
-          "hourlyFrom": 1597,
-          "hourlyTo": 1879,
-          "payNote": "Indeed national averages (2026): caregiver/companion 15.97, caregiver 17.20, in-home caregiver 18.79. Self-reported."
+          "source": "https://careers.brightstarcare.com/job-detail-712089-caregiver-full-time-or-part-time/",
+          "confidence": "H",
+          "hourlyFrom": 2100,
+          "hourlyTo": 2300,
+          "payNote": "A single BrightStar Care franchise caregiver vacancy in Antioch, California on BrightStar's careers site, posted 2026-09-01, asking for a year's caregiver experience. No tips. A BrightStar office in Allentown PA advertises $16-17 to start."
         }
       ],
       "occupation": "Home Health and Personal Care Aides (SOC 31-1120)",
@@ -6741,9 +6683,7 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "role": "Fit model",
           "where": "New York",
           "source": "https://www.ziprecruiter.com/Salaries/Fit-Model-Salary--in-New-York",
-          "confidence": "L",
-          "hourlyFrom": 5709,
-          "payNote": "ZipRecruiter New York average (September 2026). Glassdoor NYC about 41 (2025); Salary.com NY 36 (July 2025). Aggregators mix in salaried in-house fit models, so they run below agency booking rates."
+          "confidence": "L"
         },
         {
           "id": "us-modeling-fit-models-aggregate-national",
@@ -6751,10 +6691,7 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "role": "Fit model",
           "where": "national",
           "source": "https://www.ziprecruiter.com/Salaries/Fit-Model-Salary",
-          "confidence": "L",
-          "hourlyFrom": 3846,
-          "hourlyTo": 9615,
-          "payNote": "ZipRecruiter US average 52.18 (September 2026), most between 38.46 and 96.15. No Los Angeles figure (page returned 403)."
+          "confidence": "L"
         },
         {
           "id": "us-modeling-wilhelmina-img-models-ford-models-next-q",
@@ -6864,11 +6801,10 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "GardaWorld",
           "role": "Armed security officer",
           "where": "Los Angeles",
-          "source": "https://www.ziprecruiter.com/Jobs/Gardaworld-Armed-Security/-in-Los-Angeles,CA",
-          "confidence": "L",
-          "hourlyFrom": 1812,
-          "hourlyTo": 2303,
-          "payNote": "ZipRecruiter (September 15, 2026): average 22.03, most 18.12 to 23.03. Aggregator, not a posting."
+          "source": "https://securityjobsus.garda.com/search/jobdetails/security-officer---armed-flex/34f69594-d740-4d12-8c9c-89f4ff1cec40",
+          "confidence": "M",
+          "hourlyFrom": 3100,
+          "payNote": "A single GardaWorld armed security officer vacancy on GardaWorld's own U.S. careers site, Plano, Texas, posted 2026-09-22. It’s a flex (not full-time) armed-response post. No tips. Older GardaWorld armed-officer ads on the same site, now closed, showed $17.00 (Baton Rouge LA) to $28.50 (Virginia Beach VA), so the rate varies a lot by city."
         },
         {
           "id": "us-armed_forces-32bj-seiu-realty-advisory-board-contract",
@@ -6905,11 +6841,11 @@ export const EMPLOYERS: Readonly<Record<string, Readonly<Record<string, LineOfWo
           "name": "The Little Gym",
           "role": "Kids' gymnastics and movement instructor",
           "where": "Basking Ridge, New Jersey (franchise)",
-          "source": "https://www.indeed.com/cmp/Little-Gym/salaries/Instructor",
-          "confidence": "L",
-          "hourlyFrom": 1600,
-          "hourlyTo": 1900,
-          "payNote": "2026 posting seen as a search excerpt, not opened. Indeed national average for Little Gym instructors about 14.31."
+          "source": "https://little-gym-careers.careerplug.com/jobs/3598652",
+          "confidence": "H",
+          "hourlyFrom": 1400,
+          "hourlyTo": 1700,
+          "payNote": "A single Little Gym franchise vacancy for a children's fitness (gymnastics and movement) instructor at The Little Gym of Greenville, on The Little Gym's CareerPlug careers site, posted 2026-09-15. No tips. The same franchise group's Winchester ad stated the same range."
         },
         {
           "id": "us-dance-arthur-murray-dance-studios",

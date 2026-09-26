@@ -878,3 +878,30 @@ describe('Iceland’s Commerce Day', () => {
     expect(holidayOff(cafe.player.job!, Date.UTC(2026, 7, 3, 12), 'Atlantic/Reykjavik')).toBe(false);
   });
 });
+
+
+describe('a city’s own sick leave', () => {
+  it('gives Pittsburgh its ordinance’s sick leave, where Pennsylvania has none', () => {
+    expect(laborAt(['US', 'US-PA'])?.sick).toBeUndefined();
+    expect(laborAt(['US', 'US-PA', 'US-PA-pittsburgh'])?.sick).toMatchObject({ accrual: 0.0333, maxHoursAYear: 72, paidBy: 'employer' });
+    expect(laborAt(['US', 'US-PA', 'US-PA-philadelphia'])?.sick).toMatchObject({ accrual: 0.025, maxHoursAYear: 40 });
+  });
+
+  it('spreads a county’s ordinance to its towns, and not past them', () => {
+    expect(laborAt(['US', 'US-PA', 'US-PA-mckeesport'])?.sick).toMatchObject({ maxHoursAYear: 40 });
+    expect(laborAt(['US', 'US-MD', 'US-MD-rockville'])?.sick).toMatchObject({ maxHoursAYear: 56 });
+    expect(laborAt(['US', 'US-MD', 'US-MD-baltimore'])?.sick?.maxHoursAYear).toBe(STATES['US-MD']!.law!.sick!.maxHoursAYear);
+  });
+
+  it('gives Chicago paid leave for any reason beside its sick leave', () => {
+    const chicago = laborAt(['US', 'US-IL', 'US-IL-chicago'])!;
+    expect(chicago.sick).toMatchObject({ maxHoursAYear: 40 });
+    expect(chicago.leave).toMatchObject({ accrual: 0.0286, usableAfterMonths: 3 });
+    expect(laborAt(['US', 'US-IL', 'US-IL-springfield'])?.leave).toBeUndefined();
+  });
+
+  it('lifts San Francisco’s use cap over California’s', () => {
+    expect(laborAt(['US', 'US-CA'])?.sick?.maxHoursAYear).toBe(40);
+    expect(laborAt(['US', 'US-CA', 'US-CA-sanfrancisco'])?.sick?.maxHoursAYear).toBe(72);
+  });
+});
