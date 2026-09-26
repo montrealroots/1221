@@ -8,7 +8,7 @@ import { describe, expect, it } from 'vitest';
 import { quickSave } from '../src/engine';
 import { CITIES, addCountryCities } from '../src/engine/content/geography';
 import { MS_DAY } from '../src/engine/core/time';
-import { hourlyWage, layOff, shareOfYearDue } from '../src/engine/systems/work';
+import { hourlyWage, layOff, movableDue, shareOfYearDue } from '../src/engine/systems/work';
 import { jobFor, patternHours, patternOf } from '../src/engine/content/jobs';
 import type { Extra } from '../src/engine/content/labor';
 import { addCountryHolidays, hasHolidayFile } from '../src/engine/content/holidays';
@@ -401,12 +401,14 @@ describe('the finishing pass: benefits', () => {
     expect(BENEFITS.DZ!.basis(monthly(40_000, 12), ctx)).toBeCloseTo(Math.min(b.max!, (week + b.withMinimum!) / 2), 6);
   });
 
-  it('slides Puerto Rico’s fraction between the Labor Department’s anchors, SLATE’s estimate', () => {
-    expect(BENEFITS.PR!.basis(record([660, 600, 600, 600]), ctx)).toBe(60);
-    // Halfway between the anchors, halfway between 1/11 and 1/26.
-    expect(BENEFITS.PR!.basis(record([3_450, 3_000, 3_000, 3_000]), ctx)).toBeCloseTo(3_450 * (1 / 11 + 1 / 26) / 2, 6);
-    expect(BENEFITS.PR!.basis(record([6_240, 6_000, 6_000, 6_000]), ctx)).toBe(240);
-    expect(w('PR').source).toMatch(/SLATE’s estimate/);
+  it('reads Puerto Rico’s weekly benefit off its regulation’s table, stepped down to what the base period reaches', () => {
+    // Reglamento 9056: $75 to $97.50 in the best quarter is $60 a week; $4,846.01 and over is $240, with $7,480 in the base period.
+    expect(BENEFITS.PR!.basis(record([90, 90, 90, 20]), ctx)).toBe(60);
+    expect(BENEFITS.PR!.basis(record([5_000, 5_000, 5_000, 5_000]), ctx)).toBe(240);
+    // The same best quarter with too little in the rest: a lower line, $280 plus $40 for each dollar over $60.
+    const short = BENEFITS.PR!.basis(record([5_000, 100, 0, 0]), ctx);
+    expect(short).toBe(60 + Math.floor((5_100 - 280) / 40));
+    expect(BENEFITS.PR!.qualifies(record([5_000, 0, 0, 0]), ctx)).toMatch(/two quarters/);
   });
 
   it('pays Hong Kong’s CSSA as long as they’re out of work, and nothing over its asset limit', () => {
@@ -415,7 +417,8 @@ describe('the finishing pass: benefits', () => {
   });
 
   it('says where the benefit exists and SLATE couldn’t size it', () => {
-    expect(noBenefitAt(['KG'])).toMatchObject({ name: 'Kyrgyzstan', unsized: true });
+    expect(noBenefitAt(['TM'])).toMatchObject({ name: 'Turkmenistan', unsized: true });
+    expect(noBenefitAt(['KG'])).toBeUndefined();
   });
 });
 
@@ -491,5 +494,42 @@ describe('the finishing pass: extra pay', () => {
   it('loads Brazil’s leave by a third, and pays Slovakia’s Sunday premium on the minimum wage', () => {
     expect(laborAt(['BR'])?.leave?.loading).toBeCloseTo(1 / 3, 3);
     expect(laborAt(['SK'])?.windows?.find((one) => one.name === 'Sunday Premium')?.flat).toBeCloseTo(5.26, 2);
+  });
+});
+
+
+describe('the fixes: what the finishing pass left', () => {
+  const monthly = (gross: number, months = 12): WorkRecord =>
+    Array.from({ length: months }, (_, i) => ({ at: claimAt - (i + 0.5) * 30.4375 * MS_DAY, days: 30.4375, hours: 160, gross }));
+
+  it('pays Kyrgyzstan 300 som a month, more for a longer insurance record', () => {
+    expect(BENEFITS.KG!.basis(monthly(20_000, 13), ctx)).toBeCloseTo((300 * 12) / 52, 6);
+    expect(BENEFITS.KG!.basis(monthly(20_000, 30), ctx)).toBeCloseTo((330 * 12) / 52, 6);
+    expect(BENEFITS.KG!.qualifies(monthly(20_000, 11), ctx)).toMatch(/12 months/);
+  });
+
+  it('holds a Swiss claim off 31 days for quitting, the start of SECO’s severe band', () => {
+    expect(BENEFITS.CH!.quit).toEqual({ weeks: 31 / 7 });
+    expect(BENEFITS.CH!.source).toMatch(/D75/);
+  });
+
+  it('pays North Macedonia’s leave allowance of 40% of the average net wage after six months', () => {
+    expect(WORLD_LAW.MK!.law!.extras).toEqual([expect.objectContaining({ kind: 'fixed', amount: 19_116, minWeeks: 26 })]);
+  });
+
+  it('dates a bonus by the government’s listed Eid where the calendar has none (Bangladesh’s)', () => {
+    addCountryCities('bd', readFileSync('public/geo/bd.tsv', 'utf8'));
+    const dhaka = CITIES.all().find((c) => c.countryId === 'bd' && c.name === 'Dhaka')!;
+    const before = { name: 'Eid al-Fitr', days: 7, dates: ['2026-03-21'] };
+    expect(movableDue(before, dhaka.id, { year: 2026, month: 3, day: 14 })).toBe(true);
+    expect(movableDue(before, dhaka.id, { year: 2026, month: 3, day: 15 })).toBe(false);
+    expect(movableDue(before, dhaka.id, { year: 2027, month: 3, day: 3 })).toBe(false);
+  });
+
+  it('takes the Kentucky cities the first research missed, and Brandenburg’s exemption', () => {
+    const ky = (cityId: string, gross: number) => payrollYear('US', gross * 100, { path: ['US', 'US-KY'], cityId, at, age: 30 }).lines;
+    expect(ky('us-ky-henderson', 30_000).find((l) => l.name === 'Henderson Occupational License Tax')!.amount / 100).toBeCloseTo(30_000 * 0.0165, 6);
+    expect(ky('us-ky-brandenburg', 18_000).some((l) => /Brandenburg/.test(l.name))).toBe(false);
+    expect(ky('us-ky-brandenburg', 30_000).find((l) => /Brandenburg/.test(l.name))!.amount / 100).toBeCloseTo(30_000 * 0.00333, 6);
   });
 });

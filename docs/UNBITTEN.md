@@ -176,9 +176,14 @@ part the tool cannot see.
   Colorado head taxes, West Virginia's city fees, Portland's, and Iowa's
   school surtaxes, paid on the return. A worker is taken to live in the town
   they work in, so a resident's rate is charged and a credit for another
-  city's tax never arises. Not taken: Ohio's joint economic development
-  districts, which the geocoder doesn't place; about 60 Kentucky cities the
-  research couldn't find; Iowa's 2026 surtax list (2025's is used), Kentucky
+  city's tax never arises. A second search found the Kentucky cities the
+  first missed (Henderson's, Pikeville's, Brandenburg's with its exemption
+  under $20,000), 35 of them at an undated third-party table's rate, which
+  its source says. Not taken: Ohio's joint economic development districts,
+  which tax work done on the parcels inside them, where SLATE's employers
+  are placed in a town and not on a parcel; the 21 Kentucky cities with a
+  tax and no rate found, nine of them county seats (Harlan, Lawrenceburg,
+  Monticello and others); Iowa's 2026 surtax list (2025's is used), Kentucky
   counties' 2025 rates, and Anne Arundel's and Frederick's upper brackets
   (their lowest is used); and Portland Metro's boundary, which is taken as
   its three counties. Its sales, property and vehicle rules are still read
@@ -321,12 +326,17 @@ part the tool cannot see.
   weeks, Alaska's six), and Thailand pays somebody who resigned 30% for 90
   days. The other 116 places have none, and a claim says so and whose word
   it is. Puerto Rico's table is in an unpublished regulation: its benefit
-  is SLATE's estimate, the fraction on a straight line between the Labor
-  Department's two published points, and says so. Not modeled: Kyrgyzstan's
-  and Turkmenistan's, which the research found and couldn't size (a claim
-  says that); the months of work the Faroes, Greenland and the Virgin
-  Islands ask; Bosnia's share of the average wage; Switzerland's penalty
-  by severity, taken as none; and a dependant's supplement anywhere. The
+  was for a day SLATE's estimate between two published points; a second
+  search found the regulation that replaced it in 2018 (Reglamento 9056),
+  and the benefit is read off its 181-line table, stepped down to what the
+  base period reaches. Kyrgyzstan's is its 300 som a month and the steps
+  for a longer record, read through the Ministry of Justice's own data
+  service. Switzerland's penalties are bands in SECO's directive (quitting
+  without another job 31 to 60 days); SLATE takes 31, the band's start, and
+  the source says so. Not modeled: Turkmenistan's, whose share of its 520
+  manat base is in a ministry order that isn't published (a claim says
+  so); the months of work the Faroes, Greenland and the Virgin Islands ask;
+  Bosnia's share of the average wage; and a dependant's supplement. The
   benefits for citizens only (Kuwait's, Oman's, Saudi Arabia's and others)
   need no test: SLATE lets nobody but a citizen work there.
 - **Work outside the thirteen is simpler, and some of it is missing.** The
@@ -372,10 +382,16 @@ part the tool cannot see.
   four fixed sums, Slovenia's allowances and the Netherlands' 8%; leave
   loadings (Brazil's third, Portugal's and Greece's allowances); Egypt's 3%
   a year; Senegal's and Mauritania's seniority premiums; and Poland's,
-  Slovakia's and Bulgaria's premiums on the minimum wage. Not paid:
-  Bangladesh's festival bonuses (the calendar has no Eid dates there),
-  Serbia's and North Macedonia's leave allowances (no amount in law),
-  Bolivia's second aguinaldo (it turns on growth that wasn't checked),
+  Slovakia's and Bulgaria's premiums on the minimum wage; North Macedonia's
+  leave allowance, 40% of the average net wage (19,116 denars in 2026);
+  and Bangladesh's two festival bonuses, a month's basic wage a week before
+  each Eid, on the dates the government lists, since the calendar has none
+  there. Its list comes a year at a time and 2027's isn't out, and the
+  bonus needs a year's service, so none has fallen due yet. Not paid:
+  Serbia's leave allowance, which the law makes due and leaves the amount
+  to each employer's own rules, with no general agreement in force;
+  Bolivia's second aguinaldo, not decreed for 2024 or 2025 as growth fell
+  short (2026's is decided in October),
   Belgium's blue-collar holiday pay from its fund (the white-collar loading
   is paid instead), and the Nordic holiday pay the law works out in place of
   leave pay, since SLATE pays leave at the wage; nor any tax exemption on a

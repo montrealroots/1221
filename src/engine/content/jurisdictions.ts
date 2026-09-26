@@ -3641,11 +3641,13 @@ export interface WorldLaw {
     /** A share of the average week over basisMonths, of the net where ofNet; rateAbove over threshold; by months insured; with the minimum wage averaged in. */
     rate?: number; ofNet?: boolean; basisMonths?: number; rateAbove?: number; threshold?: number;
     rateByMonths?: readonly (readonly [number, number])[]; withMinimum?: number;
-    /** The best quarters times a factor (the Virgin Islands'), or a factor sliding between two anchors (Puerto Rico's, SLATE's estimate of its unpublished table). */
+    /** The best quarters times a factor (the Virgin Islands'). */
     quarters?: { top: number; factor: number };
-    quartersSlide?: { top: number; low: readonly [number, number]; high: readonly [number, number] };
+    /** A regulation's table: from this much in the best quarter, this much a week, where the base period reaches this much. */
+    quartersTable?: readonly (readonly [number, number, number])[];
     /** A flat week, or flat weeks from the week given; capped at the past average week where the law says. */
     flat?: number; flats?: readonly (readonly [number, number])[]; capAtPastWeek?: boolean;
+    flatByMonths?: readonly (readonly [number, number])[];
     /** From the week given, the rate that applies (the first entry the starting one), and Italy's cut of so much a month. */
     rates?: readonly (readonly [number, number])[]; decline?: { fromWeek: number; perMonth: number };
     min?: number; max?: number;
@@ -10193,7 +10195,45 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         "afterMonths": 12,
         "minHours": 0,
         "source": "https://mccibd.org/wp-content/uploads/2021/09/Bangladesh-Labour-Act-2006_English-Upto-2018.pdf"
-      }
+      },
+      "extras": [
+        {
+          "kind": "month",
+          "name": "Eid-ul-Fitr Bonus",
+          "months": [],
+          "shares": [
+            0.536
+          ],
+          "beforeHoliday": {
+            "name": "Eid al-Fitr",
+            "days": 7,
+            "dates": [
+              "2026-03-21"
+            ]
+          },
+          "periodMonths": 12,
+          "minMonths": 12,
+          "source": "https://www.thedailystar.net/news/bangladesh/news/govt-announces-official-list-public-holidays-2026-4031596"
+        },
+        {
+          "kind": "month",
+          "name": "Eid-ul-Adha Bonus",
+          "months": [],
+          "shares": [
+            0.536
+          ],
+          "beforeHoliday": {
+            "name": "Eid al-Adha",
+            "days": 7,
+            "dates": [
+              "2026-05-28"
+            ]
+          },
+          "periodMonths": 12,
+          "minMonths": 12,
+          "source": "https://www.thedailystar.net/news/bangladesh/news/govt-announces-official-list-public-holidays-2026-4031596"
+        }
+      ]
     }
   },
   "KH": {
@@ -12660,12 +12700,12 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
       "withinMonths": 24,
       "waitingDays": 5,
       "quit": {
-        "weeks": 9.2
+        "weeks": 4.428571428571429
       },
       "cause": {
-        "weeks": 9.2
+        "weeks": 4.428571428571429
       },
-      "source": "MISSOC comparative tables, Switzerland, 1 Jan 2026, Unemployment"
+      "source": "MISSOC comparative tables, Switzerland, 1 Jan 2026, Unemployment; SECO AVIG directive D75: quitting 31 to 60 days suspended, dismissal for conduct 1 to 60, SLATE’s choice 31"
     }
   },
   "CY": {
@@ -16094,9 +16134,37 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
         "source": "Kyrgyzstan’s Labor Code of Kyrgyzstan 2025 Arts. 43 and 46"
       }
     },
-    "unsized": {
-      "name": "Kyrgyzstan",
-      "source": "https://base.spinform.ru/show_doc.fwx?rgn=78373 (table of contents and art. 2 definition"
+    "benefit": {
+      "name": "Posobie po bezrabotitse",
+      "qualifyMonths": 12,
+      "withinMonths": 36,
+      "waitingDays": 10,
+      "quit": "none",
+      "cause": "none",
+      "source": "Law of the Kyrgyz Republic No. 214 of 03.08.2015 (edition of 23.01.2025), arts. 5-9 and 13, https://cbd.minjust.gov.kg/111258/edition/1235914/ru (read via https://cbd.minjust.gov.kg/api/v1/GetEdition?editionId=25336&lang=ru)",
+      "flatByMonths": [
+        [
+          12,
+          69.23076923076923
+        ],
+        [
+          24,
+          76.15384615384616
+        ],
+        [
+          36,
+          90
+        ],
+        [
+          60,
+          103.84615384615384
+        ],
+        [
+          120,
+          138.46153846153845
+        ]
+      ],
+      "weeks": 52
     }
   },
   "ME": {
@@ -16192,7 +16260,20 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
           ]
         ],
         "source": "CMS Expert Guide North Macedonia 2024"
-      }
+      },
+      "extras": [
+        {
+          "name": "Регрес за годишен одмор",
+          "kind": "fixed",
+          "month": 7,
+          "day": 15,
+          "amount": 19116,
+          "periodMonths": 6,
+          "minWeeks": 26,
+          "fullTimeHours": 40,
+          "source": "https://orm.org.mk/wp-content/uploads/2024/01/kolektiven-dogovor-za-privaten-sektor.pdf"
+        }
+      ]
     },
     "benefit": {
       "name": "Паричен надоместок за време на невработеност",
@@ -16445,7 +16526,7 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
     },
     "unsized": {
       "name": "Turkmenistan",
-      "source": "Law of Turkmenistan 'On Employment of the Population' of 18 Jun 2016 (amended 1 Dec 2018), arts. 26-34, Ministry of Justice text https://minjust.gov.tm/assets/files/law_documents/hukuknama_280_ru.pdf"
+      "source": "Law of Turkmenistan 'On employment of the population' (as amended to 22.11.2025 No. 185-VII), arts. 1, 26-34, Ministry of Justice text https://minjust.gov.tm/assets/files/law_documents/hukuknama_721_ru.pdf"
     }
   },
   "AE": {
@@ -17992,20 +18073,914 @@ export const WORLD_LAW: Readonly<Record<string, WorldLaw>> = {
       "waitingDays": 7,
       "quit": "none",
       "cause": "none",
-      "source": "US DOL ETA, Significant Provisions of State UI Laws, effective January 2026 (Wayback copy of https://oui.doleta.gov/unemploy/content/sigpros/2020-2029/January2026.pdf); the Secretary’s table (Reglamento 1223) isn’t published: SLATE’s estimate takes the fraction on a straight line between the DOL’s two anchors, $60 at $660 of high-quarter wages and $240 at $6,240",
-      "quartersSlide": {
-        "top": 1,
-        "low": [
-          660,
-          0.09090909090909091
+      "source": "https://www.trabajo.pr.gov/docs/Libreria_Laboral/Reglamentos/9056%20Reglamento%20para%20Administrar%20el%20Programa%20de%20Seguro%20por%20Desempleo.pdf (Reglamento 9056, filed 8 Nov 2018, art. 3.12(a)-(c), pp. 14-27",
+      "quartersTable": [
+        [
+          75,
+          60,
+          280
         ],
-        "high": [
-          6240,
-          0.038461538461538464
+        [
+          97.51,
+          61,
+          320
+        ],
+        [
+          140.41,
+          62,
+          360
+        ],
+        [
+          183.31,
+          63,
+          400
+        ],
+        [
+          226.21,
+          64,
+          440
+        ],
+        [
+          269.11,
+          65,
+          480
+        ],
+        [
+          312.01,
+          66,
+          520
+        ],
+        [
+          338.01,
+          67,
+          560
+        ],
+        [
+          364.01,
+          68,
+          600
+        ],
+        [
+          390.01,
+          69,
+          640
+        ],
+        [
+          416.01,
+          70,
+          680
+        ],
+        [
+          442.01,
+          71,
+          720
+        ],
+        [
+          468.01,
+          72,
+          760
+        ],
+        [
+          494.01,
+          73,
+          800
+        ],
+        [
+          520.01,
+          74,
+          840
+        ],
+        [
+          546.01,
+          75,
+          880
+        ],
+        [
+          572.01,
+          76,
+          920
+        ],
+        [
+          598.01,
+          77,
+          960
+        ],
+        [
+          624.01,
+          78,
+          1000
+        ],
+        [
+          650.01,
+          79,
+          1040
+        ],
+        [
+          676.01,
+          80,
+          1080
+        ],
+        [
+          702.01,
+          81,
+          1120
+        ],
+        [
+          728.01,
+          82,
+          1160
+        ],
+        [
+          754.01,
+          83,
+          1200
+        ],
+        [
+          780.01,
+          84,
+          1240
+        ],
+        [
+          806.01,
+          85,
+          1280
+        ],
+        [
+          832.01,
+          86,
+          1320
+        ],
+        [
+          858.01,
+          87,
+          1360
+        ],
+        [
+          884.01,
+          88,
+          1400
+        ],
+        [
+          910.01,
+          89,
+          1440
+        ],
+        [
+          936.01,
+          90,
+          1480
+        ],
+        [
+          962.01,
+          91,
+          1520
+        ],
+        [
+          988.01,
+          92,
+          1560
+        ],
+        [
+          1014.01,
+          93,
+          1600
+        ],
+        [
+          1040.01,
+          94,
+          1640
+        ],
+        [
+          1066.01,
+          95,
+          1680
+        ],
+        [
+          1092.01,
+          96,
+          1720
+        ],
+        [
+          1118.01,
+          97,
+          1760
+        ],
+        [
+          1144.01,
+          98,
+          1800
+        ],
+        [
+          1170.01,
+          99,
+          1840
+        ],
+        [
+          1196.01,
+          100,
+          1880
+        ],
+        [
+          1222.01,
+          101,
+          1920
+        ],
+        [
+          1248.01,
+          102,
+          1960
+        ],
+        [
+          1274.01,
+          103,
+          2000
+        ],
+        [
+          1300.01,
+          104,
+          2040
+        ],
+        [
+          1326.01,
+          105,
+          2080
+        ],
+        [
+          1352.01,
+          106,
+          2120
+        ],
+        [
+          1378.01,
+          107,
+          2160
+        ],
+        [
+          1404.01,
+          108,
+          2200
+        ],
+        [
+          1430.01,
+          109,
+          2240
+        ],
+        [
+          1456.01,
+          110,
+          2280
+        ],
+        [
+          1482.01,
+          111,
+          2320
+        ],
+        [
+          1508.01,
+          112,
+          2360
+        ],
+        [
+          1534.01,
+          113,
+          2400
+        ],
+        [
+          1560.01,
+          114,
+          2440
+        ],
+        [
+          1586.01,
+          115,
+          2480
+        ],
+        [
+          1612.01,
+          116,
+          2520
+        ],
+        [
+          1638.01,
+          117,
+          2560
+        ],
+        [
+          1664.01,
+          118,
+          2600
+        ],
+        [
+          1690.01,
+          119,
+          2640
+        ],
+        [
+          1716.01,
+          120,
+          2680
+        ],
+        [
+          1742.01,
+          121,
+          2720
+        ],
+        [
+          1768.01,
+          122,
+          2760
+        ],
+        [
+          1794.01,
+          123,
+          2800
+        ],
+        [
+          1820.01,
+          124,
+          2840
+        ],
+        [
+          1846.01,
+          125,
+          2880
+        ],
+        [
+          1872.01,
+          126,
+          2920
+        ],
+        [
+          1898.01,
+          127,
+          2960
+        ],
+        [
+          1924.01,
+          128,
+          3000
+        ],
+        [
+          1950.01,
+          129,
+          3040
+        ],
+        [
+          1976.01,
+          130,
+          3080
+        ],
+        [
+          2002.01,
+          131,
+          3120
+        ],
+        [
+          2028.01,
+          132,
+          3160
+        ],
+        [
+          2054.01,
+          133,
+          3200
+        ],
+        [
+          2080.01,
+          134,
+          3240
+        ],
+        [
+          2106.01,
+          135,
+          3280
+        ],
+        [
+          2132.01,
+          136,
+          3320
+        ],
+        [
+          2158.01,
+          137,
+          3360
+        ],
+        [
+          2184.01,
+          138,
+          3400
+        ],
+        [
+          2210.01,
+          139,
+          3440
+        ],
+        [
+          2236.01,
+          140,
+          3480
+        ],
+        [
+          2262.01,
+          141,
+          3520
+        ],
+        [
+          2288.01,
+          142,
+          3560
+        ],
+        [
+          2314.01,
+          143,
+          3600
+        ],
+        [
+          2340.01,
+          144,
+          3640
+        ],
+        [
+          2366.01,
+          145,
+          3680
+        ],
+        [
+          2392.01,
+          146,
+          3720
+        ],
+        [
+          2418.01,
+          147,
+          3760
+        ],
+        [
+          2444.01,
+          148,
+          3800
+        ],
+        [
+          2470.01,
+          149,
+          3840
+        ],
+        [
+          2496.01,
+          150,
+          3880
+        ],
+        [
+          2522.01,
+          151,
+          3920
+        ],
+        [
+          2548.01,
+          152,
+          3960
+        ],
+        [
+          2574.01,
+          153,
+          4000
+        ],
+        [
+          2600.01,
+          154,
+          4040
+        ],
+        [
+          2626.01,
+          155,
+          4080
+        ],
+        [
+          2652.01,
+          156,
+          4120
+        ],
+        [
+          2678.01,
+          157,
+          4160
+        ],
+        [
+          2704.01,
+          158,
+          4200
+        ],
+        [
+          2730.01,
+          159,
+          4240
+        ],
+        [
+          2756.01,
+          160,
+          4280
+        ],
+        [
+          2782.01,
+          161,
+          4320
+        ],
+        [
+          2808.01,
+          162,
+          4360
+        ],
+        [
+          2834.01,
+          163,
+          4400
+        ],
+        [
+          2860.01,
+          164,
+          4440
+        ],
+        [
+          2886.01,
+          165,
+          4480
+        ],
+        [
+          2912.01,
+          166,
+          4520
+        ],
+        [
+          2938.01,
+          167,
+          4560
+        ],
+        [
+          2964.01,
+          168,
+          4600
+        ],
+        [
+          2990.01,
+          169,
+          4640
+        ],
+        [
+          3016.01,
+          170,
+          4680
+        ],
+        [
+          3042.01,
+          171,
+          4720
+        ],
+        [
+          3068.01,
+          172,
+          4760
+        ],
+        [
+          3094.01,
+          173,
+          4800
+        ],
+        [
+          3120.01,
+          174,
+          4840
+        ],
+        [
+          3146.01,
+          175,
+          4880
+        ],
+        [
+          3172.01,
+          176,
+          4920
+        ],
+        [
+          3198.01,
+          177,
+          4960
+        ],
+        [
+          3224.01,
+          178,
+          5000
+        ],
+        [
+          3250.01,
+          179,
+          5040
+        ],
+        [
+          3286.01,
+          180,
+          5080
+        ],
+        [
+          3312.01,
+          181,
+          5120
+        ],
+        [
+          3338.01,
+          182,
+          5160
+        ],
+        [
+          3364.01,
+          183,
+          5200
+        ],
+        [
+          3390.01,
+          184,
+          5240
+        ],
+        [
+          3416.01,
+          185,
+          5280
+        ],
+        [
+          3442.01,
+          186,
+          5320
+        ],
+        [
+          3468.01,
+          187,
+          5360
+        ],
+        [
+          3494.01,
+          188,
+          5400
+        ],
+        [
+          3520.01,
+          189,
+          5440
+        ],
+        [
+          3546.01,
+          190,
+          5480
+        ],
+        [
+          3572.01,
+          191,
+          5520
+        ],
+        [
+          3598.01,
+          192,
+          5560
+        ],
+        [
+          3624.01,
+          193,
+          5600
+        ],
+        [
+          3650.01,
+          194,
+          5640
+        ],
+        [
+          3676.01,
+          195,
+          5680
+        ],
+        [
+          3702.01,
+          196,
+          5720
+        ],
+        [
+          3728.01,
+          197,
+          5760
+        ],
+        [
+          3754.01,
+          198,
+          5800
+        ],
+        [
+          3780.01,
+          199,
+          5840
+        ],
+        [
+          3806.01,
+          200,
+          5880
+        ],
+        [
+          3832.01,
+          201,
+          5920
+        ],
+        [
+          3858.01,
+          202,
+          5960
+        ],
+        [
+          3884.01,
+          203,
+          6000
+        ],
+        [
+          3910.01,
+          204,
+          6040
+        ],
+        [
+          3936.01,
+          205,
+          6080
+        ],
+        [
+          3962.01,
+          206,
+          6120
+        ],
+        [
+          3988.01,
+          207,
+          6160
+        ],
+        [
+          4014.01,
+          208,
+          6200
+        ],
+        [
+          4040.01,
+          209,
+          6240
+        ],
+        [
+          4066.01,
+          210,
+          6280
+        ],
+        [
+          4092.01,
+          211,
+          6320
+        ],
+        [
+          4118.01,
+          212,
+          6360
+        ],
+        [
+          4144.01,
+          213,
+          6400
+        ],
+        [
+          4170.01,
+          214,
+          6440
+        ],
+        [
+          4196.01,
+          215,
+          6480
+        ],
+        [
+          4222.01,
+          216,
+          6520
+        ],
+        [
+          4248.01,
+          217,
+          6560
+        ],
+        [
+          4274.01,
+          218,
+          6600
+        ],
+        [
+          4300.01,
+          219,
+          6640
+        ],
+        [
+          4326.01,
+          220,
+          6680
+        ],
+        [
+          4352.01,
+          221,
+          6720
+        ],
+        [
+          4378.01,
+          222,
+          6760
+        ],
+        [
+          4404.01,
+          223,
+          6800
+        ],
+        [
+          4430.01,
+          224,
+          6840
+        ],
+        [
+          4456.01,
+          225,
+          6880
+        ],
+        [
+          4482.01,
+          226,
+          6920
+        ],
+        [
+          4508.01,
+          227,
+          6960
+        ],
+        [
+          4534.01,
+          228,
+          7000
+        ],
+        [
+          4560.01,
+          229,
+          7040
+        ],
+        [
+          4586.01,
+          230,
+          7080
+        ],
+        [
+          4612.01,
+          231,
+          7120
+        ],
+        [
+          4638.01,
+          232,
+          7160
+        ],
+        [
+          4664.01,
+          233,
+          7200
+        ],
+        [
+          4690.01,
+          234,
+          7240
+        ],
+        [
+          4716.01,
+          235,
+          7280
+        ],
+        [
+          4742.01,
+          236,
+          7320
+        ],
+        [
+          4768.01,
+          237,
+          7360
+        ],
+        [
+          4794.01,
+          238,
+          7400
+        ],
+        [
+          4820.01,
+          239,
+          7440
+        ],
+        [
+          4846.01,
+          240,
+          7480
         ]
-      },
-      "min": 60,
-      "max": 240,
+      ],
       "weeks": 26
     }
   },

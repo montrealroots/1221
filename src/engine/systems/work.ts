@@ -1317,10 +1317,11 @@ export function shareOfYearDue(extra: Extract<Extra, { kind: 'shareOfYear' }>, p
 }
 
 /** Whether today is so many days before a moving holiday this year, where the town's calendar has it. */
-function movableDue(before: { name: string; days: number }, cityId: string, p: { year: number; month: number; day: number }): boolean {
+export function movableDue(before: { name: string; days: number; dates?: readonly string[] }, cityId: string, p: { year: number; month: number; day: number }): boolean {
   const country = countryOfPlace(cityId);
   if (!country) return false;
-  const day = holidaysInYear(country, p.year).find((one) => one.holiday.englishName.includes(before.name))?.date;
+  const day = holidaysInYear(country, p.year).find((one) => one.holiday.englishName.includes(before.name))?.date
+    ?? before.dates?.find((one) => one.startsWith(`${p.year}-`));
   if (!day) return false;
   const due = new Date(Date.parse(`${day}T00:00:00Z`) - before.days * MS_DAY);
   return due.getUTCMonth() + 1 === p.month && due.getUTCDate() === p.day;

@@ -180,8 +180,11 @@ export type Extra =
     kind: 'month'; name: string; months: readonly number[]; shares?: readonly number[]; day?: number; over?: 'half' | 'year'; periodMonths?: number;
     /** Only after so many months with the employer (the Seychelles' year). */
     minMonths?: number;
-    /** Paid so many days before a holiday that moves (Indonesia's THR before Eid al-Fitr, Greece's Easter bonus), by its English name. */
-    beforeHoliday?: { name: string; days: number };
+    /**
+     * Paid so many days before a holiday that moves (Indonesia's THR before Eid al-Fitr, Greece's Easter bonus), by its English name,
+     * or on the dates the government lists where the calendar has none (Bangladesh's Eids).
+     */
+    beforeHoliday?: { name: string; days: number; dates?: readonly string[] };
     source: string;
   }
   /**

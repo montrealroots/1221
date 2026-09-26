@@ -480,8 +480,11 @@ function ei(rate: number): Benefit {
  * average week over the months before the job ended (of the net where the
  * law says net; a lower share above a threshold, as Italy's; the rate by the
  * months insured, as Mongolia's; with the minimum wage averaged in, as
- * Algeria's); the US-style best quarters (the Virgin Islands'); or a flat
- * week, by the month where it steps (Singapore's, capped at the past pay).
+ * Algeria's); the US-style best quarters (the Virgin Islands'), or a table
+ * by the best quarter stepped down to what the base period reaches (Puerto
+ * Rico's); or a flat
+ * week, by the month where it steps (Singapore's, capped at the past pay)
+ * or by the months insured (Kyrgyzstan's).
  * It then steps down by the week (a new rate from a week on, or Italy's 3%
  * a month), within its bounds. It runs a number of weeks, a share of the
  * weeks worked (Italy's half, South Africa's fifth), or by the months
@@ -503,6 +506,13 @@ function worldBenefit(iso: string, b: NonNullable<WorldLaw['benefit']>): Benefit
       const short = [{ months: b.qualifyMonths, withinMonths: b.withinMonths }, ...(b.also ?? [])]
         .find((t) => t.months > 0 && monthsWorked(record, ctx.at, t.withinMonths) < t.months);
       if (short) return `${b.name} needs ${t(short.months)} of work in the last ${t(short.withinMonths)}; SLATE has ${Math.floor(monthsWorked(record, ctx.at, short.withinMonths))} on record.`;
+      if (b.quartersTable) {
+        const q = baseQuarters(record, ctx.at);
+        const [from, , needs] = b.quartersTable[0]!;
+        if (q.filter((one) => one > 0).length < 2 || q[0]! < from || q.reduce((x, y) => x + y, 0) < needs) {
+          return `${b.name} needs wages in two quarters of the base period, ${from.toLocaleString('en-US')} in the best and ${needs.toLocaleString('en-US')} in all.`;
+        }
+      }
       if (b.qualifyIncome && !b.qualifyIncome.some((q) => total(within(record, ctx.at, q.withinMonths * 30.4375), 'gross') >= q.amount)) {
         return `${b.name} needs earnings of ${b.qualifyIncome.map((q) => `${q.amount.toLocaleString('en-US')} in the last ${t(q.withinMonths)}`).join(', or ')}.`;
       }
@@ -511,13 +521,14 @@ function worldBenefit(iso: string, b: NonNullable<WorldLaw['benefit']>): Benefit
     basis: (record, ctx) => {
       const week = averageWeek(within(record, ctx.at, (b.basisMonths ?? 12) * 30.4375));
       if (b.flats) return b.capAtPastWeek ? week : Number.POSITIVE_INFINITY;
+      if (b.flatByMonths) return lookup(b.flatByMonths, monthsWorked(record, ctx.at));
       if (b.flat !== undefined) return clampTo(b.capAtPastWeek ? Math.min(b.flat, week) : b.flat, b.min ?? 0, b.max);
       if (b.quarters) return clampTo(baseQuarters(record, ctx.at).slice(0, b.quarters.top).reduce((x, y) => x + y, 0) * b.quarters.factor, b.min ?? 0, b.max);
-      if (b.quartersSlide) {
-        const { top, low, high } = b.quartersSlide;
-        const hq = baseQuarters(record, ctx.at).slice(0, top).reduce((x, y) => x + y, 0);
-        const along = clampTo((hq - low[0]) / (high[0] - low[0]), 0, 1);
-        return clampTo(hq * (low[1] + along * (high[1] - low[1])), b.min ?? 0, b.max);
+      if (b.quartersTable) {
+        // The line for the best quarter, stepped down to the line the base period's wages reach.
+        const q = baseQuarters(record, ctx.at);
+        const all = q.reduce((x, y) => x + y, 0);
+        return b.quartersTable.reduce((weekly, [from, amount, needs]) => (q[0]! >= from && all >= needs ? amount : weekly), 0);
       }
       let pay = week;
       if (b.ofNet && week > 0) {
