@@ -67,8 +67,12 @@ export interface Benefit {
   weeks?(record: WorkRecord, ctx: ClaimContext, basis: number): number;
   /** Where the first claim fails, the one that's tried instead (Britain's Universal Credit). */
   fallback?: Benefit;
-  /** Waiting days that turn on savings (Australia's liquid assets waiting period), in place of `waitingDays`. */
-  wait?(ctx: { savings: number }): number;
+  /** Waiting days that turn on savings (Australia's liquid assets waiting period), and on the weeks leave and redundancy pay paid out cover, in place of `waitingDays`. */
+  wait?(ctx: { savings: number; paidOutWeeks?: number }): number;
+  /** Tax taken from each payment as it's paid (Canada's, Spain's, France's, New Zealand's, Iceland's), at the country's tax on the benefit over a year. */
+  withheld?: boolean;
+  /** A longer bar for a quit after so many quits already claimed on in so many years (Japan's third in five). */
+  repeatQuit?: { after: number; withinYears: number; weeks: number };
   /** A bar for quitting or cause runs at the same time as the waiting days, not after them (Australia). */
   concurrentBar?: boolean;
   source: string;
@@ -407,16 +411,19 @@ const US_QUALIFY: Readonly<Record<string, (q: number[], hours: number) => string
 };
 
 /**
- * Britain's National Insurance test for New Style JSA: of the two tax years
- * before the last calendar year, earnings of 26 times the lower earnings
- * limit in one and 50 times in each. The limit is 2024/25's £123 a week,
- * the one the research fetched.
+ * Britain's National Insurance test for New Style JSA (Jobseekers Act 1995
+ * s.2): of the two tax years before the last calendar year, earnings of 26
+ * times that year's lower earnings limit in one and 50 times in each. The
+ * limit was £123 a week to 2024/25, £125 in 2025/26 and £129 in 2026/27;
+ * until 2026-09-26 2024/25's stood for every year.
  */
+const GB_LEL: Readonly<Record<number, number>> = { 2025: 125, 2026: 129 };
 function GB_JSA_QUALIFY(record: WorkRecord, ctx: ClaimContext): string | undefined {
   const year = new Date(ctx.at).getUTCFullYear();
   const taxYear = (start: number) => total(record.filter((one) => one.at >= Date.UTC(start, 3, 6) && one.at < Date.UTC(start + 1, 3, 6)), 'gross');
-  const years = [taxYear(year - 3), taxYear(year - 2)];
-  return years.some((one) => one >= 26 * 123) && years.every((one) => one >= 50 * 123) ? undefined
+  const lel = (start: number) => GB_LEL[start] ?? 123;
+  const years = [[taxYear(year - 3), lel(year - 3)], [taxYear(year - 2), lel(year - 2)]] as const;
+  return years.some(([paid, limit]) => paid >= 26 * limit) && years.every(([paid, limit]) => paid >= 50 * limit) ? undefined
     : `New Style JSA needs National Insurance paid in the tax years ${year - 3}/${String(year - 2).slice(2)} and ${year - 2}/${String(year - 1).slice(2)}.`;
 }
 
@@ -448,7 +455,7 @@ const EI_REGION: Readonly<Record<string, number>> = { 'CA-08': 6.5, 'CA-02': 6.5
 /** Canada's Employment Insurance at a region's unemployment rate. */
 function ei(rate: number): Benefit {
   return {
-    name: 'Employment Insurance', waitingDays: 7, every: 14, quit: QUIT.CA, cause: CAUSE.CA,
+    name: 'Employment Insurance', waitingDays: 7, every: 14, withheld: true, quit: QUIT.CA, cause: CAUSE.CA,
     qualifies: (record, ctx) => {
       const hours = total(within(record, ctx.at, 364), 'hours');
       const need = eiHoursNeeded(rate);
@@ -573,6 +580,38 @@ const WORLD_BENEFITS: Readonly<Record<string, Benefit>> = Object.fromEntries(
   Object.entries(WORLD_LAW).flatMap(([iso, w]) => (w.benefit ? [[iso, worldBenefit(iso, w.benefit)]] : [])),
 );
 
+/**
+ * Ireland's Jobseeker's Allowance, for somebody without the contributions
+ * for the pay-related benefit: €254 a week at 25 and over, €163.70 at 18 to
+ * 24, less the weekly means the law assesses on savings (the first €20,000
+ * ignored, then €1 a week for each €1,000 to €30,000, €2 to €40,000, €4
+ * after); after three waiting days, and for as long as they're out of work.
+ */
+const IRELAND_JA: Benefit = {
+  name: 'Jobseeker’s Allowance', waitingDays: 3, every: 7, quit: QUIT.IE, cause: CAUSE.IE,
+  qualifies: (_record, ctx) => (ctx.age < 18 ? 'Jobseeker’s Allowance is for ages 18 and over.' : undefined),
+  basis: () => 0,
+  amount: (_basis, _week, ctx) => {
+    const band = (from: number, to: number) => Math.max(0, Math.floor((Math.min(ctx.savings, to) - from) / 1_000));
+    const means = band(20_000, 30_000) + 2 * band(30_000, 40_000) + 4 * band(40_000, Number.POSITIVE_INFINITY);
+    return Math.max(0, (ctx.age >= 25 ? 254 : 163.7) - means);
+  },
+  source: 'Citizens Information and DSP operational guidelines, 2026: €254 a week at 25 and over, €163.70 at 18 to 24; savings over €20,000 assessed at €1 a week per €1,000 to €30,000, €2 to €40,000, €4 after; three waiting days; paid for as long as the conditions are met',
+};
+
+/**
+ * Canada's EI at the regional rate of the economic region a city is in, for
+ * claims from 6 September to 10 October 2026 (ESDC's table): where a city
+ * isn't listed, the province's.
+ */
+const EI_CITY: Readonly<Record<string, number>> = {
+  'ca-on-toronto': 6.8, 'ca-bc-vancouver': 6.4, 'ca-qc-montreal': 6.6, 'ca-01-calgary': 6.5, 'ca-01-edmonton': 7,
+  'ca-03-winnipeg': 5.3, 'ca-07-halifax': 5.6, 'ca-08-ottawa': 7.4, 'ca-10-quebec': 4.4, 'ca-11-saskatoon': 6.6,
+  'ca-11-regina': 6.2, 'ca-05-stjohns': 6.6, 'ca-09-charlottetown': 5.6, 'ca-04-fredericton': 6.6, 'ca-04-saintjohn': 6.6,
+  'ca-04-moncton': 6.6, 'ca-12-whitehorse': 4.8, 'ca-13-yellowknife': 4.9, 'ca-14-iqaluit': 7.1,
+};
+const EI_BY_CITY = new Map<string, Benefit>();
+
 export const BENEFITS: Readonly<Record<string, Benefit>> = {
   // --- The rest of the world, from the labor-law pass; the thirteen's own
   // below replace any of theirs, and a territory that applies another's law
@@ -655,7 +694,7 @@ export const BENEFITS: Readonly<Record<string, Benefit>> = {
 
   // --- Ireland --------------------------------------------------------------
   IE: {
-    name: 'Jobseeker’s Pay-Related Benefit', waitingDays: 0, every: 7, quit: QUIT.IE, cause: CAUSE.IE,
+    name: 'Jobseeker’s Pay-Related Benefit', waitingDays: 0, every: 7, quit: QUIT.IE, cause: CAUSE.IE, fallback: IRELAND_JA,
     qualifies: (record, ctx) => {
       const paid = weeksIn(record);
       if (paid < 104) return `Jobseeker’s Pay-Related Benefit needs 104 weeks of PRSI paid; SLATE has ${Math.floor(paid)} on record. Jobseeker’s Allowance, the means-tested one, isn’t modeled.`;
@@ -671,7 +710,7 @@ export const BENEFITS: Readonly<Record<string, Benefit>> = {
 
   // --- Iceland --------------------------------------------------------------
   IS: {
-    name: 'Atvinnuleysisbætur', waitingDays: 0, every: 30, quit: QUIT.IS, cause: CAUSE.IS,
+    name: 'Atvinnuleysisbætur', waitingDays: 0, every: 30, withheld: true, quit: QUIT.IS, cause: CAUSE.IS,
     qualifies: (record, ctx) => {
       const months = monthsIn(within(record, ctx.at, 365));
       const need = ctx.at >= Date.UTC(2026, 8, 1) ? 7 : 3;
@@ -714,7 +753,7 @@ export const BENEFITS: Readonly<Record<string, Benefit>> = {
 
   // --- Spain ----------------------------------------------------------------
   ES: {
-    name: 'Prestación por desempleo', waitingDays: 0, every: 30, quit: 'none', cause: CAUSE.ES,
+    name: 'Prestación por desempleo', waitingDays: 0, every: 30, withheld: true, quit: 'none', cause: CAUSE.ES,
     qualifies: (record, ctx) => {
       const days = total(within(record, ctx.at, 6 * 365), 'days');
       return days < 360 ? `The prestación needs 360 days of contributions in six years; SLATE has ${Math.floor(days)} on record.` : undefined;
@@ -728,7 +767,7 @@ export const BENEFITS: Readonly<Record<string, Benefit>> = {
 
   // --- France ---------------------------------------------------------------
   FR: {
-    name: 'Allocation d’aide au retour à l’emploi', waitingDays: 7, every: 30, quit: 'none', cause: CAUSE.FR,
+    name: 'Allocation d’aide au retour à l’emploi', waitingDays: 7, every: 30, withheld: true, quit: 'none', cause: CAUSE.FR,
     qualifies: (record, ctx) => {
       const back = within(record, ctx.at, (ctx.age >= 55 ? 36 : 24) * 30.4375);
       return monthsIn(back) < 6 && total(back, 'hours') < 910 ? 'The ARE needs six months, 130 days or 910 hours, worked in the last 24 months.' : undefined;
@@ -749,7 +788,7 @@ export const BENEFITS: Readonly<Record<string, Benefit>> = {
 
   // --- Japan ----------------------------------------------------------------
   JP: {
-    name: '基本手当', waitingDays: 7, every: 28, quit: QUIT.JP, cause: CAUSE.JP,
+    name: '基本手当', waitingDays: 7, every: 28, quit: QUIT.JP, cause: CAUSE.JP, repeatQuit: { after: 2, withinYears: 5, weeks: 3 * 52 / 12 },
     qualifies: (record, ctx) => {
       const recent = within(record, ctx.at, 182);
       if (recent.length > 0 && total(recent, 'hours') / (total(recent, 'days') / 7 || 1) < 20) return 'Employment insurance covers work of 20 hours a week or more.';
@@ -790,7 +829,7 @@ export const BENEFITS: Readonly<Record<string, Benefit>> = {
 
   // --- New Zealand ----------------------------------------------------------
   NZ: {
-    name: 'Jobseeker Support', waitingDays: 7, every: 7, quit: QUIT.NZ, cause: CAUSE.NZ,
+    name: 'Jobseeker Support', waitingDays: 7, every: 7, withheld: true, quit: QUIT.NZ, cause: CAUSE.NZ,
     qualifies: (_record, ctx) => (ctx.age < 18 ? 'Jobseeker Support is for ages 18 and over.' : undefined),
     basis: () => 0,
     // Income-tested past $160 a week, and nothing comes in while claiming;
@@ -804,7 +843,10 @@ export const BENEFITS: Readonly<Record<string, Benefit>> = {
     name: 'JobSeeker Payment', waitingDays: 7, every: 14, quit: QUIT.AU, cause: CAUSE.AU, concurrentBar: true,
     // The liquid assets waiting period, a week for each $500 over $5,000 from
     // $5,500, to 13, and then the ordinary week.
-    wait: ({ savings }) => (savings >= 5_500 ? Math.min(13, Math.floor((savings - 5_000) / 500)) * 7 : 0) + 7,
+    // The income maintenance period, the weeks leave and redundancy pay paid
+    // out on leaving cover, runs alongside it from the day they're paid, so
+    // the longer of the two is served (Social Security Act 1991 s.1068-G7AG).
+    wait: ({ savings, paidOutWeeks }) => Math.max(savings >= 5_500 ? Math.min(13, Math.floor((savings - 5_000) / 500)) : 0, paidOutWeeks ?? 0) * 7 + 7,
     qualifies: (_record, ctx) => (ctx.age < 18 ? 'JobSeeker and Youth Allowance are for ages 18 and over.' : undefined),
     basis: () => 0,
     // Youth Allowance under 22, living away from home; nothing over the
@@ -821,9 +863,14 @@ export function noBenefitAt(path: readonly string[]): { name: string; source: st
   return w?.noBenefit ?? (w?.unsized ? { ...w.unsized, unsized: true } : undefined);
 }
 
-/** The benefit where a job was: a state's or region's own, then the country's, then the one whose law a territory applies. */
-export function benefitAt(path: readonly string[]): Benefit | undefined {
+/** The benefit where a job was: a city's own (Canada's EI region), a state's or region's, then the country's, then the one whose law a territory applies. */
+export function benefitAt(path: readonly string[], cityId?: string): Benefit | undefined {
   const iso = path[0] ?? '';
+  const eiRate = iso === 'CA' && cityId ? EI_CITY[cityId] : undefined;
+  if (eiRate !== undefined) {
+    if (!EI_BY_CITY.has(cityId!)) EI_BY_CITY.set(cityId!, { ...ei(eiRate), withheld: true });
+    return EI_BY_CITY.get(cityId!);
+  }
   const follows = WORLD_LAW[iso]?.benefitOf ?? WORLD_LAW[iso]?.follows;
   return BENEFITS[path[1] ?? ''] ?? BENEFITS[iso] ?? (follows ? BENEFITS[follows] : undefined);
 }

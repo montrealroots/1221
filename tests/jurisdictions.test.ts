@@ -8,13 +8,15 @@ import { describe, expect, it } from 'vitest';
 import { quickSave } from '../src/engine';
 import { CITIES, addCountryCities } from '../src/engine/content/geography';
 import { MS_DAY } from '../src/engine/core/time';
-import { hourlyWage, layOff, leaveLoadingFor, movableDue, shareOfYearDue } from '../src/engine/systems/work';
+import { holidayOff, hourlyWage, layOff, leaveLoadingFor, movableDue, redundancyPay, rotaOf, shareOfYearDue } from '../src/engine/systems/work';
+import { holidaysInYear } from '../src/engine/content/holidays';
 import { jobFor, patternHours, patternOf } from '../src/engine/content/jobs';
 import type { Extra } from '../src/engine/content/labor';
 import { addCountryHolidays, hasHolidayFile } from '../src/engine/content/holidays';
 import { claimFor } from '../src/engine/systems/unemployment';
-import { payrollYear } from '../src/engine/content/payroll';
-import { laborAt } from '../src/engine/content/labor';
+import { japanStandard, payrollYear } from '../src/engine/content/payroll';
+import { employerNoticeDays, laborAt, layoffChanceADay, redundancyWeeks } from '../src/engine/content/labor';
+import { juniorShare } from '../src/engine/content/wages';
 import { BENEFITS, benefitAt, noBenefitAt, type WorkRecord } from '../src/engine/content/unemployment';
 import { SETTLEMENTS, settleYear, usEitc, type YearFigures } from '../src/engine/content/taxreturn';
 import { PROVINCES, STATES, WORLD_LAW } from '../src/engine/content/jurisdictions';
@@ -655,5 +657,223 @@ describe('the open items, closed: local taxes', () => {
   it('stops Portland Metro’s tax at Metro’s own boundary', () => {
     expect(town('US-OR', 'us-or-canby', 200_000).some((l) => /Supportive Housing/.test(l.name))).toBe(false);
     expect(town('US-OR', 'us-or-gresham', 200_000).some((l) => /Supportive Housing/.test(l.name))).toBe(true);
+  });
+});
+
+
+describe('the job engine’s own open items', () => {
+  it('fixes Japan’s standard monthly remuneration at hiring, and again each September from April to June’s pay', () => {
+    const sim = quickSave({ startLocationId: 'jp-13-tokyo', homeRegionId: 'jp-13-tokyo', livesWhereBorn: true, dayJob: true, wealth: 'modest', birthYear: 1994 }, 'jp-grade');
+    sim.advanceTo(Date.UTC(2026, 3, 1));
+    const hired = sim.player.job!.jpGrade!;
+    expect(hired.monthly).toBeGreaterThan(0);
+    sim.advanceTo(Date.UTC(2026, 9, 1));
+    const september = sim.player.job!.jpGrade!;
+    expect(september.year).toBe(2026);
+    const spring = (sim.player.earnings!.paydays).filter((one) => { const m = new Date(one.at).getUTCMonth(); return new Date(one.at).getUTCFullYear() === 2026 && m >= 3 && m <= 5; });
+    const average = spring.reduce((sum, one) => sum + one.gross, 0) / spring.length / 100;
+    expect(september.monthly).toBe(japanStandard(average));
+  });
+});
+
+
+describe('the job engine’s older open items', () => {
+  const y = (path: string[], wages: number, extra: Partial<YearFigures> = {}): YearFigures => ({ wages, benefits: [], age: 30, path, at, benefitMonths: 0, rent: 0, savings: 0, ...extra });
+  const credit = (code: string, fig: YearFigures, name: string) => SETTLEMENTS[code]!.credits!(fig, {}).find((c) => c.name === name)?.amount ?? 0;
+
+  it('lets Germany’s cafés, bars, care, security and events work Sundays, and keeps shops, offices, building sites and delivery off', () => {
+    const de = laborAt(['DE'])!;
+    expect(de.sundayOff!.lines).toEqual(['retail', 'office', 'trades', 'between']);
+    expect(de.holidayOff!.lines).toEqual(['retail', 'office', 'trades', 'between']);
+  });
+
+  it('gives Iceland’s older workers the agreements’ longer notice', () => {
+    const is = laborAt(['IS']);
+    expect(employerNoticeDays(is, 130, 54)).toBe(90);
+    expect(employerNoticeDays(is, 130, 56)).toBe(120);
+    expect(employerNoticeDays(is, 130, 64)).toBe(180);
+    expect(employerNoticeDays(is, 100, 64)).toBe(90);
+  });
+
+  it('holds Mexico’s seniority premium to twice the minimum wage a day, and not the three months’ pay', () => {
+    const r = laborAt(['MX'])!.redundancy!;
+    const week = 10_000;
+    const weeks = redundancyWeeks(r, 24, 30);
+    expect(redundancyPay(r, 24, 30, week, (x) => x)).toBe(Math.round(week * r.plus! + r.yearWeekCap! * (weeks - r.plus!)));
+  });
+
+  it('frees Spain’s and Australia’s redundancy pay from tax as their laws do, and Korea’s severance', () => {
+    expect(laborAt(['ES'])!.redundancy!.taxFree).toBe(true);
+    expect(laborAt(['AU'])!.redundancy!).toMatchObject({ taxFreeBase: 13_598, taxFreePerYear: 6_801 });
+    expect(laborAt(['KR'])!.severance!.taxFree).toBe(true);
+  });
+
+  it('lets France’s and Spain’s untaken leave lapse as their laws do', () => {
+    expect(laborAt(['FR'])!.leave!.expiry).toMatchObject({ yearStart: '06-01', graceMonths: 11, action: 'lose' });
+    expect(laborAt(['ES'])!.leave!.expiry).toMatchObject({ yearStart: '01-01', graceMonths: 0, action: 'lose' });
+  });
+
+  it('pays Australia’s café and office juniors their awards’ shares, and a bar’s the adult rate', () => {
+    expect(juniorShare('AU', 'school', 17).share).toBe(0.6);
+    expect(juniorShare('AU', 'office', 19).share).toBe(0.8);
+    expect(juniorShare('AU', 'hospitality', 17).share).toBe(1);
+  });
+
+  it('falls to Ireland’s Jobseeker’s Allowance, less its means on savings', () => {
+    const ja = BENEFITS.IE!.fallback!;
+    expect(ja.amount(0, 1, { age: 30, savings: 10_000, share: 1 })).toBe(254);
+    expect(ja.amount(0, 1, { age: 22, savings: 0, share: 1 })).toBeCloseTo(163.7, 6);
+    // €35,000: ten at €1 and five at €2.
+    expect(ja.amount(0, 1, { age: 30, savings: 35_000, share: 1 })).toBe(254 - 10 - 10);
+  });
+
+  it('waits out Australia’s income maintenance period alongside the liquid assets wait', () => {
+    const wait = BENEFITS.AU!.wait!;
+    expect(wait({ savings: 0, paidOutWeeks: 6 })).toBe(6 * 7 + 7);
+    expect(wait({ savings: 9_000, paidOutWeeks: 2 })).toBe(8 * 7 + 7);
+  });
+
+  it('bars a third quit in five years in Japan three months, not one', () => {
+    expect(BENEFITS.JP!.repeatQuit).toEqual({ after: 2, withinYears: 5, weeks: 3 * 52 / 12 });
+  });
+
+  it('works Britain’s New Style JSA test at each tax year’s own lower earnings limit', () => {
+    const at2027 = Date.UTC(2027, 5, 1);
+    // 2024/25 and 2025/26: 50 times £123 and £125.
+    const week = (start: number, gross: number) => Array.from({ length: 50 }, (_, i) => ({ at: Date.UTC(start, 3, 10) + i * 7 * MS_DAY, days: 7, hours: 20, gross }));
+    const record2 = [...week(2024, 123), ...week(2025, 125)];
+    expect(BENEFITS.GB!.qualifies(record2, { age: 30, at: at2027, why: 'laidOff' })).toBeUndefined();
+    const short = [...week(2024, 123), ...week(2025, 124)];
+    expect(BENEFITS.GB!.qualifies(short, { age: 30, at: at2027, why: 'laidOff' })).toMatch(/National Insurance/);
+  });
+
+  it('takes tax from Canada’s, Spain’s, France’s, New Zealand’s and Iceland’s benefit as it’s paid, and taxes Iceland’s at the assessment', () => {
+    for (const iso of ['ES', 'FR', 'NZ', 'IS']) expect(BENEFITS[iso]!.withheld).toBe(true);
+    expect(BENEFITS['CA-08']!.withheld).toBe(true);
+    expect(SETTLEMENTS.IS!.benefitLines!.test('Staðgreiðsla')).toBe(true);
+    expect(SETTLEMENTS.IE!.untaxed).toContain('Jobseeker’s Allowance');
+  });
+
+  it('works Canada’s EI at the city’s own region: Ottawa’s 7.4% asks fewer hours than Toronto’s 6.8%', () => {
+    const toronto = benefitAt(['CA', 'CA-08'], 'ca-on-toronto')!;
+    const ottawa = benefitAt(['CA', 'CA-08'], 'ca-08-ottawa')!;
+    const hours = (b: typeof toronto, h: number) => b.qualifies([{ at: claimAt - 30 * MS_DAY, days: 300, hours: h, gross: 20_000 }], ctx);
+    expect(hours(toronto, 640)).toMatch(/665/);
+    expect(hours(ottawa, 640)).toBeUndefined();
+  });
+
+  it('adds New York City’s own earned income credit for a city resident', () => {
+    const fig = y(['US', 'US-NY', 'US-NY-brooklyn'], 9_000);
+    const federal = usEitc(fig, 0);
+    expect(credit('US-NY', fig, 'New York City Earned Income Credit')).toBeCloseTo(federal * 0.25, 6);
+    expect(credit('US-NY', y(['US', 'US-NY', 'US-NY-albany'], 9_000), 'New York City Earned Income Credit')).toBe(0);
+  });
+
+  it('pays Washington’s Working Families Tax Credit apart, after its application', () => {
+    const later = SETTLEMENTS['US-WA']!.later!;
+    expect(later.amount(y(['US', 'US-WA'], 9_000))).toBe(335);
+    expect(later.amount(y(['US', 'US-WA'], 18_000))).toBeCloseTo(Math.max(50, 335 - 0.134 * (18_000 - 16_604)), 6);
+    expect(later.amount(y(['US', 'US-WA'], 9_000, { age: 22 }))).toBe(0);
+  });
+
+  it('gives a Quebec worker the Canada Workers Benefit at Quebec’s figures, and British Columbia’s renter a renter’s credit', () => {
+    expect(credit('CA-10', y(['CA', 'CA-10'], 12_000), 'Canada Workers Benefit')).toBeCloseTo(Math.min(3_812.06, 0.373 * 9_600), 6);
+    expect(credit('CA-02', y(['CA', 'CA-02'], 30_000, { rent: 9_000 }), 'BC Renter’s Tax Credit')).toBe(400);
+    expect(credit('CA-02', y(['CA', 'CA-02'], 30_000), 'BC Renter’s Tax Credit')).toBe(0);
+    expect(credit('CA-02', y(['CA', 'CA-02'], 18_000), 'BC Sales Tax Credit')).toBeCloseTo(75 - 0.02 * 3_000, 6);
+  });
+
+  it('cuts jobs in eight more countries as their own statistics count, and Britain’s rate where none is published', () => {
+    const month = (chance: number) => 1 - (1 - chance) ** 30.4375;
+    expect(month(layoffChanceADay('CA', 'office'))).toBeCloseTo(0.0075, 6);
+    expect(month(layoffChanceADay('ES', 'trades'))).toBeCloseTo(0.0069, 6);
+    expect(layoffChanceADay('MX', 'office')).toBe(layoffChanceADay('GB', 'office'));
+  });
+});
+
+
+describe('the job engine’s older open items, played', () => {
+  const life = (cityId: string, seed: string, extra: Record<string, unknown> = {}) =>
+    quickSave({ startLocationId: cityId, homeRegionId: cityId, livesWhereBorn: true, dayJob: true, wealth: 'modest', birthYear: 1994, ...extra }, seed);
+
+  it('has a Japanese employer book the days of five a worker hasn’t taken, in the grant’s last month', () => {
+    const sim = life('jp-13-tokyo', 'jp-five', { beforeActing: 'office' });
+    sim.must({ kind: 'work.set_hours', payload: { fullTime: true } });
+    sim.advanceTo(Date.UTC(2027, 7, 1));
+    const g = sim.player.job!.lastGrant;
+    expect(g).toBeDefined();
+    expect(g!.days).toBeGreaterThanOrEqual(10);
+    sim.advanceTo(g!.at + 12 * 30.4375 * MS_DAY - MS_DAY);
+    expect(sim.player.job!.lastGrant!.takenHours).toBeGreaterThanOrEqual(5 * g!.dayHours - 1e-6);
+  });
+
+  it('pays an Irish worker a fifth of a week for a public holiday on a day off', () => {
+    addCountryHolidays('ie', readFileSync('public/holidays/ie.tsv', 'utf8'));
+    const sim = life('ie-lei-dublin', 'ie-hol');
+    const job = sim.player.job!;
+    const rota = rotaOf(job);
+    // The first public holiday after the save starts that falls on a day off the rota.
+    const holiday = holidaysInYear('ie', 2026).map((one) => one.date).filter((date) => Date.parse(`${date}T00:00:00Z`) > sim.now + 40 * MS_DAY)
+      .find((date) => !rota.days.includes(new Date(`${date}T00:00:00Z`).getUTCDay()))!;
+    expect(holiday).toBeDefined();
+    const [yy, mm, dd] = holiday.split('-').map(Number) as [number, number, number];
+    sim.advanceTo(Date.UTC(yy, mm - 1, dd, 23));
+    const due = (job.pendingPay ?? []).find((one) => one.name === 'Public Holiday') ?? job.lastSlip?.grossLines?.find((one) => one.name === 'Public Holiday');
+    expect(due).toBeDefined();
+    expect(due!.amount).toBeCloseTo(patternHours(rota) * hourlyWage(sim, sim.player) * 0.2, -1);
+  });
+
+  it('takes tax from Toronto’s EI as it’s paid, and the return counts the benefit before it', () => {
+    const sim = life('ca-on-toronto', 'ca-with');
+    sim.advanceTo(Date.UTC(2027, 3, 1));
+    const last = layOff(sim, sim.player)!;
+    sim.advanceTo(last + MS_DAY);
+    sim.must({ kind: 'work.claim', payload: {} });
+    sim.advanceTo(last + 80 * MS_DAY);
+    const paid = sim.universe.transactions.filter((t) => t.category === 'benefit');
+    expect(paid.length).toBeGreaterThan(0);
+    const withheld = sim.nominalAccount('expense', 'Tax Withheld').id;
+    expect(paid.every((t) => t.postings.some((p) => p.accountId === withheld && p.amount > 0))).toBe(true);
+  });
+
+  it('pays the Canada Workers Benefit’s advances after a return that gave it, and takes them off the next', () => {
+    const sim = life('ca-on-toronto', 'ca-adv');
+    sim.advanceTo(Date.UTC(2027, 5, 1));
+    const a = sim.player.earnings!.cwbAdvance;
+    expect(a?.forYear).toBe(2027);
+    sim.advanceTo(Date.UTC(2027, 9, 15));
+    expect(sim.player.earnings!.cwbAdvance!.paid).toBeCloseTo(Math.round(a!.total / 3) * 2, -1);
+  });
+
+  it('bars a third quit in five years in Japan three months', () => {
+    const sim = life('jp-13-tokyo', 'jp-quit3');
+    sim.advanceTo(Date.UTC(2027, 3, 1));
+    sim.player.earnings!.quitClaims = [Date.UTC(2025, 0, 1), Date.UTC(2026, 0, 1)];
+    sim.must({ kind: 'work.quit', payload: {} });
+    sim.advanceBy(40 * MS_DAY);
+    const offer = claimFor(sim, sim.player);
+    expect('refused' in offer ? offer.refused : offer.barWeeks).toBeCloseTo(3 * 52 / 12, 6);
+  });
+
+  it('counts the weeks of leave and redundancy pay paid out on leaving in Australia', () => {
+    const sim = life('au-nsw-sydney', 'au-imp');
+    sim.advanceTo(Date.UTC(2027, 3, 1));
+    const last = layOff(sim, sim.player)!;
+    sim.advanceTo(last + MS_DAY);
+    expect(sim.player.earnings!.paidOutWeeks ?? 0).toBeGreaterThan(0);
+  });
+});
+
+
+describe('Iceland’s Commerce Day', () => {
+  it('keeps a Reykjavík shop worker off on Commerce Day, paid, and not on other holidays', () => {
+    addCountryHolidays('is', readFileSync('public/holidays/is.tsv', 'utf8'));
+    const sim = quickSave({ startLocationId: 'is-39-reykjavik', homeRegionId: 'is-39-reykjavik', livesWhereBorn: true, dayJob: true, wealth: 'modest', birthYear: 1994, beforeActing: 'retail' }, 'is-cd');
+    const job = sim.player.job!;
+    expect(job.jobId).toBe('retail');
+    expect(holidayOff(job, Date.UTC(2026, 7, 3, 12), 'Atlantic/Reykjavik')).toBe(true);
+    expect(holidayOff(job, Date.UTC(2026, 5, 17, 12), 'Atlantic/Reykjavik')).toBe(false);
+    const cafe = quickSave({ startLocationId: 'is-39-reykjavik', homeRegionId: 'is-39-reykjavik', livesWhereBorn: true, dayJob: true, wealth: 'modest', birthYear: 1994, beforeActing: 'school' }, 'is-cd2');
+    expect(holidayOff(cafe.player.job!, Date.UTC(2026, 7, 3, 12), 'Atlantic/Reykjavik')).toBe(false);
   });
 });

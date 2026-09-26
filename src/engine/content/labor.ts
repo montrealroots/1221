@@ -65,7 +65,9 @@ export interface LaborLaw {
    * Lines of work that can't be employed on a public holiday (Germany: ArbZG
    * §9 and §10); their shift falls away and the day is paid as if worked.
    */
-  holidayOff?: { lines: Lines; source: string };
+  holidayOff?: { lines: Lines; only?: readonly string[]; source: string };
+  /** A public holiday on a day not worked is paid a share of the week (Ireland's fifth), for a part-timer after so many hours in five weeks. */
+  holidayNotWorked?: { shareOfWeek: number; minHoursIn5Weeks: number; source: string };
   /** Lines of work that can't be employed on a Sunday (Germany: ArbZG §9); their Sunday shift moves to a free weekday. */
   sundayOff?: { lines: Lines; source: string };
   saturday?: Premium;
@@ -117,6 +119,8 @@ export interface LaborLaw {
       days: readonly number[];
       partTime: { maxDays: number; underHours: number; byDays: Readonly<Record<number, readonly number[]>> };
       minAttendance: number;
+      /** The employer sets the dates of what the worker hasn't taken of a large grant (Japan's five days). */
+      employerDays?: { days: number; minGranted: number; source: string };
       source: string;
     };
     source: string;
@@ -150,7 +154,7 @@ export interface LaborLaw {
   /** Korea's weekly paid rest day, for 15 hours a week or more. */
   weeklyRestDay?: { minHours: number; source: string };
   /** Korea's severance: so many days' pay a year worked, after a year. */
-  severance?: { daysAYear: number; afterMonths: number; minHours: number; source: string };
+  severance?: { daysAYear: number; afterMonths: number; minHours: number; taxFree?: boolean; source: string };
   /** Notice a worker gives on quitting, in days, by months with the employer. */
   quitNotice?: { steps: readonly (readonly [number, number])[]; source: string };
   /**
@@ -158,7 +162,12 @@ export interface LaborLaw {
    * days, by months with the employer, with a week more for an older worker
    * where the law adds one (Australia).
    */
-  employerNotice?: { steps: readonly (readonly [number, number])[]; older?: { age: number; afterMonths: number; days: number }; source: string };
+  employerNotice?: {
+    steps: readonly (readonly [number, number])[]; older?: { age: number; afterMonths: number; days: number };
+    /** At least this much notice from an age and years with the employer (Iceland's agreements: four months at 55 after ten years). */
+    olderAtLeast?: readonly { age: number; afterMonths: number; days: number }[];
+    source: string;
+  };
   /** What the law pays a worker whose job goes for no fault of theirs. */
   redundancy?: Redundancy;
   /** A state's or province's own rules, over the country's, by jurisdiction code. */
@@ -235,6 +244,10 @@ export interface Redundancy {
   maxWeeks?: number;
   /** The most a week's pay counts for, in the country's money. */
   weekCap?: number;
+  /** A cap on the week's pay for the part paid by the year only (Mexico's seniority premium, at twice the minimum wage). */
+  yearWeekCap?: number;
+  /** Free of income tax to a base and so much a year of service (Australia's genuine redundancy). */
+  taxFreeBase?: number;
   /** Paid free of income tax and contributions. */
   taxFree?: boolean;
   /** Free of income tax up to so much a year of service, in the country's money, a part year over six months counting whole (Mexico). */
@@ -298,7 +311,7 @@ export const LABOR: Readonly<Record<string, LaborLaw>> = {
     extras: [{ kind: 'days', name: 'Aguinaldo', month: 12, day: 20, days: 15, taxFreeUpTo: 30 * 117.31, source: 'LFT art. 87: 15 days’ pay by 20 December, pro rata; LISR art. 93 XIV: free of income tax to 30 UMA (MXN 117.31 a day from 1 February 2026)' }],
     quitNotice: { steps: [[0, 0]], source: 'LFT: a worker may leave at any time' },
     employerNotice: { steps: [[0, 0]], source: 'LFT arts. 46–50: no notice; a dismissal without cause is paid for instead' },
-    redundancy: { afterMonths: 0, plus: 90 / 7, weeksAYear: 12 / 7, taxFreePerYear: 90 * 117.31, source: 'LFT arts. 48, 50 and 162: three months’ pay for a dismissal without cause, and the seniority premium of 12 days a year; LISR art. 93: free of ISR to 90 UMA a year of service, 2026’s UMA being 117.31 pesos' },
+    redundancy: { afterMonths: 0, plus: 90 / 7, weeksAYear: 12 / 7, yearWeekCap: 2 * 315.04 * 7, taxFreePerYear: 90 * 117.31, source: 'LFT arts. 48, 50 and 162: three months’ pay for a dismissal without cause, and the seniority premium of 12 days a year on a day’s pay at most twice the minimum (arts. 485 and 486: 630.08 pesos in the general zone in 2026); LISR art. 93: free of ISR to 90 UMA a year of service, 2026’s UMA being 117.31 pesos' },
   },
   GB: {
     leave: {
@@ -315,6 +328,7 @@ export const LABOR: Readonly<Record<string, LaborLaw>> = {
   },
   IE: {
     holiday: { extra: 1, source: 'Organisation of Working Time Act 1997: an extra day’s pay for a public holiday worked' },
+    holidayNotWorked: { shareOfWeek: 0.2, minHoursIn5Weeks: 40, source: 'Organisation of Working Time Act 1997 s.21 and S.I. 475/1997: a public holiday on a day not normally worked is a fifth of a week’s pay, for a part-timer after 40 hours in the five weeks before it' },
     leave: {
       accrual: 0.08, paidOut: true, source: 'Organisation of Working Time Act 1997 s.19: 8% of hours worked',
       expiry: { yearStart: '04-01', graceMonths: 6, action: 'lose', source: 'Citizens Information: the leave year runs 1 April to 31 March, and leave is taken in it or, by agreement, within six months after' },
@@ -344,12 +358,20 @@ export const LABOR: Readonly<Record<string, LaborLaw>> = {
       { kind: 'fixed', name: 'Desemberuppbót', month: 12, day: 15, amount: 114_000, fullTimeHours: 40, minWeeks: 12, source: 'Efling–SA 2026: 114,000 kr by 15 December, by job share, after 12 weeks' },
     ],
     quitNotice: { steps: [[0, 0], [0.5, 12], [3, 30], [24, 60], [36, 90]], source: 'Efling–SA: 12 days to three months, then a month, two after two years, three after three' },
-    employerNotice: { steps: [[0, 0], [0.5, 12], [3, 30], [24, 60], [36, 90]], source: 'Efling–SA: the same notice both ways; no statutory severance' },
+    employerNotice: {
+      steps: [[0, 0], [0.5, 12], [3, 30], [24, 60], [36, 90]],
+      olderAtLeast: [{ age: 55, afterMonths: 120, days: 120 }, { age: 60, afterMonths: 120, days: 150 }, { age: 63, afterMonths: 120, days: 180 }],
+      source: 'Efling–SA and VR–SA: the same notice both ways, and after ten years four months at 55, five at 60 and six at 63; no statutory severance',
+    },
+    holidayOff: { lines: ['retail', 'office'], only: ['Commerce Day'], source: 'VR–SA: Commerce Day (Frídagur verslunarmanna, the first Monday of August) is a festival day for shop and office staff, paid where they would have worked' },
   },
   FR: {
     holiday: { extra: 1, only: ['05-01'], source: 'Code du travail L3133-6: 1 May worked is paid double' },
     overtime: { week: 35, extra: 0.25, tierAfter: 8, tierExtra: 0.5, source: 'Code du travail L3121-36: 25% from the 36th hour, 50% from the 44th' },
-    leave: { accrual: 5 / 47, paidOut: true, source: 'Code du travail L3141-3: 2.5 days a month, five weeks' },
+    leave: {
+      accrual: 5 / 47, paidOut: true, source: 'Code du travail L3141-3: 2.5 days a month, five weeks',
+      expiry: { yearStart: '06-01', graceMonths: 11, action: 'lose', source: 'Code du travail L3141-12 and -13: leave earned from 1 June to 31 May is taken by the end of the following April, and lapses then unless the employer agrees to carry it; paid out only when the job ends' },
+    },
     sick: { fromDay: 4, rate: 0.5, capDay: 42.97, paidBy: 'state', source: 'Sécurité sociale: 50% after three waiting days, at most €42.97 a day' },
     quitNotice: { steps: [[0, 7]], source: 'Set by the branch agreement; a week is the common minimum for hourly work' },
     employerNotice: { steps: [[0, 7], [6, 30], [24, 60]], source: 'Code du travail L1234-1: a month from six months, two from two years; before six months the branch agreement’s, a week being the common minimum' },
@@ -357,8 +379,8 @@ export const LABOR: Readonly<Record<string, LaborLaw>> = {
   },
   DE: {
     night: { extra: 0.25, from: 23, to: 30, source: 'ArbZG §6(5), and the Federal Labor Court’s 25% as the reasonable supplement' },
-    sundayOff: { lines: ['retail', 'office', 'trades'], source: 'ArbZG §9: no work on a Sunday outside the trades §10 allows; Berlin’s shop-opening law (§3) shuts shops on Sundays and public holidays' },
-    holidayOff: { lines: ['retail', 'office', 'trades'], source: 'ArbZG §9 and §10: no work on a public holiday outside the trades §10 allows, restaurants, care and security among them and shops, offices and building sites not; EFZG §2 pays a day lost to a holiday as if worked' },
+    sundayOff: { lines: ['retail', 'office', 'trades', 'between'], source: 'ArbZG §9: no work on a Sunday outside what §10 allows: cafés, bars and restaurants (§10(1) Nr. 4), care (Nr. 3), security (Nr. 13), performances and events (Nr. 5), and sport and leisure (Nr. 7), and not shops, offices, building sites or delivery; Berlin’s shop-opening law (§3) shuts shops on Sundays and public holidays' },
+    holidayOff: { lines: ['retail', 'office', 'trades', 'between'], source: 'ArbZG §9 and §10: no work on a public holiday outside what §10 allows, the same trades as on a Sunday; EFZG §2 pays a day lost to a holiday as if worked' },
     leave: { accrual: 4 / 48, paidOut: true, source: 'BUrlG: 20 days on a five-day week' },
     sick: { fromDay: 1, rate: 1, afterMonths: 1, paidBy: 'employer', source: 'EFZG §3: full pay for up to six weeks, after four weeks with the employer' },
     quitNotice: { steps: [[0, 14], [6, 28]], source: '§622 BGB: two weeks in probation, four weeks after' },
@@ -366,12 +388,15 @@ export const LABOR: Readonly<Record<string, LaborLaw>> = {
   },
   ES: {
     holiday: { extra: 0.75, source: 'Estatuto de los Trabajadores art. 37: a holiday worked is paid at least 75% extra' },
-    leave: { accrual: (30 / 7) / (52 - 30 / 7), paidOut: true, source: 'ET art. 38: 30 calendar days' },
+    leave: {
+      accrual: (30 / 7) / (52 - 30 / 7), paidOut: true, source: 'ET art. 38: 30 calendar days',
+      expiry: { yearStart: '01-01', graceMonths: 0, action: 'lose', source: 'ET art. 38: the year’s leave is taken within the calendar year, and lapses at 31 December; paid out only when the job ends' },
+    },
     sick: { fromDay: 4, rate: 0.6, paidBy: 'employer', source: 'Incapacidad temporal: 60% from the fourth day, the employer paying days 4 to 15' },
     extras: [{ kind: 'month', name: 'Paga extraordinaria', months: [6, 12], source: 'ET art. 31: two extra payments, June and Christmas' }],
     quitNotice: { steps: [[0, 15]], source: 'By convenio or custom, 15 days' },
     employerNotice: { steps: [[0, 15]], source: 'Estatuto de los Trabajadores art. 53: 15 days for an objective dismissal' },
-    redundancy: { afterMonths: 0, weeksAYear: 20 / 7, maxWeeks: 365 / 7, source: 'Estatuto de los Trabajadores art. 53: 20 days’ pay a year for an objective dismissal, to twelve months’ pay' },
+    redundancy: { afterMonths: 0, weeksAYear: 20 / 7, maxWeeks: 365 / 7, taxFree: true, source: 'Estatuto de los Trabajadores art. 53: 20 days’ pay a year for an objective dismissal, to twelve months’ pay; IRPF art. 7.e: the legal amount free of income tax, to €180,000' },
   },
   JP: {
     night: { extra: 0.25, from: 22, to: 29, source: 'Labor Standards Act art. 37: 25% from 22:00 to 05:00' },
@@ -383,6 +408,7 @@ export const LABOR: Readonly<Record<string, LaborLaw>> = {
         firstAfterMonths: 6, days: [10, 11, 12, 14, 16, 18, 20], minAttendance: 0.8,
         partTime: { maxDays: 4, underHours: 30, byDays: { 4: [7, 8, 9, 10, 12, 13, 15], 3: [5, 6, 6, 8, 9, 10, 11], 2: [3, 4, 4, 5, 6, 6, 7], 1: [1, 2, 2, 2, 3, 3, 3] } },
         source: 'Labor Standards Act art. 39 and MHLW’s table: 10 days at six months, 11, 12, 14, 16, 18 and 20 a year on; four days a week or fewer, under 30 hours, 7 to 15, 5 to 11, 3 to 7 and 1 to 3; for 80% of the shifts attended',
+        employerDays: { days: 5, minGranted: 10, source: 'Labor Standards Act art. 39(7): of a grant of 10 days or more, the employer sets the dates of any of 5 the worker hasn’t taken within the year; SLATE books them on the rota in its last month' },
       },
     },
     sick: { fromDay: 4, rate: 2 / 3, paidBy: 'state', source: '傷病手当金: two-thirds from the fourth day, for the insured' },
@@ -398,7 +424,7 @@ export const LABOR: Readonly<Record<string, LaborLaw>> = {
       expiry: { yearStart: 'hire', graceMonths: 12, action: 'payout', source: 'Labor Standards Act art. 60: unused days are paid out as annual-leave allowance (연차수당)' },
     },
     weeklyRestDay: { minHours: 15, source: 'Labor Standards Act art. 55: a paid day off a week at 15 hours or more' },
-    severance: { daysAYear: 30, afterMonths: 12, minHours: 15, source: 'Employee Retirement Benefit Security Act: 30 days’ pay a year, after a year' },
+    severance: { daysAYear: 30, afterMonths: 12, minHours: 15, taxFree: true, source: 'Employee Retirement Benefit Security Act: 30 days’ pay a year, after a year; taxed apart from pay as retirement income (소득세법 제48조), whose deductions for years of service and converted pay leave next to nothing to tax on a low wage, so SLATE pays it untaxed' },
     quitNotice: { steps: [[0, 30]], source: 'Civil Code art. 660: a month' },
     employerNotice: { steps: [[0, 0], [3, 30]], source: 'Labor Standards Act art. 26: 30 days after three months; the severance above is owed on any leaving' },
   },
@@ -422,8 +448,8 @@ export const LABOR: Readonly<Record<string, LaborLaw>> = {
     quitNotice: { steps: [[0, 7]], source: 'NES: a week in the first year' },
     employerNotice: { steps: [[0, 7], [12, 14], [36, 21], [60, 28]], older: { age: 45, afterMonths: 24, days: 7 }, source: 'Fair Work Act s.117: a week to a year, two to three, three to five, four after, and a week more over 45 with two years' },
     redundancy: {
-      afterMonths: 12, table: [[1, 4], [2, 6], [3, 7], [4, 8], [5, 10], [6, 11], [7, 13], [8, 14], [9, 16], [10, 12]],
-      source: 'Fair Work Act s.119: 4 weeks after a year up to 16 after nine, and 12 from ten, when long service leave takes over; for employers of 15 or more, as the chains on record are',
+      afterMonths: 12, table: [[1, 4], [2, 6], [3, 7], [4, 8], [5, 10], [6, 11], [7, 13], [8, 14], [9, 16], [10, 12]], taxFreeBase: 13_598, taxFreePerYear: 6_801,
+      source: 'Fair Work Act s.119: 4 weeks after a year up to 16 after nine, and 12 from ten, when long service leave takes over; for employers of 15 or more, as the chains on record are; a genuine redundancy is free of tax to $13,598 and $6,801 a completed year (2026-27)',
     },
   },
   NZ: {
@@ -485,8 +511,10 @@ export function laborAt(path: readonly string[]): LaborLaw | undefined {
  * adjusted, by the industry a line is in; it counts layoffs and discharges
  * together, as JOLTS doesn't part them, so it runs above layoffs alone.
  * Britain from the ONS, redundancies per 1,000 employees in May to July
- * 2026, 3.9 over the three months. No other country's rate was reached, so
- * everywhere else it's Britain's, SLATE's estimate.
+ * 2026, 3.9 over the three months; and since 2026-09-26 Canada's, Australia's,
+ * Japan's, Korea's, Spain's, France's, Germany's and New Zealand's own
+ * official measures. Ireland, Iceland and Mexico publish none, and there,
+ * and everywhere else, it's Britain's, SLATE's estimate.
  */
 export const LAYOFFS: Readonly<Record<string, { month: number; byLine?: Readonly<Record<string, number>>; source: string; estimate?: boolean }>> = {
   US: {
@@ -495,6 +523,24 @@ export const LAYOFFS: Readonly<Record<string, { month: number; byLine?: Readonly
     source: 'BLS JOLTS layoffs and discharges rate, August 2025 to July 2026: 1.09% a month in all, 1.27% in accommodation and food, 0.96% in retail',
   },
   GB: { month: 3.9 / 1_000 / 3, source: 'ONS, redundancies per 1,000 employees, May to July 2026: 3.9 in three months' },
+  // Since 2026-09-26, eight more countries' own measures.
+  CA: { month: 0.0075, source: 'Statistics Canada LFS layoff rate, August 2025 to August 2026: 0.6 to 1.0% a month, employed one month and laid off the next' },
+  AU: { month: 0.0017, source: 'ABS Job Mobility, year to February 2026: 1.8% retrenched and about 0.2% dismissed' },
+  JP: { month: 0.00033, source: 'MHLW 雇用動向調査 2025: 0.4% a year left for the employer’s business reasons (経営上の都合)' },
+  KR: {
+    month: 0.0037, byLine: { school: 0.0048, hospitality: 0.0048, retail: 0.0041, trades: 0.0028, office: 0.0029, care: 0.0026, armed_forces: 0.0083 },
+    source: 'KOSIS 사업체노동력조사, June 2026: involuntary separations of regular employees, by industry over all its workers',
+  },
+  ES: {
+    month: 0.003, byLine: { school: 0.0051, hospitality: 0.0051, retail: 0.0032, trades: 0.0069, office: 0.0031, care: 0.00094, armed_forces: 0.0028 },
+    source: 'Estadística de Despidos y su Coste 2024: dismissals with severance paid over the General Regime’s affiliates by sector, a floor',
+  },
+  FR: { month: 0.0025, source: 'DARES MMO, 2025: economic and other dismissals from permanent contracts over about 20 million private employees' },
+  DE: { month: 0.0025, source: 'IAB-Betriebspanel: the 2024 departure rate times the employer-dismissal share, about a quarter' },
+  NZ: {
+    month: 0.00125, byLine: { school: 0.001, hospitality: 0.001, retail: 0.0015, trades: 0.00225, office: 0.0018, armed_forces: 0.0018, care: 0.00067 },
+    estimate: true, source: 'Stats NZ survey data 2002–09 (Motu WP 13-03): laid off, dismissed or made redundant, about 1.5% a year of employees with a year’s tenure, the latest measure there is',
+  },
 };
 
 /** The chance a job is cut on a given day, where it is. */
@@ -510,6 +556,7 @@ export function employerNoticeDays(law: LaborLaw | undefined, months: number, ag
   let days = 0;
   for (const [after, given] of notice?.steps ?? []) if (months >= after) days = given;
   if (notice?.older && age > notice.older.age && months >= notice.older.afterMonths) days += notice.older.days;
+  for (const older of notice?.olderAtLeast ?? []) if (age >= older.age && months >= older.afterMonths) days = Math.max(days, older.days);
   return days;
 }
 

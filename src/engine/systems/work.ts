@@ -31,7 +31,7 @@ import type { Person } from '../domain/model';
 import type { ScheduledItem } from '../core/scheduler';
 import { CITIES, COUNTRIES, countryOfPlace, jurisdictionPath } from '../content/geography';
 import { EMPLOYERS, type Employer } from '../content/employers';
-import { payrollYear, type PayslipLine } from '../content/payroll';
+import { japanStandard, payrollYear, type PayslipLine } from '../content/payroll';
 import { EMPLOYER_EXTRAS, employerNoticeDays, laborAt, layoffChanceADay, quitNoticeDays, redundancyWeeks, type Extra, type LaborLaw, type Premium, type Redundancy } from '../content/labor';
 import { holidaysInYear, holidaysOn } from '../content/holidays';
 import { jobFor, patternHours, patternOf, payCycleFor, tipsPerHour, type Job, type Pattern } from '../content/jobs';
@@ -95,6 +95,10 @@ export interface JobState {
   week?: { key: string; hours: number; overtime: number; restPaid?: boolean };
   /** What the next payday pays besides hours: the law's extra payments, leave paid out, redundancy pay. */
   pendingPay?: { name: string; amount: Money; taxFree?: boolean }[];
+  /** The last grant of leave, for the employer's duty to see some of it taken (Japan's). */
+  lastGrant?: { at: Instant; days: number; dayHours: number; takenHours: number };
+  /** Japan's standard monthly remuneration, and the year it was fixed for. */
+  jpGrade?: { year: number; monthly: number };
   /** The leave loading paid free of tax so far this year, where the law frees it to a limit (Mexico's). */
   loadingFree?: { year: string; amount: Money };
   /** The extra payments already paid, by name and year, so none is paid twice. */
@@ -190,6 +194,7 @@ function grantLeave(sim: Simulation, person: Person, state: JobState, law: Labor
   const hours = days * week.hours;
   state.leaveHours = (state.leaveHours ?? 0) + hours;
   state.leaveYears = [...(state.leaveYears ?? []), { year: localDay(state, sim.now, sim.homeZone), hours }];
+  state.lastGrant = { at: sim.now, days, dayHours: week.hours, takenHours: 0 };
   if (person.id === sim.universe.playerId) sim.notify({ category: 'work', title: 'Paid Leave Granted', body: `${days} days of paid leave, ${hours} hours, usable for two years.`, importance: 50 });
 }
 
@@ -293,15 +298,17 @@ function finalPay(sim: Simulation, person: Person): void {
   const months = monthsWith(state, sim.now);
   if (law.severance && months >= law.severance.afterMonths && weekly >= law.severance.minHours) {
     const daily = (weekly * rate) / 7;
-    pending.push({ name: 'Severance', amount: Math.round(daily * law.severance.daysAYear * (months / 12)) });
+    pending.push({ name: 'Severance', amount: Math.round(daily * law.severance.daysAYear * (months / 12)), ...(law.severance.taxFree ? { taxFree: true } : {}) });
   }
   const r = law.redundancy;
   const owed = state.laidOff && r ? redundancyPay(r, months, ageOf(person, sim.now), averageWeek(sim, person), (units) => exchange(units * 100, countryAt(state.cityId).currency, saveCurrency(sim.universe)) ?? units * 100) : 0;
   if (r && owed > 0) {
     if (r.taxFreePerYear !== undefined) {
-      // Free to so much a year of service, a part year over six months whole.
-      const years = Math.floor(months / 12) + (months % 12 > 6 ? 1 : 0);
-      const free = Math.min(owed, exchange(Math.round(r.taxFreePerYear * 100 * Math.max(1, years)), countryAt(state.cityId).currency, saveCurrency(sim.universe)) ?? Math.round(r.taxFreePerYear * 100 * Math.max(1, years)));
+      // Free to so much a year of service, a part year over six months whole
+      // (Mexico's); Australia's to a base and so much a completed year.
+      const years = r.taxFreeBase !== undefined ? Math.floor(months / 12) : Math.max(1, Math.floor(months / 12) + (months % 12 > 6 ? 1 : 0));
+      const units = (r.taxFreeBase ?? 0) + r.taxFreePerYear * years;
+      const free = Math.min(owed, exchange(Math.round(units * 100), countryAt(state.cityId).currency, saveCurrency(sim.universe)) ?? Math.round(units * 100));
       pending.push({ name: 'Redundancy Pay', amount: free, taxFree: true });
       if (owed > free) pending.push({ name: 'Redundancy Pay', amount: owed - free });
     } else {
@@ -309,6 +316,10 @@ function finalPay(sim: Simulation, person: Person): void {
     }
   }
   state.pendingPay = pending;
+  // The weeks leave and redundancy pay paid out cover (Australia's income maintenance period).
+  const leaveWeeks = weekly > 0 ? (pending.find((one) => one.name === 'Leave Not Taken')?.amount ?? 0) / (weekly * rate) : 0;
+  const redundancyWeeksPaid = state.laidOff && r ? redundancyWeeks(r, months, ageOf(person, sim.now)) : 0;
+  (person.earnings ??= { paydays: [] }).paidOutWeeks = leaveWeeks + redundancyWeeksPaid;
 }
 
 export function jobOf(person: Person): Job | undefined {
@@ -436,7 +447,7 @@ export function paydaysAYear(cityId: string): number {
  * employer puts into the worker's pension. Worked in the country's own
  * money, and brought back.
  */
-export function payslipAt(cityId: string, gross: Money, currency: string, at: Instant, extra: { age: number; lastYear?: Money; weeklyHours?: number }): { lines: PayslipLine[]; employerPension: number; employerPensionName?: string; estimate?: boolean } {
+export function payslipAt(cityId: string, gross: Money, currency: string, at: Instant, extra: { age: number; lastYear?: Money; weeklyHours?: number; jpStandard?: number }): { lines: PayslipLine[]; employerPension: number; employerPensionName?: string; estimate?: boolean } {
   const { iso, currency: local } = countryAt(cityId);
   const periods = paydaysAYear(cityId);
   const toLocal = (amount: number) => (local === currency ? amount : exchange(amount, currency, local) ?? amount);
@@ -444,6 +455,7 @@ export function payslipAt(cityId: string, gross: Money, currency: string, at: In
   const yearly = toLocal(gross) * periods;
   const year = payrollYear(iso, yearly, {
     path: jurisdictionPath(cityId), cityId, at, age: extra.age, weeklyHours: extra.weeklyHours,
+    ...(extra.jpStandard !== undefined ? { jpStandard: extra.jpStandard } : {}),
     ...(extra.lastYear !== undefined ? { lastYear: toLocal(extra.lastYear) / 100 } : {}),
     usdPerUnit: (exchange(100_00, local, 'USD') ?? 100_00) / 100_00,
   });
@@ -490,7 +502,10 @@ function wagesInYear(sim: Simulation, person: Person, year: number): Money {
 export function redundancyPay(r: Redundancy, months: number, age: number, week: Money, toSave: (units: number) => Money): Money {
   const weeks = redundancyWeeks(r, months, age);
   const cap = r.weekCap !== undefined ? toSave(r.weekCap) : Number.POSITIVE_INFINITY;
-  return Math.round(Math.min(week, cap) * weeks);
+  if (r.yearWeekCap === undefined || weeks <= 0) return Math.round(Math.min(week, cap) * weeks);
+  // The part by the year on a week held to its own cap (Mexico's seniority premium); the rest (`plus`) on the whole week.
+  const byYear = weeks - (r.plus ?? 0);
+  return Math.round(Math.min(week, cap) * (r.plus ?? 0) + Math.min(week, cap, toSave(r.yearWeekCap)) * byYear);
 }
 
 /**
@@ -581,12 +596,36 @@ export function hire(sim: Simulation, person: Person): void {
   fillRota(sim, person);
 }
 
+/** Books the next shift on the rota as leave, or says why it can't. */
+function bookLeave(sim: Simulation, person: Person, state: JobState): { at: Instant; hours: number } | string {
+  const next = sim.timeline.pending()
+    .filter((item) => item.kind === SHIFT_KIND && item.payload.personId === person.id && item.at > sim.now)
+    .sort((a, b) => a.at - b.at)[0];
+  if (!next) return 'There’s no shift on the rota to take off.';
+  const hours = Number(next.payload.hours) || 0;
+  if ((state.leaveHours ?? 0) + 1e-9 < hours) return `That shift is ${hours} hours, and you’ve built up ${(state.leaveHours ?? 0).toFixed(1)}.`;
+  sim.timeline.cancel(next.id, sim.now);
+  state.leaveHours = (state.leaveHours ?? 0) - hours;
+  // Taken from the oldest year first, the one that lapses soonest.
+  let left = hours;
+  for (const year of state.leaveYears ?? []) {
+    const used = Math.min(year.hours, left);
+    year.hours -= used;
+    left -= used;
+  }
+  if (state.leaveYears) state.leaveYears = state.leaveYears.filter((year) => year.hours > 1e-9);
+  if (state.lastGrant) state.lastGrant.takenHours += hours;
+  state.unpaid.push({ at: next.at, hours, kind: 'leave' });
+  attend(state, true);
+  return { at: next.at, hours };
+}
+
 /** Whether the law keeps a line of work off on a day because it's a public holiday. */
-function holidayOff(state: JobState, at: Instant, zone: string): boolean {
+export function holidayOff(state: JobState, at: Instant, zone: string): boolean {
   const off = lawOf(state)?.holidayOff;
   const city = CITIES.get(state.cityId);
   if (!off || !city || !off.lines.includes(state.jobId)) return false;
-  return holidaysOn(at, zone, city.countryId, city.parentId).some((one) => one.type === 'public');
+  return holidaysOn(at, zone, city.countryId, city.parentId).some((one) => one.type === 'public' && (!off.only || off.only.some((name) => one.englishName.includes(name))));
 }
 
 /**
@@ -903,6 +942,7 @@ function pay(sim: Simulation, person: Person, payday: Instant): void {
   if (gross <= 0) return;
   const taxFree = (state.pendingPay ?? []).filter((one) => one.taxFree).reduce((sum, one) => sum + Math.max(0, Math.round(one.amount)), 0);
   const slip = payslipAt(state.cityId, gross - taxFree, currency, sim.now, {
+    ...(countryAt(state.cityId).iso === 'JP' ? { jpStandard: japanGrade(sim, person, state) } : {}),
     age: ageOf(person, sim.now),
     lastYear: wagesInYear(sim, person, new Date(sim.now).getUTCFullYear() - 1),
     weeklyHours: patternHours(patternOf(jobFor(state.jobId), state.fullTime)),
@@ -1130,27 +1170,9 @@ export function registerWork(sim: Simulation): void {
     if (monthsWith(state, s.now) < (law.leave.usableAfterMonths ?? 0)) {
       throw new CommandError(`Leave can be taken after ${law.leave.usableAfterMonths} months with the employer.`);
     }
-    const next = s.timeline.pending()
-      .filter((item) => item.kind === SHIFT_KIND && item.payload.personId === person.id && item.at > s.now)
-      .sort((a, b) => a.at - b.at)[0];
-    if (!next) throw new CommandError('There’s no shift on the rota to take off.');
-    const hours = Number(next.payload.hours) || 0;
-    if ((state.leaveHours ?? 0) + 1e-9 < hours) {
-      throw new CommandError(`That shift is ${hours} hours, and you’ve built up ${(state.leaveHours ?? 0).toFixed(1)}.`);
-    }
-    s.timeline.cancel(next.id, s.now);
-    state.leaveHours = (state.leaveHours ?? 0) - hours;
-    // Taken from the oldest year first, the one that lapses soonest.
-    let left = hours;
-    for (const year of state.leaveYears ?? []) {
-      const used = Math.min(year.hours, left);
-      year.hours -= used;
-      left -= used;
-    }
-    if (state.leaveYears) state.leaveYears = state.leaveYears.filter((year) => year.hours > 1e-9);
-    state.unpaid.push({ at: next.at, hours, kind: 'leave' });
-    attend(state, true);
-    return { at: next.at, hours };
+    const booked = bookLeave(s, person, state);
+    if (typeof booked === 'string') throw new CommandError(booked);
+    return booked;
   });
 
   // One more shift, on the first day this week they aren't already working.
@@ -1333,6 +1355,32 @@ export function shareOfYearDue(extra: Extract<Extra, { kind: 'shareOfYear' }>, p
   return cap !== undefined ? Math.min(amount, cap) : amount;
 }
 
+/**
+ * Japan's standard monthly remuneration, as the Health Insurance Act fixes
+ * it: at hiring from the pay the job is taken on at (資格取得時決定), and
+ * from each September from the average of what was paid in April, May and
+ * June (定時決定). Until 2026-09-26 it was set from each payday's own pay.
+ */
+function japanGrade(sim: Simulation, person: Person, state: JobState): number {
+  const local = countryAt(state.cityId).currency;
+  const save = saveCurrency(sim.universe);
+  const yen = (amount: Money) => (save === local ? amount : exchange(amount, save, local) ?? amount) / 100;
+  const year = new Date(sim.now).getUTCFullYear();
+  const september = Date.UTC(year, 8, 1);
+  const due = sim.now >= september ? year : year - 1;
+  const fixed = state.jpGrade;
+  if (fixed && (fixed.year >= due || state.since >= Date.UTC(due, 5, 1))) return fixed.monthly;
+  const spring = (person.earnings?.paydays ?? []).filter((one) => {
+    const d = new Date(one.at);
+    return d.getUTCFullYear() === due && d.getUTCMonth() >= 3 && d.getUTCMonth() <= 5 && one.at >= state.since;
+  });
+  const monthly = spring.length && fixed
+    ? spring.reduce((sum, one) => sum + yen(one.gross), 0) / spring.length
+    : yen(hourlyWage(sim, person)) * patternHours(patternOf(jobFor(state.jobId), state.fullTime)) * (52 / 12);
+  state.jpGrade = { year: due, monthly: japanStandard(monthly) };
+  return state.jpGrade.monthly;
+}
+
 /** The loading on a leave hour's pay for a job's line: its line's own where the law sets one, else the law's. */
 export function leaveLoadingFor(law: LaborLaw | undefined, jobId: string): number {
   return law?.leave?.loadingByLine?.[jobId] ?? law?.leave?.loading ?? 0;
@@ -1367,6 +1415,25 @@ function lawDay(sim: Simulation, person: Person): void {
   const today = new Date(Date.UTC(p.year, p.month - 1, p.day)).getUTCDay();
   if (week.days.includes(today) && holidayOff(state, instantFromZoned({ year: p.year, month: p.month, day: p.day, hour: week.startHour }, zone), zone)) {
     state.unpaid.push({ at: sim.now, hours: week.hours, kind: 'holiday' });
+  }
+  // Japan's employer books what the worker hasn't taken of five days, in the grant's last month.
+  const designate = law.leave?.grants?.employerDays;
+  const g = state.lastGrant;
+  if (designate && g && g.days >= designate.minGranted && sim.now >= g.at + 11 * 30.4375 * MS_DAY && sim.now < g.at + 12 * 30.4375 * MS_DAY
+    && g.takenHours < designate.days * g.dayHours - 1e-9) {
+    const booked = bookLeave(sim, person, state);
+    if (typeof booked !== 'string' && person.id === sim.universe.playerId) {
+      sim.notify({ category: 'work', title: 'Leave Set By Your Employer', body: `The law has your employer set the dates of the ${designate.days} days of leave you hadn’t taken this year. Your next shift is leave.`, importance: 50 });
+    }
+  }
+  // Ireland: a public holiday on a day not worked is a fifth of a week's pay.
+  const notWorked = law.holidayNotWorked;
+  const cityOf = CITIES.get(state.cityId);
+  if (notWorked && cityOf && !week.days.includes(today) && holidaysOn(instantFromZoned({ year: p.year, month: p.month, day: p.day, hour: 12 }, zone), zone, cityOf.countryId, cityOf.parentId).some((one) => one.type === 'public')) {
+    const lately = (person.earnings?.paydays ?? []).filter((one) => sim.now - one.at <= 35 * MS_DAY).reduce((sum, one) => sum + one.hours, 0);
+    if (state.fullTime || lately >= notWorked.minHoursIn5Weeks) {
+      state.pendingPay = [...(state.pendingPay ?? []), { name: 'Public Holiday', amount: Math.round(weekly * rate * notWorked.shareOfWeek) }];
+    }
   }
   // Read and written live: two extras due the same day (Peru's gratificación
   // and its 9%) each keep their record. Until 2026-09-26 the second

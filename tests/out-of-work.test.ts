@@ -284,7 +284,9 @@ describe('who qualifies, and what quitting costs', () => {
     expect(monthOf(layoffChanceADay('US', 'retail'))).toBeCloseTo(11.5 / 1_200, 9);
     expect(monthOf(layoffChanceADay('US', 'office'))).toBeCloseTo(13.1 / 1_200, 9);
     expect(monthOf(layoffChanceADay('GB', 'office'))).toBeCloseTo(0.0013, 9);
-    expect(layoffChanceADay('DE', 'office')).toBe(layoffChanceADay('GB', 'office'));
+    // Ireland publishes no measure, and Britain's stands in; Germany has its own since 2026-09-26.
+    expect(layoffChanceADay('IE', 'office')).toBe(layoffChanceADay('GB', 'office'));
+    expect(layoffChanceADay('DE', 'office')).not.toBe(layoffChanceADay('GB', 'office'));
   });
 });
 

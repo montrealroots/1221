@@ -20,6 +20,7 @@ import type { Person } from '../domain/model';
 import { CITIES, jurisdictionPath } from '../content/geography';
 import { benefitAt, noBenefitAt, type Benefit, type ClaimContext, type WorkRecord } from '../content/unemployment';
 import { exchange } from '../content/currency';
+import { payrollYear } from '../content/payroll';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { MS_DAY, type Instant } from '../core/time';
 import { netWorth } from './finance';
@@ -39,6 +40,12 @@ export interface EarningsState {
   lastReturn?: YearSettled;
   /** The last top-up for low pay paid (`systems/topup.ts`). */
   topUp?: { name: string; amount: Money; at: Instant };
+  /** The weeks the leave and redundancy pay paid out on leaving cover (Australia's income maintenance period). */
+  paidOutWeeks?: number;
+  /** When each claim after quitting was made, where the law bars a repeat longer (Japan's). */
+  quitClaims?: Instant[];
+  /** Canada Workers Benefit advances for a year: half the last return's benefit, in the save's money, and what's been paid of it. */
+  cwbAdvance?: { forYear: number; total: Money; paid: Money } | undefined;
 }
 
 export interface Claim {
@@ -87,7 +94,7 @@ function recordIn(sim: Simulation, person: Person, currency: string): WorkRecord
 
 /** The benefit a claim is on: the country's, or the one tried where it failed. */
 function benefitOf(cityId: string, fallback: boolean): Benefit | undefined {
-  const first = benefitAt(jurisdictionPath(cityId));
+  const first = benefitAt(jurisdictionPath(cityId), cityId);
   return fallback ? first?.fallback : first;
 }
 
@@ -116,7 +123,7 @@ export function claimFor(sim: Simulation, person: Person): Offer | { refused: st
   const left = person.earnings?.lastLeft;
   const where = left?.cityId ?? person.job?.cityId ?? person.currentLocationId;
   if (!CITIES.get(where)) return { refused: 'SLATE doesn’t know the law there.' };
-  const first = benefitAt(jurisdictionPath(where));
+  const first = benefitAt(jurisdictionPath(where), where);
   const none = noBenefitAt(jurisdictionPath(where));
   if (none) return { refused: none.unsized ? `${none.name} pays an unemployment benefit whose amount SLATE couldn’t find (${none.source}).` : `${none.name} has no unemployment benefit (${none.source}).` };
   if (!first) return { refused: 'SLATE has no unemployment benefit on record where you last worked.' };
@@ -136,7 +143,8 @@ export function claimFor(sim: Simulation, person: Person): Offer | { refused: st
       refused ||= refusal;
       continue;
     }
-    const bar = ctx.why === 'quit' ? benefit.quit : ctx.why === 'cause' ? benefit.cause : { weeks: 0 };
+    const priorQuits = (person.earnings?.quitClaims ?? []).filter((at) => benefit.repeatQuit && ctx.at - at <= benefit.repeatQuit.withinYears * 365.25 * MS_DAY).length;
+    const bar = ctx.why === 'quit' ? (benefit.repeatQuit && priorQuits >= benefit.repeatQuit.after ? { weeks: benefit.repeatQuit.weeks } : benefit.quit) : ctx.why === 'cause' ? benefit.cause : { weeks: 0 };
     if (bar === 'none') {
       refused ||= ctx.why === 'quit' ? `${benefit.name} isn’t paid to somebody who quit without good cause.` : `${benefit.name} isn’t paid to somebody let go for missing shifts.`;
       continue;
@@ -152,7 +160,9 @@ export function claimFor(sim: Simulation, person: Person): Offer | { refused: st
       continue;
     }
     const weekly = benefit.amount(basis, 1, { age: ctx.age, savings, share });
-    const waiting = benefit.wait ? benefit.wait({ savings }) : benefit.waitingDays;
+    // Weeks already served of what was paid out on leaving (Australia's income maintenance period).
+    const sinceLeft = left ? (sim.now - left.at) / (7 * MS_DAY) : 0;
+    const waiting = benefit.wait ? benefit.wait({ savings, paidOutWeeks: Math.max(0, (person.earnings?.paidOutWeeks ?? 0) - sinceLeft) }) : benefit.waitingDays;
     const waitDays = benefit.concurrentBar ? Math.max(waiting, bar.weeks * 7) : waiting + bar.weeks * 7;
     return { benefit, fallback, basis, share, weekly, waitDays, ...(weeks !== undefined ? { weeks } : {}), barWeeks: bar.weeks };
   }
@@ -183,6 +193,7 @@ export function registerUnemployment(sim: Simulation): void {
       ...(weeks !== undefined ? { until: paysFrom + weeks * 7 * MS_DAY } : {}),
     };
     (person.earnings ??= { paydays: [] }).claim = claim;
+    if (person.earnings.lastLeft?.why === 'quit' && benefit.repeatQuit) person.earnings.quitClaims = [...(person.earnings.quitClaims ?? []), s.now];
     scheduleBenefit(s, person, paysFrom + benefit.every * MS_DAY);
     const save = saveCurrency(s.universe);
     const { currency } = countryAt(where);
@@ -218,11 +229,19 @@ export function registerUnemployment(sim: Simulation): void {
     const local = Math.round(weekly * (days / 7) * 100);
     const amount = save === currency ? local : exchange(local, currency, save) ?? local;
     if (amount > 0 && person.primaryAccountId) {
+      // Tax taken as it's paid where the law takes it, at what the benefit over a year would bear; the return settles it.
+      const iso = countryAt(claim.cityId).iso;
+      const yearly = Math.round(weekly * 52 * 100);
+      const taxShare = benefit.withheld && yearly > 0
+        ? payrollYear(iso, yearly, { path: jurisdictionPath(claim.cityId), cityId: claim.cityId, at: s.now, age: ageAt(person, s.now) }).lines.filter((one) => one.kind === 'tax').reduce((sum, one) => sum + one.amount, 0) / yearly
+        : 0;
+      const tax = Math.round(amount * Math.min(1, Math.max(0, taxShare)));
       s.post({
         memo: claim.name, category: 'benefit',
         postings: [
           { accountId: s.nominalAccount('income', 'Unemployment Benefit').id, amount: -amount },
-          { accountId: person.primaryAccountId, amount },
+          { accountId: person.primaryAccountId, amount: amount - tax },
+          ...(tax > 0 ? [{ accountId: s.nominalAccount('expense', 'Tax Withheld').id, amount: tax }] : []),
         ],
       });
       claim.paid += amount;

@@ -349,9 +349,11 @@ describe('youth rates that last only months, juniors’ shares, and a day in lie
     expect(rateAt('au-nsw-sydney', 'retail', 'AUD', at, undefined, 20, 7).hourly).toBe(adult);
     const coach = rateAt('au-nsw-sydney', 'sport', 'AUD', at, undefined, 30, 12).hourly;
     expect(rateAt('au-nsw-sydney', 'sport', 'AUD', at, undefined, 18, 12).hourly).toBe(Math.round(coach * 0.75));
-    // Nothing for a line without junior rates on record.
+    // The Clerks award's 60% at 17, since 2026-09-26; and nothing for a line without junior rates, security work.
     const office = rateAt('au-nsw-sydney', 'office', 'AUD', at, undefined, 30, 12).hourly;
-    expect(rateAt('au-nsw-sydney', 'office', 'AUD', at, undefined, 17, 3).hourly).toBe(office);
+    expect(rateAt('au-nsw-sydney', 'office', 'AUD', at, undefined, 17, 3).hourly).toBe(Math.round(office * 0.6));
+    const guard = rateAt('au-nsw-sydney', 'armed_forces', 'AUD', at, undefined, 30, 12).hourly;
+    expect(rateAt('au-nsw-sydney', 'armed_forces', 'AUD', at, undefined, 17, 3).hourly).toBe(guard);
   });
 
   it('gives a day in lieu for a New Zealand holiday worked, on top of time and a half', () => {

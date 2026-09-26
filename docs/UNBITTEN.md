@@ -225,19 +225,24 @@ part the tool cannot see.
   worked on 2026-27's rates. France's prime d'activité, the monthly top-up
   for low pay, is paid on the 5th from the three months before last
   (`systems/topup.ts`), claimed by SLATE for the player, without the
-  housing aid SLATE doesn't pay. Not modeled: Washington's Working Families Tax Credit, a separate
-  application; the Canada Workers Benefit in Quebec, whose own figures
-  weren't found, so a Quebec worker gets the work premium alone; British
-  Columbia's renter's and sales tax credits; the Canada Workers Benefit's
-  advance payments; New York City's own earned income credit; and the
-  unemployment benefit's tax outside the US federal return, the states
-  that tax it, Canada, Britain's JSA, Ireland, Spain and New Zealand,
-  with Germany's raising the rate. Canada's, Ireland's, New Zealand's, Germany's, Spain's and Japan's
+  housing aid SLATE doesn't pay. Since 2026-09-26 the rest of what a low
+  wage gets there is paid too: Washington's Working Families Tax Credit, at
+  2025's figures and applied for apart (paid mid-April, SLATE's estimate);
+  the Canada Workers Benefit at Quebec's own figures; British Columbia's
+  renter's and sales tax credits; the Canada Workers Benefit's advances in
+  July, October and January, taken off the next return; and New York
+  City's own earned income credit. The unemployment benefit is taxed where
+  the law taxes it (Iceland's since then too), and taken from each payment
+  as it's paid in Canada, Spain, France, New Zealand and Iceland, the return
+  counting it before the tax; Ireland's means-tested allowance isn't taxed.
+  Canada's, Ireland's, New Zealand's, Germany's, Spain's and Japan's
   final-return dates are SLATE's estimates where the office names none.
   Church tax in Germany isn't taken, since SLATE doesn't know a character's
   church. Japan's contributions are on the grade of standard remuneration
-  the month's pay falls in (Kyōkai Kenpo Tokyo's fiscal 2026 table), set
-  from the pay each payday rather than fixed at hiring and each summer.
+  (Kyōkai Kenpo Tokyo's fiscal 2026 table), fixed at hiring from the pay
+  the job is taken on at and each September from April to June's pay, as
+  the Health Insurance Act fixes it; until 2026-09-26 it was set from each
+  payday's own pay.
 - **A pension fund grows in five countries and pays nothing out.** What a
   payslip puts into a fund the worker owns (Iceland, New Zealand, Australia,
   Britain, Ireland, Mexico) is theirs and counts in their worth. Since
@@ -252,29 +257,38 @@ part the tool cannot see.
   job is (`content/labor.ts`) pays its premiums, overtime, leave, sick
   pay, extra payments, Korea's rest day and severance, and asks its notice;
   since 2026-09-25 a job is also cut, as often as the BLS counts in the US
-  and the ONS in Britain (Britain's rate stands in everywhere else, SLATE's
-  estimate), with the employer's notice and the redundancy pay the law
-  gives. Germany keeps shops, offices and building sites off on Sundays and
+  and the ONS in Britain, and since 2026-09-26 as Canada's, Australia's,
+  Japan's, Korea's, Spain's, France's, Germany's and New Zealand's own
+  statistics count (Korea's, Spain's and New Zealand's by line; New
+  Zealand's the 2002–09 survey, the latest there is); Ireland, Iceland and
+  Mexico publish none, and Britain's rate stands in there, SLATE's estimate;
+  with the employer's notice and the redundancy pay the law gives. Germany
+  keeps shops, offices, building sites and delivery off on Sundays and
   public holidays (ArbZG §9 and §10; Berlin's shop-opening law §3 closes
   shops on both), working a Sunday shift on a free weekday and paying a
-  holiday as if worked (EFZG §2); the other lines work them, and which of
-  those §10 allows beyond restaurants, care and security wasn't settled.
-  Elsewhere a holiday is worked where it's
-  rostered, with its premium, so Ireland's and New Zealand's pay for a
-  holiday not worked has nothing to pay. Mexico's PTU profit share needs a
-  company's profit. Youth rates are Britain's and Ireland's by age, New
-  Zealand's starting-out rate and France's reduced SMIC by age and months
-  with the employer (France's counts months in the line of work, which SLATE
-  takes as months with the employer), and Australia's juniors by the General
-  Retail and Fitness awards' shares; the other awards' junior rates weren't
-  in the research. New Zealand's alternative holiday for a holiday worked is
-  added to the leave to book. The US rate is
-  layoffs and discharges together, as JOLTS doesn't part them, so it runs
-  above layoffs alone. Iceland's longer notice for older workers, Mexico's
-  cap on the seniority premium at twice the minimum wage, Germany's
-  optional half a month a year under §1a KSchG, and the tax-free share of
-  redundancy pay outside Britain and Ireland aren't modeled; France's
-  notice before six months is the common agreement's week. Premiums are the agreement's where
+  holiday as if worked (EFZG §2); cafés, bars, care, security, events and
+  sport work them, as §10(1) allows. Iceland's shop and office staff have
+  Commerce Day off, paid. Elsewhere a holiday is worked where it's
+  rostered, with its premium, and Ireland pays a fifth of a week for one
+  that falls on a day off (to a part-timer after 40 hours in five weeks).
+  Mexico's PTU profit share needs a company's profit, and no employer
+  SLATE has publishes what it paid a worker. Youth rates are Britain's and
+  Ireland's by age, New Zealand's starting-out rate and France's reduced
+  SMIC by age and months with the employer (France's counts months in the
+  line of work, which SLATE takes as months with the employer), and
+  Australia's juniors by the General Retail, Fitness, Fast Food (café
+  work) and Clerks awards' shares; bar and restaurant work serves liquor,
+  which the Hospitality award pays at the adult rate, and security,
+  construction and care have none. New Zealand's alternative holiday for a
+  holiday worked is added to the leave to book. The US rate is layoffs and
+  discharges together, as JOLTS doesn't part them, so it runs above
+  layoffs alone. Iceland's longer notice for older workers (four to six
+  months from 55 after ten years), Mexico's cap on the seniority premium at
+  twice the minimum wage (the general zone's), and redundancy pay free of
+  tax as Spain, Australia and Mexico free it, and Korea's severance, are
+  paid since 2026-09-26; Germany's half a month a year under §1a KSchG is
+  the employer's offer to make, not the law's to give, and France's notice
+  before six months is the common agreement's week. Premiums are the agreement's where
   the research found one: Iceland's Efling–SA tables for café, bar and
   security work and VR–SA's for shop and office work (Commerce Day, a VR
   major holiday, isn't in the shared list); Australia's awards by line on a
@@ -282,14 +296,16 @@ part the tool cannot see.
   and hospitality, whose late hours are paid in dollars; casual loadings
   aren't, as SLATE's jobs aren't casual. Japan's leave is granted at six
   months and each year after by the MHLW's table, for 80% of the shifts
-  attended; the employer's duty to see five days taken isn't modeled. Untaken
-  leave lapses by the law in Britain, Ireland and Japan, and is paid out in
-  Korea; elsewhere it piles up (Germany's turns on whether the employer
-  reminded the worker, and France's and Spain's rules weren't found at a
-  source SLATE could reach). The other US states add only what's over the
-  federal law: daily overtime in Alaska, Nevada and Colorado, and sick leave
-  where a state gives it; Kentucky's seventh day and Minnesota's 48-hour
-  week, which is under the federal 40, aren't taken. Canada's other
+  attended, and of a grant of ten days or more the employer books what the
+  worker hasn't taken of five in the grant's last month (art. 39(7)).
+  Untaken leave lapses by the law in Britain, Ireland, Japan, France (at
+  the end of the April after its reference year) and Spain (at 31
+  December), and is paid out in Korea; elsewhere it piles up, and in
+  Germany it lapses only where the employer warned the worker, which
+  SLATE's employers aren't taken to do. The other US states add only
+  what's over the federal law: daily overtime in Alaska, Nevada and
+  Colorado, and sick leave where a state gives it; Minnesota's 48-hour
+  week, which is under the federal 40, isn't taken. Canada's other
   provinces and territories have their own standards from the same pass.
 - **Unemployment benefit is the thirteen's, from the record SLATE keeps.**
   Out of work, a claim (`work.claim`, `systems/unemployment.ts`) pays
@@ -301,15 +317,18 @@ part the tool cannot see.
   claim falls to Universal Credit. Australia's waits are its liquid assets
   and ordinary waiting periods, with four weeks for quitting or misconduct
   alongside them, its assets limit that of somebody without a home, and
-  Youth Allowance at 18 to 21 at the away-from-home rate. Not modeled:
-  Ireland's means-tested Jobseeker's Allowance; Australia's income
-  maintenance period after leave or redundancy paid out; Japan's days for somebody quitting after
-  April 2025 are the month the research found, unconfirmed; New York's
-  high-quarter test is at the state's $16 minimum, not New York City's $17;
-  Britain's National Insurance test is at 2024/25's lower earnings limit;
-  the regional rate Canada's EI is worked at is September 2026's for all
-  three provinces; family supplements and a partner's income; and a
-  benefit is taxed only when the year is settled, not as it's paid. Being let go for
+  Youth Allowance at 18 to 21 at the away-from-home rate, and since
+  2026-09-26 the income maintenance period for leave and redundancy pay
+  paid out on leaving, alongside the assets wait. Ireland's claim falls to
+  the means-tested Jobseeker's Allowance, as Britain's does to Universal
+  Credit. Japan's month for quitting is confirmed from April 2025, and a
+  third quit in five years waits three. New York's high-quarter test is
+  the statute's 221 times the upstate minimum, $3,500, which is the one it
+  uses; Britain's National Insurance test takes each tax year's own lower
+  earnings limit; Canada's EI is worked at the regional rate of the
+  economic region a city is in, September 2026's table, and a
+  province's largest city's elsewhere. A family's supplements and a
+  partner's income don't arise, as nobody in SLATE has either. Being let go for
   missed shifts is held to be misconduct in the US states whose pages are
   silent on absence. Until 2026-09-26 only the US states the research
   covered had a benefit (New York, California, Texas, Florida, Washington,
@@ -447,6 +466,10 @@ part the tool cannot see.
   categories for systems long gone were taken out on 2026-09-25.)
 
 ## Unreachable: correct, and nothing can get there
+
+- **Kentucky's seventh day.** KRS 337.050 pays time and a half for the
+  seventh day of a week worked all seven, and no job in SLATE is rostered
+  more than four days a week, so it isn't written.
 
 - **The Decision Center has nothing to decide.** Answering, dismissing, closing
   on a date and forgetting are all built and held by `tests/smoke.test.ts`, which

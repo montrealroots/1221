@@ -51,7 +51,7 @@ function withheldBetween(sim: Simulation, person: Person, from: Instant, to: Ins
   const account = sim.nominalAccount('expense', 'Tax Withheld').id;
   let total = 0;
   for (const t of sim.universe.transactions) {
-    if (t.at < from || t.at >= to || t.category !== 'salary') continue;
+    if (t.at < from || t.at >= to || (t.category !== 'salary' && t.category !== 'benefit')) continue;
     if (!t.postings.some((p) => sim.universe.accounts[p.accountId]?.ownerId === person.id)) continue;
     for (const p of t.postings) if (p.accountId === account) total += p.amount;
   }
@@ -75,7 +75,9 @@ function benefitsBetween(sim: Simulation, person: Person, from: Instant, to: Ins
   const out: { name: string; amount: Money; at: Instant }[] = [];
   for (const t of sim.universe.transactions) {
     if (t.at < from || t.at >= to || t.category !== 'benefit') continue;
-    const paid = t.postings.find((p) => sim.universe.accounts[p.accountId]?.ownerId === person.id)?.amount ?? 0;
+    if (!t.postings.some((p) => sim.universe.accounts[p.accountId]?.ownerId === person.id)) continue;
+    // The benefit before any tax taken from it: what left the benefit's account.
+    const paid = -t.postings.filter((p) => sim.universe.accounts[p.accountId]?.ownerId !== person.id && sim.universe.accounts[p.accountId]?.name === 'Unemployment Benefit').reduce((sum, p) => sum + p.amount, 0);
     if (paid > 0) out.push({ name: t.memo, amount: paid, at: t.at });
   }
   return out;
@@ -175,7 +177,12 @@ export function settleToday(sim: Simulation, person: Person): YearSettled | unde
     const save = saveCurrency(sim.universe);
     const { currency } = countryAt(cityId);
     const toSave = (units: number) => Math.round(save === currency ? units * 100 : exchange(Math.round(units * 100), currency, save) ?? units * 100);
-    const { refund } = worked;
+    // Half the Canada Workers Benefit comes early, in July, October and
+    // January (CRA, RC210); what was advanced for this year comes off it.
+    const advance = e.cwbAdvance?.forYear === new Date(from).getUTCFullYear() ? e.cwbAdvance.paid : 0;
+    const refund = worked.refund - advance;
+    const cwb = worked.result.credits.find((one) => one.name === 'Canada Workers Benefit')?.amount ?? 0;
+    e.cwbAdvance = cwb > 0 ? { forYear: new Date(from).getUTCFullYear() + 1, total: toSave(cwb * 0.5), paid: 0 } : undefined;
     if (refund !== 0) {
       sim.post({
         memo: `${settlement.name}, ${new Date(from).getUTCFullYear()}`, category: 'tax',
@@ -187,7 +194,7 @@ export function settleToday(sim: Simulation, person: Person): YearSettled | unde
     const settled: YearSettled = {
       name: settlement.name, year: new Date(from).toISOString().slice(0, 10), at: sim.now,
       wages: worked.wages, benefits: worked.benefits, withheld: worked.withheld, owed: toSave(worked.result.owed),
-      credits: worked.result.credits.map((one: Credit) => ({ name: one.name, amount: toSave(one.amount) })), refund,
+      credits: [...worked.result.credits.map((one: Credit) => ({ name: one.name, amount: toSave(one.amount) })), ...(advance > 0 ? [{ name: 'Less Advances Paid', amount: -advance }] : [])], refund,
     };
     e.lastReturn = settled;
     if (person.id === sim.universe.playerId) {
@@ -205,8 +212,36 @@ export function settleToday(sim: Simulation, person: Person): YearSettled | unde
   return undefined;
 }
 
+/**
+ * The Canada Workers Benefit's advances: a third of half the year's expected
+ * benefit on the dates CRA paid them in 2026 (10 July, 9 October, 12
+ * January), to somebody still taxed in Canada; SLATE's estimate for the
+ * dates of later years.
+ */
+function payAdvance(sim: Simulation, person: Person): void {
+  const a = person.earnings?.cwbAdvance;
+  if (!a || !person.primaryAccountId || countryAt(whereTaxed(person)).iso !== 'CA') return;
+  const today = dateKey(sim.now, sim.homeZone);
+  const due = [[a.forYear, 7, 10], [a.forYear, 10, 9], [a.forYear + 1, 1, 12]].some(([y, m, d]) => today === `${y}-${String(m).padStart(2, '0')}-${String(d).padStart(2, '0')}`);
+  if (!due) return;
+  const amount = Math.round(a.total / 3);
+  if (amount <= 0) return;
+  sim.post({
+    memo: 'Canada Workers Benefit Advance', category: 'tax',
+    postings: [{ accountId: sim.nominalAccount('income', 'Tax Refund').id, amount: -amount }, { accountId: person.primaryAccountId, amount }],
+  });
+  a.paid += amount;
+  if (person.id === sim.universe.playerId) {
+    sim.notify({ category: 'work', title: 'Canada Workers Benefit Advance', body: `${formatMoney(amount, saveCurrency(sim.universe))} of this year’s Canada Workers Benefit, paid early; the return takes it off.`, importance: 45 });
+  }
+}
+
 export function registerTaxReturn(sim: Simulation): void {
   sim.onEvent('world.day_rollover', 'tax.settle', (_event, { sim: s }) => {
-    for (const person of Object.values(s.universe.people)) if (person.earnings?.paydays.length) settleToday(s, person);
+    for (const person of Object.values(s.universe.people)) {
+      if (!person.earnings?.paydays.length) continue;
+      payAdvance(s, person);
+      settleToday(s, person);
+    }
   });
 }

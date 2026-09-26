@@ -56,6 +56,8 @@ export interface PayrollContext {
   cityId?: string;
   /** Worked for the year's return: a tax paid only there is taken. */
   settling?: boolean;
+  /** Japan's standard monthly remuneration as the insurer fixed it, in yen. */
+  jpStandard?: number;
 }
 
 /** France's taxable pay (net imposable) on a year's gross: less the pension contributions and the deductible 6.8 points of CSG. */
@@ -109,6 +111,9 @@ const clampTo = (value: number, low: number, high: number) => Math.max(low, Math
 const inBand = (income: number, above: number, upTo = Number.POSITIVE_INFINITY) => clampTo(income, above, upTo) - above;
 
 type Line = { name: string; amount: number; kind: PayslipKind; source: string };
+
+/** New York City's five boroughs and the city itself, as the gazetteer codes them. */
+export const NYC_CODES: readonly string[] = ['US-NY-newyork', 'US-NY-brooklyn', 'US-NY-queens', 'US-NY-manhattan', 'US-NY-thebronx', 'US-NY-statenisland'];
 
 /** An amount after a phase-out, at a year's income. */
 function phased(amount: number, g: number, p: PhaseOut): number {
@@ -173,7 +178,7 @@ const RULES: Record<string, Rules> = {
     lines.push({ name: 'Social Security', kind: 'social', source: 'SSA 2026: 6.2% up to $184,500', amount: Math.min(g, 184_500) * 0.062 });
     lines.push({ name: 'Medicare', kind: 'social', source: 'IRS Topic 751: 1.45%, and 0.9% more over $200,000', amount: g * 0.0145 + inBand(g, 200_000) * 0.009 });
     const state = ctx.path[1];
-    const nyc = ['US-NY-newyork', 'US-NY-brooklyn', 'US-NY-queens', 'US-NY-manhattan', 'US-NY-thebronx', 'US-NY-statenisland'].includes(ctx.path[2] ?? '');
+    const nyc = NYC_CODES.includes(ctx.path[2] ?? '');
     if (state === 'US-NY') {
       const taxable = Math.max(0, g - 8_000);
       lines.push({ name: 'New York State Income Tax', kind: 'tax', source: 'NYS 2026 single rates, $8,000 standard deduction', amount: bands(taxable, [[0, 0.039], [8_500, 0.044], [11_700, 0.0515], [13_900, 0.054], [80_650, 0.059], [215_400, 0.0685], [1_077_550, 0.0965], [5_000_000, 0.103], [25_000_000, 0.109]]) });
@@ -520,9 +525,12 @@ export function japanStandard(monthly: number): number {
  * million.
  */
 function japanInsurance(g: number, ctx: PayrollContext): { kosei: number; health: number; insured: boolean } {
-  const insured = g / 12 >= 88_000 && (ctx.weeklyHours ?? 40) >= 20;
+  // The grade the insurer fixed (at hiring, and each September from April to
+  // June's pay), where the payslip has one; else the grade of this pay.
+  const monthly = ctx.jpStandard ?? g / 12;
+  const insured = monthly >= 88_000 && (ctx.weeklyHours ?? 40) >= 20;
   if (!insured) return { kosei: 0, health: 0, insured };
-  const standard = japanStandard(g / 12);
+  const standard = ctx.jpStandard ?? japanStandard(g / 12);
   const kosei = Math.min(Math.max(standard, 88_000), 650_000) * 0.0915 * 12;
   const health = standard * (0.04925 + (ctx.age >= 40 && ctx.age < 65 ? 0.0081 : 0) + (ctx.at >= Date.UTC(2026, 3, 1) ? 0.00115 : 0)) * 12;
   return { kosei, health, insured };

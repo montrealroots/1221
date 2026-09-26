@@ -19,7 +19,7 @@
  * whole units.
  */
 
-import { franceIncomeTax, franceTaxable, payrollYear, spainCuota } from './payroll';
+import { NYC_CODES, franceIncomeTax, franceTaxable, payrollYear, spainCuota } from './payroll';
 import type { Instant } from '../core/time';
 import { STATES } from './jurisdictions';
 
@@ -186,6 +186,42 @@ export function calEitc(earned: number, agi: number, age: number): number {
   return 1;
 }
 
+/**
+ * New York City's earned income credit (IT-215, 2025): a share of the federal
+ * credit by New York AGI, 30% to $5,000, 25% from $7,500, 20% from $17,500,
+ * 15% from $22,500 and 10% from $42,500, sliding on a straight line between.
+ */
+export function nycEitcShare(agi: number): number {
+  const points: readonly (readonly [number, number])[] = [[5_000, 0.3], [7_500, 0.25], [15_000, 0.25], [17_500, 0.2], [20_000, 0.2], [22_500, 0.15], [40_000, 0.15], [42_500, 0.1]];
+  if (agi <= points[0]![0]) return points[0]![1];
+  for (let i = 1; i < points.length; i += 1) {
+    const [x1, y1] = points[i]!;
+    if (agi <= x1) {
+      const [x0, y0] = points[i - 1]!;
+      return y0 + ((y1 - y0) * (agi - x0)) / (x1 - x0);
+    }
+  }
+  return 0.1;
+}
+
+/**
+ * Washington's Working Families Tax Credit with no qualifying children, at
+ * the 2025 figures, 2026's not yet published (RCW 82.08.0206, DOR): at 25 to
+ * 64 with the federal credit, $335, less 13.4 cents a dollar of income over
+ * $16,604, at least $50, and nothing over $19,104.
+ */
+export function washingtonWorkingFamilies(y: YearFigures): number {
+  const income = y.wages + allBenefits(y);
+  if (y.age < 25 || y.age >= 65 || income > 19_104 || usEitc(y, allBenefits(y)) <= 0) return 0;
+  return Math.max(50, 335 - 0.134 * Math.max(0, income - 16_604));
+}
+
+/** The Canada Workers Benefit for a Quebec resident, at Quebec's 2025 figures: 37.3% of work income over $2,400, to $3,812.06, less 20% of net income over $14,170.05. */
+export function quebecWorkers(y: YearFigures): number {
+  const net = y.wages + allBenefits(y);
+  return Math.max(0, Math.min(3_812.06, 0.373 * Math.max(0, y.wages - 2_400)) - 0.2 * Math.max(0, net - 14_170.05));
+}
+
 /** Quebec's work premium for somebody living alone, 2026: 11.6% of work income over $2,400, to $1,207.33, less 10% of family income over $12,808. */
 export function quebecWorkPremium(work: number, family: number): number {
   return Math.max(0, Math.min(1_207.33, 0.116 * Math.max(0, work - 2_400)) - 0.1 * Math.max(0, family - 12_808));
@@ -253,13 +289,27 @@ export const SETTLEMENTS: Readonly<Record<string, Settlement>> = {
     credits: (y, byLine) => {
       const federal = usEitc(y, allBenefits(y));
       const household = Math.min(nyHouseholdCredit(y.wages + allBenefits(y)), byLine['New York State Income Tax'] ?? 0);
+      const nyc = NYC_CODES.includes(y.path[2] ?? '');
       return [
         { name: 'Earned Income Tax Credit', amount: federal, refundable: true },
         { name: 'New York Household Credit', amount: household, refundable: false },
         { name: 'New York Earned Income Credit', amount: Math.max(0, 0.3 * federal - household), refundable: true },
+        // Since 2026-09-26, New York City's own for a city resident.
+        ...(nyc ? [{ name: 'New York City Earned Income Credit', amount: federal * nycEitcShare(y.wages + allBenefits(y)), refundable: true }] : []),
       ];
     },
     source: `${US.source}; New York adds 30% of the federal credit less the household credit it can use, and taxes unemployment benefit (IT-201 and IT-215, 2025)`,
+  },
+  // Washington's credit is applied for apart from the return, from February,
+  // and paid after it; SLATE applies for the player, and mid-April is its estimate of when it's paid.
+  'US-WA': {
+    ...US,
+    later: {
+      name: 'Working Families Tax Credit', settle: { month: 4, day: 15, offsetYears: 0, estimate: true },
+      amount: washingtonWorkingFamilies,
+      source: 'Washington DOR: $335 with no qualifying children in 2025, less 13.4 cents a dollar over $16,604, at least $50, at 25 to 64; applied for from February',
+    },
+    source: `${US.source}; Washington’s Working Families Tax Credit applied for apart`,
   },
   'US-CA': {
     ...US,
@@ -294,12 +344,15 @@ export const SETTLEMENTS: Readonly<Record<string, Settlement>> = {
     },
     source: `${CANADA.source}; Ontario’s LIFT credit, the lesser of $875 and 5.05% of employment income, less 5% over $32,500`,
   },
-  // Quebec: the work premium, and not the Canada Workers Benefit at its
-  // federal figures, since Quebec sets its own and they weren't found.
+  // Quebec: the work premium, and the Canada Workers Benefit at Quebec's own
+  // figures (2025's; 2026's not yet published), which until 2026-09-26 weren't found.
   'CA-10': {
     ...CANADA,
-    credits: (y) => [{ name: 'Work Premium', amount: quebecWorkPremium(y.wages, y.wages + allBenefits(y)), refundable: true }],
-    source: 'Revenu Québec: the year’s tax on a TP-1 and a T1, with the work premium for somebody living alone, 11.6% of work income over $2,400 to $1,207.33 in 2026, less 10% of family income over $12,808; EI is taxable. The CRA states no refund month; mid-May is SLATE’s estimate',
+    credits: (y) => [
+      { name: 'Canada Workers Benefit', amount: quebecWorkers(y), refundable: true },
+      { name: 'Work Premium', amount: quebecWorkPremium(y.wages, y.wages + allBenefits(y)), refundable: true },
+    ],
+    source: 'Revenu Québec and CRA Schedule 6 (Quebec): the year’s tax on a TP-1 and a T1, with the work premium for somebody living alone, 11.6% of work income over $2,400 to $1,207.33 in 2026, less 10% of family income over $12,808, and the Canada Workers Benefit at Quebec’s figures, 37.3% of work income over $2,400 to $3,812.06, less 20% of net income over $14,170.05 (2025); EI is taxable. The CRA states no refund month; mid-May is SLATE’s estimate',
   },
   'CA-02': {
     ...CANADA,
@@ -309,9 +362,12 @@ export const SETTLEMENTS: Readonly<Record<string, Settlement>> = {
       return [
         { name: 'Canada Workers Benefit', amount: canadaWorkers(y), refundable: true },
         { name: 'BC Tax Reduction', amount: Math.min(reduction, byLine['British Columbia Income Tax'] ?? 0), refundable: false },
+        // Since 2026-09-26: the renter's credit for a year's rent, and the sales tax credit.
+        ...(y.rent > 0 ? [{ name: 'BC Renter’s Tax Credit', amount: Math.max(0, 400 - 0.02 * Math.max(0, net - 66_189)), refundable: true }] : []),
+        { name: 'BC Sales Tax Credit', amount: Math.max(0, 75 - 0.02 * Math.max(0, net - 15_000)), refundable: true },
       ];
     },
-    source: `${CANADA.source}; British Columbia’s tax reduction, $690 in 2026, less 3.56% over $25,570`,
+    source: `${CANADA.source}; British Columbia’s tax reduction, $690 in 2026, less 3.56% over $25,570; its renter’s credit, $400 less 2% of income over $66,189 for somebody renting six months of the year; and its sales tax credit, $75 less 2% over $15,000`,
   },
   GB: {
     name: 'P800', yearStart: [4, 6], settle: [{ month: 6, day: 30, offsetYears: 0 }],
@@ -320,13 +376,14 @@ export const SETTLEMENTS: Readonly<Record<string, Settlement>> = {
   },
   IE: {
     name: 'End Of Year Statement', yearStart: [1, 1], settle: [{ month: 1, day: 31, offsetYears: 0, estimate: true }],
-    benefitLines: /^PAYE$/,
+    benefitLines: /^PAYE$/, untaxed: ['Jobseeker’s Allowance'],
     credits: (y, byLine) => [{ name: 'Rent Tax Credit', amount: Math.min(0.2 * y.rent, 1_000, byLine.PAYE ?? 0), refundable: false }],
     source: 'Revenue: a PAYE worker’s year is settled on the statement through myAccount, from January (SLATE’s estimate of when), with the rent credit, 20% of rent to €1,000, against income tax; Jobseeker’s Benefit bears income tax, not USC or PRSI',
   },
   IS: {
     name: 'Álagning', yearStart: [1, 1], settle: [{ month: 6, day: 1, offsetYears: 0 }], interest: 0.025,
-    source: 'Skatturinn: the year’s assessment at the end of May, paid on 1 June, with 2.5% added to a refund or a shortfall',
+    benefitLines: /^Staðgreiðsla$/,
+    source: 'Skatturinn: the year’s assessment at the end of May, paid on 1 June, with 2.5% added to a refund or a shortfall; atvinnuleysisbætur are taxed, Vinnumálastofnun taking the tax as it pays',
   },
   NZ: {
     name: 'Income Tax Assessment', yearStart: [4, 1], settle: [{ month: 6, day: 15, offsetYears: 0, estimate: true }],

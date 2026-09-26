@@ -155,8 +155,10 @@ export interface WageFloor {
 
 /**
  * Australia's junior rates, where the award pays a junior a share of the
- * adult rate by age: [from age, share]. The General Retail award's and the
- * Fitness award's (clause 17.2 and its like, as varied to 1 July 2026).
+ * adult rate by age: [from age, share]. The General Retail, Fitness, Fast
+ * Food and Clerks awards' (as varied to 1 July 2026); the Security, Building
+ * and aged-care awards have none, and the Hospitality award's don't reach a
+ * junior serving liquor.
  */
 const JUNIORS: Readonly<Record<string, Readonly<Record<string, { shares: readonly (readonly [number, number])[]; adultAt20AfterMonths?: number; source: string }>>>> = {
   AU: {
@@ -167,6 +169,17 @@ const JUNIORS: Readonly<Record<string, Readonly<Record<string, { shares: readonl
     sport: {
       shares: [[0, 0.55], [17, 0.65], [18, 0.75], [19, 0.85], [20, 1]],
       source: 'Fitness Industry Award: under 17 55%, 17 65%, 18 75%, 19 85%, 20 the adult rate',
+    },
+    // Café work is paid by the Fast Food award, as its premiums are. Bar and
+    // restaurant work serves liquor, and the Hospitality award pays a junior
+    // serving liquor the adult rate, so that line has none.
+    school: {
+      shares: [[0, 0.4], [16, 0.5], [17, 0.6], [18, 0.7], [19, 0.8], [20, 0.9], [21, 1]],
+      source: 'Fast Food Industry Award 2020, clause 17.2: under 16 40%, 16 50%, 17 60%, 18 70%, 19 80%, 20 90%',
+    },
+    office: {
+      shares: [[0, 0.45], [16, 0.5], [17, 0.6], [18, 0.7], [19, 0.8], [20, 0.9], [21, 1]],
+      source: 'Clerks – Private Sector Award 2020, clause 16.2: under 16 45%, 16 50%, 17 60%, 18 70%, 19 80%, 20 90%',
     },
   },
 };
