@@ -99,6 +99,8 @@ export interface Account {
   returnedAt?: Instant;
   cardFeeAt?: Instant;
   dormantFeeAt?: Instant;
+  /** Germany: the quarter's fees so far, charged at the quarterly closing. */
+  feesDue?: Money;
   /** A loan's monthly payment and its term. */
   loanPayment?: Money;
   loanMonths?: number;

@@ -20,6 +20,8 @@ import { Panel, Empty } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
 import { BankLending } from '@/ui/bank/BankLending';
 import { BankCard } from '@/ui/bank/BankCard';
+import { BankStatements } from '@/ui/bank/BankStatements';
+import { apyOf } from '@/engine/systems/statements';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { formatDate } from '@/engine/core/time';
 import { bankingIn } from '@/engine/content/banks';
@@ -161,6 +163,8 @@ export function BankWorkspace() {
 
       <BankLending bank={bank} />
 
+      <BankStatements />
+
       <OtherCharges bank={bank} />
 
       {country?.howMoneyMoves && (
@@ -190,7 +194,8 @@ function interestWords(sim: Simulation, product: Product | undefined, tax: numbe
   const step = introStep(sim, product, openedAt, sim.now);
   const rate = step ?? rateOn(product, sim.now, sim.homeZone);
   if (!product || (rate <= 0 && !product.bonus && !product.intro)) return 'Pays no interest.';
-  const said: string[] = [`Pays ${pct(rate)} a year`];
+  // The yield with the interest left in, credited monthly or in the bank's months (B31).
+  const said: string[] = [`Pays ${pct(rate)} a year (${pct(Number(apyOf(rate, product.pays?.length ?? 12).toFixed(5)))} APY)`];
   if (step !== undefined) {
     // The steps still to come, and what it pays after them.
     let through = 0;

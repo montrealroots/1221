@@ -62,7 +62,6 @@ const ACCOUNT_KIND: Readonly<Record<AccountKind, string>> = {
 const CATEGORY_WORDS: Readonly<Record<string, string>> = {
   opening: 'Carried From Before',
   groceries: 'Food',
-  production: 'Work',
 };
 
 const categoryWords = (key: string): string =>

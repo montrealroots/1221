@@ -52,6 +52,7 @@ import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { instantFromZoned, zonedParts, type Instant } from '../core/time';
 import { CommandError } from '../core/simulation';
 import { arrearsOf, drawFromBank, inTheBank } from './household';
+import { statementReady } from './statements';
 
 export const STATEMENT_KIND = 'card.statement';
 export const DUE_KIND = 'card.due';
@@ -243,12 +244,15 @@ function scheduleStatement(sim: Simulation, person: Person, after: Instant): voi
  * The payment due, at noon: so many days after the statement where the bank
  * says, else the 15th of the month after it.
  */
-function scheduleDue(sim: Simulation, person: Person, statementAt: Instant, graceDays?: number): void {
-  const zone = zoneOf(sim, person);
+export function dueAt(zone: string, statementAt: Instant, graceDays?: number): Instant {
   const p = zonedParts(statementAt, zone);
-  const at = graceDays !== undefined
+  return graceDays !== undefined
     ? instantFromZoned({ year: p.year, month: p.month, day: p.day + graceDays, hour: 12 }, zone)
     : instantFromZoned({ year: p.month === 12 ? p.year + 1 : p.year, month: p.month === 12 ? 1 : p.month + 1, day: 15, hour: 12 }, zone);
+}
+
+function scheduleDue(sim: Simulation, person: Person, statementAt: Instant, graceDays?: number): void {
+  const at = dueAt(zoneOf(sim, person), statementAt, graceDays);
   sim.schedule({ at, kind: DUE_KIND, label: 'Card Payment Due', category: 'home', priority: 36, payload: { personId: person.id } });
 }
 
@@ -296,6 +300,9 @@ export function registerCredit(sim: Simulation): void {
     if (credit.statementBalance > 0) scheduleDue(s, person, item.at, terms.graceDays);
     // Nothing owed: the month is reported now, paid as agreed.
     else reportMonth(s, person, card, credit, ON_TIME);
+    statementReady(s, person, card, credit.statementBalance > 0
+      ? `${formatMoney(credit.statementBalance, saveCurrency(s.universe))} to pay, at least ${formatMoney(minimumDue(s, credit.statementBalance, terms, credit.statementInterest ?? 0), saveCurrency(s.universe))}.`
+      : 'The card owes nothing this month.');
     scheduleStatement(s, person, item.at);
   });
 

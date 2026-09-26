@@ -14,6 +14,7 @@ import type { ScheduledItem } from '../core/scheduler';
 import type { HistoryRecord } from '../core/audit';
 import type { HomeState } from '../systems/household';
 import type { CreditState } from '../systems/credit';
+import type { AlertSettings } from '../systems/statements';
 import type { IdNamespace } from '../core/ids';
 import type { PerformerTitle } from '../core/performer';
 
@@ -145,6 +146,12 @@ export interface Person {
    * kept on the person.
    */
   credit?: CreditState;
+  /**
+   * The bank's alerts they've set (`systems/statements.ts`): the current
+   * account under a line, a payment over one, and a statement ready. From
+   * 2026-09-26; a save from before has the bank's defaults.
+   */
+  alerts?: AlertSettings;
 
   wellbeing: Wellbeing;
 

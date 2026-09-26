@@ -36,6 +36,7 @@ import { addMonths, dateKey, daysInMonth, instantFromZoned, zonedParts, MS_DAY, 
 import { bankById, bankingIn, banksIn, type Bank, type Product } from '../content/banks';
 import { ageOn } from './mortality';
 import { accountNumber } from './banknumber';
+import { statementReady } from './statements';
 
 export const MONTH_END_KIND = 'bank.month_end';
 
@@ -361,6 +362,17 @@ export function interestTaxOn(sim: Simulation, account: Account): number {
   return rule.rate ?? 0;
 }
 
+/**
+ * Whether the account is closed each calendar quarter rather than each month:
+ * Germany's, whose banks settle interest and fees in one closing at the end
+ * of March, June, September and December (AGB-Banken no. 7). Until
+ * 2026-09-26 SLATE settled them monthly everywhere.
+ */
+export function closesQuarterly(account: Account): boolean {
+  const bank = account.bankId ? bankById(account.bankId) : undefined;
+  return bank?.iso === 'DE' && (account.kind === 'checking' || account.kind === 'savings');
+}
+
 /** An amount in the save's money, in a bank's currency. */
 function inSaveMoneyBack(sim: Simulation, amount: Money, currency: string): Money {
   const from = saveCurrency(sim.universe);
@@ -431,10 +443,25 @@ export function registerBanking(sim: Simulation): void {
       // A month that earned the bonus adds it to what's owed; one that didn't loses it.
       if (product?.bonus && bonusEarned(s, account, monthStart)) account.accrued = (account.accrued ?? 0) + (account.bonusAccrued ?? 0);
       account.bonusAccrued = 0;
-      // Paid in the bank's months, where it doesn't pay every month.
-      if (!product?.pays || product.pays.includes(month)) payInterest(s, account, `Interest: ${account.name}`);
+      // Paid in the bank's months, where it doesn't pay every month, and in
+      // Germany at the quarterly closing (AGB-Banken no. 7), with the
+      // quarter's fees beside it.
+      const quarterly = closesQuarterly(account);
+      if ((!product?.pays || product.pays.includes(month)) && (!quarterly || month % 3 === 0)) payInterest(s, account, `Interest: ${account.name}`);
       const { fee } = feeFor(s, account, monthStart);
-      if (fee > 0) {
+      if (quarterly) {
+        account.feesDue = (account.feesDue ?? 0) + fee;
+        if (month % 3 === 0 && account.feesDue > 0) {
+          s.post({
+            memo: `Quarterly closing, fees: ${account.name}`, category: 'bank_fee',
+            postings: [
+              { accountId: account.id, amount: -account.feesDue },
+              { accountId: s.nominalAccount('expense', 'Bank Fees').id, amount: account.feesDue },
+            ],
+          });
+          account.feesDue = 0;
+        }
+      } else if (fee > 0) {
         s.post({
           memo: `Monthly fee: ${account.name}`, category: 'bank_fee',
           postings: [
@@ -442,6 +469,11 @@ export function registerBanking(sim: Simulation): void {
             { accountId: s.nominalAccount('expense', 'Bank Fees').id, amount: fee },
           ],
         });
+      }
+      // The current account's statement, monthly, or at Germany's quarterly closing.
+      if (account.kind === 'checking' && (!quarterly || month % 3 === 0)) {
+        const owner = s.universe.people[account.ownerId];
+        if (owner) statementReady(s, owner, account, `${formatMoney(account.balance, saveCurrency(s.universe))} at the close.`);
       }
       account.lowest = account.balance;
       account.monthOpen = account.balance;
