@@ -12,6 +12,7 @@ import { placeProfile, placeKindLabel, formatPeople, type PlaceProfile } from '@
 import { WEATHER_EMOJI, forecastFor, weatherAt, weatherShort } from '@/engine/systems/weather';
 import { MS_DAY, WEEKDAY_NAMES } from '@/engine/core/time';
 import { PERFORMER_NOUN } from '@/engine/core/performer';
+import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Meter, MoneyText, Empty } from '@/ui/components/primitives';
 import { openDecisions, lifeSnapshot, unreadNotifications } from '@/engine/world/world';
@@ -509,7 +510,14 @@ export function Home() {
  * hours, quitting and looking for work above it; the job engine went.
  */
 function YourHome({ cur }: { cur: string }) {
-  const { sim, run } = useGame();
+  const { sim, run, toast } = useGame();
+  const [paying, setPaying] = useState('');
+  const owed = useWorld((s) => arrearsOf(s, s.player));
+  const ahead = useWorld((s) => s.player.payments?.rentCredit ?? 0);
+  const payLandlord = () => {
+    const answer = run('home.pay_landlord', { amount: Math.round(Number(paying.replace(/[^\d.]/g, '')) * 100) });
+    if (answer.ok) { toast('Paid.', 'positive'); setPaying(''); }
+  };
   const home = useWorld((s) => s.player.home);
   const rent = useWorld((s) => rentOf(s, s.player));
   const bills = useWorld((s) => billsOf(s, s.player));
@@ -523,6 +531,15 @@ function YourHome({ cur }: { cur: string }) {
         value={homeLabel}
         note={home?.kind === 'sofa' ? SOFA.note : `${money(rent + bills)} a month on the first: ${money(rent)} rent and ${money(bills)} bills`}
       />
+      {home && home.kind !== 'sofa' && (
+        <div className="row gap-2" style={{ alignItems: 'flex-end', flexWrap: 'wrap' }}>
+          <div className="field" style={{ margin: 0 }}>
+            <label htmlFor="pay-landlord">{owed > 0 ? `Owed: ${money(owed)}` : ahead > 0 ? `Paid Ahead: ${money(ahead)}` : 'Pay The Landlord'} ({cur})</label>
+            <input id="pay-landlord" inputMode="decimal" value={paying} onChange={(e) => setPaying(e.target.value)} />
+          </div>
+          <Gated feature="home.pay_landlord" className="btn btn-sm" onClick={payLandlord} disabled={!paying}>Pay The Landlord</Gated>
+        </div>
+      )}
       {home?.noticeUntil !== undefined && (
         <div className="callout callout-warning small">
           A notice to pay or quit runs until {formatDate(home.noticeUntil, sim.zone)}. Get what you owe under a month’s rent by then.

@@ -37,6 +37,7 @@ import { registerTutorial } from './world/tutorial';
 import { armBanking, openAt, registerBanking, rebank, startingBank } from './systems/banking';
 import { registerLending } from './systems/lending';
 import { registerStatements } from './systems/statements';
+import { armPayments, freshPayments, registerPayments } from './systems/payments';
 import { CARDS } from './content/cards';
 import { registerWorld } from './world/world';
 import {
@@ -62,6 +63,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerTutorial(sim);
   registerBanking(sim);
   registerStatements(sim);
+  registerPayments(sim);
   registerLending(sim);
 }
 
@@ -139,6 +141,7 @@ function populateWorld(sim: Simulation, config: NewSaveConfig): void {
 
   armWorldClock(sim);
   moveIn(sim, player, config.housing);
+  player.payments = freshPayments(player.currentLocationId);
   openCredit(sim, player, wealth.creditScore);
   armBirthdays(sim);
   armBanking(sim);
@@ -235,6 +238,7 @@ export function loadSave(universe: SaveUniverse): Simulation {
   // Anybody with a home has a rent due. Until 2026-09-26 anybody with a job
   // had their rota two weeks out and a payday ahead too.
   armHousehold(sim);
+  armPayments(sim);
   armCredit(sim);
   armBirthdays(sim);
   // A save from before the banks banked at "Northbank", which never existed.

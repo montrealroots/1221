@@ -15,6 +15,7 @@ import type { HistoryRecord } from '../core/audit';
 import type { HomeState } from '../systems/household';
 import type { CreditState } from '../systems/credit';
 import type { AlertSettings } from '../systems/statements';
+import type { PaymentSettings } from '../systems/payments';
 import type { IdNamespace } from '../core/ids';
 import type { PerformerTitle } from '../core/performer';
 
@@ -152,6 +153,13 @@ export interface Person {
    * 2026-09-26; a save from before has the bank's defaults.
    */
   alerts?: AlertSettings;
+  /**
+   * How rent, bills and everyday spending are paid, whether savings backs
+   * the current account, their standing orders and the checks in the post
+   * (`systems/payments.ts`). From 2026-09-26; a save from before keeps the
+   * way it ran, everything from the bank with savings swept.
+   */
+  payments?: PaymentSettings;
 
   wellbeing: Wellbeing;
 

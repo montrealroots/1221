@@ -15,9 +15,9 @@ When a module lands, its rows change to **Has it** in the same commit.
 
 | | Functions |
 |---|---|
-| Has it | 62 |
-| To build | 120 |
-| Waits | 94 |
+| Has it | 85 |
+| To build | 96 |
+| Waits | 95 |
 | Outside the game | 30 |
 | **All** | **306** |
 
@@ -26,7 +26,7 @@ When a module lands, its rows change to **Has it** in the same commit.
 | Module | What | Functions |
 |---|---|---|
 | 1 | Statements and records | Done, 2026-09-26 |
-| 2 | Payments: direct debits, standing orders, checks and how each thing is paid | 24 to build |
+| 2 | Payments: direct debits, standing orders, checks and how each thing is paid | Done, 2026-09-26 |
 | 3 | Cash | 17 to build |
 | 4 | The card’s life: applying, limits, closing, default | 25 to build |
 | 5 | How a card charges interest | 9 to build |
@@ -106,29 +106,29 @@ When a module lands, its rows change to **Has it** in the same commit.
 | A53 | Other ATM services | Has it | Balance and transfers, in the bank’s screen. |
 | A54 | Teller withdrawal | Module 3 | Take cash out at the counter. |
 | A55 | Cash at another bank's teller | Module 3 | Cash from another bank’s counter, for its fee. |
-| A56 | Write a check | Module 2 | Pay the rent by check where rent is paid that way (the United States). |
-| A57 | Bank's check-paying rules | Module 2 | The bank’s rules for paying a check. |
-| A58 | Order checks / counter checks | Module 2 | Order checks. |
-| A59 | Buy a cashier's check or money order | Module 2 | Buy a cashier’s check or money order (a deposit for a new home). |
-| A60 | Stop payment on a check | Module 2 | Stop a check. |
+| A56 | Write a check | Has it | Pay the rent by check where rent is paid that way (the United States). |
+| A57 | Bank's check-paying rules | Has it | The bank’s rules for paying a check. |
+| A58 | Order checks / counter checks | Has it | Order checks. |
+| A59 | Buy a cashier's check or money order | Waits | Waits on a payee who asks for guaranteed funds: no research found landlords ask for a cashier’s check. |
+| A60 | Stop payment on a check | Has it | Stop a check. |
 | A61 | Stop a lost cashier's check | Waits | Waits on a lost cashier’s check. |
-| A62 | One-time payment by account number | Module 2 | Pay the rent by a one-off bank payment. |
-| A63 | Recurring debit / direct debit mandate | Module 2 | Rent and bills as direct debits, listed. |
-| A64 | Stop a preauthorized ACH debit | Module 2 | Stop a direct debit (US). |
-| A65 | Cancel a direct debit or standing order | Module 2 | Cancel a direct debit or standing order. |
-| A66 | Limit SEPA direct debits | Module 2 | Refuse or cap direct debits (EU). |
-| A67 | Standing order | Module 2 | Standing orders: set one up, to savings or the landlord. |
-| A68 | Recurring card payment (continuous payment authority) | Module 2 | Put the bills on the card as a recurring card payment. |
-| A69 | Online bill pay | Module 2 | Pay a bill now. |
-| A70 | Scheduled / future-dated payment | Module 2 | Schedule a payment for a date. |
+| A62 | One-time payment by account number | Has it | Pay the rent by a one-off bank payment. |
+| A63 | Recurring debit / direct debit mandate | Has it | Rent and bills as direct debits, listed. |
+| A64 | Stop a preauthorized ACH debit | Has it | Stop a direct debit (US). |
+| A65 | Cancel a direct debit or standing order | Has it | Cancel a direct debit or standing order. |
+| A66 | Limit SEPA direct debits | Has it | Refuse or cap direct debits (EU). |
+| A67 | Standing order | Has it | Standing orders: set one up, to savings or the landlord. |
+| A68 | Recurring card payment (continuous payment authority) | Has it | Put the bills on the card as a recurring card payment. |
+| A69 | Online bill pay | Has it | Pay a bill now. |
+| A70 | Scheduled / future-dated payment | Has it | Schedule a payment for a date. |
 | A71 | Transfer between own accounts | Has it | Move Money. |
 | A72 | External transfer out | Waits | Waits on payees beyond the landlord. |
 | A73 | Person-to-person payment | Waits | Waits on other people. |
-| A74 | Instant domestic payment | Module 2 | Paying the landlord goes the same day where the country pays instantly. |
+| A74 | Instant domestic payment | Has it | Paying the landlord goes the same day where the country pays instantly. |
 | A75 | Domestic wire | Waits | Waits on payees who take wires. |
 | A76 | International wire | Waits | Waits on payees abroad. |
 | A77 | Recall or cancel an international payment | Waits | Waits on payees abroad. |
-| A78 | Confirmation of Payee | Module 2 | Confirmation of Payee on paying the landlord (UK). |
+| A78 | Confirmation of Payee | Has it | Confirmation of Payee on paying the landlord (UK). |
 | A79 | Number-over-name rule | Outside the game | Outside the game: a mistyped account number has no counterpart in play. |
 | A80 | Redirect after a payee switches bank | Waits | Waits on payees who switch banks. |
 | A81 | Pay through a third-party provider | Outside the game | Outside the game: third-party apps. |
@@ -168,7 +168,7 @@ When a module lands, its rows change to **Has it** in the same commit.
 | A105 | Overdraft fee | Has it | Overdraft fees by the item. |
 | A106 | Overdraft grace / cure window | Has it | Cure by the next business day. |
 | A107 | Returned item / NSF handling | Has it | Returned items. |
-| A108 | Overdraft protection transfer | Module 2 | Overdraft protection: choose which accounts back the current account, and in what order. |
+| A108 | Overdraft protection transfer | Has it | Overdraft protection: choose which accounts back the current account, and in what order. |
 | A109 | Arranged overdraft (credit line on the account) | Has it | Arranged overdraft (lent against wages, so waiting on income to be reached). |
 | A110 | Unarranged / tolerated overdraft | Has it | Unarranged overdraft. |
 | A111 | Order deposits repay overdraft | Has it | Money in clears what’s overdrawn first. |
@@ -189,7 +189,7 @@ When a module lands, its rows change to **Has it** in the same commit.
 | A121 | Unauthorized card or electronic transfer liability | Module 6 | US liability for unauthorized use: $50, $500 or unlimited by how fast it’s reported. |
 | A122 | Unauthorized payment refund (PSD2 rule) | Module 6 | PSD2 refund of an unauthorized payment by the next working day. |
 | A123 | Refund when the amount was unexpected | Waits | Waits on merchants. |
-| A124 | Direct debit refund guarantee | Module 2 | The Direct Debit Guarantee’s refund (UK) and SEPA’s eight weeks. |
+| A124 | Direct debit refund guarantee | Has it | The Direct Debit Guarantee’s refund (UK) and SEPA’s eight weeks. |
 | A125 | Debit card chargeback | Waits | Waits on merchants. |
 | A126 | Check fraud claims | Waits | Waits on checks. |
 | A127 | Other statement errors | Waits | Waits on a bank that makes errors: SLATE’s never do, so a report would find nothing. |
@@ -233,7 +233,7 @@ When a module lands, its rows change to **Has it** in the same commit.
 | A155 | Interest rate change notice | Waits | Waits on rates that move. |
 | A156 | Deposit hold notice | Waits | Waits on deposits from outside. |
 | A157 | Varying-amount notice for recurring debits | Waits | Waits on bills that vary. |
-| A158 | Stop-payment confirmation | Module 2 | Confirmation of a stopped check. |
+| A158 | Stop-payment confirmation | Has it | Confirmation of a stopped check. |
 | A159 | Currency-conversion cost message | Waits | Waits on travel. |
 | A160 | Fee information document and annual statement of fees | Has it | The year’s fees and interest in one summary (EU). |
 | A161 | Branch closure or account-number change notice | Outside the game | Outside the game: branches. |
@@ -260,7 +260,7 @@ When a module lands, its rows change to **Has it** in the same commit.
 
 | # | Function | SLATE | How, or what it waits on |
 |---|---|---|---|
-| B8 | Scheduled transfers from checking | Module 2 | A standing order into savings. |
+| B8 | Scheduled transfers from checking | Has it | A standing order into savings. |
 | B9 | Round-up saving | Module 7 | Round-ups where the bank offers them (Bank of America’s Keep the Change). |
 | B10 | Self-service deposit to savings | Module 3 | Cash into savings. |
 | B11 | No top-ups on a CD mid-term | Has it | A term deposit takes nothing more. |
@@ -270,13 +270,13 @@ When a module lands, its rows change to **Has it** in the same commit.
 | # | Function | SLATE | How, or what it waits on |
 |---|---|---|---|
 | B12 | Withdrawal count rules | Module 7 | Savings withdrawal counts where the bank sets one. |
-| B13 | No checks, debit card, Zelle or bill pay | Module 2 | Savings pays nobody directly; it backs the current account only if linked. |
+| B13 | No checks, debit card, Zelle or bill pay | Has it | Savings pays nobody directly; it backs the current account only if linked. |
 | B14 | Seven-day notice reservation | Outside the game | Outside the game: a reserved right no bank uses. |
 | B15 | Notice account withdrawal | Waits | Waits on notice accounts (research). |
 | B16 | CD early withdrawal penalty | Module 7 | Break a term deposit early, for the bank’s penalty. |
 | B17 | Penalty waivers | Outside the game | Outside the game: a life ending ends the game. |
 | B18 | Withdraw CD interest penalty-free | Module 7 | Take a term deposit’s paid interest. |
-| B19 | Savings as overdraft backup | Module 2 | Savings as the current account’s backup, by choice. |
+| B19 | Savings as overdraft backup | Has it | Savings as the current account’s backup, by choice. |
 | B20 | Outgoing wire from savings | Waits | Waits on payees who take wires. |
 | B21 | Self-service withdrawal cap | Module 3 | Germany’s €2,000 a month from savings by card. |
 
@@ -368,8 +368,8 @@ When a module lands, its rows change to **Has it** in the same commit.
 
 | # | Function | SLATE | How, or what it waits on |
 |---|---|---|---|
-| C27 | Purchases | Module 2 | Pay the day’s spending by card, by choice. |
-| C28 | Recurring and scheduled charges | Module 2 | Bills on the card. |
+| C27 | Purchases | Has it | Pay the day’s spending by card, by choice. |
+| C28 | Recurring and scheduled charges | Has it | Bills on the card. |
 | C29 | Cash advance | Module 3 | Cash advance: its fee, its rate and no grace period. |
 | C30 | Cash-like transactions | Waits | Waits on gambling and crypto. |
 | C31 | Balance transfer | Module 8 | Balance transfer, from a card at another bank. |

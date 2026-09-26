@@ -1,0 +1,189 @@
+/**
+ * SLATE — how each thing is paid, on the bank's screen.
+ *
+ * The rent, the bills and the day's spending, each the way the character
+ * pays it; savings linked to the current account or not; standing orders
+ * into savings; payments set for a date; checks in the post, and stopping
+ * one; and, in SEPA, a direct debit taken back within eight weeks
+ * (`systems/payments.ts`).
+ */
+
+import { useState } from 'react';
+import { useGame, useWorld } from '@/app/game-context';
+import { Panel } from '@/ui/components/primitives';
+import { Gated } from '@/ui/guide/Guide';
+import { formatMoney, saveCurrency } from '@/engine/core/money';
+import { formatDate, instantFromZoned, MS_DAY } from '@/engine/core/time';
+import {
+  checksUsed, mayReclaim, paymentWords, paymentsOf, SCHEDULED_KIND, type BillsWay, type RentWay,
+} from '@/engine/systems/payments';
+import { CHECK_FEES } from '@/engine/content/payments';
+
+export function BankPayments() {
+  const { sim, run, toast } = useGame();
+  const cur = saveCurrency(sim.universe);
+  const money = (c: number) => formatMoney(c, cur);
+  const person = useWorld((s) => s.player);
+  const pay = useWorld((s) => paymentsOf(s.player));
+  const cityId = person.home?.cityId ?? person.currentLocationId;
+  const accounts = useWorld((s) => Object.values(s.universe.accounts).filter((a) => a.ownerId === s.player.id && !a.closedAt && (a.kind === 'checking' || a.kind === 'savings') && a.category !== 'term'));
+  const savings = accounts.filter((a) => a.kind === 'savings');
+  const current = accounts.find((a) => a.id === person.primaryAccountId);
+  const scheduled = useWorld((s) => s.universe.scheduled.filter((i) => i.kind === SCHEDULED_KIND && i.status === 'pending' && i.payload.personId === s.player.id));
+  const words = paymentWords(cityId);
+  const checks = checksUsed(cityId);
+  const fees = current?.bankId ? CHECK_FEES[current.bankId] : undefined;
+  const reclaimable = useWorld((s) => (mayReclaim(cityId) ? s.universe.transactions.filter((t) => t.category === 'bills' && s.now - t.at <= 56 * MS_DAY && !t.reversedBy && !t.reverses
+    && t.postings.some((p) => p.accountId === s.player.primaryAccountId && p.amount < 0)) : []));
+
+  const [soAmount, setSoAmount] = useState('');
+  const [soDay, setSoDay] = useState('1');
+  const [soTo, setSoTo] = useState('');
+  const [spFrom, setSpFrom] = useState('');
+  const [spTo, setSpTo] = useState('');
+  const [spAmount, setSpAmount] = useState('');
+  const [spDate, setSpDate] = useState('');
+  const cents = (v: string) => Math.round(Number(v.replace(/[^\d.]/g, '')) * 100);
+
+  const addOrder = () => {
+    const answer = run('bank.add_standing_order', { toId: soTo || savings[0]?.id, amount: cents(soAmount), day: Number(soDay) });
+    if (answer.ok) { toast('Standing order set up.', 'positive'); setSoAmount(''); }
+  };
+  const schedule = () => {
+    const [y, m, d] = spDate.split('-').map(Number);
+    if (!y || !m || !d) return;
+    const at = instantFromZoned({ year: y, month: m, day: d, hour: 9 }, sim.zone);
+    const from = spFrom || current?.id;
+    const to = spTo || accounts.find((a) => a.id !== from)?.id;
+    const answer = run('bank.schedule_payment', { fromId: from, toId: to, amount: cents(spAmount), at });
+    if (answer.ok) { toast(`Set for ${formatDate(at, sim.zone)}.`, 'positive'); setSpAmount(''); }
+  };
+
+  return (
+    <Panel title="How You Pay" subtitle={words?.usual ?? 'Rent, bills and the day’s spending, and where each is paid from.'}>
+      {words && <p className="xs dim" style={{ margin: '0 0 var(--s3)' }}>What they’re called here: {words.terms}.</p>}
+      <div className="field-row">
+        <div className="field">
+          <label htmlFor="pay-rent">Rent</label>
+          <select id="pay-rent" value={pay.rent} onChange={(e) => run('bank.set_payments', { rent: e.target.value as RentWay })}>
+            <option value="manual">By Hand, Paying The Landlord Yourself</option>
+            {checks && <option value="check">By Check</option>}
+            <option value="auto">From The Bank On The 1st</option>
+          </select>
+        </div>
+        <div className="field">
+          <label htmlFor="pay-bills">Bills</label>
+          <select id="pay-bills" value={pay.bills} onChange={(e) => run('bank.set_payments', { bills: e.target.value as BillsWay })}>
+            <option value="manual">By Hand</option>
+            <option value="card">On The Credit Card</option>
+            <option value="auto">From The Bank On The 1st</option>
+          </select>
+        </div>
+        <div className="field">
+          <label htmlFor="pay-everyday">The Day’s Spending</label>
+          <select id="pay-everyday" value={pay.everyday} onChange={(e) => run('bank.set_payments', { everyday: e.target.value })}>
+            <option value="credit">On The Credit Card</option>
+            <option value="debit">On The Debit Card</option>
+          </select>
+        </div>
+      </div>
+      <p className="small" style={{ margin: 'var(--s2) 0' }}>
+        {pay.rent === 'check' && 'Rent goes by check on the 1st, and comes out of the current account when the landlord cashes it. Until then it can be stopped. '}
+        {pay.rent === 'manual' && 'Rent isn’t paid for you: pay the landlord yourself, from Home, on or before the 1st, or it’s owed. '}
+        {pay.rent === 'auto' && 'Rent goes from the current account on the 1st. If the account can’t cover it, it comes back unpaid, the bank charges for that, and it’s owed. '}
+        {pay.bills === 'card' && 'Bills go on the credit card each month. '}
+        A landlord takes no card.
+      </p>
+      <Gated feature="bank.set_payments" className="btn btn-sm btn-ghost" onClick={() => run('bank.set_payments', { linkSavings: !pay.linkSavings })}>
+        Savings Covers The Current Account: {pay.linkSavings ? 'On' : 'Off'}
+      </Gated>
+
+      {savings.length > 0 && (
+        <div style={{ marginTop: 'var(--s4)' }}>
+          <div className="eyebrow">Standing Orders</div>
+          {pay.standingOrders.map((order) => (
+            <div key={order.id} className="row-between small" style={{ padding: '3px 0' }}>
+              <span>{money(order.amount)} to {sim.universe.accounts[order.toId]?.name ?? 'savings'} on the {order.day}{ordinal(order.day)} of each month</span>
+              <Gated feature="bank.cancel_standing_order" className="btn btn-sm btn-ghost" onClick={() => run('bank.cancel_standing_order', { id: order.id })}>Cancel</Gated>
+            </div>
+          ))}
+          <div className="field-row">
+            <div className="field"><label htmlFor="so-amount">Each Month ({cur})</label><input id="so-amount" inputMode="decimal" value={soAmount} onChange={(e) => setSoAmount(e.target.value)} /></div>
+            <div className="field"><label htmlFor="so-day">On The Day</label><input id="so-day" inputMode="numeric" value={soDay} onChange={(e) => setSoDay(e.target.value)} /></div>
+            {savings.length > 1 && (
+              <div className="field">
+                <label htmlFor="so-to">Into</label>
+                <select id="so-to" value={soTo || savings[0]!.id} onChange={(e) => setSoTo(e.target.value)}>
+                  {savings.map((a) => <option key={a.id} value={a.id}>{a.name}</option>)}
+                </select>
+              </div>
+            )}
+          </div>
+          <Gated feature="bank.add_standing_order" className="btn btn-sm" onClick={addOrder} disabled={!soAmount}>Set Up A Standing Order Into Savings</Gated>
+        </div>
+      )}
+
+      {accounts.length > 1 && (
+        <div style={{ marginTop: 'var(--s4)' }}>
+          <div className="eyebrow">Payments Set For A Date</div>
+          {scheduled.map((item) => (
+            <div key={item.id} className="row-between small" style={{ padding: '3px 0' }}>
+              <span>{money(Number(item.payload.amount))} to {sim.universe.accounts[String(item.payload.toId)]?.name} on {formatDate(item.at, sim.zone)}</span>
+              <Gated feature="bank.cancel_scheduled" className="btn btn-sm btn-ghost" onClick={() => run('bank.cancel_scheduled', { id: item.id })}>Cancel</Gated>
+            </div>
+          ))}
+          <div className="field-row">
+            <div className="field">
+              <label htmlFor="sp-from">From</label>
+              <select id="sp-from" value={spFrom || current?.id} onChange={(e) => setSpFrom(e.target.value)}>
+                {accounts.map((a) => <option key={a.id} value={a.id}>{a.name}</option>)}
+              </select>
+            </div>
+            <div className="field">
+              <label htmlFor="sp-to">To</label>
+              <select id="sp-to" value={spTo || accounts.find((a) => a.id !== (spFrom || current?.id))?.id} onChange={(e) => setSpTo(e.target.value)}>
+                {accounts.filter((a) => a.id !== (spFrom || current?.id)).map((a) => <option key={a.id} value={a.id}>{a.name}</option>)}
+              </select>
+            </div>
+            <div className="field"><label htmlFor="sp-amount">Amount ({cur})</label><input id="sp-amount" inputMode="decimal" value={spAmount} onChange={(e) => setSpAmount(e.target.value)} /></div>
+            <div className="field"><label htmlFor="sp-date">On</label><input id="sp-date" type="date" value={spDate} onChange={(e) => setSpDate(e.target.value)} /></div>
+          </div>
+          <Gated feature="bank.schedule_payment" className="btn btn-sm" onClick={schedule} disabled={!spAmount || !spDate}>Set The Payment</Gated>
+        </div>
+      )}
+
+      {pay.checks.length > 0 && (
+        <div style={{ marginTop: 'var(--s4)' }}>
+          <div className="eyebrow">Checks Not Yet Cashed</div>
+          {pay.checks.map((check) => (
+            <div key={check.id} className="row-between small" style={{ padding: '3px 0' }}>
+              <span>{check.memo}, {money(check.amount)}, cashed around {formatDate(check.clearsAt, sim.zone)}</span>
+              <Gated feature="bank.stop_check" className="btn btn-sm btn-ghost" onClick={() => run('bank.stop_check', { id: check.id })}>
+                Stop It{fees?.stopPayment ? ` (${money(fees.stopPayment)})` : ''}
+              </Gated>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {reclaimable.length > 0 && (
+        <div style={{ marginTop: 'var(--s4)' }}>
+          <div className="eyebrow">Direct Debits You Can Take Back</div>
+          <p className="xs dim" style={{ margin: '0 0 var(--s2)' }}>A SEPA direct debit comes back within eight weeks, no questions asked, and what it paid is owed again.</p>
+          {reclaimable.map((t) => (
+            <div key={t.id} className="row-between small" style={{ padding: '3px 0' }}>
+              <span>{t.memo}, {formatDate(t.at, sim.zone)}</span>
+              <Gated feature="bank.reclaim_debit" className="btn btn-sm btn-ghost" onClick={() => run('bank.reclaim_debit', { transactionId: t.id })}>Take It Back</Gated>
+            </div>
+          ))}
+        </div>
+      )}
+    </Panel>
+  );
+}
+
+function ordinal(n: number): string {
+  const tens = n % 100;
+  if (tens >= 11 && tens <= 13) return 'th';
+  return n % 10 === 1 ? 'st' : n % 10 === 2 ? 'nd' : n % 10 === 3 ? 'rd' : 'th';
+}

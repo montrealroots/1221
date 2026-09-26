@@ -74,6 +74,8 @@ function wall(sim: Simulation, jump: Jump, offset: number, hour: number, minute 
 }
 
 /** A save at home in `jump.place` from half past seven `offset` days from `jump`. */
+const dayOf = (jump: Jump, offset: number) => { const d = dateOf(jump, offset); return { startYear: d.year, startMonth: d.month, startDay: d.day }; };
+
 function saveIn(jump: Jump, offset: number, seed = 'bounds'): Simulation {
   const d = dateOf(jump, offset);
   return quickSave({ startYear: d.year, startMonth: d.month, startDay: d.day, startLocationId: jump.place }, seed);
@@ -133,9 +135,10 @@ describe('a bedtime in the first hour of the day of the jump', () => {
     // 0.009 condition and 0.016 morale off it the morning after, where Havana,
     // whose clocks jump the same night, reads the same.
     for (const jump of JUMPS) {
-      const here = saveIn(jump, -3, 'autopilot');
+      // Money behind both, so owing weighs on neither: the two are compared on the day's bounds alone.
+      const here = quickSave({ ...dayOf(jump, -3), startLocationId: jump.place, wealth: 'inherited' }, 'autopilot');
       const d = dateOf(jump, -3);
-      const la = quickSave({ startYear: d.year, startMonth: d.month, startDay: d.day, startLocationId: LA.place }, 'autopilot');
+      const la = quickSave({ startYear: d.year, startMonth: d.month, startDay: d.day, startLocationId: LA.place, wealth: 'inherited' }, 'autopilot');
       for (let offset = -2; offset <= 6; offset += 1) {
         here.advanceTo(wall(here, jump, offset, 7));
         la.advanceTo(instantFromZoned({ ...dateOf(jump, offset), hour: 7 }, la.homeZone));

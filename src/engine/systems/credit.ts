@@ -53,6 +53,7 @@ import { instantFromZoned, zonedParts, type Instant } from '../core/time';
 import { CommandError } from '../core/simulation';
 import { arrearsOf, drawFromBank, inTheBank } from './household';
 import { statementReady } from './statements';
+import { paymentsOf } from './payments';
 
 export const STATEMENT_KIND = 'card.statement';
 export const DUE_KIND = 'card.due';
@@ -213,15 +214,18 @@ export function minimumDue(sim: Simulation, statement: Money, terms = playerCard
 }
 
 /** Pays the card from the bank, as much of an amount as checking and savings hold. Returns what was paid. */
-function payCard(sim: Simulation, person: Person, amount: Money): Money {
+function payCard(sim: Simulation, person: Person, amount: Money, byHand = false): Money {
   const card = cardOf(sim, person);
   if (!card) return 0;
-  // From the bank, checking then savings, as a sweep would.
-  const paid = Math.max(0, Math.min(amount, inTheBank(sim, person), -card.balance));
+  // Autopay from the current account and any savings linked to it; by hand, from either.
+  const inCurrent = Math.max(0, sim.universe.accounts[person.primaryAccountId ?? '']?.balance ?? 0);
+  const linked = byHand || paymentsOf(person).linkSavings;
+  const reach = linked ? inTheBank(sim, person) : inCurrent;
+  const paid = Math.max(0, Math.min(amount, reach, -card.balance));
   if (paid <= 0) return 0;
   sim.post({
     memo: `Paid ${card.name}`, category: 'card-payment',
-    postings: [{ accountId: card.id, amount: paid }, ...drawFromBank(sim, person, paid).postings],
+    postings: [{ accountId: card.id, amount: paid }, ...drawFromBank(sim, person, paid, false, linked).postings],
   });
   if (person.credit) person.credit.paidSinceStatement += paid;
   return paid;
@@ -356,7 +360,7 @@ export function registerCredit(sim: Simulation): void {
       : p.amount === 'minimum' ? minimumDue(s, person.credit?.statementBalance ?? owed)
         : Math.round(Number(p.amount));
     if (!(want > 0)) throw new CommandError('Pay something, or nothing.');
-    const paid = payCard(s, person, want);
+    const paid = payCard(s, person, want, true);
     if (paid === 0) throw new CommandError('There’s nothing in the bank to pay it with.');
     return { paid };
   });

@@ -21,6 +21,7 @@ import { Gated } from '@/ui/guide/Guide';
 import { BankLending } from '@/ui/bank/BankLending';
 import { BankCard } from '@/ui/bank/BankCard';
 import { BankStatements } from '@/ui/bank/BankStatements';
+import { BankPayments } from '@/ui/bank/BankPayments';
 import { apyOf } from '@/engine/systems/statements';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { formatDate } from '@/engine/core/time';
@@ -160,6 +161,8 @@ export function BankWorkspace() {
           </Gated>
         </Panel>
       )}
+
+      <BankPayments />
 
       <BankLending bank={bank} />
 

@@ -217,8 +217,10 @@ describe('what risk decides', () => {
 });
 
 describe('what the audit found', () => {
-  it('draws on savings once checking is empty, before the card', () => {
+  it('draws on savings once checking is empty, where savings is linked to it, before the card', () => {
     const sim = quickSave({ wealth: 'modest' }, 'sweep');
+    // Linked as overdraft protection; a new life's savings isn't, as a bank opens it (`systems/payments.ts`).
+    expect(sim.execute({ kind: 'bank.set_payments', payload: { linkSavings: true } }).ok).toBe(true);
     const savings = accounts(sim).find((a) => a.kind === 'savings')!;
     const move = -checking(sim).balance;
     sim.post({ memo: 'test', category: 'test', postings: [{ accountId: checking(sim).id, amount: move }, { accountId: sim.nominalAccount('income', 'Test').id, amount: -move }] });
@@ -227,6 +229,20 @@ describe('what the audit found', () => {
     spend(sim, sim.player, 10_000_00, 'Rent', 'rent', true);
     expect(before - savings.balance).toBe(10_000_00);
     expect(card(sim)!.balance).toBe(cardBefore);
+  });
+
+  it('leaves savings alone where it isn’t linked, and the day goes on the card', () => {
+    const sim = quickSave({ wealth: 'modest' }, 'no-sweep');
+    const savings = accounts(sim).find((a) => a.kind === 'savings')!;
+    // The current account emptied, savings left as it is.
+    const move = -checking(sim).balance;
+    sim.post({ memo: 'test', category: 'test', postings: [{ accountId: checking(sim).id, amount: move }, { accountId: sim.nominalAccount('income', 'Test').id, amount: -move }] });
+    const before = savings.balance;
+    expect(before).toBeGreaterThan(1_000_00);
+    const cardBefore = card(sim)!.balance;
+    spend(sim, sim.player, 1_000_00, 'Groceries', 'food');
+    expect(savings.balance).toBe(before);
+    expect(card(sim)!.balance).toBe(cardBefore - 1_000_00);
   });
 
   it('starts with the month’s deposit held on the home they live in', () => {
