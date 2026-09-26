@@ -163,52 +163,53 @@ part the tool cannot see.
   everywhere else, and for US states and Canadian provinces the research
   didn't cover. Its sales, property and vehicle rules are still read by
   nothing, because nothing is bought, owned or driven.
-- **The year is settled in nine of the thirteen, and not in France, Korea,
+- **The year is settled in ten of the thirteen, and not yet in France,
   Mexico or Australia.** Since 2026-09-25 each payday's withholding is
   settled after the tax year (`systems/taxreturn.ts`) on the country's
   own date: the year's real tax on its real pay, the benefit taxed where the
-  law taxes it, and the US earned income tax credit (Illinois's 20% of it
-  too), the Canada Workers Benefit, Ontario's LIFT credit, British
-  Columbia's tax reduction, Spain's minimum-wage deduction and New
-  Zealand's independent earner credit. Not modeled: France's regularization
-  and prime d'activité (its housing deduction wasn't reached), Korea's
-  연말정산 and 근로장려금 (its bands weren't), Mexico's annual declaration
-  and Australia's return (neither office's pages could be reached), so what
-  they withhold stands; New York's and California's earned income credits
-  (New York's household credit and California's table weren't reached),
-  Washington's Working Families Tax Credit, a separate application; Quebec's
-  work premium, whose rates Revenu Québec doesn't publish; British
-  Columbia's renter's and sales tax credits; Ireland's rent credit, whose
-  share of rent wasn't found; the Canada Workers Benefit's advance payments;
-  and the unemployment benefit's tax outside the US federal return, Canada,
-  Britain's JSA, Ireland, Spain and New Zealand, with Germany's raising the
-  rate. Canada's, Ireland's, New Zealand's, Germany's, Spain's and Japan's
+  law taxes it, and the credits a low wage gets only there: the US earned
+  income tax credit, with New York's 30% of it less its household credit,
+  California's own off its table and Illinois's 20%; the Canada Workers
+  Benefit, Ontario's LIFT credit, British Columbia's tax reduction and
+  Quebec's work premium; Ireland's rent credit; Spain's minimum-wage
+  deduction; New Zealand's independent earner credit; and Korea's year-end
+  settlement with February's pay and its earned income credit (근로장려금)
+  paid at the end of September, which SLATE applies for on the player's
+  behalf. Not modeled: Washington's Working Families Tax Credit, a separate
+  application; the Canada Workers Benefit in Quebec, whose own figures
+  weren't found, so a Quebec worker gets the work premium alone; British
+  Columbia's renter's and sales tax credits; the Canada Workers Benefit's
+  advance payments; New York City's own earned income credit; and the
+  unemployment benefit's tax outside the US federal return and New York's
+  and Illinois's, Canada, Britain's JSA, Ireland, Spain and New Zealand,
+  with Germany's raising the rate. Canada's, Ireland's, New Zealand's, Germany's, Spain's and Japan's
   final-return dates are SLATE's estimates where the office names none.
   Church tax in Germany isn't taken, since SLATE doesn't know a character's
   church. Japan's contributions are on the grade of standard remuneration
   the month's pay falls in (Kyōkai Kenpo Tokyo's fiscal 2026 table), set
   from the pay each payday rather than fixed at hiring and each summer.
-- **A pension fund grows in three countries and pays nothing out.** What a
+- **A pension fund grows in five countries and pays nothing out.** What a
   payslip puts into a fund the worker owns (Iceland, New Zealand, Australia,
   Britain, Ireland, Mexico) is theirs and counts in their worth. Since
-  2026-09-25 Iceland's, Australia's and Mexico's grow each month by a
-  twelfth of their last published year's return (`FUND_RETURNS`): a real
-  return for Iceland, nominal ones for the other two, which run ahead of
-  SLATE's prices, since those don't rise. Britain's Nest, KiwiSaver's
-  default funds and Ireland's My Future Fund published none the research
-  could reach, so they don't grow. Nothing pays a fund out, since nobody in
-  SLATE has retired.
+  2026-09-25 each grows every month by a twelfth of its last published
+  year's return (`FUND_RETURNS`): a real return for Iceland, nominal ones
+  for the rest, which run ahead of SLATE's prices, since those don't rise.
+  Britain's is Nest's, the default scheme, and New Zealand's one default
+  provider's (Fisher Funds), after tax at the top rate. Ireland's My Future
+  Fund, new in 2026, has published none, so it doesn't grow. Nothing pays a
+  fund out, since nobody in SLATE has retired.
 - **Some of what employment law gives isn't modeled.** The law where a
   job is (`content/labor.ts`) pays its premiums, overtime, leave, sick
   pay, extra payments, Korea's rest day and severance, and asks its notice;
   since 2026-09-25 a job is also cut, as often as the BLS counts in the US
   and the ONS in Britain (Britain's rate stands in everywhere else, SLATE's
   estimate), with the employer's notice and the redundancy pay the law
-  gives. Germany keeps shops, offices and building sites off on a public
-  holiday (ArbZG §9 and §10) and pays the day as if worked (EFZG §2); the
-  other lines work it, and which of them §10 allows beyond restaurants,
-  care and security wasn't settled, nor Berlin's shop-opening law, whose
-  text couldn't be reached. Elsewhere a holiday is worked where it's
+  gives. Germany keeps shops, offices and building sites off on Sundays and
+  public holidays (ArbZG §9 and §10; Berlin's shop-opening law §3 closes
+  shops on both), working a Sunday shift on a free weekday and paying a
+  holiday as if worked (EFZG §2); the other lines work them, and which of
+  those §10 allows beyond restaurants, care and security wasn't settled.
+  Elsewhere a holiday is worked where it's
   rostered, with its premium, so Ireland's and New Zealand's pay for a
   holiday not worked has nothing to pay. Mexico's PTU profit share needs a
   company's profit. Youth rates are Britain's and Ireland's by age, New
@@ -246,8 +247,7 @@ part the tool cannot see.
   claim falls to Universal Credit. Not modeled: Ireland's means-tested
   Jobseeker's Allowance; Australia's waiting periods, assets test and what
   quitting costs (Services Australia's pages couldn't be reached), and its
-  Youth Allowance under 22; Korea's days past the first year's 120 (the
-  table couldn't be reached); Japan's days for somebody quitting after
+  Youth Allowance under 22; Japan's days for somebody quitting after
   April 2025 are the month the research found, unconfirmed; New York's
   high-quarter test is at the state's $16 minimum, not New York City's $17;
   Britain's National Insurance test is at 2024/25's lower earnings limit;

@@ -65,6 +65,8 @@ export interface LaborLaw {
    * §9 and §10); their shift falls away and the day is paid as if worked.
    */
   holidayOff?: { lines: Lines; source: string };
+  /** Lines of work that can't be employed on a Sunday (Germany: ArbZG §9); their Sunday shift moves to a free weekday. */
+  sundayOff?: { lines: Lines; source: string };
   saturday?: Premium;
   sunday?: Premium;
   /** A shift on a public holiday: its extra over the ordinary rate. */
@@ -300,6 +302,7 @@ export const LABOR: Readonly<Record<string, LaborLaw>> = {
   },
   DE: {
     night: { extra: 0.25, from: 23, to: 30, source: 'ArbZG §6(5), and the Federal Labor Court’s 25% as the reasonable supplement' },
+    sundayOff: { lines: ['retail', 'office', 'trades'], source: 'ArbZG §9: no work on a Sunday outside the trades §10 allows; Berlin’s shop-opening law (§3) shuts shops on Sundays and public holidays' },
     holidayOff: { lines: ['retail', 'office', 'trades'], source: 'ArbZG §9 and §10: no work on a public holiday outside the trades §10 allows, restaurants, care and security among them and shops, offices and building sites not; EFZG §2 pays a day lost to a holiday as if worked' },
     leave: { accrual: 4 / 48, paidOut: true, source: 'BUrlG: 20 days on a five-day week' },
     sick: { fromDay: 1, rate: 1, afterMonths: 1, paidBy: 'employer', source: 'EFZG §3: full pay for up to six weeks, after four weeks with the employer' },

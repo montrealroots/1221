@@ -405,7 +405,7 @@ describe('a line’s own award or agreement, and a holiday its work can’t be d
 });
 
 describe('a pension fund that grows', () => {
-  it('grows Australia’s super by a twelfth of its last published year on the 1st, and not Britain’s workplace pension', () => {
+  it('grows Australia’s super by a twelfth of its last published year on the 1st, Britain’s too, and not Ireland’s new fund', () => {
     const sydney = life('au-nsw-sydney', { dayJob: true, wealth: 'modest' });
     sydney.advanceTo(Date.UTC(2026, 4, 3));
     const returns = sydney.universe.transactions.filter((t) => t.category === 'pension_return');
@@ -420,7 +420,28 @@ describe('a pension fund that grows', () => {
     expect(earned).toBe(Math.round(before * (1.086 ** (1 / 12) - 1)));
     const london = life('uk-eng-london', { dayJob: true, wealth: 'modest' });
     london.advanceTo(Date.UTC(2026, 4, 3));
-    expect(london.universe.transactions.some((t) => t.category === 'pension_return')).toBe(false);
+    expect(london.universe.transactions.some((t) => t.category === 'pension_return')).toBe(true);
+    const dublin = life('ie-lei-dublin', { dayJob: true, wealth: 'modest' });
+    dublin.advanceTo(Date.UTC(2026, 4, 3));
+    expect(Object.values(dublin.universe.accounts).some((a) => a.category === 'pension' && a.balance > 0)).toBe(true);
+    expect(dublin.universe.transactions.some((t) => t.category === 'pension_return')).toBe(false);
     expect(sydney.ledger.audit()).toEqual([]);
+  });
+});
+
+describe('Sundays off where the law keeps a line off them', () => {
+  it('works a Berlin shop’s Sunday on a free weekday, and a café’s on the Sunday', () => {
+    const shop = life('de-be-berlin', { dayJob: true, wealth: 'modest', beforeActing: 'retail' });
+    const cafe = life('de-be-berlin', { dayJob: true, wealth: 'modest', beforeActing: 'school' });
+    const days = (sim: Simulation) => new Set(sim.timeline.pending().filter((i) => i.kind === SHIFT_KIND).map((i) => zonedParts(i.at, sim.homeZone)).map((p) => new Date(Date.UTC(p.year, p.month - 1, p.day)).getUTCDay()));
+    expect(days(shop).has(0)).toBe(false);
+    expect(days(shop).has(3)).toBe(true);
+    expect(days(cafe).has(0)).toBe(true);
+    // From a Saturday, the next free day is the Sunday: an extra shift skips it.
+    shop.advanceTo(local(shop, 2026, 1, 10, 1));
+    const { at } = shop.must<{ at: number }>({ kind: 'work.extra_shift', payload: {} });
+    const p = zonedParts(at, shop.homeZone);
+    expect(new Date(Date.UTC(p.year, p.month - 1, p.day)).getUTCDay()).not.toBe(0);
+    expect(days(shop).has(0)).toBe(false);
   });
 });

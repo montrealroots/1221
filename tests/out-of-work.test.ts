@@ -402,3 +402,14 @@ describe('how the job ended', () => {
     expect(seoul.player.job!.lookingUntil).toBeGreaterThanOrEqual(startsAt);
   });
 });
+
+describe('Korea’s benefit days', () => {
+  it('runs by the years insured, and longer from 50', () => {
+    const at = Date.UTC(2026, 8, 25);
+    const years = (n: number) => Array.from({ length: Math.round(n * 52) }, (_, i) => ({ at: at - i * 7 * MS_DAY, days: 7, hours: 30, gross: 400_000 })).reverse();
+    const kr = BENEFITS.KR!;
+    expect(kr.weeks!(years(0.5), { age: 30, at, why: 'laidOff' }, 0)).toBeCloseTo(120 / 7, 6);
+    expect(kr.weeks!(years(2), { age: 30, at, why: 'laidOff' }, 0)).toBeCloseTo(150 / 7, 6);
+    expect(kr.weeks!(years(2), { age: 55, at, why: 'laidOff' }, 0)).toBeCloseTo(180 / 7, 6);
+  });
+});

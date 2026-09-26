@@ -11,12 +11,12 @@ import { quickSave } from '@/engine';
 import { MS_DAY } from '@/engine/core/time';
 import { payrollYear, spainCuota } from '@/engine/content/payroll';
 import {
-  SETTLEMENTS, canadaWorkers, nzIndependentEarner, settleYear, spainMinimumWage, usEitc, type YearFigures,
+  SETTLEMENTS, calEitc, canadaWorkers, koreaEarnedIncome, nyHouseholdCredit, nzIndependentEarner, quebecWorkPremium, settleYear, spainMinimumWage, usEitc, type YearFigures,
 } from '@/engine/content/taxreturn';
 import { layOff } from '@/engine/systems/work';
 
 const at = Date.UTC(2026, 5, 1);
-const year = (path: string[], wages: number, extra: Partial<YearFigures> = {}): YearFigures => ({ wages, benefits: [], age: 30, path, at, benefitMonths: 0, ...extra });
+const year = (path: string[], wages: number, extra: Partial<YearFigures> = {}): YearFigures => ({ wages, benefits: [], age: 30, path, at, benefitMonths: 0, rent: 0, savings: 0, ...extra });
 const taxOn = (iso: string, path: string[], wages: number) =>
   payrollYear(iso, wages * 100, { path, at, age: 30 }).lines.filter((l) => l.kind === 'tax').reduce((sum, l) => sum + l.amount / 100, 0);
 
@@ -151,5 +151,61 @@ describe('a played year', () => {
     const settled = sim.player.earnings!.lastReturn!;
     expect(settled.credits.find((c) => c.name === 'Earned Income Tax Credit')?.amount ?? 0).toBeGreaterThan(0);
     expect(settled.refund).toBeGreaterThanOrEqual(settled.withheld);
+  });
+});
+
+describe('the credits from the second research pass', () => {
+  it('works New York’s household credit and its 30% of the federal credit', () => {
+    expect(nyHouseholdCredit(4_000)).toBe(75);
+    expect(nyHouseholdCredit(15_000)).toBe(45);
+    expect(nyHouseholdCredit(27_000)).toBe(20);
+    expect(nyHouseholdCredit(30_000)).toBe(0);
+    const path = ['US', 'US-NY'];
+    const settled = settleYear(SETTLEMENTS['US-NY']!, year(path, 9_000), 0);
+    const federal = usEitc(year(path, 9_000), 0);
+    const nyTax = payrollYear('US', 9_000 * 100, { path, at, age: 30 }).lines.find((l) => l.name === 'New York State Income Tax')?.amount ?? 0;
+    const household = Math.min(45, nyTax / 100);
+    expect(settled.credits.find((c) => c.name === 'New York Earned Income Credit')?.amount ?? 0).toBeCloseTo(Math.max(0, 0.3 * federal - household), 6);
+  });
+
+  it('reads California’s credit off its table, and Quebec’s work premium off its rates', () => {
+    expect(calEitc(4_700, 4_700, 30)).toBe(302);
+    expect(calEitc(2_500, 2_500, 30)).toBeCloseTo(160.5, 6);
+    expect(calEitc(12_500, 12_500, 30)).toBeCloseTo(188, 6);
+    expect(calEitc(33_000, 33_000, 30)).toBe(0);
+    expect(calEitc(10_000, 40_000, 30)).toBe(0);
+    expect(calEitc(4_700, 4_700, 17)).toBe(0);
+    expect(quebecWorkPremium(10_000, 10_000)).toBeCloseTo(0.116 * 7_600, 6);
+    expect(quebecWorkPremium(15_000, 15_000)).toBeCloseTo(1_207.33 - 0.1 * 2_192, 6);
+    expect(quebecWorkPremium(30_000, 30_000)).toBe(0);
+  });
+
+  it('takes Ireland’s rent credit off income tax, 20% of rent to €1,000', () => {
+    const ie = SETTLEMENTS.IE!;
+    const tax = taxOn('IE', ['IE'], 45_000);
+    expect(settleYear(ie, year(['IE'], 45_000, { rent: 3_000 }), tax).refund).toBeCloseTo(600, 6);
+    expect(settleYear(ie, year(['IE'], 45_000, { rent: 12_000 }), tax).refund).toBeCloseTo(1_000, 6);
+    // Never more than the income tax there is to take it off.
+    const paye = payrollYear('IE', 21_000 * 100, { path: ['IE'], at, age: 30 }).lines.find((l) => l.name === 'PAYE')!.amount / 100;
+    expect(paye).toBeLessThan(1_000);
+    expect(settleYear(ie, year(['IE'], 21_000, { rent: 12_000 }), taxOn('IE', ['IE'], 21_000)).refund).toBeCloseTo(paye, 6);
+  });
+
+  it('works Korea’s earned income credit for a single household, by pay and savings', () => {
+    expect(koreaEarnedIncome(2_000_000, 0)).toBeCloseTo(825_000, 6);
+    expect(koreaEarnedIncome(6_000_000, 0)).toBe(1_650_000);
+    expect(koreaEarnedIncome(15_000_000, 0)).toBeCloseTo(1_650_000 - 6_000_000 * 165 / 1_300, 6);
+    expect(koreaEarnedIncome(22_000_000, 0)).toBe(0);
+    expect(koreaEarnedIncome(6_000_000, 200_000_000)).toBe(825_000);
+    expect(koreaEarnedIncome(6_000_000, 250_000_000)).toBe(0);
+  });
+
+  it('settles Seoul’s year with February’s pay and pays the earned income credit at the end of September', () => {
+    const seoul = quickSave({ startLocationId: 'kr-11-seoul', homeRegionId: 'kr-11-seoul', livesWhereBorn: true, dayJob: true, wealth: 'modest', birthYear: 1994 }, 'return-seoul');
+    seoul.advanceTo(Date.UTC(2027, 1, 26, 12));
+    expect(seoul.player.earnings?.lastReturn?.name).toBe('연말정산');
+    seoul.advanceTo(Date.UTC(2027, 9, 1, 12));
+    expect(seoul.universe.transactions.some((t) => t.category === 'tax' && t.memo.startsWith('근로장려금'))).toBe(true);
+    expect(seoul.ledger.audit()).toEqual([]);
   });
 });

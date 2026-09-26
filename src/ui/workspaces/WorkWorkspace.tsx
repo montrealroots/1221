@@ -262,6 +262,7 @@ function lawWords(law: LaborLaw, jobId: string): { text: string; source: string 
     const what = window.flat !== undefined ? `${window.flat.toFixed(2)} an hour more` : `${pct(window.extra ?? 0)} more`;
     out.push({ text: `Hours from ${window.from % 24}:00 to ${window.to % 24}:00, ${days}, pay ${what}.`, source: window.source });
   }
+  if (law.sundayOff && covers(law.sundayOff.lines)) out.push({ text: 'Your work can’t be done on a Sunday, so a Sunday on your week is worked on a free weekday instead.', source: law.sundayOff.source });
   if (law.holidayOff && covers(law.holidayOff.lines)) out.push({ text: 'Your work can’t be done on a public holiday, so a shift that falls on one is a day off, paid as if worked.', source: law.holidayOff.source });
   if (law.overtime) {
     const past = [law.overtime.week !== undefined ? `${law.overtime.week} hours a week` : '', law.overtime.day !== undefined ? `${law.overtime.day} a day` : ''].filter(Boolean).join(' or ');

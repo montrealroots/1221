@@ -34,7 +34,7 @@ import { EMPLOYERS, type Employer } from '../content/employers';
 import { payrollYear, type PayslipLine } from '../content/payroll';
 import { employerNoticeDays, laborAt, layoffChanceADay, quitNoticeDays, redundancyWeeks, type LaborLaw, type Premium, type Redundancy } from '../content/labor';
 import { holidaysOn } from '../content/holidays';
-import { jobFor, patternHours, patternOf, payCycleFor, tipsPerHour, type Job } from '../content/jobs';
+import { jobFor, patternHours, patternOf, payCycleFor, tipsPerHour, type Job, type Pattern } from '../content/jobs';
 import { CommandError } from '../core/simulation';
 import { mayWorkIn } from '../domain/citizenship';
 import { outdoorWeather } from './weather';
@@ -501,13 +501,14 @@ const FUNDS: Readonly<Record<string, string>> = {
  * What a fund returned in its last published year, as a year's rate, applied
  * a twelfth at a time on the 1st: the fund's own figure, not a promise, and
  * SLATE's prices don't rise, so a nominal return runs ahead of what it
- * would buy. Britain's Nest, KiwiSaver's default funds and Ireland's My
- * Future Fund published none the research could reach, so theirs don't
- * grow. Until 2026-09-25 no fund grew.
+ * would buy. Ireland's My Future Fund, new in 2026, has published none, so
+ * it doesn't grow. Until 2026-09-25 no fund grew.
  */
 export const FUND_RETURNS: Readonly<Record<string, { rate: number; source: string }>> = {
   'Lífeyrissjóður': { rate: 0.032, source: 'Lífeyrissjóður verzlunarmanna, the common fund’s real return for 2025: 3.2%' },
   Superannuation: { rate: 0.086, source: 'APRA, every regulated fund’s return for the year to June 2026, after fees and tax: 8.6%' },
+  'Workplace Pension': { rate: 0.135, source: 'Nest, the default workplace scheme: its 2060 Retirement Date Fund returned 13.5% in 2025, after its charges' },
+  KiwiSaver: { rate: 0.14, source: 'Fisher Funds’ KiwiSaver Default Fund, a government default: 14.00% in the year to June 2026, after charges and tax at 28%' },
   Afore: { rate: 0.08436, source: 'CONSAR, August 2026: the net return indicator of the ten Afores’ SIEFORE Básica 90-94, averaged, 8.44%' },
 };
 
@@ -560,12 +561,25 @@ function holidayOff(state: JobState, at: Instant, zone: string): boolean {
   return holidaysOn(at, zone, city.countryId, city.parentId).some((one) => one.type === 'public');
 }
 
+/**
+ * The job's week where it's worked: where the law keeps the line off on a
+ * Sunday (Germany), the Sunday shift is worked on the last day before it
+ * that's free.
+ */
+export function rotaOf(state: JobState): Pattern {
+  const week = patternOf(jobFor(state.jobId), state.fullTime);
+  const off = lawOf(state)?.sundayOff;
+  if (!off?.lines.includes(state.jobId) || !week.days.includes(0)) return week;
+  const moved = [6, 5, 4, 3, 2, 1].find((day) => !week.days.includes(day));
+  return { ...week, days: week.days.filter((day) => day !== 0).concat(moved !== undefined ? [moved] : []) };
+}
+
 /** Puts every shift of the next two weeks on the calendar that isn't on it. */
 export function fillRota(sim: Simulation, person: Person): void {
   const state = person.job;
   if (!state || state.lookingUntil !== undefined || state.quitAt !== undefined) return;
   const job = jobFor(state.jobId);
-  const week = patternOf(job, state.fullTime);
+  const week = rotaOf(state);
   const zone = CITIES.get(state.cityId)?.timeZone ?? sim.homeZone;
   const until = sim.now + ROTA_DAYS * MS_DAY;
   let day = zonedParts(Math.max(state.rotaThrough, sim.now), zone);
@@ -1109,7 +1123,10 @@ export function registerWork(sim: Simulation): void {
     const zone = CITIES.get(state.cityId)?.timeZone ?? s.homeZone;
     for (let n = 1; n <= 7; n += 1) {
       const p = zonedParts(s.now + n * MS_DAY, zone);
+      // Not on a Sunday or a holiday the law keeps the line off.
+      if (new Date(Date.UTC(p.year, p.month - 1, p.day)).getUTCDay() === 0 && lawOf(state)?.sundayOff?.lines.includes(state.jobId)) continue;
       const at = instantFromZoned({ year: p.year, month: p.month, day: p.day, hour: week.startHour }, zone);
+      if (holidayOff(state, at, zone)) continue;
       const end = at + week.hours * MS_HOUR;
       const busy = s.timeline.between(at - week.hours * MS_HOUR, end).some((item) => item.requiresPlayer === true);
       if (busy) continue;
@@ -1274,7 +1291,7 @@ function lawDay(sim: Simulation, person: Person): void {
   const weekly = patternHours(patternOf(jobFor(state.jobId), state.fullTime));
   const months = monthsWith(state, sim.now);
   grantLeave(sim, person, state, law);
-  const week = patternOf(jobFor(state.jobId), state.fullTime);
+  const week = rotaOf(state);
   const today = new Date(Date.UTC(p.year, p.month - 1, p.day)).getUTCDay();
   if (week.days.includes(today) && holidayOff(state, instantFromZoned({ year: p.year, month: p.month, day: p.day, hour: week.startHour }, zone), zone)) {
     state.unpaid.push({ at: sim.now, hours: week.hours, kind: 'holiday' });

@@ -576,8 +576,13 @@ export const BENEFITS: Readonly<Record<string, Benefit>> = {
     // 60% of the average daily wage over the last three months, between the floor and the cap, a week's worth.
     basis: (record, ctx) => clampTo((total(within(record, ctx.at, 91), 'gross') / 91) * 0.6, 66_048, 68_100) * 7,
     amount: same,
-    weeks: () => 120 / 7,
-    source: 'MOEL 2026: 60% of the average daily wage, 66,048 to 68,100 won a day; 120 days, the least the table gives (it runs to 270 by age and years insured, the rest unreached)',
+    // 고용보험법 별표1: days by years insured, more from 50.
+    weeks: (record, ctx) => {
+      const years = monthsIn(record) / 12;
+      const col = years < 1 ? 0 : years < 3 ? 1 : years < 5 ? 2 : years < 10 ? 3 : 4;
+      return (ctx.age >= 50 ? [120, 180, 210, 240, 270] : [120, 150, 180, 210, 240])[col]! / 7;
+    },
+    source: 'MOEL 2026: 60% of the average daily wage, 66,048 to 68,100 won a day; 고용보험법 별표1: 120 to 240 days by years insured, 120 to 270 from 50',
   },
 
   // --- New Zealand ----------------------------------------------------------

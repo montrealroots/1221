@@ -17,6 +17,7 @@ import { exchange } from '../content/currency';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { dateKey, MS_DAY, type Instant } from '../core/time';
 import { countryAt } from './work';
+import { netWorth } from './finance';
 
 /** A settled year, for the work screen. */
 export interface YearSettled {
@@ -53,6 +54,18 @@ function withheldBetween(sim: Simulation, person: Person, from: Instant, to: Ins
     if (t.at < from || t.at >= to || t.category !== 'salary') continue;
     if (!t.postings.some((p) => sim.universe.accounts[p.accountId]?.ownerId === person.id)) continue;
     for (const p of t.postings) if (p.accountId === account) total += p.amount;
+  }
+  return total;
+}
+
+/** Rent a person paid between two instants, however it was paid. */
+function rentBetween(sim: Simulation, person: Person, from: Instant, to: Instant): Money {
+  const rent = sim.nominalAccount('expense', 'Rent').id;
+  let total = 0;
+  for (const t of sim.universe.transactions) {
+    if (t.at < from || t.at >= to || t.category !== 'rent') continue;
+    if (!t.postings.some((p) => sim.universe.accounts[p.accountId]?.ownerId === person.id)) continue;
+    for (const p of t.postings) if (p.accountId === rent && p.amount > 0) total += p.amount;
   }
   return total;
 }
@@ -95,6 +108,8 @@ export function workYear(sim: Simulation, person: Person, from: Instant, to: Ins
     benefits: [...byName].map(([name, amount]) => ({ name, amount })),
     age: Math.floor((to - person.birthInstant) / (365.2425 * MS_DAY)),
     path, at: from + MS_DAY, benefitMonths: months,
+    rent: toLocal(rentBetween(sim, person, from, to)),
+    savings: toLocal(netWorth(sim, person.id).cash),
     ...(days > 0 ? { weeklyHours: hours / (days / 7) } : {}),
   };
   const withheld = withheldBetween(sim, person, from, to);
@@ -123,9 +138,29 @@ export function settleToday(sim: Simulation, person: Person): YearSettled | unde
   for (let back = 0; back <= 2; back += 1) {
     const from = taxYearStart(settlement, sim.now - back * 365 * MS_DAY);
     const key = `${settlement.name}:${new Date(from).toISOString().slice(0, 10)}`;
-    if (e.settled?.includes(key)) continue;
     const end = new Date(from);
     const to = Date.UTC(end.getUTCFullYear() + 1, end.getUTCMonth(), end.getUTCDate());
+    // A credit paid apart, on its own date, whether or not the year is settled.
+    const later = settlement.later;
+    const laterKey = later ? `${later.name}:${new Date(from).toISOString().slice(0, 10)}` : '';
+    if (later && !e.settled?.includes(laterKey) && dateKey(Date.UTC(new Date(to).getUTCFullYear() + later.settle.offsetYears, later.settle.month - 1, later.settle.day), 'UTC') === today) {
+      const worked = workYear(sim, person, from, to);
+      const units = worked ? later.amount(worked.figures) : 0;
+      e.settled = [...(e.settled ?? []).slice(-9), laterKey];
+      if (units > 0) {
+        const save = saveCurrency(sim.universe);
+        const { currency } = countryAt(cityId);
+        const paid = Math.round(save === currency ? units * 100 : exchange(Math.round(units * 100), currency, save) ?? units * 100);
+        sim.post({
+          memo: `${later.name}, ${new Date(from).getUTCFullYear()}`, category: 'tax',
+          postings: [{ accountId: sim.nominalAccount('income', 'Tax Refund').id, amount: -paid }, { accountId: person.primaryAccountId, amount: paid }],
+        });
+        if (person.id === sim.universe.playerId) {
+          sim.notify({ category: 'work', title: 'Tax Credit Paid', body: `${later.name}: ${formatMoney(paid, save)} for your pay in ${new Date(from).getUTCFullYear()}.`, importance: 60 });
+        }
+      }
+    }
+    if (e.settled?.includes(key)) continue;
     const due = settlement.settle.find((one) => {
       const at = Date.UTC(new Date(to).getUTCFullYear() + one.offsetYears, one.month - 1, one.day);
       return dateKey(at, 'UTC') === today && (!one.ifEmployed || working(person));
