@@ -50,9 +50,10 @@ describe('a term deposit’s end', () => {
     expect(Math.round((term.maturesAt! - term.renewedAt!) / (30.44 * MS_DAY))).toBe(months);
     expect(term.graceUntil! - term.renewedAt!).toBe(10 * MS_DAY);
     expect(breakQuote(sim, term).penalty).toBe(0);
-    // Past the grace, 180 days’ interest for a term of six months to two years.
+    // Past the grace, 180 days’ interest for a term of six months to two years, never more than this term has earned.
     sim.advanceTo(term.graceUntil! + MS_DAY);
-    expect(breakQuote(sim, term)).toMatchObject({ penalty: Math.round(term.balance * term.fixedRate! * 180 / 365), estimate: false });
+    expect(breakQuote(sim, term)).toMatchObject({ penalty: Math.min(Math.round(term.balance * term.fixedRate! * 180 / 365), Math.floor(term.accrued!)), estimate: false });
+    expect(breakQuote(sim, term).penalty).toBe(Math.floor(term.accrued!));
     // And again, for the same term, not the time since it first opened.
     sim.advanceTo(term.maturesAt! + MS_DAY);
     expect(Math.round((term.maturesAt! - term.renewedAt!) / (30.44 * MS_DAY))).toBe(months);
@@ -122,8 +123,8 @@ describe('breaking a term deposit early', () => {
     expect(current(sim).balance - before).toBe(10_000_00);
   });
 
-  it('takes a penalty bigger than the interest from the deposit itself', () => {
-    const sim = lifeIn('us-ny-newyork', 'us-chase', 'life-principal');
+  it('takes a penalty bigger than the interest from the deposit itself where the bank doesn’t cap it, as Citi doesn’t', () => {
+    const sim = lifeIn('us-ny-newyork', 'us-citi', 'life-principal');
     const term = openTerm(sim, 10_000_00);
     sim.advanceBy(30 * MS_DAY);
     const quote = breakQuote(sim, term);
@@ -132,6 +133,20 @@ describe('breaking a term deposit early', () => {
     const before = current(sim).balance;
     sim.must({ kind: 'bank.break_term', payload: { accountId: term.id } });
     expect(current(sim).balance - before).toBe(10_000_00 - (quote.penalty - earned));
+  });
+
+  it('asks a week’s interest at least in a Chase CD’s first week, past its cap', () => {
+    const sim = lifeIn('us-ny-newyork', 'us-chase', 'life-week');
+    const term = openTerm(sim, 10_000_00);
+    sim.advanceBy(3 * MS_DAY);
+    const week = Math.round(10_000_00 * term.fixedRate! * 7 / 365);
+    expect(Math.floor(term.accrued!)).toBeLessThan(week);
+    expect(breakQuote(sim, term).penalty).toBe(week);
+    sim.advanceBy(10 * MS_DAY);
+    expect(breakQuote(sim, term).penalty).toBe(Math.floor(term.accrued!));
+    // Past the first week, with the interest taken out, the cap leaves nothing.
+    sim.must({ kind: 'bank.take_term_interest', payload: { accountId: term.id } });
+    expect(breakQuote(sim, term).penalty).toBe(0);
   });
 
   it('lets Chase’s interest be taken during the term, where the bank allows it', () => {

@@ -11,8 +11,10 @@
  *   money without penalty; moves into the bank's easy-access savings; or is
  *   paid out.
  * - **Breaking one early** (B16): for the bank's penalty in days of interest
- *   where it states it so (the US's and Britain's banks), taken from the
- *   deposit itself if the interest won't cover it; where the bank words its
+ *   where it states it so (the US's and Britain's banks), never more than
+ *   the interest earned where the bank caps it there (Chase, NatWest, HSBC),
+ *   and at least a week's interest in a term's first week where it says so;
+ *   taken from the deposit itself if the interest won't cover it; where the bank words its
  *   penalty another way (a reduced rate in Japan, a rate cut in France, a
  *   share of the amount in Spain), the interest built so far is forfeited,
  *   SLATE's estimate, and the bank's own words are shown; where the bank
@@ -70,7 +72,11 @@ export function breakQuote(sim: Simulation, term: Account): { penalty: Money; es
   if (rules?.penaltyDays) {
     const months = termMonths(term);
     const band = rules.penaltyDays.find((one) => one.underMonths === undefined || months < one.underMonths) ?? rules.penaltyDays.at(-1)!;
-    const penalty = Math.round(Math.max(0, term.balance) * (term.fixedRate ?? 0) * band.days / 365);
+    const daysOf = (days: number) => Math.round(Math.max(0, term.balance) * (term.fixedRate ?? 0) * days / 365);
+    let penalty = daysOf(band.days);
+    if (rules.penaltyCapped) penalty = Math.min(penalty, earned);
+    // In the term's first week, a week's interest at least, whatever the cap.
+    if (rules.penaltyFirstWeekDays && sim.now - (term.renewedAt ?? term.openedAt) < 7 * MS_DAY) penalty = Math.max(penalty, daysOf(rules.penaltyFirstWeekDays));
     return { penalty, estimate: false, ...(rules.penaltyWords ? { words: rules.penaltyWords } : {}) };
   }
   // Worded another way, or not found: the interest so far is forfeited, SLATE's estimate.
