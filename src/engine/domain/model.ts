@@ -160,6 +160,10 @@ export interface Person {
    * way it ran, everything from the bank with savings swept.
    */
   payments?: PaymentSettings;
+  /** Round-ups into savings, where the bank offers them, and the day's change so far. */
+  roundUps?: { on: boolean; pending: Money };
+  /** Money gone to the state or its scheme after years untouched, which can be claimed back. */
+  unclaimed?: { amount: Money; to: string; at: Instant }[];
 
   wellbeing: Wellbeing;
 

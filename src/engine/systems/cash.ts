@@ -88,6 +88,7 @@ export function withdrawalQuote(sim: Simulation, person: Person, amount: Money, 
   const bank = current?.bankId ? bankById(current.bankId) : undefined;
   const rules = bank ? CASH[bank.id] : undefined;
   if (!current || !bank) return { fee: 0, refused: 'You need a bank account to take cash out of.' };
+  if (current.dormant) return { fee: 0, refused: `${current.name} is dormant; use Reactivate first.` };
   if (from === 'post_office' && !rules?.postOffice) return { fee: 0, refused: `${bank.name}’s customers can’t use the Post Office for cash.` };
   const fee = inSave(sim, from === 'atm' ? rules?.own ?? 0 : from === 'other_atm' ? rules?.other ?? 0 : from === 'counter' ? rules?.teller ?? 0 : 0, bank.currency);
   if (from !== 'counter' && rules?.daily !== undefined) {

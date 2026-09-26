@@ -56,6 +56,7 @@ import { personalityOf } from './personality';
 import { chargeForItem, chargeForPurchase, chargeReturned, overdraftHeadroom, purchaseMayOverdraw } from './lending';
 import { paymentsOf, setPaymentHooks, writeCheck } from './payments';
 import { cardRoom } from './credit';
+import { roundUpOf, roundUpsOn } from './accountlife';
 import { CommandError } from '../core/simulation';
 
 export const RENT_KIND = 'home.rent';
@@ -343,7 +344,11 @@ export function spend(sim: Simulation, person: Person, amount: Money, memo: stri
   // A debit the bank couldn't pay went back unpaid first, where it charges
   // for that; a card purchase it can't pay is only declined.
   if (bank.short > 0 && category !== 'food') chargeReturned(sim, person, bank.short);
-  if (category === 'food' && bank.postings.length > 0 && creditFirst < amount) chargeForPurchase(sim, person);
+  if (category === 'food' && bank.postings.length > 0 && creditFirst < amount) {
+    chargeForPurchase(sim, person);
+    // The change to the next whole unit, into savings tonight, where the bank rounds up (B9).
+    if (roundUpsOn(sim, person)) person.roundUps!.pending += roundUpOf(amount - creditFirst);
+  }
   return true;
 }
 

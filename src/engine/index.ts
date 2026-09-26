@@ -40,6 +40,7 @@ import { registerStatements } from './systems/statements';
 import { armPayments, freshPayments, registerPayments } from './systems/payments';
 import { armCardLife, registerCardLife } from './systems/cardlife';
 import { registerCash } from './systems/cash';
+import { registerAccountLife } from './systems/accountlife';
 import { CARDS } from './content/cards';
 import { registerWorld } from './world/world';
 import {
@@ -68,6 +69,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerPayments(sim);
   registerCardLife(sim);
   registerCash(sim);
+  registerAccountLife(sim);
   registerLending(sim);
 }
 

@@ -36,8 +36,10 @@ import { addMonths, dateKey, daysInMonth, instantFromZoned, zonedParts, MS_DAY, 
 import { bankById, bankingIn, banksIn, type Bank, type Product } from '../content/banks';
 import { ageOn } from './mortality';
 import { accountNumber } from './banknumber';
+import { ACCOUNT_LIFE } from '../content/accountlife';
 import { statementReady } from './statements';
 import { savingsLeftThisMonth } from './cash';
+import { savingsWithdrawalFee } from './accountlife';
 
 export const MONTH_END_KIND = 'bank.month_end';
 
@@ -94,7 +96,7 @@ export function openAt(sim: Simulation, person: Person, bank: Bank, balances: { 
   if (balances.savings > 0) openOne(sim, person, bank, 'savings', balances.savings);
 }
 
-function openOne(sim: Simulation, person: Person, bank: Bank, kind: 'checking' | 'savings', balance: Money): Account {
+export function openOne(sim: Simulation, person: Person, bank: Bank, kind: 'checking' | 'savings', balance: Money): Account {
   const product = kind === 'checking' ? bank.current : bank.savings;
   const number = accountNumber(sim, person, bank, kind);
   return sim.openAccount({
@@ -423,6 +425,7 @@ export function registerBanking(sim: Simulation): void {
   sim.onEvent('world.day_rollover', 'bank.day', (_event, { sim: s }) => {
     for (const account of Object.values(s.universe.accounts)) {
       if (!account.bankId || account.closedAt || !isEveryday(account)) continue;
+      if (account.dormant && ACCOUNT_LIFE[account.bankId]?.stopsInterest) continue;
       const product = productOf(account);
       const earning = earningBalance(product, account.balance);
       const rate = tierRate(product, account, earning) ?? rateOf(s, account);
@@ -495,6 +498,8 @@ export function registerBanking(sim: Simulation): void {
     if (amount > from.balance) {
       throw new CommandError(`${from.name} holds ${formatMoney(Math.max(0, from.balance), saveCurrency(s.universe), { cents: false })}.`);
     }
+    if (from.dormant || to.dormant) throw new CommandError(`${(from.dormant ? from : to).name} is dormant; use Reactivate first.`);
+    const withdrawalFee = savingsWithdrawalFee(s, from);
     const left = savingsLeftThisMonth(s, from);
     if (left !== undefined && amount > left) {
       throw new CommandError(`${from.name} lets ${formatMoney(left, saveCurrency(s.universe), { cents: false })} more out this month without notice; more takes three months’ notice.`);
@@ -503,6 +508,7 @@ export function registerBanking(sim: Simulation): void {
       memo: `Moved to ${to.name}`, category: 'transfer',
       postings: [{ accountId: from.id, amount: -amount }, { accountId: to.id, amount }],
     });
+    if (withdrawalFee > 0) s.post({ memo: `Savings withdrawal fee: ${from.name}`, category: 'bank_fee', postings: [{ accountId: from.id, amount: -withdrawalFee }, { accountId: s.nominalAccount('expense', 'Bank Fees').id, amount: withdrawalFee }] });
     return { moved: amount };
   });
 

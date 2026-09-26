@@ -74,12 +74,13 @@ import { CommandError } from '../core/simulation';
 import type { Account } from '../core/ledger';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import type { Person } from '../domain/model';
-import { addDays, addMonths, dateKey, instantFromZoned, zonedParts, MS_DAY, type Instant } from '../core/time';
+import { addDays, addMonths, dateKey, formatDate, instantFromZoned, zonedParts, MS_DAY, type Instant } from '../core/time';
 import { clamp } from '../core/rng';
 import { bankById, bankingIn, type Bank } from '../content/banks';
 import { ageOn } from './mortality';
 import { LENDING, SWITCHING, type Lending, type Loan, type Overdraft, type Unarranged } from '../content/banks-lending';
 import { accountNumber } from './banknumber';
+import { endTerm, idleAccounts } from './accountlife';
 import { bankOf, banksFor, inSaveMoney, interestTaxFor, isoOf, monthStartOf, settleInterest } from './banking';
 
 export const LOAN_DUE_KIND = 'bank.loan_due';
@@ -446,6 +447,7 @@ function completeSwitch(sim: Simulation, person: Person, to: Bank, quietly = fal
  * a month with too few transactions, where the bank charges them.
  */
 function monthlyCharges(sim: Simulation, person: Person, current: Account, bank: Bank): void {
+  idleAccounts(sim, person, (account) => lastUsed(sim, account));
   const monthStart = monthStartOf(sim, sim.now - MS_DAY);
   for (const account of Object.values(sim.universe.accounts)) {
     if (account.ownerId !== person.id || account.closedAt || account.bankId !== bank.id) continue;
@@ -700,6 +702,16 @@ export function registerLending(sim: Simulation): void {
       for (const term of termsOf(s, person)) {
         term.accrued = (term.accrued ?? 0) + (Math.max(0, term.balance) * (term.fixedRate ?? 0)) / 365;
         if (term.maturesAt === undefined || s.now < term.maturesAt) continue;
+        // Renewed, or moved into easy-access savings, where that's how it ends (B7).
+        const ended = endTerm(s, person, term);
+        if (ended === 'renews') {
+          if (person.id === s.universe.playerId) s.notify({ category: 'money', title: `Your ${term.name} Renewed`, body: `For the same term at ${((term.fixedRate ?? 0) * 100).toFixed(2)}%, with its interest in it.${term.graceUntil ? ` Until ${formatDate(term.graceUntil, s.zone)} it can be taken without a penalty.` : ''}`, importance: 50 });
+          continue;
+        }
+        if (ended === 'savings') {
+          if (person.id === s.universe.playerId) s.notify({ category: 'money', title: `Your ${term.name} Has Ended`, body: 'It moved, with its interest, into your easy-access savings at the same bank, where it can be taken any time.', importance: 50 });
+          continue;
+        }
         const into = currentOf(s, person);
         if (!into) continue;
         const earned = Math.floor(term.accrued ?? 0);

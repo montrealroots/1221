@@ -101,6 +101,18 @@ export interface Account {
   dormantFeeAt?: Instant;
   /** Germany: the quarter's fees so far, charged at the quarterly closing. */
   feesDue?: Money;
+  /** Untouched past the bank's months: inactive, then dormant and blocked until used again. */
+  inactive?: boolean;
+  dormant?: boolean;
+  /** When its holder last had a dormant account reactivated, which counts as using it. */
+  reactivatedAt?: Instant;
+  /** A term deposit renewed: until when it can be taken without penalty, and whether the bank has written about its end. */
+  graceUntil?: Instant;
+  maturityNoticed?: boolean;
+  /** When a term deposit last renewed: its current term runs from here. */
+  renewedAt?: Instant;
+  /** What its holder has told the bank to do with a term deposit at its end, where it differs from the bank's default. */
+  atEnd?: 'renews' | 'savings' | 'paid_out';
   /** A loan's monthly payment and its term. */
   loanPayment?: Money;
   loanMonths?: number;

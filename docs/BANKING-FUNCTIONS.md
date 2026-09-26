@@ -15,9 +15,9 @@ When a module lands, its rows change to **Has it** in the same commit.
 
 | | Functions |
 |---|---|
-| Has it | 131 |
-| To build | 45 |
-| Waits | 100 |
+| Has it | 144 |
+| To build | 31 |
+| Waits | 101 |
 | Outside the game | 30 |
 | **All** | **306** |
 
@@ -31,7 +31,7 @@ When a module lands, its rows change to **Has it** in the same commit.
 | 4 | The card’s life: applying, limits, closing, default | Done, 2026-09-26 |
 | 5 | How a card charges interest | Done, 2026-09-26 |
 | 6 | Security: locking, loss, theft and fraud | 17 to build |
-| 7 | Savings and an account’s life | 14 to build |
+| 7 | Savings and an account’s life | Done, 2026-09-26 |
 | 8 | Each card’s own offers (research first) | 7 to build |
 | 9 | Pending payments and holds | 7 to build |
 
@@ -52,16 +52,16 @@ When a module lands, its rows change to **Has it** in the same commit.
 | A9 | Trusted contact person | Waits | Waits on other people. |
 | A10 | Supported decision-making supporter | Waits | Waits on other people. |
 | A11 | Fiduciary titling | Waits | Waits on other people. |
-| A12 | 14-day right of withdrawal | Module 7 | Cancel an account or card opened in the last 14 days, in the UK and the EU. |
+| A12 | 14-day right of withdrawal | Has it | Cancel a new savings account, term deposit or card in the country’s cooling-off period, Britain’s fixed deposits excepted. |
 | A13 | Right to a basic payment account | Has it | Everyone gets the bank’s everyday account. |
 | A14 | Change account product | Waits | Waits on research on each bank’s other account products. |
 | A15 | Switch the account to another bank | Has it | Switch Bank. |
 | A16 | Holder closes the account | Has it | Closing savings; the current account closes by switching. |
 | A17 | Bank closes the account | Has it | An account overdrawn for sixty days is closed. |
-| A18 | Automatic closure at zero or negative balance | Module 7 | A US account at zero and unused is closed. |
-| A19 | Inactive status | Module 7 | An account unused for 24 months is marked inactive and stops earning interest where the bank says so. |
-| A20 | Dormant status | Module 7 | Dormant after 30 months: blocked until the holder uses it again. |
-| A21 | Escheatment / unclaimed assets | Module 7 | Unclaimed balances go to the state (US) or the Reclaim Fund (UK), and can be claimed back. |
+| A18 | Automatic closure at zero or negative balance | Waits | Waits on banks say they may close an empty, unused account, not when. |
+| A19 | Inactive status | Has it | Inactive after the bank’s months untouched. |
+| A20 | Dormant status | Has it | Dormant after the bank’s months: blocked until reactivated. |
+| A21 | Escheatment / unclaimed assets | Has it | Unclaimed after the country’s years, to its state or scheme, and claimed back. |
 | A22 | Death or incapacity of an owner | Outside the game | Outside the game: a life ending ends the game; the end screen shows what was left. |
 | A23 | Disputes between owners / adverse claims | Waits | Waits on other owners. |
 | A24 | No assignment of the account | Has it | Nothing lets an account be signed over. |
@@ -254,14 +254,14 @@ When a module lands, its rows change to **Has it** in the same commit.
 | B4 | Passbook issue | Outside the game | Outside the game: a paper passbook. |
 | B5 | Open a CD / fixed-term deposit | Has it | Term deposits. |
 | B6 | CD ladder | Has it | Several term deposits at once. |
-| B7 | CD maturity, grace period and renewal | Module 7 | A term deposit’s maturity: the grace window, and renewal where the bank renews. |
+| B7 | CD maturity, grace period and renewal | Has it | A term deposit’s end: renewed, into savings, or paid out, as its holder chooses among the bank’s ways with its notice, with any grace days. |
 
 ### B.2 Money in
 
 | # | Function | SLATE | How, or what it waits on |
 |---|---|---|---|
 | B8 | Scheduled transfers from checking | Has it | A standing order into savings. |
-| B9 | Round-up saving | Module 7 | Round-ups where the bank offers them (Bank of America’s Keep the Change). |
+| B9 | Round-up saving | Has it | Round-ups into savings where the bank offers them. |
 | B10 | Self-service deposit to savings | Has it | Cash into savings. |
 | B11 | No top-ups on a CD mid-term | Has it | A term deposit takes nothing more. |
 
@@ -269,13 +269,13 @@ When a module lands, its rows change to **Has it** in the same commit.
 
 | # | Function | SLATE | How, or what it waits on |
 |---|---|---|---|
-| B12 | Withdrawal count rules | Module 7 | Savings withdrawal counts where the bank sets one. |
+| B12 | Withdrawal count rules | Has it | Free savings withdrawals a month where the bank sets them. |
 | B13 | No checks, debit card, Zelle or bill pay | Has it | Savings pays nobody directly; it backs the current account only if linked. |
 | B14 | Seven-day notice reservation | Outside the game | Outside the game: a reserved right no bank uses. |
 | B15 | Notice account withdrawal | Waits | Waits on notice accounts (research). |
-| B16 | CD early withdrawal penalty | Module 7 | Break a term deposit early, for the bank’s penalty. |
+| B16 | CD early withdrawal penalty | Has it | Break a term deposit early, for the bank’s penalty, or refused where it doesn’t allow it. |
 | B17 | Penalty waivers | Outside the game | Outside the game: a life ending ends the game. |
-| B18 | Withdraw CD interest penalty-free | Module 7 | Take a term deposit’s paid interest. |
+| B18 | Withdraw CD interest penalty-free | Has it | Take a term deposit’s interest during the term where the bank allows it. |
 | B19 | Savings as overdraft backup | Has it | Savings as the current account’s backup, by choice. |
 | B20 | Outgoing wire from savings | Waits | Waits on payees who take wires. |
 | B21 | Self-service withdrawal cap | Has it | Germany’s €2,000 a month from savings by card. |
@@ -300,9 +300,9 @@ When a module lands, its rows change to **Has it** in the same commit.
 | B30 | Promotional / bonus rates | Has it | Bonus and introductory rates. |
 | B31 | APY disclosure | Has it | The APY beside the rate. |
 | B32 | Savings monthly fee and waivers | Has it | Savings fees and waivers. |
-| B33 | Excess-withdrawal fee | Module 7 | Excess-withdrawal fees where the bank charges one. |
+| B33 | Excess-withdrawal fee | Has it | The fee for each savings withdrawal past the free ones. |
 | B34 | Tax on interest | Has it | Tax on interest, by country, with allowances. |
-| B35 | Interest stops | Module 7 | Interest stops on an inactive account where the bank says so. |
+| B35 | Interest stops | Has it | Interest stops on a dormant account where the bank says so. |
 
 ### B.6 Protections and disputes
 
@@ -323,7 +323,7 @@ When a module lands, its rows change to **Has it** in the same commit.
 | # | Function | SLATE | How, or what it waits on |
 |---|---|---|---|
 | B40 | Restricted-access rate-change notice | Waits | Waits on rates that move. |
-| B41 | CD maturity notice | Module 7 | Notice before a term deposit matures. |
+| B41 | CD maturity notice | Has it | The bank writes before a term deposit ends, in time for its notice. |
 | B42 | Advance notice of adverse changes | Waits | Waits on rates that move. |
 
 ## C. Personal credit card
@@ -337,7 +337,7 @@ When a module lands, its rows change to **Has it** in the same commit.
 | C3 | No unsolicited cards | Has it | A card is only ever issued on request. |
 | C4 | Credit limit set at opening | Has it | The limit set at opening from the record. |
 | C5 | Activate the card / use before it arrives | Has it | A new card arrives in days, and works once it does. |
-| C6 | 14-day withdrawal right | Module 7 | Cancel a new card within 14 days (UK, EU). |
+| C6 | 14-day withdrawal right | Has it | Cancel a new card in the cooling-off period, anything spent still to repay. |
 | C7 | Authorized users / additional cardholders | Waits | Waits on other people. |
 | C8 | Joint card applicants | Waits | Waits on other people. |
 | C9 | Arbitration opt-out | Outside the game | Outside the game: arbitration. |

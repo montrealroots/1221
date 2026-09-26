@@ -181,6 +181,16 @@ part the tool cannot see.
   on debit card purchases is published by few of the 60 banks and isn't
   enforced; the daily ATM limit is. A card whose cash advance terms weren't
   found charges SLATE's estimate, 5% or $10 at the purchase rate, and says so.
+- **Some of an account's life is SLATE's estimate or missing.** Where a
+  bank words its early-withdrawal penalty other than in days of interest
+  (a reduced rate in Japan, a rate cut in France, a share in Spain), SLATE
+  forfeits the interest so far and says it's an estimate. A bank that has
+  its holder choose how a term deposit ends at opening and names no default
+  is paid out by default. Korea's banks' lower after-maturity rate is taken
+  as the bank's easy-access savings rate. Three banks' maturity terms
+  weren't found (Arion, Crédit Agricole, Santander Spain) and pay out. An
+  empty, unused account that the bank may close is never closed: the banks
+  say they may, not when.
 - **The tax engine is a screen again.** `content/tax.ts` works out income
   and payroll tax on a wage for the place card and Home's Tax On A Wage, and
   nothing is paid through it. The day job withheld through it outside the
