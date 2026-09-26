@@ -55,6 +55,7 @@ import { clamp } from '../core/rng';
 import { personalityOf } from './personality';
 import { chargeForItem, chargeForPurchase, chargeReturned, overdraftHeadroom, purchaseMayOverdraw } from './lending';
 import { paymentsOf, setPaymentHooks, writeCheck } from './payments';
+import { cardRoom } from './credit';
 import { CommandError } from '../core/simulation';
 
 export const RENT_KIND = 'home.rent';
@@ -234,8 +235,7 @@ export function drawFromBank(sim: Simulation, person: Person, amount: Money, wit
 
 /** What the current account (with linked savings), its overdraft where it may be used, and the card can pay between them, now. */
 export function canPay(sim: Simulation, person: Person, overdraft = true): Money {
-  const card = cardOf(sim, person);
-  const free = card ? Math.max(0, (card.creditLimit ?? 0) + card.balance) : 0;
+  const free = cardRoom(person, cardOf(sim, person));
   return reachable(sim, person) + (overdraft ? overdraftHeadroom(sim, person) : 0) + free;
 }
 
@@ -268,7 +268,7 @@ setPaymentHooks({ fromCurrent: payFromCurrent, owe, returned: (sim, person, amou
 /** On the card, if it has room, as a recurring card payment. True if it went. */
 function onCard(sim: Simulation, person: Person, amount: Money, memo: string, category: string): boolean {
   const card = cardOf(sim, person);
-  if (!card || Math.max(0, (card.creditLimit ?? 0) + card.balance) < amount) return false;
+  if (!card || cardRoom(person, card) < amount) return false;
   sim.post({ memo, category, postings: [{ accountId: sim.nominalAccount('expense', expenseFor(category)).id, amount }, { accountId: card.id, amount: -amount }] });
   return true;
 }
@@ -317,7 +317,7 @@ export function spend(sim: Simulation, person: Person, amount: Money, memo: stri
   const current = checkingOf(sim, person);
   const before = current?.balance ?? 0;
   // On the credit card first where that's how they pay for the day, then the debit card.
-  const cardFree = card ? Math.max(0, (card.creditLimit ?? 0) + card.balance) : 0;
+  const cardFree = cardRoom(person, card);
   const creditFirst = category === 'food' && paymentsOf(person).everyday === 'credit' ? Math.min(amount, cardFree) : 0;
   const bank = drawFromBank(sim, person, amount - creditFirst, overdraft);
   const fromCard = creditFirst + Math.min(bank.short, cardFree - creditFirst);

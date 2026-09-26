@@ -15,9 +15,9 @@ When a module lands, its rows change to **Has it** in the same commit.
 
 | | Functions |
 |---|---|
-| Has it | 85 |
-| To build | 96 |
-| Waits | 95 |
+| Has it | 108 |
+| To build | 71 |
+| Waits | 97 |
 | Outside the game | 30 |
 | **All** | **306** |
 
@@ -28,7 +28,7 @@ When a module lands, its rows change to **Has it** in the same commit.
 | 1 | Statements and records | Done, 2026-09-26 |
 | 2 | Payments: direct debits, standing orders, checks and how each thing is paid | Done, 2026-09-26 |
 | 3 | Cash | 17 to build |
-| 4 | The card’s life: applying, limits, closing, default | 25 to build |
+| 4 | The card’s life: applying, limits, closing, default | Done, 2026-09-26 |
 | 5 | How a card charges interest | 9 to build |
 | 6 | Security: locking, loss, theft and fraud | 17 to build |
 | 7 | Savings and an account’s life | 14 to build |
@@ -219,7 +219,7 @@ When a module lands, its rows change to **Has it** in the same commit.
 | A146 | Strong authentication and trusted devices | Outside the game | Outside the game: two-factor sign-in. |
 | A147 | Account alerts | Has it | Alerts: low balance, a large payment, a statement ready. |
 | A148 | Bank freezes or blocks for fraud, scam or compliance | Module 6 | The bank blocks a suspect transaction. |
-| A149 | Card suspended for risk | Module 4 | The card suspended while the account is in collections. |
+| A149 | Card suspended for risk | Has it | The card suspended while the account is in collections. |
 | A150 | Credential responsibility | Outside the game | Outside the game: credentials. |
 | A151 | Third-party access control | Outside the game | Outside the game: third-party apps. |
 | A152 | Parental controls on a child's account | Waits | Waits on children. |
@@ -332,21 +332,21 @@ When a module lands, its rows change to **Has it** in the same commit.
 
 | # | Function | SLATE | How, or what it waits on |
 |---|---|---|---|
-| C1 | Apply, with an ability-to-pay check | Module 4 | Apply for a card, with the bank checking the record and what you can repay. |
-| C2 | Applicants under 21 | Module 4 | Under 21 in the US: income of your own or a co-signer. |
+| C1 | Apply, with an ability-to-pay check | Has it | Apply for a card, with the bank checking the record and what you can repay. |
+| C2 | Applicants under 21 | Has it | Under 21 in the US: income of your own or a co-signer. |
 | C3 | No unsolicited cards | Has it | A card is only ever issued on request. |
-| C4 | Credit limit set at opening | Module 4 | The limit set at opening from the record. |
-| C5 | Activate the card / use before it arrives | Module 4 | A new card arrives in days, and works once it does. |
+| C4 | Credit limit set at opening | Has it | The limit set at opening from the record. |
+| C5 | Activate the card / use before it arrives | Has it | A new card arrives in days, and works once it does. |
 | C6 | 14-day withdrawal right | Module 7 | Cancel a new card within 14 days (UK, EU). |
 | C7 | Authorized users / additional cardholders | Waits | Waits on other people. |
 | C8 | Joint card applicants | Waits | Waits on other people. |
 | C9 | Arbitration opt-out | Outside the game | Outside the game: arbitration. |
-| C10 | Holder closes the account | Module 4 | Close the card; what’s owed is still paid down. |
-| C11 | Issuer closes or suspends | Module 4 | The bank closes or suspends the card. |
-| C12 | Default and acceleration | Module 4 | Default: missed payments close the card and the balance falls due. |
-| C13 | Pro-rata annual fee refund | Module 4 | Part of a yearly fee back when the bank closes the card (UK). |
+| C10 | Holder closes the account | Has it | Close the card; what’s owed is still paid down. |
+| C11 | Issuer closes or suspends | Has it | The bank closes or suspends the card. |
+| C12 | Default and acceleration | Has it | Default: missed payments close the card and the balance falls due. |
+| C13 | Pro-rata annual fee refund | Waits | Waits on a benefit the bank cuts, or a bank closing a card without fault: a pro-rata refund follows only those. |
 | C14 | Product change / upgrade | Waits | Waits on research on each bank’s other cards. |
-| C15 | Sale of the debt | Module 4 | A defaulted card’s debt sold to collections. |
+| C15 | Sale of the debt | Has it | A defaulted card’s debt sold to collections. |
 | C16 | Card ownership and return | Outside the game | Outside the game: a plastic card. |
 
 ### C.2 Money in (payments to the card)
@@ -361,8 +361,8 @@ When a module lands, its rows change to **Has it** in the same commit.
 | C22 | "Paid in full" conditional payments | Outside the game | Outside the game: paper checks marked paid in full. |
 | C23 | Credit balance refund | Module 5 | Overpay, and have the credit balance refunded. |
 | C24 | Merchant refunds and credits | Waits | Waits on merchants. |
-| C25 | Change the payment due date | Module 4 | Change the payment due date. |
-| C26 | Take payment from other accounts | Module 4 | A UK bank takes a missed card payment from your other accounts with it. |
+| C25 | Change the payment due date | Has it | Change the payment due date. |
+| C26 | Take payment from other accounts | Has it | A UK bank takes a missed card payment from your other accounts with it. |
 
 ### C.3 Money out and transactions
 
@@ -379,7 +379,7 @@ When a module lands, its rows change to **Has it** in the same commit.
 | C35 | Foreign-currency transactions | Waits | Waits on travel. |
 | C36 | Authorization and hold | Module 9 | Authorization and holds. |
 | C37 | Transaction declines | Has it | Declined past the limit. |
-| C38 | Over-limit transactions | Module 4 | Over the limit only for someone who opted in (US). |
+| C38 | Over-limit transactions | Has it | Over the limit only for someone who opted in (US). |
 | C39 | Rewards and extra features | Module 8 | Rewards: each card’s cash back or points, as it pays them. |
 
 ### C.4 Statements and records
@@ -409,12 +409,12 @@ When a module lands, its rows change to **Has it** in the same commit.
 | C55 | Balance transfer fee | Module 8 | The balance transfer fee. |
 | C56 | Cash advance fee | Module 3 | The cash advance fee. |
 | C57 | Foreign transaction fee | Waits | Waits on travel. |
-| C58 | Late payment fee | Module 4 | The late fee never more than the minimum (US), at most four a year (UK). |
-| C59 | Returned payment fee | Module 4 | A card payment that bounces: the returned payment fee. |
-| C60 | Over-limit fee only with opt-in | Module 4 | Over-limit opt-in (US). |
+| C58 | Late payment fee | Has it | The late fee never more than the minimum (US), at most four a year (UK). |
+| C59 | Returned payment fee | Has it | A card payment that bounces: the returned payment fee. |
+| C60 | Over-limit fee only with opt-in | Has it | Over-limit opt-in (US). |
 | C61 | Returned convenience-check fee | Waits | Waits on checks. |
 | C62 | Plan fees | Module 8 | Plan fees. |
-| C63 | US fee caps | Module 4 | The US fee caps. |
+| C63 | US fee caps | Has it | The US fee caps. |
 | C64 | No interest on default fees for 28 days | Module 5 | UK default fees free of interest for 28 days. |
 | C65 | Military cost cap | Waits | Waits on military service. |
 | C66 | Card replacement fee | Module 6 | A replacement card’s fee (Germany). |
@@ -431,8 +431,8 @@ When a module lands, its rows change to **Has it** in the same commit.
 | C72 | Unauthorized card use refund (PSD2) | Module 6 | PSD2 refund of unauthorized card use. |
 | C73 | Refund when the amount was unexpected | Waits | Waits on merchants. |
 | C74 | Failed or wrong transfer refund | Waits | Waits on transfers the bank gets wrong. |
-| C75 | Persistent debt intervention | Module 4 | UK persistent debt: the bank steps in at 18 and 36 months. |
-| C76 | Hardship and reduced-payment arrangements | Module 4 | Ask for a hardship arrangement. |
+| C75 | Persistent debt intervention | Has it | UK persistent debt: the bank steps in at 18 and 36 months. |
+| C76 | Hardship and reduced-payment arrangements | Has it | Ask for a hardship arrangement. |
 | C77 | Credit reporting | Has it | The record. |
 | C78 | Complaint and ombudsman | Waits | Waits on complaints outside play. |
 
@@ -440,14 +440,14 @@ When a module lands, its rows change to **Has it** in the same commit.
 
 | # | Function | SLATE | How, or what it waits on |
 |---|---|---|---|
-| C79 | Credit limit increase | Module 4 | Ask for a higher limit; opt out of unasked raises (UK). |
-| C80 | Credit limit decrease | Module 4 | Ask for a lower limit. |
-| C81 | Temporary limit increase | Module 4 | A temporary higher limit (UK). |
+| C79 | Credit limit increase | Has it | Ask for a higher limit; opt out of unasked raises (UK). |
+| C80 | Credit limit decrease | Has it | Ask for a lower limit. |
+| C81 | Temporary limit increase | Waits | Waits on research: a temporary limit is a bank’s own offer, and none was found. |
 | C82 | Cash limit and daily cash caps | Module 3 | The cash limit. |
 | C83 | Contactless limit | Outside the game | Outside the game: contactless taps. |
 | C84 | Card controls / freeze | Module 6 | Freeze the card. |
 | C85 | Report lost or stolen | Module 6 | Report the card lost or stolen. |
-| C86 | Account restriction by the issuer | Module 4 | The bank restricts the card. |
+| C86 | Account restriction by the issuer | Has it | The bank restricts the card. |
 | C87 | Remove an authorized user | Waits | Waits on other people. |
 | C88 | Card replacement and exchange | Module 6 | A new card at expiry. |
 | C89 | PIN and security duties | Outside the game | Outside the game: PINs. |
@@ -460,8 +460,8 @@ When a module lands, its rows change to **Has it** in the same commit.
 | C91 | Right to reject a rate increase | Waits | Waits on rates that move. |
 | C92 | Credit limit notices | Has it | Limit changes are told. |
 | C93 | Minimum-payment warning | Has it | The minimum payment warning: how long paying the minimum takes, and what it costs. |
-| C94 | Over-limit opt-in and revocation notices | Module 4 | Over-limit opt-in notices. |
-| C95 | Arrears and default notices | Module 4 | Arrears and default notices. |
+| C94 | Over-limit opt-in and revocation notices | Has it | Over-limit opt-in notices. |
+| C95 | Arrears and default notices | Has it | Arrears and default notices. |
 | C96 | Fraud and security contact | Module 6 | The bank asks about a suspect payment. |
 | C97 | Currency-conversion cost message | Waits | Waits on travel. |
 | C98 | Contact consent and call recording | Outside the game | Outside the game: phone calls. |

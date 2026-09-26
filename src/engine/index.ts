@@ -38,6 +38,7 @@ import { armBanking, openAt, registerBanking, rebank, startingBank } from './sys
 import { registerLending } from './systems/lending';
 import { registerStatements } from './systems/statements';
 import { armPayments, freshPayments, registerPayments } from './systems/payments';
+import { armCardLife, registerCardLife } from './systems/cardlife';
 import { CARDS } from './content/cards';
 import { registerWorld } from './world/world';
 import {
@@ -64,6 +65,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerBanking(sim);
   registerStatements(sim);
   registerPayments(sim);
+  registerCardLife(sim);
   registerLending(sim);
 }
 
@@ -239,6 +241,7 @@ export function loadSave(universe: SaveUniverse): Simulation {
   // had their rota two weeks out and a payday ahead too.
   armHousehold(sim);
   armPayments(sim);
+  armCardLife(sim);
   armCredit(sim);
   armBirthdays(sim);
   // A save from before the banks banked at "Northbank", which never existed.

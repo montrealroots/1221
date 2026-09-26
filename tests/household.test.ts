@@ -130,6 +130,9 @@ describe('the card', () => {
   it('states on the 20th and takes the minimum on the 15th, and a carried balance draws the month’s interest', () => {
     const sim = quickSave({ wealth: 'comfortable' }, 'card');
     expect(sim.player.credit!.autopay).toBe('full');
+    // Autopay on the minimum: autopay asks for the whole of what it's set to,
+    // and a current account short of it sends the payment back (`systems/credit.ts`).
+    expect(sim.execute({ kind: 'finance.set_autopay', payload: { mode: 'minimum' } }).ok).toBe(true);
     // Spend on the card, then leave checking with enough for the minimum only.
     spend(sim, sim.player, checking(sim).balance + 10_000_00, 'Rent', 'rent', true);
     setChecking(sim, 0);

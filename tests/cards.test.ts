@@ -35,7 +35,7 @@ afterEach(() => {
 
 const life = (seed: string, extra: Record<string, unknown> = {}) => quickSave({ wealth: 'scraping', ...extra }, seed);
 const cardIn = (sim: Simulation) => cardOf(sim, sim.player)!;
-const base: CardProduct = { name: 'Test Card', kind: 'revolving', apr: 0.18, annualFee: 0, minimumShare: 0.03, minimumFloor: 5_000_00, lateFee: 3_000_00, source: 'test', asOf: '2026-09-26' };
+const base: CardProduct = { name: 'Test Card', kind: 'revolving', apr: 0.18, annualFee: 0, minimumShare: 0.03, minimumFloor: 5_000_00, lateFee: 3_000_00, returnedPaymentFee: 3_000_00, source: 'test', asOf: '2026-09-26' };
 /** The next statement, and the clock moved just past it. */
 function toStatement(sim: Simulation): number {
   const at = sim.timeline.pending().find((i) => i.kind === STATEMENT_KIND)!.at;
@@ -162,7 +162,8 @@ describe('a charge card', () => {
 
 describe('the yearly fee', () => {
   it('is charged on the statement in the month the card was opened, once a year', () => {
-    const sim = life('card-fee');
+    // Money behind it, so a year of statements comes and nothing is charged off.
+    const sim = life('card-fee', { wealth: 'inherited' });
     withCard(cardIn(sim).bankId!, { ...base, annualFee: 4_900_00 });
     const opened = zonedParts(cardIn(sim).openedAt, sim.zone).month;
     const fees = () => sim.universe.transactions.filter((t) => t.memo.startsWith('Yearly fee'));

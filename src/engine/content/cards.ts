@@ -33,6 +33,10 @@ export interface CardProduct {
   lateFee?: Money;
   /** Days from the statement to the payment due. */
   graceDays?: number;
+  /** What a bounced payment costs. */
+  returnedPaymentFee?: Money;
+  /** A US card's over-limit fee, charged only to someone who opted in. */
+  overLimitFee?: Money;
   /** The currency its amounts are in, where it isn't the bank's: a dollar card in a dollarized economy. */
   currency?: string;
   source: string;

@@ -73,6 +73,25 @@ export interface CreditState {
   reviewedAt?: Instant;
   /** The interest the last statement charged, which a minimum can add. */
   statementInterest?: Money;
+  /** The day of the month the statement comes, which moves the due date with it (C25). Absent, the 20th. */
+  statementDay?: number;
+  /** Due dates in a row with less than the minimum paid. */
+  missed?: number;
+  /** Why the card can't be used: payments missed, a hardship plan, persistent debt (A149, C11, C86). */
+  suspended?: 'late' | 'hardship' | 'persistent';
+  /** The holder closed the card: nothing new on it, and what's owed is paid down (C10). */
+  closing?: Instant;
+  /** US: the holder opted in to transactions over the limit, and how many cycles in a row have been charged for it (C60). */
+  overLimitOptIn?: boolean;
+  overLimitCycles?: number;
+  /** The holder asked the bank never to raise the limit unasked (C79). */
+  noAutoRaise?: boolean;
+  /** A hardship plan: the interest frozen and a fixed payment (C75, C76). */
+  hardship?: { payment: Money; since: Instant };
+  /** When Britain's persistent-debt notice went (C75). */
+  persistentNoticeAt?: Instant;
+  /** A card applied for and on its way (C1, C5). */
+  applied?: { bankId: string; arrivesAt: Instant; limit: Money };
 }
 
 const SCORE_MIN = 300;
@@ -85,6 +104,14 @@ const RATE_BANDS: readonly { from: number; apr: number }[] = [
 const MINIMUM_USD = 25;
 const MINIMUM_SHARE = 0.02;
 const LATE_FEE_USD = 32;
+/** What a card charges for a payment that bounces, where its own fee wasn't found: SLATE's estimate, Chase's $40. */
+const RETURNED_PAYMENT_USD = 40;
+/** Where a card may go over its limit for someone who opted in: SLATE's estimate, a tenth over. */
+const OVER_LIMIT_SHARE = 0.1;
+/** Due dates missed in a row before the bank suspends the card: SLATE's estimate, sixty days late. */
+const SUSPEND_AFTER = 2;
+/** And before it charges the card off to collections: 180 days, the FFIEC's rule for open-end credit in the US, used everywhere. */
+const CHARGE_OFF_AFTER = 6;
 /** How often the limit is reviewed, and the record that earns a raise. */
 const REVIEW_EVERY = 182 * 86_400_000;
 const RAISE_FROM = 700;
@@ -102,7 +129,7 @@ export function priceWithin(from: number, to: number, score: number): number {
 }
 
 /** A term of the card: the bank's, or SLATE's estimate. */
-export type CardTerm = 'card' | 'rate' | 'minimum' | 'lateFee' | 'annualFee';
+export type CardTerm = 'card' | 'rate' | 'minimum' | 'lateFee' | 'annualFee' | 'returnedPaymentFee';
 
 /** What a card charges and asks, for a record, in the save's money. */
 export interface CardTerms {
@@ -119,6 +146,10 @@ export interface CardTerms {
   minimumFloor: Money;
   minimumPlusInterest: boolean;
   lateFee: Money;
+  /** What a bounced payment costs. */
+  returnedPaymentFee: Money;
+  /** A US card's over-limit fee, for someone who opted in, where it charges one. */
+  overLimitFee?: Money;
   /** Days from the statement to the due date; absent, the 15th of the next month. */
   graceDays?: number;
   /** The country's law, where it capped a term. */
@@ -151,6 +182,8 @@ export function cardTerms(sim: Simulation, card: Account, score: number): CardTe
   let lateFee = product?.lateFee !== undefined ? inSave(sim, product.lateFee, money) : undefined;
   if (lateFee === undefined) { lateFee = usdIn(sim, LATE_FEE_USD); estimated.push('lateFee'); }
   if (product && product.annualFee === undefined) estimated.push('annualFee');
+  let returnedPaymentFee = product?.returnedPaymentFee !== undefined ? inSave(sim, product.returnedPaymentFee, money) : undefined;
+  if (returnedPaymentFee === undefined) { returnedPaymentFee = usdIn(sim, RETURNED_PAYMENT_USD); estimated.push('returnedPaymentFee'); }
   let capped: CardTerms['capped'];
   if (law?.aprCap !== undefined && apr > law.aprCap) { apr = law.aprCap; capped = { apr: law.aprCap, law: law.law, source: law.source }; }
   if (law?.lateFeeCap !== undefined) {
@@ -168,6 +201,8 @@ export function cardTerms(sim: Simulation, card: Account, score: number): CardTe
     minimumFloor: minimumKnown ? (product!.minimumFloor !== undefined ? inSave(sim, product!.minimumFloor, money) : 0) : usdIn(sim, MINIMUM_USD),
     minimumPlusInterest: product?.minimumPlusInterest ?? false,
     lateFee,
+    returnedPaymentFee,
+    ...(product?.overLimitFee ? { overLimitFee: inSave(sim, product.overLimitFee, money) } : {}),
     ...(product?.graceDays !== undefined ? { graceDays: product.graceDays } : {}),
     ...(capped ? { capped } : {}),
     estimated,
@@ -190,6 +225,19 @@ export function scoreIsANumberIn(cityId: string): boolean {
 /** A score said in a word, for everywhere that doesn't keep one number. */
 export function scoreWord(score: number): string {
   return score >= 800 ? 'Exceptional' : score >= 740 ? 'Very Good' : score >= 670 ? 'Good' : score >= 580 ? 'Fair' : 'Poor';
+}
+
+/**
+ * What can go on the card now: nothing while it's suspended, closing or not
+ * yet arrived; its free limit otherwise, and a tenth more for somebody in the
+ * US who opted in to going over it (C38, C60).
+ */
+export function cardRoom(person: Person, card: Account | undefined): Money {
+  const credit = person.credit;
+  if (!card || card.closedAt || credit?.suspended || credit?.closing !== undefined) return 0;
+  // Only a US holder can opt in (`card.set_over_limit`).
+  const over = credit?.overLimitOptIn ? Math.round((card.creditLimit ?? 0) * OVER_LIMIT_SHARE) : 0;
+  return Math.max(0, (card.creditLimit ?? 0) + card.balance + over);
 }
 
 export function cardOf(sim: Simulation, person: Person): Account | undefined {
@@ -235,12 +283,18 @@ function zoneOf(sim: Simulation, person: Person): string {
   return CITIES.get(person.currentLocationId)?.timeZone ?? sim.homeZone;
 }
 
-/** The next statement: the 20th at nine. */
-function scheduleStatement(sim: Simulation, person: Person, after: Instant): void {
+/** The day a person's card states: the 20th, or the day they moved it to. */
+export function statementDayOf(person: Person | undefined): number {
+  return person?.credit?.statementDay ?? 20;
+}
+
+/** The next statement: its day at nine. */
+export function scheduleStatement(sim: Simulation, person: Person, after: Instant): void {
   const zone = zoneOf(sim, person);
   const p = zonedParts(after, zone);
-  let at = instantFromZoned({ year: p.year, month: p.month, day: 20, hour: 9 }, zone);
-  if (at <= after) at = instantFromZoned({ year: p.month === 12 ? p.year + 1 : p.year, month: p.month === 12 ? 1 : p.month + 1, day: 20, hour: 9 }, zone);
+  const day = statementDayOf(person);
+  let at = instantFromZoned({ year: p.year, month: p.month, day, hour: 9 }, zone);
+  if (at <= after) at = instantFromZoned({ year: p.month === 12 ? p.year + 1 : p.year, month: p.month === 12 ? 1 : p.month + 1, day, hour: 9 }, zone);
   sim.schedule({ at, kind: STATEMENT_KIND, label: 'Card Statement', category: 'home', priority: 36, payload: { personId: person.id } });
 }
 
@@ -272,7 +326,7 @@ export function registerCredit(sim: Simulation): void {
     card.apr = terms.apr;
     const owed = Math.max(0, -card.balance);
     credit.statementInterest = 0;
-    if (credit.carrying && owed > 0) {
+    if (credit.carrying && owed > 0 && !credit.hardship) {
       const interest = Math.round(owed * card.apr / 12);
       credit.statementInterest = interest;
       s.post({
@@ -282,16 +336,28 @@ export function registerCredit(sim: Simulation): void {
     }
     // The yearly fee, on the statement in the month the card was opened.
     // One statement a month, so the month alone makes it once a year.
-    if (terms.annualFee > 0 && zonedParts(s.now, zoneOf(s, person)).month === zonedParts(card.openedAt, zoneOf(s, person)).month) {
+    // In its first year a US card's fees, penalties aside, may not pass a
+    // quarter of the limit it opened with (Reg Z §1026.52(a)).
+    const firstYearUs = bankById(card.bankId ?? '')?.iso === 'US' && s.now - card.openedAt < 365 * 86_400_000;
+    const annualFee = firstYearUs ? Math.min(terms.annualFee, Math.round((card.creditLimit ?? 0) * 0.25)) : terms.annualFee;
+    if (annualFee > 0 && credit.closing === undefined && zonedParts(s.now, zoneOf(s, person)).month === zonedParts(card.openedAt, zoneOf(s, person)).month) {
       s.post({
         memo: `Yearly fee: ${card.name}`, category: 'fees',
-        postings: [{ accountId: s.nominalAccount('expense', 'Card Fees').id, amount: terms.annualFee }, { accountId: card.id, amount: -terms.annualFee }],
+        postings: [{ accountId: s.nominalAccount('expense', 'Card Fees').id, amount: annualFee }, { accountId: card.id, amount: -annualFee }],
       });
     }
+    // Over the limit for somebody who opted in: the card's fee, once a cycle,
+    // three cycles in a row at most (Reg Z §1026.56(j)).
+    const overBy = Math.max(0, -card.balance) - (card.creditLimit ?? 0);
+    if (overBy > 0 && credit.overLimitOptIn && terms.overLimitFee && (credit.overLimitCycles ?? 0) < 3) {
+      credit.overLimitCycles = (credit.overLimitCycles ?? 0) + 1;
+      s.post({ memo: 'Over-limit fee', category: 'fees', postings: [{ accountId: s.nominalAccount('expense', 'Card Fees').id, amount: terms.overLimitFee }, { accountId: card.id, amount: -terms.overLimitFee }] });
+    } else if (overBy <= 0) credit.overLimitCycles = 0;
+    persistentDebt(s, person, card, credit);
     credit.statementBalance = Math.max(0, -card.balance);
     credit.paidSinceStatement = 0;
-    // Every six months, a good record raises the limit.
-    if (credit.reviewedAt === undefined || s.now - credit.reviewedAt >= REVIEW_EVERY) {
+    // Every six months, a good record raises the limit, unless the holder asked it never to be raised unasked.
+    if (!credit.noAutoRaise && !credit.suspended && credit.closing === undefined && (credit.reviewedAt === undefined || s.now - credit.reviewedAt >= REVIEW_EVERY)) {
       credit.reviewedAt = s.now;
       const clean = !credit.late.some((when) => s.now - when < 365 * 86_400_000);
       if (credit.score >= RAISE_FROM && clean && (card.creditLimit ?? 0) > 0) {
@@ -304,6 +370,12 @@ export function registerCredit(sim: Simulation): void {
     if (credit.statementBalance > 0) scheduleDue(s, person, item.at, terms.graceDays);
     // Nothing owed: the month is reported now, paid as agreed.
     else reportMonth(s, person, card, credit, ON_TIME);
+    // A card the holder closed is finished once nothing is owed on it.
+    if (credit.closing !== undefined && card.balance >= 0) {
+      card.closedAt = s.now;
+      if (person.id === s.universe.playerId) s.notify({ category: 'money', title: 'Card Closed', body: `The ${card.name} is paid off and closed.`, importance: 40 });
+      return;
+    }
     statementReady(s, person, card, credit.statementBalance > 0
       ? `${formatMoney(credit.statementBalance, saveCurrency(s.universe))} to pay, at least ${formatMoney(minimumDue(s, credit.statementBalance, terms, credit.statementInterest ?? 0), saveCurrency(s.universe))}.`
       : 'The card owes nothing this month.');
@@ -321,14 +393,27 @@ export function registerCredit(sim: Simulation): void {
     const minimum = minimumDue(s, statement, terms, credit.statementInterest ?? 0);
     // A charge card's minimum is the whole statement, so it takes all of it
     // whatever the autopay says.
-    const want = credit.autopay === 'full' ? statement : minimum;
-    payCard(s, person, Math.max(0, want - credit.paidSinceStatement));
+    const plan = credit.hardship ? Math.min(statement, credit.hardship.payment) : undefined;
+    const want = plan ?? (credit.autopay === 'full' ? statement : minimum);
+    const due = plan ?? minimum;
+    // Autopay asks the bank for the whole amount; a current account that
+    // can't cover it sends it back, and the card charges for that (C59).
+    const asked = Math.max(0, want - credit.paidSinceStatement);
+    if (asked > 0) {
+      if (autopayReach(s, person) >= asked) payCard(s, person, asked);
+      else {
+        const returned = terms.returnedPaymentFee;
+        s.post({ memo: 'Returned payment fee', category: 'fees', postings: [{ accountId: s.nominalAccount('expense', 'Card Fees').id, amount: returned }, { accountId: card.id, amount: -returned }] });
+        if (person.id === s.universe.playerId) s.notify({ category: 'money', title: 'A Card Payment Bounced', body: `Autopay asked for ${formatMoney(asked, currency)} and the current account couldn't cover it. The card charged ${formatMoney(returned, currency)} for that.`, importance: 75 });
+      }
+    }
     const paid = credit.paidSinceStatement;
     credit.carrying = paid < statement;
 
     let move = 0;
-    if (paid < minimum) {
-      const fee = terms.lateFee;
+    if (paid < due) {
+      // A US late fee may not be more than the minimum it was late on (Reg Z §1026.52(b)(2)(i)(B)).
+      const fee = bankById(card.bankId ?? '')?.iso === 'US' ? Math.min(terms.lateFee, due) : terms.lateFee;
       s.post({
         memo: 'Late fee', category: 'fees',
         postings: [{ accountId: s.nominalAccount('expense', 'Card Fees').id, amount: fee }, { accountId: card.id, amount: -fee }],
@@ -344,8 +429,19 @@ export function registerCredit(sim: Simulation): void {
         body: `The minimum was ${formatMoney(minimum, currency)} and only ${formatMoney(paid, currency)} went in. A ${formatMoney(fee, currency)} fee, and it's on your record.`,
         importance: 80,
       });
+      credit.missed = (credit.missed ?? 0) + 1;
+      afterMissed(s, person, card, credit, due - paid);
     } else {
       move += ON_TIME;
+      credit.missed = 0;
+      if (credit.suspended === 'late') {
+        delete credit.suspended;
+        if (person.id === s.universe.playerId) s.notify({ category: 'money', title: 'Your Card Works Again', body: `Payments are back on time, and ${terms.issuer ?? 'the bank'} has lifted the suspension.`, importance: 50 });
+      }
+      if (credit.hardship && card.balance >= 0) {
+        delete credit.hardship;
+        if (credit.suspended === 'hardship' || credit.suspended === 'persistent') delete credit.suspended;
+      }
     }
     reportMonth(s, person, card, credit, move);
   });
@@ -379,6 +475,105 @@ export function registerCredit(sim: Simulation): void {
 
 /** A month paid as agreed. */
 const ON_TIME = 3;
+
+/** What autopay can take: the current account, and savings where it's linked to it. */
+function autopayReach(sim: Simulation, person: Person): Money {
+  const inCurrent = Math.max(0, sim.universe.accounts[person.primaryAccountId ?? '']?.balance ?? 0);
+  return paymentsOf(person).linkSavings ? inTheBank(sim, person) : inCurrent;
+}
+
+/**
+ * After a due date with less than the minimum paid: a British bank takes
+ * what was missed from the holder's other accounts with it (C26); two in a
+ * row and the card is suspended (C86); five and a default notice goes, as
+ * the Consumer Credit Act's section 87 asks before a default; six, 180 days,
+ * and the card is closed and what's owed is charged off to collections
+ * (C12, C15).
+ */
+function afterMissed(sim: Simulation, person: Person, card: Account, credit: CreditState, short: Money): void {
+  const currency = saveCurrency(sim.universe);
+  const bank = card.bankId ? bankById(card.bankId) : undefined;
+  if (bank?.iso === 'GB' && short > 0) {
+    const theirs = Object.values(sim.universe.accounts).filter((a) => a.ownerId === person.id && !a.closedAt && a.bankId === bank.id && (a.kind === 'checking' || a.kind === 'savings') && a.balance > 0);
+    let left = short;
+    const postings: { accountId: string; amount: Money }[] = [];
+    for (const account of theirs) {
+      const take = Math.min(left, account.balance);
+      if (take <= 0) continue;
+      postings.push({ accountId: account.id, amount: -take });
+      left -= take;
+    }
+    const taken = short - left;
+    if (taken > 0) {
+      sim.post({ memo: `Set off against ${card.name}`, category: 'card-payment', postings: [...postings, { accountId: card.id, amount: taken }] });
+      credit.paidSinceStatement += taken;
+    }
+  }
+  const missed = credit.missed ?? 0;
+  if (missed >= SUSPEND_AFTER && !credit.suspended) {
+    credit.suspended = 'late';
+    if (person.id === sim.universe.playerId) sim.notify({ category: 'money', title: 'Your Card Is Suspended', body: `${missed} payments missed in a row. ${bank?.name ?? 'The bank'} has stopped the ${card.name} until it's brought up to date.`, importance: 85 });
+  }
+  if (missed === CHARGE_OFF_AFTER - 1 && person.id === sim.universe.playerId) {
+    sim.notify({ category: 'money', title: 'A Default Notice', body: `The ${card.name} is ${missed * 30} days behind. Pay at least ${formatMoney(minimumDue(sim, Math.max(0, -card.balance)), currency)} before the next due date, or the whole balance falls due and goes to collections.`, importance: 95 });
+  }
+  if (missed >= CHARGE_OFF_AFTER) chargeOff(sim, person, card, credit);
+}
+
+/** The card closed, and what's owed on it charged off to collections, owed to the bank. */
+function chargeOff(sim: Simulation, person: Person, card: Account, credit: CreditState): void {
+  const owed = Math.max(0, -card.balance);
+  const bank = card.bankId ? bankById(card.bankId) : undefined;
+  const name = `Owed To ${bank?.name ?? card.institution ?? 'The Bank'}, In Collections`;
+  const debt = Object.values(sim.universe.accounts).find((a) => a.ownerId === person.id && !a.closedAt && a.kind === 'loan' && a.category === 'collections' && a.institution === (bank?.name ?? card.institution))
+    ?? sim.openAccount({ id: sim.nextId('account'), kind: 'loan', category: 'collections', name, ownerId: person.id, institution: bank?.name ?? card.institution, openedAt: sim.now });
+  if (owed > 0) sim.post({ memo: `Charged off: ${card.name}`, category: 'transfer', postings: [{ accountId: card.id, amount: owed }, { accountId: debt.id, amount: -owed }] });
+  card.closedAt = sim.now;
+  credit.score = Math.max(SCORE_MIN, credit.score - CHARGED_OFF);
+  delete credit.suspended;
+  delete credit.hardship;
+  credit.missed = 0;
+  if (person.id === sim.universe.playerId) sim.notify({ category: 'money', title: 'Your Card Was Charged Off', body: `${formatMoney(owed, saveCurrency(sim.universe))} on the ${card.name} is with collections now, and the card is closed. It's on your record.`, importance: 95 });
+}
+
+/** What a charge-off costs the record: SLATE's estimate, heavier than an eviction's sixty. */
+const CHARGED_OFF = 100;
+
+/**
+ * Britain's persistent debt (FCA CONC 6.7.27–6.7.40): eighteen months in
+ * which more went to interest and fees than to paying the card down, and the
+ * bank must write; thirty-six, and it must offer a way to pay it off in a
+ * reasonable time and may suspend the card. SLATE's plan freezes the
+ * interest and asks a forty-eighth of the balance a month, four years, the
+ * longest the rules' examples run.
+ */
+function persistentDebt(sim: Simulation, person: Person, card: Account, credit: CreditState): void {
+  if (bankById(card.bankId ?? '')?.iso !== 'GB' || credit.hardship) return;
+  const month = 30 * 86_400_000;
+  const over = (months: number) => {
+    const since = sim.now - months * month;
+    if (card.openedAt > since) return false;
+    let charges = 0;
+    let paid = 0;
+    for (const txn of sim.universe.transactions) {
+      if (txn.at < since) continue;
+      const on = txn.postings.filter((p) => p.accountId === card.id).reduce((a, p) => a + p.amount, 0);
+      if (on === 0) continue;
+      if (txn.category === 'interest' || txn.category === 'fees') charges += -on;
+      else if (on > 0) paid += on;
+    }
+    return charges > 0 && charges > paid - charges;
+  };
+  if (over(36)) {
+    const owed = Math.max(0, -card.balance);
+    credit.hardship = { payment: Math.ceil(owed / 48 / 100) * 100, since: sim.now };
+    credit.suspended = 'persistent';
+    if (person.id === sim.universe.playerId) sim.notify({ category: 'money', title: 'A Plan To Clear The Card', body: `Three years in which more went to interest and fees than to the card itself. The bank has frozen the interest and set ${formatMoney(credit.hardship.payment, saveCurrency(sim.universe))} a month to clear it in four years, and suspended the card.`, importance: 80 });
+  } else if (over(18) && (credit.persistentNoticeAt === undefined || sim.now - credit.persistentNoticeAt > 365 * 86_400_000)) {
+    credit.persistentNoticeAt = sim.now;
+    if (person.id === sim.universe.playerId) sim.notify({ category: 'money', title: 'Persistent Debt', body: `Over eighteen months more of what you paid the ${card.name} went to interest and fees than to the card. Paying more than the minimum would clear it sooner; the bank can help if you can't.`, importance: 60 });
+  }
+}
 
 /** A month on the record: how it was paid, how much of the card is used, and any rent owed. */
 function reportMonth(sim: Simulation, person: Person, card: Account, credit: CreditState, paid: number): void {

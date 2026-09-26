@@ -33,7 +33,7 @@ import { isLiability } from '../core/ledger';
 import type { Money } from '../core/money';
 import { instantFromZoned, zonedParts, type Instant } from '../core/time';
 import { bankById } from '../content/banks';
-import { cardTerms, minimumDue, type CardTerms } from './credit';
+import { cardTerms, minimumDue, statementDayOf, type CardTerms } from './credit';
 import { closesQuarterly } from './banking';
 
 /** One entry, as the account saw it. */
@@ -92,7 +92,9 @@ export function periodsOf(sim: Simulation, account: Account): Period[] {
   // Cards run from the 20th to the 20th, at nine, as their statements do (`systems/credit.ts`).
   let y = now.year;
   let m = now.month;
-  if (card && sim.now >= instantFromZoned({ year: now.year, month: now.month, day: 20, hour: 9 }, zone)) m += 1;
+  // A card states on its day, the 20th unless the holder moved it.
+  const sday = statementDayOf(sim.universe.people[account.ownerId]);
+  if (card && sim.now >= instantFromZoned({ year: now.year, month: now.month, day: sday, hour: 9 }, zone)) m += 1;
   if (m > 12) { m -= 12; y += 1; }
   if (quarterly) m = Math.ceil(m / 3) * 3;
   for (let i = 0; i < 600; i += 1) {
@@ -100,15 +102,15 @@ export function periodsOf(sim: Simulation, account: Account): Period[] {
     const step = quarterly ? 3 : 1;
     const startMonth = endMonth - step + 1;
     const to = card
-      ? instantFromZoned({ year: y, month: endMonth, day: 20, hour: 9 }, zone)
+      ? instantFromZoned({ year: y, month: endMonth, day: sday, hour: 9 }, zone)
       : instantFromZoned({ year: y, month: endMonth + 1, day: 1, hour: 0 }, zone);
     const from = card
-      ? instantFromZoned({ year: y, month: endMonth - 1, day: 20, hour: 9 }, zone)
+      ? instantFromZoned({ year: y, month: endMonth - 1, day: sday, hour: 9 }, zone)
       : instantFromZoned({ year: y, month: startMonth, day: 1, hour: 0 }, zone);
     const endParts = zonedParts(to - 1, zone);
     const fromParts = zonedParts(from, zone);
     const label = card
-      ? `Statement Of ${MONTHS[endParts.month - 1]} 20, ${endParts.year}`
+      ? `Statement Of ${MONTHS[endParts.month - 1]} ${sday}, ${endParts.year}`
       : quarterly
         ? `${MONTHS[fromParts.month - 1]} To ${MONTHS[endParts.month - 1]} ${endParts.year}`
         : `${MONTHS[fromParts.month - 1]} ${fromParts.year}`;
