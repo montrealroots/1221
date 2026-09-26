@@ -15,9 +15,9 @@ When a module lands, its rows change to **Has it** in the same commit.
 
 | | Functions |
 |---|---|
-| Has it | 168 |
-| To build | 7 |
-| Waits | 101 |
+| Has it | 173 |
+| To build | 0 |
+| Waits | 103 |
 | Outside the game | 30 |
 | **All** | **306** |
 
@@ -33,7 +33,7 @@ When a module lands, its rows change to **Has it** in the same commit.
 | 6 | Security: locking, loss, theft and fraud | Done, 2026-09-26 |
 | 7 | Savings and an account’s life | Done, 2026-09-26 |
 | 8 | Each card’s own offers (research first) | Done, 2026-09-26 |
-| 9 | Pending payments and holds | 7 to build |
+| 9 | Pending payments and holds | Done, 2026-09-26 |
 
 ## A. Personal current / checking account
 
@@ -150,10 +150,10 @@ When a module lands, its rows change to **Has it** in the same commit.
 | A92 | Copies on request | Has it | Any past statement, again. |
 | A93 | Transaction history | Has it | Every transaction, with its running balance. |
 | A94 | Account printers | Outside the game | Outside the game: a branch printer. |
-| A95 | Pending vs posted transactions | Module 9 | Card purchases pending before they post. |
-| A96 | Available balance vs ledger balance | Module 9 | Available balance beside the ledger balance. |
-| A97 | Posting order | Module 9 | The US nightly posting order. |
-| A98 | Value date | Module 9 | A value date on each entry (EU). |
+| A95 | Pending vs posted transactions | Has it | Card payments pending until they post, in the bank’s days. |
+| A96 | Available balance vs ledger balance | Has it | The available balance beside the posted balance. |
+| A97 | Posting order | Waits | Waits on an item’s fee is charged when it’s paid, not at a nightly run; the order is on record. |
+| A98 | Value date | Has it | A booking date and a value date where the bank dates them apart. |
 | A99 | Receipts | Outside the game | Outside the game: receipts are the statement in play. |
 | A100 | Tax reporting | Has it | The year’s interest and tax, as the bank reports it. |
 
@@ -210,7 +210,7 @@ When a module lands, its rows change to **Has it** in the same commit.
 |---|---|---|---|
 | A138 | Daily card limits | Has it | Daily ATM and purchase limits. |
 | A139 | Contactless and payment limits | Outside the game | Outside the game: contactless taps. |
-| A140 | Authorization hold | Module 9 | Authorization holds. |
+| A140 | Authorization hold | Has it | A card payment held against the available balance; a hotel’s or fuel’s estimated hold waits for them. |
 | A141 | Hold on existing funds when cashing a check | Waits | Waits on checks. |
 | A142 | Card lock / freeze | Has it | Lock and unlock the debit card. |
 | A143 | Report a lost or stolen card | Has it | Report the card lost, stolen or damaged; a new one follows. |
@@ -356,7 +356,7 @@ When a module lands, its rows change to **Has it** in the same commit.
 | C17 | Make a payment | Has it | Pay the card. |
 | C18 | Same-day crediting and cutoff | Has it | Payments credited the same day. |
 | C19 | Autopay from a current account | Has it | Autopay. |
-| C20 | Available-credit restoration | Module 9 | Freed credit available after the payment clears. |
+| C20 | Available-credit restoration | Waits | Waits on banks say they may hold back freed credit, up to so many days, not when. |
 | C21 | Payment allocation | Has it | Payments go to the dearest balance first (US, UK): with the cash balance a cash advance makes. |
 | C22 | "Paid in full" conditional payments | Outside the game | Outside the game: paper checks marked paid in full. |
 | C23 | Credit balance refund | Has it | Overpay, and have the credit balance refunded. |
@@ -377,7 +377,7 @@ When a module lands, its rows change to **Has it** in the same commit.
 | C33 | Convenience checks | Waits | Waits on checks. |
 | C34 | Instalment / pay-over-time plan | Has it | A plan paying a purchase off in equal months for a fee, where the card charges one. |
 | C35 | Foreign-currency transactions | Waits | Waits on travel. |
-| C36 | Authorization and hold | Module 9 | Authorization and holds. |
+| C36 | Authorization and hold | Has it | The card authorizes against what’s free, pending payments included. |
 | C37 | Transaction declines | Has it | Declined past the limit. |
 | C38 | Over-limit transactions | Has it | Over the limit only for someone who opted in (US). |
 | C39 | Rewards and extra features | Has it | Rewards at the card’s base rate, redeemed onto the card. |

@@ -46,6 +46,9 @@ export interface StatementLine {
   amount: Money;
   /** The account's balance after it, the same way round. */
   balance: Money;
+  /** Authorized and not yet posted, and when it posts (A95). */
+  pending?: boolean;
+  postsAt?: Instant;
 }
 
 export interface Period { from: Instant; to: Instant; label: string }
@@ -73,7 +76,7 @@ export function activity(sim: Simulation, account: Account, from: Instant, to: I
   let running = opening;
   const lines = inside.map(({ txn, delta }) => {
     running += delta;
-    return { id: txn.id, at: txn.at, memo: txn.memo, category: txn.category, amount: delta * k, balance: running * k };
+    return { id: txn.id, at: txn.at, memo: txn.memo, category: txn.category, amount: delta * k, balance: running * k, ...(txn.postsAt !== undefined ? { postsAt: txn.postsAt, ...(txn.postsAt > sim.now ? { pending: true } : {}) } : {}) };
   });
   return { opening: opening * k, closing: atEnd * k, lines };
 }

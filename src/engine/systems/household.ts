@@ -57,6 +57,7 @@ import { chargeForItem, chargeForPurchase, chargeReturned, overdraftHeadroom, pu
 import { paymentsOf, setPaymentHooks, writeCheck } from './payments';
 import { cardRoom } from './credit';
 import { roundUpOf, roundUpsOn } from './accountlife';
+import { hold } from './pending';
 import { CommandError } from '../core/simulation';
 
 export const RENT_KIND = 'home.rent';
@@ -270,7 +271,7 @@ setPaymentHooks({ fromCurrent: payFromCurrent, owe, returned: (sim, person, amou
 function onCard(sim: Simulation, person: Person, amount: Money, memo: string, category: string): boolean {
   const card = cardOf(sim, person);
   if (!card || cardRoom(person, card, true) < amount) return false;
-  sim.post({ memo, category, postings: [{ accountId: sim.nominalAccount('expense', expenseFor(category)).id, amount }, { accountId: card.id, amount: -amount }] });
+  hold(sim, sim.post({ memo, category, postings: [{ accountId: sim.nominalAccount('expense', expenseFor(category)).id, amount }, { accountId: card.id, amount: -amount }] }), card);
   return true;
 }
 
@@ -338,7 +339,8 @@ export function spend(sim: Simulation, person: Person, amount: Money, memo: stri
     const postings = [{ accountId: sim.nominalAccount('expense', 'Food').id, amount }];
     if (onCredit > 0 && card) postings.push({ accountId: card.id, amount: -onCredit });
     if (amount > onCredit && wallet) postings.push({ accountId: wallet.id, amount: -(amount - onCredit) });
-    sim.post({ memo, category, postings });
+    const txn = sim.post({ memo, category, postings });
+    if (onCredit > 0 && card) hold(sim, txn, card);
     return true;
   }
   // On the credit card first where that's how they pay for the day, then the debit card.
@@ -349,7 +351,9 @@ export function spend(sim: Simulation, person: Person, amount: Money, memo: stri
   const postings = [{ accountId: sim.nominalAccount('expense', category === 'rent' ? 'Rent' : category === 'bills' ? 'Bills' : 'Food').id, amount }, ...bank.postings];
   if (fromCard > 0 && card) postings.push({ accountId: card.id, amount: -fromCard });
   if (owed > 0) postings.push({ accountId: arrearsAccount(sim, person).id, amount: -owed });
-  sim.post({ memo, category, postings });
+  const txn = sim.post({ memo, category, postings });
+  // A card purchase is authorized now and posts in the bank's days (A95).
+  if (category === 'food') hold(sim, txn, bank.postings.length > 0 && current ? current : card ?? current!);
   // An item's fee is for one the bank paid below zero, not one the card took.
   // Until 2026-09-25 a purchase the card paid was charged one if the account
   // happened to be overdrawn already.

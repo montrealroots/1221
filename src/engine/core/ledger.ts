@@ -151,6 +151,8 @@ export interface LedgerTransaction {
   /** Set when a transaction has been reversed; points at the reversing txn. */
   reversedBy?: string;
   reverses?: string;
+  /** A card payment authorized and held against the available balance, posting then (`systems/pending.ts`). */
+  postsAt?: Instant;
 }
 
 export interface LedgerHost {

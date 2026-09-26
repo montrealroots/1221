@@ -16,6 +16,8 @@ import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { formatDate, zonedParts } from '@/engine/core/time';
 import type { Account } from '@/engine/core/ledger';
 import { dueAt } from '@/engine/systems/credit';
+import { pendingOn } from '@/engine/systems/pending';
+import { PENDING } from '@/engine/content/pending';
 import {
   accountStatement, alertsOf, cardStatement, periodsOf, yearSummary, type StatementLine,
 } from '@/engine/systems/statements';
@@ -68,6 +70,7 @@ function AccountStatementView({ account, period }: { account: Account; period: R
   const money = (c: number) => formatMoney(c, cur);
   const st = accountStatement(sim, account, period);
   const owed = account.kind === 'loan';
+  const pending = pendingOn(sim, account);
   return (
     <div className="col gap-3">
       <div className="grid grid-3">
@@ -76,9 +79,10 @@ function AccountStatementView({ account, period }: { account: Account; period: R
         <Figure label={owed ? 'Added' : 'Money Out'} value={money(owed ? st.moneyIn : st.moneyOut)} />
         {!owed && <Figure label="Interest, After Tax" value={money(st.interest)} />}
         {!owed && <Figure label="Fees" value={money(st.fees)} />}
-        <Figure label={owed ? 'Owed At The End' : period.to > sim.now ? 'Balance Now' : 'Closing Balance'} value={money(st.closing)} />
+        <Figure label={owed ? 'Owed At The End' : period.to > sim.now ? 'Available Now' : 'Closing Balance'} value={money(st.closing)} />
+        {!owed && period.to > sim.now && pending !== 0 && <Figure label="Posted Balance" value={money(st.closing - pending)} note="Completed items only; what’s pending is still to post" />}
       </div>
-      <Lines lines={st.lines} sign={1} empty="The account stood still in this period." card={owed} />
+      <Lines lines={st.lines} sign={1} empty="The account stood still in this period." card={owed} valueDated={Boolean(account.bankId && PENDING[account.bankId]?.valueDating)} />
     </div>
   );
 }
@@ -98,7 +102,7 @@ function CardStatementView({ account, period }: { account: Account; period: Retu
         <Figure label="Spending" value={money(st.spending)} />
         <Figure label="Fees" value={money(st.fees)} />
         <Figure label="Interest" value={money(st.interest)} />
-        <Figure label={closed ? 'New Balance' : 'Balance Now'} value={money(st.newBalance)} />
+        <Figure label={closed ? 'New Balance' : 'Balance Now'} value={money(st.newBalance)} note={!closed && pendingOn(sim, account) !== 0 ? `${money(-pendingOn(sim, account))} of it pending` : undefined} />
         <Figure label="Average Daily Balance" value={money(st.averageDaily)} note="What interest is worked on" />
       </div>
       {closed && st.newBalance > 0 && st.minimum !== undefined && (
@@ -204,7 +208,7 @@ function Figure({ label, value, note }: { label: string; value: string; note?: s
 }
 
 /** The entries, newest first as a banking app shows them, each with the balance after it. */
-function Lines({ lines, sign, empty, card }: { lines: StatementLine[]; sign: 1 | -1; empty: string; card?: boolean }) {
+function Lines({ lines, sign, empty, card, valueDated }: { lines: StatementLine[]; sign: 1 | -1; empty: string; card?: boolean; valueDated?: boolean }) {
   const { sim } = useGame();
   const cur = saveCurrency(sim.universe);
   if (lines.length === 0) return <p className="small muted" style={{ margin: 0 }}>{empty}</p>;
@@ -222,7 +226,7 @@ function Lines({ lines, sign, empty, card }: { lines: StatementLine[]; sign: 1 |
         return (
           <div key={line.id} className="row-between small" style={{ padding: '4px 0', borderBottom: '1px solid var(--line-soft, var(--line))' }}>
             <span className="dim" style={{ flex: '0 0 110px' }}>{formatDate(line.at, sim.zone)}</span>
-            <span style={{ flex: 1 }}>{line.memo}</span>
+            <span style={{ flex: 1 }}>{line.memo}{line.pending ? <span className="xs dim"> · Pending, posts {formatDate(line.postsAt!, sim.zone)}</span> : valueDated && line.postsAt !== undefined ? <span className="xs dim"> · Booked {formatDate(line.postsAt, sim.zone)}, value {formatDate(line.at, sim.zone)}</span> : null}</span>
             <span className={`mono ${credit ? 'positive' : ''}`} style={{ flex: '0 0 130px', textAlign: 'right' }}>
               {credit ? '+' : '−'}{formatMoney(Math.abs(shown), cur)}
             </span>
