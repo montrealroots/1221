@@ -200,9 +200,13 @@ part the tool cannot see.
   estimate), with the employer's notice and the redundancy pay the law
   gives. Not yet: a public holiday not worked isn't paid where the law pays
   it (Germany, Ireland, New Zealand); Mexico's PTU profit share needs a
-  company's profit; youth minimum rates are applied only in Britain and
-  Ireland, where they go by age alone (New Zealand's starting-out rate and
-  France's go by months in work, and Australia's by award). The US rate is
+  company's profit. Youth rates are Britain's and Ireland's by age, New
+  Zealand's starting-out rate and France's reduced SMIC by age and months
+  with the employer (France's counts months in the line of work, which SLATE
+  takes as months with the employer), and Australia's juniors by the General
+  Retail and Fitness awards' shares; the other awards' junior rates weren't
+  in the research. New Zealand's alternative holiday for a holiday worked is
+  added to the leave to book. The US rate is
   layoffs and discharges together, as JOLTS doesn't part them, so it runs
   above layoffs alone. Iceland's longer notice for older workers, Mexico's
   cap on the seniority premium at twice the minimum wage, Germany's

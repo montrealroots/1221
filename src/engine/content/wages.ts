@@ -39,6 +39,8 @@ export interface MinimumWage {
   /** A youth rate: for ages from `ageFrom` and under `ageBelow`. The adult rate has neither. */
   ageFrom?: number;
   ageBelow?: number;
+  /** A youth rate that holds only for so many months in the job (New Zealand's starting-out rate, France's reduced SMIC). */
+  firstMonths?: number;
 }
 
 const D = (y: number, m: number, d: number) => Date.UTC(y, m - 1, d);
@@ -47,7 +49,7 @@ const DOL_STATES = 'https://www.dol.gov/agencies/whd/minimum-wage/state';
 
 const w = (
   where: string, hourly: number, currency: string, from: number, source: string,
-  extra: { to?: number; kind?: MinimumWage['kind']; note?: string; ageFrom?: number; ageBelow?: number } = {},
+  extra: { to?: number; kind?: MinimumWage['kind']; note?: string; ageFrom?: number; ageBelow?: number; firstMonths?: number } = {},
 ): MinimumWage => ({
   where, hourly: Math.round(hourly * 100), currency, effectiveFrom: from,
   ...(extra.to !== undefined ? { effectiveTo: extra.to } : {}),
@@ -55,6 +57,7 @@ const w = (
   ...(extra.note ? { note: extra.note } : {}),
   ...(extra.ageFrom !== undefined ? { ageFrom: extra.ageFrom } : {}),
   ...(extra.ageBelow !== undefined ? { ageBelow: extra.ageBelow } : {}),
+  ...(extra.firstMonths !== undefined ? { firstMonths: extra.firstMonths } : {}),
 });
 
 export const MINIMUM_WAGES: readonly MinimumWage[] = [
@@ -72,6 +75,10 @@ export const MINIMUM_WAGES: readonly MinimumWage[] = [
   w('AU', 26.44, 'AUD', D(2026, 7, 1), 'https://www.fairwork.gov.au/about-us/workplace-laws/annual-wage-review/annual-wage-review-2026'),
   w('NZ', 23.50, 'NZD', D(2025, 4, 1), 'https://www.mbie.govt.nz/about/news/minimum-wage-set-for-2026', { to: D(2026, 4, 1) }),
   w('NZ', 23.95, 'NZD', D(2026, 4, 1), 'https://www.mbie.govt.nz/about/news/minimum-wage-set-for-2026'),
+  // The starting-out rate, 80% of the adult rate, for 16- and 17-year-olds
+  // in their first six months with an employer. Its 2025 figure wasn't in
+  // the research, so before April 2026 they're paid the adult rate.
+  w('NZ', 19.16, 'NZD', D(2026, 4, 1), 'https://www.employment.govt.nz/pay-and-hours/pay-and-wages/minimum-wage/minimum-wage-rates-and-types', { ageFrom: 16, ageBelow: 18, firstMonths: 6, note: 'Starting-out, 16 and 17, the first six months with an employer.' }),
   // 476,093 a month from January and 476,379 from April, over the agreement's
   // 173.33 hours.
   w('IS', 2746.73, 'ISK', D(2026, 1, 1), 'https://www.efling.is/sa-launatoflur', { to: D(2026, 4, 1), kind: 'agreement', note: 'Iceland has no statutory minimum: this is the lowest band of the Efling–SA general agreement.' }),
@@ -86,6 +93,12 @@ export const MINIMUM_WAGES: readonly MinimumWage[] = [
   w('IE', 9.91, 'EUR', D(2026, 1, 1), 'https://www.citizensinformation.ie/en/employment/employment-rights-and-conditions/pay-and-employment/minimum-wage/', { ageBelow: 18, note: 'Under 18, 70%.' }),
   w('FR', 12.02, 'EUR', D(2026, 1, 1), 'https://www.info.gouv.fr/actualite/le-smic-revalorise-au-1er-janvier-2026', { to: D(2026, 6, 1), note: 'SMIC, gross.' }),
   w('FR', 12.31, 'EUR', D(2026, 6, 1), 'https://www.info.gouv.fr/actualite/le-smic-revalorise-le-1er-juin-2026', { note: 'SMIC, gross.' }),
+  // Under 17, 20% below the SMIC, and at 17, 10% below, until six months'
+  // experience in the line; SLATE counts the months with the employer.
+  w('FR', 9.62, 'EUR', D(2026, 1, 1), 'https://www.service-public.gouv.fr/particuliers/vosdroits/F2300', { to: D(2026, 6, 1), ageBelow: 17, firstMonths: 6, note: 'Under 17: 80% of the SMIC.' }),
+  w('FR', 10.82, 'EUR', D(2026, 1, 1), 'https://www.service-public.gouv.fr/particuliers/vosdroits/F2300', { to: D(2026, 6, 1), ageFrom: 17, ageBelow: 18, firstMonths: 6, note: '17: 90% of the SMIC.' }),
+  w('FR', 9.85, 'EUR', D(2026, 6, 1), 'https://www.service-public.gouv.fr/particuliers/vosdroits/F2300', { ageBelow: 17, firstMonths: 6, note: 'Under 17: 80% of the SMIC.' }),
+  w('FR', 11.08, 'EUR', D(2026, 6, 1), 'https://www.service-public.gouv.fr/particuliers/vosdroits/F2300', { ageFrom: 17, ageBelow: 18, firstMonths: 6, note: '17: 90% of the SMIC.' }),
   // 1,221 a month in fourteen payments is 17,094 a year, over 2,080 hours.
   w('ES', 8.22, 'EUR', D(2026, 1, 1), 'https://www.boe.es/buscar/doc.php?id=BOE-A-2026-3815', { note: 'SMI, 17,094 a year over 2,080 hours; Spain publishes it by the day and the month.' }),
   w('DE', 13.90, 'EUR', D(2026, 1, 1), 'https://www.bmas.de/DE/Service/Presse/Pressemitteilungen/2025/mindestlohn-steigt-zum-ersten-januar-2026.html'),
@@ -141,6 +154,34 @@ export interface WageFloor {
 }
 
 /**
+ * Australia's junior rates, where the award pays a junior a share of the
+ * adult rate by age: [from age, share]. The General Retail award's and the
+ * Fitness award's (clause 17.2 and its like, as varied to 1 July 2026).
+ */
+const JUNIORS: Readonly<Record<string, Readonly<Record<string, { shares: readonly (readonly [number, number])[]; adultAt20AfterMonths?: number; source: string }>>>> = {
+  AU: {
+    retail: {
+      shares: [[0, 0.45], [16, 0.5], [17, 0.6], [18, 0.7], [19, 0.8], [20, 0.9], [21, 1]], adultAt20AfterMonths: 6,
+      source: 'General Retail Industry Award, clause 17.2: under 16 45%, 16 50%, 17 60%, 18 70%, 19 80%, 20 90%, the adult rate after six months with the employer',
+    },
+    sport: {
+      shares: [[0, 0.55], [17, 0.65], [18, 0.75], [19, 0.85], [20, 1]],
+      source: 'Fitness Industry Award: under 17 55%, 17 65%, 18 75%, 19 85%, 20 the adult rate',
+    },
+  },
+};
+
+/** The share of the adult rate a junior is paid in a line of work, by age and months with the employer; 1 for an adult. */
+export function juniorShare(iso: string, jobId: string, age?: number, months?: number): { share: number; source?: string } {
+  const rule = JUNIORS[iso]?.[jobId];
+  if (!rule || age === undefined) return { share: 1 };
+  let share = 1;
+  for (const [from, given] of rule.shares) if (age >= from) share = given;
+  if (age >= 20 && rule.adultAt20AfterMonths !== undefined && (months ?? 0) >= rule.adultAt20AfterMonths) share = 1;
+  return share < 1 ? { share, source: rule.source } : { share: 1 };
+}
+
+/**
  * What an hour at the floor pays here, now.
  *
  * Where SLATE has no figure it estimates one from the town's cost of living,
@@ -149,12 +190,13 @@ export interface WageFloor {
  * hourly job pays, converted into the town's money where SLATE has a rate for
  * it, and into dollars where it hasn't.
  */
-export function minimumWageAt(cityId: string, at: number, localCurrency: string, age?: number): WageFloor {
+export function minimumWageAt(cityId: string, at: number, localCurrency: string, age?: number, months?: number): WageFloor {
   const city = CITIES.require(cityId);
   const keys = [...jurisdictionPath(cityId), cityId];
   // A youth rate for the worker's age where the place has one, else the adult rate.
   const young = (one: MinimumWage) => one.ageFrom !== undefined || one.ageBelow !== undefined;
-  const fits = (one: MinimumWage) => age !== undefined && (one.ageFrom ?? 0) <= age && age < (one.ageBelow ?? Number.POSITIVE_INFINITY);
+  const fits = (one: MinimumWage) => age !== undefined && (one.ageFrom ?? 0) <= age && age < (one.ageBelow ?? Number.POSITIVE_INFINITY)
+    && (one.firstMonths === undefined || (months !== undefined && months < one.firstMonths));
   for (let i = keys.length - 1; i >= 0; i--) {
     const here = MINIMUM_WAGES.filter((one) => one.where === keys[i]
       && one.effectiveFrom <= at && (one.effectiveTo === undefined || at < one.effectiveTo));

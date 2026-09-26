@@ -12,7 +12,8 @@ import type { Simulation } from '@/engine';
 import { addCountryHolidays } from '@/engine/content/holidays';
 import { EMPLOYERS } from '@/engine/content/employers';
 import { MS_DAY, MS_HOUR, instantFromZoned } from '@/engine/core/time';
-import { SHIFT_KIND, callIn, hourlyWage, premiumsFor, type JobState } from '@/engine/systems/work';
+import { SHIFT_KIND, callIn, hourlyWage, premiumsFor, rateAt, type JobState } from '@/engine/systems/work';
+import { minimumWageAt } from '@/engine/content/wages';
 
 const life = (cityId: string, extra: Record<string, unknown> = {}, seed = 'labor') =>
   quickSave({ startLocationId: cityId, homeRegionId: cityId, livesWhereBorn: true, ...extra }, seed);
@@ -302,5 +303,44 @@ describe('leave that lapses, and sick days that can’t be held against you', ()
     houston.advanceTo(other.at);
     callIn(houston, other);
     expect(houston.player.job!.missed.length).toBe(1);
+  });
+});
+
+describe('youth rates that last only months, juniors’ shares, and a day in lieu', () => {
+  const at = Date.UTC(2026, 6, 15);
+  it('pays New Zealand’s starting-out rate to a 17-year-old in the first six months, and the adult rate after', () => {
+    expect(minimumWageAt('nz-wgn-wellington', at, 'NZD', 17, 3).hourly).toBe(19_16);
+    expect(minimumWageAt('nz-wgn-wellington', at, 'NZD', 17, 7).hourly).toBe(23_95);
+    expect(minimumWageAt('nz-wgn-wellington', at, 'NZD', 18, 3).hourly).toBe(23_95);
+  });
+
+  it('pays France’s SMIC less a fifth under 17 and a tenth at 17, until six months in', () => {
+    expect(minimumWageAt('fr-idf-paris', at, 'EUR', 16, 2).hourly).toBe(9_85);
+    expect(minimumWageAt('fr-idf-paris', at, 'EUR', 17, 2).hourly).toBe(11_08);
+    expect(minimumWageAt('fr-idf-paris', at, 'EUR', 17, 6).hourly).toBe(12_31);
+  });
+
+  it('pays an Australian junior the award’s share of the adult rate, and a 20-year-old the adult rate after six months', () => {
+    const adult = rateAt('au-nsw-sydney', 'retail', 'AUD', at, undefined, 30, 12).hourly;
+    expect(rateAt('au-nsw-sydney', 'retail', 'AUD', at, undefined, 17, 3).hourly).toBe(Math.round(adult * 0.6));
+    expect(rateAt('au-nsw-sydney', 'retail', 'AUD', at, undefined, 20, 3).hourly).toBe(Math.round(adult * 0.9));
+    expect(rateAt('au-nsw-sydney', 'retail', 'AUD', at, undefined, 20, 7).hourly).toBe(adult);
+    const coach = rateAt('au-nsw-sydney', 'sport', 'AUD', at, undefined, 30, 12).hourly;
+    expect(rateAt('au-nsw-sydney', 'sport', 'AUD', at, undefined, 18, 12).hourly).toBe(Math.round(coach * 0.75));
+    // Nothing for a line without junior rates on record.
+    const office = rateAt('au-nsw-sydney', 'office', 'AUD', at, undefined, 30, 12).hourly;
+    expect(rateAt('au-nsw-sydney', 'office', 'AUD', at, undefined, 17, 3).hourly).toBe(office);
+  });
+
+  it('gives a day in lieu for a New Zealand holiday worked, on top of time and a half', () => {
+    const sim = life('nz-wgn-wellington', { dayJob: true, wealth: 'modest', beforeActing: 'retail' });
+    addCountryHolidays('nz', readFileSync('public/holidays/nz.tsv', 'utf8'));
+    // Christmas Day 2026 is a Friday, a retail day.
+    sim.advanceTo(Date.UTC(2026, 11, 24, 0));
+    const shift = sim.timeline.pending().filter((i) => i.kind === SHIFT_KIND).sort((a, b) => a.at - b.at).find((i) => premiumsFor(sim, { ...sim.player.job!, week: undefined }, i.at, 1).some((e) => e.name === 'Holiday Premium'))!;
+    const before = sim.player.job!.leaveHours ?? 0;
+    sim.advanceTo(shift.at + 12 * MS_HOUR);
+    const hours = Number(shift.payload.hours);
+    expect((sim.player.job!.leaveHours ?? 0) - before).toBeCloseTo(hours + hours * 0.08, 6);
   });
 });

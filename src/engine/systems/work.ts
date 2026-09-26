@@ -38,7 +38,7 @@ import { jobFor, patternHours, patternOf, payCycleFor, tipsPerHour, type Job } f
 import { CommandError } from '../core/simulation';
 import { mayWorkIn } from '../domain/citizenship';
 import { outdoorWeather } from './weather';
-import { minimumWageAt } from '../content/wages';
+import { juniorShare, minimumWageAt } from '../content/wages';
 import { exchange } from '../content/currency';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import {
@@ -299,10 +299,21 @@ export interface Rate {
   basis: 'employer' | 'line' | 'typical' | 'estimate';
   source?: string;
   note?: string;
+  /** A junior's share of the adult rate, and the award that sets it. */
+  junior?: string;
 }
 
-export function rateAt(cityId: string, jobId: string, currency: string, at: Instant, employerId?: string, age?: number): Rate {
-  const floor = minimumWageAt(cityId, at, currency, age);
+export function rateAt(cityId: string, jobId: string, currency: string, at: Instant, employerId?: string, age?: number, months?: number): Rate {
+  const adult = adultRateAt(cityId, jobId, currency, at, employerId, age, months);
+  // A junior under an award that pays juniors a share of the adult rate.
+  const junior = juniorShare(countryAt(cityId).iso, jobId, age, months);
+  return junior.share < 1
+    ? { ...adult, hourly: Math.round(adult.hourly * junior.share), junior: `${Math.round(junior.share * 100)}% of the adult rate at your age: ${junior.source}` }
+    : adult;
+}
+
+function adultRateAt(cityId: string, jobId: string, currency: string, at: Instant, employerId?: string, age?: number, months?: number): Rate {
+  const floor = minimumWageAt(cityId, at, currency, age, months);
   const toSave = (amount: number, from: string) => (from === currency ? amount : exchange(amount, from, currency) ?? amount);
   const floorInSave = toSave(floor.hourly, floor.currency);
   const local = countryAt(cityId).currency;
@@ -328,7 +339,7 @@ export function rateAt(cityId: string, jobId: string, currency: string, at: Inst
 /** What an hour of their work pays, in the save's money (`rateAt`). */
 export function hourlyWage(sim: Simulation, person: Person): Money {
   const state = person.job;
-  return state ? rateAt(state.cityId, state.jobId, saveCurrency(sim.universe), sim.now, state.employerId, ageOf(person, sim.now)).hourly : 0;
+  return state ? rateAt(state.cityId, state.jobId, saveCurrency(sim.universe), sim.now, state.employerId, ageOf(person, sim.now), monthsWith(state, sim.now)).hourly : 0;
 }
 
 /** The same, for a job in a town at a date, in a currency: for a screen with no save yet. */
@@ -843,6 +854,8 @@ export function registerWork(sim: Simulation): void {
     const extras = premiumsFor(s, state, item.at, hours);
     state.unpaid.push({ at: item.at, hours, ...(extras.length ? { extras } : {}) });
     const law = lawOf(state);
+    // New Zealand: a holiday worked on a rostered day earns a paid day off, booked as leave.
+    if (law?.holiday?.dayInLieu && extras.some((one) => one.name === 'Holiday Premium')) state.leaveHours = (state.leaveHours ?? 0) + hours;
     if (law?.leave?.accrual) {
       const earned = hours * law.leave.accrual;
       state.leaveHours = (state.leaveHours ?? 0) + earned;

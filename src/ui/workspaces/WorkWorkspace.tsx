@@ -22,7 +22,7 @@ import { JOBS, jobFor, payCycleFor, payCycleWords } from '@/engine/content/jobs'
 import { LAYOFFS, type LaborLaw } from '@/engine/content/labor';
 import { minimumWageAt } from '@/engine/content/wages';
 import { inSaveMoney } from '@/engine/systems/banking';
-import { countryAt, employerById, lawOf, monthsWith, rateAt, type JobState } from '@/engine/systems/work';
+import { countryAt, employerById, employersFor, lawOf, monthsWith, rateAt, type JobState } from '@/engine/systems/work';
 import { claimFor } from '@/engine/systems/unemployment';
 import { settlementFor, taxYearStart, workYear } from '@/engine/systems/taxreturn';
 
@@ -39,8 +39,15 @@ export function WorkWorkspace() {
   const lines = EMPLOYERS[iso] ?? {};
   const [line, setLine] = useState<string>(job?.jobId ?? 'school');
   const employer = job ? employerById(job.cityId, job.employerId) : undefined;
-  const rate = job ? rateAt(job.cityId, job.jobId, cur, sim.now, job.employerId) : undefined;
-  const floor = minimumWageAt(cityId, sim.now, cur);
+  // Between jobs: who takes them on, a different employer from the one that let them go.
+  const looking = job?.lookingUntil !== undefined;
+  const nextEmployer = looking && job
+    ? (job.letGoBy !== undefined ? employersFor(job.cityId, job.jobId).find((one) => one.id !== job.letGoBy) : employer)
+    : undefined;
+  // At their age and months with the employer, as the payslip pays it: a junior's share, a youth minimum.
+  const age = Math.floor((sim.now - sim.player.birthInstant) / (365.2425 * 86_400_000));
+  const rate = job ? rateAt(job.cityId, job.jobId, cur, sim.now, job.employerId, age, monthsWith(job, sim.now)) : undefined;
+  const floor = minimumWageAt(cityId, sim.now, cur, age, job ? monthsWith(job, sim.now) : undefined);
   const law = job ? lawOf(job) : undefined;
   const slip = job?.lastSlip;
   const apply = (employerId: string, name: string) => {
@@ -64,12 +71,12 @@ export function WorkWorkspace() {
     <>
       <div className="page-head">
         <div className="eyebrow">Your Work</div>
-        <h1>{job ? employer?.name ?? jobFor(job.jobId).title : 'No Day Job'}</h1>
+        <h1>{looking ? 'Looking For Work' : job ? employer?.name ?? jobFor(job.jobId).title : 'No Day Job'}</h1>
         <p className="muted">
-          {job && employer ? `${employer.role}, ${jobFor(job.jobId).title.toLowerCase()}, since ${formatDate(job.since, sim.zone)}.` : ''}
-          {job && !employer ? `${jobFor(job.jobId).title}: no employer in that line is on record here.` : ''}
+          {job && employer && !looking ? `${employer.role}, ${jobFor(job.jobId).title.toLowerCase()}, since ${formatDate(job.since, sim.zone)}.` : ''}
+          {job && !employer && !looking ? `${jobFor(job.jobId).title}: no employer in that line is on record here.` : ''}
           {!job ? 'You’re not working. The employers where you live are below.' : ''}
-          {job?.lookingUntil !== undefined ? ` You start on ${formatDate(job.lookingUntil, sim.zone)}.` : ''}
+          {looking ? `${jobFor(job.jobId).title}, the work you know: ${nextEmployer?.name ?? 'the same kind of work'} takes you on from ${formatDate(job.lookingUntil!, sim.zone)}.` : ''}
           {job?.switchTo ? ` You move to ${employerById(job.cityId, job.switchTo.employerId)?.name ?? 'a new employer'} on ${formatDate(job.switchTo.at, sim.zone)}, when your notice here runs out.` : ''}
           {job?.leavingAt !== undefined && !job.switchTo && !job.laidOff ? ` You’ve given notice; your last day is ${formatDate(job.leavingAt, sim.zone)}.` : ''}
           {job?.leavingAt !== undefined && job.laidOff ? ` Your job is being cut; your last day is ${formatDate(job.leavingAt, sim.zone)}.` : ''}
@@ -87,6 +94,7 @@ export function WorkWorkspace() {
               {rate.basis === 'estimate' && 'SLATE has no employer’s rate or statistic for this work here, so it’s the legal floor times what the work usually pays over it: SLATE’s estimate.'}
               {` The legal floor here is ${money(floor.hourly)}${floor.kind === 'estimate' ? ', SLATE’s estimate' : ''}.`}
             </p>
+            {rate.junior && <p className="small" style={{ margin: 'var(--s2) 0 0' }}>You’re paid {rate.junior}.</p>}
             {employer?.payNote && <p className="xs dim" style={{ margin: 'var(--s2) 0 0' }}>{employer.payNote}</p>}
             {rate.source && <p className="xs dim" style={{ margin: 'var(--s2) 0 0' }}>Source: {rate.source}</p>}
           </Panel>
@@ -236,7 +244,7 @@ function lawWords(law: LaborLaw, jobId: string): { text: string; source: string 
   const covers = (lines?: readonly string[]) => !lines || lines.includes(jobId);
   if (law.saturday && covers(law.saturday.lines)) out.push({ text: `A Saturday shift pays ${pct(law.saturday.extra)} more.`, source: law.saturday.source });
   if (law.sunday && covers(law.sunday.lines)) out.push({ text: `A Sunday shift pays ${pct(law.sunday.extra)} more.`, source: law.sunday.source });
-  if (law.holiday && covers(law.holiday.lines)) out.push({ text: `A public holiday worked pays ${pct(law.holiday.extra)} more${law.holiday.only ? ', on the days the law names' : ''}.`, source: law.holiday.source });
+  if (law.holiday && covers(law.holiday.lines)) out.push({ text: `A public holiday worked pays ${pct(law.holiday.extra)} more${law.holiday.only ? ', on the days the law names' : ''}${law.holiday.dayInLieu ? ', and a paid day off in lieu' : ''}.`, source: law.holiday.source });
   if (law.evening && covers(law.evening.lines)) out.push({ text: `Hours from ${law.evening.from}:00 to ${law.evening.to % 24}:00 pay ${pct(law.evening.extra)} more.`, source: law.evening.source });
   if (law.night && covers(law.night.lines)) out.push({ text: `Night hours from ${law.night.from % 24}:00 to ${law.night.to % 24}:00 pay ${pct(law.night.extra)} more.`, source: law.night.source });
   if (law.overtime) {

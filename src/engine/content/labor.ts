@@ -29,6 +29,8 @@ export interface Premium {
   only?: readonly string[];
   /** A different extra for some lines of work, where each has its own award. */
   byLine?: Readonly<Record<string, number>>;
+  /** A holiday worked also earns a paid day off in lieu (New Zealand's alternative holiday). */
+  dayInLieu?: boolean;
   source: string;
 }
 
@@ -311,7 +313,7 @@ export const LABOR: Readonly<Record<string, LaborLaw>> = {
     },
   },
   NZ: {
-    holiday: { extra: 0.5, source: 'Holidays Act 2003: time and a half for a public holiday worked' },
+    holiday: { extra: 0.5, dayInLieu: true, source: 'Holidays Act 2003: time and a half for a public holiday worked on a day normally worked, and a paid alternative holiday' },
     leave: { accrual: 0.08, paidOut: true, source: 'Holidays Act 2003: four weeks, or 8% of gross on leaving' },
     sick: { fromDay: 1, rate: 1, daysAYear: 10, afterMonths: 6, paidBy: 'employer', source: 'Holidays Act 2003: 10 days a year after six months' },
     quitNotice: { steps: [[0, 14]], source: 'By the agreement; two weeks is the usual' },
