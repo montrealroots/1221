@@ -22,7 +22,7 @@ import { JOBS, jobFor, payCycleFor, payCycleWords } from '@/engine/content/jobs'
 import { LAYOFFS, type LaborLaw } from '@/engine/content/labor';
 import { minimumWageAt } from '@/engine/content/wages';
 import { inSaveMoney } from '@/engine/systems/banking';
-import { countryAt, employerById, employersFor, lawOf, monthsWith, rateAt, type JobState } from '@/engine/systems/work';
+import { FUND_RETURNS, countryAt, employerById, employersFor, lawOf, monthsWith, rateAt, type JobState } from '@/engine/systems/work';
 import { claimFor } from '@/engine/systems/unemployment';
 import { settlementFor, taxYearStart, workYear } from '@/engine/systems/taxreturn';
 
@@ -50,6 +50,7 @@ export function WorkWorkspace() {
   const floor = minimumWageAt(cityId, sim.now, cur, age, job ? monthsWith(job, sim.now) : undefined);
   const law = job ? lawOf(job) : undefined;
   const slip = job?.lastSlip;
+  const fund = useWorld((s) => Object.values(s.universe.accounts).find((a) => a.ownerId === s.player.id && !a.closedAt && a.category === 'pension'));
   const apply = (employerId: string, name: string) => {
     const answer = run<{ startsAt: number }>('work.apply', { employerId });
     if (answer.ok && answer.value) toast(`${name} will take you on from ${formatDate(answer.value.startsAt, sim.zone)}.`, 'positive');
@@ -117,6 +118,12 @@ export function WorkWorkspace() {
                   <strong className="small mono">{money(slip.gross - slip.lines.reduce((sum, one) => sum + one.amount, 0))}</strong>
                 </div>
                 {slip.employerPension > 0 && <p className="xs dim" style={{ margin: 0 }}>{slip.employerPensionName ?? 'Your employer'} added {money(slip.employerPension)} to it.</p>}
+                {fund && (
+                  <p className="xs dim" style={{ margin: 0 }}>
+                    {`Your ${fund.name} holds ${money(fund.balance)}`}
+                    {FUND_RETURNS[fund.name] ? `, growing a twelfth of ${pct(FUND_RETURNS[fund.name]!.rate)} a month, its last published year (${FUND_RETURNS[fund.name]!.source}).` : '. No return from it was on record, so it doesn’t grow.'}
+                  </p>
+                )}
                 {slip.estimate && <p className="xs dim" style={{ margin: 0 }}>{slip.lines.length > 0 ? 'SLATE doesn’t have this country’s payroll rules, so the deductions are its approximation.' : 'SLATE doesn’t have this country’s payroll rules, so nothing is taken off: this is the pay before tax.'}</p>}
               </div>
             )}

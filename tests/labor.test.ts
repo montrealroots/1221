@@ -11,7 +11,7 @@ import { quickSave } from '@/engine';
 import type { Simulation } from '@/engine';
 import { addCountryHolidays } from '@/engine/content/holidays';
 import { EMPLOYERS } from '@/engine/content/employers';
-import { MS_DAY, MS_HOUR, instantFromZoned } from '@/engine/core/time';
+import { MS_DAY, MS_HOUR, instantFromZoned, zonedParts } from '@/engine/core/time';
 import { SHIFT_KIND, callIn, hourlyWage, premiumsFor, rateAt, type JobState } from '@/engine/systems/work';
 import { minimumWageAt } from '@/engine/content/wages';
 
@@ -401,5 +401,26 @@ describe('a line’s own award or agreement, and a holiday its work can’t be d
     expect(unity(cafe)).toBe(true);
     shop.advanceTo(Date.UTC(2026, 9, 3, 12));
     expect(shop.player.job!.unpaid.some((one) => one.kind === 'holiday' && one.hours === 7)).toBe(true);
+  });
+});
+
+describe('a pension fund that grows', () => {
+  it('grows Australia’s super by a twelfth of its last published year on the 1st, and not Britain’s workplace pension', () => {
+    const sydney = life('au-nsw-sydney', { dayJob: true, wealth: 'modest' });
+    sydney.advanceTo(Date.UTC(2026, 4, 3));
+    const returns = sydney.universe.transactions.filter((t) => t.category === 'pension_return');
+    expect(returns.length).toBeGreaterThan(0);
+    // Once a month, on the 1st where the life is lived.
+    expect(returns.every((t) => zonedParts(t.at, sydney.homeZone).day === 1)).toBe(true);
+    const fund = Object.values(sydney.universe.accounts).find((a) => a.category === 'pension')!;
+    const last = returns[returns.length - 1]!;
+    const index = sydney.universe.transactions.indexOf(last);
+    const before = sydney.universe.transactions.slice(0, index).reduce((sum, t) => sum + t.postings.filter((p) => p.accountId === fund.id).reduce((a, p) => a + p.amount, 0), 0);
+    const earned = last.postings.find((p) => p.accountId === fund.id)!.amount;
+    expect(earned).toBe(Math.round(before * (1.086 ** (1 / 12) - 1)));
+    const london = life('uk-eng-london', { dayJob: true, wealth: 'modest' });
+    london.advanceTo(Date.UTC(2026, 4, 3));
+    expect(london.universe.transactions.some((t) => t.category === 'pension_return')).toBe(false);
+    expect(sydney.ledger.audit()).toEqual([]);
   });
 });

@@ -188,10 +188,15 @@ part the tool cannot see.
   church. Japan's contributions are on the grade of standard remuneration
   the month's pay falls in (Kyōkai Kenpo Tokyo's fiscal 2026 table), set
   from the pay each payday rather than fixed at hiring and each summer.
-- **A pension fund fills and does nothing else.** What a payslip puts into
-  a fund the worker owns (Iceland, New Zealand, Australia, Britain,
-  Ireland, Mexico) is theirs and counts in their worth, and nothing grows
-  it or pays it out, because no fund's returns are modeled and nobody in
+- **A pension fund grows in three countries and pays nothing out.** What a
+  payslip puts into a fund the worker owns (Iceland, New Zealand, Australia,
+  Britain, Ireland, Mexico) is theirs and counts in their worth. Since
+  2026-09-25 Iceland's, Australia's and Mexico's grow each month by a
+  twelfth of their last published year's return (`FUND_RETURNS`): a real
+  return for Iceland, nominal ones for the other two, which run ahead of
+  SLATE's prices, since those don't rise. Britain's Nest, KiwiSaver's
+  default funds and Ireland's My Future Fund published none the research
+  could reach, so they don't grow. Nothing pays a fund out, since nobody in
   SLATE has retired.
 - **Some of what employment law gives isn't modeled.** The law where a
   job is (`content/labor.ts`) pays its premiums, overtime, leave, sick

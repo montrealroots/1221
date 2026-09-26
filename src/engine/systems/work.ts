@@ -497,6 +497,20 @@ const FUNDS: Readonly<Record<string, string>> = {
   IS: 'Lífeyrissjóður', NZ: 'KiwiSaver', AU: 'Superannuation', GB: 'Workplace Pension', IE: 'My Future Fund', MX: 'Afore',
 };
 
+/**
+ * What a fund returned in its last published year, as a year's rate, applied
+ * a twelfth at a time on the 1st: the fund's own figure, not a promise, and
+ * SLATE's prices don't rise, so a nominal return runs ahead of what it
+ * would buy. Britain's Nest, KiwiSaver's default funds and Ireland's My
+ * Future Fund published none the research could reach, so theirs don't
+ * grow. Until 2026-09-25 no fund grew.
+ */
+export const FUND_RETURNS: Readonly<Record<string, { rate: number; source: string }>> = {
+  'Lífeyrissjóður': { rate: 0.032, source: 'Lífeyrissjóður verzlunarmanna, the common fund’s real return for 2025: 3.2%' },
+  Superannuation: { rate: 0.086, source: 'APRA, every regulated fund’s return for the year to June 2026, after fees and tax: 8.6%' },
+  Afore: { rate: 0.08436, source: 'CONSAR, August 2026: the net return indicator of the ten Afores’ SIEFORE Básica 90-94, averaged, 8.44%' },
+};
+
 /** The person's pension fund, opened the first time anything is paid into it. */
 function pensionFund(sim: Simulation, person: Person, iso: string): string {
   const found = Object.values(sim.universe.accounts).find((a) => a.ownerId === person.id && !a.closedAt && a.category === 'pension');
@@ -1138,6 +1152,25 @@ export function registerWork(sim: Simulation): void {
   // from, by the five minutes, and by half an hour in a save whose rollover
   // an older build had armed late. Run as the rollover's reactor it adds no
   // stop at all.
+  // A fund's return on the 1st, a twelfth of its year's rate, compounded.
+  sim.onEvent('world.day_rollover', 'work.pension', (_event, { sim: s }) => {
+    if (zonedParts(s.now, s.homeZone).day !== 1) return;
+    for (const account of Object.values(s.universe.accounts)) {
+      if (account.category !== 'pension' || account.closedAt || account.balance <= 0) continue;
+      const fund = FUND_RETURNS[account.name];
+      if (!fund) continue;
+      const earned = Math.round(account.balance * ((1 + fund.rate) ** (1 / 12) - 1));
+      if (earned <= 0) continue;
+      s.post({
+        memo: `${account.name}: the month’s return`, category: 'pension_return',
+        postings: [
+          { accountId: s.nominalAccount('income', 'Pension Returns').id, amount: -earned },
+          { accountId: account.id, amount: earned },
+        ],
+      });
+    }
+  });
+
   sim.onEvent('world.day_rollover', 'work.rota', (_event, { sim: s }) => {
     for (const person of Object.values(s.universe.people)) {
       const state = person.job;
