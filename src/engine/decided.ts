@@ -24,6 +24,7 @@ import { CITIES } from './content/geography';
 import { weatherOn } from './systems/weather';
 import { endBetween } from './systems/mortality';
 import { accountNumber } from './systems/banknumber';
+import { fraudOn } from './systems/security';
 import { bankById } from './content/banks';
 import { MS_DAY } from './core/time';
 
@@ -174,3 +175,37 @@ defineDecider<Opening, string>({
   decide: ({ sim, bankId, kind }) => accountNumber(sim, sim.player, bankById(bankId)!, kind),
 });
 
+
+// ---------------------------------------------------------------------------
+// Somebody else's use of a card
+// ---------------------------------------------------------------------------
+
+interface Theft { sim: Simulation; cityId: string }
+
+/** A country for each kind of law and rate the table has: the US's, Britain's, the EU's, Australia's. */
+const SPREAD_OF_FRAUD = ['us-ny-newyork', 'uk-eng-london', 'fr-idf-paris', 'au-nsw-sydney'];
+const fraudCity = (t: number) => SPREAD_OF_FRAUD[Math.min(SPREAD_OF_FRAUD.length - 1, Math.floor(t * SPREAD_OF_FRAUD.length))]!;
+
+defineDecider<Theft, string>({
+  id: 'bank.fraud',
+  decides: 'Whether somebody else uses a card on a day, which card, how much, and whether the bank stops it: here, the first such day in thirty years.',
+  drawnIn: 'src/engine/systems/security.ts',
+  reads: {
+    // Where they bank: the country's rate, its average case and its banks' share stopped.
+    country: (o, t) => ({ ...o, cityId: fraudCity(t), sim: livingIn(fraudCity(t), 0) }),
+    // Two saves are two lives.
+    world: (o, t) => ({ ...o, sim: livingIn(o.cityId, Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ cityId: SPREAD_OF_FRAUD[seed % SPREAD_OF_FRAUD.length]!, sim: livingIn(SPREAD_OF_FRAUD[seed % SPREAD_OF_FRAUD.length]!, seed) }),
+  decide: ({ sim }) => {
+    for (let day = 0; day < 30 * 365; day += 1) {
+      const hit = fraudOn(sim, sim.player, sim.now + day * MS_DAY);
+      if (hit) return 'day ' + day + ': ' + hit.which + ' ' + hit.amount + (hit.stopped ? ' stopped' : '');
+    }
+    return 'none';
+  },
+});
+
+function livingIn(cityId: string, seed: number): Simulation {
+  return quickSave({ startLocationId: cityId, homeRegionId: cityId, livesWhereBorn: true }, `fraud-${seed}`);
+}

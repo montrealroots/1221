@@ -25,8 +25,9 @@ const STATE_DIGIT: Readonly<Record<string, string>> = {
   'au-01': '2', 'au-02': '2', 'au-03': '5', 'au-04': '4', 'au-05': '5', 'au-06': '7', 'au-07': '3', 'au-08': '6',
 };
 
-export function accountNumber(sim: Simulation, person: Person, bank: Bank, kind: 'checking' | 'savings'): string {
-  const rng = sim.rng('bank.number', person.id, bank.id, kind, String(sim.now));
+export function accountNumber(sim: Simulation, person: Person, bank: Bank, kind: 'checking' | 'savings', renumbered = 0): string {
+  // A renumbering draws again, not the number the account opened with at the same moment.
+  const rng = sim.rng('bank.number', person.id, bank.id, kind, String(sim.now), ...(renumbered ? [String(renumbered)] : []));
   const d = () => Math.floor(rng.next() * 10);
   const n = (count: number) => digits(d, count);
   const code = bank.code;

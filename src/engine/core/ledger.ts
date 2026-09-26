@@ -31,6 +31,17 @@ export function isLiability(kind: AccountKind): boolean {
   return LIABILITY_KINDS.includes(kind);
 }
 
+/** A card in the hand: its number's last four, its expiry, whether it's locked or stopped and why, a replacement on its way, and whether the bills on it still have its number. */
+export interface Plastic {
+  last4: string;
+  expiresAt: Instant;
+  issued?: number;
+  locked?: boolean;
+  stopped?: 'lost' | 'stolen' | 'damaged' | 'fraud';
+  replacementAt?: Instant;
+  billersStale?: boolean;
+}
+
 export interface Account {
   id: string;
   saveId: string;
@@ -52,6 +63,8 @@ export interface Account {
   /** Grouping for statements: 'housing', 'transport', 'career', ... */
   category?: string;
   last4?: string;
+  /** The card on it: the debit card on a current account, the credit card on a card's own (`systems/security.ts`). */
+  plastic?: Plastic;
   /** The real bank it is held at (`content/banks.ts`), for a bank account. */
   bankId?: string;
   /** The account's number as its country writes it (`systems/banknumber.ts`). */

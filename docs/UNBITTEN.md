@@ -181,6 +181,15 @@ part the tool cannot see.
   on debit card purchases is published by few of the 60 banks and isn't
   enforced; the daily ATM limit is. A card whose cash advance terms weren't
   found charges SLATE's estimate, 5% or $10 at the purchase rate, and says so.
+- **Some of what fraud costs is an estimate or missing.** A case's size
+  runs from a quarter of the country's average to seven quarters, SLATE's
+  estimate of the spread. Only Britain publishes the share its banks stop;
+  elsewhere none is stopped. Canada, Mexico and New Zealand publish a rate
+  but no average case, and Japan and Korea no rate, so nobody there meets
+  fraud. France's and New Zealand's rates include more than card fraud. A
+  card that isn't reported lost is never lost: no country publishes how
+  often. Cards last four years where the bank doesn't say, and a
+  replacement takes seven business days, SLATE's estimates.
 - **Some of a card's offers aren't modeled.** A card's bonus reward
   categories are shown in the bank's words and not paid; SLATE pays the
   base rate on everything. A plan's fee is the most the bank says it

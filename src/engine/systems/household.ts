@@ -269,7 +269,7 @@ setPaymentHooks({ fromCurrent: payFromCurrent, owe, returned: (sim, person, amou
 /** On the card, if it has room, as a recurring card payment. True if it went. */
 function onCard(sim: Simulation, person: Person, amount: Money, memo: string, category: string): boolean {
   const card = cardOf(sim, person);
-  if (!card || cardRoom(person, card) < amount) return false;
+  if (!card || cardRoom(person, card, true) < amount) return false;
   sim.post({ memo, category, postings: [{ accountId: sim.nominalAccount('expense', expenseFor(category)).id, amount }, { accountId: card.id, amount: -amount }] });
   return true;
 }
@@ -327,8 +327,21 @@ export function spend(sim: Simulation, person: Person, amount: Money, memo: stri
   }
   const current = checkingOf(sim, person);
   const before = current?.balance ?? 0;
-  // On the credit card first where that's how they pay for the day, then the debit card.
   const cardFree = cardRoom(person, card);
+  // A debit card locked, lost or stolen buys nothing: the day's shopping goes
+  // on the credit card or in cash, or isn't bought (`systems/security.ts`).
+  if (category === 'food' && current?.plastic && (current.plastic.locked || current.plastic.stopped)) {
+    const wallet = accountsOf(sim, person).find((a) => a.kind === 'cash');
+    const inHand = Math.max(0, wallet?.balance ?? 0);
+    if (cardFree + inHand < amount) return false;
+    const onCredit = Math.min(amount, cardFree);
+    const postings = [{ accountId: sim.nominalAccount('expense', 'Food').id, amount }];
+    if (onCredit > 0 && card) postings.push({ accountId: card.id, amount: -onCredit });
+    if (amount > onCredit && wallet) postings.push({ accountId: wallet.id, amount: -(amount - onCredit) });
+    sim.post({ memo, category, postings });
+    return true;
+  }
+  // On the credit card first where that's how they pay for the day, then the debit card.
   const creditFirst = category === 'food' && paymentsOf(person).everyday === 'credit' ? Math.min(amount, cardFree) : 0;
   const bank = drawFromBank(sim, person, amount - creditFirst, overdraft);
   const fromCard = creditFirst + Math.min(bank.short, cardFree - creditFirst);

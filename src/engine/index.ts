@@ -42,6 +42,7 @@ import { armCardLife, registerCardLife } from './systems/cardlife';
 import { registerCash } from './systems/cash';
 import { registerAccountLife } from './systems/accountlife';
 import { registerCardOffers } from './systems/cardoffers';
+import { registerSecurity } from './systems/security';
 import { CARDS } from './content/cards';
 import { registerWorld } from './world/world';
 import {
@@ -72,6 +73,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerCash(sim);
   registerAccountLife(sim);
   registerCardOffers(sim);
+  registerSecurity(sim);
   registerLending(sim);
 }
 

@@ -15,8 +15,8 @@ When a module lands, its rows change to **Has it** in the same commit.
 
 | | Functions |
 |---|---|
-| Has it | 151 |
-| To build | 24 |
+| Has it | 168 |
+| To build | 7 |
 | Waits | 101 |
 | Outside the game | 30 |
 | **All** | **306** |
@@ -30,7 +30,7 @@ When a module lands, its rows change to **Has it** in the same commit.
 | 3 | Cash | Done, 2026-09-26 |
 | 4 | The card’s life: applying, limits, closing, default | Done, 2026-09-26 |
 | 5 | How a card charges interest | Done, 2026-09-26 |
-| 6 | Security: locking, loss, theft and fraud | 17 to build |
+| 6 | Security: locking, loss, theft and fraud | Done, 2026-09-26 |
 | 7 | Savings and an account’s life | Done, 2026-09-26 |
 | 8 | Each card’s own offers (research first) | Done, 2026-09-26 |
 | 9 | Pending payments and holds | 7 to build |
@@ -65,7 +65,7 @@ When a module lands, its rows change to **Has it** in the same commit.
 | A22 | Death or incapacity of an owner | Outside the game | Outside the game: a life ending ends the game; the end screen shows what was left. |
 | A23 | Disputes between owners / adverse claims | Waits | Waits on other owners. |
 | A24 | No assignment of the account | Has it | Nothing lets an account be signed over. |
-| A25 | Replacement account number | Module 6 | A compromised account gets a new number. |
+| A25 | Replacement account number | Has it | A new account number where the bank moves a compromised account itself. |
 | A26 | Arbitration opt-out | Outside the game | Outside the game: arbitration is a legal process outside play. |
 | A27 | Residency and eligibility | Waits | Waits on moving abroad. |
 
@@ -135,7 +135,7 @@ When a module lands, its rows change to **Has it** in the same commit.
 | A82 | Foreign-currency card use | Waits | Waits on travel. |
 | A83 | Pay abroad in home currency (dynamic currency conversion) | Waits | Waits on travel. |
 | A84 | Buy foreign currency at a branch | Waits | Waits on travel. |
-| A85 | Card-on-file updating | Module 6 | A replaced card’s number is passed to the bills on it. |
+| A85 | Card-on-file updating | Has it | A replaced card’s number reaches its bills where the bank passes it on; otherwise they’re declined until the holder does. |
 | A86 | Bank refuses a payment instruction | Has it | Every refused instruction says why. |
 
 ### A.4 Statements and records
@@ -175,7 +175,7 @@ When a module lands, its rows change to **Has it** in the same commit.
 | A112 | Overdraft collection and charge-off | Has it | Charge-off and collections. |
 | A113 | Overdraft opt-in for ATM and one-time debit | Has it | Debit card overdraft opt-in. |
 | A114 | ATM fees | Has it | ATM fees, the bank’s and the ATM owner’s. |
-| A115 | Rush card replacement fee | Module 6 | A rush replacement card’s fee. |
+| A115 | Rush card replacement fee | Has it | A rush replacement, for the bank’s fee, where it has one. |
 | A116 | Legal processing fee | Waits | Waits on garnishment. |
 | A117 | Custody fee on large balances | Waits | Waits on research: no bank on record charges one in 2026. |
 | A118 | Fees charged regardless of balance | Has it | Fees can overdraw the account. |
@@ -185,9 +185,9 @@ When a module lands, its rows change to **Has it** in the same commit.
 
 | # | Function | SLATE | How, or what it waits on |
 |---|---|---|---|
-| A120 | Electronic transfer error claim | Module 6 | Claim an error on an electronic payment. |
-| A121 | Unauthorized card or electronic transfer liability | Module 6 | US liability for unauthorized use: $50, $500 or unlimited by how fast it’s reported. |
-| A122 | Unauthorized payment refund (PSD2 rule) | Module 6 | PSD2 refund of an unauthorized payment by the next working day. |
+| A120 | Electronic transfer error claim | Has it | Report a payment as not yours. |
+| A121 | Unauthorized card or electronic transfer liability | Has it | US liability: $50, $500 or everything by how fast it’s reported. |
+| A122 | Unauthorized payment refund (PSD2 rule) | Has it | The European rules’ refund by the next working day, and their €50. |
 | A123 | Refund when the amount was unexpected | Waits | Waits on merchants. |
 | A124 | Direct debit refund guarantee | Has it | The Direct Debit Guarantee’s refund (UK) and SEPA’s eight weeks. |
 | A125 | Debit card chargeback | Waits | Waits on merchants. |
@@ -212,13 +212,13 @@ When a module lands, its rows change to **Has it** in the same commit.
 | A139 | Contactless and payment limits | Outside the game | Outside the game: contactless taps. |
 | A140 | Authorization hold | Module 9 | Authorization holds. |
 | A141 | Hold on existing funds when cashing a check | Waits | Waits on checks. |
-| A142 | Card lock / freeze | Module 6 | Lock and unlock the debit card. |
-| A143 | Report a lost or stolen card | Module 6 | Report the card lost or stolen; a new one follows. |
-| A144 | Automatic card reissue | Module 6 | The card expires and is reissued. |
+| A142 | Card lock / freeze | Has it | Lock and unlock the debit card. |
+| A143 | Report a lost or stolen card | Has it | Report the card lost, stolen or damaged; a new one follows. |
+| A144 | Automatic card reissue | Has it | The card is reissued before it expires. |
 | A145 | PIN set and change | Outside the game | Outside the game: PINs. |
 | A146 | Strong authentication and trusted devices | Outside the game | Outside the game: two-factor sign-in. |
 | A147 | Account alerts | Has it | Alerts: low balance, a large payment, a statement ready. |
-| A148 | Bank freezes or blocks for fraud, scam or compliance | Module 6 | The bank blocks a suspect transaction. |
+| A148 | Bank freezes or blocks for fraud, scam or compliance | Has it | The bank stops a share of fraud, at its country’s rate. |
 | A149 | Card suspended for risk | Has it | The card suspended while the account is in collections. |
 | A150 | Credential responsibility | Outside the game | Outside the game: credentials. |
 | A151 | Third-party access control | Outside the game | Outside the game: third-party apps. |
@@ -417,7 +417,7 @@ When a module lands, its rows change to **Has it** in the same commit.
 | C63 | US fee caps | Has it | The US fee caps. |
 | C64 | No interest on default fees for 28 days | Has it | UK default fees free of interest for 28 days. |
 | C65 | Military cost cap | Waits | Waits on military service. |
-| C66 | Card replacement fee | Module 6 | A replacement card’s fee (Germany). |
+| C66 | Card replacement fee | Has it | The bank’s replacement card fee, and when it’s free. |
 
 ### C.6 Protections and disputes
 
@@ -425,10 +425,10 @@ When a module lands, its rows change to **Has it** in the same commit.
 |---|---|---|---|
 | C67 | Billing error dispute | Waits | Waits on merchants. |
 | C68 | Claims against the issuer for a bad purchase | Waits | Waits on merchants. |
-| C69 | Unauthorized use liability | Module 6 | US liability for unauthorized card use, at most $50. |
+| C69 | Unauthorized use liability | Has it | US liability for a credit card, $50. |
 | C70 | Section 75 joint liability | Waits | Waits on merchants. |
 | C71 | Chargeback | Waits | Waits on merchants. |
-| C72 | Unauthorized card use refund (PSD2) | Module 6 | PSD2 refund of unauthorized card use. |
+| C72 | Unauthorized card use refund (PSD2) | Has it | The European rules’ refund for a credit card. |
 | C73 | Refund when the amount was unexpected | Waits | Waits on merchants. |
 | C74 | Failed or wrong transfer refund | Waits | Waits on transfers the bank gets wrong. |
 | C75 | Persistent debt intervention | Has it | UK persistent debt: the bank steps in at 18 and 36 months. |
@@ -445,11 +445,11 @@ When a module lands, its rows change to **Has it** in the same commit.
 | C81 | Temporary limit increase | Waits | Waits on research: a temporary limit is a bank’s own offer, and none was found. |
 | C82 | Cash limit and daily cash caps | Has it | The cash limit. |
 | C83 | Contactless limit | Outside the game | Outside the game: contactless taps. |
-| C84 | Card controls / freeze | Module 6 | Freeze the card. |
-| C85 | Report lost or stolen | Module 6 | Report the card lost or stolen. |
+| C84 | Card controls / freeze | Has it | Lock the credit card; its bills still go through. |
+| C85 | Report lost or stolen | Has it | Report the credit card lost or stolen. |
 | C86 | Account restriction by the issuer | Has it | The bank restricts the card. |
 | C87 | Remove an authorized user | Waits | Waits on other people. |
-| C88 | Card replacement and exchange | Module 6 | A new card at expiry. |
+| C88 | Card replacement and exchange | Has it | A new credit card before it expires. |
 | C89 | PIN and security duties | Outside the game | Outside the game: PINs. |
 
 ### C.8 Notices and communications
@@ -462,7 +462,7 @@ When a module lands, its rows change to **Has it** in the same commit.
 | C93 | Minimum-payment warning | Has it | The minimum payment warning: how long paying the minimum takes, and what it costs. |
 | C94 | Over-limit opt-in and revocation notices | Has it | Over-limit opt-in notices. |
 | C95 | Arrears and default notices | Has it | Arrears and default notices. |
-| C96 | Fraud and security contact | Module 6 | The bank asks about a suspect payment. |
+| C96 | Fraud and security contact | Has it | The bank asks about a payment it stopped. |
 | C97 | Currency-conversion cost message | Waits | Waits on travel. |
 | C98 | Contact consent and call recording | Outside the game | Outside the game: phone calls. |
 | C99 | Keep details current / living abroad | Outside the game | Outside the game: contact details. |
