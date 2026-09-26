@@ -64,7 +64,9 @@ describe('premiums for when a shift falls', () => {
     // From four for seven hours: six of them after five.
     const evening = local(sim, 2026, 1, 13, 16);
     expect(named(premiumsFor(sim, job('is-39-reykjavik', 'hospitality'), evening, 7), 'Evening Premium')).toBeCloseTo(6 * 0.33, 6);
-    expect(named(premiumsFor(sim, job('is-39-reykjavik', 'office'), evening, 7), 'Evening Premium')).toBe(0);
+    // Office work is under VR–SA's own rate from five; construction under neither.
+    expect(named(premiumsFor(sim, job('is-39-reykjavik', 'office'), evening, 7), 'Evening Premium')).toBeCloseTo(6 * 0.394, 6);
+    expect(named(premiumsFor(sim, job('is-39-reykjavik', 'trades'), evening, 7), 'Evening Premium')).toBe(0);
   });
 });
 
@@ -111,11 +113,15 @@ describe('paid leave', () => {
     expect(sim.universe.scheduled.find((i) => i.id === shift.id)?.status).toBe('cancelled');
   });
 
-  it('can’t be taken in Japan before six months, and comes as pay in Canada', () => {
+  it('is granted in Japan at six months, by the table for a short week, and comes as pay in Canada', () => {
     const tokyo = life('jp-13-tokyo', { dayJob: true, wealth: 'modest' });
-    tokyo.player.job!.leaveHours = 100;
     expect(tokyo.execute({ kind: 'work.take_leave', payload: {} }).ok).toBe(false);
-    tokyo.player.job!.since -= 200 * MS_DAY;
+    tokyo.advanceBy(170 * MS_DAY);
+    expect(tokyo.player.job!.leaveHours ?? 0).toBe(0);
+    tokyo.advanceBy(30 * MS_DAY);
+    // Café work is four seven-hour days, under 30 hours: 7 days at six months.
+    expect(tokyo.player.job!.leaveHours).toBe(7 * 7);
+    expect(tokyo.universe.notifications.some((n) => n.title === 'Paid Leave Granted')).toBe(true);
     expect(tokyo.execute({ kind: 'work.take_leave', payload: {} }).ok).toBe(true);
     const toronto = life('ca-on-toronto', { dayJob: true, wealth: 'modest' });
     expect(toronto.execute({ kind: 'work.take_leave', payload: {} }).ok).toBe(false);
@@ -306,6 +312,22 @@ describe('leave that lapses, and sick days that can’t be held against you', ()
   });
 });
 
+describe('Japan’s leave granted a year at a time', () => {
+  it('grants full time 10 days at six months, and nothing a year on for a year under 80% attended', () => {
+    const tokyo = life('jp-13-tokyo', { dayJob: true, wealth: 'modest' });
+    tokyo.must({ kind: 'work.set_hours', payload: { fullTime: true } });
+    tokyo.advanceBy(200 * MS_DAY);
+    expect(tokyo.player.job!.leaveHours).toBe(10 * 8);
+    // Away for most of the next year's shifts: under 80% attended.
+    const job = tokyo.player.job!;
+    job.attendance = { due: 100, worked: 70 };
+    job.since = tokyo.now - 18 * 30.4375 * MS_DAY + MS_DAY;
+    tokyo.advanceBy(2 * MS_DAY);
+    expect(tokyo.universe.notifications.some((n) => n.title === 'No Leave Granted')).toBe(true);
+    expect(job.leaveGrants).toBe(2);
+  });
+});
+
 describe('youth rates that last only months, juniors’ shares, and a day in lieu', () => {
   const at = Date.UTC(2026, 6, 15);
   it('pays New Zealand’s starting-out rate to a 17-year-old in the first six months, and the adult rate after', () => {
@@ -342,5 +364,42 @@ describe('youth rates that last only months, juniors’ shares, and a day in lie
     sim.advanceTo(shift.at + 12 * MS_HOUR);
     const hours = Number(shift.payload.hours);
     expect((sim.player.job!.leaveHours ?? 0) - before).toBeCloseTo(hours + hours * 0.08, 6);
+  });
+});
+
+describe('a line’s own award or agreement, and a holiday its work can’t be done on', () => {
+  const flatOf = (list: { name: string; flat?: number }[], name: string) => list.find((one) => one.name === name)?.flat ?? 0;
+  it('pays Australia’s awards by line, on weekdays: retail evenings, security nights, hospitality’s dollars', () => {
+    const sim = life('au-nsw-sydney');
+    const tuesday = (h: number) => local(sim, 2026, 1, 13, h);
+    expect(named(premiumsFor(sim, job('au-nsw-sydney', 'retail'), tuesday(17), 7), 'Evening Premium')).toBeCloseTo(3 * 0.25, 6);
+    expect(named(premiumsFor(sim, job('au-nsw-sydney', 'retail'), local(sim, 2026, 1, 10, 17), 7), 'Evening Premium')).toBe(0);
+    expect(named(premiumsFor(sim, job('au-nsw-sydney', 'armed_forces'), tuesday(12), 10), 'Night Premium')).toBeCloseTo(4 * 0.217, 6);
+    expect(flatOf(premiumsFor(sim, job('au-nsw-sydney', 'hospitality'), tuesday(16), 7), 'Evening Loading')).toBe(4 * 2_95);
+    expect(named(premiumsFor(sim, job('au-nsw-sydney', 'school'), tuesday(16), 7), 'Evening Premium')).toBeCloseTo(0.1, 6);
+    expect(named(premiumsFor(sim, job('au-nsw-sydney', 'hospitality'), tuesday(16), 7), 'Night Premium')).toBe(0);
+  });
+
+  it('pays Iceland’s shop and office work by VR–SA: weekday evenings and the weekend', () => {
+    const sim = life('is-39-reykjavik');
+    expect(named(premiumsFor(sim, job('is-39-reykjavik', 'retail'), local(sim, 2026, 1, 13, 12), 8), 'Evening Premium')).toBeCloseTo(2 * 0.383, 6);
+    expect(named(premiumsFor(sim, job('is-39-reykjavik', 'retail'), local(sim, 2026, 1, 10, 10), 7), 'Saturday Premium')).toBeCloseTo(7 * 0.383, 6);
+    expect(named(premiumsFor(sim, job('is-39-reykjavik', 'office'), local(sim, 2026, 1, 13, 12), 8), 'Evening Premium')).toBeCloseTo(3 * 0.394, 6);
+    // Café work stays on Efling–SA's own.
+    expect(named(premiumsFor(sim, job('is-39-reykjavik', 'school'), local(sim, 2026, 1, 10, 10), 7), 'Saturday Premium')).toBeCloseTo(7 * 0.45, 6);
+  });
+
+  it('keeps Berlin’s shops shut on a public holiday, paid as if worked, and its cafés open', () => {
+    addCountryHolidays('de', readFileSync('public/holidays/de.tsv', 'utf8'));
+    const shop = life('de-be-berlin', { dayJob: true, wealth: 'modest', beforeActing: 'retail' });
+    const cafe = life('de-be-berlin', { dayJob: true, wealth: 'modest', beforeActing: 'school' });
+    // German Unity Day, Saturday 3 October 2026: both lines work Saturdays.
+    const unity = (sim: Simulation) => sim.timeline.pending().some((i) => i.kind === SHIFT_KIND && new Date(i.at).toISOString().startsWith('2026-10-03'));
+    shop.advanceTo(Date.UTC(2026, 8, 25));
+    cafe.advanceTo(Date.UTC(2026, 8, 25));
+    expect(unity(shop)).toBe(false);
+    expect(unity(cafe)).toBe(true);
+    shop.advanceTo(Date.UTC(2026, 9, 3, 12));
+    expect(shop.player.job!.unpaid.some((one) => one.kind === 'holiday' && one.hours === 7)).toBe(true);
   });
 });

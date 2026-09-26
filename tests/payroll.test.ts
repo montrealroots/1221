@@ -8,7 +8,7 @@
  */
 
 import { describe, expect, it } from 'vitest';
-import { payrollYear } from '@/engine/content/payroll';
+import { japanStandard, payrollYear } from '@/engine/content/payroll';
 
 const at = Date.UTC(2026, 8, 25);
 const year = (iso: string, gross: number, path: string[], extra: Record<string, number> = {}) =>
@@ -132,5 +132,22 @@ describe('each country’s payslip', () => {
     // North Korea: nothing found, so SLATE's approximation, and it says so.
     const none = payrollYear('KP', 20_000_00, { path: ['KP'], age: 30, at });
     expect(none.estimate).toBe(true);
+  });
+});
+
+describe('Japan’s standard monthly remuneration', () => {
+  it('charges the premiums on the grade a month’s pay falls in, not the pay', () => {
+    expect(japanStandard(212_000)).toBe(220_000);
+    expect(japanStandard(209_999)).toBe(200_000);
+    expect(japanStandard(2_000_000)).toBe(1_390_000);
+    const at = Date.UTC(2026, 5, 1);
+    const year = payrollYear('JP', 212_000 * 12 * 100, { path: ['JP'], at, age: 30, weeklyHours: 40 });
+    const line = (name: string) => year.lines.find((l) => l.name.startsWith(name))!.amount / 100;
+    expect(line('厚生年金')).toBeCloseTo(220_000 * 0.0915 * 12, 2);
+    expect(line('健康保険')).toBeCloseTo(220_000 * (0.04925 + 0.00115) * 12, 2);
+    // The pension's grades stop at ¥650,000; health's run on.
+    const high = payrollYear('JP', 900_000 * 12 * 100, { path: ['JP'], at, age: 30, weeklyHours: 40 });
+    expect(high.lines.find((l) => l.name.startsWith('厚生年金'))!.amount / 100).toBeCloseTo(650_000 * 0.0915 * 12, 2);
+    expect(high.lines.find((l) => l.name.startsWith('健康保険'))!.amount / 100).toBeCloseTo(880_000 * (0.04925 + 0.00115) * 12, 2);
   });
 });

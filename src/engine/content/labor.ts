@@ -40,7 +40,31 @@ export interface NightPremium extends Premium {
   to: number;
 }
 
+/**
+ * A premium for hours in a window of the day, on some days of the week, as a
+ * share of the rate or a flat sum an hour in the country's money (Australia's
+ * Hospitality award pays its late hours in dollars).
+ */
+export interface WindowPremium {
+  name: string;
+  from: number;
+  to: number;
+  extra?: number;
+  flat?: number;
+  lines?: Lines;
+  /** The days it's paid, 0 for Sunday; absent, every day. */
+  weekdays?: readonly number[];
+  source: string;
+}
+
 export interface LaborLaw {
+  /** Premiums for hours in a window, by line and day, where a line's award or agreement has its own. */
+  windows?: readonly WindowPremium[];
+  /**
+   * Lines of work that can't be employed on a public holiday (Germany: ArbZG
+   * §9 and §10); their shift falls away and the day is paid as if worked.
+   */
+  holidayOff?: { lines: Lines; source: string };
   saturday?: Premium;
   sunday?: Premium;
   /** A shift on a public holiday: its extra over the ordinary rate. */
@@ -75,6 +99,19 @@ export interface LaborLaw {
      * then lost, or paid out. Absent, it carries over until the job ends.
      */
     expiry?: { yearStart: 'hire' | string; graceMonths: number; action: 'lose' | 'payout'; source: string };
+    /**
+     * Leave granted in days at a time rather than built with the hours
+     * (Japan): the first grant after so many months, then one a year, each
+     * year's days for full time, and fewer by the days a week for part-time
+     * work of few enough days and hours, for enough of the shifts attended.
+     */
+    grants?: {
+      firstAfterMonths: number;
+      days: readonly number[];
+      partTime: { maxDays: number; underHours: number; byDays: Readonly<Record<number, readonly number[]>> };
+      minAttendance: number;
+      source: string;
+    };
     source: string;
   };
   sick?: {
@@ -233,9 +270,15 @@ export const LABOR: Readonly<Record<string, LaborLaw>> = {
   IS: {
     evening: { extra: 0.33, from: 17, to: 24, lines: PART_LINES, source: 'Efling–SA shift premiums: weekday evenings 17:00–24:00, 33%' },
     night: { extra: 0.45, from: 24, to: 32, lines: PART_LINES, source: 'Efling–SA: nights 00:00–08:00, 45%' },
-    saturday: { extra: 0.45, lines: PART_LINES, source: 'Efling–SA: weekends, 45%' },
-    sunday: { extra: 0.45, lines: PART_LINES, source: 'Efling–SA: weekends, 45%' },
-    holiday: { extra: 1.383, only: ['01-01', '06-17', '12-25', 'Good Friday', 'Easter Sunday', 'Whit Sunday', 'Pentecost'], source: 'Efling–SA: major holidays at 1.375% of the monthly wage an hour, 2.383 times the day rate' },
+    saturday: { extra: 0.45, lines: [...PART_LINES, 'retail', 'office'], byLine: { retail: 0.383, office: 0.394 }, source: 'Efling–SA: weekends, 45%; VR–SA: all of the weekend as eftirvinna, 0.8235% of the monthly wage an hour for shop work and 0.875% for office work' },
+    sunday: { extra: 0.45, lines: [...PART_LINES, 'retail', 'office'], byLine: { retail: 0.383, office: 0.394 }, source: 'Efling–SA: weekends, 45%; VR–SA: all of the weekend as eftirvinna' },
+    holiday: { extra: 1.383, only: ['01-01', '06-17', '12-25', 'Good Friday', 'Easter Sunday', 'Whit Sunday', 'Pentecost'], byLine: { retail: 1.309, office: 1.19 }, source: 'Efling–SA: major holidays at 1.375% of the monthly wage an hour, 2.383 times the day rate; VR–SA the same 1.375%, on its own divisors' },
+    windows: [
+      { name: 'Evening Premium', from: 18, to: 24, extra: 0.383, lines: ['retail'], weekdays: [1, 2, 3, 4, 5], source: 'VR–SA, 1 April 2026: shop work after 18:00 on a weekday is eftirvinna, 0.8235% of the monthly wage an hour, 38.3% over the day rate' },
+      { name: 'Night Premium', from: 24, to: 31, extra: 0.482, lines: ['retail'], source: 'VR–SA: næturvinna from midnight to 07:00, 0.8824% of the monthly wage, 48.2% over' },
+      { name: 'Evening Premium', from: 17, to: 24, extra: 0.394, lines: ['office'], weekdays: [1, 2, 3, 4, 5], source: 'VR–SA: office work after 17:00 is eftirvinna, 0.875% of the monthly wage, 39.4% over the day rate' },
+      { name: 'Night Premium', from: 24, to: 31, extra: 0.493, lines: ['office'], source: 'VR–SA: næturvinna, 0.9375% of the monthly wage, 49.3% over' },
+    ],
     overtime: { week: 40, extra: 0.8, source: 'Efling–SA: yfirvinna at 1.0385% of the monthly wage, an 80% premium' },
     leave: { accrual: 0.1017, paidOut: true, source: 'Holiday Act 30/1987 and the agreements: orlof at 10.17%' },
     sick: { fromDay: 1, rate: 1, accrual: 2 * 8 / 173.33, paidBy: 'employer', source: 'Efling–SA: 2 days’ full pay for each month worked in the first year' },
@@ -257,6 +300,7 @@ export const LABOR: Readonly<Record<string, LaborLaw>> = {
   },
   DE: {
     night: { extra: 0.25, from: 23, to: 30, source: 'ArbZG §6(5), and the Federal Labor Court’s 25% as the reasonable supplement' },
+    holidayOff: { lines: ['retail', 'office', 'trades'], source: 'ArbZG §9 and §10: no work on a public holiday outside the trades §10 allows, restaurants, care and security among them and shops, offices and building sites not; EFZG §2 pays a day lost to a holiday as if worked' },
     leave: { accrual: 4 / 48, paidOut: true, source: 'BUrlG: 20 days on a five-day week' },
     sick: { fromDay: 1, rate: 1, afterMonths: 1, paidBy: 'employer', source: 'EFZG §3: full pay for up to six weeks, after four weeks with the employer' },
     quitNotice: { steps: [[0, 14], [6, 28]], source: '§622 BGB: two weeks in probation, four weeks after' },
@@ -275,8 +319,13 @@ export const LABOR: Readonly<Record<string, LaborLaw>> = {
     night: { extra: 0.25, from: 22, to: 29, source: 'Labor Standards Act art. 37: 25% from 22:00 to 05:00' },
     overtime: { week: 40, day: 8, extra: 0.25, source: 'Labor Standards Act art. 37: 25% past 8 hours a day or 40 a week' },
     leave: {
-      accrual: 2 / 50, usableAfterMonths: 6, paidOut: false, source: 'Labor Standards Act art. 39: 10 days after six months, pro rata for part-time',
+      accrual: 0, paidOut: false, source: 'Labor Standards Act art. 39: 10 days after six months, pro rata for part-time',
       expiry: { yearStart: 'hire', graceMonths: 12, action: 'lose', source: 'MHLW: unused days carry over for one year' },
+      grants: {
+        firstAfterMonths: 6, days: [10, 11, 12, 14, 16, 18, 20], minAttendance: 0.8,
+        partTime: { maxDays: 4, underHours: 30, byDays: { 4: [7, 8, 9, 10, 12, 13, 15], 3: [5, 6, 6, 8, 9, 10, 11], 2: [3, 4, 4, 5, 6, 6, 7], 1: [1, 2, 2, 2, 3, 3, 3] } },
+        source: 'Labor Standards Act art. 39 and MHLW’s table: 10 days at six months, 11, 12, 14, 16, 18 and 20 a year on; four days a week or fewer, under 30 hours, 7 to 15, 5 to 11, 3 to 7 and 1 to 3; for 80% of the shifts attended',
+      },
     },
     sick: { fromDay: 4, rate: 2 / 3, paidBy: 'state', source: '傷病手当金: two-thirds from the fourth day, for the insured' },
     quitNotice: { steps: [[0, 14]], source: 'Civil Code art. 627: two weeks' },
@@ -301,7 +350,14 @@ export const LABOR: Readonly<Record<string, LaborLaw>> = {
       source: 'The awards: Sunday at 150% in retail, hospitality and restaurants, 125% under the Fast Food award, 200% for clerks, security and construction',
     },
     holiday: { extra: 1.25, source: 'The awards: public holidays at 225%' },
-    night: { extra: 0.1, from: 22, to: 30, lines: PART_LINES, source: 'Fast Food award: 110% from 10 pm' },
+    windows: [
+      { name: 'Evening Premium', from: 22, to: 24, extra: 0.1, lines: ['school'], weekdays: [1, 2, 3, 4, 5], source: 'Fast Food award: 110% Monday to Friday from 10 pm to midnight' },
+      { name: 'Night Premium', from: 24, to: 30, extra: 0.15, lines: ['school'], weekdays: [1, 2, 3, 4, 5], source: 'Fast Food award: 115% from midnight to 6 am' },
+      { name: 'Evening Premium', from: 18, to: 21, extra: 0.25, lines: ['retail'], weekdays: [1, 2, 3, 4, 5], source: 'General Retail award: 125% Monday to Friday after 6 pm, to the end of ordinary hours at 9 pm' },
+      { name: 'Night Premium', from: 18, to: 30, extra: 0.217, lines: ['armed_forces'], weekdays: [1, 2, 3, 4, 5], source: 'Security Services award: 121.7% for a night shift, Monday to Friday from 6 pm to 6 am' },
+      { name: 'Evening Loading', from: 19, to: 24, flat: 2.95, lines: ['hospitality'], weekdays: [1, 2, 3, 4, 5], source: 'Hospitality award: $2.95 an hour Monday to Friday from 7 pm to midnight' },
+      { name: 'Night Loading', from: 24, to: 31, flat: 4.42, lines: ['hospitality'], weekdays: [1, 2, 3, 4, 5], source: 'Hospitality award: $4.42 an hour from midnight to 7 am' },
+    ],
     overtime: { week: 38, extra: 0.5, source: 'The awards: 150% past 38 hours' },
     leave: { accrual: 4 / 48, loading: 0.175, paidOut: true, source: 'NES: four weeks, with the awards’ 17.5% loading' },
     sick: { fromDay: 1, rate: 1, accrual: 1 / 26, paidBy: 'employer', source: 'NES: 10 days a year of personal leave, building with hours' },

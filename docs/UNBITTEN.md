@@ -185,8 +185,9 @@ part the tool cannot see.
   rate. Canada's, Ireland's, New Zealand's, Germany's, Spain's and Japan's
   final-return dates are SLATE's estimates where the office names none.
   Church tax in Germany isn't taken, since SLATE doesn't know a character's
-  church; Japan's contributions are on the pay, not the grade of standard
-  remuneration it falls in.
+  church. Japan's contributions are on the grade of standard remuneration
+  the month's pay falls in (Kyōkai Kenpo Tokyo's fiscal 2026 table), set
+  from the pay each payday rather than fixed at hiring and each summer.
 - **A pension fund fills and does nothing else.** What a payslip puts into
   a fund the worker owns (Iceland, New Zealand, Australia, Britain,
   Ireland, Mexico) is theirs and counts in their worth, and nothing grows
@@ -198,8 +199,13 @@ part the tool cannot see.
   since 2026-09-25 a job is also cut, as often as the BLS counts in the US
   and the ONS in Britain (Britain's rate stands in everywhere else, SLATE's
   estimate), with the employer's notice and the redundancy pay the law
-  gives. Not yet: a public holiday not worked isn't paid where the law pays
-  it (Germany, Ireland, New Zealand); Mexico's PTU profit share needs a
+  gives. Germany keeps shops, offices and building sites off on a public
+  holiday (ArbZG §9 and §10) and pays the day as if worked (EFZG §2); the
+  other lines work it, and which of them §10 allows beyond restaurants,
+  care and security wasn't settled, nor Berlin's shop-opening law, whose
+  text couldn't be reached. Elsewhere a holiday is worked where it's
+  rostered, with its premium, so Ireland's and New Zealand's pay for a
+  holiday not worked has nothing to pay. Mexico's PTU profit share needs a
   company's profit. Youth rates are Britain's and Ireland's by age, New
   Zealand's starting-out rate and France's reduced SMIC by age and months
   with the employer (France's counts months in the line of work, which SLATE
@@ -213,9 +219,14 @@ part the tool cannot see.
   optional half a month a year under §1a KSchG, and the tax-free share of
   redundancy pay outside Britain and Ireland aren't modeled; France's
   notice before six months is the common agreement's week. Premiums are the agreement's where
-  the research found one: Iceland's Efling–SA tables only for café, bar and
-  security work, and Australia's awards told apart by line only on a Sunday.
-  Japan's leave is built with the hours, not granted at six months. Untaken
+  the research found one: Iceland's Efling–SA tables for café, bar and
+  security work and VR–SA's for shop and office work (Commerce Day, a VR
+  major holiday, isn't in the shared list); Australia's awards by line on a
+  Sunday, and for weekday evenings and nights in fast food, retail, security
+  and hospitality, whose late hours are paid in dollars; casual loadings
+  aren't, as SLATE's jobs aren't casual. Japan's leave is granted at six
+  months and each year after by the MHLW's table, for 80% of the shifts
+  attended; the employer's duty to see five days taken isn't modeled. Untaken
   leave lapses by the law in Britain, Ireland and Japan, and is paid out in
   Korea; elsewhere it piles up (Germany's turns on whether the employer
   reminded the worker, and France's and Spain's rules weren't found at a

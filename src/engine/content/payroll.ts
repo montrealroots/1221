@@ -368,16 +368,43 @@ const RULES: Record<string, Rules> = {
 };
 
 /**
+ * Japan's standard monthly remuneration (標準報酬月額): the month's pay
+ * placed in a grade, [standard, the pay the grade runs to], and the premiums
+ * charged on the grade's standard, not the pay. Kyōkai Kenpo Tokyo's table
+ * for fiscal 2026 (R8_13tokyo.pdf): fifty health grades; the pension's
+ * thirty-two are health grades 4 to 35, ¥88,000 to ¥650,000. Until
+ * 2026-09-25 the premiums were charged on the pay itself.
+ */
+const JP_GRADES: readonly (readonly [number, number])[] = [
+  [58000, 63000], [68000, 73000], [78000, 83000], [88000, 93000], [98000, 101000], [104000, 107000],
+  [110000, 114000], [118000, 122000], [126000, 130000], [134000, 138000], [142000, 146000], [150000, 155000],
+  [160000, 165000], [170000, 175000], [180000, 185000], [190000, 195000], [200000, 210000], [220000, 230000],
+  [240000, 250000], [260000, 270000], [280000, 290000], [300000, 310000], [320000, 330000], [340000, 350000],
+  [360000, 370000], [380000, 395000], [410000, 425000], [440000, 455000], [470000, 485000], [500000, 515000],
+  [530000, 545000], [560000, 575000], [590000, 605000], [620000, 635000], [650000, 665000], [680000, 695000],
+  [710000, 730000], [750000, 770000], [790000, 810000], [830000, 855000], [880000, 905000], [930000, 955000],
+  [980000, 1005000], [1030000, 1055000], [1090000, 1115000], [1150000, 1175000], [1210000, 1235000], [1270000, 1295000],
+  [1330000, 1355000], [1390000, Infinity],
+];
+
+/** The standard monthly remuneration a month's pay falls in. */
+export function japanStandard(monthly: number): number {
+  return JP_GRADES.find(([, upTo]) => monthly < upTo)![0];
+}
+
+/**
  * Japan's social insurance on a year's pay: from ¥88,000 a month on twenty
- * hours a week, the pension on pay to ¥650,000 a month and health (with
- * long-term care at 40 to 64, and the child levy from April 2026) to
- * ¥1.39 million.
+ * hours a week, on the standard monthly remuneration: the pension at 9.15%
+ * on grades ¥88,000 to ¥650,000, and health at 4.925% (with long-term care
+ * at 40 to 64, and the child levy from April 2026) on grades to ¥1.39
+ * million.
  */
 function japanInsurance(g: number, ctx: PayrollContext): { kosei: number; health: number; insured: boolean } {
   const insured = g / 12 >= 88_000 && (ctx.weeklyHours ?? 40) >= 20;
   if (!insured) return { kosei: 0, health: 0, insured };
-  const kosei = Math.min(g / 12, 650_000) * 0.0915 * 12;
-  const health = Math.min(g / 12, 1_390_000) * (0.04925 + (ctx.age >= 40 && ctx.age < 65 ? 0.0081 : 0) + (ctx.at >= Date.UTC(2026, 3, 1) ? 0.00115 : 0)) * 12;
+  const standard = japanStandard(g / 12);
+  const kosei = Math.min(Math.max(standard, 88_000), 650_000) * 0.0915 * 12;
+  const health = standard * (0.04925 + (ctx.age >= 40 && ctx.age < 65 ? 0.0081 : 0) + (ctx.at >= Date.UTC(2026, 3, 1) ? 0.00115 : 0)) * 12;
   return { kosei, health, insured };
 }
 

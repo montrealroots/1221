@@ -83,6 +83,9 @@ export interface JobState {
   leaveHours?: number;
   /** The same leave by the leave year it was earned in, oldest first, where the law makes it lapse. */
   leaveYears?: { year: string; hours: number; warned?: boolean }[];
+  /** Where leave is granted a year at a time (Japan): the grants made, and the shifts due and attended since the last. */
+  leaveGrants?: number;
+  attendance?: { due: number; worked: number };
   sickHours?: number;
   /** Paid sick days used this year, where the law gives a number of days. */
   sickDays?: { year: number; days: number };
@@ -121,10 +124,10 @@ export interface JobState {
 export interface UnpaidEntry {
   at: Instant;
   hours: number;
-  /** Worked, unless it's paid leave, a sick day or Korea's weekly rest day. */
-  kind?: 'leave' | 'sick' | 'rest';
-  /** Premiums the shift earned, each in hours at the base rate. */
-  extras?: { name: string; hours: number }[];
+  /** Worked, unless it's paid leave, a sick day, Korea's weekly rest day or a holiday paid as if worked. */
+  kind?: 'leave' | 'sick' | 'rest' | 'holiday';
+  /** Premiums the shift earned, each in hours at the base rate, or a flat sum. */
+  extras?: { name: string; hours: number; flat?: Money }[];
   /** A sick day's share of pay, and the most a day pays, in the save's money. */
   share?: number;
   capDay?: Money;
@@ -153,6 +156,41 @@ function addMonthsLocal(at: Instant, months: number): Instant {
   return Date.UTC(d.getUTCFullYear(), d.getUTCMonth() + months, d.getUTCDate());
 }
 
+/** A shift due, and whether it was attended, for leave granted on attendance. */
+function attend(state: JobState, worked: boolean): void {
+  if (!lawOf(state)?.leave?.grants) return;
+  const a = state.attendance ?? { due: 0, worked: 0 };
+  state.attendance = { due: a.due + 1, worked: a.worked + (worked ? 1 : 0) };
+}
+
+/**
+ * Leave granted a year at a time, where the law grants it so (Japan): at the
+ * first grant's months and each year after, the days the service and the
+ * week give, for enough of the shifts attended, as hours of the job's day.
+ */
+function grantLeave(sim: Simulation, person: Person, state: JobState, law: LaborLaw): void {
+  const grants = law.leave?.grants;
+  if (!grants) return;
+  const given = state.leaveGrants ?? 0;
+  if (monthsWith(state, sim.now) < grants.firstAfterMonths + 12 * given) return;
+  const week = patternOf(jobFor(state.jobId), state.fullTime);
+  const index = Math.min(given, grants.days.length - 1);
+  const partTime = week.days.length <= grants.partTime.maxDays && patternHours(week) < grants.partTime.underHours;
+  const days = partTime ? grants.partTime.byDays[week.days.length]?.[index] ?? 0 : grants.days[index]!;
+  const a = state.attendance ?? { due: 0, worked: 0 };
+  const attended = a.due === 0 || a.worked / a.due >= grants.minAttendance;
+  state.leaveGrants = given + 1;
+  state.attendance = { due: 0, worked: 0 };
+  if (!attended || days <= 0) {
+    if (person.id === sim.universe.playerId) sim.notify({ category: 'work', title: 'No Leave Granted', body: `Paid leave is granted for ${Math.round(grants.minAttendance * 100)}% of shifts attended, and you attended ${Math.round((a.worked / a.due) * 100)}%.`, importance: 50 });
+    return;
+  }
+  const hours = days * week.hours;
+  state.leaveHours = (state.leaveHours ?? 0) + hours;
+  state.leaveYears = [...(state.leaveYears ?? []), { year: localDay(state, sim.now, sim.homeZone), hours }];
+  if (person.id === sim.universe.playerId) sim.notify({ category: 'work', title: 'Paid Leave Granted', body: `${days} days of paid leave, ${hours} hours, usable for two years.`, importance: 50 });
+}
+
 /** Months with the employer so far. */
 export function monthsWith(state: JobState, at: Instant): number {
   return (at - state.since) / (30.4375 * MS_DAY);
@@ -177,7 +215,7 @@ function weekKey(state: JobState, at: Instant, fallback: string): string {
  * overtime past the week's or the day's limit, each in hours at the base
  * rate. A public holiday's premium stands in for a Sunday's.
  */
-export function premiumsFor(sim: Simulation, state: JobState, at: Instant, hours: number): { name: string; hours: number }[] {
+export function premiumsFor(sim: Simulation, state: JobState, at: Instant, hours: number): { name: string; hours: number; flat?: Money }[] {
   const law = lawOf(state);
   if (!law) return [];
   const city = CITIES.get(state.cityId);
@@ -185,7 +223,7 @@ export function premiumsFor(sim: Simulation, state: JobState, at: Instant, hours
   const p = zonedParts(at, zone);
   const weekday = new Date(Date.UTC(p.year, p.month - 1, p.day)).getUTCDay();
   const covers = (premium: Premium | undefined): premium is Premium => premium !== undefined && (!premium.lines || premium.lines.includes(state.jobId));
-  const out: { name: string; hours: number }[] = [];
+  const out: { name: string; hours: number; flat?: Money }[] = [];
   const extraOf = (premium: Premium) => premium.byLine?.[state.jobId] ?? premium.extra;
   const mmdd = `${String(p.month).padStart(2, '0')}-${String(p.day).padStart(2, '0')}`;
   const holiday = city ? holidaysOn(at, zone, city.countryId, city.parentId).some((one) => one.type === 'public'
@@ -202,6 +240,17 @@ export function premiumsFor(sim: Simulation, state: JobState, at: Instant, hours
   if (covers(law.night)) {
     const h = overlap(law.night.from, law.night.to);
     if (h > 0) out.push({ name: 'Night Premium', hours: h * law.night.extra });
+  }
+  // A line's own windows: by the day the shift starts, a share or a flat sum an hour.
+  for (const window of law.windows ?? []) {
+    if (window.lines && !window.lines.includes(state.jobId)) continue;
+    if (window.weekdays && !window.weekdays.includes(weekday)) continue;
+    const h = overlap(window.from, window.to);
+    if (h <= 0) continue;
+    const { currency: local } = countryAt(state.cityId);
+    const save = saveCurrency(sim.universe);
+    const flat = window.flat !== undefined ? Math.round(h * (exchange(Math.round(window.flat * 100), local, save) ?? window.flat * 100)) : undefined;
+    out.push({ name: window.name, hours: h * (window.extra ?? 0), ...(flat !== undefined ? { flat } : {}) });
   }
   const ot = law.overtime;
   if (ot) {
@@ -489,6 +538,14 @@ export function hire(sim: Simulation, person: Person): void {
   fillRota(sim, person);
 }
 
+/** Whether the law keeps a line of work off on a day because it's a public holiday. */
+function holidayOff(state: JobState, at: Instant, zone: string): boolean {
+  const off = lawOf(state)?.holidayOff;
+  const city = CITIES.get(state.cityId);
+  if (!off || !city || !off.lines.includes(state.jobId)) return false;
+  return holidaysOn(at, zone, city.countryId, city.parentId).some((one) => one.type === 'public');
+}
+
 /** Puts every shift of the next two weeks on the calendar that isn't on it. */
 export function fillRota(sim: Simulation, person: Person): void {
   const state = person.job;
@@ -501,7 +558,7 @@ export function fillRota(sim: Simulation, person: Person): void {
   for (let n = 0; n <= ROTA_DAYS + 1; n += 1) {
     const at = instantFromZoned({ year: day.year, month: day.month, day: day.day, hour: week.startHour }, zone);
     const weekday = new Date(Date.UTC(day.year, day.month - 1, day.day)).getUTCDay();
-    if (at > state.rotaThrough && at > sim.now && at <= until && week.days.includes(weekday)) {
+    if (at > state.rotaThrough && at > sim.now && at <= until && week.days.includes(weekday) && !holidayOff(state, at, zone)) {
       sim.schedule({
         at, kind: SHIFT_KIND, label: `${job.title} Shift`, category: 'work', priority: 30,
         requiresPlayer: true, durationMinutes: week.hours * 60, locationId: state.cityId,
@@ -612,6 +669,7 @@ export function callIn(sim: Simulation, item: ScheduledItem): void {
   item.resolvedAt = sim.now;
   if (!person) return;
   const hours = Number(item.payload.hours) || 0;
+  if (person.job) attend(person.job, false);
   const paid = person.job ? sickPay(sim, person, item.at, hours) : 0;
   // A sick day the law pays for can't be held against a worker: New York,
   // California, Washington and Illinois forbid it outright, and it's the
@@ -758,10 +816,11 @@ function pay(sim: Simulation, person: Person, payday: Instant): void {
     else grossLines.push({ name, amount: rounded });
   };
   add('Hours Worked', hours * rate);
-  for (const one of due) for (const extra of one.extras ?? []) add(extra.name, extra.hours * rate);
+  for (const one of due) for (const extra of one.extras ?? []) add(extra.name, extra.hours * rate + (extra.flat ?? 0));
   for (const one of due) {
     if (one.kind === 'leave') add('Paid Leave', one.hours * rate * (1 + (law?.leave?.loading ?? 0)));
     if (one.kind === 'rest') add('Weekly Rest Day', one.hours * rate);
+    if (one.kind === 'holiday') add('Holiday Pay', one.hours * rate);
     if (one.kind === 'sick') {
       const day = one.hours * rate * (one.share ?? 1);
       add(law?.sick?.paidBy === 'state' ? 'Sickness Benefit' : 'Sick Pay', one.capDay !== undefined ? Math.min(day, one.capDay) : day);
@@ -847,10 +906,12 @@ export function registerWork(sim: Simulation): void {
           : `It wanted you in ${CITIES.get(state.cityId)?.name ?? 'town'}, and you weren't there. No pay, and it counts.`,
         importance: 60,
       });
+      attend(state, false);
       strike(s, person, item.at);
       return;
     }
     item.payload = { ...item.payload, worked: true };
+    attend(state, true);
     const extras = premiumsFor(s, state, item.at, hours);
     state.unpaid.push({ at: item.at, hours, ...(extras.length ? { extras } : {}) });
     const law = lawOf(state);
@@ -992,7 +1053,7 @@ export function registerWork(sim: Simulation): void {
     const state = person.job;
     if (!state) throw new CommandError('You don’t have a day job.');
     const law = lawOf(state);
-    if (!law?.leave || law.leave.accrual <= 0) {
+    if (!law?.leave || (law.leave.accrual <= 0 && !law.leave.grants)) {
       throw new CommandError(law?.leave?.asPay ? 'Your vacation pay comes with each paycheck, not as days to book.' : 'The law where you work gives no paid leave to book.');
     }
     if (monthsWith(state, s.now) < (law.leave.usableAfterMonths ?? 0)) {
@@ -1017,6 +1078,7 @@ export function registerWork(sim: Simulation): void {
     }
     if (state.leaveYears) state.leaveYears = state.leaveYears.filter((year) => year.hours > 1e-9);
     state.unpaid.push({ at: next.at, hours, kind: 'leave' });
+    attend(state, true);
     return { at: next.at, hours };
   });
 
@@ -1178,6 +1240,12 @@ function lawDay(sim: Simulation, person: Person): void {
   const rate = hourlyWage(sim, person);
   const weekly = patternHours(patternOf(jobFor(state.jobId), state.fullTime));
   const months = monthsWith(state, sim.now);
+  grantLeave(sim, person, state, law);
+  const week = patternOf(jobFor(state.jobId), state.fullTime);
+  const today = new Date(Date.UTC(p.year, p.month - 1, p.day)).getUTCDay();
+  if (week.days.includes(today) && holidayOff(state, instantFromZoned({ year: p.year, month: p.month, day: p.day, hour: week.startHour }, zone), zone)) {
+    state.unpaid.push({ at: sim.now, hours: week.hours, kind: 'holiday' });
+  }
   const paidAlready = state.extrasPaid ?? [];
   const due = (key: string, name: string, amount: number) => {
     if (paidAlready.includes(key) || amount <= 0) return;

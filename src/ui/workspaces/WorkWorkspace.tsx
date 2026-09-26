@@ -125,7 +125,7 @@ export function WorkWorkspace() {
           <Panel title="Leave And Sick Days">
             <div className="col gap-3">
               <p className="small" style={{ margin: 0 }}>{leaveWords(law, job.leaveHours ?? 0, monthsWith(job, sim.now))}</p>
-              {law?.leave && law.leave.accrual > 0 && (
+              {law?.leave && (law.leave.accrual > 0 || law.leave.grants) && (
                 <div>
                   <Gated feature="work.take_leave" className="btn btn-sm" onClick={takeLeave}>Take The Next Shift As Paid Leave</Gated>
                 </div>
@@ -220,6 +220,7 @@ function leaveWords(law: LaborLaw | undefined, hours: number, months: number): s
   const leave = law?.leave;
   if (!leave) return 'The law where you work gives no paid annual leave.';
   if (leave.asPay) return `Vacation pay comes as ${pct(leave.asPay)} of your pay on each paycheck, rather than as days to book.`;
+  if (leave.grants) return `You have ${hours.toFixed(1)} hours of paid leave. It’s granted ${leave.grants.firstAfterMonths} months after you start and each year after, ${leave.grants.days[0]} days rising to ${leave.grants.days[leave.grants.days.length - 1]} for full time and fewer for a short week, if you attend ${pct(leave.grants.minAttendance)} of your shifts. Each grant lasts two years, and what you don’t take isn’t paid out.`;
   const usable = months >= (leave.usableAfterMonths ?? 0);
   return `You’ve built up ${hours.toFixed(1)} hours of paid leave, ${pct(leave.accrual)} of every hour you work${leave.loading ? `, paid with ${pct(leave.loading)} on top` : ''}.`
     + (usable ? '' : ` It can be taken after ${leave.usableAfterMonths} months with the employer.`)
@@ -247,6 +248,14 @@ function lawWords(law: LaborLaw, jobId: string): { text: string; source: string 
   if (law.holiday && covers(law.holiday.lines)) out.push({ text: `A public holiday worked pays ${pct(law.holiday.extra)} more${law.holiday.only ? ', on the days the law names' : ''}${law.holiday.dayInLieu ? ', and a paid day off in lieu' : ''}.`, source: law.holiday.source });
   if (law.evening && covers(law.evening.lines)) out.push({ text: `Hours from ${law.evening.from}:00 to ${law.evening.to % 24}:00 pay ${pct(law.evening.extra)} more.`, source: law.evening.source });
   if (law.night && covers(law.night.lines)) out.push({ text: `Night hours from ${law.night.from % 24}:00 to ${law.night.to % 24}:00 pay ${pct(law.night.extra)} more.`, source: law.night.source });
+  const DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  for (const window of law.windows ?? []) {
+    if (!covers(window.lines)) continue;
+    const days = window.weekdays ? (window.weekdays.length === 5 && !window.weekdays.includes(0) && !window.weekdays.includes(6) ? 'Monday to Friday' : window.weekdays.map((d) => DAYS[d]).join(', ')) : 'every day';
+    const what = window.flat !== undefined ? `${window.flat.toFixed(2)} an hour more` : `${pct(window.extra ?? 0)} more`;
+    out.push({ text: `Hours from ${window.from % 24}:00 to ${window.to % 24}:00, ${days}, pay ${what}.`, source: window.source });
+  }
+  if (law.holidayOff && covers(law.holidayOff.lines)) out.push({ text: 'Your work can’t be done on a public holiday, so a shift that falls on one is a day off, paid as if worked.', source: law.holidayOff.source });
   if (law.overtime) {
     const past = [law.overtime.week !== undefined ? `${law.overtime.week} hours a week` : '', law.overtime.day !== undefined ? `${law.overtime.day} a day` : ''].filter(Boolean).join(' or ');
     out.push({ text: `Hours past ${past} pay ${pct(law.overtime.extra)} more${law.overtime.tierAfter !== undefined ? `, and ${pct(law.overtime.tierExtra ?? 0)} past ${law.overtime.tierAfter} hours of it` : ''}.`, source: law.overtime.source });
