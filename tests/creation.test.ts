@@ -104,9 +104,10 @@ describe('Identity', () => {
     expect(settledTitle('She/Her')).toBe('actress');
   });
 
-  it('caps the birth year so nobody starts under eighteen', () => {
-    expect(latestBirthYear(2026)).toBe(2008);
-    expect(latestBirthYear(2030)).toBe(2012);
+  it('caps the birth year so nobody starts under eighteen, or twenty-one at drama school', () => {
+    expect(latestBirthYear({ startYear: 2026 })).toBe(2008);
+    expect(latestBirthYear({ startYear: 2030 })).toBe(2012);
+    expect(latestBirthYear({ startYear: 2026, school: 'yale-drama' })).toBe(2005);
   });
 
   it('carries every answer into the save', () => {

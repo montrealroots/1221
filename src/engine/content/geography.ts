@@ -355,6 +355,10 @@ const CALIBRATED_IDS = new Set(CALIBRATED_CITIES.map((c) => c.id));
  * `deriveCity` exactly like every other uncalibrated place. That matters: they
  * get the derived economics and an industry presence of zero, which for
  * Iceland is not a shortcut but the fact the premise rests on.
+ *
+ * New Haven joined them on 2026-09-26, copied out of `public/geo/us.tsv`: a
+ * new life begins at the drama school there (`content/school.ts`), and
+ * Connecticut's towns aren't bundled.
  */
 const NEEDED_AT_BOOT: readonly RawCity[] = [
   {
@@ -366,6 +370,17 @@ const NEEDED_AT_BOOT: readonly RawCity[] = [
     lon: -21.7000,
     timeZone: 'Atlantic/Reykjavik',
     population: 13_715,
+    kind: '',
+  },
+  {
+    id: 'us-ct-newhaven',
+    name: 'New Haven',
+    regionId: 'us-ct',
+    countryId: 'us',
+    lat: 41.3081,
+    lon: -72.9282,
+    timeZone: 'America/New_York',
+    population: 130_322,
     kind: '',
   },
 ];

@@ -10,7 +10,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { Slot } from '@/engine/persistence/adapter';
 import {
-  APP_VERSION, currencyFor, defaultConfig, wealthIn, wealthNote,
+  APP_VERSION, atSchool, currencyFor, newLifeConfig, wealthIn, wealthNote,
   type NewSaveConfig, type StartingWealth,
 } from '@/engine/world/bootstrap';
 import { LocationPicker } from './LocationPicker';
@@ -26,7 +26,7 @@ import { formatMoney } from '@/engine/core/money';
 import { banksFor, startingBank } from '@/engine/systems/banking';
 import { SAVE_SCHEMA_VERSION } from '@/engine/domain/model';
 import { formatPeople } from '@/engine/world/place';
-import { ageOnDate, zoneAbbreviation } from '@/engine/core/time';
+import { ageOnDate, formatDate, instantFromZoned, zoneAbbreviation } from '@/engine/core/time';
 import { citizenshipFor } from '@/engine/domain/citizenship';
 import {
   ETHNICITIES, ETHNICITY_NOTE, ETHNICITY_OTHER, describeEthnicity,
@@ -41,6 +41,8 @@ import {
   conflictingPersonalityTraits, personalityTraitPairs,
 } from '@/engine/content/personality-traits';
 import { AXIS_MAX, AXIS_MIN, personalityOf } from '@/engine/systems/personality';
+import { YALE_DRAMA } from '@/engine/content/school';
+import { termAccount } from '@/engine/systems/school';
 import { outOf, said } from '@/ui/looks/words';
 
 /**
@@ -54,9 +56,14 @@ import { outOf, said } from '@/ui/looks/words';
  */
 export const BIRTH_YEARS_BEFORE_START = 18;
 
-/** The last year somebody can be born in and still start this save. */
-export function latestBirthYear(startYear: number): number {
-  return startYear - BIRTH_YEARS_BEFORE_START;
+/**
+ * The last year somebody can be born in and still start this save: eighteen
+ * years before it begins, or twenty-one for a life that begins at drama
+ * school, whose MFA asks for a bachelor's degree (`content/school.ts`).
+ * Drawn on the year there too, for the same reason.
+ */
+export function latestBirthYear(config: Pick<NewSaveConfig, 'startYear' | 'school'>): number {
+  return config.startYear - (config.school ? YALE_DRAMA.minimumAge : BIRTH_YEARS_BEFORE_START);
 }
 
 const STEPS = ['Identity', 'Dispositions & Traits', 'Interests & Background', 'Starting Point', 'Review'] as const;
@@ -96,7 +103,7 @@ export function CharacterCreation({
   onStart: (config: NewSaveConfig) => void;
 }) {
   const [step, setStep] = useState<StepIndex>(0);
-  const [config, setConfig] = useState<NewSaveConfig>(() => loadDraft(slot) ?? defaultConfig());
+  const [config, setConfig] = useState<NewSaveConfig>(() => loadDraft(slot) ?? newLifeConfig());
   const [restored] = useState(() => loadDraft(slot) !== null);
 
   // Persist on every change. Losing the page must not lose the setup.
@@ -161,7 +168,7 @@ export function CharacterCreation({
         {restored && step === 0 && (
           <div className="callout callout-info" style={{ marginBottom: 'var(--s5)' }}>
             You’d half-filled this form already. It’s been put back the way you left it.
-            <button className="btn btn-ghost btn-sm" style={{ marginLeft: 'var(--s2)' }} onClick={() => setConfig(defaultConfig())}>
+            <button className="btn btn-ghost btn-sm" style={{ marginLeft: 'var(--s2)' }} onClick={() => setConfig(newLifeConfig())}>
               Start Over
             </button>
           </div>
@@ -418,7 +425,7 @@ function IdentityStep({ config, set, setConfig }: {
         <div className="field">
           <label htmlFor="birth-year">Year Of Birth</label>
           <input
-            id="birth-year" type="number" min={1940} max={latestBirthYear(config.startYear)}
+            id="birth-year" type="number" min={1940} max={latestBirthYear(config)}
             value={config.birthYear}
             onChange={(e) => set('birthYear', Number(e.target.value))}
           />
@@ -456,11 +463,9 @@ function IdentityStep({ config, set, setConfig }: {
         cityId={config.homeRegionId}
         // Where you were born, and where you live with it while you still live
         // there. Starting Point is where the two come apart.
-        onPick={(picked) => setConfig((c) => ({
-          ...c,
-          homeRegionId: picked.id,
-          ...(c.livesWhereBorn ? { startLocationId: picked.id } : {}),
-        }))}
+        onPick={(picked) => setConfig((c) => (c.school
+          ? { ...c, homeRegionId: picked.id, livesWhereBorn: picked.id === c.startLocationId }
+          : { ...c, homeRegionId: picked.id, ...(c.livesWhereBorn ? { startLocationId: picked.id } : {}) }))}
       />
 
       {/* Not asked: the place of birth decides it, so it sits under the
@@ -805,13 +810,21 @@ function StartingPointStep({ config, set, setConfig }: {
       <div className="card">
         <div className="panel-head">
           <div>
-            <h2>Where You Live</h2>
+            <h2>{config.school ? 'Where It Begins' : 'Where You Live'}</h2>
             <p className="muted small">
-              Where you are decides what things cost and whose holidays you keep.
+              {config.school
+                ? `A first-year in the ${YALE_DRAMA.degree} in ${YALE_DRAMA.program} at the ${YALE_DRAMA.name}: one of ${YALE_DRAMA.classSize} actors admitted this year, and the one the faculty wanted most from the auditions.`
+                : 'Where you are decides what things cost and whose holidays you keep.'}
             </p>
+            {config.school && (
+              <p className="muted small">
+                You arrive in {city?.name ?? 'New Haven'} on {formatDate(instantFromZoned({ year: config.startYear, month: config.startMonth, day: config.startDay, hour: 12 }, city?.timeZone ?? 'America/New_York'), city?.timeZone ?? 'America/New_York')}, the first day of the fall term. The school’s award covers your whole cost of attendance, with nothing to borrow.
+              </p>
+            )}
           </div>
         </div>
 
+        {!config.school && (<>
         <label className="check" htmlFor="live-here">
           <input
             id="live-here"
@@ -837,6 +850,7 @@ function StartingPointStep({ config, set, setConfig }: {
             onPick={(picked) => set('startLocationId', picked.id)}
           />
         )}
+        </>)}
 
         {city && (
           <div className="grid grid-3" style={{ marginTop: 'var(--s4)' }}>
@@ -983,7 +997,9 @@ function MonthByMonth({ config, set, cur }: { config: NewSaveConfig; set: Setter
       </div>
 
       <div className="callout" style={{ marginTop: 'var(--s4)' }}>
-        About {money(out)} going out a month. What you start with covers it until it doesn’t, and then it’s the card, and then owing the landlord.
+        {config.school
+          ? `About ${money(out)} going out a month. The school pays ${formatMoney(termAccount(cur).refund, cur)} into your bank at the start of each term, fall and spring, after your Yale Health plan.`
+          : `About ${money(out)} going out a month. What you start with covers it until it doesn’t, and then it’s the card, and then owing the landlord.`}
       </div>
 
       <p className="xs dim" style={{ marginTop: 'var(--s3)' }}>
@@ -1043,6 +1059,7 @@ function ReviewStep({ config }: { config: NewSaveConfig }) {
 
         <div className="card">
           <div className="eyebrow" style={{ marginBottom: 'var(--s3)' }}>Starting Point</div>
+          {config.school && <Line label="School" value={`${YALE_DRAMA.degree} in ${YALE_DRAMA.program}, class of ${config.startYear + 3}`} />}
           <Line label="Where You Live" value={city ? shortPlace(city) : '—'} />
           <Line label="Bank" value={startingBank(config.startLocationId, config.bankId)?.name ?? 'None On Record'} />
           <Line label="Checking" value={formatMoney(wealth.checking, cur, { cents: false })} />
@@ -1153,9 +1170,10 @@ function validate(config: NewSaveConfig, step: StepIndex): string[] {
     const age = ageAtStart(config);
     // The year, not the age. A birth year at the cap can still leave somebody
     // seventeen when the save opens, and that is a life this game will run.
-    if (config.birthYear > latestBirthYear(config.startYear)) {
-      issues.push(`Your character can’t be born after ${latestBirthYear(config.startYear)}.`);
+    if (config.birthYear > latestBirthYear(config)) {
+      issues.push(`Your character can’t be born after ${latestBirthYear(config)}.`);
     }
+
     if (age > 95) issues.push('That start date would make your character over 95.');
     if (config.birthDay < 1 || config.birthDay > 31) issues.push('That isn’t a valid day of the month.');
     if (!CITIES.get(config.homeRegionId)) issues.push('Choose the town or city you were born in.');
@@ -1197,7 +1215,7 @@ function loadDraft(slot: Slot): NewSaveConfig | null {
       return null;
     }
 
-    const merged = { ...defaultConfig(), ...stored.config };
+    const merged = atSchool({ ...newLifeConfig(), ...stored.config });
 
     // A town small enough not to be bundled is not resolvable until its
     // country has been fetched, which has not happened yet on a cold start.
@@ -1205,9 +1223,6 @@ function loadDraft(slot: Slot): NewSaveConfig | null {
     // somebody was from a village, so the id is kept whenever the country it
     // names is real, and CharacterCreation pulls that country in. An id whose
     // country does not exist is a lost cause and falls back.
-    if (!countryOfPlace(merged.startLocationId)) {
-      merged.startLocationId = defaultConfig().startLocationId;
-    }
     if (!countryOfPlace(merged.homeRegionId)) merged.homeRegionId = merged.startLocationId;
 
     return merged;

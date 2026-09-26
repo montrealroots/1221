@@ -52,6 +52,7 @@ export const PUBLISHED_RENTS: readonly PublishedRent[] = [
   r('is-39-reykjavik', 250_000, 'ISK', 'HMS mean market rent for a two-room flat; the area it covers isn’t stated', 'Q3 2025', 'https://hms.is/skyrslur/manadarskyrsla-oktober-2025'),
   r('is-39-mosfellsbr', 205_000, 'ISK', 'HMS capital-region market rent, 3,739 kr a square meter, for 55 square meters', 'September–October 2025', 'https://hms.is/gogn-og-maelabord/maelabordleiguskra/leiguverdsja'),
   r('us-ny-newyork', 2_655, 'USD', 'HUD Fair Market Rent, a 40th percentile with utilities; the room is SpareRoom’s', 'FY2026; room Q2 2026', HUD, 1_515),
+  r('us-ct-newhaven', 1_591, 'USD', 'HUD Fair Market Rent for the New Haven–Meriden area, a 40th percentile with utilities', 'FY2026', HUD),
   r('us-ca-losangeles', 2_085, 'USD', 'HUD Fair Market Rent, a 40th percentile with utilities; the room is SpareRoom’s', 'FY2026; room Q4 2025', HUD, 1_354),
   r('uk-eng-london', 1_760, 'GBP', 'ONS mean rent across private tenancies; the room is SpareRoom’s', 'August 2026; room Q1 2026', 'https://www.ons.gov.uk/economy/inflationandpriceindices/bulletins/priceindexofprivaterentsukmonthlypricestatistics', 978),
   r('ca-on-toronto', 2_090, 'CAD', 'Statistics Canada mean asking rent for a one-bedroom', 'Q2 2026', STATCAN),

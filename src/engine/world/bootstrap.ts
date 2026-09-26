@@ -28,6 +28,7 @@ function known(ids: readonly string[] | undefined, table: Readonly<Record<string
 import { freshWellbeing } from '../systems/life';
 import { citizenshipFor } from '../domain/citizenship';
 import { cleanPersonality, cleanPersonalityTraits, defaultPersonality } from '../systems/personality';
+import { ORIENTATION_2026, YALE_DRAMA } from '../content/school';
 import { PERFORMER_NOUN, impliedPerformerTitle, isPerformerTitle, type PerformerTitle } from '../core/performer';
 
 export const APP_VERSION = '1.1.0';
@@ -89,6 +90,12 @@ export interface NewSaveConfig {
   /** A room in a shared flat, or a place of their own (`systems/household.ts`). */
   housing: Housing;
 
+  /**
+   * Where the life begins: drama school (`content/school.ts`), which sets
+   * the town and the day. Absent, the town and day chosen below.
+   */
+  school?: 'yale-drama';
+
   /** Starting point */
   startLocationId: string;
   wealth: StartingWealth;
@@ -132,6 +139,31 @@ export function defaultConfig(): NewSaveConfig {
     // Monday 5 January 2026, the first working Monday of the year.
     startYear: 2026, startMonth: 1, startDay: 5,
   };
+}
+
+/**
+ * A config set to begin at drama school: the school's town, and the first
+ * day of its fall term. What the player chose about the town and the day
+ * gives way to the school's.
+ */
+export function atSchool(config: NewSaveConfig): NewSaveConfig {
+  const begins = ORIENTATION_2026.begins;
+  return {
+    ...config,
+    school: 'yale-drama',
+    startLocationId: YALE_DRAMA.cityId,
+    livesWhereBorn: config.homeRegionId === YALE_DRAMA.cityId,
+    startYear: begins.year, startMonth: begins.month, startDay: begins.day,
+  };
+}
+
+/**
+ * A new life in the game: born in New York, and beginning at drama school.
+ * The engine's `defaultConfig` stays where it was for saves made by tests
+ * and tools, which choose their own town and day.
+ */
+export function newLifeConfig(): NewSaveConfig {
+  return atSchool({ ...defaultConfig(), homeRegionId: 'us-ny-newyork', livesWhereBorn: false, birthYear: 2002 });
 }
 
 const WEALTH_PROFILE: Record<StartingWealth, { checking: Money; savings: Money; cardLimit: Money; cardBalance: Money; creditScore: number; note: string }> = {

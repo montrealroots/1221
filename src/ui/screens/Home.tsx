@@ -10,7 +10,7 @@ import { RATES_NOTE, formatAtlasCompact} from '@/engine/content/currency';
 import { titleCaseLabel } from '@/engine/core/text';
 import { placeProfile, placeKindLabel, formatPeople, type PlaceProfile } from '@/engine/world/place';
 import { WEATHER_EMOJI, forecastFor, weatherAt, weatherShort } from '@/engine/systems/weather';
-import { MS_DAY, WEEKDAY_NAMES } from '@/engine/core/time';
+import { MS_DAY, WEEKDAY_NAMES, instantFromZoned } from '@/engine/core/time';
 import { PERFORMER_NOUN } from '@/engine/core/performer';
 import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
@@ -27,6 +27,8 @@ import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { cardOf, cardTerms, scoreIsANumberIn, scoreWord } from '@/engine/systems/credit';
 import { HOUSING, SOFA, arrearsOf, billsOf, moveCost, rentOf } from '@/engine/systems/household';
 import { LookRegion, Open, at } from '@/ui/looks';
+import { YALE_DRAMA } from '@/engine/content/school';
+import { termAccount, termStart, yearOfStudy } from '@/engine/systems/school';
 import { Gated, LockedPanel, useFeature } from '@/ui/guide/Guide';
 
 export function Home() {
@@ -72,6 +74,7 @@ export function Home() {
     weather: useFeature('ui.weather').open,
     money: useFeature('ui.money').open,
     home: useFeature('ui.home').open,
+    school: useFeature('ui.school').open,
   };
 
   return (
@@ -498,8 +501,42 @@ export function Home() {
           <YourHome cur={cur} />
         </Panel>
         )}
+        {player.school && (!shows.school ? <LockedPanel feature="ui.school" title="School" /> : (
+        <Panel
+          title="School"
+          tight
+          actions={(
+            <Gated feature="ui.school" className="btn btn-sm" onClick={() => navigate('/workspace/school', 'Your School')}>
+              {YALE_DRAMA.short}
+            </Gated>
+          )}
+        >
+          <YourSchool cur={cur} />
+        </Panel>
+        ))}
       </div>
     </>
+  );
+}
+
+/** Where the life began: the program, the year, and the next term's scholarship (`systems/school.ts`). */
+function YourSchool({ cur }: { cur: string }) {
+  const person = useWorld((s) => s.player);
+  const school = person.school;
+  if (!school) return null;
+  const next = school.termsBegun < YALE_DRAMA.terms ? termStart(school.termsBegun) : undefined;
+  const zone = CITIES.require(YALE_DRAMA.cityId).timeZone;
+  return (
+    <div className="col gap-3">
+      <Stat label={`${YALE_DRAMA.degree} In ${YALE_DRAMA.program}`} value={school.termsBegun === 0 ? 'Arriving' : `Year ${yearOfStudy(person)}`} note={`Class of ${school.classOf}, one of ${YALE_DRAMA.classSize}`} />
+      {next && (
+        <Stat
+          label="Next Term"
+          value={formatDate(instantFromZoned({ ...next.date, hour: 12 }, zone), zone)}
+          note={`${formatMoney(termAccount(cur).refund, cur, { cents: false })} of scholarship paid in${next.estimate ? ', the date SLATE’s estimate' : ''}`}
+        />
+      )}
+    </div>
   );
 }
 

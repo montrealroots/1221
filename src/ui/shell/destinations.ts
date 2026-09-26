@@ -41,6 +41,13 @@ export const DESTINATIONS: readonly DestinationGroup[] = [
     ],
   },
   {
+    label: 'Your Training',
+    items: [
+      // Opened from the School panel, for a life that began at drama school.
+      { route: '/workspace/school', label: 'Your School', detail: 'Your place, your terms and your award', homeOnly: true },
+    ],
+  },
+  {
     label: 'Your Money',
     items: [
       // Opened from the Money panel, which names the bank it goes to.

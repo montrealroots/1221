@@ -116,7 +116,7 @@ describe('the year a character can be born in', () => {
 
   it('stops at eighteen years before the save begins', () => {
     expect(BIRTH_YEARS_BEFORE_START).toBe(18);
-    expect(latestBirthYear(2026)).toBe(2008);
+    expect(latestBirthYear({ startYear: 2026 })).toBe(2008);
   });
 
   it('lets a birthday at the cap open the save at seventeen', () => {
@@ -128,8 +128,8 @@ describe('the year a character can be born in', () => {
   });
 
   it('checks the year rather than the age, so the picker and the rule agree', () => {
-    expect(source).toContain('max={latestBirthYear(config.startYear)}');
-    expect(source).toContain('config.birthYear > latestBirthYear(config.startYear)');
+    expect(source).toContain('max={latestBirthYear(config)}');
+    expect(source).toContain('config.birthYear > latestBirthYear(config)');
     // No age floor anywhere: it would contradict the year the picker allows.
     expect(source.match(/\bage < \d+\b/g) ?? []).toEqual([]);
   });

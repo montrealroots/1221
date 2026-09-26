@@ -164,6 +164,8 @@ export interface Person {
   roundUps?: { on: boolean; pending: Money };
   /** Money gone to the state or its scheme after years untouched, which can be claimed back. */
   unclaimed?: { amount: Money; to: string; at: Instant }[];
+  /** Drama school: which, the class they graduate with, and how many terms have begun (`systems/school.ts`). */
+  school?: { schoolId: string; classOf: number; termsBegun: number };
   /** Payments somebody else made on their cards: when, which, when they learned of it and when the statement showed it, whether they reported it, what the law left them and what came back. */
   fraud?: { transactionId?: string; accountId: string; which: 'debit' | 'credit'; amount: Money; at: Instant; learnedAt: Instant; statedAt: Instant; reportedAt?: Instant; carried?: Money; refunded?: Money }[];
 

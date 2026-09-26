@@ -181,6 +181,22 @@ part the tool cannot see.
   on debit card purchases is published by few of the 60 banks and isn't
   enforced; the daily ATM limit is. A card whose cash advance terms weren't
   found charges SLATE's estimate, 5% or $10 at the purchase rate, and says so.
+- **Drama school is its first portion.** A new life begins as a first-year
+  actor at the David Geffen School of Drama at Yale, the one the faculty
+  wanted most, on an award covering the whole cost of attendance, paid
+  term by term. What isn't there yet:
+  - Being the faculty's first choice is said, and pays the full award,
+    but no measure of an actor's ability exists for it to raise: nothing
+    evaluates, casts or grades anybody yet.
+  - Classes, rehearsals and their hours, the school's evaluations, casting,
+    Yale Rep understudying and work-study, which the school counts toward
+    every award; the scholarship stands in for work-study's wages.
+  - The living-expense scholarship is taxable income in the US, and the
+    tax engine collects nothing.
+  - Later years' dates and costs aren't published; the terms after
+    2026–2027 are SLATE's estimate, at that year's figures.
+  - The bachelor's degree the MFA asks for is taken as read, and only the
+    birth year is held to it.
 - **Some of the banks' research is kept and read by nothing.** Each
   country's deposit guarantee, its central bank's rate, a sentence on how
   money moves there, and the local names for its ways of paying came off

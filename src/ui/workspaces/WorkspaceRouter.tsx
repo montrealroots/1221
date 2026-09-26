@@ -1,9 +1,11 @@
 import { CalendarWorkspace } from './CalendarWorkspace';
 import { BankWorkspace } from './BankWorkspace';
+import { SchoolWorkspace } from './SchoolWorkspace';
 
 const WORKSPACES: Record<string, () => JSX.Element> = {
   '/workspace/calendar': CalendarWorkspace,
   '/workspace/bank': BankWorkspace,
+  '/workspace/school': SchoolWorkspace,
 };
 
 export function WorkspaceRouter({ route }: { route: string }) {

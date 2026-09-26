@@ -43,6 +43,8 @@ import { registerCash } from './systems/cash';
 import { registerAccountLife } from './systems/accountlife';
 import { registerCardOffers } from './systems/cardoffers';
 import { registerSecurity } from './systems/security';
+import { enroll, registerSchool } from './systems/school';
+import { YALE_DRAMA } from './content/school';
 import { CARDS } from './content/cards';
 import { registerWorld } from './world/world';
 import {
@@ -74,6 +76,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerAccountLife(sim);
   registerCardOffers(sim);
   registerSecurity(sim);
+  registerSchool(sim);
   registerLending(sim);
 }
 
@@ -155,6 +158,8 @@ function populateWorld(sim: Simulation, config: NewSaveConfig): void {
   openCredit(sim, player, wealth.creditScore);
   armBirthdays(sim);
   armBanking(sim);
+  // A life that begins at drama school, where it's in the school's town.
+  if (config.school === YALE_DRAMA.id && config.startLocationId === YALE_DRAMA.cityId) enroll(sim, player);
 }
 
 /** Keeps the save-slot summary in step with the world. */

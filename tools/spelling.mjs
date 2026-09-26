@@ -92,7 +92,7 @@ const REAL_NAMES = [
   // company, not a color.
   'Grey Dog Software',
   'Southbank Centre', 'Sydney Theatre', 'Abbey Theatre', 'Lyric Theatre', 'Apollo Theatre',
-  'Dolby Theatre', 'Pantages Theatre', 'Chinese Theatre', 'Egyptian Theatre',
+  'Dolby Theatre', 'Pantages Theatre', 'Chinese Theatre', 'Egyptian Theatre', 'Yale Repertory Theatre',
   // Retail chains that spell themselves that way.
   'Text Book Centre', 'Home Centre', 'Centrepoint', 'Community Care Centre',
   // Cinema chains and classification bodies that spell themselves that way.
