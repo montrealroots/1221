@@ -9,9 +9,12 @@ import { quickSave } from '@/engine';
 import { LABOR, employerNoticeDays, laborAt, layoffChanceADay, redundancyWeeks } from '@/engine/content/labor';
 import { jobFor, patternHours, patternOf } from '@/engine/content/jobs';
 import { MS_DAY } from '@/engine/core/time';
+import { exchange } from '@/engine/content/currency';
+import { saveCurrency } from '@/engine/core/money';
 import { SHIFT_KIND, averageWeek, layOff, payslipAt, redundancyPay } from '@/engine/systems/work';
 import { EMPLOYERS } from '@/engine/content/employers';
 import { claimFor } from '@/engine/systems/unemployment';
+import { netWorth } from '@/engine/systems/finance';
 import { BENEFITS, baseQuarters, eiHoursNeeded, eiWeeks, japanDaily, japanDismissedDays } from '@/engine/content/unemployment';
 
 const life = (cityId: string, seed = 'out-of-work') =>
@@ -411,5 +414,37 @@ describe('Korea’s benefit days', () => {
     expect(kr.weeks!(years(0.5), { age: 30, at, why: 'laidOff' }, 0)).toBeCloseTo(120 / 7, 6);
     expect(kr.weeks!(years(2), { age: 30, at, why: 'laidOff' }, 0)).toBeCloseTo(150 / 7, 6);
     expect(kr.weeks!(years(2), { age: 55, at, why: 'laidOff' }, 0)).toBeCloseTo(180 / 7, 6);
+  });
+});
+
+describe('Australia’s waits, and Mexico’s severance free of tax to 90 UMA a year', () => {
+  it('waits a week for each $500 of savings over $5,000, then the ordinary week, and four weeks for quitting alongside', () => {
+    const au = BENEFITS.AU!;
+    expect(au.wait!({ savings: 7_300 })).toBe(4 * 7 + 7);
+    expect(au.wait!({ savings: 5_400 })).toBe(7);
+    expect(au.wait!({ savings: 50_000 })).toBe(13 * 7 + 7);
+    expect(au.concurrentBar).toBe(true);
+    expect(au.amount(0, 1, { age: 30, savings: 0, share: 1 })).toBeCloseTo(824.90 / 2, 6);
+    expect(au.amount(0, 1, { age: 20, savings: 0, share: 1 })).toBeCloseTo(677.20 / 2, 6);
+    expect(au.amount(0, 1, { age: 30, savings: 700_000, share: 1 })).toBe(0);
+    // Quitting: four weeks from the day the job ended, alongside the other waits.
+    const sim = life('au-nsw-sydney');
+    sim.advanceBy(300 * MS_DAY);
+    sim.must({ kind: 'work.quit', payload: {} });
+    sim.advanceBy(8 * MS_DAY);
+    const offer = claimFor(sim, sim.player);
+    const savings = netWorth(sim, sim.player.id).cash / 100;
+    expect('refused' in offer ? offer.refused : offer.waitDays).toBe(Math.max(au.wait!({ savings }), 28));
+  });
+
+  it('pays a Mexico City layoff’s severance free of ISR to 90 UMA a year, and taxes the rest', () => {
+    const sim = life('mx-cmx-mexicocity');
+    // A year and a month worked: one year counts, its month under six.
+    sim.advanceBy(400 * MS_DAY);
+    layOff(sim, sim.player);
+    const pay = sim.player.job!.pendingPay!.filter((one) => one.name === 'Redundancy Pay');
+    const free = Math.round(90 * 117.31 * 100);
+    expect(pay.find((one) => one.taxFree)?.amount).toBe(exchange(free, 'MXN', saveCurrency(sim.universe)) ?? free);
+    expect(pay.some((one) => !one.taxFree && one.amount > 0)).toBe(true);
   });
 });

@@ -163,8 +163,7 @@ part the tool cannot see.
   everywhere else, and for US states and Canadian provinces the research
   didn't cover. Its sales, property and vehicle rules are still read by
   nothing, because nothing is bought, owned or driven.
-- **The year is settled in ten of the thirteen, and not yet in France,
-  Mexico or Australia.** Since 2026-09-25 each payday's withholding is
+- **The year is settled in all thirteen.** Since 2026-09-25 each payday's withholding is
   settled after the tax year (`systems/taxreturn.ts`) on the country's
   own date: the year's real tax on its real pay, the benefit taxed where the
   law taxes it, and the credits a low wage gets only there: the US earned
@@ -175,7 +174,15 @@ part the tool cannot see.
   deduction; New Zealand's independent earner credit; and Korea's year-end
   settlement with February's pay and its earned income credit (근로장려금)
   paid at the end of September, which SLATE applies for on the player's
-  behalf. Not modeled: Washington's Working Families Tax Credit, a separate
+  behalf; France's on the 2026 barème, a refund at the end of July and a
+  balance on 25 September (in one debit, where over €300 it's four);
+  Mexico's by the employer's annual calculation for somebody with it all
+  year, else on the April declaration; and Australia's year to June in
+  November, its offset already in the withholding and its 2025-26 year
+  worked on 2026-27's rates. France's prime d'activité, the monthly top-up
+  for low pay, is paid on the 5th from the three months before last
+  (`systems/topup.ts`), claimed by SLATE for the player, without the
+  housing aid SLATE doesn't pay. Not modeled: Washington's Working Families Tax Credit, a separate
   application; the Canada Workers Benefit in Quebec, whose own figures
   weren't found, so a Quebec worker gets the work premium alone; British
   Columbia's renter's and sales tax credits; the Canada Workers Benefit's
@@ -244,10 +251,12 @@ part the tool cannot see.
   before it isn't known, so in a save's first year or two many don't
   qualify, as a new entrant wouldn't: Ireland's pay-related benefit and
   Britain's New Style JSA need two years' contributions, and Britain's
-  claim falls to Universal Credit. Not modeled: Ireland's means-tested
-  Jobseeker's Allowance; Australia's waiting periods, assets test and what
-  quitting costs (Services Australia's pages couldn't be reached), and its
-  Youth Allowance under 22; Japan's days for somebody quitting after
+  claim falls to Universal Credit. Australia's waits are its liquid assets
+  and ordinary waiting periods, with four weeks for quitting or misconduct
+  alongside them, its assets limit that of somebody without a home, and
+  Youth Allowance at 18 to 21 at the away-from-home rate. Not modeled:
+  Ireland's means-tested Jobseeker's Allowance; Australia's income
+  maintenance period after leave or redundancy paid out; Japan's days for somebody quitting after
   April 2025 are the month the research found, unconfirmed; New York's
   high-quarter test is at the state's $16 minimum, not New York City's $17;
   Britain's National Insurance test is at 2024/25's lower earnings limit;

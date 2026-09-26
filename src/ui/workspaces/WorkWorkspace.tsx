@@ -168,7 +168,7 @@ export function WorkWorkspace() {
               <p className="small" style={{ margin: 0 }}>
                 {`You can claim ${localPay(Math.round(offer.weekly * 100))} a week`}
                 {offer.weeks !== undefined ? ` for ${Math.round(offer.weeks)} weeks` : ''}
-                {`, after ${offer.benefit.waitingDays + offer.barWeeks * 7} days${offer.barWeeks > 0 ? ', longer for quitting' : ''}. It pays while you’re looking for work.`}
+                {`, after ${offer.waitDays} days${offer.barWeeks > 0 ? ', longer for quitting' : ''}. It pays while you’re looking for work.`}
               </p>
               <p className="xs dim" style={{ margin: 0 }}>Source: {offer.benefit.source}</p>
               <div><Gated feature="work.claim" className="btn btn-sm" onClick={makeClaim}>Claim {offer.benefit.name}</Gated></div>
@@ -297,6 +297,7 @@ function TaxYear() {
   const cur = saveCurrency(sim.universe);
   const money = (cents: number) => formatMoney(cents, cur);
   const last = useWorld((s) => s.player.earnings?.lastReturn);
+  const topUp = useWorld((s) => s.player.earnings?.topUp);
   const now = useWorld((s) => s.now);
   const settlement = settlementFor(sim.player);
   if (!settlement) return null;
@@ -317,6 +318,7 @@ function TaxYear() {
             {`Last settled ${formatDate(last.at, sim.zone)}, for the year from ${formatDate(Date.parse(last.year), 'UTC')}: ${money(last.withheld)} withheld, ${money(last.owed)} owed${last.credits.length ? `, ${last.credits.map((one) => `${one.name} ${money(one.amount)}`).join(', ')}` : ''}, and ${last.refund >= 0 ? `${money(last.refund)} back` : `${money(-last.refund)} paid`}.`}
           </p>
         )}
+        {topUp && <p className="small" style={{ margin: 0 }}>{`${topUp.name}: ${money(topUp.amount)} on ${formatDate(topUp.at, sim.zone)}, the top-up for low pay, worked from the three months before last.`}</p>}
         <p className="xs dim" style={{ margin: 0 }}>Source: {sofar.settlement.source}</p>
       </div>
     </Panel>

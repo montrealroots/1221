@@ -161,13 +161,16 @@ export function settleToday(sim: Simulation, person: Person): YearSettled | unde
       }
     }
     if (e.settled?.includes(key)) continue;
-    const due = settlement.settle.find((one) => {
+    const dates = settlement.settle.filter((one) => {
       const at = Date.UTC(new Date(to).getUTCFullYear() + one.offsetYears, one.month - 1, one.day);
-      return dateKey(at, 'UTC') === today && (!one.ifEmployed || working(person));
+      return dateKey(at, 'UTC') === today && (!one.ifEmployed || working(person))
+        && (!one.ifWholeYear || (working(person) && person.job!.since <= from));
     });
-    if (!due) continue;
+    if (dates.length === 0) continue;
     const worked = workYear(sim, person, from, to);
     if (!worked || (worked.wages <= 0 && worked.withheld <= 0)) continue;
+    // A date for refunds only, or sums due only, waits for the other.
+    if (!dates.some((one) => !one.only || (one.only === 'refund' ? worked.refund >= 0 : worked.refund < 0))) continue;
     e.settled = [...(e.settled ?? []).slice(-9), key];
     const save = saveCurrency(sim.universe);
     const { currency } = countryAt(cityId);

@@ -295,7 +295,17 @@ function finalPay(sim: Simulation, person: Person): void {
   }
   const r = law.redundancy;
   const owed = state.laidOff && r ? redundancyPay(r, months, ageOf(person, sim.now), averageWeek(sim, person), (units) => exchange(units * 100, countryAt(state.cityId).currency, saveCurrency(sim.universe)) ?? units * 100) : 0;
-  if (r && owed > 0) pending.push({ name: 'Redundancy Pay', amount: owed, ...(r.taxFree ? { taxFree: true } : {}) });
+  if (r && owed > 0) {
+    if (r.taxFreePerYear !== undefined) {
+      // Free to so much a year of service, a part year over six months whole.
+      const years = Math.floor(months / 12) + (months % 12 > 6 ? 1 : 0);
+      const free = Math.min(owed, exchange(Math.round(r.taxFreePerYear * 100 * Math.max(1, years)), countryAt(state.cityId).currency, saveCurrency(sim.universe)) ?? Math.round(r.taxFreePerYear * 100 * Math.max(1, years)));
+      pending.push({ name: 'Redundancy Pay', amount: free, taxFree: true });
+      if (owed > free) pending.push({ name: 'Redundancy Pay', amount: owed - free });
+    } else {
+      pending.push({ name: 'Redundancy Pay', amount: owed, ...(r.taxFree ? { taxFree: true } : {}) });
+    }
+  }
   state.pendingPay = pending;
 }
 

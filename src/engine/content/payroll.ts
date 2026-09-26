@@ -54,6 +54,25 @@ export interface PayrollContext {
   cityId?: string;
 }
 
+/** France's taxable pay (net imposable) on a year's gross: less the pension contributions and the deductible 6.8 points of CSG. */
+export function franceTaxable(g: number): number {
+  const pensions = Math.min(g, 48_060) * (0.069 + 0.0315 + 0.0086) + g * 0.004;
+  return g - pensions - g * 0.9825 * 0.068;
+}
+
+/**
+ * France's income tax for one part on a year's taxable pay (2026 barème, on
+ * 2025 income): less 10% for work expenses, €509 to €14,555; the scale; and
+ * the décote, €897 less 45.25% of a tax under €1,982.
+ */
+export function franceIncomeTax(taxable: number): number {
+  const deduction = Math.min(14_555, Math.max(509, taxable * 0.1));
+  const net = Math.max(0, taxable - deduction);
+  const gross = bands(net, [[0, 0], [11_600, 0.11], [29_579, 0.30], [84_577, 0.41], [181_917, 0.45]]);
+  const decote = gross < 1_982 ? Math.max(0, 897 - 0.4525 * gross) : 0;
+  return Math.max(0, gross - decote);
+}
+
 /**
  * Spain's IRPF on a year's pay, before the withholding's own limits: the pay
  * less Seguridad Social, €2,000 of expenses and the reduction for work
@@ -267,7 +286,7 @@ const RULES: Record<string, Rules> = {
     lines.push({ name: 'CSG and CRDS', kind: 'social', source: 'URSSAF 2026: 9.2% and 0.5% on 98.25% of pay', amount: csgBase * (0.092 + 0.005) });
     // Taxable pay keeps the non-deductible 2.4 points of CSG and the CRDS;
     // the default grid's one rate for the month's band applies to all of it.
-    const taxableMonth = (g - pensions - csgBase * 0.068) / 12;
+    const taxableMonth = franceTaxable(g) / 12;
     const grid: readonly (readonly [number, number])[] = [[0, 0], [1_635, 0.005], [1_698, 0.013], [1_807, 0.021], [1_928, 0.029], [2_060, 0.035], [2_170, 0.041], [2_315, 0.053], [2_738, 0.075], [3_135, 0.099], [3_571, 0.119], [4_019, 0.138], [4_690, 0.158], [5_624, 0.179], [7_037, 0.20], [8_789, 0.24], [12_200, 0.28], [16_523, 0.33], [25_937, 0.38], [55_558, 0.43]];
     const rate = [...grid].reverse().find(([from]) => taxableMonth >= from)?.[1] ?? 0;
     lines.push({ name: 'Prélèvement à la source', kind: 'tax', source: 'BOFIP, the taux neutre grid from 1 May 2026', amount: taxableMonth * rate * 12 });

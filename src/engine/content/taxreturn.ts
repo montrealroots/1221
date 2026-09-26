@@ -19,7 +19,7 @@
  * whole units.
  */
 
-import { payrollYear, spainCuota } from './payroll';
+import { franceIncomeTax, franceTaxable, payrollYear, spainCuota } from './payroll';
 import type { Instant } from '../core/time';
 
 /** A tax year's figures, as the settlement reads them. */
@@ -53,6 +53,10 @@ export interface SettleDate {
   day: number;
   offsetYears: number;
   ifEmployed?: boolean;
+  /** Only for somebody with the same employer the whole year (Mexico's cálculo anual). */
+  ifWholeYear?: boolean;
+  /** Only a refund, or only a sum due, is settled on this date (France pays back in July and takes in September). */
+  only?: 'refund' | 'due';
   estimate?: boolean;
 }
 
@@ -325,6 +329,23 @@ export const SETTLEMENTS: Readonly<Record<string, Settlement>> = {
       source: '조세특례제한법 제100조의5: applied for in May and paid by the end of September, for a single household by the year’s pay and savings; SLATE applies for it',
     },
     source: 'NTS: the employer settles the year with February’s pay (소득세법 제137조); somebody without an employer then may file in May, and a refund comes around the end of June, SLATE’s estimate. 구직급여 isn’t taxed',
+  },
+  FR: {
+    name: 'Impôt Sur Le Revenu', yearStart: [1, 1],
+    settle: [{ month: 7, day: 31, offsetYears: 0, only: 'refund' }, { month: 9, day: 25, offsetYears: 0, only: 'due' }],
+    // The year's taxable pay and the ARE, which is taxed as pay, on the 2026 barème.
+    tax: (y) => franceIncomeTax(franceTaxable(y.wages) + allBenefits(y)),
+    source: 'impots.gouv.fr: the year’s tax on the spring return, on the 2026 barème with the 10% deduction and the décote; a refund paid at the end of July, a balance taken on 25 September (over €300, in four from then to December); ARE is taxable',
+  },
+  MX: {
+    name: 'Declaración Anual', yearStart: [1, 1],
+    settle: [{ month: 2, day: 28, offsetYears: 0, ifWholeYear: true }, { month: 5, day: 15, offsetYears: 0, estimate: true }],
+    source: 'LISR arts. 97 and 98: the employer’s annual calculation for somebody with it all year, settled by February; anybody else files in April, and SAT’s automatic refund comes after it, mid-May being SLATE’s estimate. The Mexico City unemployment insurance isn’t taxed',
+  },
+  AU: {
+    name: 'Tax Return', yearStart: [7, 1], settle: [{ month: 11, day: 14, offsetYears: 0, estimate: true }],
+    benefitLines: /^(PAYG Withholding|Medicare Levy)$/,
+    source: 'ATO: the year to 30 June on a return due 31 October, most online refunds within two weeks; JobSeeker is taxable, and nothing is withheld from it',
   },
   JP: {
     name: '年末調整', yearStart: [1, 1],

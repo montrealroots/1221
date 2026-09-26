@@ -184,6 +184,8 @@ export interface Redundancy {
   weekCap?: number;
   /** Paid free of income tax and contributions. */
   taxFree?: boolean;
+  /** Free of income tax up to so much a year of service, in the country's money, a part year over six months counting whole (Mexico). */
+  taxFreePerYear?: number;
   source: string;
 }
 
@@ -243,7 +245,7 @@ export const LABOR: Readonly<Record<string, LaborLaw>> = {
     extras: [{ kind: 'days', name: 'Aguinaldo', month: 12, day: 20, days: 15, source: 'LFT art. 87: 15 days’ pay by 20 December, pro rata' }],
     quitNotice: { steps: [[0, 0]], source: 'LFT: a worker may leave at any time' },
     employerNotice: { steps: [[0, 0]], source: 'LFT arts. 46–50: no notice; a dismissal without cause is paid for instead' },
-    redundancy: { afterMonths: 0, plus: 90 / 7, weeksAYear: 12 / 7, source: 'LFT arts. 48, 50 and 162: three months’ pay for a dismissal without cause, and the seniority premium of 12 days a year' },
+    redundancy: { afterMonths: 0, plus: 90 / 7, weeksAYear: 12 / 7, taxFreePerYear: 90 * 117.31, source: 'LFT arts. 48, 50 and 162: three months’ pay for a dismissal without cause, and the seniority premium of 12 days a year; LISR art. 93: free of ISR to 90 UMA a year of service, 2026’s UMA being 117.31 pesos' },
   },
   GB: {
     leave: {

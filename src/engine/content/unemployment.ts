@@ -61,6 +61,10 @@ export interface Benefit {
   weeks?(record: WorkRecord, ctx: ClaimContext, basis: number): number;
   /** Where the first claim fails, the one that's tried instead (Britain's Universal Credit). */
   fallback?: Benefit;
+  /** Waiting days that turn on savings (Australia's liquid assets waiting period), in place of `waitingDays`. */
+  wait?(ctx: { savings: number }): number;
+  /** A bar for quitting or cause runs at the same time as the waiting days, not after them (Australia). */
+  concurrentBar?: boolean;
   source: string;
 }
 
@@ -277,10 +281,10 @@ function eiBestWeeks(regionalRate: number): number {
  * missed shifts aren't, so neither applies.
  */
 const QUIT = {
-  US: 'none', CA: 'none', GB: { weeks: 13 }, IE: { weeks: 9 }, IS: { weeks: 2 * 52 / 12 }, DE: { weeks: 12, cut: 0.25 }, JP: { weeks: 30 / 7 }, NZ: { weeks: 13 }, AU: { weeks: 0 },
+  US: 'none', CA: 'none', GB: { weeks: 13 }, IE: { weeks: 9 }, IS: { weeks: 2 * 52 / 12 }, DE: { weeks: 12, cut: 0.25 }, JP: { weeks: 30 / 7 }, NZ: { weeks: 13 }, AU: { weeks: 4 },
 } satisfies Readonly<Record<string, Bar>>;
 const CAUSE = {
-  US: 'none', CA: 'none', MX: { weeks: 0 }, GB: { weeks: 13 }, IE: { weeks: 9 }, IS: { weeks: 2 * 52 / 12 }, DE: { weeks: 12, cut: 0.25 }, ES: { weeks: 0 }, FR: { weeks: 0 }, JP: { weeks: 0 }, KR: { weeks: 0 }, NZ: { weeks: 13 }, AU: { weeks: 0 },
+  US: 'none', CA: 'none', MX: { weeks: 0 }, GB: { weeks: 13 }, IE: { weeks: 9 }, IS: { weeks: 2 * 52 / 12 }, DE: { weeks: 12, cut: 0.25 }, ES: { weeks: 0 }, FR: { weeks: 0 }, JP: { weeks: 0 }, KR: { weeks: 0 }, NZ: { weeks: 13 }, AU: { weeks: 4 },
 } satisfies Readonly<Record<string, Bar>>;
 
 /** A base period's quarters, highest first, their total, and how many had wages. */
@@ -598,11 +602,16 @@ export const BENEFITS: Readonly<Record<string, Benefit>> = {
 
   // --- Australia ------------------------------------------------------------
   AU: {
-    name: 'JobSeeker Payment', waitingDays: 0, every: 14, quit: QUIT.AU, cause: CAUSE.AU,
-    qualifies: (_record, ctx) => (ctx.age < 22 ? 'Under 22 it’s Youth Allowance, which SLATE doesn’t have figures it trusts for.' : undefined),
-    basis: () => 833.70 / 2,
-    amount: same,
-    source: 'Services Australia from 20 September 2026: $833.70 a fortnight single without children, with no time limit; its waiting periods and assets test couldn’t be reached, so neither is applied',
+    name: 'JobSeeker Payment', waitingDays: 7, every: 14, quit: QUIT.AU, cause: CAUSE.AU, concurrentBar: true,
+    // The liquid assets waiting period, a week for each $500 over $5,000 from
+    // $5,500, to 13, and then the ordinary week.
+    wait: ({ savings }) => (savings >= 5_500 ? Math.min(13, Math.floor((savings - 5_000) / 500)) * 7 : 0) + 7,
+    qualifies: (_record, ctx) => (ctx.age < 18 ? 'JobSeeker and Youth Allowance are for ages 18 and over.' : undefined),
+    basis: () => 0,
+    // Youth Allowance under 22, living away from home; nothing over the
+    // assets limit for somebody who doesn't own a home.
+    amount: (_basis, _week, ctx) => (ctx.savings > 600_000 ? 0 : (ctx.age < 22 ? 677.20 : 824.90) / 2),
+    source: 'DSS Social Security Guide, 21 September 2026: JobSeeker $824.90 a fortnight single, Youth Allowance $677.20 at 18 to 21 away from home; a week for each $500 of savings over $5,000 from $5,500, to 13, then an ordinary week; nothing over $600,000 of assets without a home; no time limit',
   },
 };
 

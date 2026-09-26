@@ -9,7 +9,9 @@
 import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
 import { MS_DAY } from '@/engine/core/time';
-import { payrollYear, spainCuota } from '@/engine/content/payroll';
+import { franceIncomeTax, payrollYear, spainCuota } from '@/engine/content/payroll';
+import { primeActivite } from '@/engine/systems/topup';
+import { zonedParts } from '@/engine/core/time';
 import {
   SETTLEMENTS, calEitc, canadaWorkers, koreaEarnedIncome, nyHouseholdCredit, nzIndependentEarner, quebecWorkPremium, settleYear, spainMinimumWage, usEitc, type YearFigures,
 } from '@/engine/content/taxreturn';
@@ -207,5 +209,47 @@ describe('the credits from the second research pass', () => {
     seoul.advanceTo(Date.UTC(2027, 9, 1, 12));
     expect(seoul.universe.transactions.some((t) => t.category === 'tax' && t.memo.startsWith('근로장려금'))).toBe(true);
     expect(seoul.ledger.audit()).toEqual([]);
+  });
+});
+
+describe('France, Mexico and Australia', () => {
+  it('works France’s tax with its 10% deduction and décote, and the prime d’activité by its formula', () => {
+    expect(franceIncomeTax(20_000)).toBeCloseTo(704 - (897 - 0.4525 * 704), 6);
+    expect(franceIncomeTax(12_000)).toBe(0);
+    // €1,170 net in a month, at the SMIC of €12.31: the bonus is part-way.
+    const bonus = 240.63 * (1_170 - 59 * 12.31) / (79 * 12.31);
+    expect(primeActivite(1_170, 0, 12.31)).toBeCloseTo(638.28 + 0.5985 * 1_170 + bonus - 1_170, 6);
+    // ARE counts against it; nothing under €15, nothing without earnings.
+    expect(primeActivite(1_170, 500, 12.31)).toBe(0);
+    const full = primeActivite(1_170, 0, 12.31);
+    expect(primeActivite(1_170, full - 10, 12.31)).toBe(0);
+    expect(primeActivite(1_170, full - 20, 12.31)).toBeCloseTo(20, 6);
+    expect(primeActivite(0, 0, 12.31)).toBe(0);
+    expect(primeActivite(2_000, 0, 12.31)).toBeCloseTo(638.28 + 0.5985 * 2_000 + 240.63 - 2_000, 6);
+  });
+
+  it('pays Paris’s prime d’activité on the 5th, and takes a French balance due in September, not July', () => {
+    const paris = quickSave({ startLocationId: 'fr-idf-paris', homeRegionId: 'fr-idf-paris', livesWhereBorn: true, dayJob: true, wealth: 'modest', birthYear: 1994 }, 'return-paris');
+    paris.advanceTo(Date.UTC(2026, 5, 6, 12));
+    const tops = paris.universe.transactions.filter((t) => t.category === 'topup');
+    expect(tops.length).toBeGreaterThan(0);
+    expect(tops.every((t) => zonedParts(t.at, paris.homeZone).day === 5)).toBe(true);
+    // An ARE of €15,000 in 2026, taxable and never withheld: a balance due.
+    paris.post({ memo: 'Allocation d’aide au retour à l’emploi', category: 'benefit', postings: [
+      { accountId: paris.nominalAccount('income', 'Unemployment Benefit').id, amount: -15_000_00 },
+      { accountId: paris.player.primaryAccountId!, amount: 15_000_00 },
+    ] });
+    paris.advanceTo(Date.UTC(2027, 7, 2, 12));
+    expect(paris.universe.transactions.some((t) => t.category === 'tax')).toBe(false);
+    paris.advanceTo(Date.UTC(2027, 8, 26, 12));
+    const due = paris.universe.transactions.find((t) => t.category === 'tax')!;
+    expect(due.postings.find((p) => p.accountId === paris.player.primaryAccountId)!.amount).toBeLessThan(0);
+    expect(paris.ledger.audit()).toEqual([]);
+  });
+
+  it('settles Australia’s year to June in November', () => {
+    const sydney = quickSave({ startLocationId: 'au-nsw-sydney', homeRegionId: 'au-nsw-sydney', livesWhereBorn: true, dayJob: true, wealth: 'modest', birthYear: 1994 }, 'return-sydney');
+    sydney.advanceTo(Date.UTC(2026, 10, 15, 12));
+    expect(sydney.player.earnings!.lastReturn!.year).toBe('2025-07-01');
   });
 });

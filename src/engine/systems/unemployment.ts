@@ -37,6 +37,8 @@ export interface EarningsState {
   /** The tax years settled (`systems/taxreturn.ts`), by the settlement's name and the year's first day, and the last one. */
   settled?: string[];
   lastReturn?: YearSettled;
+  /** The last top-up for low pay paid (`systems/topup.ts`). */
+  topUp?: { name: string; amount: Money; at: Instant };
 }
 
 export interface Claim {
@@ -99,6 +101,8 @@ export interface Offer {
   share: number;
   /** The first week's amount, in the country's money, at today's savings. */
   weekly: number;
+  /** Days before it pays: the waiting days, and a bar for quitting or cause, after them or alongside. */
+  waitDays: number;
   weeks?: number;
   barWeeks: number;
 }
@@ -144,7 +148,9 @@ export function claimFor(sim: Simulation, person: Person): Offer | { refused: st
       continue;
     }
     const weekly = benefit.amount(basis, 1, { age: ctx.age, savings, share });
-    return { benefit, fallback, basis, share, weekly, ...(weeks !== undefined ? { weeks } : {}), barWeeks: bar.weeks };
+    const waiting = benefit.wait ? benefit.wait({ savings }) : benefit.waitingDays;
+    const waitDays = benefit.concurrentBar ? Math.max(waiting, bar.weeks * 7) : waiting + bar.weeks * 7;
+    return { benefit, fallback, basis, share, weekly, waitDays, ...(weeks !== undefined ? { weeks } : {}), barWeeks: bar.weeks };
   }
   return { refused };
 }
@@ -164,9 +170,9 @@ export function registerUnemployment(sim: Simulation): void {
     const found = claimFor(s, person);
     if ('refused' in found) throw new CommandError(found.refused);
     if (!person.job) s.must({ kind: 'work.find_job', payload: {} });
-    const { benefit, fallback, basis, share, weekly, weeks, barWeeks } = found;
+    const { benefit, fallback, basis, share, weekly, weeks, waitDays } = found;
     const where = person.earnings?.lastLeft?.cityId ?? person.job!.cityId;
-    const paysFrom = s.now + (benefit.waitingDays + barWeeks * 7) * MS_DAY;
+    const paysFrom = s.now + waitDays * MS_DAY;
     const claim: Claim = {
       name: benefit.name, cityId: where, basis, share, from: s.now, paysFrom, paid: 0,
       ...(fallback ? { fallback: true } : {}),
