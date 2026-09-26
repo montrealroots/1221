@@ -44,7 +44,14 @@ export const DESTINATIONS: readonly DestinationGroup[] = [
     label: 'Your Training',
     items: [
       // Opened from the School panel, for a life that began at drama school.
-      { route: '/workspace/school', label: 'Your School', detail: 'Your place, your terms and your award', homeOnly: true },
+      { route: '/workspace/school', label: 'Your School', detail: 'Your standing, classes, casting and terms', homeOnly: true },
+    ],
+  },
+  {
+    label: 'Your Work',
+    items: [
+      // Opened from the Career panel, from the showcase on.
+      { route: '/workspace/career', label: 'Your Career', detail: 'Your agency, auditions, work and unions', homeOnly: true },
     ],
   },
   {

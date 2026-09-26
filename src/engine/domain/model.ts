@@ -17,6 +17,7 @@ import type { CreditState } from '../systems/credit';
 import type { AlertSettings } from '../systems/statements';
 import type { PaymentSettings } from '../systems/payments';
 import type { Craft, SchoolRecord } from '../systems/school';
+import type { CareerRecord } from '../systems/career';
 import type { IdNamespace } from '../core/ids';
 import type { PerformerTitle } from '../core/performer';
 
@@ -169,6 +170,8 @@ export interface Person {
   school?: SchoolRecord;
   /** Their craft as an actor, 0 to 100 in each area (`content/school.ts`). */
   craft?: Craft;
+  /** Their working life as an actor: representation, auditions, jobs, the unions (`systems/career.ts`). */
+  career?: CareerRecord;
   /** Where they come from, for what a school's need assessment reads. Shown nowhere. */
   family?: 'wealthy';
   /** Payments somebody else made on their cards: when, which, when they learned of it and when the statement showed it, whether they reported it, what the law left them and what came back. */

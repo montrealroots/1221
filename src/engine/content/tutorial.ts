@@ -169,6 +169,20 @@ export const CHAPTERS: readonly Chapter[] = [
     opens: ['ui.school', 'school.call_in_sick', 'school.take_shift'],
   },
   {
+    id: 'career',
+    title: 'The Business',
+    lead: 'Getting seen, getting sent out, and getting paid.',
+    body: [
+      'In your last spring the class shows scenes to agents, managers and casting directors in New York, and a week later in Los Angeles. The agencies whose bar your showing clears may offer to represent you; Sign takes one, for 10% of what you earn.',
+      'From the Monday after school ends, your agency sends you out: a self-tape you make wherever you are, or an audition in the room in its city. Be awake, and be there. Miss three and they let you go. Submit Yourself sends you after the low budget films that take submissions, with or without an agency.',
+      'A booking comes days after the audition and stands two days: Take It puts the days on your calendar, Pass lets it go. Every day of a job is in its city; miss one and you’re replaced.',
+      'You’re paid each contract’s minimum, SAG-AFTRA’s on the Thursday after the week and Equity’s each Friday, less the agency’s commission, Equity’s working dues and tax withheld. Your first SAG-AFTRA job makes you eligible, and working under it again thirty days on means joining; your first Equity contract makes you a member.',
+      'Leave The Agency is open on SAG-AFTRA’s terms. Where You Live moves you to New York, Los Angeles or back to New Haven.',
+    ],
+    names: ['Career', 'Sign', 'Submit Yourself', 'Take It', 'Pass', 'Leave The Agency', 'A Room', 'Your Own'],
+    opens: ['ui.career', 'career.sign', 'career.self_submit', 'career.accept', 'career.pass', 'career.leave', 'career.relocate'],
+  },
+  {
     id: 'home',
     title: 'Rent And A Roof',
     lead: 'What it costs to live where you live.',

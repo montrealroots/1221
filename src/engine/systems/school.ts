@@ -51,6 +51,8 @@ import {
 } from '../content/school';
 import { readiness } from './life';
 import { payFromCurrent } from './household';
+import { beginCareer, bookShowcase } from './career';
+import { YALE_COST_GROWTH } from '../content/career';
 
 export type Craft = Record<Skill, number>;
 export type Standing = 'good' | 'concern' | 'warning' | 'dismissed' | 'graduated';
@@ -87,7 +89,7 @@ export interface TermReview { term: number; standing: Standing; attendance: numb
 export interface Casting {
   production: string;
   role: string;
-  kind: 'understudy' | 'project';
+  kind: 'understudy' | 'role' | 'project';
   term: number;
   /** Went on as an understudy, or performed. */
   performed: number;
@@ -135,6 +137,8 @@ export const ESTIMATE = {
   growthFloor: 0.5,
   /** Missed rehearsal calls in a term that take an actor out of the casting pool. */
   missedCallsOut: 2,
+  /** The acting craft at which a director asks for a third-year in a Yale Rep role. */
+  castAtRep: 80,
   /** Below this condition a body is unwell enough to call in sick. */
   sickBelow: 55,
 } as const;
@@ -359,11 +363,16 @@ export function goesOn(sim: Simulation, person: Person, when: Instant): boolean 
  * tuition met by the tuition scholarship; the health plan billed; and, where
  * there's need, the living-expense scholarship, whose rest is paid out.
  */
-export function termAccount(into: string, need = true): { tuition: Money; healthPlan: Money; livingScholarship: Money; refund: Money } {
+export function termAccount(into: string, need = true, term = 0): { tuition: Money; healthPlan: Money; livingScholarship: Money; refund: Money } {
   const usd = (cents: Money) => (into === 'USD' ? cents : exchange(cents, 'USD', into) ?? cents);
-  const tuition = usd(Math.round(COST_2026_27.tuition / 2));
-  const healthPlan = usd(Math.round(COST_2026_27.healthPlan / 2));
-  const livingScholarship = need ? usd(Math.round((COST_2026_27.livingExpenses + COST_2026_27.books) / 2)) : 0;
+  // Later years at the Bulletins' growth, 2022–23 to 2026–27 (`YALE_COST_GROWTH`); until 2026-09-26 they held at 2026–27's.
+  const years = Math.floor(term / 2);
+  const grown = (cents: number, rate: number) => cents * (1 + rate) ** years;
+  const plan = grown(COST_2026_27.healthPlan, YALE_COST_GROWTH.healthPlan);
+  const living = grown(COST_2026_27.livingExpenses - COST_2026_27.healthPlan + COST_2026_27.books, YALE_COST_GROWTH.living) + plan;
+  const tuition = usd(Math.round(grown(COST_2026_27.tuition, YALE_COST_GROWTH.tuition) / 2));
+  const healthPlan = usd(Math.round(plan / 2));
+  const livingScholarship = need ? usd(Math.round(living / 2)) : 0;
   return { tuition, healthPlan, livingScholarship, refund: livingScholarship - healthPlan };
 }
 
@@ -473,7 +482,7 @@ function bookPayday(sim: Simulation, person: Person, worked: Instant): void {
   schedule(sim, person, at(dayOnOrAfter(next.year, next.month, next.day, 5), 17), { kind: PAYDAY_KIND, label: 'Work-Study Payday', minutes: 0, requiresPlayer: false });
 }
 
-/** The actor's standing moved: a notice, and on dismissal the school's hold on the calendar let go. */
+/** The actor's standing moved: a notice, and on dismissal or the degree the school's hold on the calendar let go, and the career begun. */
 function setStanding(sim: Simulation, person: Person, to: Standing, reason: string): void {
   const school = person.school!;
   school.standing = to;
@@ -483,6 +492,8 @@ function setStanding(sim: Simulation, person: Person, to: Standing, reason: stri
     }
     // What was worked is still paid.
     if (school.workStudy.owedHours > 0) schedule(sim, person, sim.now + 60_000, { kind: PAYDAY_KIND, label: 'Work-Study Payday', minutes: 0, requiresPlayer: false });
+    // The business, from here (`systems/career.ts`).
+    beginCareer(sim, person);
   }
   if (person.id !== sim.universe.playerId) return;
   const chair = YALE_DRAMA.actingChair.name;
@@ -508,12 +519,35 @@ function breach(sim: Simulation, person: Person, what: string): void {
 const PROJECTS = ['', 'Spring Project', 'Shakespeare Repertory Project', 'Langston Hughes Festival Of New Work', 'Directors’ Thesis Production', 'Carlotta Festival Of New Plays'];
 
 /**
- * The chair's casting for a term, from the second. In the spring of the
- * first year, the first-year with the most acting craft, in good standing,
- * understudies at Yale Rep in The Seagull; everybody else in the pool is in
- * a School project: five weeks of calls, Tuesday to Friday three to nine,
- * and three evening performances in the term's last class week (SLATE's
- * estimate of the dates). Out of the pool, nothing.
+ * The Yale Rep production a term's casting draws on: in the spring of
+ * 2027, The Seagull; after, the season isn't announced, and SLATE's estimate
+ * is the slot Yale Rep's seasons keep, a three-week run from the first
+ * Friday of October in a fall term and of March in a spring one, rehearsed
+ * from six and a half weeks before (Yale Rep's 2023–24 to 2026–27 seasons).
+ */
+export function repProduction(term: number): { name: string; rehearsals: { from: string; to: string }; run: { from: string; to: string }; estimate: boolean } {
+  if (term === 1) return { name: SEAGULL_2027.name, rehearsals: SEAGULL_2027.rehearsals, run: SEAGULL_2027.run, estimate: false };
+  const { date, fall } = termStart(term);
+  const opening = dayOnOrAfter(date.year, fall ? 10 : 3, 1, 5);
+  const closing = addDays(opening, 22);
+  const first = addDays(opening, -45);
+  return {
+    name: `Yale Rep’s ${fall ? 'October' : 'March'} Production`,
+    rehearsals: { from: keyOf(keyOf(first) < keyOf(date) ? date : first), to: keyOf(addDays(opening, -1)) },
+    run: { from: keyOf(opening), to: keyOf(closing) },
+    estimate: true,
+  };
+}
+
+/**
+ * The chair's casting for a term, from the second. The class's best actor
+ * in good standing goes to Yale Rep: to understudy, as most acting students
+ * do, or, in the third year and at a director's invitation, which SLATE has
+ * come at `ESTIMATE.castAtRep` acting, in a role. Everybody else in the pool
+ * is in a School project: five weeks of calls, Tuesday to Friday three to
+ * nine, and three evening performances in the term's last class week
+ * (SLATE's estimate of the dates). Out of the pool, nothing. Until
+ * 2026-09-26 only the first spring went to Yale Rep.
  */
 function cast(sim: Simulation, person: Person, term: number): void {
   const school = person.school!;
@@ -522,18 +556,24 @@ function cast(sim: Simulation, person: Person, term: number): void {
     if (person.id === sim.universe.playerId) sim.notify({ category: 'money', title: 'Not Cast This Term', body: 'You’re out of the casting pool after missed rehearsal calls. A good evaluation puts you back.', importance: 70, route: '/workspace/school' });
     return;
   }
-  const understudy = term === 1 && rankIn(person, 'acting') === 1 && school.standing === 'good';
-  if (understudy) {
-    school.casting = { production: SEAGULL_2027.name, role: person.performerTitle === 'actress' ? SEAGULL_2027.roles.actress : SEAGULL_2027.roles.actor, kind: 'understudy', term, performed: 0 };
-    // Understudy rehearsals Wednesday and Friday, three to six (SLATE's estimate), through the company's rehearsals.
-    for (let d = parseKey(SEAGULL_2027.rehearsals.from); keyOf(d) <= SEAGULL_2027.rehearsals.to; d = addDays(d, 1)) {
-      if (weekday(d) === 3 || weekday(d) === 5) schedule(sim, person, at(d, 15), { kind: CALL_KIND, label: `${SEAGULL_2027.name}: Understudy Rehearsal`, minutes: 180, payload: { call: 'rehearsal' } });
+  const toRep = rankIn(person, 'acting') === 1 && school.standing === 'good';
+  if (toRep) {
+    const rep = repProduction(term);
+    const inRole = yearOfTerm(term) === 3 && person.craft!.acting >= ESTIMATE.castAtRep;
+    const role = term === 1 ? (person.performerTitle === 'actress' ? SEAGULL_2027.roles.actress : SEAGULL_2027.roles.actor) : 'A Role';
+    school.casting = { production: rep.name, role, kind: inRole ? 'role' : 'understudy', term, performed: 0 };
+    // Rehearsals: an understudy's Wednesday and Friday, three to six; a company member's Tuesday to Saturday, three to nine (SLATE's estimate).
+    for (let d = parseKey(rep.rehearsals.from); keyOf(d) <= rep.rehearsals.to; d = addDays(d, 1)) {
+      const wd = weekday(d);
+      if (inRole ? wd >= 2 && wd <= 6 : wd === 3 || wd === 5) schedule(sim, person, at(d, 15), { kind: CALL_KIND, label: `${rep.name}: ${inRole ? 'Rehearsal' : 'Understudy Rehearsal'}`, minutes: inRole ? 360 : 180, payload: { call: 'rehearsal' } });
     }
-    // On call at every performance: evenings Tuesday to Saturday at eight, Sundays at two.
-    for (let d = parseKey(SEAGULL_2027.run.from); keyOf(d) <= SEAGULL_2027.run.to; d = addDays(d, 1)) {
+    // Every performance, evenings Tuesday to Saturday at eight and Sundays at two: played, or on call.
+    for (let d = parseKey(rep.run.from); keyOf(d) <= rep.run.to; d = addDays(d, 1)) {
       const wd = weekday(d);
       if (wd === 1) continue;
-      schedule(sim, person, wd === 0 ? at(d, 14) : at(d, 20), { kind: CALL_KIND, label: `${SEAGULL_2027.name}: On Call`, minutes: 180, payload: { call: 'oncall' }, requiresPlayer: false });
+      const when = wd === 0 ? at(d, 14) : at(d, 20);
+      if (inRole) schedule(sim, person, when, { kind: CALL_KIND, label: `${rep.name}: Performance`, minutes: 180, payload: { call: 'performance' } });
+      else schedule(sim, person, when, { kind: CALL_KIND, label: `${rep.name}: On Call`, minutes: 180, payload: { call: 'oncall' }, requiresPlayer: false });
     }
   } else {
     const period = classPeriod(term);
@@ -549,8 +589,10 @@ function cast(sim: Simulation, person: Person, term: number): void {
     sim.notify({
       category: 'money', title: `Cast: ${school.casting.production}`,
       body: school.casting.kind === 'understudy'
-        ? `The chair, ${YALE_DRAMA.actingChair.name}, has cast you to understudy ${school.casting.role} in Yale Rep’s ${SEAGULL_2027.name}, directed by ${SEAGULL_2027.director}. Understudies must be in New Haven and reachable at every performance.`
-        : `The chair, ${YALE_DRAMA.actingChair.name}, has cast you in the ${school.casting.production}. Once cast, you fulfil the casting.`,
+        ? `The chair, ${YALE_DRAMA.actingChair.name}, has cast you to understudy ${term === 1 ? `${school.casting.role} in Yale Rep’s ${SEAGULL_2027.name}, directed by ${SEAGULL_2027.director}` : `in ${school.casting.production}`}. Understudies must be in New Haven and reachable at every performance.`
+        : school.casting.kind === 'role'
+          ? `The director has asked for you, and the dean has approved it: you’re in the company of ${school.casting.production}.`
+          : `The chair, ${YALE_DRAMA.actingChair.name}, has cast you in the ${school.casting.production}. Once cast, you fulfil the casting.`,
       importance: 75, route: '/workspace/school',
     });
   }
@@ -604,7 +646,7 @@ export function registerSchool(sim: Simulation): void {
     if (term > 0 && termStart(term).fall) school.workStudy = { yearHours: 0, electiveHours: 0, owedHours: school.workStudy.owedHours };
     const cur = saveCurrency(s.universe);
     const need = hasNeed(person);
-    const account = termAccount(cur, need);
+    const account = termAccount(cur, need, term);
     const current = person.primaryAccountId ? s.universe.accounts[person.primaryAccountId] : undefined;
     if (need && current && !current.closedAt) {
       s.post({
@@ -626,6 +668,8 @@ export function registerSchool(sim: Simulation): void {
       });
     }
     if (term >= 1) cast(s, person, term);
+    // The last spring ends in the Actor Showcase.
+    if (term === YALE_DRAMA.terms - 1) bookShowcase(s, person);
     schedule(s, person, at(classPeriod(term).to, 17), { kind: EVALUATION_KIND, label: `${termLabel(term)} Evaluation`, minutes: 0, payload: { term }, requiresPlayer: false });
     if (term + 1 < YALE_DRAMA.terms) s.schedule({ at: Math.max(at(termStart(term + 1).date, 9), s.now + 60_000), kind: TERM_KIND, label: termLabel(term + 1) + ' Begins', category: 'school', priority: 30, payload: { personId: person.id, term: term + 1 } });
   });
@@ -730,7 +774,7 @@ export function registerSchool(sim: Simulation): void {
       return;
     }
     item.status = 'missed';
-    if (call === 'performance') { breach(s, person, `missed a performance of the ${casting.production}`); return; }
+    if (call === 'performance') { breach(s, person, `missed a performance of ${casting.kind === 'project' ? 'the ' : ''}${casting.production}`); return; }
     if (school.tally.calls - school.tally.answered >= ESTIMATE.missedCallsOut && school.castable) {
       school.castable = false;
       if (person.id === s.universe.playerId) s.notify({ category: 'money', title: 'Out Of The Casting Pool', body: 'Missed rehearsal calls: the chair takes you out of the casting pool to reacquire the discipline. You fulfil what you’re cast in now, and aren’t cast again until a good evaluation.', importance: 80, route: '/workspace/school' });

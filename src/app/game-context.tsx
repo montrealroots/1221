@@ -376,6 +376,7 @@ const ROUTE_LABELS: Record<string, string> = {
   '/home': 'Home',
   '/workspace/calendar': 'Calendar',
   '/workspace/school': 'Your School',
+  '/workspace/career': 'Your Career',
 };
 
 export function labelForRoute(route: string): string {

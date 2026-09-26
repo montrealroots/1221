@@ -10,7 +10,7 @@ import { RATES_NOTE, formatAtlasCompact} from '@/engine/content/currency';
 import { titleCaseLabel } from '@/engine/core/text';
 import { placeProfile, placeKindLabel, formatPeople, type PlaceProfile } from '@/engine/world/place';
 import { WEATHER_EMOJI, forecastFor, weatherAt, weatherShort } from '@/engine/systems/weather';
-import { MS_DAY, WEEKDAY_NAMES, formatDateTime } from '@/engine/core/time';
+import { MS_DAY, WEEKDAY_NAMES, formatDateTime, zonedParts } from '@/engine/core/time';
 import { PERFORMER_NOUN } from '@/engine/core/performer';
 import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
@@ -29,6 +29,7 @@ import { HOUSING, SOFA, arrearsOf, billsOf, moveCost, rentOf } from '@/engine/sy
 import { LookRegion, Open, at } from '@/ui/looks';
 import { YALE_DRAMA } from '@/engine/content/school';
 import { STANDING_LABEL, nextClasses, rankIn, yearOfStudy } from '@/engine/systems/school';
+import { agencyById } from '@/engine/systems/career';
 import { Gated, LockedPanel, useFeature } from '@/ui/guide/Guide';
 
 export function Home() {
@@ -75,6 +76,7 @@ export function Home() {
     money: useFeature('ui.money').open,
     home: useFeature('ui.home').open,
     school: useFeature('ui.school').open,
+    career: useFeature('ui.career').open,
   };
 
   return (
@@ -514,6 +516,19 @@ export function Home() {
           <YourSchool />
         </Panel>
         ))}
+        {player.career && (!shows.career ? <LockedPanel feature="ui.career" title="Career" /> : (
+        <Panel
+          title="Career"
+          tight
+          actions={(
+            <Gated feature="ui.career" className="btn btn-sm" onClick={() => navigate('/workspace/career', 'Your Career')}>
+              Career
+            </Gated>
+          )}
+        >
+          <YourCareer cur={cur} />
+        </Panel>
+        ))}
       </div>
     </>
   );
@@ -547,6 +562,30 @@ function YourSchool() {
       />
       <Stat label="Your Place In The Class" value={`${rankIn(person)} of ${YALE_DRAMA.classSize}`} note="By craft, across every area" />
       {next && <Stat label="Next" value={next.label} note={formatDateTime(next.at, zone)} />}
+    </div>
+  );
+}
+
+/**
+ * The working life (`systems/career.ts`): who represents them, what's next
+ * on the calendar for it, and the year's wages.
+ */
+function YourCareer({ cur }: { cur: string }) {
+  const { sim } = useGame();
+  const person = useWorld((s) => s.player);
+  const career = person.career;
+  if (!career) return null;
+  const agency = career.agencyId ? agencyById(career.agencyId) : undefined;
+  const next = sim.universe.scheduled
+    .filter((item) => item.status === 'pending' && item.category === 'career' && item.requiresPlayer && item.payload.personId === person.id)
+    .sort((x, y) => x.at - y.at)[0];
+  const year = String(zonedParts(sim.now, sim.zone).year);
+  const offers = career.offers.filter((o) => o.until > sim.now).length + career.bookings.filter((b) => b.status === 'offered').length;
+  return (
+    <div className="col gap-3">
+      <Stat label="Representation" value={agency?.name ?? 'None'} note={offers ? `${offers} ${offers === 1 ? 'offer' : 'offers'} to answer` : `${career.credits.length} ${career.credits.length === 1 ? 'credit' : 'credits'}`} tone={offers ? 'warning' : undefined} />
+      <Stat label="Earned This Year" value={formatMoney(career.wages[year]?.gross ?? 0, cur, { cents: false })} note="Before commission and tax" />
+      {next && <Stat label="Next" value={next.label} note={formatDateTime(next.at, sim.zone)} />}
     </div>
   );
 }

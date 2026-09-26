@@ -181,28 +181,43 @@ part the tool cannot see.
   on debit card purchases is published by few of the 60 banks and isn't
   enforced; the daily ATM limit is. A card whose cash advance terms weren't
   found charges SLATE's estimate, 5% or $10 at the purchase rate, and says so.
-- **Drama school runs its three years, and nothing follows them.** A new
+- **Drama school runs its three years, and the business follows.** A new
   life begins as a first-year actor at the David Geffen School of Drama at
   Yale, ahead of every classmate in craft; classes, work-study, casting,
-  Yale Rep understudying and each term's evaluation all read and move it
-  (`systems/school.ts`). Until 2026-09-26 being the faculty's first choice
-  was said and paid a full award, with no measure of ability for it to
-  raise, and the award covered living costs whatever the family; Yale's
-  aid for them goes by need. What's still open:
-  - After Commencement the MFA is conferred and nothing reads it: no
-    auditions, agents or work yet use the craft or the degree.
-  - Yale Rep's 2026–2027 season is the only one published, so only the
-    first spring can cast an understudy there; every later term casts a
-    School project, whose dates are SLATE's estimate.
+  Yale Rep and each term's evaluation read and move it (`systems/school.ts`),
+  and the showcase, representation, auditions, jobs, pay and the unions
+  take it from there (`systems/career.ts`). Until 2026-09-26 nothing
+  followed the MFA, only the first spring went to Yale Rep, and later
+  years held at 2026–27's costs. What's still open:
+  - Yale Rep's seasons after 2026–27 aren't announced: their productions
+    are SLATE's estimate by the slots its seasons keep, unnamed.
   - The fifteen classmates are a name and a craft each: they grow, set the
-    evaluation's median and the player's place, and do nothing else.
+    evaluation's median and the player's place, and do nothing else, and
+    they aren't at the showcase against the player.
   - A student in need is paid a living-expense scholarship that's taxable
     income in the US, and the tax engine collects nothing. The player's
     family rules need out, so their life isn't touched by it.
-  - Later years' dates and costs aren't published; the terms after
-    2026–2027 are SLATE's estimate, at that year's figures.
+  - Later years' dates aren't published; the terms after 2026–27 are
+    SLATE's estimate, and their costs grow at the Bulletins' rates.
   - The bachelor's degree the MFA asks for is taken as read, and only the
     birth year is held to it.
+- **The business is its first portion.** What isn't there yet:
+  - Off-Broadway work: Equity's Off-Broadway minimums are only in its
+    members-only rulebook, so no Off-Broadway part is offered rather than
+    one at a made-up rate. Series regulars, whose pay is negotiated, aren't
+    offered either, nor commercials, voice-over or background work.
+  - Managers: no manager offers, and none takes 15%.
+  - Residuals, overtime, per diem, and the producers' pension and health
+    contributions (22% on SAG-AFTRA principals from 6 September 2026):
+    paid by the producer to the plans, they reach no bank here, and the
+    SAG-AFTRA and Equity-League health plans' eligibility ($28,090 in 2026,
+    or ten weeks of Equity work) earns no cover.
+  - Unemployment between jobs: New York's $869 and California's $450
+    weekly maximums are known and nothing claims them.
+  - Tax withheld is kept by nothing at year's end: no return settles it.
+  - A job is only in New York or Los Angeles, and never on location.
+  - An agency's reach, the bars its showings and parts ask, the booking
+    odds and how long a job runs are SLATE's estimate, named in the code.
 - **Some of the banks' research is kept and read by nothing.** Each
   country's deposit guarantee, its central bank's rate, a sentence on how
   money moves there, and the local names for its ways of paying came off

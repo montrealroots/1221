@@ -29,6 +29,8 @@ import { bankById } from './content/banks';
 import { MS_DAY } from './core/time';
 import { admittedClass, classmatesIn, goesOn, meanCraft } from './systems/school';
 import { newLifeConfig } from './world/bootstrap';
+import { books, offersFor, weekOfAuditions } from './systems/career';
+import { AGENCIES, ROLES } from './content/career';
 
 // ---------------------------------------------------------------------------
 // The sky
@@ -264,4 +266,60 @@ defineDecider<{ sim: Simulation; night: number }, string>({
   sample: (seed) => ({ sim: atYale(seed), night: seed * 7 }),
   // Two hundred nights, so the rare night on shows.
   decide: ({ sim, night }) => Array.from({ length: 200 }, (_, n) => (goesOn(sim, sim.player, sim.now + (night + n) * MS_DAY) ? String(night + n) : '')).filter(Boolean).join(',') || 'none',
+});
+
+// ---------------------------------------------------------------------------
+// The business
+// ---------------------------------------------------------------------------
+
+defineDecider<{ sim: Simulation; score: number }, string>({
+  id: 'career.offers',
+  decides: 'Which agencies offer to represent an actor after a showing.',
+  drawnIn: 'src/engine/systems/career.ts',
+  reads: {
+    // The showing: the higher, the more agencies' bars it clears.
+    score: (o, t) => ({ ...o, score: 55 + t * 30 }),
+    // Two saves are two sets of agents in the room.
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), score: 60 + (seed % 25) }),
+  decide: ({ sim, score }) => offersFor(sim, sim.player, score, 'us-ny-newyork').join(',') || 'none',
+});
+
+defineDecider<{ sim: Simulation; tier: 0 | 1 | 2 | 3; week: number }, string>({
+  id: 'career.auditions',
+  decides: 'How many auditions a week brings, for which parts, when, and whether on tape.',
+  drawnIn: 'src/engine/systems/career.ts',
+  reads: {
+    // The agency's reach: none, or the smallest to the biggest.
+    agency: (o, t) => ({ ...o, tier: Math.min(3, Math.floor(t * 4)) as 0 | 1 | 2 | 3 }),
+    // The week: each is drawn on its own.
+    week: (o, t) => ({ ...o, week: Math.round(t * 52) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), tier: (seed % 4) as 0 | 1 | 2 | 3, week: seed % 52 }),
+  decide: ({ sim, tier, week }) => {
+    const agency = tier === 0 ? undefined : AGENCIES.find((a) => a.tier === tier);
+    return weekOfAuditions(sim, sim.player, sim.now + week * 7 * MS_DAY, agency, 'us-ny-newyork', 5)
+      .map((a) => `${a.roleId}@${a.at}/${a.mode}`).join(' ') || 'none';
+  },
+});
+
+defineDecider<{ sim: Simulation; roleId: string; acting: number }, string>({
+  id: 'career.booking',
+  decides: 'Which auditions book, weighed on the actor’s craft against the part.',
+  drawnIn: 'src/engine/systems/career.ts',
+  reads: {
+    // The part: its bar.
+    role: (o, t) => ({ ...o, roleId: ROLES[Math.min(ROLES.length - 1, Math.floor(t * ROLES.length))]!.id }),
+    // The actor's craft.
+    craft: (o, t) => ({ ...o, acting: 40 + t * 60 }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), roleId: ROLES[seed % ROLES.length]!.id, acting: 50 + (seed % 40) }),
+  decide: ({ sim, roleId, acting }) => {
+    const person = sim.player;
+    person.craft = { ...person.craft!, acting, screen: acting, voice: acting, text: acting };
+    return Array.from({ length: 300 }, (_, n) => books(sim, person, { id: `d${n}`, roleId, at: 0, mode: 'room', cityId: 'us-ny-newyork', status: 'ahead' }, 1) ? '1' : '0').join('');
+  },
 });
