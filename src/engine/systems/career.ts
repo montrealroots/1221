@@ -322,16 +322,24 @@ export function arcUplift(booking: Booking, episode: number): number {
  * tax year's gross, from 6 April, passes the treaty's $20,000. Canada's is withheld whatever the year comes to, and
  * the return has it back where the year stays under CAD 15,000.
  */
-export function foreignWithholding(person: Person, workCity: string, gross: Money, when: Instant, into: string): Money {
+export function foreignWithholding(person: Person, workCity: string, gross: Money, when: Instant, into: string, payer?: { id: string; expected: Money }): Money {
   const country = CITIES.get(workCity)?.countryId;
   if (!country || country === 'us') return 0;
   if (country === 'ca') return Math.round(gross * ABROAD.canada.rate);
   if (country === 'uk') {
-    // The treaty's test runs on the UK's own tax year, from 6 April.
-    const before = earningsOf(person).ukYears[ukTaxYear(when)] ?? 0;
-    return before + gross > usd(ABROAD.uk.treatyUsd, into) ? Math.round(gross * ABROAD.uk.rate) : 0;
+    // Payer by payer, in the UK's tax year: from the first payment, once the payer's total is expected past £12,570.
+    const paid = payer ? earningsOf(person).ukPayers?.[ukTaxYear(when)]?.[payer.id] ?? 0 : 0;
+    const threshold = exchange(ABROAD.uk.payerThresholdGbp, 'GBP', into) ?? ABROAD.uk.payerThresholdGbp;
+    return Math.max(paid + gross, payer?.expected ?? 0) > threshold ? Math.round(gross * ABROAD.uk.rate) : 0;
   }
   return 0;
+}
+
+/** What a booking is expected to pay in all, at its rate: its days on screen, its weeks on stage with rehearsal. */
+export function expectedGross(booking: Booking, when: Instant, into: string): Money {
+  const role = roleById(booking.roleId);
+  const units = role.medium === 'stage' ? booking.units + booking.rehearsalWeeks : role.series ? role.series.episodes : booking.units;
+  return unitRate(booking, when, into) * units;
 }
 
 /** A booking's unit rate on a day: a later season's own, or the part's minimum. */
@@ -970,7 +978,7 @@ export function registerCareer(sim: Simulation): void {
       // Abroad, US tax is withheld as at home, and the country takes its own (`ABROAD`).
       const check = paycheck({ scale: Math.round(scale * arcUplift(booking, week)), overtime, role, rehearsal: line.rehearsal, represented, managed, before: wages.acting, cityId: taxCity, at: item.at });
       overtime = 0;
-      const foreign = foreignWithholding(person, workCity, check.gross, item.at, cur);
+      const foreign = foreignWithholding(person, workCity, check.gross, item.at, cur, { id: booking.id, expected: expectedGross(booking, item.at, cur) });
       recordWages(person, item.at, zone, { gross: check.gross, withheld: check.withheld, commission: check.commission, dues: check.dues, sag: role.union === 'sag', employer: booking.id, where: workCity, foreignWithheld: foreign });
       check.net -= foreign;
       if (foreign) postings.push({ accountId: s.nominalAccount('expense', 'Foreign Tax Withheld').id, amount: foreign });

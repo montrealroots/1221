@@ -255,18 +255,41 @@ export const STATE_RETURN = {
 /**
  * Working abroad. Canada withholds 23% of a nonresident actor's gross for
  * film, television and commercial acting, and its residuals; under the
- * treaty a US resident whose Canadian gross in the year is CAD 15,000 or
- * less owes none, and the withholding comes back. The United Kingdom
- * withholds 20% from a nonresident entertainer paid past its threshold; the
- * treaty leaves receipts of $20,000 or less in its year alone. SLATE takes
- * both by the calendar year and keeps the UK's without a personal
- * allowance. The US credits the foreign tax against its own on the same
- * income, to its own tax on it; New York and California don't.
+ * treaty a US resident whose Canadian gross in the calendar year is CAD
+ * 15,000 or less owes none, and the withholding comes back. Over it, a
+ * section 216.1 return filed by 30 April pays Canada's graduated federal
+ * rates on the net (the gross less the agent's and manager's share) and the
+ * 48% surtax in place of a province's, the 23% credited and the rest
+ * refunded; the basic personal amount only where Canadian income is 90% of
+ * the year's. A return filed later loses the election, and the 23% stands.
+ * The 2026 brackets hold for later years, SLATE's estimate, and the surtax
+ * is the self-employed's, SLATE's estimate for an employed actor, whose
+ * province's own rates run close to it.
+ *
+ * The United Kingdom withholds 20% from a nonresident entertainer's every
+ * payment once one payer's total in the UK tax year (6 April to 5 April)
+ * is expected past £12,570, and none where it isn't. After the year, the
+ * treaty gives back everything where the UK gross was $20,000 or less;
+ * over it, UK tax is due on it all, a US citizen having no personal
+ * allowance, at 20% to £37,700, 40% to £125,140 and 45% above, and the
+ * difference from what was withheld is paid or refunded with the return,
+ * on 31 January. The US credits the foreign tax against its own on the same
+ * income, to its own tax on it; New York and California don't. Until
+ * 2026-09-27 SLATE took both by the calendar year, withheld the UK's only
+ * past the treaty's $20,000, and never settled either.
  */
 export const ABROAD = {
-  canada: { rate: 0.23, treatyCad: 15_000_00 },
-  uk: { rate: 0.2, treatyUsd: 20_000_00 },
-  source: 'https://www.canada.ca/en/revenue-agency/services/tax/international-non-residents/film-media-tax-credits/non-resident-actors/taxation-non-resident-actors-providing-film-video-acting-services-canada.html; https://www.gov.uk/guidance/pay-tax-in-the-uk-as-a-foreign-performer; IRS Form 1116',
+  canada: {
+    rate: 0.23, treatyCad: 15_000_00,
+    brackets: [[58_523_00, 0.14], [117_045_00, 0.205], [181_440_00, 0.26], [258_482_00, 0.29], [Number.POSITIVE_INFINITY, 0.33]] as readonly (readonly [number, number])[],
+    basicPersonal: 16_452_00, residentShare: 0.9, surtax: 0.48, electBy: { month: 4, day: 30 },
+  },
+  uk: {
+    rate: 0.2, treatyUsd: 20_000_00, payerThresholdGbp: 12_570_00,
+    bands: [[37_700_00, 0.2], [125_140_00, 0.4], [Number.POSITIVE_INFINITY, 0.45]] as readonly (readonly [number, number])[],
+    settleMonth: 1, settleDay: 31,
+  },
+  source: 'https://www.canada.ca/en/revenue-agency/services/tax/international-non-residents/film-media-tax-credits/non-resident-actors/taxation-non-resident-actors-providing-film-video-acting-services-canada.html; https://www.canada.ca/en/revenue-agency/services/tax/individuals/frequently-asked-questions-individuals/canadian-income-tax-rates-individuals-current-previous-years.html; https://www.gov.uk/guidance/pay-tax-in-the-uk-as-a-foreign-performer; https://www.gov.uk/income-tax-rates; IRS Form 1116',
 } as const;
 
 /**

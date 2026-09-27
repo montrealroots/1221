@@ -21,7 +21,7 @@ import { MS_DAY, formatDate, instantFromZoned, zonedParts, type Instant } from '
 import { exchange } from '../content/currency';
 import { computeAnnualTax } from '../content/tax';
 import { ABROAD, CALIFORNIA_MANDATE, CONNECTICUT, RECEIPTS, STATE_DEDUCTIONS, POVERTY_LINE, PREMIUM_CREDIT, PUBLIC_COVER, RETURN, STATE_RETURN, byYear } from '../content/safetynet';
-import { stateOf, yearOf } from './earnings';
+import { earningsOf, stateOf, yearOf } from './earnings';
 import { payFromCurrent } from './household';
 import { personalityOf } from './personality';
 
@@ -119,7 +119,42 @@ export function connecticutTax(income: Money, into = 'USD'): Money {
 }
 
 /** A year's return, worked out. */
-export function figuresFor(person: Person, year: number, into = 'USD'): ReturnFigures {
+/** Tax over bands, each band's upper edge and its rate. */
+export function banded(income: Money, bands: readonly (readonly [number, number])[]): Money {
+  let tax = 0;
+  let from = 0;
+  for (const [upTo, rate] of bands) {
+    if (income <= from) break;
+    tax += (Math.min(income, upTo) - from) * rate;
+    from = upTo;
+  }
+  return Math.round(tax);
+}
+
+/**
+ * Canada's tax under a section 216.1 election, in dollars of the save: the
+ * federal brackets on the net of the Canadian gross, the basic personal
+ * amount's credit where Canadian income is 90% of the year's, and the 48%
+ * surtax on the rest.
+ */
+export function canadaElected(gross: Money, commission: Money, world: Money, into: string): Money {
+  const c = ABROAD.canada;
+  const toCad = (m: Money) => exchange(m, into, 'CAD') ?? m;
+  const net = Math.max(0, toCad(gross - commission));
+  const credit = gross >= c.residentShare * world ? Math.round(c.basicPersonal * c.brackets[0]![1]) : 0;
+  const basic = Math.max(0, banded(net, c.brackets) - credit);
+  const cad = Math.round(basic * (1 + c.surtax));
+  return exchange(cad, 'CAD', into) ?? cad;
+}
+
+/** The UK's tax on a UK tax year's gross, a US citizen's: no personal allowance, the bands on it all. */
+export function ukTaxOn(gross: Money, into: string): Money {
+  const toGbp = (m: Money) => exchange(m, into, 'GBP') ?? m;
+  const tax = banded(toGbp(gross), ABROAD.uk.bands);
+  return exchange(tax, 'GBP', into) ?? tax;
+}
+
+export function figuresFor(person: Person, year: number, into = 'USD', filedAt?: Instant): ReturnFigures {
   const y = yearOf(person, year);
   const cityId = y.residence ?? person.currentLocationId;
   const at = instantFromZoned({ year, month: 12, day: 31, hour: 12 }, HOME);
@@ -132,14 +167,23 @@ export function figuresFor(person: Person, year: number, into = 'USD'): ReturnFi
   const deduction = performer ? expenses : 0;
   const taxed = Math.max(0, income - deduction);
   const federalBefore = computeAnnualTax(taxed, cityId, at).federal;
-  // Work abroad: Canada's tax stands over CAD 15,000 in the year, and comes back under it; the UK's stands. The US credits it, to its own tax on that income.
+  // Work abroad: Canada's comes back under CAD 15,000 in the year, and over it a 216.1 return filed by 30 April gives back what's past its graduated tax; the UK's is settled after its own year. The US credits what stands, to its own tax on that income.
   let foreignIncome = 0;
   let foreignTax = 0;
   let foreignRefund = 0;
+  const elect = instantFromZoned({ year: year + 1, month: ABROAD.canada.electBy.month, day: ABROAD.canada.electBy.day, hour: 23 }, HOME);
   for (const [country, f] of Object.entries(y.foreign)) {
     foreignIncome += f.gross;
-    if (country === 'ca' && f.gross <= (exchange(ABROAD.canada.treatyCad, 'CAD', into) ?? ABROAD.canada.treatyCad)) foreignRefund += f.withheld;
-    else foreignTax += f.withheld;
+    let back = 0;
+    if (country === 'ca') {
+      if (f.gross <= (exchange(ABROAD.canada.treatyCad, 'CAD', into) ?? ABROAD.canada.treatyCad)) back = f.withheld;
+      else if (filedAt === undefined || filedAt <= elect) {
+        const commission = y.acting > 0 ? Math.round(y.commission * (f.gross / y.acting)) : 0;
+        back = Math.max(0, f.withheld - canadaElected(f.gross, commission, income, into));
+      }
+    }
+    foreignRefund += back;
+    foreignTax += f.withheld - back;
   }
   const foreignCredit = taxed > 0 ? Math.min(foreignTax, Math.round(federalBefore * Math.min(1, foreignIncome / taxed))) : 0;
   const federal = federalBefore - foreignCredit;
@@ -218,6 +262,33 @@ export function armTaxes(sim: Simulation, person: Person): void {
   sim.schedule({ at: next, kind: TAX_SEASON_KIND, label: 'Tax Season', category: 'system', priority: 7, payload: { personId: person.id } });
 }
 
+/**
+ * The UK's years settled with its return, due 31 January after the April
+ * the year ended: under the treaty's $20,000 all that was withheld comes
+ * back; over it, the tax on the whole, less what was withheld, is paid or
+ * refunded. What changes goes into the calendar year's foreign tax, for
+ * the US credit.
+ */
+export function settleUkYears(sim: Simulation, person: Person, calendarYear: number): void {
+  const r = earningsOf(person);
+  const cur = saveCurrency(sim.universe);
+  const account = person.primaryAccountId ? sim.universe.accounts[person.primaryAccountId] : undefined;
+  for (const [key, gross] of Object.entries(r.ukYears ?? {})) {
+    // The year from April key to April key + 1 files by 31 January key + 2.
+    if (Number(key) + 2 > calendarYear || r.ukSettled?.includes(key)) continue;
+    (r.ukSettled ??= []).push(key);
+    const withheld = r.ukWithheld?.[key] ?? 0;
+    const tax = gross <= usd(ABROAD.uk.treatyUsd, cur) ? 0 : ukTaxOn(gross, cur);
+    const change = tax - withheld;
+    if (change === 0 || !account) continue;
+    const uk = (yearOf(person, calendarYear).foreign.uk ??= { gross: 0, withheld: 0 });
+    uk.withheld += change;
+    const memo = change < 0 ? `HMRC refund, UK tax year ${key}–${String(Number(key) + 1).slice(2)}` : `HMRC, UK tax year ${key}–${String(Number(key) + 1).slice(2)}`;
+    sim.post({ memo, category: 'tax', postings: [{ accountId: account.id, amount: -change }, { accountId: sim.nominalAccount(change < 0 ? 'income' : 'expense', change < 0 ? 'Tax Refund' : 'Foreign Tax Withheld').id, amount: change }] });
+    if (person.id === sim.universe.playerId) sim.notify({ category: 'money', title: change < 0 ? 'The UK Gave Tax Back' : 'The UK Took Its Balance', body: `Your ${key}–${String(Number(key) + 1).slice(2)} UK tax year: ${formatMoney(Math.abs(change), cur)} ${change < 0 ? 'back' : 'paid'}, ${tax === 0 ? 'the treaty leaving it untaxed' : `on ${formatMoney(tax, cur)} of UK tax`}.`, importance: 70, route: '/workspace/papers' });
+  }
+}
+
 export function registerTaxReturn(sim: Simulation): void {
   sim.onSchedule(TAX_SEASON_KIND, (item, s) => {
     const person = s.universe.people[String(item.payload.personId)];
@@ -226,6 +297,8 @@ export function registerTaxReturn(sim: Simulation): void {
     s.schedule({ at: instantFromZoned({ year: p.year + 1, month: 2, day: 1, hour: 9 }, HOME), kind: TAX_SEASON_KIND, label: 'Tax Season', category: 'system', priority: 7, payload: { personId: person.id } });
     const year = p.year - 1;
     const cur = saveCurrency(s.universe);
+    // A UK tax year whose return fell due yesterday, 31 January, is settled first, into this year's foreign tax.
+    settleUkYears(s, person, p.year);
     const figures = figuresFor(person, year, cur);
     // Nothing owed and nothing due back: no return to file.
     if (figures.balance === 0 && figures.income === 0 && figures.foreignRefund === 0) return;
@@ -266,7 +339,7 @@ export function registerTaxReturn(sim: Simulation): void {
     if (!r) throw new CommandError('There’s no return for that year.');
     if (r.filedAt !== undefined) throw new CommandError('You’ve filed it.');
     const cur = saveCurrency(s.universe);
-    r.figures = figuresFor(person, r.year, cur);
+    r.figures = figuresFor(person, r.year, cur, s.now);
     r.filedAt = s.now;
     r.penalty = latePenalty(r.figures.balance, r.due, s.now, cur);
     for (const d of Object.values(s.universe.decisions)) if (d.refType === 'return' && d.refId === String(r.year) && !d.resolvedAt) d.resolvedAt = s.now;

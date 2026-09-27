@@ -7,15 +7,15 @@
  */
 import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
-import { MS_DAY, instantFromZoned } from '@/engine/core/time';
+import { MS_DAY, instantFromZoned, zonedParts } from '@/engine/core/time';
 import { exchange } from '@/engine/content/currency';
 import { computeAnnualTax } from '@/engine/content/tax';
 import { MEAL_PENALTY } from '@/engine/content/career';
 import { ABROAD, CHRONIC, DENTAL_VISION, PHARMACY, STATE_DEDUCTIONS } from '@/engine/content/safetynet';
-import { afterlife, beginCareer, careerOf, foreignWithholding, mealPenalty, type Booking } from '@/engine/systems/career';
+import { afterlife, beginCareer, careerOf, expectedGross, foreignWithholding, mealPenalty, roleById, unitRate, type Booking } from '@/engine/systems/career';
 import { recordWages, yearOf } from '@/engine/systems/earnings';
 import { grown, healthOf, keepUp, rxShareOf, shareOf, teethAndEyesShareOf, illnessWeek } from '@/engine/systems/health';
-import { connecticutTax, figuresFor } from '@/engine/systems/taxreturn';
+import { canadaElected, connecticutTax, figuresFor, settleUkYears, ukTaxOn } from '@/engine/systems/taxreturn';
 import type { Simulation } from '@/engine/core/simulation';
 
 const NY = 'America/New_York';
@@ -28,15 +28,21 @@ function pro(seed: string, city = 'us-ny-newyork'): Simulation {
 }
 
 describe('working abroad', () => {
-  it('withholds Canada’s 23% from every check, and the UK’s 20% past its treaty’s $20,000', () => {
+  it('withholds Canada’s 23% from every check, and the UK’s 20% from a payer expected past £12,570', () => {
     const sim = pro('abroad');
+    const threshold = exchange(ABROAD.uk.payerThresholdGbp, 'GBP', 'USD')!;
     expect(foreignWithholding(sim.player, 'ca-bc-vancouver', 10_000_00, at(2027, 3, 1), 'USD')).toBe(2_300_00);
-    expect(foreignWithholding(sim.player, 'uk-eng-london', 10_000_00, at(2027, 3, 1), 'USD')).toBe(0);
-    recordWages(sim.player, at(2027, 3, 1), NY, { gross: 15_000_00, where: 'uk-eng-london' });
-    expect(foreignWithholding(sim.player, 'uk-eng-london', 10_000_00, at(2027, 4, 1), 'USD')).toBe(2_000_00);
+    // A payer expected under the threshold takes nothing; one expected past it, 20% from the first payment.
+    expect(foreignWithholding(sim.player, 'uk-eng-london', 5_000_00, at(2027, 3, 1), 'USD', { id: 'p1', expected: threshold - 100_00 })).toBe(0);
+    expect(foreignWithholding(sim.player, 'uk-eng-london', 5_000_00, at(2027, 3, 1), 'USD', { id: 'p2', expected: threshold + 100_00 })).toBe(1_000_00);
+    recordWages(sim.player, at(2027, 3, 1), NY, { gross: threshold - 1_000_00, where: 'uk-eng-london', employer: 'p1' });
+    // Paid past it after all: the next payment is withheld.
+    expect(foreignWithholding(sim.player, 'uk-eng-london', 5_000_00, at(2027, 3, 8), 'USD', { id: 'p1', expected: threshold - 100_00 })).toBe(1_000_00);
+    // Another payer's is its own.
+    expect(foreignWithholding(sim.player, 'uk-eng-london', 5_000_00, at(2027, 3, 8), 'USD', { id: 'p3', expected: 6_000_00 })).toBe(0);
     expect(foreignWithholding(sim.player, 'us-ga-atlanta', 10_000_00, at(2027, 4, 1), 'USD')).toBe(0);
     // Work abroad is the country's, not a state's.
-    expect(yearOf(sim.player, 2027).foreign).toEqual({ uk: { gross: 15_000_00, withheld: 0 } });
+    expect(yearOf(sim.player, 2027).foreign).toEqual({ uk: { gross: threshold - 1_000_00, withheld: 0 } });
     expect(yearOf(sim.player, 2027).elsewhere).toEqual({});
   });
 
@@ -44,11 +50,22 @@ describe('working abroad', () => {
     const sim = pro('ftc');
     recordWages(sim.player, at(2027, 3, 1), NY, { gross: 60_000_00 });
     recordWages(sim.player, at(2027, 5, 1), NY, { gross: 40_000_00, where: 'ca-on-toronto', foreignWithheld: 9_200_00 });
-    const f = figuresFor(sim.player, 2027);
     const federal = computeAnnualTax(100_000_00, 'us-ny-newyork', at(2027, 12, 31, 12)).federal;
-    expect(f.foreignCredit).toBe(Math.min(9_200_00, Math.round(federal * 0.4)));
-    expect(f.federal).toBe(federal - f.foreignCredit);
-    expect(f.foreignRefund).toBe(0);
+    // Filed late, the 216.1 election is lost and the 23% stands, all of it credited as far as the US tax on that income.
+    const late = figuresFor(sim.player, 2027, 'USD', at(2028, 5, 15));
+    expect(late.foreignRefund).toBe(0);
+    expect(late.foreignCredit).toBe(Math.min(9_200_00, Math.round(federal * 0.4)));
+    expect(late.federal).toBe(federal - late.foreignCredit);
+    // Filed by 30 April, Canada's graduated tax is what stands, and the rest comes back.
+    const elected = canadaElected(40_000_00, 0, 100_000_00, 'USD');
+    const f = figuresFor(sim.player, 2027, 'USD', at(2028, 4, 15));
+    expect(f.foreignRefund).toBe(9_200_00 - elected);
+    expect(f.foreignCredit).toBe(Math.min(elected, Math.round(federal * 0.4)));
+    // The agent's share of the Canadian work comes off its net.
+    const agented = pro('ftc-agent');
+    recordWages(agented.player, at(2027, 3, 1), NY, { gross: 60_000_00, commission: 6_000_00 });
+    recordWages(agented.player, at(2027, 5, 1), NY, { gross: 40_000_00, where: 'ca-on-toronto', foreignWithheld: 9_200_00, commission: 4_000_00 });
+    expect(figuresFor(agented.player, 2027, 'USD', at(2028, 4, 15)).foreignRefund).toBe(9_200_00 - canadaElected(40_000_00, 4_000_00, 100_000_00, 'USD'));
     const small = pro('ftc-small');
     const under = (exchange(ABROAD.canada.treatyCad, 'CAD', 'USD') ?? 0) - 100_00;
     recordWages(small.player, at(2027, 5, 1), NY, { gross: under, where: 'ca-on-toronto', foreignWithheld: Math.round(under * 0.23) });
@@ -57,12 +74,61 @@ describe('working abroad', () => {
 });
 
 describe('the UK’s tax year, and Canada’s tax on residuals', () => {
-  it('counts the UK treaty’s $20,000 over the year from 6 April', () => {
+  it('counts a payer’s total over the UK year from 6 April', () => {
     const sim = pro('uk-year');
-    recordWages(sim.player, at(2027, 3, 20), NY, { gross: 15_000_00, where: 'uk-eng-london' });
-    expect(foreignWithholding(sim.player, 'uk-eng-london', 10_000_00, at(2027, 4, 1), 'USD')).toBe(2_000_00);
+    const threshold = exchange(ABROAD.uk.payerThresholdGbp, 'GBP', 'USD')!;
+    recordWages(sim.player, at(2027, 3, 20), NY, { gross: threshold, where: 'uk-eng-london', employer: 'p' });
+    expect(foreignWithholding(sim.player, 'uk-eng-london', 1_000_00, at(2027, 4, 1), 'USD', { id: 'p', expected: 0 })).toBe(200_00);
     // From 6 April the UK's year starts again.
-    expect(foreignWithholding(sim.player, 'uk-eng-london', 10_000_00, at(2027, 4, 10), 'USD')).toBe(0);
+    expect(foreignWithholding(sim.player, 'uk-eng-london', 1_000_00, at(2027, 4, 10), 'USD', { id: 'p', expected: 0 })).toBe(0);
+  });
+
+  it('expects a booking’s whole pay at its rate: days on screen, weeks with rehearsal on stage, episodes for a series', () => {
+    const base = { cityId: 'us-ny-newyork' as const, starts: at(2027, 3, 1), status: 'accepted' as const, dueAt: 0, offeredAt: 0, worked: 0, owed: 0, weeksPaid: 0 };
+    const screen: Booking = { ...base, id: 's', roleId: 'costar', units: 3, rehearsalWeeks: 0 };
+    const stage: Booking = { ...base, id: 't', roleId: 'lort-b', units: 6, rehearsalWeeks: 4 };
+    const series: Booking = { ...base, id: 'r', roleId: 'series-hour', units: 1, rehearsalWeeks: 0 };
+    const when = at(2027, 3, 1);
+    expect(expectedGross(screen, when, 'USD')).toBe(unitRate(screen, when, 'USD') * 3);
+    expect(expectedGross(stage, when, 'USD')).toBe(unitRate(stage, when, 'USD') * 10);
+    expect(expectedGross(series, when, 'USD')).toBe(unitRate(series, when, 'USD') * roleById('series-hour').series!.episodes);
+  });
+
+  it('settles the UK years at tax season', () => {
+    const sim = pro('uk-season');
+    recordWages(sim.player, at(2024, 6, 1), NY, { gross: 10_000_00, where: 'uk-eng-london', employer: 'a', foreignWithheld: 2_000_00 });
+    const season = sim.universe.scheduled.find((i) => i.kind === 'tax.season' && i.status === 'pending')!;
+    sim.advanceTo(season.at + 60_000);
+    expect(yearOf(sim.player, zonedParts(season.at, NY).year).foreign.uk!.withheld).toBe(-2_000_00);
+  }, 60_000);
+
+  it('works Canada’s elected tax on the net: the federal brackets, the surtax, and the personal amount only for mostly Canadian income', () => {
+    const cad = (usd: number) => exchange(usd, 'USD', 'CAD')!;
+    const net = cad(40_000_00 - 4_000_00);
+    const brackets = Math.round(0.14 * Math.min(net, 58_523_00) + 0.205 * Math.max(0, net - 58_523_00));
+    expect(canadaElected(40_000_00, 4_000_00, 100_000_00, 'USD')).toBe(exchange(Math.round(brackets * 1.48), 'CAD', 'USD'));
+    const big = cad(80_000_00);
+    expect(canadaElected(80_000_00, 0, 200_000_00, 'USD')).toBe(exchange(Math.round(Math.round(0.14 * 58_523_00 + 0.205 * (big - 58_523_00)) * 1.48), 'CAD', 'USD'));
+    // All of the year's income Canadian: the basic personal amount's credit first.
+    expect(canadaElected(40_000_00, 4_000_00, 40_000_00, 'USD')).toBe(exchange(Math.round((brackets - Math.round(0.14 * 16_452_00)) * 1.48), 'CAD', 'USD'));
+  });
+
+  it('settles a UK year with its return: all back under the treaty, and over it the bands on it all', () => {
+    const sim = pro('uk-settle');
+    recordWages(sim.player, at(2027, 6, 1), NY, { gross: 15_000_00, where: 'uk-eng-london', employer: 'a', foreignWithheld: 3_000_00 });
+    recordWages(sim.player, at(2028, 6, 1), NY, { gross: 80_000_00, where: 'uk-eng-london', employer: 'b', foreignWithheld: 16_000_00 });
+    // The 2027–28 year files by 31 January 2029; not before.
+    settleUkYears(sim, sim.player, 2028);
+    expect(yearOf(sim.player, 2028).foreign.uk!.withheld).toBe(16_000_00);
+    settleUkYears(sim, sim.player, 2029);
+    expect(yearOf(sim.player, 2029).foreign.uk).toEqual({ gross: 0, withheld: -3_000_00 });
+    settleUkYears(sim, sim.player, 2029);
+    expect(yearOf(sim.player, 2029).foreign.uk!.withheld).toBe(-3_000_00);
+    settleUkYears(sim, sim.player, 2030);
+    const tax = ukTaxOn(80_000_00, 'USD');
+    const gbp = exchange(80_000_00, 'USD', 'GBP')!;
+    expect(tax).toBe(exchange(Math.round(0.2 * 37_700_00 + 0.4 * (gbp - 37_700_00)), 'GBP', 'USD'));
+    expect(yearOf(sim.player, 2030).foreign.uk!.withheld).toBe(tax - 16_000_00);
   });
 
   it('withholds Canada’s 23% from a residual for work done there', () => {

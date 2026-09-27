@@ -14,7 +14,7 @@ import { Gated } from '@/ui/guide/Guide';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { formatDate } from '@/engine/core/time';
 import { CITIES } from '@/engine/content/geography';
-import { BENCHMARK_SOURCE, BENEFIT_STATE, CALIFORNIA_MANDATE, CALIFORNIA_UI, CARE, CHRONIC, COBRA, DENTAL_PLANS, DENTAL_VISION, INSULIN, PHARMACY, MEDICAL_DEBT, NEW_YORK_UI, PLANS_SOURCE, PREMIUM_CREDIT, PUBLIC_COVER, RETURN } from '@/engine/content/safetynet';
+import { ABROAD, BENCHMARK_SOURCE, BENEFIT_STATE, CALIFORNIA_MANDATE, CALIFORNIA_UI, CARE, CHRONIC, COBRA, DENTAL_PLANS, DENTAL_VISION, INSULIN, PHARMACY, MEDICAL_DEBT, NEW_YORK_UI, PLANS_SOURCE, PREMIUM_CREDIT, PUBLIC_COVER, RETURN } from '@/engine/content/safetynet';
 import { UNION_HEALTH } from '@/engine/content/career';
 import { deadline, returnsOf } from '@/engine/systems/taxreturn';
 import { CONDITION_LABEL, COVER_LABEL, benchmarkFor, coverOn, dentalPlanFor, grown, healthOf, mayEnroll, medicalDebtOf, planOf, type Condition } from '@/engine/systems/health';
@@ -92,7 +92,7 @@ function ReturnsPane() {
           ['Performing Artist Deduction', -f.deduction],
           ['Federal Income Tax', f.federal],
           ['Of It, The Credit For Another Country’s Tax', -(f.foreignCredit ?? 0)],
-          ['Canada’s Tax Refunded Under Its Treaty', -(f.foreignRefund ?? 0)],
+          ['Canada’s Tax Refunded, By Its Treaty Or Its Return', -(f.foreignRefund ?? 0)],
           ...(f.states ?? []).flatMap((l) => [[`${stateName(l.state)} Income Tax`, l.tax], ...(l.credit ? [[`${stateName(l.state)}’s Credit For Another State’s Tax`, -l.credit]] : [])] as [string, number][]),
           ['City Income Tax', f.local ?? 0],
           ['Social Security And Medicare', f.payroll],
@@ -127,7 +127,7 @@ function ReturnsPane() {
         );
       })}
       <p className="xs dim" style={{ margin: 0 }}>
-        Due 15 April, or the next business day. Filed late with a balance, 5% of it a month or part of one, to a quarter of it, with at least {formatMoney(RETURN.lateMinimum, cur)} past 60 days; paid late, 0.5% a month. A refund comes {RETURN.refundDays} days after filing. The performing artist deduction takes your commission and dues off an income of {formatMoney(RETURN.performingArtistIncome, cur)} or less, from two employers or more; otherwise the job’s costs aren’t deductible. The tax is the federal and state law SLATE carries for where you lived. Source: {RETURN.source}.
+        Due 15 April, or the next business day. Filed late with a balance, 5% of it a month or part of one, to a quarter of it, with at least {formatMoney(RETURN.lateMinimum, cur)} past 60 days; paid late, 0.5% a month. A refund comes {RETURN.refundDays} days after filing. The performing artist deduction takes your commission and dues off an income of {formatMoney(RETURN.performingArtistIncome, cur)} or less, from two employers or more; otherwise the job’s costs aren’t deductible. The tax is the federal and state law SLATE carries for where you lived. Work in Canada is taxed at 23% as it’s paid, all of it back under CAD 15,000 in the year and, over it, a Canadian return filed with this one by 30 April gives back what’s past its graduated tax. Work in the United Kingdom is taxed 20% by a payer paying you past £12,570 in its tax year, and settled with its own return each 31 January. Source: {RETURN.source}; {ABROAD.source}.
       </p>
     </div>
   );

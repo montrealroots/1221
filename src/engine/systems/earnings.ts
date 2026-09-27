@@ -46,8 +46,11 @@ export interface EarningsRecord {
   equityWeeks: string[];
   /** Income by month, `YYYY-MM`, for the programs that test current income. */
   months: Record<string, Money>;
-  /** UK wages by the UK's tax year, keyed by the year it began on 6 April, for its treaty's test. */
+  /** UK wages by the UK's tax year, keyed by the year it began on 6 April, for its treaty's test; what was withheld, by year and by payer; and the years settled. */
   ukYears: Record<string, Money>;
+  ukWithheld?: Record<string, Money>;
+  ukPayers?: Record<string, Record<string, Money>>;
+  ukSettled?: string[];
 }
 
 export function earningsOf(person: Person): EarningsRecord {
@@ -87,7 +90,14 @@ export function recordWages(person: Person, at: Instant, zone: string, pay: {
     const f = (y.foreign[country] ??= { gross: 0, withheld: 0 });
     f.gross += pay.gross;
     f.withheld += pay.foreignWithheld ?? 0;
-    if (country === 'uk') { const key = ukTaxYear(at); earningsOf(person).ukYears[key] = (earningsOf(person).ukYears[key] ?? 0) + pay.gross; }
+    if (country === 'uk') {
+      const r = earningsOf(person);
+      const key = ukTaxYear(at);
+      r.ukYears[key] = (r.ukYears[key] ?? 0) + pay.gross;
+      r.ukWithheld = { ...r.ukWithheld, [key]: (r.ukWithheld?.[key] ?? 0) + (pay.foreignWithheld ?? 0) };
+      const payers = ((r.ukPayers ??= {})[key] ??= {});
+      if (pay.employer) payers[pay.employer] = (payers[pay.employer] ?? 0) + pay.gross;
+    }
   }
   const worked = pay.where && !(country && country !== CITIES.get(home)?.countryId) ? stateOf(pay.where) : lived;
   if (worked !== lived) y.elsewhere[`${lived}>${pay.where}`] = (y.elsewhere[`${lived}>${pay.where}`] ?? 0) + pay.gross;
