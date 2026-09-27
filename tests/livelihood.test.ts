@@ -54,7 +54,8 @@ describe('the landlord', () => {
     const score = sim.player.credit!.score;
     days(sim, 31);
     expect(sim.player.home!.kind).toBe('sofa');
-    expect(sim.player.credit!.score).toBeLessThanOrEqual(score - 60);
+    // The eviction is on the record; the rent owed before it never was, and a month's statement paid as agreed is.
+    expect(sim.player.credit!.score).toBeLessThanOrEqual(score - 60 + 3);
     expect(rentOf(sim, sim.player)).toBe(0);
     expect(sim.ledger.audit()).toEqual([]);
   });
@@ -200,7 +201,7 @@ describe('the record', () => {
     expect(sim.player.credit!.score).toBe(score + 6 * 3);
   });
 
-  it('counts rent owed in a month the card owes nothing', () => {
+  it('leaves rent owed to a landlord off the record, a month the card owes nothing being paid as agreed', () => {
     const sim = quickSave({ wealth: 'comfortable' }, 'zero-owed');
     const score = sim.player.credit!.score;
     // No room on the card, nothing in the bank: the rent is owed to the landlord.
@@ -212,8 +213,8 @@ describe('the record', () => {
       setChecking(sim, 0);
       sim.advanceTo(startOfNextDay(sim.now, sim.zone) + 7 * MS_HOUR);
     }
-    // January's statement, on the 20th, owed nothing: paid as agreed, less the rent owed.
-    expect(sim.player.credit!.score).toBe(score + 3 - 10);
+    // January's statement, on the 20th, owed nothing: paid as agreed. A private landlord reports nothing.
+    expect(sim.player.credit!.score).toBe(score + 3);
   });
 
   it('raises the card’s limit for a clean record at six months, and a late payment cuts it', () => {

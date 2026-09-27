@@ -51,7 +51,7 @@ import { CARDS, CARD_LAW, type CardProduct } from '../content/cards';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { addMonths, formatDate, instantFromZoned, zonedParts, type Instant } from '../core/time';
 import { CommandError } from '../core/simulation';
-import { arrearsOf, drawFromBank, inTheBank } from './household';
+import { drawFromBank, inTheBank } from './household';
 import { statementReady } from './statements';
 import { paymentsOf } from './payments';
 import { allocatePayment, cashOwedOn } from './cash';
@@ -506,7 +506,7 @@ export function registerCredit(sim: Simulation): void {
     }
     if (credit.statementBalance > 0) scheduleDue(s, person, item.at, terms.graceDays);
     // Nothing owed: the month is reported now, paid as agreed.
-    else reportMonth(s, person, card, credit, ON_TIME);
+    else reportMonth(card, credit, ON_TIME);
     // A card the holder closed is finished once nothing is owed on it.
     if (credit.closing !== undefined && card.balance >= 0) {
       card.closedAt = s.now;
@@ -564,18 +564,25 @@ export function registerCredit(sim: Simulation): void {
         memo: 'Late fee', category: 'fees',
         postings: [{ accountId: s.nominalAccount('expense', 'Card Fees').id, amount: fee }, { accountId: card.id, amount: -fee }],
       });
-      credit.late = [...credit.late.filter((when) => s.now - when < 365 * 86_400_000), s.now];
-      move -= 50;
-      // And the lender cuts the line, never under what's owed on it.
-      const cut = Math.max(Math.max(0, -card.balance), Math.round((card.creditLimit ?? 0) * 0.7 / 100) * 100);
-      if (cut < (card.creditLimit ?? 0)) card.creditLimit = cut;
+      credit.missed = (credit.missed ?? 0) + 1;
+      // A US lender reports a payment late to the bureaus once it's thirty
+      // days past due, at the next due date still short; elsewhere the month's
+      // report carries it. Until 2026-09-27 a US payment a day short was on
+      // the record at once. On the record, the lender cuts the line too,
+      // never under what's owed on it.
+      const reported = bankById(card.bankId ?? '')?.iso !== 'US' || credit.missed >= 2;
+      if (reported) {
+        credit.late = [...credit.late.filter((when) => s.now - when < 365 * 86_400_000), s.now];
+        move -= 50;
+        const cut = Math.max(Math.max(0, -card.balance), Math.round((card.creditLimit ?? 0) * 0.7 / 100) * 100);
+        if (cut < (card.creditLimit ?? 0)) card.creditLimit = cut;
+      }
       s.notify({
         category: 'money',
         title: 'A Late Card Payment',
-        body: `The minimum was ${formatMoney(minimum, currency)} and only ${formatMoney(paid, currency)} went in. A ${formatMoney(fee, currency)} fee, and it's on your record.`,
+        body: `The minimum was ${formatMoney(minimum, currency)} and only ${formatMoney(paid, currency)} went in. A ${formatMoney(fee, currency)} fee, and ${reported ? 'it’s on your record' : 'it goes on your record if it’s still short at the next due date, thirty days past due'}.`,
         importance: 80,
       });
-      credit.missed = (credit.missed ?? 0) + 1;
       if (credit.penalty) credit.penalty.onTime = 0;
       if (bankById(card.bankId ?? '')?.iso === 'GB') credit.recentFees = [...(credit.recentFees ?? []).filter((one) => s.now - one.at < 28 * 86_400_000), { at: s.now, amount: fee }];
       afterMissed(s, person, card, credit, due - paid);
@@ -606,7 +613,7 @@ export function registerCredit(sim: Simulation): void {
         if (credit.suspended === 'hardship' || credit.suspended === 'persistent') delete credit.suspended;
       }
     }
-    reportMonth(s, person, card, credit, move);
+    reportMonth(card, credit, move);
   });
 
   // Each day: interest builds on what the card owes that day, the interest
@@ -686,8 +693,8 @@ const ON_TIME = 3;
  * score every month from the whole file, and a closed card, a charge-off
  * or collections stay on it; with no card reporting there is no payment
  * history to build on, but negatives age. So the score climbs `aging` a
- * month while nothing is owed in collections or to the landlord and no
- * payment has been late in a year, and a thin file stops at `ceiling`.
+ * month while nothing is owed in collections and no payment has been late
+ * in a year, and a thin file stops at `ceiling`.
  * Until 2026-09-27 the score moved only at a card's statement, and after a
  * charge-off, or a card closed, it never moved again.
  */
@@ -697,7 +704,6 @@ export const NO_CARD = { aging: 2, ceiling: 680 } as const;
 export function reportWithoutCard(sim: Simulation, person: Person): void {
   const credit = person.credit;
   if (!credit || cardOf(sim, person)) return;
-  if (arrearsOf(sim, person) > 0) { credit.score = Math.max(SCORE_MIN, credit.score - 10); return; }
   const inCollections = Object.values(sim.universe.accounts).some((a) => a.ownerId === person.id && !a.closedAt && a.category === 'collections' && a.balance < 0);
   const lateThisYear = credit.late.some((at) => sim.now - at < 365 * 86_400_000);
   if (inCollections || lateThisYear || credit.score >= NO_CARD.ceiling) return;
@@ -817,13 +823,17 @@ function persistentDebt(sim: Simulation, person: Person, card: Account, credit: 
   }
 }
 
-/** A month on the record: how it was paid, how much of the card is used, and any rent owed. */
-function reportMonth(sim: Simulation, person: Person, card: Account, credit: CreditState, paid: number): void {
+/**
+ * A month on the record: how it was paid, and how much of the card is used.
+ * Rent owed to a private landlord isn't reported to the bureaus; an eviction
+ * or a debt sent to collections is. Until 2026-09-27 rent owed cost ten
+ * points every month it stood.
+ */
+function reportMonth(card: Account, credit: CreditState, paid: number): void {
   let move = paid;
   const limit = card.creditLimit ?? 0;
   const used = limit > 0 ? Math.max(0, -card.balance) / limit : 0;
   if (used > 0.3) move -= Math.round((used - 0.3) * 20);
-  if (arrearsOf(sim, person) > 0) move -= 10;
   credit.score = Math.max(SCORE_MIN, Math.min(SCORE_MAX, credit.score + move));
 }
 
