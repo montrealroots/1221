@@ -256,7 +256,7 @@ export interface CareerRecord {
   days: WorkedDay[];
   residuals: Residual[];
   /** A series under option between seasons, until its pickup is decided. */
-  option?: { seriesId: string; bookingId: string; decidedAt: Instant };
+  option?: { seriesId: string; decidedAt: Instant };
   /** Self-submissions this week, waiting on Monday. */
   submitted: number;
   /** When the business began for them: the school's hold let go. */
@@ -990,7 +990,7 @@ export function registerCareer(sim: Simulation): void {
     if (role.series && life) {
       const q = zonedParts(item.at, s.homeZone);
       const june = instantFromZoned({ year: q.month > SERIES.optionMonth || (q.month === SERIES.optionMonth && q.day >= SERIES.optionDay) ? q.year + 1 : q.year, month: SERIES.optionMonth, day: SERIES.optionDay, hour: 10 }, s.homeZone);
-      career.option = { seriesId: booking.seriesId ?? booking.id, bookingId: booking.id, decidedAt: june };
+      career.option = { seriesId: booking.seriesId ?? booking.id, decidedAt: june };
       s.schedule({ at: june, kind: RENEWAL_KIND, label: `The Option: ${role.label}`, category: 'system', priority: 20, payload: { personId: person.id, bookingId: booking.id } });
     }
     if (!career.managerId && role.tiers.some((t) => t <= 2)) {

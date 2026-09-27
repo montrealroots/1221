@@ -114,7 +114,6 @@ export class LocalSaveAdapter implements SaveAdapter {
       // Back up what is already there before overwriting it.
       if (previous) {
         store.setItem(BACKUP_KEY(slot), previous);
-        universe.meta.backupAvailable = true;
       }
       store.setItem(KEY(slot), next);
     } catch (error) {

@@ -148,10 +148,6 @@ export interface LedgerTransaction {
   /** Statement category: 'salary', 'rent', 'groceries', 'production', ... */
   category: string;
   postings: Posting[];
-  /** What caused this, for the "why is my balance this?" audit. */
-  refType?: string;
-  refId?: string;
-  idempotencyKey?: string;
   /** Set when a transaction has been reversed; points at the reversing txn. */
   reversedBy?: string;
   reverses?: string;

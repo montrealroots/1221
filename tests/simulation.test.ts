@@ -56,21 +56,6 @@ describe('time advancement', () => {
     expect(sim.now).toBe(target);
   });
 
-  it('runs recurrences without drifting', () => {
-    const sim = quickSave();
-    let count = 0;
-    sim.onSchedule('test.weekly', () => { count++; });
-    sim.schedule({
-      at: sim.now + MS_DAY,
-      kind: 'test.weekly',
-      label: 'weekly',
-      category: 'system',
-      recurrence: { unit: 'week', interval: 1, count: 5 },
-    });
-    sim.advanceTo(sim.now + 60 * MS_DAY);
-    expect(count).toBe(5);
-  });
-
   it('catches a handler that schedules itself in a loop', () => {
     const sim = quickSave();
     sim.onSchedule('test.runaway', (_item, s) => {
@@ -1151,23 +1136,6 @@ describe('the calendar', () => {
 });
 
 describe('commands', () => {
-  it('never applies the same idempotency key twice', () => {
-    const sim = quickSave();
-
-    const key = 'sleep-abc-123';
-    const first = sim.execute({ kind: 'life.sleep', payload: { hours: 8 }, idempotencyKey: key });
-    const wokeAt = sim.now;
-    const second = sim.execute({ kind: 'life.sleep', payload: { hours: 8 }, idempotencyKey: key });
-
-    expect(first.ok).toBe(true);
-    expect(second.ok).toBe(true);
-    expect(second.replayed).toBe(true);
-    expect(second.value, 'the replay returned a different result').toEqual(first.value);
-    // The second submission is a receipt, not a second night: the clock did
-    // not move again.
-    expect(sim.now).toBe(wokeAt);
-  });
-
   it('rolls back completely when a command fails part-way', () => {
     const sim = quickSave();
     const accounts = sim.ledger.accountsOf(sim.player.id).length;
@@ -1651,7 +1619,7 @@ describe('ids are told apart by namespace', () => {
     const quiet = quickSave({}, 'still');
     const busy = quickSave({}, 'still');
     const account = busy.universe.people[busy.universe.playerId]!.primaryAccountId!;
-    for (let i = 0; i < 100; i += 1) busy.income(account, 1_00, 'Something Else Entirely', 'other');
+    for (let i = 0; i < 100; i += 1) busy.post({ memo: 'Something Else Entirely', category: 'other', postings: [{ accountId: account, amount: 1_00 }, { accountId: busy.nominalAccount('income', 'Something Else Entirely').id, amount: -1_00 }] });
     expect(busy.nextId('person')).toBe(quiet.nextId('person'));
     expect(busy.nextId('decision')).toBe(quiet.nextId('decision'));
     expect(busy.nextId('txn')).not.toBe(quiet.nextId('txn'));

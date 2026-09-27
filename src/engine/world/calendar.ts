@@ -9,7 +9,6 @@
 import { holidaysAcross, type Calendar, type KeptHoliday } from '../content/holidays';
 import type { Simulation } from '../core/simulation';
 import type { ScheduledItem } from '../core/scheduler';
-import type { Id } from '../domain/model';
 import {
   addDays, dateKey, daysInMonth, instantFromZoned, seasonOf,
   startOfDay, startOfNextDay, zonedParts, type Instant, type Season, MS_DAY, MS_MINUTE,
@@ -55,8 +54,9 @@ export interface CalendarEntry {
   requiresPlayer: boolean;
   locationId?: string;
   status: ScheduledItem['status'] | 'observance';
-  refType?: string;
-  refId?: Id;
+  /** When it went on the calendar, and when it was done, missed or called off: the entry look says both. */
+  bookedAt?: Instant;
+  settledAt?: Instant;
   durationMinutes?: number;
   /** True when this entry conflicts with another commitment. */
   conflicted?: boolean;
@@ -93,8 +93,8 @@ function toEntry(item: ScheduledItem): CalendarEntry {
     requiresPlayer: item.requiresPlayer ?? false,
     locationId: item.locationId,
     status: item.status,
-    refType: item.refType,
-    refId: item.refId,
+    bookedAt: item.createdAt,
+    settledAt: item.resolvedAt,
     durationMinutes: item.durationMinutes,
   };
 }

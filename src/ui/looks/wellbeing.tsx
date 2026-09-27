@@ -31,6 +31,7 @@ import { GENRE_BY_ID, INTEREST_BY_ID } from '@/engine/content/interests';
 import { PERSONALITY_TRAIT_BY_ID } from '@/engine/content/personality-traits';
 import { ageWords, ceilingAt } from '@/engine/content/lifespan';
 import { describeEthnicity } from '@/engine/content/ethnicity';
+import { COUNTRIES } from '@/engine/content/geography';
 
 /**
  * The eight, in the order a person would notice them.
@@ -128,6 +129,11 @@ defineLook<Person>('person', {
           {spokenList(traits)}.
         </p>
       ),
+      // Their pronouns and their citizenship, as creation took them: the citizenship is the country of birth’s.
+      <p key="papers" className="small">
+        <span className="dim">{isYou ? 'On your papers. ' : 'On their papers. '}</span>
+        {person.pronouns}, a citizen of {COUNTRIES.get(person.citizenshipId)?.name ?? person.citizenshipId}.
+      </p>,
       // Who they are in their own terms, as creation took it, and nothing more: it moves nothing.
       (person.raceEthnicity?.length ?? 0) > 0 && (
         <p key="identity" className="small">

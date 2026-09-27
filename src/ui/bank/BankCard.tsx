@@ -81,7 +81,7 @@ export function BankCard({ bankId }: { bankId: string }) {
     lines.push(`${pct(terms.apr)} a year on a balance carried.`);
   }
   if (!charge) lines.push('Interest builds each day on what’s owed, the day’s interest included, once a statement isn’t paid in full; pay a statement in full and new spending draws none until the next is due.');
-  if (terms.penaltyApr) lines.push(terms.penaltyInForce ? `The penalty rate, ${pct(terms.penaltyApr)}, is in force: six payments on time in a row takes it off.` : `Sixty days late, and after 45 days’ notice the rate becomes ${pct(terms.penaltyApr)}.`);
+  if (terms.penaltyApr) lines.push(terms.penaltyInForce ? `The penalty rate, ${pct(terms.penaltyApr)}, is in force${credit.penalty ? `, on the notice of ${formatDate(credit.penalty.noticeAt, sim.zone)}` : ''}: six payments on time in a row takes it off.` : `Sixty days late, and after 45 days’ notice the rate becomes ${pct(terms.penaltyApr)}.`);
   if (card.balance > 0) lines.push(`The card holds ${money(card.balance)} of your money${bankIso === 'US' ? ', and sends it back after six months if it’s still there' : ''}.`);
   // A fee the research didn't find isn't a fee of none; until 2026-09-26 the Barclaycard said it had none.
   lines.push(terms.annualFee > 0 ? `${money(terms.annualFee)} a year, on the statement in ${opened}.` : terms.estimated.includes('annualFee') ? 'Its yearly fee wasn’t found, so SLATE charges none.' : 'No yearly fee.');
@@ -91,7 +91,7 @@ export function BankCard({ bankId }: { bankId: string }) {
   }
   lines.push(`A payment short of ${charge ? 'the statement' : 'the minimum'} costs ${money(terms.lateFee)}, goes on your record, and cuts the limit.`);
   if (credit.suspended === 'late') lines.push(`Suspended: ${credit.missed ?? 0} payments missed in a row. It works again once a payment is made on time; six in a row and it's charged off to collections.`);
-  if (credit.hardship) lines.push(`On a plan: no interest, and ${money(credit.hardship.payment)} a month until it's cleared. The card can't be used until then.`);
+  if (credit.hardship) lines.push(`On a plan since ${formatDate(credit.hardship.since, sim.zone)}: no interest, and ${money(credit.hardship.payment)} a month until it’s cleared. The card can’t be used until then.`);
   if (credit.closing !== undefined) lines.push('Closed to anything new. What’s owed is paid down as before, and then the account closes.');
   if (credit.overLimitOptIn) lines.push(`Opted in to going over the limit: a purchase can take it up to a tenth over, SLATE’s estimate of what a bank allows${terms.overLimitFee ? `, for ${money(terms.overLimitFee)} a statement, three in a row at most` : ', and this card charges nothing for it'}.`);
   if (terms.capped) {

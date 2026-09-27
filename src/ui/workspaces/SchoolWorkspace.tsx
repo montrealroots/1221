@@ -185,7 +185,7 @@ function StandingPane() {
           <div className="table-scroll">
             <table>
               <thead>
-                <tr><th scope="col">Term</th><th scope="col">Standing</th><th scope="col" className="num">Attendance</th><th scope="col" className="num">Growth</th><th scope="col" className="num">Class Growth</th></tr>
+                <tr><th scope="col">Term</th><th scope="col">Standing</th><th scope="col" className="num">Attendance</th><th scope="col" className="num">Growth</th><th scope="col" className="num">Class Growth</th><th scope="col">Why</th></tr>
               </thead>
               <tbody>
                 {school.history.map((r) => (
@@ -195,6 +195,7 @@ function StandingPane() {
                     <td className="num mono">{pct(r.attendance)}</td>
                     <td className="num mono">{r.growth.toFixed(1)}</td>
                     <td className="num mono">{r.classGrowth.toFixed(1)}</td>
+                    <td className="small">{r.reason}</td>
                   </tr>
                 ))}
               </tbody>
@@ -299,7 +300,9 @@ function CastingPane() {
   const every = ahead(sim, person, [CALL_KIND, LAB_KIND]).filter((c) => c.payload.call !== 'oncall');
   const calls = every.slice(0, 8);
   const onCall = ahead(sim, person, [CALL_KIND]).filter((c) => c.payload.call === 'oncall');
-  const castings = [school.casting, school.rep].filter((c): c is NonNullable<typeof c> => c !== undefined);
+  // This term’s, while at school: the last production stayed on the tab after the degree until 2026-09-27.
+  const enrolled = school.standing !== 'graduated' && school.standing !== 'dismissed';
+  const castings = [school.casting, school.rep].filter((c): c is NonNullable<typeof c> => c !== undefined && enrolled && c.term === school.termsBegun - 1);
 
   return (
     <div className="col gap-5">

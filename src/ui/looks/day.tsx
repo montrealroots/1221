@@ -643,6 +643,12 @@ defineLook<TheEntry>('entry', {
                 : entry.status === 'done' ? 'positive' : undefined}
               note={`${WEEKDAY_NAMES[parts.weekday]}, ${spokenWhen(entry.at, sim, zone)}`}
             />
+            {entry.bookedAt !== undefined && (
+              <Stat label="Booked" value={formatDate(entry.bookedAt, zone)} note={formatTime(entry.bookedAt, zone)} />
+            )}
+            {entry.settledAt !== undefined && entry.status !== 'pending' && (
+              <Stat label={entry.status === 'cancelled' ? 'Called Off' : entry.status === 'missed' ? 'Missed' : 'Done'} value={formatDate(entry.settledAt, zone)} note={formatTime(entry.settledAt, zone)} />
+            )}
           </div>
         </>
       ),

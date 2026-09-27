@@ -217,7 +217,7 @@ export function BankLending({ bank, show }: { bank: Bank; show: readonly Lending
         {loan && (
           <div className="col gap-3">
             <p className="small" style={{ margin: 0 }}>
-              {money(-loan.balance)} owed at {pct(loan.apr ?? 0)} a year, {money(loan.loanPayment ?? 0)} a month
+              {money(-loan.balance)} owed at {pct(loan.apr ?? 0)} a year, {money(loan.loanPayment ?? 0)} a month{loan.loanMonths ? ` over the ${loan.loanMonths} months it was taken for` : ''}
               {loanDue ? `, next on ${formatDate(loanDue.at, sim.zone)}` : ''}. A payment the account can’t make goes on your record.
             </p>
             <div>

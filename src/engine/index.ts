@@ -184,7 +184,6 @@ export function refreshMeta(sim: Simulation): void {
   sim.universe.meta.locationLabel = CITIES.get(player.currentLocationId)?.name ?? 'Unknown';
   sim.universe.meta.worldDateLabel = formatDate(sim.now, sim.homeZone);
   sim.universe.meta.netWorthLabel = formatMoneyCompact(worth.total, saveCurrency(sim.universe));
-  sim.universe.meta.lastPlayedAt = sim.now;
 }
 
 /** Creates a brand new save universe with every system wired up. */
@@ -323,7 +322,8 @@ export function migrate(universe: SaveUniverse): MigrationResult {
   record('people', 'the people');
   record('accounts', 'the accounts');
   record('decisions', 'the decision center');
-  record('idempotency', 'the command receipts');
+  // The command receipts went on 2026-09-27: nothing in play passed a key, and a save from before keeps them no more.
+  if ('idempotency' in universe) { delete (universe as unknown as Record<string, unknown>).idempotency; steps.push('Dropped the command receipts.'); }
   record('counters', 'the counters');
   list('transactions', 'the transactions');
   list('scheduled', 'the timeline');
@@ -663,7 +663,7 @@ export function migrate(universe: SaveUniverse): MigrationResult {
 export async function openSlot(
   adapter: SaveAdapter,
   slot: Slot,
-  opts: { fromBackup?: boolean; startedAt: number },
+  opts: { fromBackup?: boolean } = {},
 ): Promise<{ universe: SaveUniverse; migration: MigrationResult } | { error: string }> {
   const fromBackup = opts.fromBackup ?? false;
   const universe = fromBackup ? await adapter.restoreBackup(slot) : await adapter.load(slot);
@@ -676,10 +676,8 @@ export async function openSlot(
     };
   }
 
-  universe.meta.migrationInProgress = { from, to: SAVE_SCHEMA_VERSION, startedAt: opts.startedAt };
   const migration = migrate(universe);
   if (migration.problems.length > 0) return { error: migration.problems.join(' ') };
-  universe.meta.migrationInProgress = undefined;
   if (migration.migrated && !fromBackup) {
     await adapter.backup(slot);
     await adapter.save(universe);

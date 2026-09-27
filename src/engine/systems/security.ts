@@ -316,12 +316,12 @@ function somebodyElse(sim: Simulation, person: Person): void {
     if (person.id === sim.universe.playerId) sim.notify({ category: 'bank', title: 'Your Bank Stopped A Payment', body: `Somebody tried to spend ${formatMoney(amount, cur)} on your ${which} card ending ${account.plastic!.last4}. ${bank.name} declined it and asked; it wasn’t you, so the card is blocked and a new one is on its way, free.`, importance: 70, route: '/workspace/bank' });
     return;
   }
-  const tx = sim.post({ memo: 'Card purchase', category: 'card-fraud', postings: [{ accountId: account.id, amount: -amount }, { accountId: sim.nominalAccount('expense', 'Unauthorized Use').id, amount }] });
+  sim.post({ memo: 'Card purchase', category: 'card-fraud', postings: [{ accountId: account.id, amount: -amount }, { accountId: sim.nominalAccount('expense', 'Unauthorized Use').id, amount }] });
   // Learned of at once where an alert catches it, otherwise at the statement.
   const alert = alertsOf(person).largePayment;
   const statedAt = statementAfter(sim, which, sim.now);
   const learnedAt = alert !== undefined && amount >= alert ? sim.now : statedAt;
-  person.fraud = [...(person.fraud ?? []), { transactionId: tx?.id, accountId: account.id, which, amount, at: sim.now, learnedAt, statedAt }];
+  person.fraud = [...(person.fraud ?? []), { accountId: account.id, which, amount, at: sim.now, learnedAt, statedAt }];
   if (alert !== undefined && amount >= alert && person.id === sim.universe.playerId) {
     sim.notify({ category: 'bank', title: 'A Large Payment', body: `${formatMoney(amount, cur)} on your ${which} card ending ${account.plastic!.last4}. If it wasn’t you, report it.`, importance: 70, route: '/workspace/bank' });
   }

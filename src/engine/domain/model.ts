@@ -195,7 +195,7 @@ export interface Person {
   /** Where they come from, for what a school's need assessment reads. Shown nowhere. */
   family?: 'wealthy';
   /** Payments somebody else made on their cards: when, which, when they learned of it and when the statement showed it, whether they reported it, what the law left them and what came back. */
-  fraud?: { transactionId?: string; accountId: string; which: 'debit' | 'credit'; amount: Money; at: Instant; learnedAt: Instant; statedAt: Instant; reportedAt?: Instant; carried?: Money; refunded?: Money }[];
+  fraud?: { accountId: string; which: 'debit' | 'credit'; amount: Money; at: Instant; learnedAt: Instant; statedAt: Instant; reportedAt?: Instant; carried?: Money; refunded?: Money }[];
 
   wellbeing: Wellbeing;
 
@@ -371,7 +371,6 @@ export interface SaveMeta {
   slot: 1 | 2 | 3;
   schemaVersion: number;
   createdAt: number;
-  lastPlayedAt: number;
   /** Accumulated real seconds of play. */
   playtimeSeconds: number;
   /** Deterministic seed for the whole universe. */
@@ -386,9 +385,6 @@ export interface SaveMeta {
   locationLabel: string;
   worldDateLabel: string;
   netWorthLabel: string;
-  /** Set while a migration is mid-flight, for recovery. */
-  migrationInProgress?: { from: number; to: number; startedAt: number };
-  backupAvailable: boolean;
   appVersion: string;
   /**
    * The currency this save's money is kept in: the one where the character
@@ -450,7 +446,6 @@ export interface SaveUniverse {
   tutorial?: { read: string[] };
 
   /** Idempotency keys already applied, mapped to their recorded result. */
-  idempotency: Record<string, { at: Instant; result: unknown }>;
 
   /** Counters used by systems that need per-save monotonic sequences. */
   counters: Record<string, number>;

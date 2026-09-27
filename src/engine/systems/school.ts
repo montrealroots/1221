@@ -116,7 +116,6 @@ export interface Casting {
 }
 
 export interface SchoolRecord {
-  schoolId: string;
   classOf: number;
   termsBegun: number;
   standing: Standing;
@@ -584,7 +583,7 @@ export function enroll(sim: Simulation, person: Person): void {
   const admitted = admittedClass(sim, person);
   person.craft = admitted.player;
   const school: SchoolRecord = {
-    schoolId: YALE_DRAMA.id, classOf: TERM_STARTS_2026_27.fall.year + 3, termsBegun: 0, standing: 'good', castable: true,
+    classOf: TERM_STARTS_2026_27.fall.year + 3, termsBegun: 0, standing: 'good', castable: true,
     classmates: admitted.classmates, tally: undefined as unknown as TermTally, history: [],
     workStudy: { yearHours: 0, electiveHours: 0, owedHours: 0 },
   };

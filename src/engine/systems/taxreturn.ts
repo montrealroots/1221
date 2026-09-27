@@ -53,6 +53,8 @@ export interface ReturnFigures {
   unemployment: Money;
   /** A scholarship's taxable part. */
   scholarship?: Money;
+  /** Interest the banks paid. */
+  interest?: Money;
   income: Money;
   deduction: Money;
   incomeTax: Money;
@@ -261,7 +263,7 @@ export function figuresFor(person: Person, year: number, into = 'USD', filedAt?:
   const months = person.health?.uncoveredInCalifornia[year] ?? 0;
   const mandate = months * Math.round(Math.min(usd(CALIFORNIA_MANDATE.bronzeMonth, into), Math.max(usd(CALIFORNIA_MANDATE.flat, into), CALIFORNIA_MANDATE.share * income) / 12));
   return {
-    cityId, acting: y.acting, workStudy: y.workStudy, unemployment: y.unemployment, scholarship: y.scholarship ?? 0, income, deduction,
+    cityId, acting: y.acting, workStudy: y.workStudy, unemployment: y.unemployment, scholarship: y.scholarship ?? 0, interest: y.interest ?? 0, income, deduction,
     incomeTax, federal, foreignCredit, foreignRefund, states: stateLines, local, payroll, credit, mandate, withheld: y.withheld,
     balance: incomeTax + payroll + mandate - y.withheld - credit,
   };

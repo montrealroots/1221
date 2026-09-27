@@ -38,7 +38,7 @@ describe('a new life', () => {
     const p = sim.player;
     expect(p.currentLocationId).toBe('us-ct-newhaven');
     expect(zonedParts(sim.now, sim.zone)).toMatchObject({ year: 2026, month: 8, day: 24 });
-    expect(p.school).toMatchObject({ schoolId: 'yale-drama', classOf: 2029, termsBegun: 0, standing: 'good', castable: true });
+    expect(p.school).toMatchObject({ classOf: 2029, termsBegun: 0, standing: 'good', castable: true });
     expect(yearOfStudy(p)).toBe(1);
     expect(titled(sim, 'Welcome To The Class Of 2029')).toHaveLength(1);
     sim.advanceTo(at(2026, 8, 24, 9) + 60_000);

@@ -253,7 +253,6 @@ export function emptyUniverse(
     preferences: {
       reducedMotion: false, timeSpeed: 'live',
     },
-    idempotency: {},
     counters: {},
     engineFailures: [],
   };
@@ -293,7 +292,6 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveCon
     slot,
     schemaVersion: SAVE_SCHEMA_VERSION,
     createdAt: now,
-    lastPlayedAt: now,
     playtimeSeconds: 0,
     seed,
     characterName: `${config.firstName} ${config.lastName}`,
@@ -302,7 +300,6 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveCon
     locationLabel: city.name,
     worldDateLabel: '',
     netWorthLabel: '',
-    backupAvailable: false,
     appVersion: APP_VERSION,
     currency: currencyFor(config.startLocationId),
   };

@@ -457,8 +457,10 @@ describe('the sentence the player wrote', () => {
     player.interests = [];
     player.genres = [];
 
+    // Only the papers, which a person always has: no empty line where the background, the interests and the films would be.
     const found = resolveLook(sim, at('person', player.id)) as Looked;
-    expect(found.body).toBeUndefined();
+    const kids = (found.body as { props: { children: { key: string }[] } }).props.children.filter(Boolean);
+    expect(kids.map((k) => k.key)).toEqual(['papers']);
   });
 });
 

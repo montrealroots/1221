@@ -2,8 +2,7 @@
  * Integrity, isolation and abuse.
  *
  * The rules this file enforces are the ones that stop a save quietly becoming
- * wrong: a retry must not charge twice or hand over two of the same thing, one
- * universe must never see another, a finalised result must stay finalised, the
+ * wrong: one universe must never see another, a finalised result must stay finalised, the
  * player must not be shown what their character could not know, and a
  * malformed or hostile payload must be refused rather than absorbed.
  *
@@ -11,41 +10,16 @@
  * live on the server — authentication, row-level security, and authorisation
  * of the backend functions — cannot be exercised without a deployment and
  * credentials, and are not covered by this file. They are listed as
- * unavailable in the release report rather than counted as passing.
+ * unavailable in the release report rather than counted as passing. A retried
+ * save writing once is the server's (`tests/base44-contract.test.ts`); the
+ * engine's own command receipts went on 2026-09-27, as nothing sent a key.
  */
 
 import { describe, expect, it } from 'vitest';
 import { createSave, loadSave, quickSave, validateUniverse, defaultConfig } from '@/engine';
 import { serialise, deserialise } from '@/engine/persistence/adapter';
-import type { Id } from '@/engine/domain/model';
 
 const MS_DAY = 86_400_000;
-
-describe('retries and replays', () => {
-  it('applies a command once when the same key is submitted twice', () => {
-    const sim = quickSave({ wealth: 'comfortable' });
-    const account = sim.player.primaryAccountId as Id;
-    const before = sim.ledger.availableFunds(account);
-    const transactions = sim.universe.transactions.length;
-
-    const key = 'checkout-9f2a';
-    const first = sim.execute({ kind: 'life.sleep', payload: { hours: 8 }, idempotencyKey: key });
-    const wokeAt = sim.now;
-    const second = sim.execute({ kind: 'life.sleep', payload: { hours: 8 }, idempotencyKey: key });
-
-    expect(first.ok).toBe(true);
-    expect(second.ok).toBe(true);
-    expect(second.replayed, 'the second submission was treated as a new command').toBe(true);
-    expect(second.value, 'the replay returned a different result').toEqual(first.value);
-
-    // A receipt, not a second night: the clock stayed put and nothing posted.
-    expect(sim.now).toBe(wokeAt);
-    expect(sim.universe.transactions.length).toBe(transactions);
-    expect(sim.ledger.availableFunds(account)).toBe(before);
-  });
-
-
-});
 
 describe('one save is one universe', () => {
   it('keeps three slots completely separate', () => {

@@ -303,20 +303,16 @@ part the tool cannot see.
   (six preferences, `Booking.weeksPaid`, the rail's locked path, the
   place profile's weather, and about thirty helpers used nowhere), and
   these are kept, each with its reason:
-  - The scheduler's recurrences (`Recurrence`, `nextRecurrence`): tested,
-    and every recurring process in the world re-arms itself instead. Taking
-    it out touches the save schema and the server guard.
-  - Command idempotency (`idempotencyKey`, `Universe.idempotency`): the
-    defense against a command sent twice, tested, and no screen passes a
-    key yet.
-  - Records written and never read: a loan's term (`Account.loanMonths`),
-    `Person.citizenshipId` and `pronouns` past the migrations, the save's
+  - Settled later that day: the scheduler's recurrences and the engine's
+    command receipts went (the server's save key, which a retry needs,
+    stays); a loan's term, a hardship plan's start, a penalty's notice, a
+    home's date, a claim's base period and close, an evaluation's reason,
+    a return's income tax and interest, the pronouns and the citizenship,
+    and a calendar entry's booking and settling are shown; a casting's term
+    decides whether the Casting tab shows it; and the save's
     `migrationInProgress`, `backupAvailable` and `lastPlayedAt`, a
-    transaction's `refType` and `refId`, a penalty's notice day, a
-    hardship plan's start, a home's `since`, a claim's base period and
-    close, an option's booking, a review's reason, a casting's term, a
-    fraud's transaction, a return's `incomeTax`, and a scheduled item's
-    stamps.
+    transaction's references, an option's booking, the school's id and a
+    fraud's transaction went.
   - Content researched for features not built: the airports
     (`nearestAirport`), the neighbourhoods, a city's home price, vehicle
     fees, a bank's payment hold on freed credit and its posting-order
