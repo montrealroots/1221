@@ -67,8 +67,9 @@ export interface Wellbeing {
   /** Hunger 0-100 where 100 is fed. */
   nourishment: number;
   /**
-   * 0-100, where 100 is clean and rested-looking. Falls through the day and
-   * faster on a shoot; a shower puts it back. Rooms notice.
+   * 0-100, where 100 is clean and rested-looking. Falls through the day, and
+   * twice as fast on set or on stage (`setGrime`); a shower puts it back.
+   * Rooms notice.
    */
   hygiene: number;
 }

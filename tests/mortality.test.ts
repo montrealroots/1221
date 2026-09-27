@@ -16,7 +16,8 @@ import { deserialise, serialise } from '@/engine/persistence/adapter';
 import {
   END_KIND, chanceOfEndingYear, countryFactor, endBetween, frailty, tableChance,
 } from '@/engine/systems/mortality';
-import { BIRTHDAY_KIND, ageOn } from '@/engine/systems/birthdays';
+import { BIRTHDAY_KIND, END_BAND, ageOn, redrawIfChanged } from '@/engine/systems/birthdays';
+import { healthOf } from '@/engine/systems/health';
 import { checkConflicts, entriesBetween, skipTargets, upcoming } from '@/engine/world/calendar';
 
 const MS_YEAR = 365.2425 * MS_DAY;
@@ -98,6 +99,35 @@ describe('the chance of the end', () => {
     expect(abroad).toBe(home);
   });
 
+  it('draws the rest of the year again when the body moves a band, and not otherwise', () => {
+    const sim = quickSave({ birthYear: 1936 }, 'end-band');
+    const p = sim.player;
+    const h = healthOf(p);
+    const drawn = h.endBand!;
+    expect(drawn).toBeDefined();
+    const ends = () => sim.universe.scheduled.filter((one) => one.kind === END_KIND && one.payload.personId === p.id).length;
+    // A small change isn't a band: nothing is drawn again.
+    const before = ends();
+    redrawIfChanged(sim, p);
+    expect(h.endBand).toBe(drawn);
+    expect(ends()).toBe(before);
+    // One band down, an end pending is taken off and the rest of the year drawn again.
+    const age = (sim.now - p.birthInstant) / (365.2425 * MS_DAY);
+    const band = (c: number) => Math.round(frailty(c, age) / END_BAND) * END_BAND;
+    let c = p.wellbeing.condition;
+    while (c > 0 && band(c) === drawn) c -= 0.5;
+    expect(band(c)).toBe(drawn + END_BAND);
+    const pending = sim.schedule({ at: sim.now + 200 * MS_DAY, kind: END_KIND, label: 'x', category: 'system', priority: 1, payload: { personId: p.id } });
+    p.wellbeing.condition = c;
+    redrawIfChanged(sim, p);
+    expect(h.endBand).toBe(drawn + END_BAND);
+    expect(pending.status).toBe('cancelled');
+    // The clock looks each day: recovered, the band is drawn at again by the next.
+    p.wellbeing.condition = 100;
+    sim.advanceBy(2 * MS_DAY);
+    expect(h.endBand).toBeLessThan(drawn + END_BAND);
+  });
+
   it('draws the same for the same person and day, and a part of a year gets part of the chance', () => {
     const sim = quickSave({}, 'end-same');
     const old = { ...sim.player, birthInstant: sim.now - 104 * MS_YEAR };
@@ -134,9 +164,10 @@ describe('a life in the game', () => {
     for (let n = 1; n < 60 && !sim.universe.scheduled.some((one) => one.kind === END_KIND); n += 1) {
       sim = quickSave({ birthYear: 1916 }, `end-${n}`);
     }
-    const end = sim.universe.scheduled.find((one) => one.kind === END_KIND);
-    expect(end).toBeDefined();
+    expect(sim.universe.scheduled.some((one) => one.kind === END_KIND)).toBe(true);
     const result = sim.advanceBy(2 * 365 * MS_DAY);
+    // The end that came: the year's odds are drawn again as the body moves a band (`redrawIfChanged`).
+    const end = sim.universe.scheduled.find((one) => one.kind === END_KIND && one.status === 'done');
     expect(sim.universe.meta.endedAt).toBe(end!.at);
     expect(sim.now).toBe(end!.at);
     expect(result.to).toBe(end!.at);

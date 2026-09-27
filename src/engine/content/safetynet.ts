@@ -241,6 +241,18 @@ export const CARE = {
   uninsuredMarkup: 1.75,
   stayDays: 3,
   toll: { flu: { condition: 25, energy: 30 }, emergency: { condition: 20, energy: 20 }, stay: { condition: 40, energy: 40 } },
+  /**
+   * How long the flu keeps somebody home: five days, as the CDC gives for
+   * how long an adult is contagious. And how much likelier a short-slept or
+   * stressed body is to catch it, SLATE's estimate from the studies: people
+   * sleeping under six hours caught a cold given the virus about four times
+   * as often as those over seven (Prather et al., Sleep, 2015), and the
+   * most stressed about twice as often as the least (Cohen et al., NEJM,
+   * 1991). SLATE takes a tempered share: up to 2.5 times with a debt of ten
+   * hours, from none at two, and up to 1.8 times at full stress.
+   */
+  fluDays: 5,
+  catching: { debtFrom: 2, debtTo: 10, sleepMost: 2.5, stressMost: 1.8, source: 'https://www.cdc.gov/flu/spreading/; Prather et al., Sleep 38(9), 2015; Cohen, Tyrrell and Smith, NEJM 325, 1991' },
   source: 'CDC NAMCS and NHAMCS; CDC flu burden estimates; HCCI; FAIR Health; KFF–Peterson',
 } as const;
 

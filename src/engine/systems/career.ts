@@ -138,6 +138,8 @@ export const ESTIMATE = {
   workGain: 1.2,
   workEnergy: 8,
   performanceEnergy: 10,
+  /** Hygiene an hour on set or on stage beyond the day's drift: the drift again. */
+  setGrime: 1.6,
 } as const;
 
 /** SAG-AFTRA's terms for leaving an agency: no offer in the first 120 days; after, under ten days' work in 91. */
@@ -969,6 +971,10 @@ export function registerCareer(sim: Simulation): void {
     }
     const spent = role.medium === 'stage' && !call.rehearsal ? ESTIMATE.performanceEnergy : (ESTIMATE.workEnergy * hours) / 8;
     person.wellbeing.energy = Math.max(0, person.wellbeing.energy - spent);
+    // Under lights, in makeup and costume, a body soils twice as fast as the
+    // day's own drift (`life.ts`), SLATE's estimate; a booth doesn't. Until
+    // 2026-09-27 the model's word for it said so and nothing did it.
+    if (role.medium !== 'voice') person.wellbeing.hygiene = Math.max(0, (person.wellbeing.hygiene ?? 80) - hours * ESTIMATE.setGrime * personalityOf(person, 'hygieneDrift'));
     // What they love about the day, and how they take the road and the rehearsal room.
     enjoyWork(person, { medium: role.medium, ...(role.after ? { after: role.after.kind } : {}), ...(booking.genre ? { genre: booking.genre } : {}), away: workCityOf(booking) !== homeOf(person), rehearsal: call.rehearsal === true });
     // An early call, or a performance that runs late, as the body clock takes it.

@@ -159,12 +159,20 @@ export function billsOf(sim: Simulation, person: Person): Money {
  * a frugal one spends less on the same day than a spender does
  * (`spending`, from the money traits). Rent and bills are what they are.
  */
+/**
+ * Food is bought where they are: at home, the home town's prices; on
+ * location or a sublet, that town's, which the meal allowance pays for.
+ * Until 2026-09-27 it was always the home town's.
+ */
+const foodCostsOf = (sim: Simulation, person: Person): LivingCosts | undefined =>
+  person.home ? costsAt(person.currentLocationId, person.home.kind, saveCurrency(sim.universe), sim.now) : undefined;
+
 export function foodOf(sim: Simulation, person: Person): Money {
-  return Math.round((costsOf(sim, person)?.day ?? 0) * personalityOf(person, 'spending'));
+  return Math.round((foodCostsOf(sim, person)?.day ?? 0) * personalityOf(person, 'spending'));
 }
 
 export function mealOf(sim: Simulation, person: Person): Money {
-  return Math.round((costsOf(sim, person)?.meal ?? 0) * personalityOf(person, 'spending'));
+  return Math.round((foodCostsOf(sim, person)?.meal ?? 0) * personalityOf(person, 'spending'));
 }
 
 const accountsOf = (sim: Simulation, person: Person) =>

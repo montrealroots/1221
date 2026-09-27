@@ -18,6 +18,7 @@ import { careFor, healthOf } from '@/engine/systems/health';
 import { figuresFor } from '@/engine/systems/taxreturn';
 import { careerOf } from '@/engine/systems/career';
 import { TURNS } from '@/engine/systems/enjoyment';
+import { CARE } from '@/engine/content/safetynet';
 
 const zone = 'America/New_York';
 const at = (year: number, month: number, day: number, hour = 9, minute = 0) => instantFromZoned({ year, month, day, hour, minute }, zone);
@@ -250,6 +251,17 @@ describe('classes', () => {
     sim.advanceTo(at(2026, 8, 31, 9) + 60_000);
     expect(sim.player.school!.tally).toMatchObject({ classDays: 1, attended: 0, excused: 1 });
     expect(titled(sim, 'You Missed Classes')).toHaveLength(0);
+  });
+
+  it('excuse a student down with the flu, whatever the condition reads', () => {
+    const sim = life('flu');
+    play(sim, at(2026, 9, 1, 8));
+    sim.player.wellbeing.condition = ESTIMATE.sickBelow + 20;
+    expect(sim.execute({ kind: 'school.call_in_sick', payload: {} }).ok).toBe(false);
+    careFor(sim, sim.player, { care: 'visit', what: 'The flu', flu: true }, sim.now);
+    expect(healthOf(sim.player).fluUntil).toBe(sim.now + CARE.fluDays * MS_DAY);
+    sim.player.wellbeing.condition = ESTIMATE.sickBelow + 20;
+    expect(sim.execute({ kind: 'school.call_in_sick', payload: {} }).ok).toBe(true);
   });
 
   it('can’t be called in sick from on a day without them', () => {

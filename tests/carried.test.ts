@@ -11,7 +11,7 @@ import { MS_DAY, instantFromZoned, zonedParts } from '@/engine/core/time';
 import { exchange } from '@/engine/content/currency';
 import { computeAnnualTax } from '@/engine/content/tax';
 import { MEAL_PENALTY } from '@/engine/content/career';
-import { ABROAD, CHRONIC, DENTAL_VISION, PHARMACY, STATE_DEDUCTIONS } from '@/engine/content/safetynet';
+import { ABROAD, CARE, CHRONIC, DENTAL_VISION, PHARMACY, STATE_DEDUCTIONS } from '@/engine/content/safetynet';
 import { afterlife, beginCareer, careerOf, expectedGross, foreignWithholding, mealPenalty, paycheck, roleById, unitRate, type Booking } from '@/engine/systems/career';
 import { recordInterest, recordWages, yearOf } from '@/engine/systems/earnings';
 import { grown, healthOf, keepUp, rxShareOf, shareOf, teethAndEyesShareOf, illnessWeek } from '@/engine/systems/health';
@@ -20,6 +20,9 @@ import type { Simulation } from '@/engine/core/simulation';
 import { TURNS } from '@/engine/systems/enjoyment';
 import { occupiedAt } from '@/engine/systems/life';
 import { payeeAccount } from '@/engine/systems/cash';
+import { catching } from '@/engine/systems/health';
+import { costsAt, foodOf, mealOf, rentOf } from '@/engine/systems/household';
+import { personalityOf } from '@/engine/systems/personality';
 
 const NY = 'America/New_York';
 const instantParts = (t: number) => new Date(t).getUTCFullYear();
@@ -240,6 +243,37 @@ describe('home from a job, however it went', () => {
   }, 60_000);
 });
 
+describe('catching the flu', () => {
+  it('is likelier short of sleep and under stress, by the tempered studies', () => {
+    const sim = pro('catching');
+    const w = sim.player.wellbeing;
+    Object.assign(w, { sleepDebt: 0, stress: 0 });
+    expect(catching(sim.player)).toBe(1);
+    Object.assign(w, { sleepDebt: CARE.catching.debtTo, stress: 0 });
+    expect(catching(sim.player)).toBeCloseTo(CARE.catching.sleepMost, 9);
+    Object.assign(w, { sleepDebt: CARE.catching.debtFrom, stress: 100 });
+    expect(catching(sim.player)).toBeCloseTo(CARE.catching.stressMost, 9);
+    Object.assign(w, { sleepDebt: 6, stress: 50 });
+    expect(catching(sim.player)).toBeCloseTo((1 + 0.5 * (CARE.catching.sleepMost - 1)) * (1 + 0.5 * (CARE.catching.stressMost - 1)), 9);
+    // Over a flu season of weeks, the worn catch it more often.
+    const count = (debt: number, stress: number) => { let n = 0; for (let i = 0; i < 4000; i += 1) { Object.assign(w, { sleepDebt: debt, stress }); if (illnessWeek(sim, sim.player, at(2026, 11, 2) + i * 7 * MS_DAY).some((e) => e.flu)) n += 1; } return n; };
+    expect(count(12, 100)).toBeGreaterThan(count(0, 0) * 2);
+  });
+});
+
+describe('food', () => {
+  it('is bought at the prices where they are, the meal allowance’s town on location', () => {
+    const sim = pro('food-away');
+    const home = foodOf(sim, sim.player);
+    sim.player.currentLocationId = 'us-tx-houston';
+    expect(foodOf(sim, sim.player)).not.toBe(home);
+    expect(foodOf(sim, sim.player)).toBe(Math.round(costsAt('us-tx-houston', sim.player.home!.kind, 'USD', sim.now).day * personalityOf(sim.player, 'spending')));
+    expect(mealOf(sim, sim.player)).toBe(Math.round(costsAt('us-tx-houston', sim.player.home!.kind, 'USD', sim.now).meal * personalityOf(sim.player, 'spending')));
+    // The rent is still the home's.
+    expect(rentOf(sim, sim.player)).toBe(costsAt('us-ny-newyork', sim.player.home!.kind, 'USD', sim.now).rent);
+  });
+});
+
 describe('a day on set', () => {
   it('takes its hours: no sleep, shower, workout or unwinding in the middle of it, though a meal fits; and costs energy by them', () => {
     const sim = pro('on-set');
@@ -250,9 +284,12 @@ describe('a day on set', () => {
     const call = sim.universe.scheduled.find((i) => i.kind === 'career.work' && i.status === 'pending' && i.payload.bookingId === 'day')!;
     while (sim.now < call.at - 60_000) sim.advanceTo(Math.min(call.at - 60_000, sim.now + 6 * 3_600_000), { stopOnPlayerRequired: true });
     const before = sim.player.wellbeing.energy;
+    sim.player.wellbeing.hygiene = 90;
     sim.advanceTo(call.at);
     const hours = careerOf(sim.player).days.at(-1)!.hours;
     expect(before - sim.player.wellbeing.energy).toBeCloseTo(hours, 0);
+    // And soils them by the hours, under lights and in costume.
+    expect(90 - sim.player.wellbeing.hygiene).toBeCloseTo(hours * 1.6 * personalityOf(sim.player, 'hygieneDrift'), 0);
     sim.advanceTo(call.at + 2 * 3_600_000);
     const sleep = sim.execute({ kind: 'life.sleep', payload: { hours: 8 } });
     expect(sleep.ok).toBe(false);

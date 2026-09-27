@@ -48,6 +48,7 @@ import {
 import { earningsOf, homeOf, quartersBefore } from './earnings';
 import { payFromCurrent } from './household';
 import { personalityOf } from './personality';
+import { clamp } from '../core/rng';
 
 export const HEALTH_MONTH_KIND = 'health.month';
 export const HEALTH_WEEK_KIND = 'health.week';
@@ -85,6 +86,10 @@ export interface HealthRecord {
   bills: MedicalBill[];
   /** In hospital until. */
   inHospitalUntil?: Instant;
+  /** Down with the flu until, and excused from classes for it (`school.call_in_sick`). */
+  fluUntil?: Instant;
+  /** The frailty band the year's odds of the end were last drawn at (`systems/birthdays.ts`). */
+  endBand?: number;
   /** A medical debt past a year and reported, once. */
   reported?: boolean;
   debtSince?: Instant;
@@ -536,6 +541,18 @@ export function teethAndEyesShareOf(person: Person, care: 'cleaning' | 'filling'
   return Math.round(price * (1 - plan[care]));
 }
 
+/**
+ * How much likelier than a rested, easy body this one is to catch the flu:
+ * a sleep debt and stress each raise it (`CARE.catching`). Until 2026-09-27
+ * the chance was the same whatever state the body was in.
+ */
+export function catching(person: Person): number {
+  const c = CARE.catching;
+  const w = person.wellbeing;
+  const debt = clamp((w.sleepDebt - c.debtFrom) / (c.debtTo - c.debtFrom), 0, 1);
+  return (1 + debt * (c.sleepMost - 1)) * (1 + (clamp(w.stress, 0, 100) / 100) * (c.stressMost - 1));
+}
+
 /** A week's health (`health.illness`): the flu in its season, a doctor's visit, an emergency, a stay. */
 export function illnessWeek(sim: Simulation, person: Person, at: Instant): { care: Care; what: string; flu?: boolean }[] {
   const rng = sim.rng('health.illness', person.id, String(at));
@@ -552,7 +569,7 @@ export function illnessWeek(sim: Simulation, person: Person, at: Instant): { car
   if (rng.next() < weekly(emergencies)) out.push({ care: 'emergency', what: 'The emergency room' });
   if (rng.next() < weekly(CARE.perYear.visit)) out.push({ care: 'visit', what: 'A doctor’s visit' });
   const season = p.month >= 10 || p.month <= 3;
-  if (season && rng.next() < 1 - (1 - CARE.flu) ** (1 / CARE.fluSeasonWeeks)) {
+  if (season && rng.next() < (1 - (1 - CARE.flu) ** (1 / CARE.fluSeasonWeeks)) * catching(person)) {
     out.push(rng.next() < CARE.fluSeesClinician ? { care: 'urgent', what: 'The flu, at urgent care', flu: true } : { care: 'visit', what: 'The flu', flu: true });
   }
   // The pharmacy, the dentist, the optician.
@@ -581,6 +598,7 @@ export function careFor(sim: Simulation, person: Person, event: { care: Care; wh
     w.energy = Math.max(0, w.energy - toll.energy * takes);
   }
   if (event.care === 'stay') h.inHospitalUntil = at + CARE.stayDays * MS_DAY;
+  if (event.flu) h.fluUntil = at + CARE.fluDays * MS_DAY;
   // A flu that isn't seen costs nothing.
   if (event.flu && event.care === 'visit') return undefined;
   const amount = shareOf(person, event.care, at, cur);

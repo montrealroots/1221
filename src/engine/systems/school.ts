@@ -1169,7 +1169,8 @@ export function registerSchool(sim: Simulation): void {
     const p = zonedParts(s.now, zone());
     const today: SchoolDate = { year: p.year, month: p.month, day: p.day };
     if (!coursesOn(today).length) throw new CommandError('There are no classes today.');
-    if (person.wellbeing.condition >= ESTIMATE.sickBelow) throw new CommandError('You’re well enough to go: staying away would be an unexcused absence.');
+    // Down with the flu, they're sick whatever their condition reads; until 2026-09-27 the flu alone never took it low enough.
+    if (person.wellbeing.condition >= ESTIMATE.sickBelow && !((person.health?.fluUntil ?? 0) > s.now)) throw new CommandError('You’re well enough to go: staying away would be an unexcused absence.');
     school.sickDay = keyOf(today);
     return { excused: true };
   });
