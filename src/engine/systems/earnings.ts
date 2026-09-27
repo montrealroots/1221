@@ -20,6 +20,8 @@ export interface YearEarnings {
   sag: Money;
   workStudy: Money;
   unemployment: Money;
+  /** A scholarship's taxable part: what paid for living, not tuition or books. */
+  scholarship?: Money;
   withheld: Money;
   /** What the job cost: the agency's and the manager's commission, and the unions' dues. */
   commission: Money;
@@ -129,6 +131,15 @@ export function recordBenefit(person: Person, at: Instant, zone: string, amount:
   y.byResidence[home] = (y.byResidence[home] ?? 0) + amount;
   const month = `${p.year}-${String(p.month).padStart(2, '0')}`;
   earningsOf(person).months[month] = (earningsOf(person).months[month] ?? 0) + amount;
+}
+
+/** A scholarship's taxable part, to the year it's paid and where they lived. */
+export function recordScholarship(person: Person, at: Instant, zone: string, amount: Money): void {
+  const y = yearOf(person, zonedParts(at, zone).year);
+  y.scholarship = (y.scholarship ?? 0) + amount;
+  const home = homeOf(person);
+  y.byResidence[home] = (y.byResidence[home] ?? 0) + amount;
+  y.residence = home;
 }
 
 /** A cost of the work paid from the bank, for the year's return. */

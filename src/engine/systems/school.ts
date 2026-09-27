@@ -54,7 +54,8 @@ import { enjoyWork } from './enjoyment';
 import { payFromCurrent } from './household';
 import { beginCareer, bookShowcase } from './career';
 import { YALE_COST_GROWTH } from '../content/career';
-import { recordWages } from './earnings';
+import { recordScholarship, recordWages } from './earnings';
+import { armTaxes } from './taxreturn';
 import { armHealth } from './health';
 
 export type Craft = Record<Skill, number>;
@@ -366,7 +367,7 @@ export function goesOn(sim: Simulation, person: Person, when: Instant): boolean 
  * tuition met by the tuition scholarship; the health plan billed; and, where
  * there's need, the living-expense scholarship, whose rest is paid out.
  */
-export function termAccount(into: string, need = true, term = 0): { tuition: Money; healthPlan: Money; livingScholarship: Money; refund: Money } {
+export function termAccount(into: string, need = true, term = 0): { tuition: Money; healthPlan: Money; livingScholarship: Money; refund: Money; taxable: Money } {
   const usd = (cents: Money) => (into === 'USD' ? cents : exchange(cents, 'USD', into) ?? cents);
   // Later years at the Bulletins' growth, 2022–23 to 2026–27 (`YALE_COST_GROWTH`); until 2026-09-26 they held at 2026–27's.
   const years = Math.floor(term / 2);
@@ -376,7 +377,9 @@ export function termAccount(into: string, need = true, term = 0): { tuition: Mon
   const tuition = usd(Math.round(grown(COST_2026_27.tuition, YALE_COST_GROWTH.tuition) / 2));
   const healthPlan = usd(Math.round(plan / 2));
   const livingScholarship = need ? usd(Math.round(living / 2)) : 0;
-  return { tuition, healthPlan, livingScholarship, refund: livingScholarship - healthPlan };
+  // What of it the US taxes: all but the books, which with tuition are what a scholarship may pay untaxed.
+  const books = need ? usd(Math.round(grown(COST_2026_27.books, YALE_COST_GROWTH.living) / 2)) : 0;
+  return { tuition, healthPlan, livingScholarship, refund: livingScholarship - healthPlan, taxable: livingScholarship - books };
 }
 
 /** The work-study rate in a currency. */
@@ -448,6 +451,8 @@ export function enroll(sim: Simulation, person: Person): void {
   person.school = school;
   // Illness comes at school too, with Yale Health to meet it; until 2026-09-27 it waited for the degree.
   armHealth(sim, person);
+  // A scholarship for living costs is income the US taxes, and the returns begin with school.
+  armTaxes(sim, person);
   school.tally = freshTally(person, school);
   sim.schedule({ at: Math.max(at(termStart(0).date, 9), sim.now + 60_000), kind: TERM_KIND, label: termLabel(0) + ' Begins', category: 'school', priority: 30, payload: { personId: person.id, term: 0 } });
   planWeek(sim, person, sim.now);
@@ -661,6 +666,7 @@ export function registerSchool(sim: Simulation): void {
         category: 'scholarship',
         postings: [{ accountId: current.id, amount: account.refund }, { accountId: s.nominalAccount('income', 'Scholarship').id, amount: -account.refund }],
       });
+      recordScholarship(person, item.at, zone(), account.taxable);
     } else if (!need) {
       // No need found: the health plan is billed to the Yale account and paid from the bank.
       payFromCurrent(s, person, account.healthPlan, `Yale Health plan, ${termWords(term)}`, 'school');

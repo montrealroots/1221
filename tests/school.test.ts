@@ -15,6 +15,7 @@ import {
 } from '@/engine/systems/school';
 import type { Simulation } from '@/engine/core/simulation';
 import { careFor } from '@/engine/systems/health';
+import { figuresFor } from '@/engine/systems/taxreturn';
 
 const zone = 'America/New_York';
 const at = (year: number, month: number, day: number, hour = 9, minute = 0) => instantFromZoned({ year, month, day, hour, minute }, zone);
@@ -95,9 +96,24 @@ describe('the admitted class', () => {
 describe('money', () => {
   it('meets tuition for everyone, and living costs only where the family’s means leave need', () => {
     const need = termAccount('USD');
-    expect(need).toEqual({ tuition: COST_2026_27.tuition / 2, healthPlan: 1_882_00, livingScholarship: 15_200_50, refund: 13_318_50 });
+    // The US taxes all of it but the books, half a year's a term.
+    expect(need).toEqual({ tuition: COST_2026_27.tuition / 2, healthPlan: 1_882_00, livingScholarship: 15_200_50, refund: 13_318_50, taxable: 15_200_50 - COST_2026_27.books / 2 });
     const none = termAccount('USD', false);
-    expect(none).toEqual({ tuition: COST_2026_27.tuition / 2, healthPlan: 1_882_00, livingScholarship: 0, refund: -1_882_00 });
+    expect(none).toEqual({ tuition: COST_2026_27.tuition / 2, healthPlan: 1_882_00, livingScholarship: 0, refund: -1_882_00, taxable: 0 });
+  });
+
+  it('counts a student in need’s living-expense scholarship, but for the books, as income the year’s return taxes', () => {
+    const sim = inNeed('taxed');
+    expect(sim.universe.scheduled.some((i) => i.kind === 'tax.season' && i.status === 'pending')).toBe(true);
+    sim.advanceTo(at(2026, 8, 24, 9) + 60_000);
+    const y = sim.player.earnings!.years[2026]!;
+    expect(y.scholarship).toBe(termAccount('USD', true, 0).taxable);
+    expect(figuresFor(sim.player, 2026).income).toBeGreaterThanOrEqual(y.scholarship!);
+    expect(figuresFor(sim.player, 2026).scholarship).toBe(y.scholarship);
+    // No need, no scholarship, nothing counted.
+    const rich = life('untaxed');
+    rich.advanceTo(at(2026, 8, 24, 9) + 60_000);
+    expect(rich.player.earnings?.years[2026]?.scholarship ?? 0).toBe(0);
   });
 
   it('takes a wealthy family’s student’s health plan from the bank at nine on the first day of term, and pays in no scholarship', () => {

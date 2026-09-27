@@ -88,6 +88,7 @@ function ReturnsPane() {
         const lines: [string, number][] = [
           ['Acting Wages, With Residuals', f.acting],
           ['Work-Study Wages', f.workStudy],
+          ['Scholarship For Living Costs', f.scholarship ?? 0],
           ['Unemployment Insurance', f.unemployment],
           ['Performing Artist Deduction', -f.deduction],
           ['Federal Income Tax', f.federal],

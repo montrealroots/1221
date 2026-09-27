@@ -49,6 +49,8 @@ export interface ReturnFigures {
   acting: Money;
   workStudy: Money;
   unemployment: Money;
+  /** A scholarship's taxable part. */
+  scholarship?: Money;
   income: Money;
   deduction: Money;
   incomeTax: Money;
@@ -158,7 +160,7 @@ export function figuresFor(person: Person, year: number, into = 'USD', filedAt?:
   const y = yearOf(person, year);
   const cityId = y.residence ?? person.currentLocationId;
   const at = instantFromZoned({ year, month: 12, day: 31, hour: 12 }, HOME);
-  const income = y.acting + y.workStudy + y.unemployment;
+  const income = y.acting + y.workStudy + y.unemployment + (y.scholarship ?? 0);
   const employers = Object.values(y.employers).filter((pay) => pay >= usd(RETURN.performingArtistEmployerPay, into)).length;
   // Of the rest of the work's costs, the ones there's a receipt for.
   const kept = Math.min(1, RECEIPTS.kept * personalityOf(person, 'receipts'));
@@ -238,7 +240,7 @@ export function figuresFor(person: Person, year: number, into = 'USD', filedAt?:
   const months = person.health?.uncoveredInCalifornia[year] ?? 0;
   const mandate = months * Math.round(Math.min(usd(CALIFORNIA_MANDATE.bronzeMonth, into), Math.max(usd(CALIFORNIA_MANDATE.flat, into), CALIFORNIA_MANDATE.share * income) / 12));
   return {
-    cityId, acting: y.acting, workStudy: y.workStudy, unemployment: y.unemployment, income, deduction,
+    cityId, acting: y.acting, workStudy: y.workStudy, unemployment: y.unemployment, scholarship: y.scholarship ?? 0, income, deduction,
     incomeTax, federal, foreignCredit, foreignRefund, states: stateLines, local, payroll, credit, mandate, withheld: y.withheld,
     balance: incomeTax + payroll + mandate - y.withheld - credit,
   };

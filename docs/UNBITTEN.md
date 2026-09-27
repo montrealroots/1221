@@ -164,11 +164,13 @@ part the tool cannot see.
   - Yale Rep's seasons after 2026–27 aren't announced: their productions
     are SLATE's estimate by the slots its seasons keep, unnamed.
   - The fifteen classmates are a name and a craft each: they grow, set the
-    evaluation's median and the player's place, and do nothing else, and
-    they aren't at the showcase against the player.
-  - A student in need is paid a living-expense scholarship that's taxable
-    income in the US, and the tax engine collects nothing. The player's
-    family rules need out, so their life isn't touched by it.
+    evaluation's median and the player's place, and since 2026-09-27 show
+    beside the player, an agency taking its best two of the class (SLATE's
+    estimate). They aren't cast against the player, and don't come to
+    anything after school.
+  - A student in need's living-expense scholarship, but for its books, is
+    income the year's return taxes since 2026-09-27, and the returns begin
+    at enrollment. Until then the tax engine collected nothing on it.
   - Later years' dates aren't published; the terms after 2026–27 are
     SLATE's estimate, and their costs grow at the Bulletins' rates.
   - The bachelor's degree the MFA asks for is taken as read, and only the

@@ -101,6 +101,12 @@ export const ESTIMATE = {
   /** The chance an agency whose bar the showing clears wants the actor. */
   agencyInterest: 0.6,
   /**
+   * How many of a class an agency signs from one showcase: the class shows
+   * together, and an agency takes the best it sees, two of them. Until
+   * 2026-09-27 the player was seen alone.
+   */
+  agencyTakes: 2,
+  /**
    * A booking's chance at the part's bar, and how far each point of craft
    * above or below moves it: a newer actor at the bar books about one in
    * twenty, as the trade reckons (1 in 20 to 1 in 30), and a seasoned one
@@ -366,9 +372,11 @@ export function showcaseScore(craft: Craft, focus: number): number {
 }
 
 /** Which agencies offer after a showing (`career.offers`): those whose bar it clears and who want the actor. */
-export function offersFor(sim: Simulation, person: Person, score: number, key: string): string[] {
+export function offersFor(sim: Simulation, person: Person, score: number, key: string, rivals: readonly number[] = []): string[] {
   const rng = sim.rng('career.offers', person.id, key);
-  return AGENCIES.filter((agency) => rng.next() < ESTIMATE.agencyInterest && score >= agency.bar).map((a) => a.id);
+  // Shown beside the class, an agency takes its best two: a classmate who outshone them cleared its bar too.
+  const ahead = rivals.filter((r) => r > score).length;
+  return AGENCIES.filter((agency) => rng.next() < ESTIMATE.agencyInterest && score >= agency.bar && ahead < ESTIMATE.agencyTakes).map((a) => a.id);
 }
 
 /** Which management firms offer (`career.managers`): those whose bar the showing clears, half of them wanting the actor. */
@@ -747,7 +755,9 @@ export function registerCareer(sim: Simulation): void {
     const focus = present(person, item.at) ? focusOf(person) : 0;
     const score = showcaseScore(person.craft, focus);
     career.showcases.push({ cityId, at: item.at, score });
-    const offers = focus > 0 && !career.agencyId ? offersFor(s, person, score, cityId) : [];
+    // The class shows with them, each classmate at an ordinary day's readiness.
+    const rivals = person.school.classmates.map((m) => showcaseScore(m.craft, 1));
+    const offers = focus > 0 && !career.agencyId ? offersFor(s, person, score, cityId, rivals) : [];
     const city = CITIES.require(cityId).name;
     const managers = focus > 0 && !career.managerId ? managerOffersFor(s, person, score, cityId) : [];
     if (managers.length) offerManagement(s, person, managers, `After the showcase in ${city},`);

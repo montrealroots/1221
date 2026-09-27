@@ -113,6 +113,23 @@ describe('the showcase, on the day', () => {
     expect(careerOf(sim.player).showcases[0]!.score).toBeCloseTo(0.8 * showcaseScore(craft(90), 1), 6);
   });
 
+  it('shows the class beside them: an agency takes its best two, and an actor with two better beside them isn’t taken', () => {
+    const agency = AGENCIES[0]!;
+    const every = (sim: Simulation, rivals: number[]) => { let n = 0; for (let k = 0; k < 200; k += 1) if (offersFor(sim, sim.player, 90, `k${k}`, rivals).includes(agency.id)) n += 1; return n; };
+    const sim = pro('rivals');
+    expect(every(sim, [])).toBeGreaterThan(0);
+    // One better beside them: still in the two.
+    expect(every(sim, [95])).toBe(every(sim, []));
+    // Two better: out; two below its bar don't count.
+    expect(every(sim, [95, 96])).toBe(0);
+    expect(every(sim, [agency.bar - 1, agency.bar - 2])).toBe(every(sim, []));
+    // On the day, a class that outshines them leaves them without an offer.
+    const outshone = showing('outshone');
+    for (const m of outshone.player.school!.classmates) m.craft = craft(100);
+    outshone.advanceTo(outshone.now + 2 * 60_000);
+    expect(careerOf(outshone.player).offers).toEqual([]);
+  });
+
   it('brings no offers to an actor already signed', () => {
     const sim = showing('signed-already');
     careerOf(sim.player).agencyId = 'gersh';
