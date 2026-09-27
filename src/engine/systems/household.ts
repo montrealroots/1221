@@ -50,7 +50,7 @@ import { exchange } from '../content/currency';
 import { salesTaxRate } from '../content/tax';
 import { rentAt, type RentFigure } from '../content/rents';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
-import { instantFromZoned, zonedParts, type Instant } from '../core/time';
+import { dateKey, instantFromZoned, startOfNextDay, zonedParts, type Instant, type TimeZone } from '../core/time';
 import { clamp } from '../core/rng';
 import { personalityOf } from './personality';
 import { cardCeilingRoom, monthOrder, chargeForItem, chargeForPurchase, chargeReturned, overdraftHeadroom, purchaseMayOverdraw } from './lending';
@@ -436,10 +436,17 @@ export function depositFor(sim: Simulation, person: Person, kind: Housing): Mone
   return Math.min(rent * months, cap);
 }
 
-/** The rest of this month's rent, from today, for somebody moving in. */
+/**
+ * The rest of this month's rent, from today, for somebody moving in. Nothing
+ * when this month's rent is still to come, on the evening of the 1st, since
+ * that charges the new home's month in full: until 2026-09-27 a move on the
+ * 1st paid the month twice.
+ */
 function restOfMonth(sim: Simulation, person: Person, kind: Housing): Money {
   const zone = CITIES.get(person.currentLocationId)?.timeZone ?? sim.homeZone;
   const p = zonedParts(sim.now, zone);
+  const firstOfNext = instantFromZoned({ year: p.month === 12 ? p.year + 1 : p.year, month: p.month === 12 ? 1 : p.month + 1, day: 1, hour: 0 }, zone);
+  if (sim.universe.scheduled.some((one) => one.kind === RENT_KIND && one.status === 'pending' && one.payload.personId === person.id && one.at < firstOfNext)) return 0;
   const days = new Date(Date.UTC(p.year, p.month, 0)).getUTCDate();
   const rent = costsAt(person.currentLocationId, kind, saveCurrency(sim.universe), sim.now).rent;
   return Math.round(rent * (days - p.day + 1) / days);
@@ -489,7 +496,28 @@ export function move(sim: Simulation, person: Person, kind: Housing): void {
   });
   const hadRent = sim.universe.scheduled.some((one) => one.kind === RENT_KIND && one.status === 'pending' && one.payload.personId === person.id);
   person.home = { kind, cityId: person.currentLocationId, since: sim.now, ...(person.home?.fedOn !== undefined ? { fedOn: person.home.fedOn } : {}) };
-  if (!hadRent) scheduleRent(sim, person, sim.now);
+  // The first rent after the move is next month's: the rest of this one was paid moving in.
+  if (!hadRent) { const p = zonedParts(sim.now, CITIES.require(person.home.cityId).timeZone); scheduleRent(sim, person, instantFromZoned({ year: p.year, month: p.month, day: 1, hour: 20 }, CITIES.require(person.home.cityId).timeZone)); }
+  if (person.id === sim.universe.playerId) rehome(sim, CITIES.require(person.home.cityId).timeZone);
+}
+
+/**
+ * The day follows the player's home: the midnight rollover, the night nobody
+ * chose, the day's food and the bank's days all run on its clock. Until
+ * 2026-09-27 the save kept the starting town's zone for life, and a New Haven
+ * graduate who moved to Los Angeles rolled the day over, ate and was put to
+ * bed at nine in the evening Pacific. The rollover pending on the old clock
+ * moves to the new one: at once where the new zone's day has begun and wasn't
+ * rolled over on the old clock (a move east), and otherwise at the new zone's
+ * next midnight, so no date is rolled over twice (a move west).
+ */
+export function rehome(sim: Simulation, zone: TimeZone): void {
+  const from = sim.universe.homeZone;
+  sim.universe.homeZone = zone;
+  // A move inside the rollover itself, as off the sofa, comes before the next is armed, and that is armed on the new clock.
+  const next = sim.timeline.pending().find((one) => one.kind === 'life.day_rollover');
+  if (!next) return;
+  sim.timeline.reschedule(next.id, dateKey(sim.now, zone) >= dateKey(next.at, from) ? sim.now : startOfNextDay(sim.now, zone));
 }
 
 /** Evicted: the deposit goes against what's owed, the record takes it, and it's a friend's sofa. */
@@ -597,7 +625,7 @@ export function registerHousehold(sim: Simulation): void {
       if (person.home.kind === 'sofa') {
         w.stress = clamp(w.stress + HOMELESS_STRESS * personalityOf(person, 'stressGain'), 0, 100);
         const buffer = foodOf(s, person) * 30;
-        if (inTheBank(s, person) >= moveCost(s, person, 'shared') + buffer) {
+        if (person.currentLocationId === person.home.cityId && inTheBank(s, person) >= moveCost(s, person, 'shared') + buffer) {
           move(s, person, 'shared');
           if (person.id === s.universe.playerId) {
             s.notify({ category: 'money', title: 'You Found A Room', body: 'You took a room as soon as you could pay for it: the deposit and the rest of the month are paid. Off the sofa.', importance: 70 });
@@ -632,6 +660,11 @@ export function registerHousehold(sim: Simulation): void {
 
   sim.onCommand<{ kind: Housing }, { kind: Housing }>('home.move', (p, { sim: s }) => {
     if (p.kind !== 'shared' && p.kind !== 'own') throw new CommandError('A room in a shared flat, or a place of your own.');
+    // A home is found where they live, not wherever a job or a stay has them
+    // (a move to another city is `career.relocate`): until 2026-09-27 an
+    // actor on a location shoot, or evicted on one, rented a room there.
+    const home = s.player.home;
+    if (home && home.cityId !== s.player.currentLocationId) throw new CommandError(`You’re away: a home is found back in ${CITIES.get(home.cityId)?.name ?? 'your town'}.`);
     move(s, s.player, p.kind);
     return { kind: p.kind };
   });

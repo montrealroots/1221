@@ -85,6 +85,19 @@ describe('the chance of the end', () => {
     expect(Math.abs(ended - want)).toBeLessThan(3 * Math.sqrt(want));
   });
 
+  it('prices a year on the life table of where they live, not where a birthday finds them', () => {
+    const sim = quickSave({}, 'end-where');
+    expect(countryFactor('uk')).not.toBe(countryFactor('us'));
+    let home = 0;
+    let abroad = 0;
+    for (let i = 0; i < 2000; i += 1) {
+      const one = { ...sim.player, id: `w${i}`, birthInstant: sim.now - 80 * MS_YEAR };
+      if (endBetween(sim, one, sim.now, sim.now + MS_YEAR) !== undefined) home += 1;
+      if (endBetween(sim, { ...one, currentLocationId: 'uk-eng-london' }, sim.now, sim.now + MS_YEAR) !== undefined) abroad += 1;
+    }
+    expect(abroad).toBe(home);
+  });
+
   it('draws the same for the same person and day, and a part of a year gets part of the chance', () => {
     const sim = quickSave({}, 'end-same');
     const old = { ...sim.player, birthInstant: sim.now - 104 * MS_YEAR };

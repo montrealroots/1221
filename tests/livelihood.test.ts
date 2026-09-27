@@ -118,6 +118,8 @@ describe('moving', () => {
     const sim = quickSave({ wealth: 'comfortable' }, 'move');
     const before = checking(sim).balance;
     const cost = moveCost(sim, sim.player, 'own');
+    // Mid-month, the rest of the month is on top of the deposit.
+    expect(cost).toBeGreaterThan(depositFor(sim, sim.player, 'own'));
     // The month's deposit held on the room they started in comes back first.
     const startingDeposit = deposit(sim)!.balance;
     expect(startingDeposit).toBe(rentOf(sim, sim.player));
@@ -134,6 +136,48 @@ describe('moving', () => {
     const answer = broke.execute({ kind: 'home.move', payload: { kind: 'own' } });
     expect(answer.ok).toBe(false);
     expect(answer.error).toMatch(/deposit/);
+  });
+
+  it('charges a month once for a move on the 1st before the rent, and a room found from the sofa starts paying next month', () => {
+    const sim = quickSave({ wealth: 'comfortable' }, 'move-first');
+    const zone = sim.homeZone;
+    const p = new Date(sim.now);
+    const first = instantFromZoned({ year: p.getUTCMonth() === 11 ? p.getUTCFullYear() + 1 : p.getUTCFullYear(), month: p.getUTCMonth() === 11 ? 1 : p.getUTCMonth() + 2, day: 1, hour: 10 }, zone);
+    while (sim.now < first) sim.advanceTo(Math.min(first, sim.now + 6 * MS_HOUR));
+    const rentLine = () => sim.nominalAccount('expense', 'Rent').balance;
+    const before = rentLine();
+    expect(moveCost(sim, sim.player, 'own')).toBe(depositFor(sim, sim.player, 'own'));
+    expect(sim.execute({ kind: 'home.move', payload: { kind: 'own' } }).ok).toBe(true);
+    sim.advanceTo(first + 12 * MS_HOUR);
+    expect(rentLine() - before).toBe(rentOf(sim, sim.player));
+    // Moved in off the sofa on the 1st, with no rent to come this month, the next is next month's.
+    const sofa = quickSave({ wealth: 'comfortable' }, 'move-first-sofa');
+    while (sofa.now < first) sofa.advanceTo(Math.min(first, sofa.now + 6 * MS_HOUR));
+    for (const one of sofa.timeline.pending()) if (one.kind === 'home.rent') sofa.timeline.cancel(one.id, sofa.now);
+    sofa.player.home!.kind = 'sofa';
+    expect(sofa.execute({ kind: 'home.move', payload: { kind: 'shared' } }).ok).toBe(true);
+    const next = sofa.timeline.pending().filter((one) => one.kind === 'home.rent').map((one) => one.at);
+    expect(next).toHaveLength(1);
+    expect(next[0]).toBeGreaterThan(first + 20 * MS_DAY);
+  });
+
+  it('finds a home only where they live, not on a job away', () => {
+    const sim = quickSave({ wealth: 'comfortable' }, 'move-away');
+    const home = sim.player.home!.cityId;
+    sim.player.currentLocationId = 'ca-bc-vancouver';
+    const answer = sim.execute({ kind: 'home.move', payload: { kind: 'own' } });
+    expect(answer.ok).toBe(false);
+    expect(answer.error).toMatch(/away/);
+    expect(sim.player.home!.cityId).toBe(home);
+    // The place they're standing in reads as away from home.
+    expect(placeProfile(sim, 'ca-bc-vancouver')).toMatchObject({ away: true, homeCity: { id: home } });
+    // Off the sofa too: the room waits until they're back.
+    sim.player.home!.kind = 'sofa';
+    days(sim, 2);
+    expect(sim.player.home).toMatchObject({ kind: 'sofa', cityId: home });
+    sim.player.currentLocationId = home;
+    days(sim, 2);
+    expect(sim.player.home).toMatchObject({ kind: 'shared', cityId: home });
   });
 
   it('asks two months’ deposit of a poor record', () => {

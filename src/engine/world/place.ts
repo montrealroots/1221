@@ -95,15 +95,14 @@ export interface PlaceProfile {
 }
 
 /**
- * The city the player lives in.
- *
- * This was the house's city, and the house is gone. Nothing in this build
- * moves the player, so where they live is where they are, and where they are
- * from stands in only if that place is unknown.
+ * The city the player lives in: their home's, and where they are when they
+ * have none. Until 2026-09-27 it was always where they were, from a build in
+ * which nothing moved the player; jobs on location, sublets and relocation
+ * all move them now, and the place look's away lines never showed.
  */
 export function homeCityOf(sim: Simulation): City | undefined {
   const player = sim.player;
-  return CITIES.get(player.currentLocationId) ?? CITIES.get(player.homeRegionId);
+  return CITIES.get(player.home?.cityId ?? player.currentLocationId) ?? CITIES.get(player.homeRegionId);
 }
 
 export function placeProfile(sim: Simulation, cityId: string): PlaceProfile | undefined {

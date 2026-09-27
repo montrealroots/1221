@@ -339,10 +339,18 @@ describe('unemployment', () => {
     expect(unemploymentOf(person).claim!.paid).toBe(2 * 384_00);
     expect(yearOf(person, 2026).unemployment).toBe(2 * 384_00);
     expect(sim.universe.transactions.filter((t) => t.memo.startsWith('Unemployment insurance')).every((t) => t.category === 'benefit')).toBe(true);
-    // Away from the state, a week pays nothing.
+    // Out of the state, the claim goes on as an interstate claim; abroad, a week pays nothing.
     person.currentLocationId = 'us-ct-newhaven';
     play(sim, sim.now + 7 * MS_DAY);
-    expect(unemploymentOf(person).claim!.paid).toBe(2 * 384_00);
+    expect(unemploymentOf(person).claim!.paid).toBe(3 * 384_00);
+    person.currentLocationId = 'ca-on-toronto';
+    play(sim, sim.now + 7 * MS_DAY);
+    expect(unemploymentOf(person).claim!.paid).toBe(3 * 384_00);
+    // The week is certified on the home state's Sunday evening, wherever they are.
+    person.currentLocationId = 'us-ca-losangeles';
+    play(sim, sim.now + 7 * MS_DAY);
+    const week = sim.universe.scheduled.find((i) => i.kind === 'benefits.week' && i.status === 'pending')!;
+    expect(zonedParts(week.at, 'America/New_York').hour).toBe(20);
   });
 
   it('isn’t filed while on a job, or outside New York and California', () => {
@@ -351,8 +359,14 @@ describe('unemployment', () => {
     const b = booking(sim, 'lort-b', 3, sim.now - MS_DAY, 2);
     b.status = 'accepted';
     expect(sim.execute({ kind: 'benefits.claim', payload: {} }).ok).toBe(false);
-    b.status = 'worked';
+    // A refused command puts back a copy of the world, so the booking is looked up again.
+    careerOf(sim.player).bookings.find((one) => one.id === b.id)!.status = 'worked';
+    // Filed where they live: standing in New Haven with a New York home, it's New York's.
     sim.player.currentLocationId = 'us-ct-newhaven';
+    expect(sim.execute({ kind: 'benefits.claim', payload: {} }).ok).toBe(true);
+    delete unemploymentOf(sim.player).claim;
+    sim.player.home!.cityId = 'us-ct-newhaven';
+    sim.player.currentLocationId = 'us-ny-newyork';
     expect(sim.execute({ kind: 'benefits.claim', payload: {} }).ok).toBe(false);
   });
 });

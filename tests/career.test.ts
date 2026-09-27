@@ -15,9 +15,12 @@ import {
   type Booking,
 } from '@/engine/systems/career';
 import { repProduction, termAccount } from '@/engine/systems/school';
+import { rehome } from '@/engine/systems/household';
 import { healthOf } from '@/engine/systems/health';
 import type { Simulation } from '@/engine/core/simulation';
 import type { Craft } from '@/engine/systems/school';
+
+const NY_ZONE = 'America/New_York';
 import { yearOf } from '@/engine/systems/earnings';
 
 const NY = 'America/New_York';
@@ -498,6 +501,31 @@ describe('where they live', () => {
     expect(sim.execute({ kind: 'career.relocate', payload: { cityId: 'us-ca-losangeles', kind: 'own' } }).ok).toBe(false);
     expect(sim.player.currentLocationId).toBe('us-ny-newyork');
     expect(sim.universe.currentZone).toBe('America/New_York');
+    expect(sim.universe.homeZone).toBe('America/New_York');
+  });
+
+  it('turns the day over on the new home’s clock, each date once, moving west and east', () => {
+    const sim = pro('clock');
+    const LA = 'America/Los_Angeles';
+    const rolled = () => sim.universe.scheduled.filter((i) => i.kind === 'life.day_rollover' && i.status === 'done').map((i) => i.at);
+    sim.advanceTo(instantFromZoned({ year: 2026, month: 10, day: 5, hour: 15 }, NY_ZONE));
+    const before = rolled().length;
+    expect(sim.execute({ kind: 'career.relocate', payload: { cityId: 'us-ca-losangeles', kind: 'shared' } }).ok).toBe(true);
+    expect(sim.universe.homeZone).toBe(LA);
+    // West: New York's midnight is passed over, and Los Angeles' is the next.
+    sim.advanceTo(instantFromZoned({ year: 2026, month: 10, day: 7, hour: 12 }, LA));
+    const west = rolled().slice(before);
+    expect(west).toEqual([instantFromZoned({ year: 2026, month: 10, day: 6, hour: 0 }, LA), instantFromZoned({ year: 2026, month: 10, day: 7, hour: 0 }, LA)]);
+    // East, at ten at night Pacific: New York's day has begun, and turns over at once.
+    sim.advanceTo(instantFromZoned({ year: 2026, month: 10, day: 7, hour: 22 }, LA));
+    expect(sim.execute({ kind: 'career.relocate', payload: { cityId: 'us-ny-newyork', kind: 'shared' } }).ok).toBe(true);
+    const moved = sim.now;
+    sim.advanceTo(instantFromZoned({ year: 2026, month: 10, day: 9, hour: 12 }, NY_ZONE));
+    expect(rolled().slice(before + 2)).toEqual([moved, instantFromZoned({ year: 2026, month: 10, day: 9, hour: 0 }, NY_ZONE)]);
+    // Inside the rollover, before the next is armed, the clock still moves.
+    for (const one of sim.timeline.pending()) if (one.kind === 'life.day_rollover') sim.timeline.cancel(one.id, sim.now);
+    rehome(sim, LA);
+    expect(sim.universe.homeZone).toBe(LA);
   });
 });
 

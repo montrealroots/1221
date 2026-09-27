@@ -140,7 +140,9 @@ defineDecider<Year, string>({
     const person = {
       ...player,
       birthInstant: from - age * 365.2425 * MS_DAY,
+      // Where they live, whose table it is (`homeOf`).
       currentLocationId: COUNTRY_PLACES[countryId]!,
+      home: { kind: 'shared' as const, cityId: COUNTRY_PLACES[countryId]!, since: from },
       wellbeing: { ...player.wellbeing, condition },
     };
     const at = endBetween(sim, person, from, from + 365 * MS_DAY);

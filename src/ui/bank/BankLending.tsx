@@ -12,6 +12,7 @@
  */
 
 import { useState } from 'react';
+import { homeOf } from '@/engine/systems/earnings';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
@@ -50,8 +51,8 @@ export function BankLending({ bank, show }: { bank: Bank; show: readonly Lending
   const switching = useWorld((s) => s.universe.scheduled.find((one) => one.kind === SWITCH_KIND && one.status === 'pending'));
   // A bank owed a charged-off debt won't open an account.
   const owedTo = useWorld((s) => collectionsOf(s, s.player)?.institution);
-  const others = banksFor(sim.player.currentLocationId).filter((b) => b.id !== bank.id && b.name !== owedTo);
-  const rule = SWITCHING[isoOf(sim.player.currentLocationId) ?? ''];
+  const others = banksFor(homeOf(sim.player)).filter((b) => b.id !== bank.id && b.name !== owedTo);
+  const rule = SWITCHING[isoOf(homeOf(sim.player)) ?? ''];
 
   const [limit, setLimit] = useState('');
   const [deposit, setDeposit] = useState('');

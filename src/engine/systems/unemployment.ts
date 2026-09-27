@@ -24,7 +24,7 @@ import { MS_DAY, formatDate, instantFromZoned, normalDate, zonedParts, type Inst
 import { exchange } from '../content/currency';
 import { CITIES } from '../content/geography';
 import { BENEFIT_STATE, CALIFORNIA_UI, NEW_YORK_UI, type BenefitState } from '../content/safetynet';
-import { earningsOf, quarterKey, quartersBefore, recordBenefit } from './earnings';
+import { earningsOf, homeOf, quarterKey, quartersBefore, recordBenefit } from './earnings';
 import { workedBetween, working } from './career';
 
 export const BENEFIT_WEEK_KIND = 'benefits.week';
@@ -130,7 +130,7 @@ function close(sim: Simulation, person: Person, why: string): void {
 export function registerUnemployment(sim: Simulation): void {
   sim.onCommand<Record<string, never>, { weekly: Money; maxTotal: Money }>('benefits.claim', (_p, { sim: s }) => {
     const person = s.player;
-    const state = BENEFIT_STATE[person.currentLocationId];
+    const state = BENEFIT_STATE[homeOf(person)];
     if (!state) throw new CommandError('SLATE pays unemployment in New York and California, where you’d have to live.');
     const record = unemploymentOf(person);
     if (record.claim) throw new CommandError('You have a claim open.');
@@ -138,7 +138,7 @@ export function registerUnemployment(sim: Simulation): void {
     const cur = saveCurrency(s.universe);
     const base = basePeriodFor(person, state, s.now, cur);
     if (!base.result.ok) throw new CommandError(`${base.result.why} Your base period’s quarters paid ${base.wages.map((w) => formatMoney(w, cur)).join(', ')}.`);
-    const zone = CITIES.require(person.currentLocationId).timeZone;
+    const zone = CITIES.require(homeOf(person)).timeZone;
     record.claim = {
       state, filedAt: s.now, endsAt: s.now + 365 * MS_DAY, weekly: base.result.weekly, maxTotal: base.result.maxTotal,
       paid: 0, weeksPaid: 0, waited: false, basePeriod: base.quarters,
@@ -153,10 +153,14 @@ export function registerUnemployment(sim: Simulation): void {
     if (!person || !claim) return;
     const cur = saveCurrency(s.universe);
     if (s.now >= claim.endsAt) { close(s, person, 'A year from filing, the benefit year is over.'); return; }
-    const inState = BENEFIT_STATE[person.currentLocationId] === claim.state;
+    // Certified from anywhere in the country, as an interstate claim is, and
+    // not from abroad, where they aren't available for work. Until 2026-09-27
+    // it paid only in the claim's state, and a New York claimant who moved to
+    // Los Angeles was paid nothing for the rest of the benefit year.
+    const available = CITIES.get(person.currentLocationId)?.countryId === 'us';
     const worked = workedBetween(person, item.at - 7 * MS_DAY, item.at);
-    const due = inState ? Math.min(weekBenefit(claim, worked.hours, worked.pay, cur), claim.maxTotal - claim.paid) : 0;
-    const zone = CITIES.require(person.currentLocationId).timeZone;
+    const due = available ? Math.min(weekBenefit(claim, worked.hours, worked.pay, cur), claim.maxTotal - claim.paid) : 0;
+    const zone = CITIES.require(homeOf(person)).timeZone;
     const again = () => s.schedule({ at: nextSunday(item.at, zone), kind: BENEFIT_WEEK_KIND, label: 'Unemployment: The Week Certified', category: 'system', priority: 12, payload: { personId: person.id } });
     if (due <= 0) { again(); return; }
     if (!claim.waited) {

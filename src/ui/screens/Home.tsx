@@ -634,6 +634,8 @@ function YourHome({ cur }: { cur: string }) {
     if (answer.ok) { toast('Paid.', 'positive'); setPaying(''); }
   };
   const home = useWorld((s) => s.player.home);
+  // Away on a job or a stay, a home is found back where they live (`home.move`).
+  const away = useWorld((s) => (s.player.home && s.player.home.cityId !== s.player.currentLocationId ? s.player.home.cityId : undefined));
   const rent = useWorld((s) => rentOf(s, s.player));
   const bills = useWorld((s) => billsOf(s, s.player));
   const costs = useWorld((s) => ({ shared: moveCost(s, s.player, 'shared'), own: moveCost(s, s.player, 'own') }));
@@ -660,6 +662,9 @@ function YourHome({ cur }: { cur: string }) {
           A notice to pay or quit runs until {formatDate(home.noticeUntil, sim.zone)}. Get what you owe under a month’s rent by then.
         </div>
       )}
+      {away ? (
+        <div className="small muted">You’re away: a new home is found back in {CITIES.get(away)?.name ?? 'your town'}.</div>
+      ) : (
       <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
         {home?.kind !== 'shared' && (
           <Gated feature="home.move" className="btn btn-sm btn-ghost" onClick={() => run('home.move', { kind: 'shared' })}>
@@ -672,6 +677,7 @@ function YourHome({ cur }: { cur: string }) {
           </Gated>
         )}
       </div>
+      )}
     </div>
   );
 }

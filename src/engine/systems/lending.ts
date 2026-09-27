@@ -82,6 +82,7 @@ import { LENDING, SWITCHING, type Lending, type Loan, type Overdraft, type Unarr
 import { accountNumber } from './banknumber';
 import { endTerm, idleAccounts } from './accountlife';
 import { bankOf, banksFor, inSaveMoney, interestTaxFor, isoOf, monthStartOf, settleInterest } from './banking';
+import { homeOf } from './earnings';
 
 export const LOAN_DUE_KIND = 'bank.loan_due';
 export const SWITCH_KIND = 'bank.switch_complete';
@@ -732,7 +733,8 @@ export function closeForOverdraft(sim: Simulation, person: Person, bank: Bank): 
   const owedTo = collectionsOf(sim, person)?.institution;
   // A US bank reports it, and the next bank reads the report.
   if (bank.id.startsWith('us-')) person.chex = { at: sim.now, bank: bank.name };
-  const others = banksFor(person.currentLocationId).filter((b) => b.id !== bank.id && b.name !== owedTo);
+  // Re-banked where they live: until 2026-09-27, where they stood, so a US account closed on a London shoot moved to a UK bank.
+  const others = banksFor(homeOf(person)).filter((b) => b.id !== bank.id && b.name !== owedTo);
   const willing = others.find((b) => !declines(sim, person, b));
   const to = willing ?? others[0] ?? bank;
   const secondChance = willing === undefined && person.chex !== undefined;
@@ -1056,7 +1058,7 @@ export function registerLending(sim: Simulation): void {
   sim.onCommand<{ bankId: string }, { at: Instant }>('bank.switch', (p, { sim: s }) => {
     const person = s.player;
     const from = bankOf(s, person);
-    const to = banksFor(person.currentLocationId).find((b) => b.id === p.bankId);
+    const to = banksFor(homeOf(person)).find((b) => b.id === p.bankId);
     if (!to) throw new CommandError('That isn’t a bank where you live.');
     if (from?.id === to.id) throw new CommandError(`You already bank with ${to.name}.`);
     if (collectionsOf(s, person)?.institution === to.name) throw new CommandError(`${to.name} won’t open an account for somebody who owes it a charged-off debt.`);
@@ -1064,7 +1066,7 @@ export function registerLending(sim: Simulation): void {
     if (s.universe.scheduled.some((one) => one.kind === SWITCH_KIND && one.status === 'pending')) throw new CommandError('A switch is already under way.');
     const current = currentOf(s, person);
     if (current && current.balance < 0) throw new CommandError('Clear the overdraft before switching; the new bank won’t take it on.');
-    const iso = isoOf(person.currentLocationId) ?? '';
+    const iso = isoOf(homeOf(person)) ?? '';
     const rule = SWITCHING[iso];
     if (!rule) {
       completeSwitch(s, person, to);

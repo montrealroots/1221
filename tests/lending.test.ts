@@ -73,6 +73,28 @@ describe('an account left overdrawn', () => {
     expect(current(sim).id).not.toBe(old.id);
     // And Chase won't take them back while it's owed.
     expect(sim.execute({ kind: 'bank.switch', payload: { bankId: 'us-chase' } }).ok).toBe(false);
+    // A bank is one where they live, whatever a job abroad has them standing in.
+    sim.player.home = { kind: 'shared', cityId: 'us-ny-newyork', since: sim.now };
+    sim.player.currentLocationId = 'uk-eng-london';
+    expect(sim.execute({ kind: 'bank.switch', payload: { bankId: 'gb-hsbc' } }).error).toMatch(/where you live/);
+  });
+
+  it('re-banks them where they live, and switches on its rules, whatever a job abroad has them standing in', () => {
+    const sim = lifeIn('us-ny-newyork', { bankId: 'us-chase', wealth: 'modest' }, 'lend-away');
+    const old = current(sim);
+    set(sim, savings(sim), 0);
+    set(sim, old, -400_00);
+    old.overdraftLimit = undefined;
+    sim.player.currentLocationId = 'uk-eng-london';
+    sim.advanceBy((ESTIMATE.closeAfterDays + 1) * MS_DAY);
+    expect(old.closedAt).toBeDefined();
+    expect(bankOf(sim, sim.player)!.id.startsWith('us-')).toBe(true);
+    // A switch between US banks completes at once, not on Britain's seven working days.
+    const well = lifeIn('us-ny-newyork', { bankId: 'us-chase', wealth: 'wealthy' }, 'lend-away-switch');
+    well.player.currentLocationId = 'uk-eng-london';
+    well.must({ kind: 'bank.switch', payload: { bankId: 'us-citi' } });
+    expect(well.universe.scheduled.some((i) => i.kind === SWITCH_KIND && i.status === 'pending')).toBe(false);
+    expect(bankOf(well, well.player)!.id).toBe('us-citi');
   });
 
   it('sets off only what savings there needs to give, and charges off the rest', () => {

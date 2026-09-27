@@ -418,7 +418,7 @@ export interface SaveUniverse {
 
   /** The one canonical world instant. */
   now: Instant;
-  /** Zone used for the player's day-to-day display. */
+  /** Zone of the player's home: the day turns over on its clock, and it follows a move (`rehome`). */
   homeZone: TimeZone;
   /** Zone the player is physically in right now. */
   currentZone: TimeZone;
