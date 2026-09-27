@@ -10,7 +10,7 @@ import { MS_DAY, MS_HOUR, instantFromZoned, zonedParts } from '@/engine/core/tim
 import { rentAt } from '@/engine/content/rents';
 import { COST_2026_27, COURSES, LABS, SEAGULL_2027, SKILLS, SUMMER_CABARET, WORK_STUDY, YALE_CABARET, YALE_DRAMA } from '@/engine/content/school';
 import {
-  CABARET_KIND, CALL_KIND, ESTIMATE, LAB_KIND, labDays, rehearsalDays, repTerm, schoolProduction, SHIFT_KIND, STIPEND_KIND, SUMMER_KIND, cabaretSeason, cabaretWeek, summerOf, classPeriod, summerRuns, daysOffIn, nextClasses, evaluate, goesOn, isClassDay, isShiftDay, meanCraft, rankIn,
+  CABARET_KIND, CALL_KIND, ESTIMATE, LAB_KIND, cabaretEvenings, labDays, rehearsalDays, repTerm, schoolProduction, SHIFT_KIND, STIPEND_KIND, SUMMER_KIND, cabaretSeason, cabaretWeek, summerOf, classPeriod, summerRuns, daysOffIn, nextClasses, evaluate, goesOn, isClassDay, isShiftDay, meanCraft, rankIn,
   sessionGain, termAccount, termStart, timetable, yearOfStudy,
 } from '@/engine/systems/school';
 import type { Simulation } from '@/engine/core/simulation';
@@ -557,16 +557,13 @@ describe('the Yale Cabaret', () => {
     const cast = life('cabaret-cast');
     cast.player.school!.classmates[0]!.craft.acting = 99;
     cast.advanceTo(at(2027, 1, 4, 9) + 60_000);
-    const casting = pending(cast, CALL_KIND).map((c) => c.at);
+    // A first-year understudying at Yale Rep this spring: afternoon calls leave the evenings free.
+    const casting = pending(cast, CALL_KIND).map((c) => [c.at, c.at + (c.durationMinutes ?? 0) * 60_000] as const);
     expect(casting.length).toBeGreaterThan(0);
-    const answer = cast.execute({ kind: 'school.cabaret', payload: {} });
-    if (answer.ok) {
-      const t = day((answer.value as { week: string }).week);
-      const from = at(t.year, t.month, t.day, 0) - 13 * MS_DAY;
-      const to = at(t.year, t.month, t.day, 0) + 3 * MS_DAY;
-      expect(casting.some((x) => x >= from && x < to)).toBe(false);
-    } else {
-      expect(answer.error).toBe('No Cabaret week this term clears your classes’ recesses and your casting’s calls.');
+    expect(cast.execute({ kind: 'school.cabaret', payload: {} }).ok).toBe(true);
+    for (const c of pending(cast, CABARET_KIND)) {
+      const end = c.at + (c.durationMinutes ?? 0) * 60_000;
+      expect(casting.some(([a, b]) => a < end && c.at < b), `${c.label} at ${new Date(c.at).toISOString()} clashes`).toBe(false);
     }
   }, 60_000);
 });
@@ -576,8 +573,10 @@ describe('the Yale Cabaret, clear of casting', () => {
     const sim = life('cabaret-clear');
     play(sim, at(2026, 9, 7, 18));
     const first = cabaretWeek(sim, sim.player, 0)!;
-    // A call in the first candidate's rehearsal fortnight.
-    sim.schedule({ at: at(first.year, first.month, first.day, 15) - 5 * MS_DAY, kind: CALL_KIND, label: 'A Call', category: 'school', priority: 32, payload: { personId: sim.player.id, call: 'rehearsal' } });
+    // An afternoon call leaves the week be; an evening one against its opening night moves it.
+    sim.schedule({ at: at(first.year, first.month, first.day, 15) - MS_DAY, durationMinutes: 180, kind: CALL_KIND, label: 'An Afternoon Call', category: 'school', priority: 32, payload: { personId: sim.player.id, call: 'rehearsal' } });
+    expect(cabaretWeek(sim, sim.player, 0)).toEqual(first);
+    sim.schedule({ at: at(first.year, first.month, first.day, 20), durationMinutes: 180, kind: CALL_KIND, label: 'An Evening Call', category: 'school', priority: 32, payload: { personId: sim.player.id, call: 'oncall' } });
     const moved = cabaretWeek(sim, sim.player, 0)!;
     expect(at(moved.year, moved.month, moved.day, 0)).toBeGreaterThan(at(first.year, first.month, first.day, 0));
     // A Thursday in the Thanksgiving recess isn't a production week.
@@ -585,6 +584,14 @@ describe('the Yale Cabaret, clear of casting', () => {
     play(late, at(2026, 11, 4, 18));
     const week = cabaretWeek(late, late.player, 0)!;
     expect(week).toEqual({ year: 2026, month: 12, day: 3 });
+    // A lab's evening against one of its rehearsal evenings moves it too.
+    const lab = life('cabaret-lab');
+    play(lab, at(2026, 9, 7, 18));
+    const before = cabaretWeek(lab, lab.player, 0)!;
+    const evening = cabaretEvenings(before, classPeriod(0).off)[0]!;
+    lab.schedule({ at: at(evening.year, evening.month, evening.day, 19), durationMinutes: 120, kind: LAB_KIND, label: 'A Lab', category: 'school', priority: 32, payload: { personId: lab.player.id } });
+    const after = cabaretWeek(lab, lab.player, 0)!;
+    expect(at(after.year, after.month, after.day, 0)).toBeGreaterThan(at(before.year, before.month, before.day, 0));
     // Joined, then away for all of it: nothing on the résumé.
     const away = life('cabaret-away');
     play(away, at(2026, 9, 7, 18));

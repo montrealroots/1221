@@ -20,7 +20,7 @@ import { formatDate, formatDateTime, instantFromZoned, zonedParts } from '@/engi
 import { CITIES } from '@/engine/content/geography';
 import { COST_2026_27, COURSES, SCHOOL_SEASON, SEAGULL_2027, SKILLS, SUMMER_CABARET, WORK_STUDY, YALE_CABARET, YALE_DRAMA, type Skill } from '@/engine/content/school';
 import {
-  CABARET_KIND, CALL_KIND, ESTIMATE, EVALUATION_KIND, SHIFT_KIND, STANDING_LABEL,
+  CABARET_KIND, CALL_KIND, ESTIMATE, EVALUATION_KIND, LAB_KIND, SHIFT_KIND, STANDING_LABEL,
   cabaretSeason, classPeriod, coursesOn, daysOffIn, hasNeed, nextClasses, hourlyIn, meanCraft, rankIn, termAccount, termLabel, termOf, termStart, timetable, yearOfStudy, yearOfTerm,
 } from '@/engine/systems/school';
 import type { Simulation } from '@/engine/core/simulation';
@@ -288,23 +288,28 @@ const KIND_WORDS: Record<string, string> = {
   carlotta: 'The Carlotta Festival', project: 'A School project', understudy: 'Understudying at Yale Rep', role: 'In the company at Yale Rep',
 };
 
+/** Whether the kind's words only say the production's name again, as the festivals' do. */
+const repeats = (c: { production: string; kind: string }) => c.production.startsWith((KIND_WORDS[c.kind] ?? '-').replace(/^(A|The) /, ''));
+
 function CastingPane() {
   const { sim } = useGame();
   const person = useWorld((s) => s.player);
   const school = person.school!;
-  const calls = ahead(sim, person, [CALL_KIND]).filter((c) => c.payload.call !== 'oncall').slice(0, 8);
+  // Casting's calls and the labs', all of them for the counts, the next eight listed.
+  const every = ahead(sim, person, [CALL_KIND, LAB_KIND]).filter((c) => c.payload.call !== 'oncall');
+  const calls = every.slice(0, 8);
   const onCall = ahead(sim, person, [CALL_KIND]).filter((c) => c.payload.call === 'oncall');
   const castings = [school.casting, school.rep].filter((c): c is NonNullable<typeof c> => c !== undefined);
 
   return (
     <div className="col gap-5">
       {castings.map((casting) => (
-        <Panel key={casting.production} title={casting.production} subtitle={KIND_WORDS[casting.kind] ?? undefined}>
+        <Panel key={casting.production} title={casting.production} subtitle={repeats(casting) ? undefined : KIND_WORDS[casting.kind]}>
           <div className="col gap-3">
             <div className="grid grid-3">
               <Stat label="Role" value={casting.kind === 'understudy' ? `${casting.role} (Understudy)` : casting.role} />
               <Stat label={casting.kind === 'understudy' ? 'Went On' : 'Performed'} value={String(casting.performed)} />
-              <Stat label="Calls Ahead" value={String(casting.kind === 'understudy' ? onCall.length : calls.filter((c) => c.label.startsWith(casting.production)).length)} />
+              <Stat label="Calls Ahead" value={String(casting.kind === 'understudy' ? onCall.length : every.filter((c) => c.label.startsWith(casting.production)).length)} />
             </div>
             {casting.kind === 'understudy' && casting.production === SEAGULL_2027.name && (
               <p className="small" style={{ margin: 0 }}>

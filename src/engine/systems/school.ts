@@ -484,22 +484,26 @@ export function cabaretEvenings(thu: SchoolDate, off: readonly (readonly [string
 /**
  * The first Cabaret production week (its Thursday) at least three weeks off,
  * which leaves its rehearsals inside the term's classes, the week itself
- * clear of a recess, and its rehearsals and shows clear of every casting
- * call they have. As first
+ * clear of a recess, and each of its calls clear of the hours of every
+ * casting and lab call. Until 2026-09-27, the day it was built, any
+ * casting call in the fortnight ruled a week out, which left a first-year
+ * understudying at Yale Rep no Cabaret all spring. As first
  * built on 2026-09-27, a single day off classes in the fortnight ruled a
  * week out, which left a first-year's fall one week to choose from.
  */
 export function cabaretWeek(sim: Simulation, person: Person, term: number): SchoolDate | undefined {
   const period = classPeriod(term);
-  const calls = sim.universe.scheduled.filter((i) => i.status === 'pending' && i.kind === CALL_KIND && i.payload.personId === person.id).map((i) => i.at);
+  const calls = sim.universe.scheduled
+    .filter((i) => i.status === 'pending' && (i.kind === CALL_KIND || i.kind === LAB_KIND) && i.payload.personId === person.id)
+    .map((i) => [i.at, i.at + (i.durationMinutes ?? 0) * 60_000] as const);
+  const clashes = (from: Instant, minutes: number) => calls.some(([a, b]) => a < from + minutes * 60_000 && from < b);
   const earliest = zonedParts(sim.now + YALE_CABARET.leadDays * MS_DAY, zone());
   for (let thu = dayOnOrAfter(earliest.year, earliest.month, earliest.day, 4); keyOf(thu) <= keyOf(period.to); thu = addDays(thu, 7)) {
-    const evenings = cabaretEvenings(thu, period.off);
     const sat = addDays(thu, 2);
     if (period.off.some(([a, b]) => !(b < keyOf(thu) || a > keyOf(sat)))) continue;
-    const from = at(evenings.at(-1)!, 0);
-    const to = at(addDays(sat, 1), 0);
-    if (calls.some((t) => t >= from && t < to)) continue;
+    // Its calls, each against the hours of every casting and lab call: an afternoon rehearsal leaves the evening free, a night on call doesn't.
+    if (cabaretEvenings(thu, period.off).some((d) => clashes(at(d, YALE_CABARET.rehearsalFrom), YALE_CABARET.rehearsalMinutes))) continue;
+    if (YALE_CABARET.shows.some(([wd, hour]) => clashes(at(addDays(thu, wd - 4), hour), 90))) continue;
     return thu;
   }
   return undefined;
