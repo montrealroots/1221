@@ -24,6 +24,7 @@ import { END_WORDS } from '@/engine/systems/accountlife';
 import { banksFor, inSaveMoney, isoOf } from '@/engine/systems/banking';
 import {
   ESTIMATE, LOAN_DUE_KIND, SWITCH_KIND, collectionsOf, lendingOf, loanOf, loanOffer, overdraftOffer, overdraftRoom, termsOf,
+  FRANCE,
 } from '@/engine/systems/lending';
 
 /** Whole units typed, as a banking app takes them, in hundredths. */
@@ -199,6 +200,13 @@ export function BankLending({ bank, show }: { bank: Bank; show: readonly Lending
               </Gated>
             </div>
           </div>
+        </Panel>
+      )}
+
+      {show.includes('borrowing') && current?.creditOffered && (
+        <Panel title="A Loan For The Overrun" subtitle={`${money(current.creditOffered.amount)} over ${current.creditOffered.months} months at ${pct(current.creditOffered.apr)}`}
+          actions={<Gated feature="bank.take_overrun_loan" className="btn btn-sm" onClick={() => { if (run('bank.take_overrun_loan', {}).ok) toast('The overrun is a loan now.', 'positive'); }}>Take The Loan</Gated>}>
+          <p className="small" style={{ margin: 0 }}>Three months past your overdraft, French law has the bank offer another credit for it. The rate is the top of its personal loan rates, SLATE’s estimate of what it would offer. Source: {FRANCE.source}.</p>
         </Panel>
       )}
 

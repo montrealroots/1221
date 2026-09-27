@@ -125,6 +125,36 @@ export function roundUpsOn(sim: Simulation, person: Person): boolean {
   return Boolean(person.roundUps?.on && current?.bankId && ACCOUNT_LIFE[current.bankId]?.roundUp);
 }
 
+/**
+ * The days' notice a bank needs before it closes a term deposit early, where
+ * its terms ask for it: NatWest's Fixed Term Savings, 35 (its own words are
+ * kept in `penaltyWords`). Until 2026-09-27 SLATE broke it at once.
+ */
+export const BREAK_NOTICE: Readonly<Record<string, number>> = { 'gb-natwest': 35 };
+
+/** A term deposit broken now: the penalty from its interest, and from the deposit where that won't cover it. */
+function breakTerm(s: Simulation, person: Person, term: Account): { paid: Money; penalty: Money } {
+  const quote = breakQuote(s, term);
+  const into = currentOf(s, person)!;
+  const earned = Math.floor(term.accrued ?? 0);
+  const kept = Math.max(0, earned - quote.penalty);
+  const fromPrincipal = Math.max(0, quote.penalty - earned);
+  const tax = interestTaxFor(s, term, kept);
+  const paid = term.balance - fromPrincipal + kept - tax;
+  const postings = [
+    { accountId: into.id, amount: paid },
+    { accountId: term.id, amount: -term.balance },
+  ];
+  if (kept > 0) postings.push({ accountId: s.nominalAccount('income', 'Interest').id, amount: -kept });
+  if (tax > 0) postings.push({ accountId: s.nominalAccount('expense', 'Tax On Interest').id, amount: tax });
+  if (fromPrincipal > 0) postings.push({ accountId: s.nominalAccount('expense', 'Early Withdrawal Penalty').id, amount: fromPrincipal });
+  s.post({ memo: `${term.name} broken early`, category: kept > 0 ? 'interest' : 'transfer', postings });
+  term.accrued = 0;
+  term.closedAt = s.now;
+  delete term.breakAt;
+  return { paid, penalty: quote.penalty };
+}
+
 export function registerAccountLife(sim: Simulation): void {
   sim.onEvent('world.day_rollover', 'bank.account_life', (_event, { sim: s }) => {
     for (const person of Object.values(s.universe.people)) {
@@ -141,6 +171,12 @@ export function registerAccountLife(sim: Simulation): void {
       for (const account of Object.values(s.universe.accounts)) {
         if (account.ownerId !== person.id || account.closedAt || !account.bankId) continue;
         const rules = ACCOUNT_LIFE[account.bankId];
+        // An early close on notice, once the notice has run.
+        if (account.category === 'term' && account.breakAt !== undefined && account.breakAt <= s.now && currentOf(s, person)) {
+          const done = breakTerm(s, person, account);
+          if (person.id === s.universe.playerId) s.notify({ category: 'money', title: `Your ${account.name} Closed`, body: `On the notice given: ${formatMoney(done.paid, saveCurrency(s.universe))} to your current account, less ${formatMoney(done.penalty, saveCurrency(s.universe))} for closing early.`, importance: 50, route: '/workspace/bank' });
+          continue;
+        }
         // A term deposit's end: the bank writes a month before, or in time
         // for any notice it needs to change what happens (B41).
         if (account.category === 'term' && account.maturesAt !== undefined && rules?.atEnd && !account.maturityNoticed && account.maturesAt - s.now <= noticeLead(rules) * MS_DAY) {
@@ -164,30 +200,21 @@ export function registerAccountLife(sim: Simulation): void {
     return { atEnd: p.atEnd };
   });
 
-  sim.onCommand<{ accountId: string }, { paid: Money; penalty: Money }>('bank.break_term', (p, { sim: s }) => {
+  sim.onCommand<{ accountId: string }, { paid: Money; penalty: Money; at?: Instant }>('bank.break_term', (p, { sim: s }) => {
     const person = s.player;
     const term = s.universe.accounts[p.accountId];
     if (!term || term.ownerId !== person.id || term.closedAt || term.category !== 'term') throw new CommandError('That isn’t one of your term deposits.');
     const quote = breakQuote(s, term);
     if (quote.refused) throw new CommandError(quote.refused);
-    const into = currentOf(s, person);
-    if (!into) throw new CommandError('You need a current account for the money.');
-    const earned = Math.floor(term.accrued ?? 0);
-    const kept = Math.max(0, earned - quote.penalty);
-    const fromPrincipal = Math.max(0, quote.penalty - earned);
-    const tax = interestTaxFor(s, term, kept);
-    const paid = term.balance - fromPrincipal + kept - tax;
-    const postings = [
-      { accountId: into.id, amount: paid },
-      { accountId: term.id, amount: -term.balance },
-    ];
-    if (kept > 0) postings.push({ accountId: s.nominalAccount('income', 'Interest').id, amount: -kept });
-    if (tax > 0) postings.push({ accountId: s.nominalAccount('expense', 'Tax On Interest').id, amount: tax });
-    if (fromPrincipal > 0) postings.push({ accountId: s.nominalAccount('expense', 'Early Withdrawal Penalty').id, amount: fromPrincipal });
-    s.post({ memo: `${term.name} broken early`, category: kept > 0 ? 'interest' : 'transfer', postings });
-    term.accrued = 0;
-    term.closedAt = s.now;
-    return { paid, penalty: quote.penalty };
+    if (!currentOf(s, person)) throw new CommandError('You need a current account for the money.');
+    // A bank that needs notice closes it when the notice has run, at the penalty then.
+    const notice = BREAK_NOTICE[term.bankId ?? ''];
+    if (notice) {
+      if (term.breakAt !== undefined) throw new CommandError(`It closes on ${formatDate(term.breakAt, s.zone)}, on the notice given.`);
+      term.breakAt = s.now + notice * MS_DAY;
+      return { paid: 0, penalty: quote.penalty, at: term.breakAt };
+    }
+    return breakTerm(s, person, term);
   });
 
   sim.onCommand<{ accountId: string }, { paid: Money }>('bank.take_term_interest', (p, { sim: s }) => {

@@ -96,17 +96,18 @@ part the tool cannot see.
   the rate for an unarranged one wasn't found. The Canadian banks sell
   overdraft protection by the month or by the use; SLATE arranges the
   monthly plan only.
-- **What follows a charge-off is only partly there.** A bank closes an
-  account left overdrawn for sixty days in a row (SLATE's estimate), and
-  the debt goes to collections and costs the record. A real American bank
-  also reports it to ChexSystems, and most banks then won't open an account
-  for years; SLATE opens one at the next bank, though not the bank that is
-  owed, which won't take them back until it is paid. An account that went
-  back above zero on each payday was never sixty days overdrawn, as at a real
-  bank, so a life that spent more than it earned could run an overdraft for
-  years; with no payday since the job engine went on 2026-09-26, one that
-  goes under stays under. France's rule that a bank must offer a loan after three months of
-  it isn't modeled.
+- **What follows a charge-off rests on estimates.** A bank closes an
+  account left overdrawn for sixty days in a row (SLATE's estimate; a
+  French one two months after its notice), and the debt goes to
+  collections and costs the record. Since 2026-09-27 a US bank reports it
+  to ChexSystems for five years and the next bank reads the report: how
+  often one turns it away (85% unpaid, half paid) and the second-chance
+  account's $10 a month are SLATE's estimates, since no figure is
+  published. France's month's letter and three months' loan offer run; the
+  loan is the bank's personal loan at the top of its rates over twelve
+  months, SLATE's estimate of the offer, and the solvency check France
+  adds from 20 November 2026 isn't made. An account that goes back above
+  zero on each payday is never sixty days overdrawn, as at a real bank.
 - **The deposit guarantee and the central bank's rate are shown and change
   nothing.** No bank fails in SLATE, so the guarantee is never called on,
   and no bank's rate is set from the central bank's, which SLATE holds at
@@ -252,8 +253,6 @@ part the tool cannot see.
   offer for a missed payment keeps it. SLATE holds one card at a time, so
   a balance transfer is made only from the card being replaced, and not
   where the new limit won't take it with its fee.
-- **NatWest's fixed-term savings asks 35 days' notice to close early.**
-  SLATE breaks it at once for its penalty.
 - **Some of an account's life is SLATE's estimate or missing.** Where a
   bank words its early-withdrawal penalty other than in days of interest
   (a reduced rate in Japan, a rate cut in France, a share in Spain), SLATE

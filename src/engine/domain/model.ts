@@ -156,6 +156,8 @@ export interface Person {
    * kept on the person.
    */
   credit?: CreditState;
+  /** A US bank's ChexSystems report of an account it closed for what was owed: when, and by whom. */
+  chex?: { at: number; bank: string };
   /**
    * The bank's alerts they've set (`systems/statements.ts`): the current
    * account under a line, a payment over one, and a statement ready. From

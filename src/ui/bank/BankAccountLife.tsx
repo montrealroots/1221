@@ -12,7 +12,7 @@ import { Gated } from '@/ui/guide/Guide';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { formatDate } from '@/engine/core/time';
 import { ACCOUNT_LIFE } from '@/engine/content/accountlife';
-import { breakQuote, END_WORDS, inCoolingOff, termEndOf } from '@/engine/systems/accountlife';
+import { BREAK_NOTICE, breakQuote, END_WORDS, inCoolingOff, termEndOf } from '@/engine/systems/accountlife';
 import type { TermEnd } from '@/engine/content/accountlife';
 
 const END_BUTTON: Record<TermEnd, string> = {
@@ -49,7 +49,7 @@ export function BankAccountLife({ bankId }: { bankId: string }) {
                 {term.graceUntil && sim.now <= term.graceUntil ? ` Renewed: until ${formatDate(term.graceUntil, sim.zone)} it can be taken whole.` : ''}
               </p>
               <p className="xs dim" style={{ margin: '0 0 4px' }}>
-                {quote.refused ?? (quote.penalty > 0 ? `Broken now it costs ${money(quote.penalty)}${quote.estimate ? ', the interest so far: SLATE’s estimate of the bank’s penalty' : ''}.` : 'Broken now it comes out whole.')}
+                {term.breakAt !== undefined ? `Closing on ${formatDate(term.breakAt, sim.zone)}, on the notice given. ` : ''}{quote.refused ?? (quote.penalty > 0 ? `Broken now it costs ${money(quote.penalty)}${quote.estimate ? ', the interest so far: SLATE’s estimate of the bank’s penalty' : ''}.` : 'Broken now it comes out whole.')}
                 {quote.words ? ` The bank’s terms: ${quote.words}` : ''}
               </p>
               <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
@@ -58,7 +58,7 @@ export function BankAccountLife({ bankId }: { bankId: string }) {
                     {END_BUTTON[end]}
                   </Gated>
                 ))}
-                <Gated feature="bank.break_term" className="btn btn-sm btn-ghost" disabled={Boolean(quote.refused)} onClick={() => run('bank.break_term', { accountId: term.id })}>Break It Early</Gated>
+                <Gated feature="bank.break_term" className="btn btn-sm btn-ghost" disabled={Boolean(quote.refused) || term.breakAt !== undefined} onClick={() => run('bank.break_term', { accountId: term.id })}>{BREAK_NOTICE[term.bankId ?? ''] ? `Give ${BREAK_NOTICE[term.bankId ?? '']} Days’ Notice` : 'Break It Early'}</Gated>
                 {life?.interestDuringTerm && (
                   <Gated feature="bank.take_term_interest" className="btn btn-sm btn-ghost" disabled={Math.floor(term.accrued ?? 0) <= 0} onClick={() => run('bank.take_term_interest', { accountId: term.id })}>
                     Take The Interest So Far ({money(Math.floor(term.accrued ?? 0))})

@@ -122,6 +122,14 @@ export interface Account {
   /** A term deposit renewed: until when it can be taken without penalty, and whether the bank has written about its end. */
   graceUntil?: Instant;
   maturityNoticed?: boolean;
+  /** A term deposit whose early close has been asked for, on the notice the bank needs, closing on this day. */
+  breakAt?: number;
+  /** France: the month's letter about an overrun sent, the credit offered at three months, and the closing's notice given. */
+  overrunInformed?: boolean;
+  creditOffered?: { amount: number; apr: number; months: number };
+  closingNoticed?: boolean;
+  /** A second-chance account, opened for somebody the mainstream banks turned away: a monthly fee and no overdraft. */
+  secondChance?: boolean;
   /** When a term deposit last renewed: its current term runs from here. */
   renewedAt?: Instant;
   /** What its holder has told the bank to do with a term deposit at its end, where it differs from the bank's default. */

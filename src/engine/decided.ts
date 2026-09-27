@@ -26,6 +26,7 @@ import { endBetween } from './systems/mortality';
 import { accountNumber } from './systems/banknumber';
 import { fraudOn } from './systems/security';
 import { bankById } from './content/banks';
+import { declines } from './systems/lending';
 import { MS_DAY } from './core/time';
 import { admittedClass, classmatesIn, goesOn, meanCraft } from './systems/school';
 import { newLifeConfig } from './world/bootstrap';
@@ -397,6 +398,23 @@ defineDecider<{ sim: Simulation; key: number }, string>({
   decide: ({ sim, key }) => Array.from({ length: 30 }, (_, n) => (renewed(sim, sim.player, `s${key + n}`, SERIES.renewal.network) ? '1' : '0')).join(''),
 });
 
+defineDecider<{ sim: Simulation; bank: number }, string>({
+  id: 'bank.chex',
+  decides: 'Whether a US bank turns away somebody with a standing ChexSystems report.',
+  drawnIn: 'src/engine/systems/lending.ts',
+  reads: {
+    // Each bank answers on its own.
+    bank: (o, t) => ({ ...o, bank: Math.round(t * 4) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), bank: seed % 5 }),
+  decide: ({ sim, bank }) => {
+    sim.player.chex = { at: sim.now, bank: 'Chase' };
+    const banks = ['us-chase', 'us-bank-of-america', 'us-wells-fargo', 'us-citi', 'us-capital-one'].map((id) => bankById(id)).filter((b) => b !== undefined);
+    return banks.map((b, n) => (n >= bank && declines(sim, sim.player, b!) ? '1' : '0')).join('');
+  },
+});
+
 defineDecider<{ sim: Simulation; week: number }, string>({
   id: 'health.illness',
   decides: 'What a week brings to a body: the flu in its season, a doctor’s visit, an emergency, a stay in hospital.',
@@ -412,7 +430,7 @@ defineDecider<{ sim: Simulation; week: number }, string>({
 
 defineDecider<{ sim: Simulation }, string>({
   id: 'health.chronic',
-  decides: 'The conditions a person carries from the start, depression, asthma or high blood pressure, and whether they wear lenses; and an asthmatic month’s visit.',
+  decides: 'The conditions a person carries from the start, depression, asthma, high blood pressure, diabetes (and whether type 1) or arthritis, and whether they wear lenses; and an asthmatic’s or an arthritic’s month’s visit.',
   drawnIn: 'src/engine/systems/health.ts',
   reads: {
     // Two saves are two bodies.

@@ -120,6 +120,82 @@ export const ESTIMATE = {
 
 export const COLLECTIONS = 'collections';
 
+/**
+ * ChexSystems. A US bank that closes an account for what's owed reports it,
+ * and the report stands five years from the day, paid or not. The
+ * consumer-reporting agency decides nothing; each bank does, and about four
+ * in five screen with it. How often one turns a report away isn't
+ * published: SLATE's estimate is 85% while the debt is unpaid and half once
+ * it's paid. Turned away everywhere, a person is left the second-chance
+ * account a bank offers instead, SLATE's $10 a month and no overdraft.
+ * Until 2026-09-27 the next bank opened one as if nothing had happened.
+ */
+export const CHEX = {
+  years: 5,
+  declines: { unpaid: 0.85, paid: 0.5 },
+  secondChanceFee: 10_00,
+  source: 'https://www.chexsystems.com (consumer disclosure, 5 years); https://www.consumerfinance.gov/ask-cfpb/what-is-a-checking-account-screening-company-en-1983/; https://joinbankon.org (Bank On standards)',
+} as const;
+
+/**
+ * France's rules on an overrun past the arranged overdraft (Code de la
+ * consommation L312-92 and L312-93): a month of it and the bank must write
+ * with its amount, rate and charges; three months and it must offer another
+ * kind of credit at once. And a bank closing a current account gives two
+ * months' notice (Code monétaire et financier L312-1-1), so a French account
+ * closes two months after SLATE's sixty days, and the three months come
+ * before it. The credit offered is the bank's personal loan over twelve
+ * months at the top of its rates, SLATE's estimate of the offer; from
+ * 20 November 2026 the bank must check the borrower can repay it first,
+ * which SLATE doesn't. Until 2026-09-27 a French account closed at sixty
+ * days like any other, and none of this was reached.
+ */
+export const FRANCE = {
+  informAfterDays: 30,
+  offerAfterDays: 90,
+  closingNoticeDays: 60,
+  offerMonths: 12,
+  source: 'https://www.legifrance.gouv.fr (Code de la consommation, articles L312-92 and L312-93; Code monétaire et financier, article L312-1-1)',
+} as const;
+
+const isFrench = (bank: Bank | undefined) => bank?.id.startsWith('fr-') === true;
+
+/**
+ * France's month and three months past the limit (`FRANCE`): the letter,
+ * and the credit offered for what's past the limit.
+ */
+function frenchOverrun(sim: Simulation, person: Person, current: Account, bank: Bank): void {
+  if (!isFrench(bank) || current.negativeSince === undefined) { current.overrunInformed = undefined; current.creditOffered = undefined; current.closingNoticed = undefined; return; }
+  const days = (sim.now - current.negativeSince) / MS_DAY;
+  const past = Math.max(0, -current.balance - (current.overdraftLimit ?? 0));
+  const cur = saveCurrency(sim.universe);
+  const player = person.id === sim.universe.playerId;
+  if (days >= FRANCE.informAfterDays && !current.overrunInformed) {
+    current.overrunInformed = true;
+    const terms = lendingOf(bank).overdraft;
+    const rate = terms && 'rate' in terms && terms.rate !== undefined ? ` at ${(terms.rate * 100).toFixed(2)}% a year` : '';
+    if (player) sim.notify({ category: 'money', title: `${bank.name} Wrote About Your Overrun`, body: `A month past your overdraft: ${formatMoney(past, cur)} beyond it${rate}, with the charges each month brings. French law has the bank tell you after a month.`, importance: 70 });
+  }
+  const loan = lendingOf(bank).loan;
+  if (days >= FRANCE.offerAfterDays && !current.creditOffered && loan && past > 0 && !loanOf(sim, person)) {
+    const apr = loan.to ?? loan.from;
+    current.creditOffered = { amount: past, apr, months: FRANCE.offerMonths };
+    if (player) sim.notify({ category: 'money', title: `${bank.name} Offered A Loan For The Overrun`, body: `Three months past your overdraft, the law has it offer another credit: ${formatMoney(past, cur)} over ${FRANCE.offerMonths} months at ${(apr * 100).toFixed(2)}%, ${formatMoney(monthlyPayment(past, apr, FRANCE.offerMonths), cur)} a month. Take it from Your Bank.`, importance: 75 });
+  }
+  if (days >= ESTIMATE.closeAfterDays && !current.closingNoticed) {
+    current.closingNoticed = true;
+    if (player) sim.notify({ category: 'money', title: `${bank.name} Gave Notice To Close`, body: `Overdrawn past the limit for ${ESTIMATE.closeAfterDays} days, the account closes in two months, on ${formatDate(sim.now + FRANCE.closingNoticeDays * MS_DAY, sim.zone)}, unless it's back within it.`, importance: 85 });
+  }
+}
+
+/** A US bank's answer to somebody with a standing ChexSystems report (`bank.chex`): true where it turns them away. */
+export function declines(sim: Simulation, person: Person, bank: Bank): boolean {
+  const report = person.chex;
+  if (!report || !bank.id.startsWith('us-') || sim.now - report.at >= CHEX.years * 365 * MS_DAY) return false;
+  const unpaid = (collectionsOf(sim, person)?.balance ?? 0) < 0;
+  return sim.rng('bank.chex', person.id, bank.id, String(report.at)).next() < (unpaid ? CHEX.declines.unpaid : CHEX.declines.paid);
+}
+
 /** A person's debt in collections, where a bank charged one off. */
 export function collectionsOf(sim: Simulation, person: Person): Account | undefined {
   return Object.values(sim.universe.accounts).find((a) => a.ownerId === person.id && !a.closedAt && a.kind === 'loan' && a.category === COLLECTIONS);
@@ -170,7 +246,7 @@ export function overdraftRoom(sim: Simulation, person: Person): Money {
   const current = currentOf(sim, person);
   const bank = current?.bankId ? bankById(current.bankId) : undefined;
   const terms = lendingOf(bank).overdraft;
-  if (!current || !bank || !terms) return 0;
+  if (!current || !bank || !terms || current.secondChance) return 0;
   const cover = inSaveMoney(sim, ESTIMATE.perItemCover, bank.currency);
   // Past an arranged limit, a French, German or New Zealand bank still pays.
   if (terms.kind === 'arranged') return (current.overdraftLimit ?? 0) + (terms.beyond ? cover : 0);
@@ -415,7 +491,7 @@ function payFromBank(sim: Simulation, person: Person, amount: Money): { postings
 }
 
 /** Moves one person's bank to another of their country's, now. */
-function completeSwitch(sim: Simulation, person: Person, to: Bank, quietly = false): void {
+function completeSwitch(sim: Simulation, person: Person, to: Bank, quietly = false, secondChance = false): void {
   const old = currentOf(sim, person);
   if (!old) return;
   const oldSavings = Object.values(sim.universe.accounts).find((a) => a.ownerId === person.id && !a.closedAt && a.kind === 'savings' && a.category !== 'term' && a.bankId === old.bankId);
@@ -435,6 +511,7 @@ function completeSwitch(sim: Simulation, person: Person, to: Bank, quietly = fal
     return account;
   };
   const current = open('checking', old);
+  if (secondChance) current.secondChance = true;
   person.primaryAccountId = current.id;
   if (oldSavings) open('savings', oldSavings);
   if (person.id === sim.universe.playerId && !quietly) {
@@ -460,6 +537,7 @@ function monthlyCharges(sim: Simulation, person: Person, current: Account, bank:
       charge(sim, account, inSaveMoney(sim, dormant.yearly, bank.currency), 'Dormant account fee', 'bank_fee', 'Bank Fees');
     }
   }
+  if (current.secondChance) charge(sim, current, inSaveMoney(sim, CHEX.secondChanceFee, 'USD'), 'Second chance account fee', 'bank_fee', 'Bank Fees');
   const quiet = bank.quietMonth;
   if (quiet && current.openedAt < monthStart) {
     const month = transactionsBetween(sim, current, monthStart, sim.now);
@@ -548,7 +626,8 @@ function leftOverdrawn(sim: Simulation, person: Person, bank: Bank): boolean {
     if (account.kind !== 'checking' && account.kind !== 'savings') continue;
     if (account.balance >= -(account.overdraftLimit ?? 0)) { account.negativeSince = undefined; continue; }
     account.negativeSince ??= sim.now;
-    if (sim.now - account.negativeSince >= ESTIMATE.closeAfterDays * MS_DAY) over = true;
+    const notice = isFrench(bank) ? FRANCE.closingNoticeDays : 0;
+    if (sim.now - account.negativeSince >= (ESTIMATE.closeAfterDays + notice) * MS_DAY) over = true;
   }
   return over;
 }
@@ -598,12 +677,17 @@ export function closeForOverdraft(sim: Simulation, person: Person, bank: Bank): 
     person.credit.late = [...person.credit.late, sim.now];
   }
   const owedTo = collectionsOf(sim, person)?.institution;
-  const to = banksFor(person.currentLocationId).find((b) => b.id !== bank.id && b.name !== owedTo) ?? bank;
-  completeSwitch(sim, person, to, true);
+  // A US bank reports it, and the next bank reads the report.
+  if (bank.id.startsWith('us-')) person.chex = { at: sim.now, bank: bank.name };
+  const others = banksFor(person.currentLocationId).filter((b) => b.id !== bank.id && b.name !== owedTo);
+  const willing = others.find((b) => !declines(sim, person, b));
+  const to = willing ?? others[0] ?? bank;
+  const secondChance = willing === undefined && person.chex !== undefined;
+  completeSwitch(sim, person, to, true, secondChance);
   if (person.id === sim.universe.playerId) {
     sim.notify({
       category: 'money', title: `${bank.name} Closed Your Account`,
-      body: `It was overdrawn for ${ESTIMATE.closeAfterDays} days. ${formatMoney(owed, cur)} it couldn’t recover went to collections and onto your record; pay it from Your Bank. Your money is at ${to.name} now.`,
+      body: `It was overdrawn for ${ESTIMATE.closeAfterDays} days. ${formatMoney(owed, cur)} it couldn’t recover went to collections and onto your record; pay it from Your Bank. Your money is at ${to.name} now${secondChance ? ', in a second-chance account: every other bank here turned you away on the ChexSystems report' : ''}.`,
       importance: 90,
     });
   }
@@ -688,7 +772,9 @@ export function registerLending(sim: Simulation): void {
       }
       if (current && bank && terms?.kind === 'per_item' && terms.nextDay) settlePendingItems(s, current, bank, terms);
       if (current && bank && firstOfMonth) monthlyCharges(s, person, current, bank);
-      if (current && bank && leftOverdrawn(s, person, bank)) {
+      const over = current && bank ? leftOverdrawn(s, person, bank) : false;
+      if (current && bank) frenchOverrun(s, person, current, bank);
+      if (current && bank && over) {
         closeForOverdraft(s, person, bank);
         continue;
       }
@@ -851,6 +937,24 @@ export function registerLending(sim: Simulation): void {
     return { apr: offer.apr, payment: offer.payment };
   });
 
+  sim.onCommand<Record<string, never>, { apr: number; payment: Money }>('bank.take_overrun_loan', (_p, { sim: s }) => {
+    const person = s.player;
+    const bank = bankOf(s, person);
+    const current = currentOf(s, person);
+    const offer = current?.creditOffered;
+    if (!bank || !current || !offer) throw new CommandError('Your bank has offered no loan for an overrun.');
+    if (loanOf(s, person)) throw new CommandError('You already have a loan with the bank.');
+    const payment = monthlyPayment(offer.amount, offer.apr, offer.months);
+    const loan = s.openAccount({
+      id: s.nextId('account'), kind: 'loan', category: 'personal', name: `${bank.name} Personal Loan`, ownerId: person.id,
+      institution: bank.name, bankId: bank.id, openedAt: s.now, apr: offer.apr, loanPayment: payment, loanMonths: offer.months,
+    });
+    post(s, `Loan for the overrun, from ${bank.name}`, 'loan', [{ accountId: loan.id, amount: -offer.amount }, { accountId: current.id, amount: offer.amount }]);
+    scheduleLoan(s, loan, s.now);
+    delete current.creditOffered;
+    return { apr: offer.apr, payment };
+  });
+
   sim.onCommand<Record<string, never>, { paid: Money }>('bank.repay_loan', (_p, { sim: s }) => {
     const person = s.player;
     const loan = loanOf(s, person);
@@ -903,6 +1007,7 @@ export function registerLending(sim: Simulation): void {
     if (!to) throw new CommandError('That isn’t a bank where you live.');
     if (from?.id === to.id) throw new CommandError(`You already bank with ${to.name}.`);
     if (collectionsOf(s, person)?.institution === to.name) throw new CommandError(`${to.name} won’t open an account for somebody who owes it a charged-off debt.`);
+    if (declines(s, person, to)) throw new CommandError(`${to.name} turned you away on the ChexSystems report ${person.chex!.bank} made, which stands until ${formatDate(person.chex!.at + CHEX.years * 365 * MS_DAY, s.zone)}.`);
     if (s.universe.scheduled.some((one) => one.kind === SWITCH_KIND && one.status === 'pending')) throw new CommandError('A switch is already under way.');
     const current = currentOf(s, person);
     if (current && current.balance < 0) throw new CommandError('Clear the overdraft before switching; the new bank won’t take it on.');
