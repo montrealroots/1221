@@ -22,6 +22,8 @@ export interface YearEarnings {
   unemployment: Money;
   /** A scholarship's taxable part: what paid for living, not tuition or books. */
   scholarship?: Money;
+  /** Interest the bank paid, before any tax taken at source: a 1099-INT's, taxable, with no payroll tax. */
+  interest?: Money;
   withheld: Money;
   /** What the job cost: the agency's and the manager's commission, and the unions' dues. */
   commission: Money;
@@ -130,6 +132,22 @@ export function recordBenefit(person: Person, at: Instant, zone: string, amount:
   y.unemployment += amount;
   const home = homeOf(person);
   y.residence = home;
+  y.byResidence[home] = (y.byResidence[home] ?? 0) + amount;
+  const month = `${p.year}-${String(p.month).padStart(2, '0')}`;
+  earningsOf(person).months[month] = (earningsOf(person).months[month] ?? 0) + amount;
+}
+
+/**
+ * Interest paid on an account, to the year's return and the month's income.
+ * Until 2026-09-27 it was posted as income and read by nothing, so the
+ * wealthy start's savings earned about $11,000 a year that no return taxed
+ * and no income test for Medicaid or the premium credit saw.
+ */
+export function recordInterest(person: Person, at: Instant, zone: string, amount: Money): void {
+  const p = zonedParts(at, zone);
+  const y = yearOf(person, p.year);
+  y.interest = (y.interest ?? 0) + amount;
+  const home = homeOf(person);
   y.byResidence[home] = (y.byResidence[home] ?? 0) + amount;
   const month = `${p.year}-${String(p.month).padStart(2, '0')}`;
   earningsOf(person).months[month] = (earningsOf(person).months[month] ?? 0) + amount;

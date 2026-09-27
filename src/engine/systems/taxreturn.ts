@@ -174,7 +174,7 @@ export function figuresFor(person: Person, year: number, into = 'USD', filedAt?:
   const y = yearOf(person, year);
   const cityId = y.residence ?? person.currentLocationId;
   const at = instantFromZoned({ year, month: 12, day: 31, hour: 12 }, HOME);
-  const income = y.acting + y.workStudy + y.unemployment + (y.scholarship ?? 0);
+  const income = y.acting + y.workStudy + y.unemployment + (y.scholarship ?? 0) + (y.interest ?? 0);
   const employers = Object.values(y.employers).filter((pay) => pay >= usd(RETURN.performingArtistEmployerPay, into)).length;
   // Of the rest of the work's costs, the ones there's a receipt for.
   const kept = Math.min(1, RECEIPTS.kept * personalityOf(person, 'receipts'));

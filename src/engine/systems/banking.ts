@@ -40,6 +40,7 @@ import { ACCOUNT_LIFE } from '../content/accountlife';
 import { statementReady } from './statements';
 import { savingsLeftThisMonth } from './cash';
 import { savingsWithdrawalFee } from './accountlife';
+import { recordInterest } from './earnings';
 
 export const MONTH_END_KIND = 'bank.month_end';
 
@@ -411,6 +412,8 @@ function payInterest(sim: Simulation, account: Account, memo: string): void {
   if (tax > 0) postings.push({ accountId: sim.nominalAccount('expense', 'Tax On Interest').id, amount: tax });
   sim.post({ memo, category: 'interest', postings });
   account.accrued = (account.accrued ?? 0) - earned;
+  const owner = account.ownerId ? sim.universe.people[account.ownerId] : undefined;
+  if (owner) recordInterest(owner, sim.now, sim.homeZone, earned);
 }
 
 function scheduleMonthEnd(sim: Simulation, after: Instant): void {

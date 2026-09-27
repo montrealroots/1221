@@ -13,7 +13,7 @@ import { computeAnnualTax } from '@/engine/content/tax';
 import { MEAL_PENALTY } from '@/engine/content/career';
 import { ABROAD, CHRONIC, DENTAL_VISION, PHARMACY, STATE_DEDUCTIONS } from '@/engine/content/safetynet';
 import { afterlife, beginCareer, careerOf, expectedGross, foreignWithholding, mealPenalty, roleById, unitRate, type Booking } from '@/engine/systems/career';
-import { recordWages, yearOf } from '@/engine/systems/earnings';
+import { recordInterest, recordWages, yearOf } from '@/engine/systems/earnings';
 import { grown, healthOf, keepUp, rxShareOf, shareOf, teethAndEyesShareOf, illnessWeek } from '@/engine/systems/health';
 import { canadaElected, connecticutTax, figuresFor, settleUkYears, ukTaxOn } from '@/engine/systems/taxreturn';
 import type { Simulation } from '@/engine/core/simulation';
@@ -230,6 +230,29 @@ describe('home from a job, however it went', () => {
     expect(run.status).toBe('accepted');
     expect(run.worked).toBe(0);
     expect(first.status).toBe('missed');
+  }, 60_000);
+});
+
+describe('interest', () => {
+  it('reaches the return and the month’s income, as it was paid', () => {
+    const sim = pro('interest');
+    const interest = () => -sim.nominalAccount('income', 'Interest').balance;
+    const before = interest();
+    sim.advanceBy(70 * MS_DAY);
+    const paid = interest() - before;
+    expect(paid).toBeGreaterThan(0);
+    const years = sim.player.earnings!.years;
+    expect(Object.values(years).reduce((a, y) => a + (y.interest ?? 0), 0)).toBe(paid);
+    const months = Object.values(sim.player.earnings!.months).reduce((a, m) => a + m, 0);
+    expect(months).toBeGreaterThanOrEqual(paid);
+    // It's taxed as income, and carries no payroll tax.
+    const without = figuresFor(sim.player, 2027);
+    recordInterest(sim.player, at(2027, 6, 1), NY, 50_000_00);
+    const withInterest = figuresFor(sim.player, 2027);
+    expect(withInterest.federal).toBeGreaterThan(without.federal);
+    expect(withInterest.payroll).toBe(without.payroll);
+    // A New Yorker's city tax on it too, by where they lived when it was paid.
+    expect(withInterest.local).toBeGreaterThan(without.local);
   }, 60_000);
 });
 

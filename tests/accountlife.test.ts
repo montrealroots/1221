@@ -15,6 +15,7 @@ import { bankAccountsOf } from '@/engine/systems/banking';
 import { termsOf } from '@/engine/systems/lending';
 import { spend } from '@/engine/systems/household';
 import { breakQuote, idleAccounts, inCoolingOff, roundUpOf, termEndOf } from '@/engine/systems/accountlife';
+import { yearOf } from '@/engine/systems/earnings';
 
 const lifeIn = (cityId: string, bankId: string, seed = 'life') =>
   quickSave({ startLocationId: cityId, homeRegionId: cityId, livesWhereBorn: true, wealth: 'comfortable', bankId }, seed);
@@ -155,8 +156,11 @@ describe('breaking a term deposit early', () => {
     sim.advanceBy(60 * MS_DAY);
     const earned = Math.floor(term.accrued!);
     const before = current(sim).balance;
+    const recorded = (yearOf(sim.player, 2026).interest ?? 0);
     sim.must({ kind: 'bank.take_term_interest', payload: { accountId: term.id } });
     expect(current(sim).balance - before).toBe(earned);
+    // On the year's return, with what the savings paid.
+    expect(yearOf(sim.player, 2026).interest).toBe(recorded + earned);
     expect(term.accrued!).toBeLessThan(1);
     const fr = lifeIn('fr-idf-paris', 'fr-bnp-paribas', 'life-take-fr');
     const cat = openTerm(fr, 10_000_00);
