@@ -21,8 +21,13 @@
  *   Japanese banks' installments). The fee is the most the bank says it
  *   charges, as SLATE can't know the offer it would make on the day.
  * - **Rewards** (C39): the card's base rate on every purchase, counted at
- *   each statement from the ledger and redeemed onto the card. A card's
- *   bonus categories are shown in the bank's words and not paid.
+ *   each statement from the ledger and redeemed onto the card; and, since
+ *   2026-09-27, a card's bonus on the two things a card buys in SLATE, the
+ *   groceries and the recurring bills, at the bank's rate to its cap
+ *   (`BONUSES`). Until then the bonus categories were shown in the bank's
+ *   words and not paid. A category SLATE's card never buys on (dining,
+ *   drugstores, gas, travel) is paid at the base rate, which is what it
+ *   would earn.
  *
  * A payment goes to the dearest balance first, a US card's minimum to the
  * cheapest, and a plan's balance last (`allocatePayment` in `systems/cash.ts`).
@@ -33,7 +38,7 @@ import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
 import type { Account } from '../core/ledger';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
-import { addMonths } from '../core/time';
+import { addMonths, zonedParts } from '../core/time';
 import { exchange } from '../content/currency';
 import { bankById } from '../content/banks';
 import { CARDS } from '../content/cards';
@@ -42,6 +47,41 @@ import { cashOwedOn } from './cash';
 
 /** The months a plan may run: the lengths Chase, Bank of America and the Canadian banks all offer. */
 export const PLAN_MONTHS = [3, 6, 12] as const;
+
+/**
+ * The bonus categories of the cards that have one on groceries or recurring
+ * bills, read by hand from each bank's words in `content/cards.ts`: each
+ * category's rate to a cap in a period, and the rate past it; and the rate
+ * on everything else where it isn't the card's base rate. Caps in the bank's
+ * currency's hundredths.
+ */
+export interface Bonus { rate: number; cap?: Money; after?: number }
+export const BONUSES: Readonly<Record<string, { per: 'quarter' | 'year' | 'cycle' | 'month'; food?: Bonus; bills?: Bonus; other?: Bonus; shared?: boolean }>> = {
+  // 2% at grocery stores, on the first $2,500 of grocery and choice spending together a quarter; 1% on the rest.
+  'us-bank-of-america': { per: 'quarter', food: { rate: 0.02, cap: 2_500_00, after: 0.01 } },
+  // 2% on the first $6,000 of groceries, 1% after; 0.5% on the first $6,000 of the rest, 1% after.
+  'ca-rbc': { per: 'year', food: { rate: 0.02, cap: 6_000_00, after: 0.01 }, bills: { rate: 0.005, cap: 6_000_00, after: 0.01 }, other: { rate: 0.005, cap: 6_000_00, after: 0.01 } },
+  // 1% on grocery and recurring bills, the first $5,000 a year in each; 0.5% else.
+  'ca-td': { per: 'year', food: { rate: 0.01, cap: 5_000_00, after: 0.005 }, bills: { rate: 0.01, cap: 5_000_00, after: 0.005 } },
+  // 1% on grocery, recurring bills and the rest of its list, to $15,000 a year together; 0.5% else.
+  'ca-scotiabank': { per: 'year', food: { rate: 0.01, cap: 15_000_00, after: 0.005 }, bills: { rate: 0.01, cap: 15_000_00, after: 0.005 }, shared: true },
+  // 3% on groceries and 1% on recurring bills, each on up to $500 a statement cycle; 0.5% else.
+  'ca-bmo': { per: 'cycle', food: { rate: 0.03, cap: 500_00, after: 0.005 }, bills: { rate: 0.01, cap: 500_00, after: 0.005 } },
+  // 2% on groceries, 1% on recurring payments, no cap; 0.5% else.
+  'ca-cibc': { per: 'cycle', food: { rate: 0.02 }, bills: { rate: 0.01 } },
+  // 1% at supermarkets, the whole cash back to $500 a month, which at 1% is $50,000 of groceries; nothing elsewhere but its named categories.
+  // Its 4% on telecoms isn't paid: SLATE's bills are one sum, and the phone's share of it isn't known.
+  'mx-santander': { per: 'month', food: { rate: 0.01, cap: 50_000_00, after: 0 }, bills: { rate: 0 }, other: { rate: 0 } },
+};
+
+/** The period a bonus's cap runs over, as a key: a calendar quarter, year or month, or the statement cycle. */
+function bonusPeriod(sim: Simulation, per: 'quarter' | 'year' | 'cycle' | 'month', from: number): string {
+  const d = zonedParts(sim.now, sim.zone);
+  if (per === 'cycle') return `c${from}`;
+  if (per === 'year') return `y${d.year}`;
+  if (per === 'quarter') return `q${d.year}-${Math.floor((d.month - 1) / 3)}`;
+  return `m${d.year}-${d.month}`;
+}
 
 /** What isn't a purchase on the card, for rewards. */
 const NOT_PURCHASES = new Set(['interest', 'fees', 'cash', 'card-transfer', 'transfer', 'card-payment', 'rewards']);
@@ -96,18 +136,45 @@ export function statementOffers(sim: Simulation, card: Account, credit: CreditSt
   }
   credit.plans = (credit.plans ?? []).filter((plan) => plan.left > 0 && plan.monthsLeft > 0);
   credit.statementPlanDue = planDue;
-  if (terms.rewardsRate) {
+  const bonus = card.bankId ? BONUSES[card.bankId] : undefined;
+  if (terms.rewardsRate || bonus) {
     const from = credit.rewardsFrom ?? card.openedAt;
-    let spent = 0;
+    const spent = { food: 0, bills: 0, other: 0 };
     const list = sim.universe.transactions;
     for (let i = list.length - 1; i >= 0 && list[i]!.at >= from; i -= 1) {
       const t = list[i]!;
       if (NOT_PURCHASES.has(t.category)) continue;
-      for (const p of t.postings) if (p.accountId === card.id && p.amount < 0) spent -= p.amount;
+      const kind = t.category === 'food' ? 'food' : t.category === 'bills' ? 'bills' : 'other';
+      for (const p of t.postings) if (p.accountId === card.id && p.amount < 0) spent[kind] -= p.amount;
     }
-    credit.rewards = (credit.rewards ?? 0) + Math.round(spent * terms.rewardsRate);
+    credit.rewards = (credit.rewards ?? 0) + bonusRewards(sim, card, credit, terms.rewardsRate ?? 0, spent, from);
   }
   credit.rewardsFrom = sim.now;
+}
+
+/** A statement's rewards: each category at its bonus to the period's cap, the rate after past it, and the base rate where there's no bonus. */
+export function bonusRewards(sim: Simulation, card: Account, credit: CreditState, base: number, spent: { food: Money; bills: Money; other: Money }, from: number): Money {
+  const bonus = card.bankId ? BONUSES[card.bankId] : undefined;
+  if (!bonus) return Math.round((spent.food + spent.bills + spent.other) * base);
+  const currency = card.bankId ? bankById(card.bankId)?.currency ?? 'USD' : 'USD';
+  const into = saveCurrency(sim.universe);
+  const period = bonusPeriod(sim, bonus.per, from);
+  const used = (credit.bonusUsed ??= {});
+  for (const key of Object.keys(used)) if (!key.endsWith(`@${period}`)) delete used[key];
+  let total = 0;
+  for (const kind of ['food', 'bills', 'other'] as const) {
+    const amount = spent[kind];
+    const b = bonus[kind];
+    if (!b) { total += amount * base; continue; }
+    if (b.cap === undefined) { total += amount * b.rate; continue; }
+    const cap = exchange(b.cap, currency, into) ?? b.cap;
+    const key = `${bonus.shared ? 'all' : kind}@${period}`;
+    const room = Math.max(0, cap - (used[key] ?? 0));
+    const within = Math.min(amount, room);
+    used[key] = (used[key] ?? 0) + within;
+    total += within * b.rate + (amount - within) * (b.after ?? base);
+  }
+  return Math.round(total);
 }
 
 /**

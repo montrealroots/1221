@@ -23,6 +23,9 @@ import type { Account } from '@/engine/core/ledger';
 import { bankById } from '@/engine/content/banks';
 import { CHEX, ESTIMATE, FRANCE, closeForOverdraft, declines, overdraftRoom, termsOf } from '@/engine/systems/lending';
 import { BREAK_NOTICE } from '@/engine/systems/accountlife';
+import { BONUSES, bonusRewards } from '@/engine/systems/cardoffers';
+import { exchange } from '@/engine/content/currency';
+import type { CreditState } from '@/engine/systems/credit';
 
 const NY = 'America/New_York';
 const at = (year: number, month: number, day: number, hour = 9) => instantFromZoned({ year, month, day, hour }, NY);
@@ -286,4 +289,46 @@ describe('the banks’ open rules', () => {
     chase.must({ kind: 'bank.break_term', payload: { accountId: t2.id } });
     expect(t2.closedAt).toBe(chase.now);
   }, 60_000);
+});
+
+describe('a card’s bonus categories', () => {
+  const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true, wealth: 'modest' }, 'bonus');
+  const card = (bankId: string) => ({ bankId } as unknown as Account);
+  const cad = (c: number) => exchange(c, 'CAD', 'USD')!;
+
+  it('pays BMO’s 3% on groceries and 1% on bills to $500 a cycle each, and 0.5% past it and on the rest', () => {
+    const credit = {} as CreditState;
+    const got = bonusRewards(sim, card('ca-bmo'), credit, 0.005, { food: cad(800_00), bills: cad(200_00), other: 10_000 }, 1);
+    expect(got).toBe(Math.round(cad(500_00) * 0.03 + (cad(800_00) - cad(500_00)) * 0.005 + cad(200_00) * 0.01 + 10_000 * 0.005));
+    // A new cycle, a new cap.
+    expect(bonusRewards(sim, card('ca-bmo'), credit, 0.005, { food: cad(100_00), bills: 0, other: 0 }, 2)).toBe(Math.round(cad(100_00) * 0.03));
+    // And the last cycle's tally is gone, not kept.
+    expect(Object.keys(credit.bonusUsed!).every((k) => k.endsWith('@c2'))).toBe(true);
+  });
+
+  it('pays RBC 1% past its first $6,000 of groceries a year, above its 0.5% base', () => {
+    const credit = {} as CreditState;
+    const big = cad(8_000_00);
+    expect(bonusRewards(sim, card('ca-rbc'), credit, 0.005, { food: big, bills: 0, other: 0 }, 1)).toBe(Math.round(cad(6_000_00) * 0.02 + (big - cad(6_000_00)) * 0.01));
+  });
+
+  it('holds Bank of America’s 2% on groceries to $2,500 a quarter across statements, and 1% past it', () => {
+    const credit = {} as CreditState;
+    expect(bonusRewards(sim, card('us-bank-of-america'), credit, 0.01, { food: 2_000_00, bills: 0, other: 0 }, 1)).toBe(4_000);
+    // The same quarter: $500 more at 2%, the rest at 1%.
+    expect(bonusRewards(sim, card('us-bank-of-america'), credit, 0.01, { food: 1_000_00, bills: 0, other: 500_00 }, 2)).toBe(Math.round(500_00 * 0.02 + 500_00 * 0.01 + 500_00 * 0.01));
+  });
+
+  it('shares Scotiabank’s $15,000 a year among its categories, and pays CIBC’s without a cap', () => {
+    const credit = {} as CreditState;
+    const big = cad(10_000_00);
+    expect(bonusRewards(sim, card('ca-scotiabank'), credit, 0.005, { food: big, bills: big, other: 0 }, 1)).toBe(Math.round(cad(15_000_00) * 0.01 + (2 * big - cad(15_000_00)) * 0.005));
+    expect(bonusRewards(sim, card('ca-cibc'), {} as CreditState, 0.005, { food: big, bills: big, other: 100_00 }, 1)).toBe(Math.round(big * 0.02 + big * 0.01 + 100_00 * 0.005));
+  });
+
+  it('pays a card without a bonus its base rate on everything, and Santander Mexico nothing outside its categories', () => {
+    expect(bonusRewards(sim, card('us-chase'), {} as CreditState, 0.015, { food: 100_00, bills: 100_00, other: 100_00 }, 1)).toBe(450);
+    expect(BONUSES['us-chase']).toBeUndefined();
+    expect(bonusRewards(sim, card('mx-santander'), {} as CreditState, 0.01, { food: 100_00, bills: 100_00, other: 100_00 }, 1)).toBe(100);
+  });
 });

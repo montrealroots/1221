@@ -229,9 +229,15 @@ part the tool cannot see.
   card that isn't reported lost is never lost: no country publishes how
   often. Cards last four years where the bank doesn't say, and a
   replacement takes seven business days, SLATE's estimates.
-- **Some of a card's offers aren't modeled.** A card's bonus reward
-  categories are shown in the bank's words and not paid; SLATE pays the
-  base rate on everything. A plan's fee is the most the bank says it
+- **Some of a card's offers aren't modeled.** Since 2026-09-27 a card's
+  bonus is paid on groceries and recurring bills, the two things a card
+  buys in SLATE, for the seven cards whose bonus names either (Bank of
+  America's, RBC's, TD's, Scotiabank's, BMO's, CIBC's, Santander
+  Mexico's), read by hand from the bank's words; a bonus on something a
+  card doesn't buy here (dining, drugstores, fuel, travel) would pay the
+  base rate anyway. Santander Mexico's 4% on telecoms isn't paid, as the
+  phone's share of the bills isn't known, and a Korean card's discounts
+  on conditions of last month's spending aren't modeled. A plan's fee is the most the bank says it
   charges, not the offer it would make on the day, and plans charged as
   interest (Scotiabank's, Bank of Ireland's, the Spanish banks') aren't
   offered. A money transfer is charged the card's balance transfer rate,

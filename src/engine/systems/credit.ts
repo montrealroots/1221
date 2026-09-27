@@ -115,6 +115,8 @@ export interface CreditState {
   /** Rewards earned and not yet redeemed, and since when purchases count toward the next (C39). */
   rewards?: Money;
   rewardsFrom?: Instant;
+  /** What a card's bonus caps have taken this period, by category and period. */
+  bonusUsed?: Record<string, Money>;
   /** A US card's introductory rates, lost for a payment sixty days late (Reg Z §1026.55(b)(4)). */
   introLost?: boolean;
 }

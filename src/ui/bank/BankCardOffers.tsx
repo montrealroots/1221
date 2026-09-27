@@ -14,7 +14,7 @@ import { formatDate } from '@/engine/core/time';
 import { bankById } from '@/engine/content/banks';
 import { CARDS } from '@/engine/content/cards';
 import { cardOf, cardTerms } from '@/engine/systems/credit';
-import { PLAN_MONTHS, planRoom, transferRate } from '@/engine/systems/cardoffers';
+import { BONUSES, PLAN_MONTHS, planRoom, transferRate } from '@/engine/systems/cardoffers';
 
 const pct = (rate: number) => `${Number((rate * 100).toFixed(2))}%`;
 
@@ -60,7 +60,8 @@ export function BankCardOffers({ bankId }: { bankId: string }) {
   }
   if (terms.transfer && transfers.length === 0) lines.push(`It takes a balance from a card at another bank for ${terms.transfer.feeShare ? `${pct(terms.transfer.feeShare)} of it` : 'no fee'}, at ${terms.transfer.introMonths !== undefined ? `${pct(terms.transfer.introApr ?? 0)} for ${terms.transfer.introMonths + ' months'}, then ` : ''}${pct(terms.transfer.apr)}: after switching banks, apply for the new bank’s card and move it.`);
   for (const plan of plans) lines.push(`A plan: ${money(plan.left)} left, ${money(plan.monthly)} a month for ${plan.monthsLeft === 1 ? 'one more month' : plan.monthsLeft + ' more months'}, and ${money(plan.fee)} a month in place of interest.`);
-  if (terms.rewardsRate) lines.push(`Rewards: ${pct(terms.rewardsRate)} back on every purchase, counted at each statement. ${money(credit.rewards ?? 0)} to redeem.${terms.rewardsWords ? ` The bank’s words: ${terms.rewardsWords}. SLATE pays the base rate, not the categories.` : ''}`);
+  const bonus = card?.bankId ? BONUSES[card.bankId] : undefined;
+  if (terms.rewardsRate || bonus) lines.push(`Rewards: ${pct(terms.rewardsRate ?? 0)} back on every purchase, counted at each statement. ${money(credit.rewards ?? 0)} to redeem.${terms.rewardsWords ? ` The bank’s words: ${terms.rewardsWords}. ${bonus ? 'SLATE pays its bonus on groceries and recurring bills, to its caps, which are what a card buys here; the rest at the base rate.' : 'Its categories are ones a card doesn’t buy in SLATE, so the base rate is what it would earn.'}` : ''}`);
 
   return (
     <Panel title="The Card’s Offers" subtitle={terms.name}>
