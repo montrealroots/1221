@@ -8,7 +8,7 @@ import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
 import { MS_DAY, MS_HOUR, instantFromZoned, zonedParts } from '@/engine/core/time';
 import { computeAnnualTax } from '@/engine/content/tax';
-import { COMMERCIAL_USE, LOCATION, RECURRING, SERIES, rateOn } from '@/engine/content/career';
+import { COMMERCIAL_USE, LOCATION, RECURRING, SAG_AFTRA, SERIES, rateOn } from '@/engine/content/career';
 import { CARE, COBRA, MEDICAL_DEBT, PLANS, PUBLIC_COVER, STATE_RETURN } from '@/engine/content/safetynet';
 import {
   RENEWAL_KIND, TRAVEL_KIND, WORK_KIND, afterlife, arcUplift, beginCareer, careerOf, levelFor, locationFor, paycheck, residualAmount, roleById, workDays,
@@ -166,6 +166,39 @@ describe('a series’ later seasons', () => {
     }
     expect(released).toBeGreaterThan(0);
   });
+});
+
+describe('a season picked up with nothing in the bank', () => {
+  it('joins them anyway, keeps the job it clashes with released and the season theirs, and takes the fee from the pay', () => {
+    let picked = 0;
+    for (const seed of ['u1', 'u2', 'u3', 'u4', 'u5', 'u6']) {
+      const sim = pro(seed, 'us-ca-losangeles', 90);
+      const prior = booking(sim, 'series-half', 13, at(2026, 10, 5, 8, 'America/Los_Angeles'), { cityId: 'us-ca-losangeles', status: 'worked', worked: 65 });
+      careerOf(sim.player).residuals.push({ id: 'r', bookingId: prior.id, roleId: prior.roleId, kind: 'network', perEpisode: 1, episodes: 13, days: 65, airsAt: 0, paid: 0, payments: 0 });
+      careerOf(sim.player).unions.sag = { eligibleAt: sim.now - 400 * MS_DAY };
+      for (const a of Object.values(sim.universe.accounts)) if (a.ownerId === sim.player.id && a.balance > 0 && a.kind !== 'escrow') a.balance = 0;
+      sim.schedule({ at: sim.now + 60_000, kind: RENEWAL_KIND, label: 'x', category: 'system', priority: 1, payload: { personId: sim.player.id, bookingId: prior.id } });
+      sim.advanceTo(sim.now + 2 * 60_000);
+      const season = careerOf(sim.player).bookings.find((x) => x.season === 2);
+      if (!season) continue;
+      expect(season.status).toBe('accepted');
+      expect(careerOf(sim.player).unions.sag!.joinedAt).toBe(sim.now - 60_000);
+      expect(careerOf(sim.player).unions.owed).toBe(SAG_AFTRA.initiation + Math.round(SAG_AFTRA.basicDues / 2));
+      picked += 1;
+    }
+    expect(picked).toBeGreaterThan(0);
+    // Owed, it comes out of the next check, as dues.
+    const sim = pro('u-pay');
+    careerOf(sim.player).unions.owed = 500_00;
+    const b = booking(sim, 'costar', 1, sim.now + 3 * MS_DAY);
+    sim.must({ kind: 'career.accept', payload: { bookingId: b.id } });
+    const until = sim.now + 30 * MS_DAY;
+    while (sim.now < until) sim.advanceTo(Math.min(until, sim.now + 6 * MS_HOUR), { stopOnPlayerRequired: true });
+    expect(careerOf(sim.player).bookings.find((x) => x.id === b.id)!.status).toBe('worked');
+    expect(careerOf(sim.player).unions.owed).toBe(0);
+    const paid = sim.universe.transactions.find((t) => t.category === 'salary' && t.memo.startsWith(roleById('costar').label))!;
+    expect(paid.postings.filter((p) => p.accountId === sim.nominalAccount('expense', 'Union Dues').id).reduce((a, p) => a + p.amount, 0)).toBeGreaterThanOrEqual(500_00);
+  }, 180_000);
 });
 
 describe('public cover and COBRA', () => {

@@ -239,6 +239,8 @@ export interface CareerRecord {
   unions: {
     sag?: { eligibleAt: Instant; joinedAt?: Instant };
     equity?: { joinedAt: Instant; initiationPaid: Money };
+    /** A joining fee the bank couldn't cover on a job they were bound to, taken from the job's pay. */
+    owed?: Money;
   };
   /** A manager, and offers from them. Until 2026-09-27 there were none. */
   managerId?: string;
@@ -1032,6 +1034,13 @@ export function registerCareer(sim: Simulation): void {
       if (check.withheld) postings.push({ accountId: s.nominalAccount('expense', 'Tax Withheld').id, amount: check.withheld });
     }
     booking.owed -= calls.length;
+    // A joining fee still owed comes out of the check.
+    const toUnion = Math.min(net, careerOf(person).unions.owed ?? 0);
+    if (toUnion > 0) {
+      net -= toUnion;
+      careerOf(person).unions.owed! -= toUnion;
+      postings.push({ accountId: s.nominalAccount('expense', 'Union Dues').id, amount: toUnion });
+    }
     // The meal allowance isn't wages: it's paid beside them, untaxed.
     const perDiem = booking.perDiemOwed ?? 0;
     booking.perDiemOwed = 0;
@@ -1197,6 +1206,12 @@ export function registerCareer(sim: Simulation): void {
     const days = workDays(booking);
     const first = days[0]!.at - (booking.location ? MS_DAY : 0);
     const last = days[days.length - 1]!.at + (booking.location ? MS_DAY : 0);
+    // Joined first, so a job taken by choice that the bank can't join for
+    // releases nothing. One they're bound to, a season picked up, never
+    // fails on the fee: the union takes it from the pay, as a payroll
+    // deduction. Until 2026-09-27 the fee was asked after the clashing job
+    // was released, and a pickup the bank couldn't join for lost both.
+    joinFor(s, person, role, bound);
     for (const other of career.bookings) {
       if (other.status !== 'accepted' || other.id === booking.id) continue;
       const theirs = workDays(other);
@@ -1207,7 +1222,6 @@ export function registerCareer(sim: Simulation): void {
       if (other.owed > 0) schedulePay(s, person, other, s.now + 60_000, true);
       if (isPlayer(person)) s.notify({ category: 'money', title: 'Released For Your Series', body: `${roleById(other.roleId).label} clashed with the series’ new season, which has you first.`, importance: 75, route: '/workspace/career' });
     }
-    joinFor(s, person, role);
     booking.status = 'accepted';
     career.lastBookedAt = s.now;
     const workCity = workCityOf(booking);
@@ -1350,19 +1364,24 @@ export function registerCareer(sim: Simulation): void {
   });
 
   /** A union's membership where a job needs it: SAG-AFTRA's after thirty days eligible, Equity's on the first contract. */
-  function joinFor(s: Simulation, person: Person, role: Role): void {
+  function joinFor(s: Simulation, person: Person, role: Role, bound = false): void {
     const career = careerOf(person);
     const cur = saveCurrency(s.universe);
+    const pay = (fee: Money, memo: string, why: string) => {
+      if (payFromCurrent(s, person, fee, memo, 'dues')) return;
+      if (!bound) throw new CommandError(why);
+      career.unions.owed = (career.unions.owed ?? 0) + fee;
+    };
     if (role.union === 'sag') {
       const sag = career.unions.sag;
       if (!sag) { career.unions.sag = { eligibleAt: s.now }; return; }
       if (sag.joinedAt !== undefined || s.now - sag.eligibleAt < SAG_AFTRA.taftHartleyDays * MS_DAY) return;
       const fee = usd(SAG_AFTRA.initiation + Math.round(SAG_AFTRA.basicDues / 2), cur);
-      if (!payFromCurrent(s, person, fee, 'SAG-AFTRA initiation fee and dues', 'dues')) throw new CommandError(`Working under SAG-AFTRA again means joining, for ${formatMoney(fee, cur)}, which the bank can’t cover.`);
+      pay(fee, 'SAG-AFTRA initiation fee and dues', `Working under SAG-AFTRA again means joining, for ${formatMoney(fee, cur)}, which the bank can’t cover.`);
       sag.joinedAt = s.now;
     } else if (!career.unions.equity) {
       const fee = usd(EQUITY.initiationNow + Math.round(EQUITY.basicDues / 2), cur);
-      if (!payFromCurrent(s, person, fee, 'Actors’ Equity initiation fee and dues', 'dues')) throw new CommandError(`An Equity contract makes you a member, for ${formatMoney(fee, cur)} now, which the bank can’t cover.`);
+      pay(fee, 'Actors’ Equity initiation fee and dues', `An Equity contract makes you a member, for ${formatMoney(fee, cur)} now, which the bank can’t cover.`);
       career.unions.equity = { joinedAt: s.now, initiationPaid: EQUITY.initiationNow };
     }
   }
