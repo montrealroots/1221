@@ -111,19 +111,26 @@ part the tool cannot see.
 - **Some IBANs outside the thirteen are missing a bank code or a national
   check.** Each is built to its country's registry structure
   (`content/banks-world-iban.ts`): 82 structures, and 321 of 348 banks with
-  their own code in place. Where a code wasn't found (Burundi, Djibouti,
-  Egypt, Yemen, São Tomé, and a few banks elsewhere) that field is drawn.
+  their own code in place, and since 2026-09-27 Banque Misr's (0002, from
+  its own IBAN guide) and Al-Kuraimi's (KRMB, the first letters of its BIC,
+  SLATE's estimate). Where a code wasn't found (Burundi, Djibouti, São
+  Tomé, Egypt's National Bank and CIB, Yemen's other banks, and a few banks
+  elsewhere) that field is drawn: none is published.
   The national check inside the BBAN is built wherever its rule is
   published: Belgium, the French RIB countries, the MOD 97-10 ones
   (Portugal, Serbia, Montenegro, North Macedonia, Slovenia, Timor-Leste,
   Bosnia and Herzegovina, Kosovo) and, since 2026-09-25, Italy and San
   Marino's CIN, Norway, the Czech Republic, Slovakia, Poland, Croatia,
   Estonia, Hungary, Albania and Finland with Åland, each checked against the
-  IBAN Registry's example. Three are left with the digits drawn: Sweden,
-  whose check depends on each bank's account type; Denmark with the Faroes
-  and Greenland, whose check is set bank by bank; and São Tomé, whose rule
-  isn't published and whose registry example and a live central-bank IBAN
-  disagree. The IBAN's own check always holds.
+  IBAN Registry's example; and since 2026-09-27 Sweden, bank by bank by
+  Bankgirot's rules (Swedbank's clearing digit and account by Luhn, SEB's
+  and Nordea's by mod 11 over clearing and account, Handelsbanken's by mod
+  11 over the account), each against the official examples. Burundi's and
+  Djibouti's keys are taken as France's RIB key and São Tomé's as
+  Portugal's NIB, SLATE's inference: no rule is published, and each
+  registry example checks by it. Denmark with the Faroes and Greenland is
+  left with its digits drawn, as no Danish bank publishes a check rule; the
+  one that circulates is Norway's. The IBAN's own check always holds.
 - **Some cards' terms are SLATE's estimate.** Each bank's card is its own
   (`content/cards.ts`), and the research read 522 of them from the banks'
   terms, a comparison site where the bank's own page was blocked. A bank
