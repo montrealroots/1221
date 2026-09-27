@@ -14,7 +14,8 @@ import { formatDate } from '@/engine/core/time';
 import { bankById } from '@/engine/content/banks';
 import { CARDS } from '@/engine/content/cards';
 import { cardOf, cardTerms } from '@/engine/systems/credit';
-import { BONUSES, PLAN_MONTHS, planRoom, transferRate } from '@/engine/systems/cardoffers';
+import { BONUSES, PLAN_MONTHS, planRoom, transferRate, transferRefusal } from '@/engine/systems/cardoffers';
+import { limitFor } from '@/engine/systems/cardlife';
 import { inSaveMoney } from '@/engine/systems/banking';
 
 const pct = (rate: number) => `${Number((rate * 100).toFixed(2))}%`;
@@ -37,12 +38,16 @@ export function BankCardOffers({ bankId }: { bankId: string }) {
     const offer = found && !('none' in found) ? found.transfer : undefined;
     const bank = bankById(bankId);
     if (!offer || !bank) return null;
+    // Offered only where the bank would take it: until 2026-09-27 Apply showed for a transfer the command refused.
+    const refused = transferRefusal(sim, sim.player, bankId, limitFor(sim, credit.score));
     return (
       <Panel title="Move Your Card Here" subtitle={`A balance transfer to ${bank.name}`}>
         <p className="small">
-          Apply for {bank.name}’s card and the {card.name}’s balance moves onto it when it arrives, for {offer.feeShare ? `${pct(offer.feeShare)} of it` : 'no fee'}{offer.feeMin ? ', never under the card’s minimum' : ''}, at {offer.introMonths !== undefined ? `${pct(offer.introApr ?? 0)} for ${offer.introMonths + ' months'}, then ` : ''}{offer.apr !== undefined ? pct(offer.apr) : 'the card’s own rate'}. The old card takes nothing new while it waits, and closes once it’s moved.
+          Apply for {bank.name}’s card and the {card.name}’s balance moves onto it when it arrives, for {offer.feeShare ? `${pct(offer.feeShare)} of it` : 'no fee'}{offer.feeMin ? `, never under ${money(inSaveMoney(sim, offer.feeMin, bank.currency))}` : ''}, at {offer.introMonths !== undefined ? `${pct(offer.introApr ?? 0)} for ${offer.introMonths + ' months'}, then ` : ''}{offer.apr !== undefined ? pct(offer.apr) : 'the card’s own rate'}. The old card takes nothing new while it waits, and closes once it’s moved.
         </p>
-        <Gated feature="card.apply" className="btn btn-sm" onClick={() => run('card.apply', { transfer: true })}>Apply And Move The Balance</Gated>
+        {refused
+          ? <p className="small muted" style={{ margin: 0 }}>{refused}</p>
+          : <Gated feature="card.apply" className="btn btn-sm" onClick={() => run('card.apply', { transfer: true })}>Apply And Move The Balance</Gated>}
       </Panel>
     );
   }
@@ -80,7 +85,7 @@ export function BankCardOffers({ bankId }: { bankId: string }) {
         {terms.moneyTransferFee && (
           <div className="field-row">
             <div className="field">
-              <label htmlFor="card-money-transfer">A Money Transfer To Your Account</label>
+              <label htmlFor="card-money-transfer">A Money Transfer To Your Account ({cur})</label>
               <input id="card-money-transfer" inputMode="decimal" value={moveAmount} onChange={(e) => setMoveAmount(e.target.value)} />
             </div>
             <Gated feature="card.money_transfer" className="btn btn-sm" disabled={!moveAmount} onClick={() => {
@@ -96,7 +101,7 @@ export function BankCardOffers({ bankId }: { bankId: string }) {
             </p>
             <div className="field-row">
               <div className="field">
-                <label htmlFor="card-plan-amount">Into A Plan</label>
+                <label htmlFor="card-plan-amount">Into A Plan ({cur})</label>
                 <input id="card-plan-amount" inputMode="decimal" value={planAmount} onChange={(e) => setPlanAmount(e.target.value)} />
               </div>
               <div className="field">

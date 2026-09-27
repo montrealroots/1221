@@ -13,7 +13,7 @@ import { computeAnnualTax } from '@/engine/content/tax';
 import { MEAL_PENALTY } from '@/engine/content/career';
 import { ABROAD, CARE, CHRONIC, DENTAL_VISION, PHARMACY, STATE_DEDUCTIONS } from '@/engine/content/safetynet';
 import { afterlife, beginCareer, careerOf, expectedGross, foreignWithholding, mealPenalty, paycheck, roleById, unitRate, type Booking } from '@/engine/systems/career';
-import { recordInterest, recordWages, yearOf } from '@/engine/systems/earnings';
+import { earningsOf, recordInterest, recordWages, yearOf } from '@/engine/systems/earnings';
 import { grown, healthOf, keepUp, rxShareOf, shareOf, teethAndEyesShareOf, illnessWeek } from '@/engine/systems/health';
 import { canadaElected, connecticutTax, figuresFor, settleUkYears, ukTaxOn } from '@/engine/systems/taxreturn';
 import type { Simulation } from '@/engine/core/simulation';
@@ -161,6 +161,19 @@ describe('the UK’s tax year, and Canada’s tax on residuals', () => {
     const gbp = exchange(80_000_00, 'USD', 'GBP')!;
     expect(tax).toBe(exchange(Math.round(0.2 * 37_700_00 + 0.4 * (gbp - 37_700_00)), 'GBP', 'USD'));
     expect(yearOf(sim.player, 2030).foreign.uk!.withheld).toBe(tax - 16_000_00);
+  });
+
+  it('keeps a UK year to settle where there’s no account to settle it through', () => {
+    const sim = pro('uk-no-account');
+    recordWages(sim.player, at(2027, 6, 1), NY, { gross: 15_000_00, where: 'uk-eng-london', employer: 'a', foreignWithheld: 3_000_00 });
+    const primary = sim.player.primaryAccountId;
+    sim.player.primaryAccountId = undefined;
+    settleUkYears(sim, sim.player, 2029);
+    expect(earningsOf(sim.player).ukSettled ?? []).toEqual([]);
+    sim.player.primaryAccountId = primary;
+    settleUkYears(sim, sim.player, 2030);
+    expect(earningsOf(sim.player).ukSettled).toEqual(['2027']);
+    expect(yearOf(sim.player, 2030).foreign.uk!.withheld).toBe(-3_000_00);
   });
 
   it('withholds Canada’s 23% from a residual for work done there', () => {

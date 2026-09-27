@@ -43,8 +43,8 @@ import { registerCash } from './systems/cash';
 import { registerAccountLife } from './systems/accountlife';
 import { registerCardOffers } from './systems/cardoffers';
 import { registerSecurity } from './systems/security';
-import { enroll, registerSchool } from './systems/school';
-import { registerCareer } from './systems/career';
+import { enroll, registerSchool, yearOfStudy } from './systems/school';
+import { agencyById, registerCareer } from './systems/career';
 import { registerHealth } from './systems/health';
 import { registerUnemployment } from './systems/unemployment';
 import { registerTaxReturn } from './systems/taxreturn';
@@ -180,7 +180,12 @@ export function refreshMeta(sim: Simulation): void {
   // A finished life says so on its slot, on every adapter, since the slot
   // list the server sends carries the labels and not the rest of the meta.
   const ended = sim.universe.meta.endedAge;
-  sim.universe.meta.careerLabel = PERFORMER_NOUN[player.performerTitle] + (ended !== undefined ? `, Died At ${ended}` : '');
+  // Where the life is: the year at school, or the agency after it. Until
+  // 2026-09-27 it was the title alone, Actor or Actress, whatever the life.
+  const school = player.school;
+  const agency = player.career?.agencyId ? agencyById(player.career.agencyId)?.name : undefined;
+  const where = school && school.standing !== 'graduated' && school.standing !== 'dismissed' ? `, Yale Drama Year ${yearOfStudy(player)}` : agency ? `, With ${agency}` : '';
+  sim.universe.meta.careerLabel = PERFORMER_NOUN[player.performerTitle] + where + (ended !== undefined ? `, Died At ${ended}` : '');
   sim.universe.meta.locationLabel = CITIES.get(player.currentLocationId)?.name ?? 'Unknown';
   sim.universe.meta.worldDateLabel = formatDate(sim.now, sim.homeZone);
   sim.universe.meta.netWorthLabel = formatMoneyCompact(worth.total, saveCurrency(sim.universe));

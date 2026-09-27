@@ -49,13 +49,14 @@ import { exchange } from '../content/currency';
 import { bankById } from '../content/banks';
 import { CARDS, CARD_LAW, type CardProduct } from '../content/cards';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
-import { addMonths, formatDate, instantFromZoned, zonedParts, type Instant } from '../core/time';
+import { addMonths, formatDate, instantFromZoned, zonedParts, MS_DAY, type Instant } from '../core/time';
 import { CommandError } from '../core/simulation';
 import { drawFromBank, inTheBank } from './household';
 import { statementReady } from './statements';
 import { paymentsOf } from './payments';
 import { allocatePayment, cashOwedOn } from './cash';
 import { planLeftOf, statementOffers, transferRate, transfersOwedOn } from './cardoffers';
+import { PENDING } from '../content/pending';
 
 export const STATEMENT_KIND = 'card.statement';
 export const DUE_KIND = 'card.due';
@@ -92,6 +93,8 @@ export interface CreditState {
   hardship?: { payment: Money; since: Instant };
   /** When Britain's persistent-debt notice went (C75). */
   persistentNoticeAt?: Instant;
+  /** Credit a payment from another bank freed, held back until a day (`PENDING.paymentHoldDays`). */
+  paymentHolds?: { amount: Money; until: Instant }[];
   /** A card applied for and on its way (C1, C5). */
   applied?: { bankId: string; arrivesAt: Instant; limit: Money; transfer?: boolean };
   /** Interest built up day by day, compounded daily (C43, C50): charged at the statement once the grace period is lost, dropped at the due date where it holds. */
@@ -355,7 +358,8 @@ export function cardRoom(person: Person, card: Account | undefined, recurring = 
   if (p?.stopped || (recurring ? p?.billersStale : p?.locked)) return 0;
   // Only a US holder can opt in (`card.set_over_limit`).
   const over = credit?.overLimitOptIn ? Math.round((card.creditLimit ?? 0) * OVER_LIMIT_SHARE) : 0;
-  return Math.max(0, (card.creditLimit ?? 0) + card.balance + over);
+  const held = (credit?.paymentHolds ?? []).reduce((sum, one) => sum + one.amount, 0);
+  return Math.max(0, (card.creditLimit ?? 0) + card.balance + over - held);
 }
 
 export function cardOf(sim: Simulation, person: Person): Account | undefined {
@@ -397,6 +401,11 @@ function payCard(sim: Simulation, person: Person, amount: Money, byHand = false)
   });
   if (person.credit) {
     person.credit.paidSinceStatement += paid;
+    // Paid from another bank, the card's bank may hold back the credit it frees
+    // for its days while the payment clears; paid from its own, it doesn't.
+    const days = card.bankId ? PENDING[card.bankId]?.paymentHoldDays : undefined;
+    const from = person.primaryAccountId ? sim.universe.accounts[person.primaryAccountId]?.bankId : undefined;
+    if (days && from !== card.bankId) (person.credit.paymentHolds ??= []).push({ amount: paid, until: sim.now + days * MS_DAY });
     const terms = cardTerms(sim, card, person.credit.score);
     allocatePayment(sim, person, card, paid, minimumDue(sim, person.credit.statementBalance, terms, person.credit.statementInterest ?? 0, person.credit.statementPlanDue ?? 0), { cash: terms.cashApr, purchases: terms.apr });
   }
@@ -634,6 +643,8 @@ export function registerCredit(sim: Simulation): void {
       if (!credit || !card) continue;
       // The credit balance's age, for the US refund.
       if (card.balance > 0) credit.creditSince ??= s.now; else delete credit.creditSince;
+      // Held credit comes back on its day.
+      if (credit.paymentHolds) { credit.paymentHolds = credit.paymentHolds.filter((one) => one.until > s.now); if (!credit.paymentHolds.length) delete credit.paymentHolds; }
       if (credit.hardship || card.balance >= 0) continue;
       const terms = cardTerms(s, card, credit.score);
       const freeFees = bankById(card.bankId ?? '')?.iso === 'GB'

@@ -20,7 +20,7 @@
  */
 
 import {
-  A_NORMAL_DAYS_DEBT, EVERYDAY_FITNESS, mendsTo, moraleSettlesAt, readiness, wellbeingSummary, workoutCosts,
+  A_NORMAL_DAYS_DEBT, EVERYDAY_FITNESS, mendsTo, moraleSettlesAt, readiness, readinessParts, wellbeingSummary, workoutCosts,
 } from '@/engine/systems/life';
 import type { Person, Wellbeing } from '@/engine/domain/model';
 import type { Simulation } from '@/engine';
@@ -276,18 +276,12 @@ function sentenceFor(dial: Dial, now: number): string {
 
 interface Ready { person: Person; value: number; drags: { key: DialKey; name: string; value: number }[] }
 
-/** The dials pulling readiness down hardest, worst first. */
-function dragsOn(w: Wellbeing): { key: DialKey; name: string; value: number }[] {
-  const cost: { key: DialKey; name: string; value: number; hurt: number }[] = [
-    { key: 'energy', name: 'Energy', value: w.energy, hurt: 100 - w.energy },
-    { key: 'stress', name: 'Stress', value: w.stress, hurt: w.stress },
-    { key: 'sleepDebt', name: 'Sleep Debt', value: w.sleepDebt, hurt: Math.min(100, w.sleepDebt * 3.3) },
-    { key: 'nourishment', name: 'Nourishment', value: w.nourishment, hurt: 100 - w.nourishment },
-    { key: 'morale', name: 'Morale', value: w.morale, hurt: 100 - w.morale },
-    { key: 'hygiene', name: 'Hygiene', value: w.hygiene ?? 80, hurt: 100 - (w.hygiene ?? 80) },
-    { key: 'condition', name: 'Condition', value: w.condition, hurt: 100 - w.condition },
-  ];
-  return cost.filter((c) => c.hurt > 12).sort((a, b) => b.hurt - a.hurt).slice(0, 3)
+/** The dials pulling readiness down hardest, worst first, by what each takes off it: a dial costing more than a twentieth of it. */
+function dragsOn(person: Person): { key: DialKey; name: string; value: number }[] {
+  const w = person.wellbeing;
+  return readinessParts(person)
+    .map((part) => ({ key: part.key as DialKey, name: DIALS.find((d) => d.key === part.key)!.name, value: part.key === 'hygiene' ? w.hygiene ?? 80 : w[part.key], hurt: 1 - part.factor / part.best }))
+    .filter((c) => c.hurt > 0.05).sort((a, b) => b.hurt - a.hurt).slice(0, 3)
     .map(({ key, name, value }) => ({ key, name, value }));
 }
 
@@ -296,7 +290,7 @@ defineLook<Ready>('readiness', {
   resolve: (sim, id) => {
     const person = personIn(sim, id || sim.universe.playerId);
     if (!person) return undefined;
-    return { person, value: readiness(person), drags: dragsOn(person.wellbeing) };
+    return { person, value: readiness(person), drags: dragsOn(person) };
   },
   seeds: (sim) => [sim.universe.playerId],
   look: (ready) => ({

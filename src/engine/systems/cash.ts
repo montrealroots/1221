@@ -210,10 +210,15 @@ export function savingsLeftThisMonth(sim: Simulation, account: Account): Money |
   const monthly = CASH[account.bankId]?.savingsMonthly;
   if (monthly === undefined) return undefined;
   const bank = bankById(account.bankId)!;
-  const p = zonedParts(sim.now, sim.zone);
-  const since = instantFromZoned({ year: p.year, month: p.month, day: 1, hour: 0 }, sim.zone);
-  const out = sim.universe.transactions
-    .filter((t) => t.at >= since && t.category !== 'interest')
-    .reduce((sum, t) => sum + t.postings.filter((q) => q.accountId === account.id && q.amount < 0).reduce((a, q) => a - q.amount, 0), 0);
+  // The bank's month, as every other bank month is kept; until 2026-09-27 the clock's zone's.
+  const p = zonedParts(sim.now, sim.homeZone);
+  const since = instantFromZoned({ year: p.year, month: p.month, day: 1, hour: 0 }, sim.homeZone);
+  let out = 0;
+  const list = sim.universe.transactions;
+  for (let i = list.length - 1; i >= 0 && list[i]!.at >= since; i -= 1) {
+    const t = list[i]!;
+    if (t.category === 'interest' || t.category === 'bank_fee') continue;
+    for (const q of t.postings) if (q.accountId === account.id && q.amount < 0) out -= q.amount;
+  }
   return Math.max(0, inSave(sim, monthly, bank.currency) - out);
 }

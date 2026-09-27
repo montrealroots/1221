@@ -36,7 +36,7 @@ import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
 import type { Account, Plastic } from '../core/ledger';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
-import { dateKey, formatDate, MS_DAY, type Instant } from '../core/time';
+import { dateKey, formatDate, instantFromZoned, zonedParts, MS_DAY, type Instant } from '../core/time';
 import { exchange } from '../content/currency';
 import { bankById } from '../content/banks';
 import { FRAUD_LAW, SECURITY } from '../content/security';
@@ -147,8 +147,9 @@ function statementAfter(sim: Simulation, which: Which, at: Instant): Instant {
     const next = sim.universe.scheduled.find((one) => one.kind === 'card.statement' && one.status === 'pending');
     if (next && next.at > at) return next.at;
   }
-  const d = new Date(at);
-  return Date.UTC(d.getUTCFullYear(), d.getUTCMonth() + 1, 1);
+  // The bank's month, where the save keeps time; until 2026-09-27 a UTC month.
+  const p = zonedParts(at, sim.homeZone);
+  return instantFromZoned({ year: p.month === 12 ? p.year + 1 : p.year, month: p.month === 12 ? 1 : p.month + 1, day: 1, hour: 0 }, sim.homeZone);
 }
 
 /**

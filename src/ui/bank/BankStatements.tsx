@@ -83,7 +83,23 @@ function AccountStatementView({ account, period }: { account: Account; period: R
         {!owed && period.to > sim.now && pending !== 0 && <Figure label="Posted Balance" value={money(st.closing - pending)} note="Completed items only; what’s pending is still to post" />}
       </div>
       <Lines lines={st.lines} sign={1} empty="The account stood still in this period." card={owed} valueDated={Boolean(account.bankId && PENDING[account.bankId]?.valueDating)} />
+      {!owed && account.bankId && PENDING[account.bankId] && <PendingTerms bankId={account.bankId} />}
     </div>
+  );
+}
+
+/** How the bank holds and posts what's paid, in its words, and where they're from. */
+function PendingTerms({ bankId }: { bankId: string }) {
+  const terms = PENDING[bankId]!;
+  const said = [
+    terms.pendingWords ? `A card payment: ${terms.pendingWords}` : '',
+    terms.postingOrder ? `Overnight: ${terms.postingOrder}` : '',
+    terms.valueDating ? `Value dates: ${terms.valueDating}` : '',
+  ].filter(Boolean);
+  return (
+    <p className="xs dim" style={{ margin: 0 }}>
+      {said.join(' ')}{said.length ? ' ' : ''}{terms.pendingDays === undefined ? 'The bank doesn’t say how long a card payment stays pending, so SLATE’s estimate holds it. ' : ''}Source: {terms.source}.
+    </p>
   );
 }
 

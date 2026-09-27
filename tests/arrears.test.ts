@@ -229,6 +229,8 @@ describe('the banks’ open rules', () => {
     const firstOf = instantFromZoned({ year: 2026, month: 2, day: 1, hour: 12 }, NY);
     sim.advanceTo(firstOf);
     expect(sim.universe.transactions.some((t) => t.memo === 'Second chance account fee' && t.postings.some((p) => p.accountId === acct.id && p.amount === -CHEX.secondChanceFee))).toBe(true);
+    // Its own fee and no other: the ordinary account's isn't charged beside it.
+    expect(sim.universe.transactions.some((t) => t.memo === `Monthly fee: ${acct.name}`)).toBe(false);
   }, 60_000);
 
   it('in France: writes at a month past the limit, gives notice at sixty days, offers a loan at three months, and closes two months after the notice', () => {

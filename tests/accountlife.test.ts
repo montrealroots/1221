@@ -11,10 +11,12 @@ import { MS_DAY } from '@/engine/core/time';
 import { bankById } from '@/engine/content/banks';
 import { ACCOUNT_LIFE } from '@/engine/content/accountlife';
 import { CASH } from '@/engine/content/cash';
-import { bankAccountsOf } from '@/engine/systems/banking';
+import { bankAccountsOf, feeFor, settleFees, inSaveMoney, monthStartOf, savingsNotice, tierRate, earningBalance } from '@/engine/systems/banking';
+import { savingsLeftThisMonth } from '@/engine/systems/cash';
+import { paymentsOf } from '@/engine/systems/payments';
 import { termsOf } from '@/engine/systems/lending';
-import { spend } from '@/engine/systems/household';
-import { breakQuote, idleAccounts, inCoolingOff, roundUpOf, termEndOf } from '@/engine/systems/accountlife';
+import { inTheBank, payFromCurrent, spend } from '@/engine/systems/household';
+import { breakQuote, idleAccounts, inCoolingOff, roundUpOf, savingsDebit, savingsWithdrawalFee, termEndOf } from '@/engine/systems/accountlife';
 import { yearOf } from '@/engine/systems/earnings';
 
 const lifeIn = (cityId: string, bankId: string, seed = 'life') =>
@@ -184,6 +186,145 @@ describe('savings', () => {
     expect(move().ok).toBe(true);
     expect(fees()).toBe(1);
     expect(before - saver.balance).toBe(10_00 + ACCOUNT_LIFE['ca-rbc']!.withdrawalFee!);
+    // All of it can't come out: the fee has to come out beside it.
+    const all = run(sim, 'bank.transfer', { fromId: saver.id, toId: current(sim).id, amount: saver.balance });
+    expect(all.ok).toBe(false);
+    expect(all.error).toMatch(/withdrawal fee/);
+    expect(run(sim, 'bank.transfer', { fromId: saver.id, toId: current(sim).id, amount: saver.balance - ACCOUNT_LIFE['ca-rbc']!.withdrawalFee! }).ok).toBe(true);
+    expect(saver.balance).toBe(0);
+  });
+
+  it('charges it on a payment the linked savings makes, and counts that payment among the month’s withdrawals', () => {
+    const sim = lifeIn('ca-on-toronto', 'ca-rbc', 'life-linked-fee');
+    let saver = savings(sim);
+    if (!saver) saver = sim.universe.accounts[sim.must<{ accountId: string }>({ kind: 'bank.open_savings', payload: {} }).accountId]!;
+    give(sim, saver, 1_000_00);
+    sim.must({ kind: 'bank.set_payments', payload: { linkSavings: true } });
+    give(sim, current(sim), -current(sim).balance);
+    const fee = ACCOUNT_LIFE['ca-rbc']!.withdrawalFee!;
+    const fees = () => sim.universe.transactions.filter((t) => t.postings.some((q) => q.accountId === saver.id && q.amount === -fee)).length;
+    const before = fees();
+    for (let n = 0; n < 3; n += 1) expect(payFromCurrent(sim, sim.player, 20_00, 'Test bill', 'bills')).toBe(true);
+    // Past the one free a month, each costs the fee.
+    expect(fees() - before).toBeGreaterThanOrEqual(2);
+    expect(savingsDebit(sim, saver)).toEqual({ room: saver.balance - fee, fee });
+  });
+
+  it('takes a fee in the save’s money, where the bank’s is another', () => {
+    const sim = lifeIn('us-ny-newyork', 'us-chase', 'life-fee-money');
+    let saver = savings(sim);
+    if (!saver) saver = sim.universe.accounts[sim.must<{ accountId: string }>({ kind: 'bank.open_savings', payload: {} }).accountId]!;
+    saver.bankId = 'ca-rbc';
+    give(sim, saver, 1_000_00);
+    for (let n = 0; n < 3; n += 1) sim.post({ memo: 'out', category: 'transfer', postings: [{ accountId: saver.id, amount: -1_00 }, { accountId: current(sim).id, amount: 1_00 }] });
+    expect(savingsWithdrawalFee(sim, saver)).toBe(inSaveMoney(sim, ACCOUNT_LIFE['ca-rbc']!.withdrawalFee!, 'CAD'));
+    expect(savingsWithdrawalFee(sim, saver)).not.toBe(ACCOUNT_LIFE['ca-rbc']!.withdrawalFee!);
+  });
+
+  it('lets no more than Germany’s €2,000 a month out without notice, whichever way it goes', () => {
+    const sim = lifeIn('de-be-berlin', 'de-deutsche-bank', 'life-de-allow');
+    let saver = savings(sim);
+    if (!saver) saver = sim.universe.accounts[sim.must<{ accountId: string }>({ kind: 'bank.open_savings', payload: {} }).accountId]!;
+    give(sim, saver, 5_000_00);
+    const left = savingsLeftThisMonth(sim, saver)!;
+    expect(left).toBeLessThanOrEqual(2_000_00);
+    expect(savingsDebit(sim, saver).room).toBe(left);
+    sim.must({ kind: 'bank.set_payments', payload: { linkSavings: true } });
+    give(sim, current(sim), -current(sim).balance);
+    // The bank can pay what the allowance lets out, not what savings holds; a payment from it lowers the allowance.
+    expect(inTheBank(sim, sim.player)).toBe(left);
+    expect(payFromCurrent(sim, sim.player, 500_00, 'Test bill', 'bills')).toBe(true);
+    expect(savingsLeftThisMonth(sim, saver)).toBe(left - 500_00);
+    // The bank's own fee isn't a withdrawal of the holder's.
+    sim.post({ memo: 'A fee', category: 'bank_fee', postings: [{ accountId: saver.id, amount: -5_00 }, { accountId: sim.nominalAccount('expense', 'Bank Fees').id, amount: 5_00 }] });
+    expect(savingsLeftThisMonth(sim, saver)).toBe(left - 500_00);
+    // A payment set for a day, from savings, past what's left: not made.
+    const bal = saver.balance;
+    sim.schedule({ at: sim.now + 60_000, kind: 'bank.scheduled_payment', label: 'x', category: 'home', priority: 37, payload: { personId: sim.player.id, fromId: saver.id, toId: current(sim).id, amount: left } });
+    sim.advanceBy(2 * 60_000);
+    expect(saver.balance).toBe(bal);
+  });
+
+  it('closes German savings past the allowance on three months’ notice, and into the current account then', () => {
+    const sim = lifeIn('de-be-berlin', 'de-deutsche-bank', 'life-de-close');
+    let saver = savings(sim);
+    if (!saver) saver = sim.universe.accounts[sim.must<{ accountId: string }>({ kind: 'bank.open_savings', payload: {} }).accountId]!;
+    give(sim, saver, 5_000_00);
+    const answer = sim.must<{ closed: string; on?: number }>({ kind: 'bank.close_savings', payload: { accountId: saver.id } });
+    expect(answer.on).toBeGreaterThan(sim.now + 85 * MS_DAY);
+    expect(saver.closedAt).toBeUndefined();
+    expect(savingsNotice(sim, saver)?.at).toBe(answer.on);
+    expect(run(sim, 'bank.close_savings', { accountId: saver.id }).error).toMatch(/Notice is given/);
+    const held = saver.balance;
+    sim.advanceTo(answer.on! + 60_000);
+    expect(saver.closedAt).toBeDefined();
+    expect(saver.balance).toBe(0);
+    const moved = sim.universe.transactions.find((t) => t.memo === `Closed ${saver.name}`)!;
+    expect(moved.postings.find((q) => q.accountId === current(sim).id)!.amount).toBeGreaterThanOrEqual(held);
+  }, 120_000);
+
+  it('calls off the standing orders into savings it closes, and says a closed account is why an order failed', () => {
+    const sim = lifeIn('us-ny-newyork', 'us-chase', 'life-close-orders');
+    let saver = savings(sim);
+    if (!saver) saver = sim.universe.accounts[sim.must<{ accountId: string }>({ kind: 'bank.open_savings', payload: {} }).accountId]!;
+    give(sim, current(sim), 5_000_00);
+    sim.must({ kind: 'bank.add_standing_order', payload: { toId: saver.id, amount: 100_00, day: 15 } });
+    expect(paymentsOf(sim.player).standingOrders).toHaveLength(1);
+    sim.must({ kind: 'bank.close_savings', payload: { accountId: saver.id } });
+    expect(paymentsOf(sim.player).standingOrders).toHaveLength(0);
+    expect(sim.universe.scheduled.filter((i) => i.kind === 'bank.standing_order' && i.status === 'pending')).toHaveLength(0);
+  });
+
+  it('charges a German account’s quarter of fees when it closes mid-quarter', () => {
+    const sim = lifeIn('de-be-berlin', 'de-deutsche-bank', 'life-de-fees');
+    let saver = savings(sim);
+    if (!saver) saver = sim.universe.accounts[sim.must<{ accountId: string }>({ kind: 'bank.open_savings', payload: {} }).accountId]!;
+    // Down to a balance the month's allowance lets out whole, and a month on, so taking it down isn't this month's.
+    give(sim, saver, 500_00 - saver.balance);
+    sim.advanceBy(32 * MS_DAY);
+    saver.feesDue = 7_50;
+    const month = feeFor(sim, saver, monthStartOf(sim, sim.now)).fee;
+    sim.must({ kind: 'bank.close_savings', payload: { accountId: saver.id } });
+    const closing = sim.universe.transactions.find((t) => t.memo === `Closing fees: ${saver.name}`)!;
+    expect(closing.postings.find((q) => q.accountId === saver.id)!.amount).toBe(-(7_50 + month));
+  });
+
+  it('settles a German current account’s quarter and this month’s fee when it goes', () => {
+    const sim = lifeIn('de-be-berlin', 'de-deutsche-bank', 'life-de-current-fees');
+    const acct = current(sim);
+    const month = feeFor(sim, acct, monthStartOf(sim, sim.now)).fee;
+    expect(month).toBeGreaterThan(0);
+    acct.feesDue = 3_00;
+    const before = acct.balance;
+    settleFees(sim, acct);
+    expect(before - acct.balance).toBe(3_00 + month);
+    expect(acct.feesDue).toBe(0);
+  });
+
+  it('charges a second-chance account its own fee and not the ordinary one', () => {
+    const acct = { id: 'x', kind: 'checking', bankId: 'us-chase', ownerId: 'nobody', balance: 0, openedAt: 0, name: 'x' } as unknown as Account;
+    const sim = lifeIn('us-ny-newyork', 'us-chase', 'life-second');
+    expect(feeFor(sim, acct, monthStartOf(sim, sim.now)).fee).toBeGreaterThan(0);
+    acct.secondChance = true;
+    expect(feeFor(sim, acct, monthStartOf(sim, sim.now)).fee).toBe(0);
+  });
+
+  it('reads a tier, a floor and a cap in the bank’s own money', () => {
+    const product = { tiers: [{ from: 100_00, rate: 0.01 }, { from: 1_000_00, rate: 0.02 }], rateFrom: 100_00, rateUpTo: 1_000_00 } as never;
+    const account = { bankId: 'ca-cibc' } as Account;
+    const doubled = (x: number) => x * 2;
+    expect(tierRate(product, account, 1_500_00)).toBe(0.02);
+    expect(tierRate(product, account, 1_500_00, doubled)).toBe(0.01);
+    expect(earningBalance(product, 150_00)).toBe(150_00);
+    expect(earningBalance(product, 150_00, doubled)).toBe(0);
+    expect(earningBalance(product, 5_000_00, doubled)).toBe(2_000_00);
+  });
+
+  it('won’t link savings that aren’t there', () => {
+    const sim = lifeIn('us-ny-newyork', 'us-chase', 'life-no-link');
+    for (const a of bankAccountsOf(sim, sim.player)) if (a.kind === 'savings') sim.must({ kind: 'bank.close_savings', payload: { accountId: a.id } });
+    expect(run(sim, 'bank.set_payments', { linkSavings: true }).error).toMatch(/no savings account/);
+    expect(run(sim, 'bank.set_payments', { linkSavings: false }).ok).toBe(true);
   });
 
   it('rounds Bank of America’s debit purchases up into savings at the day’s end, and not Chase’s', () => {

@@ -39,6 +39,8 @@ import { formatDate, instantFromZoned, zonedParts, MS_DAY, type Instant } from '
 import { CITIES, COUNTRIES } from '../content/geography';
 import { PAYMENT_NORMS, CHECK_FEES, type PaymentMethod } from '../content/payments';
 import { bankById } from '../content/banks';
+import { savingsDebit } from './accountlife';
+import { inSaveMoney } from './banking';
 
 export type RentWay = 'auto' | 'check' | 'manual';
 export type BillsWay = 'auto' | 'card' | 'manual';
@@ -56,6 +58,8 @@ export interface PaymentSettings {
   checks: CheckInFlight[];
   /** Rent paid ahead of its day, by hand, held by the landlord against the next. */
   rentCredit?: Money;
+  /** A checkbook was ordered, the first time rent went by check: it isn't bought again. */
+  checkbookBought?: boolean;
 }
 
 export const STANDING_ORDER_KIND = 'bank.standing_order';
@@ -115,10 +119,10 @@ const METHOD_WORDS: Readonly<Record<PaymentMethod, string>> = {
 };
 
 /** How rent and bills usually go here, in plain words, for the screens. */
-export function paymentWords(cityId: string): { usual: string } | undefined {
+export function paymentWords(cityId: string): { usual: string; source: string } | undefined {
   const norm = PAYMENT_NORMS[isoOf(cityId) ?? ''];
   if (!norm) return undefined;
-  return { usual: `Rent here usually goes by ${METHOD_WORDS[norm.rentMost]}, and bills by ${METHOD_WORDS[norm.billsMost]}.` };
+  return { usual: `Rent here usually goes by ${METHOD_WORDS[norm.rentMost]}, and bills by ${METHOD_WORDS[norm.billsMost]}.`, source: norm.source };
 }
 
 /** Whether a direct debit here can be taken back within eight weeks (SEPA). */
@@ -131,10 +135,14 @@ function checkDays(cityId: string): number {
   return PAYMENT_NORMS[isoOf(cityId) ?? '']?.rentMost === 'check_postdated' ? 0 : 3;
 }
 
-function checkFees(sim: Simulation, person: Person) {
+/** The bank's check fees, in the save's money: until 2026-09-27 a Canadian stop was taken in the bank's own hundredths. */
+export function checkFees(sim: Simulation, person: Person) {
   const current = person.primaryAccountId ? sim.universe.accounts[person.primaryAccountId] : undefined;
   const bank = current?.bankId ? bankById(current.bankId) : undefined;
-  return { fees: bank ? CHECK_FEES[bank.id] : undefined, bank, current };
+  const listed = bank ? CHECK_FEES[bank.id] : undefined;
+  const inSave = (x: Money | undefined) => (x === undefined || !bank ? x : inSaveMoney(sim, x, bank.currency));
+  const fees = listed ? { ...listed, checkbook: inSave(listed.checkbook), stopPayment: inSave(listed.stopPayment) } : undefined;
+  return { fees, bank, current };
 }
 
 /** Writes a check that's cashed on a date, and puts its clearing on the calendar. */
@@ -205,7 +213,8 @@ export function registerPayments(sim: Simulation): void {
     if (current && to && !to.closedAt && current.balance >= order.amount) {
       s.post({ memo: `Standing order to ${to.name}`, category: 'transfer', postings: [{ accountId: current.id, amount: -order.amount }, { accountId: to.id, amount: order.amount }] });
     } else if (person.id === s.universe.playerId) {
-      s.notify({ category: 'bank', title: 'A Standing Order Didn’t Go', body: `${formatMoney(order.amount, saveCurrency(s.universe))} to ${to?.name ?? 'your savings'} wasn't in the current account on the day, so the bank didn't make it.`, importance: 50, route: '/workspace/bank' });
+      const why = !to || to.closedAt ? `${to?.name ?? 'The account'} is closed` : 'It wasn’t in the current account on the day';
+      s.notify({ category: 'bank', title: 'A Standing Order Didn’t Go', body: `${formatMoney(order.amount, saveCurrency(s.universe))} to ${to?.name ?? 'your savings'}: ${why}, so the bank didn’t make it.`, importance: 50, route: '/workspace/bank' });
     }
     s.schedule({ at: nextOn(s, order.day, item.at), kind: STANDING_ORDER_KIND, label: 'Standing Order', category: 'home', priority: 37, payload: { personId: person.id, orderId: order.id } });
   });
@@ -218,8 +227,11 @@ export function registerPayments(sim: Simulation): void {
     const to = s.universe.accounts[String(item.payload.toId)];
     const amount = Number(item.payload.amount);
     if (!from || !to || from.closedAt || to.closedAt) return;
-    if (from.balance >= amount) {
+    // From savings, what it lets out, and its withdrawal fee: until 2026-09-27 neither was read here.
+    const { room, fee } = from.kind === 'savings' ? savingsDebit(s, from) : { room: from.balance, fee: 0 };
+    if (room >= amount) {
       s.post({ memo: `Scheduled payment to ${to.name}`, category: 'transfer', postings: [{ accountId: from.id, amount: -amount }, { accountId: to.id, amount }] });
+      if (fee > 0) s.post({ memo: `Savings withdrawal fee: ${from.name}`, category: 'bank_fee', postings: [{ accountId: from.id, amount: -fee }, { accountId: s.nominalAccount('expense', 'Bank Fees').id, amount: fee }] });
     } else if (person.id === s.universe.playerId) {
       s.notify({ category: 'bank', title: 'A Scheduled Payment Didn’t Go', body: `${formatMoney(amount, saveCurrency(s.universe))} to ${to.name} wasn't in ${from.name} on the day.`, importance: 50, route: '/workspace/bank' });
     }
@@ -232,12 +244,14 @@ export function registerPayments(sim: Simulation): void {
     if (p.rent !== undefined) {
       if (!['auto', 'check', 'manual'].includes(p.rent)) throw new CommandError('Rent goes from the bank on its day, by check, or by hand.');
       if (p.rent === 'check' && !checksUsed(cityId)) throw new CommandError('Rent isn’t paid by check here.');
-      if (p.rent === 'check' && pay.rent !== 'check') {
-        // A checkbook, where the bank charges for one.
+      if (p.rent === 'check' && !pay.checkbookBought) {
+        // A checkbook, once, where the bank charges for one and the first isn't free.
+        // Until 2026-09-27 it was bought again on every switch back to checks.
         const { fees, current } = checkFees(s, person);
         if (fees?.checkbook && !fees.firstFree && current) {
           s.post({ memo: 'Checks ordered', category: 'bank_fee', postings: [{ accountId: current.id, amount: -fees.checkbook }, { accountId: s.nominalAccount('expense', 'Bank Fees').id, amount: fees.checkbook }] });
         }
+        pay.checkbookBought = true;
       }
       pay.rent = p.rent;
     }
@@ -249,6 +263,7 @@ export function registerPayments(sim: Simulation): void {
       if (p.everyday !== 'debit' && p.everyday !== 'credit' && p.everyday !== 'cash') throw new CommandError('Everyday spending goes in cash, on the debit card or on the credit card.');
       pay.everyday = p.everyday;
     }
+    if (p.linkSavings === true && !Object.values(s.universe.accounts).some((a) => a.ownerId === person.id && !a.closedAt && a.kind === 'savings' && a.category !== 'term')) throw new CommandError('There’s no savings account to cover the current account.');
     if (p.linkSavings !== undefined) pay.linkSavings = Boolean(p.linkSavings);
     return { payments: pay };
   });

@@ -56,7 +56,7 @@ import { personalityOf } from './personality';
 import { cardCeilingRoom, monthOrder, chargeForItem, chargeForPurchase, chargeReturned, overdraftHeadroom, purchaseMayOverdraw } from './lending';
 import { paymentsOf, setPaymentHooks, writeCheck } from './payments';
 import { cardRoom } from './credit';
-import { roundUpOf, roundUpsOn } from './accountlife';
+import { roundUpOf, roundUpsOn, savingsDebit } from './accountlife';
 import { hold } from './pending';
 import { CommandError } from '../core/simulation';
 import { billsFactor } from './seasons';
@@ -216,14 +216,20 @@ function savingsOf(sim: Simulation, person: Person): Account | undefined {
   return accountsOf(sim, person).find((a) => a.kind === 'savings' && a.category !== 'term');
 }
 
-/** What checking and savings hold between them, now. */
+/** What can come out of savings now, its fee and any monthly allowance allowed for. */
+function savingsRoom(sim: Simulation, person: Person): Money {
+  const savings = savingsOf(sim, person);
+  return savings ? savingsDebit(sim, savings).room : 0;
+}
+
+/** What checking and savings can pay between them, now. */
 export function inTheBank(sim: Simulation, person: Person): Money {
-  return Math.max(0, checkingOf(sim, person)?.balance ?? 0) + Math.max(0, savingsOf(sim, person)?.balance ?? 0);
+  return Math.max(0, checkingOf(sim, person)?.balance ?? 0) + savingsRoom(sim, person);
 }
 
 /** What a payment from the current account can reach: the account, and savings where it's linked to it. */
 function reachable(sim: Simulation, person: Person): Money {
-  return Math.max(0, checkingOf(sim, person)?.balance ?? 0) + (paymentsOf(person).linkSavings ? Math.max(0, savingsOf(sim, person)?.balance ?? 0) : 0);
+  return Math.max(0, checkingOf(sim, person)?.balance ?? 0) + (paymentsOf(person).linkSavings ? savingsRoom(sim, person) : 0);
 }
 
 /**
@@ -234,11 +240,22 @@ function reachable(sim: Simulation, person: Person): Money {
 export function drawFromBank(sim: Simulation, person: Person, amount: Money, withOverdraft = false, fromSavings = paymentsOf(person).linkSavings): { postings: { accountId: string; amount: Money }[]; short: Money } {
   const postings: { accountId: string; amount: Money }[] = [];
   let left = amount;
-  for (const account of [checkingOf(sim, person), fromSavings ? savingsOf(sim, person) : undefined]) {
-    if (!account || left <= 0) continue;
-    const take = Math.min(left, Math.max(0, account.balance));
+  const checking = checkingOf(sim, person);
+  if (checking && left > 0) {
+    const take = Math.min(left, Math.max(0, checking.balance));
     if (take > 0) {
-      postings.push({ accountId: account.id, amount: -take });
+      postings.push({ accountId: checking.id, amount: -take });
+      left -= take;
+    }
+  }
+  // From savings, what it lets out, and the bank's fee for the withdrawal beside it.
+  const savings = fromSavings ? savingsOf(sim, person) : undefined;
+  if (savings && left > 0) {
+    const { room, fee } = savingsDebit(sim, savings);
+    const take = Math.min(left, room);
+    if (take > 0) {
+      postings.push({ accountId: savings.id, amount: -take });
+      if (fee > 0) postings.push({ accountId: savings.id, amount: -fee }, { accountId: sim.nominalAccount('expense', 'Bank Fees').id, amount: fee });
       left -= take;
     }
   }

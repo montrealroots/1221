@@ -21,6 +21,7 @@ import { cardOf, cardTerms, DUE_KIND, minimumDue, statementDayOf, type CardTerm 
 import { bankById } from '@/engine/content/banks';
 import { useState } from 'react';
 import { inTheBank } from '@/engine/systems/household';
+import { PENDING } from '@/engine/content/pending';
 import { CARDS } from '@/engine/content/cards';
 
 const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -84,14 +85,29 @@ export function BankCard({ bankId }: { bankId: string }) {
   if (terms.penaltyApr) lines.push(terms.penaltyInForce ? `The penalty rate, ${pct(terms.penaltyApr)}, is in force${credit.penalty ? `, on the notice of ${formatDate(credit.penalty.noticeAt, sim.zone)}` : ''}: six payments on time in a row takes it off.` : `Sixty days late, and after 45 days’ notice the rate becomes ${pct(terms.penaltyApr)}.`);
   if (card.balance > 0) lines.push(`The card holds ${money(card.balance)} of your money${bankIso === 'US' ? ', and sends it back after six months if it’s still there' : ''}.`);
   // A fee the research didn't find isn't a fee of none; until 2026-09-26 the Barclaycard said it had none.
-  lines.push(terms.annualFee > 0 ? `${money(terms.annualFee)} a year, on the statement in ${opened}.` : terms.estimated.includes('annualFee') ? 'Its yearly fee wasn’t found, so SLATE charges none.' : 'No yearly fee.');
+  // In a US card's first year the law holds its fees to a quarter of the limit (Reg Z §1026.52(a)), as the statement charges it.
+  const firstYearFee = bankIso === 'US' && sim.now - card.openedAt < 365 * 86_400_000 ? Math.min(terms.annualFee, Math.round(limit * 0.25)) : undefined;
+  lines.push(firstYearFee !== undefined && firstYearFee < terms.annualFee ? `${money(firstYearFee)} this first year, on the statement in ${opened}: the law holds a first year’s fees to a quarter of the limit. ${money(terms.annualFee)} a year after.` : terms.annualFee > 0 ? `${money(terms.annualFee)} a year, on the statement in ${opened}.` : terms.estimated.includes('annualFee') ? 'Its yearly fee wasn’t found, so SLATE charges none.' : 'No yearly fee.');
   lines.push(`A statement on the ${statementDayOf(person)}${ordinal(statementDayOf(person))}, and the payment due ${terms.graceDays !== undefined ? `${terms.graceDays} days after it` : 'on the 15th of the next month'}${due ? `: next on ${formatDate(due.at, sim.zone)}` : ''}.`);
   if (!charge) {
     lines.push(`The least a statement asks is ${pct(terms.minimumShare)} of it${terms.minimumPlusInterest ? ' plus the month’s interest' : ''}${terms.minimumFloor > 0 ? `, or ${money(terms.minimumFloor)} if that’s more` : ''}${credit.statementBalance > 0 ? `: ${money(minimumDue(sim, credit.statementBalance, terms, credit.statementInterest ?? 0))} on this one` : ''}.`);
   }
-  lines.push(`A payment short of ${charge ? 'the statement' : 'the minimum'} costs ${money(terms.lateFee)}, goes on your record, and cuts the limit.`);
+  // As the engine takes it, by country: until 2026-09-27 every card read as America's rule of the day before.
+  const short = charge ? 'the statement' : 'the minimum';
+  if (bankIso === 'US') {
+    const asked = credit.statementBalance > 0 ? minimumDue(sim, credit.statementBalance, terms, credit.statementInterest, credit.statementPlanDue) : undefined;
+    lines.push(`A payment short of ${short} costs ${money(asked !== undefined ? Math.min(terms.lateFee, asked) : terms.lateFee)}${asked === undefined || asked >= terms.lateFee ? ', or the minimum if that’s less' : ', the minimum, which the law holds it to'}. Still short at the next due date, thirty days past due, it goes on your record and the limit is cut.`);
+  } else {
+    lines.push(`A payment short of ${short} costs ${money(terms.lateFee)}, goes on your record, and cuts the limit.${bankIso === 'GB' ? ` ${bankName} takes what was missed from your other accounts with it.` : ''}`);
+  }
+  if (bankIso === 'GB' && credit.persistentNoticeAt !== undefined && !credit.hardship) {
+    lines.push(`Persistent debt: over eighteen months more went to interest and fees than to the card (the bank wrote on ${formatDate(credit.persistentNoticeAt, sim.zone)}). At thirty-six the bank freezes the interest, sets ${money(Math.ceil(owed / 48 / 100) * 100)} a month, and suspends the card.`);
+  }
   if (credit.suspended === 'late') lines.push(`Suspended: ${credit.missed ?? 0} payments missed in a row. It works again once a payment is made on time; six in a row and it's charged off to collections.`);
-  if (credit.hardship) lines.push(`On a plan since ${formatDate(credit.hardship.since, sim.zone)}: no interest, and ${money(credit.hardship.payment)} a month until it’s cleared. The card can’t be used until then.`);
+  if (credit.hardship) lines.push(`${credit.suspended === 'persistent' ? 'Three years of persistent debt, and the bank put it on a plan' : 'On a plan'} since ${formatDate(credit.hardship.since, sim.zone)}: no interest, and ${money(credit.hardship.payment)} a month until it’s cleared. The card can’t be used until then.`);
+  // Credit a payment from another bank freed, held while it clears (`PENDING.paymentHoldDays`).
+  const holds = credit.paymentHolds ?? [];
+  if (holds.length) lines.push(`${money(holds.reduce((sum, one) => sum + one.amount, 0))} of the credit your payment freed is held until ${formatDate(Math.max(...holds.map((one) => one.until)), sim.zone)}, while it clears from another bank.${card.bankId && PENDING[card.bankId]?.paymentHoldWords ? ` ${PENDING[card.bankId]!.paymentHoldWords}` : ''}`);
   if (credit.closing !== undefined) lines.push('Closed to anything new. What’s owed is paid down as before, and then the account closes.');
   if (credit.overLimitOptIn) lines.push(`Opted in to going over the limit: a purchase can take it up to a tenth over, SLATE’s estimate of what a bank allows${terms.overLimitFee ? `, for ${money(terms.overLimitFee)} a statement, three in a row at most` : ', and this card charges nothing for it'}.`);
   if (terms.capped) {

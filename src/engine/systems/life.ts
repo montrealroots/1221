@@ -225,20 +225,34 @@ function debtWokenWith(person: Person, at: number): number {
  * right now?
  */
 export function readiness(person: Person): number {
+  const product = readinessParts(person).reduce((p, part) => p * part.factor, 1);
+  return clamp(100 * product / 1.35, 5, 100);
+}
+
+export type ReadinessDial = 'energy' | 'stress' | 'sleepDebt' | 'nourishment' | 'morale' | 'hygiene' | 'condition';
+
+/**
+ * Each dial's multiplier on readiness now, and the most it gives at its best:
+ * what the Wellbeing look ranks as costing the most. Until 2026-09-27 the
+ * look ranked the dials by a formula of its own, and hygiene at 40 outranked
+ * stress at 50, which costs readiness three times as much.
+ */
+export function readinessParts(person: Person): { key: ReadinessDial; factor: number; best: number }[] {
   const w = person.wellbeing;
-  const energyPart = remap(w.energy, 0, 100, 0.45, 1.15);
-  const stressPart = remap(w.stress, 0, 100, 1.12, 0.62);
-  const debtPart = remap(w.sleepDebt, 0, 30, 1.05, 0.66);
-  const nourishPart = remap(w.nourishment, 0, 100, 0.78, 1.05);
-  const moralePart = remap(w.morale, 0, 100, 0.82, 1.12);
-  // Turning up to a room having not showered in two days is not nothing, but
-  // it is not much either: a few points, not a career.
-  const cleanPart = remap(w.hygiene ?? 80, 0, 100, 0.92, 1.03);
-  // Condition was left out, so fitness reached nothing past its own dial. A
-  // body at ninety-one, where everyday fitness mends it to, is 2.7% short of
-  // one at a hundred.
-  const soundPart = remap(w.condition, 0, 100, 0.7, 1);
-  return clamp(100 * energyPart * stressPart * debtPart * nourishPart * moralePart * cleanPart * soundPart / 1.35, 5, 100);
+  return [
+    { key: 'energy', factor: remap(w.energy, 0, 100, 0.45, 1.15), best: 1.15 },
+    { key: 'stress', factor: remap(w.stress, 0, 100, 1.12, 0.62), best: 1.12 },
+    { key: 'sleepDebt', factor: remap(w.sleepDebt, 0, 30, 1.05, 0.66), best: 1.05 },
+    { key: 'nourishment', factor: remap(w.nourishment, 0, 100, 0.78, 1.05), best: 1.05 },
+    { key: 'morale', factor: remap(w.morale, 0, 100, 0.82, 1.12), best: 1.12 },
+    // Turning up to a room having not showered in two days is not nothing, but
+    // it is not much either: a few points, not a career.
+    { key: 'hygiene', factor: remap(w.hygiene ?? 80, 0, 100, 0.92, 1.03), best: 1.03 },
+    // Condition was left out, so fitness reached nothing past its own dial. A
+    // body at ninety-one, where everyday fitness mends it to, is 2.7% short of
+    // one at a hundred.
+    { key: 'condition', factor: remap(w.condition, 0, 100, 0.7, 1), best: 1 },
+  ];
 }
 
 export function wellbeingSummary(person: Person): string {

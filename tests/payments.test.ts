@@ -10,6 +10,7 @@ import { MS_DAY, instantFromZoned } from '@/engine/core/time';
 import { PAYMENT_NORMS, CHECK_FEES, type PaymentNorm, type CheckFees } from '@/engine/content/payments';
 import { paymentsOf } from '@/engine/systems/payments';
 import { arrearsOf, spend } from '@/engine/systems/household';
+import { exchange } from '@/engine/content/currency';
 
 const norms = PAYMENT_NORMS as Record<string, PaymentNorm>;
 const checkFees = CHECK_FEES as Record<string, CheckFees>;
@@ -166,6 +167,27 @@ describe('rent by check', () => {
     const paid = sim.universe.transactions.filter((t) => t.category === 'rent' && t.memo === 'Rent' && t.postings.some((p) => p.accountId === current(sim).id));
     expect(paid).toEqual([]);
     expect(sim.universe.notifications.some((n) => n.title === 'Check Stopped')).toBe(true);
+  });
+
+  it('charges the stop in the save’s money, and buys the checkbook once, where the first isn’t free', () => {
+    withNorm('US', US_CHECKS);
+    withFees('us-chase', { stopPayment: 30_00, checkbook: 20_00, source: 'test' });
+    const sim = lifeIn('us-ny-newyork', { wealth: 'comfortable', bankId: 'us-chase' }, 'pay-book');
+    const books = () => sim.universe.transactions.filter((t) => t.memo === 'Checks ordered').length;
+    const had = books();
+    run(sim, 'bank.set_payments', { rent: 'auto' });
+    run(sim, 'bank.set_payments', { rent: 'check' });
+    run(sim, 'bank.set_payments', { rent: 'auto' });
+    run(sim, 'bank.set_payments', { rent: 'check' });
+    expect(books() - had).toBeLessThanOrEqual(1);
+    expect(paymentsOf(sim.player).checkbookBought).toBe(true);
+    // A bank in another money: its fee is converted.
+    withFees('ca-rbc', { stopPayment: 12_50, source: 'test' });
+    current(sim).bankId = 'ca-rbc';
+    sim.advanceTo(firstOf(sim, 2));
+    const check = paymentsOf(sim.player).checks[0]!;
+    const answer = run(sim, 'bank.stop_check', { id: check.id });
+    expect((answer.value as { fee: number }).fee).toBe(exchange(12_50, 'CAD', 'USD'));
   });
 
   it('isn’t offered where rent isn’t paid by check', () => {

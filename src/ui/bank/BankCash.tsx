@@ -96,7 +96,7 @@ export function BankCash({ bankId }: { bankId: string }) {
       )}
       <p className="xs dim" style={{ margin: 'var(--s2) 0 0' }}>
         {rules ? `Fees and limits from the bank: ${rules.source}.` : 'This bank’s cash fees weren’t found, so taking cash out here costs nothing.'}
-        {cash?.estimated.includes('cashAdvance') ? ' The cash advance’s fee is SLATE’s estimate of a US card’s: 5% or $10.' : ''}
+        {cash?.estimated.includes('cashAdvance') ? ` The cash advance’s fee is SLATE’s estimate of a US card’s: ${Number((cash.cashFeeShare * 100).toFixed(2))}% or ${money(cash.cashFeeMin)}.` : ''}
       </p>
     </Panel>
   );

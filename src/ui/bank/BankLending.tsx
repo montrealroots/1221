@@ -25,8 +25,11 @@ import { END_WORDS } from '@/engine/systems/accountlife';
 import { banksFor, inSaveMoney, isoOf } from '@/engine/systems/banking';
 import {
   ESTIMATE, LOAN_DUE_KIND, SWITCH_KIND, collectionsOf, lendingOf, loanOf, loanOffer, overdraftOffer, overdraftRoom, termsOf,
-  FRANCE,
+  FRANCE, CHEX, declines, nextBusinessDay,
 } from '@/engine/systems/lending';
+
+/** A date key in words, as the calendar has it: no zone round trip. */
+const dayWords = (key: string) => { const [y, m, d] = key.split('-').map(Number); return formatDate(Date.UTC(y!, m! - 1, d!, 12), 'UTC'); };
 
 /** Whole units typed, as a banking app takes them, in hundredths. */
 const cents = centsFromTyped;
@@ -51,7 +54,9 @@ export function BankLending({ bank, show }: { bank: Bank; show: readonly Lending
   const switching = useWorld((s) => s.universe.scheduled.find((one) => one.kind === SWITCH_KIND && one.status === 'pending'));
   // A bank owed a charged-off debt won't open an account.
   const owedTo = useWorld((s) => collectionsOf(s, s.player)?.institution);
-  const others = banksFor(homeOf(sim.player)).filter((b) => b.id !== bank.id && b.name !== owedTo);
+  // Nor one that turns a ChexSystems report away: until 2026-09-27 the list offered them, and the switch was refused.
+  const chex = sim.player.chex && sim.now - sim.player.chex.at < CHEX.years * 365 * 86_400_000 ? sim.player.chex : undefined;
+  const others = banksFor(homeOf(sim.player)).filter((b) => b.id !== bank.id && b.name !== owedTo && !declines(sim, sim.player, b));
   const rule = SWITCHING[isoOf(homeOf(sim.player)) ?? ''];
 
   const [limit, setLimit] = useState('');
@@ -66,7 +71,13 @@ export function BankLending({ bank, show }: { bank: Bank; show: readonly Lending
   return (
     <div className="grid grid-2" style={{ margin: 'var(--s5) 0' }}>
       {show.includes('borrowing') && (
-      <Panel title="Overdraft" subtitle={od ? undefined : 'None on record'}>
+      <Panel title="Overdraft" subtitle={current?.secondChance ? 'None on a second-chance account' : od ? undefined : 'None on record'}>
+        {current?.secondChance && (
+          <p className="small">
+            A second-chance account: {formatMoney(inSaveMoney(sim, CHEX.secondChanceFee, 'USD'), cur)} a month, SLATE’s estimate, in place of the ordinary account’s fee, and no overdraft. A payment it can’t cover comes back unpaid with its fee. Source: {CHEX.source}.
+          </p>
+        )}
+        {!current?.secondChance && <>
         {!od && <p className="small">{bank.name} has no overdraft terms SLATE found, so the account never goes below zero here: a payment it can’t cover comes from savings if you’ve linked it; the day’s shopping then goes on the card, and a bill or the rent comes back unpaid with its fee and is owed.</p>}
         {od?.kind === 'per_item' && (
           <p className="small">
@@ -76,7 +87,9 @@ export function BankLending({ bank, show }: { bank: Bank; show: readonly Lending
             {od.maxPerMonth !== undefined ? `, at most ${od.maxPerMonth} a month` : ''}
             {od.nextDay ? ', unless the account is back by the end of the next business day' : ''}
             {od.graceUpTo !== undefined ? `, and nothing while it’s overdrawn by ${formatMoney(inSaveMoney(sim, od.graceUpTo, bank.currency), cur, { cents: false })} or less` : ''}
+            {od.smallItemsFree !== undefined ? `, and none on an item of ${formatMoney(inSaveMoney(sim, od.smallItemsFree, bank.currency), cur)} or less` : ''}
             {od.rate !== undefined ? `, with ${pct(od.rate)} a year on what’s overdrawn` : ''}.
+            {od.ties ? ` Payments at the same moment post ${od.ties === 'high' ? 'largest' : 'smallest'} first.` : ''}
             {' '}It covers up to about {money(room)}, SLATE’s estimate: the bank publishes no limit.
           </p>
         )}
@@ -107,7 +120,7 @@ export function BankLending({ bank, show }: { bank: Bank; show: readonly Lending
         {od?.kind === 'unarranged' && (
           <p className="small">
             {bank.name} arranges no overdraft on this account, but pays what it can’t{od.rate !== undefined ? `, at ${pct(od.rate)} a year` : ''}
-            {od.monthlyFee !== undefined ? `, and charges ${formatMoney(inSaveMoney(sim, od.monthlyFee, bank.currency), cur)} for a month it’s more than ${formatMoney(inSaveMoney(sim, od.graceUpTo ?? 0, bank.currency), cur, { cents: false })} overdrawn${od.freeUnder !== undefined ? `, none under ${od.freeUnder}` : ''}` : ''}.
+            {od.monthlyFee !== undefined ? `, and charges ${formatMoney(inSaveMoney(sim, od.monthlyFee, bank.currency), cur)} for a month it’s more than ${formatMoney(inSaveMoney(sim, od.graceUpTo ?? 0, bank.currency), cur, { cents: false })} overdrawn${od.afterDays !== undefined && od.afterDays > 1 ? ` on ${od.afterDays} days or more` : ''}${od.freeUnder !== undefined ? `, none under ${od.freeUnder}` : ''}` : ''}.
             {od.rate === undefined ? ' The bank charges interest too, at a rate it doesn’t publish, so none is charged here.' : ''}
             {' '}It covers up to about {money(room)}, SLATE’s estimate.
           </p>
@@ -128,7 +141,7 @@ export function BankLending({ bank, show }: { bank: Bank; show: readonly Lending
               {od.monthlyFee !== undefined ? ` ${formatMoney(inSaveMoney(sim, od.monthlyFee, bank.currency), cur)} a month while it’s arranged.` : ''}
               {od.setupFee !== undefined ? ` ${formatMoney(inSaveMoney(sim, od.setupFee, bank.currency), cur)} to set one up.` : ''}
               {od.yearlyFee !== undefined ? ` ${formatMoney(inSaveMoney(sim, od.yearlyFee, bank.currency), cur)} a year to have one.` : ''}
-              {od.beyond ? ` Past the limit the bank still pays${od.beyond.rate !== undefined ? `, at ${pct(od.beyond.rate)} a year on the part beyond it` : ''}${od.beyond.fee !== undefined ? `, for ${formatMoney(inSaveMoney(sim, od.beyond.fee, bank.currency), cur)} an operation${od.beyond.maxPerMonth !== undefined ? `, at most ${od.beyond.maxPerMonth} a month` : ''}` : ''}${od.beyond.monthlyFee !== undefined ? `, and ${formatMoney(inSaveMoney(sim, od.beyond.monthlyFee, bank.currency), cur)} for a month it’s more than ${formatMoney(inSaveMoney(sim, od.beyond.graceUpTo ?? 0, bank.currency), cur, { cents: false })} past it` : ''}.` : ''}
+              {od.beyond ? ` Past the limit the bank still pays${od.beyond.rate !== undefined ? `, at ${pct(od.beyond.rate)} a year on the part beyond it` : ''}${od.beyond.fee !== undefined ? `, for ${formatMoney(inSaveMoney(sim, od.beyond.fee, bank.currency), cur)} an operation${od.beyond.maxPerMonth !== undefined ? `, at most ${od.beyond.maxPerMonth} a month` : ''}` : ''}${od.beyond.monthlyFee !== undefined ? `, and ${formatMoney(inSaveMoney(sim, od.beyond.monthlyFee, bank.currency), cur)} for a month it’s more than ${formatMoney(inSaveMoney(sim, od.beyond.graceUpTo ?? 0, bank.currency), cur, { cents: false })} past it${od.beyond.afterDays !== undefined && od.beyond.afterDays > 1 ? ` on ${od.beyond.afterDays} days or more` : ''}` : ''}.` : ''}
             </p>
             {'refused' in offer
               ? <p className="small muted" style={{ margin: 0 }}>{offer.refused}</p>
@@ -155,7 +168,21 @@ export function BankLending({ bank, show }: { bank: Bank; show: readonly Lending
             )}
           </div>
         )}
+        {(current?.pendingItems?.length ?? 0) > 0 && od?.kind === 'per_item' && (
+          <p className="small">
+            {current!.pendingItems!.reduce((n, one) => n + one.count, 0)} overdraft {current!.pendingItems!.reduce((n, one) => n + one.count, 0) === 1 ? 'fee is' : 'fees are'} held, {formatMoney(inSaveMoney(sim, od.fee * current!.pendingItems!.reduce((n, one) => n + one.count, 0), bank.currency), cur)}: each comes off after the end of {dayWords(nextBusinessDay(current!.pendingItems![0]!.day, bank.iso === 'US'))} unless the account is back to {od.graceUpTo !== undefined ? `−${formatMoney(inSaveMoney(sim, od.graceUpTo, bank.currency), cur)}` : 'zero'} or better.
+          </p>
+        )}
+        {Math.floor(current?.odAccrued ?? 0) > 0 && (
+          <p className="small">{money(Math.floor(current!.odAccrued!))} of overdraft interest has built this month; it’s charged on the first.</p>
+        )}
+        {od?.kind === 'tacit' && (current?.odPeak ?? 0) > 0 && (
+          <p className="small">
+            The month’s deepest point so far is {money(current!.odPeak!)}; the commission on it would be {formatMoney(Math.max(Math.round(current!.odPeak! * od.commission.share), inSaveMoney(sim, od.commission.min, bank.currency)), cur)}{od.cap ? `, less whatever takes the month past the cap` : ''}.
+          </p>
+        )}
         <p className="xs dim" style={{ marginTop: 'var(--s3)' }}>{od ? `Source: ${od.source}.` : bank.overdraft ?? ''}</p>
+        </>}
       </Panel>
       )}
 
@@ -267,7 +294,14 @@ export function BankLending({ bank, show }: { bank: Bank; show: readonly Lending
                 ? `Through the ${rule.scheme}: ${rule.workingDays} working days, and your balances, wages and bills move with you.`
                 : 'You open the new accounts and move the money yourself, the same day.'}
               {' '}An overdraft has to be cleared first. Term deposits and loans stay where they are.
+              {bank.iso === 'DE' ? ' Savings past the month’s €2,000 isn’t moved: notice is given on it, and it follows in three months.' : ''}
             </p>
+            {chex && (
+              <p className="small" style={{ margin: 0 }}>
+                {chex.bank} reported you to ChexSystems on {formatDate(chex.at, sim.zone)}; it stands until {formatDate(chex.at + CHEX.years * 365 * 86_400_000, sim.zone)}. A bank here turns a report away about {Math.round((debt && debt.balance < 0 ? CHEX.declines.unpaid : CHEX.declines.paid) * 100)}% of the time, SLATE’s estimate, and the ones that have are left off the list. Source: {CHEX.source}.
+              </p>
+            )}
+            {rule && <p className="xs dim" style={{ margin: 0 }}>Source: {rule.source}.</p>}
             <div className="field-act">
               <div className="field"><label htmlFor="switch-to">Switch To</label><select id="switch-to" value={target} onChange={(e) => setTarget(e.target.value)}>
                 {/* The dearest current account first, the cheapest last. */}

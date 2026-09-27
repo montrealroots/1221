@@ -7,7 +7,8 @@ import { quickSave } from '@/engine';
 import type { Simulation } from '@/engine/core/simulation';
 import { MS_DAY, zonedParts } from '@/engine/core/time';
 import { CARDS, type CardProduct } from '@/engine/content/cards';
-import { cardOf, cardTerms, DUE_KIND, NO_CARD, reportWithoutCard, STATEMENT_KIND } from '@/engine/systems/credit';
+import { cardOf, cardRoom, cardTerms, DUE_KIND, NO_CARD, reportWithoutCard, STATEMENT_KIND } from '@/engine/systems/credit';
+import { PENDING } from '@/engine/content/pending';
 import { canPay } from '@/engine/systems/household';
 
 const cards = CARDS as Record<string, CardProduct | { none: true; source: string }>;
@@ -110,6 +111,23 @@ describe('applying for a card', () => {
     expect(fresh.bankId).toBe(old.bankId);
     expect(fresh.creditLimit).toBe(answer.limit);
     expect(fresh.name).not.toMatch(/Credit Card$/);
+  });
+
+  it('holds back the credit a payment from another bank frees for the card bank’s days, and not one from its own', () => {
+    const sim = lifeIn('us-ny-newyork', { wealth: 'comfortable', bankId: 'us-chase' }, 'cl-hold');
+    const c = card(sim)!;
+    expect(c.bankId).toBe('us-chase');
+    give(sim, c.id, -500_00);
+    run(sim, 'finance.pay_card', { amount: 100_00 });
+    expect(sim.player.credit!.paymentHolds).toBeUndefined();
+    // Paid from another bank, as after a switch: the card's bank holds its fifteen days.
+    sim.universe.accounts[sim.player.primaryAccountId!]!.bankId = 'us-citi';
+    const before = cardRoom(sim.player, c);
+    run(sim, 'finance.pay_card', { amount: 200_00 });
+    expect(sim.player.credit!.paymentHolds).toEqual([{ amount: 200_00, until: sim.now + PENDING['us-chase']!.paymentHoldDays! * MS_DAY }]);
+    expect(cardRoom(sim.player, c)).toBe(before);
+    sim.advanceBy((PENDING['us-chase']!.paymentHoldDays! + 1) * MS_DAY);
+    expect(sim.player.credit!.paymentHolds).toBeUndefined();
   });
 
   it('is declined for a poor record, and refused where the bank issues no card or one is held', () => {

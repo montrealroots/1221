@@ -45,7 +45,8 @@ import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { addMonths, formatDate, instantFromZoned, zonedParts, MS_DAY, type Instant } from '../core/time';
 import { bankById } from '../content/banks';
 import { ACCOUNT_LIFE, UNCLAIMED, type BankAccountLife, type TermEnd } from '../content/accountlife';
-import { interestTaxFor, openOne } from './banking';
+import { inSaveMoney, interestTaxFor, openOne } from './banking';
+import { savingsLeftThisMonth } from './cash';
 import { lendingOf } from './lending';
 import { recordInterest } from './earnings';
 
@@ -94,11 +95,22 @@ export function inCoolingOff(sim: Simulation, account: Account): boolean {
   return sim.now - account.openedAt <= days * MS_DAY;
 }
 
-/** Savings withdrawals this calendar month, for the bank's free count. */
+/**
+ * Withdrawals from savings this month, for the bank's free count: every
+ * payment out, not the bank's own interest tax or fees. Until 2026-09-27 it
+ * counted only a move by hand, in the clock's zone rather than the bank's
+ * month, and a payment the linked savings made was never counted or charged.
+ */
 function withdrawalsThisMonth(sim: Simulation, account: Account): number {
-  const p = zonedParts(sim.now, sim.zone);
-  const since = instantFromZoned({ year: p.year, month: p.month, day: 1, hour: 0 }, sim.zone);
-  return sim.universe.transactions.filter((t) => t.at >= since && t.category === 'transfer' && t.postings.some((q) => q.accountId === account.id && q.amount < 0)).length;
+  const p = zonedParts(sim.now, sim.homeZone);
+  const since = instantFromZoned({ year: p.year, month: p.month, day: 1, hour: 0 }, sim.homeZone);
+  let n = 0;
+  const list = sim.universe.transactions;
+  for (let i = list.length - 1; i >= 0 && list[i]!.at >= since; i -= 1) {
+    const t = list[i]!;
+    if (t.category !== 'interest' && t.category !== 'bank_fee' && t.postings.some((q) => q.accountId === account.id && q.amount < 0)) n += 1;
+  }
+  return n;
 }
 
 /** The fee a withdrawal from savings costs now, past the bank's free ones a month (B12, B33). */
@@ -106,7 +118,21 @@ export function savingsWithdrawalFee(sim: Simulation, account: Account): Money {
   if (account.kind !== 'savings' || account.category === 'term' || !account.bankId) return 0;
   const rules = ACCOUNT_LIFE[account.bankId];
   if (rules?.freeWithdrawals === undefined || !rules.withdrawalFee) return 0;
-  return withdrawalsThisMonth(sim, account) >= rules.freeWithdrawals ? rules.withdrawalFee : 0;
+  // In the save's money: until 2026-09-27 a Canadian or New Zealand fee was taken in the bank's own hundredths.
+  return withdrawalsThisMonth(sim, account) >= rules.freeWithdrawals ? inSaveMoney(sim, rules.withdrawalFee, bankById(account.bankId)!.currency) : 0;
+}
+
+/**
+ * What can come out of easy-access savings now, and what the next
+ * withdrawal costs: the balance less the fee, and no more than Germany's
+ * monthly allowance without notice. Every way money leaves savings reads
+ * it: a move by hand, the linked sweep, a scheduled payment, the card paid
+ * from the bank.
+ */
+export function savingsDebit(sim: Simulation, account: Account): { room: Money; fee: Money } {
+  const fee = savingsWithdrawalFee(sim, account);
+  const left = savingsLeftThisMonth(sim, account);
+  return { room: Math.max(0, Math.min(account.balance - fee, left ?? Infinity)), fee };
 }
 
 /** What round-ups have to move into savings tonight. */

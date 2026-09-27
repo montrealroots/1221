@@ -301,10 +301,13 @@ export function settleUkYears(sim: Simulation, person: Person, calendarYear: num
   for (const [key, gross] of Object.entries(r.ukYears ?? {})) {
     // The year from April key to April key + 1 files by 31 January key + 2.
     if (Number(key) + 2 > calendarYear || r.ukSettled?.includes(key)) continue;
-    (r.ukSettled ??= []).push(key);
     const withheld = r.ukWithheld?.[key] ?? 0;
     const tax = gross <= usd(ABROAD.uk.treatyUsd, cur) ? 0 : ukTaxOn(gross, cur);
     const change = tax - withheld;
+    // With no account to pay or refund through it waits for the next year's;
+    // until 2026-09-27 it was marked settled and never paid.
+    if (change !== 0 && !account) continue;
+    (r.ukSettled ??= []).push(key);
     if (change === 0 || !account) continue;
     const uk = (yearOf(person, calendarYear).foreign.uk ??= { gross: 0, withheld: 0 });
     uk.withheld += change;

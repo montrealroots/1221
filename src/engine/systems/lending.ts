@@ -81,7 +81,8 @@ import { ageOn } from './mortality';
 import { LENDING, SWITCHING, type Lending, type Loan, type Overdraft, type Unarranged } from '../content/banks-lending';
 import { accountNumber } from './banknumber';
 import { endTerm, idleAccounts } from './accountlife';
-import { bankOf, banksFor, inSaveMoney, interestTaxFor, isoOf, monthStartOf, settleInterest } from './banking';
+import { bankOf, banksFor, inSaveMoney, interestTaxFor, isoOf, monthStartOf, savingsNotice, settleFees, settleInterest, SAVINGS_NOTICE_KIND } from './banking';
+import { savingsLeftThisMonth } from './cash';
 import { homeOf } from './earnings';
 import { usBankHoliday } from '../content/usholidays';
 
@@ -556,8 +557,9 @@ function completeSwitch(sim: Simulation, person: Person, to: Bank, quietly = fal
       id: sim.nextId('account'), kind, name: kind === 'checking' ? to.current.name : to.savings.name, ownerId: person.id,
       institution: to.name, bankId: to.id, number, last4: number.replace(/\D/g, '').slice(-4), openedAt: sim.now, monthOpen: 0,
     });
-    // The balance goes across, and anything built up on it is paid first.
+    // The balance goes across, and anything built up on it is paid first, and any fees it owes.
     settleInterest(sim, from, `Interest: ${from.name}, on closing`);
+    settleFees(sim, from);
     if (from.balance !== 0) {
       post(sim, `Moved to ${to.name}`, 'transfer', [{ accountId: from.id, amount: -from.balance }, { accountId: account.id, amount: from.balance }]);
     }
@@ -569,7 +571,13 @@ function completeSwitch(sim: Simulation, person: Person, to: Bank, quietly = fal
   if (secondChance) current.secondChance = true;
   person.primaryAccountId = current.id;
   const moved = new Map([[old.id, current.id]]);
-  if (oldSavings) moved.set(oldSavings.id, open('savings', oldSavings).id);
+  // German savings past the month's allowance isn't a payment account the
+  // switch moves: notice is given on it, and it closes into the new account
+  // in three months (`bank.savings_notice`).
+  const allowance = oldSavings ? savingsLeftThisMonth(sim, oldSavings) : undefined;
+  if (oldSavings && allowance !== undefined && oldSavings.balance + Math.floor(oldSavings.accrued ?? 0) > allowance) {
+    if (!savingsNotice(sim, oldSavings)) sim.schedule({ at: addMonths(sim.now, 3, sim.homeZone), kind: SAVINGS_NOTICE_KIND, label: `${oldSavings.name} Closes`, category: 'home', priority: 36, payload: { personId: person.id, accountId: oldSavings.id } });
+  } else if (oldSavings) moved.set(oldSavings.id, open('savings', oldSavings).id);
   // Standing orders and payments set up ahead move with the accounts, as a
   // switching service moves them. Until 2026-09-27 they stayed pointed at the
   // closed accounts: an order failed every month, and a payment was dropped.
@@ -671,15 +679,19 @@ function settlePendingItems(sim: Simulation, current: Account, bank: Bank, terms
  * wait for the Friday. Until 2026-09-27 they came on the Thursday.
  */
 function nextBusinessDayOver(day: string, today: string, us: boolean): boolean {
+  return nextBusinessDay(day, us) < today;
+}
+
+/** The business day after a day, as its date key: a weekday, and at a US bank not a Federal Reserve holiday. */
+export function nextBusinessDay(day: string, us: boolean): string {
   const [y, m, d] = day.split('-').map(Number) as [number, number, number];
   for (let i = 1; i < 10; i += 1) {
     const next = new Date(Date.UTC(y, m - 1, d + i));
     const key = next.toISOString().slice(0, 10);
-    if (key >= today) return false;
     const weekday = next.getUTCDay();
-    if (weekday !== 0 && weekday !== 6 && !(us && usBankHoliday(key))) return true;
+    if (weekday !== 0 && weekday !== 6 && !(us && usBankHoliday(key))) return key;
   }
-  return true;
+  return day;
 }
 
 /**

@@ -32,14 +32,15 @@ import { formatMoney, saveCurrency, type Money } from '../core/money';
 import type { Person } from '../domain/model';
 import { CITIES, COUNTRIES } from '../content/geography';
 import { exchange } from '../content/currency';
-import { addMonths, dateKey, daysInMonth, instantFromZoned, zonedParts, MS_DAY, type Instant } from '../core/time';
+import { addMonths, dateKey, daysInMonth, formatDate, instantFromZoned, zonedParts, MS_DAY, type Instant } from '../core/time';
 import { bankById, bankingIn, banksIn, type Bank, type Product } from '../content/banks';
 import { ageOn } from './mortality';
 import { accountNumber } from './banknumber';
 import { ACCOUNT_LIFE } from '../content/accountlife';
 import { statementReady } from './statements';
 import { savingsLeftThisMonth } from './cash';
-import { savingsWithdrawalFee } from './accountlife';
+import type { ScheduledItem } from '../core/scheduler';
+import { savingsDebit } from './accountlife';
 import { recordInterest } from './earnings';
 
 export const MONTH_END_KIND = 'bank.month_end';
@@ -143,11 +144,11 @@ export function rateOf(sim: Simulation, account: Account): number {
 }
 
 /** The rate a tiered account pays on a balance, where the balance reaches a tier. */
-export function tierRate(product: Product | undefined, account: Account, balance: Money): number | undefined {
+export function tierRate(product: Product | undefined, account: Account, balance: Money, inSave: (bankMoney: Money) => Money = (x) => x): number | undefined {
   const bank = account.bankId ? bankById(account.bankId) : undefined;
   if (!product?.tiers || !bank) return undefined;
   let rate: number | undefined;
-  for (const tier of product.tiers) if (balance >= tier.from) rate = tier.rate;
+  for (const tier of product.tiers) if (balance >= inSave(tier.from)) rate = tier.rate;
   return rate;
 }
 
@@ -169,10 +170,10 @@ export function introStep(sim: Simulation, product: Product | undefined, openedA
  * The part of a balance a rate is paid on: none below the product's floor,
  * and no more than its cap.
  */
-export function earningBalance(product: Product | undefined, balance: Money): Money {
+export function earningBalance(product: Product | undefined, balance: Money, inSave: (bankMoney: Money) => Money = (x) => x): Money {
   if (!product || balance <= 0) return 0;
-  if (product.rateFrom !== undefined && balance < product.rateFrom) return 0;
-  return product.rateUpTo !== undefined ? Math.min(balance, product.rateUpTo) : balance;
+  if (product.rateFrom !== undefined && balance < inSave(product.rateFrom)) return 0;
+  return product.rateUpTo !== undefined ? Math.min(balance, inSave(product.rateUpTo)) : balance;
 }
 
 /** The first moment of the month an instant is in, where the save keeps time. */
@@ -219,7 +220,8 @@ export type WaivedBy = 'deposits' | 'balance' | 'age' | 'purchases' | 'new';
 export function feeFor(sim: Simulation, account: Account, monthStart: Instant): { fee: Money; waivedBy?: WaivedBy } {
   const product = productOf(account);
   const bank = account.bankId ? bankById(account.bankId) : undefined;
-  if (!product?.monthlyFee || !bank) return { fee: 0 };
+  // A second-chance account is its own product, and its own fee is charged on the first (`systems/lending.ts`); until 2026-09-27 it paid the ordinary account's beside it.
+  if (!product?.monthlyFee || !bank || account.secondChance) return { fee: 0 };
   const waiver = product.waiver;
   const met = (by: WaivedBy) => ({ fee: 0, waivedBy: by });
   const owner = sim.universe.people[account.ownerId];
@@ -383,17 +385,72 @@ function inSaveMoneyBack(sim: Simulation, amount: Money, currency: string): Mone
   return from === currency ? amount : exchange(amount, from, currency) ?? amount;
 }
 
+/** What's left this year of the country's untaxed interest, in the save's money, or undefined where there's no allowance. */
+export function interestAllowanceLeft(sim: Simulation, account: Account): Money | undefined {
+  const bank = account.bankId ? bankById(account.bankId) : undefined;
+  const allowance = bank ? bankingIn(bank.iso)?.interestTax?.allowance : undefined;
+  if (!bank || allowance === undefined) return undefined;
+  const p = zonedParts(sim.now, sim.homeZone);
+  const before = interestThisYear(sim, account.ownerId, instantFromZoned({ year: p.year, month: 1, day: 1, hour: 0 }, sim.homeZone));
+  return Math.max(0, inSaveMoney(sim, allowance, bank.currency) - before);
+}
+
 /** What the bank takes off a payment of interest, with any yearly allowance left untaxed. */
 export function interestTaxFor(sim: Simulation, account: Account, earned: Money): Money {
   const rate = interestTaxOn(sim, account);
   if (rate <= 0) return 0;
-  const bank = bankById(account.bankId!)!;
-  const allowance = bankingIn(bank.iso)?.interestTax?.allowance;
-  if (allowance === undefined) return Math.round(earned * rate);
-  const p = zonedParts(sim.now, sim.homeZone);
-  const before = interestThisYear(sim, account.ownerId, instantFromZoned({ year: p.year, month: 1, day: 1, hour: 0 }, sim.homeZone));
-  const free = Math.max(0, inSaveMoney(sim, allowance, bank.currency) - before);
+  const free = interestAllowanceLeft(sim, account);
+  if (free === undefined) return Math.round(earned * rate);
   return Math.round(Math.max(0, earned - free) * rate);
+}
+
+export const SAVINGS_NOTICE_KIND = 'bank.savings_notice';
+
+/** The notice given on a savings account, where it's closing on it. */
+export function savingsNotice(sim: Simulation, account: Account): ScheduledItem | undefined {
+  return sim.universe.scheduled.find((i) => i.kind === SAVINGS_NOTICE_KIND && i.status === 'pending' && i.payload.accountId === account.id);
+}
+
+/**
+ * Closes a savings account into the current account: its interest paid, its
+ * fees charged, what it holds moved across, and the holder's standing orders
+ * and payments ahead that touch it called off. Until 2026-09-27 the orders
+ * stayed pointed at it and said every month that the money wasn't there.
+ */
+function closeSavings(sim: Simulation, person: Person, account: Account, current: Account): void {
+  // What it has earned this month is paid before it closes, as a bank does.
+  payInterest(sim, account, `Interest: ${account.name}, on closing`);
+  settleFees(sim, account);
+  if (account.balance !== 0) {
+    sim.post({
+      memo: `Closed ${account.name}`, category: 'transfer',
+      postings: [{ accountId: account.id, amount: -account.balance }, { accountId: current.id, amount: account.balance }],
+    });
+  }
+  account.accrued = 0;
+  account.closedAt = sim.now;
+  const pay = person.payments;
+  if (pay) {
+    const gone = new Set(pay.standingOrders.filter((o) => o.toId === account.id).map((o) => o.id));
+    pay.standingOrders = pay.standingOrders.filter((o) => !gone.has(o.id));
+    for (const one of sim.universe.scheduled) {
+      if (one.status !== 'pending' || one.payload.personId !== person.id) continue;
+      if ((one.kind === 'bank.standing_order' && gone.has(String(one.payload.orderId))) || (one.kind === 'bank.scheduled_payment' && (one.payload.fromId === account.id || one.payload.toId === account.id))) sim.timeline.cancel(one.id, sim.now);
+    }
+  }
+}
+
+/**
+ * What a closing account owes of its fees: at Germany's quarterly closing,
+ * the quarter's so far and this month's. Until 2026-09-27 an account closed
+ * mid-quarter took them with it.
+ */
+export function settleFees(sim: Simulation, account: Account): void {
+  if (!closesQuarterly(account)) return;
+  const due = (account.feesDue ?? 0) + feeFor(sim, account, monthStartOf(sim, sim.now)).fee;
+  account.feesDue = 0;
+  if (due <= 0) return;
+  sim.post({ memo: `Closing fees: ${account.name}`, category: 'bank_fee', postings: [{ accountId: account.id, amount: -due }, { accountId: sim.nominalAccount('expense', 'Bank Fees').id, amount: due }] });
 }
 
 /** Pays what an account has built up, now, as a bank does when it closes one. */
@@ -430,8 +487,10 @@ export function registerBanking(sim: Simulation): void {
       if (!account.bankId || account.closedAt || !isEveryday(account)) continue;
       if (account.dormant && ACCOUNT_LIFE[account.bankId]?.stopsInterest) continue;
       const product = productOf(account);
-      const earning = earningBalance(product, account.balance);
-      const rate = tierRate(product, account, earning) ?? rateOf(s, account);
+      // The floor, the cap and the tiers are the bank's own money; until 2026-09-27 they were read as the save's.
+      const bankMoney = (x: Money) => inSaveMoney(s, x, bankById(account.bankId!)!.currency);
+      const earning = earningBalance(product, account.balance, bankMoney);
+      const rate = tierRate(product, account, earning, bankMoney) ?? rateOf(s, account);
       if (rate > 0 && earning > 0) account.accrued = (account.accrued ?? 0) + (earning * rate) / 365;
       // The bonus builds too, and is kept only if the month earns it.
       if (product?.bonus && earning > 0) account.bonusAccrued = (account.bonusAccrued ?? 0) + (earning * product.bonus.rate) / 365;
@@ -502,11 +561,13 @@ export function registerBanking(sim: Simulation): void {
       throw new CommandError(`${from.name} holds ${formatMoney(Math.max(0, from.balance), saveCurrency(s.universe), { cents: false })}.`);
     }
     if (from.dormant || to.dormant) throw new CommandError(`${(from.dormant ? from : to).name} is dormant; use Reactivate first.`);
-    const withdrawalFee = savingsWithdrawalFee(s, from);
+    const { room, fee: withdrawalFee } = from.kind === 'savings' ? savingsDebit(s, from) : { room: from.balance, fee: 0 };
     const left = savingsLeftThisMonth(s, from);
     if (left !== undefined && amount > left) {
       throw new CommandError(`${from.name} lets ${formatMoney(left, saveCurrency(s.universe), { cents: false })} more out this month without notice; more takes three months’ notice.`);
     }
+    // The fee comes out beside it: until 2026-09-27 a move of the whole balance left the account overdrawn by the fee.
+    if (amount > room) throw new CommandError(`${from.name} can let ${formatMoney(room, saveCurrency(s.universe), { cents: false })} out, with the ${formatMoney(withdrawalFee, saveCurrency(s.universe))} withdrawal fee.`);
     s.post({
       memo: `Moved to ${to.name}`, category: 'transfer',
       postings: [{ accountId: from.id, amount: -amount }, { accountId: to.id, amount }],
@@ -523,23 +584,32 @@ export function registerBanking(sim: Simulation): void {
     return { accountId: openOne(s, person, bank, 'savings', 0).id };
   });
 
-  sim.onCommand<{ accountId: string }, { closed: string }>('bank.close_savings', (p, { sim: s }) => {
+  sim.onCommand<{ accountId: string }, { closed: string; on?: Instant }>('bank.close_savings', (p, { sim: s }) => {
     const person = s.player;
     const account = bankAccountsOf(s, person).find((a) => a.id === p.accountId && a.kind === 'savings');
     if (!account) throw new CommandError('Only a savings account of yours can be closed here.');
     const current = person.primaryAccountId ? s.universe.accounts[person.primaryAccountId] : undefined;
     if (!current || current.closedAt) throw new CommandError('There’s no current account to move the money into.');
-    // What it has earned this month is paid before it closes, as a bank does.
-    payInterest(s, account, `Interest: ${account.name}, on closing`);
-    if (account.balance !== 0) {
-      s.post({
-        memo: `Closed ${account.name}`, category: 'transfer',
-        postings: [{ accountId: account.id, amount: -account.balance }, { accountId: current.id, amount: account.balance }],
-      });
+    const notice = savingsNotice(s, account);
+    if (notice) throw new CommandError(`Notice is given: ${account.name} closes on ${formatDate(notice.at, s.homeZone)}.`);
+    // More than Germany's monthly allowance takes the law's three months' notice, and it closes then.
+    const left = savingsLeftThisMonth(s, account);
+    if (left !== undefined && account.balance + Math.floor(account.accrued ?? 0) > left) {
+      const on = addMonths(s.now, 3, s.homeZone);
+      s.schedule({ at: on, kind: SAVINGS_NOTICE_KIND, label: `${account.name} Closes`, category: 'home', priority: 36, payload: { personId: person.id, accountId: account.id } });
+      return { closed: account.id, on };
     }
-    account.accrued = 0;
-    account.closedAt = s.now;
+    closeSavings(s, person, account, current);
     return { closed: account.id };
+  });
+
+  sim.onSchedule(SAVINGS_NOTICE_KIND, (item, s) => {
+    const person = s.universe.people[String(item.payload.personId)];
+    const account = s.universe.accounts[String(item.payload.accountId)];
+    const current = person?.primaryAccountId ? s.universe.accounts[person.primaryAccountId] : undefined;
+    if (!person || !account || account.closedAt || !current || current.closedAt) return;
+    closeSavings(s, person, account, current);
+    if (person.id === s.universe.playerId) s.notify({ category: 'bank', title: `${account.name} Closed`, body: `The notice ran out, and what it held is in your ${current.name}.`, importance: 50, route: '/workspace/bank' });
   });
 }
 

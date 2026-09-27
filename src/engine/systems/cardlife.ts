@@ -52,7 +52,7 @@ const ARRIVES_IN = 7 * MS_DAY;
 const RAISE_SHARE = 1.2;
 
 /** The limit a record opens a card with. */
-function limitFor(sim: Simulation, score: number): Money {
+export function limitFor(sim: Simulation, score: number): Money {
   const band = OPENING_LIMITS.find((one) => score >= one.from)!;
   return Math.round(usd(sim, band.usd) / 100) * 100;
 }
