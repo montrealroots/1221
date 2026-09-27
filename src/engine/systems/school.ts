@@ -64,7 +64,7 @@ import {
   type Course, type SchoolDate, type Skill, type Term,
 } from '../content/school';
 import { readiness } from './life';
-import { enjoyWork } from './enjoyment';
+import { enjoyWork, feel } from './enjoyment';
 import { payFromCurrent } from './household';
 import { armSummerWork, beginCareer, bookShowcase } from './career';
 import { YALE_COST_GROWTH } from '../content/career';
@@ -599,6 +599,7 @@ function bookPayday(sim: Simulation, person: Person, worked: Instant): void {
 function setStanding(sim: Simulation, person: Person, to: Standing, reason: string): void {
   const school = person.school!;
   school.standing = to;
+  if (to !== 'good') feel(person, to);
   if (to === 'dismissed' || to === 'graduated') {
     keepCredit(sim, school);
     // The degree's filmed monologues, posted at the end of the final term.

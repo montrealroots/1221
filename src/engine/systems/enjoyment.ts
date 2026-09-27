@@ -25,6 +25,7 @@
 import type { Person } from '../domain/model';
 import { clamp } from '../core/rng';
 import type { LookAfter } from './life';
+import { personalityOf } from './personality';
 
 /** Which of what somebody cares about each thing they can do for themselves is. */
 const LOVED_IN: Record<LookAfter, readonly string[]> = {
@@ -91,6 +92,36 @@ export function enjoyWork(person: Person, day: WorkDay & { rehearsal?: boolean }
   if (day.rehearsal) mood += DISPOSED.rehearsal * lean(person.personality?.agreeableness);
   w.morale = clamp(w.morale + mood, 0, 100);
   w.stress = clamp(w.stress - loved * LOVED_WORK.relief, 0, 100);
+}
+
+/**
+ * What a turn in the career or at school does to the mood and the stress,
+ * SLATE's estimate: a booking or an agency is a lift, being let go or
+ * replaced a blow, a dismissal the worst of them and the degree the best.
+ * Morale moves by the temperament's swing, stress by how it gains. Until
+ * 2026-09-27 none of them moved anything, and the only work that touched
+ * the mood was a day of it.
+ */
+export const TURNS = {
+  booked: { morale: 6, stress: -2 },
+  signed: { morale: 8, stress: -3 },
+  pickedUp: { morale: 6, stress: -2 },
+  graduated: { morale: 12, stress: -6 },
+  concern: { morale: -3, stress: 3 },
+  recast: { morale: -5, stress: 3 },
+  canceled: { morale: -6, stress: 3 },
+  warning: { morale: -6, stress: 6 },
+  dropped: { morale: -8, stress: 6 },
+  replaced: { morale: -10, stress: 8 },
+  dismissed: { morale: -20, stress: 15 },
+} as const;
+
+/** A turn, felt. */
+export function feel(person: Person, turn: keyof typeof TURNS): void {
+  const w = person.wellbeing;
+  const { morale, stress } = TURNS[turn];
+  w.morale = clamp(w.morale + morale * personalityOf(person, 'moraleSwing'), 0, 100);
+  w.stress = clamp(w.stress + (stress > 0 ? stress * personalityOf(person, 'stressGain') : stress), 0, 100);
 }
 
 /** An audition in the room, taken as the disposition takes it. A self-tape, made alone, takes nothing. */

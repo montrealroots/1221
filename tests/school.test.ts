@@ -17,6 +17,7 @@ import type { Simulation } from '@/engine/core/simulation';
 import { careFor, healthOf } from '@/engine/systems/health';
 import { figuresFor } from '@/engine/systems/taxreturn';
 import { careerOf } from '@/engine/systems/career';
+import { TURNS } from '@/engine/systems/enjoyment';
 
 const zone = 'America/New_York';
 const at = (year: number, month: number, day: number, hour = 9, minute = 0) => instantFromZoned({ year, month, day, hour, minute }, zone);
@@ -415,8 +416,11 @@ describe('casting', () => {
     expect(titled(sim, 'Out Of The Casting Pool')).toHaveLength(1);
     const show = pending(sim, CALL_KIND).find((c) => c.payload.call === 'performance')!;
     sim.advanceTo(show.at - 60_000);
+    sim.player.wellbeing.morale = 50;
     sim.advanceTo(show.at + 60_000);
     expect(sim.player.school!.standing).toBe('warning');
+    // And felt.
+    expect(sim.player.wellbeing.morale).toBeLessThan(50 + TURNS.warning.morale / 2);
     expect(sim.player.school!.tally.breaches).toBe(1);
   });
 

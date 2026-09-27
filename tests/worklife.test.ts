@@ -19,6 +19,7 @@ import { careFor, coverOn, grown, healthMonth, healthOf, illnessWeek, medicalDeb
 import { figuresFor } from '@/engine/systems/taxreturn';
 import type { Simulation } from '@/engine/core/simulation';
 import type { Craft } from '@/engine/systems/school';
+import { TURNS } from '@/engine/systems/enjoyment';
 
 const NY = 'America/New_York';
 const at = (year: number, month: number, day: number, hour = 9, zone = NY) => instantFromZoned({ year, month, day, hour }, zone);
@@ -151,6 +152,7 @@ describe('a series’ later seasons', () => {
 
   it('releases a job that clashes with a picked-up season', () => {
     let released = 0;
+    let canceled = 0;
     for (const seed of ['r1', 'r2', 'r3', 'r4', 'r5', 'r6']) {
       const sim = pro(seed, 'us-ca-losangeles', 90);
       const prior = booking(sim, 'series-half', 13, at(2026, 10, 5, 8, 'America/Los_Angeles'), { cityId: 'us-ca-losangeles', status: 'worked', worked: 65 });
@@ -158,13 +160,17 @@ describe('a series’ later seasons', () => {
       const clash = booking(sim, 'lort-b', 4, at(2027, 10, 5, 8, 'America/Los_Angeles'), { cityId: 'us-ca-losangeles', rehearsalWeeks: 4 });
       expect(sim.execute({ kind: 'career.accept', payload: { bookingId: clash.id } }).ok).toBe(true);
       sim.schedule({ at: sim.now + 60_000, kind: RENEWAL_KIND, label: 'x', category: 'system', priority: 1, payload: { personId: sim.player.id, bookingId: prior.id } });
+      sim.player.wellbeing.morale = 50;
       sim.advanceTo(sim.now + 2 * 60_000);
-      if (!careerOf(sim.player).bookings.some((x) => x.season === 2)) continue;
+      // Picked up or canceled, it's felt.
+      if (!careerOf(sim.player).bookings.some((x) => x.season === 2)) { expect(sim.player.wellbeing.morale).toBeLessThan(50 + TURNS.canceled.morale / 2); canceled += 1; continue; }
+      expect(sim.player.wellbeing.morale).toBeGreaterThan(50 + TURNS.pickedUp.morale / 2);
       expect(clash.status).toBe('released');
       expect(pending(sim, WORK_KIND).some((i) => i.payload.bookingId === clash.id)).toBe(false);
       released += 1;
     }
     expect(released).toBeGreaterThan(0);
+    expect(canceled).toBeGreaterThan(0);
   });
 });
 

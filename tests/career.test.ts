@@ -22,6 +22,7 @@ import type { Craft } from '@/engine/systems/school';
 
 const NY_ZONE = 'America/New_York';
 import { yearOf } from '@/engine/systems/earnings';
+import { TURNS } from '@/engine/systems/enjoyment';
 
 const NY = 'America/New_York';
 const at = (year: number, month: number, day: number, hour = 9, zone = NY) => instantFromZoned({ year, month, day, hour }, zone);
@@ -42,7 +43,10 @@ function signed(seed: string, tier: 1 | 2 | 3 = 2, level = 75): Simulation {
   const sim = pro(seed, level);
   const agency = AGENCIES.find((a) => a.tier === tier)!;
   careerOf(sim.player).offers.push({ agencyId: agency.id, cityId: 'us-ny-newyork', until: sim.now + MS_DAY });
+  const morale = sim.player.wellbeing.morale;
   expect(sim.execute({ kind: 'career.sign', payload: { agencyId: agency.id, cityId: 'us-ny-newyork' } }).ok).toBe(true);
+  // Signed, it's felt.
+  expect(sim.player.wellbeing.morale).toBeGreaterThan(Math.min(100 - TURNS.signed.morale, morale));
   return sim;
 }
 /** An offer of a part, made now. */
@@ -180,7 +184,14 @@ describe('an audition, on the day', () => {
     audition(sim, 'room');
     audition(sim, 'room');
     expect(careerOf(sim.player)).toMatchObject({ missed: 2, agencyId: 'gersh' });
+    const felt = { ...sim.player.wellbeing };
+    sim.player.wellbeing.morale = 50;
+    sim.player.wellbeing.stress = 30;
     audition(sim, 'room');
+    // Let go, it's felt.
+    expect(sim.player.wellbeing.morale).toBeLessThan(50 + TURNS.dropped.morale / 2);
+    expect(sim.player.wellbeing.stress).toBeGreaterThan(30 + TURNS.dropped.stress / 2);
+    void felt;
     expect(careerOf(sim.player).agencyId).toBeUndefined();
   });
 });
@@ -300,6 +311,19 @@ describe('auditions', () => {
     expect(careerOf(sim.player).ended!.reason).toContain(String(ESTIMATE.dropAfterMissed));
   }, 60_000);
 
+  it('from the agency, are tapes for a client who lives out of town, and rooms for one only away', () => {
+    const sim = signed('moved-away', 1, 95);
+    const agency = AGENCIES.find((a) => a.id === careerOf(sim.player).agencyId)!;
+    const modes = () => Array.from({ length: 60 }, (_, w) => weekOfAuditions(sim, sim.player, sim.now + w * 7 * MS_DAY, agency, 'us-ny-newyork', 0)).flat().map((a) => a.mode);
+    sim.player.currentLocationId = 'us-ca-losangeles';
+    sim.player.home = { kind: 'shared', cityId: 'us-ca-losangeles', since: sim.now };
+    const moved = modes();
+    expect(moved.length).toBeGreaterThan(0);
+    expect(moved.every((m) => m === 'tape')).toBe(true);
+    sim.player.home = { kind: 'shared', cityId: 'us-ny-newyork', since: sim.now };
+    expect(modes().some((m) => m === 'room')).toBe(true);
+  });
+
   it('from out of town, are tapes when self-submitted', () => {
     const sim = pro('tapes');
     sim.player.currentLocationId = 'us-ct-newhaven';
@@ -328,7 +352,13 @@ describe('a booking', () => {
   it('is offered days after the audition, and lapses unanswered after two', () => {
     const sim = signed('lapse', 1, 95);
     let weeks = 0;
-    while (!careerOf(sim.player).bookings.length && weeks < 30) { play(sim, sim.now + 7 * MS_DAY); weeks += 1; }
+    const offerAt = () => sim.timeline.pending().find((i) => i.kind === 'career.offer')?.at;
+    while (!offerAt() && weeks < 30) { play(sim, sim.now + 7 * MS_DAY); weeks += 1; }
+    // Booked, it's felt.
+    play(sim, offerAt()! - 60_000);
+    sim.player.wellbeing.morale = 50;
+    sim.advanceTo(offerAt()! + 60_000);
+    expect(sim.player.wellbeing.morale).toBeGreaterThan(50 + TURNS.booked.morale / 2);
     const b = careerOf(sim.player).bookings[0]!;
     expect(b.status === 'offered' || b.status === 'lapsed').toBe(true);
     const booked = careerOf(sim.player).auditions.find((a) => a.status === 'booked')!;

@@ -21,6 +21,8 @@ import {
   CRAFT_INTERESTS, FILM_GENRES, GENERAL_INTERESTS, isAlphabetical,
 } from '@/engine/content/interests';
 import { BIRTH_YEARS_BEFORE_START, latestBirthYear } from '@/ui/creation/CharacterCreation';
+import { TURNS, feel } from '@/engine/systems/enjoyment';
+import { personalityOf } from '@/engine/systems/personality';
 
 /** Every source file in a directory, joined, so a check can ask about the whole of it. */
 function globSource(directory: string): string {
@@ -197,6 +199,24 @@ describe('race and ethnicity on the character sheet', () => {
       return /\braceEthnicity\b/.test(text) && !/world\/bootstrap\.ts|domain\/model\.ts/.test(f);
     });
     expect(readers, 'these read race or ethnicity out of a save').toEqual([]);
+  });
+});
+
+describe('a turn in the career or at school', () => {
+  it('moves morale by the temperament’s swing and stress by how it gains, and a relief as it is', () => {
+    const sim = quickSave({}, 'turns');
+    const p = sim.player;
+    p.personalityTraits = ['highly_strung'];
+    p.wellbeing.morale = 50;
+    p.wellbeing.stress = 50;
+    feel(p, 'dropped');
+    expect(p.wellbeing.morale).toBeCloseTo(50 + TURNS.dropped.morale * personalityOf(p, 'moraleSwing'), 9);
+    expect(p.wellbeing.stress).toBeCloseTo(50 + TURNS.dropped.stress * personalityOf(p, 'stressGain'), 9);
+    expect(personalityOf(p, 'moraleSwing')).not.toBe(1);
+    expect(personalityOf(p, 'stressGain')).not.toBe(1);
+    p.wellbeing.stress = 50;
+    feel(p, 'booked');
+    expect(p.wellbeing.stress).toBe(50 + TURNS.booked.stress);
   });
 });
 

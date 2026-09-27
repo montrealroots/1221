@@ -73,7 +73,7 @@ import { armTaxes } from './taxreturn';
 import { YALE_DRAMA } from '../content/school';
 import { meanCraft, focusOf, sessionGain, summerOf, type Craft } from './school';
 import { rentAt } from '../content/rents';
-import { enjoyWork, takeTheRoom } from './enjoyment';
+import { enjoyWork, takeTheRoom, feel } from './enjoyment';
 import { personalityOf } from './personality';
 import { move, payFromCurrent, type Housing, spend } from './household';
 
@@ -508,6 +508,7 @@ function represent(sim: Simulation, person: Person, offer: Offer): void {
   career.signedAt = sim.now;
   career.missed = 0;
   career.offers = [];
+  feel(person, 'signed');
   for (const d of Object.values(sim.universe.decisions)) if (d.category === 'career' && d.refType === 'representation' && !d.resolvedAt) d.resolvedAt = sim.now;
 }
 
@@ -525,6 +526,7 @@ function endRepresentation(sim: Simulation, person: Person, reason: string, left
     a.status = 'missed';
     for (const item of sim.universe.scheduled) if (item.status === 'pending' && item.kind === AUDITION_KIND && item.payload.auditionId === a.id) sim.timeline.cancel(item.id, sim.now);
   }
+  if (!left) feel(person, 'dropped');
   if (!left && person.id === sim.universe.playerId) sim.notify({ category: 'money', title: `${agency.name} Let You Go`, body: `${reason} You can still submit yourself for work.`, importance: 85, route: '/workspace/career' });
 }
 
@@ -595,8 +597,12 @@ export function weekOfAuditions(sim: Simulation, person: Person, weekStart: Inst
     const mine = n >= count + fromManager;
     const role = pick(mine ? open : n >= count ? theirs : sent);
     const when = at(weekStart, zone, Math.floor(rng.next() * 5), 10 + Math.floor(rng.next() * 7));
-    // Submitted from out of town, casting asks for a tape; an agency's room expects its client in town.
-    const room = rng.next() >= ESTIMATE.tapeShare && !(mine && person.currentLocationId !== cityId);
+    // Submitted from out of town, casting asks for a tape. An agency's room
+    // expects a client who lives in town, and one away there comes back for it;
+    // a client who lives elsewhere is put on tape, as an agent does for
+    // out-of-town clients. Until 2026-09-27 a client who moved away from the
+    // agency's city was booked into its rooms, missed them, and was let go.
+    const room = rng.next() >= ESTIMATE.tapeShare && !(person.currentLocationId !== cityId && (mine || homeOf(person) !== cityId));
     out.push({ roleId: role.id, at: when, mode: room ? 'room' : 'tape', cityId, ...(mine ? { self: true } : {}) });
   }
   return out;
@@ -873,6 +879,7 @@ export function registerCareer(sim: Simulation): void {
     };
     career.bookings.push(booking);
     career.bookings = career.bookings.slice(-40);
+    feel(person, 'booked');
     s.schedule({ at: booking.dueAt, kind: LAPSE_KIND, label: 'An Offer Lapses', category: 'system', priority: 20, payload: { personId: person.id, bookingId: booking.id } });
     if (!isPlayer(person)) return;
     const cur = saveCurrency(s.universe);
@@ -919,12 +926,14 @@ export function registerCareer(sim: Simulation): void {
         booking.status = 'released';
         for (const one of s.universe.scheduled) if (one.status === 'pending' && one.kind === WORK_KIND && one.payload.bookingId === booking.id) s.timeline.cancel(one.id, s.now);
         if (booking.owed > 0) schedulePay(s, person, booking, s.now + 60_000, true);
+        feel(person, 'recast');
         if (isPlayer(person)) s.notify({ category: 'money', title: 'Recast While You Were In Hospital', body: `${role.label} couldn’t wait for you, and went to somebody else. What you worked is still paid.`, importance: 90, route: '/workspace/career' });
         return;
       }
       booking.status = 'fired';
       for (const one of s.universe.scheduled) if (one.status === 'pending' && one.kind === WORK_KIND && one.payload.bookingId === booking.id) s.timeline.cancel(one.id, s.now);
       if (booking.owed > 0) schedulePay(s, person, booking, s.now + 60_000, true);
+      feel(person, 'replaced');
       if (isPlayer(person)) s.notify({ category: 'money', title: 'Replaced', body: `You didn’t turn up for ${role.label}, and the production replaced you. What you worked is still paid.`, importance: 90, route: '/workspace/career' });
       if (career.agencyId) endRepresentation(s, person, 'You walked off a job the agency booked.', false);
       return;
@@ -1180,6 +1189,7 @@ export function registerCareer(sim: Simulation): void {
     const odds = life?.kind === 'network' ? SERIES.renewal.network : SERIES.renewal.svod;
     const picked = season <= SERIES.maxSeasons && renewed(s, person, prior.id, odds);
     if (!picked) {
+      feel(person, 'canceled');
       if (isPlayer(person)) s.notify({ category: 'money', title: 'Your Series Was Canceled', body: `${role.label}: the option wasn’t taken up. You’re free.`, importance: 80, route: '/workspace/career' });
       return;
     }
@@ -1193,6 +1203,7 @@ export function registerCareer(sim: Simulation): void {
     };
     career.bookings.push(next);
     takeJob(s, person, next, true);
+    feel(person, 'pickedUp');
     if (isPlayer(person)) s.notify({ category: 'money', title: `Picked Up For Season ${season}`, body: `${role.label}: the option was taken up. The season starts ${formatDate(next.starts, zone)}, at ${formatMoney(usd(next.rate!, saveCurrency(s.universe)), saveCurrency(s.universe))} an episode.`, importance: 90, route: '/workspace/career' });
   });
 

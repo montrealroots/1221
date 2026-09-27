@@ -17,6 +17,7 @@ import { recordInterest, recordWages, yearOf } from '@/engine/systems/earnings';
 import { grown, healthOf, keepUp, rxShareOf, shareOf, teethAndEyesShareOf, illnessWeek } from '@/engine/systems/health';
 import { canadaElected, connecticutTax, figuresFor, settleUkYears, ukTaxOn } from '@/engine/systems/taxreturn';
 import type { Simulation } from '@/engine/core/simulation';
+import { TURNS } from '@/engine/systems/enjoyment';
 
 const NY = 'America/New_York';
 const instantParts = (t: number) => new Date(t).getUTCFullYear();
@@ -194,10 +195,12 @@ describe('home from a job, however it went', () => {
     const call = sim.universe.scheduled.find((i) => i.kind === 'career.work' && i.status === 'pending' && i.payload.bookingId === 'tor')!;
     while (sim.now < call.at - 3_600_000) sim.advanceTo(Math.min(call.at - 3_600_000, sim.now + 6 * 3_600_000), { stopOnPlayerRequired: true });
     expect(sim.player.currentLocationId).toBe('ca-on-toronto');
-    // Asleep through the first call: replaced.
+    // Asleep through the first call: replaced, and felt.
     sim.player.awakeSince = call.at + 3_600_000;
+    sim.player.wellbeing.morale = 50;
     sim.advanceTo(call.at + 60_000);
     expect(b.status).toBe('fired');
+    expect(sim.player.wellbeing.morale).toBeLessThan(50 + TURNS.replaced.morale / 2);
     while (sim.now < at(2026, 10, 9, 12)) sim.advanceTo(Math.min(at(2026, 10, 9, 12), sim.now + 6 * 3_600_000), { stopOnPlayerRequired: true });
     expect(sim.player.currentLocationId).toBe('us-ny-newyork');
   }, 60_000);
@@ -213,8 +216,10 @@ describe('home from a job, however it went', () => {
     const call = sim.universe.scheduled.find((i) => i.kind === 'career.work' && i.status === 'pending' && i.payload.bookingId === 'set')!;
     while (sim.now < call.at - 3_600_000) sim.advanceTo(Math.min(call.at - 3_600_000, sim.now + 6 * 3_600_000), { stopOnPlayerRequired: true });
     healthOf(sim.player).inHospitalUntil = call.at + 3_600_000;
+    sim.player.wellbeing.morale = 50;
     sim.advanceTo(call.at + 60_000);
     expect(b.status).toBe('released');
+    expect(sim.player.wellbeing.morale).toBeLessThan(50 + TURNS.recast.morale / 2);
     expect(career.agencyId).toBe('caa');
     expect(sim.universe.scheduled.filter((i) => i.kind === 'career.work' && i.status === 'pending' && i.payload.bookingId === 'set')).toHaveLength(0);
     // On stage, the understudy covers the night and the run goes on.
