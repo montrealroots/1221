@@ -151,6 +151,22 @@ function statementAfter(sim: Simulation, which: Which, at: Instant): Instant {
   return Date.UTC(d.getUTCFullYear(), d.getUTCMonth() + 1, 1);
 }
 
+/**
+ * Why a payment can't be reported as not theirs, or nothing where it can:
+ * the command refuses on it, and the Bank screen offers the report only where
+ * it's empty. Until 2026-09-27 the screen offered it past the law's window.
+ */
+export function disputeRefusal(sim: Simulation, person: Person, index: number): string | undefined {
+  const one = person.fraud?.[index];
+  const account = one ? sim.universe.accounts[one.accountId] : undefined;
+  if (!one || !account) return 'That isn’t a payment on your accounts.';
+  if (one.reportedAt !== undefined) return 'You’ve reported it already.';
+  const bank = account.bankId ? bankById(account.bankId) : undefined;
+  const claimDays = bank ? FRAUD_LAW[bank.iso]?.claimDays : undefined;
+  if (claimDays !== undefined && sim.now - one.statedAt > claimDays * MS_DAY) return `The law gives ${claimDays} days from the statement to report it, and they’ve passed.`;
+  return undefined;
+}
+
 export function registerSecurity(sim: Simulation): void {
   sim.onSchedule(REPLACED_KIND, (item, s) => {
     const account = s.universe.accounts[String(item.payload.accountId)];
@@ -250,14 +266,12 @@ export function registerSecurity(sim: Simulation): void {
 
   sim.onCommand<{ index: number }, { carried: Money; refundAt: Instant }>('card.dispute', (p, { sim: s }) => {
     const person = s.player;
-    const one = person.fraud?.[Number(p.index)];
-    const account = one ? s.universe.accounts[one.accountId] : undefined;
-    if (!one || !account) throw new CommandError('That isn’t a payment on your accounts.');
-    if (one.reportedAt !== undefined) throw new CommandError('You’ve reported it already.');
+    const no = disputeRefusal(s, person, Number(p.index));
+    if (no) throw new CommandError(no);
+    const one = person.fraud![Number(p.index)]!;
+    const account = s.universe.accounts[one.accountId]!;
     const bank = account.bankId ? bankById(account.bankId) : undefined;
     const law = bank ? FRAUD_LAW[bank.iso] : undefined;
-    const claimDays = law?.claimDays;
-    if (claimDays !== undefined && s.now - one.statedAt > claimDays * MS_DAY) throw new CommandError(`The law gives ${claimDays} days from the statement to report it, and they’ve passed.`);
     one.reportedAt = s.now;
     one.carried = liabilityFor(s, account, one.which, one.amount, Math.floor((s.now - one.learnedAt) / MS_DAY));
     const refundAt = s.now + calendarDays(law?.refundDays ?? ESTIMATE_REFUND_DAYS) * MS_DAY;

@@ -453,7 +453,7 @@ function IdentityStep({ config, set, setConfig }: {
           <h3>Place Of Birth</h3>
           <p className="muted small">
             Where you’re from, which isn’t always where you ended up. It’s the answer you give
-            when somebody asks, and it’s the accent you either lost on purpose or kept.
+            when somebody asks, and it’s the citizenship you were born to.
           </p>
         </div>
       </div>
@@ -554,7 +554,7 @@ function PersonalityStep({ config, setConfig }: {
             <p className="muted small">
               How you lean, not what you can do. Each of them does something: Emotional Stability
               sets how quickly stress arrives and how quickly it clears, Conscientiousness sets how well
-              the nights go, Ambition sets what running yourself into the ground costs you in stress,
+              the nights go, Ambition adds to how quickly every stress arrives, work’s and money’s alike,
               and Risk Tolerance over 65 starts your card's autopay on the minimum, so a balance is carried.
               Extraversion sets how an audition in the room sits with you, Openness how a job away
               from home does, and Agreeableness how a rehearsal does. None of them makes you better
@@ -870,7 +870,7 @@ function StartingPointStep({ config, set, setConfig }: {
             <div className="stat">
               <span className="stat-label">Cost Of Living</span>
               <span className="stat-value">{city.costOfLivingIndex}</span>
-              <span className="stat-note">A hundred is the American average</span>
+              <span className="stat-note">A hundred is the United States’ price level</span>
             </div>
           </div>
         )}
@@ -915,6 +915,14 @@ function StartingPointStep({ config, set, setConfig }: {
             <span className="stat-label">Credit Record</span>
             <span className="stat-value mono">{scoreIsANumberIn(config.startLocationId) ? wealth.creditScore : scoreWord(wealth.creditScore)}</span>
           </div>
+          {/* The card the save opens with, and what it carries in: until 2026-09-27 creation never said. */}
+          {wealth.cardLimit > 0 && (
+            <div className="stat">
+              <span className="stat-label">Credit Card</span>
+              <span className="stat-value mono">{formatMoney(wealth.cardLimit, cur, { cents: false })} Limit</span>
+              {wealth.cardBalance < 0 && <span className="stat-note">{formatMoney(-wealth.cardBalance, cur, { cents: false })} owed on it already</span>}
+            </div>
+          )}
         </div>
       </div>
     </div>

@@ -14,7 +14,8 @@ import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { formatDate } from '@/engine/core/time';
 import { bankById } from '@/engine/content/banks';
 import { FRAUD_LAW, SECURITY } from '@/engine/content/security';
-import { cardAccount, ESTIMATE_YEARS, plasticView, type Which } from '@/engine/systems/security';
+import { cardAccount, disputeRefusal, ESTIMATE_YEARS, plasticView, type Which } from '@/engine/systems/security';
+import { inSaveMoney } from '@/engine/systems/banking';
 
 const WHY_WORDS = { lost: 'Lost', stolen: 'Stolen', damaged: 'Damaged', fraud: 'Used by somebody else' } as const;
 
@@ -68,7 +69,8 @@ export function BankSecurity({ bankId }: { bankId: string }) {
                 {p.billersStale && <Gated feature="card.update_billers" className="btn btn-sm" onClick={() => run('card.update_billers', {})}>Give The Bills The New Number</Gated>}
               </div>
               <p className="xs dim" style={{ margin: 0 }}>
-                {fee === undefined ? 'The bank lists no fee for a new card, so SLATE charges none.' : fee === 0 ? 'A new card is free.' : `A new card costs ${money(fee)} in the bank’s money.`}
+                {fee === undefined ? 'The bank lists no fee for a new card, so SLATE charges none.' : fee === 0 ? 'A new card is free.' : `A new card costs ${money(inSaveMoney(sim, fee, bankById(bankId)?.currency ?? cur))}${rules?.freeFor?.length ? `, and nothing when it’s ${rules.freeFor.map((w) => w).join(' or ')}` : ''}.`}
+                {rules?.rushFee !== undefined ? ` Sent in a rush, ${money(inSaveMoney(sim, rules.rushFee, bankById(bankId)?.currency ?? cur))} more.` : ''}
                 {(which === 'credit' ? rules?.cardYearsCredit ?? rules?.cardYears : rules?.cardYears) === undefined ? ` Cards last ${ESTIMATE_YEARS} years here, SLATE’s estimate; the bank doesn’t say.` : ''}
               </p>
             </div>
@@ -77,10 +79,10 @@ export function BankSecurity({ bankId }: { bankId: string }) {
         {learned.map(({ one, index }) => (
           <div key={index} className="row-between small">
             <span>{money(one.amount)} on your {one.which} card, {formatDate(one.at, sim.zone)}: not yours?</span>
-            <Gated feature="card.dispute" className="btn btn-sm" onClick={() => {
+            {disputeRefusal(sim, person, index) ? <span className="xs dim">{disputeRefusal(sim, person, index)}</span> : <Gated feature="card.dispute" className="btn btn-sm" onClick={() => {
               const answer = run<{ carried: number; refundAt: number }>('card.dispute', { index });
               if (answer.ok) toast(`Reported. The refund comes by ${formatDate(answer.value!.refundAt, sim.zone)}${answer.value!.carried ? `, less the ${money(answer.value!.carried)} the law leaves you` : ''}.`, 'positive');
-            }}>Report It As Not Mine</Gated>
+            }}>Report It As Not Mine</Gated>}
           </div>
         ))}
         {rules?.newNumberOnFraud && (

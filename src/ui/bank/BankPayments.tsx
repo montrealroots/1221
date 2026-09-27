@@ -12,7 +12,7 @@ import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
-import { formatMoney, saveCurrency } from '@/engine/core/money';
+import { formatMoney, saveCurrency, centsFromTyped } from '@/engine/core/money';
 import { formatDate, instantFromZoned, MS_DAY } from '@/engine/core/time';
 import {
   checksUsed, mayReclaim, paymentWords, paymentsOf, SCHEDULED_KIND, type BillsWay, type RentWay,
@@ -43,7 +43,7 @@ export function BankPayments() {
   const [spTo, setSpTo] = useState('');
   const [spAmount, setSpAmount] = useState('');
   const [spDate, setSpDate] = useState('');
-  const cents = (v: string) => Math.round(Number(v.replace(/[^\d.]/g, '')) * 100);
+  const cents = centsFromTyped;
 
   const addOrder = () => {
     const answer = run('bank.add_standing_order', { toId: soTo || savings[0]?.id, amount: cents(soAmount), day: Number(soDay) });

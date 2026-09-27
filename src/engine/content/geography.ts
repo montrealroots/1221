@@ -55,7 +55,13 @@ export interface City extends ReferenceRecord {
   timeZone: string;
   latitude: number;
   longitude: number;
-  /** 100 = national average. Drives rent, groceries, services. */
+  /**
+   * On the United States' scale, where a hundred is its price level: a
+   * published index for a town set by hand, and for the rest SLATE's estimate
+   * from the country's price level and the town's size (`deriveCity`). Drives
+   * rent, groceries, services. Until 2026-09-27 this said a hundred was the
+   * national average, which neither kind is.
+   */
   costOfLivingIndex: number;
   /** Median monthly rent for a one-bedroom, in cents. Calibrated estimate. */
   medianRentCents: number;

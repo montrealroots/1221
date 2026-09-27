@@ -1116,11 +1116,14 @@ export function suggestedSleep(sim: Simulation): { hours: number; reason: string
     return { hours, reason: needed > LONGEST_NIGHT ? why : 'Your calendar’s clear, so sleep as long as you need.' };
   }
 
-  const available = (next.at - sim.now) / MS_HOUR - 1.5;
+  // An hour and a half kept back to get up and get there. The reason says how far off it is, which it said
+  // less that hour and a half until 2026-09-27.
+  const away = (next.at - sim.now) / MS_HOUR;
+  const available = away - 1.5;
   if (available < ideal) {
     return {
       hours: Math.max(3, Math.round(available * 2) / 2),
-      reason: `"${next.label}" is in ${available.toFixed(1)} hours, so a full night isn’t available.`,
+      reason: `"${next.label}" is in ${away.toFixed(1)} hours, and getting up and there takes an hour and a half, so a full night isn’t available.`,
     };
   }
   return { hours, reason: why };

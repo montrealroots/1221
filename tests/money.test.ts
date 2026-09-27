@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import {
-  applyRate, currencySymbol, formatMoney, formatMoneyCompact, saveCurrency, splitByWeights, splitEvenly, units,
+  applyRate, centsFromTyped, currencySymbol, formatMoney, formatMoneyCompact, saveCurrency, splitByWeights, splitEvenly, units,
 } from '@/engine/core/money';
 import { createSave, defaultConfig } from '@/engine';
 import { currencyFor, wealthIn } from '@/engine/world/bootstrap';
@@ -198,5 +198,16 @@ describe('money conservation in a live universe', () => {
     // Nothing pays into a pension since the job engine went on 2026-09-26. A
     // save from before keeps the fund its pay built, and net worth counts it.
     expect(worth.pension).toBe(0);
+  });
+});
+
+describe('an amount as it is typed', () => {
+  it('reads a decimal comma or point, and thousands grouped either way', () => {
+    const cases: [string, number][] = [
+      ['12.50', 1250], ['12,50', 1250], ['12,5', 1250], ['1,000', 100000], ['1.000', 100000],
+      ['1,000.50', 100050], ['1.000,50', 100050], ['1 000', 100000], ["1'000,25", 100025],
+      ['€ 45', 4500], ['2.000.000', 200000000], ['2,000,000.5', 200000050], ['', 0], ['abc', 0],
+    ];
+    for (const [typed, cents] of cases) expect(centsFromTyped(typed), typed).toBe(cents);
   });
 });

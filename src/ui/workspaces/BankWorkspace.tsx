@@ -28,14 +28,12 @@ import { BankPayments } from '@/ui/bank/BankPayments';
 import { BankCash } from '@/ui/bank/BankCash';
 import { BankAccountLife } from '@/ui/bank/BankAccountLife';
 import { apyOf } from '@/engine/systems/statements';
-import { formatMoney, saveCurrency } from '@/engine/core/money';
+import { formatMoney, saveCurrency, centsFromTyped } from '@/engine/core/money';
 import { formatDate } from '@/engine/core/time';
 import { bankingIn } from '@/engine/content/banks';
 import type { Simulation } from '@/engine/core/simulation';
 import type { Product } from '@/engine/content/banks';
-import {
-  bankAccountsOf, introStep, rateOn, bankOf, directDeposits, feeFor, inSaveMoney, interestTaxOn, monthEndAfter, monthStartOf, productOf,
-} from '@/engine/systems/banking';
+import { bankAccountsOf, introStep, rateOn, bankOf, directDeposits, feeFor, inSaveMoney, interestTaxOn, monthEndAfter, monthStartOf, productOf, closesQuarterly } from '@/engine/systems/banking';
 
 export function BankWorkspace() {
   const { sim, run, toast } = useGame();
@@ -61,7 +59,7 @@ export function BankWorkspace() {
 
   const move = () => {
     // Typed in whole units of the money, as a banking app takes it.
-    const cents = Math.round(Number(amount.replace(/[^\d.]/g, '')) * 100);
+    const cents = centsFromTyped(amount);
     const answer = run<{ moved: number }>('bank.transfer', { fromId, toId, amount: cents });
     if (answer.ok && answer.value) {
       toast(`Moved ${money(answer.value.moved)}.`, 'positive');
@@ -85,7 +83,7 @@ export function BankWorkspace() {
                   <span className="stat-label">Balance</span>
                   <span className="stat-value mono">{money(account.balance)}</span>
                 </div>
-                <p className="small" style={{ margin: 0 }}>{interestWords(sim, product, tax, money, bank.currency, account.openedAt)}</p>
+                <p className="small" style={{ margin: 0 }}>{interestWords(sim, product, tax, money, bank.currency, account.openedAt, closesQuarterly(account))}</p>
                 {product?.monthlyFee ? (
                   <p className="small" style={{ margin: 0 }}>
                     {formatMoney(inSaveMoney(sim, product.monthlyFee, bank.currency), cur)} a month
@@ -94,8 +92,9 @@ export function BankWorkspace() {
                     {fee.fee === 0
                       ? `This month is waived so far${fee.waivedBy === 'deposits' ? `: ${money(paidIn)} paid in` : ''}.`
                       : fee.waivedBy
-                        ? `This month’s is lowered to ${formatMoney(fee.fee, cur)} so far, due ${formatDate(monthEnd, sim.zone)}.`
-                        : `This month’s is due ${formatDate(monthEnd, sim.zone)} unless that changes.`}
+                        ? `This month’s is lowered to ${formatMoney(fee.fee, cur)} so far, ${closesQuarterly(account) ? 'for the quarter’s closing' : `due ${formatDate(monthEnd, sim.zone)}`}.`
+                        : closesQuarterly(account) ? 'This month’s goes to the quarter’s closing unless that changes.' : `This month’s is due ${formatDate(monthEnd, sim.zone)} unless that changes.`}
+                    {closesQuarterly(account) && (account.feesDue ?? 0) > 0 ? ` The quarter’s fees so far, ${money(account.feesDue ?? 0)}, come off at its closing.` : ''}
                   </p>
                 ) : (
                   <p className="small" style={{ margin: 0 }}>No monthly fee.</p>
@@ -116,7 +115,7 @@ export function BankWorkspace() {
         {!savings && (
           <Panel title={bank.savings.name} subtitle="Not opened">
             <p className="small">
-              {bank.savings.rate ? `Pays ${(bank.savings.rate * 100).toFixed(2)}% a year.` : 'Pays no published rate.'} Opening one costs nothing.
+              {bank.savings.rate ? `Pays ${(bank.savings.rate * 100).toFixed(2)}% a year.` : 'Pays no published rate.'} {bank.savings.monthlyFee ? `It costs ${formatMoney(inSaveMoney(sim, bank.savings.monthlyFee, bank.currency), cur)} a month${waiverWords(bank.savings, (c) => money(inSaveMoney(sim, c, bank.currency)))}.` : 'Opening one costs nothing.'}
             </p>
             <Gated feature="bank.open_savings" className="btn btn-sm" onClick={() => run('bank.open_savings', {})}>
               Open A {bank.savings.name}
@@ -259,7 +258,7 @@ const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'Ju
  * change announced, a floor or a cap, a bonus and what earns it, when it is
  * paid, and what the bank takes off it for tax.
  */
-function interestWords(sim: Simulation, product: Product | undefined, tax: number, money: (cents: number) => string, currency: string, openedAt: number): string {
+function interestWords(sim: Simulation, product: Product | undefined, tax: number, money: (cents: number) => string, currency: string, openedAt: number, quarterly = false): string {
   const step = introStep(sim, product, openedAt, sim.now);
   const rate = step ?? rateOn(product, sim.now, sim.homeZone);
   // A rate the research didn't find isn't a rate of none: until 2026-09-26 Citi's savings said it paid no interest.
@@ -289,9 +288,12 @@ function interestWords(sim: Simulation, product: Product | undefined, tax: numbe
       : product.bonus.growBy !== undefined ? `a month the balance grows by ${money(inSaveMoney(sim, product.bonus.growBy, currency))}` : 'a month the balance grows';
     said.push(` Another ${pct(product.bonus.rate)} for ${earn}.`);
   }
+  // As the engine pays it: in the bank’s months, at Germany’s quarterly closing, or each month’s end.
   said.push(product.pays
     ? ` It builds each day and is paid in ${product.pays.map((m) => MONTH_NAMES[m - 1]).join(' and ')}.`
-    : ' It builds each day and is paid on the last day of the month.');
+    : quarterly
+      ? ' It builds each day and is paid at the quarterly closing, the end of March, June, September and December.'
+      : ' It builds each day and is paid on the last day of the month.');
   if (product.taxFree) said.push(' Tax-free.');
   else if (tax > 0) said.push(` The bank takes ${pct(tax)} of it for tax.`);
   return said.join('');

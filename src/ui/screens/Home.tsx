@@ -23,7 +23,7 @@ import { CITIES } from '@/engine/content/geography';
 import {
   dateKey, formatDate, formatRelative, formatTime, formatWeekdayDate, seasonOf, zoneAbbreviation,
 } from '@/engine/core/time';
-import { formatMoney, saveCurrency } from '@/engine/core/money';
+import { formatMoney, saveCurrency, centsFromTyped } from '@/engine/core/money';
 import { cardOf, cardTerms, scoreIsANumberIn, scoreWord } from '@/engine/systems/credit';
 import { HOUSING, SOFA, arrearsOf, billsOf, moveCost, rentOf, troubles } from '@/engine/systems/household';
 import { LookRegion, Open, at } from '@/ui/looks';
@@ -32,6 +32,8 @@ import { STANDING_LABEL, nextClasses, rankIn, yearOfStudy } from '@/engine/syste
 import { agencyById } from '@/engine/systems/career';
 import { COVER_LABEL, coverOn } from '@/engine/systems/health';
 import { Gated, LockedPanel, useFeature } from '@/ui/guide/Guide';
+import { resolveIncomeTaxLayers } from '@/engine/content/tax';
+import { homeOf } from '@/engine/systems/earnings';
 
 export function Home() {
   const { sim, navigate, run } = useGame();
@@ -374,8 +376,8 @@ export function Home() {
                 />
                 <Stat
                   label="Tax On A Wage"
-                  value={`${Math.round(place.effectiveIncomeTax * 100)}%`}
-                  note="Income tax and payroll both, on a US$60,000 wage"
+                  value={resolveIncomeTaxLayers(place.city.id, sim.now).length > 0 ? `${Math.round(place.effectiveIncomeTax * 100)}%` : 'Not On File'}
+                  note={resolveIncomeTaxLayers(place.city.id, sim.now).length > 0 ? 'Income tax and payroll both, on a US$60,000 wage' : 'No table for this country yet'}
                   look={at('place', place.city.id)}
                 />
                 <Stat
@@ -489,7 +491,7 @@ export function Home() {
             <Stat
               label="Net Worth"
               value={<MoneyText amount={worth.total} currency={cur} compact />}
-              note={`${formatMoney(worth.cash, cur, { cents: false })} in the bank${worth.held > 0 ? `, ${formatMoney(worth.held, cur, { cents: false })} held as a deposit` : ''}${worth.pension > 0 ? `, ${formatMoney(worth.pension, cur, { cents: false })} in a pension` : ''}`}
+              note={`${formatMoney(worth.cash, cur, { cents: false })} in the bank and in hand${worth.held > 0 ? `, ${formatMoney(worth.held, cur, { cents: false })} held as a deposit` : ''}${worth.pension > 0 ? `, ${formatMoney(worth.pension, cur, { cents: false })} in a pension` : ''}`}
               look={at('networth', player.id)}
             />
             {worth.liabilities > 0 && (
@@ -641,7 +643,7 @@ function YourHome({ cur }: { cur: string }) {
   const owed = useWorld((s) => arrearsOf(s, s.player));
   const ahead = useWorld((s) => s.player.payments?.rentCredit ?? 0);
   const payLandlord = () => {
-    const answer = run('home.pay_landlord', { amount: Math.round(Number(paying.replace(/[^\d.]/g, '')) * 100) });
+    const answer = run('home.pay_landlord', { amount: centsFromTyped(paying) });
     if (answer.ok) { toast('Paid.', 'positive'); setPaying(''); }
   };
   const home = useWorld((s) => s.player.home);
@@ -704,7 +706,8 @@ function CardSummary({ cur }: { cur: string }) {
   const card = useWorld((s) => cardOf(s, s.player));
   const credit = useWorld((s) => s.player.credit);
   if (!credit) return null;
-  const record = scoreIsANumberIn(sim.player.currentLocationId) ? String(credit.score) : scoreWord(credit.score);
+  // Read as it’s read where they live, not where a job has them.
+  const record = scoreIsANumberIn(homeOf(sim.player)) ? String(credit.score) : scoreWord(credit.score);
   const terms = card ? cardTerms(sim, card, credit.score) : undefined;
   return (
     <>

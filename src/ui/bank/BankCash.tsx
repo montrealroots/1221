@@ -8,7 +8,7 @@ import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
-import { formatMoney, saveCurrency } from '@/engine/core/money';
+import { formatMoney, saveCurrency, centsFromTyped } from '@/engine/core/money';
 import { CASH } from '@/engine/content/cash';
 import { walletOf, withdrawalQuote, type CashFrom, type CashTo } from '@/engine/systems/cash';
 import { cardOf, cardTerms } from '@/engine/systems/credit';
@@ -27,7 +27,7 @@ export function BankCash({ bankId }: { bankId: string }) {
   const [inAmount, setInAmount] = useState('');
   const [into, setInto] = useState('');
   const [at, setAt] = useState<CashTo>('counter');
-  const cents = (v: string) => Math.round(Number(v.replace(/[^\d.]/g, '')) * 100);
+  const cents = centsFromTyped;
   const quote = outAmount ? withdrawalQuote(sim, person, cents(outAmount), from) : undefined;
   const cash = card && person.credit ? cardTerms(sim, card, person.credit.score) : undefined;
 

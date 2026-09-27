@@ -16,7 +16,7 @@ import { homeOf } from '@/engine/systems/earnings';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
-import { formatMoney, saveCurrency } from '@/engine/core/money';
+import { formatMoney, saveCurrency, centsFromTyped } from '@/engine/core/money';
 import { formatDate } from '@/engine/core/time';
 import type { Bank } from '@/engine/content/banks';
 import { SWITCHING } from '@/engine/content/banks-lending';
@@ -29,7 +29,7 @@ import {
 } from '@/engine/systems/lending';
 
 /** Whole units typed, as a banking app takes them, in hundredths. */
-const cents = (typed: string) => Math.round(Number(typed.replace(/[^\d.]/g, '')) * 100);
+const cents = centsFromTyped;
 const pct = (rate: number) => `${Number((rate * 100).toFixed(2))}%`;
 
 /** The bank screen's parts this shows: what's borrowed, what's put away for a term, and moving banks. */
@@ -191,7 +191,7 @@ export function BankLending({ bank, show }: { bank: Bank; show: readonly Lending
         <Panel title="In Collections" subtitle={`${money(-debt.balance)} owed`}>
           <div className="col gap-3">
             <p className="small" style={{ margin: 0 }}>
-              {debt.institution} closed your account after it was overdrawn for {ESTIMATE.closeAfterDays} days, SLATE’s estimate of how long a bank lets one run, and charged off what it couldn’t recover. It’s on your record until it’s paid.
+              {debt.institution} closed your account after it was overdrawn {bank.id.startsWith('fr-') ? `past its limit, on ${FRANCE.closingNoticeDays} days’ notice as French law asks` : `for ${ESTIMATE.closeAfterDays} days, SLATE’s estimate of how long a bank lets one run`}, and charged off what it couldn’t recover. It’s on your record until it’s paid.
             </p>
             <div className="field-act">
               <div className="field"><label htmlFor="collections-pay">{`Pay Toward It (${cur})`}</label><input id="collections-pay" type="text" inputMode="decimal" value={toCollections} onChange={(e) => setToCollections(e.target.value)} /></div>

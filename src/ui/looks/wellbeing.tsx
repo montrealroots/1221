@@ -29,6 +29,7 @@ import { at } from './subject';
 import { isAre, outOf, spokenList } from './words';
 import { GENRE_BY_ID, INTEREST_BY_ID } from '@/engine/content/interests';
 import { PERSONALITY_TRAIT_BY_ID } from '@/engine/content/personality-traits';
+import { ageWords, ceilingAt } from '@/engine/content/lifespan';
 
 /**
  * The eight, in the order a person would notice them.
@@ -237,8 +238,11 @@ function sentenceFor(dial: Dial, now: number): string {
     case 'fitness': {
       const mends = Math.round(mendsTo(dial.person, now));
       const costs = Math.round(workoutCosts(dial.person));
+      // The age’s ceiling, which training can’t pass, and what the years are like now.
+      const age = (now - dial.person.birthInstant) / (365.2425 * 86_400_000);
       return `${n}. Rest can mend you to ${mends}, and a workout costs ${costs} energy.`
-        + (dial.value <= EVERYDAY_FITNESS ? ' This is what an everyday life keeps without training.' : '');
+        + (dial.value <= EVERYDAY_FITNESS ? ' This is what an everyday life keeps without training.' : '')
+        + ` At ${Math.floor(age)}, the most a body can be trained to is ${Math.round(ceilingAt(age).fitness)}. ${ageWords(age)}`;
     }
     case 'nourishment':
       return n > 70 ? `${n}. Fed, and not thinking about it.`

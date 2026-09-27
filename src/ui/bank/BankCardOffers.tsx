@@ -9,12 +9,13 @@ import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
-import { formatMoney, saveCurrency } from '@/engine/core/money';
+import { formatMoney, saveCurrency, centsFromTyped } from '@/engine/core/money';
 import { formatDate } from '@/engine/core/time';
 import { bankById } from '@/engine/content/banks';
 import { CARDS } from '@/engine/content/cards';
 import { cardOf, cardTerms } from '@/engine/systems/credit';
 import { BONUSES, PLAN_MONTHS, planRoom, transferRate } from '@/engine/systems/cardoffers';
+import { inSaveMoney } from '@/engine/systems/banking';
 
 const pct = (rate: number) => `${Number((rate * 100).toFixed(2))}%`;
 
@@ -28,7 +29,7 @@ export function BankCardOffers({ bankId }: { bankId: string }) {
   const card = useWorld((s) => cardOf(s, s.player));
   const credit = useWorld((s) => s.player.credit);
   if (!credit) return null;
-  const cents = (typed: string) => Math.round(Number(typed.replace(/[^\d.]/g, '')) * 100);
+  const cents = centsFromTyped;
 
   // A card at a bank the player has left: this bank's card, with the balance moved onto it (C31).
   if (card && card.bankId !== bankId && !credit.applied) {
@@ -61,7 +62,13 @@ export function BankCardOffers({ bankId }: { bankId: string }) {
   if (terms.transfer && transfers.length === 0) lines.push(`It takes a balance from a card at another bank for ${terms.transfer.feeShare ? `${pct(terms.transfer.feeShare)} of it` : 'no fee'}, at ${terms.transfer.introMonths !== undefined ? `${pct(terms.transfer.introApr ?? 0)} for ${terms.transfer.introMonths + ' months'}, then ` : ''}${pct(terms.transfer.apr)}: after switching banks, apply for the new bank’s card and move it.`);
   for (const plan of plans) lines.push(`A plan: ${money(plan.left)} left, ${money(plan.monthly)} a month for ${plan.monthsLeft === 1 ? 'one more month' : plan.monthsLeft + ' more months'}, and ${money(plan.fee)} a month in place of interest.`);
   const bonus = card?.bankId ? BONUSES[card.bankId] : undefined;
-  if (terms.rewardsRate || bonus) lines.push(`Rewards: ${pct(terms.rewardsRate ?? 0)} back on every purchase, counted at each statement. ${money(credit.rewards ?? 0)} to redeem.${terms.rewardsWords ? ` The bank’s words: ${terms.rewardsWords}. ${bonus ? 'SLATE pays its bonus on groceries and recurring bills, to its caps, which are what a card buys here; the rest at the base rate.' : 'Its categories are ones a card doesn’t buy in SLATE, so the base rate is what it would earn.'}` : ''}`);
+  // Each category as the card pays it (`BONUSES`), not a base rate the rest may not earn: until 2026-09-27 this
+  // said "the rest at the base rate" of cards that pay nothing on the rest, or less past a cap.
+  const per = { quarter: 'a quarter', year: 'a year', cycle: 'a statement', month: 'a month' } as const;
+  const part = (what: string, b: { rate: number; cap?: number; after?: number } | undefined, cur2: string) => b === undefined ? undefined
+    : `${pct(b.rate)} on ${what}${b.cap !== undefined ? ` to the first ${money(inSaveMoney(sim, b.cap, cur2))} ${per[bonus!.per]}, ${pct(b.after ?? 0)} after` : ''}`;
+  const bonusWords = bonus && card?.bankId ? [part('groceries', bonus.food, bankById(card.bankId)?.currency ?? 'USD'), part('recurring bills', bonus.bills, bankById(card.bankId)?.currency ?? 'USD'), bonus.other ? part('everything else', bonus.other, bankById(card.bankId)?.currency ?? 'USD') : `${pct(terms.rewardsRate ?? 0)} on everything else`].filter(Boolean).join('; ') : undefined;
+  if (terms.rewardsRate || bonus) lines.push(`Rewards: ${bonusWords ?? `${pct(terms.rewardsRate ?? 0)} back on every purchase`}, counted at each statement. ${money(credit.rewards ?? 0)} to redeem.${terms.rewardsWords ? ` The bank’s words: ${terms.rewardsWords}. ${bonus ? 'Groceries and recurring bills are what a card buys here.' : 'Its categories are ones a card doesn’t buy in SLATE, so the base rate is what it would earn.'}` : ''}`);
 
   return (
     <Panel title="The Card’s Offers" subtitle={terms.name}>

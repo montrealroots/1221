@@ -109,6 +109,29 @@ export function splitByWeights(amount: Money, weights: readonly number[]): Money
  */
 export const DEFAULT_LEDGER_CURRENCY = 'EUR';
 
+/**
+ * An amount as a person types it, in cents: "12.50", "12,50", "1,000.50",
+ * "1.000,50", "1 000", "1'000". Where both a comma and a point appear, the
+ * later is the decimal mark; where one appears once with one or two digits
+ * after it, it's the decimal mark, and otherwise it groups thousands. Until
+ * 2026-09-27 every field dropped the comma, and "12,50", as a euro or a króna
+ * is typed, was read as 1,250.
+ */
+export function centsFromTyped(typed: string): Money {
+  const text = typed.replace(/[^\d.,]/g, '');
+  const comma = text.lastIndexOf(',');
+  const point = text.lastIndexOf('.');
+  let mark: ',' | '.' | undefined;
+  if (comma >= 0 && point >= 0) mark = comma > point ? ',' : '.';
+  else {
+    const one = comma >= 0 ? ',' : point >= 0 ? '.' : undefined;
+    if (one && text.split(one).length === 2 && /^\d{1,2}$/.test(text.slice(text.lastIndexOf(one) + 1))) mark = one;
+  }
+  const [whole, fraction = ''] = mark ? [text.slice(0, text.lastIndexOf(mark)), text.slice(text.lastIndexOf(mark) + 1)] : [text, ''];
+  const value = Number(`${whole.replace(/[.,]/g, '') || '0'}.${fraction.replace(/[.,]/g, '') || '0'}`);
+  return Number.isFinite(value) ? Math.round(value * 100) : 0;
+}
+
 export function formatMoney(cents: Money, currency: string, opts: { cents?: boolean } = {}): string {
   const info = currencyInfo(currency);
   const showCents = opts.cents ?? Math.abs(cents) < 100_000_00;

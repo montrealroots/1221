@@ -15,12 +15,13 @@
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
-import { formatMoney, saveCurrency } from '@/engine/core/money';
+import { formatMoney, saveCurrency, centsFromTyped } from '@/engine/core/money';
 import { formatDate, zonedParts } from '@/engine/core/time';
 import { cardOf, cardTerms, DUE_KIND, minimumDue, statementDayOf, type CardTerm } from '@/engine/systems/credit';
 import { bankById } from '@/engine/content/banks';
 import { useState } from 'react';
 import { inTheBank } from '@/engine/systems/household';
+import { CARDS } from '@/engine/content/cards';
 
 const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 const pct = (rate: number) => `${Number((rate * 100).toFixed(2))}%`;
@@ -40,13 +41,21 @@ export function BankCard({ bankId }: { bankId: string }) {
   const payable = useWorld((s) => Math.min(Math.max(0, -(cardOf(s, s.player)?.balance ?? 0)), inTheBank(s, s.player)));
   const due = useWorld((s) => s.timeline.pending().find((i) => i.kind === DUE_KIND && i.payload.personId === s.player.id));
   if (!credit) return null;
+  // Where the bank issues none, as `card.apply` refuses; until 2026-09-27 the button showed at 28 such banks.
+  const current = sim.player.primaryAccountId ? sim.universe.accounts[sim.player.primaryAccountId] : undefined;
+  const issuer = current?.bankId ? bankById(current.bankId) : undefined;
+  const product = issuer ? CARDS[issuer.id] : undefined;
+  const issuesNone = Boolean(product && 'none' in product);
+  const bankName = issuer?.name ?? 'The bank';
   if (!card) {
     // No card: the one on its way, or applying for the bank's (C1).
     return (
       <Panel title="Credit Card" subtitle={credit.applied ? 'On its way' : 'None'}>
         {credit.applied
           ? <p className="small" style={{ margin: 0 }}>Approved with a {money(credit.applied.limit)} limit. It arrives {formatDate(credit.applied.arrivesAt, sim.zone)}.</p>
-          : (
+          : issuesNone
+            ? <p className="small" style={{ margin: 0 }}>{bankName} doesn’t issue a credit card.</p>
+            : (
             <>
               <p className="small">The bank reads your record and what you have to repay from, and if it says yes, the card comes in about a week. Applying costs your record a few points, yes or no.</p>
               <Gated feature="card.apply" className="btn btn-sm" onClick={() => run('card.apply', {})}>Apply For The Bank’s Card</Gated>
@@ -157,7 +166,7 @@ export function BankCard({ bankId }: { bankId: string }) {
               <input id="card-limit" type="text" inputMode="decimal" value={limitWanted} onChange={(e) => setLimitWanted(e.target.value)} />
             </div>
             <Gated feature="card.request_limit" className="btn btn-sm" disabled={!limitWanted} onClick={() => {
-              const answer = run<{ limit: number; granted: boolean }>('card.request_limit', { limit: Math.round(Number(limitWanted.replace(/[^\d.]/g, '')) * 100) });
+              const answer = run<{ limit: number; granted: boolean }>('card.request_limit', { limit: centsFromTyped(limitWanted) });
               if (answer.ok && answer.value?.granted) { toast(`The limit is ${money(answer.value.limit)} now.`, 'positive'); setLimitWanted(''); }
             }}>Ask For It</Gated>
           </div>

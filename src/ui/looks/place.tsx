@@ -233,7 +233,7 @@ defineLook<PlaceProfile>('place', {
           <p className="small muted">
             {place.medianRentCents > 0 && `Rent on a one-bedroom runs about ${rent} a month, `}
             {place.medianRentCents > 0
-              ? `and the cost of living sits at ${place.costOfLivingIndex}, where a hundred is the American average.`
+              ? `and the cost of living sits at ${place.costOfLivingIndex}, where a hundred is the United States’ price level.`
               : `The cost of living sits at ${place.costOfLivingIndex}, where a hundred is the American average.`}
             {layers.length === 0
               ? ` SLATE has no income tax table for ${theCountry(place.countryName)} yet, so the tile below says so rather than showing you a zero it can’t stand behind.`
@@ -265,7 +265,7 @@ defineLook<PlaceProfile>('place', {
               value={`${place.currency.symbol} ${place.currency.code}`}
               note={rateLine(place.currency)}
             />
-            <Stat label="Cost Of Living" value={place.costOfLivingIndex} note="A hundred is the American average" />
+            <Stat label="Cost Of Living" value={place.costOfLivingIndex} note="A hundred is the United States’ price level" />
             <Stat
               label="Tax On A Wage"
               value={layers.length > 0 ? `${Math.round(place.effectiveIncomeTax * 100)}%` : 'Not On File'}

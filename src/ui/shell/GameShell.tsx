@@ -6,7 +6,7 @@
  *
  * The rail down the left is every destination, always in reach, with Home at
  * the top wearing the count of what is waiting on you. It is words only: no
- * icons, and a locked room says Locked rather than showing a padlock. Below a
+ * icons. Below a
  * laptop it folds into a drawer behind the Menu button.
  *
  * The bar across the top keeps its two sides apart on purpose. Left is the
@@ -47,8 +47,7 @@ export function GameShell() {
   // A life that has ended opens onto how it ended, and nothing else.
   const ended = useWorld((s) => s.universe.meta.endedAt !== undefined);
 
-  const go = (to: string, label: string, locked?: boolean) => {
-    if (locked) { game.toast(`${label} Is Under Construction.`, 'neutral'); return; }
+  const go = (to: string, label: string) => {
     navigate(to, label);
     setRailOpen(false);
   };
@@ -126,14 +125,12 @@ export function GameShell() {
               {group.items.map((item) => (
                 <button
                   key={item.route}
-                  className={`rail-item${item.locked ? ' is-locked' : ''}`}
-                  aria-current={!item.locked && route === item.route ? 'page' : undefined}
-                  aria-label={item.locked ? `${item.label}, Locked, Under Construction` : undefined}
+                  className="rail-item"
+                  aria-current={route === item.route ? 'page' : undefined}
                   title={item.detail}
-                  onClick={() => go(item.route, item.label, item.locked)}
+                  onClick={() => go(item.route, item.label)}
                 >
                   <span className="grow truncate">{item.label}</span>
-                  {item.locked && <span className="rail-lock">Locked</span>}
                 </button>
               ))}
             </div>

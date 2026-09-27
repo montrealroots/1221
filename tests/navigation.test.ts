@@ -126,12 +126,12 @@ describe('what was taken out', () => {
     expect(creation, 'creation still calls the player a founder').not.toMatch(/And Founder/);
   });
 
-  it('tells the player it is under construction rather than navigating', () => {
-    // The rail is what renders destinations now, so it is the one that has to
-    // refuse a shut one. Home used to carry this and no longer offers tiles.
+  it('lists no destination that doesn’t open', () => {
+    // The rail refused a locked destination with Under Construction; none had
+    // been locked for a long time, and the path went on 2026-09-27.
     const shell = read('ui/shell/GameShell.tsx');
-    expect(shell).toMatch(/if \(locked\) \{[^}]*toast\([^)]*Under Construction/);
-    expect(shell).toMatch(/return; \}/);
+    expect(shell).not.toMatch(/locked|Under Construction/);
+    expect(read('ui/shell/destinations.ts')).not.toMatch(/locked\?:/);
   });
 
   it('gives the calendar a section of Home rather than a tile pointing at one', () => {
