@@ -8,7 +8,7 @@ import { createSave, quickSave } from '@/engine';
 import { newLifeConfig } from '@/engine/world/bootstrap';
 import { MS_DAY, MS_HOUR, instantFromZoned, zonedParts } from '@/engine/core/time';
 import { computeAnnualTax } from '@/engine/content/tax';
-import { AGENCIES, AGENT_COMMISSION, EQUITY, ROLES, SAG_AFTRA, SHOWCASE_2029, rateOn } from '@/engine/content/career';
+import { AGENCIES, AGENT_COMMISSION, EQUITY, ROLES, SAG_AFTRA, SHOWCASE_2029, WORK_COSTS, rateOn } from '@/engine/content/career';
 import {
   AUDITION_KIND, CAREER_WEEK_KIND, ESTIMATE, LEAVING, PAY_KIND, SHOWCASE_KIND, WORK_KIND,
   beginCareer, billDues, bookingChance, careerOf, mayLeave, mealPenalty, offersFor, overtimeFor, paycheck, roleById, showcaseScore, weekOfAuditions, workDays,
@@ -232,7 +232,8 @@ describe('auditions', () => {
       got += week.length;
       for (const a of week) { expect(a.self).toBe(true); expect(roleById(a.roleId).selfSubmit).toBe(true); }
     }
-    expect(got / 1000).toBeCloseTo(ESTIMATE.selfSubmitCallback, 1);
+    // Free, half as often as with a paid site's headshot and reel.
+    expect(got / 1000).toBeCloseTo(ESTIMATE.selfSubmitCallback * WORK_COSTS.freeSubmissionShare, 1);
     expect(sim.execute({ kind: 'career.self_submit', payload: {} }).ok).toBe(true);
     careerOf(sim.player).submitted = ESTIMATE.selfSubmitsAWeek;
     expect(sim.execute({ kind: 'career.self_submit', payload: {} }).ok).toBe(false);

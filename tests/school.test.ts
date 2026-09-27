@@ -234,12 +234,12 @@ describe('classes', () => {
 });
 
 describe('illness at school', () => {
-  it('comes at school too, with Yale Health leaving nothing to pay, and a stay in hospital keeps them from class', () => {
+  it('comes at school too, with Yale Health leaving $200 an admission, and a stay in hospital keeps them from class', () => {
     const sim = life('ill');
     expect(sim.universe.scheduled.some((i) => i.kind === 'health.week' && i.status === 'pending')).toBe(true);
     play(sim, at(2026, 8, 31, 8));
     const bill = careFor(sim, sim.player, { care: 'stay', what: 'A stay in hospital' }, sim.now);
-    expect(bill).toBeUndefined();
+    expect(bill!.amount).toBe(200_00);
     sim.advanceTo(at(2026, 8, 31, 9) + 60_000);
     expect(sim.player.school!.tally).toMatchObject({ classDays: 1, attended: 0 });
   });

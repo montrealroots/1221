@@ -24,6 +24,8 @@ export interface YearEarnings {
   /** What the job cost: the agency's and the manager's commission, and the unions' dues. */
   commission: Money;
   dues: Money;
+  /** And the rest of what the work cost: casting sites, headshots, a kit, a class, a coach. */
+  jobCosts?: Money;
   /** Productions that paid $200 or more, for the performing artist deduction. */
   employers: Record<string, Money>;
   /** Where they lived when last paid, which the return is filed from. */
@@ -44,11 +46,14 @@ export interface EarningsRecord {
   equityWeeks: string[];
   /** Income by month, `YYYY-MM`, for the programs that test current income. */
   months: Record<string, Money>;
+  /** UK wages by the UK's tax year, keyed by the year it began on 6 April, for its treaty's test. */
+  ukYears: Record<string, Money>;
 }
 
 export function earningsOf(person: Person): EarningsRecord {
-  person.earnings ??= { years: {}, quarters: {}, equityWeeks: [], months: {} };
+  person.earnings ??= { years: {}, quarters: {}, equityWeeks: [], months: {}, ukYears: {} };
   person.earnings.months ??= {};
+  person.earnings.ukYears ??= {};
   return person.earnings;
 }
 
@@ -82,6 +87,7 @@ export function recordWages(person: Person, at: Instant, zone: string, pay: {
     const f = (y.foreign[country] ??= { gross: 0, withheld: 0 });
     f.gross += pay.gross;
     f.withheld += pay.foreignWithheld ?? 0;
+    if (country === 'uk') { const key = ukTaxYear(at); earningsOf(person).ukYears[key] = (earningsOf(person).ukYears[key] ?? 0) + pay.gross; }
   }
   const worked = pay.where && !(country && country !== CITIES.get(home)?.countryId) ? stateOf(pay.where) : lived;
   if (worked !== lived) y.elsewhere[`${lived}>${pay.where}`] = (y.elsewhere[`${lived}>${pay.where}`] ?? 0) + pay.gross;
@@ -113,6 +119,18 @@ export function recordBenefit(person: Person, at: Instant, zone: string, amount:
   y.byResidence[home] = (y.byResidence[home] ?? 0) + amount;
   const month = `${p.year}-${String(p.month).padStart(2, '0')}`;
   earningsOf(person).months[month] = (earningsOf(person).months[month] ?? 0) + amount;
+}
+
+/** A cost of the work paid from the bank, for the year's return. */
+export function recordJobCost(person: Person, at: Instant, amount: Money): void {
+  const y = yearOf(person, zonedParts(at, 'America/New_York').year);
+  y.jobCosts = (y.jobCosts ?? 0) + amount;
+}
+
+/** The UK tax year a moment is in, by the year it began: 6 April to 5 April. */
+export function ukTaxYear(at: Instant): string {
+  const p = zonedParts(at, 'Europe/London');
+  return String(p.month > 4 || (p.month === 4 && p.day >= 6) ? p.year : p.year - 1);
 }
 
 /** Where they live: their home's town, or where they are without one. */

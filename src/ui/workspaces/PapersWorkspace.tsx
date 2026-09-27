@@ -14,10 +14,10 @@ import { Gated } from '@/ui/guide/Guide';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { formatDate } from '@/engine/core/time';
 import { CITIES } from '@/engine/content/geography';
-import { BENCHMARK_SOURCE, BENEFIT_STATE, CALIFORNIA_MANDATE, CALIFORNIA_UI, CARE, CHRONIC, COBRA, DENTAL_VISION, PHARMACY, MEDICAL_DEBT, NEW_YORK_UI, PLANS_SOURCE, PREMIUM_CREDIT, PUBLIC_COVER, RETURN } from '@/engine/content/safetynet';
+import { BENCHMARK_SOURCE, BENEFIT_STATE, CALIFORNIA_MANDATE, CALIFORNIA_UI, CARE, CHRONIC, COBRA, DENTAL_PLANS, DENTAL_VISION, INSULIN, PHARMACY, MEDICAL_DEBT, NEW_YORK_UI, PLANS_SOURCE, PREMIUM_CREDIT, PUBLIC_COVER, RETURN } from '@/engine/content/safetynet';
 import { UNION_HEALTH } from '@/engine/content/career';
 import { deadline, returnsOf } from '@/engine/systems/taxreturn';
-import { CONDITION_LABEL, COVER_LABEL, benchmarkFor, coverOn, healthOf, mayEnroll, medicalDebtOf, planOf, type Condition } from '@/engine/systems/health';
+import { CONDITION_LABEL, COVER_LABEL, benchmarkFor, coverOn, dentalPlanFor, grown, healthOf, mayEnroll, medicalDebtOf, planOf, type Condition } from '@/engine/systems/health';
 import { homeOf } from '@/engine/systems/earnings';
 import { titleCaseLabel } from '@/engine/core/text';
 import { basePeriodFor, unemploymentOf } from '@/engine/systems/unemployment';
@@ -192,6 +192,7 @@ function HealthPane() {
       )}
 
       <ConditionsPanel />
+      <DentalPanel />
 
       <Panel
         title="Care And Its Bills"
@@ -209,7 +210,7 @@ function HealthPane() {
             </div>
           )}
           <p className="xs dim" style={{ margin: 0 }}>
-            Illness comes at the rates of an adult your age: about {CARE.perYear.visit} doctor’s visits a year, {CARE.perYear.emergency} emergency visits, a stay in hospital one year in 25, and the flu one season in eleven. Care costs what it costs your plan: {formatMoney(CARE.price.visit, cur)} a visit, {formatMoney(CARE.price.emergency, cur)} an emergency visit and {formatMoney(CARE.price.stay, cur)} a stay at commercial prices, and the uninsured are billed more. A bill is due in {MEDICAL_DEBT.dueDays} days. Source: {CARE.source}; {PLANS_SOURCE}.
+            Illness comes at the rates of an adult your age: about {CARE.perYear.visit} doctor’s visits a year, {CARE.perYear.emergency} emergency visits, a stay in hospital one year in 25, and the flu one season in eleven. Care costs what it costs your plan: {formatMoney(grown(CARE.price.visit, 'visit', sim.now), cur)} a visit, {formatMoney(grown(CARE.price.emergency, 'emergency', sim.now), cur)} an emergency visit and {formatMoney(grown(CARE.price.stay, 'stay', sim.now), cur)} a stay at this year’s commercial prices, grown from their year by the medical price index, and the uninsured are billed more. A bill is due in {MEDICAL_DEBT.dueDays} days. Source: {CARE.source}; {PLANS_SOURCE}.
           </p>
         </div>
       </Panel>
@@ -219,24 +220,54 @@ function HealthPane() {
 
 /** The conditions carried, and keeping each up or not. */
 function ConditionsPanel() {
-  const { run, toast } = useGame();
+  const { sim, run, toast } = useGame();
+  const cur = saveCurrency(sim.universe);
   const person = useWorld((s) => s.player);
   const h = healthOf(person);
-  const conditions = Object.entries(h.chronic ?? {}) as [Condition, { treated: boolean; lapsed?: boolean }][];
+  const conditions = Object.entries(h.chronic ?? {}) as [Condition, { treated: boolean; lapsed?: boolean; typeOne?: boolean }][];
   if (!conditions.length && !h.lenses) return null;
   return (
     <Panel title="Your Conditions" subtitle={h.lenses ? 'You wear prescription lenses' : undefined}>
       <div className="col gap-3">
         {conditions.map(([condition, state]) => (
           <div key={condition} className="row-between small">
-            <span>{CONDITION_LABEL[condition]}: {state.treated ? (state.lapsed ? 'Kept Up, But This Month’s Care Went Unpaid' : 'Kept Up') : 'Left Alone'}</span>
+            <span>{CONDITION_LABEL[condition]}{condition === 'diabetes' ? (state.typeOne ? ', Type 1' : ', Type 2') : ''}: {state.treated ? (state.lapsed ? 'Kept Up, But This Month’s Care Went Unpaid' : 'Kept Up') : 'Left Alone'}</span>
             <Gated feature="health.treat" onClick={() => { const a = run<{ treated: boolean }>('health.treat', { condition, on: !state.treated }); if (a.ok) toast(a.value!.treated ? 'Kept up from this month.' : 'Left alone.', 'positive'); }}>
               {state.treated ? 'Let It Go' : 'Keep It Up'}
             </Gated>
           </div>
         ))}
         <p className="xs dim" style={{ margin: 0 }}>
-          Drawn at the rates of adults 18 to 34: depression {CHRONIC.share.depression * 100}%, asthma {(CHRONIC.share.asthma * 100).toFixed(1)}%, high blood pressure {(CHRONIC.share.hypertension * 100).toFixed(1)}%. Kept up, each month’s care is paid then, at what your plan leaves: therapy twice and a generic for depression, a brand inhaler for asthma, a generic for blood pressure. Left alone, depression weighs on your morale each week and asthma doubles your emergencies, which is SLATE’s estimate. Source: {CHRONIC.source}; {PHARMACY.source}; {DENTAL_VISION.source}.
+          Drawn at the rates of adults 18 to 34: depression {CHRONIC.share.depression * 100}%, asthma {(CHRONIC.share.asthma * 100).toFixed(1)}%, high blood pressure {(CHRONIC.share.hypertension * 100).toFixed(1)}%, diabetes {(CHRONIC.share.diabetes * 100).toFixed(1)}%, arthritis {(CHRONIC.share.arthritis * 100).toFixed(1)}%. Kept up, each month’s care is paid then, at what your plan leaves: therapy twice and a generic for depression, a brand inhaler for asthma, a generic for blood pressure, insulin (or a generic for type 2) and a visit a quarter for diabetes, a generic for arthritis. Insulin is never more than the makers’ {formatMoney(INSULIN.cashCap, cur)} a month, and nothing on a plan New York regulates. Left alone, depression weighs on your morale each week, asthma doubles your emergencies, type 1 diabetes quadruples them, diabetes wears your body down and arthritis tires it, which is SLATE’s estimate. Source: {CHRONIC.source}; {INSULIN.source}; {PHARMACY.source}; {DENTAL_VISION.source}.
+        </p>
+      </div>
+    </Panel>
+  );
+}
+
+/** A stand-alone dental plan: buying it, or dropping it. */
+function DentalPanel() {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const cur = saveCurrency(sim.universe);
+  const h = healthOf(person);
+  const own = h.dental && (h.dental.until === undefined || h.dental.until > sim.now) ? h.dental : undefined;
+  const offered = own?.plan ?? dentalPlanFor(person, sim.now);
+  if (!offered) return null;
+  const d = DENTAL_PLANS[offered];
+  const year = zonedParts(sim.now, sim.zone).year;
+  return (
+    <Panel
+      title="A Dental Plan"
+      subtitle={`${d.label}: ${formatMoney(d.premium, cur)} ${d.yearly ? 'a year' : 'a month'}`}
+      actions={own
+        ? (d.yearly ? undefined : <Gated feature="health.dental" onClick={() => { if (run('health.dental', { on: false }).ok) toast('It ends at the month’s end.', 'positive'); }}>Drop Dental</Gated>)
+        : <Gated feature="health.dental" onClick={() => { if (run('health.dental', { on: true }).ok) toast('Covered for the dentist from today.', 'positive'); }}>Buy Dental</Gated>}
+    >
+      <div className="col gap-3">
+        {own && <Stat label="Paid By The Plan This Year" value={`${formatMoney(own.paid[year] ?? 0, cur)} of ${formatMoney(d.max, cur)}`} />}
+        <p className="xs dim" style={{ margin: 0 }}>
+          Cleanings in full; a filling at {d.basic * 100}% after a {formatMoney(d.deductible, cur)} deductible, to {formatMoney(d.max, cur)} a year. It pays only where your health plan doesn’t. {offered === 'ca' ? 'Covered California sells it only beside its own plan, and it ends with that plan; its Los Angeles premium is SLATE’s estimate.' : offered === 'yale' ? 'Paid for the year to 30 September, and not canceled once paid.' : 'Bought on its own through NY State Of Health; its premium and its share of a filling are SLATE’s estimate.'} Source: {DENTAL_PLANS.source}.
         </p>
       </div>
     </Panel>

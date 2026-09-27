@@ -124,7 +124,7 @@ export function figuresFor(person: Person, year: number, into = 'USD'): ReturnFi
   const at = instantFromZoned({ year, month: 12, day: 31, hour: 12 }, HOME);
   const income = y.acting + y.workStudy + y.unemployment;
   const employers = Object.values(y.employers).filter((pay) => pay >= usd(RETURN.performingArtistEmployerPay, into)).length;
-  const expenses = y.commission + y.dues;
+  const expenses = y.commission + y.dues + (y.jobCosts ?? 0);
   const performer = income <= usd(RETURN.performingArtistIncome, into) && employers >= RETURN.performingArtistEmployers && expenses > RETURN.performingArtistShare * y.acting;
   const deduction = performer ? expenses : 0;
   const taxed = Math.max(0, income - deduction);
@@ -149,7 +149,7 @@ export function figuresFor(person: Person, year: number, into = 'USD'): ReturnFi
   // California doesn't tax unemployment, which goes to where they lived at the year's end.
   const benefitOut = (state: string) => (state === 'us-ca' && lastState === 'us-ca' ? y.unemployment : 0);
   // New York and California let the job's costs be itemized above 2% of income, where that beats the standard deduction.
-  const itemized = Math.max(0, y.commission + y.dues - STATE_DEDUCTIONS.floor * income);
+  const itemized = Math.max(0, expenses - STATE_DEDUCTIONS.floor * income);
   const extra = (state: string) => Math.max(0, itemized - usd(STATE_DEDUCTIONS.standard[state] ?? Number.POSITIVE_INFINITY, into));
   const full = (state: string) => {
     const base = Math.max(0, taxed - benefitOut(state));

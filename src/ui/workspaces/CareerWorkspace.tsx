@@ -12,17 +12,17 @@ import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Empty, Stat } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
-import { formatDate, formatDateTime, instantFromZoned } from '@/engine/core/time';
+import { formatDate, formatDateTime, instantFromZoned, zonedParts } from '@/engine/core/time';
 import { CITIES } from '@/engine/content/geography';
 import { AGENCIES, AGENCY_SOURCE, AGENT_COMMISSION, CAREER_CITIES, EQUITY, ROLES, SAG_AFTRA, SHOWCASE_2029 } from '@/engine/content/career';
 import { YALE_DRAMA } from '@/engine/content/school';
 import {
-  ESTIMATE, LEAVING, agencyById, bookingChance, careerOf, managerById, mayLeave, rateOf, roleById, workCityOf, workDays, type Booking, type CareerRecord,
+  ESTIMATE, LEAVING, agencyById, bookingChance, careerOf, managerById, mayLeave, onSite, rateOf, roleById, staleHeadshots, submissionsAWeek, workCityOf, workDays, type Booking, type CareerRecord, type CastingSite,
 } from '@/engine/systems/career';
 import { costsAt, HOUSING, type Housing } from '@/engine/systems/household';
 import { focusOf } from '@/engine/systems/school';
 import { earningsOf } from '@/engine/systems/earnings';
-import { MANAGEMENT, MANAGERS, OVERTIME, RESIDUALS } from '@/engine/content/career';
+import { MANAGEMENT, MANAGERS, OVERTIME, RESIDUALS, WORK_COSTS } from '@/engine/content/career';
 
 type CareerTab = 'agency' | 'auditions' | 'work' | 'unions' | 'home';
 
@@ -138,14 +138,16 @@ function AgencyPane() {
 
       <Panel
         title="Submitting Yourself"
-        subtitle={`${career.submitted} of ${ESTIMATE.selfSubmitsAWeek} this week`}
+        subtitle={`${career.submitted} of ${submissionsAWeek(career, sim.now)} this week`}
         actions={<Gated feature="career.self_submit" onClick={() => { if (run('career.self_submit').ok) toast('Submitted. Any audition comes on Monday.', 'positive'); }}>Submit Yourself</Gated>}
       >
         <p className="small" style={{ margin: 0 }}>
-          On the casting sites every actor uses, for the low budget films that take submissions. About {pct(ESTIMATE.selfSubmitCallback)} bring an audition, with the week’s on Monday (SLATE’s estimate).
+          On the casting sites every actor uses, for the low budget films that take submissions. About {pct(ESTIMATE.selfSubmitCallback)} bring an audition with a paid site’s headshot and reel, and half that free, with the week’s on Monday (SLATE’s estimate).
           {career.since === undefined ? ' Submissions start when school ends.' : ''}
         </p>
       </Panel>
+
+      <WorkCostsPanel />
 
       <Panel title="The Showcase" subtitle={career.showcases.length ? undefined : `New York ${formatDate(instantFromZoned({ ...SHOWCASE_2029.newYork, hour: 17 }, zoneOf(CAREER_CITIES[0])), zoneOf(CAREER_CITIES[0]))}, Los Angeles a week later`}>
         <div className="col gap-3">
@@ -215,8 +217,11 @@ function AuditionsPane() {
           <div className="col gap-2">
             {ahead.map((a) => (
               <div key={a.id} className="row-between small">
-                <span>{roleById(a.roleId).label}{a.self ? ', submitted yourself' : ''}</span>
-                <span className="mono">{a.mode === 'tape' ? 'Self-Tape' : `In The Room, ${cityName(a.cityId)}`}, {formatDateTime(a.at, zoneOf(a.cityId))}</span>
+                <span>{roleById(a.roleId).label}{a.self ? ', submitted yourself' : ''}{a.coached ? ', coached' : ''}</span>
+                <span className="row gap-2">
+                  <span className="mono">{a.mode === 'tape' ? 'Self-Tape' : `In The Room, ${cityName(a.cityId)}`}, {formatDateTime(a.at, zoneOf(a.cityId))}</span>
+                  {!a.coached && <Gated feature="career.coach" onClick={() => { if (run('career.coach', { auditionId: a.id }).ok) toast('An hour with a coach on it.', 'positive'); }}>Book A Coach</Gated>}
+                </span>
               </div>
             ))}
           </div>
@@ -403,6 +408,53 @@ function HomePane() {
 }
 
 /** A manager: who, what they take, leaving after the first year, and the offers standing. */
+/** What the work costs: the casting sites, headshots, a kit for tapes, a class. */
+function WorkCostsPanel() {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const career = careerOf(person);
+  const cur = saveCurrency(sim.universe);
+  if (career.since === undefined) return null;
+  const stale = staleHeadshots(career, sim.now);
+  return (
+    <Panel title="What The Work Costs" subtitle={`${formatMoney(yearCosts(person, sim.now), cur)} this year, deducted where the return allows`}>
+      <div className="col gap-3">
+        {(Object.keys(WORK_COSTS.sites) as CastingSite[]).map((site) => {
+          const held = career.sites?.[site];
+          const on = onSite(career, site, sim.now);
+          return (
+            <div key={site} className="row-between small">
+              <span>{WORK_COSTS.sites[site].label}, {formatMoney(WORK_COSTS.sites[site].price, cur)} a year: {on ? `to ${formatDate(held!.until, sim.zone)}${held!.renews ? ', renewing' : ''}` : 'Not Joined'}</span>
+              {on && held!.renews
+                ? <Gated feature="career.subscribe" onClick={() => { if (run('career.subscribe', { site, on: false }).ok) toast('It runs to its date and stops.', 'positive'); }}>Stop Renewing</Gated>
+                : <Gated feature="career.subscribe" onClick={() => { if (run('career.subscribe', { site, on: true }).ok) toast('Joined for the year.', 'positive'); }}>{on ? 'Renew' : 'Join'}</Gated>}
+            </div>
+          );
+        })}
+        <div className="row-between small">
+          <span>Headshots, {formatMoney(WORK_COSTS.headshots, cur)} with prints: from {formatDate(career.headshotsAt ?? career.since, sim.zone)}{stale ? ', out of date' : ''}</span>
+          <Gated feature="career.headshots" onClick={() => { if (run('career.headshots').ok) toast('New headshots.', 'positive'); }}>New Headshots</Gated>
+        </div>
+        <div className="row-between small">
+          <span>A self-tape kit, {formatMoney(WORK_COSTS.kit, cur)}: {career.kit ? 'Yours' : 'None'}</span>
+          {!career.kit && <Gated feature="career.buy_kit" onClick={() => { if (run('career.buy_kit').ok) toast('Tapes read better now.', 'positive'); }}>Buy A Kit</Gated>}
+        </div>
+        <div className="row-between small">
+          <span>A scene-study class, {formatMoney(WORK_COSTS.classMonthly, cur)} a month: {career.scene ? 'Enrolled' : 'None'}</span>
+          {career.scene
+            ? <Gated feature="career.class" onClick={() => { if (run('career.class', { on: false }).ok) toast('Out of the class.', 'positive'); }}>Leave The Class</Gated>
+            : <Gated feature="career.class" onClick={() => { if (run('career.class', { on: true }).ok) toast('In class from this week.', 'positive'); }}>Join A Class</Gated>}
+        </div>
+        <p className="xs dim" style={{ margin: 0 }}>
+          Prices are 2025–26’s. A free submission sends a name and a résumé, and is seen about half as often; Backstage’s own listings take {WORK_COSTS.backstageSubmissions} more submissions a week. Headshots more than two years old cost about a fifth of your auditions; a tape without a kit reads about a fifth worse; a week in class grows your acting as a class at school does; a coach, {formatMoney(WORK_COSTS.coach, cur)} an hour, makes an audition book about a quarter more often. What each does is SLATE’s estimate. New York and California let an actor deduct it all above 2% of income. Source: {WORK_COSTS.source}.
+        </p>
+      </div>
+    </Panel>
+  );
+}
+
+const yearCosts = (person: Parameters<typeof earningsOf>[0], at: number) => earningsOf(person).years[zonedParts(at, 'America/New_York').year]?.jobCosts ?? 0;
+
 function ManagerPanel() {
   const { sim, run, toast } = useGame();
   const person = useWorld((s) => s.player);

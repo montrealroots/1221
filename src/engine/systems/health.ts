@@ -42,7 +42,7 @@ import { exchange } from '../content/currency';
 import { CITIES } from '../content/geography';
 import { UNION_HEALTH, rateOn } from '../content/career';
 import {
-  BENCHMARK, BENEFIT_STATE, CARE, CHARITY, CHRONIC, COBRA, DENTAL_VISION, ENROLLMENT, MEDICAL_DEBT, PHARMACY, PLANS, POVERTY_LINE, PUBLIC_COVER, byYear,
+  BENCHMARK, BENEFIT_STATE, CARE, CHARITY, CHRONIC, COBRA, DENTAL_PLANS, DENTAL_VISION, ENROLLMENT, INSULIN, MEDICAL_CPI, MEDICAL_DEBT, PHARMACY, PLANS, POVERTY_LINE, PUBLIC_COVER, byYear, medicalGrowth,
   type BenefitState, type PlanDesign,
 } from '../content/safetynet';
 import { earningsOf, homeOf, quartersBefore } from './earnings';
@@ -53,8 +53,9 @@ export const HEALTH_WEEK_KIND = 'health.week';
 export const BILL_KIND = 'health.bill';
 
 export type Cover = 'yale' | 'sag' | 'equity' | 'cobra' | 'medicaid' | 'essential' | 'marketplace';
-export type Condition = 'depression' | 'asthma' | 'hypertension';
-export const CONDITION_LABEL: Record<Condition, string> = { depression: 'Depression', asthma: 'Asthma', hypertension: 'High Blood Pressure' };
+export type DentalPlan = 'ca' | 'ny' | 'yale';
+export type Condition = 'depression' | 'asthma' | 'hypertension' | 'diabetes' | 'arthritis';
+export const CONDITION_LABEL: Record<Condition, string> = { depression: 'Depression', asthma: 'Asthma', hypertension: 'High Blood Pressure', diabetes: 'Diabetes', arthritis: 'Arthritis' };
 
 export interface MedicalBill { id: string; at: Instant; what: string; amount: Money; dueAt: Instant; paid?: boolean }
 
@@ -88,7 +89,9 @@ export interface HealthRecord {
   debtSince?: Instant;
   seq?: number;
   /** Conditions carried, and whether they're kept up; whether they wear lenses, and the year of their last glasses. */
-  chronic?: Partial<Record<Condition, { treated: boolean; lapsed?: boolean }>>;
+  chronic?: Partial<Record<Condition, { treated: boolean; lapsed?: boolean; typeOne?: boolean }>>;
+  /** A stand-alone dental plan: which, from and until, and this year's deductible and what it's paid. */
+  dental?: { plan: DentalPlan; from: Instant; until?: Instant; deductible: Record<string, Money>; paid: Record<string, Money> };
   lenses?: boolean;
   lastGlasses?: number;
   drawn?: boolean;
@@ -200,6 +203,7 @@ export function drawChronic(sim: Simulation, person: Person): void {
   const rng = sim.rng('health.chronic', person.id, 'carried');
   h.chronic = {};
   for (const [condition, share] of Object.entries(CHRONIC.share) as [Condition, number][]) if (rng.next() < share) h.chronic[condition] = { treated: true };
+  if (h.chronic.diabetes) h.chronic.diabetes.typeOne = rng.next() < CHRONIC.typeOne;
   h.lenses = rng.next() < DENTAL_VISION.lensShare;
 }
 
@@ -313,6 +317,12 @@ export function healthMonth(sim: Simulation, person: Person, at: Instant): void 
       else m.until = at;
     }
   }
+  // A dental plan of their own: its month's premium, and it ends with what it's bought beside.
+  const dental = h.dental;
+  if (dental && active(dental, at)) {
+    if (dentalPlanFor(person, at) !== dental.plan) dental.until = at;
+    else if (!DENTAL_PLANS[dental.plan].yearly && !payFromCurrent(sim, person, usd(DENTAL_PLANS[dental.plan].premium, cur), `${DENTAL_PLANS[dental.plan].label} premium`, 'health')) dental.until = at;
+  }
   keepUp(sim, person, at);
   const cover = coverOn(person, at);
   if (!cover && inCalifornia(home)) h.uncoveredInCalifornia[p.year] = (h.uncoveredInCalifornia[p.year] ?? 0) + 1;
@@ -334,23 +344,31 @@ export function healthMonth(sim: Simulation, person: Person, at: Instant): void 
 /**
  * A month's care for the conditions kept up: therapy twice and a generic for
  * depression, a brand inhaler and the odd visit for asthma, a generic for high
- * blood pressure, all at what the plan leaves, paid then. What the bank can't
+ * blood pressure; for diabetes insulin, or a generic for type 2, and a visit a
+ * quarter; for arthritis a generic and the odd visit; all at what the plan
+ * leaves, paid then. What the bank can't
  * cover this month goes without, and the condition is left alone till next.
  */
 export function keepUp(sim: Simulation, person: Person, at: Instant): Money {
   const h = healthOf(person);
   const cur = saveCurrency(sim.universe);
   let total = 0;
-  for (const [condition, state] of Object.entries(h.chronic ?? {}) as [Condition, { treated: boolean; lapsed?: boolean }][]) {
+  for (const [condition, state] of Object.entries(h.chronic ?? {}) as [Condition, { treated: boolean; lapsed?: boolean; typeOne?: boolean }][]) {
     if (!state.treated) continue;
     let cost = 0;
     if (condition === 'depression') {
       const plan = planOf(person, at);
-      const session = plan ? usd(plan.visit, cur) : usd(CITIES.get(homeOf(person))?.parentId === 'us-ny' ? CHRONIC.therapy['us-ny'] : CHRONIC.therapy.other, cur);
+      const session = plan ? usd(plan.visit, cur) : usd(grown(CITIES.get(homeOf(person))?.parentId === 'us-ny' ? CHRONIC.therapy['us-ny'] : CHRONIC.therapy.other, 'therapy', at), cur);
       cost += CHRONIC.therapyPerMonth * session + rxShareOf(person, false, at, cur);
     } else if (condition === 'asthma') {
       cost += rxShareOf(person, true, at, cur);
       if (sim.rng('health.chronic', person.id, `asthma-${at}`).next() < 2 / 12) cost += shareOf(person, 'visit', at, cur);
+    } else if (condition === 'diabetes') {
+      cost += state.typeOne ? insulinShareOf(person, at, cur) : rxShareOf(person, false, at, cur);
+      if (zonedParts(at, HOME).month % 3 === 1) cost += shareOf(person, 'visit', at, cur);
+    } else if (condition === 'arthritis') {
+      cost += rxShareOf(person, false, at, cur);
+      if (sim.rng('health.chronic', person.id, `arthritis-${at}`).next() < 2 / 12) cost += shareOf(person, 'visit', at, cur);
     } else cost += rxShareOf(person, false, at, cur);
     state.lapsed = cost > 0 && !payFromCurrent(sim, person, cost, `Care for ${CONDITION_LABEL[condition].toLowerCase()}`, 'health');
     if (!state.lapsed) total += cost;
@@ -376,7 +394,7 @@ const MEDICAL: readonly Care[] = ['visit', 'urgent', 'emergency', 'stay'];
 export function shareOf(person: Person, care: Care, at: Instant, into = 'USD'): Money {
   if (care === 'rx-generic' || care === 'rx-brand') return rxShareOf(person, care === 'rx-brand', at, into);
   if (!MEDICAL.includes(care)) return teethAndEyesShareOf(person, care as 'cleaning' | 'filling' | 'exam' | 'glasses', at, into);
-  const price = usd(CARE.price[care as 'visit' | 'urgent' | 'emergency' | 'stay'], into);
+  const price = usd(grown(CARE.price[care as 'visit' | 'urgent' | 'emergency' | 'stay'], care as 'visit', at), into);
   const year = zonedParts(at, HOME).year;
   const plan = planOf(person, at);
   const h = healthOf(person);
@@ -393,7 +411,8 @@ export function shareOf(person: Person, care: Care, at: Instant, into = 'USD'): 
     return Math.round(price * CARE.uninsuredMarkup);
   }
   let share: number;
-  if (care === 'stay') {
+  if (care === 'stay' && plan.stayCopay !== undefined) share = usd(plan.stayCopay, into);
+  else if (care === 'stay') {
     const left = Math.max(0, usd(plan.deductible, into) - (h.deductible[year] ?? 0));
     const toDeductible = Math.min(price, left);
     share = toDeductible + Math.round((price - toDeductible) * plan.stayShare);
@@ -405,7 +424,7 @@ export function shareOf(person: Person, care: Care, at: Instant, into = 'USD'): 
 
 /** A prescription at the counter: the plan's copay, the greater of its dollar and its share, after a brand's deductible; uninsured, the cash price. */
 export function rxShareOf(person: Person, brand: boolean, at: Instant, into = 'USD'): Money {
-  const price = usd(brand ? PHARMACY.price.brand : PHARMACY.price.generic, into);
+  const price = usd(grown(brand ? PHARMACY.price.brand : PHARMACY.price.generic, 'rx', at), into);
   const key = planKey(person, at);
   const plan = key ? PHARMACY.plans[key] : undefined;
   if (!plan) return price;
@@ -426,11 +445,51 @@ export function rxShareOf(person: Person, brand: boolean, at: Instant, into = 'U
   return design && design.outOfPocket > 0 ? Math.max(0, Math.min(owed, usd(design.outOfPocket, into) - (h.spent[year] ?? 0))) : design ? 0 : owed;
 }
 
-/** The dentist and the optician: what the plan pays of each, where it has them; otherwise the price. */
+/**
+ * Insulin a month: nothing on a plan New York regulates from 2025; otherwise
+ * the plan's brand copay, or the price uninsured, and never more than the
+ * makers' $35.
+ */
+export function insulinShareOf(person: Person, at: Instant, into = 'USD'): Money {
+  const key = planKey(person, at);
+  if (key && INSULIN.newYorkPlans.includes(key) && dayKeyOf(at) >= INSULIN.newYorkFrom) return 0;
+  return Math.min(rxShareOf(person, true, at, into), usd(INSULIN.cashCap, into));
+}
+
+/** A price as it stood in the year it's paid, grown from the year it was measured. */
+export function grown(cents: Money, item: keyof typeof MEDICAL_CPI.base, at: Instant): Money {
+  return Math.round(cents * medicalGrowth(MEDICAL_CPI.base[item], zonedParts(at, HOME).year));
+}
+
+const dayKeyOf = (at: Instant) => { const p = zonedParts(at, HOME); return `${p.year}-${String(p.month).padStart(2, '0')}-${String(p.day).padStart(2, '0')}`; };
+
+/** The stand-alone dental plan they may buy: Yale's while at school, Covered California's beside its plan, New York's where they live. */
+export function dentalPlanFor(person: Person, at: Instant): DentalPlan | undefined {
+  const cover = coverOn(person, at);
+  if (cover === 'yale') return 'yale';
+  const key = planKey(person, at);
+  if (key === 'marketplace-ca') return 'ca';
+  if (BENEFIT_STATE[homeOf(person)] === 'ny') return 'ny';
+  return undefined;
+}
+
+/** The dentist and the optician: what the plan pays of each, where it has them, or a stand-alone dental plan; otherwise the price. */
 export function teethAndEyesShareOf(person: Person, care: 'cleaning' | 'filling' | 'exam' | 'glasses', at: Instant, into = 'USD'): Money {
-  const price = usd(DENTAL_VISION.price[care], into);
+  const price = usd(grown(DENTAL_VISION.price[care], care === 'cleaning' || care === 'filling' ? 'dental' : 'vision', at), into);
   const key = planKey(person, at);
   const plan = key ? DENTAL_VISION.plans[key] : undefined;
+  const dental = person.health?.dental;
+  // A dental plan of their own pays where the health plan pays nothing.
+  if ((care === 'cleaning' || care === 'filling') && dental && active(dental, at) && !(plan && plan[care] > 0)) {
+    const d = DENTAL_PLANS[dental.plan];
+    const year = zonedParts(at, HOME).year;
+    if (care === 'cleaning') return Math.round(price * (1 - d.preventive));
+    const toDeductible = Math.min(price, Math.max(0, usd(d.deductible, into) - (dental.deductible[year] ?? 0)));
+    dental.deductible[year] = (dental.deductible[year] ?? 0) + toDeductible;
+    const pays = Math.min(Math.round((price - toDeductible) * d.basic), Math.max(0, usd(d.max, into) - (dental.paid[year] ?? 0)));
+    dental.paid[year] = (dental.paid[year] ?? 0) + pays;
+    return price - pays;
+  }
   if (!plan) return price;
   if (care === 'exam') return plan.exam === undefined ? price : Math.min(price, usd(plan.exam, into));
   return Math.round(price * (1 - plan[care]));
@@ -445,7 +504,10 @@ export function illnessWeek(sim: Simulation, person: Person, at: Instant): { car
   if (rng.next() < weekly(CARE.perYear.stay)) out.push({ care: 'stay', what: 'A stay in hospital' });
   // Asthma left alone doubles the emergencies.
   const asthma = person.health?.chronic?.asthma;
-  const emergencies = CARE.perYear.emergency * (asthma && (!asthma.treated || asthma.lapsed) ? CHRONIC.untreated.asthmaEmergencies : 1);
+  const diabetes = person.health?.chronic?.diabetes;
+  // Type 1 diabetes without insulin brings the emergency room four times as often.
+  const emergencies = CARE.perYear.emergency * (asthma && (!asthma.treated || asthma.lapsed) ? CHRONIC.untreated.asthmaEmergencies : 1)
+    * (diabetes?.typeOne && (!diabetes.treated || diabetes.lapsed) ? CHRONIC.untreated.diabetesEmergencies : 1);
   if (rng.next() < weekly(emergencies)) out.push({ care: 'emergency', what: 'The emergency room' });
   if (rng.next() < weekly(CARE.perYear.visit)) out.push({ care: 'visit', what: 'A doctor’s visit' });
   const season = p.month >= 10 || p.month <= 3;
@@ -528,6 +590,10 @@ export function registerHealth(sim: Simulation): void {
     // Depression left alone weighs on morale.
     const depression = healthOf(person).chronic?.depression;
     if (depression && (!depression.treated || depression.lapsed)) person.wellbeing.morale = Math.max(0, person.wellbeing.morale - CHRONIC.untreated.moraleAWeek);
+    // Diabetes left alone wears the body down; arthritis tires it.
+    const { diabetes, arthritis } = healthOf(person).chronic ?? {};
+    if (diabetes && (!diabetes.treated || diabetes.lapsed)) person.wellbeing.condition = Math.max(0, person.wellbeing.condition - CHRONIC.untreated.diabetesConditionAWeek);
+    if (arthritis && (!arthritis.treated || arthritis.lapsed)) person.wellbeing.energy = Math.max(0, person.wellbeing.energy - CHRONIC.untreated.arthritisEnergyAWeek);
     s.schedule({ at: nextMonday(item.at), kind: HEALTH_WEEK_KIND, label: 'Health', category: 'system', priority: 6, payload: { personId: person.id } });
   });
 
@@ -596,6 +662,35 @@ export function registerHealth(sim: Simulation): void {
     state.treated = p.on === true;
     state.lapsed = false;
     return { treated: state.treated };
+  });
+
+  sim.onCommand<{ on: boolean }, { plan?: DentalPlan; until?: Instant }>('health.dental', (p, { sim: s }) => {
+    const person = s.player;
+    const h = healthOf(person);
+    const cur = saveCurrency(s.universe);
+    const now = h.dental && active(h.dental, s.now) ? h.dental : undefined;
+    if (p.on !== true) {
+      if (!now) throw new CommandError('You have no dental plan.');
+      if (DENTAL_PLANS[now.plan].yearly) throw new CommandError('Yale’s dental plan can’t be canceled once paid.');
+      const d = zonedParts(s.now, HOME);
+      now.until = firstOf(d.year, d.month + 1);
+      return { until: now.until };
+    }
+    if (now) throw new CommandError('You have a dental plan.');
+    const plan = dentalPlanFor(person, s.now);
+    if (!plan) throw new CommandError('Covered California sells dental only beside its own health plan.');
+    const d = DENTAL_PLANS[plan];
+    const from = s.now;
+    let until: Instant | undefined;
+    if (d.yearly) {
+      // Yale's runs to the next 30 September, paid for the year at once.
+      const t = zonedParts(s.now, HOME);
+      until = firstOf(t.month >= 10 ? t.year + 1 : t.year, 10);
+      if (!payFromCurrent(s, person, usd(d.premium, cur), `${d.label}, the year`, 'health')) throw new CommandError(`The year is ${formatMoney(usd(d.premium, cur), cur)}, which the bank can’t cover.`);
+    }
+    h.dental = { plan, from, ...(until ? { until } : {}), deductible: {}, paid: {} };
+    armHealth(s, person);
+    return { plan, ...(until ? { until } : {}) };
   });
 
   sim.onCommand<{ amount: Money }, { paid: Money }>('health.pay_bill', (p, { sim: s }) => {

@@ -203,11 +203,13 @@ export const CARE = {
 } as const;
 
 /** What a plan leaves the patient: copays for a visit, urgent care and the emergency room, the share of a stay after the deductible, and the most in a year. */
-export interface PlanDesign { visit: Money; urgent: Money; emergency: Money; stayShare: number; deductible: Money; outOfPocket: Money; label: string }
+export interface PlanDesign { visit: Money; urgent: Money; emergency: Money; stayShare: number; deductible: Money; outOfPocket: Money; label: string; stayCopay?: Money }
 
 export const PLANS: Readonly<Record<string, PlanDesign>> = {
-  // Yale Health's student plan: care at the Health Center without charge; what it leaves is SLATE's estimate.
-  yale: { visit: 0, urgent: 0, emergency: 0, stayShare: 0, deductible: 0, outOfPocket: 0, label: 'Yale Health' },
+  // Yale Health's Hospitalization and Specialty coverage, 2026–27: the Health Center and its Acute Care free, $50 an
+  // emergency room, $200 an admission, $9,100 a year at most. Until 2026-09-27 SLATE took it as free throughout.
+  // Its separate $1,000 cap on admission copays would take five stays in a year, so it isn't kept.
+  yale: { visit: 0, urgent: 0, emergency: 50_00, stayShare: 0, deductible: 0, outOfPocket: 9_100_00, stayCopay: 200_00, label: 'Yale Health' },
   sag: { visit: 25_00, urgent: 25_00, emergency: 100_00, stayShare: 0.1, deductible: 500_00, outOfPocket: 2_750_00, label: 'SAG-AFTRA Health Plan' },
   equity: { visit: 25_00, urgent: 0, emergency: 100_00, stayShare: 0, deductible: 1_000_00, outOfPocket: 4_550_00, label: 'Equity-League Health, Tier 2' },
   'marketplace-ca': { visit: 50_00, urgent: 50_00, emergency: 400_00, stayShare: 0.3, deductible: 5_200_00, outOfPocket: 9_800_00, label: 'Covered California Silver 70' },
@@ -322,7 +324,7 @@ export const PHARMACY = {
     medicaid: { generic: [1_00, 0], brand: [1_00, 0], brandDeductible: 0 },
     'essential-low': { generic: [0, 0], brand: [0, 0], brandDeductible: 0 },
     'essential-high': { generic: [6_00, 0], brand: [15_00, 0], brandDeductible: 0 },
-    yale: { generic: [0, 0], brand: [0, 0], brandDeductible: 0 },
+    yale: { generic: [10_00, 0], brand: [30_00, 0], brandDeductible: 0 },
   } as Readonly<Record<string, Pharmacy>>,
   source: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC10121264/; https://meps.ahrq.gov/data_files/publications/st245/stat245.pdf; Covered California 2026 standard benefit designs; SAG-AFTRA and Equity-League plan summaries',
 } as const;
@@ -349,6 +351,8 @@ export const DENTAL_VISION = {
   price: { cleaning: 203_00, filling: 226_00, exam: 136_00, glasses: 150_00 },
   /** The share of each the plan pays; an exam's copay where there's one. */
   plans: {
+    // Yale Health: an eye exam a year at no charge; no routine dental, nor glasses.
+    yale: { cleaning: 0, filling: 0, exam: 0, glasses: 0 },
     sag: { cleaning: 1, filling: 0.75, exam: 10_00, glasses: 0.2 },
     equity: { cleaning: 0, filling: 0, exam: 0, glasses: 1 },
     medicaid: { cleaning: 1, filling: 1, exam: 0, glasses: 1 },
@@ -366,11 +370,85 @@ export const DENTAL_VISION = {
  * high blood pressure a generic a month. Left alone, SLATE's estimate:
  * depression weighs on morale each week, asthma doubles the emergencies,
  * and high blood pressure does nothing a year shows.
+ *
+ * Diabetes, 2.0% at 18 to 34, about a quarter of it type 1: insulin a month,
+ * or a generic for type 2, and a visit a quarter. Insulin's cost to the
+ * patient is capped: nothing on a plan New York regulates since 2025, and
+ * $35 a month from the makers to anybody; the unions' self-funded plans
+ * aren't bound by the state's. Arthritis, 5.0%: a generic a month and two visits a year. Left
+ * alone, SLATE's estimate: type 1 diabetes quadruples the emergencies and
+ * both types wear the body down, and arthritis tires it. Obesity, 27.3%,
+ * isn't modeled: SLATE has no weight.
  */
 export const CHRONIC = {
-  share: { depression: 0.25, asthma: 0.101, hypertension: 0.115 },
+  share: { depression: 0.25, asthma: 0.101, hypertension: 0.115, diabetes: 0.02, arthritis: 0.05 },
+  /** Of diabetes at 27 to 30, type 1: about a quarter to 30% (CDC, 2016). */
+  typeOne: 0.27,
   therapy: { 'us-ny': 176_00, other: 139_00 },
   therapyPerMonth: 2,
-  untreated: { moraleAWeek: 3, asthmaEmergencies: 2 },
+  untreated: { moraleAWeek: 3, asthmaEmergencies: 2, diabetesEmergencies: 4, diabetesConditionAWeek: 2, arthritisEnergyAWeek: 2 },
   source: 'CDC BRFSS 2023 (ages 18–34); NHIS 2024; American Academy of Allergy, Asthma & Immunology cost estimates',
+} as const;
+
+/**
+ * Insulin's caps: New York's $0 on the plans it regulates, and the makers'
+ * $35 a month to anybody. California's $35 (SB 40, large groups 2026, its
+ * individual plans 2027) is the makers' figure, so it changes nothing SLATE
+ * shows and isn't kept.
+ */
+export const INSULIN = {
+  cashCap: 35_00,
+  newYorkFrom: '2025-01-01',
+  /** The New York plans the state regulates: its marketplace and the Essential Plan. The unions' are self-funded. */
+  newYorkPlans: ['marketplace-ny', 'essential-low', 'essential-high'] as readonly string[],
+  source: 'https://www.dfs.ny.gov/apps_and_licensing/health_insurers/insulin_cost_sharing_qa_guidance; https://leginfo.legislature.ca.gov (SB 40, 2025); Lilly, Novo Nordisk and Sanofi $35 programs',
+} as const;
+
+/**
+ * What care cost when its price was published is grown to the year it's
+ * given by the Bureau of Labor Statistics' consumer price index for medical
+ * care: 484.707 in 2018, 498.413 in 2019, 546.554 in 2022, 563.841 in 2024,
+ * 580.102 in 2025, 593.003 in August 2026; past the last print, at 2019–24's
+ * 2.5% a year, SLATE's estimate. One index for all of it, where the BLS
+ * keeps one for each of hospitals, doctors, dentists and drugs: SLATE's
+ * estimate too. Until 2026-09-27 care cost what it had in the year its price
+ * was measured.
+ */
+export const MEDICAL_CPI = {
+  levels: [[2018, 484.707], [2019, 498.413], [2022, 546.554], [2024, 563.841], [2025, 580.102], [2026, 593.003]] as readonly (readonly [number, number])[],
+  after: 0.025,
+  /** The year each price was measured. */
+  base: { visit: 2024, urgent: 2024, emergency: 2019, stay: 2018, rx: 2019, dental: 2024, vision: 2024, therapy: 2024 },
+  source: 'https://www.bls.gov/cpi/ (CPI-U, medical care, series CUUR0000SAM)',
+} as const;
+
+/** How far medical prices have grown from one year to another. */
+export function medicalGrowth(from: number, to: number): number {
+  const level = (year: number) => {
+    const known = MEDICAL_CPI.levels.find(([y]) => y === year);
+    if (known) return known[1];
+    const [lastYear, last] = MEDICAL_CPI.levels[MEDICAL_CPI.levels.length - 1]!;
+    if (year > lastYear) return last * (1 + MEDICAL_CPI.after) ** (year - lastYear);
+    // Between prints, the straight line.
+    const before = [...MEDICAL_CPI.levels].reverse().find(([y]) => y < year) ?? MEDICAL_CPI.levels[0]!;
+    const after = MEDICAL_CPI.levels.find(([y]) => y > year) ?? before;
+    return before[1] + ((after[1] - before[1]) * (year - before[0])) / Math.max(1, after[0] - before[0]);
+  };
+  return level(to) / level(from);
+}
+
+/**
+ * Stand-alone adult dental plans. Covered California's 2026 dental PPO: a
+ * $50 deductible, preventive care in full, 80% of basic work, a $1,500
+ * annual maximum, bought only beside a Covered California health plan, and
+ * about $40 a month in Los Angeles (its average was $27, SLATE's estimate for
+ * the PPO). New York's standard adult plan: $50 and $1,500 the same, its
+ * shares taken as California's, about $25 a month (SLATE's estimate). Yale's
+ * Delta Dental Basic for students: $312.72 a year, $1,000 a year at most.
+ */
+export const DENTAL_PLANS = {
+  ca: { premium: 40_00, deductible: 50_00, preventive: 1, basic: 0.8, max: 1_500_00, label: 'Covered California Dental PPO', yearly: false },
+  ny: { premium: 25_00, deductible: 50_00, preventive: 1, basic: 0.8, max: 1_500_00, label: 'NY State Of Health Adult Dental', yearly: false },
+  yale: { premium: 312_72, deductible: 50_00, preventive: 1, basic: 0.8, max: 1_000_00, label: 'Yale Delta Dental Basic', yearly: true },
+  source: 'https://www.coveredca.com (2026 dental standard benefit designs); https://info.nystateofhealth.ny.gov; https://yalehealth.yale.edu (student dental, 2026–27)',
 } as const;

@@ -12,13 +12,14 @@ import { exchange } from '@/engine/content/currency';
 import { computeAnnualTax } from '@/engine/content/tax';
 import { MEAL_PENALTY } from '@/engine/content/career';
 import { ABROAD, CHRONIC, DENTAL_VISION, PHARMACY, STATE_DEDUCTIONS } from '@/engine/content/safetynet';
-import { beginCareer, careerOf, foreignWithholding, mealPenalty, type Booking } from '@/engine/systems/career';
+import { afterlife, beginCareer, careerOf, foreignWithholding, mealPenalty, type Booking } from '@/engine/systems/career';
 import { recordWages, yearOf } from '@/engine/systems/earnings';
-import { healthOf, keepUp, rxShareOf, shareOf, teethAndEyesShareOf, illnessWeek } from '@/engine/systems/health';
+import { grown, healthOf, keepUp, rxShareOf, shareOf, teethAndEyesShareOf, illnessWeek } from '@/engine/systems/health';
 import { connecticutTax, figuresFor } from '@/engine/systems/taxreturn';
 import type { Simulation } from '@/engine/core/simulation';
 
 const NY = 'America/New_York';
+const instantParts = (t: number) => new Date(t).getUTCFullYear();
 const at = (year: number, month: number, day: number, hour = 9) => instantFromZoned({ year, month, day, hour }, NY);
 function pro(seed: string, city = 'us-ny-newyork'): Simulation {
   const sim = quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'wealthy' }, seed);
@@ -52,6 +53,28 @@ describe('working abroad', () => {
     const under = (exchange(ABROAD.canada.treatyCad, 'CAD', 'USD') ?? 0) - 100_00;
     recordWages(small.player, at(2027, 5, 1), NY, { gross: under, where: 'ca-on-toronto', foreignWithheld: Math.round(under * 0.23) });
     expect(figuresFor(small.player, 2027)).toMatchObject({ foreignRefund: Math.round(under * 0.23), foreignCredit: 0 });
+  });
+});
+
+describe('the UK’s tax year, and Canada’s tax on residuals', () => {
+  it('counts the UK treaty’s $20,000 over the year from 6 April', () => {
+    const sim = pro('uk-year');
+    recordWages(sim.player, at(2027, 3, 20), NY, { gross: 15_000_00, where: 'uk-eng-london' });
+    expect(foreignWithholding(sim.player, 'uk-eng-london', 10_000_00, at(2027, 4, 1), 'USD')).toBe(2_000_00);
+    // From 6 April the UK's year starts again.
+    expect(foreignWithholding(sim.player, 'uk-eng-london', 10_000_00, at(2027, 4, 10), 'USD')).toBe(0);
+  });
+
+  it('withholds Canada’s 23% from a residual for work done there', () => {
+    const sim = pro('ca-residual');
+    const b: Booking = { id: 'can', roleId: 'guest-hour', cityId: 'us-ny-newyork', location: 'ca-bc-vancouver', starts: sim.now, units: 8, rehearsalWeeks: 0, status: 'worked', dueAt: sim.now, offeredAt: sim.now, worked: 8, owed: 0, weeksPaid: 0 };
+    let r = afterlife(sim, sim.player, b, sim.now)!;
+    for (let n = 0; r.kind === 'network' && !r.rerun && n < 40; n += 1) r = afterlife(sim, sim.player, { ...b, id: `can${n}` }, sim.now)!;
+    const first = sim.universe.scheduled.filter((i) => i.kind === 'career.residual' && i.payload.residualId === r.id).sort((x, y) => x.at - y.at)[0]!;
+    sim.advanceTo(first.at + 60_000);
+    const ca = yearOf(sim.player, instantParts(first.at)).foreign.ca!;
+    expect(ca.gross).toBe(r.paid);
+    expect(ca.withheld).toBe(Math.round(r.paid * ABROAD.canada.rate));
   });
 });
 
@@ -109,25 +132,25 @@ describe('the pharmacy, the dentist and the optician', () => {
   it('fill a prescription at each plan’s copay, a brand after its deductible, and the uninsured at the cash price', () => {
     const sim = pro('rx');
     const when = at(2027, 3, 1);
-    expect(rxShareOf(sim.player, false, when)).toBe(PHARMACY.price.generic);
+    expect(rxShareOf(sim.player, false, when)).toBe(grown(PHARMACY.price.generic, 'rx', when));
     const h = healthOf(sim.player);
     h.sag = { from: at(2027, 1, 1, 0), until: at(2028, 1, 1, 0) };
-    expect(rxShareOf(sim.player, false, when)).toBe(Math.max(10_00, Math.round(0.1 * PHARMACY.price.generic)));
+    expect(rxShareOf(sim.player, false, when)).toBe(Math.max(10_00, Math.round(0.1 * grown(PHARMACY.price.generic, 'rx', when))));
     // SAG-AFTRA's $75 brand deductible first, the greater of $25 or 25% on top; then only the copay.
-    expect(rxShareOf(sim.player, true, when)).toBe(75_00 + Math.round(0.25 * PHARMACY.price.brand));
-    expect(rxShareOf(sim.player, true, when)).toBe(Math.round(0.25 * PHARMACY.price.brand));
+    expect(rxShareOf(sim.player, true, when)).toBe(75_00 + Math.round(0.25 * grown(PHARMACY.price.brand, 'rx', when)));
+    expect(rxShareOf(sim.player, true, when)).toBe(Math.round(0.25 * grown(PHARMACY.price.brand, 'rx', when)));
   });
 
   it('leave dental and vision to what each plan covers, and the uninsured the price', () => {
     const sim = pro('teeth');
     const when = at(2027, 3, 1);
-    expect(teethAndEyesShareOf(sim.player, 'cleaning', when)).toBe(DENTAL_VISION.price.cleaning);
+    expect(teethAndEyesShareOf(sim.player, 'cleaning', when)).toBe(grown(DENTAL_VISION.price.cleaning, 'dental', when));
     const h = healthOf(sim.player);
     h.sag = { from: at(2027, 1, 1, 0), until: at(2028, 1, 1, 0) };
     expect(teethAndEyesShareOf(sim.player, 'cleaning', when)).toBe(0);
-    expect(teethAndEyesShareOf(sim.player, 'filling', when)).toBe(Math.round(DENTAL_VISION.price.filling * 0.25));
+    expect(teethAndEyesShareOf(sim.player, 'filling', when)).toBe(Math.round(grown(DENTAL_VISION.price.filling, 'dental', when) * 0.25));
     expect(teethAndEyesShareOf(sim.player, 'exam', when)).toBe(10_00);
-    expect(shareOf(sim.player, 'glasses', when)).toBe(Math.round(DENTAL_VISION.price.glasses * 0.8));
+    expect(shareOf(sim.player, 'glasses', when)).toBe(Math.round(grown(DENTAL_VISION.price.glasses, 'vision', when) * 0.8));
   });
 
   it('bring the dentist to about three in five a year, and an eye exam only to those with lenses', () => {

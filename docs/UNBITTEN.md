@@ -208,8 +208,11 @@ part the tool cannot see.
   the Essential Plan, COBRA, illness and its bills, part-year returns; then
   work abroad, Connecticut's tax, the states' job-expense deductions, meal
   penalties, recurring roles and the 60% rule, conditions carried, the
-  pharmacy, the dentist and the optician, and illness at school. What's
-  still open:
+  pharmacy, the dentist and the optician, and illness at school; then an
+  actor's working costs, diabetes and arthritis, insulin's caps,
+  stand-alone dental plans, medical prices grown by the index, Yale
+  Health's own cost-sharing, Canada's tax on residuals and the UK's April
+  tax year. What's still open:
   - Unpublished: Off-Broadway's categories B and C and every 2027–28 rate;
     the Commercials Contracts' third year; animation's 2026 rate; SAG-AFTRA's
     2027 COBRA rate; New York City's exact 2026 benchmark premium;
@@ -217,15 +220,20 @@ part the tool cannot see.
     of freshman streaming series; how often meal penalties come and how long
     a recurring arc runs. Each holds at its last published figure, or is
     SLATE's estimate, and says so.
-  - Abroad: Canada's elective return and graduated rates, residuals from
-    Canadian work, and the UK's tax year and personal allowance aren't
-    modeled; SLATE takes both by the calendar year.
-  - The body: obesity, arthritis and diabetes, stand-alone dental plans,
-    and prices past their years (2018–2024) aren't modeled.
-  - Yale Health's own cost-sharing is taken as nothing.
-  - A return's states: New York's days-worked allocation inside a job, and
-    the costs an actor deducts besides commissions and dues (headshots,
-    classes), aren't counted.
+  - Abroad: Canada's elective return and graduated rates, and the UK's
+    personal allowance and its payer-by-payer withholding, aren't modeled.
+  - The body: obesity isn't modeled, since SLATE keeps no weight; a
+    diabetic's supplies and monitors, and Connecticut's $25 insulin cap
+    (whether Yale's plan is bound by it is unpublished), aren't either.
+    Medical prices grow by one index for all care, not the BLS's own for
+    hospitals, doctors, dentists and drugs. Yale's $1,000 cap on
+    admission copays isn't kept, since it takes five stays in a year.
+  - What the working costs do (a free submission seen half as often,
+    Backstage's five more, stale headshots, a kit, a class, a coach) is
+    SLATE's estimate; Casting Networks, reels and trade papers aren't
+    modeled.
+  - A return's states: New York's days-worked allocation inside a job
+    isn't counted.
   - Where a job is seen, how it does, a film's television money and its
     cast's units are SLATE's estimate.
 - **Some of the banks' research is kept and read by nothing.** Each

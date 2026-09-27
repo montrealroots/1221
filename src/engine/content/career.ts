@@ -313,6 +313,35 @@ export const ROLES: readonly Role[] = [
 export const RECURRING = { seasonEpisodes: 13, share: 0.6, uplift: 1.2, from: '2027-01-01', source: '2026 SAG-AFTRA TV/Theatrical memorandum of agreement, §30.a (amptp.org)' } as const;
 
 /**
+ * What an actor's work costs them, 2025–26 prices. Actors Access PLUS,
+ * $68 a year, sends a headshot and reel with a submission where the free
+ * tier sends a name and a résumé; Backstage, about $200 a year, has its own
+ * listings. Headshots, about $700 a session and $115 for a hundred prints,
+ * redone every year or two; a self-tape kit about $110; an ongoing
+ * scene-study class about $300 a month; a private coach about $150 an hour.
+ * What each does is SLATE's estimate: a free submission is seen half as
+ * often, Backstage's listings take five more submissions a week, headshots
+ * more than two years old cost a fifth of auditions and callbacks, a tape
+ * without a kit reads a fifth worse, a week's class grows craft as a class
+ * at school does, and a coached audition books a quarter more often. All of
+ * it is a job expense New York and California let an actor deduct.
+ */
+export const WORK_COSTS = {
+  sites: { 'actors-access': { label: 'Actors Access PLUS', price: 68_00 }, backstage: { label: 'Backstage', price: 199_92 } },
+  headshots: 815_00,
+  headshotsLastDays: 730,
+  kit: 110_00,
+  classMonthly: 300_00,
+  coach: 150_00,
+  freeSubmissionShare: 0.5,
+  backstageSubmissions: 5,
+  staleHeadshots: 0.8,
+  noKit: 0.8,
+  coached: 1.25,
+  source: 'https://actorsaccess.com; https://www.backstage.com; https://www.castingnetworks.com; https://ivanachubbuck.com; https://www.hbstudio.org; https://www.tschreiber.org; https://oneononenyc.com',
+} as const;
+
+/**
  * Meal penalties: a first meal due six hours from call; each half hour late
  * costs a principal $25, then $35, $50, $50, and $75 each after (2026
  * agreement). How often a shooting day runs late to its meal, a fifth of

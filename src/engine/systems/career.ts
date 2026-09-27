@@ -63,15 +63,15 @@ import { exchange } from '../content/currency';
 import { CITIES } from '../content/geography';
 import { computeAnnualTax } from '../content/tax';
 import {
-  AFTERLIFE, AGENCIES, AGENT_COMMISSION, CAREER_CITIES, MEAL_PENALTY, RECURRING, COMMERCIAL_RUN, COMMERCIAL_USE, EQUITY, LOCATION, MANAGEMENT, MANAGERS, OVERTIME, RESIDUALS, ROLES, SAG_AFTRA, SERIES, SHOWCASE_2029, rateOn,
+  AFTERLIFE, AGENCIES, AGENT_COMMISSION, CAREER_CITIES, WORK_COSTS, MEAL_PENALTY, RECURRING, COMMERCIAL_RUN, COMMERCIAL_USE, EQUITY, LOCATION, MANAGEMENT, MANAGERS, OVERTIME, RESIDUALS, ROLES, SAG_AFTRA, SERIES, SHOWCASE_2029, rateOn,
   type Agency, type CareerCity, type Manager, type Role,
 } from '../content/career';
-import { earningsOf, homeOf, recordWages, yearOf } from './earnings';
+import { earningsOf, homeOf, recordJobCost, recordWages, ukTaxYear, yearOf } from './earnings';
 import { ABROAD } from '../content/safetynet';
 import { armHealth } from './health';
 import { armTaxes } from './taxreturn';
 import { YALE_DRAMA } from '../content/school';
-import { meanCraft, focusOf, type Craft } from './school';
+import { meanCraft, focusOf, sessionGain, type Craft } from './school';
 import { move, payFromCurrent, type Housing } from './household';
 
 export const SHOWCASE_KIND = 'career.showcase';
@@ -141,6 +141,8 @@ export interface Audition {
   status: 'ahead' | 'done' | 'missed' | 'booked';
   /** Self-submitted, not sent by the agency. */
   self?: boolean;
+  /** Worked on with a coach first. */
+  coached?: boolean;
 }
 
 export interface Booking {
@@ -192,6 +194,8 @@ export interface Residual {
   days: number;
   /** When it was first seen. */
   airsAt: Instant;
+  /** Where the work was done, for another country's tax on what it pays later. */
+  workCity?: string;
   rerun?: boolean;
   syndicated?: boolean;
   hit?: boolean;
@@ -237,6 +241,11 @@ export interface CareerRecord {
   submitted: number;
   /** When the business began for them: the school's hold let go. */
   since?: Instant;
+  /** What the work costs them: casting sites paid to a date and whether they renew; headshots' date; a tape kit; a class, and the month it's paid for. */
+  sites?: Partial<Record<CastingSite, { until: Instant; renews: boolean }>>;
+  headshotsAt?: Instant;
+  kit?: boolean;
+  scene?: { paidFor: string };
   /** The last dues period billed, `YYYY-M`. */
   duesBilled?: string;
   /** The last id given an audition or a booking. */
@@ -244,6 +253,21 @@ export interface CareerRecord {
 }
 
 const nextOwnId = (career: CareerRecord, prefix: string) => `${prefix}${(career.seq += 1)}`;
+
+export type CastingSite = keyof typeof WORK_COSTS.sites;
+
+/** Whether a casting site is paid for at a moment. */
+export const onSite = (career: CareerRecord, site: CastingSite, at: Instant) => (career.sites?.[site]?.until ?? 0) > at;
+
+/** Headshots more than two years old: the showcase's, from when the business began, until new ones. */
+export const staleHeadshots = (career: CareerRecord, at: Instant) => at - (career.headshotsAt ?? career.since ?? at) > WORK_COSTS.headshotsLastDays * MS_DAY;
+
+/** Paid from the bank as a cost of the work, counted for the return; false where the bank can't. */
+function payForWork(sim: Simulation, person: Person, amount: Money, memo: string): boolean {
+  if (!payFromCurrent(sim, person, amount, memo, 'career')) return false;
+  recordJobCost(person, sim.now, amount);
+  return true;
+}
 
 export function careerOf(person: Person): CareerRecord {
   person.career ??= { showcases: [], offers: [], missed: 0, auditions: [], bookings: [], credits: [], unions: {}, submitted: 0, seq: 0, managerOffers: [], days: [], residuals: [] };
@@ -290,8 +314,8 @@ export function arcUplift(booking: Booking, episode: number): number {
 
 /**
  * What another country withholds from a check for work done there: Canada
- * 23% of the gross; the United Kingdom 20% once the year's UK gross passes
- * the treaty's $20,000. Canada's is withheld whatever the year comes to, and
+ * 23% of the gross, residuals included; the United Kingdom 20% once the UK
+ * tax year's gross, from 6 April, passes the treaty's $20,000. Canada's is withheld whatever the year comes to, and
  * the return has it back where the year stays under CAD 15,000.
  */
 export function foreignWithholding(person: Person, workCity: string, gross: Money, when: Instant, into: string): Money {
@@ -299,8 +323,8 @@ export function foreignWithholding(person: Person, workCity: string, gross: Mone
   if (!country || country === 'us') return 0;
   if (country === 'ca') return Math.round(gross * ABROAD.canada.rate);
   if (country === 'uk') {
-    const year = zonedParts(when, zoneOf(workCity)).year;
-    const before = yearOf(person, year).foreign?.uk?.gross ?? 0;
+    // The treaty's test runs on the UK's own tax year, from 6 April.
+    const before = earningsOf(person).ukYears[ukTaxYear(when)] ?? 0;
     return before + gross > usd(ABROAD.uk.treatyUsd, into) ? Math.round(gross * ABROAD.uk.rate) : 0;
   }
   return 0;
@@ -382,6 +406,38 @@ export function beginCareer(sim: Simulation, person: Person): void {
   armTaxes(sim, person);
 }
 
+/** A week's submissions: five, and Backstage's listings five more. */
+export function submissionsAWeek(career: CareerRecord, at: Instant): number {
+  return ESTIMATE.selfSubmitsAWeek + (onSite(career, 'backstage', at) ? WORK_COSTS.backstageSubmissions : 0);
+}
+
+const monthOf = (at: Instant, zone: string) => { const p = zonedParts(at, zone); return `${p.year}-${p.month}`; };
+
+/**
+ * A week of what the work costs: a site that's run out renews for a year if
+ * it's set to and the bank can pay; a class is paid for each new month, or
+ * left; and a week in class grows the actor's acting as a class at school
+ * does, if they're there to take it.
+ */
+export function workCostsWeek(sim: Simulation, person: Person, when: Instant): void {
+  const career = careerOf(person);
+  const cur = saveCurrency(sim.universe);
+  for (const [site, held] of Object.entries(career.sites ?? {}) as [CastingSite, { until: Instant; renews: boolean }][]) {
+    if (held.until > when || !held.renews) continue;
+    const { label, price } = WORK_COSTS.sites[site];
+    if (payForWork(sim, person, usd(price, cur), `${label}, a year`)) held.until += 365 * MS_DAY;
+    else held.renews = false;
+  }
+  const scene = career.scene;
+  if (!scene) return;
+  const month = monthOf(when, sim.homeZone);
+  if (scene.paidFor !== month) {
+    if (!payForWork(sim, person, usd(WORK_COSTS.classMonthly, cur), 'Scene-study class, the month')) { delete career.scene; return; }
+    scene.paidFor = month;
+  }
+  if (present(person, when) && person.craft) person.craft.acting = Math.min(100, person.craft.acting + sessionGain(person.craft.acting, focusOf(person)));
+}
+
 /** The next Monday at eight, after a moment. */
 function nextMonday(from: Instant, zone: string): Instant {
   for (let n = 1; n <= 7; n += 1) if (weekday(at(from, zone, n, 8), zone) === 1) return at(from, zone, n, 8);
@@ -444,27 +500,32 @@ export function levelFor(craft: Craft, role: Role): number {
   return role.medium === 'screen' ? (craft.acting * 2 + craft.screen) / 3 : (craft.acting * 2 + craft.voice + craft.text) / 4;
 }
 
-/** A booking's chance at an audition: at the part's bar, more above and less below, less tired, and less on tape. */
-export function bookingChance(craft: Craft, role: Role, focus: number, mode: 'tape' | 'room'): number {
+/** A booking's chance at an audition: at the part's bar, more above and less below, less tired, less on tape and less again without a kit, more coached. */
+export function bookingChance(craft: Craft, role: Role, focus: number, mode: 'tape' | 'room', kit = true, coached = false): number {
   const raw = ESTIMATE.bookAtBar + ESTIMATE.bookPerPoint * (levelFor(craft, role) - role.bar);
-  const chance = Math.min(ESTIMATE.bookCeiling, Math.max(ESTIMATE.bookFloor, raw)) * Math.min(1.1, focus);
-  return mode === 'tape' ? chance * ESTIMATE.tapeFactor : chance;
+  const chance = Math.min(ESTIMATE.bookCeiling, Math.max(ESTIMATE.bookFloor, raw)) * Math.min(1.1, focus) * (coached ? WORK_COSTS.coached : 1);
+  return mode === 'tape' ? chance * ESTIMATE.tapeFactor * (kit ? 1 : WORK_COSTS.noKit) : chance;
 }
 
 /** Whether an audition books (`career.booking`). */
 export function books(sim: Simulation, person: Person, audition: Audition, focus: number): boolean {
-  return sim.rng('career.booking', person.id, audition.id).next() < bookingChance(person.craft!, roleById(audition.roleId), focus, audition.mode);
+  return sim.rng('career.booking', person.id, audition.id).next() < bookingChance(person.craft!, roleById(audition.roleId), focus, audition.mode, careerOf(person).kit === true, audition.coached === true);
 }
 
 /** A week's auditions (`career.auditions`): the agency's, a Poisson count by its reach, and the submissions that came back. */
 export function weekOfAuditions(sim: Simulation, person: Person, weekStart: Instant, agency: Agency | undefined, cityId: CareerCity, submitted: number, managed = false): Omit<Audition, 'id' | 'status'>[] {
   const rng = sim.rng('career.auditions', person.id, String(weekStart));
   const poisson = (mean: number) => { let n = 0; const limit = Math.exp(-mean); for (let p = rng.next(); p > limit; p *= rng.next()) n += 1; return n; };
-  const count = agency ? poisson(agency.auditionsPerWeek) : 0;
+  // Old headshots get an actor called in less, by the agency and on their own.
+  const career = careerOf(person);
+  const look = staleHeadshots(career, weekStart) ? WORK_COSTS.staleHeadshots : 1;
+  const count = agency ? poisson(agency.auditionsPerWeek * look) : 0;
   // A manager's relationships: the work a middling agency's reach sends.
-  const fromManager = managed ? poisson(MANAGEMENT.auditionsPerWeek) : 0;
+  const fromManager = managed ? poisson(MANAGEMENT.auditionsPerWeek * look) : 0;
   let self = 0;
-  for (let n = 0; n < submitted; n += 1) if (rng.next() < ESTIMATE.selfSubmitCallback) self += 1;
+  // A free submission sends a name and a résumé; a paid site's, the headshot and the reel.
+  const paid = onSite(career, 'actors-access', weekStart) || onSite(career, 'backstage', weekStart) ? 1 : WORK_COSTS.freeSubmissionShare;
+  for (let n = 0; n < submitted; n += 1) if (rng.next() < ESTIMATE.selfSubmitCallback * paid * look) self += 1;
   const pick = (open: readonly Role[]) => {
     let x = rng.next() * open.reduce((sum, r) => sum + r.weight, 0);
     for (const r of open) { x -= r.weight; if (x <= 0) return r; }
@@ -681,6 +742,7 @@ export function registerCareer(sim: Simulation): void {
       const since = Math.max(career.signedAt, career.lastBookedAt ?? 0, career.since ?? 0);
       if (s.now - since > ESTIMATE.dropAfterDays * MS_DAY) endRepresentation(s, person, 'A year with nothing booked, and the agency ended the contract.', false);
     }
+    workCostsWeek(s, person, item.at);
     const agency = career.agencyId ? agencyById(career.agencyId) : undefined;
     const cityId = workCity(person);
     const week = weekOfAuditions(s, person, item.at, agency, cityId, career.submitted, career.managerId !== undefined);
@@ -1080,9 +1142,74 @@ export function registerCareer(sim: Simulation): void {
   sim.onCommand<Record<string, never>, { submitted: number }>('career.self_submit', (_p, { sim: s }) => {
     const career = careerOf(s.player);
     if (career.since === undefined) throw new CommandError('While you’re at school, its work comes first; submissions start when it ends.');
-    if (career.submitted >= ESTIMATE.selfSubmitsAWeek) throw new CommandError(`You’ve made this week’s ${ESTIMATE.selfSubmitsAWeek} submissions.`);
+    const most = submissionsAWeek(career, s.now);
+    if (career.submitted >= most) throw new CommandError(`You’ve made this week’s ${most} submissions.`);
     career.submitted += 1;
     return { submitted: career.submitted };
+  });
+
+  sim.onCommand<{ site: CastingSite; on: boolean }, { until: Instant; renews: boolean }>('career.subscribe', (p, { sim: s }) => {
+    const person = s.player;
+    const career = careerOf(person);
+    const site = WORK_COSTS.sites[p.site];
+    if (!site) throw new CommandError('No such site.');
+    const now = career.sites?.[p.site];
+    if (p.on !== true) {
+      if (!now || !onSite(career, p.site, s.now)) throw new CommandError(`You aren’t on ${site.label}.`);
+      now.renews = false;
+      return { until: now.until, renews: false };
+    }
+    if (onSite(career, p.site, s.now)) { now!.renews = true; return { until: now!.until, renews: true }; }
+    const cur = saveCurrency(s.universe);
+    if (!payForWork(s, person, usd(site.price, cur), `${site.label}, a year`)) throw new CommandError(`A year is ${formatMoney(usd(site.price, cur), cur)}, which the bank can’t cover.`);
+    career.sites ??= {};
+    career.sites[p.site] = { until: s.now + 365 * MS_DAY, renews: true };
+    return { until: career.sites[p.site]!.until, renews: true };
+  });
+
+  sim.onCommand<Record<string, never>, { at: Instant }>('career.headshots', (_p, { sim: s }) => {
+    const person = s.player;
+    const cur = saveCurrency(s.universe);
+    if (!payForWork(s, person, usd(WORK_COSTS.headshots, cur), 'Headshots and prints')) throw new CommandError(`A session and prints come to ${formatMoney(usd(WORK_COSTS.headshots, cur), cur)}, which the bank can’t cover.`);
+    careerOf(person).headshotsAt = s.now;
+    return { at: s.now };
+  });
+
+  sim.onCommand<Record<string, never>, { kit: true }>('career.buy_kit', (_p, { sim: s }) => {
+    const person = s.player;
+    const career = careerOf(person);
+    if (career.kit) throw new CommandError('You have a kit.');
+    const cur = saveCurrency(s.universe);
+    if (!payForWork(s, person, usd(WORK_COSTS.kit, cur), 'A self-tape kit')) throw new CommandError(`A kit is ${formatMoney(usd(WORK_COSTS.kit, cur), cur)}, which the bank can’t cover.`);
+    career.kit = true;
+    return { kit: true };
+  });
+
+  sim.onCommand<{ on: boolean }, { on: boolean }>('career.class', (p, { sim: s }) => {
+    const person = s.player;
+    const career = careerOf(person);
+    if (career.since === undefined) throw new CommandError('School is your class for now.');
+    if (p.on !== true) {
+      if (!career.scene) throw new CommandError('You aren’t in a class.');
+      delete career.scene;
+      return { on: false };
+    }
+    if (career.scene) throw new CommandError('You’re in a class.');
+    const cur = saveCurrency(s.universe);
+    if (!payForWork(s, person, usd(WORK_COSTS.classMonthly, cur), 'Scene-study class, the month')) throw new CommandError(`A month is ${formatMoney(usd(WORK_COSTS.classMonthly, cur), cur)}, which the bank can’t cover.`);
+    career.scene = { paidFor: monthOf(s.now, s.homeZone) };
+    return { on: true };
+  });
+
+  sim.onCommand<{ auditionId: string }, { coached: true }>('career.coach', (p, { sim: s }) => {
+    const person = s.player;
+    const audition = careerOf(person).auditions.find((a) => a.id === p.auditionId);
+    if (!audition || audition.status !== 'ahead') throw new CommandError('That audition isn’t ahead.');
+    if (audition.coached) throw new CommandError('You’ve worked on it already.');
+    const cur = saveCurrency(s.universe);
+    if (!payForWork(s, person, usd(WORK_COSTS.coach, cur), `A coach, for ${roleById(audition.roleId).label}`)) throw new CommandError(`An hour is ${formatMoney(usd(WORK_COSTS.coach, cur), cur)}, which the bank can’t cover.`);
+    audition.coached = true;
+    return { coached: true };
   });
 
   sim.onCommand<{ cityId: string; kind: Housing }, { cityId: string }>('career.relocate', (p, { sim: s }) => {
@@ -1178,7 +1305,7 @@ export function afterlife(sim: Simulation, person: Person, booking: Booking, whe
   const unit = rateOf(role, when, booking.cityId, cur);
   const episodes = role.series ? role.series.episodes : 1;
   const perEpisode = role.series ? unit : unit * booking.units;
-  const base = { id: nextOwnId(career, 'r'), bookingId: booking.id, roleId: role.id, perEpisode, episodes, days: booking.worked, paid: 0, payments: 0 };
+  const base = { id: nextOwnId(career, 'r'), bookingId: booking.id, roleId: role.id, perEpisode, episodes, days: booking.worked, paid: 0, payments: 0, workCity: workCityOf(booking) };
   let residual: Residual;
   if (role.after.kind === 'film') {
     residual = { ...base, kind: 'film', airsAt: when };
@@ -1282,14 +1409,17 @@ function payResidual(sim: Simulation, person: Person, residual: Residual, stream
   const before = yearOf(person, year).acting;
   const withheld = computeAnnualTax(before + amount, homeOf(person), when).total - computeAnnualTax(before, homeOf(person), when).total;
   const commission = stream === 'cycle' && person.career?.agencyId ? Math.round(amount * AGENT_COMMISSION.rate) : 0;
-  recordWages(person, when, zone, { gross: amount, withheld, commission, sag: true, residual: true });
+  // Canada taxes residuals from work done there, at the same 23%.
+  const foreign = residual.workCity && CITIES.get(residual.workCity)?.countryId === 'ca' ? foreignWithholding(person, residual.workCity, amount, when, cur) : 0;
+  recordWages(person, when, zone, { gross: amount, withheld, commission, sag: true, residual: true, ...(foreign || residual.workCity ? { where: residual.workCity, foreignWithheld: foreign } : {}) });
   residual.paid += amount;
   residual.payments += 1;
   const what = { cycle: `the commercial’s cycle ${n}`, rerun: 'a prime-time rerun', syndication: `syndicated run ${n}`, svod: `streaming, year ${n}`, bonus: 'streaming’s success bonus', film: `the film’s year ${n}` }[stream];
   sim.post({
     memo: `Residuals, ${role.label}: ${what}`, category: 'salary',
     postings: [
-      { accountId: account.id, amount: amount - withheld - commission },
+      { accountId: account.id, amount: amount - withheld - commission - foreign },
+      ...(foreign ? [{ accountId: sim.nominalAccount('expense', 'Foreign Tax Withheld').id, amount: foreign }] : []),
       { accountId: sim.nominalAccount('income', 'Residuals').id, amount: -amount },
       ...(withheld ? [{ accountId: sim.nominalAccount('expense', 'Tax Withheld').id, amount: withheld }] : []),
       ...(commission ? [{ accountId: sim.nominalAccount('expense', 'Agent Commission').id, amount: commission }] : []),

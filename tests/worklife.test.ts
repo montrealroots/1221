@@ -15,7 +15,7 @@ import {
   type Booking,
 } from '@/engine/systems/career';
 import { earningsOf, recordBenefit, recordWages, yearOf } from '@/engine/systems/earnings';
-import { careFor, coverOn, healthMonth, healthOf, illnessWeek, medicalDebtOf, programFor, shareOf } from '@/engine/systems/health';
+import { careFor, coverOn, grown, healthMonth, healthOf, illnessWeek, medicalDebtOf, programFor, shareOf } from '@/engine/systems/health';
 import { figuresFor } from '@/engine/systems/taxreturn';
 import type { Simulation } from '@/engine/core/simulation';
 import type { Craft } from '@/engine/systems/school';
@@ -241,19 +241,19 @@ describe('illness and its bills', () => {
     h.sag = { from: at(2026, 1, 1, 0), until: at(2027, 1, 1, 0) };
     const when = at(2026, 6, 1);
     expect(shareOf(sim.player, 'visit', when)).toBe(PLANS.sag!.visit);
-    expect(shareOf(sim.player, 'stay', when)).toBe(500_00 + Math.round((CARE.price.stay - 500_00) * 0.1));
-    expect(shareOf(sim.player, 'stay', when)).toBe(Math.round(CARE.price.stay * 0.1));
+    expect(shareOf(sim.player, 'stay', when)).toBe(500_00 + Math.round((grown(CARE.price.stay, 'stay', when) - 500_00) * 0.1));
+    expect(shareOf(sim.player, 'stay', when)).toBe(Math.round(grown(CARE.price.stay, 'stay', when) * 0.1));
     h.spent[2026] = PLANS.sag!.outOfPocket - 10_00;
     expect(shareOf(sim.player, 'emergency', when)).toBe(10_00);
     const bare = pro('bare');
-    expect(shareOf(bare.player, 'visit', when)).toBe(Math.round(CARE.price.visit * CARE.uninsuredMarkup));
+    expect(shareOf(bare.player, 'visit', when)).toBe(Math.round(grown(CARE.price.visit, 'visit', when) * CARE.uninsuredMarkup));
     // New York's hospitals charge nothing under 200% of the poverty line.
     expect(shareOf(bare.player, 'emergency', when)).toBe(0);
     earningsOf(bare.player).months['2026-03'] = 80_000_00;
-    expect(shareOf(bare.player, 'emergency', when)).toBe(Math.round(CARE.price.emergency * CARE.uninsuredMarkup));
+    expect(shareOf(bare.player, 'emergency', when)).toBe(Math.round(grown(CARE.price.emergency, 'emergency', when) * CARE.uninsuredMarkup));
     const la = pro('bare-la', 'us-ca-losangeles');
     earningsOf(la.player).months['2026-03'] = 40_000_00;
-    expect(shareOf(la.player, 'emergency', when)).toBe(CARE.price.emergency);
+    expect(shareOf(la.player, 'emergency', when)).toBe(grown(CARE.price.emergency, 'emergency', when));
   });
 
   it('puts a stay in hospital between them and their work, and a bill due in 30 days that, unpaid, is a debt', () => {
