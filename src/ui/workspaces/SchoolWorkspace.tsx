@@ -18,7 +18,7 @@ import { Gated } from '@/ui/guide/Guide';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { formatDate, formatDateTime, instantFromZoned, zonedParts } from '@/engine/core/time';
 import { CITIES } from '@/engine/content/geography';
-import { COST_2026_27, COURSES, SEAGULL_2027, SKILLS, SUMMER_CABARET, WORK_STUDY, YALE_CABARET, YALE_DRAMA, type Skill } from '@/engine/content/school';
+import { COST_2026_27, COURSES, SCHOOL_SEASON, SEAGULL_2027, SKILLS, SUMMER_CABARET, WORK_STUDY, YALE_CABARET, YALE_DRAMA, type Skill } from '@/engine/content/school';
 import {
   CABARET_KIND, CALL_KIND, ESTIMATE, EVALUATION_KIND, SHIFT_KIND, STANDING_LABEL,
   cabaretSeason, classPeriod, coursesOn, daysOffIn, hasNeed, nextClasses, hourlyIn, meanCraft, rankIn, termAccount, termLabel, termOf, termStart, timetable, yearOfStudy, yearOfTerm,
@@ -283,43 +283,49 @@ function ClassesPane() {
 }
 
 /** What the chair cast the student in, and the calls it puts on the calendar. */
+const KIND_WORDS: Record<string, string> = {
+  thesis: 'A directors’ thesis production', hughes: 'The Langston Hughes Festival', shakespeare: 'A Shakespeare Repertory Project',
+  carlotta: 'The Carlotta Festival', project: 'A School project', understudy: 'Understudying at Yale Rep', role: 'In the company at Yale Rep',
+};
+
 function CastingPane() {
   const { sim } = useGame();
   const person = useWorld((s) => s.player);
   const school = person.school!;
-  const casting = school.casting;
   const calls = ahead(sim, person, [CALL_KIND]).filter((c) => c.payload.call !== 'oncall').slice(0, 8);
   const onCall = ahead(sim, person, [CALL_KIND]).filter((c) => c.payload.call === 'oncall');
+  const castings = [school.casting, school.rep].filter((c): c is NonNullable<typeof c> => c !== undefined);
 
   return (
     <div className="col gap-5">
-      <Panel title={casting ? casting.production : 'Not Cast Yet'} subtitle={casting ? (casting.kind === 'understudy' ? `Understudying ${casting.role} at Yale Rep` : 'A School project') : undefined}>
-        <div className="col gap-3">
-          {casting ? (
-            <>
-              <div className="grid grid-3">
-                <Stat label="Role" value={casting.kind === 'understudy' ? `${casting.role} (Understudy)` : casting.role} />
-                <Stat label={casting.kind === 'understudy' ? 'Went On' : 'Performed'} value={String(casting.performed)} />
-                <Stat label="Calls Ahead" value={String(calls.length + onCall.length)} />
-              </div>
-              {casting.kind === 'understudy' && (
-                <p className="small" style={{ margin: 0 }}>
-                  {SEAGULL_2027.name}, {SEAGULL_2027.by}, directed by {SEAGULL_2027.director}: rehearsals from {dayOf(parseDay(SEAGULL_2027.rehearsals.from))}, performances {dayOf(parseDay(SEAGULL_2027.run.from))} to {dayOf(parseDay(SEAGULL_2027.run.to))}. You’re on call at all {onCall.length} performances still ahead: in New Haven and awake, or it’s a grave breach if you’re needed.
-                </p>
-              )}
-            </>
-          ) : (
-            <p className="small" style={{ margin: 0 }}>
-              {school.castable
-                ? 'The chair casts every student each term from the spring. In the first spring, the first-year with the most acting craft, in good standing, understudies at Yale Rep; everyone else is in a School project.'
-                : 'Out of the casting pool after missed rehearsal calls. A good evaluation puts you back.'}
-            </p>
-          )}
-          <p className="xs dim" style={{ margin: 0 }}>
-            Casting is the Bulletin’s: the chair casts, a student cast fulfils it, missed calls take an actor out of the pool, and a missed performance is a grave breach. {SEAGULL_2027.name}’s dates are Yale Rep’s; the School projects’ dates and every call’s hours are SLATE’s estimate.
+      {castings.map((casting) => (
+        <Panel key={casting.production} title={casting.production} subtitle={KIND_WORDS[casting.kind] ?? undefined}>
+          <div className="col gap-3">
+            <div className="grid grid-3">
+              <Stat label="Role" value={casting.kind === 'understudy' ? `${casting.role} (Understudy)` : casting.role} />
+              <Stat label={casting.kind === 'understudy' ? 'Went On' : 'Performed'} value={String(casting.performed)} />
+              <Stat label="Calls Ahead" value={String(casting.kind === 'understudy' ? onCall.length : calls.filter((c) => c.label.startsWith(casting.production)).length)} />
+            </div>
+            {casting.kind === 'understudy' && casting.production === SEAGULL_2027.name && (
+              <p className="small" style={{ margin: 0 }}>
+                {SEAGULL_2027.name}, {SEAGULL_2027.by}, directed by {SEAGULL_2027.director}: rehearsals from {dayOf(parseDay(SEAGULL_2027.rehearsals.from))}, performances {dayOf(parseDay(SEAGULL_2027.run.from))} to {dayOf(parseDay(SEAGULL_2027.run.to))}. You’re on call at all {onCall.length} performances still ahead: in New Haven and awake, or it’s a grave breach if you’re needed.
+              </p>
+            )}
+          </div>
+        </Panel>
+      ))}
+      {castings.length === 0 && (
+        <Panel title="Not Cast Yet">
+          <p className="small" style={{ margin: 0 }}>
+            {school.castable
+              ? 'The chair casts every student each term from the first spring: the Carlotta Festival then, a thesis or the Hughes Festival as a second- and third-year, a Shakespeare Repertory Project in the last spring; and once a year, for a student in good standing, Yale Rep.'
+              : 'Out of the casting pool after missed rehearsal calls. A good evaluation puts you back.'}
           </p>
-        </div>
-      </Panel>
+        </Panel>
+      )}
+      <p className="xs dim" style={{ margin: 0 }}>
+        Casting is the Bulletin’s: the chair assigns every role, balancing each student’s needs, a student cast fulfils it, missed calls take an actor out of the pool, and a missed performance is a grave breach. The 2026–27 theses and {SEAGULL_2027.name} are the School’s and Yale Rep’s own dates; the festivals’ and later years’ dates, the rehearsal weeks and which production goes to whom are SLATE’s estimate. Source: {SCHOOL_SEASON.source}.
+      </p>
 
       <CabaretPanel />
       <SummerPanel />

@@ -10,7 +10,7 @@ import { MS_DAY, MS_HOUR, instantFromZoned, zonedParts } from '@/engine/core/tim
 import { rentAt } from '@/engine/content/rents';
 import { COST_2026_27, COURSES, SEAGULL_2027, SKILLS, SUMMER_CABARET, WORK_STUDY, YALE_CABARET, YALE_DRAMA } from '@/engine/content/school';
 import {
-  CABARET_KIND, CALL_KIND, ESTIMATE, SHIFT_KIND, STIPEND_KIND, SUMMER_KIND, cabaretSeason, cabaretWeek, summerOf, classPeriod, summerRuns, daysOffIn, nextClasses, evaluate, goesOn, isClassDay, isShiftDay, meanCraft, rankIn,
+  CABARET_KIND, CALL_KIND, ESTIMATE, rehearsalDays, repTerm, schoolProduction, SHIFT_KIND, STIPEND_KIND, SUMMER_KIND, cabaretSeason, cabaretWeek, summerOf, classPeriod, summerRuns, daysOffIn, nextClasses, evaluate, goesOn, isClassDay, isShiftDay, meanCraft, rankIn,
   sessionGain, termAccount, termStart, timetable, yearOfStudy,
 } from '@/engine/systems/school';
 import type { Simulation } from '@/engine/core/simulation';
@@ -309,13 +309,14 @@ describe('work-study', () => {
 });
 
 describe('casting', () => {
-  it('casts the class’s best actor in good standing to understudy at Yale Rep in the first spring, on call at every performance', () => {
+  it('casts a first-year in good standing to understudy at Yale Rep in the first spring, beside the Carlotta Festival, on call at every performance', () => {
     const sim = life('seagull');
     sim.advanceTo(at(2027, 1, 4, 9) + 60_000);
-    const casting = sim.player.school!.casting!;
+    const casting = sim.player.school!.rep!;
     expect(casting).toMatchObject({ production: SEAGULL_2027.name, kind: 'understudy', term: 1 });
     expect(['Nina', 'Konstantin']).toContain(casting.role);
-    const calls = pending(sim, CALL_KIND);
+    expect(sim.player.school!.casting).toMatchObject({ production: 'Carlotta Festival Of New Plays', kind: 'carlotta' });
+    const calls = pending(sim, CALL_KIND).filter((c) => c.payload.which === 'rep');
     const rehearsals = calls.filter((c) => c.payload.call === 'rehearsal');
     const onCall = calls.filter((c) => c.payload.call === 'oncall');
     expect(rehearsals.length).toBe(11);
@@ -329,16 +330,56 @@ describe('casting', () => {
     play(sim, at(2027, 1, 4, 8));
     sim.player.school!.standing = 'concern';
     sim.advanceTo(at(2027, 1, 4, 9) + 60_000);
-    expect(sim.player.school!.casting).toMatchObject({ kind: 'project' });
+    expect(sim.player.school!.rep).toBeUndefined();
+    expect(sim.player.school!.casting).toMatchObject({ kind: 'carlotta' });
   });
 
-  it('casts anybody else in a School project, with rehearsals and three performances before the classes end', () => {
+  it('clears last term’s Yale Rep assignment in a term without one, so nothing goes on the résumé twice', () => {
+    const sim = life('rep-cleared');
+    play(sim, at(2027, 9, 1, 12));
+    expect(sim.player.school!.rep).toBeDefined();
+    play(sim, at(2028, 1, 10, 12));
+    expect(sim.player.school!.rep).toBeUndefined();
+    const credits = sim.player.school!.credits ?? [];
+    expect(new Set(credits.map((c) => c.production)).size).toBe(credits.length);
+  }, 300_000);
+
+  it('casts a first-year’s spring in the Carlotta Festival: rehearsals Tuesday to Friday from mid-April, four performances in early May', () => {
     const sim = life('project');
     sim.player.school!.classmates[0]!.craft.acting = 99;
     sim.advanceTo(at(2027, 1, 4, 9) + 60_000);
-    expect(sim.player.school!.casting).toMatchObject({ production: 'Spring Project', kind: 'project' });
-    const shows = pending(sim, CALL_KIND).filter((c) => c.payload.call === 'performance');
-    expect(shows.map((c) => zonedParts(c.at, zone))).toMatchObject([{ month: 4, day: 20, hour: 19 }, { month: 4, day: 21 }, { month: 4, day: 22 }]);
+    const mine = pending(sim, CALL_KIND).filter((c) => c.payload.which !== 'rep');
+    const shows = mine.filter((c) => c.payload.call === 'performance');
+    expect(shows.map((c) => zonedParts(c.at, zone))).toMatchObject([{ month: 5, day: 4, hour: 19 }, { month: 5, day: 6 }, { month: 5, day: 9 }, { month: 5, day: 12 }]);
+    const rehearsals = mine.filter((c) => c.payload.call === 'rehearsal');
+    expect(rehearsals.length).toBe(12);
+    expect(rehearsals.every((c) => { const wd = new Date(c.at).getUTCDay(); return wd >= 2 && wd <= 5; })).toBe(true);
+  });
+
+  it('gives each later term a production by year and standing: a thesis or the Hughes Festival, the January thesis or Carlotta, and a Shakespeare project', () => {
+    expect(schoolProduction(0, 1)).toBeUndefined();
+    expect(schoolProduction(2, 1)).toMatchObject({ kind: 'thesis', name: 'Directors’ Thesis Production I', runs: expect.arrayContaining([{ year: 2027, month: 10, day: 9 }]) });
+    expect(schoolProduction(2, 9)).toMatchObject({ kind: 'hughes', runs: [{ year: 2027, month: 11, day: 5 }, { year: 2027, month: 11, day: 6 }, { year: 2027, month: 11, day: 7 }] });
+    expect(schoolProduction(3, 8)).toMatchObject({ kind: 'thesis', runs: expect.arrayContaining([{ year: 2028, month: 1, day: 23 }]) });
+    expect(schoolProduction(3, 9)).toMatchObject({ kind: 'carlotta' });
+    expect(schoolProduction(4, 3)).toMatchObject({ kind: 'thesis', runs: expect.arrayContaining([{ year: 2028, month: 11, day: 14 }]) });
+    expect(schoolProduction(4, 16)).toMatchObject({ kind: 'hughes' });
+    expect(schoolProduction(5, 5)!.name).toBe('Shakespeare Repertory Project I');
+    expect(schoolProduction(5, 6)!.name).toBe('Shakespeare Repertory Project II');
+    expect(schoolProduction(5, 11)).toMatchObject({ name: 'Shakespeare Repertory Project III', runs: [{ year: 2029, month: 4, day: 2 }, { year: 2029, month: 4, day: 3 }] });
+    expect(schoolProduction(6, 1)).toBeUndefined();
+    const key = (d: { year: number; month: number; day: number }) => `${d.year}-${String(d.month).padStart(2, '0')}-${String(d.day).padStart(2, '0')}`;
+    // The January thesis rehearses from the spring term's start, not over the winter break.
+    const jan = schoolProduction(3, 1)!;
+    expect(rehearsalDays(3, jan.runs[0]!, jan.weeks).every((d) => key(d) >= key(termStart(3).date))).toBe(true);
+    // The last Shakespeare project's weeks skip the spring recess.
+    const april = schoolProduction(5, 11)!;
+    const off = classPeriod(5).off;
+    const days = rehearsalDays(5, april.runs[0]!, april.weeks);
+    expect(days.some((d) => off.some(([a, b]) => key(d) >= a && key(d) <= b))).toBe(false);
+    expect(days.length).toBeLessThan(4 * april.weeks);
+    // Yale Rep once a year.
+    expect([0, 1, 2, 3, 4, 5].map(repTerm)).toEqual([false, true, true, false, true, false]);
   });
 
   it('takes an actor out of the pool after missed rehearsal calls, and a missed performance is a grave breach', () => {
@@ -370,21 +411,21 @@ describe('casting', () => {
     sim.advanceTo(night.at - 60_000);
     const acting = sim.player.craft!.acting;
     sim.advanceTo(night.at + 60_000);
-    expect(sim.player.school!.casting!.performed).toBe(1);
+    expect(sim.player.school!.rep!.performed).toBe(1);
     expect(sim.player.craft!.acting).toBeGreaterThan(acting);
-    expect(titled(sim, `You Went On As ${sim.player.school!.casting!.role}`)).toHaveLength(1);
+    expect(titled(sim, `You Went On As ${sim.player.school!.rep!.role}`)).toHaveLength(1);
     // On the résumé, once the term's casting is done with: the next term's.
-    const role = sim.player.school!.casting!.role;
+    const role = sim.player.school!.rep!.role;
     play(sim, at(2027, 9, 20, 12));
-    expect(sim.player.school!.credits).toEqual([{ production: SEAGULL_2027.name, role, kind: 'understudy', year: 2027, wentOn: expect.any(Number) }]);
-    expect(sim.player.school!.credits![0]!.wentOn).toBeGreaterThanOrEqual(1);
+    expect(sim.player.school!.credits).toContainEqual({ production: SEAGULL_2027.name, role, kind: 'understudy', year: 2027, wentOn: expect.any(Number) });
+    expect(sim.player.school!.credits!.find((c) => c.kind === 'understudy')!.wentOn).toBeGreaterThanOrEqual(1);
     const away = found[1]!;
     away.sim.advanceTo(away.night.at - 60_000);
     away.sim.player.school!.standing = 'warning';
     away.sim.player.currentLocationId = 'us-ny-newyork';
     away.sim.advanceTo(away.night.at + 60_000);
     expect(away.sim.player.school!.standing).toBe('dismissed');
-    expect(away.sim.player.school!.casting!.performed).toBe(0);
+    expect(away.sim.player.school!.rep!.performed).toBe(0);
   }, 60_000);
 
   it('puts nothing on the résumé for a production never gone on in, and keeps what was played on dismissal', () => {
@@ -392,12 +433,12 @@ describe('casting', () => {
     never.advanceTo(at(2027, 1, 4, 9) + 60_000);
     for (const c of pending(never, CALL_KIND)) if (c.payload.call === 'oncall') never.timeline.cancel(c.id, never.now);
     play(never, at(2027, 9, 20, 12));
-    expect(never.player.school!.credits ?? []).toEqual([]);
+    expect((never.player.school!.credits ?? []).filter((c) => c.kind === 'understudy')).toEqual([]);
     // A project played once, then a grave breach at the next show while on warning: out, with the credit kept.
     const sim = life('project');
     sim.player.school!.classmates[0]!.craft.acting = 99;
     sim.advanceTo(at(2027, 1, 4, 9) + 60_000);
-    const shows = pending(sim, CALL_KIND).filter((c) => c.payload.call === 'performance');
+    const shows = pending(sim, CALL_KIND).filter((c) => c.payload.call === 'performance' && c.payload.which !== 'rep');
     play(sim, shows[0]!.at + 60_000);
     expect(sim.player.school!.casting!.performed).toBe(1);
     sim.player.school!.standing = 'warning';
@@ -405,7 +446,7 @@ describe('casting', () => {
     sim.player.currentLocationId = 'us-ny-newyork';
     sim.advanceTo(shows[1]!.at + 60_000);
     expect(sim.player.school!.standing).toBe('dismissed');
-    expect(sim.player.school!.credits).toEqual([{ production: 'Spring Project', role: 'A Lead', kind: 'project', year: 2027, wentOn: 1 }]);
+    expect(sim.player.school!.credits).toEqual([{ production: 'Carlotta Festival Of New Plays', role: 'A Role', kind: 'carlotta', year: 2027, wentOn: 1 }]);
   }, 120_000);
 
   it('sends an understudy on about one performance in fifty', () => {

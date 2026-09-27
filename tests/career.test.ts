@@ -512,8 +512,8 @@ describe('the school’s later years', () => {
     const sim = createSave(1, 'rep', { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her' });
     play(sim, at(2028, 8, 28, 10));
     const school = sim.player.school!;
-    expect(school.casting?.production).toBe('Yale Rep’s October Production');
-    expect(school.casting?.kind).toBe(sim.player.craft!.acting >= 80 ? 'role' : 'understudy');
+    expect(school.rep?.production).toBe('Yale Rep’s October Production');
+    expect(school.rep?.kind).toBe(sim.player.craft!.acting >= 80 ? 'role' : 'understudy');
   }, 120_000);
 
   it('don’t ask a second-year into a role, however strong', () => {
@@ -521,7 +521,7 @@ describe('the school’s later years', () => {
     play(sim, at(2027, 8, 22, 12));
     sim.player.craft!.acting = 95;
     play(sim, at(2027, 8, 23, 12));
-    expect(sim.player.school!.casting).toMatchObject({ production: 'Yale Rep’s October Production', kind: 'understudy' });
+    expect(sim.player.school!.rep).toMatchObject({ production: 'Yale Rep’s October Production', kind: 'understudy' });
   }, 120_000);
 });
 

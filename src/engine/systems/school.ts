@@ -27,11 +27,14 @@
  *   weeks, 150 hours a year, and up to 50 elective hours on the evenings they
  *   ask for, at $23 an hour, paid every Friday for the week's hours.
  * - **Casting.** From the second term the chair casts every student each
- *   term: the one with the most acting craft, in good standing, understudies
- *   at Yale Rep where the term has a production open to them, and on call at
- *   every performance may go on; everybody else rehearses and performs a
- *   School project. Missed rehearsal calls take an actor out of the casting
- *   pool; a missed performance or understudy call is a grave breach.
+ *   term in one of the School's own productions (`SCHOOL_SEASON`): the
+ *   Carlotta Festival, a directors' thesis, the Langston Hughes Festival or
+ *   a Shakespeare Repertory Project, by year and standing; and once a year,
+ *   in good standing, at Yale Rep, most often to understudy, on call at
+ *   every performance. Missed rehearsal calls take an actor out of the
+ *   casting pool; a missed performance or understudy call is a grave breach.
+ *   Until 2026-09-27 only the class's best actor went to Yale Rep, and
+ *   everybody else was in a project named by the term.
  * - **The Cabaret and the summer.** A show a term at the Yale Cabaret, the
  *   students' own theater, on the chair's approval, never on academic
  *   warning, in a week clear of recesses and casting; and in the spring of
@@ -53,7 +56,7 @@ import { formatDate, instantFromZoned, zonedParts, MS_DAY, type Instant } from '
 import { exchange } from '../content/currency';
 import { CITIES } from '../content/geography';
 import {
-  CLASSES_2026_27, COST_2026_27, COURSES, ORIENTATION_2026, SEAGULL_2027, SKILLS, SUMMER_CABARET, TERM_STARTS_2026_27, WORK_STUDY, YALE_CABARET, YALE_DRAMA,
+  CLASSES_2026_27, COST_2026_27, COURSES, ORIENTATION_2026, SCHOOL_SEASON, SEAGULL_2027, SKILLS, SUMMER_CABARET, TERM_STARTS_2026_27, WORK_STUDY, YALE_CABARET, YALE_DRAMA,
   type Course, type SchoolDate, type Skill, type Term,
 } from '../content/school';
 import { readiness } from './life';
@@ -100,7 +103,7 @@ export interface TermReview { term: number; standing: Standing; attendance: numb
 export interface Casting {
   production: string;
   role: string;
-  kind: 'understudy' | 'role' | 'project';
+  kind: 'understudy' | 'role' | 'project' | 'thesis' | 'hughes' | 'shakespeare' | 'carlotta';
   term: number;
   /** Went on as an understudy, or performed. */
   performed: number;
@@ -123,6 +126,8 @@ export interface SchoolRecord {
   summer?: { year: number; played: number[]; until: Instant; out?: boolean };
   history: TermReview[];
   casting?: Casting;
+  /** A Yale Rep assignment beside it: an understudy, or a role at a director's invitation. */
+  rep?: Casting;
   workStudy: { yearHours: number; electiveHours: number; owedHours: number };
   /** The day, `YYYY-MM-DD`, they called in sick, if today. */
   sickDay?: string;
@@ -614,8 +619,36 @@ function breach(sim: Simulation, person: Person, what: string): void {
   setStanding(sim, person, school.standing === 'warning' ? 'dismissed' : 'warning', `You ${what}, which the School treats as a grave breach of professionalism.`);
 }
 
-/** The School projects each term casts into after the first, by term. The dates are SLATE's estimate. */
-const PROJECTS = ['', 'Spring Project', 'Shakespeare Repertory Project', 'Langston Hughes Festival Of New Work', 'Directors’ Thesis Production', 'Carlotta Festival Of New Plays'];
+/**
+ * The School production a term casts a student in (`SCHOOL_SEASON`): a
+ * first-year's spring, the Carlotta Festival; a second-year's fall, a thesis
+ * or, below the class's middle in acting, the Hughes Festival; their spring,
+ * the January thesis or Carlotta; a third-year's fall, the November thesis
+ * or Hughes; their spring, a Shakespeare Repertory Project, by standing.
+ * Which goes to whom is SLATE's estimate of the chair's balance.
+ */
+export function schoolProduction(term: number, rank: number): { name: string; kind: Casting['kind']; runs: SchoolDate[]; weeks: number } | undefined {
+  const season = SCHOOL_SEASON;
+  const fallYear = termStart(term).fall ? termStart(term).date.year : termStart(term).date.year - 1;
+  const day = ([m, d]: readonly [number, number]): SchoolDate => ({ year: m >= 8 ? fallYear : fallYear + 1, month: m, day: d });
+  const span = (run: readonly (readonly [number, number])[]) => { const out: SchoolDate[] = []; for (let d = day(run[0]!); keyOf(d) <= keyOf(day(run[1]!)); d = addDays(d, 1)) out.push(d); return out; };
+  const upper = rank <= Math.ceil(YALE_DRAMA.classSize / 2);
+  const thesis = (n: number) => ({ name: `Directors’ Thesis Production ${['I', 'II', 'III'][n]}`, kind: 'thesis' as const, runs: span(season.theses[n]!), weeks: season.rehearsalWeeks.thesis });
+  const hughes = { name: 'Langston Hughes Festival Of New Work', kind: 'hughes' as const, runs: span(season.hughes), weeks: season.rehearsalWeeks.hughes };
+  const all = span(season.carlotta);
+  const carlotta = { name: 'Carlotta Festival Of New Plays', kind: 'carlotta' as const, runs: [0, 2, 5, all.length - 1].map((n) => all[Math.min(n, all.length - 1)]!).slice(0, season.carlottaShows), weeks: season.rehearsalWeeks.carlotta };
+  switch (term) {
+    case 1: return carlotta;
+    case 2: return upper ? thesis(0) : hughes;
+    case 3: return upper ? thesis(2) : carlotta;
+    case 4: return upper ? thesis(1) : hughes;
+    case 5: {
+      const n = rank <= 5 ? 0 : rank <= 10 ? 1 : 2;
+      return { name: `Shakespeare Repertory Project ${['I', 'II', 'III'][n]}`, kind: 'shakespeare', runs: span(season.shakespeare[n]!), weeks: season.rehearsalWeeks.shakespeare };
+    }
+    default: return undefined;
+  }
+}
 
 /**
  * The Yale Rep production a term's casting draws on: in the spring of
@@ -638,70 +671,86 @@ export function repProduction(term: number): { name: string; rehearsals: { from:
   };
 }
 
-/**
- * The chair's casting for a term, from the second. The class's best actor
- * in good standing goes to Yale Rep: to understudy, as most acting students
- * do, or, in the third year and at a director's invitation, which SLATE has
- * come at `ESTIMATE.castAtRep` acting, in a role. Everybody else in the pool
- * is in a School project: five weeks of calls, Tuesday to Friday three to
- * nine, and three evening performances in the term's last class week
- * (SLATE's estimate of the dates). Out of the pool, nothing. Until
- * 2026-09-26 only the first spring went to Yale Rep.
- */
-/** A casting done with goes on the résumé where it was played: an understudy only if they went on. */
-function keepCredit(sim: Simulation, school: SchoolRecord): void {
-  const c = school.casting;
-  if (!c || c.performed === 0) return;
-  (school.credits ??= []).push({ production: c.production, role: c.role, kind: c.kind, year: zonedParts(sim.now, zone()).year, wentOn: c.performed });
+/** A School production's rehearsal days: Tuesday to Friday for its weeks before opening, from the term's start, a recess skipped. */
+export function rehearsalDays(term: number, opening: SchoolDate, weeks: number): SchoolDate[] {
+  const period = classPeriod(term);
+  const begun = termStart(term).date;
+  const out: SchoolDate[] = [];
+  for (let d = addDays(opening, -7 * weeks); keyOf(d) < keyOf(opening); d = addDays(d, 1)) {
+    const wd = weekday(d);
+    if (wd < 2 || wd > 5 || keyOf(d) < keyOf(begun) || period.off.some(([a, b]) => keyOf(d) >= a && keyOf(d) <= b)) continue;
+    out.push(d);
+  }
+  return out;
 }
 
+/** Whether a term brings a Yale Rep assignment: once a year, a first-year's spring and a second and third year's fall. */
+export const repTerm = (term: number) => term === 1 || (termStart(term).fall && term >= 2);
+
+/** A casting done with goes on the résumé where it was played: an understudy only if they went on. */
+function keepCredit(sim: Simulation, school: SchoolRecord): void {
+  for (const c of [school.casting, school.rep]) {
+    if (!c || c.performed === 0) continue;
+    (school.credits ??= []).push({ production: c.production, role: c.role, kind: c.kind, year: zonedParts(sim.now, zone()).year, wentOn: c.performed });
+  }
+}
+
+/**
+ * The chair's casting for a term, from the second (`SCHOOL_SEASON`): a
+ * School production for every student in the pool, its rehearsal calls
+ * Tuesday to Friday from three for its weeks before opening, inside the
+ * term, and its performances at seven. Beside it, once a year (a first
+ * year's spring, a second and third year's fall), a Yale Rep assignment for
+ * a student in good standing, as most acting students work there: an
+ * understudy, or, in the third year at a director's invitation, which
+ * SLATE has come at `ESTIMATE.castAtRep` acting, a role. Out of the pool,
+ * nothing. Until 2026-09-27 a term's casting was one thing, the class's best
+ * actor alone went to Yale Rep, and everybody else was in a project named
+ * by term and played in the term's last class week.
+ */
 function cast(sim: Simulation, person: Person, term: number): void {
   const school = person.school!;
   keepCredit(sim, school);
   delete school.casting;
+  delete school.rep;
   if (!school.castable) {
     if (person.id === sim.universe.playerId) sim.notify({ category: 'money', title: 'Not Cast This Term', body: 'You’re out of the casting pool after missed rehearsal calls. A good evaluation puts you back.', importance: 70, route: '/workspace/school' });
     return;
   }
-  const toRep = rankIn(person, 'acting') === 1 && school.standing === 'good';
-  if (toRep) {
+  const production = schoolProduction(term, rankIn(person, 'acting'));
+  if (production) {
+    school.casting = { production: production.name, role: 'A Role', kind: production.kind, term, performed: 0 };
+    for (const d of rehearsalDays(term, production.runs[0]!, production.weeks)) {
+      schedule(sim, person, at(d, 15), { kind: CALL_KIND, label: `${production.name}: Rehearsal`, minutes: 360, payload: { call: 'rehearsal' } });
+    }
+    for (const d of production.runs) schedule(sim, person, at(d, 19), { kind: CALL_KIND, label: `${production.name}: Performance`, minutes: 150, payload: { call: 'performance' } });
+  }
+  if (repTerm(term) && school.standing === 'good') {
     const rep = repProduction(term);
     const inRole = yearOfTerm(term) === 3 && person.craft!.acting >= ESTIMATE.castAtRep;
     const role = term === 1 ? (person.performerTitle === 'actress' ? SEAGULL_2027.roles.actress : SEAGULL_2027.roles.actor) : 'A Role';
-    school.casting = { production: rep.name, role, kind: inRole ? 'role' : 'understudy', term, performed: 0 };
+    school.rep = { production: rep.name, role, kind: inRole ? 'role' : 'understudy', term, performed: 0 };
     // Rehearsals: an understudy's Wednesday and Friday, three to six; a company member's Tuesday to Saturday, three to nine (SLATE's estimate).
     for (let d = parseKey(rep.rehearsals.from); keyOf(d) <= rep.rehearsals.to; d = addDays(d, 1)) {
       const wd = weekday(d);
-      if (inRole ? wd >= 2 && wd <= 6 : wd === 3 || wd === 5) schedule(sim, person, at(d, 15), { kind: CALL_KIND, label: `${rep.name}: ${inRole ? 'Rehearsal' : 'Understudy Rehearsal'}`, minutes: inRole ? 360 : 180, payload: { call: 'rehearsal' } });
+      if (inRole ? wd >= 2 && wd <= 6 : wd === 3 || wd === 5) schedule(sim, person, at(d, 15), { kind: CALL_KIND, label: `${rep.name}: ${inRole ? 'Rehearsal' : 'Understudy Rehearsal'}`, minutes: inRole ? 360 : 180, payload: { call: 'rehearsal', which: 'rep' } });
     }
     // Every performance, evenings Tuesday to Saturday at eight and Sundays at two: played, or on call.
     for (let d = parseKey(rep.run.from); keyOf(d) <= rep.run.to; d = addDays(d, 1)) {
       const wd = weekday(d);
       if (wd === 1) continue;
       const when = wd === 0 ? at(d, 14) : at(d, 20);
-      if (inRole) schedule(sim, person, when, { kind: CALL_KIND, label: `${rep.name}: Performance`, minutes: 180, payload: { call: 'performance' } });
-      else schedule(sim, person, when, { kind: CALL_KIND, label: `${rep.name}: On Call`, minutes: 180, payload: { call: 'oncall' }, requiresPlayer: false });
+      if (inRole) schedule(sim, person, when, { kind: CALL_KIND, label: `${rep.name}: Performance`, minutes: 180, payload: { call: 'performance', which: 'rep' } });
+      else schedule(sim, person, when, { kind: CALL_KIND, label: `${rep.name}: On Call`, minutes: 180, payload: { call: 'oncall', which: 'rep' }, requiresPlayer: false });
     }
-  } else {
-    const period = classPeriod(term);
-    school.casting = { production: PROJECTS[term] ?? 'Acting Project', role: 'A Lead', kind: 'project', term, performed: 0 };
-    const opening = addDays(period.to, -3);
-    for (let d = addDays(opening, -35); keyOf(d) < keyOf(opening); d = addDays(d, 1)) {
-      const wd = weekday(d);
-      if (wd >= 2 && wd <= 5) schedule(sim, person, at(d, 15), { kind: CALL_KIND, label: `${school.casting.production}: Rehearsal`, minutes: 360, payload: { call: 'rehearsal' } });
-    }
-    for (let n = 0; n < 3; n += 1) schedule(sim, person, at(addDays(opening, n), 19), { kind: CALL_KIND, label: `${school.casting.production}: Performance`, minutes: 150, payload: { call: 'performance' } });
   }
   if (person.id === sim.universe.playerId) {
-    sim.notify({
-      category: 'money', title: `Cast: ${school.casting.production}`,
-      body: school.casting.kind === 'understudy'
-        ? `The chair, ${YALE_DRAMA.actingChair.name}, has cast you to understudy ${term === 1 ? `${school.casting.role} in Yale Rep’s ${SEAGULL_2027.name}, directed by ${SEAGULL_2027.director}` : `in ${school.casting.production}`}. Understudies must be in New Haven and reachable at every performance.`
-        : school.casting.kind === 'role'
-          ? `The director has asked for you, and the dean has approved it: you’re in the company of ${school.casting.production}.`
-          : `The chair, ${YALE_DRAMA.actingChair.name}, has cast you in the ${school.casting.production}. Once cast, you fulfil the casting.`,
-      importance: 75, route: '/workspace/school',
-    });
+    const chair = YALE_DRAMA.actingChair.name;
+    const parts: string[] = [];
+    if (school.casting) parts.push(`in ${school.casting.kind === 'thesis' ? '' : 'the '}${school.casting.production}, from its first rehearsal call`);
+    const r = school.rep;
+    if (r) parts.push(r.kind === 'role' ? `and, at the director’s invitation with the dean’s approval, in the company of ${r.production}` : `and to understudy ${term === 1 ? `${r.role} in Yale Rep’s ${SEAGULL_2027.name}, directed by ${SEAGULL_2027.director}` : `in ${r.production}`}, in New Haven and reachable at every performance`);
+    if (parts.length) sim.notify({ category: 'money', title: `Cast: ${school.casting?.production ?? r!.production}`, body: `The chair, ${chair}, has cast you ${parts.join(', ')}. Once cast, you fulfil the casting.`, importance: 75, route: '/workspace/school' });
   }
 }
 
@@ -852,9 +901,9 @@ export function registerSchool(sim: Simulation): void {
   sim.onSchedule(CALL_KIND, (item, s) => {
     const person = personOf(item);
     const school = person?.school;
-    if (!person || !school || !person.craft || !school.casting) return;
+    const casting = item.payload.which === 'rep' ? school?.rep : school?.casting;
+    if (!person || !school || !person.craft || !casting) return;
     const call = String(item.payload.call);
-    const casting = school.casting;
     if (call === 'oncall') {
       // Most nights the understudy isn't needed.
       if (!goesOn(s, person, item.at)) return;

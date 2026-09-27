@@ -260,3 +260,32 @@ export const SUMMER_CABARET = {
   applyBy: [4, 30] as const,
   source: 'https://www.summercabaret.org (2026 season); https://bulletin.yale.edu (School of Drama, 2026–2027)',
 } as const;
+
+/**
+ * The School's own season, which the chair of Acting casts every student in
+ * by assignment, the dean approving: "developmental needs of each student",
+ * the needs of the project and "a balance of collaborative opportunity"
+ * (the Bulletin, 2026–27). First-years are cast only from the second
+ * semester. Each year: three directors' thesis productions, cast from the
+ * second and third years, 2026–27's announced (Machinal from 9 October,
+ * Marisol from 14 November, The Doctor from 23 January, each a week); the
+ * Langston Hughes Festival of new plays in November, second and third
+ * years; three Shakespeare Repertory Projects in the spring, third years
+ * since the Practicum moved to the third year; and the Carlotta Festival of
+ * New Plays in early May, first and second years, the third at the Actor
+ * Showcase. Rehearsal calls Tuesday to Friday from three, six hours at
+ * most. SLATE's estimate: the Hughes, Shakespeare and Carlotta dates, every
+ * later year's by 2026–27's, the rehearsal weeks, the performances each
+ * gives, and which of them the chair gives whom, by the class's standing in
+ * acting, as the weights aren't published.
+ */
+export const SCHOOL_SEASON = {
+  /** 2026–27's three, Machinal, Marisol and The Doctor, give the dates; a first-year is in none of them, so later years' are unnamed. */
+  theses: [[[10, 9], [10, 16]], [[11, 14], [11, 20]], [[1, 23], [1, 29]]] as readonly (readonly (readonly [number, number])[])[],
+  hughes: [[11, 5], [11, 7]] as readonly (readonly [number, number])[],
+  shakespeare: [[[2, 5], [2, 6]], [[2, 27], [3, 1]], [[4, 2], [4, 3]]] as readonly (readonly (readonly [number, number])[])[],
+  carlotta: [[5, 4], [5, 12]] as readonly (readonly [number, number])[],
+  carlottaShows: 4,
+  rehearsalWeeks: { thesis: 5, hughes: 3, shakespeare: 4, carlotta: 3 },
+  source: 'https://bulletin.yale.edu (School of Drama, 2026–2027: Acting, Production, Casting); https://drama.yale.edu/productions; LORT Rule 39(E)',
+} as const;
