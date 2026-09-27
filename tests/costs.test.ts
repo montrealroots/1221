@@ -45,16 +45,40 @@ describe('an actor’s working costs', () => {
     expect(sim.execute({ kind: 'career.subscribe', payload: { site: 'nowhere', on: true } })).toMatchObject({ ok: false, error: 'No such site.' });
   });
 
-  it('has a paid site’s submissions seen twice as often, Backstage take five more a week, and old headshots cost a fifth of auditions', () => {
+  it('has a paid site’s submissions seen twice as often, the reel’s breakdowns shut without one, the sites’ own listings take more, and old headshots cost a fifth of auditions', () => {
     const sim = pro('seen');
     const career = careerOf(sim.player);
-    career.sites = { 'actors-access': { until: sim.now + 5_000 * MS_DAY, renews: true } };
-    let got = 0;
-    for (let w = 0; w < 400; w += 1) got += weekOfAuditions(sim, sim.player, sim.now + w * 7 * MS_DAY, undefined, 'us-ny-newyork', 5).length;
-    expect(got / 2000).toBeCloseTo(ESTIMATE.selfSubmitCallback, 1);
+    const self = () => { let got = 0; for (let w = 0; w < 600; w += 1) got += weekOfAuditions(sim, sim.player, sim.now + w * 7 * MS_DAY, undefined, 'us-ny-newyork', 5).length; return got / 3000; };
+    const free = self();
+    career.sites = { 'casting-networks': { until: sim.now + 5_000 * MS_DAY, renews: true } };
+    career.reelAt = sim.now;
+    const reel = self();
+    delete career.reelAt;
+    const bare = self();
+    expect(reel).toBeCloseTo(ESTIMATE.selfSubmitCallback, 1);
+    expect(free / reel).toBeGreaterThan(WORK_COSTS.freeSubmissionShare - 0.1);
+    expect(free / reel).toBeLessThan(WORK_COSTS.freeSubmissionShare + 0.1);
+    expect(bare / reel).toBeGreaterThan(1 - WORK_COSTS.wantReel - 0.1);
+    expect(bare / reel).toBeLessThan(1 - WORK_COSTS.wantReel + 0.1);
+    delete career.sites['casting-networks'];
     expect(submissionsAWeek(career, sim.now)).toBe(ESTIMATE.selfSubmitsAWeek);
     career.sites.backstage = { until: sim.now + MS_DAY, renews: false };
     expect(submissionsAWeek(career, sim.now)).toBe(ESTIMATE.selfSubmitsAWeek + WORK_COSTS.backstageSubmissions);
+    career.sites['casting-networks'] = { until: sim.now + MS_DAY, renews: false };
+    expect(submissionsAWeek(career, sim.now, 'us-ca-losangeles')).toBe(ESTIMATE.selfSubmitsAWeek + WORK_COSTS.backstageSubmissions + WORK_COSTS.castingNetworksSubmissions['us-ca-losangeles']);
+    expect(submissionsAWeek(career, sim.now, 'us-ny-newyork')).toBe(ESTIMATE.selfSubmitsAWeek + WORK_COSTS.backstageSubmissions + WORK_COSTS.castingNetworksSubmissions.other);
+    // In Los Angeles, Submit Yourself takes Casting Networks' five more.
+    const la = pro('seen-la', 'us-ca-losangeles');
+    careerOf(la.player).sites = { 'casting-networks': { until: la.now + 5_000 * MS_DAY, renews: true } };
+    for (let n = 0; n < ESTIMATE.selfSubmitsAWeek + WORK_COSTS.castingNetworksSubmissions['us-ca-losangeles']; n += 1) expect(la.execute({ kind: 'career.self_submit', payload: {} }).ok).toBe(true);
+    expect(la.execute({ kind: 'career.self_submit', payload: {} }).ok).toBe(false);
+    // A reel takes screen footage.
+    expect(sim.execute({ kind: 'career.reel', payload: {} })).toMatchObject({ ok: false, error: 'A reel is cut from footage, and you have no screen credit yet.' });
+    career.credits.push({ roleId: 'lort-b', year: 2026, cityId: 'us-ny-newyork' });
+    expect(sim.execute({ kind: 'career.reel', payload: {} }).ok).toBe(false);
+    career.credits.push({ roleId: 'costar', year: 2026, cityId: 'us-ny-newyork' });
+    expect(sim.execute({ kind: 'career.reel', payload: {} }).ok).toBe(true);
+    expect(career.reelAt).toBe(sim.now);
     // The showcase's headshots, from when the business began, go out of date two years on.
     expect(staleHeadshots(career, sim.now + (WORK_COSTS.headshotsLastDays - 1) * MS_DAY)).toBe(false);
     expect(staleHeadshots(career, sim.now + (WORK_COSTS.headshotsLastDays + 1) * MS_DAY)).toBe(true);

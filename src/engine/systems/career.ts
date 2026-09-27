@@ -249,6 +249,7 @@ export interface CareerRecord {
   sites?: Partial<Record<CastingSite, { until: Instant; renews: boolean }>>;
   headshotsAt?: Instant;
   kit?: boolean;
+  reelAt?: Instant;
   scene?: { paidFor: string };
   /** The last dues period billed, `YYYY-M`. */
   duesBilled?: string;
@@ -418,9 +419,11 @@ export function beginCareer(sim: Simulation, person: Person): void {
   armTaxes(sim, person);
 }
 
-/** A week's submissions: five, and Backstage's listings five more. */
-export function submissionsAWeek(career: CareerRecord, at: Instant): number {
-  return ESTIMATE.selfSubmitsAWeek + (onSite(career, 'backstage', at) ? WORK_COSTS.backstageSubmissions : 0);
+/** A week's submissions: five, Backstage's listings five more, and Casting Networks' five more in Los Angeles and two elsewhere. */
+export function submissionsAWeek(career: CareerRecord, at: Instant, cityId?: string): number {
+  const cn = WORK_COSTS.castingNetworksSubmissions;
+  return ESTIMATE.selfSubmitsAWeek + (onSite(career, 'backstage', at) ? WORK_COSTS.backstageSubmissions : 0)
+    + (onSite(career, 'casting-networks', at) ? (cityId === 'us-ca-losangeles' ? cn['us-ca-losangeles'] : cn.other) : 0);
 }
 
 const monthOf = (at: Instant, zone: string) => { const p = zonedParts(at, zone); return `${p.year}-${p.month}`; };
@@ -550,8 +553,9 @@ export function weekOfAuditions(sim: Simulation, person: Person, weekStart: Inst
   // A manager's relationships: the work a middling agency's reach sends.
   const fromManager = managed ? poisson(MANAGEMENT.auditionsPerWeek * look) : 0;
   let self = 0;
-  // A free submission sends a name and a résumé; a paid site's, the headshot and the reel.
-  const paid = onSite(career, 'actors-access', weekStart) || onSite(career, 'backstage', weekStart) ? 1 : WORK_COSTS.freeSubmissionShare;
+  // A free submission sends a name and a résumé; a paid site's, the headshot, and the reel where there is one, without which the breakdowns that ask for one are shut.
+  const onAny = (Object.keys(WORK_COSTS.sites) as CastingSite[]).some((site) => onSite(career, site, weekStart));
+  const paid = onAny ? (career.reelAt !== undefined ? 1 : 1 - WORK_COSTS.wantReel) : WORK_COSTS.freeSubmissionShare;
   for (let n = 0; n < submitted; n += 1) if (rng.next() < ESTIMATE.selfSubmitCallback * paid * look) self += 1;
   const pick = (open: readonly Role[]) => {
     let x = rng.next() * open.reduce((sum, r) => sum + r.weight, 0);
@@ -1175,7 +1179,7 @@ export function registerCareer(sim: Simulation): void {
   sim.onCommand<Record<string, never>, { submitted: number }>('career.self_submit', (_p, { sim: s }) => {
     const career = careerOf(s.player);
     if (career.since === undefined) throw new CommandError('While you’re at school, its work comes first; submissions start when it ends.');
-    const most = submissionsAWeek(career, s.now);
+    const most = submissionsAWeek(career, s.now, workCity(s.player));
     if (career.submitted >= most) throw new CommandError(`You’ve made this week’s ${most} submissions.`);
     career.submitted += 1;
     return { submitted: career.submitted };
@@ -1205,6 +1209,16 @@ export function registerCareer(sim: Simulation): void {
     const cur = saveCurrency(s.universe);
     if (!payForWork(s, person, usd(WORK_COSTS.headshots, cur), 'Headshots and prints')) throw new CommandError(`A session and prints come to ${formatMoney(usd(WORK_COSTS.headshots, cur), cur)}, which the bank can’t cover.`);
     careerOf(person).headshotsAt = s.now;
+    return { at: s.now };
+  });
+
+  sim.onCommand<Record<string, never>, { at: Instant }>('career.reel', (_p, { sim: s }) => {
+    const person = s.player;
+    const career = careerOf(person);
+    if (!career.credits.some((c) => roleById(c.roleId).medium === 'screen')) throw new CommandError('A reel is cut from footage, and you have no screen credit yet.');
+    const cur = saveCurrency(s.universe);
+    if (!payForWork(s, person, usd(WORK_COSTS.reel, cur), 'A reel, edited')) throw new CommandError(`An edit is ${formatMoney(usd(WORK_COSTS.reel, cur), cur)}, which the bank can’t cover.`);
+    career.reelAt = s.now;
     return { at: s.now };
   });
 

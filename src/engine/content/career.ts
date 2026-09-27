@@ -333,9 +333,14 @@ export const GENRES: Readonly<Record<'screen' | 'stage' | 'animation', readonly 
 
 /**
  * What an actor's work costs them, 2025–26 prices. Actors Access PLUS,
- * $68 a year, sends a headshot and reel with a submission where the free
- * tier sends a name and a résumé; Backstage, about $200 a year, has its own
- * listings. Headshots, about $700 a session and $115 for a hundred prints,
+ * $68 a year, sends a headshot with a submission where the free tier sends
+ * a name and a résumé, and the reel where there is one; Backstage, about
+ * $200 a year, and Casting Networks Premium, $299.90, have their own
+ * listings, Casting Networks' mostly in Los Angeles. A reel is cut from
+ * footage an actor has, which takes a screen credit, for about $250 ($150
+ * to $400). Casting sites let a casting director ask for one; SLATE's
+ * estimate is that four in ten breakdowns do, and a submission without one
+ * doesn't reach them. Headshots, about $700 a session and $115 for a hundred prints,
  * redone every year or two; a self-tape kit about $110; an ongoing
  * scene-study class about $300 a month; a private coach about $150 an hour.
  * What each does is SLATE's estimate: a free submission is seen half as
@@ -346,7 +351,14 @@ export const GENRES: Readonly<Record<'screen' | 'stage' | 'animation', readonly 
  * it is a job expense New York and California let an actor deduct.
  */
 export const WORK_COSTS = {
-  sites: { 'actors-access': { label: 'Actors Access PLUS', price: 68_00 }, backstage: { label: 'Backstage', price: 199_92 } },
+  sites: {
+    'actors-access': { label: 'Actors Access PLUS', price: 68_00 },
+    backstage: { label: 'Backstage', price: 199_92 },
+    'casting-networks': { label: 'Casting Networks Premium', price: 299_90 },
+  },
+  reel: 250_00,
+  wantReel: 0.4,
+  castingNetworksSubmissions: { 'us-ca-losangeles': 5, other: 2 },
   headshots: 815_00,
   headshotsLastDays: 730,
   kit: 110_00,
@@ -357,7 +369,7 @@ export const WORK_COSTS = {
   staleHeadshots: 0.8,
   noKit: 0.8,
   coached: 1.25,
-  source: 'https://actorsaccess.com; https://www.backstage.com; https://www.castingnetworks.com; https://ivanachubbuck.com; https://www.hbstudio.org; https://www.tschreiber.org; https://oneononenyc.com',
+  source: 'https://actorsaccess.com; https://www.backstage.com; https://www.castingnetworks.com/pricing (Premium, 2026); https://ivanachubbuck.com; https://www.hbstudio.org; https://www.tschreiber.org; https://oneononenyc.com',
 } as const;
 
 /**

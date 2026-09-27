@@ -139,7 +139,7 @@ function AgencyPane() {
 
       <Panel
         title="Submitting Yourself"
-        subtitle={`${career.submitted} of ${submissionsAWeek(career, sim.now)} this week`}
+        subtitle={`${career.submitted} of ${submissionsAWeek(career, sim.now, person.currentLocationId)} this week`}
         actions={<Gated feature="career.self_submit" onClick={() => { if (run('career.self_submit').ok) toast('Submitted. Any audition comes on Monday.', 'positive'); }}>Submit Yourself</Gated>}
       >
         <p className="small" style={{ margin: 0 }}>
@@ -437,6 +437,10 @@ function WorkCostsPanel() {
           <Gated feature="career.headshots" onClick={() => { if (run('career.headshots').ok) toast('New headshots.', 'positive'); }}>New Headshots</Gated>
         </div>
         <div className="row-between small">
+          <span>A reel, {formatMoney(WORK_COSTS.reel, cur)} to edit: {career.reelAt ? `from ${formatDate(career.reelAt, sim.zone)}` : career.credits.some((c) => roleById(c.roleId).medium === 'screen') ? 'None' : 'None, and no screen footage to cut one from'}</span>
+          <Gated feature="career.reel" onClick={() => { if (run('career.reel').ok) toast('A reel, cut from your footage.', 'positive'); }}>{career.reelAt ? 'Recut The Reel' : 'Cut A Reel'}</Gated>
+        </div>
+        <div className="row-between small">
           <span>A self-tape kit, {formatMoney(WORK_COSTS.kit, cur)}: {career.kit ? 'Yours' : 'None'}</span>
           {!career.kit && <Gated feature="career.buy_kit" onClick={() => { if (run('career.buy_kit').ok) toast('Tapes read better now.', 'positive'); }}>Buy A Kit</Gated>}
         </div>
@@ -447,7 +451,7 @@ function WorkCostsPanel() {
             : <Gated feature="career.class" onClick={() => { if (run('career.class', { on: true }).ok) toast('In class from this week.', 'positive'); }}>Join A Class</Gated>}
         </div>
         <p className="xs dim" style={{ margin: 0 }}>
-          Prices are 2025–26’s. A free submission sends a name and a résumé, and is seen about half as often; Backstage’s own listings take {WORK_COSTS.backstageSubmissions} more submissions a week. Headshots more than two years old cost about a fifth of your auditions; a tape without a kit reads about a fifth worse; a week in class grows your acting as a class at school does; a coach, {formatMoney(WORK_COSTS.coach, cur)} an hour, makes an audition book about a quarter more often. What each does is SLATE’s estimate. New York and California let an actor deduct it all above 2% of income. Source: {WORK_COSTS.source}.
+          Prices are 2025–26’s. A free submission sends a name and a résumé, and is seen about half as often; a paid one sends your headshot, and your reel where you have one, without which the {WORK_COSTS.wantReel * 100}% of breakdowns that ask for one are shut. Backstage’s own listings take {WORK_COSTS.backstageSubmissions} more submissions a week, and Casting Networks’ {WORK_COSTS.castingNetworksSubmissions['us-ca-losangeles']} more in Los Angeles and {WORK_COSTS.castingNetworksSubmissions.other} elsewhere. Headshots more than two years old cost about a fifth of your auditions; a tape without a kit reads about a fifth worse; a week in class grows your acting as a class at school does; a coach, {formatMoney(WORK_COSTS.coach, cur)} an hour, makes an audition book about a quarter more often. What each does is SLATE’s estimate. New York and California let an actor deduct it all above 2% of income. Source: {WORK_COSTS.source}.
         </p>
       </div>
     </Panel>

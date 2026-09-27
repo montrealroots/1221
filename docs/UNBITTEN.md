@@ -206,9 +206,11 @@ part the tool cannot see.
     care's own index grows past August 2026 at its 2019–24 rate, SLATE's
     estimate.
   - What the working costs do (a free submission seen half as often,
-    Backstage's five more, stale headshots, a kit, a class, a coach) is
-    SLATE's estimate; Casting Networks, reels and trade papers aren't
-    modeled.
+    four in ten breakdowns asking for a reel, Backstage's and Casting
+    Networks' own listings, stale headshots, a kit, a class, a coach) is
+    SLATE's estimate: no site publishes what a reel or a subscription is
+    worth. Trade papers aren't modeled: what they'd tell an actor, SLATE
+    has no news to give.
   - A return's states: New York's days-worked allocation inside a job
     isn't counted.
   - Where a job is seen, how it does, a film's television money and its
