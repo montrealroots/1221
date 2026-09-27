@@ -225,9 +225,10 @@ export const COBRA = {
 
 /**
  * What care costs and how often it comes, for an adult of 25 to 44: two
- * doctor's visits a year, 0.45 emergency visits, 0.04 hospital stays, and in
- * a flu season (October to March) an 8.9% chance of the flu, which sends 37%
- * of those who have it to a clinician. The commercial prices: a visit $100,
+ * doctor's visits a year, 0.45 emergency visits, 0.04 hospital stays, and an
+ * 8.9% chance a year of the flu, in the weeks the town's climate gives it
+ * (`fluByWeek`), which sends 37% of those who have it to a clinician. Its
+ * season was October to March everywhere until 2026-09-27. The commercial prices: a visit $100,
  * urgent care $180, an emergency visit $2,450, a medical stay $11,600; the
  * uninsured are billed about 1.75 times those. A stay is SLATE's three days,
  * and what illness takes from a body is SLATE's estimate.
@@ -235,7 +236,6 @@ export const COBRA = {
 export const CARE = {
   perYear: { visit: 2.0, emergency: 0.45, stay: 0.04 },
   flu: 0.089,
-  fluSeasonWeeks: 26,
   fluSeesClinician: 0.37,
   price: { visit: 100_00, urgent: 180_00, emergency: 2_450_00, stay: 11_600_00 },
   uninsuredMarkup: 1.75,

@@ -40,8 +40,9 @@ describe('the cost of living', () => {
   it('is the same sum on the creation page as in play', () => {
     const sim = quickSave();
     const costs = costsAt(sim.player.home!.cityId, 'shared', saveCurrency(sim.universe), sim.now);
-    expect([rentOf(sim, sim.player), billsOf(sim, sim.player), foodOf(sim, sim.player), mealOf(sim, sim.player)])
-      .toEqual([costs.rent, costs.bills, costs.day, costs.meal]);
+    // The bills are the year's average month on the page, and this month's by the climate in play (`billsFactor`).
+    expect([rentOf(sim, sim.player), foodOf(sim, sim.player), mealOf(sim, sim.player)]).toEqual([costs.rent, costs.day, costs.meal]);
+    expect(Math.abs(billsOf(sim, sim.player) - costs.bills)).toBeLessThanOrEqual(costs.bills);
     // A room is the room figure, a place of your own the one-bedroom and
     // every bill: in Mosfellsbær, HMS's capital-region rent, and a room at 55%.
     const own = quickSave({ housing: 'own' }, 'own');

@@ -987,7 +987,7 @@ function MonthByMonth({ config, set, cur }: { config: NewSaveConfig; set: Setter
       <div className="panel-head">
         <div>
           <h2>Month By Month</h2>
-          <p className="muted small">What living here costs. Rent and bills are due on the first.</p>
+          <p className="muted small">What living here costs. Rent and bills are due on the first; the bills here are the year’s average month, and a winter’s or a summer’s run higher by what the climate asks of the heating and the cooling.</p>
         </div>
       </div>
 

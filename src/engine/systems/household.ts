@@ -59,6 +59,7 @@ import { cardRoom } from './credit';
 import { roundUpOf, roundUpsOn } from './accountlife';
 import { hold } from './pending';
 import { CommandError } from '../core/simulation';
+import { billsFactor } from './seasons';
 
 export const RENT_KIND = 'home.rent';
 
@@ -149,9 +150,18 @@ export function rentOf(sim: Simulation, person: Person): Money {
   return costsOf(sim, person)?.rent ?? 0;
 }
 
-/** The month's bills: power, heat, phone, internet and getting about. */
+/**
+ * The month's bills: power, heat, phone, internet and getting about. Paid on
+ * the 1st for the month just gone, whose heating and cooling the home's
+ * climate sets (`billsFactor`); a year's come to what they did when every
+ * month's was the same.
+ */
 export function billsOf(sim: Simulation, person: Person): Money {
-  return costsOf(sim, person)?.bills ?? 0;
+  const flat = costsOf(sim, person)?.bills ?? 0;
+  if (!flat || !person.home) return flat;
+  const p = zonedParts(sim.now, CITIES.require(person.home.cityId).timeZone);
+  const billed = p.day === 1 ? (p.month === 1 ? 12 : p.month - 1) : p.month;
+  return Math.round(flat * billsFactor(person.home.cityId, billed));
 }
 
 /**

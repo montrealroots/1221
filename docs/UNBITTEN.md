@@ -287,17 +287,19 @@ part the tool cannot see.
   prints. The day's food is taken as groceries, which the states SLATE
   taxes a life in exempt. Property and vehicles wait for something owned or
   driven.
-- **The weather is read by the calendar and nothing else.** The forecast
-  and the climate model by latitude are on screen, and no system reads
-  them: bills are a month's flat figure, and the flu's season is October
-  to March. Seasonal bills would want heating and cooling costs by the
-  degree-day, and a flu season by local temperature, which SLATE hasn't
-  sourced and won't invent. Holidays, which this line said the same of
-  until 2026-09-27, are read now: the Federal Reserve's by a US bank's
-  business days and SAG-AFTRA's by a shoot (`content/usholidays.ts`).
-  Other countries' holidays, and a bank's own, are still the calendar's
-  alone, because their files are fetched at run time and the simulation
-  can't wait on them.
+- **The weather decides the bills' energy and the flu's weeks, and nothing
+  else.** Since 2026-09-27 (`systems/seasons.ts`), a month's bills carry its
+  heating and cooling by the home's degree days, from the EIA's 2020 survey,
+  and the flu comes in the town's cold weeks, or its wet ones where it's warm
+  all year, keeping its 8.9% a year (Tamerius et al., 2013). Holidays that
+  day too: the Federal Reserve's by a US bank's business days and
+  SAG-AFTRA's by a shoot (`content/usholidays.ts`). What's estimated: the
+  energy share of SLATE's bills and the degree-day rates outside the US. What
+  isn't modeled: a year's energy by the climate (a Reykjavík flat costs what a
+  Los Angeles one does in a year, only paid in other months), since the
+  climate normals are smooth and undercount degree days; air conditioning's
+  ownership by country; humidity; and other countries' holidays and a bank's
+  own, whose files are fetched at run time.
 - **Some of the machinery is built and nothing in play uses it.** Found
   by the dead-word audit of 2026-09-27; what was plainly dead went that day
   (six preferences, `Booking.weeksPaid`, the rail's locked path, the

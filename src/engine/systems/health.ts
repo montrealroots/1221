@@ -49,6 +49,7 @@ import { earningsOf, homeOf, quartersBefore } from './earnings';
 import { payFromCurrent } from './household';
 import { personalityOf } from './personality';
 import { clamp } from '../core/rng';
+import { fluByWeek, weekOfYear } from './seasons';
 
 export const HEALTH_MONTH_KIND = 'health.month';
 export const HEALTH_WEEK_KIND = 'health.week';
@@ -568,8 +569,11 @@ export function illnessWeek(sim: Simulation, person: Person, at: Instant): { car
     * (diabetes?.typeOne && (!diabetes.treated || diabetes.lapsed) ? CHRONIC.untreated.diabetesEmergencies : 1);
   if (rng.next() < weekly(emergencies)) out.push({ care: 'emergency', what: 'The emergency room' });
   if (rng.next() < weekly(CARE.perYear.visit)) out.push({ care: 'visit', what: 'A doctor’s visit' });
-  const season = p.month >= 10 || p.month <= 3;
-  if (season && rng.next() < (1 - (1 - CARE.flu) ** (1 / CARE.fluSeasonWeeks)) * catching(person)) {
+  // The week's share of a year's flu where they are, by the town's cold or wet weeks (`systems/seasons.ts`).
+  const here = CITIES.get(person.currentLocationId) ? person.currentLocationId : homeOf(person);
+  const local = zonedParts(at, CITIES.require(here).timeZone);
+  const share = fluByWeek(here)[weekOfYear(local.month, local.day)]!;
+  if (rng.next() < (1 - (1 - CARE.flu) ** share) * catching(person)) {
     out.push(rng.next() < CARE.fluSeesClinician ? { care: 'urgent', what: 'The flu, at urgent care', flu: true } : { care: 'visit', what: 'The flu', flu: true });
   }
   // The pharmacy, the dentist, the optician.
