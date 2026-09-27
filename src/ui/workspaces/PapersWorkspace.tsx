@@ -14,10 +14,12 @@ import { Gated } from '@/ui/guide/Guide';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { formatDate } from '@/engine/core/time';
 import { CITIES } from '@/engine/content/geography';
-import { BENCHMARK_SOURCE, BENEFIT_STATE, CALIFORNIA_MANDATE, CALIFORNIA_UI, NEW_YORK_UI, PREMIUM_CREDIT, RETURN } from '@/engine/content/safetynet';
+import { BENCHMARK_SOURCE, BENEFIT_STATE, CALIFORNIA_MANDATE, CALIFORNIA_UI, CARE, COBRA, MEDICAL_DEBT, NEW_YORK_UI, PLANS_SOURCE, PREMIUM_CREDIT, PUBLIC_COVER, RETURN } from '@/engine/content/safetynet';
 import { UNION_HEALTH } from '@/engine/content/career';
 import { deadline, returnsOf } from '@/engine/systems/taxreturn';
-import { COVER_LABEL, benchmarkFor, coverOn, healthOf, mayEnroll } from '@/engine/systems/health';
+import { COVER_LABEL, benchmarkFor, coverOn, healthOf, mayEnroll, medicalDebtOf, planOf } from '@/engine/systems/health';
+import { homeOf } from '@/engine/systems/earnings';
+import { titleCaseLabel } from '@/engine/core/text';
 import { basePeriodFor, unemploymentOf } from '@/engine/systems/unemployment';
 import { zonedParts } from '@/engine/core/time';
 
@@ -88,7 +90,9 @@ function ReturnsPane() {
           ['Work-Study Wages', f.workStudy],
           ['Unemployment Insurance', f.unemployment],
           ['Performing Artist Deduction', -f.deduction],
-          ['Income Tax', f.incomeTax],
+          ['Federal Income Tax', f.federal],
+          ...(f.states ?? []).flatMap((l) => [[`${stateName(l.state)} Income Tax`, l.tax], ...(l.credit ? [[`${stateName(l.state)}’s Credit For Another State’s Tax`, -l.credit]] : [])] as [string, number][]),
+          ['City Income Tax', f.local ?? 0],
           ['Social Security And Medicare', f.payroll],
           ['California’s Penalty For No Cover', f.mandate],
           ['Premium Tax Credit', -f.credit],
@@ -134,10 +138,14 @@ function HealthPane() {
   const cur = saveCurrency(sim.universe);
   const h = healthOf(person);
   const cover = coverOn(person, sim.now);
-  const state = BENEFIT_STATE[person.currentLocationId];
+  const state = BENEFIT_STATE[homeOf(person)];
   const year = zonedParts(sim.now, sim.zone).year;
-  const may = mayEnroll(person, sim.now);
-  const enrolled = h.marketplace && (h.marketplace.until === undefined || h.marketplace.until > sim.now);
+  const may = mayEnroll(person, sim.now, cur);
+  const ownPlan = [h.marketplace, h.cobra, h.program].find((r) => r && (r.until === undefined || r.until > sim.now));
+  const enrolled = ownPlan !== undefined;
+  const plan = planOf(person, sim.now);
+  const debt = medicalDebtOf(sim, person);
+  const bills = [...h.bills].reverse().slice(0, 10);
   const until = (r?: { from: number; until: number }) => (r && r.until > sim.now ? `${formatDate(r.from, sim.zone)} to ${formatDate(r.until, sim.zone)}` : 'None');
   return (
     <div className="col gap-5">
@@ -153,11 +161,12 @@ function HealthPane() {
         subtitle={state ? `${formatMoney(benchmarkFor(state, year, cur), cur)} a month for the benchmark silver plan` : 'In New York or Los Angeles'}
         actions={enrolled
           ? <Gated feature="health.drop" onClick={() => { if (run('health.drop').ok) toast('It ends at the month’s end.', 'positive'); }}>Drop The Plan</Gated>
-          : <Gated feature="health.enroll" onClick={() => { if (run('health.enroll').ok) toast('Enrolled, from the first of next month.', 'positive'); }}>Enroll</Gated>}
+          : <Gated feature="health.enroll" onClick={() => { const a = run<{ kind: string }>('health.enroll'); if (a.ok) toast(`Enrolled in ${a.value!.kind === 'marketplace' ? 'the marketplace' : a.value!.kind === 'essential' ? 'the Essential Plan' : 'Medicaid'}, from the first of next month.`, 'positive'); }}>Enroll</Gated>}
       >
         <div className="col gap-3">
           <p className="small" style={{ margin: 0 }}>
-            {enrolled ? `Enrolled from ${formatDate(h.marketplace!.from, sim.zone)}. ` : `${may.why} `}
+            {enrolled ? `Enrolled from ${formatDate(ownPlan!.from, sim.zone)}. ` : `${may.why} `}
+            On a low month’s income, Medicaid (Medi-Cal in California) takes you at 138% of the poverty line, and in New York the Essential Plan to 200%, at any time and with no premium; from 2027 Medicaid asks for {PUBLIC_COVER.workHours} hours’ work or {formatMoney(PUBLIC_COVER.workEarnings, cur)} a month at renewal.{' '}
             {enrolled && (cover === 'sag' || cover === 'equity') ? `${COVER_LABEL[cover]} covers you too, so the plan’s premium buys nothing more while it does. ` : ''}
             You pay the whole premium each month, and the return gives back what’s over your share of income: none over {PREMIUM_CREDIT.cutoff * 100}% of the poverty line, since the enhanced credits ended with 2025.
             {CITIES.get(person.currentLocationId)?.parentId === 'us-ca' ? ` In California a month without cover costs its penalty on the return: the greater of ${formatMoney(CALIFORNIA_MANDATE.flat, cur)} a year and ${CALIFORNIA_MANDATE.share * 100}% of income, a twelfth a month, to ${formatMoney(CALIFORNIA_MANDATE.bronzeMonth, cur)}; ${h.uncoveredInCalifornia[year] ?? 0} this year so far.` : ''}
@@ -167,9 +176,45 @@ function HealthPane() {
           </p>
         </div>
       </Panel>
+
+      {h.cobraOffer && h.cobraOffer.until > sim.now && (
+        <Panel
+          title="COBRA"
+          subtitle={`Elect by ${formatDate(h.cobraOffer.until, sim.zone)}`}
+          actions={<Gated feature="health.elect_cobra" onClick={() => { if (run('health.elect_cobra').ok) toast('Elected: covered from the day your plan ended.', 'positive'); }}>Elect COBRA</Gated>}
+        >
+          <p className="small" style={{ margin: 0 }}>
+            Your {COVER_LABEL[h.cobraOffer.plan]} ended {formatDate(h.cobraOffer.lostAt, sim.zone)}. COBRA keeps it for up to {COBRA.months} months, back to that day, at {formatMoney(COBRA.premium[h.cobraOffer.plan], cur)} a month; New York pays three-quarters of it for a year where last month’s income is {formatMoney(COBRA.newYorkIncome, cur)} or less. Source: {COBRA.source}.
+          </p>
+        </Panel>
+      )}
+
+      <Panel
+        title="Care And Its Bills"
+        subtitle={plan ? `${plan.label}: ${formatMoney(h.spent[year] ?? 0, cur)} of ${formatMoney(plan.outOfPocket, cur)} paid this year` : 'Uninsured: you pay the price, less a hospital’s charity'}
+        actions={debt && debt.balance < 0 ? <Gated feature="health.pay_bill" onClick={() => { if (run('health.pay_bill', { amount: -debt.balance }).ok) toast('Paid off.', 'positive'); }}>Pay It Off</Gated> : undefined}
+      >
+        <div className="col gap-3">
+          {debt && debt.balance < 0 && <Stat label="Medical Debt" value={formatMoney(-debt.balance, cur)} tone="warning" note={`On your record only at ${formatMoney(MEDICAL_DEBT.reportAt, cur)}, a year past due, and outside New York and California`} />}
+          {bills.length > 0 && (
+            <div className="table-scroll">
+              <table>
+                <thead><tr><th scope="col">Care</th><th scope="col">When</th><th scope="col" className="num">Your Share</th><th scope="col">Due</th></tr></thead>
+                <tbody>{bills.map((b) => <tr key={b.id}><td>{titleCaseLabel(b.what)}</td><td>{formatDate(b.at, sim.zone)}</td><td className="num mono">{formatMoney(b.amount, cur)}</td><td>{b.paid ? 'Settled' : formatDate(b.dueAt, sim.zone)}</td></tr>)}</tbody>
+              </table>
+            </div>
+          )}
+          <p className="xs dim" style={{ margin: 0 }}>
+            Illness comes at the rates of an adult your age: about {CARE.perYear.visit} doctor’s visits a year, {CARE.perYear.emergency} emergency visits, a stay in hospital one year in 25, and the flu one season in eleven. Care costs what it costs your plan: {formatMoney(CARE.price.visit, cur)} a visit, {formatMoney(CARE.price.emergency, cur)} an emergency visit and {formatMoney(CARE.price.stay, cur)} a stay at commercial prices, and the uninsured are billed more. A bill is due in {MEDICAL_DEBT.dueDays} days. Source: {CARE.source}; {PLANS_SOURCE}.
+          </p>
+        </div>
+      </Panel>
     </div>
   );
 }
+
+const STATE_NAMES: Record<string, string> = { 'us-ny': 'New York', 'us-ca': 'California', 'us-ct': 'Connecticut', 'us-ga': 'Georgia', 'us-il': 'Illinois', 'us-la': 'Louisiana' };
+const stateName = (state: string) => STATE_NAMES[state] ?? state;
 
 /** A claim: filing it, what it pays, and what it's paid. */
 function BenefitsPane() {

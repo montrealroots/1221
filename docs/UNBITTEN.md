@@ -204,28 +204,31 @@ part the tool cannot see.
 - **The business, and what's between jobs.** Off-Broadway, series
   regulars, managers, overtime, residuals, union health cover, the
   marketplace, unemployment insurance and the tax return were added on
-  2026-09-27 (`systems/career.ts`, `systems/health.ts`,
-  `systems/unemployment.ts`, `systems/taxreturn.ts`). What's still open:
-  - Off-Broadway's categories B and C and every 2027–28 rate aren't public;
-    SLATE offers Category A and a nonprofit's BB, and holds past 2026–27.
-  - A series regular's options on later seasons, and the 60% rule for
-    weekly performers from 2027, aren't modeled; nor recurring roles,
-    commercials, voice-over or background work.
-  - Meal penalties, a weekly performer's time and a half for the ninth and
-    tenth hours, and per diem on location: no job is on location.
-  - The producers' pension and health contributions reach no bank, and no
-    illness or medical bill exists for cover to meet: cover bites through
-    its premiums, the premium tax credit and California's penalty.
-  - Medicaid below the poverty line, COBRA, and dependents aren't modeled.
-  - New York City's 2026 benchmark premium is an estimate from 2025's and
-    the average rise; California's 2026 flat penalty isn't published, so
-    2025's $950 stands; its 2.5% is of the whole income, not above the
-    state's filing threshold.
-  - A claim is certified each week for the player, and only in New York and
-    California; Connecticut's isn't modeled.
-  - The return is filed from where they last lived, with no part-year or
-    nonresident returns; New York's and California's own deductions for
-    employee expenses aren't taken; the minimum late penalty holds at 2026's.
+  2026-09-27, and then commercials and voice work, location, a series'
+  later seasons, Medicaid, the Essential Plan, COBRA, illness and its
+  bills, and part-year and nonresident returns (`systems/career.ts`,
+  `systems/health.ts`, `systems/unemployment.ts`, `systems/taxreturn.ts`).
+  What's still open:
+  - Unpublished: Off-Broadway's categories B and C and every 2027–28 rate;
+    the Commercials Contracts' third year; animation's 2026 rate; SAG-AFTRA's
+    2027 COBRA rate; New York City's exact 2026 benchmark premium;
+    California's 2026 flat penalty; the renewal rate of freshman streaming
+    series. Each holds at its last published figure, or is SLATE's estimate,
+    and says so.
+  - A job's location is Atlanta, Chicago or New Orleans; production abroad
+    (the United Kingdom's, Canada's) isn't modeled, nor per diem on stage
+    tours, whose Equity figure is members-only.
+  - A commercial's holding fee is taken as credited against a cycle's use;
+    how many cycles and airings a commercial gets is SLATE's estimate.
+  - Illness is the rates of an adult 25 to 44 and a price for each kind of
+    care: no chronic illness, no prescriptions, no dental or vision, and
+    prices aren't inflated past their years (2018–2024).
+  - Yale Health's cost-sharing is taken as nothing, and school years have
+    no illness.
+  - A return sources wages to the state the work was in and residence to
+    the home; the states' own employee-expense deductions, Connecticut's
+    income tax, and New York's days-worked allocation within a job aren't
+    modeled.
   - Where a job is seen, how it does, a film's television money and its
     cast's units are SLATE's estimate.
 - **Some of the banks' research is kept and read by nothing.** Each

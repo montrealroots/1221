@@ -128,8 +128,13 @@ export const INCOME_TAX_RULES: readonly IncomeTaxRule[] = [
     note: APPROX,
   },
   { jurisdictionCode: 'US-CA', label: 'California Income Tax', kind: 'progressive', brackets: brackets([[0, 0.01], [10_412, 0.02], [24_684, 0.04], [38_959, 0.06], [54_081, 0.08], [68_350, 0.093], [349_137, 0.103], [418_961, 0.113], [698_271, 0.123]]), standardDeduction: 5_363_00, effectiveFrom: YEAR(2018), note: APPROX },
+  // New York City's resident income tax, a single filer's brackets (NY Form IT-201 instructions, NYC rate schedule;
+  // the rates have stood since 2017). Until 2026-09-27 SLATE had none, and a New Yorker paid only the state's.
+  { jurisdictionCode: 'US-NY-newyork', label: 'New York City Resident Income Tax', kind: 'progressive', brackets: brackets([[0, 0.03078], [12_000, 0.03762], [25_000, 0.03819], [50_000, 0.03876]]), standardDeduction: 8_000_00, effectiveFrom: YEAR(2018), note: APPROX },
   { jurisdictionCode: 'US-NY', label: 'New York State Income Tax', kind: 'progressive', brackets: brackets([[0, 0.04], [8_500, 0.045], [11_700, 0.0525], [13_900, 0.055], [80_650, 0.06], [215_400, 0.0685], [1_077_550, 0.0965], [5_000_000, 0.103]]), standardDeduction: 8_000_00, effectiveFrom: YEAR(2018), note: APPROX },
   { jurisdictionCode: 'US-GA', label: 'Georgia Income Tax', kind: 'flat', brackets: [], flatRate: 0.0539, standardDeduction: 12_000_00, effectiveFrom: YEAR(2024), note: APPROX },
+  // 4.99% for 2026, by Georgia's Department of Revenue (researched 2026-09-27).
+  { jurisdictionCode: 'US-GA', label: 'Georgia Income Tax', kind: 'flat', brackets: [], flatRate: 0.0499, standardDeduction: 12_000_00, effectiveFrom: YEAR(2026), note: APPROX },
   { jurisdictionCode: 'US-IL', label: 'Illinois Income Tax', kind: 'flat', brackets: [], flatRate: 0.0495, standardDeduction: 2_775_00, effectiveFrom: YEAR(2018), note: APPROX },
   { jurisdictionCode: 'US-MA', label: 'Massachusetts Income Tax', kind: 'flat', brackets: [], flatRate: 0.05, standardDeduction: 4_400_00, effectiveFrom: YEAR(2018), note: APPROX },
   { jurisdictionCode: 'US-CO', label: 'Colorado Income Tax', kind: 'flat', brackets: [], flatRate: 0.044, standardDeduction: 14_600_00, effectiveFrom: YEAR(2022), note: APPROX },

@@ -134,3 +134,118 @@ export const byYear = (steps: RateSteps, year: number): Money => {
   for (const [from, cents] of steps) if (Number(from.slice(0, 4)) <= year) v = cents;
   return v;
 };
+
+/**
+ * The poverty line for one person, by the year a program reads it: 2025's
+ * $15,650 for 2026's marketplace credit, 2026's $15,960 for the programs
+ * that test current income.
+ */
+export const POVERTY_LINE: RateSteps = [['2025-01-01', 15_650_00], ['2026-01-01', 15_960_00]];
+
+/**
+ * Public cover, tested on current monthly income. Medicaid in New York and
+ * Medi-Cal in California take a single adult at 138% of the poverty line
+ * ($1,836 a month in 2026), with no premium and nothing to pay for care but
+ * New York's pharmacy copays. New York's Essential Plan takes them from there
+ * to 200% ($2,660), no premium, $0 copays to 150% and $15 to $150 above it;
+ * its band to 250% ended 1 July 2026. From 1 January 2027 the federal law
+ * asks a Medicaid adult for 80 hours' work or $580 of earnings a month, and
+ * renews them every six months from 1 March 2027. A person a program takes
+ * gets no marketplace credit.
+ */
+export const PUBLIC_COVER = {
+  medicaidShare: 1.38,
+  essentialShare: 2.0,
+  essentialCopaysFrom: 1.5,
+  workFrom: '2027-01-01',
+  workHours: 80,
+  workEarnings: 580_00,
+  renewMonths: [['2025-01-01', 12], ['2027-03-01', 6]] as RateSteps,
+  source: 'https://www.health.ny.gov/health_care/medicaid/; https://info.nystateofhealth.ny.gov/EssentialPlan; https://www.dhcs.ca.gov/services/medi-cal/; Pub. L. 119-21 (2025)',
+} as const;
+
+/**
+ * COBRA: 60 days to elect after losing a plan, cover back to the day it was
+ * lost, 18 months at most, at the plan's full cost. 2026, a month: SAG-AFTRA
+ * $1,277; Equity-League's Tier 2 $1,348.50. New York pays 75% of an
+ * entertainment worker's COBRA for up to 12 months where their income is
+ * $5,217 a month or less. Yale Health has no continuation.
+ */
+export const COBRA = {
+  electDays: 60,
+  months: 18,
+  premium: { sag: 1_277_00, equity: 1_348_50 },
+  newYorkShare: 0.75,
+  newYorkMonths: 12,
+  newYorkIncome: 5_217_00,
+  source: 'https://www.dol.gov/general/topic/health-plans/cobra; https://www.sagaftraplans.org/health/premiums; https://equityleague.org/health/premiums/',
+} as const;
+
+/**
+ * What care costs and how often it comes, for an adult of 25 to 44: two
+ * doctor's visits a year, 0.45 emergency visits, 0.04 hospital stays, and in
+ * a flu season (October to March) an 8.9% chance of the flu, which sends 37%
+ * of those who have it to a clinician. The commercial prices: a visit $100,
+ * urgent care $180, an emergency visit $2,450, a medical stay $11,600; the
+ * uninsured are billed about 1.75 times those. A stay is SLATE's three days,
+ * and what illness takes from a body is SLATE's estimate.
+ */
+export const CARE = {
+  perYear: { visit: 2.0, emergency: 0.45, stay: 0.04 },
+  flu: 0.089,
+  fluSeasonWeeks: 26,
+  fluSeesClinician: 0.37,
+  price: { visit: 100_00, urgent: 180_00, emergency: 2_450_00, stay: 11_600_00 },
+  uninsuredMarkup: 1.75,
+  stayDays: 3,
+  toll: { flu: { condition: 25, energy: 30 }, emergency: { condition: 20, energy: 20 }, stay: { condition: 40, energy: 40 } },
+  source: 'CDC NAMCS and NHAMCS; CDC flu burden estimates; HCCI; FAIR Health; KFF–Peterson',
+} as const;
+
+/** What a plan leaves the patient: copays for a visit, urgent care and the emergency room, the share of a stay after the deductible, and the most in a year. */
+export interface PlanDesign { visit: Money; urgent: Money; emergency: Money; stayShare: number; deductible: Money; outOfPocket: Money; label: string }
+
+export const PLANS: Readonly<Record<string, PlanDesign>> = {
+  // Yale Health's student plan: care at the Health Center without charge; what it leaves is SLATE's estimate.
+  yale: { visit: 0, urgent: 0, emergency: 0, stayShare: 0, deductible: 0, outOfPocket: 0, label: 'Yale Health' },
+  sag: { visit: 25_00, urgent: 25_00, emergency: 100_00, stayShare: 0.1, deductible: 500_00, outOfPocket: 2_750_00, label: 'SAG-AFTRA Health Plan' },
+  equity: { visit: 25_00, urgent: 0, emergency: 100_00, stayShare: 0, deductible: 1_000_00, outOfPocket: 4_550_00, label: 'Equity-League Health, Tier 2' },
+  'marketplace-ca': { visit: 50_00, urgent: 50_00, emergency: 400_00, stayShare: 0.3, deductible: 5_200_00, outOfPocket: 9_800_00, label: 'Covered California Silver 70' },
+  'marketplace-ny': { visit: 30_00, urgent: 70_00, emergency: 500_00, stayShare: 0, deductible: 2_450_00, outOfPocket: 10_150_00, label: 'NY State Of Health Silver' },
+  medicaid: { visit: 0, urgent: 0, emergency: 0, stayShare: 0, deductible: 0, outOfPocket: 0, label: 'Medicaid' },
+  'essential-low': { visit: 0, urgent: 0, emergency: 0, stayShare: 0, deductible: 0, outOfPocket: 0, label: 'Essential Plan' },
+  'essential-high': { visit: 15_00, urgent: 25_00, emergency: 75_00, stayShare: 0, deductible: 0, outOfPocket: 2_000_00, label: 'Essential Plan' },
+};
+export const PLANS_SOURCE = 'https://www.coveredca.com/support/before-you-buy/standard-benefit-designs/; NY State of Health 2026 standard silver; https://www.sagaftraplans.org/health; https://equityleague.org/health/';
+
+/**
+ * Hospital bills to the uninsured. New York's hospitals charge nothing under
+ * 200% of the poverty line; California's must discount care to 400%, which
+ * SLATE takes as the commercial price, not the list.
+ */
+export const CHARITY = { newYorkFreeBelow: 2, californiaDiscountBelow: 4, source: 'NY Public Health Law §2807-k(9-a); California Health and Safety Code §127400 et seq.' } as const;
+
+/**
+ * A medical debt goes on a credit record only at $500 or more, unpaid, and a
+ * year past due, by the credit bureaus' own policy since the federal rule was
+ * vacated in 2025; New York and California bar it for their residents (both
+ * laws were being challenged in 2026). A bill is due in 30 days. What a
+ * reported debt costs the record is SLATE's estimate.
+ */
+export const MEDICAL_DEBT = { reportAt: 500_00, reportAfterDays: 365, dueDays: 30, recordHit: 40, barredIn: ['us-ny', 'us-ca'] as readonly string[] } as const;
+
+/**
+ * A return where more than one state is in the year. New York, California
+ * and Connecticut each tax a part-year resident or a nonresident as if they
+ * had lived there all year, times the share of income that's theirs: what
+ * came while living there, and wages for work done there. New York City
+ * taxes only the months lived in it. A wage is the state's where the work was
+ * done. The state lived in credits the tax another state charged on the same
+ * income, up to its own tax on it. Georgia leaves a nonresident's wages
+ * alone at $5,000 or 5% of all their wages, whichever is less.
+ */
+export const STATE_RETURN = {
+  georgiaExempt: 5_000_00,
+  georgiaExemptShare: 0.05,
+  source: 'https://www.tax.ny.gov/pdf/current_forms/it/it203i.pdf; https://www.ftb.ca.gov/forms/2025/2025-540nr-booklet.pdf; https://dor.georgia.gov',
+} as const;

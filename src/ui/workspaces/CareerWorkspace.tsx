@@ -17,7 +17,7 @@ import { CITIES } from '@/engine/content/geography';
 import { AGENCIES, AGENCY_SOURCE, AGENT_COMMISSION, CAREER_CITIES, EQUITY, ROLES, SAG_AFTRA, SHOWCASE_2029 } from '@/engine/content/career';
 import { YALE_DRAMA } from '@/engine/content/school';
 import {
-  ESTIMATE, LEAVING, agencyById, bookingChance, careerOf, managerById, mayLeave, rateOf, roleById, workDays, type Booking, type CareerRecord,
+  ESTIMATE, LEAVING, agencyById, bookingChance, careerOf, managerById, mayLeave, rateOf, roleById, workCityOf, workDays, type Booking, type CareerRecord,
 } from '@/engine/systems/career';
 import { costsAt, HOUSING, type Housing } from '@/engine/systems/household';
 import { focusOf } from '@/engine/systems/school';
@@ -249,7 +249,7 @@ function AuditionsPane() {
                     <td>{r.label}</td>
                     <td>{r.union === 'sag' ? 'SAG-AFTRA' : 'Equity'}</td>
                     <td className="num mono">{formatMoney(rateOf(r, sim.now, r.cities[0]!, cur), cur)}</td>
-                    <td>{r.series ? 'Episode' : r.medium === 'screen' ? 'Day' : 'Week'}</td>
+                    <td>{r.series ? 'Episode' : r.medium === 'voice' ? 'Session' : r.medium === 'screen' ? 'Day' : 'Week'}</td>
                     <td className="num mono">{pct(bookingChance(person.craft!, r, focus, 'room'))}</td>
                   </tr>
                 ))}
@@ -267,6 +267,8 @@ function AuditionsPane() {
 
 const spanOf = (b: Booking) => {
   const role = roleById(b.roleId);
+  if (role.series) return `${role.series.episodes} episodes over ${role.series.weeks} weeks`;
+  if (role.medium === 'voice') return `${b.units} ${b.units === 1 ? 'session' : 'sessions'}`;
   return role.medium === 'screen' ? `${b.units} ${b.units === 1 ? 'day' : 'days'}` : `${b.rehearsalWeeks} weeks of rehearsal and ${b.units} of performances`;
 };
 
@@ -277,12 +279,12 @@ function WorkPane() {
   const jobs = career.bookings.filter((b) => b.status === 'accepted');
   return (
     <div className="col gap-5">
-      <Panel title="Jobs" subtitle={jobs.length ? undefined : 'Nothing taken now'}>
+      <Panel title="Jobs" subtitle={career.option ? `Under option to your series until ${formatDate(career.option.decidedAt, 'America/New_York')}` : jobs.length ? undefined : 'Nothing taken now'}>
         {jobs.length ? (
           <div className="col gap-2">
             {jobs.map((b) => (
               <div key={b.id} className="row-between small">
-                <span>{roleById(b.roleId).label}, {cityName(b.cityId)}: {spanOf(b)}</span>
+                <span>{roleById(b.roleId).label}{b.season ? `, Season ${b.season}` : ''}, {cityName(workCityOf(b))}{b.location ? ' (On Location)' : ''}: {spanOf(b)}</span>
                 <span className="mono">{b.worked} of {workDays(b).length} days worked</span>
               </div>
             ))}
@@ -437,7 +439,7 @@ function ResidualsPanel() {
   const person = useWorld((s) => s.player);
   const career = careerOf(person);
   const cur = saveCurrency(sim.universe);
-  const seen = { network: 'On A Network', svod: 'Streaming', film: 'A Film’s Television And Streaming' } as const;
+  const seen = { network: 'On A Network', svod: 'Streaming', film: 'A Film’s Television And Streaming', commercial: 'A Commercial’s Cycles' } as const;
   const size = { small: 'A Small Service', middle: 'A Middling Service', large: 'A Big Service' } as const;
   return (
     <Panel title="Residuals" subtitle={career.residuals.length ? undefined : 'Television and film work pays after it’s made'}>

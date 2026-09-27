@@ -29,8 +29,9 @@ import { bankById } from './content/banks';
 import { MS_DAY } from './core/time';
 import { admittedClass, classmatesIn, goesOn, meanCraft } from './systems/school';
 import { newLifeConfig } from './world/bootstrap';
-import { afterlife, books, hoursOf, managerOffersFor, offersFor, weekOfAuditions } from './systems/career';
-import { AGENCIES, ROLES } from './content/career';
+import { afterlife, books, hoursOf, locationFor, renewed, managerOffersFor, offersFor, weekOfAuditions } from './systems/career';
+import { illnessWeek } from './systems/health';
+import { AGENCIES, ROLES, SERIES } from './content/career';
 
 // ---------------------------------------------------------------------------
 // The sky
@@ -368,4 +369,43 @@ defineDecider<{ sim: Simulation; score: number }, string>({
   },
   sample: (seed) => ({ sim: atYale(seed), score: 60 + (seed % 20) }),
   decide: ({ sim, score }) => managerOffersFor(sim, sim.player, score, 'us-ny-newyork').join(',') || 'none',
+});
+
+defineDecider<{ sim: Simulation; key: number }, string>({
+  id: 'career.location',
+  decides: 'Where a screen job shoots: at home, or on location in Atlanta, Chicago or New Orleans.',
+  drawnIn: 'src/engine/systems/career.ts',
+  reads: {
+    // The job: each is drawn on its own.
+    job: (o, t) => ({ ...o, key: Math.round(t * 300) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), key: seed * 13 }),
+  decide: ({ sim, key }) => Array.from({ length: 30 }, (_, n) => locationFor(sim, sim.player, `j${key + n}`) ?? 'home').join(','),
+});
+
+defineDecider<{ sim: Simulation; key: number }, string>({
+  id: 'career.renewal',
+  decides: 'Whether a series picks up its option on a regular for another season.',
+  drawnIn: 'src/engine/systems/career.ts',
+  reads: {
+    // The season: each is drawn on its own.
+    season: (o, t) => ({ ...o, key: Math.round(t * 300) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), key: seed * 7 }),
+  decide: ({ sim, key }) => Array.from({ length: 30 }, (_, n) => (renewed(sim, sim.player, `s${key + n}`, SERIES.renewal.network) ? '1' : '0')).join(''),
+});
+
+defineDecider<{ sim: Simulation; week: number }, string>({
+  id: 'health.illness',
+  decides: 'What a week brings to a body: the flu in its season, a doctor’s visit, an emergency, a stay in hospital.',
+  drawnIn: 'src/engine/systems/health.ts',
+  reads: {
+    // The week: in the flu season or out of it.
+    week: (o, t) => ({ ...o, week: Math.round(t * 104) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), week: seed % 104 }),
+  decide: ({ sim, week }) => Array.from({ length: 52 }, (_, n) => illnessWeek(sim, sim.player, sim.now + (week + n) * 7 * MS_DAY).map((e) => e.what).join('+') || '-').join(' '),
 });

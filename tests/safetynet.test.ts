@@ -15,7 +15,7 @@ import {
   RESIDUAL_KIND, afterlife, beginCareer, careerOf, managerOffersFor, overtimeFor, paycheck, residualAmount, roleById, weekOfAuditions, workDays,
   type Booking,
 } from '@/engine/systems/career';
-import { earningsOf, recordWages, yearOf } from '@/engine/systems/earnings';
+import { earningsOf, recordBenefit, recordWages, yearOf } from '@/engine/systems/earnings';
 import { coverOn, healthMonth, healthOf, mayEnroll, yaleUntil } from '@/engine/systems/health';
 import { basePeriodFor, monetary, unemploymentOf, weekBenefit, type Claim } from '@/engine/systems/unemployment';
 import { applicablePercent, deadline, figuresFor, latePenalty, returnsOf } from '@/engine/systems/taxreturn';
@@ -262,6 +262,8 @@ describe('health cover', () => {
   it('the marketplace: in open enrollment or 60 days from losing cover, the benchmark each month, ending on leaving the state', () => {
     const sim = pro('market');
     const person = sim.player;
+    // A month's income over what the programs allow: the marketplace, in its windows.
+    for (const m of ['2025-12', '2026-04', '2026-05', '2026-06', '2026-10', '2026-12']) earningsOf(person).months[m] = 5_000_00;
     expect(mayEnroll(person, at(2026, 6, 1)).ok).toBe(false);
     expect(mayEnroll(person, at(2026, 11, 2)).ok).toBe(true);
     expect(mayEnroll(person, at(2027, 1, 10)).ok).toBe(true);
@@ -274,7 +276,9 @@ describe('health cover', () => {
     healthMonth(sim, person, from + MS_HOUR);
     expect(healthOf(person).premiums[zonedParts(from, NY).year]).toEqual([byYear(BENCHMARK.ny, zonedParts(from, NY).year)]);
     expect(coverOn(person, from + MS_HOUR)).toBe('marketplace');
+    // Moving home out of the state ends a state's plan.
     person.currentLocationId = 'us-ct-newhaven';
+    person.home = { ...person.home!, cityId: 'us-ct-newhaven' };
     healthMonth(sim, person, from + 32 * MS_DAY);
     expect(healthOf(person).marketplace!.until).toBeDefined();
   });
@@ -381,7 +385,7 @@ describe('the tax return', () => {
   it('leaves unemployment out of California’s tax, and counts it in New York’s', () => {
     const la = pro('ui-ca', 'us-ca-losangeles');
     recordWages(la.player, at(2026, 5, 1), 'America/Los_Angeles', { gross: 30_000_00 });
-    yearOf(la.player, 2026).unemployment = 5_000_00;
+    recordBenefit(la.player, at(2026, 8, 1), 'America/Los_Angeles', 5_000_00);
     const withUi = figuresFor(la.player, 2026);
     const t = computeAnnualTax(35_000_00, 'us-ca-losangeles', at(2026, 12, 31, 12));
     const state = computeAnnualTax(30_000_00, 'us-ca-losangeles', at(2026, 12, 31, 12)).regional;

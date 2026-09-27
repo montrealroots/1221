@@ -123,7 +123,8 @@ export function rateOn(steps: RateSteps, day: string): Money {
 export interface Role {
   id: string;
   label: string;
-  medium: 'screen' | 'stage';
+  /** Screen and stage work, or a voice session in a booth. */
+  medium: 'screen' | 'stage' | 'voice';
   union: 'sag' | 'equity';
   /** Per day on screen, per week on stage, per episode for a series regular. */
   steps: RateSteps;
@@ -149,7 +150,11 @@ export interface Role {
   /** A series regular's season: the episodes guaranteed and the workweeks they're made in. */
   series?: { episodes: number; weeks: number };
   /** What earns residuals after it's made: a television episode of a length, or a film of a budget. */
-  after?: { kind: 'tv'; length: 'half' | 'hour' } | { kind: 'film'; budget: Money };
+  after?: { kind: 'tv'; length: 'half' | 'hour' } | { kind: 'film'; budget: Money } | { kind: 'commercial'; voice: boolean };
+  /** A booth session's hours, for a voice part. */
+  sessionHours?: number;
+  /** Shot where the production goes, not always at home (`LOCATION`). */
+  travels?: boolean;
   source: string;
 }
 
@@ -158,6 +163,11 @@ const SAGINDIE = 'https://www.sagindie.org/sagaftra/tv-theatrical-contract-2026/
 const LORT = 'https://cdn.actorsequity.org/pages/lort-documents/LORTRatification.pdf';
 const BROADWAY = 'https://playbill.com/article/actors-equity-membership-officially-approves-new-production-contract';
 const OFF_BROADWAY = 'Equity audition notices, July 2025 and July to September 2026 (broadwayworld.com, playbill.com)';
+const COMMERCIALS = 'SAG-AFTRA 2025 Commercials Contracts rate sheets; https://deadline.com/2025/04/sag-aftra-commercials-contracts-deal-1236378468/';
+const ANIMATION = 'Producer–SAG-AFTRA Television Animation Agreement rate sheet, 1 July 2025';
+const GAMES = 'SAG-AFTRA 2025 Interactive Media Agreement';
+const AUDIOBOOKS = 'ACX union rates; SAG-AFTRA audiobook agreements';
+const VOICE: Partial<Craft> = { voice: 1, acting: 0.5, speech: 0.5 };
 const BOTH: readonly CareerCity[] = ['us-ny-newyork', 'us-ca-losangeles'];
 const SCREEN: Partial<Craft> = { acting: 1, screen: 1 };
 const STAGE: Partial<Craft> = { acting: 1, voice: 0.5, text: 0.5, body: 0.3 };
@@ -170,31 +180,31 @@ export const ROLES: readonly Role[] = [
     id: 'costar', label: 'Co-Star, A Television Series', medium: 'screen', union: 'sag',
     steps: [['2025-07-01', 1_246_00], ['2026-07-01', 1_283_00], ['2027-07-01', 1_321_00], ['2028-07-01', 1_361_00], ['2029-07-01', 1_402_00]],
     units: [1, 2], bar: 60, weight: 10, tiers: [2, 3], selfSubmit: false, cities: BOTH, leadDays: 5, grows: SCREEN,
-    basis: 'day', after: { kind: 'tv', length: 'hour' }, source: AMPTP,
+    basis: 'day', after: { kind: 'tv', length: 'hour' }, travels: true, source: AMPTP,
   },
   {
     id: 'guest-half', label: 'Guest Star, A Half-Hour Series', medium: 'screen', union: 'sag',
     steps: perDay([['2025-07-01', 6_853_00], ['2026-07-01', 7_057_00], ['2027-07-01', 7_266_00], ['2028-07-01', 7_486_00], ['2029-07-01', 7_711_00]], 5),
     units: [5, 5], bar: 68, weight: 4, tiers: [1, 2], selfSubmit: false, cities: ['us-ca-losangeles'], leadDays: 7, grows: SCREEN,
-    basis: 'week', after: { kind: 'tv', length: 'half' }, source: AMPTP,
+    basis: 'week', after: { kind: 'tv', length: 'half' }, travels: true, source: AMPTP,
   },
   {
     id: 'guest-hour', label: 'Guest Star, An Hour Series', medium: 'screen', union: 'sag',
     steps: perDay([['2025-07-01', 10_965_00], ['2026-07-01', 11_290_00], ['2027-07-01', 11_625_00], ['2028-07-01', 11_977_00], ['2029-07-01', 12_338_00]], 8),
     units: [8, 8], bar: 72, weight: 4, tiers: [1, 2], selfSubmit: false, cities: BOTH, leadDays: 7, grows: SCREEN,
-    basis: 'week', after: { kind: 'tv', length: 'hour' }, source: AMPTP,
+    basis: 'week', after: { kind: 'tv', length: 'hour' }, travels: true, source: AMPTP,
   },
   {
     id: 'film-weekly', label: 'Supporting Role, A Studio Film', medium: 'screen', union: 'sag',
     steps: perDay([['2025-07-01', 4_326_00], ['2026-07-01', 4_456_00], ['2027-07-01', 4_590_00], ['2028-07-01', 4_728_00], ['2029-07-01', 4_870_00]], 5),
     units: [5, 15], bar: 76, weight: 2, tiers: [1], selfSubmit: false, cities: ['us-ca-losangeles'], leadDays: 21, grows: SCREEN,
-    basis: 'week', after: { kind: 'film', budget: 60_000_000_00 }, source: AMPTP,
+    basis: 'week', after: { kind: 'film', budget: 60_000_000_00 }, travels: true, source: AMPTP,
   },
   {
     id: 'film-low', label: 'A Role, A Low Budget Film', medium: 'screen', union: 'sag',
     steps: [['2025-07-01', 810_00], ['2026-07-01', 834_00], ['2027-07-01', 859_00], ['2028-07-01', 885_00], ['2029-07-01', 911_00]],
     units: [3, 10], bar: 62, weight: 5, tiers: [2, 3], selfSubmit: false, cities: BOTH, leadDays: 14, grows: SCREEN,
-    basis: 'day', after: { kind: 'film', budget: 1_350_000_00 }, source: SAGINDIE,
+    basis: 'day', after: { kind: 'film', budget: 1_350_000_00 }, travels: true, source: SAGINDIE,
   },
   {
     id: 'film-mlb', label: 'A Role, A Moderate Low Budget Film', medium: 'screen', union: 'sag',
@@ -240,15 +250,110 @@ export const ROLES: readonly Role[] = [
     id: 'series-half', label: 'Series Regular, A Half-Hour Series', medium: 'screen', union: 'sag',
     steps: [['2025-07-01', 4_326_00], ['2026-07-01', 4_456_00], ['2027-07-01', 4_590_00], ['2028-07-01', 4_728_00], ['2029-07-01', 4_870_00]],
     units: [13, 13], bar: 80, weight: 1, tiers: [1], selfSubmit: false, cities: ['us-ca-losangeles'], leadDays: 56, grows: SCREEN,
-    basis: 'episode', series: { episodes: 13, weeks: 13 }, after: { kind: 'tv', length: 'half' }, source: AMPTP,
+    basis: 'episode', series: { episodes: 13, weeks: 13 }, after: { kind: 'tv', length: 'half' }, travels: true, source: AMPTP,
   },
   {
     id: 'series-hour', label: 'Series Regular, An Hour Series', medium: 'screen', union: 'sag',
     steps: [['2025-07-01', 5_205_00], ['2026-07-01', 5_361_00], ['2027-07-01', 5_522_00], ['2028-07-01', 5_688_00], ['2029-07-01', 5_859_00]],
     units: [13, 13], bar: 82, weight: 1, tiers: [1], selfSubmit: false, cities: BOTH, leadDays: 56, grows: SCREEN,
-    basis: 'episode', series: { episodes: 13, weeks: 16 }, after: { kind: 'tv', length: 'hour' }, source: AMPTP,
+    basis: 'episode', series: { episodes: 13, weeks: 16 }, after: { kind: 'tv', length: 'hour' }, travels: true, source: AMPTP,
+  },
+  {
+    // The 2025 Commercials Contracts' session fee, $822.30 from 1 April 2025 and $855.20 from 1 April 2026; the third year isn't published.
+    id: 'commercial', label: 'A Commercial, On Camera', medium: 'screen', union: 'sag',
+    steps: [['2025-04-01', 822_30], ['2026-04-01', 855_20]],
+    units: [1, 1], bar: 55, weight: 6, tiers: [1, 2, 3], selfSubmit: false, cities: BOTH, leadDays: 5, grows: SCREEN,
+    basis: 'day', after: { kind: 'commercial', voice: false }, source: COMMERCIALS,
+  },
+  {
+    id: 'commercial-vo', label: 'A Commercial, Voice-Over', medium: 'voice', union: 'sag',
+    steps: [['2025-04-01', 618_30], ['2026-04-01', 643_00]],
+    units: [1, 1], bar: 55, weight: 4, tiers: [1, 2, 3], selfSubmit: false, cities: BOTH, leadDays: 5, grows: VOICE,
+    sessionHours: 2, after: { kind: 'commercial', voice: true }, source: COMMERCIALS,
+  },
+  {
+    // A principal's session, up to three voices, from 1 July 2025; 2026's rate isn't published.
+    id: 'animation', label: 'A Voice, An Animated Series', medium: 'voice', union: 'sag',
+    steps: [['2025-07-01', 1_246_00]],
+    units: [1, 3], bar: 65, weight: 2, tiers: [1, 2], selfSubmit: false, cities: ['us-ca-losangeles'], leadDays: 7, grows: VOICE,
+    sessionHours: 4, source: ANIMATION,
+  },
+  {
+    // The 2025 Interactive Media Agreement's four-hour session, up to three voices, from November 2025.
+    id: 'game', label: 'A Voice, A Video Game', medium: 'voice', union: 'sag',
+    steps: [['2025-11-01', 1_134_95]],
+    units: [1, 4], bar: 58, weight: 3, tiers: [2, 3], selfSubmit: true, cities: BOTH, leadDays: 10, grows: VOICE,
+    sessionHours: 4, source: GAMES,
+  },
+  {
+    // ACX's union floor, $250 a finished hour with 14% of it the health and retirement contribution, so $219.30 to the narrator;
+    // a six-hour booth day makes about 2.4 finished hours (two and a half booth hours to one), SLATE's estimate.
+    id: 'audiobook', label: 'Narrating An Audiobook', medium: 'voice', union: 'sag',
+    steps: [['2025-01-01', 526_32]],
+    units: [3, 6], bar: 50, weight: 4, tiers: [3], selfSubmit: true, cities: BOTH, leadDays: 10, grows: VOICE,
+    sessionHours: 6, source: AUDIOBOOKS,
   },
 ];
+
+/**
+ * A commercial's life after its shoot (`RESIDUALS`): a session fee
+ * covers the first 13-week cycle, and each cycle it runs after pays again.
+ * On a network, each airing, falling after the first ($783.10 on camera,
+ * $588.90 by voice), to a cap a cycle; on cable, wild spots or streaming, a
+ * flat fee. A cycle it doesn't run in pays the holding fee, the session fee,
+ * to keep the performer. Twenty-four months at most. Network and cable
+ * rates are frozen at 2022's through 2028; wild spots rose with the session
+ * fee, to $2,184 and $1,638 in 2026. How many cycles and airings is SLATE's estimate: most
+ * run two cycles or fewer.
+ */
+export const COMMERCIAL_USE = {
+  classA: { camera: [783_10, 158_21, 125_51, 60_17], voice: [588_90, 123_81, 98_48, 44_74] },
+  cap: { camera: 20_000_00, voice: 15_000_00 },
+  cable: { camera: 4_100_00, voice: 3_075_00 },
+  wild: { camera: 2_184_00, voice: 1_638_00 },
+  cycleDays: 91,
+  maxCycles: 8,
+  source: 'SAG-AFTRA 2025 Commercials Contracts, rate sheets (web.archive.org copies of sagaftra.org)',
+} as const;
+
+/**
+ * SLATE's estimates of a commercial's run: its cycles past the first (most
+ * run two or fewer), where it airs, and how many times on a network.
+ */
+export const COMMERCIAL_RUN = { moreCycles: [0.45, 0.35, 0.2] as readonly number[], network: 0.4, cable: 0.3, uses: [13, 40] as const } as const;
+
+/**
+ * A series regular's later seasons. A deal runs up to seven seasons,
+ * California's seven-year cap, about six in practice; the option is taken
+ * or dropped by about mid-June. Freshman network series have been renewed
+ * about three in four times (2022–26, tallied); streaming renewed 44% of all
+ * its series in 2025. A season's pay rises about 4% a season, built into the
+ * deal. A picked-up season begins about a year after the last began.
+ */
+export const SERIES = {
+  maxSeasons: 7,
+  renewal: { network: 0.75, svod: 0.44 },
+  raise: 0.04,
+  optionMonth: 6,
+  optionDay: 15,
+  nextSeasonDays: 364,
+  source: 'SAG-AFTRA Television Agreement §24; 2023 and 2026 memoranda; Luminate 2025; California Labor Code §2855',
+} as const;
+
+/**
+ * Working away. A screen job shoots where the production goes: by 2024's
+ * series, a quarter in Los Angeles, a tenth in Georgia, 8% in New York, 3%
+ * in Illinois (FilmLA), and the rest abroad or spread thin; SLATE sends a job
+ * home two times in three, and otherwise to Atlanta, Chicago or New Orleans.
+ * On location the production flies the actor out the day before and home the
+ * day after, a travel day on a non-work day paid as a day, a room of their
+ * own, and SAG-AFTRA's meal allowance, $75 a day ($80 from July 2028).
+ */
+export const LOCATION = {
+  cities: [['us-ga-atlanta', 0.2], ['us-il-chicago', 0.07], ['us-la-neworleans', 0.07]] as readonly (readonly [string, number])[],
+  perDiem: [['2025-07-01', 75_00], ['2028-07-01', 80_00]] as RateSteps,
+  source: 'SAG-AFTRA Television Agreement §§ overnight location; 2026 memorandum; FilmLA 2024 production report',
+} as const;
 
 /**
  * SAG-AFTRA's overtime. A day player works eight hours on the day rate over

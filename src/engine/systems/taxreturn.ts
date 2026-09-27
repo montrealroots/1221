@@ -19,10 +19,9 @@ import type { Person } from '../domain/model';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { MS_DAY, formatDate, instantFromZoned, zonedParts, type Instant } from '../core/time';
 import { exchange } from '../content/currency';
-import { CITIES } from '../content/geography';
 import { computeAnnualTax } from '../content/tax';
-import { CALIFORNIA_MANDATE, PREMIUM_CREDIT, RETURN } from '../content/safetynet';
-import { yearOf } from './earnings';
+import { CALIFORNIA_MANDATE, POVERTY_LINE, PREMIUM_CREDIT, PUBLIC_COVER, RETURN, STATE_RETURN, byYear } from '../content/safetynet';
+import { stateOf, yearOf } from './earnings';
 import { payFromCurrent } from './household';
 
 export const TAX_SEASON_KIND = 'tax.season';
@@ -52,6 +51,10 @@ export interface ReturnFigures {
   income: Money;
   deduction: Money;
   incomeTax: Money;
+  /** Of it, the federal tax, and each state's and town's, with the credit a home state gives for another's. */
+  federal: Money;
+  states: { state: string; tax: Money; credit: Money }[];
+  local: Money;
   payroll: Money;
   credit: Money;
   mandate: Money;
@@ -99,20 +102,52 @@ export function figuresFor(person: Person, year: number, into = 'USD'): ReturnFi
   const performer = income <= usd(RETURN.performingArtistIncome, into) && employers >= RETURN.performingArtistEmployers && expenses > RETURN.performingArtistShare * y.acting;
   const deduction = performer ? expenses : 0;
   const taxed = Math.max(0, income - deduction);
-  const all = computeAnnualTax(taxed, cityId, at);
-  const california = CITIES.get(cityId)?.parentId === 'us-ca';
-  const regional = california && y.unemployment > 0 ? computeAnnualTax(Math.max(0, taxed - y.unemployment), cityId, at).regional : all.regional;
-  const incomeTax = all.federal + regional + all.local;
+  const federal = computeAnnualTax(taxed, cityId, at).federal;
+  // Each state: what came while living there, and wages for work done there, over all of it.
+  const states = new Map<string, { city: string; resident: Money; source: Money }>();
+  const entry = (state: string, city: string) => { if (!states.has(state)) states.set(state, { city, resident: 0, source: 0 }); return states.get(state)!; };
+  for (const [city, amount] of Object.entries(y.byResidence)) entry(stateOf(city), city).resident += amount;
+  for (const [key, amount] of Object.entries(y.elsewhere)) { const city = key.split('>')[1]!; entry(stateOf(city), city).source += amount; }
+  const lastState = stateOf(cityId);
+  // California doesn't tax unemployment, which goes to where they lived at the year's end.
+  const benefitOut = (state: string) => (state === 'us-ca' && lastState === 'us-ca' ? y.unemployment : 0);
+  const full = (state: string) => computeAnnualTax(Math.max(0, taxed - benefitOut(state)), states.get(state)!.city, at).regional;
+  const taxes = new Map<string, number>();
+  for (const [state, part] of states) {
+    const own = Math.max(0, part.resident + part.source - benefitOut(state));
+    let tax = taxed > 0 ? Math.round(full(state) * Math.min(1, own / Math.max(1, taxed - benefitOut(state)))) : 0;
+    // Georgia leaves a nonresident's small wages alone.
+    if (state === 'us-ga' && part.resident === 0 && part.source <= Math.min(usd(STATE_RETURN.georgiaExempt, into), STATE_RETURN.georgiaExemptShare * y.acting)) tax = 0;
+    taxes.set(state, tax);
+  }
+  // The home state credits another's tax on the same wages, to its own tax on them.
+  const credits = new Map<string, number>();
+  for (const [key, amount] of Object.entries(y.elsewhere)) {
+    const [lived, city] = key.split('>') as [string, string];
+    const worked = stateOf(city);
+    if (!states.has(lived) || !taxes.get(worked)) continue;
+    const part = states.get(worked)!;
+    const theirs = taxes.get(worked)! * (amount / Math.max(1, part.resident + part.source));
+    const ours = taxed > 0 ? full(lived) * (amount / taxed) : 0;
+    credits.set(lived, (credits.get(lived) ?? 0) + Math.round(Math.min(theirs, ours)));
+  }
+  const stateLines = [...states.keys()].map((state) => ({ state, tax: taxes.get(state) ?? 0, credit: Math.min(taxes.get(state) ?? 0, credits.get(state) ?? 0) }));
+  // A city's own tax, New York City's, only on what came while living in it.
+  const local = taxed > 0 ? Object.entries(y.byResidence).reduce((sum, [city, amount]) => sum + Math.round(computeAnnualTax(taxed, city, at).local * (amount / taxed)), 0) : 0;
+  const incomeTax = federal + stateLines.reduce((sum, l) => sum + l.tax - l.credit, 0) + local;
   // Payroll tax is on the acting wages alone: a student's work-study and a benefit carry none.
   const payroll = computeAnnualTax(y.acting, cityId, at).payroll;
   const premiums = person.health?.premiums[year] ?? [];
-  const pct = applicablePercent(year, income / usd(PREMIUM_CREDIT.povertyLine, into));
+  // The poverty line the year's cover reads is the year before's; a person Medicaid or the Essential Plan would take gets no credit.
+  const ratio = income / usd(byYear(POVERTY_LINE, year - 1), into);
+  const program = ratio <= PUBLIC_COVER.medicaidShare || (lastState === 'us-ny' && ratio <= PUBLIC_COVER.essentialShare);
+  const pct = program ? undefined : applicablePercent(year, ratio);
   const credit = pct === undefined ? 0 : premiums.reduce((sum, premium) => sum + Math.max(0, Math.round(premium - (pct * income) / 12)), 0);
   const months = person.health?.uncoveredInCalifornia[year] ?? 0;
   const mandate = months * Math.round(Math.min(usd(CALIFORNIA_MANDATE.bronzeMonth, into), Math.max(usd(CALIFORNIA_MANDATE.flat, into), CALIFORNIA_MANDATE.share * income) / 12));
   return {
     cityId, acting: y.acting, workStudy: y.workStudy, unemployment: y.unemployment, income, deduction,
-    incomeTax, payroll, credit, mandate, withheld: y.withheld,
+    incomeTax, federal, states: stateLines, local, payroll, credit, mandate, withheld: y.withheld,
     balance: incomeTax + payroll + mandate - y.withheld - credit,
   };
 }
