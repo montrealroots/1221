@@ -7,7 +7,7 @@ import { quickSave } from '@/engine';
 import type { Simulation } from '@/engine/core/simulation';
 import { MS_DAY, zonedParts } from '@/engine/core/time';
 import { CARDS, type CardProduct } from '@/engine/content/cards';
-import { cardOf, cardTerms, DUE_KIND, STATEMENT_KIND } from '@/engine/systems/credit';
+import { cardOf, cardTerms, DUE_KIND, NO_CARD, reportWithoutCard, STATEMENT_KIND } from '@/engine/systems/credit';
 import { canPay } from '@/engine/systems/household';
 
 const cards = CARDS as Record<string, CardProduct | { none: true; source: string }>;
@@ -40,6 +40,57 @@ function missOne(sim: Simulation): void {
   broke(sim);
   sim.advanceTo(due + 1000);
 }
+
+describe('a record with no card open', () => {
+  it('ages back a little each month while nothing is owed, stops at a thin file’s ceiling, and holds while anything is', () => {
+    const sim = lifeIn('us-ny-newyork', { wealth: 'comfortable' }, 'cl-nocard');
+    const old = card(sim)!;
+    give(sim, old.id, -old.balance);
+    run(sim, 'card.close');
+    const credit = sim.player.credit!;
+    credit.score = 560;
+    credit.late = [];
+    // Three 1sts on the clock, two points each.
+    const firsts = () => { const p = zonedParts(sim.now, sim.homeZone); return p.day; };
+    let turned = 0;
+    let last = firsts();
+    while (turned < 3) { sim.advanceBy(MS_DAY); const d = firsts(); if (d === 1 && last !== 1) turned += 1; last = d; }
+    expect(credit.score).toBe(560 + 3 * NO_CARD.aging);
+    // A late payment in the last year holds it, and so does a debt in collections.
+    credit.late = [sim.now - 30 * MS_DAY];
+    reportWithoutCard(sim, sim.player);
+    expect(credit.score).toBe(566);
+    credit.late = [sim.now - 400 * MS_DAY];
+    reportWithoutCard(sim, sim.player);
+    expect(credit.score).toBe(568);
+    const debt = sim.openAccount({ id: sim.nextId('account'), kind: 'loan', category: 'collections', name: 'Owed', ownerId: sim.player.id, institution: 'Chase', openedAt: sim.now });
+    sim.post({ memo: 'test', category: 'test', postings: [{ accountId: debt.id, amount: -100_00 }, { accountId: sim.nominalAccount('income', 'Test').id, amount: 100_00 }] });
+    reportWithoutCard(sim, sim.player);
+    expect(credit.score).toBe(568);
+    // Paid off, it ages again, up to the ceiling and no further.
+    sim.post({ memo: 'test', category: 'test', postings: [{ accountId: debt.id, amount: 100_00 }, { accountId: sim.nominalAccount('income', 'Test').id, amount: -100_00 }] });
+    credit.score = NO_CARD.ceiling - 1;
+    reportWithoutCard(sim, sim.player);
+    expect(credit.score).toBe(NO_CARD.ceiling);
+    reportWithoutCard(sim, sim.player);
+    expect(credit.score).toBe(NO_CARD.ceiling);
+    // A score above it isn't pulled down.
+    credit.score = 760;
+    reportWithoutCard(sim, sim.player);
+    expect(credit.score).toBe(760);
+    // Rent owed takes ten a month off it.
+    const owed = sim.openAccount({ id: sim.nextId('account'), kind: 'loan', category: 'arrears', name: 'Rent And Bills Owed', ownerId: sim.player.id, institution: 'Your Landlord', openedAt: sim.now });
+    sim.post({ memo: 'test', category: 'test', postings: [{ accountId: owed.id, amount: -100_00 }, { accountId: sim.nominalAccount('income', 'Test').id, amount: 100_00 }] });
+    reportWithoutCard(sim, sim.player);
+    expect(credit.score).toBe(750);
+    // With a card open, the card's statement reports the month, not this.
+    const other = lifeIn('us-ny-newyork', { wealth: 'comfortable' }, 'cl-nocard-has');
+    other.player.credit!.score = 560;
+    other.player.credit!.late = [];
+    reportWithoutCard(other, other.player);
+    expect(other.player.credit!.score).toBe(560);
+  });
+});
 
 describe('applying for a card', () => {
   it('is approved for a record that earns it, costs the record a few points, and the bank’s card arrives in a week', () => {

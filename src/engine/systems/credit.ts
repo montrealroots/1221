@@ -615,6 +615,11 @@ export function registerCredit(sim: Simulation): void {
   // settled at the statement and the due date (C48). Until 2026-09-26 a
   // month's interest was charged in one sum at the statement, on that day's
   // balance, and only after a statement had gone unpaid.
+  sim.onEvent('world.day_rollover', 'credit.no_card', (_event, { sim: s }) => {
+    if (zonedParts(s.now, s.homeZone).day !== 1) return;
+    for (const person of Object.values(s.universe.people)) reportWithoutCard(s, person);
+  });
+
   sim.onEvent('world.day_rollover', 'card.interest', (_event, { sim: s }) => {
     for (const person of Object.values(s.universe.people)) {
       const credit = person.credit;
@@ -675,6 +680,29 @@ export function registerCredit(sim: Simulation): void {
 
 /** A month paid as agreed. */
 const ON_TIME = 3;
+
+/**
+ * A month on the record with no card open: SLATE's estimate. The bureaus
+ * score every month from the whole file, and a closed card, a charge-off
+ * or collections stay on it; with no card reporting there is no payment
+ * history to build on, but negatives age. So the score climbs `aging` a
+ * month while nothing is owed in collections or to the landlord and no
+ * payment has been late in a year, and a thin file stops at `ceiling`.
+ * Until 2026-09-27 the score moved only at a card's statement, and after a
+ * charge-off, or a card closed, it never moved again.
+ */
+export const NO_CARD = { aging: 2, ceiling: 680 } as const;
+
+/** The 1st of the month's report for somebody with no card open. */
+export function reportWithoutCard(sim: Simulation, person: Person): void {
+  const credit = person.credit;
+  if (!credit || cardOf(sim, person)) return;
+  if (arrearsOf(sim, person) > 0) { credit.score = Math.max(SCORE_MIN, credit.score - 10); return; }
+  const inCollections = Object.values(sim.universe.accounts).some((a) => a.ownerId === person.id && !a.closedAt && a.category === 'collections' && a.balance < 0);
+  const lateThisYear = credit.late.some((at) => sim.now - at < 365 * 86_400_000);
+  if (inCollections || lateThisYear || credit.score >= NO_CARD.ceiling) return;
+  credit.score = Math.min(NO_CARD.ceiling, credit.score + NO_CARD.aging);
+}
 
 /** A card's credit balance sent back to the current account (C23). */
 function refundCredit(sim: Simulation, person: Person, card: Account): Money {
