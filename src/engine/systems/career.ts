@@ -71,7 +71,8 @@ import { ABROAD } from '../content/safetynet';
 import { armHealth } from './health';
 import { armTaxes } from './taxreturn';
 import { YALE_DRAMA } from '../content/school';
-import { meanCraft, focusOf, sessionGain, type Craft } from './school';
+import { meanCraft, focusOf, sessionGain, summerOf, type Craft } from './school';
+import { rentAt } from '../content/rents';
 import { enjoyWork, takeTheRoom } from './enjoyment';
 import { personalityOf } from './personality';
 import { move, payFromCurrent, type Housing } from './household';
@@ -80,6 +81,7 @@ export const SHOWCASE_KIND = 'career.showcase';
 export const CAREER_WEEK_KIND = 'career.week';
 export const AUDITION_KIND = 'career.audition';
 export const OFFER_KIND = 'career.offer';
+export const STAY_KIND = 'career.stay';
 export const LAPSE_KIND = 'career.lapse';
 export const WORK_KIND = 'career.work';
 export const PAY_KIND = 'career.pay';
@@ -481,6 +483,12 @@ export function genreOf(role: Role, x: number): { genre?: string } {
   return { genre: list[list.length - 1]![0] };
 }
 
+/** A student's summer: the business's week from the next Monday, while the summer lasts (`systems/school.ts`). */
+export function armSummerWork(sim: Simulation, person: Person): void {
+  if (sim.universe.scheduled.some((i) => i.kind === CAREER_WEEK_KIND && i.status === 'pending' && i.payload.personId === person.id)) return;
+  scheduleWeek(sim, person, nextMonday(sim.now, zoneOf(workCity(person))));
+}
+
 /** The next Monday at eight, after a moment. */
 function nextMonday(from: Instant, zone: string): Instant {
   for (let n = 1; n <= 7; n += 1) if (weekday(at(from, zone, n, 8), zone) === 1) return at(from, zone, n, 8);
@@ -585,7 +593,9 @@ export function weekOfAuditions(sim: Simulation, person: Person, weekStart: Inst
     const mine = n >= count + fromManager;
     const role = pick(mine ? open : n >= count ? theirs : sent);
     const when = at(weekStart, zone, Math.floor(rng.next() * 5), 10 + Math.floor(rng.next() * 7));
-    out.push({ roleId: role.id, at: when, mode: rng.next() < ESTIMATE.tapeShare ? 'tape' : 'room', cityId, ...(mine ? { self: true } : {}) });
+    // Submitted from out of town, casting asks for a tape; an agency's room expects its client in town.
+    const room = rng.next() >= ESTIMATE.tapeShare && !(mine && person.currentLocationId !== cityId);
+    out.push({ roleId: role.id, at: when, mode: room ? 'room' : 'tape', cityId, ...(mine ? { self: true } : {}) });
   }
   return out;
 }
@@ -776,6 +786,8 @@ export function registerCareer(sim: Simulation): void {
     const person = personOf(item);
     if (!person?.craft) return;
     const career = careerOf(person);
+    // A student's week runs only through the summer; the fall term ends it.
+    if (career.since === undefined && !summerOf(person, item.at)) { career.submitted = 0; return; }
     career.offers = career.offers.filter((o) => o.until > s.now);
     career.managerOffers = career.managerOffers.filter((o) => o.until > s.now);
     // A manager's month: now and then, meetings that bring an unrepresented client an agency (`career.managers`).
@@ -1072,14 +1084,45 @@ export function registerCareer(sim: Simulation): void {
     const career = careerOf(person);
     const booking = career.bookings.find((b) => b.id === p.bookingId);
     if (!booking || booking.status !== 'offered') throw new CommandError('That offer isn’t open.');
+    const summer = career.since === undefined ? summerOf(person, s.now) : undefined;
+    if (career.since === undefined) {
+      const days = workDays(booking);
+      if (!summer || days[days.length - 1]!.at >= summer.until) throw new CommandError('It runs into the fall term, and the school’s work comes first while classes are in session.');
+    }
     takeJob(s, person, booking, false);
     return { starts: booking.starts };
+  });
+
+  sim.onSchedule(STAY_KIND, (item, s) => {
+    const person = personOf(item);
+    const booking = person ? careerOf(person).bookings.find((b) => b.id === item.payload.bookingId) : undefined;
+    if (!person || !booking) return;
+    const city = workCityOf(booking);
+    if (item.payload.direction === 'out') {
+      if (booking.status !== 'accepted') return;
+      // A room, sublet for the nights: the town's room rent by the night, SLATE's estimate of what it costs.
+      const cur = saveCurrency(s.universe);
+      const nights = Math.max(1, Math.round((Number(item.payload.back) - item.at) / MS_DAY));
+      const cost = Math.round((rentAt(city, cur).room * nights) / 30.44);
+      payFromCurrent(s, person, cost, `A sublet in ${CITIES.require(city).name}, ${nights} nights`, 'rent');
+      person.currentLocationId = city;
+      s.universe.currentZone = zoneOf(city);
+      if (isPlayer(person)) s.notify({ category: 'money', title: `In ${CITIES.require(city).name} For The Job`, body: `${roleById(booking.roleId).label}: a room sublet for ${nights} nights, ${formatMoney(cost, cur)}.`, importance: 55, route: '/workspace/career' });
+      return;
+    }
+    // Home again however the job went, fired from it or not, where they're still there.
+    const home = person.home?.cityId ?? person.currentLocationId;
+    if (person.currentLocationId !== city) return;
+    person.currentLocationId = home;
+    s.universe.currentZone = zoneOf(home);
   });
 
   sim.onSchedule(TRAVEL_KIND, (item, s) => {
     const person = personOf(item);
     const booking = person ? careerOf(person).bookings.find((b) => b.id === item.payload.bookingId) : undefined;
-    if (!person || !booking || !booking.location || (booking.status !== 'accepted' && booking.status !== 'worked')) return;
+    if (!person || !booking || !booking.location) return;
+    // Out only to a job still on; home from one however it went. Until 2026-09-27 an actor fired on location was left there.
+    if (item.payload.direction === 'out' ? booking.status !== 'accepted' : person.currentLocationId !== booking.location) return;
     const cur = saveCurrency(s.universe);
     const role = roleById(booking.roleId);
     const unit = unitRate(booking, item.at, cur);
@@ -1172,6 +1215,13 @@ export function registerCareer(sim: Simulation): void {
       s.schedule({ at: out, kind: TRAVEL_KIND, label: `Travel To ${CITIES.require(booking.location).name}`, category: 'career', priority: 30, payload: { personId: person.id, bookingId: booking.id, direction: 'out' } });
       s.schedule({ at: at(days[days.length - 1]!.at, zone, 1, 12), kind: TRAVEL_KIND, label: 'Travel Home', category: 'career', priority: 30, payload: { personId: person.id, bookingId: booking.id, direction: 'back', outAt: out } });
     }
+    // A job in another city with no production travel: they go and stay, in a room of their own paying.
+    const home = person.home?.cityId ?? person.currentLocationId;
+    if (!booking.location && workCity !== home) {
+      const out = at(days[0]!.at, zone, -1, 18);
+      s.schedule({ at: out, kind: STAY_KIND, label: `To ${CITIES.require(workCity).name}`, category: 'career', priority: 30, payload: { personId: person.id, bookingId: booking.id, direction: 'out', back: at(days[days.length - 1]!.at, zone, 1, 12) } });
+      s.schedule({ at: at(days[days.length - 1]!.at, zone, 1, 12), kind: STAY_KIND, label: 'Home Again', category: 'career', priority: 30, payload: { personId: person.id, bookingId: booking.id, direction: 'back' } });
+    }
     // SAG-AFTRA pays on the Thursday after the week's Saturday; Equity, each Friday.
     const paydays = new Set<Instant>();
     for (const d of days) {
@@ -1193,7 +1243,7 @@ export function registerCareer(sim: Simulation): void {
 
   sim.onCommand<Record<string, never>, { submitted: number }>('career.self_submit', (_p, { sim: s }) => {
     const career = careerOf(s.player);
-    if (career.since === undefined) throw new CommandError('While you’re at school, its work comes first; submissions start when it ends.');
+    if (career.since === undefined && !summerOf(s.player, s.now)) throw new CommandError('While classes are in session, the school’s work comes first; submissions start in the summer, and for good when school ends.');
     const most = submissionsAWeek(career, s.now, workCity(s.player));
     if (career.submitted >= most) throw new CommandError(`You’ve made this week’s ${most} submissions.`);
     career.submitted += 1;

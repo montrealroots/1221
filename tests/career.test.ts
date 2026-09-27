@@ -289,6 +289,18 @@ describe('auditions', () => {
     expect(careerOf(sim.player).ended!.reason).toContain(String(ESTIMATE.dropAfterMissed));
   }, 60_000);
 
+  it('from out of town, are tapes when self-submitted', () => {
+    const sim = pro('tapes');
+    sim.player.currentLocationId = 'us-ct-newhaven';
+    let n = 0;
+    for (let w = 0; w < 100; w += 1) for (const a of weekOfAuditions(sim, sim.player, sim.now + w * 7 * MS_DAY, undefined, 'us-ny-newyork', 5)) { n += 1; expect(a.mode).toBe('tape'); }
+    expect(n).toBeGreaterThan(0);
+    sim.player.currentLocationId = 'us-ny-newyork';
+    let rooms = 0;
+    for (let w = 0; w < 100; w += 1) rooms += weekOfAuditions(sim, sim.player, sim.now + w * 7 * MS_DAY, undefined, 'us-ny-newyork', 5).filter((a) => a.mode === 'room').length;
+    expect(rooms).toBeGreaterThan(0);
+  });
+
   it('aren’t sent for a time the actor is booked on a job', () => {
     const sim = signed('booked-out', 2);
     const b = offer(sim, 'lort-b', 4, 6, sim.now + MS_DAY);

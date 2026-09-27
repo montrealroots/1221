@@ -184,6 +184,25 @@ describe('US tax on work abroad', () => {
   });
 });
 
+describe('home from a job, however it went', () => {
+  it('brings an actor fired on location home at its end', () => {
+    const sim = pro('fired-away');
+    sim.player.craft = { acting: 50, voice: 50, speech: 50, body: 50, text: 50, singing: 50, screen: 50 };
+    const b: Booking = { id: 'tor', roleId: 'costar', cityId: 'us-ny-newyork', location: 'ca-on-toronto', starts: at(2026, 10, 5, 8), units: 2, rehearsalWeeks: 0, status: 'offered', dueAt: sim.now + 2 * MS_DAY, offeredAt: sim.now, worked: 0, owed: 0, weeksPaid: 0 };
+    careerOf(sim.player).bookings.push(b);
+    expect(sim.execute({ kind: 'career.accept', payload: { bookingId: b.id } }).ok).toBe(true);
+    const call = sim.universe.scheduled.find((i) => i.kind === 'career.work' && i.status === 'pending' && i.payload.bookingId === 'tor')!;
+    while (sim.now < call.at - 3_600_000) sim.advanceTo(Math.min(call.at - 3_600_000, sim.now + 6 * 3_600_000), { stopOnPlayerRequired: true });
+    expect(sim.player.currentLocationId).toBe('ca-on-toronto');
+    // In hospital there through the first call: replaced.
+    healthOf(sim.player).inHospitalUntil = call.at + 3_600_000;
+    sim.advanceTo(call.at + 60_000);
+    expect(b.status).toBe('fired');
+    while (sim.now < at(2026, 10, 9, 12)) sim.advanceTo(Math.min(at(2026, 10, 9, 12), sim.now + 6 * 3_600_000), { stopOnPlayerRequired: true });
+    expect(sim.player.currentLocationId).toBe('us-ny-newyork');
+  }, 60_000);
+});
+
 describe('Connecticut', () => {
   it('taxes as its instructions work it: nothing at $15,000, $40 at $20,000, $130 at $25,000', () => {
     expect(connecticutTax(15_000_00)).toBe(0);

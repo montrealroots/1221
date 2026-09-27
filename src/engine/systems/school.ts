@@ -59,7 +59,7 @@ import {
 import { readiness } from './life';
 import { enjoyWork } from './enjoyment';
 import { payFromCurrent } from './household';
-import { beginCareer, bookShowcase } from './career';
+import { armSummerWork, beginCareer, bookShowcase } from './career';
 import { YALE_COST_GROWTH } from '../content/career';
 import { recordScholarship, recordWages } from './earnings';
 import { armTaxes } from './taxreturn';
@@ -139,6 +139,7 @@ export const COMMENCEMENT_KIND = 'school.commencement';
 export const CABARET_KIND = 'school.cabaret';
 export const SUMMER_KIND = 'school.summer';
 export const STIPEND_KIND = 'school.stipend';
+export const RECESS_KIND = 'school.recess';
 
 /** SLATE's estimates of what the school doesn't publish, each named where it's used. */
 export const ESTIMATE = {
@@ -492,6 +493,30 @@ export function cabaretWeek(sim: Simulation, person: Person, term: number): Scho
   return undefined;
 }
 
+/**
+ * When a spring term's summer recess begins: twenty days after its classes
+ * end, the work period between. 2027's comes to the Bulletin's 13 May, 23
+ * April's twentieth day; later springs are SLATE's estimate by it.
+ */
+export function recessStart(term: number): SchoolDate {
+  return addDays(classPeriod(term).to, 20);
+}
+
+/**
+ * The summer a student is in at a moment, between a first or second year's
+ * recess and the next fall term: its bounds, or nothing. The Bulletin limits
+ * outside work only while classes are in session, so the summer is theirs.
+ */
+export function summerOf(person: Person, when: Instant): { from: Instant; until: Instant } | undefined {
+  const school = person.school;
+  if (!school || school.standing === 'graduated' || school.standing === 'dismissed') return undefined;
+  const term = school.termsBegun - 1;
+  if (term < 0 || termStart(term).fall || yearOfTerm(term) === 3) return undefined;
+  const from = at(recessStart(term), 0);
+  const until = at(termStart(term + 1).date, 0);
+  return when >= from && when < until ? { from, until } : undefined;
+}
+
 /** A summer's three runs, 2026's dates in the summer's year. */
 export function summerRuns(year: number): { from: SchoolDate; to: SchoolDate }[] {
   return SUMMER_CABARET.runs.map(([[m1, d1], [m2, d2]]) => ({ from: { year, month: m1, day: d1 }, to: { year, month: m2, day: d2 } }));
@@ -750,6 +775,8 @@ export function registerSchool(sim: Simulation): void {
         importance: 55, route: '/workspace/school',
       });
     }
+    // A first or second year's spring ends in a summer that's theirs: its first Monday, the business's week begins (`systems/career.ts`).
+    if (!termStart(term).fall && yearOfTerm(term) < 3) schedule(s, person, at(recessStart(term), 9), { kind: RECESS_KIND, label: 'Summer Recess', minutes: 0, requiresPlayer: false });
     if (term >= 1) cast(s, person, term);
     // The last spring ends in the Actor Showcase.
     if (term === YALE_DRAMA.terms - 1) bookShowcase(s, person);
@@ -987,6 +1014,13 @@ export function registerSchool(sim: Simulation): void {
       tire(person, ESTIMATE.energy.rehearsal);
       enjoyWork(person, { medium: 'stage', away: false, rehearsal: true });
     }
+  });
+
+  sim.onSchedule(RECESS_KIND, (item, s) => {
+    const person = personOf(item);
+    if (!person || !summerOf(person, item.at)) return;
+    armSummerWork(s, person);
+    if (person.id === s.universe.playerId) s.notify({ category: 'money', title: 'The Summer Is Yours', body: 'Classes are done until the fall term. The Bulletin limits outside work only while they’re in session: Submit Yourself for jobs that end before the term, and a job in another city means a sublet there.', importance: 60, route: '/workspace/career' });
   });
 
   sim.onSchedule(STIPEND_KIND, (item, s) => {

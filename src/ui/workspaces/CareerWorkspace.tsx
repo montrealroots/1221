@@ -144,7 +144,7 @@ function AgencyPane() {
       >
         <p className="small" style={{ margin: 0 }}>
           On the casting sites every actor uses, for the low budget films that take submissions. About {pct(ESTIMATE.selfSubmitCallback)} bring an audition with a paid site’s headshot and reel, and half that free, with the week’s on Monday (SLATE’s estimate).
-          {career.since === undefined ? ' Submissions start when school ends.' : ''}
+          {career.since === undefined ? ' At school, submissions are for the summers between years, for jobs that end before the fall term; for good when school ends.' : ''} Submitted from out of town, casting asks for a tape, and a job in another city means a room sublet there for its nights.
         </p>
       </Panel>
 
