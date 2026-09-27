@@ -91,7 +91,7 @@ describe('the UK’s tax year, and Canada’s tax on residuals', () => {
   });
 
   it('expects a booking’s whole pay at its rate: days on screen, weeks with rehearsal on stage, episodes for a series', () => {
-    const base = { cityId: 'us-ny-newyork' as const, starts: at(2027, 3, 1), status: 'accepted' as const, dueAt: 0, offeredAt: 0, worked: 0, owed: 0, weeksPaid: 0 };
+    const base = { cityId: 'us-ny-newyork' as const, starts: at(2027, 3, 1), status: 'accepted' as const, dueAt: 0, offeredAt: 0, worked: 0, owed: 0 };
     const screen: Booking = { ...base, id: 's', roleId: 'costar', units: 3, rehearsalWeeks: 0 };
     const stage: Booking = { ...base, id: 't', roleId: 'lort-b', units: 6, rehearsalWeeks: 4 };
     const series: Booking = { ...base, id: 'r', roleId: 'series-hour', units: 1, rehearsalWeeks: 0 };
@@ -165,7 +165,7 @@ describe('the UK’s tax year, and Canada’s tax on residuals', () => {
 
   it('withholds Canada’s 23% from a residual for work done there', () => {
     const sim = pro('ca-residual');
-    const b: Booking = { id: 'can', roleId: 'guest-hour', cityId: 'us-ny-newyork', location: 'ca-bc-vancouver', starts: sim.now, units: 8, rehearsalWeeks: 0, status: 'worked', dueAt: sim.now, offeredAt: sim.now, worked: 8, owed: 0, weeksPaid: 0 };
+    const b: Booking = { id: 'can', roleId: 'guest-hour', cityId: 'us-ny-newyork', location: 'ca-bc-vancouver', starts: sim.now, units: 8, rehearsalWeeks: 0, status: 'worked', dueAt: sim.now, offeredAt: sim.now, worked: 8, owed: 0 };
     let r = afterlife(sim, sim.player, b, sim.now)!;
     for (let n = 0; r.kind === 'network' && !r.rerun && n < 40; n += 1) r = afterlife(sim, sim.player, { ...b, id: `can${n}` }, sim.now)!;
     const first = sim.universe.scheduled.filter((i) => i.kind === 'career.residual' && i.payload.residualId === r.id).sort((x, y) => x.at - y.at)[0]!;
@@ -179,7 +179,7 @@ describe('the UK’s tax year, and Canada’s tax on residuals', () => {
 describe('US tax on work abroad', () => {
   it('is withheld as at home, not by the country’s own tables', () => {
     const sim = pro('home-withholding');
-    const b: Booking = { id: 'tor', roleId: 'costar', cityId: 'us-ny-newyork', location: 'ca-on-toronto', starts: at(2026, 10, 5, 8), units: 2, rehearsalWeeks: 0, status: 'offered', dueAt: sim.now + 2 * MS_DAY, offeredAt: sim.now, worked: 0, owed: 0, weeksPaid: 0 };
+    const b: Booking = { id: 'tor', roleId: 'costar', cityId: 'us-ny-newyork', location: 'ca-on-toronto', starts: at(2026, 10, 5, 8), units: 2, rehearsalWeeks: 0, status: 'offered', dueAt: sim.now + 2 * MS_DAY, offeredAt: sim.now, worked: 0, owed: 0 };
     careerOf(sim.player).bookings.push(b);
     expect(sim.execute({ kind: 'career.accept', payload: { bookingId: b.id } }).ok).toBe(true);
     while (sim.now < at(2026, 10, 16, 12)) sim.advanceTo(Math.min(at(2026, 10, 16, 12), sim.now + 6 * 3_600_000), { stopOnPlayerRequired: true });
@@ -194,7 +194,7 @@ describe('home from a job, however it went', () => {
   it('brings an actor fired on location home at its end', () => {
     const sim = pro('fired-away');
     sim.player.craft = { acting: 50, voice: 50, speech: 50, body: 50, text: 50, singing: 50, screen: 50 };
-    const b: Booking = { id: 'tor', roleId: 'costar', cityId: 'us-ny-newyork', location: 'ca-on-toronto', starts: at(2026, 10, 5, 8), units: 2, rehearsalWeeks: 0, status: 'offered', dueAt: sim.now + 2 * MS_DAY, offeredAt: sim.now, worked: 0, owed: 0, weeksPaid: 0 };
+    const b: Booking = { id: 'tor', roleId: 'costar', cityId: 'us-ny-newyork', location: 'ca-on-toronto', starts: at(2026, 10, 5, 8), units: 2, rehearsalWeeks: 0, status: 'offered', dueAt: sim.now + 2 * MS_DAY, offeredAt: sim.now, worked: 0, owed: 0 };
     careerOf(sim.player).bookings.push(b);
     expect(sim.execute({ kind: 'career.accept', payload: { bookingId: b.id } }).ok).toBe(true);
     const call = sim.universe.scheduled.find((i) => i.kind === 'career.work' && i.status === 'pending' && i.payload.bookingId === 'tor')!;
@@ -215,7 +215,7 @@ describe('home from a job, however it went', () => {
     sim.player.craft = { acting: 50, voice: 50, speech: 50, body: 50, text: 50, singing: 50, screen: 50 };
     const career = careerOf(sim.player);
     career.agencyId = 'caa';
-    const b: Booking = { id: 'set', roleId: 'costar', cityId: 'us-ny-newyork', starts: at(2026, 10, 5, 8), units: 2, rehearsalWeeks: 0, status: 'offered', dueAt: sim.now + 2 * MS_DAY, offeredAt: sim.now, worked: 0, owed: 0, weeksPaid: 0 };
+    const b: Booking = { id: 'set', roleId: 'costar', cityId: 'us-ny-newyork', starts: at(2026, 10, 5, 8), units: 2, rehearsalWeeks: 0, status: 'offered', dueAt: sim.now + 2 * MS_DAY, offeredAt: sim.now, worked: 0, owed: 0 };
     career.bookings.push(b);
     expect(sim.execute({ kind: 'career.accept', payload: { bookingId: b.id } }).ok).toBe(true);
     const call = sim.universe.scheduled.find((i) => i.kind === 'career.work' && i.status === 'pending' && i.payload.bookingId === 'set')!;
@@ -230,7 +230,7 @@ describe('home from a job, however it went', () => {
     // On stage, the understudy covers the night and the run goes on.
     const stage = pro('hospital-stage');
     stage.player.craft = { ...sim.player.craft };
-    const run: Booking = { id: 'run', roleId: 'lort-a-plus', cityId: 'us-ny-newyork', starts: at(2026, 10, 6, 8), units: 2, rehearsalWeeks: 1, status: 'offered', dueAt: stage.now + 2 * MS_DAY, offeredAt: stage.now, worked: 0, owed: 0, weeksPaid: 0 };
+    const run: Booking = { id: 'run', roleId: 'lort-a-plus', cityId: 'us-ny-newyork', starts: at(2026, 10, 6, 8), units: 2, rehearsalWeeks: 1, status: 'offered', dueAt: stage.now + 2 * MS_DAY, offeredAt: stage.now, worked: 0, owed: 0 };
     careerOf(stage.player).bookings.push(run);
     expect(stage.execute({ kind: 'career.accept', payload: { bookingId: run.id } }).ok).toBe(true);
     const first = stage.universe.scheduled.find((i) => i.kind === 'career.work' && i.status === 'pending' && i.payload.bookingId === 'run')!;
@@ -278,7 +278,7 @@ describe('a day on set', () => {
   it('takes its hours: no sleep, shower, workout or unwinding in the middle of it, though a meal fits; and costs energy by them', () => {
     const sim = pro('on-set');
     sim.player.craft = { acting: 50, voice: 50, speech: 50, body: 50, text: 50, singing: 50, screen: 50 };
-    const b: Booking = { id: 'day', roleId: 'costar', cityId: 'us-ny-newyork', starts: at(2026, 10, 5, 8), units: 1, rehearsalWeeks: 0, status: 'offered', dueAt: sim.now + 2 * MS_DAY, offeredAt: sim.now, worked: 0, owed: 0, weeksPaid: 0 };
+    const b: Booking = { id: 'day', roleId: 'costar', cityId: 'us-ny-newyork', starts: at(2026, 10, 5, 8), units: 1, rehearsalWeeks: 0, status: 'offered', dueAt: sim.now + 2 * MS_DAY, offeredAt: sim.now, worked: 0, owed: 0 };
     careerOf(sim.player).bookings.push(b);
     sim.must({ kind: 'career.accept', payload: { bookingId: b.id } });
     const call = sim.universe.scheduled.find((i) => i.kind === 'career.work' && i.status === 'pending' && i.payload.bookingId === 'day')!;
@@ -324,7 +324,7 @@ describe('a paycheck', () => {
     sim.player.home = { kind: 'shared', cityId: 'us-ct-newhaven', since: sim.now };
     // Earlier in the year, enough to be past the city's deduction.
     yearOf(sim.player, 2026).acting = 50_000_00;
-    const b: Booking = { id: 'nyc', roleId: 'costar', cityId: 'us-ny-newyork', starts: at(2026, 10, 5, 8), units: 2, rehearsalWeeks: 0, status: 'offered', dueAt: sim.now + 2 * MS_DAY, offeredAt: sim.now, worked: 0, owed: 0, weeksPaid: 0 };
+    const b: Booking = { id: 'nyc', roleId: 'costar', cityId: 'us-ny-newyork', starts: at(2026, 10, 5, 8), units: 2, rehearsalWeeks: 0, status: 'offered', dueAt: sim.now + 2 * MS_DAY, offeredAt: sim.now, worked: 0, owed: 0 };
     careerOf(sim.player).bookings.push(b);
     sim.must({ kind: 'career.accept', payload: { bookingId: b.id } });
     sim.player.currentLocationId = 'us-ny-newyork';

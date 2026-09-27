@@ -4,8 +4,9 @@
  * Every city has its own clock, weather, prices and taxes, and when the
  * player is in one, Home says so. This gathers what the rest of the engine
  * already knows about a city into one honest profile: the time zone and the
- * hours it is from home, the weather now, the climate, what things cost, how
- * much of the industry is here, and what the taxman takes. Nothing here is
+ * hours it is from home, the climate, what things cost, and what the taxman
+ * takes. The weather now is read beside it (`weatherAt`); until 2026-09-27 the
+ * profile ran the hourly model for a field nothing read. Nothing here is
  * new information; it is the same jurisdiction, geography and climate the
  * simulation runs on, read for one place.
  */
@@ -19,7 +20,6 @@ import { currencyInfo, formatLocalCompact, type CurrencyInfo } from '../content/
 import { languageNames } from '../content/languages';
 import { usesFahrenheit, usesMiles } from '../content/climate';
 import { rentAt } from '../content/rents';
-import { weatherAt, type WeatherNow } from '../systems/weather';
 
 /** "Capital", "State Capital", "Provincial Capital": what kind of place this is, if it is a kind at all. */
 export function placeKindLabel(city: City): string | undefined {
@@ -76,7 +76,6 @@ export interface PlaceProfile {
   /** Distance from home, in the unit this country reads. */
   distanceFromHome?: string;
   away: boolean;
-  weather?: WeatherNow;
   costOfLivingIndex: number;
   medianRentCents: number;
   /** Effective income tax rate at the reference income, 0-1. */
@@ -157,7 +156,6 @@ export function placeProfile(sim: Simulation, cityId: string): PlaceProfile | un
     homeCity: home,
     distanceFromHome,
     away,
-    weather: weatherAt(sim, city.id),
     costOfLivingIndex: city.costOfLivingIndex,
     medianRentCents: oneBedUsd,
     effectiveIncomeTax: totalTax / TAX_REFERENCE_INCOME,

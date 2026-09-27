@@ -30,6 +30,7 @@ import { isAre, outOf, spokenList } from './words';
 import { GENRE_BY_ID, INTEREST_BY_ID } from '@/engine/content/interests';
 import { PERSONALITY_TRAIT_BY_ID } from '@/engine/content/personality-traits';
 import { ageWords, ceilingAt } from '@/engine/content/lifespan';
+import { describeEthnicity } from '@/engine/content/ethnicity';
 
 /**
  * The eight, in the order a person would notice them.
@@ -125,6 +126,13 @@ defineLook<Person>('person', {
         <p key="traits" className="small">
           <span className="dim">{isYou ? 'Who you are. ' : 'Who they are. '}</span>
           {spokenList(traits)}.
+        </p>
+      ),
+      // Who they are in their own terms, as creation took it, and nothing more: it moves nothing.
+      (person.raceEthnicity?.length ?? 0) > 0 && (
+        <p key="identity" className="small">
+          <span className="dim">{isYou ? 'In your own terms. ' : 'In their own terms. '}</span>
+          {describeEthnicity(person.raceEthnicity!, person.raceEthnicityOwn)}.
         </p>
       ),
       before.length > 0 && (

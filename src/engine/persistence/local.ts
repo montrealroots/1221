@@ -54,11 +54,6 @@ async function unpack(raw: string): Promise<string> {
   return new Response(stream).text();
 }
 
-/** How many bytes a stored save takes, packed or not. */
-export function storedBytes(raw: string): number {
-  return raw.length;
-}
-
 function storage(): Storage {
   if (typeof localStorage === 'undefined') {
     throw new PersistenceError('This browser has no local storage available, so saves can’t be kept here.', false);

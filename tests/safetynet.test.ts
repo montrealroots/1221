@@ -38,7 +38,7 @@ function pro(seed: string, city = 'us-ny-newyork', level = 75): Simulation {
   return sim;
 }
 function booking(sim: Simulation, roleId: string, units: number, starts = sim.now + 7 * MS_DAY, rehearsalWeeks = 0): Booking {
-  const b: Booking = { id: `t${careerOf(sim.player).bookings.length}`, roleId, cityId: 'us-ny-newyork', starts, units, rehearsalWeeks, status: 'offered', dueAt: sim.now + 2 * MS_DAY, offeredAt: sim.now, worked: 0, owed: 0, weeksPaid: 0 };
+  const b: Booking = { id: `t${careerOf(sim.player).bookings.length}`, roleId, cityId: 'us-ny-newyork', starts, units, rehearsalWeeks, status: 'offered', dueAt: sim.now + 2 * MS_DAY, offeredAt: sim.now, worked: 0, owed: 0 };
   careerOf(sim.player).bookings.push(b);
   return b;
 }

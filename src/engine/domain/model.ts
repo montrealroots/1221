@@ -1,10 +1,12 @@
 /**
  * SLATE — The domain model.
  *
- * Every stateful thing in the universe. Rule: each record carries `saveId`, and
- * the store refuses to hand back a record whose saveId does not match the
- * universe you asked from. One save is one world; three saves are three worlds
- * that can never see each other.
+ * Every stateful thing in the universe. Each record carries `saveId`, and a
+ * universe is refused on load where a person, an account or a scheduled item
+ * carries another save's (`validateUniverse`). One save is one world; three
+ * saves are three worlds that can never see each other. This said a store
+ * refused any record of another save's, and until 2026-09-27 no such store
+ * existed: the load's check is the whole of it.
  */
 
 import type { Instant, TimeZone } from '../core/time';
@@ -255,8 +257,10 @@ export interface Person {
    * name, a country or a city.
    *
    * It carries no attribute, no skill, no advantage and no penalty. Nothing in
-   * the simulation reads it, and nothing should: it is on the character sheet
+   * the simulation reads it, and nothing should: the person look says it
    * because a person has one, not because the game does anything with it.
+   * Until 2026-09-27 this said it was on the character sheet, and no screen
+   * showed it after creation.
    */
   raceEthnicity?: readonly string[];
   /** Said in their own words, where the list did not have it. */
@@ -304,20 +308,21 @@ export interface Notification {
   importance: number;
 }
 
+/**
+ * What the player has set. Until 2026-09-27 six more were kept here, sound on
+ * and its volume, compact mode, advanced numbers and a confirmation for large
+ * purchases with its threshold, and nothing read any of them: there is no
+ * sound, no settings screen and no confirmation. A save from before keeps
+ * them, unread, as it keeps any key SLATE no longer knows.
+ */
 export interface Preferences {
   reducedMotion: boolean;
-  audioEnabled: boolean;
-  audioVolume: number;
   /**
    * How fast the world runs against real time. 'live' is one to one: a minute
    * of your evening is a minute of theirs. The faster settings are there for
    * waiting something out, not because the game needs them.
    */
   timeSpeed: 'paused' | 'live' | 'fast' | 'faster';
-  compactMode: boolean;
-  showAdvancedNumbers: boolean;
-  confirmLargePurchases: boolean;
-  largePurchaseThreshold: Money;
 }
 
 /**

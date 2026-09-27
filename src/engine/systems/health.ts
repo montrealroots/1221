@@ -311,7 +311,7 @@ export function healthMonth(sim: Simulation, person: Person, at: Instant): void 
   const union = active(h.sag, at) ? 'sag' : active(h.equity, at) ? 'equity' : undefined;
   if (h.lastUnion && !union && !active(h.cobra, at)) {
     h.cobraOffer = { plan: h.lastUnion, lostAt: at, until: at + COBRA.electDays * MS_DAY };
-    if (person.id === sim.universe.playerId) sim.notify({ category: 'money', title: 'You Can Keep Your Plan By COBRA', body: `Your ${PLANS[h.lastUnion]!.label} ended. Elect COBRA by ${formatDate(h.cobraOffer.until, HOME)} and it covers you from the day it ended, for up to ${COBRA.months} months, at ${formatMoney(usd(COBRA.premium[h.lastUnion], cur), cur)} a month.`, importance: 80, route: '/workspace/papers' });
+    if (person.id === sim.universe.playerId) sim.notify({ category: 'health', title: 'You Can Keep Your Plan By COBRA', body: `Your ${PLANS[h.lastUnion]!.label} ended. Elect COBRA by ${formatDate(h.cobraOffer.until, HOME)} and it covers you from the day it ended, for up to ${COBRA.months} months, at ${formatMoney(usd(COBRA.premium[h.lastUnion], cur), cur)} a month.`, importance: 80, route: '/workspace/papers' });
   }
   h.lastUnion = union;
   if (active(h.cobra, at)) {
@@ -332,7 +332,7 @@ export function healthMonth(sim: Simulation, person: Person, at: Instant): void 
         prog.renewAt = firstOf(p.year, p.month + renewMonths(at, prog.state));
       } else {
         prog.until = at;
-        if (person.id === sim.universe.playerId) sim.notify({ category: 'money', title: 'Your Public Cover Ended At Renewal', body: !worksEnough ? `Medicaid now asks for ${PUBLIC_COVER.workHours} hours’ work or ${formatMoney(usd(PUBLIC_COVER.workEarnings, cur), cur)} of earnings a month, and last month had neither.` : 'Last month’s income is over what it allows.', importance: 80, route: '/workspace/papers' });
+        if (person.id === sim.universe.playerId) sim.notify({ category: 'health', title: 'Your Public Cover Ended At Renewal', body: !worksEnough ? `Medicaid now asks for ${PUBLIC_COVER.workHours} hours’ work or ${formatMoney(usd(PUBLIC_COVER.workEarnings, cur), cur)} of earnings a month, and last month had neither.` : 'Last month’s income is over what it allows.', importance: 80, route: '/workspace/papers' });
       }
     }
   }
@@ -357,7 +357,7 @@ export function healthMonth(sim: Simulation, person: Person, at: Instant): void 
   if (!cover && inCalifornia(home)) h.uncoveredInCalifornia[p.year] = (h.uncoveredInCalifornia[p.year] ?? 0) + 1;
   if (h.covered && !cover) {
     h.lostAt = at;
-    if (person.id === sim.universe.playerId) sim.notify({ category: 'money', title: 'Your Health Cover Ended', body: `Nothing covers you from ${formatDate(at, HOME)}. You have ${ENROLLMENT.specialDays} days to enroll in the marketplace${inCalifornia(home) ? ', and every month uncovered in California costs its penalty on your return' : ''}.`, importance: 80, route: '/workspace/papers' });
+    if (person.id === sim.universe.playerId) sim.notify({ category: 'health', title: 'Your Health Cover Ended', body: `Nothing covers you from ${formatDate(at, HOME)}. You have ${ENROLLMENT.specialDays} days to enroll in the marketplace${inCalifornia(home) ? ', and every month uncovered in California costs its penalty on your return' : ''}.`, importance: 80, route: '/workspace/papers' });
   }
   h.covered = cover !== undefined;
   // A medical debt a year past due, $500 or more, goes on the record, outside the states that bar it.
@@ -366,7 +366,7 @@ export function healthMonth(sim: Simulation, person: Person, at: Instant): void 
     && !MEDICAL_DEBT.barredIn.includes(CITIES.get(home)?.parentId ?? '') && !h.reported && person.credit) {
     h.reported = true;
     person.credit.score = Math.max(300, person.credit.score - MEDICAL_DEBT.recordHit);
-    if (person.id === sim.universe.playerId) sim.notify({ category: 'money', title: 'A Medical Debt Is On Your Record', body: 'Unpaid a year and over $500, it’s reported now.', importance: 80, route: '/workspace/papers' });
+    if (person.id === sim.universe.playerId) sim.notify({ category: 'health', title: 'A Medical Debt Is On Your Record', body: 'Unpaid a year and over $500, it’s reported now.', importance: 80, route: '/workspace/papers' });
   }
 }
 
@@ -624,7 +624,7 @@ export function careFor(sim: Simulation, person: Person, event: { care: Care; wh
     return bill;
   }
   if (person.id === sim.universe.playerId && MEDICAL.includes(event.care)) {
-    sim.notify({ category: 'money', title: event.care === 'stay' ? 'In Hospital' : event.flu ? 'You Have The Flu' : event.care === 'emergency' ? 'The Emergency Room' : 'A Doctor’s Visit', body: `${event.what}${event.care === 'stay' ? `, ${CARE.stayDays} days` : ''}. ${amount > 0 ? `Your share is ${formatMoney(amount, cur)}, due in ${MEDICAL_DEBT.dueDays} days.` : 'Nothing to pay.'}`, importance: event.care === 'stay' ? 85 : 60, route: '/workspace/papers' });
+    sim.notify({ category: 'health', title: event.care === 'stay' ? 'In Hospital' : event.flu ? 'You Have The Flu' : event.care === 'emergency' ? 'The Emergency Room' : 'A Doctor’s Visit', body: `${event.what}${event.care === 'stay' ? `, ${CARE.stayDays} days` : ''}. ${amount > 0 ? `Your share is ${formatMoney(amount, cur)}, due in ${MEDICAL_DEBT.dueDays} days.` : 'Nothing to pay.'}`, importance: event.care === 'stay' ? 85 : 60, route: '/workspace/papers' });
   }
   if (amount <= 0) return undefined;
   h.seq = (h.seq ?? 0) + 1;
@@ -669,7 +669,7 @@ export function registerHealth(sim: Simulation): void {
     const debt = medicalDebtOf(s, person) ?? s.openAccount({ id: s.nextId('account'), kind: 'loan', category: 'medical', name: 'Owed For Medical Care', ownerId: person.id, institution: 'Your Providers', openedAt: s.now });
     s.post({ memo: `Medical bill unpaid: ${bill.what}`, category: 'health', postings: [{ accountId: debt.id, amount: -bill.amount }, { accountId: s.nominalAccount('expense', 'Medical Care').id, amount: bill.amount }] });
     h.debtSince ??= s.now;
-    if (person.id === s.universe.playerId) s.notify({ category: 'money', title: 'A Medical Bill Went Unpaid', body: `${formatMoney(bill.amount, saveCurrency(s.universe))} for ${bill.what.toLowerCase()} is a medical debt now.`, importance: 75, route: '/workspace/papers' });
+    if (person.id === s.universe.playerId) s.notify({ category: 'health', title: 'A Medical Bill Went Unpaid', body: `${formatMoney(bill.amount, saveCurrency(s.universe))} for ${bill.what.toLowerCase()} is a medical debt now.`, importance: 75, route: '/workspace/papers' });
   });
 
   sim.onCommand<Record<string, never>, { from: Instant; kind: string }>('health.enroll', (_p, { sim: s }) => {

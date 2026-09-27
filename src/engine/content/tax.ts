@@ -14,7 +14,7 @@
 
 import type { Money } from '../core/money';
 import { applyRate } from '../core/money';
-import { jurisdictionPath, CITIES } from './geography';
+import { jurisdictionPath } from './geography';
 
 export interface TaxBracket {
   /** Lower bound of the bracket in cents. */
@@ -452,6 +452,3 @@ export function vehicleFees(cityId: string, at: number): VehicleFeeRule {
 }
 
 /** Cost-of-living multiplier relative to the national baseline. */
-export function costOfLiving(cityId: string): number {
-  return (CITIES.require(cityId).costOfLivingIndex) / 100;
-}

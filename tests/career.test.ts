@@ -52,7 +52,7 @@ function signed(seed: string, tier: 1 | 2 | 3 = 2, level = 75): Simulation {
 /** An offer of a part, made now. */
 function offer(sim: Simulation, roleId: string, units: number, rehearsalWeeks = 0, starts = sim.now + 7 * MS_DAY): Booking {
   const career = careerOf(sim.player);
-  const b: Booking = { id: `t${career.bookings.length}`, roleId, cityId: 'us-ny-newyork', starts, units, rehearsalWeeks, status: 'offered', dueAt: sim.now + 2 * MS_DAY, offeredAt: sim.now, worked: 0, owed: 0, weeksPaid: 0 };
+  const b: Booking = { id: `t${career.bookings.length}`, roleId, cityId: 'us-ny-newyork', starts, units, rehearsalWeeks, status: 'offered', dueAt: sim.now + 2 * MS_DAY, offeredAt: sim.now, worked: 0, owed: 0 };
   career.bookings.push(b);
   return b;
 }

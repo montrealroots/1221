@@ -183,7 +183,7 @@ export function registerSecurity(sim: Simulation): void {
     // A new number reaches the bills on the card only where the bank passes it on.
     if (which === 'credit' && rules?.updaterToBills !== true) p.billersStale = true;
     if (account.ownerId === s.universe.playerId) {
-      s.notify({ category: 'money', title: 'Your New Card Arrived', body: `Ending ${p.last4}.${p.billersStale ? ' The bills on the old number will be declined until you give them the new one.' : ''}`, importance: 50, route: '/workspace/bank' });
+      s.notify({ category: 'bank', title: 'Your New Card Arrived', body: `Ending ${p.last4}.${p.billersStale ? ' The bills on the old number will be declined until you give them the new one.' : ''}`, importance: 50, route: '/workspace/bank' });
     }
   });
 
@@ -195,7 +195,7 @@ export function registerSecurity(sim: Simulation): void {
     const back = one.amount - (one.carried ?? 0);
     one.refunded = back;
     if (back > 0) s.post({ memo: 'Refund: a payment you didn’t make', category: 'refund', postings: [{ accountId: account.id, amount: back }, { accountId: s.nominalAccount('expense', 'Unauthorized Use').id, amount: -back }] });
-    if (person.id === s.universe.playerId) s.notify({ category: 'money', title: 'Refunded', body: `${formatMoney(back, saveCurrency(s.universe))} back for the payment you didn’t make.${one.carried ? ` The law leaves you ${formatMoney(one.carried, saveCurrency(s.universe))} of it.` : ''}`, importance: 50, route: '/workspace/bank' });
+    if (person.id === s.universe.playerId) s.notify({ category: 'bank', title: 'Refunded', body: `${formatMoney(back, saveCurrency(s.universe))} back for the payment you didn’t make.${one.carried ? ` The law leaves you ${formatMoney(one.carried, saveCurrency(s.universe))} of it.` : ''}`, importance: 50, route: '/workspace/bank' });
   });
 
   sim.onEvent('world.day_rollover', 'bank.security', (_event, { sim: s }) => {
@@ -207,7 +207,7 @@ export function registerSecurity(sim: Simulation): void {
       // A month before it expires, a new card with the same number (A144, C88).
       if (!p.stopped && p.expiresAt - s.now <= 30 * MS_DAY) {
         p.expiresAt += yearsFor(account, which) * 365.25 * MS_DAY;
-        s.notify({ category: 'money', title: 'A New Card Is On Its Way', body: `Your ${which} card ending ${p.last4} expires soon. The new one has the same number and expires ${formatDate(p.expiresAt, s.zone)}.`, importance: 35 });
+        s.notify({ category: 'bank', title: 'A New Card Is On Its Way', body: `Your ${which} card ending ${p.last4} expires soon. The new one has the same number and expires ${formatDate(p.expiresAt, s.zone)}.`, importance: 35 });
       }
     }
     somebodyElse(s, person);
@@ -313,7 +313,7 @@ function somebodyElse(sim: Simulation, person: Person): void {
   if (hit.stopped) {
     // Stopped: the bank declines it, asks, and on the answer that it wasn't them, blocks the card and sends another free (A148, C96).
     replace(sim, account, which, 'fraud', false);
-    if (person.id === sim.universe.playerId) sim.notify({ category: 'money', title: 'Your Bank Stopped A Payment', body: `Somebody tried to spend ${formatMoney(amount, cur)} on your ${which} card ending ${account.plastic!.last4}. ${bank.name} declined it and asked; it wasn’t you, so the card is blocked and a new one is on its way, free.`, importance: 70, route: '/workspace/bank' });
+    if (person.id === sim.universe.playerId) sim.notify({ category: 'bank', title: 'Your Bank Stopped A Payment', body: `Somebody tried to spend ${formatMoney(amount, cur)} on your ${which} card ending ${account.plastic!.last4}. ${bank.name} declined it and asked; it wasn’t you, so the card is blocked and a new one is on its way, free.`, importance: 70, route: '/workspace/bank' });
     return;
   }
   const tx = sim.post({ memo: 'Card purchase', category: 'card-fraud', postings: [{ accountId: account.id, amount: -amount }, { accountId: sim.nominalAccount('expense', 'Unauthorized Use').id, amount }] });
@@ -323,6 +323,6 @@ function somebodyElse(sim: Simulation, person: Person): void {
   const learnedAt = alert !== undefined && amount >= alert ? sim.now : statedAt;
   person.fraud = [...(person.fraud ?? []), { transactionId: tx?.id, accountId: account.id, which, amount, at: sim.now, learnedAt, statedAt }];
   if (alert !== undefined && amount >= alert && person.id === sim.universe.playerId) {
-    sim.notify({ category: 'money', title: 'A Large Payment', body: `${formatMoney(amount, cur)} on your ${which} card ending ${account.plastic!.last4}. If it wasn’t you, report it.`, importance: 70, route: '/workspace/bank' });
+    sim.notify({ category: 'bank', title: 'A Large Payment', body: `${formatMoney(amount, cur)} on your ${which} card ending ${account.plastic!.last4}. If it wasn’t you, report it.`, importance: 70, route: '/workspace/bank' });
   }
 }

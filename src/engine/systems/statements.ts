@@ -350,7 +350,7 @@ export function alertsOf(person: Person): AlertSettings {
 /** A statement ready, where they asked to be told. */
 export function statementReady(sim: Simulation, person: Person, account: Account, words: string): void {
   if (person.id !== sim.universe.playerId || !alertsOf(person).statements) return;
-  sim.notify({ category: 'money', title: `Statement Ready: ${account.name}`, body: words, importance: 20, route: '/workspace/bank' });
+  sim.notify({ category: 'bank', title: `Statement Ready: ${account.name}`, body: words, importance: 20, route: '/workspace/bank' });
 }
 
 export function registerStatements(sim: Simulation): void {
@@ -363,7 +363,7 @@ export function registerStatements(sim: Simulation): void {
     if (alerts.lowBalance !== undefined && current) {
       if (current.balance < alerts.lowBalance && !alerts.lowSent) {
         alerts.lowSent = true;
-        s.notify({ category: 'money', title: 'Low Balance', body: `${current.name} is down to ${formatMoney(current.balance, cur)}, under the ${formatMoney(alerts.lowBalance, cur)} you set.`, importance: 55, route: '/workspace/bank' });
+        s.notify({ category: 'bank', title: 'Low Balance', body: `${current.name} is down to ${formatMoney(current.balance, cur)}, under the ${formatMoney(alerts.lowBalance, cur)} you set.`, importance: 55, route: '/workspace/bank' });
       } else if (current.balance >= alerts.lowBalance) alerts.lowSent = false;
     }
     const list = s.universe.transactions as LedgerTransaction[];
@@ -375,7 +375,7 @@ export function registerStatements(sim: Simulation): void {
         for (const p of txn.postings) {
           if (!watched.has(p.accountId) || p.amount >= 0 || -p.amount < alerts.largePayment) continue;
           if (txn.category === 'transfer') continue;
-          s.notify({ category: 'money', title: 'A Large Payment', body: `${formatMoney(-p.amount, cur)} for ${txn.memo.toLowerCase()}, from ${s.universe.accounts[p.accountId]!.name}.`, importance: 45, route: '/workspace/bank' });
+          s.notify({ category: 'bank', title: 'A Large Payment', body: `${formatMoney(-p.amount, cur)} for ${txn.memo.toLowerCase()}, from ${s.universe.accounts[p.accountId]!.name}.`, importance: 45, route: '/workspace/bank' });
         }
       }
     }

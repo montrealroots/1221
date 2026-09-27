@@ -356,7 +356,7 @@ defineDecider<{ sim: Simulation; roleId: string; job: number }, string>({
   },
   sample: (seed) => ({ sim: atYale(seed), roleId: ['costar', 'guest-hour', 'series-hour', 'film-low'][seed % 4]!, job: seed }),
   decide: ({ sim, roleId, job }) => Array.from({ length: 20 }, (_, n) => {
-    const r = afterlife(sim, sim.player, { id: `j${job}-${n}`, roleId, cityId: 'us-ny-newyork', starts: sim.now, units: 2, rehearsalWeeks: 0, status: 'worked', dueAt: sim.now, offeredAt: sim.now, worked: 2, owed: 0, weeksPaid: 0 }, sim.now)!;
+    const r = afterlife(sim, sim.player, { id: `j${job}-${n}`, roleId, cityId: 'us-ny-newyork', starts: sim.now, units: 2, rehearsalWeeks: 0, status: 'worked', dueAt: sim.now, offeredAt: sim.now, worked: 2, owed: 0 }, sim.now)!;
     return `${r.kind}${r.size ?? ''}${r.rerun ? 'R' : ''}${r.syndicated ? 'S' : ''}${r.hit ? 'H' : ''}`;
   }).join(' '),
 });

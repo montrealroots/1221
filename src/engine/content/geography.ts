@@ -573,10 +573,6 @@ export function distanceKm(a: { latitude: number; longitude: number }, b: { lati
   return 2 * R * Math.asin(Math.min(1, Math.sqrt(h)));
 }
 
-export function cityDistanceKm(fromCityId: string, toCityId: string): number {
-  return distanceKm(CITIES.require(fromCityId), CITIES.require(toCityId));
-}
-
 /** Full jurisdiction path for a city, outermost first. Drives tax resolution. */
 export function jurisdictionPath(cityId: string): string[] {
   const c = CITIES.require(cityId);
@@ -603,11 +599,5 @@ export function nearestAirport(cityId: string): string | undefined {
     if (!best || km < best.km) best = { id: a.id, km };
   }
   return best?.id;
-}
-
-/** The first language a country lists, as an ISO 639-1 code; English when SLATE has nothing. */
-export function primaryLanguageOf(countryId: string | undefined): string {
-  const code = COUNTRIES.get(countryId ?? '')?.languages.split(',')[0]?.trim().split('-')[0]?.toLowerCase();
-  return code || 'en';
 }
 

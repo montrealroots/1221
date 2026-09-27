@@ -298,6 +298,33 @@ part the tool cannot see.
   Other countries' holidays, and a bank's own, are still the calendar's
   alone, because their files are fetched at run time and the simulation
   can't wait on them.
+- **Some of the machinery is built and nothing in play uses it.** Found
+  by the dead-word audit of 2026-09-27; what was plainly dead went that day
+  (six preferences, `Booking.weeksPaid`, the rail's locked path, the
+  place profile's weather, and about thirty helpers used nowhere), and
+  these are kept, each with its reason:
+  - The scheduler's recurrences (`Recurrence`, `nextRecurrence`): tested,
+    and every recurring process in the world re-arms itself instead. Taking
+    it out touches the save schema and the server guard.
+  - Command idempotency (`idempotencyKey`, `Universe.idempotency`): the
+    defense against a command sent twice, tested, and no screen passes a
+    key yet.
+  - Records written and never read: a loan's term (`Account.loanMonths`),
+    `Person.citizenshipId` and `pronouns` past the migrations, the save's
+    `migrationInProgress`, `backupAvailable` and `lastPlayedAt`, a
+    transaction's `refType` and `refId`, a penalty's notice day, a
+    hardship plan's start, a home's `since`, a claim's base period and
+    close, an option's booking, a review's reason, a casting's term, a
+    fraud's transaction, a return's `incomeTax`, and a scheduled item's
+    stamps.
+  - Content researched for features not built: the airports
+    (`nearestAirport`), the neighbourhoods, a city's home price, vehicle
+    fees, a bank's payment hold on freed credit and its posting-order
+    words, cashier's check and money order fees, and some banks' and laws'
+    wording.
+  - Sources kept and not shown: roles', interest tax's, switching's,
+    thunder's, rents', pending's, security's, fraud law's, unclaimed money's,
+    payment norms' and check fees', and the French card ceilings'.
 - **An older save's pension fund is kept, and nothing moves it.** The day
   job paid into one in five countries and it grew daily. Both went with the
   job engine on 2026-09-26. A save from before keeps the fund, and net worth

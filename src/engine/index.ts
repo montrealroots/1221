@@ -418,11 +418,7 @@ export function migrate(universe: SaveUniverse): MigrationResult {
   }
 
   if (!universe.preferences) {
-    universe.preferences = {
-      reducedMotion: false, audioEnabled: true, audioVolume: 0.6,
-      timeSpeed: 'live', compactMode: false, showAdvancedNumbers: false,
-      confirmLargePurchases: true, largePurchaseThreshold: 5_000_00,
-    };
+    universe.preferences = { reducedMotion: false, timeSpeed: 'live' };
     steps.push('Created the preferences.');
   }
 

@@ -191,7 +191,7 @@ export function registerPayments(sim: Simulation): void {
     hooks.returned(s, person, check.amount);
     hooks.owe(s, person, check.amount, check.memo, check.category);
     if (person.id === s.universe.playerId) {
-      s.notify({ category: 'money', title: 'A Check Bounced', body: `The ${check.memo.toLowerCase()} check for ${formatMoney(check.amount, saveCurrency(s.universe))} came back unpaid. It's owed, and the bank charged for it.`, importance: 80, route: '/workspace/bank' });
+      s.notify({ category: 'bank', title: 'A Check Bounced', body: `The ${check.memo.toLowerCase()} check for ${formatMoney(check.amount, saveCurrency(s.universe))} came back unpaid. It's owed, and the bank charged for it.`, importance: 80, route: '/workspace/bank' });
     }
   });
 
@@ -205,7 +205,7 @@ export function registerPayments(sim: Simulation): void {
     if (current && to && !to.closedAt && current.balance >= order.amount) {
       s.post({ memo: `Standing order to ${to.name}`, category: 'transfer', postings: [{ accountId: current.id, amount: -order.amount }, { accountId: to.id, amount: order.amount }] });
     } else if (person.id === s.universe.playerId) {
-      s.notify({ category: 'money', title: 'A Standing Order Didn’t Go', body: `${formatMoney(order.amount, saveCurrency(s.universe))} to ${to?.name ?? 'your savings'} wasn't in the current account on the day, so the bank didn't make it.`, importance: 50, route: '/workspace/bank' });
+      s.notify({ category: 'bank', title: 'A Standing Order Didn’t Go', body: `${formatMoney(order.amount, saveCurrency(s.universe))} to ${to?.name ?? 'your savings'} wasn't in the current account on the day, so the bank didn't make it.`, importance: 50, route: '/workspace/bank' });
     }
     s.schedule({ at: nextOn(s, order.day, item.at), kind: STANDING_ORDER_KIND, label: 'Standing Order', category: 'home', priority: 37, payload: { personId: person.id, orderId: order.id } });
   });
@@ -221,7 +221,7 @@ export function registerPayments(sim: Simulation): void {
     if (from.balance >= amount) {
       s.post({ memo: `Scheduled payment to ${to.name}`, category: 'transfer', postings: [{ accountId: from.id, amount: -amount }, { accountId: to.id, amount }] });
     } else if (person.id === s.universe.playerId) {
-      s.notify({ category: 'money', title: 'A Scheduled Payment Didn’t Go', body: `${formatMoney(amount, saveCurrency(s.universe))} to ${to.name} wasn't in ${from.name} on the day.`, importance: 50, route: '/workspace/bank' });
+      s.notify({ category: 'bank', title: 'A Scheduled Payment Didn’t Go', body: `${formatMoney(amount, saveCurrency(s.universe))} to ${to.name} wasn't in ${from.name} on the day.`, importance: 50, route: '/workspace/bank' });
     }
   });
 
@@ -313,7 +313,7 @@ export function registerPayments(sim: Simulation): void {
     if (item) s.timeline.cancel(item.id, s.now);
     // Stopped, it's still owed.
     hooks?.owe(s, person, check.amount, check.memo, check.category);
-    s.notify({ category: 'money', title: 'Check Stopped', body: `The ${check.memo.toLowerCase()} check for ${formatMoney(check.amount, saveCurrency(s.universe))} won't be paid. It's owed to your landlord.${fee > 0 ? ` The bank charged ${formatMoney(fee, saveCurrency(s.universe))}.` : ''}`, importance: 40 });
+    s.notify({ category: 'bank', title: 'Check Stopped', body: `The ${check.memo.toLowerCase()} check for ${formatMoney(check.amount, saveCurrency(s.universe))} won't be paid. It's owed to your landlord.${fee > 0 ? ` The bank charged ${formatMoney(fee, saveCurrency(s.universe))}.` : ''}`, importance: 40 });
     return { fee };
   });
 

@@ -180,8 +180,6 @@ export interface Booking {
   /** Days worked, and of them not yet paid. */
   worked: number;
   owed: number;
-  /** Weeks paid, on stage, so rehearsal weeks are commissioned at their rate. */
-  weeksPaid: number;
   /** Each day's overtime, by the day's place in the job. */
   overtimeDays?: Money[];
   /** Where it shoots, if not at home (`LOCATION`). */
@@ -535,7 +533,7 @@ function endRepresentation(sim: Simulation, person: Person, reason: string, left
     for (const item of sim.universe.scheduled) if (item.status === 'pending' && item.kind === AUDITION_KIND && item.payload.auditionId === a.id) sim.timeline.cancel(item.id, sim.now);
   }
   if (!left) feel(person, 'dropped');
-  if (!left && person.id === sim.universe.playerId) sim.notify({ category: 'money', title: `${agency.name} Let You Go`, body: `${reason} You can still submit yourself for work.`, importance: 85, route: '/workspace/career' });
+  if (!left && person.id === sim.universe.playerId) sim.notify({ category: 'career', title: `${agency.name} Let You Go`, body: `${reason} You can still submit yourself for work.`, importance: 85, route: '/workspace/career' });
 }
 
 function offerRepresentation(sim: Simulation, person: Person, agencies: string[], cityId: CareerCity, why: string): void {
@@ -794,7 +792,7 @@ export function registerCareer(sim: Simulation): void {
     if (managers.length) offerManagement(s, person, managers, `After the showcase in ${city},`);
     if (offers.length) { offerRepresentation(s, person, offers, cityId, `After the showcase in ${city},`); return; }
     if (isPlayer(person) && !career.agencyId) {
-      s.notify({ category: 'money', title: focus > 0 ? `No Offers From ${city}` : `You Missed The Showcase In ${city}`, body: focus > 0 ? 'Nobody in the room offered to represent you. You can still submit yourself for work, and an agency can come later.' : 'Asleep through it, you weren’t seen.', importance: 80, route: '/workspace/career' });
+      s.notify({ category: 'career', title: focus > 0 ? `No Offers From ${city}` : `You Missed The Showcase In ${city}`, body: focus > 0 ? 'Nobody in the room offered to represent you. You can still submit yourself for work, and an agency can come later.' : 'Asleep through it, you weren’t seen.', importance: 80, route: '/workspace/career' });
     }
   });
 
@@ -835,7 +833,7 @@ export function registerCareer(sim: Simulation): void {
     career.auditions = career.auditions.slice(-60);
     const sent = career.auditions.filter((a) => a.status === 'ahead' && a.at >= item.at);
     if (sent.length && isPlayer(person)) {
-      s.notify({ category: 'money', title: sent.length === 1 ? 'An Audition This Week' : `${sent.length} Auditions This Week`, body: sent.map((a) => `${roleById(a.roleId).label}, ${a.mode === 'tape' ? 'a self-tape' : `in the room in ${CITIES.require(a.cityId).name}`}, ${formatDateTime(a.at, zoneOf(a.cityId))}`).join('; ') + '.', importance: 70, route: '/workspace/career' });
+      s.notify({ category: 'career', title: sent.length === 1 ? 'An Audition This Week' : `${sent.length} Auditions This Week`, body: sent.map((a) => `${roleById(a.roleId).label}, ${a.mode === 'tape' ? 'a self-tape' : `in the room in ${CITIES.require(a.cityId).name}`}, ${formatDateTime(a.at, zoneOf(a.cityId))}`).join('; ') + '.', importance: 70, route: '/workspace/career' });
     }
     // The next Monday by the calendar, not seven days of the clock, which a change of the clocks moves an hour.
     scheduleWeek(s, person, nextMonday(item.at, zoneOf(workCity(person))));
@@ -856,7 +854,7 @@ export function registerCareer(sim: Simulation): void {
       if (audition.self || !career.agencyId || inHospital(person, item.at)) return;
       career.missed += 1;
       if (career.missed >= ESTIMATE.dropAfterMissed) { endRepresentation(s, person, `You missed ${ESTIMATE.dropAfterMissed} auditions the agency got you.`, false); return; }
-      if (isPlayer(person)) s.notify({ category: 'money', title: 'You Missed An Audition', body: `${roleById(audition.roleId).label}: the agency got you in, and you weren’t there. ${ESTIMATE.dropAfterMissed} missed and they let you go.`, importance: 75, route: '/workspace/career' });
+      if (isPlayer(person)) s.notify({ category: 'career', title: 'You Missed An Audition', body: `${roleById(audition.roleId).label}: the agency got you in, and you weren’t there. ${ESTIMATE.dropAfterMissed} missed and they let you go.`, importance: 75, route: '/workspace/career' });
       return;
     }
     audition.status = 'done';
@@ -883,7 +881,7 @@ export function registerCareer(sim: Simulation): void {
       starts: nextMonday(s.now + role.leadDays * MS_DAY, zoneOf(location ?? audition.cityId)),
       units: span(role.units), rehearsalWeeks: role.rehearsalWeeks ? span(role.rehearsalWeeks) : 0,
       ...genreOf(role, rng.next()),
-      status: 'offered', dueAt: s.now + ESTIMATE.bookingOfferDays * MS_DAY, offeredAt: s.now, worked: 0, owed: 0, weeksPaid: 0,
+      status: 'offered', dueAt: s.now + ESTIMATE.bookingOfferDays * MS_DAY, offeredAt: s.now, worked: 0, owed: 0,
       ...(location ? { location } : {}),
     };
     career.bookings.push(booking);
@@ -915,7 +913,7 @@ export function registerCareer(sim: Simulation): void {
     if (!person || !booking || booking.status !== 'offered') return;
     booking.status = 'lapsed';
     closeDecision(s, booking.id);
-    if (isPlayer(person)) s.notify({ category: 'money', title: 'An Offer Lapsed', body: `${roleById(booking.roleId).label}: unanswered, it went to somebody else.`, importance: 60, route: '/workspace/career' });
+    if (isPlayer(person)) s.notify({ category: 'career', title: 'An Offer Lapsed', body: `${roleById(booking.roleId).label}: unanswered, it went to somebody else.`, importance: 60, route: '/workspace/career' });
   });
 
   sim.onSchedule(WORK_KIND, (item, s) => {
@@ -936,14 +934,14 @@ export function registerCareer(sim: Simulation): void {
         for (const one of s.universe.scheduled) if (one.status === 'pending' && one.kind === WORK_KIND && one.payload.bookingId === booking.id) s.timeline.cancel(one.id, s.now);
         if (booking.owed > 0) schedulePay(s, person, booking, s.now + 60_000, true);
         feel(person, 'recast');
-        if (isPlayer(person)) s.notify({ category: 'money', title: 'Recast While You Were In Hospital', body: `${role.label} couldn’t wait for you, and went to somebody else. What you worked is still paid.`, importance: 90, route: '/workspace/career' });
+        if (isPlayer(person)) s.notify({ category: 'career', title: 'Recast While You Were In Hospital', body: `${role.label} couldn’t wait for you, and went to somebody else. What you worked is still paid.`, importance: 90, route: '/workspace/career' });
         return;
       }
       booking.status = 'fired';
       for (const one of s.universe.scheduled) if (one.status === 'pending' && one.kind === WORK_KIND && one.payload.bookingId === booking.id) s.timeline.cancel(one.id, s.now);
       if (booking.owed > 0) schedulePay(s, person, booking, s.now + 60_000, true);
       feel(person, 'replaced');
-      if (isPlayer(person)) s.notify({ category: 'money', title: 'Replaced', body: `You didn’t turn up for ${role.label}, and the production replaced you. What you worked is still paid.`, importance: 90, route: '/workspace/career' });
+      if (isPlayer(person)) s.notify({ category: 'career', title: 'Replaced', body: `You didn’t turn up for ${role.label}, and the production replaced you. What you worked is still paid.`, importance: 90, route: '/workspace/career' });
       if (career.agencyId) endRepresentation(s, person, 'You walked off a job the agency booked.', false);
       return;
     }
@@ -1155,7 +1153,7 @@ export function registerCareer(sim: Simulation): void {
       if (paid) recordJobCost(person, s.now, cost);
       person.currentLocationId = city;
       s.universe.currentZone = zoneOf(city);
-      if (isPlayer(person)) s.notify({ category: 'money', title: `In ${CITIES.require(city).name} For The Job`, body: paid ? `${roleById(booking.roleId).label}: a room sublet for ${nights} nights, ${formatMoney(cost, cur)}.` : `${roleById(booking.roleId).label}: a sublet for ${nights} nights is ${formatMoney(cost, cur)}, which neither the bank nor the card could cover, so it’s a friend’s sofa.`, importance: 55, route: '/workspace/career' });
+      if (isPlayer(person)) s.notify({ category: 'career', title: `In ${CITIES.require(city).name} For The Job`, body: paid ? `${roleById(booking.roleId).label}: a room sublet for ${nights} nights, ${formatMoney(cost, cur)}.` : `${roleById(booking.roleId).label}: a sublet for ${nights} nights is ${formatMoney(cost, cur)}, which neither the bank nor the card could cover, so it’s a friend’s sofa.`, importance: 55, route: '/workspace/career' });
       return;
     }
     // Home again however the job went, fired from it or not, where they're still there.
@@ -1179,7 +1177,7 @@ export function registerCareer(sim: Simulation): void {
     if (item.payload.direction === 'out') {
       person.currentLocationId = booking.location;
       s.universe.currentZone = zoneOf(booking.location);
-      if (isPlayer(person)) s.notify({ category: 'money', title: `On Location In ${CITIES.require(booking.location).name}`, body: `The production flew you out for ${role.label}, with a room of your own and a meal allowance each day.`, importance: 55, route: '/workspace/career' });
+      if (isPlayer(person)) s.notify({ category: 'career', title: `On Location In ${CITIES.require(booking.location).name}`, body: `The production flew you out for ${role.label}, with a room of your own and a meal allowance each day.`, importance: 55, route: '/workspace/career' });
       return;
     }
     const home = person.home?.cityId ?? booking.cityId;
@@ -1204,21 +1202,21 @@ export function registerCareer(sim: Simulation): void {
     const picked = season <= SERIES.maxSeasons && renewed(s, person, prior.id, odds);
     if (!picked) {
       feel(person, 'canceled');
-      if (isPlayer(person)) s.notify({ category: 'money', title: 'Your Series Was Canceled', body: `${role.label}: the option wasn’t taken up. You’re free.`, importance: 80, route: '/workspace/career' });
+      if (isPlayer(person)) s.notify({ category: 'career', title: 'Your Series Was Canceled', body: `${role.label}: the option wasn’t taken up. You’re free.`, importance: 80, route: '/workspace/career' });
       return;
     }
     const zone = zoneOf(workCityOf(prior));
     const rate = Math.round(rateOn(role.steps, dayKey(prior.starts, zone)) * (1 + SERIES.raise));
     const next: Booking = {
       id: nextOwnId(career, 'b'), roleId: role.id, cityId: prior.cityId, starts: nextMonday(prior.starts + SERIES.nextSeasonDays * MS_DAY - 3 * MS_DAY, zone),
-      units: prior.units, rehearsalWeeks: 0, status: 'offered', dueAt: s.now, offeredAt: s.now, worked: 0, owed: 0, weeksPaid: 0,
+      units: prior.units, rehearsalWeeks: 0, status: 'offered', dueAt: s.now, offeredAt: s.now, worked: 0, owed: 0,
       rate: Math.max(rate, prior.rate ? Math.round(prior.rate * (1 + SERIES.raise)) : 0), season, seriesId: prior.seriesId ?? prior.id,
       ...(prior.location ? { location: prior.location } : {}),
     };
     career.bookings.push(next);
     takeJob(s, person, next, true);
     feel(person, 'pickedUp');
-    if (isPlayer(person)) s.notify({ category: 'money', title: `Picked Up For Season ${season}`, body: `${role.label}: the option was taken up. The season starts ${formatDate(next.starts, zone)}, at ${formatMoney(usd(next.rate!, saveCurrency(s.universe)), saveCurrency(s.universe))} an episode.`, importance: 90, route: '/workspace/career' });
+    if (isPlayer(person)) s.notify({ category: 'career', title: `Picked Up For Season ${season}`, body: `${role.label}: the option was taken up. The season starts ${formatDate(next.starts, zone)}, at ${formatMoney(usd(next.rate!, saveCurrency(s.universe)), saveCurrency(s.universe))} an episode.`, importance: 90, route: '/workspace/career' });
   });
 
   /**
@@ -1250,7 +1248,7 @@ export function registerCareer(sim: Simulation): void {
       other.status = 'released';
       for (const one of s.universe.scheduled) if (one.status === 'pending' && one.payload.bookingId === other.id && (one.kind === WORK_KIND || one.kind === TRAVEL_KIND)) s.timeline.cancel(one.id, s.now);
       if (other.owed > 0) schedulePay(s, person, other, s.now + 60_000, true);
-      if (isPlayer(person)) s.notify({ category: 'money', title: 'Released For Your Series', body: `${roleById(other.roleId).label} clashed with the series’ new season, which has you first.`, importance: 75, route: '/workspace/career' });
+      if (isPlayer(person)) s.notify({ category: 'career', title: 'Released For Your Series', body: `${roleById(other.roleId).label} clashed with the series’ new season, which has you first.`, importance: 75, route: '/workspace/career' });
     }
     booking.status = 'accepted';
     career.lastBookedAt = s.now;

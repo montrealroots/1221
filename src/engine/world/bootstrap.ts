@@ -13,8 +13,7 @@ import { CITIES, COUNTRIES } from '../content/geography';
 import { exchange, hasRate } from '../content/currency';
 import { DEFAULT_LEDGER_CURRENCY } from '../core/money';
 import type { Housing } from '../systems/household';
-import { costOfLiving } from '../content/tax';
-import { addDays, addMonths, instantFromZoned, MS_DAY } from '../core/time';
+import { instantFromZoned, MS_DAY } from '../core/time';
 import type { Money } from '../core/money';
 import { idAlreadyIssued } from '../core/ids';
 import { ETHNICITY_BY_ID } from '../content/ethnicity';
@@ -252,9 +251,7 @@ export function emptyUniverse(
     accounts: {}, transactions: [],
     scheduled: [], history: [], decisions: {}, notifications: [],
     preferences: {
-      reducedMotion: false, audioEnabled: true, audioVolume: 0.6,
-      timeSpeed: 'live', compactMode: false, showAdvancedNumbers: false,
-      confirmLargePurchases: true, largePurchaseThreshold: 5_000_00,
+      reducedMotion: false, timeSpeed: 'live',
     },
     idempotency: {},
     counters: {},
@@ -380,6 +377,3 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveCon
   return { universe, playerId };
 }
 
-export const WEALTH_PROFILES = WEALTH_PROFILE;
-export const DAY = MS_DAY;
-export { addDays, addMonths, costOfLiving };

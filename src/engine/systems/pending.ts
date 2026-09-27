@@ -47,11 +47,6 @@ export function hold(sim: Simulation, txn: LedgerTransaction | undefined, accoun
   txn.postsAt = sim.now + calendarDays(pendingDaysOf(account).days) * MS_DAY;
 }
 
-/** Whether an entry is still pending. */
-export function isPending(sim: Simulation, txn: LedgerTransaction): boolean {
-  return txn.postsAt !== undefined && txn.postsAt > sim.now;
-}
-
 /** What's pending on an account, in the ledger's sense (a debit negative). */
 export function pendingOn(sim: Simulation, account: Account, at: Instant = sim.now): Money {
   let sum = 0;

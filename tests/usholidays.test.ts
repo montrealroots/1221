@@ -43,7 +43,7 @@ describe('the holidays', () => {
   it('keep a shoot off Thanksgiving and the day after', () => {
     const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true }, 'thanksgiving');
     beginCareer(sim, sim.player);
-    const b: Booking = { id: 'tg', roleId: 'costar', cityId: 'us-ny-newyork', starts: instantFromZoned({ year: 2026, month: 11, day: 25, hour: 8 }, NY), units: 3, rehearsalWeeks: 0, status: 'offered', dueAt: 0, offeredAt: 0, worked: 0, owed: 0, weeksPaid: 0 };
+    const b: Booking = { id: 'tg', roleId: 'costar', cityId: 'us-ny-newyork', starts: instantFromZoned({ year: 2026, month: 11, day: 25, hour: 8 }, NY), units: 3, rehearsalWeeks: 0, status: 'offered', dueAt: 0, offeredAt: 0, worked: 0, owed: 0 };
     careerOf(sim.player).bookings.push(b);
     const days = workDays(b).map((d) => new Date(d.at).toISOString().slice(0, 10));
     expect(days).toEqual(['2026-11-25', '2026-11-30', '2026-12-01']);

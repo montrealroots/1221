@@ -308,7 +308,7 @@ export function settleUkYears(sim: Simulation, person: Person, calendarYear: num
     uk.withheld += change;
     const memo = change < 0 ? `HMRC refund, UK tax year ${key}–${String(Number(key) + 1).slice(2)}` : `HMRC, UK tax year ${key}–${String(Number(key) + 1).slice(2)}`;
     sim.post({ memo, category: 'tax', postings: [{ accountId: account.id, amount: -change }, { accountId: sim.nominalAccount(change < 0 ? 'income' : 'expense', change < 0 ? 'Tax Refund' : 'Foreign Tax Withheld').id, amount: change }] });
-    if (person.id === sim.universe.playerId) sim.notify({ category: 'money', title: change < 0 ? 'The UK Gave Tax Back' : 'The UK Took Its Balance', body: `Your ${key}–${String(Number(key) + 1).slice(2)} UK tax year: ${formatMoney(Math.abs(change), cur)} ${change < 0 ? 'back' : 'paid'}, ${tax === 0 ? 'the treaty leaving it untaxed' : `on ${formatMoney(tax, cur)} of UK tax`}.`, importance: 70, route: '/workspace/papers' });
+    if (person.id === sim.universe.playerId) sim.notify({ category: 'tax', title: change < 0 ? 'The UK Gave Tax Back' : 'The UK Took Its Balance', body: `Your ${key}–${String(Number(key) + 1).slice(2)} UK tax year: ${formatMoney(Math.abs(change), cur)} ${change < 0 ? 'back' : 'paid'}, ${tax === 0 ? 'the treaty leaving it untaxed' : `on ${formatMoney(tax, cur)} of UK tax`}.`, importance: 70, route: '/workspace/papers' });
   }
 }
 
@@ -341,7 +341,7 @@ export function registerTaxReturn(sim: Simulation): void {
     const person = s.universe.people[String(item.payload.personId)];
     const r = person ? returnsOf(person)[String(item.payload.year)] : undefined;
     if (!person || !r || r.filedAt !== undefined || person.id !== s.universe.playerId) return;
-    s.notify({ category: 'money', title: `Your ${r.year} Return Is Late`, body: r.figures.balance > 0 ? 'Each month late adds 5% of what you owe, to a quarter of it; past 60 days, at least $525.' : 'A refund waits for the return; there’s no penalty on one.', importance: 80, route: '/workspace/papers' });
+    s.notify({ category: 'tax', title: `Your ${r.year} Return Is Late`, body: r.figures.balance > 0 ? 'Each month late adds 5% of what you owe, to a quarter of it; past 60 days, at least $525.' : 'A refund waits for the return; there’s no penalty on one.', importance: 80, route: '/workspace/papers' });
   });
 
   sim.onSchedule(TAX_REFUND_KIND, (item, s) => {

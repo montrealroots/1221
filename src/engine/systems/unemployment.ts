@@ -139,7 +139,7 @@ function close(sim: Simulation, person: Person, why: string): void {
   claim.closedAt = sim.now;
   record.past.push(claim);
   delete record.claim;
-  if (person.id === sim.universe.playerId) sim.notify({ category: 'money', title: 'Your Unemployment Claim Ended', body: why, importance: 60, route: '/workspace/papers' });
+  if (person.id === sim.universe.playerId) sim.notify({ category: 'benefits', title: 'Your Unemployment Claim Ended', body: why, importance: 60, route: '/workspace/papers' });
 }
 
 export function registerUnemployment(sim: Simulation): void {
@@ -181,7 +181,7 @@ export function registerUnemployment(sim: Simulation): void {
     if (due <= 0) { again(); return; }
     if (!claim.waited) {
       claim.waited = true;
-      if (person.id === s.universe.playerId) s.notify({ category: 'money', title: 'Your Waiting Week', body: `The first week a claim would pay isn’t paid: ${formatMoney(due, cur)} this week. Benefits start next week.`, importance: 50, route: '/workspace/papers' });
+      if (person.id === s.universe.playerId) s.notify({ category: 'benefits', title: 'Your Waiting Week', body: `The first week a claim would pay isn’t paid: ${formatMoney(due, cur)} this week. Benefits start next week.`, importance: 50, route: '/workspace/papers' });
       again();
       return;
     }

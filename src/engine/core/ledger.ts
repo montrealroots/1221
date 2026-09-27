@@ -20,10 +20,6 @@ export type AccountKind =
 
 export const NOMINAL_KINDS: readonly AccountKind[] = ['income', 'expense', 'equity', 'asset_value', 'liability_other'];
 
-export function isNominal(kind: AccountKind): boolean {
-  return NOMINAL_KINDS.includes(kind);
-}
-
 /** Liability accounts carry a negative balance when money is owed. */
 export const LIABILITY_KINDS: readonly AccountKind[] = ['credit_card', 'loan', 'mortgage', 'auto_loan', 'company_credit'];
 

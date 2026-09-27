@@ -194,7 +194,7 @@ export function transferOnArrival(sim: Simulation, person: Person, card: Account
   credit.transfers = [{ kind: 'balance', owed: owed + fee, accrued: 0, apr: terms.transfer.apr, ...intro }];
   if (person.id === sim.universe.playerId) {
     const cur = saveCurrency(sim.universe);
-    sim.notify({ category: 'money', title: 'Your Balance Moved', body: `${formatMoney(owed, cur)} from the ${old.name}, for a ${formatMoney(fee, cur)} fee, at ${((intro.introApr ?? terms.transfer.apr) * 100).toFixed(2)}%. The old card is closed.`, importance: 50, route: '/workspace/bank' });
+    sim.notify({ category: 'bank', title: 'Your Balance Moved', body: `${formatMoney(owed, cur)} from the ${old.name}, for a ${formatMoney(fee, cur)} fee, at ${((intro.introApr ?? terms.transfer.apr) * 100).toFixed(2)}%. The old card is closed.`, importance: 50, route: '/workspace/bank' });
   }
 }
 

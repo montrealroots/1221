@@ -121,15 +121,3 @@ export function hash32(input: string): number {
   }
   return h >>> 0;
 }
-
-/** Human-facing short code, e.g. for save slots or invoice numbers. */
-export function shortCode(seed: string, length = 6): string {
-  const alphabet = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-  let h = hash32(seed);
-  let out = '';
-  for (let i = 0; i < length; i++) {
-    out += alphabet[h % alphabet.length] ?? 'X';
-    h = Math.imul(h ^ (h >>> 13), 0x5bd1e995) >>> 0;
-  }
-  return out;
-}

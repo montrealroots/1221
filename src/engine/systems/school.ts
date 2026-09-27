@@ -599,7 +599,7 @@ export function enroll(sim: Simulation, person: Person): void {
   if (person.id !== sim.universe.playerId) return;
   const day = (d: SchoolDate) => formatDate(at(d, 12), zone());
   sim.notify({
-    category: 'money',
+    category: 'school',
     title: 'Welcome To The Class Of ' + school.classOf,
     body: `You’re one of the ${YALE_DRAMA.classSize} actors in the ${YALE_DRAMA.degree} in ${YALE_DRAMA.program} at the ${YALE_DRAMA.name}, and the one the faculty wanted most from this year’s auditions. Tuition is covered, as it is for every student. The fall term begins with registration, then orientation until ${day(ORIENTATION_2026.ends)}, and classes from ${day(ORIENTATION_2026.classesBegin)} at 9 a.m.`,
     importance: 80, route: '/workspace/school',
@@ -666,7 +666,7 @@ function setStanding(sim: Simulation, person: Person, to: Standing, reason: stri
     graduated: ['Your MFA Is Conferred', reason],
   };
   const [title, body] = words[to];
-  sim.notify({ category: 'money', title, body, importance: to === 'good' ? 45 : 85, route: '/workspace/school' });
+  sim.notify({ category: 'school', title, body, importance: to === 'good' ? 45 : 85, route: '/workspace/school' });
 }
 
 /** A grave breach: straight to warning, or dismissal from warning. */
@@ -805,7 +805,7 @@ function cast(sim: Simulation, person: Person, term: number): void {
   delete school.casting;
   delete school.rep;
   if (!school.castable) {
-    if (person.id === sim.universe.playerId) sim.notify({ category: 'money', title: 'Not Cast This Term', body: 'You’re out of the casting pool after missed rehearsal calls. A good evaluation puts you back.', importance: 70, route: '/workspace/school' });
+    if (person.id === sim.universe.playerId) sim.notify({ category: 'school', title: 'Not Cast This Term', body: 'You’re out of the casting pool after missed rehearsal calls. A good evaluation puts you back.', importance: 70, route: '/workspace/school' });
     return;
   }
   const production = schoolProduction(term, rankIn(person, 'acting'));
@@ -841,7 +841,7 @@ function cast(sim: Simulation, person: Person, term: number): void {
     if (school.casting) parts.push(`in ${school.casting.kind === 'thesis' ? '' : 'the '}${school.casting.production}, from its first rehearsal call`);
     const r = school.rep;
     if (r) parts.push(r.kind === 'role' ? `and, at the director’s invitation with the dean’s approval, in the company of ${r.production}` : `and to understudy ${term === 1 ? `${r.role} in Yale Rep’s ${SEAGULL_2027.name}, directed by ${SEAGULL_2027.director}` : `in ${r.production}`}, in New Haven and reachable at every performance`);
-    if (parts.length) sim.notify({ category: 'money', title: `Cast: ${school.casting?.production ?? r!.production}`, body: `The chair, ${chair}, has cast you ${parts.join(', ')}. Once cast, you fulfil the casting.`, importance: 75, route: '/workspace/school' });
+    if (parts.length) sim.notify({ category: 'school', title: `Cast: ${school.casting?.production ?? r!.production}`, body: `The chair, ${chair}, has cast you ${parts.join(', ')}. Once cast, you fulfil the casting.`, importance: 75, route: '/workspace/school' });
   }
 }
 
@@ -908,7 +908,7 @@ export function registerSchool(sim: Simulation): void {
     }
     if (person.id === s.universe.playerId) {
       s.notify({
-        category: 'money', title: `${termLabel(term)} Begins`,
+        category: 'school', title: `${termLabel(term)} Begins`,
         body: need
           ? `Your living-expense scholarship of ${formatMoney(account.livingScholarship, cur)} met this term’s Yale Health plan, ${formatMoney(account.healthPlan, cur)}, and ${formatMoney(account.refund, cur)} is in your ${current?.name ?? 'account'}. Tuition, ${formatMoney(account.tuition, cur)} a term, is covered by the tuition scholarship.`
           : `Tuition, ${formatMoney(account.tuition, cur)} a term, is covered by the tuition scholarship. Yale’s aid for living costs goes by need, and none was found, so this term’s Yale Health plan, ${formatMoney(account.healthPlan, cur)}, was paid from your bank, and living costs are yours.`,
@@ -952,7 +952,7 @@ export function registerSchool(sim: Simulation): void {
     item.status = 'missed';
     // A day in hospital is excused, as a sick day called in is.
     if (school.sickDay === keyOf(day) || inHospital(person, item.at)) { school.tally.excused += 1; return; }
-    if (person.id === s.universe.playerId) s.notify({ category: 'money', title: 'You Missed Classes', body: `${courses.map((one) => one.name).join(', ')}: an unexcused absence, which the faculty weigh at the end of the term.`, importance: 65, route: '/workspace/school' });
+    if (person.id === s.universe.playerId) s.notify({ category: 'school', title: 'You Missed Classes', body: `${courses.map((one) => one.name).join(', ')}: an unexcused absence, which the faculty weigh at the end of the term.`, importance: 65, route: '/workspace/school' });
   });
 
   sim.onSchedule(SHIFT_KIND, (item, s) => {
@@ -975,7 +975,7 @@ export function registerSchool(sim: Simulation): void {
     item.status = 'missed';
     // An elective evening not worked frees its hours to be asked for again.
     if (elective) school.workStudy.electiveHours -= hours;
-    if (person.id === s.universe.playerId) s.notify({ category: 'money', title: 'You Missed A Work-Study Shift', body: 'Unworked hours aren’t paid, and a missed assigned shift counts against you at the end of the term.', importance: 60, route: '/workspace/school' });
+    if (person.id === s.universe.playerId) s.notify({ category: 'school', title: 'You Missed A Work-Study Shift', body: 'Unworked hours aren’t paid, and a missed assigned shift counts against you at the end of the term.', importance: 60, route: '/workspace/school' });
   });
 
   sim.onSchedule(PAYDAY_KIND, (item, s) => {
@@ -1010,7 +1010,7 @@ export function registerSchool(sim: Simulation): void {
         casting.performed += 1;
         grow(person.craft, 'acting', focusOf(person), 6);
         tire(person, ESTIMATE.energy.performance);
-        if (person.id === s.universe.playerId) s.notify({ category: 'money', title: `You Went On As ${casting.role}`, body: `The role’s actor was out, and you played ${casting.role} in Yale Rep’s ${casting.production} tonight.`, importance: 90, route: '/workspace/school' });
+        if (person.id === s.universe.playerId) s.notify({ category: 'school', title: `You Went On As ${casting.role}`, body: `The role’s actor was out, and you played ${casting.role} in Yale Rep’s ${casting.production} tonight.`, importance: 90, route: '/workspace/school' });
         return;
       }
       breach(s, person, `weren’t there when called to go on as ${casting.role}`);
@@ -1036,10 +1036,10 @@ export function registerSchool(sim: Simulation): void {
     if (call === 'performance') { breach(s, person, `missed a performance of ${casting.kind === 'project' ? 'the ' : ''}${casting.production}`); return; }
     if (school.tally.calls - school.tally.answered >= ESTIMATE.missedCallsOut && school.castable) {
       school.castable = false;
-      if (person.id === s.universe.playerId) s.notify({ category: 'money', title: 'Out Of The Casting Pool', body: 'Missed rehearsal calls: the chair takes you out of the casting pool to reacquire the discipline. You fulfil what you’re cast in now, and aren’t cast again until a good evaluation.', importance: 80, route: '/workspace/school' });
+      if (person.id === s.universe.playerId) s.notify({ category: 'school', title: 'Out Of The Casting Pool', body: 'Missed rehearsal calls: the chair takes you out of the casting pool to reacquire the discipline. You fulfil what you’re cast in now, and aren’t cast again until a good evaluation.', importance: 80, route: '/workspace/school' });
       return;
     }
-    if (person.id === s.universe.playerId) s.notify({ category: 'money', title: 'You Missed A Rehearsal Call', body: 'Missed calls take an actor out of the casting pool.', importance: 65, route: '/workspace/school' });
+    if (person.id === s.universe.playerId) s.notify({ category: 'school', title: 'You Missed A Rehearsal Call', body: 'Missed calls take an actor out of the casting pool.', importance: 65, route: '/workspace/school' });
   });
 
   sim.onSchedule(EVALUATION_KIND, (item, s) => {
@@ -1139,7 +1139,7 @@ export function registerSchool(sim: Simulation): void {
       // A missed performance and the company lets them go: the calls ahead are off, the stipend stops.
       summer.out = true;
       for (const one of s.universe.scheduled) if (one.status === 'pending' && (one.kind === SUMMER_KIND || one.kind === STIPEND_KIND) && one.payload.personId === person.id) s.timeline.cancel(one.id, s.now);
-      if (person.id === s.universe.playerId) s.notify({ category: 'money', title: 'Out Of The Summer Cabaret', body: 'You missed a performance, and the company went on without you. The weeks you worked are paid.', importance: 80, route: '/workspace/school' });
+      if (person.id === s.universe.playerId) s.notify({ category: 'school', title: 'Out Of The Summer Cabaret', body: 'You missed a performance, and the company went on without you. The weeks you worked are paid.', importance: 80, route: '/workspace/school' });
       return;
     }
     if (item.payload.call === 'performance') {
@@ -1180,7 +1180,7 @@ export function registerSchool(sim: Simulation): void {
     const person = personOf(item);
     if (!person || !summerOf(person, item.at)) return;
     armSummerWork(s, person);
-    if (person.id === s.universe.playerId) s.notify({ category: 'money', title: 'The Summer Is Yours', body: 'Classes are done until the fall term. The Bulletin limits outside work only while they’re in session: Submit Yourself for jobs that end before the term, and a job in another city means a sublet there.', importance: 60, route: '/workspace/career' });
+    if (person.id === s.universe.playerId) s.notify({ category: 'school', title: 'The Summer Is Yours', body: 'Classes are done until the fall term. The Bulletin limits outside work only while they’re in session: Submit Yourself for jobs that end before the term, and a job in another city means a sublet there.', importance: 60, route: '/workspace/career' });
   });
 
   sim.onSchedule(STIPEND_KIND, (item, s) => {

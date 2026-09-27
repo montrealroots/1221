@@ -99,7 +99,7 @@ describe('a day of work, enjoyed', () => {
   it('on a played job: a rehearsal day in a loved genre leaves the mood higher and the craft the same', () => {
     const run = (genres: string[]) => {
       const sim = pro('loved-day', { genres });
-      const b: Booking = { id: 'j', roleId: 'lort-b', cityId: 'us-ny-newyork', starts: at(2026, 1, 12, 8), units: 1, rehearsalWeeks: 1, status: 'offered', dueAt: sim.now + 2 * MS_DAY, offeredAt: sim.now, worked: 0, owed: 0, weeksPaid: 0, genre: 'western' };
+      const b: Booking = { id: 'j', roleId: 'lort-b', cityId: 'us-ny-newyork', starts: at(2026, 1, 12, 8), units: 1, rehearsalWeeks: 1, status: 'offered', dueAt: sim.now + 2 * MS_DAY, offeredAt: sim.now, worked: 0, owed: 0, genre: 'western' };
       careerOf(sim.player).bookings.push(b);
       expect(sim.execute({ kind: 'career.accept', payload: { bookingId: 'j' } }).ok).toBe(true);
       const until = at(2026, 1, 13, 15);

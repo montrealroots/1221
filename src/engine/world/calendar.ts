@@ -265,25 +265,3 @@ export function missedBy(sim: Simulation, at: Instant): CalendarEntry[] {
 export function checkConflicts(sim: Simulation, at: Instant, durationMinutes: number): CalendarEntry[] {
   return sim.timeline.conflicts(at, durationMinutes).map(toEntry);
 }
-
-/** Free windows in a day, for scheduling UIs that suggest times. */
-export function freeWindows(sim: Simulation, day: Instant, opts: { fromHour?: number; toHour?: number } = {}): { start: Instant; end: Instant }[] {
-  const zone = sim.homeZone;
-  const parts = zonedParts(day, zone);
-  const from = instantFromZoned({ year: parts.year, month: parts.month, day: parts.day, hour: opts.fromHour ?? 8 }, zone);
-  const to = instantFromZoned({ year: parts.year, month: parts.month, day: parts.day, hour: opts.toHour ?? 22 }, zone);
-
-  const busy = sim.timeline
-    .between(from, to, (i) => i.requiresPlayer === true)
-    .map((i) => ({ start: i.at, end: i.at + (i.durationMinutes ?? 60) * MS_MINUTE }))
-    .sort((a, b) => a.start - b.start);
-
-  const windows: { start: Instant; end: Instant }[] = [];
-  let cursor = from;
-  for (const block of busy) {
-    if (block.start > cursor + 30 * MS_MINUTE) windows.push({ start: cursor, end: block.start });
-    cursor = Math.max(cursor, block.end);
-  }
-  if (to > cursor + 30 * MS_MINUTE) windows.push({ start: cursor, end: to });
-  return windows;
-}

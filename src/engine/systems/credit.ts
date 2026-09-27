@@ -500,7 +500,7 @@ export function registerCredit(sim: Simulation): void {
       if (credit.score >= RAISE_FROM && clean && (card.creditLimit ?? 0) > 0) {
         card.creditLimit = Math.round((card.creditLimit ?? 0) * 1.2 / 100) * 100;
         if (person.id === s.universe.playerId) {
-          s.notify({ category: 'money', title: 'Your Card Limit Went Up', body: `It's ${formatMoney(card.creditLimit, saveCurrency(s.universe))} now, for a clean record.`, importance: 40 });
+          s.notify({ category: 'bank', title: 'Your Card Limit Went Up', body: `It's ${formatMoney(card.creditLimit, saveCurrency(s.universe))} now, for a clean record.`, importance: 40 });
         }
       }
     }
@@ -510,7 +510,7 @@ export function registerCredit(sim: Simulation): void {
     // A card the holder closed is finished once nothing is owed on it.
     if (credit.closing !== undefined && card.balance >= 0) {
       card.closedAt = s.now;
-      if (person.id === s.universe.playerId) s.notify({ category: 'money', title: 'Card Closed', body: `The ${card.name} is paid off and closed.`, importance: 40 });
+      if (person.id === s.universe.playerId) s.notify({ category: 'bank', title: 'Card Closed', body: `The ${card.name} is paid off and closed.`, importance: 40 });
       return;
     }
     statementReady(s, person, card, credit.statementBalance > 0
@@ -541,7 +541,7 @@ export function registerCredit(sim: Simulation): void {
       else {
         const returned = terms.returnedPaymentFee;
         s.post({ memo: 'Returned payment fee', category: 'fees', postings: [{ accountId: s.nominalAccount('expense', 'Card Fees').id, amount: returned }, { accountId: card.id, amount: -returned }] });
-        if (person.id === s.universe.playerId) s.notify({ category: 'money', title: 'A Card Payment Bounced', body: `Autopay asked for ${formatMoney(asked, currency)} and the current account couldn't cover it. The card charged ${formatMoney(returned, currency)} for that.`, importance: 75 });
+        if (person.id === s.universe.playerId) s.notify({ category: 'bank', title: 'A Card Payment Bounced', body: `Autopay asked for ${formatMoney(asked, currency)} and the current account couldn't cover it. The card charged ${formatMoney(returned, currency)} for that.`, importance: 75 });
       }
     }
     const paid = credit.paidSinceStatement;
@@ -578,7 +578,7 @@ export function registerCredit(sim: Simulation): void {
         if (cut < (card.creditLimit ?? 0)) card.creditLimit = cut;
       }
       s.notify({
-        category: 'money',
+        category: 'bank',
         title: 'A Late Card Payment',
         body: `The minimum was ${formatMoney(minimum, currency)} and only ${formatMoney(paid, currency)} went in. A ${formatMoney(fee, currency)} fee, and ${reported ? 'it’s on your record' : 'it goes on your record if it’s still short at the next due date, thirty days past due'}.`,
         importance: 80,
@@ -591,7 +591,7 @@ export function registerCredit(sim: Simulation): void {
       // Sixty days late on a US card with a penalty rate: 45 days' notice, then the penalty rate (Reg Z §1026.9(g), §1026.55(b)(4)).
       if ((credit.missed ?? 0) >= 2 && !credit.penalty && terms.penaltyApr && bankById(card.bankId ?? '')?.iso === 'US' && !card.closedAt) {
         credit.penalty = { noticeAt: s.now, from: s.now + 45 * 86_400_000, onTime: 0 };
-        if (person.id === s.universe.playerId) s.notify({ category: 'money', title: 'A Penalty Rate Is Coming', body: `Sixty days late. From ${formatDate(credit.penalty.from, zoneOf(s, person))} the ${card.name} charges ${(terms.penaltyApr * 100).toFixed(2)}% on what's owed. Six payments on time in a row takes it off.`, importance: 85 });
+        if (person.id === s.universe.playerId) s.notify({ category: 'bank', title: 'A Penalty Rate Is Coming', body: `Sixty days late. From ${formatDate(credit.penalty.from, zoneOf(s, person))} the ${card.name} charges ${(terms.penaltyApr * 100).toFixed(2)}% on what's owed. Six payments on time in a row takes it off.`, importance: 85 });
       }
     } else {
       move += ON_TIME;
@@ -601,12 +601,12 @@ export function registerCredit(sim: Simulation): void {
         credit.penalty.onTime += 1;
         if (credit.penalty.onTime >= 6) {
           delete credit.penalty;
-          if (person.id === s.universe.playerId) s.notify({ category: 'money', title: 'The Penalty Rate Is Off', body: `Six payments on time. The ${card.name} is back to ${((card.apr ?? terms.priced) * 100).toFixed(2)}%.`, importance: 50 });
+          if (person.id === s.universe.playerId) s.notify({ category: 'bank', title: 'The Penalty Rate Is Off', body: `Six payments on time. The ${card.name} is back to ${((card.apr ?? terms.priced) * 100).toFixed(2)}%.`, importance: 50 });
         }
       }
       if (credit.suspended === 'late') {
         delete credit.suspended;
-        if (person.id === s.universe.playerId) s.notify({ category: 'money', title: 'Your Card Works Again', body: `Payments are back on time, and ${terms.issuer ?? 'the bank'} has lifted the suspension.`, importance: 50 });
+        if (person.id === s.universe.playerId) s.notify({ category: 'bank', title: 'Your Card Works Again', body: `Payments are back on time, and ${terms.issuer ?? 'the bank'} has lifted the suspension.`, importance: 50 });
       }
       if (credit.hardship && card.balance >= 0) {
         delete credit.hardship;
@@ -756,10 +756,10 @@ function afterMissed(sim: Simulation, person: Person, card: Account, credit: Cre
   const missed = credit.missed ?? 0;
   if (missed >= SUSPEND_AFTER && !credit.suspended) {
     credit.suspended = 'late';
-    if (person.id === sim.universe.playerId) sim.notify({ category: 'money', title: 'Your Card Is Suspended', body: `${missed} payments missed in a row. ${bank?.name ?? 'The bank'} has stopped the ${card.name} until it's brought up to date.`, importance: 85 });
+    if (person.id === sim.universe.playerId) sim.notify({ category: 'bank', title: 'Your Card Is Suspended', body: `${missed} payments missed in a row. ${bank?.name ?? 'The bank'} has stopped the ${card.name} until it's brought up to date.`, importance: 85 });
   }
   if (missed === CHARGE_OFF_AFTER - 1 && person.id === sim.universe.playerId) {
-    sim.notify({ category: 'money', title: 'A Default Notice', body: `The ${card.name} is ${missed * 30} days behind. Pay at least ${formatMoney(minimumDue(sim, Math.max(0, -card.balance)), currency)} before the next due date, or the whole balance falls due and goes to collections.`, importance: 95 });
+    sim.notify({ category: 'bank', title: 'A Default Notice', body: `The ${card.name} is ${missed * 30} days behind. Pay at least ${formatMoney(minimumDue(sim, Math.max(0, -card.balance)), currency)} before the next due date, or the whole balance falls due and goes to collections.`, importance: 95 });
   }
   if (missed >= CHARGE_OFF_AFTER) chargeOff(sim, person, card, credit);
 }
@@ -781,7 +781,7 @@ function chargeOff(sim: Simulation, person: Person, card: Account, credit: Credi
   delete credit.suspended;
   delete credit.hardship;
   credit.missed = 0;
-  if (person.id === sim.universe.playerId) sim.notify({ category: 'money', title: 'Your Card Was Charged Off', body: `${formatMoney(owed, saveCurrency(sim.universe))} on the ${card.name} is with collections now, and the card is closed. It's on your record.`, importance: 95 });
+  if (person.id === sim.universe.playerId) sim.notify({ category: 'bank', title: 'Your Card Was Charged Off', body: `${formatMoney(owed, saveCurrency(sim.universe))} on the ${card.name} is with collections now, and the card is closed. It's on your record.`, importance: 95 });
 }
 
 /** What a charge-off costs the record: SLATE's estimate, heavier than an eviction's sixty. */
@@ -816,10 +816,10 @@ function persistentDebt(sim: Simulation, person: Person, card: Account, credit: 
     const owed = Math.max(0, -card.balance);
     credit.hardship = { payment: Math.ceil(owed / 48 / 100) * 100, since: sim.now };
     credit.suspended = 'persistent';
-    if (person.id === sim.universe.playerId) sim.notify({ category: 'money', title: 'A Plan To Clear The Card', body: `Three years in which more went to interest and fees than to the card itself. The bank has frozen the interest and set ${formatMoney(credit.hardship.payment, saveCurrency(sim.universe))} a month to clear it in four years, and suspended the card.`, importance: 80 });
+    if (person.id === sim.universe.playerId) sim.notify({ category: 'bank', title: 'A Plan To Clear The Card', body: `Three years in which more went to interest and fees than to the card itself. The bank has frozen the interest and set ${formatMoney(credit.hardship.payment, saveCurrency(sim.universe))} a month to clear it in four years, and suspended the card.`, importance: 80 });
   } else if (over(18) && (credit.persistentNoticeAt === undefined || sim.now - credit.persistentNoticeAt > 365 * 86_400_000)) {
     credit.persistentNoticeAt = sim.now;
-    if (person.id === sim.universe.playerId) sim.notify({ category: 'money', title: 'Persistent Debt', body: `Over eighteen months more of what you paid the ${card.name} went to interest and fees than to the card. Paying more than the minimum would clear it sooner; the bank can help if you can't.`, importance: 60 });
+    if (person.id === sim.universe.playerId) sim.notify({ category: 'bank', title: 'Persistent Debt', body: `Over eighteen months more of what you paid the ${card.name} went to interest and fees than to the card. Paying more than the minimum would clear it sooner; the bank can help if you can't.`, importance: 60 });
   }
 }
 

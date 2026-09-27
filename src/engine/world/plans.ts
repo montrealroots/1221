@@ -19,7 +19,7 @@
 import type { Simulation } from '../core/simulation';
 import type { Id } from '../domain/model';
 import { CITIES } from '../content/geography';
-import { formatTime, MS_DAY, MS_MINUTE, type Instant } from '../core/time';
+import { formatTime, MS_DAY, type Instant } from '../core/time';
 
 /** The one scheduled kind a person can make for themselves. */
 export const PLAN_KIND = 'life.commitment';
@@ -212,6 +212,3 @@ export const PLAN_LENGTHS: readonly { minutes: number; label: string }[] = [
   { minutes: 480, label: 'A Working Day' },
   { minutes: LONGEST_MINUTES, label: 'All Day' },
 ];
-
-/** The end of a plan, for anything that needs to draw it. */
-export const endOfPlan = (at: Instant, minutes: number): Instant => at + minutes * MS_MINUTE;

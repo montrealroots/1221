@@ -285,15 +285,6 @@ export function addYears(instant: Instant, years: number, zone: TimeZone): Insta
   return addMonths(instant, years * 12, zone);
 }
 
-/** Elapsed-time arithmetic. Unlike addDays this does NOT preserve wall time across DST. */
-export function addHours(instant: Instant, hours: number): Instant {
-  return instant + Math.round(hours * MS_HOUR);
-}
-
-export function addMinutes(instant: Instant, minutes: number): Instant {
-  return instant + Math.round(minutes * MS_MINUTE);
-}
-
 export function isLeapYear(year: number): boolean {
   return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
 }
@@ -338,21 +329,9 @@ export function formatTime(instant: Instant, zone: TimeZone): string {
   return `${h12}:${p.minute.toString().padStart(2, '0')} ${suffix}`;
 }
 
-export function formatTimeWithSeconds(instant: Instant, zone: TimeZone): string {
-  const p = zonedParts(instant, zone);
-  const suffix = p.hour < 12 ? 'AM' : 'PM';
-  const h12 = p.hour % 12 === 0 ? 12 : p.hour % 12;
-  return `${h12}:${p.minute.toString().padStart(2, '0')}:${p.second.toString().padStart(2, '0')} ${suffix}`;
-}
-
 export function formatDate(instant: Instant, zone: TimeZone): string {
   const p = zonedParts(instant, zone);
   return `${MONTH_NAMES[p.month - 1]} ${p.day}, ${p.year}`;
-}
-
-export function formatDateShort(instant: Instant, zone: TimeZone): string {
-  const p = zonedParts(instant, zone);
-  return `${(MONTH_NAMES[p.month - 1] ?? '').slice(0, 3)} ${p.day}`;
 }
 
 export function formatWeekdayDate(instant: Instant, zone: TimeZone): string {
@@ -475,10 +454,4 @@ export function nthWeekdayOfMonth(year: number, month: number, weekday: number, 
   const lastWeekday = zonedParts(last, zone).weekday;
   const delta = (lastWeekday - weekday + 7) % 7;
   return addDays(last, -delta + (n + 1) * 7, zone);
-}
-
-/** The next day at a given local hour: the default for anything booked "tomorrow". */
-export function tomorrowAt(now: Instant, hour: number, zone: TimeZone): Instant {
-  const parts = zonedParts(addDays(now, 1, zone), zone);
-  return instantFromZoned({ year: parts.year, month: parts.month, day: parts.day, hour, minute: 0 }, zone);
 }

@@ -11,8 +11,6 @@ import { currencyInfo } from '../content/currency';
 /** Integer cents. Positive is a credit to the holder, negative a debit. */
 export type Money = number;
 
-export const ZERO: Money = 0;
-
 /**
  * Whole units of the ledger's currency to minor units, and back.
  *
@@ -24,18 +22,10 @@ export function units(amount: number): Money {
   return Math.round(amount * 100);
 }
 
-export function toUnits(cents: Money): number {
-  return cents / 100;
-}
-
 /** Applies a rate and rounds half away from zero, once. */
 export function applyRate(base: Money, rate: number): Money {
   const raw = base * rate;
   return raw >= 0 ? Math.round(raw) : -Math.round(-raw);
-}
-
-export function percentOf(base: Money, percent: number): Money {
-  return applyRate(base, percent / 100);
 }
 
 /**
@@ -156,10 +146,6 @@ export function formatMoneyCompact(cents: Money, currency: string): string {
 /** The symbol a currency is written with, on its own. */
 export function currencySymbol(currency: string): string {
   return currencyInfo(currency).symbol;
-}
-
-export function formatSignedMoney(cents: Money, currency: string): string {
-  return `${cents > 0 ? '+' : ''}${formatMoney(cents, currency)}`;
 }
 
 /** The currency a save's money is kept in, euros for one from before 89. */

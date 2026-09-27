@@ -214,17 +214,17 @@ function frenchOverrun(sim: Simulation, person: Person, current: Account, bank: 
     current.overrunInformed = true;
     const terms = lendingOf(bank).overdraft;
     const rate = terms && 'rate' in terms && terms.rate !== undefined ? ` at ${(terms.rate * 100).toFixed(2)}% a year` : '';
-    if (player) sim.notify({ category: 'money', title: `${bank.name} Wrote About Your Overrun`, body: `A month past your overdraft: ${formatMoney(past, cur)} beyond it${rate}, with the charges each month brings. French law has the bank tell you after a month.`, importance: 70 });
+    if (player) sim.notify({ category: 'bank', title: `${bank.name} Wrote About Your Overrun`, body: `A month past your overdraft: ${formatMoney(past, cur)} beyond it${rate}, with the charges each month brings. French law has the bank tell you after a month.`, importance: 70 });
   }
   const loan = lendingOf(bank).loan;
   if (days >= FRANCE.offerAfterDays && !current.creditOffered && loan && past > 0 && !loanOf(sim, person)) {
     const apr = loan.to ?? loan.from;
     current.creditOffered = { amount: past, apr, months: FRANCE.offerMonths };
-    if (player) sim.notify({ category: 'money', title: `${bank.name} Offered A Loan For The Overrun`, body: `Three months past your overdraft, the law has it offer another credit: ${formatMoney(past, cur)} over ${FRANCE.offerMonths} months at ${(apr * 100).toFixed(2)}%, ${formatMoney(monthlyPayment(past, apr, FRANCE.offerMonths), cur)} a month. Take it from Your Bank.`, importance: 75 });
+    if (player) sim.notify({ category: 'bank', title: `${bank.name} Offered A Loan For The Overrun`, body: `Three months past your overdraft, the law has it offer another credit: ${formatMoney(past, cur)} over ${FRANCE.offerMonths} months at ${(apr * 100).toFixed(2)}%, ${formatMoney(monthlyPayment(past, apr, FRANCE.offerMonths), cur)} a month. Take it from Your Bank.`, importance: 75 });
   }
   if (days >= ESTIMATE.closeAfterDays && !current.closingNoticed) {
     current.closingNoticed = true;
-    if (player) sim.notify({ category: 'money', title: `${bank.name} Gave Notice To Close`, body: `Overdrawn past the limit for ${ESTIMATE.closeAfterDays} days, the account closes in two months, on ${formatDate(sim.now + FRANCE.closingNoticeDays * MS_DAY, sim.zone)}, unless it's back within it.`, importance: 85 });
+    if (player) sim.notify({ category: 'bank', title: `${bank.name} Gave Notice To Close`, body: `Overdrawn past the limit for ${ESTIMATE.closeAfterDays} days, the account closes in two months, on ${formatDate(sim.now + FRANCE.closingNoticeDays * MS_DAY, sim.zone)}, unless it's back within it.`, importance: 85 });
   }
 }
 
@@ -579,7 +579,7 @@ function completeSwitch(sim: Simulation, person: Person, to: Bank, quietly = fal
     one.payload = { ...one.payload, fromId: moved.get(String(one.payload.fromId)) ?? one.payload.fromId, toId: moved.get(String(one.payload.toId)) ?? one.payload.toId };
   }
   if (person.id === sim.universe.playerId && !quietly) {
-    sim.notify({ category: 'money', title: `Switched To ${to.name}`, body: `Your money is at ${to.name} now, in a ${to.current.name}. Wages and bills go through it from today.`, importance: 60 });
+    sim.notify({ category: 'bank', title: `Switched To ${to.name}`, body: `Your money is at ${to.name} now, in a ${to.current.name}. Wages and bills go through it from today.`, importance: 60 });
   }
 }
 
@@ -636,7 +636,7 @@ function refundInterestTax(sim: Simulation, person: Person, current: Account, ba
     { accountId: sim.nominalAccount('expense', 'Tax On Interest').id, amount: -back },
   ]);
   if (person.id === sim.universe.playerId) {
-    sim.notify({ category: 'money', title: 'Tax On Interest Refunded', body: `The assessment gave back ${formatMoney(back, saveCurrency(sim.universe), { cents: false })} of the tax taken on last year's interest.`, importance: 50 });
+    sim.notify({ category: 'bank', title: 'Tax On Interest Refunded', body: `The assessment gave back ${formatMoney(back, saveCurrency(sim.universe), { cents: false })} of the tax taken on last year's interest.`, importance: 50 });
   }
 }
 
@@ -730,7 +730,7 @@ export function closeForOverdraft(sim: Simulation, person: Person, bank: Bank): 
       account.negativeSince = undefined;
     }
     if (person.id === sim.universe.playerId) {
-      sim.notify({ category: 'money', title: `${bank.name} Closed An Account`, body: `It had been below zero for ${ESTIMATE.closeAfterDays} days, so the bank took what it was owed from your other money there and closed it.`, importance: 60 });
+      sim.notify({ category: 'bank', title: `${bank.name} Closed An Account`, body: `It had been below zero for ${ESTIMATE.closeAfterDays} days, so the bank took what it was owed from your other money there and closed it.`, importance: 60 });
     }
     return;
   }
@@ -755,7 +755,7 @@ export function closeForOverdraft(sim: Simulation, person: Person, bank: Bank): 
   completeSwitch(sim, person, to, true, secondChance);
   if (person.id === sim.universe.playerId) {
     sim.notify({
-      category: 'money', title: `${bank.name} Closed Your Account`,
+      category: 'bank', title: `${bank.name} Closed Your Account`,
       body: `It was overdrawn for ${ESTIMATE.closeAfterDays} days. ${formatMoney(owed, cur)} it couldn’t recover went to collections and onto your record; pay it from Your Bank. Your money is at ${to.name} now${secondChance ? ', in a second-chance account: every other bank here turned you away on the ChexSystems report' : ''}.`,
       importance: 90,
     });
@@ -860,11 +860,11 @@ export function registerLending(sim: Simulation): void {
         // Renewed, or moved into easy-access savings, where that's how it ends (B7).
         const ended = endTerm(s, person, term);
         if (ended === 'renews') {
-          if (person.id === s.universe.playerId) s.notify({ category: 'money', title: `Your ${term.name} Renewed`, body: `For the same term at ${((term.fixedRate ?? 0) * 100).toFixed(2)}%, with its interest in it.${term.graceUntil ? ` Until ${formatDate(term.graceUntil, s.zone)} it can be taken without a penalty.` : ''}`, importance: 50 });
+          if (person.id === s.universe.playerId) s.notify({ category: 'bank', title: `Your ${term.name} Renewed`, body: `For the same term at ${((term.fixedRate ?? 0) * 100).toFixed(2)}%, with its interest in it.${term.graceUntil ? ` Until ${formatDate(term.graceUntil, s.zone)} it can be taken without a penalty.` : ''}`, importance: 50 });
           continue;
         }
         if (ended === 'savings') {
-          if (person.id === s.universe.playerId) s.notify({ category: 'money', title: `Your ${term.name} Has Ended`, body: 'It moved, with its interest, into your easy-access savings at the same bank, where it can be taken any time.', importance: 50 });
+          if (person.id === s.universe.playerId) s.notify({ category: 'bank', title: `Your ${term.name} Has Ended`, body: 'It moved, with its interest, into your easy-access savings at the same bank, where it can be taken any time.', importance: 50 });
           continue;
         }
         const into = currentOf(s, person);
@@ -882,7 +882,7 @@ export function registerLending(sim: Simulation): void {
         term.closedAt = s.now;
         if (person.id === s.universe.playerId) {
           s.notify({
-            category: 'money', title: `Your ${term.name} Has Matured`,
+            category: 'bank', title: `Your ${term.name} Has Matured`,
             body: `It paid ${formatMoney(earned - tax, saveCurrency(s.universe), { cents: false })} of interest after tax, and all of it is in your ${into.name}.`,
             importance: 55,
           });
@@ -914,7 +914,7 @@ export function registerLending(sim: Simulation): void {
       person.credit.score = Math.max(300, person.credit.score - 50);
       if (person.id === s.universe.playerId) {
         s.notify({
-          category: 'money', title: 'A Missed Loan Payment',
+          category: 'bank', title: 'A Missed Loan Payment',
           body: `${formatMoney(due, saveCurrency(s.universe))} was due and ${formatMoney(paid, saveCurrency(s.universe))} was there to pay it. It’s on your record, and what’s left is still owed.`,
           importance: 80,
         });

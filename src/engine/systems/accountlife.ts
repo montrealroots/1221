@@ -109,11 +109,6 @@ export function savingsWithdrawalFee(sim: Simulation, account: Account): Money {
   return withdrawalsThisMonth(sim, account) >= rules.freeWithdrawals ? rules.withdrawalFee : 0;
 }
 
-/** Whether an account is dormant, and blocked until used again. */
-export function isDormant(account: Account): boolean {
-  return account.dormant === true;
-}
-
 /** What round-ups have to move into savings tonight. */
 export function roundUpOf(amount: Money): Money {
   const rest = amount % 100;
@@ -175,14 +170,14 @@ export function registerAccountLife(sim: Simulation): void {
         // An early close on notice, once the notice has run.
         if (account.category === 'term' && account.breakAt !== undefined && account.breakAt <= s.now && currentOf(s, person)) {
           const done = breakTerm(s, person, account);
-          if (person.id === s.universe.playerId) s.notify({ category: 'money', title: `Your ${account.name} Closed`, body: `On the notice given: ${formatMoney(done.paid, saveCurrency(s.universe))} to your current account, less ${formatMoney(done.penalty, saveCurrency(s.universe))} for closing early.`, importance: 50, route: '/workspace/bank' });
+          if (person.id === s.universe.playerId) s.notify({ category: 'bank', title: `Your ${account.name} Closed`, body: `On the notice given: ${formatMoney(done.paid, saveCurrency(s.universe))} to your current account, less ${formatMoney(done.penalty, saveCurrency(s.universe))} for closing early.`, importance: 50, route: '/workspace/bank' });
           continue;
         }
         // A term deposit's end: the bank writes a month before, or in time
         // for any notice it needs to change what happens (B41).
         if (account.category === 'term' && account.maturesAt !== undefined && rules?.atEnd && !account.maturityNoticed && account.maturesAt - s.now <= noticeLead(rules) * MS_DAY) {
           account.maturityNoticed = true;
-          if (person.id === s.universe.playerId) s.notify({ category: 'money', title: `Your ${account.name} Ends Soon`, body: `On ${formatDate(account.maturesAt, s.zone)} it ${END_WORDS[termEndOf(account)]}.${(rules.endChoices?.length ?? 0) > 1 ? ` You can change that${rules.endNoticeDays ? ` until ${rules.endNoticeDays} days before` : ''}.` : ''}${rules.graceDays && termEndOf(account) === 'renews' ? ` After it renews you have ${rules.graceDays} days to take the money without a penalty.` : ''}`, importance: 45, route: '/workspace/bank' });
+          if (person.id === s.universe.playerId) s.notify({ category: 'bank', title: `Your ${account.name} Ends Soon`, body: `On ${formatDate(account.maturesAt, s.zone)} it ${END_WORDS[termEndOf(account)]}.${(rules.endChoices?.length ?? 0) > 1 ? ` You can change that${rules.endNoticeDays ? ` until ${rules.endNoticeDays} days before` : ''}.` : ''}${rules.graceDays && termEndOf(account) === 'renews' ? ` After it renews you have ${rules.graceDays} days to take the money without a penalty.` : ''}`, importance: 45, route: '/workspace/bank' });
         }
       }
     }
@@ -304,7 +299,7 @@ export function idleAccounts(sim: Simulation, person: Person, lastUsed: (account
     if (rules?.inactiveMonths !== undefined) account.inactive = idle >= rules.inactiveMonths * month;
     if (rules?.dormantMonths !== undefined && idle >= rules.dormantMonths * month && !account.dormant) {
       account.dormant = true;
-      if (person.id === sim.universe.playerId) sim.notify({ category: 'money', title: `${account.name} Is Dormant`, body: `Untouched for ${rules.dormantMonths} months. ${account.institution ?? 'The bank'} has blocked it until you use it again.`, importance: 55, route: '/workspace/bank' });
+      if (person.id === sim.universe.playerId) sim.notify({ category: 'bank', title: `${account.name} Is Dormant`, body: `Untouched for ${rules.dormantMonths} months. ${account.institution ?? 'The bank'} has blocked it until you use it again.`, importance: 55, route: '/workspace/bank' });
     }
     const iso = bankById(account.bankId)?.iso;
     const law = iso ? UNCLAIMED[iso] : undefined;
@@ -314,7 +309,7 @@ export function idleAccounts(sim: Simulation, person: Person, lastUsed: (account
       sim.post({ memo: `Unclaimed, to ${law.to ?? 'the state'}`, category: 'transfer', postings: [{ accountId: account.id, amount: -amount }, { accountId: sim.nominalAccount('liability_other', 'Unclaimed Money').id, amount }] });
       account.closedAt = sim.now;
       person.unclaimed = [...(person.unclaimed ?? []), { amount, to: law.to ?? 'the state', at: sim.now }];
-      if (person.id === sim.universe.playerId) sim.notify({ category: 'money', title: 'Unclaimed Money', body: `${formatMoney(amount, saveCurrency(sim.universe))} left untouched in ${account.name} for ${law.years} years went to ${law.to ?? 'the state'}. ${law.claimBack ?? ''}`, importance: 60, route: '/workspace/bank' });
+      if (person.id === sim.universe.playerId) sim.notify({ category: 'bank', title: 'Unclaimed Money', body: `${formatMoney(amount, saveCurrency(sim.universe))} left untouched in ${account.name} for ${law.years} years went to ${law.to ?? 'the state'}. ${law.claimBack ?? ''}`, importance: 60, route: '/workspace/bank' });
     }
   }
 }

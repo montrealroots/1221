@@ -767,7 +767,7 @@ describe('the summers, for work', () => {
   it('goes to stay for a job on a friend’s sofa when neither the bank nor the card can pay for a room', () => {
     const sim = life('summer-sofa');
     play(sim, at(2027, 5, 20, 12));
-    const job = { id: 'june', roleId: 'costar', cityId: 'us-ny-newyork' as const, starts: at(2027, 6, 7, 7), units: 2, rehearsalWeeks: 0, status: 'offered' as const, dueAt: sim.now + 2 * MS_DAY, offeredAt: sim.now, worked: 0, owed: 0, weeksPaid: 0 };
+    const job = { id: 'june', roleId: 'costar', cityId: 'us-ny-newyork' as const, starts: at(2027, 6, 7, 7), units: 2, rehearsalWeeks: 0, status: 'offered' as const, dueAt: sim.now + 2 * MS_DAY, offeredAt: sim.now, worked: 0, owed: 0 };
     careerOf(sim.player).bookings.push(job);
     expect(sim.execute({ kind: 'career.accept', payload: { bookingId: 'june' } }).ok).toBe(true);
     for (const a of Object.values(sim.universe.accounts)) if (a.ownerId === sim.player.id && a.balance > 0 && a.kind !== 'escrow') a.balance = 0;
@@ -785,7 +785,7 @@ describe('the summers, for work', () => {
     const sim = life('summer-job');
     play(sim, at(2027, 5, 20, 12));
     const career = careerOf(sim.player);
-    const into = { id: 'late', roleId: 'costar', cityId: 'us-ny-newyork' as const, starts: at(2027, 8, 20, 7), units: 5, rehearsalWeeks: 0, status: 'offered' as const, dueAt: sim.now + 2 * MS_DAY, offeredAt: sim.now, worked: 0, owed: 0, weeksPaid: 0 };
+    const into = { id: 'late', roleId: 'costar', cityId: 'us-ny-newyork' as const, starts: at(2027, 8, 20, 7), units: 5, rehearsalWeeks: 0, status: 'offered' as const, dueAt: sim.now + 2 * MS_DAY, offeredAt: sim.now, worked: 0, owed: 0 };
     career.bookings.push(into);
     expect(sim.execute({ kind: 'career.accept', payload: { bookingId: 'late' } })).toMatchObject({ ok: false, error: 'It runs into the fall term, and the school’s work comes first while classes are in session.' });
     const job = { ...into, id: 'june', starts: at(2027, 6, 7, 7), units: 2 };
