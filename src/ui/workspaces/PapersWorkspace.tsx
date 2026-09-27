@@ -81,7 +81,7 @@ function ReturnsPane() {
       {returns.length === 0 && (
         <Panel title="No Returns Yet">
           <p className="small" style={{ margin: 0 }}>
-            Each February, a year that left you owing or owed has its return ready. {thisYear}’s is due {formatDate(deadline(thisYear), sim.zone)}.
+            Each February, a year with any income, or anything owed or due back, has its return ready. {thisYear}’s is due {formatDate(deadline(thisYear), sim.zone)}.
           </p>
         </Panel>
       )}
@@ -130,7 +130,7 @@ function ReturnsPane() {
         );
       })}
       <p className="xs dim" style={{ margin: 0 }}>
-        Due 15 April, or the next business day. Filed late with a balance, 5% of it a month or part of one, to a quarter of it, with at least {formatMoney(inSaveMoney(sim, RETURN.lateMinimum, 'USD'), cur)} past 60 days; paid late, 0.5% a month. A refund comes {RETURN.refundDays} days after filing. The performing artist deduction takes your commission and dues off an income of {formatMoney(inSaveMoney(sim, RETURN.performingArtistIncome, 'USD'), cur)} or less, from two employers or more; otherwise the job’s costs aren’t deductible. The tax is the federal and state law SLATE carries for where you lived. Work in Canada is taxed at 23% as it’s paid, all of it back under CAD 15,000 in the year and, over it, a Canadian return filed with this one by 30 April gives back what’s past its graduated tax. Work in the United Kingdom is taxed 20% by a payer paying you past £12,570 in its tax year, and settled with its own return each 31 January. Source: {RETURN.source}; {ABROAD.source}.
+        Due 15 April, or the next business day. Filed late with a balance, 5% of it a month or part of one, to a quarter of it, with at least {formatMoney(inSaveMoney(sim, RETURN.lateMinimum, 'USD'), cur)} past 60 days; paid late, 0.5% a month. A refund comes {RETURN.refundDays} days after filing. The performing artist deduction takes your commission, dues and the job’s other costs you kept receipts for off an income of {formatMoney(inSaveMoney(sim, RETURN.performingArtistIncome, 'USD'), cur)} or less, from two employers paying {formatMoney(inSaveMoney(sim, RETURN.performingArtistEmployerPay, 'USD'), cur)} or more, where the costs are over a tenth of the acting wages; otherwise federally they aren’t deductible. The tax is the federal and state law SLATE carries for where you lived. Work in Canada is taxed at 23% as it’s paid, all of it back under CAD 15,000 in the year and, over it, a Canadian return filed with this one by 30 April gives back what’s past its graduated tax. Work in the United Kingdom is taxed 20% by a payer paying you past £12,570 in its tax year, and settled with its own return each 31 January. Source: {RETURN.source}; {ABROAD.source}.
       </p>
     </div>
   );

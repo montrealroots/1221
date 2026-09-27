@@ -434,8 +434,10 @@ defineLook<Owing>('debt', {
 
 function debtBody(owing: Owing, cur: string, sim: Simulation) {
   const yearly = owing.debts.reduce((s, a) => s + Math.round(owedOn(a) * (rateOf(sim, a) ?? 0)), 0);
-  const limits = owing.debts.reduce((s, a) => s + (a.creditLimit ?? 0), 0);
-  const revolving = owing.debts.filter((a) => (a.creditLimit ?? 0) > 0);
+  // Every line open to them, a card with nothing on it among them, as a bureau reads it.
+  const lines = Object.values(sim.universe.accounts).filter((a) => a.ownerId === owing.person.id && !a.closedAt && a.kind === 'credit_card' && (a.creditLimit ?? 0) > 0);
+  const limits = lines.reduce((s, a) => s + (a.creditLimit ?? 0), 0);
+  const revolving = lines;
   const used = limits > 0
     ? Math.round((revolving.reduce((s, a) => s + owedOn(a), 0) / limits) * 100)
     : 0;
@@ -453,7 +455,7 @@ function debtBody(owing: Owing, cur: string, sim: Simulation) {
       </p>
       <p className="small">
         {limits > 0
-          ? `You’re using ${used}% of the ${formatMoney(limits, cur)} of credit open to you, and a lender reads that number before it reads anything else about you.`
+          ? `You’re using ${used}% of the ${formatMoney(limits, cur)} of credit open to you. Over 30%, each month’s report costs your record points, more the more of it is used.`
           : 'None of it is revolving credit, so there’s no line to be using up.'}
       </p>
       <div className="grid grid-3">
@@ -466,7 +468,7 @@ function debtBody(owing: Owing, cur: string, sim: Simulation) {
         <Stat
           label="Credit Used"
           value={limits > 0 ? `${used}%` : 'None open'}
-          tone={used > 60 ? 'warning' : undefined}
+          tone={used > 30 ? 'warning' : undefined}
           note={limits > 0 ? `Of ${formatMoney(limits, cur)}` : 'No revolving line'}
         />
       </div>

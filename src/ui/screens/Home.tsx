@@ -18,7 +18,7 @@ import { Panel, Stat, Meter, MoneyText, Empty } from '@/ui/components/primitives
 import { openDecisions, lifeSnapshot, unreadNotifications } from '@/engine/world/world';
 import { entriesBetween, nextCommitment, upcoming } from '@/engine/world/calendar';
 import { netWorth } from '@/engine/systems/finance';
-import { readiness, wellbeingSummary } from '@/engine/systems/life';
+import { readiness, wellbeingSummary, EMPTY, OVERWROUGHT } from '@/engine/systems/life';
 import { CITIES } from '@/engine/content/geography';
 import {
   dateKey, formatDate, formatRelative, formatTime, formatWeekdayDate, seasonOf, zoneAbbreviation,
@@ -317,8 +317,8 @@ export function Home() {
                 <Open subject={at('person', player.id)}>{wellbeingSummary(player)}</Open>
               </p>
               <div className="col gap-3">
-                <Meter label="Energy" value={player.wellbeing.energy} look={at('dial', `${player.id}/energy`)} />
-                <Meter label="Stress" value={player.wellbeing.stress} invert look={at('dial', `${player.id}/stress`)} />
+                <Meter label="Energy" value={player.wellbeing.energy} line={EMPTY} look={at('dial', `${player.id}/energy`)} />
+                <Meter label="Stress" value={player.wellbeing.stress} invert line={OVERWROUGHT} look={at('dial', `${player.id}/stress`)} />
                 <Meter label="Readiness" value={ready} look={at('readiness', player.id)} />
               </div>
             </LookRegion>

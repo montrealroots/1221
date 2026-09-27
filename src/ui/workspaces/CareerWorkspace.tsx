@@ -42,7 +42,7 @@ const pct = (x: number) => `${Math.round(x * 100)}%`;
 export function CareerWorkspace() {
   const person = useWorld((s) => s.player);
   const [tab, setTab] = useState<CareerTab>('agency');
-  if (!person.career) return <Empty title="No Career Yet" body="It begins at the showcase, in the last spring at school." />;
+  if (!person.career) return <Empty title="No Career Yet" body="It begins in the first summer at school, when you can put yourself up for work, and in earnest at the showcase in the last spring." />;
   const career = person.career;
   const agency = career.agencyId ? agencyById(career.agencyId) : undefined;
   const panes: Record<CareerTab, JSX.Element> = {
@@ -296,7 +296,7 @@ function WorkPane() {
               </div>
             ))}
           </div>
-        ) : <p className="small muted" style={{ margin: 0 }}>A job you take puts its days on your calendar. You must be in its city, awake, for every one: a day missed ends the job, and an agency that booked it lets you go.</p>}
+        ) : <p className="small muted" style={{ margin: 0 }}>A job you take puts its days on your calendar. You must be in its city, awake, for every one: a day missed ends the job, and an agency you have lets you go. A day in hospital is no walking off: on screen the part is recast, and on stage the understudy covers.</p>}
       </Panel>
       <ResidualsPanel />
       {(person.school?.credits?.length ?? 0) > 0 && (

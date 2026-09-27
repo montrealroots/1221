@@ -67,7 +67,7 @@ export function BankLending({ bank, show }: { bank: Bank; show: readonly Lending
     <div className="grid grid-2" style={{ margin: 'var(--s5) 0' }}>
       {show.includes('borrowing') && (
       <Panel title="Overdraft" subtitle={od ? undefined : 'None on record'}>
-        {!od && <p className="small">{bank.name} has no overdraft terms SLATE found, so the account never goes below zero here: a payment it can’t cover comes from savings if you’ve linked it, then goes on the card, and otherwise is declined or returned unpaid.</p>}
+        {!od && <p className="small">{bank.name} has no overdraft terms SLATE found, so the account never goes below zero here: a payment it can’t cover comes from savings if you’ve linked it; the day’s shopping then goes on the card, and a bill or the rent comes back unpaid with its fee and is owed.</p>}
         {od?.kind === 'per_item' && (
           <p className="small">
             {bank.name} pays what the account can’t without an arrangement, and charges {formatMoney(inSaveMoney(sim, od.fee, bank.currency), cur)}

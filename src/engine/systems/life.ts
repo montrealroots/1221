@@ -42,10 +42,10 @@ export const NOURISHMENT_DRAIN_PER_HOUR = 2.0;
 const DEBT_PER_WAKING_HOUR = 0.34;
 const DEBT_CEILING = 60;
 /** Energy under this is running on empty, and nourishment under this is hungry. */
-const EMPTY = 15;
+export const EMPTY = 15;
 const HUNGRY = 20;
 /** Stress over this costs condition for as long as it stays there. */
-const OVERWROUGHT = 75;
+export const OVERWROUGHT = 75;
 /** Hygiene under this wears on the mood for as long as it stays there. */
 const GRIMY = 50;
 

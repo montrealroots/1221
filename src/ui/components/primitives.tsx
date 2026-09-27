@@ -83,7 +83,7 @@ export function Stat({
  * color alone is not accessible.
  */
 export function Meter({
-  label, value, max = 100, tone, hint, invert, look,
+  label, value, max = 100, tone, hint, invert, look, line,
 }: {
   label: string;
   value: number;
@@ -93,11 +93,22 @@ export function Meter({
   invert?: boolean;
   /** The dial this bar is drawing. Its label becomes the way in. */
   look?: Subject;
+  /**
+   * Where the engine starts to charge for it, on the value's own scale: red past
+   * it, and amber the fifteen before. Without one, the bar's own quarters.
+   * Until 2026-09-27 every bar turned at its own lines, energy red at 25 where
+   * running on empty starts at 15 and stress at 70 where it costs at 75.
+   */
+  line?: number;
 }) {
   const pct = clamp((value / max) * 100, 0, 100);
-  const derived = tone ?? (invert
-    ? (pct > 70 ? 'negative' : pct > 40 ? 'warning' : 'positive')
-    : (pct < 25 ? 'negative' : pct < 50 ? 'warning' : 'positive'));
+  const derived = tone ?? (line !== undefined
+    ? (invert
+      ? (value > line ? 'negative' : value > line - 15 ? 'warning' : 'positive')
+      : (value < line ? 'negative' : value < line + 15 ? 'warning' : 'positive'))
+    : invert
+      ? (pct > 70 ? 'negative' : pct > 40 ? 'warning' : 'positive')
+      : (pct < 25 ? 'negative' : pct < 50 ? 'warning' : 'positive'));
   return (
     <div>
       <div className="row-between xs" style={{ marginBottom: 3 }}>
