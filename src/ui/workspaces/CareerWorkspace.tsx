@@ -299,6 +299,19 @@ function WorkPane() {
         ) : <p className="small muted" style={{ margin: 0 }}>A job you take puts its days on your calendar. You must be in its city, awake, for every one: a day missed ends the job, and an agency that booked it lets you go.</p>}
       </Panel>
       <ResidualsPanel />
+      {(person.school?.credits?.length ?? 0) > 0 && (
+        <Panel title="Training" subtitle={YALE_DRAMA.name}>
+          <div className="table-scroll">
+            <table>
+              <thead><tr><th scope="col">Year</th><th scope="col">Production</th><th scope="col">Part</th></tr></thead>
+              <tbody>
+                {[...person.school!.credits!].reverse().map((c, i) => <tr key={i}><td className="mono">{c.year}</td><td>{c.production}</td><td>{c.kind === 'understudy' ? `${c.role} (Understudy, On ${c.wentOn} ${c.wentOn === 1 ? 'Time' : 'Times'})` : c.role}</td></tr>)}
+              </tbody>
+            </table>
+          </div>
+        </Panel>
+      )}
+
       <Panel title="Credits">
         {career.credits.length ? (
           <div className="table-scroll">

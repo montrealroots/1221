@@ -108,6 +108,8 @@ export interface SchoolRecord {
   castable: boolean;
   classmates: { name: string; craft: Craft }[];
   tally: TermTally;
+  /** What they performed in at school, for the résumé: a production played, or understudied and gone on in. */
+  credits?: { production: string; role: string; kind: Casting['kind']; year: number; wentOn: number }[];
   history: TermReview[];
   casting?: Casting;
   workStudy: { yearHours: number; electiveHours: number; owedHours: number };
@@ -499,6 +501,7 @@ function setStanding(sim: Simulation, person: Person, to: Standing, reason: stri
   const school = person.school!;
   school.standing = to;
   if (to === 'dismissed' || to === 'graduated') {
+    keepCredit(sim, school);
     for (const item of sim.universe.scheduled) {
       if (item.status === 'pending' && item.kind.startsWith('school.') && item.payload.personId === person.id) sim.timeline.cancel(item.id, sim.now);
     }
@@ -561,8 +564,16 @@ export function repProduction(term: number): { name: string; rehearsals: { from:
  * (SLATE's estimate of the dates). Out of the pool, nothing. Until
  * 2026-09-26 only the first spring went to Yale Rep.
  */
+/** A casting done with goes on the résumé where it was played: an understudy only if they went on. */
+function keepCredit(sim: Simulation, school: SchoolRecord): void {
+  const c = school.casting;
+  if (!c || c.performed === 0) return;
+  (school.credits ??= []).push({ production: c.production, role: c.role, kind: c.kind, year: zonedParts(sim.now, zone()).year, wentOn: c.performed });
+}
+
 function cast(sim: Simulation, person: Person, term: number): void {
   const school = person.school!;
+  keepCredit(sim, school);
   delete school.casting;
   if (!school.castable) {
     if (person.id === sim.universe.playerId) sim.notify({ category: 'money', title: 'Not Cast This Term', body: 'You’re out of the casting pool after missed rehearsal calls. A good evaluation puts you back.', importance: 70, route: '/workspace/school' });

@@ -372,6 +372,11 @@ describe('casting', () => {
     expect(sim.player.school!.casting!.performed).toBe(1);
     expect(sim.player.craft!.acting).toBeGreaterThan(acting);
     expect(titled(sim, `You Went On As ${sim.player.school!.casting!.role}`)).toHaveLength(1);
+    // On the résumé, once the term's casting is done with: the next term's.
+    const role = sim.player.school!.casting!.role;
+    play(sim, at(2027, 9, 20, 12));
+    expect(sim.player.school!.credits).toEqual([{ production: SEAGULL_2027.name, role, kind: 'understudy', year: 2027, wentOn: expect.any(Number) }]);
+    expect(sim.player.school!.credits![0]!.wentOn).toBeGreaterThanOrEqual(1);
     const away = found[1]!;
     away.sim.advanceTo(away.night.at - 60_000);
     away.sim.player.school!.standing = 'warning';
@@ -380,6 +385,27 @@ describe('casting', () => {
     expect(away.sim.player.school!.standing).toBe('dismissed');
     expect(away.sim.player.school!.casting!.performed).toBe(0);
   }, 60_000);
+
+  it('puts nothing on the résumé for a production never gone on in, and keeps what was played on dismissal', () => {
+    const never = life('never-on');
+    never.advanceTo(at(2027, 1, 4, 9) + 60_000);
+    for (const c of pending(never, CALL_KIND)) if (c.payload.call === 'oncall') never.timeline.cancel(c.id, never.now);
+    play(never, at(2027, 9, 20, 12));
+    expect(never.player.school!.credits ?? []).toEqual([]);
+    // A project played once, then a grave breach at the next show while on warning: out, with the credit kept.
+    const sim = life('project');
+    sim.player.school!.classmates[0]!.craft.acting = 99;
+    sim.advanceTo(at(2027, 1, 4, 9) + 60_000);
+    const shows = pending(sim, CALL_KIND).filter((c) => c.payload.call === 'performance');
+    play(sim, shows[0]!.at + 60_000);
+    expect(sim.player.school!.casting!.performed).toBe(1);
+    sim.player.school!.standing = 'warning';
+    sim.advanceTo(shows[1]!.at - 60_000);
+    sim.player.currentLocationId = 'us-ny-newyork';
+    sim.advanceTo(shows[1]!.at + 60_000);
+    expect(sim.player.school!.standing).toBe('dismissed');
+    expect(sim.player.school!.credits).toEqual([{ production: 'Spring Project', role: 'A Lead', kind: 'project', year: 2027, wentOn: 1 }]);
+  }, 120_000);
 
   it('sends an understudy on about one performance in fifty', () => {
     const sim = life('odds');
