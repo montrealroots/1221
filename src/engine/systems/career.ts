@@ -25,6 +25,17 @@
  *   each Friday. From the check come the agency's commission, Equity's
  *   working dues, and tax withheld the way a payroll does, on the year's
  *   wages so far at the job's town. A day not turned up for ends the job.
+ * - **Managers.** A management firm can offer beside the agencies, and after
+ *   a job it noticed. It takes 10% beside an agent and 15% without one, adds
+ *   an audition a week through its relationships, and finds an unrepresented
+ *   client an agency now and then (`career.managers`). A first contract runs
+ *   a year.
+ * - **Overtime.** A shooting day runs ten to twelve hours (`career.hours`),
+ *   and the hours past the contract's are paid at its premiums.
+ * - **Residuals.** Television work earns reruns, syndication and streaming
+ *   years by the agreements' formulas, and a film's cast shares its
+ *   television and streaming money; where it's seen and how it does is drawn
+ *   (`career.residuals`).
  * - **The unions.** The first SAG-AFTRA job makes the actor eligible; working
  *   under it again thirty days on means joining, and the initiation fee,
  *   first. The first Equity contract makes them a member, $600 of the fee
@@ -37,14 +48,17 @@ import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
 import type { Account } from '../core/ledger';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
-import { MS_DAY, formatDate, formatDateTime, instantFromZoned, zonedParts, type Instant } from '../core/time';
+import { MS_DAY, formatDate, formatDateTime, instantFromZoned, normalDate, zonedParts, type Instant } from '../core/time';
 import { exchange } from '../content/currency';
 import { CITIES } from '../content/geography';
 import { computeAnnualTax } from '../content/tax';
 import {
-  AGENCIES, AGENT_COMMISSION, CAREER_CITIES, EQUITY, ROLES, SAG_AFTRA, SHOWCASE_2029, rateOn,
-  type Agency, type CareerCity, type Role,
+  AFTERLIFE, AGENCIES, AGENT_COMMISSION, CAREER_CITIES, EQUITY, MANAGEMENT, MANAGERS, OVERTIME, RESIDUALS, ROLES, SAG_AFTRA, SHOWCASE_2029, rateOn,
+  type Agency, type CareerCity, type Manager, type Role,
 } from '../content/career';
+import { earningsOf, recordWages, yearOf } from './earnings';
+import { armHealth } from './health';
+import { armTaxes } from './taxreturn';
 import { YALE_DRAMA } from '../content/school';
 import { meanCraft, focusOf, type Craft } from './school';
 import { move, payFromCurrent, type Housing } from './household';
@@ -56,6 +70,7 @@ export const OFFER_KIND = 'career.offer';
 export const LAPSE_KIND = 'career.lapse';
 export const WORK_KIND = 'career.work';
 export const PAY_KIND = 'career.pay';
+export const RESIDUAL_KIND = 'career.residual';
 
 /** SLATE's estimates of what the business doesn't publish, each named where it's used. */
 export const ESTIMATE = {
@@ -66,6 +81,8 @@ export const ESTIMATE = {
   showcaseActingWeight: 0.5,
   /** How much of a showing tiredness can take: at no readiness at all, a fifth. It took it all until 2026-09-26, and the class's best actor, tired at five, read at 58 and no big agency looked. */
   showcaseTiredness: 0.2,
+  /** The chance a management firm whose bar the showing clears wants the actor. */
+  managerInterest: 0.5,
   /** The chance an agency whose bar the showing clears wants the actor. */
   agencyInterest: 0.6,
   /**
@@ -130,9 +147,37 @@ export interface Booking {
   owed: number;
   /** Weeks paid, on stage, so rehearsal weeks are commissioned at their rate. */
   weeksPaid: number;
+  /** Each day's overtime, by the day's place in the job. */
+  overtimeDays?: Money[];
 }
 
+/** A job's life after it's made, and what it has paid (`RESIDUALS`, `AFTERLIFE`). */
+export interface Residual {
+  id: string;
+  bookingId: string;
+  roleId: string;
+  kind: 'network' | 'svod' | 'film';
+  /** A streaming service's size, by its subscribers. */
+  size?: 'small' | 'middle' | 'large';
+  /** What the performer was paid for an episode, overtime premiums aside, and how many episodes. */
+  perEpisode: Money;
+  episodes: number;
+  /** Days worked, for a film's units. */
+  days: number;
+  /** When it was first seen. */
+  airsAt: Instant;
+  rerun?: boolean;
+  syndicated?: boolean;
+  hit?: boolean;
+  paid: Money;
+  payments: number;
+}
+
+/** A day worked: when, its hours, and its scale, for the rule on leaving an agency and a week's unemployment. */
+export interface WorkedDay { at: Instant; hours: number; pay: Money }
+
 export interface Offer { agencyId: string; cityId: CareerCity; until: Instant }
+export interface ManagerOffer { managerId: string; until: Instant }
 
 export interface CareerRecord {
   /** Each showcase's reading, by city. */
@@ -153,8 +198,13 @@ export interface CareerRecord {
     sag?: { eligibleAt: Instant; joinedAt?: Instant };
     equity?: { joinedAt: Instant; initiationPaid: Money };
   };
-  /** Wages by calendar year: gross, withheld for tax, and under SAG-AFTRA, for the payroll's year-to-date and the work dues. */
-  wages: Record<string, { gross: Money; withheld: Money; sag: Money }>;
+  /** A manager, and offers from them. Until 2026-09-27 there were none. */
+  managerId?: string;
+  managerSince?: Instant;
+  managerOffers: ManagerOffer[];
+  /** The days worked, the last few hundred. */
+  days: WorkedDay[];
+  residuals: Residual[];
   /** Self-submissions this week, waiting on Monday. */
   submitted: number;
   /** When the business began for them: the school's hold let go. */
@@ -168,7 +218,10 @@ export interface CareerRecord {
 const nextOwnId = (career: CareerRecord, prefix: string) => `${prefix}${(career.seq += 1)}`;
 
 export function careerOf(person: Person): CareerRecord {
-  person.career ??= { showcases: [], offers: [], missed: 0, auditions: [], bookings: [], credits: [], unions: {}, wages: {}, submitted: 0, seq: 0 };
+  person.career ??= { showcases: [], offers: [], missed: 0, auditions: [], bookings: [], credits: [], unions: {}, submitted: 0, seq: 0, managerOffers: [], days: [], residuals: [] };
+  person.career.managerOffers ??= [];
+  person.career.days ??= [];
+  person.career.residuals ??= [];
   return person.career;
 }
 
@@ -178,12 +231,13 @@ export const roleById = (id: string): Role => {
   return role;
 };
 export const agencyById = (id: string): Agency | undefined => AGENCIES.find((a) => a.id === id);
+export const managerById = (id: string): Manager | undefined => MANAGERS.find((m) => m.id === id);
 
 const zoneOf = (cityId: string) => CITIES.require(cityId).timeZone;
 const usd = (cents: Money, into: string) => (into === 'USD' ? cents : exchange(cents, 'USD', into) ?? cents);
 const dayKey = (at: Instant, zone: string) => { const p = zonedParts(at, zone); return `${p.year}-${String(p.month).padStart(2, '0')}-${String(p.day).padStart(2, '0')}`; };
 const weekday = (at: Instant, zone: string) => { const p = zonedParts(at, zone); return new Date(Date.UTC(p.year, p.month - 1, p.day)).getUTCDay(); };
-const at = (from: Instant, zone: string, days: number, hour: number) => { const p = zonedParts(from, zone); return instantFromZoned({ year: p.year, month: p.month, day: p.day + days, hour }, zone); };
+const at = (from: Instant, zone: string, days: number, hour: number) => { const p = zonedParts(from, zone); return instantFromZoned({ ...normalDate(p.year, p.month, p.day + days), hour }, zone); };
 
 /** Where the business is for them: the agency's city, or where they live if it's one of the two, or New York. */
 export function workCity(person: Person): CareerCity {
@@ -212,6 +266,27 @@ export function offersFor(sim: Simulation, person: Person, score: number, key: s
   return AGENCIES.filter((agency) => rng.next() < ESTIMATE.agencyInterest && score >= agency.bar).map((a) => a.id);
 }
 
+/** Which management firms offer (`career.managers`): those whose bar the showing clears, half of them wanting the actor. */
+export function managerOffersFor(sim: Simulation, person: Person, score: number, key: string): string[] {
+  const rng = sim.rng('career.managers', person.id, key);
+  return MANAGERS.filter((m) => rng.next() < ESTIMATE.managerInterest && score >= m.bar).map((m) => m.id);
+}
+
+function offerManagement(sim: Simulation, person: Person, managers: string[], why: string): void {
+  const career = careerOf(person);
+  if (career.managerId) return;
+  const until = sim.now + ESTIMATE.representationOfferDays * MS_DAY;
+  const fresh = managers.filter((id) => !career.managerOffers.some((o) => o.managerId === id));
+  career.managerOffers.push(...fresh.map((managerId) => ({ managerId, until })));
+  if (!fresh.length || person.id !== sim.universe.playerId) return;
+  sim.requireDecision({
+    urgency: 85, category: 'career', title: fresh.length === 1 ? 'An Offer Of Management' : `${fresh.length} Offers Of Management`,
+    detail: `${why} ${fresh.map((id) => managerById(id)!.name).join(', ')} offered to manage you, for ${Math.round(MANAGEMENT.withAgent * 100)}% of what you earn beside an agent, or ${Math.round(MANAGEMENT.alone * 100)}% without one. The offers stand until ${formatDate(until, sim.zone)}.`,
+    route: '/workspace/career', dueAt: until, refType: 'management', refId: `${sim.now}`,
+    actions: fresh.map((managerId) => ({ label: `Sign With ${managerById(managerId)!.name}`, commandKind: 'career.sign_manager', payload: { managerId } })),
+  });
+}
+
 /** Both showcases on the calendar, for a student in their last term. */
 export function bookShowcase(sim: Simulation, person: Person): void {
   const shows: [CareerCity, { year: number; month: number; day: number }, number][] = [
@@ -234,6 +309,9 @@ export function beginCareer(sim: Simulation, person: Person): void {
   if (career.since !== undefined) return;
   career.since = sim.now;
   scheduleWeek(sim, person, nextMonday(sim.now, zoneOf(workCity(person))));
+  // Cover and taxes from here: the school's plan runs out, and the returns begin.
+  armHealth(sim, person);
+  armTaxes(sim, person);
 }
 
 /** The next Monday at eight, after a moment. */
@@ -310,13 +388,12 @@ export function books(sim: Simulation, person: Person, audition: Audition, focus
 }
 
 /** A week's auditions (`career.auditions`): the agency's, a Poisson count by its reach, and the submissions that came back. */
-export function weekOfAuditions(sim: Simulation, person: Person, weekStart: Instant, agency: Agency | undefined, cityId: CareerCity, submitted: number): Omit<Audition, 'id' | 'status'>[] {
+export function weekOfAuditions(sim: Simulation, person: Person, weekStart: Instant, agency: Agency | undefined, cityId: CareerCity, submitted: number, managed = false): Omit<Audition, 'id' | 'status'>[] {
   const rng = sim.rng('career.auditions', person.id, String(weekStart));
-  let count = 0;
-  if (agency) {
-    const limit = Math.exp(-agency.auditionsPerWeek);
-    for (let p = rng.next(); p > limit; p *= rng.next()) count += 1;
-  }
+  const poisson = (mean: number) => { let n = 0; const limit = Math.exp(-mean); for (let p = rng.next(); p > limit; p *= rng.next()) n += 1; return n; };
+  const count = agency ? poisson(agency.auditionsPerWeek) : 0;
+  // A manager's relationships: the work a middling agency's reach sends.
+  const fromManager = managed ? poisson(MANAGEMENT.auditionsPerWeek) : 0;
   let self = 0;
   for (let n = 0; n < submitted; n += 1) if (rng.next() < ESTIMATE.selfSubmitCallback) self += 1;
   const pick = (open: readonly Role[]) => {
@@ -327,11 +404,12 @@ export function weekOfAuditions(sim: Simulation, person: Person, weekStart: Inst
   const here = ROLES.filter((r) => r.cities.includes(cityId));
   const sent = here.filter((r) => agency !== undefined && r.tiers.includes(agency.tier));
   const open = here.filter((r) => r.selfSubmit);
+  const theirs = here.filter((r) => r.tiers.includes(2));
   const zone = zoneOf(cityId);
   const out: Omit<Audition, 'id' | 'status'>[] = [];
-  for (let n = 0; n < count + self; n += 1) {
-    const mine = n >= count;
-    const role = pick(mine ? open : sent);
+  for (let n = 0; n < count + fromManager + self; n += 1) {
+    const mine = n >= count + fromManager;
+    const role = pick(mine ? open : n >= count ? theirs : sent);
     const when = at(weekStart, zone, Math.floor(rng.next() * 5), 10 + Math.floor(rng.next() * 7));
     out.push({ roleId: role.id, at: when, mode: rng.next() < ESTIMATE.tapeShare ? 'tape' : 'room', cityId, ...(mine ? { self: true } : {}) });
   }
@@ -354,7 +432,9 @@ export function workDays(booking: Booking): { at: Instant; week: number; rehears
   const zone = zoneOf(booking.cityId);
   const out: { at: Instant; week: number; rehearsal: boolean }[] = [];
   if (role.medium === 'screen') {
-    for (let d = 0; out.length < booking.units; d += 1) {
+    // A series regular's season is its workweeks, Monday to Friday.
+    const days = role.series ? role.series.weeks * 5 : booking.units;
+    for (let d = 0; out.length < days; d += 1) {
       const when = at(booking.starts, zone, d, 7);
       const wd = weekday(when, zone);
       if (wd >= 1 && wd <= 5) out.push({ at: when, week: Math.floor(d / 7), rehearsal: false });
@@ -383,14 +463,45 @@ export function workDays(booking: Booking): { at: Instant; week: number; rehears
  * check makes to the year's tax on the year's wages at the job's town, so a
  * year's withholding comes to the year's tax on what was earned.
  */
-export function paycheck(opts: { scale: Money; role: Role; rehearsal: boolean; represented: boolean; before: Money; cityId: string; at: Instant }) {
+export function paycheck(opts: { scale: Money; overtime?: Money; role: Role; rehearsal: boolean; represented: boolean; managed?: boolean; before: Money; cityId: string; at: Instant }) {
   const { scale, role, rehearsal, represented, before, cityId } = opts;
   const agentRate = role.union === 'equity' && rehearsal ? AGENT_COMMISSION.equityRehearsalRate : AGENT_COMMISSION.rate;
-  const gross = represented && role.union === 'sag' ? Math.round(scale * (1 + AGENT_COMMISSION.rate)) : scale;
-  const commission = !represented ? 0 : role.union === 'sag' ? gross - scale : Math.round(scale * agentRate);
+  const gross = (represented && role.union === 'sag' ? Math.round(scale * (1 + AGENT_COMMISSION.rate)) : scale) + (opts.overtime ?? 0);
+  const agent = !represented ? 0 : role.union === 'sag' ? Math.round(scale * AGENT_COMMISSION.rate) : Math.round(scale * agentRate);
+  // A manager takes a share of all of it: less beside an agent.
+  const manager = opts.managed ? Math.round(gross * (represented ? MANAGEMENT.withAgent : MANAGEMENT.alone)) : 0;
   const dues = role.union === 'equity' ? Math.round(gross * EQUITY.workingDues) : 0;
   const withheld = computeAnnualTax(before + gross, cityId, opts.at).total - computeAnnualTax(before, cityId, opts.at).total;
-  return { gross, commission, dues, withheld, net: gross - commission - dues - withheld };
+  return { gross, commission: agent + manager, agent, manager, dues, withheld, net: gross - agent - manager - dues - withheld };
+}
+
+/**
+ * A shooting day's overtime, over its hours (`OVERTIME`): a day player's
+ * ninth and tenth hours at time and a half and the rest at double, on the
+ * day rate over eight, capped at twice the day minimum; a weekly performer's
+ * hours past ten at double, on the week over 44, and above the money break
+ * on the break's rate. SLATE leaves out a weekly performer's time and a half
+ * for the ninth and tenth hours after a week's first two such days.
+ */
+export function overtimeFor(role: Role, dayRate: Money, dayMinimum: Money, hours: number, day: string): Money {
+  if (!role.basis) return 0;
+  if (role.basis === 'day') {
+    const hourly = Math.min(dayRate, OVERTIME.dayBaseCap * dayMinimum) / OVERTIME.dayStraight;
+    const half = Math.max(0, Math.min(hours, OVERTIME.dayHalfUntil) - OVERTIME.dayStraight);
+    const double = Math.max(0, hours - OVERTIME.dayHalfUntil);
+    return Math.round(hourly * (1.5 * half + 2 * double));
+  }
+  const weekly = role.basis === 'episode' ? dayRate * (role.after?.kind === 'tv' && role.after.length === 'hour' ? 5 / 6 : 1) : dayRate * 5;
+  const after = Math.max(0, hours - OVERTIME.weekDoubleAfter);
+  let hourly = (2 * weekly) / OVERTIME.weekHours;
+  for (const [from, above, rate] of OVERTIME.moneyBreak) if (day >= from && weekly >= above) hourly = rate;
+  return Math.round(after * hourly);
+}
+
+/** How long a shooting day runs (`career.hours`). */
+export function hoursOf(sim: Simulation, person: Person, key: string): number {
+  const [lo, hi] = OVERTIME.dayHours;
+  return lo + Math.floor(sim.rng('career.hours', person.id, key).next() * (hi - lo + 1));
 }
 
 function bankAccount(sim: Simulation, person: Person): Account | undefined {
@@ -401,7 +512,18 @@ function bankAccount(sim: Simulation, person: Person): Account | undefined {
 /** Days worked, on any job, in the window before a moment. */
 export function daysWorkedIn(sim: Simulation, person: Person, days: number): number {
   const from = sim.now - days * MS_DAY;
-  return sim.universe.scheduled.filter((i) => i.kind === WORK_KIND && i.payload.personId === person.id && i.status === 'done' && i.at >= from && i.at <= sim.now).length;
+  return careerOf(person).days.filter((d) => d.at >= from && d.at <= sim.now).length;
+}
+
+/** What a stretch of work came to: its hours and its scale, for a week of unemployment. */
+export function workedBetween(person: Person, from: Instant, to: Instant): { hours: number; pay: Money } {
+  const days = (person.career?.days ?? []).filter((d) => d.at >= from && d.at < to);
+  return { hours: days.reduce((sum, d) => sum + d.hours, 0), pay: days.reduce((sum, d) => sum + d.pay, 0) };
+}
+
+/** Whether they're on a job now: one taken whose days have begun and not ended. */
+export function working(sim: Simulation, person: Person): boolean {
+  return (person.career?.bookings ?? []).some((b) => b.status === 'accepted' && workDays(b)[0]!.at <= sim.now);
 }
 
 /** Whether they may leave their agency now, on SAG-AFTRA's terms, and why not if not. */
@@ -439,6 +561,8 @@ export function registerCareer(sim: Simulation): void {
     career.showcases.push({ cityId, at: item.at, score });
     const offers = focus > 0 && !career.agencyId ? offersFor(s, person, score, cityId) : [];
     const city = CITIES.require(cityId).name;
+    const managers = focus > 0 && !career.managerId ? managerOffersFor(s, person, score, cityId) : [];
+    if (managers.length) offerManagement(s, person, managers, `After the showcase in ${city},`);
     if (offers.length) { offerRepresentation(s, person, offers, cityId, `After the showcase in ${city},`); return; }
     if (isPlayer(person) && !career.agencyId) {
       s.notify({ category: 'money', title: focus > 0 ? `No Offers From ${city}` : `You Missed The Showcase In ${city}`, body: focus > 0 ? 'Nobody in the room offered to represent you. You can still submit yourself for work, and an agency can come later.' : 'Asleep through it, you weren’t seen.', importance: 80, route: '/workspace/career' });
@@ -450,13 +574,20 @@ export function registerCareer(sim: Simulation): void {
     if (!person?.craft) return;
     const career = careerOf(person);
     career.offers = career.offers.filter((o) => o.until > s.now);
+    career.managerOffers = career.managerOffers.filter((o) => o.until > s.now);
+    // A manager's month: now and then, meetings that bring an unrepresented client an agency (`career.managers`).
+    const month = zonedParts(item.at, s.homeZone);
+    if (career.managerId && !career.agencyId && month.day <= 7 && s.rng('career.managers', person.id, `agency-${item.at}`).next() < MANAGEMENT.findsAnAgency) {
+      const found = offersFor(s, person, showcaseScore(person.craft, 1), `manager-${item.at}`);
+      if (found.length) offerRepresentation(s, person, found, workCity(person), `Your manager, ${managerById(career.managerId)!.name}, set up meetings, and`);
+    }
     if (career.agencyId && career.signedAt !== undefined) {
       const since = Math.max(career.signedAt, career.lastBookedAt ?? 0, career.since ?? 0);
       if (s.now - since > ESTIMATE.dropAfterDays * MS_DAY) endRepresentation(s, person, 'A year with nothing booked, and the agency ended the contract.', false);
     }
     const agency = career.agencyId ? agencyById(career.agencyId) : undefined;
     const cityId = workCity(person);
-    const week = weekOfAuditions(s, person, item.at, agency, cityId, career.submitted);
+    const week = weekOfAuditions(s, person, item.at, agency, cityId, career.submitted, career.managerId !== undefined);
     career.submitted = 0;
     for (const one of week) {
       // Booked out: an agency doesn't send a client to an audition that clashes with a job they're working.
@@ -558,13 +689,30 @@ export function registerCareer(sim: Simulation): void {
       item.status = 'missed';
       booking.status = 'fired';
       for (const one of s.universe.scheduled) if (one.status === 'pending' && one.kind === WORK_KIND && one.payload.bookingId === booking.id) s.timeline.cancel(one.id, s.now);
-      if (booking.owed > 0) schedulePay(s, person, booking, s.now + 60_000);
+      if (booking.owed > 0) schedulePay(s, person, booking, s.now + 60_000, true);
       if (isPlayer(person)) s.notify({ category: 'money', title: 'Replaced', body: `You didn’t turn up for ${role.label}, and the production replaced you. What you worked is still paid.`, importance: 90, route: '/workspace/career' });
       if (career.agencyId) endRepresentation(s, person, 'You walked off a job the agency booked.', false);
       return;
     }
     booking.worked += 1;
     booking.owed += 1;
+    const cur = saveCurrency(s.universe);
+    const call = workDays(booking)[booking.worked - 1]!;
+    const unit = rateOf(role, item.at, booking.cityId, cur);
+    const scale = role.series ? Math.round((unit * role.series.episodes) / (role.series.weeks * 5)) : role.medium === 'screen' ? unit : Math.round(unit / 6);
+    const hours = role.medium === 'screen' ? hoursOf(s, person, `${booking.id}-${booking.worked}`) : call.rehearsal ? 8 : 3;
+    if (role.medium === 'screen') {
+      const minimum = rateOf(roleById('costar'), item.at, booking.cityId, cur);
+      (booking.overtimeDays ??= [])[booking.worked - 1] = overtimeFor(role, unit, minimum, hours, dayKey(item.at, zoneOf(booking.cityId)));
+    }
+    career.days.push({ at: item.at, hours, pay: scale });
+    career.days = career.days.slice(-400);
+    if (role.union === 'equity') {
+      const monday = at(item.at, zoneOf(booking.cityId), -((weekday(item.at, zoneOf(booking.cityId)) + 6) % 7), 12);
+      const key = dayKey(monday, zoneOf(booking.cityId));
+      const weeks = earningsOf(person).equityWeeks;
+      if (!weeks.includes(key)) weeks.push(key);
+    }
     const focus = focusOf(person);
     for (const [skill, weight] of Object.entries(role.grows) as [keyof Craft, number][]) {
       person.craft[skill] = Math.min(100, person.craft[skill] + ESTIMATE.workGain * weight * focus * (1 - person.craft[skill] / 100) ** 1.5);
@@ -573,6 +721,11 @@ export function registerCareer(sim: Simulation): void {
     if (booking.worked < workDays(booking).length) return;
     booking.status = 'worked';
     career.credits.push({ roleId: role.id, year: zonedParts(item.at, zoneOf(booking.cityId)).year, cityId: booking.cityId });
+    if (role.after) afterlife(s, person, booking, item.at);
+    if (!career.managerId && role.tiers.some((t) => t <= 2)) {
+      const managers = managerOffersFor(s, person, levelFor(person.craft, role), booking.id);
+      if (managers.length) offerManagement(s, person, managers, `Having seen your ${role.label.toLowerCase()},`);
+    }
     // Worked while unrepresented, a job an agency notices can bring its call (`career.offers`).
     if (!career.agencyId && role.tiers.some((t) => t <= 2)) {
       const score = levelFor(person.craft, role);
@@ -592,29 +745,36 @@ export function registerCareer(sim: Simulation): void {
     const cur = saveCurrency(s.universe);
     const zone = zoneOf(booking.cityId);
     const year = zonedParts(item.at, zone).year;
-    const wages = (career.wages[year] ??= { gross: 0, withheld: 0, sag: 0 });
+    const wages = yearOf(person, year);
     const represented = career.agencyId !== undefined;
+    const managed = career.managerId !== undefined;
+    // The days the period covers: SAG-AFTRA's through the Saturday before the Thursday, Equity's through the Friday; a last check, all.
+    const cutoff = item.payload.final === true ? Number.POSITIVE_INFINITY : role.union === 'sag' ? item.at - 4 * MS_DAY : item.at;
+    const from = booking.worked - booking.owed;
+    const calls = workDays(booking).slice(from, booking.worked).filter((c) => c.at <= cutoff);
+    if (!calls.length) return;
     // A day's scale on screen; on stage, each week's, a sixth for each of its six days.
-    const calls = workDays(booking).slice(booking.worked - booking.owed, booking.worked);
     const lines = new Map<number, { rehearsal: boolean; days: number }>();
     for (const c of calls) lines.set(c.week, { rehearsal: c.rehearsal, days: (lines.get(c.week)?.days ?? 0) + 1 });
     const postings: { accountId: string; amount: Money }[] = [];
     let net = 0;
     let gross = 0;
+    let overtime = (booking.overtimeDays ?? []).slice(from, from + calls.length).reduce((sum, o) => sum + (o ?? 0), 0);
     for (const [, line] of lines) {
       const rate = rateOf(role, item.at, booking.cityId, cur);
-      const scale = role.medium === 'screen' ? rate * line.days : Math.round((rate * line.days) / 6);
-      const check = paycheck({ scale, role, rehearsal: line.rehearsal, represented, before: wages.gross, cityId: booking.cityId, at: item.at });
-      wages.gross += check.gross;
-      wages.withheld += check.withheld;
-      if (role.union === 'sag') wages.sag += check.gross;
+      // A series regular's episodes, spread over the season's workweeks.
+      const scale = role.series ? Math.round((rate * role.series.episodes * line.days) / (role.series.weeks * 5)) : role.medium === 'screen' ? rate * line.days : Math.round((rate * line.days) / 6);
+      const check = paycheck({ scale, overtime, role, rehearsal: line.rehearsal, represented, managed, before: wages.acting, cityId: booking.cityId, at: item.at });
+      overtime = 0;
+      recordWages(person, item.at, zone, { gross: check.gross, withheld: check.withheld, commission: check.commission, dues: check.dues, sag: role.union === 'sag', employer: booking.id });
       gross += check.gross;
       net += check.net;
-      if (check.commission) postings.push({ accountId: s.nominalAccount('expense', 'Agent Commission').id, amount: check.commission });
+      if (check.agent) postings.push({ accountId: s.nominalAccount('expense', 'Agent Commission').id, amount: check.agent });
+      if (check.manager) postings.push({ accountId: s.nominalAccount('expense', 'Manager Commission').id, amount: check.manager });
       if (check.dues) postings.push({ accountId: s.nominalAccount('expense', 'Union Dues').id, amount: check.dues });
       if (check.withheld) postings.push({ accountId: s.nominalAccount('expense', 'Tax Withheld').id, amount: check.withheld });
     }
-    booking.owed = 0;
+    booking.owed -= calls.length;
     s.post({
       memo: `${role.label}: ${calls.length} ${calls.length === 1 ? 'day' : 'days'}`, category: 'salary',
       postings: [{ accountId: account.id, amount: net }, { accountId: s.nominalAccount('income', 'Acting').id, amount: -gross }, ...postings],
@@ -629,6 +789,35 @@ export function registerCareer(sim: Simulation): void {
     if (career.agencyId) throw new CommandError(`You’re with ${agencyById(career.agencyId)!.name}.`);
     represent(s, person, offer);
     return { agencyId: p.agencyId };
+  });
+
+  sim.onCommand<{ managerId: string }, { managerId: string }>('career.sign_manager', (p, { sim: s }) => {
+    const career = careerOf(s.player);
+    if (career.managerId) throw new CommandError(`${managerById(career.managerId)!.name} manages you.`);
+    if (!career.managerOffers.some((o) => o.managerId === p.managerId && o.until > s.now)) throw new CommandError('That firm hasn’t an offer standing.');
+    career.managerId = p.managerId;
+    career.managerSince = s.now;
+    career.managerOffers = [];
+    for (const d of Object.values(s.universe.decisions)) if (d.refType === 'management' && !d.resolvedAt) d.resolvedAt = s.now;
+    return { managerId: p.managerId };
+  });
+
+  sim.onCommand<Record<string, never>, { left: string }>('career.leave_manager', (_p, { sim: s }) => {
+    const career = careerOf(s.player);
+    if (!career.managerId || career.managerSince === undefined) throw new CommandError('You have no manager.');
+    if (s.now - career.managerSince < MANAGEMENT.minimumDays * MS_DAY) throw new CommandError(`The contract runs a year from ${formatDate(career.managerSince, s.zone)}.`);
+    const name = managerById(career.managerId)!.name;
+    delete career.managerId;
+    delete career.managerSince;
+    return { left: name };
+  });
+
+  sim.onSchedule(RESIDUAL_KIND, (item, s) => {
+    const person = personOf(item);
+    if (!person) return;
+    const residual = careerOf(person).residuals.find((r) => r.id === item.payload.residualId);
+    if (!residual) return;
+    payResidual(s, person, residual, String(item.payload.stream) as Stream, Number(item.payload.n), item.at);
   });
 
   sim.onCommand<Record<string, never>, { left: string }>('career.leave', (_p, { sim: s }) => {
@@ -723,8 +912,8 @@ export function registerCareer(sim: Simulation): void {
   }
 }
 
-function schedulePay(sim: Simulation, person: Person, booking: Booking, when: Instant): void {
-  sim.schedule({ at: when, kind: PAY_KIND, label: `Paid: ${roleById(booking.roleId).label}`, category: 'career', priority: 20, payload: { personId: person.id, bookingId: booking.id } });
+function schedulePay(sim: Simulation, person: Person, booking: Booking, when: Instant, final = false): void {
+  sim.schedule({ at: when, kind: PAY_KIND, label: `Paid: ${roleById(booking.roleId).label}`, category: 'career', priority: 20, payload: { personId: person.id, bookingId: booking.id, ...(final ? { final } : {}) } });
 }
 
 function closeDecision(sim: Simulation, bookingId: string): void {
@@ -747,7 +936,7 @@ export function billDues(sim: Simulation, person: Person, year: number, month: n
   const sag = career.unions.sag;
   if (sag?.joinedAt !== undefined) {
     total += usd(Math.round(SAG_AFTRA.basicDues / 2), cur);
-    if (month === 5) total += Math.round(Math.min(career.wages[year - 1]?.sag ?? 0, usd(SAG_AFTRA.workDuesCap, cur)) * SAG_AFTRA.workDues);
+    if (month === 5) total += Math.round(Math.min(yearOf(person, year - 1).sag, usd(SAG_AFTRA.workDuesCap, cur)) * SAG_AFTRA.workDues);
   }
   const equity = career.unions.equity;
   if (equity) {
@@ -758,6 +947,117 @@ export function billDues(sim: Simulation, person: Person, year: number, month: n
       equity.initiationPaid += EQUITY.initiationNow;
     }
   }
-  if (total > 0) payFromCurrent(sim, person, total, 'Union dues', 'dues');
+  if (total > 0) {
+    payFromCurrent(sim, person, total, 'Union dues', 'dues');
+    yearOf(person, year).dues += total;
+  }
   return total;
+}
+
+// ---------------------------------------------------------------------------
+// Residuals
+// ---------------------------------------------------------------------------
+
+type Stream = 'rerun' | 'syndication' | 'svod' | 'bonus' | 'film';
+
+/**
+ * A finished job's life after (`career.residuals`): a television episode on
+ * a network or a streaming service of a size, with or without a prime-time
+ * rerun, a syndication sale or a hit's bonus; a film by its budget. Its
+ * payments go on the calendar as they fall due.
+ */
+export function afterlife(sim: Simulation, person: Person, booking: Booking, when: Instant): Residual | undefined {
+  const role = roleById(booking.roleId);
+  if (!role.after) return undefined;
+  const career = careerOf(person);
+  const rng = sim.rng('career.residuals', person.id, booking.id);
+  const cur = saveCurrency(sim.universe);
+  const unit = rateOf(role, when, booking.cityId, cur);
+  const episodes = role.series ? role.series.episodes : 1;
+  const perEpisode = role.series ? unit : unit * booking.units;
+  const base = { id: nextOwnId(career, 'r'), bookingId: booking.id, roleId: role.id, perEpisode, episodes, days: booking.worked, paid: 0, payments: 0 };
+  let residual: Residual;
+  if (role.after.kind === 'film') {
+    residual = { ...base, kind: 'film', airsAt: when };
+  } else {
+    const network = rng.next() < AFTERLIFE.network;
+    const x = rng.next();
+    const size = x < AFTERLIFE.svodSize.small ? 'small' : x < AFTERLIFE.svodSize.small + AFTERLIFE.svodSize.middle ? 'middle' : 'large';
+    residual = {
+      ...base, kind: network ? 'network' : 'svod', airsAt: when + AFTERLIFE.airsAfterDays * MS_DAY,
+      ...(network ? { rerun: rng.next() < AFTERLIFE.rerun, syndicated: rng.next() < AFTERLIFE.syndicated } : { size, hit: rng.next() < AFTERLIFE.successBonus }),
+    } as Residual;
+  }
+  career.residuals.push(residual);
+  const due = (stream: Stream, n: number, at: Instant) => sim.schedule({
+    at, kind: RESIDUAL_KIND, label: `Residuals: ${role.label}`, category: 'career', priority: 20, payload: { personId: person.id, residualId: residual.id, stream, n },
+  });
+  if (residual.kind === 'film') due('film', 1, when + 365 * MS_DAY);
+  else if (residual.kind === 'network') {
+    // Paid within 30 days of the telecast: SLATE pays on the thirtieth.
+    if (residual.rerun) due('rerun', 2, residual.airsAt + (AFTERLIFE.rerunAfterDays + 30) * MS_DAY);
+    if (residual.syndicated) due('syndication', residual.rerun ? 3 : 2, residual.airsAt + 2 * 365 * MS_DAY);
+  } else {
+    const yearOne = residual.airsAt + 90 * MS_DAY;
+    due('svod', 1, afterQuarter(yearOne, sim.homeZone));
+    if (residual.hit) due('bonus', 1, afterQuarter(yearOne, sim.homeZone));
+  }
+  return residual;
+}
+
+/** Sixty days after the end of the quarter a moment is in. */
+function afterQuarter(when: Instant, zone: string): Instant {
+  const p = zonedParts(when, zone);
+  const endMonth = Math.ceil(p.month / 3) * 3;
+  return instantFromZoned({ ...normalDate(p.year, endMonth + 1, 1), hour: 10 }, zone) + 59 * MS_DAY;
+}
+
+/** What a payment of a residual comes to, by its stream and its number. */
+export function residualAmount(residual: Residual, stream: Stream, n: number, when: Instant, zone: string, into: string): Money {
+  const role = roleById(residual.roleId);
+  const length = role.after?.kind === 'tv' ? role.after.length : 'hour';
+  const day = dayKey(when, zone);
+  if (stream === 'rerun') return Math.min(residual.perEpisode, usd(RESIDUALS.networkCeiling[length], into)) * residual.episodes;
+  if (stream === 'syndication') return Math.round(residual.perEpisode * (RESIDUALS.syndication[n] ?? RESIDUALS.syndicationLater)) * residual.episodes;
+  if (stream === 'svod' || stream === 'bonus') {
+    const ceiling = usd(rateOn(RESIDUALS.svodCeiling[length], day), into);
+    const year = Math.round(Math.min(residual.perEpisode, ceiling) * (RESIDUALS.svodYears[n - 1] ?? RESIDUALS.svodLater) * RESIDUALS.svodSubscribers[residual.size ?? 'large']) * residual.episodes;
+    return stream === 'bonus' ? Math.round(year * RESIDUALS.successBonus * RESIDUALS.successBonusShare) : year;
+  }
+  // A film: the cast's 3.6% of the distributor's year, shared by units.
+  const film = role.after?.kind === 'film' ? role.after.budget : 0;
+  const gross = usd(film, into) * AFTERLIFE.filmFirstYear * AFTERLIFE.filmDecay ** (n - 1);
+  const time = Math.min(5, residual.days / 5);
+  const units = time + Math.min(10, time);
+  return Math.round((gross * RESIDUALS.filmPool * units) / AFTERLIFE.castUnits);
+}
+
+function payResidual(sim: Simulation, person: Person, residual: Residual, stream: Stream, n: number, when: Instant): void {
+  const account = bankAccount(sim, person);
+  const cur = saveCurrency(sim.universe);
+  const zone = sim.homeZone;
+  const amount = residualAmount(residual, stream, n, when, zone, cur);
+  const role = roleById(residual.roleId);
+  const next = (at: Instant) => sim.schedule({ at, kind: RESIDUAL_KIND, label: `Residuals: ${role.label}`, category: 'career', priority: 20, payload: { personId: person.id, residualId: residual.id, stream, n: n + 1 } });
+  // The streams that go on: syndication and streaming each year, a film's while it earns a dollar.
+  if (stream === 'syndication' && n < 20) next(when + 365 * MS_DAY);
+  if (stream === 'svod' && n < 20) next(when + 365 * MS_DAY);
+  if (stream === 'film' && amount >= 1_00 && n < 20) next(when + 365 * MS_DAY);
+  if (!account || amount <= 0) return;
+  // Wages, with tax withheld as a paycheck's; agencies don't commission residuals here.
+  const year = zonedParts(when, zone).year;
+  const before = yearOf(person, year).acting;
+  const withheld = computeAnnualTax(before + amount, person.currentLocationId, when).total - computeAnnualTax(before, person.currentLocationId, when).total;
+  recordWages(person, when, zone, { gross: amount, withheld, sag: true, residual: true });
+  residual.paid += amount;
+  residual.payments += 1;
+  const what = { rerun: 'a prime-time rerun', syndication: `syndicated run ${n}`, svod: `streaming, year ${n}`, bonus: 'streaming’s success bonus', film: `the film’s year ${n}` }[stream];
+  sim.post({
+    memo: `Residuals, ${role.label}: ${what}`, category: 'salary',
+    postings: [
+      { accountId: account.id, amount: amount - withheld },
+      { accountId: sim.nominalAccount('income', 'Residuals').id, amount: -amount },
+      ...(withheld ? [{ accountId: sim.nominalAccount('expense', 'Tax Withheld').id, amount: withheld }] : []),
+    ],
+  });
 }

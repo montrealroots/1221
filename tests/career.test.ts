@@ -11,12 +11,13 @@ import { computeAnnualTax } from '@/engine/content/tax';
 import { AGENCIES, AGENT_COMMISSION, EQUITY, ROLES, SAG_AFTRA, SHOWCASE_2029, rateOn } from '@/engine/content/career';
 import {
   AUDITION_KIND, CAREER_WEEK_KIND, ESTIMATE, LEAVING, PAY_KIND, SHOWCASE_KIND, WORK_KIND,
-  beginCareer, billDues, bookingChance, careerOf, mayLeave, offersFor, paycheck, roleById, showcaseScore, weekOfAuditions, workDays,
+  beginCareer, billDues, bookingChance, careerOf, mayLeave, offersFor, overtimeFor, paycheck, roleById, showcaseScore, weekOfAuditions, workDays,
   type Booking,
 } from '@/engine/systems/career';
 import { repProduction, termAccount } from '@/engine/systems/school';
 import type { Simulation } from '@/engine/core/simulation';
 import type { Craft } from '@/engine/systems/school';
+import { yearOf } from '@/engine/systems/earnings';
 
 const NY = 'America/New_York';
 const at = (year: number, month: number, day: number, hour = 9, zone = NY) => instantFromZoned({ year, month, day, hour }, zone);
@@ -184,9 +185,9 @@ describe('representation', () => {
     expect(mayLeave(sim, sim.player).ok).toBe(true);
     offer(sim, 'costar', 1);
     expect(mayLeave(sim, sim.player).ok).toBe(true);
-    for (let n = 0; n < LEAVING.fewerThanDays; n += 1) sim.universe.scheduled.push({ id: `w${n}`, at: sim.now - (n + 1) * MS_DAY, kind: WORK_KIND, label: 'x', category: 'career', priority: 1, status: 'done', payload: { personId: sim.player.id } } as never);
+    for (let n = 0; n < LEAVING.fewerThanDays; n += 1) careerOf(sim.player).days.push({ at: sim.now - (n + 1) * MS_DAY, hours: 10, pay: 1_283_00 });
     expect(mayLeave(sim, sim.player).ok).toBe(false);
-    sim.universe.scheduled.pop();
+    careerOf(sim.player).days.pop();
     expect(sim.execute({ kind: 'career.leave', payload: {} }).ok).toBe(true);
     expect(careerOf(sim.player)).toMatchObject({ ended: { agencyId: career.ended!.agencyId, left: true } });
     expect(careerOf(sim.player).agencyId).toBeUndefined();
@@ -370,10 +371,14 @@ describe('pay', () => {
     const pay = sim.universe.transactions.filter((t) => t.memo.startsWith('Co-Star'));
     expect(pay).toHaveLength(1);
     expect(pay[0]!.category).toBe('salary');
-    expect(-pay[0]!.postings.find((q) => q.amount < 0)!.amount).toBe(Math.round(2 * 1_283_00 * 1.1));
+    // Scale plus 10% for two days, and each day's overtime past eight hours.
+    const overtime = careerOf(sim.player).days.reduce((sum, d) => sum + overtimeFor(roleById('costar'), 1_283_00, 1_283_00, d.hours, '2026-10-05'), 0);
+    expect(careerOf(sim.player).days.map((d) => d.hours).every((h) => h >= 10 && h <= 12)).toBe(true);
+    expect(overtime).toBeGreaterThan(0);
+    expect(-pay[0]!.postings.find((q) => q.amount < 0)!.amount).toBe(Math.round(2 * 1_283_00 * 1.1) + overtime);
     expect(b.status).toBe('worked');
     expect(careerOf(sim.player).credits).toEqual([{ roleId: 'costar', year: 2026, cityId: 'us-ny-newyork' }]);
-    expect(careerOf(sim.player).wages['2026']!.sag).toBe(Math.round(2 * 1_283_00 * 1.1));
+    expect(sim.player.earnings!.years['2026']!.sag).toBe(Math.round(2 * 1_283_00 * 1.1) + overtime);
   });
 
   it('follows each contract’s steps, and holds past the last', () => {
@@ -425,7 +430,7 @@ describe('the unions', () => {
     const sim = pro('dues');
     const career = careerOf(sim.player);
     career.unions = { sag: { eligibleAt: 0, joinedAt: 1 }, equity: { joinedAt: sim.now - 365 * MS_DAY, initiationPaid: EQUITY.initiationNow } };
-    career.wages['2025'] = { gross: 50_000_00, withheld: 0, sag: 40_000_00 };
+    yearOf(sim.player, 2025).sag = 40_000_00;
     expect(billDues(sim, sim.player, 2026, 5)).toBe(Math.round(SAG_AFTRA.basicDues / 2) + Math.round(40_000_00 * SAG_AFTRA.workDues) + EQUITY.basicDues / 2 + EQUITY.initiationNow);
     expect(billDues(sim, sim.player, 2026, 5)).toBe(0);
     expect(billDues(sim, sim.player, 2026, 11)).toBe(Math.round(SAG_AFTRA.basicDues / 2) + EQUITY.basicDues / 2);

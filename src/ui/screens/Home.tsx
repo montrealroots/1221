@@ -30,6 +30,7 @@ import { LookRegion, Open, at } from '@/ui/looks';
 import { YALE_DRAMA } from '@/engine/content/school';
 import { STANDING_LABEL, nextClasses, rankIn, yearOfStudy } from '@/engine/systems/school';
 import { agencyById } from '@/engine/systems/career';
+import { COVER_LABEL, coverOn } from '@/engine/systems/health';
 import { Gated, LockedPanel, useFeature } from '@/ui/guide/Guide';
 
 export function Home() {
@@ -77,6 +78,7 @@ export function Home() {
     home: useFeature('ui.home').open,
     school: useFeature('ui.school').open,
     career: useFeature('ui.career').open,
+    papers: useFeature('ui.papers').open,
   };
 
   return (
@@ -529,6 +531,19 @@ export function Home() {
           <YourCareer cur={cur} />
         </Panel>
         ))}
+        {player.career && (!shows.papers ? <LockedPanel feature="ui.papers" title="Taxes And Cover" /> : (
+        <Panel
+          title="Taxes And Cover"
+          tight
+          actions={(
+            <Gated feature="ui.papers" className="btn btn-sm" onClick={() => navigate('/workspace/papers', 'Taxes And Cover')}>
+              Taxes
+            </Gated>
+          )}
+        >
+          <YourPapers cur={cur} />
+        </Panel>
+        ))}
       </div>
     </>
   );
@@ -567,6 +582,25 @@ function YourSchool() {
 }
 
 /**
+ * Taxes and cover (`systems/health.ts`, `systems/taxreturn.ts`,
+ * `systems/unemployment.ts`): what covers them, the next return, and a claim.
+ */
+function YourPapers({ cur }: { cur: string }) {
+  const { sim } = useGame();
+  const person = useWorld((s) => s.player);
+  const cover = coverOn(person, sim.now);
+  const open = Object.values(person.returns ?? {}).find((r) => r.filedAt === undefined);
+  const claim = person.unemployment?.claim;
+  return (
+    <div className="col gap-3">
+      <Stat label="Health Cover" value={cover ? COVER_LABEL[cover] : 'None'} tone={cover ? undefined : 'warning'} />
+      <Stat label="Tax Return" value={open ? `${open.year}, Due ${formatDateTime(open.due, sim.zone).split(' at ')[0]}` : 'None Open'} note={open ? (open.figures.balance > 0 ? `${formatMoney(open.figures.balance, cur, { cents: false })} owed` : `${formatMoney(-open.figures.balance, cur, { cents: false })} back`) : undefined} tone={open && sim.now > open.due ? 'warning' : undefined} />
+      <Stat label="Unemployment" value={claim ? `${formatMoney(claim.weekly, cur, { cents: false })} A Week` : 'No Claim'} />
+    </div>
+  );
+}
+
+/**
  * The working life (`systems/career.ts`): who represents them, what's next
  * on the calendar for it, and the year's wages.
  */
@@ -584,7 +618,7 @@ function YourCareer({ cur }: { cur: string }) {
   return (
     <div className="col gap-3">
       <Stat label="Representation" value={agency?.name ?? 'None'} note={offers ? `${offers} ${offers === 1 ? 'offer' : 'offers'} to answer` : `${career.credits.length} ${career.credits.length === 1 ? 'credit' : 'credits'}`} tone={offers ? 'warning' : undefined} />
-      <Stat label="Earned This Year" value={formatMoney(career.wages[year]?.gross ?? 0, cur, { cents: false })} note="Before commission and tax" />
+      <Stat label="Earned This Year" value={formatMoney(person.earnings?.years[year]?.acting ?? 0, cur, { cents: false })} note="Before commission and tax" />
       {next && <Stat label="Next" value={next.label} note={formatDateTime(next.at, sim.zone)} />}
     </div>
   );

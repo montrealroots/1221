@@ -18,6 +18,10 @@ import type { AlertSettings } from '../systems/statements';
 import type { PaymentSettings } from '../systems/payments';
 import type { Craft, SchoolRecord } from '../systems/school';
 import type { CareerRecord } from '../systems/career';
+import type { EarningsRecord } from '../systems/earnings';
+import type { HealthRecord } from '../systems/health';
+import type { UnemploymentRecord } from '../systems/unemployment';
+import type { TaxReturn } from '../systems/taxreturn';
 import type { IdNamespace } from '../core/ids';
 import type { PerformerTitle } from '../core/performer';
 
@@ -172,6 +176,14 @@ export interface Person {
   craft?: Craft;
   /** Their working life as an actor: representation, auditions, jobs, the unions (`systems/career.ts`). */
   career?: CareerRecord;
+  /** What they've earned, by year and by quarter, for the return, unemployment and the unions' health plans (`systems/earnings.ts`). */
+  earnings?: EarningsRecord;
+  /** Health cover after school: the unions' plans and the marketplace (`systems/health.ts`). */
+  health?: HealthRecord;
+  /** Unemployment insurance claims (`systems/unemployment.ts`). */
+  unemployment?: UnemploymentRecord;
+  /** Income tax returns, by year (`systems/taxreturn.ts`). */
+  returns?: Record<string, TaxReturn>;
   /** Where they come from, for what a school's need assessment reads. Shown nowhere. */
   family?: 'wealthy';
   /** Payments somebody else made on their cards: when, which, when they learned of it and when the statement showed it, whether they reported it, what the law left them and what came back. */

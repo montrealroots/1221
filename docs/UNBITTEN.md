@@ -201,23 +201,33 @@ part the tool cannot see.
     SLATE's estimate, and their costs grow at the Bulletins' rates.
   - The bachelor's degree the MFA asks for is taken as read, and only the
     birth year is held to it.
-- **The business is its first portion.** What isn't there yet:
-  - Off-Broadway work: Equity's Off-Broadway minimums are only in its
-    members-only rulebook, so no Off-Broadway part is offered rather than
-    one at a made-up rate. Series regulars, whose pay is negotiated, aren't
-    offered either, nor commercials, voice-over or background work.
-  - Managers: no manager offers, and none takes 15%.
-  - Residuals, overtime, per diem, and the producers' pension and health
-    contributions (22% on SAG-AFTRA principals from 6 September 2026):
-    paid by the producer to the plans, they reach no bank here, and the
-    SAG-AFTRA and Equity-League health plans' eligibility ($28,090 in 2026,
-    or ten weeks of Equity work) earns no cover.
-  - Unemployment between jobs: New York's $869 and California's $450
-    weekly maximums are known and nothing claims them.
-  - Tax withheld is kept by nothing at year's end: no return settles it.
-  - A job is only in New York or Los Angeles, and never on location.
-  - An agency's reach, the bars its showings and parts ask, the booking
-    odds and how long a job runs are SLATE's estimate, named in the code.
+- **The business, and what's between jobs.** Off-Broadway, series
+  regulars, managers, overtime, residuals, union health cover, the
+  marketplace, unemployment insurance and the tax return were added on
+  2026-09-27 (`systems/career.ts`, `systems/health.ts`,
+  `systems/unemployment.ts`, `systems/taxreturn.ts`). What's still open:
+  - Off-Broadway's categories B and C and every 2027–28 rate aren't public;
+    SLATE offers Category A and a nonprofit's BB, and holds past 2026–27.
+  - A series regular's options on later seasons, and the 60% rule for
+    weekly performers from 2027, aren't modeled; nor recurring roles,
+    commercials, voice-over or background work.
+  - Meal penalties, a weekly performer's time and a half for the ninth and
+    tenth hours, and per diem on location: no job is on location.
+  - The producers' pension and health contributions reach no bank, and no
+    illness or medical bill exists for cover to meet: cover bites through
+    its premiums, the premium tax credit and California's penalty.
+  - Medicaid below the poverty line, COBRA, and dependents aren't modeled.
+  - New York City's 2026 benchmark premium is an estimate from 2025's and
+    the average rise; California's 2026 flat penalty isn't published, so
+    2025's $950 stands; its 2.5% is of the whole income, not above the
+    state's filing threshold.
+  - A claim is certified each week for the player, and only in New York and
+    California; Connecticut's isn't modeled.
+  - The return is filed from where they last lived, with no part-year or
+    nonresident returns; New York's and California's own deductions for
+    employee expenses aren't taken; the minimum late penalty holds at 2026's.
+  - Where a job is seen, how it does, a film's television money and its
+    cast's units are SLATE's estimate.
 - **Some of the banks' research is kept and read by nothing.** Each
   country's deposit guarantee, its central bank's rate, a sentence on how
   money moves there, and the local names for its ways of paying came off

@@ -45,6 +45,9 @@ import { registerCardOffers } from './systems/cardoffers';
 import { registerSecurity } from './systems/security';
 import { enroll, registerSchool } from './systems/school';
 import { registerCareer } from './systems/career';
+import { registerHealth } from './systems/health';
+import { registerUnemployment } from './systems/unemployment';
+import { registerTaxReturn } from './systems/taxreturn';
 import { YALE_DRAMA } from './content/school';
 import { CARDS } from './content/cards';
 import { registerWorld } from './world/world';
@@ -79,6 +82,9 @@ export function registerAllSystems(sim: Simulation): void {
   registerSecurity(sim);
   registerSchool(sim);
   registerCareer(sim);
+  registerHealth(sim);
+  registerUnemployment(sim);
+  registerTaxReturn(sim);
   registerLending(sim);
 }
 

@@ -29,7 +29,7 @@ import { bankById } from './content/banks';
 import { MS_DAY } from './core/time';
 import { admittedClass, classmatesIn, goesOn, meanCraft } from './systems/school';
 import { newLifeConfig } from './world/bootstrap';
-import { books, offersFor, weekOfAuditions } from './systems/career';
+import { afterlife, books, hoursOf, managerOffersFor, offersFor, weekOfAuditions } from './systems/career';
 import { AGENCIES, ROLES } from './content/career';
 
 // ---------------------------------------------------------------------------
@@ -286,7 +286,7 @@ defineDecider<{ sim: Simulation; score: number }, string>({
   decide: ({ sim, score }) => offersFor(sim, sim.player, score, 'us-ny-newyork').join(',') || 'none',
 });
 
-defineDecider<{ sim: Simulation; tier: 0 | 1 | 2 | 3; week: number }, string>({
+defineDecider<{ sim: Simulation; tier: 0 | 1 | 2 | 3; week: number; managed?: boolean }, string>({
   id: 'career.auditions',
   decides: 'How many auditions a week brings, for which parts, when, and whether on tape.',
   drawnIn: 'src/engine/systems/career.ts',
@@ -295,12 +295,14 @@ defineDecider<{ sim: Simulation; tier: 0 | 1 | 2 | 3; week: number }, string>({
     agency: (o, t) => ({ ...o, tier: Math.min(3, Math.floor(t * 4)) as 0 | 1 | 2 | 3 }),
     // The week: each is drawn on its own.
     week: (o, t) => ({ ...o, week: Math.round(t * 52) }),
+    // A manager's relationships add their own.
+    manager: (o, t) => ({ ...o, managed: t >= 0.5 }),
     world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
   },
   sample: (seed) => ({ sim: atYale(seed), tier: (seed % 4) as 0 | 1 | 2 | 3, week: seed % 52 }),
-  decide: ({ sim, tier, week }) => {
+  decide: ({ sim, tier, week, managed }) => {
     const agency = tier === 0 ? undefined : AGENCIES.find((a) => a.tier === tier);
-    return weekOfAuditions(sim, sim.player, sim.now + week * 7 * MS_DAY, agency, 'us-ny-newyork', 5)
+    return weekOfAuditions(sim, sim.player, sim.now + week * 7 * MS_DAY, agency, 'us-ny-newyork', 5, managed ?? false)
       .map((a) => `${a.roleId}@${a.at}/${a.mode}`).join(' ') || 'none';
   },
 });
@@ -322,4 +324,48 @@ defineDecider<{ sim: Simulation; roleId: string; acting: number }, string>({
     person.craft = { ...person.craft!, acting, screen: acting, voice: acting, text: acting };
     return Array.from({ length: 300 }, (_, n) => books(sim, person, { id: `d${n}`, roleId, at: 0, mode: 'room', cityId: 'us-ny-newyork', status: 'ahead' }, 1) ? '1' : '0').join('');
   },
+});
+
+defineDecider<{ sim: Simulation; key: number }, string>({
+  id: 'career.hours',
+  decides: 'How long a shooting day runs, and so its overtime.',
+  drawnIn: 'src/engine/systems/career.ts',
+  reads: {
+    // The day: each is drawn on its own.
+    day: (o, t) => ({ ...o, key: Math.round(t * 500) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), key: seed * 11 }),
+  decide: ({ sim, key }) => Array.from({ length: 40 }, (_, n) => hoursOf(sim, sim.player, `d${key + n}`)).join(','),
+});
+
+defineDecider<{ sim: Simulation; roleId: string; job: number }, string>({
+  id: 'career.residuals',
+  decides: 'Where a finished job is seen, and how it does: a network or a streaming service of a size, a rerun, a syndication sale, a hit.',
+  drawnIn: 'src/engine/systems/career.ts',
+  reads: {
+    // The part: television or a film.
+    role: (o, t) => ({ ...o, roleId: ['costar', 'guest-hour', 'series-hour', 'film-low'][Math.min(3, Math.floor(t * 4))]! }),
+    // The job: each is drawn on its own.
+    job: (o, t) => ({ ...o, job: Math.round(t * 200) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), roleId: ['costar', 'guest-hour', 'series-hour', 'film-low'][seed % 4]!, job: seed }),
+  decide: ({ sim, roleId, job }) => Array.from({ length: 20 }, (_, n) => {
+    const r = afterlife(sim, sim.player, { id: `j${job}-${n}`, roleId, cityId: 'us-ny-newyork', starts: sim.now, units: 2, rehearsalWeeks: 0, status: 'worked', dueAt: sim.now, offeredAt: sim.now, worked: 2, owed: 0, weeksPaid: 0 }, sim.now)!;
+    return `${r.kind}${r.size ?? ''}${r.rerun ? 'R' : ''}${r.syndicated ? 'S' : ''}${r.hit ? 'H' : ''}`;
+  }).join(' '),
+});
+
+defineDecider<{ sim: Simulation; score: number }, string>({
+  id: 'career.managers',
+  decides: 'Which management firms offer after a showing or a job, and whether a manager finds an unrepresented client an agency in a month.',
+  drawnIn: 'src/engine/systems/career.ts',
+  reads: {
+    // The showing: the higher, the more firms' bars it clears.
+    score: (o, t) => ({ ...o, score: 55 + t * 25 }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), score: 60 + (seed % 20) }),
+  decide: ({ sim, score }) => managerOffersFor(sim, sim.player, score, 'us-ny-newyork').join(',') || 'none',
 });

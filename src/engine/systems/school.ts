@@ -53,6 +53,7 @@ import { readiness } from './life';
 import { payFromCurrent } from './household';
 import { beginCareer, bookShowcase } from './career';
 import { YALE_COST_GROWTH } from '../content/career';
+import { recordWages } from './earnings';
 
 export type Craft = Record<Skill, number>;
 export type Standing = 'good' | 'concern' | 'warning' | 'dismissed' | 'graduated';
@@ -734,6 +735,8 @@ export function registerSchool(sim: Simulation): void {
     // Paid by direct deposit through Yale's payroll, so a bank counts it as wages. A student's pay
     // is exempt from FICA, and at these hours no federal tax is withheld.
     s.post({ memo: `Work-study wages, ${school.workStudy.owedHours} hours: ${YALE_DRAMA.name}`, category: 'salary', postings: [{ accountId: current.id, amount: pay }, { accountId: s.nominalAccount('income', 'Wages').id, amount: -pay }] });
+    // Income for the year's return (`systems/earnings.ts`).
+    recordWages(person, item.at, zone(), { gross: pay, workStudy: true });
     school.workStudy.owedHours = 0;
   });
 

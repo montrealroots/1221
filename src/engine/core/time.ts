@@ -117,6 +117,17 @@ export interface WallClock {
  *  - "fall back" overlaps (1:30 AM occurring twice) resolve to the earlier,
  *    first occurrence, which is what a person setting an alarm means.
  */
+/**
+ * A date whose day or month has run over (the 32nd of a month, the 13th
+ * month) as the real date it lands on. `instantFromZoned` takes such a
+ * reading down its gap path and returns it a minute late, so a reading made
+ * by adding days or months is put through this first.
+ */
+export function normalDate(year: number, month: number, day: number): { year: number; month: number; day: number } {
+  const t = new Date(Date.UTC(year, month - 1, day));
+  return { year: t.getUTCFullYear(), month: t.getUTCMonth() + 1, day: t.getUTCDate() };
+}
+
 export function instantFromZoned(wall: WallClock, zone: TimeZone): Instant {
   const target = Date.UTC(
     wall.year, wall.month - 1, wall.day,

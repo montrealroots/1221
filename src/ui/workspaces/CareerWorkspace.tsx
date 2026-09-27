@@ -17,10 +17,12 @@ import { CITIES } from '@/engine/content/geography';
 import { AGENCIES, AGENCY_SOURCE, AGENT_COMMISSION, CAREER_CITIES, EQUITY, ROLES, SAG_AFTRA, SHOWCASE_2029 } from '@/engine/content/career';
 import { YALE_DRAMA } from '@/engine/content/school';
 import {
-  ESTIMATE, LEAVING, agencyById, bookingChance, careerOf, mayLeave, rateOf, roleById, workDays, type Booking, type CareerRecord,
+  ESTIMATE, LEAVING, agencyById, bookingChance, careerOf, managerById, mayLeave, rateOf, roleById, workDays, type Booking, type CareerRecord,
 } from '@/engine/systems/career';
 import { costsAt, HOUSING, type Housing } from '@/engine/systems/household';
 import { focusOf } from '@/engine/systems/school';
+import { earningsOf } from '@/engine/systems/earnings';
+import { MANAGEMENT, MANAGERS, OVERTIME, RESIDUALS } from '@/engine/content/career';
 
 type CareerTab = 'agency' | 'auditions' | 'work' | 'unions' | 'home';
 
@@ -131,6 +133,8 @@ function AgencyPane() {
           </div>
         </Panel>
       )}
+
+      <ManagerPanel />
 
       <Panel
         title="Submitting Yourself"
@@ -245,7 +249,7 @@ function AuditionsPane() {
                     <td>{r.label}</td>
                     <td>{r.union === 'sag' ? 'SAG-AFTRA' : 'Equity'}</td>
                     <td className="num mono">{formatMoney(rateOf(r, sim.now, r.cities[0]!, cur), cur)}</td>
-                    <td>{r.medium === 'screen' ? 'Day' : 'Week'}</td>
+                    <td>{r.series ? 'Episode' : r.medium === 'screen' ? 'Day' : 'Week'}</td>
                     <td className="num mono">{pct(bookingChance(person.craft!, r, focus, 'room'))}</td>
                   </tr>
                 ))}
@@ -253,7 +257,7 @@ function AuditionsPane() {
             </table>
           </div>
           <p className="xs dim" style={{ margin: 0 }}>
-            The pay is each contract’s minimum on today’s date: SAG-AFTRA’s 2026–2030 television and theatrical rates, its low budget agreements, Equity’s LORT rates and its Broadway minimum; after a contract’s last published step it holds. A guest star’s pay is the major role’s five- or eight-day price, by the day. Your chance is SLATE’s estimate: about one in twenty at the part’s bar, as the trade reckons for a newer actor, more above it, less tired or on tape.
+            The pay is each contract’s minimum on today’s date: SAG-AFTRA’s 2026–2030 television and theatrical rates, its low budget agreements, Equity’s LORT rates and its Broadway minimum; after a contract’s last published step it holds. A guest star’s pay is the major role’s five- or eight-day price, by the day; a series regular’s is by the episode, 13 guaranteed. A shooting day runs {OVERTIME.dayHours[0]} to {OVERTIME.dayHours[1]} hours, and the hours past the contract’s are paid at its overtime rates. Your chance is SLATE’s estimate: about one in twenty at the part’s bar, as the trade reckons for a newer actor, more above it, less tired or on tape.
           </p>
         </div>
       </Panel>
@@ -285,6 +289,7 @@ function WorkPane() {
           </div>
         ) : <p className="small muted" style={{ margin: 0 }}>A job you take puts its days on your calendar. You must be in its city, awake, for every one: a day missed ends the job, and an agency that booked it lets you go.</p>}
       </Panel>
+      <ResidualsPanel />
       <Panel title="Credits">
         {career.credits.length ? (
           <div className="table-scroll">
@@ -308,7 +313,8 @@ function UnionsPane() {
   const career: CareerRecord = careerOf(person);
   const cur = saveCurrency(sim.universe);
   const money = (c: number) => formatMoney(c, cur);
-  const years = Object.keys(career.wages).sort().reverse();
+  const ledger = earningsOf(person).years;
+  const years = Object.keys(ledger).filter((y) => ledger[y]!.acting > 0).sort().reverse();
   const sag = career.unions.sag;
   const equity = career.unions.equity;
   const sagWord = !sag ? 'Not Yet Eligible' : sag.joinedAt !== undefined ? 'Member' : 'Eligible';
@@ -338,9 +344,9 @@ function UnionsPane() {
         {years.length ? (
           <div className="table-scroll">
             <table>
-              <thead><tr><th scope="col">Year</th><th scope="col" className="num">Gross</th><th scope="col" className="num">Under SAG-AFTRA</th><th scope="col" className="num">Tax Withheld</th></tr></thead>
+              <thead><tr><th scope="col">Year</th><th scope="col" className="num">Gross</th><th scope="col" className="num">Of It Residuals</th><th scope="col" className="num">Under SAG-AFTRA</th><th scope="col" className="num">Commission</th><th scope="col" className="num">Tax Withheld</th></tr></thead>
               <tbody>
-                {years.map((y) => <tr key={y}><td className="mono">{y}</td><td className="num mono">{money(career.wages[y]!.gross)}</td><td className="num mono">{money(career.wages[y]!.sag)}</td><td className="num mono">{money(career.wages[y]!.withheld)}</td></tr>)}
+                {years.map((y) => <tr key={y}><td className="mono">{y}</td><td className="num mono">{money(ledger[y]!.acting)}</td><td className="num mono">{money(ledger[y]!.residuals)}</td><td className="num mono">{money(ledger[y]!.sag)}</td><td className="num mono">{money(ledger[y]!.commission)}</td><td className="num mono">{money(ledger[y]!.withheld)}</td></tr>)}
               </tbody>
             </table>
           </div>
@@ -387,6 +393,75 @@ function HomePane() {
         </div>
         <p className="small" style={{ margin: 0 }}>
           An audition in the room, and every day of a job, is in the city it’s in, and you must be there. A self-tape you make wherever you are. Moving costs a deposit and the rest of the month’s rent, and the old deposit comes back, less anything owed.
+        </p>
+      </div>
+    </Panel>
+  );
+}
+
+/** A manager: who, what they take, leaving after the first year, and the offers standing. */
+function ManagerPanel() {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const career = careerOf(person);
+  const manager = career.managerId ? managerById(career.managerId) : undefined;
+  const offers = career.managerOffers.filter((o) => o.until > sim.now);
+  const pctOf = (x: number) => `${Math.round(x * 100)}%`;
+  return (
+    <Panel
+      title={manager ? manager.name : 'No Manager'}
+      subtitle={manager && career.managerSince !== undefined ? `Managing you since ${formatDate(career.managerSince, sim.zone)}` : 'A manager is beside an agency, not instead of one'}
+      actions={manager ? <Gated feature="career.leave_manager" onClick={() => { const a = run<{ left: string }>('career.leave_manager'); if (a.ok) toast(`You left ${a.value!.left}.`, 'positive'); }}>Leave Your Manager</Gated> : undefined}
+    >
+      <div className="col gap-3">
+        {offers.map((o) => (
+          <div key={o.managerId} className="row-between small">
+            <span>{managerById(o.managerId)!.name}, until {formatDate(o.until, sim.zone)}</span>
+            <Gated feature="career.sign_manager" onClick={() => { if (run('career.sign_manager', { managerId: o.managerId }).ok) toast(`Signed with ${managerById(o.managerId)!.name}.`, 'positive'); }}>Sign</Gated>
+          </div>
+        ))}
+        <p className="small" style={{ margin: 0 }}>
+          A manager takes {pctOf(MANAGEMENT.withAgent)} of what you earn beside an agent and {pctOf(MANAGEMENT.alone)} without one, gets you about {MANAGEMENT.auditionsPerWeek} more audition a week, and, while you’ve no agency, sets up meetings that bring one about {pctOf(MANAGEMENT.findsAnAgency)} of months. A first contract runs a year.
+        </p>
+        <p className="xs dim" style={{ margin: 0 }}>
+          The firms are ones signing actors in 2026: {MANAGERS.map((m) => m.name).join(', ')}. Nothing caps a manager’s commission; the rates are what the trade reckons, and the rest is SLATE’s estimate. Source: {MANAGEMENT.source}.
+        </p>
+      </div>
+    </Panel>
+  );
+}
+
+/** What each job has paid since, and how it's seen. */
+function ResidualsPanel() {
+  const { sim } = useGame();
+  const person = useWorld((s) => s.player);
+  const career = careerOf(person);
+  const cur = saveCurrency(sim.universe);
+  const seen = { network: 'On A Network', svod: 'Streaming', film: 'A Film’s Television And Streaming' } as const;
+  const size = { small: 'A Small Service', middle: 'A Middling Service', large: 'A Big Service' } as const;
+  return (
+    <Panel title="Residuals" subtitle={career.residuals.length ? undefined : 'Television and film work pays after it’s made'}>
+      <div className="col gap-3">
+        {career.residuals.length > 0 && (
+          <div className="table-scroll">
+            <table>
+              <thead><tr><th scope="col">Part</th><th scope="col">Where</th><th scope="col">Since</th><th scope="col" className="num">Payments</th><th scope="col" className="num">Paid</th></tr></thead>
+              <tbody>
+                {[...career.residuals].reverse().map((r) => (
+                  <tr key={r.id}>
+                    <td>{roleById(r.roleId).label}</td>
+                    <td>{seen[r.kind]}{r.size ? `, ${size[r.size]}` : ''}{r.rerun ? ', Rerun' : ''}{r.syndicated ? ', Syndicated' : ''}{r.hit ? ', A Hit' : ''}</td>
+                    <td>{formatDate(r.airsAt, sim.zone)}</td>
+                    <td className="num mono">{r.payments}</td>
+                    <td className="num mono">{formatMoney(r.paid, cur)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+        <p className="xs dim" style={{ margin: 0 }}>
+          A network’s prime-time rerun pays what you were paid, to its ceiling, within 30 days; syndication a share of the part’s minimum by the run; streaming, after its first 90 days, a share each year by the service’s size, and a hit a bonus; a film’s cast shares {(RESIDUALS.filmPool * 100).toFixed(1)}% of its television and streaming money. The formulas are the agreements’. Where a job is seen, how it does, and what a film earns are SLATE’s estimate. Source: {RESIDUALS.source}.
         </p>
       </div>
     </Panel>
