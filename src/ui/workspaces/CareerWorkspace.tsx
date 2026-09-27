@@ -18,12 +18,12 @@ import { AGENCIES, AGENCY_SOURCE, AGENT_COMMISSION, CAREER_CITIES, EQUITY, ROLES
 import { YALE_DRAMA } from '@/engine/content/school';
 import { GENRE_BY_ID } from '@/engine/content/interests';
 import {
-  ESTIMATE, LEAVING, agencyById, bookingChance, careerOf, managerById, mayLeave, onSite, rateOf, roleById, staleHeadshots, submissionsAWeek, workCityOf, workDays, type Booking, type CareerRecord, type CastingSite,
-} from '@/engine/systems/career';
+  ESTIMATE, LEAVING, agencyById, bookingChance, careerOf, managerById, mayLeave, onSite, rateOf, roleById, staleHeadshots, submissionsAWeek, workCityOf, workDays, type Booking, type CareerRecord, type CastingSite, workCity } from '@/engine/systems/career';
 import { costsAt, HOUSING, type Housing } from '@/engine/systems/household';
 import { focusOf } from '@/engine/systems/school';
 import { earningsOf } from '@/engine/systems/earnings';
 import { MANAGEMENT, MANAGERS, OVERTIME, RESIDUALS, WORK_COSTS } from '@/engine/content/career';
+import { inSaveMoney } from '@/engine/systems/banking';
 
 type CareerTab = 'agency' | 'auditions' | 'work' | 'unions' | 'home';
 
@@ -139,11 +139,11 @@ function AgencyPane() {
 
       <Panel
         title="Submitting Yourself"
-        subtitle={`${career.submitted} of ${submissionsAWeek(career, sim.now, person.currentLocationId)} this week`}
+        subtitle={`${career.submitted} of ${submissionsAWeek(career, sim.now, workCity(person))} this week`}
         actions={<Gated feature="career.self_submit" onClick={() => { if (run('career.self_submit').ok) toast('Submitted. Any audition comes on Monday.', 'positive'); }}>Submit Yourself</Gated>}
       >
         <p className="small" style={{ margin: 0 }}>
-          On the casting sites every actor uses, for the low budget films that take submissions. About {pct(ESTIMATE.selfSubmitCallback)} bring an audition with a paid site’s headshot and reel, and half that free, with the week’s on Monday (SLATE’s estimate).
+          On the casting sites every actor uses, for the low budget films, games and audiobooks that take submissions. About {pct(ESTIMATE.selfSubmitCallback)} bring an audition with a paid site’s headshot and reel, and half that free, with the week’s on Monday (SLATE’s estimate).
           {career.since === undefined ? ' At school, submissions are for the summers between years, for jobs that end before the fall term; for good when school ends.' : ''} Submitted from out of town, casting asks for a tape, and a job in another city means a room sublet there for its nights.
         </p>
       </Panel>
@@ -335,6 +335,8 @@ function UnionsPane() {
   const career: CareerRecord = careerOf(person);
   const cur = saveCurrency(sim.universe);
   const money = (c: number) => formatMoney(c, cur);
+  // The unions' own figures are dollars, and charged in the save's money (`usd` in `systems/career.ts`).
+  const dollars = (c: number) => formatMoney(inSaveMoney(sim, c, 'USD'), cur);
   const ledger = earningsOf(person).years;
   const years = Object.keys(ledger).filter((y) => ledger[y]!.acting > 0).sort().reverse();
   const sag = career.unions.sag;
@@ -347,16 +349,16 @@ function UnionsPane() {
           <div className="col gap-3">
             <Stat label="Status" value={sagWord} note={sag?.joinedAt !== undefined ? `Since ${formatDate(sag.joinedAt, sim.zone)}` : sag ? `Since ${formatDate(sag.eligibleAt, sim.zone)}` : undefined} />
             <p className="small" style={{ margin: 0 }}>
-              Your first SAG-AFTRA job makes you eligible. Taking another {SAG_AFTRA.taftHartleyDays} days on means joining first: the {money(SAG_AFTRA.initiation)} initiation fee and half a year’s dues. Dues are {money(SAG_AFTRA.basicDues)} a year, billed each May and November, and each May {(SAG_AFTRA.workDues * 100).toFixed(3)}% of the last year’s SAG-AFTRA earnings.
+              Your first SAG-AFTRA job makes you eligible. Taking another {SAG_AFTRA.taftHartleyDays} days on means joining first: the {dollars(SAG_AFTRA.initiation)} initiation fee and half a year’s dues. Dues are {dollars(SAG_AFTRA.basicDues)} a year, billed each May and November, and each May {(SAG_AFTRA.workDues * 100).toFixed(3)}% of the last year’s SAG-AFTRA earnings.
             </p>
             <p className="xs dim" style={{ margin: 0 }}>Source: {SAG_AFTRA.source}.</p>
           </div>
         </Panel>
         <Panel title="Actors’ Equity">
           <div className="col gap-3">
-            <Stat label="Status" value={equity ? 'Member' : 'Not A Member'} note={equity ? `${money(equity.initiationPaid)} of the ${money(EQUITY.initiation)} fee paid` : undefined} />
+            <Stat label="Status" value={equity ? 'Member' : 'Not A Member'} note={equity ? `${dollars(equity.initiationPaid)} of the ${dollars(EQUITY.initiation)} fee paid` : undefined} />
             <p className="small" style={{ margin: 0 }}>
-              Your first Equity contract makes you a member: {money(EQUITY.initiationNow)} of the {money(EQUITY.initiation)} initiation fee down and the rest over two years. Dues are {money(EQUITY.basicDues)} a year, each May and November, and {EQUITY.workingDues * 100}% of every Equity check.
+              Your first Equity contract makes you a member: {dollars(EQUITY.initiationNow)} of the {dollars(EQUITY.initiation)} initiation fee down and the rest over two years. Dues are {dollars(EQUITY.basicDues)} a year, each May and November, and {EQUITY.workingDues * 100}% of every Equity check.
             </p>
             <p className="xs dim" style={{ margin: 0 }}>Source: {EQUITY.source}.</p>
           </div>
@@ -430,6 +432,7 @@ function WorkCostsPanel() {
   const cur = saveCurrency(sim.universe);
   if (career.since === undefined) return null;
   const stale = staleHeadshots(career, sim.now);
+  const dollars = (c: number) => formatMoney(inSaveMoney(sim, c, 'USD'), cur);
   return (
     <Panel title="What The Work Costs" subtitle={`${formatMoney(yearCosts(person, sim.now), cur)} this year, deducted where the return allows`}>
       <div className="col gap-3">
@@ -438,7 +441,7 @@ function WorkCostsPanel() {
           const on = onSite(career, site, sim.now);
           return (
             <div key={site} className="row-between small">
-              <span>{WORK_COSTS.sites[site].label}, {formatMoney(WORK_COSTS.sites[site].price, cur)} a year: {on ? `to ${formatDate(held!.until, sim.zone)}${held!.renews ? ', renewing' : ''}` : 'Not Joined'}</span>
+              <span>{WORK_COSTS.sites[site].label}, {dollars(WORK_COSTS.sites[site].price)} a year: {on ? `to ${formatDate(held!.until, sim.zone)}${held!.renews ? ', renewing' : ''}` : 'Not Joined'}</span>
               {on && held!.renews
                 ? <Gated feature="career.subscribe" onClick={() => { if (run('career.subscribe', { site, on: false }).ok) toast('It runs to its date and stops.', 'positive'); }}>Stop Renewing</Gated>
                 : <Gated feature="career.subscribe" onClick={() => { if (run('career.subscribe', { site, on: true }).ok) toast('Joined for the year.', 'positive'); }}>{on ? 'Renew' : 'Join'}</Gated>}
@@ -446,25 +449,25 @@ function WorkCostsPanel() {
           );
         })}
         <div className="row-between small">
-          <span>Headshots, {formatMoney(WORK_COSTS.headshots, cur)} with prints: from {formatDate(career.headshotsAt ?? career.since, sim.zone)}{stale ? ', out of date' : ''}</span>
+          <span>Headshots, {dollars(WORK_COSTS.headshots)} with prints: from {formatDate(career.headshotsAt ?? career.since, sim.zone)}{stale ? ', out of date' : ''}</span>
           <Gated feature="career.headshots" onClick={() => { if (run('career.headshots').ok) toast('New headshots.', 'positive'); }}>New Headshots</Gated>
         </div>
         <div className="row-between small">
-          <span>A reel, {formatMoney(WORK_COSTS.reel, cur)} to edit: {career.reelAt ? `from ${formatDate(career.reelAt, sim.zone)}` : career.credits.some((c) => roleById(c.roleId).medium === 'screen') ? 'None' : 'None, and no screen footage to cut one from'}</span>
+          <span>A reel, {dollars(WORK_COSTS.reel)} to edit: {career.reelAt ? `from ${formatDate(career.reelAt, sim.zone)}` : career.credits.some((c) => roleById(c.roleId).medium === 'screen') || person.school?.filmed ? 'None' : 'None, and no screen footage to cut one from'}</span>
           <Gated feature="career.reel" onClick={() => { if (run('career.reel').ok) toast('A reel, cut from your footage.', 'positive'); }}>{career.reelAt ? 'Recut The Reel' : 'Cut A Reel'}</Gated>
         </div>
         <div className="row-between small">
-          <span>A self-tape kit, {formatMoney(WORK_COSTS.kit, cur)} and the sales tax: {career.kit ? 'Yours' : 'None'}</span>
+          <span>A self-tape kit, {dollars(WORK_COSTS.kit)} and the sales tax: {career.kit ? 'Yours' : 'None'}</span>
           {!career.kit && <Gated feature="career.buy_kit" onClick={() => { if (run('career.buy_kit').ok) toast('Tapes read better now.', 'positive'); }}>Buy A Kit</Gated>}
         </div>
         <div className="row-between small">
-          <span>A scene-study class, {formatMoney(WORK_COSTS.classMonthly, cur)} a month: {career.scene ? 'Enrolled' : 'None'}</span>
+          <span>A scene-study class, {dollars(WORK_COSTS.classMonthly)} a month: {career.scene ? 'Enrolled' : 'None'}</span>
           {career.scene
             ? <Gated feature="career.class" onClick={() => { if (run('career.class', { on: false }).ok) toast('Out of the class.', 'positive'); }}>Leave The Class</Gated>
             : <Gated feature="career.class" onClick={() => { if (run('career.class', { on: true }).ok) toast('In class from this week.', 'positive'); }}>Join A Class</Gated>}
         </div>
         <p className="xs dim" style={{ margin: 0 }}>
-          Prices are 2025–26’s. A free submission sends a name and a résumé, and is seen about half as often; a paid one sends your headshot, and your reel where you have one, without which the {WORK_COSTS.wantReel * 100}% of breakdowns that ask for one are shut. Backstage’s own listings take {WORK_COSTS.backstageSubmissions} more submissions a week, and Casting Networks’ {WORK_COSTS.castingNetworksSubmissions['us-ca-losangeles']} more in Los Angeles and {WORK_COSTS.castingNetworksSubmissions.other} elsewhere. Headshots more than two years old cost about a fifth of your auditions; a tape without a kit reads about a fifth worse; a week in class grows your acting as a class at school does; a coach, {formatMoney(WORK_COSTS.coach, cur)} an hour, makes an audition book about a quarter more often. What each does is SLATE’s estimate. New York and California let an actor deduct it all above 2% of income. Source: {WORK_COSTS.source}.
+          Prices are 2025–26’s. A free submission sends a name and a résumé, and is seen about half as often; a paid one sends your headshot, and your reel where you have one, without which the {WORK_COSTS.wantReel * 100}% of breakdowns that ask for one are shut. Backstage’s own listings take {WORK_COSTS.backstageSubmissions} more submissions a week, and Casting Networks’ {WORK_COSTS.castingNetworksSubmissions['us-ca-losangeles']} more in Los Angeles and {WORK_COSTS.castingNetworksSubmissions.other} elsewhere. Headshots more than two years old cost about a fifth of your auditions; a tape without a kit reads about a fifth worse; a week in class grows your acting as a class at school does; a coach, {dollars(WORK_COSTS.coach)} an hour, makes an audition book about a quarter more often. What each does is SLATE’s estimate. New York and California let an actor deduct it all above 2% of income. Source: {WORK_COSTS.source}.
         </p>
       </div>
     </Panel>

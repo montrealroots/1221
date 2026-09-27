@@ -534,7 +534,8 @@ export function Home() {
           <YourCareer cur={cur} />
         </Panel>
         ))}
-        {player.career && (!shows.papers ? <LockedPanel feature="ui.papers" title="Taxes And Cover" /> : (
+        {/* From school on: Yale Health, the returns and the bills run from the first term. Until 2026-09-27 it waited for the career. */}
+        {(player.career || player.school) && (!shows.papers ? <LockedPanel feature="ui.papers" title="Taxes And Cover" /> : (
         <Panel
           title="Taxes And Cover"
           tight
@@ -567,9 +568,10 @@ function YourSchool() {
   const booked = sim.universe.scheduled
     .filter((item) => item.status === 'pending' && item.category === 'school' && item.requiresPlayer && item.payload.personId === person.id)
     .sort((x, y) => x.at - y.at)[0];
-  // What the calendar holds, or past this week, the next classes.
-  const classes = nextClasses(sim.now);
-  const next = booked ?? (classes !== undefined ? { label: 'Classes', at: classes } : undefined);
+  // What the calendar holds, or past this week, the next classes, while there are classes to go to.
+  const enrolled = school.standing !== 'graduated' && school.standing !== 'dismissed';
+  const classes = enrolled ? nextClasses(sim.now) : undefined;
+  const next = enrolled ? booked ?? (classes !== undefined ? { label: 'Classes', at: classes } : undefined) : undefined;
   return (
     <div className="col gap-3">
       <Stat
@@ -597,7 +599,7 @@ function YourPapers({ cur }: { cur: string }) {
   return (
     <div className="col gap-3">
       <Stat label="Health Cover" value={cover ? COVER_LABEL[cover] : 'None'} tone={cover ? undefined : 'warning'} />
-      <Stat label="Tax Return" value={open ? `${open.year}, Due ${formatDateTime(open.due, sim.zone).split(' at ')[0]}` : 'None Open'} note={open ? (open.figures.balance > 0 ? `${formatMoney(open.figures.balance, cur, { cents: false })} owed` : `${formatMoney(-open.figures.balance, cur, { cents: false })} back`) : undefined} tone={open && sim.now > open.due ? 'warning' : undefined} />
+      <Stat label="Tax Return" value={open ? `${open.year}, Due ${formatDateTime(open.due, 'America/New_York').split(' at ')[0]}` : 'None Open'} note={open ? (open.figures.balance > 0 ? `${formatMoney(open.figures.balance, cur, { cents: false })} owed` : `${formatMoney(-open.figures.balance, cur, { cents: false })} back`) : undefined} tone={open && sim.now > open.due ? 'warning' : undefined} />
       <Stat label="Unemployment" value={claim ? `${formatMoney(claim.weekly, cur, { cents: false })} A Week` : 'No Claim'} />
     </div>
   );

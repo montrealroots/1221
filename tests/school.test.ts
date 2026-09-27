@@ -562,6 +562,10 @@ describe('evaluation', () => {
 
   it('confers the MFA at Commencement after six terms in standing', () => {
     const sim = life('degree');
+    // The second year's assigned shifts, all booked by June, come to its 150 hours at most: every class-week Saturday was 156.
+    play(sim, at(2028, 6, 1, 12));
+    expect(sim.player.school!.workStudy.assignedBooked).toBeLessThanOrEqual(WORK_STUDY.assignedHours);
+    expect(sim.player.school!.workStudy.assignedBooked).toBeGreaterThan(WORK_STUDY.assignedHours - 12);
     play(sim, at(2029, 5, 29, 12));
     const school = sim.player.school!;
     expect(school.history.map((r) => r.standing)).toEqual(['good', 'good', 'good', 'good', 'good', 'good']);
@@ -572,6 +576,9 @@ describe('evaluation', () => {
     expect(yearOfStudy(sim.player)).toBe(3);
     expect(school.workStudy.yearHours).toBeGreaterThan(100);
     expect(school.workStudy.yearHours).toBeLessThanOrEqual(WORK_STUDY.assignedHours + WORK_STUDY.electiveHours);
+    // The year's assigned shifts come to its 150 hours at most.
+    expect(school.workStudy.assignedBooked).toBeLessThanOrEqual(WORK_STUDY.assignedHours);
+    expect(school.workStudy.assignedBooked).toBeGreaterThan(90);
     expect(titled(sim, 'Your MFA Is Conferred')).toHaveLength(1);
     expect(sim.universe.scheduled.filter((i) => i.status === 'pending' && i.kind.startsWith('school.')).map((i) => i.kind + ' ' + i.label)).toEqual([]);
   }, 120_000);
@@ -635,6 +642,12 @@ describe('the Yale Cabaret, clear of casting', () => {
     sim.schedule({ at: at(first.year, first.month, first.day, 20), durationMinutes: 180, kind: CALL_KIND, label: 'An Evening Call', category: 'school', priority: 32, payload: { personId: sim.player.id, call: 'oncall' } });
     const moved = cabaretWeek(sim, sim.player, 0)!;
     expect(at(moved.year, moved.month, moved.day, 0)).toBeGreaterThan(at(first.year, first.month, first.day, 0));
+    // An elective shift on its opening night moves it too.
+    const shift = life('cabaret-shift');
+    play(shift, at(2026, 9, 7, 18));
+    const was = cabaretWeek(shift, shift.player, 0)!;
+    shift.schedule({ at: at(was.year, was.month, was.day, 19), durationMinutes: 240, kind: SHIFT_KIND, label: 'Elective Shift', category: 'school', priority: 32, payload: { personId: shift.player.id, hours: 4, elective: true } });
+    expect(cabaretWeek(shift, shift.player, 0)).not.toEqual(was);
     // A Thursday in the Thanksgiving recess isn't a production week.
     const late = life('cabaret-recess');
     play(late, at(2026, 11, 4, 18));

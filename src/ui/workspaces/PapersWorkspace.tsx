@@ -22,6 +22,8 @@ import { homeOf } from '@/engine/systems/earnings';
 import { titleCaseLabel } from '@/engine/core/text';
 import { basePeriodFor, unemploymentOf } from '@/engine/systems/unemployment';
 import { zonedParts } from '@/engine/core/time';
+import { inSaveMoney } from '@/engine/systems/banking';
+import { working } from '@/engine/systems/career';
 
 type PapersTab = 'returns' | 'health' | 'benefits';
 
@@ -128,7 +130,7 @@ function ReturnsPane() {
         );
       })}
       <p className="xs dim" style={{ margin: 0 }}>
-        Due 15 April, or the next business day. Filed late with a balance, 5% of it a month or part of one, to a quarter of it, with at least {formatMoney(RETURN.lateMinimum, cur)} past 60 days; paid late, 0.5% a month. A refund comes {RETURN.refundDays} days after filing. The performing artist deduction takes your commission and dues off an income of {formatMoney(RETURN.performingArtistIncome, cur)} or less, from two employers or more; otherwise the job’s costs aren’t deductible. The tax is the federal and state law SLATE carries for where you lived. Work in Canada is taxed at 23% as it’s paid, all of it back under CAD 15,000 in the year and, over it, a Canadian return filed with this one by 30 April gives back what’s past its graduated tax. Work in the United Kingdom is taxed 20% by a payer paying you past £12,570 in its tax year, and settled with its own return each 31 January. Source: {RETURN.source}; {ABROAD.source}.
+        Due 15 April, or the next business day. Filed late with a balance, 5% of it a month or part of one, to a quarter of it, with at least {formatMoney(inSaveMoney(sim, RETURN.lateMinimum, 'USD'), cur)} past 60 days; paid late, 0.5% a month. A refund comes {RETURN.refundDays} days after filing. The performing artist deduction takes your commission and dues off an income of {formatMoney(inSaveMoney(sim, RETURN.performingArtistIncome, 'USD'), cur)} or less, from two employers or more; otherwise the job’s costs aren’t deductible. The tax is the federal and state law SLATE carries for where you lived. Work in Canada is taxed at 23% as it’s paid, all of it back under CAD 15,000 in the year and, over it, a Canadian return filed with this one by 30 April gives back what’s past its graduated tax. Work in the United Kingdom is taxed 20% by a payer paying you past £12,570 in its tax year, and settled with its own return each 31 January. Source: {RETURN.source}; {ABROAD.source}.
       </p>
     </div>
   );
@@ -164,18 +166,18 @@ function HealthPane() {
         subtitle={state ? `${formatMoney(benchmarkFor(state, year, cur), cur)} a month for the benchmark silver plan` : 'In New York, Los Angeles or New Haven'}
         actions={enrolled
           ? <Gated feature="health.drop" onClick={() => { if (run('health.drop').ok) toast('It ends at the month’s end.', 'positive'); }}>Drop The Plan</Gated>
-          : <Gated feature="health.enroll" onClick={() => { const a = run<{ kind: string }>('health.enroll'); if (a.ok) toast(`Enrolled in ${a.value!.kind === 'marketplace' ? 'the marketplace' : state ? PROGRAM_NAMES[state][a.value!.kind as 'medicaid' | 'essential'] : 'Medicaid'}, from the first of next month.`, 'positive'); }}>Enroll</Gated>}
+          : !may.ok ? undefined : <Gated feature="health.enroll" onClick={() => { const a = run<{ kind: string }>('health.enroll'); if (a.ok) toast(`Enrolled in ${a.value!.kind === 'marketplace' ? 'the marketplace' : state ? PROGRAM_NAMES[state][a.value!.kind as 'medicaid' | 'essential'] : 'Medicaid'}, from the first of next month.`, 'positive'); }}>Enroll</Gated>}
       >
         <div className="col gap-3">
           <p className="small" style={{ margin: 0 }}>
             {enrolled ? `Enrolled from ${formatDate(ownPlan!.from, sim.zone)}. ` : `${may.why} `}
-            On a low month’s income, Medicaid (Medi-Cal in California, HUSKY D in Connecticut) takes you at 138% of the poverty line, in New York the Essential Plan to 200%, and in Connecticut Covered Connecticut to 175% of the year before’s, at any time and with no premium; from 2027 Medicaid asks for {PUBLIC_COVER.workHours} hours’ work or {formatMoney(PUBLIC_COVER.workEarnings, cur)} a month at renewal.{' '}
+            On a low month’s income, Medicaid (Medi-Cal in California, HUSKY D in Connecticut) takes you at 138% of the poverty line, in New York the Essential Plan to 200%, and in Connecticut Covered Connecticut to 175% of the year before’s, at any time and with no premium; from 2027 Medicaid asks for {PUBLIC_COVER.workHours} hours’ work or {formatMoney(inSaveMoney(sim, PUBLIC_COVER.workEarnings, 'USD'), cur)} a month at renewal.{' '}
             {enrolled && (cover === 'sag' || cover === 'equity') ? `${COVER_LABEL[cover]} covers you too, so the plan’s premium buys nothing more while it does. ` : ''}
             You pay the whole premium each month, and the return gives back what’s over your share of income: none over {PREMIUM_CREDIT.cutoff * 100}% of the poverty line, since the enhanced credits ended with 2025.
-            {CITIES.get(person.currentLocationId)?.parentId === 'us-ca' ? ` In California a month without cover costs its penalty on the return: the greater of ${formatMoney(CALIFORNIA_MANDATE.flat, cur)} a year and ${CALIFORNIA_MANDATE.share * 100}% of income, a twelfth a month, to ${formatMoney(CALIFORNIA_MANDATE.bronzeMonth, cur)}; ${h.uncoveredInCalifornia[year] ?? 0} this year so far.` : ''}
+            {CITIES.get(person.currentLocationId)?.parentId === 'us-ca' ? ` In California a month without cover costs its penalty on the return: the greater of ${formatMoney(inSaveMoney(sim, CALIFORNIA_MANDATE.flat, 'USD'), cur)} a year and ${CALIFORNIA_MANDATE.share * 100}% of income, a twelfth a month, to ${formatMoney(inSaveMoney(sim, CALIFORNIA_MANDATE.bronzeMonth, 'USD'), cur)}; ${h.uncoveredInCalifornia[year] ?? 0} this year so far.` : ''}
           </p>
           <p className="xs dim" style={{ margin: 0 }}>
-            The benchmark premiums are SLATE’s estimate from published rates. Earned union cover: SAG-AFTRA’s from 12 months’ earnings at its threshold, for a quarterly premium; Equity-League’s from {UNION_HEALTH.equityWeeks} weeks of Equity work in 12 months, {formatMoney(UNION_HEALTH.equityPremium, cur)} a quarter. Source: {UNION_HEALTH.source}; {BENCHMARK_SOURCE}; {CALIFORNIA_MANDATE.source}.
+            The benchmark premiums are SLATE’s estimate from published rates. Earned union cover: SAG-AFTRA’s from 12 months’ earnings at its threshold, for a quarterly premium; Equity-League’s from {UNION_HEALTH.equityWeeks} weeks of Equity work in 12 months, {formatMoney(inSaveMoney(sim, UNION_HEALTH.equityPremium, 'USD'), cur)} a quarter. Source: {UNION_HEALTH.source}; {BENCHMARK_SOURCE}; {CALIFORNIA_MANDATE.source}.
           </p>
         </div>
       </Panel>
@@ -187,7 +189,7 @@ function HealthPane() {
           actions={<Gated feature="health.elect_cobra" onClick={() => { if (run('health.elect_cobra').ok) toast('Elected: covered from the day your plan ended.', 'positive'); }}>Elect COBRA</Gated>}
         >
           <p className="small" style={{ margin: 0 }}>
-            Your {COVER_LABEL[h.cobraOffer.plan]} ended {formatDate(h.cobraOffer.lostAt, sim.zone)}. COBRA keeps it for up to {COBRA.months} months, back to that day, at {formatMoney(COBRA.premium[h.cobraOffer.plan], cur)} a month; New York pays three-quarters of it for a year where last month’s income is {formatMoney(COBRA.newYorkIncome, cur)} or less. Source: {COBRA.source}.
+            Your {COVER_LABEL[h.cobraOffer.plan]} ended {formatDate(h.cobraOffer.lostAt, sim.zone)}. COBRA keeps it for up to {COBRA.months} months, back to that day, at {formatMoney(inSaveMoney(sim, COBRA.premium[h.cobraOffer.plan], 'USD'), cur)} a month; New York pays three-quarters of it for a year where last month’s income is {formatMoney(inSaveMoney(sim, COBRA.newYorkIncome, 'USD'), cur)} or less. Source: {COBRA.source}.
           </p>
         </Panel>
       )}
@@ -197,11 +199,11 @@ function HealthPane() {
 
       <Panel
         title="Care And Its Bills"
-        subtitle={plan ? `${plan.label}: ${formatMoney(h.spent[year] ?? 0, cur)} of ${formatMoney(plan.outOfPocket, cur)} paid this year` : 'Uninsured: you pay the price, less a hospital’s charity'}
+        subtitle={plan ? `${plan.label}: ${formatMoney(h.spent[year] ?? 0, cur)} of ${formatMoney(inSaveMoney(sim, plan.outOfPocket, 'USD'), cur)} paid this year` : 'Uninsured: you pay the price, less a hospital’s charity'}
         actions={debt && debt.balance < 0 ? <Gated feature="health.pay_bill" onClick={() => { if (run('health.pay_bill', { amount: -debt.balance }).ok) toast('Paid off.', 'positive'); }}>Pay It Off</Gated> : undefined}
       >
         <div className="col gap-3">
-          {debt && debt.balance < 0 && <Stat label="Medical Debt" value={formatMoney(-debt.balance, cur)} tone="warning" note={`On your record only at ${formatMoney(MEDICAL_DEBT.reportAt, cur)}, a year past due, and outside New York and California`} />}
+          {debt && debt.balance < 0 && <Stat label="Medical Debt" value={formatMoney(-debt.balance, cur)} tone="warning" note={`On your record only at ${formatMoney(inSaveMoney(sim, MEDICAL_DEBT.reportAt, 'USD'), cur)}, a year past due, and outside New York and California`} />}
           {bills.length > 0 && (
             <div className="table-scroll">
               <table>
@@ -211,7 +213,7 @@ function HealthPane() {
             </div>
           )}
           <p className="xs dim" style={{ margin: 0 }}>
-            Illness comes at the rates of an adult your age: about {CARE.perYear.visit} doctor’s visits a year, {CARE.perYear.emergency} emergency visits, a stay in hospital one year in 25, and the flu one season in eleven. Care costs what it costs your plan: {formatMoney(grown(CARE.price.visit, 'visit', sim.now), cur)} a visit, {formatMoney(grown(CARE.price.emergency, 'emergency', sim.now), cur)} an emergency visit and {formatMoney(grown(CARE.price.stay, 'stay', sim.now), cur)} a stay at this year’s commercial prices, grown from their year by the medical price index, and the uninsured are billed more. A bill is due in {MEDICAL_DEBT.dueDays} days. Source: {CARE.source}; {PLANS_SOURCE}.
+            Illness comes at the rates of an adult your age: about {CARE.perYear.visit} doctor’s visits a year, {CARE.perYear.emergency} emergency visits, a stay in hospital one year in 25, and the flu one season in eleven. Care costs what it costs your plan: {formatMoney(inSaveMoney(sim, grown(CARE.price.visit, 'visit', sim.now), 'USD'), cur)} a visit, {formatMoney(inSaveMoney(sim, grown(CARE.price.emergency, 'emergency', sim.now), 'USD'), cur)} an emergency visit and {formatMoney(inSaveMoney(sim, grown(CARE.price.stay, 'stay', sim.now), 'USD'), cur)} a stay at this year’s commercial prices, grown from their year by the medical price index, and the uninsured are billed more. A bill is due in {MEDICAL_DEBT.dueDays} days. Source: {CARE.source}; {PLANS_SOURCE}.
           </p>
         </div>
       </Panel>
@@ -239,7 +241,7 @@ function ConditionsPanel() {
           </div>
         ))}
         <p className="xs dim" style={{ margin: 0 }}>
-          Drawn at the rates of adults 18 to 34: depression {CHRONIC.share.depression * 100}%, asthma {(CHRONIC.share.asthma * 100).toFixed(1)}%, high blood pressure {(CHRONIC.share.hypertension * 100).toFixed(1)}%, diabetes {(CHRONIC.share.diabetes * 100).toFixed(1)}%, arthritis {(CHRONIC.share.arthritis * 100).toFixed(1)}%. Kept up, each month’s care is paid then, at what your plan leaves: therapy twice and a generic for depression, a brand inhaler for asthma, a generic for blood pressure, insulin and a glucose monitor (or a generic for type 2) and a visit a quarter for diabetes, a generic for arthritis. Insulin is never more than the makers’ {formatMoney(INSULIN.cashCap, cur)} a month, and nothing on a plan New York regulates; the monitor never more than Abbott’s {formatMoney(INSULIN.monitor.program, cur)}. Left alone, depression weighs on your morale each week, asthma doubles your emergencies, type 1 diabetes quadruples them, diabetes wears your body down and arthritis tires it, which is SLATE’s estimate. Source: {CHRONIC.source}; {INSULIN.source}; {PHARMACY.source}; {DENTAL_VISION.source}.
+          Drawn at the rates of adults 18 to 34: depression {CHRONIC.share.depression * 100}%, asthma {(CHRONIC.share.asthma * 100).toFixed(1)}%, high blood pressure {(CHRONIC.share.hypertension * 100).toFixed(1)}%, diabetes {(CHRONIC.share.diabetes * 100).toFixed(1)}%, arthritis {(CHRONIC.share.arthritis * 100).toFixed(1)}%. Kept up, each month’s care is paid then, at what your plan leaves: therapy twice and a generic for depression, a brand inhaler for asthma, a generic for blood pressure, insulin and a glucose monitor (or a generic for type 2) and a visit a quarter for diabetes, a generic for arthritis. Insulin is never more than the makers’ {formatMoney(inSaveMoney(sim, INSULIN.cashCap, 'USD'), cur)} a month, and nothing on a plan New York regulates; the monitor never more than Abbott’s {formatMoney(inSaveMoney(sim, INSULIN.monitor.program, 'USD'), cur)}. Left alone, depression weighs on your morale each week, asthma doubles your emergencies, type 1 diabetes quadruples them, diabetes wears your body down and arthritis tires it, which is SLATE’s estimate. Source: {CHRONIC.source}; {INSULIN.source}; {PHARMACY.source}; {DENTAL_VISION.source}.
         </p>
       </div>
     </Panel>
@@ -260,15 +262,15 @@ function DentalPanel() {
   return (
     <Panel
       title="A Dental Plan"
-      subtitle={`${d.label}: ${formatMoney(d.premium, cur)} ${d.yearly ? 'a year' : 'a month'}`}
+      subtitle={`${d.label}: ${formatMoney(inSaveMoney(sim, d.premium, 'USD'), cur)} ${d.yearly ? 'a year' : 'a month'}`}
       actions={own
         ? (d.yearly ? undefined : <Gated feature="health.dental" onClick={() => { if (run('health.dental', { on: false }).ok) toast('It ends at the month’s end.', 'positive'); }}>Drop Dental</Gated>)
         : <Gated feature="health.dental" onClick={() => { if (run('health.dental', { on: true }).ok) toast('Covered for the dentist from today.', 'positive'); }}>Buy Dental</Gated>}
     >
       <div className="col gap-3">
-        {own && <Stat label="Paid By The Plan This Year" value={`${formatMoney(own.paid[year] ?? 0, cur)} of ${formatMoney(d.max, cur)}`} />}
+        {own && <Stat label="Paid By The Plan This Year" value={`${formatMoney(own.paid[year] ?? 0, cur)} of ${formatMoney(inSaveMoney(sim, d.max, 'USD'), cur)}`} />}
         <p className="xs dim" style={{ margin: 0 }}>
-          Cleanings in full; a filling at {d.basic * 100}% after a {formatMoney(d.deductible, cur)} deductible, to {formatMoney(d.max, cur)} a year. It pays only where your health plan doesn’t. {offered === 'ca' ? 'Covered California sells it only beside its own plan, and it ends with that plan; its Los Angeles premium is SLATE’s estimate.' : offered === 'yale' ? 'Paid for the year to 30 September, and not canceled once paid.' : 'Bought on its own through NY State Of Health; its premium and its share of a filling are SLATE’s estimate.'} Source: {DENTAL_PLANS.source}.
+          Cleanings in full; a filling at {d.basic * 100}% after a {formatMoney(inSaveMoney(sim, d.deductible, 'USD'), cur)} deductible, to {formatMoney(inSaveMoney(sim, d.max, 'USD'), cur)} a year. It pays only where your health plan doesn’t. {offered === 'ca' ? 'Covered California sells it only beside its own plan, and it ends with that plan; its Los Angeles premium is SLATE’s estimate.' : offered === 'yale' ? 'Paid for the year to 30 September, and not canceled once paid.' : 'Bought on its own through NY State Of Health; its premium and its share of a filling are SLATE’s estimate.'} Source: {DENTAL_PLANS.source}.
         </p>
       </div>
     </Panel>
@@ -296,7 +298,7 @@ function BenefitsPane() {
       <Panel
         title={claim ? `A ${stateName(`us-${claim.state}`)} Claim` : 'No Claim Open'}
         subtitle={claim ? `Filed ${formatDate(claim.filedAt, sim.zone)}` : undefined}
-        actions={claim ? undefined : <Gated feature="benefits.claim" onClick={() => { const a = run<{ weekly: number }>('benefits.claim'); if (a.ok) toast(`Filed: ${money(a.value!.weekly)} a week.`, 'positive'); }}>File A Claim</Gated>}
+        actions={claim || !state || !preview?.result.ok || working(sim, person) ? undefined : <Gated feature="benefits.claim" onClick={() => { const a = run<{ weekly: number }>('benefits.claim'); if (a.ok) toast(`Filed: ${money(a.value!.weekly)} a week.`, 'positive'); }}>File A Claim</Gated>}
       >
         <div className="col gap-3">
           {claim ? (

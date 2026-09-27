@@ -136,7 +136,8 @@ export interface SchoolRecord {
   casting?: Casting;
   /** A Yale Rep assignment beside it: an understudy, or a role at a director's invitation. */
   rep?: Casting;
-  workStudy: { yearHours: number; electiveHours: number; owedHours: number };
+  /** The year's work-study: hours worked, elective hours asked for, owed on Friday, and assigned hours booked (to `WORK_STUDY.assignedHours`). */
+  workStudy: { yearHours: number; electiveHours: number; owedHours: number; assignedBooked?: number };
   /** The day, `YYYY-MM-DD`, they called in sick, if today. */
   sickDay?: string;
 }
@@ -466,6 +467,41 @@ function schedule(
   });
 }
 
+/**
+ * Why the Cabaret, the Summer Cabaret or an elective shift won't take them
+ * now, or nothing where it will: the commands refuse on it, and the School
+ * screen offers each only where it's undefined. Until 2026-09-27 the screen
+ * offered all three after graduation, and the summer's in any season.
+ */
+export function cabaretRefusal(person: Person): string | undefined {
+  const school = person.school;
+  if (!school || school.standing === 'graduated' || school.standing === 'dismissed') return 'The Cabaret is for students.';
+  if (school.standing === 'warning') return 'Nobody on academic warning may take part in the Cabaret.';
+  const term = school.termsBegun - 1;
+  if (term < 0) return 'The Cabaret’s season begins with the term.';
+  if (school.cabaret?.term === term) return 'You’re in a Cabaret show this term already.';
+  return undefined;
+}
+
+export function summerRefusal(sim: Simulation, person: Person): string | undefined {
+  const school = person.school;
+  if (!school || school.standing !== 'good') return 'The Summer Cabaret’s company takes a student in good standing.';
+  const term = school.termsBegun - 1;
+  // A spring term with a year still to come: the summer after the first or second year.
+  if (term < 0 || termStart(term).fall || yearOfTerm(term) === 3) return 'The company forms in the spring, for students with a year still to come.';
+  const year = termStart(term).date.year;
+  if (school.summer?.year === year) return 'You’re in this summer’s company.';
+  if (sim.now > at({ year, month: SUMMER_CABARET.applyBy[0], day: SUMMER_CABARET.applyBy[1] }, 23)) return 'This summer’s company has formed.';
+  return undefined;
+}
+
+export function shiftRefusal(person: Person): string | undefined {
+  const school = person.school;
+  if (!school || school.standing === 'dismissed' || school.standing === 'graduated') return 'You’re not at school.';
+  if (school.workStudy.electiveHours + 4 > WORK_STUDY.electiveHours) return `You’ve taken the year’s ${WORK_STUDY.electiveHours} elective hours.`;
+  return undefined;
+}
+
 /** The Cabaret's season a term falls in, by its number. */
 export function cabaretSeason(term: number): string {
   return `Yale Cabaret, Season ${YALE_CABARET.firstSeason + Math.floor(term / 2)}`;
@@ -495,7 +531,8 @@ export function cabaretEvenings(thu: SchoolDate, off: readonly (readonly [string
 export function cabaretWeek(sim: Simulation, person: Person, term: number): SchoolDate | undefined {
   const period = classPeriod(term);
   const calls = sim.universe.scheduled
-    .filter((i) => i.status === 'pending' && (i.kind === CALL_KIND || i.kind === LAB_KIND) && i.payload.personId === person.id)
+    // A work-study shift booked too: until 2026-09-27 an elective evening already taken wasn't read, and the show was set on it.
+    .filter((i) => i.status === 'pending' && (i.kind === CALL_KIND || i.kind === LAB_KIND || i.kind === SHIFT_KIND) && i.payload.personId === person.id)
     .map((i) => [i.at, i.at + (i.durationMinutes ?? 0) * 60_000] as const);
   const clashes = (from: Instant, minutes: number) => calls.some(([a, b]) => a < from + minutes * 60_000 && from < b);
   const earliest = zonedParts(sim.now + YALE_CABARET.leadDays * MS_DAY, zone());
@@ -584,7 +621,12 @@ function planWeek(sim: Simulation, person: Person, from: Instant): void {
   for (let day = first; keyOf(day) <= keyOf(sunday); day = addDays(day, 1)) {
     const term = termOf(day);
     if (coursesOn(day).length) schedule(sim, person, at(day, 9), { kind: CLASSES_KIND, label: 'Classes', minutes: 360, payload: { day: keyOf(day) } });
-    if (isShiftDay(term, day)) schedule(sim, person, at(day, 10), { kind: SHIFT_KIND, label: 'Work-Study Shift', minutes: 360, payload: { hours: 6, elective: false } });
+    // The year's assigned hours, and no more: until 2026-09-27 every class-week
+    // Saturday was booked, 156 hours in a second year against the Bulletin's 150.
+    if (isShiftDay(term, day) && (school.workStudy.assignedBooked ?? 0) + 6 <= WORK_STUDY.assignedHours && at(day, 10) > sim.now) {
+      school.workStudy.assignedBooked = (school.workStudy.assignedBooked ?? 0) + 6;
+      schedule(sim, person, at(day, 10), { kind: SHIFT_KIND, label: 'Work-Study Shift', minutes: 360, payload: { hours: 6, elective: false } });
+    }
   }
   sim.schedule({ at: at(sunday, 18), kind: WEEK_KIND, label: 'The School Week Ahead', category: 'system', priority: 5, payload: { personId: person.id } });
 }
@@ -1014,12 +1056,10 @@ export function registerSchool(sim: Simulation): void {
 
   sim.onCommand<Record<string, never>, { week: string }>('school.cabaret', (_p, { sim: s }) => {
     const person = s.player;
-    const school = person.school;
-    if (!school || school.standing === 'graduated' || school.standing === 'dismissed') throw new CommandError('The Cabaret is for students.');
-    if (school.standing === 'warning') throw new CommandError('Nobody on academic warning may take part in the Cabaret.');
+    const no = cabaretRefusal(person);
+    if (no) throw new CommandError(no);
+    const school = person.school!;
     const term = school.termsBegun - 1;
-    if (term < 0) throw new CommandError('The Cabaret’s season begins with the term.');
-    if (school.cabaret?.term === term) throw new CommandError('You’re in a Cabaret show this term already.');
     const week = cabaretWeek(s, person, term);
     if (!week) throw new CommandError('No Cabaret week this term clears your classes’ recesses and your casting’s calls.');
     school.cabaret = { term, week: keyOf(week), performed: 0 };
@@ -1058,14 +1098,10 @@ export function registerSchool(sim: Simulation): void {
 
   sim.onCommand<Record<string, never>, { from: Instant; until: Instant }>('school.summer_cabaret', (_p, { sim: s }) => {
     const person = s.player;
-    const school = person.school;
-    if (!school || school.standing !== 'good') throw new CommandError('The Summer Cabaret’s company takes a student in good standing.');
-    const term = school.termsBegun - 1;
-    // A spring term with a year still to come: the summer after the first or second year.
-    if (term < 0 || termStart(term).fall || yearOfTerm(term) === 3) throw new CommandError('The company forms in the spring, for students with a year still to come.');
-    const year = termStart(term).date.year;
-    if (school.summer?.year === year) throw new CommandError('You’re in this summer’s company.');
-    if (s.now > at({ year, month: SUMMER_CABARET.applyBy[0], day: SUMMER_CABARET.applyBy[1] }, 23)) throw new CommandError('This summer’s company has formed.');
+    const no = summerRefusal(s, person);
+    if (no) throw new CommandError(no);
+    const school = person.school!;
+    const year = termStart(school.termsBegun - 1).date.year;
     const runs = summerRuns(year);
     const from = at(addDays(runs[0]!.from, -7 * SUMMER_CABARET.rehearsalWeeks), SUMMER_CABARET.rehearsalFrom);
     const until = at(runs[runs.length - 1]!.to, 23);
@@ -1177,10 +1213,10 @@ export function registerSchool(sim: Simulation): void {
 
   sim.onCommand<Record<string, never>, { at: Instant; hours: number }>('school.take_shift', (_p, { sim: s }) => {
     const person = s.player;
-    const school = person.school;
-    if (!school || school.standing === 'dismissed' || school.standing === 'graduated') throw new CommandError('You’re not at school.');
+    const no = shiftRefusal(person);
+    if (no) throw new CommandError(no);
+    const school = person.school!;
     const hours = 4;
-    if (school.workStudy.electiveHours + hours > WORK_STUDY.electiveHours) throw new CommandError(`You’ve taken the year’s ${WORK_STUDY.electiveHours} elective hours.`);
     // The next evening, seven to eleven, front of house at Yale Rep, that nothing else wants.
     const p = zonedParts(s.now, zone());
     let day = addDays({ year: p.year, month: p.month, day: p.day }, 1);
