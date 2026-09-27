@@ -21,7 +21,9 @@ import { personalityOf } from '@/engine/systems/personality';
 import type { Simulation } from '@/engine/core/simulation';
 import type { Account } from '@/engine/core/ledger';
 import { bankById } from '@/engine/content/banks';
-import { CHEX, ESTIMATE, FRANCE, closeForOverdraft, declines, overdraftRoom, termsOf } from '@/engine/systems/lending';
+import { CHEX, ESTIMATE, FRANCE, FRENCH_CARDS, cardCeilingRoom, chargeForItem, lowestFirst, monthOrder, closeForOverdraft, declines, overdraftRoom, termsOf } from '@/engine/systems/lending';
+import { spend } from '@/engine/systems/household';
+import { inSaveMoney } from '@/engine/systems/banking';
 import { BREAK_NOTICE } from '@/engine/systems/accountlife';
 import { BONUSES, bonusRewards } from '@/engine/systems/cardoffers';
 import { exchange } from '@/engine/content/currency';
@@ -265,6 +267,101 @@ describe('the banks’ open rules', () => {
     expect(acct.balance).toBe(before + offer.amount);
     expect(acct.creditOffered).toBeUndefined();
     expect(sim.execute({ kind: 'bank.take_overrun_loan', payload: {} }).ok).toBe(false);
+  }, 120_000);
+
+  it('in France: a debit card pays against its ceiling, not the balance, and past the ceiling declines', () => {
+    const sim = lifeIn('fr-idf-paris', 'fr-bnp-paribas', 'fr-ceiling', 'wealthy');
+    const acct = current(sim);
+    set(sim, acct, 100_000_00);
+    sim.must({ kind: 'bank.set_payments', payload: { everyday: 'debit' } });
+    const ceiling = inSaveMoney(sim, FRENCH_CARDS['fr-bnp-paribas']!.ceiling, 'EUR');
+    expect(cardCeilingRoom(sim, sim.player)).toBeLessThanOrEqual(ceiling);
+    // A month's shopping near the ceiling, on the card.
+    sim.post({ memo: 'Groceries', category: 'food', postings: [{ accountId: acct.id, amount: -(cardCeilingRoom(sim, sim.player)! - 50_00) }, { accountId: sim.nominalAccount('expense', 'Food').id, amount: cardCeilingRoom(sim, sim.player)! - 50_00 }] });
+    expect(cardCeilingRoom(sim, sim.player)).toBe(50_00);
+    const card = Object.values(sim.universe.accounts).find((a) => a.ownerId === sim.player.id && a.kind === 'credit_card' && !a.closedAt)!;
+    expect(card).toBeDefined();
+    // The credit card full: past the ceiling, the day isn't bought, though the bank holds plenty.
+    const limit = card.creditLimit!;
+    set(sim, card, -limit);
+    expect(spend(sim, sim.player, 80_00, 'Groceries', 'food')).toBe(false);
+    // With room on it, the credit card takes the day.
+    set(sim, card, 0);
+    expect(spend(sim, sim.player, 80_00, 'Groceries', 'food')).toBe(true);
+    expect(card.balance).toBe(-80_00);
+    // Under the ceiling, the debit card pays with plenty in the bank.
+    expect(spend(sim, sim.player, 40_00, 'Groceries', 'food')).toBe(true);
+    // Only the card's purchases count against it, not the rent from the account.
+    const room = cardCeilingRoom(sim, sim.player)!;
+    sim.post({ memo: 'Rent', category: 'rent', postings: [{ accountId: acct.id, amount: -1_000_00 }, { accountId: sim.nominalAccount('expense', 'Rent').id, amount: 1_000_00 }] });
+    expect(cardCeilingRoom(sim, sim.player)).toBe(room);
+    // Crédit Agricole's is a calendar month: last month's shopping is forgotten on the 1st, where a rolling 30 days would still count it.
+    const ca = lifeIn('fr-idf-paris', 'fr-credit-agricole', 'fr-ca-month', 'wealthy');
+    const caAcct = current(ca);
+    set(ca, caAcct, 100_000_00);
+    ca.post({ memo: 'Groceries', category: 'food', postings: [{ accountId: caAcct.id, amount: -1_000_00 }, { accountId: ca.nominalAccount('expense', 'Food').id, amount: 1_000_00 }] });
+    const firstOfMonth = instantFromZoned({ year: 2026, month: 2, day: 1, hour: 6 }, 'Europe/Paris');
+    while (ca.now < firstOfMonth) ca.advanceTo(Math.min(firstOfMonth, ca.now + 6 * 3_600_000));
+    const spentSince = ca.universe.transactions.filter((t) => t.at >= instantFromZoned({ year: 2026, month: 2, day: 1, hour: 0 }, ca.homeZone) && t.category === 'food').flatMap((t) => t.postings).filter((x) => x.accountId === caAcct.id && x.amount < 0).reduce((a, x) => a - x.amount, 0);
+    expect(cardCeilingRoom(ca, ca.player)).toBe(inSaveMoney(ca, FRENCH_CARDS['fr-credit-agricole']!.ceiling, 'EUR') - spentSince);
+    // A bank with no ceiling here has none.
+    const us = lifeIn('us-ny-newyork', 'us-chase', 'us-no-ceiling');
+    expect(cardCeilingRoom(us, us.player)).toBeUndefined();
+  });
+
+  it('in the US: no fee on a small item, Bank of America’s two a day at most, and the tie order each bank posts in', () => {
+    const chase = lifeIn('us-ny-newyork', 'us-chase', 'us-small');
+    set(chase, current(chase), -200_00);
+    chargeForItem(chase, chase.player, 5_00);
+    expect(current(chase).pendingItems).toBeUndefined();
+    chargeForItem(chase, chase.player, 5_01);
+    expect(current(chase).pendingItems![0]!.count).toBe(1);
+    // Through a purchase: a $4 one into the overdraft draws no item, a $20 one does.
+    const buyer = lifeIn('us-ny-newyork', 'us-chase', 'us-small-buy');
+    current(buyer).debitOverdraft = true;
+    buyer.must({ kind: 'bank.set_payments', payload: { everyday: 'debit' } });
+    for (const a of Object.values(buyer.universe.accounts)) if (a.ownerId === buyer.player.id && a.kind === 'savings') set(buyer, a, 0);
+    set(buyer, current(buyer), -100_00);
+    expect(spend(buyer, buyer.player, 4_00, 'Groceries', 'food')).toBe(true);
+    expect(current(buyer).pendingItems).toBeUndefined();
+    expect(spend(buyer, buyer.player, 20_00, 'Groceries', 'food')).toBe(true);
+    expect(current(buyer).pendingItems![0]!.count).toBe(1);
+    const bofa = lifeIn('us-ny-newyork', 'us-bank-of-america', 'us-bofa');
+    set(bofa, current(bofa), -200_00);
+    const fees = () => bofa.universe.transactions.filter((t) => t.memo === 'Overdraft fee').length;
+    chargeForItem(bofa, bofa.player, 1_00);
+    expect(fees()).toBe(0);
+    for (let n = 0; n < 3; n += 1) chargeForItem(bofa, bofa.player, 20_00);
+    expect(fees()).toBe(2);
+    // Overdrawn by a dollar or less, no fee.
+    const near = lifeIn('us-ny-newyork', 'us-bank-of-america', 'us-bofa-near');
+    set(near, current(near), -1_00);
+    chargeForItem(near, near.player, 20_00);
+    expect(near.universe.transactions.filter((t) => t.memo === 'Overdraft fee')).toHaveLength(0);
+    // Ties: Wells Fargo posts the lowest first, Chase and Bank of America the highest.
+    const wf = lifeIn('us-ny-newyork', 'us-wells-fargo', 'us-wf');
+    expect(lowestFirst(wf, wf.player)).toBe(true);
+    expect(lowestFirst(chase, chase.player)).toBe(false);
+    expect(lowestFirst(bofa, bofa.player)).toBe(false);
+    // The smaller of rent and bills first at Wells Fargo, the larger first elsewhere.
+    expect(monthOrder(wf, wf.player, 2_000_00, 150_00)).toEqual(['bills', 'rent']);
+    expect(monthOrder(wf, wf.player, 100_00, 150_00)).toEqual(['rent', 'bills']);
+    expect(monthOrder(chase, chase.player, 2_000_00, 150_00)).toEqual(['rent', 'bills']);
+    expect(monthOrder(chase, chase.player, 100_00, 150_00)).toEqual(['bills', 'rent']);
+  });
+
+  it('on the 1st, posts the bills before the rent at a bank that takes the lowest first', () => {
+    const order = (bankId: string) => {
+      const sim = lifeIn('us-ny-newyork', bankId, `ties-${bankId}`, 'wealthy');
+      // Rent from the bank on its day, where the norm here is a check, which clears later.
+      sim.must({ kind: 'bank.set_payments', payload: { rent: 'auto', bills: 'auto' } });
+      const first = instantFromZoned({ year: 2026, month: 2, day: 1, hour: 21 }, NY);
+      while (sim.now < first) sim.advanceTo(Math.min(first, sim.now + 6 * 3_600_000));
+      const month = sim.universe.transactions.filter((t) => t.at >= first - 2 * 3_600_000 && (t.category === 'rent' || t.category === 'bills'));
+      return month.map((t) => t.category);
+    };
+    expect(order('us-wells-fargo').slice(0, 2)).toEqual(['bills', 'rent']);
+    expect(order('us-chase').slice(0, 2)).toEqual(['rent', 'bills']);
   }, 120_000);
 
   it('at NatWest: an early close on 35 days’ notice, closed when it runs', () => {

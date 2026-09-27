@@ -53,7 +53,7 @@ import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { instantFromZoned, zonedParts, type Instant } from '../core/time';
 import { clamp } from '../core/rng';
 import { personalityOf } from './personality';
-import { chargeForItem, chargeForPurchase, chargeReturned, overdraftHeadroom, purchaseMayOverdraw } from './lending';
+import { cardCeilingRoom, monthOrder, chargeForItem, chargeForPurchase, chargeReturned, overdraftHeadroom, purchaseMayOverdraw } from './lending';
 import { paymentsOf, setPaymentHooks, writeCheck } from './payments';
 import { cardRoom } from './credit';
 import { roundUpOf, roundUpsOn } from './accountlife';
@@ -253,7 +253,7 @@ export function payFromCurrent(sim: Simulation, person: Person, amount: Money, m
   const before = current?.balance ?? 0;
   const bank = drawFromBank(sim, person, amount, true);
   sim.post({ memo, category, postings: [{ accountId: sim.nominalAccount('expense', expenseFor(category)).id, amount }, ...bank.postings] });
-  if (current && current.balance < 0 && current.balance < before) chargeForItem(sim, person);
+  if (current && current.balance < 0 && current.balance < before) chargeForItem(sim, person, before - current.balance);
   return true;
 }
 
@@ -344,7 +344,13 @@ export function spend(sim: Simulation, person: Person, amount: Money, memo: stri
     return true;
   }
   // On the credit card first where that's how they pay for the day, then the debit card.
-  const creditFirst = category === 'food' && paymentsOf(person).everyday === 'credit' ? Math.min(amount, cardFree) : 0;
+  let creditFirst = category === 'food' && paymentsOf(person).everyday === 'credit' ? Math.min(amount, cardFree) : 0;
+  // A French debit card past its payment ceiling declines: the credit card takes the day, or it isn't bought.
+  const room = category === 'food' ? cardCeilingRoom(sim, person) : undefined;
+  if (room !== undefined && amount - creditFirst > room) {
+    if (cardFree < amount) return false;
+    creditFirst = amount;
+  }
   const bank = drawFromBank(sim, person, amount - creditFirst, overdraft);
   const fromCard = creditFirst + Math.min(bank.short, cardFree - creditFirst);
   const owed = bank.short - fromCard;
@@ -357,7 +363,7 @@ export function spend(sim: Simulation, person: Person, amount: Money, memo: stri
   // An item's fee is for one the bank paid below zero, not one the card took.
   // Until 2026-09-25 a purchase the card paid was charged one if the account
   // happened to be overdrawn already.
-  if (current && current.balance < 0 && current.balance < before) chargeForItem(sim, person);
+  if (current && current.balance < 0 && current.balance < before) chargeForItem(sim, person, before - current.balance);
   // A debit the bank couldn't pay went back unpaid first, where it charges
   // for that; a card purchase it can't pay is only declined.
   if (bank.short > 0 && category !== 'food') chargeReturned(sim, person, bank.short);
@@ -563,8 +569,8 @@ export function registerHousehold(sim: Simulation): void {
     const rent = rentOf(s, person);
     const bills = billsOf(s, person);
     const before = arrearsOf(s, person);
-    payRent(s, person, rent);
-    payBills(s, person, bills);
+    // Paid at the same moment, they post in the bank's order: highest first unless it takes the lowest first.
+    for (const one of monthOrder(s, person, rent, bills)) if (one === 'rent') payRent(s, person, rent); else payBills(s, person, bills);
     const owed = arrearsOf(s, person) - before;
     if (owed > 0) {
       s.notify({

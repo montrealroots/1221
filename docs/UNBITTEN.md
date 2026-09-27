@@ -223,11 +223,18 @@ part the tool cannot see.
   ten), not how soon a payment usually posts; SLATE posts one in two
   business days, its estimate, never past the bank's most. Until a played
   career showed London's groceries pending ten days each, it posted every
-  payment at the bank's most. France's card holds use the card's spending
-  limit rather than the account's balance, and SLATE holds the balance. A
-  statement's value date is the day of the payment, which Sabadell's three
-  days after it isn't. The US banks' nightly posting orders are on record
-  and don't decide anything: an item's fee is charged when it's paid.
+  payment at the bank's most. Settled on 2026-09-27: a French standard
+  debit card pays against its payment ceiling, not the balance, and past
+  it declines (`FRENCH_CARDS`; LCL's and Société Générale's are set in
+  each contract, and SLATE takes their floors, its estimate); Sabadell's
+  three-day value date is its BS Card Mastercard's, a card SLATE doesn't
+  issue, and its debit card's is the purchase day, as SLATE's statement
+  has it; and the US banks' posting order decides the order of items at
+  the same moment (Wells Fargo's lowest first, so the month's bills before
+  the rent), with their small-item waivers (Chase's $5, Wells Fargo's $10,
+  Bank of America's $1) and Bank of America's two fees a day. What's left:
+  a French card's withdrawal ceilings, and the order of checks by number
+  at Bank of America, which SLATE's one check a month never tests.
 - **Some of what fraud costs is an estimate or missing.** A case's size
   runs from a quarter of the country's average to seven quarters, SLATE's
   estimate of the spread. Only Britain publishes the share its banks stop;

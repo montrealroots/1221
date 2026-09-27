@@ -61,7 +61,12 @@ export type Overdraft =
    */
   | {
     kind: 'per_item'; fee: Money; maxPerDay?: number; maxPerMonth?: number; graceUpTo?: Money; rate?: number;
-    atMidnight?: boolean; nextDay?: boolean; debitCard?: 'opt_in' | 'never'; source: string;
+    atMidnight?: boolean; nextDay?: boolean; debitCard?: 'opt_in' | 'never';
+    /** No fee on an item this small or smaller. */
+    smallItemsFree?: Money;
+    /** Items at the same moment post highest first, or lowest first (the bank's posting order). */
+    ties?: 'high' | 'low';
+    source: string;
   }
   /**
    * Spain's descubierto: no arrangement, interest on what's overdrawn, and a
@@ -115,15 +120,15 @@ const ES_TERM: Term = { rate: 0.0202, months: 12, called: 'Depósito a plazo fij
 export const LENDING: Readonly<Record<string, Lending>> = {
   // --- United States
   'us-chase': {
-    overdraft: { kind: 'per_item', fee: 34_00, maxPerDay: 3, graceUpTo: 50_00, nextDay: true, debitCard: 'opt_in', source: 'chase.com standard overdraft practice; Chase Debit Card Coverage, opted into or not; Chase Overdraft Assist, chase.com overdraft FAQs: no fee overdrawn by $50 or less at the end of the business day, or brought back to that by 11 PM ET the next business day' },
+    overdraft: { kind: 'per_item', fee: 34_00, maxPerDay: 3, graceUpTo: 50_00, nextDay: true, debitCard: 'opt_in', smallItemsFree: 5_00, ties: 'high', source: 'chase.com standard overdraft practice; Chase Debit Card Coverage, opted into or not; Chase Overdraft Assist, chase.com overdraft FAQs: no fee overdrawn by $50 or less at the end of the business day, or brought back to that by 11 PM ET the next business day; Chase Deposit Account Agreement eff. 2026-06-14: no fee on an item of $5 or less, debits posted by time, ties highest first' },
     term: { rate: 0.035, months: 7, called: 'CD', source: 'Chase 7-month CD, via fortune.com, 24 September 2026' },
   },
   'us-bank-of-america': {
-    overdraft: { kind: 'per_item', fee: 10_00, debitCard: 'never', source: 'NerdWallet review of Bank of America; bankofamerica.com: everyday debit card purchases and ATM withdrawals aren’t authorized into an overdraft' },
+    overdraft: { kind: 'per_item', fee: 10_00, maxPerDay: 2, graceUpTo: 1_00, debitCard: 'never', smallItemsFree: 1_00, ties: 'high', source: 'NerdWallet review of Bank of America; bankofamerica.com: everyday debit card purchases and ATM withdrawals aren’t authorized into an overdraft; Clarity Statement 08/2026: $10 an item, two a day at most, none overdrawn by $1 or less or on an item of $1 or less, electronic items posted highest first' },
     term: { rate: 0.0375, months: 7, called: 'CD', source: 'Bank of America 7-month CD, via fortune.com, 24 September 2026' },
   },
   'us-wells-fargo': {
-    overdraft: { kind: 'per_item', fee: 35_00, maxPerDay: 3, graceUpTo: 10_00, nextDay: true, debitCard: 'opt_in', source: 'wellsfargo.com overdraft services; Debit Card Overdraft Service, opted into or not; Extra Day Grace Period: no fees if the balance is back by 11:59 PM ET the next business day' },
+    overdraft: { kind: 'per_item', fee: 35_00, maxPerDay: 3, graceUpTo: 10_00, nextDay: true, debitCard: 'opt_in', smallItemsFree: 10_00, ties: 'low', source: 'wellsfargo.com overdraft services; Debit Card Overdraft Service, opted into or not; Extra Day Grace Period: no fees if the balance is back by 11:59 PM ET the next business day; Wells Fargo Deposit Account Agreement eff. 2026-07-28: no fee on an item of $10 or less, items posted by time, ties lowest first' },
     loan: { from: 0.0674, minAmount: 3_000_00, maxAmount: 100_000_00, minMonths: 12, maxMonths: 84, source: 'wellsfargo.com personal loans: from 6.74% APR, $3,000 to $100,000, 12 to 84 months' },
     term: { rate: 0.0389, months: 11, called: 'CD', source: 'Wells Fargo 11-month CD, via fortune.com, 24 September 2026' },
   },

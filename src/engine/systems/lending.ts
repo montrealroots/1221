@@ -161,6 +161,44 @@ export const FRANCE = {
 const isFrench = (bank: Bank | undefined) => bank?.id.startsWith('fr-') === true;
 
 /**
+ * A French debit card's payment ceiling (plafond de paiement): its standard
+ * card authorizes a purchase against the ceiling, not the balance, which is
+ * no hard gate (none of the five banks' standard cards is systematic-
+ * authorization). BNP Paribas's Visa Classic €2,500 over 30 days; Crédit
+ * Agricole's €2,600 a calendar month; La Banque Postale's €3,500 over 30
+ * days at most; LCL's Visa Cléo "from €1,000" a month and Société
+ * Générale's CB Visa €1,600 to €15,300, where the contract sets it: SLATE
+ * takes each one's floor, its estimate. Until 2026-09-27 a French card was
+ * held to the balance, as an American one is.
+ */
+export const FRENCH_CARDS: Readonly<Record<string, { ceiling: Money; window: 'rolling30' | 'month' }>> = {
+  'fr-bnp-paribas': { ceiling: 2_500_00, window: 'rolling30' },
+  'fr-credit-agricole': { ceiling: 2_600_00, window: 'month' },
+  'fr-la-banque-postale': { ceiling: 3_500_00, window: 'rolling30' },
+  'fr-lcl': { ceiling: 1_000_00, window: 'month' },
+  'fr-societe-generale': { ceiling: 1_600_00, window: 'month' },
+};
+export const FRENCH_CARDS_SOURCE = 'https://mabanque.bnpparibas (Visa Classic); https://www.credit-agricole.fr (Mastercard Standard); https://www.labanquepostale.fr (Visa Classic); LCL Dispositions Générales carte Cléo 2026; https://static.sg.fr (CB Visa notice)';
+
+/** What a French debit card may still pay in its window, in the save's money; undefined for a card with no ceiling here. */
+export function cardCeilingRoom(sim: Simulation, person: Person): Money | undefined {
+  const current = currentOf(sim, person);
+  const rule = current?.bankId ? FRENCH_CARDS[current.bankId] : undefined;
+  if (!current || !rule) return undefined;
+  const bank = bankById(current.bankId!)!;
+  const p = zonedParts(sim.now, sim.homeZone);
+  const from = rule.window === 'month' ? instantFromZoned({ year: p.year, month: p.month, day: 1, hour: 0 }, sim.homeZone) : sim.now - 30 * MS_DAY;
+  let spent = 0;
+  const list = sim.universe.transactions;
+  for (let i = list.length - 1; i >= 0 && list[i]!.at >= from; i -= 1) {
+    const t = list[i]!;
+    if (t.category !== 'food') continue;
+    for (const one of t.postings) if (one.accountId === current.id && one.amount < 0) spent -= one.amount;
+  }
+  return Math.max(0, inSaveMoney(sim, rule.ceiling, bank.currency) - spent);
+}
+
+/**
  * France's month and three months past the limit (`FRANCE`): the letter,
  * and the credit offered for what's past the limit.
  */
@@ -342,6 +380,19 @@ function post(sim: Simulation, memo: string, category: string, postings: { accou
   sim.post({ memo, category, postings });
 }
 
+/** Whether the bank posts items at the same moment lowest first (`ties`). */
+export function lowestFirst(sim: Simulation, person: Person): boolean {
+  const current = currentOf(sim, person);
+  const terms = lendingOf(current?.bankId ? bankById(current.bankId) : undefined).overdraft;
+  return terms?.kind === 'per_item' && terms.ties === 'low';
+}
+
+/** The order the month's rent and bills post in at the same moment: the smaller first at a bank that takes the lowest first, the larger first otherwise. */
+export function monthOrder(sim: Simulation, person: Person, rent: Money, bills: Money): ['rent', 'bills'] | ['bills', 'rent'] {
+  const low = lowestFirst(sim, person);
+  return (low ? bills < rent : bills > rent) ? ['bills', 'rent'] : ['rent', 'bills'];
+}
+
 /** A fee or interest out of the current account, to the bank. */
 function charge(sim: Simulation, account: Account, amount: Money, memo: string, category: string, expense: string): void {
   if (amount <= 0) return;
@@ -356,11 +407,13 @@ function charge(sim: Simulation, account: Account, amount: Money, memo: string, 
  * bank charges by the item: after the payment's posted, if the account is
  * overdrawn by more than the grace, once per item up to the day's cap.
  */
-export function chargeForItem(sim: Simulation, person: Person): void {
+export function chargeForItem(sim: Simulation, person: Person, item?: Money): void {
   const current = currentOf(sim, person);
   const bank = current?.bankId ? bankById(current.bankId) : undefined;
   const terms = lendingOf(bank).overdraft;
   if (!current || !bank || !terms) return;
+  // No fee on a small item, where the bank waives one.
+  if (terms.kind === 'per_item' && terms.smallItemsFree !== undefined && item !== undefined && item <= inSaveMoney(sim, terms.smallItemsFree, bank.currency)) return;
   // The month's deepest point, for a commission charged on it.
   if (current.balance < 0) current.odPeak = Math.max(current.odPeak ?? 0, -current.balance);
   let fee: { fee: Money; maxPerDay?: number; maxPerMonth?: number } | undefined;
