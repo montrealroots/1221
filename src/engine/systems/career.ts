@@ -76,6 +76,7 @@ import { enjoyWork, takeTheRoom, feel } from './enjoyment';
 import { personalityOf } from './personality';
 import { move, payFromCurrent, type Housing, spend } from './household';
 import { payeeAccount } from './cash';
+import { sagHoliday } from '../content/usholidays';
 
 export const SHOWCASE_KIND = 'career.showcase';
 export const CAREER_WEEK_KIND = 'career.week';
@@ -633,11 +634,13 @@ export function workDays(booking: Booking): { at: Instant; week: number; rehears
   const out: { at: Instant; week: number; rehearsal: boolean }[] = [];
   if (role.medium !== 'stage') {
     // A series regular's season is its workweeks, Monday to Friday; a voice session is at ten.
+    // None falls on a SAG-AFTRA holiday, which production takes off (`content/usholidays.ts`);
+    // until 2026-09-27 a shoot ran through Thanksgiving and Christmas.
     const days = role.series ? role.series.weeks * 5 : role.arc ? booking.units * 5 : booking.units;
     for (let d = 0; out.length < days; d += 1) {
       const when = at(booking.starts, zone, d, role.medium === 'voice' ? 10 : 7);
       const wd = weekday(when, zone);
-      if (wd >= 1 && wd <= 5) out.push({ at: when, week: Math.floor(d / 7), rehearsal: false });
+      if (wd >= 1 && wd <= 5 && !sagHoliday(dayKey(when, zone))) out.push({ at: when, week: Math.floor(d / 7), rehearsal: false });
     }
     return out;
   }

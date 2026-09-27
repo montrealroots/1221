@@ -287,6 +287,17 @@ part the tool cannot see.
   prints. The day's food is taken as groceries, which the states SLATE
   taxes a life in exempt. Property and vehicles wait for something owned or
   driven.
+- **The weather is read by the calendar and nothing else.** The forecast
+  and the climate model by latitude are on screen, and no system reads
+  them: bills are a month's flat figure, and the flu's season is October
+  to March. Seasonal bills would want heating and cooling costs by the
+  degree-day, and a flu season by local temperature, which SLATE hasn't
+  sourced and won't invent. Holidays, which this line said the same of
+  until 2026-09-27, are read now: the Federal Reserve's by a US bank's
+  business days and SAG-AFTRA's by a shoot (`content/usholidays.ts`).
+  Other countries' holidays, and a bank's own, are still the calendar's
+  alone, because their files are fetched at run time and the simulation
+  can't wait on them.
 - **An older save's pension fund is kept, and nothing moves it.** The day
   job paid into one in five countries and it grew daily. Both went with the
   job engine on 2026-09-26. A save from before keeps the fund, and net worth

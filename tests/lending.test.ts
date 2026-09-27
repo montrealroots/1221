@@ -188,6 +188,19 @@ describe('an overdraft by the item', () => {
     expect(feesOn(sim, current(sim), 'Overdraft fee')).toEqual([-34_00]);
   });
 
+  it('waits over a Federal Reserve holiday: Friday’s fees, before Martin Luther King Jr. Day, are charged after the Tuesday ends', () => {
+    const sim = lifeIn('us-ny-newyork', { bankId: 'us-chase' });
+    sim.player.home = undefined;
+    sim.advanceTo(instantFromZoned({ year: 2026, month: 1, day: 16, hour: 12 }, sim.homeZone));
+    set(sim, current(sim), 0);
+    set(sim, savings(sim), 0);
+    spend(sim, sim.player, 200_00, 'Test', 'bills');
+    sim.advanceTo(instantFromZoned({ year: 2026, month: 1, day: 20, hour: 6 }, sim.homeZone));
+    expect(feesOn(sim, current(sim), 'Overdraft fee')).toEqual([]);
+    sim.advanceTo(instantFromZoned({ year: 2026, month: 1, day: 21, hour: 6 }, sim.homeZone));
+    expect(feesOn(sim, current(sim), 'Overdraft fee')).toEqual([-34_00]);
+  });
+
   it('lets Chase’s fees go when the account is back within $50 by the end of the next business day', () => {
     const sim = lifeIn('us-ny-newyork', { bankId: 'us-chase' });
     sim.player.home = undefined;

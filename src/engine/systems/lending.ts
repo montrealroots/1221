@@ -83,6 +83,7 @@ import { accountNumber } from './banknumber';
 import { endTerm, idleAccounts } from './accountlife';
 import { bankOf, banksFor, inSaveMoney, interestTaxFor, isoOf, monthStartOf, settleInterest } from './banking';
 import { homeOf } from './earnings';
+import { usBankHoliday } from '../content/usholidays';
 
 export const LOAN_DUE_KIND = 'bank.loan_due';
 export const SWITCH_KIND = 'bank.switch_complete';
@@ -469,7 +470,7 @@ export function chargeReturned(sim: Simulation, person: Person, short: Money): v
   charge(sim, current, inSaveMoney(sim, rule.fee, bank.currency), 'Returned payment fee', 'bank_fee', 'Bank Fees');
 }
 
-/** Monday-to-Friday days from one moment to another. */
+/** Monday-to-Friday days from one moment to another: only Canada's banks count them, for a returned payment's fee. */
 function businessDaysBetween(sim: Simulation, from: Instant, to: Instant): number {
   let days = 0;
   for (let at = addDays(from, 1, sim.homeZone); at <= to; at = addDays(at, 1, sim.homeZone)) {
@@ -651,7 +652,7 @@ function settlePendingItems(sim: Simulation, current: Account, bank: Bank, terms
   const grace = terms.graceUpTo !== undefined ? inSaveMoney(sim, terms.graceUpTo, bank.currency) : 0;
   const keep: { day: string; count: number }[] = [];
   for (const one of list) {
-    if (!nextBusinessDayOver(one.day, today)) { keep.push(one); continue; }
+    if (!nextBusinessDayOver(one.day, today, bank.iso === 'US')) { keep.push(one); continue; }
     if (current.balance >= -grace) continue;
     const month = today.slice(0, 7);
     if (current.itemsMonth !== month) { current.itemsMonth = month; current.itemsMonthCount = 0; }
@@ -664,15 +665,19 @@ function settlePendingItems(sim: Simulation, current: Account, bank: Bank, terms
   current.pendingItems = keep.length ? keep : undefined;
 }
 
-/** Whether a business day has begun and ended between a day and today. */
-function nextBusinessDayOver(day: string, today: string): boolean {
+/**
+ * Whether a business day has begun and ended between a day and today. At a
+ * US bank a Federal Reserve holiday isn't one: the fees held over Thanksgiving
+ * wait for the Friday. Until 2026-09-27 they came on the Thursday.
+ */
+function nextBusinessDayOver(day: string, today: string, us: boolean): boolean {
   const [y, m, d] = day.split('-').map(Number) as [number, number, number];
   for (let i = 1; i < 10; i += 1) {
     const next = new Date(Date.UTC(y, m - 1, d + i));
     const key = next.toISOString().slice(0, 10);
     if (key >= today) return false;
     const weekday = next.getUTCDay();
-    if (weekday !== 0 && weekday !== 6) return true;
+    if (weekday !== 0 && weekday !== 6 && !(us && usBankHoliday(key))) return true;
   }
   return true;
 }
