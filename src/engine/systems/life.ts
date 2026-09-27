@@ -17,7 +17,8 @@ import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { Person, Wellbeing } from '../domain/model';
 import { clamp, remap } from '../core/rng';
-import { formatTime, instantFromZoned, startOfDay, startOfNextDay, zonedParts, MS_HOUR, MS_DAY } from '../core/time';
+import { formatTime, instantFromZoned, startOfDay, startOfNextDay, zonedParts, MS_HOUR, MS_DAY, type Instant } from '../core/time';
+import type { ScheduledItem } from '../core/scheduler';
 import { ceilingAt, recoveryFactorAt } from '../content/lifespan';
 import { personalityOf } from './personality';
 import { LOVED_MOOD, LOVED_RELIEF, lovedIn } from './enjoyment';
@@ -295,6 +296,8 @@ export function registerLife(sim: Simulation): void {
       const hours = clamp(p.hours, 0.5, 16);
       const start = p.startAt ?? s.now;
       if (start < s.now) throw new CommandError('You can’t go to sleep in the past.');
+      const busy = occupiedAt(s, start);
+      if (busy) throw new CommandError(`You’re at ${busy.label} until ${formatTime(busy.at + busy.durationMinutes! * 60_000, s.zone)}.`);
       const wakeAt = start + Math.round(hours * MS_HOUR);
 
       // Anything scheduled during the night still happens; the world does not
@@ -427,8 +430,29 @@ const SPENT = 25;
  * worth warning about, but twenty minutes in the shower that makes you miss a
  * call is only a mistake.
  */
+/**
+ * The commitment the player is in the middle of at a moment: one they turned
+ * up for, whose hours still run. A meal fits in one, as a break on set or
+ * between classes; sleep, a shower, a workout and unwinding don't. Until
+ * 2026-09-27 a commitment took only the moment it began, and at ten in the
+ * morning of a twelve-hour shoot the player could sleep for eight hours and
+ * the day still counted as worked.
+ */
+export function occupiedAt(sim: Simulation, at: Instant): ScheduledItem | undefined {
+  const list = sim.universe.scheduled;
+  for (let i = list.length - 1; i >= 0; i -= 1) {
+    const one = list[i]!;
+    if (one.status !== 'done' || one.requiresPlayer !== true || !one.durationMinutes || one.at > at) continue;
+    if (one.payload.personId !== undefined && one.payload.personId !== sim.player.id) continue;
+    if (at < one.at + one.durationMinutes * 60_000) return one;
+  }
+  return undefined;
+}
+
 export function lookAfterRefusal(sim: Simulation, action: LookAfter): string | undefined {
   const w = sim.player.wellbeing;
+  const busy = action === 'eat' ? undefined : occupiedAt(sim, sim.now);
+  if (busy) return `You’re at ${busy.label} until ${formatTime(busy.at + busy.durationMinutes! * 60_000, sim.zone)}.`;
   if (action === 'eat' && w.nourishment >= FULL) return 'You aren’t hungry.';
   if (action === 'eat' && canPay(sim, sim.player) < mealOf(sim, sim.player)) return 'You can’t afford a meal.';
   if (action === 'wash' && (w.hygiene ?? 80) >= CLEAN) return 'You’re already clean.';

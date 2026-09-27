@@ -130,9 +130,14 @@ export const ESTIMATE = {
   /** Self-submissions a week, and the chance each brings an audition. */
   selfSubmitsAWeek: 5,
   selfSubmitCallback: 0.15,
-  /** What a day's work grows, and takes out of a body in energy. */
+  /**
+   * What a day's work grows, and takes out of a body in energy: 8 for an
+   * eight-hour day, by the hours, and a performance 10, as the School's is.
+   * Until 2026-09-27 every day cost 8, a twelve-hour shoot as a three-hour one.
+   */
   workGain: 1.2,
   workEnergy: 8,
+  performanceEnergy: 10,
 } as const;
 
 /** SAG-AFTRA's terms for leaving an agency: no offer in the first 120 days; after, under ten days' work in 91. */
@@ -963,7 +968,8 @@ export function registerCareer(sim: Simulation): void {
     for (const [skill, weight] of Object.entries(role.grows) as [keyof Craft, number][]) {
       person.craft[skill] = Math.min(100, person.craft[skill] + ESTIMATE.workGain * weight * focus * (1 - person.craft[skill] / 100) ** 1.5);
     }
-    person.wellbeing.energy = Math.max(0, person.wellbeing.energy - ESTIMATE.workEnergy);
+    const spent = role.medium === 'stage' && !call.rehearsal ? ESTIMATE.performanceEnergy : (ESTIMATE.workEnergy * hours) / 8;
+    person.wellbeing.energy = Math.max(0, person.wellbeing.energy - spent);
     // What they love about the day, and how they take the road and the rehearsal room.
     enjoyWork(person, { medium: role.medium, ...(role.after ? { after: role.after.kind } : {}), ...(booking.genre ? { genre: booking.genre } : {}), away: workCityOf(booking) !== homeOf(person), rehearsal: call.rehearsal === true });
     // An early call, or a performance that runs late, as the body clock takes it.

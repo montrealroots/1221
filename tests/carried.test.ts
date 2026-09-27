@@ -18,6 +18,7 @@ import { grown, healthOf, keepUp, rxShareOf, shareOf, teethAndEyesShareOf, illne
 import { canadaElected, connecticutTax, figuresFor, settleUkYears, ukTaxOn } from '@/engine/systems/taxreturn';
 import type { Simulation } from '@/engine/core/simulation';
 import { TURNS } from '@/engine/systems/enjoyment';
+import { occupiedAt } from '@/engine/systems/life';
 
 const NY = 'America/New_York';
 const instantParts = (t: number) => new Date(t).getUTCFullYear();
@@ -235,6 +236,36 @@ describe('home from a job, however it went', () => {
     expect(run.status).toBe('accepted');
     expect(run.worked).toBe(0);
     expect(first.status).toBe('missed');
+  }, 60_000);
+});
+
+describe('a day on set', () => {
+  it('takes its hours: no sleep, shower, workout or unwinding in the middle of it, though a meal fits; and costs energy by them', () => {
+    const sim = pro('on-set');
+    sim.player.craft = { acting: 50, voice: 50, speech: 50, body: 50, text: 50, singing: 50, screen: 50 };
+    const b: Booking = { id: 'day', roleId: 'costar', cityId: 'us-ny-newyork', starts: at(2026, 10, 5, 8), units: 1, rehearsalWeeks: 0, status: 'offered', dueAt: sim.now + 2 * MS_DAY, offeredAt: sim.now, worked: 0, owed: 0, weeksPaid: 0 };
+    careerOf(sim.player).bookings.push(b);
+    sim.must({ kind: 'career.accept', payload: { bookingId: b.id } });
+    const call = sim.universe.scheduled.find((i) => i.kind === 'career.work' && i.status === 'pending' && i.payload.bookingId === 'day')!;
+    while (sim.now < call.at - 60_000) sim.advanceTo(Math.min(call.at - 60_000, sim.now + 6 * 3_600_000), { stopOnPlayerRequired: true });
+    const before = sim.player.wellbeing.energy;
+    sim.advanceTo(call.at);
+    const hours = careerOf(sim.player).days.at(-1)!.hours;
+    expect(before - sim.player.wellbeing.energy).toBeCloseTo(hours, 0);
+    sim.advanceTo(call.at + 2 * 3_600_000);
+    const sleep = sim.execute({ kind: 'life.sleep', payload: { hours: 8 } });
+    expect(sleep.ok).toBe(false);
+    expect(sleep.error).toMatch(/You’re at On Set/);
+    for (const action of ['wash', 'exercise', 'unwind']) expect(sim.execute({ kind: 'life.look_after', payload: { action } }).error ?? '').toMatch(/You’re at On Set/);
+    expect(sim.execute({ kind: 'life.look_after', payload: { action: 'eat' } }).error ?? '').not.toMatch(/You’re at/);
+    // A sleep set for after the day is fine.
+    sim.advanceTo(call.at + 12 * 3_600_000 + 60_000);
+    expect(sim.execute({ kind: 'life.sleep', payload: { hours: 1 } }).ok).toBe(true);
+    // A call missed holds nobody, and nor does somebody else's.
+    const other = { ...call, id: 'other', at: sim.now - 60_000, status: 'done' as const, payload: { ...call.payload, personId: 'someone-else' } };
+    const missed = { ...call, id: 'missed', at: sim.now - 60_000, status: 'missed' as const };
+    sim.universe.scheduled.push(other, missed);
+    expect(occupiedAt(sim, sim.now)).toBeUndefined();
   }, 60_000);
 });
 
