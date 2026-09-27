@@ -20,8 +20,8 @@ import { formatDate, formatDateTime, instantFromZoned, zonedParts } from '@/engi
 import { CITIES } from '@/engine/content/geography';
 import { COST_2026_27, COURSES, SCHOOL_SEASON, SEAGULL_2027, SKILLS, SUMMER_CABARET, WORK_STUDY, YALE_CABARET, YALE_DRAMA, type Skill } from '@/engine/content/school';
 import {
-  CABARET_KIND, CALL_KIND, ESTIMATE, EVALUATION_KIND, LAB_KIND, SHIFT_KIND, STANDING_LABEL,
-  cabaretSeason, classPeriod, coursesOn, daysOffIn, hasNeed, nextClasses, hourlyIn, meanCraft, rankIn, termAccount, termLabel, termOf, termStart, timetable, yearOfStudy, yearOfTerm, cabaretRefusal, shiftRefusal, summerRefusal } from '@/engine/systems/school';
+  CABARET_KIND, CALL_KIND, CLASSES_KIND, ESTIMATE, EVALUATION_KIND, LAB_KIND, SHIFT_KIND, STANDING_LABEL,
+  cabaretSeason, keyOf, summerRuns, classPeriod, daysOffIn, hasNeed, nextClasses, hourlyIn, meanCraft, rankIn, termAccount, termLabel, termOf, termStart, timetable, yearOfStudy, yearOfTerm, cabaretRefusal, shiftRefusal, summerRefusal } from '@/engine/systems/school';
 import type { Simulation } from '@/engine/core/simulation';
 import type { Person } from '@/engine/domain/model';
 import { inSaveMoney } from '@/engine/systems/banking';
@@ -131,7 +131,7 @@ function StandingPane() {
 
   return (
     <div className="col gap-5">
-        <Panel title="Your Standing" subtitle={evaluation ? `Evaluated ${formatDate(evaluation.at, zone())}` : undefined}>
+        <Panel title="Your Standing" subtitle={evaluation ? `Evaluation On ${formatDate(evaluation.at, zone())}` : undefined}>
           <div className="col gap-3">
             <div className="grid grid-3">
               <Stat label="Standing" value={STANDING_LABEL[school.standing]} tone={school.standing === 'good' || school.standing === 'graduated' ? undefined : 'warning'} />
@@ -139,7 +139,7 @@ function StandingPane() {
               <Stat label="Growth This Term" value={growth.toFixed(1)} note={`The class’s ${classGrowth.toFixed(1)}; half of it is the floor`} tone={classGrowth > 0 && growth < ESTIMATE.growthFloor * classGrowth ? 'warning' : undefined} />
             </div>
             <p className="small" style={{ margin: 0 }}>
-              Attendance counts {t.attended} of {t.classDays - t.excused} class days{t.excused ? ` (${t.excused} excused)` : ''}, {t.answered} of {t.calls} calls and {t.worked} of {t.shifts} assigned shifts. Short of either floor at the evaluation, standing falls a step, from good to concern, to warning, to dismissal; meeting both restores it. A missed performance or understudy call goes straight to warning{t.breaches ? `, and this term has had ${t.breaches === 1 ? 'one' : t.breaches}` : ''}.
+              Attendance counts {t.attended} of {t.classDays - t.excused} class days{t.excused ? ` (${t.excused} excused)` : ''}, {t.answered} of {t.calls} calls and {t.worked} of {t.shifts} assigned shifts. Short of either floor at the evaluation, standing falls a step, from good to concern, to warning, to dismissal; meeting both restores it. A missed performance or understudy call goes straight to warning, or from warning to dismissal{t.breaches ? `, and this term has had ${t.breaches === 1 ? 'one' : t.breaches}` : ''}. After the last term, Commencement confers the degree on any standing short of dismissal.
             </p>
             <p className="small" style={{ margin: 0 }}>{school.castable ? 'In the casting pool.' : 'Out of the casting pool after missed rehearsal calls, until a good evaluation.'}</p>
             <p className="xs dim" style={{ margin: 0 }}>The stages are the Yale Bulletin’s. The floors are SLATE’s reading of its “appropriate standards”.</p>
@@ -215,6 +215,10 @@ const WEEKDAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
 /** The term's week, the courses, the class days, and calling in sick. */
 function ClassesPane() {
   const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const school = person.school!;
+  // Only while at school: until 2026-09-27 a dismissed student was told of their next classes.
+  const enrolled = school.standing !== 'graduated' && school.standing !== 'dismissed';
   const p = zonedParts(sim.now, zone());
   const today = { year: p.year, month: p.month, day: p.day };
   const term = Math.min(termOf(today), YALE_DRAMA.terms - 1);
@@ -222,9 +226,10 @@ function ClassesPane() {
   const fall = termStart(term).fall;
   const week = timetable(year, fall ? 'fall' : 'spring');
   const period = classPeriod(term);
-  const next = nextClasses(sim.now);
+  const next = enrolled ? nextClasses(sim.now) : undefined;
   const off = daysOffIn(term);
-  const classToday = coursesOn(today).length > 0;
+  // Offered until the day's classes have run, as the command takes it.
+  const classToday = enrolled && ahead(sim, person, [CLASSES_KIND]).some((c) => c.payload.day === keyOf(today));
   const courses = COURSES.filter((c) => c.year === year);
   const skillLabel = (id: Skill) => SKILLS.find((s) => s.id === id)!.label;
 
@@ -312,7 +317,7 @@ function CastingPane() {
             <div className="grid grid-3">
               <Stat label="Role" value={casting.kind === 'understudy' ? `${casting.role} (Understudy)` : casting.role} />
               <Stat label={casting.kind === 'understudy' ? 'Went On' : 'Performed'} value={String(casting.performed)} />
-              <Stat label="Calls Ahead" value={String(casting.kind === 'understudy' ? onCall.length : every.filter((c) => c.label.startsWith(casting.production)).length)} />
+              <Stat label="Calls Ahead" value={String(every.filter((c) => c.label.startsWith(casting.production)).length + (casting.kind === 'understudy' ? onCall.length : 0))} note={casting.kind === 'understudy' ? `${onCall.length} of them on call` : undefined} />
             </div>
             {casting.kind === 'understudy' && casting.production === SEAGULL_2027.name && (
               <p className="small" style={{ margin: 0 }}>
@@ -366,7 +371,7 @@ function CabaretPanel() {
     <Panel
       title="The Yale Cabaret"
       subtitle={mine ? `Your show plays the week of ${dayOf(parseDay(mine.week))}` : cabaretSeason(Math.max(0, term))}
-      actions={mine || cabaretRefusal(person) ? undefined : <Gated feature="school.cabaret" onClick={() => { const a = run<{ week: string }>('school.cabaret'); if (a.ok) toast(`In the Cabaret: your show plays the week of ${dayOf(parseDay(a.value!.week))}.`, 'positive'); }}>Join A Cabaret Show</Gated>}
+      actions={mine || cabaretRefusal(sim, person) ? undefined : <Gated feature="school.cabaret" onClick={() => { const a = run<{ week: string }>('school.cabaret'); if (a.ok) toast(`In the Cabaret: your show plays the week of ${dayOf(parseDay(a.value!.week))}.`, 'positive'); }}>Join A Cabaret Show</Gated>}
     >
       <div className="col gap-3">
         {mine && <Stat label="Performed" value={`${mine.performed} of ${YALE_CABARET.shows.length}`} note={`${calls.length} calls ahead`} />}
@@ -388,9 +393,14 @@ function SummerPanel() {
   return (
     <Panel
       title="The Yale Summer Cabaret"
-      subtitle={summer ? (summer.out ? 'You left the company' : `In the ${summer.year} company, to ${formatDate(summer.until, zone())}`) : 'Three shows a summer in New Haven'}
+      subtitle={summer ? (summer.out ? 'The company let you go' : `In the ${summer.year} company, to ${formatDate(summer.until, zone())}`) : 'Three shows a summer in New Haven'}
       actions={summer || summerRefusal(sim, person) ? undefined : <Gated feature="school.summer_cabaret" onClick={() => { if (run('school.summer_cabaret').ok) toast('In this summer’s company.', 'positive'); }}>Join The Summer Company</Gated>}
     >
+      {summer && (
+        <p className="small" style={{ margin: '0 0 var(--s2)' }}>
+          Performances played: {summerRuns(summer.year).map((_, i) => `Show ${i + 1}, ${summer.played[i] ?? 0}`).join('; ')}.
+        </p>
+      )}
       <p className="xs dim" style={{ margin: 0 }}>
         Three shows between late June and late August, evenings at eight and Saturdays at two, with afternoon rehearsals in the three weeks before each. It pays {formatMoney(inSaveMoney(sim, SUMMER_CABARET.stipendWeekly, 'USD'), cur)} a week, SLATE’s estimate, as are later summers’ dates and the company taking a student in good standing who asks by the end of April: neither how it’s chosen nor what it pays is published. A missed performance and the company goes on without you. The summer is yours: the Bulletin limits outside work only while classes are in session. Source: {SUMMER_CABARET.source}.
       </p>
@@ -432,7 +442,7 @@ function WorkPane() {
           </div>
         )}
         <p className="small" style={{ margin: 0 }}>
-          Every student works: six hours each Saturday of the class weeks, assigned, and elective evenings of four hours front of house at Yale Rep when you ask for them. Hours are paid on Friday for the week, by direct deposit, so your bank counts them as wages. A shift you’re not there for isn’t paid, and a missed assigned one counts against your attendance.
+          Every student works: six hours on class-week Saturdays, assigned, up to {WORK_STUDY.assignedHours} hours a year, and elective evenings of four hours front of house at Yale Rep when you ask for them. Hours are paid on Friday for the week, by direct deposit, so your bank counts them as wages. A shift you’re not there for isn’t paid, and a missed assigned one counts against your attendance.
         </p>
         <p className="xs dim" style={{ margin: 0 }}>The hours and the rate are the school’s. Which Saturdays and evenings are SLATE’s estimate. Source: {WORK_STUDY.source}.</p>
       </div>
@@ -451,6 +461,10 @@ function TermsPane() {
   // The term they're in, as the engine bills it; until 2026-09-27 the first year's, whatever the year.
   const current = Math.max(0, Math.min(YALE_DRAMA.terms - 1, school.termsBegun - 1));
   const account = termAccount(cur, need, current);
+  // This year's figures, as the engine grows them; until 2026-09-27 the sentence quoted 2026–27's in every year.
+  const aid = termAccount(cur, true, current);
+  const aidBooks = 2 * (aid.livingScholarship - aid.taxable);
+  const aidLiving = 2 * aid.livingScholarship - aidBooks;
   const terms = Array.from({ length: YALE_DRAMA.terms }, (_, i) => ({ i, ...termStart(i) }));
 
   return (
@@ -490,7 +504,7 @@ function TermsPane() {
             </table>
           </div>
           <p className="small" style={{ margin: 0 }}>
-            Tuition is met in full for every student, from the David Geffen gift. Aid for living costs, {money(inSaveMoney(sim, COST_2026_27.livingExpenses, 'USD'))} a year with the health plan and up to {money(inSaveMoney(sim, COST_2026_27.books, 'USD'))} of books, goes by need, and the need assessment reads the family’s means. {need ? 'Yours found need, and the scholarship meets it.' : 'Yours found none, so the health plan and living costs come from your bank.'}
+            Tuition is met in full for every student, from the David Geffen gift. Aid for living costs, {money(aidLiving)} a year with the health plan and up to {money(aidBooks)} of books this year, goes by need, and the need assessment reads the family’s means. {need ? 'Yours found need, and the scholarship meets it.' : 'Yours found none, so the health plan and living costs come from your bank.'}
           </p>
           <p className="xs dim" style={{ margin: 0 }}>The {COST_2026_27.year} figures are the school’s; later years grow at the Bulletins’ own rise from 2022–23, SLATE’s estimate until they’re published. Source: {COST_2026_27.source}.</p>
         </div>

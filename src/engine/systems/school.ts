@@ -66,7 +66,7 @@ import {
 import { readiness } from './life';
 import { enjoyWork, feel } from './enjoyment';
 import { payFromCurrent } from './household';
-import { armSummerWork, beginCareer, bookShowcase } from './career';
+import { SHOWCASE_KIND, armSummerWork, beginCareer, bookShowcase } from './career';
 import { YALE_COST_GROWTH } from '../content/career';
 import { recordScholarship, recordWages, yearOf } from './earnings';
 import { computeAnnualTax } from '../content/tax';
@@ -445,6 +445,12 @@ function freshTally(person: Person, school: SchoolRecord): TermTally {
 }
 
 /** Whether a person is awake and in New Haven at a moment. */
+/** The day a moment falls on in New Haven, as a sick day is kept. */
+function dayKeyAt(when: Instant): string {
+  const p = zonedParts(when, zone());
+  return keyOf({ year: p.year, month: p.month, day: p.day });
+}
+
 function present(person: Person, when: Instant): boolean {
   const asleep = person.awakeSince !== undefined && person.awakeSince > when;
   // In hospital, they're in no class (`systems/health.ts`).
@@ -472,13 +478,15 @@ function schedule(
  * screen offers each only where it's undefined. Until 2026-09-27 the screen
  * offered all three after graduation, and the summer's in any season.
  */
-export function cabaretRefusal(person: Person): string | undefined {
+export function cabaretRefusal(sim: Simulation, person: Person): string | undefined {
   const school = person.school;
   if (!school || school.standing === 'graduated' || school.standing === 'dismissed') return 'The Cabaret is for students.';
   if (school.standing === 'warning') return 'Nobody on academic warning may take part in the Cabaret.';
   const term = school.termsBegun - 1;
   if (term < 0) return 'The Cabaret’s season begins with the term.';
   if (school.cabaret?.term === term) return 'You’re in a Cabaret show this term already.';
+  // Until 2026-09-27 it was offered in the summer and the term's last weeks, where no week can be, and refused on the click.
+  if (!cabaretWeek(sim, person, term)) return 'No Cabaret week this term is three weeks off and clear of your recesses and calls.';
   return undefined;
 }
 
@@ -648,7 +656,8 @@ function setStanding(sim: Simulation, person: Person, to: Standing, reason: stri
     // The degree's filmed monologues, posted at the end of the final term.
     if (to === 'graduated') school.filmed = true;
     for (const item of sim.universe.scheduled) {
-      if (item.status === 'pending' && item.kind.startsWith('school.') && item.payload.personId === person.id) sim.timeline.cancel(item.id, sim.now);
+      // The showcase too: until 2026-09-27 a student dismissed between New York's and Los Angeles's still had the second, and the clock stopped at it.
+      if (item.status === 'pending' && (item.kind.startsWith('school.') || item.kind === SHOWCASE_KIND) && item.payload.personId === person.id) sim.timeline.cancel(item.id, sim.now);
     }
     // What was worked is still paid.
     if (school.workStudy.owedHours > 0) schedule(sim, person, sim.now + 60_000, { kind: PAYDAY_KIND, label: 'Work-Study Payday', minutes: 0, requiresPlayer: false });
@@ -807,13 +816,21 @@ function cast(sim: Simulation, person: Person, term: number): void {
     if (person.id === sim.universe.playerId) sim.notify({ category: 'school', title: 'Not Cast This Term', body: 'You’re out of the casting pool after missed rehearsal calls. A good evaluation puts you back.', importance: 70, route: '/workspace/school' });
     return;
   }
+  // Both assignments' calls, worked out before any is booked, so the one
+  // student is never called to two places at once. The School production's
+  // rehearsals give way to a Yale Rep call; a Rep night on call gives way to
+  // the student's own School performance; a Rep performance in a role wins
+  // over a School one. Until 2026-09-27 each was booked on its own, and a
+  // second-year understudy was called to Rep and to a thesis on eight
+  // afternoons, and credited with both.
+  type Call = { at: Instant; minutes: number; label: string; call: 'rehearsal' | 'performance' | 'oncall'; which?: 'rep' };
+  const ours: Call[] = [];
+  const reps: Call[] = [];
   const production = schoolProduction(term, rankIn(person, 'acting'));
   if (production) {
     school.casting = { production: production.name, role: 'A Role', kind: production.kind, term, performed: 0 };
-    for (const d of rehearsalDays(term, production.runs[0]!, production.weeks)) {
-      schedule(sim, person, at(d, 15), { kind: CALL_KIND, label: `${production.name}: Rehearsal`, minutes: 360, payload: { call: 'rehearsal' } });
-    }
-    for (const d of production.runs) schedule(sim, person, at(d, 19), { kind: CALL_KIND, label: `${production.name}: Performance`, minutes: 150, payload: { call: 'performance' } });
+    for (const d of rehearsalDays(term, production.runs[0]!, production.weeks)) ours.push({ at: at(d, 15), minutes: 360, label: `${production.name}: Rehearsal`, call: 'rehearsal' });
+    for (const d of production.runs) ours.push({ at: at(d, 19), minutes: 150, label: `${production.name}: Performance`, call: 'performance' });
   }
   if (repTerm(term) && school.standing === 'good') {
     const rep = repProduction(term);
@@ -823,16 +840,21 @@ function cast(sim: Simulation, person: Person, term: number): void {
     // Rehearsals: an understudy's Wednesday and Friday, three to six; a company member's Tuesday to Saturday, three to nine (SLATE's estimate).
     for (let d = parseKey(rep.rehearsals.from); keyOf(d) <= rep.rehearsals.to; d = addDays(d, 1)) {
       const wd = weekday(d);
-      if (inRole ? wd >= 2 && wd <= 6 : wd === 3 || wd === 5) schedule(sim, person, at(d, 15), { kind: CALL_KIND, label: `${rep.name}: ${inRole ? 'Rehearsal' : 'Understudy Rehearsal'}`, minutes: inRole ? 360 : 180, payload: { call: 'rehearsal', which: 'rep' } });
+      if (inRole ? wd >= 2 && wd <= 6 : wd === 3 || wd === 5) reps.push({ at: at(d, 15), minutes: inRole ? 360 : 180, label: `${rep.name}: ${inRole ? 'Rehearsal' : 'Understudy Rehearsal'}`, call: 'rehearsal', which: 'rep' });
     }
     // Every performance, evenings Tuesday to Saturday at eight and Sundays at two: played, or on call.
     for (let d = parseKey(rep.run.from); keyOf(d) <= rep.run.to; d = addDays(d, 1)) {
       const wd = weekday(d);
       if (wd === 1) continue;
-      const when = wd === 0 ? at(d, 14) : at(d, 20);
-      if (inRole) schedule(sim, person, when, { kind: CALL_KIND, label: `${rep.name}: Performance`, minutes: 180, payload: { call: 'performance', which: 'rep' } });
-      else schedule(sim, person, when, { kind: CALL_KIND, label: `${rep.name}: On Call`, minutes: 180, payload: { call: 'oncall', which: 'rep' }, requiresPlayer: false });
+      reps.push({ at: wd === 0 ? at(d, 14) : at(d, 20), minutes: 180, label: `${rep.name}: ${inRole ? 'Performance' : 'On Call'}`, call: inRole ? 'performance' : 'oncall', which: 'rep' });
     }
+  }
+  const overlaps = (a: Call, b: Call) => a.at < b.at + b.minutes * 60_000 && b.at < a.at + a.minutes * 60_000;
+  const keptOurs = ours.filter((c) => !reps.some((r) => overlaps(c, r) && (c.call === 'rehearsal' || r.call === 'performance')));
+  const keptReps = reps.filter((r) => !(r.call === 'oncall' && keptOurs.some((c) => c.call === 'performance' && overlaps(c, r))));
+  for (const c of [...keptOurs, ...keptReps]) {
+    // A night on call is a commitment too: sent on and not there is a grave breach (`breach`). It stopped nothing until 2026-09-27.
+    schedule(sim, person, c.at, { kind: CALL_KIND, label: c.label, minutes: c.minutes, payload: { call: c.call, ...(c.which ? { which: c.which } : {}) } });
   }
   if (person.id === sim.universe.playerId) {
     const chair = YALE_DRAMA.actingChair.name;
@@ -869,7 +891,9 @@ export function evaluate(sim: Simulation, person: Person, term: number): TermRev
   school.history.push(review);
   if (!short) school.castable = true;
   setStanding(sim, person, next, next === 'dismissed' ? `The warning wasn’t met. ${reason}` : reason);
-  school.tally = freshTally(person, school);
+  // The tally starts again with the next term (`TERM_KIND`). Until 2026-09-27 it
+  // started again here, and a first-year's Carlotta calls in May and the
+  // summer's growth went into the next fall's attendance and growth.
   // After the sixth term in standing, the degree at Commencement on the last Monday of May, as 24 May 2027 is (SLATE's estimate for 2029).
   if (term === YALE_DRAMA.terms - 1 && next !== 'dismissed') {
     const y = termStart(term).date.year;
@@ -887,6 +911,7 @@ export function registerSchool(sim: Simulation): void {
     const term = Number(item.payload.term);
     if (!person || !school || school.standing === 'dismissed') return;
     school.termsBegun = term + 1;
+    if (term > 0) school.tally = freshTally(person, school);
     // A new year's hours from the second fall; the first's began at enrollment, and resetting them
     // here lost an elective shift asked for before the first term's morning.
     if (term > 0 && termStart(term).fall) school.workStudy = { yearHours: 0, electiveHours: 0, owedHours: school.workStudy.owedHours };
@@ -998,11 +1023,14 @@ export function registerSchool(sim: Simulation): void {
     const casting = item.payload.which === 'rep' ? school?.rep : school?.casting;
     if (!person || !school || !person.craft || !casting) return;
     const call = String(item.payload.call);
-    // In hospital, somebody else covers: the call isn't theirs to answer.
-    if (inHospital(person, item.at)) { item.status = 'missed'; return; }
+    // In hospital, or sick with the day called in, somebody else covers: the
+    // call isn't theirs to answer. Until 2026-09-27 a sick day excused the
+    // classes and not that afternoon's rehearsal.
+    if (inHospital(person, item.at) || school.sickDay === dayKeyAt(item.at)) { item.status = 'missed'; return; }
     if (call === 'oncall') {
-      // Most nights the understudy isn't needed.
-      if (!goesOn(s, person, item.at)) return;
+      // Most nights the understudy isn't needed, and the night is called off: it
+      // holds the evening beforehand, and nothing once it's passed.
+      if (!goesOn(s, person, item.at)) { item.status = 'cancelled'; return; }
       school.tally.calls += 1;
       if (present(person, item.at)) {
         school.tally.answered += 1;
@@ -1055,12 +1083,11 @@ export function registerSchool(sim: Simulation): void {
 
   sim.onCommand<Record<string, never>, { week: string }>('school.cabaret', (_p, { sim: s }) => {
     const person = s.player;
-    const no = cabaretRefusal(person);
+    const no = cabaretRefusal(s, person);
     if (no) throw new CommandError(no);
     const school = person.school!;
     const term = school.termsBegun - 1;
-    const week = cabaretWeek(s, person, term);
-    if (!week) throw new CommandError('No Cabaret week this term clears your classes’ recesses and your casting’s calls.');
+    const week = cabaretWeek(s, person, term)!;
     school.cabaret = { term, week: keyOf(week), performed: 0 };
     const c = YALE_CABARET;
     for (const d of cabaretEvenings(week, classPeriod(term).off)) {
@@ -1137,7 +1164,11 @@ export function registerSchool(sim: Simulation): void {
       if (item.payload.call !== 'performance' || inHospital(person, item.at)) return;
       // A missed performance and the company lets them go: the calls ahead are off, the stipend stops.
       summer.out = true;
-      for (const one of s.universe.scheduled) if (one.status === 'pending' && (one.kind === SUMMER_KIND || one.kind === STIPEND_KIND) && one.payload.personId === person.id) s.timeline.cancel(one.id, s.now);
+      // This week's stipend is kept, for the days of it worked; until
+      // 2026-09-27 it went with the rest, and the notice said they were paid.
+      const pay = s.universe.scheduled.filter((one) => one.status === 'pending' && one.kind === STIPEND_KIND && one.payload.personId === person.id).sort((a, b) => a.at - b.at)[0];
+      if (pay) pay.payload.share = Math.max(0, Math.min(1, 1 - (pay.at - s.now) / (7 * MS_DAY)));
+      for (const one of s.universe.scheduled) if (one.status === 'pending' && one !== pay && (one.kind === SUMMER_KIND || one.kind === STIPEND_KIND) && one.payload.personId === person.id) s.timeline.cancel(one.id, s.now);
       if (person.id === s.universe.playerId) s.notify({ category: 'school', title: 'Out Of The Summer Cabaret', body: 'You missed a performance, and the company went on without you. The weeks you worked are paid.', importance: 80, route: '/workspace/school' });
       return;
     }
@@ -1160,6 +1191,9 @@ export function registerSchool(sim: Simulation): void {
     const person = personOf(item);
     const school = person?.school;
     if (!person || !school || !person.craft) return;
+    // Excused as a call is. Until 2026-09-27 a lab missed in hospital counted
+    // against them, and toward the casting pool's missed calls.
+    if (inHospital(person, item.at) || school.sickDay === dayKeyAt(item.at)) { item.status = 'missed'; return; }
     school.tally.calls += 1;
     if (!present(person, item.at)) { item.status = 'missed'; return; }
     school.tally.answered += 1;
@@ -1187,7 +1221,10 @@ export function registerSchool(sim: Simulation): void {
     if (!person) return;
     const current = payeeAccount(s, person);
     const cur = saveCurrency(s.universe);
-    const pay = cur === 'USD' ? SUMMER_CABARET.stipendWeekly : exchange(SUMMER_CABARET.stipendWeekly, 'USD', cur) ?? SUMMER_CABARET.stipendWeekly;
+    const week = cur === 'USD' ? SUMMER_CABARET.stipendWeekly : exchange(SUMMER_CABARET.stipendWeekly, 'USD', cur) ?? SUMMER_CABARET.stipendWeekly;
+    // A week cut short when the company let them go: its days worked.
+    const pay = Math.round(week * (typeof item.payload.share === 'number' ? item.payload.share : 1));
+    if (pay <= 0) return;
     // Summer wages, with tax withheld as a paycheck's: a student out of term
     // isn't exempt from FICA. Until 2026-09-27 nothing was withheld, and the
     // return asked for the payroll tax as a balance due.

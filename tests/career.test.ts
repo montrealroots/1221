@@ -10,8 +10,8 @@ import { MS_DAY, MS_HOUR, instantFromZoned, zonedParts } from '@/engine/core/tim
 import { computeAnnualTax } from '@/engine/content/tax';
 import { AGENCIES, AGENT_COMMISSION, EQUITY, ROLES, SAG_AFTRA, SHOWCASE_2029, WORK_COSTS, rateOn } from '@/engine/content/career';
 import {
-  AUDITION_KIND, CAREER_WEEK_KIND, ESTIMATE, LEAVING, PAY_KIND, SHOWCASE_KIND, WORK_KIND,
-  beginCareer, billDues, bookingChance, careerOf, mayLeave, mealPenalty, offersFor, overtimeFor, paycheck, roleById, showcaseScore, weekOfAuditions, workDays,
+  AUDITION_KIND, CAREER_WEEK_KIND, DUES_KIND, ESTIMATE, LEAVING, PAY_KIND, SHOWCASE_KIND, WORK_KIND,
+  beginCareer, billDues, pruneBookings, schoolClash, bookingChance, careerOf, mayLeave, mealPenalty, offersFor, overtimeFor, paycheck, roleById, showcaseScore, weekOfAuditions, workDays,
   type Booking,
 } from '@/engine/systems/career';
 import { repProduction, termAccount } from '@/engine/systems/school';
@@ -494,6 +494,11 @@ describe('the unions', () => {
     const b = offer(sim, 'lort-b', 3, 4);
     expect(sim.execute({ kind: 'career.accept', payload: { bookingId: b.id } }).ok).toBe(true);
     expect(careerOf(sim.player).unions.equity).toEqual({ joinedAt: sim.now, initiationPaid: EQUITY.initiationNow });
+    // The next bill is on the calendar from joining, on the first of May or November at nine.
+    const bill = sim.universe.scheduled.filter((i) => i.kind === DUES_KIND && i.status === 'pending');
+    expect(bill).toHaveLength(1);
+    expect(zonedParts(bill[0]!.at, NY)).toMatchObject({ day: 1, hour: 9 });
+    expect([5, 11]).toContain(zonedParts(bill[0]!.at, NY).month);
     const fee = sim.universe.transactions.find((t) => t.memo.startsWith('Actors’ Equity initiation'))!;
     expect(fee.postings.filter((q) => q.amount > 0).reduce((s, q) => s + q.amount, 0)).toBe(EQUITY.initiationNow + EQUITY.basicDues / 2);
   });
@@ -522,6 +527,79 @@ describe('the unions', () => {
     expect(billDues(broke, broke.player, 2026, 11)).toBe(Math.round(SAG_AFTRA.basicDues / 2));
     expect(yearOf(broke.player, 2026).dues).toBe(0);
     expect(careerOf(broke.player).unions.owed).toBe(Math.round(SAG_AFTRA.basicDues / 2));
+  });
+});
+
+describe('a showcase missed', () => {
+  it('says why: in hospital, or asleep', () => {
+    for (const [seed, ward] of [['show-ward', true], ['show-asleep', false]] as const) {
+      const sim = createSave(1, seed, { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her' });
+      sim.schedule({ at: sim.now + MS_HOUR, kind: SHOWCASE_KIND, label: 'Actor Showcase', category: 'school', priority: 30, requiresPlayer: true, durationMinutes: 150, payload: { personId: sim.player.id, cityId: 'us-ny-newyork' } });
+      if (ward) healthOf(sim.player).inHospitalUntil = sim.now + 2 * MS_HOUR;
+      else sim.player.awakeSince = sim.now + 2 * MS_HOUR;
+      sim.advanceTo(sim.now + 2 * MS_HOUR);
+      const note = sim.universe.notifications.find((n) => n.title === 'You Missed The Showcase In New York')!;
+      expect(note.body).toBe(ward ? 'In hospital that day, you weren’t seen.' : 'Asleep through it, you weren’t seen.');
+    }
+  });
+});
+
+describe('the dues by date', () => {
+  it('bill a member on the first of May and November whatever the career week, a student\u2019s term included, and book the next', () => {
+    const sim = pro('dues-dated');
+    careerOf(sim.player).unions = { equity: { joinedAt: sim.now, initiationPaid: EQUITY.initiationNow } };
+    // No career week to bill it: a student's term has none.
+    for (const i of sim.universe.scheduled) if (i.kind === CAREER_WEEK_KIND && i.status === 'pending') sim.timeline.cancel(i.id, sim.now);
+    sim.schedule({ at: sim.now + 60_000, kind: DUES_KIND, label: 'Union Dues', category: 'career', priority: 20, payload: { personId: sim.player.id } });
+    const dues = () => sim.nominalAccount('expense', 'Union Dues').balance;
+    const before = dues();
+    sim.advanceTo(sim.now + 2 * 60_000);
+    expect(dues() - before).toBe(EQUITY.basicDues / 2);
+    const next = sim.universe.scheduled.filter((i) => i.kind === DUES_KIND && i.status === 'pending');
+    expect(next).toHaveLength(1);
+    expect(zonedParts(next[0]!.at, NY)).toMatchObject({ day: 1, hour: 9 });
+  });
+});
+
+describe('a job over the school’s calls', () => {
+  it('is refused where a school call or a showcase falls in its hours, and taken once it’s clear', () => {
+    const sim = pro('clash');
+    const b = offer(sim, 'costar', 1);
+    const day = workDays(b)[0]!.at;
+    const call = sim.schedule({ at: day + 2 * MS_HOUR, kind: 'school.summer', label: 'Summer Cabaret: Performance', category: 'school', priority: 32, requiresPlayer: true, durationMinutes: 150, payload: { personId: sim.player.id } });
+    expect(schoolClash(sim, sim.player, b)?.id).toBe(call.id);
+    const no = sim.execute({ kind: 'career.accept', payload: { bookingId: b.id } });
+    expect(no.ok).toBe(false);
+    expect(no.error).toMatch(/clashes with Summer Cabaret: Performance/);
+    // Twelve hours on set at seven: an evening at nine is clear, a job at home.
+    sim.timeline.reschedule(call.id, day + 14 * MS_HOUR);
+    expect(schoolClash(sim, sim.player, b)).toBeUndefined();
+    // Away, the day before and the day after are held too.
+    const away = offer(sim, 'costar', 1);
+    away.cityId = 'us-ca-losangeles';
+    const first = workDays(away)[0]!.at;
+    sim.schedule({ at: first - 20 * MS_HOUR, kind: SHOWCASE_KIND, label: 'Actor Showcase', category: 'school', priority: 30, requiresPlayer: true, durationMinutes: 150, payload: { personId: sim.player.id } });
+    expect(schoolClash(sim, sim.player, away)?.kind).toBe(SHOWCASE_KIND);
+    expect(sim.execute({ kind: 'career.accept', payload: { bookingId: b.id } }).ok).toBe(true);
+  });
+});
+
+describe('the bookings kept', () => {
+  it('prunes to forty from the oldest finished, never one still to come or under option', () => {
+    const sim = pro('prune');
+    const career = careerOf(sim.player);
+    const live = offer(sim, 'costar', 1);
+    live.status = 'accepted';
+    const optioned = offer(sim, 'costar', 1);
+    optioned.status = 'worked';
+    career.option = { seriesId: optioned.id, decidedAt: sim.now + MS_DAY };
+    const paying = offer(sim, 'costar', 1);
+    paying.status = 'worked';
+    sim.schedule({ at: sim.now + MS_DAY, kind: PAY_KIND, label: 'Paid', category: 'career', priority: 20, payload: { personId: sim.player.id, bookingId: paying.id } });
+    for (let n = 0; n < 45; n += 1) offer(sim, 'costar', 1).status = 'passed';
+    pruneBookings(sim, sim.player);
+    expect(career.bookings).toHaveLength(40);
+    expect(career.bookings.slice(0, 3)).toEqual([live, optioned, paying]);
   });
 });
 

@@ -20,7 +20,7 @@ import { GENRE_BY_ID } from '@/engine/content/interests';
 import {
   ESTIMATE, LEAVING, agencyById, bookingChance, careerOf, managerById, mayLeave, onSite, rateOf, roleById, staleHeadshots, submissionsAWeek, workCityOf, workDays, type Booking, type CareerRecord, type CastingSite, workCity } from '@/engine/systems/career';
 import { costsAt, HOUSING, type Housing } from '@/engine/systems/household';
-import { focusOf } from '@/engine/systems/school';
+import { focusOf, summerOf } from '@/engine/systems/school';
 import { earningsOf } from '@/engine/systems/earnings';
 import { MANAGEMENT, MANAGERS, OVERTIME, RESIDUALS, WORK_COSTS } from '@/engine/content/career';
 import { inSaveMoney } from '@/engine/systems/banking';
@@ -140,7 +140,9 @@ function AgencyPane() {
       <Panel
         title="Submitting Yourself"
         subtitle={`${career.submitted} of ${submissionsAWeek(career, sim.now, workCity(person))} this week`}
-        actions={<Gated feature="career.self_submit" onClick={() => { if (run('career.self_submit').ok) toast('Submitted. Any audition comes on Monday.', 'positive'); }}>Submit Yourself</Gated>}
+        actions={(career.since !== undefined || summerOf(person, sim.now)) && career.submitted < submissionsAWeek(career, sim.now, workCity(person))
+          ? <Gated feature="career.self_submit" onClick={() => { if (run('career.self_submit').ok) toast('Submitted. Any audition comes on Monday.', 'positive'); }}>Submit Yourself</Gated>
+          : undefined}
       >
         <p className="small" style={{ margin: 0 }}>
           On the casting sites every actor uses, for the low budget films, games and audiobooks that take submissions. About {pct(ESTIMATE.selfSubmitCallback)} bring an audition with a paid site’s headshot and reel, and half that free, with the week’s on Monday (SLATE’s estimate).
@@ -281,8 +283,10 @@ const spanOf = (b: Booking) => {
 
 /** The jobs taken and ahead, and the credits. */
 function WorkPane() {
+  const { sim } = useGame();
   const person = useWorld((s) => s.player);
   const career = person.career!;
+  const cur = saveCurrency(sim.universe);
   const jobs = career.bookings.filter((b) => b.status === 'accepted');
   return (
     <div className="col gap-5">
@@ -292,7 +296,11 @@ function WorkPane() {
             {jobs.map((b) => (
               <div key={b.id} className="row-between small">
                 <span>{roleById(b.roleId).label}{b.season ? `, Season ${b.season}` : ''}, {cityName(workCityOf(b))}{b.location ? ' (On Location)' : ''}: {spanOf(b)}</span>
-                <span className="mono">{b.worked} of {workDays(b).length} days worked</span>
+                <span className="mono">
+                  {b.worked} of {workDays(b).length} days worked
+                  {(b.overtimeDays ?? []).some((o) => o) ? `, ${formatMoney((b.overtimeDays ?? []).reduce((sum, o) => sum + (o ?? 0), 0), cur)} in overtime and meal penalties` : ''}
+                  {(b.travelOwed ?? 0) + (b.perDiemOwed ?? 0) > 0 ? `, ${formatMoney((b.travelOwed ?? 0) + (b.perDiemOwed ?? 0), cur)} of travel and per diem owed` : ''}
+                </span>
               </div>
             ))}
           </div>
@@ -309,6 +317,7 @@ function WorkPane() {
               </tbody>
             </table>
           </div>
+          {person.school?.filmed && <p className="small" style={{ margin: 'var(--s3) 0 0' }}>The degree’s filmed monologues, posted with the class’s, are footage to cut a reel from.</p>}
         </Panel>
       )}
 
@@ -344,6 +353,9 @@ function UnionsPane() {
   const sagWord = !sag ? 'Not Yet Eligible' : sag.joinedAt !== undefined ? 'Member' : 'Eligible';
   return (
     <div className="col gap-5">
+      {(career.unions.owed ?? 0) > 0 && (
+        <Stat label="Owed To The Union" value={money(career.unions.owed!)} note="Dues and fees the bank couldn’t cover, taken from the next check" tone="warning" />
+      )}
       <div className="grid grid-2">
         <Panel title="SAG-AFTRA">
           <div className="col gap-3">
@@ -368,9 +380,9 @@ function UnionsPane() {
         {years.length ? (
           <div className="table-scroll">
             <table>
-              <thead><tr><th scope="col">Year</th><th scope="col" className="num">Gross</th><th scope="col" className="num">Of It Residuals</th><th scope="col" className="num">Under SAG-AFTRA</th><th scope="col" className="num">Commission</th><th scope="col" className="num">Tax Withheld</th></tr></thead>
+              <thead><tr><th scope="col">Year</th><th scope="col" className="num">Gross</th><th scope="col" className="num">Of It Residuals</th><th scope="col" className="num">Under SAG-AFTRA</th><th scope="col" className="num">Commission</th><th scope="col" className="num">Union Dues</th><th scope="col" className="num">Tax Withheld</th></tr></thead>
               <tbody>
-                {years.map((y) => <tr key={y}><td className="mono">{y}</td><td className="num mono">{money(ledger[y]!.acting)}</td><td className="num mono">{money(ledger[y]!.residuals)}</td><td className="num mono">{money(ledger[y]!.sag)}</td><td className="num mono">{money(ledger[y]!.commission)}</td><td className="num mono">{money(ledger[y]!.withheld)}</td></tr>)}
+                {years.map((y) => <tr key={y}><td className="mono">{y}</td><td className="num mono">{money(ledger[y]!.acting)}</td><td className="num mono">{money(ledger[y]!.residuals)}</td><td className="num mono">{money(ledger[y]!.sag)}</td><td className="num mono">{money(ledger[y]!.commission)}</td><td className="num mono">{money(ledger[y]!.dues)}</td><td className="num mono">{money(ledger[y]!.withheld)}</td></tr>)}
               </tbody>
             </table>
           </div>
@@ -430,7 +442,8 @@ function WorkCostsPanel() {
   const person = useWorld((s) => s.player);
   const career = careerOf(person);
   const cur = saveCurrency(sim.universe);
-  if (career.since === undefined) return null;
+  // A student's summer too, when the sites make the summer's submissions count; until 2026-09-27 they were hidden until the degree.
+  if (career.since === undefined && !summerOf(person, sim.now)) return null;
   const stale = staleHeadshots(career, sim.now);
   const dollars = (c: number) => formatMoney(inSaveMoney(sim, c, 'USD'), cur);
   return (
@@ -448,10 +461,12 @@ function WorkCostsPanel() {
             </div>
           );
         })}
-        <div className="row-between small">
-          <span>Headshots, {dollars(WORK_COSTS.headshots)} with prints: from {formatDate(career.headshotsAt ?? career.since, sim.zone)}{stale ? ', out of date' : ''}</span>
-          <Gated feature="career.headshots" onClick={() => { if (run('career.headshots').ok) toast('New headshots.', 'positive'); }}>New Headshots</Gated>
-        </div>
+        {career.since !== undefined && (
+          <div className="row-between small">
+            <span>Headshots, {dollars(WORK_COSTS.headshots)} with prints: from {formatDate(career.headshotsAt ?? career.since, sim.zone)}{stale ? ', out of date' : ''}</span>
+            <Gated feature="career.headshots" onClick={() => { if (run('career.headshots').ok) toast('New headshots.', 'positive'); }}>New Headshots</Gated>
+          </div>
+        )}
         <div className="row-between small">
           <span>A reel, {dollars(WORK_COSTS.reel)} to edit: {career.reelAt ? `from ${formatDate(career.reelAt, sim.zone)}` : career.credits.some((c) => roleById(c.roleId).medium === 'screen') || person.school?.filmed ? 'None' : 'None, and no screen footage to cut one from'}</span>
           <Gated feature="career.reel" onClick={() => { if (run('career.reel').ok) toast('A reel, cut from your footage.', 'positive'); }}>{career.reelAt ? 'Recut The Reel' : 'Cut A Reel'}</Gated>

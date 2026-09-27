@@ -246,9 +246,10 @@ export function CalendarWorkspace() {
  * and who it was with; the family was the only other kind and the only
  * company, and both went with it.
  *
- * No "where" yet. Every plan is where you are standing, because nothing in
- * the game moves you anywhere else, and offering a city you cannot get to
- * would be offering a commitment you are guaranteed to miss.
+ * No "where" yet. Every plan is where you are standing. When it was written
+ * nothing in the game moved you anywhere else; travel to a job, a sublet and
+ * a move all do now, and a plan is still made where you are at the time, so
+ * a city you won't be in is never offered.
  */
 function PlanForm({ day, onClose, onDone }: { day: CalendarDay; onClose: () => void; onDone: () => void }) {
   const { sim, run } = useGame();

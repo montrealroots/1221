@@ -54,6 +54,7 @@
  */
 
 import type { Simulation } from '../core/simulation';
+import type { ScheduledItem } from '../core/scheduler';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
@@ -79,6 +80,7 @@ import { payeeAccount } from './cash';
 import { sagHoliday } from '../content/usholidays';
 
 export const SHOWCASE_KIND = 'career.showcase';
+export const DUES_KIND = 'career.dues';
 export const CAREER_WEEK_KIND = 'career.week';
 export const AUDITION_KIND = 'career.audition';
 export const OFFER_KIND = 'career.offer';
@@ -792,7 +794,9 @@ export function registerCareer(sim: Simulation): void {
     if (managers.length) offerManagement(s, person, managers, `After the showcase in ${city},`);
     if (offers.length) { offerRepresentation(s, person, offers, cityId, `After the showcase in ${city},`); return; }
     if (isPlayer(person) && !career.agencyId) {
-      s.notify({ category: 'career', title: focus > 0 ? `No Offers From ${city}` : `You Missed The Showcase In ${city}`, body: focus > 0 ? 'Nobody in the room offered to represent you. You can still submit yourself for work, and an agency can come later.' : 'Asleep through it, you weren’t seen.', importance: 80, route: '/workspace/career' });
+      // Until 2026-09-27 a showcase missed in hospital said it was slept through.
+      const missed = inHospital(person, item.at) ? 'In hospital that day, you weren’t seen.' : 'Asleep through it, you weren’t seen.';
+      s.notify({ category: 'career', title: focus > 0 ? `No Offers From ${city}` : `You Missed The Showcase In ${city}`, body: focus > 0 ? 'Nobody in the room offered to represent you. You can still submit yourself for work, and an agency can come later.' : missed, importance: 80, route: '/workspace/career' });
     }
   });
 
@@ -837,8 +841,20 @@ export function registerCareer(sim: Simulation): void {
     }
     // The next Monday by the calendar, not seven days of the clock, which a change of the clocks moves an hour.
     scheduleWeek(s, person, nextMonday(item.at, zoneOf(workCity(person))));
+    // A member saved before the dues had a date of their own is given it here.
+    if (career.unions.sag?.joinedAt !== undefined || career.unions.equity) armDues(s, person);
+  });
+
+  // The unions bill on the first of May and November, whatever else the
+  // actor is doing. Until 2026-09-27 the bill went out with the first career
+  // week of the month, which a student's term never has, and a student who
+  // joined on a summer job paid no dues until the degree.
+  sim.onSchedule(DUES_KIND, (item, s) => {
+    const person = personOf(item);
+    if (!person) return;
     const p = zonedParts(item.at, s.homeZone);
-    if ((p.month === 5 || p.month === 11) && p.day <= 7) billDues(s, person, p.year, p.month);
+    billDues(s, person, p.year, p.month);
+    armDues(s, person);
   });
 
   sim.onSchedule(AUDITION_KIND, (item, s) => {
@@ -885,7 +901,7 @@ export function registerCareer(sim: Simulation): void {
       ...(location ? { location } : {}),
     };
     career.bookings.push(booking);
-    career.bookings = career.bookings.slice(-40);
+    pruneBookings(s, person);
     feel(person, 'booked');
     s.schedule({ at: booking.dueAt, kind: LAPSE_KIND, label: 'An Offer Lapses', category: 'system', priority: 20, payload: { personId: person.id, bookingId: booking.id } });
     if (!isPlayer(person)) return;
@@ -1133,6 +1149,8 @@ export function registerCareer(sim: Simulation): void {
       const days = workDays(booking);
       if (!summer || days[days.length - 1]!.at >= summer.until) throw new CommandError('It runs into the fall term, and the school’s work comes first while classes are in session.');
     }
+    const called = schoolClash(s, person, booking);
+    if (called) throw new CommandError(`It clashes with ${called.label}, ${formatDateTime(called.at, s.homeZone)}.`);
     takeJob(s, person, booking, false);
     return { starts: booking.starts };
   });
@@ -1265,7 +1283,7 @@ export function registerCareer(sim: Simulation): void {
         at: d.at, kind: WORK_KIND,
         label: role.medium === 'screen' ? `On Set: ${role.label}` : role.medium === 'voice' ? `In The Booth: ${role.label}` : `${d.rehearsal ? 'Rehearsal' : 'Performance'}: ${role.label}`,
         category: 'career', priority: 34, requiresPlayer: true,
-        durationMinutes: role.medium === 'screen' ? 720 : role.medium === 'voice' ? (role.sessionHours ?? 4) * 60 : d.rehearsal ? 480 : 180,
+        durationMinutes: workMinutes(role, d.rehearsal),
         locationId: workCity, payload: { personId: person.id, bookingId: booking.id },
       });
     }
@@ -1390,6 +1408,9 @@ export function registerCareer(sim: Simulation): void {
     const person = s.player;
     if (![...CAREER_CITIES, YALE_DRAMA.cityId].includes(p.cityId as CareerCity)) throw new CommandError('New York, Los Angeles or New Haven.');
     if (person.currentLocationId === p.cityId && person.home?.cityId === p.cityId && person.home.kind === p.kind) throw new CommandError('You live there already.');
+    // Until 2026-09-27 a student could move to Los Angeles mid-term, and miss every class after.
+    const school = person.school;
+    if (p.cityId !== YALE_DRAMA.cityId && school && school.standing !== 'dismissed' && school.standing !== 'graduated' && !summerOf(person, s.now)) throw new CommandError('Classes are in New Haven while the term is on; a move away waits for the summer or the degree.');
     person.currentLocationId = p.cityId;
     s.universe.currentZone = zoneOf(p.cityId);
     // A move the bank can't pay for throws, and the command's rollback puts them back where they were.
@@ -1413,10 +1434,12 @@ export function registerCareer(sim: Simulation): void {
       const fee = usd(SAG_AFTRA.initiation + Math.round(SAG_AFTRA.basicDues / 2), cur);
       pay(fee, 'SAG-AFTRA initiation fee and dues', `Working under SAG-AFTRA again means joining, for ${formatMoney(fee, cur)}, which the bank can’t cover.`);
       sag.joinedAt = s.now;
+      armDues(s, person);
     } else if (!career.unions.equity) {
       const fee = usd(EQUITY.initiationNow + Math.round(EQUITY.basicDues / 2), cur);
       pay(fee, 'Actors’ Equity initiation fee and dues', `An Equity contract makes you a member, for ${formatMoney(fee, cur)} now, which the bank can’t cover.`);
       career.unions.equity = { joinedAt: s.now, initiationPaid: EQUITY.initiationNow };
+      armDues(s, person);
     }
   }
 }
@@ -1434,6 +1457,61 @@ export function sendHome(sim: Simulation, booking: Booking): void {
     const tomorrow = sim.now + MS_DAY;
     if (one.at > tomorrow) sim.timeline.reschedule(one.id, tomorrow);
   }
+}
+
+/**
+ * Forty bookings kept, the oldest finished ones making room, and never one
+ * with anything still to come. Until 2026-09-27 the list was cut at forty
+ * whatever was in it, and a job still running or a season under option
+ * could be cut with the rest.
+ */
+export function pruneBookings(sim: Simulation, person: Person): void {
+  const career = careerOf(person);
+  for (let i = 0; career.bookings.length > 40 && i < career.bookings.length;) {
+    const old = career.bookings[i]!;
+    const done = old.status !== 'offered' && old.status !== 'accepted' && career.option?.seriesId !== (old.seriesId ?? old.id);
+    if (done && !sim.universe.scheduled.some((one) => one.status === 'pending' && one.payload.bookingId === old.id)) career.bookings.splice(i, 1);
+    else i += 1;
+  }
+}
+
+/** The next union bill, on the first of May or November at nine, unless one is on the calendar already. */
+function armDues(sim: Simulation, person: Person): void {
+  if (sim.universe.scheduled.some((i) => i.kind === DUES_KIND && i.status === 'pending' && i.payload.personId === person.id)) return;
+  const p = zonedParts(sim.now, sim.homeZone);
+  let year = p.year;
+  let month = p.month < 5 ? 5 : p.month < 11 ? 11 : 5;
+  if (p.month >= 11) year += 1;
+  let when = instantFromZoned({ year, month, day: 1, hour: 9 }, sim.homeZone);
+  // On the first itself, before nine: this one.
+  if (when <= sim.now) { month = month === 5 ? 11 : 5; if (month === 5) year += 1; when = instantFromZoned({ year, month, day: 1, hour: 9 }, sim.homeZone); }
+  sim.schedule({ at: when, kind: DUES_KIND, label: 'Union Dues', category: 'career', priority: 20, payload: { personId: person.id } });
+}
+
+/** How long a job's day holds the actor: a screen day twelve hours, a voice session its hours, a stage rehearsal eight and a performance three. */
+function workMinutes(role: Role, rehearsal: boolean): number {
+  return role.medium === 'screen' ? 720 : role.medium === 'voice' ? (role.sessionHours ?? 4) * 60 : rehearsal ? 480 : 180;
+}
+
+/**
+ * The first school call, Summer Cabaret night or showcase a job would keep
+ * the actor from: in another city, anything from the day before the work to
+ * the day after it; at home, anything in its hours. Until 2026-09-27 a
+ * student could take a job over the Summer Cabaret's run, and the calendar
+ * flagged it but Take It didn't, and the company dropped them.
+ */
+export function schoolClash(sim: Simulation, person: Person, booking: Booking): ScheduledItem | undefined {
+  const days = workDays(booking);
+  const role = roleById(booking.roleId);
+  const home = person.home?.cityId ?? person.currentLocationId;
+  const away = booking.location !== undefined || workCityOf(booking) !== home;
+  const spans: [Instant, Instant][] = away
+    ? [[days[0]!.at - MS_DAY, days[days.length - 1]!.at + 2 * MS_DAY]]
+    : days.map((d) => [d.at, d.at + workMinutes(role, d.rehearsal) * 60_000]);
+  return sim.universe.scheduled
+    .filter((i) => i.status === 'pending' && i.requiresPlayer && i.payload.personId === person.id && (i.kind.startsWith('school.') || i.kind === SHOWCASE_KIND))
+    .sort((a, b) => a.at - b.at)
+    .find((i) => spans.some(([a, b]) => i.at < b && a < i.at + Math.max(60_000, (i.durationMinutes ?? 0) * 60_000)));
 }
 
 function schedulePay(sim: Simulation, person: Person, booking: Booking, when: Instant, final = false): void {
