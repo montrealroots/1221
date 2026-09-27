@@ -348,7 +348,9 @@ export const GENRES: Readonly<Record<'screen' | 'stage' | 'animation', readonly 
  * more than two years old cost a fifth of auditions and callbacks, a tape
  * without a kit reads a fifth worse, a week's class grows craft as a class
  * at school does, and a coached audition books a quarter more often. All of
- * it is a job expense New York and California let an actor deduct.
+ * it is a job expense New York and California let an actor deduct. The kit
+ * and the prints are goods, and the sales tax where they're bought is on
+ * top (`content/tax.ts`).
  */
 export const WORK_COSTS = {
   sites: {
@@ -360,6 +362,8 @@ export const WORK_COSTS = {
   wantReel: 0.4,
   castingNetworksSubmissions: { 'us-ca-losangeles': 5, other: 2 },
   headshots: 815_00,
+  /** Of the headshots, the hundred prints: goods, which a state's sales tax takes, as it does the kit. */
+  prints: 115_00,
   headshotsLastDays: 730,
   kit: 110_00,
   classMonthly: 300_00,

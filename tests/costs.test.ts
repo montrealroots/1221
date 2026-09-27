@@ -9,10 +9,10 @@ import { describe, expect, it } from 'vitest';
 import { createSave, quickSave } from '@/engine';
 import { newLifeConfig } from '@/engine/world/bootstrap';
 import { MS_DAY, instantFromZoned, zonedParts } from '@/engine/core/time';
-import { computeAnnualTax } from '@/engine/content/tax';
+import { computeAnnualTax, salesTaxRate } from '@/engine/content/tax';
 import { AGENCIES, ROLES, WORK_COSTS } from '@/engine/content/career';
 import { CARE, CHRONIC, DENTAL_PLANS, DENTAL_VISION, INSULIN, PHARMACY, RECEIPTS, STATE_DEDUCTIONS, medicalGrowth } from '@/engine/content/safetynet';
-import { ESTIMATE, beginCareer, bookingChance, careerOf, staleHeadshots, submissionsAWeek, weekOfAuditions, workCostsWeek } from '@/engine/systems/career';
+import { ESTIMATE, beginCareer, bookingChance, careerOf, staleHeadshots, submissionsAWeek, weekOfAuditions, withSalesTax, workCostsWeek } from '@/engine/systems/career';
 import { recordJobCost, recordWages, yearOf } from '@/engine/systems/earnings';
 import { drawChronic, grown, healthMonth, monitorShareOf, healthOf, illnessWeek, insulinShareOf, keepUp, rxShareOf, shareOf, teethAndEyesShareOf } from '@/engine/systems/health';
 import { figuresFor } from '@/engine/systems/taxreturn';
@@ -106,7 +106,14 @@ describe('an actor’s working costs', () => {
     careerOf(sim.player).auditions.push({ id: 'x1', roleId: 'costar', at: sim.now + MS_DAY, mode: 'room', cityId: 'us-ny-newyork', status: 'ahead' });
     expect(sim.execute({ kind: 'career.coach', payload: { auditionId: 'x1' } }).ok).toBe(true);
     expect(sim.execute({ kind: 'career.coach', payload: { auditionId: 'x1' } }).ok).toBe(false);
-    expect(yearOf(sim.player, yearNow(sim)).jobCosts).toBe(WORK_COSTS.kit + WORK_COSTS.coach);
+    // The kit is goods, and New York City's 8.875% is on top.
+    expect(yearOf(sim.player, yearNow(sim)).jobCosts).toBe(Math.round(WORK_COSTS.kit * (1 + salesTaxRate('us-ny-newyork', sim.now, 'goods'))) + WORK_COSTS.coach);
+    expect(withSalesTax(sim.player, sim.now, 100_00)).toBe(Math.round(100_00 * (1 + salesTaxRate('us-ny-newyork', sim.now, 'goods'))));
+    expect(salesTaxRate('us-ny-newyork', sim.now, 'goods')).toBeGreaterThan(0.08);
+    // Headshots: the session untaxed, the prints taxed.
+    const before = yearOf(sim.player, yearNow(sim)).jobCosts!;
+    sim.execute({ kind: 'career.headshots', payload: {} });
+    expect(yearOf(sim.player, yearNow(sim)).jobCosts! - before).toBe(WORK_COSTS.headshots - WORK_COSTS.prints + withSalesTax(sim.player, sim.now, WORK_COSTS.prints));
   });
 
   it('bills a class each month and grows acting each week, against a life without it', () => {

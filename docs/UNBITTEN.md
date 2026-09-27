@@ -208,8 +208,6 @@ part the tool cannot see.
     SLATE's estimate: no site publishes what a reel or a subscription is
     worth. Trade papers aren't modeled: what they'd tell an actor, SLATE
     has no news to give.
-  - A return's states: New York's days-worked allocation inside a job
-    isn't counted.
   - Where a job is seen, how it does, a film's television money and its
     cast's units are SLATE's estimate.
 - **Some of pending and holds isn't modeled.** The banks publish the most
@@ -252,11 +250,14 @@ part the tool cannot see.
   weren't found (Arion, Crédit Agricole, Santander Spain) and pay out. An
   empty, unused account that the bank may close is never closed: the banks
   say they may, not when.
-- **The tax engine's sales, property and vehicle rules are read by
-  nothing.** Its income and payroll tax is paid again since the career:
-  acting wages are withheld through it and each year's return is worked out
-  with it (`systems/career.ts`, `systems/taxreturn.ts`). Its other rules
-  wait for something bought, owned or driven.
+- **The tax engine's property and vehicle rules are read by nothing.** Its
+  income and payroll tax is paid again since the career: acting wages are
+  withheld through it and each year's return is worked out with it
+  (`systems/career.ts`, `systems/taxreturn.ts`), and since 2026-09-27 its
+  sales tax is on the goods the work buys, a self-tape kit and headshot
+  prints. The day's food is taken as groceries, which the states SLATE
+  taxes a life in exempt. Property and vehicles wait for something owned or
+  driven.
 - **An older save's pension fund is kept, and nothing moves it.** The day
   job paid into one in five countries and it grew daily. Both went with the
   job engine on 2026-09-26. A save from before keeps the fund, and net worth

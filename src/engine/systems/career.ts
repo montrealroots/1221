@@ -61,7 +61,7 @@ import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { MS_DAY, MS_HOUR, formatDate, formatDateTime, instantFromZoned, normalDate, zonedParts, type Instant } from '../core/time';
 import { exchange } from '../content/currency';
 import { CITIES } from '../content/geography';
-import { computeAnnualTax } from '../content/tax';
+import { computeAnnualTax, salesTaxRate } from '../content/tax';
 import {
   AFTERLIFE, AGENCIES, AGENT_COMMISSION, CALLS, CAREER_CITIES, GENRES, WORK_COSTS, MEAL_PENALTY, RECURRING, COMMERCIAL_RUN, COMMERCIAL_USE, EQUITY, LOCATION, MANAGEMENT, MANAGERS, OVERTIME, RESIDUALS, ROLES, SAG_AFTRA, SERIES, SHOWCASE_2029, rateOn,
   type Agency, type CareerCity, type Manager, type Role,
@@ -272,6 +272,11 @@ export const onSite = (career: CareerRecord, site: CastingSite, at: Instant) => 
 
 /** Headshots more than two years old: the showcase's, from when the business began, until new ones. */
 export const staleHeadshots = (career: CareerRecord, at: Instant) => at - (career.headshotsAt ?? career.since ?? at) > WORK_COSTS.headshotsLastDays * MS_DAY;
+
+/** Goods bought where they are: the price and the sales tax on it. */
+export function withSalesTax(person: Person, at: Instant, cents: Money): Money {
+  return Math.round(cents * (1 + salesTaxRate(person.currentLocationId, at, 'goods')));
+}
 
 /** Paid from the bank as a cost of the work, counted for the return; false where the bank can't. */
 function payForWork(sim: Simulation, person: Person, amount: Money, memo: string): boolean {
@@ -1217,7 +1222,8 @@ export function registerCareer(sim: Simulation): void {
   sim.onCommand<Record<string, never>, { at: Instant }>('career.headshots', (_p, { sim: s }) => {
     const person = s.player;
     const cur = saveCurrency(s.universe);
-    if (!payForWork(s, person, usd(WORK_COSTS.headshots, cur), 'Headshots and prints')) throw new CommandError(`A session and prints come to ${formatMoney(usd(WORK_COSTS.headshots, cur), cur)}, which the bank can’t cover.`);
+    const cost = usd(WORK_COSTS.headshots - WORK_COSTS.prints, cur) + withSalesTax(person, s.now, usd(WORK_COSTS.prints, cur));
+    if (!payForWork(s, person, cost, 'Headshots and prints')) throw new CommandError(`A session and prints come to ${formatMoney(cost, cur)}, which the bank can’t cover.`);
     careerOf(person).headshotsAt = s.now;
     return { at: s.now };
   });
@@ -1237,7 +1243,8 @@ export function registerCareer(sim: Simulation): void {
     const career = careerOf(person);
     if (career.kit) throw new CommandError('You have a kit.');
     const cur = saveCurrency(s.universe);
-    if (!payForWork(s, person, usd(WORK_COSTS.kit, cur), 'A self-tape kit')) throw new CommandError(`A kit is ${formatMoney(usd(WORK_COSTS.kit, cur), cur)}, which the bank can’t cover.`);
+    const cost = withSalesTax(person, s.now, usd(WORK_COSTS.kit, cur));
+    if (!payForWork(s, person, cost, 'A self-tape kit')) throw new CommandError(`A kit is ${formatMoney(cost, cur)} with the sales tax, which the bank can’t cover.`);
     career.kit = true;
     return { kit: true };
   });

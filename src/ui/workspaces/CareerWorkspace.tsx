@@ -441,7 +441,7 @@ function WorkCostsPanel() {
           <Gated feature="career.reel" onClick={() => { if (run('career.reel').ok) toast('A reel, cut from your footage.', 'positive'); }}>{career.reelAt ? 'Recut The Reel' : 'Cut A Reel'}</Gated>
         </div>
         <div className="row-between small">
-          <span>A self-tape kit, {formatMoney(WORK_COSTS.kit, cur)}: {career.kit ? 'Yours' : 'None'}</span>
+          <span>A self-tape kit, {formatMoney(WORK_COSTS.kit, cur)} and the sales tax: {career.kit ? 'Yours' : 'None'}</span>
           {!career.kit && <Gated feature="career.buy_kit" onClick={() => { if (run('career.buy_kit').ok) toast('Tapes read better now.', 'positive'); }}>Buy A Kit</Gated>}
         </div>
         <div className="row-between small">
