@@ -139,10 +139,16 @@ part the tool cannot see.
   minimum and the late fee most often), runs on SLATE's estimate of a
   typical American card's, and the bank's screen names which terms are the
   estimate. A charge card that can be spread (Iceland's, Japan's, Korea's,
-  Spain's) is a revolving card with autopay on the whole statement. Not
-  modeled: Canada's penalty rate after two missed payments in a year (BMO's
-  and CIBC's, researched; only the US penalty rate runs, by Reg Z's rules), a late fee set as a share of the payment, Mexico's minimum on
-  the limit, and Japan's and Korea's fixed-sum revolving courses. Caps
+  Spain's) is a revolving card with autopay on the whole statement. Since
+  2026-09-27 Canada's penalty rates run (RBC's, BMO's and CIBC's, after two
+  missed minimums in twelve months; twelve on time takes them off, which is
+  SLATE's estimate for RBC), as do the late fees 31 banks set as a share of
+  the minimum, the balance or what went unpaid (`content/latefees.ts`),
+  Citi's lower first late fee, and Mexico's minimum of 1.25% of the limit.
+  Banks whose late fee is a share of nothing the terms name (Equity and
+  NCBA in Kenya, QNB, Republic Bank Suriname, Absa Uganda, Bank of Bhutan)
+  keep a flat figure or SLATE's estimate. Not modeled: Japan's and Korea's
+  fixed-sum revolving courses, which the research didn't read. Caps
   left out: Japan's Interest Rate Restriction Act binds cash advances, not
   purchases; Monaco's and Ukraine's figures weren't the law's own; the
   British £12 late fee is regulator guidance, and the United States' after
@@ -336,10 +342,10 @@ part the tool cannot see.
     payment hold on freed credit is read since that day, and its
     posting-order words, the maturity, dormancy, replacement, credit-card
     and refund wording, and the countries' claim-back words are shown.
-  - Sources kept and not shown: roles', thunder's and rents'. Interest
-    tax's, switching's, pending's, security's, fraud law's, unclaimed
-    money's, payment norms', check fees', ChexSystems' and the French card
-    ceilings' are shown since 2026-09-27.
+  - Every source is shown since 2026-09-27: roles' on the Career screen,
+    thunder's on the weather look, a published rent's on the place look and
+    at creation, and the bank's, the laws' and the research's on the Bank
+    screen.
 - **An older save's pension fund is kept, and nothing moves it.** The day
   job paid into one in five countries and it grew daily. Both went with the
   job engine on 2026-09-26. A save from before keeps the fund, and net worth

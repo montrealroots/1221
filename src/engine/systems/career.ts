@@ -1268,8 +1268,6 @@ export function registerCareer(sim: Simulation): void {
       throw new CommandError('Another series holds an option on you until it’s decided.');
     }
     const days = workDays(booking);
-    const first = days[0]!.at - (booking.location ? MS_DAY : 0);
-    const last = days[days.length - 1]!.at + (booking.location ? MS_DAY : 0);
     // Joined first, so a job taken by choice that the bank can't join for
     // releases nothing. One they're bound to, a season picked up, never
     // fails on the fee: the union takes it from the pay, as a payroll
@@ -1278,8 +1276,7 @@ export function registerCareer(sim: Simulation): void {
     joinFor(s, person, role, bound);
     for (const other of career.bookings) {
       if (other.status !== 'accepted' || other.id === booking.id) continue;
-      const theirs = workDays(other);
-      if (!(first <= theirs[theirs.length - 1]!.at && theirs[0]!.at <= last)) continue;
+      if (!jobsClash(person, booking, other)) continue;
       if (!bound) throw new CommandError(`It clashes with ${roleById(other.roleId).label}.`);
       other.status = 'released';
       for (const one of s.universe.scheduled) if (one.status === 'pending' && one.payload.bookingId === other.id && (one.kind === WORK_KIND || ((one.kind === TRAVEL_KIND || one.kind === STAY_KIND) && one.payload.direction === 'out'))) s.timeline.cancel(one.id, s.now);
@@ -1499,6 +1496,24 @@ function armDues(sim: Simulation, person: Person): void {
   // On the first itself, before nine: this one.
   if (when <= sim.now) { month = month === 5 ? 11 : 5; if (month === 5) year += 1; when = instantFromZoned({ year, month, day: 1, hour: 9 }, sim.homeZone); }
   sim.schedule({ at: when, kind: DUES_KIND, label: 'Union Dues', category: 'career', priority: 20, payload: { personId: person.id } });
+}
+
+/**
+ * Whether two jobs can't both be worked. In one city, a call of one inside
+ * another's hours. In two, the days away from home, a day either side of a
+ * job away for the journey, overlapping. Until 2026-09-27 only the calls'
+ * start times were compared, so a 7 a.m. commercial in New York didn't clash
+ * with a location shoot in Chicago at eight the same morning, both were
+ * taken, and the film was lost.
+ */
+export function jobsClash(person: Person, a: Booking, b: Booking): boolean {
+  const calls = (x: Booking) => { const role = roleById(x.roleId); return workDays(x).map((d) => [d.at, d.at + workMinutes(role, d.rehearsal) * 60_000] as const); };
+  const ca = calls(a);
+  const cb = calls(b);
+  if (workCityOf(a) === workCityOf(b)) return ca.some(([s, e]) => cb.some(([s2, e2]) => s < e2 && s2 < e));
+  const home = person.home?.cityId ?? person.currentLocationId;
+  const pad = (x: Booking) => (x.location !== undefined || workCityOf(x) !== home ? MS_DAY : 0);
+  return ca[0]![0] - pad(a) < cb[cb.length - 1]![1] + pad(b) && cb[0]![0] - pad(b) < ca[ca.length - 1]![1] + pad(a);
 }
 
 /** How long a job's day holds the actor: a screen day twelve hours, a voice session its hours, a stage rehearsal eight and a performance three. */

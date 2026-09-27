@@ -1021,7 +1021,7 @@ function MonthByMonth({ config, set, cur }: { config: NewSaveConfig; set: Setter
       </div>
 
       <p className="xs dim" style={{ marginTop: 'var(--s3)' }}>
-        {costs.rentFigure.kind === 'published' && `Rent is published here: ${costs.rentFigure.measure}, ${costs.rentFigure.period}${config.housing === 'shared' && !costs.rentFigure.measure?.includes('room') ? ', and a room is taken at 55% of it' : ''}. `}
+        {costs.rentFigure.kind === 'published' && `Rent is published here: ${costs.rentFigure.measure}, ${costs.rentFigure.period}${config.housing === 'shared' && !costs.rentFigure.measure?.includes('room') ? ', and a room is taken at 55% of it' : ''}. Source: ${costs.rentFigure.source}. `}
         {costs.rentFigure.kind === 'calibrated' && 'Rent is SLATE’s estimate for this town, scaled to what’s published elsewhere in the country. '}
         {costs.rentFigure.kind === 'estimate' && 'Rent is SLATE’s estimate for this town; nothing is published for the country. '}
         Bills and food are SLATE's estimates, not published figures.

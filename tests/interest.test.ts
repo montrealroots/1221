@@ -9,7 +9,7 @@ import { quickSave } from '@/engine';
 import type { Simulation } from '@/engine/core/simulation';
 import { MS_DAY, startOfNextDay } from '@/engine/core/time';
 import { CARDS, type CardProduct } from '@/engine/content/cards';
-import { cardOf, cardTerms, DUE_KIND, STATEMENT_KIND } from '@/engine/systems/credit';
+import { CANADA_PENALTY, cardOf, cardTerms, DUE_KIND, STATEMENT_KIND } from '@/engine/systems/credit';
 import { cardStatement, periodsOf } from '@/engine/systems/statements';
 
 const cards = CARDS as Record<string, CardProduct | { none: true; source: string }>;
@@ -160,6 +160,56 @@ describe('the US penalty rate', () => {
     expect(cardTerms(sim, c, 700).apr).toBe(c.apr);
     expect(sim.universe.notifications.some((n) => n.title === 'The Penalty Rate Is Off')).toBe(true);
   });
+});
+
+describe('Citi’s first late fee', () => {
+  it('is $29, and $40 for another within six billing periods', () => {
+    const sim = lifeIn('us-ny-newyork', { bankId: 'us-citi' }, 'int-citi');
+    const c = card(sim);
+    expect(c.bankId).toBe('us-citi');
+    sim.player.credit!.autopay = 'minimum';
+    give(sim, c.id, -5_000_00);
+    const broke = () => { for (const a of Object.values(sim.universe.accounts)) if (a.ownerId === sim.player.id && (a.kind === 'checking' || a.kind === 'savings') && !a.closedAt && a.balance > 0) give(sim, a.id, -a.balance); };
+    const fees: number[] = [];
+    for (let i = 0; i < 2; i += 1) {
+      let due = next(sim, DUE_KIND);
+      while (due === undefined) { sim.advanceTo(statementAhead(sim) + 1000); due = next(sim, DUE_KIND); }
+      broke();
+      sim.advanceTo(due + 1000);
+      fees.push(-sim.universe.transactions.filter((t) => t.memo === 'Late fee').at(-1)!.postings.find((q) => q.accountId === c.id)!.amount);
+    }
+    expect(fees).toEqual([29_00, cardTerms(sim, c, 700).lateFee]);
+    expect(fees[1]).toBeGreaterThan(fees[0]!);
+  });
+});
+
+describe('Canada’s penalty rate', () => {
+  it('rises at once after two missed minimums in twelve months, cash too at CIBC, and comes off after twelve on time', () => {
+    const sim = lifeIn('ca-on-toronto', { bankId: 'ca-cibc' }, 'int-canada');
+    const c = card(sim);
+    expect(c.bankId).toBe('ca-cibc');
+    sim.player.credit!.autopay = 'minimum';
+    const broke = () => { for (const a of Object.values(sim.universe.accounts)) if (a.ownerId === sim.player.id && (a.kind === 'checking' || a.kind === 'savings') && !a.closedAt && a.balance > 0) give(sim, a.id, -a.balance); };
+    give(sim, c.id, -500_00);
+    let due = next(sim, DUE_KIND);
+    while (due === undefined) { sim.advanceTo(statementAhead(sim) + 1000); due = next(sim, DUE_KIND); }
+    broke();
+    sim.advanceTo(due + 1000);
+    expect(sim.player.credit!.penalty).toBeUndefined();
+    due = next(sim, DUE_KIND);
+    while (due === undefined) { sim.advanceTo(statementAhead(sim) + 1000); due = next(sim, DUE_KIND); }
+    broke();
+    sim.advanceTo(due + 1000);
+    const penalty = sim.player.credit!.penalty!;
+    expect(penalty.from).toBe(penalty.noticeAt);
+    expect(cardTerms(sim, c, 700).apr).toBe(CANADA_PENALTY['ca-cibc']!.apr);
+    expect(cardTerms(sim, c, 700).cashApr).toBe(CANADA_PENALTY['ca-cibc']!.cashApr);
+    for (let i = 0; i < 11; i += 1) { give(sim, c.id, -200_00); throughDue(sim); }
+    expect(sim.player.credit!.penalty).toBeDefined();
+    give(sim, c.id, -200_00);
+    throughDue(sim);
+    expect(sim.player.credit!.penalty).toBeUndefined();
+  }, 120_000);
 });
 
 describe('Britain’s default fees', () => {

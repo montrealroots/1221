@@ -264,6 +264,7 @@ function AuditionsPane() {
               </tbody>
             </table>
           </div>
+          <p className="xs dim" style={{ margin: 0 }}>Source: {[...new Set(ROLES.map((r) => r.source))].join('; ')}.</p>
           <p className="xs dim" style={{ margin: 0 }}>
             The pay is each contract’s minimum on today’s date: SAG-AFTRA’s 2026–2030 television and theatrical rates, its low budget agreements, Equity’s LORT rates and its Broadway minimum; after a contract’s last published step it holds. A guest star’s pay is the major role’s five- or eight-day price, by the day; a series regular’s is by the episode, 13 guaranteed. A shooting day runs {OVERTIME.dayHours[0]} to {OVERTIME.dayHours[1]} hours, and the hours past the contract’s are paid at its overtime rates. Your chance is SLATE’s estimate: about one in twenty at the part’s bar, as the trade reckons for a newer actor, more above it, less tired or on tape.
           </p>

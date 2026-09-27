@@ -235,6 +235,7 @@ defineLook<PlaceProfile>('place', {
             {place.medianRentCents > 0
               ? `and the cost of living sits at ${place.costOfLivingIndex}, where a hundred is the United States’ price level.`
               : `The cost of living sits at ${place.costOfLivingIndex}, where a hundred is the American average.`}
+            {(() => { const figure = rentAt(place.city.id, 'USD'); return figure.kind === 'published' ? ` The rent is published: ${figure.measure}, ${figure.period}; source: ${figure.source}.` : ''; })()}
             {layers.length === 0
               ? ` SLATE has no income tax table for ${theCountry(place.countryName)} yet, so the tile below says so rather than showing you a zero it can’t stand behind.`
               : taking.length === 0

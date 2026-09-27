@@ -11,7 +11,7 @@ import { computeAnnualTax } from '@/engine/content/tax';
 import { AGENCIES, AGENT_COMMISSION, EQUITY, ROLES, SAG_AFTRA, SHOWCASE_2029, WORK_COSTS, rateOn } from '@/engine/content/career';
 import {
   AUDITION_KIND, CAREER_WEEK_KIND, DUES_KIND, ESTIMATE, LEAVING, PAY_KIND, SHOWCASE_KIND, WORK_KIND,
-  beginCareer, billDues, pruneBookings, schoolClash, bookingChance, careerOf, mayLeave, mealPenalty, offersFor, overtimeFor, paycheck, roleById, showcaseScore, weekOfAuditions, workDays,
+  beginCareer, billDues, jobsClash, pruneBookings, schoolClash, bookingChance, careerOf, mayLeave, mealPenalty, offersFor, overtimeFor, paycheck, roleById, showcaseScore, weekOfAuditions, workDays,
   type Booking,
 } from '@/engine/systems/career';
 import { repProduction, termAccount } from '@/engine/systems/school';
@@ -581,6 +581,35 @@ describe('a job over the school’s calls', () => {
     sim.schedule({ at: first - 20 * MS_HOUR, kind: SHOWCASE_KIND, label: 'Actor Showcase', category: 'school', priority: 30, requiresPlayer: true, durationMinutes: 150, payload: { personId: sim.player.id } });
     expect(schoolClash(sim, sim.player, away)?.kind).toBe(SHOWCASE_KIND);
     expect(sim.execute({ kind: 'career.accept', payload: { bookingId: b.id } }).ok).toBe(true);
+  });
+});
+
+describe('two jobs at once', () => {
+  it('clash in one city only where their hours meet, and in two where the days away meet', () => {
+    const sim = pro('clash-hours');
+    const monday = workDays(offer(sim, 'costar', 1)).at(0)!.at;
+    const shoot = offer(sim, 'costar', 1, 0, monday);
+    // A location film starting the same morning an hour later: a day's journey either side.
+    const film = offer(sim, 'film-low', 6, 0, monday);
+    film.location = 'us-il-chicago';
+    expect(jobsClash(sim.player, shoot, film)).toBe(true);
+    // The next morning still clashes: the day before a location shoot is the journey out.
+    const next = offer(sim, 'film-low', 6, 0, monday + MS_DAY);
+    next.location = 'us-il-chicago';
+    expect(workDays(next)[0]!.at - workDays(shoot)[0]!.at).toBeGreaterThan(20 * MS_HOUR);
+    expect(jobsClash(sim.player, shoot, next)).toBe(true);
+    // A week later it’s clear, the journey out the day before included.
+    const later = offer(sim, 'film-low', 6, 0, monday + 7 * MS_DAY);
+    later.location = 'us-il-chicago';
+    expect(jobsClash(sim.player, shoot, later)).toBe(false);
+    // In one city, a day on set meets a rehearsal that day, and not a performance that evening.
+    const play = offer(sim, 'lort-b', 1, 1, monday);
+    const rehearsal = workDays(play).find((d) => d.rehearsal)!.at;
+    const performance = workDays(play).find((d) => !d.rehearsal)!.at;
+    expect(jobsClash(sim.player, offer(sim, 'costar', 1, 0, rehearsal), play)).toBe(true);
+    const evening = offer(sim, 'costar', 1, 0, performance);
+    expect(zonedParts(workDays(evening)[0]!.at, NY).day).toBe(zonedParts(performance, NY).day);
+    expect(jobsClash(sim.player, evening, play)).toBe(false);
   });
 });
 

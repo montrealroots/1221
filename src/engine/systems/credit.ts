@@ -57,6 +57,7 @@ import { paymentsOf } from './payments';
 import { allocatePayment, cashOwedOn } from './cash';
 import { planLeftOf, statementOffers, transferRate, transfersOwedOn } from './cardoffers';
 import { PENDING } from '../content/pending';
+import { FIRST_LATE_FEE, LATE_FEE_RULES, lateFeeByRule, type LateFeeRule } from '../content/latefees';
 
 export const STATEMENT_KIND = 'card.statement';
 export const DUE_KIND = 'card.due';
@@ -93,6 +94,8 @@ export interface CreditState {
   hardship?: { payment: Money; since: Instant };
   /** When Britain's persistent-debt notice went (C75). */
   persistentNoticeAt?: Instant;
+  /** When a late fee was last charged, for a bank whose first costs less (`FIRST_LATE_FEE`). */
+  lateFeeAt?: Instant;
   /** Credit a payment from another bank freed, held back until a day (`PENDING.paymentHoldDays`). */
   paymentHolds?: { amount: Money; until: Instant }[];
   /** A card applied for and on its way (C1, C5). */
@@ -202,6 +205,8 @@ export interface CardTerms {
   minimumShare: number;
   minimumFloor: Money;
   minimumPlusInterest: boolean;
+  /** Mexico's: never under a share of the limit (`MEXICO_MINIMUM`). */
+  minimumOfLimit?: Money;
   lateFee: Money;
   /** What a bounced payment costs. */
   returnedPaymentFee: Money;
@@ -231,6 +236,8 @@ export interface CardTerms {
   rewardsWords?: string;
   /** The country's cap on a card's rate, where it has one. */
   aprCap?: number;
+  /** A late fee set as a share (`LATE_FEE_RULES`), its sums in the save's money; `lateFee` is then its least. */
+  lateRule?: LateFeeRule;
   /** The country's law, where it capped a term. */
   capped?: { apr?: number; lateFee?: Money; law: string; source: string };
   /** The terms that are SLATE's estimate, not the bank's. */
@@ -258,9 +265,11 @@ export function cardTerms(sim: Simulation, card: Account, score: number): CardTe
   if (priced === undefined) { priced = aprFor(score); estimated.push('rate'); }
   // The account's own rate, set when it opened; the penalty rate over it once in force.
   const owner = sim.universe.people[card.ownerId];
-  const penaltyInForce = Boolean(product?.penaltyApr && owner?.credit?.penalty && sim.now >= owner.credit.penalty.from);
+  const canada = bank ? CANADA_PENALTY[bank.id] : undefined;
+  const penaltyApr = product?.penaltyApr ?? canada?.apr;
+  const penaltyInForce = Boolean(penaltyApr && owner?.credit?.penalty && sim.now >= owner.credit.penalty.from);
   let apr = card.apr ?? priced;
-  if (penaltyInForce) apr = Math.max(apr, product!.penaltyApr!);
+  if (penaltyInForce) apr = Math.max(apr, penaltyApr!);
   // An introductory rate from opening, lost for a US payment sixty days late,
   // which a penalty rate needs first.
   const introUntil = product?.introMonths ? addMonths(card.openedAt, product.introMonths, sim.homeZone) : undefined;
@@ -268,7 +277,14 @@ export function cardTerms(sim: Simulation, card: Account, score: number): CardTe
   if (introUntil !== undefined && sim.now < introUntil && !owner?.credit?.introLost) apr = Math.min(apr, product!.introApr!);
   const minimumKnown = product?.minimumShare !== undefined || product?.minimumFloor !== undefined;
   if (!minimumKnown && product?.kind !== 'charge') estimated.push('minimum');
-  let lateFee = product?.lateFee !== undefined ? inSave(sim, product.lateFee, money) : undefined;
+  const rule = bank ? LATE_FEE_RULES[bank.id] : undefined;
+  const lateRule: LateFeeRule | undefined = rule ? {
+    ...rule,
+    ...(rule.fixed !== undefined ? { fixed: inSave(sim, rule.fixed, money) } : {}),
+    ...(rule.min !== undefined ? { min: inSave(sim, rule.min, money) } : {}),
+    ...(rule.max !== undefined ? { max: inSave(sim, rule.max, money) } : {}),
+  } : undefined;
+  let lateFee = lateRule ? (lateRule.fixed ?? 0) + (lateRule.min ?? 0) : product?.lateFee !== undefined ? inSave(sim, product.lateFee, money) : undefined;
   if (lateFee === undefined) { lateFee = usdIn(sim, LATE_FEE_USD); estimated.push('lateFee'); }
   if (product && product.annualFee === undefined) estimated.push('annualFee');
   // A cash advance: the card's own terms, or SLATE's estimate of a US card's, 5% or $10 at the purchase rate.
@@ -292,17 +308,18 @@ export function cardTerms(sim: Simulation, card: Account, score: number): CardTe
     kind: product?.kind ?? 'revolving',
     apr,
     priced,
-    ...(product?.penaltyApr ? { penaltyApr: product.penaltyApr, penaltyInForce } : {}),
+    ...(penaltyApr ? { penaltyApr, penaltyInForce } : {}),
     ...(range ? { aprFrom: product!.aprFrom, aprTo: product!.aprTo } : {}),
     annualFee: product?.annualFee ? inSave(sim, product.annualFee, money) : 0,
     minimumShare: minimumKnown ? product!.minimumShare ?? 0 : MINIMUM_SHARE,
     minimumFloor: minimumKnown ? (product!.minimumFloor !== undefined ? inSave(sim, product!.minimumFloor, money) : 0) : usdIn(sim, MINIMUM_USD),
     minimumPlusInterest: product?.minimumPlusInterest ?? false,
+    ...(bank?.iso === 'MX' ? { minimumOfLimit: Math.round((card.creditLimit ?? 0) * MEXICO_MINIMUM.ofLimit) } : {}),
     lateFee,
     returnedPaymentFee,
     cashFeeShare,
     cashFeeMin,
-    cashApr: Math.min(product?.cashApr ?? apr, law?.aprCap ?? Number.POSITIVE_INFINITY),
+    cashApr: Math.min(Math.max(product?.cashApr ?? apr, penaltyInForce && canada?.cashApr ? canada.cashApr : 0), law?.aprCap ?? Number.POSITIVE_INFINITY),
     ...(cashLimit !== undefined ? { cashLimit } : {}),
     ...(product?.overLimitFee ? { overLimitFee: inSave(sim, product.overLimitFee, money) } : {}),
     ...(product?.graceDays !== undefined ? { graceDays: product.graceDays } : {}),
@@ -323,6 +340,7 @@ export function cardTerms(sim: Simulation, card: Account, score: number): CardTe
     ...(product?.rewardsWords ? { rewardsWords: product.rewardsWords } : {}),
     ...(law?.aprCap !== undefined ? { aprCap: law.aprCap } : {}),
     ...(capped ? { capped } : {}),
+    ...(lateRule ? { lateRule } : {}),
     estimated,
     ...(product ? { source: product.source, asOf: product.asOf } : {}),
   };
@@ -381,7 +399,7 @@ export function minimumDue(sim: Simulation, statement: Money, terms = playerCard
   if (terms.kind === 'charge') return statement;
   // A plan's month is asked in full, on top of the rest's share (C34).
   const share = Math.round((statement - planDue) * terms.minimumShare) + (terms.minimumPlusInterest ? interest : 0);
-  return Math.min(statement, Math.max(terms.minimumFloor, share) + planDue);
+  return Math.min(statement, Math.max(terms.minimumFloor, share, terms.minimumOfLimit ?? 0) + planDue);
 }
 
 /** Pays the card from the bank, as much of an amount as checking and savings hold. Returns what was paid. */
@@ -415,6 +433,34 @@ function payCard(sim: Simulation, person: Person, amount: Money, byHand = false)
 function zoneOf(sim: Simulation, person: Person): string {
   return CITIES.get(person.currentLocationId)?.timeZone ?? sim.homeZone;
 }
+
+/**
+ * Canada's penalty rates, from each bank's cost-of-borrowing disclosure (read
+ * 2026-09-26 into `probe/cards/out-1.jsonl`): two missed minimums in twelve
+ * months, and the rate rises, RBC's purchases to 24.99%, BMO's to 25.99%,
+ * CIBC's to 25.99% and its cash to 27.99%, "for at least 12 months". It comes
+ * off after twelve payments on time in a row; RBC's box doesn't say how long,
+ * and twelve is SLATE's estimate for it. Researched and run by nothing until
+ * 2026-09-27, when only the US penalty rate ran.
+ */
+/**
+ * Mexico's minimum payment, Banco de México Circular 13/2011, for every
+ * issuer: the greater of 1.5% of the balance plus the period's interest, as
+ * the banks' own terms have it, and 1.25% of the credit limit, never more than
+ * what's owed. Researched on 2026-09-26 and not run until 2026-09-27, when the
+ * minimum was the share of the balance alone.
+ */
+export const MEXICO_MINIMUM = {
+  ofLimit: 0.0125,
+  source: 'https://www.banxico.org.mx/marco-normativo/normativa-emitida-por-el-banco-de-mexico/circular-13-2011/%7BBA4CBC28-A468-16C9-6F17-9EA9D7B03318%7D.pdf',
+} as const;
+
+export const CANADA_PENALTY: Readonly<Record<string, { apr: number; cashApr?: number }>> = {
+  'ca-rbc': { apr: 0.2499 },
+  'ca-bmo': { apr: 0.2599 },
+  'ca-cibc': { apr: 0.2599, cashApr: 0.2799 },
+};
+const CANADA_PENALTY_ON_TIME = 12;
 
 /** The day a person's card states: the 20th, or the day they moved it to. */
 export function statementDayOf(person: Person | undefined): number {
@@ -568,7 +614,14 @@ export function registerCredit(sim: Simulation): void {
     let move = 0;
     if (paid < due) {
       // A US late fee may not be more than the minimum it was late on (Reg Z §1026.52(b)(2)(i)(B)).
-      const fee = bankById(card.bankId ?? '')?.iso === 'US' ? Math.min(terms.lateFee, due) : terms.lateFee;
+      // Or the bank's share of the minimum, the balance or what went unpaid, held to any cap the law sets.
+      const byRule = terms.lateRule ? Math.min(lateFeeByRule(terms.lateRule, due, paid, statement), terms.capped?.lateFee ?? Number.POSITIVE_INFINITY) : undefined;
+      // A first late fee lower than a repeat one, where the bank sets it so: until 2026-09-27 Citi's $29 was researched and never charged.
+      const tiered = card.bankId ? FIRST_LATE_FEE[card.bankId] : undefined;
+      const repeat = credit.lateFeeAt !== undefined && s.now - credit.lateFeeAt < (tiered?.withinPeriods ?? 0) * 31 * 86_400_000;
+      const flat = tiered && !repeat ? Math.min(terms.lateFee, inSave(s, tiered.first, bankById(card.bankId!)!.currency)) : terms.lateFee;
+      const fee = byRule ?? (bankById(card.bankId ?? '')?.iso === 'US' ? Math.min(flat, due) : flat);
+      credit.lateFeeAt = s.now;
       s.post({
         memo: 'Late fee', category: 'fees',
         postings: [{ accountId: s.nominalAccount('expense', 'Card Fees').id, amount: fee }, { accountId: card.id, amount: -fee }],
@@ -602,15 +655,22 @@ export function registerCredit(sim: Simulation): void {
         credit.penalty = { noticeAt: s.now, from: s.now + 45 * 86_400_000, onTime: 0 };
         if (person.id === s.universe.playerId) s.notify({ category: 'bank', title: 'A Penalty Rate Is Coming', body: `Sixty days late. From ${formatDate(credit.penalty.from, zoneOf(s, person))} the ${card.name} charges ${(terms.penaltyApr * 100).toFixed(2)}% on what's owed. Six payments on time in a row takes it off.`, importance: 85 });
       }
+      // Two missed minimums in twelve months on a Canadian card with a penalty rate: it rises at once (`CANADA_PENALTY`).
+      const recentMisses = credit.late.filter((when) => s.now - when < 365 * 86_400_000).length;
+      if (recentMisses >= 2 && !credit.penalty && card.bankId && CANADA_PENALTY[card.bankId] && !card.closedAt) {
+        credit.penalty = { noticeAt: s.now, from: s.now, onTime: 0 };
+        if (person.id === s.universe.playerId) s.notify({ category: 'bank', title: 'A Penalty Rate', body: `Two missed minimums in twelve months. The ${card.name} charges ${(CANADA_PENALTY[card.bankId]!.apr * 100).toFixed(2)}% on purchases from today, until twelve payments in a row are on time.`, importance: 85 });
+      }
     } else {
       move += ON_TIME;
       credit.missed = 0;
       // Six on time in a row after the penalty began, and it comes off (Reg Z §1026.55(b)(4)(ii)).
       if (credit.penalty && s.now >= credit.penalty.from) {
         credit.penalty.onTime += 1;
-        if (credit.penalty.onTime >= 6) {
+        const needed = card.bankId && CANADA_PENALTY[card.bankId] ? CANADA_PENALTY_ON_TIME : 6;
+        if (credit.penalty.onTime >= needed) {
           delete credit.penalty;
-          if (person.id === s.universe.playerId) s.notify({ category: 'bank', title: 'The Penalty Rate Is Off', body: `Six payments on time. The ${card.name} is back to ${((card.apr ?? terms.priced) * 100).toFixed(2)}%.`, importance: 50 });
+          if (person.id === s.universe.playerId) s.notify({ category: 'bank', title: 'The Penalty Rate Is Off', body: `${needed === 6 ? 'Six' : 'Twelve'} payments on time. The ${card.name} is back to ${((card.apr ?? terms.priced) * 100).toFixed(2)}%.`, importance: 50 });
         }
       }
       if (credit.suspended === 'late') {

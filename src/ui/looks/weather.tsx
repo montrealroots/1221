@@ -19,6 +19,7 @@
  */
 
 import { normalFor, toFahrenheit, type ClimateType } from '@/engine/content/climate';
+import { THUNDER_DAYS, thunderDaysFor } from '@/engine/content/thunder';
 import { CITIES, type City } from '@/engine/content/geography';
 import { MONTH_NAMES, MS_DAY, WEEKDAY_NAMES, instantFromZoned, noonOf, startOfDay, zonedParts } from '@/engine/core/time';
 import {
@@ -251,6 +252,10 @@ defineLook<Sky>('weather', {
               <p className="small">
                 {dateWords(now.dateKey)} here normally runs to about {normalHigh(sim, city, now)}{unit} by day,
                 and today is {againstNormal(now)}.
+              </p>
+              {/* Where the thunder’s count comes from: until 2026-09-27 its source was kept and not shown. */}
+              <p className="xs dim">
+                About {thunderDaysFor(city.id, now.climate)} days of thunder a year here{THUNDER_DAYS[city.id] ? `, as published: ${THUNDER_DAYS[city.id]!.source}` : `, SLATE’s estimate for ${now.climateName.toLowerCase()} country`}.
               </p>
             </>
           ),

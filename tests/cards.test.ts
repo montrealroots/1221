@@ -11,6 +11,7 @@ import type { Simulation } from '@/engine/core/simulation';
 import { CARDS, CARD_LAW, type CardLaw, type CardProduct } from '@/engine/content/cards';
 import { aprFor, cardOf, cardTerms, DUE_KIND, minimumDue, priceWithin, STATEMENT_KIND } from '@/engine/systems/credit';
 import { BANKING, bankById } from '@/engine/content/banks';
+import { LATE_FEE_RULES, lateFeeByRule } from '@/engine/content/latefees';
 import { instantFromZoned, zonedParts, MS_DAY } from '@/engine/core/time';
 
 const cards = CARDS as Record<string, CardProduct | { none: true; source: string }>;
@@ -120,6 +121,46 @@ describe('the minimum, the late fee and the due date', () => {
     expect(minimumDue(sim, 500_000_00, terms, 7_000_00)).toBe(5_000_00 + 7_000_00);
     expect(minimumDue(sim, 20_000_00, terms, 0)).toBe(1_000_00);
     expect(minimumDue(sim, 500_00, terms, 0)).toBe(500_00);
+  });
+
+  it('charges a late fee set as a share, with its floor and cap, where the bank sets one that way', () => {
+    const maybank = LATE_FEE_RULES['my-maybank']!;
+    // 1% of the balance, RM10 to RM100.
+    expect(lateFeeByRule(maybank, 50_00, 0, 500_00)).toBe(10_00);
+    expect(lateFeeByRule(maybank, 500_00, 0, 5_000_00)).toBe(50_00);
+    expect(lateFeeByRule(maybank, 5_000_00, 0, 50_000_00)).toBe(100_00);
+    // What went unpaid, and never over the minimum where the bank says so.
+    expect(lateFeeByRule(LATE_FEE_RULES['vn-agribank']!, 10_000_000_00, 4_000_000_00, 0)).toBe(180_000_00);
+    expect(lateFeeByRule(LATE_FEE_RULES['hk-standard-chartered']!, 100_00, 0, 10_000_00)).toBe(100_00);
+    expect(lateFeeByRule(LATE_FEE_RULES['om-sohar-international']!, 100_00, 0, 0)).toBe(3_00 + 3_00);
+    // Charged on a missed minimum, in Kuala Lumpur, at Maybank.
+    const sim = quickSave({ startLocationId: 'my-14-kualalumpur', homeRegionId: 'my-14-kualalumpur', livesWhereBorn: true, wealth: 'scraping', bankId: 'my-maybank' }, 'card-my-late');
+    const card = cardOf(sim, sim.player)!;
+    expect(card.bankId).toBe('my-maybank');
+    expect(cardTerms(sim, card, 650).lateRule).toBeDefined();
+    sim.post({ memo: 'test', category: 'test', postings: [{ accountId: card.id, amount: -3_000_00 }, { accountId: sim.nominalAccount('income', 'Test').id, amount: 3_000_00 }] });
+    sim.player.credit!.autopay = 'minimum';
+    let due = sim.timeline.pending().find((i) => i.kind === DUE_KIND)?.at;
+    while (due === undefined) { sim.advanceTo(sim.timeline.pending().find((i) => i.kind === STATEMENT_KIND)!.at + 1000); due = sim.timeline.pending().find((i) => i.kind === DUE_KIND)?.at; }
+    const statement = sim.player.credit!.statementBalance;
+    for (const a of Object.values(sim.universe.accounts)) if (a.ownerId === sim.player.id && (a.kind === 'checking' || a.kind === 'savings') && !a.closedAt && a.balance > 0) sim.post({ memo: 'test', category: 'test', postings: [{ accountId: a.id, amount: -a.balance }, { accountId: sim.nominalAccount('income', 'Test').id, amount: a.balance }] });
+    sim.advanceTo(due + 1000);
+    const fee = sim.universe.transactions.find((t) => t.memo === 'Late fee')!;
+    const expected = Math.min(Math.max(Math.round(statement * 0.01), 10_00), 100_00);
+    expect(fee.postings.find((q) => q.accountId === card.id)!.amount).toBe(-expected);
+  });
+
+  it('in Mexico, never asks under 1.25% of the limit, and never more than is owed', () => {
+    const sim = quickSave({ startLocationId: 'mx-cmx-mexicocity', homeRegionId: 'mx-cmx-mexicocity', livesWhereBorn: true, wealth: 'comfortable' }, 'card-mx');
+    const card = cardOf(sim, sim.player)!;
+    card.creditLimit = 100_000_00;
+    const terms = cardTerms(sim, card, 650);
+    expect(terms.minimumOfLimit).toBe(1_250_00);
+    // 1.5% of 20,000 is 300: the limit's 1,250 is asked instead.
+    expect(minimumDue(sim, 20_000_00, terms, 0)).toBe(1_250_00);
+    expect(minimumDue(sim, 1_000_00, terms, 0)).toBe(1_000_00);
+    // Past it, the share of the balance and the interest.
+    expect(minimumDue(sim, 100_000_00, terms, 2_000_00)).toBe(Math.max(1_250_00, Math.round(100_000_00 * terms.minimumShare) + 2_000_00));
   });
 
   it('charges the bank’s late fee, held to the law’s cap', () => {
