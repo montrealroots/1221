@@ -203,13 +203,13 @@ export const CARE = {
 } as const;
 
 /** What a plan leaves the patient: copays for a visit, urgent care and the emergency room, the share of a stay after the deductible, and the most in a year. */
-export interface PlanDesign { visit: Money; urgent: Money; emergency: Money; stayShare: number; deductible: Money; outOfPocket: Money; label: string; stayCopay?: Money }
+export interface PlanDesign { visit: Money; urgent: Money; emergency: Money; stayShare: number; deductible: Money; outOfPocket: Money; label: string; stayCopay?: Money; stayCopayCap?: Money }
 
 export const PLANS: Readonly<Record<string, PlanDesign>> = {
   // Yale Health's Hospitalization and Specialty coverage, 2026–27: the Health Center and its Acute Care free, $50 an
-  // emergency room, $200 an admission, $9,100 a year at most. Until 2026-09-27 SLATE took it as free throughout.
-  // Its separate $1,000 cap on admission copays would take five stays in a year, so it isn't kept.
-  yale: { visit: 0, urgent: 0, emergency: 50_00, stayShare: 0, deductible: 0, outOfPocket: 9_100_00, stayCopay: 200_00, label: 'Yale Health' },
+  // emergency room, $200 an admission to $1,000 a year, $9,100 a year at most. Until 2026-09-27 SLATE took it as free
+  // throughout, and then for a while that day left out the $1,000.
+  yale: { visit: 0, urgent: 0, emergency: 50_00, stayShare: 0, deductible: 0, outOfPocket: 9_100_00, stayCopay: 200_00, stayCopayCap: 1_000_00, label: 'Yale Health' },
   sag: { visit: 25_00, urgent: 25_00, emergency: 100_00, stayShare: 0.1, deductible: 500_00, outOfPocket: 2_750_00, label: 'SAG-AFTRA Health Plan' },
   equity: { visit: 25_00, urgent: 0, emergency: 100_00, stayShare: 0, deductible: 1_000_00, outOfPocket: 4_550_00, label: 'Equity-League Health, Tier 2' },
   'marketplace-ca': { visit: 50_00, urgent: 50_00, emergency: 400_00, stayShare: 0.3, deductible: 5_200_00, outOfPocket: 9_800_00, label: 'Covered California Silver 70' },
@@ -384,7 +384,13 @@ export const DENTAL_VISION = {
  * or a generic for type 2, and a visit a quarter. Insulin's cost to the
  * patient is capped: nothing on a plan New York regulates since 2025, and
  * $35 a month from the makers to anybody; the unions' self-funded plans
- * aren't bound by the state's. Arthritis, 5.0%: a generic a month and two visits a year. Left
+ * aren't bound by the state's, and nor is Yale Health's, a university's own
+ * plan, which leaves Connecticut's $25 cap out of it. Type 1 wears a
+ * continuous glucose monitor as well: a FreeStyle Libre 3 Plus, $241 a month
+ * cash, which Abbott's program brings to $75; a plan's brand copay where
+ * that's less. The program turns away government cover, but every
+ * government plan's copay here is under $75, so that changes nothing and
+ * isn't kept. Arthritis, 5.0%: a generic a month and two visits a year. Left
  * alone, SLATE's estimate: type 1 diabetes quadruples the emergencies and
  * both types wear the body down, and arthritis tires it. Obesity, 27.3%,
  * isn't modeled: SLATE has no weight.
@@ -403,45 +409,61 @@ export const CHRONIC = {
  * Insulin's caps: New York's $0 on the plans it regulates, and the makers'
  * $35 a month to anybody. California's $35 (SB 40, large groups 2026, its
  * individual plans 2027) is the makers' figure, so it changes nothing SLATE
- * shows and isn't kept.
+ * shows and isn't kept. A type 1 diabetic's monitor is here too.
  */
 export const INSULIN = {
   cashCap: 35_00,
   newYorkFrom: '2025-01-01',
   /** The New York plans the state regulates: its marketplace and the Essential Plan. The unions' are self-funded. */
   newYorkPlans: ['marketplace-ny', 'essential-low', 'essential-high'] as readonly string[],
-  source: 'https://www.dfs.ny.gov/apps_and_licensing/health_insurers/insulin_cost_sharing_qa_guidance; https://leginfo.legislature.ca.gov (SB 40, 2025); Lilly, Novo Nordisk and Sanofi $35 programs',
+  monitor: { price: 241_00, program: 75_00 },
+  source: 'https://www.dfs.ny.gov/apps_and_licensing/health_insurers/insulin_cost_sharing_qa_guidance; https://leginfo.legislature.ca.gov (SB 40, 2025); Lilly, Novo Nordisk and Sanofi $35 programs; https://cga.ct.gov/2020/SUM/pdf/2020SUM00004-R02HB-06003-SUM.pdf; https://www.goodrx.com/freestyle-libre-3-plus',
 } as const;
 
 /**
  * What care cost when its price was published is grown to the year it's
- * given by the Bureau of Labor Statistics' consumer price index for medical
- * care: 484.707 in 2018, 498.413 in 2019, 546.554 in 2022, 563.841 in 2024,
- * 580.102 in 2025, 593.003 in August 2026; past the last print, at 2019–24's
- * 2.5% a year, SLATE's estimate. One index for all of it, where the BLS
- * keeps one for each of hospitals, doctors, dentists and drugs: SLATE's
- * estimate too. Until 2026-09-27 care cost what it had in the year its price
- * was measured.
+ * given by the Bureau of Labor Statistics' consumer price index for its own
+ * kind of care (CPI-U, US city average): hospital services for the
+ * emergency room and a stay, physicians' services for a visit and urgent
+ * care, prescription drugs, dental services, eyeglasses and eye care, and
+ * other medical professionals for therapy. Annual averages 2018 to 2025,
+ * and August 2026 for 2026; a year between prints on the straight line, and
+ * past the last at the series' own 2019–24 rate, SLATE's estimate. Other
+ * professionals' 2025 wasn't published. Until 2026-09-27 care cost what it
+ * had in the year its price was measured, and then, for a while that day,
+ * grew by the index for all medical care, which ran drugs up 2.5% a year
+ * where their own index fell 2.9% the year to August 2026.
  */
 export const MEDICAL_CPI = {
-  levels: [[2018, 484.707], [2019, 498.413], [2022, 546.554], [2024, 563.841], [2025, 580.102], [2026, 593.003]] as readonly (readonly [number, number])[],
-  after: 0.025,
-  /** The year each price was measured. */
-  base: { visit: 2024, urgent: 2024, emergency: 2019, stay: 2018, rx: 2019, dental: 2024, vision: 2024, therapy: 2024 },
-  source: 'https://www.bls.gov/cpi/ (CPI-U, medical care, series CUUR0000SAM)',
+  series: {
+    hospital: { levels: { 2018: 332.237, 2019: 338.814, 2020: 352.952, 2021: 363.533, 2022: 376.826, 2023: 392.12, 2024: 414.8, 2025: 433.655, 2026: 459.659 }, after: 0.0413 },
+    physicians: { levels: { 2018: 380.451, 2019: 383.228, 2020: 389.9, 2021: 406.528, 2022: 411.927, 2023: 412.581, 2024: 417.93, 2025: 428.549, 2026: 439.389 }, after: 0.0175 },
+    drugs: { levels: { 2018: 528.008, 2019: 526.785, 2020: 532.081, 2021: 522.392, 2022: 533.925, 2023: 549.458, 2024: 556.941, 2025: 568.032, 2026: 550.41 }, after: 0.0112 },
+    dental: { levels: { 2018: 485.525, 2019: 496.16, 2020: 511.079, 2021: 522.5, 2022: 543.726, 2023: 574.315, 2024: 598.951, 2025: 615.074, 2026: 656.707 }, after: 0.0384 },
+    eyes: { levels: { 2018: 189.609, 2019: 191.429, 2020: 192.94, 2021: 193.985, 2022: 198.68, 2023: 202.164, 2024: 209.017, 2025: 216.09, 2026: 220.071 }, after: 0.0177 },
+    professionals: { levels: { 2018: 237.355, 2019: 239.204, 2020: 242.106, 2021: 247.948, 2022: 258.105, 2023: 258.694, 2024: 261.624, 2026: 281.459 }, after: 0.0181 },
+  } as Readonly<Record<string, { levels: Readonly<Record<number, number>>; after: number }>>,
+  /** Each price: the year it was measured, and the series that grows it. */
+  base: {
+    visit: [2024, 'physicians'], urgent: [2024, 'physicians'], emergency: [2019, 'hospital'], stay: [2018, 'hospital'],
+    rx: [2019, 'drugs'], dental: [2024, 'dental'], vision: [2024, 'eyes'], therapy: [2024, 'professionals'],
+  } as const,
+  source: 'https://api.bls.gov/publicAPI/v2/timeseries/data/ (CUUR0000SEMD01, SEMC01, SEMF01, SEMC02, SEMC03, SEMC04)',
 } as const;
 
-/** How far medical prices have grown from one year to another. */
-export function medicalGrowth(from: number, to: number): number {
-  const level = (year: number) => {
-    const known = MEDICAL_CPI.levels.find(([y]) => y === year);
-    if (known) return known[1];
-    const [lastYear, last] = MEDICAL_CPI.levels[MEDICAL_CPI.levels.length - 1]!;
-    if (year > lastYear) return last * (1 + MEDICAL_CPI.after) ** (year - lastYear);
+/** How far a series' prices have grown from one year to another. */
+export function medicalGrowth(from: number, to: number, series: string): number {
+  const { levels, after } = MEDICAL_CPI.series[series]!;
+  const years = Object.keys(levels).map(Number).sort((x, y) => x - y);
+  const level = (year: number): number => {
+    if (levels[year] !== undefined) return levels[year]!;
+    const last = years[years.length - 1]!;
+    if (year > last) return levels[last]! * (1 + after) ** (year - last);
+    if (year < years[0]!) return levels[years[0]!]!;
     // Between prints, the straight line.
-    const before = [...MEDICAL_CPI.levels].reverse().find(([y]) => y < year) ?? MEDICAL_CPI.levels[0]!;
-    const after = MEDICAL_CPI.levels.find(([y]) => y > year) ?? before;
-    return before[1] + ((after[1] - before[1]) * (year - before[0])) / Math.max(1, after[0] - before[0]);
+    const lo = years.filter((y) => y < year).pop()!;
+    const hi = years.find((y) => y > year)!;
+    return levels[lo]! + ((levels[hi]! - levels[lo]!) * (year - lo)) / (hi - lo);
   };
   return level(to) / level(from);
 }

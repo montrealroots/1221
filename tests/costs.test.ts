@@ -14,7 +14,7 @@ import { AGENCIES, ROLES, WORK_COSTS } from '@/engine/content/career';
 import { CARE, CHRONIC, DENTAL_PLANS, DENTAL_VISION, INSULIN, PHARMACY, RECEIPTS, STATE_DEDUCTIONS, medicalGrowth } from '@/engine/content/safetynet';
 import { ESTIMATE, beginCareer, bookingChance, careerOf, staleHeadshots, submissionsAWeek, weekOfAuditions, workCostsWeek } from '@/engine/systems/career';
 import { recordJobCost, recordWages, yearOf } from '@/engine/systems/earnings';
-import { drawChronic, grown, healthMonth, healthOf, illnessWeek, insulinShareOf, keepUp, rxShareOf, shareOf, teethAndEyesShareOf } from '@/engine/systems/health';
+import { drawChronic, grown, healthMonth, monitorShareOf, healthOf, illnessWeek, insulinShareOf, keepUp, rxShareOf, shareOf, teethAndEyesShareOf } from '@/engine/systems/health';
 import { figuresFor } from '@/engine/systems/taxreturn';
 import type { Simulation } from '@/engine/core/simulation';
 
@@ -145,13 +145,23 @@ describe('diabetes and arthritis', () => {
     expect(insulinShareOf(sim.player, when)).toBe(INSULIN.cashCap);
   });
 
-  it('keep type 1 on insulin and a visit a quarter, and arthritis on a generic', () => {
+  it('keep type 1 on insulin, a monitor and a visit a quarter, and arthritis on a generic', () => {
     const sim = pro('diabetes');
     const h = healthOf(sim.player);
     h.chronic = { diabetes: { treated: true, typeOne: true } };
-    // January: insulin and the quarter's visit, uninsured.
-    expect(keepUp(sim, sim.player, at(2026, 1, 1, 1))).toBe(INSULIN.cashCap + shareOf(sim.player, 'visit', at(2026, 1, 1, 1)));
-    expect(keepUp(sim, sim.player, at(2026, 2, 1, 1))).toBe(INSULIN.cashCap);
+    // January: insulin, the monitor on Abbott's program, and the quarter's visit, uninsured.
+    const monthly = INSULIN.cashCap + INSULIN.monitor.program;
+    expect(keepUp(sim, sim.player, at(2026, 1, 1, 1))).toBe(monthly + shareOf(sim.player, 'visit', at(2026, 1, 1, 1)));
+    expect(keepUp(sim, sim.player, at(2026, 2, 1, 1))).toBe(monthly);
+    // A plan's brand copay where it's less than the program; on Medicaid, its $1.
+    h.sag = { from: at(2026, 1, 1, 0), until: at(2027, 1, 1, 0) };
+    // SAG-AFTRA's first brand fill carries its $75 deductible, over the program; after it, 25% is under it.
+    expect(monitorShareOf(sim.player, at(2026, 3, 1))).toBe(INSULIN.monitor.program);
+    expect(monitorShareOf(sim.player, at(2026, 4, 1))).toBe(Math.round(0.25 * INSULIN.monitor.price));
+    delete h.sag;
+    h.program = { kind: 'medicaid', state: 'ny', from: at(2026, 1, 1, 0), band: 'low', renewAt: at(2027, 1, 1, 0) };
+    expect(monitorShareOf(sim.player, at(2026, 3, 1))).toBe(1_00);
+    delete h.program;
     h.chronic = { diabetes: { treated: true, typeOne: false } };
     expect(keepUp(sim, sim.player, at(2026, 2, 1, 1))).toBe(rxShareOf(sim.player, false, at(2026, 2, 1, 1)));
     h.chronic = { arthritis: { treated: true } };
@@ -219,13 +229,21 @@ describe('a dental plan of their own', () => {
 });
 
 describe('medical prices', () => {
-  it('grow by the medical price index to the year paid, straight between its prints, and at 2.5% past the last', () => {
-    expect(medicalGrowth(2024, 2026)).toBeCloseTo(593.003 / 563.841, 10);
-    expect(medicalGrowth(2026, 2028)).toBeCloseTo(1.025 ** 2, 10);
-    expect(medicalGrowth(2019, 2020)).toBeCloseTo((498.413 + (546.554 - 498.413) / 3) / 498.413, 10);
+  it('grow by each kind of care’s own index to the year paid, straight between prints, and at its own rate past the last', () => {
+    expect(medicalGrowth(2024, 2026, 'hospital')).toBeCloseTo(459.659 / 414.8, 10);
+    expect(medicalGrowth(2026, 2028, 'drugs')).toBeCloseTo(1.0112 ** 2, 10);
+    // Other professionals' 2025 wasn't published: halfway between 2024 and 2026.
+    expect(medicalGrowth(2024, 2025, 'professionals')).toBeCloseTo((261.624 + (281.459 - 261.624) / 2) / 261.624, 10);
+    expect(medicalGrowth(2016, 2018, 'dental')).toBe(1);
     expect(grown(CARE.price.visit, 'visit', at(2024, 6, 1))).toBe(CARE.price.visit);
-    expect(grown(CARE.price.emergency, 'emergency', at(2026, 6, 1))).toBe(Math.round(CARE.price.emergency * 593.003 / 498.413));
+    expect(grown(CARE.price.visit, 'visit', at(2026, 6, 1))).toBe(Math.round(CARE.price.visit * 439.389 / 417.93));
+    expect(grown(CARE.price.emergency, 'emergency', at(2026, 6, 1))).toBe(Math.round(CARE.price.emergency * 459.659 / 338.814));
+    expect(grown(CARE.price.stay, 'stay', at(2026, 6, 1))).toBe(Math.round(CARE.price.stay * 459.659 / 332.237));
     expect(grown(PHARMACY.price.brand, 'rx', at(2019, 6, 1))).toBe(PHARMACY.price.brand);
+    // Drugs fell the year to August 2026.
+    expect(grown(PHARMACY.price.brand, 'rx', at(2026, 6, 1))).toBeLessThan(grown(PHARMACY.price.brand, 'rx', at(2025, 6, 1)));
+    expect(grown(DENTAL_VISION.price.cleaning, 'dental', at(2026, 6, 1))).toBe(Math.round(DENTAL_VISION.price.cleaning * 656.707 / 598.951));
+    expect(grown(DENTAL_VISION.price.exam, 'vision', at(2026, 6, 1))).toBe(Math.round(DENTAL_VISION.price.exam * 220.071 / 209.017));
   });
 });
 
@@ -237,6 +255,10 @@ describe('Yale Health', () => {
     expect(shareOf(sim.player, 'urgent', when)).toBe(0);
     expect(shareOf(sim.player, 'emergency', when)).toBe(50_00);
     expect(shareOf(sim.player, 'stay', when)).toBe(200_00);
+    // Admissions to $1,000 in a year, then nothing more for them.
+    for (let n = 0; n < 4; n += 1) shareOf(sim.player, 'stay', when);
+    expect(shareOf(sim.player, 'stay', when)).toBe(0);
+    expect(monitorShareOf(sim.player, when)).toBe(30_00);
     expect(rxShareOf(sim.player, false, when)).toBe(10_00);
     expect(rxShareOf(sim.player, true, when)).toBe(30_00);
     expect(insulinShareOf(sim.player, when)).toBe(30_00);

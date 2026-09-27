@@ -193,12 +193,13 @@ part the tool cannot see.
     SLATE's estimate, and says so.
   - Abroad: Canada's elective return and graduated rates, and the UK's
     personal allowance and its payer-by-payer withholding, aren't modeled.
-  - The body: obesity isn't modeled, since SLATE keeps no weight; a
-    diabetic's supplies and monitors, and Connecticut's $25 insulin cap
-    (whether Yale's plan is bound by it is unpublished), aren't either.
-    Medical prices grow by one index for all care, not the BLS's own for
-    hospitals, doctors, dentists and drugs. Yale's $1,000 cap on
-    admission copays isn't kept, since it takes five stays in a year.
+  - The body: obesity isn't modeled, since SLATE keeps no weight. A type
+    2 diabetic's test strips aren't, since most on a generic don't test
+    daily. Yale Health is taken as a university's own self-funded plan,
+    which Connecticut's $25 insulin and $100 supply caps don't bind: a
+    secondary source and an inference, SLATE's estimate. Each kind of
+    care's own index grows past August 2026 at its 2019–24 rate, SLATE's
+    estimate.
   - What the working costs do (a free submission seen half as often,
     Backstage's five more, stale headshots, a kit, a class, a coach) is
     SLATE's estimate; Casting Networks, reels and trade papers aren't

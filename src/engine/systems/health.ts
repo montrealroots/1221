@@ -96,8 +96,9 @@ export interface HealthRecord {
   lenses?: boolean;
   lastGlasses?: number;
   drawn?: boolean;
-  /** What's been paid toward a plan's brand-drug deductible this year. */
+  /** What's been paid toward a plan's brand-drug deductible this year, and its admission copays. */
   rxDeductible?: Record<string, Money>;
+  stayCopays?: Record<string, Money>;
 }
 
 export function healthOf(person: Person): HealthRecord {
@@ -365,7 +366,7 @@ export function keepUp(sim: Simulation, person: Person, at: Instant): Money {
       cost += rxShareOf(person, true, at, cur);
       if (sim.rng('health.chronic', person.id, `asthma-${at}`).next() < 2 / 12) cost += shareOf(person, 'visit', at, cur);
     } else if (condition === 'diabetes') {
-      cost += state.typeOne ? insulinShareOf(person, at, cur) : rxShareOf(person, false, at, cur);
+      cost += state.typeOne ? insulinShareOf(person, at, cur) + monitorShareOf(person, at, cur) : rxShareOf(person, false, at, cur);
       if (zonedParts(at, HOME).month % 3 === 1) cost += shareOf(person, 'visit', at, cur);
     } else if (condition === 'arthritis') {
       cost += rxShareOf(person, false, at, cur);
@@ -412,8 +413,13 @@ export function shareOf(person: Person, care: Care, at: Instant, into = 'USD'): 
     return Math.round(price * CARE.uninsuredMarkup);
   }
   let share: number;
-  if (care === 'stay' && plan.stayCopay !== undefined) share = usd(plan.stayCopay, into);
-  else if (care === 'stay') {
+  if (care === 'stay' && plan.stayCopay !== undefined) {
+    // An admission's copay, to the plan's cap on them in a year.
+    h.stayCopays ??= {};
+    const left = plan.stayCopayCap === undefined ? Number.POSITIVE_INFINITY : Math.max(0, usd(plan.stayCopayCap, into) - (h.stayCopays[year] ?? 0));
+    share = Math.min(usd(plan.stayCopay, into), left);
+    h.stayCopays[year] = (h.stayCopays[year] ?? 0) + share;
+  } else if (care === 'stay') {
     const left = Math.max(0, usd(plan.deductible, into) - (h.deductible[year] ?? 0));
     const toDeductible = Math.min(price, left);
     share = toDeductible + Math.round((price - toDeductible) * plan.stayShare);
@@ -424,8 +430,8 @@ export function shareOf(person: Person, care: Care, at: Instant, into = 'USD'): 
 }
 
 /** A prescription at the counter: the plan's copay, the greater of its dollar and its share, after a brand's deductible; uninsured, the cash price. */
-export function rxShareOf(person: Person, brand: boolean, at: Instant, into = 'USD'): Money {
-  const price = usd(grown(brand ? PHARMACY.price.brand : PHARMACY.price.generic, 'rx', at), into);
+export function rxShareOf(person: Person, brand: boolean, at: Instant, into = 'USD', cash?: Money): Money {
+  const price = cash ?? usd(grown(brand ? PHARMACY.price.brand : PHARMACY.price.generic, 'rx', at), into);
   const key = planKey(person, at);
   const plan = key ? PHARMACY.plans[key] : undefined;
   if (!plan) return price;
@@ -443,7 +449,8 @@ export function rxShareOf(person: Person, brand: boolean, at: Instant, into = 'U
     owed = Math.min(price, toDeductible + copay);
   }
   const design = planOf(person, at);
-  return design && design.outOfPocket > 0 ? Math.max(0, Math.min(owed, usd(design.outOfPocket, into) - (h.spent[year] ?? 0))) : design ? 0 : owed;
+  // A plan with no most in a year (Medicaid, the Essential Plan) charges its copay every time; until 2026-09-27 it charged nothing, and New York Medicaid's $1 was never taken.
+  return design && design.outOfPocket > 0 ? Math.max(0, Math.min(owed, usd(design.outOfPocket, into) - (h.spent[year] ?? 0))) : owed;
 }
 
 /**
@@ -457,9 +464,16 @@ export function insulinShareOf(person: Person, at: Instant, into = 'USD'): Money
   return Math.min(rxShareOf(person, true, at, into), usd(INSULIN.cashCap, into));
 }
 
+/** A type 1 diabetic's monitor a month: the plan's brand copay on its price, or the maker's program, whichever is less. */
+export function monitorShareOf(person: Person, at: Instant, into = 'USD'): Money {
+  const m = INSULIN.monitor;
+  return Math.min(rxShareOf(person, true, at, into, usd(m.price, into)), usd(m.program, into));
+}
+
 /** A price as it stood in the year it's paid, grown from the year it was measured. */
 export function grown(cents: Money, item: keyof typeof MEDICAL_CPI.base, at: Instant): Money {
-  return Math.round(cents * medicalGrowth(MEDICAL_CPI.base[item], zonedParts(at, HOME).year));
+  const [year, series] = MEDICAL_CPI.base[item];
+  return Math.round(cents * medicalGrowth(year, zonedParts(at, HOME).year, series));
 }
 
 const dayKeyOf = (at: Instant) => { const p = zonedParts(at, HOME); return `${p.year}-${String(p.month).padStart(2, '0')}-${String(p.day).padStart(2, '0')}`; };
