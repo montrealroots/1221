@@ -47,6 +47,17 @@ export function walletOf(sim: Simulation, person: Person, open = false): Account
   return sim.openAccount({ id: sim.nextId('account'), kind: 'cash', name: 'Cash In Hand', ownerId: person.id, openedAt: sim.now });
 }
 
+/**
+ * Where money paid to somebody lands: their open current account, or with
+ * none open, the payer's check, cashed into their wallet. Until 2026-09-27
+ * pay, residuals, a stipend, work-study, unemployment and a tax refund with
+ * no open current account to go to were dropped, and what was owed with them.
+ */
+export function payeeAccount(sim: Simulation, person: Person): Account {
+  const current = person.primaryAccountId ? sim.universe.accounts[person.primaryAccountId] : undefined;
+  return current && !current.closedAt ? current : walletOf(sim, person, true)!;
+}
+
 function inSave(sim: Simulation, amount: Money, currency: string): Money {
   const into = saveCurrency(sim.universe);
   return into === currency ? amount : exchange(amount, currency, into) ?? amount;

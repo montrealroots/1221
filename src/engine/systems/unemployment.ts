@@ -26,6 +26,7 @@ import { CITIES } from '../content/geography';
 import { BENEFIT_STATE, CALIFORNIA_UI, NEW_YORK_UI, type BenefitState } from '../content/safetynet';
 import { earningsOf, homeOf, quarterKey, quartersBefore, recordBenefit } from './earnings';
 import { workedBetween, working } from './career';
+import { payeeAccount } from './cash';
 
 export const BENEFIT_WEEK_KIND = 'benefits.week';
 
@@ -169,8 +170,8 @@ export function registerUnemployment(sim: Simulation): void {
       again();
       return;
     }
-    const account = person.primaryAccountId ? s.universe.accounts[person.primaryAccountId] : undefined;
-    if (account && !account.closedAt) {
+    const account = payeeAccount(s, person);
+    {
       s.post({
         memo: `Unemployment insurance: the week to ${formatDate(item.at, zone)}`, category: 'benefit',
         postings: [{ accountId: account.id, amount: due }, { accountId: s.nominalAccount('income', 'Unemployment Insurance').id, amount: -due }],

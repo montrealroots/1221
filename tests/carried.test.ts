@@ -12,13 +12,14 @@ import { exchange } from '@/engine/content/currency';
 import { computeAnnualTax } from '@/engine/content/tax';
 import { MEAL_PENALTY } from '@/engine/content/career';
 import { ABROAD, CHRONIC, DENTAL_VISION, PHARMACY, STATE_DEDUCTIONS } from '@/engine/content/safetynet';
-import { afterlife, beginCareer, careerOf, expectedGross, foreignWithholding, mealPenalty, roleById, unitRate, type Booking } from '@/engine/systems/career';
+import { afterlife, beginCareer, careerOf, expectedGross, foreignWithholding, mealPenalty, paycheck, roleById, unitRate, type Booking } from '@/engine/systems/career';
 import { recordInterest, recordWages, yearOf } from '@/engine/systems/earnings';
 import { grown, healthOf, keepUp, rxShareOf, shareOf, teethAndEyesShareOf, illnessWeek } from '@/engine/systems/health';
 import { canadaElected, connecticutTax, figuresFor, settleUkYears, ukTaxOn } from '@/engine/systems/taxreturn';
 import type { Simulation } from '@/engine/core/simulation';
 import { TURNS } from '@/engine/systems/enjoyment';
 import { occupiedAt } from '@/engine/systems/life';
+import { payeeAccount } from '@/engine/systems/cash';
 
 const NY = 'America/New_York';
 const instantParts = (t: number) => new Date(t).getUTCFullYear();
@@ -267,6 +268,48 @@ describe('a day on set', () => {
     sim.universe.scheduled.push(other, missed);
     expect(occupiedAt(sim, sim.now)).toBeUndefined();
   }, 60_000);
+});
+
+describe('a paycheck', () => {
+  it('withholds a city’s resident tax only from its residents', () => {
+    const role = roleById('costar');
+    const base = { scale: 5_000_00, role, rehearsal: false, represented: false, before: 20_000_00, cityId: 'us-ny-newyork', at: at(2027, 3, 1) };
+    const resident = paycheck({ ...base, resident: true });
+    const visitor = paycheck({ ...base, resident: false });
+    const local = computeAnnualTax(25_000_00, 'us-ny-newyork', at(2027, 3, 1)).local - computeAnnualTax(20_000_00, 'us-ny-newyork', at(2027, 3, 1)).local;
+    expect(local).toBeGreaterThan(0);
+    expect(resident.withheld - visitor.withheld).toBe(local);
+  });
+
+  it('keeps New York City’s tax off a New Haven actor’s check for a job in the city', () => {
+    const sim = pro('commuter');
+    sim.player.craft = { acting: 50, voice: 50, speech: 50, body: 50, text: 50, singing: 50, screen: 50 };
+    sim.player.home = { kind: 'shared', cityId: 'us-ct-newhaven', since: sim.now };
+    // Earlier in the year, enough to be past the city's deduction.
+    yearOf(sim.player, 2026).acting = 50_000_00;
+    const b: Booking = { id: 'nyc', roleId: 'costar', cityId: 'us-ny-newyork', starts: at(2026, 10, 5, 8), units: 2, rehearsalWeeks: 0, status: 'offered', dueAt: sim.now + 2 * MS_DAY, offeredAt: sim.now, worked: 0, owed: 0, weeksPaid: 0 };
+    careerOf(sim.player).bookings.push(b);
+    sim.must({ kind: 'career.accept', payload: { bookingId: b.id } });
+    sim.player.currentLocationId = 'us-ny-newyork';
+    while (sim.now < at(2026, 10, 16, 12)) sim.advanceTo(Math.min(at(2026, 10, 16, 12), sim.now + 6 * 3_600_000), { stopOnPlayerRequired: true });
+    const y = yearOf(sim.player, 2026);
+    expect(y.acting).toBeGreaterThan(50_000_00);
+    const owing = (income: number) => { const t = computeAnnualTax(income, 'us-ny-newyork', at(2026, 10, 15)); return { all: t.total, local: t.local }; };
+    const [after, prior] = [owing(y.acting), owing(50_000_00)];
+    expect(after.local - prior.local).toBeGreaterThan(0);
+    expect(y.withheld).toBe(after.all - after.local - (prior.all - prior.local));
+  }, 60_000);
+
+  it('comes by check into the wallet when there’s no current account open', () => {
+    const sim = pro('no-account');
+    const current = sim.universe.accounts[sim.player.primaryAccountId!]!;
+    current.closedAt = sim.now;
+    const into = payeeAccount(sim, sim.player);
+    expect(into.kind).toBe('cash');
+    expect(payeeAccount(sim, sim.player).id).toBe(into.id);
+    delete current.closedAt;
+    expect(payeeAccount(sim, sim.player).id).toBe(current.id);
+  });
 });
 
 describe('interest', () => {

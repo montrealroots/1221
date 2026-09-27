@@ -668,8 +668,11 @@ describe('the Yale Summer Cabaret', () => {
     expect(sim.player.school!.credits?.find((c) => c.kind === 'summer')).toMatchObject({ production: 'Yale Summer Cabaret 2027, Show 1', year: 2027 });
     const paid = sim.universe.transactions.filter((t) => t.memo.startsWith('Yale Summer Cabaret stipend'));
     expect(paid.length).toBeGreaterThan(0);
-    expect(paid.every((t) => t.postings.some((p) => p.amount === SUMMER_CABARET.stipendWeekly))).toBe(true);
+    expect(paid.every((t) => t.postings.some((p) => p.amount === -SUMMER_CABARET.stipendWeekly))).toBe(true);
     expect(sim.player.earnings!.years[2027]!.employers['yale-summer-cabaret']).toBe(paid.length * SUMMER_CABARET.stipendWeekly);
+    // With tax withheld as a paycheck's, payroll tax among it.
+    const withheld = paid.flatMap((t) => t.postings).filter((p) => p.accountId === sim.nominalAccount('expense', 'Tax Withheld').id).reduce((a, p) => a + p.amount, 0);
+    expect(withheld).toBeGreaterThanOrEqual(Math.floor(paid.length * SUMMER_CABARET.stipendWeekly * 0.0765));
   }, 180_000);
 
   it('lets a student go who misses a performance, and stops the stipend', () => {

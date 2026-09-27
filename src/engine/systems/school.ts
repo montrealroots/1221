@@ -68,9 +68,11 @@ import { enjoyWork, feel } from './enjoyment';
 import { payFromCurrent } from './household';
 import { armSummerWork, beginCareer, bookShowcase } from './career';
 import { YALE_COST_GROWTH } from '../content/career';
-import { recordScholarship, recordWages } from './earnings';
+import { recordScholarship, recordWages, yearOf } from './earnings';
+import { computeAnnualTax } from '../content/tax';
 import { armTaxes } from './taxreturn';
 import { armHealth, inHospital } from './health';
+import { payeeAccount } from './cash';
 
 export type Craft = Record<Skill, number>;
 export type Standing = 'good' | 'concern' | 'warning' | 'dismissed' | 'graduated';
@@ -937,8 +939,8 @@ export function registerSchool(sim: Simulation): void {
   sim.onSchedule(PAYDAY_KIND, (item, s) => {
     const person = personOf(item);
     const school = person?.school;
-    const current = person?.primaryAccountId ? s.universe.accounts[person.primaryAccountId] : undefined;
-    if (!person || !school || school.workStudy.owedHours <= 0 || !current || current.closedAt) return;
+    if (!person || !school || school.workStudy.owedHours <= 0) return;
+    const current = payeeAccount(s, person);
     const cur = saveCurrency(s.universe);
     const pay = Math.round(school.workStudy.owedHours * hourlyIn(cur));
     // Paid by direct deposit through Yale's payroll, so a bank counts it as wages. A student's pay
@@ -1147,12 +1149,17 @@ export function registerSchool(sim: Simulation): void {
 
   sim.onSchedule(STIPEND_KIND, (item, s) => {
     const person = personOf(item);
-    const current = person?.primaryAccountId ? s.universe.accounts[person.primaryAccountId] : undefined;
-    if (!person || !current || current.closedAt) return;
+    if (!person) return;
+    const current = payeeAccount(s, person);
     const cur = saveCurrency(s.universe);
     const pay = cur === 'USD' ? SUMMER_CABARET.stipendWeekly : exchange(SUMMER_CABARET.stipendWeekly, 'USD', cur) ?? SUMMER_CABARET.stipendWeekly;
-    s.post({ memo: 'Yale Summer Cabaret stipend, the week', category: 'salary', postings: [{ accountId: current.id, amount: pay }, { accountId: s.nominalAccount('income', 'Wages').id, amount: -pay }] });
-    recordWages(person, item.at, zone(), { gross: pay, employer: 'yale-summer-cabaret' });
+    // Summer wages, with tax withheld as a paycheck's: a student out of term
+    // isn't exempt from FICA. Until 2026-09-27 nothing was withheld, and the
+    // return asked for the payroll tax as a balance due.
+    const before = yearOf(person, zonedParts(item.at, zone()).year).acting;
+    const withheld = computeAnnualTax(before + pay, YALE_DRAMA.cityId, item.at).total - computeAnnualTax(before, YALE_DRAMA.cityId, item.at).total;
+    s.post({ memo: 'Yale Summer Cabaret stipend, the week', category: 'salary', postings: [{ accountId: current.id, amount: pay - withheld }, { accountId: s.nominalAccount('income', 'Wages').id, amount: -pay }, ...(withheld ? [{ accountId: s.nominalAccount('expense', 'Tax Withheld').id, amount: withheld }] : [])] });
+    recordWages(person, item.at, zone(), { gross: pay, withheld, employer: 'yale-summer-cabaret' });
   });
 
   sim.onCommand<Record<string, never>, { excused: boolean }>('school.call_in_sick', (_p, { sim: s }) => {

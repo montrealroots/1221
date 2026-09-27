@@ -56,7 +56,6 @@
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
-import type { Account } from '../core/ledger';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { MS_DAY, MS_HOUR, formatDate, formatDateTime, instantFromZoned, normalDate, zonedParts, type Instant } from '../core/time';
 import { exchange } from '../content/currency';
@@ -76,6 +75,7 @@ import { rentAt } from '../content/rents';
 import { enjoyWork, takeTheRoom, feel } from './enjoyment';
 import { personalityOf } from './personality';
 import { move, payFromCurrent, type Housing, spend } from './household';
+import { payeeAccount } from './cash';
 
 export const SHOWCASE_KIND = 'career.showcase';
 export const CAREER_WEEK_KIND = 'career.week';
@@ -661,7 +661,7 @@ export function workDays(booking: Booking): { at: Instant; week: number; rehears
  * check makes to the year's tax on the year's wages at the job's town, so a
  * year's withholding comes to the year's tax on what was earned.
  */
-export function paycheck(opts: { scale: Money; overtime?: Money; role: Role; rehearsal: boolean; represented: boolean; managed?: boolean; before: Money; cityId: string; at: Instant }) {
+export function paycheck(opts: { scale: Money; overtime?: Money; role: Role; rehearsal: boolean; represented: boolean; managed?: boolean; before: Money; cityId: string; at: Instant; resident?: boolean }) {
   const { scale, role, rehearsal, represented, before, cityId } = opts;
   const agentRate = role.union === 'equity' && rehearsal ? AGENT_COMMISSION.equityRehearsalRate : AGENT_COMMISSION.rate;
   // A commercial is commissioned at scale; other SAG-AFTRA work is paid scale plus 10% for the agent's share.
@@ -671,7 +671,11 @@ export function paycheck(opts: { scale: Money; overtime?: Money; role: Role; reh
   // A manager takes a share of all of it: less beside an agent.
   const manager = opts.managed ? Math.round(gross * (represented ? MANAGEMENT.withAgent : MANAGEMENT.alone)) : 0;
   const dues = role.union === 'equity' ? Math.round(gross * EQUITY.workingDues) : 0;
-  const withheld = computeAnnualTax(before + gross, cityId, opts.at).total - computeAnnualTax(before, cityId, opts.at).total;
+  // A city's resident tax is withheld only from its residents: New York City
+  // withholds nothing from a New Haven or Los Angeles actor working there.
+  // Until 2026-09-27 it withheld it from everybody, and the return refunded it.
+  const owing = (income: Money) => { const t = computeAnnualTax(income, cityId, opts.at); return t.total - (opts.resident === false ? t.local : 0); };
+  const withheld = owing(before + gross) - owing(before);
   return { gross, commission: agent + manager, agent, manager, dues, withheld, net: gross - agent - manager - dues - withheld };
 }
 
@@ -725,11 +729,6 @@ export function renewed(sim: Simulation, person: Person, bookingId: string, odds
 export function hoursOf(sim: Simulation, person: Person, key: string): number {
   const [lo, hi] = OVERTIME.dayHours;
   return lo + Math.floor(sim.rng('career.hours', person.id, key).next() * (hi - lo + 1));
-}
-
-function bankAccount(sim: Simulation, person: Person): Account | undefined {
-  const a = person.primaryAccountId ? sim.universe.accounts[person.primaryAccountId] : undefined;
-  return a && !a.closedAt ? a : undefined;
 }
 
 /** Days worked, on any job, in the window before a moment. */
@@ -1002,8 +1001,8 @@ export function registerCareer(sim: Simulation): void {
     if (!person) return;
     const career = careerOf(person);
     const booking = career.bookings.find((b) => b.id === item.payload.bookingId);
-    const account = bankAccount(s, person);
-    if (!booking || !account) return;
+    const account = payeeAccount(s, person);
+    if (!booking) return;
     if (booking.owed <= 0 && !booking.travelOwed && !booking.perDiemOwed) return;
     const role = roleById(booking.roleId);
     const cur = saveCurrency(s.universe);
@@ -1035,7 +1034,7 @@ export function registerCareer(sim: Simulation): void {
       // A series regular's episodes, spread over the season's workweeks.
       const scale = role.series ? Math.round((rate * role.series.episodes * line.days) / (role.series.weeks * 5)) : role.medium !== 'stage' ? rate * line.days : Math.round((rate * line.days) / 6);
       // Abroad, US tax is withheld as at home, and the country takes its own (`ABROAD`).
-      const check = paycheck({ scale: Math.round(scale * arcUplift(booking, week)), overtime, role, rehearsal: line.rehearsal, represented, managed, before: wages.acting, cityId: taxCity, at: item.at });
+      const check = paycheck({ scale: Math.round(scale * arcUplift(booking, week)), overtime, role, rehearsal: line.rehearsal, represented, managed, before: wages.acting, cityId: taxCity, at: item.at, resident: taxCity === homeOf(person) });
       overtime = 0;
       const foreign = foreignWithholding(person, workCity, check.gross, item.at, cur, { id: booking.id, expected: expectedGross(booking, item.at, cur) });
       recordWages(person, item.at, zone, { gross: check.gross, withheld: check.withheld, commission: check.commission, dues: check.dues, sag: role.union === 'sag', employer: booking.id, where: workCity, foreignWithheld: foreign });
@@ -1563,7 +1562,7 @@ export function residualAmount(residual: Residual, stream: Stream, n: number, wh
 }
 
 function payResidual(sim: Simulation, person: Person, residual: Residual, stream: Stream, n: number, when: Instant): void {
-  const account = bankAccount(sim, person);
+  const account = payeeAccount(sim, person);
   const cur = saveCurrency(sim.universe);
   const zone = sim.homeZone;
   const amount = residualAmount(residual, stream, n, when, zone, cur);
@@ -1573,7 +1572,7 @@ function payResidual(sim: Simulation, person: Person, residual: Residual, stream
   if (stream === 'syndication' && n < 20) next(when + 365 * MS_DAY);
   if (stream === 'svod' && n < 20) next(when + 365 * MS_DAY);
   if (stream === 'film' && amount >= 1_00 && n < 20) next(when + 365 * MS_DAY);
-  if (!account || amount <= 0) return;
+  if (amount <= 0) return;
   // Wages, with tax withheld as a paycheck's. An agency commissions a commercial's use fees, not television's residuals.
   const year = zonedParts(when, zone).year;
   const before = yearOf(person, year).acting;

@@ -25,6 +25,7 @@ import { ABROAD, CALIFORNIA_MANDATE, CONNECTICUT, RECEIPTS, STATE_DEDUCTIONS, PO
 import { earningsOf, stateOf, yearOf } from './earnings';
 import { payFromCurrent } from './household';
 import { personalityOf } from './personality';
+import { payeeAccount } from './cash';
 
 export const TAX_SEASON_KIND = 'tax.season';
 export const TAX_DUE_KIND = 'tax.due';
@@ -346,8 +347,8 @@ export function registerTaxReturn(sim: Simulation): void {
   sim.onSchedule(TAX_REFUND_KIND, (item, s) => {
     const person = s.universe.people[String(item.payload.personId)];
     const r = person ? returnsOf(person)[String(item.payload.year)] : undefined;
-    const account = person?.primaryAccountId ? s.universe.accounts[person.primaryAccountId] : undefined;
-    if (!person || !account || account.closedAt) return;
+    if (!person) return;
+    const account = payeeAccount(s, person);
     // Canada's refund of its withholding, under the treaty, beside the IRS's.
     const canada = item.payload.foreign === true ? r?.figures.foreignRefund ?? 0 : 0;
     if (canada) { s.post({ memo: `Canada Revenue Agency refund, ${r!.year}`, category: 'tax', postings: [{ accountId: account.id, amount: canada }, { accountId: s.nominalAccount('income', 'Tax Refund').id, amount: -canada }] }); return; }
