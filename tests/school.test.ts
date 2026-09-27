@@ -732,6 +732,23 @@ describe('the summers, for work', () => {
     expect(sim.execute({ kind: 'career.self_submit', payload: {} }).ok).toBe(false);
   }, 180_000);
 
+  it('goes to stay for a job on a friend’s sofa when neither the bank nor the card can pay for a room', () => {
+    const sim = life('summer-sofa');
+    play(sim, at(2027, 5, 20, 12));
+    const job = { id: 'june', roleId: 'costar', cityId: 'us-ny-newyork' as const, starts: at(2027, 6, 7, 7), units: 2, rehearsalWeeks: 0, status: 'offered' as const, dueAt: sim.now + 2 * MS_DAY, offeredAt: sim.now, worked: 0, owed: 0, weeksPaid: 0 };
+    careerOf(sim.player).bookings.push(job);
+    expect(sim.execute({ kind: 'career.accept', payload: { bookingId: 'june' } }).ok).toBe(true);
+    for (const a of Object.values(sim.universe.accounts)) if (a.ownerId === sim.player.id && a.balance > 0 && a.kind !== 'escrow') a.balance = 0;
+    sim.universe.accounts[sim.player.primaryAccountId!]!.balance = -100_000_00;
+    for (const a of Object.values(sim.universe.accounts)) if (a.ownerId === sim.player.id && a.kind === 'credit_card') a.balance = -(a.creditLimit ?? 0);
+    const stay = pending(sim, 'career.stay')[0]!;
+    sim.advanceTo(stay.at + 60_000);
+    expect(sim.player.currentLocationId).toBe('us-ny-newyork');
+    expect(sim.universe.transactions.some((t) => t.memo.startsWith('A sublet in New York'))).toBe(false);
+    expect(sim.player.earnings?.years[2027]?.jobCosts ?? 0).toBe(0);
+    expect(sim.universe.notifications.some((n) => /friend’s sofa/.test(n.body))).toBe(true);
+  }, 180_000);
+
   it('takes a job that ends before the term, and goes to stay in its city for it, paying for a room', () => {
     const sim = life('summer-job');
     play(sim, at(2027, 5, 20, 12));
@@ -746,7 +763,9 @@ describe('the summers, for work', () => {
     expect(stays).toHaveLength(2);
     sim.advanceTo(stays[0]!.at + 60_000);
     expect(sim.player.currentLocationId).toBe('us-ny-newyork');
-    expect(sim.universe.transactions.some((t) => t.memo.startsWith('A sublet in New York'))).toBe(true);
+    const sublet = sim.universe.transactions.find((t) => t.memo.startsWith('A sublet in New York'))!;
+    // A cost of the work, for the return.
+    expect(sim.player.earnings!.years[2027]!.jobCosts).toBe(sublet.postings.find((q) => q.amount > 0)!.amount);
     sim.advanceTo(stays[1]!.at + 60_000);
     expect(sim.player.currentLocationId).toBe(YALE_DRAMA.cityId);
     // Gone somewhere else by the job's end, they aren't brought back from it.

@@ -75,7 +75,7 @@ import { meanCraft, focusOf, sessionGain, summerOf, type Craft } from './school'
 import { rentAt } from '../content/rents';
 import { enjoyWork, takeTheRoom } from './enjoyment';
 import { personalityOf } from './personality';
-import { move, payFromCurrent, type Housing } from './household';
+import { move, payFromCurrent, type Housing, spend } from './household';
 
 export const SHOWCASE_KIND = 'career.showcase';
 export const CAREER_WEEK_KIND = 'career.week';
@@ -1039,6 +1039,7 @@ export function registerCareer(sim: Simulation): void {
     if (toUnion > 0) {
       net -= toUnion;
       careerOf(person).unions.owed! -= toUnion;
+      yearOf(person, zonedParts(item.at, zone).year).dues += toUnion;
       postings.push({ accountId: s.nominalAccount('expense', 'Union Dues').id, amount: toUnion });
     }
     // The meal allowance isn't wages: it's paid beside them, untaxed.
@@ -1124,10 +1125,14 @@ export function registerCareer(sim: Simulation): void {
       const cur = saveCurrency(s.universe);
       const nights = Math.max(1, Math.round((Number(item.payload.back) - item.at) / MS_DAY));
       const cost = Math.round((rentAt(city, cur).room * nights) / 30.44);
-      payFromCurrent(s, person, cost, `A sublet in ${CITIES.require(city).name}, ${nights} nights`, 'rent');
+      // A cost of the work, on the return with the rest, from the bank or on
+      // the card. With neither, a friend's sofa for the run. Until 2026-09-27
+      // it was taken whether or not the bank could pay, and the room was free.
+      const paid = spend(s, person, cost, `A sublet in ${CITIES.require(city).name}, ${nights} nights`, 'career');
+      if (paid) recordJobCost(person, s.now, cost);
       person.currentLocationId = city;
       s.universe.currentZone = zoneOf(city);
-      if (isPlayer(person)) s.notify({ category: 'money', title: `In ${CITIES.require(city).name} For The Job`, body: `${roleById(booking.roleId).label}: a room sublet for ${nights} nights, ${formatMoney(cost, cur)}.`, importance: 55, route: '/workspace/career' });
+      if (isPlayer(person)) s.notify({ category: 'money', title: `In ${CITIES.require(city).name} For The Job`, body: paid ? `${roleById(booking.roleId).label}: a room sublet for ${nights} nights, ${formatMoney(cost, cur)}.` : `${roleById(booking.roleId).label}: a sublet for ${nights} nights is ${formatMoney(cost, cur)}, which neither the bank nor the card could cover, so it’s a friend’s sofa.`, importance: 55, route: '/workspace/career' });
       return;
     }
     // Home again however the job went, fired from it or not, where they're still there.
@@ -1422,9 +1427,12 @@ export function billDues(sim: Simulation, person: Person, year: number, month: n
       equity.initiationPaid += EQUITY.initiationNow;
     }
   }
+  // Paid, they're on the year's return; bounced, they're owed, and the next
+  // check pays them. Until 2026-09-27 dues the bank couldn't cover were taken
+  // as paid, and deducted on the return.
   if (total > 0) {
-    payFromCurrent(sim, person, total, 'Union dues', 'dues');
-    yearOf(person, year).dues += total;
+    if (payFromCurrent(sim, person, total, 'Union dues', 'dues')) yearOf(person, year).dues += total;
+    else career.unions.owed = (career.unions.owed ?? 0) + total;
   }
   return total;
 }

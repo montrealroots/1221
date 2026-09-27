@@ -567,7 +567,16 @@ function completeSwitch(sim: Simulation, person: Person, to: Bank, quietly = fal
   const current = open('checking', old);
   if (secondChance) current.secondChance = true;
   person.primaryAccountId = current.id;
-  if (oldSavings) open('savings', oldSavings);
+  const moved = new Map([[old.id, current.id]]);
+  if (oldSavings) moved.set(oldSavings.id, open('savings', oldSavings).id);
+  // Standing orders and payments set up ahead move with the accounts, as a
+  // switching service moves them. Until 2026-09-27 they stayed pointed at the
+  // closed accounts: an order failed every month, and a payment was dropped.
+  for (const order of person.payments?.standingOrders ?? []) order.toId = moved.get(order.toId) ?? order.toId;
+  for (const one of sim.universe.scheduled) {
+    if (one.status !== 'pending' || one.kind !== 'bank.scheduled_payment' || one.payload.personId !== person.id) continue;
+    one.payload = { ...one.payload, fromId: moved.get(String(one.payload.fromId)) ?? one.payload.fromId, toId: moved.get(String(one.payload.toId)) ?? one.payload.toId };
+  }
   if (person.id === sim.universe.playerId && !quietly) {
     sim.notify({ category: 'money', title: `Switched To ${to.name}`, body: `Your money is at ${to.name} now, in a ${to.current.name}. Wages and bills go through it from today.`, importance: 60 });
   }

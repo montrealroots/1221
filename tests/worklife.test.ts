@@ -196,6 +196,8 @@ describe('a season picked up with nothing in the bank', () => {
     while (sim.now < until) sim.advanceTo(Math.min(until, sim.now + 6 * MS_HOUR), { stopOnPlayerRequired: true });
     expect(careerOf(sim.player).bookings.find((x) => x.id === b.id)!.status).toBe('worked');
     expect(careerOf(sim.player).unions.owed).toBe(0);
+    // Paid from the check, it's dues on the year's return.
+    expect(Object.values(sim.player.earnings!.years).reduce((a, y) => a + y.dues, 0)).toBeGreaterThanOrEqual(500_00);
     const paid = sim.universe.transactions.find((t) => t.category === 'salary' && t.memo.startsWith(roleById('costar').label))!;
     expect(paid.postings.filter((p) => p.accountId === sim.nominalAccount('expense', 'Union Dues').id).reduce((a, p) => a + p.amount, 0)).toBeGreaterThanOrEqual(500_00);
   }, 180_000);

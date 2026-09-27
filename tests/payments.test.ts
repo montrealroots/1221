@@ -196,6 +196,21 @@ describe('standing orders and payments set for a date', () => {
     expect(moved()).toBe(1);
   });
 
+  it('moves with the accounts when the bank is switched', () => {
+    const sim = lifeIn('us-ny-newyork', { wealth: 'comfortable', bankId: 'us-chase' }, 'pay-switch');
+    const oldSavings = accountOf(sim, 'savings')!;
+    run(sim, 'bank.add_standing_order', { toId: oldSavings.id, amount: 100_00, day: 20 });
+    const at = sim.now + 5 * MS_DAY;
+    run(sim, 'bank.schedule_payment', { fromId: current(sim).id, toId: oldSavings.id, amount: 50_00, at });
+    run(sim, 'bank.switch', { bankId: 'us-citi' });
+    const savings = Object.values(sim.universe.accounts).find((a) => a.ownerId === sim.player.id && !a.closedAt && a.kind === 'savings' && a.bankId === 'us-citi')!;
+    expect(paymentsOf(sim.player).standingOrders[0]!.toId).toBe(savings.id);
+    const before = savings.balance;
+    sim.advanceTo(instantFromZoned({ year: 2026, month: 1, day: 21, hour: 12 }, sim.zone));
+    expect(savings.balance - before).toBeGreaterThanOrEqual(150_00);
+    expect(sim.universe.notifications.some((n) => n.title === 'A Standing Order Didn’t Go')).toBe(false);
+  });
+
   it('pays on the day set, and not once canceled', () => {
     const sim = lifeIn('is-39-mosfellsbr', { wealth: 'comfortable' }, 'pay-sched');
     const savings = accountOf(sim, 'savings')!;

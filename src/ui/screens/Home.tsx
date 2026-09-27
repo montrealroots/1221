@@ -25,7 +25,7 @@ import {
 } from '@/engine/core/time';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { cardOf, cardTerms, scoreIsANumberIn, scoreWord } from '@/engine/systems/credit';
-import { HOUSING, SOFA, arrearsOf, billsOf, moveCost, rentOf } from '@/engine/systems/household';
+import { HOUSING, SOFA, arrearsOf, billsOf, moveCost, rentOf, troubles } from '@/engine/systems/household';
 import { LookRegion, Open, at } from '@/ui/looks';
 import { YALE_DRAMA } from '@/engine/content/school';
 import { STANDING_LABEL, nextClasses, rankIn, yearOfStudy } from '@/engine/systems/school';
@@ -42,16 +42,25 @@ export function Home() {
   const worth = useWorld((s) => netWorth(s, s.player.id));
   const cur = saveCurrency(sim.universe);
   const unread = useWorld(unreadNotifications);
-  // What still weighs with nothing to decide: rent owed, a notice, a clash in
-  // the next month. "All Clear" was said over all three.
+  // What still weighs with nothing to decide: a notice, what money weighs
+  // with (`troubles`, which the day's worry reads too), a clash in the next
+  // month. "All Clear" was said over all of them, and until 2026-09-27 it
+  // read only the rent of the money.
   const weighing = useWorld((s) => {
-    const owed = arrearsOf(s, s.player);
     const notice = s.player.home?.noticeUntil;
     const clash = entriesBetween(s, s.now, s.now + 30 * MS_DAY).some((e) => e.conflicted);
     const cur = saveCurrency(s.universe);
+    const m = (cents: number) => formatMoney(cents, cur, { cents: false });
     const said: string[] = [];
     if (notice !== undefined) said.push(`A notice to pay or quit runs until ${formatDate(notice, s.zone)}.`);
-    if (owed > 0) said.push(`You owe your landlord ${formatMoney(owed, cur, { cents: false })}.`);
+    for (const t of troubles(s, s.player)) {
+      if (t.kind === 'landlord') said.push(`You owe your landlord ${m(t.amount)}.`);
+      else if (t.kind === 'overdrawn') said.push(`Your current account is ${m(t.amount)} overdrawn.`);
+      else if (t.kind === 'card') said.push(`Your card is at its limit, owing ${m(t.amount)}.`);
+      else if (t.kind === 'medical') said.push(`You owe ${m(t.amount)} for medical care.`);
+      else if (t.kind === 'collections') said.push(`${m(t.amount)} is with collections.`);
+      else said.push(`You owe ${m(t.amount)} of income tax.`);
+    }
     if (clash) said.push('Two things on your calendar in the next month want you at once.');
     return said;
   });
@@ -202,7 +211,7 @@ export function Home() {
             weighing.length === 0 ? (
               <Empty
                 title="All Clear"
-                body="You’re not late for anything, you owe nobody rent, and the calendar doesn’t clash. Go and do something you want to do."
+                body="You owe nobody anything past due, the bank and the card are in order, and the calendar doesn’t clash. Go and do something you want to do."
               />
             ) : (
               <Empty title="No Decisions Waiting" body={weighing.join(' ')} />

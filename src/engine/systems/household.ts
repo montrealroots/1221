@@ -263,7 +263,13 @@ function owe(sim: Simulation, person: Person, amount: Money, memo: string, categ
   sim.post({ memo: `${memo}, unpaid`, category, postings: [{ accountId: sim.nominalAccount('expense', expenseFor(category)).id, amount }, { accountId: arrearsAccount(sim, person).id, amount: -amount }] });
 }
 
-const expenseFor = (category: string) => (category === 'rent' ? 'Rent' : category === 'bills' ? 'Bills' : 'Food');
+/**
+ * The ledger's expense line for a payment's category. Until 2026-09-27
+ * anything not rent or bills went to Food, so union dues, health premiums,
+ * tax paid and the work's costs all read as food.
+ */
+const EXPENSE_LINE: Record<string, string> = { rent: 'Rent', bills: 'Bills', food: 'Food', dues: 'Union Dues', health: 'Medical Care', tax: 'Tax Paid', career: 'Work Costs', school: 'School' };
+export const expenseFor = (category: string) => EXPENSE_LINE[category] ?? 'Other';
 
 setPaymentHooks({ fromCurrent: payFromCurrent, owe, returned: (sim, person, amount) => chargeReturned(sim, person, amount) });
 
@@ -354,7 +360,7 @@ export function spend(sim: Simulation, person: Person, amount: Money, memo: stri
   const bank = drawFromBank(sim, person, amount - creditFirst, overdraft);
   const fromCard = creditFirst + Math.min(bank.short, cardFree - creditFirst);
   const owed = bank.short - fromCard;
-  const postings = [{ accountId: sim.nominalAccount('expense', category === 'rent' ? 'Rent' : category === 'bills' ? 'Bills' : 'Food').id, amount }, ...bank.postings];
+  const postings = [{ accountId: sim.nominalAccount('expense', expenseFor(category)).id, amount }, ...bank.postings];
   if (fromCard > 0 && card) postings.push({ accountId: card.id, amount: -fromCard });
   if (owed > 0) postings.push({ accountId: arrearsAccount(sim, person).id, amount: -owed });
   const txn = sim.post({ memo, category, postings });
@@ -572,12 +578,36 @@ function landlord(sim: Simulation, person: Person): void {
   if (sim.now >= home.noticeUntil) evict(sim, person);
 }
 
-/** Whether money is weighing on somebody today: owing, overdrawn, or the card at its limit. */
-export function inTrouble(sim: Simulation, person: Person): boolean {
-  if (arrearsOf(sim, person) > 0) return true;
-  if ((checkingOf(sim, person)?.balance ?? 0) < 0) return true;
+/** A money trouble, and how much it comes to. */
+export type Trouble = { kind: 'landlord' | 'overdrawn' | 'card' | 'medical' | 'collections' | 'tax'; amount: Money };
+
+/**
+ * What money is weighing on somebody with today: owing the landlord, the
+ * doctors, a collector or the tax office, overdrawn, or the card at its
+ * limit. The day's worry reads it (`inTrouble`), and so does Home. Until
+ * 2026-09-27 a medical debt, a debt in collections and a tax balance unpaid
+ * weighed nothing, and Home's All Clear read only the rent.
+ */
+export function troubles(sim: Simulation, person: Person): Trouble[] {
+  const out: Trouble[] = [];
+  const rent = arrearsOf(sim, person);
+  if (rent > 0) out.push({ kind: 'landlord', amount: rent });
+  const current = checkingOf(sim, person)?.balance ?? 0;
+  if (current < 0) out.push({ kind: 'overdrawn', amount: -current });
   const card = cardOf(sim, person);
-  return Boolean(card && (card.creditLimit ?? 0) > 0 && -card.balance >= CARD_FULL * (card.creditLimit ?? 0));
+  if (card && (card.creditLimit ?? 0) > 0 && -card.balance >= CARD_FULL * (card.creditLimit ?? 0)) out.push({ kind: 'card', amount: -card.balance });
+  for (const kind of ['medical', 'collections'] as const) {
+    const owed = accountsOf(sim, person).filter((a) => a.category === kind && a.balance < 0).reduce((sum, a) => sum - a.balance, 0);
+    if (owed > 0) out.push({ kind, amount: owed });
+  }
+  const tax = Object.values(person.returns ?? {}).reduce((sum, r) => sum + Math.max(0, r.owed ?? 0), 0);
+  if (tax > 0) out.push({ kind: 'tax', amount: tax });
+  return out;
+}
+
+/** Whether money is weighing on somebody today (`troubles`). */
+export function inTrouble(sim: Simulation, person: Person): boolean {
+  return troubles(sim, person).length > 0;
 }
 
 function scheduleRent(sim: Simulation, person: Person, after: Instant): void {

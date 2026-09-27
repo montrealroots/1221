@@ -481,6 +481,17 @@ describe('the unions', () => {
     const later = pro('dues-nov');
     careerOf(later.player).unions = { equity: { joinedAt: later.now - 400 * MS_DAY, initiationPaid: EQUITY.initiationNow } };
     expect(billDues(later, later.player, 2026, 11)).toBe(EQUITY.basicDues / 2);
+    // Paid, they're dues on the return, on the ledger's Union Dues line.
+    expect(yearOf(sim.player, 2026).dues).toBe(Math.round(SAG_AFTRA.basicDues / 2) + Math.round(40_000_00 * SAG_AFTRA.workDues) + EQUITY.basicDues / 2 + EQUITY.initiationNow + Math.round(SAG_AFTRA.basicDues / 2) + EQUITY.basicDues / 2);
+    expect(sim.nominalAccount('expense', 'Union Dues').balance).toBeGreaterThan(0);
+    // Bounced, they're owed, not on the return.
+    const broke = pro('dues-broke');
+    careerOf(broke.player).unions = { sag: { eligibleAt: 0, joinedAt: 1 } };
+    for (const a of Object.values(broke.universe.accounts)) if (a.ownerId === broke.player.id && a.balance > 0 && a.kind !== 'escrow') a.balance = 0;
+    broke.universe.accounts[broke.player.primaryAccountId!]!.balance = -100_000_00;
+    expect(billDues(broke, broke.player, 2026, 11)).toBe(Math.round(SAG_AFTRA.basicDues / 2));
+    expect(yearOf(broke.player, 2026).dues).toBe(0);
+    expect(careerOf(broke.player).unions.owed).toBe(Math.round(SAG_AFTRA.basicDues / 2));
   });
 });
 

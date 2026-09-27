@@ -12,7 +12,7 @@ import { describe, expect, it } from 'vitest';
 import { createSave, defaultConfig, loadSave, migrate, quickSave } from '@/engine';
 import type { Simulation } from '@/engine';
 import {
-  arrearsOf, billsOf, canPay, costsAt, foodOf, inTrouble, mealOf, rentOf, spend,
+  arrearsOf, billsOf, canPay, costsAt, foodOf, inTrouble, mealOf, rentOf, spend, troubles,
 } from '@/engine/systems/household';
 import { aprFor, cardTerms, minimumDue, scoreIsANumberIn, scoreWord } from '@/engine/systems/credit';
 import { PUBLISHED_RENTS, rentAt } from '@/engine/content/rents';
@@ -79,6 +79,31 @@ describe('the cost of living', () => {
     expect(broke.universe.notifications.some((n) => n.title === 'No Money For Food Today')).toBe(true);
   });
 
+  it('weighs a medical debt, a debt in collections and a tax balance owed, each alone, and not once paid', () => {
+    const over = quickSave({ wealth: 'comfortable' }, 'worry-overdrawn');
+    setChecking(over, -40_00);
+    expect(troubles(over, over.player)).toEqual([{ kind: 'overdrawn', amount: 40_00 }]);
+    for (const kind of ['medical', 'collections', 'tax'] as const) {
+      const sim = quickSave({ wealth: 'comfortable' }, `worry-${kind}`);
+      expect(inTrouble(sim, sim.player)).toBe(false);
+      if (kind === 'tax') {
+        sim.player.returns = { 2026: { year: 2026, owed: 500_00 } as never, 2027: { year: 2027, owed: 200_00 } as never };
+        expect(troubles(sim, sim.player)).toEqual([{ kind: 'tax', amount: 700_00 }]);
+      }
+      else {
+        const debt = sim.openAccount({ id: sim.nextId('account'), kind: 'loan', category: kind, name: 'Owed', ownerId: sim.player.id, institution: 'Them', openedAt: sim.now });
+        sim.post({ memo: 'test', category: 'test', postings: [{ accountId: debt.id, amount: -100_00 }, { accountId: sim.nominalAccount('income', 'Test').id, amount: 100_00 }] });
+        expect(inTrouble(sim, sim.player)).toBe(true);
+        expect(troubles(sim, sim.player)).toEqual([{ kind, amount: 100_00 }]);
+        // Paid off, the account stands at nothing and weighs nothing.
+        sim.post({ memo: 'test', category: 'test', postings: [{ accountId: debt.id, amount: 100_00 }, { accountId: sim.nominalAccount('income', 'Test').id, amount: -100_00 }] });
+        expect(inTrouble(sim, sim.player)).toBe(false);
+        continue;
+      }
+      expect(inTrouble(sim, sim.player)).toBe(true);
+    }
+  });
+
   it('pays from checking, then the card, then owes the landlord, and pays the landlord back when money comes', () => {
     const sim = quickSave({}, 'order');
     setChecking(sim, 100_00);
@@ -89,6 +114,7 @@ describe('the cost of living', () => {
     expect(card(sim).balance).toBe(-(card(sim).creditLimit ?? 0));
     expect(arrearsOf(sim, sim.player)).toBe(5_000_00);
     expect(inTrouble(sim, sim.player)).toBe(true);
+    expect(troubles(sim, sim.player)).toEqual([{ kind: 'landlord', amount: 5_000_00 }, { kind: 'card', amount: card(sim).creditLimit ?? 0 }]);
     // Food isn't owed: not enough, and nothing is spent.
     expect(spend(sim, sim.player, 1_00, 'Groceries', 'food')).toBe(false);
     // Money comes in, and the next midnight buys the day's food and pays the

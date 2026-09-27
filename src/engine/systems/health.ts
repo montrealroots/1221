@@ -281,7 +281,8 @@ export function healthMonth(sim: Simulation, person: Person, at: Instant): void 
       const until = firstOf(p.year + 1, p.month);
       h.sag = h.sag && h.sag.until >= at ? { from: h.sag.from, until } : { from: at, until };
     }
-    if (active(h.sag, at)) payFromCurrent(sim, person, usd(rateOn(UNION_HEALTH.sagPremium, `${p.year}-${String(p.month).padStart(2, '0')}-01`), cur), 'SAG-AFTRA Health Plan premium', 'health');
+    // Unpaid, the plan ends, as COBRA and the marketplace do; until 2026-09-27 it kept covering.
+    if (active(h.sag, at) && !payFromCurrent(sim, person, usd(rateOn(UNION_HEALTH.sagPremium, `${p.year}-${String(p.month).padStart(2, '0')}-01`), cur), 'SAG-AFTRA Health Plan premium', 'health')) h.sag!.until = at;
   }
   const yearAgo = at - 365 * MS_DAY;
   const weeks = record.equityWeeks.filter((key) => instantFromZoned({ year: Number(key.slice(0, 4)), month: Number(key.slice(5, 7)), day: Number(key.slice(8, 10)), hour: 12 }, HOME) >= yearAgo).length;
@@ -290,7 +291,7 @@ export function healthMonth(sim: Simulation, person: Person, at: Instant): void 
     h.equity = { from: h.equity && h.equity.until >= from ? h.equity.from : from, until: firstOf(p.year, p.month + 2 + UNION_HEALTH.equityMonths) };
   }
   // Equity-League's $300 a quarter, a third of it each month covered.
-  if (active(h.equity, at)) payFromCurrent(sim, person, usd(Math.round(UNION_HEALTH.equityPremium / 3), cur), 'Equity-League Health premium', 'health');
+  if (active(h.equity, at) && !payFromCurrent(sim, person, usd(Math.round(UNION_HEALTH.equityPremium / 3), cur), 'Equity-League Health premium', 'health')) h.equity!.until = at;
   // A union plan just ended: COBRA may keep it.
   const union = active(h.sag, at) ? 'sag' : active(h.equity, at) ? 'equity' : undefined;
   if (h.lastUnion && !union && !active(h.cobra, at)) {

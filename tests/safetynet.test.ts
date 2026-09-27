@@ -239,6 +239,17 @@ describe('health cover', () => {
     healthMonth(sim, person, at(2027, 1, 1, 1));
     expect(healthOf(person).sag).toEqual({ from: at(2027, 1, 1, 1), until: at(2028, 1, 1, 0) });
     expect(sim.universe.transactions.some((t) => t.memo === 'SAG-AFTRA Health Plan premium')).toBe(true);
+    // On the ledger's line for care, not food's.
+    expect(sim.nominalAccount('expense', 'Medical Care').balance).toBeGreaterThan(0);
+    // A premium the bank can't pay ends the plan, as COBRA's would.
+    for (const a of Object.values(sim.universe.accounts)) if (a.ownerId === person.id && a.balance > 0 && a.kind !== 'escrow') a.balance = 0;
+    sim.universe.accounts[person.primaryAccountId!]!.balance = -100_000_00;
+    healthMonth(sim, person, at(2027, 4, 1, 1));
+    expect(healthOf(person).sag!.until).toBe(at(2027, 4, 1, 1));
+    // And Equity-League's.
+    healthOf(person).equity = { from: at(2027, 1, 1, 0), until: at(2027, 12, 1, 0) };
+    healthMonth(sim, person, at(2027, 5, 1, 1));
+    expect(healthOf(person).equity!.until).toBe(at(2027, 5, 1, 1));
     const short = pro('sag-short');
     for (const q of ['2025-4', '2026-1', '2026-2', '2026-3']) earningsOf(short.player).quarters[q] = { wages: 6_000_00, sag: 6_000_00 };
     healthMonth(short, short.player, at(2027, 1, 1, 1));
