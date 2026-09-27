@@ -49,20 +49,18 @@ describe('the world SLATE ships with', () => {
     ]) {
       const city = CITIES.get(id);
       expect(city, `${id} lost its identity`).toBeDefined();
-      expect(city!.industryPresence, `${id} lost its calibration`).toBeGreaterThan(0);
+      expect(city!.confidence, `${id} lost its calibration`).toBe('medium');
     }
   });
 
   it('gives a city nobody tuned by hand economics a simulation can use', () => {
-    const derived = CITIES.all().filter((c) => c.industryPresence === 0 && c.population > 50_000);
+    const derived = CITIES.all().filter((c) => c.confidence === 'low' && c.population > 50_000);
     expect(derived.length, 'no derived cities to check').toBeGreaterThan(100);
 
     for (const city of derived.slice(0, 200)) {
       expect(city.costOfLivingIndex, `${city.name} has no cost of living`).toBeGreaterThan(0);
       expect(city.medianRentCents, `${city.name} has no rent`).toBeGreaterThan(0);
       expect(city.medianHomePriceCents).toBeGreaterThan(city.medianRentCents);
-      expect(city.jobMarketDepth).toBeGreaterThanOrEqual(0);
-      expect(city.jobMarketDepth).toBeLessThanOrEqual(100);
       expect(city.timeZone, `${city.name} has no time zone`).toMatch(/\//);
       // And it is honest about being derived.
       expect(city.source).toBe('calibrated_estimate');

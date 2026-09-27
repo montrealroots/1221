@@ -79,8 +79,6 @@ export interface PlaceProfile {
   weather?: WeatherNow;
   costOfLivingIndex: number;
   medianRentCents: number;
-  industryPresence: number;
-  jobMarketDepth: number;
   /** Effective income tax rate at the reference income, 0-1. */
   /**
    * What a wage actually loses, as a fraction of it.
@@ -163,8 +161,6 @@ export function placeProfile(sim: Simulation, cityId: string): PlaceProfile | un
     weather: weatherAt(sim, city.id),
     costOfLivingIndex: city.costOfLivingIndex,
     medianRentCents: oneBedUsd,
-    industryPresence: city.industryPresence,
-    jobMarketDepth: city.jobMarketDepth,
     effectiveIncomeTax: totalTax / TAX_REFERENCE_INCOME,
     salesTax: salesTaxRate(city.id, sim.now, 'general'),
     propertyTax: propertyTaxRate(city.id, sim.now),

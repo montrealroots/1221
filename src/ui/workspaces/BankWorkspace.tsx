@@ -4,9 +4,9 @@
  * The bank a person keeps their money with, as that bank has it: its name,
  * the accounts by the names it sells them under, each account's number the
  * way the country writes it, what savings pays and what the current account
- * costs and how the fee is waived, and the guarantee that stands behind the
- * money if the bank fails, in five tabs: accounts, cards, payments and
- * cash, borrowing, and statements. Money moves between the accounts here, and a
+ * costs and how the fee is waived, in five tabs: accounts, cards, payments
+ * and cash, borrowing, and statements. The deposit guarantee behind the
+ * money was said here until 2026-09-26, and nothing read it. Money moves between the accounts here, and a
  * savings account is opened or closed (`systems/banking.ts`). The credit
  * card is the bank's too, and is run here (`ui/bank/BankCard.tsx`); until
  * 2026-09-26 it was run from the Money panel and this screen left it out.

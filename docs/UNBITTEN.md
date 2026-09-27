@@ -108,12 +108,6 @@ part the tool cannot see.
   months, SLATE's estimate of the offer, and the solvency check France
   adds from 20 November 2026 isn't made. An account that goes back above
   zero on each payday is never sixty days overdrawn, as at a real bank.
-- **The deposit guarantee and the central bank's rate are shown and change
-  nothing.** No bank fails in SLATE, so the guarantee is never called on,
-  and no bank's rate is set from the central bank's, which SLATE holds at
-  the day the research read it. Both are real, sourced facts on the bank
-  screen; neither has anything to bite on until banks can fail or rates
-  can move.
 - **Some IBANs outside the thirteen are missing a bank code or a national
   check.** Each is built to its country's registry structure
   (`content/banks-world-iban.ts`): 82 structures, and 321 of 348 banks with
@@ -218,13 +212,6 @@ part the tool cannot see.
     isn't counted.
   - Where a job is seen, how it does, a film's television money and its
     cast's units are SLATE's estimate.
-- **Some of the banks' research is kept and read by nothing.** Each
-  country's deposit guarantee, its central bank's rate, a sentence on how
-  money moves there, and the local names for its ways of paying came off
-  the bank's screen on 2026-09-26: no bank fails, no rate follows the
-  central bank's, and the sentences named ways of paying SLATE doesn't
-  have (Zelle, Interac, SPEI, money orders). They wait for what would read
-  them.
 - **Some of pending and holds isn't modeled.** The banks publish the most
   a hold lasts before it's released (CommBank's, NAB's and Westpac NZ's
   ten), not how soon a payment usually posts; SLATE posts one in two
@@ -274,11 +261,6 @@ part the tool cannot see.
   job paid into one in five countries and it grew daily. Both went with the
   job engine on 2026-09-26. A save from before keeps the fund, and net worth
   counts it; nothing adds to it, grows it or pays it out.
-- **The gazetteer still carries the film calibration.** Every hand-calibrated
-  city has an `industryPresence` figure, and the place card and Home print it
-  as Film and Television work. Nothing else reads it. It is reference data, so
-  it stayed through the revamp; the revamp decides whether it keeps a reader or
-  goes.
 - **Most of the crafts, and five general interests, are said back and
   nothing more.** Creation asks for them and the person look prints them.
   Since 2026-09-27 a day of work reads the genres, Voice Acting, and Film,
@@ -299,10 +281,19 @@ part the tool cannot see.
 
 ## Unreachable: correct, and nothing can get there
 
-- **The Decision Center has nothing to decide.** Answering, dismissing, closing
-  on a date and forgetting are all built and held by `tests/smoke.test.ts`, which
-  raises a row by hand. The one thing that raised a row on its own was the
-  reimbursement on the family's pictures, and it went with them.
+Nothing, since 2026-09-27. What a bank reads from wages is reached again by
+acting pay, and the Decision Center by offers of representation, management
+and work and by each year's return.
+
+## Settled on 2026-09-27, by deletion
+
+Each was researched or calibrated and read by nothing, and nothing in SLATE
+could read it: each country's deposit guarantee and its central bank's rate
+(no bank fails and no rate moves), a sentence on how money moves there and
+each country's own names for its ways of paying (`content/banks*.ts`,
+`content/payments.ts`), and every hand-calibrated town's film-industry and
+job-market ratings (`content/geography.ts`). They are in the history, and
+their generators no longer write them.
 
 ---
 

@@ -114,11 +114,11 @@ const METHOD_WORDS: Readonly<Record<PaymentMethod, string>> = {
   claim: 'a claim paid in the online bank', cash: 'cash',
 };
 
-/** How rent and bills usually go here, in plain words, and the country's own terms, for the screens. */
-export function paymentWords(cityId: string): { usual: string; terms: string } | undefined {
+/** How rent and bills usually go here, in plain words, for the screens. */
+export function paymentWords(cityId: string): { usual: string } | undefined {
   const norm = PAYMENT_NORMS[isoOf(cityId) ?? ''];
   if (!norm) return undefined;
-  return { usual: `Rent here usually goes by ${METHOD_WORDS[norm.rentMost]}, and bills by ${METHOD_WORDS[norm.billsMost]}.`, terms: norm.terms };
+  return { usual: `Rent here usually goes by ${METHOD_WORDS[norm.rentMost]}, and bills by ${METHOD_WORDS[norm.billsMost]}.` };
 }
 
 /** Whether a direct debit here can be taken back within eight weeks (SEPA). */

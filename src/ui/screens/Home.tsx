@@ -376,12 +376,6 @@ export function Home() {
                   look={at('place', place.city.id)}
                 />
                 <Stat
-                  label="Industry"
-                  value={`${place.industryPresence}/100`}
-                  note="Film and Television work here"
-                  look={at('place', place.city.id)}
-                />
-                <Stat
                   label="Languages"
                   value={place.languages[0] ?? '—'}
                   note={place.languages.slice(1).join(', ') || 'Official language'}

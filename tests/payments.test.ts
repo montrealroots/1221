@@ -38,7 +38,7 @@ const run = (sim: Simulation, kind: string, payload: Record<string, unknown>) =>
   return answer;
 };
 const firstOf = (sim: Simulation, month: number, hour = 21) => instantFromZoned({ year: 2026, month, day: 1, hour }, sim.zone);
-const US_CHECKS: PaymentNorm = { rent: ['check', 'online_portal'], rentMost: 'check', bills: ['online_portal'], billsMost: 'online_portal', terms: 'a check, or the landlord’s online portal', source: 'test' };
+const US_CHECKS: PaymentNorm = { rent: ['check', 'online_portal'], rentMost: 'check', bills: ['online_portal'], billsMost: 'online_portal', source: 'test' };
 
 describe('a new life', () => {
   it('pays the country’s usual way, on the debit card, with savings not linked, as a bank opens it', () => {

@@ -62,10 +62,11 @@ export interface City extends ReferenceRecord {
   /** Median home price in cents. Calibrated estimate. */
   medianHomePriceCents: number;
   population: number;
-  /** 0-100 how much Film and Television work happens here. */
-  industryPresence: number;
-  /** 0-100 depth of the ordinary job market. */
-  jobMarketDepth: number;
+  // How much film and television work a town had, and the depth of its
+  // ordinary job market, were SLATE's hand calibrations, printed on the place
+  // card and Home and read by nothing else; they went on 2026-09-27. Where a
+  // job films comes from `LOCATION` in `content/career.ts`, from the trade's
+  // own production figures.
   /** Primary airport id. */
   airportId?: string;
   jurisdictionCode: string;
@@ -173,7 +174,7 @@ export const REGIONS = new Registry<Region>('regions', WORLD_REGIONS.map((r) => 
 
 interface CitySpec {
   id: string; name: string; region: string; tz: string; lat: number; lon: number;
-  col: number; rent: number; home: number; pop: number; industry: number; jobs: number;
+  col: number; rent: number; home: number; pop: number;
   airport?: string; tags: string[]; aliases?: string[];
 }
 
@@ -193,8 +194,6 @@ function city(spec: CitySpec): City {
     medianRentCents: spec.rent * 100,
     medianHomePriceCents: spec.home * 100,
     population: spec.pop,
-    industryPresence: spec.industry,
-    jobMarketDepth: spec.jobs,
     airportId: spec.airport,
     jurisdictionCode: `${reg.jurisdictionCode}-${spec.id.split('-').pop()}`,
     tags: spec.tags,
@@ -209,50 +208,50 @@ function city(spec: CitySpec): City {
  * calibrated rather than derived. Everything else in the world is layered
  * underneath these. */
 const CALIBRATED_CITIES: readonly City[] = [
-  city({ id: 'us-ca-losangeles', name: 'Los Angeles', aliases: ['LA'], region: 'us-ca', tz: 'America/Los_Angeles', lat: 34.05, lon: -118.24, col: 152, rent: 2450, home: 985000, pop: 3900000, industry: 100, jobs: 88, airport: 'lax', tags: ['film', 'television', 'beach', 'entertainment capital'] }),
-  city({ id: 'us-ca-burbank', name: 'Burbank', region: 'us-ca', tz: 'America/Los_Angeles', lat: 34.18, lon: -118.31, col: 148, rent: 2350, home: 1050000, pop: 107000, industry: 96, jobs: 72, airport: 'bur', tags: ['studios', 'television', 'production'] }),
-  city({ id: 'us-ca-santamonica', name: 'Santa Monica', region: 'us-ca', tz: 'America/Los_Angeles', lat: 34.02, lon: -118.49, col: 178, rent: 3300, home: 1750000, pop: 93000, industry: 82, jobs: 70, tags: ['beach', 'agencies', 'affluent'] }),
-  city({ id: 'us-ca-sanfrancisco', name: 'San Francisco', region: 'us-ca', tz: 'America/Los_Angeles', lat: 37.77, lon: -122.42, col: 178, rent: 3200, home: 1300000, pop: 810000, industry: 44, jobs: 90, airport: 'sfo', tags: ['tech', 'expensive', 'coastal'] }),
-  city({ id: 'us-ca-sandiego', name: 'San Diego', region: 'us-ca', tz: 'America/Los_Angeles', lat: 32.72, lon: -117.16, col: 143, rent: 2500, home: 900000, pop: 1380000, industry: 38, jobs: 78, airport: 'san', tags: ['beach', 'military', 'relaxed'] }),
-  city({ id: 'us-ny-newyork', name: 'New York', aliases: ['NYC', 'Manhattan'], region: 'us-ny', tz: 'America/New_York', lat: 40.71, lon: -74.01, col: 168, rent: 3600, home: 780000, pop: 8300000, industry: 88, jobs: 96, airport: 'jfk', tags: ['theatre', 'television', 'finance', 'publishing'] }),
-  city({ id: 'us-ga-atlanta', name: 'Atlanta', region: 'us-ga', tz: 'America/New_York', lat: 33.75, lon: -84.39, col: 104, rent: 1750, home: 400000, pop: 500000, industry: 78, jobs: 82, airport: 'atl', tags: ['production hub', 'incentives', 'affordable'] }),
-  city({ id: 'us-tx-austin', name: 'Austin', region: 'us-tx', tz: 'America/Chicago', lat: 30.27, lon: -97.74, col: 112, rent: 1700, home: 490000, pop: 970000, industry: 46, jobs: 86, airport: 'aus', tags: ['music', 'festival', 'tech'] }),
-  city({ id: 'us-tx-dallas', name: 'Dallas', region: 'us-tx', tz: 'America/Chicago', lat: 32.78, lon: -96.80, col: 101, rent: 1500, home: 390000, pop: 1300000, industry: 32, jobs: 88, airport: 'dfw', tags: ['business', 'affordable'] }),
-  city({ id: 'us-fl-miami', name: 'Miami', region: 'us-fl', tz: 'America/New_York', lat: 25.76, lon: -80.19, col: 128, rent: 2600, home: 590000, pop: 450000, industry: 44, jobs: 76, airport: 'mia', tags: ['beach', 'international', 'nightlife'] }),
-  city({ id: 'us-il-chicago', name: 'Chicago', region: 'us-il', tz: 'America/Chicago', lat: 41.88, lon: -87.63, col: 108, rent: 1950, home: 360000, pop: 2700000, industry: 52, jobs: 90, airport: 'ord', tags: ['theatre', 'improv', 'architecture'] }),
-  city({ id: 'us-nv-lasvegas', name: 'Las Vegas', region: 'us-nv', tz: 'America/Los_Angeles', lat: 36.17, lon: -115.14, col: 105, rent: 1550, home: 430000, pop: 660000, industry: 40, jobs: 74, airport: 'las', tags: ['no state income tax', 'entertainment', 'hospitality'] }),
-  city({ id: 'us-wa-seattle', name: 'Seattle', region: 'us-wa', tz: 'America/Los_Angeles', lat: 47.61, lon: -122.33, col: 148, rent: 2250, home: 830000, pop: 750000, industry: 38, jobs: 88, airport: 'sea', tags: ['tech', 'no state income tax', 'rain'] }),
-  city({ id: 'us-or-portland', name: 'Portland', region: 'us-or', tz: 'America/Los_Angeles', lat: 45.51, lon: -122.68, col: 121, rent: 1700, home: 540000, pop: 640000, industry: 34, jobs: 74, airport: 'pdx', tags: ['no sales tax', 'creative', 'green'] }),
-  city({ id: 'us-co-denver', name: 'Denver', region: 'us-co', tz: 'America/Denver', lat: 39.74, lon: -104.99, col: 115, rent: 1800, home: 570000, pop: 715000, industry: 30, jobs: 82, airport: 'den', tags: ['mountains', 'outdoors'] }),
-  city({ id: 'us-nm-santafe', name: 'Santa Fe', region: 'us-nm', tz: 'America/Denver', lat: 35.69, lon: -105.94, col: 106, rent: 1600, home: 560000, pop: 88000, industry: 54, jobs: 48, tags: ['incentives', 'desert', 'arts'] }),
-  city({ id: 'us-la-neworleans', name: 'New Orleans', region: 'us-la', tz: 'America/Chicago', lat: 29.95, lon: -90.07, col: 96, rent: 1400, home: 300000, pop: 380000, industry: 56, jobs: 62, airport: 'msy', tags: ['incentives', 'music', 'historic'] }),
-  city({ id: 'us-nc-wilmington', name: 'Wilmington', region: 'us-nc', tz: 'America/New_York', lat: 34.23, lon: -77.94, col: 94, rent: 1400, home: 340000, pop: 120000, industry: 58, jobs: 52, tags: ['studios', 'coastal', 'affordable'] }),
-  city({ id: 'us-tn-nashville', name: 'Nashville', region: 'us-tn', tz: 'America/Chicago', lat: 36.16, lon: -86.78, col: 103, rent: 1650, home: 450000, pop: 690000, industry: 42, jobs: 80, airport: 'bna', tags: ['music', 'no state income tax'] }),
-  city({ id: 'us-ma-boston', name: 'Boston', region: 'us-ma', tz: 'America/New_York', lat: 42.36, lon: -71.06, col: 149, rent: 2900, home: 760000, pop: 650000, industry: 40, jobs: 86, airport: 'bos', tags: ['universities', 'historic'] }),
-  city({ id: 'us-az-phoenix', name: 'Phoenix', region: 'us-az', tz: 'America/Phoenix', lat: 33.45, lon: -112.07, col: 103, rent: 1550, home: 440000, pop: 1650000, industry: 26, jobs: 80, airport: 'phx', tags: ['no daylight saving', 'desert', 'affordable'] }),
-  city({ id: 'us-hi-honolulu', name: 'Honolulu', region: 'us-hi', tz: 'Pacific/Honolulu', lat: 21.31, lon: -157.86, col: 179, rent: 2400, home: 830000, pop: 350000, industry: 34, jobs: 58, airport: 'hnl', tags: ['island', 'no daylight saving', 'tourism'] }),
-  city({ id: 'ca-bc-vancouver', name: 'Vancouver', region: 'ca-02', tz: 'America/Vancouver', lat: 49.28, lon: -123.12, col: 137, rent: 2400, home: 1150000, pop: 675000, industry: 82, jobs: 76, airport: 'yvr', tags: ['production hub', 'incentives', 'mountains'] }),
-  city({ id: 'ca-on-toronto', name: 'Toronto', region: 'ca-08', tz: 'America/Toronto', lat: 43.65, lon: -79.38, col: 128, rent: 2200, home: 900000, pop: 2900000, industry: 74, jobs: 88, airport: 'yyz', tags: ['production hub', 'incentives', 'finance'] }),
-  city({ id: 'ca-qc-montreal', name: 'Montreal', region: 'ca-10', tz: 'America/Toronto', lat: 45.50, lon: -73.57, col: 105, rent: 1500, home: 550000, pop: 1760000, industry: 62, jobs: 76, airport: 'yul', tags: ['vfx', 'incentives', 'bilingual'] }),
-  city({ id: 'uk-eng-london', name: 'London', region: 'uk-eng', tz: 'Europe/London', lat: 51.51, lon: -0.13, col: 158, rent: 2700, home: 780000, pop: 8900000, industry: 86, jobs: 94, airport: 'lhr', tags: ['theatre', 'production hub', 'international'] }),
-  city({ id: 'uk-eng-manchester', name: 'Manchester', region: 'uk-eng', tz: 'Europe/London', lat: 53.48, lon: -2.24, col: 108, rent: 1350, home: 330000, pop: 553000, industry: 52, jobs: 76, airport: 'man', tags: ['television', 'affordable', 'music'] }),
-  city({ id: 'uk-sct-glasgow', name: 'Glasgow', region: 'uk-sct', tz: 'Europe/London', lat: 55.86, lon: -4.25, col: 98, rent: 1100, home: 250000, pop: 635000, industry: 44, jobs: 68, tags: ['incentives', 'locations'] }),
-  city({ id: 'ie-lei-dublin', name: 'Dublin', region: 'ie-l', tz: 'Europe/Dublin', lat: 53.35, lon: -6.26, col: 132, rent: 2100, home: 520000, pop: 590000, industry: 54, jobs: 78, airport: 'dub', tags: ['incentives', 'production'] }),
-  city({ id: 'fr-idf-paris', name: 'Paris', region: 'fr-11', tz: 'Europe/Paris', lat: 48.86, lon: 2.35, col: 142, rent: 2200, home: 780000, pop: 2100000, industry: 66, jobs: 86, airport: 'cdg', tags: ['festival', 'fashion', 'arthouse'] }),
-  city({ id: 'fr-paca-cannes', name: 'Cannes', region: 'fr-93', tz: 'Europe/Paris', lat: 43.55, lon: 7.02, col: 138, rent: 1900, home: 720000, pop: 74000, industry: 70, jobs: 42, tags: ['festival', 'market', 'riviera'] }),
-  city({ id: 'de-be-berlin', name: 'Berlin', region: 'de-16', tz: 'Europe/Berlin', lat: 52.52, lon: 13.40, col: 112, rent: 1450, home: 520000, pop: 3700000, industry: 62, jobs: 82, airport: 'ber', tags: ['festival', 'affordable', 'creative'] }),
-  city({ id: 'es-md-madrid', name: 'Madrid', region: 'es-29', tz: 'Europe/Madrid', lat: 40.42, lon: -3.70, col: 102, rent: 1300, home: 420000, pop: 3300000, industry: 56, jobs: 78, airport: 'mad', tags: ['production hub', 'sunny'] }),
-  city({ id: 'es-cat-barcelona', name: 'Barcelona', region: 'es-56', tz: 'Europe/Madrid', lat: 41.39, lon: 2.17, col: 108, rent: 1400, home: 480000, pop: 1620000, industry: 52, jobs: 76, airport: 'bcn', tags: ['locations', 'beach', 'design'] }),
-  city({ id: 'it-laz-rome', name: 'Rome', region: 'it-07', tz: 'Europe/Rome', lat: 41.90, lon: 12.50, col: 104, rent: 1250, home: 430000, pop: 2800000, industry: 58, jobs: 70, airport: 'fco', tags: ['historic studios', 'locations'] }),
-  city({ id: 'au-nsw-sydney', name: 'Sydney', region: 'au-02', tz: 'Australia/Sydney', lat: -33.87, lon: 151.21, col: 141, rent: 2400, home: 1050000, pop: 5300000, industry: 66, jobs: 86, airport: 'syd', tags: ['southern hemisphere', 'harbour', 'production hub'] }),
-  city({ id: 'au-vic-melbourne', name: 'Melbourne', region: 'au-07', tz: 'Australia/Melbourne', lat: -37.81, lon: 144.96, col: 128, rent: 1900, home: 780000, pop: 5000000, industry: 58, jobs: 84, airport: 'mel', tags: ['southern hemisphere', 'arts', 'coffee'] }),
-  city({ id: 'au-qld-goldcoast', name: 'Gold Coast', region: 'au-04', tz: 'Australia/Brisbane', lat: -28.02, lon: 153.40, col: 118, rent: 1700, home: 720000, pop: 640000, industry: 62, jobs: 58, tags: ['studios', 'incentives', 'beach', 'no daylight saving'] }),
-  city({ id: 'nz-wgn-wellington', name: 'Wellington', region: 'nz-g2', tz: 'Pacific/Auckland', lat: -41.29, lon: 174.78, col: 116, rent: 1650, home: 640000, pop: 215000, industry: 72, jobs: 58, airport: 'wlg', tags: ['vfx', 'southern hemisphere', 'incentives'] }),
-  city({ id: 'nz-akl-auckland', name: 'Auckland', region: 'nz-e7', tz: 'Pacific/Auckland', lat: -36.85, lon: 174.76, col: 122, rent: 1750, home: 720000, pop: 1650000, industry: 56, jobs: 72, airport: 'akl', tags: ['southern hemisphere', 'locations'] }),
-  city({ id: 'jp-13-tokyo', name: 'Tokyo', region: 'jp-40', tz: 'Asia/Tokyo', lat: 35.68, lon: 139.69, col: 126, rent: 1500, home: 620000, pop: 13900000, industry: 62, jobs: 92, airport: 'hnd', tags: ['international', 'animation', 'dense'] }),
-  city({ id: 'kr-11-seoul', name: 'Seoul', region: 'kr-11', tz: 'Asia/Seoul', lat: 37.57, lon: 126.98, col: 118, rent: 1350, home: 700000, pop: 9700000, industry: 68, jobs: 90, airport: 'icn', tags: ['international', 'television', 'music'] }),
-  city({ id: 'mx-cmx-mexicocity', name: 'Mexico City', region: 'mx-09', tz: 'America/Mexico_City', lat: 19.43, lon: -99.13, col: 68, rent: 900, home: 250000, pop: 9200000, industry: 54, jobs: 80, airport: 'mex', tags: ['affordable', 'production hub'] }),
-  city({ id: 'ae-du-dubai', name: 'Dubai', region: 'ae-03', tz: 'Asia/Dubai', lat: 25.20, lon: 55.27, col: 134, rent: 2200, home: 640000, pop: 3600000, industry: 42, jobs: 82, airport: 'dxb', tags: ['no income tax', 'luxury', 'international'] }),
+  city({ id: 'us-ca-losangeles', name: 'Los Angeles', aliases: ['LA'], region: 'us-ca', tz: 'America/Los_Angeles', lat: 34.05, lon: -118.24, col: 152, rent: 2450, home: 985000, pop: 3900000, airport: 'lax', tags: ['film', 'television', 'beach', 'entertainment capital'] }),
+  city({ id: 'us-ca-burbank', name: 'Burbank', region: 'us-ca', tz: 'America/Los_Angeles', lat: 34.18, lon: -118.31, col: 148, rent: 2350, home: 1050000, pop: 107000, airport: 'bur', tags: ['studios', 'television', 'production'] }),
+  city({ id: 'us-ca-santamonica', name: 'Santa Monica', region: 'us-ca', tz: 'America/Los_Angeles', lat: 34.02, lon: -118.49, col: 178, rent: 3300, home: 1750000, pop: 93000, tags: ['beach', 'agencies', 'affluent'] }),
+  city({ id: 'us-ca-sanfrancisco', name: 'San Francisco', region: 'us-ca', tz: 'America/Los_Angeles', lat: 37.77, lon: -122.42, col: 178, rent: 3200, home: 1300000, pop: 810000, airport: 'sfo', tags: ['tech', 'expensive', 'coastal'] }),
+  city({ id: 'us-ca-sandiego', name: 'San Diego', region: 'us-ca', tz: 'America/Los_Angeles', lat: 32.72, lon: -117.16, col: 143, rent: 2500, home: 900000, pop: 1380000, airport: 'san', tags: ['beach', 'military', 'relaxed'] }),
+  city({ id: 'us-ny-newyork', name: 'New York', aliases: ['NYC', 'Manhattan'], region: 'us-ny', tz: 'America/New_York', lat: 40.71, lon: -74.01, col: 168, rent: 3600, home: 780000, pop: 8300000, airport: 'jfk', tags: ['theatre', 'television', 'finance', 'publishing'] }),
+  city({ id: 'us-ga-atlanta', name: 'Atlanta', region: 'us-ga', tz: 'America/New_York', lat: 33.75, lon: -84.39, col: 104, rent: 1750, home: 400000, pop: 500000, airport: 'atl', tags: ['production hub', 'incentives', 'affordable'] }),
+  city({ id: 'us-tx-austin', name: 'Austin', region: 'us-tx', tz: 'America/Chicago', lat: 30.27, lon: -97.74, col: 112, rent: 1700, home: 490000, pop: 970000, airport: 'aus', tags: ['music', 'festival', 'tech'] }),
+  city({ id: 'us-tx-dallas', name: 'Dallas', region: 'us-tx', tz: 'America/Chicago', lat: 32.78, lon: -96.80, col: 101, rent: 1500, home: 390000, pop: 1300000, airport: 'dfw', tags: ['business', 'affordable'] }),
+  city({ id: 'us-fl-miami', name: 'Miami', region: 'us-fl', tz: 'America/New_York', lat: 25.76, lon: -80.19, col: 128, rent: 2600, home: 590000, pop: 450000, airport: 'mia', tags: ['beach', 'international', 'nightlife'] }),
+  city({ id: 'us-il-chicago', name: 'Chicago', region: 'us-il', tz: 'America/Chicago', lat: 41.88, lon: -87.63, col: 108, rent: 1950, home: 360000, pop: 2700000, airport: 'ord', tags: ['theatre', 'improv', 'architecture'] }),
+  city({ id: 'us-nv-lasvegas', name: 'Las Vegas', region: 'us-nv', tz: 'America/Los_Angeles', lat: 36.17, lon: -115.14, col: 105, rent: 1550, home: 430000, pop: 660000, airport: 'las', tags: ['no state income tax', 'entertainment', 'hospitality'] }),
+  city({ id: 'us-wa-seattle', name: 'Seattle', region: 'us-wa', tz: 'America/Los_Angeles', lat: 47.61, lon: -122.33, col: 148, rent: 2250, home: 830000, pop: 750000, airport: 'sea', tags: ['tech', 'no state income tax', 'rain'] }),
+  city({ id: 'us-or-portland', name: 'Portland', region: 'us-or', tz: 'America/Los_Angeles', lat: 45.51, lon: -122.68, col: 121, rent: 1700, home: 540000, pop: 640000, airport: 'pdx', tags: ['no sales tax', 'creative', 'green'] }),
+  city({ id: 'us-co-denver', name: 'Denver', region: 'us-co', tz: 'America/Denver', lat: 39.74, lon: -104.99, col: 115, rent: 1800, home: 570000, pop: 715000, airport: 'den', tags: ['mountains', 'outdoors'] }),
+  city({ id: 'us-nm-santafe', name: 'Santa Fe', region: 'us-nm', tz: 'America/Denver', lat: 35.69, lon: -105.94, col: 106, rent: 1600, home: 560000, pop: 88000, tags: ['incentives', 'desert', 'arts'] }),
+  city({ id: 'us-la-neworleans', name: 'New Orleans', region: 'us-la', tz: 'America/Chicago', lat: 29.95, lon: -90.07, col: 96, rent: 1400, home: 300000, pop: 380000, airport: 'msy', tags: ['incentives', 'music', 'historic'] }),
+  city({ id: 'us-nc-wilmington', name: 'Wilmington', region: 'us-nc', tz: 'America/New_York', lat: 34.23, lon: -77.94, col: 94, rent: 1400, home: 340000, pop: 120000, tags: ['studios', 'coastal', 'affordable'] }),
+  city({ id: 'us-tn-nashville', name: 'Nashville', region: 'us-tn', tz: 'America/Chicago', lat: 36.16, lon: -86.78, col: 103, rent: 1650, home: 450000, pop: 690000, airport: 'bna', tags: ['music', 'no state income tax'] }),
+  city({ id: 'us-ma-boston', name: 'Boston', region: 'us-ma', tz: 'America/New_York', lat: 42.36, lon: -71.06, col: 149, rent: 2900, home: 760000, pop: 650000, airport: 'bos', tags: ['universities', 'historic'] }),
+  city({ id: 'us-az-phoenix', name: 'Phoenix', region: 'us-az', tz: 'America/Phoenix', lat: 33.45, lon: -112.07, col: 103, rent: 1550, home: 440000, pop: 1650000, airport: 'phx', tags: ['no daylight saving', 'desert', 'affordable'] }),
+  city({ id: 'us-hi-honolulu', name: 'Honolulu', region: 'us-hi', tz: 'Pacific/Honolulu', lat: 21.31, lon: -157.86, col: 179, rent: 2400, home: 830000, pop: 350000, airport: 'hnl', tags: ['island', 'no daylight saving', 'tourism'] }),
+  city({ id: 'ca-bc-vancouver', name: 'Vancouver', region: 'ca-02', tz: 'America/Vancouver', lat: 49.28, lon: -123.12, col: 137, rent: 2400, home: 1150000, pop: 675000, airport: 'yvr', tags: ['production hub', 'incentives', 'mountains'] }),
+  city({ id: 'ca-on-toronto', name: 'Toronto', region: 'ca-08', tz: 'America/Toronto', lat: 43.65, lon: -79.38, col: 128, rent: 2200, home: 900000, pop: 2900000, airport: 'yyz', tags: ['production hub', 'incentives', 'finance'] }),
+  city({ id: 'ca-qc-montreal', name: 'Montreal', region: 'ca-10', tz: 'America/Toronto', lat: 45.50, lon: -73.57, col: 105, rent: 1500, home: 550000, pop: 1760000, airport: 'yul', tags: ['vfx', 'incentives', 'bilingual'] }),
+  city({ id: 'uk-eng-london', name: 'London', region: 'uk-eng', tz: 'Europe/London', lat: 51.51, lon: -0.13, col: 158, rent: 2700, home: 780000, pop: 8900000, airport: 'lhr', tags: ['theatre', 'production hub', 'international'] }),
+  city({ id: 'uk-eng-manchester', name: 'Manchester', region: 'uk-eng', tz: 'Europe/London', lat: 53.48, lon: -2.24, col: 108, rent: 1350, home: 330000, pop: 553000, airport: 'man', tags: ['television', 'affordable', 'music'] }),
+  city({ id: 'uk-sct-glasgow', name: 'Glasgow', region: 'uk-sct', tz: 'Europe/London', lat: 55.86, lon: -4.25, col: 98, rent: 1100, home: 250000, pop: 635000, tags: ['incentives', 'locations'] }),
+  city({ id: 'ie-lei-dublin', name: 'Dublin', region: 'ie-l', tz: 'Europe/Dublin', lat: 53.35, lon: -6.26, col: 132, rent: 2100, home: 520000, pop: 590000, airport: 'dub', tags: ['incentives', 'production'] }),
+  city({ id: 'fr-idf-paris', name: 'Paris', region: 'fr-11', tz: 'Europe/Paris', lat: 48.86, lon: 2.35, col: 142, rent: 2200, home: 780000, pop: 2100000, airport: 'cdg', tags: ['festival', 'fashion', 'arthouse'] }),
+  city({ id: 'fr-paca-cannes', name: 'Cannes', region: 'fr-93', tz: 'Europe/Paris', lat: 43.55, lon: 7.02, col: 138, rent: 1900, home: 720000, pop: 74000, tags: ['festival', 'market', 'riviera'] }),
+  city({ id: 'de-be-berlin', name: 'Berlin', region: 'de-16', tz: 'Europe/Berlin', lat: 52.52, lon: 13.40, col: 112, rent: 1450, home: 520000, pop: 3700000, airport: 'ber', tags: ['festival', 'affordable', 'creative'] }),
+  city({ id: 'es-md-madrid', name: 'Madrid', region: 'es-29', tz: 'Europe/Madrid', lat: 40.42, lon: -3.70, col: 102, rent: 1300, home: 420000, pop: 3300000, airport: 'mad', tags: ['production hub', 'sunny'] }),
+  city({ id: 'es-cat-barcelona', name: 'Barcelona', region: 'es-56', tz: 'Europe/Madrid', lat: 41.39, lon: 2.17, col: 108, rent: 1400, home: 480000, pop: 1620000, airport: 'bcn', tags: ['locations', 'beach', 'design'] }),
+  city({ id: 'it-laz-rome', name: 'Rome', region: 'it-07', tz: 'Europe/Rome', lat: 41.90, lon: 12.50, col: 104, rent: 1250, home: 430000, pop: 2800000, airport: 'fco', tags: ['historic studios', 'locations'] }),
+  city({ id: 'au-nsw-sydney', name: 'Sydney', region: 'au-02', tz: 'Australia/Sydney', lat: -33.87, lon: 151.21, col: 141, rent: 2400, home: 1050000, pop: 5300000, airport: 'syd', tags: ['southern hemisphere', 'harbour', 'production hub'] }),
+  city({ id: 'au-vic-melbourne', name: 'Melbourne', region: 'au-07', tz: 'Australia/Melbourne', lat: -37.81, lon: 144.96, col: 128, rent: 1900, home: 780000, pop: 5000000, airport: 'mel', tags: ['southern hemisphere', 'arts', 'coffee'] }),
+  city({ id: 'au-qld-goldcoast', name: 'Gold Coast', region: 'au-04', tz: 'Australia/Brisbane', lat: -28.02, lon: 153.40, col: 118, rent: 1700, home: 720000, pop: 640000, tags: ['studios', 'incentives', 'beach', 'no daylight saving'] }),
+  city({ id: 'nz-wgn-wellington', name: 'Wellington', region: 'nz-g2', tz: 'Pacific/Auckland', lat: -41.29, lon: 174.78, col: 116, rent: 1650, home: 640000, pop: 215000, airport: 'wlg', tags: ['vfx', 'southern hemisphere', 'incentives'] }),
+  city({ id: 'nz-akl-auckland', name: 'Auckland', region: 'nz-e7', tz: 'Pacific/Auckland', lat: -36.85, lon: 174.76, col: 122, rent: 1750, home: 720000, pop: 1650000, airport: 'akl', tags: ['southern hemisphere', 'locations'] }),
+  city({ id: 'jp-13-tokyo', name: 'Tokyo', region: 'jp-40', tz: 'Asia/Tokyo', lat: 35.68, lon: 139.69, col: 126, rent: 1500, home: 620000, pop: 13900000, airport: 'hnd', tags: ['international', 'animation', 'dense'] }),
+  city({ id: 'kr-11-seoul', name: 'Seoul', region: 'kr-11', tz: 'Asia/Seoul', lat: 37.57, lon: 126.98, col: 118, rent: 1350, home: 700000, pop: 9700000, airport: 'icn', tags: ['international', 'television', 'music'] }),
+  city({ id: 'mx-cmx-mexicocity', name: 'Mexico City', region: 'mx-09', tz: 'America/Mexico_City', lat: 19.43, lon: -99.13, col: 68, rent: 900, home: 250000, pop: 9200000, airport: 'mex', tags: ['affordable', 'production hub'] }),
+  city({ id: 'ae-du-dubai', name: 'Dubai', region: 'ae-03', tz: 'Asia/Dubai', lat: 25.20, lon: 55.27, col: 134, rent: 2200, home: 640000, pop: 3600000, airport: 'dxb', tags: ['no income tax', 'luxury', 'international'] }),
 ];
 
 // ---------------------------------------------------------------------------
@@ -317,10 +316,6 @@ function deriveCity(raw: RawCity): City {
     medianRentCents: monthlyRent * 100,
     medianHomePriceCents: homePrice * 100,
     population: raw.population,
-    // The industry is where SLATE says it is. Everywhere else, you would be
-    // working remotely or moving.
-    industryPresence: 0,
-    jobMarketDepth: Math.round(Math.min(92, 18 + scale * 17)),
     jurisdictionCode: `${REGIONS.get(raw.regionId)?.jurisdictionCode ?? country?.jurisdictionCode ?? raw.countryId.toUpperCase()}-${raw.id.split('-').pop()}`,
     tags: [],
     source: 'calibrated_estimate',
@@ -352,9 +347,9 @@ const CALIBRATED_IDS = new Set(CALIBRATED_CITIES.map((c) => c.id));
  * does not clear the rule.
  *
  * These are real rows, copied out of `public/geo/is.tsv`, and they go through
- * `deriveCity` exactly like every other uncalibrated place. That matters: they
- * get the derived economics and an industry presence of zero, which for
- * Iceland is not a shortcut but the fact the premise rests on.
+ * `deriveCity` exactly like every other uncalibrated place: they get the
+ * derived economics, and until 2026-09-27 an industry presence of zero,
+ * which for Iceland was the fact the premise rested on.
  *
  * New Haven joined them on 2026-09-26, copied out of `public/geo/us.tsv`: a
  * new life begins at the drama school there (`content/school.ts`), and
