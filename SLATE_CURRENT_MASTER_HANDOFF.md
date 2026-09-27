@@ -68,9 +68,9 @@ When this file and the tree disagree, the tree wins. Correct this file in the sa
 >   - Rent owed to a landlord is no longer reported, in `reportMonth` or `reportWithoutCard`; an eviction or collections still is.
 > - **Holidays the engine reads:** `content/usholidays.ts` computes the Federal Reserve's holidays and SAG-AFTRA's as rules, because the calendar's holiday files are fetched at run time. A US bank's next business day skips the Fed's, and a screen or voice job's days skip SAG-AFTRA's, Good Friday and the day after Thanksgiving among them. Weather stays the calendar's, in UNBITTEN, with the reason.
 > - **The screens, against the engine (the UI audit, first half):**
->   - The School screen offers the Cabaret, the Summer Company and an elective shift only where the engine will take them: ,  and  in , which the commands read too.
+>   - The School screen offers the Cabaret, the Summer Company and an elective shift only where the engine will take them: `cabaretRefusal`, `summerRefusal` and `shiftRefusal` in `systems/school.ts`, which the commands read too.
 >   - The Yale Account reads the term they're in.
->   - Work-study books the Bulletin's 150 assigned hours a year and no more (), and the Cabaret's week clears work-study shifts.
+>   - Work-study books the Bulletin's 150 assigned hours a year and no more (`assignedBooked`), and the Cabaret's week clears work-study shifts.
 >   - Home: Taxes And Cover shows from the first term, the School panel stops saying "Next: Classes" after the degree, and the tax deadline is New York's.
 >   - Career: the reel counts the filmed monologues, the week's submissions read the agency's city, and the union and work-cost figures are converted.
 >   - Papers: its dollar figures are converted, and Enroll and File A Claim show only where the engine allows them.
