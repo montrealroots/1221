@@ -289,3 +289,24 @@ export const SCHOOL_SEASON = {
   rehearsalWeeks: { thesis: 5, hughes: 3, shakespeare: 4, carlotta: 3 },
   source: 'https://bulletin.yale.edu (School of Drama, 2026–2027: Acting, Production, Casting); https://drama.yale.edu/productions; LORT Rule 39(E)',
 } as const;
+
+/**
+ * The curriculum's own labs and showings (the Bulletin, 2026–27): Drama 50,
+ * The Theatrical Event, a three-week laboratory in the first term in
+ * residence; the New Play Lab, the first-year playwrights' new one-act
+ * plays workshopped for three weeks by the first-year actors, directors and
+ * dramaturgs in the spring; You Are the Creator, each third-year's own solo
+ * piece, made across the fall and shared with the Acting program at the
+ * start of the second semester; and the filmed monologues posted at the end
+ * of the final term. SLATE's estimate: when in the term each lab falls
+ * (Drama 50 from the second week of classes, the New Play Lab after the
+ * spring recess), its afternoon hours, and the showing's day.
+ */
+export const LABS = {
+  drama50: { name: 'Drama 50: The Theatrical Event', term: 0, weeks: 3 },
+  newPlayLab: { name: 'The New Play Lab', term: 1, weeks: 3 },
+  creator: { name: 'You Are The Creator', term: 5 },
+  from: 15,
+  minutes: 180,
+  source: 'https://bulletin.yale.edu (School of Drama, 2026–2027: DRAM 50a, DRAM 51b, DRAM 363a, the acting plan of study)',
+} as const;

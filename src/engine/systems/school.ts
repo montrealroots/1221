@@ -35,6 +35,10 @@
  *   casting pool; a missed performance or understudy call is a grave breach.
  *   Until 2026-09-27 only the class's best actor went to Yale Rep, and
  *   everybody else was in a project named by the term.
+ * - **Labs.** Drama 50's three weeks in the first fall, the New Play Lab's
+ *   three in the first spring, and the third year's solo showing, You Are
+ *   The Creator, each afternoon a call like a rehearsal's (`LABS`); and at
+ *   the degree, the filmed monologues a reel can be cut from.
  * - **The Cabaret and the summer.** A show a term at the Yale Cabaret, the
  *   students' own theater, on the chair's approval, never on academic
  *   warning, in a week clear of recesses and casting; and in the spring of
@@ -56,7 +60,7 @@ import { formatDate, instantFromZoned, zonedParts, MS_DAY, type Instant } from '
 import { exchange } from '../content/currency';
 import { CITIES } from '../content/geography';
 import {
-  CLASSES_2026_27, COST_2026_27, COURSES, ORIENTATION_2026, SCHOOL_SEASON, SEAGULL_2027, SKILLS, SUMMER_CABARET, TERM_STARTS_2026_27, WORK_STUDY, YALE_CABARET, YALE_DRAMA,
+  CLASSES_2026_27, COST_2026_27, COURSES, LABS, ORIENTATION_2026, SCHOOL_SEASON, SEAGULL_2027, SKILLS, SUMMER_CABARET, TERM_STARTS_2026_27, WORK_STUDY, YALE_CABARET, YALE_DRAMA,
   type Course, type SchoolDate, type Skill, type Term,
 } from '../content/school';
 import { readiness } from './life';
@@ -124,6 +128,8 @@ export interface SchoolRecord {
   cabaret?: { term: number; week: string; performed: number };
   /** The Summer Cabaret company: the summer's year, the shows played in each run, whether it's over. */
   summer?: { year: number; played: number[]; until: Instant; out?: boolean };
+  /** The third year's filmed monologues, posted at the end of the final term: footage a reel can be cut from. */
+  filmed?: boolean;
   history: TermReview[];
   casting?: Casting;
   /** A Yale Rep assignment beside it: an understudy, or a role at a director's invitation. */
@@ -145,6 +151,7 @@ export const CABARET_KIND = 'school.cabaret';
 export const SUMMER_KIND = 'school.summer';
 export const STIPEND_KIND = 'school.stipend';
 export const RECESS_KIND = 'school.recess';
+export const LAB_KIND = 'school.lab';
 
 /** SLATE's estimates of what the school doesn't publish, each named where it's used. */
 export const ESTIMATE = {
@@ -591,6 +598,8 @@ function setStanding(sim: Simulation, person: Person, to: Standing, reason: stri
   school.standing = to;
   if (to === 'dismissed' || to === 'graduated') {
     keepCredit(sim, school);
+    // The degree's filmed monologues, posted at the end of the final term.
+    if (to === 'graduated') school.filmed = true;
     for (const item of sim.universe.scheduled) {
       if (item.status === 'pending' && item.kind.startsWith('school.') && item.payload.personId === person.id) sim.timeline.cancel(item.id, sim.now);
     }
@@ -682,6 +691,40 @@ export function rehearsalDays(term: number, opening: SchoolDate, weeks: number):
     out.push(d);
   }
   return out;
+}
+
+/**
+ * A term's labs (`LABS`): Drama 50's and the New Play Lab's three weeks of
+ * afternoon calls, weekdays and Tuesday to Friday, a day off skipped; and in
+ * the last spring, You Are The Creator's showing on the first Friday of
+ * classes.
+ */
+export function labDays(term: number): { name: string; days: SchoolDate[]; showing: boolean } | undefined {
+  const period = classPeriod(term);
+  const free = (d: SchoolDate) => !period.off.some(([a, b]) => keyOf(d) >= a && keyOf(d) <= b);
+  if (term === LABS.drama50.term || term === LABS.newPlayLab.term) {
+    const lab = term === LABS.drama50.term ? LABS.drama50 : LABS.newPlayLab;
+    // Drama 50 from the second week of classes; the New Play Lab from the Tuesday after the spring recess.
+    // The term's recess: its longest run of days off.
+    const span = ([a, b]: readonly [string, string]) => Date.parse(b) - Date.parse(a);
+    const recess = period.off.filter(([a, b]) => a >= keyOf(period.from) && b <= keyOf(period.to)).reduce((best, one) => (span(one) > span(best) ? one : best));
+    const start = term === LABS.drama50.term ? addDays(period.from, 7) : addDays(parseKey(recess![1]), 1);
+    const days: SchoolDate[] = [];
+    for (let d = start; keyOf(d) < keyOf(addDays(start, 7 * lab.weeks)); d = addDays(d, 1)) {
+      const wd = weekday(d);
+      const open = term === LABS.drama50.term ? wd >= 1 && wd <= 5 : wd >= 2 && wd <= 5;
+      if (open && free(d)) days.push(d);
+    }
+    return { name: lab.name, days, showing: false };
+  }
+  if (term === LABS.creator.term) return { name: LABS.creator.name, days: [dayOnOrAfter(period.from.year, period.from.month, period.from.day, 5)], showing: true };
+  return undefined;
+}
+
+function scheduleLabs(sim: Simulation, person: Person, term: number): void {
+  const lab = labDays(term);
+  if (!lab) return;
+  for (const d of lab.days) schedule(sim, person, at(d, LABS.from), { kind: LAB_KIND, label: lab.showing ? `${lab.name}: Your Showing` : lab.name, minutes: LABS.minutes, payload: { showing: lab.showing } });
 }
 
 /** Whether a term brings a Yale Rep assignment: once a year, a first-year's spring and a second and third year's fall. */
@@ -826,6 +869,7 @@ export function registerSchool(sim: Simulation): void {
     }
     // A first or second year's spring ends in a summer that's theirs: its first Monday, the business's week begins (`systems/career.ts`).
     if (!termStart(term).fall && yearOfTerm(term) < 3) schedule(s, person, at(recessStart(term), 9), { kind: RECESS_KIND, label: 'Summer Recess', minutes: 0, requiresPlayer: false });
+    scheduleLabs(s, person, term);
     if (term >= 1) cast(s, person, term);
     // The last spring ends in the Actor Showcase.
     if (term === YALE_DRAMA.terms - 1) bookShowcase(s, person);
@@ -1063,6 +1107,25 @@ export function registerSchool(sim: Simulation): void {
       tire(person, ESTIMATE.energy.rehearsal);
       enjoyWork(person, { medium: 'stage', away: false, rehearsal: true });
     }
+  });
+
+  sim.onSchedule(LAB_KIND, (item) => {
+    const person = personOf(item);
+    const school = person?.school;
+    if (!person || !school || !person.craft) return;
+    school.tally.calls += 1;
+    if (!present(person, item.at)) { item.status = 'missed'; return; }
+    school.tally.answered += 1;
+    if (item.payload.showing === true) {
+      grow(person.craft, 'acting', focusOf(person), 3);
+      tire(person, ESTIMATE.energy.performance);
+      enjoyWork(person, { medium: 'stage', away: false });
+      return;
+    }
+    grow(person.craft, 'acting', focusOf(person));
+    grow(person.craft, 'text', focusOf(person));
+    tire(person, ESTIMATE.energy.rehearsal);
+    enjoyWork(person, { medium: 'stage', away: false, rehearsal: true });
   });
 
   sim.onSchedule(RECESS_KIND, (item, s) => {

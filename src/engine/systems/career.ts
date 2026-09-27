@@ -1281,7 +1281,8 @@ export function registerCareer(sim: Simulation): void {
   sim.onCommand<Record<string, never>, { at: Instant }>('career.reel', (_p, { sim: s }) => {
     const person = s.player;
     const career = careerOf(person);
-    if (!career.credits.some((c) => roleById(c.roleId).medium === 'screen')) throw new CommandError('A reel is cut from footage, and you have no screen credit yet.');
+    // Footage: a screen credit, or the school's filmed monologues.
+    if (!career.credits.some((c) => roleById(c.roleId).medium === 'screen') && !person.school?.filmed) throw new CommandError('A reel is cut from footage, and you have no screen credit yet.');
     const cur = saveCurrency(s.universe);
     if (!payForWork(s, person, usd(WORK_COSTS.reel, cur), 'A reel, edited')) throw new CommandError(`An edit is ${formatMoney(usd(WORK_COSTS.reel, cur), cur)}, which the bank can’t cover.`);
     career.reelAt = s.now;

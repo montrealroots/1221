@@ -8,9 +8,9 @@ import { createSave, quickSave } from '@/engine';
 import { atSchool, defaultConfig, newLifeConfig } from '@/engine/world/bootstrap';
 import { MS_DAY, MS_HOUR, instantFromZoned, zonedParts } from '@/engine/core/time';
 import { rentAt } from '@/engine/content/rents';
-import { COST_2026_27, COURSES, SEAGULL_2027, SKILLS, SUMMER_CABARET, WORK_STUDY, YALE_CABARET, YALE_DRAMA } from '@/engine/content/school';
+import { COST_2026_27, COURSES, LABS, SEAGULL_2027, SKILLS, SUMMER_CABARET, WORK_STUDY, YALE_CABARET, YALE_DRAMA } from '@/engine/content/school';
 import {
-  CABARET_KIND, CALL_KIND, ESTIMATE, rehearsalDays, repTerm, schoolProduction, SHIFT_KIND, STIPEND_KIND, SUMMER_KIND, cabaretSeason, cabaretWeek, summerOf, classPeriod, summerRuns, daysOffIn, nextClasses, evaluate, goesOn, isClassDay, isShiftDay, meanCraft, rankIn,
+  CABARET_KIND, CALL_KIND, ESTIMATE, LAB_KIND, labDays, rehearsalDays, repTerm, schoolProduction, SHIFT_KIND, STIPEND_KIND, SUMMER_KIND, cabaretSeason, cabaretWeek, summerOf, classPeriod, summerRuns, daysOffIn, nextClasses, evaluate, goesOn, isClassDay, isShiftDay, meanCraft, rankIn,
   sessionGain, termAccount, termStart, timetable, yearOfStudy,
 } from '@/engine/systems/school';
 import type { Simulation } from '@/engine/core/simulation';
@@ -511,6 +511,8 @@ describe('evaluation', () => {
     expect(school.history.map((r) => r.standing)).toEqual(['good', 'good', 'good', 'good', 'good', 'good']);
     expect(school.standing).toBe('graduated');
     expect(school.termsBegun).toBe(6);
+    // The filmed monologues, posted at the end of the final term.
+    expect(school.filmed).toBe(true);
     expect(yearOfStudy(sim.player)).toBe(3);
     expect(school.workStudy.yearHours).toBeGreaterThan(100);
     expect(school.workStudy.yearHours).toBeLessThanOrEqual(WORK_STUDY.assignedHours + WORK_STUDY.electiveHours);
@@ -697,5 +699,48 @@ describe('the summers, for work', () => {
     sim.player.currentLocationId = 'us-ca-losangeles';
     sim.advanceTo(next[1]!.at + 60_000);
     expect(sim.player.currentLocationId).toBe('us-ca-losangeles');
+  }, 180_000);
+});
+
+describe('the curriculum’s labs', () => {
+  it('runs Drama 50 in the first fall, the New Play Lab after the first spring recess, and the third year’s solo showing', () => {
+    const d50 = labDays(0)!;
+    expect(d50.name).toBe(LABS.drama50.name);
+    expect(d50.days[0]).toEqual({ year: 2026, month: 9, day: 8 });
+    // Labor Day is off.
+    expect(d50.days.some((d) => d.month === 9 && d.day === 7)).toBe(false);
+    expect(d50.days.length).toBe(14);
+    const npl = labDays(1)!;
+    expect(npl.days[0]).toEqual({ year: 2027, month: 3, day: 16 });
+    expect(npl.days.every((d) => { const wd = new Date(Date.UTC(d.year, d.month - 1, d.day)).getUTCDay(); return wd >= 2 && wd <= 5; })).toBe(true);
+    // Three weeks of Tuesday to Friday, less the work period of 30 March to 1 April.
+    expect(npl.days.length).toBe(9);
+    const solo = labDays(5)!;
+    expect(solo).toMatchObject({ name: LABS.creator.name, showing: true });
+    expect(solo.days).toHaveLength(1);
+    expect(new Date(Date.UTC(solo.days[0]!.year, solo.days[0]!.month - 1, solo.days[0]!.day)).getUTCDay()).toBe(5);
+    expect(labDays(2)).toBeUndefined();
+    expect(labDays(3)).toBeUndefined();
+  });
+
+  it('calls a first-year to Drama 50, grows them there, and counts a missed afternoon', () => {
+    const sim = life('drama50');
+    const control = life('drama50');
+    play(sim, at(2026, 9, 1, 12));
+    play(control, at(2026, 9, 1, 12));
+    const labs = pending(sim, LAB_KIND);
+    expect(labs).toHaveLength(14);
+    // The control skips every lab afternoon in New York.
+    for (const lab of pending(control, LAB_KIND)) {
+      play(control, lab.at - 60_000);
+      control.player.currentLocationId = 'us-ny-newyork';
+      control.advanceTo(lab.at + 60_000);
+      control.player.currentLocationId = YALE_DRAMA.cityId;
+    }
+    play(sim, labs.at(-1)!.at + 60_000);
+    play(control, labs.at(-1)!.at + 60_000);
+    expect(sim.player.school!.tally.calls - sim.player.school!.tally.answered).toBe(0);
+    expect(control.player.school!.tally.calls - control.player.school!.tally.answered).toBe(14);
+    expect(sim.player.craft!.text).toBeGreaterThan(control.player.craft!.text);
   }, 180_000);
 });

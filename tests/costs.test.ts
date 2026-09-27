@@ -76,6 +76,10 @@ describe('an actor’s working costs', () => {
     expect(sim.execute({ kind: 'career.reel', payload: {} })).toMatchObject({ ok: false, error: 'A reel is cut from footage, and you have no screen credit yet.' });
     career.credits.push({ roleId: 'lort-b', year: 2026, cityId: 'us-ny-newyork' });
     expect(sim.execute({ kind: 'career.reel', payload: {} }).ok).toBe(false);
+    // The school's filmed monologues are footage too.
+    const graduate = pro('filmed');
+    graduate.player.school = { filmed: true } as unknown as NonNullable<typeof graduate.player.school>;
+    expect(graduate.execute({ kind: 'career.reel', payload: {} }).ok).toBe(true);
     career.credits.push({ roleId: 'costar', year: 2026, cityId: 'us-ny-newyork' });
     expect(sim.execute({ kind: 'career.reel', payload: {} }).ok).toBe(true);
     expect(career.reelAt).toBe(sim.now);
