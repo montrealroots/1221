@@ -264,6 +264,16 @@ describe('classes', () => {
     expect(sim.execute({ kind: 'school.call_in_sick', payload: {} }).ok).toBe(true);
   });
 
+  it('can’t be called in sick once the day’s classes have run', () => {
+    const sim = life('sick-late');
+    play(sim, at(2026, 9, 1, 8));
+    sim.player.wellbeing.condition = ESTIMATE.sickBelow - 10;
+    sim.advanceTo(at(2026, 9, 1, 12));
+    const late = sim.execute({ kind: 'school.call_in_sick', payload: {} });
+    expect(late.ok).toBe(false);
+    expect(late.error).toMatch(/been and gone/);
+  });
+
   it('can’t be called in sick from on a day without them', () => {
     const sim = life('weekend');
     play(sim, at(2026, 9, 5, 8));

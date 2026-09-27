@@ -105,6 +105,37 @@ describe('rent by hand', () => {
   });
 });
 
+describe('rent paid ahead', () => {
+  it('goes against the next rent however it’s paid, a direct debit and a check alike', () => {
+    for (const how of ['auto', 'check'] as const) {
+      withNorm('US', US_CHECKS);
+      const sim = lifeIn('us-ny-newyork', { wealth: 'comfortable', bankId: 'us-chase' }, `ahead-${how}`);
+      run(sim, 'bank.set_payments', { rent: how });
+      setCurrent(sim, 1_000_000_00);
+      run(sim, 'home.pay_landlord', { amount: 500_00 });
+      expect(paymentsOf(sim.player).rentCredit).toBe(500_00);
+      const rentLine = () => sim.nominalAccount('expense', 'Rent').balance;
+      const before = rentLine();
+      const fromBank = () => sim.universe.transactions.filter((t) => t.category === 'rent' && t.memo !== 'Rent, paid ahead').flatMap((t) => t.postings).filter((p) => p.accountId === current(sim).id).reduce((a, p) => a - p.amount, 0);
+      const bankBefore = fromBank();
+      sim.advanceTo(firstOf(sim, 2) + 5 * MS_DAY);
+      expect(paymentsOf(sim.player).rentCredit).toBe(0);
+      const rent = rentLine() - before;
+      expect(rent).toBeGreaterThan(500_00);
+      // The bank paid the month less what was paid ahead.
+      expect(fromBank() - bankBefore).toBe(rent - 500_00);
+    }
+    // A whole month paid ahead of a check writes no check that month.
+    withNorm('US', US_CHECKS);
+    const whole = lifeIn('us-ny-newyork', { wealth: 'comfortable', bankId: 'us-chase' }, 'ahead-whole');
+    run(whole, 'bank.set_payments', { rent: 'check' });
+    setCurrent(whole, 1_000_000_00);
+    run(whole, 'home.pay_landlord', { amount: 20_000_00 });
+    whole.advanceTo(firstOf(whole, 2) + MS_DAY);
+    expect(whole.universe.scheduled.filter((i) => i.kind === 'bank.check_clears' && i.label.startsWith('Rent'))).toHaveLength(0);
+  });
+});
+
 describe('rent by check', () => {
   it('is cashed days after the 1st, bounces with a fee where the account can’t cover it, and is owed', () => {
     withNorm('US', US_CHECKS);

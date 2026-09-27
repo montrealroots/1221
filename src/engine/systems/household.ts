@@ -300,17 +300,18 @@ function onCard(sim: Simulation, person: Person, amount: Money, memo: string, ca
 }
 
 /** The month's rent, the way it's paid. */
-function payRent(sim: Simulation, person: Person, rent: Money): void {
+function payRent(sim: Simulation, person: Person, full: Money): void {
   const pay = paymentsOf(person);
+  // What they paid ahead goes against it first, however the rest is paid.
+  // Until 2026-09-27 only rent paid by hand read it, and paid ahead of a
+  // check or a direct debit it sat with the landlord for good.
+  const ahead = Math.min(pay.rentCredit ?? 0, full);
+  if (ahead > 0 && person.payments) person.payments.rentCredit = (pay.rentCredit ?? 0) - ahead;
+  if (ahead > 0) sim.post({ memo: 'Rent, paid ahead', category: 'rent', postings: [{ accountId: sim.nominalAccount('expense', 'Rent').id, amount: ahead }, { accountId: sim.nominalAccount('liability_other', 'Rent Paid Ahead').id, amount: -ahead }] });
+  const rent = full - ahead;
+  if (rent <= 0) return;
   if (pay.rent === 'check') { writeCheck(sim, person, rent, 'Rent', 'rent'); return; }
-  if (pay.rent === 'manual') {
-    // What they paid ahead goes against it, and the rest is owed.
-    const ahead = Math.min(pay.rentCredit ?? 0, rent);
-    if (ahead > 0 && person.payments) person.payments.rentCredit = (pay.rentCredit ?? 0) - ahead;
-    if (ahead > 0) sim.post({ memo: 'Rent, paid ahead', category: 'rent', postings: [{ accountId: sim.nominalAccount('expense', 'Rent').id, amount: ahead }, { accountId: sim.nominalAccount('liability_other', 'Rent Paid Ahead').id, amount: -ahead }] });
-    owe(sim, person, rent - ahead, 'Rent', 'rent');
-    return;
-  }
+  if (pay.rent === 'manual') { owe(sim, person, rent, 'Rent', 'rent'); return; }
   if (payFromCurrent(sim, person, rent, 'Rent', 'rent')) return;
   chargeReturned(sim, person, rent);
   owe(sim, person, rent, 'Rent', 'rent');

@@ -743,7 +743,7 @@ export function registerHealth(sim: Simulation): void {
     }
     if (now) throw new CommandError('You have a dental plan.');
     const plan = dentalPlanFor(person, s.now);
-    if (!plan) throw new CommandError('Covered California sells dental only beside its own health plan.');
+    if (!plan) throw new CommandError(BENEFIT_STATE[homeOf(person)] === 'ca' ? 'Covered California sells dental only beside its own health plan.' : 'SLATE sells a dental plan of your own in New York, beside a Covered California plan, and at Yale.');
     const d = DENTAL_PLANS[plan];
     const from = s.now;
     let until: Instant | undefined;

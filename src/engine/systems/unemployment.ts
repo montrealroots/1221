@@ -10,8 +10,9 @@
  * times. The weekly benefit is the state's share of the high quarter, between
  * its floor and its maximum; the first week that would pay is the unpaid
  * waiting week. Each Sunday the week is certified: a week with work pays by
- * New York's hours or less California's share of the earnings, a week away
- * from the state pays nothing, and the claim ends at 26 weeks' benefit, or in
+ * New York's hours, less California's share of the earnings, or less
+ * two-thirds of them in Connecticut, a week abroad pays nothing (a week
+ * elsewhere in the country is certified as an interstate claim is), and the claim ends at 26 weeks' benefit, or in
  * California half the base period's wages, or a year from filing. What's paid
  * is income on the return.
  */
