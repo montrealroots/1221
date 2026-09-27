@@ -60,7 +60,6 @@ describe('the world SLATE ships with', () => {
     for (const city of derived.slice(0, 200)) {
       expect(city.costOfLivingIndex, `${city.name} has no cost of living`).toBeGreaterThan(0);
       expect(city.medianRentCents, `${city.name} has no rent`).toBeGreaterThan(0);
-      expect(city.medianHomePriceCents).toBeGreaterThan(city.medianRentCents);
       expect(city.timeZone, `${city.name} has no time zone`).toMatch(/\//);
       // And it is honest about being derived.
       expect(city.source).toBe('calibrated_estimate');

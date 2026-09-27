@@ -42,6 +42,18 @@ describe('fitness', () => {
     expect(mendsTo(old, at)).toBe(ceilingAt(81).condition);
   });
 
+  it('settles condition at midnight toward what a night mends to, and no lower', () => {
+    const at = 25 * 365.2425 * MS_DAY;
+    const sound = person({ fitness: EVERYDAY_FITNESS });
+    sound.wellbeing.condition = mendsTo(sound, at);
+    settleTheBody(sound, at);
+    expect(sound.wellbeing.condition).toBeCloseTo(mendsTo(sound, at), 9);
+    const worn = person({ fitness: EVERYDAY_FITNESS });
+    worn.wellbeing.condition = 50;
+    settleTheBody(worn, at);
+    expect(worn.wellbeing.condition).toBeCloseTo(50 + (mendsTo(worn, at) - 50) * 0.02, 9);
+  });
+
   it('falls to what an everyday life keeps, and no further', () => {
     const at = 25 * 365.2425 * MS_DAY;
     for (const [from, to] of [[60, 59.82], [35.1, 35], [35, 35], [20, 20]] as [number, number][]) {

@@ -919,6 +919,24 @@ describe('the summers, for work', () => {
     sim.advanceTo(next[1]!.at + 60_000);
     expect(sim.player.currentLocationId).toBe('us-ca-losangeles');
   }, 180_000);
+
+  it('keeps them in the city while another job there has calls ahead, and brings them home from the last', () => {
+    const sim = life('two-jobs');
+    play(sim, at(2027, 5, 20, 12));
+    const career = careerOf(sim.player);
+    const first = { id: 'one', roleId: 'costar', cityId: 'us-ny-newyork' as const, starts: at(2027, 6, 7, 7), units: 1, rehearsalWeeks: 0, status: 'offered' as const, dueAt: sim.now + 2 * MS_DAY, offeredAt: sim.now, worked: 0, owed: 0 };
+    const second = { ...first, id: 'two', starts: at(2027, 6, 8, 7), units: 3 };
+    career.bookings.push(first, second);
+    sim.must({ kind: 'career.accept', payload: { bookingId: 'one' } });
+    sim.must({ kind: 'career.accept', payload: { bookingId: 'two' } });
+    const home = (id: string) => sim.universe.scheduled.find((i) => i.kind === 'career.stay' && i.payload.bookingId === id && i.payload.direction === 'back')!;
+    // The first job's journey home falls inside the second's days.
+    expect(home('one').at).toBeLessThan(home('two').at);
+    play(sim, home('one').at + 60_000);
+    expect(sim.player.currentLocationId).toBe('us-ny-newyork');
+    play(sim, home('two').at + 60_000);
+    expect(sim.player.currentLocationId).toBe(YALE_DRAMA.cityId);
+  }, 180_000);
 });
 
 describe('the curriculum’s labs', () => {

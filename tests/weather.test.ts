@@ -28,7 +28,7 @@ const city = (id: string) => {
  */
 const place = (id: string, name: string, latitude: number, longitude: number, timeZone: string, countryId: string): City => ({
   id, name, type: 'city', parentId: `${countryId}-00`, countryId, timeZone, latitude, longitude,
-  costOfLivingIndex: 100, medianRentCents: 0, medianHomePriceCents: 0, population: 0,
+  costOfLivingIndex: 100, medianRentCents: 0, population: 0,
   jurisdictionCode: countryId, tags: [],
 } as unknown as City);
 const SINGAPORE = place('sg-test-singapore', 'Singapore', 1.35, 103.82, 'Asia/Singapore', 'sg');

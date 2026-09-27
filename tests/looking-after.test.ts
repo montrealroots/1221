@@ -13,7 +13,7 @@ import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
 import type { Person, Personality } from '@/engine/domain/model';
 import {
-  LOOKING_AFTER, applyLookingAfter, freshWellbeing, lookAfterRefusal, readiness, type LookAfter,
+  LOOKING_AFTER, applyLookingAfter, freshWellbeing, lookAfterRefusal, mendsTo, readiness, type LookAfter,
 } from '@/engine/systems/life';
 import { ceilingAt } from '@/engine/content/lifespan';
 import { MS_DAY, MS_HOUR, MS_MINUTE } from '@/engine/core/time';
@@ -132,7 +132,11 @@ describe('looking after yourself', () => {
       const a = trained.player.wellbeing;
       const b = idle.player.wellbeing;
       expect(a.fitness - b.fitness).toBeGreaterThan(30);
-      expect(a.condition - b.condition).toBeGreaterThan(night === 8 ? 5 : 1);
+      // Condition follows what the fitness supports (`mendsTo`): the trained
+      // body at its higher mark, the idle one sliding 2% a day toward its lower.
+      // Until 2026-09-27 the idle one slid toward 74 and the gap here was five.
+      expect(a.condition).toBeGreaterThan(mendsTo(trained.player) - 1);
+      expect(a.condition - b.condition).toBeGreaterThan(1);
       expect(readiness(trained.player)).toBeGreaterThan(readiness(idle.player));
     });
   }

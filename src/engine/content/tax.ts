@@ -9,12 +9,16 @@
  * Honesty: these rates are CALIBRATED APPROXIMATIONS of how real tax systems
  * behave in structure — progressive brackets, flat state rates, no-income-tax
  * states, sales tax, property tax, payroll tax. They are close enough for the
- * simulation to teach real intuitions and they are not filing advice.
+ * simulation to teach real intuitions and they are not filing advice. A
+ * vehicle's registration and purchase tax were kept too until 2026-09-27,
+ * and nothing is driven; property tax is a fact the place shows, charged to
+ * no one, since nothing is owned.
  */
 
 import type { Money } from '../core/money';
 import { applyRate } from '../core/money';
 import { jurisdictionPath } from './geography';
+import { exchange } from './currency';
 
 export interface TaxBracket {
   /** Lower bound of the bracket in cents. */
@@ -64,18 +68,6 @@ export interface PropertyTaxRule {
   rate: number;
   /** Cap on annual assessed-value growth, as a decimal. */
   assessmentGrowthCap?: number;
-  effectiveFrom: number;
-}
-
-export interface VehicleFeeRule {
-  jurisdictionCode: string;
-  /** Annual registration as a fraction of vehicle value. */
-  registrationRate: number;
-  registrationMinimum: Money;
-  /** One-time sales/use tax on purchase. */
-  purchaseTaxRate: number;
-  /** Whether an annual safety or emissions inspection is required. */
-  inspectionRequired: boolean;
   effectiveFrom: number;
 }
 
@@ -288,21 +280,6 @@ export const PROPERTY_TAX_RULES: readonly PropertyTaxRule[] = [
   { jurisdictionCode: 'IS', rate: 0.0028, effectiveFrom: YEAR(2024) },
 ];
 
-export const VEHICLE_FEE_RULES: readonly VehicleFeeRule[] = [
-  { jurisdictionCode: 'US-CA', registrationRate: 0.0065, registrationMinimum: 175_00, purchaseTaxRate: 0.0975, inspectionRequired: true, effectiveFrom: YEAR(2018) },
-  { jurisdictionCode: 'US-NY', registrationRate: 0.0030, registrationMinimum: 140_00, purchaseTaxRate: 0.08875, inspectionRequired: true, effectiveFrom: YEAR(2018) },
-  { jurisdictionCode: 'US-GA', registrationRate: 0.0000, registrationMinimum: 20_00, purchaseTaxRate: 0.070, inspectionRequired: false, effectiveFrom: YEAR(2018) },
-  { jurisdictionCode: 'US-TX', registrationRate: 0.0000, registrationMinimum: 75_00, purchaseTaxRate: 0.0625, inspectionRequired: true, effectiveFrom: YEAR(2018) },
-  { jurisdictionCode: 'US-FL', registrationRate: 0.0000, registrationMinimum: 225_00, purchaseTaxRate: 0.06, inspectionRequired: false, effectiveFrom: YEAR(2018) },
-  { jurisdictionCode: 'US-NV', registrationRate: 0.0035, registrationMinimum: 33_00, purchaseTaxRate: 0.0685, inspectionRequired: false, effectiveFrom: YEAR(2018) },
-  { jurisdictionCode: 'US-WA', registrationRate: 0.0110, registrationMinimum: 68_00, purchaseTaxRate: 0.065, inspectionRequired: false, effectiveFrom: YEAR(2018) },
-  { jurisdictionCode: 'US', registrationRate: 0.0020, registrationMinimum: 100_00, purchaseTaxRate: 0.055, inspectionRequired: false, effectiveFrom: YEAR(1900) },
-  { jurisdictionCode: 'CA', registrationRate: 0.0010, registrationMinimum: 90_00, purchaseTaxRate: 0.12, inspectionRequired: true, effectiveFrom: YEAR(2018) },
-  { jurisdictionCode: 'GB', registrationRate: 0.0000, registrationMinimum: 190_00, purchaseTaxRate: 0.20, inspectionRequired: true, effectiveFrom: YEAR(2018) },
-  { jurisdictionCode: 'AU', registrationRate: 0.0030, registrationMinimum: 400_00, purchaseTaxRate: 0.10, inspectionRequired: true, effectiveFrom: YEAR(2018) },
-  { jurisdictionCode: 'AE', registrationRate: 0.0000, registrationMinimum: 120_00, purchaseTaxRate: 0.05, inspectionRequired: true, effectiveFrom: YEAR(2018) },
-];
-
 // --- Resolution -------------------------------------------------------------
 
 function effective<T extends { jurisdictionCode: string; effectiveFrom: number; effectiveTo?: number }>(
@@ -375,9 +352,22 @@ export interface TaxComputation {
 
 /** Annual tax on employment income at a location. */
 export function computeAnnualTax(
-  gross: Money, cityId: string, at: number,
-  opts: { selfEmployed?: boolean; deductions?: Money } = {},
+  income: Money, cityId: string, at: number,
+  opts: { selfEmployed?: boolean; deductions?: Money; currency?: string } = {},
 ): TaxComputation {
+  // The tables are in dollars (`TAX_RULES`): an amount in another money is
+  // taxed on what it comes to in dollars, and the tax said in its own. Until
+  // 2026-09-27 a save kept in krónur was taxed as if every króna were a dollar.
+  const other = opts.currency !== undefined && opts.currency !== 'USD' ? opts.currency : undefined;
+  if (other) {
+    const inUsd = (x: Money) => exchange(x, other, 'USD') ?? x;
+    const back = (x: Money) => exchange(x, 'USD', other) ?? x;
+    const usd = computeAnnualTax(inUsd(income), cityId, at, { selfEmployed: opts.selfEmployed, deductions: opts.deductions === undefined ? undefined : inUsd(opts.deductions) });
+    const federal = back(usd.federal); const regional = back(usd.regional); const local = back(usd.local); const payroll = back(usd.payroll);
+    const total = federal + regional + local + payroll;
+    return { gross: income, federal, regional, local, payroll, total, net: income - total, effectiveRate: income > 0 ? total / income : 0, lines: usd.lines.map((l) => ({ ...l, amount: back(l.amount) })) };
+  }
+  const gross = income;
   const layers = resolveIncomeTaxLayers(cityId, at);
   const lines: TaxComputation['lines'] = [];
   let federal = 0;
@@ -444,11 +434,5 @@ export function propertyTaxRate(cityId: string, at: number): number {
   return resolveRule(PROPERTY_TAX_RULES, cityId, at)?.rate ?? 0.011;
 }
 
-export function vehicleFees(cityId: string, at: number): VehicleFeeRule {
-  return resolveRule(VEHICLE_FEE_RULES, cityId, at) ?? {
-    jurisdictionCode: 'default', registrationRate: 0.002, registrationMinimum: 100_00,
-    purchaseTaxRate: 0.055, inspectionRequired: false, effectiveFrom: 0,
-  };
-}
 
 /** Cost-of-living multiplier relative to the national baseline. */

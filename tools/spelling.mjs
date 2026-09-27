@@ -255,7 +255,7 @@ function outsideInterpolations(line, start, end) {
 /**
  * A word in a comment that is really an identifier.
  *
- * Doc comments name real code — `COLOURS`, `wardrobe.colour`, `NEIGHBOURHOODS`
+ * Doc comments name real code — `COLOURS`, `wardrobe.colour`, `favourite_colour`
  * — and rewriting those makes the documentation describe something that does
  * not exist. Anything in backticks, anything touching a dot or an underscore,
  * and anything in SHOUTING case is left alone.

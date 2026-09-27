@@ -60,6 +60,7 @@ import { roundUpOf, roundUpsOn, savingsDebit } from './accountlife';
 import { hold } from './pending';
 import { CommandError } from '../core/simulation';
 import { billsFactor } from './seasons';
+import { deadline, latePenalty } from './taxreturn';
 
 export const RENT_KIND = 'home.rent';
 
@@ -499,17 +500,41 @@ export function moveCost(sim: Simulation, person: Person, kind: Housing): Money 
   return depositFor(sim, person, kind) + restOfMonth(sim, person, kind);
 }
 
+/** What the old deposit gives back on moving: the deposit, less what's owed on the old place. */
+export function depositBack(sim: Simulation, person: Person): Money {
+  return Math.max(0, (depositAccount(sim, person)?.balance ?? 0) - arrearsOf(sim, person));
+}
+
+/**
+ * Why a move into a home of a kind here can't be made now, or nothing where
+ * it can: `move` throws it, and Home offers the move only where it's empty.
+ * Until 2026-09-27 the buttons showed whatever the bank held, and a move
+ * under a notice to pay or quit carried its arrears to a landlord who was
+ * then owed them.
+ */
+export function moveRefusal(sim: Simulation, person: Person, kind: Housing): string | undefined {
+  if (!checkingOf(sim, person)) return 'You don’t have an account to pay from.';
+  if (person.home && person.home.kind === kind && person.home.cityId === person.currentLocationId) return 'You live in one already.';
+  // A new landlord asks the old one for a reference.
+  if (person.home?.noticeUntil !== undefined) return 'There’s a notice to pay or quit on this place, and a new landlord asks this one for a reference: get what you owe under a month’s rent first.';
+  const cost = moveCost(sim, person, kind);
+  const back = depositBack(sim, person);
+  if (inTheBank(sim, person) + back < cost) {
+    const currency = saveCurrency(sim.universe);
+    return `Moving in takes ${formatMoney(cost, currency)} from the bank, a deposit and the rest of the month${back > 0 ? `, and your deposit back makes ${formatMoney(back, currency)} of it` : ''}.`;
+  }
+  return undefined;
+}
+
 /**
  * Moves them into a home of a kind here, paying the deposit and the rest of
  * the month from checking, and taking back the old deposit less what's owed.
  * Throws the reason when it can't be done.
  */
 export function move(sim: Simulation, person: Person, kind: Housing): void {
-  const checking = checkingOf(sim, person);
-  if (!checking) throw new CommandError('You don’t have an account to pay from.');
-  if (person.home && person.home.kind === kind && person.home.cityId === person.currentLocationId) {
-    throw new CommandError('You live in one already.');
-  }
+  const no = moveRefusal(sim, person, kind);
+  if (no) throw new CommandError(no);
+  const checking = checkingOf(sim, person)!;
   // The old deposit back first, less what's still owed on the old place.
   const old = depositAccount(sim, person);
   if (old && old.balance > 0) {
@@ -520,10 +545,6 @@ export function move(sim: Simulation, person: Person, kind: Housing): void {
   }
   const deposit = depositFor(sim, person, kind);
   const rest = restOfMonth(sim, person, kind);
-  if (inTheBank(sim, person) < deposit + rest) {
-    const currency = saveCurrency(sim.universe);
-    throw new CommandError(`Moving in takes ${formatMoney(deposit + rest, currency)} from the bank: a ${formatMoney(deposit, currency)} deposit and ${formatMoney(rest, currency)} for the rest of the month.`);
-  }
   const held = depositAccount(sim, person) ?? sim.openAccount({
     id: sim.nextId('account'), kind: 'escrow', name: 'Deposit Held', ownerId: person.id,
     institution: 'Your Landlord', openedAt: sim.now, category: 'deposit',
@@ -615,7 +636,7 @@ function landlord(sim: Simulation, person: Person): void {
 }
 
 /** A money trouble, and how much it comes to. */
-export type Trouble = { kind: 'landlord' | 'overdrawn' | 'card' | 'medical' | 'collections' | 'tax'; amount: Money };
+export type Trouble = { kind: 'landlord' | 'overdrawn' | 'card' | 'card_behind' | 'medical' | 'collections' | 'tax' | 'return_late'; amount: Money };
 
 /**
  * What money is weighing on somebody with today: owing the landlord, the
@@ -632,12 +653,22 @@ export function troubles(sim: Simulation, person: Person): Trouble[] {
   if (current < 0) out.push({ kind: 'overdrawn', amount: -current });
   const card = cardOf(sim, person);
   if (card && (card.creditLimit ?? 0) > 0 && -card.balance >= CARD_FULL * (card.creditLimit ?? 0)) out.push({ kind: 'card', amount: -card.balance });
+  // Behind on it, or stopped for it: until 2026-09-27 a card two payments
+  // behind and suspended counted as in order unless it was nearly full.
+  if (card && ((person.credit?.missed ?? 0) > 0 || person.credit?.suspended)) out.push({ kind: 'card_behind', amount: Math.max(0, -card.balance) });
   for (const kind of ['medical', 'collections'] as const) {
     const owed = accountsOf(sim, person).filter((a) => a.category === kind && a.balance < 0).reduce((sum, a) => sum - a.balance, 0);
     if (owed > 0) out.push({ kind, amount: owed });
   }
   const tax = Object.values(person.returns ?? {}).reduce((sum, r) => sum + Math.max(0, r.owed ?? 0), 0);
   if (tax > 0) out.push({ kind: 'tax', amount: tax });
+  // A return past its day with a balance, not filed, its penalty building:
+  // until 2026-09-27 it counted for nothing until it was filed.
+  const cur = saveCurrency(sim.universe);
+  const late = Object.values(person.returns ?? {})
+    .filter((r) => r.filedAt === undefined && r.figures.balance > 0 && sim.now > deadline(r.year))
+    .reduce((sum, r) => sum + r.figures.balance + latePenalty(r.figures.balance, deadline(r.year), sim.now, cur), 0);
+  if (late > 0) out.push({ kind: 'return_late', amount: late });
   return out;
 }
 

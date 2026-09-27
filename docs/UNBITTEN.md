@@ -176,6 +176,13 @@ part the tool cannot see.
     SLATE's estimate, and their costs grow at the Bulletins' rates.
   - The bachelor's degree the MFA asks for is taken as read, and only the
     birth year is held to it.
+  - A student ending the last term on concern or warning still takes the
+    degree: the Bulletin doesn't say what a last term short of its
+    standards does, and SLATE confers it on any standing short of
+    dismissal, which the Standing tab says.
+  - How often an understudy is sent on is SLATE's estimate; since
+    2026-09-27 a night on call holds the evening on the calendar and is
+    called off when not needed.
 - **The business, and what's between jobs.** Built on 2026-09-27 over
   four rounds: Off-Broadway, series regulars, managers, overtime,
   residuals, union health cover, the marketplace, unemployment and the tax
@@ -242,7 +249,11 @@ part the tool cannot see.
   the rent), with their small-item waivers (Chase's $5, Wells Fargo's $10,
   Bank of America's $1) and Bank of America's two fees a day. What's left:
   a French card's withdrawal ceilings, and the order of checks by number
-  at Bank of America, which SLATE's one check a month never tests.
+  at Bank of America, which SLATE's one check a month never tests. Since
+  2026-09-27 a card's bank holds back the credit a payment from another
+  bank frees for its published days (Chase's 15, Capital One's 9, CIBC's
+  7, TD's and Scotiabank's 5, SMBC's 2); a payment from its own bank isn't
+  held, which is SLATE's reading of "up to".
 - **Some of what fraud costs is an estimate or missing.** A case's size
   runs from a quarter of the country's average to seven quarters, SLATE's
   estimate of the spread. Only Britain publishes the share its banks stop;
@@ -279,14 +290,18 @@ part the tool cannot see.
   weren't found (Arion, Crédit Agricole, Santander Spain) and pay out. An
   empty, unused account that the bank may close is never closed: the banks
   say they may, not when.
-- **The tax engine's property and vehicle rules are read by nothing.** Its
+- **The tax engine's property tax is shown and charged to no one.** Its
   income and payroll tax is paid again since the career: acting wages are
   withheld through it and each year's return is worked out with it
   (`systems/career.ts`, `systems/taxreturn.ts`), and since 2026-09-27 its
   sales tax is on the goods the work buys, a self-tape kit and headshot
   prints. The day's food is taken as groceries, which the states SLATE
-  taxes a life in exempt. Property and vehicles wait for something owned or
-  driven.
+  taxes a life in exempt. Property tax is a fact the place shows, and
+  nothing is owned to charge it on; the vehicle rules went on 2026-09-27,
+  with nothing driven. Its tables are in dollars: since that day money in
+  another currency is taxed on what it comes to in dollars, where a
+  krónur save working in New York had been taxed as if a króna were a
+  dollar.
 - **The weather decides the bills' energy and the flu's weeks, and nothing
   else.** Since 2026-09-27 (`systems/seasons.ts`), a month's bills carry its
   heating and cooling by the home's degree days, from the EIA's 2020 survey,
@@ -315,14 +330,16 @@ part the tool cannot see.
     `migrationInProgress`, `backupAvailable` and `lastPlayedAt`, a
     transaction's references, an option's booking, the school's id and a
     fraud's transaction went.
-  - Content researched for features not built: the airports
-    (`nearestAirport`), the neighbourhoods, a city's home price, vehicle
-    fees, a bank's payment hold on freed credit and its posting-order
-    words, cashier's check and money order fees, and some banks' and laws'
-    wording.
-  - Sources kept and not shown: roles', interest tax's, switching's,
-    thunder's, rents', pending's, security's, fraud law's, unclaimed money's,
-    payment norms' and check fees', and the French card ceilings'.
+  - Content researched for features not built went on 2026-09-27: the
+    airports (`nearestAirport`), the neighbourhoods, a city's home price,
+    vehicle fees, and cashier's check and money order fees. A bank's
+    payment hold on freed credit is read since that day, and its
+    posting-order words, the maturity, dormancy, replacement, credit-card
+    and refund wording, and the countries' claim-back words are shown.
+  - Sources kept and not shown: roles', thunder's and rents'. Interest
+    tax's, switching's, pending's, security's, fraud law's, unclaimed
+    money's, payment norms', check fees', ChexSystems' and the French card
+    ceilings' are shown since 2026-09-27.
 - **An older save's pension fund is kept, and nothing moves it.** The day
   job paid into one in five countries and it grew daily. Both went with the
   job engine on 2026-09-26. A save from before keeps the fund, and net worth

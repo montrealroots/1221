@@ -88,7 +88,7 @@ export function TimeControls() {
           // left the clock at six, halfway through the shift.
           onGo={() => {
             clearStandingAt();
-            advanceTo(Math.max(due.wanted, due.item.at + (due.item.durationMinutes ?? 60) * 60_000), due.sentFrom);
+            advanceTo(Math.max(due.wanted, due.item.at + (due.item.durationMinutes ?? 0) * 60_000), due.sentFrom);
           }}
           onStay={() => {
             // Not silent: if the world refuses to let you walk away from
@@ -241,7 +241,7 @@ function DueNow({ item, wanted, onGo, onStay, onClose }: {
   const { sim } = useGame();
   const zone = sim.zone;
   const mine = item.kind === PLAN_KIND;
-  const runs = item.durationMinutes ?? 60;
+  const runs = item.durationMinutes ?? 0;
 
   return (
     <Modal

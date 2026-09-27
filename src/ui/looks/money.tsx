@@ -20,7 +20,7 @@
  * foot of net worth. It is not worth a lecture, and it is never a level.
  */
 
-import { formatMoney, saveCurrency } from '@/engine/core/money';
+import { formatMoney, saveCurrency, type Money } from '@/engine/core/money';
 import { Ledger, isLiability, type Account, type AccountKind } from '@/engine/core/ledger';
 import { MS_DAY } from '@/engine/core/time';
 import { titleCaseLabel } from '@/engine/core/text';
@@ -32,6 +32,10 @@ import { defineLook, type Way } from './registry';
 import { at } from './subject';
 import { isAre, spokenList } from './words';
 import { cardTerms } from '@/engine/systems/credit';
+import { lendingOf } from '@/engine/systems/lending';
+import { cashOwedOn } from '@/engine/systems/cash';
+import { transferRate } from '@/engine/systems/cardoffers';
+import { bankById } from '@/engine/content/banks';
 
 /** The window every "lately" sentence in this file means, and its word. */
 const RECENT_DAYS = 30;
@@ -84,9 +88,35 @@ const ratePercent = (apr: number): string => `${(apr * 100).toFixed(2)}%`;
  * it, 24.99% through a 0% introduction that Home showed as 0%.
  */
 function rateOf(sim: Simulation, a: Account): number | undefined {
+  // A current account overdrawn, or with one arranged, is charged its overdraft’s rate day by day (`systems/lending.ts`):
+  // until 2026-09-27 it read as charging nothing. What’s owed the landlord carries none, and read as 0%.
+  if (a.kind === 'checking') {
+    const od = a.bankId ? lendingOf(bankById(a.bankId)).overdraft : undefined;
+    const rate = a.overdraftRate ?? (od && 'rate' in od ? od.rate : undefined);
+    return a.balance < 0 || (a.overdraftLimit ?? 0) > 0 ? rate : undefined;
+  }
+  if (a.category === 'arrears' || a.apr === 0) return undefined;
   if (a.kind !== 'credit_card' || a.apr === undefined) return a.apr;
   const owner = a.ownerId ? sim.universe.people[a.ownerId] : undefined;
   return cardTerms(sim, a, owner?.credit?.score ?? 650).apr;
+}
+
+/**
+ * A year of interest on what an account owes, as the engine charges it: a
+ * card’s cash and transfers at their own rates, the rest at the purchase
+ * rate. Until 2026-09-27 the whole card was taken at the purchase rate.
+ */
+function yearOfInterest(sim: Simulation, a: Account): Money {
+  const owed = owedOn(a);
+  const owner = a.ownerId ? sim.universe.people[a.ownerId] : undefined;
+  if (a.kind !== 'credit_card' || !owner?.credit) return Math.round(owed * (rateOf(sim, a) ?? 0));
+  const terms = cardTerms(sim, a, owner.credit.score);
+  const cash = cashOwedOn(owner, a);
+  let transfers = 0;
+  let transferInterest = 0;
+  for (const one of owner.credit.transfers ?? []) { transfers += one.owed; transferInterest += one.owed * transferRate(sim, owner.credit, one); }
+  const rest = Math.max(0, owed - cash - transfers);
+  return Math.round(rest * terms.apr + cash * (terms.cashApr ?? terms.apr) + transferInterest);
 }
 
 /** How long it has been there, in the words a person uses for it. */
@@ -175,7 +205,9 @@ function accountSentence(a: Account, sim: Simulation): string {
     const free = Math.max(0, limit + a.balance);
     return limit > 0
       ? `You owe ${formatMoney(owed, cur)} on it${where}, which leaves ${formatMoney(free, cur)} of a ${formatMoney(limit, cur)} line still free.`
-      : `You owe ${formatMoney(owed, cur)} on it${where}, and it comes down only as fast as you pay it down.`;
+      : a.category === 'arrears'
+        ? `You owe ${formatMoney(owed, cur)} on it${where}. It’s taken from the first money in the bank each night, unless you pay rent by hand.`
+        : `You owe ${formatMoney(owed, cur)} on it${where}, and it comes down only as fast as you pay it down.`;
   }
 
   if (a.balance < 0) {
@@ -199,7 +231,7 @@ function movementSentence(inward: number, outward: number, cur: string): string 
 function tailFor(kind: AccountKind, spendsFromIt: boolean): string {
   switch (kind) {
     case 'savings':
-      return 'set aside, and not for spending.';
+      return 'set aside, and drawn on to pay what the current account can’t where you’ve linked it, and for what’s owed the landlord.';
     case 'brokerage':
       return 'and what it’s worth moves with the market.';
     case 'escrow':
@@ -252,7 +284,9 @@ function accountBody(a: Account, sim: Simulation) {
       <p className="small">
         {a.institution ?? 'The bank'} opened it {heldFor(sim, a.openedAt)}
         {a.last4 ? `, and it ends ${a.last4}` : ''}.{' '}
-        {rate !== undefined
+        {rate !== undefined && a.kind === 'checking'
+          ? `Overdrawn, it’s charged ${ratePercent(rate)} a year on what’s under, day by day, and paid on the first; any fee is on the Bank screen.`
+          : rate !== undefined
           ? `Anything left on it is charged at ${ratePercent(rate)} a year, against what’s still owing, not against what it started at.`
           : a.kind === 'checking' || a.kind === 'savings' ? 'It charges no interest; any fee the bank asks for keeping it is on the Bank screen.' : 'It charges no interest.'}
       </p>
@@ -433,7 +467,7 @@ defineLook<Owing>('debt', {
 });
 
 function debtBody(owing: Owing, cur: string, sim: Simulation) {
-  const yearly = owing.debts.reduce((s, a) => s + Math.round(owedOn(a) * (rateOf(sim, a) ?? 0)), 0);
+  const yearly = owing.debts.reduce((s, a) => s + yearOfInterest(sim, a), 0);
   // Every line open to them, a card with nothing on it among them, as a bureau reads it.
   const lines = Object.values(sim.universe.accounts).filter((a) => a.ownerId === owing.person.id && !a.closedAt && a.kind === 'credit_card' && (a.creditLimit ?? 0) > 0);
   const limits = lines.reduce((s, a) => s + (a.creditLimit ?? 0), 0);
@@ -449,7 +483,7 @@ function debtBody(owing: Owing, cur: string, sim: Simulation) {
     <>
       <p className="small">
         {yearly > 0
-          ? `At the rates they charge now that would come to about ${formatMoney(yearly, cur)} a year, or ${formatMoney(Math.round(yearly / 12), cur)} a month for standing still.`
+          ? `Carried at the rates they charge now, that would come to about ${formatMoney(yearly, cur)} a year, or ${formatMoney(Math.round(yearly / 12), cur)} a month for standing still. A card paid in full each month is charged none.`
           : 'None of them carries a rate, so the balance sits where it is until you pay it.'}
         {dearest ? ` The ${dearest.name} is the expensive one, at ${ratePercent(rateOf(sim, dearest) ?? 0)}.` : ''}
       </p>

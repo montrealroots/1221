@@ -479,8 +479,10 @@ export function lookAfterRefusal(sim: Simulation, action: LookAfter): string | u
 
 /**
  * What a workout builds: 0.6 fitness at readiness 75, less for training
- * tired, hungry or stretched, and up to 0.72 at a hundred. The one thing
- * outside the dials' own display that reads readiness.
+ * tired, hungry or stretched, and up to 0.72 at a hundred. Readiness is read
+ * through `focusOf` too, by the audition's booking roll and by the craft a
+ * class, a lab or a day of work builds; this said until 2026-09-27 that a
+ * workout was the one thing that read it.
  */
 export function workoutBuilds(person: Person): number {
   return WORKOUT_FITNESS * remap(readiness(person), 0, 100, 0.4, 1.2);
@@ -716,7 +718,11 @@ export function settleTheBody(person: Person, at: number): void {
   const ceiling = ceilingAt(yearsSince(person.birthInstant, at));
   const fell = w.fitness > EVERYDAY_FITNESS ? Math.max(EVERYDAY_FITNESS, w.fitness - 0.18) : w.fitness;
   w.fitness = clamp(Math.min(fell, ceiling.fitness), 0, 100);
-  const target = Math.min(60 + w.fitness * 0.4, ceiling.condition);
+  // Toward what the fitness supports, which is what a night mends to
+  // (`mendsTo`). Until 2026-09-27 it drifted toward 60 + 0.4 fitness, 74 at
+  // an everyday fitness against the nights' 91, and a body as sound as rest
+  // could make it was pulled down every midnight.
+  const target = mendsTo(person, at);
   w.condition = clamp(Math.min(w.condition + (target - w.condition) * 0.02, ceiling.condition), 0, 100);
 }
 

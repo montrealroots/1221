@@ -19,7 +19,7 @@ import { placeProfile } from '@/engine/world/place';
 import { rentAt } from '@/engine/content/rents';
 import type { Simulation } from '@/engine';
 import {
-  arrearsOf, depositFor, moveCost, rentOf, spend,
+  arrearsOf, depositBack, depositFor, moveCost, moveRefusal, rentOf, spend,
 } from '@/engine/systems/household';
 import { sleepQuality } from '@/engine/systems/life';
 import { MS_DAY, MS_HOUR, instantFromZoned, startOfNextDay } from '@/engine/core/time';
@@ -137,6 +137,25 @@ describe('moving', () => {
     const answer = broke.execute({ kind: 'home.move', payload: { kind: 'own' } });
     expect(answer.ok).toBe(false);
     expect(answer.error).toMatch(/deposit/);
+  });
+
+  it('is refused under a notice to pay or quit, and with the old deposit back counted when money is short', () => {
+    const sim = quickSave({ wealth: 'comfortable' }, 'move-notice');
+    sim.player.home!.noticeUntil = sim.now + 10 * MS_DAY;
+    expect(moveRefusal(sim, sim.player, 'own')).toMatch(/notice to pay or quit/);
+    const answer = sim.execute({ kind: 'home.move', payload: { kind: 'own' } });
+    expect(answer.ok).toBe(false);
+    delete sim.player.home!.noticeUntil;
+    // Exactly enough with the deposit back: the move goes.
+    const back = depositBack(sim, sim.player);
+    expect(back).toBeGreaterThan(0);
+    const need = moveCost(sim, sim.player, 'own') - back;
+    for (const a of Object.values(sim.universe.accounts)) if (a.ownerId === sim.player.id && a.kind === 'savings' && a.balance !== 0) sim.post({ memo: 'test', category: 'test', postings: [{ accountId: a.id, amount: -a.balance }, { accountId: sim.nominalAccount('income', 'Test').id, amount: a.balance }] });
+    setChecking(sim, need - 1);
+    expect(moveRefusal(sim, sim.player, 'own')).toMatch(/deposit back/);
+    setChecking(sim, need);
+    expect(moveRefusal(sim, sim.player, 'own')).toBeUndefined();
+    expect(sim.execute({ kind: 'home.move', payload: { kind: 'own' } }).ok).toBe(true);
   });
 
   it('charges a month once for a move on the 1st before the rent, and a room found from the sofa starts paying next month', () => {

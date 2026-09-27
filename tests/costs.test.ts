@@ -10,6 +10,7 @@ import { createSave, quickSave } from '@/engine';
 import { newLifeConfig } from '@/engine/world/bootstrap';
 import { MS_DAY, instantFromZoned, zonedParts } from '@/engine/core/time';
 import { computeAnnualTax, salesTaxRate } from '@/engine/content/tax';
+import { exchange } from '@/engine/content/currency';
 import { AGENCIES, ROLES, WORK_COSTS } from '@/engine/content/career';
 import { CARE, CHRONIC, DENTAL_PLANS, DENTAL_VISION, INSULIN, PHARMACY, RECEIPTS, STATE_DEDUCTIONS, medicalGrowth } from '@/engine/content/safetynet';
 import { ESTIMATE, beginCareer, bookingChance, careerOf, staleHeadshots, submissionsAWeek, weekOfAuditions, withSalesTax, workCostsWeek } from '@/engine/systems/career';
@@ -27,6 +28,26 @@ function pro(seed: string, city = 'us-ny-newyork'): Simulation {
   return sim;
 }
 const yearNow = (sim: Simulation) => zonedParts(sim.now, NY).year;
+
+describe('tax on money that isn’t dollars', () => {
+  it('is worked out on what it comes to in dollars, and said in its own money', () => {
+    const at = Date.UTC(2027, 5, 1);
+    const isk = 10_000_000_00;
+    const inUsd = exchange(isk, 'ISK', 'USD')!;
+    const theirs = computeAnnualTax(isk, 'us-ny-newyork', at, { currency: 'ISK' });
+    const dollars = computeAnnualTax(inUsd, 'us-ny-newyork', at);
+    expect(theirs.gross).toBe(isk);
+    expect(theirs.federal).toBe(exchange(dollars.federal, 'USD', 'ISK'));
+    expect(theirs.total).toBe(theirs.federal + theirs.regional + theirs.local + theirs.payroll);
+    // Not the dollar table read in krónur: ten million krónur taxed as ten million dollars, at twice the rate.
+    expect(theirs.total).toBeLessThan(computeAnnualTax(isk, 'us-ny-newyork', at).total * 0.6);
+    // A deduction is money too, and converted with the rest.
+    const off = 1_000_000_00;
+    expect(computeAnnualTax(isk, 'us-ny-newyork', at, { currency: 'ISK', deductions: off }).regional).toBe(exchange(computeAnnualTax(inUsd, 'us-ny-newyork', at, { deductions: exchange(off, 'ISK', 'USD')! }).regional, 'USD', 'ISK'));
+    // In dollars it's the same computation.
+    expect(computeAnnualTax(inUsd, 'us-ny-newyork', at, { currency: 'USD' })).toEqual(dollars);
+  });
+});
 
 describe('an actor’s working costs', () => {
   it('pays a casting site a year from the bank, counts it for the return, and renews it unless told not to', () => {

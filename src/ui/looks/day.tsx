@@ -342,7 +342,7 @@ defineLook<TheDay>('day', {
           {sim.zone !== zone && (
             <p className="small muted">
               You’re keeping {zoneAbbreviation(sim.now, sim.zone)} out there, and the calendar is still
-              cut into days by {zoneAbbreviation(sim.now, zone)}, which is where you started from.
+              cut into days by {zoneAbbreviation(sim.now, zone)}, where you live.
             </p>
           )}
           <div className="grid grid-3">
@@ -607,14 +607,14 @@ defineLook<TheEntry>('entry', {
             {entry.status === 'observance'
               ? 'An observance. It’s on the calendar so you know; nothing about it is yours to change.'
               : entry.requiresPlayer
-                ? 'This one wants you there. Move the clock to it and it happens.'
+                ? `This one wants you there, awake${city ? ` and in ${city.name}` : ''}, when the clock reaches it; if you aren’t, it’s missed, and a missed call, audition or day of work costs what the Guide says it does.`
                 : 'This one the world handles on its own when the clock reaches it.'}
             {length && ` It runs ${length}, ${formatTime(entry.at, clock)} to ${formatTime(endOf(entry), clock)}.`}
           </p>
           <p className="small muted">
             {city
               ? elsewhere
-                ? <>It’s in <Open subject={at('place', city.id)}>{city.name}</Open> and you’re in {elsewhere.name}, so getting there is part of it.</>
+                ? <>It’s in <Open subject={at('place', city.id)}>{city.name}</Open> and you’re in {elsewhere.name}: a job’s travel takes you there on its own, and anything else needs you to be there by then.</>
                 : <>It’s in <Open subject={at('place', city.id)}>{city.name}</Open>, where you already are.</>
               : 'It names no city, so wherever you are is close enough.'}
             {clashes.length > 0

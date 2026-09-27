@@ -23,6 +23,7 @@ import {
   A_NORMAL_DAYS_DEBT, EVERYDAY_FITNESS, mendsTo, moraleSettlesAt, readiness, readinessParts, wellbeingSummary, workoutCosts,
 } from '@/engine/systems/life';
 import type { Person, Wellbeing } from '@/engine/domain/model';
+import { ESTIMATE as SCHOOL_ESTIMATE } from '@/engine/systems/school';
 import type { Simulation } from '@/engine';
 import { defineLook, type Way } from './registry';
 import { at } from './subject';
@@ -48,7 +49,7 @@ const DIALS = [
   { key: 'stress', name: 'Stress', unit: 'level', behind: 'what it is doing to your sleep' },
   { key: 'sleepDebt', name: 'Sleep Debt', unit: 'hours', behind: 'what sleep pays back' },
   { key: 'morale', name: 'Morale', unit: 'level', behind: 'how much of the day’s stress a night clears' },
-  { key: 'condition', name: 'Condition', unit: 'level', behind: 'how much a night puts back, and your mood' },
+  { key: 'condition', name: 'Condition', unit: 'level', behind: 'how much a night puts back, your mood, a sick day, and how likely a year is to be your last' },
   { key: 'fitness', name: 'Fitness', unit: 'level', behind: 'how far rest can mend you, and what a workout costs' },
   { key: 'nourishment', name: 'Nourishment', unit: 'level', behind: 'how long since you ate properly' },
   { key: 'hygiene', name: 'Hygiene', unit: 'level', behind: 'your mood once it’s low, and readiness a little' },
@@ -92,7 +93,7 @@ defineLook<Person>('person', {
     ways.push({
       to: at('readiness', person.id),
       label: 'Readiness',
-      detail: 'What seven of the eight come to, and what a workout builds',
+      detail: 'What seven of the eight come to: your chance at an audition, and what a class, a day’s work or a workout builds',
     });
     if (isYou) {
       ways.push({
@@ -246,8 +247,10 @@ function sentenceFor(dial: Dial, now: number): string {
     case 'condition': {
       const mends = Math.round(mendsTo(dial.person, now));
       const share = Math.round(100 * (0.8 + 0.2 * Math.min(1, w.condition / mendsTo(dial.person, now))));
-      return n >= mends ? `${n}, as sound as your fitness lets rest make you. A night puts all of itself back.`
-        : `${n}, under the ${mends} your fitness lets rest mend you to. A night puts back ${share}% of what it would.`;
+      // What the dial decides, and the midnight pull toward the same mark.
+      const also = `${dial.person.school && n < SCHOOL_ESTIMATE.sickBelow ? ` Under ${SCHOOL_ESTIMATE.sickBelow}, a day off classes called in sick is excused.` : ''} The lower it is, the likelier a year is to be your last.`;
+      return n >= mends ? `${n}, as sound as your fitness lets rest make you. Each midnight settles it back toward ${mends} if it’s over.${also}`
+        : `${n}, under the ${mends} your fitness lets rest mend you to. A night puts back ${share}% of the energy it would, and each midnight settles it a little toward ${mends}.${also}`;
     }
     case 'fitness': {
       const mends = Math.round(mendsTo(dial.person, now));
@@ -259,12 +262,15 @@ function sentenceFor(dial: Dial, now: number): string {
         + ` At ${Math.floor(age)}, the most a body can be trained to is ${Math.round(ceilingAt(age).fitness)}. ${ageWords(age)}`;
     }
     case 'nourishment':
-      return n > 70 ? `${n}. Fed, and not thinking about it.`
+      // With the day’s meals: at least 76 each morning when the food is paid for, 40 when it can’t be.
+      return (n > 70 ? `${n}. Fed, and not thinking about it.`
         : n >= 20 ? `${n}. Getting hungry. Under twenty it costs condition and mood by the hour.`
-          : `${n}. Hungry, and it’s costing condition and mood by the hour.`;
+          : `${n}. Hungry, and it’s costing condition and mood by the hour.`)
+        + ' Each morning the day’s meals take it to 76 at least, or to 40 on a day the food can’t be paid for.';
     case 'hygiene':
-      return n >= 50 ? `${n}. Clean enough that it isn’t wearing on you.`
-        : `${n}. Under fifty it wears on your mood by the hour. A shower puts it back.`;
+      return (n >= 50 ? `${n}. Clean enough that it isn’t wearing on you.`
+        : `${n}. Under fifty it wears on your mood by the hour. A shower puts it back.`)
+        + ' The morning’s shower takes it to 82 at least.';
     default:
       return `${n}.`;
   }
@@ -298,13 +304,13 @@ defineLook<Ready>('readiness', {
     kind: 'How Well You Would Do Today',
     parent: at('person', ready.person.id),
     summary: ready.drags.length === 0
-      ? `${Math.round(ready.value)}, and nothing is holding you back. This is as good as a day gets.`
+      ? `${Math.round(ready.value)}, and nothing is holding you back much.${ready.value >= 99.5 ? ' This is as good as a day gets.' : ''}`
       : `${Math.round(ready.value)}, and ${spokenList(ready.drags.map((d) => d.name.toLowerCase()))} ${isAre(ready.drags.length)} what’s costing you.`,
     ways: ready.drags.map((d) => ({
       to: at('dial', `${ready.person.id}/${d.key}`),
       label: d.name,
       detail: `At ${Math.round(d.value)}, and pulling on the rest`,
     })),
-    provenance: 'Seven of the eight, multiplied together, and fitness through condition. It isn’t stored anywhere — it’s what they come to, and it sets what a workout builds.',
+    provenance: 'Seven of the eight multiplied, fitness through condition, and stored nowhere. It sets the chance of booking an audition and what a class, a lab, a day’s work or a workout builds.',
   }),
 });

@@ -1229,7 +1229,7 @@ export function registerSchool(sim: Simulation): void {
     // isn't exempt from FICA. Until 2026-09-27 nothing was withheld, and the
     // return asked for the payroll tax as a balance due.
     const before = yearOf(person, zonedParts(item.at, zone()).year).acting;
-    const withheld = computeAnnualTax(before + pay, YALE_DRAMA.cityId, item.at).total - computeAnnualTax(before, YALE_DRAMA.cityId, item.at).total;
+    const withheld = computeAnnualTax(before + pay, YALE_DRAMA.cityId, item.at, { currency: cur }).total - computeAnnualTax(before, YALE_DRAMA.cityId, item.at, { currency: cur }).total;
     s.post({ memo: 'Yale Summer Cabaret stipend, the week', category: 'salary', postings: [{ accountId: current.id, amount: pay - withheld }, { accountId: s.nominalAccount('income', 'Wages').id, amount: -pay }, ...(withheld ? [{ accountId: s.nominalAccount('expense', 'Tax Withheld').id, amount: withheld }] : [])] });
     recordWages(person, item.at, zone(), { gross: pay, withheld, employer: 'yale-summer-cabaret' });
   });

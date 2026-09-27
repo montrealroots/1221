@@ -185,7 +185,7 @@ export function figuresFor(person: Person, year: number, into = 'USD', filedAt?:
   const performer = income <= usd(RETURN.performingArtistIncome, into) && employers >= RETURN.performingArtistEmployers && expenses > RETURN.performingArtistShare * y.acting;
   const deduction = performer ? expenses : 0;
   const taxed = Math.max(0, income - deduction);
-  const federalBefore = computeAnnualTax(taxed, cityId, at).federal;
+  const federalBefore = computeAnnualTax(taxed, cityId, at, { currency: into }).federal;
   // Work abroad: Canada's comes back under CAD 15,000 in the year, and over it a 216.1 return filed by 30 April gives back what's past its graduated tax; the UK's is settled after its own year. The US credits what stands, to its own tax on that income.
   let foreignIncome = 0;
   let foreignTax = 0;
@@ -227,7 +227,7 @@ export function figuresFor(person: Person, year: number, into = 'USD', filedAt?:
     const base = Math.max(0, taxed - benefitOut(state));
     // Connecticut's own schedule; SLATE's tax table carries none for it.
     if (state === 'us-ct') return connecticutTax(base, into);
-    return computeAnnualTax(base, states.get(state)!.city, at, { deductions: extra(state) }).regional;
+    return computeAnnualTax(base, states.get(state)!.city, at, { deductions: extra(state), currency: into }).regional;
   };
   const taxes = new Map<string, number>();
   for (const [state, part] of states) {
@@ -250,10 +250,10 @@ export function figuresFor(person: Person, year: number, into = 'USD', filedAt?:
   }
   const stateLines = [...states.keys()].map((state) => ({ state, tax: taxes.get(state) ?? 0, credit: Math.min(taxes.get(state) ?? 0, credits.get(state) ?? 0) }));
   // A city's own tax, New York City's, only on what came while living in it.
-  const local = taxed > 0 ? Object.entries(y.byResidence).reduce((sum, [city, amount]) => sum + Math.round(computeAnnualTax(taxed, city, at).local * (amount / taxed)), 0) : 0;
+  const local = taxed > 0 ? Object.entries(y.byResidence).reduce((sum, [city, amount]) => sum + Math.round(computeAnnualTax(taxed, city, at, { currency: into }).local * (amount / taxed)), 0) : 0;
   const incomeTax = federal + stateLines.reduce((sum, l) => sum + l.tax - l.credit, 0) + local;
   // Payroll tax is on the acting wages alone: a student's work-study and a benefit carry none.
-  const payroll = computeAnnualTax(y.acting, cityId, at).payroll;
+  const payroll = computeAnnualTax(y.acting, cityId, at, { currency: into }).payroll;
   const premiums = person.health?.premiums[year] ?? [];
   // The poverty line the year's cover reads is the year before's; a person Medicaid or the Essential Plan would take gets no credit.
   const ratio = income / usd(byYear(POVERTY_LINE, year - 1), into);
@@ -346,7 +346,7 @@ export function registerTaxReturn(sim: Simulation): void {
     const person = s.universe.people[String(item.payload.personId)];
     const r = person ? returnsOf(person)[String(item.payload.year)] : undefined;
     if (!person || !r || r.filedAt !== undefined || person.id !== s.universe.playerId) return;
-    s.notify({ category: 'tax', title: `Your ${r.year} Return Is Late`, body: r.figures.balance > 0 ? 'Each month late adds 5% of what you owe, to a quarter of it; past 60 days, at least $525.' : 'A refund waits for the return; there’s no penalty on one.', importance: 80, route: '/workspace/papers' });
+    s.notify({ category: 'tax', title: `Your ${r.year} Return Is Late`, body: r.figures.balance > 0 ? `Each month late adds 5% of what you owe, to a quarter of it; past 60 days, at least ${formatMoney(usd(RETURN.lateMinimum, saveCurrency(s.universe)), saveCurrency(s.universe))}.` : 'A refund waits for the return; there’s no penalty on one.', importance: 80, route: '/workspace/papers' });
   });
 
   sim.onSchedule(TAX_REFUND_KIND, (item, s) => {

@@ -19,6 +19,7 @@ import { PUBLISHED_RENTS, rentAt } from '@/engine/content/rents';
 import { lookAfterRefusal } from '@/engine/systems/life';
 import { saveCurrency } from '@/engine/core/money';
 import { MS_DAY, MS_HOUR, instantFromZoned, startOfNextDay, zonedParts } from '@/engine/core/time';
+import { deadline, latePenalty } from '@/engine/systems/taxreturn';
 
 const accounts = (sim: Simulation) => Object.values(sim.universe.accounts).filter((a) => a.ownerId === sim.player.id);
 const checking = (sim: Simulation) => sim.universe.accounts[sim.player.primaryAccountId!]!;
@@ -80,6 +81,35 @@ describe('the cost of living', () => {
     expect(broke.universe.notifications.some((n) => n.title === 'No Money For Food Today')).toBe(true);
   });
 
+  it('weighs a card behind or suspended, and a return past its day unfiled with its penalty, where it used to say all clear', () => {
+    const sim = quickSave({ wealth: 'comfortable' }, 'worry-card');
+    const card = Object.values(sim.universe.accounts).find((a) => a.ownerId === sim.player.id && a.kind === 'credit_card' && !a.closedAt)!;
+    sim.post({ memo: 'test', category: 'test', postings: [{ accountId: card.id, amount: -100_00 }, { accountId: sim.nominalAccount('income', 'Test').id, amount: 100_00 }] });
+    expect(troubles(sim, sim.player).some((t) => t.kind === 'card_behind')).toBe(false);
+    sim.player.credit!.missed = 1;
+    expect(troubles(sim, sim.player)).toContainEqual({ kind: 'card_behind', amount: 100_00 });
+    sim.player.credit!.missed = 0;
+    sim.player.credit!.suspended = 'late';
+    expect(troubles(sim, sim.player).some((t) => t.kind === 'card_behind')).toBe(true);
+
+    const late = quickSave({ wealth: 'comfortable' }, 'worry-return');
+    const year = zonedParts(late.now, late.zone).year - 1;
+    late.player.returns = { [year]: { year, figures: { balance: 1_000_00 } } as never };
+    expect(late.now).toBeLessThan(deadline(year));
+    expect(troubles(late, late.player).some((t) => t.kind === 'return_late')).toBe(false);
+    late.advanceTo(deadline(year) + 70 * MS_DAY);
+    // Set again past the day, in place of the year's own the season made.
+    late.player.returns = { [year]: { year, figures: { balance: 1_000_00 } } as never };
+    const due = troubles(late, late.player).find((t) => t.kind === 'return_late')!;
+    expect(due.amount).toBe(1_000_00 + latePenalty(1_000_00, deadline(year), late.now, saveCurrency(late.universe)));
+    expect(due.amount).toBeGreaterThan(1_000_00);
+    // A refund owed back is no trouble, and doesn't net against a balance owed.
+    late.player.returns = { [year]: { year, figures: { balance: -1_000_00 } } as never };
+    expect(troubles(late, late.player).some((t) => t.kind === 'return_late')).toBe(false);
+    late.player.returns = { [year]: { year, figures: { balance: 1_000_00 } } as never, [year - 1]: { year: year - 1, figures: { balance: -900_00 } } as never };
+    expect(troubles(late, late.player).find((t) => t.kind === 'return_late')!.amount).toBe(due.amount);
+  });
+
   it('weighs a medical debt, a debt in collections and a tax balance owed, each alone, and not once paid', () => {
     const over = quickSave({ wealth: 'comfortable' }, 'worry-overdrawn');
     setChecking(over, -40_00);
@@ -88,7 +118,7 @@ describe('the cost of living', () => {
       const sim = quickSave({ wealth: 'comfortable' }, `worry-${kind}`);
       expect(inTrouble(sim, sim.player)).toBe(false);
       if (kind === 'tax') {
-        sim.player.returns = { 2026: { year: 2026, owed: 500_00 } as never, 2027: { year: 2027, owed: 200_00 } as never };
+        sim.player.returns = { 2026: { year: 2026, owed: 500_00, filedAt: 1, figures: { balance: 500_00 } } as never, 2027: { year: 2027, owed: 200_00, filedAt: 1, figures: { balance: 200_00 } } as never };
         expect(troubles(sim, sim.player)).toEqual([{ kind: 'tax', amount: 700_00 }]);
       }
       else {
