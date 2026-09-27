@@ -11,7 +11,7 @@ import { computeAnnualTax } from '@/engine/content/tax';
 import { COMMERCIAL_USE, LOCATION, RECURRING, SAG_AFTRA, SERIES, rateOn } from '@/engine/content/career';
 import { CARE, COBRA, MEDICAL_DEBT, PLANS, PUBLIC_COVER, STATE_RETURN } from '@/engine/content/safetynet';
 import {
-  RENEWAL_KIND, TRAVEL_KIND, WORK_KIND, afterlife, arcUplift, beginCareer, careerOf, levelFor, locationFor, paycheck, residualAmount, roleById, workDays,
+  RENEWAL_KIND, TRAVEL_KIND, WORK_KIND, afterlife, sendHome, arcUplift, beginCareer, careerOf, levelFor, locationFor, paycheck, residualAmount, roleById, workDays,
   type Booking,
 } from '@/engine/systems/career';
 import { earningsOf, recordBenefit, recordWages, yearOf } from '@/engine/systems/earnings';
@@ -141,6 +141,8 @@ describe('a series’ later seasons', () => {
         expect(next).toMatchObject({ status: 'accepted', seriesId: b.id });
         expect(next.rate).toBe(Math.round(rateOn(roleById('series-half').steps, '2026-10-05') * (1 + SERIES.raise)));
         expect(next.starts - b.starts).toBeGreaterThan(350 * MS_DAY);
+        // After its pickup, whenever the last season began.
+        expect(next.starts).toBeGreaterThan(option.decidedAt);
       } else {
         cancelled += 1;
         expect(titled(sim, 'Your Series Was Canceled')).toHaveLength(1);
@@ -150,6 +152,34 @@ describe('a series’ later seasons', () => {
     expect(picked).toBeGreaterThan(0);
   }, 180_000);
 
+  it('starts a season picked up in June after the pickup, though the last began in the spring', () => {
+    let picked = 0;
+    for (const seed of ['sp1', 'sp2', 'sp3', 'sp4', 'sp5', 'sp6']) {
+      const sim = pro(seed, 'us-ca-losangeles', 90);
+      // A season begun in December 2024: a year on is December 2025, already gone at the pickup.
+      const prior = booking(sim, 'series-half', 13, at(2024, 12, 2, 8, 'America/Los_Angeles'), { cityId: 'us-ca-losangeles', status: 'worked', worked: 65 });
+      careerOf(sim.player).residuals.push({ id: 'r', bookingId: prior.id, roleId: prior.roleId, kind: 'network', perEpisode: 1, episodes: 13, days: 65, airsAt: 0, paid: 0, payments: 0 });
+      sim.schedule({ at: sim.now + 60_000, kind: RENEWAL_KIND, label: 'x', category: 'system', priority: 1, payload: { personId: sim.player.id, bookingId: prior.id } });
+      sim.advanceTo(sim.now + 2 * 60_000);
+      const next = careerOf(sim.player).bookings.find((x) => x.season === 2);
+      if (!next) continue;
+      expect(next.starts).toBeGreaterThan(sim.now);
+      expect(workDays(next)[0]!.at).toBeGreaterThan(sim.now);
+      picked += 1;
+    }
+    expect(picked).toBeGreaterThan(0);
+  });
+
+  it('brings nobody home later than they’d come, and a journey already sooner stays', () => {
+    const sim = pro('home-soon');
+    const b = booking(sim, 'costar', 2, sim.now + 7 * MS_DAY);
+    const soon = sim.schedule({ at: sim.now + 2 * MS_HOUR, kind: TRAVEL_KIND, label: 'x', category: 'career', priority: 30, payload: { personId: sim.player.id, bookingId: b.id, direction: 'back' } });
+    const late = sim.schedule({ at: sim.now + 9 * MS_DAY, kind: TRAVEL_KIND, label: 'x', category: 'career', priority: 30, payload: { personId: sim.player.id, bookingId: b.id, direction: 'back' } });
+    sendHome(sim, b);
+    expect(soon.at).toBe(sim.now + 2 * MS_HOUR);
+    expect(late.at).toBe(sim.now + MS_DAY);
+  });
+
   it('releases a job that clashes with a picked-up season', () => {
     let released = 0;
     let canceled = 0;
@@ -157,7 +187,7 @@ describe('a series’ later seasons', () => {
       const sim = pro(seed, 'us-ca-losangeles', 90);
       const prior = booking(sim, 'series-half', 13, at(2026, 10, 5, 8, 'America/Los_Angeles'), { cityId: 'us-ca-losangeles', status: 'worked', worked: 65 });
       careerOf(sim.player).residuals.push({ id: 'r', bookingId: prior.id, roleId: prior.roleId, kind: 'network', perEpisode: 1, episodes: 13, days: 65, airsAt: 0, paid: 0, payments: 0 });
-      const clash = booking(sim, 'lort-b', 4, at(2027, 10, 5, 8, 'America/Los_Angeles'), { cityId: 'us-ca-losangeles', rehearsalWeeks: 4 });
+      const clash = booking(sim, 'guest-hour', 2, at(2027, 10, 5, 8, 'America/Los_Angeles'), { cityId: 'us-ca-losangeles', location: 'ca-bc-vancouver' });
       expect(sim.execute({ kind: 'career.accept', payload: { bookingId: clash.id } }).ok).toBe(true);
       sim.schedule({ at: sim.now + 60_000, kind: RENEWAL_KIND, label: 'x', category: 'system', priority: 1, payload: { personId: sim.player.id, bookingId: prior.id } });
       sim.player.wellbeing.morale = 50;
@@ -167,6 +197,10 @@ describe('a series’ later seasons', () => {
       expect(sim.player.wellbeing.morale).toBeGreaterThan(50 + TURNS.pickedUp.morale / 2);
       expect(clash.status).toBe('released');
       expect(pending(sim, WORK_KIND).some((i) => i.payload.bookingId === clash.id)).toBe(false);
+      // Its journey out is off the calendar, and a journey home comes by tomorrow.
+      expect(pending(sim, TRAVEL_KIND).some((i) => i.payload.bookingId === clash.id && i.payload.direction === 'out')).toBe(false);
+      const home = pending(sim, TRAVEL_KIND).find((i) => i.payload.bookingId === clash.id && i.payload.direction === 'back');
+      expect(home?.at).toBeLessThanOrEqual(sim.now + MS_DAY);
       released += 1;
     }
     expect(released).toBeGreaterThan(0);

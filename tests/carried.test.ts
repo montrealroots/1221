@@ -194,7 +194,7 @@ describe('home from a job, however it went', () => {
   it('brings an actor fired on location home at its end', () => {
     const sim = pro('fired-away');
     sim.player.craft = { acting: 50, voice: 50, speech: 50, body: 50, text: 50, singing: 50, screen: 50 };
-    const b: Booking = { id: 'tor', roleId: 'costar', cityId: 'us-ny-newyork', location: 'ca-on-toronto', starts: at(2026, 10, 5, 8), units: 2, rehearsalWeeks: 0, status: 'offered', dueAt: sim.now + 2 * MS_DAY, offeredAt: sim.now, worked: 0, owed: 0 };
+    const b: Booking = { id: 'tor', roleId: 'costar', cityId: 'us-ny-newyork', location: 'ca-on-toronto', starts: at(2026, 10, 5, 8), units: 5, rehearsalWeeks: 0, status: 'offered', dueAt: sim.now + 2 * MS_DAY, offeredAt: sim.now, worked: 0, owed: 0 };
     careerOf(sim.player).bookings.push(b);
     expect(sim.execute({ kind: 'career.accept', payload: { bookingId: b.id } }).ok).toBe(true);
     const call = sim.universe.scheduled.find((i) => i.kind === 'career.work' && i.status === 'pending' && i.payload.bookingId === 'tor')!;
@@ -206,7 +206,9 @@ describe('home from a job, however it went', () => {
     sim.advanceTo(call.at + 60_000);
     expect(b.status).toBe('fired');
     expect(sim.player.wellbeing.morale).toBeLessThan(50 + TURNS.replaced.morale / 2);
-    while (sim.now < at(2026, 10, 9, 12)) sim.advanceTo(Math.min(at(2026, 10, 9, 12), sim.now + 6 * 3_600_000), { stopOnPlayerRequired: true });
+    // Home the next day, not at the day the job would have ended.
+    const fired = sim.now;
+    while (sim.now < fired + 26 * 3_600_000) sim.advanceTo(Math.min(fired + 26 * 3_600_000, sim.now + 6 * 3_600_000), { stopOnPlayerRequired: true });
     expect(sim.player.currentLocationId).toBe('us-ny-newyork');
   }, 60_000);
 
@@ -215,7 +217,7 @@ describe('home from a job, however it went', () => {
     sim.player.craft = { acting: 50, voice: 50, speech: 50, body: 50, text: 50, singing: 50, screen: 50 };
     const career = careerOf(sim.player);
     career.agencyId = 'caa';
-    const b: Booking = { id: 'set', roleId: 'costar', cityId: 'us-ny-newyork', starts: at(2026, 10, 5, 8), units: 2, rehearsalWeeks: 0, status: 'offered', dueAt: sim.now + 2 * MS_DAY, offeredAt: sim.now, worked: 0, owed: 0 };
+    const b: Booking = { id: 'set', roleId: 'costar', cityId: 'us-ny-newyork', location: 'ca-on-toronto', starts: at(2026, 10, 5, 8), units: 5, rehearsalWeeks: 0, status: 'offered', dueAt: sim.now + 2 * MS_DAY, offeredAt: sim.now, worked: 0, owed: 0 };
     career.bookings.push(b);
     expect(sim.execute({ kind: 'career.accept', payload: { bookingId: b.id } }).ok).toBe(true);
     const call = sim.universe.scheduled.find((i) => i.kind === 'career.work' && i.status === 'pending' && i.payload.bookingId === 'set')!;
@@ -225,6 +227,10 @@ describe('home from a job, however it went', () => {
     sim.advanceTo(call.at + 60_000);
     expect(b.status).toBe('released');
     expect(sim.player.wellbeing.morale).toBeLessThan(50 + TURNS.recast.morale / 2);
+    // Recast on location, home the next day.
+    const recast = sim.now;
+    while (sim.now < recast + 26 * 3_600_000) sim.advanceTo(Math.min(recast + 26 * 3_600_000, sim.now + 6 * 3_600_000), { stopOnPlayerRequired: true });
+    expect(sim.player.currentLocationId).toBe('us-ny-newyork');
     expect(career.agencyId).toBe('caa');
     expect(sim.universe.scheduled.filter((i) => i.kind === 'career.work' && i.status === 'pending' && i.payload.bookingId === 'set')).toHaveLength(0);
     // On stage, the understudy covers the night and the run goes on.

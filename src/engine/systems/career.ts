@@ -933,6 +933,7 @@ export function registerCareer(sim: Simulation): void {
         booking.status = 'released';
         for (const one of s.universe.scheduled) if (one.status === 'pending' && one.kind === WORK_KIND && one.payload.bookingId === booking.id) s.timeline.cancel(one.id, s.now);
         if (booking.owed > 0) schedulePay(s, person, booking, s.now + 60_000, true);
+        sendHome(s, booking);
         feel(person, 'recast');
         if (isPlayer(person)) s.notify({ category: 'career', title: 'Recast While You Were In Hospital', body: `${role.label} couldn’t wait for you, and went to somebody else. What you worked is still paid.`, importance: 90, route: '/workspace/career' });
         return;
@@ -940,6 +941,7 @@ export function registerCareer(sim: Simulation): void {
       booking.status = 'fired';
       for (const one of s.universe.scheduled) if (one.status === 'pending' && one.kind === WORK_KIND && one.payload.bookingId === booking.id) s.timeline.cancel(one.id, s.now);
       if (booking.owed > 0) schedulePay(s, person, booking, s.now + 60_000, true);
+      sendHome(s, booking);
       feel(person, 'replaced');
       if (isPlayer(person)) s.notify({ category: 'career', title: 'Replaced', body: `You didn’t turn up for ${role.label}, and the production replaced you. What you worked is still paid.`, importance: 90, route: '/workspace/career' });
       if (career.agencyId) endRepresentation(s, person, 'You walked off a job the agency booked.', false);
@@ -1208,7 +1210,10 @@ export function registerCareer(sim: Simulation): void {
     const zone = zoneOf(workCityOf(prior));
     const rate = Math.round(rateOn(role.steps, dayKey(prior.starts, zone)) * (1 + SERIES.raise));
     const next: Booking = {
-      id: nextOwnId(career, 'b'), roleId: role.id, cityId: prior.cityId, starts: nextMonday(prior.starts + SERIES.nextSeasonDays * MS_DAY - 3 * MS_DAY, zone),
+      // A year on, and never before the pickup's own lead: until 2026-09-27 a season
+      // that had started in the spring was picked up in June to start in March,
+      // its days already gone, and its first call "missed" at once.
+      id: nextOwnId(career, 'b'), roleId: role.id, cityId: prior.cityId, starts: nextMonday(Math.max(prior.starts + SERIES.nextSeasonDays * MS_DAY, s.now + role.leadDays * MS_DAY) - 3 * MS_DAY, zone),
       units: prior.units, rehearsalWeeks: 0, status: 'offered', dueAt: s.now, offeredAt: s.now, worked: 0, owed: 0,
       rate: Math.max(rate, prior.rate ? Math.round(prior.rate * (1 + SERIES.raise)) : 0), season, seriesId: prior.seriesId ?? prior.id,
       ...(prior.location ? { location: prior.location } : {}),
@@ -1246,7 +1251,8 @@ export function registerCareer(sim: Simulation): void {
       if (!(first <= theirs[theirs.length - 1]!.at && theirs[0]!.at <= last)) continue;
       if (!bound) throw new CommandError(`It clashes with ${roleById(other.roleId).label}.`);
       other.status = 'released';
-      for (const one of s.universe.scheduled) if (one.status === 'pending' && one.payload.bookingId === other.id && (one.kind === WORK_KIND || one.kind === TRAVEL_KIND)) s.timeline.cancel(one.id, s.now);
+      for (const one of s.universe.scheduled) if (one.status === 'pending' && one.payload.bookingId === other.id && (one.kind === WORK_KIND || ((one.kind === TRAVEL_KIND || one.kind === STAY_KIND) && one.payload.direction === 'out'))) s.timeline.cancel(one.id, s.now);
+      sendHome(s, other);
       if (other.owed > 0) schedulePay(s, person, other, s.now + 60_000, true);
       if (isPlayer(person)) s.notify({ category: 'career', title: 'Released For Your Series', body: `${roleById(other.roleId).label} clashed with the series’ new season, which has you first.`, importance: 75, route: '/workspace/career' });
     }
@@ -1412,6 +1418,21 @@ export function registerCareer(sim: Simulation): void {
       pay(fee, 'Actors’ Equity initiation fee and dues', `An Equity contract makes you a member, for ${formatMoney(fee, cur)} now, which the bank can’t cover.`);
       career.unions.equity = { joinedAt: s.now, initiationPaid: EQUITY.initiationNow };
     }
+  }
+}
+
+/**
+ * A job that ended early on location or in another city sends them home the
+ * next day, as a production does, rather than at the day the job would have
+ * ended. Until 2026-09-27 an actor fired from a series in Vancouver stayed
+ * there four months, and one released for a series' new season had the
+ * journey home taken off the calendar with the rest.
+ */
+export function sendHome(sim: Simulation, booking: Booking): void {
+  for (const one of sim.universe.scheduled) {
+    if (one.status !== 'pending' || one.payload.bookingId !== booking.id || one.payload.direction !== 'back' || (one.kind !== TRAVEL_KIND && one.kind !== STAY_KIND)) continue;
+    const tomorrow = sim.now + MS_DAY;
+    if (one.at > tomorrow) sim.timeline.reschedule(one.id, tomorrow);
   }
 }
 
